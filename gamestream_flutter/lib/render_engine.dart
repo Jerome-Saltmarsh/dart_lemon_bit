@@ -182,14 +182,11 @@ class RenderEngine {
 
   static void renderParticle(Particle particle) {
     switch (particle.type) {
-
       case ParticleType.Bubble:
         if (particle.duration > 26) {
-          particleDeactivate(particle);
-          return;
+          particle.deactivate();
+          break;
         }
-        // const size = 32.0;
-        // final frame = (26 - particle.duration) ~/ 2;
         Engine.renderSprite(
           image: Images.gameobjects,
           dstX: getRenderX(particle),
@@ -200,7 +197,7 @@ class RenderEngine {
           srcHeight: 8,
           color: getRenderColor(particle),
         );
-        return;
+        break;
       // const size = 8.0;
         // return Engine.renderBuffer(
         //   dstX: particle.renderX,
@@ -211,7 +208,6 @@ class RenderEngine {
         //   srcHeight: size,
         //   color: getRenderColor(particle),
         // );
-
       case ParticleType.Bubble_Small:
         Engine.renderSprite(
           image: Images.gameobjects,
@@ -224,7 +220,6 @@ class RenderEngine {
           color: getRenderColor(particle),
         );
         break;
-
       case ParticleType.Bullet_Ring:
         Engine.renderSprite(
           image: Images.gameobjects,
@@ -237,7 +232,6 @@ class RenderEngine {
           color: getRenderColor(particle),
         );
         break;
-
       case ParticleType.Water_Drop:
         Engine.renderSprite(
           image: Images.gameobjects,
@@ -250,9 +244,8 @@ class RenderEngine {
           color: getRenderColor(particle),
         );
         break;
-
       case ParticleType.Smoke:
-        return Engine.renderBuffer(
+        Engine.renderBuffer(
           dstX: particle.renderX,
           dstY: particle.renderY,
           srcX: 5612,
@@ -262,9 +255,9 @@ class RenderEngine {
           scale: particle.scale,
           color: getRenderColor(particle),
         );
-
+        break;
       case ParticleType.Block_Wood:
-        return Engine.renderBuffer(
+        Engine.renderBuffer(
           dstX: particle.renderX,
           dstY: particle.renderY,
           srcX: 1760,
@@ -274,9 +267,9 @@ class RenderEngine {
           scale: particle.scale,
           color: getRenderColor(particle),
         );
-
+        break;
       case ParticleType.Block_Grass:
-        return Engine.renderBuffer(
+        Engine.renderBuffer(
           dstX: particle.renderX,
           dstY: particle.renderY,
           srcX: 1760,
@@ -286,9 +279,9 @@ class RenderEngine {
           scale: particle.scale,
           color: getRenderColor(particle),
         );
-
+        break;
       case ParticleType.Block_Brick:
-        return Engine.renderBuffer(
+        Engine.renderBuffer(
           dstX: particle.renderX,
           dstY: particle.renderY,
           srcX: 1760,
@@ -298,12 +291,12 @@ class RenderEngine {
           scale: particle.scale,
           color: getRenderColor(particle),
         );
-
+        break;
       case ParticleType.Fire:
         if (particle.frame > 12 ) {
-          return particleDeactivate(particle);
+          return particle.deactivate();
         }
-        return Engine.renderBuffer(
+        Engine.renderBuffer(
           dstX: particle.renderX,
           dstY: particle.renderY,
           srcX: 4464,
@@ -312,9 +305,9 @@ class RenderEngine {
           srcHeight: 32,
           scale: particle.scale,
         );
-
+        break;
       case ParticleType.Shell:
-        return Engine.renderBuffer(
+        Engine.renderBuffer(
           dstX: particle.renderX,
           dstY: particle.renderY,
           srcX: 1008 + (particle.direction * 32),
@@ -324,11 +317,11 @@ class RenderEngine {
           scale: 0.25,
           color: getRenderColor(particle),
         );
-
+        break;
       case ParticleType.Fire_Purple:
         if (particle.frame > 24 ) {
-          particleDeactivate(particle);
-          return;
+          particle.deactivate();
+          break;
         }
         Engine.renderBuffer(
           dstX: particle.renderX,
@@ -360,15 +353,13 @@ class RenderEngine {
           rotation: particle.rotation,
           frame: particle.frame,
         );
-        return;
+        break;
       case ParticleType.Flame:
-        return renderFlame(particle);
-
+        renderFlame(particle);
+        break;
       case ParticleType.Zombie_Arm:
-
         casteShadowDownV3(particle);
-
-        return Engine.renderBuffer(
+        Engine.renderBuffer(
           dstX: particle.renderX,
           dstY: particle.renderY,
           srcX: 4030.0,
@@ -377,7 +368,7 @@ class RenderEngine {
           srcHeight: 64,
           color: getRenderColor(particle),
         );
-
+        break;
       case ParticleType.Star_Explosion:
         if (particle.frame >= 7) {
           return particle.deactivate();
@@ -391,7 +382,6 @@ class RenderEngine {
           srcHeight: 32,
         );
         return;
-
       case ParticleType.Zombie_Head:
         casteShadowDownV3(particle);
         return Engine.renderBuffer(
@@ -403,9 +393,7 @@ class RenderEngine {
           srcHeight: 64,
           color: getRenderColor(particle),
         );
-
       case ParticleType.Zombie_leg:
-
         casteShadowDownV3(particle);
         return Engine.renderBuffer(
           dstX: particle.renderX,
@@ -416,9 +404,7 @@ class RenderEngine {
           srcHeight: 64,
           color: getRenderColor(particle),
         );
-
       case ParticleType.Zombie_Torso:
-
         casteShadowDownV3(particle);
         return Engine.renderBuffer(
           dstX: particle.renderX,
@@ -429,7 +415,6 @@ class RenderEngine {
           srcHeight: 64,
           color: getRenderColor(particle),
         );
-
       case ParticleType.Dust:
         if (particle.frame >= 8 ) return;
         const size = 32.0;
@@ -442,10 +427,10 @@ class RenderEngine {
           srcHeight: size,
           scale: particle.scale,
         );
-
       case ParticleType.Strike_Blade:
         if (particle.frame >= 6 ) {
-          return particleDeactivate(particle);
+          particle.deactivate();
+          break;
         }
         const size = 64.0;
         casteShadowDownV3(particle);
@@ -459,7 +444,6 @@ class RenderEngine {
           scale: particle.scale,
           rotation: particle.rotation + (Engine.PIHalf + Engine.PIQuarter),
         );
-
       case ParticleType.Strike_Punch:
         if (particle.frame >= 3 ) return;
         const size = 32.0;
@@ -474,13 +458,13 @@ class RenderEngine {
           scale: particle.scale,
           rotation: particle.rotation + (Engine.PIHalf + Engine.PIQuarter),
         );
-
       case ParticleType.Slash_Crowbar:
         if (particle.frame >= 3 ) {
-          return particleDeactivate(particle);
+          particle.deactivate();
+          break;
         }
         const size = 64.0;
-        return Engine.renderBufferRotated(
+        Engine.renderBufferRotated(
           dstX: particle.renderX,
           dstY: particle.renderY,
           srcX: 784,
@@ -490,7 +474,7 @@ class RenderEngine {
           scale: particle.scale,
           rotation: particle.rotation + (Engine.PIHalf + Engine.PIQuarter),
         );
-
+        break;
       default:
         break;
     }

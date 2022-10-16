@@ -6,16 +6,6 @@ import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:lemon_math/library.dart';
 
-void particleDeactivate(Particle particle) {
-}
-
-void particleActivate(Particle particle) {
-
-}
-
-// nothing gets shuffled only the particle order changes
-
-
 class Particle extends Vector3 {
   var xv = 0.0;
   var yv = 0.0;
