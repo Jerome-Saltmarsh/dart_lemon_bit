@@ -189,8 +189,8 @@ class RenderEngine {
         }
         Engine.renderSprite(
           image: Images.gameobjects,
-          dstX: getRenderX(particle),
-          dstY: getRenderY(particle),
+          dstX: getRenderV3X(particle),
+          dstY: getRenderV3Y(particle),
           srcX: 0.0,
           srcY: 32,
           srcWidth: 8,
@@ -211,8 +211,8 @@ class RenderEngine {
       case ParticleType.Bubble_Small:
         Engine.renderSprite(
           image: Images.gameobjects,
-          dstX: getRenderX(particle),
-          dstY: getRenderY(particle),
+          dstX: getRenderV3X(particle),
+          dstY: getRenderV3Y(particle),
           srcX: 0.0,
           srcY: 32,
           srcWidth: 4,
@@ -223,8 +223,8 @@ class RenderEngine {
       case ParticleType.Bullet_Ring:
         Engine.renderSprite(
           image: Images.gameobjects,
-          dstX: getRenderX(particle),
-          dstY: getRenderY(particle),
+          dstX: getRenderV3X(particle),
+          dstY: getRenderV3Y(particle),
           srcX: 0.0,
           srcY: 32,
           srcWidth: 4,
@@ -235,8 +235,8 @@ class RenderEngine {
       case ParticleType.Water_Drop:
         Engine.renderSprite(
           image: Images.gameobjects,
-          dstX: getRenderX(particle),
-          dstY: getRenderY(particle),
+          dstX: getRenderV3X(particle),
+          dstY: getRenderV3Y(particle),
           srcX: 0.0,
           srcY: 40,
           srcWidth: 4,
@@ -504,8 +504,8 @@ class RenderEngine {
       case GameObjectType.Loot:
         Engine.renderSprite(
           image: Images.gameobjects,
-          dstX: getRenderX(gameObject),
-          dstY: getRenderY(gameObject),
+          dstX: getRenderV3X(gameObject),
+          dstY: getRenderV3Y(gameObject),
           srcX: AtlasSrcGameObjects.Loot_X,
           srcY: AtlasSrcGameObjects.Loot_Y,
           srcWidth: AtlasSrcGameObjects.Loot_Width,
@@ -516,8 +516,8 @@ class RenderEngine {
       case GameObjectType.Barrel:
         Engine.renderSprite(
           image: Images.gameobjects,
-          dstX: getRenderX(gameObject),
-          dstY: getRenderY(gameObject),
+          dstX: getRenderV3X(gameObject),
+          dstY: getRenderV3Y(gameObject),
           srcX: AtlasSrcGameObjects.Barrel_X,
           srcY: AtlasSrcGameObjects.Barrel_Y,
           srcWidth: AtlasSrcGameObjects.Barrel_Width,
@@ -529,8 +529,8 @@ class RenderEngine {
       case GameObjectType.Tavern_Sign:
         Engine.renderSprite(
           image: Images.gameobjects,
-          dstX: getRenderX(gameObject),
-          dstY: getRenderY(gameObject),
+          dstX: getRenderV3X(gameObject),
+          dstY: getRenderV3Y(gameObject),
           srcX: AtlasSrcGameObjects.Tavern_Sign_X,
           srcY: AtlasSrcGameObjects.Tavern_Sign_Y,
           srcWidth: AtlasSrcGameObjects.Tavern_Sign_Width,
@@ -540,8 +540,8 @@ class RenderEngine {
         return;
       case GameObjectType.Candle:
         Engine.renderBuffer(
-          dstX: getRenderX(gameObject),
-          dstY: getRenderY(gameObject),
+          dstX: getRenderV3X(gameObject),
+          dstY: getRenderV3Y(gameObject),
           srcX: 1812,
           srcY: 0,
           srcWidth: 3,
@@ -551,8 +551,8 @@ class RenderEngine {
         return;
       case GameObjectType.Bottle:
         Engine.renderBuffer(
-          dstX: getRenderX(gameObject),
-          dstY: getRenderY(gameObject),
+          dstX: getRenderV3X(gameObject),
+          dstY: getRenderV3Y(gameObject),
           srcX: 1811,
           srcY: 11,
           srcWidth: 5,
@@ -563,8 +563,8 @@ class RenderEngine {
         return;
       case GameObjectType.Wheel:
         Engine.renderBuffer(
-          dstX: getRenderX(gameObject),
-          dstY: getRenderY(gameObject),
+          dstX: getRenderV3X(gameObject),
+          dstY: getRenderV3Y(gameObject),
           srcX: 1775,
           srcY: 0,
           srcWidth: 34,
@@ -575,8 +575,8 @@ class RenderEngine {
         return;
       case GameObjectType.Flower:
         Engine.renderBuffer(
-          dstX: getRenderX(gameObject),
-          dstY: getRenderY(gameObject),
+          dstX: getRenderV3X(gameObject),
+          dstY: getRenderV3Y(gameObject),
           srcX: 1680,
           srcY: 0,
           srcWidth: 16,
@@ -586,8 +586,8 @@ class RenderEngine {
         return;
       case GameObjectType.Stick:
         Engine.renderBuffer(
-          dstX: getRenderX(gameObject),
-          dstY: getRenderY(gameObject),
+          dstX: getRenderV3X(gameObject),
+          dstY: getRenderV3Y(gameObject),
           srcX: 1696,
           srcY: 0,
           srcWidth: 16,
@@ -598,8 +598,8 @@ class RenderEngine {
       case GameObjectType.Crystal:
         Engine.renderSprite(
             image: Images.gameobjects,
-            dstX: getRenderX(gameObject),
-            dstY: getRenderY(gameObject),
+            dstX: getRenderV3X(gameObject),
+            dstY: getRenderV3Y(gameObject),
             srcX: AtlasSrcGameObjects.Crystal_Large_X,
             srcY: AtlasSrcGameObjects.Crystal_Large_Y,
             srcWidth: AtlasSrcGameObjects.Crystal_Large_Width,
@@ -609,8 +609,8 @@ class RenderEngine {
         return;
       case GameObjectType.Cup:
         Engine.renderBuffer(
-          dstX: getRenderX(gameObject),
-          dstY: getRenderY(gameObject),
+          dstX: getRenderV3X(gameObject),
+          dstY: getRenderV3Y(gameObject),
           srcX: AtlasSrcGameObjects.Cup_X,
           srcY: AtlasSrcGameObjects.Cup_Y,
           srcWidth: AtlasSrcGameObjects.Cup_Width,
@@ -620,8 +620,8 @@ class RenderEngine {
         return;
       case GameObjectType.Lantern_Red:
         Engine.renderBuffer(
-          dstX:getRenderX(gameObject),
-          dstY:getRenderY(gameObject),
+          dstX:getRenderV3X(gameObject),
+          dstY:getRenderV3Y(gameObject),
           srcX: 1744,
           srcY: 48,
           srcWidth: 12,
@@ -632,8 +632,8 @@ class RenderEngine {
         return;
       case GameObjectType.Wooden_Shelf_Row:
         Engine.renderBuffer(
-            dstX:getRenderX(gameObject),
-            dstY:getRenderY(gameObject),
+            dstX:getRenderV3X(gameObject),
+            dstY:getRenderV3Y(gameObject),
             srcX: 1664,
             srcY: 16,
             srcWidth: 32,
@@ -642,8 +642,8 @@ class RenderEngine {
         return;
       case GameObjectType.Book_Purple:
         Engine.renderBuffer(
-          dstX:getRenderX(gameObject),
-          dstY:getRenderY(gameObject),
+          dstX:getRenderV3X(gameObject),
+          dstY:getRenderV3Y(gameObject),
           srcX: 1697,
           srcY: 16,
           srcWidth: 8,
@@ -652,8 +652,8 @@ class RenderEngine {
         return;
       case GameObjectType.Crystal_Small_Blue:
         Engine.renderBuffer(
-          dstX:getRenderX(gameObject),
-          dstY:getRenderY(gameObject),
+          dstX:getRenderV3X(gameObject),
+          dstY:getRenderV3Y(gameObject),
           srcX: 1697,
           srcY: 33,
           srcWidth: 10,
@@ -662,8 +662,8 @@ class RenderEngine {
         return;
       case GameObjectType.Flower_Green:
         Engine.renderBuffer(
-          dstX:getRenderX(gameObject),
-          dstY:getRenderY(gameObject),
+          dstX:getRenderV3X(gameObject),
+          dstY:getRenderV3Y(gameObject),
           srcX: 1696,
           srcY: 53,
           srcWidth: 9,
@@ -675,7 +675,7 @@ class RenderEngine {
         renderBouncingGameObjectShadow(gameObject);
         Engine.renderSprite(
             image: Images.gameobjects,
-            dstX: getRenderX(gameObject),
+            dstX: getRenderV3X(gameObject),
             dstY: getRenderYBouncing(gameObject),
             srcX: AtlasSrcGameObjects.Shotgun_X,
             srcY: AtlasSrcGameObjects.Shotgun_Y,
@@ -689,7 +689,7 @@ class RenderEngine {
         renderBouncingGameObjectShadow(gameObject);
         Engine.renderSprite(
             image: Images.gameobjects,
-            dstX: getRenderX(gameObject),
+            dstX: getRenderV3X(gameObject),
             dstY: getRenderYBouncing(gameObject),
             srcX: AtlasSrcGameObjects.Handgun_X,
             srcY: AtlasSrcGameObjects.Handgun_Y,
@@ -703,7 +703,7 @@ class RenderEngine {
         renderBouncingGameObjectShadow(gameObject);
         Engine.renderSprite(
             image: Images.gameobjects,
-            dstX: getRenderX(gameObject),
+            dstX: getRenderV3X(gameObject),
             dstY: getRenderYBouncing(gameObject),
             srcX: AtlasSrcGameObjects.Sword_X,
             srcY: AtlasSrcGameObjects.Sword_Y,
@@ -717,7 +717,7 @@ class RenderEngine {
         renderBouncingGameObjectShadow(gameObject);
         Engine.renderSprite(
             image: Images.gameobjects,
-            dstX: getRenderX(gameObject),
+            dstX: getRenderV3X(gameObject),
             dstY: getRenderYBouncing(gameObject),
             srcX: AtlasSrcGameObjects.Bow_X,
             srcY: AtlasSrcGameObjects.Bow_Y,
@@ -731,7 +731,7 @@ class RenderEngine {
         renderBouncingGameObjectShadow(gameObject);
         Engine.renderSprite(
             image: Images.gameobjects,
-            dstX: getRenderX(gameObject),
+            dstX: getRenderV3X(gameObject),
             dstY: getRenderYBouncing(gameObject),
             srcX: AtlasSrcGameObjects.Staff_X,
             srcY: AtlasSrcGameObjects.Staff_Y,
@@ -1061,8 +1061,12 @@ class RenderEngine {
     return diff ~/ tileSize;
   }
 
-  static double getRenderX(Vector3 v3) => (v3.x - v3.y) * 0.5;
-  static double getRenderY(Vector3 v3) => ((v3.y + v3.x) * 0.5) - v3.z;
+  static double getRenderV3X(Vector3 v3) => getRenderX(v3.x, v3.y, v3.z);
+  static double getRenderV3Y(Vector3 v3) => getRenderY(v3.x, v3.y, v3.z);
+
+  static double getRenderX(double x, double y, double z) => (x - y) * 0.5;
+  static double getRenderY(double x, double y, double z) => ((y + x) * 0.5) - z;
+
   static double getRenderYBouncing(Vector3 v3) => ((v3.y + v3.x) * 0.5) - v3.z + animationFrameWaterHeight;
 
   static void casteShadowDownV3(Vector3 vector3){

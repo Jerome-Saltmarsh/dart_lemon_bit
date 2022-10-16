@@ -58,4 +58,38 @@ class AtlasSrcGameObjects {
   static const Staff_Y = 0.0;
   static const Staff_Width = 20.0;
   static const Staff_Height = 24.0;
+
+  static const Bar_X = 171.0;
+  static const Bar_Width = 52.0;
+  static const Bar_Height = 8.0;
+
+  static const Bar_Red_X = 171.0;
+  static const Bar_Red_Y = 0;
+  static const Bar_Red_Width = 52;
+  static const Bar_Red_Height = 8;
+
+  static const Bar_Red_Transparent_X = 171.0;
+  static const Bar_Red_Transparent_Y = 8;
+  static const Bar_Red_Transparent_Width = 52;
+  static const Bar_Red_Transparent_Height = 8;
+
+  static const Bar_Green_X = 171.0;
+  static const Bar_Green_Y = 16.0;
+  static const Bar_Green_Width = 52.0;
+  static const Bar_Green_Height = 8.0;
+
+  static const Bar_Green_Transparent_X = 171.0;
+  static const Bar_Green_Transparent_Y =  24.0;
+  static const Bar_Green_Transparent_Width = 52.0;
+  static const Bar_Green_Transparent_Height = 8.0;
+
+  static const Bar_Yellow_X = 171.0;
+  static const Bar_Yellow_Y = 32.0;
+  static const Bar_Yellow_Width = 52;
+  static const Bar_Yellow_Height = 8.0;
+
+  static const Bar_Yellow_Transparent_X = 171.0;
+  static const Bar_Yellow_Transparent_Y = 40.0;
+  static const Bar_Yellow_Transparent_Width = 52.0;
+  static const Bar_Yellow_Transparent_Height = 8.0;
 }
