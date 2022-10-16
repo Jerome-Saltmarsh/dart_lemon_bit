@@ -233,18 +233,7 @@ void renderCharacterTemplate(Character character, {
       final torchPosX = torchRow * nodeSize + nodeSizeHalf;
       final torchPosY = torchColumn * nodeSize + nodeSizeHalf;
       angle = getAngleBetween(character.x, character.y, torchPosX, torchPosY);
-      distance = 7.5;
-
-      Engine.renderSprite(
-          image: Images.gameobjects,
-          srcX: 0,
-          srcY: 72,
-          srcWidth: 8,
-          srcHeight: 8,
-          dstX: RenderEngine.getRenderX(torchPosX, torchPosY, character.z),
-          dstY: RenderEngine.getRenderY(torchPosX, torchPosY, character.z),
-      );
-      // Engine.renderText('angle: $angle', RenderEngine.getRenderV3X(character), RenderEngine.getRenderV3Y(character) - 45.0);
+      distance = min(20, distanceBetween(character.x, character.y, torchPosX, torchPosY) * 0.15);
   }
 
   final x = character.x + getAdjacent(angle, distance);
