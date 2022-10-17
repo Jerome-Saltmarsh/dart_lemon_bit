@@ -50,29 +50,14 @@ Widget buildAccount(Account? account) =>
 
 Widget buildConnection(Connection connection) {
   switch (connection) {
-    case Connection.Connecting:
-      return buildLayoutLoading();
     case Connection.Connected:
       return GameUI.build();
-    case Connection.None:
-      return Website.build();
+    case Connection.Connecting:
+      return Website.buildPageConnectionStatus(connection.name);
     default:
-      return buildConnection(connection);
+      return Website.build();
   }
 }
-
-
-Widget buildLayoutLoading() =>
-  buildLayout(
-    padding: 6,
-    child: Center(child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        text("CONNECTING", color: colours.white80),
-      ],
-    )),
-  );
 
 Widget buildDialogChangeRegion() {
   return dialog(

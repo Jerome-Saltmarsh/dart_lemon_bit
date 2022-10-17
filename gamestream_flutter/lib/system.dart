@@ -37,7 +37,7 @@ class System {
       ImagesTemplateWeapons.shotgun = await Engine.loadImageAsset('images/template/weapons/template-weapons-shotgun.png');
       Engine.cursorType.value = CursorType.Basic;
       Engine.onDrawCanvas = Website.renderCanvas;
-      webSocket.connection.onChanged(onConnectionChanged);
+      webSocket.connection.onChanged(onChangedConnection);
     }
 
   static void onError(Object error, StackTrace stack){
@@ -46,8 +46,7 @@ class System {
     Website.error.value = error.toString();
   }
 
-  static void onConnectionChanged(Connection connection) {
-      print('onConnectionChanged($connection)');
+  static void onChangedConnection(Connection connection) {
     switch (connection) {
       case Connection.Connected:
         Engine.onDrawCanvas = modules.game.render.renderGame;
@@ -55,7 +54,9 @@ class System {
         Engine.onUpdate = modules.game.update.update;
         Engine.drawCanvasAfterUpdate = true;
         Engine.zoomOnScroll = true;
-        Engine.fullScreenEnter();
+        if (!Engine.isLocalHost) {
+          Engine.fullScreenEnter();
+        }
         isometricWebControlsRegister();
         break;
 
@@ -71,6 +72,15 @@ class System {
         Game.gameType.value = null;
         sceneEditable.value = false;
         isometricWebControlsDeregister();
+        break;
+      case Connection.Failed_To_Connect:
+        Website.error.value = "Failed to connect";
+        break;
+      case Connection.Invalid_Connection:
+        Website.error.value = "Invalid Connection";
+        break;
+      case Connection.Error:
+        Website.error.value = "Connection Error";
         break;
       default:
         break;

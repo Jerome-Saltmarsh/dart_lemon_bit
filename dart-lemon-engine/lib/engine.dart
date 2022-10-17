@@ -105,25 +105,28 @@ class Engine {
   static bool get initialized => watchInitialized.value;
 
   // WATCHES
-  static final watchBackgroundColor = Watch(DefaultBackgroundColor);
+  static final watchBackgroundColor = Watch(Default_Background_Color);
   static final watchBuildUI = Watch<WidgetBuilder?>(null);
-  static final watchTitle = Watch(DefaultTitle);
+  static final watchTitle = Watch(Default_Title);
   static final watchInitialized = Watch(false);
-  static final watchDurationPerFrame = Watch(Duration(milliseconds: DefaultMillisecondsPerFrame));
+  static final watchDurationPerFrame = Watch(Duration(milliseconds: Default_Milliseconds_Per_Frame));
   static final watchMouseLeftDown = Watch(false, onChanged: _internalOnChangedMouseLeftDown);
   static final mouseRightDown = Watch(false);
 
   // CONSTANTS
-  static const DefaultMillisecondsPerFrame = 30;
-  static const DefaultBackgroundColor = Colors.black;
-  static const DefaultTitle = "DEMO";
-  static const MillisecondsPerSecond = 1000;
-  static const PI2 = pi + pi;
-  static const PIHalf = pi * 0.5;
-  static const PIQuarter = pi * 0.25;
-  static const PIEight = pi * 0.125;
+  static const Default_Milliseconds_Per_Frame = 30;
+  static const Default_Background_Color = Colors.black;
+  static const Default_Title = "DEMO";
+  static const Milliseconds_Per_Second = 1000;
+  static const PI_2 = pi + pi;
+  static const PI_Half = pi * 0.5;
+  static const PI_Quarter = pi * 0.25;
+  static const PI_Eight = pi * 0.125;
+  static const Ratio_Radians_To_Degrees = 57.2958;
+  static const Ratio_Degrees_To_Radians = 0.0174533;
 
   // VARIABLES
+  static final random = Random();
   static var textPainter = TextPainter(
       textAlign: TextAlign.center,
       textDirection: TextDirection.ltr
@@ -243,7 +246,7 @@ class Engine {
   }
 
   static void run({
-    String title = DefaultTitle,
+    String title = Default_Title,
     Function(SharedPreferences sharedPreferences)? init,
     Function? update,
     WidgetBuilder? buildUI,
@@ -266,7 +269,7 @@ class Engine {
     Function(SharedPreferences sharedPreferences)? onInit,
     Function(Object error, StackTrace stack)? onError,
     bool setPathUrlStrategy = true,
-    Color backgroundColor = DefaultBackgroundColor,
+    Color backgroundColor = Default_Background_Color,
   }){
     Engine.watchTitle.value = title;
     Engine.onInit = init;
@@ -471,7 +474,7 @@ class Engine {
     Duration(milliseconds: convertFramesPerSecondsToMilliseconds(framesPerSecond));
 
   static int convertFramesPerSecondsToMilliseconds(int framesPerSecond) =>
-    MillisecondsPerSecond ~/ framesPerSecond;
+    Milliseconds_Per_Second ~/ framesPerSecond;
 
   static Future _internalInit() async {
     runApp(_internalBuildApp());
@@ -555,6 +558,7 @@ class Engine {
     double anchorY = 0.5,
     double scale = 1.0,
     int color = 1,
+    // BlendMode blendMode = BlendMode.dstATop,
   }){
     _colors1[0] = color;
     _src4[0] = srcX;
@@ -565,7 +569,7 @@ class Engine {
     _dst4[1] = 0; // scale
     _dst4[2] = dstX - (srcWidth * anchorX * scale);
     _dst4[3] = dstY - (srcHeight * anchorY * scale); // scale
-    canvas.drawRawAtlas(image, _dst4, _src4, _colors1, BlendMode.dstATop, null, paint);
+    canvas.drawRawAtlas(image, _dst4, _src4, _colors1, bufferBlendMode, null, paint);
   }
 
   static void renderExternalCanvas({
@@ -779,6 +783,35 @@ class Engine {
         )
     );
   }
+
+  static double calculateDistance(double x1, double y1, double x2, double y2) =>
+      calculateHypotenuse(x1 - x2, y1 - y2);
+
+  static double calculateHypotenuse(num adjacent, num opposite) =>
+     sqrt((adjacent * adjacent) + (opposite * opposite));
+
+  static double calculateAngle(double adjacent, double opposite) {
+    final angle = atan2(opposite, adjacent);
+    return angle < 0 ? PI_2 + angle : angle;
+  }
+
+  static double calculateAdjacent(double radians, double magnitude) =>
+    cos(radians) * magnitude;
+
+  static T clamp<T extends num>(T value, T min, T max) {
+    if (value < min) return min;
+    if (value > max) return max;
+    return value;
+  }
+
+  static double randomGiveOrTake(num value) =>
+    randomBetween(-value, value);
+
+  static double randomBetween(num a, num b) =>
+    (random.nextDouble() * (b - a)) + a;
+
+  static bool randomBool() =>
+    random.nextDouble() > 0.5;
 }
 
 SystemMouseCursor _mapCursorTypeToSystemMouseCursor(CursorType value){

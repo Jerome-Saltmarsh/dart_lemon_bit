@@ -37,8 +37,6 @@ import 'isometric/grid.dart';
 import 'isometric/lighting/apply_emissions_gameobjects.dart';
 import 'isometric/render/render_particle.dart';
 
-
-
 class RenderEngine {
   static var totalRemaining = 0;
   static var totalIndex = 0;
@@ -446,7 +444,7 @@ class RenderEngine {
           srcWidth: size,
           srcHeight: size,
           scale: particle.scale,
-          rotation: particle.rotation + (Engine.PIHalf + Engine.PIQuarter),
+          rotation: particle.rotation + (Engine.PI_Half + Engine.PI_Quarter),
         );
       case ParticleType.Strike_Punch:
         if (particle.frame >= 3 ) return;
@@ -460,7 +458,7 @@ class RenderEngine {
           srcWidth: size,
           srcHeight: size,
           scale: particle.scale,
-          rotation: particle.rotation + (Engine.PIHalf + Engine.PIQuarter),
+          rotation: particle.rotation + (Engine.PI_Half + Engine.PI_Quarter),
         );
       case ParticleType.Slash_Crowbar:
         if (particle.frame >= 3 ) {
@@ -476,7 +474,7 @@ class RenderEngine {
           srcWidth: size,
           srcHeight: size,
           scale: particle.scale,
-          rotation: particle.rotation + (Engine.PIHalf + Engine.PIQuarter),
+          rotation: particle.rotation + (Engine.PI_Half + Engine.PI_Quarter),
         );
         break;
       default:
@@ -1085,6 +1083,53 @@ class RenderEngine {
         RenderEngine.renderShadow(vector3.x, vector3.y, vector3.z - topRemainder, scale: topRemainder > 0 ? (topRemainder / tileHeight) * 2 : 2.0);
       }
     }
+  }
+
+  static void renderCharacterShadow(Character character, int frameLegs, int upperBodyDirection){
+
+    // find the nearest torch and move the shadow behind the character
+    final characterNodeIndex = getNodeIndexV3(character);
+    final initialSearchIndex = characterNodeIndex - Game.nodesTotalColumns - 1; // shifts the selectIndex - 1 row and - 1 column
+    var torchIndex = -1;
+
+    for (var row = 0; row < 3; row++){
+      for (var column = 0; column < 3; column++){
+        final searchIndex = initialSearchIndex + (row * Game.nodesTotalColumns) + column;
+        if (Game.nodesType[searchIndex] != NodeType.Torch) continue;
+        torchIndex = searchIndex;
+        break;
+      }
+    }
+
+    // final angle = ang
+    var angle = 0.0;
+    var distance = 0.0;
+
+    if (torchIndex != -1) {
+      final torchRow = convertIndexToRow(torchIndex);
+      final torchColumn = convertIndexToColumn(torchIndex);
+      final torchPosX = torchRow * nodeSize + nodeSizeHalf;
+      final torchPosY = torchColumn * nodeSize + nodeSizeHalf;
+      angle = getAngleBetween(character.x, character.y, torchPosX, torchPosY);
+      distance = min(20, distanceBetween(character.x, character.y, torchPosX, torchPosY) * 0.15);
+    }
+
+    final shadowX = character.x + getAdjacent(angle, distance);
+    final shadowY = character.y + getOpposite(angle, distance);
+    final shadowZ = character.z;
+
+    Engine.renderSprite(
+      image: Images.templateShadow,
+      srcX: frameLegs * 64,
+      srcY: upperBodyDirection * 64,
+      srcWidth: 64,
+      srcHeight: 64,
+      dstX: RenderEngine.getRenderX(shadowX, shadowY, shadowZ),
+      dstY: RenderEngine.getRenderY(shadowX, shadowY, shadowZ),
+      scale: 0.75,
+      color: getRenderColor(character),
+      anchorY: 0.75,
+    );
   }
 }
 

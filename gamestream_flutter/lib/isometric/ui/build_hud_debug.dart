@@ -36,6 +36,10 @@ Widget buildHudDebug() =>
               Refresh(() => text('particles: active: $Game.totalActiveParticles, total: ${Game.particles.length}')),
               Refresh(() => text('nodes-rendered: ${RenderEngine.onscreenNodes}')),
               Refresh(() => text('engine-frame: ${Engine.paintFrame}')),
+              onPressed(
+                action: () => Engine.bufferBlendMode = BlendMode.values[(BlendMode.values.indexOf(Engine.bufferBlendMode) + 1) % BlendMode.values.length],
+                  child: Refresh(() => text('render-blend-mode: ${Engine.bufferBlendMode}'))
+              ),
               watch(renderFrame, (t) => text("render-frame: $t")),
               watch(serverResponseReader.updateFrame, (t) => text("update-frame: $t")),
               watch(Game.player.interpolating, (bool interpolating) => text("interpolating: $interpolating", onPressed: () => Game.player.interpolating.value = !Game.player.interpolating.value)),

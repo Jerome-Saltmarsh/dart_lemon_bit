@@ -177,4 +177,11 @@ class Website {
     website.actions.showDialogGames();
   }
 
+  static Widget buildPageConnectionStatus(String message) =>
+      Container(
+        width: Engine.screen.width,
+        height: Engine.screen.height,
+        alignment: Alignment.center,
+        child: text(message, color: colours.white80, align: TextAlign.center),
+      );
 }

@@ -210,14 +210,12 @@ void renderCharacterTemplate(Character character, {
   // find the nearest torch and move the shadow behind the character
   final characterNodeIndex = getNodeIndexV3(character);
   final initialSearchIndex = characterNodeIndex - Game.nodesTotalColumns - 1; // shifts the selectIndex - 1 row and - 1 column
-  var torchFound = false;
   var torchIndex = -1;
 
   for (var row = 0; row < 3; row++){
     for (var column = 0; column < 3; column++){
        final searchIndex = initialSearchIndex + (row * Game.nodesTotalColumns) + column;
        if (Game.nodesType[searchIndex] != NodeType.Torch) continue;
-       torchFound = true;
        torchIndex = searchIndex;
        break;
     }
@@ -227,7 +225,7 @@ void renderCharacterTemplate(Character character, {
   var angle = 0.0;
   var distance = 0.0;
 
-  if (torchFound){
+  if (torchIndex != -1){
       final torchRow = convertIndexToRow(torchIndex);
       final torchColumn = convertIndexToColumn(torchIndex);
       final torchPosX = torchRow * nodeSize + nodeSizeHalf;
@@ -236,9 +234,9 @@ void renderCharacterTemplate(Character character, {
       distance = min(20, distanceBetween(character.x, character.y, torchPosX, torchPosY) * 0.15);
   }
 
-  final x = character.x + getAdjacent(angle, distance);
-  final y = character.y + getOpposite(angle, distance);
-  final z = character.z;
+  final shadowX = character.x + getAdjacent(angle, distance);
+  final shadowY = character.y + getOpposite(angle, distance);
+  final shadowZ = character.z;
 
   Engine.renderSprite(
     image: Images.templateShadow,
@@ -246,8 +244,8 @@ void renderCharacterTemplate(Character character, {
     srcY: upperBodyDirection * 64,
     srcWidth: 64,
     srcHeight: 64,
-    dstX: RenderEngine.getRenderX(x, y, z),
-    dstY: RenderEngine.getRenderY(x, y, z),
+    dstX: RenderEngine.getRenderX(shadowX, shadowY, shadowZ),
+    dstY: RenderEngine.getRenderY(shadowX, shadowY, shadowZ),
     scale: 0.75,
     color: getRenderColor(character),
     anchorY: 0.75,

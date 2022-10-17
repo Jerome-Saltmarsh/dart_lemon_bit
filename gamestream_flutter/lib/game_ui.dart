@@ -218,7 +218,7 @@ class GameUI {
         child: container(
             child: "QUEST UPDATED",
             alignment: Alignment.center,
-            color: green,
+            color: Colors.green,
             width: 200,
             margin: EdgeInsets.only(top: 16),
             action: actionGameDialogShowQuests),
@@ -250,5 +250,4 @@ class GameUI {
           buildWatchBool(Game.player.questAdded, buildContainerQuestUpdated),
         ],
       );
-
 }

@@ -1,7 +1,6 @@
 import 'package:gamestream_flutter/atlases.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_gameobjects.dart';
-import 'package:gamestream_flutter/isometric/render/get_character_render_color.dart';
 import 'package:gamestream_flutter/render_engine.dart';
 import 'package:lemon_engine/engine.dart';
 
@@ -24,13 +23,6 @@ void renderBarGreen(double x, double y, double z, double percentage, {
 }
 
 void renderCharacterHealthBar(Character character){
-  const srcX = 2400.0;
-  const srcWidth = 40.0;
-  const srcHeight = 8.0;
-  const marginY = 45;
-  const srcWidthHalf = srcWidth * 0.5;
-  final color = getNodeBelowShade(character);
-
   renderBarGreen(character.x, character.y, character.z, character.health);
 
   // Engine.renderSprite(
