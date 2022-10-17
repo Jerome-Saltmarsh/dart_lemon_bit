@@ -178,10 +178,15 @@ class Website {
   }
 
   static Widget buildPageConnectionStatus(String message) =>
+      buildFullScreen(
+        child: text(message, color: colours.white80, align: TextAlign.center),
+      );
+
+  static Widget buildFullScreen({required Widget child, Alignment alignment = Alignment.center}) =>
       Container(
         width: Engine.screen.width,
         height: Engine.screen.height,
-        alignment: Alignment.center,
-        child: text(message, color: colours.white80, align: TextAlign.center),
+        alignment: alignment,
+        child: child,
       );
 }

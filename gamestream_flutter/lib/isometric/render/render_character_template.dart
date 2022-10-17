@@ -5,6 +5,7 @@ import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_size.dart';
 import 'package:gamestream_flutter/atlases.dart';
 import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/game_config.dart';
 import 'package:gamestream_flutter/isometric/convert_index.dart';
 import 'package:gamestream_flutter/isometric/grid_state_util.dart';
 import 'package:gamestream_flutter/isometric/nodes.dart';
@@ -225,13 +226,21 @@ void renderCharacterTemplate(Character character, {
   var angle = 0.0;
   var distance = 0.0;
 
-  if (torchIndex != -1){
+  if (torchIndex != -1) {
       final torchRow = convertIndexToRow(torchIndex);
       final torchColumn = convertIndexToColumn(torchIndex);
       final torchPosX = torchRow * nodeSize + nodeSizeHalf;
       final torchPosY = torchColumn * nodeSize + nodeSizeHalf;
       angle = getAngleBetween(character.x, character.y, torchPosX, torchPosY);
-      distance = min(20, distanceBetween(character.x, character.y, torchPosX, torchPosY) * 0.15);
+      distance = min(
+          GameConfig.Character_Shadow_Distance_Max,
+          Engine.calculateDistance(
+              character.x,
+              character.y,
+              torchPosX,
+              torchPosY
+          ) * GameConfig.Character_Shadow_Distance_Ratio,
+      );
   }
 
   final shadowX = character.x + getAdjacent(angle, distance);
