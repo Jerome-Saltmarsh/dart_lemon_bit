@@ -20,7 +20,7 @@ class GameDarkAgeVillage extends DarkAgeArea {
         wanderRadius: 0,
         head: HeadType.Blonde,
         armour: ArmourType.shirtBlue,
-        pants: PantsType.brown,
+        pants: LegType.brown,
         onInteractedWith: (player) {
           player.health = player.maxHealth;
           player.setStoreItems([
@@ -37,7 +37,7 @@ class GameDarkAgeVillage extends DarkAgeArea {
         wanderRadius: 50,
         head: HeadType.Steel_Helm,
         armour: ArmourType.shirtCyan,
-        pants: PantsType.red,
+        pants: LegType.red,
         weapon: buildWeaponUnarmed(),
         onInteractedWith: onInteractWithGarry,
     );
@@ -49,7 +49,7 @@ class GameDarkAgeVillage extends DarkAgeArea {
         column: 17,
         head: HeadType.Wizards_Hat,
         armour: ArmourType.shirtBlue,
-        pants: PantsType.white,
+        pants: LegType.white,
         weapon: buildWeaponUnarmed(),
         onInteractedWith: onInteractWithJenkins,
     );
@@ -61,7 +61,7 @@ class GameDarkAgeVillage extends DarkAgeArea {
       column: 16,
       head: HeadType.Blonde,
       armour: ArmourType.tunicPadded,
-      pants: PantsType.brown,
+      pants: LegType.brown,
       weapon: buildWeaponUnarmed(),
       onInteractedWith: onInteractWithJulia,
     );
@@ -81,27 +81,27 @@ class GameDarkAgeVillage extends DarkAgeArea {
                 responses: {
                   "brown": (){
                     setCharacterStateChanging(player);
-                    player.equippedPants = PantsType.brown;
+                    player.equippedLegs = LegType.brown;
                     player.endInteraction();
                   },
                   "blue": (){
                     setCharacterStateChanging(player);
-                    player.equippedPants = PantsType.blue;
+                    player.equippedLegs = LegType.blue;
                     player.endInteraction();
                   },
                   "red": (){
                     setCharacterStateChanging(player);
-                    player.equippedPants = PantsType.red;
+                    player.equippedLegs = LegType.red;
                     player.endInteraction();
                   },
                   "green": (){
                     setCharacterStateChanging(player);
-                    player.equippedPants = PantsType.green;
+                    player.equippedLegs = LegType.green;
                     player.endInteraction();
                   },
                   "white": (){
                     setCharacterStateChanging(player);
-                    player.equippedPants = PantsType.white;
+                    player.equippedLegs = LegType.white;
                     player.endInteraction();
                   },
 

@@ -1978,7 +1978,7 @@ abstract class Game {
     Function(Player player)? onInteractedWith,
     int head = HeadType.None,
     int armour = ArmourType.shirtCyan,
-    int pants = PantsType.brown,
+    int pants = LegType.brown,
     int team = 1,
     int health = 10,
     double wanderRadius = 0,
@@ -1997,7 +1997,7 @@ abstract class Game {
     );
     npc.equippedHead = head;
     npc.equippedArmour = armour;
-    npc.equippedPants = pants;
+    npc.equippedLegs = pants;
     npc.indexRow = row;
     npc.indexColumn = column;
     npc.indexZ = z;

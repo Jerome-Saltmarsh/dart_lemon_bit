@@ -52,7 +52,7 @@ class AreaForest4 extends DarkAgeArea {
       weapon:  buildWeaponBow(),
       head: randomItem(HeadType.values),
       armour: randomItem(ArmourType.values),
-      pants: randomItem(PantsType.values),
+      pants: randomItem(LegType.values),
       wanderRadius: 25,
     );
 
@@ -64,7 +64,7 @@ class AreaForest4 extends DarkAgeArea {
       weapon: buildWeaponBow(),
       head: randomItem(HeadType.values),
       armour: randomItem(ArmourType.values),
-      pants: randomItem(PantsType.values),
+      pants: randomItem(LegType.values),
       wanderRadius: 20,
     );
 
@@ -76,7 +76,7 @@ class AreaForest4 extends DarkAgeArea {
       weapon: buildWeaponBow(),
       head: randomItem(HeadType.values),
       armour: randomItem(ArmourType.values),
-      pants: randomItem(PantsType.values),
+      pants: randomItem(LegType.values),
       wanderRadius: 10,
     );
   }

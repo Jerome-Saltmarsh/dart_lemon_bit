@@ -113,7 +113,7 @@ Widget buildColumnSelectPlayerHead(){
 
 Widget buildColumnSelectPlayerPants(){
   return Column(
-    children: PantsType.values.map(_buildButtonPants).toList(),
+    children: LegType.values.map(_buildButtonPants).toList(),
   );
 }
 
@@ -130,7 +130,7 @@ Widget buildButtonSelectPlayerHead(int headType) {
 Widget _buildButtonPants(int pantsType) {
   return watch(Game.player.pantsType, (int playerPantsType){
     return container(
-      child: text(PantsType.getName(pantsType)),
+      child: text(LegType.getName(pantsType)),
       action: () => sendClientRequestSetPantsType(pantsType),
       color: pantsType == playerPantsType ? green : grey,
     );

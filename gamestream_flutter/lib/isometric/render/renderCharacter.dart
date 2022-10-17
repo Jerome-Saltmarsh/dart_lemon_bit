@@ -15,7 +15,7 @@ void renderCharacter(Character character){
   if (!isVisibleV3(character)) return;
 
   if (character.spawning) {
-    if (character.type == CharacterType.Rat){
+    if (character.characterType == CharacterType.Rat){
       return Engine.renderBuffer(
         srcX: 1920,
         srcY: (character.frame % 8) * 43.0,
@@ -26,7 +26,7 @@ void renderCharacter(Character character){
         scale: 0.75,
       );
     }
-    if (character.type == CharacterType.Slime) {
+    if (character.characterType == CharacterType.Slime) {
       return Engine.renderBuffer(
         srcX: 3040,
         srcY: (character.frame % 6) * 48.0,
@@ -49,7 +49,7 @@ void renderCharacter(Character character){
     );
   }
 
-  switch (character.type) {
+  switch (character.characterType) {
     case CharacterType.Template:
       renderCharacterTemplate(character);
       // renderCharacterZombie(character);
@@ -61,6 +61,6 @@ void renderCharacter(Character character){
     case CharacterType.Zombie:
       return renderCharacterZombie(character);
     default:
-      throw Exception("Cannot render character type: ${character.type}");
+      throw Exception("Cannot render character type: ${character.characterType}");
   }
 }

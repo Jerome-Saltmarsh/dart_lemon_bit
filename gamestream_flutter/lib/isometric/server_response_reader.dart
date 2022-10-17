@@ -426,28 +426,28 @@ class ServerResponseReader with ByteReader {
 
   void readCharacterRat() {
     final character = Game.getCharacterInstance();
-    character.type = CharacterType.Rat;
+    character.characterType = CharacterType.Rat;
     readCharacter(character);
     Game.totalCharacters++;
   }
 
   void readCharacterZombie() {
     final character = Game.getCharacterInstance();
-    character.type = CharacterType.Zombie;
+    character.characterType = CharacterType.Zombie;
     readCharacter(character);
     Game.totalCharacters++;
   }
 
   void readCharacterSlime() {
     final character = Game.getCharacterInstance();
-    character.type = CharacterType.Slime;
+    character.characterType = CharacterType.Slime;
     readCharacter(character);
     Game.totalCharacters++;
   }
 
   void readCharacterTemplate() {
     final character = Game.getCharacterInstance();
-    character.type = CharacterType.Template;
+    character.characterType = CharacterType.Template;
     readCharacter(character);
     readCharacterEquipment(character);
     Game.totalCharacters++;
@@ -456,7 +456,7 @@ class ServerResponseReader with ByteReader {
   void readCharacterPlayer(){
     final character = Game.getCharacterInstance();
     final teamDirectionState = readByte();
-    character.type = CharacterType.Template;
+    character.characterType = CharacterType.Template;
     readTeamDirectionState(character, teamDirectionState);
     character.x = readDouble();
     character.y = readDouble();
@@ -775,11 +775,11 @@ class ServerResponseReader with ByteReader {
   }
 
   void readCharacterEquipment(Character character){
-    character.weapon = readByte();
+    character.weaponType = readByte();
     character.weaponState = readByte();
-    character.body = readByte();
-    character.head = readByte();
-    character.legs = readByte();
+    character.bodyType = readByte();
+    character.headType = readByte();
+    character.legType = readByte();
   }
 
   void _parseCharacterFrameHealth(Character character, int byte){

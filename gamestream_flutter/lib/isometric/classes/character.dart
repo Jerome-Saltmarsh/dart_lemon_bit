@@ -7,15 +7,15 @@ import 'package:lemon_math/library.dart';
 import 'vector3.dart';
 
 class Character extends Vector3 {
-  var type = CharacterType.Template;
+  var characterType = CharacterType.Template;
+  var weaponType = AttackType.Unarmed;
+  var weaponState = AttackType.Unarmed;
+  var bodyType = ArmourType.shirtCyan;
+  var headType = HeadType.None;
+  var legType = LegType.white;
   var state = 0;
   var direction = 0;
   var frame = 0;
-  var weapon = AttackType.Unarmed;
-  var weaponState = AttackType.Unarmed;
-  var body = ArmourType.shirtCyan;
-  var head = HeadType.None;
-  var legs = PantsType.white;
   var name = "";
   var text = "";
   var allie = false;
@@ -40,5 +40,5 @@ class Character extends Vector3 {
   double get angle => direction * piQuarter;
   int get renderDirection => direction == 0 ? 7 : (direction - 1);
 
-  bool get unarmed => weapon == AttackType.Unarmed;
+  bool get unarmed => weaponType == AttackType.Unarmed;
 }

@@ -65,7 +65,7 @@ void renderCharacterWeaponHandgun(Character character) {
 }
 
 void renderCharacterWeapon(Character character) {
-  switch (character.weapon) {
+  switch (character.weaponType) {
     case AttackType.Handgun:
       return renderCharacterWeaponHandgun(character);
     case AttackType.Shotgun:
@@ -115,7 +115,7 @@ bool weaponIs96(int weapon) =>
 
 void renderTemplateWeapon(Character character, int direction){
   if (character.unarmed) return;
-  final weapon = character.weapon;
+  final weapon = character.weaponType;
   var size = weaponIs64(weapon) ? 64.0 : 96.0;
   var frame = 0;
   var bowOrShotgun = weapon == AttackType.Bow ||weapon == AttackType.Shotgun;
@@ -188,7 +188,7 @@ void renderCharacterTemplate(Character character, {
   final upperBodyDirection = runningBackwards ? renderDirectionOpposite : character.renderDirection;
   final finalDirection = character.usingWeapon ? character.aimDirection : upperBodyDirection;
 
-  var variation = character.weapon == AttackType.Bow || character.weapon == AttackType.Shotgun;
+  var variation = character.weaponType == AttackType.Bow || character.weaponType == AttackType.Shotgun;
 
   switch (character.state) {
     case CharacterState.Idle:
@@ -204,7 +204,7 @@ void renderCharacterTemplate(Character character, {
       break;
   }
 
-  if (!weaponInFront){
+  if (!weaponInFront) {
     renderTemplateWeapon(character, finalDirection);
   }
 
@@ -222,7 +222,6 @@ void renderCharacterTemplate(Character character, {
     }
   }
 
-  // final angle = ang
   var angle = 0.0;
   var distance = 0.0;
 
@@ -260,7 +259,7 @@ void renderCharacterTemplate(Character character, {
     anchorY: 0.75,
   );
   Engine.renderSprite(
-    image: ImagesTemplateLegs.white,
+    image: ImagesTemplateLegs.fromLegType(character.legType),
     srcX: frameLegs * 64,
     srcY: upperBodyDirection * 64,
     srcWidth: 64,
@@ -320,7 +319,7 @@ void renderCharacterTemplate(Character character, {
 
     if (!inLongGrass){
       renderCharacterTemplatePartCustom(
-        layer: mapToLayerLegs(character.legs),
+        layer: mapToLayerLegs(character.legType),
         variation: false,
         renderX: character.renderX,
         renderY: character.renderY,
@@ -328,13 +327,13 @@ void renderCharacterTemplate(Character character, {
         frame: character.frame,
         direction: renderDirectionOpposite,
         color: character.color,
-        weapon: character.weapon,
+        weapon: character.weaponType,
       );
     }
 
 
     renderCharacterTemplatePartCustom(
-      layer: mapToLayerBody(character.body),
+      layer: mapToLayerBody(character.bodyType),
       variation: getVariation(character),
       renderX: character.renderX,
       renderY: character.renderY,
@@ -342,11 +341,11 @@ void renderCharacterTemplate(Character character, {
       frame: character.usingWeapon ? character.weaponFrame : character.frame,
       direction: character.usingWeapon ? character.aimDirection : renderDirectionOpposite,
       color: character.color,
-      weapon: character.weapon,
+      weapon: character.weaponType,
     );
 
     renderCharacterTemplatePartCustom(
-      layer: mapToLayerHead(character.head),
+      layer: mapToLayerHead(character.headType),
       variation: getVariation(character),
       renderX: character.renderX,
       renderY: character.renderY,
@@ -354,7 +353,7 @@ void renderCharacterTemplate(Character character, {
       frame: character.usingWeapon ? character.weaponFrame : character.frame,
       direction: character.aimDirection,
       color: character.color,
-      weapon: character.weapon,
+      weapon: character.weaponType,
     );
 
     if (!weaponInFront) {
@@ -369,7 +368,7 @@ void renderCharacterTemplate(Character character, {
 
   if (!inLongGrass){
     renderCharacterTemplatePartCustom(
-      layer: mapToLayerLegs(character.legs),
+      layer: mapToLayerLegs(character.legType),
       variation: false,
       renderX: character.renderX,
       renderY: character.renderY,
@@ -377,12 +376,12 @@ void renderCharacterTemplate(Character character, {
       frame: character.frame,
       direction: character.renderDirection,
       color: character.color,
-      weapon: character.weapon,
+      weapon: character.weaponType,
     );
   }
 
   renderCharacterTemplatePartCustom(
-    layer: mapToLayerBody(character.body),
+    layer: mapToLayerBody(character.bodyType),
     variation: getVariation(character),
     renderX: character.renderX,
     renderY: character.renderY,
@@ -390,11 +389,11 @@ void renderCharacterTemplate(Character character, {
     frame: character.usingWeapon ? character.weaponFrame : character.frame,
     direction: character.usingWeapon ? character.aimDirection : character.renderDirection,
     color: character.color,
-    weapon: character.weapon,
+    weapon: character.weaponType,
   );
 
   renderCharacterTemplatePartCustom(
-    layer: mapToLayerHead(character.head),
+    layer: mapToLayerHead(character.headType),
     variation: getVariation(character),
     renderX: character.renderX,
     renderY: character.renderY,
@@ -402,7 +401,7 @@ void renderCharacterTemplate(Character character, {
     frame: character.usingWeapon ? character.weaponFrame : character.frame,
     direction: character.aimDirection,
     color: character.color,
-    weapon: character.weapon,
+    weapon: character.weaponType,
   );
 
   if (weaponInFront){
@@ -412,8 +411,8 @@ void renderCharacterTemplate(Character character, {
 
 
 void renderCharacterTemplateWeapon2(Character character, int direction){
-  if (character.weapon == AttackType.Unarmed) return;
-  if (weaponIs96(character.weapon)) {
+  if (character.weaponType == AttackType.Unarmed) return;
+  if (weaponIs96(character.weaponType)) {
     renderCharacterTemplatePartCustom96(
       variation: getVariation(character),
       renderX: character.renderX,
@@ -425,7 +424,7 @@ void renderCharacterTemplateWeapon2(Character character, int direction){
           ? character.aimDirection
           : direction,
       color: character.color,
-      weapon: character.weapon,
+      weapon: character.weaponType,
     );
     return;
   }
@@ -438,14 +437,14 @@ void renderCharacterTemplateWeapon2(Character character, int direction){
     direction: character.usingWeapon
         ? character.aimDirection
         : direction,
-    layer: mapToLayerWeapon(character.weapon),
+    layer: mapToLayerWeapon(character.weaponType),
     color: character.color,
-    weapon: character.weapon,
+    weapon: character.weaponType,
   );
 }
 
 void renderCharacterTemplateWeapon(Character character) {
-  final equipped = character.weapon;
+  final equipped = character.weaponType;
   if (equipped == AttackType.Unarmed) return;
 
   final renderRow = const [
@@ -455,7 +454,7 @@ void renderCharacterTemplateWeapon(Character character) {
 
   if (renderRow == -1) {
     _renderCharacterPart(character,
-        mapToLayerWeapon(character.weapon), getNodeBelowShade(character));
+        mapToLayerWeapon(character.weaponType), getNodeBelowShade(character));
     return;
   }
   Engine.renderBuffer(
@@ -558,13 +557,13 @@ void renderCharacterTemplatePartCustom96({
     );
 
 bool getVariation(Character character) =>
-      character.weapon == AttackType.Shotgun ||
-      character.weapon == AttackType.Bow;
+      character.weaponType == AttackType.Shotgun ||
+      character.weaponType == AttackType.Bow;
 
 
 double _getTemplateSrcX(Character character, {required double size}) {
   const framesPerDirection = 19;
-  final weapon = character.weapon;
+  final weapon = character.weaponType;
   final variation = weapon == AttackType.Shotgun ||
       weapon == AttackType.Bow;
 
@@ -600,7 +599,7 @@ double _getTemplateSrcX(Character character, {required double size}) {
           framesPerDirection: framesPerDirection);
 
     case CharacterState.Performing:
-      final weapon = character.weapon;
+      final weapon = character.weaponType;
       return animate(
           size: size,
           animation: weapon == AttackType.Bow
@@ -797,15 +796,15 @@ Uint8List getAnimation({
 
 int mapToLayerLegs(int legType) {
   switch (legType) {
-    case PantsType.brown:
+    case LegType.brown:
       return SpriteLayer.Pants_Brown;
-    case PantsType.blue:
+    case LegType.blue:
       return SpriteLayer.Pants_Blue;
-    case PantsType.white:
+    case LegType.white:
       return SpriteLayer.Pants_White;
-    case PantsType.green:
+    case LegType.green:
       return SpriteLayer.Pants_Green;
-    case PantsType.red:
+    case LegType.red:
       return SpriteLayer.Pants_Red;
     default:
       return SpriteLayer.Pants_Blue;

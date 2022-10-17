@@ -1,7 +1,7 @@
 
 import 'dart:ui';
 
-import 'package:bleed_common/head_type.dart';
+import 'package:bleed_common/library.dart';
 
 class Images {
    static late Image pixel;
@@ -47,6 +47,17 @@ class ImagesTemplateBody {
 class ImagesTemplateLegs {
    static late Image blue;
    static late Image white;
+
+   static Image fromLegType(int legType){
+       switch(legType){
+          case LegType.white:
+             return white;
+          case LegType.blue:
+             return blue;
+          default:
+             throw Exception("atlases.ImagesTemplateLegs.fromLegType(type: $legType");
+       }
+   }
 }
 
 class ImagesTemplateWeapons {

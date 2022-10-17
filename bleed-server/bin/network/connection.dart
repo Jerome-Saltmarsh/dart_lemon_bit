@@ -140,7 +140,7 @@ class Connection {
         if (arguments.length < 2)  return errorArgsExpected(2, arguments);
         final type = int.tryParse(arguments[1]);
         if (type == null) return errorInvalidArg('invalid head type $type');
-        player.equippedPants = type;
+        player.equippedLegs = type;
         player.game.setCharacterStateChanging(player);
         break;
 

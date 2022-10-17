@@ -267,7 +267,7 @@ class Player extends Character with ByteWriter {
 
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Pants_Type);
-    writeByte(equippedPants);
+    writeByte(equippedLegs);
 
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Alive);
@@ -531,7 +531,7 @@ class Player extends Character with ByteWriter {
     writeByte(character.weapon.state);
     writeByte(character.equippedArmour); // armour
     writeByte(character.equippedHead); // helm
-    writeByte(character.equippedPants); // helm
+    writeByte(character.equippedLegs); // helm
   }
 
   void writeWeather() {

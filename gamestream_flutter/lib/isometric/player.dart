@@ -39,7 +39,7 @@ class Player extends Vector3 {
   // final weaponType = Watch(AttackType.Unarmed, onChanged: onChangedPlayerWeapon);
   final armourType = Watch(ArmourType.tunicPadded);
   final headType = Watch(HeadType.None);
-  final pantsType = Watch(PantsType.white);
+  final pantsType = Watch(LegType.white);
   final equippedLevel = Watch(0);
   final health = Watch(0);
   final designed = Watch(true, onChanged: onChangedPlayerDesigned);
