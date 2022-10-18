@@ -55,9 +55,9 @@ class System {
   static void onChangedConnection(Connection connection) {
     switch (connection) {
       case Connection.Connected:
-        Engine.onDrawCanvas = modules.game.render.renderGame;
+        Engine.onDrawCanvas = Game.renderCanvas;
         Engine.onDrawForeground = modules.game.render.renderForeground;
-        Engine.onUpdate = modules.game.update.update;
+        Engine.onUpdate = Game.update;
         Engine.drawCanvasAfterUpdate = true;
         Engine.zoomOnScroll = true;
         if (!Engine.isLocalHost) {

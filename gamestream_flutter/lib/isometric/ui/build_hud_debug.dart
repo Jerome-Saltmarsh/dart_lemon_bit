@@ -5,7 +5,6 @@ import 'package:gamestream_flutter/flutterkit.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/utils/mouse.dart';
 import 'package:gamestream_flutter/isometric/watches/debug_visible.dart';
-import 'package:gamestream_flutter/modules/game/render.dart';
 import 'package:gamestream_flutter/render_engine.dart';
 import 'package:lemon_engine/engine.dart';
 
@@ -40,7 +39,7 @@ Widget buildHudDebug() =>
                 action: () => Engine.bufferBlendMode = BlendMode.values[(BlendMode.values.indexOf(Engine.bufferBlendMode) + 1) % BlendMode.values.length],
                   child: Refresh(() => text('render-blend-mode: ${Engine.bufferBlendMode}'))
               ),
-              watch(renderFrame, (t) => text("render-frame: $t")),
+              watch(Game.renderFrame, (t) => text("render-frame: $t")),
               watch(serverResponseReader.updateFrame, (t) => text("update-frame: $t")),
               watch(Game.player.interpolating, (bool interpolating) => text("interpolating: $interpolating", onPressed: () => Game.player.interpolating.value = !Game.player.interpolating.value)),
               watch(Game.ambientShade, (int shade) => text("ambient-shade: ${Shade.getName(shade)}")),

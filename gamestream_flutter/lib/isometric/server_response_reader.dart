@@ -26,7 +26,6 @@ import 'package:gamestream_flutter/isometric/watches/lightning.dart';
 import 'package:gamestream_flutter/isometric/watches/rain.dart';
 import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
 import 'package:gamestream_flutter/isometric/weather/time_passing.dart';
-import 'package:gamestream_flutter/modules/game/render.dart';
 import 'package:gamestream_flutter/state/state_game_waves.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_engine/engine.dart';
@@ -48,7 +47,7 @@ void onChangedRendersSinceUpdate(int value){
 }
 
 void onChangedUpdateFrame(int value){
-  rendersSinceUpdate.value = 0;
+  Game.rendersSinceUpdate.value = 0;
 }
 
 class ServerResponseReader with ByteReader {

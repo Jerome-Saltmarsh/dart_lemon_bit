@@ -21,7 +21,6 @@ import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/game_map.dart';
 import 'package:gamestream_flutter/isometric/watches/debug_visible.dart';
 import 'package:gamestream_flutter/modules/game/enums.dart';
-import 'package:gamestream_flutter/modules/game/render.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch.dart';
 
@@ -168,7 +167,7 @@ class GameUI {
   static Widget buildDialogFramesSinceUpdate() => Positioned(
       top: 8,
       left: 8,
-      child: watch(rendersSinceUpdate,  (int frames) =>
+      child: watch(Game.rendersSinceUpdate,  (int frames) =>
           text("Warning: No message received from server $frames")
       )
   );
@@ -179,7 +178,7 @@ class GameUI {
         left: 0,
         child: watch(Game.player.interpolating, (bool value) {
           if (!value) return text("Interpolation Off", onPressed: () => Game.player.interpolating.value = true);
-          return watch(rendersSinceUpdate, (int frames){
+          return watch(Game.rendersSinceUpdate, (int frames){
             return text("Frames: $frames", onPressed: () => Game.player.interpolating.value = false);
           });
         }),

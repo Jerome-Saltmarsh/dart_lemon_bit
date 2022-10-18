@@ -27,6 +27,7 @@ import 'package:gamestream_flutter/isometric/render/renderCharacter.dart';
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:gamestream_flutter/isometric/render/render_projectiles.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
+import 'package:gamestream_flutter/isometric/utils/mouse_raycast.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
@@ -756,6 +757,20 @@ class RenderEngine {
     );
   }
 
+  static void renderMouseWireFrame() {
+    mouseRaycast(renderWireFrameBlue);
+  }
+
+  static void renderMouseTargetName() {
+    if (!Game.player.mouseTargetAllie.value) return;
+    final mouseTargetName = Game.player.mouseTargetName.value;
+    if (mouseTargetName == null) return;
+    renderText(
+        text: mouseTargetName,
+        x: Game.player.attackTarget.renderX,
+        y: Game.player.attackTarget.renderY - 55);
+  }
+
   static void renderSprites() {
     totalRemaining = 0;
     resetRenderOrder(renderOrderCharacters);
@@ -1091,6 +1106,34 @@ class RenderEngine {
         RenderEngine.renderShadow(vector3.x, vector3.y, vector3.z - topRemainder, scale: topRemainder > 0 ? (topRemainder / tileHeight) * 2 : 2.0);
       }
     }
+  }
+
+  static void renderWireFrameBlue(
+      int z,
+      int row,
+      int column,
+      ) {
+    return Engine.renderBuffer(
+      dstX: getTileWorldX(row, column),
+      dstY: getTileWorldY(row, column) - (z * tileHeight),
+      srcX: 6944,
+      srcY: 0,
+      srcWidth: 48,
+      srcHeight: 72,
+      anchorY: 0.3334,
+    );
+  }
+
+  static void renderWireFrameRed(int row, int column, int z) {
+    return Engine.renderBuffer(
+      dstX: getTileWorldX(row, column),
+      dstY: getTileWorldY(row, column) - (z * tileHeight),
+      srcX: 6895,
+      srcY: 0,
+      srcWidth: 48,
+      srcHeight: 72,
+      anchorY: 0.3334,
+    );
   }
 
   static void renderCharacterShadow(Character character, int frameLegs, int upperBodyDirection){

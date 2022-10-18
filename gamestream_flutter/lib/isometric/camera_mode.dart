@@ -1,15 +1,12 @@
-import 'package:gamestream_flutter/isometric/events/on_camera_mode_changed.dart';
-import 'package:lemon_watch/watch.dart';
+import 'package:gamestream_flutter/game.dart';
 
 import 'enums/camera_mode.dart';
 
-const cameraModes = CameraMode.values;
-final cameraModeWatch = Watch(CameraMode.Chase, onChanged: onCameraModeChanged);
-CameraMode get cameraMode => cameraModeWatch.value;
+
 
 
 void cameraModeNext(){
-  cameraMode = cameraModes[(cameraMode.index + 1) % cameraModes.length];
+  cameraMode = CameraMode.values[(Game.cameraMode.index + 1) % CameraMode.values.length];
 }
 
 void cameraModeSetFree(){
@@ -21,5 +18,5 @@ void cameraModeSetChase(){
 }
 
 void set cameraMode(CameraMode value) {
-  cameraModeWatch.value = value;
+  Game.cameraModeWatch.value = value;
 }

@@ -3,26 +3,15 @@ import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/game_ui.dart';
 import 'package:gamestream_flutter/isometric/ai.dart';
-import 'package:gamestream_flutter/isometric/camera.dart';
-import 'package:gamestream_flutter/isometric/edit.dart';
-import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_health_bar.dart';
-import 'package:gamestream_flutter/isometric/render/render_circle.dart';
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
-import 'package:gamestream_flutter/isometric/render/render_wireframe.dart';
-import 'package:gamestream_flutter/isometric/server_response_reader.dart';
-import 'package:gamestream_flutter/isometric/utils/mouse_raycast.dart';
-import 'package:gamestream_flutter/render_engine.dart';
 import 'package:gamestream_flutter/utils.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
-import 'package:lemon_watch/watch.dart';
 
-import '../../isometric/game.dart';
 import 'style.dart';
 
-final renderFrame = Watch(0);
-final rendersSinceUpdate = Watch(0, onChanged: onChangedRendersSinceUpdate);
+
 
 class GameRender {
   final GameStyle style;
@@ -37,40 +26,22 @@ class GameRender {
     drawPlayerText();
   }
 
-  void renderGame(Canvas canvas, Size size) {
-    /// particles are only on the ui and thus can update every frame
-    /// this makes them much smoother as they don't freeze
-    updateParticles();
-    renderFrame.value++;
-    interpolatePlayer();
-    updateCameraMode();
-    attackTargetCircle();
-    RenderEngine.renderSprites();
-    renderEditMode();
-    renderMouseTargetName();
-    renderWeaponRoundInformation();
-    rendersSinceUpdate.value++;
-  }
+  // void renderGame(Canvas canvas, Size size) {
+  //   /// particles are only on the ui and thus can update every frame
+  //   /// this makes them much smoother as they don't freeze
+  //   updateParticles();
+  //   renderFrame.value++;
+  //   interpolatePlayer();
+  //   updateCameraMode();
+  //   attackTargetCircle();
+  //   RenderEngine.renderSprites();
+  //   renderEditMode();
+  //   renderMouseTargetName();
+  //   renderWeaponRoundInformation();
+  //   rendersSinceUpdate.value++;
+  // }
 
   /// Render the player in the same relative position to the camera
-  void interpolatePlayer(){
-
-    if (!Game.player.interpolating.value) return;
-
-    if (rendersSinceUpdate.value == 0) {
-      return;
-    }
-    if (rendersSinceUpdate.value != 1) return;
-
-    final playerCharacter = Game.getPlayerCharacter();
-    if (playerCharacter == null) return;
-    final velocityX = Game.player.x - Game.player.previousPosition.x;
-    final velocityY = Game.player.y - Game.player.previousPosition.y;
-    final velocityZ = Game.player.z - Game.player.previousPosition.z;
-    playerCharacter.x += velocityX;
-    playerCharacter.y += velocityY;
-    playerCharacter.z -= velocityZ;
-  }
 
   void renderWeaponRoundInformation() {
     if (Game.player.weapon.capacity.value <= 0)
@@ -87,65 +58,6 @@ class GameRender {
       y: Game.player.renderY - 7,
       percentage: Game.player.weaponRoundPercentage,
     );
-  }
-
-  void renderEditMode() {
-    if (playMode) return;
-    if (EditState.gameObjectSelected.value){
-      Engine.renderCircleOutline(
-        sides: 24,
-        radius: EditState.gameObjectSelectedRadius.value,
-        x: EditState.gameObject.renderX,
-        y: EditState.gameObject.renderY,
-        color: Colors.white,
-      );
-      return renderCircleV3(EditState.gameObject);
-    }
-
-    renderEditWireFrames();
-    renderMouseWireFrame();
-
-    // final nodeData = EditState.selectedNodeData.value;
-    // if (nodeData != null){
-    //   Engine.renderCircleOutline(
-    //        radius: nodeData.spawnRadius.toDouble(),
-    //        x: EditState.renderX,
-    //        y: EditState.renderY,
-    //        color: Colors.white,
-    //        sides: 8,
-    //    );
-    // }
-  }
-
-  void renderMouseTargetName() {
-    if (!Game.player.mouseTargetAllie.value) return;
-    final mouseTargetName = Game.player.mouseTargetName.value;
-    if (mouseTargetName == null) return;
-    renderText(
-        text: mouseTargetName,
-        x: Game.player.attackTarget.renderX,
-        y: Game.player.attackTarget.renderY - 55);
-  }
-
-  void renderMouseWireFrame() {
-    mouseRaycast(renderWireFrameBlue);
-  }
-
-  void renderEditWireFrames() {
-    for (var z = 0; z < EditState.z; z++) {
-      renderWireFrameBlue(z, EditState.row, EditState.column);
-    }
-    renderWireFrameRed(EditState.row, EditState.column, EditState.z);
-  }
-
-  void attackTargetCircle() {
-    // final attackTarget = state.player.attackTarget;
-    // final x = attackTarget.x;
-    // final y = attackTarget.y;
-    // if (x == 0 && y == 0) return;
-    // final shade = isometric.getShadeAtPosition(x, y);
-    // if (shade >= Shade.Very_Dark) return;
-    // drawCircle36(x, y);
   }
 
   void _renderPlayerNames() {

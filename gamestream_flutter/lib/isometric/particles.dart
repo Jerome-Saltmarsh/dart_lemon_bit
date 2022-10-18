@@ -2,7 +2,6 @@
 import 'package:bleed_common/particle_type.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/classes/particle.dart';
-import 'package:gamestream_flutter/isometric/update.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 
@@ -60,14 +59,6 @@ void sortParticles(){
 
 int _compareParticles(Particle a, Particle b) {
     return a.renderOrder > b.renderOrder ? 1 : -1;
-}
-
-/// do this during the draw call so that particles are smoother
-void updateParticles() {
-  for(final particle in Game.particles){
-    Game.updateParticle(particle);
-  }
-  updateParticleFrames();
 }
 
 void updateParticlesZombieParts() {
