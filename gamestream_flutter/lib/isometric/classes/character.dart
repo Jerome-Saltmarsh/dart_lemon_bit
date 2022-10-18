@@ -41,4 +41,5 @@ class Character extends Vector3 {
   int get renderDirection => direction == 0 ? 7 : (direction - 1);
 
   bool get unarmed => weaponType == AttackType.Unarmed;
+  bool get weaponTypeIsShotgun => weaponType == AttackType.Shotgun;
 }

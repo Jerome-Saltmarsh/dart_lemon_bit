@@ -19,6 +19,10 @@ class AttackType {
    static const Axe = 19;
    static const Pickaxe = 20;
    static const Hammer = 21;
+
+   static bool isSingleHandedFirearm(int weaponType) =>
+       weaponType == AttackType.Handgun ||
+       weaponType == AttackType.Revolver ;
    
    static bool isTwoHandedFirearm(int weaponType) =>
        weaponType == AttackType.Bow ||

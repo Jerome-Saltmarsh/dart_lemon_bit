@@ -7,7 +7,6 @@ import 'package:gamestream_flutter/atlases.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/game_config.dart';
 import 'package:gamestream_flutter/isometric/convert_index.dart';
-import 'package:gamestream_flutter/isometric/grid_state_util.dart';
 import 'package:gamestream_flutter/isometric/nodes.dart';
 import 'package:gamestream_flutter/isometric/render/get_character_render_color.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
@@ -205,7 +204,10 @@ void renderCharacterTemplate(Character character, {
   }
 
   if (character.usingWeapon) {
-
+    final animation = TemplateAnimation.getAttackAnimation(character.weaponType);
+    frameWeapon = character.weaponFrame >= animation.length ? animation.last : animation[character.weaponFrame];
+    frameBody = frameWeapon;
+    frameHead = frameWeapon;
   }
 
   if (!weaponInFront) {
@@ -303,114 +305,114 @@ void renderCharacterTemplate(Character character, {
   }
 
   return;
-  final inLongGrass = gridNodeTypeAtVector3(character) == NodeType.Grass_Long;
-
-  if (!inLongGrass) {
-    renderCharacterTemplateShadow(character);
-  }
-
-  // final diff = Direction.getDifference(character.renderDirection, character.aimDirection).abs();
-  // final weaponInFront = character.renderDirection >= 2 && character.renderDirection < 6;
-
-  /// If the the player is running backwards to the direction they are aiming
-  /// render the player to run backwards
-  if (diff >= 3 && character.running) {
-    final renderDirectionOpposite = (character.renderDirection + 4) % 8;
-
-    if (weaponInFront) {
-      renderCharacterTemplateWeapon2(character, renderDirectionOpposite);
-    }
-
-    if (!inLongGrass){
-      renderCharacterTemplatePartCustom(
-        layer: mapToLayerLegs(character.legType),
-        variation: false,
-        renderX: character.renderX,
-        renderY: character.renderY,
-        state: character.state,
-        frame: character.frame,
-        direction: renderDirectionOpposite,
-        color: character.color,
-        weapon: character.weaponType,
-      );
-    }
-
-
-    renderCharacterTemplatePartCustom(
-      layer: mapToLayerBody(character.bodyType),
-      variation: getVariation(character),
-      renderX: character.renderX,
-      renderY: character.renderY,
-      state: character.usingWeapon ? CharacterState.Performing : character.state,
-      frame: character.usingWeapon ? character.weaponFrame : character.frame,
-      direction: character.usingWeapon ? character.aimDirection : renderDirectionOpposite,
-      color: character.color,
-      weapon: character.weaponType,
-    );
-
-    renderCharacterTemplatePartCustom(
-      layer: mapToLayerHead(character.headType),
-      variation: getVariation(character),
-      renderX: character.renderX,
-      renderY: character.renderY,
-      state: character.usingWeapon ? CharacterState.Performing : character.state,
-      frame: character.usingWeapon ? character.weaponFrame : character.frame,
-      direction: character.aimDirection,
-      color: character.color,
-      weapon: character.weaponType,
-    );
-
-    if (!weaponInFront) {
-      renderCharacterTemplateWeapon2(character, renderDirectionOpposite);
-    }
-    return;
-  }
-
-  if (!weaponInFront){
-    renderCharacterTemplateWeapon2(character, character.renderDirection);
-  }
-
-  if (!inLongGrass){
-    renderCharacterTemplatePartCustom(
-      layer: mapToLayerLegs(character.legType),
-      variation: false,
-      renderX: character.renderX,
-      renderY: character.renderY,
-      state: character.state,
-      frame: character.frame,
-      direction: character.renderDirection,
-      color: character.color,
-      weapon: character.weaponType,
-    );
-  }
-
-  renderCharacterTemplatePartCustom(
-    layer: mapToLayerBody(character.bodyType),
-    variation: getVariation(character),
-    renderX: character.renderX,
-    renderY: character.renderY,
-    state: character.usingWeapon ? CharacterState.Performing : character.state,
-    frame: character.usingWeapon ? character.weaponFrame : character.frame,
-    direction: character.usingWeapon ? character.aimDirection : character.renderDirection,
-    color: character.color,
-    weapon: character.weaponType,
-  );
-
-  renderCharacterTemplatePartCustom(
-    layer: mapToLayerHead(character.headType),
-    variation: getVariation(character),
-    renderX: character.renderX,
-    renderY: character.renderY,
-    state: character.usingWeapon ? CharacterState.Performing : character.state,
-    frame: character.usingWeapon ? character.weaponFrame : character.frame,
-    direction: character.aimDirection,
-    color: character.color,
-    weapon: character.weaponType,
-  );
-
-  if (weaponInFront){
-    renderCharacterTemplateWeapon2(character,  character.renderDirection);
-  }
+  // final inLongGrass = gridNodeTypeAtVector3(character) == NodeType.Grass_Long;
+  //
+  // if (!inLongGrass) {
+  //   renderCharacterTemplateShadow(character);
+  // }
+  //
+  // // final diff = Direction.getDifference(character.renderDirection, character.aimDirection).abs();
+  // // final weaponInFront = character.renderDirection >= 2 && character.renderDirection < 6;
+  //
+  // /// If the the player is running backwards to the direction they are aiming
+  // /// render the player to run backwards
+  // if (diff >= 3 && character.running) {
+  //   final renderDirectionOpposite = (character.renderDirection + 4) % 8;
+  //
+  //   if (weaponInFront) {
+  //     renderCharacterTemplateWeapon2(character, renderDirectionOpposite);
+  //   }
+  //
+  //   if (!inLongGrass){
+  //     renderCharacterTemplatePartCustom(
+  //       layer: mapToLayerLegs(character.legType),
+  //       variation: false,
+  //       renderX: character.renderX,
+  //       renderY: character.renderY,
+  //       state: character.state,
+  //       frame: character.frame,
+  //       direction: renderDirectionOpposite,
+  //       color: character.color,
+  //       weapon: character.weaponType,
+  //     );
+  //   }
+  //
+  //
+  //   renderCharacterTemplatePartCustom(
+  //     layer: mapToLayerBody(character.bodyType),
+  //     variation: getVariation(character),
+  //     renderX: character.renderX,
+  //     renderY: character.renderY,
+  //     state: character.usingWeapon ? CharacterState.Performing : character.state,
+  //     frame: character.usingWeapon ? character.weaponFrame : character.frame,
+  //     direction: character.usingWeapon ? character.aimDirection : renderDirectionOpposite,
+  //     color: character.color,
+  //     weapon: character.weaponType,
+  //   );
+  //
+  //   renderCharacterTemplatePartCustom(
+  //     layer: mapToLayerHead(character.headType),
+  //     variation: getVariation(character),
+  //     renderX: character.renderX,
+  //     renderY: character.renderY,
+  //     state: character.usingWeapon ? CharacterState.Performing : character.state,
+  //     frame: character.usingWeapon ? character.weaponFrame : character.frame,
+  //     direction: character.aimDirection,
+  //     color: character.color,
+  //     weapon: character.weaponType,
+  //   );
+  //
+  //   if (!weaponInFront) {
+  //     renderCharacterTemplateWeapon2(character, renderDirectionOpposite);
+  //   }
+  //   return;
+  // }
+  //
+  // if (!weaponInFront){
+  //   renderCharacterTemplateWeapon2(character, character.renderDirection);
+  // }
+  //
+  // if (!inLongGrass){
+  //   renderCharacterTemplatePartCustom(
+  //     layer: mapToLayerLegs(character.legType),
+  //     variation: false,
+  //     renderX: character.renderX,
+  //     renderY: character.renderY,
+  //     state: character.state,
+  //     frame: character.frame,
+  //     direction: character.renderDirection,
+  //     color: character.color,
+  //     weapon: character.weaponType,
+  //   );
+  // }
+  //
+  // renderCharacterTemplatePartCustom(
+  //   layer: mapToLayerBody(character.bodyType),
+  //   variation: getVariation(character),
+  //   renderX: character.renderX,
+  //   renderY: character.renderY,
+  //   state: character.usingWeapon ? CharacterState.Performing : character.state,
+  //   frame: character.usingWeapon ? character.weaponFrame : character.frame,
+  //   direction: character.usingWeapon ? character.aimDirection : character.renderDirection,
+  //   color: character.color,
+  //   weapon: character.weaponType,
+  // );
+  //
+  // renderCharacterTemplatePartCustom(
+  //   layer: mapToLayerHead(character.headType),
+  //   variation: getVariation(character),
+  //   renderX: character.renderX,
+  //   renderY: character.renderY,
+  //   state: character.usingWeapon ? CharacterState.Performing : character.state,
+  //   frame: character.usingWeapon ? character.weaponFrame : character.frame,
+  //   direction: character.aimDirection,
+  //   color: character.color,
+  //   weapon: character.weaponType,
+  // );
+  //
+  // if (weaponInFront){
+  //   renderCharacterTemplateWeapon2(character,  character.renderDirection);
+  // }
 }
 
 
@@ -721,19 +723,19 @@ class TemplateAnimation {
   }();
 
   static Uint8List FiringBow = (){
-    final list = Uint8List(4);
+    final list = Uint8List(3);
     list[0] = 5;
     list[1] = 8;
     list[2] = 6;
-    list[3] = 10;
     return list;
   }();
 
   static Uint8List FiringHandgun = (){
-    final list = Uint8List(3);
-    list[0] = 8;
-    list[1] = 9;
-    list[2] = 8;
+    final list = Uint8List(4);
+    list[0] = 6;
+    list[1] = 7;
+    list[2] = 7;
+    list[3] = 6;
     return list;
   }();
 
@@ -758,6 +760,21 @@ class TemplateAnimation {
     list[3] = 11;
     return list;
   }();
+
+  static Uint8List getAttackAnimation(int weaponType){
+      switch(weaponType){
+        case AttackType.Unarmed:
+          return Striking;
+        case AttackType.Handgun:
+          return FiringHandgun;
+        case AttackType.Shotgun:
+          return FiringShotgun;
+        case AttackType.Bow:
+          return FiringBow;
+        default:
+          throw Exception("TemplateAnimation.getAttackAnimation(${AttackType.getName(weaponType)})");
+      }
+  }
 }
 
 Uint8List getAnimation({
