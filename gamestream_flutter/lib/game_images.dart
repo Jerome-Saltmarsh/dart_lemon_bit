@@ -3,7 +3,7 @@ import 'dart:ui';
 
 import 'package:bleed_common/library.dart';
 
-class Images {
+class GameImages {
    static late Image pixel;
    static late Image mapAtlas;
    static late Image blocks;
@@ -12,29 +12,27 @@ class Images {
    static late Image templateShadow;
    static late Image gameobjects;
    static late Image particles;
-}
+   static late Image template_head_plain;
+   static late Image template_head_rogue;
+   static late Image template_head_steel;
+   static late Image template_head_swat;
+   static late Image template_head_wizard;
 
-class ImagesTemplateHead {
-   static late Image plain;
-   static late Image rogue;
-   static late Image steel;
-   static late Image swat;
-   static late Image wizard;
-
-   static Image fromHeadType(int headType){
-       switch (headType) {
-          case HeadType.None:
-             return plain;
-          case HeadType.Rogues_Hood:
-             return rogue;
-          case HeadType.Steel_Helm:
-             return steel;
-          case HeadType.Wizards_Hat:
-             return wizard;
-          default:
-             return plain;
-       }
+   static Image getImageForHeadType(int headType) {
+      switch (headType) {
+         case HeadType.None:
+            return template_head_plain;
+         case HeadType.Rogues_Hood:
+            return template_head_rogue;
+         case HeadType.Steel_Helm:
+            return template_head_steel;
+         case HeadType.Wizards_Hat:
+            return template_head_wizard;
+         default:
+            throw Exception('GameImages.getImageForHeadType(${HeadType.getName(headType)}');
+      }
    }
+
 }
 
 class ImagesTemplateBody {

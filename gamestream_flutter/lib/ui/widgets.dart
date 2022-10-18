@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/game_account.dart';
-import 'package:gamestream_flutter/authentication.dart';
+import 'package:gamestream_flutter/data/data_authentication.dart';
 import 'package:gamestream_flutter/game_colors.dart';
 import 'package:gamestream_flutter/game_widgets.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
@@ -91,7 +91,7 @@ class _Buttons {
 
   final Widget spawnRandomUser = button("Random User", (){
     final userId = 'random_${random.nextInt(9999999)}';
-    AccountService.login(Authentication(userId: userId, name: userId, email: "$userId@email.com"));
+    AccountService.login(DataAuthentication(userId: userId, name: userId, email: "$userId@email.com"));
   });
 
   final showDialogSubscribed = button("Sub Success", website.actions.showDialogSubscriptionSuccessful);
@@ -152,7 +152,7 @@ class _Buttons {
 }
 Widget _buildFakeLoginButton(String userId, String text){
   return button('$userId $text', (){
-    AccountService.login(Authentication(userId: userId, name: userId, email: "$userId@email.com"));
+    AccountService.login(DataAuthentication(userId: userId, name: userId, email: "$userId@email.com"));
   });
 }
 

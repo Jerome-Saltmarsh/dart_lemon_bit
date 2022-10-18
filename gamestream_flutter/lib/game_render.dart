@@ -4,7 +4,7 @@ import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/node_size.dart';
 import 'package:bleed_common/particle_type.dart';
-import 'package:gamestream_flutter/atlases.dart';
+import 'package:gamestream_flutter/game_images.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/animation_frame.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
@@ -187,7 +187,7 @@ class GameRender {
           break;
         }
         Engine.renderSprite(
-          image: Images.gameobjects,
+          image: GameImages.gameobjects,
           dstX: getRenderV3X(particle),
           dstY: getRenderV3Y(particle),
           srcX: 0.0,
@@ -209,7 +209,7 @@ class GameRender {
         // );
       case ParticleType.Bubble_Small:
         Engine.renderSprite(
-          image: Images.gameobjects,
+          image: GameImages.gameobjects,
           dstX: getRenderV3X(particle),
           dstY: getRenderV3Y(particle),
           srcX: 0.0,
@@ -221,7 +221,7 @@ class GameRender {
         break;
       case ParticleType.Bullet_Ring:
         Engine.renderSprite(
-          image: Images.gameobjects,
+          image: GameImages.gameobjects,
           dstX: getRenderV3X(particle),
           dstY: getRenderV3Y(particle),
           srcX: 0.0,
@@ -233,7 +233,7 @@ class GameRender {
         break;
       case ParticleType.Water_Drop:
         Engine.renderSprite(
-          image: Images.gameobjects,
+          image: GameImages.gameobjects,
           dstX: getRenderV3X(particle),
           dstY: getRenderV3Y(particle),
           srcX: 0.0,
@@ -257,7 +257,7 @@ class GameRender {
         break;
       case ParticleType.Block_Wood:
         Engine.renderSprite(
-          image: Images.gameobjects,
+          image: GameImages.gameobjects,
           dstX: particle.renderX,
           dstY: particle.renderY,
           srcX: 0,
@@ -270,7 +270,7 @@ class GameRender {
         break;
       case ParticleType.Block_Grass:
         Engine.renderSprite(
-          image: Images.gameobjects,
+          image: GameImages.gameobjects,
           dstX: particle.renderX,
           dstY: particle.renderY,
           srcX: 0,
@@ -283,7 +283,7 @@ class GameRender {
         break;
       case ParticleType.Block_Brick:
         Engine.renderSprite(
-          image: Images.gameobjects,
+          image: GameImages.gameobjects,
           dstX: particle.renderX,
           dstY: particle.renderY,
           srcX: 0,
@@ -338,7 +338,7 @@ class GameRender {
       case ParticleType.Blood:
         casteShadowDownV3(particle);
         Engine.renderSprite(
-          image: Images.gameobjects,
+          image: GameImages.gameobjects,
           dstX: particle.renderX,
           dstY: particle.renderY,
           srcX: 16,
@@ -506,7 +506,7 @@ class GameRender {
         return;
       case GameObjectType.Loot:
         Engine.renderSprite(
-          image: Images.gameobjects,
+          image: GameImages.gameobjects,
           dstX: getRenderV3X(gameObject),
           dstY: getRenderV3Y(gameObject),
           srcX: AtlasSrcGameObjects.Loot_X,
@@ -518,7 +518,7 @@ class GameRender {
         return;
       case GameObjectType.Barrel:
         Engine.renderSprite(
-          image: Images.gameobjects,
+          image: GameImages.gameobjects,
           dstX: getRenderV3X(gameObject),
           dstY: getRenderV3Y(gameObject),
           srcX: AtlasSrcGameObjects.Barrel_X,
@@ -531,7 +531,7 @@ class GameRender {
         return;
       case GameObjectType.Tavern_Sign:
         Engine.renderSprite(
-          image: Images.gameobjects,
+          image: GameImages.gameobjects,
           dstX: getRenderV3X(gameObject),
           dstY: getRenderV3Y(gameObject),
           srcX: AtlasSrcGameObjects.Tavern_Sign_X,
@@ -600,7 +600,7 @@ class GameRender {
         return;
       case GameObjectType.Crystal:
         Engine.renderSprite(
-            image: Images.gameobjects,
+            image: GameImages.gameobjects,
             dstX: getRenderV3X(gameObject),
             dstY: getRenderV3Y(gameObject),
             srcX: AtlasSrcGameObjects.Crystal_Large_X,
@@ -677,7 +677,7 @@ class GameRender {
       case GameObjectType.Weapon_Shotgun:
         renderBouncingGameObjectShadow(gameObject);
         Engine.renderSprite(
-            image: Images.gameobjects,
+            image: GameImages.gameobjects,
             dstX: getRenderV3X(gameObject),
             dstY: getRenderYBouncing(gameObject),
             srcX: AtlasSrcGameObjects.Shotgun_X,
@@ -691,7 +691,7 @@ class GameRender {
       case GameObjectType.Weapon_Handgun:
         renderBouncingGameObjectShadow(gameObject);
         Engine.renderSprite(
-            image: Images.gameobjects,
+            image: GameImages.gameobjects,
             dstX: getRenderV3X(gameObject),
             dstY: getRenderYBouncing(gameObject),
             srcX: AtlasSrcGameObjects.Handgun_X,
@@ -705,7 +705,7 @@ class GameRender {
       case GameObjectType.Weapon_Blade:
         renderBouncingGameObjectShadow(gameObject);
         Engine.renderSprite(
-            image: Images.gameobjects,
+            image: GameImages.gameobjects,
             dstX: getRenderV3X(gameObject),
             dstY: getRenderYBouncing(gameObject),
             srcX: AtlasSrcGameObjects.Sword_X,
@@ -719,7 +719,7 @@ class GameRender {
       case GameObjectType.Weapon_Bow:
         renderBouncingGameObjectShadow(gameObject);
         Engine.renderSprite(
-            image: Images.gameobjects,
+            image: GameImages.gameobjects,
             dstX: getRenderV3X(gameObject),
             dstY: getRenderYBouncing(gameObject),
             srcX: AtlasSrcGameObjects.Bow_X,
@@ -733,7 +733,7 @@ class GameRender {
       case GameObjectType.Weapon_Staff:
         renderBouncingGameObjectShadow(gameObject);
         Engine.renderSprite(
-            image: Images.gameobjects,
+            image: GameImages.gameobjects,
             dstX: getRenderV3X(gameObject),
             dstY: getRenderYBouncing(gameObject),
             srcX: AtlasSrcGameObjects.Staff_X,
@@ -832,7 +832,7 @@ class GameRender {
 
   static void renderShadow(double x, double y, double z, {double scale = 1}) =>
       Engine.renderSprite(
-        image: Images.gameobjects,
+        image: GameImages.gameobjects,
         dstX: (x - y) * 0.5,
         dstY: ((y + x) * 0.5) - z,
         srcX: 0,
@@ -1170,7 +1170,7 @@ class GameRender {
     final shadowZ = character.z;
 
     Engine.renderSprite(
-      image: Images.templateShadow,
+      image: GameImages.templateShadow,
       srcX: frameLegs * 64,
       srcY: upperBodyDirection * 64,
       srcWidth: 64,

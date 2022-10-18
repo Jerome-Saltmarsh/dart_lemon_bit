@@ -1,7 +1,7 @@
 
 import 'dart:async';
 
-import 'package:gamestream_flutter/atlases.dart';
+import 'package:gamestream_flutter/game_images.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
 import 'package:gamestream_flutter/isometric_web/register_isometric_web_controls.dart';
@@ -17,17 +17,17 @@ class System {
 
     static Future init(SharedPreferences sharedPreferences) async {
       print("environment: ${Engine.isLocalHost ? 'localhost' : 'production'}");
-      Images.characters = await Engine.loadImageAsset('images/atlas-characters.png');
-      Images.zombie = await Engine.loadImageAsset('images/atlas-zombie.png');
-      Images.gameobjects = await Engine.loadImageAsset('images/atlas-gameobjects.png');
-      Images.templateShadow = await Engine.loadImageAsset('images/template/template-shadow.png');
-      Images.mapAtlas = await Engine.loadImageAsset('images/atlas-map.png');
-      Images.blocks = await Engine.loadImageAsset('images/atlas-blocks.png');
-      ImagesTemplateHead.plain = await Engine.loadImageAsset('images/template/head/template-head-plain.png');
-      ImagesTemplateHead.rogue = await Engine.loadImageAsset('images/template/head/template-head-rogue.png');
-      ImagesTemplateHead.steel = await Engine.loadImageAsset('images/template/head/template-head-steel.png');
-      ImagesTemplateHead.swat = await Engine.loadImageAsset('images/template/head/template-head-swat.png');
-      ImagesTemplateHead.wizard = await Engine.loadImageAsset('images/template/head/template-head-wizard.png');
+      GameImages.characters = await Engine.loadImageAsset('images/atlas-characters.png');
+      GameImages.zombie = await Engine.loadImageAsset('images/atlas-zombie.png');
+      GameImages.gameobjects = await Engine.loadImageAsset('images/atlas-gameobjects.png');
+      GameImages.templateShadow = await Engine.loadImageAsset('images/template/template-shadow.png');
+      GameImages.mapAtlas = await Engine.loadImageAsset('images/atlas-map.png');
+      GameImages.blocks = await Engine.loadImageAsset('images/atlas-blocks.png');
+      GameImages.template_head_plain = await Engine.loadImageAsset('images/template/head/template-head-plain.png');
+      GameImages.template_head_rogue = await Engine.loadImageAsset('images/template/head/template-head-rogue.png');
+      GameImages.template_head_steel = await Engine.loadImageAsset('images/template/head/template-head-steel.png');
+      GameImages.template_head_swat = await Engine.loadImageAsset('images/template/head/template-head-swat.png');
+      GameImages.template_head_wizard = await Engine.loadImageAsset('images/template/head/template-head-wizard.png');
       ImagesTemplateBody.cyan = await Engine.loadImageAsset('images/template/body/template-body-cyan.png');
       ImagesTemplateBody.blue = await Engine.loadImageAsset('images/template/body/template-body-blue.png');
       ImagesTemplateBody.tunic = await Engine.loadImageAsset('images/template/body/template-body-tunic.png');

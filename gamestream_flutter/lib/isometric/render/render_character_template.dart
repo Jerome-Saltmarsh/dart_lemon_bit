@@ -3,7 +3,7 @@ import 'dart:typed_data';
 
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_size.dart';
-import 'package:gamestream_flutter/atlases.dart';
+import 'package:gamestream_flutter/game_images.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/game_config.dart';
 import 'package:gamestream_flutter/isometric/convert_index.dart';
@@ -170,7 +170,7 @@ void renderCharacterTemplate(Character character, {
 
 
   Engine.renderSprite(
-    image: Images.templateShadow,
+    image: GameImages.templateShadow,
     srcX: frameLegs * 64,
     srcY: upperBodyDirection * 64,
     srcWidth: 64,
@@ -206,7 +206,7 @@ void renderCharacterTemplate(Character character, {
     anchorY: 0.75
   );
   Engine.renderSprite(
-    image: ImagesTemplateHead.fromHeadType(character.headType),
+    image: GameImages.getImageForHeadType(character.headType),
     srcX: frameHead * 64,
     srcY: character.aimDirection * 64,
     srcWidth: 64,

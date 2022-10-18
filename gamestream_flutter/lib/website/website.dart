@@ -1,7 +1,7 @@
 
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/atlases.dart';
+import 'package:gamestream_flutter/game_images.dart';
 import 'package:gamestream_flutter/game_colors.dart';
 import 'package:gamestream_flutter/enums/region.dart';
 import 'package:gamestream_flutter/game_widgets.dart';
@@ -32,7 +32,7 @@ class Website {
 
    static void renderCanvas(Canvas canvas, Size size){
       Engine.renderSprite(
-          image: Images.characters,
+          image: GameImages.characters,
           srcX: 0,
           srcY: 0,
           srcWidth: 64,
@@ -41,7 +41,7 @@ class Website {
           dstY: 100,
       );
       Engine.renderSprite(
-        image: Images.blocks,
+        image: GameImages.blocks,
         srcX: 0,
         srcY: 0,
         srcWidth: 48,

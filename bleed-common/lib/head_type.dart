@@ -5,6 +5,7 @@ class HeadType {
    static const Rogues_Hood = 2;
    static const Wizards_Hat = 3;
    static const Blonde = 4;
+   static const Swat = 5;
 
    static const values = [
       None,
@@ -12,15 +13,15 @@ class HeadType {
       Rogues_Hood,
       Wizards_Hat,
       Blonde,
+      Swat,
    ];
    
-   static String getName(int type){
-       return <int, String>{
-          None: "None",
-          Steel_Helm: "Steel Helm",
-          Rogues_Hood: "Rogues Hood",
-          Wizards_Hat: "Wizards Hat",
-          Blonde: "Blonde",
-       }[type]!;
-   }
+   static String getName(int type) => <int, String> {
+      None: "None",
+      Steel_Helm: "Steel Helm",
+      Rogues_Hood: "Rogues Hood",
+      Wizards_Hat: "Wizards Hat",
+      Blonde: "Blonde",
+      Swat: "Swat",
+   }[type]!;
 }

@@ -1,7 +1,7 @@
 
 
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/atlases.dart';
+import 'package:gamestream_flutter/game_images.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/render/get_character_render_color.dart';
 import 'package:gamestream_flutter/game_render.dart';
@@ -17,7 +17,7 @@ void renderCharacterZombie(Character character) {
   GameRender.renderCharacterShadow(character, character.frame, character.renderDirection);
 
   Engine.renderSprite(
-      image: Images.zombie,
+      image: GameImages.zombie,
       srcX: getZombieSrcX(character),
       srcY: character.renderDirection * 64,
       srcWidth: 64,

@@ -1,5 +1,5 @@
 import 'package:firestore_client/firestoreService.dart';
-import 'package:gamestream_flutter/authentication.dart';
+import 'package:gamestream_flutter/data/data_authentication.dart';
 import 'package:gamestream_flutter/enums/operation_status.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/ui/actions/sign_in_with_facebook.dart';
@@ -94,7 +94,7 @@ class AccountService {
     Website.operationStatus.value = OperationStatus.None;
   }
 
-  static Future login(Authentication authentication){
+  static Future login(DataAuthentication authentication){
     print("actions.login()");
     // storage.rememberAuthorization(authentication);
     return signInOrCreateAccount(

@@ -2,7 +2,7 @@
 
 
 import 'package:flutter/widgets.dart';
-import 'package:gamestream_flutter/atlases.dart';
+import 'package:gamestream_flutter/game_images.dart';
 import 'package:gamestream_flutter/game_widgets.dart';
 import 'package:lemon_engine/engine.dart';
 
@@ -50,7 +50,7 @@ Widget buildAtlasImage({
       paint: (Canvas canvas, Size size) =>
         Engine.renderExternalCanvas(
           canvas: canvas,
-          image: Images.mapAtlas,
+          image: GameImages.mapAtlas,
           srcX: srcX,
           srcY: srcY,
           srcWidth: srcWidth,

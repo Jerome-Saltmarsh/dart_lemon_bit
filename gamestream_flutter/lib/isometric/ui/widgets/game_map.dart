@@ -1,7 +1,7 @@
 
 import 'package:bleed_common/library.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:gamestream_flutter/atlases.dart';
+import 'package:gamestream_flutter/game_images.dart';
 import 'package:gamestream_flutter/game_widgets.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/ui/dialogs/build_game_dialog_map.dart';
@@ -81,7 +81,7 @@ class GameMapWidget extends StatelessWidget {
 
     Engine.renderExternalCanvas(
       canvas: canvas,
-      image: Images.mapAtlas,
+      image: GameImages.mapAtlas,
       srcX: 92,
       srcY: 28,
       srcWidth: 8,

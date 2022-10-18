@@ -1,5 +1,5 @@
 
-import 'package:gamestream_flutter/authentication.dart';
+import 'package:gamestream_flutter/data/data_authentication.dart';
 import 'package:gamestream_flutter/enums/region.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:lemon_engine/Engine.dart';
@@ -23,7 +23,7 @@ class StorageService {
     });
   }
 
-  void rememberAuthorization(Authentication authorization){
+  void rememberAuthorization(DataAuthentication authorization){
     print("storage.rememberAuthorization()");
     put(_keys.userId, authorization.userId);
     put(_keys.userEmail, authorization.email);
@@ -36,11 +36,11 @@ class StorageService {
     Engine.sharedPreferences.remove(_keys.userName);
   }
 
-  Authentication recallAuthorization() {
+  DataAuthentication recallAuthorization() {
     final userId = get<String>(_keys.userId);
     final email = get<String>(_keys.userEmail);
     final displayName = get<String>(_keys.userName);
-    return Authentication(
+    return DataAuthentication(
       userId: userId,
       email: email,
       name: displayName,

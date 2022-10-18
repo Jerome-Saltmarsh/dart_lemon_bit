@@ -1,9 +1,9 @@
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:gamestream_flutter/authentication.dart';
+import 'package:gamestream_flutter/data/data_authentication.dart';
 
 var _initialized = false;
 
-Future<Authentication?> getAuthenticationFacebook() async {
+Future<DataAuthentication?> getAuthenticationFacebook() async {
   if (!_initialized) {
     _initialized = true;
     initFacebookAuth();
@@ -24,7 +24,7 @@ Future<Authentication?> getAuthenticationFacebook() async {
   final privateName = userData['name'];
   final email = userData['email'];
 
-  return Authentication(
+  return DataAuthentication(
       userId: accessToken.userId, name: privateName, email: email);
 }
 
