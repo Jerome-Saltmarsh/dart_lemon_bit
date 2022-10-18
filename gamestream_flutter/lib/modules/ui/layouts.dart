@@ -1,6 +1,6 @@
 
 import 'package:flutter/widgets.dart';
-import 'package:gamestream_flutter/colours.dart';
+import 'package:gamestream_flutter/game_colors.dart';
 import 'package:gamestream_flutter/game_widgets.dart';
 import 'package:gamestream_flutter/modules/ui/style.dart';
 import 'package:gamestream_flutter/ui/build.dart';
@@ -31,7 +31,7 @@ Widget buildLayoutWaitingForPlayers(){
             dotSpace += " ";
           }
           dots = (dots + 1) % 4;
-          return text("${dotSpace}WAITING FOR PLAYERS$dotText", size: FontSize.Large, color: colours.white);
+          return text("${dotSpace}WAITING FOR PLAYERS$dotText", size: FontSize.Large, color: GameColors.white);
         }, milliseconds: 200,),
         height(100),
       ],

@@ -1,6 +1,6 @@
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/colours.dart';
+import 'package:gamestream_flutter/game_colors.dart';
 import 'package:gamestream_flutter/enums/region.dart';
 import 'package:gamestream_flutter/game_widgets.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
@@ -59,7 +59,7 @@ Widget buildButtonSelectRegion(Region region){
 }
 
 Widget buildTextVersion(){
-  return text(version, color: colours.white618, size: FontSize.Small);
+  return text(version, color: GameColors.white618, size: FontSize.Small);
 }
 
 void actionSelectRegion(Region value) {

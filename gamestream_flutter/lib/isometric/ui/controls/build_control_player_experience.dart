@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/colours.dart';
+import 'package:gamestream_flutter/game_colors.dart';
 import 'package:gamestream_flutter/game_widgets.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:golden_ratio/constants.dart';
@@ -24,12 +24,12 @@ Widget buildControlPlayerExperience() {
           alignment: Alignment.centerLeft,
           children: [
             Container(
-              color: colours.brownLight,
+              color: GameColors.brownDark,
               width: width,
               height: height,
             ),
             Container(
-              color: colours.yellow,
+              color: GameColors.yellow,
               width: width * percentage,
               height: height,
             ),

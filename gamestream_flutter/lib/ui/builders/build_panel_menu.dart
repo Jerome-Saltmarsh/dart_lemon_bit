@@ -12,7 +12,7 @@ import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
-import '../../colours.dart';
+import '../../game_colors.dart';
 import 'build_time.dart';
 
 Widget buildPanelMenu() =>
@@ -40,7 +40,7 @@ Widget buildButtonTogglePlayMode() {
           toolTip: "Tab",
           child: edit ? "PLAY" : "EDIT",
           action: actionToggleEdit,
-          color: green,
+          color: GameColors.green,
           alignment: Alignment.center,
           width: 100);
     });

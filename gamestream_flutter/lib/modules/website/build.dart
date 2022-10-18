@@ -1,7 +1,7 @@
 
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/colours.dart';
+import 'package:gamestream_flutter/game_colors.dart';
 import 'package:gamestream_flutter/game_widgets.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/to_string.dart';
@@ -19,10 +19,10 @@ class WebsiteBuild {
       message: "Change Region",
       child: button(
         text(enumString(Website.region.value),
-            color: colours.white80),
+            color: GameColors.white80),
             website.actions.showDialogChangeRegion,
-        borderColor: colours.none,
-        fillColor: colours.black20,
+        borderColor: GameColors.none,
+        fillColor: GameColors.black20,
       ),
     );
   }
@@ -64,12 +64,12 @@ class WebsiteBuild {
                 Column(
                   children: mapNames.map((mapName) => margin(
                     bottom: 16,
-                    child: button(text(mapName, color: colours.white618), (){
+                    child: button(text(mapName, color: GameColors.white618), (){
                       // connect to custom game
                       website.actions.connectToCustomGame(mapName);
                     },
                         alignment: Alignment.centerLeft,
-                        fillColor: colours.white05, fillColorMouseOver: colours.white10, borderColor: none, borderColorMouseOver: none),
+                        fillColor: GameColors.white05, fillColorMouseOver: GameColors.white10, borderColor: GameColors.none, borderColorMouseOver: GameColors.none),
                   )).toList(),
                 ),
               ],

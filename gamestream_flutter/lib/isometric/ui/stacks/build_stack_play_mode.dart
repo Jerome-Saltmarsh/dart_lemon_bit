@@ -1,6 +1,6 @@
 import 'package:bleed_common/teleport_scenes.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/colours.dart';
+import 'package:gamestream_flutter/game_colors.dart';
 import 'package:gamestream_flutter/game_widgets.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/ui/build_panel_store.dart';
@@ -59,7 +59,7 @@ Widget buildWatchMouseTargetName(){
         alignment: Alignment.center,
         width: Engine.screen.width,
         child: Container(
-           color: colours.redDark1,
+           color: GameColors.redDark1,
            height: 50,
            width: 100,
            alignment: Alignment.centerLeft,

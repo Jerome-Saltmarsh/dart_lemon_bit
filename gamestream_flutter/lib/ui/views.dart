@@ -2,7 +2,7 @@
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/game_account.dart';
-import 'package:gamestream_flutter/colours.dart';
+import 'package:gamestream_flutter/game_colors.dart';
 import 'package:gamestream_flutter/game_widgets.dart';
 import 'package:gamestream_flutter/game_ui.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
@@ -34,11 +34,11 @@ Widget buildErrorDialog(String message, {Widget? bottomRight}){
   return dialog(
       width: style.dialogWidthMedium,
       height: style.dialogHeightVerySmall,
-      color: colours.brownDark,
-      borderColor: colours.none,
+      color: GameColors.brownDark,
+      borderColor: GameColors.none,
       child: buildLayout(
           child: Center(
-            child: text(message, color: colours.white),
+            child: text(message, color: GameColors.white),
           ),
           bottomRight: bottomRight ?? text("okay", onPressed: () => Website.error.value = null)
       )
@@ -63,8 +63,8 @@ Widget buildDialogChangeRegion() {
   return dialog(
       height: 500,
       padding: 16,
-      borderColor: colours.none,
-      color: colours.white05,
+      borderColor: GameColors.none,
+      color: GameColors.white05,
       child: buildLayout(
           bottomRight: widgets.buttonClose,
           child: Column(
@@ -76,11 +76,11 @@ Widget buildDialogChangeRegion() {
                   modules.website.actions.showDialogGames();
                 },
                     fillColor: region == Website.region.value
-                        ? colours.black20
-                        : colours.white05,
-                    borderColor: colours.none,
-                    fillColorMouseOver: colours.green,
-                    borderColorMouseOver: colours.green,
+                        ? GameColors.black20
+                        : GameColors.white05,
+                    borderColor: GameColors.none,
+                    fillColorMouseOver: GameColors.green,
+                    borderColorMouseOver: GameColors.green,
                     margin: const EdgeInsets.only(bottom: 8));
               }).toList()
             ],
@@ -139,8 +139,8 @@ Widget buildTopMessage(){
             top: 10,
             child: Row(
               children: [
-                text("Sign in and subscribe", color: colours.green, underline: hovering, onPressed: website.actions.showDialogLogin),
-                text(" to unlock all games", color: colours.white618, onPressed: website.actions.showDialogLogin, underline: hovering),
+                text("Sign in and subscribe", color: GameColors.green, underline: hovering, onPressed: website.actions.showDialogLogin),
+                text(" to unlock all games", color: GameColors.white618, onPressed: website.actions.showDialogLogin, underline: hovering),
               ],
             ),
           );
@@ -151,7 +151,7 @@ Widget buildTopMessage(){
         return margin(
           top: 10,
           child: text("Premium",
-              color: colours.green,
+              color: GameColors.green,
               size: 18,
               onPressed: website.actions.showDialogAccount),
         );
@@ -161,17 +161,17 @@ Widget buildTopMessage(){
         return button(
             Row(
               children: [
-                text("Subscribe", color: colours.green, bold: true, size: 20),
+                text("Subscribe", color: GameColors.green, bold: true, size: 20),
                 onPressed(
                     child: text(" for \$9.99 per month to unlock all games",
-                        color: colours.white80, size: 20),
+                        color: GameColors.white80, size: 20),
                     action: AccountService.openStripeCheckout),
               ],
             ),
             AccountService.openStripeCheckout,
-            fillColorMouseOver: none,
-            borderColor: none,
-            borderColorMouseOver: colours.white80);
+            fillColorMouseOver: GameColors.none,
+            borderColor: GameColors.none,
+            borderColorMouseOver: GameColors.white80);
       }
 
       if (account.subscriptionEnded) {
@@ -181,11 +181,11 @@ Widget buildTopMessage(){
               action: AccountService.openStripeCheckout,
               child: text(
                   "Your subscription expired on ${formatDate(account.subscriptionEndDate!)}",
-                  color: colours.red),
+                  color: GameColors.red),
             ),
             width16,
-            button(text("Renew", color: green), AccountService.openStripeCheckout,
-                borderColor: colours.green),
+            button(text("Renew", color: GameColors.green), AccountService.openStripeCheckout,
+                borderColor: GameColors.green),
           ],
         );
       }
@@ -195,7 +195,7 @@ Widget buildTopMessage(){
         if (subscriptionEndDate != null){
           return margin(
             top: 10,
-              child:                   text("Premium subscription cancelled : ends ${formatDate(subscriptionEndDate)}", color: colours.white618,
+              child:                   text("Premium subscription cancelled : ends ${formatDate(subscriptionEndDate)}", color: GameColors.white618,
                   onPressed: website.actions.showDialogAccount
               ));
         }

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/colours.dart';
+import 'package:gamestream_flutter/game_colors.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/game_ui.dart';
 import 'package:gamestream_flutter/isometric/ai.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_health_bar.dart';
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
-import 'package:gamestream_flutter/utils.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 
@@ -74,7 +73,7 @@ class GameRender {
 
   void drawPaths() {
     if (!GameUI.debug.value) return;
-    Engine.setPaintColor(colours.blue);
+    Engine.setPaintColor(GameColors.blue);
     Engine.paint.strokeWidth = 4.0;
 
     var index = 0;
@@ -96,7 +95,7 @@ class GameRender {
       }
     }
 
-    Engine.setPaintColor(colours.yellow);
+    Engine.setPaintColor(GameColors.yellow);
     final totalLines = targetsTotal * 4;
     for (var i = 0; i < totalLines; i += 4) {
       Engine.drawLine(targets[i], targets[i + 1], targets[i + 2], targets[i + 3]);

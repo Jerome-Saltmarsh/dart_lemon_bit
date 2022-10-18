@@ -1,7 +1,7 @@
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/game_account.dart';
-import 'package:gamestream_flutter/colours.dart';
+import 'package:gamestream_flutter/game_colors.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/styles.dart';
 import 'package:gamestream_flutter/to_string.dart';
@@ -49,7 +49,7 @@ Widget buildDialogAccount(){
         text("MY ACCOUNT",
             size: 30,
             weight: bold,
-            color: colours.white85
+            color: GameColors.white85
         ),
         height32,
         _buildRow("Private Name", account.privateName),
@@ -62,7 +62,7 @@ Widget buildDialogAccount(){
                   children: [
                     // buildIconEdit(),
                     text(account.publicName,
-                        color: colours.white60, size: 16)
+                        color: GameColors.white60, size: 16)
                   ],
                 )),
             action: website.actions.showDialogChangePublicName),
@@ -88,14 +88,14 @@ Widget _buildSubscriptionPanel(Account account){
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          text("PREMIUM", bold: true, color: colours.white80),
+          text("PREMIUM", bold: true, color: GameColors.white80),
           if (!account.subscriptionActive) widgets.textReactivateSubscription,
           if (account.subscriptionActive)
             panelDark(
               expand: false,
               child: onHover((hovering) {
                 return text("Cancel",
-                    color: hovering ? colours.orange : colours.white80,
+                    color: hovering ? GameColors.orange : GameColors.white80,
                     onPressed: website.actions.showDialogConfirmCancelSubscription,
                 );
               }),
@@ -129,29 +129,29 @@ Widget _buildSubscriptionPanel(Account account){
 
 Color getSubscriptionStatusColor(SubscriptionStatus value){
   if (value == SubscriptionStatus.Active){
-    return colours.green;
+    return GameColors.green;
   }
   if (value == SubscriptionStatus.Not_Subscribed){
-    return colours.white80;
+    return GameColors.white80;
   }
-  return colours.orange;
+  return GameColors.orange;
 }
 
 Widget _buildRow(String title, dynamic value){
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
-      text(title, color: colours.white85),
+      text(title, color: GameColors.white85),
       Container(
         height: 40,
           alignment: Alignment.centerRight,
           padding: const EdgeInsets.all(8),
           width: style.dialogWidthMedium * goldenRatio_0618,
           decoration: BoxDecoration(
-            color: colours.black382,
+            color: GameColors.black382,
             borderRadius: borderRadius4,
           ),
-          child: value is Widget ? value : text(value, color: colours.white60, size: 16)),
+          child: value is Widget ? value : text(value, color: GameColors.white60, size: 16)),
     ],
   );
 }
@@ -164,8 +164,8 @@ Widget buildDialog({
   Widget? bottomLeft,
 }){
   return dialog(
-      color: colours.white05,
-      borderColor: none,
+      color: GameColors.white05,
+      borderColor: GameColors.none,
       padding: 16,
       width: width,
       height: height,
@@ -218,7 +218,7 @@ Widget buildDialogSmall({required Widget child, Widget? bottomLeft, Widget? bott
 }
 
 Widget buildDialogTitle(String value){
-  return text(value.toUpperCase(), size: 20, color: colours.white85);
+  return text(value.toUpperCase(), size: 20, color: GameColors.white85);
 }
 
 Widget buildDialogSubscriptionCancelled(){
@@ -266,24 +266,24 @@ Widget buildDialogWelcome2(){
         children: [
           Container(
               width: double.infinity,
-              color: colours.white05,
+              color: GameColors.white05,
               padding: padding16,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  text("Many of our games can be played for free.", color: colours.white80),
+                  text("Many of our games can be played for free.", color: GameColors.white80),
                   height16,
-                  text("A premium membership costs \$9.99 per month", color: colours.white80),
+                  text("A premium membership costs \$9.99 per month", color: GameColors.white80),
                   height8,
-                  text("and will unlock every game in our library", color: colours.white80),
+                  text("and will unlock every game in our library", color: GameColors.white80),
                 ],
               )),
         ],
       ),
-      bottomRight: button(text("PREMIUM MEMBERSHIP", color: green), AccountService.openStripeCheckout, fillColor: none, borderColor: green),
+      bottomRight: button(text("PREMIUM MEMBERSHIP", color: GameColors.green), AccountService.openStripeCheckout, fillColor: GameColors.none, borderColor: GameColors.green),
       bottomLeft: Container(
           padding: padding8,
-          child: text("Perhaps Later", onPressed: website.actions.showDialogGames, color: colours.white80)),
+          child: text("Perhaps Later", onPressed: website.actions.showDialogGames, color: GameColors.white80)),
   );
 }
 
@@ -312,21 +312,21 @@ Widget buildDialogChangePublicName() {
       child: TextField(
         controller: _nameController,
         autofocus: true,
-        cursorColor: colours.white80,
+        cursorColor: GameColors.white80,
         style: TextStyle(
-          color: colours.white90
+          color: GameColors.white90
         ),
         decoration: InputDecoration(
           hintText: "Public Name",
           enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(color: colours.white618)
+            borderSide: BorderSide(color: GameColors.white618)
           ),
           focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: colours.white618)
+              borderSide: BorderSide(color: GameColors.white618)
           ),
-          hoverColor: colours.white80,
-          focusColor: colours.white80,
-          fillColor: colours.white80
+          hoverColor: GameColors.white80,
+          focusColor: GameColors.white80,
+          fillColor: GameColors.white80
         ),
       ),
   );
@@ -337,7 +337,7 @@ Widget buildDialogMessage(dynamic message, {Widget? bottomRight}) {
   return buildDialog(
       width: style.dialogWidthMedium,
       height: style.dialogHeightSmall,
-      child: Center(child: message is Widget ? message : text(message, color: colours.white95)),
+      child: Center(child: message is Widget ? message : text(message, color: GameColors.white95)),
       bottomRight: bottomRight ?? widgets.buttonOkay
   );
 }
@@ -346,9 +346,9 @@ Widget buildDialogConfirmCancelSubscription(){
   return buildDialog(
     width: style.dialogWidthMedium,
     height: style.dialogHeightSmall,
-    child: Center(child: text("Cancel premium subscription?", color: colours.white90)),
-    bottomLeft: button(text("YES", color: colours.red, bold: false), AccountService.cancelSubscription, fillColor: none, borderColor: colours.none, width: 100),
-    bottomRight: button(text("NO", color: colours.green, bold: true), website.actions.showDialogAccount, fillColor: none, borderColor: colours.green, width: 100, borderWidth: 2),
+    child: Center(child: text("Cancel premium subscription?", color: GameColors.white90)),
+    bottomLeft: button(text("YES", color: GameColors.red, bold: false), AccountService.cancelSubscription, fillColor: GameColors.none, borderColor: GameColors.none, width: 100),
+    bottomRight: button(text("NO", color: GameColors.green, bold: true), website.actions.showDialogAccount, fillColor: GameColors.none, borderColor: GameColors.green, width: 100, borderWidth: 2),
   );
 }
 
@@ -360,7 +360,7 @@ Widget buildButton(String value, Function action, {bool underline = false}){
   return Container(
     padding: padding16,
     child: onHover((hovering){
-      return text(value, color: hovering ? colours.white80 : colours.white618, underline: underline, onPressed: action);
+      return text(value, color: hovering ? GameColors.white80 : GameColors.white618, underline: underline, onPressed: action);
     }),
   );
 }
@@ -369,7 +369,7 @@ Widget buildButtonPrimary(String value, Function action){
   return Container(
     padding: padding16,
     child: onHover((hovering){
-      return text(value, color: colours.green, underline: true, onPressed: action, bold: true);
+      return text(value, color: GameColors.green, underline: true, onPressed: action, bold: true);
     }),
   );
 }

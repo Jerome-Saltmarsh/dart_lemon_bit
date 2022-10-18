@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/game_account.dart';
 import 'package:gamestream_flutter/authentication.dart';
-import 'package:gamestream_flutter/colours.dart';
+import 'package:gamestream_flutter/game_colors.dart';
 import 'package:gamestream_flutter/game_widgets.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/website/enums.dart';
@@ -16,7 +16,7 @@ import '../styles.dart';
 final closeDialogButton = button(
     "close",
     modules.website.actions.showDialogGames,
-    borderColor: colours.none
+    borderColor: GameColors.none
 );
 
 final widgets = _Widgets();
@@ -27,33 +27,33 @@ class _Widgets {
   final Widget timeZone = build.timeZone();
 
   final textUpgrade = button(
-    text("PURCHASE", color: green, bold: true),
+    text("PURCHASE", color: GameColors.green, bold: true),
     AccountService.openStripeCheckout,
-    fillColor: none,
-    borderColor: green,
-    borderColorMouseOver: green,
+    fillColor: GameColors.none,
+    borderColor: GameColors.green,
+    borderColorMouseOver: GameColors.green,
     borderWidth: 2,
   );
 
   final textReactivateSubscription = button(
-    text("Activate", color: green, underline: true),
+    text("Activate", color: GameColors.green, underline: true),
     AccountService.openStripeCheckout,
-    fillColor: none,
-    borderColorMouseOver: green,
-    borderColor: none,
+    fillColor: GameColors.none,
+    borderColorMouseOver: GameColors.green,
+    borderColor: GameColors.none,
   );
 
   final buttonClose = buildButton("Close", website.actions.showDialogGames);
   final buttonOkay = buildButton("Okay", website.actions.showDialogGames);
   final buttonGreat = buildButton("Great", website.actions.showDialogGames);
 
-  final buttonNo = button(text("No", color: colours.white80), website.actions.showDialogGames, fillColor: colours.none,
-    fillColorMouseOver: none,
-    borderColor: colours.none,
+  final buttonNo = button(text("No", color: GameColors.white80), website.actions.showDialogGames, fillColor: GameColors.none,
+    fillColorMouseOver: GameColors.none,
+    borderColor: GameColors.none,
     width: 100,
   );
 
-  final buttonChangeDisplayName = button(text("Change Public Name", color: colours.green), website.actions.showDialogChangePublicName, borderColor: colours.green);
+  final buttonChangeDisplayName = button(text("Change Public Name", color: GameColors.green), website.actions.showDialogChangePublicName, borderColor: GameColors.green);
 }
 
 final authenticationRequired = Exception("Authentication Required");
@@ -78,10 +78,10 @@ class _Buttons {
   ), (){
     website.state.dialog.value = WebsiteDialog.Login;
   }, width: style.buttonWidth, height: style.buttonHeight, borderWidth: 3,
-    fillColor: colours.none,
-    borderColor: colours.none,
-    fillColorMouseOver: colours.green,
-    borderColorMouseOver: colours.green,
+    fillColor: GameColors.none,
+    borderColor: GameColors.none,
+    fillColorMouseOver: GameColors.green,
+    borderColorMouseOver: GameColors.green,
     borderRadius: borderRadius2,
   );
 
@@ -109,10 +109,10 @@ class _Buttons {
       ],
     ),
   ), getAuthenticationFacebook,
-    fillColor: colours.facebook,
-    fillColorMouseOver: colours.facebook,
-    borderColorMouseOver: none,
-    borderColor: none,
+    fillColor: GameColors.facebook,
+    fillColorMouseOver: GameColors.facebook,
+    borderColorMouseOver: GameColors.none,
+    borderColor: GameColors.none,
     borderWidth: 1,
   );
 
@@ -125,10 +125,10 @@ class _Buttons {
   },
       height: style.buttonHeight,
       width: style.buttonWidth,
-      fillColor: colours.none,
-      fillColorMouseOver: colours.green,
-      borderColorMouseOver: colours.green,
-      borderColor: colours.none,
+      fillColor: GameColors.none,
+      fillColorMouseOver: GameColors.green,
+      borderColorMouseOver: GameColors.green,
+      borderColor: GameColors.none,
       borderRadius: borderRadius2,
   );
 
@@ -142,10 +142,10 @@ class _Buttons {
     },
       height: style.buttonHeight,
       width: style.buttonWidth,
-      fillColor: hovering ? colours.green : colours.none,
-      fillColorMouseOver: colours.green,
-      borderColorMouseOver: colours.green,
-      borderColor: hovering ? colours.green : colours.none,
+      fillColor: hovering ? GameColors.green : GameColors.none,
+      fillColorMouseOver: GameColors.green,
+      borderColorMouseOver: GameColors.green,
+      borderColor: hovering ? GameColors.green : GameColors.none,
       borderRadius: borderRadius2,
     );
   }
@@ -156,18 +156,18 @@ Widget _buildFakeLoginButton(String userId, String text){
   });
 }
 
-final backButton = button(text("Back", color: colours.white618), () {
+final backButton = button(text("Back", color: GameColors.white618), () {
   website.state.dialog.value = WebsiteDialog.Games;
-}, fillColor: colours.none,
-  fillColorMouseOver: none,
-  borderColor: colours.none,
+}, fillColor: GameColors.none,
+  fillColorMouseOver: GameColors.none,
+  borderColor: GameColors.none,
 );
 
 
 Widget buildInfo({required Widget child}){
   return border(
-    fillColor: colours.white05,
-    color: none,
+    fillColor: GameColors.white05,
+    color: GameColors.none,
     padding: padding16,
     child: child,
   );
@@ -178,21 +178,21 @@ Widget buildMenuButton(String text, Function onPressed){
     onPressed,
     width: style.buttonWidth,
     height: style.buttonHeight,
-    borderColor: none,
-    fillColor: colours.white05,
-    fillColorMouseOver: colours.black05,
-    borderColorMouseOver: colours.none,
+    borderColor: GameColors.none,
+    fillColor: GameColors.white05,
+    fillColorMouseOver: GameColors.black05,
+    borderColorMouseOver: GameColors.none,
     borderRadius: borderRadius0,
     boldOnHover: true
   );
 }
 
 Widget panelDark({required Widget child, bool expand = true}){
-  return buildPanel(child: child, expand: expand, color: colours.black10);
+  return buildPanel(child: child, expand: expand, color: GameColors.black10);
 }
 
 Widget panelLight({required Widget child, bool expand = true}){
-  return buildPanel(child: child, expand: expand, color: colours.white05);
+  return buildPanel(child: child, expand: expand, color: GameColors.white05);
 }
 
 Widget buildPanel({required Widget child, bool expand = true, Color? color}){
@@ -201,7 +201,7 @@ Widget buildPanel({required Widget child, bool expand = true, Color? color}){
     child: child,
     width: expand ? double.infinity : null,
     decoration: BoxDecoration(
-      color: color ?? colours.white05,
+      color: color ?? GameColors.white05,
       borderRadius: borderRadius4,
     ),
   );

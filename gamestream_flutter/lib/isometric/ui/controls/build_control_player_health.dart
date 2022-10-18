@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/colours.dart';
+import 'package:gamestream_flutter/game_colors.dart';
 import 'package:gamestream_flutter/game_widgets.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:golden_ratio/constants.dart';
@@ -30,12 +30,12 @@ Widget buildControlPlayerHealth() {
           alignment: Alignment.centerLeft,
           children: [
             Container(
-              color: colours.redDarkest,
+              color: GameColors.redDarkest,
               width: width,
               height: height,
             ),
             Container(
-              color: colours.red,
+              color: GameColors.red,
               width: width * percentage,
               height: height,
             ),

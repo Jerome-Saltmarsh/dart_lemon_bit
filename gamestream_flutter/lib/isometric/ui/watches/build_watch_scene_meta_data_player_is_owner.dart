@@ -3,7 +3,7 @@ import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/request_modify_canvas_size.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/colours.dart';
+import 'package:gamestream_flutter/game_colors.dart';
 import 'package:gamestream_flutter/game_widgets.dart';
 import 'package:gamestream_flutter/isometric/edit.dart';
 import 'package:gamestream_flutter/isometric/enums/editor_dialog.dart';
@@ -394,8 +394,8 @@ Row buildEditorMenu(EditTab activeEditTab) =>
                             child: editTab.name,
                             width: 150,
                             color: activeEditTab == editTab
-                                ? colours.brownDark
-                                : colours.brownLight,
+                                ? GameColors.brownDark
+                                : GameColors.brownLight,
                             action: () => EditState.editTab.value = editTab,
                          )
           ).toList(),

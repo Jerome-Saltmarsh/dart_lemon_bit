@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/assets.dart';
-import 'package:gamestream_flutter/colours.dart';
+import 'package:gamestream_flutter/game_colors.dart';
 import 'package:gamestream_flutter/enums/region.dart';
 import 'package:gamestream_flutter/game_widgets.dart';
 
@@ -85,7 +85,7 @@ Widget buildTitle(){
       ),
       text("STREAM",
         size: 60,
-        color: colours.red,
+        color: GameColors.red,
         family: Fonts.LibreBarcode39Text,
       ),
     ],

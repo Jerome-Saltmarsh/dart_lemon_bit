@@ -2,7 +2,7 @@
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/atlases.dart';
-import 'package:gamestream_flutter/colours.dart';
+import 'package:gamestream_flutter/game_colors.dart';
 import 'package:gamestream_flutter/enums/region.dart';
 import 'package:gamestream_flutter/game_widgets.dart';
 import 'package:gamestream_flutter/modules/core/actions.dart';
@@ -75,7 +75,7 @@ class Website {
     final double _width = 300;
     final double _height = 50;
     return fullScreen(
-      color: colours.black,
+      color: GameColors.black,
       child: watch(Website.download, (double value) {
         value = 0.6182;
         return Row(
@@ -142,7 +142,7 @@ class Website {
           Positioned(
             bottom: padding,
             right: padding,
-            child: text("Created by Jerome Saltmarsh", color: colours.white618,
+            child: text("Created by Jerome Saltmarsh", color: GameColors.white618,
                 size: FontSize.Small),
           ),
           Positioned(
@@ -179,7 +179,7 @@ class Website {
 
   static Widget buildPageConnectionStatus(String message) =>
       buildFullScreen(
-        child: text(message, color: colours.white80, align: TextAlign.center),
+        child: text(message, color: GameColors.white80, align: TextAlign.center),
       );
 
   static Widget buildFullScreen({required Widget child, Alignment alignment = Alignment.center}) =>
