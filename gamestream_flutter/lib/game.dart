@@ -634,53 +634,6 @@ class Game {
     }
   }
 
-  static void spawnParticleFlame({
-    required double x,
-    required double y,
-    required double z,
-  }) {
-    print("spawnParticleFlame()");
-    spawnParticle(
-        type: ParticleType.Flame,
-        x: x,
-        y: y,
-        z: z,
-        angle: 0,
-        speed: 0,
-        zv: 0.015,
-        weight: 0.0,
-        duration: 120,
-        rotation: 0,
-        rotationV: 0,
-        scale: 1.0,
-        scaleV: 0.005
-    );
-  }
-
-  static void spawnParticleSmoke({
-    required double x,
-    required double y,
-    required double z,
-    required double zv,
-    required double angle,
-    required double speed
-  }) {
-    spawnParticle(
-        type: ParticleType.Smoke,
-        x: x,
-        y: y,
-        z: z,
-        angle: angle,
-        speed: speed,
-        zv: 0.015,
-        weight: 0.0,
-        duration: 120,
-        rotation: 0,
-        rotationV: 0,
-        scale: 0.2,
-        scaleV: 0.005);
-  }
-
   static void spawnParticleHeadZombie({
     required double x,
     required double y,

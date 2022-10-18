@@ -34,7 +34,6 @@ import 'isometric/classes/particle.dart';
 import 'isometric/edit.dart';
 import 'isometric/grid.dart';
 import 'isometric/lighting/apply_emissions_gameobjects.dart';
-import 'isometric/render/render_particle.dart';
 
 class GameRender {
   static var totalRemaining = 0;
@@ -347,16 +346,13 @@ class GameRender {
         );
         break;
       case ParticleType.Orb_Shard:
-        renderOrbShard(
+        renderParticleOrbShard(
           x: particle.renderX,
           y: particle.renderY,
           scale: particle.scale,
           rotation: particle.rotation,
           frame: particle.frame,
         );
-        break;
-      case ParticleType.Flame:
-        renderFlame(particle);
         break;
       case ParticleType.Zombie_Arm:
         casteShadowDownV3(particle);
@@ -1180,6 +1176,39 @@ class GameRender {
       anchorY: 0.75,
     );
   }
+
+  static void renderParticleOrbShard({
+    required double x,
+    required double y,
+    required double scale,
+    required double rotation,
+    required int frame,
+  }) {
+    const size = 16.0;
+    Engine.renderSprite(
+      image: GameImages.gameobjects,
+      dstX: x,
+      dstY: y,
+      srcX: 224 ,
+      srcY: (frame % 4) * size,
+      srcWidth: size,
+      srcHeight: size,
+      scale: scale,
+    );
+  }
+
+  static void renderProjectileFireball(Position position) =>
+      Engine.renderSprite(
+        image: GameImages.projectiles,
+        dstX: position.x,
+        dstY: position.y,
+        srcY: ((position.x + position.y + Engine.paintFrame) % 6) * 23,
+        srcX: 0,
+        srcWidth: 18,
+        srcHeight: 23,
+        anchorY: 0.9,
+      );
+
 }
 
 class RenderOrderCharacters extends RenderOrder {

@@ -8,6 +8,7 @@ class GameImages {
    static late Image mapAtlas;
    static late Image blocks;
    static late Image characters;
+   static late Image projectiles;
    static late Image zombie;
    static late Image templateShadow;
    static late Image gameobjects;
