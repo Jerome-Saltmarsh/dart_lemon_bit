@@ -11,7 +11,6 @@ import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/game_object.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
-import 'package:gamestream_flutter/isometric/convert_index.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/grid_state_util.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_emmissions_particles.dart';
@@ -911,9 +910,9 @@ class GameRender {
     nodesPlayerUnderRoof = gridIsUnderSomething(playerZ, playerRow, playerColumn);
 
     indexShow = inBoundsVector3(Game.player) ? Game.player.nodeIndex : 0;
-    indexShowRow = convertIndexToRow(indexShow);
-    indexShowColumn = convertIndexToColumn(indexShow);
-    indexShowZ = convertIndexToZ(indexShow);
+    indexShowRow = Game.convertNodeIndexToRow(indexShow);
+    indexShowColumn = Game.convertNodeIndexToColumn(indexShow);
+    indexShowZ = Game.convertNodeIndexToZ(indexShow);
 
     indexShowPerceptible =
         gridIsPerceptible(indexShow) &&
@@ -1157,8 +1156,8 @@ class GameRender {
     var distance = 0.0;
 
     if (torchIndex != -1) {
-      final torchRow = convertIndexToRow(torchIndex);
-      final torchColumn = convertIndexToColumn(torchIndex);
+      final torchRow = Game.convertNodeIndexToRow(torchIndex);
+      final torchColumn = Game.convertNodeIndexToColumn(torchIndex);
       final torchPosX = torchRow * nodeSize + nodeSizeHalf;
       final torchPosY = torchColumn * nodeSize + nodeSizeHalf;
       angle = getAngleBetween(character.x, character.y, torchPosX, torchPosY);

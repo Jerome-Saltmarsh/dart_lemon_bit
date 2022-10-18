@@ -147,6 +147,16 @@ class Game {
     return false;
   }
 
+  static int convertNodeIndexToZ(int index) =>
+      index ~/ nodesArea;
+
+  static int convertNodeIndexToRow(int index) =>
+      (index - ((index ~/ nodesArea) * nodesArea)) ~/ nodesTotalColumns;
+
+  static int convertNodeIndexToColumn(int index) =>
+      index - ((convertNodeIndexToZ(index) * nodesArea) + (convertNodeIndexToRow(index) * nodesTotalColumns));
+
+
   // ACTIONS
 
   static void applyEmissionsCharacters() {

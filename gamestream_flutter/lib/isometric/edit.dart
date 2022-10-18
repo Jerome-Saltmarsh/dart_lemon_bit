@@ -3,7 +3,6 @@ import 'package:bleed_common/node_type.dart';
 import 'package:bleed_common/tile_size.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/classes/game_object.dart';
-import 'package:gamestream_flutter/isometric/convert_index.dart';
 import 'package:gamestream_flutter/isometric/editor/events/on_changed_node_type_spawn_selected.dart';
 import 'package:gamestream_flutter/isometric/editor/events/on_changed_paint_type.dart';
 import 'package:gamestream_flutter/isometric/editor/events/on_changed_selected_node.dart';
@@ -46,9 +45,9 @@ class EditState {
      return value;
   }, onChanged: onChangedSelectedNodeIndex);
 
-  static int get z => convertIndexToZ(nodeIndex.value);
-  static int get row => convertIndexToRow(nodeIndex.value);
-  static int get column => convertIndexToColumn(nodeIndex.value);
+  static int get z => Game.convertNodeIndexToZ(nodeIndex.value);
+  static int get row => Game.convertNodeIndexToRow(nodeIndex.value);
+  static int get column => Game.convertNodeIndexToColumn(nodeIndex.value);
 
   static set z(int value){
      if (value < 0) return;

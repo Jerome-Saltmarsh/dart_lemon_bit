@@ -4,7 +4,6 @@ import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/node_size.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/animation_frame.dart';
-import 'package:gamestream_flutter/isometric/convert_index.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/nodes.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_x.dart';
@@ -30,9 +29,9 @@ void renderNodeAt() {
         if (nodeBelowOrientation == NodeOrientation.None) {
            return;
         }
-        final renderNodeIndexColumn = convertIndexToColumn(GameRender.currentNodeIndex);
-        final renderNodeIndexRow = convertIndexToRow(GameRender.currentNodeIndex);
-        final renderNodeIndexZ = convertIndexToZ(GameRender.currentNodeIndex);
+        final renderNodeIndexColumn = Game.convertNodeIndexToColumn(GameRender.currentNodeIndex);
+        final renderNodeIndexRow = Game.convertNodeIndexToRow(GameRender.currentNodeIndex);
+        final renderNodeIndexZ = Game.convertNodeIndexToZ(GameRender.currentNodeIndex);
         final zDiff = (renderNodeIndexZ - GameRender.indexShowZ).abs();
 
         if (renderNodeIndexColumn > GameRender.indexShowColumn && renderNodeIndexRow > GameRender.indexShowRow){

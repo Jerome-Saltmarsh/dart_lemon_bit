@@ -6,7 +6,6 @@ import 'package:bleed_common/node_size.dart';
 import 'package:gamestream_flutter/game_images.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/game_config.dart';
-import 'package:gamestream_flutter/isometric/convert_index.dart';
 import 'package:gamestream_flutter/isometric/nodes.dart';
 import 'package:gamestream_flutter/isometric/render/get_character_render_color.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
@@ -148,8 +147,8 @@ void renderCharacterTemplate(Character character, {
   var distance = 0.0;
 
   if (torchIndex != -1) {
-      final torchRow = convertIndexToRow(torchIndex);
-      final torchColumn = convertIndexToColumn(torchIndex);
+      final torchRow = Game.convertNodeIndexToRow(torchIndex);
+      final torchColumn = Game.convertNodeIndexToColumn(torchIndex);
       final torchPosX = torchRow * nodeSize + nodeSizeHalf;
       final torchPosY = torchColumn * nodeSize + nodeSizeHalf;
       angle = getAngleBetween(character.x, character.y, torchPosX, torchPosY);

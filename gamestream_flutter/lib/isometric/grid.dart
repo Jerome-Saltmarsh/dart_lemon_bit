@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_orientation.dart';
 import 'package:gamestream_flutter/game.dart';
-import 'package:gamestream_flutter/isometric/convert_index.dart';
 import 'package:gamestream_flutter/isometric/grid/actions/rain_on.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/nodes.dart';
@@ -228,9 +227,9 @@ void applyEmissionDynamic({
   required int index,
   required int maxBrightness,
 }){
-  final zIndex = convertIndexToZ(index);
-  final rowIndex = convertIndexToRow(index);
-  final columnIndex = convertIndexToColumn(index);
+  final zIndex = Game.convertNodeIndexToZ(index);
+  final rowIndex = Game.convertNodeIndexToRow(index);
+  final columnIndex = Game.convertNodeIndexToColumn(index);
   final radius = Shade.Pitch_Black;
   final zMin = max(zIndex - radius, 0);
   final zMax = min(zIndex + radius, Game.nodesTotalZ);
