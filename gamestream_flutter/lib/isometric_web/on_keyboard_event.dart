@@ -6,7 +6,6 @@ import 'package:gamestream_flutter/isometric/actions/action_toggle_inventory.dar
 import 'package:gamestream_flutter/isometric/camera.dart';
 import 'package:gamestream_flutter/isometric/edit.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
-import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/utils/mouse.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:lemon_engine/engine.dart';
@@ -29,7 +28,7 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
   if (key == PhysicalKeyboardKey.digit5)
     return EditState.paintTorch();
   if (key == PhysicalKeyboardKey.keyZ){
-    return spawnParticleFirePurple(x: mouseGridX, y: mouseGridY, z: Game.player.z);
+    return Game.spawnParticleFirePurple(x: mouseGridX, y: mouseGridY, z: Game.player.z);
   }
 
   if (playMode) {

@@ -1,8 +1,8 @@
 
 import 'package:bleed_common/attack_type.dart';
 import 'package:gamestream_flutter/audio_engine.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/events/on_game_event.dart';
-import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 
 void onGameEventAttackPerformed(double x, double y, double z, double angle) {
@@ -10,7 +10,7 @@ void onGameEventAttackPerformed(double x, double y, double z, double angle) {
   switch (attackType){
     case AttackType.Handgun:
       AudioEngine.audioSinglePistolShot20.playXYZ(x, y, z);
-      spawnParticleShell(x, y, z);
+      Game.spawnParticleShell(x, y, z);
       break;
     case AttackType.Shotgun:
       return AudioEngine.audioSingleShotgunShot.playXYZ(x, y, z);
@@ -28,7 +28,7 @@ void onGameEventAttackPerformed(double x, double y, double z, double angle) {
       return onGameEventAttackPerformedUnarmed(x, y, z, angle);
     case AttackType.Crowbar:
       AudioEngine.audioSingleSwingSword.playXYZ(x, y, z);
-      return spawnParticleSlashCrowbar(x, y, z, angle);
+      return Game.spawnParticleSlashCrowbar(x, y, z, angle);
     default:
       return;
   }

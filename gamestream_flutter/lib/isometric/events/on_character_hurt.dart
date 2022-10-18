@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:bleed_common/character_type.dart';
 import 'package:gamestream_flutter/audio_engine.dart';
-import 'package:gamestream_flutter/isometric/particles.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:lemon_math/library.dart';
 
 void onGameEventCharacterHurt(int type, double x, double y, double z, double angle) {
@@ -12,7 +12,7 @@ void onGameEventCharacterHurt(int type, double x, double y, double z, double ang
   AudioEngine.audioSingleHeavyPunch13.playXYZ(x, y, z);
 
   for (var i = 0; i < 4; i++){
-    spawnParticleBlood(
+    Game.spawnParticleBlood(
         x: x,
         y: y,
         z: z,

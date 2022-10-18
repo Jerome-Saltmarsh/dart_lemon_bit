@@ -2,8 +2,8 @@
 import 'dart:math';
 
 import 'package:bleed_common/particle_type.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/classes/particle.dart';
-import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:lemon_math/library.dart';
 
 void emitParticlePixel({
@@ -13,7 +13,7 @@ void emitParticlePixel({
 }) {
   const initialVelocityMin = 0.15;
   const initialVelocityMax = 0.25;
-  final particle = getParticleInstance();
+  final particle = Game.getParticleInstance();
   particle.x = x;
   particle.y = y;
   particle.z = z;

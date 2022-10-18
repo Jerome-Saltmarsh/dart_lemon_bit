@@ -143,7 +143,6 @@ class Engine {
     ..strokeWidth = 1;
 
   static Timer? updateTimer;
-  static late final sharedPreferences;
   static var scrollSensitivity = 0.0005;
   static var cameraSmoothFollow = true;
   static var zoomSensitivity = 0.175;
@@ -151,23 +150,24 @@ class Engine {
   static var zoomOnScroll = true;
   static var keyPressedHandlers = <LogicalKeyboardKey, Function>{};
   static var keyReleasedHandlers = <LogicalKeyboardKey, Function>{};
-  static final Map<LogicalKeyboardKey, int> keyboardState = {};
   static var mousePosition = Vector2(0, 0);
   static var previousMousePosition = Vector2(0, 0);
   static var previousUpdateTime = DateTime.now();
   static var mouseLeftDownFrames = 0;
+  static var zoom = 1.0;
+  static var drawCanvasAfterUpdate = true;
+  static late BuildContext buildContext;
+  static late final sharedPreferences;
+  static final Map<LogicalKeyboardKey, int> keyboardState = {};
   static final themeData = Watch<ThemeData?>(null);
   static final fullScreen = Watch(false);
-  static var drawCanvasAfterUpdate = true;
+  static final deviceType = Watch(DeviceType.Computer);
   static final notifierPaintFrame = ValueNotifier<int>(0);
   static final notifierPaintForeground = ValueNotifier<int>(0);
   static final screen = _Screen();
   static final cursorType = Watch(CursorType.Precise);
   static var panStarted = false;
   static final camera = Vector2(0, 0);
-  static var zoom = 1.0;
-  static final deviceType = Watch(DeviceType.Computer);
-  static late BuildContext buildContext;
 
   // QUERIES
 
@@ -517,10 +517,10 @@ class Engine {
   }
 
   static void _internalOnUpdate(Timer timer){
-    _screen.left = camera.x;
-    _screen.right = camera.x + (_screen.width / zoom);
-    _screen.top = camera.y;
-    _screen.bottom = camera.y + (_screen.height / zoom);
+    screen.left = camera.x;
+    screen.right = camera.x + (screen.width / zoom);
+    screen.top = camera.y;
+    screen.bottom = camera.y + (screen.height / zoom);
     if (watchMouseLeftDown.value) {
       mouseLeftDownFrames++;
     }
@@ -798,6 +798,9 @@ class Engine {
   static double calculateAdjacent(double radians, double magnitude) =>
     cos(radians) * magnitude;
 
+  static double calculateOpposite(double radians, double magnitude) =>
+    sin(radians) * magnitude;
+
   static T clamp<T extends num>(T value, T min, T max) {
     if (value < min) return min;
     if (value > max) return max;
@@ -862,15 +865,12 @@ T closestToMouse<T extends Vector2>(List<T> values){
 
 // global properties
 // Offset get mouseWorld => Offset(mouseWorldX, mouseWorldY);
-final _mousePosition = Engine.mousePosition;
-final _screen = Engine.screen;
-
-double get screenCenterX => _screen.width * 0.5;
-double get screenCenterY => _screen.height * 0.5;
+double get screenCenterX => Engine.screen.width * 0.5;
+double get screenCenterY => Engine.screen.height * 0.5;
 double get screenCenterWorldX => screenToWorldX(screenCenterX);
 double get screenCenterWorldY => screenToWorldY(screenCenterY);
-double get mouseWorldX => screenToWorldX(_mousePosition.x);
-double get mouseWorldY => screenToWorldY(_mousePosition.y);
+double get mouseWorldX => screenToWorldX(Engine.mousePosition.x);
+double get mouseWorldY => screenToWorldY(Engine.mousePosition.y);
 bool get fullScreenActive => document.fullscreenElement != null;
 
 // global typedefs

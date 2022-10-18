@@ -2,7 +2,7 @@
 
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/audio_engine.dart';
-import 'package:gamestream_flutter/isometric/particles.dart';
+import 'package:gamestream_flutter/game.dart';
 
 void onGameEventGameObjectDestroyed(
     double x,
@@ -15,7 +15,7 @@ void onGameEventGameObjectDestroyed(
      case GameObjectType.Barrel:
        AudioEngine.audioSingleCrateBreaking.playXYZ(x, y, z);
        for (var i = 0; i < 5; i++) {
-         spawnParticleBlockWood(x, y, z);
+         Game.spawnParticleBlockWood(x, y, z);
        }
        break;
    }

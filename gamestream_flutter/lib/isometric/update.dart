@@ -16,7 +16,6 @@ import 'animation_frame.dart';
 import 'audio/audio_loops.dart';
 import 'audio/audio_random.dart';
 import 'particle_emitters.dart';
-import 'particles.dart';
 import 'update/update_zombie_growls.dart';
 
 void updateIsometric(){
@@ -41,7 +40,7 @@ void updateIsometric(){
 void updateMouseBubbleSpawn() {
   if (nextBubbleSpawn-- > 0) return;
   nextBubbleSpawn = 30;
-  spawnParticleBubble(x: mouseGridX, y: mouseGridY, z: Game.player.z);
+  Game.spawnParticleBubble(x: mouseGridX, y: mouseGridY, z: Game.player.z);
 }
 
 var nextBubbleSpawn = 0;
@@ -91,8 +90,8 @@ void updateProjectiles() {
   for (var i = 0; i < Game.totalProjectiles; i++) {
     final projectile = Game.projectiles[i];
     if (projectile.type == ProjectileType.Fireball) {
-      spawnParticleFire(x: projectile.x, y: projectile.y, z: projectile.z);
-      spawnParticleBubble(
+      Game.spawnParticleFire(x: projectile.x, y: projectile.y, z: projectile.z);
+      Game.spawnParticleBubble(
           x: projectile.x + giveOrTake(5),
           y: projectile.y + giveOrTake(5),
           z: projectile.z,
@@ -103,14 +102,14 @@ void updateProjectiles() {
     }
 
     if (projectile.type == ProjectileType.Bullet) {
-      spawnParticleBubble(
+      Game.spawnParticleBubble(
         x: projectile.x + giveOrTake(5),
         y: projectile.y + giveOrTake(5),
         z: projectile.z,
         angle: (projectile.angle + pi) + giveOrTake(piHalf ),
         speed: 1.5,
       );
-      spawnParticleBulletRing(
+      Game.spawnParticleBulletRing(
         x: projectile.x,
         y: projectile.y,
         z: projectile.z,
@@ -121,7 +120,7 @@ void updateProjectiles() {
     }
 
     if (projectile.type != ProjectileType.Orb) continue;
-    spawnParticleOrbShard(x: projectile.x, y: projectile.y, z: projectile.z, angle: randomAngle());
+    Game.spawnParticleOrbShard(x: projectile.x, y: projectile.y, z: projectile.z, angle: randomAngle());
   }
 }
 

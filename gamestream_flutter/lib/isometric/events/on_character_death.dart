@@ -5,7 +5,7 @@ import 'package:bleed_common/library.dart';
 import 'package:bleed_common/particle_type.dart';
 import 'package:bleed_common/tile_size.dart';
 import 'package:gamestream_flutter/audio_engine.dart';
-import 'package:gamestream_flutter/isometric/particles.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/spawn/spawn_bubbles.dart';
 import 'package:gamestream_flutter/isometric/spawn/spawn_purple_fire_explosion.dart';
 import 'package:lemon_math/library.dart';
@@ -15,7 +15,7 @@ void onGameEventCharacterDeath(int type, double x, double y, double z, double an
   spawnBubbles(x, y, z);
 
   for (var i = 0; i < 4; i++){
-    spawnParticleBlood(
+    Game.spawnParticleBlood(
       x: x,
       y: y,
       z: z,
@@ -32,7 +32,7 @@ void onGameEventCharacterDeath(int type, double x, double y, double z, double an
 }
 
 void onCharacterDeathZombie(int type, double x, double y, double z, double angle){
-  spawnParticleAnimation(
+  Game.spawnParticleAnimation(
       type: randomItem(
           const [
             ParticleType.Character_Animation_Death_Zombie_1,
@@ -48,14 +48,14 @@ void onCharacterDeathZombie(int type, double x, double y, double z, double angle
   angle += pi;
 
   final zPos = z + tileSizeHalf;
-  spawnParticleHeadZombie(x: x, y: y, z: zPos, angle: angle, speed: 4.0);
+  Game.spawnParticleHeadZombie(x: x, y: y, z: zPos, angle: angle, speed: 4.0);
   // spawnParticleArm(
   //     x: x,
   //     y: y,
   //     z: zPos,
   //     angle: angle + giveOrTake(0.5),
   //     speed: 4.0 + giveOrTake(0.5));
-  spawnParticleArm(
+  Game.spawnParticleArm(
       x: x,
       y: y,
       z: zPos,
@@ -67,13 +67,13 @@ void onCharacterDeathZombie(int type, double x, double y, double z, double angle
   //     z: zPos,
   //     angle: angle + giveOrTake(0.5),
   //     speed: 4.0 + giveOrTake(0.5));
-  spawnParticleLegZombie(
+  Game.spawnParticleLegZombie(
       x: x,
       y: y,
       z: zPos,
       angle: angle + giveOrTake(0.5),
       speed: 4.0 + giveOrTake(0.5));
-  spawnParticleOrgan(
+  Game.spawnParticleOrgan(
       x: x,
       y: y,
       z: zPos,

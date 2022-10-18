@@ -22,7 +22,6 @@ import 'package:gamestream_flutter/isometric/floating_texts.dart';
 import 'package:gamestream_flutter/isometric/gameobjects.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/io/custom_game_names.dart';
-import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/watches/lightning.dart';
 import 'package:gamestream_flutter/isometric/watches/rain.dart';
 import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
@@ -136,7 +135,7 @@ class ServerResponseReader with ByteReader {
           final speed = readDouble() * 0.01;
           final weight = readDouble() * 0.01;
           final zv = readDouble() * 0.01;
-          spawnParticle(
+          Game.spawnParticle(
               type: particleType,
               x: x,
               y: y,

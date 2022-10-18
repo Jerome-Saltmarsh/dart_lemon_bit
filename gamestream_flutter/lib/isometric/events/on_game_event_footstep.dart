@@ -1,7 +1,7 @@
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/audio_engine.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/nodes.dart';
-import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/watches/rain.dart';
 import 'package:gamestream_flutter/isometric/watches/raining.dart';
 import 'package:lemon_math/library.dart';
@@ -17,7 +17,7 @@ void onGameEventFootstep(double x, double y, double z) {
     AudioEngine.audioSingleFootstepMud6.playXYZ(x, y, z);
     final amount = rain.value == Rain.Heavy ? 3 : 2;
     for (var i = 0; i < amount; i++){
-      spawnParticleWaterDrop(x: x, y: y, z: z);
+      Game.spawnParticleWaterDrop(x: x, y: y, z: z);
     }
   }
 

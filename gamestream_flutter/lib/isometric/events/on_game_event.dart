@@ -1,6 +1,7 @@
 import 'package:bleed_common/character_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/audio_engine.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/game_events.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/camera.dart';
@@ -8,7 +9,6 @@ import 'package:gamestream_flutter/isometric/classes/explosion.dart';
 import 'package:gamestream_flutter/isometric/events/on_character_hurt.dart';
 import 'package:gamestream_flutter/isometric/events/on_game_event_attack_performed.dart';
 import 'package:gamestream_flutter/isometric/events/on_game_event_game_object_destroyed.dart';
-import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:lemon_math/library.dart';
 
@@ -46,7 +46,7 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       return GameEvents.onWeaponTypeEquipped(attackType, x, y, z);
     case GameEventType.Player_Spawned:
       for (var i = 0; i < 7; i++){
-        spawnParticleOrbShard(x: x, y: y, z: z, angle: randomAngle());
+        Game.spawnParticleOrbShard(x: x, y: y, z: z, angle: randomAngle());
       }
       return;
     case GameEventType.Splash:
@@ -110,10 +110,10 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
 
     case GameEventType.Blue_Orb_Deactivated:
       for (var i = 0; i < 8; i++) {
-        spawnParticleOrbShard(
+        Game.spawnParticleOrbShard(
             x: x, y: y, z: z, duration: 30, speed: randomBetween(1, 2), angle: randomAngle());
       }
-      spawnEffect(x: x, y: y, type: EffectType.Explosion, duration: 30);
+      Game.spawnEffect(x: x, y: y, type: EffectType.Explosion, duration: 30);
       break;
 
     case GameEventType.Character_Death:
@@ -138,22 +138,22 @@ void onGameEventNodeStruck(int nodeType, double x, double y, double z) {
 
   if (NodeType.isMaterialWood(nodeType)){
     AudioEngine.audioSingleMaterialStruckWood.playXYZ(x, y, z);
-    spawnParticleBlockWood(x, y, z);
+    Game.spawnParticleBlockWood(x, y, z);
   }
 
   if (NodeType.isMaterialGrass(nodeType)){
     AudioEngine.audioSingleGrassCut.playXYZ(x, y, z);
-    spawnParticleBlockGrass(x, y, z);
+    Game.spawnParticleBlockGrass(x, y, z);
   }
 
   if (NodeType.isMaterialStone(nodeType)){
     AudioEngine.audioSingleMaterialStruckStone.playXYZ(x, y, z);
-    spawnParticleBlockBrick(x, y, z);
+    Game.spawnParticleBlockBrick(x, y, z);
   }
 }
 
 void onGameEventAttackPerformedBlade(double x, double y, double z, double angle) {
-  spawnParticleStrikeBlade(x: x, y: y, z: z, angle: angle);
+  Game.spawnParticleStrikeBlade(x: x, y: y, z: z, angle: angle);
   // audioSingleSciFiBlaster8.playXYZ(x, y, z);
 
   AudioEngine.audioSingleSwingSword.playXYZ(x, y, z);
@@ -161,7 +161,7 @@ void onGameEventAttackPerformedBlade(double x, double y, double z, double angle)
   // engine.camera.x += getAdjacent(angle + piQuarter, range);
   // engine.camera.y += getOpposite(angle + piQuarter, range);
 
-  spawnParticleBubbles(
+  Game.spawnParticleBubbles(
     count: 3,
     x: x,
     y: y,
@@ -171,12 +171,12 @@ void onGameEventAttackPerformedBlade(double x, double y, double z, double angle)
 }
 
 void onGameEventAttackPerformedUnarmed(double x, double y, double z, double angle) {
-  spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
+  Game.spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
   // const range = 25.0;
   // engine.camera.x += getAdjacent(angle + piQuarter, range);
   // engine.camera.y += getOpposite(angle + piQuarter, range);
 
-  spawnParticleBubbles(
+  Game.spawnParticleBubbles(
     count: 3,
     x: x,
     y: y,
@@ -187,13 +187,13 @@ void onGameEventAttackPerformedUnarmed(double x, double y, double z, double angl
 
 void onGameEventSpawnDustCloud(double x, double y, double z) {
   for (var i = 0; i < 3; i++){
-    spawnParticleBubble(x: x, y: y, z: z, speed: 1, angle: randomAngle());
+    Game.spawnParticleBubble(x: x, y: y, z: z, speed: 1, angle: randomAngle());
   }
 }
 
 void onGameEventSplash(double x, double y, double z) {
   for (var i = 0; i < 8; i++){
-    spawnParticleWaterDrop(x: x, y: y, z: z);
+    Game.spawnParticleWaterDrop(x: x, y: y, z: z);
   }
   return AudioEngine.audioSingleSplash.playXYZ(x, y, z);
 }

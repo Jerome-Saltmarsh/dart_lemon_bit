@@ -8,14 +8,12 @@ import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:gamestream_flutter/isometric/classes/particle_emitter.dart';
 import 'package:lemon_math/library.dart';
 
-import 'particles.dart';
-
 
 void updateParticleEmitters(){
   for (final emitter in Game.particleEmitters) {
     if (emitter.next-- > 0) continue;
     emitter.next = emitter.rate;
-    final particle = getParticleInstance();
+    final particle = Game.getParticleInstance();
     particle.x = emitter.x;
     particle.y = emitter.y;
     particle.z = emitter.z;
@@ -32,7 +30,7 @@ void updateGameObjects() {
   nextBubble = 50;
   for (var i = 0; i < Game.totalGameObjects; i++) {
     if (!GameObjectType.emitsBubbles(Game.gameObjects[i].type)) continue;
-    spawnParticleBubbleV3(Game.gameObjects[i]);
+    Game.spawnParticleBubbleV3(Game.gameObjects[i]);
   }
 }
 
@@ -43,7 +41,7 @@ void updateCrystals(){
   for (var i = 0; i < Game.totalGameObjects; i++) {
     if (Game.gameObjects[i].type != GameObjectType.Crystal) continue;
     final crystal = Game.gameObjects[i];
-    spawnParticleOrbShard(
+    Game.spawnParticleOrbShard(
       x: crystal.x,
       y: crystal.y,
       z: crystal.z,

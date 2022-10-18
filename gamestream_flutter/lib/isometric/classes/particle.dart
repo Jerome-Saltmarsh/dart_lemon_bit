@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:bleed_common/Direction.dart';
 import 'package:bleed_common/particle_type.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
-import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:lemon_math/library.dart';
 
 class Particle extends Vector3 {
@@ -33,7 +32,7 @@ class Particle extends Vector3 {
     frame = 0;
     // TODO Doesn't belong here
     if (type == ParticleType.Orb_Shard) {
-      spawnParticleStarExploding(x: x, y: y, z: z);
+      // spawnParticleStarExploding(x: x, y: y, z: z);
     }
   }
 
