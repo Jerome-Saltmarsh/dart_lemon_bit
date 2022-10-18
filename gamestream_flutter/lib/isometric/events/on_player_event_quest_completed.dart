@@ -2,5 +2,5 @@
 import 'package:gamestream_flutter/game_audio.dart';
 
 void onPlayerEventQuestCompleted(){
-  GameAudio.audioSingleNotificationSound12();
+  GameAudio.notification_sound_12();
 }

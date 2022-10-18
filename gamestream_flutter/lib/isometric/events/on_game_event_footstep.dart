@@ -14,7 +14,7 @@ void onGameEventFootstep(double x, double y, double z) {
       gridNodeXYZTypeSafe(x, y, z + 24) == NodeType.Rain_Landing
   )
   ){
-    GameAudio.audioSingleFootstepMud6.playXYZ(x, y, z);
+    GameAudio.footstep_mud_6.playXYZ(x, y, z);
     final amount = rain.value == Rain.Heavy ? 3 : 2;
     for (var i = 0; i < amount; i++){
       Game.spawnParticleWaterDrop(x: x, y: y, z: z);
@@ -23,13 +23,13 @@ void onGameEventFootstep(double x, double y, double z) {
 
   final nodeType = gridNodeXYZTypeSafe(x, y, z - 2);
   if (NodeType.isMaterialStone(nodeType)) {
-    return GameAudio.audioSingleFootstepStone.playXYZ(x, y, z);
+    return GameAudio.footstep_stone.playXYZ(x, y, z);
   }
   if (NodeType.isMaterialWood(nodeType)) {
-    return GameAudio.audioSingleFootstepWood.playXYZ(x, y, z);
+    return GameAudio.footstep_wood_4.playXYZ(x, y, z);
   }
   if (randomBool()){
-    return GameAudio.audioSingleFootstepGrass8.playXYZ(x, y, z);
+    return GameAudio.footstep_grass_8.playXYZ(x, y, z);
   }
-  return GameAudio.audioSingleFootstepGrass7.playXYZ(x, y, z);
+  return GameAudio.footstep_grass_7.playXYZ(x, y, z);
 }

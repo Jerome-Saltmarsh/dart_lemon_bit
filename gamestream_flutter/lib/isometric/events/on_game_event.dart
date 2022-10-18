@@ -23,7 +23,7 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       return onGameEventAttackPerformed(x, y, z, angle);
     case GameEventType.Player_Spawn_Started:
       cameraCenterOnPlayer();
-      return GameAudio.audioSingleTeleport.playXYZ(x, y, z);
+      return GameAudio.teleport.playXYZ(x, y, z);
     case GameEventType.AI_Target_Acquired:
       final characterType = serverResponseReader.readByte();
       switch (characterType){
@@ -39,7 +39,7 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       onGameEventNodeStruck(nodeType, x, y, z);
       break;
     case GameEventType.Node_Deleted:
-      GameAudio.audioSingleHoverOverButton30.playXYZ(x, y, z);
+      GameAudio.hover_over_button_sound_30.playXYZ(x, y, z);
       break;
     case GameEventType.Weapon_Type_Equipped:
       final attackType =  serverResponseReader.readByte();
@@ -62,7 +62,7 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       audio.zombieTargetAcquired(x, y);
       break;
     case GameEventType.Character_Changing:
-      GameAudio.audioSingleChanging.playXYZ(x, y, z);
+      GameAudio.change_cloths.playXYZ(x, y, z);
       break;
     case GameEventType.Zombie_Strike:
       randomItem(GameAudio.audioSingleZombieBits).playXYZ(x, y, z);
@@ -76,34 +76,34 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
       audio.magicalSwoosh(x, y);
       break;
     case GameEventType.Blue_Orb_Fired:
-      return GameAudio.audioSingleSciFiBlaster.playXYZ(x, y, z);
+      return GameAudio.sci_fi_blaster_1.playXYZ(x, y, z);
     case GameEventType.Arrow_Hit:
       audio.arrowImpact(x, y);
       break;
     case GameEventType.Draw_Bow:
-      return GameAudio.audioSingleBowDraw.playXYZ(x, y, z);
+      return GameAudio.bow_draw.playXYZ(x, y, z);
     case GameEventType.Release_Bow:
-      return GameAudio.audioSingleBowRelease.playXYZ(x, y, z);
+      return GameAudio.bow_release.playXYZ(x, y, z);
     case GameEventType.Sword_Woosh:
-      return GameAudio.audioSingleSwingSword.playXYZ(x, y, z);
+      return GameAudio.swing_sword.playXYZ(x, y, z);
     case GameEventType.EnemyTargeted:
       break;
     case GameEventType.Attack_Missed:
       final attackType = serverResponseReader.readByte();
       switch (attackType) {
         case AttackType.Unarmed:
-          GameAudio.audioSingleArmSwing.playXYZ(x, y, z);
+          GameAudio.arm_swing_whoosh_11.playXYZ(x, y, z);
           break;
         case AttackType.Blade:
-          GameAudio.audioSingleArmSwing.playXYZ(x, y, z);
+          GameAudio.arm_swing_whoosh_11.playXYZ(x, y, z);
           break;
         case AttackType.Baseball_Bat:
-          GameAudio.audioSingleArmSwing.playXYZ(x, y, z);
+          GameAudio.arm_swing_whoosh_11.playXYZ(x, y, z);
           break;
       }
       break;
     case GameEventType.Arrow_Fired:
-      return GameAudio.audioSingleArrowFlying.playXYZ(x, y, z);
+      return GameAudio.arrow_flying_past_6.playXYZ(x, y, z);
 
     case GameEventType.Crate_Breaking:
       return audio.crateBreaking(x, y);
@@ -131,23 +131,23 @@ void onGameEvent(int type, double x, double y, double z, double angle) {
 }
 
 void onGameEventNodeSet(double x, double y, double z) {
-  GameAudio.audioSingleHoverOverButton43.playXYZ(x, y, z);
+  GameAudio.hover_over_button_sound_43.playXYZ(x, y, z);
 }
 
 void onGameEventNodeStruck(int nodeType, double x, double y, double z) {
 
   if (NodeType.isMaterialWood(nodeType)){
-    GameAudio.audioSingleMaterialStruckWood.playXYZ(x, y, z);
+    GameAudio.material_struck_wood.playXYZ(x, y, z);
     Game.spawnParticleBlockWood(x, y, z);
   }
 
   if (NodeType.isMaterialGrass(nodeType)){
-    GameAudio.audioSingleGrassCut.playXYZ(x, y, z);
+    GameAudio.grass_cut.playXYZ(x, y, z);
     Game.spawnParticleBlockGrass(x, y, z);
   }
 
   if (NodeType.isMaterialStone(nodeType)){
-    GameAudio.audioSingleMaterialStruckStone.playXYZ(x, y, z);
+    GameAudio.material_struck_stone.playXYZ(x, y, z);
     Game.spawnParticleBlockBrick(x, y, z);
   }
 }
@@ -156,7 +156,7 @@ void onGameEventAttackPerformedBlade(double x, double y, double z, double angle)
   Game.spawnParticleStrikeBlade(x: x, y: y, z: z, angle: angle);
   // audioSingleSciFiBlaster8.playXYZ(x, y, z);
 
-  GameAudio.audioSingleSwingSword.playXYZ(x, y, z);
+  GameAudio.swing_sword.playXYZ(x, y, z);
   // const range = 5.0;
   // engine.camera.x += getAdjacent(angle + piQuarter, range);
   // engine.camera.y += getOpposite(angle + piQuarter, range);
@@ -195,5 +195,5 @@ void onGameEventSplash(double x, double y, double z) {
   for (var i = 0; i < 8; i++){
     Game.spawnParticleWaterDrop(x: x, y: y, z: z);
   }
-  return GameAudio.audioSingleSplash.playXYZ(x, y, z);
+  return GameAudio.splash.playXYZ(x, y, z);
 }

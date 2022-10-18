@@ -186,7 +186,7 @@ class Game {
   // }
 
   static void actionLightningFlash() {
-    GameAudio.audioSingleThunder(1.0);
+    GameAudio.thunder(1.0);
     if (ambientShade.value == Shade.Very_Bright) return;
     ambientShade.value = Shade.Very_Bright;
     runAction(duration: 8, action: onActionFinishedLightningFlash);

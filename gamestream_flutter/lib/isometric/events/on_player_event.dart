@@ -14,9 +14,9 @@ import 'package:lemon_engine/engine.dart';
 void onPlayerEvent(int event) {
   switch (event) {
     case PlayerEvent.Spawn_Started:
-      return GameAudio.audioSingleTeleport();
+      return GameAudio.teleport();
     case PlayerEvent.Loot_Collected:
-      return GameAudio.audioSingleCollectStar3();
+      return GameAudio.collect_star_3();
     case PlayerEvent.Weapon_Rounds:
       final rounds = serverResponseReader.readInt();
       final capacity = serverResponseReader.readInt();
@@ -44,7 +44,7 @@ void onPlayerEvent(int event) {
       audio.buff11(Game.player.x, Game.player.y);
       break;
     case PlayerEvent.Item_Purchased:
-      GameAudio.audioSingleItemUnlock();
+      GameAudio.unlock();
       break;
     case PlayerEvent.Ammo_Acquired:
       audio.itemAcquired(Engine.screenCenterWorldX, Engine.screenCenterWorldY);
@@ -54,7 +54,7 @@ void onPlayerEvent(int event) {
       onPlayerEventItemEquipped(type);
       break;
     case PlayerEvent.Item_Dropped:
-      GameAudio.audioSingleSwitchSounds4();
+      GameAudio.switch_sounds_4();
       break;
     case PlayerEvent.Item_Sold:
       audio.coins(Engine.screenCenterWorldX, Engine.screenCenterWorldY);
@@ -75,7 +75,7 @@ void onPlayerEvent(int event) {
       audio.coins(Engine.screenCenterWorldX, Engine.screenCenterWorldY);
       break;
     case PlayerEvent.Hello_Male_01:
-      GameAudio.audioSingleMaleHello.play();
+      GameAudio.male_hello.play();
       break;
     case PlayerEvent.GameObject_Deselected:
       EditState.gameObjectSelected.value = false;
@@ -89,25 +89,25 @@ void onPlayerEvent(int event) {
 void onPlayerEventItemEquipped(int type) {
   switch (type) {
     case AttackType.Revolver:
-      GameAudio.audioSingleRevolverReload();
+      GameAudio.revolver_reload_1();
       break;
     case AttackType.Handgun:
-      GameAudio.audioSingleReload6();
+      GameAudio.reload_6();
       break;
     case AttackType.Shotgun:
-      GameAudio.audioSingleShotgunCock();
+      GameAudio.cock_shotgun_3();
       break;
     case AttackType.Rifle:
-      GameAudio.audioSingleMagIn2();
+      GameAudio.mag_in_03();
       break;
     case AttackType.Blade:
-      GameAudio.audioSingleSwordUnsheathe();
+      GameAudio.sword_unsheathe();
       break;
     case AttackType.Assault_Rifle:
-      GameAudio.audioSingleGunPickup();
+      GameAudio.gun_pickup_01();
       break;
     case AttackType.Bow:
-      GameAudio.audioSingleBowDraw();
+      GameAudio.bow_draw();
       break;
   }
 }

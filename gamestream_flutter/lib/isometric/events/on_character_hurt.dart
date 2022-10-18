@@ -7,9 +7,9 @@ import 'package:lemon_math/library.dart';
 
 void onGameEventCharacterHurt(int type, double x, double y, double z, double angle) {
 
-  randomItem(GameAudio.audioSingleBloodyPunches).playXYZ(x, y, z);
+  randomItem(GameAudio.bloody_punches).playXYZ(x, y, z);
 
-  GameAudio.audioSingleHeavyPunch13.playXYZ(x, y, z);
+  GameAudio.heavy_punch_13.playXYZ(x, y, z);
 
   for (var i = 0; i < 4; i++){
     Game.spawnParticleBlood(
@@ -25,16 +25,16 @@ void onGameEventCharacterHurt(int type, double x, double y, double z, double ang
   switch (type) {
     case CharacterType.Zombie:
       if (randomBool()){
-        GameAudio.audioSingleZombieHurt.playXYZ(x, y, z);
+        GameAudio.zombie_hurt_1.playXYZ(x, y, z);
       } else {
-        GameAudio.audioSingleZombieHit4.playXYZ(x, y, z);
+        GameAudio.zombie_hurt_4.playXYZ(x, y, z);
       }
       break;
     case CharacterType.Rat:
-      GameAudio.audioSingleRatSqueak.playXYZ(x, y, z);
+      GameAudio.rat_squeak.playXYZ(x, y, z);
       break;
     case CharacterType.Slime:
-      GameAudio.audioSingleBloodyPunches3.playXYZ(x, y, z);
+      GameAudio.bloody_punches_3.playXYZ(x, y, z);
       break;
   }
 }

@@ -81,5 +81,5 @@ void onCharacterDeathZombie(int type, double x, double y, double z, double angle
       speed: 4.0 + giveOrTake(0.5),
       zv: 0.1);
 
-  randomItem(GameAudio.audioSingleZombieDeaths).playXYZ(x, y, z);
+  randomItem(GameAudio.zombie_deaths).playXYZ(x, y, z);
 }

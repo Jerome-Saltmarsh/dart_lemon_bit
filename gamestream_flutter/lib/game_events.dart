@@ -6,7 +6,7 @@ class GameEvents {
   static void onWeaponTypeEquipped(int attackType, double x, double y, double z) {
     switch (attackType) {
       case AttackType.Shotgun:
-        GameAudio.audioSingleShotgunCock.playXYZ(x, y, z);
+        GameAudio.cock_shotgun_3.playXYZ(x, y, z);
         break;
       default:
         break;

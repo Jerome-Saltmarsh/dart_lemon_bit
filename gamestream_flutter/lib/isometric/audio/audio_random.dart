@@ -62,7 +62,7 @@ void playRandomAmbientSound(){
     return playRandom(soundsNight);
   }
   if (hour == 6){
-    return GameAudio.audioSingleRooster.play(volume: 0.3);
+    return GameAudio.rooster.play(volume: 0.3);
   }
 
   if (hour > 9 && hour < 15) {
