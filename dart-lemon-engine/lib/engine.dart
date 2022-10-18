@@ -148,8 +148,8 @@ class Engine {
   static var zoomSensitivity = 0.175;
   static var targetZoom = 1.0;
   static var zoomOnScroll = true;
-  static var keyPressedHandlers = <LogicalKeyboardKey, Function>{};
-  static var keyReleasedHandlers = <LogicalKeyboardKey, Function>{};
+  // static var keyPressedHandlers = <LogicalKeyboardKey, Function>{};
+  // static var keyReleasedHandlers = <LogicalKeyboardKey, Function>{};
   static var mousePosition = Vector2(0, 0);
   static var previousMousePosition = Vector2(0, 0);
   static var previousUpdateTime = DateTime.now();
@@ -162,12 +162,14 @@ class Engine {
   static final themeData = Watch<ThemeData?>(null);
   static final fullScreen = Watch(false);
   static final deviceType = Watch(DeviceType.Computer);
+  static final cursorType = Watch(CursorType.Precise);
   static final notifierPaintFrame = ValueNotifier<int>(0);
   static final notifierPaintForeground = ValueNotifier<int>(0);
   static final screen = _Screen();
-  static final cursorType = Watch(CursorType.Precise);
   static var panStarted = false;
   static final camera = Vector2(0, 0);
+  static Function(LogicalKeyboardKey key)? onKeyDown;
+  static Function(LogicalKeyboardKey key)? onKeyUp;
 
   // QUERIES
 
@@ -175,14 +177,16 @@ class Engine {
       keyboard.keysPressed.contains(key);
 
   // INTERNAL FUNCTIONS
-
   static void _internalOnKeyboardEvent(RawKeyEvent event) {
     if (event is RawKeyDownEvent) {
-      keyPressedHandlers[event.logicalKey]?.call();
+      // keyPressedHandlers[event.logicalKey]?.call();
+      onKeyDown?.call(event.logicalKey);
       return;
     }
     if (event is RawKeyUpEvent) {
-      keyReleasedHandlers[event.logicalKey]?.call();
+      // keyReleasedHandlers[event.logicalKey]?.call();
+      onKeyUp?.call(event.logicalKey);
+      return;
     }
   }
 
@@ -836,21 +840,17 @@ class Engine {
 
   static bool get fullScreenActive => document.fullscreenElement != null;
 
-  static double screenToWorldX(double value) {
-    return camera.x + value / zoom;
-  }
+  static double screenToWorldX(double value)  =>
+    camera.x + value / zoom;
 
-  static double screenToWorldY(double value) {
-    return camera.y + value / zoom;
-  }
+  static double screenToWorldY(double value) =>
+    camera.y + value / zoom;
 
-  static double worldToScreenX(double x) {
-    return zoom * (x - camera.x);
-  }
+  static double worldToScreenX(double x) =>
+    zoom * (x - camera.x);
 
-  static double worldToScreenY(double y) {
-    return zoom * (y - camera.y);
-  }
+  static double worldToScreenY(double y) =>
+    zoom * (y - camera.y);
 
   static double get screenCenterX => screen.width * 0.5;
   static double get screenCenterY => screen.height * 0.5;
@@ -859,10 +859,8 @@ class Engine {
   static double get mouseWorldX => screenToWorldX(mousePosition.x);
   static double get mouseWorldY => screenToWorldY(mousePosition.y);
 
-
-  static double distanceFromMouse(double x, double y) {
-    return distanceBetween(mouseWorldX, mouseWorldY, x, y);
-  }
+  static double distanceFromMouse(double x, double y) =>
+     calculateDistance(mouseWorldX, mouseWorldY, x, y);
 }
 
 typedef CallbackOnScreenSizeChanged = void Function(
