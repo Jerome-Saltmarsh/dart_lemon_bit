@@ -120,7 +120,7 @@ void renderTemplateWeapon(Character character, int direction){
   var frame = 0;
   var bowOrShotgun = weapon == AttackType.Bow ||weapon == AttackType.Shotgun;
 
-  if (character.usingWeapon){
+  if (character.usingWeapon) {
 
   }
 
@@ -153,7 +153,7 @@ void renderTemplateWeapon(Character character, int direction){
   }
 
   Engine.renderSprite(
-    image: ImagesTemplateWeapons.shotgun,
+    image: ImagesTemplateWeapons.fromWeaponType(character.weaponType),
     srcX: frame * size,
     srcY: direction * size,
     srcWidth: size,

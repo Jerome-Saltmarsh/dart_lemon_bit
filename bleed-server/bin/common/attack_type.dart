@@ -16,39 +16,34 @@ class AttackType {
    static const Rifle = 16;
    static const Staff = 17;
    static const Revolver = 18;
-
-   // static bool requiresRounds(int value) =>
-   //      value == Crossbow ||
-   //      value == Shotgun ||
-   //      value == Handgun ||
-   //      value == Assault_Rifle ||
-   //      value == Bow ||
-   //      value == Revolver ||
-   //      value == Rifle;
-
+   static const Axe = 19;
+   static const Pickaxe = 20;
+   static const Hammer = 21;
 
    static bool isMelee(int value) =>
-         value == Unarmed ||
-         value == Blade;
+      value == Unarmed ||
+      value == Axe ||
+      value == Pickaxe ||
+      value == Hammer ||
+      value == Blade;
 
-   static String getName(int value)  =>
-       const {
-          Unarmed: "Unarmed",
-          Blade: "Blade",
-          Crossbow: "Crossbow",
-          Orb: "Orb",
-          Teleport: "Teleport",
-          Particle: "Particle",
-          Node_Cannon: "Editor",
-          Shotgun: "Shotgun",
-          Handgun: "Handgun",
-          Assault_Rifle: "Assault Rifle",
-          Fireball: "Fireball",
-          Bow: "Bow",
-          Baseball_Bat: "Baseball Bat",
-          Crowbar: "Crow-bar",
-          Rifle: "Rifle",
-          Staff: "Staff",
-          Revolver: "Revolver",
-       }[value] ?? "? ($value)";
+   static String getName(int value) => const {
+      Unarmed: "Unarmed",
+      Blade: "Blade",
+      Crossbow: "Crossbow",
+      Orb: "Orb",
+      Teleport: "Teleport",
+      Particle: "Particle",
+      Node_Cannon: "Editor",
+      Shotgun: "Shotgun",
+      Handgun: "Handgun",
+      Assault_Rifle: "Assault Rifle",
+      Fireball: "Fireball",
+      Bow: "Bow",
+      Baseball_Bat: "Baseball Bat",
+      Crowbar: "Crow-bar",
+      Rifle: "Rifle",
+      Staff: "Staff",
+      Revolver: "Revolver",
+   }[value] ?? "? ($value)";
 }

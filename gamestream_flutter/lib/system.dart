@@ -36,6 +36,7 @@ class System {
       ImagesTemplateWeapons.bow = await Engine.loadImageAsset('images/template/weapons/template-weapons-bow.png');
       ImagesTemplateWeapons.handgun = await Engine.loadImageAsset('images/template/weapons/template-weapons-handgun.png');
       ImagesTemplateWeapons.shotgun = await Engine.loadImageAsset('images/template/weapons/template-weapons-shotgun.png');
+      ImagesTemplateWeapons.staff = await Engine.loadImageAsset('images/template/weapons/template-weapons-staff-wooden.png');
       Engine.cursorType.value = CursorType.Basic;
       Engine.onDrawCanvas = Website.renderCanvas;
       webSocket.connection.onChanged(onChangedConnection);
