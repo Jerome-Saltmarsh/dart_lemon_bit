@@ -113,44 +113,39 @@ bool weaponIs96(int weapon) =>
    weapon == AttackType.Staff ||
    weapon == AttackType.Blade ;
 
-void renderTemplateWeapon(Character character, int direction){
+void renderTemplateWeapon(Character character, int direction, int frame) {
   if (character.unarmed) return;
-  final weapon = character.weaponType;
-  var size = weaponIs64(weapon) ? 64.0 : 96.0;
-  var frame = 0;
-  var bowOrShotgun = weapon == AttackType.Bow ||weapon == AttackType.Shotgun;
-
-  if (character.usingWeapon) {
-
-  }
-
-  switch (character.state) {
-    case CharacterState.Idle:
-      if (bowOrShotgun) {
-        frame = 0;
-      } else {
-        frame = 1;
-      }
-      break;
-    case CharacterState.Running:
-      if (bowOrShotgun){
-         frame = const[15, 16, 17, 18][character.frame % 4];
-      } else {
-         frame = const[11, 12, 13, 14][character.frame % 4];
-      }
-      break;
-    case CharacterState.Performing:
-      if (weapon == AttackType.Shotgun){
-        frame = const[15, 16, 17, 18][character.frame % 4];
-      }
-      break;
-    case CharacterState.Changing:
-      break;
-    case CharacterState.Hurt:
-      break;
-    default:
-      return;
-  }
+  var size = weaponIs64(character.weaponType) ? 64.0 : 96.0;
+  // var frame = 0;
+  // var isTwoHandedFirearm = AttackType.isTwoHandedFirearm(character.weaponType);
+  //
+  // switch (character.state) {
+  //   case CharacterState.Idle:
+  //     if (isTwoHandedFirearm) {
+  //       frame = 0;
+  //     } else {
+  //       frame = 1;
+  //     }
+  //     break;
+  //   case CharacterState.Running:
+  //     if (isTwoHandedFirearm) {
+  //        frame = const[15, 16, 17, 18][character.frame % 4];
+  //     } else {
+  //        frame = const[11, 12, 13, 14][character.frame % 4];
+  //     }
+  //     break;
+  //   case CharacterState.Performing:
+  //     if (weapon == AttackType.Shotgun){
+  //       frame = const[15, 16, 17, 18][character.frame % 4];
+  //     }
+  //     break;
+  //   case CharacterState.Changing:
+  //     break;
+  //   case CharacterState.Hurt:
+  //     break;
+  //   default:
+  //     return;
+  // }
 
   Engine.renderSprite(
     image: ImagesTemplateWeapons.fromWeaponType(character.weaponType),
@@ -180,6 +175,7 @@ void renderCharacterTemplate(Character character, {
   var frameLegs = 0;
   var frameHead = 0;
   var frameBody = 0;
+  var frameWeapon = 0;
   final diff = Direction.getDifference(character.renderDirection, character.aimDirection).abs();
   final weaponInFront = character.renderDirection >= 2 && character.renderDirection < 6;
   final runningBackwards = diff >= 3 && character.running;
@@ -188,24 +184,28 @@ void renderCharacterTemplate(Character character, {
   final upperBodyDirection = runningBackwards ? renderDirectionOpposite : character.renderDirection;
   final finalDirection = character.usingWeapon ? character.aimDirection : upperBodyDirection;
 
-  var variation = character.weaponType == AttackType.Bow || character.weaponType == AttackType.Shotgun;
+  var weaponIsTwoHandedFirearm = AttackType.isTwoHandedFirearm(character.weaponType);
 
   switch (character.state) {
     case CharacterState.Idle:
       frameLegs = 0;
-      if (variation){
-        frameBody = 0;
-      } else {
-        frameBody = 1;
-      }
+      frameBody = weaponIsTwoHandedFirearm ? 0 : 1;
+      frameHead = frameBody;
+      frameWeapon = frameBody;
       break;
     case CharacterState.Running:
-      frameLegs = TemplateAnimation.Running1[character.frame % 4];
+      if (weaponIsTwoHandedFirearm) {
+        frameBody = 15 + (character.frame % 4);
+      } else {
+        frameBody = 11 + (character.frame % 4);
+      }
+      frameWeapon = frameLegs;
+      frameLegs = frameBody;
       break;
   }
 
   if (!weaponInFront) {
-    renderTemplateWeapon(character, finalDirection);
+    renderTemplateWeapon(character, finalDirection, frameWeapon);
   }
 
   // find the nearest torch and move the shadow behind the character
@@ -295,7 +295,7 @@ void renderCharacterTemplate(Character character, {
     anchorY: 0.75
   );
   if (weaponInFront){
-    renderTemplateWeapon(character, finalDirection);
+    renderTemplateWeapon(character, finalDirection, frameWeapon);
   }
 
   return;
