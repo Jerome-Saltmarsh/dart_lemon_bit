@@ -41,9 +41,8 @@ import 'package:url_strategy/url_strategy.dart' as us;
 /// }
 /// ```
 class Engine {
-  /// HOOKS
+  // HOOKS
   /// the following hooks are designed to be easily swapped in and out without inheritance
-
   /// override safe. run this snippet inside your initialization code.
   /// engine.onTapDown = (TapDownDetails details) => print('tap detected');
   static GestureTapDownCallback? onTapDown;
@@ -66,8 +65,6 @@ class Engine {
   /// override safe
   static DrawCanvas? onDrawForeground;
   /// override safe
-  static Function? onKeyPressedSpace;
-  /// override safe
   static Function? onLeftClicked;
   /// override safe
   static Function? onLongLeftClicked;
@@ -88,6 +85,49 @@ class Engine {
   static WidgetBuilder? onBuildLoadingScreen;
   /// override safe
   static Function(Object error, StackTrace stack)? onError;
+
+  // VARIABLES
+  static final random = Random();
+  static var textPainter = TextPainter(
+      textAlign: TextAlign.center,
+      textDirection: TextDirection.ltr
+  );
+  static final Map<String, TextSpan> textSpans = {
+  };
+  static late Canvas canvas;
+  static final keyboard = RawKeyboard.instance;
+  static final paint = Paint()
+    ..color = Colors.white
+    ..strokeCap = StrokeCap.round
+    ..style = PaintingStyle.fill
+    ..isAntiAlias = false
+    ..strokeWidth = 1;
+  static Timer? updateTimer;
+  static var scrollSensitivity = 0.0005;
+  static var cameraSmoothFollow = true;
+  static var zoomSensitivity = 0.175;
+  static var targetZoom = 1.0;
+  static var zoomOnScroll = true;
+  static var mousePosition = Vector2(0, 0);
+  static var previousMousePosition = Vector2(0, 0);
+  static var previousUpdateTime = DateTime.now();
+  static var mouseLeftDownFrames = 0;
+  static var zoom = 1.0;
+  static var drawCanvasAfterUpdate = true;
+  static late BuildContext buildContext;
+  static late final sharedPreferences;
+  static final Map<LogicalKeyboardKey, int> keyboardState = {};
+  static final themeData = Watch<ThemeData?>(null);
+  static final fullScreen = Watch(false);
+  static final deviceType = Watch(DeviceType.Computer);
+  static final cursorType = Watch(CursorType.Precise);
+  static final notifierPaintFrame = ValueNotifier<int>(0);
+  static final notifierPaintForeground = ValueNotifier<int>(0);
+  static final screen = _Screen();
+  static var panStarted = false;
+  static final camera = Vector2(0, 0);
+  static Function(LogicalKeyboardKey key)? onKeyDown;
+  static Function(LogicalKeyboardKey key)? onKeyUp;
 
   // SETTERS
   static set buildUI(WidgetBuilder? value) => watchBuildUI.value = value;
@@ -122,54 +162,14 @@ class Engine {
   static const PI_Half = pi * 0.5;
   static const PI_Quarter = pi * 0.25;
   static const PI_Eight = pi * 0.125;
+
   static const Ratio_Radians_To_Degrees = 57.2958;
   static const Ratio_Degrees_To_Radians = 0.0174533;
 
-  // VARIABLES
-  static final random = Random();
-  static var textPainter = TextPainter(
-      textAlign: TextAlign.center,
-      textDirection: TextDirection.ltr
-  );
-  static final Map<String, TextSpan> textSpans = {
-  };
-  static late Canvas canvas;
-  static final keyboard = RawKeyboard.instance;
-  static final paint = Paint()
-    ..color = Colors.white
-    ..strokeCap = StrokeCap.round
-    ..style = PaintingStyle.fill
-    ..isAntiAlias = false
-    ..strokeWidth = 1;
-
-  static Timer? updateTimer;
-  static var scrollSensitivity = 0.0005;
-  static var cameraSmoothFollow = true;
-  static var zoomSensitivity = 0.175;
-  static var targetZoom = 1.0;
-  static var zoomOnScroll = true;
-  // static var keyPressedHandlers = <LogicalKeyboardKey, Function>{};
-  // static var keyReleasedHandlers = <LogicalKeyboardKey, Function>{};
-  static var mousePosition = Vector2(0, 0);
-  static var previousMousePosition = Vector2(0, 0);
-  static var previousUpdateTime = DateTime.now();
-  static var mouseLeftDownFrames = 0;
-  static var zoom = 1.0;
-  static var drawCanvasAfterUpdate = true;
-  static late BuildContext buildContext;
-  static late final sharedPreferences;
-  static final Map<LogicalKeyboardKey, int> keyboardState = {};
-  static final themeData = Watch<ThemeData?>(null);
-  static final fullScreen = Watch(false);
-  static final deviceType = Watch(DeviceType.Computer);
-  static final cursorType = Watch(CursorType.Precise);
-  static final notifierPaintFrame = ValueNotifier<int>(0);
-  static final notifierPaintForeground = ValueNotifier<int>(0);
-  static final screen = _Screen();
-  static var panStarted = false;
-  static final camera = Vector2(0, 0);
-  static Function(LogicalKeyboardKey key)? onKeyDown;
-  static Function(LogicalKeyboardKey key)? onKeyUp;
+  static const GoldenRatio_1_618 = 1.61803398875;
+  static const GoldenRatio_1_381 = 1.38196601125;
+  static const GoldenRatio_0_618 = 0.61803398875;
+  static const GoldenRatio_0_381 = 0.38196601125;
 
   // QUERIES
 
@@ -289,7 +289,6 @@ class Engine {
     Engine.onDispose = onDispose;
     Engine.onDrawCanvas = onDrawCanvas;
     Engine.onDrawForeground = onDrawForeground;
-    Engine.onKeyPressedSpace = onKeyPressedSpace;
     Engine.onLeftClicked = onLeftClicked;
     Engine.onMouseScroll = onMouseScroll;
     Engine.onRightClicked = onRightClicked;
