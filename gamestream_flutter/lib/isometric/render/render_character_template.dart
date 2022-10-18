@@ -45,68 +45,6 @@ void renderArrow(double x, double y, double z, double angle) {
   );
 }
 
-void renderCharacterWeaponHandgun(Character character) {
-  final weaponState = character.weaponState;
-  final angle = character.lookRadian + piQuarter;
-  final distance = 15.0;
-  const size = 32.0;
-  final direction = character.aimDirection;
-
-  Engine.renderBuffer(
-    dstX: character.renderX + getAdjacent(angle, distance),
-    dstY: character.renderY + getOpposite(angle, distance) - 8,
-    srcX: 224,
-    srcY: (size * direction * 3) + (weaponState * size),
-    srcWidth: size,
-    srcHeight: size,
-  );
-}
-
-void renderCharacterWeapon(Character character) {
-  switch (character.weaponType) {
-    case AttackType.Handgun:
-      return renderCharacterWeaponHandgun(character);
-    case AttackType.Shotgun:
-      return renderCharacterWeaponShotgun(character);
-    case AttackType.Blade:
-      return renderCharacterWeaponBlade(character);
-  }
-}
-
-void renderCharacterWeaponShotgun(Character character) {
-  final weaponState = character.weaponState;
-  final angle = character.lookRadian + piQuarter;
-  final distance = 15.0;
-  const size = 32.0;
-  final direction = character.aimDirection;
-
-  Engine.renderBuffer(
-    dstX: character.renderX + getAdjacent(angle, distance),
-    dstY: character.renderY + getOpposite(angle, distance) - 8,
-    srcX: 256,
-    srcY: (size * direction * 3) + (weaponState * size),
-    srcWidth: size,
-    srcHeight: size,
-  );
-}
-
-void renderCharacterWeaponBlade(Character character) {
-  // final weaponState = character.weaponState;
-  final angle = character.lookRadian + piQuarter;
-  final distance = 15.0;
-  const size = 64.0;
-  final direction = character.aimDirection;
-
-  Engine.renderBuffer(
-    dstX: character.renderX + getAdjacent(angle, distance),
-    dstY: character.renderY + getOpposite(angle, distance) - 8,
-    srcX: 304,
-    srcY: size * direction,
-    srcWidth: size,
-    srcHeight: size,
-  );
-}
-
 bool weaponIs96(int weapon) =>
    weapon == AttackType.Staff ||
    weapon == AttackType.Blade ;
@@ -182,10 +120,9 @@ void renderCharacterTemplate(Character character, {
   }
 
   if (character.usingWeapon) {
-    RenderEngine.renderTextV3(character, character.weaponFrame);
-
+    RenderEngine.renderTextV3(character, character.weaponFrame, offsetY: -50);
     final animation = TemplateAnimation.getAttackAnimation(character.weaponType);
-    frameWeapon = character.weaponFrame >= animation.length ? animation.last : animation[character.weaponFrame];
+    frameWeapon = (character.weaponFrame >= animation.length ? animation.last : animation[character.weaponFrame]) - 1;
     frameBody = frameWeapon;
     frameHead = frameWeapon;
   }
@@ -460,30 +397,13 @@ class TemplateAnimation {
     return list;
   }();
 
-  static Uint8List FiringShotgun = (){
-    final list = Uint8List(8);
-    list[0] = 6;
-    list[1] = 7;
-    list[2] = 6;
-    list[3] = 6;
-    list[4] = 6;
-    list[5] = 8;
-    list[6] = 8;
-    list[7] = 6;
-    return list;
-  }();
+  static const FiringShotgun = [
+    6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 6, 6, 6, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 8, 8, 8, 8
+  ];
 
-  static Uint8List Striking = (){
-    final list = Uint8List(7);
-    list[0] = 10;
-    list[1] = 10;
-    list[2] = 10;
-    list[3] = 11;
-    list[4] = 11;
-    list[5] = 11;
-    list[6] = 11;
-    return list;
-  }();
+  static const Striking = [
+     10, 10, 10, 10, 10, 11
+  ];
 
   static Uint8List StrikingBlade = (){
     final list = Uint8List(7);
@@ -497,7 +417,7 @@ class TemplateAnimation {
     return list;
   }();
 
-  static Uint8List getAttackAnimation(int weaponType){
+  static List<int> getAttackAnimation(int weaponType){
       switch (weaponType) {
         case AttackType.Unarmed:
           return Striking;

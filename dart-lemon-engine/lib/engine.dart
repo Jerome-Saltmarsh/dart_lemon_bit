@@ -778,7 +778,7 @@ class Engine {
 
     return WatchBuilder(Engine.cursorType, (CursorType cursorType) =>
         MouseRegion(
-          cursor: _mapCursorTypeToSystemMouseCursor(cursorType),
+          cursor: _internalMapCursorTypeToSystemMouseCursor(cursorType),
           child: child,
         )
     );
@@ -812,20 +812,20 @@ class Engine {
 
   static bool randomBool() =>
     random.nextDouble() > 0.5;
-}
 
-SystemMouseCursor _mapCursorTypeToSystemMouseCursor(CursorType value){
-  switch (value) {
-    case CursorType.Forbidden:
-      return SystemMouseCursors.forbidden;
-    case CursorType.Precise:
-      return SystemMouseCursors.precise;
-    case CursorType.None:
-      return SystemMouseCursors.none;
-    case CursorType.Click:
-      return SystemMouseCursors.click;
-    default:
-      return SystemMouseCursors.basic;
+  static SystemMouseCursor _internalMapCursorTypeToSystemMouseCursor(CursorType value){
+    switch (value) {
+      case CursorType.Forbidden:
+        return SystemMouseCursors.forbidden;
+      case CursorType.Precise:
+        return SystemMouseCursors.precise;
+      case CursorType.None:
+        return SystemMouseCursors.none;
+      case CursorType.Click:
+        return SystemMouseCursors.click;
+      default:
+        return SystemMouseCursors.basic;
+    }
   }
 }
 
@@ -950,8 +950,6 @@ class _GameForegroundPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return true;
-  }
+  bool shouldRepaint(CustomPainter oldDelegate) => false;
 }
 

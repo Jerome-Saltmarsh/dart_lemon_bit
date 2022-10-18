@@ -1071,11 +1071,11 @@ class RenderEngine {
 
   static double getRenderYBouncing(Vector3 v3) => ((v3.y + v3.x) * 0.5) - v3.z + animationFrameWaterHeight;
 
-  static void renderTextV3(Vector3 v3, dynamic text){
+  static void renderTextV3(Vector3 v3, dynamic text, {double offsetY = 0}){
     renderText(
       text: text.toString(),
       x: RenderEngine.getRenderV3X(v3),
-      y: RenderEngine.getRenderV3Y(v3) - 50,
+      y: RenderEngine.getRenderV3Y(v3) + offsetY,
     );
   }
 
