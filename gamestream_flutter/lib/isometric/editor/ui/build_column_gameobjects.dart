@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/game_widgets.dart';
 import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/game_widgets.dart';
 
 Widget buildColumnGameObjects() => Refresh(() => SingleChildScrollView(
       child: Column(

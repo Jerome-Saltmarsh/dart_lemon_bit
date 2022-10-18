@@ -1,9 +1,9 @@
 import 'dart:math';
 
 import 'package:bleed_common/Projectile_Type.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/animation_frame.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
-import 'package:gamestream_flutter/isometric/render/get_character_render_color.dart';
 import 'package:gamestream_flutter/modules/game/render_rotated.dart';
 import 'package:lemon_engine/engine.dart';
 
@@ -38,7 +38,7 @@ void renderProjectile(Projectile value) {
         srcWidth: 32,
         srcHeight: 32,
         rotation: value.angle - piQuarter,
-        color: getNodeBelowShade(value),
+        color: Game.getNodeBelowShade(value),
       );
     default:
       return;

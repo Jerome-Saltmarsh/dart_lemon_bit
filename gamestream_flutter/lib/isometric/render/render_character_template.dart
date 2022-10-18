@@ -3,14 +3,13 @@ import 'dart:typed_data';
 
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_size.dart';
-import 'package:gamestream_flutter/game_images.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/game_config.dart';
+import 'package:gamestream_flutter/game_images.dart';
+import 'package:gamestream_flutter/game_render.dart';
 import 'package:gamestream_flutter/isometric/nodes.dart';
-import 'package:gamestream_flutter/isometric/render/get_character_render_color.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
 import 'package:gamestream_flutter/modules/game/render_rotated.dart';
-import 'package:gamestream_flutter/game_render.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 
@@ -84,7 +83,7 @@ void renderCharacterTemplate(Character character, {
 
   final dstX = GameRender.getRenderV3X(character);
   final dstY = GameRender.getRenderV3Y(character);
-  final color = getRenderColor(character);
+  final color = Game.getRenderColor(character);
 
   var frameLegs = 0;
   var frameHead = 0;

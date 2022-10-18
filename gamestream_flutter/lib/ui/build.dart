@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/assets.dart';
-import 'package:gamestream_flutter/game_colors.dart';
 import 'package:gamestream_flutter/enums/region.dart';
+import 'package:gamestream_flutter/game_colors.dart';
 import 'package:gamestream_flutter/game_widgets.dart';
 
 final build = _Build();

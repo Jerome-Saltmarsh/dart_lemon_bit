@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/game_account.dart';
 import 'package:gamestream_flutter/data/data_authentication.dart';
+import 'package:gamestream_flutter/game_account.dart';
 import 'package:gamestream_flutter/game_colors.dart';
 import 'package:gamestream_flutter/game_widgets.dart';
 import 'package:gamestream_flutter/modules/modules.dart';

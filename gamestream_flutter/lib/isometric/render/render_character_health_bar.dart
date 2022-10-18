@@ -1,7 +1,7 @@
 import 'package:gamestream_flutter/game_images.dart';
+import 'package:gamestream_flutter/game_render.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_gameobjects.dart';
-import 'package:gamestream_flutter/game_render.dart';
 import 'package:lemon_engine/engine.dart';
 
 /// @percentage is a double between 0 and 1

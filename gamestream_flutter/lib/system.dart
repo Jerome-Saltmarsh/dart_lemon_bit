@@ -1,8 +1,8 @@
 
 import 'dart:async';
 
-import 'package:gamestream_flutter/game_images.dart';
 import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/game_images.dart';
 import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
 import 'package:gamestream_flutter/isometric_web/register_isometric_web_controls.dart';
 import 'package:gamestream_flutter/modules/modules.dart';

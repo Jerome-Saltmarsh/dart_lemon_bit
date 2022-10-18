@@ -6,6 +6,7 @@ import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/particle_type.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/game_audio.dart';
+import 'package:gamestream_flutter/game_render.dart';
 import 'package:gamestream_flutter/game_ui.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/explosion.dart';
@@ -35,7 +36,6 @@ import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/isometric/update.dart';
 import 'package:gamestream_flutter/isometric_web/read_player_input.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
-import 'package:gamestream_flutter/game_render.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
@@ -133,9 +133,7 @@ class Game {
   static int getNodeShade(int z, int row, int column) =>
       outOfBounds(z, row, column)
           ? ambientShade.value
-          : nodesShade[
-      getNodeIndexZRC(z, row, column)
-      ];
+          : nodesShade[getNodeIndexZRC(z, row, column)];
 
   static bool outOfBounds(int z, int row, int column){
     if (z < 0) return true;
@@ -155,6 +153,15 @@ class Game {
 
   static int convertNodeIndexToColumn(int index) =>
       index - ((convertNodeIndexToZ(index) * nodesArea) + (convertNodeIndexToRow(index) * nodesTotalColumns));
+
+  static int getRenderColor(Vector3 vector3) =>
+      colorShades[getNodeBelowShade(vector3)];
+
+  static int getRenderShade(Vector3 vector3) =>
+      getNodeBelowShade(vector3);
+
+  static int getNodeBelowShade(Vector3 vector3) =>
+      getNodeShade(vector3.indexZ - 1, vector3.indexRow, vector3.indexColumn);
 
 
   // ACTIONS

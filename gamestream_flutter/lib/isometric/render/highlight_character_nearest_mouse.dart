@@ -3,11 +3,10 @@
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/queries/get_distance_from_mouse.dart';
-import 'package:gamestream_flutter/isometric/render/get_character_render_color.dart';
 
 void applyCharacterColors(){
   for (var i = 0; i < Game.totalCharacters; i++){
-    Game.characters[i].color = getRenderColor(Game.characters[i]);
+    Game.characters[i].color = Game.getRenderColor(Game.characters[i]);
   }
 }
 

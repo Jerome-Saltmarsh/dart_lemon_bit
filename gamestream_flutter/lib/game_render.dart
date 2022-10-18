@@ -4,8 +4,8 @@ import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/node_size.dart';
 import 'package:bleed_common/particle_type.dart';
-import 'package:gamestream_flutter/game_images.dart';
 import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/game_images.dart';
 import 'package:gamestream_flutter/isometric/animation_frame.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/game_object.dart';
@@ -20,7 +20,6 @@ import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_gameobjects.
 import 'package:gamestream_flutter/isometric/nodes/render/render_constants.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/render_node.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
-import 'package:gamestream_flutter/isometric/render/get_character_render_color.dart';
 import 'package:gamestream_flutter/isometric/render/highlight_character_nearest_mouse.dart';
 import 'package:gamestream_flutter/isometric/render/renderCharacter.dart';
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
@@ -193,7 +192,7 @@ class GameRender {
           srcY: 32,
           srcWidth: 8,
           srcHeight: 8,
-          color: getRenderColor(particle),
+          color: Game.getRenderColor(particle),
         );
         break;
       // const size = 8.0;
@@ -215,7 +214,7 @@ class GameRender {
           srcY: 32,
           srcWidth: 4,
           srcHeight: 4,
-          color: getRenderColor(particle),
+          color: Game.getRenderColor(particle),
         );
         break;
       case ParticleType.Bullet_Ring:
@@ -227,7 +226,7 @@ class GameRender {
           srcY: 32,
           srcWidth: 4,
           srcHeight: 4,
-          color: getRenderColor(particle),
+          color: Game.getRenderColor(particle),
         );
         break;
       case ParticleType.Water_Drop:
@@ -239,20 +238,20 @@ class GameRender {
           srcY: 40,
           srcWidth: 4,
           srcHeight: 4,
-          color: getRenderColor(particle),
+          color: Game.getRenderColor(particle),
         );
         break;
       case ParticleType.Smoke:
-        Engine.renderBuffer(
-          dstX: particle.renderX,
-          dstY: particle.renderY,
-          srcX: 5612,
-          srcY: 0,
-          srcWidth: 50,
-          srcHeight: 50,
-          scale: particle.scale,
-          color: getRenderColor(particle),
-        );
+        // Engine.renderBuffer(
+        //   dstX: particle.renderX,
+        //   dstY: particle.renderY,
+        //   srcX: 5612,
+        //   srcY: 0,
+        //   srcWidth: 50,
+        //   srcHeight: 50,
+        //   scale: particle.scale,
+        //   color: getRenderColor(particle),
+        // );
         break;
       case ParticleType.Block_Wood:
         Engine.renderSprite(
@@ -264,7 +263,7 @@ class GameRender {
           srcWidth: 8,
           srcHeight: 8,
           scale: particle.scale,
-          color: getRenderColor(particle),
+          color: Game.getRenderColor(particle),
         );
         break;
       case ParticleType.Block_Grass:
@@ -277,7 +276,7 @@ class GameRender {
           srcWidth: 8,
           srcHeight: 8,
           scale: particle.scale,
-          color: getRenderColor(particle),
+          color: Game.getRenderColor(particle),
         );
         break;
       case ParticleType.Block_Brick:
@@ -290,7 +289,7 @@ class GameRender {
           srcWidth: 8,
           srcHeight: 8,
           scale: particle.scale,
-          color: getRenderColor(particle),
+          color: Game.getRenderColor(particle),
         );
         break;
       case ParticleType.Fire:
@@ -316,7 +315,7 @@ class GameRender {
           srcWidth: 32,
           srcHeight: 32,
           scale: 0.25,
-          color: getRenderColor(particle),
+          color: Game.getRenderColor(particle),
         );
         break;
       case ParticleType.Fire_Purple:
@@ -344,7 +343,7 @@ class GameRender {
           srcY: 25,
           srcWidth: 8,
           srcHeight: 8,
-          color: getRenderColor(particle),
+          color: Game.getRenderColor(particle),
         );
         break;
       case ParticleType.Orb_Shard:
@@ -368,7 +367,7 @@ class GameRender {
           srcY: 64.0 * particle.direction,
           srcWidth: 64,
           srcHeight: 64,
-          color: getRenderColor(particle),
+          color: Game.getRenderColor(particle),
         );
         break;
       case ParticleType.Star_Explosion:
@@ -393,7 +392,7 @@ class GameRender {
           srcY: 64.0 * particle.direction,
           srcWidth: 64,
           srcHeight: 64,
-          color: getRenderColor(particle),
+          color: Game.getRenderColor(particle),
         );
       case ParticleType.Zombie_leg:
         casteShadowDownV3(particle);
@@ -404,7 +403,7 @@ class GameRender {
           srcY: 64.0 * particle.direction,
           srcWidth: 64,
           srcHeight: 64,
-          color: getRenderColor(particle),
+          color: Game.getRenderColor(particle),
         );
       case ParticleType.Zombie_Torso:
         casteShadowDownV3(particle);
@@ -415,7 +414,7 @@ class GameRender {
           srcY: 64.0 * particle.direction,
           srcWidth: 64,
           srcHeight: 64,
-          color: getRenderColor(particle),
+          color: Game.getRenderColor(particle),
         );
       case ParticleType.Dust:
         if (particle.frame >= 8 ) return;
@@ -500,7 +499,7 @@ class GameRender {
           srcY: AtlasSrcGameObjects.Rock_Y,
           srcWidth: AtlasSrcGameObjects.Rock_Width,
           srcHeight: AtlasSrcGameObjects.Rock_Height,
-          color: getRenderColor(gameObject),
+          color: Game.getRenderColor(gameObject),
         );
         return;
       case GameObjectType.Loot:
@@ -512,7 +511,7 @@ class GameRender {
           srcY: AtlasSrcGameObjects.Loot_Y,
           srcWidth: AtlasSrcGameObjects.Loot_Width,
           srcHeight: AtlasSrcGameObjects.Loot_Height,
-          color: getRenderColor(gameObject),
+          color: Game.getRenderColor(gameObject),
         );
         return;
       case GameObjectType.Barrel:
@@ -525,7 +524,7 @@ class GameRender {
           srcWidth: AtlasSrcGameObjects.Barrel_Width,
           srcHeight: AtlasSrcGameObjects.Barrel_Height,
           anchorY: AtlasSrcGameObjects.Barrel_Anchor,
-          color: getRenderColor(gameObject),
+          color: Game.getRenderColor(gameObject),
         );
         return;
       case GameObjectType.Tavern_Sign:
@@ -537,7 +536,7 @@ class GameRender {
           srcY: AtlasSrcGameObjects.Tavern_Sign_Y,
           srcWidth: AtlasSrcGameObjects.Tavern_Sign_Width,
           srcHeight: AtlasSrcGameObjects.Tavern_Sign_Height,
-          color: getRenderColor(gameObject),
+          color: Game.getRenderColor(gameObject),
         );
         return;
       case GameObjectType.Candle:
@@ -560,7 +559,7 @@ class GameRender {
           srcWidth: 5,
           srcHeight: 14,
           anchorY: 0.95,
-          color: getRenderColor(gameObject),
+          color: Game.getRenderColor(gameObject),
         );
         return;
       case GameObjectType.Wheel:
@@ -572,7 +571,7 @@ class GameRender {
           srcWidth: 34,
           srcHeight: 40,
           anchorY: 0.9,
-          color: getRenderColor(gameObject),
+          color: Game.getRenderColor(gameObject),
         );
         return;
       case GameObjectType.Flower:
@@ -583,7 +582,7 @@ class GameRender {
           srcY: 0,
           srcWidth: 16,
           srcHeight: 16,
-          color: getRenderColor(gameObject),
+          color: Game.getRenderColor(gameObject),
         );
         return;
       case GameObjectType.Stick:
@@ -594,7 +593,7 @@ class GameRender {
           srcY: 0,
           srcWidth: 16,
           srcHeight: 16,
-          color: getRenderColor(gameObject),
+          color: Game.getRenderColor(gameObject),
         );
         return;
       case GameObjectType.Crystal:
@@ -683,7 +682,7 @@ class GameRender {
             srcY: AtlasSrcGameObjects.Shotgun_Y,
             srcWidth: AtlasSrcGameObjects.Shotgun_Width,
             srcHeight: AtlasSrcGameObjects.Shotgun_Height,
-            color: getRenderColor(gameObject)
+            color: Game.getRenderColor(gameObject)
         );
         break;
 
@@ -697,7 +696,7 @@ class GameRender {
             srcY: AtlasSrcGameObjects.Handgun_Y,
             srcWidth: AtlasSrcGameObjects.Handgun_Width,
             srcHeight: AtlasSrcGameObjects.Handgun_Height,
-            color: getRenderColor(gameObject)
+            color: Game.getRenderColor(gameObject)
         );
         break;
 
@@ -711,7 +710,7 @@ class GameRender {
             srcY: AtlasSrcGameObjects.Sword_Y,
             srcWidth: AtlasSrcGameObjects.Sword_Width,
             srcHeight: AtlasSrcGameObjects.Sword_Height,
-            color: getRenderColor(gameObject)
+            color: Game.getRenderColor(gameObject)
         );
         break;
 
@@ -725,7 +724,7 @@ class GameRender {
             srcY: AtlasSrcGameObjects.Bow_Y,
             srcWidth: AtlasSrcGameObjects.Bow_Width,
             srcHeight: AtlasSrcGameObjects.Bow_Height,
-            color: getRenderColor(gameObject)
+            color: Game.getRenderColor(gameObject)
         );
         break;
 
@@ -739,7 +738,7 @@ class GameRender {
             srcY: AtlasSrcGameObjects.Staff_Y,
             srcWidth: AtlasSrcGameObjects.Staff_Width,
             srcHeight: AtlasSrcGameObjects.Staff_Height,
-            color: getRenderColor(gameObject)
+            color: Game.getRenderColor(gameObject)
         );
         break;
     }
@@ -1177,7 +1176,7 @@ class GameRender {
       dstX: GameRender.getRenderX(shadowX, shadowY, shadowZ),
       dstY: GameRender.getRenderY(shadowX, shadowY, shadowZ),
       scale: 0.75,
-      color: getRenderColor(character),
+      color: Game.getRenderColor(character),
       anchorY: 0.75,
     );
   }
