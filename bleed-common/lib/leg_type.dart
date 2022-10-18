@@ -5,6 +5,7 @@ class LegType {
    static const red = 2;
    static const green = 3;
    static const white = 4;
+   static const swat = 5;
 
    static String getName(int type){
       return <int, String> {
@@ -13,6 +14,7 @@ class LegType {
          red: "Red",
          green: "Green",
          white: "White",
+         white: "Swat",
       }[type]!;
    }
    
@@ -22,5 +24,6 @@ class LegType {
       red,
       green,
       white,
+      swat,
    ];
 }

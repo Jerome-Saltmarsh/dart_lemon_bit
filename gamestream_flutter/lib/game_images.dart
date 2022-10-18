@@ -26,6 +26,10 @@ class GameImages {
 
    static late Image template_legs_blue;
    static late Image template_legs_white;
+   static late Image template_legs_green;
+   static late Image template_legs_brown;
+   static late Image template_legs_red;
+   static late Image template_legs_swat;
 
    static Image getImageForHeadType(int headType) {
       switch (headType) {
@@ -63,6 +67,14 @@ class GameImages {
             return template_legs_white;
          case LegType.blue:
             return template_legs_blue;
+         case LegType.green:
+            return template_legs_green;
+         case LegType.brown:
+            return template_legs_brown;
+         case LegType.red:
+            return template_legs_red;
+         case LegType.swat:
+            return template_legs_swat;
          default:
             throw Exception('GameImages.getImageForLegType(${LegType.getName(legType)})');
       }
