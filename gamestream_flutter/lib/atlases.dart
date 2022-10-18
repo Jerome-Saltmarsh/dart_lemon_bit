@@ -21,8 +21,8 @@ class ImagesTemplateHead {
    static late Image swat;
    static late Image wizard;
 
-   Image fromHeadType(int headType){
-       switch(headType){
+   static Image fromHeadType(int headType){
+       switch (headType) {
           case HeadType.None:
              return plain;
           case HeadType.Rogues_Hood:
@@ -47,6 +47,12 @@ class ImagesTemplateBody {
       switch (bodyType){
          case BodyType.shirtBlue:
             return blue;
+         case BodyType.shirtCyan:
+            return cyan;
+         case BodyType.swat:
+            return swat;
+         case BodyType.tunicPadded:
+            return tunic;
          default:
             return cyan;
       }

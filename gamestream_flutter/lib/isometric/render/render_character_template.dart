@@ -271,7 +271,7 @@ void renderCharacterTemplate(Character character, {
     anchorY: 0.75
   );
   Engine.renderSprite(
-    image: ImagesTemplateBody.blue,
+    image: ImagesTemplateBody.fromBodyType(character.bodyType),
     srcX: frameBody * 64,
     srcY: finalDirection * 64,
     srcWidth: 64,
@@ -283,7 +283,7 @@ void renderCharacterTemplate(Character character, {
     anchorY: 0.75
   );
   Engine.renderSprite(
-    image: ImagesTemplateHead.rogue,
+    image: ImagesTemplateHead.fromHeadType(character.headType),
     srcX: frameHead * 64,
     srcY: character.aimDirection * 64,
     srcWidth: 64,
