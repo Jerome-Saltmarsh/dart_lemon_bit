@@ -31,8 +31,8 @@ class System {
       GameImages.template_body_cyan = await Engine.loadImageAsset('images/template/body/template-body-cyan.png');
       GameImages.template_body_blue = await Engine.loadImageAsset('images/template/body/template-body-blue.png');
       GameImages.template_body_tunic = await Engine.loadImageAsset('images/template/body/template-body-tunic.png');
-      ImagesTemplateLegs.blue = await Engine.loadImageAsset('images/template/legs/template-legs-blue.png');
-      ImagesTemplateLegs.white = await Engine.loadImageAsset('images/template/legs/template-legs-white.png');
+      GameImages.template_legs_blue = await Engine.loadImageAsset('images/template/legs/template-legs-blue.png');
+      GameImages.template_legs_white = await Engine.loadImageAsset('images/template/legs/template-legs-white.png');
       ImagesTemplateWeapons.bow = await Engine.loadImageAsset('images/template/weapons/template-weapons-bow.png');
       ImagesTemplateWeapons.handgun = await Engine.loadImageAsset('images/template/weapons/template-weapons-handgun.png');
       ImagesTemplateWeapons.shotgun = await Engine.loadImageAsset('images/template/weapons/template-weapons-shotgun.png');

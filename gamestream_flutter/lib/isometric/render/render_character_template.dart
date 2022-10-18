@@ -182,7 +182,7 @@ void renderCharacterTemplate(Character character, {
     anchorY: 0.75,
   );
   Engine.renderSprite(
-    image: ImagesTemplateLegs.fromLegType(character.legType),
+    image: GameImages.getImageForLegType(character.legType),
     srcX: frameLegs * 64,
     srcY: upperBodyDirection * 64,
     srcWidth: 64,

@@ -47,7 +47,7 @@ void onPlayerEvent(int event) {
       GameAudio.audioSingleItemUnlock();
       break;
     case PlayerEvent.Ammo_Acquired:
-      audio.itemAcquired(screenCenterWorldX, screenCenterWorldY);
+      audio.itemAcquired(Engine.screenCenterWorldX, Engine.screenCenterWorldY);
       break;
     case PlayerEvent.Item_Equipped:
       final type = serverResponseReader.readByte();
@@ -57,22 +57,22 @@ void onPlayerEvent(int event) {
       GameAudio.audioSingleSwitchSounds4();
       break;
     case PlayerEvent.Item_Sold:
-      audio.coins(screenCenterWorldX, screenCenterWorldY);
+      audio.coins(Engine.screenCenterWorldX, Engine.screenCenterWorldY);
       break;
     case PlayerEvent.Drink_Potion:
-      audio.bottle(screenCenterWorldX, screenCenterWorldY);
+      audio.bottle(Engine.screenCenterWorldX, Engine.screenCenterWorldY);
       break;
     case PlayerEvent.Collect_Wood:
-      audio.coins(screenCenterWorldX, screenCenterWorldY);
+      audio.coins(Engine.screenCenterWorldX, Engine.screenCenterWorldY);
       break;
     case PlayerEvent.Collect_Rock:
-      audio.coins(screenCenterWorldX, screenCenterWorldY);
+      audio.coins(Engine.screenCenterWorldX, Engine.screenCenterWorldY);
       break;
     case PlayerEvent.Collect_Experience:
-      audio.collectStar3(screenCenterWorldX, screenCenterWorldY);
+      audio.collectStar3(Engine.screenCenterWorldX, Engine.screenCenterWorldY);
       break;
     case PlayerEvent.Collect_Gold:
-      audio.coins(screenCenterWorldX, screenCenterWorldY);
+      audio.coins(Engine.screenCenterWorldX, Engine.screenCenterWorldY);
       break;
     case PlayerEvent.Hello_Male_01:
       GameAudio.audioSingleMaleHello.play();

@@ -22,7 +22,7 @@ Widget buildHudDebug() =>
             children: [
               // _buildContainerMouseInfo(),
                 Refresh(() => text(
-                  "mouseGridX: ${mouseGridX.toInt()}, mouseGridY: ${mouseGridY.toInt()}, mousePlayerAngle: ${mousePlayerAngle.toStringAsFixed(1)}, mouseWorldX: ${mouseWorldX.toInt()}, mouseWorldY: ${mouseWorldY.toInt()}"
+                  "mouseGridX: ${mouseGridX.toInt()}, mouseGridY: ${mouseGridY.toInt()}, mousePlayerAngle: ${mousePlayerAngle.toStringAsFixed(1)}, mouseWorldX: ${Engine.mouseWorldX.toInt()}, mouseWorldY: ${Engine.mouseWorldY.toInt()}"
                 )),
                 Refresh(() =>  text(
                   "player-position: x: ${Game.player.x}, y: ${Game.player.y}, z: ${Game.player.z}\n"

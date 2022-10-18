@@ -212,8 +212,8 @@ Future sendClientRequestUpdate() async {
     updateBuffer[3] = 0;
     updateBuffer[4] = 0;
   }
-  writeNumberToByteArray(number: mouseWorldX, list: updateBuffer, index: 5);
-  writeNumberToByteArray(number: mouseWorldY, list: updateBuffer, index: 7);
+  writeNumberToByteArray(number: Engine.mouseWorldX, list: updateBuffer, index: 5);
+  writeNumberToByteArray(number: Engine.mouseWorldY, list: updateBuffer, index: 7);
   writeNumberToByteArray(number: Engine.screen.left, list: updateBuffer, index: 9);
   writeNumberToByteArray(number: Engine.screen.top, list: updateBuffer, index: 11);
   writeNumberToByteArray(number: Engine.screen.right, list: updateBuffer, index: 13);

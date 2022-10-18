@@ -12,15 +12,20 @@ class GameImages {
    static late Image templateShadow;
    static late Image gameobjects;
    static late Image particles;
+
    static late Image template_head_plain;
    static late Image template_head_rogue;
    static late Image template_head_steel;
    static late Image template_head_swat;
    static late Image template_head_wizard;
+
    static late Image template_body_blue;
    static late Image template_body_cyan;
    static late Image template_body_swat;
    static late Image template_body_tunic;
+
+   static late Image template_legs_blue;
+   static late Image template_legs_white;
 
    static Image getImageForHeadType(int headType) {
       switch (headType) {
@@ -33,12 +38,12 @@ class GameImages {
          case HeadType.Wizards_Hat:
             return template_head_wizard;
          default:
-            throw Exception('GameImages.getImageForHeadType(${HeadType.getName(headType)}');
+            throw Exception('GameImages.getImageForHeadType(${HeadType.getName(headType)})');
       }
    }
 
    static Image getImageForBodyType(int bodyType) {
-      switch (bodyType){
+      switch (bodyType) {
          case BodyType.shirtBlue:
             return template_body_blue;
          case BodyType.shirtCyan:
@@ -48,28 +53,22 @@ class GameImages {
          case BodyType.tunicPadded:
             return template_body_tunic;
          default:
-            return template_body_cyan;
+            throw Exception('GameImages.getImageForBodyType(${BodyType.getName(bodyType)})');
+      }
+   }
+
+   static Image getImageForLegType(int legType) {
+      switch (legType){
+         case LegType.white:
+            return template_legs_white;
+         case LegType.blue:
+            return template_legs_blue;
+         default:
+            throw Exception('GameImages.getImageForLegType(${LegType.getName(legType)})');
       }
    }
 }
 
-
-class ImagesTemplateLegs {
-   static late Image blue;
-   static late Image white;
-
-   static Image fromLegType(int legType){
-       switch (legType){
-          case LegType.white:
-             return white;
-          case LegType.blue:
-             return blue;
-          default:
-             return white;
-             // throw Exception("atlases.ImagesTemplateLegs.fromLegType(type: $legType");
-       }
-   }
-}
 
 class ImagesTemplateWeapons {
    static late Image bow;

@@ -767,8 +767,8 @@ class Engine {
                 width: screen.width,
                 height: screen.height,
                 child: CustomPaint(
-                  painter: _GamePainter(repaint: notifierPaintFrame),
-                  foregroundPainter: _GameForegroundPainter(
+                  painter: _EnginePainter(repaint: notifierPaintFrame),
+                  foregroundPainter: _EngineForegroundPainter(
                       repaint: notifierPaintForeground
                   ),
                 )
@@ -833,6 +833,36 @@ class Engine {
 
   static void drawLine(double x1, double y1, double x2, double y2) =>
     canvas.drawLine(Offset(x1, y1), Offset(x2, y2), paint);
+
+  static bool get fullScreenActive => document.fullscreenElement != null;
+
+  static double screenToWorldX(double value) {
+    return camera.x + value / zoom;
+  }
+
+  static double screenToWorldY(double value) {
+    return camera.y + value / zoom;
+  }
+
+  static double worldToScreenX(double x) {
+    return zoom * (x - camera.x);
+  }
+
+  static double worldToScreenY(double y) {
+    return zoom * (y - camera.y);
+  }
+
+  static double get screenCenterX => screen.width * 0.5;
+  static double get screenCenterY => screen.height * 0.5;
+  static double get screenCenterWorldX => screenToWorldX(screenCenterX);
+  static double get screenCenterWorldY => screenToWorldY(screenCenterY);
+  static double get mouseWorldX => screenToWorldX(mousePosition.x);
+  static double get mouseWorldY => screenToWorldY(mousePosition.y);
+
+
+  static double distanceFromMouse(double x, double y) {
+    return distanceBetween(mouseWorldX, mouseWorldY, x, y);
+  }
 }
 
 typedef CallbackOnScreenSizeChanged = void Function(
@@ -841,40 +871,6 @@ typedef CallbackOnScreenSizeChanged = void Function(
     double newWidth,
     double newHeight,
 );
-
-double screenToWorldX(double value) {
-  return Engine.camera.x + value / Engine.zoom;
-}
-
-double screenToWorldY(double value) {
-  return Engine.camera.y + value / Engine.zoom;
-}
-
-double worldToScreenX(double x) {
-  return Engine.zoom * (x - Engine.camera.x);
-}
-
-double worldToScreenY(double y) {
-  return Engine.zoom * (y - Engine.camera.y);
-}
-
-double distanceFromMouse(double x, double y) {
-  return distanceBetween(mouseWorldX, mouseWorldY, x, y);
-}
-
-T closestToMouse<T extends Vector2>(List<T> values){
-  return findClosest(values, mouseWorldX, mouseWorldY);
-}
-
-// global properties
-// Offset get mouseWorld => Offset(mouseWorldX, mouseWorldY);
-double get screenCenterX => Engine.screen.width * 0.5;
-double get screenCenterY => Engine.screen.height * 0.5;
-double get screenCenterWorldX => screenToWorldX(screenCenterX);
-double get screenCenterWorldY => screenToWorldY(screenCenterY);
-double get mouseWorldX => screenToWorldX(Engine.mousePosition.x);
-double get mouseWorldY => screenToWorldY(Engine.mousePosition.y);
-bool get fullScreenActive => document.fullscreenElement != null;
 
 // global typedefs
 typedef DrawCanvas(Canvas canvas, Size size);
@@ -925,12 +921,9 @@ enum CursorType {
   Click,
 }
 
+class _EnginePainter extends CustomPainter {
 
-// Private Classes
-
-class _GamePainter extends CustomPainter {
-
-  const _GamePainter({required Listenable repaint})
+  const _EnginePainter({required Listenable repaint})
       : super(repaint: repaint);
 
   @override
@@ -942,9 +935,9 @@ class _GamePainter extends CustomPainter {
   bool shouldRepaint(CustomPainter oldDelegate) => false;
 }
 
-class _GameForegroundPainter extends CustomPainter {
+class _EngineForegroundPainter extends CustomPainter {
 
-  const _GameForegroundPainter({required Listenable repaint})
+  const _EngineForegroundPainter({required Listenable repaint})
       : super(repaint: repaint);
 
   @override

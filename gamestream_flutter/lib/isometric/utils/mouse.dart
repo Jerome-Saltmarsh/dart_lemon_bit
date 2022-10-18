@@ -5,11 +5,11 @@ import 'package:gamestream_flutter/isometric/utils/convert.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 
-double get mouseGridX => convertWorldToGridX(mouseWorldX, mouseWorldY) + Game.player.z;
-double get mouseGridY => convertWorldToGridY(mouseWorldX, mouseWorldY) + Game.player.z;
+double get mouseGridX => convertWorldToGridX(Engine.mouseWorldX, Engine.mouseWorldY) + Game.player.z;
+double get mouseGridY => convertWorldToGridY(Engine.mouseWorldX, Engine.mouseWorldY) + Game.player.z;
 
-double get mouseGridXStandard => convertWorldToGridX(mouseWorldX, mouseWorldY);
-double get mouseGridYStandard => convertWorldToGridY(mouseWorldX, mouseWorldY);
+double get mouseGridXStandard => convertWorldToGridX(Engine.mouseWorldX, Engine.mouseWorldY);
+double get mouseGridYStandard => convertWorldToGridY(Engine.mouseWorldX, Engine.mouseWorldY);
 
 double get mousePlayerAngle {
    final adjacent = Game.player.x - mouseGridX;
@@ -26,13 +26,13 @@ int get mouseRow {
 }
 
 int getMouseRow (int z){
-  return (convertWorldToGridX(mouseWorldX, mouseWorldY) + (z * tileHeight)) ~/ tileSize;
+  return (convertWorldToGridX(Engine.mouseWorldX, Engine.mouseWorldY) + (z * tileHeight)) ~/ tileSize;
 }
 
 int getMouseColumn (int z) {
-  return (convertWorldToGridY(mouseWorldX, mouseWorldY) + (z * tileHeight)) ~/ tileSize;
+  return (convertWorldToGridY(Engine.mouseWorldX, Engine.mouseWorldY) + (z * tileHeight)) ~/ tileSize;
 }
 
 double get mouseRowPercentage {
-  return (convertWorldToGridY(mouseWorldX, mouseWorldY) / tileSize) % 1.0;
+  return (convertWorldToGridY(Engine.mouseWorldX, Engine.mouseWorldY) / tileSize) % 1.0;
 }
