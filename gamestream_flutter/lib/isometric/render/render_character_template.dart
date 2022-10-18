@@ -111,50 +111,26 @@ bool weaponIs96(int weapon) =>
    weapon == AttackType.Staff ||
    weapon == AttackType.Blade ;
 
-void renderTemplateWeapon(Character character, int direction, int frame) {
-  if (character.unarmed) return;
-  var size = weaponIs64(character.weaponType) ? 64.0 : 96.0;
-  // var frame = 0;
-  // var isTwoHandedFirearm = AttackType.isTwoHandedFirearm(character.weaponType);
-  //
-  // switch (character.state) {
-  //   case CharacterState.Idle:
-  //     if (isTwoHandedFirearm) {
-  //       frame = 0;
-  //     } else {
-  //       frame = 1;
-  //     }
-  //     break;
-  //   case CharacterState.Running:
-  //     if (isTwoHandedFirearm) {
-  //        frame = const[15, 16, 17, 18][character.frame % 4];
-  //     } else {
-  //        frame = const[11, 12, 13, 14][character.frame % 4];
-  //     }
-  //     break;
-  //   case CharacterState.Performing:
-  //     if (weapon == AttackType.Shotgun){
-  //       frame = const[15, 16, 17, 18][character.frame % 4];
-  //     }
-  //     break;
-  //   case CharacterState.Changing:
-  //     break;
-  //   case CharacterState.Hurt:
-  //     break;
-  //   default:
-  //     return;
-  // }
-
+void renderTemplateWeapon(
+    int weaponType,
+    int direction,
+    int frame,
+    int color,
+    double dstX,
+    double dstY,
+    ) {
+  if (weaponType == AttackType.Unarmed) return;
+  var size = weaponIs64(weaponType) ? 64.0 : 96.0;
   Engine.renderSprite(
-    image: ImagesTemplateWeapons.fromWeaponType(character.weaponType),
+    image: ImagesTemplateWeapons.fromWeaponType(weaponType),
     srcX: frame * size,
     srcY: direction * size,
     srcWidth: size,
     srcHeight: size,
-    dstX: RenderEngine.getRenderV3X(character),
-    dstY: RenderEngine.getRenderV3Y(character),
+    dstX: dstX,
+    dstY: dstY,
     scale: 0.75,
-    color: getRenderColor(character),
+    color: color,
     anchorY: 0.75
   );
 }
@@ -169,6 +145,10 @@ void renderCharacterTemplate(Character character, {
   if (renderHealthBar) {
     renderCharacterHealthBar(character);
   }
+
+  final dstX = RenderEngine.getRenderV3X(character);
+  final dstY = RenderEngine.getRenderV3Y(character);
+  final color = getRenderColor(character);
 
   var frameLegs = 0;
   var frameHead = 0;
@@ -211,7 +191,7 @@ void renderCharacterTemplate(Character character, {
   }
 
   if (!weaponInFront) {
-    renderTemplateWeapon(character, finalDirection, frameWeapon);
+    renderTemplateWeapon(character.weaponType, finalDirection, frameWeapon, color, dstX, dstY);
   }
 
   // find the nearest torch and move the shadow behind the character
@@ -252,6 +232,7 @@ void renderCharacterTemplate(Character character, {
   final shadowY = character.y + getOpposite(angle, distance);
   final shadowZ = character.z;
 
+
   Engine.renderSprite(
     image: Images.templateShadow,
     srcX: frameLegs * 64,
@@ -261,7 +242,7 @@ void renderCharacterTemplate(Character character, {
     dstX: RenderEngine.getRenderX(shadowX, shadowY, shadowZ),
     dstY: RenderEngine.getRenderY(shadowX, shadowY, shadowZ),
     scale: 0.75,
-    color: getRenderColor(character),
+    color: color,
     anchorY: 0.75,
   );
   Engine.renderSprite(
@@ -270,10 +251,10 @@ void renderCharacterTemplate(Character character, {
     srcY: upperBodyDirection * 64,
     srcWidth: 64,
     srcHeight: 64,
-    dstX: RenderEngine.getRenderV3X(character),
-    dstY: RenderEngine.getRenderV3Y(character),
+    dstX: dstX,
+    dstY: dstY,
     scale: 0.75,
-    color: getRenderColor(character),
+    color: color,
     anchorY: 0.75
   );
   Engine.renderSprite(
@@ -282,10 +263,10 @@ void renderCharacterTemplate(Character character, {
     srcY: finalDirection * 64,
     srcWidth: 64,
     srcHeight: 64,
-    dstX: RenderEngine.getRenderV3X(character),
-    dstY: RenderEngine.getRenderV3Y(character),
+    dstX: dstX,
+    dstY: dstY,
     scale: 0.75,
-    color: getRenderColor(character),
+    color: color,
     anchorY: 0.75
   );
   Engine.renderSprite(
@@ -294,14 +275,14 @@ void renderCharacterTemplate(Character character, {
     srcY: character.aimDirection * 64,
     srcWidth: 64,
     srcHeight: 64,
-    dstX: RenderEngine.getRenderV3X(character),
-    dstY: RenderEngine.getRenderV3Y(character),
+    dstX: dstX,
+    dstY: dstY,
     scale: 0.75,
-    color: getRenderColor(character),
+    color: color,
     anchorY: 0.75
   );
   if (weaponInFront) {
-    renderTemplateWeapon(character, finalDirection, frameWeapon);
+    renderTemplateWeapon(character.weaponType, finalDirection, frameWeapon, color, dstX, dstY);
   }
 
   return;
