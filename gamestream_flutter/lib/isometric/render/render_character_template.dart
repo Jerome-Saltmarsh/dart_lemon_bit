@@ -199,9 +199,13 @@ void renderCharacterTemplate(Character character, {
       } else {
         frameBody = 11 + (character.frame % 4);
       }
-      frameWeapon = frameLegs;
+      frameWeapon = frameBody;
       frameLegs = frameBody;
       break;
+  }
+
+  if (character.usingWeapon) {
+
   }
 
   if (!weaponInFront) {

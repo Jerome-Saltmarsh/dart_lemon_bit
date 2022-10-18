@@ -34,9 +34,8 @@ double getZombieSrcX(Character character) {
   const framesPerDirection = 0;
   switch (character.state) {
     case CharacterState.Running:
-      const frames = [3, 4, 5, 6];
       return loop4(
-          animation: frames,
+          animation: const [3, 4, 5, 6],
           character: character,
           framesPerDirection: framesPerDirection
       );
