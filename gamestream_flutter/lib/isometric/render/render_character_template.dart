@@ -18,7 +18,6 @@ import 'package:lemon_math/library.dart';
 
 import '../classes/character.dart';
 import 'render_character_health_bar.dart';
-import 'src_utils.dart';
 
 void renderLine(double x, double y, double z, double angle, double distance) {
   final x2 = x + getAdjacent(angle, distance);
@@ -178,7 +177,6 @@ void renderCharacterTemplate(Character character, {
   final diff = Direction.getDifference(character.renderDirection, character.aimDirection).abs();
   final weaponInFront = character.renderDirection >= 2 && character.renderDirection < 6;
   final runningBackwards = diff >= 3 && character.running;
-
   final renderDirectionOpposite = (character.renderDirection + 4) % 8;
   final upperBodyDirection = runningBackwards ? renderDirectionOpposite : character.renderDirection;
   final finalDirection = character.usingWeapon ? character.aimDirection : upperBodyDirection;
@@ -204,6 +202,8 @@ void renderCharacterTemplate(Character character, {
   }
 
   if (character.usingWeapon) {
+    RenderEngine.renderTextV3(character, character.weaponFrame);
+
     final animation = TemplateAnimation.getAttackAnimation(character.weaponType);
     frameWeapon = character.weaponFrame >= animation.length ? animation.last : animation[character.weaponFrame];
     frameBody = frameWeapon;
@@ -300,7 +300,7 @@ void renderCharacterTemplate(Character character, {
     color: getRenderColor(character),
     anchorY: 0.75
   );
-  if (weaponInFront){
+  if (weaponInFront) {
     renderTemplateWeapon(character, finalDirection, frameWeapon);
   }
 
@@ -420,102 +420,6 @@ bool weaponIs64(int weapon) =>
    weapon == AttackType.Bow ||
    weapon == AttackType.Shotgun;
 
-void renderCharacterTemplatePartCustom96({
-  required bool variation,
-  required double renderX,
-  required double renderY,
-  required int state,
-  required int frame,
-  required int direction,
-  required int weapon,
-  required int color,
-}) =>
-    Engine.renderBuffer(
-      dstX: renderX,
-      dstY: renderY,
-      srcX: getTemplateSrcXCustom(
-        variation: variation,
-        size: 96,
-        characterState: state,
-        direction: direction,
-        frame: frame,
-        weapon: weapon,
-      ),
-      srcY: 2491.0 + (AtlasIndex96.getWeaponIndex(weapon) * 96),
-      srcWidth: 96.0,
-      srcHeight: 96.0,
-      scale: 0.75,
-      anchorX: 0.5,
-      anchorY: 0.69,
-      color: color,
-    );
-
-bool getVariation(Character character) =>
-      character.weaponType == AttackType.Shotgun ||
-      character.weaponType == AttackType.Bow;
-
-
-double getTemplateSrcXCustom({
-  required bool variation,
-  required int characterState,
-  required int direction,
-  required int frame,
-  required int weapon,
-  required double size,
-}) {
-  const framesPerDirection = 19;
-  switch (characterState) {
-    case CharacterState.Running:
-      const frames1 = [12, 13, 14, 15];
-      const frames2 = [16, 17, 18, 19];
-      return loopCustom(
-          size: size,
-          frame: frame,
-          animation: variation ? frames2 : frames1,
-          direction: direction,
-          framesPerDirection: framesPerDirection);
-
-    case CharacterState.Idle:
-      return single(
-          size: size,
-          frame: variation ? 1 : 2,
-          direction: direction,
-          framesPerDirection: framesPerDirection);
-
-    case CharacterState.Hurt:
-      return single(
-          size: size,
-          frame: 3,
-          direction: direction,
-          framesPerDirection: framesPerDirection);
-
-    case CharacterState.Changing:
-      return single(
-          size: size,
-          frame: 4,
-          direction: direction,
-          framesPerDirection: framesPerDirection);
-
-    case CharacterState.Performing:
-      return animateCustom(
-          size: size,
-          animation: weapon == AttackType.Bow
-              ? const [5, 8, 6, 10]
-              : weapon == AttackType.Handgun
-              ? const [8, 9, 8]
-              : weapon == AttackType.Shotgun
-              ? const [6, 7, 6, 6, 6, 8, 8, 6]
-              : const [10, 10, 11, 11],
-          frame: frame,
-          direction: direction,
-          framesPerDirection: framesPerDirection);
-
-    default:
-      throw Exception(
-          "getCharacterSrcX cannot get body x for state ${characterState}");
-  }
-}
-
 class TemplateAnimation {
   static final Uint8List Running1 = (){
       final list = Uint8List(4);
@@ -554,19 +458,24 @@ class TemplateAnimation {
   }();
 
   static Uint8List FiringBow = (){
-    final list = Uint8List(3);
+    final list = Uint8List(9);
     list[0] = 5;
-    list[1] = 8;
-    list[2] = 6;
+    list[1] = 5;
+    list[2] = 5;
+    list[3] = 5;
+    list[4] = 8;
+    list[5] = 8;
+    list[6] = 8;
+    list[7] = 8;
+    list[8] = 10;
     return list;
   }();
 
   static Uint8List FiringHandgun = (){
-    final list = Uint8List(4);
-    list[0] = 6;
+    final list = Uint8List(3);
+    list[0] = 7;
     list[1] = 7;
-    list[2] = 7;
-    list[3] = 6;
+    list[2] = 6;
     return list;
   }();
 
@@ -584,11 +493,26 @@ class TemplateAnimation {
   }();
 
   static Uint8List Striking = (){
-    final list = Uint8List(4);
+    final list = Uint8List(7);
     list[0] = 10;
     list[1] = 10;
-    list[2] = 11;
+    list[2] = 10;
     list[3] = 11;
+    list[4] = 11;
+    list[5] = 11;
+    list[6] = 11;
+    return list;
+  }();
+
+  static Uint8List StrikingBlade = (){
+    final list = Uint8List(7);
+    list[0] = 10;
+    list[1] = 10;
+    list[2] = 10;
+    list[3] = 11;
+    list[4] = 11;
+    list[5] = 11;
+    list[6] = 11;
     return list;
   }();
 
@@ -602,28 +526,11 @@ class TemplateAnimation {
           return FiringShotgun;
         case AttackType.Bow:
           return FiringBow;
+        case AttackType.Blade:
+          return StrikingBlade;
         default:
           throw Exception("TemplateAnimation.getAttackAnimation(${AttackType.getName(weaponType)})");
       }
   }
 }
 
-class AtlasIndex96 {
-  static const Hammer = 0;
-  static const Axe = Hammer + 1;
-  static const Pickaxe = Axe + 1;
-  static const Sword = Pickaxe + 1;
-  static const Wooden_Sword = Sword + 1;
-  static const Staff = Wooden_Sword + 1;
-
-  static int getWeaponIndex(int weapon){
-    switch (weapon){
-      case AttackType.Blade:
-        return Sword;
-      case AttackType.Staff:
-        return Staff;
-      default:
-        throw Exception('AtlasIndex96.getWeaponIndex(weapon: $weapon)');
-    }
-  }
-}

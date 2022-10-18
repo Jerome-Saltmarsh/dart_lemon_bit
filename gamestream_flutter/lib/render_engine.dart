@@ -1071,6 +1071,14 @@ class RenderEngine {
 
   static double getRenderYBouncing(Vector3 v3) => ((v3.y + v3.x) * 0.5) - v3.z + animationFrameWaterHeight;
 
+  static void renderTextV3(Vector3 v3, dynamic text){
+    renderText(
+      text: text.toString(),
+      x: RenderEngine.getRenderV3X(v3),
+      y: RenderEngine.getRenderV3Y(v3) - 50,
+    );
+  }
+
   static void casteShadowDownV3(Vector3 vector3){
     if (vector3.z < nodeHeight) return;
     if (vector3.z >= Game.nodesLengthZ) return;
