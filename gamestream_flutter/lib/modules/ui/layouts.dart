@@ -1,7 +1,7 @@
 
 import 'package:flutter/widgets.dart';
 import 'package:gamestream_flutter/colours.dart';
-import 'package:gamestream_flutter/flutterkit.dart';
+import 'package:gamestream_flutter/game_widgets.dart';
 import 'package:gamestream_flutter/modules/ui/style.dart';
 import 'package:gamestream_flutter/ui/build.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';

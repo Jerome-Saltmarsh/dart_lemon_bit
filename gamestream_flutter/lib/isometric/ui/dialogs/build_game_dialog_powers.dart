@@ -1,7 +1,7 @@
 
 import 'package:bleed_common/quest.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:gamestream_flutter/flutterkit.dart';
+import 'package:gamestream_flutter/game_widgets.dart';
 
 
 Widget buildColumnQuests(List<Quest> quests) =>

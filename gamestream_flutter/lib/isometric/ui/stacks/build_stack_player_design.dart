@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:gamestream_flutter/flutterkit.dart';
+import 'package:gamestream_flutter/game_widgets.dart';
 import 'package:gamestream_flutter/isometric/ui/build_panel_store.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/enums/player_design_tab.dart';

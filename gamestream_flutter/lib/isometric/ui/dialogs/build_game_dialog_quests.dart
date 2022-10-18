@@ -1,7 +1,7 @@
 
 import 'package:bleed_common/quest.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:gamestream_flutter/flutterkit.dart';
+import 'package:gamestream_flutter/game_widgets.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';

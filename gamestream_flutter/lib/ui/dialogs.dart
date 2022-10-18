@@ -1,6 +1,6 @@
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/account_service.dart';
+import 'package:gamestream_flutter/game_account.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/styles.dart';
@@ -14,7 +14,7 @@ import 'package:gamestream_flutter/utils/widget_utils.dart';
 import 'package:gamestream_flutter/website/website.dart';
 import 'package:golden_ratio/constants.dart';
 
-import '../flutterkit.dart';
+import '../game_widgets.dart';
 
 Widget buildDialogAccount(){
 

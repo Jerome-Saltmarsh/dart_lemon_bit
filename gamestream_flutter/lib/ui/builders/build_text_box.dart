@@ -6,7 +6,7 @@ import 'package:gamestream_flutter/styles.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
-import '../../flutterkit.dart';
+import '../../game_widgets.dart';
 
 Widget buildPanelWriteMessage() {
   return WatchBuilder(GameUI.messageBoxVisible, (bool visible){

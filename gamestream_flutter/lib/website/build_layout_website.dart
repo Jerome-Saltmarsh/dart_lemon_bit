@@ -2,7 +2,7 @@ import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/enums/region.dart';
-import 'package:gamestream_flutter/flutterkit.dart';
+import 'package:gamestream_flutter/game_widgets.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/ui/style.dart';
 import 'package:gamestream_flutter/to_string.dart';

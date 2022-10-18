@@ -5,7 +5,7 @@ import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:lemon_watch/watch.dart';
 
-import '../../flutterkit.dart';
+import '../../game_widgets.dart';
 import 'constants/colors.dart';
 
 

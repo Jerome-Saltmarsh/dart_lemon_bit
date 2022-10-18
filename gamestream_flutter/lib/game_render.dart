@@ -38,7 +38,7 @@ import 'isometric/grid.dart';
 import 'isometric/lighting/apply_emissions_gameobjects.dart';
 import 'isometric/render/render_particle.dart';
 
-class RenderEngine {
+class GameRender {
   static var totalRemaining = 0;
   static var totalIndex = 0;
   static final renderOrderGrid = RenderOrderNodes();
@@ -1089,8 +1089,8 @@ class RenderEngine {
   static void renderTextV3(Vector3 v3, dynamic text, {double offsetY = 0}){
     renderText(
       text: text.toString(),
-      x: RenderEngine.getRenderV3X(v3),
-      y: RenderEngine.getRenderV3Y(v3) + offsetY,
+      x: GameRender.getRenderV3X(v3),
+      y: GameRender.getRenderV3Y(v3) + offsetY,
     );
   }
 
@@ -1103,7 +1103,7 @@ class RenderEngine {
       final nodeBelowOrientation = Game.nodesOrientation[nodeBelowIndex];
       if (nodeBelowOrientation == NodeOrientation.Solid){
         final topRemainder = vector3.z % tileHeight;
-        RenderEngine.renderShadow(vector3.x, vector3.y, vector3.z - topRemainder, scale: topRemainder > 0 ? (topRemainder / tileHeight) * 2 : 2.0);
+        GameRender.renderShadow(vector3.x, vector3.y, vector3.z - topRemainder, scale: topRemainder > 0 ? (topRemainder / tileHeight) * 2 : 2.0);
       }
     }
   }
@@ -1175,8 +1175,8 @@ class RenderEngine {
       srcY: upperBodyDirection * 64,
       srcWidth: 64,
       srcHeight: 64,
-      dstX: RenderEngine.getRenderX(shadowX, shadowY, shadowZ),
-      dstY: RenderEngine.getRenderY(shadowX, shadowY, shadowZ),
+      dstX: GameRender.getRenderX(shadowX, shadowY, shadowZ),
+      dstY: GameRender.getRenderY(shadowX, shadowY, shadowZ),
       scale: 0.75,
       color: getRenderColor(character),
       anchorY: 0.75,
@@ -1186,8 +1186,8 @@ class RenderEngine {
 
 class RenderOrderCharacters extends RenderOrder {
   @override
-  void renderFunction() => RenderEngine.renderCurrentCharacter();
-  void updateFunction() => RenderEngine.updateCurrentCharacter();
+  void renderFunction() => GameRender.renderCurrentCharacter();
+  void updateFunction() => GameRender.updateCurrentCharacter();
   @override
   int getTotal() => Game.totalCharacters;
 }
@@ -1198,10 +1198,10 @@ class RenderOrderGameObjects extends RenderOrder {
   int getTotal() => Game.totalGameObjects;
 
   @override
-  void renderFunction() => RenderEngine.renderCurrentGameObject();
+  void renderFunction() => GameRender.renderCurrentGameObject();
 
   @override
-  void updateFunction() => RenderEngine.updateCurrentGameObject();
+  void updateFunction() => GameRender.updateCurrentGameObject();
 
   @override
   void reset() {
@@ -1211,10 +1211,10 @@ class RenderOrderGameObjects extends RenderOrder {
 
 class RenderOrderProjectiles extends RenderOrder {
   @override
-  void renderFunction() => RenderEngine.renderCurrentProjectile();
+  void renderFunction() => GameRender.renderCurrentProjectile();
 
   @override
-  void updateFunction() => RenderEngine.updateCurrentProjectile();
+  void updateFunction() => GameRender.updateCurrentProjectile();
 
   @override
   int getTotal() {
@@ -1231,10 +1231,10 @@ class RenderOrderProjectiles extends RenderOrder {
 class RenderOrderParticle extends RenderOrder {
 
   @override
-  void renderFunction() => RenderEngine.renderCurrentParticle();
+  void renderFunction() => GameRender.renderCurrentParticle();
 
   @override
-  void updateFunction() => RenderEngine.updateCurrentParticle();
+  void updateFunction() => GameRender.updateCurrentParticle();
   @override
   int getTotal() => Game.totalActiveParticles;
 
@@ -1245,11 +1245,11 @@ class RenderOrderParticle extends RenderOrder {
   }
 }
 
-int get renderNodeShade => Game.nodesShade[RenderEngine.currentNodeIndex];
-int get renderNodeOrientation => Game.nodesOrientation[RenderEngine.currentNodeIndex];
+int get renderNodeShade => Game.nodesShade[GameRender.currentNodeIndex];
+int get renderNodeOrientation => Game.nodesOrientation[GameRender.currentNodeIndex];
 int get renderNodeColor => Game.colorShades[renderNodeShade];
 int get renderNodeWind => Game.nodesWind[renderNodeShade];
-int get renderNodeBelowIndex => RenderEngine.currentNodeIndex + Game.nodesArea;
+int get renderNodeBelowIndex => GameRender.currentNodeIndex + Game.nodesArea;
 
 int get renderNodeBelowShade {
   if (renderNodeBelowIndex < 0) return Game.ambientShade.value;
@@ -1263,7 +1263,7 @@ int getRenderLayerColor(int layers) =>
     Game.colorShades[getRenderLayerShade(layers)];
 
 int getRenderLayerShade(int layers){
-   final index = RenderEngine.currentNodeIndex + (layers * Game.nodesArea);
+   final index = GameRender.currentNodeIndex + (layers * Game.nodesArea);
    if (index < 0) return Game.ambientShade.value;
    if (index >= Game.nodesTotal) return Game.ambientShade.value;
    return Game.nodesShade[index];
@@ -1272,11 +1272,11 @@ int getRenderLayerShade(int layers){
 class RenderOrderNodes extends RenderOrder {
 
   @override
-  void renderFunction() => RenderEngine.renderCurrentNodeLine();
+  void renderFunction() => GameRender.renderCurrentNodeLine();
   @override
-  void updateFunction() => RenderEngine.nodesUpdateFunction();
+  void updateFunction() => GameRender.nodesUpdateFunction();
   @override
-  void reset() => RenderEngine.resetNodes();
+  void reset() => GameRender.resetNodes();
   @override
   int getTotal() {
     return Game.nodesTotalZ * Game.nodesTotalRows * Game.nodesTotalColumns;
@@ -1349,5 +1349,5 @@ int getRenderColumn(int column, int z){
 }
 
 void renderTotalIndex(Vector3 position){
-  renderText(text: RenderEngine.totalIndex.toString(), x: position.renderX, y: position.renderY - 100);
+  renderText(text: GameRender.totalIndex.toString(), x: position.renderX, y: position.renderY - 100);
 }

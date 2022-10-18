@@ -3,7 +3,7 @@
 
 import 'package:flutter/widgets.dart';
 import 'package:gamestream_flutter/atlases.dart';
-import 'package:gamestream_flutter/flutterkit.dart';
+import 'package:gamestream_flutter/game_widgets.dart';
 import 'package:lemon_engine/engine.dart';
 
 Widget buildAtlasImageButton({

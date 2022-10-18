@@ -1,7 +1,7 @@
 // import 'package:bleed_common/card_type.dart';
 // import 'package:flutter/cupertino.dart';
 // import 'package:gamestream_flutter/colours.dart';
-// import 'package:gamestream_flutter/flutterkit.dart';
+// import 'package:gamestream_flutter/game_widgets.dart';
 // import 'package:gamestream_flutter/isometric/player.dart';
 // import 'package:gamestream_flutter/isometric/ui/build_card_type_icon.dart';
 // import 'package:gamestream_flutter/send_client_request.dart';

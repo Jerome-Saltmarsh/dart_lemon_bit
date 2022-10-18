@@ -1,9 +1,9 @@
 
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/account_service.dart';
+import 'package:gamestream_flutter/game_account.dart';
 import 'package:gamestream_flutter/colours.dart';
-import 'package:gamestream_flutter/flutterkit.dart';
+import 'package:gamestream_flutter/game_widgets.dart';
 import 'package:gamestream_flutter/game_ui.dart';
 import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/modules.dart';

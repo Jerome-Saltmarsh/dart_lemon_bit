@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/flutterkit.dart';
+import 'package:gamestream_flutter/game_widgets.dart';
 import 'package:gamestream_flutter/isometric/editor/actions/save_scene.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/isometric/watches/player_entered_scene_name.dart';

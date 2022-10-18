@@ -1,6 +1,6 @@
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/flutterkit.dart';
+import 'package:gamestream_flutter/game_widgets.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/edit.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
@@ -12,7 +12,7 @@ import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/isometric/watches/lightning.dart';
 import 'package:gamestream_flutter/isometric/watches/rain.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
-import 'package:gamestream_flutter/render_engine.dart';
+import 'package:gamestream_flutter/game_render.dart';
 import 'package:gamestream_flutter/styles.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
 import 'package:lemon_watch/watch_builder.dart';
@@ -25,18 +25,18 @@ Widget buildPanelMaxZRender() {
     container(
         child: "+",
         action: () {
-          RenderEngine.maxZRender.value++;
+          GameRender.maxZRender.value++;
         },
         alignment: Alignment.center),
     container(
-        child: watch(RenderEngine.maxZRender, (int max) {
+        child: watch(GameRender.maxZRender, (int max) {
           return text('MaxZRender: $max');
         }),
         alignment: Alignment.center),
     container(
         child: "-",
         action: () {
-          RenderEngine.maxZRender.value--;
+          GameRender.maxZRender.value--;
         },
         alignment: Alignment.center),
   ]);

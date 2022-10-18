@@ -5,7 +5,7 @@ import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/particle_type.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/audio_engine.dart';
+import 'package:gamestream_flutter/game_audio.dart';
 import 'package:gamestream_flutter/game_ui.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/explosion.dart';
@@ -35,7 +35,7 @@ import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/isometric/update.dart';
 import 'package:gamestream_flutter/isometric_web/read_player_input.dart';
 import 'package:gamestream_flutter/network/send_client_request.dart';
-import 'package:gamestream_flutter/render_engine.dart';
+import 'package:gamestream_flutter/game_render.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
@@ -170,7 +170,7 @@ class Game {
   }
 
   static void actionLightningFlash() {
-    AudioEngine.audioSingleThunder(1.0);
+    GameAudio.audioSingleThunder(1.0);
     if (ambientShade.value == Shade.Very_Bright) return;
     ambientShade.value = Shade.Very_Bright;
     runAction(duration: 8, action: onActionFinishedLightningFlash);
@@ -1073,9 +1073,9 @@ class Game {
     renderFrame.value++;
     interpolatePlayer();
     updateCameraMode();
-    RenderEngine.renderSprites();
+    GameRender.renderSprites();
     renderEditMode();
-    RenderEngine.renderMouseTargetName();
+    GameRender.renderMouseTargetName();
     // renderWeaponRoundInformation();
     rendersSinceUpdate.value++;
   }
@@ -1134,7 +1134,7 @@ class Game {
     }
 
     renderEditWireFrames();
-    RenderEngine.renderMouseWireFrame();
+    GameRender.renderMouseWireFrame();
 
     // final nodeData = EditState.selectedNodeData.value;
     // if (nodeData != null){
@@ -1150,9 +1150,9 @@ class Game {
 
   static void renderEditWireFrames() {
     for (var z = 0; z < EditState.z; z++) {
-      RenderEngine.renderWireFrameBlue(z, EditState.row, EditState.column);
+      GameRender.renderWireFrameBlue(z, EditState.row, EditState.column);
     }
-    RenderEngine.renderWireFrameRed(EditState.row, EditState.column, EditState.z);
+    GameRender.renderWireFrameRed(EditState.row, EditState.column, EditState.z);
   }
 
   static void update() {

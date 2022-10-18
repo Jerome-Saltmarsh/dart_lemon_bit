@@ -1,5 +1,5 @@
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/audio_engine.dart';
+import 'package:gamestream_flutter/game_audio.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/nodes.dart';
 import 'package:gamestream_flutter/isometric/watches/rain.dart';
@@ -14,7 +14,7 @@ void onGameEventFootstep(double x, double y, double z) {
       gridNodeXYZTypeSafe(x, y, z + 24) == NodeType.Rain_Landing
   )
   ){
-    AudioEngine.audioSingleFootstepMud6.playXYZ(x, y, z);
+    GameAudio.audioSingleFootstepMud6.playXYZ(x, y, z);
     final amount = rain.value == Rain.Heavy ? 3 : 2;
     for (var i = 0; i < amount; i++){
       Game.spawnParticleWaterDrop(x: x, y: y, z: z);
@@ -23,13 +23,13 @@ void onGameEventFootstep(double x, double y, double z) {
 
   final nodeType = gridNodeXYZTypeSafe(x, y, z - 2);
   if (NodeType.isMaterialStone(nodeType)) {
-    return AudioEngine.audioSingleFootstepStone.playXYZ(x, y, z);
+    return GameAudio.audioSingleFootstepStone.playXYZ(x, y, z);
   }
   if (NodeType.isMaterialWood(nodeType)) {
-    return AudioEngine.audioSingleFootstepWood.playXYZ(x, y, z);
+    return GameAudio.audioSingleFootstepWood.playXYZ(x, y, z);
   }
   if (randomBool()){
-    return AudioEngine.audioSingleFootstepGrass8.playXYZ(x, y, z);
+    return GameAudio.audioSingleFootstepGrass8.playXYZ(x, y, z);
   }
-  return AudioEngine.audioSingleFootstepGrass7.playXYZ(x, y, z);
+  return GameAudio.audioSingleFootstepGrass7.playXYZ(x, y, z);
 }

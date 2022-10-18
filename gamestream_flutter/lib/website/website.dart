@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/atlases.dart';
 import 'package:gamestream_flutter/colours.dart';
 import 'package:gamestream_flutter/enums/region.dart';
-import 'package:gamestream_flutter/flutterkit.dart';
+import 'package:gamestream_flutter/game_widgets.dart';
 import 'package:gamestream_flutter/modules/core/actions.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/ui/style.dart';

@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/flutterkit.dart';
+import 'package:gamestream_flutter/game_widgets.dart';
 import 'package:gamestream_flutter/isometric/actions/load_selected_scene_name.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_custom_game_names.dart';
 import 'package:gamestream_flutter/isometric/watches/selected_scene_name.dart';

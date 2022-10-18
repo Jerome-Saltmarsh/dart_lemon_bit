@@ -4,7 +4,7 @@ import 'package:bleed_common/character_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/particle_type.dart';
 import 'package:bleed_common/tile_size.dart';
-import 'package:gamestream_flutter/audio_engine.dart';
+import 'package:gamestream_flutter/game_audio.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/spawn/spawn_bubbles.dart';
 import 'package:gamestream_flutter/isometric/spawn/spawn_purple_fire_explosion.dart';
@@ -81,5 +81,5 @@ void onCharacterDeathZombie(int type, double x, double y, double z, double angle
       speed: 4.0 + giveOrTake(0.5),
       zv: 0.1);
 
-  randomItem(AudioEngine.audioSingleZombieDeaths).playXYZ(x, y, z);
+  randomItem(GameAudio.audioSingleZombieDeaths).playXYZ(x, y, z);
 }

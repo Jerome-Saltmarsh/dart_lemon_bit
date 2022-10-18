@@ -90,7 +90,7 @@ class GameRender {
         final bX = paths[index];
         final bY = paths[index + 1];
         index += 2;
-        drawLine(aX, aY, bX, bY);
+        Engine.drawLine(aX, aY, bX, bY);
         aX = bX;
         aY = bY;
       }
@@ -99,7 +99,7 @@ class GameRender {
     Engine.setPaintColor(colours.yellow);
     final totalLines = targetsTotal * 4;
     for (var i = 0; i < totalLines; i += 4) {
-      drawLine(targets[i], targets[i + 1], targets[i + 2], targets[i + 3]);
+      Engine.drawLine(targets[i], targets[i + 1], targets[i + 2], targets[i + 3]);
     }
   }
 

@@ -1,11 +1,11 @@
 import 'package:bleed_common/GameType.dart';
 import 'package:bleed_common/Shade.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/flutterkit.dart';
+import 'package:gamestream_flutter/game_widgets.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/utils/mouse.dart';
 import 'package:gamestream_flutter/isometric/watches/debug_visible.dart';
-import 'package:gamestream_flutter/render_engine.dart';
+import 'package:gamestream_flutter/game_render.dart';
 import 'package:lemon_engine/engine.dart';
 
 import '../server_response_reader.dart';
@@ -33,7 +33,7 @@ Widget buildHudDebug() =>
               watch(serverResponseReader.bufferSize, (int bufferSize) => text('network-buffer: $bufferSize')),
               Refresh(() => text('characters: active: ${Game.totalCharacters}, total: ${Game.characters.length}')),
               Refresh(() => text('particles: active: $Game.totalActiveParticles, total: ${Game.particles.length}')),
-              Refresh(() => text('nodes-rendered: ${RenderEngine.onscreenNodes}')),
+              Refresh(() => text('nodes-rendered: ${GameRender.onscreenNodes}')),
               Refresh(() => text('engine-frame: ${Engine.paintFrame}')),
               onPressed(
                 action: () => Engine.bufferBlendMode = BlendMode.values[(BlendMode.values.indexOf(Engine.bufferBlendMode) + 1) % BlendMode.values.length],

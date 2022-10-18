@@ -8,7 +8,7 @@ import 'package:gamestream_flutter/isometric/ui/widgets/game_map.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/engine.dart';
 
-import '../../../flutterkit.dart';
+import '../../../game_widgets.dart';
 import 'game_dialog_tab.dart';
 
 final canvasFrameMap = ValueNotifier<int>(0);

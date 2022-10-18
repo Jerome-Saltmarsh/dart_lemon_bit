@@ -1,7 +1,7 @@
 
 import 'package:bleed_common/attack_type.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/flutterkit.dart';
+import 'package:gamestream_flutter/game_widgets.dart';
 import 'package:gamestream_flutter/isometric/classes/weapon.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
 import 'package:gamestream_flutter/isometric/ui/classes/atlas_src.dart';

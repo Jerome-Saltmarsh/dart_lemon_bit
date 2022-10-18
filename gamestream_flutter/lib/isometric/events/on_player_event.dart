@@ -1,6 +1,6 @@
 import 'package:bleed_common/PlayerEvent.dart';
 import 'package:bleed_common/attack_type.dart';
-import 'package:gamestream_flutter/audio_engine.dart';
+import 'package:gamestream_flutter/game_audio.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/camera.dart';
@@ -14,9 +14,9 @@ import 'package:lemon_engine/engine.dart';
 void onPlayerEvent(int event) {
   switch (event) {
     case PlayerEvent.Spawn_Started:
-      return AudioEngine.audioSingleTeleport();
+      return GameAudio.audioSingleTeleport();
     case PlayerEvent.Loot_Collected:
-      return AudioEngine.audioSingleCollectStar3();
+      return GameAudio.audioSingleCollectStar3();
     case PlayerEvent.Weapon_Rounds:
       final rounds = serverResponseReader.readInt();
       final capacity = serverResponseReader.readInt();
@@ -44,7 +44,7 @@ void onPlayerEvent(int event) {
       audio.buff11(Game.player.x, Game.player.y);
       break;
     case PlayerEvent.Item_Purchased:
-      AudioEngine.audioSingleItemUnlock();
+      GameAudio.audioSingleItemUnlock();
       break;
     case PlayerEvent.Ammo_Acquired:
       audio.itemAcquired(screenCenterWorldX, screenCenterWorldY);
@@ -54,7 +54,7 @@ void onPlayerEvent(int event) {
       onPlayerEventItemEquipped(type);
       break;
     case PlayerEvent.Item_Dropped:
-      AudioEngine.audioSingleSwitchSounds4();
+      GameAudio.audioSingleSwitchSounds4();
       break;
     case PlayerEvent.Item_Sold:
       audio.coins(screenCenterWorldX, screenCenterWorldY);
@@ -75,7 +75,7 @@ void onPlayerEvent(int event) {
       audio.coins(screenCenterWorldX, screenCenterWorldY);
       break;
     case PlayerEvent.Hello_Male_01:
-      AudioEngine.audioSingleMaleHello.play();
+      GameAudio.audioSingleMaleHello.play();
       break;
     case PlayerEvent.GameObject_Deselected:
       EditState.gameObjectSelected.value = false;
@@ -89,25 +89,25 @@ void onPlayerEvent(int event) {
 void onPlayerEventItemEquipped(int type) {
   switch (type) {
     case AttackType.Revolver:
-      AudioEngine.audioSingleRevolverReload();
+      GameAudio.audioSingleRevolverReload();
       break;
     case AttackType.Handgun:
-      AudioEngine.audioSingleReload6();
+      GameAudio.audioSingleReload6();
       break;
     case AttackType.Shotgun:
-      AudioEngine.audioSingleShotgunCock();
+      GameAudio.audioSingleShotgunCock();
       break;
     case AttackType.Rifle:
-      AudioEngine.audioSingleMagIn2();
+      GameAudio.audioSingleMagIn2();
       break;
     case AttackType.Blade:
-      AudioEngine.audioSingleSwordUnsheathe();
+      GameAudio.audioSingleSwordUnsheathe();
       break;
     case AttackType.Assault_Rifle:
-      AudioEngine.audioSingleGunPickup();
+      GameAudio.audioSingleGunPickup();
       break;
     case AttackType.Bow:
-      AudioEngine.audioSingleBowDraw();
+      GameAudio.audioSingleBowDraw();
       break;
   }
 }

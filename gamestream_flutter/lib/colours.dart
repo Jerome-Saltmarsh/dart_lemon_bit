@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
 
-final _Colors colours = _Colors();
+final GameColors colours = GameColors();
 
 final Color none = Colors.transparent;
 final Color white05 = Colors.white.withOpacity(0.05);
 
 Color get green => colours.green;
 
-class _Colors {
+class GameColors {
 
   final Color facebook = Color.fromRGBO(66, 103, 178, 1);
   final Color black = Color.fromRGBO(33, 29, 43, 1.0);

@@ -1,6 +1,6 @@
 
-import 'package:gamestream_flutter/audio_engine.dart';
+import 'package:gamestream_flutter/game_audio.dart';
 
 void onPlayerEventQuestCompleted(){
-  AudioEngine.audioSingleNotificationSound12();
+  GameAudio.audioSingleNotificationSound12();
 }

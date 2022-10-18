@@ -11,8 +11,7 @@ import 'package:gamestream_flutter/isometric/nodes.dart';
 import 'package:gamestream_flutter/isometric/render/get_character_render_color.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
 import 'package:gamestream_flutter/modules/game/render_rotated.dart';
-import 'package:gamestream_flutter/render_engine.dart';
-import 'package:gamestream_flutter/utils.dart';
+import 'package:gamestream_flutter/game_render.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 
@@ -22,7 +21,7 @@ import 'render_character_health_bar.dart';
 void renderLine(double x, double y, double z, double angle, double distance) {
   final x2 = x + getAdjacent(angle, distance);
   final y2 = y + getOpposite(angle, distance);
-  drawLine(
+  Engine.drawLine(
     projectX(x, y),
     projectY(x, y, z),
     projectX(x2, y2),
@@ -84,8 +83,8 @@ void renderCharacterTemplate(Character character, {
     renderCharacterHealthBar(character);
   }
 
-  final dstX = RenderEngine.getRenderV3X(character);
-  final dstY = RenderEngine.getRenderV3Y(character);
+  final dstX = GameRender.getRenderV3X(character);
+  final dstY = GameRender.getRenderV3Y(character);
   final color = getRenderColor(character);
 
   var frameLegs = 0;
@@ -120,7 +119,7 @@ void renderCharacterTemplate(Character character, {
   }
 
   if (character.usingWeapon) {
-    RenderEngine.renderTextV3(character, character.weaponFrame, offsetY: -50);
+    GameRender.renderTextV3(character, character.weaponFrame, offsetY: -50);
     final animation = TemplateAnimation.getAttackAnimation(character.weaponType);
     frameWeapon = (character.weaponFrame >= animation.length ? animation.last : animation[character.weaponFrame]) - 1;
     frameBody = frameWeapon;
@@ -176,8 +175,8 @@ void renderCharacterTemplate(Character character, {
     srcY: upperBodyDirection * 64,
     srcWidth: 64,
     srcHeight: 64,
-    dstX: RenderEngine.getRenderX(shadowX, shadowY, shadowZ),
-    dstY: RenderEngine.getRenderY(shadowX, shadowY, shadowZ),
+    dstX: GameRender.getRenderX(shadowX, shadowY, shadowZ),
+    dstY: GameRender.getRenderY(shadowX, shadowY, shadowZ),
     scale: 0.75,
     color: color,
     anchorY: 0.75,
