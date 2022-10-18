@@ -40,7 +40,7 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
   Position3? target;
   var invincible = false;
   Weapon weapon;
-  var equippedArmour = ArmourType.shirtCyan;
+  var equippedArmour = BodyType.shirtCyan;
   var equippedHead = HeadType.None;
   var equippedLegs = LegType.white;
 
@@ -79,7 +79,7 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
     required this.weapon,
     required int team,
     double speed = 5.0,
-    this.equippedArmour = ArmourType.tunicPadded,
+    this.equippedArmour = BodyType.tunicPadded,
     this.equippedHead = HeadType.None,
 
   }) : super(x: x, y: y, z: z, radius: 7) {

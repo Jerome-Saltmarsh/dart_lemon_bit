@@ -42,6 +42,15 @@ class ImagesTemplateBody {
    static late Image cyan;
    static late Image swat;
    static late Image tunic;
+
+   static Image fromBodyType(int bodyType) {
+      switch (bodyType){
+         case BodyType.shirtBlue:
+            return blue;
+         default:
+            return cyan;
+      }
+   }
 }
 
 class ImagesTemplateLegs {
@@ -49,13 +58,14 @@ class ImagesTemplateLegs {
    static late Image white;
 
    static Image fromLegType(int legType){
-       switch(legType){
+       switch (legType){
           case LegType.white:
              return white;
           case LegType.blue:
              return blue;
           default:
-             throw Exception("atlases.ImagesTemplateLegs.fromLegType(type: $legType");
+             return white;
+             // throw Exception("atlases.ImagesTemplateLegs.fromLegType(type: $legType");
        }
    }
 }

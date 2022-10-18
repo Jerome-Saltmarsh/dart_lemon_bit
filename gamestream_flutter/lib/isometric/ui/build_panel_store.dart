@@ -64,7 +64,7 @@ Widget buildPanelStore(){
 
 Widget buildColumnSelectPlayerArmour(){
    return Column(
-      children: ArmourType.values.map(_buildSelectArmourType).toList(),
+      children: BodyType.values.map(_buildSelectArmourType).toList(),
    );
 }
 
@@ -174,7 +174,7 @@ Widget _buildButtonPurchaseWeapon(Weapon weapon) {
 Widget _buildSelectArmourType(int type) {
    return watch(Game.player.armourType, (int equipped){
      return container(
-         child: text(ArmourType.getName(type)),
+         child: text(BodyType.getName(type)),
          action: () => sendClientRequestSetArmour(type),
          color: equipped == type ? green : grey,
      );

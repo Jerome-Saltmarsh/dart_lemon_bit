@@ -1977,7 +1977,7 @@ abstract class Game {
     required Weapon weapon,
     Function(Player player)? onInteractedWith,
     int head = HeadType.None,
-    int armour = ArmourType.shirtCyan,
+    int armour = BodyType.shirtCyan,
     int pants = LegType.brown,
     int team = 1,
     int health = 10,

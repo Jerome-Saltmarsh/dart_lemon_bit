@@ -139,7 +139,7 @@ class GameDarkAge extends Game {
       column: column,
       z: 1,
       head: HeadType.Rogues_Hood,
-      armour: ArmourType.shirtBlue,
+      armour: BodyType.shirtBlue,
       pants: LegType.green,
       weapon: buildWeaponBow(),
     );

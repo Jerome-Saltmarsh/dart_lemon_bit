@@ -790,7 +790,8 @@ Uint8List getAnimation({
 
     default:
       throw Exception(
-          "getCharacterSrcX cannot get body x for state ${characterState}");
+          "getCharacterSrcX cannot get body x for state ${characterState}"
+      );
   }
 }
 
@@ -813,11 +814,11 @@ int mapToLayerLegs(int legType) {
 
 int mapToLayerBody(int armourType) {
   switch (armourType) {
-    case ArmourType.shirtCyan:
+    case BodyType.shirtCyan:
       return SpriteLayer.Shirt_Cyan;
-    case ArmourType.shirtBlue:
+    case BodyType.shirtBlue:
       return SpriteLayer.Shirt_Blue;
-    case ArmourType.tunicPadded:
+    case BodyType.tunicPadded:
       return SpriteLayer.Tunic_Padded;
     default:
       throw Exception("cannot render body $armourType");

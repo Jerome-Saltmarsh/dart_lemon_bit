@@ -1,4 +1,4 @@
-class ArmourType {
+class BodyType {
   static const shirtCyan = 0;
   static const shirtBlue = 1;
   static const tunicPadded = 2;

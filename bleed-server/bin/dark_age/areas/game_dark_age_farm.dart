@@ -31,7 +31,7 @@ class GameDarkAgeFarm extends DarkAgeArea {
       },
       wanderRadius: 5,
       head: HeadType.Blonde,
-      armour: ArmourType.tunicPadded,
+      armour: BodyType.tunicPadded,
     );
   }
 
