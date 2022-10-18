@@ -4,6 +4,7 @@ import 'dart:math';
 
 import 'package:bleed_common/Projectile_Type.dart';
 import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/game_audio.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/isometric/game_action.dart';
@@ -13,7 +14,6 @@ import 'package:gamestream_flutter/isometric/utils/mouse.dart';
 import 'package:lemon_math/library.dart';
 
 import 'animation_frame.dart';
-import 'audio/audio_loops.dart';
 import 'audio/audio_random.dart';
 import 'particle_emitters.dart';
 import 'update/update_zombie_growls.dart';
@@ -62,7 +62,7 @@ void applyObjectsToWind(){
   }
 
   // updateWindLine();
-  updateAudioLoops();
+  GameAudio.updateAudioLoops();
   updateLightning();
 }
 

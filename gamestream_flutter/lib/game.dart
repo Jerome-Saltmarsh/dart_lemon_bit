@@ -130,21 +130,6 @@ class Game {
     return null;
   }
 
-  static int getNodeShade(int z, int row, int column) =>
-      outOfBounds(z, row, column)
-          ? ambientShade.value
-          : nodesShade[getNodeIndexZRC(z, row, column)];
-
-  static bool outOfBounds(int z, int row, int column){
-    if (z < 0) return true;
-    if (z >= nodesTotalZ) return true;
-    if (row < 0) return true;
-    if (row >= nodesTotalRows) return true;
-    if (column < 0) return true;
-    if (column >= nodesTotalColumns) return true;
-    return false;
-  }
-
   static int convertNodeIndexToZ(int index) =>
       index ~/ nodesArea;
 
@@ -154,15 +139,29 @@ class Game {
   static int convertNodeIndexToColumn(int index) =>
       index - ((convertNodeIndexToZ(index) * nodesArea) + (convertNodeIndexToRow(index) * nodesTotalColumns));
 
-  static int getRenderColor(Vector3 vector3) =>
-      colorShades[getNodeBelowShade(vector3)];
+  static int getV3RenderColor(Vector3 vector3) =>
+      colorShades[getV3NodeBelowShade(vector3)];
 
-  static int getRenderShade(Vector3 vector3) =>
-      getNodeBelowShade(vector3);
+  static int getV3RenderShade(Vector3 vector3) =>
+      getV3NodeBelowShade(vector3);
 
-  static int getNodeBelowShade(Vector3 vector3) =>
+  static int getV3NodeBelowShade(Vector3 vector3) =>
       getNodeShade(vector3.indexZ - 1, vector3.indexRow, vector3.indexColumn);
 
+  static int getNodeShade(int z, int row, int column) =>
+      outOfBounds(z, row, column)
+          ? ambientShade.value
+          : nodesShade[getNodeIndexZRC(z, row, column)];
+
+  static bool outOfBounds(int z, int row, int column){
+    if (z < 0) return true;
+    if (row < 0) return true;
+    if (column < 0) return true;
+    if (z >= nodesTotalZ) return true;
+    if (row >= nodesTotalRows) return true;
+    if (column >= nodesTotalColumns) return true;
+    return false;
+  }
 
   // ACTIONS
 
@@ -181,10 +180,10 @@ class Game {
     }
   }
 
-  static double getVolumeTargetDayAmbience() {
-    if (ambientShade.value == Shade.Very_Bright) return 0.2;
-    return 0;
-  }
+  // static double getVolumeTargetDayAmbience() {
+  //   if (ambientShade.value == Shade.Very_Bright) return 0.2;
+  //   return 0;
+  // }
 
   static void actionLightningFlash() {
     GameAudio.audioSingleThunder(1.0);

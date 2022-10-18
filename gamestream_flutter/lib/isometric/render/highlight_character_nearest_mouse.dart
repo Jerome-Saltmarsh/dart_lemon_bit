@@ -6,7 +6,7 @@ import 'package:gamestream_flutter/isometric/queries/get_distance_from_mouse.dar
 
 void applyCharacterColors(){
   for (var i = 0; i < Game.totalCharacters; i++){
-    Game.characters[i].color = Game.getRenderColor(Game.characters[i]);
+    Game.characters[i].color = Game.getV3RenderColor(Game.characters[i]);
   }
 }
 

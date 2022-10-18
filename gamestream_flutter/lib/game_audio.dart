@@ -1,7 +1,23 @@
 
+import 'package:bleed_common/library.dart';
+import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/isometric/audio/audio_loop.dart';
+import 'package:gamestream_flutter/isometric/audio/audio_loops.dart';
 import 'package:gamestream_flutter/isometric/audio/audio_single.dart';
 
 class GameAudio {
+
+  static final audioLoops = <AudioLoop> [
+    AudioLoop(name: 'wind', getTargetVolume: getVolumeTargetWind),
+    AudioLoop(name: 'rain', getTargetVolume: getVolumeTargetRain),
+    AudioLoop(name: 'crickets', getTargetVolume: getVolumeTargetCrickets),
+    AudioLoop(name: 'day-ambience', getTargetVolume: GameAudio.getVolumeTargetDayAmbience),
+    AudioLoop(name: 'fire', getTargetVolume: getVolumeTargetFire),
+    AudioLoop(name: 'distant-thunder', getTargetVolume: getVolumeTargetDistanceThunder),
+    AudioLoop(name: 'heart-beat', getTargetVolume: getVolumeHeartBeat),
+    AudioLoop(name: 'stream', getTargetVolume: getVolumeStream),
+  ];
+
   static final audioSingleThunder = AudioSingle(name: 'thunder', volume: 0.5, maxDistance: 100);
   static final audioSingleFireball = AudioSingle(name: 'fire-bolt-14', volume: 0.5, maxDistance: 200);
   static final audioSingleFootstepGrass8 = AudioSingle(name: 'footstep-grass-8', volume: 0.05, maxDistance: 200);
@@ -70,4 +86,16 @@ class GameAudio {
   static final audioSingleTeleport = AudioSingle(name: 'teleport-1', volume: 0.5, maxDistance: 250);
   static final audioSingleHoverOverButton30 = AudioSingle(name: 'hover-over-button-sound-30', volume: 0.5, maxDistance: 250);
   static final audioSingleHoverOverButton43 = AudioSingle(name: 'hover-over-button-sound-43', volume: 0.5, maxDistance: 250);
+
+
+  static double getVolumeTargetDayAmbience() {
+    if (Game.ambientShade.value == Shade.Very_Bright) return 0.2;
+    return 0;
+  }
+
+  static void updateAudioLoops(){
+    for (final audioSource in audioLoops){
+      audioSource.update();
+    }
+  }
 }

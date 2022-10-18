@@ -9,25 +9,8 @@ import 'package:gamestream_flutter/isometric/weather/breeze.dart';
 
 import '../queries/grid_foreach_nearby.dart';
 import '../watches/rain.dart';
-import 'audio_loop.dart';
 import 'convert_distance_to_volume.dart';
 
-final audioLoops = <AudioLoop> [
-  AudioLoop(name: 'wind', getTargetVolume: getVolumeTargetWind),
-  AudioLoop(name: 'rain', getTargetVolume: getVolumeTargetRain),
-  AudioLoop(name: 'crickets', getTargetVolume: getVolumeTargetCrickets),
-  AudioLoop(name: 'day-ambience', getTargetVolume: Game.getVolumeTargetDayAmbience),
-  AudioLoop(name: 'fire', getTargetVolume: getVolumeTargetFire),
-  AudioLoop(name: 'distant-thunder', getTargetVolume: getVolumeTargetDistanceThunder),
-  AudioLoop(name: 'heart-beat', getTargetVolume: getVolumeHeartBeat),
-  AudioLoop(name: 'stream', getTargetVolume: getVolumeStream),
-];
-
-void updateAudioLoops(){
-  for (final audioSource in audioLoops){
-    audioSource.update();
-  }
-}
 
 
 double getVolumeTargetWind() {

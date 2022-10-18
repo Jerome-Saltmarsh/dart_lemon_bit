@@ -83,7 +83,7 @@ void renderCharacterTemplate(Character character, {
 
   final dstX = GameRender.getRenderV3X(character);
   final dstY = GameRender.getRenderV3Y(character);
-  final color = Game.getRenderColor(character);
+  final color = Game.getV3RenderColor(character);
 
   var frameLegs = 0;
   var frameHead = 0;

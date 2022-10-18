@@ -16,5 +16,5 @@ void renderV3({
       srcY: srcY,
       srcWidth: srcWidth,
       srcHeight: srcHeight,
-      color: Game.getNodeBelowShade(value),
+      color: Game.getV3NodeBelowShade(value),
     );

@@ -19,7 +19,7 @@ void renderCharacterRat(Character character){
       srcHeight: 64,
       anchorY: 0.66,
       scale: 1,
-      color: Game.getNodeBelowShade(character),
+      color: Game.getV3NodeBelowShade(character),
     );
   }
 
@@ -33,7 +33,7 @@ void renderCharacterRat(Character character){
       srcHeight: 64,
       anchorY: 0.66,
       scale: 1,
-      color: Game.getNodeBelowShade(character),
+      color: Game.getV3NodeBelowShade(character),
     );
   }
 
@@ -47,6 +47,6 @@ void renderCharacterRat(Character character){
     srcHeight: 64,
     anchorY: 0.66,
     scale: 1,
-    color: Game.getNodeBelowShade(character),
+    color: Game.getV3NodeBelowShade(character),
   );
 }

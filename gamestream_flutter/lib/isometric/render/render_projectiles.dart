@@ -38,7 +38,7 @@ void renderProjectile(Projectile value) {
         srcWidth: 32,
         srcHeight: 32,
         rotation: value.angle - piQuarter,
-        color: Game.getNodeBelowShade(value),
+        color: Game.getV3NodeBelowShade(value),
       );
     default:
       return;
