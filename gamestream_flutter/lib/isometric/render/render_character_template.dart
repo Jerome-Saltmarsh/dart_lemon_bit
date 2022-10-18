@@ -59,7 +59,7 @@ void renderTemplateWeapon(
   if (weaponType == AttackType.Unarmed) return;
   var size = weaponIs64(weaponType) ? 64.0 : 96.0;
   Engine.renderSprite(
-    image: ImagesTemplateWeapons.fromWeaponType(weaponType),
+    image: GameImages.getImageForWeaponType(weaponType),
     srcX: frame * size,
     srcY: direction * size,
     srcWidth: size,

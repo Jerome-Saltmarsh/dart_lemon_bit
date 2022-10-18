@@ -31,6 +31,16 @@ class GameImages {
    static late Image template_legs_red;
    static late Image template_legs_swat;
 
+   static late Image template_weapon_bow;
+   static late Image template_weapon_shotgun;
+   static late Image template_weapon_handgun;
+   static late Image template_weapon_staff;
+   static late Image template_weapon_sword_steel;
+   static late Image template_weapon_sword_wooden;
+   static late Image template_weapon_pickaxe;
+   static late Image template_weapon_axe;
+   static late Image template_weapon_hammer;
+
    static Image getImageForHeadType(int headType) {
       switch (headType) {
          case HeadType.None:
@@ -79,41 +89,30 @@ class GameImages {
             throw Exception('GameImages.getImageForLegType(${LegType.getName(legType)})');
       }
    }
-}
 
-
-class ImagesTemplateWeapons {
-   static late Image bow;
-   static late Image shotgun;
-   static late Image handgun;
-   static late Image staff;
-   static late Image sword_steel;
-   static late Image sword_wooden;
-   static late Image pickaxe;
-   static late Image axe;
-   static late Image hammer;
-
-   static Image fromWeaponType(int weaponType) {
+   static Image getImageForWeaponType(int weaponType) {
       switch (weaponType) {
          case AttackType.Shotgun:
-            return shotgun;
+            return template_weapon_shotgun;
          case AttackType.Bow:
-            return bow;
+            return template_weapon_bow;
          case AttackType.Handgun:
-            return handgun;
+            return template_weapon_handgun;
          case AttackType.Staff:
-            return staff;
+            return template_weapon_staff;
          case AttackType.Blade:
-            return sword_steel;
+            return template_weapon_sword_steel;
          case AttackType.Pickaxe:
-            return pickaxe;
+            return template_weapon_pickaxe;
          case AttackType.Axe:
-            return axe;
+            return template_weapon_axe;
          case AttackType.Hammer:
-            return hammer;
+            return template_weapon_hammer;
          default:
             throw Exception("ImagesTemplateWeapons.fromWeaponType($weaponType)");
       }
    }
 }
+
+
 
