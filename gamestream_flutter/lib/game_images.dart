@@ -17,6 +17,10 @@ class GameImages {
    static late Image template_head_steel;
    static late Image template_head_swat;
    static late Image template_head_wizard;
+   static late Image template_body_blue;
+   static late Image template_body_cyan;
+   static late Image template_body_swat;
+   static late Image template_body_tunic;
 
    static Image getImageForHeadType(int headType) {
       switch (headType) {
@@ -33,29 +37,22 @@ class GameImages {
       }
    }
 
-}
-
-class ImagesTemplateBody {
-   static late Image blue;
-   static late Image cyan;
-   static late Image swat;
-   static late Image tunic;
-
-   static Image fromBodyType(int bodyType) {
+   static Image getImageForBodyType(int bodyType) {
       switch (bodyType){
          case BodyType.shirtBlue:
-            return blue;
+            return template_body_blue;
          case BodyType.shirtCyan:
-            return cyan;
+            return template_body_cyan;
          case BodyType.swat:
-            return swat;
+            return template_body_swat;
          case BodyType.tunicPadded:
-            return tunic;
+            return template_body_tunic;
          default:
-            return cyan;
+            return template_body_cyan;
       }
    }
 }
+
 
 class ImagesTemplateLegs {
    static late Image blue;

@@ -194,7 +194,7 @@ void renderCharacterTemplate(Character character, {
     anchorY: 0.75
   );
   Engine.renderSprite(
-    image: ImagesTemplateBody.fromBodyType(character.bodyType),
+    image: GameImages.getImageForBodyType(character.bodyType),
     srcX: frameBody * 64,
     srcY: finalDirection * 64,
     srcWidth: 64,
