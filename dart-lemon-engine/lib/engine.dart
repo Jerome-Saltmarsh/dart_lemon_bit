@@ -69,7 +69,7 @@ class Engine {
   /// override safe
   static Function? onLongLeftClicked;
   /// override safe
-  static Function(double value)? onMouseScroll;
+  static Function(PointerScrollEvent value)? onPointerScrolled;
   /// override safe
   static Function? onRightClicked;
   /// override safe
@@ -288,7 +288,7 @@ class Engine {
     Engine.onDrawCanvas = onDrawCanvas;
     Engine.onDrawForeground = onDrawForeground;
     Engine.onLeftClicked = onLeftClicked;
-    Engine.onMouseScroll = onMouseScroll;
+    Engine.onPointerScrolled = onPointerScrolled;
     Engine.onRightClicked = onRightClicked;
     Engine.onRightClickReleased = onRightClickReleased;
     Engine.themeData.value = themeData;
@@ -312,12 +312,12 @@ class Engine {
       print(stack);
   }
 
-  static void _internalOnMouseScroll(double amount) {
+  static void _internalOnPointerScrollEvent(PointerScrollEvent event) {
     if (zoomOnScroll) {
-      targetZoom -=  amount * scrollSensitivity;
+      targetZoom -=  event.scrollDelta.dy * scrollSensitivity;
       targetZoom = targetZoom.clamp(0.2, 6);
     }
-    onMouseScroll?.call(amount);
+    onPointerScrolled?.call(event);
   }
 
   static void renderText(String text, double x, double y,
@@ -447,7 +447,7 @@ class Engine {
 
   static void _internalOnPointerSignal(PointerSignalEvent pointerSignalEvent) {
     if (pointerSignalEvent is PointerScrollEvent) {
-      _internalOnMouseScroll(pointerSignalEvent.scrollDelta.dy);
+      _internalOnPointerScrollEvent(pointerSignalEvent);
     }
   }
 
