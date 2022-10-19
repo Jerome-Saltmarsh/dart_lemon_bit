@@ -26,6 +26,7 @@ import 'package:gamestream_flutter/isometric/events/on_changed_edit.dart';
 import 'package:gamestream_flutter/isometric/game_action.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/grid_state_util.dart';
+import 'package:gamestream_flutter/isometric/lighting/apply_particle_emissions.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_vector_emission.dart';
 import 'package:gamestream_flutter/isometric/nodes.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
@@ -184,6 +185,18 @@ class Game {
      y >= nodesLengthColumn ;
 
   // ACTIONS
+
+  static void applyEmissions(){
+    applyEmissionsCharacters();
+    applyEmissionGameObjects();
+    applyEmissionsParticles();
+  }
+
+  static void applyEmissionsParticles(){
+    for (var i = 0; i < totalParticles; i++) {
+      applyParticleEmission(particles[i]);
+    }
+  }
 
   static void applyEmissionsCharacters() {
     var maxBrightness = ambientShade.value - 1;

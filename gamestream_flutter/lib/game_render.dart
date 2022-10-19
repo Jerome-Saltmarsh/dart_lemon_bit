@@ -11,9 +11,7 @@ import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/game_object.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
-import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/grid_state_util.dart';
-import 'package:gamestream_flutter/isometric/lighting/apply_emmissions_particles.dart';
 import 'package:gamestream_flutter/isometric/lighting/apply_projectile_emissions.dart';
 import 'package:gamestream_flutter/isometric/nodes.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_gameobjects.dart';
@@ -951,11 +949,9 @@ class GameRender {
     renderOrderGrid.total = renderOrderGrid.getTotal();
     renderOrderGrid.index = 0;
     renderOrderGrid.remaining = renderOrderGrid.total > 0;
-
     Game.refreshDynamicLightGrid();
-    Game.applyEmissionsCharacters();
-    Game.applyEmissionGameObjects();
-    applyEmissionsParticles();
+    Game.applyEmissions();
+
     applyCharacterColors();
 
     if (Game.editMode){
