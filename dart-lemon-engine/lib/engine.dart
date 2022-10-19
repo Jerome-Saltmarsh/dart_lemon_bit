@@ -456,6 +456,18 @@ class Engine {
     onPanStart?.call(details);
   }
 
+  static void _internalOnPanUpdate(DragUpdateDetails details){
+    onPanUpdate?.call(details);
+  }
+
+  static void _internalOnTapDown(TapDownDetails details){
+     onTapDown?.call(details);
+  }
+
+  static void _internalOnLongPress(){
+    onLongPress?.call();
+  }
+
   static void _internalOnPanEnd(DragEndDetails details){
     panStarted = false;
     onPanEnd?.call(details);
@@ -784,11 +796,11 @@ class Engine {
       onPointerHover: _internalOnPointerHover,
       onPointerMove: _internalOnPointerMove,
       child: GestureDetector(
-          onTapDown: onTapDown,
-          onLongPress: onLongPress,
+          onTapDown: _internalOnTapDown,
+          onLongPress: _internalOnLongPress,
           onPanStart: _internalOnPanStart,
-          onPanUpdate: onPanUpdate,
-          onPanEnd: Engine._internalOnPanEnd,
+          onPanUpdate: _internalOnPanUpdate,
+          onPanEnd: _internalOnPanEnd,
           child: WatchBuilder(watchBackgroundColor, (Color backgroundColor){
             return Container(
                 color: backgroundColor,
