@@ -426,6 +426,8 @@ class TemplateAnimation {
           return FiringBow;
         case AttackType.Blade:
           return StrikingBlade;
+        case AttackType.Staff:
+          return StrikingBlade;
         default:
           throw Exception("TemplateAnimation.getAttackAnimation(${AttackType.getName(weaponType)})");
       }
