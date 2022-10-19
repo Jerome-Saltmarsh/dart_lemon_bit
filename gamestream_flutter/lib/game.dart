@@ -441,26 +441,6 @@ class Game {
     );
   }
 
-  static void spawnParticleDustCloud({
-    required double x,
-    required double y,
-    required double z,
-  }) {
-    spawnParticle(
-      type: ParticleType.Dust,
-      x: x,
-      y: y,
-      z: z,
-      zv: 0,
-      angle: 0,
-      speed: 0,
-      weight: -0.25,
-      duration: 300,
-      rotation: 0,
-      bounciness: 0,
-    );
-  }
-
   static void spawnParticleOrgan({
     required double x,
     required double y,

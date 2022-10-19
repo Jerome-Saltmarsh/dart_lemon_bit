@@ -427,18 +427,6 @@ class GameRender {
           color: Game.getV3RenderColor(particle),
         );
         break;
-      case ParticleType.Dust:
-        if (particle.frame >= 8 ) return;
-        const size = 32.0;
-        return Engine.renderBuffer(
-          dstX: particle.renderX,
-          dstY: particle.renderY,
-          srcX: 2832,
-          srcY: particle.frame * size,
-          srcWidth: size,
-          srcHeight: size,
-          scale: particle.scale,
-        );
       case ParticleType.Strike_Blade:
         if (particle.frame >= 6 ) {
           particle.deactivate();
@@ -446,11 +434,12 @@ class GameRender {
         }
         const size = 64.0;
         casteShadowDownV3(particle);
-        Engine.renderBufferRotated(
+        Engine.renderSpriteRotated(
+          image: GameImages.particles,
           dstX: particle.renderX,
           dstY: particle.renderY,
-          srcX: 6080,
-          srcY: particle.frame * size,
+          srcX: 357,
+          srcY: 1 + particle.frame * size,
           srcWidth: size,
           srcHeight: size,
           scale: particle.scale,

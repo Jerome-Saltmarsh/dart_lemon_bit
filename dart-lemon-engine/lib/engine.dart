@@ -575,6 +575,33 @@ class Engine {
     canvas.drawRawAtlas(image, _dst4, _src4, _colors1, bufferBlendMode, null, paint);
   }
 
+  static void renderSpriteRotated({
+    required ui.Image image,
+    required double srcX,
+    required double srcY,
+    required double srcWidth,
+    required double srcHeight,
+    required double dstX,
+    required double dstY,
+    required double rotation,
+    double anchorX = 0.5,
+    double anchorY = 0.5,
+    double scale = 1.0,
+    int color = 1,
+  }){
+    final angle = rotation + piQuarter;
+    final translate = calculateHypotenuse(srcWidth * 0.5, srcHeight * 0.5);
+    _colors1[0] = color;
+    _src4[0] = srcX;
+    _dst4[0] = cos(rotation) * scale;
+    _src4[1] = srcY;
+    _dst4[1] = sin(rotation) * scale;
+    _src4[2] = srcX + srcWidth;
+    _dst4[2] = dstX - getAdjacent(angle, translate);
+    _src4[3] = srcY + srcHeight;
+    _dst4[3] = dstY - getOpposite(angle, translate);
+  }
+
   static void renderExternalCanvas({
     required Canvas canvas,
     required ui.Image image,
