@@ -11,7 +11,6 @@ import 'package:gamestream_flutter/isometric/ui/build_hud_debug.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/stacks/build_stack_game_type_skirmish.dart';
-import 'package:gamestream_flutter/isometric/ui/stacks/build_stack_game_type_waves.dart';
 import 'package:gamestream_flutter/isometric/ui/stacks/build_stack_play_mode.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_editor_dialog.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_player_alive.dart';
@@ -182,10 +181,8 @@ class GameUI {
 
   static Widget buildGameTypeUI(int? gameType) {
     switch (gameType) {
-      case GameType.Waves:
-        return buildStackGameTypeWavesUI();
       case GameType.Dark_Age:
-        return buildStackGameTypeWorld();
+        return buildStackGameTypeDarkAge();
       case GameType.Skirmish:
         return buildStackGameTypeSkirmish();
       default:
@@ -237,7 +234,7 @@ class GameUI {
       ),
     );
 
-  static Widget buildStackGameTypeWorld() =>
+  static Widget buildStackGameTypeDarkAge() =>
       Stack(
         children: [
           Positioned(left: 8, bottom: 50, child: buildColumnTeleport()),

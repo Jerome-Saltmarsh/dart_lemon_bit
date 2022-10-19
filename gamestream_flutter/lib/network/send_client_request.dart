@@ -4,14 +4,9 @@ import 'package:bleed_common/library.dart';
 import 'package:bleed_common/request_modify_canvas_size.dart';
 import 'package:bleed_common/teleport_scenes.dart';
 import 'package:flutter/services.dart';
-import 'package:gamestream_flutter/game.dart';
-import 'package:gamestream_flutter/io/touchscreen.dart';
-import 'package:gamestream_flutter/isometric_web/read_player_input.dart';
-import 'package:gamestream_flutter/network/instance/websocket.dart';
+import 'package:gamestream_flutter/game_network.dart';
 import 'package:lemon_engine/engine.dart';
 
-
-final updateBuffer = Uint8List(17);
 
 void sendRequestSpeak(String message){
   if (message.trim().isEmpty) return;
@@ -197,29 +192,6 @@ void sendGameObjectRequest(GameObjectRequest request, [dynamic message]) {
   sendClientRequest(ClientRequest.GameObject, request.index);
 }
 
-Future sendClientRequestUpdate() async {
-  const updateIndex = 0;
-  updateBuffer[0] = updateIndex;
-
-  if (Engine.deviceIsComputer){
-    updateBuffer[1] = getKeyDirection();
-    updateBuffer[2] = !Game.edit.value && Engine.watchMouseLeftDown.value ? 1 : 0;
-    updateBuffer[3] = !Game.edit.value && Engine.mouseRightDown.value ? 1 : 0;
-    updateBuffer[4] = !Game.edit.value && keyPressedSpace ? 1 : 0;
-  } else {
-    updateBuffer[1] = Touchscreen.direction;
-    updateBuffer[2] = 0;
-    updateBuffer[3] = 0;
-    updateBuffer[4] = 0;
-  }
-  writeNumberToByteArray(number: Engine.mouseWorldX, list: updateBuffer, index: 5);
-  writeNumberToByteArray(number: Engine.mouseWorldY, list: updateBuffer, index: 7);
-  writeNumberToByteArray(number: Engine.screen.left, list: updateBuffer, index: 9);
-  writeNumberToByteArray(number: Engine.screen.top, list: updateBuffer, index: 11);
-  writeNumberToByteArray(number: Engine.screen.right, list: updateBuffer, index: 13);
-  writeNumberToByteArray(number: Engine.screen.bottom, list: updateBuffer, index: 15);
-  webSocket.sink.add(updateBuffer);
-}
 
 bool get keyPressedSpace => Engine.keyPressed(LogicalKeyboardKey.space);
 
@@ -229,7 +201,7 @@ void sendClientRequestTogglePaths() {
 
 void sendClientRequest(ClientRequest value, [dynamic message]){
   if (message != null){
-    return webSocket.send('${value.index} $message');
+    return GameNetwork.webSocket.send('${value.index} $message');
   }
-  webSocket.send(value.index);
+  GameNetwork.webSocket.send(value.index);
 }

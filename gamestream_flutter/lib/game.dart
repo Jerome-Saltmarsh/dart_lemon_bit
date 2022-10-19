@@ -6,6 +6,7 @@ import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/particle_type.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/game_audio.dart';
+import 'package:gamestream_flutter/game_network.dart';
 import 'package:gamestream_flutter/game_render.dart';
 import 'package:gamestream_flutter/game_ui.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
@@ -34,7 +35,6 @@ import 'package:gamestream_flutter/isometric/render/render_circle.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/isometric/update.dart';
 import 'package:gamestream_flutter/isometric_web/read_player_input.dart';
-import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
@@ -1210,7 +1210,7 @@ class Game {
   static void update() {
     updateIsometric();
     readPlayerInput();
-    sendClientRequestUpdate();
+    GameNetwork.sendClientRequestUpdate();
   }
 
   static void applyEmissionGameObjects() {

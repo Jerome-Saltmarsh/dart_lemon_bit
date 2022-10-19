@@ -1,7 +1,6 @@
 
 import 'package:gamestream_flutter/data/data_authentication.dart';
 import 'package:gamestream_flutter/enums/region.dart';
-import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:lemon_engine/Engine.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -15,8 +14,6 @@ class StorageService {
     print("fetching");
     return Engine.sharedPreferences.getInt(_keys.server);
   }
-  Region get serverType => regions[_serverIndex ?? Region.Australia.index];
-
   void saveRegion(Region value){
     SharedPreferences.getInstance().then((instance){
       instance.setInt('server', value.index);

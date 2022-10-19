@@ -4,11 +4,9 @@ import 'package:bleed_common/api_player.dart';
 import 'package:bleed_common/character_type.dart';
 import 'package:bleed_common/environment_response.dart';
 import 'package:bleed_common/game_option.dart';
-import 'package:bleed_common/game_waves_response.dart';
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/quest.dart';
-import 'package:bleed_common/type_position.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/game_ui.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
@@ -26,7 +24,6 @@ import 'package:gamestream_flutter/isometric/watches/lightning.dart';
 import 'package:gamestream_flutter/isometric/watches/rain.dart';
 import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
 import 'package:gamestream_flutter/isometric/weather/time_passing.dart';
-import 'package:gamestream_flutter/state/state_game_waves.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
@@ -79,7 +76,7 @@ class ServerResponseReader with ByteReader {
           readGameObject();
           break;
         case ServerResponse.Game_Waves:
-          readServerResponseGameWaves();
+          // readServerResponseGameWaves();
           break;
         case ServerResponse.End:
           return readEnd();
@@ -263,40 +260,40 @@ class ServerResponseReader with ByteReader {
   }
 
   void readServerResponseGameWaves() {
-    final gameWavesResponse = readByte();
-    switch (gameWavesResponse) {
-      case GameWavesResponse.timer:
-        gameWaves.timer.value = readPercentage();
-        break;
-      case GameWavesResponse.round:
-        gameWaves.round.value = readInt();
-        break;
-      case GameWavesResponse.clear_upgrades:
-        gameWaves.purchasePrimary.clear();
-        gameWaves.purchaseSecondary.clear();
-        gameWaves.purchaseTertiary.clear();
-        gameWaves.refresh.value++;
-        break;
-      case GameWavesResponse.purchase:
-        final position = readByte();
-        final type = readByte();
-        final cost = readInt();
-        final purchase = Purchase(type, cost);
-
-        switch (position){
-          case TypePosition.Primary:
-            gameWaves.purchasePrimary.add(purchase);
-            break;
-          case TypePosition.Secondary:
-            gameWaves.purchaseSecondary.add(purchase);
-            break;
-          case TypePosition.Tertiary:
-            gameWaves.purchaseTertiary.add(purchase);
-            break;
-        }
-        gameWaves.refresh.value++;
-        break;
-    }
+    // final gameWavesResponse = readByte();
+    // switch (gameWavesResponse) {
+    //   case GameWavesResponse.timer:
+    //     gameWaves.timer.value = readPercentage();
+    //     break;
+    //   case GameWavesResponse.round:
+    //     gameWaves.round.value = readInt();
+    //     break;
+    //   case GameWavesResponse.clear_upgrades:
+    //     gameWaves.purchasePrimary.clear();
+    //     gameWaves.purchaseSecondary.clear();
+    //     gameWaves.purchaseTertiary.clear();
+    //     gameWaves.refresh.value++;
+    //     break;
+    //   case GameWavesResponse.purchase:
+    //     final position = readByte();
+    //     final type = readByte();
+    //     final cost = readInt();
+    //     final purchase = Purchase(type, cost);
+    //
+    //     switch (position){
+    //       case TypePosition.Primary:
+    //         gameWaves.purchasePrimary.add(purchase);
+    //         break;
+    //       case TypePosition.Secondary:
+    //         gameWaves.purchaseSecondary.add(purchase);
+    //         break;
+    //       case TypePosition.Tertiary:
+    //         gameWaves.purchaseTertiary.add(purchase);
+    //         break;
+    //     }
+    //     gameWaves.refresh.value++;
+    //     break;
+    // }
   }
 
   void readServerResponsePlayer() {

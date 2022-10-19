@@ -3,15 +3,13 @@ import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/game_account.dart';
 import 'package:gamestream_flutter/game_colors.dart';
+import 'package:gamestream_flutter/game_network.dart';
 import 'package:gamestream_flutter/game_ui.dart';
 import 'package:gamestream_flutter/game_widgets.dart';
-import 'package:gamestream_flutter/modules/core/enums.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/website/enums.dart';
-import 'package:gamestream_flutter/to_string.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
 import 'package:gamestream_flutter/ui/style.dart';
-import 'package:gamestream_flutter/ui/widgets.dart';
 import 'package:gamestream_flutter/utils.dart';
 import 'package:gamestream_flutter/utils/widget_utils.dart';
 import 'package:gamestream_flutter/website/website.dart';
@@ -19,7 +17,6 @@ import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import '../network/classes/websocket.dart';
-import '../network/instance/websocket.dart';
 
 final nameController = TextEditingController();
 
@@ -46,7 +43,7 @@ Widget buildErrorDialog(String message, {Widget? bottomRight}){
 }
 
 Widget buildAccount(Account? account) =>
-  watch(webSocket.connection, buildConnection);
+  watch(GameNetwork.webSocket.connection, buildConnection);
 
 Widget buildConnection(Connection connection) {
   switch (connection) {
@@ -57,34 +54,6 @@ Widget buildConnection(Connection connection) {
     default:
       return Website.build();
   }
-}
-
-Widget buildDialogChangeRegion() {
-  return dialog(
-      height: 500,
-      padding: 16,
-      borderColor: GameColors.none,
-      color: GameColors.white05,
-      child: buildLayout(
-          bottomRight: widgets.buttonClose,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ...selectableRegions.map((region) {
-                return button(enumString(region), () {
-                  Website.region.value = region;
-                  modules.website.actions.showDialogGames();
-                },
-                    fillColor: region == Website.region.value
-                        ? GameColors.black20
-                        : GameColors.white05,
-                    borderColor: GameColors.none,
-                    fillColorMouseOver: GameColors.green,
-                    borderColorMouseOver: GameColors.green,
-                    margin: const EdgeInsets.only(bottom: 8));
-              }).toList()
-            ],
-          )));
 }
 
 const connectionMessage = {
