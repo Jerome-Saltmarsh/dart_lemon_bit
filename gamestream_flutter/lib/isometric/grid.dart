@@ -98,7 +98,7 @@ void _applyShadowAt({
     for (var row = 0; row < Game.nodesTotalRows; row++){
       for (var column = 0; column < Game.nodesTotalColumns; column++){
         // final tile = grid[z][row][column];
-        final index = getNodeIndexZRC(z, row, column);
+        final index = Game.getNodeIndexZRC(z, row, column);
         final tile = Game.nodesType[index];
         if (!castesShadow(tile)) continue;
         var projectionZ = z + directionZ;
@@ -212,7 +212,7 @@ void applyEmissionBake({
   for (var z = zMin; z < zMax; z++){
     for (var row = rowMin; row < rowMax; row++){
       for (var column = columnMin; column < columnMax; column++) {
-        final nodeIndex = getNodeIndexZRC(z, row, column);
+        final nodeIndex = Game.getNodeIndexZRC(z, row, column);
         var distance = (z - zIndex).abs() + (row - rowIndex).abs() + (column - columnIndex).abs() - 1;
         final distanceValue = convertDistanceToShade(distance, maxBrightness: maxBrightness);
         if (distanceValue >= Game.nodesBake[nodeIndex]) continue;

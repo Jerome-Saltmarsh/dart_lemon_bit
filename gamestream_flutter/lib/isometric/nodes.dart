@@ -15,25 +15,25 @@ int getNodeTypeBelow(int index){
 }
 
 void setNodeShade(int index, int shade){
-
   if (shade < 0) {
-    shade = 0;
-  } else
+    Game.nodesShade[index] = 0;
+    return;
+  }
   if (shade > Shade.Pitch_Black){
-    shade = Shade.Pitch_Black;
-
+    Game.nodesShade[index] = Shade.Pitch_Black;
+    return;
   }
   Game.nodesShade[index] = shade;
 }
 
-int getNodeIndexZRC(int z, int row, int column) {
-  assert (verifyInBoundZRC(z, row, column));
-  return (z * Game.nodesArea) + (row * Game.nodesTotalColumns) + column;
-}
+// int getNodeIndexZRC(int z, int row, int column) {
+//   assert (verifyInBoundZRC(z, row, column));
+//   return (z * Game.nodesArea) + (row * Game.nodesTotalColumns) + column;
+// }
 
-int getNodeIndexV3(Vector3 v3) {
-  return getNodeIndexZRC(v3.indexZ, v3.indexRow, v3.indexColumn);
-}
+// int getNodeIndexV3(Vector3 v3) {
+//   return Game.getNodeIndexZRC(v3.indexZ, v3.indexRow, v3.indexColumn);
+// }
 
 /// a verification receives some data and returns true or false
 /// a false verification means that the data is not valid
@@ -50,7 +50,7 @@ bool verifyInBoundZRC(int z, int row, int column){
 }
 
 void gridNodeWindIncrement(int z, int row, int column){
-  final index = getNodeIndexZRC(z, row, column);
+  final index = Game.getNodeIndexZRC(z, row, column);
   if (Game.nodesWind[index] >= windIndexStrong) return;
   Game.nodesWind[index]++;
 }
@@ -61,7 +61,7 @@ int getGridNodeIndexV3(Vector3 vector3) =>
     );
 
 int getGridNodeIndexXYZ(double x, double y, double z) =>
-  getNodeIndexZRC(
+    Game.getNodeIndexZRC(
       z ~/ tileSizeHalf,
       x ~/ tileSize,
       y ~/ tileSize,
@@ -81,7 +81,7 @@ int gridNodeXYZType(double x, double y, double z) =>
     Game.nodesType[gridNodeXYZIndex(x, y, z)];
 
 bool gridNodeZRCTypeRainOrEmpty(int z, int row, int column) =>
-     NodeType.isRainOrEmpty(Game.nodesType[getNodeIndexZRC(z, row, column)]);
+     NodeType.isRainOrEmpty(Game.nodesType[Game.getNodeIndexZRC(z, row, column)]);
 
 int gridNodeZRCTypeSafe(int z, int row, int column) {
   if (z < 0) return NodeType.Boundary;
@@ -94,10 +94,11 @@ int gridNodeZRCTypeSafe(int z, int row, int column) {
 }
 
 int gridNodeZRCType(int z, int row, int column) =>
-    Game.nodesType[getNodeIndexZRC(z, row, column)];
+    Game.nodesType[Game.getNodeIndexZRC(z, row, column)];
+
 
 int gridNodeXYZIndex(double x, double y, double z) =>
-    getNodeIndexZRC(
+    Game.getNodeIndexZRC(
       z ~/ tileSizeHalf,
       x ~/ tileSize,
       y ~/ tileSize,

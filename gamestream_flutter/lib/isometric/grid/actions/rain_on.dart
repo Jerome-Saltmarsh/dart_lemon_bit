@@ -9,7 +9,7 @@ void rainOn(){
     for (var column = 0; column < Game.nodesTotalColumns; column++) {
       for (var z = Game.nodesTotalZ - 1; z >= 0; z--) {
 
-        final index = getNodeIndexZRC(z, row, column);
+        final index = Game.getNodeIndexZRC(z, row, column);
         final type = Game.nodesType[index];
         if (type != NodeType.Empty) {
           if (type == NodeType.Water || Game.nodesOrientation[index] == NodeOrientation.Solid) {

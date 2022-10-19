@@ -29,14 +29,14 @@ int gridNodeTypeAtVector3(Vector3 vector3) =>
         : NodeType.Boundary;
 
 int gridNodeIndexVector3(Vector3 vector3) =>
-  getNodeIndexZRC(
+    Game.getNodeIndexZRC(
     vector3.indexZ,
     vector3.indexRow,
     vector3.indexColumn,
   );
 
 int gridNodeIndexVector3NodeBelow(Vector3 vector3) =>
-    getNodeIndexZRC(
+    Game.getNodeIndexZRC(
       vector3.indexZ - 1,
       vector3.indexRow,
       vector3.indexColumn,

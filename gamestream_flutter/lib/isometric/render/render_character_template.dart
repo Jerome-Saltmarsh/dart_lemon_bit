@@ -7,7 +7,6 @@ import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/game_config.dart';
 import 'package:gamestream_flutter/game_images.dart';
 import 'package:gamestream_flutter/game_render.dart';
-import 'package:gamestream_flutter/isometric/nodes.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
 import 'package:gamestream_flutter/modules/game/render_rotated.dart';
 import 'package:lemon_engine/engine.dart';
@@ -129,7 +128,7 @@ void renderCharacterTemplate(Character character, {
   }
 
   // find the nearest torch and move the shadow behind the character
-  final characterNodeIndex = getNodeIndexV3(character);
+  final characterNodeIndex = Game.getNodeIndexV3(character);
   final initialSearchIndex = characterNodeIndex - Game.nodesTotalColumns - 1; // shifts the selectIndex - 1 row and - 1 column
   var torchIndex = -1;
 

@@ -996,16 +996,16 @@ class GameRender {
       column++;
       if (row >= Game.nodesTotalRows) return;
       if (column >= Game.nodesTotalColumns) return;
-      Game.nodesVisible[getNodeIndexZRC(z, row, column)] = false;
+      Game.nodesVisible[Game.getNodeIndexZRC(z, row, column)] = false;
       if (z < Game.nodesTotalZ - 2){
-        Game.nodesVisible[getNodeIndexZRC(z + 1, row, column)] = false;
+        Game.nodesVisible[Game.getNodeIndexZRC(z + 1, row, column)] = false;
       }
     }
   }
 
   static void nodesRevealAbove(int z, int row, int column){
     for (; z < Game.nodesTotalZ; z++){
-      Game.nodesVisible[getNodeIndexZRC(z, row, column)] = false;
+      Game.nodesVisible[Game.getNodeIndexZRC(z, row, column)] = false;
     }
   }
 
@@ -1107,7 +1107,7 @@ class GameRender {
   static void renderCharacterShadow(Character character, int frameLegs, int upperBodyDirection){
     if (Game.outOfBoundsV3(character)) return;
     // find the nearest torch and move the shadow behind the character
-    final characterNodeIndex = getNodeIndexV3(character);
+    final characterNodeIndex = Game.getNodeIndexV3(character);
     final initialSearchIndex = characterNodeIndex - Game.nodesTotalColumns - 1; // shifts the selectIndex - 1 row and - 1 column
     var torchIndex = -1;
 

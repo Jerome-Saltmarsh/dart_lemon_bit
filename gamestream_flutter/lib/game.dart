@@ -130,6 +130,15 @@ class Game {
     return null;
   }
 
+  static int getNodeIndexV3(Vector3 v3) {
+    return Game.getNodeIndexZRC(v3.indexZ, v3.indexRow, v3.indexColumn);
+  }
+
+  static int getNodeIndexZRC(int z, int row, int column) {
+    assert (verifyInBoundZRC(z, row, column));
+    return (z * nodesArea) + (row * nodesTotalColumns) + column;
+  }
+
   static int convertNodeIndexToZ(int index) =>
       index ~/ nodesArea;
 
