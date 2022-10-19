@@ -223,34 +223,3 @@ void applyEmissionBake({
   }
 }
 
-void applyEmissionDynamic({
-  required int index,
-  required int maxBrightness,
-}){
-  final zIndex = Game.convertNodeIndexToZ(index);
-  final rowIndex = Game.convertNodeIndexToRow(index);
-  final columnIndex = Game.convertNodeIndexToColumn(index);
-  final radius = Shade.Pitch_Black;
-  final zMin = max(zIndex - radius, 0);
-  final zMax = min(zIndex + radius, Game.nodesTotalZ);
-  final rowMin = max(rowIndex - radius, 0);
-  final rowMax = min(rowIndex + radius, Game.nodesTotalRows);
-  final columnMin = max(columnIndex - radius, 0);
-  final columnMax = min(columnIndex + radius, Game.nodesTotalColumns);
-
-  for (var z = zMin; z < zMax; z++){
-    for (var row = rowMin; row < rowMax; row++){
-      final a = (z * Game.nodesArea) + (row * Game.nodesTotalColumns);
-      final b = (z - zIndex).abs() + (row - rowIndex).abs();
-      for (var column = columnMin; column < columnMax; column++) {
-        final nodeIndex = a + column;
-        var distance = b + (column - columnIndex).abs() - 1;
-        final distanceValue = convertDistanceToShade(distance, maxBrightness: maxBrightness);
-        if (distanceValue >= Game.nodesShade[nodeIndex]) continue;
-        Game.nodesShade[nodeIndex] = distanceValue;
-        Game.nodesDynamicIndex[Game.dynamicIndex] = nodeIndex;
-        Game.dynamicIndex++;
-      }
-    }
-  }
-}

@@ -15,6 +15,7 @@ import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:gamestream_flutter/isometric/classes/particle_emitter.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
+import 'package:gamestream_flutter/isometric/convert/convert_distance_to_shade.dart';
 import 'package:gamestream_flutter/isometric/edit.dart';
 import 'package:gamestream_flutter/isometric/effects.dart';
 import 'package:gamestream_flutter/isometric/enums/camera_mode.dart';
@@ -26,8 +27,6 @@ import 'package:gamestream_flutter/isometric/events/on_changed_edit.dart';
 import 'package:gamestream_flutter/isometric/game_action.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/grid_state_util.dart';
-import 'package:gamestream_flutter/isometric/lighting/apply_particle_emissions.dart';
-import 'package:gamestream_flutter/isometric/lighting/apply_vector_emission.dart';
 import 'package:gamestream_flutter/isometric/nodes.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
@@ -190,6 +189,7 @@ class Game {
     applyEmissionsCharacters();
     applyEmissionGameObjects();
     applyEmissionsParticles();
+    applyEmissionsProjectiles();
   }
 
   static void applyEmissionsParticles(){
@@ -213,10 +213,102 @@ class Game {
     }
   }
 
-  // static double getVolumeTargetDayAmbience() {
-  //   if (ambientShade.value == Shade.Very_Bright) return 0.2;
-  //   return 0;
-  // }
+  static void applyEmissionsProjectiles() {
+    for (var i = 0; i < totalProjectiles; i++){
+      applyProjectileEmission(projectiles[i]);
+    }
+  }
+
+  static void applyProjectileEmission(Projectile projectile) {
+    if (projectile.type == ProjectileType.Orb) {
+      return applyVector3Emission(projectile, maxBrightness: Shade.Very_Bright);
+    }
+    if (projectile.type == ProjectileType.Fireball) {
+      return applyVector3Emission(projectile, maxBrightness: Shade.Very_Bright);
+    }
+    if (projectile.type == ProjectileType.Arrow) {
+      return applyVector3Emission(projectile, maxBrightness: Shade.Medium);
+    }
+  }
+
+  static void applyParticleEmission(Particle particle){
+    if (!particle.active) return;
+    if (particle.type == ParticleType.Orb_Shard){
+      if (particle.duration > 12){
+        return applyVector3Emission(particle, maxBrightness: Shade.Very_Bright);
+      }
+      if (particle.duration > 9){
+        return applyVector3Emission(particle, maxBrightness: Shade.Bright);
+      }
+      if (particle.duration > 6){
+        return applyVector3Emission(particle, maxBrightness: Shade.Medium);
+      }
+      if (particle.duration > 3) {
+        return applyVector3Emission(particle, maxBrightness: Shade.Medium);
+      }
+      return applyVector3Emission(particle, maxBrightness: Shade.Dark);
+    }
+
+    if (particle.type == ParticleType.Light_Emission){
+      if (particle.duration > 20){
+        return applyVector3Emission(particle, maxBrightness: Shade.Very_Bright);
+      }
+      if (particle.duration > 10){
+        return applyVector3Emission(particle, maxBrightness: Shade.Bright);
+      }
+      if (particle.duration > 7){
+        return applyVector3Emission(particle, maxBrightness: Shade.Medium);
+      }
+      if (particle.duration > 5) {
+        return applyVector3Emission(particle, maxBrightness: Shade.Dark);
+      }
+      if (particle.duration > 3) {
+        return applyVector3Emission(particle, maxBrightness: Shade.Very_Dark);
+      }
+      return applyVector3Emission(particle, maxBrightness: Shade.Very_Very_Dark);
+    }
+  }
+
+  static void applyVector3Emission(Vector3 v, {required int maxBrightness}){
+    if (!inBoundsVector3(v)) return;
+    applyEmissionDynamic(
+      index: gridNodeIndexVector3(v),
+      maxBrightness: maxBrightness,
+    );
+  }
+
+  static void applyEmissionDynamic({
+    required int index,
+    required int maxBrightness,
+  }){
+    final zIndex = Game.convertNodeIndexToZ(index);
+    final rowIndex = Game.convertNodeIndexToRow(index);
+    final columnIndex = Game.convertNodeIndexToColumn(index);
+    final radius = Shade.Pitch_Black;
+    final zMin = max(zIndex - radius, 0);
+    final zMax = min(zIndex + radius, Game.nodesTotalZ);
+    final rowMin = max(rowIndex - radius, 0);
+    final rowMax = min(rowIndex + radius, Game.nodesTotalRows);
+    final columnMin = max(columnIndex - radius, 0);
+    final columnMax = min(columnIndex + radius, Game.nodesTotalColumns);
+
+    for (var z = zMin; z < zMax; z++){
+      for (var row = rowMin; row < rowMax; row++){
+        final a = (z * Game.nodesArea) + (row * Game.nodesTotalColumns);
+        final b = (z - zIndex).abs() + (row - rowIndex).abs();
+        for (var column = columnMin; column < columnMax; column++) {
+          final nodeIndex = a + column;
+          var distance = b + (column - columnIndex).abs() - 1;
+          final distanceValue = convertDistanceToShade(distance, maxBrightness: maxBrightness);
+          if (distanceValue >= Game.nodesShade[nodeIndex]) continue;
+          Game.nodesShade[nodeIndex] = distanceValue;
+          Game.nodesDynamicIndex[Game.dynamicIndex] = nodeIndex;
+          Game.dynamicIndex++;
+        }
+      }
+    }
+  }
+
 
   static void actionLightningFlash() {
     GameAudio.thunder(1.0);

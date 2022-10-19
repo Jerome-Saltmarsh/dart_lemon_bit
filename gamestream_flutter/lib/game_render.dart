@@ -12,7 +12,6 @@ import 'package:gamestream_flutter/isometric/classes/game_object.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/grid_state_util.dart';
-import 'package:gamestream_flutter/isometric/lighting/apply_projectile_emissions.dart';
 import 'package:gamestream_flutter/isometric/nodes.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_gameobjects.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/render_constants.dart';
@@ -951,11 +950,10 @@ class GameRender {
     renderOrderGrid.remaining = renderOrderGrid.total > 0;
     Game.refreshDynamicLightGrid();
     Game.applyEmissions();
-
     applyCharacterColors();
 
     if (Game.editMode){
-      applyEmissionDynamic(
+      Game.applyEmissionDynamic(
         index: EditState.nodeIndex.value,
         maxBrightness: Shade.Very_Bright,
       );
@@ -1195,12 +1193,6 @@ class RenderOrderProjectiles extends RenderOrder {
   @override
   int getTotal() {
     return Game.totalProjectiles;
-  }
-
-  @override
-  void reset() {
-    applyProjectileEmissions();
-    super.reset();
   }
 }
 
