@@ -4,33 +4,35 @@ import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/enums/connection_status.dart';
 import 'package:gamestream_flutter/enums/region.dart';
 import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/game_io.dart';
 import 'package:gamestream_flutter/io/touchscreen.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/isometric_web/read_player_input.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:gamestream_flutter/website/website.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:lemon_watch/watch.dart';
+import 'isometric/watches/scene_meta_data.dart';
 import 'isometric_web/download_file.dart';
+import 'isometric_web/register_isometric_web_controls.dart';
 
 class GameNetwork {
   static const Url_Sydney = "https://gamestream-ws-australia-osbmaezptq-ts.a.run.app";
   static const Url_Singapore = "https://gamestream-ws-singapore-osbmaezptq-as.a.run.app";
   static final updateBuffer = Uint8List(17);
-
   static late WebSocketChannel webSocketChannel;
-  static final connectionStatus = Watch(ConnectionStatus.None);
+  static final connectionStatus = Watch(ConnectionStatus.None, onChanged: onChangedConnectionStatus);
   static bool get connected => connectionStatus.value == ConnectionStatus.Connected;
   static bool get connecting => connectionStatus.value == ConnectionStatus.Connecting;
   static String connectionUri = "";
   static late WebSocketSink sink;
   static DateTime? connectionEstablished;
+  static var localhostPort = '8080';
 
   static void connectToRegion(Region region, String message) {
     if (region == Region.LocalHost) {
-      connectToServer('ws://localhost:8080', message);
+      connectToServer('ws://localhost:$localhostPort', message);
       return;
     }
     if (region == Region.Custom) {
@@ -88,7 +90,7 @@ class GameNetwork {
       updateBuffer[1] = getKeyDirection();
       updateBuffer[2] = !Game.edit.value && Engine.watchMouseLeftDown.value ? 1 : 0;
       updateBuffer[3] = !Game.edit.value && Engine.mouseRightDown.value ? 1 : 0;
-      updateBuffer[4] = !Game.edit.value && keyPressedSpace ? 1 : 0;
+      updateBuffer[4] = !Game.edit.value && GameIO.keyPressedSpace ? 1 : 0;
     } else {
       updateBuffer[1] = Touchscreen.direction;
       updateBuffer[2] = 0;
@@ -103,7 +105,6 @@ class GameNetwork {
     writeNumberToByteArray(number: Engine.screen.bottom, list: updateBuffer, index: 15);
     sink.add(updateBuffer);
   }
-
 
   static void connect({required String uri, required dynamic message}) {
     print("webSocket.connect($uri)");
@@ -186,5 +187,45 @@ class GameNetwork {
     sink.close();
   }
 
+  static void onChangedConnectionStatus(ConnectionStatus connection) {
+    switch (connection) {
+      case ConnectionStatus.Connected:
+        Engine.onDrawCanvas = Game.renderCanvas;
+        Engine.onDrawForeground = modules.game.render.renderForeground;
+        Engine.onUpdate = Game.update;
+        Engine.drawCanvasAfterUpdate = true;
+        Engine.zoomOnScroll = true;
+        if (!Engine.isLocalHost) {
+          Engine.fullScreenEnter();
+        }
+        isometricWebControlsRegister();
+        break;
+
+      case ConnectionStatus.Done:
+        Engine.onUpdate = null;
+        Engine.drawCanvasAfterUpdate = true;
+        Engine.cursorType.value = CursorType.Basic;
+        Engine.drawCanvasAfterUpdate = true;
+        Engine.onDrawCanvas = Website.renderCanvas;
+        Engine.onUpdate = Website.update;
+        Engine.fullScreenExit();
+        Game.clear();
+        Game.gameType.value = null;
+        sceneEditable.value = false;
+        isometricWebControlsDeregister();
+        break;
+      case ConnectionStatus.Failed_To_Connect:
+        Website.error.value = "Failed to connect";
+        break;
+      case ConnectionStatus.Invalid_Connection:
+        Website.error.value = "Invalid Connection";
+        break;
+      case ConnectionStatus.Error:
+        Website.error.value = "Connection Error";
+        break;
+      default:
+        break;
+    }
+  }
 }
 

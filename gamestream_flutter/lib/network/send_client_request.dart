@@ -3,10 +3,7 @@ import 'package:bleed_common/gameobject_request.dart';
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/request_modify_canvas_size.dart';
 import 'package:bleed_common/teleport_scenes.dart';
-import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/game_network.dart';
-import 'package:lemon_engine/engine.dart';
-
 
 void sendRequestSpeak(String message){
   if (message.trim().isEmpty) return;
@@ -193,7 +190,6 @@ void sendGameObjectRequest(GameObjectRequest request, [dynamic message]) {
 }
 
 
-bool get keyPressedSpace => Engine.keyPressed(LogicalKeyboardKey.space);
 
 void sendClientRequestTogglePaths() {
   sendClientRequest(ClientRequest.Toggle_Debug);

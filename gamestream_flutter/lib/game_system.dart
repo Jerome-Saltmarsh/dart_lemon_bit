@@ -1,19 +1,14 @@
 
 import 'dart:async';
 
-import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/game_images.dart';
 import 'package:gamestream_flutter/game_network.dart';
-import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
-import 'package:gamestream_flutter/isometric_web/register_isometric_web_controls.dart';
-import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'enums/connection_status.dart';
 import 'website/website.dart';
 
-class System {
+class GameSystem {
 
     static Future init(SharedPreferences sharedPreferences) async {
       print("environment: ${Engine.isLocalHost ? 'localhost' : 'production'}");
@@ -56,54 +51,12 @@ class System {
 
       Engine.cursorType.value = CursorType.Basic;
       Engine.onDrawCanvas = Website.renderCanvas;
-      GameNetwork.connectionStatus.onChanged(onChangedConnection);
     }
 
   static void onError(Object error, StackTrace stack){
     print(error.toString());
     print(stack);
     Website.error.value = error.toString();
-  }
-
-  static void onChangedConnection(ConnectionStatus connection) {
-    switch (connection) {
-      case ConnectionStatus.Connected:
-        Engine.onDrawCanvas = Game.renderCanvas;
-        Engine.onDrawForeground = modules.game.render.renderForeground;
-        Engine.onUpdate = Game.update;
-        Engine.drawCanvasAfterUpdate = true;
-        Engine.zoomOnScroll = true;
-        if (!Engine.isLocalHost) {
-          Engine.fullScreenEnter();
-        }
-        isometricWebControlsRegister();
-        break;
-
-      case ConnectionStatus.Done:
-        Engine.onUpdate = null;
-        Engine.drawCanvasAfterUpdate = true;
-        Engine.cursorType.value = CursorType.Basic;
-        Engine.drawCanvasAfterUpdate = true;
-        Engine.onDrawCanvas = Website.renderCanvas;
-        Engine.onUpdate = Website.update;
-        Engine.fullScreenExit();
-        Game.clear();
-        Game.gameType.value = null;
-        sceneEditable.value = false;
-        isometricWebControlsDeregister();
-        break;
-      case ConnectionStatus.Failed_To_Connect:
-        Website.error.value = "Failed to connect";
-        break;
-      case ConnectionStatus.Invalid_Connection:
-        Website.error.value = "Invalid Connection";
-        break;
-      case ConnectionStatus.Error:
-        Website.error.value = "Connection Error";
-        break;
-      default:
-        break;
-    }
   }
 
   static void disconnect() => GameNetwork.disconnect();
