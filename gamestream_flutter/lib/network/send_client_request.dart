@@ -199,9 +199,10 @@ void sendClientRequestTogglePaths() {
   sendClientRequest(ClientRequest.Toggle_Debug);
 }
 
+
 void sendClientRequest(ClientRequest value, [dynamic message]){
   if (message != null){
-    return GameNetwork.webSocket.send('${value.index} $message');
+    return GameNetwork.send('${value.index} $message');
   }
-  GameNetwork.webSocket.send(value.index);
+  GameNetwork.send(value.index);
 }

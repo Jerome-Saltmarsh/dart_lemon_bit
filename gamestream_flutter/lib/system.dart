@@ -7,10 +7,10 @@ import 'package:gamestream_flutter/game_network.dart';
 import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
 import 'package:gamestream_flutter/isometric_web/register_isometric_web_controls.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:gamestream_flutter/network/classes/websocket.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'enums/connection_status.dart';
 import 'website/website.dart';
 
 class System {
@@ -56,7 +56,7 @@ class System {
 
       Engine.cursorType.value = CursorType.Basic;
       Engine.onDrawCanvas = Website.renderCanvas;
-      GameNetwork.webSocket.connection.onChanged(onChangedConnection);
+      GameNetwork.connectionStatus.onChanged(onChangedConnection);
     }
 
   static void onError(Object error, StackTrace stack){
@@ -65,9 +65,9 @@ class System {
     Website.error.value = error.toString();
   }
 
-  static void onChangedConnection(Connection connection) {
+  static void onChangedConnection(ConnectionStatus connection) {
     switch (connection) {
-      case Connection.Connected:
+      case ConnectionStatus.Connected:
         Engine.onDrawCanvas = Game.renderCanvas;
         Engine.onDrawForeground = modules.game.render.renderForeground;
         Engine.onUpdate = Game.update;
@@ -79,7 +79,7 @@ class System {
         isometricWebControlsRegister();
         break;
 
-      case Connection.Done:
+      case ConnectionStatus.Done:
         Engine.onUpdate = null;
         Engine.drawCanvasAfterUpdate = true;
         Engine.cursorType.value = CursorType.Basic;
@@ -92,13 +92,13 @@ class System {
         sceneEditable.value = false;
         isometricWebControlsDeregister();
         break;
-      case Connection.Failed_To_Connect:
+      case ConnectionStatus.Failed_To_Connect:
         Website.error.value = "Failed to connect";
         break;
-      case Connection.Invalid_Connection:
+      case ConnectionStatus.Invalid_Connection:
         Website.error.value = "Invalid Connection";
         break;
-      case Connection.Error:
+      case ConnectionStatus.Error:
         Website.error.value = "Connection Error";
         break;
       default:
@@ -106,5 +106,5 @@ class System {
     }
   }
 
-  static void disconnect() => GameNetwork.webSocket.disconnect();
+  static void disconnect() => GameNetwork.disconnect();
 }

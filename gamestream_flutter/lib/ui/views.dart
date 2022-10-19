@@ -1,6 +1,7 @@
 
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/enums/connection_status.dart';
 import 'package:gamestream_flutter/game_account.dart';
 import 'package:gamestream_flutter/game_colors.dart';
 import 'package:gamestream_flutter/game_network.dart';
@@ -15,8 +16,6 @@ import 'package:gamestream_flutter/utils/widget_utils.dart';
 import 'package:gamestream_flutter/website/website.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch_builder.dart';
-
-import '../network/classes/websocket.dart';
 
 final nameController = TextEditingController();
 
@@ -43,13 +42,13 @@ Widget buildErrorDialog(String message, {Widget? bottomRight}){
 }
 
 Widget buildAccount(Account? account) =>
-  watch(GameNetwork.webSocket.connection, buildConnection);
+  watch(GameNetwork.connectionStatus, buildConnection);
 
-Widget buildConnection(Connection connection) {
+Widget buildConnection(ConnectionStatus connection) {
   switch (connection) {
-    case Connection.Connected:
+    case ConnectionStatus.Connected:
       return GameUI.build();
-    case Connection.Connecting:
+    case ConnectionStatus.Connecting:
       return Website.buildPageConnectionStatus(connection.name);
     default:
       return Website.build();
@@ -57,13 +56,13 @@ Widget buildConnection(Connection connection) {
 }
 
 const connectionMessage = {
-  Connection.Done: "Connection to the server was lost",
-  Connection.Error: "An error occurred with the connection to the server",
-  Connection.Connected: "Connected to server",
-  Connection.Connecting: "Connecting to server",
-  Connection.Failed_To_Connect: "Unable to establish a connection",
-  Connection.None: "There is no connection to the server",
-  Connection.Invalid_Connection: "Invalid websocket connection string",
+  ConnectionStatus.Done: "Connection to the server was lost",
+  ConnectionStatus.Error: "An error occurred with the connection to the server",
+  ConnectionStatus.Connected: "Connected to server",
+  ConnectionStatus.Connecting: "Connecting to server",
+  ConnectionStatus.Failed_To_Connect: "Unable to establish a connection",
+  ConnectionStatus.None: "There is no connection to the server",
+  ConnectionStatus.Invalid_Connection: "Invalid websocket connection string",
 };
 
 Widget? dev(Widget child){
