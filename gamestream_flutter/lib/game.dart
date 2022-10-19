@@ -153,15 +153,24 @@ class Game {
           ? ambientShade.value
           : nodesShade[getNodeIndexZRC(z, row, column)];
 
-  static bool outOfBounds(int z, int row, int column){
-    if (z < 0) return true;
-    if (row < 0) return true;
-    if (column < 0) return true;
-    if (z >= nodesTotalZ) return true;
-    if (row >= nodesTotalRows) return true;
-    if (column >= nodesTotalColumns) return true;
-    return false;
-  }
+  static bool outOfBoundsV3(Vector3 v3) =>
+    outOfBoundsXYZ(v3.x, v3.y, v3.z);
+
+  static bool outOfBounds(int z, int row, int column) =>
+    z < 0 ||
+    row < 0 ||
+    column < 0 ||
+    z >= nodesTotalZ ||
+    row >= nodesTotalRows ||
+    column >= nodesTotalColumns ;
+
+  static bool outOfBoundsXYZ(double x, double y, double z) =>
+     z < 0 ||
+     y < 0 ||
+     z < 0 ||
+     z >= nodesLengthZ ||
+     x >= nodesLengthRow ||
+     y >= nodesLengthColumn ;
 
   // ACTIONS
 

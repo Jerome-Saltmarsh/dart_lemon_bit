@@ -110,13 +110,13 @@ class Engine {
   static var zoomOnScroll = true;
   static var mousePosition = Vector2(0, 0);
   static var previousMousePosition = Vector2(0, 0);
-  static var previousUpdateTime = DateTime.now();
   static var mouseLeftDownFrames = 0;
   static var zoom = 1.0;
   static var drawCanvasAfterUpdate = true;
+  static var panStarted = false;
   static late BuildContext buildContext;
   static late final sharedPreferences;
-  static final Map<LogicalKeyboardKey, int> keyboardState = {};
+  static final keyboardState = <LogicalKeyboardKey, int>{};
   static final themeData = Watch<ThemeData?>(null);
   static final fullScreen = Watch(false);
   static final deviceType = Watch(DeviceType.Computer);
@@ -124,7 +124,6 @@ class Engine {
   static final notifierPaintFrame = ValueNotifier<int>(0);
   static final notifierPaintForeground = ValueNotifier<int>(0);
   static final screen = _Screen();
-  static var panStarted = false;
   static final camera = Vector2(0, 0);
   static Function(LogicalKeyboardKey key)? onKeyDown;
   static Function(LogicalKeyboardKey key)? onKeyUp;
@@ -153,19 +152,18 @@ class Engine {
   static final watchMouseLeftDown = Watch(false, onChanged: _internalOnChangedMouseLeftDown);
   static final mouseRightDown = Watch(false);
 
-  // CONSTANTS
+  // DEFAULTS
   static const Default_Milliseconds_Per_Frame = 30;
   static const Default_Background_Color = Colors.black;
   static const Default_Title = "DEMO";
+  // CONSTANTS
   static const Milliseconds_Per_Second = 1000;
   static const PI_2 = pi + pi;
   static const PI_Half = pi * 0.5;
   static const PI_Quarter = pi * 0.25;
   static const PI_Eight = pi * 0.125;
-
   static const Ratio_Radians_To_Degrees = 57.2958;
   static const Ratio_Degrees_To_Radians = 0.0174533;
-
   static const GoldenRatio_1_618 = 1.61803398875;
   static const GoldenRatio_1_381 = 1.38196601125;
   static const GoldenRatio_0_618 = 0.61803398875;
