@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/game_widgets.dart';
-import 'package:gamestream_flutter/isometric/time.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
@@ -10,11 +10,11 @@ Widget buildTime(){
     child: Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        WatchBuilder(hours, (int hours){
+        WatchBuilder(Game.hours, (int hours){
           return text(padZero(hours));
         }),
         text(":"),
-        WatchBuilder(minutes, (int minutes){
+        WatchBuilder(Game.minutes, (int minutes){
           return text(padZero(minutes));
         }),
       ],

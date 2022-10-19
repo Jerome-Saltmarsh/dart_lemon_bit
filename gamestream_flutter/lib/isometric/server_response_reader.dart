@@ -37,23 +37,18 @@ import 'camera.dart';
 import 'classes/projectile.dart';
 import 'grid.dart';
 import 'player_store.dart';
-import 'time.dart';
 
 final serverResponseReader = ServerResponseReader();
-final triggerAlarmNoMessageReceivedFromServer = Watch(false);
+
 
 void onChangedRendersSinceUpdate(int value){
-   triggerAlarmNoMessageReceivedFromServer.value = value > 200;
-}
-
-void onChangedUpdateFrame(int value){
-  Game.rendersSinceUpdate.value = 0;
+   Game.triggerAlarmNoMessageReceivedFromServer.value = value > 200;
 }
 
 class ServerResponseReader with ByteReader {
   final byteLength = Watch(0);
   final bufferSize = Watch(0);
-  final updateFrame = Watch(0, onChanged: onChangedUpdateFrame);
+  final updateFrame = Watch(0, onChanged: Game.onChangedUpdateFrame);
 
   void readBytes(Uint8List values) {
     updateFrame.value++;
@@ -191,7 +186,6 @@ class ServerResponseReader with ByteReader {
           break;
         case ServerResponse.Custom_Game_Names:
           readCustomGameNames();
-
           break;
         case ServerResponse.Scene_Meta_Data:
           readSceneMetaData();
@@ -564,8 +558,8 @@ class ServerResponseReader with ByteReader {
   }
 
   void readGameTime() {
-    hours.value = readByte();
-    minutes.value = readByte();
+    Game.hours.value = readByte();
+    Game.minutes.value = readByte();
   }
 
   void readDamageApplied() {

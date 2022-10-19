@@ -19,6 +19,7 @@ class GameImages {
    static late Image template_head_steel;
    static late Image template_head_swat;
    static late Image template_head_wizard;
+   static late Image template_head_blonde;
 
    static late Image template_body_blue;
    static late Image template_body_cyan;
@@ -52,6 +53,8 @@ class GameImages {
             return template_head_steel;
          case HeadType.Wizards_Hat:
             return template_head_wizard;
+         case HeadType.Blonde:
+            return template_head_blonde;
          default:
             throw Exception('GameImages.getImageForHeadType(${HeadType.getName(headType)})');
       }

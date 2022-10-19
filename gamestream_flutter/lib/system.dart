@@ -31,6 +31,7 @@ class System {
       GameImages.template_head_steel = await Engine.loadImageAsset('images/template/head/template-head-steel.png');
       GameImages.template_head_swat = await Engine.loadImageAsset('images/template/head/template-head-swat.png');
       GameImages.template_head_wizard = await Engine.loadImageAsset('images/template/head/template-head-wizard.png');
+      GameImages.template_head_blonde = await Engine.loadImageAsset('images/template/head/template-head-blonde.png');
 
       GameImages.template_body_blue = await Engine.loadImageAsset('images/template/body/template-body-blue.png');
       GameImages.template_body_cyan = await Engine.loadImageAsset('images/template/body/template-body-cyan.png');

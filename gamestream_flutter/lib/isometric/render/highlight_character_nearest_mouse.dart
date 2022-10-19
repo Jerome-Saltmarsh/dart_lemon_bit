@@ -4,12 +4,6 @@ import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/queries/get_distance_from_mouse.dart';
 
-void applyCharacterColors(){
-  for (var i = 0; i < Game.totalCharacters; i++){
-    Game.characters[i].color = Game.getV3RenderColor(Game.characters[i]);
-  }
-}
-
 void highlightCharacterNearMouse() {
   final playerCharacter = Game.getPlayerCharacter();
   if (playerCharacter != null){

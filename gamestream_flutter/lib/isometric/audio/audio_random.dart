@@ -1,7 +1,6 @@
 import 'package:bleed_common/Shade.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/game_audio.dart';
-import 'package:gamestream_flutter/isometric/time.dart';
 import 'package:lemon_math/library.dart';
 
 import 'audio_single.dart';
@@ -54,7 +53,7 @@ void updateRandomAmbientSounds(){
 }
 
 void playRandomAmbientSound(){
-  final hour = hours.value;
+  final hour = Game.hours.value;
 
   final shade = Game.ambientShade.value;
 

@@ -1,7 +1,6 @@
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
-import 'package:gamestream_flutter/isometric/time.dart';
 import 'package:gamestream_flutter/isometric/utils/screen_utils.dart';
 import 'package:gamestream_flutter/isometric/watches/lightning.dart';
 import 'package:gamestream_flutter/isometric/watches/torches_ignited.dart';
@@ -22,8 +21,8 @@ double getVolumeTargetWind() {
   }
   final index = windAmbient.value.index;
   if (index <= windIndexCalm) {
-    if (hours.value < 6) return target;
-    if (hours.value < 18) return target + 0.1;
+    if (Game.hours.value < 6) return target;
+    if (Game.hours.value < 18) return target + 0.1;
     return target;
   }
   if (index <= windIndexGentle) return target + 0.5;
@@ -40,7 +39,7 @@ double getVolumeTargetRain() {
 }
 
 double getVolumeTargetCrickets() {
-  final hour = hours.value;
+  final hour = Game.hours.value;
   const max = 0.8;
   if (hour >= 5 && hour < 7) return max;
   if (hour >= 17 && hour < 19) return max;

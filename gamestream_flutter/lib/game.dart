@@ -44,6 +44,9 @@ class Game {
   static const tileHeight = 24.0;
   static const colorPitchBlack = Color.fromRGBO(37, 32, 48, 1.0);
 
+  static final hours = Watch(0);
+  static final minutes = Watch(0);
+
   static final colorShades = [0.0, 0.4, 0.6, 0.7, 0.8, 0.95, 1.0]
       .map((opacity) => colorPitchBlack.withOpacity(opacity).value)
       .toList(growable: false);
@@ -85,12 +88,14 @@ class Game {
   static var visibleIndex = 0;
   static var dynamicIndex = 0;
 
+  static final triggerAlarmNoMessageReceivedFromServer = Watch(false);
   static final renderFrame = Watch(0);
   static final rendersSinceUpdate = Watch(0, onChanged: onChangedRendersSinceUpdate);
 
   static final gridShadows = Watch(true, onChanged: (bool value){
     refreshLighting();
   });
+
 
   static var nodesTotalZ = 0;
   static var nodesTotalRows = 0;
@@ -190,6 +195,17 @@ class Game {
     applyEmissionGameObjects();
     applyEmissionsParticles();
     applyEmissionsProjectiles();
+    applyCharacterColors();
+  }
+
+  static void applyCharacterColors(){
+    for (var i = 0; i < totalCharacters; i++){
+      applyCharacterColor(characters[i]);
+    }
+  }
+
+  static void applyCharacterColor(Character character){
+    character.color = getV3RenderColor(character);
   }
 
   static void applyEmissionsParticles(){
@@ -221,13 +237,16 @@ class Game {
 
   static void applyProjectileEmission(Projectile projectile) {
     if (projectile.type == ProjectileType.Orb) {
-      return applyVector3Emission(projectile, maxBrightness: Shade.Very_Bright);
+      applyVector3Emission(projectile, maxBrightness: Shade.Very_Bright);
+      return;
     }
     if (projectile.type == ProjectileType.Fireball) {
-      return applyVector3Emission(projectile, maxBrightness: Shade.Very_Bright);
+      applyVector3Emission(projectile, maxBrightness: Shade.Very_Bright);
+      return;
     }
     if (projectile.type == ProjectileType.Arrow) {
-      return applyVector3Emission(projectile, maxBrightness: Shade.Medium);
+      applyVector3Emission(projectile, maxBrightness: Shade.Medium);
+      return;
     }
   }
 
@@ -332,6 +351,10 @@ class Game {
       nodesType[i] = NodeType.Empty;
       nodesOrientation[i] = NodeOrientation.None;
     }
+  }
+
+  static void onChangedUpdateFrame(int value){
+    rendersSinceUpdate.value = 0;
   }
 
   static void onChangedGameType(int? value){
@@ -1221,4 +1244,5 @@ class Game {
     nodesShade[index] = shade;
   }
 
+  static void toggleShadows () => gridShadows.value = !gridShadows.value;
 }

@@ -7,7 +7,6 @@ import 'package:gamestream_flutter/isometric/edit.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/light_mode.dart';
-import 'package:gamestream_flutter/isometric/time.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/isometric/watches/lightning.dart';
@@ -197,7 +196,7 @@ Widget buildToggleLightMode() {
 Widget buildControlTime() {
   const totalWidth = 300.0;
   const buttonWidth = totalWidth / 24.0;
-  final buttons = watch(hours, (int hours) {
+  final buttons = watch(Game.hours, (int hours) {
     final buttons1 = <Widget>[];
     final buttons2 = <Widget>[];
 
@@ -238,9 +237,9 @@ Widget buildControlTime() {
     mainAxisAlignment: MainAxisAlignment.center,
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
-      watch(hours, (num hour) => text(padZero(hour))),
+      watch(Game.hours, (num hour) => text(padZero(hour))),
       text(":"),
-      watch(minutes, (num hour) => text(padZero(hour))),
+      watch(Game.minutes, (num hour) => text(padZero(hour))),
     ],
   );
   return Container(

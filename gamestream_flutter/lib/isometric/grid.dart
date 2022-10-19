@@ -6,44 +6,14 @@ import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/isometric/grid/actions/rain_on.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/nodes.dart';
-import 'package:gamestream_flutter/isometric/time.dart';
 
 import 'convert/convert_distance_to_shade.dart';
 import 'watches/raining.dart';
 
-
-bool nodeIsInBound(int z, int row, int column){
-  if (z < 0) return false;
-  if (z >= Game.nodesTotalZ) return false;
-  if (row < 0) return false;
-  if (row >= Game.nodesTotalRows) return false;
-  if (column < 0) return false;
-  if (column >= Game.nodesTotalColumns) return false;
-  return true;
-}
-
-// Node getNodeXYZ(double x, double y, double z){
-//   final plain = z ~/ tileSizeHalf;
-//   if (plain < 0) return Node.boundary;
-//   if (plain >= gridTotalZ) return Node.empty;
-//   final row = x ~/ tileSize;
-//   if (row < 0) return Node.boundary;
-//   if (row >= gridTotalRows) return Node.boundary;
-//   final column = y ~/ tileSize;
-//   if (column < 0) return Node.boundary;
-//   if (column >= gridTotalColumns) return Node.boundary;
-//   return grid[plain][row][column];
-// }
-
-// Node getNode(int z, int row, int column) {
-//   if (outOfBounds(z, row, column)) return Node.boundary;
-//   return grid[z][row][column];
-// }
-
-void toggleShadows () => Game.gridShadows.value = !Game.gridShadows.value;
+// void toggleShadows () => Game.gridShadows.value = !Game.gridShadows.value;
 
 void actionSetAmbientShadeToHour(){
-  Game.ambientShade.value = Shade.fromHour(hours.value);
+  Game.ambientShade.value = Shade.fromHour(Game.hours.value);
 }
 
 void onGridChanged(){

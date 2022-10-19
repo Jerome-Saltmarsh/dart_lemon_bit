@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/enums/region.dart';
 import 'package:gamestream_flutter/game_colors.dart';
 import 'package:gamestream_flutter/game_images.dart';
+import 'package:gamestream_flutter/game_network.dart';
 import 'package:gamestream_flutter/game_widgets.dart';
-import 'package:gamestream_flutter/modules/core/actions.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/ui/style.dart';
 import 'package:gamestream_flutter/storage_service.dart';
@@ -113,11 +113,11 @@ class Website {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          buildTextButton("PLAY DARK-AGE", action: connectToGameDarkAge),
+          buildTextButton("PLAY DARK-AGE", action: GameNetwork.connectToGameDarkAge),
           height24,
-          buildTextButton("PLAY FIRE-STORM", action: connectToGameSkirmish),
+          buildTextButton("PLAY FIRE-STORM", action: GameNetwork.connectToGameSkirmish),
           height24,
-          buildTextButton("PLAY SAND-BOX", action: connectToGameEditor),
+          buildTextButton("PLAY SAND-BOX", action: GameNetwork.connectToGameEditor),
         ],
       );
 

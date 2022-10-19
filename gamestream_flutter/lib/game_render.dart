@@ -950,7 +950,6 @@ class GameRender {
     renderOrderGrid.remaining = renderOrderGrid.total > 0;
     Game.refreshDynamicLightGrid();
     Game.applyEmissions();
-    applyCharacterColors();
 
     if (Game.editMode){
       Game.applyEmissionDynamic(

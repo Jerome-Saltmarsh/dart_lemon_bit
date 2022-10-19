@@ -7,7 +7,6 @@ import 'package:gamestream_flutter/isometric/actions/action_game_dialog_show_que
 import 'package:gamestream_flutter/isometric/edit.dart';
 import 'package:gamestream_flutter/isometric/enums/editor_dialog.dart';
 import 'package:gamestream_flutter/isometric/events/on_visibility_changed_message_box.dart';
-import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud_debug.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
@@ -20,7 +19,6 @@ import 'package:gamestream_flutter/isometric/ui/watches/build_watch_scene_meta_d
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/game_map.dart';
 import 'package:gamestream_flutter/isometric/watches/debug_visible.dart';
-import 'package:gamestream_flutter/modules/game/enums.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch.dart';
 
@@ -28,7 +26,6 @@ import 'isometric/ui/dialogs/build_game_dialog.dart';
 import 'ui/builders/build_panel_menu.dart';
 
 class GameUI {
-  static const storeTabs = StoreTab.values;
   static final messageBoxVisible = Watch(false, clamp: (bool value){
     if (Game.gameType.value == GameType.Skirmish) return false;
     return value;
@@ -37,7 +34,6 @@ class GameUI {
   static final textEditingControllerMessage = TextEditingController();
   static final textFieldMessage = FocusNode();
   static final debug = Watch(false);
-  static final storeTab = Watch(StoreTab.Armor);
   static final panelTypeKey = <int, GlobalKey> {};
   static final playerTextStyle = TextStyle(color: Colors.white);
   static final mapVisible = Watch(false);
@@ -66,7 +62,7 @@ class GameUI {
                   ),
                 )
             ),
-            buildWatchBool(triggerAlarmNoMessageReceivedFromServer, buildDialogFramesSinceUpdate),
+            buildWatchBool(Game.triggerAlarmNoMessageReceivedFromServer, buildDialogFramesSinceUpdate),
             watch(Game.gameType, buildGameTypeUI),
             watch(editorDialog, buildWatchEditorDialog),
             watch(Game.player.gameDialog, buildGameDialog),
