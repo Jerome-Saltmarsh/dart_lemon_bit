@@ -171,11 +171,6 @@ void onGameEventAttackPerformedBlade(double x, double y, double z, double angle)
 }
 
 void onGameEventAttackPerformedUnarmed(double x, double y, double z, double angle) {
-  Game.spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
-  // const range = 25.0;
-  // engine.camera.x += getAdjacent(angle + piQuarter, range);
-  // engine.camera.y += getOpposite(angle + piQuarter, range);
-
   Game.spawnParticleBubbles(
     count: 3,
     x: x,

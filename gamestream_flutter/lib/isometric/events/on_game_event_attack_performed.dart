@@ -28,7 +28,7 @@ void onGameEventAttackPerformed(double x, double y, double z, double angle) {
       return onGameEventAttackPerformedUnarmed(x, y, z, angle);
     case AttackType.Crowbar:
       GameAudio.swing_sword.playXYZ(x, y, z);
-      return Game.spawnParticleSlashCrowbar(x, y, z, angle);
+      break;
     default:
       return;
   }

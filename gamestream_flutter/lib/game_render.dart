@@ -446,37 +446,6 @@ class GameRender {
           rotation: particle.rotation + (Engine.PI_Half + Engine.PI_Quarter),
         );
         break;
-      case ParticleType.Strike_Punch:
-        if (particle.frame >= 3 ) return;
-        const size = 32.0;
-        casteShadowDownV3(particle);
-        return Engine.renderBufferRotated(
-          dstX: particle.renderX,
-          dstY: particle.renderY,
-          srcX: 6272 ,
-          srcY: 32 + particle.frame * size,
-          srcWidth: size,
-          srcHeight: size,
-          scale: particle.scale,
-          rotation: particle.rotation + (Engine.PI_Half + Engine.PI_Quarter),
-        );
-      case ParticleType.Slash_Crowbar:
-        if (particle.frame >= 3 ) {
-          particle.deactivate();
-          break;
-        }
-        const size = 64.0;
-        Engine.renderBufferRotated(
-          dstX: particle.renderX,
-          dstY: particle.renderY,
-          srcX: 784,
-          srcY: particle.frame * size,
-          srcWidth: size,
-          srcHeight: size,
-          scale: particle.scale,
-          rotation: particle.rotation + (Engine.PI_Half + Engine.PI_Quarter),
-        );
-        break;
       default:
         break;
     }

@@ -25,9 +25,7 @@ class ParticleType {
   static const Block_Grass = 32;
   static const Block_Brick = 33;
   static const Water_Drop = 34;
-  static const Slash_Crowbar = 35;
   static const Light_Emission = 36;
-  static const Strike_Punch = 37;
   static const Strike_Blade = 38;
   static const Character_Animation_Death_Zombie_1 = 39;
   static const Character_Animation_Death_Zombie_2 = 40;
