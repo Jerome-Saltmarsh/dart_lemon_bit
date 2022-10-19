@@ -23,7 +23,6 @@ import 'package:gamestream_flutter/isometric/events/on_action_finished_lightning
 import 'package:gamestream_flutter/isometric/events/on_camera_mode_changed.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_ambient_shade.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_edit.dart';
-import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/game_action.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
 import 'package:gamestream_flutter/isometric/grid_state_util.dart';
@@ -114,6 +113,9 @@ class Game {
 
   // QUERIES
 
+  static bool get playMode => !editMode;
+  static bool get editMode => edit.value;
+
   static Character getCharacterInstance(){
     if (characters.length <= totalCharacters){
       characters.add(Character());
@@ -123,15 +125,15 @@ class Game {
 
   static Character? getPlayerCharacter(){
     for (var i = 0; i < totalCharacters; i++){
-      if (characters[i].x != Game.player.x) continue;
-      if (characters[i].y != Game.player.y) continue;
+      if (characters[i].x != player.x) continue;
+      if (characters[i].y != player.y) continue;
       return characters[i];
     }
     return null;
   }
 
   static int getNodeIndexV3(Vector3 v3) {
-    return Game.getNodeIndexZRC(v3.indexZ, v3.indexRow, v3.indexColumn);
+    return getNodeIndexZRC(v3.indexZ, v3.indexRow, v3.indexColumn);
   }
 
   static int getNodeIndexZRC(int z, int row, int column) {
@@ -232,7 +234,7 @@ class Game {
     if (value == null) {
       return;
     }
-    Game.edit.value = value == GameType.Editor;
+    edit.value = value == GameType.Editor;
     GameUI.timeVisible.value = GameType.isTimed(value);
     GameUI.mapVisible.value = value == GameType.Dark_Age;
 
@@ -335,7 +337,7 @@ class Game {
     }
 
     final nodeIndex = gridNodeIndexVector3(particle);
-    final tile = Game.nodesType[nodeIndex];
+    final tile = nodesType[nodeIndex];
     final airBorn =
         !particle.checkNodeCollision || (
             tile == NodeType.Empty        ||
@@ -391,7 +393,7 @@ class Game {
     required double y,
     required double z,
   }) {
-    Game.spawnParticle(
+    spawnParticle(
         type: ParticleType.Water_Drop,
         x: x,
         y: y,
@@ -910,15 +912,13 @@ class Game {
 
   /// This may be the cause of the bug in which the sword particle does not render
   static Particle getParticleInstance() {
-    Game.totalActiveParticles++;
-    if (Game.totalActiveParticles >= Game.totalParticles){
+    totalActiveParticles++;
+    if (totalActiveParticles >= totalParticles){
       final instance = Particle();
-      Game.particles.add(instance);
+      particles.add(instance);
       return instance;
     }
-    final particle = Game.particles[Game.totalActiveParticles];
-    // assert (!particle.active);
-    return particle;
+    return particles[totalActiveParticles];
   }
 
   static void spawnParticleFire({
@@ -1001,7 +1001,6 @@ class Game {
     GameRender.renderSprites();
     renderEditMode();
     GameRender.renderMouseTargetName();
-    // renderWeaponRoundInformation();
     rendersSinceUpdate.value++;
   }
 
@@ -1015,18 +1014,18 @@ class Game {
 
   static void interpolatePlayer(){
 
-    if (!Game.player.interpolating.value) return;
+    if (!player.interpolating.value) return;
 
     if (rendersSinceUpdate.value == 0) {
       return;
     }
     if (rendersSinceUpdate.value != 1) return;
 
-    final playerCharacter = Game.getPlayerCharacter();
+    final playerCharacter = getPlayerCharacter();
     if (playerCharacter == null) return;
-    final velocityX = Game.player.x - Game.player.previousPosition.x;
-    final velocityY = Game.player.y - Game.player.previousPosition.y;
-    final velocityZ = Game.player.z - Game.player.previousPosition.z;
+    final velocityX = player.x - player.previousPosition.x;
+    final velocityY = player.y - player.previousPosition.y;
+    final velocityZ = player.z - player.previousPosition.z;
     playerCharacter.x += velocityX;
     playerCharacter.y += velocityY;
     playerCharacter.z -= velocityZ;
@@ -1035,10 +1034,10 @@ class Game {
   static void updateCameraMode() {
     switch (cameraMode){
       case CameraMode.Chase:
-        Engine.cameraFollow(Game.player.renderX, Game.player.renderY, 0.00075);
+        Engine.cameraFollow(player.renderX, player.renderY, 0.00075);
         break;
       case CameraMode.Locked:
-        Engine.cameraFollow(Game.player.renderX, Game.player.renderY, 1.0);
+        Engine.cameraFollow(player.renderX, player.renderY, 1.0);
         break;
       case CameraMode.Free:
         break;
@@ -1085,4 +1084,36 @@ class Game {
     readPlayerInput();
     sendClientRequestUpdate();
   }
+
+  static void applyEmissionGameObjects() {
+    for (var i = 0; i < totalGameObjects; i++){
+      if (!GameObjectType.emitsLightBright(gameObjects[i].type)) continue;
+      applyVector3Emission(gameObjects[i], maxBrightness: Shade.Very_Bright);
+    }
+    for (var i = 0; i < totalGameObjects; i++){
+      final gameObject = gameObjects[i];
+      if (gameObject.type != GameObjectType.Candle) continue;
+      final nodeIndex = gridNodeIndexVector3(gameObject);
+      final nodeShade = nodesShade[nodeIndex];
+      setNodeShade(nodeIndex, nodeShade - 1);
+      if (gameObject.indexZ > 0){
+        final nodeBelowIndex = gridNodeIndexVector3NodeBelow(gameObject);
+        final nodeBelowShade = nodesShade[nodeBelowIndex];
+        setNodeShade(nodeBelowIndex, nodeBelowShade - 1);
+      }
+    }
+  }
+
+  static void setNodeShade(int index, int shade) {
+    if (shade < 0) {
+      nodesShade[index] = 0;
+      return;
+    }
+    if (shade > Shade.Pitch_Black){
+      nodesShade[index] = Shade.Pitch_Black;
+      return;
+    }
+    nodesShade[index] = shade;
+  }
+
 }

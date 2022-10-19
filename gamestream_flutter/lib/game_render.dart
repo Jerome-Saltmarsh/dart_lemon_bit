@@ -33,7 +33,6 @@ import 'package:lemon_watch/watch.dart';
 import 'isometric/classes/particle.dart';
 import 'isometric/edit.dart';
 import 'isometric/grid.dart';
-import 'isometric/lighting/apply_emissions_gameobjects.dart';
 
 class GameRender {
   static var totalRemaining = 0;
@@ -955,11 +954,11 @@ class GameRender {
 
     Game.refreshDynamicLightGrid();
     Game.applyEmissionsCharacters();
-    applyEmissionGameObjects();
+    Game.applyEmissionGameObjects();
     applyEmissionsParticles();
     applyCharacterColors();
 
-    if (editMode){
+    if (Game.editMode){
       applyEmissionDynamic(
         index: EditState.nodeIndex.value,
         maxBrightness: Shade.Very_Bright,

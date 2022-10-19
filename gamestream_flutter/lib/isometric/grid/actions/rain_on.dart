@@ -13,9 +13,9 @@ void rainOn(){
         final type = Game.nodesType[index];
         if (type != NodeType.Empty) {
           if (type == NodeType.Water || Game.nodesOrientation[index] == NodeOrientation.Solid) {
-            setGridType(z + 1, row, column, NodeType.Rain_Landing);
+            setNodeType(z + 1, row, column, NodeType.Rain_Landing);
           }
-          setGridType(z + 2, row, column, NodeType.Rain_Falling);
+          setNodeType(z + 2, row, column, NodeType.Rain_Falling);
           break;
         }
 
@@ -25,7 +25,7 @@ void rainOn(){
             !gridNodeZRCTypeRainOrEmpty(z, row - 1, column) ||
             !gridNodeZRCTypeRainOrEmpty(z, row, column - 1)
         ){
-          setGridType(z, row, column, NodeType.Rain_Falling);
+          setNodeType(z, row, column, NodeType.Rain_Falling);
         }
       }
     }

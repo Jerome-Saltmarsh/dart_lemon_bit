@@ -286,7 +286,7 @@ Widget buildButtonSelectNodeType(int nodeType) {
         alignment: Alignment.center,
         child: canvas,
         action: () {
-          if (playMode) {
+          if (Game.playMode) {
             actionSetModePlay();
             return;
           }

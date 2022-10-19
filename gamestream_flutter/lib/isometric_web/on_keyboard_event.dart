@@ -31,7 +31,7 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
     return Game.spawnParticleFirePurple(x: mouseGridX, y: mouseGridY, z: Game.player.z);
   }
 
-  if (playMode) {
+  if (Game.playMode) {
     if (key == PhysicalKeyboardKey.keyG)
       return sendClientRequestTeleport();
     if (key == PhysicalKeyboardKey.keyI)

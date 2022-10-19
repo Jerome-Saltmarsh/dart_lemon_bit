@@ -1,7 +1,7 @@
 
 import 'package:gamestream_flutter/game.dart';
 
-void setGridType(int z, int row, int column, int type){
+void setNodeType(int z, int row, int column, int type){
   if (z < 0)
     return;
   if (row < 0)

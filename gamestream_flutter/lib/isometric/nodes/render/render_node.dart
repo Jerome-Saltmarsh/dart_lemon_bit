@@ -200,21 +200,21 @@ void renderNodeAt() {
       renderNodeWindow();
       break;
     case NodeType.Spawn:
-      if (playMode) return;
+      if (Game.playMode) return;
       renderStandardNode(
         srcX: AtlasSrcX.Node_Spawn_X,
         srcY: AtlasSrcX.Node_Spawn_Y,
       );
       break;
     case NodeType.Spawn_Weapon:
-      if (playMode) return;
+      if (Game.playMode) return;
       renderStandardNode(
         srcX: AtlasSrcX.Node_Spawn_X,
         srcY: AtlasSrcX.Node_Spawn_Y,
       );
       break;
     case NodeType.Spawn_Player:
-      if (playMode) return;
+      if (Game.playMode) return;
       renderStandardNode(
         srcX: AtlasSrcX.Node_Spawn_X,
         srcY: AtlasSrcX.Node_Spawn_Y,

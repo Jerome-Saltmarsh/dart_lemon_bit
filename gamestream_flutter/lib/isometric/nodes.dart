@@ -14,17 +14,17 @@ int getNodeTypeBelow(int index){
   return Game.nodesType[indexBelow];
 }
 
-void setNodeShade(int index, int shade){
-  if (shade < 0) {
-    Game.nodesShade[index] = 0;
-    return;
-  }
-  if (shade > Shade.Pitch_Black){
-    Game.nodesShade[index] = Shade.Pitch_Black;
-    return;
-  }
-  Game.nodesShade[index] = shade;
-}
+// void setNodeShade(int index, int shade){
+//   if (shade < 0) {
+//     Game.nodesShade[index] = 0;
+//     return;
+//   }
+//   if (shade > Shade.Pitch_Black){
+//     Game.nodesShade[index] = Shade.Pitch_Black;
+//     return;
+//   }
+//   Game.nodesShade[index] = shade;
+// }
 
 // int getNodeIndexZRC(int z, int row, int column) {
 //   assert (verifyInBoundZRC(z, row, column));
