@@ -20,6 +20,7 @@ class System {
       GameImages.characters = await Engine.loadImageAsset('images/atlas-characters.png');
       GameImages.zombie = await Engine.loadImageAsset('images/atlas-zombie.png');
       GameImages.gameobjects = await Engine.loadImageAsset('images/atlas-gameobjects.png');
+      GameImages.particles = await Engine.loadImageAsset('images/atlas-particles.png');
       GameImages.projectiles = await Engine.loadImageAsset('images/atlas-projectiles.png');
       GameImages.templateShadow = await Engine.loadImageAsset('images/template/template-shadow.png');
       GameImages.mapAtlas = await Engine.loadImageAsset('images/atlas-map.png');

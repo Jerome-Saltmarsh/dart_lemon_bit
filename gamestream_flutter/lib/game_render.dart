@@ -295,22 +295,24 @@ class GameRender {
         if (particle.frame > 12 ) {
           return particle.deactivate();
         }
-        Engine.renderBuffer(
+        Engine.renderSprite(
+          image: GameImages.particles,
           dstX: particle.renderX,
           dstY: particle.renderY,
-          srcX: 4464,
-          srcY: 32.0 * particle.frame ,
+          srcX: 1,
+          srcY: 1 + 32.0 * particle.frame ,
           srcWidth: 32,
           srcHeight: 32,
           scale: particle.scale,
         );
         break;
       case ParticleType.Shell:
-        Engine.renderBuffer(
+        Engine.renderSprite(
+          image: GameImages.particles,
           dstX: particle.renderX,
           dstY: particle.renderY,
-          srcX: 1008 + (particle.direction * 32),
-          srcY: 0,
+          srcX: 34 + (particle.direction * 32),
+          srcY: 1,
           srcWidth: 32,
           srcHeight: 32,
           scale: 0.25,
@@ -322,11 +324,12 @@ class GameRender {
           particle.deactivate();
           break;
         }
-        Engine.renderBuffer(
+        Engine.renderSprite(
+          image: GameImages.particles,
           dstX: particle.renderX,
           dstY: particle.renderY,
-          srcX: 6032,
-          srcY: 32.0 * (particle.frame ~/ 2) ,
+          srcX: 291,
+          srcY: 1 + 32.0 * (particle.frame ~/ 2) ,
           srcWidth: 32,
           srcHeight: 32,
           scale: particle.scale,
@@ -346,72 +349,84 @@ class GameRender {
         );
         break;
       case ParticleType.Orb_Shard:
-        renderParticleOrbShard(
-          x: particle.renderX,
-          y: particle.renderY,
-          scale: particle.scale,
-          rotation: particle.rotation,
-          frame: particle.frame,
-        );
-        break;
-      case ParticleType.Zombie_Arm:
-        casteShadowDownV3(particle);
-        Engine.renderBuffer(
+        const size = 16.0;
+        Engine.renderSprite(
+          image: GameImages.gameobjects,
           dstX: particle.renderX,
           dstY: particle.renderY,
-          srcX: 4030.0,
-          srcY: 64.0 * particle.direction,
-          srcWidth: 64,
-          srcHeight: 64,
-          color: Game.getV3RenderColor(particle),
+          srcX: 224 ,
+          srcY: (particle.frame % 4) * size,
+          srcWidth: size,
+          srcHeight: size,
+          scale: particle.scale,
         );
         break;
       case ParticleType.Star_Explosion:
         if (particle.frame >= 7) {
           return particle.deactivate();
         }
-        Engine.renderBuffer(
+        Engine.renderSprite(
+          image: GameImages.particles,
           dstX: particle.renderX,
           dstY: particle.renderY,
-          srcX: 2304.0,
-          srcY: 32.0 + (32.0 * particle.frame),
+          srcX: 234.0,
+          srcY: 1 + 32.0 + (32.0 * particle.frame),
           srcWidth: 32,
           srcHeight: 32,
         );
         return;
+      case ParticleType.Zombie_Arm:
+        casteShadowDownV3(particle);
+        Engine.renderSprite(
+          image: GameImages.particles,
+          dstX: particle.renderX,
+          dstY: particle.renderY,
+          srcX: 34.0,
+          srcY: 1 + 64.0 * particle.direction,
+          srcWidth: 64,
+          srcHeight: 64,
+          color: Game.getV3RenderColor(particle),
+        );
+        break;
       case ParticleType.Zombie_Head:
         casteShadowDownV3(particle);
-        return Engine.renderBuffer(
+        Engine.renderSprite(
+          image: GameImages.particles,
           dstX: particle.renderX,
           dstY: particle.renderY,
-          srcX: 4030.0 + 64,
+          srcX: 34.0 + 64,
           srcY: 64.0 * particle.direction,
           srcWidth: 64,
           srcHeight: 64,
           color: Game.getV3RenderColor(particle),
         );
+        break;
       case ParticleType.Zombie_leg:
         casteShadowDownV3(particle);
-        return Engine.renderBuffer(
+        Engine.renderSprite(
+          image: GameImages.particles,
           dstX: particle.renderX,
           dstY: particle.renderY,
-          srcX: 4030.0 + (64 * 2),
+          srcX: 34.0 + (64 * 2),
           srcY: 64.0 * particle.direction,
           srcWidth: 64,
           srcHeight: 64,
           color: Game.getV3RenderColor(particle),
         );
+        break;
       case ParticleType.Zombie_Torso:
         casteShadowDownV3(particle);
-        return Engine.renderBuffer(
+        Engine.renderSprite(
+          image: GameImages.particles,
           dstX: particle.renderX,
           dstY: particle.renderY,
-          srcX: 4030.0 + (64 * 3),
+          srcX: 34.0 + (64 * 3),
           srcY: 64.0 * particle.direction,
           srcWidth: 64,
           srcHeight: 64,
           color: Game.getV3RenderColor(particle),
         );
+        break;
       case ParticleType.Dust:
         if (particle.frame >= 8 ) return;
         const size = 32.0;
@@ -431,7 +446,7 @@ class GameRender {
         }
         const size = 64.0;
         casteShadowDownV3(particle);
-        return Engine.renderBufferRotated(
+        Engine.renderBufferRotated(
           dstX: particle.renderX,
           dstY: particle.renderY,
           srcX: 6080,
@@ -441,6 +456,7 @@ class GameRender {
           scale: particle.scale,
           rotation: particle.rotation + (Engine.PI_Half + Engine.PI_Quarter),
         );
+        break;
       case ParticleType.Strike_Punch:
         if (particle.frame >= 3 ) return;
         const size = 32.0;
@@ -1174,26 +1190,6 @@ class GameRender {
       scale: 0.75,
       color: Game.getV3RenderColor(character),
       anchorY: 0.75,
-    );
-  }
-
-  static void renderParticleOrbShard({
-    required double x,
-    required double y,
-    required double scale,
-    required double rotation,
-    required int frame,
-  }) {
-    const size = 16.0;
-    Engine.renderSprite(
-      image: GameImages.gameobjects,
-      dstX: x,
-      dstY: y,
-      srcX: 224 ,
-      srcY: (frame % 4) * size,
-      srcWidth: size,
-      srcHeight: size,
-      scale: scale,
     );
   }
 
