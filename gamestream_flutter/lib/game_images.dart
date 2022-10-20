@@ -2,6 +2,7 @@
 import 'dart:ui';
 
 import 'package:bleed_common/library.dart';
+import 'package:lemon_engine/engine.dart';
 
 class GameImages {
    static late Image pixel;
@@ -116,7 +117,47 @@ class GameImages {
             throw Exception("ImagesTemplateWeapons.fromWeaponType($weaponType)");
       }
    }
+   
+   static Future loadImages() async {
+      characters = await Engine.loadImageAsset('images/atlas-characters.png');
+      zombie = await Engine.loadImageAsset('images/atlas-zombie.png');
+      gameobjects = await Engine.loadImageAsset('images/atlas-gameobjects.png');
+      particles = await Engine.loadImageAsset('images/atlas-particles.png');
+      projectiles = await Engine.loadImageAsset('images/atlas-projectiles.png');
+      templateShadow = await Engine.loadImageAsset('images/template/template-shadow.png');
+      mapAtlas = await Engine.loadImageAsset('images/atlas-map.png');
+      blocks = await Engine.loadImageAsset('images/atlas-blocks.png');
+
+      template_head_plain = await Engine.loadImageAsset('images/template/head/template-head-plain.png');
+      template_head_rogue = await Engine.loadImageAsset('images/template/head/template-head-rogue.png');
+      template_head_steel = await Engine.loadImageAsset('images/template/head/template-head-steel.png');
+      template_head_swat = await Engine.loadImageAsset('images/template/head/template-head-swat.png');
+      template_head_wizard = await Engine.loadImageAsset('images/template/head/template-head-wizard.png');
+      template_head_blonde = await Engine.loadImageAsset('images/template/head/template-head-blonde.png');
+
+      template_body_blue = await Engine.loadImageAsset('images/template/body/template-body-blue.png');
+      template_body_cyan = await Engine.loadImageAsset('images/template/body/template-body-cyan.png');
+      template_body_swat = await Engine.loadImageAsset('images/template/body/template-body-swat.png');
+      template_body_tunic = await Engine.loadImageAsset('images/template/body/template-body-tunic.png');
+
+      template_legs_blue = await Engine.loadImageAsset('images/template/legs/template-legs-blue.png');
+      template_legs_white = await Engine.loadImageAsset('images/template/legs/template-legs-white.png');
+      template_legs_green = await Engine.loadImageAsset('images/template/legs/template-legs-green.png');
+      template_legs_brown = await Engine.loadImageAsset('images/template/legs/template-legs-brown.png');
+      template_legs_red = await Engine.loadImageAsset('images/template/legs/template-legs-red.png');
+      template_legs_swat = await Engine.loadImageAsset('images/template/legs/template-legs-swat.png');
+
+      template_weapon_bow = await Engine.loadImageAsset('images/template/weapons/template-weapons-bow.png');
+      template_weapon_handgun = await Engine.loadImageAsset('images/template/weapons/template-weapons-handgun.png');
+      template_weapon_shotgun = await Engine.loadImageAsset('images/template/weapons/template-weapons-shotgun.png');
+      template_weapon_staff = await Engine.loadImageAsset('images/template/weapons/template-weapons-staff-wooden.png');
+      template_weapon_sword_steel = await Engine.loadImageAsset('images/template/weapons/template-weapons-sword-steel.png');
+      template_weapon_axe = await Engine.loadImageAsset('images/template/weapons/template-weapons-axe.png');
+      template_weapon_pickaxe = await Engine.loadImageAsset('images/template/weapons/template-weapons-pickaxe.png');
+      template_weapon_hammer = await Engine.loadImageAsset('images/template/weapons/template-weapons-hammer.png');
+   }
 }
+
 
 
 
