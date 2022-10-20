@@ -3,12 +3,12 @@ import 'package:gamestream_flutter/data/data_authentication.dart';
 import 'package:gamestream_flutter/enums/operation_status.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/ui/actions/sign_in_with_facebook.dart';
-import 'package:gamestream_flutter/website/website.dart';
+import 'package:gamestream_flutter/game_website.dart';
 
 class AccountService {
 
   static bool get premiumAccountAuthenticated {
-    final account = Website.account.value;
+    final account = GameWebsite.account.value;
     if (account == null){
       return false;
     }
@@ -21,9 +21,9 @@ class AccountService {
 
   static void changeAccountPublicName(String value) async {
     print("actions.changePublicName('$value')");
-    final account = Website.account.value;
+    final account = GameWebsite.account.value;
     if (account == null) {
-      Website.setError("Account is null");
+      GameWebsite.setError("Account is null");
       return;
     }
     value = value.trim();
@@ -33,35 +33,35 @@ class AccountService {
     }
 
     if (value.isEmpty) {
-      Website.setError("Name entered is empty");
+      GameWebsite.setError("Name entered is empty");
       return;
     }
-    Website.operationStatus.value = OperationStatus.Changing_Public_Name;
+    GameWebsite.operationStatus.value = OperationStatus.Changing_Public_Name;
     final response = await firestoreService
         .changePublicName(userId: account.userId, publicName: value)
         .catchError((error) {
-      Website.setError(error.toString());
+      GameWebsite.setError(error.toString());
       throw error;
     });
-    Website.operationStatus.value = OperationStatus.None;
+    GameWebsite.operationStatus.value = OperationStatus.None;
 
     switch (response) {
       case ChangeNameStatus.Success:
         updateAccount();
         website.actions.showDialogAccount();
-        Website.setError("Name Changed successfully");
+        GameWebsite.setError("Name Changed successfully");
         break;
       case ChangeNameStatus.Taken:
-        Website.setError("'$value' already taken");
+        GameWebsite.setError("'$value' already taken");
         break;
       case ChangeNameStatus.Too_Short:
-        Website.setError("Too short");
+        GameWebsite.setError("Too short");
         break;
       case ChangeNameStatus.Too_Long:
-        Website.setError("Too long");
+        GameWebsite.setError("Too long");
         break;
       case ChangeNameStatus.Other:
-        Website.setError("Something went wrong");
+        GameWebsite.setError("Something went wrong");
         break;
     }
   }
@@ -69,29 +69,29 @@ class AccountService {
   static void cancelSubscription() async {
     print("actions.cancelSubscription()");
     website.actions.showDialogAccount();
-    final account = Website.account.value;
+    final account = GameWebsite.account.value;
     if (account == null) {
-      Website.setError('Account is null');
+      GameWebsite.setError('Account is null');
       return;
     }
-    Website.operationStatus.value = OperationStatus.Cancelling_Subscription;
+    GameWebsite.operationStatus.value = OperationStatus.Cancelling_Subscription;
     await firestoreService.cancelSubscription(account.userId);
     await updateAccount();
-    Website.operationStatus.value = OperationStatus.None;
+    GameWebsite.operationStatus.value = OperationStatus.None;
   }
 
   static Future updateAccount() async {
     print("refreshAccountDetails()");
-    final account = Website.account.value;
+    final account = GameWebsite.account.value;
     if (account == null){
       return;
     }
 
-    Website.operationStatus.value = OperationStatus.Updating_Account;
-    Website.account.value = await firestoreService.findUserById(account.userId).catchError((error){
+    GameWebsite.operationStatus.value = OperationStatus.Updating_Account;
+    GameWebsite.account.value = await firestoreService.findUserById(account.userId).catchError((error){
       return null;
     });
-    Website.operationStatus.value = OperationStatus.None;
+    GameWebsite.operationStatus.value = OperationStatus.None;
   }
 
   static Future login(DataAuthentication authentication){
@@ -110,26 +110,26 @@ class AccountService {
     required String privateName
   }) async {
     print("actions.signInOrCreateAccount()");
-    Website.operationStatus.value = OperationStatus.Authenticating;
+    GameWebsite.operationStatus.value = OperationStatus.Authenticating;
     final account = await firestoreService.findUserById(userId).catchError((error){
       throw error;
     });
     if (account == null){
       print("No account found. Creating new account");
-      Website.operationStatus.value = OperationStatus.Creating_Account;
+      GameWebsite.operationStatus.value = OperationStatus.Creating_Account;
       await firestoreService.createAccount(userId: userId, email: email, privateName: privateName);
-      Website.operationStatus.value = OperationStatus.Authenticating;
-      Website.account.value = await firestoreService.findUserById(userId);
-      if (Website.account.value == null){
+      GameWebsite.operationStatus.value = OperationStatus.Authenticating;
+      GameWebsite.account.value = await firestoreService.findUserById(userId);
+      if (GameWebsite.account.value == null){
         throw Exception("failed to find new account");
       }
       // TODO Illegal reference to website
       // Website.dialog.value = WebsiteDialog.Account_Created;
     }else{
       print("Existing Account found");
-      Website.account.value = account;
+      GameWebsite.account.value = account;
     }
-    Website.operationStatus.value = OperationStatus.None;
+    GameWebsite.operationStatus.value = OperationStatus.None;
   }
 
   static void openStripeCheckout() {
@@ -162,7 +162,7 @@ class AccountService {
 
   static void closeErrorMessage(){
     print("actions.closeErrorMessage()");
-    Website.error.value = null;
+    GameWebsite.error.value = null;
   }
 
   // static void exitGame() => webSocket.disconnect();

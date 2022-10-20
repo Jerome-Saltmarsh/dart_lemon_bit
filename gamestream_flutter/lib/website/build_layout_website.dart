@@ -6,7 +6,7 @@ import 'package:gamestream_flutter/game_widgets.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/ui/style.dart';
 import 'package:gamestream_flutter/to_string.dart';
-import 'package:gamestream_flutter/website/website.dart';
+import 'package:gamestream_flutter/game_website.dart';
 import 'package:lemon_engine/engine.dart';
 
 import 'build/build_column_games.dart';
@@ -63,5 +63,5 @@ Widget buildTextVersion(){
 }
 
 void actionSelectRegion(Region value) {
-  Website.region.value = value;
+  GameWebsite.region.value = value;
 }

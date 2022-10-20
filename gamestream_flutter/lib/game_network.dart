@@ -7,7 +7,7 @@ import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/game_io.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:gamestream_flutter/website/website.dart';
+import 'package:gamestream_flutter/game_website.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:lemon_watch/watch.dart';
@@ -78,7 +78,7 @@ class GameNetwork {
   static void connectToGameSkirmish() => connectToGame(GameType.Skirmish);
 
   static void connectToGame(int gameType, [String message = ""]) =>
-      connectToRegion(Website.region.value, '${gameType} $message');
+      connectToRegion(GameWebsite.region.value, '${gameType} $message');
 
   static Future sendClientRequestUpdate() async {
     applyUpdateBuffer(
@@ -167,7 +167,7 @@ class GameNetwork {
         final contents = _response.substring(6, _response.length);
         downloadString(contents: contents, filename: "hello.json");
       }
-      Website.error.value = _response;
+      GameWebsite.error.value = _response;
       return;
     }
     throw Exception("cannot parse response: $_response");
@@ -209,8 +209,8 @@ class GameNetwork {
         Engine.drawCanvasAfterUpdate = true;
         Engine.cursorType.value = CursorType.Basic;
         Engine.drawCanvasAfterUpdate = true;
-        Engine.onDrawCanvas = Website.renderCanvas;
-        Engine.onUpdate = Website.update;
+        Engine.onDrawCanvas = GameWebsite.renderCanvas;
+        Engine.onUpdate = GameWebsite.update;
         Engine.fullScreenExit();
         Game.clear();
         Game.gameType.value = null;
@@ -218,13 +218,13 @@ class GameNetwork {
         isometricWebControlsDeregister();
         break;
       case ConnectionStatus.Failed_To_Connect:
-        Website.error.value = "Failed to connect";
+        GameWebsite.error.value = "Failed to connect";
         break;
       case ConnectionStatus.Invalid_Connection:
-        Website.error.value = "Invalid Connection";
+        GameWebsite.error.value = "Invalid Connection";
         break;
       case ConnectionStatus.Error:
-        Website.error.value = "Connection Error";
+        GameWebsite.error.value = "Connection Error";
         break;
       default:
         break;

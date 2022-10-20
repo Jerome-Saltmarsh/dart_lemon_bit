@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/enums/connection_status.dart';
 import 'package:gamestream_flutter/game_account.dart';
 import 'package:gamestream_flutter/game_colors.dart';
-import 'package:gamestream_flutter/game_network.dart';
 import 'package:gamestream_flutter/game_ui.dart';
 import 'package:gamestream_flutter/game_widgets.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
@@ -13,14 +12,13 @@ import 'package:gamestream_flutter/ui/builders/build_layout.dart';
 import 'package:gamestream_flutter/ui/style.dart';
 import 'package:gamestream_flutter/utils.dart';
 import 'package:gamestream_flutter/utils/widget_utils.dart';
-import 'package:gamestream_flutter/website/website.dart';
-import 'package:lemon_engine/engine.dart';
+import 'package:gamestream_flutter/game_website.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 final nameController = TextEditingController();
 
 Widget buildWatchErrorMessage(){
-  return WatchBuilder(Website.error, (String? message){
+  return WatchBuilder(GameWebsite.error, (String? message){
     if (message == null) return empty;
     return buildErrorDialog(message);
   });
@@ -36,7 +34,7 @@ Widget buildErrorDialog(String message, {Widget? bottomRight}){
           child: Center(
             child: text(message, color: GameColors.white),
           ),
-          bottomRight: bottomRight ?? text("okay", onPressed: () => Website.error.value = null)
+          bottomRight: bottomRight ?? text("okay", onPressed: () => GameWebsite.error.value = null)
       )
   );
 }
@@ -46,24 +44,10 @@ Widget buildConnection(ConnectionStatus connection) {
     case ConnectionStatus.Connected:
       return GameUI.build();
     case ConnectionStatus.Connecting:
-      return Website.buildPageConnectionStatus(connection.name);
+      return GameWebsite.buildPageConnectionStatus(connection.name);
     default:
-      return Website.build();
+      return GameWebsite.build();
   }
-}
-
-const connectionMessage = {
-  ConnectionStatus.Done: "Connection to the server was lost",
-  ConnectionStatus.Error: "An error occurred with the connection to the server",
-  ConnectionStatus.Connected: "Connected to server",
-  ConnectionStatus.Connecting: "Connecting to server",
-  ConnectionStatus.Failed_To_Connect: "Unable to establish a connection",
-  ConnectionStatus.None: "There is no connection to the server",
-  ConnectionStatus.Invalid_Connection: "Invalid websocket connection string",
-};
-
-Widget? dev(Widget child){
-  return Engine.isLocalHost ? child : null;
 }
 
 Widget margin({
@@ -86,7 +70,7 @@ Widget margin({
 
 
 Widget watchAccount(Widget builder(Account? value)) {
-  return WatchBuilder(Website.account, (Account? account) {
+  return WatchBuilder(GameWebsite.account, (Account? account) {
     return builder(account);
   });
 }
@@ -172,7 +156,7 @@ Widget buildTopMessage(){
 }
 
 bool isAccountName(String publicName){
-  final account = Website.account.value;
+  final account = GameWebsite.account.value;
   if (account == null) return false;
   return account.publicName == publicName;
 }

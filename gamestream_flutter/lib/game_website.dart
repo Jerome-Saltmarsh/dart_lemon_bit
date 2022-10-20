@@ -15,9 +15,9 @@ import 'package:gamestream_flutter/website/build_layout_website.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch.dart';
 
-import '../enums/operation_status.dart';
+import 'enums/operation_status.dart';
 
-class Website {
+class GameWebsite {
   static final operationStatus = Watch(OperationStatus.None);
   static final error = Watch<String?>(null);
   static final account = Watch<Account?>(null, onChanged: onChangedAccount);
@@ -57,7 +57,7 @@ class Website {
 
    static Widget buildUI(BuildContext context) => Stack(
     children: [
-      watch(Website.operationStatus, buildOperationStatus),
+      watch(GameWebsite.operationStatus, buildOperationStatus),
       buildWatchErrorMessage(),
     ]);
 
@@ -71,7 +71,7 @@ class Website {
     final _height = 50.0;
     return buildFullscreen(
       color: GameColors.black,
-      child: watch(Website.download, (double value) {
+      child: watch(GameWebsite.download, (double value) {
         value = 0.6182;
         return Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -132,7 +132,7 @@ class Website {
           Positioned(
             // top: padding,
             left: 32,
-            child: watch(Website.region, buildStateRegion),
+            child: watch(GameWebsite.region, buildStateRegion),
           ),
           Positioned(
             bottom: padding,
