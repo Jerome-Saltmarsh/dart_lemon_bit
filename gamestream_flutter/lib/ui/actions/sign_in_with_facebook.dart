@@ -1,5 +1,5 @@
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:gamestream_flutter/data/data_authentication.dart';
+import 'package:gamestream_flutter/game_library.dart';
 
 var _initialized = false;
 
@@ -9,6 +9,7 @@ Future<DataAuthentication?> getAuthenticationFacebook() async {
     initFacebookAuth();
   }
   final result = await FacebookAuth.instance.login();
+
 
   if (result.status != LoginStatus.success) {
     return null;
