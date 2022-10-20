@@ -94,6 +94,7 @@ class Engine {
   static Function(Object error, StackTrace stack)? onError;
 
   // VARIABLES
+  static final keyState = <LogicalKeyboardKey, bool>{ };
   static final random = Random();
   static var textPainter = TextPainter(
       textAlign: TextAlign.center,
@@ -178,6 +179,7 @@ class Engine {
   static const GoldenRatio_0_618 = 0.61803398875;
   static const GoldenRatio_0_381 = 0.38196601125;
 
+
   // QUERIES
   static bool get keyPressedShiftLeft =>
       keyPressed(LogicalKeyboardKey.space);
@@ -186,21 +188,20 @@ class Engine {
       keyPressed(LogicalKeyboardKey.space);
 
   static bool keyPressed(LogicalKeyboardKey key) =>
-      keyboard.keysPressed.contains(key);
+      keyState[key] ?? false;
 
-  // INTERNAL FUNCTIONS
   static void _internalOnKeyboardEvent(RawKeyEvent event) {
     if (event is RawKeyDownEvent) {
+      keyState[event.logicalKey] = true;
       onKeyDown?.call(event);
       return;
     }
     if (event is RawKeyUpEvent) {
+      keyState[event.logicalKey] = false;
       onKeyUp?.call(event);
       return;
     }
   }
-
-
 
   static void _internalOnChangedMouseLeftDown(bool value){
     if (value) {
