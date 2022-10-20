@@ -1,13 +1,12 @@
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/quest.dart';
-import 'package:gamestream_flutter/game_state.dart';
+import 'package:gamestream_flutter/game_library.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/classes/weapon.dart';
 import 'package:gamestream_flutter/isometric/enums/game_dialog.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_game_dialog.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_map_x.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_npc_talk.dart';
-import 'package:gamestream_flutter/isometric/events/on_changed_player_alive.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_player_designed.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_player_message.dart';
 import 'package:gamestream_flutter/isometric/events/on_quests_in_progress_changed.dart';
@@ -48,7 +47,7 @@ class Player extends Vector3 {
   final message = Watch("", onChanged: onChangedPlayerMessage);
   var messageTimer = 0;
   final state = Watch(CharacterState.Idle, onChanged: Player.onPlayerCharacterStateChanged);
-  final alive = Watch(true, onChanged: onChangedPlayerAlive);
+  final alive = Watch(true, onChanged: GameEvents.onChangedPlayerAlive);
   final magic = Watch(0.0);
   final maxMagic = Watch(0.0);
   final wood = Watch(0);

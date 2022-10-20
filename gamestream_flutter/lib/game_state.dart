@@ -39,6 +39,8 @@ import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 
+import 'isometric/events/on_inventory_visible_changed.dart';
+
 class GameState {
 
 
@@ -117,6 +119,7 @@ class GameState {
   static final cameraModeWatch = Watch(CameraMode.Chase, onChanged: onCameraModeChanged);
   static CameraMode get cameraMode => cameraModeWatch.value;
 
+  static final inventoryVisible = Watch(false, onChanged: onInventoryVisibleChanged);
   // QUERIES
 
   static bool get playMode => !editMode;
@@ -1246,4 +1249,25 @@ class GameState {
   }
 
   static void toggleShadows () => gridShadows.value = !gridShadows.value;
+
+  static void actionGameDialogShowQuests() {
+    if (gameType.value != GameType.Dark_Age) return;
+
+    if (player.gameDialog.value == GameDialog.Quests){
+      player.gameDialog.value = null;
+      return;
+    }
+    player.gameDialog.value = GameDialog.Quests;
+  }
+
+  static void actionToggleInventoryVisible() => inventoryVisible.value = !inventoryVisible.value;
+
+  static void actionInventoryClose(){
+    inventoryVisible.value = false;
+  }
+
+  static void actionShowInventory(){
+    inventoryVisible.value = true;
+  }
+
 }

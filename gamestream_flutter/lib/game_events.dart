@@ -1,6 +1,6 @@
 
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/game_audio.dart';
+import 'package:gamestream_flutter/game_library.dart';
 
 class GameEvents {
   static void onWeaponTypeEquipped(int attackType, double x, double y, double z) {
@@ -10,6 +10,16 @@ class GameEvents {
         break;
       default:
         break;
+    }
+  }
+
+  static void onChangedStoreVisible(bool storeVisible){
+    GameState.inventoryVisible.value = storeVisible;
+  }
+
+  static void onChangedPlayerAlive(bool value) {
+    if (!value) {
+      GameState.actionInventoryClose();
     }
   }
 }

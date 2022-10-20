@@ -7,7 +7,6 @@ import 'package:gamestream_flutter/isometric/ui/controls/build_control_npc_talk.
 import 'package:gamestream_flutter/isometric/ui/controls/build_control_player_experience.dart';
 import 'package:gamestream_flutter/isometric/ui/controls/build_control_player_health.dart';
 import 'package:gamestream_flutter/isometric/ui/stacks/build_page.dart';
-import 'package:gamestream_flutter/isometric/watches/inventory_visible.dart';
 import 'package:gamestream_flutter/ui/builders/build_text_box.dart';
 import 'package:lemon_engine/engine.dart';
 
@@ -82,7 +81,7 @@ Widget buildWatchMouseTargetName(){
 }
 
 Widget buildWatchInventoryVisible(){
-  return watch(inventoryVisible, (bool inventoryVisible){
+  return watch(GameState.inventoryVisible, (bool inventoryVisible){
     if (!inventoryVisible) return const SizedBox();
     return watch(GameState.player.weapon.type, buildColumnPlayerWeapons);
   });

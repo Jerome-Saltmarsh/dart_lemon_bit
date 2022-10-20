@@ -2,7 +2,6 @@ import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/game_widgets.dart';
-import 'package:gamestream_flutter/isometric/actions/action_game_dialog_show_quests.dart';
 import 'package:gamestream_flutter/isometric/edit.dart';
 import 'package:gamestream_flutter/isometric/enums/editor_dialog.dart';
 import 'package:gamestream_flutter/isometric/events/on_visibility_changed_message_box.dart';
@@ -212,7 +211,7 @@ class GameUI {
             color: Colors.green,
             width: 200,
             margin: EdgeInsets.only(top: 16),
-            action: actionGameDialogShowQuests),
+            action: GameState.actionGameDialogShowQuests),
       );
 
   static Positioned buildTopRightMenu() =>

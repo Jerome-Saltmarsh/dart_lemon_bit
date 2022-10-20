@@ -5,6 +5,7 @@ import 'package:gamestream_flutter/game_library.dart';
 import 'package:gamestream_flutter/isometric/ui/dialogs/build_game_dialog_map.dart';
 import 'package:lemon_engine/engine.dart';
 
+
 class GameMapWidget extends StatelessWidget {
   var screenCenterX = 0.0;
   var screenCenterY = 0.0;

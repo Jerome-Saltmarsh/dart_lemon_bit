@@ -1,8 +1,6 @@
 
 import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/game_library.dart';
-import 'package:gamestream_flutter/isometric/actions/action_game_dialog_show_quests.dart';
-import 'package:gamestream_flutter/isometric/actions/action_toggle_inventory.dart';
 import 'package:gamestream_flutter/isometric/camera.dart';
 import 'package:gamestream_flutter/isometric/edit.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
@@ -34,9 +32,9 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
     if (key == PhysicalKeyboardKey.keyG)
       return GameNetwork.sendClientRequestTeleport();
     if (key == PhysicalKeyboardKey.keyI)
-      return actionToggleInventoryVisible();
+      return GameState.actionToggleInventoryVisible();
     if (key == PhysicalKeyboardKey.keyT)
-      return actionGameDialogShowQuests();
+      return GameState.actionGameDialogShowQuests();
     if (key == PhysicalKeyboardKey.keyM)
       return GameState.actionGameDialogShowMap();
     return;
