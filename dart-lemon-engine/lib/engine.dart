@@ -138,6 +138,8 @@ class Engine {
   static set backgroundColor(Color value) => watchBackgroundColor.value = value;
 
   // GETTERS
+  static double get screenDiagonalLength => calculateHypotenuse(screen.width, screen.height);
+  static double get screenArea => screen.width * screen.height;
   static WidgetBuilder? get buildUI => watchBuildUI.value;
   static String get title => watchTitle.value;
   static Color get backgroundColor => watchBackgroundColor.value;
@@ -550,7 +552,7 @@ class Engine {
       mouseLeftDownFrames++;
     }
     deviceType.value =
-      screen.width < 800 || screen.height < 800
+      screenArea < 400000
         ? DeviceType.Phone
         : DeviceType.Computer;
     onUpdate?.call();

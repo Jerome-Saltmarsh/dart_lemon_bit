@@ -26,8 +26,9 @@ class GameWebsite {
   static final download = Watch(0.0);
   static final debug = true;
   static final isVisibleDialogCustomRegion = Watch(false);
-
   static final colorRegion = Colors.orange;
+
+  static const Padding = 12.0;
 
   static void setError(String message){
     error.value = message;
@@ -111,47 +112,66 @@ class GameWebsite {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          buildTextButton("PLAY DARK-AGE", action: GameNetwork.connectToGameDarkAge),
+          buildTextButton("DARK-AGE", action: GameNetwork.connectToGameDarkAge),
           height24,
-          buildTextButton("PLAY FIRE-STORM", action: GameNetwork.connectToGameSkirmish),
+          buildTextButton("FIRE-STORM", action: GameNetwork.connectToGameSkirmish),
           height24,
-          buildTextButton("PLAY SAND-BOX", action: GameNetwork.connectToGameEditor),
+          buildTextButton("CASTLE-BUILDER", action: GameNetwork.connectToGameEditor),
         ],
       );
 
-  static Widget build({double padding = 6})  =>
-      Stack(
-        children: [
+  static Widget buildNotConnected()  => watch(Engine.deviceType, buildDevice);
+
+  static Widget buildDevice(int deviceType) =>
+    Stack(
+      children: [
+        Positioned(
+          top: Padding,
+          right: Padding,
+          child: buildTextVersion(),
+        ),
+        // Positioned(
+        //   bottom: Padding,
+        //   left: Padding,
+        //   child: text(deviceType == DeviceType.Computer ? 'Computer: ${Engine.screenArea}' : 'Mobile: ${Engine.screenArea}'),
+        // ),
+        Positioned(
+          top: Padding,
+          left: 180,
+          child: buildWatchBool(isVisibleDialogCustomRegion, buildInputCustomConnectionString),
+        ),
+        if (deviceType == DeviceType.Computer)
           Positioned(
-            top: padding,
-            right: padding,
-            child: buildTextVersion(),
-          ),
-          Positioned(
-            top: 0,
-            left: 180,
-            child: buildWatchBool(isVisibleDialogCustomRegion, buildInputCustomConnectionString),
-          ),
-          Positioned(
-            // top: padding,
             left: 32,
-            child: watch(GameWebsite.region, buildStateRegion),
-          ),
-          Positioned(
-            bottom: padding,
-            right: padding,
-            child: text("Created by Jerome Saltmarsh", color: GameColors.white618,
-                size: FontSize.Small),
-          ),
-          Positioned(
-            top: 0,
-            left: 0,
             child: buildFullscreen(
-              child: buildColumnGames(),
+              child: watch(GameWebsite.region, buildColumnRegions),
+              alignment: Alignment.centerLeft
             ),
-          )
-        ],
-      );
+          ),
+        if (deviceType == DeviceType.Phone)
+          Positioned(
+              top: Padding,
+              left: Padding,
+              child: watch(region, (Region region) => text(region.name, color: colorRegion))
+          ),
+        Positioned(
+          bottom: Padding,
+          right: Padding,
+          child: text(
+              "Created by Jerome Saltmarsh",
+              color: GameColors.white382,
+              size: FontSize.Small
+          ),
+        ),
+        Positioned(
+          top: Padding,
+          left: Padding,
+          child: buildFullscreen(
+            child: buildColumnGames(),
+          ),
+        )
+      ],
+    );
 
   static void onChangedRegion(Region region) {
     storage.saveRegion(region);
@@ -184,28 +204,29 @@ class GameWebsite {
         child: child,
       );
 
-  static Widget buildStateRegion(Region selectedRegion) => Container(
-    height: Engine.screen.height,
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: Region.values
-          .map((Region region) => Container(
-        margin: const EdgeInsets.symmetric(vertical: 4),
-        child: buildTextButton('Region ${enumString(region)}',
-          action: selectedRegion == region ? null : () => actionSelectRegion(region),
-          size: 18,
-          colorRegular: selectedRegion == region
-              ? colorRegion.withOpacity(0.54)
-              : colorRegion.withOpacity(0.24),
-          colorMouseOver: selectedRegion == region
-              ? colorRegion.withOpacity(0.54)
-              : colorRegion.withOpacity(0.39),
-        ),
-      ))
-          .toList(),
-    ),
-  );
+  static Widget buildColumnRegions(Region selectedRegion) =>
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: Region.values
+            .map((Region region) => Container(
+                  margin: const EdgeInsets.symmetric(vertical: 4),
+                  child: buildTextButton(
+                    'Region ${enumString(region)}',
+                    action: selectedRegion == region
+                        ? null
+                        : () => actionSelectRegion(region),
+                    size: 18,
+                    colorRegular: selectedRegion == region
+                        ? colorRegion.withOpacity(0.54)
+                        : colorRegion.withOpacity(0.24),
+                    colorMouseOver: selectedRegion == region
+                        ? colorRegion.withOpacity(0.54)
+                        : colorRegion.withOpacity(0.39),
+                  ),
+                ))
+            .toList(),
+      );
 
   static Widget buildInputCustomConnectionString() =>
       Container(
@@ -220,17 +241,15 @@ class GameWebsite {
         ),
       );
 
-  static Widget buildButtonSelectRegion(Region region){
-    return Container(
+  static Widget buildButtonSelectRegion(Region region) =>
+    Container(
         height: 50,
-        child: text(region.name, onPressed: () => actionSelectRegion(region)));
-  }
+        child: text(region.name, onPressed: () => actionSelectRegion(region))
+    );
 
-  static Widget buildTextVersion(){
-    return text(version, color: GameColors.white618, size: FontSize.Small);
-  }
+  static Widget buildTextVersion() =>
+    text(version, color: GameColors.white382, size: FontSize.Small);
 
-  static void actionSelectRegion(Region value) {
+  static void actionSelectRegion(Region value) =>
     GameWebsite.region.value = value;
-  }
 }

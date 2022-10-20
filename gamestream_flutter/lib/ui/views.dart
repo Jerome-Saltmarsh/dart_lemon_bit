@@ -46,7 +46,7 @@ Widget buildConnection(ConnectionStatus connection) {
     case ConnectionStatus.Connecting:
       return GameWebsite.buildPageConnectionStatus(connection.name);
     default:
-      return GameWebsite.build();
+      return GameWebsite.buildNotConnected();
   }
 }
 
