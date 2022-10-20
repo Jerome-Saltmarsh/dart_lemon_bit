@@ -15,6 +15,8 @@ import 'package:lemon_watch/watch.dart';
 import 'utils/mouse_raycast.dart';
 
 class EditState {
+  static final selectedSceneName = Watch<String?>(null);
+
   static final editTab = Watch(EditTab.Grid);
   static final gameObject = GameObject();
   static final gameObjectSelected = Watch(false);
@@ -202,4 +204,8 @@ class EditState {
   static void cursorColumnDecrease() => column--;
   static void cursorZIncrease() => z++;
   static void cursorZDecrease() => z--;
+
+  static void selectSceneName(String value){
+    selectedSceneName.value = value;
+  }
 }

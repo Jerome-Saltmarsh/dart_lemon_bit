@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/game_widgets.dart';
 import 'package:gamestream_flutter/isometric/actions/load_selected_scene_name.dart';
+import 'package:gamestream_flutter/isometric/edit.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_custom_game_names.dart';
-import 'package:gamestream_flutter/isometric/watches/selected_scene_name.dart';
 
 Widget buildGameDialogSceneLoad(){
    return Column(
@@ -25,7 +25,7 @@ Widget buildGameDialogSceneLoad(){
 }
 
 Widget buildButtonLoadSelectedSceneName() =>
-    watch(selectedSceneName, (t) {
+    watch(EditState.selectedSceneName, (t) {
       return text(
           "Load",
           onPressed: t == null ? null : loadSelectedSceneName,
@@ -34,7 +34,7 @@ Widget buildButtonLoadSelectedSceneName() =>
     });
 
 Widget buildButtonDeleteSelectedSceneName() =>
-    watch(selectedSceneName, (t) {
+    watch(EditState.selectedSceneName, (t) {
       return text(
           "Delete",
           onPressed: t == null ? null : loadSelectedSceneName,
