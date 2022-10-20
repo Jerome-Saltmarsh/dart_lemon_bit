@@ -583,6 +583,7 @@ class Engine {
   static final _colors1 = Int32List(1);
   static const _cos0 = 1;
   static const _sin0 = 0;
+  static late ui.Image _image;
 
   static void renderSprite({
     required ui.Image image,
@@ -596,8 +597,8 @@ class Engine {
     double anchorY = 0.5,
     double scale = 1.0,
     int color = 1,
-    // BlendMode blendMode = BlendMode.dstATop,
   }){
+    _image = image;
     _colors1[0] = color;
     _src4[0] = srcX;
     _src4[1] = srcY;
