@@ -8,7 +8,6 @@ import 'package:gamestream_flutter/isometric/ui/controls/build_control_player_ex
 import 'package:gamestream_flutter/isometric/ui/controls/build_control_player_health.dart';
 import 'package:gamestream_flutter/isometric/ui/stacks/build_page.dart';
 import 'package:gamestream_flutter/isometric/watches/inventory_visible.dart';
-import 'package:gamestream_flutter/styles.dart';
 import 'package:gamestream_flutter/ui/builders/build_text_box.dart';
 import 'package:lemon_engine/engine.dart';
 

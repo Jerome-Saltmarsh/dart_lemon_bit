@@ -6,8 +6,8 @@ import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/website/enums.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
 import 'package:gamestream_flutter/ui/style.dart';
-import 'package:gamestream_flutter/utils.dart';
 import 'package:lemon_watch/watch_builder.dart';
+
 
 final nameController = TextEditingController();
 
@@ -123,7 +123,7 @@ Widget buildTopMessage(){
             onPressed(
               action: AccountService.openStripeCheckout,
               child: text(
-                  "Your subscription expired on ${formatDate(account.subscriptionEndDate!)}",
+                  "Your subscription expired on ${GameWebsite.formatDate(account.subscriptionEndDate!)}",
                   color: GameColors.red),
             ),
             width16,
@@ -138,7 +138,7 @@ Widget buildTopMessage(){
         if (subscriptionEndDate != null){
           return margin(
             top: 10,
-              child:                   text("Premium subscription cancelled : ends ${formatDate(subscriptionEndDate)}", color: GameColors.white618,
+              child:                   text("Premium subscription cancelled : ends ${GameWebsite.formatDate(subscriptionEndDate)}", color: GameColors.white618,
                   onPressed: website.actions.showDialogAccount
               ));
         }

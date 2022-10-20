@@ -4,14 +4,12 @@ import 'package:gamestream_flutter/game_account.dart';
 import 'package:gamestream_flutter/game_colors.dart';
 import 'package:gamestream_flutter/game_website.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:gamestream_flutter/styles.dart';
-import 'package:gamestream_flutter/to_string.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
 import 'package:gamestream_flutter/ui/style.dart';
 import 'package:gamestream_flutter/ui/views.dart';
 import 'package:gamestream_flutter/ui/widgets.dart';
-import 'package:gamestream_flutter/utils.dart';
 import 'package:golden_ratio/constants.dart';
+import 'package:lemon_engine/engine.dart';
 
 import '../game_widgets.dart';
 
@@ -68,7 +66,7 @@ Widget buildDialogAccount(){
         height8,
         _buildRow("Email", account.email),
         height8,
-        _buildRow("Joined", formatDate(account.accountCreationDate)),
+        _buildRow("Joined", GameWebsite.formatDate(account.accountCreationDate)),
         height50,
         _buildSubscriptionPanel(account),
       ],
@@ -113,7 +111,7 @@ Widget _buildSubscriptionPanel(Account account){
           "Started",
           subscriptionStartDate == null
               ? "-"
-              : formatDate(subscriptionStartDate)),
+              : GameWebsite.formatDate(subscriptionStartDate)),
       height8,
       _buildRow(
           account.subscriptionActive
@@ -121,7 +119,7 @@ Widget _buildSubscriptionPanel(Account account){
               : account.subscriptionEnded
                   ? "Ended"
                   : "Ends",
-          subscriptionEndDate == null ? "-" : formatDate(subscriptionEndDate)),
+          subscriptionEndDate == null ? "-" : GameWebsite.formatDate(subscriptionEndDate)),
     ],
   ));
 }
@@ -244,7 +242,7 @@ Widget buildDialogSubscriptionStatus(){
     case SubscriptionStatus.Canceled:
       return buildDialogSubscriptionCancelled();
     default:
-      return buildDialogMessage("Premium subscription ${enumString(subscriptionStatus)}");
+      return buildDialogMessage("Premium subscription ${Engine.enumString(subscriptionStatus)}");
   }
 }
 
@@ -352,7 +350,7 @@ Widget buildDialogConfirmCancelSubscription(){
 }
 
 String formatSubscriptionStatus(value){
-  return value == SubscriptionStatus.Canceled ? "Cancelled" : enumString(value);
+  return value == SubscriptionStatus.Canceled ? "Cancelled" : Engine.enumString(value);
 }
 
 Widget buildButton(String value, Function action, {bool underline = false}){

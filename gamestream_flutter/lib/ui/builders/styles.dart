@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:gamestream_flutter/game_colors.dart';
-import 'package:gamestream_flutter/styles.dart';
+import 'package:gamestream_flutter/game_library.dart';
 
 final panelDecoration = BoxDecoration(
   color: GameColors.brownDark,

@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/game_library.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/ui/views.dart';
+import 'package:intl/intl.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch.dart';
 
-import 'to_string.dart';
 
 class GameWebsite {
   static final operationStatus = Watch(OperationStatus.None);
@@ -20,6 +20,11 @@ class GameWebsite {
   static final isVisibleDialogCustomRegion = Watch(false);
   static final colorRegion = Colors.orange;
   static const Padding = 12.0;
+  static final dateFormat = DateFormat(DateFormat.YEAR_MONTH_DAY);
+
+  static String formatDate(DateTime value){
+    return dateFormat.format(value.toLocal());
+  }
 
   static final websitePage = Watch(WebsitePage.Games);
 
@@ -236,7 +241,7 @@ class GameWebsite {
             .map((ConnectionRegion region) => Container(
                   margin: const EdgeInsets.symmetric(vertical: 4),
                   child: buildTextButton(
-                    'Region ${enumString(region)}',
+                    'Region ${Engine.enumString(region)}',
                     action: selectedRegion == region
                         ? null
                         : () => actionSelectRegion(region),

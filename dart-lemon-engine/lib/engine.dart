@@ -977,6 +977,14 @@ class Engine {
     return;
   }
 
+  static String enumString(dynamic value){
+    final text = value.toString();
+    final index = text.indexOf(".");
+    if (index == -1) return text;
+    return text.substring(index + 1, text.length).replaceAll("_", " ");
+  }
+
+
 }
 
 typedef CallbackOnScreenSizeChanged = void Function(

@@ -10,7 +10,6 @@ import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/isometric/watches/lightning.dart';
 import 'package:gamestream_flutter/isometric/watches/rain.dart';
-import 'package:gamestream_flutter/styles.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
 import 'package:lemon_watch/watch_builder.dart';
 

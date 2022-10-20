@@ -8,8 +8,6 @@ import 'package:gamestream_flutter/ui/dialogs.dart';
 import 'package:gamestream_flutter/ui/style.dart';
 import 'package:lemon_math/library.dart';
 
-import '../styles.dart';
-
 final closeDialogButton = button(
     "close",
     modules.website.actions.showDialogGames,
