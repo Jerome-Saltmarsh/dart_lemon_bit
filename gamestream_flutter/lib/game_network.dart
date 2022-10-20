@@ -83,19 +83,20 @@ class GameNetwork {
       connectToRegion(Website.region.value, '${gameType} $message');
 
   static Future sendClientRequestUpdate() async {
-    const updateIndex = 0;
-    updateBuffer[0] = updateIndex;
-
-    if (Engine.deviceIsComputer){
-      updateBuffer[1] = getKeyDirection();
-      updateBuffer[2] = !Game.edit.value && Engine.watchMouseLeftDown.value ? 1 : 0;
-      updateBuffer[3] = !Game.edit.value && Engine.mouseRightDown.value ? 1 : 0;
-      updateBuffer[4] = !Game.edit.value && GameIO.keyPressedSpace ? 1 : 0;
+    if (Engine.deviceIsComputer) {
+      applyUpdateBuffer(
+          direction: getKeyDirection(),
+          actionPrimary: !Game.edit.value && Engine.watchMouseLeftDown.value,
+          actionSecondary: false,
+          actionTertiary: false,
+      );
     } else {
-      updateBuffer[1] = Touchscreen.direction;
-      updateBuffer[2] = 0;
-      updateBuffer[3] = 0;
-      updateBuffer[4] = 0;
+      applyUpdateBuffer(
+        direction: Touchscreen.direction,
+        actionPrimary: false,
+        actionSecondary: false,
+        actionTertiary: false,
+      );
     }
     writeNumberToByteArray(number: Engine.mouseWorldX, list: updateBuffer, index: 5);
     writeNumberToByteArray(number: Engine.mouseWorldY, list: updateBuffer, index: 7);
@@ -104,6 +105,18 @@ class GameNetwork {
     writeNumberToByteArray(number: Engine.screen.right, list: updateBuffer, index: 13);
     writeNumberToByteArray(number: Engine.screen.bottom, list: updateBuffer, index: 15);
     sink.add(updateBuffer);
+  }
+
+  static applyUpdateBuffer({
+    required int direction,
+    required bool actionPrimary,
+    required bool actionSecondary,
+    required bool actionTertiary,
+  }){
+    updateBuffer[1] = direction;
+    updateBuffer[2] = actionPrimary ? 1 : 0;
+    updateBuffer[3] = actionSecondary ? 1 : 0;
+    updateBuffer[4] = actionTertiary ? 1 : 0;
   }
 
   static void connect({required String uri, required dynamic message}) {
@@ -190,6 +203,7 @@ class GameNetwork {
   static void onChangedConnectionStatus(ConnectionStatus connection) {
     switch (connection) {
       case ConnectionStatus.Connected:
+        GameIO.initGameListeners();
         Engine.onDrawCanvas = Game.renderCanvas;
         Engine.onDrawForeground = modules.game.render.renderForeground;
         Engine.onUpdate = Game.update;

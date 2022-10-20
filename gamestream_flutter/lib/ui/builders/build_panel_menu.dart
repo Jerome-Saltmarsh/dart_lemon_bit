@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/game.dart';
-import 'package:gamestream_flutter/game_ui.dart';
-import 'package:gamestream_flutter/game_widgets.dart';
+import 'package:gamestream_flutter/game_library.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
-import 'package:gamestream_flutter/game_system.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
-import '../../game_colors.dart';
 import 'build_time.dart';
 
 Widget buildPanelMenu() =>
@@ -27,7 +23,7 @@ Widget buildPanelMenu() =>
               action:  Engine.fullscreenToggle),
           onPressed(
               child: buildButtonExit(),
-              action: GameSystem.disconnect,
+              action: GameNetwork.disconnect,
           ),
         ]
     );
@@ -69,7 +65,7 @@ Widget buildButtonExit() =>
       srcY: 48,
       srcWidth: 48,
       srcHeight: 48,
-      action: GameSystem.disconnect,
+      action: GameNetwork.disconnect,
       scale: 0.75
   );
 

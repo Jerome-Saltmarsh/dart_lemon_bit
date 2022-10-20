@@ -49,11 +49,15 @@ class Engine {
   /// override safe
   static GestureLongPressCallback? onLongPress;
   /// override safe
+  static GestureLongPressDownCallback? onLongPressDown;
+  /// override safe
   static GestureDragStartCallback? onPanStart;
   /// override safe
   static GestureDragUpdateCallback? onPanUpdate;
   /// override safe
   static GestureDragEndCallback? onPanEnd;
+  /// override safe
+  static GestureTapDownCallback? onSecondaryTapDown;
   /// override safe
   static CallbackOnScreenSizeChanged? onScreenSizeChanged;
   /// override safe
@@ -299,12 +303,12 @@ class Engine {
       us.setPathUrlStrategy();
     }
     WidgetsFlutterBinding.ensureInitialized();
-    runZonedGuarded(Engine._internalInit, _internalOnError);
+    runZonedGuarded(_internalInit, _internalOnError);
   }
 
   static void _internalOnError(Object error, StackTrace stack) {
       if (onError != null){
-        onError!.call(error, stack);
+        onError?.call(error, stack);
         return;
       }
       print("Warning no Engine.onError handler set");
@@ -468,9 +472,17 @@ class Engine {
     onLongPress?.call();
   }
 
+  static void _internalOnLongPressDown(LongPressDownDetails details){
+    onLongPressDown?.call(details);
+  }
+
   static void _internalOnPanEnd(DragEndDetails details){
     panStarted = false;
     onPanEnd?.call(details);
+  }
+
+  static void _internalOnSecondaryTapDown(TapDownDetails details){
+    onSecondaryTapDown?.call(details);
   }
 
   static void _internalPaint(Canvas canvas, Size size) {
@@ -790,17 +802,19 @@ class Engine {
 
   static Widget _internalBuildCanvas(BuildContext context) {
     final child = Listener(
-      onPointerSignal: _internalOnPointerSignal,
       onPointerDown: _internalOnPointerDown,
+      onPointerMove: _internalOnPointerMove,
       onPointerUp: _internalOnPointerUp,
       onPointerHover: _internalOnPointerHover,
-      onPointerMove: _internalOnPointerMove,
+      onPointerSignal: _internalOnPointerSignal,
       child: GestureDetector(
           onTapDown: _internalOnTapDown,
           onLongPress: _internalOnLongPress,
+          onLongPressDown: _internalOnLongPressDown,
           onPanStart: _internalOnPanStart,
           onPanUpdate: _internalOnPanUpdate,
           onPanEnd: _internalOnPanEnd,
+          onSecondaryTapDown: _internalOnSecondaryTapDown,
           child: WatchBuilder(watchBackgroundColor, (Color backgroundColor){
             return Container(
                 color: backgroundColor,
