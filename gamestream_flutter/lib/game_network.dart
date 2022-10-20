@@ -5,9 +5,7 @@ import 'package:gamestream_flutter/enums/connection_status.dart';
 import 'package:gamestream_flutter/enums/region.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/game_io.dart';
-import 'package:gamestream_flutter/io/touchscreen.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
-import 'package:gamestream_flutter/isometric_web/read_player_input.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/website/website.dart';
 import 'package:lemon_engine/engine.dart';
@@ -83,21 +81,12 @@ class GameNetwork {
       connectToRegion(Website.region.value, '${gameType} $message');
 
   static Future sendClientRequestUpdate() async {
-    if (Engine.deviceIsComputer) {
-      applyUpdateBuffer(
-          direction: getKeyDirection(),
-          actionPrimary: !Game.edit.value && Engine.watchMouseLeftDown.value,
-          actionSecondary: false,
-          actionTertiary: false,
-      );
-    } else {
-      applyUpdateBuffer(
-        direction: Touchscreen.direction,
-        actionPrimary: false,
-        actionSecondary: false,
-        actionTertiary: false,
-      );
-    }
+    applyUpdateBuffer(
+      direction: GameIO.getDirection(),
+      actionPrimary: GameIO.getActionPrimary(),
+      actionSecondary: GameIO.getActionSecondary(),
+      actionTertiary: GameIO.getActionTertiary(),
+    );
     writeNumberToByteArray(number: Engine.mouseWorldX, list: updateBuffer, index: 5);
     writeNumberToByteArray(number: Engine.mouseWorldY, list: updateBuffer, index: 7);
     writeNumberToByteArray(number: Engine.screen.left, list: updateBuffer, index: 9);

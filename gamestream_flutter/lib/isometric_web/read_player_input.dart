@@ -1,6 +1,7 @@
 import 'package:bleed_common/library.dart';
 import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/game_io.dart';
 import 'package:gamestream_flutter/isometric/edit.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/watches/debug_visible.dart';
@@ -34,40 +35,40 @@ void readPlayerInputEdit() {
   // if (keyPressed(LogicalKeyboardKey.keyR)) {
   //   edit.nodeSelectedIndex.value = edit.nodeSelectedIndex.value;
   // }
-  if (getKeyDirection() != Direction.None) {
+  if (GameIO.getKeyDirection() != Direction.None) {
     actionSetModePlay();
   }
   return;
 }
 
-int getKeyDirection() {
-  final keysPressed = Engine.keyboard.keysPressed;
-
-  if (keysPressed.contains(LogicalKeyboardKey.keyW)) {
-    if (keysPressed.contains(LogicalKeyboardKey.keyD)) {
-      return Direction.East;
-    }
-    if (keysPressed.contains(LogicalKeyboardKey.keyA)) {
-      return Direction.North;
-    }
-    return Direction.North_East;
-  }
-
-  if (keysPressed.contains(LogicalKeyboardKey.keyS)) {
-    if (keysPressed.contains(LogicalKeyboardKey.keyD)) {
-      return Direction.South;
-    }
-    if (keysPressed.contains(LogicalKeyboardKey.keyA)) {
-      return Direction.West;
-    }
-    return Direction.South_West;
-  }
-  if (keysPressed.contains(LogicalKeyboardKey.keyA)) {
-    return Direction.North_West;
-  }
-  if (keysPressed.contains(LogicalKeyboardKey.keyD)) {
-    return Direction.South_East;
-  }
-  return Direction.None;
-}
+// int getKeyDirection() {
+//   final keysPressed = Engine.keyboard.keysPressed;
+//
+//   if (keysPressed.contains(LogicalKeyboardKey.keyW)) {
+//     if (keysPressed.contains(LogicalKeyboardKey.keyD)) {
+//       return Direction.East;
+//     }
+//     if (keysPressed.contains(LogicalKeyboardKey.keyA)) {
+//       return Direction.North;
+//     }
+//     return Direction.North_East;
+//   }
+//
+//   if (keysPressed.contains(LogicalKeyboardKey.keyS)) {
+//     if (keysPressed.contains(LogicalKeyboardKey.keyD)) {
+//       return Direction.South;
+//     }
+//     if (keysPressed.contains(LogicalKeyboardKey.keyA)) {
+//       return Direction.West;
+//     }
+//     return Direction.South_West;
+//   }
+//   if (keysPressed.contains(LogicalKeyboardKey.keyA)) {
+//     return Direction.North_West;
+//   }
+//   if (keysPressed.contains(LogicalKeyboardKey.keyD)) {
+//     return Direction.South_East;
+//   }
+//   return Direction.None;
+// }
 

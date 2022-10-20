@@ -2,7 +2,6 @@ import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/game.dart';
 import 'package:gamestream_flutter/game_widgets.dart';
-import 'package:gamestream_flutter/io/touchscreen.dart';
 import 'package:gamestream_flutter/isometric/actions/action_game_dialog_show_quests.dart';
 import 'package:gamestream_flutter/isometric/edit.dart';
 import 'package:gamestream_flutter/isometric/enums/editor_dialog.dart';
@@ -71,88 +70,88 @@ class GameUI {
             watch(Game.edit, buildPlayMode),
             buildWatchBool(debugVisible, buildHudDebug),
             // https://stackoverflow.com/questions/67147229/how-can-i-detect-multiple-touches-in-flutter
-            Positioned(
-                bottom: 0,
-                left: 0,
-                child: Builder(
-                    builder: (context) {
-                      const size = 150.0;
-                      const sizeThird = size / 3;
-                      return Container(
-                        width: size,
-                        height: size,
-                        color: Colors.orange,
-                        child: Stack(
-                          children: [
-                            Positioned(
-                                top: 0,
-                                left: sizeThird,
-                                child: onPressed(
-                                    action: () => Touchscreen.direction = Direction.North_East,
-                                    child: Container(width: sizeThird, height: sizeThird, color: Colors.blue,))
-                            ),
-                            Positioned(
-                                top: sizeThird,
-                                left: 0,
-                                child: container(width: sizeThird, height: sizeThird, color: Colors.blue, action: (){
-                                  Touchscreen.direction = Direction.North_West;
-                                })
-                            ),
-                            Positioned(
-                                top: sizeThird,
-                                right: 0,
-                                child: container(width: sizeThird, height: sizeThird, color: Colors.blue, action: (){
-                                  Touchscreen.direction = Direction.South_East;
-                                })
-                            ),
-                            Positioned(
-                                bottom: 0,
-                                left: sizeThird,
-                                child: container(width: sizeThird, height: sizeThird, color: Colors.blue, action: (){
-                                  Touchscreen.direction = Direction.South_West;
-                                })
-                            ),
-                            Positioned(
-                                bottom: sizeThird,
-                                left: sizeThird,
-                                child: container(width: sizeThird, height: sizeThird, color: Colors.green, action: (){
-                                  Touchscreen.direction = Direction.None;
-                                })
-                            ),
-                            Positioned(
-                                top: 0,
-                                left: 0,
-                                child: container(width: sizeThird, height: sizeThird, color: Colors.orange, action: (){
-                                  Touchscreen.direction = Direction.North;
-                                })
-                            ),
-                            Positioned(
-                                top: 0,
-                                right: 0,
-                                child: container(width: sizeThird, height: sizeThird, color: Colors.orange, action: (){
-                                  Touchscreen.direction = Direction.East;
-                                })
-                            ),
-                            Positioned(
-                                bottom: 0,
-                                right: 0,
-                                child: container(width: sizeThird, height: sizeThird, color: Colors.orange, action: (){
-                                  Touchscreen.direction = Direction.South;
-                                })
-                            ),
-                            Positioned(
-                                bottom: 0,
-                                left: 0,
-                                child: container(width: sizeThird, height: sizeThird, color: Colors.orange, action: (){
-                                  Touchscreen.direction = Direction.West;
-                                })
-                            ),
-                          ],
-                        ),
-                      );
-                    }
-                )
-            ),
+            // Positioned(
+            //     bottom: 0,
+            //     left: 0,
+            //     child: Builder(
+            //         builder: (context) {
+            //           const size = 150.0;
+            //           const sizeThird = size / 3;
+            //           return Container(
+            //             width: size,
+            //             height: size,
+            //             color: Colors.orange,
+            //             child: Stack(
+            //               children: [
+            //                 Positioned(
+            //                     top: 0,
+            //                     left: sizeThird,
+            //                     child: onPressed(
+            //                         action: () => Touchscreen.direction = Direction.North_East,
+            //                         child: Container(width: sizeThird, height: sizeThird, color: Colors.blue,))
+            //                 ),
+            //                 Positioned(
+            //                     top: sizeThird,
+            //                     left: 0,
+            //                     child: container(width: sizeThird, height: sizeThird, color: Colors.blue, action: (){
+            //                       Touchscreen.direction = Direction.North_West;
+            //                     })
+            //                 ),
+            //                 Positioned(
+            //                     top: sizeThird,
+            //                     right: 0,
+            //                     child: container(width: sizeThird, height: sizeThird, color: Colors.blue, action: (){
+            //                       Touchscreen.direction = Direction.South_East;
+            //                     })
+            //                 ),
+            //                 Positioned(
+            //                     bottom: 0,
+            //                     left: sizeThird,
+            //                     child: container(width: sizeThird, height: sizeThird, color: Colors.blue, action: (){
+            //                       Touchscreen.direction = Direction.South_West;
+            //                     })
+            //                 ),
+            //                 Positioned(
+            //                     bottom: sizeThird,
+            //                     left: sizeThird,
+            //                     child: container(width: sizeThird, height: sizeThird, color: Colors.green, action: (){
+            //                       Touchscreen.direction = Direction.None;
+            //                     })
+            //                 ),
+            //                 Positioned(
+            //                     top: 0,
+            //                     left: 0,
+            //                     child: container(width: sizeThird, height: sizeThird, color: Colors.orange, action: (){
+            //                       Touchscreen.direction = Direction.North;
+            //                     })
+            //                 ),
+            //                 Positioned(
+            //                     top: 0,
+            //                     right: 0,
+            //                     child: container(width: sizeThird, height: sizeThird, color: Colors.orange, action: (){
+            //                       Touchscreen.direction = Direction.East;
+            //                     })
+            //                 ),
+            //                 Positioned(
+            //                     bottom: 0,
+            //                     right: 0,
+            //                     child: container(width: sizeThird, height: sizeThird, color: Colors.orange, action: (){
+            //                       Touchscreen.direction = Direction.South;
+            //                     })
+            //                 ),
+            //                 Positioned(
+            //                     bottom: 0,
+            //                     left: 0,
+            //                     child: container(width: sizeThird, height: sizeThird, color: Colors.orange, action: (){
+            //                       Touchscreen.direction = Direction.West;
+            //                     })
+            //                 ),
+            //               ],
+            //             ),
+            //           );
+            //         }
+            //     )
+            // ),
           ],
         ),
       );
