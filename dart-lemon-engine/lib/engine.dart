@@ -1,4 +1,8 @@
 library lemon_engine;
+import 'dart:convert';
+
+import 'package:universal_html/html.dart';
+
 
 import 'dart:async';
 import 'dart:math';
@@ -951,6 +955,28 @@ class Engine {
     if (body == null) return;
     body.style.cursor = name;
   }
+
+  static void downloadString({
+    required String contents,
+    required String filename,
+  }) =>
+      downloadBytes(utf8.encode(contents), downloadName: filename);
+
+  static void downloadBytes(
+      List<int> bytes, {
+        required String downloadName,
+      }) {
+    final _base64 = base64Encode(bytes);
+    final anchor =
+    AnchorElement(href: 'data:application/octet-stream;base64,$_base64')
+      ..target = 'blank';
+    anchor.download = downloadName;
+    document.body?.append(anchor);
+    anchor.click();
+    anchor.remove();
+    return;
+  }
+
 }
 
 typedef CallbackOnScreenSizeChanged = void Function(

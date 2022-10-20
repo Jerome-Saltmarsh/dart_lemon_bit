@@ -13,7 +13,6 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'game_library.dart';
 import 'isometric/watches/scene_meta_data.dart';
-import 'isometric_web/download_file.dart';
 import 'isometric_web/register_isometric_web_controls.dart';
 
 class GameNetwork {
@@ -166,7 +165,7 @@ class GameNetwork {
     if (_response is String){
       if (_response.startsWith("scene:")){
         final contents = _response.substring(6, _response.length);
-        downloadString(contents: contents, filename: "hello.json");
+        Engine.downloadString(contents: contents, filename: "hello.json");
       }
       GameWebsite.error.value = _response;
       return;
