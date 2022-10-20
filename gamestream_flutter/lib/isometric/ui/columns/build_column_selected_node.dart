@@ -1,12 +1,11 @@
 
 import 'package:bleed_common/node_type.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/game_widgets.dart';
+import 'package:gamestream_flutter/game_library.dart';
 import 'package:gamestream_flutter/isometric/edit.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
-import 'package:gamestream_flutter/utils/widget_utils.dart';
 
 const _shiftX = 23.0;
 const _shiftY = 20.0;

@@ -7,7 +7,6 @@ import 'package:gamestream_flutter/modules/website/enums.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
 import 'package:gamestream_flutter/ui/style.dart';
 import 'package:gamestream_flutter/utils.dart';
-import 'package:gamestream_flutter/utils/widget_utils.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 final nameController = TextEditingController();

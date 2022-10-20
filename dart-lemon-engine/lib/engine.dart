@@ -915,6 +915,42 @@ class Engine {
 
   static double distanceFromMouse(double x, double y) =>
      calculateDistance(mouseWorldX, mouseWorldY, x, y);
+
+  static void requestPointerLock() {
+    var canvas = document.getElementById('canvas');
+    if (canvas != null) {
+      canvas.requestPointerLock();
+    }
+  }
+
+  static  void setDocumentTitle(String value){
+    document.title = value;
+  }
+
+
+  static void setFavicon(String filename){
+    final link = document.querySelector("link[rel*='icon']");
+    if (link == null) return;
+    print("setFavicon($filename)");
+    link.setAttribute("type", 'image/x-icon');
+    link.setAttribute("rel", 'shortcut icon');
+    link.setAttribute("href", filename);
+    document.getElementsByTagName('head')[0].append(link);
+  }
+
+  static void setCursorWait(){
+    setCursorByName('wait');
+  }
+
+  static void setCursorPointer(){
+    setCursorByName('default');
+  }
+
+  static void setCursorByName(String name){
+    final body = document.body;
+    if (body == null) return;
+    body.style.cursor = name;
+  }
 }
 
 typedef CallbackOnScreenSizeChanged = void Function(

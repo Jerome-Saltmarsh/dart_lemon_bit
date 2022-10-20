@@ -1,6 +1,5 @@
 
 import 'package:gamestream_flutter/game_audio.dart';
-import 'package:gamestream_flutter/utils/string_utils.dart';
 
 void onChangedNpcTalk(String? value){
   if (_talkVisible != isNullOrEmpty(value)){
@@ -9,6 +8,10 @@ void onChangedNpcTalk(String? value){
      }
   }
   _talkVisible = isNullOrEmpty(value);
+}
+
+bool isNullOrEmpty(String? value){
+  return value == null || value.isEmpty;
 }
 
 var _talkVisible = false;

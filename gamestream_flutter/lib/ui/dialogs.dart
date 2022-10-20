@@ -11,7 +11,6 @@ import 'package:gamestream_flutter/ui/style.dart';
 import 'package:gamestream_flutter/ui/views.dart';
 import 'package:gamestream_flutter/ui/widgets.dart';
 import 'package:gamestream_flutter/utils.dart';
-import 'package:gamestream_flutter/utils/widget_utils.dart';
 import 'package:golden_ratio/constants.dart';
 
 import '../game_widgets.dart';

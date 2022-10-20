@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/game_library.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/ui/style.dart';
-import 'package:gamestream_flutter/storage_service.dart';
+import 'package:gamestream_flutter/game_persistance.dart';
 import 'package:gamestream_flutter/ui/views.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch.dart';
@@ -280,8 +280,63 @@ class GameWebsite {
     GameWebsite.region.value = value;
 }
 
-
 enum WebsitePage {
    Games,
    Region,
 }
+
+typedef MouseOverBuilder = Widget Function(BuildContext context, bool mouseOver);
+
+Widget onMouseOver({
+  required MouseOverBuilder builder,
+  Function? onEnter,
+  Function? onExit
+}) {
+  return Builder(builder: (context) {
+    bool mouseOver = false;
+    return StatefulBuilder(builder: (BuildContext cont, StateSetter setState) {
+      return MouseRegion(
+          onEnter: (_) {
+            if (onEnter != null) onEnter();
+            setState(() {
+              mouseOver = true;
+            });
+          },
+          onExit: (_) {
+            if (onExit != null) onExit();
+            setState(() {
+              mouseOver = false;
+            });
+          },
+          child: builder(cont, mouseOver));
+    });
+  });
+}
+
+typedef HoverBuilder = Widget Function(bool hovering);
+
+Widget onHover(HoverBuilder builder, {
+  Function? onEnter,
+  Function? onExit
+}) {
+  return Builder(builder: (context) {
+    bool mouseOver = false;
+    return StatefulBuilder(builder: (BuildContext cont, StateSetter setState) {
+      return MouseRegion(
+          onEnter: (_) {
+            if (onEnter != null) onEnter();
+            setState(() {
+              mouseOver = true;
+            });
+          },
+          onExit: (_) {
+            if (onExit != null) onExit();
+            setState(() {
+              mouseOver = false;
+            });
+          },
+          child: builder(mouseOver));
+    });
+  });
+}
+

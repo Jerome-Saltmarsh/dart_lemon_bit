@@ -1,7 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/game_widgets.dart';
-import 'package:gamestream_flutter/utils/widget_utils.dart';
+import 'package:gamestream_flutter/game_library.dart';
 
 Widget container({
   dynamic child,
