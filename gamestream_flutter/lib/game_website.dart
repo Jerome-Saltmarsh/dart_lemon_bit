@@ -4,8 +4,6 @@ import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/game_library.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:gamestream_flutter/modules/ui/style.dart';
-import 'package:gamestream_flutter/game_persistance.dart';
 import 'package:gamestream_flutter/ui/views.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch.dart';
@@ -16,7 +14,7 @@ class GameWebsite {
   static final operationStatus = Watch(OperationStatus.None);
   static final error = Watch<String?>(null);
   static final account = Watch<Account?>(null, onChanged: onChangedAccount);
-  static final region = Watch(Region.LocalHost, onChanged: onChangedRegion);
+  static final region = Watch(ConnectionRegion.LocalHost, onChanged: onChangedRegion);
   static final download = Watch(0.0);
   static final debug = true;
   static final isVisibleDialogCustomRegion = Watch(false);
@@ -124,7 +122,7 @@ class GameWebsite {
       Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: Region.values.map((Region region) {
+        children: ConnectionRegion.values.map((ConnectionRegion region) {
           return Container(
               margin: const EdgeInsets.only(bottom: 16),
               child: text(region.name.replaceAll("_", " "), onPressed: (){
@@ -176,7 +174,7 @@ class GameWebsite {
               child:
               watch(websitePage, (WebsitePage page){
                   if (page == WebsitePage.Games){
-                    return watch(region, (Region region) => text(region.name, color: colorRegion, onPressed: () => websitePage.value = WebsitePage.Region));
+                    return watch(region, (ConnectionRegion region) => text(region.name, color: colorRegion, onPressed: () => websitePage.value = WebsitePage.Region));
                   } else {
                     return text("<- BACK", onPressed: toggleWebsitePage);
                   }
@@ -199,9 +197,9 @@ class GameWebsite {
       ],
     );
 
-  static void onChangedRegion(Region region) {
+  static void onChangedRegion(ConnectionRegion region) {
     storage.saveRegion(region);
-    isVisibleDialogCustomRegion.value = region == Region.Custom;
+    isVisibleDialogCustomRegion.value = region == ConnectionRegion.Custom;
   }
 
   static void onChangedAccount(Account? account) {
@@ -230,12 +228,12 @@ class GameWebsite {
         child: child,
       );
 
-  static Widget buildColumnRegions(Region selectedRegion) =>
+  static Widget buildColumnRegions(ConnectionRegion selectedRegion) =>
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
-        children: Region.values
-            .map((Region region) => Container(
+        children: ConnectionRegion.values
+            .map((ConnectionRegion region) => Container(
                   margin: const EdgeInsets.symmetric(vertical: 4),
                   child: buildTextButton(
                     'Region ${enumString(region)}',
@@ -267,7 +265,7 @@ class GameWebsite {
         ),
       );
 
-  static Widget buildButtonSelectRegion(Region region) =>
+  static Widget buildButtonSelectRegion(ConnectionRegion region) =>
     Container(
         height: 50,
         child: text(region.name, onPressed: () => actionSelectRegion(region))
@@ -276,7 +274,7 @@ class GameWebsite {
   static Widget buildTextVersion() =>
     text(version, color: GameColors.white382, size: FontSize.Small);
 
-  static void actionSelectRegion(Region value) =>
+  static void actionSelectRegion(ConnectionRegion value) =>
     GameWebsite.region.value = value;
 }
 

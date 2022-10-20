@@ -15,4 +15,6 @@ export 'game_widgets.dart';
 export 'game_enums.dart';
 export 'game_website.dart';
 export 'game_classes.dart';
+export 'game_assets.dart';
+export 'game_persistence.dart';
 

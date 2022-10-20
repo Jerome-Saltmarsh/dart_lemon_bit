@@ -11,7 +11,7 @@ class StorageService {
 
   bool get serverSaved => Engine.sharedPreferences.containsKey(_keys.server);
 
-  void saveRegion(Region value){
+  void saveRegion(ConnectionRegion value){
     SharedPreferences.getInstance().then((instance){
       instance.setInt('server', value.index);
     });

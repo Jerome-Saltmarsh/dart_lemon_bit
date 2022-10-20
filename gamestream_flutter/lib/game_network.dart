@@ -28,12 +28,12 @@ class GameNetwork {
   static DateTime? connectionEstablished;
   static var localhostPort = '8080';
 
-  static void connectToRegion(Region region, String message) {
-    if (region == Region.LocalHost) {
+  static void connectToRegion(ConnectionRegion region, String message) {
+    if (region == ConnectionRegion.LocalHost) {
       connectToServer('ws://localhost:$localhostPort', message);
       return;
     }
-    if (region == Region.Custom) {
+    if (region == ConnectionRegion.Custom) {
       print("connecting to custom server");
       print(website.state.customConnectionStrongController.text);
       connectToServer(
@@ -58,11 +58,11 @@ class GameNetwork {
   static String parseUrlHttpToWS(String url, {String port = '8080'}) =>
       url.replaceAll("https", "wss") + "/:$port";
 
-  static String getRegionConnectionString(Region region) {
+  static String getRegionConnectionString(ConnectionRegion region) {
     switch (region) {
-      case Region.Australia:
+      case ConnectionRegion.Australia:
         return Url_Sydney;
-      case Region.Singapore:
+      case ConnectionRegion.Singapore:
         return Url_Singapore;
       default:
         throw Exception('GameNetwork.getRegionConnectionString($region)');
@@ -194,7 +194,7 @@ class GameNetwork {
       case ConnectionStatus.Connected:
         GameIO.initGameListeners();
         Engine.onDrawCanvas = Game.renderCanvas;
-        Engine.onDrawForeground = modules.game.render.renderForeground;
+        Engine.onDrawForeground = null;
         Engine.onUpdate = Game.update;
         Engine.drawCanvasAfterUpdate = true;
         Engine.zoomOnScroll = true;

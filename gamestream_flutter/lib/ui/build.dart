@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/assets.dart';
 import 'package:gamestream_flutter/game_library.dart';
 
 final build = _Build();
@@ -53,39 +52,22 @@ class _Build {
 }
 
 
-Region detectRegion(){
+ConnectionRegion detectRegion(){
   print("detectRegion()");
   final timeZoneName = DateTime.now().timeZoneName.toLowerCase();
 
   if (timeZoneName.contains('australia')){
     print('australia detected');
-    return Region.Australia;
+    return ConnectionRegion.Australia;
   }
   if (timeZoneName.contains('new zealand')){
     print('australia detected');
-    return Region.Australia;
+    return ConnectionRegion.Australia;
   }
   if (timeZoneName.contains('european')){
-    return Region.Germany;
+    return ConnectionRegion.Germany;
   }
 
-  return Region.Australia;
+  return ConnectionRegion.Australia;
 }
 
-Widget buildTitle(){
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [
-      text("PLAY",
-          size: 60,
-          color: Colors.white,
-          family: Fonts.LibreBarcode39Text
-      ),
-      text("STREAM",
-        size: 60,
-        color: GameColors.red,
-        family: Fonts.LibreBarcode39Text,
-      ),
-    ],
-  );
-}

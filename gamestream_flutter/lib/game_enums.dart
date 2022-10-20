@@ -1,3 +1,5 @@
+import 'package:lemon_engine/engine.dart';
+
 enum ConnectionStatus {
   None,
   Connecting,
@@ -6,6 +8,18 @@ enum ConnectionStatus {
   Error,
   Failed_To_Connect,
   Invalid_Connection,
+}
+
+enum ConnectionRegion {
+  Australia,
+  Singapore,
+  Brazil,
+  Germany,
+  South_Korea,
+  USA_East,
+  USA_West,
+  LocalHost,
+  Custom,
 }
 
 enum OperationStatus {
@@ -21,14 +35,10 @@ enum OperationStatus {
   Saving_Map,
 }
 
-enum Region {
-  Australia,
-  Singapore,
-  Brazil,
-  Germany,
-  South_Korea,
-  USA_East,
-  USA_West,
-  LocalHost,
-  Custom,
+class FontSize {
+  static const VerySmall = Regular * Engine.GoldenRatio_0_381;
+  static const Small = Regular * Engine.GoldenRatio_0_618;
+  static const Regular = 18.0;
+  static const Large = Regular * Engine.GoldenRatio_1_381;
+  static const VeryLarge = Large * Engine.GoldenRatio_1_618;
 }
