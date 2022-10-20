@@ -1,12 +1,7 @@
 
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/enums/connection_status.dart';
-import 'package:gamestream_flutter/game_account.dart';
-import 'package:gamestream_flutter/game_colors.dart';
-import 'package:gamestream_flutter/game_ui.dart';
-import 'package:gamestream_flutter/game_website.dart';
-import 'package:gamestream_flutter/game_widgets.dart';
+import 'package:gamestream_flutter/game_library.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/website/enums.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
