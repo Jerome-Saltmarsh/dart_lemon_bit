@@ -6,14 +6,14 @@ import 'package:lemon_engine/engine.dart';
 
 class GameImages {
    static late Image pixel;
-   static late Image mapAtlas;
-   static late Image blocks;
+   static late Image minimap;
+   static late Image nodes;
    static late Image characters;
    static late Image projectiles;
    static late Image zombie;
-   static late Image templateShadow;
    static late Image gameobjects;
    static late Image particles;
+   static late Image template_shadow;
 
    static late Image template_head_plain;
    static late Image template_head_rogue;
@@ -124,9 +124,9 @@ class GameImages {
       gameobjects = await Engine.loadImageAsset('images/atlas-gameobjects.png');
       particles = await Engine.loadImageAsset('images/atlas-particles.png');
       projectiles = await Engine.loadImageAsset('images/atlas-projectiles.png');
-      templateShadow = await Engine.loadImageAsset('images/template/template-shadow.png');
-      mapAtlas = await Engine.loadImageAsset('images/atlas-map.png');
-      blocks = await Engine.loadImageAsset('images/atlas-blocks.png');
+      template_shadow = await Engine.loadImageAsset('images/template/template-shadow.png');
+      minimap = await Engine.loadImageAsset('images/atlas-map.png');
+      nodes = await Engine.loadImageAsset('images/atlas-blocks.png');
 
       template_head_plain = await Engine.loadImageAsset('images/template/head/template-head-plain.png');
       template_head_rogue = await Engine.loadImageAsset('images/template/head/template-head-rogue.png');

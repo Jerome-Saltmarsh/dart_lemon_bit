@@ -50,7 +50,7 @@ Widget buildAtlasImage({
       paint: (Canvas canvas, Size size) =>
         Engine.renderExternalCanvas(
           canvas: canvas,
-          image: GameImages.mapAtlas,
+          image: GameImages.minimap,
           srcX: srcX,
           srcY: srcY,
           srcWidth: srcWidth,

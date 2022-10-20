@@ -1130,7 +1130,7 @@ class GameRender {
     final shadowZ = character.z;
 
     Engine.renderSprite(
-      image: GameImages.templateShadow,
+      image: GameImages.template_shadow,
       srcX: frameLegs * 64,
       srcY: upperBodyDirection * 64,
       srcWidth: 64,

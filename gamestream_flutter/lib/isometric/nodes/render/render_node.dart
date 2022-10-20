@@ -245,14 +245,6 @@ void renderNodeAt() {
 }
 
 void renderNodeTypeGrass() {
-  // final renderNodeInFront = renderNodeIndex + nodesArea + nodesArea + nodesTotalColumns + 1;
-  //
-  // if (renderNodeInFront < nodesTotal){
-  //   if (nodesOrientation[renderNodeInFront] == NodeOrientation.Solid){
-  //     // return;
-  //   }
-  // }
-
   switch (GameState.nodesOrientation[GameRender.currentNodeIndex]) {
     case NodeOrientation.Solid:
       return renderStandardNode(

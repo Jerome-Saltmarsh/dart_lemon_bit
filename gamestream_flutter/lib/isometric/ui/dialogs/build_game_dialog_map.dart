@@ -73,7 +73,7 @@ void mapCameraCenter(double x, double y){
 void renderMapTile(Canvas canvas, MapTile value){
   Engine.renderExternalCanvas(
     canvas: canvas,
-    image: GameImages.mapAtlas,
+    image: GameImages.minimap,
     srcX: mapTileSize * value.srcIndex,
     srcY: 0,
     srcWidth: mapTileSize,

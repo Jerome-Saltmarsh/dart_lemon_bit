@@ -1,10 +1,9 @@
 
 import 'dart:typed_data';
-import 'dart:ui';
 
-import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/game_images.dart';
 import 'package:gamestream_flutter/game_render.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:lemon_engine/engine.dart';
 
 import 'render_constants.dart';
@@ -24,14 +23,14 @@ void renderStandardNode({
   int color = 1,
 }){
   GameRender.onscreenNodes++;
-  _colors[0] = color;
+  // _colors[0] = color;
   _src[0] = srcX;
   _src[1] = srcY;
   _src[2] = srcX + spriteWidth;
   _dst[2] = GameRender.currentNodeDstX - spriteWidthHalf;
   _src[3] = srcY + spriteHeight;
   _dst[3] = GameRender.currentNodeDstY - spriteHeightThird;
-  Engine.canvas.drawRawAtlas(GameImages.blocks, _dst, _src, _colors, BlendMode.dstATop, null, Engine.paint);
+  Engine.canvas.drawRawAtlas(GameImages.nodes, _dst, _src, null, null, null, Engine.paint);
 }
 
 void renderStandardNodeShaded({
@@ -46,7 +45,7 @@ void renderStandardNodeShaded({
   _dst[2] = GameRender.currentNodeDstX - spriteWidthHalf;
   _src[3] = srcY + spriteHeight;
   _dst[3] = GameRender.currentNodeDstY - spriteHeightThird;
-  Engine.canvas.drawRawAtlas(GameImages.blocks, _dst, _src, _colors, BlendMode.dstATop, null, Engine.paint);
+  Engine.canvas.drawRawAtlas(GameImages.nodes, _dst, _src, _colors, Engine.bufferBlendMode, null, Engine.paint);
 }
 
 void renderStandardNodeHalfEast({
@@ -62,7 +61,7 @@ void renderStandardNodeHalfEast({
   _dst[2] = GameRender.currentNodeDstX - spriteWidthHalf + 17;
   _src[3] = srcY + spriteHeight;
   _dst[3] = GameRender.currentNodeDstY - spriteHeightThird - 17;
-  Engine.canvas.drawRawAtlas(GameImages.blocks, _dst, _src, _colors, BlendMode.dstATop, null, Engine.paint);
+  Engine.canvas.drawRawAtlas(GameImages.nodes, _dst, _src, _colors, Engine.bufferBlendMode, null, Engine.paint);
 }
 
 void renderStandardNodeHalfNorth({
@@ -78,7 +77,7 @@ void renderStandardNodeHalfNorth({
   _dst[2] = GameRender.currentNodeDstX - spriteWidthHalf - 17;
   _src[3] = srcY + spriteHeight;
   _dst[3] = GameRender.currentNodeDstY - spriteHeightThird - 17;
-  Engine.canvas.drawRawAtlas(GameImages.blocks, _dst, _src, _colors, BlendMode.dstATop, null, Engine.paint);
+  Engine.canvas.drawRawAtlas(GameImages.nodes, _dst, _src, _colors, Engine.bufferBlendMode, null, Engine.paint);
 }
 
 
@@ -103,5 +102,5 @@ void renderAdvanced({
   _dst[2] = dstX - width * anchorX;
   _src[3] = srcY + spriteHeight;
   _dst[3] = dstY - height * anchorY;
-  Engine.canvas.drawRawAtlas(GameImages.blocks, _dst, _src, _colors, BlendMode.dstATop, null, Engine.paint);
+  Engine.canvas.drawRawAtlas(GameImages.nodes, _dst, _src, _colors, Engine.bufferBlendMode, null, Engine.paint);
 }

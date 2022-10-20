@@ -43,7 +43,7 @@ class GameWebsite {
           dstY: 100,
       );
       Engine.renderSprite(
-        image: GameImages.blocks,
+        image: GameImages.nodes,
         srcX: 0,
         srcY: 0,
         srcWidth: 48,
