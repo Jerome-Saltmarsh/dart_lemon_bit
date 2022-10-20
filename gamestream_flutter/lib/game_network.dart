@@ -13,7 +13,6 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'game_library.dart';
 import 'isometric/watches/scene_meta_data.dart';
-import 'isometric_web/register_isometric_web_controls.dart';
 
 class GameNetwork {
   static const Url_Sydney = "https://gamestream-ws-australia-osbmaezptq-ts.a.run.app";
@@ -201,7 +200,8 @@ class GameNetwork {
         if (!Engine.isLocalHost) {
           Engine.fullScreenEnter();
         }
-        isometricWebControlsRegister();
+        Engine.onKeyDown = GameIO.onRawKeyDownEvent;
+        Engine.onLeftClicked = GameIO.onMouseClickedLeft;
         break;
 
       case ConnectionStatus.Done:
@@ -215,7 +215,6 @@ class GameNetwork {
         GameState.clear();
         GameState.gameType.value = null;
         sceneEditable.value = false;
-        isometricWebControlsDeregister();
         break;
       case ConnectionStatus.Failed_To_Connect:
         GameWebsite.error.value = "Failed to connect";

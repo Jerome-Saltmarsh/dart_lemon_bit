@@ -16,7 +16,6 @@ import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:lemon_watch/watch_builder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:universal_html/html.dart';
 import 'package:url_strategy/url_strategy.dart' as us;
 
 /// boilerplate code for game development
@@ -133,8 +132,8 @@ class Engine {
   static final notifierPaintForeground = ValueNotifier<int>(0);
   static final screen = _Screen();
   static final camera = Vector2(0, 0);
-  static Function(LogicalKeyboardKey key)? onKeyDown;
-  static Function(LogicalKeyboardKey key)? onKeyUp;
+  static Function(RawKeyDownEvent key)? onKeyDown;
+  static Function(RawKeyUpEvent key)? onKeyUp;
 
   // SETTERS
   static set buildUI(WidgetBuilder? value) => watchBuildUI.value = value;
@@ -180,6 +179,11 @@ class Engine {
   static const GoldenRatio_0_381 = 0.38196601125;
 
   // QUERIES
+  static bool get keyPressedShiftLeft =>
+      keyPressed(LogicalKeyboardKey.space);
+
+  static bool get keyPressedSpace =>
+      keyPressed(LogicalKeyboardKey.space);
 
   static bool keyPressed(LogicalKeyboardKey key) =>
       keyboard.keysPressed.contains(key);
@@ -187,16 +191,16 @@ class Engine {
   // INTERNAL FUNCTIONS
   static void _internalOnKeyboardEvent(RawKeyEvent event) {
     if (event is RawKeyDownEvent) {
-      // keyPressedHandlers[event.logicalKey]?.call();
-      onKeyDown?.call(event.logicalKey);
+      onKeyDown?.call(event);
       return;
     }
     if (event is RawKeyUpEvent) {
-      // keyReleasedHandlers[event.logicalKey]?.call();
-      onKeyUp?.call(event.logicalKey);
+      onKeyUp?.call(event);
       return;
     }
   }
+
+
 
   static void _internalOnChangedMouseLeftDown(bool value){
     if (value) {
