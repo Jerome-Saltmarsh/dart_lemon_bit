@@ -35,14 +35,12 @@ void renderNodeBauHaus() {
       renderStandardNode(
         srcX: AtlasSrcX.Node_Bau_Haus_Half_South_X,
         srcY: AtlasSrcX.Node_Bau_Haus_Half_South_Y,
-        color: renderNodeColor,
       );
       break;
     case NodeOrientation.Half_West:
       renderStandardNode(
         srcX: AtlasSrcX.Node_Bau_Haus_Half_South_X,
         srcY: AtlasSrcX.Node_Bau_Haus_Half_South_Y,
-        color: renderNodeColor,
       );
       break;
     case NodeOrientation.Corner_Top:

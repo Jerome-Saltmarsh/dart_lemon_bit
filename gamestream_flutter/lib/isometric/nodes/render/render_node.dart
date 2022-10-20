@@ -2,6 +2,7 @@
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/node_size.dart';
+import 'package:gamestream_flutter/game_images.dart';
 import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/game_render.dart';
 import 'package:gamestream_flutter/isometric/animation_frame.dart';
@@ -11,6 +12,7 @@ import 'package:gamestream_flutter/isometric/nodes/render/render_node_bau_haus.d
 import 'package:gamestream_flutter/isometric/nodes/render/render_node_wood.dart';
 import 'package:gamestream_flutter/isometric/variables/src_x_rain_falling.dart';
 import 'package:gamestream_flutter/isometric/variables/src_x_rain_landing.dart';
+import 'package:lemon_engine/engine.dart';
 
 import 'render_constants.dart';
 import 'render_node_plain.dart';
@@ -57,7 +59,6 @@ void renderNodeAt() {
           return renderStandardNode(
             srcX: 8801,
             srcY: srcY,
-            color: renderNodeColor,
           );
         }
     }
@@ -73,40 +74,44 @@ void renderNodeAt() {
       renderNodeTorch();
       break;
     case NodeType.Water:
-      return renderAdvanced(
-        dstX: GameRender.currentNodeDstX,
-        dstY: GameRender.currentNodeDstY + animationFrameWaterHeight + 14,
+      Engine.renderSprite(
+        image: GameImages.nodes,
         srcX: AtlasSrcX.Node_Water_X,
         srcY: AtlasSrcX.Node_Water_Y + (((animationFrameWater + ((GameRender.currentNodeRow + GameRender.currentNodeColumn) * 3)) % 10) * 72.0),
-        width: spriteWidth,
-        height: spriteHeight,
+        srcWidth: spriteWidth,
+        srcHeight: spriteHeight,
+        dstX: GameRender.currentNodeDstX,
+        dstY: GameRender.currentNodeDstY + animationFrameWaterHeight + 14,
         anchorY: 0.3334,
         color: renderNodeColor,
       );
+      break;
+
     case NodeType.Tree_Bottom:
-      return renderAdvanced(
-        dstX: GameRender.currentNodeDstX,
-        dstY: GameRender.currentNodeDstY,
+      Engine.renderSprite(
+        image: GameImages.nodes,
         srcX: AtlasSrcX.Node_Tree_Bottom_X,
         srcY: AtlasSrcX.Node_Tree_Bottom_Y,
-        width: AtlasSrcX.Node_Tree_Bottom_Width,
-        height: AtlasSrcX.Node_Tree_Bottom_Height,
-        anchorY: 0.5,
+        srcWidth: AtlasSrcX.Node_Tree_Bottom_Width,
+        srcHeight: AtlasSrcX.Node_Tree_Bottom_Height,
+        dstX: GameRender.currentNodeDstX,
+        dstY: GameRender.currentNodeDstY,
         color: renderNodeBelowColor,
       );
+      break;
     case NodeType.Tree_Top:
       var shift = treeAnimation[((GameRender.currentNodeRow - GameRender.currentNodeColumn) + animationFrame) % treeAnimation.length] * renderNodeWind;
-      renderAdvanced(
-        dstX: GameRender.currentNodeDstX + (shift * 0.5),
-        dstY: GameRender.currentNodeDstY,
+      Engine.renderSprite(
+        image: GameImages.nodes,
         srcX: AtlasSrcX.Node_Tree_Top_X,
         srcY: AtlasSrcX.Node_Tree_Top_Y,
-        width: AtlasSrcX.Node_Tree_Top_Width,
-        height: AtlasSrcX.Node_Tree_Top_Height,
-        anchorY: 0.5,
+        srcWidth: AtlasSrcX.Node_Tree_Top_Width,
+        srcHeight: AtlasSrcX.Node_Tree_Top_Height,
+        dstX: GameRender.currentNodeDstX + (shift * 0.5),
+        dstY: GameRender.currentNodeDstY,
         color: getRenderLayerColor(-2),
       );
-      return;
+      break;;
     case NodeType.Grass_Long:
       switch (GameState.nodesWind[GameRender.currentNodeIndex]) {
         case windIndexCalm:

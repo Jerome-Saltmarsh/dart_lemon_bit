@@ -1,42 +1,46 @@
 
 import 'package:bleed_common/wind.dart';
+import 'package:gamestream_flutter/game_library.dart';
 import 'package:gamestream_flutter/game_render.dart';
 import 'package:gamestream_flutter/isometric/animation_frame.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_x.dart';
 import 'package:gamestream_flutter/isometric/watches/torches_ignited.dart';
+import 'package:lemon_engine/engine.dart';
 
-import 'render_standard_node.dart';
 
 void renderNodeTorch(){
   if (!torchesIgnited.value) {
-    renderAdvanced(
-        srcX: AtlasSrcX.Node_Torch_X,
-        srcY: AtlasSrcX.Node_Torch_Y,
-        dstX: GameRender.currentNodeDstX,
-        dstY: GameRender.currentNodeDstY,
-        width: AtlasSrcX.Node_Torch_Width,
-        height: AtlasSrcX.Node_Torch_Height,
+    Engine.renderSprite(
+      image: GameImages.nodes,
+      srcX: AtlasSrcX.Node_Torch_X,
+      srcY: AtlasSrcX.Node_Torch_Y,
+      srcWidth: AtlasSrcX.Node_Torch_Width,
+      srcHeight: AtlasSrcX.Node_Torch_Height,
+      dstX: GameRender.currentNodeDstX,
+      dstY: GameRender.currentNodeDstY,
     );
     return;
   }
   if (renderNodeWind == Wind.Calm){
-    renderAdvanced(
+    Engine.renderSprite(
+      image: GameImages.nodes,
       srcX: AtlasSrcX.Node_Torch_X,
       srcY: AtlasSrcX.Node_Torch_Y + AtlasSrcX.Node_Torch_Height + (((GameRender.currentNodeRow + (animationFrame)) % 6) * AtlasSrcX.Node_Torch_Height),
+      srcWidth: AtlasSrcX.Node_Torch_Width,
+      srcHeight: AtlasSrcX.Node_Torch_Height,
       dstX: GameRender.currentNodeDstX,
       dstY: GameRender.currentNodeDstY,
-      width: AtlasSrcX.Node_Torch_Width,
-      height: AtlasSrcX.Node_Torch_Height,
     );
     return;
   }
-  renderAdvanced(
+  Engine.renderSprite(
+    image: GameImages.nodes,
     srcX: AtlasSrcX.Node_Torch_Windy_X,
     srcY: AtlasSrcX.Node_Torch_Windy_Y + AtlasSrcX.Node_Torch_Height + (((GameRender.currentNodeRow + (animationFrame)) % 6) * AtlasSrcX.Node_Torch_Height),
+    srcWidth: AtlasSrcX.Node_Torch_Width,
+    srcHeight: AtlasSrcX.Node_Torch_Height,
     dstX: GameRender.currentNodeDstX,
     dstY: GameRender.currentNodeDstY,
-    width: AtlasSrcX.Node_Torch_Width,
-    height: AtlasSrcX.Node_Torch_Height,
   );
   return;
 }
