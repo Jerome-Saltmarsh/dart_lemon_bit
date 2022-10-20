@@ -8,7 +8,6 @@ import 'package:gamestream_flutter/game_config.dart';
 import 'package:gamestream_flutter/game_images.dart';
 import 'package:gamestream_flutter/game_render.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
-import 'package:gamestream_flutter/modules/game/render_rotated.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 
@@ -30,15 +29,15 @@ void renderArrow(double x, double y, double z, double angle) {
   const pi3Quarters = piQuarter * 3;
   x += getAdjacent(angle, 30);
   y += getOpposite(angle, 30);
-  renderRotated(
-    dstX: projectX(x, y),
-    dstY: projectY(x, y, z),
-    srcX: 128,
-    srcY: 0,
-    srcWidth: 32,
-    srcHeight: 32,
-    rotation: angle + pi3Quarters,
-  );
+  // renderRotated(
+  //   dstX: projectX(x, y),
+  //   dstY: projectY(x, y, z),
+  //   srcX: 128,
+  //   srcY: 0,
+  //   srcWidth: 32,
+  //   srcHeight: 32,
+  //   rotation: angle + pi3Quarters,
+  // );
 }
 
 bool weaponIs96(int weapon) =>
