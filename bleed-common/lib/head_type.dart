@@ -17,11 +17,11 @@ class HeadType {
    ];
    
    static String getName(int type) => <int, String> {
-      None: "None",
-      Steel_Helm: "Steel Helm",
-      Rogues_Hood: "Rogues Hood",
-      Wizards_Hat: "Wizards Hat",
-      Blonde: "Blonde",
-      Swat: "Swat",
+      None: 'None',
+      Steel_Helm: 'Steel Helm',
+      Rogues_Hood: 'Rogues Hood',
+      Wizards_Hat: 'Wizards Hat',
+      Blonde: 'Blonde',
+      Swat: 'Swat',
    }[type]!;
 }

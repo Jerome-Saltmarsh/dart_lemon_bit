@@ -36,7 +36,7 @@ CardGenre getCardTypeGenre(CardType cardType) {
     CardType.Passive_Increase_Damage_2: CardGenre.Passive,
     CardType.Ability_Fireball: CardGenre.Ability,
   }[cardType];
-  if(genre == null) throw Exception("$cardType does not have a card genre");
+  if(genre == null) throw Exception('$cardType does not have a card genre');
   return genre;
 }
 
@@ -90,15 +90,15 @@ const cardTypeBowPassives = <CardType> [
 
 String getCardTypeName(CardType value) {
    return const <CardType, String> {
-      CardType.Ability_Bow_Freeze: "Freeze Arrow",
-      CardType.Ability_Bow_Fire: "Fire Arrow",
-      CardType.Ability_Bow_Volley: "Volley",
-      CardType.Ability_Bow_Long_Shot: "Long Shot",
-      CardType.Passive_General_Max_HP_10: "Breast Plate",
-      CardType.Passive_General_Critical_Hit: "Critical Hit",
-      CardType.Passive_Bow_Run_Speed: "Feather Boots",
-      CardType.Ability_Explosion: "Explode",
-      CardType.Ability_Fireball: "Fireball",
+      CardType.Ability_Bow_Freeze: 'Freeze Arrow',
+      CardType.Ability_Bow_Fire: 'Fire Arrow',
+      CardType.Ability_Bow_Volley: 'Volley',
+      CardType.Ability_Bow_Long_Shot: 'Long Shot',
+      CardType.Passive_General_Max_HP_10: 'Breast Plate',
+      CardType.Passive_General_Critical_Hit: 'Critical Hit',
+      CardType.Passive_Bow_Run_Speed: 'Feather Boots',
+      CardType.Ability_Explosion: 'Explode',
+      CardType.Ability_Fireball: 'Fireball',
    }[value] ?? value.name;
 }
 

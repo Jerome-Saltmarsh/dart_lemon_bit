@@ -9,12 +9,12 @@ class LegType {
 
    static String getName(int type){
       return <int, String> {
-         brown: "Brown",
-         blue: "Blue",
-         red: "Red",
-         green: "Green",
-         white: "White",
-         white: "Swat",
+         brown: 'Brown',
+         blue: 'Blue',
+         red: 'Red',
+         green: 'Green',
+         white: 'White',
+         swat: 'Swat',
       }[type]!;
    }
    

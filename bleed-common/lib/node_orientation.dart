@@ -85,30 +85,30 @@ class NodeOrientation {
        valuesSlopeCornerOuter.contains(value);
 
    static String getName(int value) => {
-         None: "None",
-         Slope_North: "Slope North",
-         Slope_East: "Slope East",
-         Slope_South: "Slope South",
-         Slope_West: "Slope West",
-         Corner_Top: "Corner Top",
-         Corner_Right: "Corner Right",
-         Corner_Bottom: "Corner Bottom",
-         Corner_Left: "Corner Left",
-         Solid: "Solid",
-         Half_North: "Half North",
-         Half_East: "Half East",
-         Half_South: "Half South",
-         Half_West: "Half West",
-         Slope_Inner_North_East: "Slope Inner North-East",
-         Slope_Inner_South_East: "Slope Inner South-East",
-         Slope_Inner_South_West: "Slope Inner South-West",
-         Slope_Inner_North_West: "Slope Inner North-West",
-         Slope_Outer_North_East: "Slope Outer North-East",
-         Slope_Outer_South_East: "Slope Outer South-East",
-         Slope_Outer_South_West: "Slope Outer South-West",
-         Slope_Outer_North_West: "Slope Outer North-West",
-         Radial: "Radial",
-   }[value] ?? "unknown: $value";
+         None: 'None',
+         Slope_North: 'Slope North',
+         Slope_East: 'Slope East',
+         Slope_South: 'Slope South',
+         Slope_West: 'Slope West',
+         Corner_Top: 'Corner Top',
+         Corner_Right: 'Corner Right',
+         Corner_Bottom: 'Corner Bottom',
+         Corner_Left: 'Corner Left',
+         Solid: 'Solid',
+         Half_North: 'Half North',
+         Half_East: 'Half East',
+         Half_South: 'Half South',
+         Half_West: 'Half West',
+         Slope_Inner_North_East: 'Slope Inner North-East',
+         Slope_Inner_South_East: 'Slope Inner South-East',
+         Slope_Inner_South_West: 'Slope Inner South-West',
+         Slope_Inner_North_West: 'Slope Inner North-West',
+         Slope_Outer_North_East: 'Slope Outer North-East',
+         Slope_Outer_South_East: 'Slope Outer South-East',
+         Slope_Outer_South_West: 'Slope Outer South-West',
+         Slope_Outer_North_West: 'Slope Outer North-West',
+         Radial: 'Radial',
+   }[value] ?? 'unknown: $value';
 
    static double getGradient(int orientation, double x, double y) {
      switch (orientation) {
@@ -189,7 +189,7 @@ class NodeOrientation {
          return ratio;
        default:
          throw Exception(
-             "node_orientation.getGradient(orientation: ${getName(orientation)}, x: $x, y: $y"
+             'node_orientation.getGradient(orientation: ${getName(orientation)}, x: $x, y: $y'
          );
      }
    }

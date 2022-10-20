@@ -12,9 +12,9 @@ class BodyType {
   ];
 
   static String getName(int type) => const <int, String> {
-    shirtCyan: "Cyan Shirt",
-    shirtBlue: "Blue Shirt",
-    tunicPadded: "Padded Tunic",
-    swat: "Swat",
+    shirtCyan: 'Cyan Shirt',
+    shirtBlue: 'Blue Shirt',
+    tunicPadded: 'Padded Tunic',
+    swat: 'Swat',
   }[type]!;
 }

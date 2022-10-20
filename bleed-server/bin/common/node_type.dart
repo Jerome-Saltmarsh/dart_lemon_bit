@@ -137,60 +137,76 @@ class NodeType {
      value == Rain_Landing ;
   
   static bool blocksPerception(int value) =>
-     value == isOrientationSolid(value);
+     isOrientationSolid(value);
 
   static bool emitsLight(int value) =>
     value == Torch || 
     value == Fireplace;
 
   static int getDefaultOrientation(int value){
-     if (isOrientationEmpty(value))
+     if (isOrientationEmpty(value)) {
        return value;
-     if (isOrientationSolid(value))
+     }
+     if (isOrientationSolid(value)) {
        return NodeOrientation.Solid;
-     if (isSlopeSymmetric(value))
+     }
+     if (isSlopeSymmetric(value)) {
        return NodeOrientation.Slope_North;
-     if (isSlopeCornerInner(value))
+     }
+     if (isSlopeCornerInner(value)) {
        return NodeOrientation.Slope_Inner_North_East;
-     if (isSlopeCornerOuter(value))
+     }
+     if (isSlopeCornerOuter(value)) {
        return NodeOrientation.Slope_Outer_North_East;
-     if (isHalf(value))
+     }
+     if (isHalf(value)) {
        return NodeOrientation.Half_North;
-     if (isCorner(value))
+     }
+     if (isCorner(value)) {
        return NodeOrientation.Corner_Top;
-     if (isRadial(value))
+     }
+     if (isRadial(value)) {
        return NodeOrientation.Radial;
+     }
 
 
-     throw Exception("node_type.getDefaultOrientation(${getName(value)}");
+     throw Exception('node_type.getDefaultOrientation(${getName(value)}');
   }
 
 
   static bool supportsOrientation(int type, int orientation) {
 
-    if (orientation == NodeOrientation.None)
+    if (orientation == NodeOrientation.None) {
       return isOrientationEmpty(type);
+    }
 
-    if (orientation == NodeOrientation.Solid)
+    if (orientation == NodeOrientation.Solid) {
       return isOrientationSolid(type);
+    }
 
-    if (NodeOrientation.isHalf(orientation))
+    if (NodeOrientation.isHalf(orientation)) {
       return isHalf(type);
+    }
 
-    if (NodeOrientation.isCorner(orientation))
+    if (NodeOrientation.isCorner(orientation)) {
       return isCorner(type);
+    }
 
-    if (NodeOrientation.isSlopeCornerInner(orientation))
+    if (NodeOrientation.isSlopeCornerInner(orientation)) {
       return isSlopeCornerInner(type);
+    }
 
-    if (NodeOrientation.isSlopeCornerOuter(orientation))
+    if (NodeOrientation.isSlopeCornerOuter(orientation)) {
       return isSlopeCornerOuter(type);
+    }
 
-    if (NodeOrientation.isSlopeSymmetric(orientation))
+    if (NodeOrientation.isSlopeSymmetric(orientation)) {
       return isSlopeSymmetric(type);
+    }
 
-    if (orientation == NodeOrientation.Radial)
+    if (orientation == NodeOrientation.Radial) {
       return isRadial(type);
+    }
 
     return false;
   }
@@ -208,30 +224,30 @@ class NodeType {
     Rain_Falling: 'Rain Falling',
     Rain_Landing: 'Rain Landing',
     Fireplace: 'Fireplace',
-    Soil: "Soil",
-    Stone: "Stone",
-    Bau_Haus: "Bau Haus",
-    Bau_Haus_2: "Bau Haus",
-    Bau_Haus_Window: "Bau Haus Window",
-    Bau_Haus_Plain: "Bau Hau Plain",
-    Chimney: "Chimney",
-    Bed_Bottom: "Bed Bottom",
-    Bed_Top: "Bed Top",
-    Table: "Table",
-    Sunflower: "Sunflower",
-    Oven: "Oven",
-    Grass_Flowers: "Grass Flowers",
-    Brick_2: "Brick",
-    Wood_2: "Wood",
-    Cottage_Roof: "Cottage Roof",
-    Grass: "Grass",
-    Plain: "Plain",
-    Window: "Window",
-    Wooden_Plank: "Wooden Plank",
-    Boulder: "Boulder",
-    Spawn: "Spawn",
-    Respawning: "Respawning",
-    Spawn_Weapon: "Spawn Weapon",
-    Spawn_Player: "Spawn Player",
-  }[type] ?? "unknown($type)";
+    Soil: 'Soil',
+    Stone: 'Stone',
+    Bau_Haus: 'Bau Haus',
+    Bau_Haus_2: 'Bau Haus',
+    Bau_Haus_Window: 'Bau Haus Window',
+    Bau_Haus_Plain: 'Bau Hau Plain',
+    Chimney: 'Chimney',
+    Bed_Bottom: 'Bed Bottom',
+    Bed_Top: 'Bed Top',
+    Table: 'Table',
+    Sunflower: 'Sunflower',
+    Oven: 'Oven',
+    Grass_Flowers: 'Grass Flowers',
+    Brick_2: 'Brick',
+    Wood_2: 'Wood',
+    Cottage_Roof: 'Cottage Roof',
+    Grass: 'Grass',
+    Plain: 'Plain',
+    Window: 'Window',
+    Wooden_Plank: 'Wooden Plank',
+    Boulder: 'Boulder',
+    Spawn: 'Spawn',
+    Respawning: 'Respawning',
+    Spawn_Weapon: 'Spawn Weapon',
+    Spawn_Player: 'Spawn Player',
+  }[type] ?? 'unknown($type)';
 }

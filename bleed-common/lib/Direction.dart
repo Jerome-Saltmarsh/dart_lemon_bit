@@ -1,7 +1,5 @@
 import 'dart:math';
 
-import 'package:lemon_math/library.dart';
-
 class Direction {
   static const North = 0;
   static const North_East = 1;
@@ -37,19 +35,21 @@ class Direction {
     assert (value >= 0);
     assert (value <= 8);
     return const <int, String> {
-       North: "North",
-       North_East: "North-East",
-       East: "East",
-       South_East: "South-East",
-       South: "South",
-       South_West: "South-West",
-       West: "West",
-       North_West: "North-West",
-       None: "None",
-    }[value] ?? "?";
+       North: 'North',
+       North_East: 'North-East',
+       East: 'East',
+       South_East: 'South-East',
+       South: 'South',
+       South_West: 'South-West',
+       West: 'West',
+       North_West: 'North-West',
+       None: 'None',
+    }[value] ?? '?';
   }
 
   static double toRadian(int direction){
+    const piQuarter = pi / 4;
+    const piHalf = pi / 2;
     if (direction == Direction.North) return pi;
     if (direction == Direction.North_East) return pi + piQuarter;
     if (direction == Direction.East) return pi + piHalf;
@@ -58,10 +58,11 @@ class Direction {
     if (direction == Direction.South_West) return piQuarter;
     if (direction == Direction.West) return piHalf;
     if (direction == Direction.North_West) return piHalf + piQuarter;
-    throw Exception("Could not convert direction $direction to angle");
+    throw Exception('Could not convert direction $direction to angle');
   }
 
   static int fromRadian(double angle) {
+    const piQuarter = pi / 4;
     if (angle < piQuarter * 1) return South;
     if (angle < piQuarter * 2) return South_West;
     if (angle < piQuarter * 3) return West;

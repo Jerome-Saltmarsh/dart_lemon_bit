@@ -42,19 +42,19 @@ class SpawnType {
 
   static String getName(int type) {
     return const {
-      Zombie: "Zombie",
-      Chicken: "Chicken",
-      Butterfly: "Butterfly",
-      Rat: "Rat",
-      Jellyfish: "Jellyfish",
-      Jellyfish_Red: "Jellyfish Red",
-      Template: "Human",
-      Slime: "Slime",
-      GameObject_Weapon_Handgun: "Handgun",
-      GameObject_Weapon_Shotgun: "Shotgun",
-      GameObject_Weapon_Rifle: "Rifle",
-      GameObject_Weapon_Sword: "Sword",
-      Random_Item: "Random Item",
-    } [type] ?? "Unknown ($type)";
+      Zombie: 'Zombie',
+      Chicken: 'Chicken',
+      Butterfly: 'Butterfly',
+      Rat: 'Rat',
+      Jellyfish: 'Jellyfish',
+      Jellyfish_Red: 'Jellyfish Red',
+      Template: 'Human',
+      Slime: 'Slime',
+      GameObject_Weapon_Handgun: 'Handgun',
+      GameObject_Weapon_Shotgun: 'Shotgun',
+      GameObject_Weapon_Rifle: 'Rifle',
+      GameObject_Weapon_Sword: 'Sword',
+      Random_Item: 'Random Item',
+    } [type] ?? 'Unknown ($type)';
   }
 }

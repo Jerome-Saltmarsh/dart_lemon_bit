@@ -32,43 +32,9 @@ void readPlayerInputEdit() {
   if (Engine.keyPressed(LogicalKeyboardKey.delete)) {
     GameEditor.delete();
   }
-  // if (keyPressed(LogicalKeyboardKey.keyR)) {
-  //   edit.nodeSelectedIndex.value = edit.nodeSelectedIndex.value;
-  // }
   if (GameIO.getKeyDirection() != Direction.None) {
     actionSetModePlay();
   }
   return;
 }
-
-// int getKeyDirection() {
-//   final keysPressed = Engine.keyboard.keysPressed;
-//
-//   if (keysPressed.contains(LogicalKeyboardKey.keyW)) {
-//     if (keysPressed.contains(LogicalKeyboardKey.keyD)) {
-//       return Direction.East;
-//     }
-//     if (keysPressed.contains(LogicalKeyboardKey.keyA)) {
-//       return Direction.North;
-//     }
-//     return Direction.North_East;
-//   }
-//
-//   if (keysPressed.contains(LogicalKeyboardKey.keyS)) {
-//     if (keysPressed.contains(LogicalKeyboardKey.keyD)) {
-//       return Direction.South;
-//     }
-//     if (keysPressed.contains(LogicalKeyboardKey.keyA)) {
-//       return Direction.West;
-//     }
-//     return Direction.South_West;
-//   }
-//   if (keysPressed.contains(LogicalKeyboardKey.keyA)) {
-//     return Direction.North_West;
-//   }
-//   if (keysPressed.contains(LogicalKeyboardKey.keyD)) {
-//     return Direction.South_East;
-//   }
-//   return Direction.None;
-// }
 

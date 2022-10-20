@@ -17,9 +17,9 @@ class GameType {
   ].contains(gameType);
 
   static String getName(int? value) => value == null ? 'None' : const {
-      Dark_Age: "Dark Age",
-      Editor: "Editor",
-      Waves: "Waves",
-      Skirmish: "Skirmish",
-  } [value] ?? "Unknown ($value)";
+      Dark_Age: 'Dark Age',
+      Editor: 'Editor',
+      Waves: 'Waves',
+      Skirmish: 'Skirmish',
+  } [value] ?? 'Unknown ($value)';
 }

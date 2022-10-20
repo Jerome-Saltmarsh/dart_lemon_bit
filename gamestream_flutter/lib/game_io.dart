@@ -80,31 +80,30 @@ class GameIO {
   }
 
   static int getKeyDirection() {
-    final keysPressed = Engine.keyboard.keysPressed;
 
-    if (keysPressed.contains(LogicalKeyboardKey.keyW)) {
-      if (keysPressed.contains(LogicalKeyboardKey.keyD)) {
+    if (Engine.keyPressed(LogicalKeyboardKey.keyW)) {
+      if (Engine.keyPressed(LogicalKeyboardKey.keyD)) {
         return Direction.East;
       }
-      if (keysPressed.contains(LogicalKeyboardKey.keyA)) {
+      if (Engine.keyPressed(LogicalKeyboardKey.keyA)) {
         return Direction.North;
       }
       return Direction.North_East;
     }
 
-    if (keysPressed.contains(LogicalKeyboardKey.keyS)) {
-      if (keysPressed.contains(LogicalKeyboardKey.keyD)) {
+    if (Engine.keyPressed(LogicalKeyboardKey.keyS)) {
+      if (Engine.keyPressed(LogicalKeyboardKey.keyD)) {
         return Direction.South;
       }
-      if (keysPressed.contains(LogicalKeyboardKey.keyA)) {
+      if (Engine.keyPressed(LogicalKeyboardKey.keyA)) {
         return Direction.West;
       }
       return Direction.South_West;
     }
-    if (keysPressed.contains(LogicalKeyboardKey.keyA)) {
+    if (Engine.keyPressed(LogicalKeyboardKey.keyA)) {
       return Direction.North_West;
     }
-    if (keysPressed.contains(LogicalKeyboardKey.keyD)) {
+    if (Engine.keyPressed(LogicalKeyboardKey.keyD)) {
       return Direction.South_East;
     }
     return Direction.None;

@@ -1,1 +1,1 @@
-const version = 'v0.5.560git ';
+const version = 'v0.5.561';
