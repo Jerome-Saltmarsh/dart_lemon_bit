@@ -64,9 +64,9 @@ class Website {
   static Widget buildOperationStatus(OperationStatus operationStatus) =>
       operationStatus != OperationStatus.None
           ? buildFullscreen(child: text(operationStatus.name))
-          : watch(Website.account, buildAccount);
+          : watch(GameNetwork.connectionStatus, buildConnection);
 
-  static Widget buildLoadingScreen(BuildContext context) {
+  static Widget buildPageLoading(BuildContext context) {
     final _width = 300.0;
     final _height = 50.0;
     return buildFullscreen(
@@ -143,11 +143,8 @@ class Website {
           Positioned(
             top: 0,
             left: 0,
-            child: Container(
-              width: Engine.screen.width,
-              height: Engine.screen.height,
-              alignment: Alignment.center,
-              child: Website.buildColumnGames(),
+            child: buildFullscreen(
+              child: buildColumnGames(),
             ),
           )
         ],

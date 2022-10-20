@@ -41,9 +41,6 @@ Widget buildErrorDialog(String message, {Widget? bottomRight}){
   );
 }
 
-Widget buildAccount(Account? account) =>
-  watch(GameNetwork.connectionStatus, buildConnection);
-
 Widget buildConnection(ConnectionStatus connection) {
   switch (connection) {
     case ConnectionStatus.Connected:

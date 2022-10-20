@@ -211,8 +211,8 @@ Widget buildFullscreen({
 }) =>
   Container(
       alignment: alignment,
-      width: double.infinity,
-      height: double.infinity,
+      width: Engine.screen.width,
+      height: Engine.screen.height,
       color: color,
       child: child
   );
