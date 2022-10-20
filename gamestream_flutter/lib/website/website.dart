@@ -63,18 +63,13 @@ class Website {
 
   static Widget buildOperationStatus(OperationStatus operationStatus) =>
       operationStatus != OperationStatus.None
-          ? _layoutOperationStatus(operationStatus)
-          : watchAccount(buildAccount);
-
-  static Widget _layoutOperationStatus(OperationStatus operationStatus) =>
-      fullScreen(
-        child: text(operationStatus.name),
-      );
+          ? buildFullscreen(child: text(operationStatus.name))
+          : watch(Website.account, buildAccount);
 
   static Widget buildLoadingScreen(BuildContext context) {
-    final double _width = 300;
-    final double _height = 50;
-    return fullScreen(
+    final _width = 300.0;
+    final _height = 50.0;
+    return buildFullscreen(
       color: GameColors.black,
       child: watch(Website.download, (double value) {
         value = 0.6182;

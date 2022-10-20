@@ -550,7 +550,9 @@ class Engine {
       mouseLeftDownFrames++;
     }
     deviceType.value =
-    screen.width < 800 ? DeviceType.Phone : DeviceType.Computer;
+      screen.width < 800 || screen.height < 800
+        ? DeviceType.Phone
+        : DeviceType.Computer;
     onUpdate?.call();
     final sX = screenCenterWorldX;
     final sY = screenCenterWorldY;

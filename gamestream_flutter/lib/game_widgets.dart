@@ -201,23 +201,22 @@ class _RefreshState extends State<Refresh> {
 }
 
 Widget center(Widget child) {
-  return fullScreen(child: child);
+  return buildFullscreen(child: child);
 }
 
-Widget fullScreen({
+Widget buildFullscreen({
   required Widget child,
   Alignment alignment = Alignment.center,
   Color? color,
-}) {
-  return Container(
-      // alignment: alignment,
+}) =>
+  Container(
+      alignment: alignment,
       width: double.infinity,
       height: double.infinity,
       color: color,
       child: child
   );
 
-}
 
 Widget height(double value) {
   return SizedBox(height: value);

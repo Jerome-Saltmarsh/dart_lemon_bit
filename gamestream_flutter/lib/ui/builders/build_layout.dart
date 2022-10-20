@@ -42,6 +42,6 @@ Widget buildLayout({
         foreground,
     ],
   );
-  return expand ? fullScreen(child: stack, color: color): stack;
+  return expand ? buildFullscreen(child: stack, color: color): stack;
 }
 
