@@ -1,4 +1,4 @@
-import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:lemon_engine/engine.dart';
 
@@ -16,5 +16,5 @@ void renderV3({
       srcY: srcY,
       srcWidth: srcWidth,
       srcHeight: srcHeight,
-      color: Game.getV3NodeBelowShade(value),
+      color: GameState.getV3NodeBelowShade(value),
     );

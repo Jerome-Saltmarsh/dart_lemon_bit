@@ -193,9 +193,9 @@ class GameNetwork {
     switch (connection) {
       case ConnectionStatus.Connected:
         GameIO.initGameListeners();
-        Engine.onDrawCanvas = Game.renderCanvas;
+        Engine.onDrawCanvas = GameState.renderCanvas;
         Engine.onDrawForeground = null;
-        Engine.onUpdate = Game.update;
+        Engine.onUpdate = GameState.update;
         Engine.drawCanvasAfterUpdate = true;
         Engine.zoomOnScroll = true;
         if (!Engine.isLocalHost) {
@@ -212,8 +212,8 @@ class GameNetwork {
         Engine.onDrawCanvas = GameWebsite.renderCanvas;
         Engine.onUpdate = GameWebsite.update;
         Engine.fullScreenExit();
-        Game.clear();
-        Game.gameType.value = null;
+        GameState.clear();
+        GameState.gameType.value = null;
         sceneEditable.value = false;
         isometricWebControlsDeregister();
         break;

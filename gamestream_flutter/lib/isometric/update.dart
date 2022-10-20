@@ -3,7 +3,7 @@
 import 'dart:math';
 
 import 'package:bleed_common/Projectile_Type.dart';
-import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/game_audio.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
@@ -29,10 +29,10 @@ void updateIsometric(){
   updateZombieGrowls();
   updateMouseBubbleSpawn();
 
-  if (Game.player.messageTimer > 0) {
-    Game.player.messageTimer--;
-     if (Game.player.messageTimer == 0){
-       Game.player.message.value = "";
+  if (GameState.player.messageTimer > 0) {
+    GameState.player.messageTimer--;
+     if (GameState.player.messageTimer == 0){
+       GameState.player.message.value = "";
      }
   }
 }
@@ -40,7 +40,7 @@ void updateIsometric(){
 void updateMouseBubbleSpawn() {
   if (nextBubbleSpawn-- > 0) return;
   nextBubbleSpawn = 30;
-  Game.spawnParticleBubble(x: mouseGridX, y: mouseGridY, z: Game.player.z);
+  GameState.spawnParticleBubble(x: mouseGridX, y: mouseGridY, z: GameState.player.z);
 }
 
 var nextBubbleSpawn = 0;
@@ -49,16 +49,16 @@ var particleAnimation = 0;
 void updateParticleFrames() {
   // if (particleAnimation++ < 3) return;
   particleAnimation = 0;
-  for (var i = 0; i < Game.particles.length; i++){
-    Game.particles[i].updateFrame();
+  for (var i = 0; i < GameState.particles.length; i++){
+    GameState.particles[i].updateFrame();
   }
 }
 
 void applyObjectsToWind(){
   // foreachPlayer(applyCharacterToWind);
 
-  for (var i = 0; i < Game.totalProjectiles; i++){
-     applyWindFromProjectile(Game.projectiles[i]);
+  for (var i = 0; i < GameState.totalProjectiles; i++){
+     applyWindFromProjectile(GameState.projectiles[i]);
   }
 
   // updateWindLine();
@@ -87,11 +87,11 @@ void applyCharacterToWind(Character character){
 }
 
 void updateProjectiles() {
-  for (var i = 0; i < Game.totalProjectiles; i++) {
-    final projectile = Game.projectiles[i];
+  for (var i = 0; i < GameState.totalProjectiles; i++) {
+    final projectile = GameState.projectiles[i];
     if (projectile.type == ProjectileType.Fireball) {
-      Game.spawnParticleFire(x: projectile.x, y: projectile.y, z: projectile.z);
-      Game.spawnParticleBubble(
+      GameState.spawnParticleFire(x: projectile.x, y: projectile.y, z: projectile.z);
+      GameState.spawnParticleBubble(
           x: projectile.x + giveOrTake(5),
           y: projectile.y + giveOrTake(5),
           z: projectile.z,
@@ -102,14 +102,14 @@ void updateProjectiles() {
     }
 
     if (projectile.type == ProjectileType.Bullet) {
-      Game.spawnParticleBubble(
+      GameState.spawnParticleBubble(
         x: projectile.x + giveOrTake(5),
         y: projectile.y + giveOrTake(5),
         z: projectile.z,
         angle: (projectile.angle + pi) + giveOrTake(piHalf ),
         speed: 1.5,
       );
-      Game.spawnParticleBulletRing(
+      GameState.spawnParticleBulletRing(
         x: projectile.x,
         y: projectile.y,
         z: projectile.z,
@@ -120,7 +120,7 @@ void updateProjectiles() {
     }
 
     if (projectile.type != ProjectileType.Orb) continue;
-    Game.spawnParticleOrbShard(x: projectile.x, y: projectile.y, z: projectile.z, angle: randomAngle());
+    GameState.spawnParticleOrbShard(x: projectile.x, y: projectile.y, z: projectile.z, angle: randomAngle());
   }
 }
 

@@ -116,7 +116,7 @@ Widget buildColumnSelectPlayerPants(){
 }
 
 Widget buildButtonSelectPlayerHead(int headType) {
-   return watch(Game.player.headType, (int playerHeadType){
+   return watch(GameState.player.headType, (int playerHeadType){
       return container(
           child: text(HeadType.getName(headType)),
           action: () => GameNetwork.sendClientRequestSetHeadType(headType),
@@ -126,7 +126,7 @@ Widget buildButtonSelectPlayerHead(int headType) {
 }
 
 Widget _buildButtonPants(int pantsType) {
-  return watch(Game.player.pantsType, (int playerPantsType){
+  return watch(GameState.player.pantsType, (int playerPantsType){
     return container(
       child: text(LegType.getName(pantsType)),
       action: () => GameNetwork.sendClientRequestSetPantsType(pantsType),
@@ -136,7 +136,7 @@ Widget _buildButtonPants(int pantsType) {
 }
 
 Widget buildColumnPlayerWeapons(int activePlayerAttackType) => watch(
-    Game.player.weapons,
+    GameState.player.weapons,
     (List<Weapon> weapons) => Container(
         color: brownLight,
         padding: const EdgeInsets.all(6),
@@ -170,7 +170,7 @@ Widget _buildButtonPurchaseWeapon(Weapon weapon) {
 }
 
 Widget _buildSelectArmourType(int type) {
-   return watch(Game.player.armourType, (int equipped){
+   return watch(GameState.player.armourType, (int equipped){
      return container(
          child: text(BodyType.getName(type)),
          action: () => GameNetwork.sendClientRequestSetArmour(type),

@@ -1,6 +1,6 @@
 
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/render/render_projectiles.dart';
 import 'package:gamestream_flutter/isometric/render/src_utils.dart';
@@ -19,7 +19,7 @@ void renderCharacterRat(Character character){
       srcHeight: 64,
       anchorY: 0.66,
       scale: 1,
-      color: Game.getV3NodeBelowShade(character),
+      color: GameState.getV3NodeBelowShade(character),
     );
   }
 
@@ -33,7 +33,7 @@ void renderCharacterRat(Character character){
       srcHeight: 64,
       anchorY: 0.66,
       scale: 1,
-      color: Game.getV3NodeBelowShade(character),
+      color: GameState.getV3NodeBelowShade(character),
     );
   }
 
@@ -47,6 +47,6 @@ void renderCharacterRat(Character character){
     srcHeight: 64,
     anchorY: 0.66,
     scale: 1,
-    color: Game.getV3NodeBelowShade(character),
+    color: GameState.getV3NodeBelowShade(character),
   );
 }

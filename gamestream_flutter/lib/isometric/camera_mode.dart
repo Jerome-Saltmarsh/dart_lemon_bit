@@ -1,4 +1,4 @@
-import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/game_state.dart';
 
 import 'enums/camera_mode.dart';
 
@@ -6,7 +6,7 @@ import 'enums/camera_mode.dart';
 
 
 void cameraModeNext(){
-  cameraMode = CameraMode.values[(Game.cameraMode.index + 1) % CameraMode.values.length];
+  cameraMode = CameraMode.values[(GameState.cameraMode.index + 1) % CameraMode.values.length];
 }
 
 void cameraModeSetFree(){
@@ -18,5 +18,5 @@ void cameraModeSetChase(){
 }
 
 void set cameraMode(CameraMode value) {
-  Game.cameraModeWatch.value = value;
+  GameState.cameraModeWatch.value = value;
 }

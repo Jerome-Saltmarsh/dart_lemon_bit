@@ -4,7 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 import 'package:lemon_engine/engine.dart';
 
-import 'game.dart';
+import 'game_state.dart';
 
 class GameIO {
   // STATE
@@ -105,7 +105,7 @@ class GameIO {
   }
 
   static bool getActionPrimary(){
-    if (Game.editMode) return false;
+    if (GameState.editMode) return false;
     if (modeKeyboard) {
       return Engine.watchMouseLeftDown.value;
     }
@@ -113,12 +113,12 @@ class GameIO {
   }
 
   static bool getActionSecondary(){
-    if (Game.editMode) return false;
+    if (GameState.editMode) return false;
     return false;
   }
 
   static bool getActionTertiary(){
-    if (Game.editMode) return false;
+    if (GameState.editMode) return false;
     return false;
   }
 }

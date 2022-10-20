@@ -1,5 +1,5 @@
 
-import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/game_state.dart';
 
 void setNodeType(int z, int row, int column, int type){
   if (z < 0)
@@ -8,12 +8,12 @@ void setNodeType(int z, int row, int column, int type){
     return;
   if (column < 0)
     return;
-  if (z >= Game.nodesTotalZ)
+  if (z >= GameState.nodesTotalZ)
     return;
-  if (row >= Game.nodesTotalRows)
+  if (row >= GameState.nodesTotalRows)
     return;
-  if (column >= Game.nodesTotalColumns)
+  if (column >= GameState.nodesTotalColumns)
     return;
 
-  Game.nodesType[Game.getNodeIndexZRC(z, row, column)] = type;
+  GameState.nodesType[GameState.getNodeIndexZRC(z, row, column)] = type;
 }

@@ -1,7 +1,7 @@
 
 
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/game_audio.dart';
 
 void onGameEventGameObjectDestroyed(
@@ -15,7 +15,7 @@ void onGameEventGameObjectDestroyed(
      case GameObjectType.Barrel:
        GameAudio.crate_breaking.playXYZ(x, y, z);
        for (var i = 0; i < 5; i++) {
-         Game.spawnParticleBlockWood(x, y, z);
+         GameState.spawnParticleBlockWood(x, y, z);
        }
        break;
    }

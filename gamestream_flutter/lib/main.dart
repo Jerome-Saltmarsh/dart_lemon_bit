@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/game_system.dart';
 import 'package:gamestream_flutter/game_website.dart';
 import 'package:lemon_engine/engine.dart';
@@ -10,7 +10,7 @@ void main() {
     init: GameSystem.init,
     buildUI: GameWebsite.buildUI,
     themeData: ThemeData(fontFamily: 'JetBrainsMono-Regular'),
-    backgroundColor: Game.colorPitchBlack,
+    backgroundColor: GameState.colorPitchBlack,
     onError: GameSystem.onError,
   );
 }

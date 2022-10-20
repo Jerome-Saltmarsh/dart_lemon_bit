@@ -1,6 +1,6 @@
 library game_library;
 
-export 'game.dart';
+export 'game_state.dart';
 export 'game_account.dart';
 export 'game_audio.dart';
 export 'game_colors.dart';

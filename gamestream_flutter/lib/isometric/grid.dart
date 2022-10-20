@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_orientation.dart';
-import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/isometric/grid/actions/rain_on.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/nodes.dart';
@@ -13,7 +13,7 @@ import 'watches/raining.dart';
 // void toggleShadows () => Game.gridShadows.value = !Game.gridShadows.value;
 
 void actionSetAmbientShadeToHour(){
-  Game.ambientShade.value = Shade.fromHour(Game.hours.value);
+  GameState.ambientShade.value = Shade.fromHour(GameState.hours.value);
 }
 
 void onGridChanged(){
@@ -27,9 +27,9 @@ void onGridChanged(){
 }
 
 void gridForEachNode(Function(int z, int row, int column) apply) {
-  for (var zIndex = 0; zIndex < Game.nodesTotalZ; zIndex++) {
-    for (var rowIndex = 0; rowIndex < Game.nodesTotalRows; rowIndex++) {
-      for (var columnIndex = 0; columnIndex < Game.nodesTotalColumns; columnIndex++) {
+  for (var zIndex = 0; zIndex < GameState.nodesTotalZ; zIndex++) {
+    for (var rowIndex = 0; rowIndex < GameState.nodesTotalRows; rowIndex++) {
+      for (var columnIndex = 0; columnIndex < GameState.nodesTotalColumns; columnIndex++) {
         apply(zIndex, rowIndex, columnIndex);
       }
     }
@@ -39,15 +39,15 @@ void gridForEachNode(Function(int z, int row, int column) apply) {
 
 
 void refreshLighting(){
-  Game.resetGridToAmbient();
-  if (Game.gridShadows.value){
+  GameState.resetGridToAmbient();
+  if (GameState.gridShadows.value){
     _applyShadows();
   }
   applyBakeMapEmissions();
 }
 
 void _applyShadows(){
-  if (Game.ambientShade.value > Shade.Very_Bright) return;
+  if (GameState.ambientShade.value > Shade.Very_Bright) return;
   _applyShadowsMidAfternoon();
 }
 
@@ -61,15 +61,15 @@ void _applyShadowAt({
   required int directionColumn,
   required int maxDistance,
 }){
-  final current = Game.ambientShade.value;
+  final current = GameState.ambientShade.value;
   final shadowShade = current >= Shade.Pitch_Black ? current : current + 1;
 
-  for (var z = 0; z < Game.nodesTotalZ; z++) {
-    for (var row = 0; row < Game.nodesTotalRows; row++){
-      for (var column = 0; column < Game.nodesTotalColumns; column++){
+  for (var z = 0; z < GameState.nodesTotalZ; z++) {
+    for (var row = 0; row < GameState.nodesTotalRows; row++){
+      for (var column = 0; column < GameState.nodesTotalColumns; column++){
         // final tile = grid[z][row][column];
-        final index = Game.getNodeIndexZRC(z, row, column);
-        final tile = Game.nodesType[index];
+        final index = GameState.getNodeIndexZRC(z, row, column);
+        final tile = GameState.nodesType[index];
         if (!castesShadow(tile)) continue;
         var projectionZ = z + directionZ;
         var projectionRow = row + directionRow;
@@ -78,14 +78,14 @@ void _applyShadowAt({
             projectionZ >= 0 &&
             projectionRow >= 0 &&
             projectionColumn >= 0 &&
-            projectionZ < Game.nodesTotalZ &&
-            projectionRow < Game.nodesTotalRows &&
-            projectionColumn < Game.nodesTotalColumns
+            projectionZ < GameState.nodesTotalZ &&
+            projectionRow < GameState.nodesTotalRows &&
+            projectionColumn < GameState.nodesTotalColumns
         ) {
-          final shade = Game.nodesBake[index];
+          final shade = GameState.nodesBake[index];
           if (shade < shadowShade){
             if (gridNodeZRCType(projectionZ + 1, projectionRow, projectionColumn) == NodeType.Empty){
-              Game.nodesBake[index] = shadowShade;
+              GameState.nodesBake[index] = shadowShade;
             }
           }
           projectionZ += directionZ;
@@ -103,8 +103,8 @@ bool castesShadow(int type) =>
     type == NodeType.Brick_Top;
 
 bool gridIsUnderSomething(int z, int row, int column){
-  if (Game.outOfBounds(z, row, column)) return false;
-  for (var zIndex = z + 1; zIndex < Game.nodesTotalZ; zIndex++){
+  if (GameState.outOfBounds(z, row, column)) return false;
+  for (var zIndex = z + 1; zIndex < GameState.nodesTotalZ; zIndex++){
     if (!gridNodeZRCTypeRainOrEmpty(z, row, column)) return false;
   }
   return true;
@@ -112,13 +112,13 @@ bool gridIsUnderSomething(int z, int row, int column){
 
 bool gridIsPerceptible(int index){
   if (index < 0) return true;
-  if (index >= Game.nodesTotal) return true;
+  if (index >= GameState.nodesTotal) return true;
   while (true){
-    index += Game.nodesArea;
+    index += GameState.nodesArea;
     index++;
-    index += Game.nodesTotalColumns;
-    if (index >= Game.nodesTotal) return true;
-    if (Game.nodesOrientation[index] != NodeOrientation.None){
+    index += GameState.nodesTotalColumns;
+    if (index >= GameState.nodesTotal) return true;
+    if (GameState.nodesOrientation[index] != NodeOrientation.None){
       return false;
     }
   }
@@ -129,15 +129,15 @@ void refreshGridMetrics(){
   // gridTotalRows = grid[0].length;
   // gridTotalColumns = grid[0][0].length;
 
-  Game.nodesLengthRow = Game.nodesTotalRows * tileSize;
-  Game.nodesLengthColumn = Game.nodesTotalColumns * tileSize;
-  Game.nodesLengthZ = Game.nodesTotalZ * tileHeight;
+  GameState.nodesLengthRow = GameState.nodesTotalRows * tileSize;
+  GameState.nodesLengthColumn = GameState.nodesTotalColumns * tileSize;
+  GameState.nodesLengthZ = GameState.nodesTotalZ * tileHeight;
 }
 
 void applyBakeMapEmissions() {
-  for (var zIndex = 0; zIndex < Game.nodesTotalZ; zIndex++) {
-    for (var rowIndex = 0; rowIndex < Game.nodesTotalRows; rowIndex++) {
-      for (var columnIndex = 0; columnIndex < Game.nodesTotalColumns; columnIndex++) {
+  for (var zIndex = 0; zIndex < GameState.nodesTotalZ; zIndex++) {
+    for (var rowIndex = 0; rowIndex < GameState.nodesTotalRows; rowIndex++) {
+      for (var columnIndex = 0; columnIndex < GameState.nodesTotalColumns; columnIndex++) {
         if (!NodeType.emitsLight(
             gridNodeZRCType(zIndex, rowIndex, columnIndex))
         ) continue;
@@ -152,7 +152,7 @@ void applyBakeMapEmissions() {
     }
   }
 
-  for (final gameObject in Game.gameObjects){
+  for (final gameObject in GameState.gameObjects){
     if (gameObject.type == GameObjectType.Crystal){
       applyEmissionBake(
         zIndex: gameObject.indexZ,
@@ -173,21 +173,21 @@ void applyEmissionBake({
   int radius = 5,
 }){
   final zMin = max(zIndex - radius, 0);
-  final zMax = min(zIndex + radius, Game.nodesTotalZ);
+  final zMax = min(zIndex + radius, GameState.nodesTotalZ);
   final rowMin = max(rowIndex - radius, 0);
-  final rowMax = min(rowIndex + radius, Game.nodesTotalRows);
+  final rowMax = min(rowIndex + radius, GameState.nodesTotalRows);
   final columnMin = max(columnIndex - radius, 0);
-  final columnMax = min(columnIndex + radius, Game.nodesTotalColumns);
+  final columnMax = min(columnIndex + radius, GameState.nodesTotalColumns);
 
   for (var z = zMin; z < zMax; z++){
     for (var row = rowMin; row < rowMax; row++){
       for (var column = columnMin; column < columnMax; column++) {
-        final nodeIndex = Game.getNodeIndexZRC(z, row, column);
+        final nodeIndex = GameState.getNodeIndexZRC(z, row, column);
         var distance = (z - zIndex).abs() + (row - rowIndex).abs() + (column - columnIndex).abs() - 1;
         final distanceValue = convertDistanceToShade(distance, maxBrightness: maxBrightness);
-        if (distanceValue >= Game.nodesBake[nodeIndex]) continue;
-        Game.nodesBake[nodeIndex] = distanceValue;
-        Game.nodesShade[nodeIndex] = distanceValue;
+        if (distanceValue >= GameState.nodesBake[nodeIndex]) continue;
+        GameState.nodesBake[nodeIndex] = distanceValue;
+        GameState.nodesShade[nodeIndex] = distanceValue;
       }
     }
   }

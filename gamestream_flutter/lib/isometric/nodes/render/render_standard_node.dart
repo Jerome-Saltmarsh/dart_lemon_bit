@@ -2,7 +2,7 @@
 import 'dart:typed_data';
 import 'dart:ui';
 
-import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/game_images.dart';
 import 'package:gamestream_flutter/game_render.dart';
 import 'package:lemon_engine/engine.dart';
@@ -39,7 +39,7 @@ void renderStandardNodeShaded({
   required double srcY,
 }){
   GameRender.onscreenNodes++;
-  _colors[0] = Game.colorShades[Game.nodesShade[GameRender.currentNodeIndex]];
+  _colors[0] = GameState.colorShades[GameState.nodesShade[GameRender.currentNodeIndex]];
   _src[0] = srcX;
   _src[1] = srcY;
   _src[2] = srcX + spriteWidth;

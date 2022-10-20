@@ -3,7 +3,7 @@ import 'dart:typed_data';
 
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_size.dart';
-import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/game_config.dart';
 import 'package:gamestream_flutter/game_images.dart';
 import 'package:gamestream_flutter/game_render.dart';
@@ -81,7 +81,7 @@ void renderCharacterTemplate(Character character, {
 
   final dstX = GameRender.getRenderV3X(character);
   final dstY = GameRender.getRenderV3Y(character);
-  final color = Game.getV3RenderColor(character);
+  final color = GameState.getV3RenderColor(character);
 
   var frameLegs = 0;
   var frameHead = 0;
@@ -127,14 +127,14 @@ void renderCharacterTemplate(Character character, {
   }
 
   // find the nearest torch and move the shadow behind the character
-  final characterNodeIndex = Game.getNodeIndexV3(character);
-  final initialSearchIndex = characterNodeIndex - Game.nodesTotalColumns - 1; // shifts the selectIndex - 1 row and - 1 column
+  final characterNodeIndex = GameState.getNodeIndexV3(character);
+  final initialSearchIndex = characterNodeIndex - GameState.nodesTotalColumns - 1; // shifts the selectIndex - 1 row and - 1 column
   var torchIndex = -1;
 
   for (var row = 0; row < 3; row++){
     for (var column = 0; column < 3; column++){
-       final searchIndex = initialSearchIndex + (row * Game.nodesTotalColumns) + column;
-       if (Game.nodesType[searchIndex] != NodeType.Torch) continue;
+       final searchIndex = initialSearchIndex + (row * GameState.nodesTotalColumns) + column;
+       if (GameState.nodesType[searchIndex] != NodeType.Torch) continue;
        torchIndex = searchIndex;
        break;
     }
@@ -144,8 +144,8 @@ void renderCharacterTemplate(Character character, {
   var distance = 0.0;
 
   if (torchIndex != -1) {
-      final torchRow = Game.convertNodeIndexToRow(torchIndex);
-      final torchColumn = Game.convertNodeIndexToColumn(torchIndex);
+      final torchRow = GameState.convertNodeIndexToRow(torchIndex);
+      final torchColumn = GameState.convertNodeIndexToColumn(torchIndex);
       final torchPosX = torchRow * nodeSize + nodeSizeHalf;
       final torchPosY = torchColumn * nodeSize + nodeSizeHalf;
       angle = getAngleBetween(character.x, character.y, torchPosX, torchPosY);

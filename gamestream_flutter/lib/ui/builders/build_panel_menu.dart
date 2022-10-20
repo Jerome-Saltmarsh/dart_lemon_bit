@@ -31,7 +31,7 @@ Widget buildPanelMenu() =>
 Widget buildButtonTogglePlayMode() {
   return watch(sceneEditable, (bool isOwner) {
     if (!isOwner) return const SizedBox();
-    return watch(Game.edit, (bool edit) {
+    return watch(GameState.edit, (bool edit) {
       return container(
           toolTip: "Tab",
           child: edit ? "PLAY" : "EDIT",
@@ -44,7 +44,7 @@ Widget buildButtonTogglePlayMode() {
 }
 
 Widget buildButtonShowMap() => Tooltip(
-    message: ("(M)"), child: text("Map", onPressed: Game.actionGameDialogShowMap));
+    message: ("(M)"), child: text("Map", onPressed: GameState.actionGameDialogShowMap));
 
 Widget buildToggleFullscreen() {
   return WatchBuilder(Engine.fullScreen, (bool fullscreen) {

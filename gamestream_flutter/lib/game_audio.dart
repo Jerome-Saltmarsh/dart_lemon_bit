@@ -1,6 +1,6 @@
 
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/isometric/audio/audio_loop.dart';
 import 'package:gamestream_flutter/isometric/audio/audio_loops.dart';
 import 'package:gamestream_flutter/isometric/audio/audio_single.dart';
@@ -87,7 +87,7 @@ class GameAudio {
   ];
 
   static double getVolumeTargetDayAmbience() {
-    if (Game.ambientShade.value == Shade.Very_Bright) return 0.2;
+    if (GameState.ambientShade.value == Shade.Very_Bright) return 0.2;
     return 0;
   }
 

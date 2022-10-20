@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/game_state.dart';
 
 import '../../../game_widgets.dart';
 import '../../enums/game_dialog.dart';
@@ -33,7 +33,7 @@ Widget buildGameDialog(GameDialog? gameDialog) =>
         children: GameDialog.values.map((e) =>
             container(
               child: e.name,
-              action: ()=> Game.player.gameDialog.value = e,
+              action: ()=> GameState.player.gameDialog.value = e,
               color: gameDialog == e ? brownDark : brownLight,
               hoverColor: brownDark,
             ),
@@ -53,5 +53,5 @@ Widget buildButtonCloseGameDialog() =>
     );
 
 void actionCloseGameDialog(){
-  Game.player.gameDialog.value = null;
+  GameState.player.gameDialog.value = null;
 }

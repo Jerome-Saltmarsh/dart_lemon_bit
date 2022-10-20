@@ -1,6 +1,6 @@
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/quest.dart';
-import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/classes/weapon.dart';
 import 'package:gamestream_flutter/isometric/enums/game_dialog.dart';
@@ -79,7 +79,7 @@ class Player extends Vector3 {
 
 
   static void onPlayerCharacterStateChanged(int characterState){
-     Game.player.alive.value = characterState != CharacterState.Dead;
+     GameState.player.alive.value = characterState != CharacterState.Dead;
   }
 }
 

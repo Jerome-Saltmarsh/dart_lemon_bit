@@ -1,5 +1,5 @@
 import 'package:bleed_common/Shade.dart';
-import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/game_audio.dart';
 import 'package:lemon_math/library.dart';
 
@@ -41,7 +41,7 @@ void updateRandomMusic(){
 }
 
 void playRandomMusic(){
-   if (Game.ambientShade.value == Shade.Pitch_Black) {
+   if (GameState.ambientShade.value == Shade.Pitch_Black) {
      playRandom(musicNight);
    }
 }
@@ -53,9 +53,9 @@ void updateRandomAmbientSounds(){
 }
 
 void playRandomAmbientSound(){
-  final hour = Game.hours.value;
+  final hour = GameState.hours.value;
 
-  final shade = Game.ambientShade.value;
+  final shade = GameState.ambientShade.value;
 
   if (shade == Shade.Pitch_Black || shade == Shade.Very_Dark){
     return playRandom(soundsNight);

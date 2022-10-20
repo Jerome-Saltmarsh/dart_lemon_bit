@@ -39,7 +39,8 @@ import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 
-class Game {
+class GameState {
+
 
   static const tileHeight = 24.0;
   static const colorPitchBlack = Color.fromRGBO(37, 32, 48, 1.0);
@@ -300,29 +301,29 @@ class Game {
     required int index,
     required int maxBrightness,
   }){
-    final zIndex = Game.convertNodeIndexToZ(index);
-    final rowIndex = Game.convertNodeIndexToRow(index);
-    final columnIndex = Game.convertNodeIndexToColumn(index);
+    final zIndex = GameState.convertNodeIndexToZ(index);
+    final rowIndex = GameState.convertNodeIndexToRow(index);
+    final columnIndex = GameState.convertNodeIndexToColumn(index);
     final radius = Shade.Pitch_Black;
     final zMin = max(zIndex - radius, 0);
-    final zMax = min(zIndex + radius, Game.nodesTotalZ);
+    final zMax = min(zIndex + radius, GameState.nodesTotalZ);
     final rowMin = max(rowIndex - radius, 0);
-    final rowMax = min(rowIndex + radius, Game.nodesTotalRows);
+    final rowMax = min(rowIndex + radius, GameState.nodesTotalRows);
     final columnMin = max(columnIndex - radius, 0);
-    final columnMax = min(columnIndex + radius, Game.nodesTotalColumns);
+    final columnMax = min(columnIndex + radius, GameState.nodesTotalColumns);
 
     for (var z = zMin; z < zMax; z++){
       for (var row = rowMin; row < rowMax; row++){
-        final a = (z * Game.nodesArea) + (row * Game.nodesTotalColumns);
+        final a = (z * GameState.nodesArea) + (row * GameState.nodesTotalColumns);
         final b = (z - zIndex).abs() + (row - rowIndex).abs();
         for (var column = columnMin; column < columnMax; column++) {
           final nodeIndex = a + column;
           var distance = b + (column - columnIndex).abs() - 1;
           final distanceValue = convertDistanceToShade(distance, maxBrightness: maxBrightness);
-          if (distanceValue >= Game.nodesShade[nodeIndex]) continue;
-          Game.nodesShade[nodeIndex] = distanceValue;
-          Game.nodesDynamicIndex[Game.dynamicIndex] = nodeIndex;
-          Game.dynamicIndex++;
+          if (distanceValue >= GameState.nodesShade[nodeIndex]) continue;
+          GameState.nodesShade[nodeIndex] = distanceValue;
+          GameState.nodesDynamicIndex[GameState.dynamicIndex] = nodeIndex;
+          GameState.dynamicIndex++;
         }
       }
     }

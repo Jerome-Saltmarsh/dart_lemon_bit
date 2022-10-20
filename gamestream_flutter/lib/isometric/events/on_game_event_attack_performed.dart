@@ -1,6 +1,6 @@
 
 import 'package:bleed_common/attack_type.dart';
-import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/game_audio.dart';
 import 'package:gamestream_flutter/isometric/events/on_game_event.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
@@ -10,7 +10,7 @@ void onGameEventAttackPerformed(double x, double y, double z, double angle) {
   switch (attackType){
     case AttackType.Handgun:
       GameAudio.pistol_shot_20.playXYZ(x, y, z);
-      Game.spawnParticleShell(x, y, z);
+      GameState.spawnParticleShell(x, y, z);
       break;
     case AttackType.Shotgun:
       return GameAudio.shotgun_shot.playXYZ(x, y, z);

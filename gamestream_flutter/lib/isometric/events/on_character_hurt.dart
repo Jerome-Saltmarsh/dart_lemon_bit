@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:bleed_common/character_type.dart';
-import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/game_audio.dart';
 import 'package:lemon_math/library.dart';
 
@@ -12,7 +12,7 @@ void onGameEventCharacterHurt(int type, double x, double y, double z, double ang
   GameAudio.heavy_punch_13.playXYZ(x, y, z);
 
   for (var i = 0; i < 4; i++){
-    Game.spawnParticleBlood(
+    GameState.spawnParticleBlood(
         x: x,
         y: y,
         z: z,

@@ -23,8 +23,8 @@ Widget buildStackPlay() =>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            watch(Game.player.npcTalk, buildControlNpcTalk),
-            watch(Game.player.npcTalkOptions, buildControlNpcTopics)
+            watch(GameState.player.npcTalk, buildControlNpcTalk),
+            watch(GameState.player.npcTalkOptions, buildControlNpcTopics)
           ],
         ),
       )),
@@ -48,7 +48,7 @@ Widget buildBottomPlayerExperienceAndHealthBar() =>
   ));
 
 Widget buildWatchMouseTargetName(){
-   return watch(Game.player.mouseTargetName, (String? name){
+   return watch(GameState.player.mouseTargetName, (String? name){
       if (name == null) return SizedBox();
 
       return Container(
@@ -61,7 +61,7 @@ Widget buildWatchMouseTargetName(){
            alignment: Alignment.centerLeft,
            child: Stack(
              children: [
-               watch(Game.player.mouseTargetHealth, (double health){
+               watch(GameState.player.mouseTargetHealth, (double health){
                   return Container(
                     height: 50,
                     width: 100 * health,
@@ -84,7 +84,7 @@ Widget buildWatchMouseTargetName(){
 Widget buildWatchInventoryVisible(){
   return watch(inventoryVisible, (bool inventoryVisible){
     if (!inventoryVisible) return const SizedBox();
-    return watch(Game.player.weapon.type, buildColumnPlayerWeapons);
+    return watch(GameState.player.weapon.type, buildColumnPlayerWeapons);
   });
 }
 

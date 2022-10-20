@@ -1,17 +1,17 @@
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 
 
 int getNodeIndexBelow(int index){
-  return index - Game.nodesArea;
+  return index - GameState.nodesArea;
 }
 
 int getNodeTypeBelow(int index){
-  if (index < Game.nodesArea) return NodeType.Boundary;
-  final indexBelow = index - Game.nodesArea;
-  if (indexBelow >= Game.nodesTotal) return NodeType.Boundary;
-  return Game.nodesType[indexBelow];
+  if (index < GameState.nodesArea) return NodeType.Boundary;
+  final indexBelow = index - GameState.nodesArea;
+  if (indexBelow >= GameState.nodesTotal) return NodeType.Boundary;
+  return GameState.nodesType[indexBelow];
 }
 
 // void setNodeShade(int index, int shade){
@@ -41,18 +41,18 @@ int getNodeTypeBelow(int index){
 /// a check does not change any state
 bool verifyInBoundZRC(int z, int row, int column){
   if (z < 0) return false;
-  if (z >= Game.nodesTotalZ) return false;
+  if (z >= GameState.nodesTotalZ) return false;
   if (row < 0) return false;
-  if (row >= Game.nodesTotalRows) return false;
+  if (row >= GameState.nodesTotalRows) return false;
   if (column < 0) return false;
-  if (column >= Game.nodesTotalColumns) return false;
+  if (column >= GameState.nodesTotalColumns) return false;
   return true;
 }
 
 void gridNodeWindIncrement(int z, int row, int column){
-  final index = Game.getNodeIndexZRC(z, row, column);
-  if (Game.nodesWind[index] >= windIndexStrong) return;
-  Game.nodesWind[index]++;
+  final index = GameState.getNodeIndexZRC(z, row, column);
+  if (GameState.nodesWind[index] >= windIndexStrong) return;
+  GameState.nodesWind[index]++;
 }
 
 int getGridNodeIndexV3(Vector3 vector3) =>
@@ -61,7 +61,7 @@ int getGridNodeIndexV3(Vector3 vector3) =>
     );
 
 int getGridNodeIndexXYZ(double x, double y, double z) =>
-    Game.getNodeIndexZRC(
+    GameState.getNodeIndexZRC(
       z ~/ tileSizeHalf,
       x ~/ tileSize,
       y ~/ tileSize,
@@ -71,34 +71,34 @@ int gridNodeXYZTypeSafe(double x, double y, double z) {
   if (x < 0) return NodeType.Boundary;
   if (y < 0) return NodeType.Boundary;
   if (z < 0) return NodeType.Boundary;
-  if (x >= Game.nodesLengthRow) return NodeType.Boundary;
-  if (y >= Game.nodesLengthColumn) return NodeType.Boundary;
-  if (z >= Game.nodesLengthZ) return NodeType.Boundary;
+  if (x >= GameState.nodesLengthRow) return NodeType.Boundary;
+  if (y >= GameState.nodesLengthColumn) return NodeType.Boundary;
+  if (z >= GameState.nodesLengthZ) return NodeType.Boundary;
   return gridNodeXYZType(x, y, z);
 }
 
 int gridNodeXYZType(double x, double y, double z) =>
-    Game.nodesType[gridNodeXYZIndex(x, y, z)];
+    GameState.nodesType[gridNodeXYZIndex(x, y, z)];
 
 bool gridNodeZRCTypeRainOrEmpty(int z, int row, int column) =>
-     NodeType.isRainOrEmpty(Game.nodesType[Game.getNodeIndexZRC(z, row, column)]);
+     NodeType.isRainOrEmpty(GameState.nodesType[GameState.getNodeIndexZRC(z, row, column)]);
 
 int gridNodeZRCTypeSafe(int z, int row, int column) {
   if (z < 0) return NodeType.Boundary;
   if (row < 0) return NodeType.Boundary;
   if (column < 0) return NodeType.Boundary;
-  if (z >= Game.nodesTotalZ) return NodeType.Boundary;
-  if (row >= Game.nodesTotalRows) return NodeType.Boundary;
-  if (column >= Game.nodesTotalColumns) return NodeType.Boundary;
+  if (z >= GameState.nodesTotalZ) return NodeType.Boundary;
+  if (row >= GameState.nodesTotalRows) return NodeType.Boundary;
+  if (column >= GameState.nodesTotalColumns) return NodeType.Boundary;
   return gridNodeZRCType(z, row, column);
 }
 
 int gridNodeZRCType(int z, int row, int column) =>
-    Game.nodesType[Game.getNodeIndexZRC(z, row, column)];
+    GameState.nodesType[GameState.getNodeIndexZRC(z, row, column)];
 
 
 int gridNodeXYZIndex(double x, double y, double z) =>
-    Game.getNodeIndexZRC(
+    GameState.getNodeIndexZRC(
       z ~/ tileSizeHalf,
       x ~/ tileSize,
       y ~/ tileSize,

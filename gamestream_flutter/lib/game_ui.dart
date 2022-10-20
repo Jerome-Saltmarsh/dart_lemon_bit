@@ -1,6 +1,6 @@
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/game_widgets.dart';
 import 'package:gamestream_flutter/isometric/actions/action_game_dialog_show_quests.dart';
 import 'package:gamestream_flutter/isometric/edit.dart';
@@ -25,7 +25,7 @@ import 'ui/builders/build_panel_menu.dart';
 
 class GameUI {
   static final messageBoxVisible = Watch(false, clamp: (bool value){
-    if (Game.gameType.value == GameType.Skirmish) return false;
+    if (GameState.gameType.value == GameType.Skirmish) return false;
     return value;
   }, onChanged: onVisibilityChangedMessageBox);
   static final canOpenMapAndQuestMenu = Watch(false);
@@ -43,7 +43,7 @@ class GameUI {
         height: Engine.screen.height,
         child: Stack(
           children: [
-            watch(Game.player.message, (String message) =>
+            watch(GameState.player.message, (String message) =>
                 Positioned(
                   bottom: 64,
                   left: 0,
@@ -60,14 +60,14 @@ class GameUI {
                   ),
                 )
             ),
-            buildWatchBool(Game.triggerAlarmNoMessageReceivedFromServer, buildDialogFramesSinceUpdate),
-            watch(Game.gameType, buildGameTypeUI),
+            buildWatchBool(GameState.triggerAlarmNoMessageReceivedFromServer, buildDialogFramesSinceUpdate),
+            watch(GameState.gameType, buildGameTypeUI),
             watch(editorDialog, buildWatchEditorDialog),
-            watch(Game.player.gameDialog, buildGameDialog),
-            buildWatchBool(Game.player.alive, buildContainerRespawn, false),
+            watch(GameState.player.gameDialog, buildGameDialog),
+            buildWatchBool(GameState.player.alive, buildContainerRespawn, false),
             buildTopRightMenu(),
             buildWatchBool(GameUI.mapVisible, buildMiniMap),
-            watch(Game.edit, buildPlayMode),
+            watch(GameState.edit, buildPlayMode),
             buildWatchBool(debugVisible, buildHudDebug),
             // https://stackoverflow.com/questions/67147229/how-can-i-detect-multiple-touches-in-flutter
             // Positioned(
@@ -161,7 +161,7 @@ class GameUI {
   static Widget buildDialogFramesSinceUpdate() => Positioned(
       top: 8,
       left: 8,
-      child: watch(Game.rendersSinceUpdate,  (int frames) =>
+      child: watch(GameState.rendersSinceUpdate,  (int frames) =>
           text("Warning: No message received from server $frames")
       )
   );
@@ -170,10 +170,10 @@ class GameUI {
       Positioned(
         bottom: 0,
         left: 0,
-        child: watch(Game.player.interpolating, (bool value) {
-          if (!value) return text("Interpolation Off", onPressed: () => Game.player.interpolating.value = true);
-          return watch(Game.rendersSinceUpdate, (int frames){
-            return text("Frames: $frames", onPressed: () => Game.player.interpolating.value = false);
+        child: watch(GameState.player.interpolating, (bool value) {
+          if (!value) return text("Interpolation Off", onPressed: () => GameState.player.interpolating.value = true);
+          return watch(GameState.rendersSinceUpdate, (int frames){
+            return text("Frames: $frames", onPressed: () => GameState.player.interpolating.value = false);
           });
         }),
       );
@@ -194,7 +194,7 @@ class GameUI {
         left: 6,
         top: 6,
         child: onPressed(
-          action: Game.actionGameDialogShowMap,
+          action: GameState.actionGameDialogShowMap,
           child: Container(
               padding: const EdgeInsets.all(4),
               color: brownDark,
@@ -238,7 +238,7 @@ class GameUI {
         children: [
           Positioned(left: 8, bottom: 50, child: buildColumnTeleport()),
           buildBottomPlayerExperienceAndHealthBar(),
-          buildWatchBool(Game.player.questAdded, buildContainerQuestUpdated),
+          buildWatchBool(GameState.player.questAdded, buildContainerQuestUpdated),
         ],
       );
 }

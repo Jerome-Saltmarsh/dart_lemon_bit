@@ -27,10 +27,10 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
   if (key == PhysicalKeyboardKey.digit5)
     return EditState.paintTorch();
   if (key == PhysicalKeyboardKey.keyZ){
-    return Game.spawnParticleFirePurple(x: mouseGridX, y: mouseGridY, z: Game.player.z);
+    return GameState.spawnParticleFirePurple(x: mouseGridX, y: mouseGridY, z: GameState.player.z);
   }
 
-  if (Game.playMode) {
+  if (GameState.playMode) {
     if (key == PhysicalKeyboardKey.keyG)
       return GameNetwork.sendClientRequestTeleport();
     if (key == PhysicalKeyboardKey.keyI)
@@ -38,7 +38,7 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
     if (key == PhysicalKeyboardKey.keyT)
       return actionGameDialogShowQuests();
     if (key == PhysicalKeyboardKey.keyM)
-      return Game.actionGameDialogShowMap();
+      return GameState.actionGameDialogShowMap();
     return;
   }
 

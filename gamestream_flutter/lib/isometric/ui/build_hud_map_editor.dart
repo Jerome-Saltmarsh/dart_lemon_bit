@@ -166,7 +166,7 @@ Widget buildButtonLightning() {
   });
 }
 
-Widget buildButtonBreeze() => watch(Game.weatherBreeze, (bool weatherBreezeOn) {
+Widget buildButtonBreeze() => watch(GameState.weatherBreeze, (bool weatherBreezeOn) {
       return Column(
         children: [
           container(
@@ -193,7 +193,7 @@ Widget buildToggleLightMode() {
 Widget buildControlTime() {
   const totalWidth = 300.0;
   const buttonWidth = totalWidth / 24.0;
-  final buttons = watch(Game.hours, (int hours) {
+  final buttons = watch(GameState.hours, (int hours) {
     final buttons1 = <Widget>[];
     final buttons2 = <Widget>[];
 
@@ -234,9 +234,9 @@ Widget buildControlTime() {
     mainAxisAlignment: MainAxisAlignment.center,
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
-      watch(Game.hours, (num hour) => text(padZero(hour))),
+      watch(GameState.hours, (num hour) => text(padZero(hour))),
       text(":"),
-      watch(Game.minutes, (num hour) => text(padZero(hour))),
+      watch(GameState.minutes, (num hour) => text(padZero(hour))),
     ],
   );
   return Container(
@@ -282,7 +282,7 @@ Widget buildButtonSelectNodeType(int nodeType) {
         alignment: Alignment.center,
         child: canvas,
         action: () {
-          if (Game.playMode) {
+          if (GameState.playMode) {
             actionSetModePlay();
             return;
           }

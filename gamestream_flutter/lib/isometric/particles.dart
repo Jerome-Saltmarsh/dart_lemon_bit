@@ -1,6 +1,6 @@
 
 import 'package:bleed_common/particle_type.dart';
-import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
@@ -8,31 +8,31 @@ import 'package:lemon_math/library.dart';
 
 
 void sortParticlesActive(){
-  Game.totalParticles = Game.particles.length;
-  for (var pos = 1; pos < Game.totalParticles; pos++) {
+  GameState.totalParticles = GameState.particles.length;
+  for (var pos = 1; pos < GameState.totalParticles; pos++) {
     var min = 0;
     var max = pos;
-    var element = Game.particles[pos];
+    var element = GameState.particles[pos];
     while (min < max) {
       var mid = min + ((max - min) >> 1);
-      if (!Game.particles[mid].active) {
+      if (!GameState.particles[mid].active) {
         max = mid;
       } else {
         min = mid + 1;
       }
     }
-    Game.particles.setRange(min + 1, pos + 1, Game.particles, min);
-    Game.particles[min] = element;
+    GameState.particles.setRange(min + 1, pos + 1, GameState.particles, min);
+    GameState.particles[min] = element;
   }
 }
 
 bool verifyTotalActiveParticles() =>
-   countActiveParticles() == Game.totalActiveParticles;
+   countActiveParticles() == GameState.totalActiveParticles;
 
 int countActiveParticles(){
   var active = 0;
-  for (var i = 0; i < Game.particles.length; i++){
-    if (Game.particles[i].active)
+  for (var i = 0; i < GameState.particles.length; i++){
+    if (GameState.particles[i].active)
       active++;
   }
   return active;
@@ -40,20 +40,20 @@ int countActiveParticles(){
 
 void sortParticles(){
   sortParticlesActive();
-  Game.totalActiveParticles = 0;
-  Game.totalParticles = Game.particles.length;
-  for (; Game.totalActiveParticles < Game.totalParticles; Game.totalActiveParticles++){
-      if (!Game.particles[Game.totalActiveParticles].active) break;
+  GameState.totalActiveParticles = 0;
+  GameState.totalParticles = GameState.particles.length;
+  for (; GameState.totalActiveParticles < GameState.totalParticles; GameState.totalActiveParticles++){
+      if (!GameState.particles[GameState.totalActiveParticles].active) break;
   }
 
-  if (Game.totalActiveParticles == 0) return;
+  if (GameState.totalActiveParticles == 0) return;
   
   assert(verifyTotalActiveParticles());
 
   insertionSort(
-    Game.particles,
+    GameState.particles,
     compare: _compareParticles,
-    end: Game.totalActiveParticles,
+    end: GameState.totalActiveParticles,
   );
 }
 
@@ -63,12 +63,12 @@ int _compareParticles(Particle a, Particle b) {
 
 void updateParticlesZombieParts() {
   if (Engine.paintFrame % 6 != 0) return;
-  for (var i = 0; i < Game.totalActiveParticles; i++) {
-    final particle = Game.particles[i];
+  for (var i = 0; i < GameState.totalActiveParticles; i++) {
+    final particle = GameState.particles[i];
     if (!particle.active) break;
     if (!particleEmitsBlood(particle.type)) continue;
     if (particle.speed < 2.0) continue;
-    Game.spawnParticleBlood(
+    GameState.spawnParticleBlood(
       x: particle.x,
       y: particle.y,
       z: particle.z,

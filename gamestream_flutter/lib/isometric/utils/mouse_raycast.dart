@@ -1,28 +1,28 @@
 import 'package:bleed_common/node_type.dart';
 import 'package:bleed_common/tile_size.dart';
-import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
 import 'package:lemon_engine/engine.dart';
 
 void mouseRaycast(Function(int z, int row, int column) callback){
-  var z = Game.nodesTotalZ - 1;
+  var z = GameState.nodesTotalZ - 1;
   while (z >= 0){
     final row = convertWorldToRow(Engine.mouseWorldX, Engine.mouseWorldY, z * tileHeight);
     final column = convertWorldToColumn(Engine.mouseWorldX, Engine.mouseWorldY, z * tileHeight);
     if (row < 0) break;
     if (column < 0) break;
-    if (row >= Game.nodesTotalRows) break;
-    if (column >= Game.nodesTotalColumns) break;
-    if (z >= Game.nodesTotalZ) break;
-    final index = Game.getNodeIndexZRC(z, row, column);
-    if (Game.nodesType[index] == NodeType.Empty
+    if (row >= GameState.nodesTotalRows) break;
+    if (column >= GameState.nodesTotalColumns) break;
+    if (z >= GameState.nodesTotalZ) break;
+    final index = GameState.getNodeIndexZRC(z, row, column);
+    if (GameState.nodesType[index] == NodeType.Empty
         ||
-        NodeType.isRain(Game.nodesType[index])
+        NodeType.isRain(GameState.nodesType[index])
     ) {
       z--;
       continue;
     }
-    if (!Game.nodesVisible[index]) {
+    if (!GameState.nodesVisible[index]) {
       z--;
       continue;
     }

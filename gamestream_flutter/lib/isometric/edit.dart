@@ -39,31 +39,31 @@ class EditState {
 
   static var nodeIndex = Watch(0, clamp: (int value){
      if (value < 0) return 0;
-     if (value >= Game.nodesTotal) return Game.nodesTotal - 1;
+     if (value >= GameState.nodesTotal) return GameState.nodesTotal - 1;
      return value;
   }, onChanged: onChangedSelectedNodeIndex);
 
-  static int get z => Game.convertNodeIndexToZ(nodeIndex.value);
-  static int get row => Game.convertNodeIndexToRow(nodeIndex.value);
-  static int get column => Game.convertNodeIndexToColumn(nodeIndex.value);
+  static int get z => GameState.convertNodeIndexToZ(nodeIndex.value);
+  static int get row => GameState.convertNodeIndexToRow(nodeIndex.value);
+  static int get column => GameState.convertNodeIndexToColumn(nodeIndex.value);
 
   static set z(int value){
      if (value < 0) return;
-     if (value >= Game.nodesTotalZ) return;
+     if (value >= GameState.nodesTotalZ) return;
      final difference = value - z;
-     nodeIndex.value += difference * Game.nodesArea;
+     nodeIndex.value += difference * GameState.nodesArea;
   }
 
   static set row(int value){
     if (value < 0) return;
-    if (value >= Game.nodesTotalRows) return;
+    if (value >= GameState.nodesTotalRows) return;
     final difference = value - row;
-    nodeIndex.value += difference * Game.nodesTotalColumns;
+    nodeIndex.value += difference * GameState.nodesTotalColumns;
   }
 
   static set column(int value){
     if (value < 0) return;
-    if (value >= Game.nodesTotalColumns) return;
+    if (value >= GameState.nodesTotalColumns) return;
     nodeIndex.value += value - column;
   }
 
@@ -79,8 +79,8 @@ class EditState {
   static double get renderY => projectY(posX, posY, posZ);
 
   static void refreshNodeSelectedIndex(){
-    nodeSelectedType.value = Game.nodesType[nodeIndex.value];
-    nodeSelectedOrientation.value = Game.nodesOrientation[nodeIndex.value];
+    nodeSelectedType.value = GameState.nodesType[nodeIndex.value];
+    nodeSelectedOrientation.value = GameState.nodesOrientation[nodeIndex.value];
   }
 
   static void deselectGameObject() {
@@ -142,7 +142,7 @@ class EditState {
   }
 
   static void selectBlock(int z, int row, int column){
-    nodeIndex.value = Game.getNodeIndexZRC(z, row, column);
+    nodeIndex.value = GameState.getNodeIndexZRC(z, row, column);
   }
 
   static void deleteGameObjectSelected(){
@@ -195,7 +195,7 @@ class EditState {
     );
   }
 
-  static void cursorSetToPlayer() => nodeIndex.value = Game.player.nodeIndex;
+  static void cursorSetToPlayer() => nodeIndex.value = GameState.player.nodeIndex;
   static void cursorRowIncrease() => row++;
   static void cursorRowDecrease() => row--;
   static void cursorColumnIncrease() => column++;

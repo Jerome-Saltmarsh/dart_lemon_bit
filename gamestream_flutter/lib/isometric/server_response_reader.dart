@@ -7,7 +7,7 @@ import 'package:bleed_common/game_option.dart';
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/quest.dart';
-import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/game_ui.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
@@ -39,19 +39,19 @@ final serverResponseReader = ServerResponseReader();
 
 
 void onChangedRendersSinceUpdate(int value){
-   Game.triggerAlarmNoMessageReceivedFromServer.value = value > 200;
+   GameState.triggerAlarmNoMessageReceivedFromServer.value = value > 200;
 }
 
 class ServerResponseReader with ByteReader {
   final byteLength = Watch(0);
   final bufferSize = Watch(0);
-  final updateFrame = Watch(0, onChanged: Game.onChangedUpdateFrame);
+  final updateFrame = Watch(0, onChanged: GameState.onChangedUpdateFrame);
 
   void readBytes(Uint8List values) {
     updateFrame.value++;
     index = 0;
-    Game.totalCharacters = 0;
-    Game.totalGameObjects = 0;
+    GameState.totalCharacters = 0;
+    GameState.totalGameObjects = 0;
     bufferSize.value = values.length;
     this.values = values;
 
@@ -126,7 +126,7 @@ class ServerResponseReader with ByteReader {
           final speed = readDouble() * 0.01;
           final weight = readDouble() * 0.01;
           final zv = readDouble() * 0.01;
-          Game.spawnParticle(
+          GameState.spawnParticle(
               type: particleType,
               x: x,
               y: y,
@@ -139,20 +139,20 @@ class ServerResponseReader with ByteReader {
           );
           break;
         case ServerResponse.Game_Type:
-          Game.gameType.value = readByte();
+          GameState.gameType.value = readByte();
           break;
         case ServerResponse.Player_Slots:
-          Game.player.weaponSlot1.type.value = readByte();
-          Game.player.weaponSlot1.capacity.value = readInt();
-          Game.player.weaponSlot1.rounds.value = readInt();
+          GameState.player.weaponSlot1.type.value = readByte();
+          GameState.player.weaponSlot1.capacity.value = readInt();
+          GameState.player.weaponSlot1.rounds.value = readInt();
 
-          Game.player.weaponSlot2.type.value = readByte();
-          Game.player.weaponSlot2.capacity.value = readInt();
-          Game.player.weaponSlot2.rounds.value = readInt();
+          GameState.player.weaponSlot2.type.value = readByte();
+          GameState.player.weaponSlot2.capacity.value = readInt();
+          GameState.player.weaponSlot2.rounds.value = readInt();
 
-          Game.player.weaponSlot3.type.value = readByte();
-          Game.player.weaponSlot3.capacity.value = readInt();
-          Game.player.weaponSlot3.rounds.value = readInt();
+          GameState.player.weaponSlot3.type.value = readByte();
+          GameState.player.weaponSlot3.capacity.value = readInt();
+          GameState.player.weaponSlot3.rounds.value = readInt();
           break;
         case ServerResponse.Player_Spawned:
           readPlayerSpawned();
@@ -167,7 +167,7 @@ class ServerResponseReader with ByteReader {
           readNode();
           break;
         case ServerResponse.Player_Target:
-          readVector3(Game.player.target);
+          readVector3(GameState.player.target);
           break;
         case ServerResponse.Store_Items:
           readStoreItems();
@@ -236,7 +236,7 @@ class ServerResponseReader with ByteReader {
     final environmentResponse = readByte();
     switch (environmentResponse) {
       case EnvironmentResponse.Shade:
-        Game.ambientShade.value = readByte();
+        GameState.ambientShade.value = readByte();
         break;
       case EnvironmentResponse.Rain:
         rain.value = readRain();
@@ -248,7 +248,7 @@ class ServerResponseReader with ByteReader {
         windAmbient.value = readWind();
         break;
       case EnvironmentResponse.Breeze:
-        Game.weatherBreeze.value = readBool();
+        GameState.weatherBreeze.value = readBool();
         break;
     }
   }
@@ -300,52 +300,52 @@ class ServerResponseReader with ByteReader {
     final apiPlayer = readByte();
     switch (apiPlayer) {
       case ApiPlayer.Position:
-        Game.player.previousPosition.x = Game.player.x;
-        Game.player.previousPosition.y = Game.player.y;
-        Game.player.previousPosition.z = Game.player.z;
-        readVector3(Game.player);
+        GameState.player.previousPosition.x = GameState.player.x;
+        GameState.player.previousPosition.y = GameState.player.y;
+        GameState.player.previousPosition.z = GameState.player.z;
+        readVector3(GameState.player);
         break;
       case ApiPlayer.Health:
-        Game.player.health.value = readInt();
+        GameState.player.health.value = readInt();
         break;
       case ApiPlayer.Max_Health:
-        Game.player.maxHealth = readInt();
+        GameState.player.maxHealth = readInt();
         break;
       case ApiPlayer.Armour_Type:
-       Game.player.armourType.value = readByte();
+       GameState.player.armourType.value = readByte();
         break;
       case ApiPlayer.Head_Type:
-       Game.player.headType.value = readByte();
+       GameState.player.headType.value = readByte();
         break;
       case ApiPlayer.Pants_Type:
-       Game.player.pantsType.value = readByte();
+       GameState.player.pantsType.value = readByte();
         break;
       case ApiPlayer.Alive:
-       Game.player.alive.value = readBool();
+       GameState.player.alive.value = readBool();
         break;
       case ApiPlayer.Experience_Percentage:
-       Game.player.experience.value = readPercentage();
+       GameState.player.experience.value = readPercentage();
         break;
       case ApiPlayer.Level:
-       Game.player.level.value = readInt();
+       GameState.player.level.value = readInt();
         break;
       case ApiPlayer.Aim_Angle:
-       Game.player.mouseAngle = readAngle();
+       GameState.player.mouseAngle = readAngle();
         break;
       case ApiPlayer.Points:
-       Game.player.points.value = readInt();
+       GameState.player.points.value = readInt();
         break;
       case ApiPlayer.Weapon_Type:
-       Game.player.weapon.type.value = readByte();
+       GameState.player.weapon.type.value = readByte();
         break;
       case ApiPlayer.Weapon_Rounds:
-       Game.player.weapon.rounds.value = readInt();
+       GameState.player.weapon.rounds.value = readInt();
         break;
       case ApiPlayer.Weapon_Capacity:
-       Game.player.weapon.capacity.value = readInt();
+       GameState.player.weapon.capacity.value = readInt();
         break;
       case ApiPlayer.Message:
-       Game.player.message.value = readString();
+       GameState.player.message.value = readString();
         break;
       default:
         throw Exception("Cannot parse apiPlayer $apiPlayer");
@@ -359,13 +359,13 @@ class ServerResponseReader with ByteReader {
   }
 
   void readPlayerAttackTargetName() {
-   Game.player.mouseTargetName.value = readString();
-   Game.player.mouseTargetAllie.value = readBool();
-   Game.player.mouseTargetHealth.value = readPercentage();
+   GameState.player.mouseTargetName.value = readString();
+   GameState.player.mouseTargetAllie.value = readBool();
+   GameState.player.mouseTargetHealth.value = readPercentage();
   }
 
   void readMapCoordinate() {
-   Game.player.mapTile.value = readByte();
+   GameState.player.mapTile.value = readByte();
   }
 
   void readEditorGameObjectSelected() {
@@ -414,36 +414,36 @@ class ServerResponseReader with ByteReader {
   }
 
   void readCharacterRat() {
-    final character = Game.getCharacterInstance();
+    final character = GameState.getCharacterInstance();
     character.characterType = CharacterType.Rat;
     readCharacter(character);
-    Game.totalCharacters++;
+    GameState.totalCharacters++;
   }
 
   void readCharacterZombie() {
-    final character = Game.getCharacterInstance();
+    final character = GameState.getCharacterInstance();
     character.characterType = CharacterType.Zombie;
     readCharacter(character);
-    Game.totalCharacters++;
+    GameState.totalCharacters++;
   }
 
   void readCharacterSlime() {
-    final character = Game.getCharacterInstance();
+    final character = GameState.getCharacterInstance();
     character.characterType = CharacterType.Slime;
     readCharacter(character);
-    Game.totalCharacters++;
+    GameState.totalCharacters++;
   }
 
   void readCharacterTemplate() {
-    final character = Game.getCharacterInstance();
+    final character = GameState.getCharacterInstance();
     character.characterType = CharacterType.Template;
     readCharacter(character);
     readCharacterEquipment(character);
-    Game.totalCharacters++;
+    GameState.totalCharacters++;
   }
 
   void readCharacterPlayer(){
-    final character = Game.getCharacterInstance();
+    final character = GameState.getCharacterInstance();
     final teamDirectionState = readByte();
     character.characterType = CharacterType.Template;
     readTeamDirectionState(character, teamDirectionState);
@@ -456,30 +456,30 @@ class ServerResponseReader with ByteReader {
     character.text = readString();
     character.lookRadian = readAngle();
     character.weaponFrame = readByte();
-    Game.totalCharacters++;
+    GameState.totalCharacters++;
   }
 
   void readInteractingNpcName() {
-   Game.player.interactingNpcName.value = readString();
+   GameState.player.interactingNpcName.value = readString();
   }
 
   void readPlayerQuests() {
-   Game.player.questsInProgress.value = readQuests();
-   Game.player.questsCompleted.value = readQuests();
+   GameState.player.questsInProgress.value = readQuests();
+   GameState.player.questsCompleted.value = readQuests();
   }
 
   void readNpcTalk() {
-   Game.player.npcTalk.value = readString();
+   GameState.player.npcTalk.value = readString();
     final totalOptions = readByte();
     final options = <String>[];
     for (var i = 0; i < totalOptions; i++) {
        options.add(readString());
     }
-   Game.player.npcTalkOptions.value = options;
+   GameState.player.npcTalkOptions.value = options;
   }
 
   void readPlayerDesigned() {
-   Game.player.designed.value = readBool();
+   GameState.player.designed.value = readBool();
   }
 
   void readSceneMetaData() {
@@ -498,11 +498,11 @@ class ServerResponseReader with ByteReader {
 
   void readWeather() {
     rain.value = readRain();
-    Game.weatherBreeze.value = readBool();
+    GameState.weatherBreeze.value = readBool();
     lightning.value = readLightning();
     watchTimePassing.value = readBool();
     windAmbient.value = readWind();
-    Game.ambientShade.value = readByte();
+    GameState.ambientShade.value = readByte();
   }
 
   Rain readRain(){
@@ -532,31 +532,31 @@ class ServerResponseReader with ByteReader {
     final nodeType = readByte();
     final nodeOrientation = readByte();
     assert(NodeType.supportsOrientation(nodeType, nodeOrientation));
-    Game.nodesType[nodeIndex] = nodeType;
-    Game.nodesOrientation[nodeIndex] = nodeOrientation;
+    GameState.nodesType[nodeIndex] = nodeType;
+    GameState.nodesOrientation[nodeIndex] = nodeOrientation;
     EditState.refreshNodeSelectedIndex();
     onGridChanged();
   }
 
   void readPlayerWeapons() {
-   Game.player.weapons.value = readWeapons();
+   GameState.player.weapons.value = readWeapons();
   }
 
   void readPlayerTarget() {
-    readVector3(Game.player.abilityTarget);
+    readVector3(GameState.player.abilityTarget);
   }
 
   void readPlayerSpawned() {
-   Game.player.x = readDouble();
-   Game.player.y = readDouble();
+   GameState.player.x = readDouble();
+   GameState.player.y = readDouble();
     cameraCenterOnPlayer();
     Engine.zoom = 1.0;
     Engine.targetZoom = 1.0;
   }
 
   void readGameTime() {
-    Game.hours.value = readByte();
-    Game.minutes.value = readByte();
+    GameState.hours.value = readByte();
+    GameState.minutes.value = readByte();
   }
 
   void readDamageApplied() {
@@ -567,22 +567,22 @@ class ServerResponseReader with ByteReader {
   }
 
   void readTechTypes() {
-   Game.player.levelPickaxe.value = readByte();
-   Game.player.levelSword.value = readByte();
-   Game.player.levelBow.value = readByte();
-   Game.player.levelAxe.value = readByte();
-   Game.player.levelHammer.value = readByte();
+   GameState.player.levelPickaxe.value = readByte();
+   GameState.player.levelSword.value = readByte();
+   GameState.player.levelBow.value = readByte();
+   GameState.player.levelAxe.value = readByte();
+   GameState.player.levelHammer.value = readByte();
   }
 
   void readPlayerAttackTargetNone() {
-   Game.player.attackTarget.x = 0;
-   Game.player.attackTarget.y = 0;
-   Game.player.mouseTargetName.value = null;
+   GameState.player.attackTarget.x = 0;
+   GameState.player.attackTarget.y = 0;
+   GameState.player.mouseTargetName.value = null;
     Engine.cursorType.value = CursorType.Basic;
   }
 
   void readPlayerAttackTarget() {
-    readVector3(Game.player.attackTarget);
+    readVector3(GameState.player.attackTarget);
     Engine.cursorType.value = CursorType.Click;
   }
 
@@ -591,23 +591,23 @@ class ServerResponseReader with ByteReader {
   }
 
   void readGrid() {
-    Game.nodesTotalZ = readInt();
-    Game.nodesTotalRows = readInt();
-    Game.nodesTotalColumns = readInt();
-    Game.nodesArea = Game.nodesTotalRows * Game.nodesTotalColumns;
-    final totalNodes = Game.nodesTotalZ * Game.nodesTotalRows * Game.nodesTotalColumns;
-    if (Game.nodesType.length < totalNodes) {
-      Game.nodesType = Uint8List(totalNodes);
-      Game.nodesOrientation = Uint8List(totalNodes);
-      Game.nodesShade = Uint8List(totalNodes);
-      Game.nodesBake = Uint8List(totalNodes);
-      Game.nodesWind = Uint8List(totalNodes);
-      Game.nodesVariation = List.generate(totalNodes, (index) => false, growable: false);
-      Game.nodesVisible = List.generate(totalNodes, (index) => true, growable: false);
-      Game.nodesVisibleIndex = Uint16List(totalNodes);
-      Game.nodesDynamicIndex = Uint16List(totalNodes);
+    GameState.nodesTotalZ = readInt();
+    GameState.nodesTotalRows = readInt();
+    GameState.nodesTotalColumns = readInt();
+    GameState.nodesArea = GameState.nodesTotalRows * GameState.nodesTotalColumns;
+    final totalNodes = GameState.nodesTotalZ * GameState.nodesTotalRows * GameState.nodesTotalColumns;
+    if (GameState.nodesType.length < totalNodes) {
+      GameState.nodesType = Uint8List(totalNodes);
+      GameState.nodesOrientation = Uint8List(totalNodes);
+      GameState.nodesShade = Uint8List(totalNodes);
+      GameState.nodesBake = Uint8List(totalNodes);
+      GameState.nodesWind = Uint8List(totalNodes);
+      GameState.nodesVariation = List.generate(totalNodes, (index) => false, growable: false);
+      GameState.nodesVisible = List.generate(totalNodes, (index) => true, growable: false);
+      GameState.nodesVisibleIndex = Uint16List(totalNodes);
+      GameState.nodesDynamicIndex = Uint16List(totalNodes);
     }
-    Game.nodesTotal = totalNodes;
+    GameState.nodesTotal = totalNodes;
 
     var gridIndex = 0;
     var total = 0;
@@ -626,20 +626,20 @@ class ServerResponseReader with ByteReader {
       total += count;
 
       while (count > 0) {
-        Game.nodesType[gridIndex] = nodeType;
-        Game.nodesOrientation[gridIndex] = nodeOrientation;
+        GameState.nodesType[gridIndex] = nodeType;
+        GameState.nodesOrientation[gridIndex] = nodeOrientation;
 
         if (nodeType == NodeType.Grass) {
-          Game.nodesVariation[gridIndex] = randomBool();
+          GameState.nodesVariation[gridIndex] = randomBool();
         }
 
         gridIndex++;
         count--;
         currentColumn++;
-        if (currentColumn >= Game.nodesTotalColumns) {
+        if (currentColumn >= GameState.nodesTotalColumns) {
           currentColumn = 0;
           currentRow++;
-          if (currentRow >= Game.nodesTotalRows) {
+          if (currentRow >= GameState.nodesTotalRows) {
             currentRow = 0;
           }
         }
@@ -705,12 +705,12 @@ class ServerResponseReader with ByteReader {
   }
 
   void readProjectiles(){
-    Game.totalProjectiles = readInt();
-    while (Game.totalProjectiles >= Game.projectiles.length){
-      Game.projectiles.add(Projectile());
+    GameState.totalProjectiles = readInt();
+    while (GameState.totalProjectiles >= GameState.projectiles.length){
+      GameState.projectiles.add(Projectile());
     }
-    for (var i = 0; i < Game.totalProjectiles; i++) {
-      final projectile = Game.projectiles[i];
+    for (var i = 0; i < GameState.totalProjectiles; i++) {
+      final projectile = GameState.projectiles[i];
       projectile.x = readDouble();
       projectile.y = readDouble();
       projectile.z = readDouble();
@@ -730,23 +730,23 @@ class ServerResponseReader with ByteReader {
   }
 
   void readNpcs() {
-    Game.totalNpcs = 0;
-    var npcLength = Game.npcs.length;
+    GameState.totalNpcs = 0;
+    var npcLength = GameState.npcs.length;
     while (true) {
       final stateInt = readByte();
       if (stateInt == END) break;
-      if (Game.totalNpcs >= npcLength){
-        Game.npcs.add(Character());
+      if (GameState.totalNpcs >= npcLength){
+        GameState.npcs.add(Character());
         npcLength++;
       }
-      final npc = Game.npcs[Game.totalNpcs];
+      final npc = GameState.npcs[GameState.totalNpcs];
       readTeamDirectionState(npc, stateInt);
       npc.x = readDouble();
       npc.y = readDouble();
       npc.z = readDouble();
       _parseCharacterFrameHealth(npc, readByte());
       readCharacterEquipment(npc);
-      Game.totalNpcs++;
+      GameState.totalNpcs++;
     }
   }
 

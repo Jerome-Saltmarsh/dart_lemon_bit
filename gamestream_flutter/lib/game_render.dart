@@ -4,7 +4,7 @@ import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/node_size.dart';
 import 'package:bleed_common/particle_type.dart';
-import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/game_images.dart';
 import 'package:gamestream_flutter/isometric/animation_frame.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
@@ -91,8 +91,8 @@ class GameRender {
   static var nodesMaxZ = 0;
   static var nodesMinZ = 0;
 
-  static final maxZRender = Watch<int>(Game.nodesTotalZ, clamp: (int value){
-    return clamp<int>(value, 0, max(Game.nodesTotalZ - 1, 0));
+  static final maxZRender = Watch<int>(GameState.nodesTotalZ, clamp: (int value){
+    return clamp<int>(value, 0, max(GameState.nodesTotalZ - 1, 0));
   });
 
   static double get currentNodeRenderX => (currentNodeRow - currentNodeColumn) * tileSizeHalf;
@@ -109,19 +109,19 @@ class GameRender {
     renderGameObject(currentRenderGameObject);
 
   static void updateCurrentParticle(){
-    currentParticle = Game.particles[renderOrderParticle.index];
+    currentParticle = GameState.particles[renderOrderParticle.index];
     renderOrderParticle.order = currentParticle.renderOrder;
     renderOrderParticle.orderZ = currentParticle.indexZ;
   }
 
   static void updateCurrentProjectile(){
-    currentRenderProjectile = Game.projectiles[renderOrderProjectiles.index];
+    currentRenderProjectile = GameState.projectiles[renderOrderProjectiles.index];
     renderOrderProjectiles.order = currentRenderProjectile.renderOrder;
     renderOrderProjectiles.orderZ = currentRenderProjectile.indexZ;
   }
 
   static void updateCurrentGameObject(){
-    currentRenderGameObject = Game.gameObjects[renderOrderGameObjects.index];
+    currentRenderGameObject = GameState.gameObjects[renderOrderGameObjects.index];
     renderOrderGameObjects.order = currentRenderGameObject.renderOrder;
     renderOrderGameObjects.orderZ = currentRenderGameObject.indexZ;
   }
@@ -131,7 +131,7 @@ class GameRender {
   }
 
   static void updateCurrentCharacter() {
-    currentRenderCharacter = Game.characters[renderOrderCharacters.index];
+    currentRenderCharacter = GameState.characters[renderOrderCharacters.index];
     renderOrderCharacters.order = currentRenderCharacter.renderOrder;
     renderOrderCharacters.orderZ = currentRenderCharacter.indexZ;
   }
@@ -156,13 +156,13 @@ class GameRender {
   static void nodesShiftIndexDown(){
     currentNodeColumn = currentNodeRow + currentNodeColumn + 1;
     currentNodeRow = 0;
-    if (currentNodeColumn < Game.nodesTotalColumns) {
+    if (currentNodeColumn < GameState.nodesTotalColumns) {
       return nodesSetStart();
     }
     currentNodeRow = currentNodeColumn - nodesGridTotalColumnsMinusOne;
     currentNodeColumn = nodesGridTotalColumnsMinusOne;
 
-    if (currentNodeRow >= Game.nodesTotalRows){
+    if (currentNodeRow >= GameState.nodesTotalRows){
       renderOrderGrid.remaining = false;
       return;
     }
@@ -187,7 +187,7 @@ class GameRender {
           srcY: 32,
           srcWidth: 8,
           srcHeight: 8,
-          color: Game.getV3RenderColor(particle),
+          color: GameState.getV3RenderColor(particle),
         );
         break;
       // const size = 8.0;
@@ -209,7 +209,7 @@ class GameRender {
           srcY: 32,
           srcWidth: 4,
           srcHeight: 4,
-          color: Game.getV3RenderColor(particle),
+          color: GameState.getV3RenderColor(particle),
         );
         break;
       case ParticleType.Bullet_Ring:
@@ -221,7 +221,7 @@ class GameRender {
           srcY: 32,
           srcWidth: 4,
           srcHeight: 4,
-          color: Game.getV3RenderColor(particle),
+          color: GameState.getV3RenderColor(particle),
         );
         break;
       case ParticleType.Water_Drop:
@@ -233,7 +233,7 @@ class GameRender {
           srcY: 40,
           srcWidth: 4,
           srcHeight: 4,
-          color: Game.getV3RenderColor(particle),
+          color: GameState.getV3RenderColor(particle),
         );
         break;
       case ParticleType.Smoke:
@@ -258,7 +258,7 @@ class GameRender {
           srcWidth: 8,
           srcHeight: 8,
           scale: particle.scale,
-          color: Game.getV3RenderColor(particle),
+          color: GameState.getV3RenderColor(particle),
         );
         break;
       case ParticleType.Block_Grass:
@@ -271,7 +271,7 @@ class GameRender {
           srcWidth: 8,
           srcHeight: 8,
           scale: particle.scale,
-          color: Game.getV3RenderColor(particle),
+          color: GameState.getV3RenderColor(particle),
         );
         break;
       case ParticleType.Block_Brick:
@@ -284,7 +284,7 @@ class GameRender {
           srcWidth: 8,
           srcHeight: 8,
           scale: particle.scale,
-          color: Game.getV3RenderColor(particle),
+          color: GameState.getV3RenderColor(particle),
         );
         break;
       case ParticleType.Fire:
@@ -312,7 +312,7 @@ class GameRender {
           srcWidth: 32,
           srcHeight: 32,
           scale: 0.25,
-          color: Game.getV3RenderColor(particle),
+          color: GameState.getV3RenderColor(particle),
         );
         break;
       case ParticleType.Fire_Purple:
@@ -341,7 +341,7 @@ class GameRender {
           srcY: 25,
           srcWidth: 8,
           srcHeight: 8,
-          color: Game.getV3RenderColor(particle),
+          color: GameState.getV3RenderColor(particle),
         );
         break;
       case ParticleType.Orb_Shard:
@@ -381,7 +381,7 @@ class GameRender {
           srcY: 1 + 64.0 * particle.direction,
           srcWidth: 64,
           srcHeight: 64,
-          color: Game.getV3RenderColor(particle),
+          color: GameState.getV3RenderColor(particle),
         );
         break;
       case ParticleType.Zombie_Head:
@@ -394,7 +394,7 @@ class GameRender {
           srcY: 64.0 * particle.direction,
           srcWidth: 64,
           srcHeight: 64,
-          color: Game.getV3RenderColor(particle),
+          color: GameState.getV3RenderColor(particle),
         );
         break;
       case ParticleType.Zombie_leg:
@@ -407,7 +407,7 @@ class GameRender {
           srcY: 64.0 * particle.direction,
           srcWidth: 64,
           srcHeight: 64,
-          color: Game.getV3RenderColor(particle),
+          color: GameState.getV3RenderColor(particle),
         );
         break;
       case ParticleType.Zombie_Torso:
@@ -420,7 +420,7 @@ class GameRender {
           srcY: 64.0 * particle.direction,
           srcWidth: 64,
           srcHeight: 64,
-          color: Game.getV3RenderColor(particle),
+          color: GameState.getV3RenderColor(particle),
         );
         break;
       case ParticleType.Strike_Blade:
@@ -465,7 +465,7 @@ class GameRender {
           srcY: AtlasSrcGameObjects.Rock_Y,
           srcWidth: AtlasSrcGameObjects.Rock_Width,
           srcHeight: AtlasSrcGameObjects.Rock_Height,
-          color: Game.getV3RenderColor(gameObject),
+          color: GameState.getV3RenderColor(gameObject),
         );
         return;
       case GameObjectType.Loot:
@@ -477,7 +477,7 @@ class GameRender {
           srcY: AtlasSrcGameObjects.Loot_Y,
           srcWidth: AtlasSrcGameObjects.Loot_Width,
           srcHeight: AtlasSrcGameObjects.Loot_Height,
-          color: Game.getV3RenderColor(gameObject),
+          color: GameState.getV3RenderColor(gameObject),
         );
         return;
       case GameObjectType.Barrel:
@@ -490,7 +490,7 @@ class GameRender {
           srcWidth: AtlasSrcGameObjects.Barrel_Width,
           srcHeight: AtlasSrcGameObjects.Barrel_Height,
           anchorY: AtlasSrcGameObjects.Barrel_Anchor,
-          color: Game.getV3RenderColor(gameObject),
+          color: GameState.getV3RenderColor(gameObject),
         );
         return;
       case GameObjectType.Tavern_Sign:
@@ -502,7 +502,7 @@ class GameRender {
           srcY: AtlasSrcGameObjects.Tavern_Sign_Y,
           srcWidth: AtlasSrcGameObjects.Tavern_Sign_Width,
           srcHeight: AtlasSrcGameObjects.Tavern_Sign_Height,
-          color: Game.getV3RenderColor(gameObject),
+          color: GameState.getV3RenderColor(gameObject),
         );
         return;
       case GameObjectType.Candle:
@@ -525,7 +525,7 @@ class GameRender {
           srcWidth: 5,
           srcHeight: 14,
           anchorY: 0.95,
-          color: Game.getV3RenderColor(gameObject),
+          color: GameState.getV3RenderColor(gameObject),
         );
         return;
       case GameObjectType.Wheel:
@@ -537,7 +537,7 @@ class GameRender {
           srcWidth: 34,
           srcHeight: 40,
           anchorY: 0.9,
-          color: Game.getV3RenderColor(gameObject),
+          color: GameState.getV3RenderColor(gameObject),
         );
         return;
       case GameObjectType.Flower:
@@ -548,7 +548,7 @@ class GameRender {
           srcY: 0,
           srcWidth: 16,
           srcHeight: 16,
-          color: Game.getV3RenderColor(gameObject),
+          color: GameState.getV3RenderColor(gameObject),
         );
         return;
       case GameObjectType.Stick:
@@ -559,7 +559,7 @@ class GameRender {
           srcY: 0,
           srcWidth: 16,
           srcHeight: 16,
-          color: Game.getV3RenderColor(gameObject),
+          color: GameState.getV3RenderColor(gameObject),
         );
         return;
       case GameObjectType.Crystal:
@@ -594,7 +594,7 @@ class GameRender {
           srcWidth: 12,
           srcHeight: 22,
           scale: 1.0,
-          color: Game.colorShades[Shade.Very_Bright],
+          color: GameState.colorShades[Shade.Very_Bright],
         );
         return;
       case GameObjectType.Wooden_Shelf_Row:
@@ -648,7 +648,7 @@ class GameRender {
             srcY: AtlasSrcGameObjects.Shotgun_Y,
             srcWidth: AtlasSrcGameObjects.Shotgun_Width,
             srcHeight: AtlasSrcGameObjects.Shotgun_Height,
-            color: Game.getV3RenderColor(gameObject)
+            color: GameState.getV3RenderColor(gameObject)
         );
         break;
 
@@ -662,7 +662,7 @@ class GameRender {
             srcY: AtlasSrcGameObjects.Handgun_Y,
             srcWidth: AtlasSrcGameObjects.Handgun_Width,
             srcHeight: AtlasSrcGameObjects.Handgun_Height,
-            color: Game.getV3RenderColor(gameObject)
+            color: GameState.getV3RenderColor(gameObject)
         );
         break;
 
@@ -676,7 +676,7 @@ class GameRender {
             srcY: AtlasSrcGameObjects.Sword_Y,
             srcWidth: AtlasSrcGameObjects.Sword_Width,
             srcHeight: AtlasSrcGameObjects.Sword_Height,
-            color: Game.getV3RenderColor(gameObject)
+            color: GameState.getV3RenderColor(gameObject)
         );
         break;
 
@@ -690,7 +690,7 @@ class GameRender {
             srcY: AtlasSrcGameObjects.Bow_Y,
             srcWidth: AtlasSrcGameObjects.Bow_Width,
             srcHeight: AtlasSrcGameObjects.Bow_Height,
-            color: Game.getV3RenderColor(gameObject)
+            color: GameState.getV3RenderColor(gameObject)
         );
         break;
 
@@ -704,7 +704,7 @@ class GameRender {
             srcY: AtlasSrcGameObjects.Staff_Y,
             srcWidth: AtlasSrcGameObjects.Staff_Width,
             srcHeight: AtlasSrcGameObjects.Staff_Height,
-            color: Game.getV3RenderColor(gameObject)
+            color: GameState.getV3RenderColor(gameObject)
         );
         break;
     }
@@ -726,13 +726,13 @@ class GameRender {
   }
 
   static void renderMouseTargetName() {
-    if (!Game.player.mouseTargetAllie.value) return;
-    final mouseTargetName = Game.player.mouseTargetName.value;
+    if (!GameState.player.mouseTargetAllie.value) return;
+    final mouseTargetName = GameState.player.mouseTargetName.value;
     if (mouseTargetName == null) return;
     renderText(
         text: mouseTargetName,
-        x: Game.player.attackTarget.renderX,
-        y: Game.player.attackTarget.renderY - 55);
+        x: GameState.player.attackTarget.renderX,
+        y: GameState.player.attackTarget.renderY - 55);
   }
 
   static void renderSprites() {
@@ -812,7 +812,7 @@ class GameRender {
         currentNodeRow <= nodesRowsMax &&
         currentNodeDstX <= screenRight
     ){
-      currentNodeType = Game.nodesType[currentNodeIndex];
+      currentNodeType = GameState.nodesType[currentNodeIndex];
       if (currentNodeType != NodeType.Empty){
         renderNodeAt();
       }
@@ -846,15 +846,15 @@ class GameRender {
     }
     currentNodeDstX = (currentNodeRow - currentNodeColumn) * nodeSizeHalf;
     currentNodeDstY = ((currentNodeRow + currentNodeColumn) * nodeSizeHalf) - (currentNodeZ * nodeHeight);
-    currentNodeIndex = (currentNodeZ * Game.nodesArea) + (currentNodeRow * Game.nodesTotalColumns) + currentNodeColumn;
-    currentNodeType = Game.nodesType[currentNodeIndex];
+    currentNodeIndex = (currentNodeZ * GameState.nodesArea) + (currentNodeRow * GameState.nodesTotalColumns) + currentNodeColumn;
+    currentNodeType = GameState.nodesType[currentNodeIndex];
     renderOrderGrid.order = ((currentNodeRow + currentNodeColumn) * tileSize) + tileSizeHalf;
     renderOrderGrid.orderZ = currentNodeZ;
   }
 
   static void resetNodes() {
-    nodesRowsMax = Game.nodesTotalRows - 1;
-    nodesGridTotalZMinusOne = Game.nodesTotalZ - 1;
+    nodesRowsMax = GameState.nodesTotalRows - 1;
+    nodesGridTotalZMinusOne = GameState.nodesTotalZ - 1;
     offscreenNodesTop = 0;
     offscreenNodesRight = 0;
     offscreenNodesBottom = 0;
@@ -865,34 +865,34 @@ class GameRender {
     renderOrderGrid.order = 0;
     renderOrderGrid.orderZ = 0;
     currentNodeZ = 0;
-    nodesGridTotalColumnsMinusOne = Game.nodesTotalColumns - 1;
-    playerZ = Game.player.indexZ;
-    playerRow = Game.player.indexRow;
-    playerColumn = Game.player.indexColumn;
+    nodesGridTotalColumnsMinusOne = GameState.nodesTotalColumns - 1;
+    playerZ = GameState.player.indexZ;
+    playerRow = GameState.player.indexRow;
+    playerColumn = GameState.player.indexColumn;
     nodesPlayerColumnRow = playerRow + playerColumn;
-    playerRenderRow = playerRow - (Game.player.indexZ ~/ 2);
-    playerRenderColumn = playerColumn - (Game.player.indexZ ~/ 2);
+    playerRenderRow = playerRow - (GameState.player.indexZ ~/ 2);
+    playerRenderColumn = playerColumn - (GameState.player.indexZ ~/ 2);
     nodesPlayerUnderRoof = gridIsUnderSomething(playerZ, playerRow, playerColumn);
 
-    indexShow = inBoundsVector3(Game.player) ? Game.player.nodeIndex : 0;
-    indexShowRow = Game.convertNodeIndexToRow(indexShow);
-    indexShowColumn = Game.convertNodeIndexToColumn(indexShow);
-    indexShowZ = Game.convertNodeIndexToZ(indexShow);
+    indexShow = inBoundsVector3(GameState.player) ? GameState.player.nodeIndex : 0;
+    indexShowRow = GameState.convertNodeIndexToRow(indexShow);
+    indexShowColumn = GameState.convertNodeIndexToColumn(indexShow);
+    indexShowZ = GameState.convertNodeIndexToZ(indexShow);
 
     indexShowPerceptible =
         gridIsPerceptible(indexShow) &&
             gridIsPerceptible(indexShow + 1) &&
             gridIsPerceptible(indexShow - 1) &&
-            gridIsPerceptible(indexShow + Game.nodesTotalColumns) &&
-            gridIsPerceptible(indexShow - Game.nodesTotalColumns) &&
-            gridIsPerceptible(indexShow + Game.nodesTotalColumns + 1) ;
+            gridIsPerceptible(indexShow + GameState.nodesTotalColumns) &&
+            gridIsPerceptible(indexShow - GameState.nodesTotalColumns) &&
+            gridIsPerceptible(indexShow + GameState.nodesTotalColumns + 1) ;
 
     screenRight = Engine.screen.right + tileSize;
     screenLeft = Engine.screen.left - tileSize;
     screenTop = Engine.screen.top - 72;
     screenBottom = Engine.screen.bottom + 72;
     var screenTopLeftColumn = convertWorldToColumn(screenLeft, screenTop, 0);
-    nodesScreenBottomRightRow = clamp(convertWorldToRow(screenRight, screenBottom, 0), 0, Game.nodesTotalRows - 1);
+    nodesScreenBottomRightRow = clamp(convertWorldToRow(screenRight, screenBottom, 0), 0, GameState.nodesTotalRows - 1);
     nodesScreenTopLeftRow = convertWorldToRow(screenLeft, screenTop, 0);
 
     if (nodesScreenTopLeftRow < 0){
@@ -903,7 +903,7 @@ class GameRender {
       nodesScreenTopLeftRow += screenTopLeftColumn;
       screenTopLeftColumn = 0;
     }
-    if (screenTopLeftColumn >= Game.nodesTotalColumns){
+    if (screenTopLeftColumn >= GameState.nodesTotalColumns){
       nodesScreenTopLeftRow = screenTopLeftColumn - nodesGridTotalColumnsMinusOne;
       screenTopLeftColumn = nodesGridTotalColumnsMinusOne;
     }
@@ -922,14 +922,14 @@ class GameRender {
 
     currentNodeDstX = (currentNodeRow - currentNodeColumn) * nodeSizeHalf;
     currentNodeDstY = ((currentNodeRow + currentNodeColumn) * nodeSizeHalf) - (currentNodeZ * nodeHeight);
-    currentNodeIndex = (currentNodeZ * Game.nodesArea) + (currentNodeRow * Game.nodesTotalColumns) + currentNodeColumn;
-    currentNodeType = Game.nodesType[currentNodeIndex];
+    currentNodeIndex = (currentNodeZ * GameState.nodesArea) + (currentNodeRow * GameState.nodesTotalColumns) + currentNodeColumn;
+    currentNodeType = GameState.nodesType[currentNodeIndex];
 
-    while (Game.visibleIndex > 0) {
-      Game.nodesVisible[Game.nodesVisibleIndex[Game.visibleIndex]] = true;
-      Game.visibleIndex--;
+    while (GameState.visibleIndex > 0) {
+      GameState.nodesVisible[GameState.nodesVisibleIndex[GameState.visibleIndex]] = true;
+      GameState.visibleIndex--;
     }
-    Game.nodesVisible[Game.nodesVisibleIndex[0]] = true;
+    GameState.nodesVisible[GameState.nodesVisibleIndex[0]] = true;
 
 
     if (!indexShowPerceptible) {
@@ -937,10 +937,10 @@ class GameRender {
       for (var r = -radius; r <= radius + 2; r++){
         for (var c = -radius; c <= radius + 2; c++){
           if (indexShowRow + r < 0) continue;
-          if (indexShowRow + r >= Game.nodesTotalRows) continue;
+          if (indexShowRow + r >= GameState.nodesTotalRows) continue;
           if (indexShowColumn + c < 0) continue;
-          if (indexShowColumn + c >= Game.nodesTotalColumns) continue;
-          nodesHideIndex(indexShow - (Game.nodesTotalColumns * r) + c);
+          if (indexShowColumn + c >= GameState.nodesTotalColumns) continue;
+          nodesHideIndex(indexShow - (GameState.nodesTotalColumns * r) + c);
         }
       }
     }
@@ -948,11 +948,11 @@ class GameRender {
     renderOrderGrid.total = renderOrderGrid.getTotal();
     renderOrderGrid.index = 0;
     renderOrderGrid.remaining = renderOrderGrid.total > 0;
-    Game.refreshDynamicLightGrid();
-    Game.applyEmissions();
+    GameState.refreshDynamicLightGrid();
+    GameState.applyEmissions();
 
-    if (Game.editMode){
-      Game.applyEmissionDynamic(
+    if (GameState.editMode){
+      GameState.applyEmissionDynamic(
         index: EditState.nodeIndex.value,
         maxBrightness: Shade.Very_Bright,
       );
@@ -962,42 +962,42 @@ class GameRender {
   }
 
   static void nodesHideIndex(int index){
-    var i = index + Game.nodesArea + Game.nodesTotalColumns + 1;
+    var i = index + GameState.nodesArea + GameState.nodesTotalColumns + 1;
     while (true) {
-      if (i >= Game.nodesTotal) break;
-      Game.nodesVisible[i] = false;
-      Game.nodesVisibleIndex[Game.visibleIndex] = i;
-      Game.visibleIndex++;
-      i += Game.nodesArea + Game.nodesArea + Game.nodesTotalColumns + 1;
+      if (i >= GameState.nodesTotal) break;
+      GameState.nodesVisible[i] = false;
+      GameState.nodesVisibleIndex[GameState.visibleIndex] = i;
+      GameState.visibleIndex++;
+      i += GameState.nodesArea + GameState.nodesArea + GameState.nodesTotalColumns + 1;
     }
-    i = index + Game.nodesArea + Game.nodesArea + Game.nodesTotalColumns + 1;
+    i = index + GameState.nodesArea + GameState.nodesArea + GameState.nodesTotalColumns + 1;
     while (true) {
-      if (i >= Game.nodesTotal) break;
-      Game.nodesVisible[i] = false;
-      Game.nodesVisibleIndex[Game.visibleIndex] = i;
-      Game.visibleIndex++;
-      i += Game.nodesArea + Game.nodesArea + Game.nodesTotalColumns + 1;
+      if (i >= GameState.nodesTotal) break;
+      GameState.nodesVisible[i] = false;
+      GameState.nodesVisibleIndex[GameState.visibleIndex] = i;
+      GameState.visibleIndex++;
+      i += GameState.nodesArea + GameState.nodesArea + GameState.nodesTotalColumns + 1;
     }
   }
 
   static void nodesRevealRaycast(int z, int row, int column){
     if (!verifyInBoundZRC(z, row, column)) return;
 
-    for (; z < Game.nodesTotalZ; z += 2){
+    for (; z < GameState.nodesTotalZ; z += 2){
       row++;
       column++;
-      if (row >= Game.nodesTotalRows) return;
-      if (column >= Game.nodesTotalColumns) return;
-      Game.nodesVisible[Game.getNodeIndexZRC(z, row, column)] = false;
-      if (z < Game.nodesTotalZ - 2){
-        Game.nodesVisible[Game.getNodeIndexZRC(z + 1, row, column)] = false;
+      if (row >= GameState.nodesTotalRows) return;
+      if (column >= GameState.nodesTotalColumns) return;
+      GameState.nodesVisible[GameState.getNodeIndexZRC(z, row, column)] = false;
+      if (z < GameState.nodesTotalZ - 2){
+        GameState.nodesVisible[GameState.getNodeIndexZRC(z + 1, row, column)] = false;
       }
     }
   }
 
   static void nodesRevealAbove(int z, int row, int column){
-    for (; z < Game.nodesTotalZ; z++){
-      Game.nodesVisible[Game.getNodeIndexZRC(z, row, column)] = false;
+    for (; z < GameState.nodesTotalZ; z++){
+      GameState.nodesVisible[GameState.getNodeIndexZRC(z, row, column)] = false;
     }
   }
 
@@ -1025,7 +1025,7 @@ class GameRender {
 
     while (convertRowColumnZToY(currentNodeRow, currentNodeColumn, nodesMinZ) > screenBottom){
       nodesMinZ++;
-      if (nodesMinZ >= Game.nodesTotalZ){
+      if (nodesMinZ >= GameState.nodesTotalZ){
         return renderOrderGrid.end();
       }
     }
@@ -1056,11 +1056,11 @@ class GameRender {
 
   static void casteShadowDownV3(Vector3 vector3){
     if (vector3.z < nodeHeight) return;
-    if (vector3.z >= Game.nodesLengthZ) return;
+    if (vector3.z >= GameState.nodesLengthZ) return;
     final nodeIndex = getGridNodeIndexV3(vector3);
-    if (nodeIndex > Game.nodesArea) {
-      final nodeBelowIndex = nodeIndex - Game.nodesArea;
-      final nodeBelowOrientation = Game.nodesOrientation[nodeBelowIndex];
+    if (nodeIndex > GameState.nodesArea) {
+      final nodeBelowIndex = nodeIndex - GameState.nodesArea;
+      final nodeBelowOrientation = GameState.nodesOrientation[nodeBelowIndex];
       if (nodeBelowOrientation == NodeOrientation.Solid){
         final topRemainder = vector3.z % tileHeight;
         GameRender.renderShadow(vector3.x, vector3.y, vector3.z - topRemainder, scale: topRemainder > 0 ? (topRemainder / tileHeight) * 2 : 2.0);
@@ -1097,16 +1097,16 @@ class GameRender {
   }
 
   static void renderCharacterShadow(Character character, int frameLegs, int upperBodyDirection){
-    if (Game.outOfBoundsV3(character)) return;
+    if (GameState.outOfBoundsV3(character)) return;
     // find the nearest torch and move the shadow behind the character
-    final characterNodeIndex = Game.getNodeIndexV3(character);
-    final initialSearchIndex = characterNodeIndex - Game.nodesTotalColumns - 1; // shifts the selectIndex - 1 row and - 1 column
+    final characterNodeIndex = GameState.getNodeIndexV3(character);
+    final initialSearchIndex = characterNodeIndex - GameState.nodesTotalColumns - 1; // shifts the selectIndex - 1 row and - 1 column
     var torchIndex = -1;
 
     for (var row = 0; row < 3; row++){
       for (var column = 0; column < 3; column++){
-        final searchIndex = initialSearchIndex + (row * Game.nodesTotalColumns) + column;
-        if (Game.nodesType[searchIndex] != NodeType.Torch) continue;
+        final searchIndex = initialSearchIndex + (row * GameState.nodesTotalColumns) + column;
+        if (GameState.nodesType[searchIndex] != NodeType.Torch) continue;
         torchIndex = searchIndex;
         break;
       }
@@ -1117,8 +1117,8 @@ class GameRender {
     var distance = 0.0;
 
     if (torchIndex != -1) {
-      final torchRow = Game.convertNodeIndexToRow(torchIndex);
-      final torchColumn = Game.convertNodeIndexToColumn(torchIndex);
+      final torchRow = GameState.convertNodeIndexToRow(torchIndex);
+      final torchColumn = GameState.convertNodeIndexToColumn(torchIndex);
       final torchPosX = torchRow * nodeSize + nodeSizeHalf;
       final torchPosY = torchColumn * nodeSize + nodeSizeHalf;
       angle = getAngleBetween(character.x, character.y, torchPosX, torchPosY);
@@ -1138,7 +1138,7 @@ class GameRender {
       dstX: GameRender.getRenderX(shadowX, shadowY, shadowZ),
       dstY: GameRender.getRenderY(shadowX, shadowY, shadowZ),
       scale: 0.75,
-      color: Game.getV3RenderColor(character),
+      color: GameState.getV3RenderColor(character),
       anchorY: 0.75,
     );
   }
@@ -1162,13 +1162,13 @@ class RenderOrderCharacters extends RenderOrder {
   void renderFunction() => GameRender.renderCurrentCharacter();
   void updateFunction() => GameRender.updateCurrentCharacter();
   @override
-  int getTotal() => Game.totalCharacters;
+  int getTotal() => GameState.totalCharacters;
 }
 
 class RenderOrderGameObjects extends RenderOrder {
 
   @override
-  int getTotal() => Game.totalGameObjects;
+  int getTotal() => GameState.totalGameObjects;
 
   @override
   void renderFunction() => GameRender.renderCurrentGameObject();
@@ -1191,7 +1191,7 @@ class RenderOrderProjectiles extends RenderOrder {
 
   @override
   int getTotal() {
-    return Game.totalProjectiles;
+    return GameState.totalProjectiles;
   }
 }
 
@@ -1203,7 +1203,7 @@ class RenderOrderParticle extends RenderOrder {
   @override
   void updateFunction() => GameRender.updateCurrentParticle();
   @override
-  int getTotal() => Game.totalActiveParticles;
+  int getTotal() => GameState.totalActiveParticles;
 
   @override
   void reset() {
@@ -1212,28 +1212,28 @@ class RenderOrderParticle extends RenderOrder {
   }
 }
 
-int get renderNodeShade => Game.nodesShade[GameRender.currentNodeIndex];
-int get renderNodeOrientation => Game.nodesOrientation[GameRender.currentNodeIndex];
-int get renderNodeColor => Game.colorShades[renderNodeShade];
-int get renderNodeWind => Game.nodesWind[renderNodeShade];
-int get renderNodeBelowIndex => GameRender.currentNodeIndex + Game.nodesArea;
+int get renderNodeShade => GameState.nodesShade[GameRender.currentNodeIndex];
+int get renderNodeOrientation => GameState.nodesOrientation[GameRender.currentNodeIndex];
+int get renderNodeColor => GameState.colorShades[renderNodeShade];
+int get renderNodeWind => GameState.nodesWind[renderNodeShade];
+int get renderNodeBelowIndex => GameRender.currentNodeIndex + GameState.nodesArea;
 
 int get renderNodeBelowShade {
-  if (renderNodeBelowIndex < 0) return Game.ambientShade.value;
-  if (renderNodeBelowIndex >= Game.nodesTotal) return Game.ambientShade.value;
-  return Game.nodesShade[renderNodeBelowIndex];
+  if (renderNodeBelowIndex < 0) return GameState.ambientShade.value;
+  if (renderNodeBelowIndex >= GameState.nodesTotal) return GameState.ambientShade.value;
+  return GameState.nodesShade[renderNodeBelowIndex];
 }
 
-int get renderNodeBelowColor => Game.colorShades[renderNodeBelowShade];
+int get renderNodeBelowColor => GameState.colorShades[renderNodeBelowShade];
 
 int getRenderLayerColor(int layers) =>
-    Game.colorShades[getRenderLayerShade(layers)];
+    GameState.colorShades[getRenderLayerShade(layers)];
 
 int getRenderLayerShade(int layers){
-   final index = GameRender.currentNodeIndex + (layers * Game.nodesArea);
-   if (index < 0) return Game.ambientShade.value;
-   if (index >= Game.nodesTotal) return Game.ambientShade.value;
-   return Game.nodesShade[index];
+   final index = GameRender.currentNodeIndex + (layers * GameState.nodesArea);
+   if (index < 0) return GameState.ambientShade.value;
+   if (index >= GameState.nodesTotal) return GameState.ambientShade.value;
+   return GameState.nodesShade[index];
 }
 
 class RenderOrderNodes extends RenderOrder {
@@ -1246,7 +1246,7 @@ class RenderOrderNodes extends RenderOrder {
   void reset() => GameRender.resetNodes();
   @override
   int getTotal() {
-    return Game.nodesTotalZ * Game.nodesTotalRows * Game.nodesTotalColumns;
+    return GameState.nodesTotalZ * GameState.nodesTotalRows * GameState.nodesTotalColumns;
   }
 }
 

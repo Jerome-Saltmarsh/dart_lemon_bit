@@ -1,6 +1,6 @@
 import 'package:bleed_common/PlayerEvent.dart';
 import 'package:bleed_common/attack_type.dart';
-import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/game_audio.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/camera.dart';
@@ -20,8 +20,8 @@ void onPlayerEvent(int event) {
     case PlayerEvent.Weapon_Rounds:
       final rounds = serverResponseReader.readInt();
       final capacity = serverResponseReader.readInt();
-      Game.player.weapon.rounds.value = rounds;
-      Game.player.weapon.capacity.value = capacity;
+      GameState.player.weapon.rounds.value = rounds;
+      GameState.player.weapon.capacity.value = capacity;
       break;
     case PlayerEvent.Scene_Changed:
       return cameraCenterOnPlayer();
@@ -30,18 +30,18 @@ void onPlayerEvent(int event) {
     case PlayerEvent.Quest_Completed:
       return onPlayerEventQuestCompleted();
     case PlayerEvent.Interaction_Finished:
-      Game.player.npcTalk.value = null;
-      Game.player.npcTalkOptions.value = [];
+      GameState.player.npcTalk.value = null;
+      GameState.player.npcTalkOptions.value = [];
       break;
     case PlayerEvent.Level_Up:
-      audio.buff(Game.player.x, Game.player.y);
-      spawnFloatingText(Game.player.x, Game.player.y, 'LEVEL UP');
+      audio.buff(GameState.player.x, GameState.player.y);
+      spawnFloatingText(GameState.player.x, GameState.player.y, 'LEVEL UP');
       break;
     case PlayerEvent.Skill_Upgraded:
-      audio.unlock(Game.player.x, Game.player.y);
+      audio.unlock(GameState.player.x, GameState.player.y);
       break;
     case PlayerEvent.Dash_Activated:
-      audio.buff11(Game.player.x, Game.player.y);
+      audio.buff11(GameState.player.x, GameState.player.y);
       break;
     case PlayerEvent.Item_Purchased:
       GameAudio.unlock();

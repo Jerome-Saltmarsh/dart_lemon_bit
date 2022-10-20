@@ -1,7 +1,7 @@
 
 import 'package:bleed_common/map_tiles.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/game_images.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/game_map.dart';
@@ -34,7 +34,7 @@ Widget buildGameDialogMap(){
       height: Engine.screen.height * goldenRatio_0618,
       child: Column(
         children: [
-          watch(Game.player.gameDialog, buildGameDialog),
+          watch(GameState.player.gameDialog, buildGameDialog),
           GameMapWidget(width: Engine.screen.width * goldenRatio_0618, height: Engine.screen.height * goldenRatio_0618 - 50),
         ],
       ),

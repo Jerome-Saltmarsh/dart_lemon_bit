@@ -1,7 +1,7 @@
 
 
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/game_images.dart';
 import 'package:gamestream_flutter/game_render.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
@@ -11,7 +11,7 @@ import 'render_character_health_bar.dart';
 import 'src_utils.dart';
 
 void renderCharacterZombie(Character character) {
-  final shade = Game.getV3RenderShade(character);
+  final shade = GameState.getV3RenderShade(character);
   if (shade < Shade.Dark) renderCharacterHealthBar(character);
 
   GameRender.renderCharacterShadow(character, character.frame, character.renderDirection);

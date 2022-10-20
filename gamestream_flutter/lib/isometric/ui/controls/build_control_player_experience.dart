@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/game_colors.dart';
 import 'package:gamestream_flutter/game_widgets.dart';
 import 'package:golden_ratio/constants.dart';
@@ -14,7 +14,7 @@ Widget buildControlPlayerExperience() {
 
   return Tooltip(
     message: 'Experience',
-    child: WatchBuilder(Game.player.experience, (double percentage) {
+    child: WatchBuilder(GameState.player.experience, (double percentage) {
 
       return Container(
         width: width,
@@ -38,7 +38,7 @@ Widget buildControlPlayerExperience() {
               width: width,
               height: height,
               alignment: Alignment.center,
-              child: WatchBuilder(Game.player.level, (int level){
+              child: WatchBuilder(GameState.player.level, (int level){
                 return text('Level $level');
               }),
             ),
