@@ -2,7 +2,7 @@ import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/game_library.dart';
 import 'package:gamestream_flutter/game_render.dart';
-import 'package:gamestream_flutter/isometric/edit.dart';
+import 'package:gamestream_flutter/game_editor.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/light_mode.dart';
@@ -275,7 +275,7 @@ Widget buildButtonSelectNodeType(int nodeType) {
     srcWidth: mapNodeTypeToSrcWidth(nodeType),
     srcHeight: mapNodeTypeToSrcHeight(nodeType),
   );
-  return WatchBuilder(EditState.nodeSelectedType, (int selectedNodeType) {
+  return WatchBuilder(GameEditor.nodeSelectedType, (int selectedNodeType) {
     return container(
         height: 78,
         width: 78,
@@ -286,7 +286,7 @@ Widget buildButtonSelectNodeType(int nodeType) {
             actionSetModePlay();
             return;
           }
-          EditState.paint(nodeType: nodeType);
+          GameEditor.paint(nodeType: nodeType);
         },
         color: selectedNodeType == nodeType ? greyDark : grey);
   });

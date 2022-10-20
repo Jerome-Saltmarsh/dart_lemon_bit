@@ -2,7 +2,7 @@
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/game_widgets.dart';
-import 'package:gamestream_flutter/isometric/edit.dart';
+import 'package:gamestream_flutter/game_editor.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/editor_grid_type_columns.dart';
 import 'package:lemon_engine/engine.dart';
@@ -14,7 +14,7 @@ Widget buildWatchEditorTab(){
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      watch(EditState.nodeSelectedType, (int nodeType) => container(child: "${NodeType.getName(nodeType)}", color: brownLight)),
+      watch(GameEditor.nodeSelectedType, (int nodeType) => container(child: "${NodeType.getName(nodeType)}", color: brownLight)),
       buildColumnSelectNodeType()
     ],
   );

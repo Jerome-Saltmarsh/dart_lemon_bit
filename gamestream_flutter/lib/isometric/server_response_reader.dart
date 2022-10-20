@@ -12,7 +12,7 @@ import 'package:gamestream_flutter/game_ui.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/classes/weapon.dart';
-import 'package:gamestream_flutter/isometric/edit.dart';
+import 'package:gamestream_flutter/game_editor.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_scene.dart';
 import 'package:gamestream_flutter/isometric/events/on_game_event.dart';
 import 'package:gamestream_flutter/isometric/events/on_player_event.dart';
@@ -369,17 +369,17 @@ class ServerResponseReader with ByteReader {
   }
 
   void readEditorGameObjectSelected() {
-    readVector3(EditState.gameObject);
+    readVector3(GameEditor.gameObject);
     final type = readByte();
-    EditState.gameObject.type = type;
-    EditState.gameObjectSelectedType.value = type;
+    GameEditor.gameObject.type = type;
+    GameEditor.gameObjectSelectedType.value = type;
     if (type == GameObjectType.Particle_Emitter){
-      EditState.gameObjectSelectedParticleType.value = readByte();
-      EditState.gameObjectSelectedParticleSpawnRate.value = readInt();
+      GameEditor.gameObjectSelectedParticleType.value = readByte();
+      GameEditor.gameObjectSelectedParticleSpawnRate.value = readInt();
     }
 
-    EditState.gameObjectSelected.value = true;
-    EditState.cameraCenterSelectedObject();
+    GameEditor.gameObjectSelected.value = true;
+    GameEditor.cameraCenterSelectedObject();
   }
 
   void readGameObjectButterfly() {
@@ -534,7 +534,7 @@ class ServerResponseReader with ByteReader {
     assert(NodeType.supportsOrientation(nodeType, nodeOrientation));
     GameState.nodesType[nodeIndex] = nodeType;
     GameState.nodesOrientation[nodeIndex] = nodeOrientation;
-    EditState.refreshNodeSelectedIndex();
+    GameEditor.refreshNodeSelectedIndex();
     onGridChanged();
   }
 

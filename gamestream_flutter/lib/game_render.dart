@@ -28,7 +28,7 @@ import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 
 import 'isometric/classes/particle.dart';
-import 'isometric/edit.dart';
+import 'game_editor.dart';
 import 'isometric/grid.dart';
 
 class GameRender {
@@ -953,7 +953,7 @@ class GameRender {
 
     if (GameState.editMode){
       GameState.applyEmissionDynamic(
-        index: EditState.nodeIndex.value,
+        index: GameEditor.nodeIndex.value,
         maxBrightness: Shade.Very_Bright,
       );
     }

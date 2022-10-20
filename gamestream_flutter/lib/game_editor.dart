@@ -12,9 +12,9 @@ import 'package:gamestream_flutter/isometric/utils/convert.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch.dart';
 
-import 'utils/mouse_raycast.dart';
+import 'isometric/utils/mouse_raycast.dart';
 
-class EditState {
+class GameEditor {
   static final selectedSceneName = Watch<String?>(null);
 
   static final editTab = Watch(EditTab.Grid);

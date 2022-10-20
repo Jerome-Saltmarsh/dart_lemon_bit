@@ -1,19 +1,19 @@
 
 
 import 'package:gamestream_flutter/game_library.dart';
-import 'package:gamestream_flutter/isometric/edit.dart';
+import 'package:gamestream_flutter/game_editor.dart';
 
 void editorActionModifySpawnNode({
   required int spawnType,
   required int spawnAmount,
   required int spawnRadius,
 }) {
-  assert (EditState.nodeTypeSpawnSelected.value);
+  assert (GameEditor.nodeTypeSpawnSelected.value);
 
   GameNetwork.sendClientRequestSpawnNodeDataModify(
-    z: EditState.z,
-    row: EditState.row,
-    column: EditState.column,
+    z: GameEditor.z,
+    row: GameEditor.row,
+    column: GameEditor.column,
     spawnType: spawnType,
     spawnAmount: spawnAmount,
     spawnRadius: spawnRadius,

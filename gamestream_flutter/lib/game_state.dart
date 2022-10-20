@@ -17,7 +17,7 @@ import 'package:gamestream_flutter/isometric/classes/particle_emitter.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/convert/convert_distance_to_shade.dart';
-import 'package:gamestream_flutter/isometric/edit.dart';
+import 'package:gamestream_flutter/game_editor.dart';
 import 'package:gamestream_flutter/isometric/effects.dart';
 import 'package:gamestream_flutter/isometric/enums/camera_mode.dart';
 import 'package:gamestream_flutter/isometric/enums/game_dialog.dart';
@@ -1178,15 +1178,15 @@ class GameState {
 
   static void renderEditMode() {
     if (playMode) return;
-    if (EditState.gameObjectSelected.value){
+    if (GameEditor.gameObjectSelected.value){
       Engine.renderCircleOutline(
         sides: 24,
-        radius: EditState.gameObjectSelectedRadius.value,
-        x: EditState.gameObject.renderX,
-        y: EditState.gameObject.renderY,
+        radius: GameEditor.gameObjectSelectedRadius.value,
+        x: GameEditor.gameObject.renderX,
+        y: GameEditor.gameObject.renderY,
         color: Colors.white,
       );
-      return renderCircleV3(EditState.gameObject);
+      return renderCircleV3(GameEditor.gameObject);
     }
 
     renderEditWireFrames();
@@ -1205,10 +1205,10 @@ class GameState {
   }
 
   static void renderEditWireFrames() {
-    for (var z = 0; z < EditState.z; z++) {
-      GameRender.renderWireFrameBlue(z, EditState.row, EditState.column);
+    for (var z = 0; z < GameEditor.z; z++) {
+      GameRender.renderWireFrameBlue(z, GameEditor.row, GameEditor.column);
     }
-    GameRender.renderWireFrameRed(EditState.row, EditState.column, EditState.z);
+    GameRender.renderWireFrameRed(GameEditor.row, GameEditor.column, GameEditor.z);
   }
 
   static void update() {

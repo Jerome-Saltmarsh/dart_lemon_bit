@@ -1,11 +1,11 @@
 
 import 'package:gamestream_flutter/game_state.dart';
-import 'package:gamestream_flutter/isometric/edit.dart';
+import 'package:gamestream_flutter/game_editor.dart';
 
 void onChangedSelectedNodeIndex(int index){
-   EditState.nodeSelectedOrientation.value = GameState.nodesOrientation[index];
-   EditState.nodeSelectedType.value = GameState.nodesType[index];
-   EditState.gameObjectSelected.value = false;
-   EditState.refreshNodeSelectedIndex();
-   EditState.deselectGameObject();
+   GameEditor.nodeSelectedOrientation.value = GameState.nodesOrientation[index];
+   GameEditor.nodeSelectedType.value = GameState.nodesType[index];
+   GameEditor.gameObjectSelected.value = false;
+   GameEditor.refreshNodeSelectedIndex();
+   GameEditor.deselectGameObject();
 }

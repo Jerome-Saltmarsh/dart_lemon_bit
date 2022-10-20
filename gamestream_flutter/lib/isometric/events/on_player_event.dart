@@ -4,7 +4,7 @@ import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/game_audio.dart';
 import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/camera.dart';
-import 'package:gamestream_flutter/isometric/edit.dart';
+import 'package:gamestream_flutter/game_editor.dart';
 import 'package:gamestream_flutter/isometric/events/on_player_event_quest_completed.dart';
 import 'package:gamestream_flutter/isometric/events/on_player_event_quest_started.dart';
 import 'package:gamestream_flutter/isometric/floating_texts.dart';
@@ -78,7 +78,7 @@ void onPlayerEvent(int event) {
       GameAudio.male_hello.play();
       break;
     case PlayerEvent.GameObject_Deselected:
-      EditState.gameObjectSelected.value = false;
+      GameEditor.gameObjectSelected.value = false;
       break;
     case PlayerEvent.Player_Moved:
       cameraCenterOnPlayer();
