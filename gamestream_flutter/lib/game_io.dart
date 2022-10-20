@@ -7,11 +7,15 @@ import 'package:lemon_engine/engine.dart';
 import 'game.dart';
 
 class GameIO {
+  // STATE
+  static var touchscreenDirection = Direction.None;
 
-
+  // GETTERS
+  static bool get modeTouchscreen => Engine.deviceIsPhone;
+  static bool get modeKeyboard => Engine.deviceIsComputer;
   static bool get keyPressedSpace => Engine.keyPressed(LogicalKeyboardKey.space);
 
-  static void initGameListeners(){
+  static void initGameListeners() {
       Engine.onPanStart = onPanStart;
       Engine.onPanUpdate = onPanUpdate;
       Engine.onPanEnd = onPanEnd;
@@ -33,23 +37,40 @@ class GameIO {
   }
 
   static void onPanUpdate(DragUpdateDetails details) {
-    print("onPanUpdate()");
-    // GameNetwork.
+    final detailsDirection = details.delta.direction;
+    final radian = detailsDirection < 0 ? detailsDirection + Engine.PI_2 : detailsDirection;
+    touchscreenDirection = convertRadianToDirection(radian);
+  }
+
+  static int convertRadianToDirection(double radian){
+     if (radian < Engine.PI_Eight + (Engine.PI_Quarter * 0)) return Direction.South_East;
+     if (radian < Engine.PI_Eight + (Engine.PI_Quarter * 1)) return Direction.South;
+     if (radian < Engine.PI_Eight + (Engine.PI_Quarter * 2)) return Direction.South_West;
+     if (radian < Engine.PI_Eight + (Engine.PI_Quarter * 3)) return Direction.West;
+     if (radian < Engine.PI_Eight + (Engine.PI_Quarter * 4)) return Direction.North_West;
+     if (radian < Engine.PI_Eight + (Engine.PI_Quarter * 5)) return Direction.North;
+     if (radian < Engine.PI_Eight + (Engine.PI_Quarter * 6)) return Direction.North_East;
+     if (radian < Engine.PI_Eight + (Engine.PI_Quarter * 7)) return Direction.East;
+     return Direction.East;
   }
 
   static void onPanEnd(DragEndDetails details){
-    print("onPanEnd()");
+    touchscreenDirection = Direction.None;
   }
 
   static void onTapDown(TapDownDetails details){
     print('onTapDown()');
   }
 
-  static int getDirection(){
-    if (Engine.deviceIsComputer){
-      return getKeyDirection();
+  static int getDirection() {
+    final keyDirection = getKeyDirection();
+    if (keyDirection != Direction.None){
+      return keyDirection;
     }
-    return Direction.None;
+    if (Engine.deviceIsComputer){
+      return Direction.None;
+    }
+    return touchscreenDirection;
   }
 
   static int getKeyDirection() {
@@ -85,7 +106,10 @@ class GameIO {
 
   static bool getActionPrimary(){
     if (Game.editMode) return false;
-    return Engine.watchMouseLeftDown.value;
+    if (modeKeyboard) {
+      return Engine.watchMouseLeftDown.value;
+    }
+    return false;
   }
 
   static bool getActionSecondary(){
