@@ -1,11 +1,10 @@
 import 'package:flutter/cupertino.dart';
-import 'package:gamestream_flutter/game_widgets.dart';
+import 'package:gamestream_flutter/game_library.dart';
 import 'package:gamestream_flutter/isometric/ui/build_panel_store.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/enums/player_design_tab.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/isometric/watches/design_equipment_tab.dart';
-import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/engine.dart';
 
@@ -60,7 +59,7 @@ Widget buildStackPlayerDesign() {
                 child: text("START", bold: true),
                 alignment: Alignment.center,
                 color: green,
-                action: sendClientRequestSubmitPlayerDesign,
+                action: GameNetwork.sendClientRequestSubmitPlayerDesign,
             ),
           ),
       ),

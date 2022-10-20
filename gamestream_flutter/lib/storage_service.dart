@@ -10,10 +10,7 @@ final _keys = _Keys();
 class StorageService {
 
   bool get serverSaved => Engine.sharedPreferences.containsKey(_keys.server);
-  int? get _serverIndex {
-    print("fetching");
-    return Engine.sharedPreferences.getInt(_keys.server);
-  }
+
   void saveRegion(Region value){
     SharedPreferences.getInstance().then((instance){
       instance.setInt('server', value.index);

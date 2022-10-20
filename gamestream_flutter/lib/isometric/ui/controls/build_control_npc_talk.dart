@@ -1,11 +1,10 @@
 
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/game_library.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
-import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:golden_ratio/constants.dart';
 
-import '../../../game_widgets.dart';
 import '../widgets/nothing.dart';
 
 const _width = 400;
@@ -33,7 +32,7 @@ Widget buildControlNpcTopics(List<String> topics) =>
           width: _width,
           alignment: Alignment.center,
           action: () {
-            sendClientRequestNpcSelectTopic(topics.indexOf(value));
+            GameNetwork.sendClientRequestNpcSelectTopic(topics.indexOf(value));
           }
       );
     }).toList(),

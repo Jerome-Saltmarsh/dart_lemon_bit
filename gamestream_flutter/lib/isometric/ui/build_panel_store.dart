@@ -1,13 +1,11 @@
 
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/game.dart';
-import 'package:gamestream_flutter/game_widgets.dart';
+import 'package:gamestream_flutter/game_library.dart';
 import 'package:gamestream_flutter/isometric/enums/equipment_type.dart';
 import 'package:gamestream_flutter/isometric/player_store.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_button_equip_attack_type.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
-import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:lemon_watch/watch.dart';
 
 import '../classes/weapon.dart';
@@ -29,7 +27,7 @@ Widget buildPanelStore(){
             children: [
               container(child: "PURCHASE"),
               container(child: SizedBox()),
-              container(child: "CLOSE", action: sendClientRequestStoreClose),
+              container(child: "CLOSE", action: GameNetwork.sendClientRequestStoreClose),
             ],
           ),
           height6,
@@ -121,7 +119,7 @@ Widget buildButtonSelectPlayerHead(int headType) {
    return watch(Game.player.headType, (int playerHeadType){
       return container(
           child: text(HeadType.getName(headType)),
-          action: () => sendClientRequestSetHeadType(headType),
+          action: () => GameNetwork.sendClientRequestSetHeadType(headType),
           color: headType == playerHeadType ? greyDark : grey,
       );
    });
@@ -131,7 +129,7 @@ Widget _buildButtonPants(int pantsType) {
   return watch(Game.player.pantsType, (int playerPantsType){
     return container(
       child: text(LegType.getName(pantsType)),
-      action: () => sendClientRequestSetPantsType(pantsType),
+      action: () => GameNetwork.sendClientRequestSetPantsType(pantsType),
       color: pantsType == playerPantsType ? green : grey,
     );
   });
@@ -166,7 +164,7 @@ Widget _buildButtonPurchaseWeapon(Weapon weapon) {
     },
     child: container(
         child: text(weapon.name),
-        action: () => sendClientRequestPurchaseWeapon(weapon.type),
+        action: () => GameNetwork.sendClientRequestPurchaseWeapon(weapon.type),
     ),
   );
 }
@@ -175,7 +173,7 @@ Widget _buildSelectArmourType(int type) {
    return watch(Game.player.armourType, (int equipped){
      return container(
          child: text(BodyType.getName(type)),
-         action: () => sendClientRequestSetArmour(type),
+         action: () => GameNetwork.sendClientRequestSetArmour(type),
          color: equipped == type ? green : grey,
      );
    });

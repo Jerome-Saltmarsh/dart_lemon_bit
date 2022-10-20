@@ -1,7 +1,7 @@
 import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/node_type.dart';
 import 'package:bleed_common/tile_size.dart';
-import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/game_library.dart';
 import 'package:gamestream_flutter/isometric/classes/game_object.dart';
 import 'package:gamestream_flutter/isometric/editor/events/on_changed_node_type_spawn_selected.dart';
 import 'package:gamestream_flutter/isometric/editor/events/on_changed_paint_type.dart';
@@ -9,7 +9,6 @@ import 'package:gamestream_flutter/isometric/editor/events/on_changed_selected_n
 import 'package:gamestream_flutter/isometric/editor/events/on_changed_selected_node_type.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_scene_meta_data_player_is_owner.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
-import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch.dart';
 
@@ -85,12 +84,12 @@ class EditState {
   }
 
   static void deselectGameObject() {
-    sendGameObjectRequestDeselect();
+    GameNetwork.sendGameObjectRequestDeselect();
   }
 
   static void translate({ double x = 0, double y = 0, double z = 0}){
     assert (gameObjectSelected.value);
-    return sendClientRequestGameObjectTranslate(
+    return GameNetwork.sendClientRequestGameObjectTranslate(
       tx: x,
       ty: y,
       tz: z,
@@ -119,7 +118,7 @@ class EditState {
   }
 
   static void selectMouseGameObject(){
-    sendGameObjectRequestSelect();
+    GameNetwork.sendGameObjectRequestSelect();
   }
 
   static void paintTorch(){
@@ -147,7 +146,7 @@ class EditState {
   }
 
   static void deleteGameObjectSelected(){
-    sendGameObjectRequestDelete();
+    GameNetwork.sendGameObjectRequestDelete();
   }
 
   static void cameraCenterSelectedObject() =>
@@ -161,7 +160,7 @@ class EditState {
   }
 
   static void setNodeType(int type, int orientation) =>
-    sendClientRequestSetBlock(
+      GameNetwork.sendClientRequestSetBlock(
         index: nodeIndex.value,
         type: type,
         orientation: orientation,
@@ -189,7 +188,7 @@ class EditState {
       orientation = NodeType.getDefaultOrientation(nodeType);
     }
 
-    return sendClientRequestSetBlock(
+    return GameNetwork.sendClientRequestSetBlock(
         index: nodeIndex.value,
         type: nodeType,
         orientation: orientation,

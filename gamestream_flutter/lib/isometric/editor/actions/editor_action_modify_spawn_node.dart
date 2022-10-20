@@ -1,7 +1,7 @@
 
 
+import 'package:gamestream_flutter/game_library.dart';
 import 'package:gamestream_flutter/isometric/edit.dart';
-import 'package:gamestream_flutter/network/send_client_request.dart';
 
 void editorActionModifySpawnNode({
   required int spawnType,
@@ -10,7 +10,7 @@ void editorActionModifySpawnNode({
 }) {
   assert (EditState.nodeTypeSpawnSelected.value);
 
-  sendClientRequestSpawnNodeDataModify(
+  GameNetwork.sendClientRequestSpawnNodeDataModify(
     z: EditState.z,
     row: EditState.row,
     column: EditState.column,

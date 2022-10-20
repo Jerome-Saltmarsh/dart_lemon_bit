@@ -1,12 +1,11 @@
 
 
 import 'package:flutter/cupertino.dart';
-import 'package:gamestream_flutter/game_widgets.dart';
+import 'package:gamestream_flutter/game_library.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/engine.dart';
 
-import '../../../network/send_client_request.dart';
 import '../widgets/build_container.dart';
 
 Widget buildContainerRespawn(){
@@ -28,7 +27,7 @@ Widget buildContainerRespawn(){
           container(
             alignment: Alignment.center,
             child: "Respawn",
-            action: sendClientRequestRespawn,
+            action: GameNetwork.sendClientRequestRespawn,
             color: greyDark,
             width: width * goldenRatio_0618,
           )

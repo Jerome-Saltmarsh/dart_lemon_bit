@@ -1,11 +1,10 @@
 
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/game_library.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
-import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:lemon_watch/watch.dart';
 
-import '../../game_widgets.dart';
 import 'constants/colors.dart';
 
 
@@ -42,7 +41,7 @@ Widget buildButtonSubmit(){
 }
 
 void onButtonPressedSubmit(){
-  sendClientRequestEditorSetSceneName(sceneNameController.text);
+  GameNetwork.sendClientRequestEditorSetSceneName(sceneNameController.text);
 }
 
 void onSceneNamedChanged(){

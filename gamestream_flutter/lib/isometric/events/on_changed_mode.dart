@@ -1,17 +1,17 @@
 
 
+import 'package:gamestream_flutter/game_library.dart';
 import 'package:gamestream_flutter/isometric/camera_mode.dart';
 import 'package:gamestream_flutter/isometric/edit.dart';
-import 'package:gamestream_flutter/network/send_client_request.dart';
 
 void onChangedMode(bool mode){
   if (mode){
     EditState.deselectGameObject();
     cameraModeSetChase();
-    sendClientRequestWeatherToggleTimePassing(true);
-    sendGameObjectRequestDeselect();
+    GameNetwork.sendClientRequestWeatherToggleTimePassing(true);
+    GameNetwork.sendGameObjectRequestDeselect();
   } else {
     cameraModeSetFree();
-    sendClientRequestWeatherToggleTimePassing(false);
+    GameNetwork.sendClientRequestWeatherToggleTimePassing(false);
   }
 }

@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/game_widgets.dart';
 import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/game_widgets.dart';
 import 'package:gamestream_flutter/isometric/ui/stacks/build_stack_player_design.dart';
 
 Widget buildWatchPlayerDesigned(){

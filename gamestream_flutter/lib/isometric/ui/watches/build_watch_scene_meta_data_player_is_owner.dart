@@ -3,8 +3,7 @@ import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/request_modify_canvas_size.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/game_colors.dart';
-import 'package:gamestream_flutter/game_widgets.dart';
+import 'package:gamestream_flutter/game_library.dart';
 import 'package:gamestream_flutter/isometric/edit.dart';
 import 'package:gamestream_flutter/isometric/enums/editor_dialog.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
@@ -14,7 +13,6 @@ import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/stacks/build_stack_play_mode.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_editor_dialog.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_editor_tab.dart';
-import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:gamestream_flutter/utils/widget_utils.dart';
 import 'package:lemon_engine/engine.dart';
 
@@ -48,7 +46,7 @@ Widget buildStackEdit(EditTab activeEditTab) =>
           left: 0,
           top: 50,
           child: container(child: 'Spawn Zombie', action: (){
-            sendClientRequestEdit(EditRequest.Spawn_Zombie, EditState.nodeIndex.value);
+            GameNetwork.sendClientRequestEdit(EditRequest.Spawn_Zombie, EditState.nodeIndex.value);
           }),
         ),
       if (activeEditTab == EditTab.Grid)
@@ -91,7 +89,7 @@ Widget buildStackEdit(EditTab activeEditTab) =>
                    height16,
                    text("MAP SIZE"),
                   ...RequestModifyCanvasSize.values.map((e) => container(
-                     child: e.name, action: () => sendClientRequestModifyCanvasSize(e)
+                     child: e.name, action: () => GameNetwork.sendClientRequestModifyCanvasSize(e)
                   )).toList(),
                 ],
               ),
@@ -146,7 +144,7 @@ Widget buildOrientationIcon(int orientation){
     hint: NodeOrientation.getName(orientation),
     action: (){
       EditState.paintOrientation.value = orientation;
-      sendClientRequestSetBlock(
+      GameNetwork.sendClientRequestSetBlock(
           index: EditState.nodeIndex.value,
           type: EditState.nodeSelectedType.value,
           orientation: orientation,
@@ -406,7 +404,7 @@ Widget buildButtonAddGameObject(int type) {
       child: GameObjectType.getName(type),
       color: brownLight,
       action: (){
-        sendClientRequestAddGameObjectXYZ(
+        GameNetwork.sendClientRequestAddGameObjectXYZ(
           x: EditState.posX,
           y: EditState.posY,
           z: EditState.posZ,

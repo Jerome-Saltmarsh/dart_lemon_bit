@@ -2,6 +2,7 @@ import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/game_account.dart';
 import 'package:gamestream_flutter/game_colors.dart';
+import 'package:gamestream_flutter/game_website.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/styles.dart';
 import 'package:gamestream_flutter/to_string.dart';
@@ -11,7 +12,6 @@ import 'package:gamestream_flutter/ui/views.dart';
 import 'package:gamestream_flutter/ui/widgets.dart';
 import 'package:gamestream_flutter/utils.dart';
 import 'package:gamestream_flutter/utils/widget_utils.dart';
-import 'package:gamestream_flutter/game_website.dart';
 import 'package:golden_ratio/constants.dart';
 
 import '../game_widgets.dart';

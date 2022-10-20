@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/game_ui.dart';
+import 'package:gamestream_flutter/game_library.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
-import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:gamestream_flutter/styles.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
-import '../../game_widgets.dart';
 
 Widget buildPanelWriteMessage() {
   return WatchBuilder(GameUI.messageBoxVisible, (bool visible){
@@ -64,6 +62,6 @@ Widget buildPanelWriteMessage() {
 }
 
 void sendAndCloseTextBox(){
-  sendRequestSpeak(GameUI.textEditingControllerMessage.text);
+  GameNetwork.sendRequestSpeak(GameUI.textEditingControllerMessage.text);
   messageBoxHide();
 }

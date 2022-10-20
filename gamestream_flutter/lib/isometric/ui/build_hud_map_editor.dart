@@ -1,8 +1,7 @@
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/game_library.dart';
 import 'package:gamestream_flutter/game_render.dart';
-import 'package:gamestream_flutter/game_widgets.dart';
 import 'package:gamestream_flutter/isometric/edit.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
@@ -11,7 +10,6 @@ import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/isometric/watches/lightning.dart';
 import 'package:gamestream_flutter/isometric/watches/rain.dart';
-import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:gamestream_flutter/styles.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
 import 'package:lemon_watch/watch_builder.dart';
@@ -69,7 +67,7 @@ Widget buildControlWind() {
             height: 50,
             alignment: Alignment.center,
             child: buildIconWind(value, active),
-            action: () => sendClientRequestWeatherSetWind(value),
+            action: () => GameNetwork.sendClientRequestWeatherSetWind(value),
             toolTip: 'Wind ${value.name}',
           )
       );
@@ -134,7 +132,7 @@ Widget buildToggleRain() {
             ),
             margin: const EdgeInsets.only(right: 2),
           ),
-          action: () => sendClientRequestWeatherSetRain(value),
+          action: () => GameNetwork.sendClientRequestWeatherSetRain(value),
           hint: 'Rain ${value.name}',
         ),
       );
@@ -154,7 +152,7 @@ Widget buildButtonLightning() {
       final value = lightningValues[i];
       list.add(
           container(
-            action: () => sendClientRequestWeatherSetLightning(value),
+            action: () => GameNetwork.sendClientRequestWeatherSetLightning(value),
             toolTip: "Lightning ${value.name}",
             width: 50,
             height: 50,
@@ -177,7 +175,7 @@ Widget buildButtonBreeze() => watch(Game.weatherBreeze, (bool weatherBreezeOn) {
             color: brownLight,
           ),
           container(
-            action: sendClientRequestWeatherToggleBreeze,
+            action: GameNetwork.sendClientRequestWeatherToggleBreeze,
             color: weatherBreezeOn ? greyDark : grey,
           ),
         ],
@@ -207,7 +205,7 @@ Widget buildControlTime() {
           child: container(
             width: buttonWidth,
             color: purple4,
-            action: () => sendClientRequestTimeSetHour(i),
+            action: () => GameNetwork.sendClientRequestTimeSetHour(i),
           ),
         ),
       );
@@ -219,7 +217,7 @@ Widget buildControlTime() {
           child: container(
             width: buttonWidth,
             color: purple3,
-            action: () => sendClientRequestTimeSetHour(i),
+            action: () => GameNetwork.sendClientRequestTimeSetHour(i),
           ),
         ),
       );

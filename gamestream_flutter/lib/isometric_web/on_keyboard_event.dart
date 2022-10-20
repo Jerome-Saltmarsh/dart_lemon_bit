@@ -1,13 +1,12 @@
 
 import 'package:flutter/services.dart';
-import 'package:gamestream_flutter/game.dart';
+import 'package:gamestream_flutter/game_library.dart';
 import 'package:gamestream_flutter/isometric/actions/action_game_dialog_show_quests.dart';
 import 'package:gamestream_flutter/isometric/actions/action_toggle_inventory.dart';
 import 'package:gamestream_flutter/isometric/camera.dart';
 import 'package:gamestream_flutter/isometric/edit.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/utils/mouse.dart';
-import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:lemon_engine/engine.dart';
 
 void onKeyboardEvent(RawKeyEvent event){
@@ -33,7 +32,7 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
 
   if (Game.playMode) {
     if (key == PhysicalKeyboardKey.keyG)
-      return sendClientRequestTeleport();
+      return GameNetwork.sendClientRequestTeleport();
     if (key == PhysicalKeyboardKey.keyI)
       return actionToggleInventoryVisible();
     if (key == PhysicalKeyboardKey.keyT)
@@ -48,7 +47,7 @@ void onRawKeyDownEvent(RawKeyDownEvent event){
   if (key == PhysicalKeyboardKey.keyR) return EditState.selectPaintType();
   if (key == PhysicalKeyboardKey.keyG) {
     if (EditState.gameObjectSelected.value) {
-      sendGameObjectRequestMoveToMouse();
+      GameNetwork.sendGameObjectRequestMoveToMouse();
     } else {
       cameraSetPositionGrid(EditState.row, EditState.column, EditState.z);
     }

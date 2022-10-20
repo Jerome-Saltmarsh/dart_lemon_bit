@@ -1,8 +1,6 @@
 import 'package:bleed_common/teleport_scenes.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/game.dart';
-import 'package:gamestream_flutter/game_colors.dart';
-import 'package:gamestream_flutter/game_widgets.dart';
+import 'package:gamestream_flutter/game_library.dart';
 import 'package:gamestream_flutter/isometric/ui/build_panel_store.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/controls/build_control_npc_talk.dart';
@@ -10,7 +8,6 @@ import 'package:gamestream_flutter/isometric/ui/controls/build_control_player_ex
 import 'package:gamestream_flutter/isometric/ui/controls/build_control_player_health.dart';
 import 'package:gamestream_flutter/isometric/ui/stacks/build_page.dart';
 import 'package:gamestream_flutter/isometric/watches/inventory_visible.dart';
-import 'package:gamestream_flutter/network/send_client_request.dart';
 import 'package:gamestream_flutter/styles.dart';
 import 'package:gamestream_flutter/ui/builders/build_text_box.dart';
 import 'package:lemon_engine/engine.dart';
@@ -100,11 +97,11 @@ Widget buildColumnTeleport(){
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         text("Village", onPressed: (){
-          sendClientRequestTeleportScene(TeleportScenes.Village);
+          GameNetwork.sendClientRequestTeleportScene(TeleportScenes.Village);
         }),
         height6,
         text("Dungeon 1", onPressed: (){
-          sendClientRequestTeleportScene(TeleportScenes.Dungeon_1);
+          GameNetwork.sendClientRequestTeleportScene(TeleportScenes.Dungeon_1);
         }),
       ],
     ),

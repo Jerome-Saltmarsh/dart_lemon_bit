@@ -1,16 +1,20 @@
 import 'dart:typed_data';
 
+import 'package:bleed_common/edit_request.dart';
+import 'package:bleed_common/gameobject_request.dart';
 import 'package:bleed_common/library.dart';
+import 'package:bleed_common/request_modify_canvas_size.dart';
+import 'package:bleed_common/teleport_scenes.dart';
 import 'package:gamestream_flutter/enums/connection_status.dart';
 import 'package:gamestream_flutter/enums/region.dart';
-import 'package:gamestream_flutter/game.dart';
-import 'package:gamestream_flutter/game_io.dart';
+import 'package:gamestream_flutter/game_website.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:gamestream_flutter/game_website.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:lemon_watch/watch.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
+
+import 'game_library.dart';
 import 'isometric/watches/scene_meta_data.dart';
 import 'isometric_web/download_file.dart';
 import 'isometric_web/register_isometric_web_controls.dart';
@@ -229,6 +233,203 @@ class GameNetwork {
       default:
         break;
     }
+  }
+
+
+  static void sendRequestSpeak(String message){
+    if (message.trim().isEmpty) return;
+    sendClientRequest(ClientRequest.Speak, message);
+  }
+
+  static void sendClientRequestTeleport(){
+    sendClientRequest(ClientRequest.Teleport);
+  }
+
+  static void sendClientRequestTeleportScene(TeleportScenes scene){
+    sendClientRequest(ClientRequest.Teleport_Scene, scene.index);
+  }
+
+  static void sendClientRequestSpawnNodeData(int z, int row, int column){
+    sendClientRequest(ClientRequest.Spawn_Node_Data, '$z $row $column');
+  }
+
+  static void sendClientRequestStoreClose(){
+    sendClientRequest(ClientRequest.Store_Close);
+  }
+
+  static void sendClientRequestSetWeapon(int type){
+    sendClientRequest(ClientRequest.Set_Weapon, type);
+  }
+
+  static void sendClientRequestPurchaseWeapon(int type){
+    sendClientRequest(ClientRequest.Purchase_Weapon, type);
+  }
+
+  static void sendClientRequestSetArmour(int type){
+    sendClientRequest(ClientRequest.Set_Armour, type);
+  }
+
+  static void sendClientRequestSetHeadType(int type){
+    sendClientRequest(ClientRequest.Set_Head_Type, type);
+  }
+
+  static void sendClientRequestSetPantsType(int type){
+    sendClientRequest(ClientRequest.Set_Pants_Type, type);
+  }
+
+  static void sendClientRequestUpgradeWeaponDamage(){
+    sendClientRequest(ClientRequest.Upgrade_Weapon_Damage);
+  }
+
+  static void sendClientRequestEquipWeapon(int index){
+    assert (index >= 0);
+    sendClientRequest(ClientRequest.Equip_Weapon, index);
+  }
+
+  static void sendClientRequestWeatherSetRain(Rain value){
+    sendClientRequest(ClientRequest.Weather_Set_Rain, value.index);
+  }
+
+  static void sendClientRequestWeatherToggleBreeze(){
+    sendClientRequest(ClientRequest.Weather_Toggle_Breeze);
+  }
+
+  static void sendClientRequestWeatherSetWind(Wind wind){
+    sendClientRequest(ClientRequest.Weather_Set_Wind, wind.index);
+  }
+
+  static void sendClientRequestWeatherSetLightning(Lightning value){
+    sendClientRequest(ClientRequest.Weather_Set_Lightning, value.index);
+  }
+
+  static void sendClientRequestWeatherToggleTimePassing([bool? value]){
+    sendClientRequest(ClientRequest.Weather_Toggle_Time_Passing, value);
+  }
+
+  static void sendClientRequestCustomGameNames(){
+    sendClientRequest(ClientRequest.Custom_Game_Names);
+  }
+
+  static void sendClientRequestEditorLoadGame(String name){
+    sendClientRequest(ClientRequest.Editor_Load_Game, name);
+  }
+
+  static void sendClientRequestEditorSetSceneName(String name){
+    sendClientRequest(ClientRequest.Editor_Set_Scene_Name, name);
+  }
+
+  static void sendClientRequestSubmitPlayerDesign(){
+    sendClientRequest(ClientRequest.Submit_Player_Design);
+  }
+
+  static void sendClientRequestNpcSelectTopic(int index) =>
+      sendClientRequest(ClientRequest.Npc_Talk_Select_Option, index);
+
+  static void sendClientRequestTimeSetHour(int hour){
+    assert(hour >= 0);
+    assert(hour <= 24);
+    sendClientRequest(ClientRequest.Time_Set_Hour, hour);
+  }
+
+  static void sendClientRequestRespawn(){
+    sendClientRequest(ClientRequest.Revive);
+  }
+
+  static void sendClientRequestSetBlock({
+    required int index,
+    required int type,
+    required int orientation,
+  }) =>
+      sendClientRequest(
+        ClientRequest.Node,
+        '$index $type $orientation',
+      );
+
+  static void sendClientRequestAddGameObject({
+    required int index,
+    required int type,
+  }) {
+    sendClientRequest(
+      ClientRequest.GameObject,
+      "${GameObjectRequest.Add.index} $index $type",
+    );
+  }
+
+  static void sendClientRequestAddGameObjectXYZ({
+    required double x,
+    required double y,
+    required double z,
+    required int type,
+  }) {
+    sendClientRequest(
+      ClientRequest.GameObject,
+      "${GameObjectRequest.Add.index} $x $y $z $type",
+    );
+  }
+
+  static void sendClientRequestGameObjectTranslate({
+    required double tx,
+    required double ty,
+    required double tz,
+  }) {
+    sendClientRequest(
+      ClientRequest.GameObject,
+      "${GameObjectRequest.Translate.index} $tx $ty $tz",
+    );
+  }
+
+  static void sendGameObjectRequestSelect() {
+    sendGameObjectRequest(GameObjectRequest.Select);
+  }
+
+  static void sendGameObjectRequestDeselect() {
+    sendGameObjectRequest(GameObjectRequest.Deselect);
+  }
+
+  static void sendGameObjectRequestDelete() {
+    sendGameObjectRequest(GameObjectRequest.Delete);
+  }
+
+  static void sendClientRequestModifyCanvasSize(RequestModifyCanvasSize request) =>
+      sendClientRequestEdit(EditRequest.Modify_Canvas_Size, request.index);
+
+  static void sendClientRequestEdit(EditRequest request, [dynamic message = null]) =>
+      sendClientRequest(ClientRequest.Edit, '${request.index} $message');
+
+  static void sendClientRequestSpawnNodeDataModify({
+    required int z,
+    required int row,
+    required int column,
+    required int spawnType,
+    required int spawnAmount,
+    required int spawnRadius,
+  }) =>
+      sendClientRequest(
+          ClientRequest.Spawn_Node_Data_Modify,
+          '$z $row $column $spawnType $spawnAmount $spawnRadius'
+      );
+
+  static void sendGameObjectRequestMoveToMouse() {
+    sendGameObjectRequest(GameObjectRequest.Move_To_Mouse);
+  }
+
+  static void sendGameObjectRequest(GameObjectRequest request, [dynamic message]) {
+    if (message != null){
+      sendClientRequest(ClientRequest.GameObject, '${request.index} $message');
+    }
+    sendClientRequest(ClientRequest.GameObject, request.index);
+  }
+
+  static void sendClientRequestTogglePaths() {
+    sendClientRequest(ClientRequest.Toggle_Debug);
+  }
+
+
+  static void sendClientRequest(ClientRequest value, [dynamic message]){
+    if (message != null){
+      return GameNetwork.send('${value.index} $message');
+    }
+    GameNetwork.send(value.index);
   }
 }
 

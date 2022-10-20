@@ -432,3 +432,18 @@ class CustomPainterPainter extends CustomPainter {
     return doRepaint(oldDelegate);
   }
 }
+
+Widget buildTextButton(
+    String value, {
+      Function? action,
+      double size = 24,
+      Color? colorMouseOver,
+      Color? colorRegular,
+    }) =>
+    onMouseOver(builder: (BuildContext context, bool mouseOver) =>
+        text(value,
+            onPressed: action,
+            size: size,
+            color: mouseOver ? colorMouseOver ?? Colors.white70 : colorRegular ?? Colors.white54
+        ),
+    );
