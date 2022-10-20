@@ -1,4 +1,5 @@
 
+import 'package:bleed_common/version.dart';
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/enums/region.dart';
@@ -11,11 +12,11 @@ import 'package:gamestream_flutter/modules/ui/style.dart';
 import 'package:gamestream_flutter/storage_service.dart';
 import 'package:gamestream_flutter/ui/views.dart';
 import 'package:gamestream_flutter/website/build/build_column_games.dart';
-import 'package:gamestream_flutter/website/build_layout_website.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch.dart';
 
 import 'enums/operation_status.dart';
+import 'to_string.dart';
 
 class GameWebsite {
   static final operationStatus = Watch(OperationStatus.None);
@@ -25,6 +26,8 @@ class GameWebsite {
   static final download = Watch(0.0);
   static final debug = true;
   static final isVisibleDialogCustomRegion = Watch(false);
+
+  static final colorRegion = Colors.orange;
 
   static void setError(String message){
     error.value = message;
@@ -165,7 +168,6 @@ class GameWebsite {
         website.actions.showDialogSubscriptionStatusChanged();
       }
     }
-    // AccountService.store(flag, enumString(account.subscriptionStatus));
     website.actions.showDialogGames();
   }
 
@@ -181,4 +183,54 @@ class GameWebsite {
         alignment: alignment,
         child: child,
       );
+
+  static Widget buildStateRegion(Region selectedRegion) => Container(
+    height: Engine.screen.height,
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: Region.values
+          .map((Region region) => Container(
+        margin: const EdgeInsets.symmetric(vertical: 4),
+        child: buildTextButton('Region ${enumString(region)}',
+          action: selectedRegion == region ? null : () => actionSelectRegion(region),
+          size: 18,
+          colorRegular: selectedRegion == region
+              ? colorRegion.withOpacity(0.54)
+              : colorRegion.withOpacity(0.24),
+          colorMouseOver: selectedRegion == region
+              ? colorRegion.withOpacity(0.54)
+              : colorRegion.withOpacity(0.39),
+        ),
+      ))
+          .toList(),
+    ),
+  );
+
+  static Widget buildInputCustomConnectionString() =>
+      Container(
+        width: 280,
+        margin: const EdgeInsets.only(left: 12),
+        child: TextField(
+          autofocus: true,
+          controller: website.state.customConnectionStrongController,
+          decoration: InputDecoration(
+              labelText: 'ws connection string'
+          ),
+        ),
+      );
+
+  static Widget buildButtonSelectRegion(Region region){
+    return Container(
+        height: 50,
+        child: text(region.name, onPressed: () => actionSelectRegion(region)));
+  }
+
+  static Widget buildTextVersion(){
+    return text(version, color: GameColors.white618, size: FontSize.Small);
+  }
+
+  static void actionSelectRegion(Region value) {
+    GameWebsite.region.value = value;
+  }
 }
