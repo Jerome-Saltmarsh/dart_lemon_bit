@@ -179,7 +179,14 @@ class GameWebsite {
           Positioned(
               top: Padding,
               left: Padding,
-              child: watch(region, (Region region) => text(region.name, color: colorRegion, onPressed: () => websitePage.value = WebsitePage.Region))
+              child:
+              watch(websitePage, (WebsitePage page){
+                  if (page == WebsitePage.Games){
+                    return watch(region, (Region region) => text(region.name, color: colorRegion, onPressed: () => websitePage.value = WebsitePage.Region));
+                  } else {
+                    return text("<- BACK", onPressed: toggleWebsitePage);
+                  }
+              }),
           ),
         Positioned(
           bottom: Padding,
