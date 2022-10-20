@@ -27,8 +27,9 @@ class GameWebsite {
   static final debug = true;
   static final isVisibleDialogCustomRegion = Watch(false);
   static final colorRegion = Colors.orange;
-
   static const Padding = 12.0;
+
+  static final websitePage = Watch(WebsitePage.Games);
 
   static void setError(String message){
     error.value = message;
@@ -107,20 +108,46 @@ class GameWebsite {
     );
   }
 
-  static Widget buildColumnGames() =>
+  static Widget buildWebsitePage(WebsitePage page) =>
+      page == WebsitePage.Games
+       ? buildWebsitePageGames()
+       : buildWebsitePageRegions();
+
+  static Widget buildWebsitePageGames() =>
+    Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        buildTextButton("DARK-AGE", action: GameNetwork.connectToGameDarkAge),
+        height24,
+        buildTextButton("FIRE-STORM", action: GameNetwork.connectToGameSkirmish),
+        height24,
+        buildTextButton("GAME-MAKER", action: GameNetwork.connectToGameEditor),
+      ],
+    );
+
+  static Widget buildWebsitePageRegions() =>
       Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          buildTextButton("DARK-AGE", action: GameNetwork.connectToGameDarkAge),
-          height24,
-          buildTextButton("FIRE-STORM", action: GameNetwork.connectToGameSkirmish),
-          height24,
-          buildTextButton("CASTLE-BUILDER", action: GameNetwork.connectToGameEditor),
-        ],
+        children: Region.values.map((Region region) {
+          return Container(
+              margin: const EdgeInsets.only(bottom: 16),
+              child: text(region.name.replaceAll("_", " "), onPressed: (){
+                GameWebsite.region.value = region;
+                GameWebsite.websitePage.value = WebsitePage.Games;
+              }, size: 20),
+          );
+        }).toList(),
       );
 
   static Widget buildNotConnected()  => watch(Engine.deviceType, buildDevice);
+
+  static void toggleWebsitePage() =>
+     websitePage.value =
+        websitePage.value == WebsitePage.Region
+         ? WebsitePage.Games
+         : WebsitePage.Region;
 
   static Widget buildDevice(int deviceType) =>
     Stack(
@@ -152,7 +179,7 @@ class GameWebsite {
           Positioned(
               top: Padding,
               left: Padding,
-              child: watch(region, (Region region) => text(region.name, color: colorRegion))
+              child: watch(region, (Region region) => text(region.name, color: colorRegion, onPressed: () => websitePage.value = WebsitePage.Region))
           ),
         Positioned(
           bottom: Padding,
@@ -164,10 +191,8 @@ class GameWebsite {
           ),
         ),
         Positioned(
-          top: Padding,
-          left: Padding,
           child: buildFullscreen(
-            child: buildColumnGames(),
+            child: watch(websitePage, buildWebsitePage)
           ),
         )
       ],
@@ -252,4 +277,10 @@ class GameWebsite {
 
   static void actionSelectRegion(Region value) =>
     GameWebsite.region.value = value;
+}
+
+
+enum WebsitePage {
+   Games,
+   Region,
 }
