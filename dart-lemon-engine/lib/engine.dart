@@ -503,7 +503,7 @@ class Engine {
     if (!initialized) return;
     if (onDrawCanvas == null) return;
     onDrawCanvas!.call(canvas, size);
-    _internalFlushRenderBuffer();
+    flushBuffer();
   }
 
   static Duration buildDurationFramesPerSecond(int framesPerSecond) =>
@@ -588,10 +588,10 @@ class Engine {
   static var bufferBlendMode = BlendMode.dstATop;
   static var bufferIndex = 0;
 
-  static const _bufferSize = 100000;
-  static final _bufferSrc = Float32List(_bufferSize * 4);
-  static final _bufferDst = Float32List(_bufferSize * 4);
-  static final _bufferColors = Int32List(_bufferSize);
+  // static const _bufferSize = 100000;
+  // static final _bufferSrc = Float32List(_bufferSize * 4);
+  // static final _bufferDst = Float32List(_bufferSize * 4);
+  // static final _bufferColors = Int32List(_bufferSize);
 
   static final _bufferSrc1 = Float32List(1 * 4);
   static final _bufferDst1 = Float32List(1 * 4);
@@ -609,33 +609,9 @@ class Engine {
   static final _bufferDst8 = Float32List(8 * 4);
   static final _bufferColors8 = Int32List(8);
 
-  static final _bufferSrc16 = Float32List(16 * 4);
-  static final _bufferDst16 = Float32List(16 * 4);
-  static final _bufferColors16 = Int32List(16);
-
-  static final _bufferSrc32 = Float32List(32 * 4);
-  static final _bufferDst32 = Float32List(32 * 4);
-  static final _bufferColors32 = Int32List(32);
-
-  static final _bufferSrc64 = Float32List(64 * 4);
-  static final _bufferDst64 = Float32List(64 * 4);
-  static final _bufferColors64 = Int32List(64);
-
-  static final _bufferSrc128 = Float32List(128 * 4);
-  static final _bufferDst128 = Float32List(128 * 4);
-  static final _bufferColors128 = Int32List(128);
-
-  static final _bufferSrc256 = Float32List(256 * 4);
-  static final _bufferDst256 = Float32List(256 * 4);
-  static final _bufferColors256 = Int32List(256);
-
-  static final _bufferSrc512 = Float32List(512 * 4);
-  static final _bufferDst512 = Float32List(512 * 4);
-  static final _bufferColors512 = Int32List(512);
-
-  static final _bufferSrc1024 = Float32List(1024 * 4);
-  static final _bufferDst1024 = Float32List(1024 * 4);
-  static final _bufferColors1024 = Int32List(1024);
+  static final _bufferSrc = _bufferSrc8;
+  static final _bufferDst = _bufferDst8;
+  static final _bufferColors = _bufferColors8;
 
   static void flushBuffer() {
     var flushIndex = 0;
@@ -691,23 +667,8 @@ class Engine {
         canvas.drawRawAtlas(bufferImage, _bufferDst4, _bufferSrc4, _bufferColors4, bufferBlendMode, null, paint);
       }
 
-      if (true) {
-        for (var i = 0; i < 8; i++) {
-          final j = i * 4;
-          final f = flushIndex * 4;
-          _bufferColors8[i] = _bufferColors[flushIndex];
-          _bufferDst8[j] = _bufferDst[f];
-          _bufferDst8[j + 1] = _bufferDst[f + 1];
-          _bufferDst8[j + 2] = _bufferDst[f + 2];
-          _bufferDst8[j + 3] = _bufferDst[f + 3];
-          _bufferSrc8[j] = _bufferSrc[f];
-          _bufferSrc8[j + 1] = _bufferSrc[f + 1];
-          _bufferSrc8[j + 2] = _bufferSrc[f + 2];
-          _bufferSrc8[j + 3] = _bufferSrc[f + 3];
-          flushIndex++;
-        }
-        canvas.drawRawAtlas(bufferImage, _bufferDst8, _bufferSrc8, _bufferColors8, bufferBlendMode, null, paint);
-      }
+      canvas.drawRawAtlas(bufferImage, _bufferDst8, _bufferSrc8, _bufferColors8, bufferBlendMode, null, paint);
+      break;
     }
     bufferIndex = 0;
   }
@@ -725,7 +686,7 @@ class Engine {
     double scale = 1.0,
     int color = 1,
   }){
-    if (bufferImage != image) {
+    if (bufferImage != image || bufferIndex >= 8) {
       flushBuffer();
       bufferImage = image;
     }
@@ -810,22 +771,6 @@ class Engine {
   // static final bufferSrc = Float32List(bufferSize * 4);
   // static final bufferDst = Float32List(bufferSize * 4);
   // static final bufferColors = Int32List(bufferSize);
-
-  static void _internalFlushRenderBuffer() {
-    flushBuffer();
-    // if (bufferIndex == 0) return;
-    // while (bufferIndex < bufferSize) {
-    //   bufferSrc[bufferIndex] = 0;
-    //   bufferDst[bufferIndex] = 0;
-    //   bufferSrc[bufferIndex + 1] = 0;
-    //   bufferDst[bufferIndex + 1] = 0;
-    //   bufferSrc[bufferIndex + 2] = 0;
-    //   bufferSrc[bufferIndex + 3] = 0;
-    //   bufferIndex++;
-    // }
-    // _internalRenderBuffer();
-  }
-
 
   static void renderBufferRotated({
     required double dstX,
