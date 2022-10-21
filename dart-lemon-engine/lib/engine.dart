@@ -583,7 +583,134 @@ class Engine {
   static final _colors1 = Int32List(1);
   static const _cos0 = 1;
   static const _sin0 = 0;
-  static late ui.Image _image;
+  static late ui.Image bufferImage;
+
+  static var bufferBlendMode = BlendMode.dstATop;
+  static var bufferIndex = 0;
+
+  static const _bufferSize = 100000;
+  static final _bufferSrc = Float32List(_bufferSize * 4);
+  static final _bufferDst = Float32List(_bufferSize * 4);
+  static final _bufferColors = Int32List(_bufferSize);
+
+  static final _bufferSrc1 = Float32List(1 * 4);
+  static final _bufferDst1 = Float32List(1 * 4);
+  static final _bufferColors1 = Int32List(1);
+
+  static final _bufferSrc2 = Float32List(2 * 4);
+  static final _bufferDst2 = Float32List(2 * 4);
+  static final _bufferColors2 = Int32List(2);
+
+  static final _bufferSrc4 = Float32List(4 * 4);
+  static final _bufferDst4 = Float32List(4 * 4);
+  static final _bufferColors4 = Int32List(4);
+
+  static final _bufferSrc8 = Float32List(8 * 4);
+  static final _bufferDst8 = Float32List(8 * 4);
+  static final _bufferColors8 = Int32List(8);
+
+  static final _bufferSrc16 = Float32List(16 * 4);
+  static final _bufferDst16 = Float32List(16 * 4);
+  static final _bufferColors16 = Int32List(16);
+
+  static final _bufferSrc32 = Float32List(32 * 4);
+  static final _bufferDst32 = Float32List(32 * 4);
+  static final _bufferColors32 = Int32List(32);
+
+  static final _bufferSrc64 = Float32List(64 * 4);
+  static final _bufferDst64 = Float32List(64 * 4);
+  static final _bufferColors64 = Int32List(64);
+
+  static final _bufferSrc128 = Float32List(128 * 4);
+  static final _bufferDst128 = Float32List(128 * 4);
+  static final _bufferColors128 = Int32List(128);
+
+  static final _bufferSrc256 = Float32List(256 * 4);
+  static final _bufferDst256 = Float32List(256 * 4);
+  static final _bufferColors256 = Int32List(256);
+
+  static final _bufferSrc512 = Float32List(512 * 4);
+  static final _bufferDst512 = Float32List(512 * 4);
+  static final _bufferColors512 = Int32List(512);
+
+  static final _bufferSrc1024 = Float32List(1024 * 4);
+  static final _bufferDst1024 = Float32List(1024 * 4);
+  static final _bufferColors1024 = Int32List(1024);
+
+  static void flushBuffer() {
+    var flushIndex = 0;
+    while (flushIndex < bufferIndex) {
+      final remaining = bufferIndex - flushIndex;
+      if (remaining == 1) {
+        _bufferColors1[0] = _bufferColors[flushIndex];
+        _bufferDst1[0] = _bufferDst[flushIndex];
+        _bufferDst1[1] = _bufferDst[flushIndex + 1];
+        _bufferDst1[2] = _bufferDst[flushIndex + 2];
+        _bufferDst1[3] = _bufferDst[flushIndex + 3];
+        _bufferSrc1[0] = _bufferSrc[flushIndex];
+        _bufferSrc1[1] = _bufferSrc[flushIndex + 1];
+        _bufferSrc1[2] = _bufferSrc[flushIndex + 2];
+        _bufferSrc1[3] = _bufferSrc[flushIndex + 3];
+        canvas.drawRawAtlas(bufferImage, _bufferDst1, _bufferSrc1, _bufferColors1, bufferBlendMode, null, paint);
+        break;
+      }
+
+      if (remaining <= 3) {
+        for (var i = 0; i < 2; i++) {
+          final j = i * 4;
+          final f = flushIndex * 4;
+          _bufferColors2[i] = _bufferColors[flushIndex];
+          _bufferDst2[j] = _bufferDst[f];
+          _bufferDst2[j + 1] = _bufferDst[f + 1];
+          _bufferDst2[j + 2] = _bufferDst[f + 2];
+          _bufferDst2[j + 3] = _bufferDst[f + 3];
+          _bufferSrc2[j] = _bufferSrc[f];
+          _bufferSrc2[j + 1] = _bufferSrc[f + 1];
+          _bufferSrc2[j + 2] = _bufferSrc[f + 2];
+          _bufferSrc2[j + 3] = _bufferSrc[f + 3];
+          flushIndex++;
+        }
+        canvas.drawRawAtlas(bufferImage, _bufferDst2, _bufferSrc2, _bufferColors2, bufferBlendMode, null, paint);
+      }
+
+      if (remaining <= 7) {
+        for (var i = 0; i < 4; i++) {
+          final j = i * 4;
+          final f = flushIndex * 4;
+          _bufferColors4[i] = _bufferColors[flushIndex];
+          _bufferDst4[j] = _bufferDst[f];
+          _bufferDst4[j + 1] = _bufferDst[f + 1];
+          _bufferDst4[j + 2] = _bufferDst[f + 2];
+          _bufferDst4[j + 3] = _bufferDst[f + 3];
+          _bufferSrc4[j] = _bufferSrc[f];
+          _bufferSrc4[j + 1] = _bufferSrc[f + 1];
+          _bufferSrc4[j + 2] = _bufferSrc[f + 2];
+          _bufferSrc4[j + 3] = _bufferSrc[f + 3];
+          flushIndex++;
+        }
+        canvas.drawRawAtlas(bufferImage, _bufferDst4, _bufferSrc4, _bufferColors4, bufferBlendMode, null, paint);
+      }
+
+      if (true) {
+        for (var i = 0; i < 8; i++) {
+          final j = i * 4;
+          final f = flushIndex * 4;
+          _bufferColors8[i] = _bufferColors[flushIndex];
+          _bufferDst8[j] = _bufferDst[f];
+          _bufferDst8[j + 1] = _bufferDst[f + 1];
+          _bufferDst8[j + 2] = _bufferDst[f + 2];
+          _bufferDst8[j + 3] = _bufferDst[f + 3];
+          _bufferSrc8[j] = _bufferSrc[f];
+          _bufferSrc8[j + 1] = _bufferSrc[f + 1];
+          _bufferSrc8[j + 2] = _bufferSrc[f + 2];
+          _bufferSrc8[j + 3] = _bufferSrc[f + 3];
+          flushIndex++;
+        }
+        canvas.drawRawAtlas(bufferImage, _bufferDst8, _bufferSrc8, _bufferColors8, bufferBlendMode, null, paint);
+      }
+    }
+    bufferIndex = 0;
+  }
 
   static void renderSprite({
     required ui.Image image,
@@ -598,17 +725,21 @@ class Engine {
     double scale = 1.0,
     int color = 1,
   }){
-    _image = image;
-    _colors1[0] = color;
-    _src4[0] = srcX;
-    _src4[1] = srcY;
-    _src4[2] = srcX + srcWidth;
-    _src4[3] = srcY + srcHeight;
-    _dst4[0] = scale;
-    _dst4[1] = 0; // scale
-    _dst4[2] = dstX - (srcWidth * anchorX * scale);
-    _dst4[3] = dstY - (srcHeight * anchorY * scale); // scale
-    canvas.drawRawAtlas(image, _dst4, _src4, _colors1, bufferBlendMode, null, paint);
+    if (bufferImage != image) {
+      flushBuffer();
+      bufferImage = image;
+    }
+    final f = bufferIndex * 4;
+    _bufferColors[bufferIndex] = color;
+    _bufferSrc[f] = srcX;
+    _bufferSrc[f + 1] = srcY;
+    _bufferSrc[f + 2] = srcX + srcWidth;
+    _bufferSrc[f + 3] = srcY + srcHeight;
+    _bufferDst[f] = scale;
+    _bufferDst[f + 1] = 0;
+    _bufferDst[f + 2] = dstX - (srcWidth * anchorX * scale);
+    _bufferDst[f + 3] = dstY - (srcHeight * anchorY * scale);
+    bufferIndex++;
   }
 
   static void renderSpriteRotated({
@@ -625,17 +756,17 @@ class Engine {
     double scale = 1.0,
     int color = 1,
   }){
-    final angle = rotation + piQuarter;
-    final translate = calculateHypotenuse(srcWidth * 0.5, srcHeight * 0.5);
-    _colors1[0] = color;
-    _src4[0] = srcX;
-    _dst4[0] = cos(rotation) * scale;
-    _src4[1] = srcY;
-    _dst4[1] = sin(rotation) * scale;
-    _src4[2] = srcX + srcWidth;
-    _dst4[2] = dstX - getAdjacent(angle, translate);
-    _src4[3] = srcY + srcHeight;
-    _dst4[3] = dstY - getOpposite(angle, translate);
+    // final angle = rotation + piQuarter;
+    // final translate = calculateHypotenuse(srcWidth * 0.5, srcHeight * 0.5);
+    // _colors1[0] = color;
+    // _src4[0] = srcX;
+    // _dst4[0] = cos(rotation) * scale;
+    // _src4[1] = srcY;
+    // _dst4[1] = sin(rotation) * scale;
+    // _src4[2] = srcX + srcWidth;
+    // _dst4[2] = dstX - getAdjacent(angle, translate);
+    // _src4[3] = srcY + srcHeight;
+    // _dst4[3] = dstY - getOpposite(angle, translate);
   }
 
   static void renderExternalCanvas({
@@ -673,27 +804,28 @@ class Engine {
 
   // SECTION RENDER
 
-  static late ui.Image bufferImage;
-  static var bufferIndex = 0;
-  static var bufferBlendMode = BlendMode.dstATop;
-  static const bufferSize = 10;
-  static final bufferSrc = Float32List(bufferSize * 4);
-  static final bufferDst = Float32List(bufferSize * 4);
-  static final bufferColors = Int32List(bufferSize);
+  // static var bufferIndex = 0;
+  // static var bufferBlendMode = BlendMode.dstATop;
+  // static const bufferSize = 10;
+  // static final bufferSrc = Float32List(bufferSize * 4);
+  // static final bufferDst = Float32List(bufferSize * 4);
+  // static final bufferColors = Int32List(bufferSize);
 
   static void _internalFlushRenderBuffer() {
-    if (bufferIndex == 0) return;
-    while (bufferIndex < bufferSize) {
-      bufferSrc[bufferIndex] = 0;
-      bufferDst[bufferIndex] = 0;
-      bufferSrc[bufferIndex + 1] = 0;
-      bufferDst[bufferIndex + 1] = 0;
-      bufferSrc[bufferIndex + 2] = 0;
-      bufferSrc[bufferIndex + 3] = 0;
-      bufferIndex++;
-    }
-    _internalRenderBuffer();
+    flushBuffer();
+    // if (bufferIndex == 0) return;
+    // while (bufferIndex < bufferSize) {
+    //   bufferSrc[bufferIndex] = 0;
+    //   bufferDst[bufferIndex] = 0;
+    //   bufferSrc[bufferIndex + 1] = 0;
+    //   bufferDst[bufferIndex + 1] = 0;
+    //   bufferSrc[bufferIndex + 2] = 0;
+    //   bufferSrc[bufferIndex + 3] = 0;
+    //   bufferIndex++;
+    // }
+    // _internalRenderBuffer();
   }
+
 
   static void renderBufferRotated({
     required double dstX,
@@ -712,15 +844,15 @@ class Engine {
     final tx = dstX + -scos * anchorX + ssin * anchorY;
     final ty = dstY + -ssin * anchorX - scos * anchorY;
     final i = bufferIndex * 4;
-    bufferSrc[i] = srcX;
-    bufferDst[i] = scos;
-    bufferSrc[i + 1] = srcY;
-    bufferDst[i + 1] = ssin;
-    bufferSrc[i + 2] = srcX + srcWidth;
-    bufferDst[i + 2] = tx;
-    bufferSrc[i + 3] = srcY + srcHeight;
-    bufferDst[i + 3] = ty;
-    _internalIncrementBufferIndex();
+    // bufferSrc[i] = srcX;
+    // bufferDst[i] = scos;
+    // bufferSrc[i + 1] = srcY;
+    // bufferDst[i + 1] = ssin;
+    // bufferSrc[i + 2] = srcX + srcWidth;
+    // bufferDst[i + 2] = tx;
+    // bufferSrc[i + 3] = srcY + srcHeight;
+    // bufferDst[i + 3] = ty;
+    // _internalIncrementBufferIndex();
   }
 
   static void renderBuffer({
@@ -736,28 +868,28 @@ class Engine {
     int color = 0,
   }){
     final i = bufferIndex * 4;
-    bufferColors[bufferIndex] = color;
-    bufferSrc[i] = srcX;
-    bufferDst[i] = scale;
-    bufferSrc[i + 1] = srcY;
-    bufferDst[i + 1] = 0;
-    bufferSrc[i + 2] = srcX + srcWidth;
-    bufferDst[i + 2] = dstX - (srcWidth * anchorX * scale);
-    bufferSrc[i + 3] = srcY + srcHeight;
-    bufferDst[i + 3] = dstY - (srcHeight * anchorY * scale);
-    _internalIncrementBufferIndex();
+    // bufferColors[bufferIndex] = color;
+    // bufferSrc[i] = srcX;
+    // bufferDst[i] = scale;
+    // bufferSrc[i + 1] = srcY;
+    // bufferDst[i + 1] = 0;
+    // bufferSrc[i + 2] = srcX + srcWidth;
+    // bufferDst[i + 2] = dstX - (srcWidth * anchorX * scale);
+    // bufferSrc[i + 3] = srcY + srcHeight;
+    // bufferDst[i + 3] = dstY - (srcHeight * anchorY * scale);
+    // _internalIncrementBufferIndex();
   }
 
-  static void _internalIncrementBufferIndex(){
-    bufferIndex++;
-    if (bufferIndex >= bufferSize)
-      _internalRenderBuffer();
-  }
+  // static void _internalIncrementBufferIndex(){
+    // bufferIndex++;
+    // if (bufferIndex >= bufferSize)
+    //   _internalRenderBuffer();
+  // }
 
-  static void _internalRenderBuffer(){
-    bufferIndex = 0;
-    canvas.drawRawAtlas(bufferImage, bufferDst, bufferSrc, bufferColors, bufferBlendMode, null, paint);
-  }
+  // static void _internalRenderBuffer(){
+  //   bufferIndex = 0;
+    // canvas.drawRawAtlas(bufferImage, bufferDst, bufferSrc, bufferColors, bufferBlendMode, null, paint);
+  // }
 
   static void renderCircleOutline({
     required double radius,

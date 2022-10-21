@@ -35,10 +35,10 @@ Widget buildHudDebug() =>
               Refresh(() => text('particles: active: $GameState.totalActiveParticles, total: ${GameState.particles.length}')),
               Refresh(() => text('nodes-rendered: ${GameRender.onscreenNodes}')),
               Refresh(() => text('engine-frame: ${Engine.paintFrame}')),
-              onPressed(
-                action: () => Engine.bufferBlendMode = BlendMode.values[(BlendMode.values.indexOf(Engine.bufferBlendMode) + 1) % BlendMode.values.length],
-                  child: Refresh(() => text('render-blend-mode: ${Engine.bufferBlendMode}'))
-              ),
+              // onPressed(
+              //   action: () => Engine.bufferBlendMode = BlendMode.values[(BlendMode.values.indexOf(Engine.bufferBlendMode) + 1) % BlendMode.values.length],
+              //     child: Refresh(() => text('render-blend-mode: ${Engine.bufferBlendMode}'))
+              // ),
               watch(GameState.renderFrame, (t) => text("render-frame: $t")),
               watch(serverResponseReader.updateFrame, (t) => text("update-frame: $t")),
               watch(GameState.player.interpolating, (bool interpolating) => text("interpolating: $interpolating", onPressed: () => GameState.player.interpolating.value = !GameState.player.interpolating.value)),
