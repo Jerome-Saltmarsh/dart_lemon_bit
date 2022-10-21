@@ -19,7 +19,7 @@ class GameWebsite {
   static final debug = true;
   static final isVisibleDialogCustomRegion = Watch(false);
   static final colorRegion = Colors.orange;
-  static const Padding = 12.0;
+  static const Padding = 16.0;
   static final dateFormat = DateFormat(DateFormat.YEAR_MONTH_DAY);
 
   static String formatDate(DateTime value){
@@ -174,12 +174,12 @@ class GameWebsite {
           ),
         if (deviceType == DeviceType.Phone)
           Positioned(
-              top: Padding,
+              bottom: Padding,
               left: Padding,
               child:
               watch(websitePage, (WebsitePage page){
                   if (page == WebsitePage.Games){
-                    return watch(region, (ConnectionRegion region) => text(region.name, color: colorRegion, onPressed: () => websitePage.value = WebsitePage.Region));
+                    return watch(region, (ConnectionRegion region) => text(region.name, color: colorRegion, onPressed: () => websitePage.value = WebsitePage.Region, size: 25));
                   } else {
                     return text("<- BACK", onPressed: toggleWebsitePage);
                   }

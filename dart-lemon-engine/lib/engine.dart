@@ -578,9 +578,9 @@ class Engine {
   void setFramesPerSecond(int framesPerSecond) =>
      watchDurationPerFrame.value = buildDurationFramesPerSecond(framesPerSecond);
 
-  static final _src4 = Float32List(4);
-  static final _dst4 = Float32List(4);
-  static final _colors1 = Int32List(1);
+  // static final _src4 = Float32List(4);
+  // static final _dst4 = Float32List(4);
+  // static final _colors1 = Int32List(1);
   static const _cos0 = 1;
   static const _sin0 = 0;
   static late ui.Image bufferImage;
@@ -647,6 +647,7 @@ class Engine {
           flushIndex++;
         }
         canvas.drawRawAtlas(bufferImage, _bufferDst2, _bufferSrc2, _bufferColors2, bufferBlendMode, null, paint);
+        continue;
       }
 
       if (remaining <= 7) {
@@ -665,6 +666,7 @@ class Engine {
           flushIndex++;
         }
         canvas.drawRawAtlas(bufferImage, _bufferDst4, _bufferSrc4, _bufferColors4, bufferBlendMode, null, paint);
+        continue;
       }
 
       canvas.drawRawAtlas(bufferImage, _bufferDst8, _bufferSrc8, _bufferColors8, bufferBlendMode, null, paint);
@@ -742,16 +744,18 @@ class Engine {
     double anchorX = 0.5,
     double anchorY = 0.5,
     double scale = 1.0,
+    int color = 1,
   }){
-    _src4[0] = srcX;
-    _src4[1] = srcY;
-    _src4[2] = srcX + srcWidth;
-    _src4[3] = srcY + srcHeight;
-    _dst4[0] = _cos0 * scale;
-    _dst4[1] = _sin0 * scale; // scale
-    _dst4[2] = dstX - (srcWidth * anchorX * scale);
-    _dst4[3] = dstY - (srcHeight * anchorY * scale); // scale
-    canvas.drawRawAtlas(image, _dst4, _src4, _colors1, BlendMode.dstATop, null, paint);
+    _bufferColors1[0] = color;
+    _bufferSrc1[0] = srcX;
+    _bufferSrc1[1] = srcY;
+    _bufferSrc1[2] = srcX + srcWidth;
+    _bufferSrc1[3] = srcY + srcHeight;
+    _bufferDst1[0] = _cos0 * scale;
+    _bufferDst1[1] = _sin0 * scale; // scale
+    _bufferDst1[2] = dstX - (srcWidth * anchorX * scale);
+    _bufferDst1[3] = dstY - (srcHeight * anchorY * scale); // scale
+    canvas.drawRawAtlas(image, _bufferDst1, _bufferSrc1, _bufferColors1, bufferBlendMode, null, paint);
   }
 
   static void renderCircle(double x, double y, double radius, Color color) {
