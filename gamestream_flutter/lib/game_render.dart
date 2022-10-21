@@ -98,6 +98,9 @@ class GameRender {
   static double get currentNodeRenderX => (currentNodeRow - currentNodeColumn) * tileSizeHalf;
   static double get currentNodeRenderY => convertRowColumnZToY(currentNodeRow, currentNodeColumn, currentNodeZ);
 
+  static int get currentNodeShade => GameState.nodesShade[currentNodeIndex];
+  static int get currentNodeColor => GameState.colorShades[currentNodeShade];
+
 
   static void renderCurrentParticle() =>
     renderParticle(currentParticle);

@@ -135,9 +135,16 @@ void renderNodeAt() {
       return;
     case NodeType.Rain_Landing:
       if (getNodeTypeBelow(GameRender.currentNodeIndex) == NodeType.Water){
-        renderStandardNodeShaded(
+        Engine.renderSprite(
+          image: GameImages.nodes,
           srcX: AtlasSrcX.Node_Rain_Landing_Water_X,
           srcY: 72.0 * ((animationFrame + GameRender.currentNodeRow + GameRender.currentNodeColumn) % 10),
+          srcWidth: spriteWidth,
+          srcHeight: spriteHeight,
+          dstX: GameRender.currentNodeDstX,
+          dstY: GameRender.currentNodeDstY + animationFrameWaterHeight + 14,
+          anchorY: 0.3,
+          color: GameRender.currentNodeColor,
         );
         return;
       }
