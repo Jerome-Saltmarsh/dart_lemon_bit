@@ -6,6 +6,7 @@ import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/particle_type.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/game_audio.dart';
+import 'package:gamestream_flutter/game_config.dart';
 import 'package:gamestream_flutter/game_network.dart';
 import 'package:gamestream_flutter/game_render.dart';
 import 'package:gamestream_flutter/game_ui.dart';
@@ -429,6 +430,7 @@ class GameState {
     double airFriction = 0.98,
     bool animation = false,
   }) {
+    if (totalActiveParticles > GameConfig.Particles_Max) return;
     assert(duration > 0);
     final particle = getParticleInstance();
     assert(!particle.active);
