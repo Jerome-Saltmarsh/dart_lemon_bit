@@ -1,5 +1,6 @@
 
 import 'package:bleed_common/character_type.dart';
+import 'package:gamestream_flutter/game_images.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/grid_state_util.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_rat.dart';
@@ -16,7 +17,8 @@ void renderCharacter(Character character){
 
   if (character.spawning) {
     if (character.characterType == CharacterType.Rat){
-      return Engine.renderBuffer(
+      Engine.renderSprite(
+        image: GameImages.gameobjects,
         srcX: 1920,
         srcY: (character.frame % 8) * 43.0,
         dstX: character.renderX,
@@ -27,7 +29,8 @@ void renderCharacter(Character character){
       );
     }
     if (character.characterType == CharacterType.Slime) {
-      return Engine.renderBuffer(
+      Engine.renderSprite(
+        image: GameImages.gameobjects,
         srcX: 3040,
         srcY: (character.frame % 6) * 48.0,
         dstX: character.renderX,
@@ -36,8 +39,10 @@ void renderCharacter(Character character){
         srcHeight: 48,
         scale: 0.75,
       );
+      return;
     }
-    return Engine.renderBuffer(
+    Engine.renderSprite(
+      image: GameImages.gameobjects,
         srcX: 2016,
         srcY: (character.frame % 8) * 73.0,
         dstX: character.renderX,

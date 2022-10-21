@@ -62,7 +62,8 @@ void renderCharacterBarWeaponRounds({
   const marginY = 45;
   const srcWidthHalf = srcWidth * 0.5;
 
-  Engine.renderBuffer(
+  Engine.renderSprite(
+    image: GameImages.gameobjects,
     dstX: x - srcWidthHalf,
     dstY: y - marginY,
     srcX: srcX,
@@ -72,7 +73,8 @@ void renderCharacterBarWeaponRounds({
     anchorX: 0,
   );
 
-  Engine.renderBuffer(
+  Engine.renderSprite(
+    image: GameImages.gameobjects,
     dstX: x - srcWidthHalf,
     dstY: y - marginY,
     srcX: srcX,

@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:bleed_common/Projectile_Type.dart';
+import 'package:gamestream_flutter/game_images.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:lemon_engine/engine.dart';
 
@@ -47,7 +48,10 @@ void renderProjectile(Projectile value) {
 const piQuarter = pi * 0.25;
 
 void renderPixelRed(double x, double y){
-  return Engine.renderBuffer(dstX: x, dstY: y, srcX: 144, srcY: 0, srcWidth: 8, srcHeight: 8);
+  // Engine.renderBuffer(
+  //     dstX: x,
+  //     dstY: y,
+  //     srcX: 144, srcY: 0, srcWidth: 8, srcHeight: 8);
 }
 
 void renderFireball(double x, double y, double rotation) {
@@ -86,7 +90,8 @@ void renderArrow(double x, double y, double angle) {
 }
 
 void renderOrb(double x, double y) {
-  Engine.renderBuffer(
+  Engine.renderSprite(
+      image: GameImages.gameobjects,
       dstX: x,
       dstY: y,
       srcX: 417,

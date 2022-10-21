@@ -1,8 +1,10 @@
 
+import 'package:gamestream_flutter/game_images.dart';
 import 'package:lemon_engine/engine.dart';
 
 void renderBoxYellow64(double x, double y){
-  Engine.renderBuffer(
+  Engine.renderSprite(
+    image: GameImages.gameobjects,
     dstX: x,
     dstY: y,
     srcX: 560,

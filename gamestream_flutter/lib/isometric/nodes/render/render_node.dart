@@ -111,7 +111,7 @@ void renderNodeAt() {
         dstY: GameRender.currentNodeDstY,
         color: getRenderLayerColor(-2),
       );
-      break;;
+      break;
     case NodeType.Grass_Long:
       switch (GameState.nodesWind[GameRender.currentNodeIndex]) {
         case windIndexCalm:

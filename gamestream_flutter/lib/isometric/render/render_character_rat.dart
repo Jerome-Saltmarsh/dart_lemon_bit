@@ -1,5 +1,6 @@
 
 import 'package:bleed_common/library.dart';
+import 'package:gamestream_flutter/game_images.dart';
 import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/render/render_projectiles.dart';
@@ -10,7 +11,8 @@ void renderCharacterRat(Character character){
   renderPixelRed(character.renderX, character.renderY);
 
   if (character.state == CharacterState.Running){
-    return Engine.renderBuffer(
+    Engine.renderSprite(
+      image: GameImages.gameobjects,
       dstX: character.renderX,
       dstY: character.renderY,
       srcX: loop4(animation: const [1, 2, 3, 4], character: character, framesPerDirection: 4),
@@ -24,7 +26,8 @@ void renderCharacterRat(Character character){
   }
 
   if (character.state == CharacterState.Performing){
-    return Engine.renderBuffer(
+    Engine.renderSprite(
+      image: GameImages.gameobjects,
       dstX: character.renderX,
       dstY: character.renderY,
       srcX: 2680,
@@ -37,8 +40,8 @@ void renderCharacterRat(Character character){
     );
   }
 
-
-  return Engine.renderBuffer(
+  Engine.renderSprite(
+    image: GameImages.gameobjects,
     dstX: character.renderX,
     dstY: character.renderY,
     srcX: 2680,

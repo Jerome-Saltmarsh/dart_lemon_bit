@@ -458,7 +458,8 @@ class GameRender {
   static void renderGameObject(GameObject gameObject) {
     switch (gameObject.type) {
       case GameObjectType.Rock:
-        Engine.renderBuffer(
+        Engine.renderSprite(
+          image: GameImages.gameobjects,
           dstX: gameObject.renderX,
           dstY: gameObject.renderY,
           srcX: AtlasSrcGameObjects.Rock_X,
@@ -506,7 +507,8 @@ class GameRender {
         );
         return;
       case GameObjectType.Candle:
-        Engine.renderBuffer(
+        Engine.renderSprite(
+          image: GameImages.gameobjects,
           dstX: getRenderV3X(gameObject),
           dstY: getRenderV3Y(gameObject),
           srcX: 1812,
@@ -517,7 +519,8 @@ class GameRender {
         );
         return;
       case GameObjectType.Bottle:
-        Engine.renderBuffer(
+        Engine.renderSprite(
+          image: GameImages.gameobjects,
           dstX: getRenderV3X(gameObject),
           dstY: getRenderV3Y(gameObject),
           srcX: 1811,
@@ -529,7 +532,8 @@ class GameRender {
         );
         return;
       case GameObjectType.Wheel:
-        Engine.renderBuffer(
+        Engine.renderSprite(
+          image: GameImages.gameobjects,
           dstX: getRenderV3X(gameObject),
           dstY: getRenderV3Y(gameObject),
           srcX: 1775,
@@ -541,7 +545,8 @@ class GameRender {
         );
         return;
       case GameObjectType.Flower:
-        Engine.renderBuffer(
+        Engine.renderSprite(
+          image: GameImages.gameobjects,
           dstX: getRenderV3X(gameObject),
           dstY: getRenderV3Y(gameObject),
           srcX: 1680,
@@ -552,7 +557,8 @@ class GameRender {
         );
         return;
       case GameObjectType.Stick:
-        Engine.renderBuffer(
+        Engine.renderSprite(
+          image: GameImages.gameobjects,
           dstX: getRenderV3X(gameObject),
           dstY: getRenderV3Y(gameObject),
           srcX: 1696,
@@ -575,7 +581,8 @@ class GameRender {
         );
         return;
       case GameObjectType.Cup:
-        Engine.renderBuffer(
+        Engine.renderSprite(
+          image: GameImages.gameobjects,
           dstX: getRenderV3X(gameObject),
           dstY: getRenderV3Y(gameObject),
           srcX: AtlasSrcGameObjects.Cup_X,
@@ -586,7 +593,8 @@ class GameRender {
         );
         return;
       case GameObjectType.Lantern_Red:
-        Engine.renderBuffer(
+        Engine.renderSprite(
+          image: GameImages.gameobjects,
           dstX:getRenderV3X(gameObject),
           dstY:getRenderV3Y(gameObject),
           srcX: 1744,
@@ -598,7 +606,8 @@ class GameRender {
         );
         return;
       case GameObjectType.Wooden_Shelf_Row:
-        Engine.renderBuffer(
+        Engine.renderSprite(
+            image: GameImages.gameobjects,
             dstX:getRenderV3X(gameObject),
             dstY:getRenderV3Y(gameObject),
             srcX: 1664,
@@ -608,7 +617,8 @@ class GameRender {
         );
         return;
       case GameObjectType.Book_Purple:
-        Engine.renderBuffer(
+        Engine.renderSprite(
+          image: GameImages.gameobjects,
           dstX:getRenderV3X(gameObject),
           dstY:getRenderV3Y(gameObject),
           srcX: 1697,
@@ -618,7 +628,8 @@ class GameRender {
         );
         return;
       case GameObjectType.Crystal_Small_Blue:
-        Engine.renderBuffer(
+        Engine.renderSprite(
+          image: GameImages.gameobjects,
           dstX:getRenderV3X(gameObject),
           dstY:getRenderV3Y(gameObject),
           srcX: 1697,
@@ -628,7 +639,8 @@ class GameRender {
         );
         return;
       case GameObjectType.Flower_Green:
-        Engine.renderBuffer(
+        Engine.renderSprite(
+          image: GameImages.gameobjects,
           dstX:getRenderV3X(gameObject),
           dstY:getRenderV3Y(gameObject),
           srcX: 1696,
@@ -1073,7 +1085,8 @@ class GameRender {
       int row,
       int column,
       ) {
-    return Engine.renderBuffer(
+    Engine.renderSprite(
+      image: GameImages.gameobjects,
       dstX: getTileWorldX(row, column),
       dstY: getTileWorldY(row, column) - (z * tileHeight),
       srcX: 6944,
@@ -1082,10 +1095,12 @@ class GameRender {
       srcHeight: 72,
       anchorY: 0.3334,
     );
+    return;
   }
 
   static void renderWireFrameRed(int row, int column, int z) {
-    return Engine.renderBuffer(
+    Engine.renderSprite(
+      image: GameImages.gameobjects,
       dstX: getTileWorldX(row, column),
       dstY: getTileWorldY(row, column) - (z * tileHeight),
       srcX: 6895,
