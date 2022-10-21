@@ -189,9 +189,10 @@ class GameNetwork {
   }
 
   static void onChangedConnectionStatus(ConnectionStatus connection) {
+    GameIO.removeListeners();
     switch (connection) {
       case ConnectionStatus.Connected:
-        GameIO.initGameListeners();
+        GameIO.addListeners();
         Engine.onDrawCanvas = GameState.renderCanvas;
         Engine.onDrawForeground = null;
         Engine.onUpdate = GameState.update;
@@ -200,8 +201,6 @@ class GameNetwork {
         if (!Engine.isLocalHost) {
           Engine.fullScreenEnter();
         }
-        Engine.onKeyDown = GameIO.onRawKeyDownEvent;
-        Engine.onLeftClicked = GameIO.onMouseClickedLeft;
         break;
 
       case ConnectionStatus.Done:

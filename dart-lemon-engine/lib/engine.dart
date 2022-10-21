@@ -74,9 +74,9 @@ class Engine {
   /// override safe
   static Function? onLeftClicked;
   /// override safe
-  static Function? onLongLeftClicked;
-  /// override safe
   static Function(PointerScrollEvent value)? onPointerScrolled;
+  /// override safe
+  static Function(PointerSignalEvent value)? onPointerSignalEvent;
   /// override safe
   static Function? onRightClicked;
   /// override safe
@@ -470,6 +470,8 @@ class Engine {
   static void _internalOnPointerSignal(PointerSignalEvent pointerSignalEvent) {
     if (pointerSignalEvent is PointerScrollEvent) {
       _internalOnPointerScrollEvent(pointerSignalEvent);
+    } else {
+      onPointerSignalEvent?.call(pointerSignalEvent);
     }
   }
 

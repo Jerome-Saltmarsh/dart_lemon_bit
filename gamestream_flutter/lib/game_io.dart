@@ -21,13 +21,35 @@ class GameIO {
   static bool get modeKeyboard => Engine.deviceIsComputer;
   static bool get keyPressedSpace => Engine.keyPressed(LogicalKeyboardKey.space);
 
-  static void initGameListeners() {
+  static var joystickLeftX = 0.0;
+  static var joystickLeftY = 0.0;
+  static var joystickLeftDown = false;
+
+  static void addListeners() {
       Engine.onPanStart = onPanStart;
       Engine.onPanUpdate = onPanUpdate;
       Engine.onPanEnd = onPanEnd;
       Engine.onTapDown = onTapDown;
       Engine.onLongPressDown = onLongPressDown;
       Engine.onSecondaryTapDown = onSecondaryTapDown;
+      Engine.onKeyDown = onRawKeyDownEvent;
+      Engine.onLeftClicked = onMouseClickedLeft;
+      Engine.onPointerSignalEvent = onPointerSignalEvent;
+  }
+
+  static void onPointerSignalEvent(PointerSignalEvent event){
+    print("onPointerSignalEvent($event)");
+  }
+
+  static void removeListeners() {
+      Engine.onPanStart = null;
+      Engine.onPanStart = null;
+      Engine.onTapDown = null;
+      Engine.onLongPressDown = null;
+      Engine.onSecondaryTapDown = null;
+      Engine.onKeyDown = null;
+      Engine.onKeyUp = null;
+      Engine.onLeftClicked = null;
   }
 
   static void onSecondaryTapDown(TapDownDetails details){

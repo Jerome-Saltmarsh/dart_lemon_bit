@@ -12,7 +12,7 @@ class GameSystem {
     await GameImages.loadImages();
     Engine.cursorType.value = CursorType.Basic;
     Engine.onDrawCanvas = GameWebsite.renderCanvas;
-    GameIO.initGameListeners();
+    GameIO.addListeners();
   }
 
   static void onError(Object error, StackTrace stack) {
