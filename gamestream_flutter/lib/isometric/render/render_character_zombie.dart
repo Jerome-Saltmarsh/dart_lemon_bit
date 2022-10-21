@@ -13,8 +13,11 @@ import 'src_utils.dart';
 void renderCharacterZombie(Character character) {
   final shade = GameState.getV3RenderShade(character);
   if (shade < Shade.Dark) renderCharacterHealthBar(character);
+  if (character.deadOrDying) return;
+  if (character.spawning) return;
 
   GameRender.renderCharacterShadow(character, character.frame, character.renderDirection);
+
 
   Engine.renderSprite(
       image: GameImages.zombie,

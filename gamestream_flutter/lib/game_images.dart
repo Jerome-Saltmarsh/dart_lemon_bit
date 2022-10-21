@@ -15,6 +15,7 @@ class GameImages {
    static late Image particles;
    static late Image template_shadow;
 
+
    static late Image template_head_plain;
    static late Image template_head_rogue;
    static late Image template_head_steel;

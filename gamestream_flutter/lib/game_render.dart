@@ -1169,7 +1169,6 @@ class GameRender {
         srcHeight: 23,
         anchorY: 0.9,
       );
-
 }
 
 class RenderOrderCharacters extends RenderOrder {
