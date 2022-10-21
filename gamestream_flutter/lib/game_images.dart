@@ -11,6 +11,7 @@ class GameImages {
    static late Image characters;
    static late Image projectiles;
    static late Image zombie;
+   static late Image zombie_shadow;
    static late Image gameobjects;
    static late Image particles;
    static late Image template_shadow;
@@ -122,6 +123,7 @@ class GameImages {
    static Future loadImages() async {
       characters = await Engine.loadImageAsset('images/atlas-characters.png');
       zombie = await Engine.loadImageAsset('images/atlas-zombie.png');
+      zombie_shadow = await Engine.loadImageAsset('images/atlas-zombie-shadow.png');
       gameobjects = await Engine.loadImageAsset('images/atlas-gameobjects.png');
       particles = await Engine.loadImageAsset('images/atlas-particles.png');
       projectiles = await Engine.loadImageAsset('images/atlas-projectiles.png');

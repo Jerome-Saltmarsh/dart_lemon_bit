@@ -35,6 +35,7 @@ Widget buildHudDebug() =>
               Refresh(() => text('particles: active: $GameState.totalActiveParticles, total: ${GameState.particles.length}')),
               Refresh(() => text('nodes-rendered: ${GameRender.onscreenNodes}')),
               Refresh(() => text('engine-frame: ${Engine.paintFrame}')),
+              Refresh(() => text('engine-render-batches: ${Engine.batchesRendered}')),
               // onPressed(
               //   action: () => Engine.bufferBlendMode = BlendMode.values[(BlendMode.values.indexOf(Engine.bufferBlendMode) + 1) % BlendMode.values.length],
               //     child: Refresh(() => text('render-blend-mode: ${Engine.bufferBlendMode}'))

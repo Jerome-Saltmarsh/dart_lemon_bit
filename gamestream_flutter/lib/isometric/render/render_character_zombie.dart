@@ -16,8 +16,12 @@ void renderCharacterZombie(Character character) {
   if (character.deadOrDying) return;
   if (character.spawning) return;
 
-  GameRender.renderCharacterShadow(character, character.frame, character.renderDirection);
-
+  GameRender.renderCharacterCustomShadow(
+      character: character,
+      frame: character.frame,
+      direction: character.renderDirection,
+      image: GameImages.zombie_shadow,
+  );
 
   Engine.renderSprite(
       image: GameImages.zombie,

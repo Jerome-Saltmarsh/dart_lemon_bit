@@ -509,6 +509,7 @@ class Engine {
     canvas.translate(-camera.x, -camera.y);
     if (!initialized) return;
     if (onDrawCanvas == null) return;
+    batchesRendered = 0;
     onDrawCanvas!.call(canvas, size);
     flushBuffer();
     assert(bufferIndex == 0);
@@ -586,20 +587,11 @@ class Engine {
   void setFramesPerSecond(int framesPerSecond) =>
      watchDurationPerFrame.value = buildDurationFramesPerSecond(framesPerSecond);
 
-  // static final _src4 = Float32List(4);
-  // static final _dst4 = Float32List(4);
-  // static final _colors1 = Int32List(1);
-  static const _cos0 = 1;
-  static const _sin0 = 0;
   static late ui.Image bufferImage;
 
   static var bufferBlendMode = BlendMode.dstATop;
   static var bufferIndex = 0;
-
-  // static const _bufferSize = 100000;
-  // static final _bufferSrc = Float32List(_bufferSize * 4);
-  // static final _bufferDst = Float32List(_bufferSize * 4);
-  // static final _bufferColors = Int32List(_bufferSize);
+  static var batchesRendered = 0;
 
   static final _bufferSrc1 = Float32List(1 * 4);
   static final _bufferDst1 = Float32List(1 * 4);
@@ -608,10 +600,6 @@ class Engine {
   static final _bufferSrc2 = Float32List(2 * 4);
   static final _bufferDst2 = Float32List(2 * 4);
   static final _bufferClr2 = Int32List(2);
-
-  static final _bufferSrc3 = Float32List(3 * 4);
-  static final _bufferDst3 = Float32List(3 * 4);
-  static final _bufferClr3 = Int32List(3);
 
   static final _bufferSrc4 = Float32List(4 * 4);
   static final _bufferDst4 = Float32List(4 * 4);
@@ -642,6 +630,7 @@ class Engine {
   static final _bufferClr = _bufferClr128;
 
   static void flushBuffer() {
+    batchesRendered++;
     if (bufferIndex == 0) return;
     var flushIndex = 0;
     while (flushIndex < bufferIndex) {
@@ -788,6 +777,7 @@ class Engine {
 
 
   static void flushAll(){
+    batchesRendered++;
     canvas.drawRawAtlas(bufferImage, _bufferDst, _bufferSrc, _bufferClr, bufferBlendMode, null, spritePaint);
     bufferIndex = 0;
   }
