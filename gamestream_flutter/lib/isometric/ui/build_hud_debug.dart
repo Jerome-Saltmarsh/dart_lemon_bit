@@ -36,6 +36,14 @@ Widget buildHudDebug() =>
               Refresh(() => text('nodes-rendered: ${GameRender.onscreenNodes}')),
               Refresh(() => text('engine-frame: ${Engine.paintFrame}')),
               Refresh(() => text('engine-render-batches: ${Engine.batchesRendered}')),
+              Refresh(() => text('engine-render-batch-1: ${Engine.batches1Rendered}')),
+              Refresh(() => text('engine-render-batch-2: ${Engine.batches2Rendered}')),
+              Refresh(() => text('engine-render-batch-4: ${Engine.batches4Rendered}')),
+              Refresh(() => text('engine-render-batch-8: ${Engine.batches8Rendered}')),
+              Refresh(() => text('engine-render-batch-16: ${Engine.batches16Rendered}')),
+              Refresh(() => text('engine-render-batch-32: ${Engine.batches32Rendered}')),
+              Refresh(() => text('engine-render-batch-64: ${Engine.batches64Rendered}')),
+              Refresh(() => text('engine-render-batch-128: ${Engine.batches128Rendered}')),
               // onPressed(
               //   action: () => Engine.bufferBlendMode = BlendMode.values[(BlendMode.values.indexOf(Engine.bufferBlendMode) + 1) % BlendMode.values.length],
               //     child: Refresh(() => text('render-blend-mode: ${Engine.bufferBlendMode}'))

@@ -510,6 +510,14 @@ class Engine {
     if (!initialized) return;
     if (onDrawCanvas == null) return;
     batchesRendered = 0;
+    batches1Rendered = 0;
+    batches2Rendered = 0;
+    batches4Rendered = 0;
+    batches8Rendered = 0;
+    batches16Rendered = 0;
+    batches32Rendered = 0;
+    batches64Rendered = 0;
+    batches128Rendered = 0;
     onDrawCanvas!.call(canvas, size);
     flushBuffer();
     assert(bufferIndex == 0);
@@ -592,6 +600,14 @@ class Engine {
   static var bufferBlendMode = BlendMode.dstATop;
   static var bufferIndex = 0;
   static var batchesRendered = 0;
+  static var batches1Rendered = 0;
+  static var batches2Rendered = 0;
+  static var batches4Rendered = 0;
+  static var batches8Rendered = 0;
+  static var batches16Rendered = 0;
+  static var batches32Rendered = 0;
+  static var batches64Rendered = 0;
+  static var batches128Rendered = 0;
 
   static final _bufferSrc1 = Float32List(1 * 4);
   static final _bufferDst1 = Float32List(1 * 4);
@@ -653,6 +669,7 @@ class Engine {
         _bufferSrc1[3] = _bufferSrc[f + 3];
         canvas.drawRawAtlas(bufferImage, _bufferDst1, _bufferSrc1, _bufferClr1, bufferBlendMode, null, spritePaint);
         bufferIndex = 0;
+        batches1Rendered++;
         return;
       }
 
@@ -672,6 +689,7 @@ class Engine {
           flushIndex++;
         }
         canvas.drawRawAtlas(bufferImage, _bufferDst2, _bufferSrc2, _bufferClr2, bufferBlendMode, null, spritePaint);
+        batches2Rendered++;
         continue;
       }
 
@@ -691,6 +709,7 @@ class Engine {
           flushIndex++;
         }
         canvas.drawRawAtlas(bufferImage, _bufferDst4, _bufferSrc4, _bufferClr4, bufferBlendMode, null, spritePaint);
+        batches4Rendered++;
         continue;
       }
 
@@ -710,6 +729,7 @@ class Engine {
           flushIndex++;
         }
         canvas.drawRawAtlas(bufferImage, _bufferDst8, _bufferSrc8, _bufferClr8, bufferBlendMode, null, spritePaint);
+        batches8Rendered++;
         continue;
       }
 
@@ -729,6 +749,7 @@ class Engine {
           flushIndex++;
         }
         canvas.drawRawAtlas(bufferImage, _bufferDst16, _bufferSrc16, _bufferClr16, bufferBlendMode, null, spritePaint);
+        batches16Rendered++;
         continue;
       }
 
@@ -748,6 +769,7 @@ class Engine {
           flushIndex++;
         }
         canvas.drawRawAtlas(bufferImage, _bufferDst32, _bufferSrc32, _bufferClr32, bufferBlendMode, null, spritePaint);
+        batches32Rendered++;
         continue;
       }
 
@@ -767,6 +789,7 @@ class Engine {
           flushIndex++;
         }
         canvas.drawRawAtlas(bufferImage, _bufferDst64, _bufferSrc64, _bufferClr64, bufferBlendMode, null, spritePaint);
+        batches64Rendered++;
         continue;
       }
 
@@ -775,11 +798,11 @@ class Engine {
     bufferIndex = 0;
   }
 
-
   static void flushAll(){
     batchesRendered++;
     canvas.drawRawAtlas(bufferImage, _bufferDst, _bufferSrc, _bufferClr, bufferBlendMode, null, spritePaint);
     bufferIndex = 0;
+    batches128Rendered++;
   }
 
   static void renderSprite({
