@@ -607,11 +607,11 @@ class Engine {
 
   static final _bufferSrc2 = Float32List(2 * 4);
   static final _bufferDst2 = Float32List(2 * 4);
-  static final _bufferColors2 = Int32List(2);
+  static final _bufferClr2 = Int32List(2);
 
   static final _bufferSrc3 = Float32List(3 * 4);
   static final _bufferDst3 = Float32List(3 * 4);
-  static final _bufferColors3 = Int32List(3);
+  static final _bufferClr3 = Int32List(3);
 
   static final _bufferSrc4 = Float32List(4 * 4);
   static final _bufferDst4 = Float32List(4 * 4);
@@ -629,9 +629,13 @@ class Engine {
   static final _bufferDst32 = Float32List(32 * 4);
   static final _bufferClr32 = Int32List(32);
 
-  static final _bufferSrc = _bufferSrc32;
-  static final _bufferDst = _bufferDst32;
-  static final _bufferClr = _bufferClr32;
+  static final _bufferSrc64 = Float32List(64 * 4);
+  static final _bufferDst64 = Float32List(64 * 4);
+  static final _bufferClr64 = Int32List(64);
+
+  static final _bufferSrc = _bufferSrc64;
+  static final _bufferDst = _bufferDst64;
+  static final _bufferClr = _bufferClr64;
 
   static void flushBuffer() {
     if (bufferIndex == 0) return;
@@ -663,7 +667,7 @@ class Engine {
         for (var i = 0; i < 2; i++) {
           final j = i * 4;
           final f = flushIndex * 4;
-          _bufferColors2[i] = _bufferClr[flushIndex];
+          _bufferClr2[i] = _bufferClr[flushIndex];
           _bufferDst2[j] = _bufferDst[f];
           _bufferDst2[j + 1] = _bufferDst[f + 1];
           _bufferDst2[j + 2] = _bufferDst[f + 2];
@@ -674,7 +678,7 @@ class Engine {
           _bufferSrc2[j + 3] = _bufferSrc[f + 3];
           flushIndex++;
         }
-        canvas.drawRawAtlas(bufferImage, _bufferDst2, _bufferSrc2, _bufferColors2, bufferBlendMode, null, spritePaint);
+        canvas.drawRawAtlas(bufferImage, _bufferDst2, _bufferSrc2, _bufferClr2, bufferBlendMode, null, spritePaint);
         continue;
       }
 
@@ -735,6 +739,25 @@ class Engine {
         continue;
       }
 
+      if (remaining < 64) {
+        for (var i = 0; i < 32; i++) {
+          final j = i * 4;
+          final f = flushIndex * 4;
+          _bufferClr32[i] = _bufferClr[flushIndex];
+          _bufferDst32[j] = _bufferDst[f];
+          _bufferDst32[j + 1] = _bufferDst[f + 1];
+          _bufferDst32[j + 2] = _bufferDst[f + 2];
+          _bufferDst32[j + 3] = _bufferDst[f + 3];
+          _bufferSrc32[j] = _bufferSrc[f];
+          _bufferSrc32[j + 1] = _bufferSrc[f + 1];
+          _bufferSrc32[j + 2] = _bufferSrc[f + 2];
+          _bufferSrc32[j + 3] = _bufferSrc[f + 3];
+          flushIndex++;
+        }
+        canvas.drawRawAtlas(bufferImage, _bufferDst32, _bufferSrc32, _bufferClr32, bufferBlendMode, null, spritePaint);
+        continue;
+      }
+
       throw Exception();
     }
     bufferIndex = 0;
@@ -775,7 +798,7 @@ class Engine {
     _bufferDst[f + 3] = dstY - (srcHeight * anchorY * scale);
     bufferIndex++;
 
-    if (bufferIndex == 32) {
+    if (bufferIndex == 64) {
       flushAll();
     }
   }
