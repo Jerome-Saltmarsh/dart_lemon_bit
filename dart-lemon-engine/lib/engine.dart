@@ -633,9 +633,13 @@ class Engine {
   static final _bufferDst64 = Float32List(64 * 4);
   static final _bufferClr64 = Int32List(64);
 
-  static final _bufferSrc = _bufferSrc64;
-  static final _bufferDst = _bufferDst64;
-  static final _bufferClr = _bufferClr64;
+  static final _bufferSrc128 = Float32List(128 * 4);
+  static final _bufferDst128 = Float32List(128 * 4);
+  static final _bufferClr128 = Int32List(128);
+
+  static final _bufferSrc = _bufferSrc128;
+  static final _bufferDst = _bufferDst128;
+  static final _bufferClr = _bufferClr128;
 
   static void flushBuffer() {
     if (bufferIndex == 0) return;
@@ -758,6 +762,25 @@ class Engine {
         continue;
       }
 
+      if (remaining < 128) {
+        for (var i = 0; i < 64; i++) {
+          final j = i * 4;
+          final f = flushIndex * 4;
+          _bufferClr64[i] = _bufferClr[flushIndex];
+          _bufferDst64[j] = _bufferDst[f];
+          _bufferDst64[j + 1] = _bufferDst[f + 1];
+          _bufferDst64[j + 2] = _bufferDst[f + 2];
+          _bufferDst64[j + 3] = _bufferDst[f + 3];
+          _bufferSrc64[j] = _bufferSrc[f];
+          _bufferSrc64[j + 1] = _bufferSrc[f + 1];
+          _bufferSrc64[j + 2] = _bufferSrc[f + 2];
+          _bufferSrc64[j + 3] = _bufferSrc[f + 3];
+          flushIndex++;
+        }
+        canvas.drawRawAtlas(bufferImage, _bufferDst64, _bufferSrc64, _bufferClr64, bufferBlendMode, null, spritePaint);
+        continue;
+      }
+
       throw Exception();
     }
     bufferIndex = 0;
@@ -798,7 +821,7 @@ class Engine {
     _bufferDst[f + 3] = dstY - (srcHeight * anchorY * scale);
     bufferIndex++;
 
-    if (bufferIndex == 64) {
+    if (bufferIndex == 128) {
       flushAll();
     }
   }
