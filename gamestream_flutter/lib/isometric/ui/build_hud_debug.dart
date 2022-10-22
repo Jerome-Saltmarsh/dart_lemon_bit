@@ -1,6 +1,7 @@
 import 'package:bleed_common/GameType.dart';
 import 'package:bleed_common/Shade.dart';
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/game_library.dart';
 import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/game_render.dart';
 import 'package:gamestream_flutter/game_widgets.dart';
@@ -56,6 +57,7 @@ Widget buildHudDebug() =>
               watch(GameState.ambientShade, (int shade) => text("ambient-shade: ${Shade.getName(shade)}")),
               watch(GameState.gameType, (int? value) => text("game-type: ${value == null ? 'None' : GameType.getName(value)}")),
               watch(Engine.deviceType, (int deviceType) => text("device-type: ${DeviceType.getName(deviceType)}", onPressed: Engine.toggleDeviceType)),
+              watch(GameIO.inputMode, (int inputMode) => text("input-mode: ${InputMode.getName(inputMode)}")),
               height24,
               text("close x", onPressed: () => debugVisible.value = false),
             ],

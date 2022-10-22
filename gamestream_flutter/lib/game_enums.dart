@@ -42,3 +42,14 @@ class FontSize {
   static const Large = Regular * Engine.GoldenRatio_1_381;
   static const VeryLarge = Large * Engine.GoldenRatio_1_618;
 }
+
+class InputMode {
+  static const Touch = 0;
+  static const Keyboard = 1;
+
+  static String getName(int value){
+     if (value == Touch) return "touch";
+     if (value == Keyboard) return "keyboard";
+     return 'unknown($value)';
+  }
+}

@@ -13,7 +13,16 @@ class GameSystem {
     Engine.cursorType.value = CursorType.Basic;
     Engine.onDrawCanvas = GameWebsite.renderCanvas;
     GameIO.addListeners();
+    Engine.onScreenSizeChanged = onScreenSizeChanged;
+    GameIO.detectInputMode();
   }
+
+  static void onScreenSizeChanged(
+      double previousWidth,
+      double previousHeight,
+      double newWidth,
+      double newHeight,
+  ) => GameIO.detectInputMode();
 
   static void onError(Object error, StackTrace stack) {
     print(error.toString());

@@ -2,28 +2,37 @@
 import 'package:bleed_common/Direction.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
-import 'package:gamestream_flutter/game_editor.dart';
-import 'package:gamestream_flutter/game_network.dart';
 import 'package:gamestream_flutter/isometric/camera.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric_web/on_mouse_clicked_left.dart';
 import 'package:lemon_engine/engine.dart';
 
-import 'game_state.dart';
 import 'isometric/utils/mouse.dart';
+import 'package:lemon_watch/watch.dart';
+import 'game_library.dart';
+
+
+
 
 class GameIO {
   // STATE
   static var touchscreenDirection = Direction.None;
 
   // GETTERS
-  static bool get modeTouchscreen => Engine.deviceIsPhone;
-  static bool get modeKeyboard => Engine.deviceIsComputer;
+  static final inputMode = Watch(InputMode.Keyboard);
+  static bool get inputModeTouch => inputMode == InputMode.Touch;
+  static bool get inputModeKeyboard => inputMode == InputMode.Keyboard;
   static bool get keyPressedSpace => Engine.keyPressed(LogicalKeyboardKey.space);
 
   static var joystickLeftX = 0.0;
   static var joystickLeftY = 0.0;
   static var joystickLeftDown = false;
+
+  static void detectInputMode(){
+    inputMode.value = Engine.deviceIsComputer
+        ? InputMode.Keyboard
+        : InputMode.Touch;
+  }
 
   static void addListeners() {
       Engine.onPanStart = onPanStart;
@@ -133,7 +142,7 @@ class GameIO {
 
   static bool getActionPrimary(){
     if (GameState.editMode) return false;
-    if (modeKeyboard) {
+    if (inputModeKeyboard) {
       return Engine.watchMouseLeftDown.value;
     }
     return false;

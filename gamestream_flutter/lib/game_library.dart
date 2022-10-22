@@ -17,4 +17,4 @@ export 'game_website.dart';
 export 'game_classes.dart';
 export 'game_assets.dart';
 export 'game_persistence.dart';
-
+export 'game_editor.dart';
