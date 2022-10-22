@@ -95,6 +95,7 @@ class Engine {
 
   // VARIABLES
   static final keyState = <LogicalKeyboardKey, bool>{ };
+  static final keyStateDuration = <LogicalKeyboardKey, int>{ };
   static final random = Random();
   static var textPainter = TextPainter(
       textAlign: TextAlign.center,
@@ -143,7 +144,7 @@ class Engine {
   /// triggered if the state of the key is down
   static Function(RawKeyDownEvent key)? onKeyDown;
   /// triggered if the key had been held
-  static Function(RawKeyDownEvent key)? onKeyHeld;
+  static Function(RawKeyDownEvent key, int duration)? onKeyHeld;
   /// triggered the first moment the key is pressed down
   static Function(RawKeyDownEvent key)? onKeyPressed;
   /// triggered upon key release
@@ -203,10 +204,14 @@ class Engine {
   static bool keyPressed(LogicalKeyboardKey key) =>
       keyState[key] ?? false;
 
+  static int getKeyDownDuration(LogicalKeyboardKey key) =>
+    keyStateDuration[key] ?? 0;
+
   static void _internalOnKeyboardEvent(RawKeyEvent event) {
     if (event is RawKeyDownEvent) {
       if (keyState[event.logicalKey] ?? false) {
-        onKeyHeld?.call(event);
+        keyStateDuration[event.logicalKey] = getKeyDownDuration(event.logicalKey) + 1;
+        onKeyHeld?.call(event, getKeyDownDuration(event.logicalKey));
       } else {
         keyState[event.logicalKey] = true;
         onKeyPressed?.call(event);

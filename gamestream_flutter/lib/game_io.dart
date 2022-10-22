@@ -47,6 +47,7 @@ class GameIO {
       Engine.onKeyDown = onRawKeyDownEvent;
       Engine.onLeftClicked = onMouseClickedLeft;
       Engine.onPointerSignalEvent = onPointerSignalEvent;
+      Engine.onKeyHeld = onKeyHeld;
   }
 
   static void onPointerSignalEvent(PointerSignalEvent event){
@@ -87,6 +88,10 @@ class GameIO {
       touchscreenRadian = touchscreenRadianInput;
     }
     touchscreenDirection = convertRadianToDirection(touchscreenRadian);
+  }
+
+  static void onKeyHeld(RawKeyDownEvent key, int duration) {
+     print('onKeyHeld(key: ${key.logicalKey.debugName}, duration: $duration)');
   }
 
   static void onPanEnd(DragEndDetails details){
