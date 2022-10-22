@@ -95,7 +95,7 @@ class GameIO {
     touchPanning = false;
   }
 
-  static int convertRadianToDirection(double radian){
+  static int convertRadianToDirection(double radian) {
      if (radian < Engine.PI_Eight + (Engine.PI_Quarter * 0)) return Direction.South_East;
      if (radian < Engine.PI_Eight + (Engine.PI_Quarter * 1)) return Direction.South;
      if (radian < Engine.PI_Eight + (Engine.PI_Quarter * 2)) return Direction.South_West;
@@ -107,7 +107,7 @@ class GameIO {
      return Direction.East;
   }
 
-  static void onTapDown(TapDownDetails details){
+  static void onTapDown(TapDownDetails details) {
     print('onTapDown()');
   }
 

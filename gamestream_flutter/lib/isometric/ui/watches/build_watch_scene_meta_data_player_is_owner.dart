@@ -4,7 +4,6 @@ import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/request_modify_canvas_size.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/game_library.dart';
-import 'package:gamestream_flutter/game_editor.dart';
 import 'package:gamestream_flutter/isometric/enums/editor_dialog.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';

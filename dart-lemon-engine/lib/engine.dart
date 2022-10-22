@@ -140,7 +140,13 @@ class Engine {
   static final notifierPaintForeground = ValueNotifier<int>(0);
   static final screen = _Screen();
   static final camera = Vector2(0, 0);
+  /// triggered if the state of the key is down
   static Function(RawKeyDownEvent key)? onKeyDown;
+  /// triggered if the key had been held
+  static Function(RawKeyDownEvent key)? onKeyHeld;
+  /// triggered the first moment the key is pressed down
+  static Function(RawKeyDownEvent key)? onKeyPressed;
+  /// triggered upon key release
   static Function(RawKeyUpEvent key)? onKeyUp;
 
   // SETTERS
@@ -199,7 +205,12 @@ class Engine {
 
   static void _internalOnKeyboardEvent(RawKeyEvent event) {
     if (event is RawKeyDownEvent) {
-      keyState[event.logicalKey] = true;
+      if (keyState[event.logicalKey] ?? false) {
+        onKeyHeld?.call(event);
+      } else {
+        keyState[event.logicalKey] = true;
+        onKeyPressed?.call(event);
+      }
       onKeyDown?.call(event);
       return;
     }
@@ -1146,13 +1157,6 @@ typedef CallbackOnScreenSizeChanged = void Function(
 
 // global typedefs
 typedef DrawCanvas(Canvas canvas, Size size);
-
-// classes
-abstract class KeyboardEventHandler {
-  void onPressed(PhysicalKeyboardKey key);
-  void onReleased(PhysicalKeyboardKey key);
-  void onHeld(PhysicalKeyboardKey key, int frames);
-}
 
 class _Screen {
   var initialized = false;
