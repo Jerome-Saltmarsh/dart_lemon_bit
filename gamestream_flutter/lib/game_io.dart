@@ -48,6 +48,7 @@ class GameIO {
       Engine.onLeftClicked = onMouseClickedLeft;
       Engine.onPointerSignalEvent = onPointerSignalEvent;
       Engine.onKeyHeld = onKeyHeld;
+      Engine.onKeyPressed = onKeyPressed;
   }
 
   static void onPointerSignalEvent(PointerSignalEvent event){
@@ -92,6 +93,12 @@ class GameIO {
 
   static void onKeyHeld(RawKeyDownEvent key, int duration) {
      print('onKeyHeld(key: ${key.logicalKey.debugName}, duration: $duration)');
+  }
+
+  static void onKeyPressed(RawKeyDownEvent event) {
+     if (event.logicalKey == LogicalKeyboardKey.keyX) {
+       actionToggleInputMode();
+     }
   }
 
   static void onPanEnd(DragEndDetails details){
