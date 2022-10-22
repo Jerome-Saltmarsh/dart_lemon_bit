@@ -16,7 +16,7 @@ import 'game_library.dart';
 
 class GameIO {
   // STATE
-  static var touchscreenDirection = Direction.None;
+  static var directionTouchscreen = Direction.None;
 
   // GETTERS
   static final inputMode = Watch(InputMode.Keyboard);
@@ -78,7 +78,7 @@ class GameIO {
   static void onPanUpdate(DragUpdateDetails details) {
     final detailsDirection = details.delta.direction;
     final radian = detailsDirection < 0 ? detailsDirection + Engine.PI_2 : detailsDirection;
-    touchscreenDirection = convertRadianToDirection(radian);
+    directionTouchscreen = convertRadianToDirection(radian);
   }
 
   static int convertRadianToDirection(double radian){
@@ -94,25 +94,17 @@ class GameIO {
   }
 
   static void onPanEnd(DragEndDetails details){
-    touchscreenDirection = Direction.None;
+    directionTouchscreen = Direction.None;
   }
 
   static void onTapDown(TapDownDetails details){
     print('onTapDown()');
   }
 
-  static int getDirection() {
-    final keyDirection = getKeyDirection();
-    if (keyDirection != Direction.None){
-      return keyDirection;
-    }
-    if (Engine.deviceIsComputer){
-      return Direction.None;
-    }
-    return touchscreenDirection;
-  }
+  static int getDirection() =>
+     inputModeKeyboard ? getDirectionKeyboard() : directionTouchscreen;
 
-  static int getKeyDirection() {
+  static int getDirectionKeyboard() {
 
     if (Engine.keyPressed(LogicalKeyboardKey.keyW)) {
       if (Engine.keyPressed(LogicalKeyboardKey.keyD)) {

@@ -32,7 +32,7 @@ void readPlayerInputEdit() {
   if (Engine.keyPressed(LogicalKeyboardKey.delete)) {
     GameEditor.delete();
   }
-  if (GameIO.getKeyDirection() != Direction.None) {
+  if (GameIO.getDirectionKeyboard() != Direction.None) {
     actionSetModePlay();
   }
   return;
