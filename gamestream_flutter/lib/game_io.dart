@@ -20,19 +20,21 @@ class GameIO {
 
   // GETTERS
   static final inputMode = Watch(InputMode.Keyboard);
-  static bool get inputModeTouch => inputMode == InputMode.Touch;
-  static bool get inputModeKeyboard => inputMode == InputMode.Keyboard;
+  static bool get inputModeTouch => inputMode.value == InputMode.Touch;
+  static bool get inputModeKeyboard => inputMode.value == InputMode.Keyboard;
   static bool get keyPressedSpace => Engine.keyPressed(LogicalKeyboardKey.space);
 
   static var joystickLeftX = 0.0;
   static var joystickLeftY = 0.0;
   static var joystickLeftDown = false;
 
-  static void detectInputMode(){
+  static void detectInputMode() =>
     inputMode.value = Engine.deviceIsComputer
         ? InputMode.Keyboard
         : InputMode.Touch;
-  }
+
+  static void actionToggleInputMode() =>
+    inputMode.value = inputModeKeyboard ? InputMode.Touch : InputMode.Keyboard;
 
   static void addListeners() {
       Engine.onPanStart = onPanStart;
