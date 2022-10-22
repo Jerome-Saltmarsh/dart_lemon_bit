@@ -83,7 +83,7 @@ class GameIO {
     final detailsDirection = details.delta.direction;
     touchscreenRadianInput = detailsDirection < 0 ? detailsDirection + Engine.PI_2 : detailsDirection;
     if (touchPanning) {
-      touchscreenRadian += (touchscreenRadian - touchscreenRadianInput) * 0.05;
+      touchscreenRadian -= (touchscreenRadian - touchscreenRadianInput) * 0.01;
     } else {
       touchPanning = true;
       touchscreenRadian = touchscreenRadianInput;
@@ -92,7 +92,7 @@ class GameIO {
   }
 
   static void onKeyHeld(RawKeyDownEvent key, int duration) {
-     print('onKeyHeld(key: ${key.logicalKey.debugName}, duration: $duration)');
+     // print('onKeyHeld(key: ${key.logicalKey.debugName}, duration: $duration)');
   }
 
   static void onKeyPressed(RawKeyDownEvent event) {
