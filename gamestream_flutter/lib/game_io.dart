@@ -1,4 +1,6 @@
 
+import 'dart:math';
+
 import 'package:bleed_common/Direction.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
@@ -6,10 +8,10 @@ import 'package:gamestream_flutter/isometric/camera.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric_web/on_mouse_clicked_left.dart';
 import 'package:lemon_engine/engine.dart';
-
-import 'isometric/utils/mouse.dart';
 import 'package:lemon_watch/watch.dart';
+
 import 'game_library.dart';
+import 'isometric/utils/mouse.dart';
 
 
 class GameIO {
@@ -52,7 +54,7 @@ class GameIO {
   }
 
   static void onPointerSignalEvent(PointerSignalEvent event){
-    print("onPointerSignalEvent($event)");
+    // print("onPointerSignalEvent($event)");
   }
 
   static void removeListeners() {
@@ -67,11 +69,11 @@ class GameIO {
   }
 
   static void onSecondaryTapDown(TapDownDetails details){
-     print("onSecondaryTapDown()");
+     // print("onSecondaryTapDown()");
   }
 
   static void onLongPressDown(LongPressDownDetails details){
-    print("onLongPressDown()");
+    // print("onLongPressDown()");
   }
 
   static void onPanStart(DragStartDetails details) {
@@ -83,12 +85,28 @@ class GameIO {
     final detailsDirection = details.delta.direction;
     touchscreenRadianInput = detailsDirection < 0 ? detailsDirection + Engine.PI_2 : detailsDirection;
     if (touchPanning) {
-      touchscreenRadian -= (touchscreenRadian - touchscreenRadianInput) * 0.01;
+      final radianDiff = Engine.calculateRadianDifference(touchscreenRadian, touchscreenRadianInput);
+      if (radianDiff.abs() < pi * 0.75) {
+        touchscreenRadian += Engine.calculateRadianDifference(touchscreenRadian, touchscreenRadianInput) * 0.05;
+        if (touchscreenRadian < 0){
+          touchscreenRadian += Engine.PI_2;
+        } else {
+          touchscreenRadian %= Engine.PI_2;
+        }
+      } else {
+        touchscreenRadian = touchscreenRadianInput;
+      }
     } else {
       touchPanning = true;
       touchscreenRadian = touchscreenRadianInput;
     }
     touchscreenDirection = convertRadianToDirection(touchscreenRadian);
+  }
+
+  static void onPanEnd(DragEndDetails details){
+    // print('onPanEnd()');
+    touchscreenDirection = Direction.None;
+    touchPanning = false;
   }
 
   static void onKeyHeld(RawKeyDownEvent key, int duration) {
@@ -99,12 +117,6 @@ class GameIO {
      if (event.logicalKey == LogicalKeyboardKey.keyX) {
        actionToggleInputMode();
      }
-  }
-
-  static void onPanEnd(DragEndDetails details){
-    // print('onPanEnd()');
-    touchscreenDirection = Direction.None;
-    touchPanning = false;
   }
 
   static int convertRadianToDirection(double radian) {
@@ -120,7 +132,7 @@ class GameIO {
   }
 
   static void onTapDown(TapDownDetails details) {
-    print('onTapDown()');
+    // print('onTapDown()');
   }
 
   static int getDirection() {

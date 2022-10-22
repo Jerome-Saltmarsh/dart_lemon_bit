@@ -1035,6 +1035,17 @@ class Engine {
     return value;
   }
 
+  static double calculateRadianDifference(double a, double b){
+    final diff = b - a;
+    if (diff > pi) {
+      return -(PI_2 - diff);
+    }
+    if (diff < -pi){
+      return PI_2 + diff;
+    }
+    return diff;
+  }
+
   static double randomGiveOrTake(num value) =>
     randomBetween(-value, value);
 

@@ -9,11 +9,17 @@ class GameSystem {
 
   static Future init(SharedPreferences sharedPreferences) async {
     print("environment: ${Engine.isLocalHost ? 'localhost' : 'production'}");
+    Engine.onScreenSizeChanged = onScreenSizeChanged;
+    Engine.deviceType.onChanged(onDeviceTypeChanged);
     await GameImages.loadImages();
     Engine.cursorType.value = CursorType.Basic;
     Engine.onDrawCanvas = GameWebsite.renderCanvas;
     GameIO.addListeners();
-    Engine.onScreenSizeChanged = onScreenSizeChanged;
+    GameIO.detectInputMode();
+
+  }
+
+  static void onDeviceTypeChanged(int deviceType){
     GameIO.detectInputMode();
   }
 
