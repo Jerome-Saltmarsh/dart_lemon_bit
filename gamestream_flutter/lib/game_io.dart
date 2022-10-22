@@ -12,11 +12,12 @@ import 'package:lemon_watch/watch.dart';
 import 'game_library.dart';
 
 
-
-
 class GameIO {
   // STATE
-  static var directionTouchscreen = Direction.None;
+  static var touchPanning = false;
+  static var touchscreenDirection = Direction.None;
+  static var touchscreenRadian = 0.0;
+  static var touchscreenRadianInput = 0.0;
 
   // GETTERS
   static final inputMode = Watch(InputMode.Keyboard);
@@ -72,13 +73,26 @@ class GameIO {
   }
 
   static void onPanStart(DragStartDetails details) {
-     print("onPanStart()");
+     // print("onPanStart()");
   }
 
   static void onPanUpdate(DragUpdateDetails details) {
+    // print("onPanUpdate()");
     final detailsDirection = details.delta.direction;
-    final radian = detailsDirection < 0 ? detailsDirection + Engine.PI_2 : detailsDirection;
-    directionTouchscreen = convertRadianToDirection(radian);
+    touchscreenRadianInput = detailsDirection < 0 ? detailsDirection + Engine.PI_2 : detailsDirection;
+    if (touchPanning) {
+      touchscreenRadian += (touchscreenRadian - touchscreenRadianInput) * 0.05;
+    } else {
+      touchPanning = true;
+      touchscreenRadian = touchscreenRadianInput;
+    }
+    touchscreenDirection = convertRadianToDirection(touchscreenRadian);
+  }
+
+  static void onPanEnd(DragEndDetails details){
+    // print('onPanEnd()');
+    touchscreenDirection = Direction.None;
+    touchPanning = false;
   }
 
   static int convertRadianToDirection(double radian){
@@ -93,16 +107,15 @@ class GameIO {
      return Direction.East;
   }
 
-  static void onPanEnd(DragEndDetails details){
-    directionTouchscreen = Direction.None;
-  }
-
   static void onTapDown(TapDownDetails details){
     print('onTapDown()');
   }
 
-  static int getDirection() =>
-     inputModeKeyboard ? getDirectionKeyboard() : directionTouchscreen;
+  static int getDirection() {
+    final keyboardDirection = getDirectionKeyboard();
+    if (keyboardDirection != Direction.None) return keyboardDirection;
+    return inputModeKeyboard ? keyboardDirection : touchscreenDirection;
+  }
 
   static int getDirectionKeyboard() {
 
