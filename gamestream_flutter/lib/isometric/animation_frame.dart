@@ -2,7 +2,6 @@
 import 'package:bleed_common/library.dart';
 
 var animationFrame = 0;
-var frameChicken = 0;
 var animationFrameWater = 0;
 var animationFrameWaterHeight = 0;
 var animationFrameWaterSrcX = 0.0;
@@ -42,18 +41,6 @@ void updateAnimationFrame() {
      animationFrameRateJellyFish = 5;
      animationFrameJellyFish = (animationFrameJellyFish + 1) % 6;
   }
-  // if (windAmbient.value == Wind.Calm){
-  //   animationFrameGrass = 0;
-  //   animationFrameGrassShort = 0;
-  // } else {
-  //
-  //   if (windAmbient.value == Wind.Gentle){
-  //     animationFrameGrassShort = frame ~/ 35;
-  //   } else{
-  //     animationFrameGrassShort = frame ~/ 10;
-  //   }
-  // }
-  // rainPosition = (animationFrameRain * windAmbient.value.index * 2.5);
 }
 
 

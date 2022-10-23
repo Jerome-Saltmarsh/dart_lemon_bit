@@ -82,19 +82,23 @@ class GameIO {
 
   static void onPanUpdate(DragUpdateDetails details) {
     // print("onPanUpdate()");
-    final detailsDirection = details.delta.direction;
-    touchscreenRadianInput = detailsDirection < 0 ? detailsDirection + Engine.PI_2 : detailsDirection;
+    final deltaDirection = details.delta.direction;
+    final deltaDistance = details.delta.distance;
+    // print(deltaDistance);
+    touchscreenRadianInput = deltaDirection < 0 ? deltaDirection + Engine.PI_2 : deltaDirection;
     if (touchPanning) {
       final radianDiff = Engine.calculateRadianDifference(touchscreenRadian, touchscreenRadianInput);
       if (radianDiff.abs() < pi * 0.75) {
-        touchscreenRadian += Engine.calculateRadianDifference(touchscreenRadian, touchscreenRadianInput) * 0.05;
+        touchscreenRadian += Engine.calculateRadianDifference(touchscreenRadian, touchscreenRadianInput) * deltaDistance * 0.05;
         if (touchscreenRadian < 0){
           touchscreenRadian += Engine.PI_2;
         } else {
           touchscreenRadian %= Engine.PI_2;
         }
       } else {
-        touchscreenRadian = touchscreenRadianInput;
+        if (deltaDistance > 0.2){
+          touchscreenRadian = touchscreenRadianInput;
+        }
       }
     } else {
       touchPanning = true;

@@ -118,7 +118,6 @@ class GameState {
 
   static const cameraModes = CameraMode.values;
   static final cameraModeWatch = Watch(CameraMode.Chase, onChanged: onCameraModeChanged);
-  static CameraMode get cameraMode => cameraModeWatch.value;
 
   static final inventoryVisible = Watch(false, onChanged: onInventoryVisibleChanged);
   // QUERIES
@@ -432,7 +431,7 @@ class GameState {
   }) {
     if (totalActiveParticles > GameConfig.Particles_Max) return;
     assert(duration > 0);
-    final particle = getParticleInstance();
+    final particle = getInstanceParticle();
     assert(!particle.active);
     particle.type = type;
     particle.x = x;
@@ -1045,7 +1044,7 @@ class GameState {
 
 
   /// This may be the cause of the bug in which the sword particle does not render
-  static Particle getParticleInstance() {
+  static Particle getInstanceParticle() {
     totalActiveParticles++;
     if (totalActiveParticles >= totalParticles){
       final instance = Particle();
@@ -1238,6 +1237,12 @@ class GameState {
     }
   }
 
+  static CameraMode get cameraMode => cameraModeWatch.value;
+
+  static set cameraMode(CameraMode value) {
+    cameraModeWatch.value = value;
+  }
+
   static void setNodeShade(int index, int shade) {
     if (shade < 0) {
       nodesShade[index] = 0;
@@ -1271,5 +1276,28 @@ class GameState {
   static void actionShowInventory(){
     inventoryVisible.value = true;
   }
+
+  static void updateParticleEmitters(){
+    for (final emitter in particleEmitters) {
+      if (emitter.next-- > 0) continue;
+      emitter.next = emitter.rate;
+      final particle = getInstanceParticle();
+      particle.x = emitter.x;
+      particle.y = emitter.y;
+      particle.z = emitter.z;
+      emitter.emit(particle);
+    }
+  }
+
+
+  static void cameraModeSetFree(){
+    cameraMode = CameraMode.Free;
+  }
+
+  static void cameraModeSetChase(){
+    cameraMode = CameraMode.Chase;
+  }
+
+
 
 }

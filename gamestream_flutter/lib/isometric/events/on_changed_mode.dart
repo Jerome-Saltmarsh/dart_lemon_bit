@@ -1,16 +1,15 @@
 
 
 import 'package:gamestream_flutter/game_library.dart';
-import 'package:gamestream_flutter/isometric/camera_mode.dart';
 
 void onChangedMode(bool mode){
   if (mode){
     GameEditor.deselectGameObject();
-    cameraModeSetChase();
+    GameState.cameraModeSetChase();
     GameNetwork.sendClientRequestWeatherToggleTimePassing(true);
     GameNetwork.sendGameObjectRequestDeselect();
   } else {
-    cameraModeSetFree();
+    GameState.cameraModeSetFree();
     GameNetwork.sendClientRequestWeatherToggleTimePassing(false);
   }
 }
