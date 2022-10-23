@@ -1,8 +1,7 @@
 import 'dart:math';
 
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/game_state.dart';
-import 'package:gamestream_flutter/isometric/nodes.dart';
+import 'package:gamestream_flutter/game_library.dart';
 import 'package:lemon_math/library.dart';
 
 class Vector3 with Position {
@@ -15,7 +14,7 @@ class Vector3 with Position {
   /// remove
   int get indexColumn => y ~/ tileSize;
   /// remove
-  int get nodeIndex => getGridNodeIndexXYZ(x, y, z);
+  int get nodeIndex => GameQueries.getGridNodeIndexXYZ(x, y, z);
   double get renderOrder => x + y;
   /// remove
   double get renderX => (x - y) * 0.5;

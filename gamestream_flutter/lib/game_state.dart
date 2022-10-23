@@ -20,7 +20,6 @@ import 'package:gamestream_flutter/isometric/events/on_camera_mode_changed.dart'
 import 'package:gamestream_flutter/isometric/events/on_changed_edit.dart';
 import 'package:gamestream_flutter/isometric/game_action.dart';
 import 'package:gamestream_flutter/isometric/grid_state_util.dart';
-import 'package:gamestream_flutter/isometric/nodes.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/render/render_circle.dart';
@@ -1420,7 +1419,7 @@ class GameState {
           ) {
             final shade = GameState.nodesBake[index];
             if (shade < shadowShade){
-              if (gridNodeZRCType(projectionZ + 1, projectionRow, projectionColumn) == NodeType.Empty){
+              if (GameQueries.gridNodeZRCType(projectionZ + 1, projectionRow, projectionColumn) == NodeType.Empty){
                 GameState.nodesBake[index] = shadowShade;
               }
             }
@@ -1441,7 +1440,7 @@ class GameState {
   static bool gridIsUnderSomething(int z, int row, int column){
     if (GameState.outOfBounds(z, row, column)) return false;
     for (var zIndex = z + 1; zIndex < GameState.nodesTotalZ; zIndex++){
-      if (!gridNodeZRCTypeRainOrEmpty(z, row, column)) return false;
+      if (!GameQueries.gridNodeZRCTypeRainOrEmpty(z, row, column)) return false;
     }
     return true;
   }
@@ -1471,7 +1470,7 @@ class GameState {
       for (var rowIndex = 0; rowIndex < GameState.nodesTotalRows; rowIndex++) {
         for (var columnIndex = 0; columnIndex < GameState.nodesTotalColumns; columnIndex++) {
           if (!NodeType.emitsLight(
-              gridNodeZRCType(zIndex, rowIndex, columnIndex))
+              GameQueries.gridNodeZRCType(zIndex, rowIndex, columnIndex))
           ) continue;
           applyEmissionBake(
             zIndex: zIndex,

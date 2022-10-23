@@ -11,7 +11,6 @@ import 'package:gamestream_flutter/isometric/classes/game_object.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/grid_state_util.dart';
-import 'package:gamestream_flutter/isometric/nodes.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_gameobjects.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/render_constants.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/render_node.dart';
@@ -1070,7 +1069,7 @@ class GameRender {
   static void casteShadowDownV3(Vector3 vector3){
     if (vector3.z < nodeHeight) return;
     if (vector3.z >= GameState.nodesLengthZ) return;
-    final nodeIndex = getGridNodeIndexV3(vector3);
+    final nodeIndex = GameQueries.getGridNodeIndexV3(vector3);
     if (nodeIndex > GameState.nodesArea) {
       final nodeBelowIndex = nodeIndex - GameState.nodesArea;
       final nodeBelowOrientation = GameState.nodesOrientation[nodeBelowIndex];

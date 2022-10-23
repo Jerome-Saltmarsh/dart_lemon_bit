@@ -1,8 +1,7 @@
 
 import 'package:bleed_common/character_type.dart';
-import 'package:gamestream_flutter/game_images.dart';
+import 'package:gamestream_flutter/game_library.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
-import 'package:gamestream_flutter/isometric/grid_state_util.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_rat.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_slime.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_zombie.dart';
@@ -10,10 +9,8 @@ import 'package:lemon_engine/engine.dart';
 
 import 'render_character_template.dart';
 
-var renderTemplateWithWeapon = false;
-
 void renderCharacter(Character character){
-  if (!isVisibleV3(character)) return;
+  if (!GameQueries.isVisibleV3(character)) return;
 
   if (character.spawning) {
     if (character.characterType == CharacterType.Rat){

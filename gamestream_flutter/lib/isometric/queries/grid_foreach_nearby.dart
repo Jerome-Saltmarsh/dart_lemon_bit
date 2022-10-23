@@ -3,8 +3,7 @@
 
 import 'dart:math';
 
-import 'package:gamestream_flutter/game_state.dart';
-import 'package:gamestream_flutter/isometric/nodes.dart';
+import 'package:gamestream_flutter/game_library.dart';
 
 int getClosestByType({required int radius, required int type}){
   final minRow = max(GameState.player.indexRow - radius, 0);
@@ -17,7 +16,7 @@ int getClosestByType({required int radius, required int type}){
   for (var z = minZ; z <= maxZ; z++){
     for (var row = minRow; row <= maxRow; row++){
       for (var column = minColumn; column <= maxColumn; column++){
-        if (gridNodeZRCType(z, row, column) != type) continue;
+        if (GameQueries.gridNodeZRCType(z, row, column) != type) continue;
          final distance = GameState.player.getGridDistance(z, row, column);
          if (distance > closest) continue;
          closest = distance;

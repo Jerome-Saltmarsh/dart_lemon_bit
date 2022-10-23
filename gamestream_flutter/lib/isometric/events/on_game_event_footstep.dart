@@ -1,7 +1,5 @@
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/game_state.dart';
-import 'package:gamestream_flutter/game_audio.dart';
-import 'package:gamestream_flutter/isometric/nodes.dart';
+import 'package:gamestream_flutter/game_library.dart';
 import 'package:gamestream_flutter/isometric/watches/rain.dart';
 import 'package:gamestream_flutter/isometric/watches/raining.dart';
 import 'package:lemon_math/library.dart';
@@ -9,9 +7,9 @@ import 'package:lemon_math/library.dart';
 
 void onGameEventFootstep(double x, double y, double z) {
   if (raining.value && (
-      gridNodeXYZTypeSafe(x, y, z) == NodeType.Rain_Landing
+      GameQueries.gridNodeXYZTypeSafe(x, y, z) == NodeType.Rain_Landing
           ||
-      gridNodeXYZTypeSafe(x, y, z + 24) == NodeType.Rain_Landing
+      GameQueries.gridNodeXYZTypeSafe(x, y, z + 24) == NodeType.Rain_Landing
   )
   ){
     GameAudio.footstep_mud_6.playXYZ(x, y, z);
@@ -21,7 +19,7 @@ void onGameEventFootstep(double x, double y, double z) {
     }
   }
 
-  final nodeType = gridNodeXYZTypeSafe(x, y, z - 2);
+  final nodeType = GameQueries.gridNodeXYZTypeSafe(x, y, z - 2);
   if (NodeType.isMaterialStone(nodeType)) {
     return GameAudio.footstep_stone.playXYZ(x, y, z);
   }
