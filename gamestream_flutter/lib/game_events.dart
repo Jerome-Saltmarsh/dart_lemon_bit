@@ -4,8 +4,6 @@ import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/game_library.dart';
 import 'package:gamestream_flutter/isometric/camera.dart';
 import 'package:gamestream_flutter/isometric/classes/explosion.dart';
-import 'package:gamestream_flutter/isometric/events/on_game_event.dart';
-import 'package:gamestream_flutter/isometric/events/on_game_event_attack_performed.dart';
 import 'package:gamestream_flutter/isometric/events/on_game_event_game_object_destroyed.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
@@ -87,7 +85,7 @@ class GameEvents {
       case GameEventType.Footstep:
         return GameEvents.onFootstep(x, y, z);
       case GameEventType.Attack_Performed:
-        return onGameEventAttackPerformed(x, y, z, angle);
+        return onAttackPerformend(x, y, z, angle);
       case GameEventType.Player_Spawn_Started:
         cameraCenterOnPlayer();
         return GameAudio.teleport.playXYZ(x, y, z);
@@ -100,10 +98,10 @@ class GameEvents {
         }
         break;
       case GameEventType.Node_Set:
-        return onGameEventNodeSet(x, y, z);
+        return onNodeSet(x, y, z);
       case GameEventType.Node_Struck:
         final nodeType = serverResponseReader.readByte();
-        onGameEventNodeStruck(nodeType, x, y, z);
+        onNodeStruck(nodeType, x, y, z);
         break;
       case GameEventType.Node_Deleted:
         GameAudio.hover_over_button_sound_30.playXYZ(x, y, z);
@@ -117,9 +115,9 @@ class GameEvents {
         }
         return;
       case GameEventType.Splash:
-        return onGameEventSplash(x, y, z);
+        return onSplash(x, y, z);
       case GameEventType.Spawn_Dust_Cloud:
-        return onGameEventSpawnDustCloud(x, y, z);
+        return GameActions.spawnDustCloud(x, y, z);
       case GameEventType.Player_Hit:
         if (Engine.randomBool()) {
           // audio.humanHurt(x, y);
@@ -196,6 +194,86 @@ class GameEvents {
       case GameEventType.Game_Object_Destroyed:
         final type = serverResponseReader.readByte();
         return onGameEventGameObjectDestroyed(x, y, z, angle, type);
+    }
+  }
+
+  static void onNodeSet(double x, double y, double z) {
+    GameAudio.hover_over_button_sound_43.playXYZ(x, y, z);
+  }
+
+  static void onNodeStruck(int nodeType, double x, double y, double z) {
+
+    if (NodeType.isMaterialWood(nodeType)){
+      GameAudio.material_struck_wood.playXYZ(x, y, z);
+      GameState.spawnParticleBlockWood(x, y, z);
+    }
+
+    if (NodeType.isMaterialGrass(nodeType)){
+      GameAudio.grass_cut.playXYZ(x, y, z);
+      GameState.spawnParticleBlockGrass(x, y, z);
+    }
+
+    if (NodeType.isMaterialStone(nodeType)){
+      GameAudio.material_struck_stone.playXYZ(x, y, z);
+      GameState.spawnParticleBlockBrick(x, y, z);
+    }
+  }
+
+  static void onGameEventAttackPerformedBlade(double x, double y, double z, double angle) {
+    GameState.spawnParticleStrikeBlade(x: x, y: y, z: z, angle: angle);
+    GameAudio.swing_sword.playXYZ(x, y, z);
+    GameState.spawnParticleBubbles(
+      count: 3,
+      x: x,
+      y: y,
+      z: z,
+      angle: angle,
+    );
+  }
+
+  static void onAttackPerformedUnarmed(double x, double y, double z, double angle) {
+    GameState.spawnParticleBubbles(
+      count: 3,
+      x: x,
+      y: y,
+      z: z,
+      angle: angle,
+    );
+  }
+
+  static void onSplash(double x, double y, double z) {
+    for (var i = 0; i < 8; i++){
+      GameState.spawnParticleWaterDrop(x: x, y: y, z: z);
+    }
+    return GameAudio.splash.playXYZ(x, y, z);
+  }
+
+  static void onAttackPerformend(double x, double y, double z, double angle) {
+    final attackType = serverResponseReader.readByte();
+    switch (attackType){
+      case AttackType.Handgun:
+        GameAudio.pistol_shot_20.playXYZ(x, y, z);
+        GameState.spawnParticleShell(x, y, z);
+        break;
+      case AttackType.Shotgun:
+        return GameAudio.shotgun_shot.playXYZ(x, y, z);
+      case AttackType.Assault_Rifle:
+        return GameAudio.assault_rifle_shot.playXYZ(x, y, z);
+      case AttackType.Rifle:
+        return GameAudio.sniper_shot_4.playXYZ(x, y, z);
+      case AttackType.Revolver:
+        return GameAudio.revolver_shot_2.playXYZ(x, y, z);
+      case AttackType.Fireball:
+        return GameAudio.fireBolt.playXYZ(x, y, z);
+      case AttackType.Blade:
+        return onGameEventAttackPerformedBlade(x, y, z, angle);
+      case AttackType.Unarmed:
+        return onAttackPerformedUnarmed(x, y, z, angle);
+      case AttackType.Crowbar:
+        GameAudio.swing_sword.playXYZ(x, y, z);
+        break;
+      default:
+        return;
     }
   }
 }
