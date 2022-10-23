@@ -1,9 +1,8 @@
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:lemon_watch/watch.dart';
 
-import 'grid.dart';
-
 final lightModeRadial = Watch(true, onChanged: (bool value){
-  refreshLighting();
+  GameState.refreshLighting();
 });
 
 void toggleLightMode(){

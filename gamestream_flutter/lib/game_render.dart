@@ -30,7 +30,6 @@ import 'package:lemon_watch/watch.dart';
 
 import 'isometric/classes/particle.dart';
 import 'game_editor.dart';
-import 'isometric/grid.dart';
 
 class GameRender {
   static var totalRemaining = 0;
@@ -888,7 +887,7 @@ class GameRender {
     nodesPlayerColumnRow = playerRow + playerColumn;
     playerRenderRow = playerRow - (GameState.player.indexZ ~/ 2);
     playerRenderColumn = playerColumn - (GameState.player.indexZ ~/ 2);
-    nodesPlayerUnderRoof = gridIsUnderSomething(playerZ, playerRow, playerColumn);
+    nodesPlayerUnderRoof = GameState.gridIsUnderSomething(playerZ, playerRow, playerColumn);
 
     indexShow = inBoundsVector3(GameState.player) ? GameState.player.nodeIndex : 0;
     indexShowRow = GameState.convertNodeIndexToRow(indexShow);
@@ -896,12 +895,12 @@ class GameRender {
     indexShowZ = GameState.convertNodeIndexToZ(indexShow);
 
     indexShowPerceptible =
-        gridIsPerceptible(indexShow) &&
-            gridIsPerceptible(indexShow + 1) &&
-            gridIsPerceptible(indexShow - 1) &&
-            gridIsPerceptible(indexShow + GameState.nodesTotalColumns) &&
-            gridIsPerceptible(indexShow - GameState.nodesTotalColumns) &&
-            gridIsPerceptible(indexShow + GameState.nodesTotalColumns + 1) ;
+        GameState.gridIsPerceptible(indexShow) &&
+            GameState.gridIsPerceptible(indexShow + 1) &&
+            GameState.gridIsPerceptible(indexShow - 1) &&
+            GameState.gridIsPerceptible(indexShow + GameState.nodesTotalColumns) &&
+            GameState.gridIsPerceptible(indexShow - GameState.nodesTotalColumns) &&
+            GameState.gridIsPerceptible(indexShow + GameState.nodesTotalColumns + 1) ;
 
     screenRight = Engine.screen.right + tileSize;
     screenLeft = Engine.screen.left - tileSize;

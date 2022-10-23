@@ -3,7 +3,6 @@ import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/game_library.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 
-import 'isometric/grid.dart';
 import 'isometric/grid/actions/rain_on.dart';
 import 'isometric/watches/raining.dart';
 
@@ -30,18 +29,18 @@ class GameEvents {
 
   static void onChangedAmbientShade(int shade) {
     GameState.ambientColor = GameState.colorShades[shade];
-    refreshLighting();
+    GameState.refreshLighting();
     GameState.torchesIgnited.value = shade != Shade.Very_Bright;
   }
 
   static void onChangedNodes(){
-    refreshGridMetrics();
+    GameState.refreshGridMetrics();
     gridWindResetToAmbient();
 
     if (raining.value) {
       rainOn();
     }
-    refreshLighting();
+    GameState.refreshLighting();
     GameEditor.refreshNodeSelectedIndex();
   }
 
