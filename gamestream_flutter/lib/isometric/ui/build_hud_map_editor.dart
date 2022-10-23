@@ -6,7 +6,6 @@ import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/light_mode.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
-import 'package:gamestream_flutter/isometric/watches/lightning.dart';
 import 'package:gamestream_flutter/isometric/watches/rain.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
 import 'package:lemon_watch/watch_builder.dart';
@@ -142,7 +141,7 @@ Widget buildToggleRain() {
 
 Widget buildButtonLightning() {
   final segments = lightningValues.length;
-  return watch(lightning, (Lightning lightning) {
+  return watch(GameState.lightning, (Lightning lightning) {
     final list = <Widget>[];
     for (var i = 0; i < segments; i++) {
       final active = lightning.index == i;

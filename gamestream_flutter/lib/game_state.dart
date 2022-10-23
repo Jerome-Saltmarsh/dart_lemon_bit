@@ -34,13 +34,16 @@ import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/render/render_circle.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
-import 'package:gamestream_flutter/isometric/update.dart';
 import 'package:gamestream_flutter/isometric_web/read_player_input.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 
+import 'isometric/animation_frame.dart';
+import 'isometric/audio/audio_random.dart';
 import 'isometric/events/on_inventory_visible_changed.dart';
+import 'isometric/update/update_zombie_growls.dart';
+import 'isometric/variables/next_lightning.dart';
 
 class GameState {
 
@@ -113,6 +116,12 @@ class GameState {
   static var windLine = 0;
   static var move = true;
 
+  static final lightning = Watch(Lightning.Off, onChanged: (Lightning value){
+    if (value != Lightning.Off){
+      nextLightning = 0;
+    }
+  });
+
   static final ambientShade = Watch(Shade.Bright, onChanged: onChangedAmbientShade);
   static const nodesInitialSize = 70 * 70 * 8;
 
@@ -124,6 +133,7 @@ class GameState {
 
   static bool get playMode => !editMode;
   static bool get editMode => edit.value;
+  static bool get lightningOn => lightning.value != Lightning.Off;
 
   static Character getCharacterInstance(){
     if (characters.length <= totalCharacters){
@@ -1140,10 +1150,12 @@ class GameState {
   /// do this during the draw call so that particles are smoother
   static void updateParticles() {
     for (final particle in particles) {
+      if (!particle.active) continue;
       updateParticle(particle);
+      particle.frame++;
     }
-    updateParticleFrames();
   }
+
 
   static void interpolatePlayer(){
 
@@ -1213,9 +1225,31 @@ class GameState {
   }
 
   static void update() {
-    updateIsometric();
+    updateGameActions();
+    updateAnimationFrame();
+    updateParticleEmitters();
+    updateProjectiles();
+    GameAudio.updateAudioLoops();
+    updateLightning();
+    updateRandomAudio();
+    updateZombieGrowls();
+
+    if (player.messageTimer > 0) {
+      player.messageTimer--;
+      if (player.messageTimer == 0){
+        player.message.value = "";
+      }
+    }
+
     readPlayerInput();
     GameNetwork.sendClientRequestUpdate();
+  }
+
+  static void updateLightning(){
+    if (lightning.value != Lightning.On) return;
+    if (nextLightning-- > 0) return;
+    GameState.actionLightningFlash();
+    nextLightning = randomInt(200, 1500);
   }
 
   static void applyEmissionGameObjects() {
@@ -1298,6 +1332,42 @@ class GameState {
     cameraMode = CameraMode.Chase;
   }
 
+  static void updateProjectiles() {
+    for (var i = 0; i < GameState.totalProjectiles; i++) {
+      final projectile = GameState.projectiles[i];
+      if (projectile.type == ProjectileType.Fireball) {
+        GameState.spawnParticleFire(x: projectile.x, y: projectile.y, z: projectile.z);
+        GameState.spawnParticleBubble(
+          x: projectile.x + giveOrTake(5),
+          y: projectile.y + giveOrTake(5),
+          z: projectile.z,
+          angle: (projectile.angle + pi) + giveOrTake(piHalf ),
+          speed: 1.5,
+        );
+        continue;
+      }
 
+      if (projectile.type == ProjectileType.Bullet) {
+        GameState.spawnParticleBubble(
+          x: projectile.x + giveOrTake(5),
+          y: projectile.y + giveOrTake(5),
+          z: projectile.z,
+          angle: (projectile.angle + pi) + giveOrTake(piHalf ),
+          speed: 1.5,
+        );
+        GameState.spawnParticleBulletRing(
+          x: projectile.x,
+          y: projectile.y,
+          z: projectile.z,
+          angle: projectile.angle,
+          speed: 1.5,
+        );
+        continue;
+      }
 
+      if (projectile.type == ProjectileType.Orb) {
+        GameState.spawnParticleOrbShard(x: projectile.x, y: projectile.y, z: projectile.z, angle: randomAngle());
+      }
+    }
+  }
 }

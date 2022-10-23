@@ -2,7 +2,6 @@ import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/utils/screen_utils.dart';
-import 'package:gamestream_flutter/isometric/watches/lightning.dart';
 import 'package:gamestream_flutter/isometric/watches/torches_ignited.dart';
 import 'package:gamestream_flutter/isometric/weather/breeze.dart';
 
@@ -62,7 +61,7 @@ double getVolumeTargetFire(){
 }
 
 double getVolumeTargetDistanceThunder(){
-   if (lightningOn) return 1.0;
+   if (GameState.lightningOn) return 1.0;
    return 0;
 }
 
