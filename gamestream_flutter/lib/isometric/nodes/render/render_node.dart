@@ -2,11 +2,8 @@
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/node_size.dart';
-import 'package:gamestream_flutter/game_images.dart';
-import 'package:gamestream_flutter/game_state.dart';
-import 'package:gamestream_flutter/game_render.dart';
+import 'package:gamestream_flutter/game_library.dart';
 import 'package:gamestream_flutter/isometric/animation_frame.dart';
-import 'package:gamestream_flutter/isometric/nodes.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_x.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/render_node_bau_haus.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/render_node_wood.dart';
@@ -134,7 +131,7 @@ void renderNodeAt() {
       );
       return;
     case NodeType.Rain_Landing:
-      if (getNodeTypeBelow(GameRender.currentNodeIndex) == NodeType.Water){
+      if (GameQueries.getNodeTypeBelow(GameRender.currentNodeIndex) == NodeType.Water){
         Engine.renderSprite(
           image: GameImages.nodes,
           srcX: AtlasSrcX.Node_Rain_Landing_Water_X,

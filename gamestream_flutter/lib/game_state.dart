@@ -5,11 +5,6 @@ import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/particle_type.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/game_audio.dart';
-import 'package:gamestream_flutter/game_config.dart';
-import 'package:gamestream_flutter/game_network.dart';
-import 'package:gamestream_flutter/game_render.dart';
-import 'package:gamestream_flutter/game_ui.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/explosion.dart';
 import 'package:gamestream_flutter/isometric/classes/game_object.dart';
@@ -18,7 +13,6 @@ import 'package:gamestream_flutter/isometric/classes/particle_emitter.dart';
 import 'package:gamestream_flutter/isometric/classes/projectile.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/convert/convert_distance_to_shade.dart';
-import 'package:gamestream_flutter/game_editor.dart';
 import 'package:gamestream_flutter/isometric/effects.dart';
 import 'package:gamestream_flutter/isometric/enums/camera_mode.dart';
 import 'package:gamestream_flutter/isometric/enums/game_dialog.dart';
@@ -36,8 +30,7 @@ import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 
-import 'game_actions.dart';
-import 'game_events.dart';
+import 'game_library.dart';
 import 'isometric/animation_frame.dart';
 import 'isometric/audio/audio_random.dart';
 import 'isometric/events/on_inventory_visible_changed.dart';
@@ -158,7 +151,7 @@ class GameState {
   }
 
   static int getNodeIndexZRC(int z, int row, int column) {
-    assert (verifyInBoundZRC(z, row, column));
+    assert (GameQueries.isInboundZRC(z, row, column));
     return (z * nodesArea) + (row * nodesTotalColumns) + column;
   }
 

@@ -5,8 +5,6 @@ import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/node_size.dart';
 import 'package:bleed_common/particle_type.dart';
-import 'package:gamestream_flutter/game_state.dart';
-import 'package:gamestream_flutter/game_images.dart';
 import 'package:gamestream_flutter/isometric/animation_frame.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/game_object.dart';
@@ -29,7 +27,7 @@ import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 
 import 'isometric/classes/particle.dart';
-import 'game_editor.dart';
+import 'game_library.dart';
 
 class GameRender {
   static var totalRemaining = 0;
@@ -996,7 +994,7 @@ class GameRender {
   }
 
   static void nodesRevealRaycast(int z, int row, int column){
-    if (!verifyInBoundZRC(z, row, column)) return;
+    if (!GameQueries.isInboundZRC(z, row, column)) return;
 
     for (; z < GameState.nodesTotalZ; z += 2){
       row++;

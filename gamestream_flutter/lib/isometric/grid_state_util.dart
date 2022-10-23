@@ -2,7 +2,7 @@
 
 
 import 'package:bleed_common/node_type.dart';
-import 'package:gamestream_flutter/game_state.dart';
+import 'package:gamestream_flutter/game_library.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 
 import 'nodes.dart';
@@ -43,7 +43,7 @@ int gridNodeIndexVector3NodeBelow(Vector3 vector3) =>
     );
 
 bool gridNodeInBoundsVector3(Vector3 vector3) =>
-    verifyInBoundZRC(vector3.indexZ, vector3.indexRow, vector3.indexColumn);
+    GameQueries.isInboundZRC(vector3.indexZ, vector3.indexRow, vector3.indexColumn);
 
 void gridNodeIncrementWindVector3(Vector3 vector3) =>
   gridNodeWindIncrement(vector3.indexZ, vector3.indexRow, vector3.indexColumn);

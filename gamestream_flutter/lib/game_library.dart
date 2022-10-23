@@ -20,3 +20,4 @@ export 'game_persistence.dart';
 export 'game_editor.dart';
 export 'game_render.dart';
 export 'game_actions.dart';
+export 'game_queries.dart';
