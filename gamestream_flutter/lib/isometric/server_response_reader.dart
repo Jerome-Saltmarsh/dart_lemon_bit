@@ -12,7 +12,6 @@ import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/classes/weapon.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_scene.dart';
-import 'package:gamestream_flutter/isometric/events/on_game_event.dart';
 import 'package:gamestream_flutter/isometric/events/on_player_event.dart';
 import 'package:gamestream_flutter/isometric/floating_texts.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
@@ -695,7 +694,7 @@ class ServerResponseReader with ByteReader {
       final y = readDouble();
       final z = readDouble();
       final angle = readDouble() * degreesToRadians;
-      onGameEvent(type, x, y, z, angle);
+      GameEvents.onGameEvent(type, x, y, z, angle);
   }
 
   void readProjectiles(){

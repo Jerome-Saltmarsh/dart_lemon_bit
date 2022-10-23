@@ -1046,6 +1046,11 @@ class Engine {
     return diff;
   }
 
+  /// Returns a random radian between 0 and pi2
+  static double randomAngle() => random.nextDouble() * pi2;
+
+  static T randomItem<T>(List<T> list) => list[random.nextInt(list.length)];
+
   static double randomGiveOrTake(num value) =>
     randomBetween(-value, value);
 
