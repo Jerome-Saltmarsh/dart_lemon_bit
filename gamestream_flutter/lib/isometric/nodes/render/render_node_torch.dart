@@ -3,12 +3,11 @@ import 'package:bleed_common/wind.dart';
 import 'package:gamestream_flutter/game_library.dart';
 import 'package:gamestream_flutter/isometric/animation_frame.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_x.dart';
-import 'package:gamestream_flutter/isometric/watches/torches_ignited.dart';
 import 'package:lemon_engine/engine.dart';
 
 
 void renderNodeTorch(){
-  if (!torchesIgnited.value) {
+  if (!GameState.torchesIgnited.value) {
     Engine.renderSprite(
       image: GameImages.nodes,
       srcX: AtlasSrcX.Node_Torch_X,

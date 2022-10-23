@@ -17,7 +17,6 @@ import 'package:gamestream_flutter/isometric/events/on_changed_scene.dart';
 import 'package:gamestream_flutter/isometric/events/on_game_event.dart';
 import 'package:gamestream_flutter/isometric/events/on_player_event.dart';
 import 'package:gamestream_flutter/isometric/floating_texts.dart';
-import 'package:gamestream_flutter/isometric/gameobjects.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/io/custom_game_names.dart';
 import 'package:gamestream_flutter/isometric/watches/rain.dart';
@@ -253,7 +252,7 @@ class ServerResponseReader with ByteReader {
   }
 
   void readGameObject() {
-    final instance = getInstanceGameObject();
+    final instance = GameState.getInstanceGameObject();
     instance.type = readByte();
     readVector3(instance);
   }
@@ -352,7 +351,7 @@ class ServerResponseReader with ByteReader {
   }
 
   void readGameObjectStatic() {
-    final gameObject = getInstanceGameObject();
+    final gameObject = GameState.getInstanceGameObject();
     readVector3(gameObject);
     gameObject.type = readByte();
   }
@@ -382,14 +381,14 @@ class ServerResponseReader with ByteReader {
   }
 
   void readGameObjectButterfly() {
-    final gameObject = getInstanceGameObject();
+    final gameObject = GameState.getInstanceGameObject();
     gameObject.type = GameObjectType.Butterfly;
     readVector3(gameObject);
     gameObject.direction = readByte();
   }
 
   void readGameObjectChicken(){
-    final gameObject = getInstanceGameObject();
+    final gameObject = GameState.getInstanceGameObject();
     gameObject.type = GameObjectType.Chicken;
     readVector3(gameObject);
     gameObject.state = readByte();
@@ -397,7 +396,7 @@ class ServerResponseReader with ByteReader {
   }
 
   void readGameObjectJellyfish(){
-    final gameObject = getInstanceGameObject();
+    final gameObject = GameState.getInstanceGameObject();
     gameObject.type = GameObjectType.Jellyfish;
     readVector3(gameObject);
     gameObject.state = readByte();
@@ -405,7 +404,7 @@ class ServerResponseReader with ByteReader {
   }
 
   void readGameObjectJellyfishRed(){
-    final gameObject = getInstanceGameObject();
+    final gameObject = GameState.getInstanceGameObject();
     gameObject.type = GameObjectType.Jellyfish_Red;
     readVector3(gameObject);
     gameObject.state = readByte();

@@ -1,9 +1,6 @@
 import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/game_ui.dart';
 
-// bool get playMode => !Game.edit.value;
-// bool get editMode => Game.edit.value;
-
 void actionSetModePlay(){
   GameState.edit.value = false;
 }

@@ -2,7 +2,6 @@ import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/utils/screen_utils.dart';
-import 'package:gamestream_flutter/isometric/watches/torches_ignited.dart';
 import 'package:gamestream_flutter/isometric/weather/breeze.dart';
 
 import '../queries/grid_foreach_nearby.dart';
@@ -51,7 +50,7 @@ double getVolumeTargetFire(){
   const r = 4;
   const maxDistance = r * tileSize;
   var closest = getClosestByType(radius: r, type: NodeType.Fireplace) * tileSize;
-  if (torchesIgnited.value) {
+  if (GameState.torchesIgnited.value) {
       final closestTorch = getClosestByType(radius: r, type: NodeType.Torch) * tileSize;
       if (closestTorch < closest) {
          closest = closestTorch;

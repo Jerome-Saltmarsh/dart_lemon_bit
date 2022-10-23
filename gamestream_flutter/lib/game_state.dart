@@ -24,7 +24,6 @@ import 'package:gamestream_flutter/isometric/enums/camera_mode.dart';
 import 'package:gamestream_flutter/isometric/enums/game_dialog.dart';
 import 'package:gamestream_flutter/isometric/events/on_action_finished_lightning_flash.dart';
 import 'package:gamestream_flutter/isometric/events/on_camera_mode_changed.dart';
-import 'package:gamestream_flutter/isometric/events/on_changed_ambient_shade.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_edit.dart';
 import 'package:gamestream_flutter/isometric/game_action.dart';
 import 'package:gamestream_flutter/isometric/grid.dart';
@@ -39,6 +38,7 @@ import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 
+import 'game_events.dart';
 import 'isometric/animation_frame.dart';
 import 'isometric/audio/audio_random.dart';
 import 'isometric/events/on_inventory_visible_changed.dart';
@@ -47,7 +47,7 @@ import 'isometric/variables/next_lightning.dart';
 
 class GameState {
 
-
+  static final torchesIgnited = Watch(true);
   static const tileHeight = 24.0;
   static const colorPitchBlack = Color.fromRGBO(37, 32, 48, 1.0);
 
@@ -122,13 +122,16 @@ class GameState {
     }
   });
 
-  static final ambientShade = Watch(Shade.Bright, onChanged: onChangedAmbientShade);
+  static final ambientShade = Watch(Shade.Bright, onChanged: GameEvents.onChangedAmbientShade);
   static const nodesInitialSize = 70 * 70 * 8;
 
   static const cameraModes = CameraMode.values;
   static final cameraModeWatch = Watch(CameraMode.Chase, onChanged: onCameraModeChanged);
 
   static final inventoryVisible = Watch(false, onChanged: onInventoryVisibleChanged);
+
+  // WATCHES
+
   // QUERIES
 
   static bool get playMode => !editMode;
@@ -1062,6 +1065,13 @@ class GameState {
       return instance;
     }
     return particles[totalActiveParticles];
+  }
+
+  static GameObject getInstanceGameObject(){
+    if (gameObjects.length <= totalGameObjects){
+      gameObjects.add(GameObject());
+    }
+    return gameObjects[totalGameObjects++];
   }
 
   static void spawnParticleFire({

@@ -10,8 +10,6 @@ import 'package:gamestream_flutter/isometric/nodes.dart';
 import 'convert/convert_distance_to_shade.dart';
 import 'watches/raining.dart';
 
-// void toggleShadows () => Game.gridShadows.value = !Game.gridShadows.value;
-
 void actionSetAmbientShadeToHour(){
   GameState.ambientShade.value = Shade.fromHour(GameState.hours.value);
 }
@@ -35,8 +33,6 @@ void gridForEachNode(Function(int z, int row, int column) apply) {
     }
   }
 }
-
-
 
 void refreshLighting(){
   GameState.resetGridToAmbient();
