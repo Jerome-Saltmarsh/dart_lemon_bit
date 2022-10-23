@@ -7,12 +7,10 @@ import 'package:bleed_common/game_option.dart';
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/quest.dart';
-import 'package:gamestream_flutter/game_state.dart';
-import 'package:gamestream_flutter/game_ui.dart';
+import 'package:gamestream_flutter/game_library.dart';
 import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/classes/weapon.dart';
-import 'package:gamestream_flutter/game_editor.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_scene.dart';
 import 'package:gamestream_flutter/isometric/events/on_game_event.dart';
 import 'package:gamestream_flutter/isometric/events/on_player_event.dart';
@@ -30,7 +28,6 @@ import 'package:lemon_watch/watch.dart';
 import 'ai.dart';
 import 'camera.dart';
 import 'classes/projectile.dart';
-import 'grid.dart';
 import 'player_store.dart';
 
 final serverResponseReader = ServerResponseReader();
@@ -532,8 +529,7 @@ class ServerResponseReader with ByteReader {
     assert(NodeType.supportsOrientation(nodeType, nodeOrientation));
     GameState.nodesType[nodeIndex] = nodeType;
     GameState.nodesOrientation[nodeIndex] = nodeOrientation;
-    GameEditor.refreshNodeSelectedIndex();
-    onGridChanged();
+    GameEvents.onChangedNodes();
   }
 
   void readPlayerWeapons() {
@@ -644,7 +640,7 @@ class ServerResponseReader with ByteReader {
       }
     }
     assert(total == totalNodes);
-    onGridChanged();
+    GameEvents.onChangedNodes();
     onChangedScene();
   }
 

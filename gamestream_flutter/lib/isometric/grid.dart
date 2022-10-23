@@ -3,26 +3,9 @@ import 'dart:math';
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_orientation.dart';
 import 'package:gamestream_flutter/game_state.dart';
-import 'package:gamestream_flutter/isometric/grid/actions/rain_on.dart';
-import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/nodes.dart';
 
 import 'convert/convert_distance_to_shade.dart';
-import 'watches/raining.dart';
-
-void actionSetAmbientShadeToHour(){
-  GameState.ambientShade.value = Shade.fromHour(GameState.hours.value);
-}
-
-void onGridChanged(){
-  refreshGridMetrics();
-  gridWindResetToAmbient();
-
-  if (raining.value) {
-     rainOn();
-  }
-  refreshLighting();
-}
 
 void gridForEachNode(Function(int z, int row, int column) apply) {
   for (var zIndex = 0; zIndex < GameState.nodesTotalZ; zIndex++) {

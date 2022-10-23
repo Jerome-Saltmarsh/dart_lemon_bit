@@ -22,7 +22,6 @@ import 'package:gamestream_flutter/game_editor.dart';
 import 'package:gamestream_flutter/isometric/effects.dart';
 import 'package:gamestream_flutter/isometric/enums/camera_mode.dart';
 import 'package:gamestream_flutter/isometric/enums/game_dialog.dart';
-import 'package:gamestream_flutter/isometric/events/on_action_finished_lightning_flash.dart';
 import 'package:gamestream_flutter/isometric/events/on_camera_mode_changed.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_edit.dart';
 import 'package:gamestream_flutter/isometric/game_action.dart';
@@ -38,6 +37,7 @@ import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 
+import 'game_actions.dart';
 import 'game_events.dart';
 import 'isometric/animation_frame.dart';
 import 'isometric/audio/audio_random.dart';
@@ -350,7 +350,7 @@ class GameState {
     GameAudio.thunder(1.0);
     if (ambientShade.value == Shade.Very_Bright) return;
     ambientShade.value = Shade.Very_Bright;
-    runAction(duration: 8, action: onActionFinishedLightningFlash);
+    runAction(duration: 8, action: GameActions.setAmbientShadeToHour);
   }
 
   static void resetGridToAmbient(){
