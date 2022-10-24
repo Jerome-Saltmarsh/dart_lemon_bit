@@ -5,7 +5,6 @@ import 'package:gamestream_flutter/isometric/nodes/render/render_node_bau_haus.d
 import 'package:gamestream_flutter/isometric/nodes/render/render_node_wood.dart';
 import 'package:gamestream_flutter/library.dart';
 
-import 'render_constants.dart';
 import 'render_node_plain.dart';
 import 'render_node_torch.dart';
 import 'render_node_type_brick.dart';
@@ -36,16 +35,16 @@ void renderNodeAt() {
             srcY = 0;
           } else
           if (orientation == NodeOrientation.Slope_North) {
-            srcY = spriteHeight_1;
+            srcY = GameConstants.spriteHeight * 1;
           } else
           if (orientation == NodeOrientation.Slope_East) {
-            srcY = spriteHeight_2;
+            srcY = GameConstants.spriteHeight * 2;
           } else
           if (orientation == NodeOrientation.Slope_South) {
-            srcY = spriteHeight_3;
+            srcY = GameConstants.spriteHeight * 3;
           } else
           if (orientation == NodeOrientation.Slope_West) {
-            srcY = spriteHeight_4;
+            srcY = GameConstants.spriteHeight * 4;
           }
           return renderStandardNode(
             srcX: 8801,
@@ -69,8 +68,8 @@ void renderNodeAt() {
         image: GameImages.nodes,
         srcX: AtlasSrcX.Node_Water_X,
         srcY: AtlasSrcX.Node_Water_Y + (((GameAnimation.animationFrameWater + ((GameRender.currentNodeRow + GameRender.currentNodeColumn) * 3)) % 10) * 72.0),
-        srcWidth: spriteWidth,
-        srcHeight: spriteHeight,
+        srcWidth: GameConstants.spriteWidth,
+        srcHeight: GameConstants.spriteHeight,
         dstX: GameRender.currentNodeDstX,
         dstY: GameRender.currentNodeDstY + GameAnimation.animationFrameWaterHeight + 14,
         anchorY: 0.3334,
@@ -108,13 +107,13 @@ void renderNodeAt() {
         case windIndexCalm:
           renderStandardNode(
             srcX: AtlasSrcX.Node_Grass_Long,
-            srcY: spriteHeight * renderNodeShade,
+            srcY: GameConstants.spriteHeight * renderNodeShade,
           );
           return;
         default:
           renderStandardNode(
               srcX: AtlasSrcX.Node_Grass_Long + ((((GameRender.currentNodeRow - GameRender.currentNodeColumn) + GameAnimation.animationFrameGrass) % 6) * 48),
-              srcY: spriteHeight * renderNodeShade,
+              srcY: GameConstants.spriteHeight * renderNodeShade,
           );
           return;
       }
@@ -130,8 +129,8 @@ void renderNodeAt() {
           image: GameImages.nodes,
           srcX: AtlasSrcX.Node_Rain_Landing_Water_X,
           srcY: 72.0 * ((GameAnimation.animationFrame + GameRender.currentNodeRow + GameRender.currentNodeColumn) % 10),
-          srcWidth: spriteWidth,
-          srcHeight: spriteHeight,
+          srcWidth: GameConstants.spriteWidth,
+          srcHeight: GameConstants.spriteHeight,
           dstX: GameRender.currentNodeDstX,
           dstY: GameRender.currentNodeDstY + GameAnimation.animationFrameWaterHeight + 14,
           anchorY: 0.3,
@@ -252,67 +251,67 @@ void renderNodeTypeGrass() {
     case NodeOrientation.Solid:
       return renderStandardNode(
           srcX: GameState.nodesVariation[GameRender.currentNodeIndex] ? AtlasSrcX.Node_Grass : AtlasSrcX.Node_Grass_Flowers,
-          srcY: spriteHeight * GameState.nodesShade[GameRender.currentNodeIndex],
+          srcY: GameConstants.spriteHeight * GameState.nodesShade[GameRender.currentNodeIndex],
       );
     case NodeOrientation.Slope_North:
       return renderStandardNode(
         srcX: AtlasSrcX.Node_Grass_Slope_North,
-        srcY: spriteHeight * GameState.nodesShade[GameRender.currentNodeIndex],
+        srcY: GameConstants.spriteHeight * GameState.nodesShade[GameRender.currentNodeIndex],
       );
     case NodeOrientation.Slope_East:
       return renderStandardNode(
         srcX: AtlasSrcX.Node_Grass_Slope_East,
-        srcY: spriteHeight * GameState.nodesShade[GameRender.currentNodeIndex],
+        srcY: GameConstants.spriteHeight * GameState.nodesShade[GameRender.currentNodeIndex],
       );
     case NodeOrientation.Slope_South:
       return renderStandardNode(
         srcX: AtlasSrcX.Node_Grass_Slope_South,
-        srcY: spriteHeight * GameState.nodesShade[GameRender.currentNodeIndex],
+        srcY: GameConstants.spriteHeight * GameState.nodesShade[GameRender.currentNodeIndex],
       );
     case NodeOrientation.Slope_West:
       return renderStandardNode(
         srcX: AtlasSrcX.Node_Grass_Slope_West,
-        srcY: spriteHeight * GameState.nodesShade[GameRender.currentNodeIndex],
+        srcY: GameConstants.spriteHeight * GameState.nodesShade[GameRender.currentNodeIndex],
       );
     case NodeOrientation.Slope_Inner_North_East:
       return renderStandardNode(
         srcX: AtlasSrcX.Node_Grass_Slope_Inner_North_East,
-        srcY: spriteHeight * GameState.nodesShade[GameRender.currentNodeIndex],
+        srcY: GameConstants.spriteHeight * GameState.nodesShade[GameRender.currentNodeIndex],
       );
     case NodeOrientation.Slope_Inner_South_East:
       return renderStandardNode(
         srcX: AtlasSrcX.Node_Grass_Slope_Inner_South_East,
-        srcY: spriteHeight * GameState.nodesShade[GameRender.currentNodeIndex],
+        srcY: GameConstants.spriteHeight * GameState.nodesShade[GameRender.currentNodeIndex],
       );
     case NodeOrientation.Slope_Inner_South_West:
       return renderStandardNode(
         srcX: AtlasSrcX.Node_Grass_Slope_Inner_South_West,
-        srcY: spriteHeight * GameState.nodesShade[GameRender.currentNodeIndex],
+        srcY: GameConstants.spriteHeight * GameState.nodesShade[GameRender.currentNodeIndex],
       );
     case NodeOrientation.Slope_Inner_North_West:
       return renderStandardNode(
         srcX: AtlasSrcX.Node_Grass_Slope_Inner_North_West,
-        srcY: spriteHeight * GameState.nodesShade[GameRender.currentNodeIndex],
+        srcY: GameConstants.spriteHeight * GameState.nodesShade[GameRender.currentNodeIndex],
       );
     case NodeOrientation.Slope_Outer_North_East:
       return renderStandardNode(
         srcX: AtlasSrcX.Node_Grass_Slope_Outer_North_East,
-        srcY: spriteHeight * GameState.nodesShade[GameRender.currentNodeIndex],
+        srcY: GameConstants.spriteHeight * GameState.nodesShade[GameRender.currentNodeIndex],
       );
     case NodeOrientation.Slope_Outer_South_East:
       return renderStandardNode(
         srcX: AtlasSrcX.Node_Grass_Slope_Outer_South_East,
-        srcY: spriteHeight * GameState.nodesShade[GameRender.currentNodeIndex],
+        srcY: GameConstants.spriteHeight * GameState.nodesShade[GameRender.currentNodeIndex],
       );
     case NodeOrientation.Slope_Outer_South_West:
       return renderStandardNode(
         srcX: AtlasSrcX.Node_Grass_Slope_Outer_South_West,
-        srcY: spriteHeight * GameState.nodesShade[GameRender.currentNodeIndex],
+        srcY: GameConstants.spriteHeight * GameState.nodesShade[GameRender.currentNodeIndex],
       );
     case NodeOrientation.Slope_Outer_North_West:
       return renderStandardNode(
         srcX: AtlasSrcX.Node_Grass_Slope_Outer_North_West,
-        srcY: spriteHeight * GameState.nodesShade[GameRender.currentNodeIndex],
+        srcY: GameConstants.spriteHeight * GameState.nodesShade[GameRender.currentNodeIndex],
       );
     default:
       throw Exception(
