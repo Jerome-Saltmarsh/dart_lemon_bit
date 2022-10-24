@@ -1,14 +1,13 @@
 
-import 'package:gamestream_flutter/isometric/player_store.dart';
 import 'package:gamestream_flutter/library.dart';
 
 void onPlayerStoreItemsChanged(List<Weapon> values){
-   storeVisible.value = values.isNotEmpty;
+   GameState.player.storeVisible.value = values.isNotEmpty;
    if (values.isNotEmpty){
-      storeVisible.value = true;
+      GameState.player.storeVisible.value = true;
       GameState.actionShowInventory();
    } else {
-      storeVisible.value = false;
+      GameState.player.storeVisible.value = false;
       GameState.actionInventoryClose();
    }
 }

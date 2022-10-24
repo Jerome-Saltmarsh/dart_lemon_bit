@@ -60,31 +60,4 @@ int _compareParticles(Particle a, Particle b) {
     return a.renderOrder > b.renderOrder ? 1 : -1;
 }
 
-void updateParticlesZombieParts() {
-  if (Engine.paintFrame % 6 != 0) return;
-  for (var i = 0; i < GameState.totalActiveParticles; i++) {
-    final particle = GameState.particles[i];
-    if (!particle.active) break;
-    if (!particleEmitsBlood(particle.type)) continue;
-    if (particle.speed < 2.0) continue;
-    GameState.spawnParticleBlood(
-      x: particle.x,
-      y: particle.y,
-      z: particle.z,
-      zv: 0,
-      angle: 0,
-      speed: 0,
-    );
-  }
-}
-
-bool particleEmitsBlood(int type){
-  if (type == ParticleType.Zombie_Head) return true;
-  if (type == ParticleType.Zombie_Torso) return true;
-  if (type == ParticleType.Zombie_Arm) return true;
-  if (type == ParticleType.Zombie_leg) return true;
-  return false;
-}
-
-
 int get bodyPartDuration => randomInt(120, 200);

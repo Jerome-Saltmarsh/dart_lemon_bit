@@ -2,7 +2,11 @@ import 'package:gamestream_flutter/isometric/events/on_quests_in_progress_change
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/services/mini_map.dart';
 
+import 'events/on_store_items_changed.dart';
+
 class Player extends Vector3 {
+  final storeItems = Watch(<Weapon>[], onChanged: onPlayerStoreItemsChanged);
+  final storeVisible = Watch(false, onChanged: GameEvents.onChangedStoreVisible);
   final interpolating = Watch(true);
   final previousPosition = Vector3();
   final target = Vector3();

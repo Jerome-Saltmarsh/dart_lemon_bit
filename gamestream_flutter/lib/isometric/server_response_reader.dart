@@ -3,8 +3,6 @@ import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_math/library.dart';
 
-import 'player_store.dart';
-
 final serverResponseReader = ServerResponseReader();
 
 
@@ -475,7 +473,7 @@ class ServerResponseReader with ByteReader {
   }
 
   void readStoreItems() {
-    storeItems.value = readWeapons();
+    GameState.player.storeItems.value = readWeapons();
   }
 
   void readNode() {

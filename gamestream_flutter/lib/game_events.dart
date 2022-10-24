@@ -3,7 +3,6 @@ import 'package:gamestream_flutter/isometric/events/on_game_event_game_object_de
 import 'package:gamestream_flutter/isometric/events/on_player_event_quest_completed.dart';
 import 'package:gamestream_flutter/isometric/events/on_player_event_quest_started.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_x.dart';
-import 'package:gamestream_flutter/isometric/player_store.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -473,7 +472,7 @@ class GameEvents {
 
   static void onInventoryVisibleChanged(bool inventoryVisible){
     GameAudio.click_sound_8();
-    if (!inventoryVisible && storeVisible.value) {
+    if (!inventoryVisible && GameState.player.storeVisible.value) {
       GameNetwork.sendClientRequestStoreClose();
     }
   }
