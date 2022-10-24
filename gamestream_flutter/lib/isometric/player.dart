@@ -1,8 +1,6 @@
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/quest.dart';
 import 'package:gamestream_flutter/game_library.dart';
-import 'package:gamestream_flutter/isometric/classes/vector3.dart';
-import 'package:gamestream_flutter/isometric/classes/weapon.dart';
 import 'package:gamestream_flutter/isometric/enums/game_dialog.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_game_dialog.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_map_x.dart';

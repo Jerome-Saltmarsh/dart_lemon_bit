@@ -3,15 +3,11 @@ import 'dart:typed_data';
 
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_size.dart';
-import 'package:gamestream_flutter/game_state.dart';
-import 'package:gamestream_flutter/game_config.dart';
-import 'package:gamestream_flutter/game_images.dart';
-import 'package:gamestream_flutter/game_render.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 
-import '../classes/character.dart';
+import '../../game_library.dart';
 import 'render_character_health_bar.dart';
 
 void renderLine(double x, double y, double z, double angle, double distance) {

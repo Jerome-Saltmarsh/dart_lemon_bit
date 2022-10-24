@@ -1,7 +1,7 @@
 
 import 'dart:math';
 
-import 'package:gamestream_flutter/isometric/classes/character.dart';
+import '../../game_library.dart';
 
 double single({
       required int frame,

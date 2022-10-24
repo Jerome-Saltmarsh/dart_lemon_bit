@@ -8,7 +8,6 @@ import 'package:gamestream_flutter/isometric/ui/buttons/build_button_equip_attac
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:lemon_watch/watch.dart';
 
-import '../classes/weapon.dart';
 import 'constants/colors.dart';
 
 final storeEquipmentType = Watch(EquipmentType.Weapon);

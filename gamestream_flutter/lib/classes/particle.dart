@@ -1,9 +1,10 @@
 import 'dart:math';
 
-import 'package:bleed_common/Direction.dart';
+import 'package:bleed_common/library.dart';
 import 'package:bleed_common/particle_type.dart';
-import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:lemon_math/library.dart';
+
+import 'vector3.dart';
 
 class Particle extends Vector3 {
   var xv = 0.0;

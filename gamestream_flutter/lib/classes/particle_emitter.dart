@@ -1,8 +1,9 @@
 
 
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/isometric/classes/particle.dart';
-import 'package:gamestream_flutter/isometric/classes/vector3.dart';
+
+import 'particle.dart';
+import 'vector3.dart';
 
 typedef Particle GetParticle();
 

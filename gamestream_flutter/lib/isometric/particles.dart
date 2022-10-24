@@ -1,9 +1,9 @@
 
 import 'package:bleed_common/particle_type.dart';
-import 'package:gamestream_flutter/game_state.dart';
-import 'package:gamestream_flutter/isometric/classes/particle.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
+
+import '../game_library.dart';
 
 
 

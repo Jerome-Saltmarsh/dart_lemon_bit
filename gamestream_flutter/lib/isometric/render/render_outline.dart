@@ -1,6 +1,7 @@
 
-import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:gamestream_flutter/isometric/render/render_circle.dart';
+
+import '../../game_library.dart';
 
 void renderOutline(Vector3 value){
   renderCircle32(value.renderX, value.renderY);

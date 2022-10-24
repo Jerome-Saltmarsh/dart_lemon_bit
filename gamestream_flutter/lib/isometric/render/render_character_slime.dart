@@ -1,4 +1,4 @@
-import 'package:gamestream_flutter/isometric/classes/character.dart';
+import '../../game_library.dart';
 
 void renderCharacterSlime(Character character) {
   if (character.hurt || character.dying) {

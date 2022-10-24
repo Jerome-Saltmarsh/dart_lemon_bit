@@ -1,7 +1,6 @@
 
 import 'package:bleed_common/character_type.dart';
 import 'package:gamestream_flutter/game_library.dart';
-import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_rat.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_slime.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_zombie.dart';

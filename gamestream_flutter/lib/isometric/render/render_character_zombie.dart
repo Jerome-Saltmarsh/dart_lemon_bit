@@ -1,12 +1,9 @@
 
 
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/game_state.dart';
-import 'package:gamestream_flutter/game_images.dart';
-import 'package:gamestream_flutter/game_render.dart';
-import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:lemon_engine/engine.dart';
 
+import '../../game_library.dart';
 import 'render_character_health_bar.dart';
 import 'src_utils.dart';
 

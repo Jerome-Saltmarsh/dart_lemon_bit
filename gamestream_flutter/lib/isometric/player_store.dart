@@ -1,6 +1,5 @@
 
 
-import 'package:gamestream_flutter/isometric/classes/weapon.dart';
 import 'package:gamestream_flutter/game_library.dart';
 import 'package:lemon_watch/watch.dart';
 

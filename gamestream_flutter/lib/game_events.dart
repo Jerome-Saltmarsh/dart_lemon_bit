@@ -3,7 +3,6 @@ import 'package:bleed_common/character_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/game_library.dart';
 import 'package:gamestream_flutter/isometric/camera.dart';
-import 'package:gamestream_flutter/isometric/classes/explosion.dart';
 import 'package:gamestream_flutter/isometric/events/on_game_event_game_object_destroyed.dart';
 import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';

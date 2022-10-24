@@ -1,11 +1,10 @@
 
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/game_images.dart';
-import 'package:gamestream_flutter/game_state.dart';
-import 'package:gamestream_flutter/isometric/classes/character.dart';
 import 'package:gamestream_flutter/isometric/render/render_projectiles.dart';
 import 'package:gamestream_flutter/isometric/render/src_utils.dart';
 import 'package:lemon_engine/engine.dart';
+
+import '../../game_library.dart';
 
 void renderCharacterRat(Character character){
   renderPixelRed(character.renderX, character.renderY);
