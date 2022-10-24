@@ -2,7 +2,6 @@
 import 'package:bleed_common/library.dart';
 
 import 'isometric/grid_state_util.dart';
-
 import 'library.dart';
 
 class GameQueries {

@@ -10,8 +10,8 @@ import 'package:gamestream_flutter/isometric_web/on_mouse_clicked_left.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch.dart';
 
-import 'library.dart';
 import 'isometric/utils/mouse.dart';
+import 'library.dart';
 
 
 class GameIO {

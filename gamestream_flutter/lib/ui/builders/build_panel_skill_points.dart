@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/game_colors.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/game_widgets.dart';
 import 'package:lemon_watch/watch_builder.dart';
 

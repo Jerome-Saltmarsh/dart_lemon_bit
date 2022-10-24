@@ -15,11 +15,11 @@ import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 
-import 'library.dart';
 import 'isometric/animation_frame.dart';
 import 'isometric/events/on_inventory_visible_changed.dart';
 import 'isometric/update/update_zombie_growls.dart';
 import 'isometric/variables/next_lightning.dart';
+import 'library.dart';
 
 class GameState {
   static final rain = Watch(Rain.None, onChanged: GameEvents.onChangedRain);

@@ -11,8 +11,8 @@ import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-import 'library.dart';
 import 'isometric/watches/scene_meta_data.dart';
+import 'library.dart';
 
 class GameNetwork {
   static const Url_Sydney = "https://gamestream-ws-australia-osbmaezptq-ts.a.run.app";

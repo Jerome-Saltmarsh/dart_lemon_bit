@@ -2,7 +2,6 @@ import 'package:bleed_common/edit_request.dart';
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/request_modify_canvas_size.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
 import 'package:gamestream_flutter/isometric/ui/columns/build_column_selected_node.dart';
@@ -10,6 +9,7 @@ import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/stacks/build_stack_play_mode.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_editor_dialog.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_editor_tab.dart';
+import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_engine/engine.dart';
 
 import '../stacks/build_page.dart';

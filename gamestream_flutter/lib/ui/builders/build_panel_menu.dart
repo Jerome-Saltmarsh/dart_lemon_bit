@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/library.dart';
-import 'package:gamestream_flutter/isometric/audio.dart';
 import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
+import 'package:gamestream_flutter/library.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch_builder.dart';
@@ -71,8 +70,7 @@ Widget buildButtonExit() =>
 
 Widget buildButtonToggleAudio() {
   return onPressed(
-    action: audio.toggleSoundEnabled,
-    child: WatchBuilder(audio.soundEnabled, (bool soundEnabled) {
+    child: WatchBuilder(GameAudio.soundEnabled, (bool soundEnabled) {
       return soundEnabled
           ? Tooltip(child: text("Disable Sound"), message: 'Disable Sound')
           : Tooltip(

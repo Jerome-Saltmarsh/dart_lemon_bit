@@ -6,13 +6,12 @@ import 'package:bleed_common/environment_response.dart';
 import 'package:bleed_common/game_option.dart';
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/quest.dart';
-import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_scene.dart';
-import 'package:gamestream_flutter/isometric/events/on_player_event.dart';
 import 'package:gamestream_flutter/isometric/floating_texts.dart';
 import 'package:gamestream_flutter/isometric/io/custom_game_names.dart';
 import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
 import 'package:gamestream_flutter/isometric/weather/time_passing.dart';
+import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
@@ -769,7 +768,7 @@ class ServerResponseReader with ByteReader {
   }
 
   void readPlayerEvent() {
-    onPlayerEvent(readByte());
+    GameEvents.onPlayerEvent(readByte());
   }
 
   void readPosition(Position position){

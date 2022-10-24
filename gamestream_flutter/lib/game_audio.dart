@@ -1,16 +1,19 @@
 
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/classes/audio_loop.dart';
 import 'package:gamestream_flutter/classes/audio_single.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/isometric/queries/grid_foreach_nearby.dart';
 import 'package:gamestream_flutter/isometric/utils/screen_utils.dart';
 import 'package:gamestream_flutter/isometric/weather/breeze.dart';
 import 'package:lemon_engine/engine.dart';
 
+import 'lemon_cache/cache.dart';
+
 
 class GameAudio {
 
+  static final soundEnabled = Cache(key: 'audio-enabled', value: true);
   static var nextRandomSound = 0;
   static var nextRandomMusic = 0;
 
