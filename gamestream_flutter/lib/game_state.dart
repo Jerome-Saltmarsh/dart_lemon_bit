@@ -23,6 +23,7 @@ import 'isometric/variables/next_lightning.dart';
 
 class GameState {
 
+  static final windAmbient = Watch(Wind.Calm, onChanged: GameEvents.onChangedWind);
   static final torchesIgnited = Watch(true);
   static const tileHeight = 24.0;
   static const colorPitchBlack = Color.fromRGBO(37, 32, 48, 1.0);
@@ -335,14 +336,6 @@ class GameState {
       nodesBake[i] = shade;
       nodesShade[i] = shade;
       dynamicIndex = 0;
-    }
-  }
-
-  static void rainOff() {
-    for (var i = 0; i < nodesTotal; i++) {
-      if (!NodeType.isRain(nodesType[i])) continue;
-      nodesType[i] = NodeType.Empty;
-      nodesOrientation[i] = NodeOrientation.None;
     }
   }
 
@@ -1505,6 +1498,13 @@ class GameState {
           GameState.nodesShade[nodeIndex] = distanceValue;
         }
       }
+    }
+  }
+
+  static void gridWindResetToAmbient(){
+    final ambientWindIndex = windAmbient.value.index;
+    for (var i = 0; i < nodesTotal; i++){
+      nodesWind[i] = ambientWindIndex;
     }
   }
 }

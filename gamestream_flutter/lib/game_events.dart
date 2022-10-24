@@ -5,14 +5,12 @@ import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/isometric/camera.dart';
 import 'package:gamestream_flutter/isometric/events/on_game_event_game_object_destroyed.dart';
-import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/isometric/watches/rain.dart';
 import 'package:lemon_engine/engine.dart';
 
 import 'isometric/events/on_character_death.dart';
 import 'isometric/events/on_character_hurt.dart';
-import 'isometric/grid/actions/rain_on.dart';
 import 'isometric/watches/raining.dart';
 
 class GameEvents {
@@ -44,10 +42,10 @@ class GameEvents {
 
   static void onChangedNodes(){
     GameState.refreshGridMetrics();
-    gridWindResetToAmbient();
+    GameState.gridWindResetToAmbient();
 
     if (raining.value) {
-      rainOn();
+      GameActions.rainStart();
     }
     GameState.refreshLighting();
     GameEditor.refreshNodeSelectedIndex();
@@ -289,5 +287,9 @@ class GameEvents {
         GameState.player.message.value = "press tab to edit";
       }
     }
+  }
+
+  static void onChangedWind(Wind value) {
+    GameState.gridWindResetToAmbient();
   }
 }

@@ -3,7 +3,6 @@ import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/classes/audio_loop.dart';
 import 'package:gamestream_flutter/classes/audio_single.dart';
-import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
 import 'package:gamestream_flutter/isometric/queries/grid_foreach_nearby.dart';
 import 'package:gamestream_flutter/isometric/utils/screen_utils.dart';
 import 'package:gamestream_flutter/isometric/watches/rain.dart';
@@ -148,7 +147,7 @@ class GameAudio {
     if (windLineRenderX - 250 <= screenCenterRenderX) {
       target += windLineDistanceVolume;
     }
-    final index = windAmbient.value.index;
+    final index = GameState.windAmbient.value.index;
     if (index <= windIndexCalm) {
       if (GameState.hours.value < 6) return target;
       if (GameState.hours.value < 18) return target + 0.1;
