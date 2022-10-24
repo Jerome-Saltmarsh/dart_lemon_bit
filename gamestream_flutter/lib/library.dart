@@ -28,6 +28,7 @@ export 'game_widgets.dart';
 export 'game_debug.dart';
 export 'game_animation.dart';
 export 'game_constants.dart';
+export 'game_sort.dart';
 export 'package:lemon_engine/engine.dart';
 export 'package:lemon_watch/watch.dart';
 export 'package:lemon_watch/watch_builder.dart';

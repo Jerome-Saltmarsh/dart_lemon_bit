@@ -4,7 +4,6 @@ import 'dart:ui' as ui;
 import 'package:bleed_common/node_size.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_gameobjects.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/render_node.dart';
-import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/render/highlight_character_nearest_mouse.dart';
 import 'package:gamestream_flutter/isometric/render/renderCharacter.dart';
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
@@ -1258,7 +1257,7 @@ class RenderOrderParticle extends RenderOrder {
 
   @override
   void reset() {
-    sortParticles();
+    GameSort.sortParticles();
     super.reset();
   }
 }

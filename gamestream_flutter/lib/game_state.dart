@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_raining.dart';
-import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/render/render_circle.dart';
 import 'package:lemon_math/library.dart';
@@ -110,7 +109,7 @@ class GameState {
   // WATCHES
 
   // QUERIES
-
+  static int get bodyPartDuration => randomInt(120, 200);
   static bool get playMode => !editMode;
   static bool get editMode => edit.value;
   static bool get lightningOn => lightning.value != Lightning.Off;

@@ -5,8 +5,6 @@ import 'package:lemon_math/library.dart';
 
 final serverResponseReader = ServerResponseReader();
 
-
-
 class ServerResponseReader with ByteReader {
   final byteLength = Watch(0);
   final bufferSize = Watch(0);
