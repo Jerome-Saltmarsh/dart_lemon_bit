@@ -1,5 +1,3 @@
-import 'package:bleed_common/quest.dart';
-import 'package:gamestream_flutter/isometric/events/on_changed_player_message.dart';
 import 'package:gamestream_flutter/isometric/events/on_quests_in_progress_changed.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/services/mini_map.dart';
@@ -35,7 +33,7 @@ class Player extends Vector3 {
   final experience = Watch(0.0);
   final level = Watch(1);
   final points = Watch(0);
-  final message = Watch("", onChanged: onChangedPlayerMessage);
+  final message = Watch("", onChanged: GameEvents.onChangedPlayerMessage);
   var messageTimer = 0;
   final state = Watch(CharacterState.Idle, onChanged: Player.onPlayerCharacterStateChanged);
   final alive = Watch(true, onChanged: GameEvents.onChangedPlayerAlive);

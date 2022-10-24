@@ -1,5 +1,4 @@
 
-import 'package:bleed_common/character_type.dart';
 import 'package:gamestream_flutter/isometric/events/on_game_event_game_object_destroyed.dart';
 import 'package:gamestream_flutter/isometric/events/on_player_event_quest_completed.dart';
 import 'package:gamestream_flutter/isometric/events/on_player_event_quest_started.dart';
@@ -476,6 +475,14 @@ class GameEvents {
     GameAudio.click_sound_8();
     if (!inventoryVisible && storeVisible.value) {
       GameNetwork.sendClientRequestStoreClose();
+    }
+  }
+
+  static void onChangedPlayerMessage(String value){
+    if (value.isNotEmpty) {
+      GameState.player.messageTimer = 200;
+    } else {
+      GameState.player.messageTimer = 0;
     }
   }
 }

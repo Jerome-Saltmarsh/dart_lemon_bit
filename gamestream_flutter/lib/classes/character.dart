@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:bleed_common/character_type.dart';
 import 'package:bleed_common/library.dart';
 import 'package:lemon_math/library.dart';
 
