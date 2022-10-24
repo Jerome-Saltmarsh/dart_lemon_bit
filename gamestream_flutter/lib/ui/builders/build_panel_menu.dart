@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
@@ -34,7 +33,7 @@ Widget buildButtonTogglePlayMode() {
       return container(
           toolTip: "Tab",
           child: edit ? "PLAY" : "EDIT",
-          action: actionToggleEdit,
+          action: GameActions.actionToggleEdit,
           color: GameColors.green,
           alignment: Alignment.center,
           width: 100);

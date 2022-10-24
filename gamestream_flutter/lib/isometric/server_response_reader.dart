@@ -17,7 +17,6 @@ import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 
 import 'ai.dart';
-import 'camera.dart';
 import 'player_store.dart';
 
 final serverResponseReader = ServerResponseReader();
@@ -521,7 +520,7 @@ class ServerResponseReader with ByteReader {
   void readPlayerSpawned() {
    GameState.player.x = readDouble();
    GameState.player.y = readDouble();
-    cameraCenterOnPlayer();
+   GameActions.cameraCenterOnPlayer();
     Engine.zoom = 1.0;
     Engine.targetZoom = 1.0;
   }

@@ -57,4 +57,30 @@ class GameActions {
       GameState.nodesOrientation[i] = NodeOrientation.None;
     }
   }
+
+  static void cameraCenterOnPlayer() => Engine.cameraCenter(GameState.player.renderX, GameState.player.renderY);
+
+  static void actionSetModePlay(){
+    GameState.edit.value = false;
+  }
+
+  static void actionSetModeEdit(){
+    GameState.edit.value = true;
+  }
+
+  static void actionToggleEdit() {
+    GameState.edit.value = !GameState.edit.value;
+  }
+
+  static void messageBoxToggle(){
+    GameUI.messageBoxVisible.value = !GameUI.messageBoxVisible.value;
+  }
+
+  static void messageBoxShow(){
+    GameUI.messageBoxVisible.value = true;
+  }
+
+  static void messageBoxHide(){
+    GameUI.messageBoxVisible.value = false;
+  }
 }

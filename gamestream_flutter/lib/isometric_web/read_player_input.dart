@@ -1,9 +1,6 @@
 import 'package:bleed_common/library.dart';
 import 'package:flutter/services.dart';
-import 'package:gamestream_flutter/game_editor.dart';
-import 'package:gamestream_flutter/game_io.dart';
-import 'package:gamestream_flutter/game_state.dart';
-import 'package:gamestream_flutter/isometric/game.dart';
+import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/isometric/watches/debug_visible.dart';
 import 'package:lemon_engine/engine.dart';
 
@@ -21,7 +18,7 @@ void readPlayerInput() {
   }
 
   if (Engine.keyPressed(LogicalKeyboardKey.enter)){
-    messageBoxShow();
+    GameActions.messageBoxShow();
   }
 }
 
@@ -33,7 +30,7 @@ void readPlayerInputEdit() {
     GameEditor.delete();
   }
   if (GameIO.getDirectionKeyboard() != Direction.None) {
-    actionSetModePlay();
+    GameActions.actionSetModePlay();
   }
   return;
 }

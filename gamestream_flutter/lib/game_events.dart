@@ -1,7 +1,6 @@
 
 import 'package:bleed_common/character_type.dart';
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/isometric/camera.dart';
 import 'package:gamestream_flutter/isometric/events/on_game_event_game_object_destroyed.dart';
 import 'package:gamestream_flutter/isometric/events/on_player_event_quest_completed.dart';
 import 'package:gamestream_flutter/isometric/events/on_player_event_quest_started.dart';
@@ -89,7 +88,7 @@ class GameEvents {
       case GameEventType.Attack_Performed:
         return onAttackPerformend(x, y, z, angle);
       case GameEventType.Player_Spawn_Started:
-        cameraCenterOnPlayer();
+        GameActions.cameraCenterOnPlayer();
         return GameAudio.teleport.playXYZ(x, y, z);
       case GameEventType.AI_Target_Acquired:
         final characterType = serverResponseReader.readByte();
@@ -327,7 +326,7 @@ class GameEvents {
         GameState.player.weapon.capacity.value = capacity;
         break;
       case PlayerEvent.Scene_Changed:
-        return cameraCenterOnPlayer();
+        return GameActions.cameraCenterOnPlayer();
       case PlayerEvent.Quest_Started:
         return onPlayerEventQuestStarted();
       case PlayerEvent.Quest_Completed:
@@ -384,7 +383,7 @@ class GameEvents {
         GameEditor.gameObjectSelected.value = false;
         break;
       case PlayerEvent.Player_Moved:
-        cameraCenterOnPlayer();
+        GameActions.cameraCenterOnPlayer();
         break;
     }
   }

@@ -1,9 +1,5 @@
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/game_state.dart';
 import 'package:lemon_engine/engine.dart';
-
-
-void cameraCenterOnPlayer() => Engine.cameraCenter(GameState.player.renderX, GameState.player.renderY);
 
 void cameraSetPositionGrid(int row, int column, int z){
   cameraSetPosition(row * tileSize, column * tileSize, z * tileHeight);

@@ -1,6 +1,5 @@
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/light_mode.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
@@ -278,7 +277,7 @@ Widget buildButtonSelectNodeType(int nodeType) {
         child: canvas,
         action: () {
           if (GameState.playMode) {
-            actionSetModePlay();
+            GameActions.actionSetModePlay();
             return;
           }
           GameEditor.paint(nodeType: nodeType);

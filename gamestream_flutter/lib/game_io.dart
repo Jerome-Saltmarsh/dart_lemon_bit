@@ -5,7 +5,6 @@ import 'package:bleed_common/Direction.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/isometric/camera.dart';
-import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric_web/on_mouse_clicked_left.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch.dart';
@@ -197,7 +196,7 @@ class GameIO {
     final key = event.physicalKey;
 
     if (key == PhysicalKeyboardKey.tab)
-      return actionToggleEdit();
+      return GameActions.actionToggleEdit();
 
     if (key == PhysicalKeyboardKey.digit5)
       return GameEditor.paintTorch();

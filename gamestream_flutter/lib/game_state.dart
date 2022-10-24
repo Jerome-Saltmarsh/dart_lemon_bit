@@ -3,7 +3,6 @@ import 'dart:typed_data';
 
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/isometric/effects.dart';
 import 'package:gamestream_flutter/isometric/game_action.dart';
 import 'package:gamestream_flutter/isometric/grid_state_util.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
@@ -22,6 +21,7 @@ import 'isometric/variables/next_lightning.dart';
 import 'library.dart';
 
 class GameState {
+  static final effects = <Effect>[];
   static final rain = Watch(Rain.None, onChanged: GameEvents.onChangedRain);
   static var npcTextVisible = false;
   static final windAmbient = Watch(Wind.Calm, onChanged: GameEvents.onChangedWind);
@@ -802,7 +802,7 @@ class GameState {
     required EffectType type,
     required int duration,
   }){
-    final effect = getEffect();
+    final effect = getInstanceEffect();
     effect.x = x;
     effect.y = y;
     effect.type = type;
@@ -1043,6 +1043,17 @@ class GameState {
     }
     return gameObjects[totalGameObjects++];
   }
+
+  static Effect getInstanceEffect(){
+    for(final effect in effects){
+      if (effect.enabled) continue;
+      return effect;
+    }
+    final effect = Effect();
+    effects.add(effect);
+    return effect;
+  }
+
 
   static void spawnParticleFire({
     required double x,
