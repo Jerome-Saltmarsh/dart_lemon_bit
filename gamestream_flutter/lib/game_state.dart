@@ -15,7 +15,6 @@ import 'package:lemon_watch/watch.dart';
 
 import 'isometric/animation_frame.dart';
 import 'isometric/events/on_inventory_visible_changed.dart';
-import 'isometric/update/update_zombie_growls.dart';
 import 'isometric/variables/next_lightning.dart';
 import 'library.dart';
 
@@ -1236,7 +1235,6 @@ class GameState {
     updateProjectiles();
     GameAudio.update();
     updateLightning();
-    updateZombieGrowls();
 
     if (player.messageTimer > 0) {
       player.messageTimer--;

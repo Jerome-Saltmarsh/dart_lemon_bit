@@ -10,6 +10,7 @@ import 'library.dart';
 
 class GameAudio {
 
+  static var nextZombieGrowl = 100;
   static final soundEnabled = Cache(key: 'audio-enabled', value: true);
   static var nextRandomSound = 0;
   static var nextRandomMusic = 0;
@@ -138,6 +139,7 @@ class GameAudio {
     }
     updateRandomAmbientSounds();
     updateRandomMusic();
+    updateZombieGrowls();
   }
 
   static double getVolumeTargetWind() {
@@ -248,5 +250,12 @@ class GameAudio {
 
   static void playRandom(List<AudioSingle> items){
     Engine.randomItem(items).play();
+  }
+
+  static void updateZombieGrowls(){
+    if (GameState.totalZombies <= 0) return;
+    if (nextZombieGrowl-- > 0) return;
+    nextZombieGrowl = Engine.randomInt(200, 300);
+    Engine.randomItem(GameAudio.audioSingleZombieTalking).playV3(GameState.zombies[Engine.randomInt(0, GameState.totalZombies)]);
   }
 }
