@@ -1,8 +1,8 @@
-import 'package:gamestream_flutter/isometric/floating_texts.dart';
+import 'package:gamestream_flutter/game_state.dart';
 import 'package:lemon_engine/engine.dart';
 
 void renderFloatingTexts() {
-  for (final floatingText in floatingTexts) {
+  for (final floatingText in GameState.floatingTexts) {
     if (floatingText.duration <= 0) continue;
     floatingText.duration--;
     renderText(

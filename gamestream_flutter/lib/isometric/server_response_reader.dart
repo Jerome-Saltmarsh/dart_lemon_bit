@@ -7,7 +7,6 @@ import 'package:bleed_common/game_option.dart';
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/quest.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_scene.dart';
-import 'package:gamestream_flutter/isometric/floating_texts.dart';
 import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
 import 'package:gamestream_flutter/isometric/weather/time_passing.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -534,7 +533,7 @@ class ServerResponseReader with ByteReader {
     final x = readDouble();
     final y = readDouble() - 5;
     final amount = readInt();
-    spawnFloatingText(x, y, amount.toString());
+    GameState.spawnFloatingText(x, y, amount.toString());
   }
 
   void readTechTypes() {

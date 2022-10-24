@@ -20,7 +20,6 @@ import 'isometric/variables/next_lightning.dart';
 import 'library.dart';
 
 class GameState {
-  static final effects = <Effect>[];
   static final rain = Watch(Rain.None, onChanged: GameEvents.onChangedRain);
   static var npcTextVisible = false;
   static final windAmbient = Watch(Wind.Calm, onChanged: GameEvents.onChangedWind);
@@ -39,6 +38,7 @@ class GameState {
   static final edit = Watch(false, onChanged: GameEvents.onChangedEdit);
   static final player = Player();
 
+  static final effects = <Effect>[];
   static final gameObjects = <GameObject>[];
   static final characters = <Character>[];
   static final players = <Character>[];
@@ -47,6 +47,7 @@ class GameState {
   static final particles = <Particle>[];
   static final projectiles = <Projectile>[];
   static final particleEmitters = <ParticleEmitter>[];
+  static final floatingTexts = <FloatingText>[];
 
   static var totalGameObjects = 0;
   static var totalCharacters = 0;
@@ -1044,8 +1045,18 @@ class GameState {
     return gameObjects[totalGameObjects++];
   }
 
+  static FloatingText getInstanceFloatingText(){
+    for (final floatingText in floatingTexts) {
+      if (floatingText.duration > 0) continue;
+      return floatingText;
+    }
+    final instance = FloatingText();
+    GameState.floatingTexts.add(instance);
+    return instance;
+  }
+
   static Effect getInstanceEffect(){
-    for(final effect in effects){
+    for (final effect in effects){
       if (effect.enabled) continue;
       return effect;
     }
@@ -1526,5 +1537,14 @@ class GameState {
     for (var i = 0; i < nodesTotal; i++){
       nodesWind[i] = ambientWindIndex;
     }
+  }
+
+  static void spawnFloatingText(double x, double y, String text) {
+    final floatingText = getInstanceFloatingText();
+    floatingText.duration = 50;
+    floatingText.x = x;
+    floatingText.y = y;
+    floatingText.xv = giveOrTake(0.2);
+    floatingText.value = text;
   }
 }
