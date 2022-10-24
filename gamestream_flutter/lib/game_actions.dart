@@ -82,4 +82,8 @@ class GameActions {
   static void messageBoxHide(){
     GameUI.messageBoxVisible.value = false;
   }
+
+  static void toggleDebugMode(){
+    GameState.debugVisible.value = !GameState.debugVisible.value;;
+  }
 }

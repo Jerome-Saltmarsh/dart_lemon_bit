@@ -2,7 +2,6 @@ import 'package:bleed_common/GameType.dart';
 import 'package:bleed_common/Shade.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/utils/mouse.dart';
-import 'package:gamestream_flutter/isometric/watches/debug_visible.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_engine/engine.dart';
 
@@ -56,7 +55,7 @@ Widget buildHudDebug() =>
               watch(Engine.deviceType, (int deviceType) => text("device-type: ${DeviceType.getName(deviceType)}", onPressed: Engine.toggleDeviceType)),
               watch(GameIO.inputMode, (int inputMode) => text("input-mode: ${InputMode.getName(inputMode)}", onPressed: GameIO.actionToggleInputMode)),
               height24,
-              text("close x", onPressed: () => debugVisible.value = false),
+              text("close x", onPressed: () => GameState.debugVisible.value = false),
             ],
           )),
     ],

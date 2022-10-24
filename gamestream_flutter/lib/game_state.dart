@@ -8,7 +8,6 @@ import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/render/render_circle.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
-import 'package:gamestream_flutter/isometric_web/read_player_input.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
@@ -20,6 +19,7 @@ import 'isometric/variables/next_lightning.dart';
 import 'library.dart';
 
 class GameState {
+  static final debugVisible = Watch(false);
   static final rain = Watch(Rain.None, onChanged: GameEvents.onChangedRain);
   static var npcTextVisible = false;
   static final windAmbient = Watch(Wind.Calm, onChanged: GameEvents.onChangedWind);
@@ -1250,7 +1250,7 @@ class GameState {
        }
     }
 
-    readPlayerInput();
+    GameIO.readPlayerInput();
     GameNetwork.sendClientRequestUpdate();
   }
 

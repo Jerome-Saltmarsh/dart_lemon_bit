@@ -10,7 +10,6 @@ import 'package:gamestream_flutter/isometric/ui/watches/build_watch_player_alive
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_scene_meta_data_player_is_owner.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/game_map.dart';
-import 'package:gamestream_flutter/isometric/watches/debug_visible.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch.dart';
@@ -62,7 +61,7 @@ class GameUI {
             buildTopRightMenu(),
             buildWatchBool(GameUI.mapVisible, buildMiniMap),
             watch(GameState.edit, buildPlayMode),
-            buildWatchBool(debugVisible, buildHudDebug),
+            buildWatchBool(GameState.debugVisible, buildHudDebug),
             // https://stackoverflow.com/questions/67147229/how-can-i-detect-multiple-touches-in-flutter
             // Positioned(
             //     bottom: 0,

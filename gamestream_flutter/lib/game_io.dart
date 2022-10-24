@@ -5,7 +5,6 @@ import 'package:bleed_common/Direction.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/isometric/camera.dart';
-import 'package:gamestream_flutter/isometric_web/on_mouse_clicked_left.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch.dart';
 
@@ -119,6 +118,12 @@ class GameIO {
   static void onKeyPressed(RawKeyDownEvent event) {
      if (event.logicalKey == LogicalKeyboardKey.keyX) {
        actionToggleInputMode();
+     }
+     if (event.logicalKey == LogicalKeyboardKey.keyP){
+       GameActions.toggleDebugMode();
+     }
+     if (event.logicalKey == LogicalKeyboardKey.enter){
+       GameActions.messageBoxShow();
      }
   }
 
@@ -280,4 +285,35 @@ class GameIO {
       onMouseClickedEditMode();
     }
   }
+
+  static void onMouseClickedEditMode(){
+    if (Engine.keyPressedShiftLeft){
+      GameEditor.selectMouseGameObject();
+      return;
+    }
+    GameEditor.selectMouseBlock();
+    GameEditor.actionRecenterCamera();
+  }
+
+  static void readPlayerInput() {
+
+    if (GameState.edit.value) {
+      return readPlayerInputEdit();
+    }
+  }
+
+  static void readPlayerInputEdit() {
+    if (Engine.keyPressed(LogicalKeyboardKey.space)) {
+      Engine.panCamera();
+    }
+    if (Engine.keyPressed(LogicalKeyboardKey.delete)) {
+      GameEditor.delete();
+    }
+    if (GameIO.getDirectionKeyboard() != Direction.None) {
+      GameActions.actionSetModePlay();
+    }
+    return;
+  }
+
+
 }
