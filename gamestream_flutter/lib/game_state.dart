@@ -3,7 +3,6 @@ import 'dart:typed_data';
 
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/isometric/game_action.dart';
 import 'package:gamestream_flutter/isometric/grid_state_util.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
@@ -72,6 +71,8 @@ class GameState {
   static var nodesWind = Uint8List(nodesInitialSize);
   static var visibleIndex = 0;
   static var dynamicIndex = 0;
+
+  static var lightningFlashFrames = 0;
 
   static final triggerAlarmNoMessageReceivedFromServer = Watch(false);
   static final renderFrame = Watch(0);
@@ -323,12 +324,11 @@ class GameState {
     }
   }
 
-
   static void actionLightningFlash() {
     GameAudio.thunder(1.0);
     if (ambientShade.value == Shade.Very_Bright) return;
     ambientShade.value = Shade.Very_Bright;
-    runAction(duration: 8, action: GameActions.setAmbientShadeToHour);
+    lightningFlashFrames = GameConfig.Lightning_Flash_Duration;
   }
 
   static void resetGridToAmbient(){
@@ -1216,7 +1216,8 @@ class GameState {
   }
 
   static void update() {
-    updateGameActions();
+    // updateGameActions();
+
     updateAnimationFrame();
     updateParticleEmitters();
     updateProjectiles();
@@ -1229,6 +1230,13 @@ class GameState {
       if (player.messageTimer == 0){
         player.message.value = "";
       }
+    }
+
+    if (lightningFlashFrames > 0) {
+      lightningFlashFrames--;
+       if (lightningFlashFrames <= 0){
+         GameActions.setAmbientShadeToHour();
+       }
     }
 
     readPlayerInput();
