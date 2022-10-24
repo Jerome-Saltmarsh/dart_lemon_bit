@@ -20,6 +20,7 @@ import 'isometric/variables/next_lightning.dart';
 import 'library.dart';
 
 class GameState {
+  static final watchTimePassing = Watch(false);
   static final debugVisible = Watch(false);
   static final rain = Watch(Rain.None, onChanged: GameEvents.onChangedRain);
   static var npcTextVisible = false;

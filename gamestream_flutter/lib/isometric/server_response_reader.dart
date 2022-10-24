@@ -8,7 +8,6 @@ import 'package:bleed_common/library.dart';
 import 'package:bleed_common/quest.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_scene.dart';
 import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
-import 'package:gamestream_flutter/isometric/weather/time_passing.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_engine/engine.dart';
@@ -471,7 +470,7 @@ class ServerResponseReader with ByteReader {
     GameState.rain.value = readRain();
     GameState.weatherBreeze.value = readBool();
     GameState.lightning.value = readLightning();
-    watchTimePassing.value = readBool();
+    GameState.watchTimePassing.value = readBool();
     GameState.windAmbient.value = readWind();
     GameState.ambientShade.value = readByte();
   }
