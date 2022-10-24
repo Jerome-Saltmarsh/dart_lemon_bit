@@ -1,10 +1,10 @@
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/quest.dart';
-import 'package:gamestream_flutter/isometric/events/on_changed_map_x.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_player_designed.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_player_message.dart';
 import 'package:gamestream_flutter/isometric/events/on_quests_in_progress_changed.dart';
 import 'package:gamestream_flutter/library.dart';
+import 'package:gamestream_flutter/services/mini_map.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch.dart';
 
@@ -21,7 +21,7 @@ class Player extends Vector3 {
   var abilityRadius = 0.0;
   var maxHealth = 0;
   var attackRange = 0.0;
-  final mapTile = Watch(0, onChanged: onMapTileChanged);
+  final mapTile = Watch(0, onChanged: MiniMap.onMapTileChanged);
   var interactingNpcName = Watch<String?>(null, onChanged: onChangedNpcTalk);
   var npcTalk = Watch<String?>(null, onChanged: onChangedNpcTalk);
   var npcTalkOptions = Watch<List<String>>([]);

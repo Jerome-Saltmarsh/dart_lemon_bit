@@ -1,6 +1,5 @@
 
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/isometric/queries/set_grid_type.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_engine/engine.dart';
 
@@ -31,9 +30,9 @@ class GameActions {
           final type = GameState.nodesType[index];
           if (type != NodeType.Empty) {
             if (type == NodeType.Water || GameState.nodesOrientation[index] == NodeOrientation.Solid) {
-              setNodeType(z + 1, row, column, NodeType.Rain_Landing);
+              GameState.setNodeType(z + 1, row, column, NodeType.Rain_Landing);
             }
-            setNodeType(z + 2, row, column, NodeType.Rain_Falling);
+            GameState.setNodeType(z + 2, row, column, NodeType.Rain_Falling);
             break;
           }
 
@@ -43,7 +42,7 @@ class GameActions {
               !GameQueries.gridNodeZRCTypeRainOrEmpty(z, row - 1, column) ||
               !GameQueries.gridNodeZRCTypeRainOrEmpty(z, row, column - 1)
           ){
-            setNodeType(z, row, column, NodeType.Rain_Falling);
+            GameState.setNodeType(z, row, column, NodeType.Rain_Falling);
           }
         }
       }

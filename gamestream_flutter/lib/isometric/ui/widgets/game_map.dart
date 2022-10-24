@@ -3,6 +3,7 @@ import 'package:bleed_common/library.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/isometric/ui/dialogs/build_game_dialog_map.dart';
 import 'package:gamestream_flutter/library.dart';
+import 'package:gamestream_flutter/services/mini_map.dart';
 import 'package:lemon_engine/engine.dart';
 
 
@@ -58,10 +59,10 @@ class GameMapWidget extends StatelessWidget {
     canvas.translate(-cameraX, -cameraY);
     // canvas.drawRect(Rect.fromLTWH(0, 0, width, height), paint);
     // canvas.clipRRect(RRect.fromLTRBAndCorners(0, 0, 100, 100));
-    for (final mapTile in mapTiles){
-      renderMapTile(canvas, mapTile);
+    for (final mapTile in MiniMap.mapTiles){
+      MiniMap.renderMapTile(canvas, mapTile);
     }
-    renderMapTile(canvas, mapTileActive);
+    MiniMap.renderMapTile(canvas, MiniMap.mapTileActive);
     renderPlayerDot(canvas);
     // cameraCenter(mapTileActive.renderX, mapTileActive.renderY);
   }
@@ -70,8 +71,8 @@ class GameMapWidget extends StatelessWidget {
     final playerPerX = GameState.player.x / (tileSize * GameState.nodesTotalRows);
     final playerPerY = GameState.player.y / (tileSize * GameState.nodesTotalColumns);
 
-    final playerX = (mapTileActive.x + playerPerX);
-    final playerY = (mapTileActive.y + playerPerY);
+    final playerX = (MiniMap.mapTileActive.x + playerPerX);
+    final playerY = (MiniMap.mapTileActive.y + playerPerY);
 
     final renderX = ((playerX * mapTileSize) - (playerY * mapTileSize)) * 0.5;
     final renderY = (((playerX * mapTileSize) + (playerY * mapTileSize)) * 0.5) - mapTileSizeHalf;
@@ -93,8 +94,8 @@ class GameMapWidget extends StatelessWidget {
   void snapCameraToTarget() {
     final playerPerX = GameState.player.x / (tileSize * GameState.nodesTotalRows);
     final playerPerY = GameState.player.y / (tileSize * GameState.nodesTotalColumns);
-    final playerX = (mapTileActive.x + playerPerX);
-    final playerY = (mapTileActive.y + playerPerY);
+    final playerX = (MiniMap.mapTileActive.x + playerPerX);
+    final playerY = (MiniMap.mapTileActive.y + playerPerY);
     final renderX = ((playerX * mapTileSize) - (playerY * mapTileSize)) * 0.5;
     final renderY = (((playerX * mapTileSize) + (playerY * mapTileSize)) * 0.5) - mapTileSizeHalf;
     cameraCenter(renderX, renderY);

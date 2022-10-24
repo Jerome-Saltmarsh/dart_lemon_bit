@@ -1,14 +1,12 @@
 
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/classes/audio_loop.dart';
 import 'package:gamestream_flutter/classes/audio_single.dart';
-import 'package:gamestream_flutter/game_state.dart';
-import 'package:gamestream_flutter/isometric/queries/grid_foreach_nearby.dart';
 import 'package:gamestream_flutter/isometric/utils/screen_utils.dart';
 import 'package:gamestream_flutter/isometric/weather/breeze.dart';
 import 'package:lemon_engine/engine.dart';
 
 import 'lemon_cache/cache.dart';
+import 'library.dart';
 
 
 class GameAudio {
@@ -164,7 +162,7 @@ class GameAudio {
     if (GameState.rain.value == Rain.None) return 0.0;
     const r = 7;
     const maxDistance = r * tileSize;
-    final distance = getClosestByType(radius: r, type: NodeType.Rain_Landing) * tileSize;
+    final distance = GameQueries.getClosestByType(radius: r, type: NodeType.Rain_Landing) * tileSize;
     final v = convertDistanceToVolume(distance, maxDistance: maxDistance);
     return v * (GameState.rain.value == Rain.Light ? 0.5 : 1.0) * 0.5;
   }
@@ -180,9 +178,9 @@ class GameAudio {
   static double getVolumeTargetFire(){
     const r = 4;
     const maxDistance = r * tileSize;
-    var closest = getClosestByType(radius: r, type: NodeType.Fireplace) * tileSize;
+    var closest = GameQueries.getClosestByType(radius: r, type: NodeType.Fireplace) * tileSize;
     if (GameState.torchesIgnited.value) {
-      final closestTorch = getClosestByType(radius: r, type: NodeType.Torch) * tileSize;
+      final closestTorch = GameQueries.getClosestByType(radius: r, type: NodeType.Torch) * tileSize;
       if (closestTorch < closest) {
         closest = closestTorch;
       }
@@ -202,7 +200,7 @@ class GameAudio {
   static double getVolumeStream(){
     const r = 7;
     const maxDistance = r * tileSize;
-    final distance = getClosestByType(radius: r, type: NodeType.Water_Flowing) * tileSize;
+    final distance = GameQueries.getClosestByType(radius: r, type: NodeType.Water_Flowing) * tileSize;
     return convertDistanceToVolume(distance, maxDistance: maxDistance) * 0.3;
   }
 
