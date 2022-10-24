@@ -495,7 +495,7 @@ class ServerResponseReader with ByteReader {
   void readPlayerSpawned() {
    GamePlayer.position.x = readDouble();
    GamePlayer.position.y = readDouble();
-   GameCamera.cameraCenterOnPlayer();
+   GameCamera.centerOnPlayer();
     Engine.zoom = 1.0;
     Engine.targetZoom = 1.0;
   }

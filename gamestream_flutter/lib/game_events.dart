@@ -80,7 +80,7 @@ class GameEvents {
       case GameEventType.Attack_Performed:
         return onAttackPerformend(x, y, z, angle);
       case GameEventType.Player_Spawn_Started:
-        GameCamera.cameraCenterOnPlayer();
+        GameCamera.centerOnPlayer();
         return GameAudio.teleport.playXYZ(x, y, z);
       case GameEventType.AI_Target_Acquired:
         final characterType = serverResponseReader.readByte();
@@ -318,7 +318,7 @@ class GameEvents {
         GameState.player.weapon.capacity.value = capacity;
         break;
       case PlayerEvent.Scene_Changed:
-        return GameCamera.cameraCenterOnPlayer();
+        return GameCamera.centerOnPlayer();
       case PlayerEvent.Quest_Started:
         return onPlayerEventQuestStarted();
       case PlayerEvent.Quest_Completed:
@@ -375,7 +375,7 @@ class GameEvents {
         GameEditor.gameObjectSelected.value = false;
         break;
       case PlayerEvent.Player_Moved:
-        GameCamera.cameraCenterOnPlayer();
+        GameCamera.centerOnPlayer();
         break;
     }
   }
