@@ -1,7 +1,6 @@
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/quest.dart';
 import 'package:gamestream_flutter/library.dart';
-import 'package:gamestream_flutter/isometric/events/on_changed_game_dialog.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_map_x.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_npc_talk.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_player_designed.dart';
@@ -76,6 +75,13 @@ class Player extends Vector3 {
 
   static void onPlayerCharacterStateChanged(int characterState){
      GameState.player.alive.value = characterState != CharacterState.Dead;
+  }
+
+  static void onChangedGameDialog(GameDialog? value){
+    GameAudio.click_sound_8();
+    if (value == GameDialog.Quests) {
+      // actionHideQuestAdded();
+    }
   }
 }
 

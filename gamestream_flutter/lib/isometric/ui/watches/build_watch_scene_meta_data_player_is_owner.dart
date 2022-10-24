@@ -21,7 +21,7 @@ Widget buildPlayMode(bool edit) =>
 Widget buildStackEdit(EditTab activeEditTab) =>
     buildPage(
     children: [
-      watch(editorDialog, buildWatchEditorDialog),
+      watch(GameEditor.editorDialog, buildWatchEditorDialog),
       if (activeEditTab == EditTab.Grid)
       Positioned(
         right: 6,
@@ -80,8 +80,8 @@ Widget buildStackEdit(EditTab activeEditTab) =>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                   container(child: "SAVE", action: actionGameDialogShowSceneSave),
-                   container(child: "LOAD", action: editorLoadScene),
+                   container(child: "SAVE", action: GameEditor.actionGameDialogShowSceneSave),
+                   container(child: "LOAD", action: GameEditor.editorLoadScene),
                    height16,
                    text("MAP SIZE"),
                   ...RequestModifyCanvasSize.values.map((e) => container(

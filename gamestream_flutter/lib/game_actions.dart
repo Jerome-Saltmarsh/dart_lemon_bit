@@ -18,6 +18,6 @@ class GameActions {
     final sceneName = GameEditor.selectedSceneName.value;
     if (sceneName == null) throw Exception("loadSelectedSceneNameException: selected scene name is null");
     GameNetwork.sendClientRequestEditorLoadGame(sceneName);
-    actionGameDialogClose();
+    GameEditor.actionGameDialogClose();
   }
 }

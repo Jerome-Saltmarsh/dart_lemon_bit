@@ -7,6 +7,6 @@ Widget buildButtonShowDialogLoadScene(){
    return container(
        child: "Load",
        alignment: Alignment.center,
-       action: editorLoadScene,
+       action: GameEditor.editorLoadScene,
    );
 }

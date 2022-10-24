@@ -4,8 +4,6 @@ import 'dart:typed_data';
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/effects.dart';
-import 'package:gamestream_flutter/isometric/events/on_camera_mode_changed.dart';
-import 'package:gamestream_flutter/isometric/events/on_changed_edit.dart';
 import 'package:gamestream_flutter/isometric/game_action.dart';
 import 'package:gamestream_flutter/isometric/grid_state_util.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
@@ -37,7 +35,7 @@ class GameState {
       .toList(growable: false);
 
   static final gameType = Watch<int?>(null, onChanged: onChangedGameType);
-  static final edit = Watch(false, onChanged: onChangedEdit);
+  static final edit = Watch(false, onChanged: GameEvents.onChangedEdit);
   static final player = Player();
 
   static final gameObjects = <GameObject>[];
@@ -104,7 +102,7 @@ class GameState {
   static const nodesInitialSize = 70 * 70 * 8;
 
   static const cameraModes = CameraMode.values;
-  static final cameraModeWatch = Watch(CameraMode.Chase, onChanged: onCameraModeChanged);
+  static final cameraModeWatch = Watch(CameraMode.Chase);
 
   static final inventoryVisible = Watch(false, onChanged: onInventoryVisibleChanged);
 

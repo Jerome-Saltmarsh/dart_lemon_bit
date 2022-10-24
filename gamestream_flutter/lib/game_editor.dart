@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:bleed_common/library.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:gamestream_flutter/isometric/camera.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_scene_meta_data_player_is_owner.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
@@ -9,6 +12,7 @@ import 'package:lemon_watch/watch.dart';
 import 'isometric/utils/mouse_raycast.dart';
 
 class GameEditor {
+  static final editorDialog = Watch<EditorDialog?>(null, onChanged: onChangedEditorDialog);
   static final selectedSceneName = Watch<String?>(null);
 
   static final editTab = Watch(EditTab.Grid);
@@ -243,5 +247,27 @@ class GameEditor {
     nodeSupportsSlopeCornerInner.value = NodeType.isSlopeCornerInner(nodeType);
     nodeSupportsSlopeCornerOuter.value = NodeType.isSlopeCornerOuter(nodeType);
     nodeSupportsSlopeSymmetric.value = NodeType.isSlopeSymmetric(nodeType);
+  }
+
+  static void onChangedEditorDialog(EditorDialog? value){
+    if (value == EditorDialog.Scene_Load){
+      GameNetwork.sendClientRequestCustomGameNames();
+    }
+  }
+
+  static void editorLoadScene() async {
+    final result = await FilePicker.platform.pickFiles();
+    if (result == null) return;
+    final contents = result.files[0].bytes;
+    if (contents == null) throw Exception("Load Scene Exception: selected file contents are null");
+    GameNetwork.sendClientRequest(ClientRequest.Editor_Load_Scene, utf8.decode(contents));
+  }
+
+  static void actionGameDialogShowSceneSave(){
+    GameEditor.editorDialog.value = EditorDialog.Scene_Save;
+  }
+
+  static void actionGameDialogClose(){
+    GameEditor.editorDialog.value = null;
   }
 }
