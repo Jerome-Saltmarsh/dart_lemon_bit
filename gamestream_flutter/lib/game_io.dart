@@ -5,10 +5,10 @@ import 'package:bleed_common/Direction.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/isometric/camera.dart';
+import 'package:gamestream_flutter/isometric/utils/convert.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch.dart';
 
-import 'isometric/utils/mouse.dart';
 import 'library.dart';
 
 
@@ -28,6 +28,9 @@ class GameIO {
   static var joystickLeftX = 0.0;
   static var joystickLeftY = 0.0;
   static var joystickLeftDown = false;
+
+  static double get mouseGridX => convertWorldToGridX(Engine.mouseWorldX, Engine.mouseWorldY) + GameState.player.z;
+  static double get mouseGridY => convertWorldToGridY(Engine.mouseWorldX, Engine.mouseWorldY) + GameState.player.z;
 
   static void detectInputMode() =>
     inputMode.value = Engine.deviceIsComputer
@@ -205,8 +208,13 @@ class GameIO {
 
     if (key == PhysicalKeyboardKey.digit5)
       return GameEditor.paintTorch();
-    if (key == PhysicalKeyboardKey.keyZ){
-      return GameState.spawnParticleFirePurple(x: mouseGridX, y: mouseGridY, z: GameState.player.z);
+    if (key == PhysicalKeyboardKey.keyZ) {
+      GameState.spawnParticleFirePurple(
+          x: mouseGridX,
+          y: mouseGridY,
+          z: GameState.player.z,
+      );
+      return;
     }
 
     if (GameState.playMode) {

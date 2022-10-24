@@ -1,7 +1,6 @@
 import 'package:bleed_common/GameType.dart';
 import 'package:bleed_common/Shade.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/isometric/utils/mouse.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_engine/engine.dart';
 
@@ -19,7 +18,7 @@ Widget buildHudDebug() =>
             children: [
               // _buildContainerMouseInfo(),
                 Refresh(() => text(
-                  "mouseGridX: ${mouseGridX.toInt()}, mouseGridY: ${mouseGridY.toInt()}, mousePlayerAngle: ${mousePlayerAngle.toStringAsFixed(1)}, mouseWorldX: ${Engine.mouseWorldX.toInt()}, mouseWorldY: ${Engine.mouseWorldY.toInt()}"
+                  "mouseGridX: ${GameIO.mouseGridX.toInt()}, mouseGridY: ${GameIO.mouseGridY.toInt()}, mouseWorldX: ${Engine.mouseWorldX.toInt()}, mouseWorldY: ${Engine.mouseWorldY.toInt()}"
                 )),
                 Refresh(() =>  text(
                   "player-position: x: ${GameState.player.x}, y: ${GameState.player.y}, z: ${GameState.player.z}\n"

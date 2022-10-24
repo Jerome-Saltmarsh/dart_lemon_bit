@@ -2,7 +2,7 @@
 import 'package:bleed_common/attack_type.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
-import 'package:gamestream_flutter/isometric/ui/classes/atlas_src.dart';
+import 'package:gamestream_flutter/classes/atlas_src.dart';
 import 'package:gamestream_flutter/isometric/ui/maps/map_attack_type_to_atlas_src.dart';
 
 import '../../../library.dart';

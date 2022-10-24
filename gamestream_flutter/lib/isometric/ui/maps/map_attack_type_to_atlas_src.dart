@@ -1,6 +1,6 @@
 
 import 'package:bleed_common/attack_type.dart';
-import 'package:gamestream_flutter/isometric/ui/classes/atlas_src.dart';
+import 'package:gamestream_flutter/classes/atlas_src.dart';
 
 const mapAttackTypeToAtlasSrc = {
   AttackType.Blade          : AtlasSrc (srcX: 11859, srcY: 164, width: 25, height: 25),
