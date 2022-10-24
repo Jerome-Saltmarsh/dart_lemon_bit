@@ -272,12 +272,12 @@ class GameEvents {
 
   static void onChangedEdit(bool value) {
     if (value) {
-      GameState.cameraModeSetFree();
+      GameCamera.setModeFree();
       GameEditor.cursorSetToPlayer();
       GameState.player.message.value = "-press arrow keys to move\n\n-press tab to play";
       GameState.player.messageTimer = 300;
     } else {
-      GameState.cameraModeSetChase();
+      GameCamera.setModeChase();
       if (GameState.sceneEditable.value){
         GameState.player.message.value = "press tab to edit";
       }

@@ -101,9 +101,6 @@ class GameState {
   static final ambientShade = Watch(Shade.Bright, onChanged: GameEvents.onChangedAmbientShade);
   static const nodesInitialSize = 70 * 70 * 8;
 
-  static const cameraModes = CameraMode.values;
-  static final cameraModeWatch = Watch(CameraMode.Chase);
-
   static final inventoryVisible = Watch(false, onChanged: GameEvents.onInventoryVisibleChanged);
 
   // WATCHES
@@ -1138,7 +1135,7 @@ class GameState {
     updateParticles();
     renderFrame.value++;
     interpolatePlayer();
-    updateCameraMode();
+    GameCamera.update();
     GameRender.renderSprites();
     renderEditMode();
     GameRender.renderMouseTargetName();
@@ -1172,25 +1169,6 @@ class GameState {
     playerCharacter.x += velocityX;
     playerCharacter.y += velocityY;
     playerCharacter.z -= velocityZ;
-  }
-
-  static void updateCameraMode() {
-    switch (cameraMode){
-      case CameraMode.Chase:
-        // TODO cameraFollowV3
-        // Engine.cameraFollow(GamePlayer.renderX, GamePlayer.renderY);
-        cameraFollowV3(GamePlayer.position, amount: 0.00075);
-        break;
-      case CameraMode.Locked:
-        cameraFollowV3(GamePlayer.position, amount: 1.0);
-        break;
-      case CameraMode.Free:
-        break;
-    }
-  }
-
-  static void cameraFollowV3(Vector3 v3, {double amount = 0.00075}){
-    Engine.cameraFollow(v3.renderX, v3.renderY, amount);
   }
 
   static void renderEditMode() {
@@ -1281,12 +1259,6 @@ class GameState {
     }
   }
 
-  static CameraMode get cameraMode => cameraModeWatch.value;
-
-  static set cameraMode(CameraMode value) {
-    cameraModeWatch.value = value;
-  }
-
   static void setNodeShade(int index, int shade) {
     if (shade < 0) {
       nodesShade[index] = 0;
@@ -1331,15 +1303,6 @@ class GameState {
       particle.z = emitter.z;
       emitter.emit(particle);
     }
-  }
-
-
-  static void cameraModeSetFree(){
-    cameraMode = CameraMode.Free;
-  }
-
-  static void cameraModeSetChase(){
-    cameraMode = CameraMode.Chase;
   }
 
   static void updateProjectiles() {
