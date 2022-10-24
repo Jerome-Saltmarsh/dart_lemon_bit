@@ -41,6 +41,7 @@ class Vector3 with Position {
      y > GameState.nodesLengthColumn ||
      z >= GameState.nodesLengthZ     ;
 
+  /// TODO Delete
   int getGridDistance(int z, int row, int column){
     var distance = (z - indexZ).abs();
     final distanceRow = (row - indexRow).abs();
@@ -65,6 +66,7 @@ class Vector3 with Position {
     return 'x: ${x.toInt()}, y: ${y.toInt()}, z: ${z.toInt()}';
   }
 
+  // TODO Delete
   double distance3(double x, double y, double z){
     return sqrt(_sq(this.x - x) + _sq(this.y - y) + _sq(this.z - z));
   }

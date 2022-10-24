@@ -185,7 +185,7 @@ class GameEditor {
     );
   }
 
-  static void cursorSetToPlayer() => nodeIndex.value = GameState.player.nodeIndex;
+  static void cursorSetToPlayer() => nodeIndex.value = GamePlayer.position.nodeIndex;
   static void cursorRowIncrease() => row++;
   static void cursorRowDecrease() => row--;
   static void cursorColumnIncrease() => column++;

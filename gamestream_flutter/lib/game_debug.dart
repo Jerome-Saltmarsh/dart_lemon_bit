@@ -25,9 +25,9 @@ class GameDebug {
                       "mouseGridX: ${GameIO.mouseGridX.toInt()}, mouseGridY: ${GameIO.mouseGridY.toInt()}, mouseWorldX: ${Engine.mouseWorldX.toInt()}, mouseWorldY: ${Engine.mouseWorldY.toInt()}"
                   )),
                   Refresh(() =>  text(
-                      "player-position: x: ${GameState.player.x}, y: ${GameState.player.y}, z: ${GameState.player.z}\n"
-                          "player-index: z: ${GameState.player.indexZ}, row: ${GameState.player.indexRow}, column: ${GameState.player.indexColumn}\n"
-                          "player-render: renderX: ${GameState.player.renderX}, renderY: ${GameState.player.renderY}, angle: ${GameState.player.angle}, mouseAngle: ${GameState.player.mouseAngle}"
+                      "player-position: x: ${GamePlayer.position.x}, y: ${GamePlayer.position.y}, z: ${GamePlayer.position.z}\n"
+                          "player-index: z: ${GamePlayer.position.indexZ}, row: ${GamePlayer.position.indexRow}, column: ${GamePlayer.position.indexColumn}\n"
+                          "player-render: renderX: ${GamePlayer.position.renderX}, renderY: ${GamePlayer.position.renderY}, angle: ${GameState.player.angle}, mouseAngle: ${GameState.player.mouseAngle}"
                   )),
                   watch(serverResponseReader.byteLength, (int bytes) => text('network-bytes: $bytes')),
                   watch(serverResponseReader.bufferSize, (int bufferSize) => text('network-buffer: $bufferSize')),

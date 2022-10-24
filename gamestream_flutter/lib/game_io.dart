@@ -23,8 +23,8 @@ class GameIO {
   static var joystickLeftY = 0.0;
   static var joystickLeftDown = false;
 
-  static double get mouseGridX => GameConvert.convertWorldToGridX(Engine.mouseWorldX, Engine.mouseWorldY) + GameState.player.z;
-  static double get mouseGridY => GameConvert.convertWorldToGridY(Engine.mouseWorldX, Engine.mouseWorldY) + GameState.player.z;
+  static double get mouseGridX => GameConvert.convertWorldToGridX(Engine.mouseWorldX, Engine.mouseWorldY) + GamePlayer.position.z;
+  static double get mouseGridY => GameConvert.convertWorldToGridY(Engine.mouseWorldX, Engine.mouseWorldY) + GamePlayer.position.z;
 
   static void detectInputMode() =>
     inputMode.value = Engine.deviceIsComputer
@@ -206,7 +206,7 @@ class GameIO {
       GameState.spawnParticleFirePurple(
           x: mouseGridX,
           y: mouseGridY,
-          z: GameState.player.z,
+          z: GamePlayer.position.z,
       );
       return;
     }

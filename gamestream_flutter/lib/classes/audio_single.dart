@@ -1,7 +1,5 @@
 
-import 'package:gamestream_flutter/classes/library.dart';
-import 'package:gamestream_flutter/game_audio.dart';
-import 'package:gamestream_flutter/game_state.dart';
+import 'package:gamestream_flutter/library.dart';
 import 'package:just_audio/just_audio.dart';
 
 class AudioSingle {
@@ -30,7 +28,7 @@ class AudioSingle {
   }
 
   void playXYZ(double x, double y, double z){
-    final distanceFromPlayer = GameState.player.distance3(x, y, z);
+    final distanceFromPlayer = GamePlayer.position.distance3(x, y, z);
     final distanceVolume = GameAudio.convertDistanceToVolume(
         distanceFromPlayer,
         maxDistance: maxDistance,

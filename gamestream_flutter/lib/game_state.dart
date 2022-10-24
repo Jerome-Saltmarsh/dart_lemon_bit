@@ -123,8 +123,8 @@ class GameState {
 
   static Character? getPlayerCharacter(){
     for (var i = 0; i < totalCharacters; i++){
-      if (characters[i].x != player.x) continue;
-      if (characters[i].y != player.y) continue;
+      if (characters[i].x != GamePlayer.position.x) continue;
+      if (characters[i].y != GamePlayer.position.y) continue;
       return characters[i];
     }
     return null;
@@ -366,8 +366,8 @@ class GameState {
   }
 
   static void clear() {
-    player.x = -1;
-    player.y = -1;
+    GamePlayer.position.x = -1;
+    GamePlayer.position.y = -1;
     totalZombies = 0;
     totalPlayers = 0;
     totalProjectiles = 0;
@@ -1166,9 +1166,9 @@ class GameState {
 
     final playerCharacter = getPlayerCharacter();
     if (playerCharacter == null) return;
-    final velocityX = player.x - player.previousPosition.x;
-    final velocityY = player.y - player.previousPosition.y;
-    final velocityZ = player.z - player.previousPosition.z;
+    final velocityX = GamePlayer.position.x - player.previousPosition.x;
+    final velocityY = GamePlayer.position.y - player.previousPosition.y;
+    final velocityZ = GamePlayer.position.z - player.previousPosition.z;
     playerCharacter.x += velocityX;
     playerCharacter.y += velocityY;
     playerCharacter.z -= velocityZ;
@@ -1177,14 +1177,20 @@ class GameState {
   static void updateCameraMode() {
     switch (cameraMode){
       case CameraMode.Chase:
-        Engine.cameraFollow(player.renderX, player.renderY, 0.00075);
+        // TODO cameraFollowV3
+        // Engine.cameraFollow(GamePlayer.renderX, GamePlayer.renderY);
+        cameraFollowV3(GamePlayer.position, amount: 0.00075);
         break;
       case CameraMode.Locked:
-        Engine.cameraFollow(player.renderX, player.renderY, 1.0);
+        cameraFollowV3(GamePlayer.position, amount: 1.0);
         break;
       case CameraMode.Free:
         break;
     }
+  }
+
+  static void cameraFollowV3(Vector3 v3, {double amount = 0.00075}){
+    Engine.cameraFollow(v3.renderX, v3.renderY, amount);
   }
 
   static void renderEditMode() {

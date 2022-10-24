@@ -50,8 +50,8 @@ void renderCharacterTemplate(Character character, {
     renderCharacterHealthBar(character);
   }
 
-  final dstX = GameRender.getRenderV3X(character);
-  final dstY = GameRender.getRenderV3Y(character);
+  final dstX = GameConvert.convertV3ToRenderX(character);
+  final dstY = GameConvert.convertV3ToRenderY(character);
   final color = GameState.getV3RenderColor(character);
 
   var frameLegs = 0;
@@ -143,8 +143,8 @@ void renderCharacterTemplate(Character character, {
     srcY: upperBodyDirection * 64,
     srcWidth: 64,
     srcHeight: 64,
-    dstX: GameRender.getRenderX(shadowX, shadowY, shadowZ),
-    dstY: GameRender.getRenderY(shadowX, shadowY, shadowZ),
+    dstX: GameConvert.getRenderX(shadowX, shadowY, shadowZ),
+    dstY: GameConvert.getRenderY(shadowX, shadowY, shadowZ),
     scale: 0.75,
     color: color,
     anchorY: 0.75,

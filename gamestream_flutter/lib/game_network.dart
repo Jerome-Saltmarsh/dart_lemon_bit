@@ -143,23 +143,23 @@ class GameNetwork {
     sink.add(message);
   }
 
-  static void _onEvent(dynamic _response) {
+  static void _onEvent(dynamic response) {
     if (connecting) {
       connectionStatus.value = ConnectionStatus.Connected;
     }
 
-    if (_response is Uint8List) {
-      return serverResponseReader.readBytes(_response);
+    if (response is Uint8List) {
+      return serverResponseReader.readBytes(response);
     }
-    if (_response is String){
-      if (_response.startsWith("scene:")){
-        final contents = _response.substring(6, _response.length);
+    if (response is String){
+      if (response.startsWith("scene:")){
+        final contents = response.substring(6, response.length);
         Engine.downloadString(contents: contents, filename: "hello.json");
       }
-      GameWebsite.error.value = _response;
+      GameWebsite.error.value = response;
       return;
     }
-    throw Exception("cannot parse response: $_response");
+    throw Exception("cannot parse response: $response");
   }
 
   static void _onError(Object error, StackTrace stackTrace) {

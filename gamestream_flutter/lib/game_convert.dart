@@ -1,6 +1,5 @@
 
-import 'package:bleed_common/library.dart';
-import 'package:lemon_engine/engine.dart';
+import 'library.dart';
 
 class GameConvert {
   static int distanceToShade(int distance, {
@@ -35,4 +34,10 @@ class GameConvert {
   static int convertWorldToColumn(double x, double y, double z) {
     return (y - x + z) ~/ tileSize;
   }
+
+  static double convertV3ToRenderX(Vector3 v3) => getRenderX(v3.x, v3.y, v3.z);
+  static double convertV3ToRenderY(Vector3 v3) => getRenderY(v3.x, v3.y, v3.z);
+
+  static double getRenderX(double x, double y, double z) => (x - y) * 0.5;
+  static double getRenderY(double x, double y, double z) => ((y + x) * 0.5) - z;
 }

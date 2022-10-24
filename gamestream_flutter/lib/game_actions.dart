@@ -55,7 +55,7 @@ class GameActions {
     }
   }
 
-  static void cameraCenterOnPlayer() => Engine.cameraCenter(GameState.player.renderX, GameState.player.renderY);
+
 
   static void actionSetModePlay(){
     GameState.edit.value = false;

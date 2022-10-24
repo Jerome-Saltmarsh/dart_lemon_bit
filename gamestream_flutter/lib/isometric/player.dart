@@ -4,7 +4,7 @@ import 'package:gamestream_flutter/services/mini_map.dart';
 
 import 'events/on_store_items_changed.dart';
 
-class Player extends Vector3 {
+class Player {
   final storeItems = Watch(<Weapon>[], onChanged: onPlayerStoreItemsChanged);
   final storeVisible = Watch(false, onChanged: GameEvents.onChangedStoreVisible);
   final interpolating = Watch(true);
@@ -46,12 +46,6 @@ class Player extends Vector3 {
   final wood = Watch(0);
   final stone = Watch(0);
   final gold = Watch(0);
-  final levelPickaxe = Watch(0);
-  final levelSword = Watch(0);
-  final levelBow = Watch(0);
-  final levelAxe = Watch(0);
-  final levelHammer = Watch(0);
-  final levelBag = Watch(0);
   final questsInProgress = Watch<List<Quest>>([], onChanged: onQuestsInProgressChanged);
   final questsCompleted = Watch<List<Quest>>([]);
 
@@ -60,8 +54,6 @@ class Player extends Vector3 {
   final weaponSlot1 = AttackSlot();
   final weaponSlot2 = AttackSlot();
   final weaponSlot3 = AttackSlot();
-
-  // final message = Watch("");
 
   // Properties
   bool get dead => !alive.value;

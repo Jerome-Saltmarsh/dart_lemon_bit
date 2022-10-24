@@ -260,10 +260,10 @@ class ServerResponseReader with ByteReader {
     final apiPlayer = readByte();
     switch (apiPlayer) {
       case ApiPlayer.Position:
-        GameState.player.previousPosition.x = GameState.player.x;
-        GameState.player.previousPosition.y = GameState.player.y;
-        GameState.player.previousPosition.z = GameState.player.z;
-        readVector3(GameState.player);
+        GameState.player.previousPosition.x = GamePlayer.position.x;
+        GameState.player.previousPosition.y = GamePlayer.position.y;
+        GameState.player.previousPosition.z = GamePlayer.position.z;
+        readVector3(GamePlayer.position);
         break;
       case ApiPlayer.Health:
         GameState.player.health.value = readInt();
@@ -493,9 +493,9 @@ class ServerResponseReader with ByteReader {
   }
 
   void readPlayerSpawned() {
-   GameState.player.x = readDouble();
-   GameState.player.y = readDouble();
-   GameActions.cameraCenterOnPlayer();
+   GamePlayer.position.x = readDouble();
+   GamePlayer.position.y = readDouble();
+   GameCamera.cameraCenterOnPlayer();
     Engine.zoom = 1.0;
     Engine.targetZoom = 1.0;
   }
@@ -510,14 +510,6 @@ class ServerResponseReader with ByteReader {
     final y = readDouble() - 5;
     final amount = readInt();
     GameState.spawnFloatingText(x, y, amount.toString());
-  }
-
-  void readTechTypes() {
-   GameState.player.levelPickaxe.value = readByte();
-   GameState.player.levelSword.value = readByte();
-   GameState.player.levelBow.value = readByte();
-   GameState.player.levelAxe.value = readByte();
-   GameState.player.levelHammer.value = readByte();
   }
 
   void readPlayerAttackTargetNone() {
