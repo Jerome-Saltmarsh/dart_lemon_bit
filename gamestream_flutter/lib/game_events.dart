@@ -6,8 +6,6 @@ import 'package:gamestream_flutter/isometric/events/on_player_event_quest_comple
 import 'package:gamestream_flutter/isometric/events/on_player_event_quest_started.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_x.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
-import 'package:gamestream_flutter/isometric/spawn/spawn_bubbles.dart';
-import 'package:gamestream_flutter/isometric/spawn/spawn_purple_fire_explosion.dart';
 import 'package:gamestream_flutter/isometric/variables/src_x_rain_falling.dart';
 import 'package:gamestream_flutter/isometric/variables/src_x_rain_landing.dart';
 import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
@@ -415,8 +413,8 @@ class GameEvents {
   }
 
   static void onCharacterDeath(int type, double x, double y, double z, double angle) {
-    spawnPurpleFireExplosion(x, y, z);
-    spawnBubbles(x, y, z);
+    GameSpawn.spawnPurpleFireExplosion(x, y, z);
+    GameSpawn.spawnBubbles(x, y, z);
 
     for (var i = 0; i < 4; i++){
       GameState.spawnParticleBlood(
