@@ -13,8 +13,6 @@ import 'package:gamestream_flutter/isometric/render/highlight_character_nearest_
 import 'package:gamestream_flutter/isometric/render/renderCharacter.dart';
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:gamestream_flutter/isometric/render/render_projectiles.dart';
-import 'package:gamestream_flutter/isometric/utils/convert.dart';
-import 'package:gamestream_flutter/isometric/utils/mouse_raycast.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
@@ -86,7 +84,7 @@ class GameRender {
   });
 
   static double get currentNodeRenderX => (currentNodeRow - currentNodeColumn) * tileSizeHalf;
-  static double get currentNodeRenderY => convertRowColumnZToY(currentNodeRow, currentNodeColumn, currentNodeZ);
+  static double get currentNodeRenderY => GameConvert.convertRowColumnZToRenderY(currentNodeRow, currentNodeColumn, currentNodeZ);
 
   static int get currentNodeShade => GameState.nodesShade[currentNodeIndex];
   static int get currentNodeColor => GameState.colorShades[currentNodeShade];
@@ -727,7 +725,7 @@ class GameRender {
   }
 
   static void renderMouseWireFrame() {
-    mouseRaycast(renderWireFrameBlue);
+    GameIO.mouseRaycast(renderWireFrameBlue);
   }
 
   static void renderMouseTargetName() {
@@ -896,9 +894,9 @@ class GameRender {
     screenLeft = Engine.screen.left - tileSize;
     screenTop = Engine.screen.top - 72;
     screenBottom = Engine.screen.bottom + 72;
-    var screenTopLeftColumn = convertWorldToColumn(screenLeft, screenTop, 0);
-    nodesScreenBottomRightRow = clamp(convertWorldToRow(screenRight, screenBottom, 0), 0, GameState.nodesTotalRows - 1);
-    nodesScreenTopLeftRow = convertWorldToRow(screenLeft, screenTop, 0);
+    var screenTopLeftColumn = GameConvert.convertWorldToColumn(screenLeft, screenTop, 0);
+    nodesScreenBottomRightRow = clamp(GameConvert.convertWorldToRow(screenRight, screenBottom, 0), 0, GameState.nodesTotalRows - 1);
+    nodesScreenTopLeftRow = GameConvert.convertWorldToRow(screenLeft, screenTop, 0);
 
     if (nodesScreenTopLeftRow < 0){
       screenTopLeftColumn += nodesScreenTopLeftRow;
@@ -1018,7 +1016,7 @@ class GameRender {
   // otherwise use totalZ;
   // calculate the world position Y at row / column, then workout its distance from the top of the screen;
   static void nodesCalculateMinMaxZ(){
-    final bottom = convertRowColumnToY(currentNodeRow, currentNodeColumn);
+    final bottom = GameConvert.convertRowColumnToRenderY(currentNodeRow, currentNodeColumn);
     final distance =  bottom - screenTop;
     nodesMaxZ = (distance ~/ tileHeight);
     if (nodesMaxZ > nodesGridTotalZMinusOne){
@@ -1028,7 +1026,7 @@ class GameRender {
       nodesMaxZ = 0;
     }
 
-    while (convertRowColumnZToY(currentNodeRow, currentNodeColumn, nodesMinZ) > screenBottom){
+    while (GameConvert.convertRowColumnZToRenderY(currentNodeRow, currentNodeColumn, nodesMinZ) > screenBottom){
       nodesMinZ++;
       if (nodesMinZ >= GameState.nodesTotalZ){
         return renderOrderGrid.end();
@@ -1037,7 +1035,7 @@ class GameRender {
   }
 
   static int get countLeftOffscreen {
-    final x = convertRowColumnToX(currentNodeRow, currentNodeColumn);
+    final x = GameConvert.convertRowColumnToRenderX(currentNodeRow, currentNodeColumn);
     if (Engine.screen.left < x) return 0;
     final diff = Engine.screen.left - x;
     return diff ~/ tileSize;

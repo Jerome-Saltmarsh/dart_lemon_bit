@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
-import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/engine.dart';
@@ -27,7 +26,7 @@ Widget buildPanelMenu() =>
     );
 
 Widget buildButtonTogglePlayMode() {
-  return watch(sceneEditable, (bool isOwner) {
+  return watch(GameState.sceneEditable, (bool isOwner) {
     if (!isOwner) return const SizedBox();
     return watch(GameState.edit, (bool edit) {
       return container(

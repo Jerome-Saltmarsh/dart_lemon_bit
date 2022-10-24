@@ -11,7 +11,6 @@ import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-import 'isometric/watches/scene_meta_data.dart';
 import 'library.dart';
 
 class GameNetwork {
@@ -213,7 +212,7 @@ class GameNetwork {
         Engine.fullScreenExit();
         GameState.clear();
         GameState.gameType.value = null;
-        sceneEditable.value = false;
+        GameState.sceneEditable.value = false;
         break;
       case ConnectionStatus.Failed_To_Connect:
         GameWebsite.error.value = "Failed to connect";

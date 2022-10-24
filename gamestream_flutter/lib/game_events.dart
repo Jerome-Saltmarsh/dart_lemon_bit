@@ -6,9 +6,6 @@ import 'package:gamestream_flutter/isometric/events/on_player_event_quest_comple
 import 'package:gamestream_flutter/isometric/events/on_player_event_quest_started.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_x.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
-import 'package:gamestream_flutter/isometric/variables/src_x_rain_falling.dart';
-import 'package:gamestream_flutter/isometric/variables/src_x_rain_landing.dart';
-import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_engine/engine.dart';
 
@@ -284,7 +281,7 @@ class GameEvents {
       GameState.player.messageTimer = 300;
     } else {
       GameState.cameraModeSetChase();
-      if (sceneEditable.value){
+      if (GameState.sceneEditable.value){
         GameState.player.message.value = "press tab to edit";
       }
     }
@@ -301,12 +298,12 @@ class GameEvents {
       case Rain.None:
         break;
       case Rain.Light:
-        srcXRainFalling = AtlasSrcX.Node_Rain_Falling_Light_X;
-        srcXRainLanding = AtlasSrcX.Node_Rain_Landing_Light_X;
+        GameState.srcXRainFalling = AtlasSrcX.Node_Rain_Falling_Light_X;
+        GameState.srcXRainLanding = AtlasSrcX.Node_Rain_Landing_Light_X;
         break;
       case Rain.Heavy:
-        srcXRainFalling = AtlasSrcX.Node_Rain_Falling_Heavy_X;
-        srcXRainLanding = AtlasSrcX.Node_Rain_Landing_Heavy_X;
+        GameState.srcXRainFalling = AtlasSrcX.Node_Rain_Falling_Heavy_X;
+        GameState.srcXRainLanding = AtlasSrcX.Node_Rain_Landing_Heavy_X;
         break;
     }
   }

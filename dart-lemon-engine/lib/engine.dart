@@ -156,6 +156,8 @@ class Engine {
   static set backgroundColor(Color value) => watchBackgroundColor.value = value;
 
   // GETTERS
+  static double get screenCenterRenderX => (screen.left + screen.right) * 0.5;
+
   static double get screenDiagonalLength => calculateHypotenuse(screen.width, screen.height);
   static double get screenArea => screen.width * screen.height;
   static WidgetBuilder? get buildUI => watchBuildUI.value;

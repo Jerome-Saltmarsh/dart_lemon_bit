@@ -4,12 +4,9 @@ import 'package:bleed_common/library.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:gamestream_flutter/isometric/camera.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_scene_meta_data_player_is_owner.dart';
-import 'package:gamestream_flutter/isometric/utils/convert.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch.dart';
-
-import 'isometric/utils/mouse_raycast.dart';
 
 class GameEditor {
   static final editorDialog = Watch<EditorDialog?>(null, onChanged: onChangedEditorDialog);
@@ -75,9 +72,6 @@ class GameEditor {
   static double get posY => column * tileSize + tileSizeHalf;
   static double get posZ => z * tileHeight;
 
-  static double get renderX => projectX(posX, posY);
-  static double get renderY => projectY(posX, posY, posZ);
-
   static void refreshNodeSelectedIndex(){
     nodeSelectedType.value = GameState.nodesType[nodeIndex.value];
     nodeSelectedOrientation.value = GameState.nodesOrientation[nodeIndex.value];
@@ -114,7 +108,7 @@ class GameEditor {
   }
 
   static void selectMouseBlock(){
-    mouseRaycast(selectBlock);
+    GameIO.mouseRaycast(selectBlock);
   }
 
   static void selectMouseGameObject(){

@@ -1,7 +1,6 @@
 
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/classes/audio_single.dart';
-import 'package:gamestream_flutter/isometric/utils/screen_utils.dart';
 import 'package:lemon_engine/engine.dart';
 
 import 'lemon_cache/cache.dart';
@@ -143,10 +142,10 @@ class GameAudio {
   }
 
   static double getVolumeTargetWind() {
-    final windLineDistance = (screenCenterRenderX - GameQueries.windLineRenderX).abs();
+    final windLineDistance = (Engine.screenCenterRenderX - GameQueries.windLineRenderX).abs();
     final windLineDistanceVolume = convertDistanceToVolume(windLineDistance, maxDistance: 300);
     var target = 0.0;
-    if (GameQueries.windLineRenderX - 250 <= screenCenterRenderX) {
+    if (GameQueries.windLineRenderX - 250 <= Engine.screenCenterRenderX) {
       target += windLineDistanceVolume;
     }
     final index = GameState.windAmbient.value.index;

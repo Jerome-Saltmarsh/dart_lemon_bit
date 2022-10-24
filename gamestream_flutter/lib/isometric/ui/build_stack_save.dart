@@ -1,7 +1,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
-import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_watch/watch.dart';
 
@@ -12,7 +11,7 @@ final sceneNameController = TextEditingController()..addListener(onSceneNamedCha
 final enteredSceneNameText = Watch("");
 
 Widget buildControlSceneName(){
-  return watch(sceneMetaDataSceneName, (String? sceneName){
+  return watch(GameState.sceneMetaDataSceneName, (String? sceneName){
       if (sceneName == null || sceneName.trim().isEmpty) {
         return Container(
           padding: const EdgeInsets.all(24),

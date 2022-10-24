@@ -1,11 +1,10 @@
 
 import 'dart:math';
 
-import 'package:bleed_common/Direction.dart';
+import 'package:bleed_common/library.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/isometric/camera.dart';
-import 'package:gamestream_flutter/isometric/utils/convert.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch.dart';
 
@@ -13,7 +12,6 @@ import 'library.dart';
 
 
 class GameIO {
-  // STATE
   static var touchPanning = false;
   static var touchscreenDirection = Direction.None;
   static var touchscreenRadian = 0.0;
@@ -29,8 +27,8 @@ class GameIO {
   static var joystickLeftY = 0.0;
   static var joystickLeftDown = false;
 
-  static double get mouseGridX => convertWorldToGridX(Engine.mouseWorldX, Engine.mouseWorldY) + GameState.player.z;
-  static double get mouseGridY => convertWorldToGridY(Engine.mouseWorldX, Engine.mouseWorldY) + GameState.player.z;
+  static double get mouseGridX => GameConvert.convertWorldToGridX(Engine.mouseWorldX, Engine.mouseWorldY) + GameState.player.z;
+  static double get mouseGridY => GameConvert.convertWorldToGridY(Engine.mouseWorldX, Engine.mouseWorldY) + GameState.player.z;
 
   static void detectInputMode() =>
     inputMode.value = Engine.deviceIsComputer
@@ -323,5 +321,31 @@ class GameIO {
     return;
   }
 
+  static void mouseRaycast(Function(int z, int row, int column) callback){
+    var z = GameState.nodesTotalZ - 1;
+    while (z >= 0){
+      final row = GameConvert.convertWorldToRow(Engine.mouseWorldX, Engine.mouseWorldY, z * tileHeight);
+      final column = GameConvert.convertWorldToColumn(Engine.mouseWorldX, Engine.mouseWorldY, z * tileHeight);
+      if (row < 0) break;
+      if (column < 0) break;
+      if (row >= GameState.nodesTotalRows) break;
+      if (column >= GameState.nodesTotalColumns) break;
+      if (z >= GameState.nodesTotalZ) break;
+      final index = GameState.getNodeIndexZRC(z, row, column);
+      if (GameState.nodesType[index] == NodeType.Empty
+          ||
+          NodeType.isRain(GameState.nodesType[index])
+      ) {
+        z--;
+        continue;
+      }
+      if (!GameState.nodesVisible[index]) {
+        z--;
+        continue;
+      }
+      callback(z, row, column);
+      return;
+    }
+  }
 
 }

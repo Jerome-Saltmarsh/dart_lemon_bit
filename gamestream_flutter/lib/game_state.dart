@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/isometric/events/on_changed_meta_data_player_is_owner.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_raining.dart';
 import 'package:gamestream_flutter/isometric/grid_state_util.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
@@ -15,10 +16,14 @@ import 'package:lemon_watch/watch.dart';
 
 import 'isometric/animation_frame.dart';
 import 'isometric/events/on_inventory_visible_changed.dart';
-import 'isometric/variables/next_lightning.dart';
 import 'library.dart';
 
 class GameState {
+  static final sceneMetaDataSceneName = Watch<String?>(null);
+  static final sceneEditable = Watch(false, onChanged: onChangedSceneEditable);
+  static var srcXRainFalling = 6640.0;
+  static var srcXRainLanding = 6739.0;
+  static var nextLightning = 0;
   static final watchTimePassing = Watch(false);
   static final debugVisible = Watch(false);
   static final rain = Watch(Rain.None, onChanged: GameEvents.onChangedRain);

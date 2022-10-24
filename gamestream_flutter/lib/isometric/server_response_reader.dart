@@ -7,7 +7,6 @@ import 'package:bleed_common/game_option.dart';
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/quest.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_scene.dart';
-import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_engine/engine.dart';
@@ -462,8 +461,8 @@ class ServerResponseReader with ByteReader {
   }
 
   void readSceneMetaData() {
-    sceneEditable.value = readBool();
-    sceneMetaDataSceneName.value = readString();
+    GameState.sceneEditable.value = readBool();
+    GameState.sceneMetaDataSceneName.value = readString();
   }
 
   void readWeather() {

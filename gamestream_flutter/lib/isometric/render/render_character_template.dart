@@ -3,36 +3,15 @@ import 'dart:typed_data';
 
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_size.dart';
-import 'package:gamestream_flutter/isometric/utils/convert.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 
 import '../../library.dart';
 import 'render_character_health_bar.dart';
 
-void renderLine(double x, double y, double z, double angle, double distance) {
-  final x2 = x + getAdjacent(angle, distance);
-  final y2 = y + getOpposite(angle, distance);
-  Engine.drawLine(
-    projectX(x, y),
-    projectY(x, y, z),
-    projectX(x2, y2),
-    projectY(x2, y2, z),
-  );
-}
-
 void renderArrow(double x, double y, double z, double angle) {
   x += getAdjacent(angle, 30);
   y += getOpposite(angle, 30);
-  // renderRotated(
-  //   dstX: projectX(x, y),
-  //   dstY: projectY(x, y, z),
-  //   srcX: 128,
-  //   srcY: 0,
-  //   srcWidth: 32,
-  //   srcHeight: 32,
-  //   rotation: angle + pi3Quarters,
-  // );
 }
 
 bool weaponIs96(int weapon) =>
