@@ -8,7 +8,6 @@ import 'package:bleed_common/library.dart';
 import 'package:bleed_common/quest.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_scene.dart';
 import 'package:gamestream_flutter/isometric/floating_texts.dart';
-import 'package:gamestream_flutter/isometric/io/custom_game_names.dart';
 import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
 import 'package:gamestream_flutter/isometric/weather/time_passing.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -166,9 +165,6 @@ class ServerResponseReader with ByteReader {
           break;
         case ServerResponse.Weather:
           readWeather();
-          break;
-        case ServerResponse.Custom_Game_Names:
-          readCustomGameNames();
           break;
         case ServerResponse.Scene_Meta_Data:
           readSceneMetaData();
@@ -471,15 +467,6 @@ class ServerResponseReader with ByteReader {
   void readSceneMetaData() {
     sceneEditable.value = readBool();
     sceneMetaDataSceneName.value = readString();
-  }
-
-  void readCustomGameNames() {
-    final length = readInt();
-    final list = <String>[];
-    for (var i = 0; i < length; i++) {
-      list.add(readString());
-    }
-    customGameNames.value = list;
   }
 
   void readWeather() {

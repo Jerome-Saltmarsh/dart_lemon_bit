@@ -33,7 +33,6 @@ class ServerResponse {
   static const Store_Items = 66;
   static const Player_Attack_Target_Name = 77;
   static const Weather = 78;
-  static const Custom_Game_Names = 79;
   static const Scene_Meta_Data = 80;
   static const Player_Debug = 82;
   static const Npc_Talk = 83;

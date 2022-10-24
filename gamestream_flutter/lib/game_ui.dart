@@ -58,7 +58,6 @@ class GameUI {
             ),
             buildWatchBool(GameState.triggerAlarmNoMessageReceivedFromServer, buildDialogFramesSinceUpdate),
             watch(GameState.gameType, buildGameTypeUI),
-            watch(GameEditor.editorDialog, buildWatchEditorDialog),
             watch(GameState.player.gameDialog, buildGameDialog),
             buildWatchBool(GameState.player.alive, buildContainerRespawn, false),
             buildTopRightMenu(),

@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_button_game_dialog_close.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
-import 'package:gamestream_flutter/isometric/ui/dialogs/build_editor_dialog.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_engine/engine.dart';
 
@@ -27,7 +26,6 @@ Widget buildWatchEditorDialog(EditorDialog? activeEditorDialog){
               ],
             ),
             height8,
-            buildEditorDialog(activeEditorDialog),
           ],
         )),
   );
