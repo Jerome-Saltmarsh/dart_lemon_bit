@@ -1,7 +1,7 @@
 import 'package:bleed_common/library.dart';
 import 'package:flutter/services.dart';
-import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/isometric/watches/debug_visible.dart';
+import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_engine/engine.dart';
 
 void readPlayerInput() {

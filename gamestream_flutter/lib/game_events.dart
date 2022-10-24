@@ -6,13 +6,14 @@ import 'package:gamestream_flutter/isometric/events/on_player_event_quest_comple
 import 'package:gamestream_flutter/isometric/events/on_player_event_quest_started.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_x.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
+import 'package:gamestream_flutter/isometric/spawn/spawn_bubbles.dart';
+import 'package:gamestream_flutter/isometric/spawn/spawn_purple_fire_explosion.dart';
 import 'package:gamestream_flutter/isometric/variables/src_x_rain_falling.dart';
 import 'package:gamestream_flutter/isometric/variables/src_x_rain_landing.dart';
 import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_engine/engine.dart';
 
-import 'isometric/events/on_character_death.dart';
 import 'isometric/events/on_character_hurt.dart';
 import 'isometric/watches/raining.dart';
 
@@ -186,7 +187,7 @@ class GameEvents {
 
       case GameEventType.Character_Death:
         final characterType = serverResponseReader.readByte();
-        return onGameEventCharacterDeath(characterType, x, y, z, angle);
+        return onCharacterDeath(characterType, x, y, z, angle);
 
       case GameEventType.Character_Hurt:
         final characterType = serverResponseReader.readByte();
@@ -412,5 +413,65 @@ class GameEvents {
         GameAudio.bow_draw();
         break;
     }
+  }
+
+  static void onCharacterDeath(int type, double x, double y, double z, double angle) {
+    spawnPurpleFireExplosion(x, y, z);
+    spawnBubbles(x, y, z);
+
+    for (var i = 0; i < 4; i++){
+      GameState.spawnParticleBlood(
+        x: x,
+        y: y,
+        z: z,
+        zv: Engine.randomBetween(1.5, 2),
+        angle: angle + Engine.PI + Engine.randomGiveOrTake(Engine.PI_Quarter),
+        speed: Engine.randomBetween(1.5, 2.5),
+      );
+    }
+
+    switch (type) {
+      case CharacterType.Zombie:
+        return onCharacterDeathZombie(type, x, y, z, angle);
+    }
+  }
+
+  static void onCharacterDeathZombie(int type, double x, double y, double z, double angle){
+    GameState.spawnParticleAnimation(
+      type: Engine.randomItem(
+          const [
+            ParticleType.Character_Animation_Death_Zombie_1,
+            ParticleType.Character_Animation_Death_Zombie_2,
+            ParticleType.Character_Animation_Death_Zombie_3,
+          ]
+      ),
+      x: x,
+      y: y,
+      z: z,
+      angle: angle,
+    );
+    angle += Engine.PI;
+    final zPos = z + tileSizeHalf;
+    GameState.spawnParticleHeadZombie(x: x, y: y, z: zPos, angle: angle, speed: 4.0);
+    GameState.spawnParticleArm(
+        x: x,
+        y: y,
+        z: zPos,
+        angle: angle + Engine.randomGiveOrTake(0.5),
+        speed: 4.0 + Engine.randomGiveOrTake(0.5));
+    GameState.spawnParticleLegZombie(
+        x: x,
+        y: y,
+        z: zPos,
+        angle: angle + Engine.randomGiveOrTake(0.5),
+        speed: 4.0 + Engine.randomGiveOrTake(0.5));
+    GameState.spawnParticleOrgan(
+        x: x,
+        y: y,
+        z: zPos,
+        angle: angle + Engine.randomGiveOrTake(0.5),
+        speed: 4.0 + Engine.randomGiveOrTake(0.5),
+        zv: 0.1);
+    Engine.randomItem(GameAudio.zombie_deaths).playXYZ(x, y, z);
   }
 }

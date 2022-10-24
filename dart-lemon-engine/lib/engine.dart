@@ -182,6 +182,7 @@ class Engine {
   static const Default_Title = "DEMO";
   // CONSTANTS
   static const Milliseconds_Per_Second = 1000;
+  static const PI = pi;
   static const PI_2 = pi + pi;
   static const PI_Half = pi * 0.5;
   static const PI_Quarter = pi * 0.25;
