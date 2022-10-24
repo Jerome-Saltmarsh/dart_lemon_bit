@@ -2,7 +2,6 @@ import 'dart:typed_data';
 
 import 'package:bleed_common/edit_request.dart';
 import 'package:bleed_common/gameobject_request.dart';
-import 'package:bleed_common/library.dart';
 import 'package:bleed_common/request_modify_canvas_size.dart';
 import 'package:bleed_common/teleport_scenes.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';

@@ -1,8 +1,7 @@
 
 
-import 'package:bleed_common/library.dart';
+import 'package:gamestream_flutter/library.dart';
 
-import '../../library.dart';
 import 'render_character_health_bar.dart';
 import 'src_utils.dart';
 
