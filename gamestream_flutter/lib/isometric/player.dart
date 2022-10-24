@@ -1,5 +1,4 @@
 import 'package:bleed_common/quest.dart';
-import 'package:gamestream_flutter/isometric/events/on_changed_player_designed.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_player_message.dart';
 import 'package:gamestream_flutter/isometric/events/on_quests_in_progress_changed.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -33,7 +32,6 @@ class Player extends Vector3 {
   final pantsType = Watch(LegType.white);
   final equippedLevel = Watch(0);
   final health = Watch(0);
-  final designed = Watch(true, onChanged: onChangedPlayerDesigned);
   final experience = Watch(0.0);
   final level = Watch(1);
   final points = Watch(0);

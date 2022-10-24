@@ -2,7 +2,6 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/isometric/events/on_changed_meta_data_player_is_owner.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_raining.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
@@ -13,7 +12,7 @@ import 'library.dart';
 
 class GameState {
   static final sceneMetaDataSceneName = Watch<String?>(null);
-  static final sceneEditable = Watch(false, onChanged: onChangedSceneEditable);
+  static final sceneEditable = Watch(false);
   static var srcXRainFalling = 6640.0;
   static var srcXRainLanding = 6739.0;
   static var nextLightning = 0;

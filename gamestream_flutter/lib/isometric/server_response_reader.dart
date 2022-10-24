@@ -450,10 +450,6 @@ class ServerResponseReader with ByteReader {
    GameState.player.npcTalkOptions.value = options;
   }
 
-  void readPlayerDesigned() {
-   GameState.player.designed.value = readBool();
-  }
-
   void readSceneMetaData() {
     GameState.sceneEditable.value = readBool();
     GameState.sceneMetaDataSceneName.value = readString();
