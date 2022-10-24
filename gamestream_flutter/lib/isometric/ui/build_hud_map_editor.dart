@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/isometric/light_mode.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -173,14 +172,14 @@ Widget buildButtonBreeze() => watch(GameState.weatherBreeze, (bool weatherBreeze
       );
     });
 
-Widget buildToggleLightMode() {
-  return watch(lightModeRadial, (bool radial) {
-    return container(
-      child: radial ? "Radial" : "Square",
-      action: toggleLightMode,
-    );
-  });
-}
+// Widget buildToggleLightMode() {
+//   return watch(lightModeRadial, (bool radial) {
+//     return container(
+//       child: radial ? "Radial" : "Square",
+//       action: toggleLightMode,
+//     );
+//   });
+// }
 
 Widget buildControlTime() {
   const totalWidth = 300.0;

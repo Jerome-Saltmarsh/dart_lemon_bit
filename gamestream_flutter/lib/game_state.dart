@@ -9,7 +9,6 @@ import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/render/render_circle.dart';
 import 'package:lemon_math/library.dart';
 
-import 'isometric/animation_frame.dart';
 import 'library.dart';
 
 class GameState {
@@ -1229,7 +1228,7 @@ class GameState {
   static void update() {
     // updateGameActions();
 
-    updateAnimationFrame();
+    GameAnimation.updateAnimationFrame();
     updateParticleEmitters();
     updateProjectiles();
     GameAudio.update();

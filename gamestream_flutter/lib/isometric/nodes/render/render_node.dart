@@ -1,6 +1,5 @@
 
 import 'package:bleed_common/node_size.dart';
-import 'package:gamestream_flutter/isometric/animation_frame.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_x.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/render_node_bau_haus.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/render_node_wood.dart';
@@ -69,11 +68,11 @@ void renderNodeAt() {
       Engine.renderSprite(
         image: GameImages.nodes,
         srcX: AtlasSrcX.Node_Water_X,
-        srcY: AtlasSrcX.Node_Water_Y + (((animationFrameWater + ((GameRender.currentNodeRow + GameRender.currentNodeColumn) * 3)) % 10) * 72.0),
+        srcY: AtlasSrcX.Node_Water_Y + (((GameAnimation.animationFrameWater + ((GameRender.currentNodeRow + GameRender.currentNodeColumn) * 3)) % 10) * 72.0),
         srcWidth: spriteWidth,
         srcHeight: spriteHeight,
         dstX: GameRender.currentNodeDstX,
-        dstY: GameRender.currentNodeDstY + animationFrameWaterHeight + 14,
+        dstY: GameRender.currentNodeDstY + GameAnimation.animationFrameWaterHeight + 14,
         anchorY: 0.3334,
         color: renderNodeColor,
       );
@@ -92,7 +91,7 @@ void renderNodeAt() {
       );
       break;
     case NodeType.Tree_Top:
-      var shift = treeAnimation[((GameRender.currentNodeRow - GameRender.currentNodeColumn) + animationFrame) % treeAnimation.length] * renderNodeWind;
+      var shift = GameAnimation.treeAnimation[((GameRender.currentNodeRow - GameRender.currentNodeColumn) + GameAnimation.animationFrame) % GameAnimation.treeAnimation.length] * renderNodeWind;
       Engine.renderSprite(
         image: GameImages.nodes,
         srcX: AtlasSrcX.Node_Tree_Top_X,
@@ -114,7 +113,7 @@ void renderNodeAt() {
           return;
         default:
           renderStandardNode(
-              srcX: AtlasSrcX.Node_Grass_Long + ((((GameRender.currentNodeRow - GameRender.currentNodeColumn) + animationFrameGrass) % 6) * 48),
+              srcX: AtlasSrcX.Node_Grass_Long + ((((GameRender.currentNodeRow - GameRender.currentNodeColumn) + GameAnimation.animationFrameGrass) % 6) * 48),
               srcY: spriteHeight * renderNodeShade,
           );
           return;
@@ -122,7 +121,7 @@ void renderNodeAt() {
     case NodeType.Rain_Falling:
         renderStandardNodeShaded(
         srcX: GameState.srcXRainFalling,
-        srcY: 72.0 * ((animationFrame + GameRender.currentNodeRow + GameRender.currentNodeColumn) % 6),
+        srcY: 72.0 * ((GameAnimation.animationFrame + GameRender.currentNodeRow + GameRender.currentNodeColumn) % 6),
       );
       return;
     case NodeType.Rain_Landing:
@@ -130,11 +129,11 @@ void renderNodeAt() {
         Engine.renderSprite(
           image: GameImages.nodes,
           srcX: AtlasSrcX.Node_Rain_Landing_Water_X,
-          srcY: 72.0 * ((animationFrame + GameRender.currentNodeRow + GameRender.currentNodeColumn) % 10),
+          srcY: 72.0 * ((GameAnimation.animationFrame + GameRender.currentNodeRow + GameRender.currentNodeColumn) % 10),
           srcWidth: spriteWidth,
           srcHeight: spriteHeight,
           dstX: GameRender.currentNodeDstX,
-          dstY: GameRender.currentNodeDstY + animationFrameWaterHeight + 14,
+          dstY: GameRender.currentNodeDstY + GameAnimation.animationFrameWaterHeight + 14,
           anchorY: 0.3,
           color: GameRender.currentNodeColor,
         );
@@ -142,7 +141,7 @@ void renderNodeAt() {
       }
       renderStandardNodeShaded(
         srcX: GameState.srcXRainLanding,
-        srcY: 72.0 * ((animationFrame + GameRender.currentNodeRow + GameRender.currentNodeColumn) % 6),
+        srcY: 72.0 * ((GameAnimation.animationFrame + GameRender.currentNodeRow + GameRender.currentNodeColumn) % 6),
       );
       return;
     case NodeType.Stone:
@@ -178,7 +177,7 @@ void renderNodeAt() {
     case NodeType.Fireplace:
       renderStandardNode(
         srcX: AtlasSrcX.Node_Campfire_X,
-        srcY: AtlasSrcX.Node_Campfire_Y + ((animationFrame % 6) * 72),
+        srcY: AtlasSrcX.Node_Campfire_Y + ((GameAnimation.animationFrame % 6) * 72),
       );
       return;
     case NodeType.Boulder:

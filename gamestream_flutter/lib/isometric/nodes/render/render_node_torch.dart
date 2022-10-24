@@ -1,5 +1,4 @@
 
-import 'package:gamestream_flutter/isometric/animation_frame.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_x.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -21,7 +20,7 @@ void renderNodeTorch(){
     Engine.renderSprite(
       image: GameImages.nodes,
       srcX: AtlasSrcX.Node_Torch_X,
-      srcY: AtlasSrcX.Node_Torch_Y + AtlasSrcX.Node_Torch_Height + (((GameRender.currentNodeRow + (animationFrame)) % 6) * AtlasSrcX.Node_Torch_Height),
+      srcY: AtlasSrcX.Node_Torch_Y + AtlasSrcX.Node_Torch_Height + (((GameRender.currentNodeRow + (GameAnimation.animationFrame)) % 6) * AtlasSrcX.Node_Torch_Height),
       srcWidth: AtlasSrcX.Node_Torch_Width,
       srcHeight: AtlasSrcX.Node_Torch_Height,
       dstX: GameRender.currentNodeDstX,
@@ -32,7 +31,7 @@ void renderNodeTorch(){
   Engine.renderSprite(
     image: GameImages.nodes,
     srcX: AtlasSrcX.Node_Torch_Windy_X,
-    srcY: AtlasSrcX.Node_Torch_Windy_Y + AtlasSrcX.Node_Torch_Height + (((GameRender.currentNodeRow + (animationFrame)) % 6) * AtlasSrcX.Node_Torch_Height),
+    srcY: AtlasSrcX.Node_Torch_Windy_Y + AtlasSrcX.Node_Torch_Height + (((GameRender.currentNodeRow + (GameAnimation.animationFrame)) % 6) * AtlasSrcX.Node_Torch_Height),
     srcWidth: AtlasSrcX.Node_Torch_Width,
     srcHeight: AtlasSrcX.Node_Torch_Height,
     dstX: GameRender.currentNodeDstX,

@@ -2,7 +2,6 @@ import 'dart:math';
 import 'dart:ui' as ui;
 
 import 'package:bleed_common/node_size.dart';
-import 'package:gamestream_flutter/isometric/animation_frame.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_gameobjects.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/render_constants.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/render_node.dart';
@@ -716,7 +715,7 @@ class GameRender {
         gameObject.x,
         gameObject.y,
         gameObject.z - 15,
-        scale: shadowScale + (shadowScaleHeight * animationFrameWaterHeight.toDouble())
+        scale: shadowScale + (shadowScaleHeight * GameAnimation.animationFrameWaterHeight.toDouble())
     );
   }
 
@@ -1043,7 +1042,7 @@ class GameRender {
   static double getRenderX(double x, double y, double z) => (x - y) * 0.5;
   static double getRenderY(double x, double y, double z) => ((y + x) * 0.5) - z;
 
-  static double getRenderYBouncing(Vector3 v3) => ((v3.y + v3.x) * 0.5) - v3.z + animationFrameWaterHeight;
+  static double getRenderYBouncing(Vector3 v3) => ((v3.y + v3.x) * 0.5) - v3.z + GameAnimation.animationFrameWaterHeight;
 
   static void renderTextV3(Vector3 v3, dynamic text, {double offsetY = 0}){
     renderText(
