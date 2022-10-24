@@ -1,7 +1,8 @@
 import 'library.dart';
 
+
 class GameCamera {
-  static final cameraModeWatch = Watch(CameraMode.Chase);
+  static final chaseTarget = Watch(true);
   static var followStrength = 0.00075;
 
   static void centerOnPlayer() => centerOnV3(GamePlayer.position);
@@ -16,32 +17,20 @@ class GameCamera {
   }
 
   static void update() {
-    switch (cameraMode) {
-      case CameraMode.Chase:
-        GameCamera.cameraFollowV3(
-            target:GamePlayer.position,
-            strength: GameCamera.followStrength
-        );
-        break;
-      case CameraMode.Locked:
-        GameCamera.cameraFollowV3(target: GamePlayer.position, strength: 1.0);
-        break;
-      case CameraMode.Free:
-        break;
+    if (chaseTarget.value) {
+      cameraFollowV3(
+          target:GamePlayer.position,
+          strength: GameCamera.followStrength
+      );
     }
-  }
-  static CameraMode get cameraMode => cameraModeWatch.value;
-
-  static set cameraMode(CameraMode value) {
-    cameraModeWatch.value = value;
   }
 
   static void setModeFree(){
-    cameraMode = CameraMode.Free;
+    chaseTarget.value = false;
   }
 
   static void setModeChase(){
-    cameraMode = CameraMode.Chase;
+    chaseTarget.value = true;
   }
 }
 
