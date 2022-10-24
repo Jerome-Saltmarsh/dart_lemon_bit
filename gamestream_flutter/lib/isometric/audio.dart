@@ -1,8 +1,7 @@
-import 'package:gamestream_flutter/game_state.dart';
+import 'package:gamestream_flutter/game_library.dart';
 import 'package:lemon_math/library.dart';
 
 import '../lemon_cache/cache.dart';
-import 'audio/convert_distance_to_volume.dart';
 
 final audio = _Audio();
 
@@ -255,7 +254,7 @@ void _playRandom(List<String> values, double x, double y) {
 }
 
 double _calculateVolume(double x, double y) {
-  return convertDistanceToVolume(distanceBetween(x, y, GameState.player.x, GameState.player.y), maxDistance: 300);
+  return GameAudio.convertDistanceToVolume(distanceBetween(x, y, GameState.player.x, GameState.player.y), maxDistance: 300);
 }
 
 

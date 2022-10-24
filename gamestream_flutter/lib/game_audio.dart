@@ -1,11 +1,40 @@
 
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/game_state.dart';
-import 'package:gamestream_flutter/isometric/audio/audio_loop.dart';
-import 'package:gamestream_flutter/isometric/audio/audio_loops.dart';
-import 'package:gamestream_flutter/isometric/audio/audio_single.dart';
+import 'package:gamestream_flutter/classes/audio_loop.dart';
+import 'package:gamestream_flutter/classes/audio_single.dart';
+import 'package:gamestream_flutter/isometric/grid/state/wind.dart';
+import 'package:gamestream_flutter/isometric/queries/grid_foreach_nearby.dart';
+import 'package:gamestream_flutter/isometric/utils/screen_utils.dart';
+import 'package:gamestream_flutter/isometric/watches/rain.dart';
+import 'package:gamestream_flutter/isometric/weather/breeze.dart';
+import 'package:lemon_engine/engine.dart';
 
 class GameAudio {
+
+  static var nextRandomSound = 0;
+  static var nextRandomMusic = 0;
+
+
+  static final musicNight = [
+    AudioSingle(name: 'creepy-whistle', volume: 0.1),
+    AudioSingle(name: 'creepy-wind', volume: 0.1),
+    AudioSingle(name: 'spooky-tribal', volume: 1.0),
+  ];
+
+  static final soundsNight = [
+    AudioSingle(name: 'owl-1', volume: 0.15),
+    AudioSingle(name: 'wolf-howl', volume: 0.1),
+    AudioSingle(name: 'creepy-5', volume: 0.2),
+  ];
+
+  static final soundsDay = [
+    AudioSingle(name: 'wind-chime', volume: 0.25),
+  ];
+
+  static final soundsLateAfternoon = [
+    AudioSingle(name: 'gong', volume: 0.25),
+  ];
 
   static final audioLoops = <AudioLoop> [
     AudioLoop(name: 'wind', getTargetVolume: getVolumeTargetWind),
@@ -92,9 +121,133 @@ class GameAudio {
     return 0;
   }
 
-  static void updateAudioLoops(){
+  static void updateRandomAmbientSounds(){
+    if (nextRandomSound-- > 0) return;
+    playRandomAmbientSound();
+    nextRandomSound = Engine.randomInt(200, 1000);
+  }
+
+  static void updateRandomMusic(){
+    if (nextRandomMusic-- > 0) return;
+    playRandomMusic();
+    nextRandomMusic = Engine.randomInt(800, 2000);
+  }
+
+  static void update(){
     for (final audioSource in audioLoops){
       audioSource.update();
     }
+    updateRandomAmbientSounds();
+    updateRandomMusic();
+  }
+
+  static double getVolumeTargetWind() {
+    final windLineDistance = (screenCenterRenderX - windLineRenderX).abs();
+    final windLineDistanceVolume = convertDistanceToVolume(windLineDistance, maxDistance: 300);
+    var target = 0.0;
+    if (windLineRenderX - 250 <= screenCenterRenderX) {
+      target += windLineDistanceVolume;
+    }
+    final index = windAmbient.value.index;
+    if (index <= windIndexCalm) {
+      if (GameState.hours.value < 6) return target;
+      if (GameState.hours.value < 18) return target + 0.1;
+      return target;
+    }
+    if (index <= windIndexGentle) return target + 0.5;
+    return 1.0;
+  }
+
+  static double getVolumeTargetRain() {
+    if (rain.value == Rain.None) return 0.0;
+    const r = 7;
+    const maxDistance = r * tileSize;
+    final distance = getClosestByType(radius: r, type: NodeType.Rain_Landing) * tileSize;
+    final v = convertDistanceToVolume(distance, maxDistance: maxDistance);
+    return v * (rain.value == Rain.Light ? 0.5 : 1.0) * 0.5;
+  }
+
+  static double getVolumeTargetCrickets() {
+    final hour = GameState.hours.value;
+    const max = 0.8;
+    if (hour >= 5 && hour < 7) return max;
+    if (hour >= 17 && hour < 19) return max;
+    return 0;
+  }
+
+  static double getVolumeTargetFire(){
+    const r = 4;
+    const maxDistance = r * tileSize;
+    var closest = getClosestByType(radius: r, type: NodeType.Fireplace) * tileSize;
+    if (GameState.torchesIgnited.value) {
+      final closestTorch = getClosestByType(radius: r, type: NodeType.Torch) * tileSize;
+      if (closestTorch < closest) {
+        closest = closestTorch;
+      }
+    }
+    return convertDistanceToVolume(closest, maxDistance: maxDistance) * 1.0;
+  }
+
+  static double getVolumeTargetDistanceThunder(){
+    if (GameState.lightningOn) return 1.0;
+    return 0;
+  }
+
+  static double getVolumeHeartBeat(){
+    return 1.0 - GameState.player.health.value / GameState.player.maxHealth;
+  }
+
+  static double getVolumeStream(){
+    const r = 7;
+    const maxDistance = r * tileSize;
+    final distance = getClosestByType(radius: r, type: NodeType.Water_Flowing) * tileSize;
+    return convertDistanceToVolume(distance, maxDistance: maxDistance) * 0.3;
+  }
+
+  static void playAudioSingle(AudioSingle audioSingle, double x, double y, double z){
+    // TODO calculate from screen center instead
+    final distanceFromPlayer = GameState.player.distance3(x, y, z);
+    final distanceVolume = convertDistanceToVolume(
+      distanceFromPlayer,
+      maxDistance: audioSingle.maxDistance,
+    );
+    audioSingle.play(volume: distanceVolume);
+  }
+
+  static double convertDistanceToVolume(double distance, {required double maxDistance}){
+    if (distance > maxDistance) return 0;
+    if (distance < 1) return 1.0;
+    final perc = distance / maxDistance;
+    return 1.0 - perc;
+  }
+
+  static void playRandomMusic(){
+    if (GameState.ambientShade.value == Shade.Pitch_Black) {
+      playRandom(musicNight);
+    }
+  }
+
+  static void playRandomAmbientSound(){
+    final hour = GameState.hours.value;
+
+    final shade = GameState.ambientShade.value;
+
+    if (shade == Shade.Pitch_Black || shade == Shade.Very_Dark){
+      return playRandom(soundsNight);
+    }
+    if (hour == 6){
+      return GameAudio.rooster.play(volume: 0.3);
+    }
+
+    if (hour > 9 && hour < 15) {
+      return playRandom(soundsDay);
+    }
+    if (hour >= 15 && hour < 18) {
+      return playRandom(soundsLateAfternoon);
+    }
+  }
+
+  static void playRandom(List<AudioSingle> items){
+    Engine.randomItem(items).play();
   }
 }

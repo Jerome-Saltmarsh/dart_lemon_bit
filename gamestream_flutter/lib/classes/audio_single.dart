@@ -1,6 +1,6 @@
 
+import 'package:gamestream_flutter/game_audio.dart';
 import 'package:gamestream_flutter/game_state.dart';
-import 'package:gamestream_flutter/isometric/audio/convert_distance_to_volume.dart';
 import 'package:gamestream_flutter/isometric/classes/vector3.dart';
 import 'package:just_audio/just_audio.dart';
 
@@ -31,7 +31,7 @@ class AudioSingle {
 
   void playXYZ(double x, double y, double z){
     final distanceFromPlayer = GameState.player.distance3(x, y, z);
-    final distanceVolume = convertDistanceToVolume(
+    final distanceVolume = GameAudio.convertDistanceToVolume(
         distanceFromPlayer,
         maxDistance: maxDistance,
     );

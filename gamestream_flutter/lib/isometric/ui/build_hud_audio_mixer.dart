@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/game_audio.dart';
-import 'package:gamestream_flutter/isometric/audio/audio_loop.dart';
+import 'package:gamestream_flutter/classes/audio_loop.dart';
 import 'package:gamestream_flutter/ui/builders/build_panel_menu.dart';
 
 import '../../game_widgets.dart';

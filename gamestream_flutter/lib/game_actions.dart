@@ -1,6 +1,7 @@
 
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/game_library.dart';
+import 'package:gamestream_flutter/isometric/enums/editor_dialog.dart';
 import 'package:lemon_engine/engine.dart';
 
 class GameActions {
@@ -12,5 +13,12 @@ class GameActions {
     for (var i = 0; i < 3; i++){
       GameState.spawnParticleBubble(x: x, y: y, z: z, speed: 1, angle: Engine.randomAngle());
     }
+  }
+
+  static void loadSelectedSceneName(){
+    final sceneName = GameEditor.selectedSceneName.value;
+    if (sceneName == null) throw Exception("loadSelectedSceneNameException: selected scene name is null");
+    GameNetwork.sendClientRequestEditorLoadGame(sceneName);
+    actionGameDialogClose();
   }
 }

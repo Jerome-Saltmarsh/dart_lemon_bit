@@ -1046,6 +1046,8 @@ class Engine {
     return diff;
   }
 
+  static int randomInt(int min, int max) => random.nextInt(max - min) + min;
+
   /// Returns a random radian between 0 and pi2
   static double randomAngle() => random.nextDouble() * pi2;
 
