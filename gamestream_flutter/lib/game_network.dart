@@ -41,7 +41,7 @@ class GameNetwork {
   }
 
   static void connectToServer(String uri, String message) {
-    connect(uri: uri, message: '${ClientRequest.Join.index} $message');
+    connect(uri: uri, message: '${ClientRequest.Join} $message');
   }
 
   static String parseUrlHttpToWS(String url, {String port = '8080'}) =>
@@ -290,10 +290,6 @@ class GameNetwork {
     sendClientRequest(ClientRequest.Weather_Toggle_Time_Passing, value);
   }
 
-  static void sendClientRequestCustomGameNames(){
-    sendClientRequest(ClientRequest.Custom_Game_Names);
-  }
-
   static void sendClientRequestEditorLoadGame(String name){
     sendClientRequest(ClientRequest.Editor_Load_Game, name);
   }
@@ -409,11 +405,11 @@ class GameNetwork {
   }
 
 
-  static void sendClientRequest(ClientRequest value, [dynamic message]){
+  static void sendClientRequest(int value, [dynamic message]){
     if (message != null){
-      return GameNetwork.send('${value.index} $message');
+      return GameNetwork.send('${value} $message');
     }
-    GameNetwork.send(value.index);
+    GameNetwork.send(value);
   }
 }
 

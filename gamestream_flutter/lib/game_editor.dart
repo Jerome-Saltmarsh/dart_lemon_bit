@@ -241,7 +241,7 @@ class GameEditor {
 
   static void onChangedEditorDialog(EditorDialog? value){
     if (value == EditorDialog.Scene_Load){
-      GameNetwork.sendClientRequestCustomGameNames();
+
     }
   }
 

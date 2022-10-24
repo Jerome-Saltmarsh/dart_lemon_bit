@@ -3,7 +3,6 @@
 import '../../classes/library.dart';
 import '../../common/library.dart';
 import '../../common/map_tiles.dart';
-import '../../common/quest.dart';
 import '../dark_age_scenes.dart';
 import '../on_interaction/on_interact_with_jenkins.dart';
 import 'dark_age_area.dart';

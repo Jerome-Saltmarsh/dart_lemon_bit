@@ -3,7 +3,6 @@ import 'dart:typed_data';
 
 import '../classes/library.dart';
 import '../common/library.dart';
-import '../common/node_orientation.dart';
 
 Scene generateEmptyScene({int height = 8, int rows = 50, int columns = 50}){
   final area = rows * columns;

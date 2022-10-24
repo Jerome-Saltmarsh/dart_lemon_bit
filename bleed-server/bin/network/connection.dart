@@ -6,13 +6,9 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 
 import '../classes/gameobject.dart';
 import '../classes/library.dart';
-import '../common/edit_request.dart';
-import '../common/gameobject_request.dart';
 import '../common/library.dart';
 import '../common/maths.dart';
-import '../common/request_modify_canvas_size.dart';
 import '../common/spawn_type.dart';
-import '../common/teleport_scenes.dart';
 import '../dark_age/dark_age_scenes.dart';
 import '../dark_age/game_dark_age.dart';
 import '../dark_age/game_dark_age_editor.dart';
@@ -23,7 +19,6 @@ import '../game_types/game_skirmish.dart';
 import '../game_types/game_waves.dart';
 import '../io/convert_json_to_scene.dart';
 import '../io/convert_scene_to_json.dart';
-import '../io/save_directory.dart';
 import '../io/write_scene_to_file.dart';
 import '../utilities/is_valid_index.dart';
 import 'handle_request_modify_canvas_size.dart';
@@ -93,10 +88,7 @@ class Connection {
     if (clientRequestInt < 0)
       return error(GameError.UnrecognizedClientRequest);
 
-    if (clientRequestInt >= clientRequestsLength)
-      return error(GameError.UnrecognizedClientRequest);
-
-    final clientRequest = clientRequests[clientRequestInt];
+    final clientRequest = clientRequestInt;
 
     if (clientRequest == ClientRequest.Join)
       return handleClientRequestJoin(arguments);
@@ -245,16 +237,6 @@ class Connection {
             .fold("", (previousValue, element) => '$previousValue $element');
         player.textDuration = 150;
         break;
-
-      case ClientRequest.Custom_Game_Names:
-          getSaveDirectoryFileNames().then((fileNames){
-              player.writeByte(ServerResponse.Custom_Game_Names);
-              player.writeInt(fileNames.length);
-              for (final fileName in fileNames) {
-                 player.writeString(fileName);
-              }
-          });
-          break;
 
       case ClientRequest.Save_Scene:
         final scene = convertSceneToString(player.scene);

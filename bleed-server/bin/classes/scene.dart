@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 
 import '../common/library.dart';
-import '../common/node_orientation.dart';
 import '../common/node_size.dart';
 import 'ai.dart';
 import 'gameobject.dart';

@@ -2,7 +2,6 @@
 import '../../classes/library.dart';
 import '../../common/library.dart';
 import '../../common/map_tiles.dart';
-import '../../common/quest.dart';
 import '../../functions/move_player_to_crystal.dart';
 import '../dark_age_scenes.dart';
 import 'dark_age_area.dart';

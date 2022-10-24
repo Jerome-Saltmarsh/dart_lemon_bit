@@ -5,7 +5,6 @@ import 'package:lemon_math/library.dart';
 import '../common/attack_state.dart';
 import '../common/library.dart';
 import '../common/maths.dart';
-import '../common/node_orientation.dart';
 import '../common/node_size.dart';
 import '../common/teams.dart';
 import '../engine.dart';

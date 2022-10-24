@@ -1,40 +1,37 @@
-enum ClientRequest {
-  Update,
-  Join,
-  Revive,
-  Toggle_Debug,
-  Version,
-  Speak,
-  Teleport,
-  Set_Weapon,
-  Set_Armour,
-  Set_Head_Type,
-  Set_Pants_Type,
-  Upgrade_Weapon_Damage,
-  Purchase_Weapon,
-  Equip_Weapon,
-  Store_Close,
-  Weather_Set_Rain,
-  Weather_Set_Wind,
-  Weather_Set_Lightning,
-  Weather_Toggle_Breeze,
-  Weather_Toggle_Time_Passing,
-  Custom_Game_Names,
-  Editor_Load_Game,
-  Save_Scene,
-  Editor_Set_Scene_Name,
-  Time_Set_Hour,
-  Submit_Player_Design,
-  Npc_Talk_Select_Option,
-  GameObject,
-  Node,
-  Editor_Load_Scene,
-  Teleport_Scene,
-  Spawn_Node_Data,
-  Spawn_Node_Data_Modify,
-  Game_Waves,
-  Edit,
+class ClientRequest {
+  static const Update = 0;
+  static const Join = 1;
+  static const Revive = 2;
+  static const Toggle_Debug = 3;
+  static const Version = 4;
+  static const Speak = 5;
+  static const Teleport = 6;
+  static const Set_Weapon = 7;
+  static const Set_Armour = 8;
+  static const Set_Head_Type = 9;
+  static const Set_Pants_Type = 10;
+  static const Upgrade_Weapon_Damage = 11;
+  static const Purchase_Weapon = 12;
+  static const Equip_Weapon = 13;
+  static const Store_Close = 14;
+  static const Weather_Set_Rain = 15;
+  static const Weather_Set_Wind = 16;
+  static const Weather_Set_Lightning = 17;
+  static const Weather_Toggle_Breeze = 18;
+  static const Weather_Toggle_Time_Passing = 19;
+  static const Editor_Load_Game = 21;
+  static const Save_Scene = 22;
+  static const Editor_Set_Scene_Name = 24;
+  static const Time_Set_Hour = 25;
+  static const Submit_Player_Design = 24;
+  static const Npc_Talk_Select_Option = 25;
+  static const GameObject = 26;
+  static const Node = 27;
+  static const Editor_Load_Scene = 28;
+  static const Teleport_Scene = 29;
+  static const Spawn_Node_Data = 30;
+  static const Spawn_Node_Data_Modify = 31;
+  static const Game_Waves = 32;
+  static const Edit = 33;
 }
 
-const clientRequests = ClientRequest.values;
-final clientRequestsLength = clientRequests.length;
