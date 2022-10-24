@@ -1,7 +1,6 @@
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/events/on_visibility_changed_message_box.dart';
-import 'package:gamestream_flutter/isometric/ui/build_hud_debug.dart';
 import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/stacks/build_stack_game_type_skirmish.dart';
@@ -61,7 +60,7 @@ class GameUI {
             buildTopRightMenu(),
             buildWatchBool(GameUI.mapVisible, buildMiniMap),
             watch(GameState.edit, buildPlayMode),
-            buildWatchBool(GameState.debugVisible, buildHudDebug),
+            buildWatchBool(GameState.debugVisible, GameDebug.buildUI),
             // https://stackoverflow.com/questions/67147229/how-can-i-detect-multiple-touches-in-flutter
             // Positioned(
             //     bottom: 0,
