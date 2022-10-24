@@ -4,8 +4,6 @@ import 'dart:typed_data';
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/effects.dart';
-import 'package:gamestream_flutter/isometric/enums/camera_mode.dart';
-import 'package:gamestream_flutter/isometric/enums/game_dialog.dart';
 import 'package:gamestream_flutter/isometric/events/on_camera_mode_changed.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_edit.dart';
 import 'package:gamestream_flutter/isometric/game_action.dart';

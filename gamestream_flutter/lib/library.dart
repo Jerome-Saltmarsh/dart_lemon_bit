@@ -22,4 +22,5 @@ export 'game_render.dart';
 export 'game_actions.dart';
 export 'game_queries.dart';
 export 'game_convert.dart';
-export 'classes/classes.dart';
+export 'classes/library.dart';
+export 'enums/library.dart';

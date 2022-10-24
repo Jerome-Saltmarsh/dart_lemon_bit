@@ -1,5 +1,5 @@
 
-import 'package:gamestream_flutter/classes/classes.dart';
+import 'package:gamestream_flutter/classes/library.dart';
 import 'package:gamestream_flutter/game_audio.dart';
 import 'package:gamestream_flutter/game_state.dart';
 import 'package:just_audio/just_audio.dart';

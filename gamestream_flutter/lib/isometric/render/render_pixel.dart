@@ -1,4 +1,4 @@
-import 'package:gamestream_flutter/classes/classes.dart';
+import 'package:gamestream_flutter/classes/library.dart';
 import 'package:gamestream_flutter/game_images.dart';
 import 'package:lemon_engine/engine.dart';
 
