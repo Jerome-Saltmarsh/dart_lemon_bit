@@ -5,7 +5,6 @@ import 'package:gamestream_flutter/isometric/game.dart';
 import 'package:gamestream_flutter/isometric/light_mode.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
-import 'package:gamestream_flutter/isometric/watches/rain.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
@@ -109,7 +108,7 @@ Widget buildIconWeather(double srcY, bool active) {
 Widget buildToggleRain() {
   final segments = rainValues.length;
 
-  return watch(rain, (Rain rain) {
+  return watch(GameState.rain, (Rain rain) {
     final list = <Widget>[];
     for (var i = 0; i < segments; i++) {
       final active = rain.index == i;

@@ -1,12 +1,14 @@
 
 import 'package:bleed_common/character_type.dart';
 import 'package:bleed_common/library.dart';
+import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_x.dart';
+import 'package:gamestream_flutter/isometric/variables/src_x_rain_falling.dart';
+import 'package:gamestream_flutter/isometric/variables/src_x_rain_landing.dart';
 import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/isometric/camera.dart';
 import 'package:gamestream_flutter/isometric/events/on_game_event_game_object_destroyed.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
-import 'package:gamestream_flutter/isometric/watches/rain.dart';
 import 'package:lemon_engine/engine.dart';
 
 import 'isometric/events/on_character_death.dart';
@@ -59,7 +61,7 @@ class GameEvents {
     )
     ){
       GameAudio.footstep_mud_6.playXYZ(x, y, z);
-      final amount = rain.value == Rain.Heavy ? 3 : 2;
+      final amount = GameState.rain.value == Rain.Heavy ? 3 : 2;
       for (var i = 0; i < amount; i++){
         GameState.spawnParticleWaterDrop(x: x, y: y, z: z);
       }
@@ -292,4 +294,22 @@ class GameEvents {
   static void onChangedWind(Wind value) {
     GameState.gridWindResetToAmbient();
   }
+
+  static void onChangedRain(Rain value) {
+    raining.value = value != Rain.None;
+
+    switch (value) {
+      case Rain.None:
+        break;
+      case Rain.Light:
+        srcXRainFalling = AtlasSrcX.Node_Rain_Falling_Light_X;
+        srcXRainLanding = AtlasSrcX.Node_Rain_Landing_Light_X;
+        break;
+      case Rain.Heavy:
+        srcXRainFalling = AtlasSrcX.Node_Rain_Falling_Heavy_X;
+        srcXRainLanding = AtlasSrcX.Node_Rain_Landing_Heavy_X;
+        break;
+    }
+  }
+
 }

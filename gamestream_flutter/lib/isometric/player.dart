@@ -2,10 +2,10 @@ import 'package:bleed_common/library.dart';
 import 'package:bleed_common/quest.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_map_x.dart';
-import 'package:gamestream_flutter/isometric/events/on_changed_npc_talk.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_player_designed.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_player_message.dart';
 import 'package:gamestream_flutter/isometric/events/on_quests_in_progress_changed.dart';
+import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch.dart';
 
 class Player extends Vector3 {
@@ -82,6 +82,15 @@ class Player extends Vector3 {
     if (value == GameDialog.Quests) {
       // actionHideQuestAdded();
     }
+  }
+
+  static void onChangedNpcTalk(String? value){
+    if (GameState.npcTextVisible != Engine.isNullOrEmpty(value)){
+      if (GameState.npcTextVisible){
+        GameAudio.click_sound_8(0.25);
+      }
+    }
+    GameState.npcTextVisible = Engine.isNullOrEmpty(value);
   }
 }
 

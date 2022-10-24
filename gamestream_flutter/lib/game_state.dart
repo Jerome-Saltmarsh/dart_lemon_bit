@@ -22,7 +22,8 @@ import 'isometric/update/update_zombie_growls.dart';
 import 'isometric/variables/next_lightning.dart';
 
 class GameState {
-
+  static final rain = Watch(Rain.None, onChanged: GameEvents.onChangedRain);
+  static var npcTextVisible = false;
   static final windAmbient = Watch(Wind.Calm, onChanged: GameEvents.onChangedWind);
   static final torchesIgnited = Watch(true);
   static const tileHeight = 24.0;

@@ -5,9 +5,9 @@ import 'package:gamestream_flutter/classes/audio_loop.dart';
 import 'package:gamestream_flutter/classes/audio_single.dart';
 import 'package:gamestream_flutter/isometric/queries/grid_foreach_nearby.dart';
 import 'package:gamestream_flutter/isometric/utils/screen_utils.dart';
-import 'package:gamestream_flutter/isometric/watches/rain.dart';
 import 'package:gamestream_flutter/isometric/weather/breeze.dart';
 import 'package:lemon_engine/engine.dart';
+
 
 class GameAudio {
 
@@ -158,12 +158,12 @@ class GameAudio {
   }
 
   static double getVolumeTargetRain() {
-    if (rain.value == Rain.None) return 0.0;
+    if (GameState.rain.value == Rain.None) return 0.0;
     const r = 7;
     const maxDistance = r * tileSize;
     final distance = getClosestByType(radius: r, type: NodeType.Rain_Landing) * tileSize;
     final v = convertDistanceToVolume(distance, maxDistance: maxDistance);
-    return v * (rain.value == Rain.Light ? 0.5 : 1.0) * 0.5;
+    return v * (GameState.rain.value == Rain.Light ? 0.5 : 1.0) * 0.5;
   }
 
   static double getVolumeTargetCrickets() {

@@ -1046,6 +1046,9 @@ class Engine {
     return diff;
   }
 
+  static bool isNullOrEmpty(String? value) =>
+     value == null || value.isEmpty;
+
   static int randomInt(int min, int max) => random.nextInt(max - min) + min;
 
   /// Returns a random radian between 0 and pi2

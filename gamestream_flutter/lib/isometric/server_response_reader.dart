@@ -11,7 +11,6 @@ import 'package:gamestream_flutter/isometric/events/on_changed_scene.dart';
 import 'package:gamestream_flutter/isometric/events/on_player_event.dart';
 import 'package:gamestream_flutter/isometric/floating_texts.dart';
 import 'package:gamestream_flutter/isometric/io/custom_game_names.dart';
-import 'package:gamestream_flutter/isometric/watches/rain.dart';
 import 'package:gamestream_flutter/isometric/watches/scene_meta_data.dart';
 import 'package:gamestream_flutter/isometric/weather/time_passing.dart';
 import 'package:lemon_byte/byte_reader.dart';
@@ -227,7 +226,7 @@ class ServerResponseReader with ByteReader {
         GameState.ambientShade.value = readByte();
         break;
       case EnvironmentResponse.Rain:
-        rain.value = readRain();
+        GameState.rain.value = readRain();
         break;
       case EnvironmentResponse.Lightning:
         GameState.lightning.value = readLightning();
@@ -485,7 +484,7 @@ class ServerResponseReader with ByteReader {
   }
 
   void readWeather() {
-    rain.value = readRain();
+    GameState.rain.value = readRain();
     GameState.weatherBreeze.value = readBool();
     GameState.lightning.value = readLightning();
     watchTimePassing.value = readBool();
