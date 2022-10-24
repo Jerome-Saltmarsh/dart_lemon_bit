@@ -15,7 +15,6 @@ import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_engine/engine.dart';
 
 import 'isometric/events/on_character_hurt.dart';
-import 'isometric/watches/raining.dart';
 
 class GameEvents {
   static void onWeaponTypeEquipped(int attackType, double x, double y, double z) {
@@ -48,7 +47,7 @@ class GameEvents {
     GameState.refreshGridMetrics();
     GameState.gridWindResetToAmbient();
 
-    if (raining.value) {
+    if (GameState.raining.value) {
       GameActions.rainStart();
     }
     GameState.refreshLighting();
@@ -56,7 +55,7 @@ class GameEvents {
   }
 
   static void onFootstep(double x, double y, double z) {
-    if (raining.value && (
+    if (GameState.raining.value && (
         GameQueries.gridNodeXYZTypeSafe(x, y, z) == NodeType.Rain_Landing
             ||
             GameQueries.gridNodeXYZTypeSafe(x, y, z + 24) == NodeType.Rain_Landing
@@ -298,7 +297,7 @@ class GameEvents {
   }
 
   static void onChangedRain(Rain value) {
-    raining.value = value != Rain.None;
+    GameState.raining.value = value != Rain.None;
 
     switch (value) {
       case Rain.None:

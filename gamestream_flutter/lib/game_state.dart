@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/isometric/events/on_changed_raining.dart';
 import 'package:gamestream_flutter/isometric/grid_state_util.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
@@ -26,7 +27,7 @@ class GameState {
   static final torchesIgnited = Watch(true);
   static const tileHeight = 24.0;
   static const colorPitchBlack = Color.fromRGBO(37, 32, 48, 1.0);
-
+  static final raining = Watch(false, onChanged: onChangedRaining);
   static final hours = Watch(0);
   static final minutes = Watch(0);
 
