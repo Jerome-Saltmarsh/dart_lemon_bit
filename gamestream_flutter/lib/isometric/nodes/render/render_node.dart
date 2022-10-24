@@ -6,7 +6,6 @@ import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_x.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/render_node_bau_haus.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/render_node_wood.dart';
 import 'package:gamestream_flutter/library.dart';
-import 'package:lemon_engine/engine.dart';
 
 import 'render_constants.dart';
 import 'render_node_plain.dart';

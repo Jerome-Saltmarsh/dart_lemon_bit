@@ -3,8 +3,6 @@ import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:golden_ratio/constants.dart';
-import 'package:lemon_engine/engine.dart';
-import 'package:lemon_watch/watch_builder.dart';
 
 import 'build_time.dart';
 

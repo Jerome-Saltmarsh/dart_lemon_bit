@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/isometric/ui/dialogs/build_game_dialog_map.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/services/mini_map.dart';
-import 'package:lemon_engine/engine.dart';
 
 
 class GameMapWidget extends StatelessWidget {

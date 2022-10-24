@@ -1,7 +1,6 @@
 
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/library.dart';
-import 'package:lemon_engine/engine.dart';
 
 class GameActions {
   static void setAmbientShadeToHour(){
@@ -85,5 +84,15 @@ class GameActions {
 
   static void toggleDebugMode(){
     GameState.debugVisible.value = !GameState.debugVisible.value;;
+  }
+
+  static void cameraSetPositionGrid(int row, int column, int z){
+    cameraSetPosition(row * tileSize, column * tileSize, z * tileHeight);
+  }
+
+  static void cameraSetPosition(double x, double y, double z){
+    final renderX = (x - y) * 0.5;
+    final renderY = ((y + x) * 0.5) - z;
+    Engine.cameraCenter(renderX, renderY);
   }
 }

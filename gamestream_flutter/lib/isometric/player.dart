@@ -5,8 +5,6 @@ import 'package:gamestream_flutter/isometric/events/on_changed_player_message.da
 import 'package:gamestream_flutter/isometric/events/on_quests_in_progress_changed.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/services/mini_map.dart';
-import 'package:lemon_engine/engine.dart';
-import 'package:lemon_watch/watch.dart';
 
 class Player extends Vector3 {
   final interpolating = Watch(true);

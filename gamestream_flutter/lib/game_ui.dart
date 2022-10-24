@@ -10,8 +10,6 @@ import 'package:gamestream_flutter/isometric/ui/watches/build_watch_scene_meta_d
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/game_map.dart';
 import 'package:gamestream_flutter/library.dart';
-import 'package:lemon_engine/engine.dart';
-import 'package:lemon_watch/watch.dart';
 
 import 'isometric/ui/dialogs/build_game_dialog.dart';
 import 'ui/builders/build_panel_menu.dart';

@@ -1,5 +1,4 @@
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_gameobjects.dart';
-import 'package:lemon_engine/engine.dart';
 
 import '../../library.dart';
 

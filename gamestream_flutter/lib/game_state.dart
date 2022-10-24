@@ -5,17 +5,12 @@ import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_meta_data_player_is_owner.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_raining.dart';
-import 'package:gamestream_flutter/isometric/grid_state_util.dart';
 import 'package:gamestream_flutter/isometric/particles.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/render/render_circle.dart';
-import 'package:gamestream_flutter/isometric/server_response_reader.dart';
-import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
-import 'package:lemon_watch/watch.dart';
 
 import 'isometric/animation_frame.dart';
-import 'isometric/events/on_inventory_visible_changed.dart';
 import 'library.dart';
 
 class GameState {
@@ -83,7 +78,7 @@ class GameState {
 
   static final triggerAlarmNoMessageReceivedFromServer = Watch(false);
   static final renderFrame = Watch(0);
-  static final rendersSinceUpdate = Watch(0, onChanged: onChangedRendersSinceUpdate);
+  static final rendersSinceUpdate = Watch(0, onChanged: GameEvents.onChangedRendersSinceUpdate);
 
   static final gridShadows = Watch(true, onChanged: (bool value){
     refreshLighting();
@@ -114,7 +109,7 @@ class GameState {
   static const cameraModes = CameraMode.values;
   static final cameraModeWatch = Watch(CameraMode.Chase);
 
-  static final inventoryVisible = Watch(false, onChanged: onInventoryVisibleChanged);
+  static final inventoryVisible = Watch(false, onChanged: GameEvents.onInventoryVisibleChanged);
 
   // WATCHES
 
@@ -292,9 +287,9 @@ class GameState {
   }
 
   static void applyVector3Emission(Vector3 v, {required int maxBrightness}){
-    if (!inBoundsVector3(v)) return;
+    if (!GameQueries.inBoundsVector3(v)) return;
     applyEmissionDynamic(
-      index: gridNodeIndexVector3(v),
+      index: GameQueries.getNodeIndexV3(v),
       maxBrightness: maxBrightness,
     );
   }
@@ -459,7 +454,7 @@ class GameState {
       return;
     }
 
-    final nodeIndex = gridNodeIndexVector3(particle);
+    final nodeIndex = GameQueries.getNodeIndexV3(particle);
     final tile = nodesType[nodeIndex];
     final airBorn =
         !particle.checkNodeCollision || (
@@ -480,7 +475,7 @@ class GameState {
       particle.applyFloorFriction();
     } else {
       if (particle.type == ParticleType.Smoke){
-        final wind = gridNodeWindGetVector3(particle) * 0.01;
+        final wind = GameQueries.getWindAtV3(particle) * 0.01;
         particle.xv -= wind;
         particle.yv += wind;
       }
@@ -1274,11 +1269,11 @@ class GameState {
     for (var i = 0; i < totalGameObjects; i++){
       final gameObject = gameObjects[i];
       if (gameObject.type != GameObjectType.Candle) continue;
-      final nodeIndex = gridNodeIndexVector3(gameObject);
+      final nodeIndex = GameQueries.getNodeIndexV3(gameObject);
       final nodeShade = nodesShade[nodeIndex];
       setNodeShade(nodeIndex, nodeShade - 1);
       if (gameObject.indexZ > 0){
-        final nodeBelowIndex = gridNodeIndexVector3NodeBelow(gameObject);
+        final nodeBelowIndex = GameQueries.getNodeIndexBelowV3(gameObject);
         final nodeBelowShade = nodesShade[nodeBelowIndex];
         setNodeShade(nodeBelowIndex, nodeBelowShade - 1);
       }

@@ -1,6 +1,4 @@
 
-import 'package:lemon_engine/engine.dart';
-
 import 'library.dart';
 
 class GameSpawn {

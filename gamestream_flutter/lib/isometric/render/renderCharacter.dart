@@ -4,7 +4,6 @@ import 'package:gamestream_flutter/isometric/render/render_character_rat.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_slime.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_zombie.dart';
 import 'package:gamestream_flutter/library.dart';
-import 'package:lemon_engine/engine.dart';
 
 import 'render_character_template.dart';
 

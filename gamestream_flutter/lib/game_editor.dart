@@ -2,11 +2,8 @@ import 'dart:convert';
 
 import 'package:bleed_common/library.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:gamestream_flutter/isometric/camera.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_scene_meta_data_player_is_owner.dart';
 import 'package:gamestream_flutter/library.dart';
-import 'package:lemon_engine/engine.dart';
-import 'package:lemon_watch/watch.dart';
 
 class GameEditor {
   static final editorDialog = Watch<EditorDialog?>(null, onChanged: onChangedEditorDialog);
@@ -208,7 +205,7 @@ class GameEditor {
       );
 
   static void actionRecenterCamera() =>
-      cameraSetPositionGrid(
+      GameActions.cameraSetPositionGrid(
         GameEditor.row,
         GameEditor.column,
         GameEditor.z,

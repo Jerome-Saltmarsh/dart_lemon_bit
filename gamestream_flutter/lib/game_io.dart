@@ -4,9 +4,6 @@ import 'dart:math';
 import 'package:bleed_common/library.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
-import 'package:gamestream_flutter/isometric/camera.dart';
-import 'package:lemon_engine/engine.dart';
-import 'package:lemon_watch/watch.dart';
 
 import 'library.dart';
 
@@ -234,7 +231,7 @@ class GameIO {
       if (GameEditor.gameObjectSelected.value) {
         GameNetwork.sendGameObjectRequestMoveToMouse();
       } else {
-        cameraSetPositionGrid(GameEditor.row, GameEditor.column, GameEditor.z);
+        GameActions.cameraSetPositionGrid(GameEditor.row, GameEditor.column, GameEditor.z);
       }
     }
 

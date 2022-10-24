@@ -4,7 +4,6 @@ import 'dart:ui' as ui;
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_size.dart';
 import 'package:gamestream_flutter/isometric/animation_frame.dart';
-import 'package:gamestream_flutter/isometric/grid_state_util.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_gameobjects.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/render_constants.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/render_node.dart';
@@ -13,9 +12,7 @@ import 'package:gamestream_flutter/isometric/render/highlight_character_nearest_
 import 'package:gamestream_flutter/isometric/render/renderCharacter.dart';
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:gamestream_flutter/isometric/render/render_projectiles.dart';
-import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
-import 'package:lemon_watch/watch.dart';
 
 import 'library.dart';
 
@@ -877,7 +874,7 @@ class GameRender {
     playerRenderColumn = playerColumn - (GameState.player.indexZ ~/ 2);
     nodesPlayerUnderRoof = GameState.gridIsUnderSomething(playerZ, playerRow, playerColumn);
 
-    indexShow = inBoundsVector3(GameState.player) ? GameState.player.nodeIndex : 0;
+    indexShow = GameQueries.inBoundsVector3(GameState.player) ? GameState.player.nodeIndex : 0;
     indexShowRow = GameState.convertNodeIndexToRow(indexShow);
     indexShowColumn = GameState.convertNodeIndexToColumn(indexShow);
     indexShowZ = GameState.convertNodeIndexToZ(indexShow);

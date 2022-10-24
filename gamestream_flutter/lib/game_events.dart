@@ -5,9 +5,9 @@ import 'package:gamestream_flutter/isometric/events/on_game_event_game_object_de
 import 'package:gamestream_flutter/isometric/events/on_player_event_quest_completed.dart';
 import 'package:gamestream_flutter/isometric/events/on_player_event_quest_started.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_x.dart';
+import 'package:gamestream_flutter/isometric/player_store.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/library.dart';
-import 'package:lemon_engine/engine.dart';
 
 import 'isometric/events/on_character_hurt.dart';
 
@@ -467,5 +467,16 @@ class GameEvents {
         speed: 4.0 + Engine.randomGiveOrTake(0.5),
         zv: 0.1);
     Engine.randomItem(GameAudio.zombie_deaths).playXYZ(x, y, z);
+  }
+
+  static void onChangedRendersSinceUpdate(int value){
+    GameState.triggerAlarmNoMessageReceivedFromServer.value = value > 200;
+  }
+
+  static void onInventoryVisibleChanged(bool inventoryVisible){
+    GameAudio.click_sound_8();
+    if (!inventoryVisible && storeVisible.value) {
+      GameNetwork.sendClientRequestStoreClose();
+    }
   }
 }

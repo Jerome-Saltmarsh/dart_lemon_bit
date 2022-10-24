@@ -5,7 +5,6 @@ import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
-import 'package:lemon_watch/watch_builder.dart';
 
 import 'constants/colors.dart';
 import 'maps/map_node_type_to_src.dart';

@@ -2,9 +2,7 @@
 import 'dart:math';
 
 import 'package:bleed_common/library.dart';
-import 'package:lemon_engine/engine.dart';
 
-import 'isometric/grid_state_util.dart';
 import 'library.dart';
 
 class GameQueries {
@@ -30,6 +28,17 @@ class GameQueries {
 
    static bool isVisibleV3(Vector3 vector) =>
        inBoundsVector3(vector) ? GameState.nodesVisible[getGridNodeIndexV3(vector)] : true;
+
+   static bool inBoundsVector3(Vector3 vector3){
+     if (vector3.x < 0) return false;
+     if (vector3.y < 0) return false;
+     if (vector3.z < 0) return false;
+     if (vector3.x >= GameState.nodesLengthRow) return false;
+     if (vector3.y >= GameState.nodesLengthColumn) return false;
+     if (vector3.z >= GameState.nodesLengthZ) return false;
+     return true;
+   }
+
 
    static int getGridNodeIndexV3(Vector3 vector3) =>
        getGridNodeIndexXYZ(
@@ -116,4 +125,25 @@ class GameQueries {
      }
      return (windLineRow - windLineColumn) * tileSizeHalf;
    }
+
+   static int getNodeIndexV3(Vector3 vector3) =>
+       GameState.getNodeIndexZRC(
+         vector3.indexZ,
+         vector3.indexRow,
+         vector3.indexColumn,
+       );
+
+   static int getNodeIndexBelowV3(Vector3 vector3) =>
+       GameState.getNodeIndexZRC(
+         vector3.indexZ - 1,
+         vector3.indexRow,
+         vector3.indexColumn,
+       );
+
+   static bool isInboundV3(Vector3 vector3) =>
+       GameQueries.isInboundZRC(vector3.indexZ, vector3.indexRow, vector3.indexColumn);
+
+   static int getWindAtV3(Vector3 vector3) =>
+       GameState.nodesWind[getNodeIndexV3(vector3)];
+
 }

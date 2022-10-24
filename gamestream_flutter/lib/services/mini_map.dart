@@ -3,7 +3,6 @@ import 'package:bleed_common/map_tiles.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/ui/dialogs/build_game_dialog_map.dart';
 import 'package:gamestream_flutter/library.dart';
-import 'package:lemon_engine/engine.dart';
 
 class MiniMap {
 

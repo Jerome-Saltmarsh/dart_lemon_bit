@@ -26,3 +26,6 @@ export 'game_website.dart';
 export 'game_spawn.dart';
 export 'game_widgets.dart';
 export 'game_debug.dart';
+export 'package:lemon_engine/engine.dart';
+export 'package:lemon_watch/watch.dart';
+export 'package:lemon_watch/watch_builder.dart';

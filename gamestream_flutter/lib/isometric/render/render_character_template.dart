@@ -3,7 +3,6 @@ import 'dart:typed_data';
 
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_size.dart';
-import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 
 import '../../library.dart';

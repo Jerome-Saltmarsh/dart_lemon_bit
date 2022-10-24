@@ -9,9 +9,7 @@ import 'package:bleed_common/quest.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_scene.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_byte/byte_reader.dart';
-import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
-import 'package:lemon_watch/watch.dart';
 
 import 'ai.dart';
 import 'player_store.dart';
@@ -19,9 +17,6 @@ import 'player_store.dart';
 final serverResponseReader = ServerResponseReader();
 
 
-void onChangedRendersSinceUpdate(int value){
-   GameState.triggerAlarmNoMessageReceivedFromServer.value = value > 200;
-}
 
 class ServerResponseReader with ByteReader {
   final byteLength = Watch(0);
