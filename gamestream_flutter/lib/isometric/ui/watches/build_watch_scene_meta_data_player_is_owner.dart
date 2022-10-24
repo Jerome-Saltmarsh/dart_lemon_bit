@@ -1,6 +1,5 @@
 import 'package:bleed_common/edit_request.dart';
 import 'package:bleed_common/library.dart';
-import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/request_modify_canvas_size.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/library.dart';

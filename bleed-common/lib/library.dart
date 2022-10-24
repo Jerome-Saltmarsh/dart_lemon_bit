@@ -35,6 +35,7 @@ export 'tile_size.dart';
 export 'card_type.dart';
 export 'armour_type.dart';
 export 'node_type.dart';
+export 'node_orientation.dart';
 export 'head_type.dart';
 export 'leg_type.dart';
 export 'rain.dart';

@@ -1,9 +1,8 @@
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/game_widgets.dart';
-import 'package:gamestream_flutter/isometric/editor/actions/save_scene.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/isometric/watches/player_entered_scene_name.dart';
+import 'package:gamestream_flutter/library.dart';
 
 Widget buildGameDialogSceneSave(){
   return Column(
@@ -12,11 +11,11 @@ Widget buildGameDialogSceneSave(){
       TextField(
         autofocus: true,
         onSubmitted: (value){
-          requestSaveScene();
+          GameEditor.requestSaveScene();
         },
         onChanged: playerEnteredSceneName,
       ),
-      container(child: "Save", action: requestSaveScene),
+      container(child: "Save", action: GameEditor.requestSaveScene),
     ],
   );
 }

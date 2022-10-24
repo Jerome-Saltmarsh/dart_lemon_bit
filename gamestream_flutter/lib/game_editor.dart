@@ -1,8 +1,6 @@
-import 'package:bleed_common/node_orientation.dart';
-import 'package:bleed_common/node_type.dart';
-import 'package:bleed_common/tile_size.dart';
+import 'package:bleed_common/library.dart';
+import 'package:gamestream_flutter/isometric/camera.dart';
 import 'package:gamestream_flutter/library.dart';
-import 'package:gamestream_flutter/isometric/editor/events/on_changed_node_type_spawn_selected.dart';
 import 'package:gamestream_flutter/isometric/editor/events/on_changed_paint_type.dart';
 import 'package:gamestream_flutter/isometric/editor/events/on_changed_selected_node.dart';
 import 'package:gamestream_flutter/isometric/editor/events/on_changed_selected_node_type.dart';
@@ -29,7 +27,7 @@ class GameEditor {
   static final nodeSelectedType = Watch<int>(0, onChanged: onChangedSelectedNodeType);
   static final nodeSelectedOrientation = Watch(NodeOrientation.None);
   static final nodeOrientationVisible = Watch(true);
-  static final nodeTypeSpawnSelected = Watch(false, onChanged: onChangeNodeTypeSpawnSelected);
+  static final nodeTypeSpawnSelected = Watch(false);
   static final nodeSupportsSolid = Watch(false);
   static final nodeSupportsSlopeSymmetric = Watch(false);
   static final nodeSupportsSlopeCornerInner = Watch(false);
@@ -207,4 +205,20 @@ class GameEditor {
   static void selectSceneName(String value){
     selectedSceneName.value = value;
   }
+
+  static void actionAddGameObject(int type) =>
+      GameNetwork.sendClientRequestAddGameObject(
+        index: GameEditor.nodeIndex.value,
+        type: type,
+      );
+
+  static void actionRecenterCamera() =>
+      cameraSetPositionGrid(
+        GameEditor.row,
+        GameEditor.column,
+        GameEditor.z,
+      );
+
+  static void requestSaveScene() =>
+    GameNetwork.sendClientRequest(ClientRequest.Save_Scene);
 }
