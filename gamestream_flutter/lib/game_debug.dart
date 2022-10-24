@@ -5,6 +5,11 @@ import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'library.dart';
 
 class GameDebug {
+
+  static final paths = Float32List(10000);
+  static final targets = Float32List(10000);
+  static var targetsTotal = 0;
+
   static Widget buildUI() =>
       Stack(
         children: [

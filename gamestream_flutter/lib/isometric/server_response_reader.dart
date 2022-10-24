@@ -1,11 +1,8 @@
-import 'dart:typed_data';
-
 import 'package:gamestream_flutter/isometric/events/on_changed_scene.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_math/library.dart';
 
-import 'ai.dart';
 import 'player_store.dart';
 
 final serverResponseReader = ServerResponseReader();
@@ -608,22 +605,22 @@ class ServerResponseReader with ByteReader {
     var index = 0;
     while (true) {
       final pathIndex = readInt();
-      paths[index] = pathIndex.toDouble();
+      GameDebug.paths[index] = pathIndex.toDouble();
       index++;
       if (pathIndex == 250) break;
       for (var i = 0; i < pathIndex; i++) {
-        paths[index] = readDouble();
-        paths[index + 1] = readDouble();
+        GameDebug.paths[index] = readDouble();
+        GameDebug.paths[index + 1] = readDouble();
         index += 2;
       }
     }
     var i = 0;
 
     while(readByte() != 0) {
-       targets[i] = readDouble();
-       targets[i + 1] = readDouble();
-       targets[i + 2] = readDouble();
-       targets[i + 3] = readDouble();
+      GameDebug.targets[i] = readDouble();
+      GameDebug.targets[i + 1] = readDouble();
+      GameDebug.targets[i + 2] = readDouble();
+      GameDebug.targets[i + 3] = readDouble();
        i += 4;
     }
   }

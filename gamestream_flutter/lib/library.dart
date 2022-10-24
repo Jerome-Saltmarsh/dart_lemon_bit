@@ -31,3 +31,4 @@ export 'package:lemon_engine/engine.dart';
 export 'package:lemon_watch/watch.dart';
 export 'package:lemon_watch/watch_builder.dart';
 export 'package:bleed_common/library.dart';
+export 'dart:typed_data';

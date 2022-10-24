@@ -1,4 +1,3 @@
-import 'package:bleed_common/teleport_scenes.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/ui/build_panel_store.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
