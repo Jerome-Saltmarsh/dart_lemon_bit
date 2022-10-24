@@ -1,11 +1,8 @@
 import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/isometric/camera.dart';
-import 'package:gamestream_flutter/library.dart';
-import 'package:gamestream_flutter/isometric/editor/events/on_changed_paint_type.dart';
-import 'package:gamestream_flutter/isometric/editor/events/on_changed_selected_node.dart';
-import 'package:gamestream_flutter/isometric/editor/events/on_changed_selected_node_type.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_scene_meta_data_player_is_owner.dart';
 import 'package:gamestream_flutter/isometric/utils/convert.dart';
+import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch.dart';
 
@@ -221,4 +218,30 @@ class GameEditor {
 
   static void requestSaveScene() =>
     GameNetwork.sendClientRequest(ClientRequest.Save_Scene);
+
+  static void onChangedPaintType(int type) {
+    if (!NodeType.supportsOrientation(type, paintOrientation.value))
+      return setPaintOrientationNone();
+    if (NodeType.supportsOrientation(type, paintOrientation.value)) return;
+    assignDefaultNodeOrientation(type);
+  }
+
+  static void onChangedSelectedNodeIndex(int index){
+    nodeSelectedOrientation.value = GameState.nodesOrientation[index];
+    nodeSelectedType.value = GameState.nodesType[index];
+    gameObjectSelected.value = false;
+    refreshNodeSelectedIndex();
+    deselectGameObject();
+  }
+
+  static void onChangedSelectedNodeType(int nodeType){
+    nodeOrientationVisible.value = true;
+    nodeTypeSpawnSelected.value = nodeType == NodeType.Spawn;
+    nodeSupportsSolid.value = NodeType.isOrientationSolid(nodeType);
+    nodeSupportsCorner.value = NodeType.isCorner(nodeType);
+    nodeSupportsHalf.value = NodeType.isHalf(nodeType);
+    nodeSupportsSlopeCornerInner.value = NodeType.isSlopeCornerInner(nodeType);
+    nodeSupportsSlopeCornerOuter.value = NodeType.isSlopeCornerOuter(nodeType);
+    nodeSupportsSlopeSymmetric.value = NodeType.isSlopeSymmetric(nodeType);
+  }
 }
