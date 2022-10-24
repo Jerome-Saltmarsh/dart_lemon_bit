@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/game_library.dart';
+import 'package:gamestream_flutter/library.dart';
 
 final build = _Build();
 

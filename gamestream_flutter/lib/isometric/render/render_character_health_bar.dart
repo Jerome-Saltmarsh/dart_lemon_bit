@@ -1,7 +1,7 @@
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_gameobjects.dart';
 import 'package:lemon_engine/engine.dart';
 
-import '../../game_library.dart';
+import '../../library.dart';
 
 /// @percentage is a double between 0 and 1
 /// determines how full it is

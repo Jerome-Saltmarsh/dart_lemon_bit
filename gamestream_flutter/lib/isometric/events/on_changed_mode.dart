@@ -1,6 +1,6 @@
 
 
-import 'package:gamestream_flutter/game_library.dart';
+import 'package:gamestream_flutter/library.dart';
 
 void onChangedMode(bool mode){
   if (mode){

@@ -1,6 +1,6 @@
 
 
-import 'package:gamestream_flutter/game_library.dart';
+import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_watch/watch.dart';
 
 import 'events/on_store_items_changed.dart';

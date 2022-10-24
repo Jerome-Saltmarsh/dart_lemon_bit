@@ -1,6 +1,6 @@
 import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/node_type.dart';
-import 'package:gamestream_flutter/game_library.dart';
+import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/isometric/queries/set_grid_type.dart';
 
 void rainOn(){

@@ -1,4 +1,4 @@
-import '../../game_library.dart';
+import '../../library.dart';
 
 void renderCharacterSlime(Character character) {
   if (character.hurt || character.dying) {

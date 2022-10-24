@@ -1,5 +1,5 @@
 
-import 'package:gamestream_flutter/game_library.dart';
+import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_engine/engine.dart';
 
 void renderCircle32(double x, double y, { double scale = 1.0}){

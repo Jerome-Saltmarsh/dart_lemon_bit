@@ -42,3 +42,4 @@ export 'wind.dart';
 export 'lightning.dart';
 export 'attack_type.dart';
 export 'grid_axis.dart';
+export 'particle_type.dart';

@@ -1,4 +1,4 @@
-import '../game_library.dart';
+import '../library.dart';
 
 final effects = <Effect>[];
 

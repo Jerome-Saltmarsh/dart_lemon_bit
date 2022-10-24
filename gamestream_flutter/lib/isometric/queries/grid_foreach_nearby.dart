@@ -3,7 +3,7 @@
 
 import 'dart:math';
 
-import 'package:gamestream_flutter/game_library.dart';
+import 'package:gamestream_flutter/library.dart';
 
 int getClosestByType({required int radius, required int type}){
   final minRow = max(GameState.player.indexRow - radius, 0);

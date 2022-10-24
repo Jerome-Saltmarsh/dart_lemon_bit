@@ -3,9 +3,7 @@ import 'dart:typed_data';
 
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_orientation.dart';
-import 'package:bleed_common/particle_type.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/isometric/convert/convert_distance_to_shade.dart';
 import 'package:gamestream_flutter/isometric/effects.dart';
 import 'package:gamestream_flutter/isometric/enums/camera_mode.dart';
 import 'package:gamestream_flutter/isometric/enums/game_dialog.dart';
@@ -22,7 +20,7 @@ import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 
-import 'game_library.dart';
+import 'library.dart';
 import 'isometric/animation_frame.dart';
 import 'isometric/events/on_inventory_visible_changed.dart';
 import 'isometric/update/update_zombie_growls.dart';
@@ -318,7 +316,7 @@ class GameState {
         for (var column = columnMin; column < columnMax; column++) {
           final nodeIndex = a + column;
           var distance = b + (column - columnIndex).abs() - 1;
-          final distanceValue = convertDistanceToShade(distance, maxBrightness: maxBrightness);
+          final distanceValue = GameConvert.distanceToShade(distance, maxBrightness: maxBrightness);
           if (distanceValue >= GameState.nodesShade[nodeIndex]) continue;
           GameState.nodesShade[nodeIndex] = distanceValue;
           GameState.nodesDynamicIndex[GameState.dynamicIndex] = nodeIndex;
@@ -1506,7 +1504,7 @@ class GameState {
         for (var column = columnMin; column < columnMax; column++) {
           final nodeIndex = GameState.getNodeIndexZRC(z, row, column);
           var distance = (z - zIndex).abs() + (row - rowIndex).abs() + (column - columnIndex).abs() - 1;
-          final distanceValue = convertDistanceToShade(distance, maxBrightness: maxBrightness);
+          final distanceValue = GameConvert.distanceToShade(distance, maxBrightness: maxBrightness);
           if (distanceValue >= GameState.nodesBake[nodeIndex]) continue;
           GameState.nodesBake[nodeIndex] = distanceValue;
           GameState.nodesShade[nodeIndex] = distanceValue;

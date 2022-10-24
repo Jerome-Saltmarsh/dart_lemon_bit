@@ -7,7 +7,7 @@ import 'package:gamestream_flutter/isometric/utils/convert.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 
-import '../../game_library.dart';
+import '../../library.dart';
 import 'render_character_health_bar.dart';
 
 void renderLine(double x, double y, double z, double angle, double distance) {

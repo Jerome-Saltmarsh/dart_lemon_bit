@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:bleed_common/client_request.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:gamestream_flutter/game_library.dart';
+import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_editor_dialog.dart';
 import 'package:lemon_watch/watch.dart';
 

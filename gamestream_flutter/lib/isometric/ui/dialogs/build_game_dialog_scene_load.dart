@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/game_library.dart';
+import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_custom_game_names.dart';
 
 Widget buildGameDialogSceneLoad(){

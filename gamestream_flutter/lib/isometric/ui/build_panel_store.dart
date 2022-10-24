@@ -1,7 +1,7 @@
 
 import 'package:bleed_common/library.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/game_library.dart';
+import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/isometric/enums/equipment_type.dart';
 import 'package:gamestream_flutter/isometric/player_store.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_button_equip_attack_type.dart';

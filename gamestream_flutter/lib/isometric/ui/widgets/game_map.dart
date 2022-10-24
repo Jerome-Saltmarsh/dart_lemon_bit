@@ -1,7 +1,7 @@
 
 import 'package:bleed_common/library.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:gamestream_flutter/game_library.dart';
+import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/isometric/ui/dialogs/build_game_dialog_map.dart';
 import 'package:lemon_engine/engine.dart';
 

@@ -4,7 +4,6 @@ import 'dart:ui' as ui;
 import 'package:bleed_common/library.dart';
 import 'package:bleed_common/node_orientation.dart';
 import 'package:bleed_common/node_size.dart';
-import 'package:bleed_common/particle_type.dart';
 import 'package:gamestream_flutter/isometric/animation_frame.dart';
 import 'package:gamestream_flutter/isometric/grid_state_util.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_gameobjects.dart';
@@ -21,7 +20,7 @@ import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/library.dart';
 import 'package:lemon_watch/watch.dart';
 
-import 'game_library.dart';
+import 'library.dart';
 
 class GameRender {
   static var totalRemaining = 0;

@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:bleed_common/library.dart';
-import 'package:bleed_common/particle_type.dart';
 import 'package:lemon_math/library.dart';
 
 import 'vector3.dart';

@@ -1,7 +1,7 @@
 
 import 'dart:math';
 
-import '../../game_library.dart';
+import '../../library.dart';
 
 double single({
       required int frame,

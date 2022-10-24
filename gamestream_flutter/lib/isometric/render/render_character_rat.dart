@@ -4,7 +4,7 @@ import 'package:gamestream_flutter/isometric/render/render_projectiles.dart';
 import 'package:gamestream_flutter/isometric/render/src_utils.dart';
 import 'package:lemon_engine/engine.dart';
 
-import '../../game_library.dart';
+import '../../library.dart';
 
 void renderCharacterRat(Character character){
   renderPixelRed(character.renderX, character.renderY);

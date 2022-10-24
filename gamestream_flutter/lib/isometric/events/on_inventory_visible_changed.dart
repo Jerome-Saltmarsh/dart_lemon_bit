@@ -1,5 +1,5 @@
 
-import 'package:gamestream_flutter/game_library.dart';
+import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/isometric/player_store.dart';
 
 void onInventoryVisibleChanged(bool inventoryVisible){

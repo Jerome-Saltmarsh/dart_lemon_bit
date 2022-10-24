@@ -21,4 +21,5 @@ export 'game_editor.dart';
 export 'game_render.dart';
 export 'game_actions.dart';
 export 'game_queries.dart';
+export 'game_convert.dart';
 export 'classes/classes.dart';

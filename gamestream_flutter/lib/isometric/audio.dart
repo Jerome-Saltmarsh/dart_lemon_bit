@@ -1,4 +1,4 @@
-import 'package:gamestream_flutter/game_library.dart';
+import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_math/library.dart';
 
 import '../lemon_cache/cache.dart';

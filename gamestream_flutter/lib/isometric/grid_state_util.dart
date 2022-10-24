@@ -2,7 +2,7 @@
 
 
 import 'package:bleed_common/node_type.dart';
-import 'package:gamestream_flutter/game_library.dart';
+import 'package:gamestream_flutter/library.dart';
 
 bool inBoundsVector3(Vector3 vector3){
   if (vector3.x < 0) return false;

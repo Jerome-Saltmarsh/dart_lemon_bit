@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:lemon_engine/engine.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'game_library.dart';
+import 'library.dart';
 
 class GameSystem {
 

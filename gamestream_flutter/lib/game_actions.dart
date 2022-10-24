@@ -1,6 +1,6 @@
 
 import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/game_library.dart';
+import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/isometric/enums/editor_dialog.dart';
 import 'package:lemon_engine/engine.dart';
 
