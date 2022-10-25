@@ -1128,6 +1128,7 @@ class GameState {
     GameRender.renderSprites();
     renderEditMode();
     GameRender.renderMouseTargetName();
+    GameIO.render();
     rendersSinceUpdate.value++;
   }
 

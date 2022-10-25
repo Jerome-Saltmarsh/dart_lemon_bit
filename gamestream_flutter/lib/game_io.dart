@@ -10,11 +10,11 @@ import 'library.dart';
 class GameIO {
   static var touchPanning = false;
   static var touchscreenDirectionMove = Direction.None;
+  static var touchscreenRadianInput = 0.0;
   static var touchscreenRadianMove = 0.0;
   static var touchscreenRadianPerform = 0.0;
   static var touchscreenMouseX = 0.0;
   static var touchscreenMouseY = 0.0;
-  static var touchscreenRadianInput = 0.0;
   static var touchPerformPrimary = false;
 
   // GETTERS
@@ -31,6 +31,17 @@ class GameIO {
 
   static double get mouseGridX => GameConvert.convertWorldToGridX(Engine.mouseWorldX, Engine.mouseWorldY) + GamePlayer.position.z;
   static double get mouseGridY => GameConvert.convertWorldToGridY(Engine.mouseWorldX, Engine.mouseWorldY) + GamePlayer.position.z;
+
+  static void render(){
+     if (inputModeTouch){
+       Engine.renderLine(
+           GamePlayer.renderX,
+           GamePlayer.renderY,
+           GamePlayer.renderX + Engine.calculateAdjacent(touchscreenRadianInput, 100),
+           GamePlayer.renderY + Engine.calculateOpposite(touchscreenRadianInput, 100),
+       );
+     }
+  }
 
   static void detectInputMode() =>
     inputMode.value = Engine.deviceIsComputer
@@ -143,6 +154,7 @@ class GameIO {
   }
 
   static void onTapDown(TapDownDetails details) {
+    print("onTapDown()");
     if (inputModeTouch) {
        touchscreenMouseX = Engine.screenToWorldX(details.globalPosition.dx);
        touchscreenMouseY = Engine.screenToWorldY(details.globalPosition.dy);

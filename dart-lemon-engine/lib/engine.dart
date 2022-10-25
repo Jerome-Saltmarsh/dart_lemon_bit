@@ -922,6 +922,10 @@ class Engine {
     canvas.drawCircle(offset, radius, paint);
   }
 
+  static void renderLine(double x1, double y1, double x2, double y2){
+    canvas.drawLine(Offset(x1, y1), Offset(x2, y2), paint);
+  }
+
   static void renderCircleOutline({
     required double radius,
     required double x,
