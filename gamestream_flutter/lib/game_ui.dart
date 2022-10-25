@@ -73,15 +73,22 @@ class GameUI {
                     watch(GameIO.panDirection, (double panDirection) => text('pan-direction: $panDirection')),
                   ],
                 ))),
-            buildAimButton(Engine.PI_Quarter * 0),
-            buildAimButton(Engine.PI_Quarter * 1),
-            buildAimButton(Engine.PI_Quarter * 2),
-            buildAimButton(Engine.PI_Quarter * 3),
-            buildAimButton(Engine.PI_Quarter * 4),
-            buildAimButton(Engine.PI_Quarter * 5),
-            buildAimButton(Engine.PI_Quarter * 6),
-            buildAimButton(Engine.PI_Quarter * 7),
-            buildWalkButtons(),
+            watch(GameIO.inputMode, (int mode) {
+              if (mode == InputMode.Keyboard) return const SizedBox();
+              return Stack(
+                children: [
+                  buildAimButton(Engine.PI_Quarter * 0),
+                  buildAimButton(Engine.PI_Quarter * 1),
+                  buildAimButton(Engine.PI_Quarter * 2),
+                  buildAimButton(Engine.PI_Quarter * 3),
+                  buildAimButton(Engine.PI_Quarter * 4),
+                  buildAimButton(Engine.PI_Quarter * 5),
+                  buildAimButton(Engine.PI_Quarter * 6),
+                  buildAimButton(Engine.PI_Quarter * 7),
+                  buildWalkButtons(),
+                ],
+              );
+            }),
           ],
         ),
       );
