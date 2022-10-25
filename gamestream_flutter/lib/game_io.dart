@@ -33,14 +33,14 @@ class GameIO {
   static double get mouseGridY => GameConvert.convertWorldToGridY(Engine.mouseWorldX, Engine.mouseWorldY) + GamePlayer.position.z;
 
   static void render(){
-     if (inputModeTouch){
-       Engine.renderLine(
-           GamePlayer.renderX,
-           GamePlayer.renderY,
-           GamePlayer.renderX + Engine.calculateAdjacent(touchscreenRadianInput, 100),
-           GamePlayer.renderY + Engine.calculateOpposite(touchscreenRadianInput, 100),
-       );
-     }
+     // if (inputModeTouch){
+     //   Engine.renderLine(
+     //       GamePlayer.renderX,
+     //       GamePlayer.renderY,
+     //       GamePlayer.renderX + Engine.calculateAdjacent(touchscreenRadianInput, 100),
+     //       GamePlayer.renderY + Engine.calculateOpposite(touchscreenRadianInput, 100),
+     //   );
+     // }
   }
 
   static void detectInputMode() =>
@@ -95,21 +95,21 @@ class GameIO {
   static var touchX1 = 0.0;
   static var touchX2 = 0.0;
   static var touchX3 = 0.0;
+  static var touchX4 = 0.0;
   static var touchY1 = 0.0;
   static var touchY2 = 0.0;
   static var touchY3 = 0.0;
+  static var touchY4 = 0.0;
 
   static void onPanUpdate(DragUpdateDetails details) {
     // print("onPanUpdate()");
-
-
-
     final deltaDirection = details.delta.direction;
     final deltaDistance = details.delta.distance;
-    // print(deltaDistance)
     panDistance.value = deltaDistance;
     panDirection.value = deltaDirection;
-
+    if (deltaDistance < 1) return;
+    touchX4 = touchX3;
+    touchY4 = touchY3;
     touchX3 = touchX2;
     touchY3 = touchY2;
     touchX2 = touchX1;
@@ -117,41 +117,20 @@ class GameIO {
     touchX1 = Engine.calculateAdjacent(deltaDirection, deltaDistance);
     touchY1 = Engine.calculateOpposite(deltaDirection, deltaDistance);
 
-    final totalX = touchX1 + touchX2 + touchX3;
-    final totalY = touchY1 + touchY2 + touchY3;
+    if (!touchPanning) {
+      touchPanning = true;
+      touchX4 = touchX1;
+      touchY4 = touchY1;
+      touchX3 = touchX1;
+      touchY3 = touchY1;
+      touchX2 = touchX1;
+      touchY2 = touchY1;
+    }
+    final totalX = touchX1 + touchX2 + touchX3 + touchX4;
+    final totalY = touchY1 + touchY2 + touchY3 + touchY4;
     final angle = Engine.calculateAngle(totalX, totalY);
     final distance = Engine.calculateHypotenuse(totalX, totalY);
-
-    if (distance < 1.0){
-      return;
-    }
-
-    const radianPerDirection = Engine.PI_Quarter;
-    touchscreenRadianInput = angle < 0 ? angle + Engine.PI_2 : angle;
-    var segments = touchscreenRadianInput ~/ radianPerDirection;
-    touchscreenRadianInput = segments * radianPerDirection;
-
-    if (touchPanning) {
-      final radianDiff = Engine.calculateRadianDifference(touchscreenRadianMove, touchscreenRadianInput);
-      // if (radianDiff.abs() < pi * 0.75) {
-        touchscreenRadianMove += Engine.calculateRadianDifference(touchscreenRadianMove, touchscreenRadianInput) * deltaDistance * 0.05;
-        if (touchscreenRadianMove < 0){
-          touchscreenRadianMove += Engine.PI_2;
-        } else {
-          touchscreenRadianMove %= Engine.PI_2;
-        }
-      // }
-
-      // else {
-      //   if (deltaDistance > 0.2){
-      //     touchscreenRadianMove = touchscreenRadianInput;
-      //   }
-      // }
-    } else {
-      touchPanning = true;
-      touchscreenRadianMove = touchscreenRadianInput;
-    }
-    touchscreenDirectionMove = convertRadianToDirection(touchscreenRadianMove);
+    touchscreenDirectionMove = convertRadianToDirection(angle);
   }
 
   static void onPanEnd(DragEndDetails details){
@@ -177,6 +156,7 @@ class GameIO {
   }
 
   static int convertRadianToDirection(double radian) {
+    radian = radian < 0 ? radian + Engine.PI_2 : radian;
      if (radian < Engine.PI_Eight + (Engine.PI_Quarter * 0)) return Direction.South_East;
      if (radian < Engine.PI_Eight + (Engine.PI_Quarter * 1)) return Direction.South;
      if (radian < Engine.PI_Eight + (Engine.PI_Quarter * 2)) return Direction.South_West;
