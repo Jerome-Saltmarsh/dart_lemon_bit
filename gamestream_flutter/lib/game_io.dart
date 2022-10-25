@@ -96,10 +96,12 @@ class GameIO {
   static var touchX2 = 0.0;
   static var touchX3 = 0.0;
   static var touchX4 = 0.0;
+  static var touchX5 = 0.0;
   static var touchY1 = 0.0;
   static var touchY2 = 0.0;
   static var touchY3 = 0.0;
   static var touchY4 = 0.0;
+  static var touchY5 = 0.0;
 
   static void onPanUpdate(DragUpdateDetails details) {
     // print("onPanUpdate()");
@@ -108,6 +110,8 @@ class GameIO {
     panDistance.value = deltaDistance;
     panDirection.value = deltaDirection;
     if (deltaDistance < 1) return;
+    touchX5 = touchX4;
+    touchY5 = touchY4;
     touchX4 = touchX3;
     touchY4 = touchY3;
     touchX3 = touchX2;
@@ -126,10 +130,10 @@ class GameIO {
       touchX2 = touchX1;
       touchY2 = touchY1;
     }
-    final totalX = touchX1 + touchX2 + touchX3 + touchX4;
-    final totalY = touchY1 + touchY2 + touchY3 + touchY4;
+    final totalX = touchX1 + (touchX2 * 0.8) + (touchX3 * 0.6) + (touchX4 * 0.4) + (touchX5 * 0.2);
+    final totalY = touchY1 + (touchY2 * 0.8) + (touchY3 * 0.6) + (touchY4 * 0.4) + (touchY5 * 0.2);
     final angle = Engine.calculateAngle(totalX, totalY);
-    final distance = Engine.calculateHypotenuse(totalX, totalY);
+    // final distance = Engine.calculateHypotenuse(totalX, totalY);
     touchscreenDirectionMove = convertRadianToDirection(angle);
   }
 
