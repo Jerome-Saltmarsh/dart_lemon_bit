@@ -8,7 +8,7 @@ class GameActions {
 
   static void spawnDustCloud(double x, double y, double z) {
     for (var i = 0; i < 3; i++){
-      GameState.spawnParticleBubble(x: x, y: y, z: z, speed: 1, angle: Engine.randomAngle());
+      // GameState.spawnParticleBubble(x: x, y: y, z: z, speed: 1, angle: Engine.randomAngle());
     }
   }
 

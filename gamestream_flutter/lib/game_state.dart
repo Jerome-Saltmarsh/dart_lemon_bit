@@ -853,18 +853,6 @@ class GameState {
     );
   }
 
-  static void spawnParticleBubbleV3(Vector3 value, {
-    int duration = 100,
-    double scale = 1.0
-  }) =>
-      spawnParticleBubble(
-        x: value.x,
-        y: value.y,
-        z: value.z,
-        duration: duration,
-        scale: scale,
-      );
-
   static void spawnParticleBubbles({
     required int count,
     required double x,
@@ -1129,6 +1117,7 @@ class GameState {
     );
   }
 
+  /// TODO render logic does not belong here
   static void renderCanvas(Canvas canvas, Size size) {
     /// particles are only on the ui and thus can update every frame
     /// this makes them much smoother as they don't freeze

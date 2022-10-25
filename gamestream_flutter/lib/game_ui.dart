@@ -27,6 +27,11 @@ class GameUI {
   static final mapVisible = Watch(false);
   static final timeVisible = Watch(true);
 
+  static const _centerX = 100.0;
+  static const _centerY = 100.0;
+  static const _joystickRadius = 75.0;
+  static const _joystickButtonSize = 60.0;
+
   static Widget build()  =>
       Container(
         width: Engine.screen.width,
@@ -57,95 +62,42 @@ class GameUI {
             buildTopRightMenu(),
             buildWatchBool(GameUI.mapVisible, buildMiniMap),
             watch(GameState.edit, buildPlayMode),
-            buildWatchBool(GameState.debugVisible, GameDebug.buildUI),
-            // https://stackoverflow.com/questions/67147229/how-can-i-detect-multiple-touches-in-flutter
-            // Positioned(
-            //     bottom: 0,
-            //     left: 0,
-            //     child: Builder(
-            //         builder: (context) {
-            //           const size = 150.0;
-            //           const sizeThird = size / 3;
-            //           return Container(
-            //             width: size,
-            //             height: size,
-            //             color: Colors.orange,
-            //             child: Stack(
-            //               children: [
-            //                 Positioned(
-            //                     top: 0,
-            //                     left: sizeThird,
-            //                     child: onPressed(
-            //                         action: () => Touchscreen.direction = Direction.North_East,
-            //                         child: Container(width: sizeThird, height: sizeThird, color: Colors.blue,))
-            //                 ),
-            //                 Positioned(
-            //                     top: sizeThird,
-            //                     left: 0,
-            //                     child: container(width: sizeThird, height: sizeThird, color: Colors.blue, action: (){
-            //                       Touchscreen.direction = Direction.North_West;
-            //                     })
-            //                 ),
-            //                 Positioned(
-            //                     top: sizeThird,
-            //                     right: 0,
-            //                     child: container(width: sizeThird, height: sizeThird, color: Colors.blue, action: (){
-            //                       Touchscreen.direction = Direction.South_East;
-            //                     })
-            //                 ),
-            //                 Positioned(
-            //                     bottom: 0,
-            //                     left: sizeThird,
-            //                     child: container(width: sizeThird, height: sizeThird, color: Colors.blue, action: (){
-            //                       Touchscreen.direction = Direction.South_West;
-            //                     })
-            //                 ),
-            //                 Positioned(
-            //                     bottom: sizeThird,
-            //                     left: sizeThird,
-            //                     child: container(width: sizeThird, height: sizeThird, color: Colors.green, action: (){
-            //                       Touchscreen.direction = Direction.None;
-            //                     })
-            //                 ),
-            //                 Positioned(
-            //                     top: 0,
-            //                     left: 0,
-            //                     child: container(width: sizeThird, height: sizeThird, color: Colors.orange, action: (){
-            //                       Touchscreen.direction = Direction.North;
-            //                     })
-            //                 ),
-            //                 Positioned(
-            //                     top: 0,
-            //                     right: 0,
-            //                     child: container(width: sizeThird, height: sizeThird, color: Colors.orange, action: (){
-            //                       Touchscreen.direction = Direction.East;
-            //                     })
-            //                 ),
-            //                 Positioned(
-            //                     bottom: 0,
-            //                     right: 0,
-            //                     child: container(width: sizeThird, height: sizeThird, color: Colors.orange, action: (){
-            //                       Touchscreen.direction = Direction.South;
-            //                     })
-            //                 ),
-            //                 Positioned(
-            //                     bottom: 0,
-            //                     left: 0,
-            //                     child: container(width: sizeThird, height: sizeThird, color: Colors.orange, action: (){
-            //                       Touchscreen.direction = Direction.West;
-            //                     })
-            //                 ),
-            //               ],
-            //             ),
-            //           );
-            //         }
-            //     )
-            // ),
+            Positioned(
+                top: 8,
+                left: 8,
+                child: watch(GameIO.inputMode, (int mode) => text("touch: ${InputMode.getName(mode)}"))),
+            buildAimButton(Engine.PI_Quarter * 0),
+            buildAimButton(Engine.PI_Quarter * 1),
+            buildAimButton(Engine.PI_Quarter * 2),
+            buildAimButton(Engine.PI_Quarter * 3),
+            buildAimButton(Engine.PI_Quarter * 4),
+            buildAimButton(Engine.PI_Quarter * 5),
+            buildAimButton(Engine.PI_Quarter * 6),
+            buildAimButton(Engine.PI_Quarter * 7),
           ],
         ),
       );
 
-
+  static Widget buildAimButton(double radian) =>
+    Positioned(
+      bottom: _centerX - Engine.calculateAdjacent(radian, _joystickRadius),
+      right: _centerY - Engine.calculateOpposite(radian, _joystickRadius),
+      child: GestureDetector(
+        onTap: () {
+          GameIO.touchscreenRadianPerform = radian;
+          GameIO.touchPerformPrimary = true;
+          print("aim: $radian");
+        },
+        child: Container(
+          width: _joystickButtonSize,
+          height: _joystickButtonSize,
+          decoration: BoxDecoration(
+            color: Colors.amber,
+            shape: BoxShape.circle,
+          ),
+        ),
+      ) ,
+    );
 
   static Widget buildDialogFramesSinceUpdate() => Positioned(
       top: 8,

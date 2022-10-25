@@ -9,9 +9,13 @@ import 'library.dart';
 
 class GameIO {
   static var touchPanning = false;
-  static var touchscreenDirection = Direction.None;
-  static var touchscreenRadian = 0.0;
+  static var touchscreenDirectionMove = Direction.None;
+  static var touchscreenRadianMove = 0.0;
+  static var touchscreenRadianPerform = 0.0;
+  static var touchscreenMouseX = 0.0;
+  static var touchscreenMouseY = 0.0;
   static var touchscreenRadianInput = 0.0;
+  static var touchPerformPrimary = false;
 
   // GETTERS
   static final inputMode = Watch(InputMode.Keyboard);
@@ -22,6 +26,8 @@ class GameIO {
   static var joystickLeftX = 0.0;
   static var joystickLeftY = 0.0;
   static var joystickLeftDown = false;
+  var touchscreenAimX = 0.0;
+  var touchscreenAimY = 0.0;
 
   static double get mouseGridX => GameConvert.convertWorldToGridX(Engine.mouseWorldX, Engine.mouseWorldY) + GamePlayer.position.z;
   static double get mouseGridY => GameConvert.convertWorldToGridY(Engine.mouseWorldX, Engine.mouseWorldY) + GamePlayer.position.z;
@@ -82,29 +88,29 @@ class GameIO {
     // print(deltaDistance);
     touchscreenRadianInput = deltaDirection < 0 ? deltaDirection + Engine.PI_2 : deltaDirection;
     if (touchPanning) {
-      final radianDiff = Engine.calculateRadianDifference(touchscreenRadian, touchscreenRadianInput);
+      final radianDiff = Engine.calculateRadianDifference(touchscreenRadianMove, touchscreenRadianInput);
       if (radianDiff.abs() < pi * 0.75) {
-        touchscreenRadian += Engine.calculateRadianDifference(touchscreenRadian, touchscreenRadianInput) * deltaDistance * 0.05;
-        if (touchscreenRadian < 0){
-          touchscreenRadian += Engine.PI_2;
+        touchscreenRadianMove += Engine.calculateRadianDifference(touchscreenRadianMove, touchscreenRadianInput) * deltaDistance * 0.05;
+        if (touchscreenRadianMove < 0){
+          touchscreenRadianMove += Engine.PI_2;
         } else {
-          touchscreenRadian %= Engine.PI_2;
+          touchscreenRadianMove %= Engine.PI_2;
         }
       } else {
         if (deltaDistance > 0.2){
-          touchscreenRadian = touchscreenRadianInput;
+          touchscreenRadianMove = touchscreenRadianInput;
         }
       }
     } else {
       touchPanning = true;
-      touchscreenRadian = touchscreenRadianInput;
+      touchscreenRadianMove = touchscreenRadianInput;
     }
-    touchscreenDirection = convertRadianToDirection(touchscreenRadian);
+    touchscreenDirectionMove = convertRadianToDirection(touchscreenRadianMove);
   }
 
   static void onPanEnd(DragEndDetails details){
     // print('onPanEnd()');
-    touchscreenDirection = Direction.None;
+    touchscreenDirectionMove = Direction.None;
     touchPanning = false;
   }
 
@@ -137,13 +143,33 @@ class GameIO {
   }
 
   static void onTapDown(TapDownDetails details) {
-    // print('onTapDown()');
+    if (inputModeTouch) {
+       touchscreenMouseX = Engine.screenToWorldX(details.globalPosition.dx);
+       touchscreenMouseY = Engine.screenToWorldY(details.globalPosition.dy);
+       touchPerformPrimary = true;
+    }
+  }
+
+  static double getMouseX() {
+     if (inputModeTouch){
+       return Engine.screenCenterWorldX + Engine.calculateAdjacent(Engine.PI_2 - touchscreenRadianPerform + Engine.PI_Half, 100);
+       // return touchscreenMouseX;
+     }
+     return Engine.mouseWorldX;
+  }
+
+  static double getMouseY() {
+    if (inputModeTouch){
+      return Engine.screenCenterWorldY + Engine.calculateOpposite(Engine.PI_2 - touchscreenRadianPerform + Engine.PI_Half, 100);
+      // return touchscreenMouseY;
+    }
+    return Engine.mouseWorldY;
   }
 
   static int getDirection() {
     final keyboardDirection = getDirectionKeyboard();
     if (keyboardDirection != Direction.None) return keyboardDirection;
-    return inputModeKeyboard ? keyboardDirection : touchscreenDirection;
+    return inputModeKeyboard ? keyboardDirection : touchscreenDirectionMove;
   }
 
   static int getDirectionKeyboard() {
@@ -180,6 +206,10 @@ class GameIO {
     if (GameState.editMode) return false;
     if (inputModeKeyboard) {
       return Engine.watchMouseLeftDown.value;
+    }
+    if (touchPerformPrimary) {
+      touchPerformPrimary = false;
+      return true;
     }
     return false;
   }
