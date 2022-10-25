@@ -6,7 +6,7 @@ import 'library.dart';
 
 class GameNetwork {
   static const Url_Sydney = "https://gamestream-ws-australia-osbmaezptq-ts.a.run.app";
-  static const Url_Singapore = "https://gamestream-ws-singapore-osbmaezptq-as.a.run.app";
+  static const Url_Singapore = "https://gamestream-ws-osbmaezptq-as.a.run.app";
   static final updateBuffer = Uint8List(17);
   static late WebSocketChannel webSocketChannel;
   static final connectionStatus = Watch(ConnectionStatus.None, onChanged: onChangedConnectionStatus);

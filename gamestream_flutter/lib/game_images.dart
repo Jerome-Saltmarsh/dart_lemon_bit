@@ -58,6 +58,8 @@ class GameImages {
             return template_head_wizard;
          case HeadType.Blonde:
             return template_head_blonde;
+         case HeadType.Swat:
+            return template_head_swat;
          default:
             throw Exception('GameImages.getImageForHeadType(${HeadType.getName(headType)})');
       }
