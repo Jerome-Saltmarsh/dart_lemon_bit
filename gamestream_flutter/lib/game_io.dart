@@ -28,6 +28,8 @@ class GameIO {
   static var joystickLeftDown = false;
   var touchscreenAimX = 0.0;
   var touchscreenAimY = 0.0;
+  static var panDistance = Watch(0.0);
+  static var panDirection = Watch(0.0);
 
   static double get mouseGridX => GameConvert.convertWorldToGridX(Engine.mouseWorldX, Engine.mouseWorldY) + GamePlayer.position.z;
   static double get mouseGridY => GameConvert.convertWorldToGridY(Engine.mouseWorldX, Engine.mouseWorldY) + GamePlayer.position.z;
@@ -92,12 +94,45 @@ class GameIO {
      // print("onPanStart()");
   }
 
+  static var touchX1 = 0.0;
+  static var touchX2 = 0.0;
+  static var touchX3 = 0.0;
+  static var touchY1 = 0.0;
+  static var touchY2 = 0.0;
+  static var touchY3 = 0.0;
+
   static void onPanUpdate(DragUpdateDetails details) {
     // print("onPanUpdate()");
+
+
+
     final deltaDirection = details.delta.direction;
     final deltaDistance = details.delta.distance;
-    // print(deltaDistance);
-    touchscreenRadianInput = deltaDirection < 0 ? deltaDirection + Engine.PI_2 : deltaDirection;
+    // print(deltaDistance)
+    panDistance.value = deltaDistance;
+    panDirection.value = deltaDirection;
+
+    touchX3 = touchX2;
+    touchY3 = touchY2;
+    touchX2 = touchX1;
+    touchY2 = touchY1;
+    touchX1 = Engine.calculateAdjacent(details.delta.direction, details.delta.distance);
+    touchY1 = Engine.calculateOpposite(details.delta.direction, details.delta.distance);
+
+    final totalX = touchX1 + touchX2 + touchX3;
+    final totalY = touchY1 + touchY2 + touchY3;
+    final angle = Engine.calculateAngle(totalX, totalY);
+    final distance = Engine.calculateHypotenuse(totalX, totalY);
+
+    if (distance < 1.0){
+      return;
+    }
+
+    const radianPerDirection = Engine.PI_2 / 8.0;
+    touchscreenRadianInput = angle < 0 ? angle + Engine.PI_2 : angle;
+    var segments = touchscreenRadianInput ~/ radianPerDirection;
+    touchscreenRadianInput = segments * radianPerDirection;
+
     if (touchPanning) {
       final radianDiff = Engine.calculateRadianDifference(touchscreenRadianMove, touchscreenRadianInput);
       if (radianDiff.abs() < pi * 0.75) {

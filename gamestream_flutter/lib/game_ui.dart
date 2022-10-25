@@ -65,7 +65,14 @@ class GameUI {
             Positioned(
                 top: 8,
                 left: 8,
-                child: watch(GameIO.inputMode, (int mode) => text("touch: ${InputMode.getName(mode)}"))),
+                child: watch(GameIO.inputMode, (int mode) => Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    text("touch: ${InputMode.getName(mode)}"),
+                    watch(GameIO.panDistance, (double panDistance) => text('pan-distance: $panDistance')),
+                    watch(GameIO.panDirection, (double panDirection) => text('pan-direction: $panDirection')),
+                  ],
+                ))),
             buildAimButton(Engine.PI_Quarter * 0),
             buildAimButton(Engine.PI_Quarter * 1),
             buildAimButton(Engine.PI_Quarter * 2),
@@ -74,9 +81,52 @@ class GameUI {
             buildAimButton(Engine.PI_Quarter * 5),
             buildAimButton(Engine.PI_Quarter * 6),
             buildAimButton(Engine.PI_Quarter * 7),
+            buildWalkButtons(),
           ],
         ),
       );
+
+  static Widget buildWalkButtons() =>
+    Positioned(
+        bottom: 0,
+        left: 0,
+        child: Row(
+          children: [
+            Column(
+              children: [
+                buildWalkBox(0),
+                buildWalkBox(0),
+                buildWalkBox(0),
+              ],
+            ),
+            Column(
+              children: [
+                buildWalkBox(0),
+                Container(width: 60, height: 60),
+                buildWalkBox(0),
+              ],
+            ),
+            Column(
+              children: [
+                buildWalkBox(0),
+                buildWalkBox(0),
+                buildWalkBox(0),
+              ],
+            )
+          ],
+        ),
+    );
+
+  static Widget buildWalkBox(int direction){
+    return container(
+       width: 60,
+       height: 60,
+       color: Colors.blue,
+       action: (){
+          GameIO.touchscreenDirectionMove = direction;
+       }
+    );
+  }
 
   static Widget buildAimButton(double radian) =>
     Positioned(
