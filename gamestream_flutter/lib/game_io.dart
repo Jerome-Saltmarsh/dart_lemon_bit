@@ -177,14 +177,14 @@ class GameIO {
   }
 
   static int convertRadianToDirection(double radian) {
-     if (radian < Engine.PI_Eight + (Engine.PI_Quarter * 0)) return Direction.South_East;
-     if (radian < Engine.PI_Eight + (Engine.PI_Quarter * 1)) return Direction.South;
-     if (radian < Engine.PI_Eight + (Engine.PI_Quarter * 2)) return Direction.South_West;
-     if (radian < Engine.PI_Eight + (Engine.PI_Quarter * 3)) return Direction.West;
-     if (radian < Engine.PI_Eight + (Engine.PI_Quarter * 4)) return Direction.North_West;
-     if (radian < Engine.PI_Eight + (Engine.PI_Quarter * 5)) return Direction.North;
-     if (radian < Engine.PI_Eight + (Engine.PI_Quarter * 6)) return Direction.North_East;
-     if (radian < Engine.PI_Eight + (Engine.PI_Quarter * 7)) return Direction.East;
+     if (radian < Engine.PI_SIXTEENTH + (Engine.PI_Quarter * 0)) return Direction.South_East;
+     if (radian < Engine.PI_SIXTEENTH + (Engine.PI_Quarter * 1)) return Direction.South;
+     if (radian < Engine.PI_SIXTEENTH + (Engine.PI_Quarter * 2)) return Direction.South_West;
+     if (radian < Engine.PI_SIXTEENTH + (Engine.PI_Quarter * 3)) return Direction.West;
+     if (radian < Engine.PI_SIXTEENTH + (Engine.PI_Quarter * 4)) return Direction.North_West;
+     if (radian < Engine.PI_SIXTEENTH + (Engine.PI_Quarter * 5)) return Direction.North;
+     if (radian < Engine.PI_SIXTEENTH + (Engine.PI_Quarter * 6)) return Direction.North_East;
+     if (radian < Engine.PI_SIXTEENTH + (Engine.PI_Quarter * 7)) return Direction.East;
      return Direction.East;
   }
 

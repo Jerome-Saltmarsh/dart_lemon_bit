@@ -189,6 +189,7 @@ class Engine {
   static const PI_Half = pi * 0.5;
   static const PI_Quarter = pi * 0.25;
   static const PI_Eight = pi * 0.125;
+  static const PI_SIXTEENTH = pi / 16;
   static const Ratio_Radians_To_Degrees = 57.2958;
   static const Ratio_Degrees_To_Radians = 0.0174533;
   static const GoldenRatio_1_618 = 1.61803398875;
