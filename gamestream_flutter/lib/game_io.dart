@@ -1,6 +1,4 @@
 
-import 'dart:math';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 
@@ -116,8 +114,8 @@ class GameIO {
     touchY3 = touchY2;
     touchX2 = touchX1;
     touchY2 = touchY1;
-    touchX1 = Engine.calculateAdjacent(details.delta.direction, details.delta.distance);
-    touchY1 = Engine.calculateOpposite(details.delta.direction, details.delta.distance);
+    touchX1 = Engine.calculateAdjacent(deltaDirection, deltaDistance);
+    touchY1 = Engine.calculateOpposite(deltaDirection, deltaDistance);
 
     final totalX = touchX1 + touchX2 + touchX3;
     final totalY = touchY1 + touchY2 + touchY3;
@@ -128,25 +126,27 @@ class GameIO {
       return;
     }
 
-    const radianPerDirection = Engine.PI_2 / 8.0;
+    const radianPerDirection = Engine.PI_Quarter;
     touchscreenRadianInput = angle < 0 ? angle + Engine.PI_2 : angle;
     var segments = touchscreenRadianInput ~/ radianPerDirection;
     touchscreenRadianInput = segments * radianPerDirection;
 
     if (touchPanning) {
       final radianDiff = Engine.calculateRadianDifference(touchscreenRadianMove, touchscreenRadianInput);
-      if (radianDiff.abs() < pi * 0.75) {
+      // if (radianDiff.abs() < pi * 0.75) {
         touchscreenRadianMove += Engine.calculateRadianDifference(touchscreenRadianMove, touchscreenRadianInput) * deltaDistance * 0.05;
         if (touchscreenRadianMove < 0){
           touchscreenRadianMove += Engine.PI_2;
         } else {
           touchscreenRadianMove %= Engine.PI_2;
         }
-      } else {
-        if (deltaDistance > 0.2){
-          touchscreenRadianMove = touchscreenRadianInput;
-        }
-      }
+      // }
+
+      // else {
+      //   if (deltaDistance > 0.2){
+      //     touchscreenRadianMove = touchscreenRadianInput;
+      //   }
+      // }
     } else {
       touchPanning = true;
       touchscreenRadianMove = touchscreenRadianInput;
@@ -177,15 +177,15 @@ class GameIO {
   }
 
   static int convertRadianToDirection(double radian) {
-     if (radian < Engine.PI_SIXTEENTH + (Engine.PI_Quarter * 0)) return Direction.South_East;
-     if (radian < Engine.PI_SIXTEENTH + (Engine.PI_Quarter * 1)) return Direction.South;
-     if (radian < Engine.PI_SIXTEENTH + (Engine.PI_Quarter * 2)) return Direction.South_West;
-     if (radian < Engine.PI_SIXTEENTH + (Engine.PI_Quarter * 3)) return Direction.West;
-     if (radian < Engine.PI_SIXTEENTH + (Engine.PI_Quarter * 4)) return Direction.North_West;
-     if (radian < Engine.PI_SIXTEENTH + (Engine.PI_Quarter * 5)) return Direction.North;
-     if (radian < Engine.PI_SIXTEENTH + (Engine.PI_Quarter * 6)) return Direction.North_East;
-     if (radian < Engine.PI_SIXTEENTH + (Engine.PI_Quarter * 7)) return Direction.East;
-     return Direction.East;
+     if (radian < Engine.PI_Eight + (Engine.PI_Quarter * 0)) return Direction.South_East;
+     if (radian < Engine.PI_Eight + (Engine.PI_Quarter * 1)) return Direction.South;
+     if (radian < Engine.PI_Eight + (Engine.PI_Quarter * 2)) return Direction.South_West;
+     if (radian < Engine.PI_Eight + (Engine.PI_Quarter * 3)) return Direction.West;
+     if (radian < Engine.PI_Eight + (Engine.PI_Quarter * 4)) return Direction.North_West;
+     if (radian < Engine.PI_Eight + (Engine.PI_Quarter * 5)) return Direction.North;
+     if (radian < Engine.PI_Eight + (Engine.PI_Quarter * 6)) return Direction.North_East;
+     if (radian < Engine.PI_Eight + (Engine.PI_Quarter * 7)) return Direction.East;
+     return Direction.South_East;
   }
 
   static void onTapDown(TapDownDetails details) {
