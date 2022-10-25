@@ -62,21 +62,21 @@ class GameUI {
             buildTopRightMenu(),
             buildWatchBool(GameUI.mapVisible, buildMiniMap),
             watch(GameState.edit, buildPlayMode),
-            Positioned(
-                top: 8,
-                left: 8,
-                child: watch(GameIO.inputMode, (int mode) => Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    text("touch: ${InputMode.getName(mode)}"),
-                    watch(GameIO.panDistance, (double panDistance) => text('pan-distance: $panDistance')),
-                    watch(GameIO.panDirection, (double panDirection) => text('pan-direction: $panDirection')),
-                  ],
-                ))),
             watch(GameIO.inputMode, (int mode) {
               if (mode == InputMode.Keyboard) return const SizedBox();
               return Stack(
                 children: [
+                  Positioned(
+                      top: 8,
+                      left: 8,
+                      child: watch(GameIO.inputMode, (int mode) => Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          text("touch: ${InputMode.getName(mode)}"),
+                          watch(GameIO.panDistance, (double panDistance) => text('pan-distance: $panDistance')),
+                          watch(GameIO.panDirection, (double panDirection) => text('pan-direction: $panDirection')),
+                        ],
+                      ))),
                   buildAimButton(Engine.PI_Quarter * 0),
                   buildAimButton(Engine.PI_Quarter * 1),
                   buildAimButton(Engine.PI_Quarter * 2),
