@@ -24,6 +24,7 @@ class AtlasNodeX {
   static const Plain_Solid = 1557.0;
   static const Oven = 618.0;
   static const Window = 618.0;
+  static const Boulder = 618.0;
 
   static double mapNodeType(int type) => {
     NodeType.Brick_2: Brick_Solid,
@@ -41,7 +42,6 @@ class AtlasNodeX {
     NodeType.Cottage_Roof: -1.0,
     NodeType.Tree_Bottom: Tree_Bottom,
     NodeType.Wooden_Plank: AtlasNode.Wooden_Plank_Solid_X,
-    NodeType.Boulder: AtlasNode.Boulder_X,
     NodeType.Spawn: AtlasNode.Spawn_X,
     NodeType.Empty: 0.0,
     NodeType.Water: Water,
@@ -56,6 +56,7 @@ class AtlasNodeX {
     NodeType.Tree_Top: Tree_Top,
     NodeType.Oven: Oven,
     NodeType.Window: Window,
+    NodeType.Boulder: Boulder,
   }[type] ?? 7055;
 }
 
@@ -81,6 +82,7 @@ class AtlasNodeY {
   static const Window = 876.0;
   static const Spawn = 1021.0;
   static const Oven = 804.0;
+  static const Boulder = 657.0;
 
   static double mapNodeType(int type) => {
     NodeType.Water: Water,
@@ -103,6 +105,7 @@ class AtlasNodeY {
     NodeType.Stone: Stone,
     NodeType.Plain: Plain_Solid,
     NodeType.Oven: Oven,
+    NodeType.Boulder: Boulder,
   }[type] ?? 0;
 }
 
@@ -220,8 +223,6 @@ class AtlasNode {
   static const Node_Soil_Y = 584.0;
   static const Campfire_X = 667.0;
   static const Node_Campfire_Y = 512.0;
-  static const Boulder_X = 618.0;
-  static const Node_Boulder_Y = 657.0;
   static const Chimney_X = 618.0;
   static const Node_Chimney_Y = 730.0;
   static const Node_Window_West_X = 618.0;

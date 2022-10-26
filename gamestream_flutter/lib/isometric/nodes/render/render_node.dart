@@ -180,8 +180,8 @@ void renderNodeAt() {
       return;
     case NodeType.Boulder:
       renderStandardNodeShaded(
-        srcX: AtlasNode.Boulder_X,
-        srcY: AtlasNode.Node_Boulder_Y,
+        srcX: AtlasNodeX.Boulder,
+        srcY: AtlasNodeY.Boulder,
       );
       return;
     case NodeType.Oven:
