@@ -2,7 +2,7 @@ import 'package:bleed_common/node_type.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_node.dart';
 
 double mapNodeTypeToSrcX(int type) => {
-  NodeType.Brick_2: AtlasNode.Brick_Solid,
+  NodeType.Brick_2: AtlasNodeX.Brick_Solid,
   NodeType.Grass: AtlasNode.Grass,
   NodeType.Wood_2: AtlasNode.Wood_Solid_X,
   NodeType.Torch: AtlasNode.X_Torch,
@@ -16,8 +16,8 @@ double mapNodeTypeToSrcX(int type) => {
   NodeType.Soil: AtlasNode.Soil_X,
   NodeType.Bau_Haus: AtlasNode.Bau_Haus_Solid_X,
   NodeType.Chimney: AtlasNode.Chimney_X,
-  NodeType.Bed_Bottom: AtlasNode.Bed_Bottom_X,
-  NodeType.Bed_Top: AtlasNode.Bed_Top_X,
+  NodeType.Bed_Bottom: AtlasNode.X_Bed_Bottom,
+  NodeType.Bed_Top: AtlasNode.X_Bed_Top,
   NodeType.Sunflower: AtlasNode.Sunflower_X,
   NodeType.Oven: AtlasNode.Oven_X,
   NodeType.Cottage_Roof: -1.0,

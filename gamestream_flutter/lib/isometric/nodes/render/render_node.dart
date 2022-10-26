@@ -229,14 +229,14 @@ void renderNodeAt() {
       return;
     case NodeType.Bed_Top:
       renderStandardNode(
-        srcX: AtlasNode.Bed_Top_X,
-        srcY: AtlasNode.Node_Bed_Top_Y,
+        srcX: AtlasNode.X_Bed_Top,
+        srcY: AtlasNode.Y_Bed_Top,
       );
       return;
     case NodeType.Bed_Bottom:
       renderStandardNode(
-        srcX: AtlasNode.Bed_Bottom_X,
-        srcY: AtlasNode.Node_Bed_Bottom_Y,
+        srcX: AtlasNode.X_Bed_Bottom,
+        srcY: AtlasNode.Y_Bed_Bottom,
       );
       return;
     case NodeType.Respawning:

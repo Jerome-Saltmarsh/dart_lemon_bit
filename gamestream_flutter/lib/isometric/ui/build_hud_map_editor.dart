@@ -276,7 +276,7 @@ Widget buildButtonSelectNodeType(int nodeType) {
         height: 78,
         width: 78,
         alignment: Alignment.center,
-        child: canvas,
+        child: Tooltip(child: canvas, message: NodeType.getName(nodeType),),
         action: () {
           if (GameState.playMode) {
             GameActions.actionSetModePlay();

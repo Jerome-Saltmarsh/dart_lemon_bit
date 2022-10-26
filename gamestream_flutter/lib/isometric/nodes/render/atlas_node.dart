@@ -1,10 +1,25 @@
+class AtlasNodeX {
+  static const Brick_Solid = 680.0;
+}
+
+class AtlasNodeY {
+
+}
+
+class AtlasNodeWidth {
+
+}
+
+class AtlasNodeHeight {
+
+}
+
 
 class AtlasNode {
   static const Sprite_Width = 48.0;
   static const Sprite_Height = 72.0;
   static const Sprite_Width_Padded = Sprite_Width + 1;
   static const Sprite_Height_Padded = Sprite_Height + 1;
-
   static const Grass = 0.0;
   static const Grass_Flowers = Grass + Sprite_Width_Padded;
   static const Node_Grass_Slope_North = Grass_Flowers + Sprite_Width_Padded;
@@ -19,8 +34,8 @@ class AtlasNode {
   static const Node_Grass_Slope_Outer_North_East = Node_Grass_Slope_Outer_South_East + Sprite_Width_Padded;
   static const Node_Grass_Slope_Outer_North_West = Node_Grass_Slope_Outer_North_East + Sprite_Width_Padded;
   static const Node_Grass_Slope_Outer_South_West = Node_Grass_Slope_Outer_North_West + Sprite_Width_Padded;
-  static const Brick_Solid = 680.0;
-  static const Node_Brick_Half_North = Brick_Solid + Sprite_Width;
+  // static const Brick_Solid = 680.0;
+  static const Node_Brick_Half_North = AtlasNodeX.Brick_Solid + Sprite_Width;
   static const Node_Brick_Half_East = Node_Brick_Half_North + Sprite_Width;
   static const Node_Brick_Half_South = Node_Brick_Half_North;
   static const Node_Brick_Half_West = Node_Brick_Half_East;
@@ -76,8 +91,6 @@ class AtlasNode {
   static const Node_Wood_Corner_Right_Y = Node_Wood_Solid_Y;
   static const Node_Wood_Corner_Bottom_X = Node_Wood_Corner_Right_X + Sprite_Width_Padded;
   static const Node_Wood_Corner_Bottom_Y = Node_Wood_Solid_Y;
-
-
   static const Bau_Haus_Solid_X = 520.0;
   static const Node_Bau_Haus_Solid_Y = 512.0;
   static const Node_Bau_Haus_Half_South_X = Bau_Haus_Solid_X;
@@ -151,11 +164,10 @@ class AtlasNode {
   static const Node_Wood_Slope_South_Y = Node_Wood_Slope_North_Y;
   static const Node_Wood_Slope_West_X = Node_Wood_Slope_South_X - Sprite_Width_Padded;
   static const Node_Wood_Slope_West_Y = Node_Wood_Slope_North_Y;
-  static const Bed_Bottom_X = 765.0;
-  static const Node_Bed_Bottom_Y = 585.0;
-  static const Bed_Top_X = Bed_Bottom_X + Sprite_Width_Padded;
-  static const Node_Bed_Top_Y = Node_Bed_Bottom_Y;
-
+  static const X_Bed_Bottom = 765.0;
+  static const Y_Bed_Bottom = 585.0;
+  static const X_Bed_Top = X_Bed_Bottom + Sprite_Width_Padded;
+  static const Y_Bed_Top = Y_Bed_Bottom;
   static const X_Torch_Windy = 986.0;
   static const X_Torch = 960.0;
   static const Y_Torch = 512.0;

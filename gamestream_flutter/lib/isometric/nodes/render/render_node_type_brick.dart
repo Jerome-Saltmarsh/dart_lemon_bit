@@ -9,7 +9,7 @@ void renderNodeTypeBrick({
   switch (GameState.nodesOrientation[GameRender.currentNodeIndex]) {
     case NodeOrientation.Solid:
       return renderStandardNode(
-        srcX: AtlasNode.Brick_Solid,
+        srcX: AtlasNodeX.Brick_Solid,
         srcY: GameConstants.spriteHeightPadded * shade,
       );
     case NodeOrientation.Slope_North:
