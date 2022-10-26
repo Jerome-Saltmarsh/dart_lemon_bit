@@ -26,7 +26,7 @@ Widget buildEditorSelectedNode() =>
                 width: 16,
                 height: 16,
                 child: buildAtlasImageButton(
-                  image: GameImages.icons,
+                  image: GameImages.atlasIcons,
                   srcX: 80,
                   srcY: 96,
                   srcWidth: 16,
@@ -60,12 +60,12 @@ Widget buildEditorSelectedNode() =>
                 left: 27 + _shiftX,
                 child: onMouseOver(builder: (BuildContext context, bool mouseOver) =>
                       buildAtlasImageButton(
-                          image: GameImages.icons,
+                          image: GameImages.atlasIcons,
                           action: GameEditor.cursorZDecrease,
-                          srcX: mouseOver ? 9673 : 9650,
-                          srcY: 27,
-                          srcWidth: 19,
-                          srcHeight: 27,
+                          srcX: mouseOver ? AtlasIconsX.Arrows_Orange : AtlasIconsX.Arrows_Yellow,
+                          srcY: AtlasIconsY.Arrows_Down,
+                          srcWidth: 21,
+                          srcHeight: 30,
                           hint: "Shift + Arrow Down"
                       )
                 ),
@@ -74,10 +74,10 @@ Widget buildEditorSelectedNode() =>
                 top: 3 + _shiftY,
                 left: 3 + _shiftY,
                 child: onMouseOver(builder: (BuildContext context, bool mouseOver) => buildAtlasImageButton(
-                    image: GameImages.icons,
+                    image: GameImages.atlasIcons,
                   action: GameEditor.cursorRowIncrease,
-                  srcX: mouseOver ? 9672 : 9649,
-                  srcY: 110,
+                  srcX: mouseOver ? AtlasIconsX.Arrows_Orange : AtlasIconsX.Arrows_Yellow,
+                  srcY: AtlasIconsY.Arrows_North,
                   srcWidth: 21,
                   srcHeight: 21,
                   hint: "Arrow Up"
@@ -87,10 +87,10 @@ Widget buildEditorSelectedNode() =>
                 top: 5 + _shiftY,
                 left: 50 + _shiftX,
                 child: onMouseOver(builder: (BuildContext context, bool mouseOver) => buildAtlasImageButton(
-                    image: GameImages.icons,
+                    image: GameImages.atlasIcons,
                     action: GameEditor.cursorColumnIncrease,
-                    srcX: mouseOver ? 9672 : 9649,
-                    srcY: 137,
+                    srcX: mouseOver ? AtlasIconsX.Arrows_Orange : AtlasIconsX.Arrows_Yellow,
+                    srcY: AtlasIconsY.Arrows_East,
                     srcWidth: 21,
                     srcHeight: 21,
                     hint: "Arrow Right"
@@ -100,15 +100,16 @@ Widget buildEditorSelectedNode() =>
                   height: 72,
                   width: 72,
                   alignment: Alignment.center,
-                  child: watch(GameEditor.nodeSelectedType, buildIconNodeType)),
+                  child: watch(GameEditor.nodeSelectedType, buildIconNodeType)
+              ),
               Positioned(
                 top: 50 + _shiftY,
                 left: 50 + _shiftX,
                 child: onMouseOver(builder: (BuildContext context, bool mouseOver) => buildAtlasImageButton(
-                    image: GameImages.icons,
+                    image: GameImages.atlasIcons,
                   action: GameEditor.cursorRowDecrease,
-                  srcX: mouseOver ? 9672 : 9649,
-                  srcY: 56,
+                  srcX: mouseOver ? AtlasIconsX.Arrows_Orange : AtlasIconsX.Arrows_Yellow,
+                  srcY: AtlasIconsY.Arrows_South,
                   srcWidth: 21,
                   srcHeight: 21,
                   hint: "Arrow Down"
@@ -118,10 +119,10 @@ Widget buildEditorSelectedNode() =>
                 top: -10 + _shiftY,
                 left: 27 + _shiftX,
                 child: onMouseOver(builder: (BuildContext context, bool mouseOver) => buildAtlasImageButton(
-                    image: GameImages.icons,
+                    image: GameImages.atlasIcons,
                   action: GameEditor.cursorZIncrease,
-                  srcX: mouseOver ? 9673 : 9650,
-                  srcY: 0,
+                  srcX: mouseOver ? AtlasIconsX.Arrows_Orange : AtlasIconsX.Arrows_Yellow,
+                  srcY: AtlasIconsY.Arrows_Up,
                   srcWidth: 21,
                   srcHeight: 21,
                   hint: "Shift + Arrow Up"
@@ -131,10 +132,10 @@ Widget buildEditorSelectedNode() =>
                 top: 50 + _shiftY,
                 left: 0 + _shiftX,
                 child: onMouseOver(builder: (BuildContext context, bool mouseOver) => buildAtlasImageButton(
-                    image: GameImages.icons,
+                    image: GameImages.atlasIcons,
                     action: GameEditor.cursorColumnDecrease,
-                    srcX: mouseOver ? 9672 : 9649,
-                    srcY: 83,
+                    srcX: mouseOver ? AtlasIconsX.Arrows_Orange : AtlasIconsX.Arrows_Yellow,
+                    srcY: AtlasIconsY.Arrows_West,
                     srcWidth: 21,
                     srcHeight: 21,
                     hint: "Arrow Left"

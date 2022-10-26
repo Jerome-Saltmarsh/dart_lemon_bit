@@ -2,7 +2,6 @@
 
 
 import 'package:flutter/widgets.dart';
-import 'package:gamestream_flutter/game_images.dart';
 import 'package:gamestream_flutter/game_widgets.dart';
 import 'package:lemon_engine/engine.dart';
 import 'dart:ui' as ui;
@@ -27,7 +26,7 @@ Widget buildAtlasImageButton({
         width: srcWidth,
         height: srcHeight,
         child: buildAtlasImage(
-            image: GameImages.icons,
+            image: image,
             srcX: srcX,
             srcY: srcY,
             srcWidth: srcWidth,

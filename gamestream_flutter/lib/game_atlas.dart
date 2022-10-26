@@ -1,5 +1,19 @@
 import 'library.dart';
 
+class AtlasIconsX {
+  static const Arrows_Yellow = 0.0;
+  static const Arrows_Orange = 22.0;
+}
+
+class AtlasIconsY {
+  static const Arrows_Up = 0.0;
+  static const Arrows_Down = 26.0;
+  static const Arrows_South = 56.0;
+  static const Arrows_West = 83.0;
+  static const Arrows_North = 110.0;
+  static const Arrows_East = 137.0;
+}
+
 class AtlasNodeX {
   static const Bau_Haus_Solid = 520.0;
   static const Brick_Solid = 680.0;

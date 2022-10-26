@@ -15,7 +15,7 @@ class GameImages {
    static late Image gameobjects;
    static late Image particles;
    static late Image template_shadow;
-   static late Image icons;
+   static late Image atlasIcons;
 
    static late Image template_head_plain;
    static late Image template_head_rogue;
@@ -132,7 +132,7 @@ class GameImages {
       template_shadow = await Engine.loadImageAsset('images/template/template-shadow.png');
       minimap = await Engine.loadImageAsset('images/atlas-map.png');
       atlasNodes = await Engine.loadImageAsset('images/atlas-nodes.png');
-      icons = await Engine.loadImageAsset('images/atlas-icons.png');
+      atlasIcons = await Engine.loadImageAsset('images/atlas-icons.png');
 
       template_head_plain = await Engine.loadImageAsset('images/template/head/template-head-plain.png');
       template_head_rogue = await Engine.loadImageAsset('images/template/head/template-head-rogue.png');

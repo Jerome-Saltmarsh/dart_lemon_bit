@@ -15,7 +15,7 @@ Widget buildIconAttackType(int type) {
 
 Widget buildAtlasSrc(AtlasSrc atlasSrc) =>
   buildAtlasImage(
-    image: GameImages.icons,
+    image: GameImages.atlasIcons,
     srcX: atlasSrc.srcX,
     srcY: atlasSrc.srcY,
     srcWidth: atlasSrc.width,
@@ -33,7 +33,7 @@ Widget buildButtonWeapon(Weapon weapon, int activeWeaponType) {
       child: Column(
         children: [
           buildAtlasImageButton(
-            image: GameImages.icons,
+            image: GameImages.atlasIcons,
             // action: () => sendClientRequestPlayerEquipAttackType1(weapon.uuid),
             action: () => {},
             srcX: weaponTypeAtlasImage.srcX,
