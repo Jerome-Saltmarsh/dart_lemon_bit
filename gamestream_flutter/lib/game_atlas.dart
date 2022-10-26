@@ -5,6 +5,8 @@ class AtlasIconsX {
   static const Arrows_Orange = 22.0;
   static const Home = 44.0;
   static const Fullscreen = 93.0;
+  static const Weather_Inactive = 153.0;
+  static const Weather_Active = 217.0;
 }
 
 class AtlasIconsY {

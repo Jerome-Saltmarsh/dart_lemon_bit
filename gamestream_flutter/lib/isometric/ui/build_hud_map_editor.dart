@@ -67,8 +67,8 @@ Widget buildControlWind() {
 
 Widget buildIconRain(Rain rain, bool active) {
   return buildAtlasImage(
-    image: GameImages.atlasNodes,
-    srcX: active ? 4352 : 4287,
+    image: GameImages.atlasIcons,
+    srcX: active ? AtlasIconsX.Weather_Active : AtlasIconsX.Weather_Inactive,
     srcY: 64.0 * rain.index,
     srcWidth: 64.0,
     srcHeight: 64.0,
@@ -79,9 +79,8 @@ Widget buildIconRain(Rain rain, bool active) {
 Widget buildIconLightning(Lightning lightning, bool active) {
   return buildAtlasImage(
     image: GameImages.atlasIcons,
-    srcX: active ? 4352 : 4287,
-    srcY:
-        lightning == Lightning.Off ? 0 : (64.0 * 2) + (64.0 * lightning.index),
+    srcX: active ? AtlasIconsX.Weather_Active : AtlasIconsX.Weather_Inactive,
+    srcY: lightning == Lightning.Off ? 0 : (64.0 * 2) + (64.0 * lightning.index),
     srcWidth: 64.0,
     srcHeight: 64.0,
     scale: 50 / 64.0,
@@ -95,7 +94,7 @@ Widget buildIconWind(Wind wind, bool active) {
 Widget buildIconWeather(double srcY, bool active) {
   return buildAtlasImage(
     image: GameImages.atlasIcons,
-    srcX: active ? 4352 : 4287,
+    srcX: active ? AtlasIconsX.Weather_Active : AtlasIconsX.Weather_Inactive,
     srcY: srcY,
     srcWidth: 64.0,
     srcHeight: 64.0,
