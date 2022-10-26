@@ -6,7 +6,7 @@ void renderNodeTorch(){
   if (!GameState.torchesIgnited.value) {
     Engine.renderSprite(
       image: GameImages.nodes,
-      srcX: AtlasNode.X_Torch,
+      srcX: AtlasNodeX.Torch,
       srcY: AtlasNode.Y_Torch,
       srcWidth: AtlasNode.Width_Torch,
       srcHeight: AtlasNode.Height_Torch,
@@ -18,7 +18,7 @@ void renderNodeTorch(){
   if (renderNodeWind == Wind.Calm){
     Engine.renderSprite(
       image: GameImages.nodes,
-      srcX: AtlasNode.X_Torch,
+      srcX: AtlasNodeX.Torch,
       srcY: AtlasNode.Y_Torch + AtlasNode.Height_Torch + (((GameRender.currentNodeRow + (GameAnimation.animationFrame)) % 6) * AtlasNode.Height_Torch),
       srcWidth: AtlasNode.Width_Torch,
       srcHeight: AtlasNode.Height_Torch,

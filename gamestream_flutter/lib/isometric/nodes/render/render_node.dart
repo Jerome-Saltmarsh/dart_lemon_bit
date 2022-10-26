@@ -65,8 +65,8 @@ void renderNodeAt() {
     case NodeType.Water:
       Engine.renderSprite(
         image: GameImages.nodes,
-        srcX: AtlasNode.Water_X,
-        srcY: AtlasNode.Water_Y + (((GameAnimation.animationFrameWater + ((GameRender.currentNodeRow + GameRender.currentNodeColumn) * 3)) % 10) * 72.0),
+        srcX: AtlasNodeX.Water,
+        srcY: AtlasNodeY.Water + (((GameAnimation.animationFrameWater + ((GameRender.currentNodeRow + GameRender.currentNodeColumn) * 3)) % 10) * 72.0),
         srcWidth: GameConstants.spriteWidth,
         srcHeight: GameConstants.spriteHeight,
         dstX: GameRender.currentNodeDstX,
@@ -105,13 +105,13 @@ void renderNodeAt() {
       switch (GameState.nodesWind[GameRender.currentNodeIndex]) {
         case windIndexCalm:
           renderStandardNode(
-            srcX: AtlasNode.Grass_Long,
+            srcX: AtlasNodeX.Grass_Long,
             srcY: GameConstants.spriteHeight * renderNodeShade,
           );
           return;
         default:
           renderStandardNode(
-              srcX: AtlasNode.Grass_Long + ((((GameRender.currentNodeRow - GameRender.currentNodeColumn) + GameAnimation.animationFrameGrass) % 6) * 48),
+              srcX: AtlasNodeX.Grass_Long + ((((GameRender.currentNodeRow - GameRender.currentNodeColumn) + GameAnimation.animationFrameGrass) % 6) * 48),
               srcY: GameConstants.spriteHeight * renderNodeShade,
           );
           return;
@@ -249,7 +249,7 @@ void renderNodeTypeGrass() {
   switch (GameState.nodesOrientation[GameRender.currentNodeIndex]) {
     case NodeOrientation.Solid:
       return renderStandardNode(
-          srcX: GameState.nodesVariation[GameRender.currentNodeIndex] ? AtlasNode.Grass : AtlasNode.Grass_Flowers,
+          srcX: GameState.nodesVariation[GameRender.currentNodeIndex] ? AtlasNodeX.Grass : AtlasNode.Grass_Flowers,
           srcY: GameConstants.spriteHeight * GameState.nodesShade[GameRender.currentNodeIndex],
       );
     case NodeOrientation.Slope_North:

@@ -14,12 +14,16 @@ class AtlasNodeX {
   static const Fireplace = 667.0;
   static const Sunflower = 618.0;
   static const Tree_Top = 62.0;
+  static const Water = 128.0;
+  static const Grass = 0.0;
+  static const Grass_Long = 1218.0;
+  static const Torch = 960.0;
 
   static double mapNodeType(int type) => {
     NodeType.Brick_2: Brick_Solid,
-    NodeType.Grass: AtlasNode.Grass,
-    NodeType.Torch: AtlasNode.X_Torch,
-    NodeType.Grass_Long: AtlasNode.Grass_Long,
+    NodeType.Grass: Grass,
+    NodeType.Torch: Torch,
+    NodeType.Grass_Long: Grass_Long,
     NodeType.Grass_Flowers: AtlasNode.Grass_Flowers,
     NodeType.Brick_Top: 0.0,
     NodeType.Stone: AtlasNode.Stone_X,
@@ -35,7 +39,7 @@ class AtlasNodeX {
     NodeType.Boulder: AtlasNode.Boulder_X,
     NodeType.Spawn: AtlasNode.Spawn_X,
     NodeType.Empty: 0.0,
-    NodeType.Water: AtlasNode.Water_X,
+    NodeType.Water: Water,
     NodeType.Spawn_Weapon: Spawn_Weapon,
     NodeType.Spawn_Player: Spawn_Player,
     NodeType.Wood_2: Wood,
@@ -61,9 +65,10 @@ class AtlasNodeY {
   static const Fireplace = 512.0;
   static const Sunflower = 512.0;
   static const Tree_Top = 512.0;
+  static const Water = 512.0;
 
   static double mapNodeType(int type) => {
-    NodeType.Water: AtlasNode.Water_Y,
+    NodeType.Water: Water,
     NodeType.Torch: AtlasNode.Y_Torch,
     NodeType.Water_Flowing: 0.0,
     NodeType.Window: AtlasNode.Window_South_Y,
@@ -102,8 +107,7 @@ class AtlasNode {
   static const Sprite_Height = 72.0;
   static const Sprite_Width_Padded = Sprite_Width + 1;
   static const Sprite_Height_Padded = Sprite_Height + 1;
-  static const Grass = 0.0;
-  static const Grass_Flowers = Grass + Sprite_Width_Padded;
+  static const Grass_Flowers = 0 + Sprite_Width_Padded;
   static const Node_Grass_Slope_North = Grass_Flowers + Sprite_Width_Padded;
   static const Node_Grass_Slope_East = Node_Grass_Slope_North + Sprite_Width_Padded;
   static const Node_Grass_Slope_South = Node_Grass_Slope_East + Sprite_Width_Padded;
@@ -129,7 +133,6 @@ class AtlasNode {
   static const Node_Brick_Corner_Right = Node_Brick_Corner_Top + Sprite_Width_Padded;
   static const Node_Brick_Corner_Bottom = Node_Brick_Corner_Right + Sprite_Width_Padded;
   static const Node_Brick_Corner_Left = Node_Brick_Corner_Bottom + Sprite_Width_Padded;
-  static const Grass_Long = 1218.0;
   static const Stone_X = 1508.0;
   static const Plain_Solid_X = 1557.0;
   static const Node_Plain_Half_Row_X = Plain_Solid_X;
@@ -155,8 +158,6 @@ class AtlasNode {
   static const Node_Tree_Bottom_Height = 75.0;
   static const Node_Tree_Top_Width = Width_Tree_Bottom;
   static const Node_Tree_Top_Height = Node_Tree_Bottom_Height;
-  static const Water_X = 128.0;
-  static const Water_Y = 512.0;
   static const Wood_Solid_X = 177.0;
   static const Node_Wood_Solid_Y = 512.0;
   static const Node_Wood_Half_West_X = Wood_Solid_X + Sprite_Width_Padded;
@@ -247,7 +248,6 @@ class AtlasNode {
   static const X_Bed_Top = X_Bed_Bottom + Sprite_Width_Padded;
   static const Y_Bed_Top = Y_Bed_Bottom;
   static const X_Torch_Windy = 986.0;
-  static const X_Torch = 960.0;
   static const Y_Torch = 512.0;
   static const Y_Torch_Windy = 512.0;
   static const Width_Torch = 25.0;
