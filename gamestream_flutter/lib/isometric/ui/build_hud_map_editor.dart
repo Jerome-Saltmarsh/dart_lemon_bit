@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/isometric/nodes/render/atlas_node.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -256,7 +257,7 @@ Widget buildControlTime() {
 Widget buildIconNodeType(int value){
   return buildAtlasImage(
     image: GameImages.icons,
-    srcX: mapNodeTypeToSrcX(value),
+    srcX: AtlasNodeX.mapNodeType(value),
     srcY: mapNodeTypeToSrcY(value),
     srcWidth: mapNodeTypeToSrcWidth(value),
     srcHeight: mapNodeTypeToSrcHeight(value),
@@ -266,7 +267,7 @@ Widget buildIconNodeType(int value){
 Widget buildButtonSelectNodeType(int nodeType) {
   final canvas = buildAtlasImage(
     image: GameImages.nodes,
-    srcX: mapNodeTypeToSrcX(nodeType),
+    srcX: AtlasNodeX.mapNodeType(nodeType),
     srcY: mapNodeTypeToSrcY(nodeType),
     srcWidth: mapNodeTypeToSrcWidth(nodeType),
     srcHeight: mapNodeTypeToSrcHeight(nodeType),
