@@ -7,7 +7,7 @@ void renderNodeTorch(){
     Engine.renderSprite(
       image: GameImages.nodes,
       srcX: AtlasNodeX.Torch,
-      srcY: AtlasNode.Y_Torch,
+      srcY: AtlasNodeY.Torch,
       srcWidth: AtlasNode.Width_Torch,
       srcHeight: AtlasNode.Height_Torch,
       dstX: GameRender.currentNodeDstX,
@@ -19,7 +19,7 @@ void renderNodeTorch(){
     Engine.renderSprite(
       image: GameImages.nodes,
       srcX: AtlasNodeX.Torch,
-      srcY: AtlasNode.Y_Torch + AtlasNode.Height_Torch + (((GameRender.currentNodeRow + (GameAnimation.animationFrame)) % 6) * AtlasNode.Height_Torch),
+      srcY: AtlasNodeY.Torch + AtlasNode.Height_Torch + (((GameRender.currentNodeRow + (GameAnimation.animationFrame)) % 6) * AtlasNode.Height_Torch),
       srcWidth: AtlasNode.Width_Torch,
       srcHeight: AtlasNode.Height_Torch,
       dstX: GameRender.currentNodeDstX,

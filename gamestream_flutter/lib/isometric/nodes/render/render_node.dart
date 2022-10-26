@@ -79,8 +79,8 @@ void renderNodeAt() {
     case NodeType.Tree_Bottom:
       Engine.renderSprite(
         image: GameImages.nodes,
-        srcX: AtlasNode.Tree_Bottom_X,
-        srcY: AtlasNode.Node_Tree_Bottom_Y,
+        srcX: AtlasNodeX.Tree_Bottom,
+        srcY: AtlasNodeY.Tree_Bottom,
         srcWidth: AtlasNode.Width_Tree_Bottom,
         srcHeight: AtlasNode.Node_Tree_Bottom_Height,
         dstX: GameRender.currentNodeDstX,

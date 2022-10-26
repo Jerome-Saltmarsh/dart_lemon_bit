@@ -7,7 +7,7 @@ class GameConvert {
   }) =>
       Engine.clamp(distance - 1, maxBrightness, Shade.Pitch_Black);
 
-  static double convertRowColumnZToRenderY(int row, int column, int z){
+  static double rowColumnZToRenderY(int row, int column, int z){
     return ((row + column) * tileSizeHalf) - (z * tileHeight);
   }
 

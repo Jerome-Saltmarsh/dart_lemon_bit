@@ -77,7 +77,7 @@ class GameRender {
   });
 
   static double get currentNodeRenderX => (currentNodeRow - currentNodeColumn) * tileSizeHalf;
-  static double get currentNodeRenderY => GameConvert.convertRowColumnZToRenderY(currentNodeRow, currentNodeColumn, currentNodeZ);
+  static double get currentNodeRenderY => GameConvert.rowColumnZToRenderY(currentNodeRow, currentNodeColumn, currentNodeZ);
 
   static int get currentNodeShade => GameState.nodesShade[currentNodeIndex];
   static int get currentNodeColor => GameState.colorShades[currentNodeShade];
@@ -1020,7 +1020,7 @@ class GameRender {
       nodesMaxZ = 0;
     }
 
-    while (GameConvert.convertRowColumnZToRenderY(currentNodeRow, currentNodeColumn, nodesMinZ) > screenBottom){
+    while (GameConvert.rowColumnZToRenderY(currentNodeRow, currentNodeColumn, nodesMinZ) > screenBottom){
       nodesMinZ++;
       if (nodesMinZ >= GameState.nodesTotalZ){
         return renderOrderGrid.end();

@@ -14,6 +14,7 @@ class AtlasNodeX {
   static const Fireplace = 667.0;
   static const Sunflower = 618.0;
   static const Tree_Top = 62.0;
+  static const Tree_Bottom = 0.0;
   static const Water = 128.0;
   static const Grass = 0.0;
   static const Grass_Long = 1218.0;
@@ -37,7 +38,7 @@ class AtlasNodeX {
     NodeType.Bed_Top: AtlasNode.X_Bed_Top,
     NodeType.Oven: AtlasNode.Oven_X,
     NodeType.Cottage_Roof: -1.0,
-    NodeType.Tree_Bottom: AtlasNode.Tree_Bottom_X,
+    NodeType.Tree_Bottom: Tree_Bottom,
     NodeType.Wooden_Plank: AtlasNode.Wooden_Plank_Solid_X,
     NodeType.Boulder: AtlasNode.Boulder_X,
     NodeType.Spawn: AtlasNode.Spawn_X,
@@ -68,16 +69,21 @@ class AtlasNodeY {
   static const Fireplace = 512.0;
   static const Sunflower = 512.0;
   static const Tree_Top = 512.0;
+  static const Tree_Bottom = 512.0;
   static const Water = 512.0;
   static const Stone = 0.0;
   static const Plain_Solid = 0.0;
+  static const Torch = 512.0;
+  static const Water_Flowing = 0.0;
+  static const Window = 876.0;
+  static const Spawn = 1021.0;
 
   static double mapNodeType(int type) => {
     NodeType.Water: Water,
-    NodeType.Torch: AtlasNode.Y_Torch,
-    NodeType.Water_Flowing: 0.0,
-    NodeType.Window: AtlasNode.Window_South_Y,
-    NodeType.Spawn: AtlasNode.Spawn_Y,
+    NodeType.Torch: Torch,
+    NodeType.Water_Flowing: Water_Flowing,
+    NodeType.Window: Window,
+    NodeType.Spawn: Spawn,
     NodeType.Spawn_Weapon: Spawn_Weapon,
     NodeType.Spawn_Player: Spawn_Player,
     NodeType.Soil: Soil,
@@ -89,6 +95,7 @@ class AtlasNodeY {
     NodeType.Fireplace: Fireplace,
     NodeType.Sunflower: Sunflower,
     NodeType.Tree_Top: Tree_Top,
+    NodeType.Tree_Bottom: Tree_Bottom,
     NodeType.Stone: Stone,
     NodeType.Plain: Plain_Solid,
   }[type] ?? 0;
@@ -156,8 +163,6 @@ class AtlasNode {
   static const Node_Rain_Landing_Light_X = 1704.0;
   static const Node_Rain_Landing_Heavy_X = Node_Rain_Landing_Light_X + Sprite_Width_Padded;
   static const Node_Rain_Landing_Water_X = 1802.0;
-  static const Tree_Bottom_X = 0.0;
-  static const Node_Tree_Bottom_Y = 512.0;
   static const Width_Tree_Bottom = 62.0;
   static const Node_Tree_Bottom_Height = 75.0;
   static const Node_Tree_Top_Width = Width_Tree_Bottom;
@@ -252,7 +257,6 @@ class AtlasNode {
   static const X_Bed_Top = X_Bed_Bottom + Sprite_Width_Padded;
   static const Y_Bed_Top = Y_Bed_Bottom;
   static const X_Torch_Windy = 986.0;
-  static const Y_Torch = 512.0;
   static const Y_Torch_Windy = 512.0;
   static const Width_Torch = 25.0;
   static const Height_Torch = 70.0;
