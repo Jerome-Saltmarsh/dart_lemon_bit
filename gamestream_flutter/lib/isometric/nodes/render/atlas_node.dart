@@ -3,12 +3,14 @@ class AtlasNodeX {
   static const Spawn_Weapon = 0.0;
   static const Spawn_Player = 49.0;
   static const Spawn_Zombie = 0.0;
+  static const Soil = 618.0;
 }
 
 class AtlasNodeY {
   static const Spawn_Weapon = 592.0;
   static const Spawn_Player = 592.0;
   static const Spawn_Zombie = 665.0;
+  static const Soil = 584.0;
 }
 
 class AtlasNodeWidth {

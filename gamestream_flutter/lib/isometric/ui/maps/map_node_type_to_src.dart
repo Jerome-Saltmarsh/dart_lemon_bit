@@ -13,7 +13,7 @@ double mapNodeTypeToSrcX(int type) => {
   NodeType.Table: AtlasNode.Table_X,
   NodeType.Stone: AtlasNode.Stone_X,
   NodeType.Plain: AtlasNode.Plain_Solid_X,
-  NodeType.Soil: AtlasNode.Soil_X,
+  NodeType.Soil: AtlasNodeX.Soil,
   NodeType.Bau_Haus: AtlasNode.Bau_Haus_Solid_X,
   NodeType.Chimney: AtlasNode.Chimney_X,
   NodeType.Bed_Bottom: AtlasNode.X_Bed_Bottom,
@@ -41,6 +41,7 @@ double mapNodeTypeToSrcY(int type) => {
   NodeType.Spawn: AtlasNode.Spawn_Y,
   NodeType.Spawn_Weapon: AtlasNodeY.Spawn_Weapon,
   NodeType.Spawn_Player: AtlasNodeY.Spawn_Player,
+  NodeType.Soil: AtlasNodeY.Soil
 }[type] ?? 0;
 
 double mapNodeTypeToSrcWidth(int type) => {
