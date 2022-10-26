@@ -11,8 +11,8 @@ void renderNodeBauHaus() {
   switch (renderNodeOrientation) {
     case NodeOrientation.Solid:
       renderStandardNodeShaded(
-        srcX: AtlasNode.Bau_Haus_Solid_X,
-        srcY: AtlasNode.Node_Bau_Haus_Solid_Y,
+        srcX: AtlasNodeX.Bau_Haus_Solid,
+        srcY: AtlasNodeY.Bau_Haus_Solid,
       );
       break;
     case NodeOrientation.Half_North:

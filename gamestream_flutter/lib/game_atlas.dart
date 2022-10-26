@@ -1,6 +1,7 @@
 import 'library.dart';
 
 class AtlasNodeX {
+  static const Bau_Haus_Solid = 520.0;
   static const Brick_Solid = 680.0;
   static const Spawn_Weapon = 0.0;
   static const Spawn_Player = 49.0;
@@ -44,7 +45,7 @@ class AtlasNodeX {
     NodeType.Stone: Stone,
     NodeType.Plain: Plain_Solid,
     NodeType.Soil: Soil,
-    NodeType.Bau_Haus: AtlasNode.Bau_Haus_Solid_X,
+    NodeType.Bau_Haus: Bau_Haus_Solid,
     NodeType.Bed_Bottom: AtlasNode.X_Bed_Bottom,
     NodeType.Bed_Top: AtlasNode.X_Bed_Top,
     NodeType.Cottage_Roof: -1.0,
@@ -91,6 +92,7 @@ class AtlasNodeX {
 }
 
 class AtlasNodeY {
+  static const Bau_Haus_Solid = 512.0;
   static const Spawn_Weapon = 592.0;
   static const Spawn_Player = 592.0;
   static const Spawn_Zombie = 665.0;
@@ -123,19 +125,19 @@ class AtlasNodeY {
   static const Orientation_Slope_Symmetric_North = 878.0;
   static const Orientation_Slope_Symmetric_East = 951.0;
   static const Orientation_Slope_Symmetric_South = 1024.0;
-  static const Orientation_Slope_Symmetric_West = 2016.0;
+  static const Orientation_Slope_Symmetric_West = Orientation_Slope_Symmetric_South + AtlasNode.Sprite_Height;
   static const Orientation_Corner_Top = 512.0;
-  static const Orientation_Corner_Right = Orientation_Corner_Top + AtlasNode.Sprite_Height;
-  static const Orientation_Corner_Bottom = Orientation_Corner_Right + AtlasNode.Sprite_Height;
-  static const Orientation_Corner_Left = Orientation_Corner_Bottom + AtlasNode.Sprite_Height;
-  static const Orientation_Slope_Outer_South_West = Orientation_Corner_Left + AtlasNode.Sprite_Height;
-  static const Orientation_Slope_Outer_North_West = Orientation_Slope_Outer_South_West + AtlasNode.Sprite_Height;
-  static const Orientation_Slope_Outer_North_East = Orientation_Slope_Outer_North_West + AtlasNode.Sprite_Height;
-  static const Orientation_Slope_Outer_South_East = Orientation_Slope_Outer_North_East + AtlasNode.Sprite_Height;
-  static const Orientation_Slope_Inner_South_East = Orientation_Slope_Outer_South_East + AtlasNode.Sprite_Height;
-  static const Orientation_Slope_Inner_North_East = Orientation_Slope_Inner_South_East + AtlasNode.Sprite_Height;
-  static const Orientation_Slope_Inner_North_West = Orientation_Slope_Inner_North_East + AtlasNode.Sprite_Height;
-  static const Orientation_Slope_Inner_South_West = Orientation_Slope_Inner_North_West + AtlasNode.Sprite_Height;
+  static const Orientation_Corner_Right = Orientation_Corner_Top + AtlasNode.Sprite_Height_Padded;
+  static const Orientation_Corner_Bottom = Orientation_Corner_Right + AtlasNode.Sprite_Height_Padded;
+  static const Orientation_Corner_Left = Orientation_Corner_Bottom + AtlasNode.Sprite_Height_Padded;
+  static const Orientation_Slope_Outer_South_West = Orientation_Corner_Left + AtlasNode.Sprite_Height_Padded;
+  static const Orientation_Slope_Outer_North_West = Orientation_Slope_Outer_South_West + AtlasNode.Sprite_Height_Padded;
+  static const Orientation_Slope_Outer_North_East = Orientation_Slope_Outer_North_West + AtlasNode.Sprite_Height_Padded;
+  static const Orientation_Slope_Outer_South_East = Orientation_Slope_Outer_North_East + AtlasNode.Sprite_Height_Padded;
+  static const Orientation_Slope_Inner_South_East = Orientation_Slope_Outer_South_East + AtlasNode.Sprite_Height_Padded;
+  static const Orientation_Slope_Inner_North_East = Orientation_Slope_Inner_South_East + AtlasNode.Sprite_Height_Padded;
+  static const Orientation_Slope_Inner_North_West = Orientation_Slope_Inner_North_East + AtlasNode.Sprite_Height_Padded;
+  static const Orientation_Slope_Inner_South_West = Orientation_Slope_Inner_North_West + AtlasNode.Sprite_Height_Padded;
 
   static double mapNodeType(int type) => {
     NodeType.Water: Water,
@@ -289,19 +291,18 @@ class AtlasNode {
   static const Node_Wood_Corner_Right_Y = Node_Wood_Solid_Y;
   static const Node_Wood_Corner_Bottom_X = Node_Wood_Corner_Right_X + Sprite_Width_Padded;
   static const Node_Wood_Corner_Bottom_Y = Node_Wood_Solid_Y;
-  static const Bau_Haus_Solid_X = 520.0;
-  static const Node_Bau_Haus_Solid_Y = 512.0;
-  static const Node_Bau_Haus_Half_South_X = Bau_Haus_Solid_X;
-  static const Node_Bau_Haus_Half_South_Y = Node_Bau_Haus_Solid_Y + Sprite_Height_Padded;
-  static const Node_Bau_Haus_Half_West_X = Bau_Haus_Solid_X;
-  static const Node_Bau_Haus_Half_West_Y = Node_Bau_Haus_Solid_Y + Sprite_Height_Padded;
-  static const Node_Bau_Haus_Corner_Top_X = Bau_Haus_Solid_X;
+  // static const Node_Bau_Haus_Solid_Y = 512.0;
+  static const Node_Bau_Haus_Half_South_X = 520.0;
+  static const Node_Bau_Haus_Half_South_Y = 512.0 + Sprite_Height_Padded;
+  static const Node_Bau_Haus_Half_West_X = 520.0;
+  static const Node_Bau_Haus_Half_West_Y = 512.0 + Sprite_Height_Padded;
+  static const Node_Bau_Haus_Corner_Top_X = 520.0;
   static const Node_Bau_Haus_Corner_Top_Y = Node_Bau_Haus_Half_West_Y + Sprite_Height_Padded;
-  static const Node_Bau_Haus_Corner_Right_X = Bau_Haus_Solid_X;
+  static const Node_Bau_Haus_Corner_Right_X = 520.0;
   static const Node_Bau_Haus_Corner_Right_Y = Node_Bau_Haus_Corner_Top_Y + Sprite_Height_Padded;
-  static const Node_Bau_Haus_Corner_Bottom_X = Bau_Haus_Solid_X;
+  static const Node_Bau_Haus_Corner_Bottom_X = 520.0;
   static const Node_Bau_Haus_Corner_Bottom_Y = Node_Bau_Haus_Corner_Right_Y + Sprite_Height_Padded;
-  static const Node_Bau_Haus_Corner_Left_X = Bau_Haus_Solid_X;
+  static const Node_Bau_Haus_Corner_Left_X = 520.0;
   static const Node_Bau_Haus_Corner_Left_Y = Node_Bau_Haus_Corner_Bottom_Y + Sprite_Height_Padded;
   static const Node_Bau_Haus_Slope_North_X = 569.0;
   static const Node_Bau_Haus_Slope_North_Y = 512.0;
