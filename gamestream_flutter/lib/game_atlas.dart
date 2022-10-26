@@ -27,6 +27,12 @@ class AtlasNodeX {
   static const Boulder = 618.0;
   static const Wireframe_Blue = 0.0;
   static const Wireframe_Red = 49.0;
+  static const Orientation_Solid = 1018.0;
+  static const Orientation_Half = 1018.0;
+  static const Orientation_Slope_Symmetric = 1018.0;
+  static const Orientation_Corner = 1067.0;
+  static const Orientation_Slope_Inner = 1067.0;
+  static const Orientation_Slope_Outer = 1067.0;
 
   static double mapNodeType(int type) => {
     NodeType.Brick_2: Brick_Solid,
@@ -87,6 +93,27 @@ class AtlasNodeY {
   static const Boulder = 657.0;
   static const Wireframe_Blue = 738.0;
   static const Wireframe_Red = 738.0;
+  static const Orientation_Solid = 512.0;
+  static const Orientation_Half_North = 586.0;
+  static const Orientation_Half_East = 586.0;
+  static const Orientation_Half_South = 586.0;
+  static const Orientation_Half_West = 586.0;
+  static const Orientation_Slope_Symmetric_North = 1018.0;
+  static const Orientation_Slope_Symmetric_East = 1018.0;
+  static const Orientation_Slope_Symmetric_South = 1018.0;
+  static const Orientation_Slope_Symmetric_West = 1018.0;
+  static const Orientation_Corner_Top = 1067.0;
+  static const Orientation_Corner_Right = 1067.0;
+  static const Orientation_Corner_Bottom = 1067.0;
+  static const Orientation_Corner_Left = 1067.0;
+  static const Orientation_Slope_Outer_South_West = 1067.0;
+  static const Orientation_Slope_Outer_North_West = 1067.0;
+  static const Orientation_Slope_Outer_North_East = 1067.0;
+  static const Orientation_Slope_Outer_South_East = 1067.0;
+  static const Orientation_Slope_Inner_South_East = 1067.0;
+  static const Orientation_Slope_Inner_North_East = 1067.0;
+  static const Orientation_Slope_Inner_North_West = 1067.0;
+  static const Orientation_Slope_Inner_South_West = 1067.0;
 
   static double mapNodeType(int type) => {
     NodeType.Water: Water,
@@ -111,6 +138,54 @@ class AtlasNodeY {
     NodeType.Oven: Oven,
     NodeType.Boulder: Boulder,
   }[type] ?? 0;
+
+  static double mapOrientation(int orientation) {
+    if (orientation == NodeOrientation.Solid)
+      return AtlasNodeY.Orientation_Solid;
+    if (orientation == NodeOrientation.Slope_North)
+      return AtlasNodeY.Orientation_Slope_Symmetric_North;
+    if (orientation == NodeOrientation.Slope_East)
+      return AtlasNodeY.Orientation_Slope_Symmetric_East;
+    if (orientation == NodeOrientation.Slope_South)
+      return AtlasNodeY.Orientation_Slope_Symmetric_South;
+    if (orientation == NodeOrientation.Slope_West)
+      return AtlasNodeY.Orientation_Slope_Symmetric_West;
+    if (orientation == NodeOrientation.Half_North)
+      return AtlasNodeY.Orientation_Half_North;
+    if (orientation == NodeOrientation.Half_East)
+      return AtlasNodeY.Orientation_Half_East;
+    if (orientation == NodeOrientation.Half_South)
+      return AtlasNodeY.Orientation_Half_South;
+    if (orientation == NodeOrientation.Half_West)
+      return AtlasNodeY.Orientation_Half_West;
+    if (orientation == NodeOrientation.Corner_Top)
+      return AtlasNodeY.Orientation_Corner_Top;
+    if (orientation == NodeOrientation.Corner_Right)
+      return AtlasNodeY.Orientation_Corner_Right;
+    if (orientation == NodeOrientation.Corner_Bottom)
+      return AtlasNodeY.Orientation_Corner_Bottom;
+    if (orientation == NodeOrientation.Corner_Left)
+      return AtlasNodeY.Orientation_Corner_Left;
+    if (orientation == NodeOrientation.Slope_Outer_South_West)
+      return AtlasNodeY.Orientation_Slope_Outer_South_West;
+    if (orientation == NodeOrientation.Slope_Outer_North_West)
+      return AtlasNodeY.Orientation_Slope_Outer_North_West;
+    if (orientation == NodeOrientation.Slope_Outer_North_East)
+      return AtlasNodeY.Orientation_Slope_Outer_North_East;
+    if (orientation == NodeOrientation.Slope_Outer_South_East)
+      return AtlasNodeY.Orientation_Slope_Outer_South_East;
+    if (orientation == NodeOrientation.Slope_Inner_South_East)
+      return AtlasNodeY.Orientation_Slope_Inner_South_East;
+    if (orientation == NodeOrientation.Slope_Inner_North_East)
+      return AtlasNodeY.Orientation_Slope_Inner_North_East;
+    if (orientation == NodeOrientation.Slope_Inner_North_West)
+      return AtlasNodeY.Orientation_Slope_Inner_North_West;
+    if (orientation == NodeOrientation.Slope_Inner_South_West)
+      return AtlasNodeY.Orientation_Slope_Inner_South_West;
+
+    throw Exception('mapOrientationToSrcY(${NodeOrientation.getName(orientation)}');
+  }
+
 }
 
 class AtlasNodeWidth {

@@ -1070,9 +1070,9 @@ class GameRender {
       dstY: GameConvert.rowColumnZToRenderY(row, column,z),
       srcX: AtlasNodeX.Wireframe_Blue,
       srcY: AtlasNodeY.Wireframe_Blue,
-      srcWidth: 48,
-      srcHeight: 72,
-      anchorY: 0.3334,
+      srcWidth: GameConstants.spriteWidth,
+      srcHeight: GameConstants.spriteHeight,
+      anchorY: GameConstants.spriteAnchorY,
     );
     return;
   }
@@ -1084,9 +1084,9 @@ class GameRender {
       dstY: GameConvert.rowColumnZToRenderY(row, column,z),
       srcX: AtlasNodeX.Wireframe_Red,
       srcY: AtlasNodeY.Wireframe_Red,
-      srcWidth: 48,
-      srcHeight: 72,
-      anchorY: 0.3334,
+      srcWidth: GameConstants.spriteWidth,
+      srcHeight: GameConstants.spriteHeight,
+      anchorY: GameConstants.spriteAnchorY,
     );
   }
 

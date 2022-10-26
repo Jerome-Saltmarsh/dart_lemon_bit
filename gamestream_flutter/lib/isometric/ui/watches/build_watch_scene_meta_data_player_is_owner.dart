@@ -123,11 +123,10 @@ Widget buildColumnNodeOrientationSolid() =>
     );
 
 Widget buildOrientationIcon(int orientation){
-
   final canvas = buildAtlasImage(
-    image: GameImages.icons,
+    image: GameImages.atlasNodes,
     srcX: mapOrientationToSrcX(orientation),
-    srcY: mapOrientationToSrcY(orientation),
+    srcY: AtlasNodeY.mapOrientation(orientation),
     srcWidth: 48,
     srcHeight: 72,
     scale: 0.75,
@@ -155,64 +154,25 @@ Widget buildOrientationIcon(int orientation){
   );
 }
 
-double mapOrientationToSrcX(int orientation){
+double mapOrientationToSrcX(int orientation) {
   if (NodeOrientation.isCorner(orientation)){
-    return 7256;
+    return AtlasNodeX.Orientation_Corner;
   }
   if (NodeOrientation.isSlopeCornerOuter(orientation)){
-    return 7256;
+    return AtlasNodeX.Orientation_Slope_Outer;
   }
   if (NodeOrientation.isSlopeCornerInner(orientation)){
-    return 7256;
+    return AtlasNodeX.Orientation_Slope_Inner;
   }
- return 7207;
+  if (NodeOrientation.isHalf(orientation)){
+    return AtlasNodeX.Orientation_Half;
+  }
+  if (NodeOrientation.isSlopeSymmetric(orientation)){
+    return AtlasNodeX.Orientation_Slope_Symmetric;
+  }
+  throw Exception('mapOrientationToSrcX(${NodeOrientation.getName(orientation)}');
 }
 
-double mapOrientationToSrcY(int orientation){
-  if (orientation == NodeOrientation.Solid)
-    return 0 * 73;
-  if (orientation == NodeOrientation.Slope_North)
-    return 5 * 73;
-  if (orientation == NodeOrientation.Slope_East)
-    return 6 * 73;
-  if (orientation == NodeOrientation.Slope_South)
-    return 7 * 73;
-  if (orientation == NodeOrientation.Slope_West)
-    return 8 * 73;
-  if (orientation == NodeOrientation.Half_North)
-    return 1 * 73;
-  if (orientation == NodeOrientation.Half_East)
-    return 2 * 73;
-  if (orientation == NodeOrientation.Half_South)
-    return 3 * 73;
-  if (orientation == NodeOrientation.Half_West)
-    return 4 * 73;
-  if (orientation == NodeOrientation.Corner_Top)
-    return 0 * 73;
-  if (orientation == NodeOrientation.Corner_Right)
-    return 1 * 73;
-  if (orientation == NodeOrientation.Corner_Bottom)
-    return 2 * 73;
-  if (orientation == NodeOrientation.Corner_Left)
-    return 3 * 73;
-  if (orientation == NodeOrientation.Slope_Outer_South_West)
-    return 4 * 73;
-  if (orientation == NodeOrientation.Slope_Outer_North_West)
-    return 5 * 73;
-  if (orientation == NodeOrientation.Slope_Outer_North_East)
-    return 6 * 73;
-  if (orientation == NodeOrientation.Slope_Outer_South_East)
-    return 7 * 73;
-  if (orientation == NodeOrientation.Slope_Inner_South_East)
-    return 8 * 73;
-  if (orientation == NodeOrientation.Slope_Inner_North_East)
-    return 9 * 73;
-  if (orientation == NodeOrientation.Slope_Inner_North_West)
-    return 10 * 73;
-  if (orientation == NodeOrientation.Slope_Inner_South_West)
-    return 11 * 73;
-  return 0;
-}
 
 Widget buildColumnNodeOrientationSlopeSymmetric() =>
     visibleBuilder(
