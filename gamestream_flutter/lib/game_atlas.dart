@@ -142,9 +142,9 @@ class AtlasNodeY {
   static const Wireframe_Red = 738.0;
   static const Orientation_Solid = 512.0;
   static const Orientation_Half_North = 586.0;
-  static const Orientation_Half_East = 586.0;
-  static const Orientation_Half_South = 586.0;
-  static const Orientation_Half_West = 586.0;
+  static const Orientation_Half_East = Orientation_Half_North + AtlasNode.Sprite_Height_Padded;
+  static const Orientation_Half_South = Orientation_Half_East + AtlasNode.Sprite_Height_Padded;
+  static const Orientation_Half_West = Orientation_Half_South + AtlasNode.Sprite_Height_Padded;
   static const Orientation_Slope_Symmetric_North = 878.0;
   static const Orientation_Slope_Symmetric_East = 951.0;
   static const Orientation_Slope_Symmetric_South = 1024.0;

@@ -157,7 +157,6 @@ Widget buildOrientationIcon(int orientation){
 Widget buildColumnNodeOrientationSlopeSymmetric() =>
     visibleBuilder(
       GameEditor.nodeSupportsSlopeSymmetric,
-      // buildColumnButtonsNodeOrientations(NodeOrientation.valuesSlopeSymmetric),
       Row(
         children: [
            Column(
