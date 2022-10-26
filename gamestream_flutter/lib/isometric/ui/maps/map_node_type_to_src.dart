@@ -29,8 +29,8 @@ double mapNodeTypeToSrcX(int type) => {
   NodeType.Spawn: AtlasNode.Spawn_X,
   NodeType.Empty: 0.0,
   NodeType.Water: AtlasNode.Water_X,
-  NodeType.Spawn_Weapon: 0.0,
-  NodeType.Spawn_Player: 0.0,
+  NodeType.Spawn_Weapon: AtlasNodeX.Spawn_Weapon,
+  NodeType.Spawn_Player: AtlasNodeX.Spawn_Player,
 }[type] ?? 7055;
 
 double mapNodeTypeToSrcY(int type) => {
@@ -39,8 +39,8 @@ double mapNodeTypeToSrcY(int type) => {
   NodeType.Water_Flowing: 0.0,
   NodeType.Window: AtlasNode.Window_South_Y,
   NodeType.Spawn: AtlasNode.Spawn_Y,
-  NodeType.Spawn_Weapon: 153.0,
-  NodeType.Spawn_Player: 225.0,
+  NodeType.Spawn_Weapon: AtlasNodeY.Spawn_Weapon,
+  NodeType.Spawn_Player: AtlasNodeY.Spawn_Player,
 }[type] ?? 0;
 
 double mapNodeTypeToSrcWidth(int type) => {
