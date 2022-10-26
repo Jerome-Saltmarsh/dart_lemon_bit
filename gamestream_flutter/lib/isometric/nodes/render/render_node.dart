@@ -92,8 +92,8 @@ void renderNodeAt() {
       var shift = GameAnimation.treeAnimation[((GameRender.currentNodeRow - GameRender.currentNodeColumn) + GameAnimation.animationFrame) % GameAnimation.treeAnimation.length] * renderNodeWind;
       Engine.renderSprite(
         image: GameImages.nodes,
-        srcX: AtlasNode.Tree_Top_X,
-        srcY: AtlasNode.Node_Tree_Top_Y,
+        srcX: AtlasNodeX.Tree_Top,
+        srcY: AtlasNodeY.Tree_Top,
         srcWidth: AtlasNode.Node_Tree_Top_Width,
         srcHeight: AtlasNode.Node_Tree_Top_Height,
         dstX: GameRender.currentNodeDstX + (shift * 0.5),
@@ -162,8 +162,8 @@ void renderNodeAt() {
       break;
     case NodeType.Sunflower:
       renderStandardNodeShaded(
-          srcX: AtlasNode.Sunflower_X,
-          srcY: AtlasNode.Node_Sunflower_Y,
+          srcX: AtlasNodeX.Sunflower,
+          srcY: AtlasNodeY.Sunflower,
       );
       return;
     case NodeType.Soil:

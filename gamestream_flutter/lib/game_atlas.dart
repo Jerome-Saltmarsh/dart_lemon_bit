@@ -12,6 +12,8 @@ class AtlasNodeX {
   static const Chimney = 618.0;
   static const Table = 667.0;
   static const Fireplace = 667.0;
+  static const Sunflower = 618.0;
+  static const Tree_Top = 62.0;
 
   static double mapNodeType(int type) => {
     NodeType.Brick_2: Brick_Solid,
@@ -26,11 +28,9 @@ class AtlasNodeX {
     NodeType.Bau_Haus: AtlasNode.Bau_Haus_Solid_X,
     NodeType.Bed_Bottom: AtlasNode.X_Bed_Bottom,
     NodeType.Bed_Top: AtlasNode.X_Bed_Top,
-    NodeType.Sunflower: AtlasNode.Sunflower_X,
     NodeType.Oven: AtlasNode.Oven_X,
     NodeType.Cottage_Roof: -1.0,
     NodeType.Tree_Bottom: AtlasNode.Tree_Bottom_X,
-    NodeType.Tree_Top: AtlasNode.Tree_Top_X,
     NodeType.Wooden_Plank: AtlasNode.Wooden_Plank_Solid_X,
     NodeType.Boulder: AtlasNode.Boulder_X,
     NodeType.Spawn: AtlasNode.Spawn_X,
@@ -43,6 +43,8 @@ class AtlasNodeX {
     NodeType.Chimney: Chimney,
     NodeType.Table: Table,
     NodeType.Fireplace: Fireplace,
+    NodeType.Sunflower: Sunflower,
+    NodeType.Tree_Top: Tree_Top,
   }[type] ?? 7055;
 }
 
@@ -57,6 +59,8 @@ class AtlasNodeY {
   static const Chimney = 730.0;
   static const Table = 945.0;
   static const Fireplace = 512.0;
+  static const Sunflower = 512.0;
+  static const Tree_Top = 512.0;
 
   static double mapNodeType(int type) => {
     NodeType.Water: AtlasNode.Water_Y,
@@ -64,15 +68,17 @@ class AtlasNodeY {
     NodeType.Water_Flowing: 0.0,
     NodeType.Window: AtlasNode.Window_South_Y,
     NodeType.Spawn: AtlasNode.Spawn_Y,
-    NodeType.Spawn_Weapon: AtlasNodeY.Spawn_Weapon,
-    NodeType.Spawn_Player: AtlasNodeY.Spawn_Player,
-    NodeType.Soil: AtlasNodeY.Soil,
-    NodeType.Wood_2: AtlasNodeY.Wood,
-    NodeType.Wooden_Plank: AtlasNodeY.Wooden_Plank,
+    NodeType.Spawn_Weapon: Spawn_Weapon,
+    NodeType.Spawn_Player: Spawn_Player,
+    NodeType.Soil: Soil,
+    NodeType.Wood_2: Wood,
+    NodeType.Wooden_Plank: Wooden_Plank,
     NodeType.Bau_Haus_2: Bau_Haus,
     NodeType.Chimney: Chimney,
     NodeType.Table: Table,
     NodeType.Fireplace: Fireplace,
+    NodeType.Sunflower: Sunflower,
+    NodeType.Tree_Top: Tree_Top,
   }[type] ?? 0;
 }
 
@@ -147,8 +153,6 @@ class AtlasNode {
   static const Node_Tree_Bottom_Y = 512.0;
   static const Width_Tree_Bottom = 62.0;
   static const Node_Tree_Bottom_Height = 75.0;
-  static const Tree_Top_X = Width_Tree_Bottom;
-  static const Node_Tree_Top_Y = Node_Tree_Bottom_Y;
   static const Node_Tree_Top_Width = Width_Tree_Bottom;
   static const Node_Tree_Top_Height = Node_Tree_Bottom_Height;
   static const Water_X = 128.0;
@@ -197,8 +201,6 @@ class AtlasNode {
   static const Node_Bau_Haus_Slope_Inner_South_West_Y = Node_Bau_Haus_Slope_Inner_South_East_Y + Sprite_Height_Padded;
   static const Node_Bau_Haus_Slope_Inner_North_West_X = Node_Bau_Haus_Slope_North_X;
   static const Node_Bau_Haus_Slope_Inner_North_West_Y = Node_Bau_Haus_Slope_Inner_South_West_Y + Sprite_Height_Padded;
-  static const Sunflower_X = 618.0;
-  static const Node_Sunflower_Y = 512.0;
   static const Soil_X = 618.0;
   static const Node_Soil_Y = 584.0;
   static const Campfire_X = 667.0;
