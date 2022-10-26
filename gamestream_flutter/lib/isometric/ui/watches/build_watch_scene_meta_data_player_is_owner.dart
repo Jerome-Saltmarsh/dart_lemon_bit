@@ -50,7 +50,17 @@ Widget buildStackEdit(EditTab activeEditTab) =>
         Positioned(
           left: 200,
           top: 56,
-          child: buildEditorSelectedNode(),
+          child: Column(
+            children: [
+              buildEditorSelectedNode(),
+              buildOrientationIcon(NodeOrientation.Solid),
+              buildOrientationIcon(NodeOrientation.Half_East),
+              buildOrientationIcon(NodeOrientation.Corner_Top),
+              buildOrientationIcon(NodeOrientation.Slope_East),
+              buildOrientationIcon(NodeOrientation.Slope_Inner_North_East),
+              buildOrientationIcon(NodeOrientation.Slope_Outer_North_East),
+            ],
+          ),
         ),
       if (activeEditTab == EditTab.Weather)
         Positioned(

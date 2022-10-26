@@ -55,9 +55,8 @@ void renderNodeAt() {
     case NodeType.Grass:
       return renderNodeTypeGrass();
     case NodeType.Brick_2:
-      return renderNodeTypeBrick(
-        shade: GameState.nodesShade[GameRender.currentNodeIndex],
-      );
+      RenderNode.renderNodeTypeBrick();
+      return;
     case NodeType.Torch:
       RenderNode.renderNodeTorch();
       break;
