@@ -1,7 +1,6 @@
 
 import 'package:gamestream_flutter/library.dart';
 
-
 void renderNodeTorch(){
   if (!GameState.torchesIgnited.value) {
     Engine.renderSprite(
@@ -12,6 +11,7 @@ void renderNodeTorch(){
       srcHeight: AtlasNode.Height_Torch,
       dstX: GameRender.currentNodeDstX,
       dstY: GameRender.currentNodeDstY,
+      anchorY: AtlasNodeAnchorY.Torch,
     );
     return;
   }
@@ -24,6 +24,7 @@ void renderNodeTorch(){
       srcHeight: AtlasNode.Height_Torch,
       dstX: GameRender.currentNodeDstX,
       dstY: GameRender.currentNodeDstY,
+      anchorY: AtlasNodeAnchorY.Torch,
     );
     return;
   }
@@ -35,6 +36,7 @@ void renderNodeTorch(){
     srcHeight: AtlasNode.Height_Torch,
     dstX: GameRender.currentNodeDstX,
     dstY: GameRender.currentNodeDstY,
+    anchorY: AtlasNodeAnchorY.Torch,
   );
   return;
 }

@@ -232,7 +232,10 @@ class AtlasNodeY {
 
     throw Exception('AtlasNodeY.mapOrientation(${NodeOrientation.getName(orientation)}');
   }
+}
 
+class AtlasNodeAnchorY{
+   static const Torch = 0.33;
 }
 
 class AtlasNodeWidth {
