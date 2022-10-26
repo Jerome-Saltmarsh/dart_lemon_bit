@@ -75,7 +75,7 @@ Widget buildEditorSelectedNode() =>
                 left: 3 + _shiftY,
                 child: onMouseOver(builder: (BuildContext context, bool mouseOver) => buildAtlasImageButton(
                     image: GameImages.atlasIcons,
-                  action: GameEditor.cursorRowIncrease,
+                  action: GameEditor.cursorRowDecrease,
                   srcX: mouseOver ? AtlasIconsX.Arrows_Orange : AtlasIconsX.Arrows_Yellow,
                   srcY: AtlasIconsY.Arrows_North,
                   srcWidth: 21,
