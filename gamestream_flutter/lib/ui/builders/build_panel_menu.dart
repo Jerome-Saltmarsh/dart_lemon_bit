@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/library.dart';
-import 'package:golden_ratio/constants.dart';
 
 import 'build_time.dart';
 
@@ -14,10 +13,10 @@ Widget buildPanelMenu() =>
           width8,
           buildWatchBool(GameUI.timeVisible, buildTime),
           onPressed(
-              child: buildToggleFullscreen(),
+              child: buildIconFullscreen(),
               action:  Engine.fullscreenToggle),
           onPressed(
-              child: buildButtonExit(),
+              child: buildIconHome(),
               action: GameNetwork.disconnect,
           ),
         ]
@@ -41,29 +40,29 @@ Widget buildButtonTogglePlayMode() {
 Widget buildButtonShowMap() => Tooltip(
     message: ("(M)"), child: text("Map", onPressed: GameState.actionGameDialogShowMap));
 
-Widget buildToggleFullscreen() {
+Widget buildIconFullscreen() {
   return WatchBuilder(Engine.fullScreen, (bool fullscreen) {
     return buildAtlasImageButton(
         image: GameImages.atlasIcons,
-        srcX: 80,
-        srcY: 0,
-        srcWidth: 48,
-        srcHeight: 48,
-        scale: goldenRatio_0618,
+        srcX: AtlasIconsX.Fullscreen,
+        srcY: AtlasIconsY.Fullscreen,
+        srcWidth: AtlasIconSize.Fullscreen,
+        srcHeight: AtlasIconSize.Fullscreen,
+        scale: Engine.GoldenRatio_0_618,
         action: Engine.fullscreenToggle,
     );
   });
 }
 
-Widget buildButtonExit() =>
+Widget buildIconHome() =>
     buildAtlasImageButton(
       image: GameImages.atlasIcons,
-      srcX: 80,
-      srcY: 48,
-      srcWidth: 48,
-      srcHeight: 48,
+      srcX: AtlasIconsX.Home,
+      srcY: AtlasIconsY.Home,
+      srcWidth: AtlasIconSize.Home,
+      srcHeight: AtlasIconSize.Home,
       action: GameNetwork.disconnect,
-      scale: 0.75
+      scale: Engine.GoldenRatio_0_618,
   );
 
 Widget buildButtonToggleAudio() {
