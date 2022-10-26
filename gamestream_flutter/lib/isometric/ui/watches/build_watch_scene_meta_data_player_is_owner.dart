@@ -125,10 +125,10 @@ Widget buildColumnNodeOrientationSolid() =>
 Widget buildOrientationIcon(int orientation){
   final canvas = buildAtlasImage(
     image: GameImages.atlasNodes,
-    srcX: mapOrientationToSrcX(orientation),
+    srcX: AtlasNodeX.mapOrientation(orientation),
     srcY: AtlasNodeY.mapOrientation(orientation),
-    srcWidth: 48,
-    srcHeight: 72,
+    srcWidth: GameConstants.spriteWidth,
+    srcHeight: GameConstants.spriteHeight,
     scale: 0.75,
   );
 
@@ -153,26 +153,6 @@ Widget buildOrientationIcon(int orientation){
     }),
   );
 }
-
-double mapOrientationToSrcX(int orientation) {
-  if (NodeOrientation.isCorner(orientation)){
-    return AtlasNodeX.Orientation_Corner;
-  }
-  if (NodeOrientation.isSlopeCornerOuter(orientation)){
-    return AtlasNodeX.Orientation_Slope_Outer;
-  }
-  if (NodeOrientation.isSlopeCornerInner(orientation)){
-    return AtlasNodeX.Orientation_Slope_Inner;
-  }
-  if (NodeOrientation.isHalf(orientation)){
-    return AtlasNodeX.Orientation_Half;
-  }
-  if (NodeOrientation.isSlopeSymmetric(orientation)){
-    return AtlasNodeX.Orientation_Slope_Symmetric;
-  }
-  throw Exception('mapOrientationToSrcX(${NodeOrientation.getName(orientation)}');
-}
-
 
 Widget buildColumnNodeOrientationSlopeSymmetric() =>
     visibleBuilder(
