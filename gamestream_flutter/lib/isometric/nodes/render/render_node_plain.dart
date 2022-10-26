@@ -3,24 +3,24 @@ import 'package:gamestream_flutter/library.dart';
 
 import 'render_standard_node.dart';
 
-void renderNodePlain(){
-  switch (GameState.nodesOrientation[GameRender.currentNodeIndex]){
+void renderNodePlain() {
+  switch (GameRender.currentNodeOrientation) {
     case NodeOrientation.Solid:
       return renderStandardNodeShaded(
-        srcX: AtlasNode.Plain_Solid_X,
-        srcY: 0,
+        srcX: AtlasNodeX.Plain_Solid,
+        srcY: AtlasNodeY.Plain_Solid,
       );
     case NodeOrientation.Half_North:
       return renderStandardNodeHalfNorth(
         srcX: AtlasNode.Node_Plain_Half_Row_X,
         srcY: AtlasNode.Node_Plain_Half_Row_Y,
-        color: GameState.colorShades[GameState.nodesShade[GameRender.currentNodeIndex]],
+        color: GameRender.currentNodeColor,
       );
     case NodeOrientation.Half_East:
       return renderStandardNodeHalfEast(
         srcX: AtlasNode.Node_Plain_Half_Column_X,
         srcY: AtlasNode.Node_Plain_Half_Column_Y,
-        color: GameState.colorShades[GameState.nodesShade[GameRender.currentNodeIndex]],
+        color: GameRender.currentNodeColor,
       );
     case NodeOrientation.Half_South:
       return renderStandardNodeShaded(

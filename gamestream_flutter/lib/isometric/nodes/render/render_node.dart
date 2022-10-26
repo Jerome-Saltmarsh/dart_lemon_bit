@@ -144,8 +144,8 @@ void renderNodeAt() {
       return;
     case NodeType.Stone:
       renderStandardNodeShaded(
-          srcX: AtlasNode.Stone_X,
-          srcY: 0,
+          srcX: AtlasNodeX.Stone,
+          srcY: AtlasNodeY.Stone,
       );
       return;
     case NodeType.Plain:
@@ -249,7 +249,7 @@ void renderNodeTypeGrass() {
   switch (GameState.nodesOrientation[GameRender.currentNodeIndex]) {
     case NodeOrientation.Solid:
       return renderStandardNode(
-          srcX: GameState.nodesVariation[GameRender.currentNodeIndex] ? AtlasNodeX.Grass : AtlasNode.Grass_Flowers,
+          srcX: GameState.nodesVariation[GameRender.currentNodeIndex] ? AtlasNodeX.Grass : AtlasNodeX.Grass_Flowers,
           srcY: GameConstants.spriteHeight * GameState.nodesShade[GameRender.currentNodeIndex],
       );
     case NodeOrientation.Slope_North:

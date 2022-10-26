@@ -17,17 +17,20 @@ class AtlasNodeX {
   static const Water = 128.0;
   static const Grass = 0.0;
   static const Grass_Long = 1218.0;
+  static const Grass_Flowers = 49.0;
   static const Torch = 960.0;
+  static const Stone = 1508.0;
+  static const Plain_Solid = 1557.0;
 
   static double mapNodeType(int type) => {
     NodeType.Brick_2: Brick_Solid,
     NodeType.Grass: Grass,
     NodeType.Torch: Torch,
     NodeType.Grass_Long: Grass_Long,
-    NodeType.Grass_Flowers: AtlasNode.Grass_Flowers,
+    NodeType.Grass_Flowers: Grass_Flowers,
     NodeType.Brick_Top: 0.0,
-    NodeType.Stone: AtlasNode.Stone_X,
-    NodeType.Plain: AtlasNode.Plain_Solid_X,
+    NodeType.Stone: Stone,
+    NodeType.Plain: Plain_Solid,
     NodeType.Soil: Soil,
     NodeType.Bau_Haus: AtlasNode.Bau_Haus_Solid_X,
     NodeType.Bed_Bottom: AtlasNode.X_Bed_Bottom,
@@ -66,6 +69,8 @@ class AtlasNodeY {
   static const Sunflower = 512.0;
   static const Tree_Top = 512.0;
   static const Water = 512.0;
+  static const Stone = 0.0;
+  static const Plain_Solid = 0.0;
 
   static double mapNodeType(int type) => {
     NodeType.Water: Water,
@@ -84,6 +89,8 @@ class AtlasNodeY {
     NodeType.Fireplace: Fireplace,
     NodeType.Sunflower: Sunflower,
     NodeType.Tree_Top: Tree_Top,
+    NodeType.Stone: Stone,
+    NodeType.Plain: Plain_Solid,
   }[type] ?? 0;
 }
 
@@ -107,8 +114,7 @@ class AtlasNode {
   static const Sprite_Height = 72.0;
   static const Sprite_Width_Padded = Sprite_Width + 1;
   static const Sprite_Height_Padded = Sprite_Height + 1;
-  static const Grass_Flowers = 0 + Sprite_Width_Padded;
-  static const Node_Grass_Slope_North = Grass_Flowers + Sprite_Width_Padded;
+  static const Node_Grass_Slope_North = 49 + Sprite_Width_Padded;
   static const Node_Grass_Slope_East = Node_Grass_Slope_North + Sprite_Width_Padded;
   static const Node_Grass_Slope_South = Node_Grass_Slope_East + Sprite_Width_Padded;
   static const Node_Grass_Slope_West = Node_Grass_Slope_South + Sprite_Width_Padded;
@@ -133,19 +139,17 @@ class AtlasNode {
   static const Node_Brick_Corner_Right = Node_Brick_Corner_Top + Sprite_Width_Padded;
   static const Node_Brick_Corner_Bottom = Node_Brick_Corner_Right + Sprite_Width_Padded;
   static const Node_Brick_Corner_Left = Node_Brick_Corner_Bottom + Sprite_Width_Padded;
-  static const Stone_X = 1508.0;
-  static const Plain_Solid_X = 1557.0;
-  static const Node_Plain_Half_Row_X = Plain_Solid_X;
+  static const Node_Plain_Half_Row_X = 1557.0;
   static const Node_Plain_Half_Row_Y = Sprite_Height_Padded;
-  static const Node_Plain_Half_Column_X = Plain_Solid_X;
+  static const Node_Plain_Half_Column_X = 1557.0;
   static const Node_Plain_Half_Column_Y = Sprite_Height_Padded * 2;
-  static const Node_Plain_Corner_Top_X = Plain_Solid_X;
+  static const Node_Plain_Corner_Top_X = 1557.0;
   static const Node_Plain_Corner_Top_Y = Sprite_Height_Padded * 6;
-  static const Node_Plain_Corner_Right_X = Plain_Solid_X;
+  static const Node_Plain_Corner_Right_X = 1557.0;
   static const Node_Plain_Corner_Right_Y = Sprite_Height_Padded * 5;
-  static const Node_Plain_Corner_Bottom_X = Plain_Solid_X;
+  static const Node_Plain_Corner_Bottom_X = 1557.0;
   static const Node_Plain_Corner_Bottom_Y = Sprite_Height_Padded * 4;
-  static const Node_Plain_Corner_Left_X = Plain_Solid_X;
+  static const Node_Plain_Corner_Left_X = 1557.0;
   static const Node_Plain_Corner_Left_Y = Sprite_Height_Padded * 3;
   static const Node_Rain_Falling_Light_X = 1606.0;
   static const Node_Rain_Falling_Heavy_X = Node_Rain_Falling_Light_X + Sprite_Width_Padded;
