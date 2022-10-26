@@ -8,6 +8,8 @@ class AtlasNodeX {
   static const Soil = 618.0;
   static const Wood = 177.0;
   static const Wooden_Plank = 716.0;
+  static const Bau_Haus = 520.0;
+  static const Chimney = 618.0;
 
   static double mapNodeType(int type) => {
     NodeType.Brick_2: Brick_Solid,
@@ -22,7 +24,6 @@ class AtlasNodeX {
     NodeType.Plain: AtlasNode.Plain_Solid_X,
     NodeType.Soil: Soil,
     NodeType.Bau_Haus: AtlasNode.Bau_Haus_Solid_X,
-    NodeType.Chimney: AtlasNode.Chimney_X,
     NodeType.Bed_Bottom: AtlasNode.X_Bed_Bottom,
     NodeType.Bed_Top: AtlasNode.X_Bed_Top,
     NodeType.Sunflower: AtlasNode.Sunflower_X,
@@ -31,7 +32,6 @@ class AtlasNodeX {
     NodeType.Tree_Bottom: AtlasNode.Tree_Bottom_X,
     NodeType.Tree_Top: AtlasNode.Tree_Top_X,
     NodeType.Wooden_Plank: AtlasNode.Wooden_Plank_Solid_X,
-    NodeType.Bau_Haus_2: AtlasNode.Bau_Haus_Solid_X,
     NodeType.Boulder: AtlasNode.Boulder_X,
     NodeType.Spawn: AtlasNode.Spawn_X,
     NodeType.Empty: 0.0,
@@ -39,6 +39,8 @@ class AtlasNodeX {
     NodeType.Spawn_Weapon: Spawn_Weapon,
     NodeType.Spawn_Player: Spawn_Player,
     NodeType.Wood_2: Wood,
+    NodeType.Bau_Haus_2: Bau_Haus,
+    NodeType.Chimney: Chimney,
   }[type] ?? 7055;
 }
 
@@ -49,6 +51,8 @@ class AtlasNodeY {
   static const Soil = 584.0;
   static const Wood = 512.0;
   static const Wooden_Plank = 512.0;
+  static const Bau_Haus = 512.0;
+  static const Chimney = 730.0;
 
   static double mapNodeType(int type) => {
     NodeType.Water: AtlasNode.Water_Y,
@@ -61,6 +65,8 @@ class AtlasNodeY {
     NodeType.Soil: AtlasNodeY.Soil,
     NodeType.Wood_2: AtlasNodeY.Wood,
     NodeType.Wooden_Plank: AtlasNodeY.Wooden_Plank,
+    NodeType.Bau_Haus_2: Bau_Haus,
+    NodeType.Chimney: Chimney,
   }[type] ?? 0;
 }
 
