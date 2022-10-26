@@ -5,7 +5,6 @@ import 'package:gamestream_flutter/isometric/nodes/render/render_node_wood.dart'
 import 'package:gamestream_flutter/library.dart';
 
 import 'render_node_plain.dart';
-import 'render_node_torch.dart';
 import 'render_node_type_brick.dart';
 import 'render_node_window.dart';
 import 'render_node_wooden_plank.dart';
@@ -60,22 +59,11 @@ void renderNodeAt() {
         shade: GameState.nodesShade[GameRender.currentNodeIndex],
       );
     case NodeType.Torch:
-      renderNodeTorch();
+      RenderNode.renderNodeTorch();
       break;
     case NodeType.Water:
-      Engine.renderSprite(
-        image: GameImages.atlasNodes,
-        srcX: AtlasNodeX.Water,
-        srcY: AtlasNodeY.Water + (((GameAnimation.animationFrameWater + ((GameRender.currentNodeRow + GameRender.currentNodeColumn) * 3)) % 10) * 72.0),
-        srcWidth: GameConstants.spriteWidth,
-        srcHeight: GameConstants.spriteHeight,
-        dstX: GameRender.currentNodeDstX,
-        dstY: GameRender.currentNodeDstY + GameAnimation.animationFrameWaterHeight + 14,
-        anchorY: 0.3334,
-        color: renderNodeColor,
-      );
+      RenderNode.renderNodeWater();
       break;
-
     case NodeType.Tree_Bottom:
       Engine.renderSprite(
         image: GameImages.atlasNodes,
