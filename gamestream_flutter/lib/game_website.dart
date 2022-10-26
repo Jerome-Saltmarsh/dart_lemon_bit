@@ -40,7 +40,7 @@ class GameWebsite {
           dstY: 100,
       );
       Engine.renderSprite(
-        image: GameImages.nodes,
+        image: GameImages.atlasNodes,
         srcX: 0,
         srcY: 0,
         srcWidth: 48,

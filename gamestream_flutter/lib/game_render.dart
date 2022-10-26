@@ -1065,11 +1065,11 @@ class GameRender {
       int column,
       ) {
     Engine.renderSprite(
-      image: GameImages.gameobjects,
+      image: GameImages.atlasNodes,
       dstX: getTileWorldX(row, column),
       dstY: getTileWorldY(row, column) - (z * tileHeight),
-      srcX: 6944,
-      srcY: 0,
+      srcX: AtlasNodeX.Wireframe_Blue,
+      srcY: AtlasNodeY.Wireframe_Blue,
       srcWidth: 48,
       srcHeight: 72,
       anchorY: 0.3334,
@@ -1079,11 +1079,11 @@ class GameRender {
 
   static void renderWireFrameRed(int row, int column, int z) {
     Engine.renderSprite(
-      image: GameImages.gameobjects,
+      image: GameImages.atlasNodes,
       dstX: getTileWorldX(row, column),
       dstY: getTileWorldY(row, column) - (z * tileHeight),
-      srcX: 6895,
-      srcY: 0,
+      srcX: AtlasNodeX.Wireframe_Red,
+      srcY: AtlasNodeY.Wireframe_Red,
       srcWidth: 48,
       srcHeight: 72,
       anchorY: 0.3334,

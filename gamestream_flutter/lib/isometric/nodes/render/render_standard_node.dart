@@ -16,7 +16,7 @@ void renderStandardNode({
 }){
   GameRender.onscreenNodes++;
   Engine.renderSprite(
-      image: GameImages.nodes,
+      image: GameImages.atlasNodes,
       srcX: srcX,
       srcY: srcY,
       srcWidth: GameConstants.spriteWidth,
@@ -32,7 +32,7 @@ void renderStandardNodeShaded({
   required double srcY,
 }){
   Engine.renderSprite(
-    image: GameImages.nodes,
+    image: GameImages.atlasNodes,
     srcX: srcX,
     srcY: srcY,
     srcWidth: GameConstants.spriteWidth,
@@ -51,7 +51,7 @@ void renderStandardNodeHalfEast({
 }){
   GameRender.onscreenNodes++;
   Engine.renderSprite(
-    image: GameImages.nodes,
+    image: GameImages.atlasNodes,
     srcX: srcX,
     srcY: srcY,
     srcWidth: GameConstants.spriteWidth,
@@ -70,7 +70,7 @@ void renderStandardNodeHalfNorth({
 }){
   GameRender.onscreenNodes++;
   Engine.renderSprite(
-    image: GameImages.nodes,
+    image: GameImages.atlasNodes,
     srcX: srcX,
     srcY: srcY,
     srcWidth: GameConstants.spriteWidth,

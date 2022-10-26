@@ -67,7 +67,7 @@ Widget buildControlWind() {
 
 Widget buildIconRain(Rain rain, bool active) {
   return buildAtlasImage(
-    image: GameImages.nodes,
+    image: GameImages.atlasNodes,
     srcX: active ? 4352 : 4287,
     srcY: 64.0 * rain.index,
     srcWidth: 64.0,
@@ -263,7 +263,7 @@ Widget buildIconNodeType(int nodeType) =>
 
 Widget buildButtonSelectNodeType(int nodeType) {
   final canvas = buildAtlasImage(
-    image: GameImages.nodes,
+    image: GameImages.atlasNodes,
     srcX: AtlasNodeX.mapNodeType(nodeType),
     srcY: AtlasNodeY.mapNodeType(nodeType),
     srcWidth: AtlasNodeWidth.mapNodeType(nodeType),

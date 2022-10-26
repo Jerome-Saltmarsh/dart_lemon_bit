@@ -64,7 +64,7 @@ void renderNodeAt() {
       break;
     case NodeType.Water:
       Engine.renderSprite(
-        image: GameImages.nodes,
+        image: GameImages.atlasNodes,
         srcX: AtlasNodeX.Water,
         srcY: AtlasNodeY.Water + (((GameAnimation.animationFrameWater + ((GameRender.currentNodeRow + GameRender.currentNodeColumn) * 3)) % 10) * 72.0),
         srcWidth: GameConstants.spriteWidth,
@@ -78,7 +78,7 @@ void renderNodeAt() {
 
     case NodeType.Tree_Bottom:
       Engine.renderSprite(
-        image: GameImages.nodes,
+        image: GameImages.atlasNodes,
         srcX: AtlasNodeX.Tree_Bottom,
         srcY: AtlasNodeY.Tree_Bottom,
         srcWidth: AtlasNode.Width_Tree_Bottom,
@@ -91,7 +91,7 @@ void renderNodeAt() {
     case NodeType.Tree_Top:
       var shift = GameAnimation.treeAnimation[((GameRender.currentNodeRow - GameRender.currentNodeColumn) + GameAnimation.animationFrame) % GameAnimation.treeAnimation.length] * renderNodeWind;
       Engine.renderSprite(
-        image: GameImages.nodes,
+        image: GameImages.atlasNodes,
         srcX: AtlasNodeX.Tree_Top,
         srcY: AtlasNodeY.Tree_Top,
         srcWidth: AtlasNode.Node_Tree_Top_Width,
@@ -125,7 +125,7 @@ void renderNodeAt() {
     case NodeType.Rain_Landing:
       if (GameQueries.getNodeTypeBelow(GameRender.currentNodeIndex) == NodeType.Water){
         Engine.renderSprite(
-          image: GameImages.nodes,
+          image: GameImages.atlasNodes,
           srcX: AtlasNode.Node_Rain_Landing_Water_X,
           srcY: 72.0 * ((GameAnimation.animationFrame + GameRender.currentNodeRow + GameRender.currentNodeColumn) % 10),
           srcWidth: GameConstants.spriteWidth,

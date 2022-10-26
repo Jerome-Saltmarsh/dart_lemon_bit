@@ -25,6 +25,8 @@ class AtlasNodeX {
   static const Oven = 618.0;
   static const Window = 618.0;
   static const Boulder = 618.0;
+  static const Wireframe_Blue = 0.0;
+  static const Wireframe_Red = 49.0;
 
   static double mapNodeType(int type) => {
     NodeType.Brick_2: Brick_Solid,
@@ -83,6 +85,8 @@ class AtlasNodeY {
   static const Spawn = 1021.0;
   static const Oven = 804.0;
   static const Boulder = 657.0;
+  static const Wireframe_Blue = 738.0;
+  static const Wireframe_Red = 738.0;
 
   static double mapNodeType(int type) => {
     NodeType.Water: Water,
@@ -141,7 +145,6 @@ class AtlasNode {
   static const Node_Grass_Slope_Outer_North_East = Node_Grass_Slope_Outer_South_East + Sprite_Width_Padded;
   static const Node_Grass_Slope_Outer_North_West = Node_Grass_Slope_Outer_North_East + Sprite_Width_Padded;
   static const Node_Grass_Slope_Outer_South_West = Node_Grass_Slope_Outer_North_West + Sprite_Width_Padded;
-  // static const Brick_Solid = 680.0;
   static const Node_Brick_Half_North = AtlasNodeX.Brick_Solid + Sprite_Width;
   static const Node_Brick_Half_East = Node_Brick_Half_North + Sprite_Width;
   static const Node_Brick_Half_South = Node_Brick_Half_North;
