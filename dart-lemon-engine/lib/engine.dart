@@ -200,7 +200,7 @@ class Engine {
 
   // QUERIES
   static bool get keyPressedShiftLeft =>
-      keyPressed(LogicalKeyboardKey.space);
+      keyPressed(LogicalKeyboardKey.shiftLeft);
 
   static bool get keyPressedSpace =>
       keyPressed(LogicalKeyboardKey.space);
