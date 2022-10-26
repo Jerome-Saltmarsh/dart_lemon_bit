@@ -186,8 +186,8 @@ void renderNodeAt() {
       return;
     case NodeType.Oven:
       renderStandardNodeShaded(
-        srcX: AtlasNode.Oven_X,
-        srcY: AtlasNode.Node_Oven_Y,
+        srcX: AtlasNodeX.Oven,
+        srcY: AtlasNodeY.Oven,
       );
       return;
     case NodeType.Chimney:
