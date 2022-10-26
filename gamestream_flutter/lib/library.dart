@@ -33,6 +33,7 @@ export 'game_player.dart';
 export 'game_camera.dart';
 export 'game_atlas.dart';
 export 'render/render_node.dart';
+export 'editor/editor_ui.dart';
 export 'package:lemon_engine/engine.dart';
 export 'package:lemon_watch/watch.dart';
 export 'package:lemon_watch/watch_builder.dart';

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
 import 'package:gamestream_flutter/isometric/ui/columns/build_column_selected_node.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
@@ -62,7 +61,7 @@ Widget buildStackEdit(EditTab activeEditTab) =>
               alignment: Alignment.center,
               child: buildWatchBool(
                 GameEditor.controlsVisibleWeather,
-                  buildControlsWeather,
+                EditorUI.buildControlsWeather,
               ),
             )
         ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/events/on_visibility_changed_message_box.dart';
-import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/stacks/build_stack_game_type_skirmish.dart';
 import 'package:gamestream_flutter/isometric/ui/stacks/build_stack_play_mode.dart';
@@ -225,7 +224,7 @@ class GameUI {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            buildControlsWeather(),
+            EditorUI.buildControlsWeather(),
           ],
         ),
       ),

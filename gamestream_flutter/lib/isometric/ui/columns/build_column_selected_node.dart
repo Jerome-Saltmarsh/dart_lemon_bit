@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/isometric/ui/build_hud_map_editor.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -100,7 +99,7 @@ Widget buildEditorSelectedNode() =>
                   height: 72,
                   width: 72,
                   alignment: Alignment.center,
-                  child: watch(GameEditor.nodeSelectedType, buildIconNodeType)
+                  child: watch(GameEditor.nodeSelectedType, EditorUI.buildIconNodeType)
               ),
               Positioned(
                 top: 50 + _shiftY,
