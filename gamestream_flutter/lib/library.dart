@@ -31,6 +31,7 @@ export 'game_constants.dart';
 export 'game_sort.dart';
 export 'game_player.dart';
 export 'game_camera.dart';
+export 'game_atlas.dart';
 export 'package:lemon_engine/engine.dart';
 export 'package:lemon_watch/watch.dart';
 export 'package:lemon_watch/watch_builder.dart';

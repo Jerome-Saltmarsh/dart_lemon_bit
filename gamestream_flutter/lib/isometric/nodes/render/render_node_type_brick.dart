@@ -1,5 +1,4 @@
 import 'package:gamestream_flutter/library.dart';
-import 'package:gamestream_flutter/isometric/nodes/render/atlas_node.dart';
 
 import 'render_standard_node.dart';
 
