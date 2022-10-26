@@ -11,11 +11,11 @@ class GameConvert {
     return ((row + column) * tileSizeHalf) - (z * tileHeight);
   }
 
-  static double convertRowColumnToRenderY(int row, int column){
+  static double rowColumnToRenderY(int row, int column){
     return (row + column) * tileSizeHalf;
   }
 
-  static double convertRowColumnToRenderX(int row, int column){
+  static double rowColumnToRenderX(int row, int column){
     return (row - column) * tileSizeHalf;
   }
 

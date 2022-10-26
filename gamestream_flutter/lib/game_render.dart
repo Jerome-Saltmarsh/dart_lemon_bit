@@ -1010,7 +1010,7 @@ class GameRender {
   // otherwise use totalZ;
   // calculate the world position Y at row / column, then workout its distance from the top of the screen;
   static void nodesCalculateMinMaxZ(){
-    final bottom = GameConvert.convertRowColumnToRenderY(currentNodeRow, currentNodeColumn);
+    final bottom = GameConvert.rowColumnToRenderY(currentNodeRow, currentNodeColumn);
     final distance =  bottom - screenTop;
     nodesMaxZ = (distance ~/ tileHeight);
     if (nodesMaxZ > nodesGridTotalZMinusOne){
@@ -1029,7 +1029,7 @@ class GameRender {
   }
 
   static int get countLeftOffscreen {
-    final x = GameConvert.convertRowColumnToRenderX(currentNodeRow, currentNodeColumn);
+    final x = GameConvert.rowColumnToRenderX(currentNodeRow, currentNodeColumn);
     if (Engine.screen.left < x) return 0;
     final diff = Engine.screen.left - x;
     return diff ~/ tileSize;
@@ -1066,8 +1066,8 @@ class GameRender {
       ) {
     Engine.renderSprite(
       image: GameImages.atlasNodes,
-      dstX: getTileWorldX(row, column),
-      dstY: getTileWorldY(row, column) - (z * tileHeight),
+      dstX: GameConvert.rowColumnToRenderX(row, column),
+      dstY: GameConvert.rowColumnZToRenderY(row, column,z),
       srcX: AtlasNodeX.Wireframe_Blue,
       srcY: AtlasNodeY.Wireframe_Blue,
       srcWidth: 48,
@@ -1080,8 +1080,8 @@ class GameRender {
   static void renderWireFrameRed(int row, int column, int z) {
     Engine.renderSprite(
       image: GameImages.atlasNodes,
-      dstX: getTileWorldX(row, column),
-      dstY: getTileWorldY(row, column) - (z * tileHeight),
+      dstX: GameConvert.rowColumnToRenderX(row, column),
+      dstY: GameConvert.rowColumnZToRenderY(row, column,z),
       srcX: AtlasNodeX.Wireframe_Red,
       srcY: AtlasNodeY.Wireframe_Red,
       srcWidth: 48,
