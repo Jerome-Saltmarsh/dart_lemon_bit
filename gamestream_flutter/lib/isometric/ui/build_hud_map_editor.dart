@@ -68,6 +68,7 @@ Widget buildControlWind() {
 
 Widget buildIconRain(Rain rain, bool active) {
   return buildAtlasImage(
+    image: GameImages.nodes,
     srcX: active ? 4352 : 4287,
     srcY: 64.0 * rain.index,
     srcWidth: 64.0,
@@ -78,6 +79,7 @@ Widget buildIconRain(Rain rain, bool active) {
 
 Widget buildIconLightning(Lightning lightning, bool active) {
   return buildAtlasImage(
+    image: GameImages.icons,
     srcX: active ? 4352 : 4287,
     srcY:
         lightning == Lightning.Off ? 0 : (64.0 * 2) + (64.0 * lightning.index),
@@ -93,6 +95,7 @@ Widget buildIconWind(Wind wind, bool active) {
 
 Widget buildIconWeather(double srcY, bool active) {
   return buildAtlasImage(
+    image: GameImages.icons,
     srcX: active ? 4352 : 4287,
     srcY: srcY,
     srcWidth: 64.0,
@@ -252,6 +255,7 @@ Widget buildControlTime() {
 
 Widget buildIconNodeType(int value){
   return buildAtlasImage(
+    image: GameImages.icons,
     srcX: mapNodeTypeToSrcX(value),
     srcY: mapNodeTypeToSrcY(value),
     srcWidth: mapNodeTypeToSrcWidth(value),
@@ -261,6 +265,7 @@ Widget buildIconNodeType(int value){
 
 Widget buildButtonSelectNodeType(int nodeType) {
   final canvas = buildAtlasImage(
+    image: GameImages.nodes,
     srcX: mapNodeTypeToSrcX(nodeType),
     srcY: mapNodeTypeToSrcY(nodeType),
     srcWidth: mapNodeTypeToSrcWidth(nodeType),

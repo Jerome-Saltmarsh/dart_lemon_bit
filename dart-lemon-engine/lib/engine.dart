@@ -631,6 +631,10 @@ class Engine {
   static var batches64Rendered = 0;
   static var batches128Rendered = 0;
 
+  static final _externalImageSrc1 = Float32List(1 * 4);
+  static final _externalImageDst1 = Float32List(1 * 4);
+  static final _externalImageClr1 = Int32List(1);
+
   static final _bufferSrc1 = Float32List(1 * 4);
   static final _bufferDst1 = Float32List(1 * 4);
   static final _bufferClr1 = Int32List(1);
@@ -902,16 +906,16 @@ class Engine {
     double scale = 1.0,
     int color = 1,
   }){
-    // _bufferColors1[0] = color;
-    // _bufferSrc1[0] = srcX;
-    // _bufferSrc1[1] = srcY;
-    // _bufferSrc1[2] = srcX + srcWidth;
-    // _bufferSrc1[3] = srcY + srcHeight;
-    // _bufferDst1[0] = _cos0 * scale;
-    // _bufferDst1[1] = _sin0 * scale; // scale
-    // _bufferDst1[2] = dstX - (srcWidth * anchorX * scale);
-    // _bufferDst1[3] = dstY - (srcHeight * anchorY * scale); // scale
-    // canvas.drawRawAtlas(image, _bufferDst1, _bufferSrc1, _bufferColors1, bufferBlendMode, null, paint);
+    _externalImageClr1[0] = color;
+    _externalImageSrc1[0] = srcX;
+    _externalImageSrc1[1] = srcY;
+    _externalImageSrc1[2] = srcX + srcWidth;
+    _externalImageSrc1[3] = srcY + srcHeight;
+    _externalImageDst1[0] = cos(0) * scale;
+    _externalImageDst1[1] = sin(0) * scale; // scale
+    _externalImageDst1[2] = dstX - (srcWidth * anchorX * scale);
+    _externalImageDst1[3] = dstY - (srcHeight * anchorY * scale); // scale
+    canvas.drawRawAtlas(image, _externalImageDst1, _externalImageSrc1, _externalImageClr1, bufferBlendMode, null, paint);
   }
 
   static void renderCircle(double x, double y, double radius, Color color) {

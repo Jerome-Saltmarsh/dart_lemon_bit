@@ -44,6 +44,7 @@ Widget buildButtonShowMap() => Tooltip(
 Widget buildToggleFullscreen() {
   return WatchBuilder(Engine.fullScreen, (bool fullscreen) {
     return buildAtlasImageButton(
+        image: GameImages.icons,
         srcX: 80,
         srcY: 0,
         srcWidth: 48,
@@ -56,6 +57,7 @@ Widget buildToggleFullscreen() {
 
 Widget buildButtonExit() =>
     buildAtlasImageButton(
+      image: GameImages.icons,
       srcX: 80,
       srcY: 48,
       srcWidth: 48,

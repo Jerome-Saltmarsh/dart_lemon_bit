@@ -5,8 +5,10 @@ import 'package:flutter/widgets.dart';
 import 'package:gamestream_flutter/game_images.dart';
 import 'package:gamestream_flutter/game_widgets.dart';
 import 'package:lemon_engine/engine.dart';
+import 'dart:ui' as ui;
 
 Widget buildAtlasImageButton({
+  required ui.Image image,
   required double srcX,
   required double srcY,
   required double srcWidth,
@@ -25,6 +27,7 @@ Widget buildAtlasImageButton({
         width: srcWidth,
         height: srcHeight,
         child: buildAtlasImage(
+            image: GameImages.icons,
             srcX: srcX,
             srcY: srcY,
             srcWidth: srcWidth,
@@ -36,6 +39,7 @@ Widget buildAtlasImageButton({
   );
 
 Widget buildAtlasImage({
+    required ui.Image image,
     required double srcX,
     required double srcY,
     required double srcWidth,
@@ -50,7 +54,7 @@ Widget buildAtlasImage({
       paint: (Canvas canvas, Size size) =>
         Engine.renderExternalCanvas(
           canvas: canvas,
-          image: GameImages.minimap,
+          image: image,
           srcX: srcX,
           srcY: srcY,
           srcWidth: srcWidth,

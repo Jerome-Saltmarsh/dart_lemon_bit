@@ -1,5 +1,5 @@
 
-import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_x.dart';
+import 'package:gamestream_flutter/isometric/nodes/render/atlas_node.dart';
 import 'package:gamestream_flutter/library.dart';
 
 
@@ -7,10 +7,10 @@ void renderNodeTorch(){
   if (!GameState.torchesIgnited.value) {
     Engine.renderSprite(
       image: GameImages.nodes,
-      srcX: AtlasSrcX.Node_Torch_X,
-      srcY: AtlasSrcX.Node_Torch_Y,
-      srcWidth: AtlasSrcX.Node_Torch_Width,
-      srcHeight: AtlasSrcX.Node_Torch_Height,
+      srcX: AtlasNode.X_Torch,
+      srcY: AtlasNode.Y_Torch,
+      srcWidth: AtlasNode.Width_Torch,
+      srcHeight: AtlasNode.Height_Torch,
       dstX: GameRender.currentNodeDstX,
       dstY: GameRender.currentNodeDstY,
     );
@@ -19,10 +19,10 @@ void renderNodeTorch(){
   if (renderNodeWind == Wind.Calm){
     Engine.renderSprite(
       image: GameImages.nodes,
-      srcX: AtlasSrcX.Node_Torch_X,
-      srcY: AtlasSrcX.Node_Torch_Y + AtlasSrcX.Node_Torch_Height + (((GameRender.currentNodeRow + (GameAnimation.animationFrame)) % 6) * AtlasSrcX.Node_Torch_Height),
-      srcWidth: AtlasSrcX.Node_Torch_Width,
-      srcHeight: AtlasSrcX.Node_Torch_Height,
+      srcX: AtlasNode.X_Torch,
+      srcY: AtlasNode.Y_Torch + AtlasNode.Height_Torch + (((GameRender.currentNodeRow + (GameAnimation.animationFrame)) % 6) * AtlasNode.Height_Torch),
+      srcWidth: AtlasNode.Width_Torch,
+      srcHeight: AtlasNode.Height_Torch,
       dstX: GameRender.currentNodeDstX,
       dstY: GameRender.currentNodeDstY,
     );
@@ -30,10 +30,10 @@ void renderNodeTorch(){
   }
   Engine.renderSprite(
     image: GameImages.nodes,
-    srcX: AtlasSrcX.Node_Torch_Windy_X,
-    srcY: AtlasSrcX.Node_Torch_Windy_Y + AtlasSrcX.Node_Torch_Height + (((GameRender.currentNodeRow + (GameAnimation.animationFrame)) % 6) * AtlasSrcX.Node_Torch_Height),
-    srcWidth: AtlasSrcX.Node_Torch_Width,
-    srcHeight: AtlasSrcX.Node_Torch_Height,
+    srcX: AtlasNode.X_Torch_Windy,
+    srcY: AtlasNode.Y_Torch_Windy + AtlasNode.Height_Torch + (((GameRender.currentNodeRow + (GameAnimation.animationFrame)) % 6) * AtlasNode.Height_Torch),
+    srcWidth: AtlasNode.Width_Torch,
+    srcHeight: AtlasNode.Height_Torch,
     dstX: GameRender.currentNodeDstX,
     dstY: GameRender.currentNodeDstY,
   );

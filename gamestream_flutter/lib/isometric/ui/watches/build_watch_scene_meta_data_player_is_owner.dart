@@ -125,6 +125,7 @@ Widget buildColumnNodeOrientationSolid() =>
 Widget buildOrientationIcon(int orientation){
 
   final canvas = buildAtlasImage(
+    image: GameImages.icons,
     srcX: mapOrientationToSrcX(orientation),
     srcY: mapOrientationToSrcY(orientation),
     srcWidth: 48,

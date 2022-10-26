@@ -2,7 +2,7 @@
 import 'package:gamestream_flutter/isometric/events/on_game_event_game_object_destroyed.dart';
 import 'package:gamestream_flutter/isometric/events/on_player_event_quest_completed.dart';
 import 'package:gamestream_flutter/isometric/events/on_player_event_quest_started.dart';
-import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_x.dart';
+import 'package:gamestream_flutter/isometric/nodes/render/atlas_node.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -295,12 +295,12 @@ class GameEvents {
       case Rain.None:
         break;
       case Rain.Light:
-        GameState.srcXRainFalling = AtlasSrcX.Node_Rain_Falling_Light_X;
-        GameState.srcXRainLanding = AtlasSrcX.Node_Rain_Landing_Light_X;
+        GameState.srcXRainFalling = AtlasNode.Node_Rain_Falling_Light_X;
+        GameState.srcXRainLanding = AtlasNode.Node_Rain_Landing_Light_X;
         break;
       case Rain.Heavy:
-        GameState.srcXRainFalling = AtlasSrcX.Node_Rain_Falling_Heavy_X;
-        GameState.srcXRainLanding = AtlasSrcX.Node_Rain_Landing_Heavy_X;
+        GameState.srcXRainFalling = AtlasNode.Node_Rain_Falling_Heavy_X;
+        GameState.srcXRainLanding = AtlasNode.Node_Rain_Landing_Heavy_X;
         break;
     }
   }
