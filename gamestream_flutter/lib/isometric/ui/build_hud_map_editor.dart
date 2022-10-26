@@ -6,7 +6,6 @@ import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
 
 import 'constants/colors.dart';
-import 'maps/map_node_type_to_src.dart';
 
 Widget buildPanelMaxZRender() {
   return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -254,23 +253,22 @@ Widget buildControlTime() {
   );
 }
 
-Widget buildIconNodeType(int value){
-  return buildAtlasImage(
+Widget buildIconNodeType(int nodeType) =>
+  buildAtlasImage(
     image: GameImages.icons,
-    srcX: AtlasNodeX.mapNodeType(value),
-    srcY: mapNodeTypeToSrcY(value),
-    srcWidth: mapNodeTypeToSrcWidth(value),
-    srcHeight: mapNodeTypeToSrcHeight(value),
+    srcX: AtlasNodeX.mapNodeType(nodeType),
+    srcY: AtlasNodeY.mapNodeType(nodeType),
+    srcWidth: AtlasNodeWidth.mapNodeType(nodeType),
+    srcHeight: AtlasNodeHeight.mapNodeType(nodeType),
   );
-}
 
 Widget buildButtonSelectNodeType(int nodeType) {
   final canvas = buildAtlasImage(
     image: GameImages.nodes,
     srcX: AtlasNodeX.mapNodeType(nodeType),
-    srcY: mapNodeTypeToSrcY(nodeType),
-    srcWidth: mapNodeTypeToSrcWidth(nodeType),
-    srcHeight: mapNodeTypeToSrcHeight(nodeType),
+    srcY: AtlasNodeY.mapNodeType(nodeType),
+    srcWidth: AtlasNodeWidth.mapNodeType(nodeType),
+    srcHeight: AtlasNodeHeight.mapNodeType(nodeType),
   );
   return WatchBuilder(GameEditor.nodeSelectedType, (int selectedNodeType) {
     return container(

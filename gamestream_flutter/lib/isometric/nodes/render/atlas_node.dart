@@ -7,6 +7,7 @@ class AtlasNodeX {
   static const Spawn_Zombie = 0.0;
   static const Soil = 618.0;
   static const Wood = 177.0;
+  static const Wooden_Plank = 716.0;
 
   static double mapNodeType(int type) => {
     NodeType.Brick_2: Brick_Solid,
@@ -47,14 +48,34 @@ class AtlasNodeY {
   static const Spawn_Zombie = 665.0;
   static const Soil = 584.0;
   static const Wood = 512.0;
+  static const Wooden_Plank = 512.0;
+
+  static double mapNodeType(int type) => {
+    NodeType.Water: AtlasNode.Water_Y,
+    NodeType.Torch: AtlasNode.Y_Torch,
+    NodeType.Water_Flowing: 0.0,
+    NodeType.Window: AtlasNode.Window_South_Y,
+    NodeType.Spawn: AtlasNode.Spawn_Y,
+    NodeType.Spawn_Weapon: AtlasNodeY.Spawn_Weapon,
+    NodeType.Spawn_Player: AtlasNodeY.Spawn_Player,
+    NodeType.Soil: AtlasNodeY.Soil,
+    NodeType.Wood_2: AtlasNodeY.Wood,
+    NodeType.Wooden_Plank: AtlasNodeY.Wooden_Plank,
+  }[type] ?? 0;
 }
 
 class AtlasNodeWidth {
-
+  static double mapNodeType(int type) => {
+    NodeType.Torch: AtlasNode.Width_Torch,
+    NodeType.Tree_Bottom: AtlasNode.Width_Tree_Bottom,
+    NodeType.Tree_Top: 62.0,
+  }[type] ?? 48;
 }
 
 class AtlasNodeHeight {
+  static double mapNodeType(int type) => {
 
+  }[type] ?? 72;
 }
 
 
