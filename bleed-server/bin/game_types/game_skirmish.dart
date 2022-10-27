@@ -60,10 +60,13 @@ class GameSkirmish extends Game {
   @override
   void customUpdate() {
     for (final character in characters) {
-      if (character.alive) continue;
+      if (character.alive) {
+        continue;
+      }
       if (character is AI) {
-        if (character.respawn-- <= 0)
-          respawnAI(character);
+          if
+          (character.respawn-- <= 0)
+            respawnAI(character);
       }
     }
   }
@@ -98,11 +101,30 @@ class GameSkirmish extends Game {
 
   @override
   Player spawnPlayer() {
-    final player = Player(game: this, weapon: buildWeaponShotgun(), team: 0);
+    final
+    player = Player(
+      game: this,
+      team: 0,
+      weapon: Weapon(
+        type: AttackType.Staff,
+        damage: 5,
+        capacity: 1000,
+        duration: 10,
+        range: 200,
+      ),
+    );
+    player.weaponSlot1 = Weapon(
+      type: AttackType.Staff,
+      damage: 5,
+      capacity: 1000,
+      duration: 10,
+      range: 200,
+    );
     player.equippedLegs = randomItem(LegType.values);
     player.equippedArmour = randomItem(BodyType.values);
     player.equippedHead = randomItem(HeadType.values);
-    return player;
+    return
+    player;
   }
 
   @override
@@ -113,7 +135,8 @@ class GameSkirmish extends Game {
     player.writeEnvironmentWind(Wind.Gentle);
     player.writeEnvironmentBreeze(false);
     player.writePlayerMessage("press W,A,S,D to run and LEFT CLICK to punch");
-    if (playerSpawnPoints.isNotEmpty){
+    if
+    (playerSpawnPoints.isNotEmpty) {
       moveV3ToNodeIndex(player, randomItem(playerSpawnPoints));
     }
     player.writePlayerPosition();

@@ -334,15 +334,15 @@ abstract class Game {
         break;
       case AttackType.Staff:
         weapon.durationRemaining = weapon.duration;
-        spawnProjectileOrb(player, damage: 2);
-        playerAttackMelee(
-          player: player,
-          attackType: weapon.type,
-          distance: weapon.range,
-          attackRadius: 35, /// TODO read value from weapon
-          damage: weapon.damage,
-          duration: weapon.duration,
-        );
+        spawnProjectileOrb(src: player, damage: 2);
+        // playerAttackMelee(
+        //   player: player,
+        //   attackType: weapon.type,
+        //   distance: weapon.range,
+        //   attackRadius: 35, /// TODO read value from weapon
+        //   damage: weapon.damage,
+        //   duration: weapon.duration,
+        // );
         break;
     }
   }
@@ -1331,12 +1331,15 @@ abstract class Game {
   }
 
   void respawnAI(AI ai){
-    final spawn = ai.spawn;
+    final
+    spawn = ai.spawn;
     if (spawn == null){
       throw Exception("ai.spawn is null");
     }
-    final distance = randomBetween(0, spawn.spawnRadius);
-    final angle = randomAngle();
+    final
+    distance = randomBetween(0, spawn.spawnRadius);
+    final
+    angle = randomAngle();
     ai.x = spawn.x + getAdjacent(angle, distance);
     ai.y = spawn.y + getOpposite(angle, distance);
     ai.z = ai.spawnZ;
@@ -1355,9 +1358,10 @@ abstract class Game {
     customOnAIRespawned(ai);
   }
 
-  Projectile spawnProjectileOrb(Character src, {required int damage}) {
+  Projectile spawnProjectileOrb({required Character src, required int damage}) {
     dispatchV3(GameEventType.Blue_Orb_Fired, src);
-    return spawnProjectile(
+    return
+    spawnProjectile(
       src: src,
       accuracy: 0,
       speed: 4.5,
@@ -1370,13 +1374,13 @@ abstract class Game {
   }
 
   void spawnProjectileArrow({
-        required Character src,
-        required int damage,
-        required double range,
-        double accuracy = 0,
-        Position3? target,
-        double? angle,
-      }) {
+    required Character src,
+    required int damage,
+    required double range,
+    double accuracy = 0,
+    Position3? target,
+    double? angle,
+  }) {
     dispatch(GameEventType.Arrow_Fired, src.x, src.y, src.z);
     spawnProjectile(
       src: src,
@@ -1403,7 +1407,8 @@ abstract class Game {
       src.z,
       angle ?? src.faceAngle,
     );
-    return spawnProjectile(
+    return
+      spawnProjectile(
       src: src,
       accuracy: 0,
       speed: 5,
@@ -1419,8 +1424,8 @@ abstract class Game {
     required Character src,
     double accuracy = 0,
     double speed = 12,
-  }) {
-    return spawnProjectile(
+  }) =>
+    spawnProjectile(
       src: src,
       accuracy: 0,
       angle: src.faceAngle,
@@ -1429,7 +1434,6 @@ abstract class Game {
       projectileType: ProjectileType.Bullet,
       damage: src.weapon.damage,
     );
-  }
 
   void fireAssaultRifle(Character src, double angle) {
     spawnProjectile(
@@ -1901,10 +1905,11 @@ abstract class Game {
       dispatchV3(GameEventType.Draw_Bow, character);
     }
 
-    if (stateDuration != framePerformStrike) return;
+    if (stateDuration != framePerformStrike)
+      return;
 
     if (character.equippedTypeIsStaff) {
-      spawnProjectileOrb(character, damage: equippedDamage);
+      spawnProjectileOrb(src: character, damage: equippedDamage);
       character.target = null;
       return;
     }

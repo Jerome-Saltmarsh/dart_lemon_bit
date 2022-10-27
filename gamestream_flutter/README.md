@@ -4,10 +4,11 @@
 [ ] android app title 
 [ ] mobile movement controls
 [ ] mobile disable movement tutorial
-[ ] fix staff orb kills zombie bug
 
 28.10.2022
+[x] fix staff orb kills zombie bug
 [x] fix zombie shadow
+
 
 27.10.2022
 [x] aim cursor
