@@ -35,8 +35,8 @@ void renderNodeWood(){
       return;
     case NodeOrientation.Half_North:
       RenderNode.renderStandardNodeHalfNorth(
-        srcX: AtlasNode.Node_Wood_Slope_North_X,
-        srcY: AtlasNode.Node_Wood_Slope_North_Y,
+        srcX: AtlasNode.Node_Wood_Half_South_X,
+        srcY: AtlasNode.Node_Wood_Half_South_Y,
         color: renderNodeColor,
       );
       return;
