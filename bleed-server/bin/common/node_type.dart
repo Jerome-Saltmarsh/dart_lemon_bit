@@ -60,7 +60,7 @@ class NodeType {
     value == Brick_2 ||
     value == Chimney;
 
-  static bool isOrientationSolid(int type) =>
+  static bool supportsOrientationSolid(int type) =>
     type == Brick_2 ||
     type == Soil ||
     type == Stone ||
@@ -76,7 +76,7 @@ class NodeType {
     type == Chimney ||
     type == Boulder;
 
-  static bool isOrientationEmpty(int type) =>
+  static bool supportsOrientationEmpty(int type) =>
     type == Empty ||
     type == Water ||
     type == Spawn ||
@@ -89,32 +89,27 @@ class NodeType {
     type == Sunflower ||
     type == Rain_Falling ;
 
-  static bool isRadial(int type) =>
+  static bool supportsOrientationRadial(int type) =>
     type == Tree_Bottom ||
     type == Torch ||
     type == Fireplace ;
 
-  static bool isDestroyable(int type) =>
-    type == Boulder ||
-    type == Sunflower ||
-    type == Grass_Long ;
-
-  static bool isSlopeSymmetric(int type) =>
+  static bool supportsOrientationSlopeSymmetric(int type) =>
     type == Cottage_Roof ||
     type == Wood_2 ||
     type == Grass ||
     type == Brick_2 ||
     type == Bau_Haus_2;
 
-  static bool isSlopeCornerInner(int type) =>
+  static bool supportsOrientationSlopeCornerInner(int type) =>
     type == Cottage_Roof ||
     type == Grass ||
     type == Bau_Haus_2;
 
-  static bool isSlopeCornerOuter(int type) =>
+  static bool supportsOrientationSlopeCornerOuter(int type) =>
     type == Grass;
 
-  static bool isHalf(int type) =>
+  static bool supportsOrientationHalf(int type) =>
     type == Wood_2 ||
     type == Plain ||
     type == Window ||
@@ -122,12 +117,17 @@ class NodeType {
     type == Brick_2 ||
     type == Bau_Haus_2;
 
-  static bool isCorner(int type) =>
+  static bool supportsOrientationCorner(int type) =>
     type == Wood_2 ||
     type == Plain ||
     type == Brick_2 ||
     type == Bau_Haus_2 ||
     type == Wooden_Plank;
+
+  static bool isDestroyable(int type) =>
+      type == Boulder ||
+          type == Sunflower ||
+          type == Grass_Long ;
 
   static bool isRainOrEmpty(value) =>
     isRain(value) || value == Empty;
@@ -137,74 +137,72 @@ class NodeType {
      value == Rain_Landing ;
   
   static bool blocksPerception(int value) =>
-     isOrientationSolid(value);
+     supportsOrientationSolid(value);
 
   static bool emitsLight(int value) =>
     value == Torch || 
     value == Fireplace;
 
   static int getDefaultOrientation(int value){
-     if (isOrientationEmpty(value)) {
+     if (supportsOrientationEmpty(value)) {
        return value;
      }
-     if (isOrientationSolid(value)) {
+     if (supportsOrientationSolid(value)) {
        return NodeOrientation.Solid;
      }
-     if (isSlopeSymmetric(value)) {
+     if (supportsOrientationSlopeSymmetric(value)) {
        return NodeOrientation.Slope_North;
      }
-     if (isSlopeCornerInner(value)) {
+     if (supportsOrientationSlopeCornerInner(value)) {
        return NodeOrientation.Slope_Inner_North_East;
      }
-     if (isSlopeCornerOuter(value)) {
+     if (supportsOrientationSlopeCornerOuter(value)) {
        return NodeOrientation.Slope_Outer_North_East;
      }
-     if (isHalf(value)) {
+     if (supportsOrientationHalf(value)) {
        return NodeOrientation.Half_North;
      }
-     if (isCorner(value)) {
+     if (supportsOrientationCorner(value)) {
        return NodeOrientation.Corner_Top;
      }
-     if (isRadial(value)) {
+     if (supportsOrientationRadial(value)) {
        return NodeOrientation.Radial;
      }
-
-
      throw Exception('node_type.getDefaultOrientation(${getName(value)}');
   }
 
   static bool supportsOrientation(int type, int orientation) {
 
     if (orientation == NodeOrientation.None) {
-      return isOrientationEmpty(type);
+      return supportsOrientationEmpty(type);
     }
 
     if (orientation == NodeOrientation.Solid) {
-      return isOrientationSolid(type);
+      return supportsOrientationSolid(type);
     }
 
     if (NodeOrientation.isHalf(orientation)) {
-      return isHalf(type);
+      return supportsOrientationHalf(type);
     }
 
     if (NodeOrientation.isCorner(orientation)) {
-      return isCorner(type);
+      return supportsOrientationCorner(type);
     }
 
     if (NodeOrientation.isSlopeCornerInner(orientation)) {
-      return isSlopeCornerInner(type);
+      return supportsOrientationSlopeCornerInner(type);
     }
 
     if (NodeOrientation.isSlopeCornerOuter(orientation)) {
-      return isSlopeCornerOuter(type);
+      return supportsOrientationSlopeCornerOuter(type);
     }
 
     if (NodeOrientation.isSlopeSymmetric(orientation)) {
-      return isSlopeSymmetric(type);
+      return supportsOrientationSlopeSymmetric(type);
     }
 
     if (orientation == NodeOrientation.Radial) {
-      return isRadial(type);
+      return supportsOrientationRadial(type);
     }
 
     return false;

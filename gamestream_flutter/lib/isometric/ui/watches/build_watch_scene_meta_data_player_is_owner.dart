@@ -45,28 +45,28 @@ Widget buildStackEdit(EditTab activeEditTab) =>
         ),
       if (activeEditTab == EditTab.Grid)
         Positioned(
-          left: 200,
-          top: 56,
+          left: 160,
+          top: 50,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               watch(GameEditor.nodeSelectedType, (int selectedNodeType) => Row(
                 children: [
-                  if (NodeType.isOrientationEmpty(selectedNodeType))
+                  if (NodeType.supportsOrientationEmpty(selectedNodeType))
                     buildOrientationIcon(NodeOrientation.None),
-                  if (NodeType.isOrientationSolid(selectedNodeType))
+                  if (NodeType.supportsOrientationSolid(selectedNodeType))
                     buildOrientationIcon(NodeOrientation.Solid),
-                  if (NodeType.isHalf(selectedNodeType))
+                  if (NodeType.supportsOrientationHalf(selectedNodeType))
                     buildOrientationIcon(NodeOrientation.Half_East),
-                  if (NodeType.isCorner(selectedNodeType))
+                  if (NodeType.supportsOrientationCorner(selectedNodeType))
                     buildOrientationIcon(NodeOrientation.Corner_Top),
-                  if (NodeType.isSlopeSymmetric(selectedNodeType))
+                  if (NodeType.supportsOrientationSlopeSymmetric(selectedNodeType))
                     buildOrientationIcon(NodeOrientation.Slope_East),
-                  if (NodeType.isSlopeCornerInner(selectedNodeType))
+                  if (NodeType.supportsOrientationSlopeCornerInner(selectedNodeType))
                     buildOrientationIcon(
                       NodeOrientation.Slope_Inner_North_East,
                     ),
-                  if (NodeType.isSlopeCornerOuter(selectedNodeType))
+                  if (NodeType.supportsOrientationSlopeCornerOuter(selectedNodeType))
                     buildOrientationIcon(
                       NodeOrientation.Slope_Outer_North_East,
                     ),
