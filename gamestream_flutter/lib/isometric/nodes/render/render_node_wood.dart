@@ -1,86 +1,84 @@
 
 import 'package:gamestream_flutter/library.dart';
 
-import 'render_standard_node.dart';
-
 void renderNodeWood(){
   switch (renderNodeOrientation) {
     case NodeOrientation.Solid:
-      renderStandardNodeShaded(
+      RenderNode.renderStandardNodeShaded(
         srcX: AtlasNode.Wood_Solid_X,
         srcY: AtlasNode.Node_Wood_Solid_Y,
       );
       return;
     case NodeOrientation.Slope_North:
-      renderStandardNodeShaded(
+      RenderNode.renderStandardNodeShaded(
         srcX: AtlasNode.Node_Wood_Slope_North_X,
         srcY: AtlasNode.Node_Wood_Slope_North_Y,
       );
       return;
     case NodeOrientation.Slope_East:
-      renderStandardNodeShaded(
+      RenderNode.renderStandardNodeShaded(
         srcX: AtlasNode.Node_Wood_Slope_East_X,
         srcY: AtlasNode.Node_Wood_Slope_East_Y,
       );
       return;
     case NodeOrientation.Slope_South:
-      renderStandardNodeShaded(
+      RenderNode.renderStandardNodeShaded(
         srcX: AtlasNode.Node_Wood_Slope_South_X,
         srcY: AtlasNode.Node_Wood_Slope_South_Y,
       );
       return;
     case NodeOrientation.Slope_West:
-      renderStandardNodeShaded(
+      RenderNode.renderStandardNodeShaded(
         srcX: AtlasNode.Node_Wood_Slope_West_X,
         srcY: AtlasNode.Node_Wood_Slope_West_Y,
       );
       return;
     case NodeOrientation.Half_North:
-      renderStandardNodeHalfNorth(
+      RenderNode.renderStandardNodeHalfNorth(
         srcX: AtlasNode.Node_Wood_Slope_North_X,
         srcY: AtlasNode.Node_Wood_Slope_North_Y,
         color: renderNodeColor,
       );
       return;
     case NodeOrientation.Half_East:
-      renderStandardNodeHalfEast(
+      RenderNode.renderStandardNodeHalfEast(
         srcX: AtlasNode.Node_Wood_Half_West_X,
         srcY: AtlasNode.Node_Wood_Half_West_Y,
         color: renderNodeColor,
       );
       return;
     case NodeOrientation.Half_South:
-      renderStandardNodeShaded(
+      RenderNode.renderStandardNodeShaded(
         srcX: AtlasNode.Node_Wood_Half_South_X,
         srcY: AtlasNode.Node_Wood_Half_South_Y,
       );
       return;
     case NodeOrientation.Half_West:
-      renderStandardNodeShaded(
+      RenderNode.renderStandardNodeShaded(
         srcX: AtlasNode.Node_Wood_Half_West_X,
         srcY: AtlasNode.Node_Wood_Half_West_Y,
       );
       return;
     case NodeOrientation.Corner_Top:
-      renderStandardNodeShaded(
+      RenderNode.renderStandardNodeShaded(
         srcX: AtlasNode.Node_Wood_Corner_Top_X,
         srcY: AtlasNode.Node_Wood_Corner_Top_Y,
       );
       return;
     case NodeOrientation.Corner_Right:
-      renderStandardNodeShaded(
+      RenderNode.renderStandardNodeShaded(
         srcX: AtlasNode.Node_Wood_Corner_Right_X,
         srcY: AtlasNode.Node_Wood_Corner_Right_Y,
       );
       return;
     case NodeOrientation.Corner_Bottom:
-      renderStandardNodeShaded(
+      RenderNode.renderStandardNodeShaded(
         srcX: AtlasNode.Node_Wood_Corner_Bottom_X,
         srcY: AtlasNode.Node_Wood_Corner_Bottom_Y,
       );
       return;
     case NodeOrientation.Corner_Left:
-      renderStandardNodeShaded(
+      RenderNode.renderStandardNodeShaded(
         srcX: AtlasNode.Node_Wood_Corner_Left_X,
         srcY: AtlasNode.Node_Wood_Corner_Left_Y,
       );
