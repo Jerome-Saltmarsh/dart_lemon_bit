@@ -1,6 +1,7 @@
-
+import 'dart:ui' as ui;
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/ui/views.dart';
@@ -64,7 +65,29 @@ class GameWebsite {
       Container(
          color: GameState.colorPitchBlack,
          alignment: Alignment.center,
-         child: text("Please wait..."),
+         child: Stack(
+           children: [
+             text("Please wait..."),
+             FutureBuilder<ui.Image>(
+               future: Engine.loadImageAsset('images/loading-icon.png'),
+               builder: (context, snapshot){
+                   if (snapshot.connectionState != ConnectionState.done){
+                     return const SizedBox();
+                   }
+                   final image = snapshot.data;
+                   if (image == null){
+                     return const SizedBox();
+                   }
+                   return buildAtlasImage(
+                       image: image,
+                       srcX: 0,
+                       srcY: 0,
+                       srcWidth: 64,
+                       srcHeight: 64
+                   );
+               }),
+           ],
+         ),
       );
 
    static Widget buildUI(BuildContext context) => Stack(

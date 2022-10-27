@@ -1,5 +1,7 @@
 [ ] cache region
 [ ] mobile attack controls
+[ ] android app icon
+[ ] android app title 
 [ ] mobile movement controls
 [ ] loading screen
 
