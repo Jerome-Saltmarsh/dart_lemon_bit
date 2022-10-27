@@ -1,6 +1,10 @@
 import 'package:gamestream_flutter/isometric/render/render_character_health_bar.dart';
 import 'package:gamestream_flutter/isometric/render/src_utils.dart';
 import 'package:gamestream_flutter/library.dart';
+import 'dart:math';
+
+import 'package:bleed_common/node_size.dart';
+import 'package:lemon_math/library.dart';
 
 class RenderCharacter {
 
@@ -10,14 +14,55 @@ class RenderCharacter {
     if (character.deadOrDying) return;
     if (character.spawning) return;
 
+
+    var angle = 0.0;
+    var distance = 0.0;
+
+    if (!GameState.outOfBoundsV3(character)){
+      // find the nearest torch and move the shadow behind the character
+      final characterNodeIndex = GameState.getNodeIndexV3(character);
+      final initialSearchIndex = characterNodeIndex - GameState.nodesTotalColumns - 1; // shifts the selectIndex - 1 row and - 1 column
+      var torchIndex = -1;
+
+      for (var row = 0; row < 3; row++){
+        for (var column = 0; column < 3; column++){
+          final searchIndex = initialSearchIndex + (row * GameState.nodesTotalColumns) + column;
+          if (GameState.nodesType[searchIndex] != NodeType.Torch) continue;
+          torchIndex = searchIndex;
+          break;
+        }
+      }
+
+      if (torchIndex != -1) {
+        final torchRow = GameState.convertNodeIndexToRow(torchIndex);
+        final torchColumn = GameState.convertNodeIndexToColumn(torchIndex);
+        final torchPosX = torchRow * nodeSize + nodeSizeHalf;
+        final torchPosY = torchColumn * nodeSize + nodeSizeHalf;
+        angle = getAngleBetween(character.x, character.y, torchPosX, torchPosY);
+        distance = min(
+          GameConfig.Character_Shadow_Distance_Max,
+          Engine.calculateDistance(
+              character.x,
+              character.y,
+              torchPosX,
+              torchPosY
+          ) * GameConfig.Character_Shadow_Distance_Ratio,
+        );
+      }
+    }
+
+    final shadowX = character.x + Engine.calculateAdjacent(angle, distance);
+    final shadowY = character.y + Engine.calculateOpposite(angle, distance);
+    final shadowZ = character.z;
+
     Engine.renderSprite(
       image: GameImages.zombie_shadow,
       srcX: getZombieSrcX(character),
       srcY: character.renderDirection * 64,
       srcWidth: 64,
       srcHeight: 64,
-      dstX: character.renderX,
-      dstY: character.renderY,
+      dstX: GameConvert.getRenderX(shadowX, shadowY, shadowZ),
+      dstY: GameConvert.getRenderY(shadowX, shadowY, shadowZ),
       anchorY: 0.66,
       scale: 0.7,
       color: character.color,

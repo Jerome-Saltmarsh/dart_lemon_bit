@@ -5,7 +5,9 @@
 [ ] mobile movement controls
 [ ] mobile disable movement tutorial
 [ ] fix staff orb kills zombie bug
-[ ] fix zombie shadow
+
+28.10.2022
+[x] fix zombie shadow
 
 27.10.2022
 [x] aim cursor
