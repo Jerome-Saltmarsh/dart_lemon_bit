@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.gamestream.gamestream_flutter">
    <application
-        android:label="gamestream_flutter"
+        android:label="gamestream"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
