@@ -173,7 +173,6 @@ class NodeType {
      throw Exception('node_type.getDefaultOrientation(${getName(value)}');
   }
 
-
   static bool supportsOrientation(int type, int orientation) {
 
     if (orientation == NodeOrientation.None) {

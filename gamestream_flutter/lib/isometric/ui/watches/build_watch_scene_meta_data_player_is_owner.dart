@@ -50,14 +50,28 @@ Widget buildStackEdit(EditTab activeEditTab) =>
           child: Column(
             children: [
               buildEditorSelectedNode(),
-              buildOrientationIcon(NodeOrientation.Solid),
-              buildOrientationIcon(NodeOrientation.Half_East),
-              buildOrientationIcon(NodeOrientation.Corner_Top),
-              buildOrientationIcon(NodeOrientation.Slope_East),
-              buildOrientationIcon(NodeOrientation.Slope_Inner_North_East),
-              buildOrientationIcon(NodeOrientation.Slope_Outer_North_East),
-            ],
-          ),
+                watch(GameEditor.nodeSelectedType, (int selectedNodeType) => Column(
+                    children: [
+                      if (NodeType.isOrientationSolid(selectedNodeType))
+                        buildOrientationIcon(NodeOrientation.Solid),
+                      if (NodeType.isHalf(selectedNodeType))
+                      buildOrientationIcon(NodeOrientation.Half_East),
+                      if (NodeType.isCorner(selectedNodeType))
+                      buildOrientationIcon(NodeOrientation.Corner_Top),
+                      if (NodeType.isSlopeSymmetric(selectedNodeType))
+                      buildOrientationIcon(NodeOrientation.Slope_East),
+                      if (NodeType.isSlopeCornerInner(selectedNodeType))
+                      buildOrientationIcon(
+                          NodeOrientation.Slope_Inner_North_East,
+                      ),
+                      if (NodeType.isSlopeCornerOuter(selectedNodeType))
+                      buildOrientationIcon(
+                          NodeOrientation.Slope_Outer_North_East,
+                      ),
+                    ],
+                  ))
+              ],
+            ),
         ),
       if (activeEditTab == EditTab.Weather)
         Positioned(
