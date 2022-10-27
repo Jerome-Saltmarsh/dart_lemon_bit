@@ -17,12 +17,12 @@ Widget buildStackEdit(EditTab activeEditTab) =>
     buildPage(
     children: [
       watch(GameEditor.editorDialog, buildWatchEditorDialog),
-      if (activeEditTab == EditTab.Grid)
-      Positioned(
-        right: 6,
-        top: 50,
-        child: watch(GameEditor.nodeSelectedOrientation, buildColumnEditNodeOrientation),
-      ),
+      // if (activeEditTab == EditTab.Grid)
+      // Positioned(
+      //   right: 6,
+      //   top: 50,
+      //   child: watch(GameEditor.nodeSelectedOrientation, buildColumnEditNodeOrientation),
+      // ),
       if (activeEditTab == EditTab.Objects)
         Positioned(
           left: 0,
@@ -48,28 +48,36 @@ Widget buildStackEdit(EditTab activeEditTab) =>
           left: 200,
           top: 56,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              buildEditorSelectedNode(),
-                watch(GameEditor.nodeSelectedType, (int selectedNodeType) => Column(
-                    children: [
-                      if (NodeType.isOrientationSolid(selectedNodeType))
-                        buildOrientationIcon(NodeOrientation.Solid),
-                      if (NodeType.isHalf(selectedNodeType))
-                      buildOrientationIcon(NodeOrientation.Half_East),
-                      if (NodeType.isCorner(selectedNodeType))
-                      buildOrientationIcon(NodeOrientation.Corner_Top),
-                      if (NodeType.isSlopeSymmetric(selectedNodeType))
-                      buildOrientationIcon(NodeOrientation.Slope_East),
-                      if (NodeType.isSlopeCornerInner(selectedNodeType))
-                      buildOrientationIcon(
-                          NodeOrientation.Slope_Inner_North_East,
-                      ),
-                      if (NodeType.isSlopeCornerOuter(selectedNodeType))
-                      buildOrientationIcon(
-                          NodeOrientation.Slope_Outer_North_East,
-                      ),
-                    ],
-                  ))
+              watch(GameEditor.nodeSelectedType, (int selectedNodeType) => Row(
+                children: [
+                  if (NodeType.isOrientationSolid(selectedNodeType))
+                    buildOrientationIcon(NodeOrientation.Solid),
+                  if (NodeType.isHalf(selectedNodeType))
+                    buildOrientationIcon(NodeOrientation.Half_East),
+                  if (NodeType.isCorner(selectedNodeType))
+                    buildOrientationIcon(NodeOrientation.Corner_Top),
+                  if (NodeType.isSlopeSymmetric(selectedNodeType))
+                    buildOrientationIcon(NodeOrientation.Slope_East),
+                  if (NodeType.isSlopeCornerInner(selectedNodeType))
+                    buildOrientationIcon(
+                      NodeOrientation.Slope_Inner_North_East,
+                    ),
+                  if (NodeType.isSlopeCornerOuter(selectedNodeType))
+                    buildOrientationIcon(
+                      NodeOrientation.Slope_Outer_North_East,
+                    ),
+                ],
+              )),
+              Row(
+                children: [
+                  buildEditorSelectedNode(),
+                  watch(GameEditor.nodeSelectedOrientation, buildColumnEditNodeOrientation),
+                ],
+              ),
+              // height8,
+              // watch(GameEditor.nodeSelectedOrientation, buildColumnEditNodeOrientation),
               ],
             ),
         ),

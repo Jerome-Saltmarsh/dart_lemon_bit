@@ -1,12 +1,13 @@
-[ ] Cache region
-[ ] Fix EditorUI orientations do not fit for BauHaus
+[ ] cache region
+[ ] auto detect region
+[ ] fix editor-ui orientations do not fit for bauhaus
 
 27.10.2022
-[x] Fix Wood Half North
-[x] Fix BauHaus Corners
-[x] Fix BauHaus Halves
-[x] Fix Brick Corners
-[x] Fix Brick Halves
-[x] Fixed editor change time
-[x] Fixed editor weather icons
-[x] Fixed editor menu icons
+[x] fix wood half north
+[x] fix bauhaus corners
+[x] fix bauhaus halves
+[x] fix brick corners
+[x] fix brick halves
+[x] fixed editor change time
+[x] fixed editor weather icons
+[x] fixed editor menu icons
