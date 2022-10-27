@@ -173,7 +173,7 @@ class GameIO {
   }
 
   static void onTapDown(TapDownDetails details) {
-    print("onTapDown()");
+    // print("onTapDown()");
     if (inputModeTouch) {
        touchscreenMouseX = Engine.screenToWorldX(details.globalPosition.dx);
        touchscreenMouseY = Engine.screenToWorldY(details.globalPosition.dy);

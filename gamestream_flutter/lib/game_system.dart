@@ -18,7 +18,8 @@ class GameSystem {
     GameIO.addListeners();
     GameIO.detectInputMode();
     GameWebsite.region.value = GameUtils.detectConnectionRegion();
-    GameWebsite.errorMessageEnabled.value = Engine.isLocalHost;
+    // GameWebsite.errorMessageEnabled.value = Engine.isLocalHost;
+    GameWebsite.errorMessageEnabled.value = true;
 
     final visitCount = sharedPreferences.getInt('visit-count');
     if (visitCount == null){

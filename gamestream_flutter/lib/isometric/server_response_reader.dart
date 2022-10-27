@@ -516,12 +516,12 @@ class ServerResponseReader with ByteReader {
    GameState.player.attackTarget.x = 0;
    GameState.player.attackTarget.y = 0;
    GameState.player.mouseTargetName.value = null;
-    Engine.cursorType.value = CursorType.Basic;
+    // Engine.cursorType.value = CursorType.Basic;
   }
 
   void readPlayerAttackTarget() {
     readVector3(GameState.player.attackTarget);
-    Engine.cursorType.value = CursorType.Click;
+    // Engine.cursorType.value = CursorType.Click;
   }
 
   void readDebugMode() {

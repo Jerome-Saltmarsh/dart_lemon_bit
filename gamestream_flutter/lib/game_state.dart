@@ -1117,6 +1117,20 @@ class GameState {
     );
   }
 
+  static void renderForeground(Canvas canvas, Size size) {
+     if (Engine.deviceIsPhone) return;
+      Engine.renderExternalCanvas(
+          canvas: canvas,
+          image: GameImages.cursor,
+          srcX: 0,
+          srcY: 0,
+          srcWidth: 64,
+          srcHeight: 64,
+          dstX: Engine.mousePosition.x,
+          dstY: Engine.mousePosition.y,
+      );
+  }
+
   /// TODO render logic does not belong here
   static void renderCanvas(Canvas canvas, Size size) {
     /// particles are only on the ui and thus can update every frame

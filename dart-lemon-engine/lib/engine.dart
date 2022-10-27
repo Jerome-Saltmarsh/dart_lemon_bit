@@ -371,20 +371,6 @@ class Engine {
     textPainter.paint(other ?? canvas, Offset(x, y));
   }
 
-  // /// If there are draw jobs remaining in the buffer
-  // /// it draws them and clears the rest
-  // void flushRenderBuffer(){
-  //   for (var i = bufferIndex; i < bufferSize; i += 4) {
-  //     src[i] = 0;
-  //     src[i + 1] = 0;
-  //     src[i + 2] = 0;
-  //     src[i + 3] = 0;
-  //     canvas.drawRawAtlas(atlas, dst, src, colors, renderBlendMode, null, paint);
-  //   }
-  //   bufferIndex = 0;
-  //   renderIndex = 0;
-  // }
-
   static void cameraFollow(double x, double y, double speed) {
     final diffX = screenCenterWorldX - x;
     final diffY = screenCenterWorldY - y;

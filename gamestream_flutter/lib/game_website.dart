@@ -37,54 +37,60 @@ class GameWebsite {
   }
 
    static void renderCanvas(Canvas canvas, Size size){
-      Engine.renderSprite(
-          image: GameImages.characters,
-          srcX: 0,
-          srcY: 0,
-          srcWidth: 64,
-          srcHeight: 64,
-          dstX: 100,
-          dstY: 100,
-      );
+      final centerX = size.width * 0.5;
+      // final y =
       Engine.renderSprite(
         image: GameImages.atlasNodes,
         srcX: 0,
         srcY: 0,
         srcWidth: 48,
         srcHeight: 72,
-        dstX: 200,
-        dstY: 100,
+        dstX: centerX,
+        dstY: 100 + GameAnimation.animationFrameWaterHeight.toDouble(),
+      );
+      Engine.renderSprite(
+        image: GameImages.characters,
+        srcX: 0,
+        srcY: 0,
+        srcWidth: 64,
+        srcHeight: 64,
+        dstX: centerX,
+        dstY: 100 + GameAnimation.animationFrameWaterHeight.toDouble() - GameConstants.Node_Height,
       );
    }
 
    static void update(){
-
+      GameAnimation.updateAnimationFrame();
    }
 
    static Widget buildLoadingPage() =>
       Container(
          color: GameState.colorPitchBlack,
          alignment: Alignment.center,
-         child: Stack(
+         child: Column(
+           mainAxisAlignment: MainAxisAlignment.center,
+           crossAxisAlignment: CrossAxisAlignment.center,
            children: [
-             text("Please wait..."),
+             text("please wait"),
+             height8,
              FutureBuilder<ui.Image>(
                future: Engine.loadImageAsset('images/loading-icon.png'),
                builder: (context, snapshot){
                    if (snapshot.connectionState != ConnectionState.done){
-                     return const SizedBox();
+                     return const SizedBox(height: 45,);
                    }
                    final image = snapshot.data;
                    if (image == null){
-                     return const SizedBox();
+                     return const SizedBox(height: 45,);
                    }
                    return buildAtlasImage(
                        image: image,
                        srcX: 0,
                        srcY: 0,
-                       srcWidth: 64,
-                       srcHeight: 64
+                       srcWidth: 22,
+                       srcHeight: 45
                    );
+
                }),
            ],
          ),

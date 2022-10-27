@@ -1,5 +1,6 @@
 
 class GameConstants {
+  static const Node_Height = 24.0;
   static const Sprite_Width = 48.0;
   static const Sprite_Width_Half = 24.0;
   static const Sprite_Width_Padded = Sprite_Width + 1;

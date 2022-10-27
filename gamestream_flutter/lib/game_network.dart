@@ -180,11 +180,13 @@ class GameNetwork {
 
   static void onChangedConnectionStatus(ConnectionStatus connection) {
     GameIO.removeListeners();
+    Engine.onDrawForeground = null;
     switch (connection) {
       case ConnectionStatus.Connected:
+        Engine.cursorType.value = CursorType.None;
         GameIO.addListeners();
         Engine.onDrawCanvas = GameState.renderCanvas;
-        Engine.onDrawForeground = null;
+        Engine.onDrawForeground = GameState.renderForeground;
         Engine.onUpdate = GameState.update;
         Engine.drawCanvasAfterUpdate = true;
         Engine.zoomOnScroll = true;
