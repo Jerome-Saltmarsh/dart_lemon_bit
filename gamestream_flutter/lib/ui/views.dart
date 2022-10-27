@@ -13,6 +13,7 @@ final nameController = TextEditingController();
 Widget buildWatchErrorMessage(){
   return WatchBuilder(GameWebsite.error, (String? message){
     if (message == null) return empty;
+    if (!GameWebsite.errorMessageEnabled.value) return empty;
     return buildErrorDialog(message);
   });
 }

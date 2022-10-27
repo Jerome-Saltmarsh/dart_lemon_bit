@@ -18,6 +18,12 @@ class GameWebsite {
   static final colorRegion = Colors.orange;
   static const Padding = 16.0;
   static final dateFormat = DateFormat(DateFormat.YEAR_MONTH_DAY);
+  static final visitCount = Watch(0, onChanged: onChangedVisitCount);
+  static final errorMessageEnabled = Watch(true);
+
+  static onChangedVisitCount(int value){
+    print("visit-count: $value");
+  }
 
   static String formatDate(DateTime value){
     return dateFormat.format(value.toLocal());
@@ -182,6 +188,12 @@ class GameWebsite {
                   }
               }),
           ),
+        // if (deviceType == DeviceType.Phone)
+        //   Positioned(
+        //     top: Padding,
+        //     left: Padding,
+        //     child: text('utc: ${DateTime.now().timeZoneOffset.inHours} - ${DateTime.now().timeZoneName}'),
+        //   ),
         Positioned(
           bottom: Padding,
           right: Padding,

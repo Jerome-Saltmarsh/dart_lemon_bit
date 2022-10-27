@@ -10,7 +10,6 @@ class GameSystem {
   static Future init(SharedPreferences sharedPreferences) async {
     print("environment: ${Engine.isLocalHost ? 'localhost' : 'production'}");
     print("time zone: ${GameUtils.detectConnectionRegion()}");
-
     Engine.onScreenSizeChanged = onScreenSizeChanged;
     Engine.deviceType.onChanged(onDeviceTypeChanged);
     await GameImages.loadImages();
@@ -19,6 +18,17 @@ class GameSystem {
     GameIO.addListeners();
     GameIO.detectInputMode();
     GameWebsite.region.value = GameUtils.detectConnectionRegion();
+    GameWebsite.errorMessageEnabled.value = Engine.isLocalHost;
+
+    final visitCount = sharedPreferences.getInt('visit-count');
+    if (visitCount == null){
+      sharedPreferences.putAny('visit-count', 1);
+      GameWebsite.visitCount.value = 1;
+      GameNetwork.connectToGameSkirmish();
+    } else {
+      sharedPreferences.putAny('visit-count', visitCount + 1);
+      GameWebsite.visitCount.value = visitCount + 1;
+    }
   }
 
   static void onDeviceTypeChanged(int deviceType){

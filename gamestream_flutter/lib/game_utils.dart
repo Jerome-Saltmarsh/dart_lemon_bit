@@ -21,6 +21,9 @@ class GameUtils {
       if (timeZoneName.contains('Singapore')){
         return ConnectionRegion.Singapore;
       }
+      if (timeZoneName.contains('Indochina')){
+        return ConnectionRegion.Singapore;
+      }
       if (timeZoneName.contains('Brasil')){
         return ConnectionRegion.Brazil;
       }
@@ -33,7 +36,6 @@ class GameUtils {
       if (timeZoneName.contains('Korea')){
         return ConnectionRegion.South_Korea;
       }
-
       final utc = now.timeZoneOffset.inHours;
 
       if (utc == -9) {
@@ -70,10 +72,10 @@ class GameUtils {
         return ConnectionRegion.Germany;
       }
       if (utc == 6) {
-        return ConnectionRegion.Germany;
+        return ConnectionRegion.Singapore;
       }
       if (utc == 7) {
-        return ConnectionRegion.Germany;
+        return ConnectionRegion.Singapore;
       }
       if (utc == 8) {
         return ConnectionRegion.Singapore;
