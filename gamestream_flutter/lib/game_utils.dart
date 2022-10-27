@@ -57,10 +57,34 @@ class GameUtils {
       if (utc == 1) {
         return ConnectionRegion.Germany;
       }
+      if (utc == 2) {
+        return ConnectionRegion.Germany;
+      }
+      if (utc == 3) {
+        return ConnectionRegion.Germany;
+      }
+      if (utc == 4) {
+        return ConnectionRegion.Germany;
+      }
+      if (utc == 5) {
+        return ConnectionRegion.Germany;
+      }
+      if (utc == 6) {
+        return ConnectionRegion.Germany;
+      }
+      if (utc == 7) {
+        return ConnectionRegion.Germany;
+      }
       if (utc == 8) {
         return ConnectionRegion.Singapore;
       }
       if (utc == 9) {
+        return ConnectionRegion.South_Korea;
+      }
+      if (utc == 10) {
+        return ConnectionRegion.South_Korea;
+      }
+      if (utc == 11) {
         return ConnectionRegion.South_Korea;
       }
      return ConnectionRegion.USA_West;

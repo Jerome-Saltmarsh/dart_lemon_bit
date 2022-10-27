@@ -1,7 +1,7 @@
 [ ] cache region
-[ ] auto detect region
 
 27.10.2022
+[x] auto detect region
 [x] fix editor-ui orientations do not fit for bauhaus
 [x] fix wood half north
 [x] fix bauhaus corners
