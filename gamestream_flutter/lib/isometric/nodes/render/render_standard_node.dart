@@ -1,15 +1,6 @@
 
 import 'package:gamestream_flutter/library.dart';
 
-// final _src = Float32List(4);
-// final _dst = () {
-//   final bytes = Float32List(4);
-//   bytes[0] = 1;
-//   bytes[1] = 0;
-//   return bytes;
-// }();
-// final _colors = Int32List(1);
-
 void renderStandardNode({
   required double srcX,
   required double srcY,
@@ -39,8 +30,8 @@ void renderStandardNodeShaded({
     srcHeight: GameConstants.Sprite_Height,
     dstX: GameRender.currentNodeDstX,
     dstY: GameRender.currentNodeDstY,
-    anchorY: 0.3,
-    color: GameState.colorShades[GameState.nodesShade[GameRender.currentNodeIndex]],
+    anchorY: GameConstants.Sprite_Anchor_Y,
+    color: GameRender.currentNodeColor,
   );
 }
 
@@ -58,7 +49,7 @@ void renderStandardNodeHalfEast({
     srcHeight: GameConstants.Sprite_Height,
     dstX: GameRender.currentNodeDstX + 17,
     dstY: GameRender.currentNodeDstY - 17,
-    anchorY: 0.3,
+    anchorY: GameConstants.Sprite_Anchor_Y,
     color: color,
   );
 }
@@ -77,7 +68,7 @@ void renderStandardNodeHalfNorth({
     srcHeight: GameConstants.Sprite_Height,
     dstX: GameRender.currentNodeDstX - 17,
     dstY: GameRender.currentNodeDstY - 17,
-    anchorY: 0.3,
+    anchorY: GameConstants.Sprite_Anchor_Y,
     color: color,
   );
 }
