@@ -287,6 +287,14 @@ class AtlasNodeHeight {
   }[type] ?? 72;
 }
 
+class AtlasParticleX {
+   static const Blood = 0.0;
+}
+
+class AtlasParticleY {
+  static const Blood = 72.0;
+}
+
 
 class AtlasNode {
   static const Sprite_Width = 48.0;
