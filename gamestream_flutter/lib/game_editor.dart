@@ -22,42 +22,36 @@ class GameEditor {
   static final nodeSelectedOrientation = Watch(NodeOrientation.None);
   static final nodeOrientationVisible = Watch(true);
   static final nodeTypeSpawnSelected = Watch(false);
-  static final nodeSupportsSolid = Watch(false);
-  static final nodeSupportsSlopeSymmetric = Watch(false);
-  static final nodeSupportsSlopeCornerInner = Watch(false);
-  static final nodeSupportsSlopeCornerOuter = Watch(false);
-  static final nodeSupportsHalf = Watch(false);
-  static final nodeSupportsCorner = Watch(false);
   static final isActiveEditTriggers = Watch(true);
 
-  static var nodeIndex = Watch(0, clamp: (int value){
+  static var nodeSelectedIndex = Watch(0, clamp: (int value){
      if (value < 0) return 0;
      if (value >= GameState.nodesTotal) return GameState.nodesTotal - 1;
      return value;
   }, onChanged: onChangedSelectedNodeIndex);
 
-  static int get z => GameState.convertNodeIndexToZ(nodeIndex.value);
-  static int get row => GameState.convertNodeIndexToRow(nodeIndex.value);
-  static int get column => GameState.convertNodeIndexToColumn(nodeIndex.value);
+  static int get z => GameState.convertNodeIndexToZ(nodeSelectedIndex.value);
+  static int get row => GameState.convertNodeIndexToRow(nodeSelectedIndex.value);
+  static int get column => GameState.convertNodeIndexToColumn(nodeSelectedIndex.value);
 
   static set z(int value){
      if (value < 0) return;
      if (value >= GameState.nodesTotalZ) return;
      final difference = value - z;
-     nodeIndex.value += difference * GameState.nodesArea;
+     nodeSelectedIndex.value += difference * GameState.nodesArea;
   }
 
   static set row(int value){
     if (value < 0) return;
     if (value >= GameState.nodesTotalRows) return;
     final difference = value - row;
-    nodeIndex.value += difference * GameState.nodesTotalColumns;
+    nodeSelectedIndex.value += difference * GameState.nodesTotalColumns;
   }
 
   static set column(int value){
     if (value < 0) return;
     if (value >= GameState.nodesTotalColumns) return;
-    nodeIndex.value += value - column;
+    nodeSelectedIndex.value += value - column;
   }
 
   static final paintType = Watch(NodeType.Brick_2, onChanged: onChangedPaintType);
@@ -69,8 +63,8 @@ class GameEditor {
   static double get posZ => z * tileHeight;
 
   static void refreshNodeSelectedIndex(){
-    nodeSelectedType.value = GameState.nodesType[nodeIndex.value];
-    nodeSelectedOrientation.value = GameState.nodesOrientation[nodeIndex.value];
+    nodeSelectedType.value = GameState.nodesType[nodeSelectedIndex.value];
+    nodeSelectedOrientation.value = GameState.nodesOrientation[nodeSelectedIndex.value];
   }
 
   static void deselectGameObject() {
@@ -132,7 +126,7 @@ class GameEditor {
   }
 
   static void selectBlock(int z, int row, int column){
-    nodeIndex.value = GameState.getNodeIndexZRC(z, row, column);
+    nodeSelectedIndex.value = GameState.getNodeIndexZRC(z, row, column);
   }
 
   static void deleteGameObjectSelected(){
@@ -151,7 +145,7 @@ class GameEditor {
 
   static void setNodeType(int type, int orientation) =>
       GameNetwork.sendClientRequestSetBlock(
-        index: nodeIndex.value,
+        index: nodeSelectedIndex.value,
         type: type,
         orientation: orientation,
     );
@@ -179,13 +173,13 @@ class GameEditor {
     }
 
     return GameNetwork.sendClientRequestSetBlock(
-        index: nodeIndex.value,
+        index: nodeSelectedIndex.value,
         type: nodeType,
         orientation: orientation,
     );
   }
 
-  static void cursorSetToPlayer() => nodeIndex.value = GamePlayer.position.nodeIndex;
+  static void cursorSetToPlayer() => nodeSelectedIndex.value = GamePlayer.position.nodeIndex;
   static void cursorRowIncrease() => row++;
   static void cursorRowDecrease() => row--;
   static void cursorColumnIncrease() => column++;
@@ -199,7 +193,7 @@ class GameEditor {
 
   static void actionAddGameObject(int type) =>
       GameNetwork.sendClientRequestAddGameObject(
-        index: GameEditor.nodeIndex.value,
+        index: GameEditor.nodeSelectedIndex.value,
         type: type,
       );
 
@@ -231,12 +225,6 @@ class GameEditor {
   static void onChangedSelectedNodeType(int nodeType){
     nodeOrientationVisible.value = true;
     nodeTypeSpawnSelected.value = nodeType == NodeType.Spawn;
-    nodeSupportsSolid.value = NodeType.isOrientationSolid(nodeType);
-    nodeSupportsCorner.value = NodeType.isCorner(nodeType);
-    nodeSupportsHalf.value = NodeType.isHalf(nodeType);
-    nodeSupportsSlopeCornerInner.value = NodeType.isSlopeCornerInner(nodeType);
-    nodeSupportsSlopeCornerOuter.value = NodeType.isSlopeCornerOuter(nodeType);
-    nodeSupportsSlopeSymmetric.value = NodeType.isSlopeSymmetric(nodeType);
   }
 
   static void onChangedEditorDialog(EditorDialog? value){

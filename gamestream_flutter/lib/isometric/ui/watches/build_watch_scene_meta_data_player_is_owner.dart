@@ -20,11 +20,8 @@ Widget buildStackEdit(EditTab activeEditTab) =>
       if (activeEditTab == EditTab.Grid)
       Positioned(
         right: 6,
-        top: 80,
-        child: buildWatchBool(
-            GameEditor.nodeOrientationVisible,
-            buildColumnEditNodeOrientation
-        ),
+        top: 50,
+        child: watch(GameEditor.nodeSelectedOrientation, buildColumnEditNodeOrientation),
       ),
       if (activeEditTab == EditTab.Objects)
         Positioned(
@@ -37,7 +34,7 @@ Widget buildStackEdit(EditTab activeEditTab) =>
           left: 0,
           top: 50,
           child: container(child: 'Spawn Zombie', action: (){
-            GameNetwork.sendClientRequestEdit(EditRequest.Spawn_Zombie, GameEditor.nodeIndex.value);
+            GameNetwork.sendClientRequestEdit(EditRequest.Spawn_Zombie, GameEditor.nodeSelectedIndex.value);
           }),
         ),
       if (activeEditTab == EditTab.Grid)
@@ -113,23 +110,24 @@ Widget buildStackEdit(EditTab activeEditTab) =>
     ],
   );
 
-Widget buildColumnEditNodeOrientation() =>
+Widget buildColumnEditNodeOrientation(int selectedNodeOrientation) =>
     Column(
       children: [
-        buildColumnNodeOrientationSolid(),
+        if (NodeOrientation.isSlopeSymmetric(selectedNodeOrientation))
         buildColumnNodeOrientationSlopeSymmetric(),
+        if (NodeOrientation.isCorner(selectedNodeOrientation))
         buildColumnNodeOrientationCorner(),
+        if (NodeOrientation.isHalf(selectedNodeOrientation))
         buildColumnNodeOrientationHalf(),
+        if (NodeOrientation.isSlopeCornerInner(selectedNodeOrientation))
         buildColumnNodeOrientationSlopeCornerInner(),
+        if (NodeOrientation.isSlopeCornerOuter(selectedNodeOrientation))
         buildColumnNodeOrientationSlopeCornerOuter(),
       ],
     );
 
 Widget buildColumnNodeOrientationSolid() =>
-    visibleBuilder(
-      GameEditor.nodeSupportsSolid,
-      buildOrientationIcon(NodeOrientation.Solid),
-    );
+    buildOrientationIcon(NodeOrientation.Solid);
 
 Widget buildOrientationIcon(int orientation){
   final canvas = buildAtlasImage(
@@ -146,7 +144,7 @@ Widget buildOrientationIcon(int orientation){
     action: (){
       GameEditor.paintOrientation.value = orientation;
       GameNetwork.sendClientRequestSetBlock(
-          index: GameEditor.nodeIndex.value,
+          index: GameEditor.nodeSelectedIndex.value,
           type: GameEditor.nodeSelectedType.value,
           orientation: orientation,
       );
@@ -164,106 +162,93 @@ Widget buildOrientationIcon(int orientation){
 }
 
 Widget buildColumnNodeOrientationSlopeSymmetric() =>
-    visibleBuilder(
-      GameEditor.nodeSupportsSlopeSymmetric,
-      Row(
-        children: [
-           Column(
-             children: [
-               buildOrientationIcon(NodeOrientation.Slope_South),
-               buildOrientationIcon(NodeOrientation.Slope_East),
-             ],
-           ),
-          Column(
-            children: [
-              buildOrientationIcon(NodeOrientation.Slope_West),
-              buildOrientationIcon(NodeOrientation.Slope_North),
-            ],
-          )
-        ],
-      ),
+    Row(
+      children: [
+        Column(
+          children: [
+            buildOrientationIcon(NodeOrientation.Slope_South),
+            buildOrientationIcon(NodeOrientation.Slope_East),
+          ],
+        ),
+        Column(
+          children: [
+            buildOrientationIcon(NodeOrientation.Slope_West),
+            buildOrientationIcon(NodeOrientation.Slope_North),
+          ],
+        )
+      ],
     );
 
 Widget buildColumnNodeOrientationCorner() =>
-    visibleBuilder(
-        GameEditor.nodeSupportsCorner,
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+    Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        buildOrientationIcon(NodeOrientation.Corner_Top),
+        Row(
           children: [
-            buildOrientationIcon(NodeOrientation.Corner_Top),
-            Row(
-              children: [
-                buildOrientationIcon(NodeOrientation.Corner_Left),
-                width(48),
-                buildOrientationIcon(NodeOrientation.Corner_Right),
-              ],
-            ),
-            buildOrientationIcon(NodeOrientation.Corner_Bottom),
+            buildOrientationIcon(NodeOrientation.Corner_Left),
+            width(48),
+            buildOrientationIcon(NodeOrientation.Corner_Right),
           ],
-        )
+        ),
+        buildOrientationIcon(NodeOrientation.Corner_Bottom),
+      ],
     );
+
 
 Widget buildColumnNodeOrientationHalf() =>
-    visibleBuilder(
-        GameEditor.nodeSupportsHalf,
-        Row(
+    Row(
+      children: [
+        Column(
           children: [
-            Column(
-              children: [
-                buildOrientationIcon(NodeOrientation.Half_North),
-                buildOrientationIcon(NodeOrientation.Half_West),
-              ],
-            ),
-            Column(
-              children: [
-                buildOrientationIcon(NodeOrientation.Half_East),
-                buildOrientationIcon(NodeOrientation.Half_South),
-              ],
-            )
+            buildOrientationIcon(NodeOrientation.Half_North),
+            buildOrientationIcon(NodeOrientation.Half_West),
+          ],
+        ),
+        Column(
+          children: [
+            buildOrientationIcon(NodeOrientation.Half_East),
+            buildOrientationIcon(NodeOrientation.Half_South),
           ],
         )
+      ],
     );
 
+
 Widget buildColumnNodeOrientationSlopeCornerInner() =>
-    visibleBuilder(
-        GameEditor.nodeSupportsSlopeCornerInner,
-        Row(
+    Row(
+      children: [
+        Column(
           children: [
-            Column(
-              children: [
-                buildOrientationIcon(NodeOrientation.Slope_Inner_North_West),
-                buildOrientationIcon(NodeOrientation.Slope_Inner_North_East),
-              ],
-            ),
-            Column(
-              children: [
-                buildOrientationIcon(NodeOrientation.Slope_Inner_South_West),
-                buildOrientationIcon(NodeOrientation.Slope_Inner_South_East),
-              ],
-            )
+            buildOrientationIcon(NodeOrientation.Slope_Inner_North_West),
+            buildOrientationIcon(NodeOrientation.Slope_Inner_North_East),
+          ],
+        ),
+        Column(
+          children: [
+            buildOrientationIcon(NodeOrientation.Slope_Inner_South_West),
+            buildOrientationIcon(NodeOrientation.Slope_Inner_South_East),
           ],
         )
+      ],
     );
 
 Widget buildColumnNodeOrientationSlopeCornerOuter() =>
-    visibleBuilder(
-        GameEditor.nodeSupportsSlopeCornerOuter,
-        Row(
+    Row(
+      children: [
+        Column(
           children: [
-            Column(
-              children: [
-                buildOrientationIcon(NodeOrientation.Slope_Outer_North_West),
-                buildOrientationIcon(NodeOrientation.Slope_Outer_North_East),
-              ],
-            ),
-            Column(
-              children: [
-                buildOrientationIcon(NodeOrientation.Slope_Outer_South_West),
-                buildOrientationIcon(NodeOrientation.Slope_Outer_South_East),
-              ],
-            )
+            buildOrientationIcon(NodeOrientation.Slope_Outer_North_West),
+            buildOrientationIcon(NodeOrientation.Slope_Outer_North_East),
+          ],
+        ),
+        Column(
+          children: [
+            buildOrientationIcon(NodeOrientation.Slope_Outer_South_West),
+            buildOrientationIcon(NodeOrientation.Slope_Outer_South_East),
           ],
         )
+      ],
     );
 
 Widget buildColumnButtonsNodeOrientations(List<int> orientations) =>

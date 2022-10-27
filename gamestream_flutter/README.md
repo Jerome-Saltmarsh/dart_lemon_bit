@@ -1,7 +1,7 @@
 [ ] Cache region
+[ ] Fix EditorUI orientations do not fit for BauHaus
 
 27.10.2022
-[x] Fix EditorUI orientations do not fit for BauHaus
 [x] Fix BauHaus Corners
 [x] Fix BauHaus Halves
 [x] Fix Brick Corners

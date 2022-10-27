@@ -952,7 +952,7 @@ class GameRender {
 
     if (GameState.editMode){
       GameState.applyEmissionDynamic(
-        index: GameEditor.nodeIndex.value,
+        index: GameEditor.nodeSelectedIndex.value,
         maxBrightness: Shade.Very_Bright,
       );
     }
