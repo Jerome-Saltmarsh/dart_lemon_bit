@@ -52,6 +52,8 @@ Widget buildStackEdit(EditTab activeEditTab) =>
             children: [
               watch(GameEditor.nodeSelectedType, (int selectedNodeType) => Row(
                 children: [
+                  if (NodeType.isOrientationEmpty(selectedNodeType))
+                    buildOrientationIcon(NodeOrientation.None),
                   if (NodeType.isOrientationSolid(selectedNodeType))
                     buildOrientationIcon(NodeOrientation.Solid),
                   if (NodeType.isHalf(selectedNodeType))
@@ -71,6 +73,7 @@ Widget buildStackEdit(EditTab activeEditTab) =>
                 ],
               )),
               Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   buildEditorSelectedNode(),
                   watch(GameEditor.nodeSelectedOrientation, buildColumnEditNodeOrientation),
@@ -136,15 +139,15 @@ Widget buildColumnEditNodeOrientation(int selectedNodeOrientation) =>
     Column(
       children: [
         if (NodeOrientation.isSlopeSymmetric(selectedNodeOrientation))
-        buildColumnNodeOrientationSlopeSymmetric(),
+          buildColumnNodeOrientationSlopeSymmetric(),
         if (NodeOrientation.isCorner(selectedNodeOrientation))
-        buildColumnNodeOrientationCorner(),
+          buildColumnNodeOrientationCorner(),
         if (NodeOrientation.isHalf(selectedNodeOrientation))
-        buildColumnNodeOrientationHalf(),
+          buildColumnNodeOrientationHalf(),
         if (NodeOrientation.isSlopeCornerInner(selectedNodeOrientation))
-        buildColumnNodeOrientationSlopeCornerInner(),
+          buildColumnNodeOrientationSlopeCornerInner(),
         if (NodeOrientation.isSlopeCornerOuter(selectedNodeOrientation))
-        buildColumnNodeOrientationSlopeCornerOuter(),
+          buildColumnNodeOrientationSlopeCornerOuter(),
       ],
     );
 
@@ -272,9 +275,6 @@ Widget buildColumnNodeOrientationSlopeCornerOuter() =>
         )
       ],
     );
-
-Widget buildColumnButtonsNodeOrientations(List<int> orientations) =>
-  Column(children: orientations.map(buildOrientationIcon).toList());
 
 
 Widget buildColumnSelectedGameObject() {

@@ -72,6 +72,7 @@ class AtlasNodeX {
   static const Orientation_Corner = 1067.0;
   static const Orientation_Slope_Inner = 1067.0;
   static const Orientation_Slope_Outer = 1067.0;
+  static const Orientation_Empty = 1018.0;
 
   static double mapNodeType(int type) => {
     NodeType.Brick_2: Brick_Solid,
@@ -124,6 +125,9 @@ class AtlasNodeX {
     }
     if (NodeOrientation.isSlopeSymmetric(orientation)){
       return Orientation_Slope_Symmetric;
+    }
+    if (orientation == NodeOrientation.None){
+      return Orientation_Empty;
     }
     throw Exception('AtlasNodeX.mapOrientation(${NodeOrientation.getName(orientation)}');
   }
@@ -190,6 +194,7 @@ class AtlasNodeY {
   static const Orientation_Slope_Inner_North_East = Orientation_Slope_Inner_South_East + AtlasNode.Sprite_Height_Padded;
   static const Orientation_Slope_Inner_North_West = Orientation_Slope_Inner_North_East + AtlasNode.Sprite_Height_Padded;
   static const Orientation_Slope_Inner_South_West = Orientation_Slope_Inner_North_West + AtlasNode.Sprite_Height_Padded;
+  static const Orientation_Empty = 1185.0;
 
   static double mapNodeType(int type) => {
     NodeType.Water: Water,
@@ -258,7 +263,8 @@ class AtlasNodeY {
       return Orientation_Slope_Inner_North_West;
     if (orientation == NodeOrientation.Slope_Inner_South_West)
       return Orientation_Slope_Inner_South_West;
-
+    if (orientation == NodeOrientation.None)
+      return Orientation_Empty;
     throw Exception('AtlasNodeY.mapOrientation(${NodeOrientation.getName(orientation)}');
   }
 }
