@@ -4,10 +4,11 @@
 [ ] android app title 
 [ ] mobile movement controls
 [ ] mobile disable movement tutorial
-[ ] zombie shadow
-[ ] aim cursor
+[ ] fix staff orb kills zombie bug
+[ ] fix zombie shadow
 
 27.10.2022
+[x] aim cursor
 [x] loading screen
 [x] fix particle blood color
 [x] mobile device auto connect on first visit

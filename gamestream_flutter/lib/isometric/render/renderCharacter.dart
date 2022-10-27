@@ -1,7 +1,6 @@
 
 import 'package:gamestream_flutter/isometric/render/render_character_rat.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_slime.dart';
-import 'package:gamestream_flutter/isometric/render/render_character_zombie.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import 'render_character_template.dart';
@@ -58,7 +57,7 @@ void renderCharacter(Character character){
     case CharacterType.Rat:
       return renderCharacterRat(character);
     case CharacterType.Zombie:
-      return renderCharacterZombie(character);
+      return RenderCharacter.renderCharacterZombie(character);
     default:
       throw Exception("Cannot render character type: ${character.characterType}");
   }
