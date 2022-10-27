@@ -27,6 +27,9 @@ class AtlasIconSize {
 
 class AtlasNodeX {
   static const Bau_Haus_Solid = 520.0;
+  static const Bau_Haus_Half = Bau_Haus_Solid;
+  static const Bau_Haus_Corner = Bau_Haus_Half;
+  static const Bau_Haus_Slope = Bau_Haus_Solid + GameConstants.Sprite_Width_Padded;
   static const Brick_Solid = 680.0;
   static const Brick_Half_West = Brick_Solid + GameConstants.Sprite_Width_Padded;
   static const Brick_Half_South = Brick_Half_West + GameConstants.Sprite_Width_Padded;
@@ -128,6 +131,20 @@ class AtlasNodeX {
 
 class AtlasNodeY {
   static const Bau_Haus_Solid = 512.0;
+  static const Bau_Haus_Half_South = Bau_Haus_Solid + GameConstants.Sprite_Height_Padded;
+  static const Bau_Haus_Half_West = Bau_Haus_Half_South + GameConstants.Sprite_Height_Padded;
+  static const Bau_Haus_Corner_Top = Bau_Haus_Half_West + GameConstants.Sprite_Height_Padded;
+  static const Bau_Haus_Corner_Right = Bau_Haus_Corner_Top + GameConstants.Sprite_Height_Padded;
+  static const Bau_Haus_Corner_Bottom = Bau_Haus_Corner_Right + GameConstants.Sprite_Height_Padded;
+  static const Bau_Haus_Corner_Left = Bau_Haus_Corner_Bottom + GameConstants.Sprite_Height_Padded;
+  static const Bau_Haus_Slope_Symmetric_North = 512.0;
+  static const Bau_Haus_Slope_Symmetric_East = Bau_Haus_Slope_Symmetric_North + GameConstants.Sprite_Height_Padded;
+  static const Bau_Haus_Slope_Symmetric_South = Bau_Haus_Slope_Symmetric_East + GameConstants.Sprite_Height_Padded;
+  static const Bau_Haus_Slope_Symmetric_West = Bau_Haus_Slope_Symmetric_South + GameConstants.Sprite_Height_Padded;
+  static const Bau_Haus_Slope_Inner_North_East = Bau_Haus_Slope_Symmetric_West + GameConstants.Sprite_Height_Padded;
+  static const Bau_Haus_Slope_Inner_South_East = Bau_Haus_Slope_Inner_North_East + GameConstants.Sprite_Height_Padded;
+  static const Bau_Haus_Slope_Inner_South_West = Bau_Haus_Slope_Inner_South_East + GameConstants.Sprite_Height_Padded;
+  static const Bau_Haus_Slope_Inner_North_West = Bau_Haus_Slope_Inner_South_West + GameConstants.Sprite_Height_Padded;
   static const Spawn_Weapon = 592.0;
   static const Spawn_Player = 592.0;
   static const Spawn_Zombie = 665.0;

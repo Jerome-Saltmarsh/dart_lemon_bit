@@ -137,100 +137,100 @@ class RenderNode {
         break;
       case NodeOrientation.Half_North:
         renderStandardNodeHalfNorth(
-          srcX: AtlasNode.Node_Bau_Haus_Half_South_X,
-          srcY: AtlasNode.Node_Bau_Haus_Half_South_Y,
+          srcX: AtlasNodeX.Bau_Haus_Half,
+          srcY: AtlasNodeY.Bau_Haus_Half_South,
           color: renderNodeColor,
         );
         break;
       case NodeOrientation.Half_East:
         renderStandardNodeHalfEast(
-          srcX: AtlasNode.Node_Bau_Haus_Half_West_X,
-          srcY: AtlasNode.Node_Bau_Haus_Half_West_Y,
+          srcX: AtlasNodeX.Bau_Haus_Half,
+          srcY: AtlasNodeY.Bau_Haus_Half_West,
           color: renderNodeColor,
         );
         break;
       case NodeOrientation.Half_South:
         renderStandardNode(
-          srcX: AtlasNode.Node_Bau_Haus_Half_South_X,
-          srcY: AtlasNode.Node_Bau_Haus_Half_South_Y,
+          srcX: AtlasNodeX.Bau_Haus_Half,
+          srcY: AtlasNodeY.Bau_Haus_Half_South,
         );
         break;
       case NodeOrientation.Half_West:
         renderStandardNode(
-          srcX: AtlasNode.Node_Bau_Haus_Half_South_X,
-          srcY: AtlasNode.Node_Bau_Haus_Half_South_Y,
+          srcX: AtlasNodeX.Bau_Haus_Half,
+          srcY: AtlasNodeY.Bau_Haus_Half_West,
         );
         break;
       case NodeOrientation.Corner_Top:
         renderStandardNodeShaded(
-          srcX: AtlasNode.Node_Bau_Haus_Corner_Top_X,
-          srcY: AtlasNode.Node_Bau_Haus_Corner_Top_Y,
+          srcX: AtlasNodeX.Bau_Haus_Corner,
+          srcY: AtlasNodeY.Bau_Haus_Corner_Top,
         );
         break;
       case NodeOrientation.Corner_Right:
         renderStandardNodeShaded(
-          srcX: AtlasNode.Node_Bau_Haus_Corner_Right_X,
-          srcY: AtlasNode.Node_Bau_Haus_Corner_Right_Y,
+          srcX: AtlasNodeX.Bau_Haus_Corner,
+          srcY: AtlasNodeY.Bau_Haus_Corner_Right,
         );
         break;
       case NodeOrientation.Corner_Bottom:
         renderStandardNodeShaded(
-          srcX: AtlasNode.Node_Bau_Haus_Corner_Bottom_X,
-          srcY: AtlasNode.Node_Bau_Haus_Corner_Bottom_Y,
+          srcX: AtlasNodeX.Bau_Haus_Corner,
+          srcY: AtlasNodeY.Bau_Haus_Corner_Bottom,
         );
         break;
       case NodeOrientation.Corner_Left:
         renderStandardNodeShaded(
-          srcX: AtlasNode.Node_Bau_Haus_Corner_Left_X,
-          srcY: AtlasNode.Node_Bau_Haus_Corner_Left_Y,
+          srcX: AtlasNodeX.Bau_Haus_Corner,
+          srcY: AtlasNodeY.Bau_Haus_Corner_Left,
         );
         break;
       case NodeOrientation.Slope_North:
         renderStandardNodeShaded(
-          srcX: AtlasNode.Node_Bau_Haus_Slope_North_X,
-          srcY: AtlasNode.Node_Bau_Haus_Slope_North_Y,
+          srcX: AtlasNodeX.Bau_Haus_Slope,
+          srcY: AtlasNodeY.Bau_Haus_Slope_Symmetric_North,
         );
         break;
       case NodeOrientation.Slope_East:
         renderStandardNodeShaded(
-          srcX: AtlasNode.Node_Bau_Haus_Slope_East_X,
-          srcY: AtlasNode.Node_Bau_Haus_Slope_East_Y,
+          srcX: AtlasNodeX.Bau_Haus_Slope,
+          srcY: AtlasNodeY.Bau_Haus_Slope_Symmetric_East,
         );
         break;
       case NodeOrientation.Slope_South:
         renderStandardNodeShaded(
-          srcX: AtlasNode.Node_Bau_Haus_Slope_South_X,
-          srcY: AtlasNode.Node_Bau_Haus_Slope_South_Y,
+          srcX: AtlasNodeX.Bau_Haus_Slope,
+          srcY: AtlasNodeY.Bau_Haus_Slope_Symmetric_South,
         );
         break;
       case NodeOrientation.Slope_West:
         renderStandardNodeShaded(
-          srcX: AtlasNode.Node_Bau_Haus_Slope_West_X,
-          srcY: AtlasNode.Node_Bau_Haus_Slope_West_Y,
+          srcX: AtlasNodeX.Bau_Haus_Slope,
+          srcY: AtlasNodeY.Bau_Haus_Slope_Symmetric_West,
         );
         break;
       case NodeOrientation.Slope_Inner_North_East:
         renderStandardNodeShaded(
-          srcX: AtlasNode.Node_Bau_Haus_Slope_Inner_North_East_X,
-          srcY: AtlasNode.Node_Bau_Haus_Slope_Inner_North_East_Y,
+          srcX: AtlasNodeX.Bau_Haus_Slope,
+          srcY: AtlasNodeY.Bau_Haus_Slope_Inner_North_East,
         );
         break;
       case NodeOrientation.Slope_Inner_South_East:
         renderStandardNodeShaded(
-          srcX: AtlasNode.Node_Bau_Haus_Slope_Inner_South_East_X,
-          srcY: AtlasNode.Node_Bau_Haus_Slope_Inner_South_East_Y,
+          srcX: AtlasNodeX.Bau_Haus_Slope,
+          srcY: AtlasNodeY.Bau_Haus_Slope_Inner_South_East,
         );
         break;
       case NodeOrientation.Slope_Inner_South_West:
         renderStandardNodeShaded(
-          srcX: AtlasNode.Node_Bau_Haus_Slope_Inner_South_West_X,
-          srcY: AtlasNode.Node_Bau_Haus_Slope_Inner_South_West_Y,
+          srcX: AtlasNodeX.Bau_Haus_Slope,
+          srcY: AtlasNodeY.Bau_Haus_Slope_Inner_South_West,
         );
         break;
       case NodeOrientation.Slope_Inner_North_West:
         renderStandardNodeShaded(
-          srcX: AtlasNode.Node_Bau_Haus_Slope_Inner_North_West_X,
-          srcY: AtlasNode.Node_Bau_Haus_Slope_Inner_North_West_Y,
+          srcX: AtlasNodeX.Bau_Haus_Slope,
+          srcY: AtlasNodeY.Bau_Haus_Slope_Inner_North_West,
         );
         break;
     }

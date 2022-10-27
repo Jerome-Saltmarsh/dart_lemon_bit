@@ -82,6 +82,8 @@ class GameRender {
   static int get currentNodeShade => GameState.nodesShade[currentNodeIndex];
   static int get currentNodeColor => GameState.colorShades[currentNodeShade];
   static int get currentNodeOrientation => GameState.nodesOrientation[currentNodeIndex];
+  static bool get currentNodeVisible => GameState.nodesVisible[currentNodeIndex];
+  static int get currentNodeWind => GameState.nodesWind[currentNodeIndex];
 
 
   static void renderCurrentParticle() =>

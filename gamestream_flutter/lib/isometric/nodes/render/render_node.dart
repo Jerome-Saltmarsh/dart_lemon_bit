@@ -8,7 +8,7 @@ import 'render_node_window.dart';
 import 'render_node_wooden_plank.dart';
 
 void renderNodeAt() {
-  if (!GameState.nodesVisible[GameRender.currentNodeIndex] && GameState.nodesOrientation[GameRender.currentNodeIndex] != NodeOrientation.None) {
+  if (!GameRender.currentNodeVisible && GameRender.currentNodeOrientation != NodeOrientation.None) {
     if (GameRender.currentNodeIndex > GameState.nodesArea){
         final nodeBelowIndex = GameRender.currentNodeIndex - GameState.nodesArea;
         final nodeBelowOrientation = GameState.nodesOrientation[nodeBelowIndex];
@@ -86,7 +86,7 @@ void renderNodeAt() {
       );
       break;
     case NodeType.Grass_Long:
-      switch (GameState.nodesWind[GameRender.currentNodeIndex]) {
+      switch (GameRender.currentNodeWind) {
         case windIndexCalm:
           RenderNode.renderStandardNode(
             srcX: AtlasNodeX.Grass_Long,
