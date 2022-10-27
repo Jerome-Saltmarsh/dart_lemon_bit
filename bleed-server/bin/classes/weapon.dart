@@ -24,6 +24,8 @@ class Weapon {
 
    bool get requiresRounds => capacity > 0;
 
+   double get durationPercentage => durationRemaining / duration;
+
    set rounds(int value) {
      _rounds = clamp(value, 0, capacity);
    }

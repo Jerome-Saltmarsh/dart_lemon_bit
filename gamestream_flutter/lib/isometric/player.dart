@@ -5,6 +5,7 @@ import 'package:gamestream_flutter/services/mini_map.dart';
 import 'events/on_store_items_changed.dart';
 
 class Player {
+  final weaponCooldown = Watch(1.0);
   final storeItems = Watch(<Weapon>[], onChanged: onPlayerStoreItemsChanged);
   final storeVisible = Watch(false, onChanged: GameEvents.onChangedStoreVisible);
   final interpolating = Watch(true);

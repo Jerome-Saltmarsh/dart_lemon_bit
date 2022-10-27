@@ -17,4 +17,5 @@ class ApiPlayer {
   static const Level = 14;
   static const Aim_Angle = 15;
   static const Message = 16;
+  static const Weapon_Cooldown = 17;
 }

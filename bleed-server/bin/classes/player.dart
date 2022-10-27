@@ -243,6 +243,7 @@ class Player extends Character with ByteWriter {
 
   void writePlayerGame() {
     writePlayerPosition();
+    writePlayerWeaponCooldown();
 
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Health);
@@ -318,6 +319,12 @@ class Player extends Character with ByteWriter {
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Weapon_Capacity);
     writeInt(weapon.capacity);
+  }
+
+  void writePlayerWeaponCooldown() {
+    writeByte(ServerResponse.Player);
+    writeByte(ApiPlayer.Weapon_Cooldown);
+    writePercentage(weapon.durationPercentage);
   }
 
   void writeGameObjects(){
