@@ -1,8 +1,8 @@
 [ ] cache region
 [ ] auto detect region
-[ ] fix editor-ui orientations do not fit for bauhaus
 
 27.10.2022
+[x] fix editor-ui orientations do not fit for bauhaus
 [x] fix wood half north
 [x] fix bauhaus corners
 [x] fix bauhaus halves
