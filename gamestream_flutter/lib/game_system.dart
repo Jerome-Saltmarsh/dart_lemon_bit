@@ -44,6 +44,13 @@ class GameSystem {
   ) => GameIO.detectInputMode();
 
   static void onError(Object error, StackTrace stack) {
+    if (error.toString().contains('NotAllowedError')){
+      // https://developer.chrome.com/blog/autoplay/
+      // This error appears when the game attempts to fullscreen
+      // without the user having interacted first
+      // TODO dispatch event on fullscreen failed
+      return;
+    }
     print(error.toString());
     print(stack);
     GameWebsite.error.value = error.toString();

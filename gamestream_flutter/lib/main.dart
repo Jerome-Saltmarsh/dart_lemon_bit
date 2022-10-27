@@ -6,7 +6,7 @@ import 'package:lemon_engine/engine.dart';
 
 void main() {
   Engine.run(
-    title: "GameStream",
+    title: "Gamestream",
     init: GameSystem.init,
     buildUI: GameWebsite.buildUI,
     buildLoadingScreen: GameWebsite.buildLoadingPage,

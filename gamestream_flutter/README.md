@@ -1,11 +1,12 @@
 [ ] cache region
 [ ] mobile attack controls
-[ ] android app icon
-[ ] android app title 
+[ ] fix android app title gamestream_flutter 
 [ ] mobile movement controls
 [ ] mobile disable movement tutorial
 
 28.10.2022
+[x] fix auto fullscreen error message
+[x] android app icon
 [x] fix staff orb kills zombie bug
 [x] fix zombie shadow
 
