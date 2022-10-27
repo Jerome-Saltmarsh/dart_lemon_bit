@@ -60,6 +60,13 @@ class GameWebsite {
 
    }
 
+   static Widget buildLoadingPage() =>
+      Container(
+         color: GameState.colorPitchBlack,
+         alignment: Alignment.center,
+         child: text("Please wait..."),
+      );
+
    static Widget buildUI(BuildContext context) => Stack(
     children: [
       watch(GameWebsite.operationStatus, buildOperationStatus),

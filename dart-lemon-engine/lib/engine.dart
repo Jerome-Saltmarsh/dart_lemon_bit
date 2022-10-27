@@ -89,7 +89,7 @@ class Engine {
   /// gets called when update timer is changed
   static Function? onUpdateTimerReset;
   /// override safe
-  static WidgetBuilder? onBuildLoadingScreen;
+  static BasicWidgetBuilder? onBuildLoadingScreen;
   /// override safe
   static Function(Object error, StackTrace stack)? onError;
 
@@ -294,6 +294,7 @@ class Engine {
     Function(SharedPreferences sharedPreferences)? init,
     Function? update,
     WidgetBuilder? buildUI,
+    BasicWidgetBuilder? buildLoadingScreen,
     DrawCanvas? onDrawCanvas,
     ThemeData? themeData,
     GestureTapDownCallback? onTapDown,
@@ -319,6 +320,7 @@ class Engine {
     Engine.onInit = init;
     Engine.onUpdate = update;
     Engine.watchBuildUI.value = buildUI;
+    Engine.onBuildLoadingScreen = buildLoadingScreen;
     Engine.onDrawCanvas = onDrawCanvas;
     Engine.onTapDown = onTapDown;
     Engine.onLongPress = onLongPress;
@@ -963,7 +965,7 @@ class Engine {
         home: Scaffold(
           body: WatchBuilder(watchInitialized, (bool value) {
             if (!value) {
-              return onBuildLoadingScreen != null ? onBuildLoadingScreen!(buildContext) : Text("Loading");
+              return onBuildLoadingScreen != null ? onBuildLoadingScreen!() : Center(child: Text("Loading"));
             }
             return LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) {
@@ -1288,3 +1290,4 @@ class _EngineForegroundPainter extends CustomPainter {
   bool shouldRepaint(CustomPainter oldDelegate) => false;
 }
 
+typedef BasicWidgetBuilder = Widget Function();

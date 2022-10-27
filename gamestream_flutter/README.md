@@ -1,7 +1,7 @@
 [ ] cache region
-[ ] loading screen
 [ ] mobile attack controls
 [ ] mobile movement controls
+[ ] loading screen
 
 27.10.2022
 [x] fix particle blood color

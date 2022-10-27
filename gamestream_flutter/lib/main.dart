@@ -9,6 +9,7 @@ void main() {
     title: "GameStream",
     init: GameSystem.init,
     buildUI: GameWebsite.buildUI,
+    buildLoadingScreen: GameWebsite.buildLoadingPage,
     themeData: ThemeData(fontFamily: 'JetBrainsMono-Regular'),
     backgroundColor: GameState.colorPitchBlack,
     onError: GameSystem.onError,
