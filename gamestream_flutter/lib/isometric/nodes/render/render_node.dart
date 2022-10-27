@@ -5,7 +5,6 @@ import 'package:gamestream_flutter/isometric/nodes/render/render_node_wood.dart'
 import 'package:gamestream_flutter/library.dart';
 
 import 'render_node_plain.dart';
-import 'render_node_type_brick.dart';
 import 'render_node_window.dart';
 import 'render_node_wooden_plank.dart';
 import 'render_standard_node.dart';

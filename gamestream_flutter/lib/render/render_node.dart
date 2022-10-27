@@ -65,62 +65,62 @@ class RenderNode {
         );
       case NodeOrientation.Slope_North:
         return renderStandardNode(
-          srcX: AtlasNode.Node_Brick_Slope_North,
+          srcX: AtlasNodeX.Brick_Slope_Symmetric_North,
           srcY: GameConstants.Sprite_Height * GameRender.currentNodeShade,
         );
       case NodeOrientation.Slope_East:
         return renderStandardNode(
-          srcX: AtlasNode.Node_Brick_Slope_East,
+          srcX: AtlasNodeX.Brick_Slope_Symmetric_East,
           srcY: GameConstants.Sprite_Height * GameRender.currentNodeShade,
         );
       case NodeOrientation.Slope_South:
         return renderStandardNode(
-          srcX: AtlasNode.Node_Brick_Slope_South,
+          srcX: AtlasNodeX.Brick_Slope_Symmetric_South,
           srcY: GameConstants.Sprite_Height * GameRender.currentNodeShade,
         );
       case NodeOrientation.Slope_West:
         return renderStandardNode(
-          srcX: AtlasNode.Node_Brick_Slope_West,
+          srcX: AtlasNodeX.Brick_Slope_Symmetric_West,
           srcY: GameConstants.Sprite_Height * GameRender.currentNodeShade,
         );
       case NodeOrientation.Half_North:
         return renderStandardNodeHalfNorth(
-          srcX: AtlasNode.Node_Brick_Half_North,
+          srcX: AtlasNodeX.Brick_Half_South,
           srcY: GameConstants.Sprite_Height * GameRender.currentNodeShade,
         );
       case NodeOrientation.Half_East:
         return renderStandardNodeHalfEast(
-          srcX: AtlasNode.Node_Brick_Half_East,
+          srcX: AtlasNodeX.Brick_Half_West,
           srcY: GameConstants.Sprite_Height * GameRender.currentNodeShade,
         );
       case NodeOrientation.Half_South:
         return renderStandardNode(
-          srcX: AtlasNode.Node_Brick_Half_South,
+          srcX: AtlasNodeX.Brick_Half_South,
           srcY: GameConstants.Sprite_Height * GameRender.currentNodeShade,
         );
       case NodeOrientation.Half_West:
         return renderStandardNode(
-          srcX: AtlasNode.Node_Brick_Half_West,
+          srcX: AtlasNodeX.Brick_Half_West,
           srcY: GameConstants.Sprite_Height * GameRender.currentNodeShade,
         );
       case NodeOrientation.Corner_Top:
         return renderStandardNode(
-          srcX: AtlasNode.Node_Brick_Corner_Top,
+          srcX: AtlasNodeX.Brick_Corner_Top,
           srcY: GameConstants.Sprite_Height * GameRender.currentNodeShade,
         );
       case NodeOrientation.Corner_Right:
         return renderStandardNode(
-          srcX: AtlasNode.Node_Brick_Corner_Right,
+          srcX: AtlasNodeX.Brick_Corner_Right,
           srcY: GameConstants.Sprite_Height * GameRender.currentNodeShade,
         );
       case NodeOrientation.Corner_Bottom:
         return renderStandardNode(
-          srcX: AtlasNode.Node_Brick_Corner_Bottom,
+          srcX: AtlasNodeX.Brick_Corner_Bottom,
           srcY: GameConstants.Sprite_Height * GameRender.currentNodeShade,
         );
       case NodeOrientation.Corner_Left:
         return renderStandardNode(
-          srcX: AtlasNode.Node_Brick_Corner_Left,
+          srcX: AtlasNodeX.Brick_Corner_Left,
           srcY: GameConstants.Sprite_Height * GameRender.currentNodeShade,
         );
       default:
