@@ -136,8 +136,8 @@ Widget buildOrientationIcon(int orientation){
     image: GameImages.atlasNodes,
     srcX: AtlasNodeX.mapOrientation(orientation),
     srcY: AtlasNodeY.mapOrientation(orientation),
-    srcWidth: GameConstants.spriteWidth,
-    srcHeight: GameConstants.spriteHeight,
+    srcWidth: GameConstants.Sprite_Width,
+    srcHeight: GameConstants.Sprite_Height,
     scale: 0.75,
   );
 

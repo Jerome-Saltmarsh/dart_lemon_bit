@@ -1,12 +1,10 @@
 
 class GameConstants {
-  static const spriteWidth = 48.0;
-  static const spriteHeight = 72.0;
-  static const spriteAnchorY = 0.3334;
-
-  static const spriteWidthHalf = 24.0;
-  static const spriteHeightThird = 24.0;
-
-  static const spriteWidthPadded = spriteWidth + 1;
-  static const spriteHeightPadded = spriteHeight + 1;
+  static const Sprite_Width = 48.0;
+  static const Sprite_Width_Half = 24.0;
+  static const Sprite_Width_Padded = Sprite_Width + 1;
+  static const Sprite_Height = 72.0;
+  static const Sprite_Height_Third = 24.0;
+  static const Sprite_Height_Padded = Sprite_Height + 1;
+  static const Sprite_Anchor_Y = 0.3334;
 }

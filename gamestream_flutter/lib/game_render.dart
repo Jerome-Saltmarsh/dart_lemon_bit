@@ -816,7 +816,7 @@ class GameRender {
       currentNodeRow++;
       currentNodeColumn--;
       currentNodeIndex += nodesGridTotalColumnsMinusOne;
-      currentNodeDstX += GameConstants.spriteWidth;
+      currentNodeDstX += GameConstants.Sprite_Width;
     }
   }
 
@@ -1070,9 +1070,9 @@ class GameRender {
       dstY: GameConvert.rowColumnZToRenderY(row, column,z),
       srcX: AtlasNodeX.Wireframe_Blue,
       srcY: AtlasNodeY.Wireframe_Blue,
-      srcWidth: GameConstants.spriteWidth,
-      srcHeight: GameConstants.spriteHeight,
-      anchorY: GameConstants.spriteAnchorY,
+      srcWidth: GameConstants.Sprite_Width,
+      srcHeight: GameConstants.Sprite_Height,
+      anchorY: GameConstants.Sprite_Anchor_Y,
     );
     return;
   }
@@ -1084,9 +1084,9 @@ class GameRender {
       dstY: GameConvert.rowColumnZToRenderY(row, column,z),
       srcX: AtlasNodeX.Wireframe_Red,
       srcY: AtlasNodeY.Wireframe_Red,
-      srcWidth: GameConstants.spriteWidth,
-      srcHeight: GameConstants.spriteHeight,
-      anchorY: GameConstants.spriteAnchorY,
+      srcWidth: GameConstants.Sprite_Width,
+      srcHeight: GameConstants.Sprite_Height,
+      anchorY: GameConstants.Sprite_Anchor_Y,
     );
   }
 
