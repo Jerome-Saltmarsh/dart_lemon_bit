@@ -176,6 +176,8 @@ class GameIO {
     final angle = Engine.joystickAngle + (pi * 0.75);
     return GamePlayer.position.y + Engine.calculateOpposite(angle, Engine.joystickDistance);
   }
+
+  static double get touchMouseWorldZ => GamePlayer.position.z;
   
   static double getCursorWorldX() {
     if (inputModeTouch){

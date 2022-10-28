@@ -1120,47 +1120,6 @@ class GameState {
     );
   }
 
-  static void renderForeground(Canvas canvas, Size size) {
-    if (Engine.joystickEngaged) {
-      Engine.canvasRenderJoystick(canvas);
-    }
-
-    GameRender.canvasRenderCrossHair(canvas, 5 + GameState.player.weaponCooldown.value * 10);
-  }
-
-  /// TODO render logic does not belong here
-  static void renderCanvas(Canvas canvas, Size size) {
-    /// particles are only on the ui and thus can update every frame
-    /// this makes them much smoother as they don't freeze
-    updateParticles();
-    renderFrame.value++;
-    interpolatePlayer();
-    GameCamera.update();
-    GameRender.renderSprites();
-    renderEditMode();
-    GameRender.renderMouseTargetName();
-    rendersSinceUpdate.value++;
-
-    if (GameIO.inputModeTouch){
-      renderTouchMouse();
-    }
-  }
-
-  static void renderTouchMouse() {
-    final x = GameIO.touchMouseWorldX;
-    final y = GameIO.touchMouseWorldY;
-    final z = GamePlayer.position.z;
-    Engine.renderSprite(
-        image: GameImages.gameobjects,
-        srcX: 0,
-        srcY: 72,
-        srcWidth: 8,
-        srcHeight: 8,
-        dstX: GameConvert.getRenderX(x, y, z),
-        dstY: GameConvert.getRenderY(x, y, z),
-    );
-  }
-
   /// do this during the draw call so that particles are smoother
   static void updateParticles() {
     for (final particle in particles) {

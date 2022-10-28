@@ -183,8 +183,8 @@ class GameNetwork {
       case ConnectionStatus.Connected:
         Engine.cursorType.value = CursorType.None;
         GameIO.addListeners();
-        Engine.onDrawCanvas = GameState.renderCanvas;
-        Engine.onDrawForeground = GameState.renderForeground;
+        Engine.onDrawCanvas = GameCanvas.renderCanvas;
+        Engine.onDrawForeground = GameCanvas.renderForeground;
         Engine.onUpdate = GameState.update;
         Engine.drawCanvasAfterUpdate = true;
         Engine.zoomOnScroll = true;
