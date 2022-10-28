@@ -20,19 +20,18 @@ class GameDebug {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  // _buildContainerMouseInfo(),
-                  Refresh(() => text(
-                      "mouseGridX: ${GameIO.mouseGridX.toInt()}, mouseGridY: ${GameIO.mouseGridY.toInt()}, mouseWorldX: ${Engine.mouseWorldX.toInt()}, mouseWorldY: ${Engine.mouseWorldY.toInt()}"
-                  )),
-                  Refresh(() =>  text(
-                      "player-position: x: ${GamePlayer.position.x}, y: ${GamePlayer.position.y}, z: ${GamePlayer.position.z}\n"
-                          "player-index: z: ${GamePlayer.position.indexZ}, row: ${GamePlayer.position.indexRow}, column: ${GamePlayer.position.indexColumn}\n"
-                          "player-render: renderX: ${GamePlayer.position.renderX}, renderY: ${GamePlayer.position.renderY}, angle: ${GameState.player.angle}, mouseAngle: ${GameState.player.mouseAngle}"
-                  )),
                   watch(serverResponseReader.byteLength, (int bytes) => text('network-bytes: $bytes')),
                   watch(serverResponseReader.bufferSize, (int bufferSize) => text('network-buffer: $bufferSize')),
+                  Refresh(() =>  text(
+                      "mouse-world: x: ${Engine.mouseWorldX.toInt()}, y: ${Engine.mouseWorldY.toInt()}\n"
+                      "mouse-grid: x: ${GameIO.mouseGridX.toInt()}, y: ${GameIO.mouseGridY.toInt()}\n"
+                      'mouse-screen: x: ${Engine.mousePosition.x.toInt()}, y: ${Engine.mousePosition.y.toInt()}\n'
+                      "player-position: x: ${GamePlayer.position.x}, y: ${GamePlayer.position.y}, z: ${GamePlayer.position.z}\n"
+                      "player-index: z: ${GamePlayer.position.indexZ}, row: ${GamePlayer.position.indexRow}, column: ${GamePlayer.position.indexColumn}\n"
+                      "player-render: x: ${GamePlayer.position.renderX}, y: ${GamePlayer.position.renderY}\n"
+                      "player-screen: x: ${Engine.worldToScreenX(GamePlayer.position.renderX).toInt()}, y: ${Engine.worldToScreenY(GamePlayer.position.renderY).toInt()}"
+                  )),
                   Refresh(() => text('touch-screen: x: ${GameIO.touchScreenX.toInt()}, y: ${GameIO.touchScreenY.toInt()}')),
-                  Refresh(() => text('mouse-screen: x: ${Engine.mousePosition.x.toInt()}, y: ${Engine.mousePosition.y.toInt()}')),
                   Refresh(() => text('characters-total: ${GameState.characters.length}')),
                   Refresh(() => text('characters-active: ${GameState.totalCharacters}')),
                   Refresh(() => text('particles-total: ${GameState.particles.length}')),
