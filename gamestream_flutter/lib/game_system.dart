@@ -21,6 +21,7 @@ class GameSystem {
     // GameWebsite.errorMessageEnabled.value = Engine.isLocalHost;
     GameWebsite.errorMessageEnabled.value = true;
     Engine.joystickMaxDistance = 150;
+    Engine.callbackOnJoystickChanged = GameIO.onJoystickChanged;
 
     final visitCount = sharedPreferences.getInt('visit-count');
     if (visitCount == null){

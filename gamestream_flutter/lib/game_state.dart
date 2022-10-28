@@ -1134,8 +1134,8 @@ class GameState {
            srcY: 0,
            srcWidth: 6,
            srcHeight: 22,
-           dstX: GameIO.getMouseScreenX(),
-           dstY: GameIO.getMouseScreenY() - range,
+           dstX: GameIO.getCursorScreenX(),
+           dstY: GameIO.getCursorScreenY() - range,
            anchorY: 1.0
        );
        Engine.renderExternalCanvas(
@@ -1145,8 +1145,8 @@ class GameState {
            srcY: 0,
            srcWidth: 6,
            srcHeight: 22,
-           dstX: GameIO.getMouseScreenX(),
-           dstY: GameIO.getMouseScreenY() + range,
+           dstX: GameIO.getCursorScreenX(),
+           dstY: GameIO.getCursorScreenY() + range,
            anchorY: 0.0
        );
        Engine.renderExternalCanvas(
@@ -1156,8 +1156,8 @@ class GameState {
            srcY: 29,
            srcWidth: 22,
            srcHeight: 6,
-           dstX: GameIO.getMouseScreenX() - range,
-           dstY: GameIO.getMouseScreenY(),
+           dstX: GameIO.getCursorScreenX() - range,
+           dstY: GameIO.getCursorScreenY(),
            anchorX: 1.0
        );
        Engine.renderExternalCanvas(
@@ -1167,8 +1167,8 @@ class GameState {
            srcY: 29,
            srcWidth: 22,
            srcHeight: 6,
-           dstX: GameIO.getMouseScreenX() + range,
-           dstY: GameIO.getMouseScreenY(),
+           dstX: GameIO.getCursorScreenX() + range,
+           dstY: GameIO.getCursorScreenY(),
            anchorX: 0.0
        );
      }
@@ -1187,7 +1187,7 @@ class GameState {
     GameRender.renderMouseTargetName();
     rendersSinceUpdate.value++;
 
-    if (Engine.joystickEngaged){
+    if (GameIO.inputModeTouch){
       final angle = Engine.joystickAngle + (pi * 0.75);
       final x = GamePlayer.position.x + Engine.calculateAdjacent(angle, Engine.joystickDistance);
       final y = GamePlayer.position.y + Engine.calculateOpposite(angle, Engine.joystickDistance);

@@ -1,4 +1,6 @@
 
+import 'dart:math';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 
@@ -12,6 +14,12 @@ class GameIO {
   static var touchscreenRadianMove = 0.0;
   static var touchscreenRadianPerform = 0.0;
   static var touchPerformPrimary = false;
+
+  // static var cursorPositionXScreen = 0.0;
+  // static var cursorPositionYScreen = 0.0;
+
+  // static double get cursorPositionXWorld => GameConvert.convertWorldToGridX(cursorPositionXScreen, cursorPositionYScreen);
+  // static double get cursorPositionYWorld => GameConvert.convertWorldToGridX(cursorPositionXScreen, cursorPositionYScreen);
 
   static final inputMode = Watch(InputMode.Keyboard);
   static bool get inputModeTouch => inputMode.value == InputMode.Touch;
@@ -149,48 +157,70 @@ class GameIO {
      return Direction.South_East;
   }
 
+  static void onJoystickChanged(double angle, double distance){
+       // cursorPositionXScreen += Engine.calculateAdjacent(angle, distance);
+       // cursorPositionYScreen += Engine.calculateOpposite(angle, distance);
+  }
+
   static void onTapDown(TapDownDetails details) {
     // print("onTapDown()");
     GameActions.runToMouse();
   }
 
-  static double getMouseX() {
-     if (inputModeTouch){
-       // return Engine.screenCenterWorldX + Engine.calculateAdjacent(Engine.PI_2 - touchscreenRadianPerform + Engine.PI_Half, 100);
-       // return touchscreenMouseX;
-       return Engine.joystickEndX;
-     }
-     return Engine.mouseWorldX;
+  // static double getMouseX() {
+  //    if (inputModeTouch){
+  //      return Engine.screenToWorldY(getCursorScreenY());
+  //    }
+  //    return Engine.mouseWorldX;
+  // }
+  //
+  // static double getMouseY() {
+  //   if (inputModeTouch){
+  //     return Engine.screenToWorldX(getCursorScreenX());
+  //   }
+  //   return Engine.mouseWorldY;
+  // }
+
+  static double get touchMouseWorldX {
+    final angle = Engine.joystickAngle + (pi * 0.75);
+    return GamePlayer.position.x + Engine.calculateAdjacent(angle, Engine.joystickDistance);
   }
 
-  static double getMouseY() {
+  static double get touchMouseWorldY {
+    final angle = Engine.joystickAngle + (pi * 0.75);
+    return GamePlayer.position.y + Engine.calculateOpposite(angle, Engine.joystickDistance);
+  }
+  
+  static double getCursorWorldX() {
     if (inputModeTouch){
-      // return Engine.screenCenterWorldY + Engine.calculateOpposite(Engine.PI_2 - touchscreenRadianPerform + Engine.PI_Half, 100);
-      // return touchscreenMouseY;
-      return Engine.joystickEndY;
+      return touchMouseWorldX;
+    } else {
+      return Engine.mouseWorldX;
     }
-    return Engine.mouseWorldY;
+  }
+  static double getCursorWorldY() {
+    if (inputModeTouch){
+      return touchMouseWorldY;
+    } else {
+      return Engine.mouseWorldY;
+    }
   }
 
-  static double getMouseScreenX(){
+  static double getCursorScreenX() {
      if (inputModeTouch){
-       return Engine.joystickEndX;
+       return Engine.worldToScreenX(touchMouseWorldX);
      } else {
        return Engine.mousePosition.x;
      }
   }
 
-  static double getMouseScreenY(){
-    if (inputModeTouch){
-      return Engine.joystickEndY;
+  static double getCursorScreenY() {
+    if (inputModeTouch) {
+      return Engine.worldToScreenY(touchMouseWorldY);
     } else {
       return Engine.mousePosition.y;
     }
   }
-
-  // static void onJoystickEngaged({required double angle, required double distance}){
-  //
-  // }
 
   static int getDirection() {
     final keyboardDirection = getDirectionKeyboard();
@@ -354,10 +384,15 @@ class GameIO {
   }
 
   static void readPlayerInput() {
-
+    if (inputModeTouch) {
+      // cursorPositionXScreen += Engine.calculateAdjacent(Engine.joystickAngle, Engine.joystickDistance);
+      // cursorPositionYScreen += Engine.calculateOpposite(Engine.joystickAngle, Engine.joystickDistance);
+    }
     if (GameState.edit.value) {
       return readPlayerInputEdit();
     }
+
+
   }
 
   static void readPlayerInputEdit() {
