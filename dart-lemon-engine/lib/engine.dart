@@ -1022,6 +1022,10 @@ class Engine {
     final angle = atan2(opposite, adjacent);
     return angle < 0 ? PI_2 + angle : angle;
   }
+  
+  static double calculateAngleBetween(double x1, double y1, double x2, double y2) {
+    return calculateAngle(x1 - x2, y1 - y2);
+  }
 
   static double calculateAdjacent(double radians, double magnitude) =>
     cos(radians) * magnitude;

@@ -9,8 +9,10 @@ import 'package:lemon_math/library.dart';
 import 'library.dart';
 
 class GameState {
-  static var joystickX = 0.0;
-  static var joystickY = 0.0;
+  static var joystickBaseX = 0.0;
+  static var joystickBaseY = 0.0;
+  static var joystickEndX = 0.0;
+  static var joystickEndY = 0.0;
   static var joystickEngaged = false;
   static final sceneMetaDataSceneName = Watch<String?>(null);
   static final sceneEditable = Watch(false);
@@ -109,6 +111,10 @@ class GameState {
   // WATCHES
 
   // QUERIES
+
+  static double get joystickDistance => Engine.calculateDistance(joystickBaseX, joystickBaseY, joystickEndX, joystickEndY);
+  static double get joystickAngle => Engine.calculateAngleBetween(joystickBaseX, joystickBaseY, joystickEndX, joystickEndY);
+
   static int get bodyPartDuration => randomInt(120, 200);
   static bool get playMode => !editMode;
   static bool get editMode => edit.value;
@@ -1121,8 +1127,12 @@ class GameState {
   }
 
   static void renderForeground(Canvas canvas, Size size) {
-    if (joystickEngaged){
-      canvas.drawCircle(Offset(joystickX, joystickY), 30, Engine.paint);
+    if (joystickEngaged) {
+      final base = Offset(joystickBaseX, joystickBaseY);
+      final end = Offset(joystickEndX, joystickEndY);
+      canvas.drawCircle(base, 20, Engine.paint);
+      canvas.drawCircle(end, 10, Engine.paint);
+      canvas.drawLine(base, end, Engine.paint);
     }
 
      if (Engine.deviceIsComputer) {

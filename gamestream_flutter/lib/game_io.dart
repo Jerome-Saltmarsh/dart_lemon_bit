@@ -78,10 +78,11 @@ class GameIO {
   }
 
   static void onPanStart(DragStartDetails details) {
-     // print("onPanStart()");
     GameState.joystickEngaged = true;
-    GameState.joystickX = details.globalPosition.dx;
-    GameState.joystickY = details.globalPosition.dy;
+    GameState.joystickBaseX = details.globalPosition.dx;
+    GameState.joystickBaseY = details.globalPosition.dy;
+    GameState.joystickEndX = GameState.joystickBaseX;
+    GameState.joystickEndY = GameState.joystickBaseY;
   }
 
   static var touchX1 = 0.0;
@@ -97,8 +98,15 @@ class GameIO {
 
   static void onPanUpdate(DragUpdateDetails details) {
     // print("onPanUpdate()");
-    GameState.joystickX = details.globalPosition.dx;
-    GameState.joystickY = details.globalPosition.dy;
+    GameState.joystickEndX = details.globalPosition.dx;
+    GameState.joystickEndY = details.globalPosition.dy;
+    const maxDistance = 100.0;
+    if (GameState.joystickDistance > maxDistance){
+       final angle = GameState.joystickAngle;
+       GameState.joystickBaseX = GameState.joystickEndX + Engine.calculateAdjacent(angle, maxDistance);
+       GameState.joystickBaseY = GameState.joystickEndY + Engine.calculateOpposite(angle, maxDistance);
+    }
+
     final deltaDirection = details.delta.direction;
     final deltaDistance = details.delta.distance;
     panDistance.value = deltaDistance;
