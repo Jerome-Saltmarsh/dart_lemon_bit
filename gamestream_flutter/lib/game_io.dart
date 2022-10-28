@@ -17,15 +17,16 @@ class GameIO {
   static var touchscreenMouseY = 0.0;
   static var touchPerformPrimary = false;
 
-  static var joystickBaseX = 0.0;
-  static var joystickBaseY = 0.0;
-  static var joystickEndX = 0.0;
-  static var joystickEndY = 0.0;
-  static var joystickEngaged = false;
+  // static var joystickBaseX = 0.0;
+  // static var joystickBaseY = 0.0;
+  // static var joystickEndX = 0.0;
+  // static var joystickEndY = 0.0;
+  // static var joystickEngaged = false;
+  // static var joystickMaxDistance = 25.0;
 
   // GETTERS
-  static double get joystickDistance => Engine.calculateDistance(joystickBaseX, joystickBaseY, joystickEndX, joystickEndY);
-  static double get joystickAngle => Engine.calculateAngleBetween(joystickBaseX, joystickBaseY, joystickEndX, joystickEndY);
+  // static double get joystickDistance => Engine.calculateDistance(joystickBaseX, joystickBaseY, joystickEndX, joystickEndY);
+  // static double get joystickAngle => Engine.calculateAngleBetween(joystickBaseX, joystickBaseY, joystickEndX, joystickEndY);
   static final inputMode = Watch(InputMode.Keyboard);
   static bool get inputModeTouch => inputMode.value == InputMode.Touch;
   static bool get inputModeKeyboard => inputMode.value == InputMode.Keyboard;
@@ -88,11 +89,11 @@ class GameIO {
   }
 
   static void onPanStart(DragStartDetails details) {
-    joystickEngaged = true;
-    joystickBaseX = details.globalPosition.dx;
-    joystickBaseY = details.globalPosition.dy;
-    joystickEndX = joystickBaseX;
-    joystickEndY = joystickBaseY;
+    // joystickEngaged = true;
+    // joystickBaseX = details.globalPosition.dx;
+    // joystickBaseY = details.globalPosition.dy;
+    // joystickEndX = joystickBaseX;
+    // joystickEndY = joystickBaseY;
   }
 
   static var touchX1 = 0.0;
@@ -107,22 +108,27 @@ class GameIO {
   static var touchY5 = 0.0;
 
   static void onPanUpdate(DragUpdateDetails details) {
-    joystickEndX = details.globalPosition.dx;
-    joystickEndY = details.globalPosition.dy;
-    const maxDistance = 25.0;
-    if (joystickDistance > maxDistance){
-       final angle = joystickAngle;
-       joystickBaseX = joystickEndX + Engine.calculateAdjacent(angle, maxDistance);
-       joystickBaseY = joystickEndY + Engine.calculateOpposite(angle, maxDistance);
-    }
-    touchscreenDirectionMove = convertRadianToDirection(joystickAngle + Engine.PI);
+    // joystickEndX = details.globalPosition.dx;
+    // joystickEndY = details.globalPosition.dy;
+    //
+    // if (joystickDistance > joystickMaxDistance){
+    //    final angle = joystickAngle;
+    //    joystickBaseX = joystickEndX + Engine.calculateAdjacent(angle, joystickMaxDistance);
+    //    joystickBaseY = joystickEndY + Engine.calculateOpposite(angle, joystickMaxDistance);
+    // }
+    // disable move on joystick for now
+    // instead a button will be pressed to command the server to run to that position
+    // an attack button will be used to command the server to attack
+    // touchscreenDirectionMove = convertRadianToDirection(joystickAngle + Engine.PI);
+    // onJoystickEngaged(angle: joystickAngle, distance: joystickDistance);
   }
 
   static void onPanEnd(DragEndDetails details){
     // print('onPanEnd()');
     touchscreenDirectionMove = Direction.None;
     touchPanning = false;
-    joystickEngaged = false;
+    // joystickEngaged = false;
+
   }
 
   static void onKeyHeld(RawKeyDownEvent key, int duration) {
@@ -167,7 +173,7 @@ class GameIO {
      if (inputModeTouch){
        // return Engine.screenCenterWorldX + Engine.calculateAdjacent(Engine.PI_2 - touchscreenRadianPerform + Engine.PI_Half, 100);
        // return touchscreenMouseX;
-       return GameIO.joystickEndX;
+       return Engine.joystickEndX;
      }
      return Engine.mouseWorldX;
   }
@@ -176,10 +182,14 @@ class GameIO {
     if (inputModeTouch){
       // return Engine.screenCenterWorldY + Engine.calculateOpposite(Engine.PI_2 - touchscreenRadianPerform + Engine.PI_Half, 100);
       // return touchscreenMouseY;
-      return GameIO.joystickEndY;
+      return Engine.joystickEndY;
     }
     return Engine.mouseWorldY;
   }
+
+  // static void onJoystickEngaged({required double angle, required double distance}){
+  //
+  // }
 
   static int getDirection() {
     final keyboardDirection = getDirectionKeyboard();
@@ -390,11 +400,11 @@ class GameIO {
   }
 
 
-  static void canvasRenderJoystick(Canvas canvas){
-      final base = Offset(joystickBaseX, joystickBaseY);
-      final end = Offset(joystickEndX, joystickEndY);
-      canvas.drawCircle(base, 20, Engine.paint);
-      canvas.drawCircle(end, 10, Engine.paint);
-      canvas.drawLine(base, end, Engine.paint);
-  }
+  // static void canvasRenderJoystick(Canvas canvas){
+  //     final base = Offset(joystickBaseX, joystickBaseY);
+  //     final end = Offset(joystickEndX, joystickEndY);
+  //     canvas.drawCircle(base, 20, Engine.paint);
+  //     canvas.drawCircle(end, 10, Engine.paint);
+  //     canvas.drawLine(base, end, Engine.paint);
+  // }
 }

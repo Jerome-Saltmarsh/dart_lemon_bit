@@ -90,6 +90,18 @@ class Engine {
   static Function? onUpdateTimerReset;
   /// override safe
   static BasicWidgetBuilder? onBuildLoadingScreen;
+  /// ___Engine.callbackOnJoystickStart gets called once before___ <br/>
+  /// Engine.callbackOnJoystickChanged gets called whenever the user moves the joystick <br/>
+  /// Engine.callbackOnJoystickStart gets called once the user releases the joystick <br/>
+  static Function? callbackOnJoystickStart;
+  /// Engine.callbackOnJoystickStart gets called once before
+  /// Engine.callbackOnJoystickChanged gets called whenever the user moves the joystick [THIS]
+  /// Engine.callbackOnJoystickStart gets called once the user releases the joystick
+  static CallbackOnJoystickEngaged? callbackOnJoystickChanged;
+  /// Engine.callbackOnJoystickStart gets called once before
+  /// Engine.callbackOnJoystickChanged gets called whenever the user moves the joystick
+  /// Engine.callbackOnJoystickStart gets called once the user releases the joystick [THIS]
+  static Function? callbackOnJoystickEnd;
   /// override safe
   static Function(Object error, StackTrace stack)? onError;
 
@@ -150,12 +162,22 @@ class Engine {
   /// triggered upon key release
   static Function(RawKeyUpEvent key)? onKeyUp;
 
+  static var joystickBaseX = 0.0;
+  static var joystickBaseY = 0.0;
+  static var joystickEndX = 0.0;
+  static var joystickEndY = 0.0;
+  static var joystickEngaged = false;
+  static var joystickMaxDistance = 25.0;
+
   // SETTERS
   static set buildUI(WidgetBuilder? value) => watchBuildUI.value = value;
   static set title(String value) => watchTitle.value = value;
   static set backgroundColor(Color value) => watchBackgroundColor.value = value;
 
   // GETTERS
+  static double get joystickDistance => Engine.calculateDistance(joystickBaseX, joystickBaseY, joystickEndX, joystickEndY);
+  static double get joystickAngle => Engine.calculateAngleBetween(joystickBaseX, joystickBaseY, joystickEndX, joystickEndY);
+
   static double get screenCenterRenderX => (screen.left + screen.right) * 0.5;
 
   static double get screenDiagonalLength => calculateHypotenuse(screen.width, screen.height);
@@ -485,11 +507,26 @@ class Engine {
 
   static void _internalOnPanStart(DragStartDetails details){
     panStarted = true;
+    joystickEngaged = true;
+    joystickBaseX = details.globalPosition.dx;
+    joystickBaseY = details.globalPosition.dy;
+    joystickEndX = joystickBaseX;
+    joystickEndY = joystickBaseY;
     onPanStart?.call(details);
+    callbackOnJoystickStart?.call();
   }
 
   static void _internalOnPanUpdate(DragUpdateDetails details){
+    joystickEndX = details.globalPosition.dx;
+    joystickEndY = details.globalPosition.dy;
+
+    if (joystickDistance > joystickMaxDistance){
+      final angle = joystickAngle;
+      joystickBaseX = joystickEndX + Engine.calculateAdjacent(angle, joystickMaxDistance);
+      joystickBaseY = joystickEndY + Engine.calculateOpposite(angle, joystickMaxDistance);
+    }
     onPanUpdate?.call(details);
+    callbackOnJoystickChanged?.call(joystickAngle, joystickDistance);
   }
 
   static void _internalOnTapDown(TapDownDetails details){
@@ -506,7 +543,9 @@ class Engine {
 
   static void _internalOnPanEnd(DragEndDetails details){
     panStarted = false;
+    joystickEngaged = false;
     onPanEnd?.call(details);
+    callbackOnJoystickEnd?.call();
   }
 
   static void _internalOnSecondaryTapDown(TapDownDetails details){
@@ -1022,7 +1061,7 @@ class Engine {
     final angle = atan2(opposite, adjacent);
     return angle < 0 ? PI_2 + angle : angle;
   }
-  
+
   static double calculateAngleBetween(double x1, double y1, double x2, double y2) {
     return calculateAngle(x1 - x2, y1 - y2);
   }
@@ -1200,7 +1239,13 @@ class Engine {
     return text.substring(index + 1, text.length).replaceAll("_", " ");
   }
 
-
+  static void canvasRenderJoystick(Canvas canvas){
+    final base = Offset(joystickBaseX, joystickBaseY);
+    final end = Offset(joystickEndX, joystickEndY);
+    canvas.drawCircle(base, 20, Engine.paint);
+    canvas.drawCircle(end, 10, Engine.paint);
+    canvas.drawLine(base, end, Engine.paint);
+  }
 }
 
 typedef CallbackOnScreenSizeChanged = void Function(
@@ -1280,4 +1325,6 @@ class _EngineForegroundPainter extends CustomPainter {
   bool shouldRepaint(CustomPainter oldDelegate) => false;
 }
 
+// TYPEDEFS
 typedef BasicWidgetBuilder = Widget Function();
+typedef CallbackOnJoystickEngaged = void Function(double angle, double distance);

@@ -1121,8 +1121,8 @@ class GameState {
   }
 
   static void renderForeground(Canvas canvas, Size size) {
-    if (GameIO.joystickEngaged) {
-      GameIO.canvasRenderJoystick(canvas);
+    if (Engine.joystickEngaged) {
+      Engine.canvasRenderJoystick(canvas);
     }
 
      if (Engine.deviceIsComputer) {
@@ -1187,10 +1187,10 @@ class GameState {
     GameRender.renderMouseTargetName();
     rendersSinceUpdate.value++;
 
-    if (GameIO.joystickEngaged){
-      final angle = GameIO.joystickAngle + (pi * 0.75);
-      final x = GamePlayer.position.x + Engine.calculateAdjacent(angle, GameIO.joystickDistance);
-      final y = GamePlayer.position.y + Engine.calculateOpposite(angle, GameIO.joystickDistance);
+    if (Engine.joystickEngaged){
+      final angle = Engine.joystickAngle + (pi * 0.75);
+      final x = GamePlayer.position.x + Engine.calculateAdjacent(angle, Engine.joystickDistance);
+      final y = GamePlayer.position.y + Engine.calculateOpposite(angle, Engine.joystickDistance);
       final z = GamePlayer.position.z;
 
       Engine.renderSprite(
