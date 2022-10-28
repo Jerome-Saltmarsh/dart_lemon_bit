@@ -95,7 +95,7 @@ class GameActions {
     Engine.cameraCenter(renderX, renderY);
   }
 
-  static void runToMouse(){
-    print("actionPlayerRunToMouse()");
+  static void runToMouse() {
+    GameNetwork.setCharacterAction(CharacterAction.Run_To_Mouse);
   }
 }

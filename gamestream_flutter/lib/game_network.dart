@@ -413,5 +413,9 @@ class GameNetwork {
     }
     GameNetwork.send(value);
   }
+
+  static void setCharacterAction(int characterAction) {
+
+  }
 }
 
