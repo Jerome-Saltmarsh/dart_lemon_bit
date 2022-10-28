@@ -20,6 +20,7 @@ class GameSystem {
     GameWebsite.region.value = GameUtils.detectConnectionRegion();
     // GameWebsite.errorMessageEnabled.value = Engine.isLocalHost;
     GameWebsite.errorMessageEnabled.value = true;
+    Engine.joystickMaxDistance = 150;
 
     final visitCount = sharedPreferences.getInt('visit-count');
     if (visitCount == null){

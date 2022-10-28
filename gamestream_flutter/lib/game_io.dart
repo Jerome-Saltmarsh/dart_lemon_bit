@@ -372,6 +372,10 @@ class GameIO {
     return;
   }
 
+  static void actionPlayerRunToMouse(){
+     print("actionPlayerRunToMouse()");
+  }
+
   static void mouseRaycast(Function(int z, int row, int column) callback){
     var z = GameState.nodesTotalZ - 1;
     while (z >= 0){

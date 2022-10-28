@@ -9,6 +9,7 @@ import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/game_map.dart';
 import 'package:gamestream_flutter/library.dart';
 
+import 'game_ui_config.dart';
 import 'isometric/ui/dialogs/build_game_dialog.dart';
 import 'ui/builders/build_panel_menu.dart';
 
@@ -73,14 +74,35 @@ class GameUI {
                                       text('pan-direction: $panDirection')),
                             ],
                           ))),
-              buildAimButton(Engine.PI_Quarter * 0),
-              buildAimButton(Engine.PI_Quarter * 1),
-              buildAimButton(Engine.PI_Quarter * 2),
-              buildAimButton(Engine.PI_Quarter * 3),
-              buildAimButton(Engine.PI_Quarter * 4),
-              buildAimButton(Engine.PI_Quarter * 5),
-              buildAimButton(Engine.PI_Quarter * 6),
-              buildAimButton(Engine.PI_Quarter * 7),
+              Positioned(
+                bottom: 8,
+                right: 8,
+                child: onPressed(
+                  action: GameUIConfig.runButtonPressed,
+                  child: Container(
+                    width: GameUIConfig.runButtonSize,
+                    height: GameUIConfig.runButtonSize,
+                    alignment: Alignment.center,
+                    child: text(
+                        GameUIConfig.runButtonTextValue,
+                        color: GameUIConfig.runButtonTextColor,
+                        size: GameUIConfig.runButtonTextFontSize,
+                    ),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: GameUIConfig.runButtonColor
+                    ),
+                  ),
+                ),
+              ),
+              // buildAimButton(Engine.PI_Quarter * 0),
+              // buildAimButton(Engine.PI_Quarter * 1),
+              // buildAimButton(Engine.PI_Quarter * 2),
+              // buildAimButton(Engine.PI_Quarter * 3),
+              // buildAimButton(Engine.PI_Quarter * 4),
+              // buildAimButton(Engine.PI_Quarter * 5),
+              // buildAimButton(Engine.PI_Quarter * 6),
+              // buildAimButton(Engine.PI_Quarter * 7),
               // buildWalkButtons(),
             ]);
 

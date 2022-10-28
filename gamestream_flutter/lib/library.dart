@@ -25,6 +25,7 @@ export 'game_ui.dart';
 export 'game_website.dart';
 export 'game_spawn.dart';
 export 'game_widgets.dart';
+export 'game_ui_events.dart';
 export 'game_debug.dart';
 export 'game_animation.dart';
 export 'game_constants.dart';
