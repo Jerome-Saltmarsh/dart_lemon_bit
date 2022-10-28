@@ -1125,7 +1125,7 @@ class GameState {
       Engine.canvasRenderJoystick(canvas);
     }
 
-     if (Engine.deviceIsComputer) {
+     if (true) {
        final range = 5 + GameState.player.weaponCooldown.value * 10;
        Engine.renderExternalCanvas(
            canvas: canvas,
@@ -1134,8 +1134,8 @@ class GameState {
            srcY: 0,
            srcWidth: 6,
            srcHeight: 22,
-           dstX: Engine.mousePosition.x,
-           dstY: Engine.mousePosition.y - range,
+           dstX: GameIO.getMouseScreenX(),
+           dstY: GameIO.getMouseScreenY() - range,
            anchorY: 1.0
        );
        Engine.renderExternalCanvas(
@@ -1145,8 +1145,8 @@ class GameState {
            srcY: 0,
            srcWidth: 6,
            srcHeight: 22,
-           dstX: Engine.mousePosition.x,
-           dstY: Engine.mousePosition.y + range,
+           dstX: GameIO.getMouseScreenX(),
+           dstY: GameIO.getMouseScreenY() + range,
            anchorY: 0.0
        );
        Engine.renderExternalCanvas(
@@ -1156,8 +1156,8 @@ class GameState {
            srcY: 29,
            srcWidth: 22,
            srcHeight: 6,
-           dstX: Engine.mousePosition.x - range,
-           dstY: Engine.mousePosition.y,
+           dstX: GameIO.getMouseScreenX() - range,
+           dstY: GameIO.getMouseScreenY(),
            anchorX: 1.0
        );
        Engine.renderExternalCanvas(
@@ -1167,8 +1167,8 @@ class GameState {
            srcY: 29,
            srcWidth: 22,
            srcHeight: 6,
-           dstX: Engine.mousePosition.x + range,
-           dstY: Engine.mousePosition.y,
+           dstX: GameIO.getMouseScreenX() + range,
+           dstY: GameIO.getMouseScreenY(),
            anchorX: 0.0
        );
      }

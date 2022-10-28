@@ -11,8 +11,6 @@ class GameIO {
   static var touchscreenRadianInput = 0.0;
   static var touchscreenRadianMove = 0.0;
   static var touchscreenRadianPerform = 0.0;
-  static var touchscreenMouseX = 0.0;
-  static var touchscreenMouseY = 0.0;
   static var touchPerformPrimary = false;
 
   static final inputMode = Watch(InputMode.Keyboard);
@@ -152,14 +150,8 @@ class GameIO {
   }
 
   static void onTapDown(TapDownDetails details) {
-    print("onTapDown()");
+    // print("onTapDown()");
     GameActions.runToMouse();
-    if (inputModeTouch) {
-       touchscreenMouseX = Engine.screenToWorldX(details.globalPosition.dx);
-       touchscreenMouseY = Engine.screenToWorldY(details.globalPosition.dy);
-       // touchPerformPrimary = true;
-      // GameActions.runToMouse();
-    }
   }
 
   static double getMouseX() {
@@ -178,6 +170,22 @@ class GameIO {
       return Engine.joystickEndY;
     }
     return Engine.mouseWorldY;
+  }
+
+  static double getMouseScreenX(){
+     if (inputModeTouch){
+       return Engine.joystickEndX;
+     } else {
+       return Engine.mousePosition.x;
+     }
+  }
+
+  static double getMouseScreenY(){
+    if (inputModeTouch){
+      return Engine.joystickEndY;
+    } else {
+      return Engine.mousePosition.y;
+    }
   }
 
   // static void onJoystickEngaged({required double angle, required double distance}){
