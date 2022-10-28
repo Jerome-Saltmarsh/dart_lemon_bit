@@ -1204,7 +1204,6 @@ class GameRender {
       );
 
   static void canvasRenderCrossHair(ui.Canvas canvas, double range){
-    // final range = 5 + GameState.player.weaponCooldown.value * 10;
     Engine.renderExternalCanvas(
         canvas: canvas,
         image: GameImages.cursor,

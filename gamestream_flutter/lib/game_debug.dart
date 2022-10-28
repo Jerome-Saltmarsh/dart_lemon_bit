@@ -10,7 +10,7 @@ class GameDebug {
   static final targets = Float32List(10000);
   static var targetsTotal = 0;
 
-  static Widget buildUI() =>
+  static Widget buildStackDebug() =>
       Stack(
         children: [
           Positioned(
@@ -31,6 +31,8 @@ class GameDebug {
                   )),
                   watch(serverResponseReader.byteLength, (int bytes) => text('network-bytes: $bytes')),
                   watch(serverResponseReader.bufferSize, (int bufferSize) => text('network-buffer: $bufferSize')),
+                  Refresh(() => text('touch-screen: x: ${GameIO.touchScreenX.toInt()}, y: ${GameIO.touchScreenY.toInt()}')),
+                  Refresh(() => text('mouse-screen: x: ${Engine.mousePosition.x.toInt()}, y: ${Engine.mousePosition.y.toInt()}')),
                   Refresh(() => text('characters-total: ${GameState.characters.length}')),
                   Refresh(() => text('characters-active: ${GameState.totalCharacters}')),
                   Refresh(() => text('particles-total: ${GameState.particles.length}')),

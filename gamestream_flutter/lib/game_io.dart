@@ -177,6 +177,9 @@ class GameIO {
     return GamePlayer.position.y + Engine.calculateOpposite(angle, Engine.joystickDistance);
   }
 
+  static double get touchScreenX => Engine.worldToScreenX(touchMouseWorldX);
+  static double get touchScreenY => Engine.worldToScreenY(touchMouseWorldY);
+
   static double get touchMouseWorldZ => GamePlayer.position.z;
   
   static double getCursorWorldX() {
@@ -196,8 +199,7 @@ class GameIO {
 
   static double getCursorScreenX() {
      if (inputModeTouch){
-       // return Engine.worldToScreenX(touchMouseWorldX);
-       return (touchMouseWorldX);
+       return touchScreenX;;
      } else {
        return Engine.mousePosition.x;
      }
@@ -205,8 +207,7 @@ class GameIO {
 
   static double getCursorScreenY() {
     if (inputModeTouch) {
-      // return Engine.worldToScreenY(touchMouseWorldY);
-      return (touchMouseWorldY);
+      return touchScreenY;
     } else {
       return Engine.mousePosition.y;
     }
