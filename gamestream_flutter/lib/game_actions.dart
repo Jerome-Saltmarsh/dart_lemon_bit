@@ -86,6 +86,6 @@ class GameActions {
   }
 
   static void runToMouse() {
-    GameNetwork.setCharacterAction(CharacterAction.Run_To_Mouse);
+    GameNetwork.updateBuffer[17] = 1;
   }
 }

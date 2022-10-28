@@ -138,7 +138,12 @@ abstract class Game {
     required double screenTop,
     required double screenRight,
     required double screenBottom,
+    required bool runToMouse,
   }) {
+    if (runToMouse){
+      print("runToMouse()");
+    }
+
     player.framesSinceClientRequest = 0;
     player.screenLeft = screenLeft;
     player.screenTop = screenTop;

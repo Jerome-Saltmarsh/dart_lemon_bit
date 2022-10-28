@@ -584,6 +584,7 @@ class Connection {
       screenTop: readNumberFromByteArray(args, index: 11).toDouble(),
       screenRight: readNumberFromByteArray(args, index: 13).toDouble(),
       screenBottom: readNumberFromByteArray(args, index: 15).toDouble(),
+      runToMouse: readBoolFromBytes(bytes: args, index: 17),
     );
   }
 

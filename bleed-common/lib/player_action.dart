@@ -11,5 +11,4 @@ class CharacterAction {
   static const Fire_Tertiary = 8;
   static const Delete_Node = 8;
   static const Add_Node = 8;
-  static const Run_To_Mouse;
 }

@@ -15,6 +15,9 @@ int readNumberFromByteArray(List<int> bytes, {required int index}){
   return (a < 100 ? -1 : 1) * ((a % 100) * 100 + bytes[index + 1]);
 }
 
+bool readBoolFromBytes({required List<int> bytes, required int index}) =>
+  bytes[index] == 1;
+
 /// Writes numbers up to 256^3
 /// Consumes 4 bytes
 void writeBigNumberToArray({

@@ -5,7 +5,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 import 'library.dart';
 
 class GameNetwork {
-  static final updateBuffer = Uint8List(17);
+  static final updateBuffer = Uint8List(18);
   static late WebSocketChannel webSocketChannel;
   static final connectionStatus = Watch(ConnectionStatus.None, onChanged: onChangedConnectionStatus);
   static bool get connected => connectionStatus.value == ConnectionStatus.Connected;
@@ -80,6 +80,7 @@ class GameNetwork {
     writeNumberToByteArray(number: Engine.screen.right, list: updateBuffer, index: 13);
     writeNumberToByteArray(number: Engine.screen.bottom, list: updateBuffer, index: 15);
     sink.add(updateBuffer);
+    updateBuffer[17] = 0;
   }
 
   static applyUpdateBuffer({
@@ -405,10 +406,6 @@ class GameNetwork {
       return GameNetwork.send('${value} $message');
     }
     GameNetwork.send(value);
-  }
-
-  static void setCharacterAction(int characterAction) {
-
   }
 }
 
