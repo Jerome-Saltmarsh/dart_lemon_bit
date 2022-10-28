@@ -9,11 +9,6 @@ import 'package:lemon_math/library.dart';
 import 'library.dart';
 
 class GameState {
-  static var joystickBaseX = 0.0;
-  static var joystickBaseY = 0.0;
-  static var joystickEndX = 0.0;
-  static var joystickEndY = 0.0;
-  static var joystickEngaged = false;
   static final sceneMetaDataSceneName = Watch<String?>(null);
   static final sceneEditable = Watch(false);
   static var srcXRainFalling = 6640.0;
@@ -112,8 +107,7 @@ class GameState {
 
   // QUERIES
 
-  static double get joystickDistance => Engine.calculateDistance(joystickBaseX, joystickBaseY, joystickEndX, joystickEndY);
-  static double get joystickAngle => Engine.calculateAngleBetween(joystickBaseX, joystickBaseY, joystickEndX, joystickEndY);
+
 
   static int get bodyPartDuration => randomInt(120, 200);
   static bool get playMode => !editMode;
@@ -1127,12 +1121,8 @@ class GameState {
   }
 
   static void renderForeground(Canvas canvas, Size size) {
-    if (joystickEngaged) {
-      final base = Offset(joystickBaseX, joystickBaseY);
-      final end = Offset(joystickEndX, joystickEndY);
-      canvas.drawCircle(base, 20, Engine.paint);
-      canvas.drawCircle(end, 10, Engine.paint);
-      canvas.drawLine(base, end, Engine.paint);
+    if (GameIO.joystickEngaged) {
+      GameIO.canvasRenderJoystick(canvas);
     }
 
      if (Engine.deviceIsComputer) {
@@ -1196,6 +1186,23 @@ class GameState {
     renderEditMode();
     GameRender.renderMouseTargetName();
     rendersSinceUpdate.value++;
+
+    if (GameIO.joystickEngaged){
+      final angle = GameIO.joystickAngle + (pi * 0.75);
+      final x = GamePlayer.position.x + Engine.calculateAdjacent(angle, GameIO.joystickDistance);
+      final y = GamePlayer.position.y + Engine.calculateOpposite(angle, GameIO.joystickDistance);
+      final z = GamePlayer.position.z;
+
+      Engine.renderSprite(
+          image: GameImages.gameobjects,
+          srcX: 0,
+          srcY: 72,
+          srcWidth: 8,
+          srcHeight: 8,
+          dstX: GameConvert.getRenderX(x, y, z),
+          dstY: GameConvert.getRenderY(x, y, z),
+      );
+    }
   }
 
   /// do this during the draw call so that particles are smoother

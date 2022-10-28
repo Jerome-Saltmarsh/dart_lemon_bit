@@ -1,4 +1,6 @@
 
+import 'dart:ui';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 
@@ -15,7 +17,15 @@ class GameIO {
   static var touchscreenMouseY = 0.0;
   static var touchPerformPrimary = false;
 
+  static var joystickBaseX = 0.0;
+  static var joystickBaseY = 0.0;
+  static var joystickEndX = 0.0;
+  static var joystickEndY = 0.0;
+  static var joystickEngaged = false;
+
   // GETTERS
+  static double get joystickDistance => Engine.calculateDistance(joystickBaseX, joystickBaseY, joystickEndX, joystickEndY);
+  static double get joystickAngle => Engine.calculateAngleBetween(joystickBaseX, joystickBaseY, joystickEndX, joystickEndY);
   static final inputMode = Watch(InputMode.Keyboard);
   static bool get inputModeTouch => inputMode.value == InputMode.Touch;
   static bool get inputModeKeyboard => inputMode.value == InputMode.Keyboard;
@@ -78,11 +88,11 @@ class GameIO {
   }
 
   static void onPanStart(DragStartDetails details) {
-    GameState.joystickEngaged = true;
-    GameState.joystickBaseX = details.globalPosition.dx;
-    GameState.joystickBaseY = details.globalPosition.dy;
-    GameState.joystickEndX = GameState.joystickBaseX;
-    GameState.joystickEndY = GameState.joystickBaseY;
+    joystickEngaged = true;
+    joystickBaseX = details.globalPosition.dx;
+    joystickBaseY = details.globalPosition.dy;
+    joystickEndX = joystickBaseX;
+    joystickEndY = joystickBaseY;
   }
 
   static var touchX1 = 0.0;
@@ -97,53 +107,22 @@ class GameIO {
   static var touchY5 = 0.0;
 
   static void onPanUpdate(DragUpdateDetails details) {
-    // print("onPanUpdate()");
-    GameState.joystickEndX = details.globalPosition.dx;
-    GameState.joystickEndY = details.globalPosition.dy;
-    const maxDistance = 100.0;
-    if (GameState.joystickDistance > maxDistance){
-       final angle = GameState.joystickAngle;
-       GameState.joystickBaseX = GameState.joystickEndX + Engine.calculateAdjacent(angle, maxDistance);
-       GameState.joystickBaseY = GameState.joystickEndY + Engine.calculateOpposite(angle, maxDistance);
+    joystickEndX = details.globalPosition.dx;
+    joystickEndY = details.globalPosition.dy;
+    const maxDistance = 25.0;
+    if (joystickDistance > maxDistance){
+       final angle = joystickAngle;
+       joystickBaseX = joystickEndX + Engine.calculateAdjacent(angle, maxDistance);
+       joystickBaseY = joystickEndY + Engine.calculateOpposite(angle, maxDistance);
     }
-
-    // final deltaDirection = details.delta.direction;
-    // final deltaDistance = details.delta.distance;
-    // panDistance.value = deltaDistance;
-    // panDirection.value = deltaDirection;
-    // if (deltaDistance < 1) return;
-    // touchX5 = touchX4;
-    // touchY5 = touchY4;
-    // touchX4 = touchX3;
-    // touchY4 = touchY3;
-    // touchX3 = touchX2;
-    // touchY3 = touchY2;
-    // touchX2 = touchX1;
-    // touchY2 = touchY1;
-    // touchX1 = Engine.calculateAdjacent(deltaDirection, deltaDistance);
-    // touchY1 = Engine.calculateOpposite(deltaDirection, deltaDistance);
-
-    // if (!touchPanning) {
-    //   touchPanning = true;
-    //   touchX4 = touchX1;
-    //   touchY4 = touchY1;
-    //   touchX3 = touchX1;
-    //   touchY3 = touchY1;
-    //   touchX2 = touchX1;
-    //   touchY2 = touchY1;
-    // }
-    // final totalX = touchX1 + (touchX2 * 0.8) + (touchX3 * 0.6) + (touchX4 * 0.4) + (touchX5 * 0.2);
-    // final totalY = touchY1 + (touchY2 * 0.8) + (touchY3 * 0.6) + (touchY4 * 0.4) + (touchY5 * 0.2);
-    // final angle = Engine.calculateAngle(totalX, totalY);
-    // final distance = Engine.calculateHypotenuse(totalX, totalY);
-    touchscreenDirectionMove = convertRadianToDirection(GameState.joystickAngle + Engine.PI);
+    touchscreenDirectionMove = convertRadianToDirection(joystickAngle + Engine.PI);
   }
 
   static void onPanEnd(DragEndDetails details){
     // print('onPanEnd()');
     touchscreenDirectionMove = Direction.None;
     touchPanning = false;
-    GameState.joystickEngaged = false;
+    joystickEngaged = false;
   }
 
   static void onKeyHeld(RawKeyDownEvent key, int duration) {
@@ -186,16 +165,18 @@ class GameIO {
 
   static double getMouseX() {
      if (inputModeTouch){
-       return Engine.screenCenterWorldX + Engine.calculateAdjacent(Engine.PI_2 - touchscreenRadianPerform + Engine.PI_Half, 100);
+       // return Engine.screenCenterWorldX + Engine.calculateAdjacent(Engine.PI_2 - touchscreenRadianPerform + Engine.PI_Half, 100);
        // return touchscreenMouseX;
+       return GameIO.joystickEndX;
      }
      return Engine.mouseWorldX;
   }
 
   static double getMouseY() {
     if (inputModeTouch){
-      return Engine.screenCenterWorldY + Engine.calculateOpposite(Engine.PI_2 - touchscreenRadianPerform + Engine.PI_Half, 100);
+      // return Engine.screenCenterWorldY + Engine.calculateOpposite(Engine.PI_2 - touchscreenRadianPerform + Engine.PI_Half, 100);
       // return touchscreenMouseY;
+      return GameIO.joystickEndY;
     }
     return Engine.mouseWorldY;
   }
@@ -408,4 +389,12 @@ class GameIO {
     }
   }
 
+
+  static void canvasRenderJoystick(Canvas canvas){
+      final base = Offset(joystickBaseX, joystickBaseY);
+      final end = Offset(joystickEndX, joystickEndY);
+      canvas.drawCircle(base, 20, Engine.paint);
+      canvas.drawCircle(end, 10, Engine.paint);
+      canvas.drawLine(base, end, Engine.paint);
+  }
 }
