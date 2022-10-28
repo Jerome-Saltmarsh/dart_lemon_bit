@@ -85,16 +85,6 @@ class GameActions {
     GameState.debugVisible.value = !GameState.debugVisible.value;;
   }
 
-  static void cameraSetPositionGrid(int row, int column, int z){
-    cameraSetPosition(row * tileSize, column * tileSize, z * tileHeight);
-  }
-
-  static void cameraSetPosition(double x, double y, double z){
-    final renderX = (x - y) * 0.5;
-    final renderY = ((y + x) * 0.5) - z;
-    Engine.cameraCenter(renderX, renderY);
-  }
-
   static void runToMouse() {
     GameNetwork.setCharacterAction(CharacterAction.Run_To_Mouse);
   }

@@ -273,7 +273,7 @@ class GameIO {
       if (GameEditor.gameObjectSelected.value) {
         GameNetwork.sendGameObjectRequestMoveToMouse();
       } else {
-        GameActions.cameraSetPositionGrid(GameEditor.row, GameEditor.column, GameEditor.z);
+        GameCamera.cameraSetPositionGrid(GameEditor.row, GameEditor.column, GameEditor.z);
       }
     }
 
