@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'library.dart';
 
 class GameUIConfig {
-   static final runButtonPressed = GameIO.actionPlayerRunToMouse;
+   static final runButtonPressed = GameActions.runToMouse;
    static const runButtonSize = 80.0;
    static const runButtonColor = Colors.orange;
    static const runButtonTextValue = "Run";

@@ -94,4 +94,8 @@ class GameActions {
     final renderY = ((y + x) * 0.5) - z;
     Engine.cameraCenter(renderX, renderY);
   }
+
+  static void runToMouse(){
+    print("actionPlayerRunToMouse()");
+  }
 }

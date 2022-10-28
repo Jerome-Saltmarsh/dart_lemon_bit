@@ -1,6 +1,4 @@
 
-import 'dart:ui';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 
@@ -17,16 +15,6 @@ class GameIO {
   static var touchscreenMouseY = 0.0;
   static var touchPerformPrimary = false;
 
-  // static var joystickBaseX = 0.0;
-  // static var joystickBaseY = 0.0;
-  // static var joystickEndX = 0.0;
-  // static var joystickEndY = 0.0;
-  // static var joystickEngaged = false;
-  // static var joystickMaxDistance = 25.0;
-
-  // GETTERS
-  // static double get joystickDistance => Engine.calculateDistance(joystickBaseX, joystickBaseY, joystickEndX, joystickEndY);
-  // static double get joystickAngle => Engine.calculateAngleBetween(joystickBaseX, joystickBaseY, joystickEndX, joystickEndY);
   static final inputMode = Watch(InputMode.Keyboard);
   static bool get inputModeTouch => inputMode.value == InputMode.Touch;
   static bool get inputModeKeyboard => inputMode.value == InputMode.Keyboard;
@@ -372,9 +360,7 @@ class GameIO {
     return;
   }
 
-  static void actionPlayerRunToMouse(){
-     print("actionPlayerRunToMouse()");
-  }
+
 
   static void mouseRaycast(Function(int z, int row, int column) callback){
     var z = GameState.nodesTotalZ - 1;
