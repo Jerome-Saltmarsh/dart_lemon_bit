@@ -11,7 +11,7 @@ Widget buildPanelMenu() =>
         children: [
           buildButtonTogglePlayMode(),
           width8,
-          buildWatchBool(GameUI.timeVisible, buildTime),
+          watch(GameState.sceneEditable, (bool sceneEditable) => sceneEditable ? EditorUI.buildControlTime() : buildWatchBool(GameUI.timeVisible, buildTime)),
           onPressed(
               child: buildIconFullscreen(),
               action:  Engine.fullscreenToggle),

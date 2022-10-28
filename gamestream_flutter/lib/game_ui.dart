@@ -37,23 +37,7 @@ class GameUI {
         height: Engine.screen.height,
         child: Stack(
           children: [
-            watch(GameState.player.message, (String message) =>
-                Positioned(
-                  bottom: 64,
-                  left: 0,
-                  child: message.isEmpty
-                      ? const SizedBox()
-                      : Container(
-                      width: Engine.screen.width,
-                      alignment: Alignment.center,
-                      child: Container(
-                          padding: const EdgeInsets.all(12),
-                          color: Colors.white10,
-                          child: text(message)
-                      )
-                  ),
-                )
-            ),
+            watch(GameState.player.message, buildPlayerMessage),
             buildWatchBool(GameState.triggerAlarmNoMessageReceivedFromServer, buildDialogFramesSinceUpdate),
             watch(GameState.gameType, buildGameTypeUI),
             watch(GameState.player.gameDialog, buildGameDialog),
@@ -91,6 +75,23 @@ class GameUI {
           ],
         ),
       );
+
+  static Widget buildPlayerMessage(String message) =>
+    Positioned(
+      bottom: 64,
+      left: 0,
+      child: message.isEmpty
+          ? const SizedBox()
+          : Container(
+          width: Engine.screen.width,
+          alignment: Alignment.center,
+          child: Container(
+              padding: const EdgeInsets.all(12),
+              color: Colors.white10,
+              child: text(message)
+          )
+      ),
+    );
 
   static Widget buildWalkButtons() =>
     Positioned(

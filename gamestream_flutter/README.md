@@ -1,10 +1,12 @@
 [ ] cache region
-[ ] mobile attack controls
-[ ] fix android app title gamestream_flutter 
-[ ] mobile movement controls
 [ ] mobile disable movement tutorial
+[ ] option fullscreen dialog on game start
+[ ] fix android app title gamestream_flutter
+[ ] mobile attack controls
+[ ] mobile movement controls
 
 28.10.2022
+[x] add editor time control in menu 
 [x] fix auto fullscreen error message
 [x] android app icon
 [x] fix staff orb kills zombie bug
