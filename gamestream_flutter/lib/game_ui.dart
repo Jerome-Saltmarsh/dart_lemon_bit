@@ -46,7 +46,7 @@ class GameUI {
             buildTopRightMenu(),
             buildWatchBool(GameUI.mapVisible, buildMiniMap),
             watch(GameState.edit, buildPlayMode),
-            // watch(GameIO.inputMode, buildStackInputMode),
+            watch(GameIO.inputMode, buildStackInputMode),
             buildWatchBool(GameState.debugVisible, GameDebug.buildStackDebug),
           ],
         ),
@@ -56,25 +56,6 @@ class GameUI {
       inputMode == InputMode.Keyboard
           ? const SizedBox()
           : Stack(children: [
-              Positioned(
-                  top: 8,
-                  left: 8,
-                  child: watch(
-                      GameIO.inputMode,
-                      (int mode) => Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              text("touch: ${InputMode.getName(mode)}"),
-                              watch(
-                                  GameIO.panDistance,
-                                  (double panDistance) =>
-                                      text('pan-distance: $panDistance')),
-                              watch(
-                                  GameIO.panDirection,
-                                  (double panDirection) =>
-                                      text('pan-direction: $panDirection')),
-                            ],
-                          ))),
               Positioned(
                 bottom: 8,
                 right: 8,

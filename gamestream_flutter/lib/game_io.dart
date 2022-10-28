@@ -189,14 +189,14 @@ class GameIO {
   
   static double getCursorWorldX() {
     if (inputModeTouch){
-      return touchMouseWorldX;
+      return touchMouseRenderX;
     } else {
       return Engine.mouseWorldX;
     }
   }
   static double getCursorWorldY() {
     if (inputModeTouch){
-      return touchMouseWorldY;
+      return touchMouseRenderY;
     } else {
       return Engine.mouseWorldY;
     }
