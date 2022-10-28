@@ -1202,6 +1202,54 @@ class GameRender {
         srcHeight: 23,
         anchorY: 0.9,
       );
+
+  static void canvasRenderCrossHair(ui.Canvas canvas, double range){
+    // final range = 5 + GameState.player.weaponCooldown.value * 10;
+    Engine.renderExternalCanvas(
+        canvas: canvas,
+        image: GameImages.cursor,
+        srcX: 29,
+        srcY: 0,
+        srcWidth: 6,
+        srcHeight: 22,
+        dstX: GameIO.getCursorScreenX(),
+        dstY: GameIO.getCursorScreenY() - range,
+        anchorY: 1.0
+    );
+    Engine.renderExternalCanvas(
+        canvas: canvas,
+        image: GameImages.cursor,
+        srcX: 29,
+        srcY: 0,
+        srcWidth: 6,
+        srcHeight: 22,
+        dstX: GameIO.getCursorScreenX(),
+        dstY: GameIO.getCursorScreenY() + range,
+        anchorY: 0.0
+    );
+    Engine.renderExternalCanvas(
+        canvas: canvas,
+        image: GameImages.cursor,
+        srcX: 0,
+        srcY: 29,
+        srcWidth: 22,
+        srcHeight: 6,
+        dstX: GameIO.getCursorScreenX() - range,
+        dstY: GameIO.getCursorScreenY(),
+        anchorX: 1.0
+    );
+    Engine.renderExternalCanvas(
+        canvas: canvas,
+        image: GameImages.cursor,
+        srcX: 0,
+        srcY: 29,
+        srcWidth: 22,
+        srcHeight: 6,
+        dstX: GameIO.getCursorScreenX() + range,
+        dstY: GameIO.getCursorScreenY(),
+        anchorX: 0.0
+    );
+  }
 }
 
 class RenderOrderCharacters extends RenderOrder {

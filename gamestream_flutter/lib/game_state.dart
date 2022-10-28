@@ -1125,53 +1125,7 @@ class GameState {
       Engine.canvasRenderJoystick(canvas);
     }
 
-     if (true) {
-       final range = 5 + GameState.player.weaponCooldown.value * 10;
-       Engine.renderExternalCanvas(
-           canvas: canvas,
-           image: GameImages.cursor,
-           srcX: 29,
-           srcY: 0,
-           srcWidth: 6,
-           srcHeight: 22,
-           dstX: GameIO.getCursorScreenX(),
-           dstY: GameIO.getCursorScreenY() - range,
-           anchorY: 1.0
-       );
-       Engine.renderExternalCanvas(
-           canvas: canvas,
-           image: GameImages.cursor,
-           srcX: 29,
-           srcY: 0,
-           srcWidth: 6,
-           srcHeight: 22,
-           dstX: GameIO.getCursorScreenX(),
-           dstY: GameIO.getCursorScreenY() + range,
-           anchorY: 0.0
-       );
-       Engine.renderExternalCanvas(
-           canvas: canvas,
-           image: GameImages.cursor,
-           srcX: 0,
-           srcY: 29,
-           srcWidth: 22,
-           srcHeight: 6,
-           dstX: GameIO.getCursorScreenX() - range,
-           dstY: GameIO.getCursorScreenY(),
-           anchorX: 1.0
-       );
-       Engine.renderExternalCanvas(
-           canvas: canvas,
-           image: GameImages.cursor,
-           srcX: 0,
-           srcY: 29,
-           srcWidth: 22,
-           srcHeight: 6,
-           dstX: GameIO.getCursorScreenX() + range,
-           dstY: GameIO.getCursorScreenY(),
-           anchorX: 0.0
-       );
-     }
+    GameRender.canvasRenderCrossHair(canvas, 5 + GameState.player.weaponCooldown.value * 10);
   }
 
   /// TODO render logic does not belong here
@@ -1188,21 +1142,23 @@ class GameState {
     rendersSinceUpdate.value++;
 
     if (GameIO.inputModeTouch){
-      final angle = Engine.joystickAngle + (pi * 0.75);
-      final x = GamePlayer.position.x + Engine.calculateAdjacent(angle, Engine.joystickDistance);
-      final y = GamePlayer.position.y + Engine.calculateOpposite(angle, Engine.joystickDistance);
-      final z = GamePlayer.position.z;
-
-      Engine.renderSprite(
-          image: GameImages.gameobjects,
-          srcX: 0,
-          srcY: 72,
-          srcWidth: 8,
-          srcHeight: 8,
-          dstX: GameConvert.getRenderX(x, y, z),
-          dstY: GameConvert.getRenderY(x, y, z),
-      );
+      renderTouchMouse();
     }
+  }
+
+  static void renderTouchMouse() {
+    final x = GameIO.touchMouseWorldX;
+    final y = GameIO.touchMouseWorldY;
+    final z = GamePlayer.position.z;
+    Engine.renderSprite(
+        image: GameImages.gameobjects,
+        srcX: 0,
+        srcY: 72,
+        srcWidth: 8,
+        srcHeight: 8,
+        dstX: GameConvert.getRenderX(x, y, z),
+        dstY: GameConvert.getRenderY(x, y, z),
+    );
   }
 
   /// do this during the draw call so that particles are smoother

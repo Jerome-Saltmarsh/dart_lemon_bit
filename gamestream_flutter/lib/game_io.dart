@@ -167,20 +167,6 @@ class GameIO {
     GameActions.runToMouse();
   }
 
-  // static double getMouseX() {
-  //    if (inputModeTouch){
-  //      return Engine.screenToWorldY(getCursorScreenY());
-  //    }
-  //    return Engine.mouseWorldX;
-  // }
-  //
-  // static double getMouseY() {
-  //   if (inputModeTouch){
-  //     return Engine.screenToWorldX(getCursorScreenX());
-  //   }
-  //   return Engine.mouseWorldY;
-  // }
-
   static double get touchMouseWorldX {
     final angle = Engine.joystickAngle + (pi * 0.75);
     return GamePlayer.position.x + Engine.calculateAdjacent(angle, Engine.joystickDistance);
@@ -208,7 +194,8 @@ class GameIO {
 
   static double getCursorScreenX() {
      if (inputModeTouch){
-       return Engine.worldToScreenX(touchMouseWorldX);
+       // return Engine.worldToScreenX(touchMouseWorldX);
+       return (touchMouseWorldX);
      } else {
        return Engine.mousePosition.x;
      }
@@ -216,7 +203,8 @@ class GameIO {
 
   static double getCursorScreenY() {
     if (inputModeTouch) {
-      return Engine.worldToScreenY(touchMouseWorldY);
+      // return Engine.worldToScreenY(touchMouseWorldY);
+      return (touchMouseWorldY);
     } else {
       return Engine.mousePosition.y;
     }

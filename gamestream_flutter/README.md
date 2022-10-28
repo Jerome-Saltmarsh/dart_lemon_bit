@@ -9,6 +9,7 @@
 [ ] right click to attack
 [ ] left click to run to mouse
 [ ] left shift + left click to attack (same as diablo 2)
+[ ] render run target circle
 
 28.10.2022
 [x] add editor time control in menu 
