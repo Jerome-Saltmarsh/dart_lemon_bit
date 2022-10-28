@@ -227,12 +227,22 @@ abstract class Game {
   }
 
   void playerRunInDirection(Player player, int direction) {
+    if (direction == Direction.None && !player.runningToTarget){
+      player.setCharacterStateIdle();
+      return;
+    }
+
     if (player.runningToTarget){
-      if (direction != Direction.None){
-        player.clearTarget();
-        player.runningToTarget = false;
+      if (direction == Direction.None){
+        return;
       }
+      player.clearTarget();
+      player.runningToTarget = false;
+      player.setCharacterStateIdle();
+      return;
     } else if (direction == Direction.None){
+      player.clearTarget();
+      player.runningToTarget = false;
       player.setCharacterStateIdle();
       return;
     }
