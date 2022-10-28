@@ -16,6 +16,7 @@ export 'game_events.dart';
 export 'game_images.dart';
 export 'game_io.dart';
 export 'game_network.dart';
+export 'game_network_config.dart';
 export 'game_persistence.dart';
 export 'game_queries.dart';
 export 'game_render.dart';

@@ -5,8 +5,6 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 import 'library.dart';
 
 class GameNetwork {
-  static const Url_Sydney = "https://gamestream-ws-australia-osbmaezptq-ts.a.run.app";
-  static const Url_Singapore = "https://gamestream-ws-osbmaezptq-as.a.run.app";
   static final updateBuffer = Uint8List(17);
   static late WebSocketChannel webSocketChannel;
   static final connectionStatus = Watch(ConnectionStatus.None, onChanged: onChangedConnectionStatus);
@@ -15,11 +13,10 @@ class GameNetwork {
   static String connectionUri = "";
   static late WebSocketSink sink;
   static DateTime? connectionEstablished;
-  static var localhostPort = '8080';
 
   static void connectToRegion(ConnectionRegion region, String message) {
     if (region == ConnectionRegion.LocalHost) {
-      connectToServer('ws://localhost:$localhostPort', message);
+      connectToServer(GameNetworkConfig.wsLocalHost, message);
       return;
     }
     if (region == ConnectionRegion.Custom) {
@@ -50,9 +47,9 @@ class GameNetwork {
   static String getRegionConnectionString(ConnectionRegion region) {
     switch (region) {
       case ConnectionRegion.Australia:
-        return Url_Sydney;
+        return GameNetworkConfig.Url_Sydney;
       case ConnectionRegion.Singapore:
-        return Url_Singapore;
+        return GameNetworkConfig.Url_Singapore;
       default:
         throw Exception('GameNetwork.getRegionConnectionString($region)');
     }
