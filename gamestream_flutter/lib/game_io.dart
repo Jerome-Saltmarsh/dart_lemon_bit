@@ -32,17 +32,6 @@ class GameIO {
   static double get mouseGridX => GameConvert.convertWorldToGridX(Engine.mouseWorldX, Engine.mouseWorldY) + GamePlayer.position.z;
   static double get mouseGridY => GameConvert.convertWorldToGridY(Engine.mouseWorldX, Engine.mouseWorldY) + GamePlayer.position.z;
 
-  static void render(){
-     // if (inputModeTouch){
-     //   Engine.renderLine(
-     //       GamePlayer.renderX,
-     //       GamePlayer.renderY,
-     //       GamePlayer.renderX + Engine.calculateAdjacent(touchscreenRadianInput, 100),
-     //       GamePlayer.renderY + Engine.calculateOpposite(touchscreenRadianInput, 100),
-     //   );
-     // }
-  }
-
   static void detectInputMode() =>
     inputMode.value = Engine.deviceIsComputer
         ? InputMode.Keyboard
@@ -90,6 +79,9 @@ class GameIO {
 
   static void onPanStart(DragStartDetails details) {
      // print("onPanStart()");
+    GameState.joystickEngaged = true;
+    GameState.joystickX = details.globalPosition.dx;
+    GameState.joystickY = details.globalPosition.dy;
   }
 
   static var touchX1 = 0.0;
@@ -105,6 +97,8 @@ class GameIO {
 
   static void onPanUpdate(DragUpdateDetails details) {
     // print("onPanUpdate()");
+    GameState.joystickX = details.globalPosition.dx;
+    GameState.joystickY = details.globalPosition.dy;
     final deltaDirection = details.delta.direction;
     final deltaDistance = details.delta.distance;
     panDistance.value = deltaDistance;
@@ -141,6 +135,7 @@ class GameIO {
     // print('onPanEnd()');
     touchscreenDirectionMove = Direction.None;
     touchPanning = false;
+    GameState.joystickEngaged = false;
   }
 
   static void onKeyHeld(RawKeyDownEvent key, int duration) {
