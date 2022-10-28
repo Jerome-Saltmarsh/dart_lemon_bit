@@ -68,10 +68,14 @@ class GameNetwork {
 
   static Future sendClientRequestUpdate() async {
     applyUpdateBuffer(
+      // direction: GameIO.getDirection(),
+      // actionPrimary: GameIO.getActionPrimary(),
+      // actionSecondary: GameIO.getActionSecondary(),
+      // actionTertiary: GameIO.getActionTertiary(),
       direction: GameIO.getDirection(),
-      actionPrimary: GameIO.getActionPrimary(),
-      actionSecondary: GameIO.getActionSecondary(),
-      actionTertiary: GameIO.getActionTertiary(),
+      actionPrimary: false,
+      actionSecondary: false,
+      actionTertiary: false,
     );
     writeNumberToByteArray(number: GameIO.getMouseX(), list: updateBuffer, index: 5);
     writeNumberToByteArray(number: GameIO.getMouseY(), list: updateBuffer, index: 7);

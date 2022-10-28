@@ -140,10 +140,6 @@ abstract class Game {
     required double screenBottom,
     required bool runToMouse,
   }) {
-    if (runToMouse){
-      print("runToMouse()");
-    }
-
     player.framesSinceClientRequest = 0;
     player.screenLeft = screenLeft;
     player.screenTop = screenTop;
@@ -151,6 +147,10 @@ abstract class Game {
     player.screenBottom = screenBottom;
     player.mouse.x = mouseX;
     player.mouse.y = mouseY;
+
+    if (runToMouse){
+      player.runToMouse();
+    }
 
     if (player.deadOrBusy) return;
 
@@ -227,6 +227,9 @@ abstract class Game {
   }
 
   void playerRunInDirection(Player player, int direction) {
+    if (player.runningToTarget){
+      return;
+    }
     if (direction == Direction.None){
       player.setCharacterStateIdle();
       return;
@@ -1100,6 +1103,11 @@ abstract class Game {
       player.setCharacterStateIdle();
       return;
     }
+
+    // if (player.runningToTarget) {
+    //   player.face(player.runTarget);
+    // }
+
     setCharacterStateRunning(player);
   }
 

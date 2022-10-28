@@ -133,6 +133,9 @@ class GameIO {
      if (event.logicalKey == LogicalKeyboardKey.enter){
        GameActions.messageBoxShow();
      }
+     if (event.logicalKey == LogicalKeyboardKey.space){
+       GameActions.runToMouse();
+     }
   }
 
   static int convertRadianToDirection(double radian) {
@@ -149,11 +152,13 @@ class GameIO {
   }
 
   static void onTapDown(TapDownDetails details) {
-    // print("onTapDown()");
+    print("onTapDown()");
+    GameActions.runToMouse();
     if (inputModeTouch) {
        touchscreenMouseX = Engine.screenToWorldX(details.globalPosition.dx);
        touchscreenMouseY = Engine.screenToWorldY(details.globalPosition.dy);
-       touchPerformPrimary = true;
+       // touchPerformPrimary = true;
+      // GameActions.runToMouse();
     }
   }
 
