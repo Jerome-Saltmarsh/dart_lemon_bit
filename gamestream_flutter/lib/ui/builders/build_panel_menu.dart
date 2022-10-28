@@ -7,11 +7,11 @@ import 'build_time.dart';
 
 Widget buildPanelMenu() =>
     Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           buildButtonTogglePlayMode(),
-          width8,
-          watch(GameState.sceneEditable, (bool sceneEditable) => sceneEditable ? EditorUI.buildControlTime() : buildWatchBool(GameUI.timeVisible, buildTime)),
+          width2,
+          watch(GameState.sceneEditable, (bool sceneEditable) => sceneEditable ? EditorUI.buildControlsWeather() : buildWatchBool(GameUI.timeVisible, buildTime)),
           onPressed(
               child: buildIconFullscreen(),
               action:  Engine.fullscreenToggle),

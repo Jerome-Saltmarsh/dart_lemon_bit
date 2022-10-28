@@ -36,11 +36,11 @@ class EditorUI {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           buildControlTime(),
-          width4,
+          width2,
           buildToggleRain(),
-          width4,
+          width2,
           buildButtonLightning(),
-          width4,
+          width2,
           buildControlWind(),
         ],
       );

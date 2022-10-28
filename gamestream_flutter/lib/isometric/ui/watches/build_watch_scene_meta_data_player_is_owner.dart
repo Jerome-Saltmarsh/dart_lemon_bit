@@ -84,19 +84,19 @@ Widget buildStackEdit(EditTab activeEditTab) =>
               ],
             ),
         ),
-      if (activeEditTab == EditTab.Weather)
-        Positioned(
-            bottom: 6,
-            left: 0,
-            child: Container(
-              width: Engine.screen.width,
-              alignment: Alignment.center,
-              child: buildWatchBool(
-                GameEditor.controlsVisibleWeather,
-                EditorUI.buildControlsWeather,
-              ),
-            )
-        ),
+      // if (activeEditTab == EditTab.Weather)
+      //   Positioned(
+      //       bottom: 6,
+      //       left: 0,
+      //       child: Container(
+      //         width: Engine.screen.width,
+      //         alignment: Alignment.center,
+      //         child: buildWatchBool(
+      //           GameEditor.controlsVisibleWeather,
+      //           EditorUI.buildControlsWeather,
+      //         ),
+      //       )
+      //   ),
       if (activeEditTab == EditTab.File)
         Positioned(
             top: 50,
@@ -327,8 +327,7 @@ enum EditTab {
   File,
   Grid,
   Objects,
-  Player,
-  Weather,
+  // Player,
 }
 
 Row buildEditorMenu(EditTab activeEditTab) =>

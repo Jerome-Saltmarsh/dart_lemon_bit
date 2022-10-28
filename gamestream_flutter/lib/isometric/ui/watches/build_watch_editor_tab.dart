@@ -1,19 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/library.dart';
-import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/editor_grid_type_columns.dart';
-import '../widgets/build_container.dart';
-
-Widget buildWatchEditorTab(){
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      watch(GameEditor.nodeSelectedType, (int nodeType) => container(child: "${NodeType.getName(nodeType)}", color: brownLight)),
-      buildColumnSelectNodeType()
-    ],
-  );
-}
 
 Widget buildColumnSelectNodeType() =>
   Container(
