@@ -133,7 +133,7 @@ class GameNetwork {
       print("warning cannot send because not connected");
       return;
     }
-    sinkMessage(message);
+    sink.add(message);
   }
 
   static void sinkMessage(dynamic message) {
