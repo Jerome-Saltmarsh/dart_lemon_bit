@@ -14,7 +14,8 @@ Widget buildPanelMenu() =>
           watch(GameState.sceneEditable, (bool sceneEditable) => sceneEditable ? EditorUI.buildControlsWeather() : buildWatchBool(GameUI.timeVisible, buildTime)),
           onPressed(
               child: buildIconFullscreen(),
-              action:  Engine.fullscreenToggle),
+              action:  Engine.fullscreenToggle,
+          ),
           onPressed(
               child: buildIconHome(),
               action: GameNetwork.disconnect,
