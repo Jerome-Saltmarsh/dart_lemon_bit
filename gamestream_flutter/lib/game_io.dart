@@ -107,36 +107,36 @@ class GameIO {
        GameState.joystickBaseY = GameState.joystickEndY + Engine.calculateOpposite(angle, maxDistance);
     }
 
-    final deltaDirection = details.delta.direction;
-    final deltaDistance = details.delta.distance;
-    panDistance.value = deltaDistance;
-    panDirection.value = deltaDirection;
-    if (deltaDistance < 1) return;
-    touchX5 = touchX4;
-    touchY5 = touchY4;
-    touchX4 = touchX3;
-    touchY4 = touchY3;
-    touchX3 = touchX2;
-    touchY3 = touchY2;
-    touchX2 = touchX1;
-    touchY2 = touchY1;
-    touchX1 = Engine.calculateAdjacent(deltaDirection, deltaDistance);
-    touchY1 = Engine.calculateOpposite(deltaDirection, deltaDistance);
+    // final deltaDirection = details.delta.direction;
+    // final deltaDistance = details.delta.distance;
+    // panDistance.value = deltaDistance;
+    // panDirection.value = deltaDirection;
+    // if (deltaDistance < 1) return;
+    // touchX5 = touchX4;
+    // touchY5 = touchY4;
+    // touchX4 = touchX3;
+    // touchY4 = touchY3;
+    // touchX3 = touchX2;
+    // touchY3 = touchY2;
+    // touchX2 = touchX1;
+    // touchY2 = touchY1;
+    // touchX1 = Engine.calculateAdjacent(deltaDirection, deltaDistance);
+    // touchY1 = Engine.calculateOpposite(deltaDirection, deltaDistance);
 
-    if (!touchPanning) {
-      touchPanning = true;
-      touchX4 = touchX1;
-      touchY4 = touchY1;
-      touchX3 = touchX1;
-      touchY3 = touchY1;
-      touchX2 = touchX1;
-      touchY2 = touchY1;
-    }
-    final totalX = touchX1 + (touchX2 * 0.8) + (touchX3 * 0.6) + (touchX4 * 0.4) + (touchX5 * 0.2);
-    final totalY = touchY1 + (touchY2 * 0.8) + (touchY3 * 0.6) + (touchY4 * 0.4) + (touchY5 * 0.2);
-    final angle = Engine.calculateAngle(totalX, totalY);
+    // if (!touchPanning) {
+    //   touchPanning = true;
+    //   touchX4 = touchX1;
+    //   touchY4 = touchY1;
+    //   touchX3 = touchX1;
+    //   touchY3 = touchY1;
+    //   touchX2 = touchX1;
+    //   touchY2 = touchY1;
+    // }
+    // final totalX = touchX1 + (touchX2 * 0.8) + (touchX3 * 0.6) + (touchX4 * 0.4) + (touchX5 * 0.2);
+    // final totalY = touchY1 + (touchY2 * 0.8) + (touchY3 * 0.6) + (touchY4 * 0.4) + (touchY5 * 0.2);
+    // final angle = Engine.calculateAngle(totalX, totalY);
     // final distance = Engine.calculateHypotenuse(totalX, totalY);
-    touchscreenDirectionMove = convertRadianToDirection(angle);
+    touchscreenDirectionMove = convertRadianToDirection(GameState.joystickAngle + Engine.PI);
   }
 
   static void onPanEnd(DragEndDetails details){
@@ -163,7 +163,7 @@ class GameIO {
   }
 
   static int convertRadianToDirection(double radian) {
-    radian = radian < 0 ? radian + Engine.PI_2 : radian;
+    radian = radian < 0 ? radian + Engine.PI_2 : radian % Engine.PI_2;
      if (radian < Engine.PI_Eight + (Engine.PI_Quarter * 0)) return Direction.South_East;
      if (radian < Engine.PI_Eight + (Engine.PI_Quarter * 1)) return Direction.South;
      if (radian < Engine.PI_Eight + (Engine.PI_Quarter * 2)) return Direction.South_West;
