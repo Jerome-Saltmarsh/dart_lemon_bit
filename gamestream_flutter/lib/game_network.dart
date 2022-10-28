@@ -114,7 +114,7 @@ class GameNetwork {
         }
       });
       connectionUri = uri;
-      sinkMessage(message);
+      sink.add(message);
     } catch(e) {
       connectionStatus.value = ConnectionStatus.Failed_To_Connect;
     }
@@ -133,10 +133,6 @@ class GameNetwork {
       print("warning cannot send because not connected");
       return;
     }
-    sink.add(message);
-  }
-
-  static void sinkMessage(dynamic message) {
     sink.add(message);
   }
 
