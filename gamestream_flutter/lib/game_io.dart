@@ -15,6 +15,9 @@ class GameIO {
 
   static var previousVelocityX = 0.0;
   static var previousVelocityY = 0.0;
+  static var previousVelocityX2 = 0.0;
+  static var previousVelocityY2 = 0.0;
+
 
   static set touchCursorScreenX(double value) {
      _touchCursorScreenX = Engine.clamp(value, 0, Engine.screen.width);
@@ -105,20 +108,26 @@ class GameIO {
   }
 
   static void onPanUpdate(DragUpdateDetails details) {
-    const sensitivity = Engine.GoldenRatio_1_381;
+    const sensitivity = 2.0;
     final velocityX = details.delta.dx * sensitivity;
     final velocityY = details.delta.dy * sensitivity;
     if (!_panning) {
       _panning = true;
+      previousVelocityX2 = velocityX;
+      previousVelocityY2 = velocityY;
       previousVelocityX = velocityX;
       previousVelocityY = velocityY;
     }
-    final combinedVelocityX = (velocityX + previousVelocityX) * 0.5;
-    final combinedVelocityY = (velocityY + previousVelocityY) * 0.5;
+    final combinedVelocityX = (velocityX + previousVelocityX + previousVelocityX2) / 3;
+    final combinedVelocityY = (velocityY + previousVelocityY + previousVelocityY2) / 3;
+
     touchCursorScreenX += combinedVelocityX;
     touchCursorScreenY += combinedVelocityY;
-    previousVelocityX = velocityX;
-    previousVelocityY = velocityY;
+    const sensitivityLoss = 0.8;
+    previousVelocityX2 = previousVelocityX * sensitivityLoss;
+    previousVelocityY2 = previousVelocityY * sensitivityLoss;
+    previousVelocityX = velocityX * sensitivityLoss;
+    previousVelocityY = velocityY * sensitivityLoss;
   }
 
   static void onPanEnd(DragEndDetails details){

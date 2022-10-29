@@ -19,4 +19,5 @@ class ApiPlayer {
   static const Message = 16;
   static const Weapon_Cooldown = 17;
   static const Target_Position = 18;
+  static const Target_Position_None = 19;
 }

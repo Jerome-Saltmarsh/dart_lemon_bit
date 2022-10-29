@@ -22,7 +22,12 @@ class GameCanvas {
     GameState.renderEditMode();
     GameRender.renderMouseTargetName();
     GameState.rendersSinceUpdate.value++;
-    GameRender.renderCircle32(GamePlayer.target.x, GamePlayer.target.y, GamePlayer.target.z);
+    renderPlayerRunTarget();
   }
 
+  static void renderPlayerRunTarget(){
+    if (GamePlayer.runningToTarget){
+      GameRender.renderCircle32(GamePlayer.target.x, GamePlayer.target.y, GamePlayer.target.z);
+    }
+  }
 }

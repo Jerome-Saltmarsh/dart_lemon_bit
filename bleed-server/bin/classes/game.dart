@@ -237,7 +237,10 @@ abstract class Game {
         return;
       }
       player.clearTarget();
-      player.runningToTarget = false;
+      if (player.runningToTarget) {
+        player.runningToTarget = false;
+        player.writeTargetPositionNone();
+      }
       player.setCharacterStateIdle();
       return;
     } else if (direction == Direction.None){

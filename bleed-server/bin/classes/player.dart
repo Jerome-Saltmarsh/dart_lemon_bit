@@ -162,7 +162,6 @@ class Player extends Character with ByteWriter {
   }
 
   void runToMouse(){
-    print("player.runToMouse()");
     setRunTarget(mouseGridX, mouseGridY);
   }
 
@@ -396,6 +395,11 @@ class Player extends Character with ByteWriter {
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Target_Position);
     writePosition3(runTarget);
+  }
+
+  void writeTargetPositionNone(){
+    writeByte(ServerResponse.Player);
+    writeByte(ApiPlayer.Target_Position_None);
   }
 
   void writeAttackTarget() {
