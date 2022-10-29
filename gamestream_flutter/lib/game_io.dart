@@ -8,9 +8,13 @@ import 'library.dart';
 class GameIO {
   static var _touchCursorScreenX = 100.0;
   static var _touchCursorScreenY = 100.0;
+  static bool _panning = false;
 
   static double get touchCursorScreenX => _touchCursorScreenX;
   static double get touchCursorScreenY => _touchCursorScreenY;
+
+  static var previousVelocityX = 0.0;
+  static var previousVelocityY = 0.0;
 
   static set touchCursorScreenX(double value) {
      _touchCursorScreenX = Engine.clamp(value, 0, Engine.screen.width);
@@ -102,8 +106,19 @@ class GameIO {
 
   static void onPanUpdate(DragUpdateDetails details) {
     const sensitivity = Engine.GoldenRatio_1_381;
-    touchCursorScreenX += details.delta.dx * sensitivity;
-    touchCursorScreenY += details.delta.dy * sensitivity;
+    final velocityX = details.delta.dx * sensitivity;
+    final velocityY = details.delta.dy * sensitivity;
+    if (!_panning) {
+      _panning = true;
+      previousVelocityX = velocityX;
+      previousVelocityY = velocityY;
+    }
+    final combinedVelocityX = (velocityX + previousVelocityX) * 0.5;
+    final combinedVelocityY = (velocityY + previousVelocityY) * 0.5;
+    touchCursorScreenX += combinedVelocityX;
+    touchCursorScreenY += combinedVelocityY;
+    previousVelocityX = velocityX;
+    previousVelocityY = velocityY;
   }
 
   static void onPanEnd(DragEndDetails details){
@@ -112,6 +127,8 @@ class GameIO {
     if (inputModeTouch) {
       GameActions.runToMouse();
     }
+
+    _panning = false;
   }
 
   static void onKeyHeld(RawKeyDownEvent key, int duration) {
