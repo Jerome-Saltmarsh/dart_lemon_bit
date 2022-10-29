@@ -50,6 +50,8 @@ class Engine {
   /// engine.onTapDown = (TapDownDetails details) => print('tap detected');
   static GestureTapDownCallback? onTapDown;
   /// override safe
+  static GestureTapCallback? onTap;
+  /// override safe
   static GestureLongPressCallback? onLongPress;
   /// override safe
   static GestureLongPressDownCallback? onLongPressDown;
@@ -526,6 +528,10 @@ class Engine {
 
   static void _internalOnTapDown(TapDownDetails details){
      onTapDown?.call(details);
+  }
+
+  static void _internalOnTap(){
+    onTap?.call();
   }
 
   static void _internalOnLongPress(){
@@ -1017,6 +1023,7 @@ class Engine {
       onPointerSignal: _internalOnPointerSignal,
       child: GestureDetector(
           onTapDown: _internalOnTapDown,
+          onTap: _internalOnTap,
           onLongPress: _internalOnLongPress,
           onLongPressDown: _internalOnLongPressDown,
           onPanStart: _internalOnPanStart,

@@ -6,6 +6,8 @@ import 'library.dart';
 
 
 class GameIO {
+  static var _touchCursorTapX = 0.0;
+  static var _touchCursorTapY = 0.0;
   static var _touchCursorScreenX = 100.0;
   static var _touchCursorScreenY = 100.0;
   static bool _panning = false;
@@ -70,6 +72,7 @@ class GameIO {
       Engine.onPanUpdate = onPanUpdate;
       Engine.onPanEnd = onPanEnd;
       Engine.onTapDown = onTapDown;
+      Engine.onTap = onTap;
       Engine.onLongPressDown = onLongPressDown;
       Engine.onSecondaryTapDown = onSecondaryTapDown;
       Engine.onKeyDown = onRawKeyDownEvent;
@@ -172,14 +175,22 @@ class GameIO {
      return Direction.South_East;
   }
 
-  static void onTapDown(TapDownDetails details) {
-    if (inputModeKeyboard){
-      if (Engine.keyPressedShiftLeft){
-        GameActions.performActionPrimary();
-      } else {
-        GameActions.runToMouse();
-      }
+  static void onTap(){
+    print("onTap()");
+    _touchCursorScreenX = _touchCursorTapX;
+    _touchCursorScreenY = _touchCursorTapY;
+
+    if (inputModeKeyboard && Engine.keyPressedShiftLeft){
+      GameActions.performActionPrimary();
+    } else {
+      GameActions.runToMouse();
     }
+  }
+
+  static void onTapDown(TapDownDetails details) {
+    print("onTapDown()");
+    _touchCursorTapX = details.globalPosition.dx;
+    _touchCursorTapY = details.globalPosition.dy;
   }
 
   static double get touchMouseWorldX  =>
