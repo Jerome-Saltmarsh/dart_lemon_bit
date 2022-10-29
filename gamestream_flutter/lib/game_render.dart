@@ -1262,20 +1262,20 @@ class GameRender {
     );
   }
 
-  static void renderTouchMouse() {
-    final x = GameIO.touchMouseWorldX;
-    final y = GameIO.touchMouseWorldY;
-    final z = GameIO.touchMouseWorldZ;
-    Engine.renderSprite(
-      image: GameImages.gameobjects,
-      srcX: 0,
-      srcY: 72,
-      srcWidth: 8,
-      srcHeight: 8,
-      dstX: GameConvert.getRenderX(x, y, z),
-      dstY: GameConvert.getRenderY(x, y, z),
-    );
-  }
+  // static void renderTouchMouse() {
+  //   final x = GameIO.touchMouseWorldX;
+  //   final y = GameIO.touchMouseWorldY;
+  //   final z = GameIO.touchMouseWorldZ;
+  //   Engine.renderSprite(
+  //     image: GameImages.gameobjects,
+  //     srcX: 0,
+  //     srcY: 72,
+  //     srcWidth: 8,
+  //     srcHeight: 8,
+  //     dstX: GameConvert.getRenderX(x, y, z),
+  //     dstY: GameConvert.getRenderY(x, y, z),
+  //   );
+  // }
 }
 
 class RenderOrderCharacters extends RenderOrder {

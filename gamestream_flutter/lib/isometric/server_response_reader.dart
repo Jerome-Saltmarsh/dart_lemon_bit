@@ -317,7 +317,6 @@ class ServerResponseReader with ByteReader {
       case ApiPlayer.Alive:
         GameState.player.alive.value = readBool();
         break;
-        break;
       default:
         throw Exception("Cannot parse apiPlayer $apiPlayer");
     }

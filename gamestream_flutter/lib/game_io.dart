@@ -8,12 +8,12 @@ import 'library.dart';
 class GameIO {
   static var _touchCursorTapX = 0.0;
   static var _touchCursorTapY = 0.0;
-  static var _touchCursorScreenX = 100.0;
-  static var _touchCursorScreenY = 100.0;
+  static var touchCursorWorldX = 100.0;
+  static var touchCursorWorldY = 100.0;
   static bool _panning = false;
 
-  static double get touchCursorScreenX => _touchCursorScreenX;
-  static double get touchCursorScreenY => _touchCursorScreenY;
+  // static double get touchCursorScreenX => _touchCursorScreenX;
+  // static double get touchCursorScreenY => _touchCursorScreenY;
 
   static var previousVelocityX = 0.0;
   static var previousVelocityY = 0.0;
@@ -21,13 +21,13 @@ class GameIO {
   static var previousVelocityY2 = 0.0;
 
 
-  static set touchCursorScreenX(double value) {
-     _touchCursorScreenX = Engine.clamp(value, 0, Engine.screen.width);
-  }
-
-  static set touchCursorScreenY(double value) {
-    _touchCursorScreenY = Engine.clamp(value, 0, Engine.screen.height);
-  }
+  // static set touchCursorScreenX(double value) {
+  //    _touchCursorScreenX = Engine.clamp(value, 0, Engine.screen.width);
+  // }
+  //
+  // static set touchCursorScreenY(double value) {
+  //   _touchCursorScreenY = Engine.clamp(value, 0, Engine.screen.height);
+  // }
 
 
   static var touchPanning = false;
@@ -124,8 +124,8 @@ class GameIO {
     final combinedVelocityX = (velocityX + previousVelocityX + previousVelocityX2) / 3;
     final combinedVelocityY = (velocityY + previousVelocityY + previousVelocityY2) / 3;
 
-    touchCursorScreenX += combinedVelocityX;
-    touchCursorScreenY += combinedVelocityY;
+    touchCursorWorldX += combinedVelocityX;
+    touchCursorWorldY += combinedVelocityY;
     const sensitivityLoss = 0.8;
     previousVelocityX2 = previousVelocityX * sensitivityLoss;
     previousVelocityY2 = previousVelocityY * sensitivityLoss;
@@ -176,9 +176,9 @@ class GameIO {
   }
 
   static void onTap(){
-    print("onTap()");
-    _touchCursorScreenX = _touchCursorTapX;
-    _touchCursorScreenY = _touchCursorTapY;
+    // print("onTap()");
+    touchCursorWorldX = Engine.screenToWorldX(_touchCursorTapX);
+    touchCursorWorldY = Engine.screenToWorldY(_touchCursorTapY);
 
     if (inputModeKeyboard && Engine.keyPressedShiftLeft){
       GameActions.performActionPrimary();
@@ -188,33 +188,33 @@ class GameIO {
   }
 
   static void onTapDown(TapDownDetails details) {
-    print("onTapDown()");
+    // print("onTapDown()");
     _touchCursorTapX = details.globalPosition.dx;
     _touchCursorTapY = details.globalPosition.dy;
   }
 
-  static double get touchMouseWorldX  =>
-    Engine.screenToWorldX(_touchCursorScreenX);
-
-  static double get touchMouseWorldY  =>
-      Engine.screenToWorldY(_touchCursorScreenY);
+  // static double get touchMouseWorldX  =>
+  //   Engine.screenToWorldX(touchCursorScreenX);
+  //
+  // static double get touchMouseWorldY  =>
+  //     Engine.screenToWorldY(touchCursorScreenY);
 
   static double get touchMouseWorldZ => GamePlayer.position.z;
-  static double get touchMouseRenderX => GameConvert.getRenderX(touchMouseWorldX, touchMouseWorldY, touchMouseWorldZ);
-  static double get touchMouseRenderY => GameConvert.getRenderY(touchMouseWorldX, touchMouseWorldY, touchMouseWorldZ);
+  // static double get touchMouseRenderX => GameConvert.getRenderX(touchMouseWorldX, touchMouseWorldY, touchMouseWorldZ);
+  // static double get touchMouseRenderY => GameConvert.getRenderY(touchMouseWorldX, touchMouseWorldY, touchMouseWorldZ);
   // static double get touchScreenX => Engine.worldToScreenX(touchMouseRenderX);
   // static double get touchScreenY => Engine.worldToScreenY(touchMouseRenderY);
 
   static double getCursorWorldX() {
     if (inputModeTouch){
-      return touchMouseWorldX;
+      return touchCursorWorldX;
     } else {
       return Engine.mouseWorldX;
     }
   }
   static double getCursorWorldY() {
     if (inputModeTouch){
-      return touchMouseWorldY;
+      return touchCursorWorldY;
     } else {
       return Engine.mouseWorldY;
     }
@@ -222,7 +222,7 @@ class GameIO {
 
   static double getCursorScreenX() {
      if (inputModeTouch){
-       return touchCursorScreenX;
+       return Engine.worldToScreenX(touchCursorWorldX);
      } else {
        return Engine.mousePosition.x;
      }
@@ -230,7 +230,7 @@ class GameIO {
 
   static double getCursorScreenY() {
     if (inputModeTouch) {
-      return touchCursorScreenY;
+      return Engine.worldToScreenY(touchCursorWorldY);
     } else {
       return Engine.mousePosition.y;
     }

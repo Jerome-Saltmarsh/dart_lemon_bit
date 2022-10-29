@@ -31,7 +31,7 @@ class GameDebug {
                       "player-render: x: ${GamePlayer.position.renderX}, y: ${GamePlayer.position.renderY}\n"
                       "player-screen: x: ${Engine.worldToScreenX(GamePlayer.position.renderX).toInt()}, y: ${Engine.worldToScreenY(GamePlayer.position.renderY).toInt()}"
                   )),
-                  Refresh(() => text('touch-screen: x: ${GameIO.touchCursorScreenX.toInt()}, y: ${GameIO.touchCursorScreenY.toInt()}')),
+                  Refresh(() => text('touch-screen: x: ${GameIO.touchCursorWorldX.toInt()}, y: ${GameIO.touchCursorWorldY.toInt()}')),
                   Refresh(() => text('characters-total: ${GameState.characters.length}')),
                   Refresh(() => text('characters-active: ${GameState.totalCharacters}')),
                   Refresh(() => text('particles-total: ${GameState.particles.length}')),

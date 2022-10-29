@@ -27,11 +27,6 @@ class GameUI {
   static final mapVisible = Watch(false);
   static final timeVisible = Watch(true);
 
-  static const _centerX = 100.0;
-  static const _centerY = 100.0;
-  static const _joystickRadius = 75.0;
-  static const _joystickButtonSize = 60.0;
-
   static Widget build()  =>
       Container(
         width: Engine.screen.width,
