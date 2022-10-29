@@ -20,6 +20,9 @@ class ServerResponseReader with ByteReader {
 
     while (true) {
       switch (readByte()) {
+        case ServerResponse.Player:
+          readServerResponsePlayer();
+          break;
         case ServerResponse.Character_Rat:
           readCharacterRat();
           break;
@@ -76,9 +79,6 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Game_Time:
           readGameTime();
           break;
-        case ServerResponse.Player:
-          readServerResponsePlayer();
-          break;
         case ServerResponse.Spawn_Particle:
           final x = readDouble();
           final y = readDouble();
@@ -119,6 +119,7 @@ class ServerResponseReader with ByteReader {
           break;
         case ServerResponse.Player_Spawned:
           readPlayerSpawned();
+          GameActions.playerStop();
           break;
         case ServerResponse.Player_Weapons:
           readPlayerWeapons();

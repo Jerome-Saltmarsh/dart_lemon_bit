@@ -92,4 +92,10 @@ class GameActions {
   static void performActionPrimary() {
      GameIO.performActionPrimary = true;
   }
+
+  static void playerStop() {
+    GameIO.touchCursorWorldX = GamePlayer.renderX;
+    GameIO.touchCursorWorldY = GamePlayer.renderY;
+    runToMouse();
+  }
 }

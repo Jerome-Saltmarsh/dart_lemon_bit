@@ -53,7 +53,7 @@ class GameUI {
           : Stack(children: [
               Positioned(
                 bottom: 16,
-                right: 16,
+                right: 36,
                 child: onPressed(
                   action: GameUIConfig.runButtonPressed,
                   child: Container(
@@ -72,15 +72,27 @@ class GameUI {
                   ),
                 ),
               ),
-              // buildAimButton(Engine.PI_Quarter * 0),
-              // buildAimButton(Engine.PI_Quarter * 1),
-              // buildAimButton(Engine.PI_Quarter * 2),
-              // buildAimButton(Engine.PI_Quarter * 3),
-              // buildAimButton(Engine.PI_Quarter * 4),
-              // buildAimButton(Engine.PI_Quarter * 5),
-              // buildAimButton(Engine.PI_Quarter * 6),
-              // buildAimButton(Engine.PI_Quarter * 7),
-              // buildWalkButtons(),
+        Positioned(
+          bottom: 145,
+          right: 5,
+          child: onPressed(
+            action: GameActions.playerStop,
+            child: Container(
+              width: 75,
+              height: 75,
+              alignment: Alignment.center,
+              child: text(
+                "Stop",
+                color: Colors.white,
+                size: GameUIConfig.runButtonTextFontSize,
+              ),
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.red.withOpacity(Engine.GoldenRatio_0_381),
+              ),
+            ),
+          ),
+        )
             ]);
 
   static Widget buildPlayerMessage(String message) =>
