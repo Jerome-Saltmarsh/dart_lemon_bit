@@ -88,4 +88,9 @@ class GameActions {
   static void runToMouse() {
     GameNetwork.updateBuffer[17] = 1;
   }
+
+  static void performActionPrimary() {
+    print("performActionPrimary()");
+     GameIO.performActionPrimary = true;
+  }
 }

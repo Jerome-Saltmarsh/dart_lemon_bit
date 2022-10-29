@@ -69,11 +69,10 @@ class GameNetwork {
   static Future sendClientRequestUpdate() async {
     applyUpdateBuffer(
       // direction: GameIO.getDirection(),
-      // actionPrimary: GameIO.getActionPrimary(),
+      actionPrimary: GameIO.getActionPrimary(),
       // actionSecondary: GameIO.getActionSecondary(),
       // actionTertiary: GameIO.getActionTertiary(),
       direction: GameIO.getDirection(),
-      actionPrimary: false,
       actionSecondary: false,
       actionTertiary: false,
     );

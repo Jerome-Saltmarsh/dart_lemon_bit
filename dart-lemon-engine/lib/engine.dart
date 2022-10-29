@@ -479,13 +479,8 @@ class Engine {
   /// event.buttons is always 0 and does not seem to correspond to the left or right mouse
   /// click like in internalOnPointerDown
   static void _internalOnPointerUp(PointerUpEvent event) {
-    // if (event.buttons == 0) {
-    //   watchMouseLeftDown.value = false;
-    // }
-    // if (event.buttons == 2) {
-    //   mouseRightDown.value = false;
-    // }
     watchMouseLeftDown.value = false;
+    mouseRightDown.value = false;
   }
 
   static void _internalOnPointerDown(PointerDownEvent event) {

@@ -57,8 +57,8 @@ class GameUI {
           ? const SizedBox()
           : Stack(children: [
               Positioned(
-                bottom: 8,
-                right: 8,
+                bottom: 16,
+                right: 16,
                 child: onPressed(
                   action: GameUIConfig.runButtonPressed,
                   child: Container(
@@ -154,7 +154,7 @@ class GameUI {
       child: GestureDetector(
         onTap: () {
           GameIO.touchscreenRadianPerform = radian;
-          GameIO.touchPerformPrimary = true;
+          GameIO.performActionPrimary = true;
           print("aim: $radian");
         },
         child: Container(

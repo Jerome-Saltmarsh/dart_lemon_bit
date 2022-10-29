@@ -26,7 +26,7 @@ class GameIO {
   static var touchscreenRadianInput = 0.0;
   static var touchscreenRadianMove = 0.0;
   static var touchscreenRadianPerform = 0.0;
-  static var touchPerformPrimary = false;
+  static var performActionPrimary = false;
 
   // static var cursorPositionXScreen = 0.0;
   // static var cursorPositionYScreen = 0.0;
@@ -67,6 +67,7 @@ class GameIO {
       Engine.onSecondaryTapDown = onSecondaryTapDown;
       Engine.onKeyDown = onRawKeyDownEvent;
       Engine.onLeftClicked = onMouseClickedLeft;
+      Engine.onRightClicked = onMouseClickedRight;
       Engine.onPointerSignalEvent = onPointerSignalEvent;
       Engine.onKeyHeld = onKeyHeld;
       Engine.onKeyPressed = onKeyPressed;
@@ -115,8 +116,9 @@ class GameIO {
   static var touchY5 = 0.0;
 
   static void onPanUpdate(DragUpdateDetails details) {
-    touchCursorScreenX += details.delta.dx;
-    touchCursorScreenY += details.delta.dy;
+    const sensitivity = Engine.GoldenRatio_1_381;
+    touchCursorScreenX += details.delta.dx * sensitivity;
+    touchCursorScreenY += details.delta.dy * sensitivity;
   }
 
   static void onPanEnd(DragEndDetails details){
@@ -160,8 +162,9 @@ class GameIO {
   }
 
   static void onTapDown(TapDownDetails details) {
-    // print("onTapDown()");
-    GameActions.runToMouse();
+    if (inputModeKeyboard){
+      GameActions.runToMouse();
+    }
   }
 
   static double get touchMouseWorldX  =>
@@ -245,11 +248,8 @@ class GameIO {
 
   static bool getActionPrimary(){
     if (GameState.editMode) return false;
-    if (inputModeKeyboard) {
-      return Engine.watchMouseLeftDown.value;
-    }
-    if (touchPerformPrimary) {
-      touchPerformPrimary = false;
+    if (performActionPrimary) {
+      performActionPrimary = false;
       return true;
     }
     return false;
@@ -357,6 +357,11 @@ class GameIO {
     if (GameState.edit.value) {
       onMouseClickedEditMode();
     }
+  }
+
+  static void onMouseClickedRight(){
+    print('onMouseClickedRight()');
+    GameActions.performActionPrimary();
   }
 
   static void onMouseClickedEditMode(){
