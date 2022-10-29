@@ -1250,6 +1250,18 @@ class GameRender {
     );
   }
 
+  static void renderCircle32(double x, double y, double z){
+    Engine.renderSprite(
+      image: GameImages.gameobjects,
+      srcX: AtlasSrcGameObjects.Circle32_X,
+      srcY: AtlasSrcGameObjects.Circle32_Y,
+      srcWidth: 32,
+      srcHeight: 32,
+      dstX: GameConvert.getRenderX(x, y, z),
+      dstY: GameConvert.getRenderY(x, y, z),
+    );
+  }
+
   static void renderTouchMouse() {
     final x = GameIO.touchMouseWorldX;
     final y = GameIO.touchMouseWorldY;

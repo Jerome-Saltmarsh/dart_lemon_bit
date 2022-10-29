@@ -265,6 +265,10 @@ class ServerResponseReader with ByteReader {
         GameState.player.previousPosition.z = GamePlayer.position.z;
         readVector3(GamePlayer.position);
         break;
+      case ApiPlayer.Target_Position:
+        GamePlayer.runningToTarget = true;
+        readVector3(GamePlayer.target);
+        break;
       case ApiPlayer.Health:
         GameState.player.health.value = readInt();
         break;
@@ -282,9 +286,6 @@ class ServerResponseReader with ByteReader {
         break;
       case ApiPlayer.Pants_Type:
        GameState.player.pantsType.value = readByte();
-        break;
-      case ApiPlayer.Alive:
-       GameState.player.alive.value = readBool();
         break;
       case ApiPlayer.Experience_Percentage:
        GameState.player.experience.value = readPercentage();
@@ -309,6 +310,10 @@ class ServerResponseReader with ByteReader {
         break;
       case ApiPlayer.Message:
        GameState.player.message.value = readString();
+       break;
+      case ApiPlayer.Alive:
+        GameState.player.alive.value = readBool();
+        break;
         break;
       default:
         throw Exception("Cannot parse apiPlayer $apiPlayer");

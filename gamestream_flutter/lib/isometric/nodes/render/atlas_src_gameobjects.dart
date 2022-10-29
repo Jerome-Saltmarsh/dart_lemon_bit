@@ -1,6 +1,9 @@
 
 
 class AtlasSrcGameObjects {
+  static const Circle32_X = 16.0;
+  static const Circle32_Y = 48.0;
+
   static const Rock_X = 60.0;
   static const Rock_Y = 0.0;
   static const Rock_Width = 14.0;

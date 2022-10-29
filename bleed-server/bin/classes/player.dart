@@ -171,7 +171,9 @@ class Player extends Character with ByteWriter {
     endInteraction();
     runTarget.x = x;
     runTarget.y = y;
+    runTarget.z = z;
     target = runTarget;
+    writeTargetPosition();
   }
 
   /// in radians
@@ -388,6 +390,12 @@ class Player extends Character with ByteWriter {
     game.customPlayerWrite(this);
     writeByte(ServerResponse.End);
     sendBufferToClient();
+  }
+
+  void writeTargetPosition(){
+    writeByte(ServerResponse.Player);
+    writeByte(ApiPlayer.Target_Position);
+    writePosition3(runTarget);
   }
 
   void writeAttackTarget() {

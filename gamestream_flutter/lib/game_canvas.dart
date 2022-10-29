@@ -22,10 +22,7 @@ class GameCanvas {
     GameState.renderEditMode();
     GameRender.renderMouseTargetName();
     GameState.rendersSinceUpdate.value++;
-
-    // if (GameIO.inputModeTouch){
-    //   GameRender.renderTouchMouse();
-    // }
+    GameRender.renderCircle32(GamePlayer.target.x, GamePlayer.target.y, GamePlayer.target.z);
   }
 
 }

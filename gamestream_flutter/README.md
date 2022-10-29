@@ -1,8 +1,7 @@
 [ ] cache region
 [ ] mobile disable movement tutorial
-[ ] option fullscreen dialog on game start
 [ ] fix android app title gamestream_flutter
-[ ] shift camera to mouse
+[ ] option fullscreen dialog on game start
 [ ] render run target circle
 
 29.10.2022
