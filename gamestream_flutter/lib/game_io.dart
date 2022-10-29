@@ -97,23 +97,8 @@ class GameIO {
   }
 
   static void onPanStart(DragStartDetails details) {
-    // joystickEngaged = true;
-    // joystickBaseX = details.globalPosition.dx;
-    // joystickBaseY = details.globalPosition.dy;
-    // joystickEndX = joystickBaseX;
-    // joystickEndY = joystickBaseY;
-  }
 
-  static var touchX1 = 0.0;
-  static var touchX2 = 0.0;
-  static var touchX3 = 0.0;
-  static var touchX4 = 0.0;
-  static var touchX5 = 0.0;
-  static var touchY1 = 0.0;
-  static var touchY2 = 0.0;
-  static var touchY3 = 0.0;
-  static var touchY4 = 0.0;
-  static var touchY5 = 0.0;
+  }
 
   static void onPanUpdate(DragUpdateDetails details) {
     const sensitivity = Engine.GoldenRatio_1_381;
@@ -144,7 +129,7 @@ class GameIO {
        GameActions.messageBoxShow();
      }
      if (event.logicalKey == LogicalKeyboardKey.space){
-       GameActions.runToMouse();
+       GameActions.performActionPrimary();
      }
   }
 
@@ -163,7 +148,11 @@ class GameIO {
 
   static void onTapDown(TapDownDetails details) {
     if (inputModeKeyboard){
-      GameActions.runToMouse();
+      if (Engine.keyPressedShiftLeft){
+        GameActions.performActionPrimary();
+      } else {
+        GameActions.runToMouse();
+      }
     }
   }
 
@@ -360,7 +349,6 @@ class GameIO {
   }
 
   static void onMouseClickedRight(){
-    print('onMouseClickedRight()');
     GameActions.performActionPrimary();
   }
 
@@ -374,15 +362,9 @@ class GameIO {
   }
 
   static void readPlayerInput() {
-    if (inputModeTouch) {
-      // cursorPositionXScreen += Engine.calculateAdjacent(Engine.joystickAngle, Engine.joystickDistance);
-      // cursorPositionYScreen += Engine.calculateOpposite(Engine.joystickAngle, Engine.joystickDistance);
-    }
     if (GameState.edit.value) {
       return readPlayerInputEdit();
     }
-
-
   }
 
   static void readPlayerInputEdit() {

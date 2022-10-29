@@ -90,7 +90,6 @@ class GameActions {
   }
 
   static void performActionPrimary() {
-    print("performActionPrimary()");
      GameIO.performActionPrimary = true;
   }
 }

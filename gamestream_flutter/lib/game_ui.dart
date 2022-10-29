@@ -147,27 +147,6 @@ class GameUI {
     );
   }
 
-  static Widget buildAimButton(double radian) =>
-    Positioned(
-      bottom: _centerX - Engine.calculateAdjacent(radian, _joystickRadius),
-      right: _centerY - Engine.calculateOpposite(radian, _joystickRadius),
-      child: GestureDetector(
-        onTap: () {
-          GameIO.touchscreenRadianPerform = radian;
-          GameIO.performActionPrimary = true;
-          print("aim: $radian");
-        },
-        child: Container(
-          width: _joystickButtonSize,
-          height: _joystickButtonSize,
-          decoration: BoxDecoration(
-            color: Colors.amber,
-            shape: BoxShape.circle,
-          ),
-        ),
-      ) ,
-    );
-
   static Widget buildDialogFramesSinceUpdate() => Positioned(
       top: 8,
       left: 8,

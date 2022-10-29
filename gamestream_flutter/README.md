@@ -3,14 +3,14 @@
 [ ] option fullscreen dialog on game start
 [ ] fix android app title gamestream_flutter
 [ ] shift camera to mouse
-[ ] mobile attack controls
-[ ] space bar to attack
-[ ] right click to attack
-[ ] left click to run to mouse
-[ ] left shift + left click to attack (same as diablo 2)
 [ ] render run target circle
 
 29.10.2022
+[x] space bar to attack
+[x] left shift + left click to attack (same as diablo 2)
+[x] mobile attack controls
+[x] left click to run to mouse
+[x] right click to attack
 [x] mobile movement controls
 
 28.10.2022
