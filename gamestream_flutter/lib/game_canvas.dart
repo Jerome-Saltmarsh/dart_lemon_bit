@@ -5,10 +5,9 @@ import 'package:gamestream_flutter/library.dart';
 
 class GameCanvas {
   static void renderForeground(Canvas canvas, Size size) {
-    if (Engine.joystickEngaged) {
-      Engine.canvasRenderJoystick(canvas);
-    }
-
+    // if (Engine.joystickEngaged) {
+    //   Engine.canvasRenderJoystick(canvas);
+    // }
     GameRender.canvasRenderCrossHair(canvas, 5 + GameState.player.weaponCooldown.value * 10);
   }
 
@@ -24,9 +23,9 @@ class GameCanvas {
     GameRender.renderMouseTargetName();
     GameState.rendersSinceUpdate.value++;
 
-    if (GameIO.inputModeTouch){
-      GameRender.renderTouchMouse();
-    }
+    // if (GameIO.inputModeTouch){
+    //   GameRender.renderTouchMouse();
+    // }
   }
 
 }

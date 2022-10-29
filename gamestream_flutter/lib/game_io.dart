@@ -1,6 +1,4 @@
 
-import 'dart:math';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/services.dart';
 
@@ -8,6 +6,21 @@ import 'library.dart';
 
 
 class GameIO {
+  static var _touchCursorScreenX = 100.0;
+  static var _touchCursorScreenY = 100.0;
+
+  static double get touchCursorScreenX => _touchCursorScreenX;
+  static double get touchCursorScreenY => _touchCursorScreenY;
+
+  static set touchCursorScreenX(double value) {
+     _touchCursorScreenX = Engine.clamp(value, 0, Engine.screen.width);
+  }
+
+  static set touchCursorScreenY(double value) {
+    _touchCursorScreenY = Engine.clamp(value, 0, Engine.screen.height);
+  }
+
+
   static var touchPanning = false;
   static var touchscreenDirectionMove = Direction.None;
   static var touchscreenRadianInput = 0.0;
@@ -102,27 +115,16 @@ class GameIO {
   static var touchY5 = 0.0;
 
   static void onPanUpdate(DragUpdateDetails details) {
-    // joystickEndX = details.globalPosition.dx;
-    // joystickEndY = details.globalPosition.dy;
-    //
-    // if (joystickDistance > joystickMaxDistance){
-    //    final angle = joystickAngle;
-    //    joystickBaseX = joystickEndX + Engine.calculateAdjacent(angle, joystickMaxDistance);
-    //    joystickBaseY = joystickEndY + Engine.calculateOpposite(angle, joystickMaxDistance);
-    // }
-    // disable move on joystick for now
-    // instead a button will be pressed to command the server to run to that position
-    // an attack button will be used to command the server to attack
-    // touchscreenDirectionMove = convertRadianToDirection(joystickAngle + Engine.PI);
-    // onJoystickEngaged(angle: joystickAngle, distance: joystickDistance);
+    touchCursorScreenX += details.delta.dx;
+    touchCursorScreenY += details.delta.dy;
   }
 
   static void onPanEnd(DragEndDetails details){
-    // print('onPanEnd()');
     touchscreenDirectionMove = Direction.None;
     touchPanning = false;
-    // joystickEngaged = false;
-
+    if (inputModeTouch) {
+      GameActions.runToMouse();
+    }
   }
 
   static void onKeyHeld(RawKeyDownEvent key, int duration) {
@@ -157,46 +159,33 @@ class GameIO {
      return Direction.South_East;
   }
 
-  static void onJoystickChanged(double angle, double distance){
-       // cursorPositionXScreen += Engine.calculateAdjacent(angle, distance);
-       // cursorPositionYScreen += Engine.calculateOpposite(angle, distance);
-  }
-
   static void onTapDown(TapDownDetails details) {
     // print("onTapDown()");
     GameActions.runToMouse();
   }
 
-  static double get touchMouseWorldX {
-    final angle = Engine.joystickAngle + (pi * 0.75);
-    return GamePlayer.position.x + Engine.calculateAdjacent(angle, Engine.joystickDistance);
-  }
+  static double get touchMouseWorldX  =>
+    Engine.screenToWorldX(_touchCursorScreenX);
 
-  static double get touchMouseWorldY {
-    final angle = Engine.joystickAngle + (pi * 0.75);
-    return GamePlayer.position.y + Engine.calculateOpposite(angle, Engine.joystickDistance);
-  }
+  static double get touchMouseWorldY  =>
+      Engine.screenToWorldY(_touchCursorScreenY);
 
   static double get touchMouseWorldZ => GamePlayer.position.z;
-
   static double get touchMouseRenderX => GameConvert.getRenderX(touchMouseWorldX, touchMouseWorldY, touchMouseWorldZ);
   static double get touchMouseRenderY => GameConvert.getRenderY(touchMouseWorldX, touchMouseWorldY, touchMouseWorldZ);
+  // static double get touchScreenX => Engine.worldToScreenX(touchMouseRenderX);
+  // static double get touchScreenY => Engine.worldToScreenY(touchMouseRenderY);
 
-  static double get touchScreenX => Engine.worldToScreenX(touchMouseRenderX);
-  static double get touchScreenY => Engine.worldToScreenY(touchMouseRenderY);
-
-
-  
   static double getCursorWorldX() {
     if (inputModeTouch){
-      return touchMouseRenderX;
+      return touchMouseWorldX;
     } else {
       return Engine.mouseWorldX;
     }
   }
   static double getCursorWorldY() {
     if (inputModeTouch){
-      return touchMouseRenderY;
+      return touchMouseWorldY;
     } else {
       return Engine.mouseWorldY;
     }
@@ -204,7 +193,7 @@ class GameIO {
 
   static double getCursorScreenX() {
      if (inputModeTouch){
-       return touchScreenX;;
+       return touchCursorScreenX;
      } else {
        return Engine.mousePosition.x;
      }
@@ -212,7 +201,7 @@ class GameIO {
 
   static double getCursorScreenY() {
     if (inputModeTouch) {
-      return touchScreenY;
+      return touchCursorScreenY;
     } else {
       return Engine.mousePosition.y;
     }

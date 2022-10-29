@@ -4,12 +4,14 @@
 [ ] fix android app title gamestream_flutter
 [ ] shift camera to mouse
 [ ] mobile attack controls
-[ ] mobile movement controls
 [ ] space bar to attack
 [ ] right click to attack
 [ ] left click to run to mouse
 [ ] left shift + left click to attack (same as diablo 2)
 [ ] render run target circle
+
+29.10.2022
+[x] mobile movement controls
 
 28.10.2022
 [x] add editor time control in menu 
