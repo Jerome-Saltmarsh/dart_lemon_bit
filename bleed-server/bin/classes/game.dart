@@ -628,11 +628,12 @@ abstract class Game {
     }
   }
 
-  void revive(Player character) {
-    character.setCharacterStateSpawning();
-    character.health = character.maxHealth;
-    character.collidable = true;
-    customOnPlayerRevived(character);
+  void revive(Player player) {
+    player.setCharacterStateSpawning();
+    player.health = player.maxHealth;
+    player.collidable = true;
+    customOnPlayerRevived(player);
+    player.writePlayerMoved();
   }
 
   int countAlive(List<Character> characters) {

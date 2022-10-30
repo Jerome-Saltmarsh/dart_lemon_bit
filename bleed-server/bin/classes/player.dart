@@ -478,6 +478,11 @@ class Player extends Character with ByteWriter {
     writeByte(value);
   }
 
+  void writePlayerMoved(){
+    writePlayerPosition();
+    writePlayerEvent(PlayerEvent.Player_Moved);
+  }
+
   void writePlayerEventItemEquipped(int itemType){
     writePlayerEvent(PlayerEvent.Item_Equipped);
     writeByte(itemType);

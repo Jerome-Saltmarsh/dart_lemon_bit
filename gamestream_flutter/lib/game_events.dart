@@ -375,6 +375,7 @@ class GameEvents {
         break;
       case PlayerEvent.Player_Moved:
         GameCamera.centerOnPlayer();
+        GameIO.recenterCursor();
         break;
     }
   }

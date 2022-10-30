@@ -5,11 +5,11 @@
 [ ] fix android app title gamestream_flutter
 [ ] mobile zoom in and out
 [ ] option fullscreen dialog on game start
-[ ] fix on touch on change scene center cursor on player
-[ ] fix on death center cursor on player
-
 
 31.10.2022
+[x] fix on change scene center cursor on player
+[x] fix on death center cursor on player
+[x] fix on touch on change scene center cursor on player
 [x] fix mobile cursor starts on player
 
 30.10.2022

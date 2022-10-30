@@ -132,13 +132,11 @@ class GameSkirmish extends Game {
     player.writeEnvironmentLightning(Lightning.Off);
     player.writeEnvironmentWind(Wind.Gentle);
     player.writeEnvironmentBreeze(false);
-    player.writePlayerMessage("press W,A,S,D to run and LEFT CLICK to punch");
+    // player.writePlayerMessage("press W,A,S,D to run and LEFT CLICK to punch");
     if
     (playerSpawnPoints.isNotEmpty) {
       moveV3ToNodeIndex(player, randomItem(playerSpawnPoints));
     }
-    player.writePlayerPosition();
-    player.writePlayerEvent(PlayerEvent.Player_Moved);
   }
 
   @override
