@@ -194,7 +194,7 @@ abstract class Game {
     removePlayer(player);
     for (final character in characters) {
       if (character.target != this) continue;
-      character.clearTarget();
+      clearTarget(character);
     }
     to.players.add(player);
     to.characters.add(player);
@@ -236,7 +236,7 @@ abstract class Game {
       if (direction == Direction.None) {
         return;
       }
-      player.clearTarget();
+      clearTarget(player);
       if (player.runningToTarget) {
         player.runningToTarget = false;
         player.writeTargetPositionNone();
@@ -244,7 +244,7 @@ abstract class Game {
       player.setCharacterStateIdle();
       return;
     } else if (direction == Direction.None) {
-      player.clearTarget();
+      clearTarget(player);
       player.runningToTarget = false;
       player.setCharacterStateIdle();
       return;
@@ -703,7 +703,7 @@ abstract class Game {
       customOnCharacterKilled(target, src);
 
       if (target is AI){
-        target.clearTarget();
+        clearTarget(target);
         target.clearDest();
         target.clearPath();
       }
@@ -721,7 +721,7 @@ abstract class Game {
 
   /// unsafe to override
   void onAIKilled(AI ai){
-    ai.clearTarget();
+    clearTarget(ai);
     ai.clearDest();
     ai.clearPath();
   }
@@ -906,7 +906,7 @@ abstract class Game {
 
     for (final character in characters) {
       if (character.target != character) continue;
-      character.clearTarget();
+      clearTarget(character);
     }
 
     for (final projectile in projectiles) {
@@ -937,7 +937,7 @@ abstract class Game {
 
     for (final character in characters) {
       if (character.target != character) continue;
-      character.clearTarget();
+      clearTarget(character);
     }
 
     for (final projectile in projectiles) {
@@ -1102,7 +1102,7 @@ abstract class Game {
             player.setInteractingNpcName(target.name);
             onInteractedWith(player);
           }
-          player.target = null;
+          clearTarget(player);
           player.setCharacterStateIdle();
           return;
         }
@@ -1114,7 +1114,7 @@ abstract class Game {
     }
 
     if (player.distanceFromPos2(target) <= player.velocitySpeed) {
-      player.target = null;
+      clearTarget(player);
       player.setCharacterStateIdle();
       return;
     }
@@ -1372,7 +1372,7 @@ abstract class Game {
     ai.y = spawn.y + getOpposite(angle, distance);
     ai.z = ai.spawnZ;
     ai.clearDest();
-    ai.clearTarget();
+    clearTarget(ai);
     ai.clearPath();
     ai.collidable = true;
     ai.health = ai.maxHealth;
@@ -2152,6 +2152,15 @@ abstract class Game {
     scene.nodeTypes[nodeIndex] = nodeType;
     for (final player in players){
       player.writeNode(nodeIndex);
+    }
+  }
+
+  void clearTarget(Character character){
+    if (character.target == null) return;
+    character.target = null;
+    if (character is Player){
+      character.runningToTarget = false;
+      character.writeTargetPositionNone();
     }
   }
 }

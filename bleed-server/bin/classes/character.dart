@@ -94,9 +94,7 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
   //     animationFrame = 0;
   // }
 
-  void clearTarget(){
-    target = null;
-  }
+
 
   void attackTarget(Position3 target) {
     if (deadOrBusy) return;
