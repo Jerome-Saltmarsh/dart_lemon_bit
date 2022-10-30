@@ -11,6 +11,7 @@ import '../engine.dart';
 import '../functions/withinRadius.dart';
 import '../io/write_scene_to_file.dart';
 import '../maths.dart';
+import '../maths/get_distance_between_v3.dart';
 import '../physics.dart';
 import 'ai.dart';
 import 'character.dart';
@@ -61,8 +62,6 @@ abstract class Game {
   void customOnPlayerRevived(Player player) { }
   /// safe to overridable
   void customOnGameStarted() { }
-  /// safe to overridable
-  void customOnPlayerDeath(Player player) { }
   /// safe to overridable
   void customOnNpcObjectivesCompleted(Character npc) { }
   /// safe to overridable
@@ -264,14 +263,6 @@ abstract class Game {
 
     final weapon = player.weapon;
 
-    // if (weapon.type == AttackType.Bow){
-    //   weapon.charge++;
-    //   if (weapon.charge == 1){
-    //      dispatchV3(GameEventType.Draw_Bow, player);
-    //   }
-    //   return;
-    // }
-
     if (weapon.capacity > 0){
       if (weapon.rounds == 0) return;
       weapon.rounds--;
@@ -358,6 +349,9 @@ abstract class Game {
         break;
       case AttackType.Staff:
         weapon.durationRemaining = weapon.duration;
+        if (player.autoAim) {
+          playerAutoAim(player, weapon.range);
+        }
         spawnProjectileOrb(src: player, damage: 2);
         // playerAttackMelee(
         //   player: player,
@@ -380,6 +374,22 @@ abstract class Game {
     position.y = player.mouseGridY;
   }
 
+  void playerAutoAim(Player player, double minDistance) {
+    var closestCharacterDistance = minDistance * 1.5;
+    Character? closestCharacter = null;
+    for (final character in characters) {
+      if (character.deadOrDying) continue;
+      if (onSameTeam(player, character)) continue;
+      final distance = getDistanceBetweenV3(player, character);
+      if (distance > closestCharacterDistance) continue;
+      closestCharacter = character;
+      closestCharacterDistance = distance;
+    }
+    if (closestCharacter != null) {
+      player.lookAt(closestCharacter);
+    }
+  }
+
   void playerAttackMelee({
     required Player player,
     required int attackType,
@@ -388,6 +398,11 @@ abstract class Game {
     required int damage,
     required int duration,
   }) {
+
+    if (player.autoAim) {
+      playerAutoAim(player, distance);
+    }
+
     final angle = player.lookRadian;
 
     final performX = player.x + getAdjacent(angle, distance);
@@ -634,6 +649,7 @@ abstract class Game {
     player.collidable = true;
     customOnPlayerRevived(player);
     player.writePlayerMoved();
+    clearTarget(player);
   }
 
   int countAlive(List<Character> characters) {

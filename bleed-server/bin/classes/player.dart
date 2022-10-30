@@ -1,4 +1,6 @@
 
+import 'dart:math';
+
 import 'package:bleed_server/firestoreClient/firestoreService.dart';
 import 'package:bleed_server/system.dart';
 import 'package:lemon_byte/byte_writer.dart';
@@ -17,6 +19,7 @@ import 'rat.dart';
 import 'zombie.dart';
 
 class Player extends Character with ByteWriter {
+  var autoAim = true;
   final mouse = Vector2(0, 0);
   final runTarget = Position3();
   var runningToTarget = false;
@@ -784,6 +787,11 @@ class Player extends Character with ByteWriter {
     writePositiveInt(index);
     writeByte(scene.nodeTypes[index]);
     writeByte(scene.nodeOrientations[index]);
+  }
+
+  void lookAt(Position position) {
+    assert(!deadOrBusy);
+    lookRadian = this.getAngle(position) + pi;
   }
 }
 

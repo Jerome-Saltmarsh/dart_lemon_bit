@@ -8,6 +8,11 @@ import 'package:gamestream_flutter/library.dart';
 import 'isometric/events/on_character_hurt.dart';
 
 class GameEvents {
+
+  static void onErrorFullscreenAuto(){
+     // TODO show a dialog box asking the user to go fullscreen
+  }
+
   static void onWeaponTypeEquipped(int attackType, double x, double y, double z) {
     switch (attackType) {
       case AttackType.Shotgun:

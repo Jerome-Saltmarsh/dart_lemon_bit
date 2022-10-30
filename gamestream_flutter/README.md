@@ -1,12 +1,13 @@
 [ ] cache region
+[ ] fix android app title gamestream_flutter
 [ ] optimize front end - do not use objects to store particles
 [ ] optimize network - compile all characters into single server_response
-[ ] mobile disable movement tutorial
-[ ] fix android app title gamestream_flutter
+[ ] option fullscreen dialog on game start if it fails to do so automatically
 [ ] mobile zoom in and out
-[ ] option fullscreen dialog on game start
 
 31.10.2022
+[x] Touchscreen auto aim
+[x] mobile disable movement tutorial
 [x] fix on change scene center cursor on player
 [x] fix on death center cursor on player
 [x] fix on touch on change scene center cursor on player
