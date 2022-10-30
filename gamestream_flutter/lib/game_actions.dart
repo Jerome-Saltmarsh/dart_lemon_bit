@@ -25,9 +25,9 @@ class GameActions {
         for (var z = GameState.nodesTotalZ - 1; z >= 0; z--) {
 
           final index = GameState.getNodeIndexZRC(z, row, column);
-          final type = GameState.nodesType[index];
+          final type = GameNodes.nodesType[index];
           if (type != NodeType.Empty) {
-            if (type == NodeType.Water || GameState.nodesOrientation[index] == NodeOrientation.Solid) {
+            if (type == NodeType.Water || GameNodes.nodesOrientation[index] == NodeOrientation.Solid) {
               GameState.setNodeType(z + 1, row, column, NodeType.Rain_Landing);
             }
             GameState.setNodeType(z + 2, row, column, NodeType.Rain_Falling);
@@ -48,10 +48,10 @@ class GameActions {
   }
 
   static void rainStop() {
-    for (var i = 0; i < GameState.nodesTotal; i++) {
-      if (!NodeType.isRain(GameState.nodesType[i])) continue;
-      GameState.nodesType[i] = NodeType.Empty;
-      GameState.nodesOrientation[i] = NodeOrientation.None;
+    for (var i = 0; i < GameNodes.nodesTotal; i++) {
+      if (!NodeType.isRain(GameNodes.nodesType[i])) continue;
+      GameNodes.nodesType[i] = NodeType.Empty;
+      GameNodes.nodesOrientation[i] = NodeOrientation.None;
     }
   }
 
@@ -94,8 +94,7 @@ class GameActions {
   }
 
   static void playerStop() {
-    GameIO.touchCursorWorldX = GamePlayer.renderX;
-    GameIO.touchCursorWorldY = GamePlayer.renderY;
+    GameIO.recenterCursor();
     runToMouse();
   }
 }

@@ -26,7 +26,7 @@ class GameEditor {
 
   static var nodeSelectedIndex = Watch(0, clamp: (int value){
      if (value < 0) return 0;
-     if (value >= GameState.nodesTotal) return GameState.nodesTotal - 1;
+     if (value >= GameNodes.nodesTotal) return GameNodes.nodesTotal - 1;
      return value;
   }, onChanged: onChangedSelectedNodeIndex);
 
@@ -63,8 +63,8 @@ class GameEditor {
   static double get posZ => z * tileHeight;
 
   static void refreshNodeSelectedIndex(){
-    nodeSelectedType.value = GameState.nodesType[nodeSelectedIndex.value];
-    nodeSelectedOrientation.value = GameState.nodesOrientation[nodeSelectedIndex.value];
+    nodeSelectedType.value = GameNodes.nodesType[nodeSelectedIndex.value];
+    nodeSelectedOrientation.value = GameNodes.nodesOrientation[nodeSelectedIndex.value];
   }
 
   static void deselectGameObject() {
@@ -215,8 +215,8 @@ class GameEditor {
   }
 
   static void onChangedSelectedNodeIndex(int index){
-    nodeSelectedOrientation.value = GameState.nodesOrientation[index];
-    nodeSelectedType.value = GameState.nodesType[index];
+    nodeSelectedOrientation.value = GameNodes.nodesOrientation[index];
+    nodeSelectedType.value = GameNodes.nodesType[index];
     gameObjectSelected.value = false;
     refreshNodeSelectedIndex();
     deselectGameObject();

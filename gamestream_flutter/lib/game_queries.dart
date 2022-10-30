@@ -8,8 +8,8 @@ class GameQueries {
    static int getNodeTypeBelow(int index){
      if (index < GameState.nodesArea) return NodeType.Boundary;
      final indexBelow = index - GameState.nodesArea;
-     if (indexBelow >= GameState.nodesTotal) return NodeType.Boundary;
-     return GameState.nodesType[indexBelow];
+     if (indexBelow >= GameNodes.nodesTotal) return NodeType.Boundary;
+     return GameNodes.nodesType[indexBelow];
    }
 
    static int getNodeIndexBelow(int index) => index - GameState.nodesArea;
@@ -25,7 +25,7 @@ class GameQueries {
    }
 
    static bool isVisibleV3(Vector3 vector) =>
-       inBoundsVector3(vector) ? GameState.nodesVisible[getGridNodeIndexV3(vector)] : true;
+       inBoundsVector3(vector) ? GameNodes.nodesVisible[getGridNodeIndexV3(vector)] : true;
 
    static bool inBoundsVector3(Vector3 vector3){
      if (vector3.x < 0) return false;
@@ -61,10 +61,10 @@ class GameQueries {
    }
 
    static int gridNodeXYZType(double x, double y, double z) =>
-       GameState.nodesType[gridNodeXYZIndex(x, y, z)];
+       GameNodes.nodesType[gridNodeXYZIndex(x, y, z)];
 
    static bool gridNodeZRCTypeRainOrEmpty(int z, int row, int column) =>
-       NodeType.isRainOrEmpty(GameState.nodesType[GameState.getNodeIndexZRC(z, row, column)]);
+       NodeType.isRainOrEmpty(GameNodes.nodesType[GameState.getNodeIndexZRC(z, row, column)]);
 
    static int gridNodeZRCTypeSafe(int z, int row, int column) {
      if (z < 0) return NodeType.Boundary;
@@ -77,7 +77,7 @@ class GameQueries {
    }
 
    static int gridNodeZRCType(int z, int row, int column) =>
-       GameState.nodesType[GameState.getNodeIndexZRC(z, row, column)];
+       GameNodes.nodesType[GameState.getNodeIndexZRC(z, row, column)];
 
 
    static int gridNodeXYZIndex(double x, double y, double z) =>
@@ -142,6 +142,6 @@ class GameQueries {
        GameQueries.isInboundZRC(vector3.indexZ, vector3.indexRow, vector3.indexColumn);
 
    static int getWindAtV3(Vector3 vector3) =>
-       GameState.nodesWind[getNodeIndexV3(vector3)];
+       GameNodes.nodesWind[getNodeIndexV3(vector3)];
 
 }

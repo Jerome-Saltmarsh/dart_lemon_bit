@@ -32,4 +32,12 @@ class ParticleType {
   static const Character_Animation_Death_Zombie_3 = 41;
   static const Character_Animation_Death_Slime_1 = 41;
   static const Character_Animation_Death_Slime_2 = 42;
+  
+  static String getName(int particleType){
+    return const {
+      Smoke: "Smoke",
+      Zombie_Head: "Zombie_Head",
+      Shell: "Shell",
+    }[particleType] ?? "ParticleType name unknown (particleType: $particleType)";
+  }
 }

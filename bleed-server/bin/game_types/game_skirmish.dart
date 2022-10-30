@@ -101,8 +101,7 @@ class GameSkirmish extends Game {
 
   @override
   Player spawnPlayer() {
-    final
-    player = Player(
+    final player = Player(
       game: this,
       team: 0,
       weapon: Weapon(
@@ -123,8 +122,7 @@ class GameSkirmish extends Game {
     player.equippedLegs = randomItem(LegType.values);
     player.equippedArmour = randomItem(BodyType.values);
     player.equippedHead = randomItem(HeadType.values);
-    return
-    player;
+    return player;
   }
 
   @override

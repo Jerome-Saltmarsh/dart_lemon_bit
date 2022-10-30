@@ -483,4 +483,11 @@ class GameEvents {
       GameState.player.messageTimer = 0;
     }
   }
+
+  static void onChangedInputMode(int inputMode){
+    if (inputMode == InputMode.Touch){
+      GameCamera.centerOnPlayer();
+      GameIO.recenterCursor();
+    }
+  }
 }

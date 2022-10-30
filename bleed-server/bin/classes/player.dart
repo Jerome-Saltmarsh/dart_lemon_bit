@@ -300,6 +300,7 @@ class Player extends Character with ByteWriter {
       writePlayerWeaponType();
       writePlayerWeaponCapacity();
       writePlayerWeaponRounds();
+      writePlayerSpawned();
     }
 
     if (!sceneDownloaded){
@@ -379,9 +380,8 @@ class Player extends Character with ByteWriter {
   }
 
   void writePlayerSpawned(){
-    writeByte(ServerResponse.Player_Spawned);
-    writeInt(x);
-    writeInt(y);
+    writeByte(ServerResponse.Player);
+    writeByte(ApiPlayer.Spawned);
   }
 
   void writeAndSendResponse(){

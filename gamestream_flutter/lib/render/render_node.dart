@@ -123,7 +123,7 @@ class RenderNode {
           srcY: GameConstants.Sprite_Height * GameRender.currentNodeShade,
         );
       default:
-        throw Exception("renderNodeTypeBrick(orientation: ${NodeOrientation.getName(GameState.nodesOrientation[GameRender.currentNodeIndex])}");
+        throw Exception("renderNodeTypeBrick(orientation: ${NodeOrientation.getName(GameNodes.nodesOrientation[GameRender.currentNodeIndex])}");
     }
   }
 

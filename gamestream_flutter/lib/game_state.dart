@@ -37,7 +37,6 @@ class GameState {
   static final effects = <Effect>[];
   static final gameObjects = <GameObject>[];
   static final characters = <Character>[];
-  static final players = <Character>[];
   static final npcs = <Character>[];
   static final zombies = <Character>[];
   static final particles = <Particle>[];
@@ -55,17 +54,17 @@ class GameState {
 
   static var totalActiveParticles = 0;
   static var ambientColor = colorShades[Shade.Bright];
-  static var nodesBake = Uint8List(nodesInitialSize);
-  static var nodesColor = Int32List(nodesInitialSize);
-  static var nodesOrientation = Uint8List(nodesInitialSize);
-  static var nodesShade = Uint8List(nodesInitialSize);
-  static var nodesTotal = nodesInitialSize;
-  static var nodesType = Uint8List(nodesInitialSize);
-  static var nodesVariation = List<bool>.generate(nodesInitialSize, (index) => false, growable: false);
-  static var nodesVisible = List<bool>.generate(nodesInitialSize, (index) => true, growable: false);
-  static var nodesVisibleIndex = Uint16List(nodesInitialSize);
-  static var nodesDynamicIndex = Uint16List(nodesInitialSize);
-  static var nodesWind = Uint8List(nodesInitialSize);
+  // static var nodesBake = Uint8List(nodesInitialSize);
+  // static var nodesColor = Int32List(nodesInitialSize);
+  // static var nodesOrientation = Uint8List(nodesInitialSize);
+  // static var nodesShade = Uint8List(nodesInitialSize);
+  // static var nodesTotal = nodesInitialSize;
+  // static var nodesType = Uint8List(nodesInitialSize);
+  // static var nodesVariation = List<bool>.generate(nodesInitialSize, (index) => false, growable: false);
+  // static var nodesVisible = List<bool>.generate(nodesInitialSize, (index) => true, growable: false);
+  // static var nodesVisibleIndex = Uint16List(nodesInitialSize);
+  // static var nodesDynamicIndex = Uint16List(nodesInitialSize);
+  // static var nodesWind = Uint8List(nodesInitialSize);
   static var visibleIndex = 0;
   static var dynamicIndex = 0;
 
@@ -99,7 +98,6 @@ class GameState {
   });
 
   static final ambientShade = Watch(Shade.Bright, onChanged: GameEvents.onChangedAmbientShade);
-  static const nodesInitialSize = 70 * 70 * 8;
 
   static final inventoryVisible = Watch(false, onChanged: GameEvents.onInventoryVisibleChanged);
 
@@ -160,7 +158,7 @@ class GameState {
   static int getNodeShade(int z, int row, int column) =>
       outOfBounds(z, row, column)
           ? ambientShade.value
-          : nodesShade[getNodeIndexZRC(z, row, column)];
+          : GameNodes.nodesShade[getNodeIndexZRC(z, row, column)];
 
   static bool outOfBoundsV3(Vector3 v3) =>
     outOfBoundsXYZ(v3.x, v3.y, v3.z);
@@ -312,9 +310,9 @@ class GameState {
           final nodeIndex = a + column;
           var distance = b + (column - columnIndex).abs() - 1;
           final distanceValue = GameConvert.distanceToShade(distance, maxBrightness: maxBrightness);
-          if (distanceValue >= GameState.nodesShade[nodeIndex]) continue;
-          GameState.nodesShade[nodeIndex] = distanceValue;
-          GameState.nodesDynamicIndex[GameState.dynamicIndex] = nodeIndex;
+          if (distanceValue >= GameNodes.nodesShade[nodeIndex]) continue;
+          GameNodes.nodesShade[nodeIndex] = distanceValue;
+          GameNodes.nodesDynamicIndex[GameState.dynamicIndex] = nodeIndex;
           GameState.dynamicIndex++;
         }
       }
@@ -330,9 +328,9 @@ class GameState {
 
   static void resetGridToAmbient(){
     final shade = ambientShade.value;
-    for (var i = 0; i < nodesTotal; i++){
-      nodesBake[i] = shade;
-      nodesShade[i] = shade;
+    for (var i = 0; i < GameNodes.nodesTotal; i++){
+      GameNodes.nodesBake[i] = shade;
+      GameNodes.nodesShade[i] = shade;
       dynamicIndex = 0;
     }
   }
@@ -383,8 +381,8 @@ class GameState {
 
   static void refreshDynamicLightGrid() {
     while (dynamicIndex >= 0) {
-      final i = nodesDynamicIndex[dynamicIndex];
-      nodesShade[i] = nodesBake[i];
+      final i = GameNodes.nodesDynamicIndex[dynamicIndex];
+      GameNodes.nodesShade[i] = GameNodes.nodesBake[i];
       dynamicIndex--;
     }
     dynamicIndex = 0;
@@ -450,7 +448,7 @@ class GameState {
     }
 
     final nodeIndex = GameQueries.getNodeIndexV3(particle);
-    final tile = nodesType[nodeIndex];
+    final tile = GameNodes.nodesType[nodeIndex];
     final airBorn =
         !particle.checkNodeCollision || (
             tile == NodeType.Empty        ||
@@ -1227,11 +1225,11 @@ class GameState {
       final gameObject = gameObjects[i];
       if (gameObject.type != GameObjectType.Candle) continue;
       final nodeIndex = GameQueries.getNodeIndexV3(gameObject);
-      final nodeShade = nodesShade[nodeIndex];
+      final nodeShade = GameNodes.nodesShade[nodeIndex];
       setNodeShade(nodeIndex, nodeShade - 1);
       if (gameObject.indexZ > 0){
         final nodeBelowIndex = GameQueries.getNodeIndexBelowV3(gameObject);
-        final nodeBelowShade = nodesShade[nodeBelowIndex];
+        final nodeBelowShade = GameNodes.nodesShade[nodeBelowIndex];
         setNodeShade(nodeBelowIndex, nodeBelowShade - 1);
       }
     }
@@ -1239,14 +1237,14 @@ class GameState {
 
   static void setNodeShade(int index, int shade) {
     if (shade < 0) {
-      nodesShade[index] = 0;
+      GameNodes.nodesShade[index] = 0;
       return;
     }
     if (shade > Shade.Pitch_Black){
-      nodesShade[index] = Shade.Pitch_Black;
+      GameNodes.nodesShade[index] = Shade.Pitch_Black;
       return;
     }
-    nodesShade[index] = shade;
+    GameNodes.nodesShade[index] = shade;
   }
 
   static void toggleShadows () => gridShadows.value = !gridShadows.value;
@@ -1354,7 +1352,7 @@ class GameState {
         for (var column = 0; column < GameState.nodesTotalColumns; column++){
           // final tile = grid[z][row][column];
           final index = GameState.getNodeIndexZRC(z, row, column);
-          final tile = GameState.nodesType[index];
+          final tile = GameNodes.nodesType[index];
           if (!castesShadow(tile)) continue;
           var projectionZ = z + directionZ;
           var projectionRow = row + directionRow;
@@ -1367,10 +1365,10 @@ class GameState {
               projectionRow < GameState.nodesTotalRows &&
               projectionColumn < GameState.nodesTotalColumns
           ) {
-            final shade = GameState.nodesBake[index];
+            final shade = GameNodes.nodesBake[index];
             if (shade < shadowShade){
               if (GameQueries.gridNodeZRCType(projectionZ + 1, projectionRow, projectionColumn) == NodeType.Empty){
-                GameState.nodesBake[index] = shadowShade;
+                GameNodes.nodesBake[index] = shadowShade;
               }
             }
             projectionZ += directionZ;
@@ -1397,13 +1395,13 @@ class GameState {
 
   static bool gridIsPerceptible(int index){
     if (index < 0) return true;
-    if (index >= GameState.nodesTotal) return true;
+    if (index >= GameNodes.nodesTotal) return true;
     while (true){
       index += GameState.nodesArea;
       index++;
       index += GameState.nodesTotalColumns;
-      if (index >= GameState.nodesTotal) return true;
-      if (GameState.nodesOrientation[index] != NodeOrientation.None){
+      if (index >= GameNodes.nodesTotal) return true;
+      if (GameNodes.nodesOrientation[index] != NodeOrientation.None){
         return false;
       }
     }
@@ -1466,9 +1464,9 @@ class GameState {
           final nodeIndex = GameState.getNodeIndexZRC(z, row, column);
           var distance = (z - zIndex).abs() + (row - rowIndex).abs() + (column - columnIndex).abs() - 1;
           final distanceValue = GameConvert.distanceToShade(distance, maxBrightness: maxBrightness);
-          if (distanceValue >= GameState.nodesBake[nodeIndex]) continue;
-          GameState.nodesBake[nodeIndex] = distanceValue;
-          GameState.nodesShade[nodeIndex] = distanceValue;
+          if (distanceValue >= GameNodes.nodesBake[nodeIndex]) continue;
+          GameNodes.nodesBake[nodeIndex] = distanceValue;
+          GameNodes.nodesShade[nodeIndex] = distanceValue;
         }
       }
     }
@@ -1476,8 +1474,8 @@ class GameState {
 
   static void gridWindResetToAmbient(){
     final ambientWindIndex = windAmbient.value.index;
-    for (var i = 0; i < nodesTotal; i++){
-      nodesWind[i] = ambientWindIndex;
+    for (var i = 0; i < GameNodes.nodesTotal; i++){
+      GameNodes.nodesWind[i] = ambientWindIndex;
     }
   }
 
@@ -1504,6 +1502,6 @@ class GameState {
     if (column >= nodesTotalColumns)
       return;
 
-    nodesType[getNodeIndexZRC(z, row, column)] = type;
+    GameNodes.nodesType[getNodeIndexZRC(z, row, column)] = type;
   }
 }

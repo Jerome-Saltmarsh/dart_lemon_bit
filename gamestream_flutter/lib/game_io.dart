@@ -12,23 +12,10 @@ class GameIO {
   static var touchCursorWorldY = 100.0;
   static bool _panning = false;
 
-  // static double get touchCursorScreenX => _touchCursorScreenX;
-  // static double get touchCursorScreenY => _touchCursorScreenY;
-
   static var previousVelocityX = 0.0;
   static var previousVelocityY = 0.0;
   static var previousVelocityX2 = 0.0;
   static var previousVelocityY2 = 0.0;
-
-
-  // static set touchCursorScreenX(double value) {
-  //    _touchCursorScreenX = Engine.clamp(value, 0, Engine.screen.width);
-  // }
-  //
-  // static set touchCursorScreenY(double value) {
-  //   _touchCursorScreenY = Engine.clamp(value, 0, Engine.screen.height);
-  // }
-
 
   static var touchPanning = false;
   static var touchscreenDirectionMove = Direction.None;
@@ -37,13 +24,7 @@ class GameIO {
   static var touchscreenRadianPerform = 0.0;
   static var performActionPrimary = false;
 
-  // static var cursorPositionXScreen = 0.0;
-  // static var cursorPositionYScreen = 0.0;
-
-  // static double get cursorPositionXWorld => GameConvert.convertWorldToGridX(cursorPositionXScreen, cursorPositionYScreen);
-  // static double get cursorPositionYWorld => GameConvert.convertWorldToGridX(cursorPositionXScreen, cursorPositionYScreen);
-
-  static final inputMode = Watch(InputMode.Keyboard);
+  static final inputMode = Watch(InputMode.Keyboard, onChanged: GameEvents.onChangedInputMode);
   static bool get inputModeTouch => inputMode.value == InputMode.Touch;
   static bool get inputModeKeyboard => inputMode.value == InputMode.Keyboard;
   static bool get keyPressedSpace => Engine.keyPressed(LogicalKeyboardKey.space);
@@ -58,6 +39,11 @@ class GameIO {
 
   static double get mouseGridX => GameConvert.convertWorldToGridX(Engine.mouseWorldX, Engine.mouseWorldY) + GamePlayer.position.z;
   static double get mouseGridY => GameConvert.convertWorldToGridY(Engine.mouseWorldX, Engine.mouseWorldY) + GamePlayer.position.z;
+
+  static void recenterCursor(){
+    touchCursorWorldX = GamePlayer.renderX;
+    touchCursorWorldY = GamePlayer.renderY;
+  }
 
   static void detectInputMode() =>
     inputMode.value = Engine.deviceIsComputer
@@ -418,7 +404,6 @@ class GameIO {
   }
 
 
-
   static void mouseRaycast(Function(int z, int row, int column) callback){
     var z = GameState.nodesTotalZ - 1;
     while (z >= 0){
@@ -430,14 +415,14 @@ class GameIO {
       if (column >= GameState.nodesTotalColumns) break;
       if (z >= GameState.nodesTotalZ) break;
       final index = GameState.getNodeIndexZRC(z, row, column);
-      if (GameState.nodesType[index] == NodeType.Empty
+      if (GameNodes.nodesType[index] == NodeType.Empty
           ||
-          NodeType.isRain(GameState.nodesType[index])
+          NodeType.isRain(GameNodes.nodesType[index])
       ) {
         z--;
         continue;
       }
-      if (!GameState.nodesVisible[index]) {
+      if (!GameNodes.nodesVisible[index]) {
         z--;
         continue;
       }

@@ -35,6 +35,7 @@ export 'game_sort.dart';
 export 'game_player.dart';
 export 'game_camera.dart';
 export 'game_atlas.dart';
+export 'game_nodes.dart';
 export 'render/render_node.dart';
 export 'render/render_character.dart';
 export 'editor/editor_ui.dart';

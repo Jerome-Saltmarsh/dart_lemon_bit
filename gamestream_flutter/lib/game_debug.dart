@@ -23,15 +23,15 @@ class GameDebug {
                   watch(serverResponseReader.byteLength, (int bytes) => text('network-bytes: $bytes')),
                   watch(serverResponseReader.bufferSize, (int bufferSize) => text('network-buffer: $bufferSize')),
                   Refresh(() =>  text(
-                      "mouse-world: x: ${Engine.mouseWorldX.toInt()}, y: ${Engine.mouseWorldY.toInt()}\n"
                       "mouse-grid: x: ${GameIO.mouseGridX.toInt()}, y: ${GameIO.mouseGridY.toInt()}\n"
+                      "mouse-world: x: ${Engine.mouseWorldX.toInt()}, y: ${Engine.mouseWorldY.toInt()}\n"
                       'mouse-screen: x: ${Engine.mousePosition.x.toInt()}, y: ${Engine.mousePosition.y.toInt()}\n'
                       "player-position: x: ${GamePlayer.position.x}, y: ${GamePlayer.position.y}, z: ${GamePlayer.position.z}\n"
-                      "player-index: z: ${GamePlayer.position.indexZ}, row: ${GamePlayer.position.indexRow}, column: ${GamePlayer.position.indexColumn}\n"
                       "player-render: x: ${GamePlayer.position.renderX}, y: ${GamePlayer.position.renderY}\n"
-                      "player-screen: x: ${Engine.worldToScreenX(GamePlayer.position.renderX).toInt()}, y: ${Engine.worldToScreenY(GamePlayer.position.renderY).toInt()}"
+                      "player-screen: x: ${Engine.worldToScreenX(GamePlayer.position.renderX).toInt()}, y: ${Engine.worldToScreenY(GamePlayer.position.renderY).toInt()}\n"
+                      "player-index: z: ${GamePlayer.position.indexZ}, row: ${GamePlayer.position.indexRow}, column: ${GamePlayer.position.indexColumn}\n"
                   )),
-                  Refresh(() => text('touch-screen: x: ${GameIO.touchCursorWorldX.toInt()}, y: ${GameIO.touchCursorWorldY.toInt()}')),
+                  Refresh(() => text('touch-world: x: ${GameIO.touchCursorWorldX.toInt()}, y: ${GameIO.touchCursorWorldY.toInt()}')),
                   Refresh(() => text('characters-total: ${GameState.characters.length}')),
                   Refresh(() => text('characters-active: ${GameState.totalCharacters}')),
                   Refresh(() => text('particles-total: ${GameState.particles.length}')),
