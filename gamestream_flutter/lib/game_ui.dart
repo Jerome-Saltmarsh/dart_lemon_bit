@@ -26,6 +26,11 @@ class GameUI {
   static final playerTextStyle = TextStyle(color: Colors.white);
   static final mapVisible = Watch(false);
   static final timeVisible = Watch(true);
+  /// true == right
+  /// false == left
+  static final touchButtonSide = Watch(TouchButtonSideRight);
+  static const TouchButtonSideLeft = false;
+  static const TouchButtonSideRight = true;
 
   static Widget build()  =>
       Container(
@@ -47,34 +52,34 @@ class GameUI {
         ),
       );
 
-  static Widget buildStackInputMode(int inputMode) =>
-      inputMode == InputMode.Keyboard
-          ? const SizedBox()
-          : Stack(children: [
-              Positioned(
-                bottom: 16,
-                right: 36,
-                child: onPressed(
-                  action: GameUIConfig.runButtonPressed,
-                  child: Container(
-                    width: GameUIConfig.runButtonSize,
-                    height: GameUIConfig.runButtonSize,
-                    alignment: Alignment.center,
-                    child: text(
-                        GameUIConfig.runButtonTextValue,
-                        color: GameUIConfig.runButtonTextColor,
-                        size: GameUIConfig.runButtonTextFontSize,
-                    ),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: GameUIConfig.runButtonColor
-                    ),
-                  ),
-                ),
+  static Widget buildStackInputModeTouch(bool side) =>
+      Stack(children: [
+        Positioned(
+          bottom: 16,
+          right: side ? 36 : null,
+          left: side ? null : 36,
+          child: onPressed(
+            action: GameUIConfig.runButtonPressed,
+            child: Container(
+              width: GameUIConfig.runButtonSize,
+              height: GameUIConfig.runButtonSize,
+              alignment: Alignment.center,
+              child: text(
+                GameUIConfig.runButtonTextValue,
+                color: GameUIConfig.runButtonTextColor,
+                size: GameUIConfig.runButtonTextFontSize,
               ),
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: GameUIConfig.runButtonColor
+              ),
+            ),
+          ),
+        ),
         Positioned(
           bottom: 145,
-          right: 5,
+          right: side ? 5 : null,
+          left: side ? null : 5,
           child: onPressed(
             action: GameActions.playerStop,
             child: Container(
@@ -87,13 +92,18 @@ class GameUI {
                 size: GameUIConfig.runButtonTextFontSize,
               ),
               decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.red.withOpacity(Engine.GoldenRatio_0_381),
+                shape: BoxShape.circle,
+                color: Colors.red.withOpacity(Engine.GoldenRatio_0_381),
               ),
             ),
           ),
         )
-            ]);
+      ]);
+
+  static Widget buildStackInputMode(int inputMode) =>
+      inputMode == InputMode.Keyboard
+          ? const SizedBox()
+          : watch(touchButtonSide, buildStackInputModeTouch);
 
   static Widget buildPlayerMessage(String message) =>
     Positioned(

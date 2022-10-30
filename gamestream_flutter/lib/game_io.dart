@@ -107,7 +107,7 @@ class GameIO {
   }
 
   static void onPanStart(DragStartDetails details) {
-
+      GameUI.touchButtonSide.value = (details.globalPosition.dx < Engine.screenCenterX);
   }
 
   static void onPanUpdate(DragUpdateDetails details) {
