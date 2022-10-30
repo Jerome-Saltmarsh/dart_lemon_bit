@@ -1,46 +1,19 @@
-[ ] collect weapons to combine to craft new items
-[ ] collect wood, golden and gems to craft special items
-[ ] use gold to purchase health potions etc
-[ ] cannot use gold to purchase items
-
-[ ] LOOT Type (
-  Consumable (Potions)
-  Weapon (Potions)
-  Resource 
-    - Wood
-    - Gold
-    - Stone
-    - Food
-    - Crystal
-
-  Build your own fort
-  Visit the forge to craft items
-  Trade resources (3 for 1) 
-  Trade resources (2 for 1) if ring of the haggle is worn
-
-   
-  amulet-types
-        amulet of the vampire
-
-  ring-types
-        ring of the haggle is worn
-        ring of healing 
-        ring of magic
-        ring of speed 
-        ring of the knight
-        ring of the marksman
-)
-
 [ ] cache region
-[ ] compile all characters into single server_response
+[ ] optimize front end - do not use objects to store particles
+[ ] optimize network - compile all characters into single server_response
 [ ] mobile disable movement tutorial
 [ ] fix android app title gamestream_flutter
-[ ] option fullscreen dialog on game start
-[ ] render run target circle
-[ ] front end - do not use objects to store particles
-[ ] it has to be easy to make friends and play together
 [ ] mobile zoom in and out
-[ ] fix mobile cursor starts on player
+[ ] option fullscreen dialog on game start
+[ ] fix on touch on change scene center cursor on player
+[ ] fix on death center cursor on player
+
+
+31.10.2022
+[x] fix mobile cursor starts on player
+
+30.10.2022
+[x] render run target circle
 
 29.10.2022
 [x] space bar to attack

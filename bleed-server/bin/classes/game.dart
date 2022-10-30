@@ -200,6 +200,7 @@ abstract class Game {
     to.characters.add(player);
     player.sceneDownloaded = false;
     player.game = to;
+    player.game.clearTarget(player);
   }
 
   void playerUpdateAimTarget(Player player){

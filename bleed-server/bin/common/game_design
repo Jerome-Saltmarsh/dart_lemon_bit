@@ -1,3 +1,36 @@
+[ ] collect weapons to combine to craft new items
+[ ] collect wood, golden and gems to craft special items
+[ ] use gold to purchase health potions etc
+[ ] cannot use gold to purchase items
+
+[ ] LOOT Type (
+  Consumable (Potions)
+  Weapon (Potions)
+  Resource
+    - Wood
+    - Gold
+    - Stone
+    - Food
+    - Crystal
+
+  Build your own fort
+  Visit the forge to craft items
+  Trade resources (3 for 1)
+  Trade resources (2 for 1) if ring of the haggle is worn
+
+
+  amulet-types
+        amulet of the vampire
+
+  ring-types
+        ring of the haggle is worn
+        ring of healing
+        ring of magic
+        ring of speed
+        ring of the knight
+        ring of the marksman
+)
+
 3 weapon slots
 Left click
 right click
