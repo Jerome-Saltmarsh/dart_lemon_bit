@@ -144,6 +144,8 @@ abstract class Game {
     player.mouse.x = mouseX;
     player.mouse.y = mouseY;
 
+    if (player.deadOrBusy) return;
+
     if (cursorAction == CursorAction.Set_Target) {
       var closestDistance = 9999.0;
       Character? closestCharacter;
@@ -162,7 +164,7 @@ abstract class Game {
         }
         if (player.withinAttackRange(closestCharacter)) {
           player.lookAt(closestCharacter);
-          playerUseWeapon(player, autoAim: false);
+          playerUseWeapon(player);
           player.setCharacterStateIdle();
           clearCharacterTarget(player);
         }
@@ -170,7 +172,7 @@ abstract class Game {
         if (direction == Direction.None) {
           player.runToMouse();
         } else {
-          playerUseWeapon(player, autoAim: false);
+          playerUseWeapon(player);
         }
       }
     }
@@ -180,14 +182,13 @@ abstract class Game {
     }
 
     if (cursorAction == CursorAction.Stationary_Attack_Cursor){
-      playerUseWeapon(player, autoAim: false);
+      playerUseWeapon(player);
     }
 
     if (cursorAction == CursorAction.Stationary_Attack_Auto){
-      playerUseWeapon(player, autoAim: true);
+      playerAutoAim(player);
+      playerUseWeapon(player);
     }
-
-    if (player.deadOrBusy) return;
 
     playerRunInDirection(player, direction);
     playerUpdateAimTarget(player);
@@ -277,7 +278,7 @@ abstract class Game {
     }
   }
 
-  void playerUseWeapon(Player player, {bool autoAim = false}) {
+  void playerUseWeapon(Player player) {
     if (player.deadBusyOrPerforming) return;
 
     final weapon = player.weapon;
@@ -368,9 +369,6 @@ abstract class Game {
         break;
       case AttackType.Staff:
         weapon.durationRemaining = weapon.duration;
-        if (autoAim) {
-          playerAutoAim(player, weapon.range);
-        }
         spawnProjectileOrb(src: player, damage: 2);
         break;
     }
@@ -385,9 +383,9 @@ abstract class Game {
     position.y = player.mouseGridY;
   }
 
-  void playerAutoAim(Player player, double minDistance) {
+  void playerAutoAim(Player player) {
     if (player.deadOrBusy) return;
-    var closestCharacterDistance = minDistance * 1.5;
+    var closestCharacterDistance = player.weapon.range * 1.5;
     Character? closestCharacter = null;
     for (final character in characters) {
       if (character.deadOrDying) continue;
@@ -410,11 +408,6 @@ abstract class Game {
     required int damage,
     required int duration,
   }) {
-
-    if (player.autoAim) {
-      playerAutoAim(player, distance);
-    }
-
     final angle = player.lookRadian;
 
     final performX = player.x + getAdjacent(angle, distance);
@@ -1124,7 +1117,7 @@ abstract class Game {
       if (player.targetIsEnemy) {
         player.lookAt(target);
         if (player.withinAttackRange(target)) {
-          playerUseWeapon(player, autoAim: false);
+          playerUseWeapon(player);
           player.setCharacterStateIdle();
           clearCharacterTarget(player);
           return;
