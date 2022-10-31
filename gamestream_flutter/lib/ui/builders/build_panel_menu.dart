@@ -12,6 +12,15 @@ Widget buildPanelMenu() =>
           buildButtonTogglePlayMode(),
           width2,
           watch(GameState.sceneEditable, (bool sceneEditable) => sceneEditable ? EditorUI.buildControlsWeather() : buildWatchBool(GameUI.timeVisible, buildTime)),
+          width2,
+          text("Zoom", onPressed: (){
+            if (Engine.targetZoom != 1.0){
+              Engine.targetZoom = 1.0;
+            } else {
+              Engine.targetZoom = 2.0;
+            }
+          }),
+          width2,
           onPressed(
               child: buildIconFullscreen(),
               action:  Engine.fullscreenToggle,

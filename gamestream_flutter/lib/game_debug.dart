@@ -47,6 +47,7 @@ class GameDebug {
                   Refresh(() => text('engine-render-batch-32: ${Engine.batches32Rendered}')),
                   Refresh(() => text('engine-render-batch-64: ${Engine.batches64Rendered}')),
                   Refresh(() => text('engine-render-batch-128: ${Engine.batches128Rendered}')),
+                  Refresh(() => text('camera-zoom: ${Engine.targetZoom.toStringAsFixed(3)}')),
                   watch(GameState.renderFrame, (t) => text("render-frame: $t")),
                   watch(serverResponseReader.updateFrame, (t) => text("update-frame: $t")),
                   watch(GameState.player.interpolating, (bool interpolating) => text("interpolating: $interpolating", onPressed: () => GameState.player.interpolating.value = !GameState.player.interpolating.value)),
