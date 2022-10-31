@@ -1604,7 +1604,7 @@ abstract class Game {
     var finalAngle = angle;
     if (finalAngle == null) {
       if (target != null && target is Collider) {
-        finalAngle = src.getAngle(target);
+        finalAngle = target.getAngle(src);
       } else {
         finalAngle = src.faceAngle;
       }
