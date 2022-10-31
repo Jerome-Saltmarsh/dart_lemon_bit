@@ -297,12 +297,13 @@ class Player extends Character with ByteWriter {
     writeEditorGameObjectSelected();
 
     if (!initialized) {
-      writeGameOptionControlScheme();
       game.customInitPlayer(this);
       initialized = true;
+      runningToTarget = false;
       writePlayerWeaponType();
       writePlayerWeaponCapacity();
       writePlayerWeaponRounds();
+      writePlayerPosition();
       writePlayerSpawned();
     }
 
@@ -772,12 +773,6 @@ class Player extends Character with ByteWriter {
     writeByte(ServerResponse.Environment);
     writeByte(EnvironmentResponse.Breeze);
     writeBool(value);
-  }
-
-  void writeGameOptionControlScheme(){
-    writeByte(ServerResponse.Options);
-    writeByte(GameOption.Set_Control_Scheme);
-    writeByte(game.controlScheme);
   }
 
   void writeNode(int index){

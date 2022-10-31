@@ -5,9 +5,9 @@
 [ ] option fullscreen dialog on game start if it fails to do so automatically
 [ ] mobile zoom in and out
 [ ] disable touch screen for keyboard mouse
-[ ] on click enemy - attack
 
 31.10.2022
+[x] on click enemy - attack
 [x] Touchscreen auto aim
 [x] mobile disable movement tutorial
 [x] fix on change scene center cursor on player

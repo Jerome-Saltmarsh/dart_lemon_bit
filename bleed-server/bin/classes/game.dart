@@ -34,8 +34,6 @@ abstract class Game {
   final characters = <Character>[];
   final projectiles = <Projectile>[];
 
-  int get controlScheme;
-
   List<GameObject> get gameObjects => scene.gameObjects;
 
   /// In seconds
@@ -159,7 +157,7 @@ abstract class Game {
          closestCharacter = character;
       }
 
-      if (closestCharacter != null && closestDistance < 40) {
+      if (closestCharacter != null && closestDistance < 50) {
         player.target = closestCharacter;
         player.runningToTarget = true;
       } else {
@@ -1131,7 +1129,7 @@ abstract class Game {
         if (player.withinAttackRange(target)) {
           playerUseWeapon(player, autoAim: false);
           player.setCharacterStateIdle();
-          player.runningToTarget = false;
+          clearTarget(player);
           return;
         }
         setCharacterStateRunning(player);

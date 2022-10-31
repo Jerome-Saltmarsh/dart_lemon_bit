@@ -4,22 +4,18 @@ import 'package:lemon_math/library.dart';
 
 import '../classes/gameobject.dart';
 import '../classes/library.dart';
-import '../common/control_scheme.dart';
 import '../common/library.dart';
 import '../functions/move_player_to_crystal.dart';
 
 
 class GameSkirmish extends Game {
-
   static const configAIRespawnFrames = 500;
   static const configRespawnFramesWeapons = 500;
   var configMaxPlayers = 7;
   var configZombieHealth = 5;
+  var configZombieSpeed = 5.0;
 
   List<int> playerSpawnPoints = [];
-
-  @override
-  int get controlScheme => ControlScheme.schemeA;
 
   @override
   int get gameType => GameType.Skirmish;
@@ -33,6 +29,7 @@ class GameSkirmish extends Game {
           instance.maxHealth = configZombieHealth;
           instance.health = configZombieHealth;
           instance.respawn = configAIRespawnFrames;
+          instance.maxSpeed = configZombieSpeed;
           continue;
         }
         if (scene.nodeTypes[i] == NodeType.Spawn_Weapon) {
