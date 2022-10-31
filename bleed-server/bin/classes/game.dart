@@ -120,7 +120,7 @@ abstract class Game {
     value.y += getOpposite(angle, distance);
   }
 
-  /// 0 nothing
+  /// 0 do_nothing
   /// 1 run_to_mouse
   /// 2 attack_mouse
   void onPlayerUpdateRequestedReceived({
@@ -148,6 +148,10 @@ abstract class Game {
     player.mouse.x = mouseX;
     player.mouse.y = mouseY;
 
+    if (perform1) {
+       print('perform 1');
+    }
+
     if (runToMouse || perform1) {
       var closestDistance = 9999.0;
       Character? closestCharacter;
@@ -162,7 +166,7 @@ abstract class Game {
 
       if (closestCharacter != null && closestDistance < 50) {
         if (direction == Direction.None){
-          player.target = closestCharacter;
+          setCharacterTarget(player, closestCharacter);
         }
         if (player.withinAttackRange(closestCharacter)) {
           player.lookAt(closestCharacter);
@@ -2206,6 +2210,17 @@ abstract class Game {
     scene.nodeTypes[nodeIndex] = nodeType;
     for (final player in players){
       player.writeNode(nodeIndex);
+    }
+  }
+
+  void setCharacterTarget(Character character, Position3 target){
+    character.target = target;
+    if (character is Player) {
+      if (character.target == character.runTarget){
+        character.writeTargetPosition();
+      } else {
+        character.writeTargetPositionNone();
+      }
     }
   }
 

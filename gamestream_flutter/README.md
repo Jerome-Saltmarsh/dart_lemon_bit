@@ -5,6 +5,8 @@
 [ ] option fullscreen dialog on game start if it fails to do so automatically
 [ ] mobile zoom in and out
 [ ] disable touch screen for keyboard mouse
+[ ] shift left click - stand attack
+[ ] touch screen - attack button while running
 
 31.10.2022
 [x] on click enemy - attack
