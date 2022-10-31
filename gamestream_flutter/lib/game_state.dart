@@ -1297,20 +1297,20 @@ class GameState {
       }
 
       if (projectile.type == ProjectileType.Bullet) {
-        GameState.spawnParticleBubble(
-          x: projectile.x + giveOrTake(5),
-          y: projectile.y + giveOrTake(5),
-          z: projectile.z,
-          angle: (projectile.angle + pi) + giveOrTake(piHalf ),
-          speed: 1.5,
-        );
-        GameState.spawnParticleBulletRing(
-          x: projectile.x,
-          y: projectile.y,
-          z: projectile.z,
-          angle: projectile.angle,
-          speed: 1.5,
-        );
+        // GameState.spawnParticleBubble(
+        //   x: projectile.x + giveOrTake(5),
+        //   y: projectile.y + giveOrTake(5),
+        //   z: projectile.z,
+        //   angle: (projectile.angle + pi) + giveOrTake(piHalf ),
+        //   speed: 1.5,
+        // );
+        // GameState.spawnParticleBulletRing(
+        //   x: projectile.x,
+        //   y: projectile.y,
+        //   z: projectile.z,
+        //   angle: projectile.angle,
+        //   speed: 1.5,
+        // );
         continue;
       }
 

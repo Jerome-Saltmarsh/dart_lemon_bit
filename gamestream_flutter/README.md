@@ -3,6 +3,7 @@
 [ ] optimize front end - do not use objects to store particles
 [ ] optimize network - compile all characters into single server_response
 [ ] option fullscreen dialog on game start if it fails to do so automatically
+[ ] weapon - fire staff
 [ ] mobile zoom in and out
 [ ] disable touch screen for keyboard mouse
 [ ] shift left click - stand attack
