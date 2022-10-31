@@ -3,7 +3,6 @@
 import 'package:lemon_math/library.dart';
 
 import '../classes/library.dart';
-import '../common/control_scheme.dart';
 import '../common/library.dart';
 import '../constants/frames_per_second.dart';
 import '../engine.dart';
@@ -55,9 +54,6 @@ class GameDarkAge extends Game {
 
   @override
   int get gameType => GameType.Dark_Age;
-
-  @override
-  int get controlScheme => ControlScheme.schemeB;
 
   void onHourChanged(int hour){
 

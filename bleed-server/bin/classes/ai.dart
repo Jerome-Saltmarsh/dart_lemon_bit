@@ -86,11 +86,6 @@ abstract class AI extends Character {
     wanderPause = randomInt(300, 500);
   }
 
-  void clearTargetIf(Character value){
-    if (target != value) return;
-    target = null;
-  }
-
   bool withinViewRange(Position3 target) {
     return withinRadius(this, target, viewRange);
   }

@@ -3,7 +3,6 @@
 import 'package:lemon_math/library.dart';
 
 import '../classes/library.dart';
-import '../common/control_scheme.dart';
 import '../common/game_waves_response.dart';
 import '../common/library.dart';
 import '../common/type_position.dart';
@@ -15,9 +14,6 @@ class GameWaves extends Game {
   var timer = framesBetweenRounds;
   var remaining = 0;
   var round = 1;
-
-  @override
-  int get controlScheme => ControlScheme.schemeA;
 
   GameWaves({required Scene scene}) : super(scene);
 

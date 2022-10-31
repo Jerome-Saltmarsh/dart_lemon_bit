@@ -159,7 +159,7 @@ abstract class Game {
 
       if (closestCharacter != null && closestDistance < 50) {
         player.target = closestCharacter;
-        player.runningToTarget = true;
+        // player.runningToTarget = true;
       } else {
         player.runToMouse();
       }
@@ -207,13 +207,13 @@ abstract class Game {
     removePlayer(player);
     for (final character in characters) {
       if (character.target != this) continue;
-      clearTarget(character);
+      clearCharacterTarget(character);
     }
     to.players.add(player);
     to.characters.add(player);
     player.sceneDownloaded = false;
     player.game = to;
-    player.game.clearTarget(player);
+    player.game.clearCharacterTarget(player);
   }
 
   void playerUpdateAimTarget(Player player){
@@ -250,22 +250,17 @@ abstract class Game {
       if (direction == Direction.None) {
         return;
       }
-      clearTarget(player);
-      if (player.runningToTarget) {
-        player.runningToTarget = false;
-        player.writeTargetPositionNone();
-      }
+      clearCharacterTarget(player);
       player.setCharacterStateIdle();
       return;
     } else if (direction == Direction.None) {
-      clearTarget(player);
-      player.runningToTarget = false;
+      clearCharacterTarget(player);
       player.setCharacterStateIdle();
       return;
     }
     player.faceDirection = direction;
     setCharacterStateRunning(player);
-    player.target = null;
+    clearCharacterTarget(player);
 
     if (player.interactingWithNpc){
       return player.endInteraction();
@@ -664,7 +659,7 @@ abstract class Game {
     player.collidable = true;
     customOnPlayerRevived(player);
     player.writePlayerMoved();
-    clearTarget(player);
+    clearCharacterTarget(player);
   }
 
   int countAlive(List<Character> characters) {
@@ -736,7 +731,7 @@ abstract class Game {
       customOnCharacterKilled(target, src);
 
       if (target is AI){
-        clearTarget(target);
+        clearCharacterTarget(target);
         target.clearDest();
         target.clearPath();
       }
@@ -754,7 +749,7 @@ abstract class Game {
 
   /// unsafe to override
   void onAIKilled(AI ai){
-    clearTarget(ai);
+    clearCharacterTarget(ai);
     ai.clearDest();
     ai.clearPath();
   }
@@ -939,7 +934,7 @@ abstract class Game {
 
     for (final character in characters) {
       if (character.target != character) continue;
-      clearTarget(character);
+      clearCharacterTarget(character);
     }
 
     for (final projectile in projectiles) {
@@ -970,7 +965,7 @@ abstract class Game {
 
     for (final character in characters) {
       if (character.target != character) continue;
-      clearTarget(character);
+      clearCharacterTarget(character);
     }
 
     for (final projectile in projectiles) {
@@ -1120,7 +1115,7 @@ abstract class Game {
     if (target is Collider) {
 
       if (!target.collidable) {
-        clearTarget(player);
+        clearCharacterTarget(player);
         return;
       }
 
@@ -1129,7 +1124,7 @@ abstract class Game {
         if (player.withinAttackRange(target)) {
           playerUseWeapon(player, autoAim: false);
           player.setCharacterStateIdle();
-          clearTarget(player);
+          clearCharacterTarget(player);
           return;
         }
         setCharacterStateRunning(player);
@@ -1148,7 +1143,7 @@ abstract class Game {
             player.setInteractingNpcName(target.name);
             onInteractedWith(player);
           }
-          clearTarget(player);
+          clearCharacterTarget(player);
           player.setCharacterStateIdle();
           return;
         }
@@ -1159,7 +1154,7 @@ abstract class Game {
     }
 
     if (player.distanceFromPos2(target) <= player.velocitySpeed) {
-      clearTarget(player);
+      clearCharacterTarget(player);
       player.setCharacterStateIdle();
       return;
     }
@@ -1417,7 +1412,7 @@ abstract class Game {
     ai.y = spawn.y + getOpposite(angle, distance);
     ai.z = ai.spawnZ;
     ai.clearDest();
-    clearTarget(ai);
+    clearCharacterTarget(ai);
     ai.clearPath();
     ai.collidable = true;
     ai.health = ai.maxHealth;
@@ -2200,11 +2195,10 @@ abstract class Game {
     }
   }
 
-  void clearTarget(Character character){
+  void clearCharacterTarget(Character character){
     if (character.target == null) return;
     character.target = null;
     if (character is Player){
-      character.runningToTarget = false;
       character.writeTargetPositionNone();
     }
   }

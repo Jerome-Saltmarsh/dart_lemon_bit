@@ -22,7 +22,6 @@ class Player extends Character with ByteWriter {
   var autoAim = true;
   final mouse = Vector2(0, 0);
   final runTarget = Position3();
-  var runningToTarget = false;
   late Function sendBufferToClient;
   GameObject? editorSelectedGameObject;
   var debug = false;
@@ -69,6 +68,8 @@ class Player extends Character with ByteWriter {
 
   double get mouseGridX => (mouse.x + mouse.y) + z;
   double get mouseGridY => (mouse.y - mouse.x) + z;
+
+  bool get runningToTarget => target != null;
 
   int get lookDirection => Direction.fromRadian(lookRadian);
 
@@ -169,7 +170,7 @@ class Player extends Character with ByteWriter {
   }
 
   void setRunTarget(double x, double y){
-    runningToTarget = true;
+    // runningToTarget = true;
     endInteraction();
     runTarget.x = x;
     runTarget.y = y;
@@ -299,7 +300,7 @@ class Player extends Character with ByteWriter {
     if (!initialized) {
       game.customInitPlayer(this);
       initialized = true;
-      runningToTarget = false;
+      // runningToTarget = false;
       writePlayerWeaponType();
       writePlayerWeaponCapacity();
       writePlayerWeaponRounds();
