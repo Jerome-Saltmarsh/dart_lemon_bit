@@ -162,7 +162,12 @@ abstract class Game {
 
       if (closestCharacter != null && closestDistance < 50) {
         player.target = closestCharacter;
-        // player.runningToTarget = true;
+        if (player.withinAttackRange(closestCharacter)) {
+          player.lookAt(closestCharacter);
+          playerUseWeapon(player, autoAim: false);
+          player.setCharacterStateIdle();
+          clearCharacterTarget(player);
+        }
       } else {
         player.runToMouse();
       }
