@@ -171,7 +171,11 @@ abstract class Game {
           clearCharacterTarget(player);
         }
       } else {
-        player.runToMouse();
+        if (direction == Direction.None) {
+          player.runToMouse();
+        } else {
+          playerUseWeapon(player, autoAim: false);
+        }
       }
     }
 
@@ -186,7 +190,7 @@ abstract class Game {
     weapon.state = AttackState.Aiming;
     player.lookRadian = player.mouseAngle;
 
-    if (player.deadBusyOrPerforming) return;
+    // if (player.deadBusyOrPerforming) return;
 
     // if (perform1) {
     //   playerSetWeapon(player, player.weaponSlot1);
