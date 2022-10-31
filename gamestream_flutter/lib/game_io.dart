@@ -262,6 +262,12 @@ class GameIO {
     if (GameState.editMode) return CursorAction.None;
 
     if (inputModeKeyboard) {
+      if (Engine.mouseRightDown.value){
+        return CursorAction.Stationary_Attack_Cursor;
+      }
+      if (Engine.keyPressedSpace){
+        return CursorAction.Stationary_Attack_Auto;
+      }
       if (Engine.watchMouseLeftDown.value) {
           if (Engine.keyPressedShiftLeft) {
              return CursorAction.Stationary_Attack_Cursor;
