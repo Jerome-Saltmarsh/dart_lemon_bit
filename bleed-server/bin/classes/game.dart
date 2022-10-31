@@ -148,10 +148,6 @@ abstract class Game {
     player.mouse.x = mouseX;
     player.mouse.y = mouseY;
 
-    if (perform1) {
-       print('perform 1');
-    }
-
     if (runToMouse || perform1) {
       var closestDistance = 9999.0;
       Character? closestCharacter;
@@ -1186,13 +1182,13 @@ abstract class Game {
 
   void setCharacterStateRunning(Character character){
     character.setCharacterState(value: CharacterState.Running, duration: 0);
-    if (character.stateDuration == 0) {
-      dispatchV3(
-        GameEventType.Spawn_Dust_Cloud,
-        character,
-        angle: character.velocityAngle,
-      );
-    }
+    // if (character.stateDuration == 0) {
+    //   dispatchV3(
+    //     GameEventType.Spawn_Dust_Cloud,
+    //     character,
+    //     angle: character.velocityAngle,
+    //   );
+    // }
   }
 
   void checkProjectileCollision(List<Collider> colliders) {

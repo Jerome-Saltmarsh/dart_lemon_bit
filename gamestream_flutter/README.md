@@ -3,11 +3,13 @@
 [ ] optimize front end - do not use objects to store particles
 [ ] optimize network - compile all characters into single server_response
 [ ] option fullscreen dialog on game start if it fails to do so automatically
-[ ] weapon - fire staff
+[ ] add weapon fire staff
+[ ] fix render arrow
 [ ] mobile zoom in and out
-[ ] disable touch screen for keyboard mouse
 [ ] shift left click - stand attack
-[ ] touch screen - attack button while running
+[ ] fix touch screen - attack button while running
+if the user is already running then strike the nearest enemy, otherwise if the user is actively
+aiming, strike the enemy closest to the target
 
 31.10.2022
 [x] on click enemy - attack
@@ -36,7 +38,6 @@
 [x] fix staff orb kills zombie bug
 [x] fix zombie shadow
 
-
 27.10.2022
 [x] aim cursor
 [x] loading screen
@@ -52,7 +53,6 @@
 [x] fixed editor change time
 [x] fixed editor weather icons
 [x] fixed editor menu icons
-
 
 [COMMANDS]
 flutter build web --web-renderer canvaskit --release
