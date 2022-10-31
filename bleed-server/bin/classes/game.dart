@@ -372,14 +372,6 @@ abstract class Game {
           playerAutoAim(player, weapon.range);
         }
         spawnProjectileOrb(src: player, damage: 2);
-        // playerAttackMelee(
-        //   player: player,
-        //   attackType: weapon.type,
-        //   distance: weapon.range,
-        //   attackRadius: 35, /// TODO read value from weapon
-        //   damage: weapon.damage,
-        //   duration: weapon.duration,
-        // );
         break;
     }
   }
@@ -1447,8 +1439,7 @@ abstract class Game {
 
   Projectile spawnProjectileOrb({required Character src, required int damage}) {
     dispatchV3(GameEventType.Blue_Orb_Fired, src);
-    return
-    spawnProjectile(
+    return spawnProjectile(
       src: src,
       accuracy: 0,
       speed: 4.5,

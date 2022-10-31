@@ -258,12 +258,12 @@ class GameIO {
     return Direction.None;
   }
 
-  static int getCursorAction(){
+  static int getCursorAction() {
     if (GameState.editMode) return CursorAction.None;
 
     if (inputModeKeyboard) {
-      if (Engine.watchMouseLeftDown.value){
-          if (Engine.keyPressedShiftLeft){
+      if (Engine.watchMouseLeftDown.value) {
+          if (Engine.keyPressedShiftLeft) {
              return CursorAction.Stationary_Attack_Cursor;
           }
           return CursorAction.Set_Target;
