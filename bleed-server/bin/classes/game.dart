@@ -161,7 +161,9 @@ abstract class Game {
       }
 
       if (closestCharacter != null && closestDistance < 50) {
-        player.target = closestCharacter;
+        if (direction == Direction.None){
+          player.target = closestCharacter;
+        }
         if (player.withinAttackRange(closestCharacter)) {
           player.lookAt(closestCharacter);
           playerUseWeapon(player, autoAim: false);
