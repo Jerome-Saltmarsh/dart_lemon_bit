@@ -260,10 +260,11 @@ class GameIO {
 
   static bool getActionPrimary(){
     if (GameState.editMode) return false;
+
+    if (Engine.watchMouseLeftDown.value) {
+      return true;
+    }
     if (performActionPrimary) {
-      if (Engine.watchMouseLeftDown.value) {
-        return true;
-      }
       performActionPrimary = false;
       return true;
     }

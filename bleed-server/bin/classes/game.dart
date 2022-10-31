@@ -120,6 +120,9 @@ abstract class Game {
     value.y += getOpposite(angle, distance);
   }
 
+  /// 0 nothing
+  /// 1 run_to_mouse
+  /// 2 attack_mouse
   void onPlayerUpdateRequestedReceived({
     required Player player,
     required int direction,
@@ -145,7 +148,7 @@ abstract class Game {
     player.mouse.x = mouseX;
     player.mouse.y = mouseY;
 
-    if (runToMouse) {
+    if (runToMouse || perform1) {
       var closestDistance = 9999.0;
       Character? closestCharacter;
       for (final character in characters){
@@ -178,15 +181,15 @@ abstract class Game {
 
     if (player.deadBusyOrPerforming) return;
 
-    if (perform1) {
-      playerSetWeapon(player, player.weaponSlot1);
-      playerUseWeapon(player, autoAim: true);
-    }
-
-    if (perform2){
-      playerSetWeapon(player, player.weaponSlot2);
-      playerUseWeapon(player);
-    }
+    // if (perform1) {
+    //   playerSetWeapon(player, player.weaponSlot1);
+    //   playerUseWeapon(player, autoAim: true);
+    // }
+    //
+    // if (perform2){
+    //   playerSetWeapon(player, player.weaponSlot2);
+    //   playerUseWeapon(player);
+    // }
   }
 
   void playerSetWeaponUnarmed(Player player) {
@@ -241,12 +244,12 @@ abstract class Game {
   }
 
   void playerRunInDirection(Player player, int direction) {
-    if (direction == Direction.None && !player.runningToTarget) {
+    if (direction == Direction.None && !player.targetSet) {
       player.setCharacterStateIdle();
       return;
     }
 
-    if (player.runningToTarget) {
+    if (player.targetSet) {
       if (direction == Direction.None) {
         return;
       }

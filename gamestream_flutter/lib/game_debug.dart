@@ -54,6 +54,8 @@ class GameDebug {
                   watch(GameState.gameType, (int? value) => text("game-type: ${value == null ? 'None' : GameType.getName(value)}")),
                   watch(Engine.deviceType, (int deviceType) => text("device-type: ${DeviceType.getName(deviceType)}", onPressed: Engine.toggleDeviceType)),
                   watch(GameIO.inputMode, (int inputMode) => text("input-mode: ${InputMode.getName(inputMode)}", onPressed: GameIO.actionToggleInputMode)),
+                  watch(Engine.watchMouseLeftDown, (bool mouseLeftDown) => text("mouse-left-down: $mouseLeftDown")),
+                  watch(Engine.mouseRightDown, (bool rightDown) => text("mouse-right-down: $rightDown")),
                   height24,
                   text("close x", onPressed: () => GameState.debugVisible.value = false),
                 ],

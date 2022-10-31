@@ -69,8 +69,6 @@ class Player extends Character with ByteWriter {
   double get mouseGridX => (mouse.x + mouse.y) + z;
   double get mouseGridY => (mouse.y - mouse.x) + z;
 
-  bool get runningToTarget => target != null;
-
   int get lookDirection => Direction.fromRadian(lookRadian);
 
   int get experience => _experience;

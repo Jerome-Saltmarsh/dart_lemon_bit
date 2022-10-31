@@ -51,6 +51,8 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
 
   dynamic spawn;
 
+  bool get targetSet => target != null;
+
   bool get targetIsEnemy {
     if (target == null) return false;
     if (target == this) return false;
