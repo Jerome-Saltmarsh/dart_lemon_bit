@@ -147,8 +147,24 @@ abstract class Game {
     player.mouse.x = mouseX;
     player.mouse.y = mouseY;
 
-    if (runToMouse){
-      player.runToMouse();
+    if (runToMouse) {
+      var closestDistance = 9999.0;
+      Character? closestCharacter;
+      for (final character in characters){
+         if (character.deadOrDying) continue;
+         if (onSameTeam(player, character)) continue;
+         final distance = getDistanceV3(player.mouseGridX, player.mouseGridY, player.z, character.x, character.y, character.z);
+         if (distance > closestDistance) continue;
+         closestDistance = distance;
+         closestCharacter = character;
+      }
+
+      if (closestCharacter != null && closestDistance < 40) {
+        player.target = closestCharacter;
+        player.runningToTarget = true;
+      } else {
+        player.runToMouse();
+      }
     }
 
     if (player.deadOrBusy) return;
@@ -375,6 +391,7 @@ abstract class Game {
   }
 
   void playerAutoAim(Player player, double minDistance) {
+    if (player.deadOrBusy) return;
     var closestCharacterDistance = minDistance * 1.5;
     Character? closestCharacter = null;
     for (final character in characters) {
@@ -1103,12 +1120,24 @@ abstract class Game {
     }
 
     if (target is Collider) {
+
       if (!target.collidable) {
-        player.target = null;
+        clearTarget(player);
         return;
       }
 
-      if (target is Npc && onSameTeam(player, target)) {
+      if (player.targetIsEnemy) {
+        if (player.withinAttackRange(target)) {
+          playerUseWeapon(player);
+          player.setCharacterStateIdle();
+          player.runningToTarget = false;
+          return;
+        }
+        setCharacterStateRunning(player);
+        return;
+      }
+
+      if (target is Npc && player.targetIsAlly) {
         if (withinRadius(player, target, 100)) {
           if (!target.deadOrBusy) {
             target.face(player);
@@ -1127,7 +1156,6 @@ abstract class Game {
         setCharacterStateRunning(player);
         return;
       }
-
       return;
     }
 

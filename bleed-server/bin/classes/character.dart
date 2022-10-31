@@ -51,6 +51,25 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
 
   dynamic spawn;
 
+  bool get targetIsEnemy {
+    if (target == null) return false;
+    if (target == this) return false;
+    if (target is Team == false) return false;
+    final targetTeam = (target as Team).team;
+    if (targetTeam == 0) return true;
+    return team != targetTeam;
+  }
+
+  bool get targetIsAlly {
+    if (target == null) return false;
+    if (target == this) return true;
+    if (target is Team == false) return false;
+    final targetTeam = (target as Team).team;
+    if (targetTeam == 0) return false;
+    return team == targetTeam;
+  }
+
+
   bool get usingWeapon => weapon.durationRemaining > 0;
   bool get running => state == CharacterState.Running;
   bool get idling => state == CharacterState.Idle;
@@ -140,7 +159,6 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
     if (deadOrBusy) return;
     if (characterStateIdle) return;
     setCharacterState(value: CharacterState.Idle, duration: 0);
-    target = null;
   }
 
   void setCharacterState({required int value, required int duration}) {

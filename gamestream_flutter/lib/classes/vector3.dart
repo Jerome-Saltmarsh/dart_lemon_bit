@@ -37,8 +37,8 @@ class Vector3 with Position {
      z < 0                ||
      x < 0                ||
      y < 0                ||
-     x > GameState.nodesLengthRow    ||
-     y > GameState.nodesLengthColumn ||
+     x >= GameState.nodesLengthRow    ||
+     y >= GameState.nodesLengthColumn ||
      z >= GameState.nodesLengthZ     ;
 
   /// TODO Delete
