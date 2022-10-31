@@ -86,7 +86,7 @@ void renderCharacterTemplate(Character character, {
   }
 
   if (character.usingWeapon) {
-    GameRender.renderTextV3(character, character.weaponFrame, offsetY: -50);
+    // GameRender.renderTextV3(character, character.weaponFrame, offsetY: -50);
     final animation = TemplateAnimation.getAttackAnimation(character.weaponType);
     frameWeapon = (character.weaponFrame >= animation.length ? animation.last : animation[character.weaponFrame]) - 1;
     frameBody = frameWeapon;

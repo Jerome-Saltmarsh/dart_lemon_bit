@@ -71,7 +71,6 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
     return team == targetTeam;
   }
 
-
   bool get usingWeapon => weapon.durationRemaining > 0;
   bool get running => state == CharacterState.Running;
   bool get idling => state == CharacterState.Idle;
@@ -85,7 +84,6 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
   bool get equippedTypeIsShotgun => weapon.type == AttackType.Shotgun;
   bool get equippedIsMelee => AttackType.isMelee(weapon.type);
   bool get equippedIsEmpty => false;
-  int get equippedLevel => 1;
   int get equippedAttackDuration => 25;
   int get equippedDamage => weapon.damage;
   double get equippedRange => weapon.range;
@@ -109,23 +107,12 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
     this.team = team;
   }
 
-  // void updateFrame(){
-  //   animationFrame++;
-  //   if (animationFrame > 6)
-  //     animationFrame = 0;
-  // }
-
-
 
   void attackTarget(Position3 target) {
     if (deadOrBusy) return;
     face(target);
     setCharacterStatePerforming(duration: equippedAttackDuration);
     this.target = target;
-  }
-
-  bool getCollisionInDirection({required Game game, required double angle, required double distance}){
-    return game.scene.getCollisionAt(x + getAdjacent(angle, distance), y + getOpposite(angle, distance), z + tileHeightHalf);
   }
 
   int getNodeTypeInDirection({
@@ -173,10 +160,6 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
     stateDurationRemaining = duration;
     state = value;
     onCharacterStateChanged();
-  }
-
-  void dispatch(int gameEventType, [double angle = 0]){
-     // game.dispatch(gameEventType, x, y, z, angle);
   }
 
   void onCharacterStateChanged(){

@@ -1388,23 +1388,23 @@ abstract class Game {
     character.x += character.xv;
     character.y += character.yv;
 
-    final nodeType = character.getNodeTypeInDirection(
-      game: this,
-      angle: character.velocityAngle,
-      distance: character.radius,
-    );
-
-    if (nodeType == NodeType.Tree_Bottom || nodeType == NodeType.Torch) {
-      final nodeCenterX = character.indexRow * tileSize + tileSizeHalf;
-      final nodeCenterY = character.indexColumn * tileSize + tileSizeHalf;
-      final dis = character.getDistanceXY(nodeCenterX, nodeCenterY);
-      const treeRadius = 5;
-      final overlap = dis - treeRadius - character.radius;
-      if (overlap < 0) {
-        character.x -= getAdjacent(character.velocityAngle, overlap);
-        character.y -= getOpposite(character.velocityAngle, overlap);
-      }
-    }
+    // final nodeType = character.getNodeTypeInDirection(
+    //   game: this,
+    //   angle: character.velocityAngle,
+    //   distance: character.radius,
+    // );
+    //
+    // if (nodeType == NodeType.Tree_Bottom || nodeType == NodeType.Torch) {
+    //   final nodeCenterX = character.indexRow * tileSize + tileSizeHalf;
+    //   final nodeCenterY = character.indexColumn * tileSize + tileSizeHalf;
+    //   final dis = character.getDistanceXY(nodeCenterX, nodeCenterY);
+    //   const treeRadius = 5;
+    //   final overlap = dis - treeRadius - character.radius;
+    //   if (overlap < 0) {
+    //     character.x -= getAdjacent(character.velocityAngle, overlap);
+    //     character.y -= getOpposite(character.velocityAngle, overlap);
+    //   }
+    // }
 
     character.applyFriction(0.75);
   }
@@ -1932,7 +1932,7 @@ abstract class Game {
           target: attackTarget,
           damage: equippedDamage,
         );
-        character.target = null;
+        clearCharacterTarget(character);
       }
       return;
     }
@@ -1996,7 +1996,7 @@ abstract class Game {
 
     if (character.equippedTypeIsStaff) {
       spawnProjectileOrb(src: character, damage: equippedDamage);
-      character.target = null;
+      clearCharacterTarget(character);
       return;
     }
 
@@ -2008,7 +2008,7 @@ abstract class Game {
           target: character.target,
           range: character.equippedRange,
          );
-      character.target = null;
+      clearCharacterTarget(character);
       return;
     }
     if (character.equippedIsMelee) {
@@ -2026,10 +2026,10 @@ abstract class Game {
         if (attackTarget is Collider && attackTarget.collidable) {
           applyHit(
               src: character, target: attackTarget, damage: equippedDamage);
-          character.target = null;
+          clearCharacterTarget(character);
           return;
         }
-        character.target = null;
+        clearCharacterTarget(character);
       }
       final zombieHit = raycastHit(
           character: character,
