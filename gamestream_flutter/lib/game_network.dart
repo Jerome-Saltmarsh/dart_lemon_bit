@@ -68,10 +68,7 @@ class GameNetwork {
 
   static Future sendClientRequestUpdate() async {
     applyUpdateBuffer(
-      // direction: GameIO.getDirection(),
-      actionPrimary: GameIO.getActionPrimary(),
-      // actionSecondary: GameIO.getActionSecondary(),
-      // actionTertiary: GameIO.getActionTertiary(),
+      actionPrimary: GameIO.getCursorAction(),
       direction: GameIO.getDirection(),
       actionSecondary: false,
       actionTertiary: false,
@@ -83,17 +80,17 @@ class GameNetwork {
     writeNumberToByteArray(number: Engine.screen.right, list: updateBuffer, index: 13);
     writeNumberToByteArray(number: Engine.screen.bottom, list: updateBuffer, index: 15);
     sink.add(updateBuffer);
-    updateBuffer[17] = 0;
+    setCursorAction(CursorAction.None);
   }
 
   static applyUpdateBuffer({
     required int direction,
-    required bool actionPrimary,
+    required int actionPrimary,
     required bool actionSecondary,
     required bool actionTertiary,
   }){
     updateBuffer[1] = direction;
-    updateBuffer[2] = actionPrimary ? 1 : 0;
+    updateBuffer[2] = actionPrimary;
     updateBuffer[3] = actionSecondary ? 1 : 0;
     updateBuffer[4] = actionTertiary ? 1 : 0;
   }
@@ -409,6 +406,10 @@ class GameNetwork {
       return GameNetwork.send('${value} $message');
     }
     GameNetwork.send(value);
+  }
+
+  static void setCursorAction(int cursorAction){
+    updateBuffer[17] = cursorAction;
   }
 }
 

@@ -575,7 +575,7 @@ class Connection {
     player.game.onPlayerUpdateRequestedReceived(
       player: player,
       direction: args[1],
-      perform1: args[2] == 1,
+      cursorAction: args[2],
       perform2: args[3] == 1,
       perform3: args[4] == 1,
       mouseX: readNumberFromByteArray(args, index: 5).toDouble(),

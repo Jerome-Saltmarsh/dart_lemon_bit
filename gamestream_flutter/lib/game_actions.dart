@@ -55,8 +55,6 @@ class GameActions {
     }
   }
 
-
-
   static void actionSetModePlay(){
     GameState.edit.value = false;
   }
@@ -98,3 +96,4 @@ class GameActions {
     runToMouse();
   }
 }
+

@@ -5,7 +5,7 @@ import 'dart:typed_data';
 import 'package:gamestream_flutter/bool_list.dart';
 
 class GameParticles {
-  static const total = 1000;
+  static const total = 0;
   static final masses = Float32List(total);
   static final positionsX = Float32List(total);
   static final positionsY = Float32List(total);
@@ -21,7 +21,6 @@ class GameParticles {
   static final durations = Int16List(total);
   static final maxDurations = Int16List(total);
   static final order = Int16List(total);
-  static final _inactive = Int16List(total);
 
   static void spawn({
     required double positionX,

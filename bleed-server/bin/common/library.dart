@@ -2,6 +2,7 @@
 library common;
 
 export 'AbilityMode.dart';
+export 'cursor_action.dart';
 export 'AbilityType.dart';
 export 'CharacterAction.dart';
 export 'CharacterState.dart';

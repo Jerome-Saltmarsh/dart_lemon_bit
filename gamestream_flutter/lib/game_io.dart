@@ -258,17 +258,23 @@ class GameIO {
     return Direction.None;
   }
 
-  static bool getActionPrimary(){
-    if (GameState.editMode) return false;
+  static int getCursorAction(){
+    if (GameState.editMode) return CursorAction.None;
 
-    if (inputModeKeyboard && Engine.watchMouseLeftDown.value) {
-      return true;
+    if (inputModeKeyboard) {
+      if (Engine.watchMouseLeftDown.value){
+          if (Engine.keyPressedShiftLeft){
+             return CursorAction.Stationary_Attack_Cursor;
+          }
+          return CursorAction.Set_Target;
+      }
+      return CursorAction.None;
     }
     if (performActionPrimary) {
       performActionPrimary = false;
-      return true;
+      return CursorAction.Set_Target;
     }
-    return false;
+    return CursorAction.None;
   }
 
   static bool getActionSecondary(){

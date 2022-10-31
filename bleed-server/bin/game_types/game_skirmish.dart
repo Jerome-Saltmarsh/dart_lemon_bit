@@ -70,9 +70,7 @@ class GameSkirmish extends Game {
 
   @override
   void customOnPlayerWeaponReady(Player player){
-    // if (player.weapon == player.weaponSlot2){
-    //   playerSetWeapon(player, player.weaponSlot1);
-    // }
+
   }
 
   void respawnAI(AI ai){
@@ -86,14 +84,7 @@ class GameSkirmish extends Game {
 
   @override
   void customUpdatePlayer(Player player) {
-    if (player.idling){
-      final diff = Direction.getDifference(player.lookDirection, player.faceDirection);
-      if (diff >= 2){
-        player.faceAngle += piQuarter;
-      } else if (diff <= -3) {
-        player.faceAngle -= piQuarter;
-      }
-    }
+
   }
 
   @override

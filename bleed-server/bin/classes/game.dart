@@ -120,14 +120,10 @@ abstract class Game {
     value.y += getOpposite(angle, distance);
   }
 
-  /// 0 do_nothing
-  /// 1 run_to_mouse
-  /// 2 attack_mouse
   void onPlayerUpdateRequestedReceived({
     required Player player,
     required int direction,
-    /// Left click
-    required bool perform1,
+    required int cursorAction,
     /// Right Click
     required bool perform2,
     /// Space Bar
@@ -148,7 +144,7 @@ abstract class Game {
     player.mouse.x = mouseX;
     player.mouse.y = mouseY;
 
-    if (runToMouse || perform1) {
+    if (cursorAction == CursorAction.Set_Target) {
       var closestDistance = 9999.0;
       Character? closestCharacter;
       for (final character in characters){
@@ -179,6 +175,18 @@ abstract class Game {
       }
     }
 
+    if (cursorAction == CursorAction.None){
+      playerRunInDirection(player, direction);
+    }
+
+    if (cursorAction == CursorAction.Stationary_Attack_Cursor){
+      playerUseWeapon(player, autoAim: false);
+    }
+
+    if (cursorAction == CursorAction.Stationary_Attack_Auto){
+      playerUseWeapon(player, autoAim: true);
+    }
+
     if (player.deadOrBusy) return;
 
     playerRunInDirection(player, direction);
@@ -189,18 +197,6 @@ abstract class Game {
     if (weapon.durationRemaining > 0) return;
     weapon.state = AttackState.Aiming;
     player.lookRadian = player.mouseAngle;
-
-    // if (player.deadBusyOrPerforming) return;
-
-    // if (perform1) {
-    //   playerSetWeapon(player, player.weaponSlot1);
-    //   playerUseWeapon(player, autoAim: true);
-    // }
-    //
-    // if (perform2){
-    //   playerSetWeapon(player, player.weaponSlot2);
-    //   playerUseWeapon(player);
-    // }
   }
 
   void playerSetWeaponUnarmed(Player player) {
@@ -1178,6 +1174,15 @@ abstract class Game {
     // }
 
     setCharacterStateRunning(player);
+
+    if (player.idling){
+      final diff = Direction.getDifference(player.lookDirection, player.faceDirection);
+      if (diff >= 2){
+        player.faceAngle += piQuarter;
+      } else if (diff <= -3) {
+        player.faceAngle -= piQuarter;
+      }
+    }
   }
 
   void setCharacterStateRunning(Character character){
