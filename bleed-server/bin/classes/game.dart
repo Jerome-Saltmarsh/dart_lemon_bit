@@ -182,7 +182,7 @@ abstract class Game {
 
     if (perform1) {
       playerSetWeapon(player, player.weaponSlot1);
-      playerUseWeapon(player);
+      playerUseWeapon(player, autoAim: true);
     }
 
     if (perform2){
@@ -274,7 +274,7 @@ abstract class Game {
     }
   }
 
-  void playerUseWeapon(Player player) {
+  void playerUseWeapon(Player player, {bool autoAim = false}) {
     if (player.deadBusyOrPerforming) return;
 
     final weapon = player.weapon;
@@ -365,7 +365,7 @@ abstract class Game {
         break;
       case AttackType.Staff:
         weapon.durationRemaining = weapon.duration;
-        if (player.autoAim) {
+        if (autoAim) {
           playerAutoAim(player, weapon.range);
         }
         spawnProjectileOrb(src: player, damage: 2);
@@ -1127,8 +1127,9 @@ abstract class Game {
       }
 
       if (player.targetIsEnemy) {
+        player.lookAt(target);
         if (player.withinAttackRange(target)) {
-          playerUseWeapon(player);
+          playerUseWeapon(player, autoAim: false);
           player.setCharacterStateIdle();
           player.runningToTarget = false;
           return;

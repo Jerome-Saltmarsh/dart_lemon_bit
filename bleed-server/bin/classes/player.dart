@@ -790,7 +790,7 @@ class Player extends Character with ByteWriter {
   }
 
   void lookAt(Position position) {
-    assert(!deadOrBusy);
+    assert(!deadOrDying);
     lookRadian = this.getAngle(position) + pi;
   }
 }
