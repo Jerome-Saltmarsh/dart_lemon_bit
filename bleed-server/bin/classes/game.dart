@@ -146,6 +146,11 @@ abstract class Game {
 
     if (player.deadOrBusy) return;
 
+    if (player.weapon.durationRemaining <= 0) {
+      player.weapon.state = AttackState.Aiming;
+      player.lookRadian = player.mouseAngle;
+    }
+
     if (cursorAction == CursorAction.Set_Target) {
       var closestDistance = 9999.0;
       Character? closestCharacter;
@@ -192,12 +197,11 @@ abstract class Game {
 
     playerRunInDirection(player, direction);
     playerUpdateAimTarget(player);
-
-    final weapon = player.weapon;
-
-    if (weapon.durationRemaining > 0) return;
-    weapon.state = AttackState.Aiming;
-    player.lookRadian = player.mouseAngle;
+    // final weapon = player.weapon;
+    //
+    // if (weapon.durationRemaining > 0) return;
+    // weapon.state = AttackState.Aiming;
+    // player.lookRadian = player.mouseAngle;
   }
 
   void playerSetWeaponUnarmed(Player player) {
@@ -1602,7 +1606,7 @@ abstract class Game {
       if (target != null && target is Collider) {
         finalAngle = target.getAngle(src);
       } else {
-        finalAngle = src.faceAngle;
+        finalAngle = src is Player ? src.lookRadian : src.faceAngle;
       }
     }
     projectile.damage = damage;
