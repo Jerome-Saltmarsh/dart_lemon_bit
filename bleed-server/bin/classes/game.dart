@@ -1086,6 +1086,15 @@ abstract class Game {
 
     if (player.deadOrDying) return;
 
+    if (player.idling && !player.usingWeapon){
+      final diff = Direction.getDifference(player.lookDirection, player.faceDirection);
+      if (diff >= 2){
+        player.faceAngle += piQuarter;
+      } else if (diff <= -3) {
+        player.faceAngle -= piQuarter;
+      }
+    }
+
     if (player.weapon.durationRemaining > 0) {
       final weapon = player.weapon;
       weapon.durationRemaining--;
@@ -1163,15 +1172,6 @@ abstract class Game {
     // }
 
     setCharacterStateRunning(player);
-
-    if (player.idling){
-      final diff = Direction.getDifference(player.lookDirection, player.faceDirection);
-      if (diff >= 2){
-        player.faceAngle += piQuarter;
-      } else if (diff <= -3) {
-        player.faceAngle -= piQuarter;
-      }
-    }
   }
 
   void setCharacterStateRunning(Character character){
