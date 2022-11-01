@@ -104,19 +104,20 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Game_Type:
           GameState.gameType.value = readByte();
           break;
-        case ServerResponse.Player_Slots:
-          GameState.player.weaponSlot1.type.value = readByte();
-          GameState.player.weaponSlot1.capacity.value = readInt();
-          GameState.player.weaponSlot1.rounds.value = readInt();
 
-          GameState.player.weaponSlot2.type.value = readByte();
-          GameState.player.weaponSlot2.capacity.value = readInt();
-          GameState.player.weaponSlot2.rounds.value = readInt();
-
-          GameState.player.weaponSlot3.type.value = readByte();
-          GameState.player.weaponSlot3.capacity.value = readInt();
-          GameState.player.weaponSlot3.rounds.value = readInt();
-          break;
+        // case ServerResponse.Player_Slots:
+        //   GameState.player.weaponSlot1.type.value = readByte();
+        //   GameState.player.weaponSlot1.capacity.value = readInt();
+        //   GameState.player.weaponSlot1.rounds.value = readInt();
+        //
+        //   GameState.player.weaponSlot2.type.value = readByte();
+        //   GameState.player.weaponSlot2.capacity.value = readInt();
+        //   GameState.player.weaponSlot2.rounds.value = readInt();
+        //
+        //   GameState.player.weaponSlot3.type.value = readByte();
+        //   GameState.player.weaponSlot3.capacity.value = readInt();
+        //   GameState.player.weaponSlot3.rounds.value = readInt();
+        //   break;
         case ServerResponse.Player_Spawned:
           readPlayerSpawned();
           GameActions.playerStop();

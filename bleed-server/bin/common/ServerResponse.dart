@@ -21,7 +21,7 @@ class ServerResponse {
   static const Game_Type = 34;
   static const Subscription_Required = 41;
   static const Lobby_CountDown = 42;
-  static const Player_Slots = 44;
+  // static const Player_Slots = 44;
   static const Debug_Mode = 45;
   static const End = 47;
   static const Damage_Applied = 50;

@@ -287,7 +287,7 @@ class Player extends Character with ByteWriter {
     writeByte(ApiPlayer.Aim_Angle);
     writeAngle(mouseAngle);
 
-    writePlayerSlots();
+    // writePlayerSlots();
     writeAttackTarget();
     writeProjectiles();
     writePlayerTarget();
@@ -716,21 +716,21 @@ class Player extends Character with ByteWriter {
     writeByte(selectedGameObject.type);
   }
 
-  void writePlayerSlots() {
-    writeByte(ServerResponse.Player_Slots);
-
-    writeByte(weaponSlot1.type);
-    writeInt(weaponSlot1.capacity);
-    writeInt(weaponSlot1.rounds);
-
-    writeByte(weaponSlot2.type);
-    writeInt(weaponSlot2.capacity);
-    writeInt(weaponSlot2.rounds);
-
-    writeByte(weaponSlot3.type);
-    writeInt(weaponSlot3.capacity);
-    writeInt(weaponSlot3.rounds);
-  }
+  // void writePlayerSlots() {
+  //   writeByte(ServerResponse.Player_Slots);
+  //
+  //   writeByte(weaponSlot1.type);
+  //   writeInt(weaponSlot1.capacity);
+  //   writeInt(weaponSlot1.rounds);
+  //
+  //   writeByte(weaponSlot2.type);
+  //   writeInt(weaponSlot2.capacity);
+  //   writeInt(weaponSlot2.rounds);
+  //
+  //   writeByte(weaponSlot3.type);
+  //   writeInt(weaponSlot3.capacity);
+  //   writeInt(weaponSlot3.rounds);
+  // }
 
   void writePoints(){
     writeByte(ServerResponse.Player);
