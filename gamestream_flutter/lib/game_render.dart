@@ -449,10 +449,10 @@ class GameRender {
           image: GameImages.gameobjects,
           dstX: gameObject.renderX,
           dstY: gameObject.renderY,
-          srcX: AtlasSrcGameObjects.Rock_X,
-          srcY: AtlasSrcGameObjects.Rock_Y,
-          srcWidth: AtlasSrcGameObjects.Rock_Width,
-          srcHeight: AtlasSrcGameObjects.Rock_Height,
+          srcX: AtlasGameObjects.Rock_X,
+          srcY: AtlasGameObjects.Rock_Y,
+          srcWidth: AtlasGameObjects.Rock_Width,
+          srcHeight: AtlasGameObjects.Rock_Height,
           color: GameState.getV3RenderColor(gameObject),
         );
         return;
@@ -461,10 +461,10 @@ class GameRender {
           image: GameImages.gameobjects,
           dstX: GameConvert.convertV3ToRenderX(gameObject),
           dstY: GameConvert.convertV3ToRenderY(gameObject),
-          srcX: AtlasSrcGameObjects.Loot_X,
-          srcY: AtlasSrcGameObjects.Loot_Y,
-          srcWidth: AtlasSrcGameObjects.Loot_Width,
-          srcHeight: AtlasSrcGameObjects.Loot_Height,
+          srcX: AtlasGameObjects.Loot_X,
+          srcY: AtlasGameObjects.Loot_Y,
+          srcWidth: AtlasGameObjects.Loot_Width,
+          srcHeight: AtlasGameObjects.Loot_Height,
           color: GameState.getV3RenderColor(gameObject),
         );
         return;
@@ -473,11 +473,11 @@ class GameRender {
           image: GameImages.gameobjects,
           dstX: GameConvert.convertV3ToRenderX(gameObject),
           dstY: GameConvert.convertV3ToRenderY(gameObject),
-          srcX: AtlasSrcGameObjects.Barrel_X,
-          srcY: AtlasSrcGameObjects.Barrel_Y,
-          srcWidth: AtlasSrcGameObjects.Barrel_Width,
-          srcHeight: AtlasSrcGameObjects.Barrel_Height,
-          anchorY: AtlasSrcGameObjects.Barrel_Anchor,
+          srcX: AtlasGameObjects.Barrel_X,
+          srcY: AtlasGameObjects.Barrel_Y,
+          srcWidth: AtlasGameObjects.Barrel_Width,
+          srcHeight: AtlasGameObjects.Barrel_Height,
+          anchorY: AtlasGameObjects.Barrel_Anchor,
           color: GameState.getV3RenderColor(gameObject),
         );
         return;
@@ -486,10 +486,10 @@ class GameRender {
           image: GameImages.gameobjects,
           dstX: GameConvert.convertV3ToRenderX(gameObject),
           dstY: GameConvert.convertV3ToRenderY(gameObject),
-          srcX: AtlasSrcGameObjects.Tavern_Sign_X,
-          srcY: AtlasSrcGameObjects.Tavern_Sign_Y,
-          srcWidth: AtlasSrcGameObjects.Tavern_Sign_Width,
-          srcHeight: AtlasSrcGameObjects.Tavern_Sign_Height,
+          srcX: AtlasGameObjects.Tavern_Sign_X,
+          srcY: AtlasGameObjects.Tavern_Sign_Y,
+          srcWidth: AtlasGameObjects.Tavern_Sign_Width,
+          srcHeight: AtlasGameObjects.Tavern_Sign_Height,
           color: GameState.getV3RenderColor(gameObject),
         );
         return;
@@ -560,11 +560,11 @@ class GameRender {
             image: GameImages.gameobjects,
             dstX: GameConvert.convertV3ToRenderX(gameObject),
             dstY: GameConvert.convertV3ToRenderY(gameObject),
-            srcX: AtlasSrcGameObjects.Crystal_Large_X,
-            srcY: AtlasSrcGameObjects.Crystal_Large_Y,
-            srcWidth: AtlasSrcGameObjects.Crystal_Large_Width,
-            srcHeight: AtlasSrcGameObjects.Crystal_Large_Height,
-            anchorY: AtlasSrcGameObjects.Crystal_Anchor_Y
+            srcX: AtlasGameObjects.Crystal_Large_X,
+            srcY: AtlasGameObjects.Crystal_Large_Y,
+            srcWidth: AtlasGameObjects.Crystal_Large_Width,
+            srcHeight: AtlasGameObjects.Crystal_Large_Height,
+            anchorY: AtlasGameObjects.Crystal_Anchor_Y
         );
         return;
       case GameObjectType.Cup:
@@ -572,11 +572,11 @@ class GameRender {
           image: GameImages.gameobjects,
           dstX: GameConvert.convertV3ToRenderX(gameObject),
           dstY: GameConvert.convertV3ToRenderY(gameObject),
-          srcX: AtlasSrcGameObjects.Cup_X,
-          srcY: AtlasSrcGameObjects.Cup_Y,
-          srcWidth: AtlasSrcGameObjects.Cup_Width,
-          srcHeight: AtlasSrcGameObjects.Cup_Height,
-          anchorY: AtlasSrcGameObjects.Cup_Anchor_Y,
+          srcX: AtlasGameObjects.Cup_X,
+          srcY: AtlasGameObjects.Cup_Y,
+          srcWidth: AtlasGameObjects.Cup_Width,
+          srcHeight: AtlasGameObjects.Cup_Height,
+          anchorY: AtlasGameObjects.Cup_Anchor_Y,
         );
         return;
       case GameObjectType.Lantern_Red:
@@ -643,10 +643,10 @@ class GameRender {
             image: GameImages.gameobjects,
             dstX: GameConvert.convertV3ToRenderX(gameObject),
             dstY: getRenderYBouncing(gameObject),
-            srcX: AtlasSrcGameObjects.Shotgun_X,
-            srcY: AtlasSrcGameObjects.Shotgun_Y,
-            srcWidth: AtlasSrcGameObjects.Shotgun_Width,
-            srcHeight: AtlasSrcGameObjects.Shotgun_Height,
+            srcX: AtlasGameObjects.Shotgun_X,
+            srcY: AtlasGameObjects.Shotgun_Y,
+            srcWidth: AtlasGameObjects.Shotgun_Width,
+            srcHeight: AtlasGameObjects.Shotgun_Height,
             color: GameState.getV3RenderColor(gameObject)
         );
         break;
@@ -657,10 +657,10 @@ class GameRender {
             image: GameImages.gameobjects,
             dstX: GameConvert.convertV3ToRenderX(gameObject),
             dstY: getRenderYBouncing(gameObject),
-            srcX: AtlasSrcGameObjects.Handgun_X,
-            srcY: AtlasSrcGameObjects.Handgun_Y,
-            srcWidth: AtlasSrcGameObjects.Handgun_Width,
-            srcHeight: AtlasSrcGameObjects.Handgun_Height,
+            srcX: AtlasGameObjects.Handgun_X,
+            srcY: AtlasGameObjects.Handgun_Y,
+            srcWidth: AtlasGameObjects.Handgun_Width,
+            srcHeight: AtlasGameObjects.Handgun_Height,
             color: GameState.getV3RenderColor(gameObject)
         );
         break;
@@ -671,10 +671,10 @@ class GameRender {
             image: GameImages.gameobjects,
             dstX: GameConvert.convertV3ToRenderX(gameObject),
             dstY: getRenderYBouncing(gameObject),
-            srcX: AtlasSrcGameObjects.Sword_X,
-            srcY: AtlasSrcGameObjects.Sword_Y,
-            srcWidth: AtlasSrcGameObjects.Sword_Width,
-            srcHeight: AtlasSrcGameObjects.Sword_Height,
+            srcX: AtlasGameObjects.Sword_X,
+            srcY: AtlasGameObjects.Sword_Y,
+            srcWidth: AtlasGameObjects.Sword_Width,
+            srcHeight: AtlasGameObjects.Sword_Height,
             color: GameState.getV3RenderColor(gameObject)
         );
         break;
@@ -685,10 +685,10 @@ class GameRender {
             image: GameImages.gameobjects,
             dstX: GameConvert.convertV3ToRenderX(gameObject),
             dstY: getRenderYBouncing(gameObject),
-            srcX: AtlasSrcGameObjects.Bow_X,
-            srcY: AtlasSrcGameObjects.Bow_Y,
-            srcWidth: AtlasSrcGameObjects.Bow_Width,
-            srcHeight: AtlasSrcGameObjects.Bow_Height,
+            srcX: AtlasGameObjects.Bow_X,
+            srcY: AtlasGameObjects.Bow_Y,
+            srcWidth: AtlasGameObjects.Bow_Width,
+            srcHeight: AtlasGameObjects.Bow_Height,
             color: GameState.getV3RenderColor(gameObject)
         );
         break;
@@ -699,10 +699,10 @@ class GameRender {
             image: GameImages.gameobjects,
             dstX: GameConvert.convertV3ToRenderX(gameObject),
             dstY: getRenderYBouncing(gameObject),
-            srcX: AtlasSrcGameObjects.Staff_X,
-            srcY: AtlasSrcGameObjects.Staff_Y,
-            srcWidth: AtlasSrcGameObjects.Staff_Width,
-            srcHeight: AtlasSrcGameObjects.Staff_Height,
+            srcX: AtlasGameObjects.Staff_X,
+            srcY: AtlasGameObjects.Staff_Y,
+            srcWidth: AtlasGameObjects.Staff_Width,
+            srcHeight: AtlasGameObjects.Staff_Height,
             color: GameState.getV3RenderColor(gameObject)
         );
         break;
@@ -1254,8 +1254,8 @@ class GameRender {
   static void renderCircle32(double x, double y, double z){
     Engine.renderSprite(
       image: GameImages.gameobjects,
-      srcX: AtlasSrcGameObjects.Circle32_X,
-      srcY: AtlasSrcGameObjects.Circle32_Y,
+      srcX: AtlasGameObjects.Circle32_X,
+      srcY: AtlasGameObjects.Circle32_Y,
       srcWidth: 32,
       srcHeight: 32,
       dstX: GameConvert.getRenderX(x, y, z),

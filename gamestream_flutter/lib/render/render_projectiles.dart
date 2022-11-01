@@ -7,10 +7,10 @@ class RenderProjectiles {
   static void renderArrow(double x, double y, double rotation) {
     Engine.renderSpriteRotated(
       image: GameImages.gameobjects,
-      srcX: AtlasSrcGameObjects.arrow_shadow_x,
-      srcY: AtlasSrcGameObjects.arrow_shadow_y,
-      srcWidth: AtlasSrcGameObjects.arrow_width,
-      srcHeight: AtlasSrcGameObjects.arrow_height,
+      srcX: AtlasGameObjects.arrow_shadow_x,
+      srcY: AtlasGameObjects.arrow_shadow_y,
+      srcWidth: AtlasGameObjects.arrow_width,
+      srcHeight: AtlasGameObjects.arrow_height,
       dstX: x,
       dstY: y + 10,
       rotation: rotation - Engine.PI_Quarter,
@@ -19,10 +19,10 @@ class RenderProjectiles {
 
     Engine.renderSpriteRotated(
       image: GameImages.gameobjects,
-      srcX: AtlasSrcGameObjects.arrow_x,
-      srcY: AtlasSrcGameObjects.arrow_y,
-      srcWidth: AtlasSrcGameObjects.arrow_width,
-      srcHeight: AtlasSrcGameObjects.arrow_height,
+      srcX: AtlasGameObjects.arrow_x,
+      srcY: AtlasGameObjects.arrow_y,
+      srcWidth: AtlasGameObjects.arrow_width,
+      srcHeight: AtlasGameObjects.arrow_height,
       dstX: x,
       dstY: y,
       rotation: rotation - Engine.PI_Quarter,

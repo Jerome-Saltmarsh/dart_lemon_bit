@@ -9,12 +9,12 @@ void renderBarGreen(double x, double y, double z, double percentage, {
 }) {
   Engine.renderSprite(
     image: GameImages.gameobjects,
-    dstX: GameConvert.getRenderX(x, y, z) - AtlasSrcGameObjects.Bar_Green_Width_Half,
+    dstX: GameConvert.getRenderX(x, y, z) - AtlasGameObjects.Bar_Green_Width_Half,
     dstY: GameConvert.getRenderY(x, y, z) - 45,
-    srcX: transparent ? AtlasSrcGameObjects.Bar_Green_Transparent_X :AtlasSrcGameObjects.Bar_Green_X,
-    srcY: transparent ? AtlasSrcGameObjects.Bar_Green_Transparent_Y :AtlasSrcGameObjects.Bar_Green_Y,
-    srcWidth: (transparent ? AtlasSrcGameObjects.Bar_Green_Transparent_Width :AtlasSrcGameObjects.Bar_Green_Width) * percentage,
-    srcHeight: transparent ? AtlasSrcGameObjects.Bar_Green_Transparent_Height :AtlasSrcGameObjects.Bar_Green_Height,
+    srcX: transparent ? AtlasGameObjects.Bar_Green_Transparent_X :AtlasGameObjects.Bar_Green_X,
+    srcY: transparent ? AtlasGameObjects.Bar_Green_Transparent_Y :AtlasGameObjects.Bar_Green_Y,
+    srcWidth: (transparent ? AtlasGameObjects.Bar_Green_Transparent_Width :AtlasGameObjects.Bar_Green_Width) * percentage,
+    srcHeight: transparent ? AtlasGameObjects.Bar_Green_Transparent_Height :AtlasGameObjects.Bar_Green_Height,
     anchorX: 0.0,
     color: color,
   );

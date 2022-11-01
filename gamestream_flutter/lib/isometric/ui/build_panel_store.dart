@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/isometric/ui/buttons/build_button_equip_attack_type.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -135,16 +134,16 @@ Widget buildColumnPlayerWeapons(int activePlayerAttackType) => watch(
     (List<Weapon> weapons) => Container(
         color: brownLight,
         padding: const EdgeInsets.all(6),
-        child: SingleChildScrollView(
-          child: Column(
-            children: weapons.map((Weapon weapon) =>
-              buildButtonWeapon(
-                  weapon,
-                  activePlayerAttackType,
-              )
-            ).toList(),
-          ),
-        )
+        // child: SingleChildScrollView(
+        //   child: Column(
+        //     children: weapons.map((Weapon weapon) =>
+        //       buildButtonWeapon(
+        //           weapon,
+        //           activePlayerAttackType,
+        //       )
+        //     ).toList(),
+        //   ),
+        // )
     )
 );
 

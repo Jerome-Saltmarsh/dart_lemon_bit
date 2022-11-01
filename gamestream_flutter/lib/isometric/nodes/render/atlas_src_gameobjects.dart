@@ -1,6 +1,6 @@
 
 
-class AtlasSrcGameObjects {
+class AtlasGameObjects {
   static const arrow_x = 59.0;
   static const arrow_y = 48.0;
   static const arrow_width = 9.0;
