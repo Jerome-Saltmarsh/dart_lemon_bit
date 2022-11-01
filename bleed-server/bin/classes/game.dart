@@ -964,9 +964,9 @@ abstract class Game {
     character.collidable = false;
     clearCharacterTarget(character);
 
-    for (final character in characters) {
-      if (character.target != character) continue;
-      clearCharacterTarget(character);
+    for (final otherCharacter in characters) {
+      if (otherCharacter.target != character) continue;
+      clearCharacterTarget(otherCharacter);
     }
 
     for (final projectile in projectiles) {
