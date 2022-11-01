@@ -251,10 +251,7 @@ class RenderNode {
     Engine.bufferDst[f + 1] = 0;
     Engine.bufferDst[f + 2] = GameRender.currentNodeDstX - (GameConstants.Sprite_Width_Half);
     Engine.bufferDst[f + 3] = GameRender.currentNodeDstY - (GameConstants.Sprite_Height_Third);
-    Engine.bufferIndex++;
-    if (Engine.bufferIndex == 128) {
-      Engine.flushAll();
-    }
+    Engine.incrementBufferIndex();
   }
 
   static void renderStandardNodeShaded({
@@ -272,10 +269,7 @@ class RenderNode {
     Engine.bufferDst[f + 1] = 0;
     Engine.bufferDst[f + 2] = GameRender.currentNodeDstX - (GameConstants.Sprite_Width_Half);
     Engine.bufferDst[f + 3] = GameRender.currentNodeDstY - (GameConstants.Sprite_Height_Third);
-    Engine.bufferIndex++;
-    if (Engine.bufferIndex == 128) {
-      Engine.flushAll();
-    }
+    Engine.incrementBufferIndex();
   }
 
   static void renderStandardNodeHalfEast({

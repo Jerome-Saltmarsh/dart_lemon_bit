@@ -886,11 +886,7 @@ class Engine {
     bufferDst[f + 1] = 0;
     bufferDst[f + 2] = dstX - (srcWidth * anchorX * scale);
     bufferDst[f + 3] = dstY - (srcHeight * anchorY * scale);
-    bufferIndex++;
-
-    if (bufferIndex == 128) {
-      flushAll();
-    }
+    incrementBufferIndex();
   }
 
   static void renderSpriteRotated({
@@ -913,7 +909,6 @@ class Engine {
     }
     final angle = rotation + piQuarter;
     final translate = calculateHypotenuse(srcWidth * 0.5, srcHeight * 0.5);
-
     final f = bufferIndex * 4;
     bufferClr[bufferIndex] = color;
     bufferSrc[f] = srcX;
@@ -925,9 +920,7 @@ class Engine {
     bufferDst[f + 2] = dstX - getAdjacent(angle, translate);
     bufferDst[f + 3] = dstY - getOpposite(angle, translate);
     bufferIndex++;
-    if (bufferIndex == 128) {
-      flushAll();
-    }
+    incrementBufferIndex();
   }
 
   static void renderExternalCanvas({
@@ -1257,6 +1250,13 @@ class Engine {
     canvas.drawCircle(base, 20, Engine.paint);
     canvas.drawCircle(end, 10, Engine.paint);
     canvas.drawLine(base, end, Engine.paint);
+  }
+
+  static void incrementBufferIndex(){
+    Engine.bufferIndex++;
+    if (Engine.bufferIndex == 128) {
+      Engine.flushAll();
+    }
   }
 }
 
