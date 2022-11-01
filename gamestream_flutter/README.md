@@ -9,9 +9,9 @@
 [ ] render foreground zombie walking while connecting
 [ ] add weapon fire staff
 [ ] attack button has weapon icon
-[ ] optimize render node
 
 01.11.2022
+[x] optimize render node
 [x] fix render arrow
 [x] fix weapon render order
 [x] button toggle zoom in and out
