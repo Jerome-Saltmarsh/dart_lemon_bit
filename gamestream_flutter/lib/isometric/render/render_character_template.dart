@@ -59,10 +59,10 @@ void renderCharacterTemplate(Character character, {
   var frameBody = 0;
   var frameWeapon = 0;
   final diff = Direction.getDifference(character.renderDirection, character.aimDirection).abs();
-  final weaponInFront = character.renderDirection >= 2 && character.renderDirection < 6;
   final runningBackwards = diff >= 3 && character.running;
   final renderDirectionOpposite = (character.renderDirection + 4) % 8;
   final upperBodyDirection = runningBackwards ? renderDirectionOpposite : character.renderDirection;
+  final weaponInFront = upperBodyDirection >= 2 && upperBodyDirection < 6;
   final finalDirection = character.usingWeapon ? character.aimDirection : upperBodyDirection;
 
   var weaponIsTwoHandedFirearm = AttackType.isTwoHandedFirearm(character.weaponType);

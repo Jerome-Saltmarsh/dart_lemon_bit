@@ -5,13 +5,12 @@
 [ ] option fullscreen dialog on game start if it fails to do so automatically
 [ ] add weapon fire staff
 [ ] fix render arrow
-[ ] fix weapon render order staff
-[ ] fix weapon render order shotgun when running backwards
-[ ] button toggle zoom in and out
-[ ] shift left click - stand attack
-[ ] fix touch screen - attack button while running
-if the user is already running then strike the nearest enemy, otherwise if the user is actively
-aiming, strike the enemy closest to the target
+
+01.11.2022
+[x] fix weapon render order
+[x] button toggle zoom in and out
+[x] shift left click - stand attack
+[x] fix touch screen - attack button while running
 
 31.10.2022
 [x] on click enemy - attack
