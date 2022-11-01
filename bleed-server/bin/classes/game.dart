@@ -1670,6 +1670,22 @@ abstract class Game {
     return instance;
   }
 
+  GameObject spawnGameObjectAtXYZ({
+    required double x,
+    required double y,
+    required double z,
+    required int type,
+  }){
+    final instance = GameObject(
+      x: x,
+      y: y,
+      z: z,
+      type: type,
+    );
+    gameObjects.add(instance);
+    return instance;
+  }
+
   Zombie spawnZombie({
     required double x,
     required double y,
