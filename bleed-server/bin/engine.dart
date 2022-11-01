@@ -144,6 +144,8 @@ class Engine {
     games.add(game);
   }
 
+  GameDarkAge findGameDarkAge() => findGameDarkAreaPlains1();
+
   DarkAgeDungeon1 findGameDarkAgeDungeon1() {
     for (final game in games) {
       if (game is DarkAgeDungeon1) {
@@ -162,9 +164,9 @@ class Engine {
     return GameDarkAgeVillage();
   }
 
-  GameDarkAge findGameDarkAgeFarm() {
+  GameDarkAge findGameDarkAreaPlains1() {
     for (final game in games) {
-      if (game is GameDarkAgeFarm) {
+      if (game is AreaPlains1) {
         return game;
       }
     }

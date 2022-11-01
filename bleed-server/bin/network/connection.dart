@@ -321,7 +321,7 @@ class Connection {
 
         switch (scene) {
           case TeleportScenes.Village:
-            game.changeGame(player, engine.findGameDarkAgeFarm());
+            game.changeGame(player, engine.findGameDarkAge());
             movePlayerToCrystal(player);
             break;
           case TeleportScenes.Dungeon_1:
@@ -589,7 +589,7 @@ class Connection {
   }
 
   Future joinGameDarkAge() async {
-    joinGame(engine.findGameDarkAgeFarm());
+    joinGame(engine.findGameDarkAge());
   }
 
   Future joinGameEditor({String? name}) async {

@@ -9,10 +9,11 @@
 [ ] improve grid invisibility
 [ ] render foreground zombie walking while connecting
 [ ] add weapon fire staff
-[ ] fix equip sword
+[ ] teleport crystal
 
 02.11.2022
 [x] attack button has weapon icon
+[x] fix equip sword
 
 01.11.2022
 [x] fix torch goes out during lightning strike at night
