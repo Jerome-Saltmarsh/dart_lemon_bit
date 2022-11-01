@@ -80,7 +80,7 @@ class GameNetwork {
     writeNumberToByteArray(number: Engine.screen.right, list: updateBuffer, index: 13);
     writeNumberToByteArray(number: Engine.screen.bottom, list: updateBuffer, index: 15);
     sink.add(updateBuffer);
-    setCursorAction(CursorAction.None);
+    GameIO.setCursorAction(CursorAction.None);
   }
 
   static applyUpdateBuffer({
@@ -408,8 +408,6 @@ class GameNetwork {
     GameNetwork.send(value);
   }
 
-  static void setCursorAction(int cursorAction){
-    updateBuffer[17] = cursorAction;
-  }
+
 }
 

@@ -83,17 +83,17 @@ class GameActions {
     GameState.debugVisible.value = !GameState.debugVisible.value;;
   }
 
-  static void runToMouse() {
-    GameNetwork.updateBuffer[17] = 1;
+  static void setTarget() {
+    GameIO.touchscreenCursorAction = CursorAction.Set_Target;
   }
 
-  static void performActionPrimary() {
-     GameIO.performActionPrimary = true;
+  static void attackAuto() {
+    GameIO.touchscreenCursorAction = CursorAction.Stationary_Attack_Auto;
   }
 
   static void playerStop() {
     GameIO.recenterCursor();
-    runToMouse();
+    setTarget();
   }
 }
 

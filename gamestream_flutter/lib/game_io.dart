@@ -19,6 +19,7 @@ class GameIO {
 
   static var touchPanning = false;
   static var touchscreenDirectionMove = Direction.None;
+  static var touchscreenCursorAction = CursorAction.None;
   static var touchscreenRadianInput = 0.0;
   static var touchscreenRadianMove = 0.0;
   static var touchscreenRadianPerform = 0.0;
@@ -123,7 +124,7 @@ class GameIO {
     touchscreenDirectionMove = Direction.None;
     touchPanning = false;
     if (inputModeTouch) {
-      GameActions.runToMouse();
+      GameActions.setTarget();
     }
 
     _panning = false;
@@ -144,7 +145,7 @@ class GameIO {
        GameActions.messageBoxShow();
      }
      if (event.logicalKey == LogicalKeyboardKey.space){
-       GameActions.performActionPrimary();
+       GameActions.attackAuto();
      }
   }
 
@@ -167,9 +168,9 @@ class GameIO {
     touchCursorWorldY = Engine.screenToWorldY(_touchCursorTapY);
 
     if (inputModeKeyboard && Engine.keyPressedShiftLeft){
-      GameActions.performActionPrimary();
+      GameActions.attackAuto();
     } else {
-      GameActions.runToMouse();
+      GameActions.setTarget();
     }
   }
 
@@ -258,8 +259,16 @@ class GameIO {
     return Direction.None;
   }
 
+  static void setCursorAction(int cursorAction) {
+    GameIO.touchscreenCursorAction = CursorAction.None;
+  }
+
   static int getCursorAction() {
     if (GameState.editMode) return CursorAction.None;
+
+    if (inputModeTouch){
+       return GameIO.touchscreenCursorAction;
+    }
 
     if (inputModeKeyboard) {
       if (Engine.mouseRightDown.value){
@@ -388,7 +397,7 @@ class GameIO {
   }
 
   static void onMouseClickedRight(){
-    GameActions.performActionPrimary();
+    GameActions.attackAuto();
   }
 
   static void onMouseClickedEditMode(){

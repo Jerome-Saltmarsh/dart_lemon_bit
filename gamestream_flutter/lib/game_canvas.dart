@@ -8,6 +8,10 @@ class GameCanvas {
     // if (Engine.joystickEngaged) {
     //   Engine.canvasRenderJoystick(canvas);
     // }
+    // final distanceX = Engine.worldToScreenX(GamePlayer.renderX - GameIO.getCursorScreenX());
+    // final distanceY = Engine.worldToScreenY(GamePlayer.renderY - GameIO.getCursorScreenY());
+    // final distance = Engine.calculateHypotenuse(distanceX, distanceY);
+    // if (distance < 50) return;
     GameRender.canvasRenderCrossHair(canvas, 5 + GameState.player.weaponCooldown.value * 10);
   }
 
