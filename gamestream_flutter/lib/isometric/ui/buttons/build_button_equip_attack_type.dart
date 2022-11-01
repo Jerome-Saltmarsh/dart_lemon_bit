@@ -6,12 +6,14 @@ import 'package:gamestream_flutter/isometric/ui/maps/map_attack_type_to_atlas_sr
 
 import '../../../library.dart';
 
-
-
-Widget buildIconAttackType(int type) {
-  const unknown = AtlasSrc(srcX: 11827, srcY: 133, width: 26, height: 20);
-  return buildAtlasSrc(mapAttackTypeToAtlasSrc[type] ?? unknown);
-}
+Widget buildIconAttackType(int type) =>
+  buildAtlasImage(
+    image: GameImages.atlasIcons,
+    srcX: AtlasIconsX.getWeaponType(type),
+    srcY: AtlasIconsY.getWeaponType(type),
+    srcWidth: AtlasIconSize.getWeaponType(type),
+    srcHeight: AtlasIconSize.getWeaponType(type),
+  );
 
 Widget buildAtlasSrc(AtlasSrc atlasSrc) =>
   buildAtlasImage(

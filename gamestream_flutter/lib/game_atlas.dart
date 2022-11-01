@@ -8,6 +8,15 @@ class AtlasIconsX {
   static const Zoom = 48.0;
   static const Weather_Inactive = 153.0;
   static const Weather_Active = 217.0;
+
+  static double getWeaponType(int weaponType) => <int, double> {
+    AttackType.Blade: 288,
+    AttackType.Shotgun: 288,
+    AttackType.Rifle: 288,
+    AttackType.Assault_Rifle: 288,
+    AttackType.Staff: 318,
+    AttackType.Unarmed: 384,
+  } [weaponType] ?? 0.0;
 }
 
 class AtlasIconsY {
@@ -20,12 +29,26 @@ class AtlasIconsY {
   static const Home = 0.0;
   static const Fullscreen = 0.0;
   static const Zoom = 48.0;
+
+  static double getWeaponType(int weaponType) => <int, double> {
+    AttackType.Staff: 0,
+    AttackType.Blade: 0,
+    AttackType.Unarmed: 0,
+    AttackType.Shotgun: 32,
+    AttackType.Rifle: 32,
+    AttackType.Assault_Rifle: 32,
+  } [weaponType] ?? 0.0;
 }
 
 class AtlasIconSize {
   static const Home = 48.0;
   static const Fullscreen = 48.0;
   static const Zoom = 32.0;
+  static const Default = 32.0;
+
+  static double getWeaponType(int weaponType) => <int, double> {
+    AttackType.Staff: 32,
+  } [weaponType] ?? Default;
 }
 
 class AtlasNodeX {

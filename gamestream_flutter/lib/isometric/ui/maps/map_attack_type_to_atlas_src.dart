@@ -17,3 +17,5 @@ const mapAttackTypeToAtlasSrc = {
   AttackType.Crowbar        : AtlasSrc (srcX: 12176, srcY: 544, width: 32, height: 32),
   AttackType.Baseball_Bat   : AtlasSrc (srcX: 11920, srcY: 645, width: 25, height: 07),
 };
+
+

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/events/on_visibility_changed_message_box.dart';
+import 'package:gamestream_flutter/isometric/ui/buttons/build_button_equip_attack_type.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/stacks/build_stack_game_type_skirmish.dart';
 import 'package:gamestream_flutter/isometric/ui/stacks/build_stack_play_mode.dart';
@@ -64,11 +65,12 @@ class GameUI {
               width: GameUIConfig.runButtonSize,
               height: GameUIConfig.runButtonSize,
               alignment: Alignment.center,
-              child: text(
-                GameUIConfig.runButtonTextValue,
-                color: GameUIConfig.runButtonTextColor,
-                size: GameUIConfig.runButtonTextFontSize,
-              ),
+              // child: text(
+              //   GameUIConfig.runButtonTextValue,
+              //   color: GameUIConfig.runButtonTextColor,
+              //   size: GameUIConfig.runButtonTextFontSize,
+              // ),
+              child: watch(GameState.player.weapon.type, buildIconAttackType),
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.white, width: 2),
                 shape: BoxShape.circle,

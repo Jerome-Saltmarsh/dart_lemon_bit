@@ -6,9 +6,10 @@
 [ ] optimize front end - do not use objects to store particles
 [ ] optimize network - compile all characters into single server_response
 [ ] option fullscreen dialog on game start if it fails to do so automatically
-[ ] render foreground zombie walking while connecting
-[ ] add weapon fire staff
 [ ] improve grid invisibility
+[ ] render foreground zombie walking while connecting
+[ ] fix game-editor orientation icon active
+[ ] add weapon fire staff
 [ ] attack button has weapon icon
 
 01.11.2022
