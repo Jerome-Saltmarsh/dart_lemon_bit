@@ -100,13 +100,6 @@ class GameSkirmish extends Game {
         range: 200,
       ),
     );
-    player.weaponSlot1 = Weapon(
-      type: AttackType.Bow,
-      damage: 5,
-      capacity: 1000,
-      duration: 10,
-      range: 200,
-    );
     player.equippedLegs = randomItem(LegType.values);
     player.equippedArmour = randomItem(BodyType.values);
     player.equippedHead = randomItem(HeadType.values);
@@ -135,7 +128,6 @@ class GameSkirmish extends Game {
       final weapon = buildWeaponShotgun();
       playerSetWeapon(player, weapon);
       weapon.spawn = gameObject;
-      player.weaponSlot1 = weapon;
       player.writePlayerEventItemEquipped(weapon.type);
       return;
     }
@@ -145,7 +137,6 @@ class GameSkirmish extends Game {
       gameObject.type = getRandomItemType();
       final weapon = buildWeaponHandgun();
       weapon.spawn = gameObject;
-      player.weaponSlot1 = weapon;
       playerSetWeapon(player, weapon);
       player.writePlayerEventItemEquipped(weapon.type);
       player.writePlayerEventItemEquipped(weapon.type);
@@ -156,11 +147,9 @@ class GameSkirmish extends Game {
       deactivateGameObject(gameObject, duration: configRespawnFramesWeapons);
       gameObject.type = getRandomItemType();
       final weapon = buildWeaponBlade();
-      if (player.weapon == player.weaponSlot2){
-        playerSetWeapon(player, weapon);
-      }
       weapon.spawn = gameObject;
-      player.weaponSlot2 = weapon;
+      playerSetWeapon(player, weapon);
+      player.writePlayerEventItemEquipped(weapon.type);
       player.writePlayerEventItemEquipped(weapon.type);
       return;
     }
@@ -171,7 +160,6 @@ class GameSkirmish extends Game {
       final weapon = buildWeaponBow();
       playerSetWeapon(player, weapon);
       weapon.spawn = gameObject;
-      player.weaponSlot1 = weapon;
       player.writePlayerEventItemEquipped(weapon.type);
       return;
     }
@@ -182,7 +170,6 @@ class GameSkirmish extends Game {
       final weapon = buildWeaponStaff();
       playerSetWeapon(player, weapon);
       weapon.spawn = gameObject;
-      player.weaponSlot1 = weapon;
       player.writePlayerEventItemEquipped(weapon.type);
       return;
     }
@@ -195,14 +182,7 @@ class GameSkirmish extends Game {
 
   @override
   void customOnPlayerWeaponRoundsExhausted(Player player, Weapon weapon){
-    if (weapon == player.weaponSlot1){
-      player.weaponSlot1 = player.weaponSlot3; // unarmed
-      playerSetWeapon(player, player.weaponSlot2);
-    }
-    if (weapon == player.weaponSlot2){
-      player.weaponSlot2 = player.weaponSlot3; // unarmed
-      playerSetWeapon(player, player.weaponSlot1);
-    }
+
   }
 
   @override
@@ -214,9 +194,6 @@ class GameSkirmish extends Game {
   void customOnPlayerDeath(Player player) {
     reactivatePlayerWeapons(player);
     player.weapon = buildWeaponUnarmed();
-    player.weaponSlot1 = player.weapon;
-    player.weaponSlot2 = player.weapon;
-    player.weaponSlot3 = player.weapon;
   }
 
   @override

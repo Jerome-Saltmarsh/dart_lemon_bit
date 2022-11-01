@@ -16,6 +16,7 @@ class AtlasIconsX {
     AttackType.Assault_Rifle: 288,
     AttackType.Staff: 318,
     AttackType.Unarmed: 384,
+    AttackType.Handgun: 320,
   } [weaponType] ?? 0.0;
 }
 
@@ -37,6 +38,7 @@ class AtlasIconsY {
     AttackType.Shotgun: 32,
     AttackType.Rifle: 32,
     AttackType.Assault_Rifle: 32,
+    AttackType.Handgun: 32,
   } [weaponType] ?? 0.0;
 }
 

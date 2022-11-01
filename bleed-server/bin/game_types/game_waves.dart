@@ -67,10 +67,6 @@ class GameWaves extends Game {
   @override
   void customInitPlayer(Player player) {
     player.points = 50;
-    player.weaponSlot1 = buildWeaponUnarmed();
-    player.weaponSlot2 = buildWeaponUnarmed();
-    player.weaponSlot3 = buildWeaponUnarmed();
-    player.weapon = player.weaponSlot1;
     player.setCharacterStateSpawning();
     movePlayerToCrystal(player);
     playerWriteRound(player);
@@ -158,9 +154,6 @@ class GameWaves extends Game {
     movePlayerToCrystal(player);
     playerWriteRound(player);
     player.health = player.maxHealth;
-    player.weaponSlot1.rounds = player.weaponSlot1.capacity;
-    player.weaponSlot2.rounds = player.weaponSlot2.capacity;
-    player.weaponSlot3.rounds = player.weaponSlot3.capacity;
   }
 
   Weapon buildWeaponByType(int type){
@@ -201,20 +194,6 @@ class GameWaves extends Game {
      player.writePlayerWeaponType();
      player.writePlayerWeaponCapacity();
      player.writePlayerWeaponRounds();
-     switch(mapAttackTypeToPosition(weapon.type)){
-       case TypePosition.Primary:
-         player.weaponSlot1 = weapon;
-         break;
-       case TypePosition.Secondary:
-         player.weaponSlot2 = weapon;
-         break;
-       case TypePosition.Tertiary:
-         player.weaponSlot3 = weapon;
-         break;
-       default:
-         throw Exception("Cannot assign player weapon to player ${weapon.type}");
-     }
-
   }
 
   @override

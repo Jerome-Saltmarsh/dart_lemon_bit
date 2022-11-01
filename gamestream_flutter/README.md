@@ -7,10 +7,9 @@
 [ ] optimize network - compile all characters into single server_response
 [ ] option fullscreen dialog on game start if it fails to do so automatically
 [ ] improve grid invisibility
-[ ] add weapon fire staff
 [ ] render foreground zombie walking while connecting
-[ ] fix game-editor orientation icon active
-
+[ ] add weapon fire staff
+[ ] fix equip sword
 
 02.11.2022
 [x] attack button has weapon icon

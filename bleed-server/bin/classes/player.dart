@@ -51,10 +51,6 @@ class Player extends Character with ByteWriter {
   final weapons = <Weapon>[];
   var storeItems = <Weapon>[];
 
-  var weaponSlot1 = buildWeaponUnarmed();
-  var weaponSlot2 = buildWeaponUnarmed();
-  var weaponSlot3 = buildWeaponUnarmed();
-
   final questsInProgress = <Quest>[];
   final questsCompleted = <Quest>[];
   final flags = <Flag>[];

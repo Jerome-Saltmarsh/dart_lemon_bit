@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:bleed_common/library.dart';
 import 'package:lemon_math/library.dart';
 
@@ -24,19 +22,12 @@ class Particle extends Vector3 {
   var animation = false;
 
   bool get active => duration > 0;
-
   int get direction => Direction.fromRadian(rotation);
 
   void deactivate(){
     duration = -1;
     frame = 0;
-    // TODO Doesn't belong here
-    if (type == ParticleType.Orb_Shard) {
-      // spawnParticleStarExploding(x: x, y: y, z: z);
-    }
   }
-
-  double get speed => sqrt(xv * xv + yv * yv);
 
   void setAngle({required double value, required double speed}){
     xv = getAdjacent(value, speed);
