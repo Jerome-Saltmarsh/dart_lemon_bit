@@ -261,17 +261,21 @@ class RenderNode {
     required double srcX,
     required double srcY,
   }){
-    Engine.renderSprite(
-      image: GameImages.atlasNodes,
-      srcX: srcX,
-      srcY: srcY,
-      srcWidth: GameConstants.Sprite_Width,
-      srcHeight: GameConstants.Sprite_Height,
-      dstX: GameRender.currentNodeDstX,
-      dstY: GameRender.currentNodeDstY,
-      anchorY: GameConstants.Sprite_Anchor_Y,
-      color: GameRender.currentNodeColor,
-    );
+    GameRender.onscreenNodes++;
+    final f = Engine.bufferIndex * 4;
+    Engine.bufferClr[Engine.bufferIndex] = GameRender.currentNodeColor;
+    Engine.bufferSrc[f] = srcX;
+    Engine.bufferSrc[f + 1] = srcY;
+    Engine.bufferSrc[f + 2] = srcX + GameConstants.Sprite_Width;
+    Engine.bufferSrc[f + 3] = srcY + GameConstants.Sprite_Height;
+    Engine.bufferDst[f] = 1.0; // scale
+    Engine.bufferDst[f + 1] = 0;
+    Engine.bufferDst[f + 2] = GameRender.currentNodeDstX - (GameConstants.Sprite_Width_Half);
+    Engine.bufferDst[f + 3] = GameRender.currentNodeDstY - (GameConstants.Sprite_Height_Third);
+    Engine.bufferIndex++;
+    if (Engine.bufferIndex == 128) {
+      Engine.flushAll();
+    }
   }
 
   static void renderStandardNodeHalfEast({
