@@ -532,19 +532,23 @@ class Connection {
         break;
 
       case GameObjectRequest.Add:
-        final x = double.tryParse(arguments[2]);
-        final y = double.tryParse(arguments[3]);
-        final z = double.tryParse(arguments[4]);
-        final type = int.tryParse(arguments[5]);
-        if (x == null) return errorInvalidArg('x is null (2)');
-        if (y == null) return errorInvalidArg('y is null (3)');
-        if (z == null) return errorInvalidArg('z is null (4)');
-        if (type == null) return errorInvalidArg('type is null (5)');
-
-        player.game.scene.gameObjects.add(
-          GameObject(x: x, y: y, z: z, type: type)
+        final index = int.tryParse(arguments[2]);
+        final type = int.tryParse(arguments[3]);
+        if (index == null) return errorInvalidArg('index is null (2)');
+        if (type == null) return errorInvalidArg('type is null (3)');
+        if (index < 0) return errorInvalidArg('index cannot be negative');
+        final scene = player.game.scene;
+        if (index >= scene.gridVolume) {
+          return errorInvalidArg('index must be lower than grid volume');
+        }
+        scene.gameObjects.add(
+          GameObject(
+              x: scene.convertNodeIndexToXPosition(index),
+              y: scene.convertNodeIndexToYPosition(index),
+              z: scene.convertNodeIndexToZPosition(index),
+              type: type,
+          )
         );
-
         player.editorSelectedGameObject = player.game.scene.gameObjects.last;
         player.scene.dirty = true;
         break;

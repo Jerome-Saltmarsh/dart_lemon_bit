@@ -9,7 +9,7 @@
 [ ] improve grid invisibility
 [ ] render foreground zombie walking while connecting
 [ ] add weapon fire staff
-[ ] teleport crystal
+[ ] editor - gameobjects
 
 02.11.2022
 [x] attack button has weapon icon

@@ -332,18 +332,6 @@ class GameNetwork {
     );
   }
 
-  static void sendClientRequestAddGameObjectXYZ({
-    required double x,
-    required double y,
-    required double z,
-    required int type,
-  }) {
-    sendClientRequest(
-      ClientRequest.GameObject,
-      "${GameObjectRequest.Add.index} $x $y $z $type",
-    );
-  }
-
   static void sendClientRequestGameObjectTranslate({
     required double tx,
     required double ty,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_gameobjects.dart';
 import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
 import 'package:gamestream_flutter/isometric/ui/columns/build_column_selected_node.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
@@ -33,9 +34,31 @@ Widget buildStackEdit(EditTab activeEditTab) =>
         Positioned(
           left: 0,
           top: 50,
-          child: container(child: 'Spawn Zombie', action: (){
-            GameNetwork.sendClientRequestEdit(EditRequest.Spawn_Zombie, GameEditor.nodeSelectedIndex.value);
-          }),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              container(child: 'Spawn Zombie', action: (){
+                GameNetwork.sendClientRequestEdit(EditRequest.Spawn_Zombie, GameEditor.nodeSelectedIndex.value);
+              }),
+              Container(
+                width: 100,
+                height: 100,
+                color: Colors.white,
+                child: buildAtlasImageButton(
+                    image: GameImages.gameobjects,
+                    srcX: AtlasGameObjects.Crystal_Large_X,
+                    srcY: AtlasGameObjects.Crystal_Large_Y,
+                    srcWidth: AtlasGameObjects.Crystal_Large_Width,
+                    srcHeight: AtlasGameObjects.Crystal_Large_Height,
+                    action: () =>
+                        GameNetwork.sendClientRequestAddGameObject(
+                            index: GameEditor.nodeSelectedIndex.value,
+                            type: GameObjectType.Crystal,
+                        )
+                ),
+              ),
+            ],
+          ),
         ),
       if (activeEditTab == EditTab.Grid)
         Positioned(
@@ -345,20 +368,6 @@ Row buildEditorMenu(EditTab activeEditTab) =>
                          )
           ).toList(),
         );
-
-Widget buildButtonAddGameObject(int type) {
-  return container(
-      child: GameObjectType.getName(type),
-      color: brownLight,
-      action: (){
-        GameNetwork.sendClientRequestAddGameObjectXYZ(
-          x: GameEditor.posX,
-          y: GameEditor.posY,
-          z: GameEditor.posZ,
-          type: type,
-        );
-      });
-}
 
 Widget buildMenu({required String text, required List<Widget> children}){
   final child = container(child: text, color: brownLight);
