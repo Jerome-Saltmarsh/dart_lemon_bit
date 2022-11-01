@@ -6,8 +6,11 @@ import 'library.dart';
 class GameUIConfig {
    static final runButtonPressed = GameActions.attackAuto;
    static const runButtonSize = 140.0;
-   static final runButtonColor = Colors.orange.withOpacity(Engine.GoldenRatio_0_381);
-   static const runButtonTextValue = "Attack";
+   static const runButtonPadding = 32.0;
+   static final runButtonColor = Colors.black12;
+   static const runButtonTextValue = "attack";
    static const runButtonTextColor = Colors.white;
-   static const runButtonTextFontSize = 20;
+   static const runButtonTextFontSize = 25;
+
+
 }

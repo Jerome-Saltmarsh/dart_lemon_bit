@@ -137,7 +137,6 @@ class GameSkirmish extends Game {
       weapon.spawn = gameObject;
       player.weaponSlot1 = weapon;
       player.writePlayerEventItemEquipped(weapon.type);
-      player.writePlayerMessage("left click to fire shotgun");
       return;
     }
 
@@ -150,7 +149,6 @@ class GameSkirmish extends Game {
       playerSetWeapon(player, weapon);
       player.writePlayerEventItemEquipped(weapon.type);
       player.writePlayerEventItemEquipped(weapon.type);
-      player.writePlayerMessage("left click to fire handgun");
       return;
     }
 
@@ -164,7 +162,6 @@ class GameSkirmish extends Game {
       weapon.spawn = gameObject;
       player.weaponSlot2 = weapon;
       player.writePlayerEventItemEquipped(weapon.type);
-      player.writePlayerMessage("right click to use sword");
       return;
     }
 
@@ -176,7 +173,6 @@ class GameSkirmish extends Game {
       weapon.spawn = gameObject;
       player.weaponSlot1 = weapon;
       player.writePlayerEventItemEquipped(weapon.type);
-      player.writePlayerMessage("left click to use bow");
       return;
     }
 
@@ -188,7 +184,6 @@ class GameSkirmish extends Game {
       weapon.spawn = gameObject;
       player.weaponSlot1 = weapon;
       player.writePlayerEventItemEquipped(weapon.type);
-      player.writePlayerMessage("left click to use staff");
       return;
     }
   }

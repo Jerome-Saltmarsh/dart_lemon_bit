@@ -55,9 +55,9 @@ class GameUI {
   static Widget buildStackInputModeTouch(bool side) =>
       Stack(children: [
         Positioned(
-          bottom: 16,
-          right: side ? 36 : null,
-          left: side ? null : 36,
+          bottom: GameUIConfig.runButtonPadding,
+          right: side ? GameUIConfig.runButtonPadding : null,
+          left: side ? null : GameUIConfig.runButtonPadding,
           child: onPressed(
             action: GameUIConfig.runButtonPressed,
             child: Container(
@@ -70,34 +70,35 @@ class GameUI {
                 size: GameUIConfig.runButtonTextFontSize,
               ),
               decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: GameUIConfig.runButtonColor
+                border: Border.all(color: Colors.white, width: 2),
+                shape: BoxShape.circle,
+                color: GameUIConfig.runButtonColor,
               ),
             ),
           ),
         ),
-        Positioned(
-          bottom: 145,
-          right: side ? 5 : null,
-          left: side ? null : 5,
-          child: onPressed(
-            action: GameActions.playerStop,
-            child: Container(
-              width: 75,
-              height: 75,
-              alignment: Alignment.center,
-              child: text(
-                "Stop",
-                color: Colors.white,
-                size: GameUIConfig.runButtonTextFontSize,
-              ),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.red.withOpacity(Engine.GoldenRatio_0_381),
-              ),
-            ),
-          ),
-        )
+        // Positioned(
+        //   bottom: 145,
+        //   right: side ? 5 : null,
+        //   left: side ? null : 5,
+        //   child: onPressed(
+        //     action: GameActions.playerStop,
+        //     child: Container(
+        //       width: 75,
+        //       height: 75,
+        //       alignment: Alignment.center,
+        //       child: text(
+        //         "Stop",
+        //         color: Colors.white,
+        //         size: GameUIConfig.runButtonTextFontSize,
+        //       ),
+        //       decoration: BoxDecoration(
+        //         shape: BoxShape.circle,
+        //         color: Colors.red.withOpacity(Engine.GoldenRatio_0_381),
+        //       ),
+        //     ),
+        //   ),
+        // )
       ]);
 
   static Widget buildStackInputMode(int inputMode) =>

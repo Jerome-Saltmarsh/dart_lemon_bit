@@ -17,7 +17,7 @@ Widget buildPanelMenu() =>
             if (Engine.targetZoom != 1.0){
               Engine.targetZoom = 1.0;
             } else {
-              Engine.targetZoom = 2.0;
+              Engine.targetZoom = 1.5;
             }
           }),
           width2,
