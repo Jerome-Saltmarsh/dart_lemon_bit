@@ -319,8 +319,8 @@ class ServerResponseReader with ByteReader {
         GameState.player.alive.value = readBool();
         break;
       case ApiPlayer.Spawned:
-        Engine.zoom = 1.0;
-        Engine.targetZoom = 1.0;
+        // Engine.zoom = GameConfig.Zoom_Standard;
+        // Engine.targetZoom = GameConfig.Zoom_Standard;;
         GameCamera.centerOnPlayer();
         GameIO.recenterCursor();
         break;

@@ -184,6 +184,7 @@ class GameNetwork {
         Engine.onUpdate = GameState.update;
         Engine.drawCanvasAfterUpdate = true;
         Engine.zoomOnScroll = true;
+        Engine.targetZoom = GameConfig.Zoom_Default;
         if (!Engine.isLocalHost) {
           Engine.fullScreenEnter();
         }
