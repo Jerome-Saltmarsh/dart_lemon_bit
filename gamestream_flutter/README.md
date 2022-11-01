@@ -4,9 +4,9 @@
 [ ] optimize network - compile all characters into single server_response
 [ ] option fullscreen dialog on game start if it fails to do so automatically
 [ ] add weapon fire staff
-[ ] fix render arrow
 
 01.11.2022
+[x] fix render arrow
 [x] fix weapon render order
 [x] button toggle zoom in and out
 [x] shift left click - stand attack
