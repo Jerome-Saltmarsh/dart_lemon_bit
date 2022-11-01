@@ -36,7 +36,7 @@ class GameEvents {
   static void onChangedAmbientShade(int shade) {
     GameState.ambientColor = GameState.colorShades[shade];
     GameState.refreshLighting();
-    GameState.torchesIgnited.value = shade != Shade.Very_Bright;
+    // GameState.torchesIgnited.value = shade != Shade.Very_Bright;
   }
 
   static void onChangedNodes(){
@@ -290,6 +290,10 @@ class GameEvents {
 
   static void onChangedWind(Wind value) {
     GameState.gridWindResetToAmbient();
+  }
+
+  static void onChangedHour(int hour){
+    GameState.torchesIgnited.value = Shade.fromHour(hour) != Shade.Very_Bright;
   }
 
   static void onChangedRain(Rain value) {

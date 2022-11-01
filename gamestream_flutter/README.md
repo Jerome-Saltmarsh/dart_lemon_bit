@@ -10,9 +10,10 @@
 [ ] add weapon fire staff
 [ ] improve grid invisibility
 [ ] attack button has weapon icon
-[x] zoom icon
 
 01.11.2022
+[x] fix torch goes out during lightning strike at night
+[x] zoom icon
 [x] fix player body does not turn with mouse when idle
 [x] zoom key shortcut
 [x] optimize render node

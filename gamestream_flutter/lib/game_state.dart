@@ -23,7 +23,7 @@ class GameState {
   static const tileHeight = 24.0;
   static const colorPitchBlack = Color.fromRGBO(37, 32, 48, 1.0);
   static final raining = Watch(false, onChanged: onChangedRaining);
-  static final hours = Watch(0);
+  static final hours = Watch(0, onChanged: GameEvents.onChangedHour);
   static final minutes = Watch(0);
 
   static final colorShades = [0.0, 0.4, 0.6, 0.7, 0.8, 0.95, 1.0]
