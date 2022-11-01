@@ -10,6 +10,21 @@
 [ ] render foreground zombie walking while connecting
 [ ] add weapon fire staff
 [ ] editor - gameobjects
+[ ] short sword
+[ ] loot-drop
+[ ] equipment quality - 
+    - high
+    - normal
+    - low
+[ ] equipment class - 
+    - normal 
+    - magic 
+    - rare
+    - super-rare
+
+[ ] dark-age
+[ ] quick-game
+[ ] map-editor
 
 02.11.2022
 [x] attack button has weapon icon

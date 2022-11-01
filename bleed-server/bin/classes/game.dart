@@ -959,8 +959,10 @@ abstract class Game {
     dispatchGameEventCharacterDeath(character);
     character.health = 0;
     character.state = CharacterState.Dead;
-    character.onCharacterStateChanged();
+    character.stateDuration = 0;
+    character.animationFrame = 0;
     character.collidable = false;
+    clearCharacterTarget(character);
 
     for (final character in characters) {
       if (character.target != character) continue;
@@ -2218,6 +2220,10 @@ abstract class Game {
     character.target = null;
     if (character is Player){
       character.writeTargetPositionNone();
+    }
+    if (character is AI){
+      character.clearDest();
+      character.clearPath();
     }
   }
 }

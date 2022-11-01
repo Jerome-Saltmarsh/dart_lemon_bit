@@ -745,7 +745,6 @@ class GameRender {
     RenderOrder first = renderOrderGrid;
 
     if (totalRemaining == 0) return;
-
     while (true) {
       RenderOrder next = first;
       if (renderOrderCharacters.remaining){

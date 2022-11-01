@@ -190,12 +190,6 @@ class GameSkirmish extends Game {
     // reactiveWeaponGameObject(previousWeapon);
   }
 
-  /// safe to overridable
-  void customOnPlayerDeath(Player player) {
-    reactivatePlayerWeapons(player);
-    player.weapon = buildWeaponUnarmed();
-  }
-
   @override
   void customOnPlayerDisconnected(Player player) {
 
