@@ -1,6 +1,13 @@
 
 
 class AtlasSrcGameObjects {
+  static const arrow_x = 59.0;
+  static const arrow_y = 48.0;
+  static const arrow_width = 9.0;
+  static const arrow_height = 44.0;
+  static const arrow_shadow_x = 49.0;
+  static const arrow_shadow_y = 48.0;
+
   static const Circle32_X = 16.0;
   static const Circle32_Y = 48.0;
 

@@ -93,7 +93,7 @@ class GameSkirmish extends Game {
       game: this,
       team: 0,
       weapon: Weapon(
-        type: AttackType.Staff,
+        type: AttackType.Bow,
         damage: 5,
         capacity: 1000,
         duration: 10,
@@ -101,7 +101,7 @@ class GameSkirmish extends Game {
       ),
     );
     player.weaponSlot1 = Weapon(
-      type: AttackType.Staff,
+      type: AttackType.Bow,
       damage: 5,
       capacity: 1000,
       duration: 10,

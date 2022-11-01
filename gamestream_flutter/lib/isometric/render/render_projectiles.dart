@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_gameobjects.dart';
 import 'package:gamestream_flutter/library.dart';
 
 
@@ -7,7 +8,7 @@ void renderProjectile(Projectile value) {
   switch (value.type) {
     case ProjectileType.Arrow:
       // renderPixelRed(value.renderX, value.renderY);
-      return renderArrow(value.renderX, value.renderY, value.angle);
+      return RenderProjectiles.renderArrow(value.renderX, value.renderY, value.angle);
     case ProjectileType.Orb:
       return renderOrb(value.renderX, value.renderY);
     case ProjectileType.Fireball:
@@ -63,28 +64,6 @@ void renderFireball(double x, double y, double rotation) {
   // );
 }
 
-void renderArrow(double x, double y, double angle) {
-  // renderRotated(
-  //     dstX: x,
-  //     dstY: y + 10,
-  //     srcX: 2172,
-  //     srcY: 0,
-  //     srcWidth: 9,
-  //     srcHeight: 43,
-  //     rotation: angle - piQuarter,
-  //     scale: 0.5
-  // );
-  // renderRotated(
-  //     dstX: x,
-  //     dstY: y,
-  //     srcX: 2182,
-  //     srcY: 0,
-  //     srcWidth: 9,
-  //     srcHeight: 44,
-  //     rotation: angle - piQuarter,
-  //     scale: 0.5
-  // );
-}
 
 void renderOrb(double x, double y) {
   Engine.renderSprite(

@@ -6,10 +6,10 @@ import 'package:lemon_math/library.dart';
 import '../../library.dart';
 import 'render_character_health_bar.dart';
 
-void renderArrow(double x, double y, double z, double angle) {
-  x += getAdjacent(angle, 30);
-  y += getOpposite(angle, 30);
-}
+// void renderArrow(double x, double y, double z, double angle) {
+//   x += getAdjacent(angle, 30);
+//   y += getOpposite(angle, 30);
+// }
 
 bool weaponIs96(int weapon) =>
    weapon == AttackType.Staff ||

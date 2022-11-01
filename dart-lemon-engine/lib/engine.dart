@@ -907,17 +907,27 @@ class Engine {
     double scale = 1.0,
     int color = 1,
   }){
-    // final angle = rotation + piQuarter;
-    // final translate = calculateHypotenuse(srcWidth * 0.5, srcHeight * 0.5);
-    // _colors1[0] = color;
-    // _src4[0] = srcX;
-    // _dst4[0] = cos(rotation) * scale;
-    // _src4[1] = srcY;
-    // _dst4[1] = sin(rotation) * scale;
-    // _src4[2] = srcX + srcWidth;
-    // _dst4[2] = dstX - getAdjacent(angle, translate);
-    // _src4[3] = srcY + srcHeight;
-    // _dst4[3] = dstY - getOpposite(angle, translate);
+    if (bufferImage != image) {
+      flushBuffer();
+      bufferImage = image;
+    }
+    final angle = rotation + piQuarter;
+    final translate = calculateHypotenuse(srcWidth * 0.5, srcHeight * 0.5);
+
+    final f = bufferIndex * 4;
+    _bufferClr[bufferIndex] = color;
+    _bufferSrc[f] = srcX;
+    _bufferSrc[f + 1] = srcY;
+    _bufferSrc[f + 2] = srcX + srcWidth;
+    _bufferSrc[f + 3] = srcY + srcHeight;
+    _bufferDst[f] = cos(rotation) * scale;
+    _bufferDst[f + 1] = sin(rotation) * scale;
+    _bufferDst[f + 2] = dstX - getAdjacent(angle, translate);
+    _bufferDst[f + 3] = dstY - getOpposite(angle, translate);
+    bufferIndex++;
+    if (bufferIndex == 128) {
+      flushAll();
+    }
   }
 
   static void renderExternalCanvas({
