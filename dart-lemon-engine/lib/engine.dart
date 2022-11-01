@@ -695,9 +695,9 @@ class Engine {
   static final _bufferDst128 = Float32List(128 * 4);
   static final _bufferClr128 = Int32List(128);
 
-  static final _bufferSrc = _bufferSrc128;
-  static final _bufferDst = _bufferDst128;
-  static final _bufferClr = _bufferClr128;
+  static final bufferSrc = _bufferSrc128;
+  static final bufferDst = _bufferDst128;
+  static final bufferClr = _bufferClr128;
 
   static void flushBuffer() {
     batchesRendered++;
@@ -712,15 +712,15 @@ class Engine {
 
       if (remaining == 1) {
         final f = flushIndex * 4;
-        _bufferClr1[0] = _bufferClr[flushIndex];
-        _bufferDst1[0] = _bufferDst[f];
-        _bufferDst1[1] = _bufferDst[f + 1];
-        _bufferDst1[2] = _bufferDst[f + 2];
-        _bufferDst1[3] = _bufferDst[f + 3];
-        _bufferSrc1[0] = _bufferSrc[f];
-        _bufferSrc1[1] = _bufferSrc[f + 1];
-        _bufferSrc1[2] = _bufferSrc[f + 2];
-        _bufferSrc1[3] = _bufferSrc[f + 3];
+        _bufferClr1[0] = bufferClr[flushIndex];
+        _bufferDst1[0] = bufferDst[f];
+        _bufferDst1[1] = bufferDst[f + 1];
+        _bufferDst1[2] = bufferDst[f + 2];
+        _bufferDst1[3] = bufferDst[f + 3];
+        _bufferSrc1[0] = bufferSrc[f];
+        _bufferSrc1[1] = bufferSrc[f + 1];
+        _bufferSrc1[2] = bufferSrc[f + 2];
+        _bufferSrc1[3] = bufferSrc[f + 3];
         canvas.drawRawAtlas(bufferImage, _bufferDst1, _bufferSrc1, _bufferClr1, bufferBlendMode, null, spritePaint);
         bufferIndex = 0;
         batches1Rendered++;
@@ -731,15 +731,15 @@ class Engine {
         for (var i = 0; i < 2; i++) {
           final j = i * 4;
           final f = flushIndex * 4;
-          _bufferClr2[i] = _bufferClr[flushIndex];
-          _bufferDst2[j] = _bufferDst[f];
-          _bufferDst2[j + 1] = _bufferDst[f + 1];
-          _bufferDst2[j + 2] = _bufferDst[f + 2];
-          _bufferDst2[j + 3] = _bufferDst[f + 3];
-          _bufferSrc2[j] = _bufferSrc[f];
-          _bufferSrc2[j + 1] = _bufferSrc[f + 1];
-          _bufferSrc2[j + 2] = _bufferSrc[f + 2];
-          _bufferSrc2[j + 3] = _bufferSrc[f + 3];
+          _bufferClr2[i] = bufferClr[flushIndex];
+          _bufferDst2[j] = bufferDst[f];
+          _bufferDst2[j + 1] = bufferDst[f + 1];
+          _bufferDst2[j + 2] = bufferDst[f + 2];
+          _bufferDst2[j + 3] = bufferDst[f + 3];
+          _bufferSrc2[j] = bufferSrc[f];
+          _bufferSrc2[j + 1] = bufferSrc[f + 1];
+          _bufferSrc2[j + 2] = bufferSrc[f + 2];
+          _bufferSrc2[j + 3] = bufferSrc[f + 3];
           flushIndex++;
         }
         canvas.drawRawAtlas(bufferImage, _bufferDst2, _bufferSrc2, _bufferClr2, bufferBlendMode, null, spritePaint);
@@ -751,15 +751,15 @@ class Engine {
         for (var i = 0; i < 4; i++) {
           final j = i * 4;
           final f = flushIndex * 4;
-          _bufferClr4[i] = _bufferClr[flushIndex];
-          _bufferDst4[j] = _bufferDst[f];
-          _bufferDst4[j + 1] = _bufferDst[f + 1];
-          _bufferDst4[j + 2] = _bufferDst[f + 2];
-          _bufferDst4[j + 3] = _bufferDst[f + 3];
-          _bufferSrc4[j] = _bufferSrc[f];
-          _bufferSrc4[j + 1] = _bufferSrc[f + 1];
-          _bufferSrc4[j + 2] = _bufferSrc[f + 2];
-          _bufferSrc4[j + 3] = _bufferSrc[f + 3];
+          _bufferClr4[i] = bufferClr[flushIndex];
+          _bufferDst4[j] = bufferDst[f];
+          _bufferDst4[j + 1] = bufferDst[f + 1];
+          _bufferDst4[j + 2] = bufferDst[f + 2];
+          _bufferDst4[j + 3] = bufferDst[f + 3];
+          _bufferSrc4[j] = bufferSrc[f];
+          _bufferSrc4[j + 1] = bufferSrc[f + 1];
+          _bufferSrc4[j + 2] = bufferSrc[f + 2];
+          _bufferSrc4[j + 3] = bufferSrc[f + 3];
           flushIndex++;
         }
         canvas.drawRawAtlas(bufferImage, _bufferDst4, _bufferSrc4, _bufferClr4, bufferBlendMode, null, spritePaint);
@@ -771,15 +771,15 @@ class Engine {
         for (var i = 0; i < 8; i++) {
           final j = i * 4;
           final f = flushIndex * 4;
-          _bufferClr8[i] = _bufferClr[flushIndex];
-          _bufferDst8[j] = _bufferDst[f];
-          _bufferDst8[j + 1] = _bufferDst[f + 1];
-          _bufferDst8[j + 2] = _bufferDst[f + 2];
-          _bufferDst8[j + 3] = _bufferDst[f + 3];
-          _bufferSrc8[j] = _bufferSrc[f];
-          _bufferSrc8[j + 1] = _bufferSrc[f + 1];
-          _bufferSrc8[j + 2] = _bufferSrc[f + 2];
-          _bufferSrc8[j + 3] = _bufferSrc[f + 3];
+          _bufferClr8[i] = bufferClr[flushIndex];
+          _bufferDst8[j] = bufferDst[f];
+          _bufferDst8[j + 1] = bufferDst[f + 1];
+          _bufferDst8[j + 2] = bufferDst[f + 2];
+          _bufferDst8[j + 3] = bufferDst[f + 3];
+          _bufferSrc8[j] = bufferSrc[f];
+          _bufferSrc8[j + 1] = bufferSrc[f + 1];
+          _bufferSrc8[j + 2] = bufferSrc[f + 2];
+          _bufferSrc8[j + 3] = bufferSrc[f + 3];
           flushIndex++;
         }
         canvas.drawRawAtlas(bufferImage, _bufferDst8, _bufferSrc8, _bufferClr8, bufferBlendMode, null, spritePaint);
@@ -791,15 +791,15 @@ class Engine {
         for (var i = 0; i < 16; i++) {
           final j = i * 4;
           final f = flushIndex * 4;
-          _bufferClr16[i] = _bufferClr[flushIndex];
-          _bufferDst16[j] = _bufferDst[f];
-          _bufferDst16[j + 1] = _bufferDst[f + 1];
-          _bufferDst16[j + 2] = _bufferDst[f + 2];
-          _bufferDst16[j + 3] = _bufferDst[f + 3];
-          _bufferSrc16[j] = _bufferSrc[f];
-          _bufferSrc16[j + 1] = _bufferSrc[f + 1];
-          _bufferSrc16[j + 2] = _bufferSrc[f + 2];
-          _bufferSrc16[j + 3] = _bufferSrc[f + 3];
+          _bufferClr16[i] = bufferClr[flushIndex];
+          _bufferDst16[j] = bufferDst[f];
+          _bufferDst16[j + 1] = bufferDst[f + 1];
+          _bufferDst16[j + 2] = bufferDst[f + 2];
+          _bufferDst16[j + 3] = bufferDst[f + 3];
+          _bufferSrc16[j] = bufferSrc[f];
+          _bufferSrc16[j + 1] = bufferSrc[f + 1];
+          _bufferSrc16[j + 2] = bufferSrc[f + 2];
+          _bufferSrc16[j + 3] = bufferSrc[f + 3];
           flushIndex++;
         }
         canvas.drawRawAtlas(bufferImage, _bufferDst16, _bufferSrc16, _bufferClr16, bufferBlendMode, null, spritePaint);
@@ -811,15 +811,15 @@ class Engine {
         for (var i = 0; i < 32; i++) {
           final j = i * 4;
           final f = flushIndex * 4;
-          _bufferClr32[i] = _bufferClr[flushIndex];
-          _bufferDst32[j] = _bufferDst[f];
-          _bufferDst32[j + 1] = _bufferDst[f + 1];
-          _bufferDst32[j + 2] = _bufferDst[f + 2];
-          _bufferDst32[j + 3] = _bufferDst[f + 3];
-          _bufferSrc32[j] = _bufferSrc[f];
-          _bufferSrc32[j + 1] = _bufferSrc[f + 1];
-          _bufferSrc32[j + 2] = _bufferSrc[f + 2];
-          _bufferSrc32[j + 3] = _bufferSrc[f + 3];
+          _bufferClr32[i] = bufferClr[flushIndex];
+          _bufferDst32[j] = bufferDst[f];
+          _bufferDst32[j + 1] = bufferDst[f + 1];
+          _bufferDst32[j + 2] = bufferDst[f + 2];
+          _bufferDst32[j + 3] = bufferDst[f + 3];
+          _bufferSrc32[j] = bufferSrc[f];
+          _bufferSrc32[j + 1] = bufferSrc[f + 1];
+          _bufferSrc32[j + 2] = bufferSrc[f + 2];
+          _bufferSrc32[j + 3] = bufferSrc[f + 3];
           flushIndex++;
         }
         canvas.drawRawAtlas(bufferImage, _bufferDst32, _bufferSrc32, _bufferClr32, bufferBlendMode, null, spritePaint);
@@ -831,15 +831,15 @@ class Engine {
         for (var i = 0; i < 64; i++) {
           final j = i * 4;
           final f = flushIndex * 4;
-          _bufferClr64[i] = _bufferClr[flushIndex];
-          _bufferDst64[j] = _bufferDst[f];
-          _bufferDst64[j + 1] = _bufferDst[f + 1];
-          _bufferDst64[j + 2] = _bufferDst[f + 2];
-          _bufferDst64[j + 3] = _bufferDst[f + 3];
-          _bufferSrc64[j] = _bufferSrc[f];
-          _bufferSrc64[j + 1] = _bufferSrc[f + 1];
-          _bufferSrc64[j + 2] = _bufferSrc[f + 2];
-          _bufferSrc64[j + 3] = _bufferSrc[f + 3];
+          _bufferClr64[i] = bufferClr[flushIndex];
+          _bufferDst64[j] = bufferDst[f];
+          _bufferDst64[j + 1] = bufferDst[f + 1];
+          _bufferDst64[j + 2] = bufferDst[f + 2];
+          _bufferDst64[j + 3] = bufferDst[f + 3];
+          _bufferSrc64[j] = bufferSrc[f];
+          _bufferSrc64[j + 1] = bufferSrc[f + 1];
+          _bufferSrc64[j + 2] = bufferSrc[f + 2];
+          _bufferSrc64[j + 3] = bufferSrc[f + 3];
           flushIndex++;
         }
         canvas.drawRawAtlas(bufferImage, _bufferDst64, _bufferSrc64, _bufferClr64, bufferBlendMode, null, spritePaint);
@@ -854,7 +854,7 @@ class Engine {
 
   static void flushAll(){
     batchesRendered++;
-    canvas.drawRawAtlas(bufferImage, _bufferDst, _bufferSrc, _bufferClr, bufferBlendMode, null, spritePaint);
+    canvas.drawRawAtlas(bufferImage, bufferDst, bufferSrc, bufferClr, bufferBlendMode, null, spritePaint);
     bufferIndex = 0;
     batches128Rendered++;
   }
@@ -877,15 +877,15 @@ class Engine {
       bufferImage = image;
     }
     final f = bufferIndex * 4;
-    _bufferClr[bufferIndex] = color;
-    _bufferSrc[f] = srcX;
-    _bufferSrc[f + 1] = srcY;
-    _bufferSrc[f + 2] = srcX + srcWidth;
-    _bufferSrc[f + 3] = srcY + srcHeight;
-    _bufferDst[f] = scale;
-    _bufferDst[f + 1] = 0;
-    _bufferDst[f + 2] = dstX - (srcWidth * anchorX * scale);
-    _bufferDst[f + 3] = dstY - (srcHeight * anchorY * scale);
+    bufferClr[bufferIndex] = color;
+    bufferSrc[f] = srcX;
+    bufferSrc[f + 1] = srcY;
+    bufferSrc[f + 2] = srcX + srcWidth;
+    bufferSrc[f + 3] = srcY + srcHeight;
+    bufferDst[f] = scale;
+    bufferDst[f + 1] = 0;
+    bufferDst[f + 2] = dstX - (srcWidth * anchorX * scale);
+    bufferDst[f + 3] = dstY - (srcHeight * anchorY * scale);
     bufferIndex++;
 
     if (bufferIndex == 128) {
@@ -915,15 +915,15 @@ class Engine {
     final translate = calculateHypotenuse(srcWidth * 0.5, srcHeight * 0.5);
 
     final f = bufferIndex * 4;
-    _bufferClr[bufferIndex] = color;
-    _bufferSrc[f] = srcX;
-    _bufferSrc[f + 1] = srcY;
-    _bufferSrc[f + 2] = srcX + srcWidth;
-    _bufferSrc[f + 3] = srcY + srcHeight;
-    _bufferDst[f] = cos(rotation) * scale;
-    _bufferDst[f + 1] = sin(rotation) * scale;
-    _bufferDst[f + 2] = dstX - getAdjacent(angle, translate);
-    _bufferDst[f + 3] = dstY - getOpposite(angle, translate);
+    bufferClr[bufferIndex] = color;
+    bufferSrc[f] = srcX;
+    bufferSrc[f + 1] = srcY;
+    bufferSrc[f + 2] = srcX + srcWidth;
+    bufferSrc[f + 3] = srcY + srcHeight;
+    bufferDst[f] = cos(rotation) * scale;
+    bufferDst[f + 1] = sin(rotation) * scale;
+    bufferDst[f + 2] = dstX - getAdjacent(angle, translate);
+    bufferDst[f + 3] = dstY - getOpposite(angle, translate);
     bufferIndex++;
     if (bufferIndex == 128) {
       flushAll();
