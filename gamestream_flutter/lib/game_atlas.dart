@@ -5,6 +5,7 @@ class AtlasIconsX {
   static const Arrows_Orange = 22.0;
   static const Home = 44.0;
   static const Fullscreen = 93.0;
+  static const Zoom = 48.0;
   static const Weather_Inactive = 153.0;
   static const Weather_Active = 217.0;
 }
@@ -18,11 +19,13 @@ class AtlasIconsY {
   static const Arrows_East = 137.0;
   static const Home = 0.0;
   static const Fullscreen = 0.0;
+  static const Zoom = 48.0;
 }
 
 class AtlasIconSize {
   static const Home = 48.0;
   static const Fullscreen = 48.0;
+  static const Zoom = 32.0;
 }
 
 class AtlasNodeX {

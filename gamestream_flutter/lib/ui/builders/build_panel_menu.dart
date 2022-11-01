@@ -13,7 +13,7 @@ Widget buildPanelMenu() =>
           width2,
           watch(GameState.sceneEditable, (bool sceneEditable) => sceneEditable ? EditorUI.buildControlsWeather() : buildWatchBool(GameUI.timeVisible, buildTime)),
           width2,
-          text("Zoom", onPressed: GameActions.toggleZoom),
+          buildIconZoom(),
           width2,
           onPressed(
               child: buildIconFullscreen(),
@@ -57,6 +57,18 @@ Widget buildIconFullscreen() {
     );
   });
 }
+
+Widget buildIconZoom() =>
+  buildAtlasImageButton(
+    hint: "Zoom (F)",
+    image: GameImages.atlasIcons,
+    srcX: AtlasIconsX.Zoom,
+    srcY: AtlasIconsY.Zoom,
+    srcWidth: AtlasIconSize.Zoom,
+    srcHeight: AtlasIconSize.Zoom,
+    scale: 1.0,
+    action: GameActions.toggleZoom,
+  );
 
 Widget buildIconHome() =>
     buildAtlasImageButton(

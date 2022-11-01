@@ -8,9 +8,9 @@
 [ ] option fullscreen dialog on game start if it fails to do so automatically
 [ ] render foreground zombie walking while connecting
 [ ] add weapon fire staff
-[ ] zoom icon
 [ ] improve grid invisibility
 [ ] attack button has weapon icon
+[x] zoom icon
 
 01.11.2022
 [x] fix player body does not turn with mouse when idle
