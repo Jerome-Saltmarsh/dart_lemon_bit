@@ -138,17 +138,19 @@ class GameIO {
      if (event.logicalKey == LogicalKeyboardKey.keyX) {
        actionToggleInputMode();
      }
-     if (event.logicalKey == LogicalKeyboardKey.keyP){
+     if (event.logicalKey == LogicalKeyboardKey.keyP) {
        GameActions.toggleDebugMode();
      }
-     if (event.logicalKey == LogicalKeyboardKey.enter){
-       GameActions.messageBoxShow();
-     }
-     if (event.logicalKey == LogicalKeyboardKey.space){
-       GameActions.attackAuto();
-     }
-     if (event.logicalKey == LogicalKeyboardKey.keyF){
-       GameActions.toggleZoom();
+     if (GameState.playMode) {
+       if (event.logicalKey == LogicalKeyboardKey.enter) {
+         GameActions.messageBoxShow();
+       }
+       if (event.logicalKey == LogicalKeyboardKey.space) {
+         GameActions.attackAuto();
+       }
+       if (event.logicalKey == LogicalKeyboardKey.keyF) {
+         GameActions.toggleZoom();
+       }
      }
   }
 
