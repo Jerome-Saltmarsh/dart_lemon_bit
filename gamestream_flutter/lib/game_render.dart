@@ -806,9 +806,6 @@ class GameRender {
       );
 
   static void renderCurrentNodeLine() {
-    if (Engine.bufferImage != GameImages.atlasNodes){
-      Engine.flushBuffer();
-    }
     Engine.bufferImage = GameImages.atlasNodes;
     while (
         currentNodeColumn >= 0 &&

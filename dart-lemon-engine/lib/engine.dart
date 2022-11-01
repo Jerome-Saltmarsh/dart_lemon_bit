@@ -288,7 +288,7 @@ class Engine {
       deviceIsComputer ? DeviceType.Phone : DeviceType.Computer;
 
   static Future loadBufferImage(String filename) async {
-    bufferImage = await loadImageAsset(filename);
+    _bufferImage = await loadImageAsset(filename);
   }
 
   static Future<ui.Image> loadImageAsset(String url) async {
@@ -645,7 +645,15 @@ class Engine {
   void setFramesPerSecond(int framesPerSecond) =>
      watchDurationPerFrame.value = buildDurationFramesPerSecond(framesPerSecond);
 
-  static late ui.Image bufferImage;
+  static late ui.Image _bufferImage;
+
+  static ui.Image get bufferImage => _bufferImage;
+
+  static set bufferImage(ui.Image image){
+    if (_bufferImage == image) return;
+    flushBuffer();
+    _bufferImage = image;
+  }
 
   static var bufferBlendMode = BlendMode.dstATop;
   static var bufferIndex = 0;
@@ -721,7 +729,7 @@ class Engine {
         _bufferSrc1[1] = bufferSrc[f + 1];
         _bufferSrc1[2] = bufferSrc[f + 2];
         _bufferSrc1[3] = bufferSrc[f + 3];
-        canvas.drawRawAtlas(bufferImage, _bufferDst1, _bufferSrc1, _bufferClr1, bufferBlendMode, null, spritePaint);
+        canvas.drawRawAtlas(_bufferImage, _bufferDst1, _bufferSrc1, _bufferClr1, bufferBlendMode, null, spritePaint);
         bufferIndex = 0;
         batches1Rendered++;
         return;
@@ -742,7 +750,7 @@ class Engine {
           _bufferSrc2[j + 3] = bufferSrc[f + 3];
           flushIndex++;
         }
-        canvas.drawRawAtlas(bufferImage, _bufferDst2, _bufferSrc2, _bufferClr2, bufferBlendMode, null, spritePaint);
+        canvas.drawRawAtlas(_bufferImage, _bufferDst2, _bufferSrc2, _bufferClr2, bufferBlendMode, null, spritePaint);
         batches2Rendered++;
         continue;
       }
@@ -762,7 +770,7 @@ class Engine {
           _bufferSrc4[j + 3] = bufferSrc[f + 3];
           flushIndex++;
         }
-        canvas.drawRawAtlas(bufferImage, _bufferDst4, _bufferSrc4, _bufferClr4, bufferBlendMode, null, spritePaint);
+        canvas.drawRawAtlas(_bufferImage, _bufferDst4, _bufferSrc4, _bufferClr4, bufferBlendMode, null, spritePaint);
         batches4Rendered++;
         continue;
       }
@@ -782,7 +790,7 @@ class Engine {
           _bufferSrc8[j + 3] = bufferSrc[f + 3];
           flushIndex++;
         }
-        canvas.drawRawAtlas(bufferImage, _bufferDst8, _bufferSrc8, _bufferClr8, bufferBlendMode, null, spritePaint);
+        canvas.drawRawAtlas(_bufferImage, _bufferDst8, _bufferSrc8, _bufferClr8, bufferBlendMode, null, spritePaint);
         batches8Rendered++;
         continue;
       }
@@ -802,7 +810,7 @@ class Engine {
           _bufferSrc16[j + 3] = bufferSrc[f + 3];
           flushIndex++;
         }
-        canvas.drawRawAtlas(bufferImage, _bufferDst16, _bufferSrc16, _bufferClr16, bufferBlendMode, null, spritePaint);
+        canvas.drawRawAtlas(_bufferImage, _bufferDst16, _bufferSrc16, _bufferClr16, bufferBlendMode, null, spritePaint);
         batches16Rendered++;
         continue;
       }
@@ -822,7 +830,7 @@ class Engine {
           _bufferSrc32[j + 3] = bufferSrc[f + 3];
           flushIndex++;
         }
-        canvas.drawRawAtlas(bufferImage, _bufferDst32, _bufferSrc32, _bufferClr32, bufferBlendMode, null, spritePaint);
+        canvas.drawRawAtlas(_bufferImage, _bufferDst32, _bufferSrc32, _bufferClr32, bufferBlendMode, null, spritePaint);
         batches32Rendered++;
         continue;
       }
@@ -842,7 +850,7 @@ class Engine {
           _bufferSrc64[j + 3] = bufferSrc[f + 3];
           flushIndex++;
         }
-        canvas.drawRawAtlas(bufferImage, _bufferDst64, _bufferSrc64, _bufferClr64, bufferBlendMode, null, spritePaint);
+        canvas.drawRawAtlas(_bufferImage, _bufferDst64, _bufferSrc64, _bufferClr64, bufferBlendMode, null, spritePaint);
         batches64Rendered++;
         continue;
       }
@@ -854,7 +862,7 @@ class Engine {
 
   static void flushAll(){
     batchesRendered++;
-    canvas.drawRawAtlas(bufferImage, bufferDst, bufferSrc, bufferClr, bufferBlendMode, null, spritePaint);
+    canvas.drawRawAtlas(_bufferImage, bufferDst, bufferSrc, bufferClr, bufferBlendMode, null, spritePaint);
     bufferIndex = 0;
     batches128Rendered++;
   }
@@ -872,10 +880,7 @@ class Engine {
     double scale = 1.0,
     int color = 1,
   }){
-    if (bufferImage != image) {
-      flushBuffer();
-      bufferImage = image;
-    }
+    bufferImage = image;
     final f = bufferIndex * 4;
     bufferClr[bufferIndex] = color;
     bufferSrc[f] = srcX;
@@ -903,10 +908,7 @@ class Engine {
     double scale = 1.0,
     int color = 1,
   }){
-    if (bufferImage != image) {
-      flushBuffer();
-      bufferImage = image;
-    }
+    bufferImage = image;
     final angle = rotation + piQuarter;
     final translate = calculateHypotenuse(srcWidth * 0.5, srcHeight * 0.5);
     final f = bufferIndex * 4;
