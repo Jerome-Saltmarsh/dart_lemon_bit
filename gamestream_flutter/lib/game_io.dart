@@ -147,6 +147,9 @@ class GameIO {
      if (event.logicalKey == LogicalKeyboardKey.space){
        GameActions.attackAuto();
      }
+     if (event.logicalKey == LogicalKeyboardKey.keyF){
+       GameActions.toggleZoom();
+     }
   }
 
   static int convertRadianToDirection(double radian) {

@@ -13,13 +13,7 @@ Widget buildPanelMenu() =>
           width2,
           watch(GameState.sceneEditable, (bool sceneEditable) => sceneEditable ? EditorUI.buildControlsWeather() : buildWatchBool(GameUI.timeVisible, buildTime)),
           width2,
-          text("Zoom", onPressed: (){
-            if (Engine.targetZoom != GameConfig.Zoom_Far){
-              Engine.targetZoom = GameConfig.Zoom_Far;
-            } else {
-              Engine.targetZoom = GameConfig.Zoom_Close;
-            }
-          }),
+          text("Zoom", onPressed: GameActions.toggleZoom),
           width2,
           onPressed(
               child: buildIconFullscreen(),

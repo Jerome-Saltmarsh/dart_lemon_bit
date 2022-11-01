@@ -95,5 +95,13 @@ class GameActions {
     GameIO.recenterCursor();
     setTarget();
   }
+
+  static void toggleZoom(){
+    if (Engine.targetZoom != GameConfig.Zoom_Far){
+      Engine.targetZoom = GameConfig.Zoom_Far;
+    } else {
+      Engine.targetZoom = GameConfig.Zoom_Close;
+    }
+  }
 }
 
