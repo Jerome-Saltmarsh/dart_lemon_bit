@@ -47,9 +47,9 @@ class Player {
 
   final weapons = Watch(<Weapon>[]);
   final weapon = AttackSlot();
-  final weaponSlot1 = AttackSlot();
-  final weaponSlot2 = AttackSlot();
-  final weaponSlot3 = AttackSlot();
+  // final weaponSlot1 = AttackSlot();
+  // final weaponSlot2 = AttackSlot();
+  // final weaponSlot3 = AttackSlot();
 
   // Properties
   bool get dead => !alive.value;
