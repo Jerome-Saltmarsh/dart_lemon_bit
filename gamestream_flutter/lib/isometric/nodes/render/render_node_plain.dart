@@ -27,8 +27,8 @@ void renderNodePlain() {
       );
     case NodeOrientation.Half_West:
       return RenderNode.renderStandardNodeShaded(
-        srcX: AtlasNode.Node_Plain_Half_Row_X,
-        srcY: AtlasNode.Node_Plain_Half_Row_Y,
+        srcX: AtlasNode.Node_Plain_Half_Column_X,
+        srcY: AtlasNode.Node_Plain_Half_Column_Y,
       );
     case NodeOrientation.Corner_Top:
       return RenderNode.renderStandardNodeShaded(
