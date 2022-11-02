@@ -5,9 +5,9 @@ import 'package:just_audio/just_audio.dart';
 class AudioSingle {
   final String name;
   late AudioSource source;
-  final players = <AudioPlayer>[];
   late double volume;
   late double maxDistance;
+  final audioPlayer = AudioPlayer();
 
   String get url => 'assets/audio/sounds/$name.mp3';
 
@@ -17,6 +17,14 @@ class AudioSingle {
     this.maxDistance = 200,
   }){
     source = AudioSource.uri(Uri.parse(url));
+    audioPlayer.setAudioSource(source);
+    audioPlayer.processingStateStream.listen(onProcessingStateStreamChanged);
+  }
+
+  void onProcessingStateStreamChanged(ProcessingState state){
+    if (state == ProcessingState.completed){
+      audioPlayer.pause();
+    }
   }
 
   void call([double volume = 1.0]){
@@ -39,32 +47,13 @@ class AudioSingle {
   void play({double volume = 1.0}) async {
     final playVolume = this.volume * volume;
     if (playVolume <= 0) return;
-    final player = getAudioPlayer;
-    await player.setVolume(playVolume);
-    if (player.audioSource == null) throw Exception("no audio source");
-    await player.seek(null);
-    if (!player.playing){
-      await player.play().catchError((error){
+    await audioPlayer.setVolume(playVolume);
+    if (audioPlayer.audioSource == null) throw Exception("no audio source");
+    await audioPlayer.seek(null);
+    if (!audioPlayer.playing){
+      await audioPlayer.play().catchError((error){
         print("failed to play $name");
       });
     }
-  }
-
-  AudioPlayer get getAudioPlayer {
-     for (final player in players) {
-       if (player.playing) continue;
-       player.seek(null);
-       return player;
-     }
-
-     final newPlayer = AudioPlayer();
-     newPlayer.setAudioSource(source);
-     newPlayer.processingStateStream.listen((event) {
-        if (event == ProcessingState.completed){
-          newPlayer.pause();
-        }
-     });
-     players.add(newPlayer);
-     return newPlayer;
   }
 }
