@@ -112,7 +112,7 @@ class Connection {
                if (item.itemType != ItemType.Weapon) continue;
                final weaponType = player.weapon.type;
                player.weapon.type = item.subType;
-               item.itemType = weaponType;
+               item.subType = weaponType;
                swapped = true;
                break;
             }
