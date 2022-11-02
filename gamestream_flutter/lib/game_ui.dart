@@ -70,10 +70,10 @@ class GameUI {
               //   color: GameUIConfig.runButtonTextColor,
               //   size: GameUIConfig.runButtonTextFontSize,
               // ),
-              child: watch(GameState.player.weapon.type, buildIconAttackType),
+              child: watch(GamePlayer.weapon.type, buildIconAttackType),
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.white, width: 2),
                 shape: BoxShape.circle,
+                border: Border.all(color: Colors.white, width: 2),
                 color: GameUIConfig.runButtonColor,
               ),
             ),
@@ -250,4 +250,31 @@ class GameUI {
           buildWatchBool(GameState.player.questAdded, buildContainerQuestUpdated),
         ],
       );
+
+  static Widget buildPanelPlayerEquippedAttackType(int bodyType) =>
+      Container(
+        color: brownLight,
+        width: 150,
+        height: 150,
+        padding: const EdgeInsets.all(6),
+        child: buildIconAttackType(bodyType),
+      );
+
+  static Widget buildColumnInventory() =>
+    Column(
+      children: [
+        watch(GamePlayer.weapon.type, GameUI.buildPanelPlayerEquippedAttackType),
+        watch(GamePlayer.weapons, buildColumnPlayerWeapons),
+      ],
+    );
+
+  static Widget buildColumnPlayerWeapons(List<Weapon> weapons) =>
+      Container(
+        color: brownLight,
+        width: 300,
+        height: 400,
+        padding: const EdgeInsets.all(6),
+        child: text("weapons"),
+      );
+
 }

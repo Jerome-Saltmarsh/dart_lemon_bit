@@ -45,17 +45,12 @@ class Player {
   final questsInProgress = Watch<List<Quest>>([], onChanged: onQuestsInProgressChanged);
   final questsCompleted = Watch<List<Quest>>([]);
 
-  final weapons = Watch(<Weapon>[]);
-  final weapon = AttackSlot();
-  // final weaponSlot1 = AttackSlot();
-  // final weaponSlot2 = AttackSlot();
-  // final weaponSlot3 = AttackSlot();
 
   // Properties
   bool get dead => !alive.value;
 
-  double get weaponRoundPercentage => weapon.capacity.value == 0
-      ? 0 : weapon.rounds.value / weapon.capacity.value;
+  double get weaponRoundPercentage => GamePlayer.weapon.capacity.value == 0
+      ? 0 : GamePlayer.weapon.rounds.value / GamePlayer.weapon.capacity.value;
 
 
   static void onPlayerCharacterStateChanged(int characterState){

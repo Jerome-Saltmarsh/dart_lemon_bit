@@ -305,13 +305,13 @@ class ServerResponseReader with ByteReader {
        GameState.player.points.value = readInt();
         break;
       case ApiPlayer.Weapon_Type:
-       GameState.player.weapon.type.value = readByte();
+        GamePlayer.weapon.type.value = readByte();
         break;
       case ApiPlayer.Weapon_Rounds:
-       GameState.player.weapon.rounds.value = readInt();
+        GamePlayer.weapon.rounds.value = readInt();
         break;
       case ApiPlayer.Weapon_Capacity:
-       GameState.player.weapon.capacity.value = readInt();
+        GamePlayer.weapon.capacity.value = readInt();
         break;
       case ApiPlayer.Message:
        GameState.player.message.value = readString();
@@ -503,7 +503,7 @@ class ServerResponseReader with ByteReader {
   }
 
   void readPlayerWeapons() {
-   GameState.player.weapons.value = readWeapons();
+   GamePlayer.weapons.value = readWeapons();
   }
 
   void readPlayerTarget() {

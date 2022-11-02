@@ -322,8 +322,8 @@ class GameEvents {
       case PlayerEvent.Weapon_Rounds:
         final rounds = serverResponseReader.readInt();
         final capacity = serverResponseReader.readInt();
-        GameState.player.weapon.rounds.value = rounds;
-        GameState.player.weapon.capacity.value = capacity;
+        GamePlayer.weapon.rounds.value = rounds;
+        GamePlayer.weapon.capacity.value = capacity;
         break;
       case PlayerEvent.Scene_Changed:
         return GameCamera.centerOnPlayer();

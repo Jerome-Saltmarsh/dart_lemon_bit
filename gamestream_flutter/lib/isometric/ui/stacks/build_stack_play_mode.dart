@@ -11,7 +11,7 @@ import 'package:gamestream_flutter/ui/builders/build_text_box.dart';
 Widget buildStackPlay() =>
   buildPage(
     children: [
-      Positioned(top: 75, right: 16, child: buildWatchInventoryVisible()),
+      Positioned(top: 75, right: 16, child: buildWatchBool(GameState.inventoryVisible, GameUI.buildColumnInventory)),
       Positioned(top: 50, left: 0, child: buildPanelStore()),
       Positioned(top: 0, left: 0, child: Container(
         width: Engine.screen.width,
@@ -78,12 +78,7 @@ Widget buildWatchMouseTargetName(){
    });
 }
 
-Widget buildWatchInventoryVisible(){
-  return watch(GameState.inventoryVisible, (bool inventoryVisible){
-    if (!inventoryVisible) return const SizedBox();
-    return watch(GameState.player.weapon.type, buildColumnPlayerWeapons);
-  });
-}
+
 
 Widget buildColumnTeleport(){
   return Container(
