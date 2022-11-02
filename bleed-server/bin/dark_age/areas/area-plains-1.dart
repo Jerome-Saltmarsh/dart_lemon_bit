@@ -11,19 +11,22 @@ class AreaPlains1 extends DarkAgeArea {
     init();
   }
 
+  
+
   void init(){
     characters.add(
         Npc(
           game: this,
-          x: 740,
+          x: 1000,
           y: 825,
           z: tileHeight,
           weapon: buildWeaponUnarmed(),
           team: 1,
           name: "Roth",
           health: 100,
-          onInteractedWith: (Player player){
+          onInteractedWith: (Player player) {
              print("player interacted with Roth");
+             // player.setSto
           }
         )
     );

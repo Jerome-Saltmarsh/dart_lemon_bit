@@ -27,6 +27,8 @@
     - talk cursor
 [ ] quick-game
 [ ] map-editor
+    - fix add remove columns
+    - adding tree auto adds tree top
 
 02.11.2022
 [x] attack button has weapon icon

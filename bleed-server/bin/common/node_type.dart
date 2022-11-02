@@ -145,7 +145,7 @@ class NodeType {
 
   static int getDefaultOrientation(int value){
      if (supportsOrientationEmpty(value)) {
-       return value;
+       return NodeOrientation.None;
      }
      if (supportsOrientationSolid(value)) {
        return NodeOrientation.Solid;

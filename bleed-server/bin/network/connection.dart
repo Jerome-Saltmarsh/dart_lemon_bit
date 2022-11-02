@@ -460,6 +460,17 @@ class Connection {
         nodeType: nodeType,
         nodeOrientation: nodeOrientation,
     );
+    if (nodeType == NodeType.Tree_Bottom){
+      final topIndex = nodeIndex + game.scene.gridArea;
+      if (topIndex < game.scene.gridVolume){
+        game.setNode(
+          nodeIndex: nodeIndex + game.scene.gridArea,
+          nodeType: NodeType.Tree_Top,
+          nodeOrientation: nodeOrientation,
+        );
+      }
+    }
+
   }
 
   void handleNpcTalkSelectOption(Player player, List<String> arguments) {
