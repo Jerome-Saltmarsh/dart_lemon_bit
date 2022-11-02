@@ -21,6 +21,10 @@ class Scene {
   var dirty = false;
   final List<GameObject> gameObjects;
 
+  final Uint8List spawnPointIndexes;
+  final Uint8List spawnPointTypes;
+  final Uint8List spawnPointAmount;
+
   late double gridRowLength;
   late double gridColumnLength;
   late double gridHeightLength;
@@ -36,6 +40,9 @@ class Scene {
     required this.gridRows,
     required this.gridColumns,
     required this.gameObjects,
+    required this.spawnPointIndexes,
+    required this.spawnPointTypes,
+    required this.spawnPointAmount,
   }) {
     refreshGridMetrics();
   }

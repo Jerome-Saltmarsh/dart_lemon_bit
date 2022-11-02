@@ -59,14 +59,19 @@ class DarkAgeScenes {
       mountains_3 = await loadScene('mountains-3');
       mountains_4 = await loadScene('mountains-4');
       shrine_1 = await loadScene('shrine-1');
+
+      final emptyList = Uint8List(0);
       empty = Scene(
           name: 'empty',
           gameObjects: [],
           gridColumns: 0,
           gridHeight: 0,
           gridRows: 0,
-          nodeOrientations: Uint8List(0),
-          nodeTypes: Uint8List(0),
+          nodeOrientations: emptyList,
+          nodeTypes: emptyList,
+          spawnPointAmount: emptyList,
+          spawnPointIndexes: emptyList,
+          spawnPointTypes: emptyList,
       );
       print("Loading dark age scenes finished");
   }

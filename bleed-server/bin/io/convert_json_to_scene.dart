@@ -22,6 +22,10 @@ Scene convertJsonToScene(Json json, String name) {
   final types = Uint8List(total);
   final orientations = Uint8List(total);
 
+  final spawnPointIndexes = Uint8List(0);
+  final spawnPointTypes = Uint8List(0);
+  final spawnPointAmounts = Uint8List(0);
+
   for(var i = 0; i < total; i++){
     assert (nodeTypesDynamic.length == total);
     var nodeType = nodeTypesDynamic[i];
@@ -49,6 +53,9 @@ Scene convertJsonToScene(Json json, String name) {
     gridHeight: height,
     gridColumns: columns,
     gameObjects: jsonGameObjects.map(convertDynamicToGameObject).toList(),
+    spawnPointTypes: spawnPointTypes,
+    spawnPointIndexes: spawnPointIndexes,
+    spawnPointAmount: spawnPointAmounts,
   );
 }
 
