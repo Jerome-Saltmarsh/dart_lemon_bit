@@ -100,6 +100,18 @@ class Connection {
 
     switch (clientRequest) {
 
+      case ClientRequest.Inventory_Move:
+        if (arguments.length < 3)  return errorArgsExpected(3, arguments);
+        final indexFrom = int.tryParse(arguments[1]);
+        final indexTo = int.tryParse(arguments[1]);
+        if (indexFrom == null) return errorInvalidArg('index from is null');
+        if (indexTo == null) return errorInvalidArg('index from is null');
+        if (player.inventory.isNotEmpty){
+          player.inventory.first.x = 5;
+        }
+        player.writePlayerInventory();
+        return;
+
       case ClientRequest.Teleport:
         handleClientRequestTeleport(player);
         return;

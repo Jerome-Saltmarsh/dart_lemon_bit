@@ -332,6 +332,16 @@ class GameNetwork {
     );
   }
 
+  static void sendClientRequestInventoryMove({
+    required int indexFrom,
+    required int indexTo,
+  }) {
+    sendClientRequest(
+      ClientRequest.Inventory_Move,
+      "$indexFrom $indexTo",
+    );
+  }
+
   static void sendClientRequestGameObjectTranslate({
     required double tx,
     required double ty,

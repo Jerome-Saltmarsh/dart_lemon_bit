@@ -33,5 +33,6 @@ class ClientRequest {
   static const Spawn_Node_Data_Modify = 31;
   static const Game_Waves = 32;
   static const Edit = 33;
+  static const Inventory_Move = 34;
 }
 

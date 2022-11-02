@@ -409,6 +409,11 @@ class GameUI {
               onAccept: (int? index){
                 // send request to move inventory item to new index
                 print("accepted");
+                if (index == null) return;
+                GameNetwork.sendClientRequestInventoryMove(
+                    indexFrom: index,
+                    indexTo: row + column,
+                );
               },
               builder: (context, candidate, index){
                 return buildAtlasImage(
