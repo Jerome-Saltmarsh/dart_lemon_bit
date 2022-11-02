@@ -29,9 +29,6 @@ class Player {
   final mouseTargetName = Watch<String?>(null);
   final mouseTargetAllie = Watch<bool>(false);
   final mouseTargetHealth = Watch(0.0);
-  final armourType = Watch(BodyType.tunicPadded);
-  final headType = Watch(HeadType.None);
-  final pantsType = Watch(LegType.white);
   final health = Watch(0);
   final experience = Watch(0.0);
   final level = Watch(1);

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/events/on_visibility_changed_message_box.dart';
-import 'package:gamestream_flutter/isometric/ui/buttons/build_button_equip_attack_type.dart';
+import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/stacks/build_stack_game_type_skirmish.dart';
 import 'package:gamestream_flutter/isometric/ui/stacks/build_stack_play_mode.dart';
@@ -260,10 +260,24 @@ class GameUI {
         child: buildIconAttackType(bodyType),
       );
 
+  static Widget buildPanelPlayerEquippedBodyType(int bodyType) =>
+      Container(
+        color: brownLight,
+        width: 150,
+        height: 150,
+        padding: const EdgeInsets.all(6),
+        child: buildIconBodyType(bodyType),
+      );
+
   static Widget buildColumnInventory() =>
     Column(
       children: [
-        watch(GamePlayer.weapon.type, GameUI.buildPanelPlayerEquippedAttackType),
+        Row(
+          children: [
+            watch(GamePlayer.weapon.type, GameUI.buildPanelPlayerEquippedAttackType),
+            watch(GamePlayer.bodyType, GameUI.buildPanelPlayerEquippedBodyType),
+          ],
+        ),
         watch(GamePlayer.weapons, buildColumnPlayerWeapons),
       ],
     );
@@ -275,6 +289,26 @@ class GameUI {
         height: 400,
         padding: const EdgeInsets.all(6),
         child: text("weapons"),
+      );
+
+  static Widget buildIconAttackType(int type) =>
+      buildAtlasImage(
+        image: GameImages.atlasIcons,
+        srcX: AtlasIconsX.getWeaponType(type),
+        srcY: AtlasIconsY.getWeaponType(type),
+        srcWidth: AtlasIconSize.getWeaponType(type),
+        srcHeight: AtlasIconSize.getWeaponType(type),
+        scale: 3.0,
+      );
+
+  static Widget buildIconBodyType(int type) =>
+      buildAtlasImage(
+        image: GameImages.atlasIcons,
+        srcX: AtlasIconsX.getBodyType(type),
+        srcY: AtlasIconsY.getBodyType(type),
+        srcWidth: AtlasIconSize.getBodyType(type),
+        srcHeight: AtlasIconSize.getBodyType(type),
+        scale: 3.0,
       );
 
 }

@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/isometric/ui/buttons/build_button_equip_attack_type.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -111,7 +110,7 @@ Widget buildColumnSelectPlayerPants(){
 }
 
 Widget buildButtonSelectPlayerHead(int headType) {
-   return watch(GameState.player.headType, (int playerHeadType){
+   return watch(GamePlayer.headType, (int playerHeadType){
       return container(
           child: text(HeadType.getName(headType)),
           action: () => GameNetwork.sendClientRequestSetHeadType(headType),
@@ -121,7 +120,7 @@ Widget buildButtonSelectPlayerHead(int headType) {
 }
 
 Widget _buildButtonPants(int pantsType) {
-  return watch(GameState.player.pantsType, (int playerPantsType){
+  return watch(GamePlayer.pantsType, (int playerPantsType){
     return container(
       child: text(LegType.getName(pantsType)),
       action: () => GameNetwork.sendClientRequestSetPantsType(pantsType),
@@ -147,7 +146,7 @@ Widget _buildButtonPurchaseWeapon(Weapon weapon) {
 }
 
 Widget _buildSelectArmourType(int type) {
-   return watch(GameState.player.armourType, (int equipped){
+   return watch(GamePlayer.bodyType, (int equipped){
      return container(
          child: text(BodyType.getName(type)),
          action: () => GameNetwork.sendClientRequestSetArmour(type),

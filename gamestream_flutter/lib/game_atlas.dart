@@ -18,6 +18,13 @@ class AtlasIconsX {
     AttackType.Unarmed: 384,
     AttackType.Handgun: 320,
   } [weaponType] ?? 0.0;
+
+  static double getBodyType(int bodyType) => <int, double> {
+      BodyType.shirtBlue: 352,
+      BodyType.shirtCyan: 384,
+      BodyType.swat: 416,
+      BodyType.tunicPadded: 448,
+  } [bodyType] ?? 0.0;
 }
 
 class AtlasIconsY {
@@ -40,6 +47,10 @@ class AtlasIconsY {
     AttackType.Assault_Rifle: 32,
     AttackType.Handgun: 32,
   } [weaponType] ?? 0.0;
+
+  static double getBodyType(int bodyType) => <int, double> {
+    BodyType.shirtBlue: 32,
+  } [bodyType] ?? 0.0;
 }
 
 class AtlasIconSize {
@@ -51,6 +62,10 @@ class AtlasIconSize {
   static double getWeaponType(int weaponType) => <int, double> {
     AttackType.Staff: 32,
   } [weaponType] ?? Default;
+
+  static double getBodyType(int bodyType) => <int, double> {
+    BodyType.shirtBlue: 32,
+  } [bodyType] ?? Default;
 }
 
 class AtlasNodeX {
