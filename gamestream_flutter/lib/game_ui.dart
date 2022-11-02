@@ -288,9 +288,29 @@ class GameUI {
             watch(GamePlayer.headType, buildPanelPlayerEquippedHeadType),
           ],
         ),
-        watch(GamePlayer.weapons, buildColumnPlayerWeapons),
+        watch(GameInventory.reads, buildInventory),
       ],
     );
+
+  static Widget buildInventory(int reads) {
+
+    var values = <Widget>[];
+    for (var i = 0; i < GameInventory.total; i++){
+        values.add(text('${GameInventory.itemType[i]} ${GameInventory.itemSubType[i]}'));
+    }
+    return Container(
+      color: brownLight,
+      width: 300,
+      height: 400,
+      padding: const EdgeInsets.all(6),
+      child: Column(
+        children: values,
+      ),
+    );
+  }
+
+
+
 
   static Widget buildColumnPlayerWeapons(List<Weapon> weapons) =>
       Container(

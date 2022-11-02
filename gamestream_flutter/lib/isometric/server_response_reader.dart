@@ -321,6 +321,7 @@ class ServerResponseReader with ByteReader {
           GameInventory.itemType[i] = readByte();
           GameInventory.itemSubType[i] = readByte();
         }
+        GameInventory.reads.value++;
         break;
       case ApiPlayer.Message:
        GameState.player.message.value = readString();
