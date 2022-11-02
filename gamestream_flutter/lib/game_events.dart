@@ -486,7 +486,7 @@ class GameEvents {
     GameState.triggerAlarmNoMessageReceivedFromServer.value = value > 200;
   }
 
-  static void onInventoryVisibleChanged(bool inventoryVisible){
+  static void onChangedInventoryVisible(bool inventoryVisible){
     GameAudio.click_sound_8();
     if (!inventoryVisible && GameState.player.storeVisible.value) {
       GameNetwork.sendClientRequestStoreClose();
@@ -495,6 +495,7 @@ class GameEvents {
       GameCamera.translateX = 200;
     } else {
       GameCamera.translateX = 0;
+      GameCanvas.cursorVisible = true;
     }
   }
 

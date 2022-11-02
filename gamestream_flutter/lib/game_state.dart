@@ -99,7 +99,7 @@ class GameState {
 
   static final ambientShade = Watch(Shade.Bright, onChanged: GameEvents.onChangedAmbientShade);
 
-  static final inventoryOpen = Watch(false, onChanged: GameEvents.onInventoryVisibleChanged);
+  static final inventoryOpen = Watch(false, onChanged: GameEvents.onChangedInventoryVisible);
 
   // WATCHES
 
