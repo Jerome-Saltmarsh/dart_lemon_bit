@@ -19,20 +19,16 @@ Widget buildAtlasImageButton({
   onPressed(
     action: action,
     hint: hint,
-    child: onPressed(
-      action: action,
-      hint: hint,
-      child: Container(
-        width: srcWidth,
-        height: srcHeight,
-        child: buildAtlasImage(
-            image: image,
-            srcX: srcX,
-            srcY: srcY,
-            srcWidth: srcWidth,
-            srcHeight: srcHeight,
-            scale: scale,
-        ),
+    child: Container(
+      width: srcWidth,
+      height: srcHeight,
+      child: buildAtlasImage(
+        image: image,
+        srcX: srcX,
+        srcY: srcY,
+        srcWidth: srcWidth,
+        srcHeight: srcHeight,
+        scale: scale,
       ),
     ),
   );

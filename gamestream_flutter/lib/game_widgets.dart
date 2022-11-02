@@ -137,6 +137,7 @@ Widget onPressed({
           ? SystemMouseCursors.click
           : SystemMouseCursors.forbidden,
       child: GestureDetector(
+         behavior: HitTestBehavior.opaque,
           child: child,
           onSecondaryTap: onRightClick != null ? (){
             onRightClick.call();
