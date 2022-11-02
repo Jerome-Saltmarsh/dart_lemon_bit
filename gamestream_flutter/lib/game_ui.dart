@@ -327,29 +327,32 @@ class GameUI {
   static Widget buildInventoryItem(int i){
     final index = GameInventory.index[i];
      return Positioned(
-         child: Draggable<int>(
-           hitTestBehavior: HitTestBehavior.opaque,
-           data: index,
-           feedback: buildAtlasImage(
-             image: GameImages.atlasIcons,
-             srcX: getInventoryItemSrcX(i),
-             srcY: getInventoryItemSrcY(i),
-             srcWidth: getInventoryItemSrcSize(i),
-             srcHeight: getInventoryItemSrcSize(i),
-           ),
-           child: buildAtlasImage(
-             image: GameImages.atlasIcons,
-             srcX: getInventoryItemSrcX(i),
-             srcY: getInventoryItemSrcY(i),
-             srcWidth: getInventoryItemSrcSize(i),
-             srcHeight: getInventoryItemSrcSize(i),
-           ),
-           childWhenDragging: buildAtlasImage(
-             image: GameImages.atlasIcons,
-             srcX: getInventoryItemSrcX(i),
-             srcY: getInventoryItemSrcY(i),
-             srcWidth: getInventoryItemSrcSize(i),
-             srcHeight: getInventoryItemSrcSize(i),
+         child: MouseRegion(
+           cursor: SystemMouseCursors.click,
+           child: Draggable<int>(
+             hitTestBehavior: HitTestBehavior.opaque,
+             data: index,
+             feedback: buildAtlasImage(
+               image: GameImages.atlasIcons,
+               srcX: getInventoryItemSrcX(i),
+               srcY: getInventoryItemSrcY(i),
+               srcWidth: getInventoryItemSrcSize(i),
+               srcHeight: getInventoryItemSrcSize(i),
+             ),
+             child: buildAtlasImage(
+               image: GameImages.atlasIcons,
+               srcX: getInventoryItemSrcX(i),
+               srcY: getInventoryItemSrcY(i),
+               srcWidth: getInventoryItemSrcSize(i),
+               srcHeight: getInventoryItemSrcSize(i),
+             ),
+             childWhenDragging: buildAtlasImage(
+               image: GameImages.atlasIcons,
+               srcX: getInventoryItemSrcX(i),
+               srcY: getInventoryItemSrcY(i),
+               srcWidth: getInventoryItemSrcSize(i),
+               srcHeight: getInventoryItemSrcSize(i),
+             ),
            ),
          ),
         left: InventoryDimensions.convertIndexToColumn(index) * GameInventory.Size,
