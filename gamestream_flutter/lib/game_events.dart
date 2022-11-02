@@ -316,7 +316,11 @@ class GameEvents {
   static void onPlayerEvent(int event) {
     switch (event) {
       case PlayerEvent.Spawn_Started:
-        return GameAudio.teleport();
+        GameAudio.teleport();
+        break;
+      case PlayerEvent.Inventory_Item_Moved:
+        GameAudio.switch_sounds_4();
+        break;
       case PlayerEvent.Loot_Collected:
         return GameAudio.collect_star_3();
       case PlayerEvent.Weapon_Rounds:
@@ -326,11 +330,14 @@ class GameEvents {
         GamePlayer.weapon.capacity.value = capacity;
         break;
       case PlayerEvent.Scene_Changed:
-        return GameCamera.centerOnPlayer();
+        GameCamera.centerOnPlayer();
+        break;
       case PlayerEvent.Quest_Started:
-        return onPlayerEventQuestStarted();
+        onPlayerEventQuestStarted();
+        break;
       case PlayerEvent.Quest_Completed:
-        return onPlayerEventQuestCompleted();
+        onPlayerEventQuestCompleted();
+        break;
       case PlayerEvent.Interaction_Finished:
         GameState.player.npcTalk.value = null;
         GameState.player.npcTalkOptions.value = [];

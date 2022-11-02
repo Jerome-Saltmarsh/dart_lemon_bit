@@ -106,12 +106,18 @@ class Connection {
         final indexTo = int.tryParse(arguments[2]);
         if (indexFrom == null) return errorInvalidArg('index from is null');
         if (indexTo == null) return errorInvalidArg('index from is null');
+        if (indexFrom == indexTo) return;
+        var itemMoved = false;
         for (final item in player.inventory) {
           if (item.index != indexFrom) continue;
           item.index = indexTo;
+          itemMoved = true;
           break;
         }
         player.writePlayerInventory();
+        if (itemMoved){
+           player.writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
+        }
         return;
 
       case ClientRequest.Teleport:
