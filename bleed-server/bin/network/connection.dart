@@ -105,6 +105,48 @@ class Connection {
         if (player.deadBusyOrPerforming) return;
         final inventoryRequest = int.tryParse(arguments[1]);
         switch (inventoryRequest){
+          case InventoryRequest.Equip:
+            final index = int.tryParse(arguments[2]);
+            var swapped = false;
+            for (final item in player.inventory) {
+              if (item.index != index) continue;
+              switch (item.itemType) {
+                case ItemType.Body:
+                  final previouslyEquippedArmour = player.equippedArmour;
+                  player.equippedArmour = item.subType;
+                  item.subType = previouslyEquippedArmour;
+                  swapped = true;
+                  break;
+                case ItemType.Weapon:
+                  final previous = player.weapon.type;
+                  player.weapon.type = item.subType;
+                  item.subType = previous;
+                  swapped = true;
+                  player.writePlayerWeaponType();
+                  break;
+                case ItemType.Pants:
+                  final previous = player.equippedLegs;
+                  player.equippedLegs = item.subType;
+                  item.subType = previous;
+                  swapped = true;
+                  // todo write player leg type
+                  // player.writePlayer();
+                  break;
+                case ItemType.Head:
+                  final previous = player.equippedHead;
+                  player.equippedHead = item.subType;
+                  item.subType = previous;
+                  // todo write player leg type
+                  swapped = true;
+                  break;
+              }
+              if (swapped) {
+                player.game.setCharacterStateChanging(player);
+                player.writePlayerInventory();
+              }
+            }
+            break;
+
           case InventoryRequest.Equip_Weapon:
             final index = int.tryParse(arguments[2]);
             var swapped = false;

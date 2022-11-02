@@ -338,6 +338,11 @@ class GameNetwork {
       ClientRequest.Inventory, "$inventoryRequest $message",
     );
 
+  static void sendClientRequestInventoryEquip(int index) =>
+      sendClientRequest(
+        ClientRequest.Inventory, "${InventoryRequest.Equip} $index",
+      );
+
   static void sendClientRequestInventoryMove({
     required int indexFrom,
     required int indexTo,

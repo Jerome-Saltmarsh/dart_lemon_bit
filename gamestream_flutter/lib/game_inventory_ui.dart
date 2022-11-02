@@ -17,14 +17,58 @@ class GameInventoryUI {
         },
         child: Column(
           children: [
-            Row(
-              children: [
-                buildContainerWeapon(),
-                watch(GamePlayer.bodyType, buildPanelPlayerEquippedBodyType),
-                watch(GamePlayer.headType, buildPanelPlayerEquippedHeadType),
-              ],
-            ),
-            buildInventory(),
+            buildRowEquippedItems(),
+            buildContainerInventory(),
+          ],
+        ),
+      );
+
+  static Row buildRowEquippedItems() => Row(
+        children: [
+          buildDragTargetWeapon(),
+          buildDragTargetBody(),
+          buildDragTargetHead(),
+        ],
+      );
+
+  static DragTarget<int> buildDragTargetWeapon() =>
+    DragTarget<int>(
+      builder: (context, i, a) {
+        return watch(GamePlayer.weapon.type, buildPanelPlayerEquippedAttackType);
+      },
+      onWillAccept: onDragWillAccept,
+      onAccept: onDragAccept,
+    );
+
+  static Widget buildDragTargetBody() =>
+    DragTarget<int>(
+      builder: (context, i, a) {
+        return watch(GamePlayer.bodyType, buildPanelPlayerEquippedBodyType);
+      },
+      onWillAccept: onDragWillAccept,
+      onAccept: onDragAccept,
+    );
+
+  static Widget buildDragTargetHead() =>
+    DragTarget<int>(
+      builder: (context, i, a) {
+        return watch(GamePlayer.headType, buildPanelPlayerEquippedHeadType);
+      },
+      onWillAccept: onDragWillAccept,
+      onAccept: onDragAccept,
+    );
+
+
+  static Widget buildContainerInventory() =>
+      Container(
+        color: brownLight,
+        width: 400,
+        height: 400,
+        padding: const EdgeInsets.all(6),
+        child: Stack(
+          children: [
+            buildInventorySlotGrid(),
+            watch(GameInventory.reads, buildInventoryItemGrid),
           ],
         ),
       );
@@ -56,39 +100,14 @@ class GameInventoryUI {
         child: buildIconHeadType(headType),
       );
 
-  static DragTarget<int> buildContainerWeapon() {
-    return DragTarget<int>(
-      builder: (context, i, a) {
-        return watch(GamePlayer.weapon.type, buildPanelPlayerEquippedAttackType);
-      },
-      onWillAccept: (int? i){
-        if (i == null) return false;
-        if (GameInventory.itemType[i] != ItemType.Weapon) return false;
-        return true;
-      },
-      onAccept: (int? i){
-        if (i == null) return;
-        GameNetwork.sendClientInventoryRequest(
-          inventoryRequest: InventoryRequest.Equip_Weapon,
-          message: GameInventory.index[i],
-        );
-      },
+  static bool onDragWillAccept(int? i) => i != null;
+
+  static void onDragAccept(int? i){
+    if (i == null) return;
+    GameNetwork.sendClientRequestInventoryEquip(
+      GameInventory.index[i]
     );
   }
-
-  static Widget buildInventory() =>
-      Container(
-        color: brownLight,
-        width: 400,
-        height: 400,
-        padding: const EdgeInsets.all(6),
-        child: Stack(
-          children: [
-            buildInventorySlotGrid(),
-            watch(GameInventory.reads, buildInventoryItemGrid),
-          ],
-        ),
-      );
 
   static Widget buildInventoryItemGrid(int reads){
     final children = <Widget>[];
