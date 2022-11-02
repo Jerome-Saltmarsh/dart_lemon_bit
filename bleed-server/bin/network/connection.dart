@@ -102,6 +102,7 @@ class Connection {
 
       case ClientRequest.Inventory:
         if (arguments.length < 2)  return errorArgsExpected(3, arguments);
+        if (player.deadBusyOrPerforming) return;
         final inventoryRequest = int.tryParse(arguments[1]);
         switch (inventoryRequest){
           case InventoryRequest.Equip_Weapon:
@@ -117,6 +118,7 @@ class Connection {
                break;
             }
             if (swapped) {
+              player.game.setCharacterStateChanging(player);
               player.writePlayerInventory();
               player.writePlayerWeaponType();
             }
