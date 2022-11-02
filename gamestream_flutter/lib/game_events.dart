@@ -24,7 +24,7 @@ class GameEvents {
   }
 
   static void onChangedStoreVisible(bool storeVisible){
-    GameState.inventoryVisible.value = storeVisible;
+    GameState.inventoryOpen.value = storeVisible;
   }
 
   static void onChangedPlayerAlive(bool value) {
@@ -483,6 +483,11 @@ class GameEvents {
     GameAudio.click_sound_8();
     if (!inventoryVisible && GameState.player.storeVisible.value) {
       GameNetwork.sendClientRequestStoreClose();
+    }
+    if (inventoryVisible) {
+      GameCamera.translateX = 200;
+    } else {
+      GameCamera.translateX = 0;
     }
   }
 

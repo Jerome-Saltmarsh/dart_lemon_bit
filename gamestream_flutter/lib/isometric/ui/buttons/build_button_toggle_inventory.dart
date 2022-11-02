@@ -6,7 +6,7 @@ Widget buildButtonToggleInventory() {
   return onPressed(
     hint: "Inventory (I)",
     action: GameState.actionToggleInventoryVisible,
-    child: WatchBuilder(GameState.inventoryVisible, (bool inventoryVisible) {
+    child: WatchBuilder(GameState.inventoryOpen, (bool inventoryVisible) {
       if (inventoryVisible){
         return text("Inventory");
       }

@@ -99,7 +99,7 @@ class GameState {
 
   static final ambientShade = Watch(Shade.Bright, onChanged: GameEvents.onChangedAmbientShade);
 
-  static final inventoryVisible = Watch(false, onChanged: GameEvents.onInventoryVisibleChanged);
+  static final inventoryOpen = Watch(false, onChanged: GameEvents.onInventoryVisibleChanged);
 
   // WATCHES
 
@@ -1259,14 +1259,14 @@ class GameState {
     player.gameDialog.value = GameDialog.Quests;
   }
 
-  static void actionToggleInventoryVisible() => inventoryVisible.value = !inventoryVisible.value;
+  static void actionToggleInventoryVisible() => inventoryOpen.value = !inventoryOpen.value;
 
   static void actionInventoryClose(){
-    inventoryVisible.value = false;
+    inventoryOpen.value = false;
   }
 
   static void actionShowInventory(){
-    inventoryVisible.value = true;
+    inventoryOpen.value = true;
   }
 
   static void updateParticleEmitters(){
