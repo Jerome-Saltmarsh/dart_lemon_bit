@@ -288,24 +288,148 @@ class GameUI {
             watch(GamePlayer.headType, buildPanelPlayerEquippedHeadType),
           ],
         ),
-        watch(GameInventory.reads, buildInventory),
+        buildInventory(),
       ],
     );
 
-  static Widget buildInventory(int reads) {
+  static Widget buildInventory() {
+    // return Container(
+    //   color: brownLight,
+    //   width: 300,
+    //   height: 400,
+    //   padding: const EdgeInsets.all(6),
+    //   child: buildCanvas(
+    //       paint: (Canvas canvas, Size size){
+    //           for (var i = 0; i < GameInventory.total; i++){
+    //             final subType = GameInventory.itemSubType[i];
+    //             final x = GameInventory.x[i];
+    //             final y = GameInventory.y[i];
+    //               switch (GameInventory.itemType[i]){
+    //                 case ItemType.Body:
+    //                    Engine.renderExternalCanvas(
+    //                        canvas: canvas,
+    //                        image: GameImages.atlasIcons,
+    //                        srcX: AtlasIconsX.getBodyType(subType),
+    //                        srcY: AtlasIconsY.getBodyType(subType),
+    //                        srcWidth: AtlasIconSize.getBodyType(subType),
+    //                        srcHeight: AtlasIconSize.getBodyType(subType),
+    //                        dstX: x * 32,
+    //                        dstY: y * 32,
+    //                    );
+    //                    break;
+    //                 default:
+    //                   break;
+    //               }
+    //           }
+    //       },
+    //       frame: GameInventory.canvasDrawNotifier),
+    // );
 
-    var values = <Widget>[];
-    for (var i = 0; i < GameInventory.total; i++){
-        values.add(text('${GameInventory.itemType[i]} ${GameInventory.itemSubType[i]}'));
-    }
     return Container(
       color: brownLight,
-      width: 300,
+      width: 400,
       height: 400,
       padding: const EdgeInsets.all(6),
-      child: Column(
-        children: values,
+      child: Stack(
+        children: [
+          buildInventorySlotGrid(),
+          watch(GameInventory.reads, buildInventoryItemGrid),
+        ],
       ),
+    );
+
+  }
+
+  static Widget buildInventoryItemGrid(int reads){
+
+    final children = <Widget>[];
+
+    for (var i = 0; i < GameInventory.total; i++){
+       children.add(buildInventoryItem(i));
+    }
+
+    return Stack(
+      children: children,
+    );
+  }
+
+  static Widget buildInventoryItem(int index){
+     return Positioned(
+         child: buildAtlasImage(
+             image: GameImages.atlasIcons,
+             srcX: getInventoryItemSrcX(index),
+             srcY: getInventoryItemSrcY(index),
+             srcWidth: getInventoryItemSrcSize(index),
+             srcHeight: getInventoryItemSrcSize(index),
+         ),
+        left: GameInventory.x[index] * 32.0,
+        top: GameInventory.y[index] * 32.0,
+     );
+  }
+
+  static double getInventoryItemSrcX(int index){
+      switch (GameInventory.itemType[index]) {
+        case ItemType.Body:
+          return AtlasIconsX.getBodyType(GameInventory.itemSubType[index]);
+        case ItemType.Weapon:
+          return AtlasIconsX.getWeaponType(GameInventory.itemSubType[index]);
+        case ItemType.Head:
+          return AtlasIconsX.getHeadType(GameInventory.itemSubType[index]);
+        default:
+          throw Exception('GameUI.getInventoryItemSrcX($index)');
+      }
+  }
+
+  static double getInventoryItemSrcY(int index){
+    switch (GameInventory.itemType[index]) {
+      case ItemType.Body:
+        return AtlasIconsY.getBodyType(GameInventory.itemSubType[index]);
+      case ItemType.Weapon:
+        return AtlasIconsY.getWeaponType(GameInventory.itemSubType[index]);
+      case ItemType.Head:
+        return AtlasIconsY.getHeadType(GameInventory.itemSubType[index]);
+      default:
+        throw Exception('GameUI.getInventoryItemSrcY($index)');
+    }
+  }
+
+  static double getInventoryItemSrcSize(int index){
+    switch (GameInventory.itemType[index]) {
+      case ItemType.Body:
+        return AtlasIconSize.getBodyType(GameInventory.itemSubType[index]);
+      case ItemType.Weapon:
+        return AtlasIconSize.getWeaponType(GameInventory.itemSubType[index]);
+      case ItemType.Head:
+        return AtlasIconSize.getHeadType(GameInventory.itemSubType[index]);
+      default:
+        throw Exception('GameUI.getInventoryItemSrcSize($index)');
+    }
+  }
+
+  static Widget buildInventorySlotGrid(){
+    final rows = <Widget>[];
+
+    for (var row = 0; row < 5; row++){
+      final columns = <Widget>[];
+      for (var column = 0; column < 10; column++){
+        columns.add(
+            buildAtlasImage(
+              image: GameImages.atlasIcons,
+              srcX: AtlasIconsX.Slot,
+              srcY: AtlasIconsY.Slot,
+              srcWidth: AtlasIconSize.Slot,
+              srcHeight: AtlasIconSize.Slot,
+            )
+        );
+      }
+      rows.add(
+          Row(
+            children: columns,
+          )
+      );
+    }
+    return Column(
+      children: rows,
     );
   }
 

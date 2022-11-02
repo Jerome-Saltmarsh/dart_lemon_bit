@@ -8,6 +8,7 @@ class AtlasIconsX {
   static const Zoom = 48.0;
   static const Weather_Inactive = 153.0;
   static const Weather_Active = 217.0;
+  static const Slot = 288.0;
 
   static double getWeaponType(int weaponType) => <int, double> {
     AttackType.Blade: 288,
@@ -43,6 +44,7 @@ class AtlasIconsY {
   static const Home = 0.0;
   static const Fullscreen = 0.0;
   static const Zoom = 48.0;
+  static const Slot = 64.0;
 
   static double getWeaponType(int weaponType) => <int, double> {
     AttackType.Staff: 0,
@@ -71,6 +73,7 @@ class AtlasIconSize {
   static const Fullscreen = 48.0;
   static const Zoom = 32.0;
   static const Default = 32.0;
+  static const Slot = 32.0;
 
   static double getWeaponType(int weaponType) => <int, double> {
   } [weaponType] ?? Default;
