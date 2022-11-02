@@ -291,19 +291,19 @@ class GameUI {
           Row(
             children: [
               DragTarget<int>(
-                 builder: (context, s, a) {
+                 builder: (context, i, a) {
                    return watch(GamePlayer.weapon.type, buildPanelPlayerEquippedAttackType);
                  },
-                onWillAccept: (int? value){
-                   if (value == null) return false;
-                   if (GameInventory.itemType[value] != ItemType.Weapon) return false;
+                onWillAccept: (int? i){
+                   if (i == null) return false;
+                   if (GameInventory.itemType[i] != ItemType.Weapon) return false;
                    return true;
                 },
-                onAccept: (int? value){
-                   if (value == null) return;
+                onAccept: (int? i){
+                   if (i == null) return;
                    GameNetwork.sendClientInventoryRequest(
                       inventoryRequest: InventoryRequest.Equip_Weapon,
-                      message: value,
+                      message: GameInventory.index[i],
                    );
                 },
               ),
@@ -347,7 +347,7 @@ class GameUI {
            cursor: SystemMouseCursors.click,
            child: Draggable<int>(
              hitTestBehavior: HitTestBehavior.opaque,
-             data: index,
+             data: i,
              feedback: buildAtlasImage(
                image: GameImages.atlasIcons,
                srcX: getInventoryItemSrcX(i),
@@ -426,12 +426,10 @@ class GameUI {
               onWillAccept: (int? index){
                 return true;
               },
-              onAccept: (int? index){
-                // send request to move inventory item to new index
-                print("accepted");
-                if (index == null) return;
+              onAccept: (int? i){
+                if (i == null) return;
                 GameNetwork.sendClientRequestInventoryMove(
-                    indexFrom: index,
+                    indexFrom: GameInventory.index[i],
                     indexTo: InventoryDimensions.convertToIndex(row: row, column: column),
                 );
               },
