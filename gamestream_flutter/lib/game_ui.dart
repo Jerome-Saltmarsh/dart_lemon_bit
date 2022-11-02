@@ -279,53 +279,29 @@ class GameUI {
       );
 
   static Widget buildColumnInventory() =>
-    Column(
-      children: [
-        Row(
-          children: [
-            watch(GamePlayer.weapon.type, buildPanelPlayerEquippedAttackType),
-            watch(GamePlayer.bodyType, buildPanelPlayerEquippedBodyType),
-            watch(GamePlayer.headType, buildPanelPlayerEquippedHeadType),
-          ],
-        ),
-        buildInventory(),
-      ],
+    MouseRegion(
+      onEnter: (event){
+        GameCanvas.cursorVisible = false;
+      },
+      onExit: (event){
+        GameCanvas.cursorVisible = true;
+      },
+      child: Column(
+        children: [
+          Row(
+            children: [
+              watch(GamePlayer.weapon.type, buildPanelPlayerEquippedAttackType),
+              watch(GamePlayer.bodyType, buildPanelPlayerEquippedBodyType),
+              watch(GamePlayer.headType, buildPanelPlayerEquippedHeadType),
+            ],
+          ),
+          buildInventory(),
+        ],
+      ),
     );
 
-  static Widget buildInventory() {
-    // return Container(
-    //   color: brownLight,
-    //   width: 300,
-    //   height: 400,
-    //   padding: const EdgeInsets.all(6),
-    //   child: buildCanvas(
-    //       paint: (Canvas canvas, Size size){
-    //           for (var i = 0; i < GameInventory.total; i++){
-    //             final subType = GameInventory.itemSubType[i];
-    //             final x = GameInventory.x[i];
-    //             final y = GameInventory.y[i];
-    //               switch (GameInventory.itemType[i]){
-    //                 case ItemType.Body:
-    //                    Engine.renderExternalCanvas(
-    //                        canvas: canvas,
-    //                        image: GameImages.atlasIcons,
-    //                        srcX: AtlasIconsX.getBodyType(subType),
-    //                        srcY: AtlasIconsY.getBodyType(subType),
-    //                        srcWidth: AtlasIconSize.getBodyType(subType),
-    //                        srcHeight: AtlasIconSize.getBodyType(subType),
-    //                        dstX: x * 32,
-    //                        dstY: y * 32,
-    //                    );
-    //                    break;
-    //                 default:
-    //                   break;
-    //               }
-    //           }
-    //       },
-    //       frame: GameInventory.canvasDrawNotifier),
-    // );
-
-    return Container(
+  static Widget buildInventory() =>
+    Container(
       color: brownLight,
       width: 400,
       height: 400,
@@ -337,8 +313,6 @@ class GameUI {
         ],
       ),
     );
-
-  }
 
   static Widget buildInventoryItemGrid(int reads){
     final children = <Widget>[];
@@ -429,6 +403,13 @@ class GameUI {
       for (var column = 0; column < 10; column++){
         columns.add(
             DragTarget<int>(
+              onWillAccept: (int? index){
+                return true;
+              },
+              onAccept: (int? index){
+                // send request to move inventory item to new index
+                print("accepted");
+              },
               builder: (context, candidate, index){
                 return buildAtlasImage(
                   image: GameImages.atlasIcons,
