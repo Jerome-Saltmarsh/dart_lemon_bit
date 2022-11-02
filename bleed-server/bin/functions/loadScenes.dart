@@ -8,7 +8,7 @@
 // import '../classes/character.dart';
 // import '../classes/scene.dart';
 // import '../common/CharacterType.dart';
-// import '../common/SceneJson.dart';
+// import '../common/scene_json';
 // import '../common/SlotType.dart';
 // import '../common/Tile.dart';
 //

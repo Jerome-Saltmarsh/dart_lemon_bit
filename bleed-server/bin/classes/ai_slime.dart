@@ -1,5 +1,5 @@
 
-import '../common/ServerResponse.dart';
+import '../common/server_response';
 import '../common/attack_type.dart';
 import '../common/character_type.dart';
 import 'ai.dart';

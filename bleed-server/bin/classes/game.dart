@@ -681,8 +681,6 @@ abstract class Game {
 
   Player spawnPlayer();
 
-  void onPlayerSelectCharacterType(Player player, CharacterSelection value) {}
-
   void playersWriteWeather() {
     for (final player in players) {
       player.writeWeather();

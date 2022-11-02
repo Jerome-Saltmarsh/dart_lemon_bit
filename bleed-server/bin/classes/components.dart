@@ -1,6 +1,6 @@
 import 'package:lemon_math/library.dart';
 
-import '../common/Direction.dart';
+import '../common/direction.dart';
 
 class FaceDirection {
   var _faceAngle = 0.0;

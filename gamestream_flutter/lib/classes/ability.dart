@@ -1,6 +1,5 @@
 
-import 'package:bleed_common/AbilityType.dart';
-import 'package:lemon_watch/watch.dart';
+import 'package:gamestream_flutter/library.dart';
 
 class Ability {
   final int index;
