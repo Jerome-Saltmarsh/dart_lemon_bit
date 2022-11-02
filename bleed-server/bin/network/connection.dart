@@ -103,11 +103,13 @@ class Connection {
       case ClientRequest.Inventory_Move:
         if (arguments.length < 3)  return errorArgsExpected(3, arguments);
         final indexFrom = int.tryParse(arguments[1]);
-        final indexTo = int.tryParse(arguments[1]);
+        final indexTo = int.tryParse(arguments[2]);
         if (indexFrom == null) return errorInvalidArg('index from is null');
         if (indexTo == null) return errorInvalidArg('index from is null');
-        if (player.inventory.isNotEmpty){
-          player.inventory.first.index = 5;
+        for (final item in player.inventory) {
+          if (item.index != indexFrom) continue;
+          item.index = indexTo;
+          break;
         }
         player.writePlayerInventory();
         return;

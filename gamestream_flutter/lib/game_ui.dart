@@ -413,7 +413,7 @@ class GameUI {
                 if (index == null) return;
                 GameNetwork.sendClientRequestInventoryMove(
                     indexFrom: index,
-                    indexTo: row + column,
+                    indexTo: InventoryDimensions.convertToIndex(row: row, column: column),
                 );
               },
               builder: (context, candidate, index){
