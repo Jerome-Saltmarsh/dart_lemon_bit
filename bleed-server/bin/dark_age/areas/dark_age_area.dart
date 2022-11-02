@@ -1,4 +1,6 @@
 
+import 'package:lemon_math/functions/give_or_take.dart';
+
 import '../../classes/library.dart';
 import '../../common/library.dart';
 import '../../engine.dart';
@@ -15,12 +17,17 @@ class DarkAgeArea extends GameDarkAge {
 
     for (var i = 0; i < volume; i++) {
       if (scene.nodeTypes[i] == NodeType.Spawn) {
-        final instance = spawnZombieAtIndex(i);
-        instance.maxHealth = 10;
-        instance.health = 10;
-        instance.respawn = 200;
-        instance.maxSpeed = 3;
-        continue;
+        for (var j = 0; j < 4; j++){
+          final instance = spawnZombieAtIndex(i);
+          instance.x += giveOrTake(50);
+          instance.y += giveOrTake(50);
+          instance.clearDest();
+          instance.maxHealth = 10;
+          instance.health = 10;
+          instance.respawn = 200;
+          instance.maxSpeed = 3;
+          continue;
+        }
       }
     }
   }
