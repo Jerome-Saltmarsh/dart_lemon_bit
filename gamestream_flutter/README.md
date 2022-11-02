@@ -11,26 +11,13 @@
 [ ] add weapon fire staff
 [ ] editor - gameobjects
 [ ] short sword
-[ ] loot-drop
-[ ] equipment quality - 
-    - high
-    - normal
-    - low
-[ ] equipment class - 
-    - normal 
-    - magic 
-    - rare
-    - super-rare
-
-[ ] dark-age
-    - inventory
-    - talk cursor
-[ ] quick-game
-[ ] map-editor
-    - fix add remove columns
-    - adding tree auto adds tree top
+[ ] editor fix add remove columns
+[ ] dark-age cursor interact with npc
+[ ] dark-age loot-drop
+    
 
 02.11.2022
+[x] editor adding tree auto adds tree top
 [x] attack button has weapon icon
 [x] fix equip sword
 

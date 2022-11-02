@@ -13,5 +13,6 @@ void movePlayerToCrystal(Player player) {
     player.x = gameObject.x + getAdjacent(angle, distance);
     player.y = gameObject.y + getOpposite(angle, distance);
     player.z = gameObject.z;
+    return;
   }
 }

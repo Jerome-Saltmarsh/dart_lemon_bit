@@ -1,5 +1,6 @@
 
 import '../../classes/library.dart';
+import '../../common/library.dart';
 import '../../engine.dart';
 import '../game_dark_age.dart';
 
@@ -9,7 +10,20 @@ class DarkAgeArea extends GameDarkAge {
   var mapTile = 0;
 
   DarkAgeArea(Scene scene, {required this.mapTile})
-      : super(scene, engine.environmentAboveGround);
+      : super(scene, engine.environmentAboveGround) {
+    final volume = scene.gridVolume;
+
+    for (var i = 0; i < volume; i++) {
+      if (scene.nodeTypes[i] == NodeType.Spawn) {
+        final instance = spawnZombieAtIndex(i);
+        instance.maxHealth = 10;
+        instance.health = 10;
+        instance.respawn = 200;
+        instance.maxSpeed = 3;
+        continue;
+      }
+    }
+  }
 
   void customUpdate() {
     super.customUpdate();
