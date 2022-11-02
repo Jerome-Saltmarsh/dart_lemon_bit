@@ -341,13 +341,10 @@ class GameUI {
   }
 
   static Widget buildInventoryItemGrid(int reads){
-
     final children = <Widget>[];
-
     for (var i = 0; i < GameInventory.total; i++){
        children.add(buildInventoryItem(i));
     }
-
     return Stack(
       children: children,
     );
@@ -355,12 +352,30 @@ class GameUI {
 
   static Widget buildInventoryItem(int index){
      return Positioned(
-         child: buildAtlasImage(
+         child: Draggable<int>(
+           hitTestBehavior: HitTestBehavior.opaque,
+           data: index,
+           feedback: buildAtlasImage(
              image: GameImages.atlasIcons,
              srcX: getInventoryItemSrcX(index),
              srcY: getInventoryItemSrcY(index),
              srcWidth: getInventoryItemSrcSize(index),
              srcHeight: getInventoryItemSrcSize(index),
+           ),
+           child: buildAtlasImage(
+               image: GameImages.atlasIcons,
+               srcX: getInventoryItemSrcX(index),
+               srcY: getInventoryItemSrcY(index),
+               srcWidth: getInventoryItemSrcSize(index),
+               srcHeight: getInventoryItemSrcSize(index),
+           ),
+           childWhenDragging: buildAtlasImage(
+             image: GameImages.atlasIcons,
+             srcX: getInventoryItemSrcX(index),
+             srcY: getInventoryItemSrcY(index),
+             srcWidth: getInventoryItemSrcSize(index),
+             srcHeight: getInventoryItemSrcSize(index),
+           ),
          ),
         left: GameInventory.x[index] * 32.0,
         top: GameInventory.y[index] * 32.0,
@@ -413,12 +428,16 @@ class GameUI {
       final columns = <Widget>[];
       for (var column = 0; column < 10; column++){
         columns.add(
-            buildAtlasImage(
-              image: GameImages.atlasIcons,
-              srcX: AtlasIconsX.Slot,
-              srcY: AtlasIconsY.Slot,
-              srcWidth: AtlasIconSize.Slot,
-              srcHeight: AtlasIconSize.Slot,
+            DragTarget<int>(
+              builder: (context, candidate, index){
+                return buildAtlasImage(
+                  image: GameImages.atlasIcons,
+                  srcX: AtlasIconsX.Slot,
+                  srcY: AtlasIconsY.Slot,
+                  srcWidth: AtlasIconSize.Slot,
+                  srcHeight: AtlasIconSize.Slot,
+                );
+              },
             )
         );
       }
@@ -432,9 +451,6 @@ class GameUI {
       children: rows,
     );
   }
-
-
-
 
   static Widget buildColumnPlayerWeapons(List<Weapon> weapons) =>
       Container(
