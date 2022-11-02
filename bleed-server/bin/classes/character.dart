@@ -7,7 +7,6 @@ import '../functions/withinRadius.dart';
 import '../utilities.dart';
 import 'collider.dart';
 import 'components.dart';
-import 'game.dart';
 import 'player.dart';
 import 'position3.dart';
 import 'weapon.dart';

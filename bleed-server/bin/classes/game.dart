@@ -120,6 +120,16 @@ abstract class Game {
     value.y += getOpposite(angle, distance);
   }
 
+  double getDistanceFromPlayerMouse(Player player, Position3 position) =>
+     getDistanceV3(
+         player.mouseGridX,
+         player.mouseGridY,
+         player.z,
+         position.x,
+         position.y,
+         position.z,
+     );
+
   void onPlayerUpdateRequestedReceived({
     required Player player,
     required int direction,
@@ -154,10 +164,9 @@ abstract class Game {
     if (cursorAction == CursorAction.Set_Target) {
       var closestDistance = 9999.0;
       Character? closestCharacter;
-      for (final character in characters){
+      for (final character in characters) {
          if (character.deadOrDying) continue;
-         if (onSameTeam(player, character)) continue;
-         final distance = getDistanceV3(player.mouseGridX, player.mouseGridY, player.z, character.x, character.y, character.z);
+         final distance = getDistanceFromPlayerMouse(player, character);
          if (distance > closestDistance) continue;
          closestDistance = distance;
          closestCharacter = character;
@@ -167,7 +176,8 @@ abstract class Game {
         if (direction == Direction.None){
           setCharacterTarget(player, closestCharacter);
         }
-        if (player.withinAttackRange(closestCharacter)) {
+
+        if (!onSameTeam(player, closestCharacter) && player.withinAttackRange(closestCharacter)) {
           player.lookAt(closestCharacter);
           playerUseWeapon(player);
           player.setCharacterStateIdle();
@@ -1148,7 +1158,6 @@ abstract class Game {
           }
           final onInteractedWith = target.onInteractedWith;
           if (onInteractedWith != null) {
-            onInteractedWith(player);
             player.interactingWithNpc = true;
             player.setInteractingNpcName(target.name);
             onInteractedWith(player);

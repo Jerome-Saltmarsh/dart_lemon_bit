@@ -24,6 +24,7 @@
 
 [ ] dark-age
     - inventory
+    - talk cursor
 [ ] quick-game
 [ ] map-editor
 
