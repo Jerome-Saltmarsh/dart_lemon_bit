@@ -37,7 +37,7 @@ class AreaPlains1 extends DarkAgeArea {
         InventoryItem()
         ..itemType = ItemType.Body
         ..subType = BodyType.tunicPadded
-        ..index = 1
+        ..index = 10
     );
     player.writePlayerInventory();
     return player;

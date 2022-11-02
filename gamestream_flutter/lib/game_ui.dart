@@ -399,9 +399,9 @@ class GameUI {
   static Widget buildInventorySlotGrid(){
     final rows = <Widget>[];
 
-    for (var row = 0; row < 5; row++){
+    for (var row = 0; row < InventoryDimensions.Rows; row++){
       final columns = <Widget>[];
-      for (var column = 0; column < 10; column++){
+      for (var column = 0; column < InventoryDimensions.Columns; column++){
         columns.add(
             DragTarget<int>(
               onWillAccept: (int? index){
