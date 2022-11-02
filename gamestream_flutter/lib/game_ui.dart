@@ -269,13 +269,23 @@ class GameUI {
         child: buildIconBodyType(bodyType),
       );
 
+  static Widget buildPanelPlayerEquippedHeadType(int headType) =>
+      Container(
+        color: brownLight,
+        width: 150,
+        height: 150,
+        padding: const EdgeInsets.all(6),
+        child: buildIconHeadType(headType),
+      );
+
   static Widget buildColumnInventory() =>
     Column(
       children: [
         Row(
           children: [
-            watch(GamePlayer.weapon.type, GameUI.buildPanelPlayerEquippedAttackType),
-            watch(GamePlayer.bodyType, GameUI.buildPanelPlayerEquippedBodyType),
+            watch(GamePlayer.weapon.type, buildPanelPlayerEquippedAttackType),
+            watch(GamePlayer.bodyType, buildPanelPlayerEquippedBodyType),
+            watch(GamePlayer.headType, buildPanelPlayerEquippedHeadType),
           ],
         ),
         watch(GamePlayer.weapons, buildColumnPlayerWeapons),
@@ -301,13 +311,23 @@ class GameUI {
         scale: 3.0,
       );
 
-  static Widget buildIconBodyType(int type) =>
+  static Widget buildIconBodyType(int bodyType) =>
       buildAtlasImage(
         image: GameImages.atlasIcons,
-        srcX: AtlasIconsX.getBodyType(type),
-        srcY: AtlasIconsY.getBodyType(type),
-        srcWidth: AtlasIconSize.getBodyType(type),
-        srcHeight: AtlasIconSize.getBodyType(type),
+        srcX: AtlasIconsX.getBodyType(bodyType),
+        srcY: AtlasIconsY.getBodyType(bodyType),
+        srcWidth: AtlasIconSize.getBodyType(bodyType),
+        srcHeight: AtlasIconSize.getBodyType(bodyType),
+        scale: 3.0,
+      );
+
+  static Widget buildIconHeadType(int headType) =>
+      buildAtlasImage(
+        image: GameImages.atlasIcons,
+        srcX: AtlasIconsX.getHeadType(headType),
+        srcY: AtlasIconsY.getHeadType(headType),
+        srcWidth: AtlasIconSize.getHeadType(headType),
+        srcHeight: AtlasIconSize.getHeadType(headType),
         scale: 3.0,
       );
 

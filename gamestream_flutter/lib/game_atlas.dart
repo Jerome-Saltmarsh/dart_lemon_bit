@@ -25,6 +25,12 @@ class AtlasIconsX {
       BodyType.swat: 416,
       BodyType.tunicPadded: 448,
   } [bodyType] ?? 0.0;
+
+  static double getHeadType(int headType) => <int, double> {
+      HeadType.Steel_Helm: 416,
+      HeadType.Rogues_Hood: 448,
+      HeadType.Wizards_Hat: 480,
+  } [headType] ?? 0.0;
 }
 
 class AtlasIconsY {
@@ -50,6 +56,13 @@ class AtlasIconsY {
 
   static double getBodyType(int bodyType) => <int, double> {
     BodyType.shirtBlue: 32,
+    BodyType.shirtCyan: 32,
+    BodyType.tunicPadded: 32,
+    BodyType.swat: 32,
+  } [bodyType] ?? 0.0;
+
+  static double getHeadType(int bodyType) => <int, double> {
+    HeadType.Steel_Helm: 0,
   } [bodyType] ?? 0.0;
 }
 
@@ -60,11 +73,12 @@ class AtlasIconSize {
   static const Default = 32.0;
 
   static double getWeaponType(int weaponType) => <int, double> {
-    AttackType.Staff: 32,
   } [weaponType] ?? Default;
 
   static double getBodyType(int bodyType) => <int, double> {
-    BodyType.shirtBlue: 32,
+  } [bodyType] ?? Default;
+
+  static double getHeadType(int bodyType) => <int, double> {
   } [bodyType] ?? Default;
 }
 
