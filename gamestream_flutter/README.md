@@ -23,6 +23,7 @@
     - super-rare
 
 [ ] dark-age
+    - inventory
 [ ] quick-game
 [ ] map-editor
 
