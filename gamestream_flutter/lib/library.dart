@@ -21,6 +21,7 @@ export 'game_network_config.dart';
 export 'game_persistence.dart';
 export 'game_queries.dart';
 export 'game_render.dart';
+export 'game_inventory.dart';
 export 'game_state.dart';
 export 'game_system.dart';
 export 'game_ui.dart';

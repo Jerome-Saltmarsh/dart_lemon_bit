@@ -15,7 +15,7 @@ export 'GameError.dart';
 export 'GameEventType.dart';
 export 'GameStatus.dart';
 export 'GameType.dart';
-export 'ItemType.dart';
+export 'item_type.dart';
 export 'Modify_Game.dart';
 export 'game_object_type.dart';
 export 'PlayerEvent.dart';

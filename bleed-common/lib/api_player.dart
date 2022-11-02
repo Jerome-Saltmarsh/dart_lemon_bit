@@ -21,4 +21,5 @@ class ApiPlayer {
   static const Target_Position = 18;
   static const Target_Position_None = 19;
   static const Spawned = 20;
+  static const Inventory = 21;
 }

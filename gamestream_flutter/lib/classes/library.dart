@@ -15,3 +15,4 @@ export 'projectile.dart';
 export 'structure.dart';
 export 'vector3.dart';
 export 'weapon.dart';
+export 'inventory_item.dart';

@@ -13,6 +13,7 @@ import '../dark_age/game_dark_age.dart';
 import '../dark_age/game_dark_age_editor.dart';
 import '../utilities.dart';
 import 'gameobject.dart';
+import 'inventory_item.dart';
 import 'library.dart';
 import 'position3.dart';
 import 'rat.dart';
@@ -49,6 +50,13 @@ class Player extends Character with ByteWriter {
   Account? account;
 
   final weapons = <Weapon>[];
+  final inventory = <InventoryItem>[
+    InventoryItem()
+      ..itemType = ItemType.Body
+      ..subType = BodyType.tunicPadded
+      ..x = 0
+      ..y = 0,
+  ];
   var storeItems = <Weapon>[];
 
   final questsInProgress = <Quest>[];
@@ -300,6 +308,7 @@ class Player extends Character with ByteWriter {
       writePlayerWeaponRounds();
       writePlayerPosition();
       writePlayerSpawned();
+      writePlayerInventory();
     }
 
     if (!sceneDownloaded){
@@ -628,13 +637,6 @@ class Player extends Character with ByteWriter {
     writePositiveInt(count);
   }
 
-  // void writeNodeData(NodeSpawn node){
-  //   writeByte(ServerResponse.Node_Data);
-  //   writeByte(node.spawnType);
-  //   writeInt(node.spawnAmount);
-  //   writeInt(node.spawnRadius);
-  // }
-
   void writePlayerWeapons(){
     writeByte(ServerResponse.Player_Weapons);
     writeInt(weapons.length);
@@ -645,6 +647,18 @@ class Player extends Character with ByteWriter {
     writeByte(weapon.type);
     writeInt(weapon.damage);
     writeString(weapon.uuid);
+  }
+
+  void writePlayerInventory() {
+    writeByte(ServerResponse.Player);
+    writeByte(ApiPlayer.Inventory);
+    writePositiveInt(inventory.length);
+    for (final item in inventory){
+       writeByte(item.x);
+       writeByte(item.y);
+       writeByte(item.itemType);
+       writeByte(item.subType);
+    }
   }
 
   void writePlayerTarget() {

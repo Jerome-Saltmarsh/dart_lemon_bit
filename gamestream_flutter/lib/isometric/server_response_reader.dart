@@ -313,6 +313,15 @@ class ServerResponseReader with ByteReader {
       case ApiPlayer.Weapon_Capacity:
         GamePlayer.weapon.capacity.value = readInt();
         break;
+      case ApiPlayer.Inventory:
+        GameInventory.total = readPositiveInt();
+        for (var i = 0; i < GameInventory.total; i++){
+          GameInventory.x[i] = readByte();
+          GameInventory.y[i] = readByte();
+          GameInventory.itemType[i] = readByte();
+          GameInventory.itemSubType[i] = readByte();
+        }
+        break;
       case ApiPlayer.Message:
        GameState.player.message.value = readString();
        break;
