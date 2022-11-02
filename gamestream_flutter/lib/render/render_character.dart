@@ -18,7 +18,7 @@ class RenderCharacter {
     var angle = 0.0;
     var distance = 0.0;
 
-    if (!GameState.outOfBoundsV3(character)){
+    if (GameState.torchesIgnited.value && !GameState.outOfBoundsV3(character)){
       // find the nearest torch and move the shadow behind the character
       final characterNodeIndex = GameState.getNodeIndexV3(character);
       final initialSearchIndex = characterNodeIndex - GameState.nodesTotalColumns - 1; // shifts the selectIndex - 1 row and - 1 column
