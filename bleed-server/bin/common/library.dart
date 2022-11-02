@@ -3,6 +3,7 @@ library common;
 
 export 'AbilityMode.dart';
 export 'cursor_action.dart';
+export 'inventory_request.dart';
 export 'inventory_dimensions.dart';
 export 'AbilityType.dart';
 export 'CharacterAction.dart';

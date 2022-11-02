@@ -100,6 +100,30 @@ class Connection {
 
     switch (clientRequest) {
 
+      case ClientRequest.Inventory:
+        if (arguments.length < 2)  return errorArgsExpected(3, arguments);
+        final inventoryRequest = int.tryParse(arguments[1]);
+        switch (inventoryRequest){
+          case InventoryRequest.Equip_Weapon:
+            final index = int.tryParse(arguments[2]);
+            var swapped = false;
+            for (final item in player.inventory){
+               if (item.index != index) continue;
+               if (item.itemType != ItemType.Weapon) continue;
+               final weaponType = player.weapon.type;
+               player.weapon.type = item.subType;
+               item.itemType = weaponType;
+               swapped = true;
+               break;
+            }
+            if (swapped) {
+              player.writePlayerInventory();
+              player.writePlayerWeaponType();
+            }
+            break;
+        }
+        break;
+
       case ClientRequest.Inventory_Move:
         if (arguments.length < 3)  return errorArgsExpected(3, arguments);
         final indexFrom = int.tryParse(arguments[1]);

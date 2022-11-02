@@ -290,7 +290,23 @@ class GameUI {
         children: [
           Row(
             children: [
-              watch(GamePlayer.weapon.type, buildPanelPlayerEquippedAttackType),
+              DragTarget<int>(
+                 builder: (context, s, a) {
+                   return watch(GamePlayer.weapon.type, buildPanelPlayerEquippedAttackType);
+                 },
+                onWillAccept: (int? value){
+                   if (value == null) return false;
+                   if (GameInventory.itemType[value] != ItemType.Weapon) return false;
+                   return true;
+                },
+                onAccept: (int? value){
+                   if (value == null) return;
+                   GameNetwork.sendClientInventoryRequest(
+                      inventoryRequest: InventoryRequest.Equip_Weapon,
+                      message: value,
+                   );
+                },
+              ),
               watch(GamePlayer.bodyType, buildPanelPlayerEquippedBodyType),
               watch(GamePlayer.headType, buildPanelPlayerEquippedHeadType),
             ],

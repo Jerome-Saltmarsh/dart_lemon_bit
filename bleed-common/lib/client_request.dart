@@ -34,5 +34,8 @@ class ClientRequest {
   static const Game_Waves = 32;
   static const Edit = 33;
   static const Inventory_Move = 34;
+  static const Inventory = 35;
 }
+
+
 

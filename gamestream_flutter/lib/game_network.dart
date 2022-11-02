@@ -325,22 +325,27 @@ class GameNetwork {
   static void sendClientRequestAddGameObject({
     required int index,
     required int type,
-  }) {
+  }) =>
     sendClientRequest(
-      ClientRequest.GameObject,
-      "${GameObjectRequest.Add.index} $index $type",
+      ClientRequest.GameObject, "${GameObjectRequest.Add.index} $index $type",
     );
-  }
+
+  static void sendClientInventoryRequest({
+    required int inventoryRequest,
+    int? message,
+  }) =>
+    sendClientRequest(
+      ClientRequest.Inventory, "$inventoryRequest $message",
+    );
 
   static void sendClientRequestInventoryMove({
     required int indexFrom,
     required int indexTo,
-  }) {
+  }) =>
     sendClientRequest(
       ClientRequest.Inventory_Move,
       "$indexFrom $indexTo",
     );
-  }
 
   static void sendClientRequestGameObjectTranslate({
     required double tx,
