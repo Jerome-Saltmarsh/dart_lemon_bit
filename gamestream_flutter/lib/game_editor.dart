@@ -109,6 +109,10 @@ class GameEditor {
     paint(nodeType: NodeType.Torch);
   }
 
+  static void paintTree(){
+    paint(nodeType: NodeType.Tree_Bottom);
+  }
+
   static void paintLongGrass(){
     paint(nodeType: NodeType.Grass_Long);
   }

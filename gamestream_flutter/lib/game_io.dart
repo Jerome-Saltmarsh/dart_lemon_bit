@@ -137,10 +137,21 @@ class GameIO {
   static void onKeyPressed(RawKeyDownEvent event) {
      if (event.logicalKey == LogicalKeyboardKey.keyX) {
        actionToggleInputMode();
+       return;
      }
      if (event.logicalKey == LogicalKeyboardKey.keyP) {
        GameActions.toggleDebugMode();
+       return;
      }
+     if (event.physicalKey == PhysicalKeyboardKey.digit5) {
+       GameEditor.paintTorch();
+       return;
+     }
+     if (event.physicalKey == PhysicalKeyboardKey.digit4) {
+       GameEditor.paintTree();
+       return;
+     }
+
      if (GameState.playMode) {
        if (event.logicalKey == LogicalKeyboardKey.enter) {
          GameActions.messageBoxShow();
@@ -149,6 +160,10 @@ class GameIO {
          GameActions.attackAuto();
        }
        if (event.logicalKey == LogicalKeyboardKey.keyF) {
+         GameActions.toggleZoom();
+       }
+     } else {
+       if (event.logicalKey == LogicalKeyboardKey.digit5) {
          GameActions.toggleZoom();
        }
      }
@@ -313,8 +328,6 @@ class GameIO {
     if (key == PhysicalKeyboardKey.tab)
       return GameActions.actionToggleEdit();
 
-    if (key == PhysicalKeyboardKey.digit5)
-      return GameEditor.paintTorch();
     if (key == PhysicalKeyboardKey.keyZ) {
       GameState.spawnParticleFirePurple(
           x: mouseGridX,
@@ -353,8 +366,8 @@ class GameIO {
       return GameEditor.paintGrass();
     if (key == PhysicalKeyboardKey.digit3)
       return GameEditor.paintWater();
-    if (key == PhysicalKeyboardKey.digit4)
-      return GameEditor.paintBricks();
+    // if (key == PhysicalKeyboardKey.digit4)
+    //   return GameEditor.paintBricks();
     if (key == PhysicalKeyboardKey.arrowUp) {
       if (Engine.keyPressedShiftLeft) {
         if (GameEditor.gameObjectSelected.value){
