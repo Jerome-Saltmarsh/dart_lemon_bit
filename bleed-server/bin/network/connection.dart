@@ -107,7 +107,7 @@ class Connection {
         if (indexFrom == null) return errorInvalidArg('index from is null');
         if (indexTo == null) return errorInvalidArg('index from is null');
         if (player.inventory.isNotEmpty){
-          player.inventory.first.x = 5;
+          player.inventory.first.index = 5;
         }
         player.writePlayerInventory();
         return;

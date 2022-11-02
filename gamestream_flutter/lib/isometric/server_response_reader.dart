@@ -314,14 +314,7 @@ class ServerResponseReader with ByteReader {
         GamePlayer.weapon.capacity.value = readInt();
         break;
       case ApiPlayer.Inventory:
-        GameInventory.total = readPositiveInt();
-        for (var i = 0; i < GameInventory.total; i++){
-          GameInventory.x[i] = readByte();
-          GameInventory.y[i] = readByte();
-          GameInventory.itemType[i] = readByte();
-          GameInventory.itemSubType[i] = readByte();
-        }
-        GameInventory.reads.value++;
+        readPlayerInventory();
         break;
       case ApiPlayer.Message:
        GameState.player.message.value = readString();
@@ -338,6 +331,16 @@ class ServerResponseReader with ByteReader {
       default:
         throw Exception("Cannot parse apiPlayer $apiPlayer");
     }
+  }
+
+  void readPlayerInventory() {
+    GameInventory.total = readPositiveInt();
+    for (var i = 0; i < GameInventory.total; i++){
+      GameInventory.index[i] = readByte();
+      GameInventory.itemType[i] = readByte();
+      GameInventory.itemSubType[i] = readByte();
+    }
+    GameInventory.reads.value++;
   }
 
   void readGameObjectStatic() {

@@ -324,35 +324,36 @@ class GameUI {
     );
   }
 
-  static Widget buildInventoryItem(int index){
+  static Widget buildInventoryItem(int i){
+    final index = GameInventory.index[i];
      return Positioned(
          child: Draggable<int>(
            hitTestBehavior: HitTestBehavior.opaque,
            data: index,
            feedback: buildAtlasImage(
              image: GameImages.atlasIcons,
-             srcX: getInventoryItemSrcX(index),
-             srcY: getInventoryItemSrcY(index),
-             srcWidth: getInventoryItemSrcSize(index),
-             srcHeight: getInventoryItemSrcSize(index),
+             srcX: getInventoryItemSrcX(i),
+             srcY: getInventoryItemSrcY(i),
+             srcWidth: getInventoryItemSrcSize(i),
+             srcHeight: getInventoryItemSrcSize(i),
            ),
            child: buildAtlasImage(
-               image: GameImages.atlasIcons,
-               srcX: getInventoryItemSrcX(index),
-               srcY: getInventoryItemSrcY(index),
-               srcWidth: getInventoryItemSrcSize(index),
-               srcHeight: getInventoryItemSrcSize(index),
+             image: GameImages.atlasIcons,
+             srcX: getInventoryItemSrcX(i),
+             srcY: getInventoryItemSrcY(i),
+             srcWidth: getInventoryItemSrcSize(i),
+             srcHeight: getInventoryItemSrcSize(i),
            ),
            childWhenDragging: buildAtlasImage(
              image: GameImages.atlasIcons,
-             srcX: getInventoryItemSrcX(index),
-             srcY: getInventoryItemSrcY(index),
-             srcWidth: getInventoryItemSrcSize(index),
-             srcHeight: getInventoryItemSrcSize(index),
+             srcX: getInventoryItemSrcX(i),
+             srcY: getInventoryItemSrcY(i),
+             srcWidth: getInventoryItemSrcSize(i),
+             srcHeight: getInventoryItemSrcSize(i),
            ),
          ),
-        left: GameInventory.x[index] * 32.0,
-        top: GameInventory.y[index] * 32.0,
+        left: InventoryDimensions.convertIndexToColumn(index) * GameInventory.Size,
+        top: InventoryDimensions.convertIndexToRow(index) * GameInventory.Size,
      );
   }
 

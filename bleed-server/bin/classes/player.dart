@@ -50,13 +50,7 @@ class Player extends Character with ByteWriter {
   Account? account;
 
   final weapons = <Weapon>[];
-  final inventory = <InventoryItem>[
-    InventoryItem()
-      ..itemType = ItemType.Body
-      ..subType = BodyType.tunicPadded
-      ..x = 0
-      ..y = 0,
-  ];
+  final inventory = <InventoryItem>[];
   var storeItems = <Weapon>[];
 
   final questsInProgress = <Quest>[];
@@ -654,8 +648,7 @@ class Player extends Character with ByteWriter {
     writeByte(ApiPlayer.Inventory);
     writePositiveInt(inventory.length);
     for (final item in inventory){
-       writeByte(item.x);
-       writeByte(item.y);
+       writeByte(item.index);
        writeByte(item.itemType);
        writeByte(item.subType);
     }

@@ -1,6 +1,7 @@
 
 import 'package:lemon_math/functions/random_item.dart';
 
+import '../../classes/inventory_item.dart';
 import '../../classes/library.dart';
 import '../../common/library.dart';
 import '../../common/map_tiles.dart';
@@ -31,6 +32,14 @@ class AreaPlains1 extends DarkAgeArea {
     player.equippedLegs = randomItem(LegType.values);
     player.equippedHead = randomItem(HeadType.values);
     movePlayerToCrystal(player);
+
+    player.inventory.add(
+        InventoryItem()
+        ..itemType = ItemType.Body
+        ..subType = BodyType.tunicPadded
+        ..index = 1
+    );
+    player.writePlayerInventory();
     return player;
   }
 
