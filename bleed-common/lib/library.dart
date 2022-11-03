@@ -4,7 +4,6 @@ library common;
 export 'ability_mode.dart';
 export 'cursor_action.dart';
 export 'inventory_request.dart';
-export 'inventory_dimensions.dart';
 export 'ability_type.dart';
 export 'character_action.dart';
 export 'CharacterState.dart';

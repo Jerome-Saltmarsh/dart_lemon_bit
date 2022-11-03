@@ -2,11 +2,35 @@ import 'library.dart';
 
 class AtlasItems {
   static double getSrcX(int itemType) => <int, double> {
-      ItemType.Weapon_Ranged_Bow: 352,
+      ItemType.Weapon_Melee_Sword: 0,
+      ItemType.Weapon_Melee_Magic_Staff: 32,
+      ItemType.Weapon_Ranged_Bow: 64,
+      ItemType.Empty: 96,
+      ItemType.Head_Steel_Helm: 128,
+      ItemType.Head_Rogues_Hood: 160,
+      ItemType.Head_Wizards_Hat: 192,
+      ItemType.Weapon_Ranged_Shotgun: 0,
+      ItemType.Weapon_Ranged_Handgun: 32,
+      ItemType.Body_Shirt_Blue: 64,
+      ItemType.Body_Shirt_Cyan: 96,
+      ItemType.Body_Tunic_Padded: 128,
+      ItemType.Body_Swat: 128,
   }[0] ?? 0;
 
   static double getSrcY(int itemType) => <int, double> {
+    ItemType.Weapon_Melee_Sword: 0,
+    ItemType.Weapon_Melee_Magic_Staff: 0,
     ItemType.Weapon_Ranged_Bow: 0,
+    ItemType.Empty: 96,
+    ItemType.Head_Steel_Helm: 0,
+    ItemType.Head_Rogues_Hood: 0,
+    ItemType.Head_Wizards_Hat: 0,
+    ItemType.Weapon_Ranged_Shotgun: 32,
+    ItemType.Weapon_Ranged_Handgun: 32,
+    ItemType.Body_Shirt_Blue: 32,
+    ItemType.Body_Shirt_Cyan: 32,
+    ItemType.Body_Tunic_Padded: 32,
+    ItemType.Body_Swat: 32,
   }[0] ?? 0;
 }
 

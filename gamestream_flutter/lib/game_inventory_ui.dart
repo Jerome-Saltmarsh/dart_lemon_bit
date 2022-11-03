@@ -6,8 +6,20 @@ import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'library.dart';
 
 class GameInventoryUI {
-
+  static const Slot_Size = 32.0;
   static const ColumnsPerRow = 10;
+
+  static int convertIndexToRow(int index){
+    return index ~/ ColumnsPerRow;
+  }
+
+  static int convertIndexToColumn(int index){
+    return index % ColumnsPerRow;
+  }
+
+  static int convertToIndex({required int row, required int column}){
+    return row * ColumnsPerRow + column;
+  }
 
   static Widget buildInventoryUI() =>
       MouseRegion(
@@ -123,6 +135,8 @@ class GameInventoryUI {
   static Widget buildInventoryItem(int i){
     const size = 32.0;
     return Positioned(
+      left: convertIndexToColumn(i) * Slot_Size,
+      top: convertIndexToRow(i) * Slot_Size,
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
         child: Draggable<int>(
@@ -151,8 +165,6 @@ class GameInventoryUI {
           ),
         ),
       ),
-      left: InventoryDimensions.convertIndexToColumn(i) * GameInventory.Size,
-      top: InventoryDimensions.convertIndexToRow(i) * GameInventory.Size,
     );
   }
 
@@ -181,6 +193,7 @@ class GameInventoryUI {
   //       throw Exception('GameUI.getInventoryItemSrcY($index)');
   //   }
   // }
+  
 
   static int getIndexRow(int index) =>
     index ~/ ColumnsPerRow;
@@ -188,74 +201,35 @@ class GameInventoryUI {
   static int getIndexColumn(int index) =>
       index % ColumnsPerRow;
 
-  static Widget buildInventorySlotGrid(){
-    final rows = <Widget>[];
-
-    for (var i = 0; i < GameInventory.Size; i++){
-       rows.add(
-         Positioned(
-             top: getIndexRow(i) * 32.0,
-             left: getIndexColumn(i) * 32.0,
-             child: DragTarget<int>(
-               onWillAccept: (int? index) => index != null,
-               onAccept: (int? toIndex){
-                 if (toIndex == null) return;
-                 GameNetwork.sendClientRequestInventoryMove(
-                   indexFrom: i,
-                   indexTo: toIndex,
-                 );
-               },
-               builder: (context, candidate, index){
-                 return buildAtlasImage(
-                   image: GameImages.atlasIcons,
-                   srcX: AtlasIconsX.Slot,
-                   srcY: AtlasIconsY.Slot,
-                   srcWidth: AtlasIconSize.Slot,
-                   srcHeight: AtlasIconSize.Slot,
-                 );
-               },
-             )
-         )
-       );
-    }
-
-    // for (var row = 0; row < InventoryDimensions.Rows; row++){
-    //   final columns = <Widget>[];
-    //   for (var column = 0; column < InventoryDimensions.Columns; column++){
-    //     columns.add(
-    //         DragTarget<int>(
-    //           onWillAccept: (int? index){
-    //             return true;
-    //           },
-    //           onAccept: (int? fromIndex){
-    //             if (fromIndex == null) return;
-    //             GameNetwork.sendClientRequestInventoryMove(
-    //               indexFrom: fromIndex,
-    //               indexTo: i,
-    //             );
-    //           },
-    //           builder: (context, candidate, index){
-    //             return buildAtlasImage(
-    //               image: GameImages.atlasIcons,
-    //               srcX: AtlasIconsX.Slot,
-    //               srcY: AtlasIconsY.Slot,
-    //               srcWidth: AtlasIconSize.Slot,
-    //               srcHeight: AtlasIconSize.Slot,
-    //             );
-    //           },
-    //         )
-    //     );
-    //   }
-    //   rows.add(
-    //       Row(
-    //         children: columns,
-    //       )
-    //   );
-    // }
-    return Column(
-      children: rows,
+  static Widget buildInventorySlotGrid() =>
+    Stack(
+      children: GameInventory.items.map(buildPositionedGridSlot).toList(),
     );
-  }
+
+  static Widget buildPositionedGridSlot(int i) =>
+    Positioned(
+        top: getIndexRow(i) * 32.0,
+        left: getIndexColumn(i) * 32.0,
+        child: DragTarget<int>(
+          onWillAccept: (int? index) => index != null,
+          onAccept: (int? toIndex){
+            if (toIndex == null) return;
+            GameNetwork.sendClientRequestInventoryMove(
+              indexFrom: i,
+              indexTo: toIndex,
+            );
+          },
+          builder: (context, candidate, index){
+            return buildAtlasImage(
+              image: GameImages.atlasItems,
+              srcX: 0,
+              srcY: 64,
+              srcWidth: 32,
+              srcHeight: 32,
+            );
+          },
+        )
+    );
 
   static Widget buildColumnPlayerWeapons(List<Weapon> weapons) =>
       Container(
