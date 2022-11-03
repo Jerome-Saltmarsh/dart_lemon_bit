@@ -7,19 +7,9 @@ import 'library.dart';
 
 class GameInventoryUI {
   static const Slot_Size = 32.0;
-  static const ColumnsPerRow = 10;
-
-  static int convertIndexToRow(int index){
-    return index ~/ ColumnsPerRow;
-  }
-
-  static int convertIndexToColumn(int index){
-    return index % ColumnsPerRow;
-  }
-
-  static int convertToIndex({required int row, required int column}){
-    return row * ColumnsPerRow + column;
-  }
+  static const Slot_Scale = 1.5;
+  static const Slot_Item_Scale = Slot_Scale * 0.9;
+  static const ColumnsPerRow = 8;
 
   static Widget buildInventoryUI() =>
       MouseRegion(
@@ -108,21 +98,22 @@ class GameInventoryUI {
         child: Draggable<int>(
           hitTestBehavior: HitTestBehavior.opaque,
           data: index,
-          feedback: buildItemTypeAtlasImage(itemType),
-          child: buildItemTypeAtlasImage(itemType),
-          childWhenDragging: buildItemTypeAtlasImage(itemType),
+          feedback: buildItemTypeAtlasImage(itemType, scale: Slot_Item_Scale),
+          child: buildItemTypeAtlasImage(itemType, scale: Slot_Item_Scale),
+          childWhenDragging: buildItemTypeAtlasImage(itemType, scale: Slot_Item_Scale),
         ),
       ),
     );
   }
 
-  static buildItemTypeAtlasImage(int itemType) =>
+  static buildItemTypeAtlasImage(int itemType, {double scale = 1.0}) =>
     buildAtlasImage(
       image: GameImages.atlasItems,
       srcX: AtlasItems.getSrcX(itemType),
       srcY: AtlasItems.getSrcY(itemType),
       srcWidth: Slot_Size,
       srcHeight: Slot_Size,
+      scale: scale,
     );
 
   static Widget buildStackSlotGrid() {
@@ -154,14 +145,15 @@ class GameInventoryUI {
               srcY: 64,
               srcWidth: 32,
               srcHeight: 32,
+              scale: Slot_Scale,
             );
           },
         )
     );
 
-  static double getIndexX(int index) => getIndexColumn(index) * Slot_Size;
+  static double getIndexX(int index) => getIndexColumn(index) * Slot_Size * Slot_Scale;
 
-  static double getIndexY(int index) => getIndexRow(index) * Slot_Size;
+  static double getIndexY(int index) => getIndexRow(index) * Slot_Size * Slot_Scale;
 
   static int getIndexRow(int index) => index ~/ ColumnsPerRow;
 
