@@ -74,6 +74,14 @@ class Player extends Character with ByteWriter {
 
   int get points => _points;
 
+  int? getEmptyInventoryIndex(){
+    for (var i = 0; i < inventory.length; i++){
+      if (inventory[i] != ItemType.Empty) continue;
+      return i;
+    }
+    return null;
+  }
+
   set points(int value){
     if (_points == value) return;
     _points = value >= 0 ? value : 0;
@@ -554,15 +562,10 @@ class Player extends Character with ByteWriter {
   }
 
   void writeCharacterEquipment(Character character) {
-    if (!ItemType.isTypeBody(character.equippedArmour)){
-      print('hello');
-    }
-
     assert (ItemType.isTypeWeapon(character.weapon.type) || character.weapon.type == ItemType.Empty);
-    assert (ItemType.isTypeLegs(character.equippedLegs));
-    assert (ItemType.isTypeBody(character.equippedArmour));
-    assert (ItemType.isTypeHead(character.equippedHead));
-    assert (ItemType.isTypeLegs(character.equippedLegs));
+    assert (ItemType.isTypeLegs(character.equippedLegs) || character.equippedLegs == ItemType.Empty);
+    assert (ItemType.isTypeBody(character.equippedArmour) || character.equippedArmour == ItemType.Empty);
+    assert (ItemType.isTypeHead(character.equippedHead) || character.equippedHead == ItemType.Empty);
     writeUInt16(character.weapon.type);
     writeUInt16(character.weapon.state);
     writeUInt16(character.equippedArmour); // armour

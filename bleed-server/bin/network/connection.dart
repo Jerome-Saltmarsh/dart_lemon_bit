@@ -116,6 +116,24 @@ class Connection {
               break;
             }
             break;
+          case InventoryRequest.Unequip_Head:
+            if (player.equippedHead == ItemType.Empty) return;
+            final emptyIndex = player.getEmptyInventoryIndex();
+            if (emptyIndex == null) return;
+            player.inventory[emptyIndex] = player.equippedHead;
+            player.equippedHead = ItemType.Empty;
+            player.game.setCharacterStateChanging(player);
+            player.writePlayerInventory();
+            break;
+          case InventoryRequest.Unequip_Body:
+            if (player.equippedArmour == ItemType.Empty) return;
+            final emptyIndex = player.getEmptyInventoryIndex();
+            if (emptyIndex == null) return;
+            player.inventory[emptyIndex] = player.equippedArmour;
+            player.equippedArmour = ItemType.Empty;
+            player.game.setCharacterStateChanging(player);
+            player.writePlayerInventory();
+            break;
           case InventoryRequest.Equip:
             final index = int.tryParse(arguments[2]);
             if (index == null){

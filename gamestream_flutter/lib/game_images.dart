@@ -69,6 +69,8 @@ class GameImages {
 
    static Image getImageForBodyType(int bodyType) {
       switch (bodyType) {
+         case ItemType.Empty:
+            return template_body_blue;
          case ItemType.Body_Shirt_Blue:
             return template_body_blue;
          case ItemType.Body_Shirt_Cyan:
@@ -84,6 +86,8 @@ class GameImages {
 
    static Image getImageForLegType(int legType) {
       switch (legType){
+         case ItemType.Empty:
+            return template_legs_white;
          case ItemType.Legs_White:
             return template_legs_white;
          case ItemType.Legs_Blue:

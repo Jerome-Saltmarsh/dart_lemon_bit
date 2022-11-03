@@ -38,8 +38,15 @@ class GameInventoryUI {
       action: GameNetwork.sendClientRequestInventoryUnequipWeapon,
       child: buildDragTarget(GamePlayer.weapon.type)
   );
-  static Widget buildDragTargetBody() => buildDragTarget(GamePlayer.bodyType);
-  static Widget buildDragTargetHead() => buildDragTarget(GamePlayer.headType);
+
+  static Widget buildDragTargetBody() => onPressed(
+      action: GameNetwork.sendClientRequestInventoryUnequipBody,
+      child: buildDragTarget(GamePlayer.bodyType)
+  );
+  static Widget buildDragTargetHead() => onPressed(
+      action: GameNetwork.sendClientRequestInventoryUnequipHead,
+      child: buildDragTarget(GamePlayer.headType)
+  );
 
   static Widget buildDragTarget(Watch<int> watchInt) =>
       DragTarget<int>(
