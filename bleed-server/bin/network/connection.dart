@@ -107,64 +107,50 @@ class Connection {
         switch (inventoryRequest){
           case InventoryRequest.Equip:
             final index = int.tryParse(arguments[2]);
-            var swapped = false;
-            for (final item in player.inventory) {
-              if (item.index != index) continue;
-              switch (item.itemType) {
-                case ItemType.Body:
-                  final previouslyEquippedArmour = player.equippedArmour;
-                  player.equippedArmour = item.subType;
-                  item.subType = previouslyEquippedArmour;
-                  swapped = true;
-                  break;
-                case ItemType.Weapon:
-                  final previous = player.weapon.type;
-                  player.weapon.type = item.subType;
-                  item.subType = previous;
-                  swapped = true;
-                  player.writePlayerWeaponType();
-                  break;
-                case ItemType.Pants:
-                  final previous = player.equippedLegs;
-                  player.equippedLegs = item.subType;
-                  item.subType = previous;
-                  swapped = true;
-                  // todo write player leg type
-                  // player.writePlayer();
-                  break;
-                case ItemType.Head:
-                  final previous = player.equippedHead;
-                  player.equippedHead = item.subType;
-                  item.subType = previous;
-                  // todo write player leg type
-                  swapped = true;
-                  break;
-              }
-              if (swapped) {
-                player.game.setCharacterStateChanging(player);
-                player.writePlayerInventory();
-              }
+            if (index == null){
+              return errorInvalidArg('index is null');
             }
-            break;
+            if (index < 0 || index >= player.inventory.length){
+              return errorInvalidArg('index out of bounds');
+            }
+            final itemType = player.inventory[index];
+            var swapped = false;
 
-          case InventoryRequest.Equip_Weapon:
-            final index = int.tryParse(arguments[2]);
-            var swapped = false;
-            for (final item in player.inventory){
-               if (item.index != index) continue;
-               if (item.itemType != ItemType.Weapon) continue;
-               final weaponType = player.weapon.type;
-               player.weapon.type = item.subType;
-               item.subType = weaponType;
+            if (ItemType.isTypeWeapon(itemType)){
+               final currentWeapon = player.weapon.type;
+               player.weapon.type = itemType;
+               player.inventory[index] = currentWeapon;
                swapped = true;
-               break;
+               player.writePlayerWeaponType();
             }
+
+            if (ItemType.isTypeBody(itemType)){
+              final current = player.equippedArmour;
+              player.equippedArmour = itemType;
+              player.inventory[index] = current;
+              swapped = true;
+            }
+
+            if (ItemType.isTypeHead(itemType)){
+              final current = player.equippedHead;
+              player.equippedHead = itemType;
+              player.inventory[index] = current;
+              swapped = true;
+            }
+
+            if (ItemType.isTypeLegs(itemType)){
+              final current = player.equippedLegs;
+              player.equippedLegs = itemType;
+              player.inventory[index] = current;
+              swapped = true;
+            }
+
             if (swapped) {
               player.game.setCharacterStateChanging(player);
               player.writePlayerInventory();
-              player.writePlayerWeaponType();
             }
             break;
+
         }
         break;
 
@@ -174,18 +160,18 @@ class Connection {
         final indexTo = int.tryParse(arguments[2]);
         if (indexFrom == null) return errorInvalidArg('index from is null');
         if (indexTo == null) return errorInvalidArg('index from is null');
-        if (indexFrom == indexTo) return;
-        var itemMoved = false;
-        for (final item in player.inventory) {
-          if (item.index != indexFrom) continue;
-          item.index = indexTo;
-          itemMoved = true;
-          break;
-        }
+        if (indexFrom < 0) return errorInvalidArg('invalid inventory from index');
+        if (indexTo < 0) return errorInvalidArg('invalid inventory to index');
+        final inventory = player.inventory;
+        if (indexFrom >= inventory.length) return errorInvalidArg('invalid inventory from index');
+        if (indexTo >= inventory.length) return errorInvalidArg('invalid inventory to index');
+        final typeFrom = inventory[indexFrom];
+        final typeTo = inventory[indexTo];
+        if (typeFrom == ItemType.Empty && typeTo == ItemType.Empty) return;
+        inventory[indexFrom] = typeTo;
+        inventory[indexTo] = typeFrom;
         player.writePlayerInventory();
-        if (itemMoved){
-           player.writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
-        }
+        player.writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
         return;
 
       case ClientRequest.Teleport:

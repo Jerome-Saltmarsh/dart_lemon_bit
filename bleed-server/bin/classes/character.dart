@@ -39,11 +39,10 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
   Position3? target;
   var invincible = false;
   Weapon weapon;
-  var equippedArmour = BodyType.shirtCyan;
-  var equippedHead = HeadType.None;
-  var equippedLegs = LegType.white;
+  var equippedArmour = ItemType.Body_Shirt_Cyan;
+  var equippedHead = ItemType.Head_Steel_Helm;
+  var equippedLegs = ItemType.Legs_Blue;
 
-  // var performDuration = 0;
   var performX = 0.0;
   var performY = 0.0;
   var performZ = 0.0;

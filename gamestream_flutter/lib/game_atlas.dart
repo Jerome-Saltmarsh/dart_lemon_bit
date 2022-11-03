@@ -1,5 +1,15 @@
 import 'library.dart';
 
+class AtlasItems {
+  static double getSrcX(int itemType) => <int, double> {
+      ItemType.Weapon_Ranged_Bow: 352,
+  }[0] ?? 0;
+
+  static double getSrcY(int itemType) => <int, double> {
+    ItemType.Weapon_Ranged_Bow: 0,
+  }[0] ?? 0;
+}
+
 class AtlasIconsX {
   static const Arrows_Yellow = 0.0;
   static const Arrows_Orange = 22.0;

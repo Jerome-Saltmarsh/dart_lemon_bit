@@ -1,5 +1,6 @@
 
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:bleed_server/firestoreClient/firestoreService.dart';
 import 'package:bleed_server/system.dart';
@@ -13,7 +14,6 @@ import '../dark_age/game_dark_age.dart';
 import '../dark_age/game_dark_age_editor.dart';
 import '../utilities.dart';
 import 'gameobject.dart';
-import 'inventory_item.dart';
 import 'library.dart';
 import 'position3.dart';
 import 'rat.dart';
@@ -50,7 +50,8 @@ class Player extends Character with ByteWriter {
   Account? account;
 
   final weapons = <Weapon>[];
-  final inventory = <InventoryItem>[];
+  static const InventorySize = 40;
+  final inventory = Uint16List(InventorySize);
   var storeItems = <Weapon>[];
 
   final questsInProgress = <Quest>[];
@@ -617,7 +618,7 @@ class Player extends Character with ByteWriter {
           } else {
             writeByte(previousType);
             writeByte(previousOrientation);
-            writePositiveInt(count);
+            writeUInt16(count);
             previousType = nodeType;
             previousOrientation = nodeOrientation;
             count = 1;
@@ -628,7 +629,7 @@ class Player extends Character with ByteWriter {
 
     writeByte(previousType);
     writeByte(previousOrientation);
-    writePositiveInt(count);
+    writeUInt16(count);
   }
 
   void writePlayerWeapons(){
@@ -646,11 +647,9 @@ class Player extends Character with ByteWriter {
   void writePlayerInventory() {
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Inventory);
-    writePositiveInt(inventory.length);
-    for (final item in inventory){
-       writeByte(item.index);
-       writeByte(item.itemType);
-       writeByte(item.subType);
+    writeUInt16(inventory.length);
+    for (final item in inventory) {
+       writeUInt16(item);
     }
   }
 
@@ -781,7 +780,7 @@ class Player extends Character with ByteWriter {
     assert (index >= 0);
     assert (index < scene.gridVolume);
     writeByte(ServerResponse.Node);
-    writePositiveInt(index);
+    writeUInt16(index);
     writeByte(scene.nodeTypes[index]);
     writeByte(scene.nodeOrientations[index]);
   }

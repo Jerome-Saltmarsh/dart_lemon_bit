@@ -1,7 +1,6 @@
 
 import 'package:lemon_math/functions/random_item.dart';
 
-import '../../classes/inventory_item.dart';
 import '../../classes/library.dart';
 import '../../common/library.dart';
 import '../../common/map_tiles.dart';
@@ -33,18 +32,25 @@ class AreaPlains1 extends DarkAgeArea {
     player.equippedHead = randomItem(HeadType.values);
     movePlayerToCrystal(player);
 
-    player.inventory.add(
-        InventoryItem()
-        ..itemType = ItemType.Body
-        ..subType = BodyType.tunicPadded
-        ..index = 10
-    );
-    player.inventory.add(
-        InventoryItem()
-          ..itemType = ItemType.Weapon
-          ..subType = AttackType.Shotgun
-          ..index = 5
-    );
+    player.inventory[0] = ItemType.Weapon_Ranged_Handgun;
+    // player.inventory.add(
+    //     InventoryItem()
+    //     ..itemType = ItemType.Body
+    //     ..subType = BodyType.tunicPadded
+    //     ..index = 10
+    // );
+    // player.inventory.add(
+    //     InventoryItem()
+    //       ..itemType = ItemType.Weapon
+    //       ..subType = AttackType.Shotgun
+    //       ..index = 5
+    // );
+    // player.inventory.add(
+    //     InventoryItem()
+    //       ..itemType = ItemType.Head
+    //       ..subType = HeadType.Wizards_Hat
+    //       ..index = 8
+    // );
     player.writePlayerInventory();
     return player;
   }
@@ -62,7 +68,6 @@ class AreaPlains1 extends DarkAgeArea {
           health: 100,
           onInteractedWith: (Player player) {
              print("player interacted with Roth");
-             // player.setSto
           }
         )
     );

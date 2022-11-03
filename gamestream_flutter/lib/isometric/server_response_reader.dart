@@ -334,11 +334,12 @@ class ServerResponseReader with ByteReader {
   }
 
   void readPlayerInventory() {
-    GameInventory.total = readPositiveInt();
-    for (var i = 0; i < GameInventory.total; i++){
-      GameInventory.index[i] = readByte();
-      GameInventory.itemType[i] = readByte();
-      GameInventory.itemSubType[i] = readByte();
+    final total = readUInt16();
+    if (GameInventory.items.length != total){
+      GameInventory.items = Uint16List(total);
+    }
+    for (var i = 0; i < total; i++){
+      GameInventory.items[i] = readUInt16();
     }
     GameInventory.reads.value++;
   }
@@ -506,7 +507,7 @@ class ServerResponseReader with ByteReader {
   }
 
   void readNode() {
-    final nodeIndex = readPositiveInt();
+    final nodeIndex = readUInt16();
     final nodeType = readByte();
     final nodeOrientation = readByte();
     assert(NodeType.supportsOrientation(nodeType, nodeOrientation));
@@ -591,7 +592,7 @@ class ServerResponseReader with ByteReader {
          print("node type ${NodeType.getName(nodeType)} does not support orientation ${NodeOrientation.getName(nodeOrientation)}");
       }
 
-      var count = readPositiveInt();
+      var count = readUInt16();
       total += count;
 
       while (count > 0) {

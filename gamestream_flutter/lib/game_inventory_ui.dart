@@ -7,6 +7,8 @@ import 'library.dart';
 
 class GameInventoryUI {
 
+  static const ColumnsPerRow = 10;
+
   static Widget buildInventoryUI() =>
       MouseRegion(
         onEnter: (event){
@@ -104,14 +106,12 @@ class GameInventoryUI {
 
   static void onDragAccept(int? i){
     if (i == null) return;
-    GameNetwork.sendClientRequestInventoryEquip(
-      GameInventory.index[i]
-    );
+    GameNetwork.sendClientRequestInventoryEquip(i);
   }
 
   static Widget buildInventoryItemGrid(int reads){
     final children = <Widget>[];
-    for (var i = 0; i < GameInventory.total; i++){
+    for (var i = 0; i < GameInventory.items.length; i++){
       children.add(buildInventoryItem(i));
     }
     return Stack(
@@ -120,7 +120,7 @@ class GameInventoryUI {
   }
 
   static Widget buildInventoryItem(int i){
-    final index = GameInventory.index[i];
+    const size = 32.0;
     return Positioned(
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
@@ -129,107 +129,128 @@ class GameInventoryUI {
           data: i,
           feedback: buildAtlasImage(
             image: GameImages.atlasIcons,
-            srcX: getInventoryItemSrcX(i),
-            srcY: getInventoryItemSrcY(i),
-            srcWidth: getInventoryItemSrcSize(i),
-            srcHeight: getInventoryItemSrcSize(i),
+            srcX: AtlasItems.getSrcX(i),
+            srcY: AtlasItems.getSrcY(i),
+            srcWidth: size,
+            srcHeight: size,
           ),
           child: buildAtlasImage(
             image: GameImages.atlasIcons,
-            srcX: getInventoryItemSrcX(i),
-            srcY: getInventoryItemSrcY(i),
-            srcWidth: getInventoryItemSrcSize(i),
-            srcHeight: getInventoryItemSrcSize(i),
+            srcX: AtlasItems.getSrcX(i),
+            srcY: AtlasItems.getSrcY(i),
+            srcWidth: size,
+            srcHeight: size,
           ),
           childWhenDragging: buildAtlasImage(
             image: GameImages.atlasIcons,
-            srcX: getInventoryItemSrcX(i),
-            srcY: getInventoryItemSrcY(i),
-            srcWidth: getInventoryItemSrcSize(i),
-            srcHeight: getInventoryItemSrcSize(i),
+            srcX: AtlasItems.getSrcX(i),
+            srcY: AtlasItems.getSrcY(i),
+            srcWidth: size,
+            srcHeight: size,
           ),
         ),
       ),
-      left: InventoryDimensions.convertIndexToColumn(index) * GameInventory.Size,
-      top: InventoryDimensions.convertIndexToRow(index) * GameInventory.Size,
+      left: InventoryDimensions.convertIndexToColumn(i) * GameInventory.Size,
+      top: InventoryDimensions.convertIndexToRow(i) * GameInventory.Size,
     );
   }
 
-  static double getInventoryItemSrcX(int index){
-    switch (GameInventory.itemType[index]) {
-      case ItemType.Body:
-        return AtlasIconsX.getBodyType(GameInventory.itemSubType[index]);
-      case ItemType.Weapon:
-        return AtlasIconsX.getWeaponType(GameInventory.itemSubType[index]);
-      case ItemType.Head:
-        return AtlasIconsX.getHeadType(GameInventory.itemSubType[index]);
-      default:
-        throw Exception('GameUI.getInventoryItemSrcX($index)');
-    }
-  }
+  // static double getInventoryItemSrcX(int index){
+  //   switch (GameInventory.itemType[index]) {
+  //     case ItemType.Body:
+  //       return AtlasIconsX.getBodyType(GameInventory.itemSubType[index]);
+  //     case ItemType.Weapon:
+  //       return AtlasIconsX.getWeaponType(GameInventory.itemSubType[index]);
+  //     case ItemType.Head:
+  //       return AtlasIconsX.getHeadType(GameInventory.itemSubType[index]);
+  //     default:
+  //       throw Exception('GameUI.getInventoryItemSrcX($index)');
+  //   }
+  // }
 
-  static double getInventoryItemSrcY(int index){
-    switch (GameInventory.itemType[index]) {
-      case ItemType.Body:
-        return AtlasIconsY.getBodyType(GameInventory.itemSubType[index]);
-      case ItemType.Weapon:
-        return AtlasIconsY.getWeaponType(GameInventory.itemSubType[index]);
-      case ItemType.Head:
-        return AtlasIconsY.getHeadType(GameInventory.itemSubType[index]);
-      default:
-        throw Exception('GameUI.getInventoryItemSrcY($index)');
-    }
-  }
+  // static double getInventoryItemSrcY(int index){
+  //   switch (GameInventory.itemType[index]) {
+  //     case ItemType.Body:
+  //       return AtlasIconsY.getBodyType(GameInventory.itemSubType[index]);
+  //     case ItemType.Weapon:
+  //       return AtlasIconsY.getWeaponType(GameInventory.itemSubType[index]);
+  //     case ItemType.Head:
+  //       return AtlasIconsY.getHeadType(GameInventory.itemSubType[index]);
+  //     default:
+  //       throw Exception('GameUI.getInventoryItemSrcY($index)');
+  //   }
+  // }
 
-  static double getInventoryItemSrcSize(int index){
-    switch (GameInventory.itemType[index]) {
-      case ItemType.Body:
-        return AtlasIconSize.getBodyType(GameInventory.itemSubType[index]);
-      case ItemType.Weapon:
-        return AtlasIconSize.getWeaponType(GameInventory.itemSubType[index]);
-      case ItemType.Head:
-        return AtlasIconSize.getHeadType(GameInventory.itemSubType[index]);
-      default:
-        throw Exception('GameUI.getInventoryItemSrcSize($index)');
-    }
-  }
+  static int getIndexRow(int index) =>
+    index ~/ ColumnsPerRow;
+
+  static int getIndexColumn(int index) =>
+      index % ColumnsPerRow;
 
   static Widget buildInventorySlotGrid(){
     final rows = <Widget>[];
 
-    for (var row = 0; row < InventoryDimensions.Rows; row++){
-      final columns = <Widget>[];
-      for (var column = 0; column < InventoryDimensions.Columns; column++){
-        columns.add(
-            DragTarget<int>(
-              onWillAccept: (int? index){
-                return true;
-              },
-              onAccept: (int? i){
-                if (i == null) return;
-                GameNetwork.sendClientRequestInventoryMove(
-                  indexFrom: GameInventory.index[i],
-                  indexTo: InventoryDimensions.convertToIndex(row: row, column: column),
-                );
-              },
-              builder: (context, candidate, index){
-                return buildAtlasImage(
-                  image: GameImages.atlasIcons,
-                  srcX: AtlasIconsX.Slot,
-                  srcY: AtlasIconsY.Slot,
-                  srcWidth: AtlasIconSize.Slot,
-                  srcHeight: AtlasIconSize.Slot,
-                );
-              },
-            )
-        );
-      }
-      rows.add(
-          Row(
-            children: columns,
-          )
-      );
+    for (var i = 0; i < GameInventory.Size; i++){
+       rows.add(
+         Positioned(
+             top: getIndexRow(i) * 32.0,
+             left: getIndexColumn(i) * 32.0,
+             child: DragTarget<int>(
+               onWillAccept: (int? index) => index != null,
+               onAccept: (int? toIndex){
+                 if (toIndex == null) return;
+                 GameNetwork.sendClientRequestInventoryMove(
+                   indexFrom: i,
+                   indexTo: toIndex,
+                 );
+               },
+               builder: (context, candidate, index){
+                 return buildAtlasImage(
+                   image: GameImages.atlasIcons,
+                   srcX: AtlasIconsX.Slot,
+                   srcY: AtlasIconsY.Slot,
+                   srcWidth: AtlasIconSize.Slot,
+                   srcHeight: AtlasIconSize.Slot,
+                 );
+               },
+             )
+         )
+       );
     }
+
+    // for (var row = 0; row < InventoryDimensions.Rows; row++){
+    //   final columns = <Widget>[];
+    //   for (var column = 0; column < InventoryDimensions.Columns; column++){
+    //     columns.add(
+    //         DragTarget<int>(
+    //           onWillAccept: (int? index){
+    //             return true;
+    //           },
+    //           onAccept: (int? fromIndex){
+    //             if (fromIndex == null) return;
+    //             GameNetwork.sendClientRequestInventoryMove(
+    //               indexFrom: fromIndex,
+    //               indexTo: i,
+    //             );
+    //           },
+    //           builder: (context, candidate, index){
+    //             return buildAtlasImage(
+    //               image: GameImages.atlasIcons,
+    //               srcX: AtlasIconsX.Slot,
+    //               srcY: AtlasIconsY.Slot,
+    //               srcWidth: AtlasIconSize.Slot,
+    //               srcHeight: AtlasIconSize.Slot,
+    //             );
+    //           },
+    //         )
+    //     );
+    //   }
+    //   rows.add(
+    //       Row(
+    //         children: columns,
+    //       )
+    //   );
+    // }
     return Column(
       children: rows,
     );
