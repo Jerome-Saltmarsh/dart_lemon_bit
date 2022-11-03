@@ -1,7 +1,6 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -68,7 +67,7 @@ class EditorUI {
   }
 
   static Widget buildIconRain(Rain rain, bool active) {
-    return buildAtlasImage(
+    return Engine.buildAtlasImage(
       image: GameImages.atlasIcons,
       srcX: active ? AtlasIconsX.Weather_Active : AtlasIconsX.Weather_Inactive,
       srcY: 64.0 * rain.index,
@@ -79,7 +78,7 @@ class EditorUI {
   }
 
   static Widget buildIconLightning(Lightning lightning, bool active) {
-    return buildAtlasImage(
+    return Engine.buildAtlasImage(
       image: GameImages.atlasIcons,
       srcX: active ? AtlasIconsX.Weather_Active : AtlasIconsX.Weather_Inactive,
       srcY: lightning == Lightning.Off ? 0 : (64.0 * 2) + (64.0 * lightning.index),
@@ -94,7 +93,7 @@ class EditorUI {
   }
 
   static Widget buildIconWeather(double srcY, bool active) {
-    return buildAtlasImage(
+    return Engine.buildAtlasImage(
       image: GameImages.atlasIcons,
       srcX: active ? AtlasIconsX.Weather_Active : AtlasIconsX.Weather_Inactive,
       srcY: srcY,
@@ -245,7 +244,7 @@ class EditorUI {
   }
 
   static Widget buildIconNodeType(int nodeType) =>
-      buildAtlasImage(
+      Engine.buildAtlasImage(
         image: GameImages.atlasNodes,
         srcX: AtlasNodeX.mapNodeType(nodeType),
         srcY: AtlasNodeY.mapNodeType(nodeType),
@@ -254,7 +253,7 @@ class EditorUI {
       );
 
   static Widget buildButtonSelectNodeType(int nodeType) {
-    final canvas = buildAtlasImage(
+    final canvas = Engine.buildAtlasImage(
       image: GameImages.atlasNodes,
       srcX: AtlasNodeX.mapNodeType(nodeType),
       srcY: AtlasNodeY.mapNodeType(nodeType),

@@ -91,7 +91,7 @@ class MiniMap {
     return SizedBox(
       height: width,
       width: height,
-      child: buildCanvas(paint: renderCanvasMap, frame: canvasFrameMap),
+      child: Engine.buildCanvas(paint: renderCanvasMap, frame: canvasFrameMap),
     );
   }
 

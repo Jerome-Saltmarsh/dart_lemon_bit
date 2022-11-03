@@ -1,7 +1,6 @@
 import 'dart:ui' as ui;
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/ui/views.dart';
@@ -83,7 +82,7 @@ class GameWebsite {
                    if (image == null){
                      return const SizedBox(height: 45,);
                    }
-                   return buildAtlasImage(
+                   return Engine.buildAtlasImage(
                        image: image,
                        srcX: 0,
                        srcY: 0,

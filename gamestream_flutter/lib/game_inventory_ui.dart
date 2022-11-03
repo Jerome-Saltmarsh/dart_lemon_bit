@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 
 import 'library.dart';
@@ -134,7 +133,7 @@ class GameInventoryUI {
             );
           },
           builder: (context, candidate, index){
-            return buildAtlasImage(
+            return Engine.buildAtlasImage(
               image: GameImages.atlasItems,
               srcX: 0,
               srcY: 64,
@@ -162,7 +161,7 @@ class GameInventoryUI {
     );
 
   static buildItemTypeAtlasImage({required int itemType, double scale = 1.0}) =>
-      buildAtlasImage(
+      Engine.buildAtlasImage(
         image: GameImages.atlasItems,
         srcX: AtlasItems.getSrcX(itemType),
         srcY: AtlasItems.getSrcY(itemType),

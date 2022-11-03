@@ -1260,6 +1260,105 @@ class Engine {
       Engine.flushAll();
     }
   }
+
+  static Widget buildAtlasImageButton({
+    required ui.Image image,
+    required double srcX,
+    required double srcY,
+    required double srcWidth,
+    required double srcHeight,
+    required Function? action,
+    double scale = 1.0,
+    String hint = "",
+  }) =>
+      onPressed(
+        action: action,
+        hint: hint,
+        child: Container(
+          width: srcWidth,
+          height: srcHeight,
+          child: buildAtlasImage(
+            image: image,
+            srcX: srcX,
+            srcY: srcY,
+            srcWidth: srcWidth,
+            srcHeight: srcHeight,
+            scale: scale,
+          ),
+        ),
+      );
+
+  static Widget buildAtlasImage({
+    required ui.Image image,
+    required double srcX,
+    required double srcY,
+    required double srcWidth,
+    required double srcHeight,
+    double scale = 1.0,
+  }) =>
+      Container(
+        alignment: Alignment.center,
+        width: srcWidth,
+        height: srcHeight,
+        child: buildCanvas(
+            paint: (Canvas canvas, Size size) =>
+                Engine.renderExternalCanvas(
+                  canvas: canvas,
+                  image: image,
+                  srcX: srcX,
+                  srcY: srcY,
+                  srcWidth: srcWidth,
+                  srcHeight: srcHeight,
+                  dstX: 0,
+                  dstY: 0,
+                  scale: scale,
+                )
+        ),
+      );
+
+  static Widget onPressed({
+    required Widget child,
+    Function? action,
+    Function? onRightClick,
+    dynamic hint,
+  }) {
+    final widget = MouseRegion(
+        cursor: action != null
+            ? SystemMouseCursors.click
+            : SystemMouseCursors.forbidden,
+        child: GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            child: child,
+            onSecondaryTap: onRightClick != null ? (){
+              onRightClick.call();
+            } : null,
+            onTap: (){
+              if (action == null) return;
+              action();
+            }
+        ));
+
+    if (hint == null) return widget;
+
+    return Tooltip(
+      message: hint.toString(),
+      child: widget,
+    );
+  }
+
+  static Widget buildCanvas({
+    required PaintCanvas paint,
+    ValueNotifier<int>? frame,
+    ShouldRepaint? shouldRepaint,
+  }){
+    return CustomPaint(
+      painter: CustomPainterPainter(
+          paint,
+          shouldRepaint ?? (CustomPainter oldDelegate) => false,
+          frame
+      ),
+    );
+  }
 }
 
 typedef CallbackOnScreenSizeChanged = void Function(
@@ -1342,3 +1441,26 @@ class _EngineForegroundPainter extends CustomPainter {
 // TYPEDEFS
 typedef BasicWidgetBuilder = Widget Function();
 typedef CallbackOnJoystickEngaged = void Function(double angle, double distance);
+
+
+
+typedef PaintCanvas = void Function(Canvas canvas, Size size);
+typedef ShouldRepaint = bool Function(CustomPainter oldDelegate);
+
+class CustomPainterPainter extends CustomPainter {
+
+  final PaintCanvas paintCanvas;
+  final ShouldRepaint doRepaint;
+
+  CustomPainterPainter(this.paintCanvas, this.doRepaint, ValueNotifier<int>? frame) : super(repaint: frame);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    return paintCanvas(canvas, size);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return doRepaint(oldDelegate);
+  }
+}

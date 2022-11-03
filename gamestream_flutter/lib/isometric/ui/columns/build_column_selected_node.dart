@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -24,7 +23,7 @@ Widget buildEditorSelectedNode() =>
               child: Container(
                 width: 16,
                 height: 16,
-                child: buildAtlasImageButton(
+                child: Engine.buildAtlasImageButton(
                   image: GameImages.atlasIcons,
                   srcX: 80,
                   srcY: 96,
@@ -58,7 +57,7 @@ Widget buildEditorSelectedNode() =>
                 top: 65 + _shiftY,
                 left: 27 + _shiftX,
                 child: onMouseOver(builder: (BuildContext context, bool mouseOver) =>
-                      buildAtlasImageButton(
+                    Engine.buildAtlasImageButton(
                           image: GameImages.atlasIcons,
                           action: GameEditor.cursorZDecrease,
                           srcX: mouseOver ? AtlasIconsX.Arrows_Orange : AtlasIconsX.Arrows_Yellow,
@@ -72,7 +71,7 @@ Widget buildEditorSelectedNode() =>
               Positioned(
                 top: 3 + _shiftY,
                 left: 3 + _shiftY,
-                child: onMouseOver(builder: (BuildContext context, bool mouseOver) => buildAtlasImageButton(
+                child: onMouseOver(builder: (BuildContext context, bool mouseOver) => Engine.buildAtlasImageButton(
                     image: GameImages.atlasIcons,
                   action: GameEditor.cursorRowDecrease,
                   srcX: mouseOver ? AtlasIconsX.Arrows_Orange : AtlasIconsX.Arrows_Yellow,
@@ -85,7 +84,7 @@ Widget buildEditorSelectedNode() =>
               Positioned(
                 top: 5 + _shiftY,
                 left: 50 + _shiftX,
-                child: onMouseOver(builder: (BuildContext context, bool mouseOver) => buildAtlasImageButton(
+                child: onMouseOver(builder: (BuildContext context, bool mouseOver) => Engine.buildAtlasImageButton(
                     image: GameImages.atlasIcons,
                     action: GameEditor.cursorColumnDecrease,
                     srcX: mouseOver ? AtlasIconsX.Arrows_Orange : AtlasIconsX.Arrows_Yellow,
@@ -104,7 +103,7 @@ Widget buildEditorSelectedNode() =>
               Positioned(
                 top: 50 + _shiftY,
                 left: 50 + _shiftX,
-                child: onMouseOver(builder: (BuildContext context, bool mouseOver) => buildAtlasImageButton(
+                child: onMouseOver(builder: (BuildContext context, bool mouseOver) => Engine.buildAtlasImageButton(
                     image: GameImages.atlasIcons,
                   action: GameEditor.cursorRowIncrease,
                   srcX: mouseOver ? AtlasIconsX.Arrows_Orange : AtlasIconsX.Arrows_Yellow,
@@ -117,7 +116,7 @@ Widget buildEditorSelectedNode() =>
               Positioned(
                 top: -10 + _shiftY,
                 left: 27 + _shiftX,
-                child: onMouseOver(builder: (BuildContext context, bool mouseOver) => buildAtlasImageButton(
+                child: onMouseOver(builder: (BuildContext context, bool mouseOver) => Engine.buildAtlasImageButton(
                     image: GameImages.atlasIcons,
                   action: GameEditor.cursorZIncrease,
                   srcX: mouseOver ? AtlasIconsX.Arrows_Orange : AtlasIconsX.Arrows_Yellow,
@@ -130,7 +129,7 @@ Widget buildEditorSelectedNode() =>
               Positioned(
                 top: 50 + _shiftY,
                 left: 0 + _shiftX,
-                child: onMouseOver(builder: (BuildContext context, bool mouseOver) => buildAtlasImageButton(
+                child: onMouseOver(builder: (BuildContext context, bool mouseOver) => Engine.buildAtlasImageButton(
                     image: GameImages.atlasIcons,
                     action: GameEditor.cursorColumnIncrease,
                     srcX: mouseOver ? AtlasIconsX.Arrows_Orange : AtlasIconsX.Arrows_Yellow,

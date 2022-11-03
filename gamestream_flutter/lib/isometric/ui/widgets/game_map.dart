@@ -28,7 +28,7 @@ class GameMapWidget extends StatelessWidget {
     return SizedBox(
       width: width,
       height: height,
-      child: buildCanvas(paint: renderCanvasMap, frame: canvasFrameMap),
+      child: Engine.buildCanvas(paint: renderCanvasMap, frame: canvasFrameMap),
     );
   }
 

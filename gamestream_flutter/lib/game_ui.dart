@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/events/on_visibility_changed_message_box.dart';
-import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/stacks/build_stack_game_type_skirmish.dart';
 import 'package:gamestream_flutter/isometric/ui/stacks/build_stack_play_mode.dart';
@@ -9,7 +8,6 @@ import 'package:gamestream_flutter/isometric/ui/watches/build_watch_scene_meta_d
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/game_map.dart';
 import 'package:gamestream_flutter/library.dart';
-
 import 'game_ui_config.dart';
 import 'isometric/ui/dialogs/build_game_dialog.dart';
 import 'ui/builders/build_panel_menu.dart';
@@ -252,7 +250,7 @@ class GameUI {
       );
 
   static Widget buildIconAttackType(int type) =>
-      buildAtlasImage(
+      Engine.buildAtlasImage(
         image: GameImages.atlasIcons,
         srcX: AtlasItems.getSrcX(type),
         srcY: AtlasItems.getSrcY(type),

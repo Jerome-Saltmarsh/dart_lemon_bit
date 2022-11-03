@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_gameobjects.dart';
-import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
 import 'package:gamestream_flutter/isometric/ui/columns/build_column_selected_node.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/stacks/build_stack_play_mode.dart';
@@ -44,7 +43,7 @@ Widget buildStackEdit(EditTab activeEditTab) =>
                 width: 100,
                 height: 100,
                 color: Colors.white,
-                child: buildAtlasImageButton(
+                child: Engine.buildAtlasImageButton(
                     image: GameImages.gameobjects,
                     srcX: AtlasGameObjects.Crystal_Large_X,
                     srcY: AtlasGameObjects.Crystal_Large_Y,
@@ -178,7 +177,7 @@ Widget buildColumnNodeOrientationSolid() =>
     buildOrientationIcon(NodeOrientation.Solid);
 
 Widget buildOrientationIcon(int orientation){
-  final canvas = buildAtlasImage(
+  final canvas = Engine.buildAtlasImage(
     image: GameImages.atlasNodes,
     srcX: AtlasNodeX.mapOrientation(orientation),
     srcY: AtlasNodeY.mapOrientation(orientation),

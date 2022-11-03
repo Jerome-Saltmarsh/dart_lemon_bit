@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/isometric/ui/buttons/build_atlas_image.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -46,7 +45,7 @@ Widget buildButtonShowMap() => Tooltip(
 
 Widget buildIconFullscreen() {
   return WatchBuilder(Engine.fullScreen, (bool fullscreen) {
-    return buildAtlasImageButton(
+    return Engine.buildAtlasImageButton(
         image: GameImages.atlasIcons,
         srcX: AtlasIconsX.Fullscreen,
         srcY: AtlasIconsY.Fullscreen,
@@ -59,7 +58,7 @@ Widget buildIconFullscreen() {
 }
 
 Widget buildIconZoom() =>
-  buildAtlasImageButton(
+    Engine.buildAtlasImageButton(
     hint: "Zoom (F)",
     image: GameImages.atlasIcons,
     srcX: AtlasIconsX.Zoom,
@@ -71,7 +70,7 @@ Widget buildIconZoom() =>
   );
 
 Widget buildIconHome() =>
-    buildAtlasImageButton(
+    Engine.buildAtlasImageButton(
       image: GameImages.atlasIcons,
       srcX: AtlasIconsX.Home,
       srcY: AtlasIconsY.Home,
