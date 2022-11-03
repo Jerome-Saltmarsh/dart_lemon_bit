@@ -130,19 +130,19 @@ class GameDarkAgeVillage extends DarkAgeArea {
             "Staff": () {
               player.beginQuest(Quest.Garry_Kill_Farm_Zombies);
               setCharacterStateChanging(player);
-              player.weapon = buildWeaponStaff();
+              // player.weapon = buildWeaponStaff();
               player.endInteraction();
             },
             "Sword": () {
               player.beginQuest(Quest.Garry_Kill_Farm_Zombies);
               setCharacterStateChanging(player);
-              player.weapon = buildWeaponBlade();
+              // player.weapon = buildWeaponBlade();
               player.endInteraction();
             },
             "Bow": () {
               player.beginQuest(Quest.Garry_Kill_Farm_Zombies);
               setCharacterStateChanging(player);
-              player.weapon = buildWeaponBow();
+              // player.weapon = buildWeaponBow();
               player.endInteraction();
             },
             "I can't right now": player.endInteraction,

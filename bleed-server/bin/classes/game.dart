@@ -156,8 +156,8 @@ abstract class Game {
 
     if (player.deadOrBusy) return;
 
-    if (player.weapon.durationRemaining <= 0) {
-      player.weapon.state = AttackState.Aiming;
+    if (player.weaponDurationRemaining <= 0) {
+      // player.weapon.state = AttackState.Aiming;
       player.lookRadian = player.mouseAngle;
     }
 
@@ -219,12 +219,13 @@ abstract class Game {
   }
 
   void playerSetWeapon(Player player, Weapon weapon){
-    if (player.weapon == weapon) return;
-    player.weapon = weapon;
+    if (player.weaponType == weapon.type) return;
+    player.weaponType = weapon.type;
+    // player.weaponDuration = weapon.duration;
     player.writePlayerWeaponType();
     player.writePlayerWeaponRounds();
     player.writePlayerWeaponCapacity();
-    player.writePlayerEventItemEquipped(player.weapon.type);
+    player.writePlayerEventItemEquipped(player.weaponType);
   }
 
   void changeGame(Player player, Game to){
@@ -295,60 +296,34 @@ abstract class Game {
   void playerUseWeapon(Player player) {
     if (player.deadBusyOrPerforming) return;
 
-    final weapon = player.weapon;
+    final weaponType = player.weaponType;
+    player.weaponDurationRemaining = ItemType.getCooldown(weaponType);
 
-    if (weapon.capacity > 0){
-      if (weapon.rounds == 0) return;
-      weapon.rounds--;
-      player.writePlayerWeaponRounds();
+    if (ItemType.isTypeWeaponMelee(weaponType)) {
+      playerAttackMelee(player: player);
+      return;
     }
 
-    switch (weapon.type) {
-      case ItemType.Empty:
-        return playerAttackMelee(
-          player: player,
-          attackType: ItemType.Empty,
-          distance: weapon.range,
-          attackRadius: 35,
-          damage: weapon.damage,
-          duration: weapon.duration,
-        );
-      case ItemType.Weapon_Melee_Sword:
-        return playerAttackMelee(
-          player: player,
-          attackType: weapon.type,
-          distance: weapon.range,
-          attackRadius: 35, /// TODO read value from weapon
-          damage: weapon.damage,
-          duration: weapon.duration,
-        );
+    switch (weaponType) {
       case ItemType.Weapon_Ranged_Crossbow:
-        return spawnProjectileArrow(
+        spawnProjectileArrow(
+            damage: ItemType.getDamage(weaponType),
+            range: ItemType.getRange(weaponType),
             src: player,
             angle: player.lookRadian,
-            damage: weapon.damage,
-            range: weapon.range,
         );
+        return;
       case ItemType.Weapon_Ranged_Handgun:
-        return characterFireWeapon(
-          character: player,
-          weapon: weapon,
-          angle: player.lookRadian,
-        );
+        characterFireWeapon(player);
+        return;
       case ItemType.Weapon_Ranged_Shotgun:
         return characterFireShotgun(player, player.lookRadian);
       case ItemType.Weapon_Ranged_Assault_Rifle:
-        return characterFireWeapon(
-          character: player,
-          weapon: weapon,
-          angle: player.lookRadian,
-        );
+        characterFireWeapon(player);
+        return;
       case ItemType.Weapon_Ranged_Rifle:
-        return characterFireWeapon(
-          character: player,
-          weapon: weapon,
-          angle: player.lookRadian,
-        );
+        characterFireWeapon(player);
+        return;
       case ItemType.Weapon_Ranged_Staff_Of_Flames:
         characterSpawnProjectileFireball(
             player,
@@ -356,31 +331,17 @@ abstract class Game {
         );
         break;
       case ItemType.Weapon_Ranged_Revolver:
-        return characterFireWeapon(
-          character: player,
-          weapon: weapon,
-          angle: player.lookRadian,
-        );
-      case ItemType.Weapon_Melee_Crowbar:
-        return playerAttackMelee(
-          player: player,
-          attackType: weapon.type,
-          distance: weapon.range,
-          attackRadius: 35, /// TODO read value from weapon
-          damage: weapon.damage,
-          duration: weapon.duration,
-        );
+        characterFireWeapon(player);
+        return;
       case ItemType.Weapon_Ranged_Bow:
-        weapon.durationRemaining = weapon.duration;
         spawnProjectileArrow(
             src: player,
-            damage: weapon.damage,
-            range: weapon.range,
+            damage: ItemType.getDamage(weaponType),
+            range: ItemType.getRange(weaponType),
             angle: player.lookRadian,
         );
         break;
       case ItemType.Weapon_Melee_Magic_Staff:
-        weapon.durationRemaining = weapon.duration;
         spawnProjectileOrb(src: player, damage: 2);
         break;
     }
@@ -397,7 +358,7 @@ abstract class Game {
 
   void playerAutoAim(Player player) {
     if (player.deadOrBusy) return;
-    var closestCharacterDistance = player.weapon.range * 1.5;
+    var closestCharacterDistance = player.weaponRange * 1.5;
     Character? closestCharacter = null;
     for (final character in characters) {
       if (character.deadOrDying) continue;
@@ -414,13 +375,13 @@ abstract class Game {
 
   void playerAttackMelee({
     required Player player,
-    required int attackType,
-    required double distance,
-    required double attackRadius,
-    required int damage,
-    required int duration,
   }) {
+    if (player.deadBusyOrPerforming) return;
+
     final angle = player.lookRadian;
+    final distance = ItemType.getRange(player.weaponType);
+    final damage = ItemType.getDamage(player.weaponType);
+    final attackRadius = 35.0;
 
     final performX = player.x + getAdjacent(angle, distance);
     final performY = player.y + getOpposite(angle, distance);
@@ -429,11 +390,11 @@ abstract class Game {
     player.performX = performX;
     player.performY = performY;
     player.performZ = performZ;
-    player.weapon.durationRemaining = player.weapon.duration;
+    player.weaponDurationRemaining = ItemType.getCooldown(player.weaponType);
 
     /// TODO name arguments
     dispatchAttackPerformed(
-        attackType,
+        player.weaponType,
         performX,
         performY,
         performZ,
@@ -523,19 +484,18 @@ abstract class Game {
           z: performZ,
           angle: angle,
         );
-        player.writeByte(attackType);
+        player.writeByte(player.weaponType);
       }
     }
   }
 
-  void characterFireWeapon({
-    required Character character,
-    required Weapon weapon,
-    required double angle,
-  }){
-    if (weapon.durationRemaining > 0) return;
-    weapon.durationRemaining = weapon.duration;
-    weapon.state = AttackState.Firing;
+  void characterFireWeapon(Character character){
+    if (character.deadBusyOrPerforming) return;
+
+    final angle = (character is Player) ? character.lookRadian : character.faceAngle;
+
+    character.weaponDurationRemaining = ItemType.getCooldown(character.weaponType);
+    character.weaponState = AttackState.Firing;
     character.applyForce(
       force: 2.0,
       angle: angle + pi,
@@ -546,12 +506,12 @@ abstract class Game {
       accuracy: 0,
       angle: angle,
       speed: 8.0,
-      range: weapon.range,
+      range: character.weaponRange,
       projectileType: ProjectileType.Bullet,
-      damage: weapon.damage,
+      damage: character.weaponDamage,
     );
     dispatchAttackPerformed(
-        weapon.type,
+        character.weaponType,
         character.x,
         character.y,
         character.z,
@@ -1103,17 +1063,11 @@ abstract class Game {
       }
     }
 
-    if (player.weapon.durationRemaining > 0) {
-      final weapon = player.weapon;
-      weapon.durationRemaining--;
-      if (weapon.durationRemaining == 0){
-        weapon.state = AttackState.Aiming;
+    if (player.weaponDurationRemaining > 0) {
+      player.weaponDurationRemaining--;
+      if (player.weaponDurationRemaining <= 0){
+        player.weaponState = AttackState.Idle;
         player.lookRadian = player.mouseAngle;
-        if (weapon.requiresRounds) {
-          if (weapon.rounds == 0) {
-            customOnPlayerWeaponRoundsExhausted(player, weapon);
-          }
-        }
         customOnPlayerWeaponReady(player);
       }
     }
@@ -1514,7 +1468,7 @@ abstract class Game {
       speed: speed,
       range: src.equippedRange,
       projectileType: ProjectileType.Bullet,
-      damage: src.weapon.damage,
+      damage: src.weaponDamage,
     );
 
   void fireAssaultRifle(Character src, double angle) {
@@ -1527,7 +1481,7 @@ abstract class Game {
       projectileType: ProjectileType.Bullet,
       damage: 5,
     );
-    dispatchAttackPerformed(src.weapon.type, src.x, src.y, src.z, angle);
+    dispatchAttackPerformed(src.weaponType, src.x, src.y, src.z, angle);
   }
 
   // void fireArrow(Character src, double angle) {
@@ -1553,7 +1507,7 @@ abstract class Game {
       projectileType: ProjectileType.Bullet,
       damage: 10,
     );
-    dispatchAttackPerformed(src.weapon.type, src.x, src.y, src.z, angle);
+    dispatchAttackPerformed(src.weaponType, src.x, src.y, src.z, angle);
   }
 
   void characterSpawnProjectileFireball(Character character, {
@@ -1575,13 +1529,13 @@ abstract class Game {
   }
 
   void characterFireShotgun(Character src, double angle) {
-    if (src.weapon.durationRemaining > 0) return;
+    if (src.weaponDurationRemaining > 0) return;
 
     src.applyForce(
       force: 6.0,
       angle: angle + pi,
     );
-    src.weapon.durationRemaining = src.weapon.duration;
+    src.weaponDurationRemaining = src.weaponDuration;
 
     for (var i = 0; i < 5; i++) {
       spawnProjectile(
@@ -1589,12 +1543,12 @@ abstract class Game {
         accuracy: 0,
         angle: angle + giveOrTake(0.25),
         speed: 8.0,
-        range: src.weapon.range,
+        range: src.weaponRange,
         projectileType: ProjectileType.Bullet,
-        damage:src.weapon.damage,
+        damage:src.weaponDamage,
       );
     }
-    dispatchAttackPerformed(src.weapon.type, src.x, src.y, src.z, angle);
+    dispatchAttackPerformed(src.weaponType, src.x, src.y, src.z, angle);
   }
 
   Projectile spawnProjectile({
@@ -1949,7 +1903,7 @@ abstract class Game {
       return;
     }
 
-    final weaponType = character.weapon.type;
+    final weaponType = character.weaponType;
     if (weaponType == ItemType.Weapon_Melee_Sword) {
       if (stateDuration == 7) {
         dispatchV3(GameEventType.Sword_Woosh, character);
@@ -2097,9 +2051,9 @@ abstract class Game {
       wanderRadius: wanderRadius,
       game: this,
     );
-    npc.equippedHead = headType;
-    npc.equippedArmour = armour;
-    npc.equippedLegs = pants;
+    npc.headType = headType;
+    npc.bodyType = armour;
+    npc.legsType = pants;
     npc.indexRow = row;
     npc.indexColumn = column;
     npc.indexZ = z;

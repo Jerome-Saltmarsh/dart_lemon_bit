@@ -100,9 +100,9 @@ class GameSkirmish extends Game {
         range: 200,
       ),
     );
-    player.equippedLegs = ItemType.Legs_Brown;
-    player.equippedArmour = ItemType.Body_Tunic_Padded;
-    player.equippedHead = ItemType.Head_Wizards_Hat;
+    player.legsType = ItemType.Legs_Brown;
+    player.bodyType = ItemType.Body_Tunic_Padded;
+    player.headType = ItemType.Head_Wizards_Hat;
     return player;
   }
 

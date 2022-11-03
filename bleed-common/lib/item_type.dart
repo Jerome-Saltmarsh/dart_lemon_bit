@@ -22,7 +22,7 @@ class ItemType {
       value >= Index_Weapon_Melee;
 
   static bool isTypeWeaponMelee(int value) =>
-      value >= Index_Weapon_Melee && value < Index_Weapon_Ranged;
+      value == ItemType.Empty || (value >= Index_Weapon_Melee && value < Index_Weapon_Ranged);
 
   static bool isTypeWeaponRanged(int value) =>
       value >= Index_Weapon_Ranged;
@@ -106,7 +106,7 @@ class ItemType {
   static int getCooldown(int value) => {
       Weapon_Ranged_Handgun: 20,
       Weapon_Ranged_Shotgun: 40,
-  }[value] ?? 0;
+  }[value] ?? 30;
   
   static String getName(int value) => {
     

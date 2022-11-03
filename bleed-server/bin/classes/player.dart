@@ -211,9 +211,9 @@ class Player extends Character with ByteWriter {
             health: health,
             speed: 4.25,
             team: team,
-            weapon: weapon,
-            equippedArmour: ItemType.Body_Tunic_Padded,
-            equippedHead: ItemType.Head_Rogues_Hood,
+            weaponType: ItemType.Empty,
+            bodyType: ItemType.Body_Tunic_Padded,
+            headType: ItemType.Head_Rogues_Hood,
   ){
     maxMagic = magic;
     _magic = maxMagic;
@@ -261,15 +261,15 @@ class Player extends Character with ByteWriter {
 
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Armour_Type);
-    writeUInt16(equippedArmour);
+    writeUInt16(bodyType);
 
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Head_Type);
-    writeUInt16(equippedHead);
+    writeUInt16(headType);
 
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Pants_Type);
-    writeUInt16(equippedLegs);
+    writeUInt16(legsType);
 
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Alive);
@@ -315,25 +315,25 @@ class Player extends Character with ByteWriter {
   void writePlayerWeaponType(){
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Weapon_Type);
-    writeUInt16(weapon.type);
+    writeUInt16(weaponType);
   }
 
   void writePlayerWeaponRounds(){
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Weapon_Rounds);
-    writeInt(weapon.rounds);
+    writeInt(0);
   }
 
   void writePlayerWeaponCapacity(){
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Weapon_Capacity);
-    writeInt(weapon.capacity);
+    writeInt(0);
   }
 
   void writePlayerWeaponCooldown() {
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Weapon_Cooldown);
-    writePercentage(weapon.durationPercentage);
+    writePercentage(weaponDurationPercentage);
   }
 
   void writeGameObjects(){
@@ -536,7 +536,7 @@ class Player extends Character with ByteWriter {
     writeString(player.name);
     writeString(player.text);
     writeAngle(player.lookRadian);
-    writeByte(player.weapon.frame);
+    writeByte(player.weaponFrame);
   }
 
   void writeNpc(Player player, Character npc) {
@@ -553,15 +553,15 @@ class Player extends Character with ByteWriter {
   }
 
   void writeCharacterEquipment(Character character) {
-    assert (ItemType.isTypeWeapon(character.weapon.type) || character.weapon.type == ItemType.Empty);
-    assert (ItemType.isTypeLegs(character.equippedLegs) || character.equippedLegs == ItemType.Empty);
-    assert (ItemType.isTypeBody(character.equippedArmour) || character.equippedArmour == ItemType.Empty);
-    assert (ItemType.isTypeHead(character.equippedHead) || character.equippedHead == ItemType.Empty);
-    writeUInt16(character.weapon.type);
-    writeUInt16(character.weapon.state);
-    writeUInt16(character.equippedArmour); // armour
-    writeUInt16(character.equippedHead); // helm
-    writeUInt16(character.equippedLegs); // helm
+    assert (ItemType.isTypeWeapon(character.weaponType) || character.weaponType == ItemType.Empty);
+    assert (ItemType.isTypeLegs(character.legsType) || character.legsType == ItemType.Empty);
+    assert (ItemType.isTypeBody(character.bodyType) || character.bodyType == ItemType.Empty);
+    assert (ItemType.isTypeHead(character.headType) || character.headType == ItemType.Empty);
+    writeUInt16(character.weaponType);
+    writeUInt16(character.weaponState);
+    writeUInt16(character.bodyType); // armour
+    writeUInt16(character.headType); // helm
+    writeUInt16(character.legsType); // helm
   }
 
   void writeWeather() {

@@ -45,7 +45,7 @@ class GameDarkAgeFarm extends DarkAgeArea {
   void customInitPlayer(Player player) {
     movePlayerToCrystal(player);
     player.setCharacterStateSpawning();
-    player.weapon = buildWeaponShotgun();
+    // player.weapon = buildWeaponShotgun();
 
     player.interact(
         message: "Welcome to Dark-Age! \n\nUse the W,A,S,D keys to run \nLeft and right mouse click to attack and interact",

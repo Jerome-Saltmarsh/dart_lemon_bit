@@ -50,10 +50,10 @@ abstract class AI extends Character {
       z: z,
       health: health,
       team: team,
-      weapon: weapon,
       speed: speed,
-      equippedHead: ItemType.Head_Wizards_Hat,
-     equippedArmour: ItemType.Body_Tunic_Padded,
+      weaponType: ItemType.Empty,
+      headType: ItemType.Head_Wizards_Hat,
+      bodyType: ItemType.Body_Tunic_Padded,
   ) {
     clearDest();
     spawnX = x;

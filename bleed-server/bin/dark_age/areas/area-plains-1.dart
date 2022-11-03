@@ -26,9 +26,9 @@ class AreaPlains1 extends DarkAgeArea {
         weapon: buildWeaponHandgun(),
         health: 20,
     );
-    player.equippedArmour = ItemType.Body_Tunic_Padded;
-    player.equippedLegs = ItemType.Legs_Blue;
-    player.equippedHead = ItemType.Head_Steel_Helm;
+    player.bodyType = ItemType.Body_Tunic_Padded;
+    player.legsType = ItemType.Legs_Blue;
+    player.headType = ItemType.Head_Steel_Helm;
     movePlayerToCrystal(player);
 
     player.inventory[0] = ItemType.Weapon_Ranged_Handgun;
@@ -52,9 +52,9 @@ class AreaPlains1 extends DarkAgeArea {
              print("player interacted with Roth");
           }
         )
-          ..equippedArmour = ItemType.Body_Tunic_Padded
-          ..equippedLegs = ItemType.Legs_Blue
-          ..equippedHead = ItemType.Head_Steel_Helm
+          ..bodyType = ItemType.Body_Tunic_Padded
+          ..legsType = ItemType.Legs_Blue
+          ..headType = ItemType.Head_Steel_Helm
 
     );
   }

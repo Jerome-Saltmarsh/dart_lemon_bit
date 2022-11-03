@@ -105,11 +105,11 @@ class Connection {
         final inventoryRequest = int.tryParse(arguments[1]);
         switch (inventoryRequest){
           case InventoryRequest.Unequip_Weapon:
-            if (player.weapon.type == ItemType.Empty) return;
+            if (player.weaponType == ItemType.Empty) return;
             for (var i = 0; i < player.inventory.length; i++){
               if (player.inventory[i] != ItemType.Empty) continue;
-              player.inventory[i] = player.weapon.type;
-              player.weapon.type = ItemType.Empty;
+              player.inventory[i] = player.weaponType;
+              player.weaponType = ItemType.Empty;
               player.writePlayerWeaponType();
               player.game.setCharacterStateChanging(player);
               player.writePlayerInventory();
@@ -117,20 +117,20 @@ class Connection {
             }
             break;
           case InventoryRequest.Unequip_Head:
-            if (player.equippedHead == ItemType.Empty) return;
+            if (player.headType == ItemType.Empty) return;
             final emptyIndex = player.getEmptyInventoryIndex();
             if (emptyIndex == null) return;
-            player.inventory[emptyIndex] = player.equippedHead;
-            player.equippedHead = ItemType.Empty;
+            player.inventory[emptyIndex] = player.headType;
+            player.headType = ItemType.Empty;
             player.game.setCharacterStateChanging(player);
             player.writePlayerInventory();
             break;
           case InventoryRequest.Unequip_Body:
-            if (player.equippedArmour == ItemType.Empty) return;
+            if (player.bodyType == ItemType.Empty) return;
             final emptyIndex = player.getEmptyInventoryIndex();
             if (emptyIndex == null) return;
-            player.inventory[emptyIndex] = player.equippedArmour;
-            player.equippedArmour = ItemType.Empty;
+            player.inventory[emptyIndex] = player.bodyType;
+            player.bodyType = ItemType.Empty;
             player.game.setCharacterStateChanging(player);
             player.writePlayerInventory();
             break;
@@ -146,30 +146,30 @@ class Connection {
             var swapped = false;
 
             if (ItemType.isTypeWeapon(itemType)){
-               final currentWeapon = player.weapon.type;
-               player.weapon.type = itemType;
+               final currentWeapon = player.weaponType;
+               player.weaponType = itemType;
                player.inventory[index] = currentWeapon;
                swapped = true;
                player.writePlayerWeaponType();
             }
 
             if (ItemType.isTypeBody(itemType)){
-              final current = player.equippedArmour;
-              player.equippedArmour = itemType;
+              final current = player.bodyType;
+              player.bodyType = itemType;
               player.inventory[index] = current;
               swapped = true;
             }
 
             if (ItemType.isTypeHead(itemType)){
-              final current = player.equippedHead;
-              player.equippedHead = itemType;
+              final current = player.headType;
+              player.headType = itemType;
               player.inventory[index] = current;
               swapped = true;
             }
 
             if (ItemType.isTypeLegs(itemType)){
-              final current = player.equippedLegs;
-              player.equippedLegs = itemType;
+              final current = player.legsType;
+              player.legsType = itemType;
               player.inventory[index] = current;
               swapped = true;
             }
@@ -211,7 +211,7 @@ class Connection {
         if (arguments.length < 2)  return errorArgsExpected(2, arguments);
         final weaponType = int.tryParse(arguments[1]);
         if (weaponType == null) return errorInvalidArg('weapon type');
-        player.weapon = Weapon(type: weaponType, damage: 1, duration: 10, range: 50);
+        // player.weapon = Weapon(type: weaponType, damage: 1, duration: 10, range: 50);
         player.game.setCharacterStateChanging(player);
         break;
 
@@ -219,7 +219,7 @@ class Connection {
         if (arguments.length < 2)  return errorArgsExpected(2, arguments);
         final armourType = int.tryParse(arguments[1]);
         if (armourType == null) return errorInvalidArg('armour type');
-        player.equippedArmour = armourType;
+        player.bodyType = armourType;
         player.game.setCharacterStateChanging(player);
         break;
 
@@ -227,7 +227,7 @@ class Connection {
         if (arguments.length < 2)  return errorArgsExpected(2, arguments);
         final type = int.tryParse(arguments[1]);
         if (type == null) return errorInvalidArg('invalid head type $type');
-        player.equippedHead = type;
+        player.headType = type;
         player.game.setCharacterStateChanging(player);
         break;
 
@@ -235,7 +235,7 @@ class Connection {
         if (arguments.length < 2)  return errorArgsExpected(2, arguments);
         final type = int.tryParse(arguments[1]);
         if (type == null) return errorInvalidArg('invalid head type $type');
-        player.equippedLegs = type;
+        player.legsType = type;
         player.game.setCharacterStateChanging(player);
         break;
 

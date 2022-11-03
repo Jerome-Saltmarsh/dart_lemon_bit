@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:lemon_math/library.dart';
 
+import '../common/attack_state.dart';
 import '../common/library.dart';
 import '../functions/withinRadius.dart';
 import '../utilities.dart';
@@ -9,7 +10,6 @@ import 'collider.dart';
 import 'components.dart';
 import 'player.dart';
 import 'position3.dart';
-import 'weapon.dart';
 
 abstract class Character extends Collider with Team, Velocity, FaceDirection {
 
@@ -38,10 +38,14 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
   /// This forces a hit to occur even if the target goes out of range of the attack
   Position3? target;
   var invincible = false;
-  Weapon weapon;
-  var equippedArmour = ItemType.Body_Shirt_Cyan;
-  var equippedHead = ItemType.Head_Steel_Helm;
-  var equippedLegs = ItemType.Legs_Blue;
+  // Weapon weapon;
+  var weaponType = ItemType.Empty;
+  var weaponDurationRemaining = 0;
+  var weaponState = AttackState.Idle;
+  var bodyType = ItemType.Body_Shirt_Cyan;
+  var headType = ItemType.Head_Steel_Helm;
+  var legsType = ItemType.Legs_Blue;
+  int get weaponFrame => weaponDurationRemaining > 0 ? weaponDuration - weaponDurationRemaining : 0;
 
   var performX = 0.0;
   var performY = 0.0;
@@ -49,7 +53,13 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
 
   dynamic spawn;
 
+  double get weaponRange => ItemType.getRange(weaponType);
+  int get weaponDamage => ItemType.getDamage(weaponType);
+  int get weaponDuration => ItemType.getCooldown(weaponType);
+
   bool get targetSet => target != null;
+
+  double get weaponDurationPercentage => weaponDurationRemaining / weaponDuration;
 
   bool get targetIsEnemy {
     if (target == null) return false;
@@ -69,22 +79,22 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
     return team == targetTeam;
   }
 
-  bool get usingWeapon => weapon.durationRemaining > 0;
+  bool get usingWeapon => weaponDurationRemaining > 0;
   bool get running => state == CharacterState.Running;
   bool get idling => state == CharacterState.Idle;
   bool get characterStateIdle => state == CharacterState.Idle;
   bool get busy => stateDurationRemaining > 0;
   bool get deadOrBusy => dying || dead || busy;
   bool get deadBusyOrPerforming => dying || dead || usingWeapon;
-  bool get equippedTypeIsBow => weapon.type == ItemType.Weapon_Ranged_Bow;
-  bool get equippedTypeIsStaff => weapon.type == ItemType.Weapon_Melee_Magic_Staff;
-  bool get unarmed => weapon.type == ItemType.Empty;
-  bool get equippedTypeIsShotgun => weapon.type == ItemType.Weapon_Ranged_Shotgun;
-  bool get equippedIsMelee => ItemType.isTypeWeaponMelee(weapon.type);
+  bool get equippedTypeIsBow => weaponType == ItemType.Weapon_Ranged_Bow;
+  bool get equippedTypeIsStaff => weaponType == ItemType.Weapon_Melee_Magic_Staff;
+  bool get unarmed => weaponType == ItemType.Empty;
+  bool get equippedTypeIsShotgun => weaponType == ItemType.Weapon_Ranged_Shotgun;
+  bool get equippedIsMelee => ItemType.isTypeWeaponMelee(weaponType);
   bool get equippedIsEmpty => false;
   int get equippedAttackDuration => 25;
-  int get equippedDamage => weapon.damage;
-  double get equippedRange => weapon.range;
+  int get equippedDamage => ItemType.getDamage(weaponType);
+  double get equippedRange => ItemType.getRange(weaponType);
 
   void write(Player player);
 
@@ -93,13 +103,11 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
     required double y,
     required double z,
     required int health,
-      required this.equippedArmour,
-      required this.equippedHead,
-    required this.weapon,
+    required this.bodyType,
+    required this.headType,
+    required this.weaponType,
     required int team,
     double speed = 5.0,
-
-
   }) : super(x: x, y: y, z: z, radius: 7) {
     maxHealth = health;
     this.health = health;
