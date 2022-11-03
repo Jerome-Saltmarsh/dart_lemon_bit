@@ -1,0 +1,32 @@
+class PlayerEvent {
+  static const Level_Up = 0;
+  static const Skill_Upgraded = 1;
+  static const Teleported = 2;
+  static const Ammo_Acquired = 3;
+  static const Dash_Activated = 4;
+  static const Item_Purchased = 5;
+  static const Item_Equipped = 6;
+  static const Item_Dropped = 7;
+  static const Item_Sold = 8;
+  static const Drink_Potion = 9;
+  static const Orb_Earned_Topaz = 10;
+  static const Orb_Earned_Ruby = 11;
+  static const Orb_Earned_Emerald = 12;
+  static const Collect_Wood = 13;
+  static const Collect_Rock = 14;
+  static const Collect_Experience = 15;
+  static const Collect_Gold = 16;
+  static const Hello_Male_01 = 17;
+  static const Interaction_Finished = 17;
+  static const Quest_Started = 18;
+  static const Quest_Completed = 19;
+  static const Scene_Changed = 20;
+  static const GameObject_Deselected = 21;
+  static const Spawn_Started = 22;
+  static const Weapon_Rounds = 23;
+  static const Loot_Collected = 24;
+  static const Weapon_Slot_Type_Changed = 25;
+  static const Weapon_Slot_Rounds_Changed = 26;
+  static const Player_Moved = 27;
+  static const Inventory_Item_Moved = 28;
+}
