@@ -76,7 +76,7 @@ class GameInventoryUI {
         width: 150,
         height: 150,
         padding: const EdgeInsets.all(6),
-        child: buildIconItemType(itemType),
+        child: buildAtlasImageItemType(itemType),
       );
 
   static bool onDragWillAccept(int? i) => i != null;
@@ -174,23 +174,13 @@ class GameInventoryUI {
       child: child,
     );
 
-  static Widget buildColumnPlayerWeapons(List<Weapon> weapons) =>
-      Container(
-        color: brownLight,
-        width: 300,
-        height: 400,
-        padding: const EdgeInsets.all(6),
-        child: text("weapons"),
-      );
-
-
-  static Widget buildIconItemType(int itemType) =>
+  static Widget buildAtlasImageItemType(int itemType) =>
       buildAtlasImage(
         image: GameImages.atlasItems,
         srcX: AtlasItems.getSrcX(itemType),
         srcY: AtlasItems.getSrcY(itemType),
-        srcWidth: AtlasItems.getSrcX(itemType),
-        srcHeight: AtlasItems.getSrcY(itemType),
+        srcWidth: 32,
+        srcHeight: 32,
         scale: 3.0,
       );
 }
