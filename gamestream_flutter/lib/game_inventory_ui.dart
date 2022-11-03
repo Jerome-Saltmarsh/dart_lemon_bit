@@ -138,8 +138,8 @@ class GameInventoryUI {
   static Widget buildPositionInventoryItem(int index){
     final itemType = GameInventory.items[index];
     return Positioned(
-      left: convertIndexToColumn(index) * Slot_Size,
-      top: convertIndexToRow(index) * Slot_Size,
+      left: getIndexX(index),
+      top: getIndexY(index),
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
         child: Draggable<int>(
@@ -171,39 +171,6 @@ class GameInventoryUI {
     );
   }
 
-  // static double getInventoryItemSrcX(int index){
-  //   switch (GameInventory.itemType[index]) {
-  //     case ItemType.Body:
-  //       return AtlasIconsX.getBodyType(GameInventory.itemSubType[index]);
-  //     case ItemType.Weapon:
-  //       return AtlasIconsX.getWeaponType(GameInventory.itemSubType[index]);
-  //     case ItemType.Head:
-  //       return AtlasIconsX.getHeadType(GameInventory.itemSubType[index]);
-  //     default:
-  //       throw Exception('GameUI.getInventoryItemSrcX($index)');
-  //   }
-  // }
-
-  // static double getInventoryItemSrcY(int index){
-  //   switch (GameInventory.itemType[index]) {
-  //     case ItemType.Body:
-  //       return AtlasIconsY.getBodyType(GameInventory.itemSubType[index]);
-  //     case ItemType.Weapon:
-  //       return AtlasIconsY.getWeaponType(GameInventory.itemSubType[index]);
-  //     case ItemType.Head:
-  //       return AtlasIconsY.getHeadType(GameInventory.itemSubType[index]);
-  //     default:
-  //       throw Exception('GameUI.getInventoryItemSrcY($index)');
-  //   }
-  // }
-
-
-  static int getIndexRow(int index) =>
-    index ~/ ColumnsPerRow;
-
-  static int getIndexColumn(int index) =>
-      index % ColumnsPerRow;
-
   static Widget buildStackSlotGrid() {
     final children = <Widget>[];
     for (var i = 0; i < GameInventory.items.length; i++) {
@@ -216,8 +183,8 @@ class GameInventoryUI {
 
   static Widget buildPositionedGridSlot(int i) =>
     Positioned(
-        top: getIndexRow(i) * 32.0,
-        left: getIndexColumn(i) * 32.0,
+        left: getIndexX(i),
+        top: getIndexY(i),
         child: DragTarget<int>(
           onWillAccept: (int? index) => index != null,
           onAccept: (int? toIndex){
@@ -238,6 +205,14 @@ class GameInventoryUI {
           },
         )
     );
+
+  static double getIndexX(int index) => getIndexColumn(index) * Slot_Size;
+
+  static double getIndexY(int index) => getIndexRow(index) * Slot_Size;
+
+  static int getIndexRow(int index) => index ~/ ColumnsPerRow;
+
+  static int getIndexColumn(int index) =>  index % ColumnsPerRow;
 
   static Widget buildColumnPlayerWeapons(List<Weapon> weapons) =>
       Container(
