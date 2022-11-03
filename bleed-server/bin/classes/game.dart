@@ -24,7 +24,6 @@ import 'position3.dart';
 import 'projectile.dart';
 import 'rat.dart';
 import 'scene.dart';
-import 'weapon.dart';
 import 'zombie.dart';
 
 abstract class Game {
@@ -77,11 +76,7 @@ abstract class Game {
   /// safe to override
   void customOnPlayerRequestPurchaseWeapon(Player player, int type){ }
   /// safe to override
-  void customOnPlayerWeaponRoundsExhausted(Player player, Weapon weapon){
-    playerSetWeaponUnarmed(player);
-  }
-  /// safe to override
-  void customOnPlayerWeaponChanged(Player player, Weapon newWeapon, Weapon previousWeapon){ }
+  void customOnPlayerWeaponChanged(Player player, int previousWeaponType, int newWeaponType){ }
   /// once the player has finished striking then reequip the weapon
   void customOnPlayerWeaponReady(Player player) {  }
   /// PROPERTIES
@@ -214,19 +209,19 @@ abstract class Game {
     // player.lookRadian = player.mouseAngle;
   }
 
-  void playerSetWeaponUnarmed(Player player) {
-    playerSetWeapon(player, buildWeaponUnarmed());
-  }
+  // void playerSetWeaponUnarmed(Player player) {
+  //   playerSetWeapon(player, buildWeaponUnarmed());
+  // }
 
-  void playerSetWeapon(Player player, Weapon weapon){
-    if (player.weaponType == weapon.type) return;
-    player.weaponType = weapon.type;
-    // player.weaponDuration = weapon.duration;
-    player.writePlayerWeaponType();
-    player.writePlayerWeaponRounds();
-    player.writePlayerWeaponCapacity();
-    player.writePlayerEventItemEquipped(player.weaponType);
-  }
+  // void playerSetWeapon(Player player, Weapon weapon){
+  //   if (player.weaponType == weapon.type) return;
+  //   player.weaponType = weapon.type;
+  //   // player.weaponDuration = weapon.duration;
+  //   player.writePlayerWeaponType();
+  //   player.writePlayerWeaponRounds();
+  //   player.writePlayerWeaponCapacity();
+  //   player.writePlayerEventItemEquipped(player.weaponType);
+  // }
 
   void changeGame(Player player, Game to){
     if (this == to) return;
@@ -251,20 +246,20 @@ abstract class Game {
     );
   }
 
-  void playerReleaseWeaponCharge(Player player, Weapon weapon){
-    if (weapon.charge <= 0) return;
-
-    final maxCharge = 30;
-    double power = weapon.charge >= maxCharge ? 1.0 : weapon.charge / maxCharge;
-    weapon.charge = 0;
-    dispatchV3(GameEventType.Release_Bow, player);
-    spawnProjectileArrow(
-      src: player,
-      angle: player.lookRadian,
-      damage: weapon.damage,
-      range: weapon.range * power,
-    );
-  }
+  // void playerReleaseWeaponCharge(Player player, Weapon weapon){
+  //   if (weapon.charge <= 0) return;
+  //
+  //   final maxCharge = 30;
+  //   double power = weapon.charge >= maxCharge ? 1.0 : weapon.charge / maxCharge;
+  //   weapon.charge = 0;
+  //   dispatchV3(GameEventType.Release_Bow, player);
+  //   spawnProjectileArrow(
+  //     src: player,
+  //     angle: player.lookRadian,
+  //     damage: weapon.damage,
+  //     range: weapon.range * power,
+  //   );
+  // }
 
   void playerRunInDirection(Player player, int direction) {
     if (direction == Direction.None && !player.targetSet) {
@@ -2030,7 +2025,7 @@ abstract class Game {
     required int row,
     required int column,
     required int z,
-    required Weapon weapon,
+    required int weaponType,
     required int headType,
     required int armour,
     required int pants,
@@ -2045,7 +2040,7 @@ abstract class Game {
       x: 0,
       y: 0,
       z: 0,
-      weapon: weapon,
+      weaponType: weaponType,
       team: team,
       health: health,
       wanderRadius: wanderRadius,
@@ -2089,21 +2084,6 @@ abstract class Game {
     required int type,
   }){
     // TODO
-  }
-
-  Weapon buildWeaponByType(int type){
-    switch(type){
-      case ItemType.Weapon_Ranged_Shotgun:
-        return buildWeaponShotgun();
-      case ItemType.Weapon_Ranged_Handgun:
-        return buildWeaponHandgun();
-      case ItemType.Weapon_Melee_Sword:
-        return buildWeaponBlade();
-      case ItemType.Weapon_Ranged_Bow:
-        return buildWeaponBow();
-      default:
-        throw Exception("cannot build weapon for type $type");
-    }
   }
 
   void resolveCharacterTileCollision(Character character) {

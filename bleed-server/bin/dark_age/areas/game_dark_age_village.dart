@@ -13,7 +13,7 @@ class GameDarkAgeVillage extends DarkAgeArea {
   GameDarkAgeVillage() : super(darkAgeScenes.village, mapTile: MapTiles.Village) {
     addNpc(
         team: DarkAgeTeam.Good,
-        weapon: buildWeaponUnarmed(),
+        weaponType: ItemType.Empty,
         name: "Bell",
         row: 21,
         column: 13,
@@ -24,10 +24,10 @@ class GameDarkAgeVillage extends DarkAgeArea {
         pants: ItemType.Legs_Brown,
         onInteractedWith: (player) {
           player.health = player.maxHealth;
-          player.setStoreItems([
-            Weapon(type: ItemType.Weapon_Ranged_Bow, damage: 5, duration: 10, range: 200),
-            Weapon(type: ItemType.Weapon_Ranged_Bow, damage: 5, duration: 15, range: 50),
-          ]);
+          // player.setStoreItems([
+          //   Weapon(type: ItemType.Weapon_Ranged_Bow, damage: 5, duration: 10, range: 200),
+          //   Weapon(type: ItemType.Weapon_Ranged_Bow, damage: 5, duration: 15, range: 50),
+          // ]);
         });
 
     addNpc(
@@ -39,7 +39,7 @@ class GameDarkAgeVillage extends DarkAgeArea {
         headType: ItemType.Head_Rogues_Hood,
         armour: ItemType.Body_Tunic_Padded,
         pants: ItemType.Legs_Brown,
-        weapon: buildWeaponUnarmed(),
+        weaponType: ItemType.Empty,
         onInteractedWith: onInteractWithGarry,
         team: DarkAgeTeam.Good,
     );
@@ -65,7 +65,7 @@ class GameDarkAgeVillage extends DarkAgeArea {
       z: 4,
       row: 20,
       column: 16,
-      weapon: buildWeaponUnarmed(),
+      weaponType: ItemType.Empty,
       onInteractedWith: onInteractWithJulia,
     );
 

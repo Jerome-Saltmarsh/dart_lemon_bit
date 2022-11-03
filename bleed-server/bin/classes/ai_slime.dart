@@ -2,7 +2,6 @@
 import '../common/library.dart';
 import 'ai.dart';
 import 'player.dart';
-import 'weapon.dart';
 
 class AISlime extends AI {
 
@@ -17,13 +16,7 @@ class AISlime extends AI {
       y: y,
       z: z,
       health: health,
-      weapon: Weapon(
-          type: ItemType.Empty,
-          damage: 1,
-          capacity: 0,
-          duration: 10,
-          range: 50,
-      ),
+      weaponType: ItemType.Empty,
       team: team,
   );
 

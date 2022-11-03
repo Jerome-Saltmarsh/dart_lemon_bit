@@ -92,13 +92,7 @@ class GameSkirmish extends Game {
     final player = Player(
       game: this,
       team: 0,
-      weapon: Weapon(
-        type: ItemType.Weapon_Ranged_Bow,
-        damage: 5,
-        capacity: 1000,
-        duration: 10,
-        range: 200,
-      ),
+      weaponType: ItemType.Weapon_Ranged_Handgun,
     );
     player.legsType = ItemType.Legs_Brown;
     player.bodyType = ItemType.Body_Tunic_Padded;
@@ -125,52 +119,40 @@ class GameSkirmish extends Game {
     if (gameObject.type == GameObjectType.Weapon_Shotgun){
       deactivateGameObject(gameObject, duration: configRespawnFramesWeapons);
       gameObject.type = getRandomItemType();
-      final weapon = buildWeaponShotgun();
-      playerSetWeapon(player, weapon);
-      weapon.spawn = gameObject;
-      player.writePlayerEventItemEquipped(weapon.type);
+      player.weaponType = ItemType.Weapon_Ranged_Shotgun;
+      player.writePlayerEventItemEquipped(player.weaponType);
       return;
     }
 
     if (gameObject.type == GameObjectType.Weapon_Handgun){
       deactivateGameObject(gameObject, duration: configRespawnFramesWeapons);
       gameObject.type = getRandomItemType();
-      final weapon = buildWeaponHandgun();
-      weapon.spawn = gameObject;
-      playerSetWeapon(player, weapon);
-      player.writePlayerEventItemEquipped(weapon.type);
-      player.writePlayerEventItemEquipped(weapon.type);
+      player.weaponType = ItemType.Weapon_Ranged_Handgun;
+      player.writePlayerEventItemEquipped(player.weaponType);
       return;
     }
 
     if (gameObject.type == GameObjectType.Weapon_Blade){
       deactivateGameObject(gameObject, duration: configRespawnFramesWeapons);
       gameObject.type = getRandomItemType();
-      final weapon = buildWeaponBlade();
-      weapon.spawn = gameObject;
-      playerSetWeapon(player, weapon);
-      player.writePlayerEventItemEquipped(weapon.type);
-      player.writePlayerEventItemEquipped(weapon.type);
+      player.weaponType = ItemType.Weapon_Melee_Sword;
+      player.writePlayerEventItemEquipped(player.weaponType);
       return;
     }
 
     if (gameObject.type == GameObjectType.Weapon_Bow){
       deactivateGameObject(gameObject, duration: configRespawnFramesWeapons);
       gameObject.type = getRandomItemType();
-      final weapon = buildWeaponBow();
-      playerSetWeapon(player, weapon);
-      weapon.spawn = gameObject;
-      player.writePlayerEventItemEquipped(weapon.type);
+      player.weaponType = ItemType.Weapon_Ranged_Bow;
+      player.writePlayerEventItemEquipped(player.weaponType);
       return;
     }
 
     if (gameObject.type == GameObjectType.Weapon_Staff){
       deactivateGameObject(gameObject, duration: configRespawnFramesWeapons);
       gameObject.type = getRandomItemType();
-      final weapon = buildWeaponStaff();
-      playerSetWeapon(player, weapon);
-      weapon.spawn = gameObject;
-      player.writePlayerEventItemEquipped(weapon.type);
+      player.weaponType = ItemType.Weapon_Melee_Magic_Staff;
+      player.writePlayerEventItemEquipped(player.weaponType);
       return;
     }
   }
@@ -181,12 +163,7 @@ class GameSkirmish extends Game {
   }
 
   @override
-  void customOnPlayerWeaponRoundsExhausted(Player player, Weapon weapon){
-
-  }
-
-  @override
-  void customOnPlayerWeaponChanged(Player player, Weapon newWeapon, Weapon previousWeapon){
+  void customOnPlayerWeaponChanged(Player player, int newWeapon, int previousWeapon){
     // reactiveWeaponGameObject(previousWeapon);
   }
 
@@ -196,13 +173,6 @@ class GameSkirmish extends Game {
   }
 
   void reactivatePlayerWeapons(Player player){
-  }
-
-  void reactiveWeaponGameObject(Weapon weapon){
-    final previousWeaponSpawn = weapon.spawn;
-    if (previousWeaponSpawn is GameObject) {
-      reactivateGameObject(previousWeaponSpawn);
-    }
   }
 
   reactivateGameObject(GameObject gameObject){

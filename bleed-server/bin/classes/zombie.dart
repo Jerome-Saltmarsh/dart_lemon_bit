@@ -1,10 +1,9 @@
 
 
-import '../common/character_type.dart';
+import '../common/library.dart';
 import 'ai.dart';
 import 'game.dart';
 import 'player.dart';
-import 'weapon.dart';
 
 class Zombie extends AI {
   Zombie({
@@ -21,7 +20,7 @@ class Zombie extends AI {
       y: y,
       z: z,
       health: health,
-      weapon: buildWeaponUnarmed(),
+      weaponType: ItemType.Empty,
       wanderRadius: wanderRadius,
       team: team,
   );

@@ -23,7 +23,7 @@ class AreaPlains1 extends DarkAgeArea {
     final player = Player(
         game: this,
         team: DarkAgeTeam.Good,
-        weapon: buildWeaponHandgun(),
+        weaponType: ItemType.Weapon_Ranged_Handgun,
         health: 20,
     );
     player.bodyType = ItemType.Body_Tunic_Padded;
@@ -44,7 +44,7 @@ class AreaPlains1 extends DarkAgeArea {
           x: 1000,
           y: 825,
           z: tileHeight,
-          weapon: buildWeaponUnarmed(),
+          weaponType: ItemType.Empty,
           team: DarkAgeTeam.Good,
           name: "Roth",
           health: 100,

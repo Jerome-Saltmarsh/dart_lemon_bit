@@ -19,7 +19,7 @@ class AreaForest4 extends DarkAgeArea {
         column: 33,
         z: 1,
         wanderRadius: 20,
-        weapon: buildWeaponBow(),
+        weaponType: ItemType.Empty,
         onInteractedWith: (Player player) {
           return player.interact(
               message:
@@ -55,7 +55,7 @@ class AreaForest4 extends DarkAgeArea {
       row: 18,
       column: 33,
       z: 1,
-      weapon:  buildWeaponBow(),
+      weaponType: ItemType.Empty,
       wanderRadius: 25,
     );
 
@@ -76,7 +76,7 @@ class AreaForest4 extends DarkAgeArea {
       row: 12,
       column: 37,
       z: 1,
-      weapon: buildWeaponBow(),
+      weaponType: ItemType.Weapon_Ranged_Bow,
       headType: ItemType.Head_Rogues_Hood,
       armour: ItemType.Body_Tunic_Padded,
       pants: ItemType.Legs_Brown,

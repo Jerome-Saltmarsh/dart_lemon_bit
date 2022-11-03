@@ -1,9 +1,8 @@
 
-import '../common/character_type.dart';
+import '../common/library.dart';
 import 'ai.dart';
 import 'game.dart';
 import 'player.dart';
-import 'weapon.dart';
 
 class Rat extends AI {
   Rat({
@@ -19,7 +18,7 @@ class Rat extends AI {
       y: 0,
       z: 0,
       health: health,
-      weapon: buildWeaponUnarmed(),
+      weaponType: ItemType.Empty,
       team: team,
   ) {
     indexZ = z;

@@ -51,7 +51,7 @@ class Player extends Character with ByteWriter {
 
   static const InventorySize = 40;
   final inventory = Uint16List(InventorySize);
-  var storeItems = <Weapon>[];
+  var storeItems = <int>[];
 
   final questsInProgress = <Quest>[];
   final questsCompleted = <Quest>[];
@@ -153,7 +153,7 @@ class Player extends Character with ByteWriter {
     writeNpcTalk(text: message, options: responses);
   }
 
-  void setStoreItems(List<Weapon> values){
+  void setStoreItems(List<int> values){
     if (values.isNotEmpty){
       interactingWithNpc = true;
     }
@@ -200,7 +200,7 @@ class Player extends Character with ByteWriter {
 
   Player({
     required this.game,
-    required Weapon weapon,
+    required int weaponType,
     int team = 0,
     int magic = 10,
     int health = 10,
@@ -211,7 +211,7 @@ class Player extends Character with ByteWriter {
             health: health,
             speed: 4.25,
             team: team,
-            weaponType: ItemType.Empty,
+            weaponType: weaponType,
             bodyType: ItemType.Body_Tunic_Padded,
             headType: ItemType.Head_Rogues_Hood,
   ){
@@ -637,12 +637,6 @@ class Player extends Character with ByteWriter {
     writeUInt16(count);
   }
 
-  void writeWeapon(Weapon weapon){
-    writeByte(weapon.type);
-    writeInt(weapon.damage);
-    writeString(weapon.uuid);
-  }
-
   void writePlayerInventory() {
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Inventory);
@@ -670,7 +664,7 @@ class Player extends Character with ByteWriter {
   void writeStoreItems(){
     writeByte(ServerResponse.Store_Items);
     writeInt(storeItems.length);
-    storeItems.forEach(writeWeapon);
+    throw Exception('not implemented');
   }
 
   void writeNpcTalk({required String text, Map<String, Function>? options}){

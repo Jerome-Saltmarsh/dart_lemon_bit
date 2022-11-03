@@ -2,7 +2,6 @@ import '../common/character_type.dart';
 import 'game.dart';
 import 'player.dart';
 import 'ai.dart';
-import 'weapon.dart';
 
 class Npc extends AI {
   final String name;
@@ -15,7 +14,7 @@ class Npc extends AI {
       required double y,
       required double z,
       required int health,
-      required Weapon weapon,
+      required int weaponType,
       required Game game,
       required int team,
       this.onInteractedWith,
@@ -26,7 +25,7 @@ class Npc extends AI {
             y: y,
             z: z,
             health: health,
-            weapon: weapon,
+            weaponType: weaponType,
             team: team,
             wanderRadius: wanderRadius,
   );

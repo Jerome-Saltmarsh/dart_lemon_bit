@@ -7,7 +7,6 @@ import '../functions/withinRadius.dart';
 import 'character.dart';
 import 'game.dart';
 import 'position3.dart';
-import 'weapon.dart';
 
 abstract class AI extends Character {
   static const maxAIPathLength = 80;
@@ -40,7 +39,7 @@ abstract class AI extends Character {
     required double y,
     required double z,
     required int health,
-    required Weapon weapon,
+    required int weaponType,
     int team = 0,
     double speed = 3.0,
     this.wanderRadius = 0,
@@ -51,7 +50,7 @@ abstract class AI extends Character {
       health: health,
       team: team,
       speed: speed,
-      weaponType: ItemType.Empty,
+      weaponType: weaponType,
       headType: ItemType.Head_Wizards_Hat,
       bodyType: ItemType.Body_Tunic_Padded,
   ) {

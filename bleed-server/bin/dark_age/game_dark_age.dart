@@ -108,7 +108,7 @@ class GameDarkAge extends Game {
   Player spawnPlayer() {
     final player = Player(
         game: this,
-        weapon: buildWeaponUnarmed(),
+        weaponType: ItemType.Weapon_Ranged_Handgun,
         team: 1,
     );
 
@@ -129,7 +129,7 @@ class GameDarkAge extends Game {
       headType: ItemType.Head_Wizards_Hat,
       armour: ItemType.Body_Tunic_Padded,
       pants: ItemType.Legs_Brown,
-      weapon: buildWeaponBow(),
+      weaponType: ItemType.Weapon_Ranged_Bow,
       team: 1
     );
   }
