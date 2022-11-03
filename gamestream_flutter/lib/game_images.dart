@@ -32,6 +32,7 @@ class GameImages {
    static late Image template_body_swat;
    static late Image template_body_tunic;
 
+   static late Image template_legs_none;
    static late Image template_legs_blue;
    static late Image template_legs_white;
    static late Image template_legs_green;
@@ -86,9 +87,9 @@ class GameImages {
    }
 
    static Image getImageForLegType(int legType) {
-      switch (legType){
+      switch (legType) {
          case ItemType.Empty:
-            return template_legs_white;
+            return template_legs_none;
          case ItemType.Legs_White:
             return template_legs_white;
          case ItemType.Legs_Blue:
@@ -158,6 +159,7 @@ class GameImages {
       template_body_tunic = await Engine.loadImageAsset('images/template/body/template-body-tunic.png');
       template_body_empty = await Engine.loadImageAsset('images/template/body/template-body-empty.png');
 
+      template_legs_none = await Engine.loadImageAsset('images/template/legs/template-legs-none.png');
       template_legs_blue = await Engine.loadImageAsset('images/template/legs/template-legs-blue.png');
       template_legs_white = await Engine.loadImageAsset('images/template/legs/template-legs-white.png');
       template_legs_green = await Engine.loadImageAsset('images/template/legs/template-legs-green.png');
