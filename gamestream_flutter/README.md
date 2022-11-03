@@ -14,7 +14,11 @@
 [ ] editor fix add remove columns
 [ ] dark-age cursor interact with npc
 [ ] dark-age loot-drop
-    
+
+[ ] DARK-AGE
+[ ] MOON-LIGHT Expansion Pack
+[ ] FULL-MOON Expansion Pack
+[ ] BLUET
 
 02.11.2022
 [x] editor adding tree auto adds tree top

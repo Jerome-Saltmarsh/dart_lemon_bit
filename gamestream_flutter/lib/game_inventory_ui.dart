@@ -141,14 +141,7 @@ class GameInventoryUI {
             );
           },
           builder: (context, candidate, index){
-            return Engine.buildAtlasImage(
-              image: GameImages.atlasItems,
-              srcX: 0,
-              srcY: 64,
-              srcWidth: 32,
-              srcHeight: 32,
-              scale: Slot_Scale,
-            );
+            return buildAtlasIconSlotEmpty();
           },
         )
     );
@@ -161,14 +154,14 @@ class GameInventoryUI {
 
   static int getIndexColumn(int index) =>  index % ColumnsPerRow;
 
-  static Positioned buildPositionGridItem({required int index, required Widget child}) =>
+  static Widget buildPositionGridItem({required int index, required Widget child}) =>
     Positioned(
       left: getIndexX(index),
       top: getIndexY(index),
       child: child,
     );
 
-  static buildItemTypeAtlasImage({required int itemType, double scale = 1.0}) =>
+  static Widget buildItemTypeAtlasImage({required int itemType, double scale = 1.0}) =>
       Engine.buildAtlasImage(
         image: GameImages.atlasItems,
         srcX: AtlasItems.getSrcX(itemType),
@@ -176,5 +169,55 @@ class GameInventoryUI {
         srcWidth: Slot_Size,
         srcHeight: Slot_Size,
         scale: scale,
+      );
+
+  static Widget buildAtlasIconSlotEmpty() =>
+      Engine.buildAtlasImage(
+        image: GameImages.atlasIcons,
+        srcX: 288,
+        srcY: 0,
+        srcWidth: Slot_Size,
+        srcHeight: Slot_Size,
+        scale: Slot_Scale,
+      );
+
+  static Widget buildAtlasIconSlotArmour() =>
+      Engine.buildAtlasImage(
+        image: GameImages.atlasIcons,
+        srcX: 320,
+        srcY: 0,
+        srcWidth: Slot_Size,
+        srcHeight: Slot_Size,
+        scale: 1.0,
+      );
+
+  static Widget buildAtlasIconSlotLegs() =>
+      Engine.buildAtlasImage(
+        image: GameImages.atlasIcons,
+        srcX: 352,
+        srcY: 0,
+        srcWidth: Slot_Size,
+        srcHeight: Slot_Size,
+        scale: 1.0,
+      );
+
+  static Widget buildAtlasIconSlotWeapon() =>
+      Engine.buildAtlasImage(
+        image: GameImages.atlasIcons,
+        srcX: 384,
+        srcY: 0,
+        srcWidth: Slot_Size,
+        srcHeight: Slot_Size,
+        scale: 1.0,
+      );
+
+  static Widget buildAtlasIconSlotHead() =>
+      Engine.buildAtlasImage(
+        image: GameImages.atlasIcons,
+        srcX: 416,
+        srcY: 0,
+        srcWidth: Slot_Size,
+        srcHeight: Slot_Size,
+        scale: 1.0,
       );
 }
