@@ -1271,20 +1271,16 @@ class Engine {
     double scale = 1.0,
     String hint = "",
   }) =>
-      onPressed(
+      buildOnPressed(
         action: action,
         hint: hint,
-        child: Container(
-          width: srcWidth,
-          height: srcHeight,
-          child: buildAtlasImage(
-            image: image,
-            srcX: srcX,
-            srcY: srcY,
-            srcWidth: srcWidth,
-            srcHeight: srcHeight,
-            scale: scale,
-          ),
+        child: buildAtlasImage(
+          image: image,
+          srcX: srcX,
+          srcY: srcY,
+          srcWidth: srcWidth,
+          srcHeight: srcHeight,
+          scale: scale,
         ),
       );
 
@@ -1316,7 +1312,8 @@ class Engine {
         ),
       );
 
-  static Widget onPressed({
+
+  static Widget buildOnPressed({
     required Widget child,
     Function? action,
     Function? onRightClick,
