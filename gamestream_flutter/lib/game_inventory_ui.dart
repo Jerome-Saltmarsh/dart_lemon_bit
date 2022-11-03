@@ -137,9 +137,8 @@ class GameInventoryUI {
 
   static Widget buildPositionInventoryItem(int index){
     final itemType = GameInventory.items[index];
-    return Positioned(
-      left: getIndexX(index),
-      top: getIndexY(index),
+    return buildGridItem(
+      index: index,
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
         child: Draggable<int>(
@@ -182,9 +181,8 @@ class GameInventoryUI {
   }
 
   static Widget buildPositionedGridSlot(int i) =>
-    Positioned(
-        left: getIndexX(i),
-        top: getIndexY(i),
+    buildGridItem(
+        index: i,
         child: DragTarget<int>(
           onWillAccept: (int? index) => index != null,
           onAccept: (int? toIndex){
@@ -213,6 +211,13 @@ class GameInventoryUI {
   static int getIndexRow(int index) => index ~/ ColumnsPerRow;
 
   static int getIndexColumn(int index) =>  index % ColumnsPerRow;
+
+  static Positioned buildGridItem({required int index, required Widget child}) =>
+    Positioned(
+      left: getIndexX(index),
+      top: getIndexY(index),
+      child: child,
+    );
 
   static Widget buildColumnPlayerWeapons(List<Weapon> weapons) =>
       Container(
