@@ -36,6 +36,7 @@ export 'tile_size.dart';
 export 'card_type.dart';
 export 'node_type.dart';
 export 'node_orientation.dart';
+export 'attack_state.dart';
 export 'rain.dart';
 export 'wind.dart';
 export 'lightning.dart';

@@ -101,7 +101,7 @@ class Connection {
 
       case ClientRequest.Inventory:
         if (arguments.length < 2)  return errorArgsExpected(3, arguments);
-        if (player.deadBusyOrPerforming) return;
+        if (player.deadBusyOrUsingWeapon) return;
         final inventoryRequest = int.tryParse(arguments[1]);
         switch (inventoryRequest){
           case InventoryRequest.Unequip_Weapon:

@@ -26,6 +26,7 @@ class GameImages {
    static late Image template_head_wizard;
    static late Image template_head_blonde;
 
+   static late Image template_body_empty;
    static late Image template_body_blue;
    static late Image template_body_cyan;
    static late Image template_body_swat;
@@ -70,7 +71,7 @@ class GameImages {
    static Image getImageForBodyType(int bodyType) {
       switch (bodyType) {
          case ItemType.Empty:
-            return template_body_blue;
+            return template_body_empty;
          case ItemType.Body_Shirt_Blue:
             return template_body_blue;
          case ItemType.Body_Shirt_Cyan:
@@ -155,6 +156,7 @@ class GameImages {
       template_body_cyan = await Engine.loadImageAsset('images/template/body/template-body-cyan.png');
       template_body_swat = await Engine.loadImageAsset('images/template/body/template-body-swat.png');
       template_body_tunic = await Engine.loadImageAsset('images/template/body/template-body-tunic.png');
+      template_body_empty = await Engine.loadImageAsset('images/template/body/template-body-empty.png');
 
       template_legs_blue = await Engine.loadImageAsset('images/template/legs/template-legs-blue.png');
       template_legs_white = await Engine.loadImageAsset('images/template/legs/template-legs-white.png');

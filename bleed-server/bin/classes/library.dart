@@ -10,4 +10,3 @@ export 'player.dart';
 export 'projectile.dart';
 export 'scene.dart';
 export 'ai.dart';
-export 'weapon.dart';

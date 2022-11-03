@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:lemon_math/library.dart';
 
-import '../common/attack_state.dart';
 import '../common/library.dart';
 import '../common/maths.dart';
 import '../common/node_size.dart';
@@ -289,7 +288,7 @@ abstract class Game {
   }
 
   void playerUseWeapon(Player player) {
-    if (player.deadBusyOrPerforming) return;
+    if (player.deadBusyOrUsingWeapon) return;
 
     final weaponType = player.weaponType;
     player.weaponDurationRemaining = ItemType.getCooldown(weaponType);
@@ -371,7 +370,7 @@ abstract class Game {
   void playerAttackMelee({
     required Player player,
   }) {
-    if (player.deadBusyOrPerforming) return;
+    if (player.deadBusyOrUsingWeapon) return;
 
     final angle = player.lookRadian;
     final distance = ItemType.getRange(player.weaponType);
@@ -485,7 +484,7 @@ abstract class Game {
   }
 
   void characterFireWeapon(Character character){
-    if (character.deadBusyOrPerforming) return;
+    if (character.deadBusyOrUsingWeapon) return;
 
     final angle = (character is Player) ? character.lookRadian : character.faceAngle;
 
@@ -1132,13 +1131,6 @@ abstract class Game {
 
   void setCharacterStateRunning(Character character){
     character.setCharacterState(value: CharacterState.Running, duration: 0);
-    // if (character.stateDuration == 0) {
-    //   dispatchV3(
-    //     GameEventType.Spawn_Dust_Cloud,
-    //     character,
-    //     angle: character.velocityAngle,
-    //   );
-    // }
   }
 
   void checkProjectileCollision(List<Collider> colliders) {
@@ -1252,23 +1244,29 @@ abstract class Game {
     updateCharacterState(character);
   }
 
+  void faceCharacterTowards(Character character, Position position){
+    assert(!character.deadOrBusy);
+    character.faceAngle = getAngleBetweenV3(character, position);
+  }
+
   void updateAI(AI ai){
       if (ai.deadOrBusy) return;
 
       final target = ai.target;
       if (target != null) {
         if (ai.withinAttackRange(target)) {
-          return ai.attackTarget(target);
+          faceCharacterTowards(ai, target);
+          ai.setCharacterStatePerforming(duration: ai.equippedAttackDuration);
+          return;
         }
-        // if ((ai.getDistance(target) < ai.chaseRange)) {
-          ai.destX = target.x;
-          ai.destY = target.y;
-        // }
+        ai.destX = target.x;
+        ai.destY = target.y;
       }
 
       if (!ai.arrivedAtDest) {
         ai.faceAngle = ai.getDestinationAngle();
-        return  setCharacterStateRunning(ai);
+        setCharacterStateRunning(ai);
+        return;
       }
 
       if (ai.pathIndex > 0){
@@ -2181,5 +2179,7 @@ abstract class Game {
       character.clearPath();
     }
   }
+
+  static double getAngleBetweenV3(Position a, Position b) => getAngle(a.x - b.x, a.y - b.y);
 }
 

@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:lemon_math/library.dart';
 
-import '../common/attack_state.dart';
 import '../common/library.dart';
 import '../functions/withinRadius.dart';
 import '../utilities.dart';
@@ -85,7 +84,7 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
   bool get characterStateIdle => state == CharacterState.Idle;
   bool get busy => stateDurationRemaining > 0;
   bool get deadOrBusy => dying || dead || busy;
-  bool get deadBusyOrPerforming => dying || dead || usingWeapon;
+  bool get deadBusyOrUsingWeapon => dying || dead || usingWeapon;
   bool get equippedTypeIsBow => weaponType == ItemType.Weapon_Ranged_Bow;
   bool get equippedTypeIsStaff => weaponType == ItemType.Weapon_Melee_Magic_Staff;
   bool get unarmed => weaponType == ItemType.Empty;
@@ -112,14 +111,6 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
     maxHealth = health;
     this.health = health;
     this.team = team;
-  }
-
-
-  void attackTarget(Position3 target) {
-    if (deadOrBusy) return;
-    face(target);
-    setCharacterStatePerforming(duration: equippedAttackDuration);
-    this.target = target;
   }
 
   void setCharacterStatePerforming({required int duration}){
