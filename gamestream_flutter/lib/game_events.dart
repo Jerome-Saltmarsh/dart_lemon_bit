@@ -15,7 +15,7 @@ class GameEvents {
 
   static void onWeaponTypeEquipped(int attackType, double x, double y, double z) {
     switch (attackType) {
-      case AttackType.Shotgun:
+      case ItemType.Weapon_Ranged_Shotgun:
         GameAudio.cock_shotgun_3.playXYZ(x, y, z);
         break;
       default:
@@ -154,13 +154,10 @@ class GameEvents {
       case GameEventType.Attack_Missed:
         final attackType = serverResponseReader.readByte();
         switch (attackType) {
-          case AttackType.Unarmed:
+          case ItemType.Empty:
             GameAudio.arm_swing_whoosh_11.playXYZ(x, y, z);
             break;
-          case AttackType.Blade:
-            GameAudio.arm_swing_whoosh_11.playXYZ(x, y, z);
-            break;
-          case AttackType.Baseball_Bat:
+          case ItemType.Weapon_Melee_Sword:
             GameAudio.arm_swing_whoosh_11.playXYZ(x, y, z);
             break;
         }
@@ -248,25 +245,23 @@ class GameEvents {
   static void onAttackPerformend(double x, double y, double z, double angle) {
     final attackType = serverResponseReader.readByte();
     switch (attackType){
-      case AttackType.Handgun:
+      case ItemType.Weapon_Ranged_Handgun:
         GameAudio.pistol_shot_20.playXYZ(x, y, z);
         GameState.spawnParticleShell(x, y, z);
         break;
-      case AttackType.Shotgun:
+      case ItemType.Weapon_Ranged_Shotgun:
         return GameAudio.shotgun_shot.playXYZ(x, y, z);
-      case AttackType.Assault_Rifle:
+      case ItemType.Weapon_Ranged_Assault_Rifle:
         return GameAudio.assault_rifle_shot.playXYZ(x, y, z);
-      case AttackType.Rifle:
+      case ItemType.Weapon_Ranged_Rifle:
         return GameAudio.sniper_shot_4.playXYZ(x, y, z);
-      case AttackType.Revolver:
+      case ItemType.Weapon_Ranged_Revolver:
         return GameAudio.revolver_shot_2.playXYZ(x, y, z);
-      case AttackType.Fireball:
-        return GameAudio.fireBolt.playXYZ(x, y, z);
-      case AttackType.Blade:
+      case ItemType.Weapon_Melee_Sword:
         return onGameEventAttackPerformedBlade(x, y, z, angle);
-      case AttackType.Unarmed:
+      case ItemType.Empty:
         return onAttackPerformedUnarmed(x, y, z, angle);
-      case AttackType.Crowbar:
+      case ItemType.Weapon_Melee_Crowbar:
         GameAudio.swing_sword.playXYZ(x, y, z);
         break;
       default:
@@ -398,25 +393,25 @@ class GameEvents {
 
   static void onPlayerEventItemEquipped(int type) {
     switch (type) {
-      case AttackType.Revolver:
+      case ItemType.Weapon_Ranged_Revolver:
         GameAudio.revolver_reload_1();
         break;
-      case AttackType.Handgun:
+      case ItemType.Weapon_Ranged_Handgun:
         GameAudio.reload_6();
         break;
-      case AttackType.Shotgun:
+      case ItemType.Weapon_Ranged_Shotgun:
         GameAudio.cock_shotgun_3();
         break;
-      case AttackType.Rifle:
+      case ItemType.Weapon_Ranged_Rifle:
         GameAudio.mag_in_03();
         break;
-      case AttackType.Blade:
+      case ItemType.Weapon_Melee_Sword:
         GameAudio.sword_unsheathe();
         break;
-      case AttackType.Assault_Rifle:
+      case ItemType.Weapon_Ranged_Assault_Rifle:
         GameAudio.gun_pickup_01();
         break;
-      case AttackType.Bow:
+      case ItemType.Weapon_Ranged_Bow:
         GameAudio.bow_draw();
         break;
     }

@@ -1,15 +1,14 @@
 
 import 'package:lemon_math/library.dart';
 
-import '../common/attack_state.dart';
-import '../common/attack_type.dart';
+import '../common/library.dart';
 import '../functions/generateUUID.dart';
 
 class Weapon {
    int type;
    int damage;
    int capacity;
-   var state = AttackState.Idle;
+   var state = 0;
    double range;
    late int _rounds;
    int duration;
@@ -43,7 +42,7 @@ class Weapon {
 
 Weapon buildWeaponShotgun() =>
     Weapon(
-      type: AttackType.Shotgun,
+      type: ItemType.Weapon_Ranged_Shotgun,
       damage: 3,
       capacity: 8,
       duration: 20,
@@ -52,7 +51,7 @@ Weapon buildWeaponShotgun() =>
 
 Weapon buildWeaponRifle() =>
     Weapon(
-      type: AttackType.Rifle,
+      type: ItemType.Weapon_Ranged_Rifle,
       damage: 10,
       capacity: 8,
       duration: 25,
@@ -61,7 +60,7 @@ Weapon buildWeaponRifle() =>
 
 Weapon buildWeaponRevolver() =>
     Weapon(
-      type: AttackType.Revolver,
+      type: ItemType.Weapon_Ranged_Revolver,
       damage: 20,
       capacity: 5,
       duration: 35,
@@ -70,7 +69,7 @@ Weapon buildWeaponRevolver() =>
 
 Weapon buildWeaponHandgun() =>
     Weapon(
-      type: AttackType.Handgun,
+      type: ItemType.Weapon_Ranged_Handgun,
       damage: 4,
       capacity: 20,
       duration: 10,
@@ -79,25 +78,16 @@ Weapon buildWeaponHandgun() =>
 
 Weapon buildWeaponAssaultRifle() =>
     Weapon(
-      type: AttackType.Assault_Rifle,
+      type: ItemType.Weapon_Ranged_Assault_Rifle,
       damage: 3,
       capacity: 100,
       duration: 4,
       range: 300,
     );
 
-Weapon buildWeaponFireball() =>
-    Weapon(
-      type: AttackType.Fireball,
-      damage: 1,
-      capacity: 20,
-      duration: 10,
-      range: 200,
-    );
-
 Weapon buildWeaponBow() =>
    Weapon(
-      type: AttackType.Bow,
+      type: ItemType.Weapon_Ranged_Bow,
       damage: 1,
       capacity: 15,
       duration: 30,
@@ -106,7 +96,7 @@ Weapon buildWeaponBow() =>
 
 Weapon buildWeaponCrossBow() =>
     Weapon(
-      type: AttackType.Crossbow,
+      type: ItemType.Weapon_Ranged_Crossbow,
       damage: 1,
       capacity: 15,
       duration: 30,
@@ -115,25 +105,16 @@ Weapon buildWeaponCrossBow() =>
 
 Weapon buildWeaponStaff() =>
     Weapon(
-      type: AttackType.Staff,
+      type: ItemType.Weapon_Melee_Magic_Staff,
       damage: 5,
       capacity: 15,
       duration: 10,
       range: 200,
     );
 
-/// TODO implement
-Weapon buildWeaponBaseballBat() =>
-    Weapon(
-      type: AttackType.Blade,
-      damage: 3,
-      duration: 20,
-      range: 60,
-    );
-
 Weapon buildWeaponBlade() =>
     Weapon(
-      type: AttackType.Blade,
+      type: ItemType.Weapon_Melee_Sword,
       damage: 3,
       duration: 20,
       range: 60,
@@ -142,7 +123,7 @@ Weapon buildWeaponBlade() =>
 
 Weapon buildWeaponUnarmed({int damage = 1}) =>
     Weapon(
-       type: AttackType.Unarmed,
+       type: ItemType.Empty,
        damage: damage,
        capacity: 0,
        duration: 10,

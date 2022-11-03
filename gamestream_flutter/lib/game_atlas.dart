@@ -20,28 +20,28 @@ class AtlasIconsX {
   static const Weather_Active = 217.0;
   static const Slot = 288.0;
 
-  static double getWeaponType(int weaponType) => <int, double> {
-    AttackType.Blade: 288,
-    AttackType.Shotgun: 288,
-    AttackType.Rifle: 288,
-    AttackType.Assault_Rifle: 288,
-    AttackType.Staff: 318,
-    AttackType.Unarmed: 384,
-    AttackType.Handgun: 320,
-  } [weaponType] ?? 0.0;
+  // static double getWeaponType(int weaponType) => <int, double> {
+  //   AttackType.Blade: 288,
+  //   AttackType.Shotgun: 288,
+  //   AttackType.Rifle: 288,
+  //   AttackType.Assault_Rifle: 288,
+  //   AttackType.Staff: 318,
+  //   AttackType.Unarmed: 384,
+  //   AttackType.Handgun: 320,
+  // } [weaponType] ?? 0.0;
 
-  static double getBodyType(int bodyType) => <int, double> {
-      BodyType.shirtBlue: 352,
-      BodyType.shirtCyan: 384,
-      BodyType.swat: 416,
-      BodyType.tunicPadded: 448,
-  } [bodyType] ?? 0.0;
+  // static double getBodyType(int bodyType) => <int, double> {
+  //     BodyType.shirtBlue: 352,
+  //     BodyType.shirtCyan: 384,
+  //     BodyType.swat: 416,
+  //     BodyType.tunicPadded: 448,
+  // } [bodyType] ?? 0.0;
 
-  static double getHeadType(int headType) => <int, double> {
-      HeadType.Steel_Helm: 416,
-      HeadType.Rogues_Hood: 448,
-      HeadType.Wizards_Hat: 480,
-  } [headType] ?? 0.0;
+  // static double getHeadType(int headType) => <int, double> {
+  //     HeadType.Steel_Helm: 416,
+  //     HeadType.Rogues_Hood: 448,
+  //     HeadType.Wizards_Hat: 480,
+  // } [headType] ?? 0.0;
 }
 
 class AtlasIconsY {
@@ -56,26 +56,26 @@ class AtlasIconsY {
   static const Zoom = 48.0;
   static const Slot = 64.0;
 
-  static double getWeaponType(int weaponType) => <int, double> {
-    AttackType.Staff: 0,
-    AttackType.Blade: 0,
-    AttackType.Unarmed: 0,
-    AttackType.Shotgun: 32,
-    AttackType.Rifle: 32,
-    AttackType.Assault_Rifle: 32,
-    AttackType.Handgun: 32,
-  } [weaponType] ?? 0.0;
+  // static double getWeaponType(int weaponType) => <int, double> {
+  //   AttackType.Staff: 0,
+  //   AttackType.Blade: 0,
+  //   AttackType.Unarmed: 0,
+  //   AttackType.Shotgun: 32,
+  //   AttackType.Rifle: 32,
+  //   AttackType.Assault_Rifle: 32,
+  //   AttackType.Handgun: 32,
+  // } [weaponType] ?? 0.0;
 
-  static double getBodyType(int bodyType) => <int, double> {
-    BodyType.shirtBlue: 32,
-    BodyType.shirtCyan: 32,
-    BodyType.tunicPadded: 32,
-    BodyType.swat: 32,
-  } [bodyType] ?? 0.0;
+  // static double getBodyType(int bodyType) => <int, double> {
+  //   BodyType.shirtBlue: 32,
+  //   BodyType.shirtCyan: 32,
+  //   BodyType.tunicPadded: 32,
+  //   BodyType.swat: 32,
+  // } [bodyType] ?? 0.0;
 
-  static double getHeadType(int bodyType) => <int, double> {
-    HeadType.Steel_Helm: 0,
-  } [bodyType] ?? 0.0;
+  // static double getHeadType(int bodyType) => <int, double> {
+  //   HeadType.Steel_Helm: 0,
+  // } [bodyType] ?? 0.0;
 }
 
 class AtlasIconSize {

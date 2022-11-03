@@ -17,6 +17,7 @@ class GameImages {
    static late Image particles;
    static late Image template_shadow;
    static late Image atlasIcons;
+   static late Image atlasItems;
 
    static late Image template_head_plain;
    static late Image template_head_rogue;
@@ -49,74 +50,76 @@ class GameImages {
 
    static Image getImageForHeadType(int headType) {
       switch (headType) {
-         case HeadType.None:
+         case ItemType.Empty:
             return template_head_plain;
-         case HeadType.Rogues_Hood:
+         case ItemType.Head_Rogues_Hood:
             return template_head_rogue;
-         case HeadType.Steel_Helm:
+         case ItemType.Head_Steel_Helm:
             return template_head_steel;
-         case HeadType.Wizards_Hat:
+         case ItemType.Head_Wizards_Hat:
             return template_head_wizard;
-         case HeadType.Blonde:
+         case ItemType.Head_Blonde:
             return template_head_blonde;
-         case HeadType.Swat:
+         case ItemType.Head_Swat:
             return template_head_swat;
          default:
-            throw Exception('GameImages.getImageForHeadType(${HeadType.getName(headType)})');
+            throw Exception('GameImages.getImageForHeadType(${ItemType.getName(headType)})');
       }
    }
 
    static Image getImageForBodyType(int bodyType) {
       switch (bodyType) {
-         case BodyType.shirtBlue:
+         case ItemType.Body_Shirt_Blue:
             return template_body_blue;
-         case BodyType.shirtCyan:
+         case ItemType.Body_Shirt_Cyan:
             return template_body_cyan;
-         case BodyType.swat:
+         case ItemType.Body_Swat:
             return template_body_swat;
-         case BodyType.tunicPadded:
+         case ItemType.Body_Tunic_Padded:
             return template_body_tunic;
          default:
-            throw Exception('GameImages.getImageForBodyType(${BodyType.getName(bodyType)})');
+            throw Exception('GameImages.getImageForBodyType(${ItemType.getName(bodyType)})');
       }
    }
 
    static Image getImageForLegType(int legType) {
       switch (legType){
-         case LegType.white:
+         case ItemType.Legs_White:
             return template_legs_white;
-         case LegType.blue:
+         case ItemType.Legs_Blue:
             return template_legs_blue;
-         case LegType.green:
+         case ItemType.Legs_Green:
             return template_legs_green;
-         case LegType.brown:
+         case ItemType.Legs_Brown:
             return template_legs_brown;
-         case LegType.red:
+         case ItemType.Legs_Red:
             return template_legs_red;
-         case LegType.swat:
+         case ItemType.Legs_Swat:
             return template_legs_swat;
          default:
-            throw Exception('GameImages.getImageForLegType(${LegType.getName(legType)})');
+            throw Exception('GameImages.getImageForLegType(${ItemType.getName(legType)})');
       }
    }
 
    static Image getImageForWeaponType(int weaponType) {
       switch (weaponType) {
-         case AttackType.Shotgun:
+         case ItemType.Weapon_Ranged_Shotgun:
             return template_weapon_shotgun;
-         case AttackType.Bow:
+         case ItemType.Weapon_Ranged_Bow:
             return template_weapon_bow;
-         case AttackType.Handgun:
+         case ItemType.Weapon_Ranged_Handgun:
             return template_weapon_handgun;
-         case AttackType.Staff:
+         case ItemType.Weapon_Ranged_Staff_Of_Flames:
             return template_weapon_staff;
-         case AttackType.Blade:
+         case ItemType.Weapon_Melee_Magic_Staff:
+            return template_weapon_staff;
+         case ItemType.Weapon_Melee_Sword:
             return template_weapon_sword_steel;
-         case AttackType.Pickaxe:
+         case ItemType.Weapon_Melee_Pickaxe:
             return template_weapon_pickaxe;
-         case AttackType.Axe:
+         case ItemType.Weapon_Melee_Axe:
             return template_weapon_axe;
-         case AttackType.Hammer:
+         case ItemType.Weapon_Melee_Hammer:
             return template_weapon_hammer;
          default:
             throw Exception("ImagesTemplateWeapons.fromWeaponType($weaponType)");
@@ -135,6 +138,7 @@ class GameImages {
       minimap = await Engine.loadImageAsset('images/atlas-map.png');
       atlasNodes = await Engine.loadImageAsset('images/atlas-nodes.png');
       atlasIcons = await Engine.loadImageAsset('images/atlas-icons.png');
+      atlasItems = await Engine.loadImageAsset('images/atlas-items.png');
 
       template_head_plain = await Engine.loadImageAsset('images/template/head/template-head-plain.png');
       template_head_rogue = await Engine.loadImageAsset('images/template/head/template-head-rogue.png');

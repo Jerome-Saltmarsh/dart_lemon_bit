@@ -90,8 +90,9 @@ class GameInventoryUI {
         width: 150,
         height: 150,
         padding: const EdgeInsets.all(6),
-        child: buildIconBodyType(bodyType),
+        child: buildIconItemType(bodyType),
       );
+
 
   static Widget buildPanelPlayerEquippedHeadType(int headType) =>
       Container(
@@ -99,7 +100,7 @@ class GameInventoryUI {
         width: 150,
         height: 150,
         padding: const EdgeInsets.all(6),
-        child: buildIconHeadType(headType),
+        child: buildIconItemType(headType),
       );
 
   static bool onDragWillAccept(int? i) => i != null;
@@ -265,23 +266,14 @@ class GameInventoryUI {
         child: text("weapons"),
       );
 
-  static Widget buildIconBodyType(int bodyType) =>
-      buildAtlasImage(
-        image: GameImages.atlasIcons,
-        srcX: AtlasIconsX.getBodyType(bodyType),
-        srcY: AtlasIconsY.getBodyType(bodyType),
-        srcWidth: AtlasIconSize.getBodyType(bodyType),
-        srcHeight: AtlasIconSize.getBodyType(bodyType),
-        scale: 3.0,
-      );
 
-  static Widget buildIconHeadType(int headType) =>
+  static Widget buildIconItemType(int itemType) =>
       buildAtlasImage(
-        image: GameImages.atlasIcons,
-        srcX: AtlasIconsX.getHeadType(headType),
-        srcY: AtlasIconsY.getHeadType(headType),
-        srcWidth: AtlasIconSize.getHeadType(headType),
-        srcHeight: AtlasIconSize.getHeadType(headType),
+        image: GameImages.atlasItems,
+        srcX: AtlasItems.getSrcX(itemType),
+        srcY: AtlasItems.getSrcY(itemType),
+        srcWidth: AtlasItems.getSrcX(itemType),
+        srcHeight: AtlasItems.getSrcY(itemType),
         scale: 3.0,
       );
 }

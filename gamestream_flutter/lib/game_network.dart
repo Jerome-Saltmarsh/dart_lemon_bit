@@ -59,8 +59,6 @@ class GameNetwork {
 
   static void connectToGameEditor() => connectToGame(GameType.Editor);
 
-  static void connectToGameWaves() => connectToGame(GameType.Waves);
-
   static void connectToGameSkirmish() => connectToGame(GameType.Skirmish);
 
   static void connectToGame(int gameType, [String message = ""]) =>

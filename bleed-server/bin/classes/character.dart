@@ -76,11 +76,11 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
   bool get busy => stateDurationRemaining > 0;
   bool get deadOrBusy => dying || dead || busy;
   bool get deadBusyOrPerforming => dying || dead || usingWeapon;
-  bool get equippedTypeIsBow => weapon.type == AttackType.Bow;
-  bool get equippedTypeIsStaff => weapon.type == AttackType.Staff;
-  bool get unarmed => weapon.type == AttackType.Unarmed;
-  bool get equippedTypeIsShotgun => weapon.type == AttackType.Shotgun;
-  bool get equippedIsMelee => AttackType.isMelee(weapon.type);
+  bool get equippedTypeIsBow => weapon.type == ItemType.Weapon_Ranged_Bow;
+  bool get equippedTypeIsStaff => weapon.type == ItemType.Weapon_Melee_Magic_Staff;
+  bool get unarmed => weapon.type == ItemType.Empty;
+  bool get equippedTypeIsShotgun => weapon.type == ItemType.Weapon_Ranged_Shotgun;
+  bool get equippedIsMelee => ItemType.isTypeWeaponMelee(weapon.type);
   bool get equippedIsEmpty => false;
   int get equippedAttackDuration => 25;
   int get equippedDamage => weapon.damage;
@@ -93,11 +93,12 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
     required double y,
     required double z,
     required int health,
+      required this.equippedArmour,
+      required this.equippedHead,
     required this.weapon,
     required int team,
     double speed = 5.0,
-    this.equippedArmour = BodyType.tunicPadded,
-    this.equippedHead = HeadType.None,
+
 
   }) : super(x: x, y: y, z: z, radius: 7) {
     maxHealth = health;

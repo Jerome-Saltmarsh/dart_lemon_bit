@@ -35,30 +35,30 @@ Widget buildPanelStore(){
             });
           }).toList()),
           height6,
-          watch(storeEquipmentType, (tab){
-            switch (tab){
-              case EquipmentType.Weapon:
-                return buildStoreTabWeapons();
-              case EquipmentType.Armour:
-                return buildColumnSelectPlayerArmour();
-              case EquipmentType.Head:
-                return buildColumnSelectPlayerHead();
-              case EquipmentType.Pants:
-                return buildColumnSelectPlayerPants();
-              default:
-                return text("not available");
-            }
-          })
+          // watch(storeEquipmentType, (tab){
+          //   switch (tab){
+          //     case EquipmentType.Weapon:
+          //       return buildStoreTabWeapons();
+          //     case EquipmentType.Armour:
+          //       return buildColumnSelectPlayerArmour();
+          //     case EquipmentType.Head:
+          //       return buildColumnSelectPlayerHead();
+          //     case EquipmentType.Pants:
+          //       return buildColumnSelectPlayerPants();
+          //     default:
+          //       return text("not available");
+          //   }
+          // })
         ],
       );
   });
 }
 
-Widget buildColumnSelectPlayerArmour(){
-   return Column(
-      children: BodyType.values.map(_buildSelectArmourType).toList(),
-   );
-}
+// Widget buildColumnSelectPlayerArmour(){
+//    return Column(
+//       children: BodyType.values.map(_buildSelectArmourType).toList(),
+//    );
+// }
 
 Widget buildStoreTabWeapons(){
    return Row(
@@ -97,37 +97,37 @@ Widget buildWatchWeaponInformation(){
    });
 }
 
-Widget buildColumnSelectPlayerHead(){
-   return Column(
-      children: HeadType.values.map(buildButtonSelectPlayerHead).toList(),
-   );
-}
+// Widget buildColumnSelectPlayerHead(){
+//    return Column(
+//       children: HeadType.values.map(buildButtonSelectPlayerHead).toList(),
+//    );
+// }
 
-Widget buildColumnSelectPlayerPants(){
-  return Column(
-    children: LegType.values.map(_buildButtonPants).toList(),
-  );
-}
+// Widget buildColumnSelectPlayerPants(){
+//   return Column(
+//     children: LegType.values.map(_buildButtonPants).toList(),
+//   );
+// }
 
-Widget buildButtonSelectPlayerHead(int headType) {
-   return watch(GamePlayer.headType, (int playerHeadType){
-      return container(
-          child: text(HeadType.getName(headType)),
-          action: () => GameNetwork.sendClientRequestSetHeadType(headType),
-          color: headType == playerHeadType ? greyDark : grey,
-      );
-   });
-}
+// Widget buildButtonSelectPlayerHead(int headType) {
+//    return watch(GamePlayer.headType, (int playerHeadType){
+//       return container(
+//           child: text(HeadType.getName(headType)),
+//           action: () => GameNetwork.sendClientRequestSetHeadType(headType),
+//           color: headType == playerHeadType ? greyDark : grey,
+//       );
+//    });
+// }
 
-Widget _buildButtonPants(int pantsType) {
-  return watch(GamePlayer.pantsType, (int playerPantsType){
-    return container(
-      child: text(LegType.getName(pantsType)),
-      action: () => GameNetwork.sendClientRequestSetPantsType(pantsType),
-      color: pantsType == playerPantsType ? green : grey,
-    );
-  });
-}
+// Widget _buildButtonPants(int pantsType) {
+//   return watch(GamePlayer.pantsType, (int playerPantsType){
+//     return container(
+//       child: text(LegType.getName(pantsType)),
+//       action: () => GameNetwork.sendClientRequestSetPantsType(pantsType),
+//       color: pantsType == playerPantsType ? green : grey,
+//     );
+//   });
+// }
 
 Widget _buildButtonPurchaseWeapon(Weapon weapon) {
   return MouseRegion(
@@ -145,13 +145,14 @@ Widget _buildButtonPurchaseWeapon(Weapon weapon) {
   );
 }
 
-Widget _buildSelectArmourType(int type) {
-   return watch(GamePlayer.bodyType, (int equipped){
-     return container(
-         child: text(BodyType.getName(type)),
-         action: () => GameNetwork.sendClientRequestSetArmour(type),
-         color: equipped == type ? green : grey,
-     );
-   });
-}
+// Widget _buildSelectArmourType(int type) {
+//    return watch(GamePlayer.bodyType, (int equipped){
+//      return container(
+//          child: text(BodyType.getName(type)),
+//          action: () => GameNetwork.sendClientRequestSetArmour(type),
+//          color: equipped == type ? green : grey,
+//      );
+//    });
+// }
+
 

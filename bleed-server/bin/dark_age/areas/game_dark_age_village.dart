@@ -5,26 +5,28 @@ import '../../common/library.dart';
 import '../../common/map_tiles.dart';
 import '../dark_age_scenes.dart';
 import '../on_interaction/on_interact_with_jenkins.dart';
+import 'area-plains-1.dart';
 import 'dark_age_area.dart';
 
 class GameDarkAgeVillage extends DarkAgeArea {
 
   GameDarkAgeVillage() : super(darkAgeScenes.village, mapTile: MapTiles.Village) {
     addNpc(
+        team: DarkAgeTeam.Good,
         weapon: buildWeaponUnarmed(),
         name: "Bell",
         row: 21,
         column: 13,
         z: 1,
         wanderRadius: 0,
-        head: HeadType.Blonde,
-        armour: BodyType.shirtBlue,
-        pants: LegType.brown,
+        headType: ItemType.Head_Blonde,
+        armour: ItemType.Body_Tunic_Padded,
+        pants: ItemType.Legs_Brown,
         onInteractedWith: (player) {
           player.health = player.maxHealth;
           player.setStoreItems([
-            Weapon(type: AttackType.Bow, damage: 5, duration: 10, range: 200),
-            Weapon(type: AttackType.Blade, damage: 5, duration: 15, range: 50),
+            Weapon(type: ItemType.Weapon_Ranged_Bow, damage: 5, duration: 10, range: 200),
+            Weapon(type: ItemType.Weapon_Ranged_Bow, damage: 5, duration: 15, range: 50),
           ]);
         });
 
@@ -34,33 +36,35 @@ class GameDarkAgeVillage extends DarkAgeArea {
         column: 21,
         z: 2,
         wanderRadius: 50,
-        head: HeadType.Steel_Helm,
-        armour: BodyType.shirtCyan,
-        pants: LegType.red,
+        headType: ItemType.Head_Rogues_Hood,
+        armour: ItemType.Body_Tunic_Padded,
+        pants: ItemType.Legs_Brown,
         weapon: buildWeaponUnarmed(),
         onInteractedWith: onInteractWithGarry,
+        team: DarkAgeTeam.Good,
     );
 
-    addNpc(
-        name: "Jenkins",
-        z: 1,
-        row: 19,
-        column: 17,
-        head: HeadType.Wizards_Hat,
-        armour: BodyType.shirtBlue,
-        pants: LegType.white,
-        weapon: buildWeaponUnarmed(),
-        onInteractedWith: onInteractWithJenkins,
-    );
+    // addNpc(
+    //     name: "Jenkins",
+    //     z: 1,
+    //     row: 19,
+    //     column: 17,
+    //   headType: ItemType.Head_Rogues_Hood,
+    //   armour: ItemType.Body_Tunic_Padded,
+    //   pants: ItemType.Legs_Brown,
+    //     weapon: buildWeaponUnarmed(),
+    //     onInteractedWith: onInteractWithJenkins,
+    // );
 
     addNpc(
+      headType: ItemType.Head_Rogues_Hood,
+      armour: ItemType.Body_Tunic_Padded,
+      pants: ItemType.Legs_Brown,
+      team: DarkAgeTeam.Bandits,
       name: "Julia",
       z: 4,
       row: 20,
       column: 16,
-      head: HeadType.Blonde,
-      armour: BodyType.tunicPadded,
-      pants: LegType.brown,
       weapon: buildWeaponUnarmed(),
       onInteractedWith: onInteractWithJulia,
     );
@@ -80,27 +84,27 @@ class GameDarkAgeVillage extends DarkAgeArea {
                 responses: {
                   "brown": (){
                     setCharacterStateChanging(player);
-                    player.equippedLegs = LegType.brown;
+                    // player.equippedLegs = ItemType.;
                     player.endInteraction();
                   },
                   "blue": (){
                     setCharacterStateChanging(player);
-                    player.equippedLegs = LegType.blue;
+                    // player.equippedLegs = LegType.blue;
                     player.endInteraction();
                   },
                   "red": (){
                     setCharacterStateChanging(player);
-                    player.equippedLegs = LegType.red;
+                    // player.equippedLegs = LegType.red;
                     player.endInteraction();
                   },
                   "green": (){
                     setCharacterStateChanging(player);
-                    player.equippedLegs = LegType.green;
+                    // player.equippedLegs = LegType.green;
                     player.endInteraction();
                   },
                   "white": (){
                     setCharacterStateChanging(player);
-                    player.equippedLegs = LegType.white;
+                    // player.equippedLegs = LegType.white;
                     player.endInteraction();
                   },
 

@@ -251,12 +251,11 @@ class GameUI {
         ],
       );
 
-
   static Widget buildIconAttackType(int type) =>
       buildAtlasImage(
         image: GameImages.atlasIcons,
-        srcX: AtlasIconsX.getWeaponType(type),
-        srcY: AtlasIconsY.getWeaponType(type),
+        srcX: AtlasItems.getSrcX(type),
+        srcY: AtlasItems.getSrcY(type),
         srcWidth: AtlasIconSize.getWeaponType(type),
         srcHeight: AtlasIconSize.getWeaponType(type),
         scale: 3.0,

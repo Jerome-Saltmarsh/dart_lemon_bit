@@ -213,6 +213,8 @@ class Player extends Character with ByteWriter {
             speed: 4.25,
             team: team,
             weapon: weapon,
+            equippedArmour: ItemType.Body_Tunic_Padded,
+            equippedHead: ItemType.Head_Rogues_Hood,
   ){
     maxMagic = magic;
     _magic = maxMagic;
@@ -260,15 +262,15 @@ class Player extends Character with ByteWriter {
 
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Armour_Type);
-    writeByte(equippedArmour);
+    writeUInt16(equippedArmour);
 
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Head_Type);
-    writeByte(equippedHead);
+    writeUInt16(equippedHead);
 
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Pants_Type);
-    writeByte(equippedLegs);
+    writeUInt16(equippedLegs);
 
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Alive);
@@ -314,7 +316,7 @@ class Player extends Character with ByteWriter {
   void writePlayerWeaponType(){
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Weapon_Type);
-    writeByte(weapon.type);
+    writeUInt16(weapon.type);
   }
 
   void writePlayerWeaponRounds(){
@@ -552,11 +554,20 @@ class Player extends Character with ByteWriter {
   }
 
   void writeCharacterEquipment(Character character) {
-    writeByte(character.weapon.type);
-    writeByte(character.weapon.state);
-    writeByte(character.equippedArmour); // armour
-    writeByte(character.equippedHead); // helm
-    writeByte(character.equippedLegs); // helm
+    if (!ItemType.isTypeBody(character.equippedArmour)){
+      print('hello');
+    }
+
+    assert (ItemType.isTypeWeapon(character.weapon.type) || character.weapon.type == ItemType.Empty);
+    assert (ItemType.isTypeLegs(character.equippedLegs));
+    assert (ItemType.isTypeBody(character.equippedArmour));
+    assert (ItemType.isTypeHead(character.equippedHead));
+    assert (ItemType.isTypeLegs(character.equippedLegs));
+    writeUInt16(character.weapon.type);
+    writeUInt16(character.weapon.state);
+    writeUInt16(character.equippedArmour); // armour
+    writeUInt16(character.equippedHead); // helm
+    writeUInt16(character.equippedLegs); // helm
   }
 
   void writeWeather() {

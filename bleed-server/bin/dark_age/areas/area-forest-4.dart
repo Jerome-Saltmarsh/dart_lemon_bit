@@ -1,16 +1,19 @@
 
-import 'package:lemon_math/library.dart';
-
 import '../../classes/library.dart';
 import '../../common/flag.dart';
 import '../../common/library.dart';
 import '../../common/map_tiles.dart';
 import '../dark_age_scenes.dart';
+import 'area-plains-1.dart';
 import 'dark_age_area.dart';
 
 class AreaForest4 extends DarkAgeArea {
   AreaForest4() : super(darkAgeScenes.forest_4, mapTile: MapTiles.Forest_4) {
     addNpc(
+        headType: ItemType.Head_Rogues_Hood,
+        armour: ItemType.Body_Tunic_Padded,
+        pants: ItemType.Legs_Brown,
+        team: DarkAgeTeam.Bandits,
         name: "Roy",
         row: 12,
         column: 33,
@@ -44,28 +47,29 @@ class AreaForest4 extends DarkAgeArea {
         });
 
     addNpc(
+      headType: ItemType.Head_Rogues_Hood,
+      armour: ItemType.Body_Tunic_Padded,
+      pants: ItemType.Legs_Brown,
+      team: DarkAgeTeam.Good,
       name: "Bandit",
       row: 18,
       column: 33,
       z: 1,
       weapon:  buildWeaponBow(),
-      head: randomItem(HeadType.values),
-      armour: randomItem(BodyType.values),
-      pants: randomItem(LegType.values),
       wanderRadius: 25,
     );
 
-    addNpc(
-      name: "Bandit",
-      row: 18,
-      column: 35,
-      z: 1,
-      weapon: buildWeaponBow(),
-      head: randomItem(HeadType.values),
-      armour: randomItem(BodyType.values),
-      pants: randomItem(LegType.values),
-      wanderRadius: 20,
-    );
+    // addNpc(
+    //   name: "Bandit",
+    //   row: 18,
+    //   column: 35,
+    //   z: 1,
+    //   weapon: buildWeaponBow(),
+    //   headType: ItemType.Head_Rogues_Hood,
+    //   armour: ItemType.Body_Tunic_Padded,
+    //   pants: ItemType.Legs_Brown,
+    //   wanderRadius: 20,
+    // );
 
     addNpc(
       name: "Bandit",
@@ -73,10 +77,11 @@ class AreaForest4 extends DarkAgeArea {
       column: 37,
       z: 1,
       weapon: buildWeaponBow(),
-      head: randomItem(HeadType.values),
-      armour: randomItem(BodyType.values),
-      pants: randomItem(LegType.values),
+      headType: ItemType.Head_Rogues_Hood,
+      armour: ItemType.Body_Tunic_Padded,
+      pants: ItemType.Legs_Brown,
       wanderRadius: 10,
+      team: 3,
     );
   }
 

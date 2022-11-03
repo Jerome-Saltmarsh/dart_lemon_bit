@@ -7,11 +7,11 @@ import 'vector3.dart';
 
 class Character extends Vector3 {
   var characterType = CharacterType.Template;
-  var weaponType = AttackType.Unarmed;
-  var weaponState = AttackType.Unarmed;
-  var bodyType = BodyType.shirtCyan;
-  var headType = HeadType.None;
-  var legType = LegType.white;
+  var weaponType = ItemType.Empty;
+  var weaponState = 0;
+  var bodyType = 0;
+  var headType = 0;
+  var legType = 0;
   var state = 0;
   var direction = 0;
   var frame = 0;
@@ -39,6 +39,6 @@ class Character extends Vector3 {
   double get angle => direction * piQuarter;
   int get renderDirection => direction == 0 ? 7 : (direction - 1);
 
-  bool get unarmed => weaponType == AttackType.Unarmed;
-  bool get weaponTypeIsShotgun => weaponType == AttackType.Shotgun;
+  bool get unarmed => weaponType == ItemType.Empty;
+  bool get weaponTypeIsShotgun => weaponType == ItemType.Weapon_Ranged_Shotgun;
 }

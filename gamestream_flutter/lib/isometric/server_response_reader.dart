@@ -284,13 +284,13 @@ class ServerResponseReader with ByteReader {
         GameState.player.weaponCooldown.value = readPercentage();
         break;
       case ApiPlayer.Armour_Type:
-       GamePlayer.bodyType.value = readByte();
+       GamePlayer.bodyType.value = readUInt16();
         break;
       case ApiPlayer.Head_Type:
-        GamePlayer.headType.value = readByte();
+        GamePlayer.headType.value = readUInt16();
         break;
       case ApiPlayer.Pants_Type:
-        GamePlayer.pantsType.value = readByte();
+        GamePlayer.pantsType.value = readUInt16();
         break;
       case ApiPlayer.Experience_Percentage:
        GameState.player.experience.value = readPercentage();
@@ -305,7 +305,7 @@ class ServerResponseReader with ByteReader {
        GameState.player.points.value = readInt();
         break;
       case ApiPlayer.Weapon_Type:
-        GamePlayer.weapon.type.value = readByte();
+        GamePlayer.weapon.type.value = readUInt16();
         break;
       case ApiPlayer.Weapon_Rounds:
         GamePlayer.weapon.rounds.value = readInt();
@@ -734,11 +734,11 @@ class ServerResponseReader with ByteReader {
   }
 
   void readCharacterEquipment(Character character){
-    character.weaponType = readByte();
-    character.weaponState = readByte();
-    character.bodyType = readByte();
-    character.headType = readByte();
-    character.legType = readByte();
+    character.weaponType = readUInt16();
+    character.weaponState = readUInt16();
+    character.bodyType = readUInt16();
+    character.headType = readUInt16();
+    character.legType = readUInt16();
   }
 
   void _parseCharacterFrameHealth(Character character, int byte){

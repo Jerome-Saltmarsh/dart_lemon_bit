@@ -4,11 +4,16 @@ import '../../common/library.dart';
 import '../../common/map_tiles.dart';
 import '../../functions/move_player_to_crystal.dart';
 import '../dark_age_scenes.dart';
+import 'area-plains-1.dart';
 import 'dark_age_area.dart';
 
 class GameDarkAgeFarm extends DarkAgeArea {
   GameDarkAgeFarm() : super(darkAgeScenes.farm, mapTile: MapTiles.Farm) {
     addNpc(
+      headType: ItemType.Head_Rogues_Hood,
+      armour: ItemType.Body_Tunic_Padded,
+      pants: ItemType.Legs_Brown,
+      team: DarkAgeTeam.Bandits,
        weapon: buildWeaponBow(),
         name: "Magellan",
         row: 28,
@@ -20,6 +25,10 @@ class GameDarkAgeFarm extends DarkAgeArea {
     );
 
     addNpc(
+      headType: ItemType.Head_Rogues_Hood,
+      armour: ItemType.Body_Tunic_Padded,
+      pants: ItemType.Legs_Brown,
+      team: DarkAgeTeam.Bandits,
       weapon: buildWeaponBow(),
       name: "Sammy",
       row: 28,
@@ -29,8 +38,6 @@ class GameDarkAgeFarm extends DarkAgeArea {
         player.interact(message: "Hi Dear");
       },
       wanderRadius: 5,
-      head: HeadType.Blonde,
-      armour: BodyType.tunicPadded,
     );
   }
 

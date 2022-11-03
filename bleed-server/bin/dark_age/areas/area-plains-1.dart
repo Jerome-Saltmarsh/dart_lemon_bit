@@ -1,6 +1,4 @@
 
-import 'package:lemon_math/functions/random_item.dart';
-
 import '../../classes/library.dart';
 import '../../common/library.dart';
 import '../../common/map_tiles.dart';
@@ -11,6 +9,7 @@ import 'dark_age_area.dart';
 class DarkAgeTeam {
   static const Good = 1;
   static const Bad = 2;
+  static const Bandits = 3;
 }
 
 class AreaPlains1 extends DarkAgeArea {
@@ -27,9 +26,9 @@ class AreaPlains1 extends DarkAgeArea {
         weapon: buildWeaponHandgun(),
         health: 20,
     );
-    player.equippedArmour = randomItem(BodyType.values);
-    player.equippedLegs = randomItem(LegType.values);
-    player.equippedHead = randomItem(HeadType.values);
+    player.equippedArmour = ItemType.Body_Tunic_Padded;
+    player.equippedLegs = ItemType.Legs_Blue;
+    player.equippedHead = ItemType.Head_Steel_Helm;
     movePlayerToCrystal(player);
 
     player.inventory[0] = ItemType.Weapon_Ranged_Handgun;
@@ -70,6 +69,10 @@ class AreaPlains1 extends DarkAgeArea {
              print("player interacted with Roth");
           }
         )
+          ..equippedArmour = ItemType.Body_Tunic_Padded
+          ..equippedLegs = ItemType.Legs_Blue
+          ..equippedHead = ItemType.Head_Steel_Helm
+
     );
   }
 }

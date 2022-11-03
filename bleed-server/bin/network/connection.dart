@@ -16,7 +16,6 @@ import '../engine.dart';
 import '../functions/generateName.dart';
 import '../functions/move_player_to_crystal.dart';
 import '../game_types/game_skirmish.dart';
-import '../game_types/game_waves.dart';
 import '../io/convert_json_to_scene.dart';
 import '../io/convert_scene_to_json.dart';
 import '../io/write_scene_to_file.dart';
@@ -446,13 +445,6 @@ class Connection {
           player.writeSceneMetaData();
           break;
 
-      case ClientRequest.Game_Waves:
-        if (game is GameWaves == false) return;
-        final gameWaves = game as GameWaves;
-        if (gameWaves.timer <= 1) return;
-        gameWaves.timer = 1;
-        break;
-
       default:
         break;
     }
@@ -692,10 +684,6 @@ class Connection {
     joinGame(GameDarkAgeEditor(scene: scene));
   }
 
-  Future joinGameWaves() async {
-    joinGame(GameWaves(scene: darkAgeScenes.dungeon_1));
-  }
-
   Future joinGameSkirmish() async {
     for (final game in engine.games){
        if (game is GameSkirmish){
@@ -772,9 +760,6 @@ class Connection {
         break;
       case GameType.Dark_Age:
         joinGameDarkAge();
-        break;
-      case GameType.Waves:
-        joinGameWaves();
         break;
       case GameType.Skirmish:
         joinGameSkirmish();

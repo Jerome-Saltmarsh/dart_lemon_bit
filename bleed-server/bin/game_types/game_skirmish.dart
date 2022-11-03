@@ -93,16 +93,16 @@ class GameSkirmish extends Game {
       game: this,
       team: 0,
       weapon: Weapon(
-        type: AttackType.Bow,
+        type: ItemType.Weapon_Ranged_Bow,
         damage: 5,
         capacity: 1000,
         duration: 10,
         range: 200,
       ),
     );
-    player.equippedLegs = randomItem(LegType.values);
-    player.equippedArmour = randomItem(BodyType.values);
-    player.equippedHead = randomItem(HeadType.values);
+    player.equippedLegs = ItemType.Legs_Brown;
+    player.equippedArmour = ItemType.Body_Tunic_Padded;
+    player.equippedHead = ItemType.Head_Wizards_Hat;
     return player;
   }
 

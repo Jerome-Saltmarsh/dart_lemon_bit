@@ -73,7 +73,7 @@ class Player {
 
 class AttackSlot {
   /// see attack_type.dart
-  final type = Watch(AttackType.Unarmed);
+  final type = Watch(ItemType.Empty);
   final capacity = Watch(0);
   final rounds = Watch(0);
 }

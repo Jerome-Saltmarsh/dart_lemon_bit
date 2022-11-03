@@ -304,16 +304,16 @@ abstract class Game {
     }
 
     switch (weapon.type) {
-      case AttackType.Unarmed:
+      case ItemType.Empty:
         return playerAttackMelee(
           player: player,
-          attackType: AttackType.Unarmed,
+          attackType: ItemType.Empty,
           distance: weapon.range,
           attackRadius: 35,
           damage: weapon.damage,
           duration: weapon.duration,
         );
-      case AttackType.Blade:
+      case ItemType.Weapon_Melee_Sword:
         return playerAttackMelee(
           player: player,
           attackType: weapon.type,
@@ -322,48 +322,46 @@ abstract class Game {
           damage: weapon.damage,
           duration: weapon.duration,
         );
-      case AttackType.Crossbow:
+      case ItemType.Weapon_Ranged_Crossbow:
         return spawnProjectileArrow(
             src: player,
             angle: player.lookRadian,
             damage: weapon.damage,
             range: weapon.range,
         );
-      case AttackType.Teleport:
-        return playerTeleportToMouse(player);
-      case AttackType.Handgun:
+      case ItemType.Weapon_Ranged_Handgun:
         return characterFireWeapon(
           character: player,
           weapon: weapon,
           angle: player.lookRadian,
         );
-      case AttackType.Shotgun:
+      case ItemType.Weapon_Ranged_Shotgun:
         return characterFireShotgun(player, player.lookRadian);
-      case AttackType.Assault_Rifle:
+      case ItemType.Weapon_Ranged_Assault_Rifle:
         return characterFireWeapon(
           character: player,
           weapon: weapon,
           angle: player.lookRadian,
         );
-      case AttackType.Rifle:
+      case ItemType.Weapon_Ranged_Rifle:
         return characterFireWeapon(
           character: player,
           weapon: weapon,
           angle: player.lookRadian,
         );
-      case AttackType.Fireball:
+      case ItemType.Weapon_Ranged_Staff_Of_Flames:
         characterSpawnProjectileFireball(
             player,
             angle: player.lookRadian,
         );
         break;
-      case AttackType.Revolver:
+      case ItemType.Weapon_Ranged_Revolver:
         return characterFireWeapon(
           character: player,
           weapon: weapon,
           angle: player.lookRadian,
         );
-      case AttackType.Crowbar:
+      case ItemType.Weapon_Melee_Crowbar:
         return playerAttackMelee(
           player: player,
           attackType: weapon.type,
@@ -372,7 +370,7 @@ abstract class Game {
           damage: weapon.damage,
           duration: weapon.duration,
         );
-      case AttackType.Bow:
+      case ItemType.Weapon_Ranged_Bow:
         weapon.durationRemaining = weapon.duration;
         spawnProjectileArrow(
             src: player,
@@ -381,7 +379,7 @@ abstract class Game {
             angle: player.lookRadian,
         );
         break;
-      case AttackType.Staff:
+      case ItemType.Weapon_Melee_Magic_Staff:
         weapon.durationRemaining = weapon.duration;
         spawnProjectileOrb(src: player, damage: 2);
         break;
@@ -1225,8 +1223,8 @@ abstract class Game {
 
   int getRandomWeaponIndex() =>
     randomItem([
-      AttackType.Handgun,
-      AttackType.Shotgun,
+      ItemType.Weapon_Ranged_Rifle,
+      ItemType.Weapon_Ranged_Bow,
     ]);
 
   void handleProjectileHit(Projectile projectile, Position3 target) {
@@ -1484,13 +1482,13 @@ abstract class Game {
         required double range,
         double? angle,
       }) {
-    dispatchAttackPerformed(
-      AttackType.Fireball,
-      src.x,
-      src.y,
-      src.z,
-      angle ?? src.faceAngle,
-    );
+    // dispatchAttackPerformed(
+    //   AttackType.Fireball,
+    //   src.x,
+    //   src.y,
+    //   src.z,
+    //   angle ?? src.faceAngle,
+    // );
     return
       spawnProjectile(
       src: src,
@@ -1529,7 +1527,7 @@ abstract class Game {
       projectileType: ProjectileType.Bullet,
       damage: 5,
     );
-    dispatchAttackPerformed(AttackType.Assault_Rifle, src.x, src.y, src.z, angle);
+    dispatchAttackPerformed(src.weapon.type, src.x, src.y, src.z, angle);
   }
 
   // void fireArrow(Character src, double angle) {
@@ -1555,7 +1553,7 @@ abstract class Game {
       projectileType: ProjectileType.Bullet,
       damage: 10,
     );
-    dispatchAttackPerformed(AttackType.Rifle, src.x, src.y, src.z, angle);
+    dispatchAttackPerformed(src.weapon.type, src.x, src.y, src.z, angle);
   }
 
   void characterSpawnProjectileFireball(Character character, {
@@ -1573,7 +1571,7 @@ abstract class Game {
       range: range,
       damage: damage,
     );
-    dispatchAttackPerformed(AttackType.Fireball, character.x, character.y, character.z, angle);
+    // dispatchAttackPerformed(AttackType.Fireball, character.x, character.y, character.z, angle);
   }
 
   void characterFireShotgun(Character src, double angle) {
@@ -1596,7 +1594,7 @@ abstract class Game {
         damage:src.weapon.damage,
       );
     }
-    dispatchAttackPerformed(AttackType.Shotgun, src.x, src.y, src.z, angle);
+    dispatchAttackPerformed(src.weapon.type, src.x, src.y, src.z, angle);
   }
 
   Projectile spawnProjectile({
@@ -1952,17 +1950,17 @@ abstract class Game {
     }
 
     final weaponType = character.weapon.type;
-    if (weaponType == AttackType.Blade) {
+    if (weaponType == ItemType.Weapon_Melee_Sword) {
       if (stateDuration == 7) {
         dispatchV3(GameEventType.Sword_Woosh, character);
       }
     }
-    if (weaponType == AttackType.Unarmed) {
+    if (weaponType == ItemType.Empty) {
       if (stateDuration == 7) {
         // dispatchV3(GameEventType.Arm_Swing, character);
       }
     }
-    if (weaponType == AttackType.Handgun) {
+    if (weaponType == ItemType.Weapon_Ranged_Handgun) {
       if (stateDuration == 1) {
         if (character.equippedIsEmpty) {
           // dispatchV3(GameEventType.Clip_Empty, character);
@@ -2079,11 +2077,11 @@ abstract class Game {
     required int column,
     required int z,
     required Weapon weapon,
+    required int headType,
+    required int armour,
+    required int pants,
+    required int team,
     Function(Player player)? onInteractedWith,
-    int head = HeadType.None,
-    int armour = BodyType.shirtCyan,
-    int pants = LegType.brown,
-    int team = 1,
     int health = 10,
     double wanderRadius = 0,
   }) {
@@ -2099,7 +2097,7 @@ abstract class Game {
       wanderRadius: wanderRadius,
       game: this,
     );
-    npc.equippedHead = head;
+    npc.equippedHead = headType;
     npc.equippedArmour = armour;
     npc.equippedLegs = pants;
     npc.indexRow = row;
@@ -2141,13 +2139,13 @@ abstract class Game {
 
   Weapon buildWeaponByType(int type){
     switch(type){
-      case AttackType.Shotgun:
+      case ItemType.Weapon_Ranged_Shotgun:
         return buildWeaponShotgun();
-      case AttackType.Handgun:
+      case ItemType.Weapon_Ranged_Handgun:
         return buildWeaponHandgun();
-      case AttackType.Blade:
+      case ItemType.Weapon_Melee_Sword:
         return buildWeaponBlade();
-      case AttackType.Bow:
+      case ItemType.Weapon_Ranged_Bow:
         return buildWeaponBow();
       default:
         throw Exception("cannot build weapon for type $type");

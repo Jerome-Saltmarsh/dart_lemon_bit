@@ -12,8 +12,9 @@ import 'render_character_health_bar.dart';
 // }
 
 bool weaponIs96(int weapon) =>
-   weapon == AttackType.Staff ||
-   weapon == AttackType.Blade ;
+   weapon == ItemType.Weapon_Ranged_Staff_Of_Flames ||
+   weapon == ItemType.Weapon_Melee_Magic_Staff ||
+   weapon == ItemType.Weapon_Melee_Sword ;
 
 void renderTemplateWeapon(
     int weaponType,
@@ -23,7 +24,7 @@ void renderTemplateWeapon(
     double dstX,
     double dstY,
     ) {
-  if (weaponType == AttackType.Unarmed) return;
+  if (weaponType == ItemType.Empty) return;
   var size = weaponIs64(weaponType) ? 64.0 : 96.0;
   Engine.renderSprite(
     image: GameImages.getImageForWeaponType(weaponType),
@@ -65,7 +66,7 @@ void renderCharacterTemplate(Character character, {
   final weaponInFront = upperBodyDirection >= 2 && upperBodyDirection < 6;
   final finalDirection = character.usingWeapon ? character.aimDirection : upperBodyDirection;
 
-  var weaponIsTwoHandedFirearm = AttackType.isTwoHandedFirearm(character.weaponType);
+  var weaponIsTwoHandedFirearm = ItemType.isTwoHandedFirearm(character.weaponType);
 
   switch (character.state) {
     case CharacterState.Idle:
@@ -191,9 +192,9 @@ void renderCharacterTemplate(Character character, {
 }
 
 bool weaponIs64(int weapon) =>
-   weapon == AttackType.Handgun ||
-   weapon == AttackType.Bow ||
-   weapon == AttackType.Shotgun;
+   weapon == ItemType.Weapon_Ranged_Handgun ||
+   weapon == ItemType.Weapon_Ranged_Bow ||
+   weapon == ItemType.Weapon_Ranged_Shotgun;
 
 class TemplateAnimation {
   static final Uint8List Running1 = (){
@@ -276,20 +277,22 @@ class TemplateAnimation {
 
   static List<int> getAttackAnimation(int weaponType){
       switch (weaponType) {
-        case AttackType.Unarmed:
+        case ItemType.Empty:
           return Striking;
-        case AttackType.Handgun:
+        case ItemType.Weapon_Ranged_Handgun:
           return FiringHandgun;
-        case AttackType.Shotgun:
+        case ItemType.Weapon_Ranged_Shotgun:
           return FiringShotgun;
-        case AttackType.Bow:
+        case ItemType.Weapon_Ranged_Bow:
           return FiringBow;
-        case AttackType.Blade:
+        case ItemType.Weapon_Melee_Sword:
           return StrikingBlade;
-        case AttackType.Staff:
+        case ItemType.Weapon_Melee_Magic_Staff:
+          return StrikingBlade;
+        case ItemType.Weapon_Ranged_Staff_Of_Flames:
           return StrikingBlade;
         default:
-          throw Exception("TemplateAnimation.getAttackAnimation(${AttackType.getName(weaponType)})");
+          throw Exception("TemplateAnimation.getAttackAnimation(${ItemType.getName(weaponType)})");
       }
   }
 }

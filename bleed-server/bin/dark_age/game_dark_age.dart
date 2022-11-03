@@ -134,10 +134,11 @@ class GameDarkAge extends Game {
       row: row,
       column: column,
       z: 1,
-      head: HeadType.Rogues_Hood,
-      armour: BodyType.shirtBlue,
-      pants: LegType.green,
+      headType: ItemType.Head_Wizards_Hat,
+      armour: ItemType.Body_Tunic_Padded,
+      pants: ItemType.Legs_Brown,
       weapon: buildWeaponBow(),
+      team: 1
     );
   }
 

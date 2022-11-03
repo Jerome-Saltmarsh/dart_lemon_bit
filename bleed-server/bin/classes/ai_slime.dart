@@ -1,7 +1,5 @@
 
-import '../common/server_response';
-import '../common/attack_type.dart';
-import '../common/character_type.dart';
+import '../common/library.dart';
 import 'ai.dart';
 import 'player.dart';
 import 'weapon.dart';
@@ -20,7 +18,7 @@ class AISlime extends AI {
       z: z,
       health: health,
       weapon: Weapon(
-          type: AttackType.Unarmed,
+          type: ItemType.Empty,
           damage: 1,
           capacity: 0,
           duration: 10,
