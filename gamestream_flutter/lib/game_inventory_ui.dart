@@ -34,11 +34,14 @@ class GameInventoryUI {
         ],
       );
 
-  static DragTarget<int> buildDragTargetWeapon() => buildDragTarget(GamePlayer.weapon.type);
-  static DragTarget<int> buildDragTargetBody() => buildDragTarget(GamePlayer.bodyType);
-  static DragTarget<int> buildDragTargetHead() => buildDragTarget(GamePlayer.headType);
+  static Widget buildDragTargetWeapon() => onPressed(
+      action: GameNetwork.sendClientRequestInventoryUnequipWeapon,
+      child: buildDragTarget(GamePlayer.weapon.type)
+  );
+  static Widget buildDragTargetBody() => buildDragTarget(GamePlayer.bodyType);
+  static Widget buildDragTargetHead() => buildDragTarget(GamePlayer.headType);
 
-  static DragTarget<int> buildDragTarget(Watch<int> watchInt) =>
+  static Widget buildDragTarget(Watch<int> watchInt) =>
       DragTarget<int>(
         builder: (context, i, a) => watch(watchInt, buildContainerItemType),
         onWillAccept: onDragWillAccept,
@@ -60,14 +63,12 @@ class GameInventoryUI {
       );
 
   static Widget buildContainerItemType(int itemType) =>
-      onPressed(
-        child: Container(
-          color: brownLight,
-          width: 100,
-          height: 100,
-          padding: const EdgeInsets.all(6),
-          child: buildItemTypeAtlasImage(itemType: itemType, scale: 2.5),
-        ),
+      Container(
+        color: brownLight,
+        width: 100,
+        height: 100,
+        padding: const EdgeInsets.all(6),
+        child: buildItemTypeAtlasImage(itemType: itemType, scale: 2.5),
       );
 
   static bool onDragWillAccept(int? i) => i != null;

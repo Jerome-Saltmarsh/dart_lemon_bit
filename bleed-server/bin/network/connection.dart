@@ -104,6 +104,18 @@ class Connection {
         if (player.deadBusyOrPerforming) return;
         final inventoryRequest = int.tryParse(arguments[1]);
         switch (inventoryRequest){
+          case InventoryRequest.Unequip_Weapon:
+            if (player.weapon.type == ItemType.Empty) return;
+            for (var i = 0; i < player.inventory.length; i++){
+              if (player.inventory[i] != ItemType.Empty) continue;
+              player.inventory[i] = player.weapon.type;
+              player.weapon.type = ItemType.Empty;
+              player.writePlayerWeaponType();
+              player.game.setCharacterStateChanging(player);
+              player.writePlayerInventory();
+              break;
+            }
+            break;
           case InventoryRequest.Equip:
             final index = int.tryParse(arguments[2]);
             if (index == null){

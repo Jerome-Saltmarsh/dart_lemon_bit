@@ -4,7 +4,10 @@ class ItemType {
   static bool isNotTypeEmpty(int value) => value != Empty;
 
   static bool isTypeConsumable(int value) =>
-      value >= Index_Consumables && value < Index_Heads;
+      value >= Index_Consumables && value < Index_Resources;
+
+  static bool isTypeResource(int value) =>
+      value >= Index_Resources && value < Index_Heads;
 
   static bool isTypeHead(int value) =>
     value >= Index_Heads && value < Index_Bodies;
@@ -34,22 +37,25 @@ class ItemType {
 
   static const Empty = 0;
   static const Index_Consumables = 00001;
+  static const Index_Resources = 05001;
   static const Index_Heads = 10000;
   static const Index_Bodies = 20000;
   static const Index_Legs = 30000;
   static const Index_Weapon_Melee = 40000;
   static const Index_Weapon_Ranged = 45000;
 
-  // static const Consumable = 0;
-  // static const Head = 1;
-  // static const Body = 2;
-  // static const Pants = 3;
-  // static const Weapon = 4;
-
   static const Consumable_Health_Potion_05 = Index_Consumables + 0;
   static const Consumable_Health_Potion_10 = Index_Consumables + 1;
   static const Consumable_Health_Potion_20 = Index_Consumables + 2;
   static const Consumable_Health_Potion_40 = Index_Consumables + 3;
+
+  static const Resource_Ammo_9mm = Index_Resources + 1;
+  static const Resource_Ammo_Shells = Index_Resources + 2;
+  static const Resource_Ammo_Arrows = Index_Resources + 3;
+  static const Resource_Ammo_Arrows_Iron_Tip = Index_Resources + 3;
+  static const Resource_Ammo_Arrows_Silver = Index_Resources + 3;
+  static const Resource_Ammo_Arrows_Fire = Index_Resources + 3;
+  static const Resource_Ammo_Bolts = Index_Resources + 4;
 
   static const Head_Steel_Helm = Index_Heads + 1;
   static const Head_Rogues_Hood = Index_Heads + 2;
