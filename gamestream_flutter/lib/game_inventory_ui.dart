@@ -45,33 +45,16 @@ class GameInventoryUI {
         ],
       );
 
-  static DragTarget<int> buildDragTargetWeapon() =>
-    DragTarget<int>(
-      builder: (context, i, a) {
-        return watch(GamePlayer.weapon.type, buildPanelPlayerEquippedAttackType);
-      },
-      onWillAccept: onDragWillAccept,
-      onAccept: onDragAccept,
-    );
+  static DragTarget<int> buildDragTargetWeapon() => buildDragTarget(GamePlayer.weapon.type);
+  static DragTarget<int> buildDragTargetBody() => buildDragTarget(GamePlayer.bodyType);
+  static DragTarget<int> buildDragTargetHead() => buildDragTarget(GamePlayer.headType);
 
-  static Widget buildDragTargetBody() =>
-    DragTarget<int>(
-      builder: (context, i, a) {
-        return watch(GamePlayer.bodyType, buildPanelPlayerEquippedBodyType);
-      },
-      onWillAccept: onDragWillAccept,
-      onAccept: onDragAccept,
-    );
-
-  static Widget buildDragTargetHead() =>
-    DragTarget<int>(
-      builder: (context, i, a) {
-        return watch(GamePlayer.headType, buildPanelPlayerEquippedHeadType);
-      },
-      onWillAccept: onDragWillAccept,
-      onAccept: onDragAccept,
-    );
-
+  static DragTarget<int> buildDragTarget(Watch<int> watchInt) =>
+      DragTarget<int>(
+        builder: (context, i, a) => watch(watchInt, buildContainerItemType),
+        onWillAccept: onDragWillAccept,
+        onAccept: onDragAccept,
+      );
 
   static Widget buildContainerInventory() =>
       Container(
@@ -87,32 +70,13 @@ class GameInventoryUI {
         ),
       );
 
-  static Widget buildPanelPlayerEquippedAttackType(int bodyType) =>
+  static Widget buildContainerItemType(int itemType) =>
       Container(
         color: brownLight,
         width: 150,
         height: 150,
         padding: const EdgeInsets.all(6),
-        child: GameUI.buildIconAttackType(bodyType),
-      );
-
-  static Widget buildPanelPlayerEquippedBodyType(int bodyType) =>
-      Container(
-        color: brownLight,
-        width: 150,
-        height: 150,
-        padding: const EdgeInsets.all(6),
-        child: buildIconItemType(bodyType),
-      );
-
-
-  static Widget buildPanelPlayerEquippedHeadType(int headType) =>
-      Container(
-        color: brownLight,
-        width: 150,
-        height: 150,
-        padding: const EdgeInsets.all(6),
-        child: buildIconItemType(headType),
+        child: buildIconItemType(itemType),
       );
 
   static bool onDragWillAccept(int? i) => i != null;
