@@ -1808,7 +1808,7 @@ abstract class Game {
         z: z,
         angle: angle,
       );
-      player.writeByte(attackType);
+      player.writeUInt16(attackType);
     }
   }
 

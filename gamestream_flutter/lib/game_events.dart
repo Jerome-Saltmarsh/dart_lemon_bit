@@ -82,7 +82,7 @@ class GameEvents {
       case GameEventType.Footstep:
         return GameEvents.onFootstep(x, y, z);
       case GameEventType.Attack_Performed:
-        return onAttackPerformend(x, y, z, angle);
+        return onAttackPerformed(x, y, z, angle);
       case GameEventType.Player_Spawn_Started:
         GameCamera.centerOnPlayer();
         return GameAudio.teleport.playXYZ(x, y, z);
@@ -242,8 +242,8 @@ class GameEvents {
     return GameAudio.splash.playXYZ(x, y, z);
   }
 
-  static void onAttackPerformend(double x, double y, double z, double angle) {
-    final attackType = serverResponseReader.readByte();
+  static void onAttackPerformed(double x, double y, double z, double angle) {
+    final attackType = serverResponseReader.readUInt16();
     switch (attackType){
       case ItemType.Weapon_Ranged_Handgun:
         GameAudio.pistol_shot_20.playXYZ(x, y, z);
