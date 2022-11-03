@@ -81,8 +81,8 @@ class GameInventoryUI {
         padding: const EdgeInsets.all(6),
         child: Stack(
           children: [
-            buildInventorySlotGrid(),
-            watch(GameInventory.reads, buildInventoryItemGrid),
+            buildStackSlotGrid(),
+            watch(GameInventory.reads, buildStackInventoryItems),
           ],
         ),
       );
@@ -122,46 +122,49 @@ class GameInventoryUI {
     GameNetwork.sendClientRequestInventoryEquip(i);
   }
 
-  static Widget buildInventoryItemGrid(int reads){
-    final children = <Widget>[];
-    for (var i = 0; i < GameInventory.items.length; i++){
-      children.add(buildInventoryItem(i));
-    }
-    return Stack(
-      children: children,
-    );
+  static Widget buildStackInventoryItems(int reads) {
+     final positioned = <Widget>[];
+     for (var i = 0; i < GameInventory.items.length; i++){
+         if (GameInventory.items[i] == ItemType.Empty) continue;
+         positioned.add(
+           buildPositionInventoryItem(i)
+         );
+     }
+     return Stack(
+       children: positioned,
+     );
   }
 
-  static Widget buildInventoryItem(int i){
-    const size = 32.0;
+  static Widget buildPositionInventoryItem(int index){
+    final itemType = GameInventory.items[index];
     return Positioned(
-      left: convertIndexToColumn(i) * Slot_Size,
-      top: convertIndexToRow(i) * Slot_Size,
+      left: convertIndexToColumn(index) * Slot_Size,
+      top: convertIndexToRow(index) * Slot_Size,
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
         child: Draggable<int>(
           hitTestBehavior: HitTestBehavior.opaque,
-          data: i,
+          data: index,
           feedback: buildAtlasImage(
-            image: GameImages.atlasIcons,
-            srcX: AtlasItems.getSrcX(i),
-            srcY: AtlasItems.getSrcY(i),
-            srcWidth: size,
-            srcHeight: size,
+            image: GameImages.atlasItems,
+            srcX: AtlasItems.getSrcX(itemType),
+            srcY: AtlasItems.getSrcY(itemType),
+            srcWidth: Slot_Size,
+            srcHeight: Slot_Size,
           ),
           child: buildAtlasImage(
-            image: GameImages.atlasIcons,
-            srcX: AtlasItems.getSrcX(i),
-            srcY: AtlasItems.getSrcY(i),
-            srcWidth: size,
-            srcHeight: size,
+            image: GameImages.atlasItems,
+            srcX: AtlasItems.getSrcX(itemType),
+            srcY: AtlasItems.getSrcY(itemType),
+            srcWidth: Slot_Size,
+            srcHeight: Slot_Size,
           ),
           childWhenDragging: buildAtlasImage(
-            image: GameImages.atlasIcons,
-            srcX: AtlasItems.getSrcX(i),
-            srcY: AtlasItems.getSrcY(i),
-            srcWidth: size,
-            srcHeight: size,
+            image: GameImages.atlasItems,
+            srcX: AtlasItems.getSrcX(itemType),
+            srcY: AtlasItems.getSrcY(itemType),
+            srcWidth: Slot_Size,
+            srcHeight: Slot_Size,
           ),
         ),
       ),
@@ -193,7 +196,7 @@ class GameInventoryUI {
   //       throw Exception('GameUI.getInventoryItemSrcY($index)');
   //   }
   // }
-  
+
 
   static int getIndexRow(int index) =>
     index ~/ ColumnsPerRow;
@@ -201,10 +204,15 @@ class GameInventoryUI {
   static int getIndexColumn(int index) =>
       index % ColumnsPerRow;
 
-  static Widget buildInventorySlotGrid() =>
-    Stack(
-      children: GameInventory.items.map(buildPositionedGridSlot).toList(),
+  static Widget buildStackSlotGrid() {
+    final children = <Widget>[];
+    for (var i = 0; i < GameInventory.items.length; i++) {
+       children.add(buildPositionedGridSlot(i));
+    }
+    return Stack(
+      children: children,
     );
+  }
 
   static Widget buildPositionedGridSlot(int i) =>
     Positioned(

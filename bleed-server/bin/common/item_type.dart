@@ -1,6 +1,7 @@
 class ItemType {
 
   static bool isTypeEmpty(int value) => value == Empty;
+  static bool isNotTypeEmpty(int value) => value != Empty;
 
   static bool isTypeConsumable(int value) =>
       value >= Index_Consumables && value < Index_Heads;

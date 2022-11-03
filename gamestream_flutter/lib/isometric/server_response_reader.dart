@@ -336,6 +336,7 @@ class ServerResponseReader with ByteReader {
   void readPlayerInventory() {
     final total = readUInt16();
     if (GameInventory.items.length != total){
+      print("GameInventory.items = Uint16List($total);");
       GameInventory.items = Uint16List(total);
     }
     for (var i = 0; i < total; i++){
