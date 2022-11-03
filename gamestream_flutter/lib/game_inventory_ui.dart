@@ -61,12 +61,17 @@ class GameInventoryUI {
       );
 
   static Widget buildContainerItemType(int itemType) =>
-      Container(
-        color: brownLight,
-        width: 150,
-        height: 150,
-        padding: const EdgeInsets.all(6),
-        child: buildAtlasImageItemType(itemType),
+      onPressed(
+        action: (){
+          print("pressed");
+        },
+        child: Container(
+          color: brownLight,
+          width: 100,
+          height: 100,
+          padding: const EdgeInsets.all(6),
+          child: buildAtlasImageItemType(itemType),
+        ),
       );
 
   static bool onDragWillAccept(int? i) => i != null;
@@ -99,7 +104,10 @@ class GameInventoryUI {
           hitTestBehavior: HitTestBehavior.opaque,
           data: index,
           feedback: buildItemTypeAtlasImage(itemType, scale: Slot_Item_Scale),
-          child: buildItemTypeAtlasImage(itemType, scale: Slot_Item_Scale),
+          child: onPressed(
+              action: () => GameNetwork.sendClientRequestInventoryEquip(index),
+              child: buildItemTypeAtlasImage(itemType, scale: Slot_Item_Scale),
+          ),
           childWhenDragging: buildItemTypeAtlasImage(itemType, scale: Slot_Item_Scale),
         ),
       ),
