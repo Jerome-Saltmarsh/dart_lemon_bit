@@ -6,7 +6,6 @@ class ApiPlayer {
   static const Weapon_Type = 3;
   static const Weapon_Rounds = 4;
   static const Weapon_Capacity = 5;
-  static const Weapons = 6;
   static const Points = 7;
   static const Experience = 8;
   static const Armour_Type = 9;

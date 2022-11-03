@@ -122,9 +122,6 @@ class ServerResponseReader with ByteReader {
           readPlayerSpawned();
           GameActions.playerStop();
           break;
-        case ServerResponse.Player_Weapons:
-          readPlayerWeapons();
-          break;
         case ServerResponse.Environment:
           readServerResponseEnvironment();
           break;
@@ -515,10 +512,6 @@ class ServerResponseReader with ByteReader {
     GameNodes.nodesType[nodeIndex] = nodeType;
     GameNodes.nodesOrientation[nodeIndex] = nodeOrientation;
     GameEvents.onChangedNodes();
-  }
-
-  void readPlayerWeapons() {
-   GamePlayer.weapons.value = readWeapons();
   }
 
   void readPlayerTarget() {

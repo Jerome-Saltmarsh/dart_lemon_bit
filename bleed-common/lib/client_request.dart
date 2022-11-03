@@ -12,7 +12,6 @@ class ClientRequest {
   static const Set_Pants_Type = 10;
   static const Upgrade_Weapon_Damage = 11;
   static const Purchase_Weapon = 12;
-  static const Equip_Weapon = 13;
   static const Store_Close = 14;
   static const Weather_Set_Rain = 15;
   static const Weather_Set_Wind = 16;

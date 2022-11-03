@@ -299,17 +299,6 @@ class Connection {
         environment.toggleTimePassing();
         break;
 
-      case ClientRequest.Equip_Weapon:
-        if (player.deadOrBusy) return;
-        final index = int.tryParse(arguments[1]);
-        if (index == null || index < 0 || index >= player.weapons.length) {
-          return errorInvalidArg('invalid weapon index $index');
-        }
-        player.weapon = player.weapons[index];
-        player.game.setCharacterStateChanging(player);
-        // player.writeEquippedWeapon();
-        break;
-
       case ClientRequest.Revive:
         if (player.alive) {
           error(GameError.PlayerStillAlive);

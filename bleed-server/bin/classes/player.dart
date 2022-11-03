@@ -49,7 +49,6 @@ class Player extends Character with ByteWriter {
   Collider? aimTarget; // the currently highlighted character
   Account? account;
 
-  final weapons = <Weapon>[];
   static const InventorySize = 40;
   final inventory = Uint16List(InventorySize);
   var storeItems = <Weapon>[];
@@ -100,14 +99,6 @@ class Player extends Character with ByteWriter {
       points++;
       game.customOnPlayerLevelGained(this);
     }
-  }
-
-  Weapon? getWeaponByUuid(String weaponUuid){
-    for (final weapon in weapons){
-      if (weapon.uuid != weaponUuid) continue;
-      return weapon;
-    }
-    return null;
   }
 
   bool questToDo(Quest quest) => !questCompleted(quest) && !questInProgress(quest);
@@ -644,12 +635,6 @@ class Player extends Character with ByteWriter {
     writeByte(previousType);
     writeByte(previousOrientation);
     writeUInt16(count);
-  }
-
-  void writePlayerWeapons(){
-    writeByte(ServerResponse.Player_Weapons);
-    writeInt(weapons.length);
-    weapons.forEach(writeWeapon);
   }
 
   void writeWeapon(Weapon weapon){

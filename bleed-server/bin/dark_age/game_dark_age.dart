@@ -117,14 +117,6 @@ class GameDarkAge extends Game {
     player.indexColumn = 21;
     player.x += giveOrTake(5);
     player.y += giveOrTake(5);
-    player.weapons.add(buildWeaponBow());
-    player.weapons.add(buildWeaponBlade());
-    player.weapons.add(buildWeaponHandgun());
-    player.weapons.add(buildWeaponShotgun());
-    player.weapons.add(buildWeaponRevolver());
-    player.weapons.add(buildWeaponUnarmed());
-    player.weapons.add(buildWeaponRifle());
-    player.writePlayerWeapons();
     return player;
   }
 

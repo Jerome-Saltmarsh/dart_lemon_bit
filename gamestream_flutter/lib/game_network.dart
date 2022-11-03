@@ -260,11 +260,6 @@ class GameNetwork {
     sendClientRequest(ClientRequest.Upgrade_Weapon_Damage);
   }
 
-  static void sendClientRequestEquipWeapon(int index){
-    assert (index >= 0);
-    sendClientRequest(ClientRequest.Equip_Weapon, index);
-  }
-
   static void sendClientRequestWeatherSetRain(Rain value){
     sendClientRequest(ClientRequest.Weather_Set_Rain, value.index);
   }
