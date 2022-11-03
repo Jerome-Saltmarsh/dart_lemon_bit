@@ -62,15 +62,12 @@ class GameInventoryUI {
 
   static Widget buildContainerItemType(int itemType) =>
       onPressed(
-        action: (){
-          print("pressed");
-        },
         child: Container(
           color: brownLight,
           width: 100,
           height: 100,
           padding: const EdgeInsets.all(6),
-          child: buildAtlasImageItemType(itemType),
+          child: buildItemTypeAtlasImage(itemType: itemType, scale: 2.5),
         ),
       );
 
@@ -103,26 +100,16 @@ class GameInventoryUI {
         child: Draggable<int>(
           hitTestBehavior: HitTestBehavior.opaque,
           data: index,
-          feedback: buildItemTypeAtlasImage(itemType, scale: Slot_Item_Scale),
+          feedback: buildItemTypeAtlasImage(itemType: itemType, scale: Slot_Item_Scale),
           child: onPressed(
               action: () => GameNetwork.sendClientRequestInventoryEquip(index),
-              child: buildItemTypeAtlasImage(itemType, scale: Slot_Item_Scale),
+              child: buildItemTypeAtlasImage(itemType: itemType, scale: Slot_Item_Scale),
           ),
-          childWhenDragging: buildItemTypeAtlasImage(itemType, scale: Slot_Item_Scale),
+          childWhenDragging: buildItemTypeAtlasImage(itemType: itemType, scale: Slot_Item_Scale),
         ),
       ),
     );
   }
-
-  static buildItemTypeAtlasImage(int itemType, {double scale = 1.0}) =>
-    buildAtlasImage(
-      image: GameImages.atlasItems,
-      srcX: AtlasItems.getSrcX(itemType),
-      srcY: AtlasItems.getSrcY(itemType),
-      srcWidth: Slot_Size,
-      srcHeight: Slot_Size,
-      scale: scale,
-    );
 
   static Widget buildStackSlotGrid() {
     final children = <Widget>[];
@@ -174,13 +161,13 @@ class GameInventoryUI {
       child: child,
     );
 
-  static Widget buildAtlasImageItemType(int itemType) =>
+  static buildItemTypeAtlasImage({required int itemType, double scale = 1.0}) =>
       buildAtlasImage(
         image: GameImages.atlasItems,
         srcX: AtlasItems.getSrcX(itemType),
         srcY: AtlasItems.getSrcY(itemType),
-        srcWidth: 32,
-        srcHeight: 32,
-        scale: 3.0,
+        srcWidth: Slot_Size,
+        srcHeight: Slot_Size,
+        scale: scale,
       );
 }
