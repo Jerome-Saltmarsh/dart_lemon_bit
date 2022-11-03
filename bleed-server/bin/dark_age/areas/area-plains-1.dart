@@ -32,24 +32,7 @@ class AreaPlains1 extends DarkAgeArea {
     movePlayerToCrystal(player);
 
     player.inventory[0] = ItemType.Weapon_Ranged_Handgun;
-    // player.inventory.add(
-    //     InventoryItem()
-    //     ..itemType = ItemType.Body
-    //     ..subType = BodyType.tunicPadded
-    //     ..index = 10
-    // );
-    // player.inventory.add(
-    //     InventoryItem()
-    //       ..itemType = ItemType.Weapon
-    //       ..subType = AttackType.Shotgun
-    //       ..index = 5
-    // );
-    // player.inventory.add(
-    //     InventoryItem()
-    //       ..itemType = ItemType.Head
-    //       ..subType = HeadType.Wizards_Hat
-    //       ..index = 8
-    // );
+    player.inventory[1] = ItemType.Weapon_Ranged_Shotgun;
     player.writePlayerInventory();
     return player;
   }

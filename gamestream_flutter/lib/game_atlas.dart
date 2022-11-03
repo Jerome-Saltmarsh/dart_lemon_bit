@@ -15,7 +15,7 @@ class AtlasItems {
       ItemType.Body_Shirt_Cyan: 96,
       ItemType.Body_Tunic_Padded: 128,
       ItemType.Body_Swat: 128,
-  }[0] ?? 0;
+  }[itemType] ?? 0;
 
   static double getSrcY(int itemType) => <int, double> {
     ItemType.Weapon_Melee_Sword: 0,
@@ -31,7 +31,7 @@ class AtlasItems {
     ItemType.Body_Shirt_Cyan: 32,
     ItemType.Body_Tunic_Padded: 32,
     ItemType.Body_Swat: 32,
-  }[0] ?? 0;
+  }[itemType] ?? 0;
 }
 
 class AtlasIconsX {

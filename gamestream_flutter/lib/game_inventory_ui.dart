@@ -137,38 +137,29 @@ class GameInventoryUI {
 
   static Widget buildPositionInventoryItem(int index){
     final itemType = GameInventory.items[index];
-    return buildGridItem(
+    return buildPositionGridItem(
       index: index,
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
         child: Draggable<int>(
           hitTestBehavior: HitTestBehavior.opaque,
           data: index,
-          feedback: buildAtlasImage(
-            image: GameImages.atlasItems,
-            srcX: AtlasItems.getSrcX(itemType),
-            srcY: AtlasItems.getSrcY(itemType),
-            srcWidth: Slot_Size,
-            srcHeight: Slot_Size,
-          ),
-          child: buildAtlasImage(
-            image: GameImages.atlasItems,
-            srcX: AtlasItems.getSrcX(itemType),
-            srcY: AtlasItems.getSrcY(itemType),
-            srcWidth: Slot_Size,
-            srcHeight: Slot_Size,
-          ),
-          childWhenDragging: buildAtlasImage(
-            image: GameImages.atlasItems,
-            srcX: AtlasItems.getSrcX(itemType),
-            srcY: AtlasItems.getSrcY(itemType),
-            srcWidth: Slot_Size,
-            srcHeight: Slot_Size,
-          ),
+          feedback: buildItemTypeAtlasImage(itemType),
+          child: buildItemTypeAtlasImage(itemType),
+          childWhenDragging: buildItemTypeAtlasImage(itemType),
         ),
       ),
     );
   }
+
+  static buildItemTypeAtlasImage(int itemType) =>
+    buildAtlasImage(
+      image: GameImages.atlasItems,
+      srcX: AtlasItems.getSrcX(itemType),
+      srcY: AtlasItems.getSrcY(itemType),
+      srcWidth: Slot_Size,
+      srcHeight: Slot_Size,
+    );
 
   static Widget buildStackSlotGrid() {
     final children = <Widget>[];
@@ -181,7 +172,7 @@ class GameInventoryUI {
   }
 
   static Widget buildPositionedGridSlot(int i) =>
-    buildGridItem(
+    buildPositionGridItem(
         index: i,
         child: DragTarget<int>(
           onWillAccept: (int? index) => index != null,
@@ -212,7 +203,7 @@ class GameInventoryUI {
 
   static int getIndexColumn(int index) =>  index % ColumnsPerRow;
 
-  static Positioned buildGridItem({required int index, required Widget child}) =>
+  static Positioned buildPositionGridItem({required int index, required Widget child}) =>
     Positioned(
       left: getIndexX(index),
       top: getIndexY(index),
