@@ -1105,6 +1105,7 @@ abstract class Game {
              final emptyInventoryIndex = player.getEmptyInventoryIndex();
              if (emptyInventoryIndex != null){
                 player.inventory[emptyInventoryIndex] = target.subType;
+                player.writePlayerInventory();
                 deactivateGameObject(target);
              }
              player.setCharacterStateIdle();
