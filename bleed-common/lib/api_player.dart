@@ -17,9 +17,12 @@ class ApiPlayer {
   static const Aim_Angle = 15;
   static const Message = 16;
   static const Weapon_Cooldown = 17;
-  static const Target_Position = 18;
-  static const Target_Position_None = 19;
+  // static const Target_Position = 18;
+  // static const Target_Position_None = 19;
   static const Spawned = 20;
   static const Inventory = 21;
   static const Aim_Target = 22;
+  static const Target = 23;
+  static const Target_Category = 23;
+  static const Target_Position = 24;
 }

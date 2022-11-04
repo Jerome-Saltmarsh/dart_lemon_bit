@@ -2183,9 +2183,12 @@ abstract class Game {
   }
 
   void setCharacterTarget(Character character, Position3 target){
+    if (character.target == target) return;
     character.target = target;
     if (character is Player) {
-      character.writeTargetPosition();
+      character.endInteraction();
+      character.writePlayerTargetCategory();
+      character.writePlayerTargetPosition();
     }
   }
 
@@ -2194,7 +2197,7 @@ abstract class Game {
     character.target = null;
     character.setCharacterStateIdle();
     if (character is Player){
-      character.writeTargetPosition();
+      character.writePlayerTargetCategory();
     }
     if (character is AI){
       character.clearDest();

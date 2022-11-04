@@ -60,6 +60,8 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
 
   double get weaponDurationPercentage => weaponDurationRemaining == 0 ? 0 : weaponDurationRemaining / weaponDuration;
 
+  bool get targetIsNull => target == null;
+
   bool get targetIsEnemy {
     if (target == null) return false;
     if (target == this) return false;

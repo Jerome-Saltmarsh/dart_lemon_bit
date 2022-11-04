@@ -173,12 +173,10 @@ class Player extends Character with ByteWriter {
   }
 
   void setRunTarget(double x, double y){
-    endInteraction();
     runTarget.x = x;
     runTarget.y = y;
     runTarget.z = z;
-    target = runTarget;
-    writeTargetPosition();
+    game.setCharacterTarget(this, runTarget);
   }
 
   /// in radians
@@ -296,7 +294,7 @@ class Player extends Character with ByteWriter {
     // writePlayerSlots();
     // writeAimTarget();
     writeProjectiles();
-    writePlayerTarget();
+    writePlayerTargetPosition();
     writeCharacters();
     writeGameObjects();
     writeEditorGameObjectSelected();
@@ -404,20 +402,26 @@ class Player extends Character with ByteWriter {
     sendBufferToClient();
   }
 
-  void writeTargetPosition(){
+  void writePlayerTargetPosition(){
+    if (target == null) return;
     writeByte(ServerResponse.Player);
-    if (target == null){
-      writeByte(ApiPlayer.Target_Position_None);writeTargetPositionNone();
-      // writeByte(TargetCategory.Nothing);
-      return;
-    }
     writeByte(ApiPlayer.Target_Position);
     writePosition3(target!);
   }
 
-  void writeTargetPositionNone(){
+  void writePlayerTargetCategory(){
+    if (target == null) return;
     writeByte(ServerResponse.Player);
-    writeByte(ApiPlayer.Target_Position_None);
+    writeByte(ApiPlayer.Target_Position);
+    writePosition3(target!);
+  }
+
+  int get targetCategory {
+    if (target == null) return TargetCategory.Nothing;
+    if (targetIsAlly) return TargetCategory.Allie;
+    if (targetIsEnemy) return TargetCategory.Enemy;
+    if (target is GameObject) return TargetCategory.GameObject;
+    return TargetCategory.Nothing;
   }
 
   void writeProjectiles(){

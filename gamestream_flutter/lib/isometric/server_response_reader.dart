@@ -210,12 +210,13 @@ class ServerResponseReader with ByteReader {
       case ApiPlayer.Aim_Target:
         readPlayerAimTarget();
         break;
+
       case ApiPlayer.Target_Position:
         GamePlayer.runningToTarget = true;
         readVector3(GamePlayer.target);
         break;
-      case ApiPlayer.Target_Position_None:
-        GamePlayer.runningToTarget = false;
+      case ApiPlayer.Target_Category:
+        GamePlayer.targetCategory = readByte();
         break;
       case ApiPlayer.Health:
         GameState.player.health.value = readInt();
