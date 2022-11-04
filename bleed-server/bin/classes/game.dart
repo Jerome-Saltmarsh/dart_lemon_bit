@@ -484,8 +484,6 @@ abstract class Game {
   }
 
   void characterFireWeapon(Character character){
-    if (character.deadBusyOrUsingWeapon) return;
-
     final angle = (character is Player) ? character.lookRadian : character.faceAngle;
 
     character.weaponDurationRemaining = ItemType.getCooldown(character.weaponType);

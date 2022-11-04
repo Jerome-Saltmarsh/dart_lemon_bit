@@ -114,5 +114,8 @@ class ItemType {
      Empty: "Empty",
      Weapon_Ranged_Shotgun: "Shotgun",
      Weapon_Ranged_Handgun: "Handgun",
+     Resource_Ammo_9mm: "Ammo 9mm",
+     Resource_Ammo_Shells: "Shells",
+     Resource_Ammo_Arrows: "Arrows",
   }[value] ?? "item-type-unknown($value)";
 }

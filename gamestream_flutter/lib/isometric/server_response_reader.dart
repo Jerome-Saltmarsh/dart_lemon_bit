@@ -215,44 +215,10 @@ class ServerResponseReader with ByteReader {
   void readGameObject() {
     final instance = GameState.getInstanceGameObject();
     instance.type = readByte();
+    if (instance.type == GameObjectType.Item){
+      instance.subType = readUInt16();
+    }
     readVector3(instance);
-  }
-
-  void readServerResponseGameWaves() {
-    // final gameWavesResponse = readByte();
-    // switch (gameWavesResponse) {
-    //   case GameWavesResponse.timer:
-    //     gameWaves.timer.value = readPercentage();
-    //     break;
-    //   case GameWavesResponse.round:
-    //     gameWaves.round.value = readInt();
-    //     break;
-    //   case GameWavesResponse.clear_upgrades:
-    //     gameWaves.purchasePrimary.clear();
-    //     gameWaves.purchaseSecondary.clear();
-    //     gameWaves.purchaseTertiary.clear();
-    //     gameWaves.refresh.value++;
-    //     break;
-    //   case GameWavesResponse.purchase:
-    //     final position = readByte();
-    //     final type = readByte();
-    //     final cost = readInt();
-    //     final purchase = Purchase(type, cost);
-    //
-    //     switch (position){
-    //       case TypePosition.Primary:
-    //         gameWaves.purchasePrimary.add(purchase);
-    //         break;
-    //       case TypePosition.Secondary:
-    //         gameWaves.purchaseSecondary.add(purchase);
-    //         break;
-    //       case TypePosition.Tertiary:
-    //         gameWaves.purchaseTertiary.add(purchase);
-    //         break;
-    //     }
-    //     gameWaves.refresh.value++;
-    //     break;
-    // }
   }
 
   void readServerResponsePlayer() {

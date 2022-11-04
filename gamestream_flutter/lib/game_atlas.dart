@@ -15,6 +15,7 @@ class AtlasItems {
       ItemType.Body_Shirt_Cyan: 96,
       ItemType.Body_Tunic_Padded: 128,
       ItemType.Body_Swat: 128,
+      ItemType.Resource_Ammo_9mm: 256,
   }[itemType] ?? 0;
 
   static double getSrcY(int itemType) => <int, double> {

@@ -33,6 +33,7 @@ class AreaPlains1 extends DarkAgeArea {
 
     player.inventory[0] = ItemType.Weapon_Ranged_Handgun;
     player.inventory[1] = ItemType.Weapon_Ranged_Shotgun;
+    player.inventory[2] = ItemType.Resource_Ammo_9mm;
     player.writePlayerInventory();
     return player;
   }

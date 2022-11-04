@@ -2,50 +2,12 @@
 
 import 'package:lemon_math/library.dart';
 
+import '../classes/gameobject.dart';
 import '../classes/library.dart';
 import '../common/library.dart';
-import '../constants/frames_per_second.dart';
 import '../engine.dart';
 import 'dark_age_environment.dart';
 
-/// Your melee attack depletes energy.
-/// The less energy the player has the less damage is dealt
-/// The energy bar is not visible to the user
-///
-/// The player has 3 different weapon categories
-///
-/// Primary, secondary and tertiary
-///
-/// The primary attack is dealt by clicking the left mouse button
-///
-/// The secondary attack is dealt using the right mouse button
-///
-/// Space bar is used pressed to trigger the tertiary attack
-///
-/// Players also get a choice of one Armor
-///
-/// The primary weapon is a dominant weapon and the heaviest.
-///
-/// Such as a sniper rifle, a machine gun gun, a staff
-///
-/// The secondary is a lighter weapon such as a handgun
-///
-/// Should a grenade be a secondary or tertiary attack?
-///
-/// A blade is a tertiary attack.
-///
-/// The player also gets a choice of two spells
-///
-/// Spells can be triggered using Q and E.
-///
-/// What is a shield?
-///
-/// Shield is used to defend the player against damage
-///
-/// The shield can be upgraded to stun enemies that are effectively blocked
-///
-/// Flash - means to quickly move to a near location
-///
 class GameDarkAge extends Game {
   final DarkAgeEnvironment environment;
 
@@ -55,12 +17,28 @@ class GameDarkAge extends Game {
   @override
   int get gameType => GameType.Dark_Age;
 
-  void onHourChanged(int hour){
-
-  }
 
   GameDarkAge(Scene scene, this.environment) : super(scene) {
     refreshSpawns();
+  }
+
+  @override
+  void customOnCharacterKilled(Character target, dynamic src) {
+     if (target is AI){
+        spawnRandomLootAtPosition(target);
+     }
+  }
+
+  void spawnRandomLootAtPosition(Position3 position){
+      gameObjects.add(
+         GameObject(
+             x: position.x,
+             y: position.y,
+             z: position.z,
+             type: GameObjectType.Item,
+             subType: ItemType.Resource_Ammo_9mm,
+         )
+      );
   }
 
   @override
@@ -101,8 +79,6 @@ class GameDarkAge extends Game {
       player.x += giveOrTake(5);
       player.y += giveOrTake(5);
   }
-
-  var timerReplenishAmmo = framesPerSecond * 5;
 
   @override
   Player spawnPlayer() {

@@ -26,6 +26,7 @@ class GameObjectType {
   static const Weapon_Blade = 29;
   static const Weapon_Bow = 30;
   static const Weapon_Staff = 31;
+  static const Item = 32;
 
   static bool isPersistable(int type) =>
       type != Loot &&
