@@ -47,6 +47,15 @@ class GameUI {
             watch(GameState.edit, buildPlayMode),
             watch(GameIO.inputMode, buildStackInputMode),
             buildWatchBool(GameState.debugVisible, GameDebug.buildStackDebug),
+            // watch(GameState.player.aimTargetChanged, (int value) {
+            //   if (GameState.player.aimTargetCategory == AimTargetCategory.Nothing) return SizedBox();
+            //
+            //    return Positioned(
+            //      left: Engine.worldToScreenX(GameState.player.aimTargetPosition.renderX),
+            //      top: Engine.worldToScreenY(GameState.player.aimTargetPosition.renderY),
+            //      child: text(GameState.player.aimTargetText),
+            //    );
+            // }),
           ],
         ),
       );

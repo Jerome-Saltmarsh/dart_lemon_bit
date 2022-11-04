@@ -431,6 +431,8 @@ class GameIO {
     if (GameState.edit.value) {
       return readPlayerInputEdit();
     }
+
+    GameState.showAllItems = Engine.keyPressed(LogicalKeyboardKey.keyQ);
   }
 
   static void readPlayerInputEdit() {

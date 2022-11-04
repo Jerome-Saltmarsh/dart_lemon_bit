@@ -489,6 +489,7 @@ class ServerResponseReader with ByteReader {
   }
 
   void readPlayerAimTarget() {
+    GameState.player.aimTargetChanged.value++;
     final category = readByte();
     GameState.player.aimTargetCategory = category;
     switch (category) {
@@ -498,9 +499,12 @@ class ServerResponseReader with ByteReader {
         GameState.player.aimTargetType = readByte();
         GameState.player.aimTargetSubType = readUInt16();
         readVector3(GameState.player.aimTargetPosition);
+        if (GameState.player.aimTargetType == GameObjectType.Item){
+          GameState.player.aimTargetText = ItemType.getName(GameState.player.aimTargetSubType);
+        }
         break;
       case AimTargetCategory.Allie:
-        GameState.player.aimTargetName = readString();
+        GameState.player.aimTargetText = readString();
         readVector3(GameState.player.aimTargetPosition);
         break;
       case AimTargetCategory.Enemy:

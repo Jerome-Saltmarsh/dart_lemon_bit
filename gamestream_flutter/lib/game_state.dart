@@ -33,6 +33,7 @@ class GameState {
   static final gameType = Watch<int?>(null, onChanged: onChangedGameType);
   static final edit = Watch(false, onChanged: GameEvents.onChangedEdit);
   static final player = Player();
+  static var showAllItems = false;
 
   static final effects = <Effect>[];
   static final gameObjects = <GameObject>[];
