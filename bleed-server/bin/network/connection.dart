@@ -104,6 +104,16 @@ class Connection {
         if (player.deadBusyOrUsingWeapon) return;
         final inventoryRequest = int.tryParse(arguments[1]);
         switch (inventoryRequest){
+          case InventoryRequest.Drop:
+            final index = int.tryParse(arguments[2]);
+            if (index == null) return errorInvalidArg('index == null');
+            if (index < 0) return errorInvalidArg('index < 0');
+            if (index >= player.inventory.length) return errorInvalidArg('index >= player.inventory.length');
+            final gameObjectItem = player.game.spawnGameObjectAtXYZ(x: player.x, y: player.y, z: player.z, type: GameObjectType.Item);
+            gameObjectItem.subType = player.inventory[index];
+            player.inventory[index] = ItemType.Empty;
+            player.writePlayerInventory();
+            break;
           case InventoryRequest.Unequip_Weapon:
             if (player.weaponType == ItemType.Empty) return;
             for (var i = 0; i < player.inventory.length; i++){

@@ -122,12 +122,15 @@ class GameInventoryUI {
           Engine.mousePosition.y = event.position.dy;
           itemTypeHover.value = itemType;
         },
-        onExit: (_){
+        onExit: (_) {
           if (itemTypeHover.value == itemType){
              itemTypeHover.value = ItemType.Empty;
           }
         },
         child: Draggable<int>(
+          onDraggableCanceled: (velocity, offset){
+            GameNetwork.sendClientRequestInventoryDrop(index);
+          },
           hitTestBehavior: HitTestBehavior.opaque,
           data: index,
           feedback: buildItemTypeAtlasImage(itemType: itemType, scale: Slot_Item_Scale),

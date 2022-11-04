@@ -15,7 +15,6 @@ import '../dark_age/game_dark_age_editor.dart';
 import '../utilities.dart';
 import 'gameobject.dart';
 import 'library.dart';
-import 'position3.dart';
 import 'rat.dart';
 import 'zombie.dart';
 
