@@ -41,9 +41,6 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.GameObject:
           readGameObject();
           break;
-        case ServerResponse.Game_Waves:
-          // readServerResponseGameWaves();
-          break;
         case ServerResponse.End:
           return readEnd();
         case ServerResponse.Projectiles:
@@ -61,14 +58,8 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Debug_Mode:
           readDebugMode();
           break;
-        case ServerResponse.Player_Attack_Target:
-          readPlayerAttackTarget();
-          break;
-        case ServerResponse.Player_Attack_Target_Name:
-          readPlayerAttackTargetName();
-          break;
-        case ServerResponse.Player_Attack_Target_None:
-          readPlayerAttackTargetNone();
+        case ServerResponse.Player_Aim_Target:
+          readPlayerAimTarget();
           break;
         case ServerResponse.Damage_Applied:
           readDamageApplied();
@@ -104,20 +95,6 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Game_Type:
           GameState.gameType.value = readByte();
           break;
-
-        // case ServerResponse.Player_Slots:
-        //   GameState.player.weaponSlot1.type.value = readByte();
-        //   GameState.player.weaponSlot1.capacity.value = readInt();
-        //   GameState.player.weaponSlot1.rounds.value = readInt();
-        //
-        //   GameState.player.weaponSlot2.type.value = readByte();
-        //   GameState.player.weaponSlot2.capacity.value = readInt();
-        //   GameState.player.weaponSlot2.rounds.value = readInt();
-        //
-        //   GameState.player.weaponSlot3.type.value = readByte();
-        //   GameState.player.weaponSlot3.capacity.value = readInt();
-        //   GameState.player.weaponSlot3.rounds.value = readInt();
-        //   break;
         case ServerResponse.Player_Spawned:
           readPlayerSpawned();
           GameActions.playerStop();
@@ -504,16 +481,30 @@ class ServerResponseReader with ByteReader {
     GameState.spawnFloatingText(x, y, amount.toString());
   }
 
-  void readPlayerAttackTargetNone() {
-   GameState.player.attackTarget.x = 0;
-   GameState.player.attackTarget.y = 0;
+  void readPlayerAimTargetNone() {
+   GameState.player.aimTargetPosition.x = 0;
+   GameState.player.aimTargetPosition.y = 0;
    GameState.player.mouseTargetName.value = null;
     // Engine.cursorType.value = CursorType.Basic;
   }
 
-  void readPlayerAttackTarget() {
-    readVector3(GameState.player.attackTarget);
-    // Engine.cursorType.value = CursorType.Click;
+  void readPlayerAimTarget() {
+    final category = readByte();
+    GameState.player.aimTargetCategory = category;
+    print('aim target: $category');
+    switch (category) {
+      case AimTargetCategory.Nothing:
+        break;
+      case AimTargetCategory.GameObject:
+        GameState.player.aimTargetType = readByte();
+        GameState.player.aimTargetSubType = readUInt16();
+        readVector3(GameState.player.aimTargetPosition);
+        break;
+      case AimTargetCategory.Character:
+        readVector3(GameState.player.aimTargetPosition);
+        break;
+
+    }
   }
 
   void readDebugMode() {

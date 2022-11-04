@@ -44,8 +44,36 @@ class Player extends Character with ByteWriter {
   var lookRadian = 0.0;
   /// Warning - do not reference
   Game game;
-  Collider? aimTarget; // the currently highlighted character
+  Collider? _aimTarget; // the currently highlighted character
   Account? account;
+
+  Collider? get aimTarget => _aimTarget;
+
+  set aimTarget(Collider? collider){
+    if (_aimTarget == collider) return;
+    if (collider == this) return;
+
+    if (collider is GameObject) {
+      _aimTarget = collider;
+      final gameObject = aimTarget as GameObject;
+      writeByte(ServerResponse.Player_Aim_Target);
+      writeByte(AimTargetCategory.GameObject);
+      writeByte(gameObject.type);
+      writeUInt16(gameObject.subType);
+      writePosition3(gameObject);
+      return;
+    }
+    if (collider is Character) {
+      _aimTarget = collider;
+      writeByte(ServerResponse.Player_Aim_Target);
+      writeByte(AimTargetCategory.Character);
+      writePosition3(aimTarget!);
+      return;
+    }
+    _aimTarget = null;
+    writeByte(ServerResponse.Player_Aim_Target);
+    writeByte(AimTargetCategory.Nothing);
+  }
 
   static const InventorySize = 40;
   final inventory = Uint16List(InventorySize);
@@ -286,7 +314,7 @@ class Player extends Character with ByteWriter {
     writeAngle(mouseAngle);
 
     // writePlayerSlots();
-    writeAttackTarget();
+    // writeAimTarget();
     writeProjectiles();
     writePlayerTarget();
     writeCharacters();
@@ -407,29 +435,29 @@ class Player extends Character with ByteWriter {
     writeByte(ApiPlayer.Target_Position_None);
   }
 
-  void writeAttackTarget() {
-    final mouseTarget = aimTarget;
-    if (mouseTarget == null) {
-      writeByte(ServerResponse.Player_Attack_Target_None);
-      return;
-    }
-    writeByte(ServerResponse.Player_Attack_Target);
-    writePosition3(mouseTarget);
+  // void writeAimTarget() {
+  //   final mouseTarget = aimTarget;
+  //   if (mouseTarget == null) {
+  //     writeByte(ServerResponse.Player_Aim_Target_None);
+  //     return;
+  //   }
+  //   writeByte(ServerResponse.Player_Aim_Target);
+  //   writePosition3(mouseTarget);
+  //
+  //   if (mouseTarget is Npc) {
+  //     return writePlayerAttackTargetName(mouseTarget.name, mouseTarget.healthPercentage);
+  //   }
+  //   if (mouseTarget is AI) {
+  //     return writePlayerAttackTargetName("Zombie", mouseTarget.healthPercentage);
+  //   }
+  // }
 
-    if (mouseTarget is Npc) {
-      return writePlayerAttackTargetName(mouseTarget.name, mouseTarget.healthPercentage);
-    }
-    if (mouseTarget is AI) {
-      return writePlayerAttackTargetName("Zombie", mouseTarget.healthPercentage);
-    }
-  }
-
-  void writePlayerAttackTargetName(String name, double health){
-    writeByte(ServerResponse.Player_Attack_Target_Name);
-    writeString(name);
-    writeBool(onSameTeam(this, aimTarget));
-    writePercentage(health);
-  }
+  // void writePlayerAttackTargetName(String name, double health){
+  //   writeByte(ServerResponse.Player_Attack_Target_Name);
+  //   writeString(name);
+  //   writeBool(onSameTeam(this, aimTarget));
+  //   writePercentage(health);
+  // }
 
   void writeProjectiles(){
     writeByte(ServerResponse.Projectiles);

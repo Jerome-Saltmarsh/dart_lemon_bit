@@ -157,7 +157,6 @@ abstract class Game {
     }
 
     if (cursorAction == CursorAction.Set_Target) {
-
       if (direction != Direction.None) {
         playerUseWeapon(player);
       } else {
@@ -275,14 +274,12 @@ abstract class Game {
       closestCollider = gameObject;
     }
 
-    if (closestCollider == null || closestDistance > 50) {
+    if (closestDistance > 50) {
        player.aimTarget = null;
        return;
     }
-
     player.aimTarget = closestCollider;
   }
-
 
   void playerRunInDirection(Player player, int direction) {
     if (direction == Direction.None && !player.targetSet) {

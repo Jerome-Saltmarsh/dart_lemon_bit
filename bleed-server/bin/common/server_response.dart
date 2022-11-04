@@ -11,17 +11,13 @@ class ServerResponse {
   static const Game_Time = 23;
   static const Scene_Changed = 24;
   static const Scene_Shade_Max = 25;
-  static const Weapons = 26;
-  static const Player_Weapon = 27;
   static const Player_Ability = 28;
-  static const Player_Attack_Target = 29;
-  static const Player_Attack_Target_None = 30;
-  static const Waiting_For_More_Players = 31; 
+  static const Player_Aim_Target = 29;
+  static const Waiting_For_More_Players = 31;
   static const Player_Text = 32;
   static const Game_Type = 34;
   static const Subscription_Required = 41;
   static const Lobby_CountDown = 42;
-  // static const Player_Slots = 44;
   static const Debug_Mode = 45;
   static const End = 47;
   static const Damage_Applied = 50;
@@ -30,7 +26,6 @@ class ServerResponse {
   static const Grid = 62;
   static const Node = 63;
   static const Store_Items = 66;
-  static const Player_Attack_Target_Name = 77;
   static const Weather = 78;
   static const Scene_Meta_Data = 80;
   static const Player_Debug = 82;
@@ -47,11 +42,9 @@ class ServerResponse {
   static const Player_Can_Teleport = 102;
   static const Node_Data = 103;
   static const Render_Map = 104;
-  static const Game_Waves = 106;
   static const GameObject = 107;
   static const Environment = 108;
   static const Options = 109;
   static const Spawn_Particle = 110;
-
 }
 
