@@ -491,7 +491,6 @@ class ServerResponseReader with ByteReader {
   void readPlayerAimTarget() {
     final category = readByte();
     GameState.player.aimTargetCategory = category;
-    print('aim target: $category');
     switch (category) {
       case AimTargetCategory.Nothing:
         break;
@@ -501,11 +500,12 @@ class ServerResponseReader with ByteReader {
         readVector3(GameState.player.aimTargetPosition);
         break;
       case AimTargetCategory.Character:
+        GameState.player.aimTargetOnSameTeam = readBool();
         readVector3(GameState.player.aimTargetPosition);
         break;
-
     }
   }
+
 
   void readDebugMode() {
     GameUI.debug.value = readBool();

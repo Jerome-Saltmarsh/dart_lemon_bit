@@ -19,6 +19,13 @@ class GameCanvas {
           Engine.worldToScreenY(GameState.player.aimTargetPosition.renderY),
         );
         break;
+      case AimTargetCategory.Character:
+        Engine.renderText(
+          ItemType.getName(GameState.player.aimTargetSubType),
+          Engine.worldToScreenX(GameState.player.aimTargetPosition.renderX),
+          Engine.worldToScreenY(GameState.player.aimTargetPosition.renderY),
+        );
+        break;
     }
   }
 

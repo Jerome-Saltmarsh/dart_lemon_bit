@@ -67,6 +67,10 @@ class Player extends Character with ByteWriter {
       _aimTarget = collider;
       writeByte(ServerResponse.Player_Aim_Target);
       writeByte(AimTargetCategory.Character);
+      writeBool(onSameTeam(this, _aimTarget));
+      // if (collidable is Npc){
+      //   writeString((collider as Npc).name);
+      // }
       writePosition3(aimTarget!);
       return;
     }
