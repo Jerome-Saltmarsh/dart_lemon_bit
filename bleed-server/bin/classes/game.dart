@@ -1107,6 +1107,7 @@ abstract class Game {
                 player.inventory[emptyInventoryIndex] = target.subType;
                 player.writePlayerInventory();
                 deactivateGameObject(target);
+                player.writePlayerEvent(PlayerEvent.Item_Picked_Up);
              }
              player.setCharacterStateIdle();
              clearCharacterTarget(player);

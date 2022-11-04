@@ -344,6 +344,9 @@ class GameEvents {
       case PlayerEvent.Skill_Upgraded:
         // audio.unlock(GameState.player.x, GameState.player.y);
         break;
+      case PlayerEvent.Item_Picked_Up:
+        GameAudio.hoverOverButtonSound5();
+        break;
       case PlayerEvent.Dash_Activated:
         // audio.buff11(GameState.player.x, GameState.player.y);
         break;
