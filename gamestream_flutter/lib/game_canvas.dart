@@ -19,15 +19,23 @@ class GameCanvas {
           Engine.worldToScreenY(GameState.player.aimTargetPosition.renderY),
         );
         break;
-      case AimTargetCategory.Character:
+      case AimTargetCategory.Allie:
         Engine.renderText(
-          ItemType.getName(GameState.player.aimTargetSubType),
+          GameState.player.aimTargetName,
+          Engine.worldToScreenX(GameState.player.aimTargetPosition.renderX),
+          Engine.worldToScreenY(GameState.player.aimTargetPosition.renderY),
+        );
+        break;
+      case AimTargetCategory.Enemy:
+        Engine.renderText(
+          GameState.player.aimTargetName,
           Engine.worldToScreenX(GameState.player.aimTargetPosition.renderX),
           Engine.worldToScreenY(GameState.player.aimTargetPosition.renderY),
         );
         break;
     }
   }
+
 
   static void renderCanvas(Canvas canvas, Size size) {
     /// particles are only on the ui and thus can update every frame

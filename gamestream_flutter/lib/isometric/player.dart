@@ -26,7 +26,6 @@ class Player {
   var npcTalkOptions = Watch<List<String>>([]);
   final abilityTarget = Vector3();
   final aimTargetPosition = Vector3();
-  var aimTargetOnSameTeam = false;
   var aimTargetCategory = AimTargetCategory.Nothing;
   var aimTargetType = 0;
   var aimTargetSubType = 0;

@@ -499,13 +499,15 @@ class ServerResponseReader with ByteReader {
         GameState.player.aimTargetSubType = readUInt16();
         readVector3(GameState.player.aimTargetPosition);
         break;
-      case AimTargetCategory.Character:
-        GameState.player.aimTargetOnSameTeam = readBool();
+      case AimTargetCategory.Allie:
+        GameState.player.aimTargetName = readString();
+        readVector3(GameState.player.aimTargetPosition);
+        break;
+      case AimTargetCategory.Enemy:
         readVector3(GameState.player.aimTargetPosition);
         break;
     }
   }
-
 
   void readDebugMode() {
     GameUI.debug.value = readBool();
