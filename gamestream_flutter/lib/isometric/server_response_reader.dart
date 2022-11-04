@@ -224,13 +224,13 @@ class ServerResponseReader with ByteReader {
         GameState.player.weaponCooldown.value = readPercentage();
         break;
       case ApiPlayer.Armour_Type:
-       GamePlayer.bodyType.value = readUInt16();
+       GamePlayer.body.value = readUInt16();
         break;
       case ApiPlayer.Head_Type:
-        GamePlayer.headType.value = readUInt16();
+        GamePlayer.head.value = readUInt16();
         break;
       case ApiPlayer.Pants_Type:
-        GamePlayer.pantsType.value = readUInt16();
+        GamePlayer.legs.value = readUInt16();
         break;
       case ApiPlayer.Experience_Percentage:
        GameState.player.experience.value = readPercentage();
@@ -245,13 +245,13 @@ class ServerResponseReader with ByteReader {
        GameState.player.points.value = readInt();
         break;
       case ApiPlayer.Weapon_Type:
-        GamePlayer.weapon.type.value = readUInt16();
+        GamePlayer.weapon.value = readUInt16();
         break;
       case ApiPlayer.Weapon_Rounds:
-        GamePlayer.weapon.rounds.value = readInt();
+        final rounds = readInt();
         break;
       case ApiPlayer.Weapon_Capacity:
-        GamePlayer.weapon.capacity.value = readInt();
+        final capacity = readInt();
         break;
       case ApiPlayer.Inventory:
         readPlayerInventory();

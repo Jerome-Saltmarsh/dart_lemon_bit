@@ -51,8 +51,7 @@ class Player {
   // Properties
   bool get dead => !alive.value;
 
-  double get weaponRoundPercentage => GamePlayer.weapon.capacity.value == 0
-      ? 0 : GamePlayer.weapon.rounds.value / GamePlayer.weapon.capacity.value;
+  double get weaponRoundPercentage => 1.0;
 
 
   static void onPlayerCharacterStateChanged(int characterState){

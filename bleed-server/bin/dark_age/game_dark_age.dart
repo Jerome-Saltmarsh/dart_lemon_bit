@@ -24,18 +24,29 @@ class GameDarkAge extends Game {
   @override
   void customOnCharacterKilled(Character target, dynamic src) {
      if (target is AI){
-        spawnRandomLootAtPosition(target);
+        if (random.nextDouble() < 0.5){
+          spawnRandomItemAtPosition(target);
+        }
      }
   }
 
-  void spawnRandomLootAtPosition(Position3 position){
+  void spawnRandomItemAtPosition(Position3 position){
        spawnGameObjectItem(
            x: position.x,
            y: position.y,
            z: position.z,
-           type: ItemType.Resource_Ammo_9mm,
+           type: getRandomItemType(),
        );
   }
+
+  int getRandomItemType() => randomItem(const [
+    ItemType.Resource_Ammo_9mm,
+    ItemType.Weapon_Ranged_Handgun,
+    ItemType.Weapon_Ranged_Shotgun,
+    ItemType.Body_Tunic_Padded,
+    ItemType.Body_Shirt_Blue,
+    ItemType.Body_Shirt_Cyan,
+  ]);
 
   @override
   void customDownloadScene(Player player) {

@@ -77,7 +77,7 @@ class GameUI {
               //   color: GameUIConfig.runButtonTextColor,
               //   size: GameUIConfig.runButtonTextFontSize,
               // ),
-              child: watch(GamePlayer.weapon.type, buildIconAttackType),
+              child: watch(GamePlayer.weapon, buildIconAttackType),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(color: Colors.white, width: 2),

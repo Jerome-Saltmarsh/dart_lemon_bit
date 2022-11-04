@@ -1,11 +1,11 @@
-import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class GamePlayer {
-  static final weapon = AttackSlot();
-  static final bodyType = Watch(0);
-  static final headType = Watch(0);
-  static final pantsType = Watch(0);
+  // static final weapon = AttackSlot();
+  static final weapon = Watch(0);
+  static final body = Watch(0);
+  static final head = Watch(0);
+  static final legs = Watch(0);
   static Vector3 position = Vector3();
   static Vector3 target = Vector3();
   static bool runningToTarget = false;

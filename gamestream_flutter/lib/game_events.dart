@@ -318,12 +318,6 @@ class GameEvents {
         break;
       case PlayerEvent.Loot_Collected:
         return GameAudio.collect_star_3();
-      case PlayerEvent.Weapon_Rounds:
-        final rounds = serverResponseReader.readInt();
-        final capacity = serverResponseReader.readInt();
-        GamePlayer.weapon.rounds.value = rounds;
-        GamePlayer.weapon.capacity.value = capacity;
-        break;
       case PlayerEvent.Scene_Changed:
         GameCamera.centerOnPlayer();
         break;
