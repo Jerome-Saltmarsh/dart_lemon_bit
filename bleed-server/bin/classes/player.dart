@@ -56,7 +56,8 @@ class Player extends Character with ByteWriter {
     if (collider is GameObject) {
       _aimTarget = collider;
       final gameObject = aimTarget as GameObject;
-      writeByte(ServerResponse.Player_Aim_Target);
+      writeByte(ServerResponse.Player);
+      writeByte(ApiPlayer.Aim_Target);
       writeByte(TargetCategory.GameObject);
       writeByte(gameObject.type);
       writeUInt16(gameObject.subType);
@@ -65,7 +66,8 @@ class Player extends Character with ByteWriter {
     }
     if (collider is Character) {
       _aimTarget = collider;
-      writeByte(ServerResponse.Player_Aim_Target);
+      writeByte(ServerResponse.Player);
+      writeByte(ApiPlayer.Aim_Target);
 
       if (onSameTeam(this, collider)) {
         writeByte(TargetCategory.Allie);
@@ -83,7 +85,8 @@ class Player extends Character with ByteWriter {
       return;
     }
     _aimTarget = null;
-    writeByte(ServerResponse.Player_Aim_Target);
+    writeByte(ServerResponse.Player);
+    writeByte(ApiPlayer.Aim_Target);
     writeByte(TargetCategory.Nothing);
   }
 

@@ -58,9 +58,9 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Debug_Mode:
           readDebugMode();
           break;
-        case ServerResponse.Player_Aim_Target:
-          readPlayerAimTarget();
-          break;
+        // case ServerResponse.Player_Aim_Target:
+        //   readPlayerAimTarget();
+        //   break;
         case ServerResponse.Damage_Applied:
           readDamageApplied();
           break;
@@ -206,6 +206,9 @@ class ServerResponseReader with ByteReader {
         GameState.player.previousPosition.y = GamePlayer.position.y;
         GameState.player.previousPosition.z = GamePlayer.position.z;
         readVector3(GamePlayer.position);
+        break;
+      case ApiPlayer.Aim_Target:
+        readPlayerAimTarget();
         break;
       case ApiPlayer.Target_Position:
         GamePlayer.runningToTarget = true;
@@ -481,13 +484,6 @@ class ServerResponseReader with ByteReader {
     GameState.spawnFloatingText(x, y, amount.toString());
   }
 
-
-  void readPlayerAimTargetNone() {
-   GameState.player.aimTargetPosition.x = 0;
-   GameState.player.aimTargetPosition.y = 0;
-   GameState.player.mouseTargetName.value = null;
-    // Engine.cursorType.value = CursorType.Basic;
-  }
 
   void readPlayerAimTarget() {
     GameState.player.aimTargetChanged.value++;
