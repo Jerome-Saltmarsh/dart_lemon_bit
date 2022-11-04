@@ -109,6 +109,7 @@ class ItemType {
   }[value] ?? 30;
   
   static String getName(int value) => {
-    
-  }[0] ?? "item-type-unknown($value)";
+     Weapon_Ranged_Shotgun: "Shotgun",
+     Weapon_Ranged_Handgun: "Handgun",
+  }[value] ?? "item-type-unknown($value)";
 }

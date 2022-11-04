@@ -9,6 +9,7 @@ class GameInventoryUI {
   static const Slot_Scale = 1.5;
   static const Slot_Item_Scale = Slot_Scale * 0.9;
   static const ColumnsPerRow = 8;
+  static final itemTypeHover = Watch(ItemType.Empty);
 
   static Widget buildInventoryUI() =>
       MouseRegion(
@@ -104,6 +105,14 @@ class GameInventoryUI {
       index: index,
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
+        onEnter: (_){
+          itemTypeHover.value = itemType;
+        },
+        onExit: (_){
+          if (itemTypeHover.value == itemType){
+             itemTypeHover.value = ItemType.Empty;
+          }
+        },
         child: Draggable<int>(
           hitTestBehavior: HitTestBehavior.opaque,
           data: index,
@@ -220,4 +229,27 @@ class GameInventoryUI {
         srcHeight: Slot_Size,
         scale: 1.0,
       );
+
+  static Widget buildPositionedContainerItemTypeInformation(int itemType){
+    if (itemType == ItemType.Empty) return const SizedBox();
+    return Positioned(
+      top: Engine.mousePosition.y,
+      left: Engine.mousePosition.x - 200,
+      child: Container(
+        // width: 100,
+        // height: 50,
+        padding: const EdgeInsets.all(12),
+        color: brownDark,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            text(ItemType.getName(itemType)),
+            text('Damage: ${ItemType.getDamage(itemType)}'),
+            text('Range: ${ItemType.getRange(itemType).toInt()}'),
+            text('Cooldown: ${ItemType.getCooldown(itemType).toInt()}'),
+          ],
+        ),
+      ),
+    );
+  }
 }
