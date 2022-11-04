@@ -52,42 +52,8 @@ class Player extends Character with ByteWriter {
   set aimTarget(Collider? collider) {
     if (_aimTarget == collider) return;
     if (collider == this) return;
-
-    if (collider is GameObject) {
-      _aimTarget = collider;
-      final gameObject = aimTarget as GameObject;
-      writeByte(ServerResponse.Player);
-      writeByte(ApiPlayer.Aim_Target);
-      writeByte(TargetCategory.GameObject);
-      writeByte(gameObject.type);
-      writeUInt16(gameObject.subType);
-      writePosition3(gameObject);
-      return;
-    }
-    if (collider is Character) {
-      _aimTarget = collider;
-      writeByte(ServerResponse.Player);
-      writeByte(ApiPlayer.Aim_Target);
-
-      if (onSameTeam(this, collider)) {
-        writeByte(TargetCategory.Allie);
-        if (collider is Npc){
-           writeString(collider.name);
-        } else if (collider is Player){
-           writeString(collider.name);
-        } else {
-          writeString("");
-        }
-      } else {
-        writeByte(TargetCategory.Enemy);
-      }
-      writePosition3(aimTarget!);
-      return;
-    }
-    _aimTarget = null;
-    writeByte(ServerResponse.Player);
-    writeByte(ApiPlayer.Aim_Target);
-    writeByte(TargetCategory.Nothing);
+    _aimTarget = collider;
+    writePlayerAimTarget();
   }
 
   static const InventorySize = 40;
@@ -809,6 +775,44 @@ class Player extends Character with ByteWriter {
     assert(!deadOrDying);
     lookRadian = this.getAngle(position) + pi;
   }
+
+  void writePlayerAimTarget(){
+    final aimTarget = _aimTarget;
+    if (aimTarget is GameObject) {
+      writeByte(ServerResponse.Player);
+      writeByte(ApiPlayer.Aim_Target);
+      writeByte(TargetCategory.GameObject);
+      writeByte(aimTarget.type);
+      writeUInt16(aimTarget.subType);
+      writePosition3(aimTarget);
+      return;
+    }
+    if (aimTarget is Character) {
+      writeByte(ServerResponse.Player);
+      writeByte(ApiPlayer.Aim_Target);
+
+      if (onSameTeam(this, aimTarget)) {
+        writeByte(TargetCategory.Allie);
+        if (aimTarget is Npc){
+          writeString(aimTarget.name);
+        } else if (aimTarget is Player){
+          writeString(aimTarget.name);
+        } else {
+          writeString("");
+        }
+      } else {
+        writeByte(TargetCategory.Enemy);
+      }
+      writePosition3(aimTarget);
+      return;
+    }
+
+    _aimTarget = null;
+    writeByte(ServerResponse.Player);
+    writeByte(ApiPlayer.Aim_Target);
+    writeByte(TargetCategory.Nothing);
+  }
+
 }
 
 int getExperienceForLevel(int level){
