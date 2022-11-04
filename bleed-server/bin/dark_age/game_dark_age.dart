@@ -2,7 +2,6 @@
 
 import 'package:lemon_math/library.dart';
 
-import '../classes/gameobject.dart';
 import '../classes/library.dart';
 import '../common/library.dart';
 import '../engine.dart';
@@ -30,19 +29,12 @@ class GameDarkAge extends Game {
   }
 
   void spawnRandomLootAtPosition(Position3 position){
-    spawnRandomLoot(position.x, position.y, position.z);
-  }
-
-  void spawnRandomLoot(double x, double y, double z){
-    gameObjects.add(
-        GameObject(
-          x: x,
-          y: y,
-          z: z,
-          type: GameObjectType.Item,
-          subType: ItemType.Resource_Ammo_9mm,
-        )
-    );
+       spawnGameObjectItem(
+           x: position.x,
+           y: position.y,
+           z: position.z,
+           type: ItemType.Resource_Ammo_9mm,
+       );
   }
 
   @override

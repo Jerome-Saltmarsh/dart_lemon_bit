@@ -182,11 +182,6 @@ class GameSkirmish extends Game {
   }
 
   void customOnCharacterKilled(Character target, dynamic src) {
-      spawnGameObjectAtXYZ(
-        x: target.x,
-        y: target.y,
-        z: target.z,
-        type: GameObjectType.Weapon_Shotgun,
-      );
+
   }
 }

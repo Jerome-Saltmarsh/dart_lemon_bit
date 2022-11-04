@@ -122,7 +122,7 @@ class GameInventoryUI {
           Engine.mousePosition.y = event.position.dy;
           itemTypeHover.value = itemType;
         },
-        onExit: (_) {
+        onExit: (_){
           if (itemTypeHover.value == itemType){
              itemTypeHover.value = ItemType.Empty;
           }

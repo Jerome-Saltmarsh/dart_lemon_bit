@@ -28,6 +28,10 @@ class GameObjectType {
   static const Weapon_Staff = 31;
   static const Item = 32;
 
+  static bool isCollidable(int type){
+     return type != Item;
+  }
+
   static bool isPersistable(int type) =>
       type != Loot &&
       type != Weapon_Handgun &&

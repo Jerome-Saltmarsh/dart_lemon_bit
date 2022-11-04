@@ -109,8 +109,10 @@ class Connection {
             if (index == null) return errorInvalidArg('index == null');
             if (index < 0) return errorInvalidArg('index < 0');
             if (index >= player.inventory.length) return errorInvalidArg('index >= player.inventory.length');
-            final gameObjectItem = player.game.spawnGameObjectAtXYZ(x: player.x, y: player.y, z: player.z, type: GameObjectType.Item);
-            gameObjectItem.subType = player.inventory[index];
+            player.game.spawnGameObjectItemAtPosition(
+                position: player,
+                type: player.inventory[index],
+            );
             player.inventory[index] = ItemType.Empty;
             player.writePlayerInventory();
             break;

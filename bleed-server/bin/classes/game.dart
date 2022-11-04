@@ -1661,20 +1661,51 @@ abstract class Game {
     return instance;
   }
 
-  GameObject spawnGameObjectAtXYZ({
+  void spawnGameObjectItemAtPosition({
+    required Position3 position,
+    required int type,
+  }){
+    spawnGameObjectItem(x: position.x, y: position.y, z: position.z, type: type);
+  }
+
+  void spawnGameObjectItem({
+        required double x,
+        required double y,
+        required double z,
+        required int type,
+  }){
+    spawnGameObject(x: x, y: y, z: z, type: GameObjectType.Item, subType: type);
+  }
+
+  void spawnGameObject({
     required double x,
     required double y,
     required double z,
     required int type,
+    int subType = 0,
   }){
-    final instance = GameObject(
-      x: x,
-      y: y,
-      z: z,
-      type: type,
+    assert (type != GameObjectType.Item || subType != ItemType.Empty);
+
+    for (final gameObject in gameObjects){
+       if (gameObject.active) continue;
+       gameObject.x = x;
+       gameObject.y = y;
+       gameObject.z = z;
+       gameObject.type = type;
+       gameObject.subType = subType;
+       gameObject.active = true;
+       gameObject.collidable = GameObjectType.isCollidable(type);
+       return;
+    }
+    gameObjects.add(
+        GameObject(
+          x: x,
+          y: y,
+          z: z,
+          type: type,
+          subType: subType,
+        )..collidable = GameObjectType.isCollidable(type)
     );
-    gameObjects.add(instance);
-    return instance;
   }
 
   Zombie spawnZombie({

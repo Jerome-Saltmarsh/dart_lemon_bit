@@ -36,7 +36,12 @@ class AreaPlains1 extends DarkAgeArea {
     player.inventory[2] = ItemType.Resource_Ammo_9mm;
     player.writePlayerInventory();
 
-    spawnRandomLoot(player.x + 100, player.y + 200, player.z);
+    spawnGameObjectItem(
+        x: player.x + 100,
+        y: player.y + 100,
+        z: player.z,
+        type: ItemType.Resource_Ammo_9mm,
+    );
     return player;
   }
 
