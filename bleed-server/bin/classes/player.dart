@@ -204,7 +204,6 @@ class Player extends Character with ByteWriter {
   }
 
   void setRunTarget(double x, double y){
-    // runningToTarget = true;
     endInteraction();
     runTarget.x = x;
     runTarget.y = y;
@@ -438,38 +437,18 @@ class Player extends Character with ByteWriter {
 
   void writeTargetPosition(){
     writeByte(ServerResponse.Player);
+    if (target == null){
+      writeByte(ApiPlayer.Target_Position_None);writeTargetPositionNone();
+      return;
+    }
     writeByte(ApiPlayer.Target_Position);
-    writePosition3(runTarget);
+    writePosition3(target!);
   }
 
   void writeTargetPositionNone(){
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Target_Position_None);
   }
-
-  // void writeAimTarget() {
-  //   final mouseTarget = aimTarget;
-  //   if (mouseTarget == null) {
-  //     writeByte(ServerResponse.Player_Aim_Target_None);
-  //     return;
-  //   }
-  //   writeByte(ServerResponse.Player_Aim_Target);
-  //   writePosition3(mouseTarget);
-  //
-  //   if (mouseTarget is Npc) {
-  //     return writePlayerAttackTargetName(mouseTarget.name, mouseTarget.healthPercentage);
-  //   }
-  //   if (mouseTarget is AI) {
-  //     return writePlayerAttackTargetName("Zombie", mouseTarget.healthPercentage);
-  //   }
-  // }
-
-  // void writePlayerAttackTargetName(String name, double health){
-  //   writeByte(ServerResponse.Player_Attack_Target_Name);
-  //   writeString(name);
-  //   writeBool(onSameTeam(this, aimTarget));
-  //   writePercentage(health);
-  // }
 
   void writeProjectiles(){
     writeByte(ServerResponse.Projectiles);

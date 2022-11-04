@@ -1078,13 +1078,10 @@ abstract class Game {
         }
       }
 
-
-
       if (player.targetIsEnemy) {
         player.lookAt(target);
         if (player.withinAttackRange(target)) {
           playerUseWeapon(player);
-          // player.setCharacterStateIdle();
           clearCharacterTarget(player);
           return;
         }
@@ -2188,11 +2185,7 @@ abstract class Game {
   void setCharacterTarget(Character character, Position3 target){
     character.target = target;
     if (character is Player) {
-      if (character.target == character.runTarget){
-        character.writeTargetPosition();
-      } else {
-        character.writeTargetPositionNone();
-      }
+      character.writeTargetPosition();
     }
   }
 
@@ -2201,7 +2194,7 @@ abstract class Game {
     character.target = null;
     character.setCharacterStateIdle();
     if (character is Player){
-      character.writeTargetPositionNone();
+      character.writeTargetPosition();
     }
     if (character is AI){
       character.clearDest();
