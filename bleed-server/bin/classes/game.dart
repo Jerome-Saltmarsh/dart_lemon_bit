@@ -150,8 +150,9 @@ abstract class Game {
 
     if (player.deadOrBusy) return;
 
+    playerUpdateAimTarget(player);
+
     if (player.weaponDurationRemaining <= 0) {
-      // player.weapon.state = AttackState.Aiming;
       player.lookRadian = player.mouseAngle;
     }
 
@@ -220,27 +221,7 @@ abstract class Game {
     }
 
     playerRunInDirection(player, direction);
-    playerUpdateAimTarget(player);
-    // final weapon = player.weapon;
-    //
-    // if (weapon.durationRemaining > 0) return;
-    // weapon.state = AttackState.Aiming;
-    // player.lookRadian = player.mouseAngle;
   }
-
-  // void playerSetWeaponUnarmed(Player player) {
-  //   playerSetWeapon(player, buildWeaponUnarmed());
-  // }
-
-  // void playerSetWeapon(Player player, Weapon weapon){
-  //   if (player.weaponType == weapon.type) return;
-  //   player.weaponType = weapon.type;
-  //   // player.weaponDuration = weapon.duration;
-  //   player.writePlayerWeaponType();
-  //   player.writePlayerWeaponRounds();
-  //   player.writePlayerWeaponCapacity();
-  //   player.writePlayerEventItemEquipped(player.weaponType);
-  // }
 
   void changeGame(Player player, Game to){
     if (this == to) return;
@@ -257,28 +238,39 @@ abstract class Game {
   }
 
   void playerUpdateAimTarget(Player player){
-    player.aimTarget = getClosestCollider(
-      player.mouseGridX,
-      player.mouseGridY,
-      player,
-      minDistance: minAimTargetCursorDistance,
-    );
+    var closestDistance = 9999.0;
+
+    final mouseX = player.mouseGridX;
+    final mouseY = player.mouseGridY;
+    final mouseZ = player.z;
+
+    Collider? closestCollider;
+
+    for (final character in characters) {
+      if (character.deadOrDying) continue;
+      final distance = getDistanceV3(mouseX, mouseY, mouseZ, character.x, character.y, character.z);
+      if (distance > closestDistance) continue;
+      closestDistance = distance;
+      closestCollider = character;
+    }
+
+    for (final gameObject in gameObjects) {
+      if (!gameObject.active) continue;
+      if (!gameObject.isItem) continue;
+      final distance = getDistanceV3(mouseX, mouseY, mouseZ, gameObject.x, gameObject.y, gameObject.z);
+      if (distance > closestDistance) continue;
+      closestDistance = distance;
+      closestCollider = gameObject;
+    }
+
+    if (closestCollider == null || closestDistance > 50) {
+       player.aimTarget = null;
+       return;
+    }
+
+    player.aimTarget = closestCollider;
   }
 
-  // void playerReleaseWeaponCharge(Player player, Weapon weapon){
-  //   if (weapon.charge <= 0) return;
-  //
-  //   final maxCharge = 30;
-  //   double power = weapon.charge >= maxCharge ? 1.0 : weapon.charge / maxCharge;
-  //   weapon.charge = 0;
-  //   dispatchV3(GameEventType.Release_Bow, player);
-  //   spawnProjectileArrow(
-  //     src: player,
-  //     angle: player.lookRadian,
-  //     damage: weapon.damage,
-  //     range: weapon.range * power,
-  //   );
-  // }
 
   void playerRunInDirection(Player player, int direction) {
     if (direction == Direction.None && !player.targetSet) {

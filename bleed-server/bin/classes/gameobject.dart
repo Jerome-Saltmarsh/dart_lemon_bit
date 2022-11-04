@@ -1,3 +1,4 @@
+import '../common/library.dart';
 import 'library.dart';
 
 class GameObject extends Collider {
@@ -6,6 +7,8 @@ class GameObject extends Collider {
   int type;
   int subType = 0;
   int timer = 0;
+
+  bool get isItem => type == GameObjectType.Item;
 
   GameObject({
     required double x,

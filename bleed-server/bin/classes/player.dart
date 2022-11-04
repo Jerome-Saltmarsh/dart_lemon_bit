@@ -19,7 +19,6 @@ import 'rat.dart';
 import 'zombie.dart';
 
 class Player extends Character with ByteWriter {
-  var autoAim = true;
   final mouse = Vector2(0, 0);
   final runTarget = Position3();
   late Function sendBufferToClient;

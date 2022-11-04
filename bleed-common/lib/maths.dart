@@ -14,9 +14,9 @@ double getDistanceV3(double x1, double y1, double z1, double x2, double y2, doub
   return sqrt(
       squareDifference(x1, x2)
           +
-          squareDifference(y1, y2)
+      squareDifference(y1, y2)
           +
-          squareDifference(z1, z2)
+      squareDifference(z1, z2)
   );
 }
 
