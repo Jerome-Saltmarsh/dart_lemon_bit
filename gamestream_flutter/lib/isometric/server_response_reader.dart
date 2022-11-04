@@ -481,6 +481,7 @@ class ServerResponseReader with ByteReader {
     GameState.spawnFloatingText(x, y, amount.toString());
   }
 
+
   void readPlayerAimTargetNone() {
    GameState.player.aimTargetPosition.x = 0;
    GameState.player.aimTargetPosition.y = 0;
@@ -493,9 +494,9 @@ class ServerResponseReader with ByteReader {
     final category = readByte();
     GameState.player.aimTargetCategory = category;
     switch (category) {
-      case AimTargetCategory.Nothing:
+      case TargetCategory.Nothing:
         break;
-      case AimTargetCategory.GameObject:
+      case TargetCategory.GameObject:
         GameState.player.aimTargetType = readByte();
         GameState.player.aimTargetSubType = readUInt16();
         readVector3(GameState.player.aimTargetPosition);
@@ -503,11 +504,11 @@ class ServerResponseReader with ByteReader {
           GameState.player.aimTargetText = ItemType.getName(GameState.player.aimTargetSubType);
         }
         break;
-      case AimTargetCategory.Allie:
+      case TargetCategory.Allie:
         GameState.player.aimTargetText = readString();
         readVector3(GameState.player.aimTargetPosition);
         break;
-      case AimTargetCategory.Enemy:
+      case TargetCategory.Enemy:
         readVector3(GameState.player.aimTargetPosition);
         break;
     }

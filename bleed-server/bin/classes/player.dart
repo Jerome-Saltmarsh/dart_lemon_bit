@@ -57,7 +57,7 @@ class Player extends Character with ByteWriter {
       _aimTarget = collider;
       final gameObject = aimTarget as GameObject;
       writeByte(ServerResponse.Player_Aim_Target);
-      writeByte(AimTargetCategory.GameObject);
+      writeByte(TargetCategory.GameObject);
       writeByte(gameObject.type);
       writeUInt16(gameObject.subType);
       writePosition3(gameObject);
@@ -68,7 +68,7 @@ class Player extends Character with ByteWriter {
       writeByte(ServerResponse.Player_Aim_Target);
 
       if (onSameTeam(this, collider)) {
-        writeByte(AimTargetCategory.Allie);
+        writeByte(TargetCategory.Allie);
         if (collider is Npc){
            writeString(collider.name);
         } else if (collider is Player){
@@ -77,14 +77,14 @@ class Player extends Character with ByteWriter {
           writeString("");
         }
       } else {
-        writeByte(AimTargetCategory.Enemy);
+        writeByte(TargetCategory.Enemy);
       }
       writePosition3(aimTarget!);
       return;
     }
     _aimTarget = null;
     writeByte(ServerResponse.Player_Aim_Target);
-    writeByte(AimTargetCategory.Nothing);
+    writeByte(TargetCategory.Nothing);
   }
 
   static const InventorySize = 40;
@@ -439,6 +439,7 @@ class Player extends Character with ByteWriter {
     writeByte(ServerResponse.Player);
     if (target == null){
       writeByte(ApiPlayer.Target_Position_None);writeTargetPositionNone();
+      // writeByte(TargetCategory.Nothing);
       return;
     }
     writeByte(ApiPlayer.Target_Position);

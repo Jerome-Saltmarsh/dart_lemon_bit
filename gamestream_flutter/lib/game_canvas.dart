@@ -30,8 +30,8 @@ class GameCanvas {
     }
 
     const style = TextStyle(color: Colors.white, fontSize: 18);
-    switch(GameState.player.aimTargetCategory){
-      case AimTargetCategory.GameObject:
+    switch (GameState.player.aimTargetCategory) {
+      case TargetCategory.GameObject:
         Engine.renderText(
           ItemType.getName(GameState.player.aimTargetSubType),
           Engine.worldToScreenX(GameState.player.aimTargetPosition.renderX),
@@ -39,7 +39,7 @@ class GameCanvas {
           style: style,
         );
         break;
-      case AimTargetCategory.Allie:
+      case TargetCategory.Allie:
         Engine.renderText(
           GameState.player.aimTargetText,
           Engine.worldToScreenX(GameState.player.aimTargetPosition.renderX),
@@ -47,7 +47,7 @@ class GameCanvas {
           style: style,
         );
         break;
-      case AimTargetCategory.Enemy:
+      case TargetCategory.Enemy:
         // Engine.renderText(
         //   GameState.player.aimTargetText,
         //   Engine.worldToScreenX(GameState.player.aimTargetPosition.renderX),
@@ -60,16 +60,16 @@ class GameCanvas {
 
   static void renderCursor(Canvas canvas) {
     switch (GameState.player.aimTargetCategory) {
-      case AimTargetCategory.Nothing:
+      case TargetCategory.Nothing:
         GameRender.canvasRenderCursorCrossHair(canvas, 5 + GameState.player.weaponCooldown.value * 10);
         break;
-      case AimTargetCategory.GameObject:
+      case TargetCategory.GameObject:
         GameRender.canvasRenderCursorHand(canvas);
         return;
-      case AimTargetCategory.Allie:
+      case TargetCategory.Allie:
         GameRender.canvasRenderCursorTalk(canvas);
         return;
-      case AimTargetCategory.Enemy:
+      case TargetCategory.Enemy:
         GameRender.canvasRenderCursorCrossHairRed(canvas, 5 + GameState.player.weaponCooldown.value * 10);
         break;
     }

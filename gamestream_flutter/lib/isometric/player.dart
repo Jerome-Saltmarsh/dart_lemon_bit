@@ -27,7 +27,7 @@ class Player {
   final abilityTarget = Vector3();
   final aimTargetPosition = Vector3();
   var aimTargetChanged = Watch(0);
-  var aimTargetCategory = AimTargetCategory.Nothing;
+  var aimTargetCategory = TargetCategory.Nothing;
   var aimTargetType = 0;
   var aimTargetSubType = 0;
   var aimTargetText = "";

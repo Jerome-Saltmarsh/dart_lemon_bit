@@ -1,5 +1,5 @@
 
-class AimTargetCategory {
+class TargetCategory {
    static const Nothing = 0;
    static const Allie = 1;
    static const Enemy = 2;

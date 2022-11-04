@@ -28,7 +28,7 @@ export 'slot_type_category.dart';
 export 'team_size.dart';
 export 'utilities.dart';
 export 'version.dart';
-export 'aim_target_category.dart';
+export 'target_category.dart';
 export 'orb_type.dart';
 export 'projectile_type.dart';
 export 'seconds_per_day.dart';
