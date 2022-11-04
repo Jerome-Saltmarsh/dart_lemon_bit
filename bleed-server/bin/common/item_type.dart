@@ -94,13 +94,15 @@ class ItemType {
 
 
   static int getDamage(int value) => {
+      Empty: 1,
       Weapon_Ranged_Handgun: 2,
       Weapon_Ranged_Shotgun: 2,
   }[value] ?? 0;
 
   static double getRange(int value) => <int, double> {
-      Weapon_Ranged_Handgun: 2,
-      Weapon_Ranged_Shotgun: 2,
+      Empty: 50,
+      Weapon_Ranged_Handgun: 200,
+      Weapon_Ranged_Shotgun: 100,
   }[value] ?? 0;
 
   static int getCooldown(int value) => {
@@ -109,6 +111,7 @@ class ItemType {
   }[value] ?? 30;
   
   static String getName(int value) => {
+     Empty: "Empty",
      Weapon_Ranged_Shotgun: "Shotgun",
      Weapon_Ranged_Handgun: "Handgun",
   }[value] ?? "item-type-unknown($value)";
