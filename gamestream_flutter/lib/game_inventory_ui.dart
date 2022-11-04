@@ -105,7 +105,9 @@ class GameInventoryUI {
       index: index,
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
-        onEnter: (_){
+        onEnter: (event){
+          Engine.mousePosition.x = event.position.dx;
+          Engine.mousePosition.y = event.position.dy;
           itemTypeHover.value = itemType;
         },
         onExit: (_){
@@ -233,11 +235,9 @@ class GameInventoryUI {
   static Widget buildPositionedContainerItemTypeInformation(int itemType){
     if (itemType == ItemType.Empty) return const SizedBox();
     return Positioned(
-      top: Engine.mousePosition.y,
-      left: Engine.mousePosition.x - 200,
+      top: Engine.mousePosition.y - 10,
+      left: Engine.mousePosition.x - 170,
       child: Container(
-        // width: 100,
-        // height: 50,
         padding: const EdgeInsets.all(12),
         color: brownDark,
         child: Column(
