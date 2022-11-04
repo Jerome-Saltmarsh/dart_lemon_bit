@@ -358,7 +358,7 @@ class GameEvents {
         onPlayerEventItemEquipped(type);
         break;
       case PlayerEvent.Item_Dropped:
-        GameAudio.switch_sounds_4();
+        GameAudio.popSounds14();
         break;
       case PlayerEvent.Item_Sold:
         // audio.coins(Engine.screenCenterWorldX, Engine.screenCenterWorldY);

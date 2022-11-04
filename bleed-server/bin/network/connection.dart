@@ -115,6 +115,7 @@ class Connection {
             );
             player.inventory[index] = ItemType.Empty;
             player.writePlayerInventory();
+            player.writePlayerEvent(PlayerEvent.Item_Dropped);
             break;
           case InventoryRequest.Unequip_Weapon:
             if (player.weaponType == ItemType.Empty) return;

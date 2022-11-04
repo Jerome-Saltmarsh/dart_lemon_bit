@@ -44,6 +44,7 @@ class GameAudio {
     AudioLoop(name: 'stream', getTargetVolume: getVolumeStream),
   ];
 
+  static final popSounds14 = AudioSingle(name: 'pop-sounds-14', volume: 0.5, maxDistance: 100);
   static final thunder = AudioSingle(name: 'thunder', volume: 0.5, maxDistance: 100);
   static final fireBolt = AudioSingle(name: 'fire-bolt-14', volume: 0.5, maxDistance: 200);
   static final footstep_grass_8 = AudioSingle(name: 'footstep-grass-8', volume: 0.05, maxDistance: 200);
