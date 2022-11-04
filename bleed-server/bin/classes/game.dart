@@ -157,54 +157,66 @@ abstract class Game {
     }
 
     if (cursorAction == CursorAction.Set_Target) {
-      var closestDistance = 9999.0;
-      Character? closestCharacter;
-      for (final character in characters) {
-         if (character.deadOrDying) continue;
-         final distance = getDistanceFromPlayerMouse(player, character);
-         if (distance > closestDistance) continue;
-         closestDistance = distance;
-         closestCharacter = character;
-      }
 
-      if (closestCharacter != null && closestDistance < 50) {
-        if (direction == Direction.None){
-          setCharacterTarget(player, closestCharacter);
-        }
-
-        if (!onSameTeam(player, closestCharacter) && player.withinAttackRange(closestCharacter)) {
-          player.lookAt(closestCharacter);
-          playerUseWeapon(player);
-          player.setCharacterStateIdle();
-          clearCharacterTarget(player);
-        }
+      if (direction != Direction.None) {
+        playerUseWeapon(player);
       } else {
-
-        var closestGameObjectDistance = 9999.0;
-        GameObject? closestGameObject;
-
-        for (final gameObject in gameObjects){
-           if (!gameObject.active) continue;
-           if (gameObject.type != GameObjectType.Item) continue;
-           final distance = getDistanceFromPlayerMouse(player, gameObject);
-           if (distance > closestDistance) continue;
-           closestGameObjectDistance = distance;
-           closestGameObject = gameObject;
-        }
-
-        if (closestGameObject != null && closestGameObjectDistance < 50){
-          if (direction == Direction.None){
-            setCharacterTarget(player, closestGameObject);
-            return;
-          }
-        }
-
-        if (direction == Direction.None) {
+        final aimTarget = player.aimTarget;
+        if (aimTarget == null){
           player.runToMouse();
         } else {
-          playerUseWeapon(player);
+          setCharacterTarget(player, aimTarget);
         }
       }
+
+      // var closestDistance = 9999.0;
+      // Character? closestCharacter;
+      // for (final character in characters) {
+      //    if (character.deadOrDying) continue;
+      //    final distance = getDistanceFromPlayerMouse(player, character);
+      //    if (distance > closestDistance) continue;
+      //    closestDistance = distance;
+      //    closestCharacter = character;
+      // }
+      //
+      // if (closestCharacter != null && closestDistance < 50) {
+      //   if (direction == Direction.None){
+      //     setCharacterTarget(player, closestCharacter);
+      //   }
+      //
+      //   if (!onSameTeam(player, closestCharacter) && player.withinAttackRange(closestCharacter)) {
+      //     player.lookAt(closestCharacter);
+      //     playerUseWeapon(player);
+      //     player.setCharacterStateIdle();
+      //     clearCharacterTarget(player);
+      //   }
+      // } else {
+      //
+      //   var closestGameObjectDistance = 9999.0;
+      //   GameObject? closestGameObject;
+      //
+      //   for (final gameObject in gameObjects){
+      //      if (!gameObject.active) continue;
+      //      if (gameObject.type != GameObjectType.Item) continue;
+      //      final distance = getDistanceFromPlayerMouse(player, gameObject);
+      //      if (distance > closestDistance) continue;
+      //      closestGameObjectDistance = distance;
+      //      closestGameObject = gameObject;
+      //   }
+      //
+      //   if (closestGameObject != null && closestGameObjectDistance < 50){
+      //     if (direction == Direction.None){
+      //       setCharacterTarget(player, closestGameObject);
+      //       return;
+      //     }
+      //   }
+      //
+      //   if (direction == Direction.None) {
+      //     player.runToMouse();
+      //   } else {
+      //     playerUseWeapon(player);
+      //   }
+      // }
     }
 
     if (cursorAction == CursorAction.None){
