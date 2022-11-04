@@ -7,25 +7,18 @@ class GameCanvas {
   static bool cursorVisible = true;
 
   static void renderForeground(Canvas canvas, Size size) {
-    // if (Engine.joystickEngaged) {
-    //   Engine.canvasRenderJoystick(canvas);
-    // }
-    // final distanceX = Engine.worldToScreenX(GamePlayer.renderX - GameIO.getCursorScreenX());
-    // final distanceY = Engine.worldToScreenY(GamePlayer.renderY - GameIO.getCursorScreenY());
-    // final distance = Engine.calculateHypotenuse(distanceX, distanceY);
-    // if (distance < 50) return;
     if (cursorVisible){
       GameRender.canvasRenderCrossHair(canvas, 5 + GameState.player.weaponCooldown.value * 10);
     }
 
-    for (var i = 0; i < GameState.totalGameObjects; i++){
-       if (GameState.gameObjects[i].type != GameObjectType.Item) continue;
-       final gameObject = GameState.gameObjects[i];
-       Engine.renderText(
-           ItemType.getName(gameObject.subType),
-           Engine.worldToScreenX(gameObject.renderX),
-           Engine.worldToScreenY(gameObject.renderY),
-       );
+    switch(GameState.player.aimTargetCategory){
+      case AimTargetCategory.GameObject:
+        Engine.renderText(
+          ItemType.getName(GameState.player.aimTargetSubType),
+          Engine.worldToScreenX(GameState.player.aimTargetPosition.renderX),
+          Engine.worldToScreenY(GameState.player.aimTargetPosition.renderY),
+        );
+        break;
     }
   }
 
