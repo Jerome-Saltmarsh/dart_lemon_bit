@@ -1216,11 +1216,13 @@ class GameRender {
       );
 
   static void canvasRenderCrossHair(ui.Canvas canvas, double range){
+    const srcX = 0;
+    const srcY = 160;
     Engine.renderExternalCanvas(
         canvas: canvas,
-        image: GameImages.cursor,
-        srcX: 29,
-        srcY: 0,
+        image: GameImages.atlasIcons,
+        srcX: srcX + 29,
+        srcY: srcY + 0,
         srcWidth: 6,
         srcHeight: 22,
         dstX: GameIO.getCursorScreenX(),
@@ -1229,9 +1231,9 @@ class GameRender {
     );
     Engine.renderExternalCanvas(
         canvas: canvas,
-        image: GameImages.cursor,
-        srcX: 29,
-        srcY: 0,
+        image: GameImages.atlasIcons,
+        srcX: srcX + 29,
+        srcY: srcY + 0,
         srcWidth: 6,
         srcHeight: 22,
         dstX: GameIO.getCursorScreenX(),
@@ -1240,9 +1242,9 @@ class GameRender {
     );
     Engine.renderExternalCanvas(
         canvas: canvas,
-        image: GameImages.cursor,
-        srcX: 0,
-        srcY: 29,
+        image: GameImages.atlasIcons,
+        srcX: srcX + 0,
+        srcY: srcY + 29,
         srcWidth: 22,
         srcHeight: 6,
         dstX: GameIO.getCursorScreenX() - range,
@@ -1251,9 +1253,9 @@ class GameRender {
     );
     Engine.renderExternalCanvas(
         canvas: canvas,
-        image: GameImages.cursor,
-        srcX: 0,
-        srcY: 29,
+        image: GameImages.atlasIcons,
+        srcX: srcX + 0,
+        srcY: srcY + 29,
         srcWidth: 22,
         srcHeight: 6,
         dstX: GameIO.getCursorScreenX() + range,

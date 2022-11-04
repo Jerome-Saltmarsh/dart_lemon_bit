@@ -9,7 +9,6 @@ class GameImages {
    static late Image minimap;
    static late Image atlasNodes;
    static late Image characters;
-   static late Image cursor;
    static late Image projectiles;
    static late Image zombie;
    static late Image zombie_shadow;
@@ -134,7 +133,6 @@ class GameImages {
    
    static Future loadImages() async {
       characters = await Engine.loadImageAsset('images/atlas-characters.png');
-      cursor = await Engine.loadImageAsset('images/cursor.png');
       zombie = await Engine.loadImageAsset('images/atlas-zombie.png');
       zombie_shadow = await Engine.loadImageAsset('images/atlas-zombie-shadow.png');
       gameobjects = await Engine.loadImageAsset('images/atlas-gameobjects.png');
