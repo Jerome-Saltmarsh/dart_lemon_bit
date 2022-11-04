@@ -49,7 +49,7 @@ class Player extends Character with ByteWriter {
 
   Collider? get aimTarget => _aimTarget;
 
-  set aimTarget(Collider? collider){
+  set aimTarget(Collider? collider) {
     if (_aimTarget == collider) return;
     if (collider == this) return;
 

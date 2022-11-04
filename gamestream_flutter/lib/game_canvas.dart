@@ -14,14 +14,12 @@ class GameCanvas {
     );
   }
 
+
   static void renderForeground(Canvas canvas, Size size) {
     if (cursorVisible){
-      if (GameState.player.aimTargetCategory == AimTargetCategory.GameObject){
-        GameRender.canvasRenderCrossHand(canvas);
-      } else {
-        GameRender.canvasRenderCrossHair(canvas, 5 + GameState.player.weaponCooldown.value * 10);
-      }
+      renderCursor(canvas);
     }
+
 
     if (GameState.showAllItems) {
        for (var i = 0; i < GameState.totalGameObjects; i++){
@@ -56,6 +54,23 @@ class GameCanvas {
         //   Engine.worldToScreenY(GameState.player.aimTargetPosition.renderY),
         //   style: style,
         // );
+        break;
+    }
+  }
+
+  static void renderCursor(Canvas canvas) {
+    switch (GameState.player.aimTargetCategory) {
+      case AimTargetCategory.Nothing:
+        GameRender.canvasRenderCursorCrossHair(canvas, 5 + GameState.player.weaponCooldown.value * 10);
+        break;
+      case AimTargetCategory.GameObject:
+        GameRender.canvasRenderCursorHand(canvas);
+        return;
+      case AimTargetCategory.Allie:
+        GameRender.canvasRenderCursorTalk(canvas);
+        return;
+      case AimTargetCategory.Enemy:
+        GameRender.canvasRenderCursorCrossHair(canvas, 5 + GameState.player.weaponCooldown.value * 10);
         break;
     }
   }
