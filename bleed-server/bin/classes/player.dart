@@ -346,6 +346,9 @@ class Player extends Character with ByteWriter {
       if (gameObject.renderY > screenBottom) continue;
       writeByte(ServerResponse.GameObject);
       writeByte(gameObject.type);
+      if (gameObject.type == GameObjectType.Item){
+        writeUInt16(gameObject.subType);
+      }
       writePosition3(gameObject);
     }
   }
@@ -595,14 +598,14 @@ class Player extends Character with ByteWriter {
     writeInt(value.z);
   }
 
-  void writeGameObject(GameObject gameObject) {
-    writeByte(ServerResponse.GameObject);
-    writeByte(gameObject.type);
-    if (gameObject.type == GameObjectType.Item){
-      writeUInt16(gameObject.subType);
-    }
-    writePosition3(gameObject);
-  }
+  // void writeGameObject(GameObject gameObject) {
+  //   writeByte(ServerResponse.GameObject);
+  //   writeByte(gameObject.type);
+  //   if (gameObject.type == GameObjectType.Item){
+  //     writeUInt16(gameObject.subType);
+  //   }
+  //   writePosition3(gameObject);
+  // }
 
   void writeGrid() {
     writeByte(ServerResponse.Grid);

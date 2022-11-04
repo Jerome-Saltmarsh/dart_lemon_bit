@@ -444,6 +444,18 @@ class GameRender {
   
   static void renderGameObject(GameObject gameObject) {
     switch (gameObject.type) {
+      case GameObjectType.Item:
+        Engine.renderSprite(
+          image: GameImages.gameobjects,
+          dstX: gameObject.renderX,
+          dstY: gameObject.renderY,
+          srcX: 0,
+          srcY: 80,
+          srcWidth: 32,
+          srcHeight: 32,
+          color: GameState.getV3RenderColor(gameObject),
+        );
+        break;
       case GameObjectType.Rock:
         Engine.renderSprite(
           image: GameImages.gameobjects,
