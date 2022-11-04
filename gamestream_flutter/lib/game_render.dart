@@ -1293,6 +1293,56 @@ class GameRender {
     );
   }
 
+  static void canvasRenderCursorCrossHairRed(ui.Canvas canvas, double range){
+    const srcX = 0;
+    const srcY = 352;
+    Engine.renderExternalCanvas(
+        canvas: canvas,
+        image: GameImages.atlasIcons,
+        srcX: srcX + 29,
+        srcY: srcY + 0,
+        srcWidth: 6,
+        srcHeight: 22,
+        dstX: GameIO.getCursorScreenX(),
+        dstY: GameIO.getCursorScreenY() - range,
+        anchorY: 1.0
+    );
+    Engine.renderExternalCanvas(
+        canvas: canvas,
+        image: GameImages.atlasIcons,
+        srcX: srcX + 29,
+        srcY: srcY + 0,
+        srcWidth: 6,
+        srcHeight: 22,
+        dstX: GameIO.getCursorScreenX(),
+        dstY: GameIO.getCursorScreenY() + range,
+        anchorY: 0.0
+    );
+    Engine.renderExternalCanvas(
+        canvas: canvas,
+        image: GameImages.atlasIcons,
+        srcX: srcX + 0,
+        srcY: srcY + 29,
+        srcWidth: 22,
+        srcHeight: 6,
+        dstX: GameIO.getCursorScreenX() - range,
+        dstY: GameIO.getCursorScreenY(),
+        anchorX: 1.0
+    );
+    Engine.renderExternalCanvas(
+        canvas: canvas,
+        image: GameImages.atlasIcons,
+        srcX: srcX + 0,
+        srcY: srcY + 29,
+        srcWidth: 22,
+        srcHeight: 6,
+        dstX: GameIO.getCursorScreenX() + range,
+        dstY: GameIO.getCursorScreenY(),
+        anchorX: 0.0
+    );
+  }
+
+
   static void renderCircle32(double x, double y, double z){
     Engine.renderSprite(
       image: GameImages.gameobjects,

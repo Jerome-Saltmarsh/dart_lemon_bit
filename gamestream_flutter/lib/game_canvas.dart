@@ -70,7 +70,7 @@ class GameCanvas {
         GameRender.canvasRenderCursorTalk(canvas);
         return;
       case AimTargetCategory.Enemy:
-        GameRender.canvasRenderCursorCrossHair(canvas, 5 + GameState.player.weaponCooldown.value * 10);
+        GameRender.canvasRenderCursorCrossHairRed(canvas, 5 + GameState.player.weaponCooldown.value * 10);
         break;
     }
   }
