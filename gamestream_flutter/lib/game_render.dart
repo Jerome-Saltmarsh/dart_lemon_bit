@@ -1215,6 +1215,20 @@ class GameRender {
         anchorY: 0.9,
       );
 
+  static void canvasRenderCrossHand(ui.Canvas canvas){
+    Engine.renderExternalCanvas(
+        canvas: canvas,
+        image: GameImages.atlasIcons,
+        srcX: 0,
+        srcY: 224,
+        srcWidth: 64,
+        srcHeight: 64,
+        dstX: GameIO.getCursorScreenX(),
+        dstY: GameIO.getCursorScreenY(),
+        scale: 0.5,
+    );
+  }
+
   static void canvasRenderCrossHair(ui.Canvas canvas, double range){
     const srcX = 0;
     const srcY = 160;

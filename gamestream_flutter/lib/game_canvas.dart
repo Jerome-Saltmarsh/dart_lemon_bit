@@ -17,11 +17,10 @@ class GameCanvas {
   static void renderForeground(Canvas canvas, Size size) {
     if (cursorVisible){
       if (GameState.player.aimTargetCategory == AimTargetCategory.GameObject){
-
+        GameRender.canvasRenderCrossHand(canvas);
       } else {
         GameRender.canvasRenderCrossHair(canvas, 5 + GameState.player.weaponCooldown.value * 10);
       }
-
     }
 
     if (GameState.showAllItems) {
