@@ -71,12 +71,24 @@ class GameInventoryUI {
       );
 
   static Widget buildContainerItemType(int itemType) =>
-      Container(
-        color: brownLight,
-        width: 100,
-        height: 100,
-        padding: const EdgeInsets.all(6),
-        child: buildItemTypeAtlasImage(itemType: itemType, scale: 2.5),
+      MouseRegion(
+        onEnter: (event){
+          Engine.mousePosition.x = event.position.dx;
+          Engine.mousePosition.y = event.position.dy;
+          itemTypeHover.value = itemType;
+        },
+        onExit: (_){
+          if (itemTypeHover.value == itemType){
+            itemTypeHover.value = ItemType.Empty;
+          }
+        },
+        child: Container(
+          color: brownLight,
+          width: 100,
+          height: 100,
+          padding: const EdgeInsets.all(6),
+          child: buildItemTypeAtlasImage(itemType: itemType, scale: 2.5),
+        ),
       );
 
   static bool onDragWillAccept(int? i) => i != null;
@@ -235,7 +247,7 @@ class GameInventoryUI {
   static Widget buildPositionedContainerItemTypeInformation(int itemType){
     if (itemType == ItemType.Empty) return const SizedBox();
     return Positioned(
-      top: Engine.mousePosition.y - 10,
+      top: Engine.mousePosition.y + 10,
       left: Engine.mousePosition.x - 170,
       child: Container(
         padding: const EdgeInsets.all(12),
