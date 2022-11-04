@@ -491,6 +491,7 @@ class GameEvents {
     } else {
       GameCamera.translateX = 0;
       GameCanvas.cursorVisible = true;
+      GameInventoryUI.itemTypeHover.value = ItemType.Empty;
     }
   }
 
