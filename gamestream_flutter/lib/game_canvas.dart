@@ -17,6 +17,16 @@ class GameCanvas {
     if (cursorVisible){
       GameRender.canvasRenderCrossHair(canvas, 5 + GameState.player.weaponCooldown.value * 10);
     }
+
+    for (var i = 0; i < GameState.totalGameObjects; i++){
+       if (GameState.gameObjects[i].type != GameObjectType.Item) continue;
+       final gameObject = GameState.gameObjects[i];
+       Engine.renderText(
+           ItemType.getName(gameObject.subType),
+           Engine.worldToScreenX(gameObject.renderX),
+           Engine.worldToScreenY(gameObject.renderY),
+       );
+    }
   }
 
   static void renderCanvas(Canvas canvas, Size size) {

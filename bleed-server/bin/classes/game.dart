@@ -178,6 +178,26 @@ abstract class Game {
           clearCharacterTarget(player);
         }
       } else {
+
+        var closestGameObjectDistance = 9999.0;
+        GameObject? closestGameObject;
+
+        for (final gameObject in gameObjects){
+           if (!gameObject.active) continue;
+           if (gameObject.type != GameObjectType.Item) continue;
+           final distance = getDistanceFromPlayerMouse(player, gameObject);
+           if (distance > closestDistance) continue;
+           closestGameObjectDistance = distance;
+           closestGameObject = gameObject;
+        }
+
+        if (closestGameObject != null && closestGameObjectDistance < 50){
+          if (direction == Direction.None){
+            setCharacterTarget(player, closestGameObject);
+            return;
+          }
+        }
+
         if (direction == Direction.None) {
           player.runToMouse();
         } else {
@@ -1076,10 +1096,30 @@ abstract class Game {
 
     if (target is Collider) {
 
-      if (!target.collidable) {
-        clearCharacterTarget(player);
-        return;
+      if (target is GameObject){
+        if (target.type == GameObjectType.Item){
+           if (getDistanceBetweenV3(player, target) > 50){
+             setCharacterStateRunning(player);
+             return;
+           } else {
+             final emptyInventoryIndex = player.getEmptyInventoryIndex();
+             if (emptyInventoryIndex != null){
+                player.inventory[emptyInventoryIndex] = target.subType;
+                deactivateGameObject(target);
+             }
+             player.setCharacterStateIdle();
+             clearCharacterTarget(player);
+             return;
+           }
+        }
+      } else {
+        if (!target.collidable) {
+          clearCharacterTarget(player);
+          return;
+        }
       }
+
+
 
       if (player.targetIsEnemy) {
         player.lookAt(target);

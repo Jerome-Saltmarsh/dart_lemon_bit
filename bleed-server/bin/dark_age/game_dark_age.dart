@@ -30,15 +30,19 @@ class GameDarkAge extends Game {
   }
 
   void spawnRandomLootAtPosition(Position3 position){
-      gameObjects.add(
-         GameObject(
-             x: position.x,
-             y: position.y,
-             z: position.z,
-             type: GameObjectType.Item,
-             subType: ItemType.Resource_Ammo_9mm,
-         )
-      );
+    spawnRandomLoot(position.x, position.y, position.z);
+  }
+
+  void spawnRandomLoot(double x, double y, double z){
+    gameObjects.add(
+        GameObject(
+          x: x,
+          y: y,
+          z: z,
+          type: GameObjectType.Item,
+          subType: ItemType.Resource_Ammo_9mm,
+        )
+    );
   }
 
   @override
