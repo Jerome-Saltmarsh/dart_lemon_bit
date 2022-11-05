@@ -182,19 +182,7 @@ class GameInventoryUI {
   static Widget buildPositionedGridSlot(int i) =>
     buildPositionGridItem(
         index: i,
-        child: DragTarget<int>(
-          onWillAccept: (int? index) => index != null,
-          onAccept: (int? indexFrom){
-            if (indexFrom == null) return;
-            GameNetwork.sendClientRequestInventoryMove(
-              indexFrom: indexFrom,
-              indexTo: i,
-            );
-          },
-          builder: (context, candidate, index){
-            return buildAtlasIconSlotEmpty();
-          },
-        )
+        child: buildAtlasIconSlotEmpty()
     );
 
   static double getIndexX(int index) => getIndexColumn(index) * Slot_Size * Slot_Scale;
@@ -206,11 +194,23 @@ class GameInventoryUI {
   static int getIndexColumn(int index) =>  index % ColumnsPerRow;
 
   static Widget buildPositionGridItem({required int index, required Widget child}) =>
-    Positioned(
-      left: getIndexX(index) + 7,
-      top: getIndexY(index) + 7,
-      child: child,
-    );
+      Positioned(
+        left: getIndexX(index) + 7,
+        top: getIndexY(index) + 7,
+        child: DragTarget<int>(
+          onWillAccept: (int? index) => index != null,
+          onAccept: (int? indexFrom){
+            if (indexFrom == null) return;
+            GameNetwork.sendClientRequestInventoryMove(
+              indexFrom: indexFrom,
+              indexTo: index,
+            );
+          },
+          builder: (context, candidate, i){
+            return child;
+          },
+        ),
+      );
 
   static Widget buildItemTypeAtlasImage({required int itemType, double scale = 1.0}) =>
       Engine.buildAtlasImage(
