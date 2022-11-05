@@ -2098,15 +2098,6 @@ abstract class Game {
     player.writePlayerEvent(PlayerEvent.GameObject_Deselected);
   }
 
-  void spawnGameObjectLoot({
-    required double x,
-    required double y,
-    required double z,
-    required int type,
-  }){
-    // TODO
-  }
-
   void resolveCharacterTileCollision(Character character) {
     const distance = 3;
     final stepHeight = character.z + tileHeightHalf;
