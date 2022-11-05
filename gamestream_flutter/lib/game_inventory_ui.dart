@@ -13,7 +13,7 @@ class GameInventoryUI {
   static const ColumnsPerRow = 7;
   static final itemTypeHover = Watch(ItemType.Empty);
   static var mouseOverInventory = false;
-  static const Inventory_Width = 350.0;
+  static const Inventory_Width = Slot_Size * Slot_Scale * ColumnsPerRow;
 
   static void onMouseEnter(PointerEnterEvent event){
     GameCanvas.cursorVisible = false;
