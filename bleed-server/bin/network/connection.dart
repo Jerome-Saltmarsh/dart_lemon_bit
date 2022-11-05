@@ -100,150 +100,152 @@ class Connection {
     switch (clientRequest) {
 
       case ClientRequest.Inventory:
-        if (arguments.length < 2)  return errorArgsExpected(3, arguments);
-        if (player.deadBusyOrUsingWeapon) return;
-        final inventoryRequest = int.tryParse(arguments[1]);
-        switch (inventoryRequest){
-          case InventoryRequest.Drop:
-            final index = int.tryParse(arguments[2]);
-            if (index == null) return errorInvalidArg('index == null');
-            if (index < 0) return errorInvalidArg('index < 0');
-            if (index >= player.inventory.length) return errorInvalidArg('index >= player.inventory.length');
-            player.game.spawnGameObjectItemAtPosition(
-                position: player,
-                type: player.inventory[index],
-            );
-            player.inventory[index] = ItemType.Empty;
-            player.writePlayerInventory();
-            player.writePlayerEvent(PlayerEvent.Item_Dropped);
-            break;
-          case InventoryRequest.Move:
-            if (player.deadBusyOrUsingWeapon) return;
-            if (arguments.length < 4)  return errorArgsExpected(4, arguments);
-            final indexFrom = int.tryParse(arguments[2]);
-            final indexTo = int.tryParse(arguments[3]);
-            if (indexFrom == null) return errorInvalidArg('index from is null');
-            if (indexTo == null) return errorInvalidArg('index from is null');
-            if (indexFrom < 0) return errorInvalidArg('invalid inventory from index');
-            if (indexTo < 0) return errorInvalidArg('invalid inventory to index');
-
-            if (indexFrom == ItemType.Equipped_Body){
-              if (player.inventory[indexTo] == ItemType.Empty) {
-                player.inventory[indexTo] = player.bodyType;
-                player.bodyType = ItemType.Empty;
-                player.writePlayerInventory();
-                player.writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
-                return;
-              }
-              if (ItemType.isTypeBody(player.inventory[indexTo])) {
-                final toType = player.inventory[indexTo];
-                player.inventory[indexTo] = player.bodyType;
-                player.bodyType = toType;
-                player.writePlayerInventory();
-                player.writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
-                return;
-              }
-              final availableIndex = player.getEmptyInventoryIndex();
-              if (availableIndex != null){
-                player.inventory[availableIndex] = player.bodyType;
-                player.bodyType = ItemType.Empty;
-                player.writePlayerInventory();
-                player.writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
-                return;
-              }
-              return;
-            }
-
-            final inventory = player.inventory;
-            if (indexFrom >= inventory.length) return errorInvalidArg('invalid inventory from index');
-            if (indexTo >= inventory.length) return errorInvalidArg('invalid inventory to index');
-            final typeFrom = inventory[indexFrom];
-            final typeTo = inventory[indexTo];
-            if (typeFrom == ItemType.Empty && typeTo == ItemType.Empty) return;
-            inventory[indexFrom] = typeTo;
-            inventory[indexTo] = typeFrom;
-            player.writePlayerInventory();
-            player.writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
-            break;
-
-          case InventoryRequest.Unequip_Weapon:
-            if (player.weaponType == ItemType.Empty) return;
-            for (var i = 0; i < player.inventory.length; i++){
-              if (player.inventory[i] != ItemType.Empty) continue;
-              player.inventory[i] = player.weaponType;
-              player.weaponType = ItemType.Empty;
-              player.writePlayerWeaponType();
-              player.game.setCharacterStateChanging(player);
-              player.writePlayerInventory();
-              break;
-            }
-            break;
-          case InventoryRequest.Unequip_Head:
-            if (player.headType == ItemType.Empty) return;
-            final emptyIndex = player.getEmptyInventoryIndex();
-            if (emptyIndex == null) return;
-            player.inventory[emptyIndex] = player.headType;
-            player.headType = ItemType.Empty;
-            player.game.setCharacterStateChanging(player);
-            player.writePlayerInventory();
-            break;
-          case InventoryRequest.Unequip_Body:
-            if (player.bodyType == ItemType.Empty) return;
-            final emptyIndex = player.getEmptyInventoryIndex();
-            if (emptyIndex == null) return;
-            player.inventory[emptyIndex] = player.bodyType;
-            player.bodyType = ItemType.Empty;
-            player.game.setCharacterStateChanging(player);
-            player.writePlayerInventory();
-            break;
-          case InventoryRequest.Equip:
-            final index = int.tryParse(arguments[2]);
-            if (index == null){
-              return errorInvalidArg('index is null');
-            }
-            if (index < 0 || index >= player.inventory.length){
-              return errorInvalidArg('index out of bounds');
-            }
-            final itemType = player.inventory[index];
-            var swapped = false;
-
-            if (ItemType.isTypeWeapon(itemType)){
-               final currentWeapon = player.weaponType;
-               player.weaponType = itemType;
-               player.inventory[index] = currentWeapon;
-               swapped = true;
-               player.writePlayerWeaponType();
-            }
-
-            if (ItemType.isTypeBody(itemType)){
-              final current = player.bodyType;
-              player.bodyType = itemType;
-              player.inventory[index] = current;
-              swapped = true;
-            }
-
-            if (ItemType.isTypeHead(itemType)){
-              final current = player.headType;
-              player.headType = itemType;
-              player.inventory[index] = current;
-              swapped = true;
-            }
-
-            if (ItemType.isTypeLegs(itemType)){
-              final current = player.legsType;
-              player.legsType = itemType;
-              player.inventory[index] = current;
-              swapped = true;
-            }
-
-            if (swapped) {
-              player.game.setCharacterStateChanging(player);
-              player.writePlayerInventory();
-            }
-            break;
-
-        }
+        handleRequestInventory(player, arguments);
         break;
+        // if (arguments.length < 2)  return errorArgsExpected(3, arguments);
+        // if (player.deadBusyOrUsingWeapon) return;
+        // final inventoryRequest = int.tryParse(arguments[1]);
+        // switch (inventoryRequest){
+        //   case InventoryRequest.Drop:
+        //     final index = int.tryParse(arguments[2]);
+        //     if (index == null) return errorInvalidArg('index == null');
+        //     if (index < 0) return errorInvalidArg('index < 0');
+        //     if (index >= player.inventory.length) return errorInvalidArg('index >= player.inventory.length');
+        //     player.game.spawnGameObjectItemAtPosition(
+        //         position: player,
+        //         type: player.inventory[index],
+        //     );
+        //     player.inventory[index] = ItemType.Empty;
+        //     player.writePlayerInventory();
+        //     player.writePlayerEvent(PlayerEvent.Item_Dropped);
+        //     break;
+        //   case InventoryRequest.Move:
+        //     if (player.deadBusyOrUsingWeapon) return;
+        //     if (arguments.length < 4)  return errorArgsExpected(4, arguments);
+        //     final indexFrom = int.tryParse(arguments[2]);
+        //     final indexTo = int.tryParse(arguments[3]);
+        //     if (indexFrom == null) return errorInvalidArg('index from is null');
+        //     if (indexTo == null) return errorInvalidArg('index from is null');
+        //     if (indexFrom < 0) return errorInvalidArg('invalid inventory from index');
+        //     if (indexTo < 0) return errorInvalidArg('invalid inventory to index');
+        //
+        //     if (indexFrom == ItemType.Equipped_Body) {
+        //       if (player.inventory[indexTo] == ItemType.Empty) {
+        //         player.inventory[indexTo] = player.bodyType;
+        //         player.bodyType = ItemType.Empty;
+        //         player.writePlayerInventory();
+        //         player.writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
+        //         return;
+        //       }
+        //       if (ItemType.isTypeBody(player.inventory[indexTo])) {
+        //         final toType = player.inventory[indexTo];
+        //         player.inventory[indexTo] = player.bodyType;
+        //         player.bodyType = toType;
+        //         player.writePlayerInventory();
+        //         player.writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
+        //         return;
+        //       }
+        //       final availableIndex = player.getEmptyInventoryIndex();
+        //       if (availableIndex != null){
+        //         player.inventory[availableIndex] = player.bodyType;
+        //         player.bodyType = ItemType.Empty;
+        //         player.writePlayerInventory();
+        //         player.writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
+        //         return;
+        //       }
+        //       return;
+        //     }
+        //
+        //     final inventory = player.inventory;
+        //     if (indexFrom >= inventory.length) return errorInvalidArg('invalid inventory from index');
+        //     if (indexTo >= inventory.length) return errorInvalidArg('invalid inventory to index');
+        //     final typeFrom = inventory[indexFrom];
+        //     final typeTo = inventory[indexTo];
+        //     if (typeFrom == ItemType.Empty && typeTo == ItemType.Empty) return;
+        //     inventory[indexFrom] = typeTo;
+        //     inventory[indexTo] = typeFrom;
+        //     player.writePlayerInventory();
+        //     player.writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
+        //     break;
+        //
+        //   case InventoryRequest.Unequip_Weapon:
+        //     if (player.weaponType == ItemType.Empty) return;
+        //     for (var i = 0; i < player.inventory.length; i++){
+        //       if (player.inventory[i] != ItemType.Empty) continue;
+        //       player.inventory[i] = player.weaponType;
+        //       player.weaponType = ItemType.Empty;
+        //       player.writePlayerWeaponType();
+        //       player.game.setCharacterStateChanging(player);
+        //       player.writePlayerInventory();
+        //       break;
+        //     }
+        //     break;
+        //   case InventoryRequest.Unequip_Head:
+        //     if (player.headType == ItemType.Empty) return;
+        //     final emptyIndex = player.getEmptyInventoryIndex();
+        //     if (emptyIndex == null) return;
+        //     player.inventory[emptyIndex] = player.headType;
+        //     player.headType = ItemType.Empty;
+        //     player.game.setCharacterStateChanging(player);
+        //     player.writePlayerInventory();
+        //     break;
+        //   case InventoryRequest.Unequip_Body:
+        //     if (player.bodyType == ItemType.Empty) return;
+        //     final emptyIndex = player.getEmptyInventoryIndex();
+        //     if (emptyIndex == null) return;
+        //     player.inventory[emptyIndex] = player.bodyType;
+        //     player.bodyType = ItemType.Empty;
+        //     player.game.setCharacterStateChanging(player);
+        //     player.writePlayerInventory();
+        //     break;
+        //   case InventoryRequest.Equip:
+        //     final index = int.tryParse(arguments[2]);
+        //     if (index == null){
+        //       return errorInvalidArg('index is null');
+        //     }
+        //     if (index < 0 || index >= player.inventory.length){
+        //       return errorInvalidArg('index out of bounds');
+        //     }
+        //     final itemType = player.inventory[index];
+        //     var swapped = false;
+        //
+        //     if (ItemType.isTypeWeapon(itemType)){
+        //        final currentWeapon = player.weaponType;
+        //        player.weaponType = itemType;
+        //        player.inventory[index] = currentWeapon;
+        //        swapped = true;
+        //        player.writePlayerWeaponType();
+        //     }
+        //
+        //     if (ItemType.isTypeBody(itemType)){
+        //       final current = player.bodyType;
+        //       player.bodyType = itemType;
+        //       player.inventory[index] = current;
+        //       swapped = true;
+        //     }
+        //
+        //     if (ItemType.isTypeHead(itemType)){
+        //       final current = player.headType;
+        //       player.headType = itemType;
+        //       player.inventory[index] = current;
+        //       swapped = true;
+        //     }
+        //
+        //     if (ItemType.isTypeLegs(itemType)){
+        //       final current = player.legsType;
+        //       player.legsType = itemType;
+        //       player.inventory[index] = current;
+        //       swapped = true;
+        //     }
+        //
+        //     if (swapped) {
+        //       player.game.setCharacterStateChanging(player);
+        //       player.writePlayerInventory();
+        //     }
+        //     break;
+        //
+        // }
+        // break;
 
       case ClientRequest.Teleport:
         handleClientRequestTeleport(player);
@@ -468,6 +470,151 @@ class Connection {
           break;
 
       default:
+        break;
+    }
+  }
+
+  void handleRequestInventory(Player player, List<String> arguments){
+    if (arguments.length < 2)  return errorArgsExpected(3, arguments);
+    if (player.deadBusyOrUsingWeapon) return;
+    final inventoryRequest = int.tryParse(arguments[1]);
+    switch (inventoryRequest){
+      case InventoryRequest.Drop:
+        final index = int.tryParse(arguments[2]);
+        if (index == null) return errorInvalidArg('index == null');
+        if (index < 0) return errorInvalidArg('index < 0');
+        if (index >= player.inventory.length) return errorInvalidArg('index >= player.inventory.length');
+        player.game.spawnGameObjectItemAtPosition(
+          position: player,
+          type: player.inventory[index],
+        );
+        player.inventory[index] = ItemType.Empty;
+        player.writePlayerInventory();
+        player.writePlayerEvent(PlayerEvent.Item_Dropped);
+        break;
+      case InventoryRequest.Move:
+        if (player.deadBusyOrUsingWeapon) return;
+        if (arguments.length < 4)  return errorArgsExpected(4, arguments);
+        final indexFrom = int.tryParse(arguments[2]);
+        final indexTo = int.tryParse(arguments[3]);
+        if (indexFrom == null) return errorInvalidArg('index from is null');
+        if (indexTo == null) return errorInvalidArg('index from is null');
+        if (indexFrom < 0) return errorInvalidArg('invalid inventory from index');
+        if (indexTo < 0) return errorInvalidArg('invalid inventory to index');
+
+        if (indexFrom == ItemType.Equipped_Body) {
+          if (player.inventory[indexTo] == ItemType.Empty) {
+            player.inventory[indexTo] = player.bodyType;
+            player.bodyType = ItemType.Empty;
+            player.writePlayerInventory();
+            player.writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
+            return;
+          }
+          if (ItemType.isTypeBody(player.inventory[indexTo])) {
+            final toType = player.inventory[indexTo];
+            player.inventory[indexTo] = player.bodyType;
+            player.bodyType = toType;
+            player.writePlayerInventory();
+            player.writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
+            return;
+          }
+          final availableIndex = player.getEmptyInventoryIndex();
+          if (availableIndex != null){
+            player.inventory[availableIndex] = player.bodyType;
+            player.bodyType = ItemType.Empty;
+            player.writePlayerInventory();
+            player.writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
+            return;
+          }
+          return;
+        }
+
+        final inventory = player.inventory;
+        if (indexFrom >= inventory.length) return errorInvalidArg('invalid inventory from index');
+        if (indexTo >= inventory.length) return errorInvalidArg('invalid inventory to index');
+        final typeFrom = inventory[indexFrom];
+        final typeTo = inventory[indexTo];
+        if (typeFrom == ItemType.Empty && typeTo == ItemType.Empty) return;
+        inventory[indexFrom] = typeTo;
+        inventory[indexTo] = typeFrom;
+        player.writePlayerInventory();
+        player.writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
+        break;
+
+      case InventoryRequest.Unequip_Weapon:
+        if (player.weaponType == ItemType.Empty) return;
+        for (var i = 0; i < player.inventory.length; i++){
+          if (player.inventory[i] != ItemType.Empty) continue;
+          player.inventory[i] = player.weaponType;
+          player.weaponType = ItemType.Empty;
+          player.writePlayerWeaponType();
+          player.game.setCharacterStateChanging(player);
+          player.writePlayerInventory();
+          break;
+        }
+        break;
+      case InventoryRequest.Unequip_Head:
+        if (player.headType == ItemType.Empty) return;
+        final emptyIndex = player.getEmptyInventoryIndex();
+        if (emptyIndex == null) return;
+        player.inventory[emptyIndex] = player.headType;
+        player.headType = ItemType.Empty;
+        player.game.setCharacterStateChanging(player);
+        player.writePlayerInventory();
+        break;
+      case InventoryRequest.Unequip_Body:
+        if (player.bodyType == ItemType.Empty) return;
+        final emptyIndex = player.getEmptyInventoryIndex();
+        if (emptyIndex == null) return;
+        player.inventory[emptyIndex] = player.bodyType;
+        player.bodyType = ItemType.Empty;
+        player.game.setCharacterStateChanging(player);
+        player.writePlayerInventory();
+        break;
+      case InventoryRequest.Equip:
+        final index = int.tryParse(arguments[2]);
+        if (index == null){
+          return errorInvalidArg('index is null');
+        }
+        if (index < 0 || index >= player.inventory.length){
+          return errorInvalidArg('index out of bounds');
+        }
+        final itemType = player.inventory[index];
+        var swapped = false;
+
+        if (ItemType.isTypeWeapon(itemType)){
+          final currentWeapon = player.weaponType;
+          player.weaponType = itemType;
+          player.inventory[index] = currentWeapon;
+          swapped = true;
+          player.writePlayerWeaponType();
+        }
+
+        if (ItemType.isTypeBody(itemType)){
+          final current = player.bodyType;
+          player.bodyType = itemType;
+          player.inventory[index] = current;
+          swapped = true;
+        }
+
+        if (ItemType.isTypeHead(itemType)){
+          final current = player.headType;
+          player.headType = itemType;
+          player.inventory[index] = current;
+          swapped = true;
+        }
+
+        if (ItemType.isTypeLegs(itemType)){
+          final current = player.legsType;
+          player.legsType = itemType;
+          player.inventory[index] = current;
+          swapped = true;
+        }
+
+        if (swapped) {
+          player.game.setCharacterStateChanging(player);
+          player.writePlayerInventory();
+        }
         break;
     }
   }
