@@ -204,6 +204,17 @@ class Connection {
         if (indexTo == null) return errorInvalidArg('index from is null');
         if (indexFrom < 0) return errorInvalidArg('invalid inventory from index');
         if (indexTo < 0) return errorInvalidArg('invalid inventory to index');
+
+        if (indexFrom == ItemType.Equipped_Body){
+          if (player.inventory[indexTo] == ItemType.Empty) {
+            player.inventory[indexTo] = player.bodyType;
+            player.bodyType = ItemType.Empty;
+            player.writePlayerInventory();
+            player.writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
+            return;
+          }
+        }
+
         final inventory = player.inventory;
         if (indexFrom >= inventory.length) return errorInvalidArg('invalid inventory from index');
         if (indexTo >= inventory.length) return errorInvalidArg('invalid inventory to index');

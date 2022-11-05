@@ -29,38 +29,65 @@ class GameInventoryUI {
 
   static Row buildRowEquippedItems() => Row(
         children: [
-          buildDragTargetWeapon(),
-          buildDragTargetBody(),
-          buildDragTargetHead(),
-          buildDragTargetLegs(),
+          buildContainerEquippedWeapon(),
+          buildContainerEquippedBody(),
+          buildContainerEquippedHead(),
+          buildContainerEquippedLegs(),
         ],
       );
 
-  static Widget buildDragTargetWeapon() => onPressed(
+  static Widget buildContainerEquippedWeapon() => onPressed(
       action: GameNetwork.sendClientRequestInventoryUnequipWeapon,
-      child: buildDragTarget(GamePlayer.weapon)
+      child: buildDragTarget(GamePlayer.weapon, ItemType.Equipped_Weapon)
   );
 
-  static Widget buildDragTargetBody() => onPressed(
+  static Widget buildContainerEquippedBody() => onPressed(
       action: GameNetwork.sendClientRequestInventoryUnequipBody,
-      child: buildDragTarget(GamePlayer.body)
+      child: buildDragTarget(GamePlayer.body, ItemType.Equipped_Body)
   );
 
-  static Widget buildDragTargetHead() => onPressed(
+  static Widget buildContainerEquippedHead() => onPressed(
       action: GameNetwork.sendClientRequestInventoryUnequipHead,
-      child: buildDragTarget(GamePlayer.head)
+      child: buildDragTarget(GamePlayer.head, ItemType.Equipped_Head)
   );
 
-  static Widget buildDragTargetLegs() => onPressed(
+  static Widget buildContainerEquippedLegs() => onPressed(
       action: GameNetwork.sendClientRequestInventoryUnequipLegs,
-      child: buildDragTarget(GamePlayer.legs)
+      child: buildDragTarget(GamePlayer.legs, ItemType.Equipped_Legs)
   );
 
-  static Widget buildDragTarget(Watch<int> watchInt) =>
+  static Widget buildDragTarget(Watch<int> watchInt, int index) =>
       DragTarget<int>(
-        builder: (context, i, a) => watch(watchInt, buildContainerItemType),
+        builder: (context, i, a) => watch(watchInt, (int itemType) => buildContainerEquippedItemType(itemType, index)),
         onWillAccept: onDragWillAccept,
         onAccept: onDragAccept,
+      );
+
+
+  static Widget buildContainerEquippedItemType(int itemType, int index) =>
+      Draggable(
+        data: index,
+        feedback: buildItemTypeAtlasImage(itemType: itemType, scale: Slot_Item_Scale),
+        hitTestBehavior: HitTestBehavior.opaque,
+        child: MouseRegion(
+          onEnter: (event){
+            Engine.mousePosition.x = event.position.dx;
+            Engine.mousePosition.y = event.position.dy;
+            itemTypeHover.value = itemType;
+          },
+          onExit: (_){
+            if (itemTypeHover.value == itemType){
+              itemTypeHover.value = ItemType.Empty;
+            }
+          },
+          child: Container(
+            color: brownLight,
+            width: 100,
+            height: 100,
+            padding: const EdgeInsets.all(6),
+            child: buildItemTypeAtlasImage(itemType: itemType, scale: 2.5),
+          ),
+        ),
       );
 
   static Widget buildContainerInventory() =>
@@ -74,27 +101,6 @@ class GameInventoryUI {
             buildStackSlotGrid(),
             watch(GameInventory.reads, buildStackInventoryItems),
           ],
-        ),
-      );
-
-  static Widget buildContainerItemType(int itemType) =>
-      MouseRegion(
-        onEnter: (event){
-          Engine.mousePosition.x = event.position.dx;
-          Engine.mousePosition.y = event.position.dy;
-          itemTypeHover.value = itemType;
-        },
-        onExit: (_){
-          if (itemTypeHover.value == itemType){
-            itemTypeHover.value = ItemType.Empty;
-          }
-        },
-        child: Container(
-          color: brownLight,
-          width: 100,
-          height: 100,
-          padding: const EdgeInsets.all(6),
-          child: buildItemTypeAtlasImage(itemType: itemType, scale: 2.5),
         ),
       );
 
@@ -166,11 +172,11 @@ class GameInventoryUI {
         index: i,
         child: DragTarget<int>(
           onWillAccept: (int? index) => index != null,
-          onAccept: (int? toIndex){
-            if (toIndex == null) return;
+          onAccept: (int? indexFrom){
+            if (indexFrom == null) return;
             GameNetwork.sendClientRequestInventoryMove(
-              indexFrom: i,
-              indexTo: toIndex,
+              indexFrom: indexFrom,
+              indexTo: i,
             );
           },
           builder: (context, candidate, index){

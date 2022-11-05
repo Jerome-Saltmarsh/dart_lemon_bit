@@ -25,7 +25,7 @@ class ItemType {
       value == ItemType.Empty || (value >= Index_Weapon_Melee && value < Index_Weapon_Ranged);
 
   static bool isTypeWeaponRanged(int value) =>
-      value >= Index_Weapon_Ranged;
+      value >= Index_Weapon_Ranged && value < Index_Equipped;
 
   static bool isSingleHandedFirearm(int weaponType) =>
       weaponType == Weapon_Ranged_Handgun ||
@@ -35,14 +35,22 @@ class ItemType {
       weaponType == Weapon_Ranged_Bow ||
           weaponType == Weapon_Ranged_Shotgun ;
 
-  static const Empty = 0;
-  static const Index_Consumables = 00001;
+  static const Empty = 00000;
+
+  static const Index_Consumables = 00005;
   static const Index_Resources = 05001;
   static const Index_Heads = 10000;
   static const Index_Bodies = 20000;
   static const Index_Legs = 30000;
   static const Index_Weapon_Melee = 40000;
   static const Index_Weapon_Ranged = 45000;
+  static const Index_Equipped = 65000;
+
+  static const Index_Equipped_Head = Index_Equipped + 0;
+  static const Equipped_Head = Index_Equipped + 1;
+  static const Equipped_Body = Index_Equipped + 2;
+  static const Equipped_Legs = Index_Equipped + 3;
+  static const Equipped_Weapon = Index_Equipped + 4;
 
   static const Consumable_Health_Potion_05 = Index_Consumables + 0;
   static const Consumable_Health_Potion_10 = Index_Consumables + 1;
