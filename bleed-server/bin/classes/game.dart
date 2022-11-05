@@ -1624,7 +1624,11 @@ abstract class Game {
         required double z,
         required int type,
   }){
-    if (type == ItemType.Empty) return;
+    assert (type != ItemType.Empty);
+    assert (type != ItemType.Equipped_Legs);
+    assert (type != ItemType.Equipped_Body);
+    assert (type != ItemType.Equipped_Head);
+    assert (type != ItemType.Equipped_Weapon);
     spawnGameObject(x: x, y: y, z: z, type: GameObjectType.Item, subType: type);
   }
 
@@ -1635,9 +1639,7 @@ abstract class Game {
     required int type,
     int subType = 0,
   }){
-    assert (type != GameObjectType.Item || subType != ItemType.Empty);
-
-    for (final gameObject in gameObjects){
+    for (final gameObject in gameObjects) {
        if (gameObject.active) continue;
        gameObject.x = x;
        gameObject.y = y;
