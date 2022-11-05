@@ -97,39 +97,6 @@ Widget buildWatchWeaponInformation(){
    });
 }
 
-// Widget buildColumnSelectPlayerHead(){
-//    return Column(
-//       children: HeadType.values.map(buildButtonSelectPlayerHead).toList(),
-//    );
-// }
-
-// Widget buildColumnSelectPlayerPants(){
-//   return Column(
-//     children: LegType.values.map(_buildButtonPants).toList(),
-//   );
-// }
-
-// Widget buildButtonSelectPlayerHead(int headType) {
-//    return watch(GamePlayer.headType, (int playerHeadType){
-//       return container(
-//           child: text(HeadType.getName(headType)),
-//           action: () => GameNetwork.sendClientRequestSetHeadType(headType),
-//           color: headType == playerHeadType ? greyDark : grey,
-//       );
-//    });
-// }
-
-// Widget _buildButtonPants(int pantsType) {
-//   return watch(GamePlayer.pantsType, (int playerPantsType){
-//     return container(
-//       child: text(LegType.getName(pantsType)),
-//       action: () => GameNetwork.sendClientRequestSetPantsType(pantsType),
-//       color: pantsType == playerPantsType ? green : grey,
-//     );
-//   });
-// }
-
-
 Widget _buildButtonPurchaseWeapon(Weapon weapon) {
   return MouseRegion(
     onEnter: (event){

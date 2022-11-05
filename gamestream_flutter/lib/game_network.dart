@@ -303,14 +303,6 @@ class GameNetwork {
       ClientRequest.GameObject, "${GameObjectRequest.Add.index} $index $type",
     );
 
-  static void sendClientInventoryRequest({
-    required int inventoryRequest,
-    int? message,
-  }) =>
-    sendClientRequest(
-      ClientRequest.Inventory, "$inventoryRequest $message",
-    );
-
   static void sendClientRequestInventoryEquip(int index) =>
       sendClientRequest(
         ClientRequest.Inventory, "${InventoryRequest.Equip} $index",

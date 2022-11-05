@@ -10,14 +10,17 @@ class GameInventoryUI {
   static const Slot_Item_Scale = Slot_Scale * 0.9;
   static const ColumnsPerRow = 8;
   static final itemTypeHover = Watch(ItemType.Empty);
+  static var mouseOverInventory = false;
 
   static Widget buildInventoryUI() =>
       MouseRegion(
         onEnter: (event){
           GameCanvas.cursorVisible = false;
+          mouseOverInventory = true;
         },
         onExit: (event){
           GameCanvas.cursorVisible = true;
+          mouseOverInventory = false;
         },
         child: Column(
           children: [
@@ -142,6 +145,7 @@ class GameInventoryUI {
         },
         child: Draggable<int>(
           onDraggableCanceled: (velocity, offset){
+            if (mouseOverInventory) return;
             GameNetwork.sendClientRequestInventoryDrop(index);
           },
           hitTestBehavior: HitTestBehavior.opaque,

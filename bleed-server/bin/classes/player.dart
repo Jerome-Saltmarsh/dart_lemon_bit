@@ -163,6 +163,15 @@ class Player extends Character with ByteWriter {
     writeNpcTalk(text: message, options: responses);
   }
 
+  bool isValidInventoryIndex(int? index) =>
+      index != null &&
+      index >= 0 &&
+      (
+          index == ItemType.isTypeEquipped(index) ||
+          index < inventory.length
+      );
+
+
   void setStoreItems(List<int> values){
     if (values.isNotEmpty){
       interactingWithNpc = true;
@@ -308,6 +317,45 @@ class Player extends Character with ByteWriter {
     bodyType = ItemType.Empty;
     game.setCharacterStateChanging(this);
     writePlayerInventory();
+  }
+  
+  void inventoryEquip(int index){
+    final itemType = inventory[index];
+    var swapped = false;
+
+    if (ItemType.isTypeWeapon(itemType)){
+      final currentWeapon = weaponType;
+      weaponType = itemType;
+      inventory[index] = currentWeapon;
+      swapped = true;
+      writePlayerWeaponType();
+    }
+
+    if (ItemType.isTypeBody(itemType)){
+      final current = bodyType;
+      bodyType = itemType;
+      inventory[index] = current;
+      swapped = true;
+    }
+
+    if (ItemType.isTypeHead(itemType)){
+      final current = headType;
+      headType = itemType;
+      inventory[index] = current;
+      swapped = true;
+    }
+
+    if (ItemType.isTypeLegs(itemType)){
+      final current = legsType;
+      legsType = itemType;
+      inventory[index] = current;
+      swapped = true;
+    }
+
+    if (swapped) {
+      game.setCharacterStateChanging(this);
+      writePlayerInventory();
+    }
   }
 
   void toggleDebug(){

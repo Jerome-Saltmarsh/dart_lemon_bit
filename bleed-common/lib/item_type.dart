@@ -3,6 +3,13 @@ class ItemType {
   static bool isTypeEmpty(int value) => value == Empty;
   static bool isNotTypeEmpty(int value) => value != Empty;
 
+  static bool isTypeEquipped(int value) =>
+    value == Equipped_Weapon ||
+    value == Equipped_Head ||
+    value == Equipped_Body ||
+    value == Equipped_Legs ||
+    value == Equipped_Weapon;
+
   static bool isTypeConsumable(int value) =>
       value >= Index_Consumables && value < Index_Resources;
 

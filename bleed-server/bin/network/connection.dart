@@ -510,48 +510,15 @@ class Connection {
         break;
       case InventoryRequest.Equip:
         final index = int.tryParse(arguments[2]);
-        if (index == null){
-          return errorInvalidArg('index is null');
+        if (index == null) {
+          errorInvalidArg('index is null');
+          return;
         }
-        if (index < 0 || index >= player.inventory.length){
-          return errorInvalidArg('index out of bounds');
+        if (index < 0 || index >= player.inventory.length) {
+          errorInvalidArg('index inventory index');
+          return;
         }
-        final itemType = player.inventory[index];
-        var swapped = false;
-
-        if (ItemType.isTypeWeapon(itemType)){
-          final currentWeapon = player.weaponType;
-          player.weaponType = itemType;
-          player.inventory[index] = currentWeapon;
-          swapped = true;
-          player.writePlayerWeaponType();
-        }
-
-        if (ItemType.isTypeBody(itemType)){
-          final current = player.bodyType;
-          player.bodyType = itemType;
-          player.inventory[index] = current;
-          swapped = true;
-        }
-
-        if (ItemType.isTypeHead(itemType)){
-          final current = player.headType;
-          player.headType = itemType;
-          player.inventory[index] = current;
-          swapped = true;
-        }
-
-        if (ItemType.isTypeLegs(itemType)){
-          final current = player.legsType;
-          player.legsType = itemType;
-          player.inventory[index] = current;
-          swapped = true;
-        }
-
-        if (swapped) {
-          player.game.setCharacterStateChanging(player);
-          player.writePlayerInventory();
-        }
+        player.inventoryEquip(index);
         break;
       default:
         return errorInvalidArg('unrecognized inventory request $inventoryRequest');
