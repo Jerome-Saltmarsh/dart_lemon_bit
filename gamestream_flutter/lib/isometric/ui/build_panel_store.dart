@@ -129,6 +129,7 @@ Widget buildWatchWeaponInformation(){
 //   });
 // }
 
+
 Widget _buildButtonPurchaseWeapon(Weapon weapon) {
   return MouseRegion(
     onEnter: (event){

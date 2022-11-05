@@ -115,6 +115,7 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
     this.team = team;
   }
 
+
   void setCharacterStatePerforming({required int duration}){
     setCharacterState(value: CharacterState.Performing, duration: duration);
   }

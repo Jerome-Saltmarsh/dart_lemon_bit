@@ -228,6 +228,45 @@ class Player extends Character with ByteWriter {
     game.characters.add(this);
   }
 
+  void inventoryMove(int indexFrom, int indexTo){
+    if (indexFrom == ItemType.Equipped_Body) {
+      if (inventory[indexTo] == ItemType.Empty) {
+        inventory[indexTo] = bodyType;
+        bodyType = ItemType.Empty;
+        writePlayerInventory();
+        writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
+        return;
+      }
+      if (ItemType.isTypeBody(inventory[indexTo])) {
+        final toType = inventory[indexTo];
+        inventory[indexTo] = bodyType;
+        bodyType = toType;
+        writePlayerInventory();
+        writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
+        return;
+      }
+      final availableIndex = getEmptyInventoryIndex();
+      if (availableIndex != null){
+        inventory[availableIndex] = bodyType;
+        bodyType = ItemType.Empty;
+        writePlayerInventory();
+        writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
+        return;
+      }
+      return;
+    }
+
+    if (indexFrom >= inventory.length) return;
+    if (indexTo >= inventory.length) return;
+    final typeFrom = inventory[indexFrom];
+    final typeTo = inventory[indexTo];
+    if (typeFrom == ItemType.Empty && typeTo == ItemType.Empty) return;
+    inventory[indexFrom] = typeTo;
+    inventory[indexTo] = typeFrom;
+    writePlayerInventory();
+    writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
+  }
+
   void toggleDebug(){
     debug = !debug;
     writeByte(ServerResponse.Debug_Mode);

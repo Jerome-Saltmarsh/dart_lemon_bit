@@ -478,7 +478,10 @@ class Connection {
     if (arguments.length < 2)  return errorArgsExpected(3, arguments);
     if (player.deadBusyOrUsingWeapon) return;
     final inventoryRequest = int.tryParse(arguments[1]);
-    switch (inventoryRequest){
+
+    if (inventoryRequest == null) return errorInvalidArg('inventory request is null');
+
+    switch (inventoryRequest) {
       case InventoryRequest.Drop:
         final index = int.tryParse(arguments[2]);
         if (index == null) return errorInvalidArg('index == null');
@@ -493,7 +496,6 @@ class Connection {
         player.writePlayerEvent(PlayerEvent.Item_Dropped);
         break;
       case InventoryRequest.Move:
-        if (player.deadBusyOrUsingWeapon) return;
         if (arguments.length < 4)  return errorArgsExpected(4, arguments);
         final indexFrom = int.tryParse(arguments[2]);
         final indexTo = int.tryParse(arguments[3]);
@@ -501,46 +503,8 @@ class Connection {
         if (indexTo == null) return errorInvalidArg('index from is null');
         if (indexFrom < 0) return errorInvalidArg('invalid inventory from index');
         if (indexTo < 0) return errorInvalidArg('invalid inventory to index');
-
-        if (indexFrom == ItemType.Equipped_Body) {
-          if (player.inventory[indexTo] == ItemType.Empty) {
-            player.inventory[indexTo] = player.bodyType;
-            player.bodyType = ItemType.Empty;
-            player.writePlayerInventory();
-            player.writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
-            return;
-          }
-          if (ItemType.isTypeBody(player.inventory[indexTo])) {
-            final toType = player.inventory[indexTo];
-            player.inventory[indexTo] = player.bodyType;
-            player.bodyType = toType;
-            player.writePlayerInventory();
-            player.writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
-            return;
-          }
-          final availableIndex = player.getEmptyInventoryIndex();
-          if (availableIndex != null){
-            player.inventory[availableIndex] = player.bodyType;
-            player.bodyType = ItemType.Empty;
-            player.writePlayerInventory();
-            player.writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
-            return;
-          }
-          return;
-        }
-
-        final inventory = player.inventory;
-        if (indexFrom >= inventory.length) return errorInvalidArg('invalid inventory from index');
-        if (indexTo >= inventory.length) return errorInvalidArg('invalid inventory to index');
-        final typeFrom = inventory[indexFrom];
-        final typeTo = inventory[indexTo];
-        if (typeFrom == ItemType.Empty && typeTo == ItemType.Empty) return;
-        inventory[indexFrom] = typeTo;
-        inventory[indexTo] = typeFrom;
-        player.writePlayerInventory();
-        player.writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
+        player.inventoryMove(indexFrom, indexTo);
         break;
-
       case InventoryRequest.Unequip_Weapon:
         if (player.weaponType == ItemType.Empty) return;
         for (var i = 0; i < player.inventory.length; i++){
@@ -616,6 +580,8 @@ class Connection {
           player.writePlayerInventory();
         }
         break;
+      default:
+        return errorInvalidArg('unrecognized inventory request $inventoryRequest');
     }
   }
 
