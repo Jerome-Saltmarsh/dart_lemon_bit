@@ -1140,9 +1140,9 @@ class GameState {
 
     final playerCharacter = getPlayerCharacter();
     if (playerCharacter == null) return;
-    final velocityX = GamePlayer.position.x - player.previousPosition.x;
-    final velocityY = GamePlayer.position.y - player.previousPosition.y;
-    final velocityZ = GamePlayer.position.z - player.previousPosition.z;
+    final velocityX = GamePlayer.position.x - GamePlayer.previousPosition.x;
+    final velocityY = GamePlayer.position.y - GamePlayer.previousPosition.y;
+    final velocityZ = GamePlayer.position.z - GamePlayer.previousPosition.z;
     playerCharacter.x += velocityX;
     playerCharacter.y += velocityY;
     playerCharacter.z -= velocityZ;

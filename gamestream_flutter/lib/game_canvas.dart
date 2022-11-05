@@ -30,10 +30,10 @@ class GameCanvas {
     }
 
     const style = TextStyle(color: Colors.white, fontSize: 18);
-    switch (GameState.player.aimTargetCategory) {
+    switch (GamePlayer.aimTargetCategory) {
       case TargetCategory.GameObject:
         Engine.renderText(
-          ItemType.getName(GameState.player.aimTargetSubType),
+          ItemType.getName(GamePlayer.aimTargetSubType),
           Engine.worldToScreenX(GameState.player.aimTargetPosition.renderX),
           Engine.worldToScreenY(GameState.player.aimTargetPosition.renderY),
           style: style,
@@ -58,12 +58,13 @@ class GameCanvas {
     }
   }
 
+
   static void renderCursor(Canvas canvas) {
-    switch (GameState.player.aimTargetCategory) {
+    switch (GamePlayer.aimTargetCategory) {
       case TargetCategory.Nothing:
         GameRender.canvasRenderCursorCrossHair(canvas, 5 + GameState.player.weaponCooldown.value * 10);
         break;
-      case TargetCategory.GameObject:
+      case TargetCategory.Item:
         GameRender.canvasRenderCursorHand(canvas);
         return;
       case TargetCategory.Allie:
@@ -92,7 +93,7 @@ class GameCanvas {
 
   static void renderPlayerRunTarget(){
     if (GamePlayer.runningToTarget){
-      GameRender.renderCircle32(GamePlayer.target.x, GamePlayer.target.y, GamePlayer.target.z);
+      GameRender.renderCircle32(GamePlayer.targetPosition.x, GamePlayer.targetPosition.y, GamePlayer.targetPosition.z);
     }
   }
 }

@@ -53,7 +53,10 @@ class Player extends Character with ByteWriter {
     if (_aimTarget == collider) return;
     if (collider == this) return;
     _aimTarget = collider;
-    writePlayerAimTarget();
+    writePlayerAimTargetCategory();
+    writePlayerAimTargetType();
+    writePlayerAimTargetPosition();
+    writePlayerAimTargetName();
   }
 
   static const InventorySize = 40;
@@ -410,18 +413,85 @@ class Player extends Character with ByteWriter {
   }
 
   void writePlayerTargetCategory(){
-    if (target == null) return;
     writeByte(ServerResponse.Player);
-    writeByte(ApiPlayer.Target_Position);
-    writePosition3(target!);
+    writeByte(ApiPlayer.Target_Category);
+    writeByte(getCategory(target));
   }
 
-  int get targetCategory {
-    if (target == null) return TargetCategory.Nothing;
-    if (targetIsAlly) return TargetCategory.Allie;
-    if (targetIsEnemy) return TargetCategory.Enemy;
-    if (target is GameObject) return TargetCategory.GameObject;
+  void writePlayerAimTargetPosition(){
+    if (aimTarget == null) return;
+    writeByte(ServerResponse.Player);
+    writeByte(ApiPlayer.Aim_Target_Position);
+    writePosition3(aimTarget!);
+  }
+
+  void writePlayerAimTargetCategory() {
+    writeByte(ServerResponse.Player);
+    writeByte(ApiPlayer.Aim_Target_Category);
+    writeByte(getCategory(aimTarget));
+  }
+
+  void writePlayerAimTargetType() {
+    if (aimTarget == null) return;
+    if (aimTarget is GameObject){
+      writeByte(ServerResponse.Player);
+      writeByte(ApiPlayer.Aim_Target_Type);
+       if ((aimTarget as GameObject).isItem) {
+          writeUInt16((aimTarget as GameObject).subType);
+       } else {
+         writeUInt16((aimTarget as GameObject).type);
+       }
+    }
+    if (aimTarget is Character) {
+      writeByte(ServerResponse.Player);
+      writeByte(ApiPlayer.Aim_Target_Type);
+      writeUInt16((aimTarget as Character).type);
+    }
+  }
+
+  void writePlayerAimTargetName() {
+    if (aimTarget == null) return;
+
+    if (aimTarget is Player){
+      writeByte(ServerResponse.Player);
+      writeByte(ApiPlayer.Aim_Target_Name);
+      writeString((aimTarget as Player).name);
+      return;
+    }
+    if (aimTarget is Npc){
+      writeByte(ServerResponse.Player);
+      writeByte(ApiPlayer.Aim_Target_Name);
+      writeString((aimTarget as Npc).name);
+      return;
+    }
+  }
+
+  int getCategory(Position3? value){
+    if (value == null) return TargetCategory.Nothing;
+    if (isAllie(value)) return TargetCategory.Allie;
+    if (isEnemy(value)) return TargetCategory.Enemy;
+    if (value is GameObject) {
+       if (value.type == GameObjectType.Item) return TargetCategory.Item;
+       return TargetCategory.GameObject;
+    }
     return TargetCategory.Nothing;
+  }
+
+  bool isAllie(Position3? value){
+    if (value == null) return false;
+    if (value == this) return true;
+    if (value is Team == false) return false;
+    final targetTeam = (value as Team).team;
+    if (targetTeam == 0) return false;
+    return team == targetTeam;
+  }
+
+  bool isEnemy(Position3? value) {
+    if (value == null) return false;
+    if (value is Team == false) return false;
+    final targetTeam = (value as Team).team;
+    if (targetTeam == 0) return true;
+    return team != targetTeam;
   }
 
   void writeProjectiles(){
@@ -780,42 +850,42 @@ class Player extends Character with ByteWriter {
     lookRadian = this.getAngle(position) + pi;
   }
 
-  void writePlayerAimTarget(){
-    final aimTarget = _aimTarget;
-    if (aimTarget is GameObject) {
-      writeByte(ServerResponse.Player);
-      writeByte(ApiPlayer.Aim_Target);
-      writeByte(TargetCategory.GameObject);
-      writeByte(aimTarget.type);
-      writeUInt16(aimTarget.subType);
-      writePosition3(aimTarget);
-      return;
-    }
-    if (aimTarget is Character) {
-      writeByte(ServerResponse.Player);
-      writeByte(ApiPlayer.Aim_Target);
-
-      if (onSameTeam(this, aimTarget)) {
-        writeByte(TargetCategory.Allie);
-        if (aimTarget is Npc){
-          writeString(aimTarget.name);
-        } else if (aimTarget is Player){
-          writeString(aimTarget.name);
-        } else {
-          writeString("");
-        }
-      } else {
-        writeByte(TargetCategory.Enemy);
-      }
-      writePosition3(aimTarget);
-      return;
-    }
-
-    _aimTarget = null;
-    writeByte(ServerResponse.Player);
-    writeByte(ApiPlayer.Aim_Target);
-    writeByte(TargetCategory.Nothing);
-  }
+  // void writePlayerAimTarget(){
+  //   final aimTarget = _aimTarget;
+  //   if (aimTarget is GameObject) {
+  //     writeByte(ServerResponse.Player);
+  //     writeByte(ApiPlayer.Aim_Target);
+  //     writeByte(TargetCategory.GameObject);
+  //     writeByte(aimTarget.type);
+  //     writeUInt16(aimTarget.subType);
+  //     writePosition3(aimTarget);
+  //     return;
+  //   }
+  //   if (aimTarget is Character) {
+  //     writeByte(ServerResponse.Player);
+  //     writeByte(ApiPlayer.Aim_Target);
+  //
+  //     if (onSameTeam(this, aimTarget)) {
+  //       writeByte(TargetCategory.Allie);
+  //       if (aimTarget is Npc){
+  //         writeString(aimTarget.name);
+  //       } else if (aimTarget is Player){
+  //         writeString(aimTarget.name);
+  //       } else {
+  //         writeString("");
+  //       }
+  //     } else {
+  //       writeByte(TargetCategory.Enemy);
+  //     }
+  //     writePosition3(aimTarget);
+  //     return;
+  //   }
+  //
+  //   _aimTarget = null;
+  //   writeByte(ServerResponse.Player);
+  //   writeByte(ApiPlayer.Aim_Target);
+  //   writeByte(TargetCategory.Nothing);
+  // }
 
 }
 

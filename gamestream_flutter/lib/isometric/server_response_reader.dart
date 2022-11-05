@@ -58,9 +58,6 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Debug_Mode:
           readDebugMode();
           break;
-        // case ServerResponse.Player_Aim_Target:
-        //   readPlayerAimTarget();
-        //   break;
         case ServerResponse.Damage_Applied:
           readDamageApplied();
           break;
@@ -202,18 +199,27 @@ class ServerResponseReader with ByteReader {
     final apiPlayer = readByte();
     switch (apiPlayer) {
       case ApiPlayer.Position:
-        GameState.player.previousPosition.x = GamePlayer.position.x;
-        GameState.player.previousPosition.y = GamePlayer.position.y;
-        GameState.player.previousPosition.z = GamePlayer.position.z;
+        GamePlayer.previousPosition.x = GamePlayer.position.x;
+        GamePlayer.previousPosition.y = GamePlayer.position.y;
+        GamePlayer.previousPosition.z = GamePlayer.position.z;
         readVector3(GamePlayer.position);
         break;
-      case ApiPlayer.Aim_Target:
-        readPlayerAimTarget();
+      case ApiPlayer.Aim_Target_Category:
+        GamePlayer.aimTargetCategory = readByte();
+        break;
+      case ApiPlayer.Aim_Target_Position:
+        readVector3(GamePlayer.aimTargetPosition);
+        break;
+      case ApiPlayer.Aim_Target_Type:
+        GamePlayer.aimTargetType = readUInt16();
         break;
 
+      case ApiPlayer.Aim_Target_Name:
+        GamePlayer.aimTargetName = readString();
+        break;
       case ApiPlayer.Target_Position:
         GamePlayer.runningToTarget = true;
-        readVector3(GamePlayer.target);
+        readVector3(GamePlayer.targetPosition);
         break;
       case ApiPlayer.Target_Category:
         GamePlayer.targetCategory = readByte();
@@ -485,31 +491,30 @@ class ServerResponseReader with ByteReader {
     GameState.spawnFloatingText(x, y, amount.toString());
   }
 
-
-  void readPlayerAimTarget() {
-    GameState.player.aimTargetChanged.value++;
-    final category = readByte();
-    GameState.player.aimTargetCategory = category;
-    switch (category) {
-      case TargetCategory.Nothing:
-        break;
-      case TargetCategory.GameObject:
-        GameState.player.aimTargetType = readByte();
-        GameState.player.aimTargetSubType = readUInt16();
-        readVector3(GameState.player.aimTargetPosition);
-        if (GameState.player.aimTargetType == GameObjectType.Item){
-          GameState.player.aimTargetText = ItemType.getName(GameState.player.aimTargetSubType);
-        }
-        break;
-      case TargetCategory.Allie:
-        GameState.player.aimTargetText = readString();
-        readVector3(GameState.player.aimTargetPosition);
-        break;
-      case TargetCategory.Enemy:
-        readVector3(GameState.player.aimTargetPosition);
-        break;
-    }
-  }
+  // void readPlayerAimTarget() {
+  //   GameState.player.aimTargetChanged.value++;
+  //   final category = readByte();
+  //   GameState.player.aimTargetCategory = category;
+  //   switch (category) {
+  //     case TargetCategory.Nothing:
+  //       break;
+  //     case TargetCategory.GameObject:
+  //       GameState.player.aimTargetType = readByte();
+  //       GameState.player.aimTargetSubType = readUInt16();
+  //       readVector3(GameState.player.aimTargetPosition);
+  //       if (GameState.player.aimTargetType == GameObjectType.Item){
+  //         GameState.player.aimTargetText = ItemType.getName(GameState.player.aimTargetSubType);
+  //       }
+  //       break;
+  //     case TargetCategory.Allie:
+  //       GameState.player.aimTargetText = readString();
+  //       readVector3(GameState.player.aimTargetPosition);
+  //       break;
+  //     case TargetCategory.Enemy:
+  //       readVector3(GameState.player.aimTargetPosition);
+  //       break;
+  //   }
+  // }
 
   void readDebugMode() {
     GameUI.debug.value = readBool();

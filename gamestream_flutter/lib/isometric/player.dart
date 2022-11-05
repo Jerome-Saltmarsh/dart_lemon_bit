@@ -4,12 +4,12 @@ import 'package:gamestream_flutter/services/mini_map.dart';
 
 import 'events/on_store_items_changed.dart';
 
+
 class Player {
   final weaponCooldown = Watch(1.0);
   final storeItems = Watch(<Weapon>[], onChanged: onPlayerStoreItemsChanged);
   final storeVisible = Watch(false, onChanged: GameEvents.onChangedStoreVisible);
   final interpolating = Watch(true);
-  final previousPosition = Vector3();
   final target = Vector3();
   final questAdded = Watch(false);
   var gameDialog = Watch<GameDialog?>(null, onChanged: onChangedGameDialog);
@@ -27,9 +27,9 @@ class Player {
   final abilityTarget = Vector3();
   final aimTargetPosition = Vector3();
   var aimTargetChanged = Watch(0);
-  var aimTargetCategory = TargetCategory.Nothing;
-  var aimTargetType = 0;
-  var aimTargetSubType = 0;
+  // var aimTargetCategory = TargetCategory.Nothing;
+  // var aimTargetType = 0;
+  // var aimTargetSubType = 0;
   var aimTargetText = "";
   final mouseTargetName = Watch<String?>(null);
   final mouseTargetAllie = Watch<bool>(false);
