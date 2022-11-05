@@ -130,7 +130,6 @@ abstract class Game {
     required int cursorAction,
     /// Right Click
     required bool perform2,
-    /// Space Bar
     required bool perform3,
     required double mouseX,
     required double mouseY,
@@ -167,10 +166,6 @@ abstract class Game {
           setCharacterTarget(player, aimTarget);
         }
       }
-    }
-
-    if (cursorAction == CursorAction.None){
-      playerRunInDirection(player, direction);
     }
 
     if (cursorAction == CursorAction.Stationary_Attack_Cursor){
@@ -233,7 +228,7 @@ abstract class Game {
   }
 
   void playerRunInDirection(Player player, int direction) {
-    if (direction == Direction.None && !player.targetSet) {
+    if (direction == Direction.None && player.target == null) {
       player.setCharacterStateIdle();
       return;
     }
