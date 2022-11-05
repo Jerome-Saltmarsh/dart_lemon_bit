@@ -294,6 +294,8 @@ class Player extends Character with ByteWriter {
     writeByte(ApiPlayer.Aim_Angle);
     writeAngle(mouseAngle);
 
+    writePlayerAimTargetPosition();
+
     // writePlayerSlots();
     // writeAimTarget();
     writeProjectiles();
