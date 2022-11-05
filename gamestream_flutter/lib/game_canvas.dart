@@ -36,16 +36,16 @@ class GameCanvas {
       case TargetCategory.Item:
         Engine.renderText(
           ItemType.getName(GamePlayer.aimTargetType),
-          Engine.worldToScreenX(GameState.player.aimTargetPosition.renderX),
-          Engine.worldToScreenY(GameState.player.aimTargetPosition.renderY),
+          Engine.worldToScreenX(GamePlayer.aimTargetPosition.renderX),
+          Engine.worldToScreenY(GamePlayer.aimTargetPosition.renderY),
           style: style,
         );
         break;
       case TargetCategory.Allie:
         Engine.renderText(
           GameState.player.aimTargetText,
-          Engine.worldToScreenX(GameState.player.aimTargetPosition.renderX),
-          Engine.worldToScreenY(GameState.player.aimTargetPosition.renderY),
+          Engine.worldToScreenX(GamePlayer.aimTargetPosition.renderX),
+          Engine.worldToScreenY(GamePlayer.aimTargetPosition.renderY),
           style: style,
         );
         break;

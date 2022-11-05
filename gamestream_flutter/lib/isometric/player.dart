@@ -25,7 +25,6 @@ class Player {
   var npcTalk = Watch<String?>(null, onChanged: onChangedNpcTalk);
   var npcTalkOptions = Watch<List<String>>([]);
   final abilityTarget = Vector3();
-  final aimTargetPosition = Vector3();
   var aimTargetChanged = Watch(0);
   // var aimTargetCategory = TargetCategory.Nothing;
   // var aimTargetType = 0;

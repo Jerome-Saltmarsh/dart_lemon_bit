@@ -742,8 +742,8 @@ class GameRender {
     if (mouseTargetName == null) return;
     renderText(
         text: mouseTargetName,
-        x: GameState.player.aimTargetPosition.renderX,
-        y: GameState.player.aimTargetPosition.renderY - 55);
+        x: GamePlayer.aimTargetPosition.renderX,
+        y: GamePlayer.aimTargetPosition.renderY - 55);
   }
 
   static void renderSprites() {
