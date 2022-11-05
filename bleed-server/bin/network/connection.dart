@@ -500,34 +500,13 @@ class Connection {
         player.inventoryMove(indexFrom, indexTo);
         break;
       case InventoryRequest.Unequip_Weapon:
-        if (player.weaponType == ItemType.Empty) return;
-        for (var i = 0; i < player.inventory.length; i++){
-          if (player.inventory[i] != ItemType.Empty) continue;
-          player.inventory[i] = player.weaponType;
-          player.weaponType = ItemType.Empty;
-          player.writePlayerWeaponType();
-          player.game.setCharacterStateChanging(player);
-          player.writePlayerInventory();
-          break;
-        }
+        player.inventoryUnequipWeapon();
         break;
       case InventoryRequest.Unequip_Head:
-        if (player.headType == ItemType.Empty) return;
-        final emptyIndex = player.getEmptyInventoryIndex();
-        if (emptyIndex == null) return;
-        player.inventory[emptyIndex] = player.headType;
-        player.headType = ItemType.Empty;
-        player.game.setCharacterStateChanging(player);
-        player.writePlayerInventory();
+        player.inventoryUnequipHead();
         break;
       case InventoryRequest.Unequip_Body:
-        if (player.bodyType == ItemType.Empty) return;
-        final emptyIndex = player.getEmptyInventoryIndex();
-        if (emptyIndex == null) return;
-        player.inventory[emptyIndex] = player.bodyType;
-        player.bodyType = ItemType.Empty;
-        player.game.setCharacterStateChanging(player);
-        player.writePlayerInventory();
+        player.inventoryUnequipBody();
         break;
       case InventoryRequest.Equip:
         final index = int.tryParse(arguments[2]);

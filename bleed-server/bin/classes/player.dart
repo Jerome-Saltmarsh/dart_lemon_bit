@@ -276,6 +276,39 @@ class Player extends Character with ByteWriter {
     writePlayerInventory();
     writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
   }
+  
+  void inventoryUnequipWeapon(){
+    if (weaponType == ItemType.Empty) return;
+    for (var i = 0; i < inventory.length; i++){
+      if (inventory[i] != ItemType.Empty) continue;
+      inventory[i] = weaponType;
+      weaponType = ItemType.Empty;
+      writePlayerWeaponType();
+      writePlayerInventory();
+      game.setCharacterStateChanging(this);
+      break;
+    }
+  }
+  
+  void inventoryUnequipHead(){
+    if (headType == ItemType.Empty) return;
+    final emptyIndex = getEmptyInventoryIndex();
+    if (emptyIndex == null) return;
+    inventory[emptyIndex] = headType;
+    headType = ItemType.Empty;
+    game.setCharacterStateChanging(this);
+    writePlayerInventory();
+  }
+  
+  void inventoryUnequipBody(){
+    if (bodyType == ItemType.Empty) return;
+    final emptyIndex = getEmptyInventoryIndex();
+    if (emptyIndex == null) return;
+    inventory[emptyIndex] = bodyType;
+    bodyType = ItemType.Empty;
+    game.setCharacterStateChanging(this);
+    writePlayerInventory();
+  }
 
   void toggleDebug(){
     debug = !debug;
