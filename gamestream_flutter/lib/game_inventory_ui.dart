@@ -32,6 +32,7 @@ class GameInventoryUI {
           buildDragTargetWeapon(),
           buildDragTargetBody(),
           buildDragTargetHead(),
+          buildDragTargetLegs(),
         ],
       );
 
@@ -51,7 +52,7 @@ class GameInventoryUI {
   );
 
   static Widget buildDragTargetLegs() => onPressed(
-      action: GameNetwork.sendClientRequestInventoryUnequipHead,
+      action: GameNetwork.sendClientRequestInventoryUnequipLegs,
       child: buildDragTarget(GamePlayer.legs)
   );
 

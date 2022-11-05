@@ -117,5 +117,11 @@ class ItemType {
      Resource_Ammo_9mm: "Ammo 9mm",
      Resource_Ammo_Shells: "Shells",
      Resource_Ammo_Arrows: "Arrows",
+     Legs_Brown: "Pants Brown",
+     Legs_Swat: "Pants Swat",
+     Legs_Green: "Pants Green",
+     Legs_Blue: "Pants Blue",
+     Legs_White: "Pants White",
+     Legs_Red: "Pants Red",
   }[value] ?? "item-type-unknown($value)";
 }

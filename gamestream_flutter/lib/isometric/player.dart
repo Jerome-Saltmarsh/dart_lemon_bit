@@ -26,10 +26,6 @@ class Player {
   var npcTalkOptions = Watch<List<String>>([]);
   final abilityTarget = Vector3();
   var aimTargetChanged = Watch(0);
-  // var aimTargetCategory = TargetCategory.Nothing;
-  // var aimTargetType = 0;
-  // var aimTargetSubType = 0;
-  var aimTargetText = "";
   final mouseTargetName = Watch<String?>(null);
   final mouseTargetAllie = Watch<bool>(false);
   final mouseTargetHealth = Watch(0.0);

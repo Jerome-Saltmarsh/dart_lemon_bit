@@ -43,7 +43,7 @@ class GameCanvas {
         break;
       case TargetCategory.Allie:
         Engine.renderText(
-          GameState.player.aimTargetText,
+          GamePlayer.aimTargetName,
           Engine.worldToScreenX(GamePlayer.aimTargetPosition.renderX),
           Engine.worldToScreenY(GamePlayer.aimTargetPosition.renderY),
           style: style,

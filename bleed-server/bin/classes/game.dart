@@ -1624,6 +1624,7 @@ abstract class Game {
         required double z,
         required int type,
   }){
+    if (type == ItemType.Empty) return;
     spawnGameObject(x: x, y: y, z: z, type: GameObjectType.Item, subType: type);
   }
 

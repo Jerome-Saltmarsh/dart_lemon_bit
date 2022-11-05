@@ -450,7 +450,7 @@ class GameRender {
           dstX: gameObject.renderX,
           dstY: gameObject.renderY,
           srcX: 0,
-          srcY: 80,
+          srcY: 96,
           srcWidth: 32,
           srcHeight: 32,
           color: GameState.getV3RenderColor(gameObject),

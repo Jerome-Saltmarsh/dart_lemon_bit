@@ -46,6 +46,10 @@ class GameDebug {
                                 "aim-target-position: ${GamePlayer.aimTargetPosition}\n"
                                 "target-category: ${TargetCategory.getName(GamePlayer.targetCategory)}\n"
                                 "target-position: ${GamePlayer.targetPosition}"
+                                "player-legs: ${ItemType.getName(GamePlayer.legs.value)}"
+                                "player-body: ${ItemType.getName(GamePlayer.body.value)}"
+                                "player-head: ${ItemType.getName(GamePlayer.head.value)}"
+                                "player-weapon: ${ItemType.getName(GamePlayer.weapon.value)}"
                             )),
                             Refresh(() => text('touch-world: x: ${GameIO.touchCursorWorldX.toInt()}, y: ${GameIO.touchCursorWorldY.toInt()}')),
                             Refresh(() => text('characters-total: ${GameState.characters.length}')),
