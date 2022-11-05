@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 
 import 'library.dart';
@@ -8,35 +9,47 @@ class GameInventoryUI {
   static const Slot_Size = 32.0;
   static const Slot_Scale = 1.5;
   static const Slot_Item_Scale = Slot_Scale * 0.9;
+  static const Equipped_Item_Scale = Slot_Scale * Engine.GoldenRatio_1_618;
   static const ColumnsPerRow = 8;
   static final itemTypeHover = Watch(ItemType.Empty);
   static var mouseOverInventory = false;
 
+  static void onMouseEnter(PointerEnterEvent event){
+    GameCanvas.cursorVisible = false;
+    mouseOverInventory = true;
+  }
+
+  static void onMouseExit(PointerExitEvent event){
+    GameCanvas.cursorVisible = true;
+    mouseOverInventory = false;
+  }
+
   static Widget buildInventoryUI() =>
       MouseRegion(
-        onEnter: (event){
-          GameCanvas.cursorVisible = false;
-          mouseOverInventory = true;
-        },
-        onExit: (event){
-          GameCanvas.cursorVisible = true;
-          mouseOverInventory = false;
-        },
+        onEnter: onMouseEnter,
+        onExit: onMouseExit,
         child: Column(
           children: [
-            buildRowEquippedItems(),
+            buildContainerEquippedItems(),
             buildContainerInventory(),
           ],
         ),
       );
 
-  static Row buildRowEquippedItems() => Row(
-        children: [
-          buildContainerEquippedWeapon(),
-          buildContainerEquippedBody(),
-          buildContainerEquippedHead(),
-          buildContainerEquippedLegs(),
-        ],
+  static Widget buildContainerEquippedItems() => Container(
+        width: 350,
+        height: 80.0,
+        color: brownDark,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            buildContainerEquippedWeapon(),
+            buildContainerEquippedBody(),
+            buildContainerEquippedHead(),
+            buildContainerEquippedLegs(),
+          ],
+        ),
       );
 
   static Widget buildContainerEquippedWeapon() => onPressed(
@@ -83,13 +96,7 @@ class GameInventoryUI {
               itemTypeHover.value = ItemType.Empty;
             }
           },
-          child: Container(
-            color: brownLight,
-            width: 100,
-            height: 100,
-            padding: const EdgeInsets.all(6),
-            child: buildItemTypeAtlasImage(itemType: itemType, scale: 2.5),
-          ),
+          child: buildItemTypeAtlasImage(itemType: itemType, scale: Equipped_Item_Scale),
         ),
       );
 
