@@ -487,13 +487,7 @@ class Connection {
         if (index == null) return errorInvalidArg('index == null');
         if (index < 0) return errorInvalidArg('index < 0');
         if (index >= player.inventory.length) return errorInvalidArg('index >= player.inventory.length');
-        player.game.spawnGameObjectItemAtPosition(
-          position: player,
-          type: player.inventory[index],
-        );
-        player.inventory[index] = ItemType.Empty;
-        player.writePlayerInventory();
-        player.writePlayerEvent(PlayerEvent.Item_Dropped);
+        player.inventoryDrop(index);
         break;
       case InventoryRequest.Move:
         if (arguments.length < 4)  return errorArgsExpected(4, arguments);

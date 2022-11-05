@@ -227,6 +227,16 @@ class Player extends Character with ByteWriter {
     game.players.add(this);
     game.characters.add(this);
   }
+  
+  void inventoryDrop(int index){
+    game.spawnGameObjectItemAtPosition(
+      position: this,
+      type: inventory[index],
+    );
+    inventory[index] = ItemType.Empty;
+    writePlayerInventory();
+    writePlayerEvent(PlayerEvent.Item_Dropped);
+  }
 
   void inventoryMove(int indexFrom, int indexTo){
     if (indexFrom == ItemType.Equipped_Body) {
