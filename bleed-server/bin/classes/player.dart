@@ -275,6 +275,88 @@ class Player extends Character with ByteWriter {
       return;
     }
 
+    if (indexFrom == ItemType.Equipped_Head) {
+      if (inventory[indexTo] == ItemType.Empty) {
+        inventory[indexTo] = headType;
+        headType = ItemType.Empty;
+        writePlayerInventory();
+        writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
+        return;
+      }
+      if (ItemType.isTypeHead(inventory[indexTo])) {
+        final toType = inventory[indexTo];
+        inventory[indexTo] = headType;
+        headType = toType;
+        writePlayerInventory();
+        writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
+        return;
+      }
+      final availableIndex = getEmptyInventoryIndex();
+      if (availableIndex != null){
+        inventory[availableIndex] = headType;
+        headType = ItemType.Empty;
+        writePlayerInventory();
+        writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
+        return;
+      }
+      return;
+    }
+
+    if (indexFrom == ItemType.Equipped_Weapon) {
+      if (inventory[indexTo] == ItemType.Empty) {
+        inventory[indexTo] = weaponType;
+        weaponType = ItemType.Empty;
+        writePlayerInventory();
+        writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
+        return;
+      }
+      if (ItemType.isTypeWeapon(inventory[indexTo])) {
+        final typeTo = inventory[indexTo];
+        inventory[indexTo] = weaponType;
+        weaponType = typeTo;
+        writePlayerInventory();
+        writePlayerWeaponType();
+        writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
+        return;
+      }
+      final availableIndex = getEmptyInventoryIndex();
+      if (availableIndex != null){
+        inventory[availableIndex] = weaponType;
+        weaponType = ItemType.Empty;
+        writePlayerInventory();
+        writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
+        return;
+      }
+      return;
+    }
+
+    if (indexFrom == ItemType.Equipped_Legs) {
+      if (inventory[indexTo] == ItemType.Empty) {
+        inventory[indexTo] = legsType;
+        legsType = ItemType.Empty;
+        writePlayerInventory();
+        writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
+        return;
+      }
+      if (ItemType.isTypeLegs(inventory[indexTo])) {
+        final toType = inventory[indexTo];
+        inventory[indexTo] = legsType;
+        legsType = toType;
+        writePlayerInventory();
+        writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
+        return;
+      }
+      final availableIndex = getEmptyInventoryIndex();
+      if (availableIndex != null){
+        inventory[availableIndex] = legsType;
+        legsType = ItemType.Empty;
+        writePlayerInventory();
+        writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
+        return;
+      }
+      return;
+    }
+
     if (indexFrom >= inventory.length) return;
     if (indexTo >= inventory.length) return;
     final typeFrom = inventory[indexFrom];
