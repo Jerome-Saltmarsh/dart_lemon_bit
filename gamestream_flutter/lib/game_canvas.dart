@@ -32,8 +32,10 @@ class GameCanvas {
     const style = TextStyle(color: Colors.white, fontSize: 18);
     switch (GamePlayer.aimTargetCategory) {
       case TargetCategory.GameObject:
+        break;
+      case TargetCategory.Item:
         Engine.renderText(
-          ItemType.getName(GamePlayer.aimTargetSubType),
+          ItemType.getName(GamePlayer.aimTargetType),
           Engine.worldToScreenX(GameState.player.aimTargetPosition.renderX),
           Engine.worldToScreenY(GameState.player.aimTargetPosition.renderY),
           style: style,
@@ -48,12 +50,6 @@ class GameCanvas {
         );
         break;
       case TargetCategory.Enemy:
-        // Engine.renderText(
-        //   GameState.player.aimTargetText,
-        //   Engine.worldToScreenX(GameState.player.aimTargetPosition.renderX),
-        //   Engine.worldToScreenY(GameState.player.aimTargetPosition.renderY),
-        //   style: style,
-        // );
         break;
     }
   }

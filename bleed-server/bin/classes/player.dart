@@ -471,7 +471,7 @@ class Player extends Character with ByteWriter {
     if (isAllie(value)) return TargetCategory.Allie;
     if (isEnemy(value)) return TargetCategory.Enemy;
     if (value is GameObject) {
-       if (value.type == GameObjectType.Item) return TargetCategory.Item;
+       if (value.isItem) return TargetCategory.Item;
        return TargetCategory.GameObject;
     }
     return TargetCategory.Nothing;

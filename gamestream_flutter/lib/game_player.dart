@@ -12,7 +12,6 @@ class GamePlayer {
   static var targetPosition = Vector3();
   static var aimTargetCategory = TargetCategory.Nothing;
   static var aimTargetType = TargetCategory.Nothing;
-  static var aimTargetSubType = TargetCategory.Nothing;
   static var aimTargetName = "";
   static var aimTargetPosition = Vector3();
 
