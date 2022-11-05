@@ -6,12 +6,7 @@ class ClientRequest {
   static const Version = 4;
   static const Speak = 5;
   static const Teleport = 6;
-  static const Set_Weapon = 7;
-  static const Set_Armour = 8;
-  static const Set_Head_Type = 9;
-  static const Set_Pants_Type = 10;
   static const Upgrade_Weapon_Damage = 11;
-  static const Purchase_Weapon = 12;
   static const Store_Close = 14;
   static const Weather_Set_Rain = 15;
   static const Weather_Set_Wind = 16;

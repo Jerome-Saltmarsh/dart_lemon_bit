@@ -236,26 +236,6 @@ class GameNetwork {
     sendClientRequest(ClientRequest.Store_Close);
   }
 
-  static void sendClientRequestSetWeapon(int type){
-    sendClientRequest(ClientRequest.Set_Weapon, type);
-  }
-
-  static void sendClientRequestPurchaseWeapon(int type){
-    sendClientRequest(ClientRequest.Purchase_Weapon, type);
-  }
-
-  static void sendClientRequestSetArmour(int type){
-    sendClientRequest(ClientRequest.Set_Armour, type);
-  }
-
-  static void sendClientRequestSetHeadType(int type){
-    sendClientRequest(ClientRequest.Set_Head_Type, type);
-  }
-
-  static void sendClientRequestSetPantsType(int type){
-    sendClientRequest(ClientRequest.Set_Pants_Type, type);
-  }
-
   static void sendClientRequestUpgradeWeaponDamage(){
     sendClientRequest(ClientRequest.Upgrade_Weapon_Damage);
   }

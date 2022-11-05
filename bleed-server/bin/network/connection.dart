@@ -249,45 +249,6 @@ class Connection {
         handleClientRequestTeleport(player);
         return;
 
-      case ClientRequest.Set_Weapon:
-        if (arguments.length < 2)  return errorArgsExpected(2, arguments);
-        final weaponType = int.tryParse(arguments[1]);
-        if (weaponType == null) return errorInvalidArg('weapon type');
-        // player.weapon = Weapon(type: weaponType, damage: 1, duration: 10, range: 50);
-        player.game.setCharacterStateChanging(player);
-        break;
-
-      case ClientRequest.Set_Armour:
-        if (arguments.length < 2)  return errorArgsExpected(2, arguments);
-        final armourType = int.tryParse(arguments[1]);
-        if (armourType == null) return errorInvalidArg('armour type');
-        player.bodyType = armourType;
-        player.game.setCharacterStateChanging(player);
-        break;
-
-      case ClientRequest.Set_Head_Type:
-        if (arguments.length < 2)  return errorArgsExpected(2, arguments);
-        final type = int.tryParse(arguments[1]);
-        if (type == null) return errorInvalidArg('invalid head type $type');
-        player.headType = type;
-        player.game.setCharacterStateChanging(player);
-        break;
-
-      case ClientRequest.Set_Pants_Type:
-        if (arguments.length < 2)  return errorArgsExpected(2, arguments);
-        final type = int.tryParse(arguments[1]);
-        if (type == null) return errorInvalidArg('invalid head type $type');
-        player.legsType = type;
-        player.game.setCharacterStateChanging(player);
-        break;
-
-      case ClientRequest.Purchase_Weapon:
-        if (arguments.length < 2) return errorArgsExpected(2, arguments);
-        final type = int.tryParse(arguments[1]);
-        if (type == null) return errorInvalidArg('invalid weapon type $type');
-        player.game.customOnPlayerRequestPurchaseWeapon(player, type);
-        break;
-
       case ClientRequest.Store_Close:
         player.storeItems = [];
         player.writeStoreItems();

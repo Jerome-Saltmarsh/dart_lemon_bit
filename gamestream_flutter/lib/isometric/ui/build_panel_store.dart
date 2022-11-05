@@ -140,7 +140,7 @@ Widget _buildButtonPurchaseWeapon(Weapon weapon) {
     },
     child: container(
         child: text(weapon.name),
-        action: () => GameNetwork.sendClientRequestPurchaseWeapon(weapon.type),
+        // action: () => GameNetwork.sendClientRequestPurchaseWeapon(weapon.type),
     ),
   );
 }
