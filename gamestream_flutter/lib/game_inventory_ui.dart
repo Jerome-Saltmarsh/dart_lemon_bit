@@ -10,9 +10,10 @@ class GameInventoryUI {
   static const Slot_Scale = 1.5;
   static const Slot_Item_Scale = Slot_Scale * 0.9;
   static const Equipped_Item_Scale = Slot_Scale * Engine.GoldenRatio_1_618;
-  static const ColumnsPerRow = 8;
+  static const ColumnsPerRow = 7;
   static final itemTypeHover = Watch(ItemType.Empty);
   static var mouseOverInventory = false;
+  static const Inventory_Width = 350.0;
 
   static void onMouseEnter(PointerEnterEvent event){
     GameCanvas.cursorVisible = false;
@@ -37,7 +38,7 @@ class GameInventoryUI {
       );
 
   static Widget buildContainerEquippedItems() => Container(
-        width: 350,
+        width: Inventory_Width,
         height: 80.0,
         color: brownDark,
         child: Row(
@@ -103,9 +104,9 @@ class GameInventoryUI {
   static Widget buildContainerInventory() =>
       Container(
         color: brownLight,
-        width: 400,
+        width: Inventory_Width,
         height: 400,
-        padding: const EdgeInsets.all(6),
+        // padding: const EdgeInsets.all(6),
         child: Stack(
           children: [
             buildStackSlotGrid(),
@@ -206,8 +207,8 @@ class GameInventoryUI {
 
   static Widget buildPositionGridItem({required int index, required Widget child}) =>
     Positioned(
-      left: getIndexX(index),
-      top: getIndexY(index),
+      left: getIndexX(index) + 7,
+      top: getIndexY(index) + 7,
       child: child,
     );
 
