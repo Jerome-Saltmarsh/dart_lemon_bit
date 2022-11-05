@@ -365,10 +365,14 @@ class GameNetwork {
     required int indexFrom,
     required int indexTo,
   }) =>
-    sendClientRequest(
-      ClientRequest.Inventory_Move,
-      "$indexFrom $indexTo",
-    );
+      sendClientRequest(
+        ClientRequest.Inventory, "${InventoryRequest.Move} $indexFrom $indexTo",
+      );
+
+    // sendClientRequest(
+    //   ClientRequest.Inventory_Move,
+    //   "$indexFrom $indexTo",
+    // );
 
   static void sendClientRequestGameObjectTranslate({
     required double tx,

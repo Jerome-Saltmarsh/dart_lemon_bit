@@ -31,7 +31,6 @@ class ClientRequest {
   static const Spawn_Node_Data = 30;
   static const Spawn_Node_Data_Modify = 31;
   static const Edit = 33;
-  static const Inventory_Move = 34;
   static const Inventory = 35;
 }
 

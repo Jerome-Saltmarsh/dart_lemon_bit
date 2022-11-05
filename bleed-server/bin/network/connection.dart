@@ -117,6 +117,55 @@ class Connection {
             player.writePlayerInventory();
             player.writePlayerEvent(PlayerEvent.Item_Dropped);
             break;
+          case InventoryRequest.Move:
+            if (player.deadBusyOrUsingWeapon) return;
+            if (arguments.length < 4)  return errorArgsExpected(4, arguments);
+            final indexFrom = int.tryParse(arguments[2]);
+            final indexTo = int.tryParse(arguments[3]);
+            if (indexFrom == null) return errorInvalidArg('index from is null');
+            if (indexTo == null) return errorInvalidArg('index from is null');
+            if (indexFrom < 0) return errorInvalidArg('invalid inventory from index');
+            if (indexTo < 0) return errorInvalidArg('invalid inventory to index');
+
+            if (indexFrom == ItemType.Equipped_Body){
+              if (player.inventory[indexTo] == ItemType.Empty) {
+                player.inventory[indexTo] = player.bodyType;
+                player.bodyType = ItemType.Empty;
+                player.writePlayerInventory();
+                player.writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
+                return;
+              }
+              if (ItemType.isTypeBody(player.inventory[indexTo])) {
+                final toType = player.inventory[indexTo];
+                player.inventory[indexTo] = player.bodyType;
+                player.bodyType = toType;
+                player.writePlayerInventory();
+                player.writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
+                return;
+              }
+              final availableIndex = player.getEmptyInventoryIndex();
+              if (availableIndex != null){
+                player.inventory[availableIndex] = player.bodyType;
+                player.bodyType = ItemType.Empty;
+                player.writePlayerInventory();
+                player.writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
+                return;
+              }
+              return;
+            }
+
+            final inventory = player.inventory;
+            if (indexFrom >= inventory.length) return errorInvalidArg('invalid inventory from index');
+            if (indexTo >= inventory.length) return errorInvalidArg('invalid inventory to index');
+            final typeFrom = inventory[indexFrom];
+            final typeTo = inventory[indexTo];
+            if (typeFrom == ItemType.Empty && typeTo == ItemType.Empty) return;
+            inventory[indexFrom] = typeTo;
+            inventory[indexTo] = typeFrom;
+            player.writePlayerInventory();
+            player.writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
+            break;
+
           case InventoryRequest.Unequip_Weapon:
             if (player.weaponType == ItemType.Empty) return;
             for (var i = 0; i < player.inventory.length; i++){
@@ -195,37 +244,6 @@ class Connection {
 
         }
         break;
-
-      case ClientRequest.Inventory_Move:
-        if (arguments.length < 3)  return errorArgsExpected(3, arguments);
-        final indexFrom = int.tryParse(arguments[1]);
-        final indexTo = int.tryParse(arguments[2]);
-        if (indexFrom == null) return errorInvalidArg('index from is null');
-        if (indexTo == null) return errorInvalidArg('index from is null');
-        if (indexFrom < 0) return errorInvalidArg('invalid inventory from index');
-        if (indexTo < 0) return errorInvalidArg('invalid inventory to index');
-
-        if (indexFrom == ItemType.Equipped_Body){
-          if (player.inventory[indexTo] == ItemType.Empty) {
-            player.inventory[indexTo] = player.bodyType;
-            player.bodyType = ItemType.Empty;
-            player.writePlayerInventory();
-            player.writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
-            return;
-          }
-        }
-
-        final inventory = player.inventory;
-        if (indexFrom >= inventory.length) return errorInvalidArg('invalid inventory from index');
-        if (indexTo >= inventory.length) return errorInvalidArg('invalid inventory to index');
-        final typeFrom = inventory[indexFrom];
-        final typeTo = inventory[indexTo];
-        if (typeFrom == ItemType.Empty && typeTo == ItemType.Empty) return;
-        inventory[indexFrom] = typeTo;
-        inventory[indexTo] = typeFrom;
-        player.writePlayerInventory();
-        player.writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
-        return;
 
       case ClientRequest.Teleport:
         handleClientRequestTeleport(player);
