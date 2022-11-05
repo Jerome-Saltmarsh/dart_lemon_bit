@@ -5,6 +5,8 @@ class TargetCategory {
    static const Enemy = 2;
    static const GameObject = 3;
    static const Item = 4;
+   static const Run = 5;
+
    
    static String getName(int value) => {
       Nothing: "Nothing",
@@ -12,5 +14,6 @@ class TargetCategory {
       Enemy: "Enemy",
       GameObject: "GameObject",
       Item: "Item",
+      Run: "Run",
    }[value] ?? "target-category-unknown($value)";
 }

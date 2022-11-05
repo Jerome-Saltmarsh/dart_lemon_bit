@@ -476,7 +476,7 @@ class Player extends Character with ByteWriter {
        if (value.isItem) return TargetCategory.Item;
        return TargetCategory.GameObject;
     }
-    return TargetCategory.Nothing;
+    return TargetCategory.Run;
   }
 
   bool isAllie(Position3? value){

@@ -88,7 +88,7 @@ class GameCanvas {
   }
 
   static void renderPlayerRunTarget(){
-    if (GamePlayer.runningToTarget){
+    if (GamePlayer.targetCategory == TargetCategory.Run){
       GameRender.renderCircle32(GamePlayer.targetPosition.x, GamePlayer.targetPosition.y, GamePlayer.targetPosition.z);
     }
   }
