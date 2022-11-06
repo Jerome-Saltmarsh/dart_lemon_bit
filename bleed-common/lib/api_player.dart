@@ -8,9 +8,9 @@ class ApiPlayer {
   static const Weapon_Capacity = 5;
   static const Points = 7;
   static const Experience = 8;
-  static const Body_Type = 9;
-  static const Head_Type = 10;
-  static const Legs_Type = 11;
+  // static const Body_Type = 9;
+  // static const Head_Type = 10;
+  // static const Legs_Type = 11;
   static const Alive = 12;
   static const Experience_Percentage = 13;
   static const Level = 14;
