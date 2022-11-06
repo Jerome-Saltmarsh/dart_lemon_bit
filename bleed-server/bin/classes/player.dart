@@ -236,65 +236,59 @@ class Player extends Character with ByteWriter {
     game.players.add(this);
     game.characters.add(this);
   }
-  
+
   void inventoryDrop(int index) {
     assert (isValidInventoryIndex(index));
-
-    if (index == ItemType.Equipped_Weapon) {
-      if (weaponType == ItemType.Empty) return;
-      game.spawnGameObjectItemAtPosition(
-        position: this,
-        type: weaponType,
-      );
-      weaponType = ItemType.Empty;
-      writePlayerInventory();
-      writePlayerEvent(PlayerEvent.Item_Dropped);
-      return;
-    }
-
-    if (index == ItemType.Equipped_Body) {
-      if (weaponType == ItemType.Empty) return;
-      game.spawnGameObjectItemAtPosition(
-        position: this,
-        type: bodyType,
-      );
-      bodyType = ItemType.Empty;
-      writePlayerInventory();
-      writePlayerEvent(PlayerEvent.Item_Dropped);
-      return;
-    }
-
-    if (index == ItemType.Equipped_Head) {
-      if (weaponType == ItemType.Empty) return;
-      game.spawnGameObjectItemAtPosition(
-        position: this,
-        type: headType,
-      );
-      headType = ItemType.Empty;
-      writePlayerInventory();
-      writePlayerEvent(PlayerEvent.Item_Dropped);
-      return;
-    }
-
-    if (index == ItemType.Equipped_Legs) {
-      if (weaponType == ItemType.Empty) return;
-      game.spawnGameObjectItemAtPosition(
-        position: this,
-        type: legsType,
-      );
-      legsType = ItemType.Empty;
-      writePlayerInventory();
-      writePlayerEvent(PlayerEvent.Item_Dropped);
-      return;
-    }
-
+    final itemType = inventoryGetItemTypeAtIndex(index);
+    if (itemType == ItemType.Empty) return;
     game.spawnGameObjectItemAtPosition(
       position: this,
-      type: inventory[index],
+      type: itemType,
     );
-    inventory[index] = ItemType.Empty;
-    writePlayerInventory();
+    inventorySetItemTypeAtIndex(index, ItemType.Empty);
     writePlayerEvent(PlayerEvent.Item_Dropped);
+  }
+
+  int inventoryGetItemTypeAtIndex(int index){
+    assert (index >= 0);
+    if (index == ItemType.Equipped_Weapon)
+      return weaponType;
+    if (index == ItemType.Equipped_Body)
+      return bodyType;
+    if (index == ItemType.Equipped_Head)
+      return headType;
+    if (index == ItemType.Equipped_Legs)
+      return legsType;
+
+    assert(index < inventory.length);
+    return inventory[index];
+  }
+
+  void inventorySetItemTypeAtIndex(int index, int itemType){
+    assert (index >= 0);
+    if (index == ItemType.Equipped_Weapon) {
+      weaponType = itemType;
+      writePlayerInventory();
+      return;
+    }
+    if (index == ItemType.Equipped_Body) {
+      bodyType = itemType;
+      writePlayerInventory();
+      return;
+    }
+    if (index == ItemType.Equipped_Head) {
+      headType = itemType;
+      writePlayerInventory();
+      return;
+    }
+    if (index == ItemType.Equipped_Legs) {
+      legsType = itemType;
+      writePlayerInventory();
+      return;
+    }
+    assert(index < inventory.length);
+    inventory[index] = itemType;
+    writePlayerInventory();
   }
 
   void inventoryMove(int indexFrom, int indexTo){

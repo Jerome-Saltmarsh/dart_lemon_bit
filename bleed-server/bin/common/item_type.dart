@@ -42,6 +42,7 @@ class ItemType {
       weaponType == Weapon_Ranged_Bow ||
           weaponType == Weapon_Ranged_Shotgun ;
 
+  static const Invalid = -1;
   static const Empty = 00000;
 
   static const Index_Consumables = 00005;
