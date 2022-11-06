@@ -13,11 +13,10 @@ Widget buildStackPlay() =>
     children: [
       Positioned(top: 75, right: 16, child: buildWatchBool(GameState.inventoryOpen, GameInventoryUI.buildInventoryUI)),
       watch(GameInventoryUI.itemTypeHover, GameInventoryUI.buildPositionedContainerItemTypeInformation),
-      Positioned(top: 50, left: 0, child: buildPanelStore()),
+      Positioned(top: 50, left: 0, child: GameUIInteract.buildPanelStore()),
       GameUIInteract.buildUIInteract(),
-      Positioned(bottom: 50, left: 0, child: buildWatchMouseTargetName()),
-      // buildWatchPlayerDesigned(),
-      buildPanelWriteMessage(),
+      // Positioned(bottom: 50, left: 0, child: buildWatchMouseTargetName()),
+      // buildPanelWriteMessage(),
     ]
   );
 
