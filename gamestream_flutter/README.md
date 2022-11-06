@@ -13,6 +13,7 @@
 [ ] add weapon fire staff
 [ ] editor - gameobjects
 [ ] editor fix add remove columns
+[ ] talk to npc
 
 07.11.2022
 [x] right click to drop item

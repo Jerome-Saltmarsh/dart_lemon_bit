@@ -52,7 +52,23 @@ class AreaPlains1 extends DarkAgeArea {
           name: "Roth",
           health: 100,
           onInteractedWith: (Player player) {
-             print("player interacted with Roth");
+             player.interact(message: 'salutations', responses: {
+               'introduction': () {
+                 player.interact(message: 'the name is roth. i am the mayor of this town');
+               },
+               'tutorial': () {
+                 player.interact(
+                    message: 'what would you like to know?',
+                 );
+               },
+               'trade': () {
+                 player.setStoreItems(const [
+                    ItemType.Legs_Brown,
+                    ItemType.Legs_Blue,
+                 ]);
+               },
+               'never mind': player.endInteraction
+             });
           }
         )
           ..bodyType = ItemType.Body_Tunic_Padded

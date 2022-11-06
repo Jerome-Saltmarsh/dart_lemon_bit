@@ -457,8 +457,15 @@ class ServerResponseReader with ByteReader {
     Engine.redrawCanvas();
   }
 
+
   void readStoreItems() {
-    GameState.player.storeItems.value = readWeapons();
+    final length = readUInt16();
+    if (GamePlayer.storeItems.value.length != length){
+      GamePlayer.storeItems.value = Uint16List(length);
+    }
+    for (var i = 0; i < length; i++){
+      GamePlayer.storeItems.value[i] = readUInt16();
+    }
   }
 
   void readNode() {

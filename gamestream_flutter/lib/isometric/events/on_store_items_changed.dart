@@ -1,7 +1,7 @@
 
 import 'package:gamestream_flutter/library.dart';
 
-void onPlayerStoreItemsChanged(List<Weapon> values){
+void onPlayerStoreItemsChanged(List<int> values){
    GameState.player.storeVisible.value = values.isNotEmpty;
    if (values.isNotEmpty){
       GameState.player.storeVisible.value = true;

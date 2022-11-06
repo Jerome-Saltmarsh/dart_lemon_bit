@@ -10,7 +10,7 @@ final storeEquipmentType = Watch(EquipmentType.Weapon);
 final weaponInformation = Watch<Weapon?>(null);
 
 Widget buildPanelStore(){
-  return watch(GameState.player.storeItems, (List<Weapon> weapons){
+  return watch(GamePlayer.storeItems, (List<int> weapons){
       if (weapons.isEmpty) return SizedBox();
       return Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -72,7 +72,7 @@ Widget buildStoreTabWeapons(){
 }
 
 Widget buildWatchPlayerStoreItems() {
-  return watch(GameState.player.storeItems, (List<Weapon> weapons){
+  return watch(GamePlayer.storeItems, (List<int> weapons){
       if (weapons.isEmpty) return const SizedBox();
       return Column(
         children: weapons.map(_buildButtonPurchaseWeapon).toList(),
@@ -97,17 +97,17 @@ Widget buildWatchWeaponInformation(){
    });
 }
 
-Widget _buildButtonPurchaseWeapon(Weapon weapon) {
+Widget _buildButtonPurchaseWeapon(int weapon) {
   return MouseRegion(
     onEnter: (event){
-      weaponInformation.value = weapon;
+      // weaponInformation.value = weapon;
     },
     onExit: (event){
        if (weaponInformation.value != weapon) return;
        weaponInformation.value = null;
     },
     child: container(
-        child: text(weapon.name),
+        // child: text(weapon.name),
         // action: () => GameNetwork.sendClientRequestPurchaseWeapon(weapon.type),
     ),
   );

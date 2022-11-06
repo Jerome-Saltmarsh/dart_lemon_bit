@@ -1041,8 +1041,8 @@ class Player extends Character with ByteWriter {
 
   void writeStoreItems(){
     writeByte(ServerResponse.Store_Items);
-    writeInt(storeItems.length);
-    throw Exception('not implemented');
+    writeUInt16(storeItems.length);
+    storeItems.forEach(writeUInt16);
   }
 
   void writeNpcTalk({required String text, Map<String, Function>? options}){
