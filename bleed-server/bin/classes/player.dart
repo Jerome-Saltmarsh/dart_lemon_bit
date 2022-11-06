@@ -267,26 +267,31 @@ class Player extends Character with ByteWriter {
   void inventorySetItemTypeAtIndex(int index, int itemType){
     assert (index >= 0);
     if (index == ItemType.Equipped_Weapon) {
+      if (weaponType == itemType) return;
       weaponType = itemType;
       writePlayerInventory();
       return;
     }
     if (index == ItemType.Equipped_Body) {
+      if (bodyType == itemType) return;
       bodyType = itemType;
       writePlayerInventory();
       return;
     }
     if (index == ItemType.Equipped_Head) {
+      if (headType == itemType) return;
       headType = itemType;
       writePlayerInventory();
       return;
     }
     if (index == ItemType.Equipped_Legs) {
+      if (legsType == itemType) return;
       legsType = itemType;
       writePlayerInventory();
       return;
     }
     assert(index < inventory.length);
+    if (inventory[index] == itemType) return;
     inventory[index] = itemType;
     writePlayerInventory();
   }
