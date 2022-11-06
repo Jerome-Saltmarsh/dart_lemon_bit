@@ -13,7 +13,10 @@
 [ ] add weapon fire staff
 [ ] editor - gameobjects
 [ ] editor fix add remove columns
+[ ] fix character state changing
 [ ] talk to npc
+[ ] trade with other players
+[ ] trade with npc
 
 07.11.2022
 [x] right click to drop item

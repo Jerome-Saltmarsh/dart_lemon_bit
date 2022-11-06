@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/game_ui_interact.dart';
 import 'package:gamestream_flutter/isometric/ui/build_panel_store.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
-import 'package:gamestream_flutter/isometric/ui/controls/build_control_npc_talk.dart';
 import 'package:gamestream_flutter/isometric/ui/controls/build_control_player_experience.dart';
 import 'package:gamestream_flutter/isometric/ui/controls/build_control_player_health.dart';
 import 'package:gamestream_flutter/isometric/ui/stacks/build_page.dart';
@@ -14,18 +14,7 @@ Widget buildStackPlay() =>
       Positioned(top: 75, right: 16, child: buildWatchBool(GameState.inventoryOpen, GameInventoryUI.buildInventoryUI)),
       watch(GameInventoryUI.itemTypeHover, GameInventoryUI.buildPositionedContainerItemTypeInformation),
       Positioned(top: 50, left: 0, child: buildPanelStore()),
-      Positioned(top: 0, left: 0, child: Container(
-        width: Engine.screen.width,
-        height: Engine.screen.height,
-        alignment: Alignment.center,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            watch(GameState.player.npcTalk, buildControlNpcTalk),
-            watch(GameState.player.npcTalkOptions, buildControlNpcTopics)
-          ],
-        ),
-      )),
+      GameUIInteract.buildUIInteract(),
       Positioned(bottom: 50, left: 0, child: buildWatchMouseTargetName()),
       // buildWatchPlayerDesigned(),
       buildPanelWriteMessage(),

@@ -182,6 +182,7 @@ class GameNetwork {
         Engine.onUpdate = GameState.update;
         Engine.drawCanvasAfterUpdate = true;
         Engine.zoomOnScroll = true;
+        Engine.zoom = GameConfig.Zoom_Spawn;
         Engine.targetZoom = GameConfig.Zoom_Default;
         if (!Engine.isLocalHost) {
           Engine.fullScreenEnter();
@@ -189,6 +190,9 @@ class GameNetwork {
         break;
 
       case ConnectionStatus.Done:
+        Engine.camera.x = 0;
+        Engine.camera.y = 0;
+        Engine.zoom = 1.0;
         Engine.onUpdate = null;
         Engine.drawCanvasAfterUpdate = true;
         Engine.cursorType.value = CursorType.Basic;
