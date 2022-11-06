@@ -7,7 +7,7 @@ import 'constants/colors.dart';
 
 final storeEquipmentType = Watch(EquipmentType.Weapon);
 
-final weaponInformation = Watch<Weapon?>(null);
+// final weaponInformation = Watch<Weapon?>(null);
 
 Widget buildPanelStore(){
   return watch(GamePlayer.storeItems, (List<int> weapons){
@@ -66,7 +66,7 @@ Widget buildStoreTabWeapons(){
      children: [
         buildWatchPlayerStoreItems(),
         width6,
-        buildWatchWeaponInformation(),
+        // buildWatchWeaponInformation(),
      ],
    );
 }
@@ -80,22 +80,22 @@ Widget buildWatchPlayerStoreItems() {
   });
 }
 
-Widget buildWatchWeaponInformation(){
-   return watch(weaponInformation, (Weapon? weapon){
-      return Container(
-         color: grey,
-         width: 200,
-         padding: const EdgeInsets.all(6),
-         child: weapon == null ? null : Column(
-             crossAxisAlignment: CrossAxisAlignment.start,
-             children: [
-               text(weapon.name),
-               text('Damage: ${weapon.damage}'),
-             ],
-         ),
-      );
-   });
-}
+// Widget buildWatchWeaponInformation(){
+//    return watch(weaponInformation, (Weapon? weapon){
+//       return Container(
+//          color: grey,
+//          width: 200,
+//          padding: const EdgeInsets.all(6),
+//          child: weapon == null ? null : Column(
+//              crossAxisAlignment: CrossAxisAlignment.start,
+//              children: [
+//                text(weapon.name),
+//                text('Damage: ${weapon.damage}'),
+//              ],
+//          ),
+//       );
+//    });
+// }
 
 Widget _buildButtonPurchaseWeapon(int weapon) {
   return MouseRegion(
@@ -103,8 +103,8 @@ Widget _buildButtonPurchaseWeapon(int weapon) {
       // weaponInformation.value = weapon;
     },
     onExit: (event){
-       if (weaponInformation.value != weapon) return;
-       weaponInformation.value = null;
+       // if (weaponInformation.value != weapon) return;
+       // weaponInformation.value = null;
     },
     child: container(
         // child: text(weapon.name),

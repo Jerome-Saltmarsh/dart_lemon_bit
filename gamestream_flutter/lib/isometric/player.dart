@@ -2,9 +2,6 @@ import 'package:gamestream_flutter/isometric/events/on_quests_in_progress_change
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/services/mini_map.dart';
 
-import 'events/on_store_items_changed.dart';
-
-
 class Player {
   final weaponCooldown = Watch(1.0);
   final storeVisible = Watch(false, onChanged: GameEvents.onChangedStoreVisible);
