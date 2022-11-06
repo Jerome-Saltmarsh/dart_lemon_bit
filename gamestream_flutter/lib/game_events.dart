@@ -29,7 +29,7 @@ class GameEvents {
 
   static void onChangedPlayerAlive(bool value) {
     if (!value) {
-      GamePlayer.actionInventoryClose();
+      GamePlayer.actionSetInteractModeNone();
     }
   }
 
@@ -478,20 +478,6 @@ class GameEvents {
     GameState.triggerAlarmNoMessageReceivedFromServer.value = value > 200;
   }
 
-  // static void onChangedInventoryVisible(bool inventoryVisible){
-  //   GameAudio.click_sound_8();
-  //   if (!inventoryVisible && GameState.player.storeVisible.value) {
-  //     GameNetwork.sendClientRequestStoreClose();
-  //   }
-  //   // if (inventoryVisible) {
-  //   //   GameCamera.translateX = 200;
-  //   // } else {
-  //   //   GameCamera.translateX = 0;
-  //   //   GameCanvas.cursorVisible = true;
-  //   //   GameInventoryUI.itemTypeHover.value = ItemType.Empty;
-  //   // }
-  // }
-
   static void onChangedPlayerMessage(String value){
     if (value.isNotEmpty) {
       GameState.player.messageTimer = 200;
@@ -524,13 +510,5 @@ class GameEvents {
     } else {
       GamePlayer.interactMode.value = InteractMode.Trading;
     }
-    // GameState.player.storeVisible.value = values.isNotEmpty;
-    // if (values.isNotEmpty){
-    //   GameState.player.storeVisible.value = true;
-    //   GamePlayer.actionInventoryShow();
-    // } else {
-    //   GameState.player.storeVisible.value = false;
-    //   GamePlayer.actionInventoryClose();
-    // }
   }
 }

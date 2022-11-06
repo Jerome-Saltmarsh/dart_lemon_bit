@@ -25,12 +25,18 @@ class GamePlayer {
 
   static void actionToggleInventoryVisible() =>
       interactMode.value == InteractMode.None
-          ? actionInventoryShow()
-          : actionInventoryClose();
+          ? actionSetInteractModeTrading()
+          : actionSetInteractModeNone();
 
-  static void actionInventoryClose() =>
-      interactMode.value = InteractMode.None;
+  static void actionSetInteractModeTrading() =>
+      setInteractMode(InteractMode.Inventory);
 
-  static void actionInventoryShow() =>
-      interactMode.value = InteractMode.Inventory;
+  static void actionSetInteractModeTalking() =>
+      setInteractMode(InteractMode.Talking);
+
+  static void actionSetInteractModeNone() =>
+      setInteractMode(InteractMode.None);
+
+  static void setInteractMode(int value) =>
+      interactMode.value = value;
 }
