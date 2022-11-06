@@ -555,9 +555,9 @@ class Player extends Character with ByteWriter {
     writePlayerWeaponCooldown();
     writePlayerHealth();
     writePlayerMaxHealth();
-    writePlayerBodyType();
-    writePlayerHeadType();
-    writePlayerLegsType();
+    // writePlayerBodyType();
+    // writePlayerHeadType();
+    // writePlayerLegsType();
     writePlayerExperiencePercentage();
     writePlayerLevel();
     writePlayerAimAngle();
@@ -965,6 +965,10 @@ class Player extends Character with ByteWriter {
   void writePlayerInventory() {
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Inventory);
+    writeUInt16(headType);
+    writeUInt16(bodyType);
+    writeUInt16(legsType);
+    writeUInt16(weaponType);
     writeUInt16(inventory.length);
     for (final item in inventory) {
        writeUInt16(item);
