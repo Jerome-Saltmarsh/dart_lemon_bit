@@ -17,8 +17,8 @@ class Player {
   var maxHealth = 0;
   var attackRange = 0.0;
   final mapTile = Watch(0, onChanged: MiniMap.onMapTileChanged);
-  var interactingNpcName = Watch<String?>(null, onChanged: onChangedNpcTalk);
-  var npcTalk = Watch<String?>(null, onChanged: onChangedNpcTalk);
+  var interactingNpcName = Watch<String?>(null);
+  var npcTalk = Watch<String?>(null);
   var npcTalkOptions = Watch<List<String>>([]);
   final abilityTarget = Vector3();
   var aimTargetChanged = Watch(0);
@@ -56,10 +56,9 @@ class Player {
     }
   }
 
-  static void onChangedNpcTalk(String? value){
-    GameState.npcTextVisible = Engine.isNullOrEmpty(value);
-    GamePlayer.interactMode.value = InteractMode.Talking;
-  }
+  // static void onChangedNpcTalk(String? value){
+  //   // GameState.npcTextVisible = Engine.isNullOrEmpty(value);
+  // }
 }
 
 class AttackSlot {

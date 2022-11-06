@@ -2,6 +2,7 @@
 library common;
 
 export 'ability_mode.dart';
+export 'interact_mode.dart';
 export 'cursor_action.dart';
 export 'inventory_request.dart';
 export 'ability_type.dart';

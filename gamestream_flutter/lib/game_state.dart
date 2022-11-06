@@ -17,7 +17,7 @@ class GameState {
   static final watchTimePassing = Watch(false);
   static final debugVisible = Watch(false);
   static final rain = Watch(Rain.None, onChanged: GameEvents.onChangedRain);
-  static var npcTextVisible = false;
+  // static var npcTextVisible = false;
   static final windAmbient = Watch(Wind.Calm, onChanged: GameEvents.onChangedWind);
   static final torchesIgnited = Watch(true);
   static const tileHeight = 24.0;
