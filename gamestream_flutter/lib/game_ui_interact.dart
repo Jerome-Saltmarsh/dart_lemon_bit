@@ -86,8 +86,8 @@ class GameUIInteract {
         );
 
   static Widget buildPositionedTrading(){
-    return watch(GamePlayer.storeItems, (List<int> weapons){
-      if (weapons.isEmpty) return SizedBox();
+    return watch(GamePlayer.storeItems, (List<int> itemTypes){
+      if (itemTypes.isEmpty) return SizedBox();
       return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,

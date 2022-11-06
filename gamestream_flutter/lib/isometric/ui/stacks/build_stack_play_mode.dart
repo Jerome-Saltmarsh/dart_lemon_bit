@@ -10,9 +10,10 @@ Widget buildStackPlay() =>
   buildPage(
     children: [
       // Positioned(top: 75, right: 16, child: buildWatchBool(GameState.inventoryOpen, GameInventoryUI.buildInventoryUI)),
-      watch(GameInventoryUI.itemTypeHover, GameInventoryUI.buildPositionedContainerItemTypeInformation),
-      Positioned(top: 50, left: 0, child: GameUIInteract.buildPositionedTrading()),
+      // watch(GameInventoryUI.itemTypeHover, GameInventoryUI.buildPositionedContainerItemTypeInformation),
+      // Positioned(top: 50, left: 0, child: GameUIInteract.buildPositionedTrading()),
       GameUIInteract.buildWatchInteractMode(),
+      watch(GameInventoryUI.itemTypeHover, GameInventoryUI.buildPositionedContainerItemTypeInformation),
     ]
   );
 

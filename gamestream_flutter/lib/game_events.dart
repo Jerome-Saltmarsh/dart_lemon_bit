@@ -478,19 +478,19 @@ class GameEvents {
     GameState.triggerAlarmNoMessageReceivedFromServer.value = value > 200;
   }
 
-  static void onChangedInventoryVisible(bool inventoryVisible){
-    GameAudio.click_sound_8();
-    if (!inventoryVisible && GameState.player.storeVisible.value) {
-      GameNetwork.sendClientRequestStoreClose();
-    }
-    if (inventoryVisible) {
-      GameCamera.translateX = 200;
-    } else {
-      GameCamera.translateX = 0;
-      GameCanvas.cursorVisible = true;
-      GameInventoryUI.itemTypeHover.value = ItemType.Empty;
-    }
-  }
+  // static void onChangedInventoryVisible(bool inventoryVisible){
+  //   GameAudio.click_sound_8();
+  //   if (!inventoryVisible && GameState.player.storeVisible.value) {
+  //     GameNetwork.sendClientRequestStoreClose();
+  //   }
+  //   // if (inventoryVisible) {
+  //   //   GameCamera.translateX = 200;
+  //   // } else {
+  //   //   GameCamera.translateX = 0;
+  //   //   GameCanvas.cursorVisible = true;
+  //   //   GameInventoryUI.itemTypeHover.value = ItemType.Empty;
+  //   // }
+  // }
 
   static void onChangedPlayerMessage(String value){
     if (value.isNotEmpty) {
@@ -509,16 +509,28 @@ class GameEvents {
 
   static void onChangedPlayerInteractMode(int value) {
     GameAudio.click_sound_8(1);
+    if (value == InteractMode.Inventory){
+      GameCamera.translateX = 200;
+    } else {
+      GameCamera.translateX = 0;
+      GameCanvas.cursorVisible = true;
+      GameInventoryUI.itemTypeHover.value = ItemType.Empty;
+    }
   }
 
   static void onChangedPlayerStoreItems(List<int> values){
-    GameState.player.storeVisible.value = values.isNotEmpty;
-    if (values.isNotEmpty){
-      GameState.player.storeVisible.value = true;
-      GamePlayer.actionInventoryShow();
+    if (values.isEmpty) {
+       GamePlayer.interactMode.value = InteractMode.None;
     } else {
-      GameState.player.storeVisible.value = false;
-      GamePlayer.actionInventoryClose();
+      GamePlayer.interactMode.value = InteractMode.Trading;
     }
+    // GameState.player.storeVisible.value = values.isNotEmpty;
+    // if (values.isNotEmpty){
+    //   GameState.player.storeVisible.value = true;
+    //   GamePlayer.actionInventoryShow();
+    // } else {
+    //   GameState.player.storeVisible.value = false;
+    //   GamePlayer.actionInventoryClose();
+    // }
   }
 }
