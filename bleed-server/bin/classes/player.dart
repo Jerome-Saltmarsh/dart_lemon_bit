@@ -548,7 +548,6 @@ class Player extends Character with ByteWriter {
     writePlayerBodyType();
     writePlayerHeadType();
     writePlayerLegsType();
-    writePlayerAlive();
     writePlayerExperiencePercentage();
     writePlayerLevel();
     writePlayerAimAngle();

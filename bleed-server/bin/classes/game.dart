@@ -583,9 +583,10 @@ abstract class Game {
     player.setCharacterStateSpawning();
     player.health = player.maxHealth;
     player.collidable = true;
-    customOnPlayerRevived(player);
-    player.writePlayerMoved();
     clearCharacterTarget(player);
+    player.writePlayerMoved();
+    player.writePlayerAlive();
+    customOnPlayerRevived(player);
   }
 
   int countAlive(List<Character> characters) {
@@ -888,6 +889,10 @@ abstract class Game {
     character.animationFrame = 0;
     character.collidable = false;
     clearCharacterTarget(character);
+
+    if (character is Player) {
+       character.writePlayerAlive();
+    }
 
     for (final otherCharacter in characters) {
       if (otherCharacter.target != character) continue;
