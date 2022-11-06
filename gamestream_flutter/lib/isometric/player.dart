@@ -1,4 +1,3 @@
-import 'package:gamestream_flutter/game_ui_interact.dart';
 import 'package:gamestream_flutter/isometric/events/on_quests_in_progress_changed.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/services/mini_map.dart';

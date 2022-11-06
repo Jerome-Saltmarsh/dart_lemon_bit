@@ -20,10 +20,25 @@ class GameUIInteract {
         case InteractMode.Talking:
           return buildPositionedTalk();
         case InteractMode.Trading:
-          return buildPositionedTrading();
+          return Stack(
+            children: [
+              buildPositionedTrading(),
+              buildPositionedInventory(),
+            ],
+          );
+        case InteractMode.Inventory:
+          return buildPositionedInventory();
         default:
           return const SizedBox();
       }
+    }
+
+    static Widget buildPositionedInventory(){
+      return Positioned(
+        top: 10,
+        right: 10,
+        child: GameInventoryUI.buildInventoryUI(),
+      );
     }
 
     static Widget buildPositionedTalk(){

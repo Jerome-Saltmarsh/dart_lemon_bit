@@ -24,7 +24,7 @@ class GameEvents {
   }
 
   static void onChangedStoreVisible(bool storeVisible){
-    GameState.inventoryOpen.value = storeVisible;
+    // GameState.inventoryOpen.value = storeVisible;
   }
 
   static void onChangedPlayerAlive(bool value) {
@@ -507,7 +507,18 @@ class GameEvents {
     }
   }
 
-  static void onChangedInteractMode(int value) {
+  static void onChangedPlayerInteractMode(int value) {
     GameAudio.click_sound_8(1);
+  }
+
+  static void onChangedPlayerStoreItems(List<int> values){
+    GameState.player.storeVisible.value = values.isNotEmpty;
+    if (values.isNotEmpty){
+      GameState.player.storeVisible.value = true;
+      GameState.actionInventoryShow();
+    } else {
+      GameState.player.storeVisible.value = false;
+      GameState.actionInventoryClose();
+    }
   }
 }

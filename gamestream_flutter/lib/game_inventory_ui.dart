@@ -15,16 +15,6 @@ class GameInventoryUI {
   static var mouseOverInventory = false;
   static const Inventory_Width = Slot_Size * Slot_Scale * ColumnsPerRow;
 
-  static void onMouseEnter(PointerEnterEvent event){
-    GameCanvas.cursorVisible = false;
-    mouseOverInventory = true;
-  }
-
-  static void onMouseExit(PointerExitEvent event){
-    GameCanvas.cursorVisible = true;
-    mouseOverInventory = false;
-  }
-
   static Widget buildInventoryUI() =>
       MouseRegion(
         onEnter: onMouseEnter,
@@ -36,6 +26,16 @@ class GameInventoryUI {
           ],
         ),
       );
+
+  static void onMouseEnter(PointerEnterEvent event){
+    GameCanvas.cursorVisible = false;
+    mouseOverInventory = true;
+  }
+
+  static void onMouseExit(PointerExitEvent event){
+    GameCanvas.cursorVisible = true;
+    mouseOverInventory = false;
+  }
 
   static Widget buildContainerEquippedItems() => Container(
         width: Inventory_Width,

@@ -1,4 +1,3 @@
-import 'package:gamestream_flutter/isometric/events/on_store_items_changed.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class GamePlayer {
@@ -15,8 +14,8 @@ class GamePlayer {
   static var aimTargetType = 0;
   static var aimTargetName = "";
   static var aimTargetPosition = Vector3();
-  static final storeItems = Watch(<int>[], onChanged: onPlayerStoreItemsChanged);
-  static final interactMode = Watch(InteractMode.None, onChanged: GameEvents.onChangedInteractMode);
+  static final storeItems = Watch(<int>[], onChanged: GameEvents.onChangedPlayerStoreItems);
+  static final interactMode = Watch(InteractMode.None, onChanged: GameEvents.onChangedPlayerInteractMode);
 
   static double get renderX => GameConvert.convertV3ToRenderX(position);
   static double get renderY => GameConvert.convertV3ToRenderY(position);

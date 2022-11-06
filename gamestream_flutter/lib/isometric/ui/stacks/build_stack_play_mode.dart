@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/game_ui_interact.dart';
-import 'package:gamestream_flutter/isometric/ui/build_panel_store.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/controls/build_control_player_experience.dart';
 import 'package:gamestream_flutter/isometric/ui/controls/build_control_player_health.dart';
@@ -10,7 +9,7 @@ import 'package:gamestream_flutter/library.dart';
 Widget buildStackPlay() =>
   buildPage(
     children: [
-      Positioned(top: 75, right: 16, child: buildWatchBool(GameState.inventoryOpen, GameInventoryUI.buildInventoryUI)),
+      // Positioned(top: 75, right: 16, child: buildWatchBool(GameState.inventoryOpen, GameInventoryUI.buildInventoryUI)),
       watch(GameInventoryUI.itemTypeHover, GameInventoryUI.buildPositionedContainerItemTypeInformation),
       Positioned(top: 50, left: 0, child: GameUIInteract.buildPositionedTrading()),
       GameUIInteract.buildWatchInteractMode(),
