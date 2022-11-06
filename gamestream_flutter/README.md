@@ -13,14 +13,12 @@
 [ ] add weapon fire staff
 [ ] editor - gameobjects
 [ ] editor fix add remove columns
-[ ] dark-age loot-drop
-[ ] right click to drop item
-
-
 
 07.11.2022
+[x] right click to drop item
 [x] fix rain
 [x] dark-age cursor interact with npc
+[x] dark-age loot-drop
 
 02.11.2022
 [x] editor adding tree auto adds tree top
