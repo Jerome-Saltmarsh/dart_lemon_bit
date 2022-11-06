@@ -55,21 +55,26 @@ class GameInventoryUI {
 
   static Widget buildContainerEquippedWeapon() => onPressed(
       action: GameNetwork.sendClientRequestInventoryUnequipWeapon,
+      onRightClick: () => GameNetwork.sendClientRequestInventoryDrop(ItemType.Equipped_Weapon),
       child: buildDragTarget(GamePlayer.weapon, ItemType.Equipped_Weapon)
   );
 
   static Widget buildContainerEquippedBody() => onPressed(
       action: GameNetwork.sendClientRequestInventoryUnequipBody,
+      onRightClick: () => GameNetwork.sendClientRequestInventoryDrop(ItemType.Equipped_Body),
       child: buildDragTarget(GamePlayer.body, ItemType.Equipped_Body)
   );
 
   static Widget buildContainerEquippedHead() => onPressed(
       action: GameNetwork.sendClientRequestInventoryUnequipHead,
+      onRightClick: () => GameNetwork.sendClientRequestInventoryDrop(ItemType.Equipped_Head),
       child: buildDragTarget(GamePlayer.head, ItemType.Equipped_Head)
   );
 
+
   static Widget buildContainerEquippedLegs() => onPressed(
       action: GameNetwork.sendClientRequestInventoryUnequipLegs,
+      onRightClick: () => GameNetwork.sendClientRequestInventoryDrop(ItemType.Equipped_Legs),
       child: buildDragTarget(GamePlayer.legs, ItemType.Equipped_Legs)
   );
 

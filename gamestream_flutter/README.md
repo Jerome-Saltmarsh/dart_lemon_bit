@@ -8,19 +8,15 @@
 [ ] option fullscreen dialog on game start if it fails to do so automatically
 [ ] improve grid invisibility
 [ ] fix player renders behind stairs
+[ ] add mobile share (whatsapp, facebook) button
 [ ] render foreground zombie walking while connecting
 [ ] add weapon fire staff
 [ ] editor - gameobjects
-[ ] short sword
 [ ] editor fix add remove columns
-
 [ ] dark-age loot-drop
 [ ] right click to drop item
 
-[ ] DARK-AGE
-[ ] MOON-LIGHT Expansion Pack
-[ ] FULL-MOON Expansion Pack
-[ ] BLUE-MOON Expansion Pack
+
 
 07.11.2022
 [x] fix rain

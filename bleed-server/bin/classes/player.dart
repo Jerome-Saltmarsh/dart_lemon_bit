@@ -167,7 +167,7 @@ class Player extends Character with ByteWriter {
       index != null &&
       index >= 0 &&
       (
-          index == ItemType.isTypeEquipped(index) ||
+          ItemType.isTypeEquipped(index) ||
           index < inventory.length
       );
 
@@ -237,7 +237,21 @@ class Player extends Character with ByteWriter {
     game.characters.add(this);
   }
   
-  void inventoryDrop(int index){
+  void inventoryDrop(int index) {
+    assert (isValidInventoryIndex(index));
+
+    if (index == ItemType.Equipped_Weapon) {
+      if (weaponType == ItemType.Empty) return;
+      game.spawnGameObjectItemAtPosition(
+        position: this,
+        type: weaponType,
+      );
+      weaponType = ItemType.Empty;
+      writePlayerInventory();
+      writePlayerEvent(PlayerEvent.Item_Dropped);
+      return;
+    }
+
     game.spawnGameObjectItemAtPosition(
       position: this,
       type: inventory[index],

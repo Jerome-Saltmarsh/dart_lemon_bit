@@ -484,9 +484,10 @@ class Connection {
     switch (inventoryRequest) {
       case InventoryRequest.Drop:
         final index = int.tryParse(arguments[2]);
-        if (index == null) return errorInvalidArg('index == null');
-        if (index < 0) return errorInvalidArg('index < 0');
-        if (index >= player.inventory.length) return errorInvalidArg('index >= player.inventory.length');
+        if (index == null)
+          return errorInvalidArg('index == null');
+        if (!player.isValidInventoryIndex(index))
+          return errorInvalidArg('Error - Inventory.Drop: invalid index $index');
         player.inventoryDrop(index);
         break;
       case InventoryRequest.Move:
@@ -518,7 +519,7 @@ class Connection {
           return;
         }
         if (index < 0 || index >= player.inventory.length) {
-          errorInvalidArg('index inventory index');
+          errorInvalidArg('InventoryRequest.Equip.error (index inventory index');
           return;
         }
         player.inventoryEquip(index);
