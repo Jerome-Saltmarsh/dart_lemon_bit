@@ -45,10 +45,10 @@ class GameDebug {
                                 "aim-target-name: ${GamePlayer.aimTargetName}\n"
                                 "aim-target-position: ${GamePlayer.aimTargetPosition}\n"
                                 "target-category: ${TargetCategory.getName(GamePlayer.targetCategory)}\n"
-                                "target-position: ${GamePlayer.targetPosition}"
-                                "player-legs: ${ItemType.getName(GamePlayer.legs.value)}"
-                                "player-body: ${ItemType.getName(GamePlayer.body.value)}"
-                                "player-head: ${ItemType.getName(GamePlayer.head.value)}"
+                                "target-position: ${GamePlayer.targetPosition}\n"
+                                "player-legs: ${ItemType.getName(GamePlayer.legs.value)}\n"
+                                "player-body: ${ItemType.getName(GamePlayer.body.value)}\n"
+                                "player-head: ${ItemType.getName(GamePlayer.head.value)}\n"
                                 "player-weapon: ${ItemType.getName(GamePlayer.weapon.value)}"
                             )),
                             Refresh(() => text('touch-world: x: ${GameIO.touchCursorWorldX.toInt()}, y: ${GameIO.touchCursorWorldY.toInt()}')),
@@ -57,7 +57,6 @@ class GameDebug {
                             Refresh(() => text('particles-total: ${GameState.particles.length}')),
                             Refresh(() => text('particles-active: ${GameState.totalActiveParticles}')),
                             Refresh(() => text('nodes-rendered: ${GameRender.onscreenNodes}')),
-                            Refresh(() => text('engine-frame: ${Engine.paintFrame}')),
                             Refresh(() => text('engine-render-batches: ${Engine.batchesRendered}')),
                             Refresh(() => text('engine-render-batch-1: ${Engine.batches1Rendered}')),
                             Refresh(() => text('engine-render-batch-2: ${Engine.batches2Rendered}')),
@@ -68,8 +67,9 @@ class GameDebug {
                             Refresh(() => text('engine-render-batch-64: ${Engine.batches64Rendered}')),
                             Refresh(() => text('engine-render-batch-128: ${Engine.batches128Rendered}')),
                             Refresh(() => text('camera-zoom: ${Engine.targetZoom.toStringAsFixed(3)}')),
-                            watch(GameState.renderFrame, (t) => text("render-frame: $t")),
+                            Refresh(() => text('engine-frame: ${Engine.paintFrame}')),
                             watch(serverResponseReader.updateFrame, (t) => text("update-frame: $t")),
+                            watch(GameState.renderFrame, (t) => text("render-frame: $t")),
                             watch(GameState.player.interpolating, (bool interpolating) => text("interpolating: $interpolating", onPressed: () => GameState.player.interpolating.value = !GameState.player.interpolating.value)),
                             watch(GameState.ambientShade, (int shade) => text("ambient-shade: ${Shade.getName(shade)}")),
                             watch(GameState.gameType, (int? value) => text("game-type: ${value == null ? 'None' : GameType.getName(value)}")),
