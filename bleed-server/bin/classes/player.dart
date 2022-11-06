@@ -345,8 +345,37 @@ class Player extends Character with ByteWriter {
       return;
     }
 
+    if (indexFrom == ItemType.Equipped_Legs) {
+      if (indexTo >= inventory.length) return;
 
-
+      if (inventory[indexTo] == ItemType.Empty) {
+        inventory[indexTo] = legsType;
+        legsType = ItemType.Empty;
+        writePlayerInventory();
+        // writePlayerT(); TODO writePlayerHead()
+        writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
+        return;
+      }
+      if (ItemType.isTypeLegs(inventory[indexTo])) {
+        final typeTo = inventory[indexTo];
+        inventory[indexTo] = legsType;
+        legsType = typeTo;
+        writePlayerInventory();
+        // writePlayerWeaponType();
+        writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
+        return;
+      }
+      final availableIndex = getEmptyInventoryIndex();
+      if (availableIndex != null){
+        inventory[availableIndex] = legsType;
+        legsType = ItemType.Empty;
+        writePlayerInventory();
+        // writePlayerWeaponType();
+        writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
+        return;
+      }
+      return;
+    }
 
     if (indexFrom >= inventory.length) return;
     if (indexTo >= inventory.length) return;
