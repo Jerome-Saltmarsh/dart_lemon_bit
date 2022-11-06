@@ -7,18 +7,11 @@ import 'package:gamestream_flutter/library.dart';
 import 'isometric/ui/widgets/nothing.dart';
 
 
-class InteractMode {
-   static const None = 0;
-   static const Talking = 1;
-   static const Trading = 2;
-}
-
 class GameUIInteract {
   static const _width = 400;
-  static final interactMode = Watch(InteractMode.None);
 
     static Widget buildWatchInteractMode() =>
-      watch(interactMode, buildInteractMode);
+      watch(GamePlayer.interactMode, buildInteractMode);
 
     static Widget buildInteractMode(int mode) {
       switch (mode) {

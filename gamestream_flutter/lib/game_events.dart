@@ -506,4 +506,8 @@ class GameEvents {
       GameIO.recenterCursor();
     }
   }
+
+  static void onChangedInteractMode(int value) {
+    GameAudio.click_sound_8(1);
+  }
 }

@@ -58,13 +58,8 @@ class Player {
   }
 
   static void onChangedNpcTalk(String? value){
-    if (GameState.npcTextVisible != Engine.isNullOrEmpty(value)){
-      if (GameState.npcTextVisible){
-        GameAudio.click_sound_8(0.25);
-      }
-    }
     GameState.npcTextVisible = Engine.isNullOrEmpty(value);
-    GameUIInteract.interactMode.value = InteractMode.Talking;
+    GamePlayer.interactMode.value = InteractMode.Talking;
   }
 }
 
