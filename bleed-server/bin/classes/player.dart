@@ -420,6 +420,16 @@ class Player extends Character with ByteWriter {
     game.setCharacterStateChanging(this);
     writePlayerInventory();
   }
+
+  void inventoryUnequipLegs(){
+    if (legsType == ItemType.Empty) return;
+    final emptyIndex = getEmptyInventoryIndex();
+    if (emptyIndex == null) return;
+    inventory[emptyIndex] = legsType;
+    legsType = ItemType.Empty;
+    game.setCharacterStateChanging(this);
+    writePlayerInventory();
+  }
   
   void inventoryEquip(int index){
     final itemType = inventory[index];
@@ -915,15 +925,6 @@ class Player extends Character with ByteWriter {
     writeInt(value.y);
     writeInt(value.z);
   }
-
-  // void writeGameObject(GameObject gameObject) {
-  //   writeByte(ServerResponse.GameObject);
-  //   writeByte(gameObject.type);
-  //   if (gameObject.type == GameObjectType.Item){
-  //     writeUInt16(gameObject.subType);
-  //   }
-  //   writePosition3(gameObject);
-  // }
 
   void writeGrid() {
     writeByte(ServerResponse.Grid);

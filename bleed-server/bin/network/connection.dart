@@ -508,6 +508,9 @@ class Connection {
       case InventoryRequest.Unequip_Body:
         player.inventoryUnequipBody();
         break;
+      case InventoryRequest.Unequip_Legs:
+        player.inventoryUnequipLegs();
+        break;
       case InventoryRequest.Equip:
         final index = int.tryParse(arguments[2]);
         if (index == null) {

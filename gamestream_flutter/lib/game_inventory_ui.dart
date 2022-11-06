@@ -80,7 +80,6 @@ class GameInventoryUI {
         onAccept: onDragAccept,
       );
 
-
   static Widget buildContainerEquippedItemType(int itemType, int index) =>
       Draggable(
         data: index,
