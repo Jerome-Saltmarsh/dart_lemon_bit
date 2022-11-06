@@ -6,17 +6,14 @@ import 'package:gamestream_flutter/isometric/ui/controls/build_control_player_ex
 import 'package:gamestream_flutter/isometric/ui/controls/build_control_player_health.dart';
 import 'package:gamestream_flutter/isometric/ui/stacks/build_page.dart';
 import 'package:gamestream_flutter/library.dart';
-import 'package:gamestream_flutter/ui/builders/build_text_box.dart';
 
 Widget buildStackPlay() =>
   buildPage(
     children: [
       Positioned(top: 75, right: 16, child: buildWatchBool(GameState.inventoryOpen, GameInventoryUI.buildInventoryUI)),
       watch(GameInventoryUI.itemTypeHover, GameInventoryUI.buildPositionedContainerItemTypeInformation),
-      Positioned(top: 50, left: 0, child: GameUIInteract.buildPanelStore()),
-      GameUIInteract.buildUIInteract(),
-      // Positioned(bottom: 50, left: 0, child: buildWatchMouseTargetName()),
-      // buildPanelWriteMessage(),
+      Positioned(top: 50, left: 0, child: GameUIInteract.buildPositionedTrading()),
+      GameUIInteract.buildWatchInteractMode(),
     ]
   );
 

@@ -15,8 +15,25 @@ class InteractMode {
 
 class GameUIInteract {
   static const _width = 400;
+  static final interactMode = Watch(InteractMode.None);
 
-    static Widget buildUIInteract(){
+    static Widget buildWatchInteractMode() =>
+      watch(interactMode, buildInteractMode);
+
+    static Widget buildInteractMode(int mode) {
+      switch (mode) {
+        case InteractMode.None:
+          return const SizedBox();
+        case InteractMode.Talking:
+          return buildPositionedTalk();
+        case InteractMode.Trading:
+          return buildPositionedTrading();
+        default:
+          return const SizedBox();
+      }
+    }
+
+    static Widget buildPositionedTalk(){
       return Positioned(top: 0, left: 0, child: Container(
         width: Engine.screen.width,
         height: Engine.screen.height,
@@ -60,7 +77,7 @@ class GameUIInteract {
           }).toList(),
         );
 
-  static Widget buildPanelStore(){
+  static Widget buildPositionedTrading(){
     return watch(GamePlayer.storeItems, (List<int> weapons){
       if (weapons.isEmpty) return SizedBox();
       return Column(
