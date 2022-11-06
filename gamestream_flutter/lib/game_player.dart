@@ -25,11 +25,14 @@ class GamePlayer {
 
   static void actionToggleInventoryVisible() =>
       interactMode.value == InteractMode.None
-          ? actionSetInteractModeTrading()
+          ? actionSetInteractModeInventory()
           : actionSetInteractModeNone();
 
-  static void actionSetInteractModeTrading() =>
+  static void actionSetInteractModeInventory() =>
       setInteractMode(InteractMode.Inventory);
+
+  static void actionSetInteractModeTrading() =>
+      setInteractMode(InteractMode.Trading);
 
   static void actionSetInteractModeTalking() =>
       setInteractMode(InteractMode.Talking);

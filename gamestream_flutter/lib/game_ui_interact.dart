@@ -42,10 +42,8 @@ class GameUIInteract {
     }
 
     static Widget buildPositionedTalk(){
-      return Positioned(top: 0, left: 0, child: Container(
-        width: Engine.screen.width,
-        height: Engine.screen.height,
-        alignment: Alignment.center,
+      return Positioned(top: 55, left: 5, child: Container(
+        color: brownDark,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -86,34 +84,19 @@ class GameUIInteract {
         );
 
   static Widget buildPositionedTrading(){
-    return watch(GamePlayer.storeItems, (List<int> itemTypes){
-      if (itemTypes.isEmpty) return SizedBox();
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              container(child: "PURCHASE"),
-              container(child: SizedBox()),
-              container(child: "CLOSE", action: GameNetwork.sendClientRequestStoreClose),
-            ],
+    return Positioned(
+      top: 55,
+      left: 5,
+      child: watch(GamePlayer.storeItems, (List<int> itemTypes) {
+        if (itemTypes.isEmpty) return text("No items to trade");
+        return Container(
+          color: brownDark,
+          child: Column(
+            children: itemTypes.map(text).toList(),
           ),
-          // height6,
-          // Row(children: EquipmentType.values.map((tab) {
-          //   return watch(storeEquipmentType, (active){
-          //     return container(
-          //       child: text(tab.name),
-          //       action: () => storeEquipmentType.value = tab,
-          //       color: tab == storeEquipmentType.value ? greyDark : grey,
-          //     );
-          //   });
-          // }).toList()),
-          height6,
-        ],
-      );
-    });
+        );
+      }),
+    );
   }
 
 }

@@ -328,8 +328,7 @@ class GameEvents {
         onPlayerEventQuestCompleted();
         break;
       case PlayerEvent.Interaction_Finished:
-        GameState.player.npcTalk.value = null;
-        GameState.player.npcTalkOptions.value = [];
+        GamePlayer.actionSetInteractModeNone();
         break;
       case PlayerEvent.Level_Up:
         // audio.buff(GameState.player.x, GameState.player.y);
@@ -494,13 +493,26 @@ class GameEvents {
   }
 
   static void onChangedPlayerInteractMode(int value) {
+    print('onChangedPlayerInteractMode(${InteractMode.getName(value)})');
     GameAudio.click_sound_8(1);
-    if (value == InteractMode.Inventory){
-      GameCamera.translateX = 200;
-    } else {
-      GameCamera.translateX = 0;
-      GameCanvas.cursorVisible = true;
-      GameInventoryUI.itemTypeHover.value = ItemType.Empty;
+    switch (value) {
+      case InteractMode.Inventory:
+        GameCamera.translateX = 200;
+        break;
+      case InteractMode.Talking:
+        GameCamera.translateX = -200;
+        break;
+      case InteractMode.Trading:
+        GameCamera.translateX = 0;
+        GameCanvas.cursorVisible = false;
+        break;
+      case InteractMode.None:
+        GameCamera.translateX = 0;
+        GameCanvas.cursorVisible = true;
+        GameInventoryUI.itemTypeHover.value = ItemType.Empty;
+        GameState.player.npcTalk.value = null;
+        GameState.player.npcTalkOptions.value = [];
+        break;
     }
   }
 
