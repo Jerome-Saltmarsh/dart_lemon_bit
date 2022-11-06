@@ -29,7 +29,7 @@ class GameEvents {
 
   static void onChangedPlayerAlive(bool value) {
     if (!value) {
-      GameState.actionInventoryClose();
+      GamePlayer.actionInventoryClose();
     }
   }
 
@@ -515,10 +515,10 @@ class GameEvents {
     GameState.player.storeVisible.value = values.isNotEmpty;
     if (values.isNotEmpty){
       GameState.player.storeVisible.value = true;
-      GameState.actionInventoryShow();
+      GamePlayer.actionInventoryShow();
     } else {
       GameState.player.storeVisible.value = false;
-      GameState.actionInventoryClose();
+      GamePlayer.actionInventoryClose();
     }
   }
 }

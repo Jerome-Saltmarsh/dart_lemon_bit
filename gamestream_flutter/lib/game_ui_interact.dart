@@ -35,8 +35,8 @@ class GameUIInteract {
 
     static Widget buildPositionedInventory(){
       return Positioned(
-        top: 10,
-        right: 10,
+        top: 55,
+        right: 5,
         child: GameInventoryUI.buildInventoryUI(),
       );
     }

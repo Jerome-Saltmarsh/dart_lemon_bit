@@ -22,4 +22,15 @@ class GamePlayer {
 
   static double get positionScreenX => Engine.worldToScreenX(position.renderX);
   static double get positionScreenY => Engine.worldToScreenY(position.renderX);
+
+  static void actionToggleInventoryVisible() =>
+      interactMode.value == InteractMode.None
+          ? actionInventoryShow()
+          : actionInventoryClose();
+
+  static void actionInventoryClose() =>
+      interactMode.value = InteractMode.None;
+
+  static void actionInventoryShow() =>
+      interactMode.value = InteractMode.Inventory;
 }
