@@ -138,31 +138,34 @@ class GameInventoryUI {
     final itemType = GameInventory.items[index];
     return buildPositionGridItem(
       index: index,
-      child: MouseRegion(
-        cursor: SystemMouseCursors.click,
-        onEnter: (event){
-          Engine.mousePosition.x = event.position.dx;
-          Engine.mousePosition.y = event.position.dy;
-          itemTypeHover.value = itemType;
-        },
-        onExit: (_){
-          if (itemTypeHover.value == itemType){
-             itemTypeHover.value = ItemType.Empty;
-          }
-        },
-        child: Draggable<int>(
-          onDraggableCanceled: (velocity, offset){
-            if (mouseOverInventory) return;
-            GameNetwork.sendClientRequestInventoryDrop(index);
+      child: GestureDetector(
+        onSecondaryTap: () => GameNetwork.sendClientRequestInventoryDrop(index),
+        child: MouseRegion(
+          cursor: SystemMouseCursors.click,
+          onEnter: (event){
+            Engine.mousePosition.x = event.position.dx;
+            Engine.mousePosition.y = event.position.dy;
+            itemTypeHover.value = itemType;
           },
-          hitTestBehavior: HitTestBehavior.opaque,
-          data: index,
-          feedback: buildItemTypeAtlasImage(itemType: itemType, scale: Slot_Item_Scale),
-          child: onPressed(
-              action: () => GameNetwork.sendClientRequestInventoryEquip(index),
-              child: buildItemTypeAtlasImage(itemType: itemType, scale: Slot_Item_Scale),
+          onExit: (_){
+            if (itemTypeHover.value == itemType){
+               itemTypeHover.value = ItemType.Empty;
+            }
+          },
+          child: Draggable<int>(
+            onDraggableCanceled: (velocity, offset){
+              if (mouseOverInventory) return;
+              GameNetwork.sendClientRequestInventoryDrop(index);
+            },
+            hitTestBehavior: HitTestBehavior.opaque,
+            data: index,
+            feedback: buildItemTypeAtlasImage(itemType: itemType, scale: Slot_Item_Scale),
+            child: onPressed(
+                action: () => GameNetwork.sendClientRequestInventoryEquip(index),
+                child: buildItemTypeAtlasImage(itemType: itemType, scale: Slot_Item_Scale),
+            ),
+            childWhenDragging: buildItemTypeAtlasImage(itemType: itemType, scale: Slot_Item_Scale),
           ),
-          childWhenDragging: buildItemTypeAtlasImage(itemType: itemType, scale: Slot_Item_Scale),
         ),
       ),
     );
