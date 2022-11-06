@@ -417,8 +417,8 @@ class AtlasNode {
   static const Node_Plain_Corner_Bottom_Y = Sprite_Height_Padded * 4;
   static const Node_Plain_Corner_Left_X = 1557.0;
   static const Node_Plain_Corner_Left_Y = Sprite_Height_Padded * 3;
-  static const Node_Rain_Falling_Light_X = 1606.0;
-  static const Node_Rain_Falling_Heavy_X = Node_Rain_Falling_Light_X + Sprite_Width_Padded;
+  static const Node_Rain_Falling_Heavy_X = 1606.0;
+  static const Node_Rain_Falling_Light_X = Node_Rain_Falling_Heavy_X + Sprite_Width_Padded;
   static const Node_Rain_Landing_Light_X = 1704.0;
   static const Node_Rain_Landing_Heavy_X = Node_Rain_Landing_Light_X + Sprite_Width_Padded;
   static const Node_Rain_Landing_Water_X = 1802.0;

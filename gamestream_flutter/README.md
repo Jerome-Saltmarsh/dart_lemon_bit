@@ -7,18 +7,24 @@
 [ ] optimize network - compile all characters into single server_response
 [ ] option fullscreen dialog on game start if it fails to do so automatically
 [ ] improve grid invisibility
+[ ] fix player renders behind stairs
 [ ] render foreground zombie walking while connecting
 [ ] add weapon fire staff
 [ ] editor - gameobjects
 [ ] short sword
 [ ] editor fix add remove columns
-[ ] dark-age cursor interact with npc
+
 [ ] dark-age loot-drop
+[ ] right click to drop item
 
 [ ] DARK-AGE
 [ ] MOON-LIGHT Expansion Pack
 [ ] FULL-MOON Expansion Pack
-[ ] BLUET
+[ ] BLUE-MOON Expansion Pack
+
+07.11.2022
+[x] fix rain
+[x] dark-age cursor interact with npc
 
 02.11.2022
 [x] editor adding tree auto adds tree top
