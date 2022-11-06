@@ -486,50 +486,74 @@ class Player extends Character with ByteWriter {
     writePosition3(this);
   }
 
-  void writePlayerGame() {
-    writePlayerPosition();
-    writePlayerWeaponCooldown();
-
+  void writePlayerHealth(){
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Health);
     writeInt(health);
+  }
 
+  void writePlayerMaxHealth(){
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Max_Health);
     writeInt(maxHealth); // 2
+  }
 
+  void writePlayerBodyType(){
     writeByte(ServerResponse.Player);
-    writeByte(ApiPlayer.Armour_Type);
+    writeByte(ApiPlayer.Body_Type);
     writeUInt16(bodyType);
+  }
 
+  void writePlayerHeadType(){
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Head_Type);
     writeUInt16(headType);
+  }
 
+  void writePlayerLegsType(){
     writeByte(ServerResponse.Player);
-    writeByte(ApiPlayer.Pants_Type);
+    writeByte(ApiPlayer.Legs_Type);
     writeUInt16(legsType);
+  }
 
+  void writePlayerAlive(){
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Alive);
     writeBool(alive);
+  }
 
+  void writePlayerExperiencePercentage(){
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Experience_Percentage);
     writePercentage(experiencePercentage);
+  }
 
+  void writePlayerLevel(){
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Level);
     writeInt(level);
+  }
 
+  void writePlayerAimAngle(){
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Aim_Angle);
     writeAngle(mouseAngle);
+  }
 
+  void writePlayerGame() {
+    writePlayerPosition();
+    writePlayerWeaponCooldown();
+    writePlayerHealth();
+    writePlayerMaxHealth();
+    writePlayerBodyType();
+    writePlayerHeadType();
+    writePlayerLegsType();
+    writePlayerAlive();
+    writePlayerExperiencePercentage();
+    writePlayerLevel();
+    writePlayerAimAngle();
     writePlayerAimTargetPosition();
 
-    // writePlayerSlots();
-    // writeAimTarget();
     writeProjectiles();
     writePlayerTargetPosition();
     writeCharacters();
