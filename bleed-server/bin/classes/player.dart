@@ -252,6 +252,42 @@ class Player extends Character with ByteWriter {
       return;
     }
 
+    if (index == ItemType.Equipped_Body) {
+      if (weaponType == ItemType.Empty) return;
+      game.spawnGameObjectItemAtPosition(
+        position: this,
+        type: bodyType,
+      );
+      bodyType = ItemType.Empty;
+      writePlayerInventory();
+      writePlayerEvent(PlayerEvent.Item_Dropped);
+      return;
+    }
+
+    if (index == ItemType.Equipped_Head) {
+      if (weaponType == ItemType.Empty) return;
+      game.spawnGameObjectItemAtPosition(
+        position: this,
+        type: headType,
+      );
+      headType = ItemType.Empty;
+      writePlayerInventory();
+      writePlayerEvent(PlayerEvent.Item_Dropped);
+      return;
+    }
+
+    if (index == ItemType.Equipped_Legs) {
+      if (weaponType == ItemType.Empty) return;
+      game.spawnGameObjectItemAtPosition(
+        position: this,
+        type: legsType,
+      );
+      legsType = ItemType.Empty;
+      writePlayerInventory();
+      writePlayerEvent(PlayerEvent.Item_Dropped);
+      return;
+    }
+
     game.spawnGameObjectItemAtPosition(
       position: this,
       type: inventory[index],
