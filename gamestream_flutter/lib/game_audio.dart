@@ -133,9 +133,14 @@ class GameAudio {
     nextRandomMusic = Engine.randomInt(800, 2000);
   }
 
-  static void update(){
-    for (final audioSource in audioLoops){
-      audioSource.update();
+  static var _nextAudioSourceUpdate = 0;
+
+  static void update() {
+    if (_nextAudioSourceUpdate-- <= 0){
+      _nextAudioSourceUpdate = 5;
+      for (final audioSource in audioLoops){
+        audioSource.update();
+      }
     }
     updateRandomAmbientSounds();
     updateRandomMusic();

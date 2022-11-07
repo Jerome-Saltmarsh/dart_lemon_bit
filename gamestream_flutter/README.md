@@ -14,11 +14,12 @@
 [ ] editor - gameobjects
 [ ] editor fix add remove columns
 [ ] fix character state changing
-[ ] talk to npc
+[ ] fix character state spawning
 [ ] trade with other players
-[ ] trade with npc
 
 07.11.2022
+[x] talk to npc
+[x] trade with npc
 [x] right click to drop item
 [x] fix rain
 [x] dark-age cursor interact with npc
