@@ -16,6 +16,7 @@ class GameInventoryUI {
 
   static Widget buildInventoryUI() =>
       GameUI.buildDialog(
+        dialogType: DialogType.Inventory,
         child: Column(
           children: [
             buildContainerEquippedItems(),
@@ -153,7 +154,7 @@ class GameInventoryUI {
           },
           child: Draggable<int>(
             onDraggableCanceled: (velocity, offset){
-              if (GameUI.mouseOverDialog) return;
+              if (GameUI.mouseOverDialog.value != DialogType.None) return;
               GameNetwork.sendClientRequestInventoryDrop(index);
             },
             hitTestBehavior: HitTestBehavior.opaque,
