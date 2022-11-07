@@ -46,7 +46,7 @@ class GameUIInteract {
         color: GameColors.brownDark,
         child: Stack(
           children: [
-            buildStackSlotGrid(itemTypes.length + 5),
+            buildStackSlotGrid(itemTypes.length + 12),
             ...buildPositionedTrading(itemTypes),
           ],
         ),
@@ -121,7 +121,12 @@ class GameUIInteract {
           children.add(
              GameInventoryUI.buildPositionGridItem(
                  index: i,
-                 child: GameInventoryUI.buildItemTypeAtlasImage(itemType: itemTypes[i]),
+                 child: GestureDetector(
+                     behavior: HitTestBehavior.opaque,
+                     child: GameInventoryUI.buildItemTypeAtlasImage(itemType: itemTypes[i]),
+                     onTap: () => GameNetwork.sendClientRequestInventoryBuy(i),
+                     onSecondaryTap: () => GameNetwork.sendClientRequestInventoryBuy(i),
+                 ),
              )
           );
       }

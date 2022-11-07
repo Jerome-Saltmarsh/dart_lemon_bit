@@ -1128,6 +1128,13 @@ abstract class Game {
     setCharacterStateRunning(player);
   }
 
+  void playerAddItemTypeToInventory(Player player, int itemType){
+    final emptyInventoryIndex = player.getEmptyInventoryIndex();
+    if (emptyInventoryIndex == null) return;
+    player.inventory[emptyInventoryIndex] = itemType;
+    player.writePlayerInventory();
+  }
+
   void setCharacterStateRunning(Character character){
     character.setCharacterState(value: CharacterState.Running, duration: 0);
   }

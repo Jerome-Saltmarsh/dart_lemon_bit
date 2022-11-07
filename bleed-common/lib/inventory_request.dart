@@ -7,4 +7,7 @@ class InventoryRequest {
   static const Unequip_Legs = 5;
   static const Drop = 6;
   static const Toggle = 7;
+  static const Buy = 8;
+  static const Sell = 9;
+  
 }

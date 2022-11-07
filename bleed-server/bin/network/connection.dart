@@ -482,6 +482,22 @@ class Connection {
     if (inventoryRequest == null) return errorInvalidArg('inventory request is null');
 
     switch (inventoryRequest) {
+      case InventoryRequest.Buy:
+        final index = int.tryParse(arguments[2]);
+        if (index == null)
+          return errorInvalidArg('index == null');
+
+        if (index < 0) return errorInvalidArg('index < 0');
+        if (index >= player.storeItems.length) return errorInvalidArg('index >= player.storeItems.length');
+        final emptyInventoryIndex = player.getEmptyInventoryIndex();
+        if (emptyInventoryIndex == null) return errorInvalidArg('inventory full');
+        final itemType = player.storeItems[index];
+        if (itemType == ItemType.Empty) return;
+        player.inventory[emptyInventoryIndex] = itemType;
+        player.writePlayerInventory();
+        break;
+      case InventoryRequest.Sell:
+        break;
       case InventoryRequest.Toggle:
         if (player.interactMode != InteractMode.None){
            player.interactMode = InteractMode.None;
