@@ -35,8 +35,8 @@ void renderCharacter(Character character){
       return;
     }
     Engine.renderSprite(
-      image: GameImages.gameobjects,
-        srcX: 2016,
+      image: GameImages.characters,
+        srcX: 513,
         srcY: (character.frame % 8) * 73.0,
         dstX: character.renderX,
         dstY: character.renderY,
@@ -45,12 +45,12 @@ void renderCharacter(Character character){
         anchorY: 0.61,
         scale: 0.75,
     );
+    return;
   }
 
   switch (character.characterType) {
     case CharacterType.Template:
       renderCharacterTemplate(character);
-      // renderCharacterZombie(character);
       return;
     case CharacterType.Slime:
       return renderCharacterSlime(character);

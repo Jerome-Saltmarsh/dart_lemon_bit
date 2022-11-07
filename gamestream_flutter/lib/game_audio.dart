@@ -259,7 +259,8 @@ class GameAudio {
 
   static void updateZombieGrowls(){
     if (GameState.totalZombies <= 0) return;
-    if (nextZombieGrowl-- > 0) return;
+    nextZombieGrowl--;
+    if (nextZombieGrowl > 0) return;
     nextZombieGrowl = Engine.randomInt(200, 300);
     Engine.randomItem(GameAudio.audioSingleZombieTalking).playV3(GameState.zombies[Engine.randomInt(0, GameState.totalZombies)]);
   }

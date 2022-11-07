@@ -30,6 +30,7 @@ class AreaPlains1 extends DarkAgeArea {
     player.legsType = ItemType.Legs_Blue;
     player.headType = ItemType.Head_Steel_Helm;
     movePlayerToCrystal(player);
+    player.setCharacterStateSpawning();
     player.inventory[0] = ItemType.Weapon_Ranged_Handgun;
     player.inventory[1] = ItemType.Weapon_Ranged_Shotgun;
     player.inventory[2] = ItemType.Resource_Ammo_9mm;
