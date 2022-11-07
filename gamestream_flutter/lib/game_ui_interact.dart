@@ -121,11 +121,10 @@ class GameUIInteract {
           children.add(
              GameInventoryUI.buildPositionGridItem(
                  index: i,
-                 child: GestureDetector(
-                     behavior: HitTestBehavior.opaque,
+                 child: onPressed(
                      child: GameInventoryUI.buildItemTypeAtlasImage(itemType: itemTypes[i]),
-                     onTap: () => GameNetwork.sendClientRequestInventoryBuy(i),
-                     onSecondaryTap: () => GameNetwork.sendClientRequestInventoryBuy(i),
+                     action: () => GameNetwork.sendClientRequestInventoryBuy(i),
+                     onRightClick: () => GameNetwork.sendClientRequestInventoryBuy(i),
                  ),
              )
           );
