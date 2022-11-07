@@ -38,7 +38,7 @@ class AudioLoop {
 
   void update(){
     final change = (getTargetVolume() - volume) * 0.05;
-    if (change == 0) {
+    if (change < 0.01) {
        return;
     }
     volume = clamp(volume + change, 0, 1.0);
