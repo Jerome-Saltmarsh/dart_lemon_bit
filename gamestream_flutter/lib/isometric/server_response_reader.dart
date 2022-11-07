@@ -224,6 +224,9 @@ class ServerResponseReader with ByteReader {
       case ApiPlayer.Target_Category:
         GamePlayer.targetCategory = readByte();
         break;
+      case ApiPlayer.Interact_Mode:
+        GamePlayer.interactMode.value = readByte();
+        break;
       case ApiPlayer.Health:
         GameState.player.health.value = readInt();
         break;

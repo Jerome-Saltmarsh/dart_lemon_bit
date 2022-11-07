@@ -68,11 +68,19 @@ class Player extends Character with ByteWriter {
   final flags = <Flag>[];
 
   var options = <String, Function> {};
-  var interactingWithNpc = false;
+  var _interactMode = InteractMode.None;
   var npcName = "";
 
   var mapX = 0;
   var mapY = 0;
+
+  int get interactMode => _interactMode;
+
+  set interactMode(int value){
+    if (_interactMode == value) return;
+    _interactMode = value;
+    writeInteractMode();
+  }
 
   double get mouseGridX => (mouse.x + mouse.y) + z;
   double get mouseGridY => (mouse.y - mouse.x) + z;
@@ -146,7 +154,7 @@ class Player extends Character with ByteWriter {
   }
 
   void endInteraction(){
-    if (!interactingWithNpc) return;
+    if (interactMode == InteractMode.None) return;
     if (storeItems.isNotEmpty) {
       storeItems = [];
       writeStoreItems();
@@ -154,7 +162,7 @@ class Player extends Character with ByteWriter {
     if (options.isNotEmpty) {
       options.clear();
     }
-    interactingWithNpc = false;
+    interactMode = InteractMode.None;
     npcName = "";
     writePlayerEvent(PlayerEvent.Interaction_Finished);
   }
@@ -174,7 +182,7 @@ class Player extends Character with ByteWriter {
 
   void setStoreItems(List<int> values){
     if (values.isNotEmpty){
-      interactingWithNpc = true;
+      interactMode = InteractMode.Trading;
     }
     this.storeItems = values;
     writeStoreItems();
@@ -1045,8 +1053,14 @@ class Player extends Character with ByteWriter {
     storeItems.forEach(writeUInt16);
   }
 
+  void writeInteractMode() {
+    writeByte(ServerResponse.Player);
+    writeByte(ApiPlayer.Interact_Mode);
+    writeByte(interactMode);
+  }
+
   void writeNpcTalk({required String text, Map<String, Function>? options}){
-    interactingWithNpc = true;
+    interactMode = InteractMode.Talking;
     this.options = options ?? {'Goodbye' : endInteraction};
     writeByte(ServerResponse.Npc_Talk);
     writeString(text);

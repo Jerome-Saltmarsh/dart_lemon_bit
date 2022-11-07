@@ -249,7 +249,10 @@ abstract class Game {
     setCharacterStateRunning(player);
     clearCharacterTarget(player);
 
-    if (player.interactingWithNpc){
+    if (
+        player.interactMode == InteractMode.Trading ||
+        player.interactMode != InteractMode.Talking
+    ){
       return player.endInteraction();
     }
   }
@@ -1096,7 +1099,7 @@ abstract class Game {
           }
           final onInteractedWith = target.onInteractedWith;
           if (onInteractedWith != null) {
-            player.interactingWithNpc = true;
+            player.interactMode = InteractMode.Talking;
             player.setInteractingNpcName(target.name);
             onInteractedWith(player);
           }
