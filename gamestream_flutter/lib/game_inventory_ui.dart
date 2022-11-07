@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 
 import 'library.dart';
@@ -13,11 +12,10 @@ class GameInventoryUI {
   static const Equipped_Item_Scale = Slot_Scale * Engine.GoldenRatio_1_618;
   static const ColumnsPerRow = 7;
   static final itemTypeHover = Watch(ItemType.Empty);
-  static var mouseOverDialog = false;
   static const Inventory_Width = Slot_Size * Slot_Scale * ColumnsPerRow;
 
   static Widget buildInventoryUI() =>
-      buildDialog(
+      GameUI.buildDialog(
         child: Column(
           children: [
             buildContainerEquippedItems(),
@@ -25,23 +23,6 @@ class GameInventoryUI {
           ],
         ),
       );
-
-  static Widget buildDialog({required Widget child}) =>
-    MouseRegion(
-      onEnter: onMouseEnter,
-      onExit: onMouseExit,
-      child: child,
-    );
-
-  static void onMouseEnter(PointerEnterEvent event){
-    GameCanvas.cursorVisible = false;
-    mouseOverDialog = true;
-  }
-
-  static void onMouseExit(PointerExitEvent event){
-    GameCanvas.cursorVisible = true;
-    mouseOverDialog = false;
-  }
 
   static Widget buildContainerEquippedItems() => Container(
         width: Inventory_Width,
@@ -172,7 +153,7 @@ class GameInventoryUI {
           },
           child: Draggable<int>(
             onDraggableCanceled: (velocity, offset){
-              if (mouseOverDialog) return;
+              if (GameUI.mouseOverDialog) return;
               GameNetwork.sendClientRequestInventoryDrop(index);
             },
             hitTestBehavior: HitTestBehavior.opaque,

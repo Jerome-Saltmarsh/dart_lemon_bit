@@ -69,6 +69,8 @@ class GameCanvas {
       case TargetCategory.Enemy:
         GameRender.canvasRenderCursorCrossHairRed(canvas, 5 + GameState.player.weaponCooldown.value * 10);
         break;
+      case TargetCategory.Dialog:
+        break;
     }
   }
 

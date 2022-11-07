@@ -25,6 +25,7 @@ class GameState {
   static final raining = Watch(false, onChanged: onChangedRaining);
   static final hours = Watch(0, onChanged: GameEvents.onChangedHour);
   static final minutes = Watch(0);
+  static final cursor = Watch(GameCursor.Aim);
 
   static final colorShades = [0.0, 0.4, 0.6, 0.7, 0.8, 0.95, 1.0]
       .map((opacity) => colorPitchBlack.withOpacity(opacity).value)

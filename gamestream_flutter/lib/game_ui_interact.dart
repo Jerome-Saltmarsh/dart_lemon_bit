@@ -40,7 +40,7 @@ class GameUIInteract {
     }
 
     static Widget buildContainerTrade(List<int> itemTypes) =>
-      GameInventoryUI.buildDialog(
+      GameUI.buildDialog(
         child: Container(
           width: GameInventoryUI.Inventory_Width,
           height: 400,
@@ -78,7 +78,7 @@ class GameUIInteract {
     }
 
     static Widget buildPositionedTalk() =>
-      Positioned(top: 55, left: 5, child: GameInventoryUI.buildDialog(
+      Positioned(top: 55, left: 5, child: GameUI.buildDialog(
         child: Container(
           color: GameColors.brownDark,
           child: Column(

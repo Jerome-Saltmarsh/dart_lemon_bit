@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/isometric/events/on_visibility_changed_message_box.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/stacks/build_stack_game_type_skirmish.dart';
@@ -13,6 +14,7 @@ import 'isometric/ui/dialogs/build_game_dialog.dart';
 import 'ui/builders/build_panel_menu.dart';
 
 class GameUI {
+  static var mouseOverDialog = false;
   static final messageBoxVisible = Watch(false, clamp: (bool value){
     if (GameState.gameType.value == GameType.Skirmish) return false;
     return value;
@@ -258,4 +260,21 @@ class GameUI {
         srcHeight: AtlasIconSize.getWeaponType(type),
         scale: 3.0,
       );
+
+  static Widget buildDialog({required Widget child}) =>
+      MouseRegion(
+        onEnter: onMouseEnterGameDialog,
+        onExit: onMouseExitGameDialog,
+        child: child,
+      );
+
+  static void onMouseEnterGameDialog(PointerEnterEvent event){
+    GameCanvas.cursorVisible = false;
+    mouseOverDialog = true;
+  }
+
+  static void onMouseExitGameDialog(PointerExitEvent event){
+    GameCanvas.cursorVisible = true;
+    mouseOverDialog = false;
+  }
 }
