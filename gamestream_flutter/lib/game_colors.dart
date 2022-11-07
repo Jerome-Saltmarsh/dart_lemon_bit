@@ -59,4 +59,6 @@ class GameColors {
   static final Color pitchBlack = Color.fromRGBO(28, 27, 23, 1.0);
 
   Color get blood => redDark;
+
+  static final Color inventoryHint = Colors.orange.withOpacity(0.85);
 }

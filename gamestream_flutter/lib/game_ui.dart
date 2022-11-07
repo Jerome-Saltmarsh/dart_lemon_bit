@@ -33,7 +33,7 @@ class GameUI {
   static const TouchButtonSideLeft = false;
   static const TouchButtonSideRight = true;
 
-  static bool get mouseOverDialogInventory => mouseOverDialogType.value != DialogType.Inventory;
+  static bool get mouseOverDialogInventory => mouseOverDialogType.value == DialogType.Inventory;
 
   static Widget build()  =>
       Container(

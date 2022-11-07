@@ -1,4 +1,6 @@
 
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 
@@ -291,8 +293,8 @@ class GameInventoryUI {
   static Widget buildPositionedContainerItemTypeInformation(int itemType){
     if (itemType == ItemType.Empty) return const SizedBox();
     return Positioned(
-      top: Engine.mousePosition.y + 10,
-      left: Engine.mousePosition.x - 170,
+      top:  Engine.mousePosition.y + 10,
+      left: max(10, min(Engine.mousePosition.x - 170, Engine.screen.width - 300)),
       child: Container(
         padding: const EdgeInsets.all(12),
         color: brownDark,
@@ -303,12 +305,12 @@ class GameInventoryUI {
             text('Damage: ${ItemType.getDamage(itemType)}'),
             text('Range: ${ItemType.getRange(itemType).toInt()}'),
             text('Cooldown: ${ItemType.getCooldown(itemType).toInt()}'),
-            height8,
-            text("(left click to equip)", color: Colors.orange.withOpacity(0.85)),
-            if (GamePlayer.interactModeTrading)
-              text("(right click to sell)", color: Colors.orange.withOpacity(0.85)),
-            if (!GamePlayer.interactModeTrading)
-              text("(right click to drop)", color: Colors.orange.withOpacity(0.85)),
+            height16,
+            text("left click to ${GameUI.mouseOverDialogInventory ? 'equip' : 'buy'}", color: GameColors.inventoryHint),
+            if (GamePlayer.interactModeTrading && GameUI.mouseOverDialogInventory)
+              text("right click to sell", color: GameColors.inventoryHint),
+            if (!GamePlayer.interactModeTrading && GameUI.mouseOverDialogInventory)
+              text("right click to drop", color: GameColors.inventoryHint),
           ],
         ),
       ),
