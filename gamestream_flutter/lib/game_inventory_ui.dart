@@ -300,6 +300,12 @@ class GameInventoryUI {
             text('Damage: ${ItemType.getDamage(itemType)}'),
             text('Range: ${ItemType.getRange(itemType).toInt()}'),
             text('Cooldown: ${ItemType.getCooldown(itemType).toInt()}'),
+            height8,
+            text("(left click to equip)", color: Colors.orange.withOpacity(0.85)),
+            if (GamePlayer.interactModeTrading)
+              text("(right click to sell)", color: Colors.orange.withOpacity(0.85)),
+            if (!GamePlayer.interactModeTrading)
+              text("(right click to drop)", color: Colors.orange.withOpacity(0.85)),
           ],
         ),
       ),
