@@ -137,10 +137,17 @@ class GameUIInteract {
           children.add(
              GameInventoryUI.buildPositionGridItem(
                  index: i,
-                 child: onPressed(
-                     child: GameInventoryUI.buildItemTypeAtlasImage(itemType: itemTypes[i]),
-                     action: () => GameNetwork.sendClientRequestInventoryBuy(i),
-                     onRightClick: () => GameNetwork.sendClientRequestInventoryBuy(i),
+                 child: Draggable<int>(
+                   feedback: GameInventoryUI.buildItemTypeAtlasImage(itemType: itemTypes[i]),
+                   onDraggableCanceled: (Velocity velocity, Offset offset){
+                     if (GameUI.mouseOverDialogInventory) return;
+                     GameNetwork.sendClientRequestInventoryBuy(i);
+                   },
+                   child: onPressed(
+                       child: GameInventoryUI.buildItemTypeAtlasImage(itemType: itemTypes[i]),
+                       action: () => GameNetwork.sendClientRequestInventoryBuy(i),
+                       onRightClick: () => GameNetwork.sendClientRequestInventoryBuy(i),
+                   ),
                  ),
              )
           );

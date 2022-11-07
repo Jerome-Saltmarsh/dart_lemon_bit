@@ -21,10 +21,10 @@
 [ ] add mobile share (whatsapp, facebook) button
 [ ] improve grid invisibility
 [ ] trade hover information container
-[ ] trade drag to buy
 
 08.11.2022
 [x] trade drag to sell
+[x] trade drag to buy
 
 07.11.2022
 [x] fix character state spawning
