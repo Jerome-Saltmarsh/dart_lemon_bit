@@ -87,15 +87,27 @@ class GameUIInteract {
     return Positioned(
       top: 55,
       left: 5,
-      child: watch(GamePlayer.storeItems, (List<int> itemTypes) {
-        if (itemTypes.isEmpty) return text("No items to trade");
-        return Container(
-          color: brownDark,
-          child: Column(
-            children: itemTypes.map(text).toList(),
-          ),
-        );
-      }),
+      child: Container(
+        color: brownDark,
+        width: 300,
+        height: 400,
+        padding: const EdgeInsets.all(10),
+        child: watch(GamePlayer.storeItems, (List<int> itemTypes) {
+          if (itemTypes.isEmpty) return text("No items to trade");
+          final children = <Widget>[];
+          for (var i = 0; i < itemTypes.length; i++){
+              children.add(
+                 GameInventoryUI.buildPositionGridItem(
+                     index: i,
+                     child: GameInventoryUI.buildItemTypeAtlasImage(itemType: itemTypes[i]),
+                 )
+              );
+          }
+          return Stack(
+            children: children,
+          );
+        }),
+      ),
     );
   }
 
