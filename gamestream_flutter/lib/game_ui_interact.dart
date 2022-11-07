@@ -4,8 +4,6 @@ import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/library.dart';
 
-import 'isometric/ui/widgets/nothing.dart';
-
 
 class GameUIInteract {
   static const _width = 400;
@@ -20,17 +18,54 @@ class GameUIInteract {
         case InteractMode.Talking:
           return buildPositionedTalk();
         case InteractMode.Trading:
-          return Stack(
-            children: [
-              buildPositionedTrading(),
-              buildPositionedInventory(),
-            ],
-          );
+          return watch(GamePlayer.storeItems, buildStoreItems);
         case InteractMode.Inventory:
           return buildPositionedInventory();
         default:
           return const SizedBox();
       }
+    }
+
+    static Widget buildStoreItems(List<int> itemTypes){
+      return Stack(
+        children: [
+          buildPositionedContainerTrade(itemTypes),
+          buildPositionedInventory(),
+        ],
+      );
+    }
+
+    static Widget buildPositionedContainerTrade(List<int> itemTypes) {
+      return Positioned(
+        left: 0,
+        top: 100,
+        child: Container(
+          width: GameInventoryUI.Inventory_Width,
+          height: 400,
+          color: GameColors.brownDark,
+          child: Stack(
+            children: [
+              buildStackSlotGrid(itemTypes.length + 5),
+              ...buildPositionedTrading(itemTypes),
+            ],
+          ),
+        ),
+      );
+    }
+
+    static Widget buildStackSlotGrid(int count){
+      final children = <Widget>[];
+      for (var i = 0; i < count; i++) {
+        children.add(
+            GameInventoryUI.buildPositionGridElement(
+                index: i,
+                child: GameInventoryUI.buildAtlasIconSlotEmpty(),
+            ),
+        );
+      }
+      return Stack(
+        children: children,
+      );
     }
 
     static Widget buildPositionedInventory(){
@@ -41,9 +76,9 @@ class GameUIInteract {
       );
     }
 
-    static Widget buildPositionedTalk(){
-      return Positioned(top: 55, left: 5, child: Container(
-        color: brownDark,
+    static Widget buildPositionedTalk() =>
+      Positioned(top: 55, left: 5, child: Container(
+        color: GameColors.brownDark,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -52,7 +87,6 @@ class GameUIInteract {
           ],
         ),
       ));
-    }
 
     static Widget buildControlNpcTalk(String value) =>
         container(
@@ -81,32 +115,16 @@ class GameUIInteract {
           }).toList(),
         );
 
-  static Widget buildPositionedTrading(){
-    return Positioned(
-      top: 55,
-      left: 5,
-      child: Container(
-        color: brownDark,
-        width: 300,
-        height: 400,
-        padding: const EdgeInsets.all(10),
-        child: watch(GamePlayer.storeItems, (List<int> itemTypes) {
-          if (itemTypes.isEmpty) return text("No items to trade");
-          final children = <Widget>[];
-          for (var i = 0; i < itemTypes.length; i++){
-              children.add(
-                 GameInventoryUI.buildPositionGridItem(
-                     index: i,
-                     child: GameInventoryUI.buildItemTypeAtlasImage(itemType: itemTypes[i]),
-                 )
-              );
-          }
-          return Stack(
-            children: children,
+  static List<Widget> buildPositionedTrading(List<int> itemTypes){
+      final children = <Widget>[];
+      for (var i = 0; i < itemTypes.length; i++){
+          children.add(
+             GameInventoryUI.buildPositionGridItem(
+                 index: i,
+                 child: GameInventoryUI.buildItemTypeAtlasImage(itemType: itemTypes[i]),
+             )
           );
-        }),
-      ),
-    );
+      }
+      return children;
   }
-
 }

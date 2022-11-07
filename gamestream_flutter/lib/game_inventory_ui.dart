@@ -8,6 +8,7 @@ import 'library.dart';
 class GameInventoryUI {
   static const Slot_Size = 32.0;
   static const Slot_Scale = 1.5;
+  static const Scaled_Slot_Size = Slot_Size * Slot_Scale;
   static const Slot_Item_Scale = Slot_Scale * 0.9;
   static const Equipped_Item_Scale = Slot_Scale * Engine.GoldenRatio_1_618;
   static const ColumnsPerRow = 7;
@@ -192,13 +193,24 @@ class GameInventoryUI {
         child: buildAtlasIconSlotEmpty()
     );
 
-  static double getIndexX(int index) => getIndexColumn(index) * Slot_Size * Slot_Scale;
+  static double getIndexX(int index) => getIndexColumn(index) * Scaled_Slot_Size;
 
-  static double getIndexY(int index) => getIndexRow(index) * Slot_Size * Slot_Scale;
+  static double getIndexY(int index) => getIndexRow(index) * Scaled_Slot_Size;
 
   static int getIndexRow(int index) => index ~/ ColumnsPerRow;
 
   static int getIndexColumn(int index) =>  index % ColumnsPerRow;
+
+  static Widget buildPositionGridElement({
+    required int index,
+    required Widget child,
+  }) =>
+      Positioned(
+        left: getIndexX(index) + 7,
+        top: getIndexY(index) + 7,
+        child: child,
+      );
+
 
   static Widget buildPositionGridItem({required int index, required Widget child}) =>
       Positioned(
