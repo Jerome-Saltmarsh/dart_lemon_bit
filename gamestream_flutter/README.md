@@ -4,20 +4,25 @@
 [ ] optimize front end - do not use objects to store characters
 [ ] optimize front end - do not use objects to store gameobjects
 [ ] optimize front end - do not use objects to store particles
-[ ] optimize network - compile all characters into single server_response
 [ ] option fullscreen dialog on game start if it fails to do so automatically
-[ ] improve grid invisibility
+[ ] render foreground zombie walking while connecting
+[ ] editor - gameobjects
+
+[Afternoon-Tasks]
+[ ] optimize network - compile all characters into single server_response
+[ ] fix character state changing
+[ ] editor fix add remove columns
+[ ] add weapon fire staff
+
+[Morning-Tasks]
+[ ] talk other players
+[ ] trade with other players
 [ ] fix player renders behind stairs
 [ ] add mobile share (whatsapp, facebook) button
-[ ] render foreground zombie walking while connecting
-[ ] add weapon fire staff
-[ ] editor - gameobjects
-[ ] editor fix add remove columns
-[ ] fix character state changing
-[ ] fix character state spawning
-[ ] trade with other players
+[ ] improve grid invisibility
 
 07.11.2022
+[x] fix character state spawning
 [x] talk to npc
 [x] trade with npc
 [x] right click to drop item
