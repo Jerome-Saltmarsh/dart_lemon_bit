@@ -332,25 +332,25 @@ class GameNetwork {
         ClientRequest.Inventory, "${InventoryRequest.Sell} $index",
       );
 
-  static void sendClientRequestInventoryUnequipWeapon() =>
-      sendClientRequest(
-        ClientRequest.Inventory, "${InventoryRequest.Unequip_Weapon}",
-      );
-
-  static void sendClientRequestInventoryUnequipHead() =>
-      sendClientRequest(
-        ClientRequest.Inventory, "${InventoryRequest.Unequip_Head}",
-      );
-
-  static void sendClientRequestInventoryUnequipBody() =>
-      sendClientRequest(
-        ClientRequest.Inventory, "${InventoryRequest.Unequip_Body}",
-      );
-
-  static void sendClientRequestInventoryUnequipLegs() =>
-      sendClientRequest(
-        ClientRequest.Inventory, "${InventoryRequest.Unequip_Legs}",
-      );
+  // static void sendClientRequestInventoryUnequipWeapon() =>
+  //     sendClientRequest(
+  //       ClientRequest.Inventory, "${InventoryRequest.Unequip_Weapon}",
+  //     );
+  //
+  // static void sendClientRequestInventoryUnequipHead() =>
+  //     sendClientRequest(
+  //       ClientRequest.Inventory, "${InventoryRequest.Unequip_Head}",
+  //     );
+  //
+  // static void sendClientRequestInventoryUnequipBody() =>
+  //     sendClientRequest(
+  //       ClientRequest.Inventory, "${InventoryRequest.Unequip_Body}",
+  //     );
+  //
+  // static void sendClientRequestInventoryUnequipLegs() =>
+  //     sendClientRequest(
+  //       ClientRequest.Inventory, "${InventoryRequest.Unequip_Legs}",
+  //     );
 
   static void sendClientRequestInventoryMove({
     required int indexFrom,

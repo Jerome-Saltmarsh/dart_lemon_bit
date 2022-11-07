@@ -529,26 +529,10 @@ class Connection {
         if (indexTo < 0) return errorInvalidArg('invalid inventory to index');
         player.inventoryMove(indexFrom, indexTo);
         break;
-      case InventoryRequest.Unequip_Weapon:
-        player.inventoryUnequipWeapon();
-        break;
-      case InventoryRequest.Unequip_Head:
-        player.inventoryUnequipHead();
-        break;
-      case InventoryRequest.Unequip_Body:
-        player.inventoryUnequipBody();
-        break;
-      case InventoryRequest.Unequip_Legs:
-        player.inventoryUnequipLegs();
-        break;
       case InventoryRequest.Equip:
         final index = int.tryParse(arguments[2]);
         if (index == null) {
           errorInvalidArg('index is null');
-          return;
-        }
-        if (index < 0 || index >= player.inventory.length) {
-          errorInvalidArg('InventoryRequest.Equip.error (index inventory index');
           return;
         }
         player.inventoryEquip(index);

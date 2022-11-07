@@ -491,7 +491,34 @@ class Player extends Character with ByteWriter {
     writePlayerInventory();
   }
   
-  void inventoryEquip(int index){
+  void inventoryEquip(int index) {
+    if (index < 0){
+      // warn user
+      return;
+    }
+
+    if (index == ItemType.Equipped_Weapon){
+      inventoryUnequipWeapon();
+      return;
+    }
+    if (index == ItemType.Equipped_Head){
+      inventoryUnequipHead();
+      return;
+    }
+    if (index == ItemType.Equipped_Body){
+      inventoryUnequipBody();
+      return;
+    }
+    if (index == ItemType.Equipped_Legs){
+      inventoryUnequipLegs();
+      return;
+    }
+
+    if (index >= inventory.length) {
+      // warn user
+      return;
+    }
+
     final itemType = inventory[index];
     var swapped = false;
 

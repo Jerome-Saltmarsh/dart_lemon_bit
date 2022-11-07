@@ -55,7 +55,7 @@ class GameInventoryUI {
       );
 
   static Widget buildContainerEquippedWeapon() => onPressed(
-      action: GameNetwork.sendClientRequestInventoryUnequipWeapon,
+      action: () => GameNetwork.sendClientRequestInventoryEquip(ItemType.Equipped_Weapon),
       onRightClick: () => GamePlayer.interactModeTrading
           ? GameNetwork.sendClientRequestInventorySell(ItemType.Equipped_Weapon)
           : GameNetwork.sendClientRequestInventoryDrop(ItemType.Equipped_Weapon),
@@ -63,7 +63,7 @@ class GameInventoryUI {
   );
 
   static Widget buildContainerEquippedBody() => onPressed(
-      action: GameNetwork.sendClientRequestInventoryUnequipBody,
+      action: () => GameNetwork.sendClientRequestInventoryEquip(ItemType.Equipped_Body),
       onRightClick: () => GamePlayer.interactModeTrading
           ? GameNetwork.sendClientRequestInventorySell(ItemType.Equipped_Body)
           : GameNetwork.sendClientRequestInventoryDrop(ItemType.Equipped_Body),
@@ -71,6 +71,7 @@ class GameInventoryUI {
   );
 
   static Widget buildContainerEquippedHead() => onPressed(
+      action: () => GameNetwork.sendClientRequestInventoryEquip(ItemType.Equipped_Head),
       onRightClick: () => GamePlayer.interactModeTrading
           ? GameNetwork.sendClientRequestInventorySell(ItemType.Equipped_Head)
           : GameNetwork.sendClientRequestInventoryDrop(ItemType.Equipped_Head),
@@ -78,7 +79,7 @@ class GameInventoryUI {
   );
 
   static Widget buildContainerEquippedLegs() => onPressed(
-      action: GameNetwork.sendClientRequestInventoryUnequipLegs,
+      action: () => GameNetwork.sendClientRequestInventoryEquip(ItemType.Equipped_Legs),
       onRightClick: () => GameNetwork.sendClientRequestInventoryDrop(ItemType.Equipped_Legs),
       child: buildDragTarget(GamePlayer.legs, ItemType.Equipped_Legs)
   );
