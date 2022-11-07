@@ -42,16 +42,27 @@ class GameUIInteract {
     static Widget buildContainerTrade(List<int> itemTypes) =>
       GameUI.buildDialog(
         dialogType: DialogType.Trade,
-        child: Container(
-          width: GameInventoryUI.Inventory_Width,
-          height: 400,
-          color: GameColors.brownDark,
-          child: Stack(
-            children: [
-              buildStackSlotGrid(itemTypes.length + 12),
-              ...buildPositionedTrading(itemTypes),
-            ],
-          ),
+        child: DragTarget<int>(
+          onWillAccept: (int? data){
+            return true;
+          },
+          onAccept: (int? data){
+            if (data == null) return;
+            GameNetwork.sendClientRequestInventorySell(data);
+          },
+          builder: (context, data, rejected){
+            return Container(
+              width: GameInventoryUI.Inventory_Width,
+              height: 400,
+              color: GameColors.brownDark,
+              child: Stack(
+                children: [
+                  buildStackSlotGrid(itemTypes.length + 12),
+                  ...buildPositionedTrading(itemTypes),
+                ],
+              ),
+            );
+          },
         ),
       );
 
