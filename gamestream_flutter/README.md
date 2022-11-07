@@ -17,7 +17,7 @@
 [Morning-Tasks]
 [ ] gold
 [ ] experience
-[ ] talk with iiiother players
+[ ] talk with other players
 [ ] trade with other players
 [ ] fix player renders behind stairs
 [ ] add mobile share (whatsapp, facebook) button

@@ -207,9 +207,8 @@ class GameInventoryUI {
 
 
   static Widget buildPositionGridItem({required int index, required Widget child}) =>
-      Positioned(
-        left: getIndexX(index) + 7,
-        top: getIndexY(index) + 7,
+      buildPositionGridElement(
+        index: index,
         child: DragTarget<int>(
           onWillAccept: (int? index) => index != null,
           onAccept: (int? indexFrom){

@@ -44,7 +44,7 @@ class GameUIInteract {
         dialogType: DialogType.Trade,
         child: DragTarget<int>(
           onWillAccept: (int? data){
-            return true;
+            return data != null;
           },
           onAccept: (int? data){
             if (data == null) return;
@@ -135,9 +135,15 @@ class GameUIInteract {
       final children = <Widget>[];
       for (var i = 0; i < itemTypes.length; i++){
           children.add(
-             GameInventoryUI.buildPositionGridItem(
+             GameInventoryUI.buildPositionGridElement(
                  index: i,
                  child: Draggable<int>(
+                   onDragCompleted: (){
+
+                   },
+                   onDragEnd: (details){
+
+                   },
                    feedback: GameInventoryUI.buildItemTypeAtlasImage(itemType: itemTypes[i]),
                    onDraggableCanceled: (Velocity velocity, Offset offset){
                      if (GameUI.mouseOverDialogInventory) return;
