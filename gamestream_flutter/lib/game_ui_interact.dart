@@ -54,10 +54,8 @@ class GameUIInteract {
       ));
     }
 
-    static Widget buildControlNpcTalk(String? value) =>
-        (value == null || value.isEmpty)
-            ? nothing
-            : container(
+    static Widget buildControlNpcTalk(String value) =>
+        container(
           child: SingleChildScrollView(child: text(value = value.replaceAll(". ", "\n\n"), color: white80, height: 2.2)),
           color: brownLight,
           width: _width,

@@ -18,7 +18,7 @@ class Player {
   var attackRange = 0.0;
   final mapTile = Watch(0, onChanged: MiniMap.onMapTileChanged);
   var interactingNpcName = Watch<String?>(null);
-  var npcTalk = Watch<String?>(null);
+  var npcTalk = Watch("");
   var npcTalkOptions = Watch<List<String>>([]);
   final abilityTarget = Vector3();
   var aimTargetChanged = Watch(0);

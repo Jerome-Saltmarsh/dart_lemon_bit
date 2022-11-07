@@ -484,7 +484,6 @@ class GameEvents {
   }
 
   static void onChangedPlayerInteractMode(int value) {
-    print('onChangedPlayerInteractMode(${InteractMode.getName(value)})');
     GameAudio.click_sound_8(1);
     switch (value) {
       case InteractMode.Inventory:
@@ -501,8 +500,8 @@ class GameEvents {
         GameCamera.translateX = 0;
         GameCanvas.cursorVisible = true;
         GameInventoryUI.itemTypeHover.value = ItemType.Empty;
-        GameState.player.npcTalk.value = null;
-        GameState.player.npcTalkOptions.value = [];
+        // GameState.player.npcTalk.value = "";
+        // GameState.player.npcTalkOptions.value = [];
         break;
     }
   }
