@@ -29,26 +29,26 @@ class GameUIInteract {
     static Widget buildStoreItems(List<int> itemTypes){
       return Stack(
         children: [
-          buildPositionedContainerTrade(itemTypes),
+          Positioned(
+            left: 0,
+            top: 100,
+            child: buildContainerTrade(itemTypes),
+          ),
           buildPositionedInventory(),
         ],
       );
     }
 
-    static Widget buildPositionedContainerTrade(List<int> itemTypes) {
-      return Positioned(
-        left: 0,
-        top: 100,
-        child: Container(
-          width: GameInventoryUI.Inventory_Width,
-          height: 400,
-          color: GameColors.brownDark,
-          child: Stack(
-            children: [
-              buildStackSlotGrid(itemTypes.length + 5),
-              ...buildPositionedTrading(itemTypes),
-            ],
-          ),
+    static Widget buildContainerTrade(List<int> itemTypes) {
+      return Container(
+        width: GameInventoryUI.Inventory_Width,
+        height: 400,
+        color: GameColors.brownDark,
+        child: Stack(
+          children: [
+            buildStackSlotGrid(itemTypes.length + 5),
+            ...buildPositionedTrading(itemTypes),
+          ],
         ),
       );
     }
