@@ -150,13 +150,13 @@ class GameUIInteract {
                      GameNetwork.sendClientRequestInventoryBuy(i);
                    },
                    child: onPressed(
-                       child: GameInventoryUI.buildItemTypeAtlasImage(itemType: itemTypes[i]),
-                       action: () => GameNetwork.sendClientRequestInventoryBuy(i),
-                       onRightClick: () => GameNetwork.sendClientRequestInventoryBuy(i),
+                         child: GameInventoryUI.buildItemType(itemType: itemTypes[i]),
+                         action: () => GameNetwork.sendClientRequestInventoryBuy(i),
+                         onRightClick: () => GameNetwork.sendClientRequestInventoryBuy(i),
+                     ),
                    ),
                  ),
-             )
-          );
+             );
       }
       return children;
   }
