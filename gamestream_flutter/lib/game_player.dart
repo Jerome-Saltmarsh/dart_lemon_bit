@@ -23,13 +23,8 @@ class GamePlayer {
   static double get positionScreenX => Engine.worldToScreenX(position.renderX);
   static double get positionScreenY => Engine.worldToScreenY(position.renderX);
 
-  static void actionToggleInventoryVisible() =>
-      interactMode.value == InteractMode.None
-          ? actionSetInteractModeInventory()
-          : actionSetInteractModeNone();
-
-  static void actionSetInteractModeInventory() =>
-      setInteractMode(InteractMode.Inventory);
+  // static void actionToggleInventoryVisible() =>
+  //     sendClientRequestInventoryToggle;
 
   static void actionSetInteractModeTrading() =>
       setInteractMode(InteractMode.Trading);

@@ -482,6 +482,13 @@ class Connection {
     if (inventoryRequest == null) return errorInvalidArg('inventory request is null');
 
     switch (inventoryRequest) {
+      case InventoryRequest.Toggle:
+        if (player.interactMode != InteractMode.None){
+           player.interactMode = InteractMode.None;
+        } else {
+          player.interactMode = InteractMode.Inventory;
+        }
+        break;
       case InventoryRequest.Drop:
         final index = int.tryParse(arguments[2]);
         if (index == null)

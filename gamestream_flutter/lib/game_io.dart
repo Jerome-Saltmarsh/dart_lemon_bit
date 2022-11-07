@@ -341,7 +341,7 @@ class GameIO {
       if (key == PhysicalKeyboardKey.keyG)
         return GameNetwork.sendClientRequestTeleport();
       if (key == PhysicalKeyboardKey.keyI)
-        return GamePlayer.actionToggleInventoryVisible();
+        return GameNetwork.sendClientRequestInventoryToggle();
       if (key == PhysicalKeyboardKey.keyT)
         return GameState.actionGameDialogShowQuests();
       if (key == PhysicalKeyboardKey.keyM)

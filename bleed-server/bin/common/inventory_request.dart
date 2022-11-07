@@ -6,4 +6,5 @@ class InventoryRequest {
   static const Unequip_Head = 4;
   static const Unequip_Legs = 5;
   static const Drop = 6;
+  static const Toggle = 7;
 }

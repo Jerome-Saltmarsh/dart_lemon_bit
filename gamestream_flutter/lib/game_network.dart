@@ -312,6 +312,11 @@ class GameNetwork {
         ClientRequest.Inventory, "${InventoryRequest.Equip} $index",
       );
 
+  static void sendClientRequestInventoryToggle() =>
+      sendClientRequest(
+        ClientRequest.Inventory, "${InventoryRequest.Toggle}",
+      );
+
   static void sendClientRequestInventoryDrop(int index) =>
       sendClientRequest(
         ClientRequest.Inventory, "${InventoryRequest.Drop} $index",
