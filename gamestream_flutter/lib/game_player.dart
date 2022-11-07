@@ -22,4 +22,6 @@ class GamePlayer {
 
   static double get positionScreenX => Engine.worldToScreenX(position.renderX);
   static double get positionScreenY => Engine.worldToScreenY(position.renderX);
+
+  static bool get interactModeTrading => interactMode.value == InteractMode.Trading;
 }

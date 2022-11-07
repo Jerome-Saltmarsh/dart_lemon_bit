@@ -277,24 +277,28 @@ class Player extends Character with ByteWriter {
       if (weaponType == itemType) return;
       weaponType = itemType;
       writePlayerInventory();
+      game.setCharacterStateChanging(this);
       return;
     }
     if (index == ItemType.Equipped_Body) {
       if (bodyType == itemType) return;
       bodyType = itemType;
       writePlayerInventory();
+      game.setCharacterStateChanging(this);
       return;
     }
     if (index == ItemType.Equipped_Head) {
       if (headType == itemType) return;
       headType = itemType;
       writePlayerInventory();
+      game.setCharacterStateChanging(this);
       return;
     }
     if (index == ItemType.Equipped_Legs) {
       if (legsType == itemType) return;
       legsType = itemType;
       writePlayerInventory();
+      game.setCharacterStateChanging(this);
       return;
     }
     assert(index < inventory.length);

@@ -56,22 +56,26 @@ class GameInventoryUI {
 
   static Widget buildContainerEquippedWeapon() => onPressed(
       action: GameNetwork.sendClientRequestInventoryUnequipWeapon,
-      onRightClick: () => GameNetwork.sendClientRequestInventoryDrop(ItemType.Equipped_Weapon),
+      onRightClick: () => GamePlayer.interactModeTrading
+          ? GameNetwork.sendClientRequestInventorySell(ItemType.Equipped_Weapon)
+          : GameNetwork.sendClientRequestInventoryDrop(ItemType.Equipped_Weapon),
       child: buildDragTarget(GamePlayer.weapon, ItemType.Equipped_Weapon)
   );
 
   static Widget buildContainerEquippedBody() => onPressed(
       action: GameNetwork.sendClientRequestInventoryUnequipBody,
-      onRightClick: () => GameNetwork.sendClientRequestInventoryDrop(ItemType.Equipped_Body),
+      onRightClick: () => GamePlayer.interactModeTrading
+          ? GameNetwork.sendClientRequestInventorySell(ItemType.Equipped_Body)
+          : GameNetwork.sendClientRequestInventoryDrop(ItemType.Equipped_Body),
       child: buildDragTarget(GamePlayer.body, ItemType.Equipped_Body)
   );
 
   static Widget buildContainerEquippedHead() => onPressed(
-      action: GameNetwork.sendClientRequestInventoryUnequipHead,
-      onRightClick: () => GameNetwork.sendClientRequestInventoryDrop(ItemType.Equipped_Head),
+      onRightClick: () => GamePlayer.interactModeTrading
+          ? GameNetwork.sendClientRequestInventorySell(ItemType.Equipped_Head)
+          : GameNetwork.sendClientRequestInventoryDrop(ItemType.Equipped_Head),
       child: buildDragTarget(GamePlayer.head, ItemType.Equipped_Head)
   );
-
 
   static Widget buildContainerEquippedLegs() => onPressed(
       action: GameNetwork.sendClientRequestInventoryUnequipLegs,
@@ -145,7 +149,9 @@ class GameInventoryUI {
     return buildPositionGridItem(
       index: index,
       child: GestureDetector(
-        onSecondaryTap: () => GameNetwork.sendClientRequestInventoryDrop(index),
+        onSecondaryTap: () => GamePlayer.interactModeTrading
+            ? GameNetwork.sendClientRequestInventorySell(index)
+            : GameNetwork.sendClientRequestInventoryDrop(index),
         child: MouseRegion(
           cursor: SystemMouseCursors.click,
           onEnter: (event){
