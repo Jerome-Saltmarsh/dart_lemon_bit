@@ -26,15 +26,15 @@ class GamePlayer {
   // static void actionToggleInventoryVisible() =>
   //     sendClientRequestInventoryToggle;
 
-  static void actionSetInteractModeTrading() =>
-      setInteractMode(InteractMode.Trading);
+  // static void actionSetInteractModeTrading() =>
+  //     setInteractMode(InteractMode.Trading);
+  //
+  // static void actionSetInteractModeTalking() =>
+  //     setInteractMode(InteractMode.Talking);
+  //
+  // static void actionSetInteractModeNone() =>
+  //     setInteractMode(InteractMode.None);
 
-  static void actionSetInteractModeTalking() =>
-      setInteractMode(InteractMode.Talking);
-
-  static void actionSetInteractModeNone() =>
-      setInteractMode(InteractMode.None);
-
-  static void setInteractMode(int value) =>
-      interactMode.value = value;
+  // static void setInteractMode(int value) =>
+  //     interactMode.value = value;
 }

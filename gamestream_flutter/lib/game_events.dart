@@ -27,12 +27,6 @@ class GameEvents {
     // GameState.inventoryOpen.value = storeVisible;
   }
 
-  static void onChangedPlayerAlive(bool value) {
-    if (!value) {
-      GamePlayer.actionSetInteractModeNone();
-    }
-  }
-
   static void onChangedAmbientShade(int shade) {
     GameState.ambientColor = GameState.colorShades[shade];
     GameState.refreshLighting();
@@ -326,9 +320,6 @@ class GameEvents {
         break;
       case PlayerEvent.Quest_Completed:
         onPlayerEventQuestCompleted();
-        break;
-      case PlayerEvent.Interaction_Finished:
-        GamePlayer.actionSetInteractModeNone();
         break;
       case PlayerEvent.Level_Up:
         // audio.buff(GameState.player.x, GameState.player.y);

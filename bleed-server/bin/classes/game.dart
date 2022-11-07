@@ -893,7 +893,9 @@ abstract class Game {
     character.collidable = false;
     clearCharacterTarget(character);
 
+    // onPlayerKilled
     if (character is Player) {
+       character.interactMode = InteractMode.None;
        character.writePlayerAlive();
     }
 

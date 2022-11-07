@@ -31,7 +31,7 @@ class Player {
   final points = Watch(0);
   final message = Watch("", onChanged: GameEvents.onChangedPlayerMessage);
   var messageTimer = 0;
-  final alive = Watch(true, onChanged: GameEvents.onChangedPlayerAlive);
+  final alive = Watch(true);
   final wood = Watch(0);
   final stone = Watch(0);
   final gold = Watch(0);

@@ -164,7 +164,6 @@ class Player extends Character with ByteWriter {
     }
     interactMode = InteractMode.None;
     npcName = "";
-    writePlayerEvent(PlayerEvent.Interaction_Finished);
   }
 
   void interact({required String message, Map<String, Function>? responses}){
