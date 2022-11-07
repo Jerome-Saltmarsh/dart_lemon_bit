@@ -154,7 +154,7 @@ class GameInventoryUI {
           },
           child: Draggable<int>(
             onDraggableCanceled: (velocity, offset){
-              if (GameUI.mouseOverDialog.value != DialogType.None) return;
+              if (GameUI.mouseOverDialogType.value != DialogType.None) return;
               GameNetwork.sendClientRequestInventoryDrop(index);
             },
             hitTestBehavior: HitTestBehavior.opaque,

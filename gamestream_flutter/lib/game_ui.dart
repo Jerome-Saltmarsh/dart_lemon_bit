@@ -14,7 +14,7 @@ import 'isometric/ui/dialogs/build_game_dialog.dart';
 import 'ui/builders/build_panel_menu.dart';
 
 class GameUI {
-  static var mouseOverDialog = Watch(DialogType.None);
+  static var mouseOverDialogType = Watch(DialogType.None);
   static final messageBoxVisible = Watch(false, clamp: (bool value){
     if (GameState.gameType.value == GameType.Skirmish) return false;
     return value;
@@ -264,12 +264,10 @@ class GameUI {
   static Widget buildDialog({required Widget child, required int dialogType}) =>
       MouseRegion(
         onEnter: (PointerEnterEvent event){
-          GameCanvas.cursorVisible = false;
-          mouseOverDialog.value = dialogType;
+          mouseOverDialogType.value = dialogType;
         },
         onExit: (PointerExitEvent event){
-          GameCanvas.cursorVisible = true;
-          mouseOverDialog.value = DialogType.None;
+          mouseOverDialogType.value = DialogType.None;
         },
         child: child,
       );

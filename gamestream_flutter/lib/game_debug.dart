@@ -46,7 +46,7 @@ class GameDebug {
                                 "aim-target-position: ${GamePlayer.aimTargetPosition}\n"
                                 "target-category: ${TargetCategory.getName(GamePlayer.targetCategory)}\n"
                                 "target-position: ${GamePlayer.targetPosition}\n"
-                                "dialog-type: ${DialogType.getName(GameUI.mouseOverDialog.value)}\n"
+                                "dialog-type: ${DialogType.getName(GameUI.mouseOverDialogType.value)}\n"
                                 "player-legs: ${ItemType.getName(GamePlayer.legs.value)}\n"
                                 "player-body: ${ItemType.getName(GamePlayer.body.value)}\n"
                                 "player-head: ${ItemType.getName(GamePlayer.head.value)}\n"

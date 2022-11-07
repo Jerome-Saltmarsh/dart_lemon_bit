@@ -494,14 +494,10 @@ class GameEvents {
         break;
       case InteractMode.Trading:
         GameCamera.translateX = 0;
-        GameCanvas.cursorVisible = false;
         break;
       case InteractMode.None:
         GameCamera.translateX = 0;
-        GameCanvas.cursorVisible = true;
         GameInventoryUI.itemTypeHover.value = ItemType.Empty;
-        // GameState.player.npcTalk.value = "";
-        // GameState.player.npcTalkOptions.value = [];
         break;
     }
   }

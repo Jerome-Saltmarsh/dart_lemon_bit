@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class GameCanvas {
-  static bool cursorVisible = true;
-
   static void renderForegroundText(Vector3 position, String text){
     Engine.renderText(
       text,
@@ -16,7 +14,7 @@ class GameCanvas {
 
 
   static void renderForeground(Canvas canvas, Size size) {
-    if (cursorVisible){
+    if (GameUI.mouseOverDialogType.value == DialogType.None){
       renderCursor(canvas);
     }
 
