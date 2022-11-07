@@ -14,7 +14,7 @@ class Vector3 with Position {
   int get indexColumn => y ~/ tileSize;
   /// remove
   int get nodeIndex => GameQueries.getGridNodeIndexXYZ(x, y, z);
-  double get renderOrder => x + y;
+  double get renderOrder => x + y + (z * 0.4);
   /// remove
   double get renderX => (x - y) * 0.5;
   /// remove

@@ -19,12 +19,12 @@
 [ ] experience
 [ ] talk with other players
 [ ] trade with other players
-[ ] fix player renders behind stairs
 [ ] add mobile share (whatsapp, facebook) button
 [ ] improve grid invisibility
 [ ] trade hover information container
 
 08.11.2022
+[x] fix player renders behind stairs
 [x] trade drag to sell
 [x] trade drag to buy
 
