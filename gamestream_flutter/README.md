@@ -15,7 +15,9 @@
 [ ] add weapon fire staff
 
 [Morning-Tasks]
-[ ] talk other players
+[ ] gold
+[ ] experience
+[ ] talk with iiiother players
 [ ] trade with other players
 [ ] fix player renders behind stairs
 [ ] add mobile share (whatsapp, facebook) button
