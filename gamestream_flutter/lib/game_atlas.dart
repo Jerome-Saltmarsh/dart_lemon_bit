@@ -18,6 +18,7 @@ class AtlasItems {
       ItemType.Resource_Ammo_9mm: 256,
       ItemType.Legs_Blue: 224,
       ItemType.Legs_Brown: 192,
+      ItemType.Recipe_Staff_Of_Fire: 0,
   }[itemType] ?? 0;
 
   static double getSrcY(int itemType) => <int, double> {
@@ -29,6 +30,7 @@ class AtlasItems {
     ItemType.Body_Swat: 32,
     ItemType.Legs_Blue: 32,
     ItemType.Legs_Brown: 32,
+    ItemType.Recipe_Staff_Of_Fire: 64,
   }[itemType] ?? 0;
 }
 

@@ -32,15 +32,18 @@ class ItemType {
       value == ItemType.Empty || (value >= Index_Weapon_Melee && value < Index_Weapon_Ranged);
 
   static bool isTypeWeaponRanged(int value) =>
-      value >= Index_Weapon_Ranged && value < Index_Equipped;
+      value >= Index_Weapon_Ranged && value < Index_Recipe;
+
+  static bool isTypeRecipe(int value) =>
+      value >= Index_Recipe && value < Index_Equipped;
 
   static bool isSingleHandedFirearm(int weaponType) =>
       weaponType == Weapon_Ranged_Handgun ||
-          weaponType == Weapon_Ranged_Revolver ;
+      weaponType == Weapon_Ranged_Revolver ;
 
   static bool isTwoHandedFirearm(int weaponType) =>
       weaponType == Weapon_Ranged_Bow ||
-          weaponType == Weapon_Ranged_Shotgun ;
+      weaponType == Weapon_Ranged_Shotgun ;
 
   static const Invalid = -1;
   static const Empty = 00000;
@@ -52,6 +55,7 @@ class ItemType {
   static const Index_Legs = 30000;
   static const Index_Weapon_Melee = 40000;
   static const Index_Weapon_Ranged = 45000;
+  static const Index_Recipe = 50000;
   static const Index_Equipped = 65000;
 
   static const Index_Equipped_Head = Index_Equipped + 0;
@@ -72,6 +76,12 @@ class ItemType {
   static const Resource_Ammo_Arrows_Silver = Index_Resources + 3;
   static const Resource_Ammo_Arrows_Fire = Index_Resources + 3;
   static const Resource_Ammo_Bolts = Index_Resources + 4;
+
+  static const Resource_Wood = Index_Resources + 5;
+  static const Resource_Stone = Index_Resources + 6;
+  static const Resource_Crystal = Index_Resources + 7;
+  static const Resource_Iron = Index_Resources + 8;
+  static const Resource_Gold = Index_Resources + 9;
 
   static const Head_Steel_Helm = Index_Heads + 1;
   static const Head_Rogues_Hood = Index_Heads + 2;
@@ -108,6 +118,14 @@ class ItemType {
   static const Weapon_Melee_Axe = Index_Weapon_Melee + 5;
   static const Weapon_Melee_Hammer = Index_Weapon_Melee + 6;
 
+  static const Recipe_Staff_Of_Fire = Index_Recipe + 1;
+
+  static const Recipes = {
+    Recipe_Staff_Of_Fire : [
+      Resource_Wood, 50,
+      Resource_Crystal, 50,
+    ],
+  };
 
   static int getDamage(int value) => {
       Empty: 1,
@@ -125,6 +143,20 @@ class ItemType {
       Weapon_Ranged_Handgun: 20,
       Weapon_Ranged_Shotgun: 40,
   }[value] ?? 30;
+
+  static String getGroupTypeName(int value) {
+     if (isTypeEmpty(value)) return "Empty";
+     if (isTypeEquipped(value)) return "Equipped";
+     if (isTypeConsumable(value)) return "Consumable";
+     if (isTypeResource(value)) return "Resource";
+     if (isTypeHead(value)) return "Headpiece";
+     if (isTypeLegs(value)) return "Pants";
+     if (isTypeBody(value)) return "Body";
+     if (isTypeWeaponRanged(value)) return "Ranged Weapon";
+     if (isTypeWeaponMelee(value)) return "Melee Weapon";
+     if (isTypeRecipe(value)) return "Recipe";
+     return "item-type-group-unknown-$value";
+  }
   
   static String getName(int value) => {
      Empty: "Empty",
@@ -133,11 +165,15 @@ class ItemType {
      Resource_Ammo_9mm: "Ammo 9mm",
      Resource_Ammo_Shells: "Shells",
      Resource_Ammo_Arrows: "Arrows",
+     Resource_Crystal: "Crystal",
+     Resource_Wood: "Wood",
+     Resource_Iron: "Iron",
      Legs_Brown: "Pants Brown",
      Legs_Swat: "Pants Swat",
      Legs_Green: "Pants Green",
      Legs_Blue: "Pants Blue",
      Legs_White: "Pants White",
      Legs_Red: "Pants Red",
+     Recipe_Staff_Of_Fire: "Staff of Fire",
   }[value] ?? "item-type-unknown($value)";
 }

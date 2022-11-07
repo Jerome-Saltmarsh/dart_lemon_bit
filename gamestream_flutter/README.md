@@ -6,24 +6,32 @@
 [ ] optimize front end - do not use objects to store particles
 [ ] option fullscreen dialog on game start if it fails to do so automatically
 [ ] render foreground zombie walking while connecting
+[ ] talk with other players
+[ ] trade with other players
 [ ] editor - gameobjects
+[ ] character-type fallen
+[ ] character-type skeleton
+[ ] character-type ranger
+[ ] stash
+[ ] forge (for crafting materials)
+
 
 [Afternoon-Tasks]
 [ ] optimize network - compile all characters into single server_response
 [ ] fix character state changing
 [ ] editor fix add remove columns
 [ ] add weapon fire staff
+[ ] add mobile share (whatsapp, facebook) button
 
 [Morning-Tasks]
 [ ] gold
 [ ] experience
-[ ] talk with other players
-[ ] trade with other players
-[ ] add mobile share (whatsapp, facebook) button
 [ ] improve grid invisibility
-[ ] trade hover information container
+[ ] smith (for crafting recipes)
+[ ] recipes
 
 08.11.2022
+[x] trade hover information container
 [x] fix player renders behind stairs
 [x] trade drag to sell
 [x] trade drag to buy

@@ -37,6 +37,7 @@ class AreaPlains1 extends DarkAgeArea {
     player.inventory[3] = ItemType.Head_Wizards_Hat;
     player.inventory[4] = ItemType.Body_Shirt_Cyan;
     player.inventory[5] = ItemType.Legs_Brown;
+    player.inventory[6] = ItemType.Recipe_Staff_Of_Fire;
     player.writePlayerInventory();
     return player;
   }

@@ -301,10 +301,15 @@ class GameInventoryUI {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            text(ItemType.getGroupTypeName(itemType), color: Colors.blue),
             text(ItemType.getName(itemType)),
             text('Damage: ${ItemType.getDamage(itemType)}'),
             text('Range: ${ItemType.getRange(itemType).toInt()}'),
             text('Cooldown: ${ItemType.getCooldown(itemType).toInt()}'),
+
+            if (ItemType.isTypeRecipe(itemType))
+              buildContainerRecipe(itemType),
+
             height16,
             text("left click to ${GameUI.mouseOverDialogInventory ? 'equip' : 'buy'}", color: GameColors.inventoryHint),
             if (GamePlayer.interactModeTrading && GameUI.mouseOverDialogInventory)
@@ -316,4 +321,24 @@ class GameInventoryUI {
       ),
     );
   }
+
+  static Widget buildContainerRecipe(int itemTypeRecipe) {
+     final recipe = ItemType.Recipes[itemTypeRecipe];
+     if (recipe == null) {
+       return text("recipe not found");
+     }
+     final children = <Widget>[];
+     for (var i = 0; i < recipe.length; i += 2){
+        final itemType = recipe[i];
+        final quantity = recipe[i + 1];
+        children.add(
+           text('${ItemType.getName(itemType)}: x$quantity', color: Colors.yellow)
+        );
+     }
+     return Column(
+       crossAxisAlignment: CrossAxisAlignment.start,
+       children: children,
+     );
+  }
+
 }
