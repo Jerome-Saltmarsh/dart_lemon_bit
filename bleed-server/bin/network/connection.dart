@@ -494,6 +494,7 @@ class Connection {
         if (itemType == ItemType.Empty) return;
         player.inventory[emptyInventoryIndex] = itemType;
         player.writePlayerInventory();
+        player.writePlayerEvent(PlayerEvent.Item_Purchased);
         break;
       case InventoryRequest.Sell:
         if (player.interactMode != InteractMode.Trading) return;
@@ -501,6 +502,7 @@ class Connection {
         if (index == null) return errorInvalidArg('index == null');
         if (index < 0) return errorInvalidArg('index < 0');
         player.inventorySetItemTypeAtIndex(index, ItemType.Empty);
+        player.writePlayerEvent(PlayerEvent.Item_Sold);
         break;
       case InventoryRequest.Toggle:
         if (player.interactMode != InteractMode.None){

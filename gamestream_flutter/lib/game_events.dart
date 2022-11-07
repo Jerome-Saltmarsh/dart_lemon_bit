@@ -335,7 +335,7 @@ class GameEvents {
         // audio.buff11(GameState.player.x, GameState.player.y);
         break;
       case PlayerEvent.Item_Purchased:
-        GameAudio.unlock();
+        GameAudio.coins_24();
         break;
       case PlayerEvent.Ammo_Acquired:
         // audio.itemAcquired(Engine.screenCenterWorldX, Engine.screenCenterWorldY);
@@ -348,7 +348,7 @@ class GameEvents {
         GameAudio.popSounds14();
         break;
       case PlayerEvent.Item_Sold:
-        // audio.coins(Engine.screenCenterWorldX, Engine.screenCenterWorldY);
+        GameAudio.coins_24();
         break;
       case PlayerEvent.Drink_Potion:
         // audio.bottle(Engine.screenCenterWorldX, Engine.screenCenterWorldY);
