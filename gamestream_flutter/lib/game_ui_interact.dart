@@ -39,19 +39,20 @@ class GameUIInteract {
       );
     }
 
-    static Widget buildContainerTrade(List<int> itemTypes) {
-      return Container(
-        width: GameInventoryUI.Inventory_Width,
-        height: 400,
-        color: GameColors.brownDark,
-        child: Stack(
-          children: [
-            buildStackSlotGrid(itemTypes.length + 12),
-            ...buildPositionedTrading(itemTypes),
-          ],
+    static Widget buildContainerTrade(List<int> itemTypes) =>
+      GameInventoryUI.buildDialog(
+        child: Container(
+          width: GameInventoryUI.Inventory_Width,
+          height: 400,
+          color: GameColors.brownDark,
+          child: Stack(
+            children: [
+              buildStackSlotGrid(itemTypes.length + 12),
+              ...buildPositionedTrading(itemTypes),
+            ],
+          ),
         ),
       );
-    }
 
     static Widget buildStackSlotGrid(int count){
       final children = <Widget>[];
@@ -77,14 +78,16 @@ class GameUIInteract {
     }
 
     static Widget buildPositionedTalk() =>
-      Positioned(top: 55, left: 5, child: Container(
-        color: GameColors.brownDark,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            watch(GameState.player.npcTalk, buildControlNpcTalk),
-            watch(GameState.player.npcTalkOptions, buildControlNpcTopics)
-          ],
+      Positioned(top: 55, left: 5, child: GameInventoryUI.buildDialog(
+        child: Container(
+          color: GameColors.brownDark,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              watch(GameState.player.npcTalk, buildControlNpcTalk),
+              watch(GameState.player.npcTalkOptions, buildControlNpcTopics)
+            ],
+          ),
         ),
       ));
 

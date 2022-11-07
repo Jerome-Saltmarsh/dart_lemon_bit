@@ -13,13 +13,11 @@ class GameInventoryUI {
   static const Equipped_Item_Scale = Slot_Scale * Engine.GoldenRatio_1_618;
   static const ColumnsPerRow = 7;
   static final itemTypeHover = Watch(ItemType.Empty);
-  static var mouseOverInventory = false;
+  static var mouseOverDialog = false;
   static const Inventory_Width = Slot_Size * Slot_Scale * ColumnsPerRow;
 
   static Widget buildInventoryUI() =>
-      MouseRegion(
-        onEnter: onMouseEnter,
-        onExit: onMouseExit,
+      buildDialog(
         child: Column(
           children: [
             buildContainerEquippedItems(),
@@ -28,14 +26,21 @@ class GameInventoryUI {
         ),
       );
 
+  static Widget buildDialog({required Widget child}) =>
+    MouseRegion(
+      onEnter: onMouseEnter,
+      onExit: onMouseExit,
+      child: child,
+    );
+
   static void onMouseEnter(PointerEnterEvent event){
     GameCanvas.cursorVisible = false;
-    mouseOverInventory = true;
+    mouseOverDialog = true;
   }
 
   static void onMouseExit(PointerExitEvent event){
     GameCanvas.cursorVisible = true;
-    mouseOverInventory = false;
+    mouseOverDialog = false;
   }
 
   static Widget buildContainerEquippedItems() => Container(
@@ -167,7 +172,7 @@ class GameInventoryUI {
           },
           child: Draggable<int>(
             onDraggableCanceled: (velocity, offset){
-              if (mouseOverInventory) return;
+              if (mouseOverDialog) return;
               GameNetwork.sendClientRequestInventoryDrop(index);
             },
             hitTestBehavior: HitTestBehavior.opaque,

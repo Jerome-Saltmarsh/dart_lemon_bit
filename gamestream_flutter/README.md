@@ -20,6 +20,9 @@
 [ ] fix player renders behind stairs
 [ ] add mobile share (whatsapp, facebook) button
 [ ] improve grid invisibility
+[ ] trade hover information container
+[ ] trade drag to sell
+[ ] trade drag to buy
 
 07.11.2022
 [x] fix character state spawning
