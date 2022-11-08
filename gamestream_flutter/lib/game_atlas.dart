@@ -24,6 +24,7 @@ class AtlasItems {
       ItemType.Resource_Stone: 64,
       ItemType.Resource_Crystal: 96,
       ItemType.Resource_Gold: 128,
+      ItemType.Resource_Gun_Powder: 160,
   }[itemType] ?? 0;
 
   static double getSrcY(int itemType) => <int, double> {
@@ -40,6 +41,7 @@ class AtlasItems {
     ItemType.Resource_Stone: 64,
     ItemType.Resource_Crystal: 64,
     ItemType.Resource_Gold: 64,
+    ItemType.Resource_Gun_Powder: 64,
   }[itemType] ?? 0;
 }
 

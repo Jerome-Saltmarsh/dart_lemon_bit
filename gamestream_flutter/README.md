@@ -32,12 +32,15 @@
 [ ] improve grid invisibility
 [ ] recipes
 [ ] smith (for crafting recipes)
-[ ] respawn dead enemies
+[ ] item quantities
+[ ] gun-powder
+
 
 
 
 
 09.11.2022
+[x] respawn dead enemies
 [x] merge game-object-types into item-type
 
 08.11.2022

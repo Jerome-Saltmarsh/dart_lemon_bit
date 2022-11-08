@@ -268,6 +268,15 @@ abstract class Game {
       return;
     }
 
+    if (player.equippedWeaponAmmunitionType != ItemType.Empty){
+      if (player.equippedWeaponAmmunitionQuantity > 0){
+        player.consumeAmmunition();
+      } else {
+        // TODO player.insufficientGunPowder
+        return;
+      }
+    }
+
     switch (weaponType) {
       case ItemType.Weapon_Ranged_Crossbow:
         spawnProjectileArrow(
@@ -278,7 +287,15 @@ abstract class Game {
         );
         return;
       case ItemType.Weapon_Ranged_Handgun:
+        var totalGunPowder = 0;
+        for (var i = 0; i < player.inventory.length; i++){
+           if (player.inventory[i] != ItemType.Resource_Gun_Powder) continue;
+           totalGunPowder += player.inventoryQuantity[i];
+        }
+        if (totalGunPowder <= 0) return;
         characterFireWeapon(player);
+        totalGunPowder--;
+        player.writePlayerEquippedWeaponAmmunition();
         return;
       case ItemType.Weapon_Ranged_Shotgun:
         return characterFireShotgun(player, player.lookRadian);

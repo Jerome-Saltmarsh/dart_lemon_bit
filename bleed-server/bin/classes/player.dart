@@ -272,6 +272,9 @@ class Player extends Character with ByteWriter {
     return inventory[index];
   }
 
+  void inventorySetEmptyAtIndex(int index) =>
+    inventorySet(index: index, itemType: ItemType.Empty);
+
   void inventorySet({required int index, required int itemType}){
     assert (index >= 0);
     if (index == ItemType.Equipped_Weapon) {
@@ -1191,48 +1194,42 @@ class Player extends Character with ByteWriter {
     writeByte(scene.nodeOrientations[index]);
   }
 
+  void writePlayerEquippedWeaponAmmunition(){
+    writeByte(ServerResponse.Player);
+    writeByte(ApiPlayer.Equipped_Weapon_Ammunition);
+    writeUInt16(equippedWeaponAmmunitionType);
+    writeUInt16(equippedWeaponAmmunitionQuantity);
+  }
+
+  void consumeAmmunition() {
+    final ammunitionType = equippedWeaponAmmunitionType;
+    if (ammunitionType == ItemType.Empty) return;
+    for (var i = 0; i < inventory.length; i++){
+        if (inventory[i] != ammunitionType) continue;
+        inventoryQuantity[i]--;
+        if (inventoryQuantity[i] > 0) continue;
+        inventorySetEmptyAtIndex(i);
+    }
+    writePlayerEquippedWeaponAmmunition();
+  }
+
+  int get equippedWeaponAmmunitionType => ItemType.getWeaponAmmunitionType(weaponType);
+
+  int get equippedWeaponAmmunitionQuantity {
+    var total = 0;
+    final ammunitionType = ItemType.getWeaponAmmunitionType(weaponType);
+    if (ammunitionType == ItemType.Empty) return 0;
+    for (var i = 0; i < inventory.length; i++){
+      if (inventory[i] != ammunitionType) continue;
+      total += inventoryQuantity[i];
+    }
+    return total;
+  }
+
   void lookAt(Position position) {
     assert(!deadOrDying);
     lookRadian = this.getAngle(position) + pi;
   }
-
-  // void writePlayerAimTarget(){
-  //   final aimTarget = _aimTarget;
-  //   if (aimTarget is GameObject) {
-  //     writeByte(ServerResponse.Player);
-  //     writeByte(ApiPlayer.Aim_Target);
-  //     writeByte(TargetCategory.GameObject);
-  //     writeByte(aimTarget.type);
-  //     writeUInt16(aimTarget.subType);
-  //     writePosition3(aimTarget);
-  //     return;
-  //   }
-  //   if (aimTarget is Character) {
-  //     writeByte(ServerResponse.Player);
-  //     writeByte(ApiPlayer.Aim_Target);
-  //
-  //     if (onSameTeam(this, aimTarget)) {
-  //       writeByte(TargetCategory.Allie);
-  //       if (aimTarget is Npc){
-  //         writeString(aimTarget.name);
-  //       } else if (aimTarget is Player){
-  //         writeString(aimTarget.name);
-  //       } else {
-  //         writeString("");
-  //       }
-  //     } else {
-  //       writeByte(TargetCategory.Enemy);
-  //     }
-  //     writePosition3(aimTarget);
-  //     return;
-  //   }
-  //
-  //   _aimTarget = null;
-  //   writeByte(ServerResponse.Player);
-  //   writeByte(ApiPlayer.Aim_Target);
-  //   writeByte(TargetCategory.Nothing);
-  // }
-
 }
 
 int getExperienceForLevel(int level){

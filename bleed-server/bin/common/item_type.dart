@@ -96,6 +96,7 @@ class ItemType {
   static const Resource_Iron = Index_Resources + 8;
   static const Resource_Gold = Index_Resources + 9;
   static const Resource_Gun_Powder = Index_Resources + 10;
+  static const Resource_Arrow = Index_Resources + 11;
 
   static const Head_Steel_Helm = Index_Heads + 1;
   static const Head_Rogues_Hood = Index_Heads + 2;
@@ -139,6 +140,13 @@ class ItemType {
 
   static bool isCollectable(int type){
     return type >= Index_Consumables;
+  }
+
+  static int getWeaponAmmunitionType(int type) {
+    if (type == Weapon_Ranged_Handgun) return Resource_Gun_Powder;
+    if (type == Weapon_Ranged_Shotgun) return Resource_Gun_Powder;
+    if (type == Weapon_Ranged_Bow) return Resource_Arrow;
+    return Empty;
   }
   
   static const Recipes = {
