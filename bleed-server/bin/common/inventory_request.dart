@@ -5,5 +5,4 @@ class InventoryRequest {
   static const Toggle = 7;
   static const Buy = 8;
   static const Sell = 9;
-  
 }

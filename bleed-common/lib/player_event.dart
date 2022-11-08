@@ -28,4 +28,5 @@ class PlayerEvent {
   static const Player_Moved = 27;
   static const Inventory_Item_Moved = 28;
   static const Item_Picked_Up = 29;
+  static const Recipe_Crafted = 30;
 }

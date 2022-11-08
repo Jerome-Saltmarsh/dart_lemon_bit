@@ -1,6 +1,5 @@
 
 import 'package:gamestream_flutter/isometric/events/on_game_event_game_object_destroyed.dart';
-import 'package:gamestream_flutter/isometric/events/on_player_event_quest_completed.dart';
 import 'package:gamestream_flutter/isometric/events/on_player_event_quest_started.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -304,6 +303,10 @@ class GameEvents {
 
   static void onPlayerEvent(int event) {
     switch (event) {
+      case PlayerEvent.Recipe_Crafted:
+        print("PlayerEvent.Recipe_Crafted");
+        GameAudio.unlock();
+        break;
       case PlayerEvent.Spawn_Started:
         GameAudio.teleport();
         break;
@@ -319,7 +322,7 @@ class GameEvents {
         onPlayerEventQuestStarted();
         break;
       case PlayerEvent.Quest_Completed:
-        onPlayerEventQuestCompleted();
+        GameAudio.notification_sound_12();
         break;
       case PlayerEvent.Level_Up:
         // audio.buff(GameState.player.x, GameState.player.y);

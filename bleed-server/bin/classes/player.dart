@@ -252,7 +252,7 @@ class Player extends Character with ByteWriter {
       position: this,
       type: itemType,
     );
-    inventorySetItemTypeAtIndex(index, ItemType.Empty);
+    inventorySet(itemType: ItemType.Empty, index: index);
     writePlayerEvent(PlayerEvent.Item_Dropped);
   }
 
@@ -271,7 +271,7 @@ class Player extends Character with ByteWriter {
     return inventory[index];
   }
 
-  void inventorySetItemTypeAtIndex(int index, int itemType){
+  void inventorySet({required int index, required int itemType}){
     assert (index >= 0);
     if (index == ItemType.Equipped_Weapon) {
       if (weaponType == itemType) return;
@@ -493,7 +493,7 @@ class Player extends Character with ByteWriter {
   
   void inventoryEquip(int index) {
     if (index < 0){
-      // warn user
+      // TODO warn user
       return;
     }
 
@@ -521,6 +521,15 @@ class Player extends Character with ByteWriter {
 
     final itemType = inventory[index];
     var swapped = false;
+
+    if (ItemType.isTypeRecipe(itemType)){
+
+       if (itemType == ItemType.Recipe_Staff_Of_Fire) {
+         inventorySet(itemType: ItemType.Weapon_Melee_Magic_Staff, index: index);
+         writePlayerEventRecipeCrafted();
+         return;
+       }
+    }
 
     if (ItemType.isTypeWeapon(itemType)){
       final currentWeapon = weaponType;
@@ -891,9 +900,8 @@ class Player extends Character with ByteWriter {
       writeByte(gameObject.type);
   }
 
-  void dispatchEventLootCollected(){
-    writePlayerEvent(PlayerEvent.Loot_Collected);
-  }
+  void writePlayerEventRecipeCrafted() =>
+    writePlayerEvent(PlayerEvent.Recipe_Crafted);
 
   void writePlayerEvent(int value){
     writeByte(ServerResponse.Player_Event);

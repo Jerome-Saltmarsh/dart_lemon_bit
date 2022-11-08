@@ -501,7 +501,7 @@ class Connection {
         final index = int.tryParse(arguments[2]);
         if (index == null) return errorInvalidArg('index == null');
         if (index < 0) return errorInvalidArg('index < 0');
-        player.inventorySetItemTypeAtIndex(index, ItemType.Empty);
+        player.inventorySet(itemType: ItemType.Empty, index: index);
         player.writePlayerEvent(PlayerEvent.Item_Sold);
         break;
       case InventoryRequest.Toggle:

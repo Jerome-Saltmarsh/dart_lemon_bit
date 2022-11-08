@@ -118,7 +118,6 @@ class ItemType {
   static const Weapon_Melee_Pickaxe = Index_Weapon_Melee + 4;
   static const Weapon_Melee_Axe = Index_Weapon_Melee + 5;
   static const Weapon_Melee_Hammer = Index_Weapon_Melee + 6;
-
   static const Recipe_Staff_Of_Fire = Index_Recipe + 1;
 
   static const Recipes = {
@@ -163,6 +162,8 @@ class ItemType {
      Empty: "Empty",
      Weapon_Ranged_Shotgun: "Shotgun",
      Weapon_Ranged_Handgun: "Handgun",
+     Weapon_Melee_Magic_Staff: "Magic Staff",
+     Weapon_Ranged_Staff_Of_Flames: "Staff of Flames",
      Resource_Ammo_9mm: "Ammo 9mm",
      Resource_Ammo_Shells: "Shells",
      Resource_Ammo_Arrows: "Arrows",
