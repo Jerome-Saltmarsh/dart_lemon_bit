@@ -40,11 +40,9 @@ class ServerResponse {
   static const Character_Slime = 91;
   static const Editor_GameObject_Selected = 101;
   static const Player_Can_Teleport = 102;
-  static const Node_Data = 103;
   static const Render_Map = 104;
   static const GameObject = 107;
   static const Environment = 108;
-  static const Options = 109;
   static const Spawn_Particle = 110;
 }
 

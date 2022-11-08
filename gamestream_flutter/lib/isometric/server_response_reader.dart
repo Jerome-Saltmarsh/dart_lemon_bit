@@ -129,27 +129,8 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Editor_GameObject_Selected:
           readEditorGameObjectSelected();
           break;
-        case ServerResponse.Node_Data:
-          final spawnType = readByte();
-          final spawnAmount = readInt();
-          final spawnRadius = readInt();
-          // EditState.selectedNodeData.value = SpawnNodeData(
-          //    spawnType: spawnType,
-          //    spawnAmount: spawnAmount,
-          //    spawnRadius: spawnRadius,
-          // );
-          break;
         case ServerResponse.Render_Map:
           GameUI.mapVisible.value = readBool();
-          break;
-        case ServerResponse.Options:
-          final optionType = readByte();
-          switch(optionType){
-            case GameOption.Set_Control_Scheme:
-              final controlsScheme = readByte();
-              print(controlsScheme);
-              break;
-          }
           break;
         default:
           if (debugging) {
@@ -257,15 +238,6 @@ class ServerResponseReader with ByteReader {
       case ApiPlayer.Points:
        GameState.player.points.value = readInt();
         break;
-      // case ApiPlayer.Weapon_Type:
-      //   GamePlayer.weapon.value = readUInt16();
-      //   break;
-      // case ApiPlayer.Weapon_Rounds:
-      //   final rounds = readInt();
-      //   break;
-      // case ApiPlayer.Weapon_Capacity:
-      //   final capacity = readInt();
-      //   break;
       case ApiPlayer.Inventory:
         readPlayerInventory();
         break;
@@ -276,8 +248,6 @@ class ServerResponseReader with ByteReader {
         GameState.player.alive.value = readBool();
         break;
       case ApiPlayer.Spawned:
-        // Engine.zoom = GameConfig.Zoom_Standard;
-        // Engine.targetZoom = GameConfig.Zoom_Standard;;
         GameCamera.centerOnPlayer();
         GameIO.recenterCursor();
         break;

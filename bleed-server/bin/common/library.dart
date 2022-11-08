@@ -48,7 +48,6 @@ export 'quest.dart';
 export 'api_player.dart';
 export 'character_type.dart';
 export 'environment_response.dart';
-export 'game_option.dart';
 export 'edit_request.dart';
 export 'gameobject_request.dart';
 export 'request_modify_canvas_size.dart';
