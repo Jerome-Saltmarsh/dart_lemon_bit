@@ -15,7 +15,6 @@ class AtlasItems {
       ItemType.Body_Shirt_Cyan: 96,
       ItemType.Body_Tunic_Padded: 128,
       ItemType.Body_Swat: 128,
-      ItemType.Resource_Ammo_9mm: 256,
       ItemType.Legs_Blue: 224,
       ItemType.Legs_Brown: 192,
       ItemType.Recipe_Staff_Of_Fire: 0,

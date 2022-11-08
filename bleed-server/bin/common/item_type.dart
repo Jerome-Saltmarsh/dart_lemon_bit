@@ -58,35 +58,10 @@ class ItemType {
   static const Index_Recipe = 50000;
   static const Index_Equipped = 65000;
 
-  static const Index_Equipped_Head = Index_Equipped + 0;
   static const Equipped_Head = Index_Equipped + 1;
   static const Equipped_Body = Index_Equipped + 2;
   static const Equipped_Legs = Index_Equipped + 3;
   static const Equipped_Weapon = Index_Equipped + 4;
-
-  static const Consumable_Health_Potion_05 = Index_Consumables + 0;
-  static const Consumable_Health_Potion_10 = Index_Consumables + 1;
-  static const Consumable_Health_Potion_20 = Index_Consumables + 2;
-  static const Consumable_Health_Potion_40 = Index_Consumables + 3;
-
-  static const Resource_Ammo_9mm = Index_Resources + 1;
-  static const Resource_Ammo_Shells = Index_Resources + 2;
-  static const Resource_Ammo_Arrows = Index_Resources + 3;
-  static const Resource_Ammo_Arrows_Iron_Tip = Index_Resources + 3;
-  static const Resource_Ammo_Arrows_Silver = Index_Resources + 3;
-  static const Resource_Ammo_Arrows_Fire = Index_Resources + 3;
-  static const Resource_Ammo_Bolts = Index_Resources + 4;
-
-  static const Arrows_01 = Index_Resources + 5;
-  static const Arrows_02 = Index_Resources + 6;
-  static const Arrows_03 = Index_Resources + 7;
-  static const Arrows_04 = Index_Resources + 8;
-  static const Arrows_05 = Index_Resources + 9;
-  static const Arrows_06 = Index_Resources + 9;
-  static const Arrows_07 = Index_Resources + 9;
-  static const Arrows_08 = Index_Resources + 9;
-  static const Arrows_09 = Index_Resources + 9;
-  static const Arrows_10 = Index_Resources + 9;
 
   static const Resource_Wood = Index_Resources + 5;
   static const Resource_Stone = Index_Resources + 6;
@@ -183,9 +158,6 @@ class ItemType {
      Weapon_Ranged_Handgun: "Handgun",
      Weapon_Melee_Magic_Staff: "Magic Staff",
      Weapon_Ranged_Staff_Of_Flames: "Staff of Flames",
-     Resource_Ammo_9mm: "Ammo 9mm",
-     Resource_Ammo_Shells: "Shells",
-     Resource_Ammo_Arrows: "Arrows",
      Resource_Crystal: "Crystal",
      Resource_Wood: "Wood",
      Resource_Iron: "Iron",

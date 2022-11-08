@@ -46,13 +46,7 @@ class GameSkirmish extends Game {
     }
   }
 
-  int getRandomItemType() => randomItem(const [
-    GameObjectType.Weapon_Shotgun,
-    GameObjectType.Weapon_Handgun,
-    GameObjectType.Weapon_Blade,
-    GameObjectType.Weapon_Bow,
-    GameObjectType.Weapon_Staff,
-  ]);
+  int getRandomItemType() => 0;
 
   @override
   void customUpdate() {
@@ -116,45 +110,7 @@ class GameSkirmish extends Game {
 
   @override
   void customOnCollisionBetweenPlayerAndGameObject(Player player, GameObject gameObject) {
-    if (gameObject.type == GameObjectType.Weapon_Shotgun){
-      deactivateGameObject(gameObject, duration: configRespawnFramesWeapons);
-      gameObject.type = getRandomItemType();
-      player.weaponType = ItemType.Weapon_Ranged_Shotgun;
-      player.writePlayerEventItemEquipped(player.weaponType);
-      return;
-    }
 
-    if (gameObject.type == GameObjectType.Weapon_Handgun){
-      deactivateGameObject(gameObject, duration: configRespawnFramesWeapons);
-      gameObject.type = getRandomItemType();
-      player.weaponType = ItemType.Weapon_Ranged_Handgun;
-      player.writePlayerEventItemEquipped(player.weaponType);
-      return;
-    }
-
-    if (gameObject.type == GameObjectType.Weapon_Blade){
-      deactivateGameObject(gameObject, duration: configRespawnFramesWeapons);
-      gameObject.type = getRandomItemType();
-      player.weaponType = ItemType.Weapon_Melee_Sword;
-      player.writePlayerEventItemEquipped(player.weaponType);
-      return;
-    }
-
-    if (gameObject.type == GameObjectType.Weapon_Bow){
-      deactivateGameObject(gameObject, duration: configRespawnFramesWeapons);
-      gameObject.type = getRandomItemType();
-      player.weaponType = ItemType.Weapon_Ranged_Bow;
-      player.writePlayerEventItemEquipped(player.weaponType);
-      return;
-    }
-
-    if (gameObject.type == GameObjectType.Weapon_Staff){
-      deactivateGameObject(gameObject, duration: configRespawnFramesWeapons);
-      gameObject.type = getRandomItemType();
-      player.weaponType = ItemType.Weapon_Melee_Magic_Staff;
-      player.writePlayerEventItemEquipped(player.weaponType);
-      return;
-    }
   }
 
   @override

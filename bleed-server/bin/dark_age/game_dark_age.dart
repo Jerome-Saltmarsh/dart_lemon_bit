@@ -40,7 +40,6 @@ class GameDarkAge extends Game {
   }
 
   int getRandomItemType() => randomItem(const [
-    ItemType.Resource_Ammo_9mm,
     ItemType.Weapon_Ranged_Handgun,
     ItemType.Weapon_Ranged_Shotgun,
     ItemType.Body_Tunic_Padded,

@@ -21,11 +21,6 @@ class GameObjectType {
   static const Lantern_Red = 21;
   static const Loot = 22;
   static const Particle_Emitter = 23;
-  static const Weapon_Shotgun = 27;
-  static const Weapon_Handgun = 28;
-  static const Weapon_Blade = 29;
-  static const Weapon_Bow = 30;
-  static const Weapon_Staff = 31;
   static const Item = 32;
 
   static bool isCollidable(int type){
@@ -33,12 +28,7 @@ class GameObjectType {
   }
 
   static bool isPersistable(int type) =>
-      type != Loot &&
-      type != Weapon_Handgun &&
-      type != Weapon_Blade &&
-      type != Weapon_Bow &&
-      type != Weapon_Staff &&
-      type != Weapon_Shotgun;
+      type != GameObjectType.Item;
 
   static bool emitsLightBright(int type){
     if (type == Jellyfish) return true;
@@ -76,8 +66,5 @@ class GameObjectType {
     Jellyfish_Red: 'Jelly Fish Red',
     Lantern_Red: 'Lantern Red',
     Particle_Emitter: 'Particle Emitter',
-    Weapon_Handgun: 'Handgun',
-    Weapon_Shotgun: 'Shotgun',
-    Weapon_Blade: 'Blade',
   }[value] ?? '?';
 }

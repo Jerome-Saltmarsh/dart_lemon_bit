@@ -29,6 +29,8 @@
 [ ] respawn dead enemies
 [ ] smith (for crafting recipes)
 [ ] fix character state changing
+[ ] separate head-type and helm-type
+[ ] select skin color
 
 08.11.2022
 [x] fix fire shotgun
