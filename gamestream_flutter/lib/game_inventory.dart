@@ -9,5 +9,4 @@ class GameInventory {
    });
 
    static final canvasDrawNotifier = ValueNotifier(0);
-   static var items = Uint16List(0);
 }

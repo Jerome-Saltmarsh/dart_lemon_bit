@@ -77,6 +77,17 @@ class ItemType {
   static const Resource_Ammo_Arrows_Fire = Index_Resources + 3;
   static const Resource_Ammo_Bolts = Index_Resources + 4;
 
+  static const Arrows_01 = Index_Resources + 5;
+  static const Arrows_02 = Index_Resources + 6;
+  static const Arrows_03 = Index_Resources + 7;
+  static const Arrows_04 = Index_Resources + 8;
+  static const Arrows_05 = Index_Resources + 9;
+  static const Arrows_06 = Index_Resources + 9;
+  static const Arrows_07 = Index_Resources + 9;
+  static const Arrows_08 = Index_Resources + 9;
+  static const Arrows_09 = Index_Resources + 9;
+  static const Arrows_10 = Index_Resources + 9;
+
   static const Resource_Wood = Index_Resources + 5;
   static const Resource_Stone = Index_Resources + 6;
   static const Resource_Crystal = Index_Resources + 7;
@@ -108,7 +119,11 @@ class ItemType {
   static const Weapon_Ranged_Bow = Index_Weapon_Ranged + 4;
   static const Weapon_Ranged_Crossbow = Index_Weapon_Ranged + 5;
   static const Weapon_Ranged_Assault_Rifle = Index_Weapon_Ranged + 6;
+  static const Weapon_Ranged_Harquebus = Index_Weapon_Ranged + 6;
+  static const Weapon_Ranged_Musket = Index_Weapon_Ranged + 6;
+  static const Weapon_Ranged_Blunderbuss = Index_Weapon_Ranged + 6;
   static const Weapon_Ranged_Rifle = Index_Weapon_Ranged + 7;
+  static const Weapon_Ranged_Flintlock_Pistol = Index_Weapon_Ranged + 7;
   static const Weapon_Ranged_Staff_Of_Flames = Index_Weapon_Ranged + 8;
   static const Weapon_Melee_Magic_Staff = Index_Weapon_Ranged + 9;
 

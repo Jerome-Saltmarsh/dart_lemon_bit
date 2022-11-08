@@ -1,6 +1,8 @@
 import 'package:gamestream_flutter/library.dart';
 
 class GamePlayer {
+  static var inventory = Uint16List(0);
+  static var inventoryQuantity = Uint16List(0);
   static final weapon = Watch(0);
   static final body = Watch(0);
   static final head = Watch(0);

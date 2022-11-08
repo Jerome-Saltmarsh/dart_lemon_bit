@@ -61,6 +61,7 @@ class Player extends Character with ByteWriter {
 
   static const InventorySize = 40;
   final inventory = Uint16List(InventorySize);
+  final inventoryQuantity = Uint16List(InventorySize);
   var storeItems = <int>[];
 
   final questsInProgress = <Quest>[];
@@ -1065,9 +1066,8 @@ class Player extends Character with ByteWriter {
     writeUInt16(legsType);
     writeUInt16(weaponType);
     writeUInt16(inventory.length);
-    for (final item in inventory) {
-       writeUInt16(item);
-    }
+    inventory.forEach(writeUInt16);
+    inventoryQuantity.forEach(writeUInt16);
   }
 
   void writePlayerTarget() {

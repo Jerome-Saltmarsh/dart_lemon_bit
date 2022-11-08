@@ -292,12 +292,15 @@ class ServerResponseReader with ByteReader {
     GamePlayer.legs.value = readUInt16();
     GamePlayer.weapon.value = readUInt16();
     final total = readUInt16();
-    if (GameInventory.items.length != total){
-      print("GameInventory.items = Uint16List($total);");
-      GameInventory.items = Uint16List(total);
+    if (GamePlayer.inventory.length != total){
+      GamePlayer.inventory = Uint16List(total);
+      GamePlayer.inventoryQuantity = Uint16List(total);
     }
     for (var i = 0; i < total; i++){
-      GameInventory.items[i] = readUInt16();
+      GamePlayer.inventory[i] = readUInt16();
+    }
+    for (var i = 0; i < total; i++){
+      GamePlayer.inventoryQuantity[i] = readUInt16();
     }
     GameInventory.reads.value++;
   }

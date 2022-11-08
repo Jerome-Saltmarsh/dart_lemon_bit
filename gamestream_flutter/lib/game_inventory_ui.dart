@@ -127,8 +127,8 @@ class GameInventoryUI {
 
   static Widget buildStackInventoryItems(int reads) {
      final positioned = <Widget>[];
-     for (var i = 0; i < GameInventory.items.length; i++){
-         if (GameInventory.items[i] == ItemType.Empty) continue;
+     for (var i = 0; i < GamePlayer.inventory.length; i++){
+         if (GamePlayer.inventory[i] == ItemType.Empty) continue;
          positioned.add(
            buildPositionInventoryItem(i)
          );
@@ -139,7 +139,7 @@ class GameInventoryUI {
   }
 
   static Widget buildPositionInventoryItem(int index){
-    final itemType = GameInventory.items[index];
+    final itemType = GamePlayer.inventory[index];
     return buildPositionGridItem(
       index: index,
       child: GestureDetector(
@@ -179,7 +179,7 @@ class GameInventoryUI {
 
   static Widget buildStackSlotGrid() {
     final children = <Widget>[];
-    for (var i = 0; i < GameInventory.items.length; i++) {
+    for (var i = 0; i < GamePlayer.inventory.length; i++) {
        children.add(buildPositionedGridSlot(i));
     }
     return Stack(
