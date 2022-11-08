@@ -131,12 +131,16 @@ class ItemType {
       Empty: 1,
       Weapon_Ranged_Handgun: 2,
       Weapon_Ranged_Shotgun: 2,
+      Weapon_Melee_Magic_Staff: 2,
+      Weapon_Ranged_Staff_Of_Flames: 2,
   }[value] ?? 0;
 
   static double getRange(int value) => <int, double> {
       Empty: 50,
       Weapon_Ranged_Handgun: 200,
       Weapon_Ranged_Shotgun: 100,
+      Weapon_Ranged_Staff_Of_Flames: 100,
+      Weapon_Melee_Magic_Staff: 100,
   }[value] ?? 0;
 
   static int getCooldown(int value) => {
