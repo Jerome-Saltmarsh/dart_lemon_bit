@@ -1218,13 +1218,13 @@ class GameState {
   }
 
   static void applyEmissionGameObjects() {
-    for (var i = 0; i < totalGameObjects; i++){
-      if (!GameObjectType.emitsLightBright(gameObjects[i].type)) continue;
-      applyVector3Emission(gameObjects[i], maxBrightness: Shade.Very_Bright);
-    }
+    // for (var i = 0; i < totalGameObjects; i++){
+    //   if (!GameObjectType.emitsLightBright(gameObjects[i].type)) continue;
+    //   applyVector3Emission(gameObjects[i], maxBrightness: Shade.Very_Bright);
+    // }
     for (var i = 0; i < totalGameObjects; i++){
       final gameObject = gameObjects[i];
-      if (gameObject.type != GameObjectType.Candle) continue;
+      if (gameObject.type != ItemType.GameObjects_Candle) continue;
       final nodeIndex = GameQueries.getNodeIndexV3(gameObject);
       final nodeShade = GameNodes.nodesShade[nodeIndex];
       setNodeShade(nodeIndex, nodeShade - 1);
@@ -1434,7 +1434,7 @@ class GameState {
       }
 
       for (final gameObject in GameState.gameObjects){
-        if (gameObject.type == GameObjectType.Crystal){
+        if (gameObject.type == ItemType.GameObjects_Crystal){
           applyEmissionBake(
             zIndex: gameObject.indexZ,
             rowIndex: gameObject.indexRow,

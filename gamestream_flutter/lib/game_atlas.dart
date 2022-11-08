@@ -1,6 +1,8 @@
 import 'library.dart';
 
 class AtlasItems {
+  static const size = 32.0;
+
   static double getSrcX(int itemType) => <int, double> {
       ItemType.Weapon_Melee_Sword: 0,
       ItemType.Weapon_Melee_Magic_Staff: 32,

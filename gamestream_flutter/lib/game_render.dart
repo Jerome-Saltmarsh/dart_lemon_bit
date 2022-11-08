@@ -441,33 +441,42 @@ class GameRender {
       totalRemaining++;
     }
   }
-  
+
+  static bool isCollectable(int itemType) =>
+      ItemType.isTypeWeapon(itemType) ||
+      ItemType.isTypeRecipe(itemType) ||
+      ItemType.isTypeHead(itemType)   ||
+      ItemType.isTypeBody(itemType)   ||
+      ItemType.isTypeLegs(itemType)    ;
+
   static void renderGameObject(GameObject gameObject) {
+    if (isCollectable(gameObject.type)) {
+      // Engine.renderSprite(
+      //   image: GameImages.gameobjects,
+      //   dstX: gameObject.renderX,
+      //   dstY: gameObject.renderY,
+      //   srcX: 0,
+      //   srcY: 96,
+      //   srcWidth: 32,
+      //   srcHeight: 32,
+      //   color: GameState.getV3RenderColor(gameObject),
+      // );
+      renderBouncingGameObjectShadow(gameObject);
+      Engine.renderSprite(
+        image: GameImages.atlasItems,
+        dstX: GameConvert.convertV3ToRenderX(gameObject),
+        dstY: getRenderYBouncing(gameObject),
+        srcX: AtlasItems.getSrcX(gameObject.type),
+        srcY: AtlasItems.getSrcY(gameObject.type),
+        srcWidth: AtlasItems.size,
+        srcHeight: AtlasItems.size,
+        color: GameState.getV3RenderColor(gameObject),
+      );
+      return;
+    }
+
     switch (gameObject.type) {
-      case GameObjectType.Item:
-        // Engine.renderSprite(
-        //   image: GameImages.gameobjects,
-        //   dstX: gameObject.renderX,
-        //   dstY: gameObject.renderY,
-        //   srcX: 0,
-        //   srcY: 96,
-        //   srcWidth: 32,
-        //   srcHeight: 32,
-        //   color: GameState.getV3RenderColor(gameObject),
-        // );
-        renderBouncingGameObjectShadow(gameObject);
-        Engine.renderSprite(
-          image: GameImages.atlasItems,
-          dstX: GameConvert.convertV3ToRenderX(gameObject),
-          dstY: getRenderYBouncing(gameObject),
-          srcX: AtlasItems.getSrcX(gameObject.subType),
-          srcY: AtlasItems.getSrcY(gameObject.subType),
-          srcWidth: 32,
-          srcHeight: 32,
-          color: GameState.getV3RenderColor(gameObject),
-        );
-        return;
-      case GameObjectType.Rock:
+      case ItemType.GameObjects_Rock:
         Engine.renderSprite(
           image: GameImages.gameobjects,
           dstX: gameObject.renderX,
@@ -479,19 +488,7 @@ class GameRender {
           color: GameState.getV3RenderColor(gameObject),
         );
         return;
-      case GameObjectType.Loot:
-        Engine.renderSprite(
-          image: GameImages.gameobjects,
-          dstX: GameConvert.convertV3ToRenderX(gameObject),
-          dstY: GameConvert.convertV3ToRenderY(gameObject),
-          srcX: AtlasGameObjects.Loot_X,
-          srcY: AtlasGameObjects.Loot_Y,
-          srcWidth: AtlasGameObjects.Loot_Width,
-          srcHeight: AtlasGameObjects.Loot_Height,
-          color: GameState.getV3RenderColor(gameObject),
-        );
-        return;
-      case GameObjectType.Barrel:
+      case ItemType.GameObjects_Barrel:
         Engine.renderSprite(
           image: GameImages.gameobjects,
           dstX: GameConvert.convertV3ToRenderX(gameObject),
@@ -504,7 +501,7 @@ class GameRender {
           color: GameState.getV3RenderColor(gameObject),
         );
         return;
-      case GameObjectType.Tavern_Sign:
+      case ItemType.GameObjects_Tavern_Sign:
         Engine.renderSprite(
           image: GameImages.gameobjects,
           dstX: GameConvert.convertV3ToRenderX(gameObject),
@@ -516,7 +513,7 @@ class GameRender {
           color: GameState.getV3RenderColor(gameObject),
         );
         return;
-      case GameObjectType.Candle:
+      case ItemType.GameObjects_Candle:
         Engine.renderSprite(
           image: GameImages.gameobjects,
           dstX: GameConvert.convertV3ToRenderX(gameObject),
@@ -528,7 +525,7 @@ class GameRender {
           anchorY: 0.95,
         );
         return;
-      case GameObjectType.Bottle:
+      case ItemType.GameObjects_Bottle:
         Engine.renderSprite(
           image: GameImages.gameobjects,
           dstX: GameConvert.convertV3ToRenderX(gameObject),
@@ -541,7 +538,7 @@ class GameRender {
           color: GameState.getV3RenderColor(gameObject),
         );
         return;
-      case GameObjectType.Wheel:
+      case ItemType.GameObjects_Wheel:
         Engine.renderSprite(
           image: GameImages.gameobjects,
           dstX: GameConvert.convertV3ToRenderX(gameObject),
@@ -554,31 +551,7 @@ class GameRender {
           color: GameState.getV3RenderColor(gameObject),
         );
         return;
-      case GameObjectType.Flower:
-        Engine.renderSprite(
-          image: GameImages.gameobjects,
-          dstX: GameConvert.convertV3ToRenderX(gameObject),
-          dstY: GameConvert.convertV3ToRenderY(gameObject),
-          srcX: 1680,
-          srcY: 0,
-          srcWidth: 16,
-          srcHeight: 16,
-          color: GameState.getV3RenderColor(gameObject),
-        );
-        return;
-      case GameObjectType.Stick:
-        Engine.renderSprite(
-          image: GameImages.gameobjects,
-          dstX: GameConvert.convertV3ToRenderX(gameObject),
-          dstY: GameConvert.convertV3ToRenderY(gameObject),
-          srcX: 1696,
-          srcY: 0,
-          srcWidth: 16,
-          srcHeight: 16,
-          color: GameState.getV3RenderColor(gameObject),
-        );
-        return;
-      case GameObjectType.Crystal:
+      case ItemType.GameObjects_Crystal:
         Engine.renderSprite(
             image: GameImages.gameobjects,
             dstX: GameConvert.convertV3ToRenderX(gameObject),
@@ -590,7 +563,7 @@ class GameRender {
             anchorY: AtlasGameObjects.Crystal_Anchor_Y
         );
         return;
-      case GameObjectType.Cup:
+      case ItemType.GameObjects_Cup:
         Engine.renderSprite(
           image: GameImages.gameobjects,
           dstX: GameConvert.convertV3ToRenderX(gameObject),
@@ -602,7 +575,7 @@ class GameRender {
           anchorY: AtlasGameObjects.Cup_Anchor_Y,
         );
         return;
-      case GameObjectType.Lantern_Red:
+      case ItemType.GameObjects_Lantern_Red:
         Engine.renderSprite(
           image: GameImages.gameobjects,
           dstX:GameConvert.convertV3ToRenderX(gameObject),
@@ -615,18 +588,7 @@ class GameRender {
           color: GameState.colorShades[Shade.Very_Bright],
         );
         return;
-      case GameObjectType.Wooden_Shelf_Row:
-        Engine.renderSprite(
-            image: GameImages.gameobjects,
-            dstX: GameConvert.convertV3ToRenderX(gameObject),
-            dstY: GameConvert.convertV3ToRenderY(gameObject),
-            srcX: 1664,
-            srcY: 16,
-            srcWidth: 32,
-            srcHeight: 38
-        );
-        return;
-      case GameObjectType.Book_Purple:
+      case ItemType.GameObjects_Book_Purple:
         Engine.renderSprite(
           image: GameImages.gameobjects,
           dstX: GameConvert.convertV3ToRenderX(gameObject),
@@ -637,7 +599,7 @@ class GameRender {
           srcHeight: 15,
         );
         return;
-      case GameObjectType.Crystal_Small_Blue:
+      case ItemType.GameObjects_Crystal_Small_Blue:
         Engine.renderSprite(
           image: GameImages.gameobjects,
           dstX: GameConvert.convertV3ToRenderX(gameObject),
@@ -646,17 +608,6 @@ class GameRender {
           srcY: 33,
           srcWidth: 10,
           srcHeight: 19,
-        );
-        return;
-      case GameObjectType.Flower_Green:
-        Engine.renderSprite(
-          image: GameImages.gameobjects,
-          dstX: GameConvert.convertV3ToRenderX(gameObject),
-          dstY: GameConvert.convertV3ToRenderY(gameObject),
-          srcX: 1696,
-          srcY: 53,
-          srcWidth: 9,
-          srcHeight: 7,
         );
         return;
     }

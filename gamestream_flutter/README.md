@@ -33,6 +33,7 @@
 [ ] select skin color
 [ ] mini-map close-up
 [ ] player-charge-attack 
+[ ] merge game-object-types into item-type
 
 08.11.2022
 [x] fix fire shotgun

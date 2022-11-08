@@ -12,7 +12,7 @@ void onGameEventGameObjectDestroyed(
     int type,
 ){
    switch (type){
-     case GameObjectType.Barrel:
+     case ItemType.GameObjects_Barrel:
        GameAudio.crate_breaking.playXYZ(x, y, z);
        for (var i = 0; i < 5; i++) {
          GameState.spawnParticleBlockWood(x, y, z);

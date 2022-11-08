@@ -188,10 +188,7 @@ class ServerResponseReader with ByteReader {
 
   void readGameObject() {
     final instance = GameState.getInstanceGameObject();
-    instance.type = readByte();
-    if (instance.type == GameObjectType.Item){
-      instance.subType = readUInt16();
-    }
+    instance.type = readUInt16();
     readVector3(instance);
   }
 
@@ -323,47 +320,11 @@ class ServerResponseReader with ByteReader {
 
   void readEditorGameObjectSelected() {
     readVector3(GameEditor.gameObject);
-    final type = readByte();
+    final type = readUInt16();
     GameEditor.gameObject.type = type;
     GameEditor.gameObjectSelectedType.value = type;
-    if (type == GameObjectType.Particle_Emitter){
-      GameEditor.gameObjectSelectedParticleType.value = readByte();
-      GameEditor.gameObjectSelectedParticleSpawnRate.value = readInt();
-    }
-
     GameEditor.gameObjectSelected.value = true;
     GameEditor.cameraCenterSelectedObject();
-  }
-
-  void readGameObjectButterfly() {
-    final gameObject = GameState.getInstanceGameObject();
-    gameObject.type = GameObjectType.Butterfly;
-    readVector3(gameObject);
-    gameObject.direction = readByte();
-  }
-
-  void readGameObjectChicken(){
-    final gameObject = GameState.getInstanceGameObject();
-    gameObject.type = GameObjectType.Chicken;
-    readVector3(gameObject);
-    gameObject.state = readByte();
-    gameObject.direction = readByte();
-  }
-
-  void readGameObjectJellyfish(){
-    final gameObject = GameState.getInstanceGameObject();
-    gameObject.type = GameObjectType.Jellyfish;
-    readVector3(gameObject);
-    gameObject.state = readByte();
-    gameObject.direction = readByte();
-  }
-
-  void readGameObjectJellyfishRed(){
-    final gameObject = GameState.getInstanceGameObject();
-    gameObject.type = GameObjectType.Jellyfish_Red;
-    readVector3(gameObject);
-    gameObject.state = readByte();
-    gameObject.direction = readByte();
   }
 
   void readCharacterRat() {

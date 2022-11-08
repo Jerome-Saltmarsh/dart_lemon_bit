@@ -716,10 +716,7 @@ class Player extends Character with ByteWriter {
       if (gameObject.renderX > screenRight) continue;
       if (gameObject.renderY > screenBottom) continue;
       writeByte(ServerResponse.GameObject);
-      writeByte(gameObject.type);
-      if (gameObject.type == GameObjectType.Item){
-        writeUInt16(gameObject.subType);
-      }
+      writeUInt16(gameObject.type);
       writePosition3(gameObject);
     }
   }
@@ -800,11 +797,13 @@ class Player extends Character with ByteWriter {
     if (aimTarget is GameObject){
       writeByte(ServerResponse.Player);
       writeByte(ApiPlayer.Aim_Target_Type);
-       if ((aimTarget as GameObject).isItem) {
-          writeUInt16((aimTarget as GameObject).subType);
-       } else {
-         writeUInt16((aimTarget as GameObject).type);
-       }
+      writeUInt16((aimTarget as GameObject).type);
+       // if ((aimTarget as GameObject).isItem) {
+       //
+       //    writeUInt16((aimTarget as GameObject).subType);
+       // } else {
+       //
+       // }
     }
     if (aimTarget is Character) {
       writeByte(ServerResponse.Player);
@@ -835,7 +834,7 @@ class Player extends Character with ByteWriter {
     if (isAllie(value)) return TargetCategory.Allie;
     if (isEnemy(value)) return TargetCategory.Enemy;
     if (value is GameObject) {
-       if (value.isItem) return TargetCategory.Item;
+       if (value.collectable) return TargetCategory.Item;
        return TargetCategory.GameObject;
     }
     return TargetCategory.Run;
@@ -1138,24 +1137,8 @@ class Player extends Character with ByteWriter {
     if (selectedGameObject == null) return;
     writeByte(ServerResponse.Editor_GameObject_Selected);
     writePosition3(selectedGameObject);
-    writeByte(selectedGameObject.type);
+    writeUInt16(selectedGameObject.type);
   }
-
-  // void writePlayerSlots() {
-  //   writeByte(ServerResponse.Player_Slots);
-  //
-  //   writeByte(weaponSlot1.type);
-  //   writeInt(weaponSlot1.capacity);
-  //   writeInt(weaponSlot1.rounds);
-  //
-  //   writeByte(weaponSlot2.type);
-  //   writeInt(weaponSlot2.capacity);
-  //   writeInt(weaponSlot2.rounds);
-  //
-  //   writeByte(weaponSlot3.type);
-  //   writeInt(weaponSlot3.capacity);
-  //   writeInt(weaponSlot3.rounds);
-  // }
 
   void writePoints(){
     writeByte(ServerResponse.Player);

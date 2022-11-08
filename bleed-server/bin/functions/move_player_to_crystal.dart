@@ -3,11 +3,11 @@
 import 'package:lemon_math/library.dart';
 
 import '../classes/library.dart';
-import '../common/game_object_type.dart';
+import '../common/library.dart';
 
 void movePlayerToCrystal(Player player) {
   for (final gameObject in player.game.gameObjects) {
-    if (gameObject.type != GameObjectType.Crystal) continue;
+    if (gameObject.type != ItemType.GameObjects_Crystal) continue;
     final angle = randomAngle();
     const distance = 50.0;
     player.x = gameObject.x + getAdjacent(angle, distance);

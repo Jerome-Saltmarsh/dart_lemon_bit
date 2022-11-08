@@ -213,7 +213,7 @@ abstract class Game {
 
     for (final gameObject in gameObjects) {
       if (!gameObject.active) continue;
-      if (!gameObject.isItem) continue;
+      if (!gameObject.collectable) continue;
       final distance = getDistanceV3(mouseX, mouseY, mouseZ, gameObject.x, gameObject.y, gameObject.z);
       if (distance > closestDistance) continue;
       closestDistance = distance;
@@ -1058,20 +1058,19 @@ abstract class Game {
            return;
         }
 
-        if (target.type == GameObjectType.Item){
+        if (target.type == ItemType.isCollectable(target.type)){
            if (getDistanceBetweenV3(player, target) > 50){
              setCharacterStateRunning(player);
              return;
            } else {
              final emptyInventoryIndex = player.getEmptyInventoryIndex();
              if (emptyInventoryIndex != null){
-                player.inventory[emptyInventoryIndex] = target.subType;
+                player.inventory[emptyInventoryIndex] = target.type;
                 player.writePlayerInventory();
                 deactivateGameObject(target);
                 player.writePlayerEvent(PlayerEvent.Item_Picked_Up);
                 clearCharacterTarget(player);
              }
-             // player.setCharacterStateIdle();
              clearCharacterTarget(player);
              return;
            }
@@ -1641,7 +1640,7 @@ abstract class Game {
     assert (type != ItemType.Equipped_Body);
     assert (type != ItemType.Equipped_Head);
     assert (type != ItemType.Equipped_Weapon);
-    spawnGameObject(x: x, y: y, z: z, type: GameObjectType.Item, subType: type);
+    spawnGameObject(x: x, y: y, z: z, type: type);
   }
 
   void spawnGameObject({
@@ -1649,7 +1648,6 @@ abstract class Game {
     required double y,
     required double z,
     required int type,
-    int subType = 0,
   }){
     for (final gameObject in gameObjects) {
        if (gameObject.active) continue;
@@ -1657,9 +1655,8 @@ abstract class Game {
        gameObject.y = y;
        gameObject.z = z;
        gameObject.type = type;
-       gameObject.subType = subType;
        gameObject.active = true;
-       gameObject.collidable = GameObjectType.isCollidable(type);
+       gameObject.collidable = ItemType.isCollidable(type);
        return;
     }
     gameObjects.add(
@@ -1668,8 +1665,7 @@ abstract class Game {
           y: y,
           z: z,
           type: type,
-          subType: subType,
-        )..collidable = GameObjectType.isCollidable(type)
+        )..collidable = ItemType.isCollidable(type)
     );
   }
 

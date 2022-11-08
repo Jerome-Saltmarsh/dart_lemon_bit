@@ -52,7 +52,7 @@ Widget buildStackEdit(EditTab activeEditTab) =>
                     action: () =>
                         GameNetwork.sendClientRequestAddGameObject(
                             index: GameEditor.nodeSelectedIndex.value,
-                            type: GameObjectType.Crystal,
+                            type: ItemType.GameObjects_Crystal,
                         )
                 ),
               ),
@@ -302,7 +302,6 @@ Widget buildColumnNodeOrientationSlopeCornerOuter() =>
 Widget buildColumnSelectedGameObject() {
 
   return watch(GameEditor.gameObjectSelected, (bool gameObjectSelected){
-
     return Container(
       color: brownLight,
       padding: const EdgeInsets.all(6),
@@ -311,9 +310,7 @@ Widget buildColumnSelectedGameObject() {
           watch(GameEditor.gameObjectSelectedType, (int type){
             return Column(
               children: [
-                text(GameObjectType.getName(type)),
-                if (type == GameObjectType.Particle_Emitter)
-                  buildColumnEditParticleEmitter(),
+                text(ItemType.getName(type)),
               ],
             );
           }),

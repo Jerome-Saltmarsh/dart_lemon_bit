@@ -3,6 +3,14 @@ class ItemType {
   static bool isTypeEmpty(int value) => value == Empty;
   static bool isNotTypeEmpty(int value) => value != Empty;
 
+  static bool isPersistable(int value) {
+    return true;
+  }
+
+  static bool isCollidable(int value) {
+     return value == ItemType.GameObjects_Crystal;
+  }
+
   static bool isTypeEquipped(int value) =>
     value == Equipped_Weapon ||
     value == Equipped_Head ||
@@ -11,7 +19,10 @@ class ItemType {
     value == Equipped_Weapon;
 
   static bool isTypeConsumable(int value) =>
-      value >= Index_Consumables && value < Index_Resources;
+      value >= Index_Consumables && value < Index_GameObjects;
+
+  static bool isTypeGameObject(int value) =>
+      value >= Index_GameObjects && value < Index_Resources;
 
   static bool isTypeResource(int value) =>
       value >= Index_Resources && value < Index_Heads;
@@ -45,23 +56,39 @@ class ItemType {
       weaponType == Weapon_Ranged_Bow ||
       weaponType == Weapon_Ranged_Shotgun ;
 
-  static const Invalid = -1;
-  static const Empty = 00000;
-
-  static const Index_Consumables = 00005;
-  static const Index_Resources = 05001;
-  static const Index_Heads = 10000;
-  static const Index_Bodies = 20000;
-  static const Index_Legs = 30000;
-  static const Index_Weapon_Melee = 40000;
-  static const Index_Weapon_Ranged = 45000;
-  static const Index_Recipe = 50000;
-  static const Index_Equipped = 65000;
+  static const Invalid              = -0001;
+  static const Empty                = 00000;
+  static const Index_Equipped       = 00001;
+  static const Index_GameObjects    = 01000;
+  static const Index_Consumables    = 02000;
+  static const Index_Resources      = 05000;
+  static const Index_Heads          = 10000;
+  static const Index_Bodies         = 20000;
+  static const Index_Legs           = 30000;
+  static const Index_Weapon_Melee   = 40000;
+  static const Index_Weapon_Ranged  = 45000;
+  static const Index_Recipe         = 50000;
 
   static const Equipped_Head = Index_Equipped + 1;
   static const Equipped_Body = Index_Equipped + 2;
   static const Equipped_Legs = Index_Equipped + 3;
   static const Equipped_Weapon = Index_Equipped + 4;
+  
+  static const Consumables_Apple = Index_Consumables + 1;
+  
+  static const GameObjects_Flower = Index_GameObjects + 1;
+  static const GameObjects_Rock = Index_GameObjects + 2;
+  static const GameObjects_Stick = Index_GameObjects + 3;
+  static const GameObjects_Barrel = Index_GameObjects + 4;
+  static const GameObjects_Tavern_Sign = Index_GameObjects + 5;
+  static const GameObjects_Candle = Index_GameObjects + 6;
+  static const GameObjects_Bottle = Index_GameObjects + 7;
+  static const GameObjects_Wheel = Index_GameObjects + 8;
+  static const GameObjects_Crystal = Index_GameObjects + 9;
+  static const GameObjects_Cup = Index_GameObjects + 10;
+  static const GameObjects_Lantern_Red = Index_GameObjects + 11;
+  static const GameObjects_Book_Purple = Index_GameObjects + 12;
+  static const GameObjects_Crystal_Small_Blue = Index_GameObjects + 13;
 
   static const Resource_Wood = Index_Resources + 5;
   static const Resource_Stone = Index_Resources + 6;
@@ -110,6 +137,10 @@ class ItemType {
   static const Weapon_Melee_Hammer = Index_Weapon_Melee + 6;
   static const Recipe_Staff_Of_Fire = Index_Recipe + 1;
 
+  static bool isCollectable(int type){
+    return type >= Index_Consumables;
+  }
+  
   static const Recipes = {
     Recipe_Staff_Of_Fire : [
       Resource_Wood, 50,
