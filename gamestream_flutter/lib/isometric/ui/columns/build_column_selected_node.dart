@@ -163,7 +163,7 @@ Widget buildEditorSelectedNode() =>
                 left: 0 + _shiftX,
                 child: onPressed(
                   action: GameEditor.cursorZIncrease,
-                  child: onMouseOver(builder: (BuildContext context, bool mouseOver) => GameUI.buildAtlasIcon(
+                  child: onMouseOver(builder: (BuildContext context, bool mouseOver) => GameUI.buildAtlasIconType(
                       mouseOver ? IconType.Arrows_West_Orange : IconType.Arrows_West_Yellow
                   )),
                   hint: "Arrow Left",
@@ -189,7 +189,7 @@ Widget buildPositionedIconArrow({
     left: left,
     child: onPressed(
       action: action,
-      child: onMouseOver(builder: (BuildContext context, bool mouseOver) => GameUI.buildAtlasIcon(
+      child: onMouseOver(builder: (BuildContext context, bool mouseOver) => GameUI.buildAtlasIconType(
           mouseOver ? iconTypeMouseOver : iconType
       )),
       hint: hint,

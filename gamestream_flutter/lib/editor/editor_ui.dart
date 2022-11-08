@@ -70,11 +70,11 @@ class EditorUI {
   static Widget buildIconRain(Rain rain, bool active) {
     switch (rain) {
       case Rain.None:
-        return GameUI.buildAtlasIcon(IconType.Rain_None);
+        return GameUI.buildAtlasIconType(IconType.Rain_None);
       case Rain.Light:
-        return GameUI.buildAtlasIcon(IconType.Rain_Light);
+        return GameUI.buildAtlasIconType(IconType.Rain_Light);
       case Rain.Heavy:
-        return GameUI.buildAtlasIcon(IconType.Rain_Heavy);
+        return GameUI.buildAtlasIconType(IconType.Rain_Heavy);
     }
   }
 
@@ -82,22 +82,22 @@ class EditorUI {
   static Widget buildIconLightning(Lightning lightning, bool active) {
     switch (lightning) {
       case Lightning.Off:
-        return GameUI.buildAtlasIcon(IconType.Lightning_Off);
+        return GameUI.buildAtlasIconType(IconType.Lightning_Off);
       case Lightning.Nearby:
-        return GameUI.buildAtlasIcon(IconType.Lightning_Nearby);
+        return GameUI.buildAtlasIconType(IconType.Lightning_Nearby);
       case Lightning.On:
-        return GameUI.buildAtlasIcon(IconType.Lightning_On);
+        return GameUI.buildAtlasIconType(IconType.Lightning_On);
     }
   }
 
   static Widget buildIconWind(Wind wind, bool active) {
     switch (wind) {
       case Wind.Calm:
-        return GameUI.buildAtlasIcon(IconType.Wind_Calm);
+        return GameUI.buildAtlasIconType(IconType.Wind_Calm);
       case Wind.Gentle:
-        return GameUI.buildAtlasIcon(IconType.Wind_Gentle);
+        return GameUI.buildAtlasIconType(IconType.Wind_Gentle);
       case Wind.Strong:
-        return GameUI.buildAtlasIcon(IconType.Wind_Strong);
+        return GameUI.buildAtlasIconType(IconType.Wind_Strong);
     }
   }
 

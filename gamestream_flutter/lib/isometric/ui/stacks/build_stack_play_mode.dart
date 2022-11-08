@@ -11,7 +11,6 @@ Widget buildStackPlay() =>
     children: [
       GameUIInteract.buildWatchInteractMode(),
       watch(GameInventoryUI.itemTypeHover, GameInventoryUI.buildPositionedContainerItemTypeInformation),
-
       watch(ServerState.playerEquippedWeaponAmmunitionType, (int ammunitionType){
          if (ammunitionType == ItemType.Empty) return const SizedBox();
          return Positioned(

@@ -3,7 +3,7 @@ import 'library.dart';
 class AtlasItems {
   static const size = 32.0;
 
-  static double getSrcX(int itemType) => <int, double> {
+  static double getSrcX(int itemType) => const <int, double> {
       ItemType.Weapon_Melee_Sword: 0,
       ItemType.Weapon_Melee_Magic_Staff: 32,
       ItemType.Weapon_Ranged_Bow: 64,
@@ -27,7 +27,7 @@ class AtlasItems {
       ItemType.Resource_Gun_Powder: 160,
   }[itemType] ?? 0;
 
-  static double getSrcY(int itemType) => <int, double> {
+  static double getSrcY(int itemType) => const <int, double> {
     ItemType.Weapon_Ranged_Shotgun: 32,
     ItemType.Weapon_Ranged_Handgun: 32,
     ItemType.Body_Shirt_Blue: 32,
@@ -45,16 +45,15 @@ class AtlasItems {
   }[itemType] ?? 0;
 }
 
-
 class AtlasIcons {
 
-  static double getSrcX(int itemType) => <int, double> {
+  static double getSrcX(int itemType) => const <int, double> {
     IconType.Home: 44,
     IconType.Fullscreen: 93,
     IconType.Zoom: 48,
   }[itemType] ?? 0;
 
-  static double getSrcY(int itemType) => <int, double> {
+  static double getSrcY(int itemType) => const  <int, double> {
     IconType.Arrows_Up_Yellow: 0,
     IconType.Arrows_Down_Yellow: 26,
     IconType.Arrows_North_Yellow: 110,
@@ -73,27 +72,10 @@ class AtlasIcons {
     IconType.Slot: 64,
   }[itemType] ?? 0;
 
-  static double getSize(int itemType) => <int, double> {
+  static double getSize(int itemType) => const <int, double> {
     IconType.Home: 48,
     IconType.Fullscreen: 48,
   }[itemType] ?? 32;
-}
-
-class AtlasIconSize {
-  static const Home = 48.0;
-  static const Fullscreen = 48.0;
-  static const Zoom = 32.0;
-  static const Default = 32.0;
-  static const Slot = 32.0;
-
-  static double getWeaponType(int weaponType) => <int, double> {
-  } [weaponType] ?? Default;
-
-  static double getBodyType(int bodyType) => <int, double> {
-  } [bodyType] ?? Default;
-
-  static double getHeadType(int bodyType) => <int, double> {
-  } [bodyType] ?? Default;
 }
 
 class AtlasNodeX {
@@ -145,7 +127,7 @@ class AtlasNodeX {
   static const Orientation_Slope_Outer = 1067.0;
   static const Orientation_Empty = 1018.0;
 
-  static double mapNodeType(int type) => {
+  static double mapNodeType(int type) => const {
     NodeType.Brick_2: Brick_Solid,
     NodeType.Grass: Grass,
     NodeType.Torch: Torch,
@@ -267,7 +249,7 @@ class AtlasNodeY {
   static const Orientation_Slope_Inner_South_West = Orientation_Slope_Inner_North_West + AtlasNode.Sprite_Height_Padded;
   static const Orientation_Empty = 1185.0;
 
-  static double mapNodeType(int type) => {
+  static double mapNodeType(int type) => const {
     NodeType.Water: Water,
     NodeType.Torch: Torch,
     NodeType.Water_Flowing: Water_Flowing,
@@ -345,7 +327,7 @@ class AtlasNodeAnchorY{
 }
 
 class AtlasNodeWidth {
-  static double mapNodeType(int type) => {
+  static double mapNodeType(int type) => const {
     NodeType.Torch: AtlasNode.Width_Torch,
     NodeType.Tree_Bottom: AtlasNode.Width_Tree_Bottom,
     NodeType.Tree_Top: 62.0,
@@ -353,7 +335,7 @@ class AtlasNodeWidth {
 }
 
 class AtlasNodeHeight {
-  static double mapNodeType(int type) => {
+  static double mapNodeType(int type) => const {
 
   }[type] ?? 72;
 }
@@ -365,7 +347,6 @@ class AtlasParticleX {
 class AtlasParticleY {
   static const Blood = 72.0;
 }
-
 
 class AtlasNode {
   static const Sprite_Width = 48.0;
