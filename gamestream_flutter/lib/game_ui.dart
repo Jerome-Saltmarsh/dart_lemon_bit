@@ -253,6 +253,26 @@ class GameUI {
         ],
       );
 
+  static Widget buildIconFullscreen() =>
+      WatchBuilder(Engine.fullScreen, (bool fullscreen) =>
+          onPressed(
+              action: Engine.fullscreenToggle,
+              child: GameUI.buildAtlasIcon(IconType.Fullscreen)
+          )
+      );
+
+  static Widget buildIconZoom() =>
+      onPressed(
+          action: GameActions.toggleZoom,
+          child: buildAtlasIcon(IconType.Zoom)
+      );
+
+  static Widget buildIconHome() =>
+      onPressed(
+          action: GameNetwork.disconnect,
+          child: buildAtlasIcon(IconType.Home)
+      );
+
   static Widget buildAtlasIcon(int type, {double scale = 1}) =>
       Engine.buildAtlasImage(
         image: GameImages.atlasIcons,

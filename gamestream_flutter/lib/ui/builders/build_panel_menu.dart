@@ -12,14 +12,14 @@ Widget buildPanelMenu() =>
           width2,
           watch(GameState.sceneEditable, (bool sceneEditable) => sceneEditable ? EditorUI.buildControlsWeather() : buildWatchBool(GameUI.timeVisible, buildTime)),
           width2,
-          buildIconZoom(),
+          GameUI.buildIconZoom(),
           width2,
           onPressed(
-              child: buildIconFullscreen(),
+              child: GameUI.buildIconFullscreen(),
               action:  Engine.fullscreenToggle,
           ),
           onPressed(
-              child: buildIconHome(),
+              child: GameUI.buildIconHome(),
               action: GameNetwork.disconnect,
           ),
         ]
@@ -43,25 +43,6 @@ Widget buildButtonTogglePlayMode() {
 Widget buildButtonShowMap() => Tooltip(
     message: ("(M)"), child: text("Map", onPressed: GameState.actionGameDialogShowMap));
 
-Widget buildIconFullscreen()  =>
-  WatchBuilder(Engine.fullScreen, (bool fullscreen) =>
-    onPressed(
-        action: Engine.fullscreenToggle,
-        child: GameUI.buildAtlasIcon(IconType.Fullscreen)
-    )
-  );
-
-Widget buildIconZoom() =>
-   onPressed(
-       action: GameActions.toggleZoom,
-       child: GameUI.buildAtlasIcon(IconType.Zoom)
-   );
-
-Widget buildIconHome() =>
-    onPressed(
-        action: GameNetwork.disconnect,
-        child: GameUI.buildAtlasIcon(IconType.Home)
-    );
 
 Widget buildButtonToggleAudio() {
   return onPressed(
