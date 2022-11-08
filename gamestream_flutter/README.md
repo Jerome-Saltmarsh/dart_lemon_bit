@@ -28,10 +28,10 @@
 [ ] recipes
 [ ] respawn dead enemies
 [ ] smith (for crafting recipes)
-[ ] fix fire shotgun
 [ ] fix character state changing
 
 08.11.2022
+[x] fix fire shotgun
 [x] trade hover information container
 [x] fix player renders behind stairs
 [x] trade drag to sell

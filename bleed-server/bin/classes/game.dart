@@ -1524,18 +1524,13 @@ abstract class Game {
       range: range,
       damage: damage,
     );
-    // dispatchAttackPerformed(AttackType.Fireball, character.x, character.y, character.z, angle);
   }
 
   void characterFireShotgun(Character src, double angle) {
-    if (src.weaponDurationRemaining > 0) return;
-
     src.applyForce(
       force: 6.0,
       angle: angle + pi,
     );
-    src.weaponDurationRemaining = src.weaponDuration;
-
     for (var i = 0; i < 5; i++) {
       spawnProjectile(
         src: src,
