@@ -26,7 +26,7 @@ class ItemType {
       value >= Index_Legs && value < Index_Weapon_Melee;
 
   static bool isTypeWeapon(int value) =>
-      value >= Index_Weapon_Melee;
+      value >= Index_Weapon_Melee && value < Index_Recipe;
 
   static bool isTypeWeaponMelee(int value) =>
       value == ItemType.Empty || (value >= Index_Weapon_Melee && value < Index_Weapon_Ranged);

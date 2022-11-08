@@ -21,9 +21,34 @@ class GameUIInteract {
           return watch(GamePlayer.storeItems, buildStoreItems);
         case InteractMode.Inventory:
           return buildPositionedInventory();
+        case InteractMode.Craft:
+          return buildInteractModeCrafting();
         default:
           return const SizedBox();
       }
+    }
+
+    static Widget buildInteractModeCrafting(){
+      return Stack(
+        children: [
+          Positioned(
+            left: 0,
+            top: 100,
+            child: buildContainerCraft(),
+          ),
+          buildPositionedInventory(),
+        ],
+      );
+    }
+
+    static Widget buildContainerCraft(){
+      return GameUI.buildDialog(
+        dialogType: DialogType.Craft,
+        child: Container(
+           color: GameColors.brownDark,
+          child: text("Craft"),
+        ),
+      );
     }
 
     static Widget buildStoreItems(List<int> itemTypes){

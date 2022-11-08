@@ -16,12 +16,9 @@
 [ ] forge (for crafting materials)
 [ ] gameobject disappear after timeout
 
-
 [Afternoon-Tasks]
 [ ] optimize network - compile all characters into single server_response
-[ ] fix character state changing
-[ ] editor fix add remove columns
-[ ] add weapon fire staff
+[ ] fix editor add remove columns
 [ ] add mobile share (whatsapp, facebook) button
 
 [Morning-Tasks]
@@ -32,6 +29,7 @@
 [ ] respawn dead enemies
 [ ] smith (for crafting recipes)
 [ ] fix fire shotgun
+[ ] fix character state changing
 
 08.11.2022
 [x] trade hover information container

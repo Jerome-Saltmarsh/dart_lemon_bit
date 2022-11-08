@@ -100,10 +100,7 @@ class AreaPlains1 extends DarkAgeArea {
                   );
                 },
                 'craft': () {
-                  player.setStoreItems(const [
-                    ItemType.Legs_Brown,
-                    ItemType.Legs_Blue,
-                  ]);
+                  player.interactMode = InteractMode.Craft;
                 },
                 'never mind': player.endInteraction
               });
