@@ -14,7 +14,6 @@ class Player {
   var team = 0;
   var abilityRange = 0.0;
   var abilityRadius = 0.0;
-  var maxHealth = 0;
   var attackRange = 0.0;
   final mapTile = Watch(0, onChanged: MiniMap.onMapTileChanged);
   var interactingNpcName = Watch<String?>(null);
@@ -25,7 +24,6 @@ class Player {
   final mouseTargetName = Watch<String?>(null);
   final mouseTargetAllie = Watch<bool>(false);
   final mouseTargetHealth = Watch(0.0);
-  final health = Watch(0);
   final experience = Watch(0.0);
   final level = Watch(1);
   final points = Watch(0);

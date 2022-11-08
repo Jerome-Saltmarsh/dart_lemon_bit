@@ -31,6 +31,8 @@
 [ ] fix character state changing
 [ ] separate head-type and helm-type
 [ ] select skin color
+[ ] mini-map close-up
+[ ] player-charge-attack 
 
 08.11.2022
 [x] fix fire shotgun

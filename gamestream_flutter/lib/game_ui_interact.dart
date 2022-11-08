@@ -9,7 +9,7 @@ class GameUIInteract {
   static const _width = 400;
 
     static Widget buildWatchInteractMode() =>
-      watch(GamePlayer.interactMode, buildInteractMode);
+      watch(ServerState.interactMode, buildInteractMode);
 
     static Widget buildInteractMode(int mode) {
       switch (mode) {

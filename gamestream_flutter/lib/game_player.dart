@@ -17,7 +17,6 @@ class GamePlayer {
   static var aimTargetName = "";
   static var aimTargetPosition = Vector3();
   static final storeItems = Watch(<int>[], onChanged: GameEvents.onChangedPlayerStoreItems);
-  static final interactMode = Watch(InteractMode.None, onChanged: GameEvents.onChangedPlayerInteractMode);
 
   static double get renderX => GameConvert.convertV3ToRenderX(position);
   static double get renderY => GameConvert.convertV3ToRenderY(position);
@@ -25,5 +24,5 @@ class GamePlayer {
   static double get positionScreenX => Engine.worldToScreenX(position.renderX);
   static double get positionScreenY => Engine.worldToScreenY(position.renderX);
 
-  static bool get interactModeTrading => interactMode.value == InteractMode.Trading;
+  static bool get interactModeTrading => ServerState.interactMode.value == InteractMode.Trading;
 }

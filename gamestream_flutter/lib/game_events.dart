@@ -508,9 +508,9 @@ class GameEvents {
 
   static void onChangedPlayerStoreItems(List<int> values){
     if (values.isEmpty) {
-       GamePlayer.interactMode.value = InteractMode.None;
+       ServerState.interactMode.value = InteractMode.None;
     } else {
-      GamePlayer.interactMode.value = InteractMode.Trading;
+      ServerState.interactMode.value = InteractMode.Trading;
     }
   }
 }

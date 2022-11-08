@@ -375,7 +375,7 @@ class GameState {
     particles.clear();
     player.gameDialog.value = null;
     player.npcTalkOptions.value = [];
-    GamePlayer.interactMode.value = InteractMode.None;
+    ServerState.interactMode.value = InteractMode.None;
     Engine.zoom = 1;
     Engine.redrawCanvas();
   }

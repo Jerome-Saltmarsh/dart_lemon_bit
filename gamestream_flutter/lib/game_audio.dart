@@ -200,7 +200,7 @@ class GameAudio {
   }
 
   static double getVolumeHeartBeat(){
-    return 1.0 - GameState.player.health.value / GameState.player.maxHealth;
+    return 1.0 - ServerState.playerHealth.value / ServerState.playerMaxHealth;
   }
 
   static double getVolumeStream(){

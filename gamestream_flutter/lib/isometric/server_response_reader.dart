@@ -225,13 +225,13 @@ class ServerResponseReader with ByteReader {
         GamePlayer.targetCategory = readByte();
         break;
       case ApiPlayer.Interact_Mode:
-        GamePlayer.interactMode.value = readByte();
+        ServerState.interactMode.value = readByte();
         break;
       case ApiPlayer.Health:
-        GameState.player.health.value = readInt();
+        ServerState.playerHealth.value = readInt();
         break;
       case ApiPlayer.Max_Health:
-        GameState.player.maxHealth = readInt();
+        ServerState.playerMaxHealth = readInt();
         break;
       case ApiPlayer.Weapon_Cooldown:
         GameState.player.weaponCooldown.value = readPercentage();
