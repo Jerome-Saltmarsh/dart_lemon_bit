@@ -455,10 +455,11 @@ class GameRender {
         //   srcHeight: 32,
         //   color: GameState.getV3RenderColor(gameObject),
         // );
+        renderBouncingGameObjectShadow(gameObject);
         Engine.renderSprite(
           image: GameImages.atlasItems,
-          dstX: gameObject.renderX,
-          dstY: gameObject.renderY,
+          dstX: GameConvert.convertV3ToRenderX(gameObject),
+          dstY: getRenderYBouncing(gameObject),
           srcX: AtlasItems.getSrcX(gameObject.subType),
           srcY: AtlasItems.getSrcY(gameObject.subType),
           srcWidth: 32,

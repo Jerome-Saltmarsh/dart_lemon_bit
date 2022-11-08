@@ -24,13 +24,12 @@
 [ ] add mobile share (whatsapp, facebook) button
 
 [Morning-Tasks]
-[ ] gold
 [ ] experience
 [ ] improve grid invisibility
-[ ] smith (for crafting recipes)
 [ ] highlight cursor gameobject item
 [ ] recipes
 [ ] respawn dead enemies
+[ ] smith (for crafting recipes)
 
 08.11.2022
 [x] trade hover information container

@@ -78,5 +78,41 @@ class AreaPlains1 extends DarkAgeArea {
           ..headType = ItemType.Head_Steel_Helm
 
     );
+
+    characters.add(
+        Npc(
+            game: this,
+            x: 1020,
+            y: 1225,
+            z: tileHeight,
+            weaponType: ItemType.Empty,
+            team: DarkAgeTeam.Good,
+            name: "Smith",
+            health: 100,
+            onInteractedWith: (Player player) {
+              player.interact(message: 'welcome', responses: {
+                'introduction': () {
+                  player.interact(message: 'the name is Bastian. I am the smith. Bring me your materials and recipe I can craft it into an item for you. For a fee of course');
+                },
+                'hints': () {
+                  player.interact(
+                    message: 'what would you like to know?',
+                  );
+                },
+                'craft': () {
+                  player.setStoreItems(const [
+                    ItemType.Legs_Brown,
+                    ItemType.Legs_Blue,
+                  ]);
+                },
+                'never mind': player.endInteraction
+              });
+            }
+        )
+          ..bodyType = ItemType.Body_Tunic_Padded
+          ..legsType = ItemType.Legs_Blue
+          ..headType = ItemType.Head_Steel_Helm
+
+    );
   }
 }

@@ -82,6 +82,7 @@ class ItemType {
   static const Resource_Crystal = Index_Resources + 7;
   static const Resource_Iron = Index_Resources + 8;
   static const Resource_Gold = Index_Resources + 9;
+  static const Resource_Gun_Powder = Index_Resources + 10;
 
   static const Head_Steel_Helm = Index_Heads + 1;
   static const Head_Rogues_Hood = Index_Heads + 2;
@@ -169,6 +170,7 @@ class ItemType {
      Resource_Wood: "Wood",
      Resource_Iron: "Iron",
      Resource_Stone: "Stone",
+     Resource_Gun_Powder: "Gun-Powder",
      Legs_Brown: "Pants Brown",
      Legs_Swat: "Pants Swat",
      Legs_Green: "Pants Green",
