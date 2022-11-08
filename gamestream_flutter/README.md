@@ -15,25 +15,30 @@
 [ ] stash
 [ ] forge (for crafting materials)
 [ ] gameobject disappear after timeout
+[ ] player-charge-attack
+[ ] mini-map close-up
+[ ] select skin color
+[ ] separate head-type and helm-type
 
 [Afternoon-Tasks]
 [ ] optimize network - compile all characters into single server_response
 [ ] fix editor add remove columns
 [ ] add mobile share (whatsapp, facebook) button
+[ ] fix character state changing
+[ ] highlight cursor gameobject item
 
 [Morning-Tasks]
 [ ] experience
 [ ] improve grid invisibility
-[ ] highlight cursor gameobject item
 [ ] recipes
-[ ] respawn dead enemies
 [ ] smith (for crafting recipes)
-[ ] fix character state changing
-[ ] separate head-type and helm-type
-[ ] select skin color
-[ ] mini-map close-up
-[ ] player-charge-attack 
-[ ] merge game-object-types into item-type
+[ ] respawn dead enemies
+
+
+
+
+09.11.2022
+[x] merge game-object-types into item-type
 
 08.11.2022
 [x] fix fire shotgun

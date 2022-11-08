@@ -957,37 +957,6 @@ abstract class Game {
     checkProjectileCollision(characters);
   }
 
-  void refreshSpawns() {
-    // for (final plane in scene.grid) {
-    //   for (final row in plane) {
-    //     for (final node in row) {
-    //       if (node is NodeSpawn) nodeSpawnInstancesCreate(node);
-    //     }
-    //   }
-    // }
-  }
-
-  // void nodeSpawnInstancesClear(NodeSpawn node) {
-  //   for (var i = 0; i < characters.length; i++){
-  //     final character = characters[i];
-  //     if (character.spawn != node) continue;
-  //     removeInstance(character);
-  //     i--;
-  //   }
-  //   for (var i = 0; i < gameObjects.length; i++){
-  //     final gameObject = gameObjects[i];
-  //     if (gameObject.spawn != node) continue;
-  //     removeInstance(gameObject);
-  //     i--;
-  //   }
-  // }
-
-  // void nodeSpawnInstancesCreate(NodeSpawn node) {
-  //   for (var i = 0; i < node.spawnAmount; i++){
-  //     spawnNodeInstance(node);
-  //   }
-  // }
-
   void removeInstance(dynamic instance) {
     if (instance == null) return;
 
@@ -996,7 +965,6 @@ abstract class Game {
       players.remove(instance);
     }
     if (instance is Character) {
-      instance.spawn = null;
       characters.remove(instance);
       return;
     }
@@ -1226,18 +1194,11 @@ abstract class Game {
   }
 
   void updateCharacter(Character character) {
-    if (character.dead) {
-      if (character is AI) {
-        updateRespawnAI(character);
-      }
-      return;
-    }
-
     if (character is AI){
       updateAI(character);
     }
 
-    updateCharacterMovement(character);
+    character.updateMovement();
     resolveCharacterTileCollision(character);
     if (character.dying){
       if (character.stateDurationRemaining-- <= 0){
@@ -1255,7 +1216,13 @@ abstract class Game {
   }
 
   void updateAI(AI ai){
-      if (ai.deadOrBusy) return;
+      if (ai.dead){
+        if (ai.respawn-- > 0) return;
+        respawnAI(ai);
+        return;
+      }
+
+      if (ai.busy) return;
 
       final target = ai.target;
       if (target != null) {
@@ -1326,58 +1293,19 @@ abstract class Game {
     character.stateDuration++;
   }
 
-  void updateCharacterMovement(Character character) {
-    character.z -= character.zVelocity;
-    const gravity = 0.98;
-    character.zVelocity += gravity;
-
-    const minVelocity = 0.005;
-    if (character.velocitySpeed <= minVelocity) return;
-
-    character.x += character.xv;
-    character.y += character.yv;
-
-    // final nodeType = character.getNodeTypeInDirection(
-    //   game: this,
-    //   angle: character.velocityAngle,
-    //   distance: character.radius,
-    // );
-    //
-    // if (nodeType == NodeType.Tree_Bottom || nodeType == NodeType.Torch) {
-    //   final nodeCenterX = character.indexRow * tileSize + tileSizeHalf;
-    //   final nodeCenterY = character.indexColumn * tileSize + tileSizeHalf;
-    //   final dis = character.getDistanceXY(nodeCenterX, nodeCenterY);
-    //   const treeRadius = 5;
-    //   final overlap = dis - treeRadius - character.radius;
-    //   if (overlap < 0) {
-    //     character.x -= getAdjacent(character.velocityAngle, overlap);
-    //     character.y -= getOpposite(character.velocityAngle, overlap);
-    //   }
-    // }
-
-    character.applyFriction(0.75);
-  }
-
   void updateRespawnAI(AI ai) {
     assert(ai.dead);
-    if (ai.spawn == null) return;
     if (ai.respawn-- > 0) return;
     respawnAI(ai);
   }
 
   void respawnAI(AI ai){
-    final
-    spawn = ai.spawn;
-    if (spawn == null){
-      throw Exception("ai.spawn is null");
-    }
-    final
-    distance = randomBetween(0, spawn.spawnRadius);
-    final
-    angle = randomAngle();
-    ai.x = spawn.x + getAdjacent(angle, distance);
-    ai.y = spawn.y + getOpposite(angle, distance);
+    final distance = randomBetween(0, 100);
+    final angle = randomAngle();
+    ai.x = ai.spawnX + getAdjacent(angle, distance);
+    ai.y = ai.spawnY + getOpposite(angle, distance);
     ai.z = ai.spawnZ;
+    ai.respawn = 500;
     ai.clearDest();
     clearCharacterTarget(ai);
     ai.clearPath();
@@ -1386,9 +1314,6 @@ abstract class Game {
     ai.target = null;
     ai.xv = 0;
     ai.xv = 0;
-    ai.spawnX = ai.x;
-    ai.spawnY = ai.y;
-    ai.spawnZ = ai.z;
     ai.setCharacterStateSpawning();
     customOnAIRespawned(ai);
   }

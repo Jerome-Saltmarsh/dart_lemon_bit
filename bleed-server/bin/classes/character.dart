@@ -50,8 +50,6 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
   var performY = 0.0;
   var performZ = 0.0;
 
-  dynamic spawn;
-
   double get weaponRange => ItemType.getRange(weaponType);
   int get weaponDamage => ItemType.getDamage(weaponType);
   int get weaponDuration => ItemType.getCooldown(weaponType);
@@ -176,6 +174,17 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
 
   double getAngleXY(double x, double y) =>
       getAngleBetween(this.x, this.y, x, y);
+
+  void updateMovement() {
+    z -= zVelocity;
+    const gravity = 0.98;
+    zVelocity += gravity;
+    const minVelocity = 0.005;
+    if (velocitySpeed <= minVelocity) return;
+    x += xv;
+    y += yv;
+    applyFriction(0.75);
+  }
 }
 
 class RunSpeed {

@@ -24,8 +24,11 @@ class DarkAgeArea extends GameDarkAge {
           instance.clearDest();
           instance.maxHealth = 10;
           instance.health = 10;
-          instance.respawn = 200;
+          instance.respawn = 500;
           instance.maxSpeed = 3;
+          instance.spawnX = instance.x;
+          instance.spawnY = instance.y;
+          instance.spawnZ = instance.z;
           continue;
         }
       }

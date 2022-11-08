@@ -16,10 +16,7 @@ class GameDarkAge extends Game {
   @override
   int get gameType => GameType.Dark_Age;
 
-
-  GameDarkAge(Scene scene, this.environment) : super(scene) {
-    refreshSpawns();
-  }
+  GameDarkAge(Scene scene, this.environment) : super(scene);
 
   @override
   void customOnCharacterKilled(Character target, dynamic src) {
