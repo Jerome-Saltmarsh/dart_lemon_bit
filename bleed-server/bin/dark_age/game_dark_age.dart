@@ -46,6 +46,10 @@ class GameDarkAge extends Game {
     ItemType.Body_Tunic_Padded,
     ItemType.Body_Shirt_Blue,
     ItemType.Body_Shirt_Cyan,
+    ItemType.Resource_Wood,
+    ItemType.Resource_Gold,
+    ItemType.Resource_Crystal,
+    ItemType.Resource_Stone,
   ]);
 
   @override

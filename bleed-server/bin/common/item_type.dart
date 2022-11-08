@@ -168,6 +168,7 @@ class ItemType {
      Resource_Crystal: "Crystal",
      Resource_Wood: "Wood",
      Resource_Iron: "Iron",
+     Resource_Stone: "Stone",
      Legs_Brown: "Pants Brown",
      Legs_Swat: "Pants Swat",
      Legs_Green: "Pants Green",

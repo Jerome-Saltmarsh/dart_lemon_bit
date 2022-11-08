@@ -445,17 +445,27 @@ class GameRender {
   static void renderGameObject(GameObject gameObject) {
     switch (gameObject.type) {
       case GameObjectType.Item:
+        // Engine.renderSprite(
+        //   image: GameImages.gameobjects,
+        //   dstX: gameObject.renderX,
+        //   dstY: gameObject.renderY,
+        //   srcX: 0,
+        //   srcY: 96,
+        //   srcWidth: 32,
+        //   srcHeight: 32,
+        //   color: GameState.getV3RenderColor(gameObject),
+        // );
         Engine.renderSprite(
-          image: GameImages.gameobjects,
+          image: GameImages.atlasItems,
           dstX: gameObject.renderX,
           dstY: gameObject.renderY,
-          srcX: 0,
-          srcY: 96,
+          srcX: AtlasItems.getSrcX(gameObject.subType),
+          srcY: AtlasItems.getSrcY(gameObject.subType),
           srcWidth: 32,
           srcHeight: 32,
           color: GameState.getV3RenderColor(gameObject),
         );
-        break;
+        return;
       case GameObjectType.Rock:
         Engine.renderSprite(
           image: GameImages.gameobjects,
