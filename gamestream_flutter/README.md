@@ -14,6 +14,7 @@
 [ ] character-type ranger
 [ ] stash
 [ ] forge (for crafting materials)
+[ ] gameobject disappear after timeout
 
 
 [Afternoon-Tasks]
@@ -30,6 +31,7 @@
 [ ] recipes
 [ ] respawn dead enemies
 [ ] smith (for crafting recipes)
+[ ] fix fire shotgun
 
 08.11.2022
 [x] trade hover information container
