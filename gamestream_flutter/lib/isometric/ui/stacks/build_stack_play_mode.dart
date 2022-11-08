@@ -12,6 +12,7 @@ Widget buildStackPlay() =>
       GameUIInteract.buildWatchInteractMode(),
       watch(GameInventoryUI.itemTypeHover, GameInventoryUI.buildPositionedContainerItemTypeInformation),
       watch(ServerState.playerEquippedWeaponAmmunitionType, (int ammunitionType){
+        print("ammunition type: ${ItemType.getName(ammunitionType)}");
          if (ammunitionType == ItemType.Empty) return const SizedBox();
          return Positioned(
            bottom: 12,

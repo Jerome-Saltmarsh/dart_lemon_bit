@@ -674,11 +674,12 @@ class Player extends Character with ByteWriter {
       initialized = true;
       // runningToTarget = false;
       writePlayerWeaponType();
-      writePlayerWeaponCapacity();
-      writePlayerWeaponRounds();
+      // writePlayerWeaponCapacity();
+      // writePlayerWeaponRounds();
       writePlayerPosition();
       writePlayerSpawned();
       writePlayerInventory();
+      writePlayerEquippedWeaponAmmunition();
     }
 
     if (!sceneDownloaded){
