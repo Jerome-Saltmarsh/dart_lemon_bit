@@ -218,6 +218,5 @@ class ItemType {
      Legs_White: "White Pants",
      Legs_Red: "Red Trousers",
      Recipe_Staff_Of_Fire: "Staff of Fire",
-     Resource_Gun_Powder: "Gunpowder"
   }[value] ?? "item-type-unknown($value)";
 }

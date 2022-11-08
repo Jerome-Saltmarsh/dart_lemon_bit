@@ -257,15 +257,15 @@ class ServerResponseReader with ByteReader {
       case ApiPlayer.Points:
        GameState.player.points.value = readInt();
         break;
-      case ApiPlayer.Weapon_Type:
-        GamePlayer.weapon.value = readUInt16();
-        break;
-      case ApiPlayer.Weapon_Rounds:
-        final rounds = readInt();
-        break;
-      case ApiPlayer.Weapon_Capacity:
-        final capacity = readInt();
-        break;
+      // case ApiPlayer.Weapon_Type:
+      //   GamePlayer.weapon.value = readUInt16();
+      //   break;
+      // case ApiPlayer.Weapon_Rounds:
+      //   final rounds = readInt();
+      //   break;
+      // case ApiPlayer.Weapon_Capacity:
+      //   final capacity = readInt();
+      //   break;
       case ApiPlayer.Inventory:
         readPlayerInventory();
         break;

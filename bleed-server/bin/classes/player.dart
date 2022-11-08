@@ -320,7 +320,7 @@ class Player extends Character with ByteWriter {
         inventory[indexTo] = weaponType;
         weaponType = ItemType.Empty;
         writePlayerInventory();
-        writePlayerWeaponType();
+        // writePlayerWeaponType();
         writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
         return;
       }
@@ -329,7 +329,7 @@ class Player extends Character with ByteWriter {
         inventory[indexTo] = weaponType;
         weaponType = typeTo;
         writePlayerInventory();
-        writePlayerWeaponType();
+        // writePlayerWeaponType();
         writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
         return;
       }
@@ -338,7 +338,7 @@ class Player extends Character with ByteWriter {
         inventory[availableIndex] = weaponType;
         weaponType = ItemType.Empty;
         writePlayerInventory();
-        writePlayerWeaponType();
+        // writePlayerWeaponType();
         writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
         return;
       }
@@ -458,7 +458,7 @@ class Player extends Character with ByteWriter {
       if (inventory[i] != ItemType.Empty) continue;
       inventory[i] = weaponType;
       weaponType = ItemType.Empty;
-      writePlayerWeaponType();
+      // writePlayerWeaponType();
       writePlayerInventory();
       game.setCharacterStateChanging(this);
       break;
@@ -540,7 +540,7 @@ class Player extends Character with ByteWriter {
       weaponType = itemType;
       inventory[index] = currentWeapon;
       swapped = true;
-      writePlayerWeaponType();
+      // writePlayerWeaponType();
     }
 
     if (ItemType.isTypeBody(itemType)){
@@ -673,7 +673,7 @@ class Player extends Character with ByteWriter {
       game.customInitPlayer(this);
       initialized = true;
       // runningToTarget = false;
-      writePlayerWeaponType();
+      // writePlayerWeaponType();
       // writePlayerWeaponCapacity();
       // writePlayerWeaponRounds();
       writePlayerPosition();
@@ -687,23 +687,23 @@ class Player extends Character with ByteWriter {
     }
   }
 
-  void writePlayerWeaponType(){
-    writeByte(ServerResponse.Player);
-    writeByte(ApiPlayer.Weapon_Type);
-    writeUInt16(weaponType);
-  }
-
-  void writePlayerWeaponRounds(){
-    writeByte(ServerResponse.Player);
-    writeByte(ApiPlayer.Weapon_Rounds);
-    writeInt(0);
-  }
-
-  void writePlayerWeaponCapacity(){
-    writeByte(ServerResponse.Player);
-    writeByte(ApiPlayer.Weapon_Capacity);
-    writeInt(0);
-  }
+  // void writePlayerWeaponType(){
+  //   writeByte(ServerResponse.Player);
+  //   writeByte(ApiPlayer.Weapon_Type);
+  //   writeUInt16(weaponType);
+  // }
+  //
+  // void writePlayerWeaponRounds(){
+  //   writeByte(ServerResponse.Player);
+  //   writeByte(ApiPlayer.Weapon_Rounds);
+  //   writeInt(0);
+  // }
+  //
+  // void writePlayerWeaponCapacity(){
+  //   writeByte(ServerResponse.Player);
+  //   writeByte(ApiPlayer.Weapon_Capacity);
+  //   writeInt(0);
+  // }
 
   void writePlayerWeaponCooldown() {
     writeByte(ServerResponse.Player);

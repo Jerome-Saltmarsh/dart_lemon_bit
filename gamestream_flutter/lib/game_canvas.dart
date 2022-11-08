@@ -18,10 +18,9 @@ class GameCanvas {
       renderCursor(canvas);
     }
 
-
     if (GameState.showAllItems) {
        for (var i = 0; i < GameState.totalGameObjects; i++){
-         final gameObject = GameState.gameObjects[i];
+         // final gameObject = GameState.gameObjects[i];
          // if (gameObject.type != GameObjectType.Item) continue;
          // renderForegroundText(gameObject, ItemType.getName(gameObject.subType));
        }
