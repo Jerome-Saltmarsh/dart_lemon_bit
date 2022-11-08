@@ -58,7 +58,6 @@ class ItemType {
 
   static const Invalid              = -0001;
   static const Empty                = 00000;
-  static const Index_Equipped       = 00001;
   static const Index_GameObjects    = 01000;
   static const Index_Consumables    = 02000;
   static const Index_Resources      = 05000;
@@ -68,6 +67,7 @@ class ItemType {
   static const Index_Weapon_Melee   = 40000;
   static const Index_Weapon_Ranged  = 45000;
   static const Index_Recipe         = 50000;
+  static const Index_Equipped       = 65000;
 
   static const Equipped_Head = Index_Equipped + 1;
   static const Equipped_Body = Index_Equipped + 2;
