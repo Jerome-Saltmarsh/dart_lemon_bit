@@ -1058,7 +1058,7 @@ abstract class Game {
            return;
         }
 
-        if (target.type == ItemType.isCollectable(target.type)){
+        if (target.collectable){
            if (getDistanceBetweenV3(player, target) > 50){
              setCharacterStateRunning(player);
              return;
