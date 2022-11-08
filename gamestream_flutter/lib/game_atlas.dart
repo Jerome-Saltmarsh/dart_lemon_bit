@@ -45,72 +45,38 @@ class AtlasItems {
   }[itemType] ?? 0;
 }
 
-class AtlasIconsX {
-  static const Arrows_Yellow = 0.0;
-  static const Arrows_Orange = 22.0;
-  static const Home = 44.0;
-  static const Fullscreen = 93.0;
-  static const Zoom = 48.0;
-  static const Weather_Inactive = 153.0;
-  static const Weather_Active = 217.0;
-  static const Slot = 288.0;
 
-  // static double getWeaponType(int weaponType) => <int, double> {
-  //   AttackType.Blade: 288,
-  //   AttackType.Shotgun: 288,
-  //   AttackType.Rifle: 288,
-  //   AttackType.Assault_Rifle: 288,
-  //   AttackType.Staff: 318,
-  //   AttackType.Unarmed: 384,
-  //   AttackType.Handgun: 320,
-  // } [weaponType] ?? 0.0;
+class AtlasIcons {
 
-  // static double getBodyType(int bodyType) => <int, double> {
-  //     BodyType.shirtBlue: 352,
-  //     BodyType.shirtCyan: 384,
-  //     BodyType.swat: 416,
-  //     BodyType.tunicPadded: 448,
-  // } [bodyType] ?? 0.0;
+  static double getSrcX(int itemType) => <int, double> {
+    IconType.Home: 44,
+    IconType.Fullscreen: 93,
+    IconType.Zoom: 48,
+  }[itemType] ?? 0;
 
-  // static double getHeadType(int headType) => <int, double> {
-  //     HeadType.Steel_Helm: 416,
-  //     HeadType.Rogues_Hood: 448,
-  //     HeadType.Wizards_Hat: 480,
-  // } [headType] ?? 0.0;
-}
+  static double getSrcY(int itemType) => <int, double> {
+    IconType.Arrows_Up_Yellow: 0,
+    IconType.Arrows_Down_Yellow: 26,
+    IconType.Arrows_North_Yellow: 110,
+    IconType.Arrows_East_Yellow: 137,
+    IconType.Arrows_West_Yellow: 83,
+    IconType.Arrows_South_Yellow: 56,
+    IconType.Arrows_Up_Orange: 0,
+    IconType.Arrows_Down_Orange: 26,
+    IconType.Arrows_North_Orange: 110,
+    IconType.Arrows_East_Orange: 137,
+    IconType.Arrows_West_Orange: 83,
+    IconType.Arrows_South_Orange: 56,
+    IconType.Home: 0,
+    IconType.Fullscreen: 0,
+    IconType.Zoom: 48,
+    IconType.Slot: 64,
+  }[itemType] ?? 0;
 
-class AtlasIconsY {
-  static const Arrows_Up = 0.0;
-  static const Arrows_Down = 26.0;
-  static const Arrows_South = 56.0;
-  static const Arrows_West = 83.0;
-  static const Arrows_North = 110.0;
-  static const Arrows_East = 137.0;
-  static const Home = 0.0;
-  static const Fullscreen = 0.0;
-  static const Zoom = 48.0;
-  static const Slot = 64.0;
-
-  // static double getWeaponType(int weaponType) => <int, double> {
-  //   AttackType.Staff: 0,
-  //   AttackType.Blade: 0,
-  //   AttackType.Unarmed: 0,
-  //   AttackType.Shotgun: 32,
-  //   AttackType.Rifle: 32,
-  //   AttackType.Assault_Rifle: 32,
-  //   AttackType.Handgun: 32,
-  // } [weaponType] ?? 0.0;
-
-  // static double getBodyType(int bodyType) => <int, double> {
-  //   BodyType.shirtBlue: 32,
-  //   BodyType.shirtCyan: 32,
-  //   BodyType.tunicPadded: 32,
-  //   BodyType.swat: 32,
-  // } [bodyType] ?? 0.0;
-
-  // static double getHeadType(int bodyType) => <int, double> {
-  //   HeadType.Steel_Helm: 0,
-  // } [bodyType] ?? 0.0;
+  static double getSize(int itemType) => <int, double> {
+    IconType.Home: 48,
+    IconType.Fullscreen: 48,
+  }[itemType] ?? 32;
 }
 
 class AtlasIconSize {

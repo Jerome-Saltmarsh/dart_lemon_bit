@@ -1,4 +1,5 @@
 
+// TODO remove enum
 enum Rain {
     None,
     Light,

@@ -53,95 +53,145 @@ Widget buildEditorSelectedNode() =>
             fit: StackFit.expand,
             alignment: Alignment.center,
             children: [
-              Positioned(
+              buildPositionedIconArrow(
                 top: 65 + _shiftY,
                 left: 27 + _shiftX,
-                child: onMouseOver(builder: (BuildContext context, bool mouseOver) =>
-                    Engine.buildAtlasImageButton(
-                          image: GameImages.atlasIcons,
-                          action: GameEditor.cursorZDecrease,
-                          srcX: mouseOver ? AtlasIconsX.Arrows_Orange : AtlasIconsX.Arrows_Yellow,
-                          srcY: AtlasIconsY.Arrows_Down,
-                          srcWidth: 21,
-                          srcHeight: 30,
-                          hint: "Shift + Arrow Down"
-                      )
-                ),
+                action: GameEditor.cursorZDecrease,
+                iconType: IconType.Arrows_Down_Yellow,
+                iconTypeMouseOver: IconType.Arrows_Down_Orange,
+                hint: "Shift + Arrow Down",
               ),
-              Positioned(
+              buildPositionedIconArrow(
                 top: 3 + _shiftY,
                 left: 3 + _shiftY,
-                child: onMouseOver(builder: (BuildContext context, bool mouseOver) => Engine.buildAtlasImageButton(
-                    image: GameImages.atlasIcons,
-                  action: GameEditor.cursorRowDecrease,
-                  srcX: mouseOver ? AtlasIconsX.Arrows_Orange : AtlasIconsX.Arrows_Yellow,
-                  srcY: AtlasIconsY.Arrows_North,
-                  srcWidth: 21,
-                  srcHeight: 21,
-                  hint: "Arrow Up"
-                ),
-              )),
-              Positioned(
+                action: GameEditor.cursorRowDecrease,
+                iconType: IconType.Arrows_North_Yellow,
+                iconTypeMouseOver: IconType.Arrows_North_Orange,
+                hint: "Arrow Up",
+              ),
+              // Positioned(
+              //   top: 3 + _shiftY,
+              //   left: 3 + _shiftY,
+              //   child: onMouseOver(builder: (BuildContext context, bool mouseOver) => Engine.buildAtlasImageButton(
+              //       image: GameImages.atlasIcons,
+              //     action: GameEditor.cursorRowDecrease,
+              //     srcX: mouseOver ? AtlasIconsX.Arrows_Orange : AtlasIconsX.Arrows_Yellow,
+              //     srcY: AtlasIconsY.Arrows_North,
+              //     srcWidth: 21,
+              //     srcHeight: 21,
+              //     hint: "Arrow Up"
+              //   ),
+              // )),
+              buildPositionedIconArrow(
                 top: 5 + _shiftY,
                 left: 50 + _shiftX,
-                child: onMouseOver(builder: (BuildContext context, bool mouseOver) => Engine.buildAtlasImageButton(
-                    image: GameImages.atlasIcons,
-                    action: GameEditor.cursorColumnDecrease,
-                    srcX: mouseOver ? AtlasIconsX.Arrows_Orange : AtlasIconsX.Arrows_Yellow,
-                    srcY: AtlasIconsY.Arrows_East,
-                    srcWidth: 21,
-                    srcHeight: 21,
-                    hint: "Arrow Right"
-                ),
-              )),
+                action: GameEditor.cursorColumnDecrease,
+                iconType: IconType.Arrows_East_Yellow,
+                iconTypeMouseOver: IconType.Arrows_East_Orange,
+                hint: "Arrow Right",
+              ),
+              // Positioned(
+              //   top: 5 + _shiftY,
+              //   left: 50 + _shiftX,
+              //   child: onMouseOver(builder: (BuildContext context, bool mouseOver) => Engine.buildAtlasImageButton(
+              //       image: GameImages.atlasIcons,
+              //       action: GameEditor.cursorColumnDecrease,
+              //       srcX: mouseOver ? AtlasIconsX.Arrows_Orange : AtlasIconsX.Arrows_Yellow,
+              //       srcY: AtlasIconsY.Arrows_East,
+              //       srcWidth: 21,
+              //       srcHeight: 21,
+              //       hint: "Arrow Right"
+              //   ),
+              // )),
               Container(
                   height: 72,
                   width: 72,
                   alignment: Alignment.center,
                   child: watch(GameEditor.nodeSelectedType, EditorUI.buildIconNodeType)
               ),
-              Positioned(
+              buildPositionedIconArrow(
                 top: 50 + _shiftY,
                 left: 50 + _shiftX,
-                child: onMouseOver(builder: (BuildContext context, bool mouseOver) => Engine.buildAtlasImageButton(
-                    image: GameImages.atlasIcons,
-                  action: GameEditor.cursorRowIncrease,
-                  srcX: mouseOver ? AtlasIconsX.Arrows_Orange : AtlasIconsX.Arrows_Yellow,
-                  srcY: AtlasIconsY.Arrows_South,
-                  srcWidth: 21,
-                  srcHeight: 21,
+                action: GameEditor.cursorRowIncrease,
+                iconType: IconType.Arrows_South_Yellow,
+                iconTypeMouseOver: IconType.Arrows_South_Orange,
                   hint: "Arrow Down"
-                )),
               ),
-              Positioned(
-                top: -10 + _shiftY,
-                left: 27 + _shiftX,
-                child: onMouseOver(builder: (BuildContext context, bool mouseOver) => Engine.buildAtlasImageButton(
-                    image: GameImages.atlasIcons,
+              // Positioned(
+              //   top: 50 + _shiftY,
+              //   left: 50 + _shiftX,
+              //   child: onMouseOver(builder: (BuildContext context, bool mouseOver) => Engine.buildAtlasImageButton(
+              //       image: GameImages.atlasIcons,
+              //     action: GameEditor.cursorRowIncrease,
+              //     srcX: mouseOver ? AtlasIconsX.Arrows_Orange : AtlasIconsX.Arrows_Yellow,
+              //     srcY: AtlasIconsY.Arrows_South,
+              //     srcWidth: 21,
+              //     srcHeight: 21,
+              //     hint: "Arrow Down"
+              //   )),
+              // ),
+              buildPositionedIconArrow(
+                  top: -10 + _shiftY,
+                  left: 27 + _shiftX,
                   action: GameEditor.cursorZIncrease,
-                  srcX: mouseOver ? AtlasIconsX.Arrows_Orange : AtlasIconsX.Arrows_Yellow,
-                  srcY: AtlasIconsY.Arrows_Up,
-                  srcWidth: 21,
-                  srcHeight: 21,
-                  hint: "Shift + Arrow Up"
-                )),
+                  iconType: IconType.Arrows_Up_Yellow,
+                  iconTypeMouseOver: IconType.Arrows_Up_Orange,
+                  hint: "Arrow Down"
               ),
+              // Positioned(
+              //   top: -10 + _shiftY,
+              //   left: 27 + _shiftX,
+              //   child: onPressed(
+              //     action: GameEditor.cursorZIncrease,
+              //     child: onMouseOver(builder: (BuildContext context, bool mouseOver) => GameUI.buildAtlasIcon(
+              //       mouseOver ? IconType.Arrows_Orange : IconType.Arrows_Yellow
+              //     )),
+              //     hint: "Shift + Arrow Up",
+              //   ),
+              //   // child: onMouseOver(builder: (BuildContext context, bool mouseOver) => GameUI.buildAtlasIcon(
+              //   //     image: GameImages.atlasIcons,
+              //   //     action: GameEditor.cursorZIncrease,
+              //   //     srcX: mouseOver ? AtlasIcons.getSrcX(IconType.Arrows_Orange).Arrows_Orange : AtlasIconsX.Arrows_Yellow,
+              //   //     srcY: AtlasIconsY.Arrows_Up,
+              //   //     srcWidth: 21,
+              //   //     srcHeight: 21,
+              //   //     hint: "Shift + Arrow Up"
+              //   // )),
+              // ),
               Positioned(
                 top: 50 + _shiftY,
                 left: 0 + _shiftX,
-                child: onMouseOver(builder: (BuildContext context, bool mouseOver) => Engine.buildAtlasImageButton(
-                    image: GameImages.atlasIcons,
-                    action: GameEditor.cursorColumnIncrease,
-                    srcX: mouseOver ? AtlasIconsX.Arrows_Orange : AtlasIconsX.Arrows_Yellow,
-                    srcY: AtlasIconsY.Arrows_West,
-                    srcWidth: 21,
-                    srcHeight: 21,
-                    hint: "Arrow Left"
-                )),
+                child: onPressed(
+                  action: GameEditor.cursorZIncrease,
+                  child: onMouseOver(builder: (BuildContext context, bool mouseOver) => GameUI.buildAtlasIcon(
+                      mouseOver ? IconType.Arrows_West_Orange : IconType.Arrows_West_Yellow
+                  )),
+                  hint: "Arrow Left",
+                ),
               ),
             ],
           ),
         ),
       ],
+    ),
+  );
+
+Widget buildPositionedIconArrow({
+  required double top,
+  required double left,
+  required Function action,
+  required int iconType,
+  required int iconTypeMouseOver,
+  required String hint,
+}) =>
+  Positioned(
+    top: top,
+    left: left,
+    child: onPressed(
+      action: action,
+      child: onMouseOver(builder: (BuildContext context, bool mouseOver) => GameUI.buildAtlasIcon(
+          mouseOver ? iconTypeMouseOver : iconType
+      )),
+      hint: hint,
     ),
   );

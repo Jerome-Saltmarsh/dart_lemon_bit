@@ -43,42 +43,25 @@ Widget buildButtonTogglePlayMode() {
 Widget buildButtonShowMap() => Tooltip(
     message: ("(M)"), child: text("Map", onPressed: GameState.actionGameDialogShowMap));
 
-Widget buildIconFullscreen() {
-  return WatchBuilder(Engine.fullScreen, (bool fullscreen) {
-    return Engine.buildAtlasImageButton(
-        image: GameImages.atlasIcons,
-        srcX: AtlasIconsX.Fullscreen,
-        srcY: AtlasIconsY.Fullscreen,
-        srcWidth: AtlasIconSize.Fullscreen,
-        srcHeight: AtlasIconSize.Fullscreen,
-        scale: Engine.GoldenRatio_0_618,
+Widget buildIconFullscreen()  =>
+  WatchBuilder(Engine.fullScreen, (bool fullscreen) =>
+    onPressed(
         action: Engine.fullscreenToggle,
-    );
-  });
-}
+        child: GameUI.buildAtlasIcon(IconType.Fullscreen)
+    )
+  );
 
 Widget buildIconZoom() =>
-    Engine.buildAtlasImageButton(
-    hint: "Zoom (F)",
-    image: GameImages.atlasIcons,
-    srcX: AtlasIconsX.Zoom,
-    srcY: AtlasIconsY.Zoom,
-    srcWidth: AtlasIconSize.Zoom,
-    srcHeight: AtlasIconSize.Zoom,
-    scale: 1.0,
-    action: GameActions.toggleZoom,
-  );
+   onPressed(
+       action: GameActions.toggleZoom,
+       child: GameUI.buildAtlasIcon(IconType.Zoom)
+   );
 
 Widget buildIconHome() =>
-    Engine.buildAtlasImageButton(
-      image: GameImages.atlasIcons,
-      srcX: AtlasIconsX.Home,
-      srcY: AtlasIconsY.Home,
-      srcWidth: AtlasIconSize.Home,
-      srcHeight: AtlasIconSize.Home,
-      action: GameNetwork.disconnect,
-      scale: Engine.GoldenRatio_0_618,
-  );
+    onPressed(
+        action: GameNetwork.disconnect,
+        child: GameUI.buildAtlasIcon(IconType.Home)
+    );
 
 Widget buildButtonToggleAudio() {
   return onPressed(

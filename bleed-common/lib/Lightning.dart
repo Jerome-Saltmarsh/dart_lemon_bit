@@ -1,4 +1,5 @@
 
+// TODO Remove enum
 enum Lightning {
    Off,
    Nearby,

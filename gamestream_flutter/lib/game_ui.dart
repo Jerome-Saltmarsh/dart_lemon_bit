@@ -72,7 +72,7 @@ class GameUI {
               //   color: GameUIConfig.runButtonTextColor,
               //   size: GameUIConfig.runButtonTextFontSize,
               // ),
-              child: watch(GamePlayer.weapon, buildIconAttackType),
+              child: watch(GamePlayer.weapon, buildAtlasItemType),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(color: Colors.white, width: 2),
@@ -253,14 +253,24 @@ class GameUI {
         ],
       );
 
-  static Widget buildIconAttackType(int type) =>
+  static Widget buildAtlasIcon(int type, {double scale = 1}) =>
       Engine.buildAtlasImage(
         image: GameImages.atlasIcons,
+        srcX: AtlasIcons.getSrcX(type),
+        srcY: AtlasIcons.getSrcY(type),
+        srcWidth: AtlasIcons.getSize(type),
+        srcHeight: AtlasIcons.getSize(type),
+        scale: scale,
+      );
+
+  static Widget buildAtlasItemType(int type, {double scale = 1}) =>
+      Engine.buildAtlasImage(
+        image: GameImages.atlasItems,
         srcX: AtlasItems.getSrcX(type),
         srcY: AtlasItems.getSrcY(type),
-        srcWidth: AtlasIconSize.getWeaponType(type),
-        srcHeight: AtlasIconSize.getWeaponType(type),
-        scale: 3.0,
+        srcWidth: AtlasItems.size,
+        srcHeight: AtlasItems.size,
+        scale: scale,
       );
 
   static Widget buildDialog({required Widget child, required int dialogType}) =>

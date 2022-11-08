@@ -66,41 +66,39 @@ class EditorUI {
     });
   }
 
+  // TODO Fix active
   static Widget buildIconRain(Rain rain, bool active) {
-    return Engine.buildAtlasImage(
-      image: GameImages.atlasIcons,
-      srcX: active ? AtlasIconsX.Weather_Active : AtlasIconsX.Weather_Inactive,
-      srcY: 64.0 * rain.index,
-      srcWidth: 64.0,
-      srcHeight: 64.0,
-      scale: 50 / 64.0,
-    );
+    switch (rain) {
+      case Rain.None:
+        return GameUI.buildAtlasIcon(IconType.Rain_None);
+      case Rain.Light:
+        return GameUI.buildAtlasIcon(IconType.Rain_Light);
+      case Rain.Heavy:
+        return GameUI.buildAtlasIcon(IconType.Rain_Heavy);
+    }
   }
 
+  // TODO Fix active
   static Widget buildIconLightning(Lightning lightning, bool active) {
-    return Engine.buildAtlasImage(
-      image: GameImages.atlasIcons,
-      srcX: active ? AtlasIconsX.Weather_Active : AtlasIconsX.Weather_Inactive,
-      srcY: lightning == Lightning.Off ? 0 : (64.0 * 2) + (64.0 * lightning.index),
-      srcWidth: 64.0,
-      srcHeight: 64.0,
-      scale: 50 / 64.0,
-    );
+    switch (lightning) {
+      case Lightning.Off:
+        return GameUI.buildAtlasIcon(IconType.Lightning_Off);
+      case Lightning.Nearby:
+        return GameUI.buildAtlasIcon(IconType.Lightning_Nearby);
+      case Lightning.On:
+        return GameUI.buildAtlasIcon(IconType.Lightning_On);
+    }
   }
 
   static Widget buildIconWind(Wind wind, bool active) {
-    return buildIconWeather([0.0, 320.0, 384.0][wind.index], active);
-  }
-
-  static Widget buildIconWeather(double srcY, bool active) {
-    return Engine.buildAtlasImage(
-      image: GameImages.atlasIcons,
-      srcX: active ? AtlasIconsX.Weather_Active : AtlasIconsX.Weather_Inactive,
-      srcY: srcY,
-      srcWidth: 64.0,
-      srcHeight: 64.0,
-      scale: 50 / 64.0,
-    );
+    switch (wind) {
+      case Wind.Calm:
+        return GameUI.buildAtlasIcon(IconType.Wind_Calm);
+      case Wind.Gentle:
+        return GameUI.buildAtlasIcon(IconType.Wind_Gentle);
+      case Wind.Strong:
+        return GameUI.buildAtlasIcon(IconType.Wind_Strong);
+    }
   }
 
   static Widget buildToggleRain() {
