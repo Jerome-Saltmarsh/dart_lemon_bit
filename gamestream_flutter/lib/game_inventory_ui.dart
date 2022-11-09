@@ -21,18 +21,27 @@ class GameInventoryUI {
   static Widget buildInventoryUI() =>
       GameUI.buildDialog(
         dialogType: DialogType.Inventory,
-        child: Column(
-          children: [
-            buildContainerEquippedItems(),
-            buildContainerInventory(),
-          ],
+        child: Container(
+          width: Inventory_Width,
+          color: GameColors.brownDark,
+          child: Column(
+            children: [
+              buildContainerEquippedItems(),
+              buildContainerInventory(),
+              Container(
+                padding: const EdgeInsets.all(16),
+                alignment: Alignment.centerLeft,
+                child: watch(ServerState.playerGold, (int gold) => text("Gold $gold")),
+              )
+            ],
+          ),
         ),
       );
 
   static Widget buildContainerEquippedItems() => Container(
-        width: Inventory_Width,
+        // width: Inventory_Width,
         height: 80.0,
-        color: brownDark,
+        // color: brownDark,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -108,8 +117,8 @@ class GameInventoryUI {
 
   static Widget buildContainerInventory() =>
       Container(
-        color: brownLight,
-        width: Inventory_Width,
+        // color: brownLight,
+        // width: Inventory_Width,
         height: 400,
         child: Stack(
           children: [

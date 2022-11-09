@@ -22,6 +22,7 @@ class Player extends Character with ByteWriter {
   final runTarget = Position3();
   late Function sendBufferToClient;
   GameObject? editorSelectedGameObject;
+  var gold = 0;
   var debug = false;
   var characterState = CharacterState.Idle;
   var framesSinceClientRequest = 0;
