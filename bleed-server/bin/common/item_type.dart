@@ -142,13 +142,13 @@ class ItemType {
     return type >= Index_Consumables;
   }
 
-  static int getWeaponAmmunitionType(int itemType) => const {
+  static int getConsumeType(int itemType) => const {
       Weapon_Ranged_Handgun: Resource_Gun_Powder,
       Weapon_Ranged_Shotgun: Resource_Gun_Powder,
       Weapon_Ranged_Bow: Resource_Arrow,
   }[itemType] ?? Empty;
 
-  static int getWeaponAmmunitionConsumption(int itemType) => const {
+  static int getConsumeAmount(int itemType) => const {
     Weapon_Ranged_Bow: 1,
     Weapon_Ranged_Handgun: 1,
     Weapon_Ranged_Shotgun: 3,

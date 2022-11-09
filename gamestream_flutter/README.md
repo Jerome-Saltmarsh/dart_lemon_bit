@@ -19,6 +19,7 @@
 [ ] mini-map close-up
 [ ] select skin color
 [ ] separate head-type and helm-type
+[ ] fix animation fire handgun
 
 [Afternoon-Tasks]
 [ ] optimize network - compile all characters into single server_response
@@ -33,9 +34,10 @@
 [ ] improve grid invisibility
 [ ] recipes
 [ ] smith (for crafting recipes)
-[ ] render item quantities in inventory dialog
+[ ] dropped gameobject quantity
 
 09.11.2022
+[x] render item quantities in inventory dialog
 [x] item quantities
 [x] gun-powder
 [x] respawn dead enemies
