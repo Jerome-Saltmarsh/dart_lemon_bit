@@ -18,6 +18,10 @@ class ItemType {
     value == Equipped_Legs ||
     value == Equipped_Weapon;
 
+  static int getSellPrice(int itemType) {
+    return getBuyPrice(itemType) ~/ 10;
+  }
+
   static int getBuyPrice(int itemType) {
       return 100;
   }
