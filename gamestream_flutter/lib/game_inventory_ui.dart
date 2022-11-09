@@ -169,7 +169,18 @@ class GameInventoryUI {
             feedback: buildItemTypeAtlasImage(itemType: itemType, scale: Slot_Item_Scale),
             child: onPressed(
                 action: () => GameNetwork.sendClientRequestInventoryEquip(index),
-                child: buildItemTypeAtlasImage(itemType: itemType, scale: Slot_Item_Scale),
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    buildItemTypeAtlasImage(itemType: itemType, scale: Slot_Item_Scale),
+                    if (GamePlayer.inventoryQuantity[index] > 1)
+                      Positioned(
+                          bottom: -5,
+                          right: -5,
+                          child: text(GamePlayer.inventoryQuantity[index], size: 14),
+                      ),
+                  ],
+                ),
             ),
             childWhenDragging: buildItemTypeAtlasImage(itemType: itemType, scale: Slot_Item_Scale),
           ),
