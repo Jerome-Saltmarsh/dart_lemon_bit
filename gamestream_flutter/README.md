@@ -37,10 +37,11 @@
 [ ] consume food to heal
 
 [current]
-[ ] item sell
-[ ] item buy
+[ ] ui error message
 
 10.11.2022
+[x] item sell
+[x] item buy
 [x] prevent item-type information panel from going off screen
 [x] player gold
 

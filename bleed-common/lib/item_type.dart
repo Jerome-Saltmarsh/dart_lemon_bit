@@ -18,13 +18,18 @@ class ItemType {
     value == Equipped_Legs ||
     value == Equipped_Weapon;
 
-  static int getSellPrice(int itemType) {
-    return getBuyPrice(itemType) ~/ 10;
-  }
+  static int getSellPrice(int itemType) =>
+    getBuyPrice(itemType) ~/ 10;
 
-  static int getBuyPrice(int itemType) {
-      return 100;
-  }
+  static int getBuyPrice(int itemType) => const {
+     Resource_Gun_Powder: 25,
+     Resource_Arrow: 20,
+     Legs_Brown: 100,
+     Legs_Blue: 100,
+     Head_Wizards_Hat: 500,
+     Head_Rogues_Hood: 500,
+     Head_Steel_Helm: 1000,
+  }[itemType] ?? 0;
 
   static bool isTypeEquippable(int value) =>
       isTypeBody(value) ||

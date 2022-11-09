@@ -334,7 +334,7 @@ class GameInventoryUI {
               children: [
                 Expanded(child: text(ItemType.getName(itemType), color: Colors.blue)),
                 if (GameUI.mouseOverDialogTrade)
-                  text("${ItemType.getBuyPrice(itemType)} Gold", color: GameColors.yellowDark),
+                  text("${ItemType.getBuyPrice(itemType)} Gold", color: ServerQuery.playerCanAffordToBuy(itemType) ? GameColors.yellow : GameColors.yellowDark),
                 if (GameUI.mouseOverDialogInventory && GamePlayer.interactModeTrading)
                   text("${ItemType.getSellPrice(itemType)} Gold", color: GameColors.yellowDark),
               ],
