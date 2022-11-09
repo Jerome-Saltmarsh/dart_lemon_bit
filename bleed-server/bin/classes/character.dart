@@ -4,7 +4,6 @@ import 'package:lemon_math/library.dart';
 
 import '../common/library.dart';
 import '../functions/withinRadius.dart';
-import '../utilities.dart';
 import 'collider.dart';
 import 'components.dart';
 import 'player.dart';
@@ -26,7 +25,7 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
 
 
   set health(int value) {
-    _health = clampInt(value, 0, maxHealth);
+    _health = clamp(value, 0, maxHealth);
   }
   var state = CharacterState.Idle;
   var stateDurationRemaining = 0;

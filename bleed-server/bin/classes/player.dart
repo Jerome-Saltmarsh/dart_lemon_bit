@@ -12,7 +12,6 @@ import '../common/library.dart';
 import '../dark_age/areas/dark_age_area.dart';
 import '../dark_age/game_dark_age.dart';
 import '../dark_age/game_dark_age_editor.dart';
-import '../utilities.dart';
 import 'gameobject.dart';
 import 'library.dart';
 import 'rat.dart';
@@ -220,7 +219,7 @@ class Player extends Character with ByteWriter {
   }
 
   set magic(int value){
-    _magic = clampInt(value, 0, maxMagic);
+    _magic = clamp(value, 0, maxMagic);
   }
 
   Player({
