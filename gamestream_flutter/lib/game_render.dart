@@ -443,6 +443,8 @@ class GameRender {
   }
 
   static bool isCollectable(int itemType) =>
+      ItemType.isTypeResource(itemType) ||
+      ItemType.isTypeRecipe(itemType) ||
       ItemType.isTypeWeapon(itemType) ||
       ItemType.isTypeRecipe(itemType) ||
       ItemType.isTypeHead(itemType)   ||
@@ -451,16 +453,6 @@ class GameRender {
 
   static void renderGameObject(GameObject gameObject) {
     if (isCollectable(gameObject.type)) {
-      // Engine.renderSprite(
-      //   image: GameImages.gameobjects,
-      //   dstX: gameObject.renderX,
-      //   dstY: gameObject.renderY,
-      //   srcX: 0,
-      //   srcY: 96,
-      //   srcWidth: 32,
-      //   srcHeight: 32,
-      //   color: GameState.getV3RenderColor(gameObject),
-      // );
       renderBouncingGameObjectShadow(gameObject);
       Engine.renderSprite(
         image: GameImages.atlasItems,
