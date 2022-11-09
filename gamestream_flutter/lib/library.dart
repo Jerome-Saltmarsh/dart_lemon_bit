@@ -48,5 +48,7 @@ export 'dart:typed_data';
 export 'game_inventory_ui.dart';
 export 'state/client_state.dart';
 export 'state/server_state.dart';
+export 'events/client_events.dart';
+export 'events/server_events.dart';
 export 'actions/client_actions.dart';
 export 'widgets/library_widgets.dart';
