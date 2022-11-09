@@ -317,8 +317,9 @@ class GameInventoryUI {
     final consumeType = ItemType.getConsumeType(itemType);
 
     return Positioned(
-      top:  Engine.mousePosition.y + 10,
-      left: max(10, min(Engine.mousePosition.x - 170, Engine.screen.width - 300)),
+      top:  Engine.mousePosition.y + 25,
+      left:  GameUI.mouseOverDialogTrade ? max(Engine.mousePosition.x - 100, 50) : null,
+      right: GameUI.mouseOverDialogInventory ? max((Engine.screen.width - Engine.mousePosition.x) - 100, 50) : null,
       child: Container(
         padding: const EdgeInsets.all(12),
         color: brownDark,
