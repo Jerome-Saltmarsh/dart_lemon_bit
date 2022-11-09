@@ -1,6 +1,5 @@
 
 export 'character.dart';
-export 'collectable.dart';
 export 'collider.dart';
 export 'components.dart';
 export 'game.dart';

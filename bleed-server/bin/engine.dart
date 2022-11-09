@@ -34,7 +34,6 @@ import 'dark_age/dark_age_environment.dart';
 import 'dark_age/game_dark_age.dart';
 import 'dark_age/game_dark_age_editor.dart';
 import 'io/read_scene_from_file.dart';
-import 'language.dart';
 
 final engine = Engine();
 
@@ -105,7 +104,7 @@ class Engine {
        }
     }
 
-    periodic(fixedUpdate, ms: 1000 ~/ framesPerSecond);
+    Timer.periodic(Duration(milliseconds: 1000 ~/ framesPerSecond), fixedUpdate);
   }
 
   void fixedUpdate(Timer timer) {
