@@ -247,17 +247,17 @@ class Player extends Character with ByteWriter {
 
   void inventoryDrop(int index) {
     assert (isValidInventoryIndex(index));
-    final itemType = inventoryGetItemTypeAtIndex(index);
+    final itemType = inventoryGetItemType(index);
     if (itemType == ItemType.Empty) return;
     game.spawnGameObjectItemAtPosition(
       position: this,
       type: itemType,
     );
-    inventorySet(itemType: ItemType.Empty, index: index);
+    inventorySetEmptyAtIndex(index);
     writePlayerEvent(PlayerEvent.Item_Dropped);
   }
 
-  int inventoryGetItemTypeAtIndex(int index){
+  int inventoryGetItemType(int index){
     assert (index >= 0);
     if (index == ItemType.Equipped_Weapon)
       return weaponType;
@@ -272,46 +272,83 @@ class Player extends Character with ByteWriter {
     return inventory[index];
   }
 
-  void inventorySetEmptyAtIndex(int index) =>
-    inventorySet(index: index, itemType: ItemType.Empty);
-
-  void inventorySet({required int index, required int itemType}){
+  int inventoryGetItemQuantity(int index){
     assert (index >= 0);
+
+    if (index == ItemType.Equipped_Weapon)
+      return weaponQuantity;
+    if (index == ItemType.Equipped_Body)
+      return bodyQuantity;
+    if (index == ItemType.Equipped_Head)
+      return headQuantity;
+    if (index == ItemType.Equipped_Legs)
+      return legsQuantity;
+
+    assert(index < inventoryQuantity.length);
+    return inventoryQuantity[index];
+  }
+
+  void inventorySetEmptyAtIndex(int index) =>
+    inventorySet(index: index, itemType: ItemType.Empty, quantity: 0);
+
+  void inventorySet({
+    required int index,
+    required int itemType,
+    required int quantity,
+    bool publish = true,
+  }){
+    assert (index >= 0);
+
     if (index == ItemType.Equipped_Weapon) {
       if (weaponType == itemType) return;
       weaponType = itemType;
-      writePlayerInventory();
+      weaponQuantity = quantity;
+      if (publish){
+        writePlayerInventory();
+      }
       game.setCharacterStateChanging(this);
       return;
     }
     if (index == ItemType.Equipped_Body) {
       if (bodyType == itemType) return;
       bodyType = itemType;
-      writePlayerInventory();
+      bodyQuantity = quantity;
+      if (publish){
+        writePlayerInventory();
+      }
       game.setCharacterStateChanging(this);
       return;
     }
     if (index == ItemType.Equipped_Head) {
       if (headType == itemType) return;
       headType = itemType;
-      writePlayerInventory();
+      headQuantity = quantity;
+      if (publish){
+        writePlayerInventory();
+      }
       game.setCharacterStateChanging(this);
       return;
     }
     if (index == ItemType.Equipped_Legs) {
       if (legsType == itemType) return;
       legsType = itemType;
-      writePlayerInventory();
+      legsQuantity = quantity;
+      if (publish){
+        writePlayerInventory();
+      }
       game.setCharacterStateChanging(this);
       return;
     }
     assert(index < inventory.length);
-    if (inventory[index] == itemType) return;
     inventory[index] = itemType;
-    writePlayerInventory();
+    inventoryQuantity[index] = quantity;
+    if (publish){
+      writePlayerInventory();
+    }
   }
 
   void inventoryMove(int indexFrom, int indexTo){
+    // inventorySwapIndexes(indexFrom, indexTo);
 
     if (indexFrom == ItemType.Equipped_Weapon) {
       if (indexTo >= inventory.length) return;
@@ -416,7 +453,6 @@ class Player extends Character with ByteWriter {
         inventory[indexTo] = legsType;
         legsType = ItemType.Empty;
         writePlayerInventory();
-        // writePlayerT(); TODO writePlayerHead()
         writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
         return;
       }
@@ -464,7 +500,7 @@ class Player extends Character with ByteWriter {
       break;
     }
   }
-  
+
   void inventoryUnequipHead(){
     if (headType == ItemType.Empty) return;
     final emptyIndex = getEmptyInventoryIndex();
@@ -474,7 +510,21 @@ class Player extends Character with ByteWriter {
     game.setCharacterStateChanging(this);
     writePlayerInventory();
   }
-  
+
+  void inventorySwapIndexes(int indexA, int indexB){
+    if (indexA == indexB) return;
+     assert (isValidInventoryIndex(indexA));
+     assert (isValidInventoryIndex(indexB));
+     final indexAType = inventoryGetItemType(indexA);
+     final indexBType = inventoryGetItemType(indexB);
+     final indexAQuantity = inventoryGetItemQuantity(indexA);
+     final indexBQuantity = inventoryGetItemQuantity(indexB);
+     inventorySet(index: indexA, itemType: indexBType, quantity: indexBQuantity, publish: false);
+     inventorySet(index: indexB, itemType: indexAType, quantity: indexAQuantity, publish: false);
+     writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
+     writePlayerInventory();
+  }
+
   void inventoryUnequipBody(){
     if (bodyType == ItemType.Empty) return;
     final emptyIndex = getEmptyInventoryIndex();
@@ -529,7 +579,7 @@ class Player extends Character with ByteWriter {
     if (ItemType.isTypeRecipe(itemType)){
 
        if (itemType == ItemType.Recipe_Staff_Of_Fire) {
-         inventorySet(itemType: ItemType.Weapon_Melee_Magic_Staff, index: index);
+         inventorySet(itemType: ItemType.Weapon_Melee_Magic_Staff, index: index, quantity: 1);
          writePlayerEventRecipeCrafted();
          return;
        }

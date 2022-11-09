@@ -501,7 +501,7 @@ class Connection {
         final index = int.tryParse(arguments[2]);
         if (index == null) return errorInvalidArg('index == null');
         if (index < 0) return errorInvalidArg('index < 0');
-        player.inventorySet(itemType: ItemType.Empty, index: index);
+        player.inventorySetEmptyAtIndex(index);
         player.writePlayerEvent(PlayerEvent.Item_Sold);
         break;
       case InventoryRequest.Toggle:
@@ -527,7 +527,8 @@ class Connection {
         if (indexTo == null) return errorInvalidArg('index from is null');
         if (indexFrom < 0) return errorInvalidArg('invalid inventory from index');
         if (indexTo < 0) return errorInvalidArg('invalid inventory to index');
-        player.inventoryMove(indexFrom, indexTo);
+        player.inventorySwapIndexes(indexFrom, indexTo);
+        // player.inventoryMove(indexFrom, indexTo);
         break;
       case InventoryRequest.Equip:
         final index = int.tryParse(arguments[2]);

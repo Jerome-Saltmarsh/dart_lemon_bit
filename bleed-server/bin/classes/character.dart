@@ -38,12 +38,18 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
   Position3? target;
   var invincible = false;
   // Weapon weapon;
-  var weaponType = ItemType.Empty;
   var weaponDurationRemaining = 0;
   var weaponState = AttackState.Idle;
+  var weaponType = ItemType.Empty;
   var bodyType = ItemType.Body_Shirt_Cyan;
   var headType = ItemType.Head_Steel_Helm;
   var legsType = ItemType.Legs_Blue;
+
+  var weaponQuantity = 0;
+  var bodyQuantity = 0;
+  var headQuantity = 0;
+  var legsQuantity = 0;
+
   int get weaponFrame => weaponDurationRemaining > 0 ? weaponDuration - weaponDurationRemaining : 0;
 
   var performX = 0.0;
