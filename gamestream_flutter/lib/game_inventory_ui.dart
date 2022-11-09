@@ -16,6 +16,8 @@ class GameInventoryUI {
   static final itemTypeHover = Watch(ItemType.Empty);
   static const Inventory_Width = Slot_Size * Slot_Scale * ColumnsPerRow;
 
+  static final atlasIconSlotEmpty = buildAtlasIconSlotEmpty();
+
   static Widget buildInventoryUI() =>
       GameUI.buildDialog(
         dialogType: DialogType.Inventory,
@@ -109,7 +111,6 @@ class GameInventoryUI {
         color: brownLight,
         width: Inventory_Width,
         height: 400,
-        // padding: const EdgeInsets.all(6),
         child: Stack(
           children: [
             buildStackSlotGrid(),
@@ -190,7 +191,7 @@ class GameInventoryUI {
   static Widget buildPositionedGridSlot(int i) =>
     buildPositionGridItem(
         index: i,
-        child: buildAtlasIconSlotEmpty()
+        child: atlasIconSlotEmpty,
     );
 
   static double getIndexX(int index) => getIndexColumn(index) * Scaled_Slot_Size;

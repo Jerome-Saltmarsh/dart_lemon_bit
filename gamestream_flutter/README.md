@@ -33,14 +33,11 @@
 [ ] improve grid invisibility
 [ ] recipes
 [ ] smith (for crafting recipes)
-[ ] item quantities
-[ ] gun-powder
-
-
-
-
+[ ] render item quantities in inventory dialog
 
 09.11.2022
+[x] item quantities
+[x] gun-powder
 [x] respawn dead enemies
 [x] merge game-object-types into item-type
 
