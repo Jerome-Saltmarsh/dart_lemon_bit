@@ -1267,14 +1267,25 @@ class Player extends Character with ByteWriter {
         if (inventoryQuantity[i] == 0) {
             inventorySetEmptyAtIndex(i);
         }
+        writePlayerInventorySlot(i);
         break;
       } else {
         amount -= quantity;
         inventorySetEmptyAtIndex(i);
         inventoryQuantity[i] = 0;
+        writePlayerInventorySlot(i);
       }
     }
     writePlayerEquippedWeaponAmmunition();
+  }
+
+  void writePlayerInventorySlot(int index) {
+     assert (isValidInventoryIndex(index));
+     writeByte(ServerResponse.Player);
+     writeByte(ApiPlayer.Inventory_Slot);
+     writeUInt16(index);
+     writeUInt16(inventoryGetItemType(index));
+     writeUInt16(inventoryGetItemQuantity(index));
   }
 
   bool get equippedWeaponUsesAmmunition => equippedWeaponAmmoConsumption > 0;
