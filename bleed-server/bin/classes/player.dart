@@ -252,6 +252,7 @@ class Player extends Character with ByteWriter {
     game.spawnGameObjectItemAtPosition(
       position: this,
       type: itemType,
+      quantity: inventoryGetItemQuantity(index),
     );
     inventorySetEmptyAtIndex(index);
     writePlayerEvent(PlayerEvent.Item_Dropped);

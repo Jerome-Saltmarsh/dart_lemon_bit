@@ -3,8 +3,9 @@ import 'library.dart';
 
 class GameObject extends Collider {
   var active = true;
-  int _type = 0;
-  int timer = 0;
+  var _type = 0;
+  var quantity = 0;
+  var timer = 0;
 
   int get type => _type;
   bool get collectable => _isCollectable;

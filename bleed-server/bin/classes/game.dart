@@ -1053,6 +1053,7 @@ abstract class Game {
              final emptyInventoryIndex = player.getEmptyInventoryIndex();
              if (emptyInventoryIndex != null){
                 player.inventory[emptyInventoryIndex] = target.type;
+                player.inventoryQuantity[emptyInventoryIndex] = target.quantity;
                 player.writePlayerInventory();
                 deactivateGameObject(target);
                 player.writePlayerEvent(PlayerEvent.Item_Picked_Up);
@@ -1569,25 +1570,32 @@ abstract class Game {
   void spawnGameObjectItemAtPosition({
     required Position3 position,
     required int type,
-  }){
-    spawnGameObjectItem(x: position.x, y: position.y, z: position.z, type: type);
-  }
+    int quantity = 1,
+  }) =>
+    spawnGameObjectItem(
+        x: position.x,
+        y: position.y,
+        z: position.z,
+        type: type,
+        quantity: quantity,
+    );
 
   void spawnGameObjectItem({
         required double x,
         required double y,
         required double z,
         required int type,
+        int quantity = 1,
   }){
     assert (type != ItemType.Empty);
     assert (type != ItemType.Equipped_Legs);
     assert (type != ItemType.Equipped_Body);
     assert (type != ItemType.Equipped_Head);
     assert (type != ItemType.Equipped_Weapon);
-    spawnGameObject(x: x, y: y, z: z, type: type);
+    spawnGameObject(x: x, y: y, z: z, type: type).quantity = quantity;
   }
 
-  void spawnGameObject({
+  GameObject spawnGameObject({
     required double x,
     required double y,
     required double z,
@@ -1601,16 +1609,17 @@ abstract class Game {
        gameObject.type = type;
        gameObject.active = true;
        gameObject.collidable = ItemType.isCollidable(type);
-       return;
+       return gameObject;
     }
-    gameObjects.add(
-        GameObject(
-          x: x,
-          y: y,
-          z: z,
-          type: type,
-        )..collidable = ItemType.isCollidable(type)
+    final instance = GameObject(
+      x: x,
+      y: y,
+      z: z,
+      type: type,
     );
+    instance.collidable = ItemType.isCollidable(type);
+    gameObjects.add(instance);
+    return instance;
   }
 
   Zombie spawnZombie({
