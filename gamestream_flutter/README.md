@@ -34,9 +34,12 @@
 [ ] improve grid invisibility
 [ ] recipes
 [ ] smith (for crafting recipes)
-[ ] dropped gameobject quantity
+
+[current]
+[ ] item cost
 
 09.11.2022
+[x] dropped gameobject quantity
 [x] render item quantities in inventory dialog
 [x] item quantities
 [x] gun-powder

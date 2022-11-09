@@ -62,8 +62,6 @@ abstract class Game {
   void customOnNpcObjectivesCompleted(Character npc) { }
   /// safe to overridable
   void customOnPlayerLevelGained(Player player) { }
-  /// safe to overridable
-  void customOnPlayerAddCardToDeck(Player player, CardType cardType) { }
   /// safe to override
   void customOnCollisionBetweenColliders(Collider a, Collider b) { }
   /// safe to override

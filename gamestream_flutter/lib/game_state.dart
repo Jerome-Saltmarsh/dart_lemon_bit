@@ -807,30 +807,6 @@ class GameState {
     effect.enabled = true;
   }
 
-  static void spawnParticleOrb(OrbType type, double x, double y) {
-    spawnParticle(
-      type: ParticleType.Orb_Ruby,
-      x: x,
-      y: y,
-      z: 0.5,
-      angle: 0,
-      speed: 0,
-      zv: 0.05,
-      weight: 0.0,
-      duration: 50,
-      rotation: randomAngle(),
-      rotationV: 0,
-      scale: 0.3,
-    );
-  }
-
-  static void freezeCircle({
-    required double x,
-    required double y
-  }){
-    spawnEffect(x: x, y: y, type: EffectType.FreezeCircle, duration: 45);
-  }
-
   static void spawnParticleOrbShard({
     required double x,
     required double y,

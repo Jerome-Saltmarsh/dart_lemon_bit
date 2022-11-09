@@ -1,6 +1,5 @@
 library game_classes;
 
-export 'ability.dart';
 export 'audio_loop.dart';
 export 'audio_loop.dart';
 export 'character.dart';
