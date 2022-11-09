@@ -329,7 +329,11 @@ class GameInventoryUI {
               buildContainerRecipe(itemType),
 
             height16,
-            text("left click to ${GameUI.mouseOverDialogInventory ? 'equip' : 'buy'}", color: GameColors.inventoryHint),
+
+            if (GameUI.mouseOverDialogTrade)
+              text("left click to buy", color: GameColors.inventoryHint),
+            if (GameUI.mouseOverDialogInventory && ItemType.isTypeEquippable(itemType))
+              text("left click to equip", color: GameColors.inventoryHint),
             if (GamePlayer.interactModeTrading && GameUI.mouseOverDialogInventory)
               text("right click to sell", color: GameColors.inventoryHint),
             if (!GamePlayer.interactModeTrading && GameUI.mouseOverDialogInventory)

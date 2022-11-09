@@ -34,6 +34,7 @@ class GameUI {
   static const TouchButtonSideRight = true;
 
   static bool get mouseOverDialogInventory => mouseOverDialogType.value == DialogType.Inventory;
+  static bool get mouseOverDialogTrade => mouseOverDialogType.value == DialogType.Trade;
 
   static Widget buildUI()  =>
       StackFullscreen(

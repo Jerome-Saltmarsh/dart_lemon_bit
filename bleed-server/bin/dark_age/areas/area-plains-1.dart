@@ -68,6 +68,8 @@ class AreaPlains1 extends DarkAgeArea {
                  player.setStoreItems(const [
                     ItemType.Legs_Brown,
                     ItemType.Legs_Blue,
+                    ItemType.Resource_Gun_Powder,
+                    ItemType.Resource_Arrow,
                  ]);
                },
                'never mind': player.endInteraction

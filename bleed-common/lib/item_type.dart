@@ -18,6 +18,12 @@ class ItemType {
     value == Equipped_Legs ||
     value == Equipped_Weapon;
 
+  static bool isTypeEquippable(int value) =>
+      isTypeBody(value) ||
+      isTypeHead(value) ||
+      isTypeLegs(value) ||
+      isTypeWeapon(value);
+
   static bool isTypeConsumable(int value) =>
       value >= Index_Consumables && value < Index_GameObjects;
 
@@ -206,7 +212,9 @@ class ItemType {
      Resource_Wood: "Wood",
      Resource_Iron: "Iron",
      Resource_Stone: "Stone",
+     Resource_Gold: "Gold",
      Resource_Gun_Powder: "Gun-Powder",
+     Resource_Arrow: "Arrow",
      Head_Wizards_Hat: "Wizards Hat",
      Head_Steel_Helm: "Steel Helm",
      Head_Rogues_Hood: "Rogues Hood",
