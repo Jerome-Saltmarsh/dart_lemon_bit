@@ -107,7 +107,7 @@ Widget buildEditorSelectedNode() =>
                   height: 72,
                   width: 72,
                   alignment: Alignment.center,
-                  child: watch(GameEditor.nodeSelectedType, EditorUI.buildIconNodeType)
+                  child: watch(GameEditor.nodeSelectedType, GameUI.buildAtlasNodeType)
               ),
               buildPositionedIconArrow(
                 top: 50 + _shiftY,

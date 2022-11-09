@@ -284,24 +284,33 @@ class GameUI {
           child: buildAtlasIconType(IconType.Home)
       );
 
-  static Widget buildAtlasIconType(int type, {double scale = 1}) =>
+  static Widget buildAtlasIconType(int iconType, {double scale = 1}) =>
       Engine.buildAtlasImage(
         image: GameImages.atlasIcons,
-        srcX: AtlasIcons.getSrcX(type),
-        srcY: AtlasIcons.getSrcY(type),
-        srcWidth: AtlasIcons.getSize(type),
-        srcHeight: AtlasIcons.getSize(type),
+        srcX: AtlasIcons.getSrcX(iconType),
+        srcY: AtlasIcons.getSrcY(iconType),
+        srcWidth: AtlasIcons.getSize(iconType),
+        srcHeight: AtlasIcons.getSize(iconType),
         scale: scale,
       );
 
-  static Widget buildAtlasItemType(int type, {double scale = 1}) =>
+  static Widget buildAtlasItemType(int itemType, {double scale = 1}) =>
       Engine.buildAtlasImage(
         image: GameImages.atlasItems,
-        srcX: AtlasItems.getSrcX(type),
-        srcY: AtlasItems.getSrcY(type),
+        srcX: AtlasItems.getSrcX(itemType),
+        srcY: AtlasItems.getSrcY(itemType),
         srcWidth: AtlasItems.size,
         srcHeight: AtlasItems.size,
         scale: scale,
+      );
+
+  static Widget buildAtlasNodeType(int nodeType) =>
+      Engine.buildAtlasImage(
+        image: GameImages.atlasNodes,
+        srcX: AtlasNodeX.mapNodeType(nodeType),
+        srcY: AtlasNodeY.mapNodeType(nodeType),
+        srcWidth: AtlasNodeWidth.mapNodeType(nodeType),
+        srcHeight: AtlasNodeHeight.mapNodeType(nodeType),
       );
 
   static Widget buildDialog({required Widget child, required int dialogType}) =>

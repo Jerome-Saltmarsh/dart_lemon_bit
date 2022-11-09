@@ -26,6 +26,7 @@
 [ ] add mobile share (whatsapp, facebook) button
 [ ] fix character state changing
 [ ] highlight cursor gameobject item
+[ ] refactor AtlasNodeX.mapNodeType(nodeType),
 
 [Morning-Tasks]
 [ ] experience

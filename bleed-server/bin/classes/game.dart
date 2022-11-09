@@ -260,6 +260,15 @@ abstract class Game {
   void playerUseWeapon(Player player) {
     if (player.deadBusyOrUsingWeapon) return;
 
+    if (player.equippedWeaponUsesAmmunition){
+      if (player.sufficientAmmunition){
+        player.consumeAmmunition();
+      } else {
+        // TODO player.insufficientGunPowder
+        return;
+      }
+    }
+
     final weaponType = player.weaponType;
     player.weaponDurationRemaining = ItemType.getCooldown(weaponType);
 
@@ -268,14 +277,7 @@ abstract class Game {
       return;
     }
 
-    if (player.equippedWeaponAmmunitionType != ItemType.Empty){
-      if (player.equippedWeaponAmmunitionQuantity > 0){
-        player.consumeAmmunition();
-      } else {
-        // TODO player.insufficientGunPowder
-        return;
-      }
-    }
+
 
     switch (weaponType) {
       case ItemType.Weapon_Ranged_Crossbow:

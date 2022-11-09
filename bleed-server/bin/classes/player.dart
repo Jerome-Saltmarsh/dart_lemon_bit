@@ -1205,16 +1205,34 @@ class Player extends Character with ByteWriter {
   void consumeAmmunition() {
     final ammunitionType = equippedWeaponAmmunitionType;
     if (ammunitionType == ItemType.Empty) return;
+    var amount = ItemType.getWeaponAmmunitionConsumption(weaponType);
+    if (amount == 0) return;
+    assert (amount <= equippedWeaponAmmunitionQuantity);
+
     for (var i = 0; i < inventory.length; i++){
-        if (inventory[i] != ammunitionType) continue;
-        inventoryQuantity[i]--;
-        if (inventoryQuantity[i] > 0) continue;
+      if (inventory[i] != ammunitionType) continue;
+      final quantity = inventoryQuantity[i];
+      if (quantity >= amount){
+        inventoryQuantity[i] -= amount;
+        if (inventoryQuantity[i] == 0) {
+            inventorySetEmptyAtIndex(i);
+        }
+        break;
+      } else {
+        amount -= quantity;
         inventorySetEmptyAtIndex(i);
+        inventoryQuantity[i] = 0;
+      }
     }
     writePlayerEquippedWeaponAmmunition();
   }
 
+  bool get equippedWeaponUsesAmmunition => equippedWeaponAmmoConsumption > 0;
+  int get equippedWeaponAmmoConsumption => ItemType.getWeaponAmmunitionConsumption(weaponType);
   int get equippedWeaponAmmunitionType => ItemType.getWeaponAmmunitionType(weaponType);
+
+  bool get sufficientAmmunition =>
+    equippedWeaponAmmunitionQuantity >= equippedWeaponAmmoConsumption;
 
   int get equippedWeaponAmmunitionQuantity {
     var total = 0;
