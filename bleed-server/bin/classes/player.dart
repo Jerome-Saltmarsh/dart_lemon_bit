@@ -22,7 +22,7 @@ class Player extends Character with ByteWriter {
   final runTarget = Position3();
   late Function sendBufferToClient;
   GameObject? editorSelectedGameObject;
-  var gold = 0;
+  var _gold = 0;
   var debug = false;
   var characterState = CharacterState.Idle;
   var framesSinceClientRequest = 0;
@@ -48,6 +48,14 @@ class Player extends Character with ByteWriter {
   Account? account;
 
   Collider? get aimTarget => _aimTarget;
+
+  int get gold => _gold;
+
+  set gold(int value) {
+     if (_gold == value) return;
+     _gold = value;
+     writePlayerGold();
+  }
 
   set aimTarget(Collider? collider) {
     if (_aimTarget == collider) return;
@@ -288,6 +296,28 @@ class Player extends Character with ByteWriter {
 
     assert(index < inventoryQuantity.length);
     return inventoryQuantity[index];
+  }
+
+  void writeError(String error){
+
+  }
+
+  void inventorySell(int index) {
+    if (interactMode != InteractMode.Trading) {
+      writeError('player.inventorySell($index) - interactMode != InteractMode.Trading');
+    }
+    if (!isValidInventoryIndex(index)) {
+       writeError('player.inventorySell($index) invalid index');
+       return;
+    }
+    final itemType = inventoryGetItemType(index);
+    if (itemType == ItemType.Empty) {
+      writeError('player.inventorySell($index) itemType == ItemType.Empty');
+      return;
+    }
+    inventorySetEmptyAtIndex(index);
+    writePlayerEvent(PlayerEvent.Item_Sold);
+    gold += ItemType.getSellPrice(itemType);
   }
 
   void inventorySetEmptyAtIndex(int index) =>
@@ -1113,6 +1143,12 @@ class Player extends Character with ByteWriter {
     writeByte(previousType);
     writeByte(previousOrientation);
     writeUInt16(count);
+  }
+
+  void writePlayerGold(){
+    writeByte(ServerResponse.Player);
+    writeByte(ApiPlayer.Gold);
+    writeUInt16(gold);
   }
 
   void writePlayerInventory() {

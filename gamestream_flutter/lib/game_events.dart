@@ -500,7 +500,7 @@ class GameEvents {
         break;
       case InteractMode.None:
         GameCamera.translateX = 0;
-        GameInventoryUI.itemTypeHover.value = ItemType.Empty;
+        ClientState.itemTypeHover.value = ItemType.Empty;
         GameUI.mouseOverDialogType.value = DialogType.None;
         break;
     }

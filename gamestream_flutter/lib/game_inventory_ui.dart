@@ -12,9 +12,8 @@ class GameInventoryUI {
   static const Scaled_Slot_Size = Slot_Size * Slot_Scale;
   static const Slot_Item_Scale = Slot_Scale * 0.9;
   static const Equipped_Item_Scale = Slot_Scale * Engine.GoldenRatio_1_618;
-  static const ColumnsPerRow = 7;
-  static final itemTypeHover = Watch(ItemType.Empty);
-  static const Inventory_Width = Slot_Size * Slot_Scale * ColumnsPerRow;
+  static const Columns_Per_Row = 7;
+  static const Inventory_Width = Slot_Size * Slot_Scale * Columns_Per_Row;
 
   static final atlasIconSlotEmpty = buildAtlasIconSlotEmpty();
 
@@ -28,20 +27,21 @@ class GameInventoryUI {
             children: [
               buildContainerEquippedItems(),
               buildContainerInventory(),
-              Container(
-                padding: const EdgeInsets.all(16),
-                alignment: Alignment.centerLeft,
-                child: watch(ServerState.playerGold, (int gold) => text("Gold $gold")),
-              )
+              buildContainerPlayerGold()
             ],
           ),
         ),
       );
 
+  static Container buildContainerPlayerGold() =>
+      Container(
+        padding: const EdgeInsets.all(16),
+        alignment: Alignment.centerLeft,
+        child: watch(ServerState.playerGold, (int gold) => text("Gold $gold")),
+      );
+
   static Widget buildContainerEquippedItems() => Container(
-        // width: Inventory_Width,
         height: 80.0,
-        // color: brownDark,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -104,11 +104,11 @@ class GameInventoryUI {
       onEnter: (event){
         Engine.mousePosition.x = event.position.dx;
         Engine.mousePosition.y = event.position.dy;
-        itemTypeHover.value = itemType;
+        ClientState.itemTypeHover.value = itemType;
       },
       onExit: (_){
-        if (itemTypeHover.value == itemType){
-          itemTypeHover.value = ItemType.Empty;
+        if (ClientState.itemTypeHover.value == itemType){
+          ClientState.itemTypeHover.value = ItemType.Empty;
         }
       },
       child: buildItemTypeAtlasImage(itemType: itemType, scale: scale),
@@ -161,11 +161,11 @@ class GameInventoryUI {
           onEnter: (event){
             Engine.mousePosition.x = event.position.dx;
             Engine.mousePosition.y = event.position.dy;
-            itemTypeHover.value = itemType;
+            ClientState.itemTypeHover.value = itemType;
           },
           onExit: (_){
-            if (itemTypeHover.value == itemType){
-               itemTypeHover.value = ItemType.Empty;
+            if (ClientState.itemTypeHover.value == itemType){
+              ClientState.itemTypeHover.value = ItemType.Empty;
             }
           },
           child: Draggable<int>(
@@ -218,9 +218,9 @@ class GameInventoryUI {
 
   static double getIndexY(int index) => getIndexRow(index) * Scaled_Slot_Size;
 
-  static int getIndexRow(int index) => index ~/ ColumnsPerRow;
+  static int getIndexRow(int index) => index ~/ Columns_Per_Row;
 
-  static int getIndexColumn(int index) =>  index % ColumnsPerRow;
+  static int getIndexColumn(int index) =>  index % Columns_Per_Row;
 
   static Widget buildPositionGridElement({
     required int index,

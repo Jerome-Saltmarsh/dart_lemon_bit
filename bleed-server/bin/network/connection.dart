@@ -497,16 +497,10 @@ class Connection {
         player.writePlayerEvent(PlayerEvent.Item_Purchased);
         break;
       case InventoryRequest.Sell:
-        if (player.interactMode != InteractMode.Trading) return;
         final index = int.tryParse(arguments[2]);
         if (index == null) return errorInvalidArg('index == null');
         if (index < 0) return errorInvalidArg('index < 0');
-        if (!player.isValidInventoryIndex(index)) return errorInvalidArg('invalid inventory index: $index');
-        final itemType = player.inventoryGetItemType(index);
-        if (itemType == ItemType.Empty) return errorInvalidArg('InventoryRequest.Sell: itemType == ItemType.Empty');
-        player.inventorySetEmptyAtIndex(index);
-        player.writePlayerEvent(PlayerEvent.Item_Sold);
-        player.gold += ItemType.getSellPrice(itemType);
+        player.inventorySell(index);
         break;
       case InventoryRequest.Toggle:
         if (player.interactMode != InteractMode.None){

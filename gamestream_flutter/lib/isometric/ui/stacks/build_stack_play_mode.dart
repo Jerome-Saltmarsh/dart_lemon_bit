@@ -10,7 +10,7 @@ Widget buildStackPlay() =>
   buildPage(
     children: [
       GameUIInteract.buildWatchInteractMode(),
-      watch(GameInventoryUI.itemTypeHover, GameInventoryUI.buildPositionedContainerItemTypeInformation),
+      watch(ClientState.itemTypeHover, GameInventoryUI.buildPositionedContainerItemTypeInformation),
       GameUI.buildWatchPlayerAmmunition(),
     ]
   );
