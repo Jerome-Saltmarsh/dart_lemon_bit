@@ -313,11 +313,21 @@ class GameInventoryUI {
       child: Container(
         padding: const EdgeInsets.all(12),
         color: brownDark,
+        constraints: BoxConstraints(
+          maxWidth: 400,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            text(ItemType.getGroupTypeName(itemType), color: Colors.blue),
-            text(ItemType.getName(itemType)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(child: text(ItemType.getName(itemType), color: Colors.blue)),
+                if (GameUI.mouseOverDialogTrade)
+                  text("${ItemType.getBuyPrice(itemType)} Gold", color: GameColors.yellowDark),
+              ],
+            ),
+            text('type: ${ItemType.getGroupTypeName(itemType)}'),
             text('Damage: ${ItemType.getDamage(itemType)}'),
             text('Range: ${ItemType.getRange(itemType).toInt()}'),
             text('Cooldown: ${ItemType.getCooldown(itemType).toInt()}'),

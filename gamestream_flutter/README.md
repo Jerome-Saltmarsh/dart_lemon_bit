@@ -34,6 +34,7 @@
 [ ] improve grid invisibility
 [ ] recipes
 [ ] smith (for crafting recipes)
+[ ] consume food to heal
 
 [current]
 [ ] item cost

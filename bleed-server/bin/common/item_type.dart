@@ -18,6 +18,10 @@ class ItemType {
     value == Equipped_Legs ||
     value == Equipped_Weapon;
 
+  static int getBuyPrice(int itemType) {
+      return 100;
+  }
+
   static bool isTypeEquippable(int value) =>
       isTypeBody(value) ||
       isTypeHead(value) ||

@@ -31,8 +31,6 @@ class GameColors {
   static final Color redDark1 = Color.fromRGBO(92, 30, 55, 1);
   static final Color redDark = Color.fromRGBO(179, 56, 49, 1);
 
-  //static final Color redWhite = Color.fromRGBO(244, 166, 154, 1.0);
-  //static final Color redWhite = Color.fromRGBO(242, 155, 172, 1.0);
   static final Color redWhite = Color.fromRGBO(255, 192, 171, 1.0);
   static final Color red = Color.fromRGBO(234, 79, 54, 1.0);
   static final Color orange = Color.fromRGBO(247, 150, 23, 1);
