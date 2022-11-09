@@ -114,7 +114,7 @@ class GameInventoryUI {
         child: Stack(
           children: [
             buildStackSlotGrid(),
-            watch(GameInventory.reads, buildStackInventoryItems),
+            watch(ClientState.inventoryReads, buildStackInventoryItems),
           ],
         ),
       );

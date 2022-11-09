@@ -247,7 +247,7 @@ class ServerResponseReader with ByteReader {
         final itemQuantity = readUInt16();
         GamePlayer.inventory[index] = itemType;
         GamePlayer.inventoryQuantity[index] = itemQuantity;
-        GameInventory.updateUI();
+        ClientActions.redrawInventory();
         break;
       case ApiPlayer.Message:
        GameState.player.message.value = readString();
@@ -280,7 +280,7 @@ class ServerResponseReader with ByteReader {
     for (var i = 0; i < total; i++){
       GamePlayer.inventoryQuantity[i] = readUInt16();
     }
-    GameInventory.updateUI();
+    ClientActions.redrawInventory();
   }
 
   void readGameObjectStatic() {
