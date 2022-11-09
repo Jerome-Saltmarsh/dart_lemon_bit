@@ -16,6 +16,7 @@ class ApiPlayer {
   static const Aim_Target_Category = 22;
   static const Aim_Target_Position = 23;
   static const Aim_Target_Type = 24;
+  static const Aim_Target_Quantity = 25;
   static const Aim_Target_Name = 26;
   static const Target_Category = 27;
   static const Target_Position = 28;

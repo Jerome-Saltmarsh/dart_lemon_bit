@@ -32,7 +32,9 @@ class GameCanvas {
         break;
       case TargetCategory.Item:
         Engine.renderText(
-          ItemType.getName(GamePlayer.aimTargetType),
+          GamePlayer.aimTargetQuantity > 1
+              ? '${ItemType.getName(GamePlayer.aimTargetType)} x${GamePlayer.aimTargetQuantity}'
+              : ItemType.getName(GamePlayer.aimTargetType),
           Engine.worldToScreenX(GamePlayer.aimTargetPosition.renderX),
           Engine.worldToScreenY(GamePlayer.aimTargetPosition.renderY),
           style: style,

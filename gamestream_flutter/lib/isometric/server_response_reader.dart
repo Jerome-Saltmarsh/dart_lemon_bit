@@ -191,6 +191,9 @@ class ServerResponseReader with ByteReader {
       case ApiPlayer.Aim_Target_Type:
         GamePlayer.aimTargetType = readUInt16();
         break;
+      case ApiPlayer.Aim_Target_Quantity:
+        GamePlayer.aimTargetQuantity = readUInt16();
+        break;
       case ApiPlayer.Equipped_Weapon_Ammunition:
         ServerState.playerEquippedWeaponAmmunitionType.value = readUInt16();
         ServerState.playerEquippedWeaponAmmunitionQuantity.value = readUInt16();

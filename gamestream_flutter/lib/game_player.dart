@@ -15,6 +15,7 @@ class GamePlayer {
   static var aimTargetCategory = TargetCategory.Nothing;
   static var aimTargetType = 0;
   static var aimTargetName = "";
+  static var aimTargetQuantity = 0;
   static var aimTargetPosition = Vector3();
   static final storeItems = Watch(<int>[], onChanged: GameEvents.onChangedPlayerStoreItems);
 

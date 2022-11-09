@@ -57,6 +57,7 @@ class Player extends Character with ByteWriter {
     writePlayerAimTargetType();
     writePlayerAimTargetPosition();
     writePlayerAimTargetName();
+    writePlayerAimTargetQuantity();
   }
 
   static const InventorySize = 40;
@@ -853,17 +854,19 @@ class Player extends Character with ByteWriter {
       writeByte(ServerResponse.Player);
       writeByte(ApiPlayer.Aim_Target_Type);
       writeUInt16((aimTarget as GameObject).type);
-       // if ((aimTarget as GameObject).isItem) {
-       //
-       //    writeUInt16((aimTarget as GameObject).subType);
-       // } else {
-       //
-       // }
     }
     if (aimTarget is Character) {
       writeByte(ServerResponse.Player);
       writeByte(ApiPlayer.Aim_Target_Type);
       writeUInt16((aimTarget as Character).type);
+    }
+  }
+
+  void writePlayerAimTargetQuantity() {
+    if (aimTarget is GameObject) {
+      writeByte(ServerResponse.Player);
+      writeByte(ApiPlayer.Aim_Target_Quantity);
+      writeUInt16((aimTarget as GameObject).quantity);
     }
   }
 
