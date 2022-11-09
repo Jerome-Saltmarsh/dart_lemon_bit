@@ -44,6 +44,7 @@ class GameAudio {
     AudioLoop(name: 'stream', getTargetVolume: getVolumeStream),
   ];
 
+  static final errorSound15 = AudioSingle(name: 'error-sound-15', volume: 0.5, maxDistance: 100);
   static final popSounds14 = AudioSingle(name: 'pop-sounds-14', volume: 0.5, maxDistance: 100);
   static final coins_24 = AudioSingle(name: 'coins-24', volume: 0.5, maxDistance: 100);
   static final hoverOverButtonSound5 = AudioSingle(name: 'hover-over-button-sound-5', volume: 0.5, maxDistance: 100);

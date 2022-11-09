@@ -37,7 +37,12 @@
 [ ] consume food to heal
 
 [current]
-[ ] item cost
+[ ] item sell
+[ ] item buy
+
+10.11.2022
+[x] prevent item-type information panel from going off screen
+[x] player gold
 
 09.11.2022
 [x] dropped gameobject quantity

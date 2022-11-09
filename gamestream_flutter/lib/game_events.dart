@@ -378,6 +378,15 @@ class GameEvents {
         GameCamera.centerOnPlayer();
         GameIO.recenterCursor();
         break;
+      case PlayerEvent.Insufficient_Gold:
+        GameAudio.errorSound15();
+        break;
+      case PlayerEvent.Inventory_Full:
+        GameAudio.errorSound15();
+        break;
+      case PlayerEvent.Invalid_Request:
+        GameAudio.errorSound15();
+        break;
     }
   }
 

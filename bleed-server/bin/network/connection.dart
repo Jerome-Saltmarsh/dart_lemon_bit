@@ -483,23 +483,13 @@ class Connection {
 
     switch (inventoryRequest) {
       case InventoryRequest.Buy:
-        if (player.interactMode != InteractMode.Trading) return;
         final index = int.tryParse(arguments[2]);
         if (index == null) return errorInvalidArg('index == null');
-        if (index < 0) return errorInvalidArg('index < 0');
-        if (index >= player.storeItems.length) return errorInvalidArg('index >= player.storeItems.length');
-        final emptyInventoryIndex = player.getEmptyInventoryIndex();
-        if (emptyInventoryIndex == null) return errorInvalidArg('inventory full');
-        final itemType = player.storeItems[index];
-        if (itemType == ItemType.Empty) return;
-        player.inventory[emptyInventoryIndex] = itemType;
-        player.writePlayerInventory();
-        player.writePlayerEvent(PlayerEvent.Item_Purchased);
+        player.inventoryBuy(index);
         break;
       case InventoryRequest.Sell:
         final index = int.tryParse(arguments[2]);
         if (index == null) return errorInvalidArg('index == null');
-        if (index < 0) return errorInvalidArg('index < 0');
         player.inventorySell(index);
         break;
       case InventoryRequest.Toggle:

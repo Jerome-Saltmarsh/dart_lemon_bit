@@ -53,7 +53,7 @@ class Player extends Character with ByteWriter {
 
   set gold(int value) {
      if (_gold == value) return;
-     _gold = value;
+     _gold = clamp(value, 0, 65000);
      writePlayerGold();
   }
 
@@ -302,17 +302,50 @@ class Player extends Character with ByteWriter {
 
   }
 
+  void inventoryBuy(int index){
+    if (interactMode != InteractMode.Trading) {
+      writePlayerEventInvalidRequest();
+      return;
+    }
+    if (index < 0) {
+      writePlayerEventInvalidRequest();
+      return;
+    }
+    if (index >= storeItems.length) {
+      writePlayerEventInvalidRequest();
+      return;
+    }
+    final emptyInventoryIndex = getEmptyInventoryIndex();
+    if (emptyInventoryIndex == null) {
+      writePlayerEvent(PlayerEvent.Inventory_Full);
+      return;
+    }
+    final itemType = storeItems[index];
+    if (itemType == ItemType.Empty) {
+      writePlayerEventInvalidRequest();
+      return;
+    }
+    if (ItemType.getBuyPrice(itemType) > gold) {
+      writePlayerEvent(PlayerEvent.Insufficient_Gold);
+      return;
+    }
+    inventory[emptyInventoryIndex] = itemType;
+    writePlayerInventory();
+    writePlayerEvent(PlayerEvent.Item_Purchased);
+  }
+
   void inventorySell(int index) {
     if (interactMode != InteractMode.Trading) {
-      writeError('player.inventorySell($index) - interactMode != InteractMode.Trading');
+      writePlayerEventInvalidRequest();
+      return;
     }
     if (!isValidInventoryIndex(index)) {
-       writeError('player.inventorySell($index) invalid index');
-       return;
+      writePlayerEventInvalidRequest();
+      return;
     }
     final itemType = inventoryGetItemType(index);
     if (itemType == ItemType.Empty) {
-      writeError('player.inventorySell($index) itemType == ItemType.Empty');
+      writePlayerEventInvalidRequest();
       return;
     }
     inventorySetEmptyAtIndex(index);
@@ -990,6 +1023,9 @@ class Player extends Character with ByteWriter {
 
   void writePlayerEventRecipeCrafted() =>
     writePlayerEvent(PlayerEvent.Recipe_Crafted);
+
+  void writePlayerEventInvalidRequest() =>
+    writePlayerEvent(PlayerEvent.Invalid_Request);
 
   void writePlayerEvent(int value){
     writeByte(ServerResponse.Player_Event);

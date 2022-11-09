@@ -29,4 +29,7 @@ class PlayerEvent {
   static const Inventory_Item_Moved = 28;
   static const Item_Picked_Up = 29;
   static const Recipe_Crafted = 30;
+  static const Insufficient_Gold = 31;
+  static const Inventory_Full = 32;
+  static const Invalid_Request = 33;
 }
