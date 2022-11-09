@@ -16,9 +16,8 @@ Widget buildControlPlayerHealth() {
     child: WatchBuilder(ServerState.playerHealth, (int health) {
 
       final maxHealth = ServerState.playerMaxHealth;
-      if (maxHealth <= 0) return empty;
-
-      final percentage = health / maxHealth;
+      if (maxHealth.value <= 0) return empty;
+      final percentage = health / maxHealth.value;
       return Container(
         width: width,
         height: height,

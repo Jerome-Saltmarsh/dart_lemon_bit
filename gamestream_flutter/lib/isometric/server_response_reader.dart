@@ -212,7 +212,7 @@ class ServerResponseReader with ByteReader {
         ServerState.playerHealth.value = readInt();
         break;
       case ApiPlayer.Max_Health:
-        ServerState.playerMaxHealth = readInt();
+        ServerState.playerMaxHealth.value = readInt();
         break;
       case ApiPlayer.Weapon_Cooldown:
         GameState.player.weaponCooldown.value = readPercentage();

@@ -35,24 +35,20 @@ class GameUI {
 
   static bool get mouseOverDialogInventory => mouseOverDialogType.value == DialogType.Inventory;
 
-  static Widget build()  =>
-      Container(
-        width: Engine.screen.width,
-        height: Engine.screen.height,
-        child: Stack(
-          children: [
-            watch(GameState.player.message, buildPlayerMessage),
-            buildWatchBool(GameState.triggerAlarmNoMessageReceivedFromServer, buildDialogFramesSinceUpdate),
-            watch(GameState.gameType, buildGameTypeUI),
-            watch(GameState.player.gameDialog, buildGameDialog),
-            buildWatchBool(GameState.player.alive, buildContainerRespawn, false),
-            buildTopRightMenu(),
-            buildWatchBool(GameUI.mapVisible, buildMiniMap),
-            watch(GameState.edit, buildPlayMode),
-            watch(GameIO.inputMode, buildStackInputMode),
-            buildWatchBool(GameState.debugVisible, GameDebug.buildStackDebug),
-          ],
-        ),
+  static Widget buildUI()  =>
+      StackFullscreen(
+        children: [
+          watch(GameState.player.message, buildPlayerMessage),
+          buildWatchBool(GameState.triggerAlarmNoMessageReceivedFromServer, buildDialogFramesSinceUpdate),
+          // watch(GameState.gameType, buildGameTypeUI),
+          watch(GameState.player.gameDialog, buildGameDialog),
+          buildWatchBool(GameState.player.alive, buildContainerRespawn, false),
+          buildTopRightMenu(),
+          buildWatchBool(GameUI.mapVisible, buildMiniMap),
+          watch(GameState.edit, buildPlayMode),
+          watch(GameIO.inputMode, buildStackInputMode),
+          buildWatchBool(GameState.debugVisible, GameDebug.buildStackDebug),
+        ]
       );
 
   static Widget buildStackInputModeTouch(bool side) =>
@@ -228,6 +224,21 @@ class GameUI {
 
   static Positioned buildTopRightMenu() =>
       Positioned(top: 0, right: 0, child: buildPanelMenu());
+
+  static Widget buildWatchPlayerAmmunition(){
+    return watch(ServerState.playerEquippedWeaponAmmunitionType, (int ammunitionType) {
+      if (ammunitionType == ItemType.Empty) return const SizedBox();
+      return Positioned(
+        bottom: 12,
+        right: 12,
+        child: Row(children: [
+          watch(ServerState.playerEquippedWeaponAmmunitionType, GameUI.buildAtlasItemType),
+          width4,
+          watch(ServerState.playerEquippedWeaponAmmunitionQuantity, text),
+        ]),
+      );
+    });
+  }
 
   static Widget buildControlsEnvironment() =>
     visibleBuilder(

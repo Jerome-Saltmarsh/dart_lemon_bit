@@ -5,7 +5,7 @@ class ServerState {
   static final playerHealth = Watch(0);
   static final playerEquippedWeaponAmmunitionType = Watch(0);
   static final playerEquippedWeaponAmmunitionQuantity = Watch(0);
-  static var playerMaxHealth = 0;
+  static final playerMaxHealth = Watch(0);
 }
 
 

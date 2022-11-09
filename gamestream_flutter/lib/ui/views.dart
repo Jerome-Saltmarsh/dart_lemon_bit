@@ -36,7 +36,7 @@ Widget buildErrorDialog(String message, {Widget? bottomRight}){
 Widget buildConnection(ConnectionStatus connection) {
   switch (connection) {
     case ConnectionStatus.Connected:
-      return GameUI.build();
+      return GameUI.buildUI();
     case ConnectionStatus.Connecting:
       return GameWebsite.buildPageConnectionStatus(connection.name);
     default:

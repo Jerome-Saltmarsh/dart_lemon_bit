@@ -11,18 +11,7 @@ Widget buildStackPlay() =>
     children: [
       GameUIInteract.buildWatchInteractMode(),
       watch(GameInventoryUI.itemTypeHover, GameInventoryUI.buildPositionedContainerItemTypeInformation),
-      watch(ServerState.playerEquippedWeaponAmmunitionType, (int ammunitionType) {
-         if (ammunitionType == ItemType.Empty) return const SizedBox();
-         return Positioned(
-           bottom: 12,
-           right: 12,
-           child: Row(children: [
-             watch(ServerState.playerEquippedWeaponAmmunitionType, GameUI.buildAtlasItemType),
-             width4,
-             watch(ServerState.playerEquippedWeaponAmmunitionQuantity, text),
-           ]),
-         );
-      }),
+      GameUI.buildWatchPlayerAmmunition(),
     ]
   );
 

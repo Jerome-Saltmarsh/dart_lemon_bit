@@ -49,3 +49,4 @@ export 'dart:typed_data';
 export 'game_inventory_ui.dart';
 export 'state/client_state.dart';
 export 'state/server_state.dart';
+export 'widgets/library_widgets.dart';
