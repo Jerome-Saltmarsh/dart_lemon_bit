@@ -337,9 +337,18 @@ class GameUI {
           ]
       );
 
-  static Widget buildPlayerExperience(double experience) {
-     return text("Experience: $experience");
-  }
+  static Widget buildPlayerExperience(double experience) =>
+     Container(
+       width: GameUIStyle.ExperienceBarWidth,
+       height: GameUIStyle.ExperienceBarHeight,
+       color: GameUIStyle.ExperienceBarColorBackground,
+       alignment: Alignment.centerLeft,
+       child: Container(
+         width: GameUIStyle.ExperienceBarWidth * experience,
+         height: GameUIStyle.ExperienceBarHeight,
+         color: GameColors.yellow,
+       ),
+     );
 
   static Widget buildControlPlayerEquippedWeaponAmmunition(){
     return watch(ServerState.playerEquippedWeaponAmmunitionType, (int ammunitionType) {

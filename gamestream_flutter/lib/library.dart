@@ -51,5 +51,6 @@ export 'state/server_state.dart';
 export 'events/client_events.dart';
 export 'events/server_events.dart';
 export 'queries/server_query.dart';
+export 'game_ui_style.dart';
 export 'actions/client_actions.dart';
 export 'widgets/library_widgets.dart';
