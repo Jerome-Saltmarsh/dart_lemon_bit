@@ -36,9 +36,10 @@
 [ ] fix editor icons
 
 [current]
-[ ] consume food to heal
+
 
 10.11.2022
+[x] consume food to heal
 [x] item sell
 [x] item buy
 [x] prevent item-type information panel from going off screen

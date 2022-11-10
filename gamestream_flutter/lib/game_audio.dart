@@ -44,6 +44,7 @@ class GameAudio {
     AudioLoop(name: 'stream', getTargetVolume: getVolumeStream),
   ];
 
+  static final eat = AudioSingle(name: 'eat', volume: 0.5, maxDistance: 100);
   static final errorSound15 = AudioSingle(name: 'error-sound-15', volume: 0.5, maxDistance: 100);
   static final popSounds14 = AudioSingle(name: 'pop-sounds-14', volume: 0.5, maxDistance: 100);
   static final coins_24 = AudioSingle(name: 'coins-24', volume: 0.5, maxDistance: 100);

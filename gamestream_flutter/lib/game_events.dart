@@ -393,12 +393,10 @@ class GameEvents {
   }
 
   static void onItemTypeConsumed(int itemType) {
-      switch (itemType) {
-        case ItemType.Consumables_Apple:
-          break;
-        case ItemType.Consumables_Meat:
-          break;
-      }
+    if (ItemType.isFood(itemType)) {
+      GameAudio.eat();
+      return;
+    }
   }
 
   static void onPlayerEventItemEquipped(int type) {

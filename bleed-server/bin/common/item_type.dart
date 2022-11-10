@@ -98,6 +98,7 @@ class ItemType {
   
   static const Consumables_Apple = Index_Consumables + 1;
   static const Consumables_Meat = Index_Consumables + 2;
+  static const Consumables_Potion_Red = Index_Consumables + 3;
 
   static const GameObjects_Flower = Index_GameObjects + 1;
   static const GameObjects_Rock = Index_GameObjects + 2;
@@ -161,6 +162,10 @@ class ItemType {
   static const Weapon_Melee_Hammer = Index_Weapon_Melee + 6;
   static const Recipe_Staff_Of_Fire = Index_Recipe + 1;
 
+  static bool isFood(int type) =>
+     type == Consumables_Apple ||
+     type == Consumables_Meat ;
+  
   static bool isCollectable(int type){
     return type >= Index_Consumables;
   }
