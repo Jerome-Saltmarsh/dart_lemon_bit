@@ -29,7 +29,7 @@ class EditorUI {
     ]);
   }
 
-  static Widget buildControlsWeather() =>
+  static Widget buildRowWeatherControls() =>
       Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -44,33 +44,46 @@ class EditorUI {
         ],
       );
 
-  static Widget buildIconRain(Rain rain) =>
-      watch(GameState.rain, (Rain activeRain) {
-        const Size = 64.0;
-        final isActive = rain == activeRain;
-        return Tooltip(
-          message: '${rain.name} Rain',
-          child: Stack(
-            children: [
-              onPressed(
-                action: isActive ? null : () => GameNetwork.sendClientRequestWeatherSetRain(rain),
-                child: GameUI.buildAtlasIconType(convertRainToIconType(rain), size: Size),
-              ),
-              if (isActive)
-                Container(
-                   width: Size,
-                   height: Size,
-                   decoration: GameUI.buildDecorationBorder(
-                       colorBorder: Colors.white,
-                       colorFill: Colors.transparent,
-                       width: 2,
-                       borderRadius: 0,
-                   ),
-                ),
-            ],
+
+  static Widget buildIconWeatherControl({
+    required String tooltip,
+    required Function action,
+    required Widget icon,
+    required bool isActive,
+  }) {
+    return Tooltip(
+      message: tooltip,
+      child: Stack(
+        children: [
+          onPressed(
+            action: isActive ? null  : action,
+            child: icon,
           ),
-        );
-      });
+          if (isActive)
+            Container(
+              width: 64,
+              height: 64,
+              decoration: GameUI.buildDecorationBorder(
+                colorBorder: Colors.white,
+                colorFill: Colors.transparent,
+                width: 2,
+                borderRadius: 0,
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  static Widget buildIconRain(Rain rain) =>
+      watch(GameState.rain, (Rain activeRain) =>
+        buildIconWeatherControl(
+            tooltip: '${rain.name} Rain',
+            action: () => GameNetwork.sendClientRequestWeatherSetRain(rain),
+            icon: GameUI.buildAtlasIconType(convertRainToIconType(rain), size: 64),
+            isActive: rain == activeRain,
+        )
+      );
 
   static Widget buildIconLightning(Lightning lightning) =>
       watch(GameState.lightning, (Lightning activeLightning) {

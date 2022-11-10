@@ -237,7 +237,7 @@ class GameUI {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            EditorUI.buildControlsWeather(),
+            EditorUI.buildRowWeatherControls(),
           ],
         ),
       ),

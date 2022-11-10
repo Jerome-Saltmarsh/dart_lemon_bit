@@ -10,7 +10,7 @@ Widget buildPanelMenu() =>
         children: [
           buildButtonTogglePlayMode(),
           width2,
-          watch(GameState.sceneEditable, (bool sceneEditable) => sceneEditable ? EditorUI.buildControlsWeather() : buildWatchBool(GameUI.timeVisible, buildTime)),
+          watch(GameState.sceneEditable, (bool sceneEditable) => sceneEditable ? EditorUI.buildRowWeatherControls() : buildWatchBool(GameUI.timeVisible, buildTime)),
           width2,
           GameUI.buildIconZoom(),
           width2,
