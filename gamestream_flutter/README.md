@@ -27,12 +27,15 @@
 [ ] add mobile share (whatsapp, facebook) button
 [ ] fix character state changing
 [ ] highlight cursor gameobject item
-[ ] refactor AtlasNodeX.mapNodeType(nodeType),
 [ ] improve grid invisibility
 [ ] recipes
 [ ] smith (for crafting recipes)
 [ ] ui error message
 [ ] fix editor icons
+[ ] character butterfly
+[ ] character bird
+[ ] character chicken
+[ ] hotkeys to change weapons
 
 [current]
 [ ] player attributes
