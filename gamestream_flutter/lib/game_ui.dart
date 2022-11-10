@@ -274,13 +274,13 @@ class GameUI {
   static Widget buildIconSlotEmpty() =>
       buildAtlasIconType(IconType.Slot, scale: GameInventoryUI.Slot_Scale);
 
-  static Widget buildAtlasIconType(int iconType, {double scale = 1, int color = 1}) =>
+  static Widget buildAtlasIconType(int iconType, {double scale = 1, int color = 1, double size = AtlasIcons.Size}) =>
       Engine.buildAtlasImage(
         image: GameImages.atlasIcons,
         srcX: AtlasIcons.getSrcX(iconType),
         srcY: AtlasIcons.getSrcY(iconType),
-        srcWidth: AtlasIcons.Size,
-        srcHeight: AtlasIcons.Size,
+        srcWidth: size,
+        srcHeight: size,
         scale: scale,
         color: color,
       );

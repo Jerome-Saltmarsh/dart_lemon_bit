@@ -60,6 +60,15 @@ class AtlasIcons {
     IconType.Home: Size * 2,
     IconType.Fullscreen: Size * 3,
     IconType.Slot: Size * 1,
+    IconType.Rain_None: 128,
+    IconType.Rain_Light: 128,
+    IconType.Rain_Heavy: 128,
+    IconType.Lightning_Off: 128,
+    IconType.Lightning_Nearby: 128,
+    IconType.Lightning_On: 128,
+    IconType.Wind_Calm: 128,
+    IconType.Wind_Gentle: 128,
+    IconType.Wind_Strong: 128,
   }[itemType] ?? 0;
 
   static double getSrcY(int itemType) => const  <int, double> {
@@ -73,6 +82,15 @@ class AtlasIcons {
     IconType.Fullscreen: 0,
     IconType.Zoom: 0,
     IconType.Slot: Size * 1,
+    IconType.Rain_None: 64 * 0,
+    IconType.Rain_Light: 64 * 1,
+    IconType.Rain_Heavy: 64 * 2,
+    IconType.Lightning_Off: 64 * 3,
+    IconType.Lightning_Nearby: 64 * 4,
+    IconType.Lightning_On: 64 * 5,
+    IconType.Wind_Calm: 64 * 6,
+    IconType.Wind_Gentle: 64 * 7,
+    IconType.Wind_Strong: 64 * 8,
   }[itemType] ?? 0;
 }
 

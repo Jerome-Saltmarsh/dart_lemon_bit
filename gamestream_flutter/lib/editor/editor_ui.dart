@@ -66,15 +66,21 @@ class EditorUI {
     });
   }
 
-  // TODO Fix active
-  static Widget buildIconRain(Rain rain, bool active) {
+  static Widget buildIconRain(Rain rain) {
+    return onPressed(
+        action: () => GameNetwork.sendClientRequestWeatherSetRain(rain),
+        child: GameUI.buildAtlasIconType(convertRainToIconType(rain), size: 64),
+    );
+  }
+
+  static int convertRainToIconType(Rain rain){
     switch (rain) {
       case Rain.None:
-        return GameUI.buildAtlasIconType(IconType.Rain_None);
+        return IconType.Rain_None;
       case Rain.Light:
-        return GameUI.buildAtlasIconType(IconType.Rain_Light);
+        return IconType.Rain_Light;
       case Rain.Heavy:
-        return GameUI.buildAtlasIconType(IconType.Rain_Heavy);
+        return IconType.Rain_Heavy;
     }
   }
 
@@ -101,37 +107,14 @@ class EditorUI {
     }
   }
 
-  static Widget buildToggleRain() {
-    final segments = rainValues.length;
-
-    return watch(GameState.rain, (Rain rain) {
-      final list = <Widget>[];
-      for (var i = 0; i < segments; i++) {
-        final active = rain.index == i;
-        final value = rainValues[i];
-        list.add(
-          onPressed(
-            child: Container(
-              width: 52,
-              height: 52,
-              alignment: Alignment.center,
-              child: buildIconRain(value, active),
-              decoration: BoxDecoration(
-                border: Border.all(color: active ? purple3 : purple5, width: 2),
-                borderRadius: borderRadius2,
-              ),
-              margin: const EdgeInsets.only(right: 2),
-            ),
-            action: () => GameNetwork.sendClientRequestWeatherSetRain(value),
-            hint: 'Rain ${value.name}',
-          ),
-        );
-      }
-      return Row(
-        children: list,
+  static Widget buildToggleRain() =>
+      Row(
+        children: [
+          buildIconRain(Rain.None),
+          buildIconRain(Rain.Light),
+          buildIconRain(Rain.Heavy),
+        ],
       );
-    });
-  }
 
   static Widget buildButtonLightning() {
     final segments = lightningValues.length;
