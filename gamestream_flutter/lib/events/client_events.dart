@@ -3,10 +3,10 @@ import 'package:gamestream_flutter/library.dart';
 
 class ClientEvents {
   static void onInventoryReadsChanged(int value){
-    ClientActions.windowCloseInventoryInformation();
+    ClientActions.clearItemTypeHover();
   }
 
   static void onChangedAttributesWindowVisible(bool value){
-    GameAudio.click_sound_8(1);
+    ClientActions.playSoundWindow();
   }
 }

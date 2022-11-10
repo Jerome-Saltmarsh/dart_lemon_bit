@@ -5,7 +5,10 @@ class ClientActions {
 
   static void redrawInventory() => ClientState.inventoryReads.value++;
 
-  static void windowCloseInventoryInformation() =>
+  static void clearMouseOverDialogType() =>
+    GameUI.mouseOverDialogType.value = DialogType.None;
+
+  static void clearItemTypeHover() =>
     ClientState.itemTypeHover.value = ItemType.Empty;
 
   static void windowClosePlayerAttributes() =>
@@ -16,4 +19,7 @@ class ClientActions {
 
   static void windowTogglePlayerAttributes() =>
       ClientState.windowVisibleAttributes.value = !ClientState.windowVisibleAttributes.value;
+
+  static void playSoundWindow() =>
+      GameAudio.click_sound_8(1);
 }

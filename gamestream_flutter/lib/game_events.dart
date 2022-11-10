@@ -504,7 +504,7 @@ class GameEvents {
   }
 
   static void onChangedPlayerInteractMode(int value) {
-    GameAudio.click_sound_8(1);
+    ClientActions.playSoundWindow();
     switch (value) {
       case InteractMode.Inventory:
         GameCamera.translateX = 200;
@@ -517,8 +517,8 @@ class GameEvents {
         break;
       case InteractMode.None:
         GameCamera.translateX = 0;
-        ClientState.itemTypeHover.value = ItemType.Empty;
-        GameUI.mouseOverDialogType.value = DialogType.None;
+        ClientActions.clearItemTypeHover();
+        ClientActions.clearMouseOverDialogType();
         break;
     }
   }
