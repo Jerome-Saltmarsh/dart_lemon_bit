@@ -96,33 +96,14 @@ class EditorUI {
       );
 
   static Widget buildIconWind(Wind wind) =>
-      watch(GameState.windAmbient, (Wind activeWind) {
-        const Size = 64.0;
-        final isActive = wind == activeWind;
-        return Tooltip(
-          message: "${wind.name} Wind",
-          child: Stack(
-            children: [
-              onPressed(
-                action: isActive ? null : () => GameNetwork.sendClientRequestWeatherSetWind(wind),
-                child: GameUI.buildAtlasIconType(convertWindToIconType(wind), size: Size),
-              ),
-              if (isActive)
-                Container(
-                  width: Size,
-                  height: Size,
-                  decoration: GameUI.buildDecorationBorder(
-                    colorBorder: Colors.white,
-                    colorFill: Colors.transparent,
-                    width: 2,
-                    borderRadius: 0,
-                  ),
-                ),
-            ],
-          ),
-        );
-      });
-
+      watch(GameState.windAmbient, (Wind active) =>
+          buildIconWeatherControl(
+            tooltip: '${wind.name} Wind',
+            action: () => GameNetwork.sendClientRequestWeatherSetWind(wind),
+            icon: GameUI.buildAtlasIconType(convertWindToIconType(wind), size: 64),
+            isActive: wind == active,
+          )
+      );
 
   static int convertRainToIconType(Rain rain){
     switch (rain) {
