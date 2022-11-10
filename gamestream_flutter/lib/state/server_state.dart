@@ -7,6 +7,7 @@ class ServerState {
   static final playerEquippedWeaponAmmunitionQuantity = Watch(0);
   static final playerMaxHealth = Watch(0);
   static final playerGold = Watch(0);
+  static final playerExperiencePercentage = Watch(0.0);
 }
 
 

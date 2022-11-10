@@ -21,6 +21,9 @@ class GameDarkAge extends Game {
   @override
   void customOnCharacterKilled(Character target, dynamic src) {
      if (target is AI){
+        if (src is Player){
+           src.experience += 1;
+        }
         if (random.nextDouble() < 0.5){
           spawnRandomItemAtPosition(target);
         }

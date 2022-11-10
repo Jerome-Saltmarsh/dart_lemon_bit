@@ -10,8 +10,7 @@ import 'package:gamestream_flutter/library.dart';
 import '../stacks/build_page.dart';
 import '../widgets/build_container.dart';
 
-Widget buildPlayMode(bool edit) =>
-  edit ? watch(GameEditor.editTab, buildStackEdit) : buildStackPlay();
+
 
 Widget buildStackEdit(EditTab activeEditTab) =>
     buildPage(

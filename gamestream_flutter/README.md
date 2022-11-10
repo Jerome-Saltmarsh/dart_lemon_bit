@@ -28,7 +28,6 @@
 [ ] fix character state changing
 [ ] highlight cursor gameobject item
 [ ] refactor AtlasNodeX.mapNodeType(nodeType),
-[ ] experience
 [ ] improve grid invisibility
 [ ] recipes
 [ ] smith (for crafting recipes)
@@ -36,7 +35,7 @@
 [ ] fix editor icons
 
 [current]
-
+[ ] experience
 
 10.11.2022
 [x] consume food to heal

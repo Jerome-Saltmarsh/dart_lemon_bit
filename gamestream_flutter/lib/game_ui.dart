@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gamestream_flutter/game_ui_interact.dart';
 import 'package:gamestream_flutter/isometric/events/on_visibility_changed_message_box.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/stacks/build_stack_game_type_skirmish.dart';
@@ -9,6 +10,7 @@ import 'package:gamestream_flutter/isometric/ui/watches/build_watch_scene_meta_d
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/game_map.dart';
 import 'package:gamestream_flutter/library.dart';
+
 import 'game_ui_config.dart';
 import 'isometric/ui/dialogs/build_game_dialog.dart';
 import 'ui/builders/build_panel_menu.dart';
@@ -226,21 +228,6 @@ class GameUI {
   static Positioned buildTopRightMenu() =>
       Positioned(top: 0, right: 0, child: buildPanelMenu());
 
-  static Widget buildWatchPlayerAmmunition(){
-    return watch(ServerState.playerEquippedWeaponAmmunitionType, (int ammunitionType) {
-      if (ammunitionType == ItemType.Empty) return const SizedBox();
-      return Positioned(
-        bottom: 12,
-        right: 12,
-        child: Row(children: [
-          watch(ServerState.playerEquippedWeaponAmmunitionType, GameUI.buildAtlasItemType),
-          width4,
-          watch(ServerState.playerEquippedWeaponAmmunitionQuantity, text),
-        ]),
-      );
-    });
-  }
-
   static Widget buildControlsEnvironment() =>
     visibleBuilder(
       GameEditor.controlsVisibleWeather,
@@ -328,4 +315,40 @@ class GameUI {
         },
         child: child,
       );
+
+  static Widget buildPlayMode(bool edit) =>
+      edit ? watch(GameEditor.editTab, buildStackEdit) : buildStackPlay();
+
+  static Widget buildStackPlay() =>
+      StackFullscreen(
+          children: [
+            GameUIInteract.buildWatchInteractMode(),
+            watch(ClientState.itemTypeHover, GameInventoryUI.buildPositionedContainerItemTypeInformation),
+            Positioned(
+                bottom: 12,
+                right: 12,
+                child: Row(
+                  children: [
+                    watch(ServerState.playerExperiencePercentage, buildPlayerExperience),
+                    buildControlPlayerEquippedWeaponAmmunition(),
+                  ],
+                ),
+            ),
+          ]
+      );
+
+  static Widget buildPlayerExperience(double experience) {
+     return text("Experience: $experience");
+  }
+
+  static Widget buildControlPlayerEquippedWeaponAmmunition(){
+    return watch(ServerState.playerEquippedWeaponAmmunitionType, (int ammunitionType) {
+      if (ammunitionType == ItemType.Empty) return const SizedBox();
+      return Row(children: [
+        watch(ServerState.playerEquippedWeaponAmmunitionType, GameUI.buildAtlasItemType),
+        width4,
+        watch(ServerState.playerEquippedWeaponAmmunitionQuantity, text),
+      ]);
+    });
+  }
 }

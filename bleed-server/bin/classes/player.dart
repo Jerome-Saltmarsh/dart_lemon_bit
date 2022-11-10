@@ -109,24 +109,16 @@ class Player extends Character with ByteWriter {
     return null;
   }
 
-  set points(int value){
-    if (_points == value) return;
-    _points = value >= 0 ? value : 0;
-    writePoints();
-  }
-
   set experience(int value){
-    if (value < 0) {
-      _experience = 0;
-      return;
-    }
+    if (_experience == value) return;
+    assert (value >= 0);
     _experience = value;
     while (value >= experienceRequiredForNextLevel) {
       value -= experienceRequiredForNextLevel;
       level++;
-      points++;
       game.customOnPlayerLevelGained(this);
     }
+    writePlayerExperiencePercentage();
   }
 
   bool questToDo(Quest quest) => !questCompleted(quest) && !questInProgress(quest);
@@ -224,6 +216,7 @@ class Player extends Character with ByteWriter {
   int get experienceRequiredForNextLevel => getExperienceForLevel(level + 1);
 
   double get experiencePercentage {
+    if (experienceRequiredForNextLevel <= 0) return 1.0;
     return _experience / experienceRequiredForNextLevel;
   }
 
@@ -1277,12 +1270,6 @@ class Player extends Character with ByteWriter {
     writeByte(ServerResponse.Editor_GameObject_Selected);
     writePosition3(selectedGameObject);
     writeUInt16(selectedGameObject.type);
-  }
-
-  void writePoints(){
-    writeByte(ServerResponse.Player);
-    writeByte(ApiPlayer.Points);
-    writeInt(points);
   }
 
   void writeEnvironmentShade(int value){

@@ -208,6 +208,9 @@ class ServerResponseReader with ByteReader {
       case ApiPlayer.Target_Category:
         GamePlayer.targetCategory = readByte();
         break;
+      case ApiPlayer.Experience_Percentage:
+        ServerState.playerExperiencePercentage.value = readPercentage();
+        break;
       case ApiPlayer.Interact_Mode:
         ServerState.interactMode.value = readByte();
         break;
@@ -220,9 +223,6 @@ class ServerResponseReader with ByteReader {
       case ApiPlayer.Weapon_Cooldown:
         GameState.player.weaponCooldown.value = readPercentage();
         break;
-      case ApiPlayer.Experience_Percentage:
-       GameState.player.experience.value = readPercentage();
-        break;
       case ApiPlayer.Level:
        GameState.player.level.value = readInt();
         break;
@@ -231,9 +231,6 @@ class ServerResponseReader with ByteReader {
         break;
       case ApiPlayer.Aim_Angle:
        GameState.player.mouseAngle = readAngle();
-        break;
-      case ApiPlayer.Points:
-       GameState.player.points.value = readInt();
         break;
       case ApiPlayer.Inventory:
         readPlayerInventory();
