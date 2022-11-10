@@ -739,24 +739,6 @@ class Player extends Character with ByteWriter {
     writeInt(maxHealth); // 2
   }
 
-  // void writePlayerBodyType(){
-  //   writeByte(ServerResponse.Player);
-  //   writeByte(ApiPlayer.Body_Type);
-  //   writeUInt16(bodyType);
-  // }
-  //
-  // void writePlayerHeadType(){
-  //   writeByte(ServerResponse.Player);
-  //   writeByte(ApiPlayer.Head_Type);
-  //   writeUInt16(headType);
-  // }
-  //
-  // void writePlayerLegsType(){
-  //   writeByte(ServerResponse.Player);
-  //   writeByte(ApiPlayer.Legs_Type);
-  //   writeUInt16(legsType);
-  // }
-
   void writePlayerAlive(){
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Alive);
@@ -803,14 +785,12 @@ class Player extends Character with ByteWriter {
     if (!initialized) {
       game.customInitPlayer(this);
       initialized = true;
-      // runningToTarget = false;
-      // writePlayerWeaponType();
-      // writePlayerWeaponCapacity();
-      // writePlayerWeaponRounds();
       writePlayerPosition();
       writePlayerSpawned();
       writePlayerInventory();
       writePlayerEquippedWeaponAmmunition();
+      writePlayerLevel();
+      writePlayerExperiencePercentage();
     }
 
     if (!sceneDownloaded){
