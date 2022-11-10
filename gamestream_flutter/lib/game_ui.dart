@@ -324,6 +324,11 @@ class GameUI {
             GameUIInteract.buildWatchInteractMode(),
             watch(ClientState.itemTypeHover, GameInventoryUI.buildPositionedContainerItemTypeInformation),
             Positioned(
+               bottom: 24,
+               left: 24,
+               child: watch(ServerState.playerAttributes, buildButtonAttributes)
+            ),
+            Positioned(
                 bottom: 12,
                 right: 12,
                 child: Row(
@@ -336,6 +341,18 @@ class GameUI {
             ),
           ]
       );
+
+  static Widget buildButtonAttributes(int attributes){
+    if (attributes == 0) return const SizedBox();
+    return buildDialog(
+      dialogType: DialogType.UI_Control,
+      child: container(
+          alignment: Alignment.center,
+          color: GameColors.brownDark,
+          child: text("ATTRIBUTES +$attributes", align: TextAlign.center)
+      ),
+    );
+  }
 
   static Widget buildPlayerLevel(int level) =>
     Tooltip(

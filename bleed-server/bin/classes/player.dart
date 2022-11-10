@@ -127,17 +127,14 @@ class Player extends Character with ByteWriter {
     if (_experience == value) return;
     assert (value >= 0);
     _experience = value;
-    var levelIncreased = false;
     while (value >= experienceRequiredForNextLevel) {
       value -= experienceRequiredForNextLevel;
       level++;
+      attributes += 3;
       game.customOnPlayerLevelGained(this);
-      levelIncreased = true;
-    }
-    writePlayerExperiencePercentage();
-    if (levelIncreased) {
       writePlayerEvent(PlayerEvent.Level_Increased);
     }
+    writePlayerExperiencePercentage();
   }
 
   bool questToDo(Quest quest) => !questCompleted(quest) && !questInProgress(quest);
