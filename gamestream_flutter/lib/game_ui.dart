@@ -203,12 +203,14 @@ class GameUI {
       Positioned(
         left: 6,
         top: 6,
-        child: onPressed(
-          action: GameState.actionGameDialogShowMap,
-          child: Container(
-              padding: const EdgeInsets.all(4),
-              color: brownDark,
-              child: GameMapWidget(width: 133, height: 133)),
+        child: buildDialogUIControl(
+          child: onPressed(
+            action: GameState.actionGameDialogShowMap,
+            child: Container(
+                padding: const EdgeInsets.all(4),
+                color: brownDark,
+                child: GameMapWidget(width: 133, height: 133)),
+          ),
         ),
       );
 
@@ -324,12 +326,14 @@ class GameUI {
             Positioned(
                 bottom: 12,
                 right: 12,
-                child: Row(
-                  children: [
-                    watch(ServerState.playerLevel, buildPlayerLevel),
-                    watch(GamePlayer.weapon, buildAtlasItemType),
-                    buildControlPlayerEquippedWeaponAmmunition(),
-                  ],
+                child: buildDialogUIControl(
+                  child: Row(
+                    children: [
+                      watch(ServerState.playerLevel, buildPlayerLevel),
+                      watch(GamePlayer.weapon, buildAtlasItemType),
+                      buildControlPlayerEquippedWeaponAmmunition(),
+                    ],
+                  ),
                 ),
             ),
           ]
