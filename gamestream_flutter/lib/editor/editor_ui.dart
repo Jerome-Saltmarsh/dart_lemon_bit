@@ -48,24 +48,27 @@ class EditorUI {
       watch(GameState.rain, (Rain activeRain) {
         const Size = 64.0;
         final isActive = rain == activeRain;
-        return Stack(
-          children: [
-            onPressed(
-              action: isActive ? null : () => GameNetwork.sendClientRequestWeatherSetRain(rain),
-              child: GameUI.buildAtlasIconType(convertRainToIconType(rain), size: Size),
-            ),
-            if (isActive)
-              Container(
-                 width: Size,
-                 height: Size,
-                 decoration: GameUI.buildDecorationBorder(
-                     colorBorder: Colors.white,
-                     colorFill: Colors.transparent,
-                     width: 2,
-                     borderRadius: 0,
-                 ),
+        return Tooltip(
+          message: '${rain.name} Rain',
+          child: Stack(
+            children: [
+              onPressed(
+                action: isActive ? null : () => GameNetwork.sendClientRequestWeatherSetRain(rain),
+                child: GameUI.buildAtlasIconType(convertRainToIconType(rain), size: Size),
               ),
-          ],
+              if (isActive)
+                Container(
+                   width: Size,
+                   height: Size,
+                   decoration: GameUI.buildDecorationBorder(
+                       colorBorder: Colors.white,
+                       colorFill: Colors.transparent,
+                       width: 2,
+                       borderRadius: 0,
+                   ),
+                ),
+            ],
+          ),
         );
       });
 
@@ -73,24 +76,27 @@ class EditorUI {
       watch(GameState.lightning, (Lightning activeLightning) {
         const Size = 64.0;
         final isActive = lightning == activeLightning;
-        return Stack(
-          children: [
-            onPressed(
-              action: isActive ? null : () => GameNetwork.sendClientRequestWeatherSetLightning(lightning),
-              child: GameUI.buildAtlasIconType(convertLightningToIconType(lightning), size: Size),
-            ),
-            if (isActive)
-              Container(
-                width: Size,
-                height: Size,
-                decoration: GameUI.buildDecorationBorder(
-                  colorBorder: Colors.white,
-                  colorFill: Colors.transparent,
-                  width: 2,
-                  borderRadius: 0,
-                ),
+        return Tooltip(
+          message: "${lightning.name} Lightning",
+          child: Stack(
+            children: [
+              onPressed(
+                action: isActive ? null : () => GameNetwork.sendClientRequestWeatherSetLightning(lightning),
+                child: GameUI.buildAtlasIconType(convertLightningToIconType(lightning), size: Size),
               ),
-          ],
+              if (isActive)
+                Container(
+                  width: Size,
+                  height: Size,
+                  decoration: GameUI.buildDecorationBorder(
+                    colorBorder: Colors.white,
+                    colorFill: Colors.transparent,
+                    width: 2,
+                    borderRadius: 0,
+                  ),
+                ),
+            ],
+          ),
         );
       });
 
@@ -98,24 +104,27 @@ class EditorUI {
       watch(GameState.windAmbient, (Wind activeWind) {
         const Size = 64.0;
         final isActive = wind == activeWind;
-        return Stack(
-          children: [
-            onPressed(
-              action: isActive ? null : () => GameNetwork.sendClientRequestWeatherSetWind(wind),
-              child: GameUI.buildAtlasIconType(convertWindToIconType(wind), size: Size),
-            ),
-            if (isActive)
-              Container(
-                width: Size,
-                height: Size,
-                decoration: GameUI.buildDecorationBorder(
-                  colorBorder: Colors.white,
-                  colorFill: Colors.transparent,
-                  width: 2,
-                  borderRadius: 0,
-                ),
+        return Tooltip(
+          message: "${wind.name} Wind",
+          child: Stack(
+            children: [
+              onPressed(
+                action: isActive ? null : () => GameNetwork.sendClientRequestWeatherSetWind(wind),
+                child: GameUI.buildAtlasIconType(convertWindToIconType(wind), size: Size),
               ),
-          ],
+              if (isActive)
+                Container(
+                  width: Size,
+                  height: Size,
+                  decoration: GameUI.buildDecorationBorder(
+                    colorBorder: Colors.white,
+                    colorFill: Colors.transparent,
+                    width: 2,
+                    borderRadius: 0,
+                  ),
+                ),
+            ],
+          ),
         );
       });
 
@@ -161,21 +170,6 @@ class EditorUI {
 
   static Widget buildRowWindIcons() =>
       Row(children: Wind.values.map(buildIconWind).toList());
-
-  static Widget buildButtonBreeze() => watch(GameState.weatherBreeze, (bool weatherBreezeOn) {
-    return Column(
-      children: [
-        container(
-          child: "Breeze",
-          color: brownLight,
-        ),
-        container(
-          action: GameNetwork.sendClientRequestWeatherToggleBreeze,
-          color: weatherBreezeOn ? greyDark : grey,
-        ),
-      ],
-    );
-  });
 
   static Widget buildControlTime() {
     const totalWidth = 300.0;
