@@ -12,7 +12,7 @@ import 'position3.dart';
 abstract class Character extends Collider with Team, Velocity, FaceDirection {
 
   var _health = 1;
-  var maxHealth = 1;
+  var _maxHealth = 1;
 
   bool get dead => state == CharacterState.Dead;
   bool get dying => state == CharacterState.Dying;
@@ -23,20 +23,32 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
 
   int get type;
 
+  int get maxHealth => _maxHealth;
 
-  set health(int value) {
+  set maxHealth(int value){
+     if (_maxHealth == value) return;
+     assert (value >= 0);
+     _maxHealth = value;
+     if (this is Player){
+       (this as Player).writePlayerMaxHealth();
+       (this as Player).writePlayerHealth();
+     }
+  }
+
+  set health (int value) {
+    if (_health == value) return;
     _health = clamp(value, 0, maxHealth);
+    if (this is Player){
+      (this as Player).writePlayerHealth();
+    }
   }
   var state = CharacterState.Idle;
   var stateDurationRemaining = 0;
   var stateDuration = 0;
   var animationFrame = 0;
   var frozenDuration = 0;
-  /// the character that was highlighted as the character began attacking
-  /// This forces a hit to occur even if the target goes out of range of the attack
   Position3? target;
   var invincible = false;
-  // Weapon weapon;
   var weaponDurationRemaining = 0;
   var weaponState = AttackState.Idle;
   var weaponType = ItemType.Empty;

@@ -772,8 +772,6 @@ class Player extends Character with ByteWriter {
   void writePlayerGame() {
     writePlayerPosition();
     writePlayerWeaponCooldown();
-    writePlayerHealth();
-    writePlayerMaxHealth();
     writePlayerAimTargetPosition();
 
     writeProjectiles();
@@ -791,6 +789,8 @@ class Player extends Character with ByteWriter {
       writePlayerEquippedWeaponAmmunition();
       writePlayerLevel();
       writePlayerExperiencePercentage();
+      writePlayerHealth();
+      writePlayerMaxHealth();
     }
 
     if (!sceneDownloaded){
