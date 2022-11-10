@@ -570,6 +570,7 @@ abstract class Game {
        gameObject.timer--;
        if (gameObject.timer > 0) continue;
        deactivateGameObject(gameObject);
+       dispatchV3(GameEventType.GameObject_Timeout, gameObject);
     }
   }
 

@@ -89,6 +89,9 @@ class GameEvents {
         break;
       case GameEventType.Node_Set:
         return onNodeSet(x, y, z);
+      case GameEventType.GameObject_Timeout:
+        GameSpawn.spawnBubbles(x, y, z);
+        break;
       case GameEventType.Node_Struck:
         final nodeType = serverResponseReader.readByte();
         onNodeStruck(nodeType, x, y, z);

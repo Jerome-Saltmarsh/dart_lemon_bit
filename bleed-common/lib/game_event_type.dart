@@ -29,4 +29,5 @@ class GameEventType {
   static const Node_Struck = 70;
   static const Attack_Missed = 71;
   static const AI_Target_Acquired = 72;
+  static const GameObject_Timeout = 73;
 }
