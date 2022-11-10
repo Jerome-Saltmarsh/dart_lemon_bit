@@ -352,7 +352,7 @@ class GameUI {
        child: Container(
          width: GameUIStyle.ExperienceBarWidth * experience,
          height: GameUIStyle.ExperienceBarHeight,
-         color: GameColors.yellow,
+         color: GameUIStyle.ExperienceBarColorFill,
        ),
      );
 
