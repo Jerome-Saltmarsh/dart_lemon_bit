@@ -447,31 +447,6 @@ class ServerResponseReader with ByteReader {
     GameState.spawnFloatingText(x, y, amount.toString());
   }
 
-  // void readPlayerAimTarget() {
-  //   GameState.player.aimTargetChanged.value++;
-  //   final category = readByte();
-  //   GameState.player.aimTargetCategory = category;
-  //   switch (category) {
-  //     case TargetCategory.Nothing:
-  //       break;
-  //     case TargetCategory.GameObject:
-  //       GameState.player.aimTargetType = readByte();
-  //       GameState.player.aimTargetSubType = readUInt16();
-  //       readVector3(GameState.player.aimTargetPosition);
-  //       if (GameState.player.aimTargetType == GameObjectType.Item){
-  //         GameState.player.aimTargetText = ItemType.getName(GameState.player.aimTargetSubType);
-  //       }
-  //       break;
-  //     case TargetCategory.Allie:
-  //       GameState.player.aimTargetText = readString();
-  //       readVector3(GameState.player.aimTargetPosition);
-  //       break;
-  //     case TargetCategory.Enemy:
-  //       readVector3(GameState.player.aimTargetPosition);
-  //       break;
-  //   }
-  // }
-
   void readDebugMode() {
     GameUI.debug.value = readBool();
   }
@@ -561,26 +536,6 @@ class ServerResponseReader with ByteReader {
     }
   }
 
-  // List<Weapon> readWeapons() {
-  //   final weapons = <Weapon>[];
-  //   final total = readInt();
-  //   for (var i = 0; i < total; i++){
-  //     weapons.add(readWeapon());
-  //   }
-  //   return weapons;
-  // }
-
-  // Weapon readWeapon(){
-  //   final type = readByte();
-  //   final damage = readInt();
-  //   final uuid = readString();
-  //   return Weapon(
-  //     type: type,
-  //     damage: damage,
-  //     uuid: uuid,
-  //   );
-  // }
-
   void readGameEvent(){
       final type = readByte();
       final x = readDouble();
@@ -634,11 +589,6 @@ class ServerResponseReader with ByteReader {
       readCharacterEquipment(npc);
       GameState.totalNpcs++;
     }
-  }
-
-  void readNpc(Character character){
-    readCharacter(character);
-    readCharacterEquipment(character);
   }
 
   void readCharacter(Character character){

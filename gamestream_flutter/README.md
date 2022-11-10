@@ -25,7 +25,6 @@
 [ ] optimize network - compile all characters into single server_response
 [ ] fix editor add remove columns
 [ ] add mobile share (whatsapp, facebook) button
-[ ] fix character state changing
 [ ] highlight cursor gameobject item
 [ ] improve grid invisibility
 [ ] recipes
@@ -35,10 +34,14 @@
 [ ] character butterfly
 [ ] character bird
 [ ] character chicken
+[ ] scene cemetery
 [ ] hotkeys to change weapons
+[ ] player attributes
 
 [current]
-[ ] player attributes
+
+11.11.2022
+[x] fix character state changing
 
 10.11.2022
 [x] gameobject items timeout

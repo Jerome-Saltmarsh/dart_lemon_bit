@@ -6,11 +6,6 @@ import 'package:lemon_math/library.dart';
 import '../../library.dart';
 import 'render_character_health_bar.dart';
 
-// void renderArrow(double x, double y, double z, double angle) {
-//   x += getAdjacent(angle, 30);
-//   y += getOpposite(angle, 30);
-// }
-
 bool weaponIs96(int weapon) =>
    weapon == ItemType.Weapon_Ranged_Staff_Of_Flames ||
    weapon == ItemType.Weapon_Melee_Magic_Staff ||
@@ -25,7 +20,7 @@ void renderTemplateWeapon(
     double dstY,
     ) {
   if (weaponType == ItemType.Empty) return;
-  var size = weaponIs64(weaponType) ? 64.0 : 96.0;
+  final size = weaponIs64(weaponType) ? 64.0 : 96.0;
   Engine.renderSprite(
     image: GameImages.getImageForWeaponType(weaponType),
     srcX: frame * size,
@@ -84,10 +79,15 @@ void renderCharacterTemplate(Character character, {
       frameWeapon = frameBody;
       frameLegs = frameBody;
       break;
+    case CharacterState.Changing:
+      frameHead = TemplateAnimation.StateChangingFrame;
+      frameBody = TemplateAnimation.StateChangingFrame;
+      frameLegs = TemplateAnimation.StateChangingFrame;
+      frameWeapon = TemplateAnimation.StateChangingFrame;
+      break;
   }
 
   if (character.usingWeapon) {
-    // GameRender.renderTextV3(character, character.weaponFrame, offsetY: -50);
     final animation = TemplateAnimation.getAttackAnimation(character.weaponType);
     frameWeapon = (character.weaponFrame >= animation.length ? animation.last : animation[character.weaponFrame]) - 1;
     frameBody = frameWeapon;
@@ -197,6 +197,9 @@ bool weaponIs64(int weapon) =>
    weapon == ItemType.Weapon_Ranged_Shotgun;
 
 class TemplateAnimation {
+
+  static const StateChangingFrame = 4;
+
   static final Uint8List Running1 = (){
       final list = Uint8List(4);
       list[0] = 12;
