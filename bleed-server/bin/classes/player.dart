@@ -29,8 +29,8 @@ class Player extends Character with ByteWriter {
   var textDuration = 0;
   var _experience = 0;
   var _level = 1;
-  var _points = 0;
   var _magic = 0;
+  var _attributes = 0;
   var maxMagic = 100;
   var message = "";
   var text = "";
@@ -50,13 +50,21 @@ class Player extends Character with ByteWriter {
   Collider? get aimTarget => _aimTarget;
 
   int get gold => _gold;
-
   int get level => _level;
+  int get attributes => _attributes;
 
   set level(int value){
     assert (value >= 1);
     if (_level == value) return;
+    _level = value;
     writePlayerLevel();
+  }
+
+  set attributes(int value){
+    assert (value >= 0);
+    if (_attributes == value) return;
+    _attributes = value;
+    writePlayerAttributes();
   }
 
   set gold(int value) {
@@ -106,8 +114,6 @@ class Player extends Character with ByteWriter {
   int get lookDirection => Direction.fromRadian(lookRadian);
 
   int get experience => _experience;
-
-  int get points => _points;
 
   int? getEmptyInventoryIndex(){
     for (var i = 0; i < inventory.length; i++){
@@ -769,6 +775,12 @@ class Player extends Character with ByteWriter {
     writeUInt16(level);
   }
 
+  void writePlayerAttributes(){
+    writeByte(ServerResponse.Player);
+    writeByte(ApiPlayer.Attributes);
+    writeUInt16(attributes);
+  }
+
   void writePlayerAimAngle(){
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Aim_Angle);
@@ -780,12 +792,6 @@ class Player extends Character with ByteWriter {
     writePlayerWeaponCooldown();
     writePlayerHealth();
     writePlayerMaxHealth();
-    // writePlayerBodyType();
-    // writePlayerHeadType();
-    // writePlayerLegsType();
-    writePlayerExperiencePercentage();
-    writePlayerLevel();
-    writePlayerAimAngle();
     writePlayerAimTargetPosition();
 
     writeProjectiles();

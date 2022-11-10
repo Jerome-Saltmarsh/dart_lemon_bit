@@ -253,6 +253,9 @@ class ServerResponseReader with ByteReader {
         GameCamera.centerOnPlayer();
         GameIO.recenterCursor();
         break;
+      case ApiPlayer.Attributes:
+        ServerState.playerAttributes.value = readUInt16();
+        break;
       default:
         throw Exception("Cannot parse apiPlayer $apiPlayer");
     }

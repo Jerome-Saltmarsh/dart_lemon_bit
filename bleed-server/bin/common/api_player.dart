@@ -23,4 +23,5 @@ class ApiPlayer {
   static const Equipped_Weapon_Ammunition = 30;
   static const Inventory_Slot = 31;
   static const Gold = 32;
+  static const Attributes = 33;
 }
