@@ -1104,7 +1104,7 @@ class GameRender {
         canvas: canvas,
         image: GameImages.atlasIcons,
         srcX: 0,
-        srcY: 224,
+        srcY: 256,
         srcWidth: 64,
         srcHeight: 64,
         dstX: GameIO.getCursorScreenX(),
@@ -1118,7 +1118,7 @@ class GameRender {
       canvas: canvas,
       image: GameImages.atlasIcons,
       srcX: 0,
-      srcY: 288,
+      srcY: 320,
       srcWidth: 64,
       srcHeight: 64,
       dstX: GameIO.getCursorScreenX(),
@@ -1127,10 +1127,9 @@ class GameRender {
     );
   }
 
-
   static void canvasRenderCursorCrossHair(ui.Canvas canvas, double range){
     const srcX = 0;
-    const srcY = 160;
+    const srcY = 192;
     Engine.renderExternalCanvas(
         canvas: canvas,
         image: GameImages.atlasIcons,
@@ -1179,7 +1178,7 @@ class GameRender {
 
   static void canvasRenderCursorCrossHairRed(ui.Canvas canvas, double range){
     const srcX = 0;
-    const srcY = 352;
+    const srcY = 384;
     Engine.renderExternalCanvas(
         canvas: canvas,
         image: GameImages.atlasIcons,

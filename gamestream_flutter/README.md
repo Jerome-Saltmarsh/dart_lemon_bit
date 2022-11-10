@@ -20,24 +20,24 @@
 [ ] select skin color
 [ ] separate head-type and helm-type
 [ ] fix animation fire handgun
-
-[Afternoon-Tasks]
+[ ] item weight
+[ ] inventory max weight
 [ ] optimize network - compile all characters into single server_response
 [ ] fix editor add remove columns
 [ ] add mobile share (whatsapp, facebook) button
 [ ] fix character state changing
 [ ] highlight cursor gameobject item
 [ ] refactor AtlasNodeX.mapNodeType(nodeType),
-
-[Morning-Tasks]
 [ ] experience
 [ ] improve grid invisibility
 [ ] recipes
 [ ] smith (for crafting recipes)
 [ ] consume food to heal
+[ ] ui error message
 
 [current]
-[ ] ui error message
+[ ] fix editor icons
+
 
 10.11.2022
 [x] item sell

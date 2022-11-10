@@ -49,35 +49,27 @@ class AtlasItems {
 
 class AtlasIcons {
 
+  static const Size = 32.0;
+
   static double getSrcX(int itemType) => const <int, double> {
-    IconType.Home: 44,
-    IconType.Fullscreen: 93,
-    IconType.Zoom: 48,
+    IconType.Zoom: Size * 1,
+    IconType.Home: Size * 2,
+    IconType.Fullscreen: Size * 3,
+    IconType.Slot: Size * 1,
   }[itemType] ?? 0;
 
   static double getSrcY(int itemType) => const  <int, double> {
-    IconType.Arrows_Up_Yellow: 0,
-    IconType.Arrows_Down_Yellow: 26,
-    IconType.Arrows_North_Yellow: 110,
-    IconType.Arrows_East_Yellow: 137,
-    IconType.Arrows_West_Yellow: 83,
-    IconType.Arrows_South_Yellow: 56,
-    IconType.Arrows_Up_Orange: 0,
-    IconType.Arrows_Down_Orange: 26,
-    IconType.Arrows_North_Orange: 110,
-    IconType.Arrows_East_Orange: 137,
-    IconType.Arrows_West_Orange: 83,
-    IconType.Arrows_South_Orange: 56,
+    IconType.Arrows_Up_Yellow: Size * 0,
+    IconType.Arrows_Down_Yellow: Size * 1,
+    IconType.Arrows_North_Yellow: Size * 2,
+    IconType.Arrows_East_Yellow: Size * 3,
+    IconType.Arrows_West_Yellow: Size * 4,
+    IconType.Arrows_South_Yellow: Size * 5,
     IconType.Home: 0,
     IconType.Fullscreen: 0,
-    IconType.Zoom: 48,
-    IconType.Slot: 64,
+    IconType.Zoom: 0,
+    IconType.Slot: Size * 1,
   }[itemType] ?? 0;
-
-  static double getSize(int itemType) => const <int, double> {
-    IconType.Home: 48,
-    IconType.Fullscreen: 48,
-  }[itemType] ?? 32;
 }
 
 class AtlasNodeX {

@@ -58,7 +58,6 @@ Widget buildEditorSelectedNode() =>
                 left: 27 + _shiftX,
                 action: GameEditor.cursorZDecrease,
                 iconType: IconType.Arrows_Down_Yellow,
-                iconTypeMouseOver: IconType.Arrows_Down_Orange,
                 hint: "Shift + Arrow Down",
               ),
               buildPositionedIconArrow(
@@ -66,7 +65,6 @@ Widget buildEditorSelectedNode() =>
                 left: 3 + _shiftY,
                 action: GameEditor.cursorRowDecrease,
                 iconType: IconType.Arrows_North_Yellow,
-                iconTypeMouseOver: IconType.Arrows_North_Orange,
                 hint: "Arrow Up",
               ),
               // Positioned(
@@ -87,7 +85,6 @@ Widget buildEditorSelectedNode() =>
                 left: 50 + _shiftX,
                 action: GameEditor.cursorColumnDecrease,
                 iconType: IconType.Arrows_East_Yellow,
-                iconTypeMouseOver: IconType.Arrows_East_Orange,
                 hint: "Arrow Right",
               ),
               // Positioned(
@@ -114,7 +111,6 @@ Widget buildEditorSelectedNode() =>
                 left: 50 + _shiftX,
                 action: GameEditor.cursorRowIncrease,
                 iconType: IconType.Arrows_South_Yellow,
-                iconTypeMouseOver: IconType.Arrows_South_Orange,
                   hint: "Arrow Down"
               ),
               // Positioned(
@@ -135,7 +131,6 @@ Widget buildEditorSelectedNode() =>
                   left: 27 + _shiftX,
                   action: GameEditor.cursorZIncrease,
                   iconType: IconType.Arrows_Up_Yellow,
-                  iconTypeMouseOver: IconType.Arrows_Up_Orange,
                   hint: "Arrow Down"
               ),
               // Positioned(
@@ -158,17 +153,24 @@ Widget buildEditorSelectedNode() =>
               //   //     hint: "Shift + Arrow Up"
               //   // )),
               // ),
-              Positioned(
-                top: 50 + _shiftY,
-                left: 0 + _shiftX,
-                child: onPressed(
+              buildPositionedIconArrow(
+                  top: 50 + _shiftY,
+                  left: 0 + _shiftX,
                   action: GameEditor.cursorZIncrease,
-                  child: onMouseOver(builder: (BuildContext context, bool mouseOver) => GameUI.buildAtlasIconType(
-                      mouseOver ? IconType.Arrows_West_Orange : IconType.Arrows_West_Yellow
-                  )),
-                  hint: "Arrow Left",
-                ),
+                  iconType: IconType.Arrows_West_Yellow,
+                  hint: "Arrow Left"
               ),
+              // Positioned(
+              //   top: 50 + _shiftY,
+              //   left: 0 + _shiftX,
+              //   child: onPressed(
+              //     action: GameEditor.cursorZIncrease,
+              //     child: onMouseOver(builder: (BuildContext context, bool mouseOver) => GameUI.buildAtlasIconType(
+              //         mouseOver ? IconType.Arrows_West_Orange : IconType.Arrows_West_Yellow
+              //     )),
+              //     hint: "Arrow Left",
+              //   ),
+              // ),
             ],
           ),
         ),
@@ -181,7 +183,6 @@ Widget buildPositionedIconArrow({
   required double left,
   required Function action,
   required int iconType,
-  required int iconTypeMouseOver,
   required String hint,
 }) =>
   Positioned(
@@ -189,9 +190,12 @@ Widget buildPositionedIconArrow({
     left: left,
     child: onPressed(
       action: action,
-      child: onMouseOver(builder: (BuildContext context, bool mouseOver) => GameUI.buildAtlasIconType(
-          mouseOver ? iconTypeMouseOver : iconType
-      )),
+      child: onMouseOver(builder: (BuildContext context, bool mouseOver) =>
+          GameUI.buildAtlasIconType(
+            iconType,
+            color: mouseOver ? Colors.black38.value : Colors.white.value,
+          )
+      ),
       hint: hint,
     ),
   );

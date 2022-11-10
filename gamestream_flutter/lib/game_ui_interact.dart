@@ -97,7 +97,7 @@ class GameUIInteract {
         children.add(
             GameInventoryUI.buildPositionGridElement(
                 index: i,
-                child: GameInventoryUI.buildAtlasIconSlotEmpty(),
+                child: GameInventoryUI.atlasIconSlotEmpty,
             ),
         );
       }

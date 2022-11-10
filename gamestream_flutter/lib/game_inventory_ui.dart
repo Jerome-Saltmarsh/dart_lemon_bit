@@ -14,8 +14,7 @@ class GameInventoryUI {
   static const Equipped_Item_Scale = Slot_Scale * Engine.GoldenRatio_1_618;
   static const Columns_Per_Row = 7;
   static const Inventory_Width = Slot_Size * Slot_Scale * Columns_Per_Row;
-
-  static final atlasIconSlotEmpty = buildAtlasIconSlotEmpty();
+  static final atlasIconSlotEmpty = GameUI.buildIconSlotEmpty();
 
   static Widget buildInventoryUI() =>
       GameUI.buildDialog(
@@ -259,56 +258,6 @@ class GameInventoryUI {
         srcWidth: Slot_Size,
         srcHeight: Slot_Size,
         scale: scale,
-      );
-
-  static Widget buildAtlasIconSlotEmpty() =>
-      Engine.buildAtlasImage(
-        image: GameImages.atlasIcons,
-        srcX: 288,
-        srcY: 0,
-        srcWidth: Slot_Size,
-        srcHeight: Slot_Size,
-        scale: Slot_Scale,
-      );
-
-  static Widget buildAtlasIconSlotArmour() =>
-      Engine.buildAtlasImage(
-        image: GameImages.atlasIcons,
-        srcX: 320,
-        srcY: 0,
-        srcWidth: Slot_Size,
-        srcHeight: Slot_Size,
-        scale: 1.0,
-      );
-
-  static Widget buildAtlasIconSlotLegs() =>
-      Engine.buildAtlasImage(
-        image: GameImages.atlasIcons,
-        srcX: 352,
-        srcY: 0,
-        srcWidth: Slot_Size,
-        srcHeight: Slot_Size,
-        scale: 1.0,
-      );
-
-  static Widget buildAtlasIconSlotWeapon() =>
-      Engine.buildAtlasImage(
-        image: GameImages.atlasIcons,
-        srcX: 384,
-        srcY: 0,
-        srcWidth: Slot_Size,
-        srcHeight: Slot_Size,
-        scale: 1.0,
-      );
-
-  static Widget buildAtlasIconSlotHead() =>
-      Engine.buildAtlasImage(
-        image: GameImages.atlasIcons,
-        srcX: 416,
-        srcY: 0,
-        srcWidth: Slot_Size,
-        srcHeight: Slot_Size,
-        scale: 1.0,
       );
 
   static Widget buildPositionedContainerItemTypeInformation(int itemType){

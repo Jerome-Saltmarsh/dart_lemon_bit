@@ -5,12 +5,6 @@ class IconType {
   static const Arrows_West_Yellow = 3;
   static const Arrows_North_Yellow = 4;
   static const Arrows_East_Yellow = 5;
-  static const Arrows_Up_Orange = 6;
-  static const Arrows_Down_Orange = 7;
-  static const Arrows_South_Orange = 8;
-  static const Arrows_West_Orange = 9;
-  static const Arrows_North_Orange = 10;
-  static const Arrows_East_Orange = 11;
   static const Home = 12;
   static const Fullscreen = 13;
   static const Zoom = 14;

@@ -1291,6 +1291,7 @@ class Engine {
     required double srcWidth,
     required double srcHeight,
     double scale = 1.0,
+    int color = 1,
   }) =>
       Container(
         alignment: Alignment.center,
@@ -1308,6 +1309,7 @@ class Engine {
                   dstX: 0,
                   dstY: 0,
                   scale: scale,
+                  color: color,
                 )
         ),
       );
