@@ -553,21 +553,24 @@ abstract class Game {
       updateAITargets();
     }
 
-    for (final gameObject in gameObjects){
-       if (gameObject.active) continue;
-       if (gameObject.timer <= 0) continue;
-       gameObject.timer--;
-       if (gameObject.timer > 0) continue;
-       activateGameObject(gameObject);
-    }
-
     customUpdate();
+    updateGameObjects();
     updateCollisions();
     updateCharacters();
     updateProjectiles();
     updateProjectiles(); // called twice to fix collision detection
     updateCharacterFrames();
     sortGameObjects();
+  }
+
+  void updateGameObjects() {
+    for (final gameObject in gameObjects){
+       if (!gameObject.active) continue;
+       if (gameObject.timer <= 0) continue;
+       gameObject.timer--;
+       if (gameObject.timer > 0) continue;
+       deactivateGameObject(gameObject);
+    }
   }
 
   void updateStatus() {
@@ -1569,6 +1572,7 @@ abstract class Game {
     required Position3 position,
     required int type,
     int quantity = 1,
+    int timer = 0,
   }) =>
     spawnGameObjectItem(
         x: position.x,
@@ -1576,6 +1580,7 @@ abstract class Game {
         z: position.z,
         type: type,
         quantity: quantity,
+        timer: timer,
     );
 
   void spawnGameObjectItem({
@@ -1584,13 +1589,16 @@ abstract class Game {
         required double z,
         required int type,
         int quantity = 1,
+        int timer = 0,
   }){
     assert (type != ItemType.Empty);
     assert (type != ItemType.Equipped_Legs);
     assert (type != ItemType.Equipped_Body);
     assert (type != ItemType.Equipped_Head);
     assert (type != ItemType.Equipped_Weapon);
-    spawnGameObject(x: x, y: y, z: z, type: type).quantity = quantity;
+    spawnGameObject(x: x, y: y, z: z, type: type)
+      ..quantity = quantity
+      ..timer = timer;
   }
 
   GameObject spawnGameObject({

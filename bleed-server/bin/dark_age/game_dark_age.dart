@@ -25,17 +25,18 @@ class GameDarkAge extends Game {
            src.experience += 1;
         }
         if (random.nextDouble() < 0.5){
-          spawnRandomItemAtPosition(target);
+          spawnRandomItemAtPosition(target, timer: 2000);
         }
      }
   }
 
-  void spawnRandomItemAtPosition(Position3 position){
+  void spawnRandomItemAtPosition(Position3 position, {int timer = 0}){
        spawnGameObjectItem(
            x: position.x,
            y: position.y,
            z: position.z,
            type: getRandomItemType(),
+           timer: timer,
        );
   }
 

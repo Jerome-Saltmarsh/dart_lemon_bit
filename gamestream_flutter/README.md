@@ -33,12 +33,12 @@
 [ ] smith (for crafting recipes)
 [ ] ui error message
 [ ] fix editor icons
-[ ] gameobject items timeout
 
 [current]
 [ ] player attributes
 
 10.11.2022
+[x] gameobject items timeout
 [x] player experience
 [x] consume food to heal
 [x] item sell

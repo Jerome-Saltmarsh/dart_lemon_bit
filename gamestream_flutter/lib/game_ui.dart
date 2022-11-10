@@ -370,6 +370,20 @@ class GameUI {
                       container(child: "+", width: 50, height: 50),
                  ],
                ),
+               Row(
+                 children: [
+                   text("Inventory Size"),
+                   if (remaining)
+                     container(child: "+", width: 50, height: 50),
+                 ],
+               ),
+               Row(
+                 children: [
+                   text("Sword Mastery"),
+                   if (remaining)
+                     container(child: "+", width: 50, height: 50),
+                 ],
+               ),
              ],
            ),
          ),
