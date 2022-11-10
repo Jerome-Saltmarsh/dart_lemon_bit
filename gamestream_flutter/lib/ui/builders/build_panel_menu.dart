@@ -5,24 +5,26 @@ import 'package:gamestream_flutter/library.dart';
 import 'build_time.dart';
 
 Widget buildPanelMenu() =>
-    Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          buildButtonTogglePlayMode(),
-          width2,
-          watch(GameState.sceneEditable, (bool sceneEditable) => sceneEditable ? EditorUI.buildRowWeatherControls() : buildWatchBool(GameUI.timeVisible, buildTime)),
-          width2,
-          GameUI.buildIconZoom(),
-          width2,
-          onPressed(
-              child: GameUI.buildIconFullscreen(),
-              action:  Engine.fullscreenToggle,
-          ),
-          onPressed(
-              child: GameUI.buildIconHome(),
-              action: GameNetwork.disconnect,
-          ),
-        ]
+    GameUI.buildDialogUIControl(
+      child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            buildButtonTogglePlayMode(),
+            width2,
+            watch(GameState.sceneEditable, (bool sceneEditable) => sceneEditable ? EditorUI.buildRowWeatherControls() : buildWatchBool(GameUI.timeVisible, buildTime)),
+            width2,
+            GameUI.buildIconZoom(),
+            width2,
+            onPressed(
+                child: GameUI.buildIconFullscreen(),
+                action:  Engine.fullscreenToggle,
+            ),
+            onPressed(
+                child: GameUI.buildIconHome(),
+                action: GameNetwork.disconnect,
+            ),
+          ]
+      ),
     );
 
 Widget buildButtonTogglePlayMode() {

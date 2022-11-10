@@ -50,8 +50,7 @@ class EditorUI {
     required Function action,
     required Widget icon,
     required bool isActive,
-  }) {
-    return Tooltip(
+  }) => Tooltip(
       message: tooltip,
       child: Stack(
         children: [
@@ -73,7 +72,6 @@ class EditorUI {
         ],
       ),
     );
-  }
 
   static Widget buildIconRain(Rain rain) =>
       watch(GameState.rain, (Rain activeRain) =>

@@ -228,21 +228,6 @@ class GameUI {
   static Positioned buildTopRightMenu() =>
       Positioned(top: 0, right: 0, child: buildPanelMenu());
 
-  static Widget buildControlsEnvironment() =>
-    visibleBuilder(
-      GameEditor.controlsVisibleWeather,
-      Container(
-        width: Engine.screen.width,
-        alignment: Alignment.center,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            EditorUI.buildRowWeatherControls(),
-          ],
-        ),
-      ),
-    );
-
   static Widget buildStackGameTypeDarkAge() =>
       Stack(
         children: [
