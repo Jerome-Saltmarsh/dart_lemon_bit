@@ -29,6 +29,8 @@ class ItemType {
      Head_Wizards_Hat: 500,
      Head_Rogues_Hood: 500,
      Head_Steel_Helm: 1000,
+     Consumables_Apple: 30,
+     Consumables_Meat: 50,
   }[itemType] ?? 0;
 
   static bool isTypeEquippable(int value) =>
@@ -37,11 +39,12 @@ class ItemType {
       isTypeLegs(value) ||
       isTypeWeapon(value);
 
-  static bool isTypeConsumable(int value) =>
-      value >= Index_Consumables && value < Index_GameObjects;
-
+  
   static bool isTypeGameObject(int value) =>
-      value >= Index_GameObjects && value < Index_Resources;
+      value >= Index_GameObjects && value < Index_Consumables;
+
+  static bool isTypeConsumable(int value) =>
+      value >= Index_Consumables && value < Index_Resources;
 
   static bool isTypeResource(int value) =>
       value >= Index_Resources && value < Index_Heads;
@@ -94,7 +97,8 @@ class ItemType {
   static const Equipped_Weapon = Index_Equipped + 4;
   
   static const Consumables_Apple = Index_Consumables + 1;
-  
+  static const Consumables_Meat = Index_Consumables + 2;
+
   static const GameObjects_Flower = Index_GameObjects + 1;
   static const GameObjects_Rock = Index_GameObjects + 2;
   static const GameObjects_Stick = Index_GameObjects + 3;
@@ -244,5 +248,7 @@ class ItemType {
      Legs_White: "White Pants",
      Legs_Red: "Red Trousers",
      Recipe_Staff_Of_Fire: "Staff of Fire",
+     Consumables_Apple: "Apple",
+     Consumables_Meat: "Meat",
   }[value] ?? "item-type-unknown($value)";
 }

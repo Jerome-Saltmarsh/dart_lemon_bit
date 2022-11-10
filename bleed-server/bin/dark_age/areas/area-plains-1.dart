@@ -70,6 +70,8 @@ class AreaPlains1 extends DarkAgeArea {
                     ItemType.Legs_Blue,
                     ItemType.Resource_Gun_Powder,
                     ItemType.Resource_Arrow,
+                    ItemType.Consumables_Apple,
+                    ItemType.Consumables_Meat,
                  ]);
                },
                'never mind': player.endInteraction
