@@ -304,6 +304,9 @@ class GameUI {
         srcHeight: AtlasNodeHeight.mapNodeType(nodeType),
       );
 
+  static Widget buildDialogUIControl({required Widget child}) =>
+      buildDialog(child: child, dialogType: DialogType.UI_Control);
+
   static Widget buildDialog({required Widget child, required int dialogType}) =>
       MouseRegion(
         onEnter: (PointerEnterEvent event){
@@ -347,12 +350,31 @@ class GameUI {
           ]
       );
 
-  static Widget buildWindowAttributes() {
-     return container(
-        color: GameColors.brownDark,
-        child: text("Max Health"),
-     );
-  }
+  static Widget buildWindowAttributes() =>
+     watch(ServerState.playerAttributes, (int attributes){
+       final remaining = attributes > 0;
+       return buildDialogUIControl(
+         child: Container(
+           padding: const EdgeInsets.all(16),
+           color: GameColors.brownDark,
+           width: GameUIStyle.Window_Attributes_Width,
+           height: GameUIStyle.Window_Attributes_Height,
+           child: Column(
+             children: [
+               if (remaining)
+               text("REMAINING $attributes"),
+               Row(
+                 children: [
+                   text("Max Health"),
+                   if (remaining)
+                      container(child: "+", width: 50, height: 50),
+                 ],
+               ),
+             ],
+           ),
+         ),
+       );
+     });
 
   static Widget buildButtonAttributes(int attributes){
     if (attributes == 0) return const SizedBox();

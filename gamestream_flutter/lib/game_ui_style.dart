@@ -7,4 +7,7 @@ class GameUIStyle {
   static final ExperienceBarColorFill = Colors.white;
   static final ExperienceBarWidth = 200.0;
   static final ExperienceBarHeight = 20.0;
+
+  static final Window_Attributes_Width = 300.0;
+  static final Window_Attributes_Height = 300.0;
 }
