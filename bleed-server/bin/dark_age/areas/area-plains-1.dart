@@ -38,6 +38,8 @@ class AreaPlains1 extends DarkAgeArea {
     player.inventory[5] = ItemType.Legs_Brown;
     player.inventory[6] = ItemType.Recipe_Staff_Of_Fire;
     player.inventory[7] = ItemType.Resource_Gun_Powder;
+    player.inventory[8] = ItemType.Consumables_Meat;
+    player.inventory[9] = ItemType.Consumables_Apple;
     player.inventoryQuantity[7] = 30;
     player.writePlayerInventory();
     return player;

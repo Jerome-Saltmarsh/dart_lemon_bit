@@ -611,11 +611,10 @@ class Player extends Character with ByteWriter {
   }
   
   void inventoryEquip(int index) {
-    if (index < 0){
-      // TODO warn user
+    if (index < 0) {
+      writePlayerEventInvalidRequest();
       return;
     }
-
     if (index == ItemType.Equipped_Weapon){
       inventoryUnequipWeapon();
       return;
@@ -632,9 +631,8 @@ class Player extends Character with ByteWriter {
       inventoryUnequipLegs();
       return;
     }
-
     if (index >= inventory.length) {
-      // warn user
+      writePlayerEventInvalidRequest();
       return;
     }
 
@@ -642,41 +640,47 @@ class Player extends Character with ByteWriter {
     var swapped = false;
 
     if (ItemType.isTypeRecipe(itemType)){
-
        if (itemType == ItemType.Recipe_Staff_Of_Fire) {
          inventorySet(itemType: ItemType.Weapon_Melee_Magic_Staff, index: index, quantity: 1);
          writePlayerEventRecipeCrafted();
          return;
        }
     }
-
     if (ItemType.isTypeWeapon(itemType)){
       final currentWeapon = weaponType;
       weaponType = itemType;
       inventory[index] = currentWeapon;
       swapped = true;
-      // writePlayerWeaponType();
     }
-
     if (ItemType.isTypeBody(itemType)){
       final current = bodyType;
       bodyType = itemType;
       inventory[index] = current;
       swapped = true;
     }
-
     if (ItemType.isTypeHead(itemType)){
       final current = headType;
       headType = itemType;
       inventory[index] = current;
       swapped = true;
     }
-
     if (ItemType.isTypeLegs(itemType)){
       final current = legsType;
       legsType = itemType;
       inventory[index] = current;
       swapped = true;
+    }
+    if (ItemType.isTypeConsumable(itemType)){
+       switch (itemType) {
+         case ItemType.Consumables_Meat:
+           break;
+         case ItemType.Consumables_Apple:
+           break;
+       }
+       writePlayerEventItemTypeConsumed(itemType);
+       inventorySetEmptyAtIndex(index);
+       writePlayerInventorySlot(index);
+       return;
     }
 
     if (swapped) {
@@ -1019,6 +1023,11 @@ class Player extends Character with ByteWriter {
         angle: 0,
       );
       writeByte(gameObject.type);
+  }
+
+  void writePlayerEventItemTypeConsumed(int itemType){
+    writePlayerEvent(PlayerEvent.Item_Consumed);
+    writeUInt16(itemType);
   }
 
   void writePlayerEventRecipeCrafted() =>

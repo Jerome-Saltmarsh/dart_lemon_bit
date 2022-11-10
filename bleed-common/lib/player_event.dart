@@ -32,4 +32,5 @@ class PlayerEvent {
   static const Insufficient_Gold = 31;
   static const Inventory_Full = 32;
   static const Invalid_Request = 33;
+  static const Item_Consumed = 34;
 }

@@ -303,8 +303,10 @@ class GameEvents {
 
   static void onPlayerEvent(int event) {
     switch (event) {
+      case PlayerEvent.Item_Consumed:
+        onItemTypeConsumed(serverResponseReader.readUInt16());
+        break;
       case PlayerEvent.Recipe_Crafted:
-        print("PlayerEvent.Recipe_Crafted");
         GameAudio.unlock();
         break;
       case PlayerEvent.Spawn_Started:
@@ -388,6 +390,15 @@ class GameEvents {
         GameAudio.errorSound15();
         break;
     }
+  }
+
+  static void onItemTypeConsumed(int itemType) {
+      switch (itemType) {
+        case ItemType.Consumables_Apple:
+          break;
+        case ItemType.Consumables_Meat:
+          break;
+      }
   }
 
   static void onPlayerEventItemEquipped(int type) {
