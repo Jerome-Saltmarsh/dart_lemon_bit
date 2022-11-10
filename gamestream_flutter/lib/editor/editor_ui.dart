@@ -40,31 +40,9 @@ class EditorUI {
           width2,
           buildRowLightningIcons(),
           width2,
-          buildControlWind(),
+          buildRowWindIcons(),
         ],
       );
-
-  static Widget buildControlWind() {
-    final segments = windValues.length;
-    return watch(GameState.windAmbient, (Wind wind) {
-      final list = <Widget>[];
-      for (var i = 0; i < segments; i++) {
-        final active = wind.index == i;
-        final value = windValues[i];
-        list.add(
-            container(
-              width: 50,
-              height: 50,
-              alignment: Alignment.center,
-              child: buildIconWind(value, active),
-              action: () => GameNetwork.sendClientRequestWeatherSetWind(value),
-              toolTip: 'Wind ${value.name}',
-            )
-        );
-      }
-      return Row(children: list);
-    });
-  }
 
   static Widget buildIconRain(Rain rain) =>
       watch(GameState.rain, (Rain activeRain) {
@@ -116,6 +94,32 @@ class EditorUI {
         );
       });
 
+  static Widget buildIconWind(Wind wind) =>
+      watch(GameState.windAmbient, (Wind activeWind) {
+        const Size = 64.0;
+        final isActive = wind == activeWind;
+        return Stack(
+          children: [
+            onPressed(
+              action: isActive ? null : () => GameNetwork.sendClientRequestWeatherSetWind(wind),
+              child: GameUI.buildAtlasIconType(convertWindToIconType(wind), size: Size),
+            ),
+            if (isActive)
+              Container(
+                width: Size,
+                height: Size,
+                decoration: GameUI.buildDecorationBorder(
+                  colorBorder: Colors.white,
+                  colorFill: Colors.transparent,
+                  width: 2,
+                  borderRadius: 0,
+                ),
+              ),
+          ],
+        );
+      });
+
+
   static int convertRainToIconType(Rain rain){
     switch (rain) {
       case Rain.None:
@@ -138,14 +142,14 @@ class EditorUI {
     }
   }
 
-  static Widget buildIconWind(Wind wind, bool active) {
+  static int convertWindToIconType(Wind wind){
     switch (wind) {
       case Wind.Calm:
-        return GameUI.buildAtlasIconType(IconType.Wind_Calm);
+        return IconType.Wind_Calm;
       case Wind.Gentle:
-        return GameUI.buildAtlasIconType(IconType.Wind_Gentle);
+        return IconType.Wind_Gentle;
       case Wind.Strong:
-        return GameUI.buildAtlasIconType(IconType.Wind_Strong);
+        return IconType.Wind_Strong;
     }
   }
 
@@ -154,6 +158,9 @@ class EditorUI {
 
   static Widget buildRowLightningIcons() =>
       Row(children: Lightning.values.map(buildIconLightning).toList());
+
+  static Widget buildRowWindIcons() =>
+      Row(children: Wind.values.map(buildIconWind).toList());
 
   static Widget buildButtonBreeze() => watch(GameState.weatherBreeze, (bool weatherBreezeOn) {
     return Column(

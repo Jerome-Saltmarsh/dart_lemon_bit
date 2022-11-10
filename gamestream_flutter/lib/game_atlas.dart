@@ -85,12 +85,12 @@ class AtlasIcons {
     IconType.Rain_None: 64 * 0,
     IconType.Rain_Light: 64 * 1,
     IconType.Rain_Heavy: 64 * 2,
-    IconType.Lightning_Off: 64 * 3,
-    IconType.Lightning_Nearby: 64 * 4,
-    IconType.Lightning_On: 64 * 5,
-    IconType.Wind_Calm: 64 * 6,
-    IconType.Wind_Gentle: 64 * 7,
-    IconType.Wind_Strong: 64 * 8,
+    IconType.Lightning_Off: 64 * 0,
+    IconType.Lightning_Nearby: 64 * 3,
+    IconType.Lightning_On: 64 * 4,
+    IconType.Wind_Calm: 64 * 0,
+    IconType.Wind_Gentle: 64 * 5,
+    IconType.Wind_Strong: 64 * 6,
   }[itemType] ?? 0;
 }
 
