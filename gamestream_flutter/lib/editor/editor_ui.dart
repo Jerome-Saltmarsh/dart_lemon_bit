@@ -38,7 +38,7 @@ class EditorUI {
           width2,
           buildRowRainIcons(),
           width2,
-          buildButtonLightning(),
+          buildRowLightningIcons(),
           width2,
           buildControlWind(),
         ],
@@ -91,7 +91,30 @@ class EditorUI {
         );
       });
 
-
+  static Widget buildIconLightning(Lightning lightning) =>
+      watch(GameState.lightning, (Lightning activeLightning) {
+        const Size = 64.0;
+        final isActive = lightning == activeLightning;
+        return Stack(
+          children: [
+            onPressed(
+              action: isActive ? null : () => GameNetwork.sendClientRequestWeatherSetLightning(lightning),
+              child: GameUI.buildAtlasIconType(convertLightningToIconType(lightning), size: Size),
+            ),
+            if (isActive)
+              Container(
+                width: Size,
+                height: Size,
+                decoration: GameUI.buildDecorationBorder(
+                  colorBorder: Colors.white,
+                  colorFill: Colors.transparent,
+                  width: 2,
+                  borderRadius: 0,
+                ),
+              ),
+          ],
+        );
+      });
 
   static int convertRainToIconType(Rain rain){
     switch (rain) {
@@ -104,15 +127,14 @@ class EditorUI {
     }
   }
 
-  // TODO Fix active
-  static Widget buildIconLightning(Lightning lightning, bool active) {
+  static int convertLightningToIconType(Lightning lightning){
     switch (lightning) {
       case Lightning.Off:
-        return GameUI.buildAtlasIconType(IconType.Lightning_Off);
+        return IconType.Lightning_Off;
       case Lightning.Nearby:
-        return GameUI.buildAtlasIconType(IconType.Lightning_Nearby);
+        return IconType.Lightning_Nearby;
       case Lightning.On:
-        return GameUI.buildAtlasIconType(IconType.Lightning_On);
+        return IconType.Lightning_On;
     }
   }
 
@@ -130,29 +152,8 @@ class EditorUI {
   static Widget buildRowRainIcons() =>
       Row(children: Rain.values.map(buildIconRain).toList());
 
-  static Widget buildButtonLightning() {
-    final segments = lightningValues.length;
-    return watch(GameState.lightning, (Lightning lightning) {
-      final list = <Widget>[];
-      for (var i = 0; i < segments; i++) {
-        final active = lightning.index == i;
-        final value = lightningValues[i];
-        list.add(
-            container(
-              action: () => GameNetwork.sendClientRequestWeatherSetLightning(value),
-              toolTip: "Lightning ${value.name}",
-              width: 50,
-              height: 50,
-              alignment: Alignment.center,
-              child: buildIconLightning(value, active),
-            )
-        );
-      }
-      return Row(
-        children: list,
-      );
-    });
-  }
+  static Widget buildRowLightningIcons() =>
+      Row(children: Lightning.values.map(buildIconLightning).toList());
 
   static Widget buildButtonBreeze() => watch(GameState.weatherBreeze, (bool weatherBreezeOn) {
     return Column(

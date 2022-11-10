@@ -18,5 +18,4 @@ class IconType {
   static const Lightning_Off = 22;
   static const Lightning_Nearby = 23;
   static const Lightning_On = 24;
-
 }
