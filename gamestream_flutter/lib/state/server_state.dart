@@ -8,6 +8,7 @@ class ServerState {
   static final playerMaxHealth = Watch(0);
   static final playerGold = Watch(0);
   static final playerExperiencePercentage = Watch(0.0);
+  static final playerLevel = Watch(1);
 }
 
 

@@ -28,7 +28,7 @@ class Player extends Character with ByteWriter {
   var framesSinceClientRequest = 0;
   var textDuration = 0;
   var _experience = 0;
-  var level = 1;
+  var _level = 1;
   var _points = 0;
   var _magic = 0;
   var maxMagic = 100;
@@ -50,6 +50,14 @@ class Player extends Character with ByteWriter {
   Collider? get aimTarget => _aimTarget;
 
   int get gold => _gold;
+
+  int get level => _level;
+
+  set level(int value){
+    assert (value >= 1);
+    if (_level == value) return;
+    writePlayerLevel();
+  }
 
   set gold(int value) {
      if (_gold == value) return;
@@ -109,16 +117,21 @@ class Player extends Character with ByteWriter {
     return null;
   }
 
-  set experience(int value){
+  set experience(int value) {
     if (_experience == value) return;
     assert (value >= 0);
     _experience = value;
+    var levelIncreased = false;
     while (value >= experienceRequiredForNextLevel) {
       value -= experienceRequiredForNextLevel;
       level++;
       game.customOnPlayerLevelGained(this);
+      levelIncreased = true;
     }
     writePlayerExperiencePercentage();
+    if (levelIncreased) {
+      writePlayerEvent(PlayerEvent.Level_Increased);
+    }
   }
 
   bool questToDo(Quest quest) => !questCompleted(quest) && !questInProgress(quest);
@@ -753,7 +766,7 @@ class Player extends Character with ByteWriter {
   void writePlayerLevel(){
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Level);
-    writeInt(level);
+    writeUInt16(level);
   }
 
   void writePlayerAimAngle(){

@@ -1,5 +1,5 @@
 class PlayerEvent {
-  static const Level_Up = 0;
+  static const Level_Increased = 0;
   static const Skill_Upgraded = 1;
   static const Teleported = 2;
   static const Ammo_Acquired = 3;

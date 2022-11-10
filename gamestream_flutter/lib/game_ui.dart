@@ -247,7 +247,6 @@ class GameUI {
       Stack(
         children: [
           Positioned(left: 8, bottom: 50, child: buildColumnTeleport()),
-          buildBottomPlayerExperienceAndHealthBar(),
           buildWatchBool(GameState.player.questAdded, buildContainerQuestUpdated),
         ],
       );
@@ -329,7 +328,8 @@ class GameUI {
                 right: 12,
                 child: Row(
                   children: [
-                    watch(ServerState.playerExperiencePercentage, buildPlayerExperience),
+                    watch(ServerState.playerLevel, buildPlayerLevel),
+                    watch(GamePlayer.weapon, buildAtlasItemType),
                     buildControlPlayerEquippedWeaponAmmunition(),
                   ],
                 ),
@@ -337,8 +337,14 @@ class GameUI {
           ]
       );
 
+  static Widget buildPlayerLevel(int level) =>
+    Tooltip(
+        child: watch(ServerState.playerExperiencePercentage, buildPlayerExperience),
+        message: "Level $level",
+    );
+
   static Widget buildPlayerExperience(double experience) =>
-     Container(
+      Container(
        width: GameUIStyle.ExperienceBarWidth,
        height: GameUIStyle.ExperienceBarHeight,
        color: GameUIStyle.ExperienceBarColorBackground,

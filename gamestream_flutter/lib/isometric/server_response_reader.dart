@@ -224,7 +224,7 @@ class ServerResponseReader with ByteReader {
         GameState.player.weaponCooldown.value = readPercentage();
         break;
       case ApiPlayer.Level:
-       GameState.player.level.value = readInt();
+        ServerState.playerLevel.value = readUInt16();
         break;
       case ApiPlayer.Gold:
         ServerState.playerGold.value = readUInt16();

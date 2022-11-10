@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_gameobjects.dart';
 import 'package:gamestream_flutter/isometric/ui/columns/build_column_selected_node.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
-import 'package:gamestream_flutter/isometric/ui/stacks/build_stack_play_mode.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_editor_dialog.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_editor_tab.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import '../stacks/build_page.dart';
 import '../widgets/build_container.dart';
-
 
 
 Widget buildStackEdit(EditTab activeEditTab) =>

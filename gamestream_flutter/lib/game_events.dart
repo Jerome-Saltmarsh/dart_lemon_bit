@@ -303,6 +303,9 @@ class GameEvents {
 
   static void onPlayerEvent(int event) {
     switch (event) {
+      case PlayerEvent.Level_Increased:
+        GameAudio.buff_1();
+        break;
       case PlayerEvent.Item_Consumed:
         onItemTypeConsumed(serverResponseReader.readUInt16());
         break;
@@ -325,10 +328,6 @@ class GameEvents {
         break;
       case PlayerEvent.Quest_Completed:
         GameAudio.notification_sound_12();
-        break;
-      case PlayerEvent.Level_Up:
-        // audio.buff(GameState.player.x, GameState.player.y);
-        // spawnFloatingText(GameState.player.x, GameState.player.y, 'LEVEL UP');
         break;
       case PlayerEvent.Skill_Upgraded:
         // audio.unlock(GameState.player.x, GameState.player.y);

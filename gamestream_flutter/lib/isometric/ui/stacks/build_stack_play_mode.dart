@@ -1,22 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
-import 'package:gamestream_flutter/isometric/ui/controls/build_control_player_experience.dart';
-import 'package:gamestream_flutter/isometric/ui/controls/build_control_player_health.dart';
 import 'package:gamestream_flutter/library.dart';
 
-
-Widget buildBottomPlayerExperienceAndHealthBar() =>
-  Positioned(bottom: 8, child: Container(
-    width: Engine.screen.width,
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        buildControlPlayerExperience(),
-        width6,
-        buildControlPlayerHealth(),
-      ],
-    ),
-  ));
 
 Widget buildWatchMouseTargetName(){
    return watch(GameState.player.mouseTargetName, (String? name){

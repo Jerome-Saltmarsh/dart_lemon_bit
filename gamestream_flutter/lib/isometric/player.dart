@@ -24,7 +24,6 @@ class Player {
   final mouseTargetName = Watch<String?>(null);
   final mouseTargetAllie = Watch<bool>(false);
   final mouseTargetHealth = Watch(0.0);
-  final level = Watch(1);
   final points = Watch(0);
   final message = Watch("", onChanged: GameEvents.onChangedPlayerMessage);
   var messageTimer = 0;
