@@ -17,7 +17,7 @@ class GamePlayer {
   static var aimTargetName = "";
   static var aimTargetQuantity = 0;
   static var aimTargetPosition = Vector3();
-  static final storeItems = Watch(<int>[], onChanged: GameEvents.onChangedPlayerStoreItems);
+  static final storeItems = Watch(<int>[]);
 
   static double get renderX => GameConvert.convertV3ToRenderX(position);
   static double get renderY => GameConvert.convertV3ToRenderY(position);

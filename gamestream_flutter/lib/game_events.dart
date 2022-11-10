@@ -522,12 +522,4 @@ class GameEvents {
         break;
     }
   }
-
-  static void onChangedPlayerStoreItems(List<int> values){
-    if (values.isEmpty) {
-       ServerState.interactMode.value = InteractMode.None;
-    } else {
-      ServerState.interactMode.value = InteractMode.Trading;
-    }
-  }
 }
