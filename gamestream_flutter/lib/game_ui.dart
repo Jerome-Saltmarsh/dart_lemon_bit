@@ -329,6 +329,11 @@ class GameUI {
                child: watch(ServerState.playerAttributes, buildButtonAttributes)
             ),
             Positioned(
+                left: 50,
+                top: 50,
+                child: buildWatchBool(ClientState.windowVisibleAttributes, buildWindowAttributes),
+            ),
+            Positioned(
                 bottom: 12,
                 right: 12,
                 child: Row(
@@ -342,11 +347,19 @@ class GameUI {
           ]
       );
 
+  static Widget buildWindowAttributes() {
+     return container(
+        color: GameColors.brownDark,
+        child: text("Max Health"),
+     );
+  }
+
   static Widget buildButtonAttributes(int attributes){
     if (attributes == 0) return const SizedBox();
     return buildDialog(
       dialogType: DialogType.UI_Control,
       child: container(
+          action: ClientActions.windowOpenPlayerAttributes,
           alignment: Alignment.center,
           color: GameColors.brownDark,
           child: text("ATTRIBUTES +$attributes", align: TextAlign.center)

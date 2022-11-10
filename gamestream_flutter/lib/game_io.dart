@@ -152,6 +152,11 @@ class GameIO {
        return;
      }
 
+     if (event.physicalKey == PhysicalKeyboardKey.keyB) {
+       ClientActions.windowTogglePlayerAttributes();
+       return;
+     }
+
      if (GameState.playMode) {
        if (event.logicalKey == LogicalKeyboardKey.enter) {
          GameActions.messageBoxShow();
