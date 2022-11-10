@@ -36,7 +36,7 @@ class EditorUI {
         children: [
           buildControlTime(),
           width2,
-          buildToggleRain(),
+          buildRowRainIcons(),
           width2,
           buildButtonLightning(),
           width2,
@@ -127,14 +127,8 @@ class EditorUI {
     }
   }
 
-  static Widget buildToggleRain() =>
-      Row(
-        children: [
-          buildIconRain(Rain.None),
-          buildIconRain(Rain.Light),
-          buildIconRain(Rain.Heavy),
-        ],
-      );
+  static Widget buildRowRainIcons() =>
+      Row(children: Rain.values.map(buildIconRain).toList());
 
   static Widget buildButtonLightning() {
     final segments = lightningValues.length;
