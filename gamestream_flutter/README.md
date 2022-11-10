@@ -32,11 +32,11 @@
 [ ] improve grid invisibility
 [ ] recipes
 [ ] smith (for crafting recipes)
-[ ] consume food to heal
 [ ] ui error message
+[ ] fix editor icons
 
 [current]
-[ ] fix editor icons
+[ ] consume food to heal
 
 
 10.11.2022
