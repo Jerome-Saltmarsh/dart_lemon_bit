@@ -432,4 +432,16 @@ class GameUI {
       ]);
     });
   }
+
+  static Decoration buildDecorationBorder({
+    required Color colorBorder,
+    required Color colorFill,
+    required double width,
+    double borderRadius = 0.0,
+  }) =>
+    BoxDecoration(
+        border: Border.all(color: colorBorder, width: width),
+        borderRadius: BorderRadius.circular(borderRadius),
+        color: colorFill
+    );
 }

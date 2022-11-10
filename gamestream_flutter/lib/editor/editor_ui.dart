@@ -66,12 +66,32 @@ class EditorUI {
     });
   }
 
-  static Widget buildIconRain(Rain rain) {
-    return onPressed(
-        action: () => GameNetwork.sendClientRequestWeatherSetRain(rain),
-        child: GameUI.buildAtlasIconType(convertRainToIconType(rain), size: 64),
-    );
-  }
+  static Widget buildIconRain(Rain rain) =>
+      watch(GameState.rain, (Rain activeRain) {
+        const Size = 64.0;
+        final isActive = rain == activeRain;
+        return Stack(
+          children: [
+            onPressed(
+              action: isActive ? null : () => GameNetwork.sendClientRequestWeatherSetRain(rain),
+              child: GameUI.buildAtlasIconType(convertRainToIconType(rain), size: Size),
+            ),
+            if (isActive)
+              Container(
+                 width: Size,
+                 height: Size,
+                 decoration: GameUI.buildDecorationBorder(
+                     colorBorder: Colors.white,
+                     colorFill: Colors.transparent,
+                     width: 2,
+                     borderRadius: 0,
+                 ),
+              ),
+          ],
+        );
+      });
+
+
 
   static int convertRainToIconType(Rain rain){
     switch (rain) {
