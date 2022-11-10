@@ -271,6 +271,7 @@ class Player extends Character with ByteWriter {
       position: this,
       type: itemType,
       quantity: inventoryGetItemQuantity(index),
+      timer: 3000,
     );
     inventorySetEmptyAtIndex(index);
     writePlayerEvent(PlayerEvent.Item_Dropped);
