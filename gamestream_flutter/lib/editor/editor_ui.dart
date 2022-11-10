@@ -86,32 +86,14 @@ class EditorUI {
       );
 
   static Widget buildIconLightning(Lightning lightning) =>
-      watch(GameState.lightning, (Lightning activeLightning) {
-        const Size = 64.0;
-        final isActive = lightning == activeLightning;
-        return Tooltip(
-          message: "${lightning.name} Lightning",
-          child: Stack(
-            children: [
-              onPressed(
-                action: isActive ? null : () => GameNetwork.sendClientRequestWeatherSetLightning(lightning),
-                child: GameUI.buildAtlasIconType(convertLightningToIconType(lightning), size: Size),
-              ),
-              if (isActive)
-                Container(
-                  width: Size,
-                  height: Size,
-                  decoration: GameUI.buildDecorationBorder(
-                    colorBorder: Colors.white,
-                    colorFill: Colors.transparent,
-                    width: 2,
-                    borderRadius: 0,
-                  ),
-                ),
-            ],
-          ),
-        );
-      });
+      watch(GameState.lightning, (Lightning activeLightning) =>
+          buildIconWeatherControl(
+            tooltip: '${lightning.name} Lightning',
+            action: () => GameNetwork.sendClientRequestWeatherSetLightning(lightning),
+            icon: GameUI.buildAtlasIconType(convertLightningToIconType(lightning), size: 64),
+            isActive: lightning == activeLightning,
+          )
+      );
 
   static Widget buildIconWind(Wind wind) =>
       watch(GameState.windAmbient, (Wind activeWind) {
