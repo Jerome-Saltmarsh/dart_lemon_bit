@@ -6,10 +6,13 @@ import 'package:typedef/json.dart';
 
 import '../classes/gameobject.dart';
 import '../classes/library.dart';
-import '../common/node_type.dart';
 
 Scene convertStringToScene(String value, String name) =>
   convertJsonToScene(jsonDecode(value), name);
+
+Object? buildSceneReviver(Object? key, Object? value) {
+  return '';
+}
 
 Scene convertJsonToScene(Json json, String name) {
   final height = json.getInt('grid-z');
@@ -19,41 +22,32 @@ Scene convertJsonToScene(Json json, String name) {
   final List jsonGameObjects = json['gameobjects'] ?? [];
   final nodeTypesDynamic = (json['grid-types'] as List);
   final nodeOrientations = (json['grid-orientations'] as List);
-  final types = Uint8List(total);
-  final orientations = Uint8List(total);
-
-
+  final nodeTypes = Uint8List(total);
+  final nodeOrientation = Uint8List(total);
   final spawnNodesDynamic = json['spawn-nodes'];
-
+  assert (nodeTypesDynamic.length == total);
   final spawnNodes = Uint16List(spawnNodesDynamic == null ? 0 : (spawnNodesDynamic as List).length);
 
   for (var i = 0; i < spawnNodes.length; i++) {
      spawnNodes[i] = spawnNodesDynamic[i];
   }
 
-  for(var i = 0; i < total; i++){
-    assert (nodeTypesDynamic.length == total);
-    var nodeType = nodeTypesDynamic[i];
-    final nodeOrientation = nodeOrientations[i];
-
-    if (nodeType == NodeType.Cottage_Roof){
-      nodeType = NodeType.Bau_Haus_2;
-    }
-    if (nodeType == NodeType.Brick_Top){
-      nodeType = NodeType.Brick_2;
-    }
-
-    types[i] = nodeType;
-    if (NodeType.supportsOrientation(nodeType, nodeOrientation)){
-      orientations[i] = nodeOrientation;
-    } else {
-      orientations[i] = NodeType.getDefaultOrientation(nodeType);
-    }
+  for (var i = 0; i < total; i++) {
+    nodeTypes[i] = nodeTypesDynamic[i];
+    nodeOrientation[i] = nodeOrientations[i];
+    //
+    // nodeTypes[i] = nodeType;
+    // if (NodeType.supportsOrientation(nodeType, nodeOrientation)){
+    //   nodeOrientation[i] = nodeOrientation;
+    // } else {
+    //   nodeOrientation[i] = NodeType.getDefaultOrientation(nodeType);
+    // }
   }
+
   return Scene(
     name: name,
-    nodeOrientations: orientations,
-    nodeTypes: types,
+    nodeOrientations: nodeOrientation,
+    nodeTypes: nodeTypes,
     gridRows: rows,
     gridHeight: height,
     gridColumns: columns,

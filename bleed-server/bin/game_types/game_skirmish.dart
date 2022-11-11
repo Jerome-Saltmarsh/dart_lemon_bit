@@ -20,31 +20,7 @@ class GameSkirmish extends Game {
   @override
   int get gameType => GameType.Skirmish;
 
-  GameSkirmish({required Scene scene}) : super(scene) {
-
-    final volume = scene.gridVolume;
-    for (var i = 0; i < volume; i++){
-        if (scene.nodeTypes[i] == NodeType.Spawn) {
-          final instance = spawnZombieAtIndex(i);
-          instance.maxHealth = configZombieHealth;
-          instance.health = configZombieHealth;
-          instance.respawn = configAIRespawnFrames;
-          instance.maxSpeed = configZombieSpeed;
-          continue;
-        }
-        if (scene.nodeTypes[i] == NodeType.Spawn_Weapon) {
-          spawnGameObjectAtIndex(
-              index: i,
-              type: getRandomItemType(),
-          );
-          continue;
-        }
-        if (scene.nodeTypes[i] == NodeType.Spawn_Player) {
-          playerSpawnPoints.add(i);
-          continue;
-        }
-    }
-  }
+  GameSkirmish({required Scene scene}) : super(scene);
 
   int getRandomItemType() => 0;
 

@@ -789,30 +789,13 @@ class Player extends Character with ByteWriter {
       writePlayerExperiencePercentage();
       writePlayerHealth();
       writePlayerMaxHealth();
+      writePlayerAlive();
     }
 
     if (!sceneDownloaded){
       downloadScene();
     }
   }
-
-  // void writePlayerWeaponType(){
-  //   writeByte(ServerResponse.Player);
-  //   writeByte(ApiPlayer.Weapon_Type);
-  //   writeUInt16(weaponType);
-  // }
-  //
-  // void writePlayerWeaponRounds(){
-  //   writeByte(ServerResponse.Player);
-  //   writeByte(ApiPlayer.Weapon_Rounds);
-  //   writeInt(0);
-  // }
-  //
-  // void writePlayerWeaponCapacity(){
-  //   writeByte(ServerResponse.Player);
-  //   writeByte(ApiPlayer.Weapon_Capacity);
-  //   writeInt(0);
-  // }
 
   void writePlayerWeaponCooldown() {
     writeByte(ServerResponse.Player);
