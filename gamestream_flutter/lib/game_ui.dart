@@ -332,12 +332,14 @@ class GameUI {
                       watch(ServerState.playerLevel, buildPlayerLevel),
                       watch(GamePlayer.weapon, buildAtlasItemType),
                       buildControlPlayerEquippedWeaponAmmunition(),
+                      buildAtlasIconType(IconType.Inventory, scale: 2),
                     ],
                   ),
                 ),
             ),
           ]
       );
+
 
   static Widget buildWindowAttributes() =>
      watch(ServerState.playerAttributes, (int attributes){

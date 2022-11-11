@@ -8,11 +8,7 @@ import '../classes/gameobject.dart';
 import '../classes/library.dart';
 
 Scene convertStringToScene(String value, String name) =>
-  convertJsonToScene(jsonDecode(value), name);
-
-Object? buildSceneReviver(Object? key, Object? value) {
-  return '';
-}
+  convertJsonToScene(json.decode(value), name);
 
 Scene convertJsonToScene(Json json, String name) {
   final height = json.getInt('grid-z');

@@ -69,6 +69,7 @@ class AtlasIcons {
     IconType.Wind_Calm: 128,
     IconType.Wind_Gentle: 128,
     IconType.Wind_Strong: 128,
+    IconType.Inventory: 64,
   }[itemType] ?? 0;
 
   static double getSrcY(int itemType) => const  <int, double> {
@@ -91,6 +92,7 @@ class AtlasIcons {
     IconType.Wind_Calm: 64 * 0,
     IconType.Wind_Gentle: 64 * 5,
     IconType.Wind_Strong: 64 * 6,
+    IconType.Inventory: 32,
   }[itemType] ?? 0;
 }
 

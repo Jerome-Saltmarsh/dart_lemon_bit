@@ -38,6 +38,7 @@ class DarkAgeScenes {
 
   Future load() async {
       print('Loading dark age scenes');
+      final start = DateTime.now();
       farm = await loadScene('farm');
       farmA = await loadScene('farm-a');
       farmB = await loadScene('farm-b');
@@ -59,6 +60,9 @@ class DarkAgeScenes {
       mountains_3 = await loadScene('mountains-3');
       mountains_4 = await loadScene('mountains-4');
       shrine_1 = await loadScene('shrine-1');
+
+      final ms = DateTime.now().difference(start).inMilliseconds;
+      print("scenes took $ms ms to load");
 
       final emptyList = Uint8List(0);
       empty = Scene(

@@ -12,8 +12,6 @@
 [ ] trade with other players
 [ ] editor - gameobjects
 [ ] stash
-[ ] forge (for crafting materials)
-[ ] gameobject disappear after timeout
 [ ] player-charge-attack
 [ ] mini-map close-up
 [ ] select skin color
@@ -21,14 +19,13 @@
 [ ] fix animation fire handgun
 [ ] item weight
 [ ] inventory max weight
-[ ] optimize network - compile all characters into single server_response
 [ ] fix editor add remove columns
 [ ] highlight cursor gameobject item
 [ ] engine improve grid invisibility
 [ ] ui error message
 [ ] hotkeys to change weapons
 [ ] player attributes
-[ ] ui inventory icon
+[ ] skills
 
 [content]
 [ ] scene cemetery
@@ -42,11 +39,14 @@
 [ ] character-type skeleton
 [ ] character-type ranger
 [ ] character-type goblin
+[ ] character-type vampire
+[ ] character-type wolf
 
 [current]
-[ ] optimize spawn nodes
+[ ] ui inventory icon
 
 11.11.2022
+[x] optimize spawn nodes
 [x] fix editor icons
 [x] fix character state changing
 

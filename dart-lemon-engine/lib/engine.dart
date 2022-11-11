@@ -1295,8 +1295,8 @@ class Engine {
   }) =>
       Container(
         alignment: Alignment.center,
-        width: srcWidth,
-        height: srcHeight,
+        width: srcWidth * scale,
+        height: srcHeight * scale,
         child: buildCanvas(
             paint: (Canvas canvas, Size size) =>
                 Engine.renderExternalCanvas(
