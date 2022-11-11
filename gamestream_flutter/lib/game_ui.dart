@@ -332,13 +332,20 @@ class GameUI {
                       watch(ServerState.playerLevel, buildPlayerLevel),
                       watch(GamePlayer.weapon, buildAtlasItemType),
                       buildControlPlayerEquippedWeaponAmmunition(),
-                      buildAtlasIconType(IconType.Inventory, scale: 2),
+                      buildButtonInventory(),
                     ],
                   ),
                 ),
             ),
           ]
       );
+
+  static Widget buildButtonInventory() {
+    return onPressed(
+                        action: GameNetwork.sendClientRequestInventoryToggle,
+                        child: buildAtlasIconType(IconType.Inventory, scale: 2),
+                    );
+  }
 
 
   static Widget buildWindowAttributes() =>

@@ -43,9 +43,9 @@
 [ ] character-type wolf
 
 [current]
-[ ] ui inventory icon
 
 11.11.2022
+[x] ui inventory icon
 [x] optimize spawn nodes
 [x] fix editor icons
 [x] fix character state changing
