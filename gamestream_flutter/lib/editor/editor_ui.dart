@@ -145,6 +145,20 @@ class EditorUI {
   static Widget buildRowWindIcons() =>
       Row(children: Wind.values.map(buildIconWind).toList());
 
+  static String convertHourToString(int hour){
+     if (hour < 0) return 'invalid time';
+     if (hour == 0) return 'midnight';
+     if (hour < 3) return 'night';
+     if (hour < 6) return 'early morning';
+     if (hour < 10) return 'morning';
+     if (hour < 12) return 'late morning';
+     if (hour == 12) return 'midday';
+     if (hour < 15) return 'afternoon';
+     if (hour < 17) return 'late afternoon';
+     if (hour < 19) return 'evening';
+     return 'night';
+  }
+
   static Widget buildControlTime() {
     const totalWidth = 300.0;
     const buttonWidth = totalWidth / 24.0;
@@ -155,7 +169,7 @@ class EditorUI {
       for (var i = 0; i <= hours; i++) {
         buttons1.add(
           Tooltip(
-            message: i.toString(),
+            message: '$i - ${convertHourToString(i)}',
             child: container(
               width: buttonWidth,
               color: purple4,
@@ -167,7 +181,7 @@ class EditorUI {
       for (var i = hours + 1; i < 24; i++) {
         buttons2.add(
           Tooltip(
-            message: i.toString(),
+            message: '$i - ${convertHourToString(i)}',
             child: container(
               width: buttonWidth,
               color: purple3,
