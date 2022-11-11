@@ -16,7 +16,11 @@ class GameDarkAge extends Game {
   @override
   int get gameType => GameType.Dark_Age;
 
-  GameDarkAge(Scene scene, this.environment) : super(scene);
+  GameDarkAge(Scene scene, this.environment) : super(scene) {
+    for (final index in scene.spawnPoints){
+      spawnZombies(index: index, total: 4);
+    }
+  }
 
   @override
   void customOnCharacterKilled(Character target, dynamic src) {

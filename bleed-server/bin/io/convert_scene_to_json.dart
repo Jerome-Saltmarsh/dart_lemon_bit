@@ -18,10 +18,22 @@ Json convertSceneToJson(Scene scene) => Json()..
   ['grid-columns'] = scene.gridColumns..
   ['grid-types'] = scene.nodeTypes..
   ['grid-orientations'] = scene.nodeOrientations..
+  ['spawn-nodes'] = getSceneSpawns(scene)..
   ['gameobjects'] = scene.gameObjects
     .where(isPersistable)
     .map(convertGameObjectToJson)
     .toList();
+
+List<int> getSceneSpawns(Scene scene) {
+  final volume = scene.gridVolume;
+  final spawnPoints = <int>[];
+  final nodeTypes = scene.nodeTypes;
+  for (var i = 0; i < volume; i++) {
+    if (nodeTypes[i] != NodeType.Spawn) continue;
+    spawnPoints.add(i);
+  }
+  return spawnPoints;
+}
 
 bool isPersistable(GameObject gameObject) =>
     ItemType.isPersistable(gameObject.type);

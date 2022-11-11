@@ -1,5 +1,7 @@
+[engine]
 [ ] cache region
 [ ] fix android app title gamestream_flutter
+[ ] add mobile share (whatsapp, facebook) button
 [ ] optimize front end - do not use objects to store projectiles
 [ ] optimize front end - do not use objects to store characters
 [ ] optimize front end - do not use objects to store gameobjects
@@ -9,9 +11,6 @@
 [ ] talk with other players
 [ ] trade with other players
 [ ] editor - gameobjects
-[ ] character-type fallen
-[ ] character-type skeleton
-[ ] character-type ranger
 [ ] stash
 [ ] forge (for crafting materials)
 [ ] gameobject disappear after timeout
@@ -24,23 +23,31 @@
 [ ] inventory max weight
 [ ] optimize network - compile all characters into single server_response
 [ ] fix editor add remove columns
-[ ] add mobile share (whatsapp, facebook) button
 [ ] highlight cursor gameobject item
-[ ] improve grid invisibility
-[ ] recipes
-[ ] smith (for crafting recipes)
+[ ] engine improve grid invisibility
 [ ] ui error message
-[ ] fix editor icons
-[ ] character butterfly
-[ ] character bird
-[ ] character chicken
-[ ] scene cemetery
 [ ] hotkeys to change weapons
 [ ] player attributes
+[ ] ui inventory icon
+
+[content]
+[ ] scene cemetery
+[ ] scene cave
+[ ] scene forest
+[ ] scene wilderness
+[ ] scene swamp
+[ ] character-butterfly
+[ ] character-bird
+[ ] character-chicken
+[ ] character-type skeleton
+[ ] character-type ranger
+[ ] character-type goblin
 
 [current]
+[ ] optimize spawn nodes
 
 11.11.2022
+[x] fix editor icons
 [x] fix character state changing
 
 10.11.2022

@@ -69,9 +69,7 @@ class DarkAgeScenes {
           gridRows: 0,
           nodeOrientations: emptyList,
           nodeTypes: emptyList,
-          spawnPointAmount: emptyList,
-          spawnPointIndexes: emptyList,
-          spawnPointTypes: emptyList,
+          spawnPoints: Uint16List(0),
       );
       print("Loading dark age scenes finished");
   }

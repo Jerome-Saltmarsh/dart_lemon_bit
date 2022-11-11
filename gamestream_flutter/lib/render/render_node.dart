@@ -150,13 +150,13 @@ class RenderNode {
         );
         break;
       case NodeOrientation.Half_South:
-        renderStandardNode(
+        renderStandardNodeShaded(
           srcX: AtlasNodeX.Bau_Haus_Half,
           srcY: AtlasNodeY.Bau_Haus_Half_South,
         );
         break;
       case NodeOrientation.Half_West:
-        renderStandardNode(
+        renderStandardNodeShaded(
           srcX: AtlasNodeX.Bau_Haus_Half,
           srcY: AtlasNodeY.Bau_Haus_Half_West,
         );

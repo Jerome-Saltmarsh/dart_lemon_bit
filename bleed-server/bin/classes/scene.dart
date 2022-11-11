@@ -11,6 +11,7 @@ var pathFindSearchID = 0;
 class Scene {
   late Uint8List nodeTypes;
   late Uint8List nodeOrientations;
+  late Uint16List nodeSpawns;
 
   var gridHeight = 0;
   var gridRows = 0;
@@ -21,9 +22,7 @@ class Scene {
   var dirty = false;
   final List<GameObject> gameObjects;
 
-  final Uint8List spawnPointIndexes;
-  final Uint8List spawnPointTypes;
-  final Uint8List spawnPointAmount;
+  final Uint16List spawnPoints;
 
   late double gridRowLength;
   late double gridColumnLength;
@@ -40,9 +39,7 @@ class Scene {
     required this.gridRows,
     required this.gridColumns,
     required this.gameObjects,
-    required this.spawnPointIndexes,
-    required this.spawnPointTypes,
-    required this.spawnPointAmount,
+    required this.spawnPoints,
   }) {
     refreshGridMetrics();
   }

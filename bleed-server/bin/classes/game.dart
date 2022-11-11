@@ -1539,7 +1539,16 @@ abstract class Game {
     return projectile;
   }
 
-  Zombie spawnZombieAtIndex(int i){
+  void spawnZombies({required int index, required int total}){
+    for (var j = 0; j < 4; j++){
+      spawnZombieAtIndex(index);
+    }
+  }
+
+  Zombie spawnZombieAtIndex(int i) {
+    if (i >= scene.gridVolume) {
+      throw Exception('game.spawnZombieAtIndex($i) \ni >= scene.gridVolume');
+    }
     final indexZ = i ~/ scene.gridArea;
     var remainder = i - (indexZ * scene.gridArea);
     final indexRow = remainder ~/ scene.gridColumns;
@@ -1553,6 +1562,10 @@ abstract class Game {
       team: 100,
       damage: 1,
     );
+    zombie.x += giveOrTake(10);
+    zombie.y += giveOrTake(10);
+    zombie.spawnX = zombie.x;
+    zombie.spawnY = zombie.y;
     zombie.spawnNodeIndex = i;
     return zombie;
   }
