@@ -373,7 +373,7 @@ class GameUI {
                         Positioned(
                           right: 5,
                           bottom: 5,
-                          child: buildInventoryAware(builder: () => text(ServerQuery.getItemQuantity(ItemType.getConsumeType(thisItemType)), italic: true, color: Colors.white70))
+                          child: buildInventoryAware(builder: () => text(ServerQuery.getItemQuantity(ItemType.getConsumeType(thisItemType)) ~/ ItemType.getConsumeAmount(thisItemType), italic: true, color: Colors.white70))
                         ),
                       if (playerWeaponType == thisItemType)
                         Container(
