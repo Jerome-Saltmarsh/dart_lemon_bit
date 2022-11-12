@@ -14,4 +14,10 @@ class ServerQuery {
      }
      return total;
   }
+
+  static int getItemTypeConsumesRemaining(int itemType) {
+    final consumeAmount = ItemType.getConsumeAmount(itemType);
+    if (consumeAmount <= 0) return 0;
+    return getItemQuantity(ItemType.getConsumeType(itemType)) ~/ consumeAmount;
+  }
 }
