@@ -22,4 +22,8 @@ class ClientActions {
 
   static void playSoundWindow() =>
       GameAudio.click_sound_8(1);
+
+  static void assignHotKey1(int value){
+     ClientState.hotKey1.value = value;
+  }
 }

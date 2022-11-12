@@ -345,31 +345,44 @@ class GameUI {
         ],
       );
 
-  static Widget buildStackHotKey(Watch<int> value, int index) =>
-      watch(GamePlayer.weapon, (int playerWeaponType) =>
-          watch(value, (int thisItemType) =>
-            Stack(
-                children: [
-                  buildAtlasIconType(IconType.Slot, scale: 2.0),
-                  buildAtlasItemType(thisItemType, scale: 1.8),
-                  Positioned(
-                      left: 10,
-                      top: 10,
-                      child: text(index),
-                  ),
-                  if (playerWeaponType == thisItemType)
-                    Container(
-                      width: 64,
-                      height: 64,
-                      decoration: buildDecorationBorder(
-                          colorBorder: Colors.white,
-                          colorFill: Colors.transparent,
-                          width: 2,
+  static Widget buildStackHotKey(Watch<int> watchItemType, int index) =>
+      watch(watchItemType, (int thisItemType) =>
+        DragTarget<int>(
+          onWillAccept: (int? data) {
+            return data != null;
+          },
+          onAccept: (int? data){
+            if (data == null) return;
+            watchItemType.value = ServerState.inventory[data];
+          },
+          builder: (context, data, rejectedData) =>
+            watch(GamePlayer.weapon, (int playerWeaponType) =>
+                onPressed(
+                  action: () => ServerActions.equipItemType(thisItemType),
+                  child: Stack(
+                    children: [
+                      buildAtlasIconType(IconType.Slot, scale: 2.0),
+                      buildAtlasItemType(thisItemType, scale: 1.8),
+                      Positioned(
+                        left: 5,
+                        top: 5,
+                        child: text(index),
                       ),
-                    )
-                ],
-              )
-          )
+                      if (playerWeaponType == thisItemType)
+                        Container(
+                          width: 64,
+                          height: 64,
+                          decoration: buildDecorationBorder(
+                            colorBorder: Colors.white,
+                            colorFill: Colors.transparent,
+                            width: 3,
+                          ),
+                        )
+                    ],
+                  ),
+                )
+            )
+        )
       );
 
   static Widget buildButtonInventory() {

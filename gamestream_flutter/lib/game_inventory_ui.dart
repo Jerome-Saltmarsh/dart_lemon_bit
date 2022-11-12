@@ -116,8 +116,6 @@ class GameInventoryUI {
 
   static Widget buildContainerInventory() =>
       Container(
-        // color: brownLight,
-        // width: Inventory_Width,
         height: 400,
         child: Stack(
           children: [
