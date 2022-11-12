@@ -11,7 +11,7 @@ class GameInventoryUI {
   static const Slot_Scale = 1.5;
   static const Scaled_Slot_Size = Slot_Size * Slot_Scale;
   static const Slot_Item_Scale = Slot_Scale * 0.9;
-  static const Equipped_Item_Scale = Slot_Scale * Engine.GoldenRatio_1_618;
+  static const Equipped_Item_Scale = Slot_Scale;
   static const Columns_Per_Row = 7;
   static const Inventory_Width = Slot_Size * Slot_Scale * Columns_Per_Row;
   static final atlasIconSlotEmpty = GameUI.buildIconSlotEmpty();
