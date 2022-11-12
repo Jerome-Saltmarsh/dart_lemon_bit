@@ -510,10 +510,10 @@ class GameEvents {
     ClientActions.playSoundWindow();
     switch (value) {
       case InteractMode.Inventory:
-        GameCamera.translateX = 200;
+        GameCamera.translateX = GameInventoryUI.Inventory_Width * 0.5;
         break;
       case InteractMode.Talking:
-        GameCamera.translateX = -200;
+        GameCamera.translateX = -GameInventoryUI.Inventory_Width * 0.5;
         break;
       case InteractMode.Trading:
         GameCamera.translateX = 0;

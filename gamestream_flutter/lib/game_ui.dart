@@ -358,6 +358,7 @@ class GameUI {
           builder: (context, data, rejectedData) =>
             watch(GamePlayer.weapon, (int playerWeaponType) =>
                 onPressed(
+                  onRightClick: () => watchItemType.value = ItemType.Empty,
                   action: () => ServerActions.equipItemType(thisItemType),
                   child: Stack(
                     children: [
