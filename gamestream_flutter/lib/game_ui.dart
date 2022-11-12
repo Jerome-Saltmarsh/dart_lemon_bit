@@ -327,8 +327,8 @@ class GameUI {
                     children: [
                       buildRowHotKeys(),
                       watch(ServerState.playerLevel, buildPlayerLevel),
-                      watch(GamePlayer.weapon, buildAtlasItemType),
-                      buildControlPlayerEquippedWeaponAmmunition(),
+                      // watch(GamePlayer.weapon, buildAtlasItemType),
+                      // buildControlPlayerEquippedWeaponAmmunition(),
                       buildButtonInventory(),
                     ],
                   ),
@@ -345,17 +345,32 @@ class GameUI {
         ],
       );
 
-  static Stack buildStackHotKey(Watch<int> value, int index) => Stack(
-          children: [
-            buildAtlasIconType(IconType.Slot, scale: 2.0),
-            watch(value, (int itemType) => buildAtlasItemType(itemType, scale: 1.8)),
-            Positioned(
-                left: 10,
-                top: 10,
-                child: text(index),
-            ),
-          ],
-        );
+  static Widget buildStackHotKey(Watch<int> value, int index) =>
+      watch(GamePlayer.weapon, (int playerWeaponType) =>
+          watch(value, (int thisItemType) =>
+            Stack(
+                children: [
+                  buildAtlasIconType(IconType.Slot, scale: 2.0),
+                  buildAtlasItemType(thisItemType, scale: 1.8),
+                  Positioned(
+                      left: 10,
+                      top: 10,
+                      child: text(index),
+                  ),
+                  if (playerWeaponType == thisItemType)
+                    Container(
+                      width: 64,
+                      height: 64,
+                      decoration: buildDecorationBorder(
+                          colorBorder: Colors.white,
+                          colorFill: Colors.transparent,
+                          width: 2,
+                      ),
+                    )
+                ],
+              )
+          )
+      );
 
   static Widget buildButtonInventory() {
     return onPressed(
