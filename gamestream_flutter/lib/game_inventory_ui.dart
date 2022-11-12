@@ -103,11 +103,11 @@ class GameInventoryUI {
       onEnter: (event){
         Engine.mousePosition.x = event.position.dx;
         Engine.mousePosition.y = event.position.dy;
-        ClientState.itemTypeHover.value = itemType;
+        ClientState.hoverItemType.value = itemType;
       },
       onExit: (_){
-        if (ClientState.itemTypeHover.value == itemType){
-          ClientState.itemTypeHover.value = ItemType.Empty;
+        if (ClientState.hoverItemType.value == itemType){
+          ClientState.hoverItemType.value = ItemType.Empty;
         }
       },
       child: buildItemTypeAtlasImage(itemType: itemType, scale: scale),
@@ -136,8 +136,8 @@ class GameInventoryUI {
 
   static Widget buildStackInventoryItems(int reads) {
      final positioned = <Widget>[];
-     for (var i = 0; i < GamePlayer.inventory.length; i++){
-         if (GamePlayer.inventory[i] == ItemType.Empty) continue;
+     for (var i = 0; i < ServerState.inventory.length; i++){
+         if (ServerState.inventory[i] == ItemType.Empty) continue;
          positioned.add(
            buildPositionInventoryItem(i)
          );
@@ -148,7 +148,7 @@ class GameInventoryUI {
   }
 
   static Widget buildPositionInventoryItem(int index){
-    final itemType = GamePlayer.inventory[index];
+    final itemType = ServerState.inventory[index];
     return buildPositionGridItem(
       index: index,
       child: GestureDetector(
@@ -160,16 +160,20 @@ class GameInventoryUI {
           onEnter: (event){
             Engine.mousePosition.x = event.position.dx;
             Engine.mousePosition.y = event.position.dy;
-            ClientState.itemTypeHover.value = itemType;
+            ClientState.hoverItemType.value = itemType;
+            ClientState.hoverIndex.value = index;
           },
           onExit: (_){
-            if (ClientState.itemTypeHover.value == itemType){
-              ClientState.itemTypeHover.value = ItemType.Empty;
+            if (ClientState.hoverItemType.value == itemType){
+              ClientState.hoverItemType.value = ItemType.Empty;
+            }
+            if (ClientState.hoverIndex.value == index){
+              ClientState.hoverIndex.value = -1;
             }
           },
           child: Draggable<int>(
             onDraggableCanceled: (velocity, offset){
-              if (GameUI.mouseOverDialogType.value != DialogType.None) return;
+              if (ClientState.hoverDialogType.value != DialogType.None) return;
               GameNetwork.sendClientRequestInventoryDrop(index);
             },
             hitTestBehavior: HitTestBehavior.opaque,
@@ -181,11 +185,11 @@ class GameInventoryUI {
                   clipBehavior: Clip.none,
                   children: [
                     buildItemTypeAtlasImage(itemType: itemType, scale: Slot_Item_Scale),
-                    if (GamePlayer.inventoryQuantity[index] > 1)
+                    if (ServerState.inventoryQuantity[index] > 1)
                       Positioned(
                           bottom: -5,
                           right: -5,
-                          child: text(GamePlayer.inventoryQuantity[index], size: 14),
+                          child: text(ServerState.inventoryQuantity[index], size: 14),
                       ),
                   ],
                 ),
@@ -199,7 +203,7 @@ class GameInventoryUI {
 
   static Widget buildStackSlotGrid() {
     final children = <Widget>[];
-    for (var i = 0; i < GamePlayer.inventory.length; i++) {
+    for (var i = 0; i < ServerState.inventory.length; i++) {
        children.add(buildPositionedGridSlot(i));
     }
     return Stack(
@@ -267,8 +271,8 @@ class GameInventoryUI {
 
     return Positioned(
       top:  Engine.mousePosition.y + 25,
-      left:  GameUI.mouseOverDialogTrade ? max(Engine.mousePosition.x - 100, 50) : null,
-      right: GameUI.mouseOverDialogInventory ? max((Engine.screen.width - Engine.mousePosition.x) - 100, 50) : null,
+      left:  ClientState.hoverDialogDialogIsTrade ? max(Engine.mousePosition.x - 100, 50) : null,
+      right: ClientState.hoverDialogIsInventory ? max((Engine.screen.width - Engine.mousePosition.x) - 100, 50) : null,
       child: Container(
         padding: const EdgeInsets.all(12),
         color: brownDark,
@@ -282,9 +286,9 @@ class GameInventoryUI {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(child: text(ItemType.getName(itemType), color: Colors.blue)),
-                if (GameUI.mouseOverDialogTrade)
+                if (ClientState.hoverDialogDialogIsTrade)
                   text("${ItemType.getBuyPrice(itemType)} Gold", color: ServerQuery.playerCanAffordToBuy(itemType) ? GameColors.yellow : GameColors.yellowDark),
-                if (GameUI.mouseOverDialogInventory && GamePlayer.interactModeTrading)
+                if (ClientState.hoverDialogIsInventory && GamePlayer.interactModeTrading)
                   text("${ItemType.getSellPrice(itemType)} Gold", color: GameColors.yellowDark),
               ],
             ),
@@ -301,15 +305,15 @@ class GameInventoryUI {
 
             height16,
 
-            if (GameUI.mouseOverDialogTrade)
+            if (ClientState.hoverDialogDialogIsTrade)
               text("left click to buy", color: GameColors.inventoryHint),
-            if (GameUI.mouseOverDialogInventory && ItemType.isTypeEquippable(itemType))
+            if (ClientState.hoverDialogIsInventory && ItemType.isTypeEquippable(itemType))
               text("left click to equip", color: GameColors.inventoryHint),
-            if (GameUI.mouseOverDialogInventory && ItemType.isFood(itemType))
+            if (ClientState.hoverDialogIsInventory && ItemType.isFood(itemType))
               text("left click to eat", color: GameColors.inventoryHint),
-            if (GamePlayer.interactModeTrading && GameUI.mouseOverDialogInventory)
+            if (GamePlayer.interactModeTrading && ClientState.hoverDialogIsInventory)
               text("right click to sell", color: GameColors.inventoryHint),
-            if (!GamePlayer.interactModeTrading && GameUI.mouseOverDialogInventory)
+            if (!GamePlayer.interactModeTrading && ClientState.hoverDialogIsInventory)
               text("right click to drop", color: GameColors.inventoryHint),
           ],
         ),

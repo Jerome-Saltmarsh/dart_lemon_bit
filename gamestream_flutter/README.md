@@ -23,7 +23,6 @@
 [ ] highlight cursor gameobject item
 [ ] engine improve grid invisibility
 [ ] ui error message
-[ ] hotkeys to change weapons
 [ ] player attributes
 [ ] skills
 
@@ -41,8 +40,11 @@
 [ ] character-type goblin
 [ ] character-type vampire
 [ ] character-type wolf
+[ ] save scene as byte stream
+[ ] particle-type myst
 
 [current]
+[ ] hotkeys to change weapons
 
 11.11.2022
 [x] ui inventory icon

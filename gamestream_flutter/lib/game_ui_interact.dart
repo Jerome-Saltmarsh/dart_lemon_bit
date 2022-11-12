@@ -171,7 +171,7 @@ class GameUIInteract {
                    },
                    feedback: GameInventoryUI.buildItemTypeAtlasImage(itemType: itemTypes[i]),
                    onDraggableCanceled: (Velocity velocity, Offset offset){
-                     if (GameUI.mouseOverDialogInventory) return;
+                     if (ClientState.hoverDialogIsInventory) return;
                      GameNetwork.sendClientRequestInventoryBuy(i);
                    },
                    child: onPressed(

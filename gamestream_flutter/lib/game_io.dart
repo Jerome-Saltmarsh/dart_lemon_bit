@@ -143,14 +143,7 @@ class GameIO {
        GameActions.toggleDebugMode();
        return;
      }
-     if (event.physicalKey == PhysicalKeyboardKey.digit5) {
-       GameEditor.paintTorch();
-       return;
-     }
-     if (event.physicalKey == PhysicalKeyboardKey.digit4) {
-       GameEditor.paintTree();
-       return;
-     }
+
 
      if (event.physicalKey == PhysicalKeyboardKey.keyB) {
        ClientActions.windowTogglePlayerAttributes();
@@ -158,6 +151,25 @@ class GameIO {
      }
 
      if (GameState.playMode) {
+
+       if (event.logicalKey == LogicalKeyboardKey.digit1) {
+         if (ClientState.hoverIndex.value >= 0 && ClientState.hoverDialogIsInventory){
+           ClientState.hotKey1.value = ServerState.inventory[ClientState.hoverIndex.value];
+         } else {
+           ServerActions.equipItemType(ClientState.hotKey1.value);
+         }
+         return;
+       }
+       if (event.logicalKey == LogicalKeyboardKey.digit2) {
+         if (ClientState.hoverIndex.value >= 0 && ClientState.hoverDialogIsInventory){
+           ClientState.hotKey2.value = ServerState.inventory[ClientState.hoverIndex.value];
+         } else {
+           ServerActions.equipItemType(ClientState.hotKey2.value);
+         }
+         return;
+       }
+
+
        if (event.logicalKey == LogicalKeyboardKey.enter) {
          GameActions.messageBoxShow();
        }
@@ -168,8 +180,14 @@ class GameIO {
          GameActions.toggleZoom();
        }
      } else {
-       if (event.logicalKey == LogicalKeyboardKey.digit5) {
-         GameActions.toggleZoom();
+
+       if (event.physicalKey == PhysicalKeyboardKey.digit5) {
+         GameEditor.paintTorch();
+         return;
+       }
+       if (event.physicalKey == PhysicalKeyboardKey.digit4) {
+         GameEditor.paintTree();
+         return;
        }
      }
   }

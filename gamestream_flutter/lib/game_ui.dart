@@ -16,7 +16,6 @@ import 'isometric/ui/dialogs/build_game_dialog.dart';
 import 'ui/builders/build_panel_menu.dart';
 
 class GameUI {
-  static var mouseOverDialogType = Watch(DialogType.None);
   static final messageBoxVisible = Watch(false, clamp: (bool value){
     if (GameState.gameType.value == GameType.Skirmish) return false;
     return value;
@@ -34,9 +33,6 @@ class GameUI {
   static final touchButtonSide = Watch(TouchButtonSideRight);
   static const TouchButtonSideLeft = false;
   static const TouchButtonSideRight = true;
-
-  static bool get mouseOverDialogInventory => mouseOverDialogType.value == DialogType.Inventory;
-  static bool get mouseOverDialogTrade => mouseOverDialogType.value == DialogType.Trade;
 
   static Widget buildUI()  =>
       StackFullscreen(
@@ -297,10 +293,10 @@ class GameUI {
   static Widget buildDialog({required Widget child, required int dialogType}) =>
       MouseRegion(
         onEnter: (PointerEnterEvent event){
-          mouseOverDialogType.value = dialogType;
+          ClientState.hoverDialogType.value = dialogType;
         },
         onExit: (PointerExitEvent event){
-          mouseOverDialogType.value = DialogType.None;
+          ClientState.hoverDialogType.value = DialogType.None;
         },
         child: child,
       );
@@ -312,7 +308,7 @@ class GameUI {
       StackFullscreen(
           children: [
             GameUIInteract.buildWatchInteractMode(),
-            watch(ClientState.itemTypeHover, GameInventoryUI.buildPositionedContainerItemTypeInformation),
+            watch(ClientState.hoverItemType, GameInventoryUI.buildPositionedContainerItemTypeInformation),
             Positioned(
                bottom: 24,
                left: 24,
@@ -329,6 +325,7 @@ class GameUI {
                 child: buildDialogUIControl(
                   child: Row(
                     children: [
+                      buildRowHotKeys(),
                       watch(ServerState.playerLevel, buildPlayerLevel),
                       watch(GamePlayer.weapon, buildAtlasItemType),
                       buildControlPlayerEquippedWeaponAmmunition(),
@@ -339,6 +336,26 @@ class GameUI {
             ),
           ]
       );
+
+  static Row buildRowHotKeys() => Row(
+        children: [
+          buildStackHotKey(ClientState.hotKey1, 1),
+          buildStackHotKey(ClientState.hotKey2, 2),
+          buildStackHotKey(ClientState.hotKey3, 3),
+        ],
+      );
+
+  static Stack buildStackHotKey(Watch<int> value, int index) => Stack(
+          children: [
+            buildAtlasIconType(IconType.Slot, scale: 2.0),
+            watch(value, (int itemType) => buildAtlasItemType(itemType, scale: 1.8)),
+            Positioned(
+                left: 10,
+                top: 10,
+                child: text(index),
+            ),
+          ],
+        );
 
   static Widget buildButtonInventory() {
     return onPressed(

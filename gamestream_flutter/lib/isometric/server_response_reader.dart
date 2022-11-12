@@ -239,8 +239,8 @@ class ServerResponseReader with ByteReader {
         final index = readUInt16();
         final itemType = readUInt16();
         final itemQuantity = readUInt16();
-        GamePlayer.inventory[index] = itemType;
-        GamePlayer.inventoryQuantity[index] = itemQuantity;
+        ServerState.inventory[index] = itemType;
+        ServerState.inventoryQuantity[index] = itemQuantity;
         ClientActions.redrawInventory();
         break;
       case ApiPlayer.Message:
@@ -267,15 +267,15 @@ class ServerResponseReader with ByteReader {
     GamePlayer.legs.value = readUInt16();
     GamePlayer.weapon.value = readUInt16();
     final total = readUInt16();
-    if (GamePlayer.inventory.length != total){
-      GamePlayer.inventory = Uint16List(total);
-      GamePlayer.inventoryQuantity = Uint16List(total);
+    if (ServerState.inventory.length != total){
+      ServerState.inventory = Uint16List(total);
+      ServerState.inventoryQuantity = Uint16List(total);
     }
     for (var i = 0; i < total; i++){
-      GamePlayer.inventory[i] = readUInt16();
+      ServerState.inventory[i] = readUInt16();
     }
     for (var i = 0; i < total; i++){
-      GamePlayer.inventoryQuantity[i] = readUInt16();
+      ServerState.inventoryQuantity[i] = readUInt16();
     }
     ClientActions.redrawInventory();
   }

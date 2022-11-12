@@ -60,7 +60,6 @@ class DarkAgeScenes {
       mountains_3 = await loadScene('mountains-3');
       mountains_4 = await loadScene('mountains-4');
       shrine_1 = await loadScene('shrine-1');
-
       final ms = DateTime.now().difference(start).inMilliseconds;
       print("scenes took $ms ms to load");
 

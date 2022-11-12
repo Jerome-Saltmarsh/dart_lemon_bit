@@ -6,10 +6,10 @@ class ClientActions {
   static void redrawInventory() => ClientState.inventoryReads.value++;
 
   static void clearMouseOverDialogType() =>
-    GameUI.mouseOverDialogType.value = DialogType.None;
+    ClientState.hoverDialogType.value = DialogType.None;
 
   static void clearItemTypeHover() =>
-    ClientState.itemTypeHover.value = ItemType.Empty;
+    ClientState.hoverItemType.value = ItemType.Empty;
 
   static void windowClosePlayerAttributes() =>
     ClientState.windowVisibleAttributes.value = false;

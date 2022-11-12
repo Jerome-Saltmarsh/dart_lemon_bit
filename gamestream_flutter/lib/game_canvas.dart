@@ -14,7 +14,7 @@ class GameCanvas {
 
 
   static void renderForeground(Canvas canvas, Size size) {
-    if (GameUI.mouseOverDialogType.value == DialogType.None){
+    if (ClientState.hoverDialogType.value == DialogType.None){
       renderCursor(canvas);
     }
 
