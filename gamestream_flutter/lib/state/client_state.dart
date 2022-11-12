@@ -2,7 +2,7 @@
 import 'package:gamestream_flutter/library.dart';
 
 class ClientState {
-  static var inventoryReads = Watch(0, onChanged: ClientEvents.onInventoryReadsChanged);
+  static final inventoryReads = Watch(0, onChanged: ClientEvents.onInventoryReadsChanged);
   static final hoverItemType = Watch(ItemType.Empty);
   static final hoverIndex = Watch(-1);
   static final hoverDialogType = Watch(DialogType.None);

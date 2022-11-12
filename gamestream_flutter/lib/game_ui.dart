@@ -372,7 +372,7 @@ class GameUI {
                         Positioned(
                           right: 5,
                           bottom: 5,
-                          child: buildInventoryAware(child: text(ServerQuery.getItemQuantity(ItemType.getConsumeType(thisItemType)), italic: true, color: Colors.white70))
+                          child: buildInventoryAware(builder: () => text(ServerQuery.getItemQuantity(ItemType.getConsumeType(thisItemType)), italic: true, color: Colors.white70))
                         ),
                       if (playerWeaponType == thisItemType)
                         Container(
@@ -391,17 +391,14 @@ class GameUI {
         )
       );
 
-  /// A widget which automatically rebuilds whenever the inventory gets updated
-  static Widget buildInventoryAware({required Widget child}) =>
-    watch(ClientState.inventoryReads, (int reads) => child);
+  /// Automatically rebuilds whenever the inventory gets updated
+  static Widget buildInventoryAware({required BasicWidgetBuilder builder}) =>
+    watch(ClientState.inventoryReads, (int reads) => builder());
 
-  static Widget buildButtonInventory() {
-    return onPressed(
-                        action: GameNetwork.sendClientRequestInventoryToggle,
-                        child: buildAtlasIconType(IconType.Inventory, scale: 2),
-                    );
-  }
-
+  static Widget buildButtonInventory() => onPressed(
+        action: GameNetwork.sendClientRequestInventoryToggle,
+        child: buildAtlasIconType(IconType.Inventory, scale: 2),
+      );
 
   static Widget buildWindowAttributes() =>
      watch(ServerState.playerAttributes, (int attributes){
