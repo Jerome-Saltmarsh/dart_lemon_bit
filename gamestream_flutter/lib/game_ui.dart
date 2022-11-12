@@ -368,6 +368,12 @@ class GameUI {
                         top: 5,
                         child: text(index),
                       ),
+                      if (ItemType.getConsumeType(thisItemType) != ItemType.Empty)
+                        Positioned(
+                          right: 5,
+                          bottom: 5,
+                          child: buildInventoryAware(child: text(ServerQuery.getItemQuantity(ItemType.getConsumeType(thisItemType)), italic: true, color: Colors.white70))
+                        ),
                       if (playerWeaponType == thisItemType)
                         Container(
                           width: 64,
@@ -384,6 +390,10 @@ class GameUI {
             )
         )
       );
+
+  /// A widget which automatically rebuilds whenever the inventory gets updated
+  static Widget buildInventoryAware({required Widget child}) =>
+    watch(ClientState.inventoryReads, (int reads) => child);
 
   static Widget buildButtonInventory() {
     return onPressed(
