@@ -16,35 +16,32 @@ import 'isometric/ui/dialogs/build_game_dialog.dart';
 import 'ui/builders/build_panel_menu.dart';
 
 class GameUI {
-  static final messageBoxVisible = Watch(false, clamp: (bool value){
+  static final messageBoxVisible = Watch(false, clamp: (bool value) {
     if (ServerState.gameType.value == GameType.Skirmish) return false;
     return value;
   }, onChanged: onVisibilityChangedMessageBox);
   static final textEditingControllerMessage = TextEditingController();
   static final textFieldMessage = FocusNode();
   static final debug = Watch(false);
-  static final panelTypeKey = <int, GlobalKey> {};
+  static final panelTypeKey = <int, GlobalKey>{};
   static final playerTextStyle = TextStyle(color: Colors.white);
   static final mapVisible = Watch(false);
   static final timeVisible = Watch(true);
 
-  static Widget buildUI()  =>
-      StackFullscreen(
-        children: [
-          watch(GameState.player.message, buildPlayerMessage),
-          buildWatchBool(ClientState.triggerAlarmNoMessageReceivedFromServer, buildDialogFramesSinceUpdate),
-          watch(GameState.player.gameDialog, buildGameDialog),
-          buildWatchBool(GameState.player.alive, buildContainerRespawn, false),
-          buildTopRightMenu(),
-          buildWatchBool(GameUI.mapVisible, buildMiniMap),
-          watch(ClientState.edit, buildPlayMode),
-          watch(GameIO.inputMode, buildStackInputMode),
-          buildWatchBool(ClientState.debugVisible, GameDebug.buildStackDebug),
-        ]
-      );
+  static Widget buildUI() => StackFullscreen(children: [
+        watch(GameState.player.message, buildPlayerMessage),
+        buildWatchBool(ClientState.triggerAlarmNoMessageReceivedFromServer,
+            buildDialogFramesSinceUpdate),
+        watch(GameState.player.gameDialog, buildGameDialog),
+        buildWatchBool(GameState.player.alive, buildContainerRespawn, false),
+        buildTopRightMenu(),
+        buildWatchBool(GameUI.mapVisible, buildMiniMap),
+        watch(ClientState.edit, buildPlayMode),
+        watch(GameIO.inputMode, buildStackInputMode),
+        buildWatchBool(ClientState.debugVisible, GameDebug.buildStackDebug),
+      ]);
 
-  static Widget buildStackInputModeTouch(bool side) =>
-      Stack(children: [
+  static Widget buildStackInputModeTouch(bool side) => Stack(children: [
         Positioned(
           bottom: GameUIConfig.runButtonPadding,
           right: side ? GameUIConfig.runButtonPadding : null,
@@ -98,25 +95,21 @@ class GameUI {
           ? const SizedBox()
           : watch(ClientState.touchButtonSide, buildStackInputModeTouch);
 
-  static Widget buildPlayerMessage(String message) =>
-    Positioned(
-      bottom: 64,
-      left: 0,
-      child: message.isEmpty
-          ? const SizedBox()
-          : Container(
-          width: Engine.screen.width,
-          alignment: Alignment.center,
-          child: Container(
-              padding: const EdgeInsets.all(12),
-              color: Colors.white10,
-              child: text(message)
-          )
-      ),
-    );
+  static Widget buildPlayerMessage(String message) => Positioned(
+        bottom: 64,
+        left: 0,
+        child: message.isEmpty
+            ? const SizedBox()
+            : Container(
+                width: Engine.screen.width,
+                alignment: Alignment.center,
+                child: Container(
+                    padding: const EdgeInsets.all(12),
+                    color: Colors.white10,
+                    child: text(message))),
+      );
 
-  static Widget buildWalkButtons() =>
-    Positioned(
+  static Widget buildWalkButtons() => Positioned(
         bottom: 0,
         left: 0,
         child: Row(
@@ -144,35 +137,36 @@ class GameUI {
             )
           ],
         ),
-    );
+      );
 
-  static Widget buildWalkBox(int direction){
+  static Widget buildWalkBox(int direction) {
     return container(
-       width: 60,
-       height: 60,
-       color: Colors.blue,
-       action: (){
+        width: 60,
+        height: 60,
+        color: Colors.blue,
+        action: () {
           GameIO.touchscreenDirectionMove = direction;
-       }
-    );
+        });
   }
 
   static Widget buildDialogFramesSinceUpdate() => Positioned(
       top: 8,
       left: 8,
-      child: watch(ClientState.rendersSinceUpdate,  (int frames) =>
-          text("Warning: No message received from server $frames")
-      )
-  );
+      child: watch(
+          ClientState.rendersSinceUpdate,
+          (int frames) =>
+              text("Warning: No message received from server $frames")));
 
-  static Positioned buildWatchInterpolation() =>
-      Positioned(
+  static Positioned buildWatchInterpolation() => Positioned(
         bottom: 0,
         left: 0,
         child: watch(GameState.player.interpolating, (bool value) {
-          if (!value) return text("Interpolation Off", onPressed: () => GameState.player.interpolating.value = true);
-          return watch(ClientState.rendersSinceUpdate, (int frames){
-            return text("Frames: $frames", onPressed: () => GameState.player.interpolating.value = false);
+          if (!value)
+            return text("Interpolation Off",
+                onPressed: () => GameState.player.interpolating.value = true);
+          return watch(ClientState.rendersSinceUpdate, (int frames) {
+            return text("Frames: $frames",
+                onPressed: () => GameState.player.interpolating.value = false);
           });
         }),
       );
@@ -188,8 +182,7 @@ class GameUI {
     }
   }
 
-  static Positioned buildMiniMap() =>
-      Positioned(
+  static Positioned buildMiniMap() => Positioned(
         left: 6,
         top: 6,
         child: buildDialogUIControl(
@@ -203,8 +196,7 @@ class GameUI {
         ),
       );
 
-  static Widget buildContainerQuestUpdated() =>
-      Container(
+  static Widget buildContainerQuestUpdated() => Container(
         width: Engine.screen.width,
         alignment: Alignment.topCenter,
         child: container(
@@ -219,38 +211,31 @@ class GameUI {
   static Positioned buildTopRightMenu() =>
       Positioned(top: 0, right: 0, child: buildPanelMenu());
 
-  static Widget buildStackGameTypeDarkAge() =>
-      Stack(
+  static Widget buildStackGameTypeDarkAge() => Stack(
         children: [
           Positioned(left: 8, bottom: 50, child: buildColumnTeleport()),
-          buildWatchBool(GameState.player.questAdded, buildContainerQuestUpdated),
+          buildWatchBool(
+              GameState.player.questAdded, buildContainerQuestUpdated),
         ],
       );
 
-  static Widget buildIconFullscreen() =>
-      WatchBuilder(Engine.fullScreen, (bool fullscreen) =>
-          onPressed(
-              action: Engine.fullscreenToggle,
-              child: GameUI.buildAtlasIconType(IconType.Fullscreen)
-          )
-      );
+  static Widget buildIconFullscreen() => WatchBuilder(
+      Engine.fullScreen,
+      (bool fullscreen) => onPressed(
+          action: Engine.fullscreenToggle,
+          child: GameUI.buildAtlasIconType(IconType.Fullscreen)));
 
-  static Widget buildIconZoom() =>
-      onPressed(
-          action: GameActions.toggleZoom,
-          child: buildAtlasIconType(IconType.Zoom)
-      );
+  static Widget buildIconZoom() => onPressed(
+      action: GameActions.toggleZoom, child: buildAtlasIconType(IconType.Zoom));
 
-  static Widget buildIconHome() =>
-      onPressed(
-          action: GameNetwork.disconnect,
-          child: buildAtlasIconType(IconType.Home)
-      );
+  static Widget buildIconHome() => onPressed(
+      action: GameNetwork.disconnect, child: buildAtlasIconType(IconType.Home));
 
   static Widget buildIconSlotEmpty() =>
       buildAtlasIconType(IconType.Slot, scale: GameInventoryUI.Slot_Scale);
 
-  static Widget buildAtlasIconType(int iconType, {double scale = 1, int color = 1, double size = AtlasIcons.Size}) =>
+  static Widget buildAtlasIconType(int iconType,
+          {double scale = 1, int color = 1, double size = AtlasIcons.Size}) =>
       Engine.buildAtlasImage(
         image: GameImages.atlasIcons,
         srcX: AtlasIcons.getSrcX(iconType),
@@ -271,8 +256,7 @@ class GameUI {
         scale: scale,
       );
 
-  static Widget buildAtlasNodeType(int nodeType) =>
-      Engine.buildAtlasImage(
+  static Widget buildAtlasNodeType(int nodeType) => Engine.buildAtlasImage(
         image: GameImages.atlasNodes,
         srcX: AtlasNodeX.mapNodeType(nodeType),
         srcY: AtlasNodeY.mapNodeType(nodeType),
@@ -285,10 +269,10 @@ class GameUI {
 
   static Widget buildDialog({required Widget child, required int dialogType}) =>
       MouseRegion(
-        onEnter: (PointerEnterEvent event){
+        onEnter: (PointerEnterEvent event) {
           ClientState.hoverDialogType.value = dialogType;
         },
-        onExit: (PointerExitEvent event){
+        onExit: (PointerExitEvent event) {
           ClientState.hoverDialogType.value = DialogType.None;
         },
         child: child,
@@ -297,50 +281,67 @@ class GameUI {
   static Widget buildPlayMode(bool edit) =>
       edit ? watch(GameEditor.editTab, buildStackEdit) : buildStackPlay();
 
-  static Widget buildStackPlay() =>
-      StackFullscreen(
-          children: [
-            GameUIInteract.buildWatchInteractMode(),
-            watch(ClientState.hoverItemType, GameInventoryUI.buildPositionedContainerItemTypeInformation),
-            Positioned(
-               bottom: 24,
-               left: 24,
-               child: watch(ServerState.playerAttributes, buildButtonAttributes)
-            ),
-            Positioned(
-                left: 50,
-                top: 50,
-                child: buildWatchBool(ClientState.windowVisibleAttributes, buildWindowAttributes),
-            ),
-            Positioned(
-                bottom: 12,
-                right: 12,
-                child: buildDialogUIControl(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      buildRowHotKeys(),
-                      Row(
-                        children: [
-                          width(96.0),
-                          buildStackHotKey(ClientState.hotKeyQ, 'Q'),
-                          width(64.0),
-                          buildStackHotKey(ClientState.hotKeyE, 'E'),
-                        ],
-                      ),
-                      watch(ServerState.playerLevel, buildPlayerLevel),
-                      // watch(GamePlayer.weapon, buildAtlasItemType),
-                      // buildControlPlayerEquippedWeaponAmmunition(),
-                      buildButtonInventory(),
-                    ],
-                  ),
-                ),
-            ),
-          ]
+  static Widget buildStackPlay() => StackFullscreen(children: [
+        GameUIInteract.buildWatchInteractMode(),
+        watch(ClientState.hoverItemType,
+            GameInventoryUI.buildPositionedContainerItemTypeInformation),
+        Positioned(
+            bottom: 24,
+            left: 24,
+            child: watch(ServerState.playerAttributes, buildButtonAttributes)),
+        Positioned(
+          left: 50,
+          top: 50,
+          child: buildWatchBool(
+              ClientState.windowVisibleAttributes, buildWindowAttributes),
+        ),
+        Positioned(
+          child: Container(
+            width: Engine.screen.width,
+            alignment: Alignment.center,
+            child: buildWatchPlayerLevel(),
+          ),
+          bottom: 12,
+        ),
+        Positioned(
+          bottom: 12,
+          right: 12,
+          child: buildDialogUIControl(
+            child: buildColumnHotKeys(),
+          ),
+        ),
+      ]);
+
+  static Column buildColumnHotKeys() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        buildRowHotKeyNumbers(),
+        buildRowHotKeyLetters(),
+      ],
+    );
+  }
+
+  static Row buildRowHotKeyLetters() => Row(
+        children: [
+          width(96.0),
+          buildStackHotKey(ClientState.hotKeyQ, 'Q'),
+          width(64.0),
+          buildStackHotKey(ClientState.hotKeyE, 'E'),
+          Stack(
+            children: [
+              onPressed(
+                  hint: "Inventory",
+                  action: GameNetwork.sendClientRequestInventoryToggle,
+                  child: buildAtlasIconType(IconType.Inventory, scale: 2.0),
+              ),
+              Positioned(top: 5, left: 5, child: text("R"))
+            ],
+          ),
+        ],
       );
 
-  static Row buildRowHotKeys() =>
-      Row(
+  static Row buildRowHotKeyNumbers() => Row(
         children: [
           buildUnassignedWeaponSlot(),
           buildStackHotKey(ClientState.hotKey1, '1'),
@@ -350,74 +351,77 @@ class GameUI {
         ],
       );
 
-  static Widget buildUnassignedWeaponSlot() =>
-    watch(ClientState.readsHotKeys, (int reads) =>
-        watch(GamePlayer.weapon, (int playerWeaponType){
-          if (
-          ClientState.hotKey1.value == playerWeaponType ||
-              ClientState.hotKey2.value == playerWeaponType ||
-              ClientState.hotKey3.value == playerWeaponType ||
-              ClientState.hotKey4.value == playerWeaponType
-          ) return const SizedBox();
+  static Widget buildUnassignedWeaponSlot() => watch(
+      ClientState.readsHotKeys,
+      (int reads) => watch(GamePlayer.weapon, (int playerWeaponType) {
+            if (ClientState.hotKey1.value == playerWeaponType ||
+                ClientState.hotKey2.value == playerWeaponType ||
+                ClientState.hotKey3.value == playerWeaponType ||
+                ClientState.hotKey4.value == playerWeaponType)
+              return const SizedBox();
 
-          return Container(child: buildStackHotKeyContainer(itemType: playerWeaponType, hotKey: "-"), margin: const EdgeInsets.only(right: 4),);
-        })
-    );
+            return Container(
+              child: buildStackHotKeyContainer(
+                  itemType: playerWeaponType, hotKey: "-"),
+              margin: const EdgeInsets.only(right: 4),
+            );
+          }));
 
   static Widget buildStackHotKey(Watch<int> watchItemType, String index) =>
-      watch(watchItemType, (int thisItemType) =>
-        DragTarget<int>(
-          onWillAccept: (int? data) {
-            return data != null;
-          },
-          onAccept: (int? data){
-            if (data == null) return;
-            watchItemType.value = ServerState.inventory[data];
-          },
-          builder: (context, data, rejectedData) =>
-            watch(GamePlayer.weapon, (int playerWeaponType) =>
-                onPressed(
-                  onRightClick: () => watchItemType.value = ItemType.Empty,
-                  action: () => ServerActions.equipItemType(thisItemType),
-                  child: Stack(
-                    children: [
-                      buildAtlasIconType(IconType.Slot, scale: 2.0),
-                      buildAtlasItemType(thisItemType, scale: 1.8),
-                      Positioned(
-                        left: 5,
-                        top: 5,
-                        child: text(index),
-                      ),
-                      if (ItemType.getConsumeType(thisItemType) != ItemType.Empty)
-                        Positioned(
-                          right: 5,
-                          bottom: 5,
-                          child: buildInventoryAware(
-                              builder: () =>
-                                  text(ServerQuery.getItemTypeConsumesRemaining(thisItemType),
-                                      italic: true,
-                                      color: Colors.white70,
-                                  )
-                            )
+      watch(
+          watchItemType,
+          (int thisItemType) => DragTarget<int>(
+              onWillAccept: (int? data) {
+                return data != null;
+              },
+              onAccept: (int? data) {
+                if (data == null) return;
+                watchItemType.value = ServerState.inventory[data];
+              },
+              builder: (context, data, rejectedData) => watch(
+                  GamePlayer.weapon,
+                  (int playerWeaponType) => onPressed(
+                        onRightClick: () =>
+                            watchItemType.value = ItemType.Empty,
+                        action: () => ServerActions.equipItemType(thisItemType),
+                        child: Stack(
+                          children: [
+                            buildAtlasIconType(IconType.Slot, scale: 2.0),
+                            buildAtlasItemType(thisItemType, scale: 1.8),
+                            Positioned(
+                              left: 5,
+                              top: 5,
+                              child: text(index),
+                            ),
+                            if (ItemType.getConsumeType(thisItemType) !=
+                                ItemType.Empty)
+                              Positioned(
+                                  right: 5,
+                                  bottom: 5,
+                                  child: buildInventoryAware(
+                                      builder: () => text(
+                                            ServerQuery
+                                                .getItemTypeConsumesRemaining(
+                                                    thisItemType),
+                                            italic: true,
+                                            color: Colors.white70,
+                                          ))),
+                            if (playerWeaponType == thisItemType)
+                              Container(
+                                width: 64,
+                                height: 64,
+                                decoration: buildDecorationBorder(
+                                  colorBorder: Colors.white,
+                                  colorFill: Colors.transparent,
+                                  width: 3,
+                                ),
+                              )
+                          ],
                         ),
-                      if (playerWeaponType == thisItemType)
-                        Container(
-                          width: 64,
-                          height: 64,
-                          decoration: buildDecorationBorder(
-                            colorBorder: Colors.white,
-                            colorFill: Colors.transparent,
-                            width: 3,
-                          ),
-                        )
-                    ],
-                  ),
-                )
-            )
-        )
-      );
+                      ))));
 
-  static Widget buildStackHotKeyContainer({required int itemType, required String hotKey}){
+  static Widget buildStackHotKeyContainer(
+      {required int itemType, required String hotKey}) {
     return Stack(
       children: [
         buildAtlasIconType(IconType.Slot, scale: 2.0),
@@ -432,13 +436,11 @@ class GameUI {
               right: 5,
               bottom: 5,
               child: buildInventoryAware(
-                  builder: () =>
-                      text(ServerQuery.getItemTypeConsumesRemaining(itemType),
+                  builder: () => text(
+                        ServerQuery.getItemTypeConsumesRemaining(itemType),
                         italic: true,
                         color: Colors.white70,
-                      )
-              )
-          ),
+                      ))),
         if (GamePlayer.weapon.value == itemType)
           Container(
             width: 64,
@@ -455,7 +457,7 @@ class GameUI {
 
   /// Automatically rebuilds whenever the inventory gets updated
   static Widget buildInventoryAware({required BasicWidgetBuilder builder}) =>
-    watch(ClientState.inventoryReads, (int reads) => builder());
+      watch(ClientState.inventoryReads, (int reads) => builder());
 
   static Widget buildButtonInventory() => onPressed(
         action: GameNetwork.sendClientRequestInventoryToggle,
@@ -463,46 +465,42 @@ class GameUI {
       );
 
   static Widget buildWindowAttributes() =>
-     watch(ServerState.playerAttributes, (int attributes){
-       final remaining = attributes > 0;
-       return buildDialogUIControl(
-         child: Container(
-           padding: const EdgeInsets.all(16),
-           color: GameColors.brownDark,
-           width: GameUIStyle.Window_Attributes_Width,
-           height: GameUIStyle.Window_Attributes_Height,
-           child: Column(
-             children: [
-               if (remaining)
-               text("REMAINING $attributes"),
-               Row(
-                 children: [
-                   text("Max Health"),
-                   if (remaining)
-                      container(child: "+", width: 50, height: 50),
-                 ],
-               ),
-               Row(
-                 children: [
-                   text("Inventory Size"),
-                   if (remaining)
-                     container(child: "+", width: 50, height: 50),
-                 ],
-               ),
-               Row(
-                 children: [
-                   text("Sword Mastery"),
-                   if (remaining)
-                     container(child: "+", width: 50, height: 50),
-                 ],
-               ),
-             ],
-           ),
-         ),
-       );
-     });
+      watch(ServerState.playerAttributes, (int attributes) {
+        final remaining = attributes > 0;
+        return buildDialogUIControl(
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            color: GameColors.brownDark,
+            width: GameUIStyle.Window_Attributes_Width,
+            height: GameUIStyle.Window_Attributes_Height,
+            child: Column(
+              children: [
+                if (remaining) text("REMAINING $attributes"),
+                Row(
+                  children: [
+                    text("Max Health"),
+                    if (remaining) container(child: "+", width: 50, height: 50),
+                  ],
+                ),
+                Row(
+                  children: [
+                    text("Inventory Size"),
+                    if (remaining) container(child: "+", width: 50, height: 50),
+                  ],
+                ),
+                Row(
+                  children: [
+                    text("Sword Mastery"),
+                    if (remaining) container(child: "+", width: 50, height: 50),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      });
 
-  static Widget buildButtonAttributes(int attributes){
+  static Widget buildButtonAttributes(int attributes) {
     if (attributes == 0) return const SizedBox();
     return buildDialog(
       dialogType: DialogType.UI_Control,
@@ -510,35 +508,37 @@ class GameUI {
           action: ClientActions.windowOpenPlayerAttributes,
           alignment: Alignment.center,
           color: GameColors.brownDark,
-          child: text("ATTRIBUTES +$attributes", align: TextAlign.center)
-      ),
+          child: text("ATTRIBUTES +$attributes", align: TextAlign.center)),
     );
   }
 
-  static Widget buildPlayerLevel(int level) =>
-    Tooltip(
-        child: watch(ServerState.playerExperiencePercentage, buildPlayerExperience),
-        message: "Level $level",
-    );
+  static Widget buildWatchPlayerLevel() => watch(
+      ServerState.playerLevel,
+      (int level) => Tooltip(
+            child: watch(
+                ServerState.playerExperiencePercentage, buildPlayerExperience),
+            message: "Level $level",
+          ));
 
-  static Widget buildPlayerExperience(double experience) =>
-      Container(
-       width: GameUIStyle.ExperienceBarWidth,
-       height: GameUIStyle.ExperienceBarHeight,
-       color: GameUIStyle.ExperienceBarColorBackground,
-       alignment: Alignment.centerLeft,
-       child: Container(
-         width: GameUIStyle.ExperienceBarWidth * experience,
-         height: GameUIStyle.ExperienceBarHeight,
-         color: GameUIStyle.ExperienceBarColorFill,
-       ),
-     );
+  static Widget buildPlayerExperience(double experience) => Container(
+        width: GameUIStyle.ExperienceBarWidth,
+        height: GameUIStyle.ExperienceBarHeight,
+        color: GameUIStyle.ExperienceBarColorBackground,
+        alignment: Alignment.centerLeft,
+        child: Container(
+          width: GameUIStyle.ExperienceBarWidth * experience,
+          height: GameUIStyle.ExperienceBarHeight,
+          color: GameUIStyle.ExperienceBarColorFill,
+        ),
+      );
 
-  static Widget buildControlPlayerEquippedWeaponAmmunition(){
-    return watch(ServerState.playerEquippedWeaponAmmunitionType, (int ammunitionType) {
+  static Widget buildControlPlayerEquippedWeaponAmmunition() {
+    return watch(ServerState.playerEquippedWeaponAmmunitionType,
+        (int ammunitionType) {
       if (ammunitionType == ItemType.Empty) return const SizedBox();
       return Row(children: [
-        watch(ServerState.playerEquippedWeaponAmmunitionType, GameUI.buildAtlasItemType),
+        watch(ServerState.playerEquippedWeaponAmmunitionType,
+            GameUI.buildAtlasItemType),
         width4,
         watch(ServerState.playerEquippedWeaponAmmunitionQuantity, text),
       ]);
@@ -551,9 +551,8 @@ class GameUI {
     required double width,
     double borderRadius = 0.0,
   }) =>
-    BoxDecoration(
-        border: Border.all(color: colorBorder, width: width),
-        borderRadius: BorderRadius.circular(borderRadius),
-        color: colorFill
-    );
+      BoxDecoration(
+          border: Border.all(color: colorBorder, width: width),
+          borderRadius: BorderRadius.circular(borderRadius),
+          color: colorFill);
 }

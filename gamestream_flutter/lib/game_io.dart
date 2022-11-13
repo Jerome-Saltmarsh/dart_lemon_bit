@@ -152,6 +152,11 @@ class GameIO {
 
      if (GameState.playMode) {
 
+       if (event.physicalKey == PhysicalKeyboardKey.keyR){
+         GameNetwork.sendClientRequestInventoryToggle();
+         return;
+       }
+
        if (event.logicalKey == LogicalKeyboardKey.digit1) {
          if (ClientState.hoverIndex.value >= 0 && ClientState.hoverDialogIsInventory){
            ClientState.hotKey1.value = ServerState.inventory[ClientState.hoverIndex.value];
