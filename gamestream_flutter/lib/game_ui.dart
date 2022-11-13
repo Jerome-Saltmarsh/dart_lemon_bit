@@ -312,42 +312,51 @@ class GameUI {
         ),
       ]);
 
-  static Column buildColumnHotKeys() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        buildRowHotKeyNumbers(),
-        buildRowHotKeyLetters(),
-      ],
-    );
-  }
-
-  static Row buildRowHotKeyLetters() => Row(
+  static Column buildColumnHotKeys() => Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          width(96.0),
-          buildStackHotKey(ClientState.hotKeyQ, 'Q'),
-          width(64.0),
-          buildStackHotKey(ClientState.hotKeyE, 'E'),
-          Stack(
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              onPressed(
-                  hint: "Inventory",
-                  action: GameNetwork.sendClientRequestInventoryToggle,
-                  child: buildAtlasIconType(IconType.Inventory, scale: 2.0),
-              ),
-              Positioned(top: 5, left: 5, child: text("R"))
+              buildUnassignedWeaponSlot(),
+              buildRowHotKeyNumbers(),
             ],
           ),
+          buildRowHotKeyLettersAndInventory(),
         ],
       );
 
-  static Row buildRowHotKeyNumbers() => Row(
+  static Row buildRowHotKeyLettersAndInventory() => Row(
         children: [
-          buildUnassignedWeaponSlot(),
+          width96,
+          buildStackHotKey(ClientState.hotKeyQ, 'Q'),
+          width64,
+          buildStackHotKey(ClientState.hotKeyE, 'E'),
+          buildButtonInventory(),
+        ],
+      );
+
+  static Stack buildButtonInventory() {
+    return Stack(
+          children: [
+            onPressed(
+                hint: "Inventory",
+                action: GameNetwork.sendClientRequestInventoryToggle,
+                child: buildAtlasIconType(IconType.Inventory, scale: 2.0),
+            ),
+            Positioned(top: 5, left: 5, child: text("R"))
+          ],
+        );
+  }
+
+  static Row buildRowHotKeyNumbers() => Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+        children: [
           buildStackHotKey(ClientState.hotKey1, '1'),
           buildStackHotKey(ClientState.hotKey2, '2'),
           buildStackHotKey(ClientState.hotKey3, '3'),
           buildStackHotKey(ClientState.hotKey4, '4'),
+          width32,
         ],
       );
 
@@ -357,8 +366,10 @@ class GameUI {
             if (ClientState.hotKey1.value == playerWeaponType ||
                 ClientState.hotKey2.value == playerWeaponType ||
                 ClientState.hotKey3.value == playerWeaponType ||
-                ClientState.hotKey4.value == playerWeaponType)
-              return const SizedBox();
+                ClientState.hotKey4.value == playerWeaponType ||
+                ClientState.hotKeyE.value == playerWeaponType ||
+                ClientState.hotKeyQ.value == playerWeaponType
+            ) return const SizedBox();
 
             return Container(
               child: buildStackHotKeyContainer(
@@ -458,11 +469,6 @@ class GameUI {
   /// Automatically rebuilds whenever the inventory gets updated
   static Widget buildInventoryAware({required BasicWidgetBuilder builder}) =>
       watch(ClientState.inventoryReads, (int reads) => builder());
-
-  static Widget buildButtonInventory() => onPressed(
-        action: GameNetwork.sendClientRequestInventoryToggle,
-        child: buildAtlasIconType(IconType.Inventory, scale: 2),
-      );
 
   static Widget buildWindowAttributes() =>
       watch(ServerState.playerAttributes, (int attributes) {
