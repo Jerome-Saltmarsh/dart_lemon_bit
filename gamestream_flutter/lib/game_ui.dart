@@ -394,7 +394,7 @@ class GameUI {
                   (int playerWeaponType) => onPressed(
                         onRightClick: () =>
                             watchItemType.value = ItemType.Empty,
-                        action: () => ServerActions.equipItemType(thisItemType),
+                        action: () => thisItemType == ItemType.Empty ? ClientActions.assignEquippedItemToHotKey(index) : ServerActions.equipItemType(thisItemType),
                         child: Stack(
                           children: [
                             buildAtlasIconType(IconType.Slot, scale: 2.0),

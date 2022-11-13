@@ -24,11 +24,28 @@ class ClientActions {
   static void playSoundWindow() =>
       GameAudio.click_sound_8(1);
 
-  static void assignHotKey1(int value){
-     ClientState.hotKey1.value = value;
-  }
-
   static void dragStartSetNone(){
     ClientState.dragStarted.value = DragStart.None;
+  }
+
+  static void assignEquippedItemToHotKey(String index){
+       if (index == "1") {
+         ClientState.hotKey1.value = GamePlayer.weapon.value;
+       }
+       if (index == "2") {
+         ClientState.hotKey2.value = GamePlayer.weapon.value;
+       }
+       if (index == "3") {
+         ClientState.hotKey3.value = GamePlayer.weapon.value;
+       }
+       if (index == "4") {
+         ClientState.hotKey4.value = GamePlayer.weapon.value;
+       }
+       if (index == "Q") {
+         ClientState.hotKeyQ.value = GamePlayer.weapon.value;
+       }
+       if (index == "E") {
+         ClientState.hotKeyE.value = GamePlayer.weapon.value;
+       }
   }
 }
