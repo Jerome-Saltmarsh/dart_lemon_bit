@@ -170,7 +170,6 @@ class GameEvents {
           GameState.spawnParticleOrbShard(
               x: x, y: y, z: z, duration: 30, speed: Engine.randomBetween(1, 2), angle: Engine.randomAngle());
         }
-        GameState.spawnEffect(x: x, y: y, type: EffectType.Explosion, duration: 30);
         break;
 
       case GameEventType.Character_Death:

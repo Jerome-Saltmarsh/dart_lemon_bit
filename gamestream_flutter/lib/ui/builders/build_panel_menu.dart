@@ -30,7 +30,7 @@ Widget buildPanelMenu() =>
 Widget buildButtonTogglePlayMode() {
   return watch(ServerState.sceneEditable, (bool isOwner) {
     if (!isOwner) return const SizedBox();
-    return watch(GameState.edit, (bool edit) {
+    return watch(ClientState.edit, (bool edit) {
       return container(
           toolTip: "Tab",
           child: edit ? "PLAY" : "EDIT",

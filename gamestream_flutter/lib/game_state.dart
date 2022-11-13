@@ -8,11 +8,9 @@ import 'package:lemon_math/library.dart';
 import 'library.dart';
 
 class GameState {
-  static final edit = Watch(false, onChanged: GameEvents.onChangedEdit);
   static final player = Player();
   static var showAllItems = false;
 
-  static final effects = <Effect>[];
   static final gameObjects = <GameObject>[];
   static final characters = <Character>[];
   static final npcs = <Character>[];
@@ -59,7 +57,7 @@ class GameState {
 
   static int get bodyPartDuration => randomInt(120, 200);
   static bool get playMode => !editMode;
-  static bool get editMode => edit.value;
+  static bool get editMode => ClientState.edit.value;
   static bool get lightningOn => ServerState.lightning.value != Lightning.Off;
 
   static Character getCharacterInstance(){
@@ -727,21 +725,6 @@ class GameState {
         scale: 0.75);
   }
 
-  static void spawnEffect({
-    required double x,
-    required double y,
-    required EffectType type,
-    required int duration,
-  }){
-    final effect = getInstanceEffect();
-    effect.x = x;
-    effect.y = y;
-    effect.type = type;
-    effect.maxDuration = duration;
-    effect.duration = 0;
-    effect.enabled = true;
-  }
-
   static void spawnParticleOrbShard({
     required double x,
     required double y,
@@ -947,17 +930,6 @@ class GameState {
     GameState.floatingTexts.add(instance);
     return instance;
   }
-
-  static Effect getInstanceEffect(){
-    for (final effect in effects){
-      if (effect.enabled) continue;
-      return effect;
-    }
-    final effect = Effect();
-    effects.add(effect);
-    return effect;
-  }
-
 
   static void spawnParticleFire({
     required double x,

@@ -16,6 +16,7 @@ class ClientState {
   static final rendersSinceUpdate = Watch(0, onChanged: GameEvents.onChangedRendersSinceUpdate);
   static final particles = <Particle>[];
   static var totalActiveParticles = 0;
+  static final edit = Watch(false, onChanged: GameEvents.onChangedEdit);
 
   static var srcXRainFalling = 6640.0;
   static var srcXRainLanding = 6739.0;

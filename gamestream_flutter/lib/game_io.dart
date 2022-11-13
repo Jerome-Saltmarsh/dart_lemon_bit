@@ -432,7 +432,7 @@ class GameIO {
   }
 
   static void onMouseClickedLeft(){
-    if (GameState.edit.value) {
+    if (ClientState.edit.value) {
       onMouseClickedEditMode();
     }
   }
@@ -451,7 +451,7 @@ class GameIO {
   }
 
   static void readPlayerInput() {
-    if (GameState.edit.value) {
+    if (ClientState.edit.value) {
       return readPlayerInputEdit();
     }
 

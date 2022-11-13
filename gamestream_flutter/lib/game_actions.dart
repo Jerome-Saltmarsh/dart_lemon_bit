@@ -56,15 +56,15 @@ class GameActions {
   }
 
   static void actionSetModePlay(){
-    GameState.edit.value = false;
+    ClientState.edit.value = false;
   }
 
   static void actionSetModeEdit(){
-    GameState.edit.value = true;
+    ClientState.edit.value = true;
   }
 
   static void actionToggleEdit() {
-    GameState.edit.value = !GameState.edit.value;
+    ClientState.edit.value = !ClientState.edit.value;
   }
 
   static void messageBoxToggle(){

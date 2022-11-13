@@ -38,7 +38,7 @@ class GameUI {
           buildWatchBool(GameState.player.alive, buildContainerRespawn, false),
           buildTopRightMenu(),
           buildWatchBool(GameUI.mapVisible, buildMiniMap),
-          watch(GameState.edit, buildPlayMode),
+          watch(ClientState.edit, buildPlayMode),
           watch(GameIO.inputMode, buildStackInputMode),
           buildWatchBool(ClientState.debugVisible, GameDebug.buildStackDebug),
         ]
