@@ -9,15 +9,8 @@ import 'package:lemon_math/library.dart';
 import 'library.dart';
 
 class GameState {
-  static final sceneMetaDataSceneName = Watch<String?>(null);
-  static final sceneEditable = Watch(false);
-  static var srcXRainFalling = 6640.0;
-  static var srcXRainLanding = 6739.0;
   static var nextLightning = 0;
-  static final watchTimePassing = Watch(false);
   static final debugVisible = Watch(false);
-  static final rain = Watch(Rain.None, onChanged: GameEvents.onChangedRain);
-  static final windAmbient = Watch(Wind.Calm, onChanged: GameEvents.onChangedWind);
   static final torchesIgnited = Watch(true);
   static const tileHeight = 24.0;
   static const colorPitchBlack = Color.fromRGBO(37, 32, 48, 1.0);
@@ -87,30 +80,15 @@ class GameState {
   static var nodesLengthZ = 0.0;
   static var nodesArea = 0;
 
-  static final weatherBreeze = Watch(false);
+
   static var windLine = 0;
   static var move = true;
-
-  static final lightning = Watch(Lightning.Off, onChanged: (Lightning value){
-    if (value != Lightning.Off){
-      nextLightning = 0;
-    }
-  });
-
-  static final ambientShade = Watch(Shade.Bright, onChanged: GameEvents.onChangedAmbientShade);
-
-  // static final inventoryOpen = Watch(false, onChanged: GameEvents.onChangedInventoryVisible);
-
-  // WATCHES
-
-  // QUERIES
-
 
 
   static int get bodyPartDuration => randomInt(120, 200);
   static bool get playMode => !editMode;
   static bool get editMode => edit.value;
-  static bool get lightningOn => lightning.value != Lightning.Off;
+  static bool get lightningOn => ServerState.lightning.value != Lightning.Off;
 
   static Character getCharacterInstance(){
     if (characters.length <= totalCharacters){
@@ -157,7 +135,7 @@ class GameState {
 
   static int getNodeShade(int z, int row, int column) =>
       outOfBounds(z, row, column)
-          ? ambientShade.value
+          ? ServerState.ambientShade.value
           : GameNodes.nodesShade[getNodeIndexZRC(z, row, column)];
 
   static bool outOfBoundsV3(Vector3 v3) =>
@@ -206,7 +184,7 @@ class GameState {
   }
 
   static void applyEmissionsCharacters() {
-    var maxBrightness = ambientShade.value - 1;
+    var maxBrightness = ServerState.ambientShade.value - 1;
     if (maxBrightness < Shade.Bright) {
       maxBrightness = Shade.Bright;
     }
@@ -321,13 +299,13 @@ class GameState {
 
   static void actionLightningFlash() {
     GameAudio.thunder(1.0);
-    if (ambientShade.value == Shade.Very_Bright) return;
-    ambientShade.value = Shade.Very_Bright;
+    if (ServerState.ambientShade.value == Shade.Very_Bright) return;
+    ServerState.ambientShade.value = Shade.Very_Bright;
     lightningFlashFrames = GameConfig.Lightning_Flash_Duration;
   }
 
   static void resetGridToAmbient(){
-    final shade = ambientShade.value;
+    final shade = ServerState.ambientShade.value;
     for (var i = 0; i < GameNodes.nodesTotal; i++){
       GameNodes.nodesBake[i] = shade;
       GameNodes.nodesShade[i] = shade;
@@ -1186,7 +1164,7 @@ class GameState {
   }
 
   static void updateLightning(){
-    if (lightning.value != Lightning.On) return;
+    if (ServerState.lightning.value != Lightning.On) return;
     if (nextLightning-- > 0) return;
     GameState.actionLightningFlash();
     nextLightning = randomInt(200, 1500);
@@ -1307,7 +1285,7 @@ class GameState {
     }
 
     static void applyShadows(){
-      if (GameState.ambientShade.value > Shade.Very_Bright) return;
+      if (ServerState.ambientShade.value > Shade.Very_Bright) return;
       applyShadowsMidAfternoon();
     }
 
@@ -1321,7 +1299,7 @@ class GameState {
       required int directionColumn,
       required int maxDistance,
     }){
-      final current = GameState.ambientShade.value;
+      final current = ServerState.ambientShade.value;
       final shadowShade = current >= Shade.Pitch_Black ? current : current + 1;
 
       for (var z = 0; z < GameState.nodesTotalZ; z++) {
@@ -1450,7 +1428,7 @@ class GameState {
     }
 
     static void gridWindResetToAmbient(){
-      final ambientWindIndex = windAmbient.value.index;
+      final ambientWindIndex = ServerState.windAmbient.value.index;
       for (var i = 0; i < GameNodes.nodesTotal; i++){
         GameNodes.nodesWind[i] = ambientWindIndex;
       }

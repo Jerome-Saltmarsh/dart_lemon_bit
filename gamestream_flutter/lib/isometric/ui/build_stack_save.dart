@@ -10,7 +10,7 @@ final sceneNameController = TextEditingController()..addListener(onSceneNamedCha
 final enteredSceneNameText = Watch("");
 
 Widget buildControlSceneName(){
-  return watch(GameState.sceneMetaDataSceneName, (String? sceneName){
+  return watch(ServerState.sceneName, (String? sceneName){
       if (sceneName == null || sceneName.trim().isEmpty) {
         return Container(
           padding: const EdgeInsets.all(24),

@@ -1317,8 +1317,8 @@ int get renderNodeWind => GameNodes.nodesWind[renderNodeShade];
 int get renderNodeBelowIndex => GameRender.currentNodeIndex + GameState.nodesArea;
 
 int get renderNodeBelowShade {
-  if (renderNodeBelowIndex < 0) return GameState.ambientShade.value;
-  if (renderNodeBelowIndex >= GameNodes.nodesTotal) return GameState.ambientShade.value;
+  if (renderNodeBelowIndex < 0) return ServerState.ambientShade.value;
+  if (renderNodeBelowIndex >= GameNodes.nodesTotal) return ServerState.ambientShade.value;
   return GameNodes.nodesShade[renderNodeBelowIndex];
 }
 
@@ -1329,8 +1329,8 @@ int getRenderLayerColor(int layers) =>
 
 int getRenderLayerShade(int layers){
    final index = GameRender.currentNodeIndex + (layers * GameState.nodesArea);
-   if (index < 0) return GameState.ambientShade.value;
-   if (index >= GameNodes.nodesTotal) return GameState.ambientShade.value;
+   if (index < 0) return ServerState.ambientShade.value;
+   if (index >= GameNodes.nodesTotal) return ServerState.ambientShade.value;
    return GameNodes.nodesShade[index];
 }
 

@@ -74,7 +74,7 @@ class EditorUI {
     );
 
   static Widget buildIconRain(Rain rain) =>
-      watch(GameState.rain, (Rain activeRain) =>
+      watch(ServerState.rain, (Rain activeRain) =>
         buildIconWeatherControl(
             tooltip: '${rain.name} Rain',
             action: () => GameNetwork.sendClientRequestWeatherSetRain(rain),
@@ -84,7 +84,7 @@ class EditorUI {
       );
 
   static Widget buildIconLightning(Lightning lightning) =>
-      watch(GameState.lightning, (Lightning activeLightning) =>
+      watch(ServerState.lightning, (Lightning activeLightning) =>
           buildIconWeatherControl(
             tooltip: '${lightning.name} Lightning',
             action: () => GameNetwork.sendClientRequestWeatherSetLightning(lightning),
@@ -94,7 +94,7 @@ class EditorUI {
       );
 
   static Widget buildIconWind(Wind wind) =>
-      watch(GameState.windAmbient, (Wind active) =>
+      watch(ServerState.windAmbient, (Wind active) =>
           buildIconWeatherControl(
             tooltip: '${wind.name} Wind',
             action: () => GameNetwork.sendClientRequestWeatherSetWind(wind),

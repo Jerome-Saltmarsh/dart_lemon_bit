@@ -120,7 +120,7 @@ class GameAudio {
   ];
 
   static double getVolumeTargetDayAmbience() {
-    if (GameState.ambientShade.value == Shade.Very_Bright) return 0.2;
+    if (ServerState.ambientShade.value == Shade.Very_Bright) return 0.2;
     return 0;
   }
 
@@ -157,7 +157,7 @@ class GameAudio {
     if (GameQueries.windLineRenderX - 250 <= Engine.screenCenterRenderX) {
       target += windLineDistanceVolume;
     }
-    final index = GameState.windAmbient.value.index;
+    final index = ServerState.windAmbient.value.index;
     if (index <= windIndexCalm) {
       if (GameState.hours.value < 6) return target;
       if (GameState.hours.value < 18) return target + 0.1;
@@ -168,12 +168,12 @@ class GameAudio {
   }
 
   static double getVolumeTargetRain() {
-    if (GameState.rain.value == Rain.None) return 0.0;
+    if (ServerState.rain.value == Rain.None) return 0.0;
     const r = 7;
     const maxDistance = r * tileSize;
     final distance = GameQueries.getClosestByType(radius: r, type: NodeType.Rain_Landing) * tileSize;
     final v = convertDistanceToVolume(distance, maxDistance: maxDistance);
-    return v * (GameState.rain.value == Rain.Light ? 0.5 : 1.0) * 0.5;
+    return v * (ServerState.rain.value == Rain.Light ? 0.5 : 1.0) * 0.5;
   }
 
   static double getVolumeTargetCrickets() {
@@ -231,7 +231,7 @@ class GameAudio {
   }
 
   static void playRandomMusic(){
-    if (GameState.ambientShade.value == Shade.Pitch_Black) {
+    if (ServerState.ambientShade.value == Shade.Pitch_Black) {
       playRandom(musicNight);
     }
   }
@@ -239,7 +239,7 @@ class GameAudio {
   static void playRandomAmbientSound(){
     final hour = GameState.hours.value;
 
-    final shade = GameState.ambientShade.value;
+    final shade = ServerState.ambientShade.value;
 
     if (shade == Shade.Pitch_Black || shade == Shade.Very_Dark){
       return playRandom(soundsNight);

@@ -9,4 +9,8 @@ class ClientEvents {
   static void onChangedAttributesWindowVisible(bool value){
     ClientActions.playSoundWindow();
   }
+
+  static void onChangedHotKeys(int value){
+    ClientActions.redrawHotKeys();
+  }
 }

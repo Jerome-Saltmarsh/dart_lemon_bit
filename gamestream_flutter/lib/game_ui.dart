@@ -339,6 +339,19 @@ class GameUI {
 
   static Row buildRowHotKeys() => Row(
         children: [
+
+          watch(ClientState.readsHotKeys, (int reads) =>
+            watch(GamePlayer.weapon, (int playerWeaponType){
+              if (
+              ClientState.hotKey1.value == playerWeaponType ||
+                  ClientState.hotKey2.value == playerWeaponType ||
+                  ClientState.hotKey3.value == playerWeaponType ||
+                  ClientState.hotKey4.value == playerWeaponType
+              ) return const SizedBox();
+
+              return Container(child: buildStackHotKeyContainer(itemType: playerWeaponType, hotKey: "-"), margin: const EdgeInsets.only(right: 4),);
+            })
+          ),
           buildStackHotKey(ClientState.hotKey1, 1),
           buildStackHotKey(ClientState.hotKey2, 2),
           buildStackHotKey(ClientState.hotKey3, 3),
@@ -397,6 +410,42 @@ class GameUI {
             )
         )
       );
+
+  static Widget buildStackHotKeyContainer({required int itemType, required String hotKey}){
+    return Stack(
+      children: [
+        buildAtlasIconType(IconType.Slot, scale: 2.0),
+        buildAtlasItemType(itemType, scale: 1.8),
+        Positioned(
+          left: 5,
+          top: 5,
+          child: text(hotKey),
+        ),
+        if (ItemType.getConsumeType(itemType) != ItemType.Empty)
+          Positioned(
+              right: 5,
+              bottom: 5,
+              child: buildInventoryAware(
+                  builder: () =>
+                      text(ServerQuery.getItemTypeConsumesRemaining(itemType),
+                        italic: true,
+                        color: Colors.white70,
+                      )
+              )
+          ),
+        if (GamePlayer.weapon.value == itemType)
+          Container(
+            width: 64,
+            height: 64,
+            decoration: buildDecorationBorder(
+              colorBorder: Colors.white,
+              colorFill: Colors.transparent,
+              width: 3,
+            ),
+          )
+      ],
+    );
+  }
 
   /// Automatically rebuilds whenever the inventory gets updated
   static Widget buildInventoryAware({required BasicWidgetBuilder builder}) =>

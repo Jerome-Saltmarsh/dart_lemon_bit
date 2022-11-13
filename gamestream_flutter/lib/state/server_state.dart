@@ -10,9 +10,23 @@ class ServerState {
   static final playerExperiencePercentage = Watch(0.0);
   static final playerLevel = Watch(1);
   static final playerAttributes = Watch(0);
+  static final sceneEditable = Watch(false);
+  static final sceneName = Watch<String?>(null);
+  static final rain = Watch(Rain.None, onChanged: GameEvents.onChangedRain);
+  static final weatherBreeze = Watch(false);
 
   static var inventory = Uint16List(0);
   static var inventoryQuantity = Uint16List(0);
+
+  static final lightning = Watch(Lightning.Off, onChanged: (Lightning value){
+    if (value != Lightning.Off){
+      GameState.nextLightning = 0;
+    }
+  });
+
+  static final watchTimePassing = Watch(false);
+  static final windAmbient = Watch(Wind.Calm, onChanged: GameEvents.onChangedWind);
+  static final ambientShade = Watch(Shade.Bright, onChanged: GameEvents.onChangedAmbientShade);
 }
 
 

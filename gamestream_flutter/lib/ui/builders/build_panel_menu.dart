@@ -11,7 +11,7 @@ Widget buildPanelMenu() =>
           children: [
             buildButtonTogglePlayMode(),
             width2,
-            watch(GameState.sceneEditable, (bool sceneEditable) => sceneEditable ? EditorUI.buildRowWeatherControls() : buildWatchBool(GameUI.timeVisible, buildTime)),
+            watch(ServerState.sceneEditable, (bool sceneEditable) => sceneEditable ? EditorUI.buildRowWeatherControls() : buildWatchBool(GameUI.timeVisible, buildTime)),
             width2,
             GameUI.buildIconZoom(),
             width2,
@@ -28,7 +28,7 @@ Widget buildPanelMenu() =>
     );
 
 Widget buildButtonTogglePlayMode() {
-  return watch(GameState.sceneEditable, (bool isOwner) {
+  return watch(ServerState.sceneEditable, (bool isOwner) {
     if (!isOwner) return const SizedBox();
     return watch(GameState.edit, (bool edit) {
       return container(

@@ -102,7 +102,7 @@ void renderNodeAt() {
       }
     case NodeType.Rain_Falling:
       RenderNode.renderStandardNodeShaded(
-        srcX: GameState.srcXRainFalling,
+        srcX: ClientState.srcXRainFalling,
         srcY: 72.0 * ((GameAnimation.animationFrame + GameRender.currentNodeRow + GameRender.currentNodeColumn) % 6),
       );
       return;
@@ -122,7 +122,7 @@ void renderNodeAt() {
         return;
       }
       RenderNode.renderStandardNodeShaded(
-        srcX: GameState.srcXRainLanding,
+        srcX: ClientState.srcXRainLanding,
         srcY: 72.0 * ((GameAnimation.animationFrame + GameRender.currentNodeRow + GameRender.currentNodeColumn) % 6),
       );
       return;

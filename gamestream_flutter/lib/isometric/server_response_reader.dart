@@ -150,19 +150,19 @@ class ServerResponseReader with ByteReader {
     final environmentResponse = readByte();
     switch (environmentResponse) {
       case EnvironmentResponse.Shade:
-        GameState.ambientShade.value = readByte();
+        ServerState.ambientShade.value = readByte();
         break;
       case EnvironmentResponse.Rain:
-        GameState.rain.value = readRain();
+        ServerState.rain.value = readRain();
         break;
       case EnvironmentResponse.Lightning:
-        GameState.lightning.value = readLightning();
+        ServerState.lightning.value = readLightning();
         break;
       case EnvironmentResponse.Wind:
-        GameState.windAmbient.value = readWind();
+        ServerState.windAmbient.value = readWind();
         break;
       case EnvironmentResponse.Breeze:
-        GameState.weatherBreeze.value = readBool();
+        ServerState.weatherBreeze.value = readBool();
         break;
     }
   }
@@ -371,17 +371,17 @@ class ServerResponseReader with ByteReader {
   }
 
   void readSceneMetaData() {
-    GameState.sceneEditable.value = readBool();
-    GameState.sceneMetaDataSceneName.value = readString();
+    ServerState.sceneEditable.value = readBool();
+    ServerState.sceneName.value = readString();
   }
 
   void readWeather() {
-    GameState.rain.value = readRain();
-    GameState.weatherBreeze.value = readBool();
-    GameState.lightning.value = readLightning();
-    GameState.watchTimePassing.value = readBool();
-    GameState.windAmbient.value = readWind();
-    GameState.ambientShade.value = readByte();
+    ServerState.rain.value = readRain();
+    ServerState.weatherBreeze.value = readBool();
+    ServerState.lightning.value = readLightning();
+    ServerState.watchTimePassing.value = readBool();
+    ServerState.windAmbient.value = readWind();
+    ServerState.ambientShade.value = readByte();
   }
 
   Rain readRain(){

@@ -3,7 +3,7 @@ import 'package:gamestream_flutter/library.dart';
 
 class GameActions {
   static void setAmbientShadeToHour(){
-    GameState.ambientShade.value = Shade.fromHour(GameState.hours.value);
+    ServerState.ambientShade.value = Shade.fromHour(GameState.hours.value);
   }
 
   static void spawnDustCloud(double x, double y, double z) {

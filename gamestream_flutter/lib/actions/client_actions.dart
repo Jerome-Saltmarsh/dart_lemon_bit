@@ -4,6 +4,7 @@ import 'package:gamestream_flutter/library.dart';
 class ClientActions {
 
   static void redrawInventory() => ClientState.inventoryReads.value++;
+  static void redrawHotKeys() => ClientState.readsHotKeys.value++;
 
   static void clearMouseOverDialogType() =>
     ClientState.hoverDialogType.value = DialogType.None;

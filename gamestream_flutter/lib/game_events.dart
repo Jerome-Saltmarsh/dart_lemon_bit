@@ -51,7 +51,7 @@ class GameEvents {
     )
     ){
       GameAudio.footstep_mud_6.playXYZ(x, y, z);
-      final amount = GameState.rain.value == Rain.Heavy ? 3 : 2;
+      final amount = ServerState.rain.value == Rain.Heavy ? 3 : 2;
       for (var i = 0; i < amount; i++){
         GameState.spawnParticleWaterDrop(x: x, y: y, z: z);
       }
@@ -273,7 +273,7 @@ class GameEvents {
       GameState.player.messageTimer = 300;
     } else {
       GameCamera.setModeChase();
-      if (GameState.sceneEditable.value){
+      if (ServerState.sceneEditable.value){
         GameState.player.message.value = "press tab to edit";
       }
     }
@@ -294,12 +294,12 @@ class GameEvents {
       case Rain.None:
         break;
       case Rain.Light:
-        GameState.srcXRainFalling = AtlasNode.Node_Rain_Falling_Light_X;
-        GameState.srcXRainLanding = AtlasNode.Node_Rain_Landing_Light_X;
+        ClientState.srcXRainFalling = AtlasNode.Node_Rain_Falling_Light_X;
+        ClientState.srcXRainLanding = AtlasNode.Node_Rain_Landing_Light_X;
         break;
       case Rain.Heavy:
-        GameState.srcXRainFalling = AtlasNode.Node_Rain_Falling_Heavy_X;
-        GameState.srcXRainLanding = AtlasNode.Node_Rain_Landing_Heavy_X;
+        ClientState.srcXRainFalling = AtlasNode.Node_Rain_Falling_Heavy_X;
+        ClientState.srcXRainLanding = AtlasNode.Node_Rain_Landing_Heavy_X;
         break;
     }
   }

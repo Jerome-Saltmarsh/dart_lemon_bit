@@ -202,7 +202,7 @@ class GameNetwork {
         Engine.fullScreenExit();
         GameState.clear();
         GameState.gameType.value = null;
-        GameState.sceneEditable.value = false;
+        ServerState.sceneEditable.value = false;
         break;
       case ConnectionStatus.Failed_To_Connect:
         GameWebsite.error.value = "Failed to connect";
