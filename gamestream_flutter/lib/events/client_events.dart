@@ -1,4 +1,5 @@
 
+import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class ClientEvents {
@@ -17,5 +18,87 @@ class ClientEvents {
   static void onChangedRaining(bool raining){
     raining ? GameActions.rainStart() : GameActions.rainStop();
     GameState.refreshLighting();
+  }
+  
+  static void onKeyPressed(LogicalKeyboardKey key){
+    if (key == LogicalKeyboardKey.keyX) {
+      GameIO.actionToggleInputMode();
+      return;
+    }
+    if (key == LogicalKeyboardKey.keyP) {
+      GameActions.toggleDebugMode();
+      return;
+    }
+    if (key == LogicalKeyboardKey.keyB) {
+      ClientActions.windowTogglePlayerAttributes();
+      return;
+    }
+
+    if (GameState.playMode) {
+      if (key == LogicalKeyboardKey.keyR){
+        GameNetwork.sendClientRequestInventoryToggle();
+        return;
+      }
+
+      if (key == LogicalKeyboardKey.digit1) {
+        if (ClientState.hoverIndex.value >= 0 && ClientState.hoverDialogIsInventory){
+          ClientState.hotKey1.value = ServerState.inventory[ClientState.hoverIndex.value];
+        } else {
+          ServerActions.equipItemType(ClientState.hotKey1.value);
+        }
+        return;
+      }
+      if (key == LogicalKeyboardKey.digit2) {
+        if (ClientState.hoverIndex.value >= 0 && ClientState.hoverDialogIsInventory){
+          ClientState.hotKey2.value = ServerState.inventory[ClientState.hoverIndex.value];
+        } else {
+          ServerActions.equipItemType(ClientState.hotKey2.value);
+        }
+        return;
+      }
+      if (key == LogicalKeyboardKey.digit3) {
+        if (ClientState.hoverIndex.value >= 0 && ClientState.hoverDialogIsInventory){
+          ClientState.hotKey3.value = ServerState.inventory[ClientState.hoverIndex.value];
+        } else {
+          ServerActions.equipItemType(ClientState.hotKey3.value);
+        }
+        return;
+      }
+      if (key == LogicalKeyboardKey.keyQ) {
+        if (ClientState.hoverIndex.value >= 0 && ClientState.hoverDialogIsInventory){
+          ClientState.hotKeyQ.value = ServerState.inventory[ClientState.hoverIndex.value];
+        } else {
+          ServerActions.equipItemType(ClientState.hotKeyQ.value);
+        }
+        return;
+      }
+      if (key == LogicalKeyboardKey.keyE) {
+        if (ClientState.hoverIndex.value >= 0 && ClientState.hoverDialogIsInventory){
+          ClientState.hotKeyE.value = ServerState.inventory[ClientState.hoverIndex.value];
+        } else {
+          ServerActions.equipItemType(ClientState.hotKeyE.value);
+        }
+        return;
+      }
+      if (key == LogicalKeyboardKey.enter) {
+        GameActions.messageBoxShow();
+      }
+      if (key == LogicalKeyboardKey.space) {
+        GameActions.attackAuto();
+      }
+      if (key == LogicalKeyboardKey.keyF) {
+        GameActions.toggleZoom();
+      }
+    } else {
+
+      if (key == LogicalKeyboardKey.digit5) {
+        GameEditor.paintTorch();
+        return;
+      }
+      if (key == LogicalKeyboardKey.digit4) {
+        GameEditor.paintTree();
+        return;
+      }
+    }
   }
 }
