@@ -25,7 +25,7 @@ class ClientActions {
       GameAudio.click_sound_8(1);
 
   static void dragStartSetNone(){
-    ClientState.dragStarted.value = DragStart.None;
+    ClientState.dragStart.value = DragStart.None;
   }
 
   static void assignEquippedItemToHotKey(String index){
@@ -47,5 +47,17 @@ class ClientActions {
        if (index == "E") {
          ClientState.hotKeyE.value = GamePlayer.weapon.value;
        }
+  }
+
+  static void setDragStart(int clientType) =>
+    () => ClientState.dragStart.value = clientType;
+
+  static void removeEquippedWeaponHotKey() {
+    if (GamePlayer.weapon.value == ItemType.Empty) return;
+
+    for (final hotKey in ClientState.hotKeyWatches) {
+      if (hotKey.value != GamePlayer.weapon.value) continue;
+      hotKey.value = ItemType.Empty;
+    }
   }
 }

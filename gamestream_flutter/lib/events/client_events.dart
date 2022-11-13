@@ -1,4 +1,5 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -19,119 +20,79 @@ class ClientEvents {
     raining ? GameActions.rainStart() : GameActions.rainStop();
     GameState.refreshLighting();
   }
-  
+
+  static void onDragCompleted(){
+
+  }
+
+  static void onDragCancelled(Velocity velocity, Offset offset){
+
+  }
+
+  static void onDragEnd(DraggableDetails details){
+
+  }
+
   static void onKeyPressed(LogicalKeyboardKey key){
-    if (key == LogicalKeyboardKey.keyX) {
+    if (key == ClientConstants.Key_Toggle_Input_Mode) {
       GameIO.actionToggleInputMode();
       return;
     }
-    if (key == LogicalKeyboardKey.keyP) {
+    if (key == ClientConstants.Key_Toggle_Debug_Mode) {
       GameActions.toggleDebugMode();
       return;
     }
-    if (key == LogicalKeyboardKey.keyB) {
+    if (key == ClientConstants.Key_Toggle_Window_Attributes) {
       ClientActions.windowTogglePlayerAttributes();
       return;
     }
 
     if (GameState.playMode) {
-      if (key == LogicalKeyboardKey.keyR){
+      if (key == ClientConstants.Key_Inventory){
         GameNetwork.sendClientRequestInventoryToggle();
         return;
       }
-
-      if (key == LogicalKeyboardKey.digit1) {
-        if (ClientState.hoverIndex.value >= 0 && ClientState.hoverDialogIsInventory){
-          ClientState.hotKey1.value = ServerState.inventory[ClientState.hoverIndex.value];
-        } else {
-          if (ClientState.hotKey1.value == ItemType.Empty) {
-            ClientState.hotKey1.value = GamePlayer.weapon.value;
-            return;
-          }
-          ServerActions.equipItemType(ClientState.hotKey1.value);
-        }
+      if (ClientQuery.keyboardKeyIsHotKey(key)) {
+        onKeyPressedHotKey(key);
         return;
       }
-      if (key == LogicalKeyboardKey.digit2) {
-        if (ClientState.hoverIndex.value >= 0 && ClientState.hoverDialogIsInventory){
-          ClientState.hotKey2.value = ServerState.inventory[ClientState.hoverIndex.value];
-        } else {
-          if (ClientState.hotKey2.value == ItemType.Empty) {
-            ClientState.hotKey2.value = GamePlayer.weapon.value;
-            return;
-          }
-          ServerActions.equipItemType(ClientState.hotKey2.value);
-        }
-        return;
-      }
-      if (key == LogicalKeyboardKey.digit3) {
-        if (ClientState.hoverIndex.value >= 0 && ClientState.hoverDialogIsInventory){
-          ClientState.hotKey3.value = ServerState.inventory[ClientState.hoverIndex.value];
-        } else {
-          if (ClientState.hotKey3.value == ItemType.Empty) {
-            ClientState.hotKey3.value = GamePlayer.weapon.value;
-            return;
-          }
-          ServerActions.equipItemType(ClientState.hotKey3.value);
-        }
-        return;
-      }
-      if (key == LogicalKeyboardKey.digit4) {
-        if (ClientState.hoverIndex.value >= 0 && ClientState.hoverDialogIsInventory){
-          ClientState.hotKey4.value = ServerState.inventory[ClientState.hoverIndex.value];
-        } else {
-          if (ClientState.hotKey4.value == ItemType.Empty) {
-            ClientState.hotKey4.value = GamePlayer.weapon.value;
-            return;
-          }
-          ServerActions.equipItemType(ClientState.hotKey4.value);
-        }
-        return;
-      }
-
-      if (key == LogicalKeyboardKey.keyQ) {
-        if (ClientState.hoverIndex.value >= 0 && ClientState.hoverDialogIsInventory){
-          ClientState.hotKeyQ.value = ServerState.inventory[ClientState.hoverIndex.value];
-        } else {
-          if (ClientState.hotKeyQ.value == ItemType.Empty) {
-            ClientState.hotKeyQ.value = GamePlayer.weapon.value;
-            return;
-          }
-          ServerActions.equipItemType(ClientState.hotKeyQ.value);
-        }
-        return;
-      }
-      if (key == LogicalKeyboardKey.keyE) {
-        if (ClientState.hoverIndex.value >= 0 && ClientState.hoverDialogIsInventory){
-          ClientState.hotKeyE.value = ServerState.inventory[ClientState.hoverIndex.value];
-        } else {
-          if (ClientState.hotKeyE.value == ItemType.Empty) {
-            ClientState.hotKeyE.value = GamePlayer.weapon.value;
-            return;
-          }
-          ServerActions.equipItemType(ClientState.hotKeyE.value);
-        }
-        return;
-      }
-      if (key == LogicalKeyboardKey.enter) {
+      if (key == ClientConstants.Key_Message) {
         GameActions.messageBoxShow();
+        return;
       }
-      if (key == LogicalKeyboardKey.space) {
+      if (key == ClientConstants.Key_Auto_Attack) {
         GameActions.attackAuto();
+        return;
       }
-      if (key == LogicalKeyboardKey.keyF) {
+      if (key == ClientConstants.Key_Zoom) {
         GameActions.toggleZoom();
+        return;
       }
     } else {
 
-      if (key == LogicalKeyboardKey.digit5) {
-        GameEditor.paintTorch();
-        return;
-      }
-      if (key == LogicalKeyboardKey.digit4) {
-        GameEditor.paintTree();
-        return;
-      }
+      // if (key == LogicalKeyboardKey.digit5) {
+      //   GameEditor.paintTorch();
+      //   return;
+      // }
+      // if (key == LogicalKeyboardKey.digit4) {
+      //   GameEditor.paintTree();
+      //   return;
+      // }
     }
+  }
+
+  static void onKeyPressedHotKey(LogicalKeyboardKey key) {
+    final hotKeyWatch = ClientQuery.getKeyboardKeyHotKeyWatch(key);
+    if (ClientState.hoverIndex.value >= 0 &&
+        ClientState.hoverDialogIsInventory) {
+      hotKeyWatch.value = ClientQuery.getHoverItemType();
+      return;
+    }
+    if (hotKeyWatch.value == ItemType.Empty) {
+      ClientActions.removeEquippedWeaponHotKey();
+      hotKeyWatch.value = GamePlayer.weapon.value;
+      return;
+    }
+    ServerActions.equipItemType(hotKeyWatch.value);
   }
 }

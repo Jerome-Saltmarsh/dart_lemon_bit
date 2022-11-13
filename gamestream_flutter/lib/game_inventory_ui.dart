@@ -92,8 +92,8 @@ class GameInventoryUI {
 
   static Widget buildContainerEquippedItemType(int itemType, int index) =>
       Draggable(
-        onDragStarted: () => ClientState.dragStarted.value = DragStart.Inventory_Equipped,
-        onDragEnd: (details) => ClientActions.dragStartSetNone(),
+        onDragStarted: () => ClientActions.setDragStart(index),
+        onDragEnd: ClientEvents.onDragEnd,
         data: index,
         feedback: buildItemTypeAtlasImage(itemType: itemType, scale: Slot_Item_Scale),
         hitTestBehavior: HitTestBehavior.opaque,
@@ -148,7 +148,7 @@ class GameInventoryUI {
   }
 
   static Widget buildPositionInventoryItem(int index){
-    final itemType = ServerState.inventory[index];
+    final itemType = ServerQuery.getItemTypeAtInventoryIndex(index);
     return buildPositionGridItem(
       index: index,
       child: GestureDetector(
@@ -172,11 +172,8 @@ class GameInventoryUI {
             }
           },
           child: Draggable<int>(
-            onDragStarted: () => ClientState.dragStarted.value = DragStart.Inventory_Unequipped,
-            onDraggableCanceled: (velocity, offset){
-              if (ClientState.hoverDialogType.value != DialogType.None) return;
-              GameNetwork.sendClientRequestInventoryDrop(index);
-            },
+            onDragStarted: () => ClientActions.setDragStart(index),
+            onDraggableCanceled: ClientEvents.onDragCancelled,
             hitTestBehavior: HitTestBehavior.opaque,
             data: index,
             feedback: buildItemTypeAtlasImage(itemType: itemType, scale: Slot_Item_Scale),

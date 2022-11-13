@@ -1,4 +1,5 @@
 
+import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/library.dart';
 
 /// The data stored in client state belongs to the client and can be safely read and written
@@ -22,8 +23,27 @@ class ClientState {
   static final hotKey4 = Watch(0, onChanged: ClientEvents.onChangedHotKeys);
   static final hotKeyQ = Watch(0, onChanged: ClientEvents.onChangedHotKeys);
   static final hotKeyE = Watch(0, onChanged: ClientEvents.onChangedHotKeys);
-  static final dragStarted = Watch(DragStart.None);
 
+  static const hotKeyKeys = [
+    LogicalKeyboardKey.digit1,
+    LogicalKeyboardKey.digit2,
+    LogicalKeyboardKey.digit3,
+    LogicalKeyboardKey.digit4,
+    LogicalKeyboardKey.keyQ,
+    LogicalKeyboardKey.keyE,
+  ];
+
+  static final hotKeyWatches = [
+     hotKey1,
+     hotKey2,
+     hotKey3,
+     hotKey4,
+     hotKeyQ,
+     hotKeyE,
+  ];
+
+  static final dragStart = Watch(DragStart.None);
+  static final dragEnd = Watch(DragStart.None);
 
   static final triggerAlarmNoMessageReceivedFromServer = Watch(false);
 
