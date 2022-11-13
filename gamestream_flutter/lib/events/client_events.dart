@@ -48,26 +48,7 @@ class ClientEvents {
     }
 
     if (GameState.playMode) {
-      if (key == ClientConstants.Key_Inventory){
-        GameNetwork.sendClientRequestInventoryToggle();
-        return;
-      }
-      if (ClientQuery.keyboardKeyIsHotKey(key)) {
-        onKeyPressedHotKey(key);
-        return;
-      }
-      if (key == ClientConstants.Key_Message) {
-        GameActions.messageBoxShow();
-        return;
-      }
-      if (key == ClientConstants.Key_Auto_Attack) {
-        GameActions.attackAuto();
-        return;
-      }
-      if (key == ClientConstants.Key_Zoom) {
-        GameActions.toggleZoom();
-        return;
-      }
+      onKeyPressedPlayMode(key);
     } else {
 
       // if (key == LogicalKeyboardKey.digit5) {
@@ -81,7 +62,30 @@ class ClientEvents {
     }
   }
 
-  static void onKeyPressedHotKey(LogicalKeyboardKey key) {
+  static void onKeyPressedPlayMode(LogicalKeyboardKey key){
+    if (key == ClientConstants.Key_Inventory){
+      GameNetwork.sendClientRequestInventoryToggle();
+      return;
+    }
+    if (ClientQuery.keyboardKeyIsHotKey(key)) {
+      onKeyPressedPlayModeHotKey(key);
+      return;
+    }
+    if (key == ClientConstants.Key_Message) {
+      GameActions.messageBoxShow();
+      return;
+    }
+    if (key == ClientConstants.Key_Auto_Attack) {
+      GameActions.attackAuto();
+      return;
+    }
+    if (key == ClientConstants.Key_Zoom) {
+      GameActions.toggleZoom();
+      return;
+    }
+  }
+
+  static void onKeyPressedPlayModeHotKey(LogicalKeyboardKey key) {
     final hotKeyWatch = ClientQuery.getKeyboardKeyHotKeyWatch(key);
     if (ClientState.hoverIndex.value >= 0 &&
         ClientState.hoverDialogIsInventory) {
