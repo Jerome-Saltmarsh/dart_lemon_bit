@@ -431,9 +431,10 @@ class GameUI {
                         ),
                       ))));
 
-  static Widget buildStackHotKeyContainer(
-      {required int itemType, required String hotKey}) {
-    return Stack(
+  static Widget buildStackHotKeyContainer({
+    required int itemType,
+    required String hotKey,
+  }) => Stack(
       children: [
         buildAtlasIconType(IconType.Slot, scale: 2.0),
         buildAtlasItemType(itemType, scale: 1.8),
@@ -452,7 +453,7 @@ class GameUI {
                         italic: true,
                         color: Colors.white70,
                       ))),
-        if (GamePlayer.weapon.value == itemType)
+        if (itemType != ItemType.Empty && GamePlayer.weapon.value == itemType)
           Container(
             width: 64,
             height: 64,
@@ -464,7 +465,6 @@ class GameUI {
           )
       ],
     );
-  }
 
   /// Automatically rebuilds whenever the inventory gets updated
   static Widget buildInventoryAware({required BasicWidgetBuilder builder}) =>

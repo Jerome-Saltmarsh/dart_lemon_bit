@@ -39,19 +39,23 @@ class GameInventoryUI {
         child: watch(ServerState.playerGold, (int gold) => text("Gold $gold")),
       );
 
-  static Widget buildContainerEquippedItems() => Container(
-        height: 80.0,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            buildContainerEquippedWeapon(),
-            buildContainerEquippedBody(),
-            buildContainerEquippedHead(),
-            buildContainerEquippedLegs(),
-          ],
-        ),
-      );
+  static Widget buildContainerEquippedItems() =>
+      DragTarget<int>(
+        onWillAccept: onDragWillAccept,
+        onAccept: onDragAccept,
+        builder: (context, i, a) => Container(
+            height: 80.0,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                buildContainerEquippedWeapon(),
+                buildContainerEquippedBody(),
+                buildContainerEquippedHead(),
+                buildContainerEquippedLegs(),
+              ],
+            ),
+          ));
 
   static Widget buildContainerEquippedWeapon() => onPressed(
       action: () => GameNetwork.sendClientRequestInventoryEquip(ItemType.Equipped_Weapon),
@@ -84,11 +88,7 @@ class GameInventoryUI {
   );
 
   static Widget buildDragTarget(Watch<int> watchInt, int index) =>
-      DragTarget<int>(
-        builder: (context, i, a) => watch(watchInt, (int itemType) => buildContainerEquippedItemType(itemType, index)),
-        onWillAccept: onDragWillAccept,
-        onAccept: onDragAccept,
-      );
+      watch(watchInt, (int itemType) => buildContainerEquippedItemType(itemType, index));
 
   static Widget buildContainerEquippedItemType(int itemType, int index) =>
       Draggable(

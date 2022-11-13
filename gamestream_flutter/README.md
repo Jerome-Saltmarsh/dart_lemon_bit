@@ -44,6 +44,8 @@
 [ ] particle-type myst
 
 [current]
+[ ] fix drop equipped item by dragging
+[ ] make hotkeys draggable
 [ ] hotkeys to change weapons
 
 11.11.2022
