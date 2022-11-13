@@ -12,6 +12,10 @@ class ClientState {
   static final windowVisibleAttributes = Watch(false, onChanged: ClientEvents.onChangedAttributesWindowVisible);
   static final debugVisible = Watch(false);
   static final torchesIgnited = Watch(true);
+  static final touchButtonSide = Watch(TouchButtonSide.Right);
+  static final rendersSinceUpdate = Watch(0, onChanged: GameEvents.onChangedRendersSinceUpdate);
+  static final particles = <Particle>[];
+  static var totalActiveParticles = 0;
 
   static var srcXRainFalling = 6640.0;
   static var srcXRainLanding = 6739.0;

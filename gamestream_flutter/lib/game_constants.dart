@@ -1,4 +1,6 @@
 
+import 'package:gamestream_flutter/game_colors.dart';
+
 class GameConstants {
   static const Node_Height = 24.0;
   static const Sprite_Width = 48.0;
@@ -8,4 +10,9 @@ class GameConstants {
   static const Sprite_Height_Third = 24.0;
   static const Sprite_Height_Padded = Sprite_Height + 1;
   static const Sprite_Anchor_Y = 0.3;
+
+  static const Shade_Opacities = [0.0, 0.4, 0.6, 0.7, 0.8, 0.95, 1.0];
+  static final colorShades = Shade_Opacities
+      .map((opacity) => GameColors.black.withOpacity(opacity).value)
+      .toList(growable: false);
 }

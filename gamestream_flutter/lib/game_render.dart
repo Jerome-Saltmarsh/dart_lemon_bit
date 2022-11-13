@@ -80,7 +80,7 @@ class GameRender {
   static double get currentNodeRenderY => GameConvert.rowColumnZToRenderY(currentNodeRow, currentNodeColumn, currentNodeZ);
 
   static int get currentNodeShade => GameNodes.nodesShade[currentNodeIndex];
-  static int get currentNodeColor => GameState.colorShades[currentNodeShade];
+  static int get currentNodeColor => GameConstants.colorShades[currentNodeShade];
   static int get currentNodeOrientation => GameNodes.nodesOrientation[currentNodeIndex];
   static bool get currentNodeVisible => GameNodes.nodesVisible[currentNodeIndex];
   static int get currentNodeWind => GameNodes.nodesWind[currentNodeIndex];
@@ -96,7 +96,7 @@ class GameRender {
     renderGameObject(currentRenderGameObject);
 
   static void updateCurrentParticle(){
-    currentParticle = GameState.particles[renderOrderParticle.index];
+    currentParticle = ClientState.particles[renderOrderParticle.index];
     renderOrderParticle.order = currentParticle.renderOrder;
     renderOrderParticle.orderZ = currentParticle.indexZ;
   }
@@ -578,7 +578,7 @@ class GameRender {
           srcWidth: 12,
           srcHeight: 22,
           scale: 1.0,
-          color: GameState.colorShades[Shade.Very_Bright],
+          color: GameConstants.colorShades[Shade.Very_Bright],
         );
         return;
       case ItemType.GameObjects_Book_Purple:
@@ -1301,7 +1301,7 @@ class RenderOrderParticle extends RenderOrder {
   @override
   void updateFunction() => GameRender.updateCurrentParticle();
   @override
-  int getTotal() => GameState.totalActiveParticles;
+  int getTotal() => ClientState.totalActiveParticles;
 
   @override
   void reset() {
@@ -1312,7 +1312,7 @@ class RenderOrderParticle extends RenderOrder {
 
 int get renderNodeShade => GameNodes.nodesShade[GameRender.currentNodeIndex];
 int get renderNodeOrientation => GameNodes.nodesOrientation[GameRender.currentNodeIndex];
-int get renderNodeColor => GameState.colorShades[renderNodeShade];
+int get renderNodeColor => GameConstants.colorShades[renderNodeShade];
 int get renderNodeWind => GameNodes.nodesWind[renderNodeShade];
 int get renderNodeBelowIndex => GameRender.currentNodeIndex + GameState.nodesArea;
 
@@ -1322,10 +1322,10 @@ int get renderNodeBelowShade {
   return GameNodes.nodesShade[renderNodeBelowIndex];
 }
 
-int get renderNodeBelowColor => GameState.colorShades[renderNodeBelowShade];
+int get renderNodeBelowColor => GameConstants.colorShades[renderNodeBelowShade];
 
 int getRenderLayerColor(int layers) =>
-    GameState.colorShades[getRenderLayerShade(layers)];
+    GameConstants.colorShades[getRenderLayerShade(layers)];
 
 int getRenderLayerShade(int layers){
    final index = GameRender.currentNodeIndex + (layers * GameState.nodesArea);

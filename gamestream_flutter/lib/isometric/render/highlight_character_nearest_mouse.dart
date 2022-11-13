@@ -1,8 +1,6 @@
 
 
-import 'package:bleed_common/library.dart';
-import 'package:gamestream_flutter/game_queries.dart';
-import 'package:gamestream_flutter/game_state.dart';
+import 'package:gamestream_flutter/library.dart';
 
 void highlightCharacterNearMouse() {
   final playerCharacter = GameState.getPlayerCharacter();
@@ -17,7 +15,7 @@ void highlightCharacterNearMouse() {
       nearestIndex = i;
     }
     if (nearestIndex != -1){
-      GameState.characters[nearestIndex].color = GameState.colorShades[Shade.Very_Bright];
+      GameState.characters[nearestIndex].color = GameConstants.colorShades[Shade.Very_Bright];
     }
   }
 }

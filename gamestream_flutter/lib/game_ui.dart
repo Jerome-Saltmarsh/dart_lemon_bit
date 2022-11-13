@@ -20,7 +20,6 @@ class GameUI {
     if (ServerState.gameType.value == GameType.Skirmish) return false;
     return value;
   }, onChanged: onVisibilityChangedMessageBox);
-  static final canOpenMapAndQuestMenu = Watch(false);
   static final textEditingControllerMessage = TextEditingController();
   static final textFieldMessage = FocusNode();
   static final debug = Watch(false);
@@ -28,11 +27,6 @@ class GameUI {
   static final playerTextStyle = TextStyle(color: Colors.white);
   static final mapVisible = Watch(false);
   static final timeVisible = Watch(true);
-  /// true == right
-  /// false == left
-  static final touchButtonSide = Watch(TouchButtonSideRight);
-  static const TouchButtonSideLeft = false;
-  static const TouchButtonSideRight = true;
 
   static Widget buildUI()  =>
       StackFullscreen(
@@ -103,7 +97,7 @@ class GameUI {
   static Widget buildStackInputMode(int inputMode) =>
       inputMode == InputMode.Keyboard
           ? const SizedBox()
-          : watch(touchButtonSide, buildStackInputModeTouch);
+          : watch(ClientState.touchButtonSide, buildStackInputModeTouch);
 
   static Widget buildPlayerMessage(String message) =>
     Positioned(
@@ -167,7 +161,7 @@ class GameUI {
   static Widget buildDialogFramesSinceUpdate() => Positioned(
       top: 8,
       left: 8,
-      child: watch(GameState.rendersSinceUpdate,  (int frames) =>
+      child: watch(ClientState.rendersSinceUpdate,  (int frames) =>
           text("Warning: No message received from server $frames")
       )
   );
@@ -178,7 +172,7 @@ class GameUI {
         left: 0,
         child: watch(GameState.player.interpolating, (bool value) {
           if (!value) return text("Interpolation Off", onPressed: () => GameState.player.interpolating.value = true);
-          return watch(GameState.rendersSinceUpdate, (int frames){
+          return watch(ClientState.rendersSinceUpdate, (int frames){
             return text("Frames: $frames", onPressed: () => GameState.player.interpolating.value = false);
           });
         }),

@@ -76,13 +76,12 @@ class GameCanvas {
     /// particles are only on the ui and thus can update every frame
     /// this makes them much smoother as they don't freeze
     GameState.updateParticles();
-    GameState.renderFrame.value++;
     GameState.interpolatePlayer();
     GameCamera.update();
     GameRender.renderSprites();
     GameState.renderEditMode();
     GameRender.renderMouseTargetName();
-    GameState.rendersSinceUpdate.value++;
+    ClientState.rendersSinceUpdate.value++;
     renderPlayerRunTarget();
   }
 

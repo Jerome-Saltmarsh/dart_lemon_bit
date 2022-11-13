@@ -27,7 +27,7 @@ class GameEvents {
   }
 
   static void onChangedAmbientShade(int shade) {
-    GameState.ambientColor = GameState.colorShades[shade];
+    GameState.ambientColor = GameConstants.colorShades[shade];
     GameState.refreshLighting();
     // GameState.torchesIgnited.value = shade != Shade.Very_Bright;
   }

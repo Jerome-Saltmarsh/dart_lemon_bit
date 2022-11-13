@@ -8,10 +8,6 @@ import 'package:lemon_math/library.dart';
 import 'library.dart';
 
 class GameState {
-  static final colorShades = [0.0, 0.4, 0.6, 0.7, 0.8, 0.95, 1.0]
-      .map((opacity) => GameColors.black.withOpacity(opacity).value)
-      .toList(growable: false);
-
   static final edit = Watch(false, onChanged: GameEvents.onChangedEdit);
   static final player = Player();
   static var showAllItems = false;
@@ -21,7 +17,7 @@ class GameState {
   static final characters = <Character>[];
   static final npcs = <Character>[];
   static final zombies = <Character>[];
-  static final particles = <Particle>[];
+
   static final projectiles = <Projectile>[];
   static final particleEmitters = <ParticleEmitter>[];
   static final floatingTexts = <FloatingText>[];
@@ -34,32 +30,19 @@ class GameState {
   static var totalParticles = 0;
   static var totalProjectiles = 0;
 
-  static var totalActiveParticles = 0;
-  static var ambientColor = colorShades[Shade.Bright];
-  // static var nodesBake = Uint8List(nodesInitialSize);
-  // static var nodesColor = Int32List(nodesInitialSize);
-  // static var nodesOrientation = Uint8List(nodesInitialSize);
-  // static var nodesShade = Uint8List(nodesInitialSize);
-  // static var nodesTotal = nodesInitialSize;
-  // static var nodesType = Uint8List(nodesInitialSize);
-  // static var nodesVariation = List<bool>.generate(nodesInitialSize, (index) => false, growable: false);
-  // static var nodesVisible = List<bool>.generate(nodesInitialSize, (index) => true, growable: false);
-  // static var nodesVisibleIndex = Uint16List(nodesInitialSize);
-  // static var nodesDynamicIndex = Uint16List(nodesInitialSize);
-  // static var nodesWind = Uint8List(nodesInitialSize);
+
+  static var ambientColor = GameConstants.colorShades[Shade.Bright];
   static var visibleIndex = 0;
   static var dynamicIndex = 0;
 
   static var lightningFlashFrames = 0;
 
   static final triggerAlarmNoMessageReceivedFromServer = Watch(false);
-  static final renderFrame = Watch(0);
-  static final rendersSinceUpdate = Watch(0, onChanged: GameEvents.onChangedRendersSinceUpdate);
+
 
   static final gridShadows = Watch(true, onChanged: (bool value){
     refreshLighting();
   });
-
 
   static var nodesTotalZ = 0;
   static var nodesTotalRows = 0;
@@ -114,7 +97,7 @@ class GameState {
       index - ((convertNodeIndexToZ(index) * nodesArea) + (convertNodeIndexToRow(index) * nodesTotalColumns));
 
   static int getV3RenderColor(Vector3 vector3) =>
-      colorShades[getV3NodeBelowShade(vector3)];
+      GameConstants.colorShades[getV3NodeBelowShade(vector3)];
 
   static int getV3RenderShade(Vector3 vector3) =>
       getV3NodeBelowShade(vector3);
@@ -168,7 +151,7 @@ class GameState {
 
   static void applyEmissionsParticles(){
     for (var i = 0; i < totalParticles; i++) {
-      applyParticleEmission(particles[i]);
+      applyParticleEmission(ClientState.particles[i]);
     }
   }
 
@@ -303,7 +286,7 @@ class GameState {
   }
 
   static void onChangedUpdateFrame(int value){
-    rendersSinceUpdate.value = 0;
+    ClientState.rendersSinceUpdate.value = 0;
   }
 
   static void actionGameDialogShowMap() {
@@ -324,7 +307,7 @@ class GameState {
     totalProjectiles = 0;
     totalNpcs = 0;
     particleEmitters.clear();
-    particles.clear();
+    ClientState.particles.clear();
     player.gameDialog.value = null;
     player.npcTalkOptions.value = [];
     ServerState.interactMode.value = InteractMode.None;
@@ -360,7 +343,7 @@ class GameState {
     double airFriction = 0.98,
     bool animation = false,
   }) {
-    if (totalActiveParticles > GameConfig.Particles_Max) return;
+    if (ClientState.totalActiveParticles > GameConfig.Particles_Max) return;
     assert(duration > 0);
     final particle = getInstanceParticle();
     assert(!particle.active);
@@ -937,16 +920,15 @@ class GameState {
         animation: true,
       );
 
-
   /// This may be the cause of the bug in which the sword particle does not render
   static Particle getInstanceParticle() {
-    totalActiveParticles++;
-    if (totalActiveParticles >= totalParticles){
+    ClientState.totalActiveParticles++;
+    if (ClientState.totalActiveParticles >= totalParticles){
       final instance = Particle();
-      particles.add(instance);
+      ClientState.particles.add(instance);
       return instance;
     }
-    return particles[totalActiveParticles];
+    return ClientState.particles[ClientState.totalActiveParticles];
   }
 
   static GameObject getInstanceGameObject(){
@@ -1049,7 +1031,7 @@ class GameState {
 
   /// do this during the draw call so that particles are smoother
   static void updateParticles() {
-    for (final particle in particles) {
+    for (final particle in ClientState.particles) {
       if (!particle.active) continue;
       updateParticle(particle);
       particle.frame++;
@@ -1061,10 +1043,10 @@ class GameState {
 
     if (!player.interpolating.value) return;
 
-    if (rendersSinceUpdate.value == 0) {
+    if (ClientState.rendersSinceUpdate.value == 0) {
       return;
     }
-    if (rendersSinceUpdate.value != 1) return;
+    if (ClientState.rendersSinceUpdate.value != 1) return;
 
     final playerCharacter = getPlayerCharacter();
     if (playerCharacter == null) return;
