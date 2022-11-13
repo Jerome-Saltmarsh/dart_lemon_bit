@@ -9,17 +9,14 @@ import 'package:lemon_math/library.dart';
 import 'library.dart';
 
 class GameState {
-  static var nextLightning = 0;
-  static final debugVisible = Watch(false);
-  static final torchesIgnited = Watch(true);
-  static const tileHeight = 24.0;
-  static const colorPitchBlack = Color.fromRGBO(37, 32, 48, 1.0);
+
+
   static final raining = Watch(false, onChanged: onChangedRaining);
   static final hours = Watch(0, onChanged: GameEvents.onChangedHour);
   static final minutes = Watch(0);
 
   static final colorShades = [0.0, 0.4, 0.6, 0.7, 0.8, 0.95, 1.0]
-      .map((opacity) => colorPitchBlack.withOpacity(opacity).value)
+      .map((opacity) => GameColors.black.withOpacity(opacity).value)
       .toList(growable: false);
 
   static final gameType = Watch<int?>(null, onChanged: onChangedGameType);
@@ -1165,9 +1162,9 @@ class GameState {
 
   static void updateLightning(){
     if (ServerState.lightning.value != Lightning.On) return;
-    if (nextLightning-- > 0) return;
+    if (ClientState.nextLightning-- > 0) return;
     GameState.actionLightningFlash();
-    nextLightning = randomInt(200, 1500);
+    ClientState.nextLightning = randomInt(200, 1500);
   }
 
   static void applyEmissionGameObjects() {

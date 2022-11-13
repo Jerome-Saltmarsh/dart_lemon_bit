@@ -188,7 +188,7 @@ class GameAudio {
     const r = 4;
     const maxDistance = r * tileSize;
     var closest = GameQueries.getClosestByType(radius: r, type: NodeType.Fireplace) * tileSize;
-    if (GameState.torchesIgnited.value) {
+    if (ClientState.torchesIgnited.value) {
       final closestTorch = GameQueries.getClosestByType(radius: r, type: NodeType.Torch) * tileSize;
       if (closestTorch < closest) {
         closest = closestTorch;

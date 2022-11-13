@@ -1,5 +1,7 @@
 import 'package:gamestream_flutter/library.dart';
 
+/// the data inside server state belongs to the server and can only be read
+/// writing to server state is forbidden
 class ServerState {
   static final interactMode = Watch(InteractMode.None, onChanged: GameEvents.onChangedPlayerInteractMode);
   static final playerHealth = Watch(0);
@@ -20,7 +22,7 @@ class ServerState {
 
   static final lightning = Watch(Lightning.Off, onChanged: (Lightning value){
     if (value != Lightning.Off){
-      GameState.nextLightning = 0;
+      ClientState.nextLightning = 0;
     }
   });
 

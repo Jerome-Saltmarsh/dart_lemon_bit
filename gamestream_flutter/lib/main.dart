@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/game_state.dart';
-import 'package:gamestream_flutter/game_system.dart';
-import 'package:gamestream_flutter/game_website.dart';
-import 'package:lemon_engine/engine.dart';
+
+import 'library.dart';
 
 void main() {
   Engine.run(
@@ -11,7 +9,7 @@ void main() {
     buildUI: GameWebsite.buildUI,
     buildLoadingScreen: GameWebsite.buildLoadingPage,
     themeData: ThemeData(fontFamily: 'JetBrainsMono-Regular'),
-    backgroundColor: GameState.colorPitchBlack,
+    backgroundColor: GameColors.black,
     onError: GameSystem.onError,
   );
 }

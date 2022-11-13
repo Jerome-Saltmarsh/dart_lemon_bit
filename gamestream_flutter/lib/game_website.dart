@@ -64,7 +64,7 @@ class GameWebsite {
 
    static Widget buildLoadingPage() =>
       Container(
-         color: GameState.colorPitchBlack,
+         color: GameColors.black,
          alignment: Alignment.center,
          child: Column(
            mainAxisAlignment: MainAxisAlignment.center,

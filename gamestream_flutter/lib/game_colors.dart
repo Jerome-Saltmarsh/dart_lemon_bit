@@ -3,15 +3,15 @@ import 'package:golden_ratio/constants.dart';
 
 class GameColors {
   static final Color facebook = Color.fromRGBO(66, 103, 178, 1);
-  static final Color black = Color.fromRGBO(33, 29, 43, 1.0);
+  static final Color black = Color.fromRGBO(38, 34, 47, 1.0);
   static final Color brownDark = Color.fromRGBO(36, 33, 38, 1);
   static final Color brownLight = Color.fromRGBO(48, 48, 48, 1.0);
-  static final Color black05 = Colors.black.withOpacity(0.05);
-  static final Color black10 = Colors.black.withOpacity(0.1);
-  static final Color black15 = Colors.black.withOpacity(0.15);
-  static final Color black20 = Colors.black.withOpacity(0.2);
-  static final Color black382 = Colors.black.withOpacity(goldenRatio_0381);
-  static final Color black618 = Colors.black.withOpacity(goldenRatio_0618);
+  static final Color black05 = black.withOpacity(0.05);
+  static final Color black10 = black.withOpacity(0.1);
+  static final Color black15 = black.withOpacity(0.15);
+  static final Color black20 = black.withOpacity(0.2);
+  static final Color black382 = black.withOpacity(goldenRatio_0381);
+  static final Color black618 = black.withOpacity(goldenRatio_0618);
 
   static final Color white = Colors.white;
   static final Color white05 = Colors.white.withOpacity(0.05);
@@ -49,12 +49,6 @@ class GameColors {
 
   static final Color grey = Color.fromRGBO(120, 120, 120, 1.0);
   static final Color greyDark = Color.fromRGBO(60, 60, 60, 1.0);
-
-  static final Color skinCaucasian01 = Color.fromRGBO(226, 198, 181, 1.0);
-  static final Color skinCaucasian02 = Color.fromRGBO(168, 130, 123, 1.0);
-  static final Color skinCaucasian03 = Color.fromRGBO(142, 96, 98, 1.0);
-  static final Color skinCaucasian04 = Color.fromRGBO(85, 56, 58, 1.0);
-  static final Color pitchBlack = Color.fromRGBO(28, 27, 23, 1.0);
 
   Color get blood => redDark;
 

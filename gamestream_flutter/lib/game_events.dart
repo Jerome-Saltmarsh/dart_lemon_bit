@@ -284,7 +284,7 @@ class GameEvents {
   }
 
   static void onChangedHour(int hour){
-    GameState.torchesIgnited.value = Shade.fromHour(hour) != Shade.Very_Bright;
+    ClientState.torchesIgnited.value = Shade.fromHour(hour) != Shade.Very_Bright;
   }
 
   static void onChangedRain(Rain value) {

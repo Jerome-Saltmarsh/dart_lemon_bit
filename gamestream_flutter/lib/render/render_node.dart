@@ -3,7 +3,7 @@ import 'package:gamestream_flutter/library.dart';
 
 class RenderNode {
   static void renderNodeTorch(){
-    if (!GameState.torchesIgnited.value) {
+    if (!ClientState.torchesIgnited.value) {
       Engine.renderSprite(
         image: GameImages.atlasNodes,
         srcX: AtlasNodeX.Torch,

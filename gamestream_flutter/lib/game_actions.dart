@@ -80,7 +80,7 @@ class GameActions {
   }
 
   static void toggleDebugMode(){
-    GameState.debugVisible.value = !GameState.debugVisible.value;;
+    ClientState.debugVisible.value = !ClientState.debugVisible.value;;
   }
 
   static void setTarget() {
