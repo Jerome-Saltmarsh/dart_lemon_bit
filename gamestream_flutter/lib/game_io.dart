@@ -181,6 +181,22 @@ class GameIO {
          }
          return;
        }
+       if (event.logicalKey == LogicalKeyboardKey.keyQ) {
+         if (ClientState.hoverIndex.value >= 0 && ClientState.hoverDialogIsInventory){
+           ClientState.hotKeyQ.value = ServerState.inventory[ClientState.hoverIndex.value];
+         } else {
+           ServerActions.equipItemType(ClientState.hotKeyQ.value);
+         }
+         return;
+       }
+       if (event.logicalKey == LogicalKeyboardKey.keyE) {
+         if (ClientState.hoverIndex.value >= 0 && ClientState.hoverDialogIsInventory){
+           ClientState.hotKeyE.value = ServerState.inventory[ClientState.hoverIndex.value];
+         } else {
+           ServerActions.equipItemType(ClientState.hotKeyE.value);
+         }
+         return;
+       }
 
 
        if (event.logicalKey == LogicalKeyboardKey.enter) {
