@@ -417,7 +417,7 @@ class GameUI {
                                             italic: true,
                                             color: Colors.white70,
                                           ))),
-                            if (playerWeaponType == thisItemType)
+                            if (playerWeaponType != ItemType.Empty && playerWeaponType == thisItemType)
                               Container(
                                 width: 64,
                                 height: 64,

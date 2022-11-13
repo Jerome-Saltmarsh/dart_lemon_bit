@@ -27,4 +27,8 @@ class ClientActions {
   static void assignHotKey1(int value){
      ClientState.hotKey1.value = value;
   }
+
+  static void dragStartSetNone(){
+    ClientState.dragStarted.value = DragStart.None;
+  }
 }

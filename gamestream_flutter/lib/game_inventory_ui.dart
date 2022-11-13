@@ -62,7 +62,7 @@ class GameInventoryUI {
       onRightClick: () => GamePlayer.interactModeTrading
           ? GameNetwork.sendClientRequestInventorySell(ItemType.Equipped_Weapon)
           : GameNetwork.sendClientRequestInventoryDrop(ItemType.Equipped_Weapon),
-      child: buildDragTarget(GamePlayer.weapon, ItemType.Equipped_Weapon)
+      child: buildWatchEquippedItemType(GamePlayer.weapon, ItemType.Equipped_Weapon)
   );
 
   static Widget buildContainerEquippedBody() => onPressed(
@@ -70,7 +70,7 @@ class GameInventoryUI {
       onRightClick: () => GamePlayer.interactModeTrading
           ? GameNetwork.sendClientRequestInventorySell(ItemType.Equipped_Body)
           : GameNetwork.sendClientRequestInventoryDrop(ItemType.Equipped_Body),
-      child: buildDragTarget(GamePlayer.body, ItemType.Equipped_Body)
+      child: buildWatchEquippedItemType(GamePlayer.body, ItemType.Equipped_Body)
   );
 
   static Widget buildContainerEquippedHead() => onPressed(
@@ -78,20 +78,22 @@ class GameInventoryUI {
       onRightClick: () => GamePlayer.interactModeTrading
           ? GameNetwork.sendClientRequestInventorySell(ItemType.Equipped_Head)
           : GameNetwork.sendClientRequestInventoryDrop(ItemType.Equipped_Head),
-      child: buildDragTarget(GamePlayer.head, ItemType.Equipped_Head)
+      child: buildWatchEquippedItemType(GamePlayer.head, ItemType.Equipped_Head)
   );
 
   static Widget buildContainerEquippedLegs() => onPressed(
       action: () => GameNetwork.sendClientRequestInventoryEquip(ItemType.Equipped_Legs),
       onRightClick: () => GameNetwork.sendClientRequestInventoryDrop(ItemType.Equipped_Legs),
-      child: buildDragTarget(GamePlayer.legs, ItemType.Equipped_Legs)
+      child: buildWatchEquippedItemType(GamePlayer.legs, ItemType.Equipped_Legs)
   );
 
-  static Widget buildDragTarget(Watch<int> watchInt, int index) =>
+  static Widget buildWatchEquippedItemType(Watch<int> watchInt, int index) =>
       watch(watchInt, (int itemType) => buildContainerEquippedItemType(itemType, index));
 
   static Widget buildContainerEquippedItemType(int itemType, int index) =>
       Draggable(
+        onDragStarted: () => ClientState.dragStarted.value = DragStart.Inventory_Equipped,
+        onDragEnd: (details) => ClientActions.dragStartSetNone(),
         data: index,
         feedback: buildItemTypeAtlasImage(itemType: itemType, scale: Slot_Item_Scale),
         hitTestBehavior: HitTestBehavior.opaque,
@@ -170,6 +172,7 @@ class GameInventoryUI {
             }
           },
           child: Draggable<int>(
+            onDragStarted: () => ClientState.dragStarted.value = DragStart.Inventory_Unequipped,
             onDraggableCanceled: (velocity, offset){
               if (ClientState.hoverDialogType.value != DialogType.None) return;
               GameNetwork.sendClientRequestInventoryDrop(index);
