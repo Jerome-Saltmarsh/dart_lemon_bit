@@ -18,7 +18,7 @@ class GameCanvas {
       renderCursor(canvas);
     }
 
-    if (GameState.showAllItems) {
+    if (ClientState.showAllItems) {
        for (var i = 0; i < GameState.totalGameObjects; i++){
          // final gameObject = GameState.gameObjects[i];
          // if (gameObject.type != GameObjectType.Item) continue;

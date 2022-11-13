@@ -168,6 +168,14 @@ class GameIO {
          }
          return;
        }
+       if (event.logicalKey == LogicalKeyboardKey.digit3) {
+         if (ClientState.hoverIndex.value >= 0 && ClientState.hoverDialogIsInventory){
+           ClientState.hotKey3.value = ServerState.inventory[ClientState.hoverIndex.value];
+         } else {
+           ServerActions.equipItemType(ClientState.hotKey3.value);
+         }
+         return;
+       }
 
 
        if (event.logicalKey == LogicalKeyboardKey.enter) {
@@ -455,7 +463,7 @@ class GameIO {
       return readPlayerInputEdit();
     }
 
-    GameState.showAllItems = Engine.keyPressed(LogicalKeyboardKey.keyQ);
+    ClientState.showAllItems = Engine.keyPressed(LogicalKeyboardKey.keyQ);
   }
 
   static void readPlayerInputEdit() {

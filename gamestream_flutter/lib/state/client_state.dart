@@ -3,6 +3,7 @@ import 'package:gamestream_flutter/library.dart';
 
 /// The data stored in client state belongs to the client and can be safely read and written
 class ClientState {
+  // WATCHES
   static final raining = Watch(false, onChanged: ClientEvents.onChangedRaining);
   static final readsHotKeys = Watch(0);
   static final inventoryReads = Watch(0, onChanged: ClientEvents.onInventoryReadsChanged);
@@ -14,18 +15,22 @@ class ClientState {
   static final torchesIgnited = Watch(true);
   static final touchButtonSide = Watch(TouchButtonSide.Right);
   static final rendersSinceUpdate = Watch(0, onChanged: GameEvents.onChangedRendersSinceUpdate);
-  static final particles = <Particle>[];
-  static var totalActiveParticles = 0;
   static final edit = Watch(false, onChanged: GameEvents.onChangedEdit);
-
-  static var srcXRainFalling = 6640.0;
-  static var srcXRainLanding = 6739.0;
-  static var nextLightning = 0;
-
   static final hotKey1 = Watch(0, onChanged: ClientEvents.onChangedHotKeys);
   static final hotKey2 = Watch(0, onChanged: ClientEvents.onChangedHotKeys);
   static final hotKey3 = Watch(0, onChanged: ClientEvents.onChangedHotKeys);
   static final hotKey4 = Watch(0, onChanged: ClientEvents.onChangedHotKeys);
+  static final hotKeyQ = Watch(0, onChanged: ClientEvents.onChangedHotKeys);
+  static final hotKeyE = Watch(0, onChanged: ClientEvents.onChangedHotKeys);
+  static final triggerAlarmNoMessageReceivedFromServer = Watch(false);
+
+  static final particles = <Particle>[];
+  static var lightningFlashFrames = 0;
+  static var totalActiveParticles = 0;
+  static var showAllItems = false;
+  static var srcXRainFalling = 6640.0;
+  static var srcXRainLanding = 6739.0;
+  static var nextLightning = 0;
 
   // PROPERTIES
   static bool get hoverDialogIsInventory => hoverDialogType.value == DialogType.Inventory;

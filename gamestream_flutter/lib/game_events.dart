@@ -22,14 +22,8 @@ class GameEvents {
     }
   }
 
-  static void onChangedStoreVisible(bool storeVisible){
-    // GameState.inventoryOpen.value = storeVisible;
-  }
-
   static void onChangedAmbientShade(int shade) {
-    GameState.ambientColor = GameConstants.colorShades[shade];
     GameState.refreshLighting();
-    // GameState.torchesIgnited.value = shade != Shade.Very_Bright;
   }
 
   static void onChangedNodes(){
@@ -487,7 +481,7 @@ class GameEvents {
   }
 
   static void onChangedRendersSinceUpdate(int value){
-    GameState.triggerAlarmNoMessageReceivedFromServer.value = value > 200;
+    ClientState.triggerAlarmNoMessageReceivedFromServer.value = value > 200;
   }
 
   static void onChangedPlayerMessage(String value){

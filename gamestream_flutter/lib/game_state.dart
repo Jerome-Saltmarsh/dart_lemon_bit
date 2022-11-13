@@ -9,8 +9,6 @@ import 'library.dart';
 
 class GameState {
   static final player = Player();
-  static var showAllItems = false;
-
   static final gameObjects = <GameObject>[];
   static final characters = <Character>[];
   static final npcs = <Character>[];
@@ -27,15 +25,8 @@ class GameState {
   static var totalZombies = 0;
   static var totalParticles = 0;
   static var totalProjectiles = 0;
-
-
-  static var ambientColor = GameConstants.colorShades[Shade.Bright];
   static var visibleIndex = 0;
   static var dynamicIndex = 0;
-
-  static var lightningFlashFrames = 0;
-
-  static final triggerAlarmNoMessageReceivedFromServer = Watch(false);
 
 
   static final gridShadows = Watch(true, onChanged: (bool value){
@@ -50,9 +41,7 @@ class GameState {
   static var nodesLengthZ = 0.0;
   static var nodesArea = 0;
 
-
   static var windLine = 0;
-  static var move = true;
 
 
   static int get bodyPartDuration => randomInt(120, 200);
@@ -271,7 +260,7 @@ class GameState {
     GameAudio.thunder(1.0);
     if (ServerState.ambientShade.value == Shade.Very_Bright) return;
     ServerState.ambientShade.value = Shade.Very_Bright;
-    lightningFlashFrames = GameConfig.Lightning_Flash_Duration;
+    ClientState.lightningFlashFrames = GameConfig.Lightning_Flash_Duration;
   }
 
   static void resetGridToAmbient(){
@@ -1081,9 +1070,9 @@ class GameState {
       }
     }
 
-    if (lightningFlashFrames > 0) {
-      lightningFlashFrames--;
-       if (lightningFlashFrames <= 0){
+    if (ClientState.lightningFlashFrames > 0) {
+      ClientState.lightningFlashFrames--;
+       if (ClientState.lightningFlashFrames <= 0){
          GameActions.setAmbientShadeToHour();
        }
     }

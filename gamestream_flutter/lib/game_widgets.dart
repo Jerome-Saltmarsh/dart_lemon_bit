@@ -11,7 +11,6 @@ import 'ui/style.dart';
 
 const empty = SizedBox();
 
-
 class _FlutterKitConfiguration {
   Color defaultTextColor = Colors.white;
   double defaultTextFontSize = 18;
@@ -238,12 +237,13 @@ Widget width(double value) {
   return SizedBox(width: value);
 }
 
-final width32 = width(32);
-final width16 = width(16);
-final width8 = width(8);
-final width6 = width(6);
-final width4 = width(4);
 final width2 = width(2);
+final width4 = width(4);
+final width6 = width(6);
+final width8 = width(8);
+final width16 = width(16);
+final width32 = width(32);
+final width64 = width(64);
 
 ButtonStyle buildButtonStyle(Color borderColor, double borderWidth) {
   return OutlinedButton.styleFrom(

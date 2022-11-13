@@ -32,8 +32,7 @@ class GameUI {
       StackFullscreen(
         children: [
           watch(GameState.player.message, buildPlayerMessage),
-          buildWatchBool(GameState.triggerAlarmNoMessageReceivedFromServer, buildDialogFramesSinceUpdate),
-          // watch(GameState.gameType, buildGameTypeUI),
+          buildWatchBool(ClientState.triggerAlarmNoMessageReceivedFromServer, buildDialogFramesSinceUpdate),
           watch(GameState.player.gameDialog, buildGameDialog),
           buildWatchBool(GameState.player.alive, buildContainerRespawn, false),
           buildTopRightMenu(),
@@ -317,9 +316,18 @@ class GameUI {
                 bottom: 12,
                 right: 12,
                 child: buildDialogUIControl(
-                  child: Row(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       buildRowHotKeys(),
+                      Row(
+                        children: [
+                          width(96.0),
+                          buildStackHotKey(ClientState.hotKeyQ, 'Q'),
+                          width(64.0),
+                          buildStackHotKey(ClientState.hotKeyE, 'E'),
+                        ],
+                      ),
                       watch(ServerState.playerLevel, buildPlayerLevel),
                       // watch(GamePlayer.weapon, buildAtlasItemType),
                       // buildControlPlayerEquippedWeaponAmmunition(),
@@ -331,28 +339,32 @@ class GameUI {
           ]
       );
 
-  static Row buildRowHotKeys() => Row(
+  static Row buildRowHotKeys() =>
+      Row(
         children: [
-
-          watch(ClientState.readsHotKeys, (int reads) =>
-            watch(GamePlayer.weapon, (int playerWeaponType){
-              if (
-              ClientState.hotKey1.value == playerWeaponType ||
-                  ClientState.hotKey2.value == playerWeaponType ||
-                  ClientState.hotKey3.value == playerWeaponType ||
-                  ClientState.hotKey4.value == playerWeaponType
-              ) return const SizedBox();
-
-              return Container(child: buildStackHotKeyContainer(itemType: playerWeaponType, hotKey: "-"), margin: const EdgeInsets.only(right: 4),);
-            })
-          ),
-          buildStackHotKey(ClientState.hotKey1, 1),
-          buildStackHotKey(ClientState.hotKey2, 2),
-          buildStackHotKey(ClientState.hotKey3, 3),
+          buildUnassignedWeaponSlot(),
+          buildStackHotKey(ClientState.hotKey1, '1'),
+          buildStackHotKey(ClientState.hotKey2, '2'),
+          buildStackHotKey(ClientState.hotKey3, '3'),
+          buildStackHotKey(ClientState.hotKey4, '4'),
         ],
       );
 
-  static Widget buildStackHotKey(Watch<int> watchItemType, int index) =>
+  static Widget buildUnassignedWeaponSlot() =>
+    watch(ClientState.readsHotKeys, (int reads) =>
+        watch(GamePlayer.weapon, (int playerWeaponType){
+          if (
+          ClientState.hotKey1.value == playerWeaponType ||
+              ClientState.hotKey2.value == playerWeaponType ||
+              ClientState.hotKey3.value == playerWeaponType ||
+              ClientState.hotKey4.value == playerWeaponType
+          ) return const SizedBox();
+
+          return Container(child: buildStackHotKeyContainer(itemType: playerWeaponType, hotKey: "-"), margin: const EdgeInsets.only(right: 4),);
+        })
+    );
+
+  static Widget buildStackHotKey(Watch<int> watchItemType, String index) =>
       watch(watchItemType, (int thisItemType) =>
         DragTarget<int>(
           onWillAccept: (int? data) {
