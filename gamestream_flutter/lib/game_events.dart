@@ -36,7 +36,7 @@ class GameEvents {
     GameState.refreshGridMetrics();
     GameState.gridWindResetToAmbient();
 
-    if (GameState.raining.value) {
+    if (ClientState.raining.value) {
       GameActions.rainStart();
     }
     GameState.refreshLighting();
@@ -44,7 +44,7 @@ class GameEvents {
   }
 
   static void onFootstep(double x, double y, double z) {
-    if (GameState.raining.value && (
+    if (ClientState.raining.value && (
         GameQueries.gridNodeXYZTypeSafe(x, y, z) == NodeType.Rain_Landing
             ||
             GameQueries.gridNodeXYZTypeSafe(x, y, z + 24) == NodeType.Rain_Landing
@@ -288,7 +288,7 @@ class GameEvents {
   }
 
   static void onChangedRain(Rain value) {
-    GameState.raining.value = value != Rain.None;
+    ClientState.raining.value = value != Rain.None;
 
     switch (value) {
       case Rain.None:

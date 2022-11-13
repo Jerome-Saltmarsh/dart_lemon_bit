@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/isometric/events/on_changed_raining.dart';
 import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/render/render_circle.dart';
 import 'package:lemon_math/library.dart';
@@ -9,17 +8,10 @@ import 'package:lemon_math/library.dart';
 import 'library.dart';
 
 class GameState {
-
-
-  static final raining = Watch(false, onChanged: onChangedRaining);
-  static final hours = Watch(0, onChanged: GameEvents.onChangedHour);
-  static final minutes = Watch(0);
-
   static final colorShades = [0.0, 0.4, 0.6, 0.7, 0.8, 0.95, 1.0]
       .map((opacity) => GameColors.black.withOpacity(opacity).value)
       .toList(growable: false);
 
-  static final gameType = Watch<int?>(null, onChanged: onChangedGameType);
   static final edit = Watch(false, onChanged: GameEvents.onChangedEdit);
   static final player = Player();
   static var showAllItems = false;
@@ -314,22 +306,8 @@ class GameState {
     rendersSinceUpdate.value = 0;
   }
 
-  static void onChangedGameType(int? value){
-    print("gamestream.onChangedGameType(${GameType.getName(value)})");
-    if (value == null) {
-      return;
-    }
-    edit.value = value == GameType.Editor;
-    GameUI.timeVisible.value = GameType.isTimed(value);
-    GameUI.mapVisible.value = value == GameType.Dark_Age;
-
-    if (!Engine.isLocalHost){
-      Engine.fullScreenEnter();
-    }
-  }
-
   static void actionGameDialogShowMap() {
-    if (gameType.value != GameType.Dark_Age) return;
+    if (ServerState.gameType.value != GameType.Dark_Age) return;
 
     if (player.gameDialog.value == GameDialog.Map){
       player.gameDialog.value = null;
@@ -1201,7 +1179,7 @@ class GameState {
   static void toggleShadows () => gridShadows.value = !gridShadows.value;
 
   static void actionGameDialogShowQuests() {
-    if (gameType.value != GameType.Dark_Age) return;
+    if (ServerState.gameType.value != GameType.Dark_Age) return;
 
     if (player.gameDialog.value == GameDialog.Quests){
       player.gameDialog.value = null;

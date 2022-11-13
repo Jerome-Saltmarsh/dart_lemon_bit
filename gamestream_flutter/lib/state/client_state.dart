@@ -3,6 +3,7 @@ import 'package:gamestream_flutter/library.dart';
 
 /// The data stored in client state belongs to the client and can be safely read and written
 class ClientState {
+  static final raining = Watch(false, onChanged: ClientEvents.onChangedRaining);
   static final readsHotKeys = Watch(0);
   static final inventoryReads = Watch(0, onChanged: ClientEvents.onInventoryReadsChanged);
   static final hoverItemType = Watch(ItemType.Empty);

@@ -13,4 +13,9 @@ class ClientEvents {
   static void onChangedHotKeys(int value){
     ClientActions.redrawHotKeys();
   }
+
+  static void onChangedRaining(bool raining){
+    raining ? GameActions.rainStart() : GameActions.rainStop();
+    GameState.refreshLighting();
+  }
 }

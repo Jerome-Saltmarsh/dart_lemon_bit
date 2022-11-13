@@ -16,19 +16,17 @@ class ServerState {
   static final sceneName = Watch<String?>(null);
   static final rain = Watch(Rain.None, onChanged: GameEvents.onChangedRain);
   static final weatherBreeze = Watch(false);
-
-  static var inventory = Uint16List(0);
-  static var inventoryQuantity = Uint16List(0);
-
-  static final lightning = Watch(Lightning.Off, onChanged: (Lightning value){
-    if (value != Lightning.Off){
-      ClientState.nextLightning = 0;
-    }
-  });
-
+  static final hours = Watch(0, onChanged: GameEvents.onChangedHour);
+  static final minutes = Watch(0);
+  static final gameType = Watch<int?>(null, onChanged: ServerEvents.onChangedGameType);
+  static final lightning = Watch(Lightning.Off, onChanged: ServerEvents.onChangedLightning);
   static final watchTimePassing = Watch(false);
   static final windAmbient = Watch(Wind.Calm, onChanged: GameEvents.onChangedWind);
   static final ambientShade = Watch(Shade.Bright, onChanged: GameEvents.onChangedAmbientShade);
+
+  // VARIABLES
+  static var inventory = Uint16List(0);
+  static var inventoryQuantity = Uint16List(0);
 }
 
 

@@ -74,7 +74,7 @@ class GameDebug {
                             watch(GameState.renderFrame, (t) => text("render-frame: $t")),
                             watch(GameState.player.interpolating, (bool interpolating) => text("interpolating: $interpolating", onPressed: () => GameState.player.interpolating.value = !GameState.player.interpolating.value)),
                             watch(ServerState.ambientShade, (int shade) => text("ambient-shade: ${Shade.getName(shade)}")),
-                            watch(GameState.gameType, (int? value) => text("game-type: ${value == null ? 'None' : GameType.getName(value)}")),
+                            watch(ServerState.gameType, (int? value) => text("game-type: ${value == null ? 'None' : GameType.getName(value)}")),
                             watch(Engine.deviceType, (int deviceType) => text("device-type: ${DeviceType.getName(deviceType)}", onPressed: Engine.toggleDeviceType)),
                             watch(GameIO.inputMode, (int inputMode) => text("input-mode: ${InputMode.getName(inputMode)}", onPressed: GameIO.actionToggleInputMode)),
                             watch(Engine.watchMouseLeftDown, (bool mouseLeftDown) => text("mouse-left-down: $mouseLeftDown")),

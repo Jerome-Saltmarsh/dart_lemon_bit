@@ -201,7 +201,8 @@ class GameNetwork {
         Engine.onUpdate = GameWebsite.update;
         Engine.fullScreenExit();
         GameState.clear();
-        GameState.gameType.value = null;
+        // TODO illegal server state assignment
+        ServerState.gameType.value = null;
         ServerState.sceneEditable.value = false;
         break;
       case ConnectionStatus.Failed_To_Connect:

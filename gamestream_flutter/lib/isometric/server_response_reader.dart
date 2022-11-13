@@ -90,7 +90,7 @@ class ServerResponseReader with ByteReader {
           );
           break;
         case ServerResponse.Game_Type:
-          GameState.gameType.value = readByte();
+          ServerState.gameType.value = readByte();
           break;
         case ServerResponse.Player_Spawned:
           readPlayerSpawned();
@@ -436,8 +436,8 @@ class ServerResponseReader with ByteReader {
   }
 
   void readGameTime() {
-    GameState.hours.value = readByte();
-    GameState.minutes.value = readByte();
+    ServerState.hours.value = readByte();
+    ServerState.minutes.value = readByte();
   }
 
   void readDamageApplied() {

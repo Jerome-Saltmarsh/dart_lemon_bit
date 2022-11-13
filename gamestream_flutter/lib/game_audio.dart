@@ -159,8 +159,8 @@ class GameAudio {
     }
     final index = ServerState.windAmbient.value.index;
     if (index <= windIndexCalm) {
-      if (GameState.hours.value < 6) return target;
-      if (GameState.hours.value < 18) return target + 0.1;
+      if (ServerState.hours.value < 6) return target;
+      if (ServerState.hours.value < 18) return target + 0.1;
       return target;
     }
     if (index <= windIndexGentle) return target + 0.5;
@@ -177,7 +177,7 @@ class GameAudio {
   }
 
   static double getVolumeTargetCrickets() {
-    final hour = GameState.hours.value;
+    final hour = ServerState.hours.value;
     const max = 0.8;
     if (hour >= 5 && hour < 7) return max;
     if (hour >= 17 && hour < 19) return max;
@@ -237,7 +237,7 @@ class GameAudio {
   }
 
   static void playRandomAmbientSound(){
-    final hour = GameState.hours.value;
+    final hour = ServerState.hours.value;
 
     final shade = ServerState.ambientShade.value;
 

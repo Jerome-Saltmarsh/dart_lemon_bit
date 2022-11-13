@@ -162,7 +162,7 @@ class EditorUI {
   static Widget buildControlTime() {
     const totalWidth = 300.0;
     const buttonWidth = totalWidth / 24.0;
-    final buttons = watch(GameState.hours, (int hours) {
+    final buttons = watch(ServerState.hours, (int hours) {
       final buttons1 = <Widget>[];
       final buttons2 = <Widget>[];
 
@@ -203,9 +203,9 @@ class EditorUI {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        watch(GameState.hours, (num hour) => text(padZero(hour))),
+        watch(ServerState.hours, (num hour) => text(padZero(hour))),
         text(":"),
-        watch(GameState.minutes, (num hour) => text(padZero(hour))),
+        watch(ServerState.minutes, (num hour) => text(padZero(hour))),
       ],
     );
     return Container(

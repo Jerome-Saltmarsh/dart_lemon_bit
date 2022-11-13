@@ -17,7 +17,7 @@ import 'ui/builders/build_panel_menu.dart';
 
 class GameUI {
   static final messageBoxVisible = Watch(false, clamp: (bool value){
-    if (GameState.gameType.value == GameType.Skirmish) return false;
+    if (ServerState.gameType.value == GameType.Skirmish) return false;
     return value;
   }, onChanged: onVisibilityChangedMessageBox);
   static final canOpenMapAndQuestMenu = Watch(false);
