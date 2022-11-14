@@ -79,6 +79,7 @@ class Player extends Character with ByteWriter {
     _equippedWeaponIndex = index;
     weaponType = inventoryGetItemType(_equippedWeaponIndex);
     inventoryDirty = true;
+    game.setCharacterStateChanging(this);
   }
 
   set level(int value){
@@ -621,7 +622,7 @@ class Player extends Character with ByteWriter {
           if (belt1_itemType == ItemType.Empty) {
             inventorySwapIndexes(index, ItemType.Belt_1);
             equippedWeaponIndex = belt1_itemType;
-             return;
+            return;
           }
           if (belt2_itemType == ItemType.Empty) {
             inventorySwapIndexes(index, ItemType.Belt_2);
@@ -682,17 +683,6 @@ class Player extends Character with ByteWriter {
        writePlayerInventorySlot(index);
        return;
     }
-  }
-
-  bool get inventoryFull {
-     return getAvailableInventoryIndex() == -1;
-  }
-
-  int getAvailableInventoryIndex() {
-    for (var i = 0; i < inventory.length; i++){
-      if (inventory[i] == ItemType.Empty) return 1;
-    }
-    return -1;
   }
 
   void setInventoryDirty(){
