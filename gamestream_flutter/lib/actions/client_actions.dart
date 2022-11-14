@@ -30,22 +30,22 @@ class ClientActions {
 
   static void assignEquippedItemToHotKey(String index){
        if (index == "1") {
-         ClientState.hotKey1.value = GamePlayer.weapon.value;
+         assignHotKeyWatchPlayerWeapon(ClientState.hotKey1);
        }
        if (index == "2") {
-         ClientState.hotKey2.value = GamePlayer.weapon.value;
+         assignHotKeyWatchPlayerWeapon(ClientState.hotKey2);
        }
        if (index == "3") {
-         ClientState.hotKey3.value = GamePlayer.weapon.value;
+         assignHotKeyWatchPlayerWeapon(ClientState.hotKey3);
        }
        if (index == "4") {
-         ClientState.hotKey4.value = GamePlayer.weapon.value;
+         assignHotKeyWatchPlayerWeapon(ClientState.hotKey4);
        }
        if (index == "Q") {
-         ClientState.hotKeyQ.value = GamePlayer.weapon.value;
+         assignHotKeyWatchPlayerWeapon(ClientState.hotKeyQ);
        }
        if (index == "E") {
-         ClientState.hotKeyE.value = GamePlayer.weapon.value;
+         assignHotKeyWatchPlayerWeapon(ClientState.hotKeyE);
        }
   }
 
@@ -59,5 +59,20 @@ class ClientActions {
       if (hotKey.value != GamePlayer.weapon.value) continue;
       hotKey.value = ItemType.Empty;
     }
+  }
+
+  static void assignHotKeyWatchPlayerWeapon(Watch<int> hotKeyWatch) =>
+    assignHotKeyWatchValue(hotKeyWatch, GamePlayer.weapon.value);
+
+  static void assignHotKeyWatchValue(Watch<int> hotKeyWatch, int value){
+    if (hotKeyWatch.value == value) return;
+
+    if (value != ItemType.Empty){
+      for (final hotKey in ClientState.hotKeyWatches) {
+        if (hotKey.value != value) continue;
+        hotKey.value = ItemType.Empty;
+      }
+    }
+    hotKeyWatch.value = value;
   }
 }

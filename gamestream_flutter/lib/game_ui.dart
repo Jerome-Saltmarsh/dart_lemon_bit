@@ -378,23 +378,23 @@ class GameUI {
             );
           }));
 
-  static Widget buildStackHotKey(Watch<int> watchItemType, String index) =>
+  static Widget buildStackHotKey(Watch<int> hotKeyWatch, String index) =>
       watch(
-          watchItemType,
+          hotKeyWatch,
           (int thisItemType) => DragTarget<int>(
               onWillAccept: (int? data) {
                 return data != null;
               },
               onAccept: (int? data) {
                 if (data == null) return;
-                watchItemType.value = ServerState.inventory[data];
+                hotKeyWatch.value = ServerState.inventory[data];
               },
               builder: (context, data, rejectedData) => watch(
                   GamePlayer.weapon,
                   (int playerWeaponType) => onPressed(
                         onRightClick: () =>
-                            watchItemType.value = ItemType.Empty,
-                        action: () => thisItemType == ItemType.Empty ? ClientActions.assignEquippedItemToHotKey(index) : ServerActions.equipItemType(thisItemType),
+                            hotKeyWatch.value = ItemType.Empty,
+                         action: () => ClientEvents.onHotKeyWatchButtonPressed(hotKeyWatch),
                         child: Stack(
                           children: [
                             buildAtlasIconType(IconType.Slot, scale: 2.0),

@@ -8,9 +8,9 @@ class ClientQuery {
     ServerQuery.getItemTypeAtInventoryIndex(ClientState.hoverIndex.value);
 
   static bool keyboardKeyIsHotKey(LogicalKeyboardKey key) =>
-      ClientState.hotKeyKeys.contains(key);
+      ClientConstants.Hot_Keys.contains(key);
 
-  static Watch<int> getKeyboardKeyHotKeyWatch(LogicalKeyboardKey key){
+  static Watch<int> mapKeyboardKeyHotKeyToHotKeyWatch(LogicalKeyboardKey key){
     if (key == LogicalKeyboardKey.digit1)
        return ClientState.hotKey1;
      if (key == LogicalKeyboardKey.digit2)

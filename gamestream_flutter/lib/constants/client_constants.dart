@@ -9,4 +9,13 @@ class ClientConstants {
   static final Key_Toggle_Window_Attributes = LogicalKeyboardKey.keyB;
   static final Key_Toggle_Debug_Mode = LogicalKeyboardKey.keyP;
   static final Key_Toggle_Input_Mode = LogicalKeyboardKey.keyX;
+
+  static const Hot_Keys = [
+    LogicalKeyboardKey.digit1,
+    LogicalKeyboardKey.digit2,
+    LogicalKeyboardKey.digit3,
+    LogicalKeyboardKey.digit4,
+    LogicalKeyboardKey.keyQ,
+    LogicalKeyboardKey.keyE,
+  ];
 }

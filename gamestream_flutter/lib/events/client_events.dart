@@ -85,8 +85,16 @@ class ClientEvents {
     }
   }
 
+  static void onHotKeyWatchButtonPressed(Watch<int> hotKeyWatch) {
+    if (hotKeyWatch.value == ItemType.Empty) {
+      ClientActions.assignHotKeyWatchPlayerWeapon(hotKeyWatch);
+      return;
+    }
+    ServerActions.equipItemType(hotKeyWatch.value);
+  }
+
   static void onKeyPressedPlayModeHotKey(LogicalKeyboardKey key) {
-    final hotKeyWatch = ClientQuery.getKeyboardKeyHotKeyWatch(key);
+    final hotKeyWatch = ClientQuery.mapKeyboardKeyHotKeyToHotKeyWatch(key);
     if (ClientState.hoverIndex.value >= 0 &&
         ClientState.hoverDialogIsInventory) {
       hotKeyWatch.value = ClientQuery.getHoverItemType();
