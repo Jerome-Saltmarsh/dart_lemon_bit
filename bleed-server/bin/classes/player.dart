@@ -603,20 +603,9 @@ class Player extends Character with ByteWriter {
       writePlayerEventInvalidRequest();
       return;
     }
-    if (index == ItemType.Equipped_Weapon){
-      inventoryUnequipWeapon();
-      return;
-    }
-    if (index == ItemType.Equipped_Head){
-      inventoryUnequipHead();
-      return;
-    }
-    if (index == ItemType.Equipped_Body){
-      inventoryUnequipBody();
-      return;
-    }
-    if (index == ItemType.Equipped_Legs){
-      inventoryUnequipLegs();
+
+    if (ItemType.isTypeEquipped(index)){
+      inventoryUnequip(index);
       return;
     }
 
