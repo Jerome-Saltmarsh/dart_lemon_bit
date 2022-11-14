@@ -85,6 +85,10 @@ class ClientEvents {
     }
   }
 
+  static void onHotKeyDragAccept(Watch<int> hotKeyWatch, int index){
+    ClientActions.assignHotKeyWatchValue(hotKeyWatch, ServerQuery.getItemTypeAtInventoryIndex(index));
+  }
+
   static void onHotKeyWatchButtonPressed(Watch<int> hotKeyWatch) {
     if (hotKeyWatch.value == ItemType.Empty) {
       ClientActions.assignHotKeyWatchPlayerWeapon(hotKeyWatch);

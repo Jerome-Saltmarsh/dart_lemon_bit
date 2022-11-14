@@ -382,12 +382,10 @@ class GameUI {
       watch(
           hotKeyWatch,
           (int thisItemType) => DragTarget<int>(
-              onWillAccept: (int? data) {
-                return data != null;
-              },
+              onWillAccept: (int? data) => data != null,
               onAccept: (int? data) {
                 if (data == null) return;
-                hotKeyWatch.value = ServerState.inventory[data];
+                ClientEvents.onHotKeyDragAccept(hotKeyWatch, data);
               },
               builder: (context, data, rejectedData) => watch(
                   GamePlayer.weapon,
