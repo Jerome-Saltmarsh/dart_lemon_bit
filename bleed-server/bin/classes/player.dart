@@ -550,6 +550,8 @@ class Player extends Character with ByteWriter {
     game.setCharacterStateChanging(this);
     inventoryDirty = true;
   }
+
+
   
   void inventoryEquip(int index) {
 
@@ -585,9 +587,45 @@ class Player extends Character with ByteWriter {
        }
     }
     if (ItemType.isTypeWeapon(itemType)){
-      // final currentWeapon = weaponType;
       weaponType = itemType;
-      // inventory[index] = currentWeapon;
+      if (index < inventory.length) {
+          if (belt1_itemType == ItemType.Empty) {
+             belt1_itemType = itemType;
+             inventory[index] = ItemType.Empty;
+             setInventoryDirty();
+             return;
+          }
+          if (belt2_itemType == ItemType.Empty) {
+            belt2_itemType = itemType;
+            inventory[index] = ItemType.Empty;
+            setInventoryDirty();
+            return;
+          }
+          if (belt3_itemType == ItemType.Empty) {
+            belt3_itemType = itemType;
+            inventory[index] = ItemType.Empty;
+            setInventoryDirty();
+            return;
+          }
+          if (belt4_itemType == ItemType.Empty) {
+            belt4_itemType = itemType;
+            inventory[index] = ItemType.Empty;
+            setInventoryDirty();
+            return;
+          }
+          if (belt5_itemType == ItemType.Empty) {
+            belt5_itemType = itemType;
+            inventory[index] = ItemType.Empty;
+            setInventoryDirty();
+            return;
+          }
+          if (belt6_itemType == ItemType.Empty) {
+            belt6_itemType = itemType;
+            inventory[index] = ItemType.Empty;
+            setInventoryDirty();
+            return;
+          }
+      }
       swapped = true;
     }
     if (ItemType.isTypeBody(itemType)){
@@ -625,6 +663,22 @@ class Player extends Character with ByteWriter {
       game.setCharacterStateChanging(this);
       inventoryDirty = true;
     }
+  }
+
+  bool get inventoryFull {
+     return getAvailableInventoryIndex() == -1;
+  }
+
+  int getAvailableInventoryIndex() {
+    for (var i = 0; i < inventory.length; i++){
+      if (inventory[i] == ItemType.Empty) return 1;
+    }
+    return -1;
+  }
+
+  void setInventoryDirty(){
+    game.setCharacterStateChanging(this);
+    inventoryDirty = true;
   }
 
   void toggleDebug(){
@@ -938,6 +992,9 @@ class Player extends Character with ByteWriter {
 
   void writePlayerEventRecipeCrafted() =>
     writePlayerEvent(PlayerEvent.Recipe_Crafted);
+
+  void writePlayerEventInventoryFull() =>
+      writePlayerEvent(PlayerEvent.Inventory_Full);
 
   void writePlayerEventInvalidRequest() =>
     writePlayerEvent(PlayerEvent.Invalid_Request);
