@@ -330,9 +330,9 @@ class GameUI {
   static Row buildRowHotKeyLettersAndInventory() => Row(
         children: [
           width96,
-          buildHotKeyWatch(ServerState.playerBelt5_ItemType),
+          buildWatchBeltType(ServerState.playerBelt5_ItemType),
           width64,
-          buildHotKeyWatch(ServerState.playerBelt6_ItemType),
+          buildWatchBeltType(ServerState.playerBelt6_ItemType),
           buildButtonInventory(),
         ],
       );
@@ -354,10 +354,10 @@ class GameUI {
   static Row buildRowHotKeyNumbers() => Row(
       mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          buildHotKeyWatch(ServerState.playerBelt1_ItemType),
-          buildHotKeyWatch(ServerState.playerBelt2_ItemType),
-          buildHotKeyWatch(ServerState.playerBelt3_ItemType),
-          buildHotKeyWatch(ServerState.playerBelt4_ItemType),
+          buildWatchBeltType(ServerState.playerBelt1_ItemType),
+          buildWatchBeltType(ServerState.playerBelt2_ItemType),
+          buildWatchBeltType(ServerState.playerBelt3_ItemType),
+          buildWatchBeltType(ServerState.playerBelt4_ItemType),
         ],
       );
 
@@ -383,31 +383,30 @@ class GameUI {
   //           );
   //         }));
 
-  static Widget buildHotKeyWatch(Watch<int> hotKeyWatch) =>
+  static Widget buildWatchBeltType(Watch<int> watchBeltType) =>
       watch(
-          hotKeyWatch,
-          (int thisItemType) => DragTarget<int>(
+          watchBeltType,
+          (int beltItemType) => DragTarget<int>(
               onWillAccept: (int? data) => data != null,
               onAccept: (int? data) {
                 if (data == null) return;
-                ClientEvents.onHotKeyDragAccept(hotKeyWatch, data);
+                ClientEvents.onHotKeyDragAccept(watchBeltType, data);
               },
               builder: (context, data, rejectedData) => watch(
                   GamePlayer.weapon,
                   (int playerWeaponType) => onPressed(
-                        onRightClick: () =>
-                            hotKeyWatch.value = ItemType.Empty,
-                         action: () => ClientEvents.onHotKeyWatchButtonPressed(hotKeyWatch),
+                        onRightClick: () => watchBeltType.value = ItemType.Empty,
+                        action: () => ClientEvents.onBeltButtonPressed(watchBeltType),
                         child: Stack(
                           children: [
                             buildAtlasIconType(IconType.Slot, scale: 2.0),
-                            buildAtlasItemType(thisItemType, scale: 1.8),
+                            buildAtlasItemType(beltItemType, scale: 1.8),
                             Positioned(
                               left: 5,
                               top: 5,
-                              child: text(ClientQuery.mapHotKeyWatchToString(hotKeyWatch)),
+                              child: text(ClientQuery.mapWatchBeltTypeToString(watchBeltType)),
                             ),
-                            if (ItemType.getConsumeType(thisItemType) !=
+                            if (ItemType.getConsumeType(beltItemType) !=
                                 ItemType.Empty)
                               Positioned(
                                   right: 5,
@@ -416,11 +415,11 @@ class GameUI {
                                       builder: () => text(
                                             ServerQuery
                                                 .getItemTypeConsumesRemaining(
-                                                    thisItemType),
+                                                    beltItemType),
                                             italic: true,
                                             color: Colors.white70,
                                           ))),
-                            if (playerWeaponType != ItemType.Empty && playerWeaponType == thisItemType)
+                            if (playerWeaponType != ItemType.Empty && playerWeaponType == beltItemType)
                               Container(
                                 width: 64,
                                 height: 64,

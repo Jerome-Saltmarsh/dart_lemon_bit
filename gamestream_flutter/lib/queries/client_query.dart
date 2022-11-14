@@ -10,7 +10,7 @@ class ClientQuery {
   static bool keyboardKeyIsHotKey(LogicalKeyboardKey key) =>
       ClientConstants.Hot_Keys.contains(key);
 
-  static Watch<int> mapKeyboardKeyHotKeyToHotKeyWatch(LogicalKeyboardKey key){
+  static Watch<int> mapKeyboardKeyToWatchBeltType(LogicalKeyboardKey key){
     if (key == LogicalKeyboardKey.digit1)
        return ServerState.playerBelt1_ItemType;
      if (key == LogicalKeyboardKey.digit2)
@@ -43,7 +43,7 @@ class ClientQuery {
     throw Exception("ClientEvents.convertKeyboardKeyToBeltIndex($key)");
   }
 
-  static String mapHotKeyWatchToString(Watch<int> hotKeyWatch){
+  static String mapWatchBeltTypeToString(Watch<int> hotKeyWatch){
      if (hotKeyWatch == ServerState.playerBelt1_ItemType) return '1';
      if (hotKeyWatch == ServerState.playerBelt2_ItemType) return '2';
      if (hotKeyWatch == ServerState.playerBelt3_ItemType) return '3';

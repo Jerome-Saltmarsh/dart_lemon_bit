@@ -21,6 +21,16 @@ class ServerQuery {
     return getItemQuantity(ItemType.getConsumeType(itemType)) ~/ consumeAmount;
   }
 
+  static int mapWatchBeltTypeToItemType(Watch<int> watchBeltType){
+     if (watchBeltType == ServerState.playerBelt1_ItemType) return ItemType.Belt_1;
+     if (watchBeltType == ServerState.playerBelt2_ItemType) return ItemType.Belt_2;
+     if (watchBeltType == ServerState.playerBelt3_ItemType) return ItemType.Belt_3;
+     if (watchBeltType == ServerState.playerBelt4_ItemType) return ItemType.Belt_4;
+     if (watchBeltType == ServerState.playerBelt5_ItemType) return ItemType.Belt_5;
+     if (watchBeltType == ServerState.playerBelt6_ItemType) return ItemType.Belt_6;
+     throw Exception('ServerQuery.mapWatchBeltTypeToItemType($watchBeltType)');
+  }
+
   static int getItemTypeAtInventoryIndex(int index){
     if (index == ItemType.Equipped_Weapon)
       return GamePlayer.weapon.value;

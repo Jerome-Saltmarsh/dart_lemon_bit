@@ -89,31 +89,35 @@ class ClientEvents {
     ClientActions.assignHotKeyWatchValue(hotKeyWatch, ServerQuery.getItemTypeAtInventoryIndex(index));
   }
 
-  static void onHotKeyWatchButtonPressed(Watch<int> hotKeyWatch) {
-    if (hotKeyWatch.value == ItemType.Empty) {
-      ClientActions.assignHotKeyWatchPlayerWeapon(hotKeyWatch);
+  static void onBeltButtonPressed(Watch<int> watchBeltType) {
+    if (watchBeltType.value == ItemType.Empty) {
+      ClientActions.assignHotKeyWatchPlayerWeapon(watchBeltType);
       return;
     }
-    ServerActions.equipItemType(hotKeyWatch.value);
+    // ServerActions.equipItemType(hotKeyWatch.value);
+    // GameNetwork.sendClientRequestInventoryEquip(
+    //     ServerQuery.mapWatchBeltTypeToItemType(watchBeltType)
+    // );
+    ServerActions.equipWatchBeltType(watchBeltType);
   }
 
   static void onKeyPressedPlayModeHotKey(LogicalKeyboardKey key) {
-    final hotKeyWatch = ClientQuery.mapKeyboardKeyHotKeyToHotKeyWatch(key);
+    final watchBeltType = ClientQuery.mapKeyboardKeyToWatchBeltType(key);
     if (ClientState.hoverIndex.value >= 0 &&
         ClientState.hoverDialogIsInventory
     ) {
-      hotKeyWatch.value = ClientQuery.getHoverItemType();
+      watchBeltType.value = ClientQuery.getHoverItemType();
       GameNetwork.sendClientRequestInventoryMove(
           indexFrom: ClientState.hoverIndex.value,
           indexTo: ClientQuery.mapKeyboardKeyToBeltIndex(key),
       );
       return;
     }
-    if (hotKeyWatch.value == ItemType.Empty) {
+    if (watchBeltType.value == ItemType.Empty) {
       ClientActions.removeEquippedWeaponHotKey();
-      hotKeyWatch.value = GamePlayer.weapon.value;
+      watchBeltType.value = GamePlayer.weapon.value;
       return;
     }
-    ServerActions.equipItemType(hotKeyWatch.value);
+    ServerActions.equipWatchBeltType(watchBeltType);
   }
 }

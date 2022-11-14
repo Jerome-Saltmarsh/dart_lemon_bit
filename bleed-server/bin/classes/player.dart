@@ -552,7 +552,8 @@ class Player extends Character with ByteWriter {
   }
   
   void inventoryEquip(int index) {
-    if (index < 0) {
+
+    if (!isValidInventoryIndex(index)) {
       writePlayerEventInvalidRequest();
       return;
     }
@@ -572,12 +573,8 @@ class Player extends Character with ByteWriter {
       inventoryUnequipLegs();
       return;
     }
-    if (index >= inventory.length) {
-      writePlayerEventInvalidRequest();
-      return;
-    }
 
-    final itemType = inventory[index];
+    final itemType = inventoryGetItemType(index);
     var swapped = false;
 
     if (ItemType.isTypeRecipe(itemType)){
@@ -588,9 +585,9 @@ class Player extends Character with ByteWriter {
        }
     }
     if (ItemType.isTypeWeapon(itemType)){
-      final currentWeapon = weaponType;
+      // final currentWeapon = weaponType;
       weaponType = itemType;
-      inventory[index] = currentWeapon;
+      // inventory[index] = currentWeapon;
       swapped = true;
     }
     if (ItemType.isTypeBody(itemType)){
