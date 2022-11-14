@@ -52,15 +52,6 @@ class ClientActions {
   static void setDragStart(int clientType) =>
     () => ClientState.dragStart.value = clientType;
 
-  static void removeEquippedWeaponHotKey() {
-    if (GamePlayer.weapon.value == ItemType.Empty) return;
-
-    // for (final hotKey in ClientState.hotKeyWatches) {
-    //   if (hotKey.value != GamePlayer.weapon.value) continue;
-    //   hotKey.value = ItemType.Empty;
-    // }
-  }
-
   static void assignHotKeyWatchPlayerWeapon(Watch<int> hotKeyWatch) =>
     assignHotKeyWatchValue(hotKeyWatch, GamePlayer.weapon.value);
 
