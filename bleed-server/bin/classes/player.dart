@@ -449,14 +449,13 @@ class Player extends Character with ByteWriter {
          weaponQuantity = quantity;
          inventoryDirty = true;
          game.setCharacterStateChanging(this);
-         // return;
        }
        equippedWeaponIndex = -1;
-       // return;
     }
 
     if (index == ItemType.Equipped_Weapon) {
       if (weaponType == itemType) return;
+      assert (ItemType.isTypeWeapon(itemType) || itemType == ItemType.Empty);
       weaponType = itemType;
       weaponQuantity = quantity;
       inventoryDirty = true;
@@ -465,6 +464,7 @@ class Player extends Character with ByteWriter {
     }
     if (index == ItemType.Equipped_Body) {
       if (bodyType == itemType) return;
+      assert (ItemType.isTypeBody(itemType) || itemType == ItemType.Empty);
       bodyType = itemType;
       bodyQuantity = quantity;
       inventoryDirty = true;
@@ -473,6 +473,7 @@ class Player extends Character with ByteWriter {
     }
     if (index == ItemType.Equipped_Head) {
       if (headType == itemType) return;
+      assert (ItemType.isTypeHead(itemType) || itemType == ItemType.Empty);
       headType = itemType;
       headQuantity = quantity;
       inventoryDirty = true;
@@ -481,6 +482,7 @@ class Player extends Character with ByteWriter {
     }
     if (index == ItemType.Equipped_Legs) {
       if (legsType == itemType) return;
+      assert (ItemType.isTypeLegs(itemType) || itemType == ItemType.Empty);
       legsType = itemType;
       legsQuantity = quantity;
       inventoryDirty = true;
@@ -545,6 +547,7 @@ class Player extends Character with ByteWriter {
      final indexBType = inventoryGetItemType(indexB);
      final indexAQuantity = inventoryGetItemQuantity(indexA);
      final indexBQuantity = inventoryGetItemQuantity(indexB);
+
      inventorySet(index: indexA, itemType: indexBType, quantity: indexBQuantity);
      inventorySet(index: indexB, itemType: indexAType, quantity: indexAQuantity);
   }
