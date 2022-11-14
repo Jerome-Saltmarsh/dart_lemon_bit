@@ -513,39 +513,6 @@ class Player extends Character with ByteWriter {
     inventoryDirty = true;
   }
 
-  void inventoryUnequipWeapon(){
-    if (weaponType == ItemType.Empty) return;
-
-    if (ItemType.isIndexBelt(equippedWeaponIndex)){
-      weaponType = ItemType.Empty;
-      equippedWeaponIndex = -1;
-      inventoryDirty = true;
-      game.setCharacterStateChanging(this);
-      return;
-    }
-
-
-    // for (var i = 0; i < inventory.length; i++){
-    //   if (inventory[i] != ItemType.Empty) continue;
-    //   inventory[i] = weaponType;
-    //   weaponType = ItemType.Empty;
-    //   equippedWeaponIndex = -1;
-    //   inventoryDirty = true;
-    //   game.setCharacterStateChanging(this);
-    //   break;
-    // }
-  }
-
-  void inventoryUnequipHead(){
-    if (headType == ItemType.Empty) return;
-    final emptyIndex = getEmptyInventoryIndex();
-    if (emptyIndex == null) return;
-    inventory[emptyIndex] = headType;
-    headType = ItemType.Empty;
-    game.setCharacterStateChanging(this);
-    inventoryDirty = true;
-  }
-
   void inventorySwapIndexes(int indexA, int indexB){
      if (indexA == indexB) return;
      assert (isValidInventoryIndex(indexA));
@@ -556,26 +523,6 @@ class Player extends Character with ByteWriter {
      final indexBQuantity = inventoryGetItemQuantity(indexB);
      inventorySet(index: indexA, itemType: indexBType, quantity: indexBQuantity);
      inventorySet(index: indexB, itemType: indexAType, quantity: indexAQuantity);
-  }
-
-  void inventoryUnequipBody(){
-    if (bodyType == ItemType.Empty) return;
-    final emptyIndex = getEmptyInventoryIndex();
-    if (emptyIndex == null) return;
-    inventory[emptyIndex] = bodyType;
-    bodyType = ItemType.Empty;
-    game.setCharacterStateChanging(this);
-    inventoryDirty = true;
-  }
-
-  void inventoryUnequipLegs(){
-    if (legsType == ItemType.Empty) return;
-    final emptyIndex = getEmptyInventoryIndex();
-    if (emptyIndex == null) return;
-    inventory[emptyIndex] = legsType;
-    legsType = ItemType.Empty;
-    game.setCharacterStateChanging(this);
-    inventoryDirty = true;
   }
 
   void inventoryUnequip(int index){
