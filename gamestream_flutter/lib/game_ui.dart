@@ -372,10 +372,14 @@ class GameUI {
                 ClientState.hotKeyQ.value == playerWeaponType
             ) return const SizedBox();
 
-            return Container(
-              child: buildStackHotKeyContainer(
-                  itemType: playerWeaponType, hotKey: "-"),
-              margin: const EdgeInsets.only(right: 4),
+            return onPressed(
+              action: ServerActions.dropEquippedWeapon,
+              onRightClick: ServerActions.dropEquippedWeapon,
+              child: Container(
+                child: buildStackHotKeyContainer(
+                    itemType: playerWeaponType, hotKey: "-"),
+                margin: const EdgeInsets.only(right: 4),
+              ),
             );
           }));
 

@@ -10,4 +10,7 @@ class ServerActions {
          return;
       }
   }
+
+  static void dropEquippedWeapon() =>
+     GameNetwork.sendClientRequestInventoryDrop(ItemType.Equipped_Weapon);
 }
