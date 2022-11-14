@@ -320,6 +320,7 @@ class GameUI {
             children: [
               buildUnassignedWeaponSlot(),
               buildRowHotKeyNumbers(),
+              width32,
             ],
           ),
           buildRowHotKeyLettersAndInventory(),
@@ -329,9 +330,9 @@ class GameUI {
   static Row buildRowHotKeyLettersAndInventory() => Row(
         children: [
           width96,
-          buildStackHotKey(ClientState.hotKeyQ, 'Q'),
+          buildHotKeyWatch(ClientState.hotKeyQ),
           width64,
-          buildStackHotKey(ClientState.hotKeyE, 'E'),
+          buildHotKeyWatch(ClientState.hotKeyE),
           buildButtonInventory(),
         ],
       );
@@ -352,11 +353,10 @@ class GameUI {
   static Row buildRowHotKeyNumbers() => Row(
       mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          buildStackHotKey(ClientState.hotKey1, '1'),
-          buildStackHotKey(ClientState.hotKey2, '2'),
-          buildStackHotKey(ClientState.hotKey3, '3'),
-          buildStackHotKey(ClientState.hotKey4, '4'),
-          width32,
+          buildHotKeyWatch(ClientState.hotKey1),
+          buildHotKeyWatch(ClientState.hotKey2),
+          buildHotKeyWatch(ClientState.hotKey3),
+          buildHotKeyWatch(ClientState.hotKey4),
         ],
       );
 
@@ -378,7 +378,7 @@ class GameUI {
             );
           }));
 
-  static Widget buildStackHotKey(Watch<int> hotKeyWatch, String index) =>
+  static Widget buildHotKeyWatch(Watch<int> hotKeyWatch) =>
       watch(
           hotKeyWatch,
           (int thisItemType) => DragTarget<int>(
@@ -402,7 +402,7 @@ class GameUI {
                             Positioned(
                               left: 5,
                               top: 5,
-                              child: text(index),
+                              child: text(ClientQuery.mapHotKeyWatchToString(hotKeyWatch)),
                             ),
                             if (ItemType.getConsumeType(thisItemType) !=
                                 ItemType.Empty)

@@ -26,4 +26,14 @@ class ClientQuery {
 
     throw Exception("ClientQuery.getKeyHotKey(key: $key)");
   }
+
+  static String mapHotKeyWatchToString(Watch<int> hotKeyWatch){
+     if (hotKeyWatch == ClientState.hotKey1) return '1';
+     if (hotKeyWatch == ClientState.hotKey2) return '2';
+     if (hotKeyWatch == ClientState.hotKey3) return '3';
+     if (hotKeyWatch == ClientState.hotKey4) return '4';
+     if (hotKeyWatch == ClientState.hotKeyQ) return 'Q';
+     if (hotKeyWatch == ClientState.hotKeyE) return 'E';
+     throw Exception("ClientQuery.mapHotKeyWatchToString($hotKeyWatch)");
+  }
 }
