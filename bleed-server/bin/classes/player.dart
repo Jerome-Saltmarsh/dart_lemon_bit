@@ -356,7 +356,7 @@ class Player extends Character with ByteWriter {
       return;
     }
     inventory[emptyInventoryIndex] = itemType;
-    writePlayerInventory();
+    inventoryDirty = true;
     writePlayerEvent(PlayerEvent.Item_Purchased);
   }
 
@@ -476,7 +476,7 @@ class Player extends Character with ByteWriter {
       if (inventory[i] != ItemType.Empty) continue;
       inventory[i] = weaponType;
       weaponType = ItemType.Empty;
-      writePlayerInventory();
+      inventoryDirty = true;
       game.setCharacterStateChanging(this);
       break;
     }
@@ -489,7 +489,7 @@ class Player extends Character with ByteWriter {
     inventory[emptyIndex] = headType;
     headType = ItemType.Empty;
     game.setCharacterStateChanging(this);
-    writePlayerInventory();
+    inventoryDirty = true;
   }
 
   void inventorySwapIndexes(int indexA, int indexB){
@@ -513,7 +513,7 @@ class Player extends Character with ByteWriter {
     inventory[emptyIndex] = bodyType;
     bodyType = ItemType.Empty;
     game.setCharacterStateChanging(this);
-    writePlayerInventory();
+    inventoryDirty = true;
   }
 
   void inventoryUnequipLegs(){
@@ -523,7 +523,7 @@ class Player extends Character with ByteWriter {
     inventory[emptyIndex] = legsType;
     legsType = ItemType.Empty;
     game.setCharacterStateChanging(this);
-    writePlayerInventory();
+    inventoryDirty = true;
   }
   
   void inventoryEquip(int index) {
@@ -601,7 +601,7 @@ class Player extends Character with ByteWriter {
 
     if (swapped) {
       game.setCharacterStateChanging(this);
-      writePlayerInventory();
+      inventoryDirty = true;
     }
   }
 

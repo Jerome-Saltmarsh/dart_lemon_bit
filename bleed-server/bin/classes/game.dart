@@ -1056,7 +1056,7 @@ abstract class Game {
              if (emptyInventoryIndex != null){
                 player.inventory[emptyInventoryIndex] = target.type;
                 player.inventoryQuantity[emptyInventoryIndex] = target.quantity;
-                player.writePlayerInventory();
+                player.inventoryDirty = true;
                 deactivateGameObject(target);
                 player.writePlayerEvent(PlayerEvent.Item_Picked_Up);
                 clearCharacterTarget(player);
@@ -1115,13 +1115,6 @@ abstract class Game {
     // }
 
     setCharacterStateRunning(player);
-  }
-
-  void playerAddItemTypeToInventory(Player player, int itemType){
-    final emptyInventoryIndex = player.getEmptyInventoryIndex();
-    if (emptyInventoryIndex == null) return;
-    player.inventory[emptyInventoryIndex] = itemType;
-    player.writePlayerInventory();
   }
 
   void setCharacterStateRunning(Character character){
