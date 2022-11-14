@@ -10,4 +10,7 @@ class ServerActions {
     GameNetwork.sendClientRequestInventoryEquip(
         ServerQuery.mapWatchBeltTypeToItemType(watchBeltType)
     );
+
+  static void inventoryUnequip(int index) =>
+      GameNetwork.sendClientRequestInventoryUnequip(index);
 }

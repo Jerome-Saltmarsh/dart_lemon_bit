@@ -395,7 +395,7 @@ class GameUI {
               builder: (context, data, rejectedData) => watch(
                   GamePlayer.weapon,
                   (int playerWeaponType) => onPressed(
-                        onRightClick: () => watchBeltType.value = ItemType.Empty,
+                        onRightClick: () => ClientEvents.onBeltButtonRightClicked(watchBeltType),
                         action: () => ClientEvents.onBeltButtonPressed(watchBeltType),
                         child: Stack(
                           children: [

@@ -324,6 +324,11 @@ class GameNetwork {
         ClientRequest.Inventory, "${InventoryRequest.Drop} $index",
       );
 
+  static void sendClientRequestInventoryUnequip(int index) =>
+      sendClientRequest(
+        ClientRequest.Inventory, "${InventoryRequest.Unequip} $index",
+      );
+
   static void sendClientRequestInventoryBuy(int index) =>
       sendClientRequest(
         ClientRequest.Inventory, "${InventoryRequest.Buy} $index",
@@ -334,26 +339,6 @@ class GameNetwork {
         ClientRequest.Inventory, "${InventoryRequest.Sell} $index",
       );
 
-  // static void sendClientRequestInventoryUnequipWeapon() =>
-  //     sendClientRequest(
-  //       ClientRequest.Inventory, "${InventoryRequest.Unequip_Weapon}",
-  //     );
-  //
-  // static void sendClientRequestInventoryUnequipHead() =>
-  //     sendClientRequest(
-  //       ClientRequest.Inventory, "${InventoryRequest.Unequip_Head}",
-  //     );
-  //
-  // static void sendClientRequestInventoryUnequipBody() =>
-  //     sendClientRequest(
-  //       ClientRequest.Inventory, "${InventoryRequest.Unequip_Body}",
-  //     );
-  //
-  // static void sendClientRequestInventoryUnequipLegs() =>
-  //     sendClientRequest(
-  //       ClientRequest.Inventory, "${InventoryRequest.Unequip_Legs}",
-  //     );
-
   static void sendClientRequestInventoryMove({
     required int indexFrom,
     required int indexTo,
@@ -361,11 +346,6 @@ class GameNetwork {
       sendClientRequest(
         ClientRequest.Inventory, "${InventoryRequest.Move} $indexFrom $indexTo",
       );
-
-    // sendClientRequest(
-    //   ClientRequest.Inventory_Move,
-    //   "$indexFrom $indexTo",
-    // );
 
   static void sendClientRequestGameObjectTranslate({
     required double tx,

@@ -578,6 +578,25 @@ class Player extends Character with ByteWriter {
     inventoryDirty = true;
   }
 
+  void inventoryUnequip(int index){
+      assert (isValidInventoryIndex(index));
+
+      final emptyInventoryIndex = inventoryGetEmptyIndex();
+      if (emptyInventoryIndex == null) {
+        writePlayerEventInventoryFull();
+        return;
+      }
+      inventorySwapIndexes(index, emptyInventoryIndex);
+  }
+
+  int? inventoryGetEmptyIndex() {
+    for (var i = 0; i < inventory.length; i++){
+      if (inventory[i] == ItemType.Empty)
+        return i;
+    }
+    return null;
+  }
+
   void inventoryEquip(int index) {
 
     if (!isValidInventoryIndex(index)) {

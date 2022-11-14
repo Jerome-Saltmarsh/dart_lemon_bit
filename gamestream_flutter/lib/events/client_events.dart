@@ -92,6 +92,10 @@ class ClientEvents {
   static void onBeltButtonPressed(Watch<int> watchBeltType) =>
     ServerActions.equipWatchBeltType(watchBeltType);
 
+  static void onBeltButtonRightClicked(Watch<int> watchBeltType){
+    ServerActions.inventoryUnequip(ServerQuery.mapWatchBeltTypeToItemType(watchBeltType));
+  }
+
   static void onKeyPressedPlayModeHotKey(LogicalKeyboardKey key) {
     if (ClientState.hoverIndex.value >= 0 &&
         ClientState.hoverDialogIsInventory

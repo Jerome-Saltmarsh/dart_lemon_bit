@@ -79,7 +79,7 @@ class Connection {
       return;
     }
 
-    final clientRequestInt = int.tryParse(arguments[0]);
+    final clientRequestInt = parse(arguments[0]);
 
     if (clientRequestInt == null)
       return error(GameError.ClientRequestRequired);
@@ -102,150 +102,6 @@ class Connection {
       case ClientRequest.Inventory:
         handleRequestInventory(player, arguments);
         break;
-        // if (arguments.length < 2)  return errorArgsExpected(3, arguments);
-        // if (player.deadBusyOrUsingWeapon) return;
-        // final inventoryRequest = int.tryParse(arguments[1]);
-        // switch (inventoryRequest){
-        //   case InventoryRequest.Drop:
-        //     final index = int.tryParse(arguments[2]);
-        //     if (index == null) return errorInvalidArg('index == null');
-        //     if (index < 0) return errorInvalidArg('index < 0');
-        //     if (index >= player.inventory.length) return errorInvalidArg('index >= player.inventory.length');
-        //     player.game.spawnGameObjectItemAtPosition(
-        //         position: player,
-        //         type: player.inventory[index],
-        //     );
-        //     player.inventory[index] = ItemType.Empty;
-        //     player.writePlayerInventory();
-        //     player.writePlayerEvent(PlayerEvent.Item_Dropped);
-        //     break;
-        //   case InventoryRequest.Move:
-        //     if (player.deadBusyOrUsingWeapon) return;
-        //     if (arguments.length < 4)  return errorArgsExpected(4, arguments);
-        //     final indexFrom = int.tryParse(arguments[2]);
-        //     final indexTo = int.tryParse(arguments[3]);
-        //     if (indexFrom == null) return errorInvalidArg('index from is null');
-        //     if (indexTo == null) return errorInvalidArg('index from is null');
-        //     if (indexFrom < 0) return errorInvalidArg('invalid inventory from index');
-        //     if (indexTo < 0) return errorInvalidArg('invalid inventory to index');
-        //
-        //     if (indexFrom == ItemType.Equipped_Body) {
-        //       if (player.inventory[indexTo] == ItemType.Empty) {
-        //         player.inventory[indexTo] = player.bodyType;
-        //         player.bodyType = ItemType.Empty;
-        //         player.writePlayerInventory();
-        //         player.writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
-        //         return;
-        //       }
-        //       if (ItemType.isTypeBody(player.inventory[indexTo])) {
-        //         final toType = player.inventory[indexTo];
-        //         player.inventory[indexTo] = player.bodyType;
-        //         player.bodyType = toType;
-        //         player.writePlayerInventory();
-        //         player.writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
-        //         return;
-        //       }
-        //       final availableIndex = player.getEmptyInventoryIndex();
-        //       if (availableIndex != null){
-        //         player.inventory[availableIndex] = player.bodyType;
-        //         player.bodyType = ItemType.Empty;
-        //         player.writePlayerInventory();
-        //         player.writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
-        //         return;
-        //       }
-        //       return;
-        //     }
-        //
-        //     final inventory = player.inventory;
-        //     if (indexFrom >= inventory.length) return errorInvalidArg('invalid inventory from index');
-        //     if (indexTo >= inventory.length) return errorInvalidArg('invalid inventory to index');
-        //     final typeFrom = inventory[indexFrom];
-        //     final typeTo = inventory[indexTo];
-        //     if (typeFrom == ItemType.Empty && typeTo == ItemType.Empty) return;
-        //     inventory[indexFrom] = typeTo;
-        //     inventory[indexTo] = typeFrom;
-        //     player.writePlayerInventory();
-        //     player.writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
-        //     break;
-        //
-        //   case InventoryRequest.Unequip_Weapon:
-        //     if (player.weaponType == ItemType.Empty) return;
-        //     for (var i = 0; i < player.inventory.length; i++){
-        //       if (player.inventory[i] != ItemType.Empty) continue;
-        //       player.inventory[i] = player.weaponType;
-        //       player.weaponType = ItemType.Empty;
-        //       player.writePlayerWeaponType();
-        //       player.game.setCharacterStateChanging(player);
-        //       player.writePlayerInventory();
-        //       break;
-        //     }
-        //     break;
-        //   case InventoryRequest.Unequip_Head:
-        //     if (player.headType == ItemType.Empty) return;
-        //     final emptyIndex = player.getEmptyInventoryIndex();
-        //     if (emptyIndex == null) return;
-        //     player.inventory[emptyIndex] = player.headType;
-        //     player.headType = ItemType.Empty;
-        //     player.game.setCharacterStateChanging(player);
-        //     player.writePlayerInventory();
-        //     break;
-        //   case InventoryRequest.Unequip_Body:
-        //     if (player.bodyType == ItemType.Empty) return;
-        //     final emptyIndex = player.getEmptyInventoryIndex();
-        //     if (emptyIndex == null) return;
-        //     player.inventory[emptyIndex] = player.bodyType;
-        //     player.bodyType = ItemType.Empty;
-        //     player.game.setCharacterStateChanging(player);
-        //     player.writePlayerInventory();
-        //     break;
-        //   case InventoryRequest.Equip:
-        //     final index = int.tryParse(arguments[2]);
-        //     if (index == null){
-        //       return errorInvalidArg('index is null');
-        //     }
-        //     if (index < 0 || index >= player.inventory.length){
-        //       return errorInvalidArg('index out of bounds');
-        //     }
-        //     final itemType = player.inventory[index];
-        //     var swapped = false;
-        //
-        //     if (ItemType.isTypeWeapon(itemType)){
-        //        final currentWeapon = player.weaponType;
-        //        player.weaponType = itemType;
-        //        player.inventory[index] = currentWeapon;
-        //        swapped = true;
-        //        player.writePlayerWeaponType();
-        //     }
-        //
-        //     if (ItemType.isTypeBody(itemType)){
-        //       final current = player.bodyType;
-        //       player.bodyType = itemType;
-        //       player.inventory[index] = current;
-        //       swapped = true;
-        //     }
-        //
-        //     if (ItemType.isTypeHead(itemType)){
-        //       final current = player.headType;
-        //       player.headType = itemType;
-        //       player.inventory[index] = current;
-        //       swapped = true;
-        //     }
-        //
-        //     if (ItemType.isTypeLegs(itemType)){
-        //       final current = player.legsType;
-        //       player.legsType = itemType;
-        //       player.inventory[index] = current;
-        //       swapped = true;
-        //     }
-        //
-        //     if (swapped) {
-        //       player.game.setCharacterStateChanging(player);
-        //       player.writePlayerInventory();
-        //     }
-        //     break;
-        //
-        // }
-        // break;
 
       case ClientRequest.Teleport:
         handleClientRequestTeleport(player);
@@ -259,7 +115,7 @@ class Connection {
       case ClientRequest.Weather_Set_Rain:
         if (game is GameDarkAge == false) return;
         final universe = (game as GameDarkAge).environment;
-        final rainIndex = int.tryParse(arguments[1]);
+        final rainIndex = parse(arguments[1]);
         if (rainIndex == null || !isValidIndex(rainIndex, rainValues))
            return errorInvalidArg('invalid rain index: $rainIndex');
 
@@ -275,7 +131,7 @@ class Connection {
       case ClientRequest.Weather_Set_Wind:
         if (game is GameDarkAge == false) return;
         final universe = (game as GameDarkAge).environment;
-        final index = int.tryParse(arguments[1]);
+        final index = parse(arguments[1]);
         if (index == null || !isValidIndex(index, windValues))
           return errorInvalidArg('invalid rain index: $index');
 
@@ -286,7 +142,7 @@ class Connection {
         if (game is GameDarkAge == false) return;
         final universe = (game as GameDarkAge).environment;
 
-        final index = int.tryParse(arguments[1]);
+        final index = parse(arguments[1]);
         if (index == null || !isValidIndex(index, lightningValues))
           return errorInvalidArg('invalid lightning index: $index');
         universe.lightning = lightningValues[index];
@@ -344,9 +200,9 @@ class Connection {
         if (arguments.length < 4){
           return errorInvalidArg('expected 4 args');
         }
-        final z = int.tryParse(arguments[1]);
-        final row = int.tryParse(arguments[2]);
-        final column = int.tryParse(arguments[3]);
+        final z = parse(arguments[1]);
+        final row = parse(arguments[2]);
+        final column = parse(arguments[3]);
 
         if (z == null) return errorInvalidArg('z is null');
         if (row == null) return errorInvalidArg('row is null');
@@ -363,11 +219,11 @@ class Connection {
         if (arguments.length < 6){
           return errorInvalidArg('expected 6 args');
         }
-        final z = int.tryParse(arguments[1]);
-        final row = int.tryParse(arguments[2]);
-        final column = int.tryParse(arguments[3]);
-        final spawnType = int.tryParse(arguments[4]);
-        final spawnAmount = int.tryParse(arguments[5]);
+        final z = parse(arguments[1]);
+        final row = parse(arguments[2]);
+        final column = parse(arguments[3]);
+        final spawnType = parse(arguments[4]);
+        final spawnAmount = parse(arguments[5]);
         final spawnRadius = double.tryParse(arguments[6]);
 
         if (z == null) return errorInvalidArg('z is null');
@@ -406,7 +262,7 @@ class Connection {
         break;
 
       case ClientRequest.Teleport_Scene:
-        final sceneIndex = int.tryParse(arguments[1]);
+        final sceneIndex = parse(arguments[1]);
 
         if (sceneIndex == null)
           return errorInvalidArg('scene index is null');
@@ -450,7 +306,7 @@ class Connection {
           break;
 
       case ClientRequest.Time_Set_Hour:
-          final hour = int.tryParse(arguments[1]);
+          final hour = parse(arguments[1]);
           if (hour == null) return errorInvalidArg('hour required');
           player.game.setHourMinutes(hour, 0);
           break;
@@ -477,19 +333,24 @@ class Connection {
   void handleRequestInventory(Player player, List<String> arguments){
     if (arguments.length < 2)  return errorArgsExpected(3, arguments);
     if (player.deadBusyOrUsingWeapon) return;
-    final inventoryRequest = int.tryParse(arguments[1]);
+    final inventoryRequest = parse(arguments[1]);
 
     if (inventoryRequest == null) return errorInvalidArg('inventory request is null');
 
     switch (inventoryRequest) {
+      case InventoryRequest.Unequip:
+        final index = parse(arguments[2]);
+        if (index == null) return;
+        player.inventoryUnequip(index);
+        break;
       case InventoryRequest.Buy:
-        final index = int.tryParse(arguments[2]);
-        if (index == null) return errorInvalidArg('index == null');
+        final index = parse(arguments[2]);
+        if (index == null) return;
         player.inventoryBuy(index);
         break;
       case InventoryRequest.Sell:
-        final index = int.tryParse(arguments[2]);
-        if (index == null) return errorInvalidArg('index == null');
+        final index = parse(arguments[2]);
+        if (index == null) return;
         player.inventorySell(index);
         break;
       case InventoryRequest.Toggle:
@@ -500,7 +361,7 @@ class Connection {
         }
         break;
       case InventoryRequest.Drop:
-        final index = int.tryParse(arguments[2]);
+        final index = parse(arguments[2]);
         if (index == null)
           return errorInvalidArg('index == null');
         if (!player.isValidInventoryIndex(index))
@@ -509,8 +370,8 @@ class Connection {
         break;
       case InventoryRequest.Move:
         if (arguments.length < 4)  return errorArgsExpected(4, arguments);
-        final indexFrom = int.tryParse(arguments[2]);
-        final indexTo = int.tryParse(arguments[3]);
+        final indexFrom = parse(arguments[2]);
+        final indexTo = parse(arguments[3]);
         if (indexFrom == null) return errorInvalidArg('index from is null');
         if (indexTo == null) return errorInvalidArg('index from is null');
         if (indexFrom < 0) return errorInvalidArg('invalid inventory from index');
@@ -519,7 +380,7 @@ class Connection {
         // player.inventoryMove(indexFrom, indexTo);
         break;
       case InventoryRequest.Equip:
-        final index = int.tryParse(arguments[2]);
+        final index = parse(arguments[2]);
         if (index == null) {
           errorInvalidArg('index is null');
           return;
@@ -541,7 +402,7 @@ class Connection {
       return errorInvalidArg('insufficient args');
     }
 
-    final editRequestIndex = int.tryParse(arguments[1]);
+    final editRequestIndex = parse(arguments[1]);
     if (editRequestIndex == null){
       return errorInvalidArg('editRequestIndex is null');
     }
@@ -554,7 +415,7 @@ class Connection {
         if (arguments.length < 3) {
           return errorInsufficientArgs(3, arguments);
         }
-        final modifyCanvasSizeIndex = int.tryParse(arguments[2]);
+        final modifyCanvasSizeIndex = parse(arguments[2]);
         if (modifyCanvasSizeIndex == null){
           return errorInvalidArg('modify canvas size is null');
         }
@@ -569,7 +430,7 @@ class Connection {
         if (arguments.length < 3) {
           return errorInsufficientArgs(3, arguments);
         }
-        final spawnIndex = int.tryParse(arguments[2]);
+        final spawnIndex = parse(arguments[2]);
         if (spawnIndex == null) {
           return errorInvalidArg('spawn index required');
         }
@@ -586,9 +447,9 @@ class Connection {
 
     if (arguments.length < 4) return errorInvalidArg('4 args expected');
 
-    var nodeIndex = int.tryParse(arguments[1]);
-    var nodeType = int.tryParse(arguments[2]);
-    var nodeOrientation = int.tryParse(arguments[3]);
+    var nodeIndex = parse(arguments[1]);
+    var nodeType = parse(arguments[2]);
+    var nodeOrientation = parse(arguments[3]);
     if (nodeIndex == null) {
       return errorInvalidArg('orientation is null');
     }
@@ -623,7 +484,7 @@ class Connection {
   void handleNpcTalkSelectOption(Player player, List<String> arguments) {
     if (player.deadOrDying) return errorPlayerDead();
     if (arguments.length != 2) return errorArgsExpected(2, arguments);
-    final index = int.tryParse(arguments[1]);
+    final index = parse(arguments[1]);
     if (index == null) {
       return errorInvalidArg('int required: got ${arguments[1]}');
     }
@@ -642,7 +503,7 @@ class Connection {
     if (arguments.length <= 1)
       return errorInvalidArg('handleGameObjectRequest invalid args');
 
-    final gameObjectRequestIndex = int.tryParse(arguments[1]);
+    final gameObjectRequestIndex = parse(arguments[1]);
 
     if (gameObjectRequestIndex == null)
       return errorInvalidArg("gameObjectRequestIndex is null");
@@ -690,8 +551,8 @@ class Connection {
         break;
 
       case GameObjectRequest.Add:
-        final index = int.tryParse(arguments[2]);
-        final type = int.tryParse(arguments[3]);
+        final index = parse(arguments[2]);
+        final type = parse(arguments[3]);
         if (index == null) return errorInvalidArg('index is null (2)');
         if (type == null) return errorInvalidArg('type is null (3)');
         if (index < 0) return errorInvalidArg('index cannot be negative');
@@ -820,6 +681,10 @@ class Connection {
     error(GameError.InvalidArguments, message: message);
   }
 
+  void errorParse(String source){
+    errorInvalidArg('connection.parse($source)');
+  }
+
   void errorPlayerNotFound() {
     error(GameError.PlayerNotFound);
   }
@@ -834,7 +699,7 @@ class Connection {
 
   void handleClientRequestJoin(List<String> arguments,) {
     if (arguments.length < 2) return errorInsufficientArgs(2, arguments);
-    final gameType = int.tryParse(arguments[1]);
+    final gameType = parse(arguments[1]);
     switch (gameType) {
       case GameType.Editor:
         joinGameEditor();
@@ -855,5 +720,14 @@ class Connection {
     player.y = player.mouseGridY;
     player.health = player.maxHealth;
     player.state = CharacterState.Idle;
+  }
+
+  parse(String source, {int? radix}) {
+    final value = int.tryParse(source);
+    if (value == null){
+        errorParse(source);
+       return null;
+    }
+    return value;
   }
 }
