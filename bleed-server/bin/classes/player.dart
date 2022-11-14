@@ -443,6 +443,12 @@ class Player extends Character with ByteWriter {
       throw Exception('player.inventorySet(index: $index, itemType: $itemType, quantity: $quantity)');
     }
 
+    if (index == equippedWeaponIndex){
+       if (!ItemType.isTypeWeapon(itemType)){
+          equippedWeaponIndex = -1;
+       }
+    }
+
     if (index == ItemType.Equipped_Weapon) {
       if (weaponType == itemType) return;
       weaponType = itemType;
