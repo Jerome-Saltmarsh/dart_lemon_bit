@@ -42,6 +42,22 @@ class Player extends Character with ByteWriter {
   var sceneDownloaded = false;
   var initialized = false;
   var lookRadian = 0.0;
+
+  var inventoryDirty = false;
+  var belt1ItemType = ItemType.Empty; // 1
+  var belt2ItemType = ItemType.Empty; // 2
+  var belt3ItemType = ItemType.Empty; // 3
+  var belt4ItemType = ItemType.Empty; // 4
+  var belt5ItemType = ItemType.Empty; // Q
+  var belt6ItemType = ItemType.Empty; // E
+
+  var belt1Quantity = 0; // 1
+  var belt2Quantity = 0; // 2
+  var belt3Quantity = 0; // 3
+  var belt4Quantity = 0; // 4
+  var belt5Quantity = 0; // Q
+  var belt6Quantity = 0; // E
+
   /// Warning - do not reference
   Game game;
   Collider? _aimTarget; // the currently highlighted character
@@ -370,7 +386,6 @@ class Player extends Character with ByteWriter {
     required int index,
     required int itemType,
     required int quantity,
-    bool publish = true,
   }){
     assert (index >= 0);
 
@@ -378,9 +393,7 @@ class Player extends Character with ByteWriter {
       if (weaponType == itemType) return;
       weaponType = itemType;
       weaponQuantity = quantity;
-      if (publish){
-        writePlayerInventory();
-      }
+      inventoryDirty = true;
       game.setCharacterStateChanging(this);
       return;
     }
@@ -388,9 +401,7 @@ class Player extends Character with ByteWriter {
       if (bodyType == itemType) return;
       bodyType = itemType;
       bodyQuantity = quantity;
-      if (publish){
-        writePlayerInventory();
-      }
+      inventoryDirty = true;
       game.setCharacterStateChanging(this);
       return;
     }
@@ -398,9 +409,7 @@ class Player extends Character with ByteWriter {
       if (headType == itemType) return;
       headType = itemType;
       headQuantity = quantity;
-      if (publish){
-        writePlayerInventory();
-      }
+      inventoryDirty = true;
       game.setCharacterStateChanging(this);
       return;
     }
@@ -408,168 +417,65 @@ class Player extends Character with ByteWriter {
       if (legsType == itemType) return;
       legsType = itemType;
       legsQuantity = quantity;
-      if (publish){
-        writePlayerInventory();
-      }
+      inventoryDirty = true;
       game.setCharacterStateChanging(this);
       return;
     }
+    if (index == ItemType.Belt_1){
+      if (belt1ItemType == itemType) return;
+      belt1ItemType = itemType;
+      belt1Quantity = quantity;
+      inventoryDirty = true;
+      return;
+    }
+    if (index == ItemType.Belt_2){
+      if (belt2ItemType == itemType) return;
+      belt2ItemType = itemType;
+      belt2Quantity = quantity;
+      inventoryDirty = true;
+      return;
+    }
+    if (index == ItemType.Belt_3){
+      if (belt3ItemType == itemType) return;
+      belt3ItemType = itemType;
+      belt3Quantity = quantity;
+      inventoryDirty = true;
+      return;
+    }
+    if (index == ItemType.Belt_4){
+      if (belt4ItemType == itemType) return;
+      belt4ItemType = itemType;
+      belt4Quantity = quantity;
+      inventoryDirty = true;
+      return;
+    }
+    if (index == ItemType.Belt_5){
+      if (belt5ItemType == itemType) return;
+      belt5ItemType = itemType;
+      belt5Quantity = quantity;
+      inventoryDirty = true;
+      return;
+    }
+    if (index == ItemType.Belt_6){
+      if (belt6ItemType == itemType) return;
+      belt6ItemType = itemType;
+      belt6Quantity = quantity;
+      inventoryDirty = true;
+      return;
+    }
+
     assert(index < inventory.length);
     inventory[index] = itemType;
     inventoryQuantity[index] = quantity;
-    if (publish){
-      writePlayerInventory();
-    }
+    inventoryDirty = true;
   }
 
-  void inventoryMove(int indexFrom, int indexTo){
-    // inventorySwapIndexes(indexFrom, indexTo);
-
-    if (indexFrom == ItemType.Equipped_Weapon) {
-      if (indexTo >= inventory.length) return;
-
-      if (inventory[indexTo] == ItemType.Empty) {
-        inventory[indexTo] = weaponType;
-        weaponType = ItemType.Empty;
-        writePlayerInventory();
-        // writePlayerWeaponType();
-        writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
-        return;
-      }
-      if (ItemType.isTypeWeapon(inventory[indexTo])) {
-        final typeTo = inventory[indexTo];
-        inventory[indexTo] = weaponType;
-        weaponType = typeTo;
-        writePlayerInventory();
-        // writePlayerWeaponType();
-        writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
-        return;
-      }
-      final availableIndex = getEmptyInventoryIndex();
-      if (availableIndex != null){
-        inventory[availableIndex] = weaponType;
-        weaponType = ItemType.Empty;
-        writePlayerInventory();
-        // writePlayerWeaponType();
-        writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
-        return;
-      }
-      return;
-    }
-
-    if (indexFrom == ItemType.Equipped_Head) {
-      if (indexTo >= inventory.length) return;
-
-      if (inventory[indexTo] == ItemType.Empty) {
-        inventory[indexTo] = headType;
-        headType = ItemType.Empty;
-        writePlayerInventory();
-        // writePlayerT(); TODO writePlayerHead()
-        writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
-        return;
-      }
-      if (ItemType.isTypeHead(inventory[indexTo])) {
-        final typeTo = inventory[indexTo];
-        inventory[indexTo] = headType;
-        headType = typeTo;
-        writePlayerInventory();
-        // writePlayerWeaponType();
-        writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
-        return;
-      }
-      final availableIndex = getEmptyInventoryIndex();
-      if (availableIndex != null){
-        inventory[availableIndex] = headType;
-        headType = ItemType.Empty;
-        writePlayerInventory();
-        // writePlayerWeaponType();
-        writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
-        return;
-      }
-      return;
-    }
-
-    if (indexFrom == ItemType.Equipped_Body) {
-      if (indexTo >= inventory.length) return;
-
-      if (inventory[indexTo] == ItemType.Empty) {
-        inventory[indexTo] = bodyType;
-        bodyType = ItemType.Empty;
-        writePlayerInventory();
-        // writePlayerT(); TODO writePlayerHead()
-        writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
-        return;
-      }
-      if (ItemType.isTypeBody(inventory[indexTo])) {
-        final typeTo = inventory[indexTo];
-        inventory[indexTo] = bodyType;
-        bodyType = typeTo;
-        writePlayerInventory();
-        // writePlayerWeaponType();
-        writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
-        return;
-      }
-      final availableIndex = getEmptyInventoryIndex();
-      if (availableIndex != null){
-        inventory[availableIndex] = bodyType;
-        bodyType = ItemType.Empty;
-        writePlayerInventory();
-        // writePlayerWeaponType();
-        writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
-        return;
-      }
-      return;
-    }
-
-    if (indexFrom == ItemType.Equipped_Legs) {
-      if (indexTo >= inventory.length) return;
-
-      if (inventory[indexTo] == ItemType.Empty) {
-        inventory[indexTo] = legsType;
-        legsType = ItemType.Empty;
-        writePlayerInventory();
-        writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
-        return;
-      }
-      if (ItemType.isTypeLegs(inventory[indexTo])) {
-        final typeTo = inventory[indexTo];
-        inventory[indexTo] = legsType;
-        legsType = typeTo;
-        writePlayerInventory();
-        // writePlayerWeaponType();
-        writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
-        return;
-      }
-      final availableIndex = getEmptyInventoryIndex();
-      if (availableIndex != null){
-        inventory[availableIndex] = legsType;
-        legsType = ItemType.Empty;
-        writePlayerInventory();
-        // writePlayerWeaponType();
-        writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
-        return;
-      }
-      return;
-    }
-
-    if (indexFrom >= inventory.length) return;
-    if (indexTo >= inventory.length) return;
-    final typeFrom = inventory[indexFrom];
-    final typeTo = inventory[indexTo];
-    if (typeFrom == ItemType.Empty && typeTo == ItemType.Empty) return;
-    inventory[indexFrom] = typeTo;
-    inventory[indexTo] = typeFrom;
-    writePlayerInventory();
-    writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
-  }
-  
   void inventoryUnequipWeapon(){
     if (weaponType == ItemType.Empty) return;
     for (var i = 0; i < inventory.length; i++){
       if (inventory[i] != ItemType.Empty) continue;
       inventory[i] = weaponType;
       weaponType = ItemType.Empty;
-      // writePlayerWeaponType();
       writePlayerInventory();
       game.setCharacterStateChanging(this);
       break;
@@ -594,10 +500,10 @@ class Player extends Character with ByteWriter {
      final indexBType = inventoryGetItemType(indexB);
      final indexAQuantity = inventoryGetItemQuantity(indexA);
      final indexBQuantity = inventoryGetItemQuantity(indexB);
-     inventorySet(index: indexA, itemType: indexBType, quantity: indexBQuantity, publish: false);
-     inventorySet(index: indexB, itemType: indexAType, quantity: indexAQuantity, publish: false);
-     writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
-     writePlayerInventory();
+     inventorySet(index: indexA, itemType: indexBType, quantity: indexBQuantity);
+     inventorySet(index: indexB, itemType: indexAType, quantity: indexAQuantity);
+     // writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
+     // writePlayerInventory();
   }
 
   void inventoryUnequipBody(){
@@ -777,6 +683,11 @@ class Player extends Character with ByteWriter {
     writeCharacters();
     writeGameObjects();
     writeEditorGameObjectSelected();
+
+    if (inventoryDirty) {
+      inventoryDirty = false;
+      writePlayerInventory();
+    }
 
     if (!initialized) {
       game.customInitPlayer(this);
@@ -1176,6 +1087,18 @@ class Player extends Character with ByteWriter {
     writeUInt16(bodyType);
     writeUInt16(legsType);
     writeUInt16(weaponType);
+    writeUInt16(belt1ItemType);
+    writeUInt16(belt2ItemType);
+    writeUInt16(belt3ItemType);
+    writeUInt16(belt4ItemType);
+    writeUInt16(belt5ItemType);
+    writeUInt16(belt6ItemType);
+    writeUInt16(belt1Quantity);
+    writeUInt16(belt2Quantity);
+    writeUInt16(belt3Quantity);
+    writeUInt16(belt4Quantity);
+    writeUInt16(belt5Quantity);
+    writeUInt16(belt6Quantity);
     writeUInt16(inventory.length);
     inventory.forEach(writeUInt16);
     inventoryQuantity.forEach(writeUInt16);

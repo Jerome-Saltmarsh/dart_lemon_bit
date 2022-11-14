@@ -67,6 +67,8 @@ class ItemType {
   static bool isTypeWeaponRanged(int value) =>
       value >= Index_Weapon_Ranged && value < Index_Recipe;
 
+  static bool isIndexBelt(int index)=> index >= Belt_1 && index <= Belt_6;
+
   static bool isTypeRecipe(int value) =>
       value >= Index_Recipe && value < Index_Equipped;
 
@@ -89,7 +91,15 @@ class ItemType {
   static const Index_Weapon_Melee   = 40000;
   static const Index_Weapon_Ranged  = 45000;
   static const Index_Recipe         = 50000;
-  static const Index_Equipped       = 65000;
+  static const Index_Belt       = 65000;
+  static const Index_Equipped       = Index_Belt + 7;
+
+  static const Belt_1 = Index_Belt + 1;
+  static const Belt_2 = Index_Belt + 2;
+  static const Belt_3 = Index_Belt + 3;
+  static const Belt_4 = Index_Belt + 4;
+  static const Belt_5 = Index_Belt + 5;
+  static const Belt_6 = Index_Belt + 6;
 
   static const Equipped_Head = Index_Equipped + 1;
   static const Equipped_Body = Index_Equipped + 2;

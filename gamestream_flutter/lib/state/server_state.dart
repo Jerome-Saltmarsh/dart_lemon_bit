@@ -24,6 +24,20 @@ class ServerState {
   static final windAmbient = Watch(Wind.Calm, onChanged: GameEvents.onChangedWind);
   static final ambientShade = Watch(Shade.Bright, onChanged: GameEvents.onChangedAmbientShade);
 
+  static final playerBelt1_ItemType = Watch(ItemType.Empty);
+  static final playerBelt2_ItemType = Watch(ItemType.Empty);
+  static final playerBelt3_ItemType = Watch(ItemType.Empty);
+  static final playerBelt4_ItemType = Watch(ItemType.Empty);
+  static final playerBelt5_ItemType = Watch(ItemType.Empty);
+  static final playerBelt6_ItemType = Watch(ItemType.Empty);
+
+  static final playerBelt1_Quantity = Watch(0);
+  static final playerBelt2_Quantity = Watch(0);
+  static final playerBelt3_Quantity = Watch(0);
+  static final playerBelt4_Quantity = Watch(0);
+  static final playerBelt5_Quantity = Watch(0);
+  static final playerBelt6_Quantity = Watch(0);
+
   // VARIABLES
   static var inventory = Uint16List(0);
   static var inventoryQuantity = Uint16List(0);
