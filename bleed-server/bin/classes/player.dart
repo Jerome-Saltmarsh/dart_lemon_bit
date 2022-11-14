@@ -44,6 +44,8 @@ class Player extends Character with ByteWriter {
   var lookRadian = 0.0;
 
   var inventoryDirty = false;
+  var _equippedWeaponIndex = 0;
+
   var belt1_itemType = ItemType.Empty; // 1
   var belt2_itemType = ItemType.Empty; // 2
   var belt3_itemType = ItemType.Empty; // 3
@@ -68,6 +70,16 @@ class Player extends Character with ByteWriter {
   int get gold => _gold;
   int get level => _level;
   int get attributes => _attributes;
+
+  int get equippedWeaponIndex => _equippedWeaponIndex;
+
+  set equippedWeaponIndex(int index){
+    assert (index == -1 || isValidInventoryIndex(index));
+    if (_equippedWeaponIndex == index) return;
+    _equippedWeaponIndex = index;
+    weaponType = inventoryGetItemType(_equippedWeaponIndex);
+    inventoryDirty = true;
+  }
 
   set level(int value){
     assert (value >= 1);
@@ -295,7 +307,9 @@ class Player extends Character with ByteWriter {
   }
 
   int inventoryGetItemType(int index){
-    assert (index >= 0);
+    if (index == -1){
+      return ItemType.Empty;
+    }
     if (index == ItemType.Equipped_Weapon)
       return weaponType;
     if (index == ItemType.Equipped_Body)
@@ -414,7 +428,9 @@ class Player extends Character with ByteWriter {
     required int itemType,
     required int quantity,
   }){
-    assert (index >= 0);
+    if (!isValidInventoryIndex(index)){
+      throw Exception('player.inventorySet(index: $index, itemType: $itemType, quantity: $quantity)');
+    }
 
     if (index == ItemType.Equipped_Weapon) {
       if (weaponType == itemType) return;
@@ -491,7 +507,6 @@ class Player extends Character with ByteWriter {
       return;
     }
 
-    assert(index < inventory.length);
     inventory[index] = itemType;
     inventoryQuantity[index] = quantity;
     inventoryDirty = true;
@@ -499,14 +514,25 @@ class Player extends Character with ByteWriter {
 
   void inventoryUnequipWeapon(){
     if (weaponType == ItemType.Empty) return;
-    for (var i = 0; i < inventory.length; i++){
-      if (inventory[i] != ItemType.Empty) continue;
-      inventory[i] = weaponType;
+
+    if (ItemType.isIndexBelt(equippedWeaponIndex)){
       weaponType = ItemType.Empty;
+      equippedWeaponIndex = -1;
       inventoryDirty = true;
       game.setCharacterStateChanging(this);
-      break;
+      return;
     }
+
+
+    // for (var i = 0; i < inventory.length; i++){
+    //   if (inventory[i] != ItemType.Empty) continue;
+    //   inventory[i] = weaponType;
+    //   weaponType = ItemType.Empty;
+    //   equippedWeaponIndex = -1;
+    //   inventoryDirty = true;
+    //   game.setCharacterStateChanging(this);
+    //   break;
+    // }
   }
 
   void inventoryUnequipHead(){
@@ -520,7 +546,7 @@ class Player extends Character with ByteWriter {
   }
 
   void inventorySwapIndexes(int indexA, int indexB){
-    if (indexA == indexB) return;
+     if (indexA == indexB) return;
      assert (isValidInventoryIndex(indexA));
      assert (isValidInventoryIndex(indexB));
      final indexAType = inventoryGetItemType(indexA);
@@ -551,8 +577,6 @@ class Player extends Character with ByteWriter {
     inventoryDirty = true;
   }
 
-
-  
   void inventoryEquip(int index) {
 
     if (!isValidInventoryIndex(index)) {
@@ -577,7 +601,6 @@ class Player extends Character with ByteWriter {
     }
 
     final itemType = inventoryGetItemType(index);
-    var swapped = false;
 
     if (ItemType.isTypeRecipe(itemType)){
        if (itemType == ItemType.Recipe_Staff_Of_Fire) {
@@ -587,112 +610,65 @@ class Player extends Character with ByteWriter {
        }
     }
     if (ItemType.isTypeWeapon(itemType)){
+
+      if (ItemType.isIndexBelt(index)){
+        equippedWeaponIndex = index;
+        return;
+      }
+
       if (index < inventory.length) {
+
           if (belt1_itemType == ItemType.Empty) {
-             belt1_itemType = itemType;
-             weaponType = itemType;
-             inventory[index] = ItemType.Empty;
-             setInventoryDirty();
+            inventorySwapIndexes(index, ItemType.Belt_1);
+            equippedWeaponIndex = belt1_itemType;
              return;
           }
           if (belt2_itemType == ItemType.Empty) {
-            belt2_itemType = itemType;
-            weaponType = itemType;
-            inventory[index] = ItemType.Empty;
-            setInventoryDirty();
+            inventorySwapIndexes(index, ItemType.Belt_2);
+            equippedWeaponIndex = belt2_itemType;
             return;
           }
           if (belt3_itemType == ItemType.Empty) {
-            belt3_itemType = itemType;
-            weaponType = itemType;
-            inventory[index] = ItemType.Empty;
-            setInventoryDirty();
+            inventorySwapIndexes(index, ItemType.Belt_3);
+            equippedWeaponIndex = belt3_itemType;
             return;
           }
           if (belt4_itemType == ItemType.Empty) {
-            belt4_itemType = itemType;
-            weaponType = itemType;
-            inventory[index] = ItemType.Empty;
-            setInventoryDirty();
+            inventorySwapIndexes(index, ItemType.Belt_4);
+            equippedWeaponIndex = belt4_itemType;
             return;
           }
           if (belt5_itemType == ItemType.Empty) {
-            belt5_itemType = itemType;
-            weaponType = itemType;
-            inventory[index] = ItemType.Empty;
-            setInventoryDirty();
+            inventorySwapIndexes(index, ItemType.Belt_5);
+            equippedWeaponIndex = belt5_itemType;
             return;
           }
           if (belt6_itemType == ItemType.Empty) {
-            belt6_itemType = itemType;
-            weaponType = itemType;
-            inventory[index] = ItemType.Empty;
-            setInventoryDirty();
+            inventorySwapIndexes(index, ItemType.Belt_6);
+            equippedWeaponIndex = belt6_itemType;
             return;
           }
-
-          if (belt1_itemType == weaponType) {
-            belt1_itemType = itemType;
-            inventory[index] = weaponType;
-            weaponType = itemType;
-            setInventoryDirty();
+          // if an item from the bag was selected but all belt slots are already being used
+          if (equippedWeaponIndex != -1) {
+            inventorySwapIndexes(index, equippedWeaponIndex);
             return;
           }
-          if (belt2_itemType == weaponType) {
-            belt2_itemType = itemType;
-            inventory[index] = weaponType;
-            weaponType = itemType;
-            setInventoryDirty();
-            return;
-          }
-          if (belt3_itemType == weaponType) {
-            belt3_itemType = itemType;
-            inventory[index] = weaponType;
-            weaponType = itemType;
-            setInventoryDirty();
-            return;
-          }
-          if (belt4_itemType == weaponType) {
-            belt4_itemType = itemType;
-            inventory[index] = weaponType;
-            weaponType = itemType;
-            setInventoryDirty();
-            return;
-          }
-          if (belt5_itemType == weaponType) {
-            belt5_itemType = itemType;
-            inventory[index] = weaponType;
-            weaponType = itemType;
-            setInventoryDirty();
-            return;
-          }
-          if (belt6_itemType == weaponType) {
-            belt6_itemType = itemType;
-            inventory[index] = weaponType;
-            weaponType = itemType;
-            setInventoryDirty();
-            return;
-          }
+          // if none of the belts items are weapons simply use the first index
+          inventorySwapIndexes(index, ItemType.Belt_1);
+          return;
       }
-      swapped = true;
-    }
-    if (ItemType.isTypeBody(itemType)){
-      final current = bodyType;
-      bodyType = itemType;
-      inventory[index] = current;
-      swapped = true;
     }
     if (ItemType.isTypeHead(itemType)){
-      final current = headType;
-      headType = itemType;
-      inventory[index] = current;
-      swapped = true;
+      inventorySwapIndexes(index, ItemType.Equipped_Head);
+      return;
+    }
+    if (ItemType.isTypeBody(itemType)){
+      inventorySwapIndexes(index, ItemType.Equipped_Body);
+      return;
     }
     if (ItemType.isTypeLegs(itemType)){
-      final current = legsType;
-      legsType = itemType;
-      inventory[index] = current;
-      swapped = true;
+      inventorySwapIndexes(index, ItemType.Equipped_Legs);
+      return;
     }
     if (ItemType.isTypeConsumable(itemType)){
        switch (itemType) {
@@ -705,11 +681,6 @@ class Player extends Character with ByteWriter {
        inventorySetEmptyAtIndex(index);
        writePlayerInventorySlot(index);
        return;
-    }
-
-    if (swapped) {
-      game.setCharacterStateChanging(this);
-      inventoryDirty = true;
     }
   }
 
