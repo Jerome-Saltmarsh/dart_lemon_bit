@@ -381,10 +381,7 @@ class Connection {
         break;
       case InventoryRequest.Equip:
         final index = parse(arguments[2]);
-        if (index == null) {
-          errorInvalidArg('index is null');
-          return;
-        }
+        if (index == null) return;
         player.inventoryEquip(index);
         break;
       default:

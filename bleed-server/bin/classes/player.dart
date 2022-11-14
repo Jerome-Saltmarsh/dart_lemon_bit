@@ -152,6 +152,16 @@ class Player extends Character with ByteWriter {
     return null;
   }
 
+  int? getEmptyBeltIndex(){
+    if (belt1_itemType == ItemType.Empty) return ItemType.Belt_1;
+    if (belt2_itemType == ItemType.Empty) return ItemType.Belt_2;
+    if (belt3_itemType == ItemType.Empty) return ItemType.Belt_3;
+    if (belt4_itemType == ItemType.Empty) return ItemType.Belt_4;
+    if (belt5_itemType == ItemType.Empty) return ItemType.Belt_5;
+    if (belt6_itemType == ItemType.Empty) return ItemType.Belt_6;
+    return null;
+  }
+
   set experience(int value) {
     if (_experience == value) return;
     assert (value >= 0);
@@ -572,46 +582,25 @@ class Player extends Character with ByteWriter {
         return;
       }
 
+      // move an item from the inventory to the belt and equip it
       if (index < inventory.length) {
 
-          if (belt1_itemType == ItemType.Empty) {
-            inventorySwapIndexes(index, ItemType.Belt_1);
-            equippedWeaponIndex = ItemType.Belt_1;
-            return;
-          }
-          if (belt2_itemType == ItemType.Empty) {
-            inventorySwapIndexes(index, ItemType.Belt_2);
-            equippedWeaponIndex = ItemType.Belt_2;
-            return;
-          }
-          if (belt3_itemType == ItemType.Empty) {
-            inventorySwapIndexes(index, ItemType.Belt_3);
-            equippedWeaponIndex = ItemType.Belt_3;
-            return;
-          }
-          if (belt4_itemType == ItemType.Empty) {
-            inventorySwapIndexes(index, ItemType.Belt_4);
-            equippedWeaponIndex = ItemType.Belt_4;
-            return;
-          }
-          if (belt5_itemType == ItemType.Empty) {
-            inventorySwapIndexes(index, ItemType.Belt_5);
-            equippedWeaponIndex = ItemType.Belt_5;
-            return;
-          }
-          if (belt6_itemType == ItemType.Empty) {
-            inventorySwapIndexes(index, ItemType.Belt_6);
-            equippedWeaponIndex = ItemType.Belt_6;
-            return;
-          }
-          // if an item from the bag was selected but all belt slots are already being used
-          if (equippedWeaponIndex != -1) {
-            inventorySwapIndexes(index, equippedWeaponIndex);
-            return;
-          }
-          // if none of the belts items are weapons simply use the first index
-          inventorySwapIndexes(index, ItemType.Belt_1);
+        final emptyBeltIndex = getEmptyBeltIndex();
+        if (emptyBeltIndex != null) {
+          inventorySwapIndexes(index, emptyBeltIndex);
+          equippedWeaponIndex = emptyBeltIndex;
           return;
+        }
+
+        // if an item from the bag was selected but all belt slots are already being used
+        if (equippedWeaponIndex != -1) {
+          inventorySwapIndexes(index, equippedWeaponIndex);
+          return;
+        }
+
+        // if none of the belts items are weapons simply use the first index
+        inventorySwapIndexes(index, ItemType.Belt_1);
+        return;
       }
     }
     if (ItemType.isTypeHead(itemType)){
