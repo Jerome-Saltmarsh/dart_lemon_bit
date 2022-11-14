@@ -52,6 +52,9 @@ class ItemType {
   static bool isTypeHead(int value) =>
     value >= Index_Heads && value < Index_Bodies;
 
+  static bool isTypeHeadOrEmpty(int value) =>
+      isTypeHead(value) || value == Empty;
+
   static bool isTypeBody(int value) =>
       value >= Index_Bodies && value < Index_Legs;
 
