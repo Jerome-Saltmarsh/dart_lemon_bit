@@ -390,13 +390,13 @@ class GameUI {
               onWillAccept: (int? data) => data != null,
               onAccept: (int? data) {
                 if (data == null) return;
-                ClientEvents.onHotKeyDragAccept(watchBeltType, data);
+                ClientEvents.onDragAcceptWatchBelt(watchBeltType, data);
               },
               builder: (context, data, rejectedData) => watch(
                   GamePlayer.weapon,
                   (int playerWeaponType) => onPressed(
-                        onRightClick: () => ClientEvents.onBeltButtonRightClicked(watchBeltType),
-                        action: () => ClientEvents.onBeltButtonPressed(watchBeltType),
+                        onRightClick: () => ClientEvents.onRightClickedWatchBelt(watchBeltType),
+                        action: () => ClientEvents.onButtonPressedWatchBelt(watchBeltType),
                         child: Stack(
                           children: [
                             buildAtlasIconType(IconType.Slot, scale: 2.0),

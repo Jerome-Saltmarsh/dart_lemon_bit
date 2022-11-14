@@ -535,23 +535,15 @@ class Player extends Character with ByteWriter {
      inventorySet(index: indexB, itemType: indexAType, quantity: indexAQuantity);
   }
 
-  void inventoryUnequip(int index){
+  void inventoryUnequip(int index) {
       assert (isValidInventoryIndex(index));
 
-      final emptyInventoryIndex = inventoryGetEmptyIndex();
+      final emptyInventoryIndex = getEmptyInventoryIndex();
       if (emptyInventoryIndex == null) {
         writePlayerEventInventoryFull();
         return;
       }
       inventorySwapIndexes(index, emptyInventoryIndex);
-  }
-
-  int? inventoryGetEmptyIndex() {
-    for (var i = 0; i < inventory.length; i++){
-      if (inventory[i] == ItemType.Empty)
-        return i;
-    }
-    return null;
   }
 
   void inventoryEquip(int index) {
@@ -574,6 +566,7 @@ class Player extends Character with ByteWriter {
          writePlayerEventRecipeCrafted();
          return;
        }
+       return;
     }
     if (ItemType.isTypeWeapon(itemType)){
 

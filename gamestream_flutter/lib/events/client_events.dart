@@ -85,15 +85,16 @@ class ClientEvents {
     }
   }
 
-  static void onHotKeyDragAccept(Watch<int> hotKeyWatch, int index){
-    ClientActions.assignHotKeyWatchValue(hotKeyWatch, ServerQuery.getItemTypeAtInventoryIndex(index));
-  }
+  static void onDragAcceptWatchBelt(Watch<int> watchBelt, int index) =>
+    ServerActions.inventoryMoveToWatchBelt(index, watchBelt);
 
-  static void onBeltButtonPressed(Watch<int> watchBeltType) =>
+  static void onButtonPressedWatchBelt(Watch<int> watchBeltType) =>
     ServerActions.equipWatchBeltType(watchBeltType);
 
-  static void onBeltButtonRightClicked(Watch<int> watchBeltType){
-    ServerActions.inventoryUnequip(ServerQuery.mapWatchBeltTypeToItemType(watchBeltType));
+  static void onRightClickedWatchBelt(Watch<int> watchBelt){
+    ServerActions.inventoryUnequip(
+        ServerQuery.mapWatchBeltTypeToItemType(watchBelt)
+    );
   }
 
   static void onKeyPressedPlayModeHotKey(LogicalKeyboardKey key) {

@@ -13,4 +13,10 @@ class ServerActions {
 
   static void inventoryUnequip(int index) =>
       GameNetwork.sendClientRequestInventoryUnequip(index);
+
+  static void inventoryMoveToWatchBelt(int index, Watch<int> watchBelt)=>
+      GameNetwork.sendClientRequestInventoryMove(
+        indexFrom: index,
+        indexTo: ServerQuery.mapWatchBeltTypeToItemType(watchBelt),
+      );
 }
