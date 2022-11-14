@@ -44,19 +44,19 @@ class Player extends Character with ByteWriter {
   var lookRadian = 0.0;
 
   var inventoryDirty = false;
-  var belt1ItemType = ItemType.Empty; // 1
-  var belt2ItemType = ItemType.Empty; // 2
-  var belt3ItemType = ItemType.Empty; // 3
-  var belt4ItemType = ItemType.Empty; // 4
-  var belt5ItemType = ItemType.Empty; // Q
-  var belt6ItemType = ItemType.Empty; // E
+  var belt1_itemType = ItemType.Empty; // 1
+  var belt2_itemType = ItemType.Empty; // 2
+  var belt3_itemType = ItemType.Empty; // 3
+  var belt4_itemType = ItemType.Empty; // 4
+  var belt5_itemType = ItemType.Empty; // Q
+  var belt6_itemType = ItemType.Empty; // E
 
-  var belt1Quantity = 0; // 1
-  var belt2Quantity = 0; // 2
-  var belt3Quantity = 0; // 3
-  var belt4Quantity = 0; // 4
-  var belt5Quantity = 0; // Q
-  var belt6Quantity = 0; // E
+  var belt1_quantity = 0; // 1
+  var belt2_quantity = 0; // 2
+  var belt3_quantity = 0; // 3
+  var belt4_quantity = 0; // 4
+  var belt5_quantity = 0; // Q
+  var belt6_quantity = 0; // E
 
   /// Warning - do not reference
   Game game;
@@ -209,6 +209,7 @@ class Player extends Character with ByteWriter {
       index >= 0 &&
       (
           ItemType.isTypeEquipped(index) ||
+          ItemType.isIndexBelt(index) ||
           index < inventory.length
       );
 
@@ -304,6 +305,19 @@ class Player extends Character with ByteWriter {
     if (index == ItemType.Equipped_Legs)
       return legsType;
 
+    if (index == ItemType.Belt_1)
+      return belt1_itemType;
+    if (index == ItemType.Belt_2)
+      return belt2_itemType;
+    if (index == ItemType.Belt_3)
+      return belt3_itemType;
+    if (index == ItemType.Belt_4)
+      return belt4_itemType;
+    if (index == ItemType.Belt_5)
+      return belt5_itemType;
+    if (index == ItemType.Belt_6)
+      return belt6_itemType;
+
     assert(index < inventory.length);
     return inventory[index];
   }
@@ -319,6 +333,19 @@ class Player extends Character with ByteWriter {
       return headQuantity;
     if (index == ItemType.Equipped_Legs)
       return legsQuantity;
+
+    if (index == ItemType.Belt_1)
+      return belt1_quantity;
+    if (index == ItemType.Belt_2)
+      return belt2_quantity;
+    if (index == ItemType.Belt_3)
+      return belt3_quantity;
+    if (index == ItemType.Belt_4)
+      return belt4_quantity;
+    if (index == ItemType.Belt_5)
+      return belt5_quantity;
+    if (index == ItemType.Belt_6)
+      return belt6_quantity;
 
     assert(index < inventoryQuantity.length);
     return inventoryQuantity[index];
@@ -422,44 +449,44 @@ class Player extends Character with ByteWriter {
       return;
     }
     if (index == ItemType.Belt_1){
-      if (belt1ItemType == itemType) return;
-      belt1ItemType = itemType;
-      belt1Quantity = quantity;
+      if (belt1_itemType == itemType) return;
+      belt1_itemType = itemType;
+      belt1_quantity = quantity;
       inventoryDirty = true;
       return;
     }
     if (index == ItemType.Belt_2){
-      if (belt2ItemType == itemType) return;
-      belt2ItemType = itemType;
-      belt2Quantity = quantity;
+      if (belt2_itemType == itemType) return;
+      belt2_itemType = itemType;
+      belt2_quantity = quantity;
       inventoryDirty = true;
       return;
     }
     if (index == ItemType.Belt_3){
-      if (belt3ItemType == itemType) return;
-      belt3ItemType = itemType;
-      belt3Quantity = quantity;
+      if (belt3_itemType == itemType) return;
+      belt3_itemType = itemType;
+      belt3_quantity = quantity;
       inventoryDirty = true;
       return;
     }
     if (index == ItemType.Belt_4){
-      if (belt4ItemType == itemType) return;
-      belt4ItemType = itemType;
-      belt4Quantity = quantity;
+      if (belt4_itemType == itemType) return;
+      belt4_itemType = itemType;
+      belt4_quantity = quantity;
       inventoryDirty = true;
       return;
     }
     if (index == ItemType.Belt_5){
-      if (belt5ItemType == itemType) return;
-      belt5ItemType = itemType;
-      belt5Quantity = quantity;
+      if (belt5_itemType == itemType) return;
+      belt5_itemType = itemType;
+      belt5_quantity = quantity;
       inventoryDirty = true;
       return;
     }
     if (index == ItemType.Belt_6){
-      if (belt6ItemType == itemType) return;
-      belt6ItemType = itemType;
-      belt6Quantity = quantity;
+      if (belt6_itemType == itemType) return;
+      belt6_itemType = itemType;
+      belt6_quantity = quantity;
       inventoryDirty = true;
       return;
     }
@@ -502,8 +529,6 @@ class Player extends Character with ByteWriter {
      final indexBQuantity = inventoryGetItemQuantity(indexB);
      inventorySet(index: indexA, itemType: indexBType, quantity: indexBQuantity);
      inventorySet(index: indexB, itemType: indexAType, quantity: indexAQuantity);
-     // writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
-     // writePlayerInventory();
   }
 
   void inventoryUnequipBody(){
@@ -1087,18 +1112,18 @@ class Player extends Character with ByteWriter {
     writeUInt16(bodyType);
     writeUInt16(legsType);
     writeUInt16(weaponType);
-    writeUInt16(belt1ItemType);
-    writeUInt16(belt2ItemType);
-    writeUInt16(belt3ItemType);
-    writeUInt16(belt4ItemType);
-    writeUInt16(belt5ItemType);
-    writeUInt16(belt6ItemType);
-    writeUInt16(belt1Quantity);
-    writeUInt16(belt2Quantity);
-    writeUInt16(belt3Quantity);
-    writeUInt16(belt4Quantity);
-    writeUInt16(belt5Quantity);
-    writeUInt16(belt6Quantity);
+    writeUInt16(belt1_itemType);
+    writeUInt16(belt2_itemType);
+    writeUInt16(belt3_itemType);
+    writeUInt16(belt4_itemType);
+    writeUInt16(belt5_itemType);
+    writeUInt16(belt6_itemType);
+    writeUInt16(belt1_quantity);
+    writeUInt16(belt2_quantity);
+    writeUInt16(belt3_quantity);
+    writeUInt16(belt4_quantity);
+    writeUInt16(belt5_quantity);
+    writeUInt16(belt6_quantity);
     writeUInt16(inventory.length);
     inventory.forEach(writeUInt16);
     inventoryQuantity.forEach(writeUInt16);
