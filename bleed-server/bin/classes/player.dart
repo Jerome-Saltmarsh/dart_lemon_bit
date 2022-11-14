@@ -443,10 +443,16 @@ class Player extends Character with ByteWriter {
       throw Exception('player.inventorySet(index: $index, itemType: $itemType, quantity: $quantity)');
     }
 
-    if (index == equippedWeaponIndex){
-       if (!ItemType.isTypeWeapon(itemType)){
-          equippedWeaponIndex = -1;
+    if (index == equippedWeaponIndex) {
+       if (ItemType.isTypeWeapon(itemType)) {
+         weaponType = itemType;
+         weaponQuantity = quantity;
+         inventoryDirty = true;
+         game.setCharacterStateChanging(this);
+         // return;
        }
+       equippedWeaponIndex = -1;
+       // return;
     }
 
     if (index == ItemType.Equipped_Weapon) {
@@ -524,9 +530,11 @@ class Player extends Character with ByteWriter {
       return;
     }
 
-    inventory[index] = itemType;
-    inventoryQuantity[index] = quantity;
-    inventoryDirty = true;
+    if (index < inventory.length){
+      inventory[index] = itemType;
+      inventoryQuantity[index] = quantity;
+      inventoryDirty = true;
+    }
   }
 
   void inventorySwapIndexes(int indexA, int indexB){
