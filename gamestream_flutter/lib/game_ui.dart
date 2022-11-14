@@ -343,6 +343,7 @@ class GameUI {
             onPressed(
                 hint: "Inventory",
                 action: GameNetwork.sendClientRequestInventoryToggle,
+                onRightClick: GameNetwork.sendClientRequestInventoryToggle,
                 child: buildAtlasIconType(IconType.Inventory, scale: 2.0),
             ),
             Positioned(top: 5, left: 5, child: text("R"))
@@ -524,15 +525,18 @@ class GameUI {
             message: "Level $level",
           ));
 
-  static Widget buildPlayerExperience(double experience) => Container(
-        width: GameUIStyle.ExperienceBarWidth,
-        height: GameUIStyle.ExperienceBarHeight,
-        color: GameUIStyle.ExperienceBarColorBackground,
-        alignment: Alignment.centerLeft,
+  static Widget buildPlayerExperience(double experience) =>
+      buildDialogUIControl(
         child: Container(
-          width: GameUIStyle.ExperienceBarWidth * experience,
+          width: GameUIStyle.ExperienceBarWidth,
           height: GameUIStyle.ExperienceBarHeight,
-          color: GameUIStyle.ExperienceBarColorFill,
+          color: GameUIStyle.ExperienceBarColorBackground,
+          alignment: Alignment.centerLeft,
+          child: Container(
+            width: GameUIStyle.ExperienceBarWidth * experience,
+            height: GameUIStyle.ExperienceBarHeight,
+            color: GameUIStyle.ExperienceBarColorFill,
+          ),
         ),
       );
 
