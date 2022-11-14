@@ -640,32 +640,32 @@ class Player extends Character with ByteWriter {
 
           if (belt1_itemType == ItemType.Empty) {
             inventorySwapIndexes(index, ItemType.Belt_1);
-            equippedWeaponIndex = belt1_itemType;
+            equippedWeaponIndex = ItemType.Belt_1;
             return;
           }
           if (belt2_itemType == ItemType.Empty) {
             inventorySwapIndexes(index, ItemType.Belt_2);
-            equippedWeaponIndex = belt2_itemType;
+            equippedWeaponIndex = ItemType.Belt_2;
             return;
           }
           if (belt3_itemType == ItemType.Empty) {
             inventorySwapIndexes(index, ItemType.Belt_3);
-            equippedWeaponIndex = belt3_itemType;
+            equippedWeaponIndex = ItemType.Belt_3;
             return;
           }
           if (belt4_itemType == ItemType.Empty) {
             inventorySwapIndexes(index, ItemType.Belt_4);
-            equippedWeaponIndex = belt4_itemType;
+            equippedWeaponIndex = ItemType.Belt_4;
             return;
           }
           if (belt5_itemType == ItemType.Empty) {
             inventorySwapIndexes(index, ItemType.Belt_5);
-            equippedWeaponIndex = belt5_itemType;
+            equippedWeaponIndex = ItemType.Belt_5;
             return;
           }
           if (belt6_itemType == ItemType.Empty) {
             inventorySwapIndexes(index, ItemType.Belt_6);
-            equippedWeaponIndex = belt6_itemType;
+            equippedWeaponIndex = ItemType.Belt_6;
             return;
           }
           // if an item from the bag was selected but all belt slots are already being used
