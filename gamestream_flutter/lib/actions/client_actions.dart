@@ -30,22 +30,22 @@ class ClientActions {
 
   static void assignEquippedItemToHotKey(String index){
        if (index == "1") {
-         assignHotKeyWatchPlayerWeapon(ClientState.hotKey1);
+         // assignHotKeyWatchPlayerWeapon(ServerState.hotKey1);
        }
        if (index == "2") {
-         assignHotKeyWatchPlayerWeapon(ClientState.hotKey2);
+         // assignHotKeyWatchPlayerWeapon(ClientState.hotKey2);
        }
        if (index == "3") {
-         assignHotKeyWatchPlayerWeapon(ClientState.hotKey3);
+         // assignHotKeyWatchPlayerWeapon(ClientState.hotKey3);
        }
        if (index == "4") {
-         assignHotKeyWatchPlayerWeapon(ClientState.hotKey4);
+         // assignHotKeyWatchPlayerWeapon(ClientState.hotKey4);
        }
        if (index == "Q") {
-         assignHotKeyWatchPlayerWeapon(ClientState.hotKeyQ);
+         // assignHotKeyWatchPlayerWeapon(ClientState.hotKeyQ);
        }
        if (index == "E") {
-         assignHotKeyWatchPlayerWeapon(ClientState.hotKeyE);
+         // assignHotKeyWatchPlayerWeapon(ClientState.hotKeyE);
        }
   }
 
@@ -55,10 +55,10 @@ class ClientActions {
   static void removeEquippedWeaponHotKey() {
     if (GamePlayer.weapon.value == ItemType.Empty) return;
 
-    for (final hotKey in ClientState.hotKeyWatches) {
-      if (hotKey.value != GamePlayer.weapon.value) continue;
-      hotKey.value = ItemType.Empty;
-    }
+    // for (final hotKey in ClientState.hotKeyWatches) {
+    //   if (hotKey.value != GamePlayer.weapon.value) continue;
+    //   hotKey.value = ItemType.Empty;
+    // }
   }
 
   static void assignHotKeyWatchPlayerWeapon(Watch<int> hotKeyWatch) =>
@@ -68,10 +68,10 @@ class ClientActions {
     if (hotKeyWatch.value == value) return;
 
     if (value != ItemType.Empty){
-      for (final hotKey in ClientState.hotKeyWatches) {
-        if (hotKey.value != value) continue;
-        hotKey.value = ItemType.Empty;
-      }
+      // for (final hotKey in ClientState.hotKeyWatches) {
+      //   if (hotKey.value != value) continue;
+      //   hotKey.value = ItemType.Empty;
+      // }
     }
     hotKeyWatch.value = value;
   }

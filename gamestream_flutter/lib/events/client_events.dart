@@ -100,8 +100,13 @@ class ClientEvents {
   static void onKeyPressedPlayModeHotKey(LogicalKeyboardKey key) {
     final hotKeyWatch = ClientQuery.mapKeyboardKeyHotKeyToHotKeyWatch(key);
     if (ClientState.hoverIndex.value >= 0 &&
-        ClientState.hoverDialogIsInventory) {
+        ClientState.hoverDialogIsInventory
+    ) {
       hotKeyWatch.value = ClientQuery.getHoverItemType();
+      GameNetwork.sendClientRequestInventoryMove(
+          indexFrom: ClientState.hoverIndex.value,
+          indexTo: ClientQuery.mapKeyboardKeyToBeltIndex(key),
+      );
       return;
     }
     if (hotKeyWatch.value == ItemType.Empty) {

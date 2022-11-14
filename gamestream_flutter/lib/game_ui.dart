@@ -318,7 +318,7 @@ class GameUI {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              buildUnassignedWeaponSlot(),
+              // buildUnassignedWeaponSlot(),
               buildRowHotKeyNumbers(),
               width32,
             ],
@@ -330,9 +330,9 @@ class GameUI {
   static Row buildRowHotKeyLettersAndInventory() => Row(
         children: [
           width96,
-          buildHotKeyWatch(ClientState.hotKeyQ),
+          buildHotKeyWatch(ServerState.playerBelt5_ItemType),
           width64,
-          buildHotKeyWatch(ClientState.hotKeyE),
+          buildHotKeyWatch(ServerState.playerBelt6_ItemType),
           buildButtonInventory(),
         ],
       );
@@ -354,34 +354,34 @@ class GameUI {
   static Row buildRowHotKeyNumbers() => Row(
       mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          buildHotKeyWatch(ClientState.hotKey1),
-          buildHotKeyWatch(ClientState.hotKey2),
-          buildHotKeyWatch(ClientState.hotKey3),
-          buildHotKeyWatch(ClientState.hotKey4),
+          buildHotKeyWatch(ServerState.playerBelt1_ItemType),
+          buildHotKeyWatch(ServerState.playerBelt2_ItemType),
+          buildHotKeyWatch(ServerState.playerBelt3_ItemType),
+          buildHotKeyWatch(ServerState.playerBelt4_ItemType),
         ],
       );
 
-  static Widget buildUnassignedWeaponSlot() => watch(
-      ClientState.readsHotKeys,
-      (int reads) => watch(GamePlayer.weapon, (int playerWeaponType) {
-            if (ClientState.hotKey1.value == playerWeaponType ||
-                ClientState.hotKey2.value == playerWeaponType ||
-                ClientState.hotKey3.value == playerWeaponType ||
-                ClientState.hotKey4.value == playerWeaponType ||
-                ClientState.hotKeyE.value == playerWeaponType ||
-                ClientState.hotKeyQ.value == playerWeaponType
-            ) return const SizedBox();
-
-            return onPressed(
-              action: ServerActions.dropEquippedWeapon,
-              onRightClick: ServerActions.dropEquippedWeapon,
-              child: Container(
-                child: buildStackHotKeyContainer(
-                    itemType: playerWeaponType, hotKey: "-"),
-                margin: const EdgeInsets.only(right: 4),
-              ),
-            );
-          }));
+  // static Widget buildUnassignedWeaponSlot() => watch(
+  //     ClientState.readsHotKeys,
+  //     (int reads) => watch(GamePlayer.weapon, (int playerWeaponType) {
+  //           if (ClientState.hotKey1.value == playerWeaponType ||
+  //               ClientState.hotKey2.value == playerWeaponType ||
+  //               ClientState.hotKey3.value == playerWeaponType ||
+  //               ClientState.hotKey4.value == playerWeaponType ||
+  //               ClientState.hotKeyE.value == playerWeaponType ||
+  //               ClientState.hotKeyQ.value == playerWeaponType
+  //           ) return const SizedBox();
+  //
+  //           return onPressed(
+  //             action: ServerActions.dropEquippedWeapon,
+  //             onRightClick: ServerActions.dropEquippedWeapon,
+  //             child: Container(
+  //               child: buildStackHotKeyContainer(
+  //                   itemType: playerWeaponType, hotKey: "-"),
+  //               margin: const EdgeInsets.only(right: 4),
+  //             ),
+  //           );
+  //         }));
 
   static Widget buildHotKeyWatch(Watch<int> hotKeyWatch) =>
       watch(

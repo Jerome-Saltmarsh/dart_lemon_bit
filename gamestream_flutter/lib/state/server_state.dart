@@ -38,6 +38,15 @@ class ServerState {
   static final playerBelt5_Quantity = Watch(0);
   static final playerBelt6_Quantity = Watch(0);
 
+  static final watchBeltItemTypes = [
+    playerBelt1_ItemType,
+    playerBelt2_ItemType,
+    playerBelt3_ItemType,
+    playerBelt4_ItemType,
+    playerBelt5_ItemType,
+    playerBelt6_ItemType,
+  ];
+
   // VARIABLES
   static var inventory = Uint16List(0);
   static var inventoryQuantity = Uint16List(0);

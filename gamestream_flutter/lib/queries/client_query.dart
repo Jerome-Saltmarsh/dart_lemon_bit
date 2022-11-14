@@ -12,28 +12,44 @@ class ClientQuery {
 
   static Watch<int> mapKeyboardKeyHotKeyToHotKeyWatch(LogicalKeyboardKey key){
     if (key == LogicalKeyboardKey.digit1)
-       return ClientState.hotKey1;
+       return ServerState.playerBelt1_ItemType;
      if (key == LogicalKeyboardKey.digit2)
-       return ClientState.hotKey2;
+       return ServerState.playerBelt2_ItemType;
     if (key == LogicalKeyboardKey.digit3)
-      return ClientState.hotKey3;
+      return ServerState.playerBelt3_ItemType;
     if (key == LogicalKeyboardKey.digit4)
-      return ClientState.hotKey4;
+      return ServerState.playerBelt4_ItemType;
     if (key == LogicalKeyboardKey.keyQ)
-      return ClientState.hotKeyQ;
+      return ServerState.playerBelt5_ItemType;
     if (key == LogicalKeyboardKey.keyE)
-      return ClientState.hotKeyE;
+      return ServerState.playerBelt6_ItemType;
 
     throw Exception("ClientQuery.getKeyHotKey(key: $key)");
   }
 
+  static int mapKeyboardKeyToBeltIndex(LogicalKeyboardKey key){
+    if (key == LogicalKeyboardKey.digit1)
+      return ItemType.Belt_1;
+    if (key == LogicalKeyboardKey.digit2)
+      return ItemType.Belt_2;
+    if (key == LogicalKeyboardKey.digit3)
+      return ItemType.Belt_3;
+    if (key == LogicalKeyboardKey.digit4)
+      return ItemType.Belt_4;
+    if (key == LogicalKeyboardKey.keyQ)
+      return ItemType.Belt_5;
+    if (key == LogicalKeyboardKey.keyE)
+      return ItemType.Belt_6;
+    throw Exception("ClientEvents.convertKeyboardKeyToBeltIndex($key)");
+  }
+
   static String mapHotKeyWatchToString(Watch<int> hotKeyWatch){
-     if (hotKeyWatch == ClientState.hotKey1) return '1';
-     if (hotKeyWatch == ClientState.hotKey2) return '2';
-     if (hotKeyWatch == ClientState.hotKey3) return '3';
-     if (hotKeyWatch == ClientState.hotKey4) return '4';
-     if (hotKeyWatch == ClientState.hotKeyQ) return 'Q';
-     if (hotKeyWatch == ClientState.hotKeyE) return 'E';
+     if (hotKeyWatch == ServerState.playerBelt1_ItemType) return '1';
+     if (hotKeyWatch == ServerState.playerBelt2_ItemType) return '2';
+     if (hotKeyWatch == ServerState.playerBelt3_ItemType) return '3';
+     if (hotKeyWatch == ServerState.playerBelt4_ItemType) return '4';
+     if (hotKeyWatch == ServerState.playerBelt5_ItemType) return 'Q';
+     if (hotKeyWatch == ServerState.playerBelt6_ItemType) return 'E';
      throw Exception("ClientQuery.mapHotKeyWatchToString($hotKeyWatch)");
   }
 }

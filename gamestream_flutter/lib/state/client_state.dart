@@ -16,22 +16,12 @@ class ClientState {
   static final touchButtonSide = Watch(TouchButtonSide.Right);
   static final rendersSinceUpdate = Watch(0, onChanged: GameEvents.onChangedRendersSinceUpdate);
   static final edit = Watch(false, onChanged: GameEvents.onChangedEdit);
-  static final hotKey1 = Watch(0, onChanged: ClientEvents.onChangedHotKeys);
-  static final hotKey2 = Watch(0, onChanged: ClientEvents.onChangedHotKeys);
-  static final hotKey3 = Watch(0, onChanged: ClientEvents.onChangedHotKeys);
-  static final hotKey4 = Watch(0, onChanged: ClientEvents.onChangedHotKeys);
-  static final hotKeyQ = Watch(0, onChanged: ClientEvents.onChangedHotKeys);
-  static final hotKeyE = Watch(0, onChanged: ClientEvents.onChangedHotKeys);
-
-  static final hotKeyWatches = [
-     hotKey1,
-     hotKey2,
-     hotKey3,
-     hotKey4,
-     hotKeyQ,
-     hotKeyE,
-  ];
-
+  // static final hotKey1 = Watch(0, onChanged: ClientEvents.onChangedHotKeys);
+  // static final hotKey2 = Watch(0, onChanged: ClientEvents.onChangedHotKeys);
+  // static final hotKey3 = Watch(0, onChanged: ClientEvents.onChangedHotKeys);
+  // static final hotKey4 = Watch(0, onChanged: ClientEvents.onChangedHotKeys);
+  // static final hotKeyQ = Watch(0, onChanged: ClientEvents.onChangedHotKeys);
+  // static final hotKeyE = Watch(0, onChanged: ClientEvents.onChangedHotKeys);
   static final dragStart = Watch(DragStart.None);
   static final dragEnd = Watch(DragStart.None);
 
