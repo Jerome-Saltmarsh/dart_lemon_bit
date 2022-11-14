@@ -587,41 +587,89 @@ class Player extends Character with ByteWriter {
        }
     }
     if (ItemType.isTypeWeapon(itemType)){
-      weaponType = itemType;
       if (index < inventory.length) {
           if (belt1_itemType == ItemType.Empty) {
              belt1_itemType = itemType;
+             weaponType = itemType;
              inventory[index] = ItemType.Empty;
              setInventoryDirty();
              return;
           }
           if (belt2_itemType == ItemType.Empty) {
             belt2_itemType = itemType;
+            weaponType = itemType;
             inventory[index] = ItemType.Empty;
             setInventoryDirty();
             return;
           }
           if (belt3_itemType == ItemType.Empty) {
             belt3_itemType = itemType;
+            weaponType = itemType;
             inventory[index] = ItemType.Empty;
             setInventoryDirty();
             return;
           }
           if (belt4_itemType == ItemType.Empty) {
             belt4_itemType = itemType;
+            weaponType = itemType;
             inventory[index] = ItemType.Empty;
             setInventoryDirty();
             return;
           }
           if (belt5_itemType == ItemType.Empty) {
             belt5_itemType = itemType;
+            weaponType = itemType;
             inventory[index] = ItemType.Empty;
             setInventoryDirty();
             return;
           }
           if (belt6_itemType == ItemType.Empty) {
             belt6_itemType = itemType;
+            weaponType = itemType;
             inventory[index] = ItemType.Empty;
+            setInventoryDirty();
+            return;
+          }
+
+          if (belt1_itemType == weaponType) {
+            belt1_itemType = itemType;
+            inventory[index] = weaponType;
+            weaponType = itemType;
+            setInventoryDirty();
+            return;
+          }
+          if (belt2_itemType == weaponType) {
+            belt2_itemType = itemType;
+            inventory[index] = weaponType;
+            weaponType = itemType;
+            setInventoryDirty();
+            return;
+          }
+          if (belt3_itemType == weaponType) {
+            belt3_itemType = itemType;
+            inventory[index] = weaponType;
+            weaponType = itemType;
+            setInventoryDirty();
+            return;
+          }
+          if (belt4_itemType == weaponType) {
+            belt4_itemType = itemType;
+            inventory[index] = weaponType;
+            weaponType = itemType;
+            setInventoryDirty();
+            return;
+          }
+          if (belt5_itemType == weaponType) {
+            belt5_itemType = itemType;
+            inventory[index] = weaponType;
+            weaponType = itemType;
+            setInventoryDirty();
+            return;
+          }
+          if (belt6_itemType == weaponType) {
+            belt6_itemType = itemType;
+            inventory[index] = weaponType;
+            weaponType = itemType;
             setInventoryDirty();
             return;
           }
