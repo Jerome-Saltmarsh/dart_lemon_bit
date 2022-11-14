@@ -38,6 +38,8 @@ class ServerState {
   static final playerBelt5_Quantity = Watch(0);
   static final playerBelt6_Quantity = Watch(0);
 
+  static final equippedWeaponIndex = Watch(0);
+
   static final watchBeltItemTypes = [
     playerBelt1_ItemType,
     playerBelt2_ItemType,

@@ -420,15 +420,20 @@ class GameUI {
                                             color: Colors.white70,
                                           ))),
                             if (playerWeaponType != ItemType.Empty && playerWeaponType == beltItemType)
-                              Container(
-                                width: 64,
-                                height: 64,
-                                decoration: buildDecorationBorder(
-                                  colorBorder: Colors.white,
-                                  colorFill: Colors.transparent,
-                                  width: 3,
-                                ),
-                              )
+                              watch(ServerState.equippedWeaponIndex, (equippedWeaponIndex) =>
+                                  ServerQuery.mapWatchBeltTypeToItemType(watchBeltType) != equippedWeaponIndex
+                                      ? const SizedBox()
+                                      :
+                                  Container(
+                                    width: 64,
+                                    height: 64,
+                                    decoration: buildDecorationBorder(
+                                      colorBorder: Colors.white,
+                                      colorFill: Colors.transparent,
+                                      width: 3,
+                                    ),
+                                  )),
+
                           ],
                         ),
                       ))));

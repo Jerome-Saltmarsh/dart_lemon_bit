@@ -1187,6 +1187,7 @@ class Player extends Character with ByteWriter {
     writeUInt16(belt4_quantity);
     writeUInt16(belt5_quantity);
     writeUInt16(belt6_quantity);
+    writeUInt16(equippedWeaponIndex.abs());
     writeUInt16(inventory.length);
     inventory.forEach(writeUInt16);
     inventoryQuantity.forEach(writeUInt16);

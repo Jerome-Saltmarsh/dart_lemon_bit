@@ -278,6 +278,7 @@ class ServerResponseReader with ByteReader {
     ServerState.playerBelt4_Quantity.value = readUInt16();
     ServerState.playerBelt5_Quantity.value = readUInt16();
     ServerState.playerBelt6_Quantity.value = readUInt16();
+    ServerState.equippedWeaponIndex.value = readUInt16();
     final total = readUInt16();
     if (ServerState.inventory.length != total){
       ServerState.inventory = Uint16List(total);
