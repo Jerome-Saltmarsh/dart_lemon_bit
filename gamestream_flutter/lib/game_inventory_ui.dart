@@ -145,52 +145,23 @@ class GameInventoryUI {
     final itemType = ServerQuery.getItemTypeAtInventoryIndex(index);
     return buildPositionGridItem(
       index: index,
-      child: GestureDetector(
-
-        onSecondaryTap: () => GamePlayer.interactModeTrading
-            ? GameNetwork.sendClientRequestInventorySell(index)
-            : GameNetwork.sendClientRequestInventoryDrop(index),
-        child: MouseRegion(
-          cursor: SystemMouseCursors.click,
-          onEnter: (event){
-            Engine.mousePosition.x = event.position.dx;
-            Engine.mousePosition.y = event.position.dy;
-            ClientState.hoverItemType.value = itemType;
-            ClientState.hoverIndex.value = index;
-          },
-          onExit: (_){
-            if (ClientState.hoverItemType.value == itemType){
-              ClientState.hoverItemType.value = ItemType.Empty;
-            }
-            if (ClientState.hoverIndex.value == index){
-              ClientState.hoverIndex.value = -1;
-            }
-          },
-          child: Draggable<int>(
-            onDragStarted: () => ClientEvents.onDragStarted(index),
-            onDraggableCanceled: ClientEvents.onDragCancelled,
-            onDragCompleted: ClientEvents.onDragCompleted,
-            hitTestBehavior: HitTestBehavior.opaque,
-            data: index,
-            feedback: buildItemTypeAtlasImage(itemType: itemType, scale: Slot_Item_Scale),
-            child: onPressed(
-                action: () => GameNetwork.sendClientRequestInventoryEquip(index),
-                child: Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    buildItemTypeAtlasImage(itemType: itemType, scale: Slot_Item_Scale),
-                    if (ServerState.inventoryQuantity[index] > 1)
-                      Positioned(
-                          bottom: -5,
-                          right: -5,
-                          child: text(ServerState.inventoryQuantity[index], size: 14),
-                      ),
-                  ],
-                ),
-            ),
-            childWhenDragging: buildItemTypeAtlasImage(itemType: itemType, scale: Slot_Item_Scale),
-          ),
-        ),
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        onEnter: (event){
+          Engine.mousePosition.x = event.position.dx;
+          Engine.mousePosition.y = event.position.dy;
+          ClientState.hoverItemType.value = itemType;
+          ClientState.hoverIndex.value = index;
+        },
+        onExit: (_){
+          if (ClientState.hoverItemType.value == itemType){
+            ClientState.hoverItemType.value = ItemType.Empty;
+          }
+          if (ClientState.hoverIndex.value == index){
+            ClientState.hoverIndex.value = -1;
+          }
+        },
+        child: buildDraggableItemIndex(index),
       ),
     );
   }
