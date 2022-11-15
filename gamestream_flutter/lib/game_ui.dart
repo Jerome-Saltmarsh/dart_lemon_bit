@@ -391,51 +391,48 @@ class GameUI {
                 if (data == null) return;
                 ClientEvents.onDragAcceptWatchBelt(watchBeltType, data);
               },
-              builder: (context, data, rejectedData) => watch(
-                  GamePlayer.weapon,
-                  (int playerWeaponType) => onPressed(
-                        onRightClick: () => ClientEvents.onRightClickedWatchBelt(watchBeltType),
-                        action: () => ClientEvents.onButtonPressedWatchBelt(watchBeltType),
-                        child: Stack(
-                          children: [
-                            buildAtlasIconType(IconType.Slot, scale: 2.0),
-                            buildAtlasItemType(beltItemType, scale: 1.8),
-                            Positioned(
-                              left: 5,
-                              top: 5,
-                              child: text(ClientQuery.mapWatchBeltTypeToString(watchBeltType)),
-                            ),
-                            if (ItemType.getConsumeType(beltItemType) !=
-                                ItemType.Empty)
-                              Positioned(
-                                  right: 5,
-                                  bottom: 5,
-                                  child: buildInventoryAware(
-                                      builder: () => text(
-                                            ServerQuery
-                                                .getItemTypeConsumesRemaining(
-                                                    beltItemType),
-                                            italic: true,
-                                            color: Colors.white70,
-                                          ))),
-                            if (playerWeaponType != ItemType.Empty && playerWeaponType == beltItemType)
-                              watch(ServerState.equippedWeaponIndex, (equippedWeaponIndex) =>
-                                  ServerQuery.mapWatchBeltTypeToItemType(watchBeltType) != equippedWeaponIndex
-                                      ? const SizedBox()
-                                      :
-                                  Container(
-                                    width: 64,
-                                    height: 64,
-                                    decoration: buildDecorationBorder(
-                                      colorBorder: Colors.white,
-                                      colorFill: Colors.transparent,
-                                      width: 3,
-                                    ),
-                                  )),
+              builder: (context, data, rejectedData) => onPressed(
+                onRightClick: () => ClientEvents.onRightClickedWatchBelt(watchBeltType),
+                action: () => ClientEvents.onButtonPressedWatchBelt(watchBeltType),
+                child: Stack(
+                  children: [
+                    buildAtlasIconType(IconType.Slot, scale: 2.0),
+                    buildAtlasItemType(beltItemType, scale: 1.8),
+                    Positioned(
+                      left: 5,
+                      top: 5,
+                      child: text(ClientQuery.mapWatchBeltTypeToString(watchBeltType)),
+                    ),
+                    if (ItemType.getConsumeType(beltItemType) !=
+                        ItemType.Empty)
+                      Positioned(
+                          right: 5,
+                          bottom: 5,
+                          child: buildInventoryAware(
+                              builder: () => text(
+                                ServerQuery
+                                    .getItemTypeConsumesRemaining(
+                                    beltItemType),
+                                italic: true,
+                                color: Colors.white70,
+                              ))),
+                    watch(ServerState.equippedWeaponIndex, (equippedWeaponIndex) =>
+                    ServerQuery.mapWatchBeltTypeToItemType(watchBeltType) != equippedWeaponIndex
+                        ? const SizedBox()
+                        :
+                    Container(
+                      width: 64,
+                      height: 64,
+                      decoration: buildDecorationBorder(
+                        colorBorder: Colors.white,
+                        colorFill: Colors.transparent,
+                        width: 3,
+                      ),
+                    )),
 
-                          ],
-                        ),
-                      ))));
+                  ],
+                ),
+              )));
 
   static Widget buildStackHotKeyContainer({
     required int itemType,
