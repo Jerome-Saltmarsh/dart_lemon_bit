@@ -120,6 +120,7 @@ class ServerResponseReader with ByteReader {
           print(values);
           debugging = true;
           readBytes(values);
+          GameNetwork.disconnect();
           return;
       }
     }

@@ -68,4 +68,13 @@ class ClientActions {
   static void playAudioError(){
     GameAudio.errorSound15();
   }
+
+  static void inventorySwapDragTarget(){
+    if (ClientState.dragStart.value == -1) return;
+    if (ClientState.hoverIndex.value == -1) return;
+    GameNetwork.sendClientRequestInventoryMove(
+      indexFrom: ClientState.dragStart.value,
+      indexTo: ClientState.hoverIndex.value,
+    );
+  }
 }

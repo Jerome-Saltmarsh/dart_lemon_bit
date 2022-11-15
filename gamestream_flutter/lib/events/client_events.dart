@@ -45,7 +45,8 @@ class ClientEvents {
         : GameNetwork.sendClientRequestInventoryDrop(itemIndex);
   }
 
-  static void onDragAccept(int? i){
+
+  static void onDragAcceptEquippedItemContainer(int? i){
     if (i == null) return;
     GameNetwork.sendClientRequestInventoryEquip(i);
   }
@@ -55,10 +56,7 @@ class ClientEvents {
     if (ClientState.hoverIndex.value == -1){
       ClientActions.dropDraggedItem();
     } else {
-      GameNetwork.sendClientRequestInventoryMove(
-          indexFrom: ClientState.dragStart.value,
-          indexTo: ClientState.hoverIndex.value,
-      );
+      ClientActions.inventorySwapDragTarget();
     }
     ClientState.dragStart.value = -1;
     ClientState.dragEnd.value = -1;
