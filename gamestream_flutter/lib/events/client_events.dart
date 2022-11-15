@@ -30,6 +30,14 @@ class ClientEvents {
 
   }
 
+  static void onItemIndexPrimary(int itemIndex){
+     GameNetwork.sendClientRequestInventoryEquip(itemIndex);
+  }
+
+  static void onItemIndexSecondary(int itemIndex){
+    GameNetwork.sendClientRequestInventoryDrop(itemIndex);
+  }
+
   static void onDragCancelled(Velocity velocity, Offset offset){
     ClientActions.dropDraggedItem();
     ClientState.dragStart.value = -1;

@@ -57,35 +57,17 @@ class GameInventoryUI {
             ),
           ));
 
-  static Widget buildContainerEquippedWeapon() => onPressed(
-      action: () => GameNetwork.sendClientRequestInventoryEquip(ItemType.Equipped_Weapon),
-      onRightClick: () => GamePlayer.interactModeTrading
-          ? GameNetwork.sendClientRequestInventorySell(ItemType.Equipped_Weapon)
-          : GameNetwork.sendClientRequestInventoryDrop(ItemType.Equipped_Weapon),
-      child: buildWatchEquippedItemType(GamePlayer.weapon, ItemType.Equipped_Weapon)
-  );
+  static Widget buildContainerEquippedWeapon() =>
+      buildWatchEquippedItemType(GamePlayer.weapon, ItemType.Equipped_Weapon);
 
-  static Widget buildContainerEquippedBody() => onPressed(
-      action: () => GameNetwork.sendClientRequestInventoryEquip(ItemType.Equipped_Body),
-      onRightClick: () => GamePlayer.interactModeTrading
-          ? GameNetwork.sendClientRequestInventorySell(ItemType.Equipped_Body)
-          : GameNetwork.sendClientRequestInventoryDrop(ItemType.Equipped_Body),
-      child: buildWatchEquippedItemType(GamePlayer.body, ItemType.Equipped_Body)
-  );
+  static Widget buildContainerEquippedBody() =>
+      buildWatchEquippedItemType(GamePlayer.body, ItemType.Equipped_Body);
 
-  static Widget buildContainerEquippedHead() => onPressed(
-      action: () => GameNetwork.sendClientRequestInventoryEquip(ItemType.Equipped_Head),
-      onRightClick: () => GamePlayer.interactModeTrading
-          ? GameNetwork.sendClientRequestInventorySell(ItemType.Equipped_Head)
-          : GameNetwork.sendClientRequestInventoryDrop(ItemType.Equipped_Head),
-      child: buildWatchEquippedItemType(GamePlayer.head, ItemType.Equipped_Head)
-  );
+  static Widget buildContainerEquippedHead() =>
+      buildWatchEquippedItemType(GamePlayer.head, ItemType.Equipped_Head);
 
-  static Widget buildContainerEquippedLegs() => onPressed(
-      action: () => GameNetwork.sendClientRequestInventoryEquip(ItemType.Equipped_Legs),
-      onRightClick: () => GameNetwork.sendClientRequestInventoryDrop(ItemType.Equipped_Legs),
-      child: buildWatchEquippedItemType(GamePlayer.legs, ItemType.Equipped_Legs)
-  );
+  static Widget buildContainerEquippedLegs() =>
+      buildWatchEquippedItemType(GamePlayer.legs, ItemType.Equipped_Legs);
 
   static Widget buildWatchEquippedItemType(Watch<int> watchInt, int index) =>
       watch(watchInt, (int itemType) => buildDraggableItemIndex(index));
@@ -101,9 +83,13 @@ class GameInventoryUI {
             itemType: ServerQuery.getItemTypeAtInventoryIndex(itemIndex),
             scale: Slot_Item_Scale,
         ),
-        child: buildItemType(
-            itemType: ServerQuery.getItemTypeAtInventoryIndex(itemIndex),
-            scale: Equipped_Item_Scale,
+        child: onPressed(
+          action: () => ClientEvents.onItemIndexPrimary(itemIndex),
+          onRightClick: () => ClientEvents.onItemIndexSecondary(itemIndex),
+          child: buildItemType(
+              itemType: ServerQuery.getItemTypeAtInventoryIndex(itemIndex),
+              scale: Equipped_Item_Scale,
+          ),
         ),
       );
 
