@@ -72,7 +72,7 @@ class GameInventoryUI {
   static Widget buildWatchEquippedItemType(Watch<int> watchInt, int index) =>
       watch(watchInt, (int itemType) => buildDraggableItemIndex(index));
 
-  static Widget buildDraggableItemIndex(int itemIndex) =>
+  static Widget buildDraggableItemIndex(int itemIndex, {double scale = Slot_Item_Scale}) =>
       Draggable(
         onDragStarted: () => ClientEvents.onDragStarted(itemIndex),
         onDragEnd: ClientEvents.onDragEnd,
@@ -80,9 +80,9 @@ class GameInventoryUI {
         onDragCompleted: ClientEvents.onDragCompleted,
         data: itemIndex,
         hitTestBehavior: HitTestBehavior.opaque,
-        feedback: buildItemTypeAtlasImage(
-            itemType: ServerQuery.getItemTypeAtInventoryIndex(itemIndex),
-            scale: Slot_Item_Scale,
+        feedback: buildItemType(
+            itemIndex: itemIndex,
+            scale: scale,
         ),
         child: onPressed(
           action: () => ClientEvents.onItemIndexPrimary(itemIndex),
@@ -143,25 +143,11 @@ class GameInventoryUI {
      );
   }
 
-  static Widget buildPositionInventoryItem(int index){
-    return buildPositionGridItem(
-      index: index,
-      child: MouseRegion(
-        cursor: SystemMouseCursors.click,
-        onEnter: (event){
-          Engine.mousePosition.x = event.position.dx;
-          Engine.mousePosition.y = event.position.dy;
-          ClientState.hoverIndex.value = index;
-        },
-        onExit: (_){
-          if (ClientState.hoverIndex.value == index){
-            ClientState.hoverIndex.value = -1;
-          }
-        },
+  static Widget buildPositionInventoryItem(int index) =>
+      buildPositionGridItem(
+        index: index,
         child: buildDraggableItemIndex(index),
-      ),
-    );
-  }
+      );
 
   static Widget buildStackSlotGrid() {
     final children = <Widget>[];

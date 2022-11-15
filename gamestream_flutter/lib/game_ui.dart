@@ -414,16 +414,18 @@ class GameUI {
                   width: 3,
                 ),
               )),
-              Draggable(
-                hitTestBehavior: HitTestBehavior.translucent,
-                child: buildAtlasItemType(beltItemType, scale: 1.8),
-                feedback: buildAtlasItemType(beltItemType, scale: 1.8),
-                onDragStarted: () => ClientEvents.onDragStarted(
-                    ServerQuery.mapWatchBeltTypeToItemType(watchBeltType)
-                ),
-                onDragCompleted: ClientEvents.onDragCompleted,
-                onDraggableCanceled: ClientEvents.onDragCancelled,
-              ),
+              if (watchBeltType.value != ItemType.Empty)
+                GameInventoryUI.buildDraggableItemIndex(ServerQuery.mapWatchBeltTypeToItemType(watchBeltType), scale: 1.8),
+              // Draggable(
+              //   hitTestBehavior: HitTestBehavior.translucent,
+              //   child: buildAtlasItemType(beltItemType, scale: 1.8),
+              //   feedback: buildAtlasItemType(beltItemType, scale: 1.8),
+              //   onDragStarted: () => ClientEvents.onDragStarted(
+              //       ServerQuery.mapWatchBeltTypeToItemType(watchBeltType)
+              //   ),
+              //   onDragCompleted: ClientEvents.onDragCompleted,
+              //   onDraggableCanceled: ClientEvents.onDragCancelled,
+              // ),
             ],
           ));
 
