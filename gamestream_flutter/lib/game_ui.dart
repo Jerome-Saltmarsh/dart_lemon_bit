@@ -383,7 +383,6 @@ class GameUI {
                   index: ServerQuery.mapWatchBeltTypeToItemType(watchBeltType),
                   scale: 2.0,
               ),
-              buildAtlasItemType(beltItemType, scale: 1.8),
               Positioned(
                 left: 5,
                 top: 5,
@@ -415,7 +414,16 @@ class GameUI {
                   width: 3,
                 ),
               )),
-
+              Draggable(
+                hitTestBehavior: HitTestBehavior.translucent,
+                child: buildAtlasItemType(beltItemType, scale: 1.8),
+                feedback: buildAtlasItemType(beltItemType, scale: 1.8),
+                onDragStarted: () => ClientEvents.onDragStarted(
+                    ServerQuery.mapWatchBeltTypeToItemType(watchBeltType)
+                ),
+                onDragCompleted: ClientEvents.onDragCompleted,
+                onDraggableCanceled: ClientEvents.onDragCancelled,
+              ),
             ],
           ));
 

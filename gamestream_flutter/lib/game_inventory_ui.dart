@@ -197,7 +197,6 @@ class GameInventoryUI {
         child: child,
       );
 
-
   static Widget buildPositionGridItem({required int index, required Widget child}) =>
       buildPositionGridElement(
         index: index,
