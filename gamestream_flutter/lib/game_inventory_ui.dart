@@ -90,12 +90,12 @@ class GameInventoryUI {
   static Widget buildWatchEquippedItemType(Watch<int> watchInt, int index) =>
       watch(watchInt, (int itemType) => buildContainerEquippedItemType(itemType, index));
 
-  static Widget buildContainerEquippedItemType(int itemType, int index) =>
+  static Widget buildContainerEquippedItemType(int itemType, int itemIndex) =>
       Draggable(
-        onDragStarted: () => ClientActions.setDragItemIndex(index),
+        onDragStarted: () => ClientEvents.onDragStarted(itemIndex),
         onDragEnd: ClientEvents.onDragEndItemIndex,
         onDraggableCanceled: ClientEvents.onDragCancelled,
-        data: index,
+        data: itemIndex,
         feedback: buildItemTypeAtlasImage(itemType: itemType, scale: Slot_Item_Scale),
         hitTestBehavior: HitTestBehavior.opaque,
         child: buildItemType(itemType: itemType, scale: Equipped_Item_Scale),
