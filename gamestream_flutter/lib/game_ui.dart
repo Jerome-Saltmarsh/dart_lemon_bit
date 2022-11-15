@@ -360,79 +360,62 @@ class GameUI {
         ],
       );
 
-  // static Widget buildUnassignedWeaponSlot() => watch(
-  //     ClientState.readsHotKeys,
-  //     (int reads) => watch(GamePlayer.weapon, (int playerWeaponType) {
-  //           if (ClientState.hotKey1.value == playerWeaponType ||
-  //               ClientState.hotKey2.value == playerWeaponType ||
-  //               ClientState.hotKey3.value == playerWeaponType ||
-  //               ClientState.hotKey4.value == playerWeaponType ||
-  //               ClientState.hotKeyE.value == playerWeaponType ||
-  //               ClientState.hotKeyQ.value == playerWeaponType
-  //           ) return const SizedBox();
-  //
-  //           return onPressed(
-  //             action: ServerActions.dropEquippedWeapon,
-  //             onRightClick: ServerActions.dropEquippedWeapon,
-  //             child: Container(
-  //               child: buildStackHotKeyContainer(
-  //                   itemType: playerWeaponType, hotKey: "-"),
-  //               margin: const EdgeInsets.only(right: 4),
-  //             ),
-  //           );
-  //         }));
+  static Widget buildDragTargetSlot(int index) =>
+      DragTarget<int>(
+        builder: (context, data, rejectedData) {
+          return buildAtlasIconType(IconType.Slot, scale: 2.0);
+        },
+        onWillAccept: (int? data) => data != null,
+        onAccept: (int? data) {
+          if (data == null) return;
+          GameNetwork.sendClientRequestInventoryMove(
+            indexFrom: data,
+            indexTo: index,
+          );
+        },
+      );
 
   static Widget buildWatchBeltType(Watch<int> watchBeltType) =>
       watch(
           watchBeltType,
-          (int beltItemType) => DragTarget<int>(
-              onWillAccept: (int? data) => data != null,
-              onAccept: (int? data) {
-                if (data == null) return;
-                ClientEvents.onDragAcceptWatchBelt(watchBeltType, data);
-              },
-              builder: (context, data, rejectedData) => onPressed(
-                onRightClick: () => ClientEvents.onRightClickedWatchBelt(watchBeltType),
-                action: () => ClientEvents.onButtonPressedWatchBelt(watchBeltType),
-                child: Stack(
-                  children: [
-                    buildAtlasIconType(IconType.Slot, scale: 2.0),
-                    buildAtlasItemType(beltItemType, scale: 1.8),
-                    Positioned(
-                      left: 5,
-                      top: 5,
-                      child: text(ClientQuery.mapWatchBeltTypeToString(watchBeltType)),
-                    ),
-                    if (ItemType.getConsumeType(beltItemType) !=
-                        ItemType.Empty)
-                      Positioned(
-                          right: 5,
-                          bottom: 5,
-                          child: buildInventoryAware(
-                              builder: () => text(
-                                ServerQuery
-                                    .getItemTypeConsumesRemaining(
-                                    beltItemType),
-                                italic: true,
-                                color: Colors.white70,
-                              ))),
-                    watch(ServerState.equippedWeaponIndex, (equippedWeaponIndex) =>
-                    ServerQuery.mapWatchBeltTypeToItemType(watchBeltType) != equippedWeaponIndex
-                        ? const SizedBox()
-                        :
-                    Container(
-                      width: 64,
-                      height: 64,
-                      decoration: buildDecorationBorder(
-                        colorBorder: Colors.white,
-                        colorFill: Colors.transparent,
-                        width: 3,
-                      ),
-                    )),
-
-                  ],
+          (int beltItemType) => Stack(
+            children: [
+              buildDragTargetSlot(ServerQuery.mapWatchBeltTypeToItemType(watchBeltType)),
+              buildAtlasItemType(beltItemType, scale: 1.8),
+              Positioned(
+                left: 5,
+                top: 5,
+                child: text(ClientQuery.mapWatchBeltTypeToString(watchBeltType)),
+              ),
+              if (ItemType.getConsumeType(beltItemType) !=
+                  ItemType.Empty)
+                Positioned(
+                    right: 5,
+                    bottom: 5,
+                    child: buildInventoryAware(
+                        builder: () => text(
+                          ServerQuery
+                              .getItemTypeConsumesRemaining(
+                              beltItemType),
+                          italic: true,
+                          color: Colors.white70,
+                        ))),
+              watch(ServerState.equippedWeaponIndex, (equippedWeaponIndex) =>
+              ServerQuery.mapWatchBeltTypeToItemType(watchBeltType) != equippedWeaponIndex
+                  ? const SizedBox()
+                  :
+              Container(
+                width: 64,
+                height: 64,
+                decoration: buildDecorationBorder(
+                  colorBorder: Colors.white,
+                  colorFill: Colors.transparent,
+                  width: 3,
                 ),
-              )));
+              )),
+
+            ],
+          ));
 
   static Widget buildStackHotKeyContainer({
     required int itemType,
