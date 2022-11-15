@@ -75,8 +75,9 @@ class GameInventoryUI {
   static Widget buildDraggableItemIndex(int itemIndex) =>
       Draggable(
         onDragStarted: () => ClientEvents.onDragStarted(itemIndex),
-        onDragEnd: ClientEvents.onDragEndItemIndex,
+        onDragEnd: ClientEvents.onDragEnd,
         onDraggableCanceled: ClientEvents.onDragCancelled,
+        onDragCompleted: ClientEvents.onDragCompleted,
         data: itemIndex,
         hitTestBehavior: HitTestBehavior.opaque,
         feedback: buildItemTypeAtlasImage(
@@ -92,8 +93,6 @@ class GameInventoryUI {
           ),
         ),
       );
-
-
 
   static Widget buildItemType({required int itemType, double scale = Slot_Item_Scale}){
     return MouseRegion(
@@ -147,6 +146,7 @@ class GameInventoryUI {
     return buildPositionGridItem(
       index: index,
       child: GestureDetector(
+
         onSecondaryTap: () => GamePlayer.interactModeTrading
             ? GameNetwork.sendClientRequestInventorySell(index)
             : GameNetwork.sendClientRequestInventoryDrop(index),
@@ -169,6 +169,7 @@ class GameInventoryUI {
           child: Draggable<int>(
             onDragStarted: () => ClientEvents.onDragStarted(index),
             onDraggableCanceled: ClientEvents.onDragCancelled,
+            onDragCompleted: ClientEvents.onDragCompleted,
             hitTestBehavior: HitTestBehavior.opaque,
             data: index,
             feedback: buildItemTypeAtlasImage(itemType: itemType, scale: Slot_Item_Scale),

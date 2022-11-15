@@ -22,30 +22,34 @@ class ClientEvents {
   }
 
   static void onDragStarted(int itemIndex){
+    print("onDragStarted()");
     ClientState.dragStart.value = itemIndex;
     ClientState.dragEnd.value = -1;
   }
 
   static void onDragCompleted(){
-
+    print("onDragCompleted()");
   }
 
-  static void onItemIndexPrimary(int itemIndex){
+  static void onDragEnd(DraggableDetails details){
+    print("onDragEnd()");
+  }
+
+  static void onItemIndexPrimary(int itemIndex) {
      GameNetwork.sendClientRequestInventoryEquip(itemIndex);
   }
 
   static void onItemIndexSecondary(int itemIndex){
-    GameNetwork.sendClientRequestInventoryDrop(itemIndex);
+    GamePlayer.interactModeTrading
+        ? GameNetwork.sendClientRequestInventorySell(itemIndex)
+        : GameNetwork.sendClientRequestInventoryDrop(itemIndex);
   }
 
   static void onDragCancelled(Velocity velocity, Offset offset){
+    print("onDragCancelled()");
     ClientActions.dropDraggedItem();
     ClientState.dragStart.value = -1;
     ClientState.dragEnd.value = -1;
-  }
-
-  static void onDragEndItemIndex(DraggableDetails details){
-
   }
 
   static void onKeyPressed(LogicalKeyboardKey key){
