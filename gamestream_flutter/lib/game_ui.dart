@@ -360,11 +360,10 @@ class GameUI {
         ],
       );
 
-  static Widget buildDragTargetSlot(int index) =>
+  static Widget buildDragTargetSlot({required int index, double scale = 1.0}) =>
       DragTarget<int>(
-        builder: (context, data, rejectedData) {
-          return buildAtlasIconType(IconType.Slot, scale: 2.0);
-        },
+        builder: (context, data, rejectedData) =>
+            buildAtlasIconType(IconType.Slot, scale: scale),
         onWillAccept: (int? data) => data != null,
         onAccept: (int? data) {
           if (data == null) return;
@@ -380,7 +379,10 @@ class GameUI {
           watchBeltType,
           (int beltItemType) => Stack(
             children: [
-              buildDragTargetSlot(ServerQuery.mapWatchBeltTypeToItemType(watchBeltType)),
+              buildDragTargetSlot(
+                  index: ServerQuery.mapWatchBeltTypeToItemType(watchBeltType),
+                  scale: 2.0,
+              ),
               buildAtlasItemType(beltItemType, scale: 1.8),
               Positioned(
                 left: 5,
