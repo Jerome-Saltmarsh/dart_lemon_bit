@@ -80,35 +80,35 @@ class GameInventoryUI {
         onDragCompleted: ClientEvents.onDragCompleted,
         data: itemIndex,
         hitTestBehavior: HitTestBehavior.opaque,
-        feedback: buildItemType(
+        feedback: buildItemIndex(
             itemIndex: itemIndex,
             scale: scale,
         ),
-        child: onPressed(
-          action: () => ClientEvents.onItemIndexPrimary(itemIndex),
-          onRightClick: () => ClientEvents.onItemIndexSecondary(itemIndex),
-          child: buildItemType(
-              itemIndex: itemIndex,
-              scale: Equipped_Item_Scale,
-          ),
+        child: buildItemIndex(
+          itemIndex: itemIndex,
+          scale: Equipped_Item_Scale,
         ),
       );
 
-  static Widget buildItemType({required int itemIndex, double scale = Slot_Item_Scale}) =>
-      MouseRegion(
-        onEnter: (event) {
-          Engine.mousePosition.x = event.position.dx;
-          Engine.mousePosition.y = event.position.dy;
-          ClientState.hoverIndex.value = itemIndex;
-        },
-        onExit: (_) {
-          if (ClientState.hoverIndex.value == itemIndex) {
-            ClientActions.clearHoverIndex();
-          }
-        },
-        child: buildItemTypeAtlasImage(
-          itemType: ServerQuery.getItemTypeAtInventoryIndex(itemIndex),
-          scale: scale,
+  static Widget buildItemIndex({required int itemIndex, double scale = Slot_Item_Scale}) =>
+      onPressed(
+        action: () => ClientEvents.onItemIndexPrimary(itemIndex),
+        onRightClick: () => ClientEvents.onItemIndexSecondary(itemIndex),
+        child: MouseRegion(
+          onEnter: (event) {
+            Engine.mousePosition.x = event.position.dx;
+            Engine.mousePosition.y = event.position.dy;
+            ClientState.hoverIndex.value = itemIndex;
+          },
+          onExit: (_) {
+            if (ClientState.hoverIndex.value == itemIndex) {
+              ClientActions.clearHoverIndex();
+            }
+          },
+          child: buildItemTypeAtlasImage(
+            itemType: ServerQuery.getItemTypeAtInventoryIndex(itemIndex),
+            scale: scale,
+          ),
         ),
       );
 
