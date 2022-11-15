@@ -44,10 +44,8 @@
 [ ] character-type wolf
 [ ] particle-type myst
 [ ] inventory layout equipped items vertically
-[ ] inventory remove equipped weapon
 
 [current]
-[ ] fix fire shotgun animation
 
 16.11.2022
 [x] fix active belt drag target

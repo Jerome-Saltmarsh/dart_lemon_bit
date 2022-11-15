@@ -11,7 +11,6 @@ class GameInventoryUI {
   static const Slot_Scale = 1.5;
   static const Scaled_Slot_Size = Slot_Size * Slot_Scale;
   static const Slot_Item_Scale = Slot_Scale * 0.9;
-  static const Equipped_Item_Scale = Slot_Scale;
   static const Columns_Per_Row = 7;
   static const Inventory_Width = Slot_Size * Slot_Scale * Columns_Per_Row;
   static final atlasIconSlotEmpty = GameUI.buildIconSlotEmpty();
@@ -24,9 +23,21 @@ class GameInventoryUI {
           color: GameColors.brownDark,
           child: Column(
             children: [
-              buildContainerEquippedItems(),
               buildContainerInventory(),
-              buildContainerPlayerGold()
+              buildContainerPlayerGold(),
+              Container(
+                padding: const EdgeInsets.all(8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      child: text("health: 100"),
+                    ),
+                    buildContainerEquippedItems(),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
@@ -44,15 +55,17 @@ class GameInventoryUI {
         onWillAccept: onDragWillAccept,
         onAccept: ClientEvents.onDragAcceptEquippedItemContainer,
         builder: (context, i, a) => Container(
-            height: 80.0,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 // buildContainerEquippedWeapon(),
-                buildContainerEquippedBody(),
                 buildContainerEquippedHead(),
+                height2,
+                buildContainerEquippedBody(),
+                height2,
                 buildContainerEquippedLegs(),
+                height6,
               ],
             ),
           ));
@@ -70,7 +83,11 @@ class GameInventoryUI {
       buildWatchEquippedItemType(GamePlayer.legs, ItemType.Equipped_Legs);
 
   static Widget buildWatchEquippedItemType(Watch<int> watchInt, int index) =>
-      watch(watchInt, (int itemType) => buildDraggableItemIndex(itemIndex: index));
+   Container(
+     alignment: Alignment.center,
+     width: 32 * Slot_Scale, height: 32 * Slot_Scale, color: GameColors.brown02,
+      child: watch(watchInt, (int itemType) => buildDraggableItemIndex(itemIndex: index)),
+   );
 
   static Widget buildDraggableItemIndex({required int itemIndex, double scale = Slot_Item_Scale}) =>
       Draggable(
@@ -119,7 +136,7 @@ class GameInventoryUI {
 
   static Widget buildContainerInventory() =>
       Container(
-        height: 400,
+        height: 300,
         child: Stack(
           children: [
             buildStackSlotGrid(),
