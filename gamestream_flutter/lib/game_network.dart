@@ -111,6 +111,10 @@ class GameNetwork {
           final duration = DateTime.now().difference(connectionEstablished!);
           print("Connection Duration ${duration.inSeconds} seconds");
         }
+
+        if (webSocketChannel.closeCode != null){
+           WebsiteState.error.value = "Lost Connection";
+        }
       });
       connectionUri = uri;
       sink.add(message);
