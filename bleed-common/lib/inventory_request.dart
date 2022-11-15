@@ -6,4 +6,5 @@ class InventoryRequest {
   static const Buy = 8;
   static const Sell = 9;
   static const Unequip = 10;
+  static const Deposit = 11;
 }

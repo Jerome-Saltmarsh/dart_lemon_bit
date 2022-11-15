@@ -339,11 +339,23 @@ class GameUI {
   static Stack buildButtonInventory() {
     return Stack(
           children: [
-            onPressed(
-                hint: "Inventory",
-                action: GameNetwork.sendClientRequestInventoryToggle,
-                onRightClick: GameNetwork.sendClientRequestInventoryToggle,
-                child: buildAtlasIconType(IconType.Inventory, scale: 2.0),
+            // TODO DragTarget
+            DragTarget<int>(
+              onWillAccept: (int? data){
+                return data != null;
+              },
+              onAccept: (int? data){
+                 if (data == null) return;
+                 ClientEvents.onAcceptDragInventoryIcon();
+              },
+              builder: (context, data, dataRejected){
+                return onPressed(
+                  hint: "Inventory",
+                  action: GameNetwork.sendClientRequestInventoryToggle,
+                  onRightClick: GameNetwork.sendClientRequestInventoryToggle,
+                  child: buildAtlasIconType(IconType.Inventory, scale: 2.0),
+                );
+              },
             ),
             Positioned(top: 5, left: 5, child: text("R"))
           ],

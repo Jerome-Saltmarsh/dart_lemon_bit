@@ -383,6 +383,20 @@ class Player extends Character with ByteWriter {
 
   }
 
+  void inventoryDeposit(int index){
+    if (!isValidInventoryIndex(index)){
+      writePlayerEventInvalidRequest();
+      return;
+    }
+    if (index < inventory.length) return;
+    final emptyInventoryIndex = getEmptyInventoryIndex();
+    if (emptyInventoryIndex == null) {
+      writePlayerEventInventoryFull();
+      return;
+    }
+    inventorySwapIndexes(index, emptyInventoryIndex);
+  }
+
   void inventoryBuy(int index){
     if (interactMode != InteractMode.Trading) {
       writePlayerEventInvalidRequest();

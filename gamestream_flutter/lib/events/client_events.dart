@@ -128,4 +128,9 @@ class ClientEvents {
     }
     ServerActions.equipWatchBeltType(ClientQuery.mapKeyboardKeyToWatchBeltType(key));
   }
+
+  static void onAcceptDragInventoryIcon(){
+     if (ClientState.dragStart.value == -1) return;
+     GameNetwork.sendClientRequestInventoryDeposit(ClientState.dragStart.value);
+  }
 }

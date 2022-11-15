@@ -338,6 +338,12 @@ class Connection {
     if (inventoryRequest == null) return errorInvalidArg('inventory request is null');
 
     switch (inventoryRequest) {
+
+      case InventoryRequest.Deposit:
+        final index = parse(arguments[2]);
+        if (index == null) return;
+        player.inventoryDeposit(index);
+        break;
       case InventoryRequest.Unequip:
         final index = parse(arguments[2]);
         if (index == null) return;
