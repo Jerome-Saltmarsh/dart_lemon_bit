@@ -39,6 +39,14 @@ class GameUI {
         watch(ClientState.edit, buildPlayMode),
         watch(GameIO.inputMode, buildStackInputMode),
         buildWatchBool(ClientState.debugVisible, GameDebug.buildStackDebug),
+        Positioned(
+            bottom: 100,
+            child: Container(
+                width: Engine.screen.width,
+                alignment: Alignment.center,
+                child: watch(ClientState.messageStatus, text),
+            ),
+        ),
       ]);
 
   static Widget buildStackInputModeTouch(bool side) => Stack(children: [

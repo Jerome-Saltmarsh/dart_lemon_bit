@@ -67,28 +67,6 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Game_Time:
           readGameTime();
           break;
-        case ServerResponse.Spawn_Particle:
-          final x = readDouble();
-          final y = readDouble();
-          final z = readDouble();
-          final particleType = readByte();
-          final duration = readInt();
-          final angle = readAngle();
-          final speed = readDouble() * 0.01;
-          final weight = readDouble() * 0.01;
-          final zv = readDouble() * 0.01;
-          GameState.spawnParticle(
-              type: particleType,
-              x: x,
-              y: y,
-              z: z,
-              angle: angle,
-              speed: speed,
-              duration: duration,
-              weight: weight,
-              zv: zv,
-          );
-          break;
         case ServerResponse.Game_Type:
           ServerState.gameType.value = readByte();
           break;
@@ -131,6 +109,9 @@ class ServerResponseReader with ByteReader {
           break;
         case ServerResponse.Render_Map:
           GameUI.mapVisible.value = readBool();
+          break;
+        case ServerResponse.Error:
+          ServerState.error.value = readString();
           break;
         default:
           if (debugging) {

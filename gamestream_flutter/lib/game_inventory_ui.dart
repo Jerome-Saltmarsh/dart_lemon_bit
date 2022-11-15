@@ -49,7 +49,7 @@ class GameInventoryUI {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                buildContainerEquippedWeapon(),
+                // buildContainerEquippedWeapon(),
                 buildContainerEquippedBody(),
                 buildContainerEquippedHead(),
                 buildContainerEquippedLegs(),

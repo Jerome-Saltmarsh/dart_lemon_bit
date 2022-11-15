@@ -1,4 +1,5 @@
 [engine]
+[ ] save scene as byte stream
 [ ] cache region
 [ ] fix android app title gamestream_flutter
 [ ] add mobile share (whatsapp, facebook) button
@@ -25,6 +26,7 @@
 [ ] ui error message
 [ ] player attributes
 [ ] skills
+[ ] repeat killing same enemies yields no reward
 
 [content]
 [ ] scene cemetery
@@ -40,13 +42,21 @@
 [ ] character-type goblin
 [ ] character-type vampire
 [ ] character-type wolf
-[ ] save scene as byte stream
 [ ] particle-type myst
+[ ] inventory layout equipped items vertically
+[ ] inventory remove equipped weapon
 
 [current]
-[ ] fix drop equipped item by dragging
-[ ] make hotkeys draggable
-[ ] hotkeys to change weapons
+[ ] fix fire handgun animation
+[ ] fix fire shotgun animation
+
+16.11.2022
+[x] show server error message
+
+15.11.2022
+[x] fix drop equipped item by dragging
+[x] make hotkeys draggable
+[x] hotkeys to change weapons
 
 11.11.2022
 [x] ui inventory icon

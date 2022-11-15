@@ -133,4 +133,13 @@ class ClientEvents {
      if (ClientState.dragStart.value == -1) return;
      GameNetwork.sendClientRequestInventoryDeposit(ClientState.dragStart.value);
   }
+
+  static void onChangedMessageStatus(String value){
+    if (value.isEmpty){
+      ClientState.messageStatusDuration = 0;
+    } else {
+      ClientActions.playAudioError();
+      ClientState.messageStatusDuration = 150;
+    }
+  }
 }

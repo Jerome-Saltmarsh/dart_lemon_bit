@@ -17,6 +17,7 @@ class ClientState {
   static final edit = Watch(false, onChanged: GameEvents.onChangedEdit);
   static final dragStart = Watch(-1);
   static final dragEnd = Watch(-1);
+  static final messageStatus = Watch("", onChanged: ClientEvents.onChangedMessageStatus);
 
   static final triggerAlarmNoMessageReceivedFromServer = Watch(false);
 
@@ -27,6 +28,7 @@ class ClientState {
   static var srcXRainFalling = 6640.0;
   static var srcXRainLanding = 6739.0;
   static var nextLightning = 0;
+  static var messageStatusDuration = 0;
 
   // PROPERTIES
   static bool get hoverDialogIsInventory => hoverDialogType.value == DialogType.Inventory;

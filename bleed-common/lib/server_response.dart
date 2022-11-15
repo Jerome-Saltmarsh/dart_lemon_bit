@@ -12,7 +12,6 @@ class ServerResponse {
   static const Scene_Changed = 24;
   static const Scene_Shade_Max = 25;
   static const Player_Ability = 28;
-  // static const Player_Aim_Target = 29;
   static const Waiting_For_More_Players = 31;
   static const Player_Text = 32;
   static const Game_Type = 34;
@@ -43,6 +42,6 @@ class ServerResponse {
   static const Render_Map = 104;
   static const GameObject = 107;
   static const Environment = 108;
-  static const Spawn_Particle = 110;
+  static const Error = 109;
 }
 

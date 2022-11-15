@@ -379,8 +379,13 @@ class Player extends Character with ByteWriter {
     return inventoryQuantity[index];
   }
 
-  void writeError(String error){
+  void writeErrorInvalidInventoryIndex(int index){
+     writeError('invalid inventory index: $index (${ItemType.getName(index)})');
+  }
 
+  void writeError(String error){
+      writeByte(ServerResponse.Error);
+      writeString(error);
   }
 
   void inventoryDeposit(int index){
@@ -1023,7 +1028,7 @@ class Player extends Character with ByteWriter {
       writePlayerEvent(PlayerEvent.Inventory_Full);
 
   void writePlayerEventInvalidRequest() =>
-    writePlayerEvent(PlayerEvent.Invalid_Request);
+      writePlayerEvent(PlayerEvent.Invalid_Request);
 
   void writePlayerEvent(int value){
     writeByte(ServerResponse.Player_Event);

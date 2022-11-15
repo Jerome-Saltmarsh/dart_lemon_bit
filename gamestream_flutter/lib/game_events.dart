@@ -22,6 +22,15 @@ class GameEvents {
     }
   }
 
+  static void onChangedError(String error) {
+    ClientState.messageStatus.value = error;
+    if (error.isNotEmpty) {
+      ClientState.messageStatusDuration = 200;
+    } else {
+      ClientState.messageStatusDuration = 0;
+    }
+  }
+
   static void onChangedAmbientShade(int shade) {
     GameState.refreshLighting();
   }
@@ -376,13 +385,13 @@ class GameEvents {
         GameIO.recenterCursor();
         break;
       case PlayerEvent.Insufficient_Gold:
-        GameAudio.errorSound15();
+        ClientActions.writeMessage("Not Enough Gold");
         break;
       case PlayerEvent.Inventory_Full:
-        GameAudio.errorSound15();
+        ClientActions.writeMessage("Inventory Full");
         break;
       case PlayerEvent.Invalid_Request:
-        GameAudio.errorSound15();
+        ClientActions.writeMessage("Invalid Request");
         break;
     }
   }

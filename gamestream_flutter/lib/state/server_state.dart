@@ -23,6 +23,7 @@ class ServerState {
   static final watchTimePassing = Watch(false);
   static final windAmbient = Watch(Wind.Calm, onChanged: GameEvents.onChangedWind);
   static final ambientShade = Watch(Shade.Bright, onChanged: GameEvents.onChangedAmbientShade);
+  static final error = Watch("invalid request", onChanged: GameEvents.onChangedError);
 
   static final playerBelt1_ItemType = Watch(ItemType.Empty);
   static final playerBelt2_ItemType = Watch(ItemType.Empty);

@@ -1063,6 +1063,13 @@ class GameState {
     GameAudio.update();
     updateLightning();
 
+    if (ClientState.messageStatusDuration > 0){
+      ClientState.messageStatusDuration--;
+      if (ClientState.messageStatusDuration <= 0){
+        ClientState.messageStatus.value = "";
+      }
+    }
+
     if (player.messageTimer > 0) {
       player.messageTimer--;
       if (player.messageTimer == 0){

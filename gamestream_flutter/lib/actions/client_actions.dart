@@ -56,4 +56,16 @@ class ClientActions {
     if (ClientState.dragStart.value == -1) return;
     GameNetwork.sendClientRequestInventoryDrop(ClientState.dragStart.value);
   }
+
+  static void messageClear(){
+    writeMessage("");
+  }
+
+  static void writeMessage(String value){
+    ClientState.messageStatus.value = value;
+  }
+
+  static void playAudioError(){
+    GameAudio.errorSound15();
+  }
 }

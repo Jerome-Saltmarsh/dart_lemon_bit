@@ -370,7 +370,7 @@ class Connection {
         final index = parse(arguments[2]);
         if (index == null) return;
         if (!player.isValidInventoryIndex(index)){
-          player.writePlayerEventInvalidRequest();
+          player.writeErrorInvalidInventoryIndex(index);
           return;
         }
         player.inventoryDrop(index);
@@ -681,12 +681,12 @@ class Connection {
         'Invalid type at index $index, expected integer but got $got');
   }
 
-  void errorInvalidArg(String message) {
-    error(GameError.InvalidArguments, message: message);
-  }
-
   void errorParse(String source){
     errorInvalidArg('connection.parse($source)');
+  }
+
+  void errorInvalidArg(String message) {
+    _player?.writeError(message);
   }
 
   void errorPlayerNotFound() {
