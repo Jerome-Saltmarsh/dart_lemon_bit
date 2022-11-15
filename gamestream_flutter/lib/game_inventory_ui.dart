@@ -173,7 +173,7 @@ class GameInventoryUI {
             }
           },
           child: Draggable<int>(
-            onDragStarted: () => ClientActions.setDragItemIndex(index),
+            onDragStarted: () => ClientEvents.onDragStarted(index),
             onDraggableCanceled: ClientEvents.onDragCancelled,
             hitTestBehavior: HitTestBehavior.opaque,
             data: index,

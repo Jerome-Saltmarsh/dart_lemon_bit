@@ -53,6 +53,7 @@ class ClientActions {
     () => ClientState.dragStart.value = index;
 
   static void dropDraggedItem(){
+    if (ClientState.dragStart.value == -1) return;
     GameNetwork.sendClientRequestInventoryDrop(ClientState.dragStart.value);
   }
 }
