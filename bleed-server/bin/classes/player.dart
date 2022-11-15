@@ -682,7 +682,6 @@ class Player extends Character with ByteWriter {
        }
        writePlayerEventItemTypeConsumed(itemType);
        inventorySetEmptyAtIndex(index);
-       writePlayerInventorySlot(index);
        return;
     }
   }
