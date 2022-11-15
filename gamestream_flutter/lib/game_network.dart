@@ -148,7 +148,7 @@ class GameNetwork {
         final contents = response.substring(6, response.length);
         Engine.downloadString(contents: contents, filename: "hello.json");
       }
-      GameWebsite.error.value = response;
+      WebsiteState.error.value = response;
       return;
     }
     throw Exception("cannot parse response: $response");
@@ -206,13 +206,13 @@ class GameNetwork {
         ServerState.sceneEditable.value = false;
         break;
       case ConnectionStatus.Failed_To_Connect:
-        GameWebsite.error.value = "Failed to connect";
+        WebsiteState.error.value = "Failed to connect";
         break;
       case ConnectionStatus.Invalid_Connection:
-        GameWebsite.error.value = "Invalid Connection";
+        WebsiteState.error.value = "Invalid Connection";
         break;
       case ConnectionStatus.Error:
-        GameWebsite.error.value = "Connection Error";
+        WebsiteState.error.value = "Connection Error";
         break;
       default:
         break;

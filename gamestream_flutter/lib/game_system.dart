@@ -55,6 +55,6 @@ class GameSystem {
     }
     print(error.toString());
     print(stack);
-    GameWebsite.error.value = error.toString();
+    WebsiteState.error.value = error.toString();
   }
 }

@@ -9,7 +9,6 @@ import 'package:intl/intl.dart';
 
 class GameWebsite {
   static final operationStatus = Watch(OperationStatus.None);
-  static final error = Watch<String?>(null);
   static final account = Watch<Account?>(null, onChanged: onChangedAccount);
   static final region = Watch(ConnectionRegion.LocalHost, onChanged: onChangedRegion);
   static final download = Watch(0.0);
@@ -32,7 +31,7 @@ class GameWebsite {
   static final websitePage = Watch(WebsitePage.Games);
 
   static void setError(String message){
-    error.value = message;
+    WebsiteState.error.value = message;
   }
 
    static void renderCanvas(Canvas canvas, Size size){
@@ -98,7 +97,7 @@ class GameWebsite {
    static Widget buildUI(BuildContext context) => Stack(
     children: [
       watch(GameWebsite.operationStatus, buildOperationStatus),
-      buildWatchErrorMessage(),
+      WebsiteBuild.buildWatchErrorMessage(),
     ]);
 
   static Widget buildOperationStatus(OperationStatus operationStatus) =>

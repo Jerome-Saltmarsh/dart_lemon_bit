@@ -10,14 +10,6 @@ import 'package:gamestream_flutter/ui/style.dart';
 
 final nameController = TextEditingController();
 
-Widget buildWatchErrorMessage(){
-  return WatchBuilder(GameWebsite.error, (String? message){
-    if (message == null) return empty;
-    if (!GameWebsite.errorMessageEnabled.value) return empty;
-    return buildErrorDialog(message);
-  });
-}
-
 Widget buildErrorDialog(String message, {Widget? bottomRight}){
   return dialog(
       width: style.dialogWidthMedium,
@@ -28,7 +20,7 @@ Widget buildErrorDialog(String message, {Widget? bottomRight}){
           child: Center(
             child: text(message, color: GameColors.white),
           ),
-          bottomRight: bottomRight ?? text("okay", onPressed: () => GameWebsite.error.value = null)
+          bottomRight: bottomRight ?? text("okay", onPressed: () => WebsiteState.error.value = null)
       )
   );
 }

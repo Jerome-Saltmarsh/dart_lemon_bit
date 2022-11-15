@@ -159,9 +159,6 @@ class AccountService {
   }
 
   static void closeErrorMessage(){
-    print("actions.closeErrorMessage()");
-    GameWebsite.error.value = null;
+    WebsiteState.error.value = null;
   }
-
-  // static void exitGame() => webSocket.disconnect();
 }

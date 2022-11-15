@@ -121,6 +121,7 @@ class ServerResponseReader with ByteReader {
           debugging = true;
           readBytes(values);
           GameNetwork.disconnect();
+          WebsiteState.error.value = "An error occurred";
           return;
       }
     }

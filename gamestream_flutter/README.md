@@ -27,6 +27,7 @@
 [ ] player attributes
 [ ] skills
 [ ] repeat killing same enemies yields no reward
+[ ] website connection error dialog
 
 [content]
 [ ] scene cemetery
@@ -43,11 +44,11 @@
 [ ] character-type vampire
 [ ] character-type wolf
 [ ] particle-type myst
-[ ] inventory layout equipped items vertically
 
 [current]
 
 16.11.2022
+[x] inventory layout equipped items vertically
 [x] fix active belt drag target
 [x] fix fire handgun animation
 [x] show server error message
