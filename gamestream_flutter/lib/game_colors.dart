@@ -4,6 +4,13 @@ import 'package:golden_ratio/constants.dart';
 class GameColors {
   static final Color facebook = Color.fromRGBO(66, 103, 178, 1);
   static final Color black = Color.fromRGBO(38, 34, 47, 1.0);
+
+  static final Color brown00 = Color.fromRGBO(46, 34, 47, 1);
+  static final Color brown01 = Color.fromRGBO(62, 53, 70, 1);
+  static final Color brown02 = Color.fromRGBO(98, 85, 101, 1);
+  static final Color brown03 = Color.fromRGBO(150, 108, 108, 1);
+  static final Color brown04 = Color.fromRGBO(171, 148, 122, 1);
+
   static final Color brownDark = Color.fromRGBO(36, 33, 38, 1);
   static final Color brownLight = Color.fromRGBO(48, 48, 48, 1.0);
   static final Color black05 = black.withOpacity(0.05);

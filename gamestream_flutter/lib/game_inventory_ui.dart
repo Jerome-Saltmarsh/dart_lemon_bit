@@ -42,7 +42,7 @@ class GameInventoryUI {
   static Widget buildContainerEquippedItems() =>
       DragTarget<int>(
         onWillAccept: onDragWillAccept,
-        onAccept: onDragAccept,
+        onAccept: ClientEvents.onDragAccept,
         builder: (context, i, a) => Container(
             height: 80.0,
             child: Row(
@@ -129,11 +129,6 @@ class GameInventoryUI {
       );
 
   static bool onDragWillAccept(int? i) => i != null;
-
-  static void onDragAccept(int? i){
-    if (i == null) return;
-    GameNetwork.sendClientRequestInventoryEquip(i);
-  }
 
   static Widget buildStackInventoryItems(int reads) {
      final positioned = <Widget>[];

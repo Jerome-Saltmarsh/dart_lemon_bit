@@ -45,9 +45,21 @@ class ClientEvents {
         : GameNetwork.sendClientRequestInventoryDrop(itemIndex);
   }
 
+  static void onDragAccept(int? i){
+    if (i == null) return;
+    GameNetwork.sendClientRequestInventoryEquip(i);
+  }
+
   static void onDragCancelled(Velocity velocity, Offset offset){
     print("onDragCancelled()");
-    ClientActions.dropDraggedItem();
+    if (ClientState.hoverIndex.value == -1){
+      ClientActions.dropDraggedItem();
+    } else {
+      GameNetwork.sendClientRequestInventoryMove(
+          indexFrom: ClientState.dragStart.value,
+          indexTo: ClientState.hoverIndex.value,
+      );
+    }
     ClientState.dragStart.value = -1;
     ClientState.dragEnd.value = -1;
   }

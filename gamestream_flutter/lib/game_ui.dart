@@ -380,10 +380,18 @@ class GameUI {
         ],
       );
 
-  static Widget buildDragTargetSlot({required int index, double scale = 1.0}) =>
+  static Widget buildDragTargetSlot({required int index, double scale = 1.0, Color? outlineColor}) =>
       DragTarget<int>(
         builder: (context, data, rejectedData) =>
-            buildAtlasIconType(IconType.Slot, scale: scale),
+            Container(
+               width: 64,
+               height: 64,
+               decoration: buildDecorationBorder(
+                   colorBorder: outlineColor ?? GameColors.brown01,
+                   colorFill: GameColors.brown02,
+                   width: 2,
+               ),
+            ),
         onWillAccept: (int? data) => data != null,
         onAccept: (int? data) {
           if (data == null) return;
@@ -399,10 +407,12 @@ class GameUI {
           watchBeltType,
           (int beltItemType) => Stack(
             children: [
-              buildDragTargetSlot(
+              watch(ServerState.equippedWeaponIndex, (equippedWeaponIndex) =>
+                buildDragTargetSlot(
                   index: ServerQuery.mapWatchBeltTypeToItemType(watchBeltType),
                   scale: 2.0,
-              ),
+                  outlineColor: ServerQuery.mapWatchBeltTypeToItemType(watchBeltType) == equippedWeaponIndex ? GameColors.white : GameColors.brown02
+                ),),
               Positioned(
                 left: 5,
                 top: 5,
@@ -421,19 +431,19 @@ class GameUI {
                           italic: true,
                           color: Colors.white70,
                         ))),
-              watch(ServerState.equippedWeaponIndex, (equippedWeaponIndex) =>
-              ServerQuery.mapWatchBeltTypeToItemType(watchBeltType) != equippedWeaponIndex
-                  ? const SizedBox()
-                  :
-              Container(
-                width: 64,
-                height: 64,
-                decoration: buildDecorationBorder(
-                  colorBorder: Colors.white,
-                  colorFill: Colors.transparent,
-                  width: 3,
-                ),
-              )),
+              // watch(ServerState.equippedWeaponIndex, (equippedWeaponIndex) =>
+              // ServerQuery.mapWatchBeltTypeToItemType(watchBeltType) != equippedWeaponIndex
+              //     ? const SizedBox()
+              //     :
+              // Container(
+              //   width: 64,
+              //   height: 64,
+              //   decoration: buildDecorationBorder(
+              //     colorBorder: Colors.white,
+              //     colorFill: Colors.transparent,
+              //     width: 3,
+              //   ),
+              // )),
               if (watchBeltType.value != ItemType.Empty)
                 Container(
                   width: 64,

@@ -50,6 +50,7 @@
 [ ] fix fire shotgun animation
 
 16.11.2022
+[x] fix active belt drag target
 [x] fix fire handgun animation
 [x] show server error message
 
