@@ -575,6 +575,8 @@ class Player extends Character with ByteWriter {
      if (weaponsSwapped && ItemType.isTypeWeapon(indexAType) && ItemType.isTypeWeapon(indexBType)) {
         equippedWeaponIndex = currentEquippedWeaponIndex;
      }
+
+     game.setCharacterStateChanging(this);
   }
 
   bool itemTypeCanBeAssignedToIndex({
