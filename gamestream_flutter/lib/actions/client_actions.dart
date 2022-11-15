@@ -25,7 +25,7 @@ class ClientActions {
       GameAudio.click_sound_8(1);
 
   static void dragStartSetNone(){
-    ClientState.dragStart.value = DragStart.None;
+    ClientState.dragStart.value = -1;
   }
 
   static void assignEquippedItemToHotKey(String index){
@@ -49,6 +49,10 @@ class ClientActions {
        }
   }
 
-  static void setDragStart(int clientType) =>
-    () => ClientState.dragStart.value = clientType;
+  static void setDragItemIndex(int index) =>
+    () => ClientState.dragStart.value = index;
+
+  static void dropDraggedItem(){
+    GameNetwork.sendClientRequestInventoryDrop(ClientState.dragStart.value);
+  }
 }

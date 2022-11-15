@@ -21,15 +21,22 @@ class ClientEvents {
     GameState.refreshLighting();
   }
 
+  static void onDragStarted(int itemIndex){
+    ClientState.dragStart.value = itemIndex;
+    ClientState.dragEnd.value = -1;
+  }
+
   static void onDragCompleted(){
 
   }
 
   static void onDragCancelled(Velocity velocity, Offset offset){
-    GameNetwork.sendClientRequestInventoryDrop(ClientState.dragStart.value);
+    ClientActions.dropDraggedItem();
+    ClientState.dragStart.value = -1;
+    ClientState.dragEnd.value = -1;
   }
 
-  static void onDragEnd(DraggableDetails details){
+  static void onDragEndItemIndex(DraggableDetails details){
 
   }
 

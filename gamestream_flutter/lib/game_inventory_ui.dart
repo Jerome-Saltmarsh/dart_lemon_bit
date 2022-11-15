@@ -92,8 +92,9 @@ class GameInventoryUI {
 
   static Widget buildContainerEquippedItemType(int itemType, int index) =>
       Draggable(
-        onDragStarted: () => ClientActions.setDragStart(index),
-        onDragEnd: ClientEvents.onDragEnd,
+        onDragStarted: () => ClientActions.setDragItemIndex(index),
+        onDragEnd: ClientEvents.onDragEndItemIndex,
+        onDraggableCanceled: ClientEvents.onDragCancelled,
         data: index,
         feedback: buildItemTypeAtlasImage(itemType: itemType, scale: Slot_Item_Scale),
         hitTestBehavior: HitTestBehavior.opaque,
@@ -172,7 +173,7 @@ class GameInventoryUI {
             }
           },
           child: Draggable<int>(
-            onDragStarted: () => ClientActions.setDragStart(index),
+            onDragStarted: () => ClientActions.setDragItemIndex(index),
             onDraggableCanceled: ClientEvents.onDragCancelled,
             hitTestBehavior: HitTestBehavior.opaque,
             data: index,
