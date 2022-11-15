@@ -47,10 +47,10 @@
 [ ] inventory remove equipped weapon
 
 [current]
-[ ] fix fire handgun animation
 [ ] fix fire shotgun animation
 
 16.11.2022
+[x] fix fire handgun animation
 [x] show server error message
 
 15.11.2022

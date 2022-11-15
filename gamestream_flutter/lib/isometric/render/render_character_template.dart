@@ -250,12 +250,13 @@ class TemplateAnimation {
     return list;
   }();
 
-  static Uint8List FiringHandgun = (){
-    final list = Uint8List(3);
-    list[0] = 7;
-    list[1] = 7;
-    list[2] = 6;
-    return list;
+  static List<int> FiringHandgun = (){
+    final frames = Uint8List(4);
+    frames[0] = 8;
+    frames[1] = 9;
+    frames[2] = 9;
+    frames[3] = 8;
+    return frames;
   }();
 
   static const FiringShotgun = [
