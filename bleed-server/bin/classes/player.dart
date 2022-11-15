@@ -442,7 +442,10 @@ class Player extends Character with ByteWriter {
     required int itemType,
     required int itemQuantity,
   }){
-    if (!isValidInventoryIndex(index)){
+    if (!isValidInventoryIndex(index)) {
+      throw Exception('player.inventorySet(index: $index, itemType: $itemType, quantity: $itemQuantity)');
+    }
+    if (!itemTypeCanBeAssignedToIndex(itemType: itemType, index: index)){
       throw Exception('player.inventorySet(index: $index, itemType: $itemType, quantity: $itemQuantity)');
     }
 
@@ -458,7 +461,6 @@ class Player extends Character with ByteWriter {
 
     if (index == ItemType.Equipped_Weapon) {
       if (weaponType == itemType) return;
-      assert (ItemType.isTypeWeapon(itemType) || itemType == ItemType.Empty);
       weaponType = itemType;
       weaponQuantity = itemQuantity;
       inventoryDirty = true;
@@ -466,8 +468,6 @@ class Player extends Character with ByteWriter {
       return;
     }
     if (index == ItemType.Equipped_Body) {
-      if (bodyType == itemType) return;
-      assert (ItemType.isTypeBody(itemType) || itemType == ItemType.Empty);
       bodyType = itemType;
       bodyQuantity = itemQuantity;
       inventoryDirty = true;
@@ -475,8 +475,6 @@ class Player extends Character with ByteWriter {
       return;
     }
     if (index == ItemType.Equipped_Head) {
-      if (headType == itemType) return;
-      assert (ItemType.isTypeHead(itemType) || itemType == ItemType.Empty);
       headType = itemType;
       headQuantity = itemQuantity;
       inventoryDirty = true;
@@ -484,8 +482,6 @@ class Player extends Character with ByteWriter {
       return;
     }
     if (index == ItemType.Equipped_Legs) {
-      if (legsType == itemType) return;
-      assert (ItemType.isTypeLegs(itemType) || itemType == ItemType.Empty);
       legsType = itemType;
       legsQuantity = itemQuantity;
       inventoryDirty = true;
@@ -493,21 +489,18 @@ class Player extends Character with ByteWriter {
       return;
     }
     if (index == ItemType.Belt_1){
-      if (belt1_itemType == itemType) return;
       belt1_itemType = itemType;
       belt1_quantity = itemQuantity;
       inventoryDirty = true;
       return;
     }
     if (index == ItemType.Belt_2){
-      if (belt2_itemType == itemType) return;
       belt2_itemType = itemType;
       belt2_quantity = itemQuantity;
       inventoryDirty = true;
       return;
     }
     if (index == ItemType.Belt_3){
-      if (belt3_itemType == itemType) return;
       belt3_itemType = itemType;
       belt3_quantity = itemQuantity;
       inventoryDirty = true;
@@ -521,20 +514,17 @@ class Player extends Character with ByteWriter {
       return;
     }
     if (index == ItemType.Belt_5){
-      if (belt5_itemType == itemType) return;
       belt5_itemType = itemType;
       belt5_quantity = itemQuantity;
       inventoryDirty = true;
       return;
     }
     if (index == ItemType.Belt_6){
-      if (belt6_itemType == itemType) return;
       belt6_itemType = itemType;
       belt6_quantity = itemQuantity;
       inventoryDirty = true;
       return;
     }
-
     if (index < inventory.length){
       inventory[index] = itemType;
       inventoryQuantity[index] = itemQuantity;
@@ -551,6 +541,9 @@ class Player extends Character with ByteWriter {
      final indexAQuantity = inventoryGetItemQuantity(indexA);
      final indexBQuantity = inventoryGetItemQuantity(indexB);
 
+     final weaponsSwapped = indexA == equippedWeaponIndex || indexB == equippedWeaponIndex;
+     final currentEquippedWeaponIndex = equippedWeaponIndex;
+
      if (itemTypeCanBeAssignedToIndex(itemType: indexAType, index: indexB)){
        inventorySet(index: indexB, itemType: indexAType, itemQuantity: indexAQuantity);
      } else {
@@ -563,6 +556,10 @@ class Player extends Character with ByteWriter {
      } else {
        inventoryAdd(itemType: indexBType, itemQuantity: indexBQuantity);
        inventorySetEmptyAtIndex(indexA);
+     }
+
+     if (weaponsSwapped && ItemType.isTypeWeapon(indexAType) && ItemType.isTypeWeapon(indexBType)) {
+        equippedWeaponIndex = currentEquippedWeaponIndex;
      }
   }
 
@@ -592,7 +589,6 @@ class Player extends Character with ByteWriter {
 
   void inventoryAdd({required int itemType, required int itemQuantity}) {
       final availableIndex = getEmptyInventoryIndex();
-
       if (availableIndex != null) {
         inventorySet(
             index: availableIndex,
@@ -601,7 +597,6 @@ class Player extends Character with ByteWriter {
         );
         return;
       }
-
       dropItemType(itemType: itemType, quantity: itemQuantity);
   }
 
