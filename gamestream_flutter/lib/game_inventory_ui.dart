@@ -86,7 +86,7 @@ class GameInventoryUI {
         ),
         child: buildPressableItemIndex(
           itemIndex: itemIndex,
-          scale: Equipped_Item_Scale,
+          scale: scale,
         ),
       );
 
