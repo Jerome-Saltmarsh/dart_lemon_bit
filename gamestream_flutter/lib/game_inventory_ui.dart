@@ -70,9 +70,9 @@ class GameInventoryUI {
       buildWatchEquippedItemType(GamePlayer.legs, ItemType.Equipped_Legs);
 
   static Widget buildWatchEquippedItemType(Watch<int> watchInt, int index) =>
-      watch(watchInt, (int itemType) => buildDraggableItemIndex(index));
+      watch(watchInt, (int itemType) => buildDraggableItemIndex(itemIndex: index));
 
-  static Widget buildDraggableItemIndex(int itemIndex, {double scale = Slot_Item_Scale}) =>
+  static Widget buildDraggableItemIndex({required int itemIndex, double scale = Slot_Item_Scale}) =>
       Draggable(
         onDragStarted: () => ClientEvents.onDragStarted(itemIndex),
         onDragEnd: ClientEvents.onDragEnd,
@@ -108,9 +108,11 @@ class GameInventoryUI {
               ClientActions.clearHoverIndex();
             }
           },
-          child: buildItemTypeAtlasImage(
-            itemType: ServerQuery.getItemTypeAtInventoryIndex(itemIndex),
-            scale: scale,
+          child: Container(
+            child: buildItemTypeAtlasImage(
+              itemType: ServerQuery.getItemTypeAtInventoryIndex(itemIndex),
+              scale: scale,
+            ),
           ),
         ),
       );
@@ -149,7 +151,7 @@ class GameInventoryUI {
   static Widget buildPositionInventoryItem(int index) =>
       buildPositionGridItem(
         index: index,
-        child: buildDraggableItemIndex(index),
+        child: buildDraggableItemIndex(itemIndex: index),
       );
 
   static Widget buildStackSlotGrid() {
