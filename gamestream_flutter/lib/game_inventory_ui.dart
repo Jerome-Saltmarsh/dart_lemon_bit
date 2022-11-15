@@ -32,7 +32,11 @@ class GameInventoryUI {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      child: text("health: 100"),
+                      child: watch(ServerState.playerMaxHealth, (int maxHealth){
+                          return watch(ServerState.playerHealth, (int currentHealth){
+                             return text("health: $currentHealth / $maxHealth");
+                          });
+                      }) ,
                     ),
                     buildContainerEquippedItems(),
                   ],
