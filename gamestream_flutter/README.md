@@ -17,17 +17,14 @@
 [ ] mini-map close-up
 [ ] select skin color
 [ ] separate head-type and helm-type
-[ ] fix animation fire handgun
 [ ] item weight
 [ ] inventory max weight
 [ ] fix editor add remove columns
 [ ] highlight cursor gameobject item
 [ ] engine improve grid invisibility
-[ ] ui error message
 [ ] player attributes
 [ ] skills
 [ ] repeat killing same enemies yields no reward
-[ ] website connection error dialog
 
 [content]
 [ ] scene cemetery
@@ -48,6 +45,8 @@
 [current]
 
 16.11.2022
+[x] auto check for latest version
+[x] connection lost error message
 [x] inventory layout equipped items vertically
 [x] fix active belt drag target
 [x] fix fire handgun animation

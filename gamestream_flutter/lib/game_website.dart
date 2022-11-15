@@ -102,7 +102,7 @@ class GameWebsite {
 
   static Widget buildOperationStatus(OperationStatus operationStatus) =>
       operationStatus != OperationStatus.None
-          ? buildFullscreen(child: text(operationStatus.name))
+          ? buildFullscreen(child: text(operationStatus.name.replaceAll("_", " ")))
           : watch(GameNetwork.connectionStatus, buildConnection);
 
   static Widget buildPageLoading(BuildContext context) {

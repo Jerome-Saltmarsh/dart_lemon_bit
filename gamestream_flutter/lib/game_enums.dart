@@ -33,6 +33,7 @@ enum OperationStatus {
   Changing_Public_Name,
   Loading_Map,
   Saving_Map,
+  Checking_For_Updates,
 }
 
 class FontSize {

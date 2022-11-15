@@ -9,6 +9,20 @@ class GameSystem {
 
   static Future init(SharedPreferences sharedPreferences) async {
     print("environment: ${Engine.isLocalHost ? 'localhost' : 'production'}");
+
+
+    final visitDateTimeString = sharedPreferences.getString('visit-datetime');
+    if (visitDateTimeString != null) {
+      final visitDateTime = DateTime.parse(visitDateTimeString);
+      final durationSinceLastVisit = DateTime.now().difference(visitDateTime);
+      print("duration since last visit: ${durationSinceLastVisit.inSeconds} seconds");
+      WebsiteActions.saveVisitDateTime();
+      if (durationSinceLastVisit.inSeconds > 45){
+        WebsiteActions.checkForLatestVersion();
+        return;
+      }
+    }
+
     print("time zone: ${GameUtils.detectConnectionRegion()}");
     Engine.onScreenSizeChanged = onScreenSizeChanged;
     Engine.deviceType.onChanged(onDeviceTypeChanged);
@@ -26,10 +40,18 @@ class GameSystem {
     if (visitCount == null){
       sharedPreferences.putAny('visit-count', 1);
       GameWebsite.visitCount.value = 1;
-      GameNetwork.connectToGameSkirmish();
+      GameNetwork.connectToGameDarkAge();
     } else {
       sharedPreferences.putAny('visit-count', visitCount + 1);
       GameWebsite.visitCount.value = visitCount + 1;
+
+      final cachedVersion = sharedPreferences.getString('version');
+
+      if (cachedVersion != null){
+         if (version != cachedVersion){
+            print("New version detected (previous: $cachedVersion, latest: $version)");
+         }
+      }
     }
   }
 
