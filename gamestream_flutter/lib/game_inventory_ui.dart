@@ -80,17 +80,20 @@ class GameInventoryUI {
         onDragCompleted: ClientEvents.onDragCompleted,
         data: itemIndex,
         hitTestBehavior: HitTestBehavior.opaque,
-        feedback: buildItemIndex(
+        feedback: buildPressableItemIndex(
             itemIndex: itemIndex,
             scale: scale,
         ),
-        child: buildItemIndex(
+        child: buildPressableItemIndex(
           itemIndex: itemIndex,
           scale: Equipped_Item_Scale,
         ),
       );
 
-  static Widget buildItemIndex({required int itemIndex, double scale = Slot_Item_Scale}) =>
+  static Widget buildPressableItemIndex({
+    required int itemIndex,
+    double scale = Slot_Item_Scale,
+  }) =>
       onPressed(
         action: () => ClientEvents.onItemIndexPrimary(itemIndex),
         onRightClick: () => ClientEvents.onItemIndexSecondary(itemIndex),
@@ -215,11 +218,11 @@ class GameInventoryUI {
     if (itemIndex == -1) return const SizedBox();
     final itemType = ServerQuery.getItemTypeAtInventoryIndex(itemIndex);
     final consumeType = ItemType.getConsumeType(itemType);
-
     return Positioned(
-      top:  Engine.mousePosition.y + 25,
-      left:  ClientState.hoverDialogDialogIsTrade ? max(Engine.mousePosition.x - 100, 50) : null,
-      right: ClientState.hoverDialogIsInventory ? max((Engine.screen.width - Engine.mousePosition.x) - 100, 50) : null,
+      top: Engine.mousePosition.y < (Engine.screen.height * 0.5) ?  Engine.mousePosition.y + 60 : null,
+      bottom: Engine.mousePosition.y >= (Engine.screen.height * 0.5) ?  Engine.screen.height - Engine.mousePosition.y + 50 : null,
+      left:  Engine.mousePosition.x < (Engine.screen.width * 0.5) ? max(Engine.mousePosition.x - 100, 50) : null,
+      right: Engine.mousePosition.x >= (Engine.screen.width * 0.5) ? max((Engine.screen.width - Engine.mousePosition.x) - 100, 50) : null,
       child: Container(
         padding: const EdgeInsets.all(12),
         color: brownDark,
