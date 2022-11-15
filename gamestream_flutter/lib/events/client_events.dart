@@ -26,7 +26,7 @@ class ClientEvents {
   }
 
   static void onDragCancelled(Velocity velocity, Offset offset){
-
+    GameNetwork.sendClientRequestInventoryDrop(ClientState.dragStart.value);
   }
 
   static void onDragEnd(DraggableDetails details){

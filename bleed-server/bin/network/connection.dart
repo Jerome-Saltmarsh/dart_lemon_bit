@@ -362,10 +362,11 @@ class Connection {
         break;
       case InventoryRequest.Drop:
         final index = parse(arguments[2]);
-        if (index == null)
-          return errorInvalidArg('index == null');
-        if (!player.isValidInventoryIndex(index))
-          return errorInvalidArg('Error - Inventory.Drop: invalid index $index');
+        if (index == null) return;
+        if (!player.isValidInventoryIndex(index)){
+          player.writePlayerEventInvalidRequest();
+          return;
+        }
         player.inventoryDrop(index);
         break;
       case InventoryRequest.Move:

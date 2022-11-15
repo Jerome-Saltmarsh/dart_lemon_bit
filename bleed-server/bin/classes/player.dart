@@ -305,8 +305,8 @@ class Player extends Character with ByteWriter {
 
   void inventoryDrop(int index) {
     assert (isValidInventoryIndex(index));
-    final itemType = inventoryGetItemType(index);
     dropItemType(itemType: inventoryGetItemType(index), quantity: inventoryGetItemQuantity(index));
+    inventorySetEmptyAtIndex(index);
   }
 
   void dropItemType({required int itemType, required int quantity}){
