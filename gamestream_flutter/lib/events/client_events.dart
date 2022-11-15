@@ -5,7 +5,7 @@ import 'package:gamestream_flutter/library.dart';
 
 class ClientEvents {
   static void onInventoryReadsChanged(int value){
-    ClientActions.clearItemTypeHover();
+    ClientActions.clearHoverIndex();
   }
 
   static void onChangedAttributesWindowVisible(bool value){

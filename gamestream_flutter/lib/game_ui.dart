@@ -283,7 +283,7 @@ class GameUI {
 
   static Widget buildStackPlay() => StackFullscreen(children: [
         GameUIInteract.buildWatchInteractMode(),
-        watch(ClientState.hoverItemType,
+        watch(ClientState.hoverIndex,
             GameInventoryUI.buildPositionedContainerItemTypeInformation),
         Positioned(
             bottom: 24,

@@ -513,7 +513,7 @@ class GameEvents {
         break;
       case InteractMode.None:
         GameCamera.translateX = 0;
-        ClientActions.clearItemTypeHover();
+        ClientActions.clearHoverIndex();
         ClientActions.clearMouseOverDialogType();
         break;
     }

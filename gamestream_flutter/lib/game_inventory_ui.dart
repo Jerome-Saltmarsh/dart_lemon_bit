@@ -88,25 +88,47 @@ class GameInventoryUI {
           action: () => ClientEvents.onItemIndexPrimary(itemIndex),
           onRightClick: () => ClientEvents.onItemIndexSecondary(itemIndex),
           child: buildItemType(
-              itemType: ServerQuery.getItemTypeAtInventoryIndex(itemIndex),
+              itemIndex: itemIndex,
               scale: Equipped_Item_Scale,
           ),
         ),
       );
 
-  static Widget buildItemType({required int itemType, double scale = Slot_Item_Scale}){
+  // MouseRegion(
+  // cursor: SystemMouseCursors.click,
+  // onEnter: (event){
+  // Engine.mousePosition.x = event.position.dx;
+  // Engine.mousePosition.y = event.position.dy;
+  // ClientState.hoverItemType.value = itemType;
+  // ClientState.hoverIndex.value = index;
+  // },
+  // onExit: (_){
+  // if (ClientState.hoverItemType.value == itemType){
+  // ClientState.hoverItemType.value = ItemType.Empty;
+  // }
+  // if (ClientState.hoverIndex.value == index){
+  // ClientState.hoverIndex.value = -1;
+  // }
+  // },
+  // child: buildDraggableItemIndex(index),
+  // )
+
+  static Widget buildItemType({required int itemIndex, double scale = Slot_Item_Scale}){
     return MouseRegion(
       onEnter: (event){
         Engine.mousePosition.x = event.position.dx;
         Engine.mousePosition.y = event.position.dy;
-        ClientState.hoverItemType.value = itemType;
+        ClientState.hoverIndex.value = itemIndex;
       },
       onExit: (_){
-        if (ClientState.hoverItemType.value == itemType){
-          ClientState.hoverItemType.value = ItemType.Empty;
+        if (ClientState.hoverIndex.value == itemIndex){
+          ClientActions.clearHoverIndex();
         }
       },
-      child: buildItemTypeAtlasImage(itemType: itemType, scale: scale),
+      child: buildItemTypeAtlasImage(
+          itemType: ServerQuery.getItemTypeAtInventoryIndex(itemIndex),
+          scale: scale,
+      ),
     );
   }
 
@@ -142,7 +164,6 @@ class GameInventoryUI {
   }
 
   static Widget buildPositionInventoryItem(int index){
-    final itemType = ServerQuery.getItemTypeAtInventoryIndex(index);
     return buildPositionGridItem(
       index: index,
       child: MouseRegion(
@@ -150,13 +171,9 @@ class GameInventoryUI {
         onEnter: (event){
           Engine.mousePosition.x = event.position.dx;
           Engine.mousePosition.y = event.position.dy;
-          ClientState.hoverItemType.value = itemType;
           ClientState.hoverIndex.value = index;
         },
         onExit: (_){
-          if (ClientState.hoverItemType.value == itemType){
-            ClientState.hoverItemType.value = ItemType.Empty;
-          }
           if (ClientState.hoverIndex.value == index){
             ClientState.hoverIndex.value = -1;
           }
@@ -229,9 +246,9 @@ class GameInventoryUI {
         scale: scale,
       );
 
-  static Widget buildPositionedContainerItemTypeInformation(int itemType){
-    if (itemType == ItemType.Empty) return const SizedBox();
-
+  static Widget buildPositionedContainerItemTypeInformation(int itemIndex){
+    if (itemIndex == -1) return const SizedBox();
+    final itemType = ServerQuery.getItemTypeAtInventoryIndex(itemIndex);
     final consumeType = ItemType.getConsumeType(itemType);
 
     return Positioned(

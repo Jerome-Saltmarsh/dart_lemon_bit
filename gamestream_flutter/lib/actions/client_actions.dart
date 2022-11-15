@@ -9,8 +9,8 @@ class ClientActions {
   static void clearMouseOverDialogType() =>
     ClientState.hoverDialogType.value = DialogType.None;
 
-  static void clearItemTypeHover() =>
-    ClientState.hoverItemType.value = ItemType.Empty;
+  static void clearHoverIndex() =>
+    ClientState.hoverIndex.value = -1;
 
   static void windowClosePlayerAttributes() =>
     ClientState.windowVisibleAttributes.value = false;
