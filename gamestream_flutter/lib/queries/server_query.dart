@@ -44,6 +44,24 @@ class ServerQuery {
     if (index == ItemType.Equipped_Legs)
       return GamePlayer.legs.value;
 
+    if (index == ItemType.Belt_1){
+      return ServerState.playerBelt1_ItemType.value;
+    }
+    if (index == ItemType.Belt_2){
+      return ServerState.playerBelt2_ItemType.value;
+    }
+    if (index == ItemType.Belt_3){
+      return ServerState.playerBelt3_ItemType.value;
+    }
+    if (index == ItemType.Belt_4){
+      return ServerState.playerBelt4_ItemType.value;
+    }
+    if (index == ItemType.Belt_5){
+      return ServerState.playerBelt5_ItemType.value;
+    }
+    if (index == ItemType.Belt_6){
+      return ServerState.playerBelt6_ItemType.value;
+    }
     if (index >= ServerState.inventory.length){
       throw Exception("ServerQuery.getItemTypeWatchAtInventoryIndex($index) index >= ServerState.inventory.length");
     }

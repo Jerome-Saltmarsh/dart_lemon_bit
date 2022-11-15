@@ -88,18 +88,26 @@ class GameInventoryUI {
   );
 
   static Widget buildWatchEquippedItemType(Watch<int> watchInt, int index) =>
-      watch(watchInt, (int itemType) => buildContainerEquippedItemType(itemType, index));
+      watch(watchInt, (int itemType) => buildDraggableItemIndex(index));
 
-  static Widget buildContainerEquippedItemType(int itemType, int itemIndex) =>
+  static Widget buildDraggableItemIndex(int itemIndex) =>
       Draggable(
         onDragStarted: () => ClientEvents.onDragStarted(itemIndex),
         onDragEnd: ClientEvents.onDragEndItemIndex,
         onDraggableCanceled: ClientEvents.onDragCancelled,
         data: itemIndex,
-        feedback: buildItemTypeAtlasImage(itemType: itemType, scale: Slot_Item_Scale),
         hitTestBehavior: HitTestBehavior.opaque,
-        child: buildItemType(itemType: itemType, scale: Equipped_Item_Scale),
+        feedback: buildItemTypeAtlasImage(
+            itemType: ServerQuery.getItemTypeAtInventoryIndex(itemIndex),
+            scale: Slot_Item_Scale,
+        ),
+        child: buildItemType(
+            itemType: ServerQuery.getItemTypeAtInventoryIndex(itemIndex),
+            scale: Equipped_Item_Scale,
+        ),
       );
+
+
 
   static Widget buildItemType({required int itemType, double scale = Slot_Item_Scale}){
     return MouseRegion(
