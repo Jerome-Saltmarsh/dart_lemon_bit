@@ -307,19 +307,18 @@ class GameUI {
           bottom: 12,
           right: 12,
           child: buildDialogUIControl(
-            child: buildColumnHotKeys(),
+            child: buildColumnBelt(),
           ),
         ),
       ]);
 
-  static Column buildColumnHotKeys() => Column(
+  static Column buildColumnBelt() => Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              // buildUnassignedWeaponSlot(),
-              buildRowHotKeyNumbers(),
+              buildRowBeltItems(),
               width32,
             ],
           ),
@@ -351,7 +350,7 @@ class GameUI {
         );
   }
 
-  static Row buildRowHotKeyNumbers() => Row(
+  static Row buildRowBeltItems() => Row(
       mainAxisAlignment: MainAxisAlignment.end,
         children: [
           buildWatchBeltType(ServerState.playerBelt1_ItemType),

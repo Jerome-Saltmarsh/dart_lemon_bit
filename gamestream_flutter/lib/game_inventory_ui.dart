@@ -94,43 +94,23 @@ class GameInventoryUI {
         ),
       );
 
-  // MouseRegion(
-  // cursor: SystemMouseCursors.click,
-  // onEnter: (event){
-  // Engine.mousePosition.x = event.position.dx;
-  // Engine.mousePosition.y = event.position.dy;
-  // ClientState.hoverItemType.value = itemType;
-  // ClientState.hoverIndex.value = index;
-  // },
-  // onExit: (_){
-  // if (ClientState.hoverItemType.value == itemType){
-  // ClientState.hoverItemType.value = ItemType.Empty;
-  // }
-  // if (ClientState.hoverIndex.value == index){
-  // ClientState.hoverIndex.value = -1;
-  // }
-  // },
-  // child: buildDraggableItemIndex(index),
-  // )
-
-  static Widget buildItemType({required int itemIndex, double scale = Slot_Item_Scale}){
-    return MouseRegion(
-      onEnter: (event){
-        Engine.mousePosition.x = event.position.dx;
-        Engine.mousePosition.y = event.position.dy;
-        ClientState.hoverIndex.value = itemIndex;
-      },
-      onExit: (_){
-        if (ClientState.hoverIndex.value == itemIndex){
-          ClientActions.clearHoverIndex();
-        }
-      },
-      child: buildItemTypeAtlasImage(
+  static Widget buildItemType({required int itemIndex, double scale = Slot_Item_Scale}) =>
+      MouseRegion(
+        onEnter: (event) {
+          Engine.mousePosition.x = event.position.dx;
+          Engine.mousePosition.y = event.position.dy;
+          ClientState.hoverIndex.value = itemIndex;
+        },
+        onExit: (_) {
+          if (ClientState.hoverIndex.value == itemIndex) {
+            ClientActions.clearHoverIndex();
+          }
+        },
+        child: buildItemTypeAtlasImage(
           itemType: ServerQuery.getItemTypeAtInventoryIndex(itemIndex),
           scale: scale,
-      ),
-    );
-  }
+        ),
+      );
 
   static Widget buildContainerInventory() =>
       Container(
