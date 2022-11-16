@@ -55,7 +55,8 @@ class GameUI {
                 crossAxisAlignment: CrossAxisAlignment.start,
                  children: [
                    text("Spawn AI", onPressed: ServerActions.editSceneSpawnAI),
-                   text("Clear Spawned", onPressed: ServerActions.editSceneClearSpawnedAI),
+                   text("Clear Spawned AI", onPressed: ServerActions.editSceneClearSpawnedAI),
+                   text("Pause AI", onPressed: ServerActions.editSceneClearSpawnedAI),
                  ],
               ),
           ),
