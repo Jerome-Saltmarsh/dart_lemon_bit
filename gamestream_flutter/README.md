@@ -48,9 +48,9 @@
 [ ] particle-type myst
 
 [current]
-[ ] mute sounds
 
 16.11.2022
+[x] mute sounds
 [x] auto check for latest version
 [x] connection lost error message
 [x] inventory layout equipped items vertically

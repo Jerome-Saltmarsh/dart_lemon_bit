@@ -13,7 +13,8 @@ Widget buildPanelMenu() =>
             width2,
             watch(ServerState.sceneEditable, (bool sceneEditable) => sceneEditable ? EditorUI.buildRowWeatherControls() : buildWatchBool(GameUI.timeVisible, buildTime)),
             width2,
-            watch(GameAudio.muted, (bool t) => text("Audio Enabled: ${!t}", onPressed: GameAudio.toggleMuted)),
+            GameUI.buildIconAudio(),
+            width2,
             GameUI.buildIconZoom(),
             width2,
             onPressed(

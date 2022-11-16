@@ -227,6 +227,14 @@ class GameUI {
         ],
       );
 
+  static Widget buildIconAudio() =>
+      onPressed(
+        action: GameAudio.toggleMuted,
+        child: watch(GameAudio.muted, (bool t) =>
+            GameUI.buildAtlasIconType(t ? IconType.Sound_Disabled : IconType.Sound_Enabled)
+        ),
+      );
+
   static Widget buildIconFullscreen() => WatchBuilder(
       Engine.fullScreen,
       (bool fullscreen) => onPressed(

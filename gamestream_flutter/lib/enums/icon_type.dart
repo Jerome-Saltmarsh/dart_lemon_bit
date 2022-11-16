@@ -19,4 +19,6 @@ class IconType {
   static const Lightning_Nearby = 23;
   static const Lightning_On = 24;
   static const Inventory = 25;
+  static const Sound_Enabled = 26;
+  static const Sound_Disabled = 27;
 }
