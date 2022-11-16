@@ -48,8 +48,12 @@
 [ ] particle-type myst
 
 [current]
+[ ] scene edit tool - respawn 
+[ ] scene edit tool - pause ai  
+[ ] scene edit tool - clear ai
 
 16.11.2022
+[x] fix rain bug
 [x] edit save button
 [x] mute sounds
 [x] auto check for latest version

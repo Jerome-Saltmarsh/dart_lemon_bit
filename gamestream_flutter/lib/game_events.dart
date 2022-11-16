@@ -40,6 +40,7 @@ class GameEvents {
     GameState.gridWindResetToAmbient();
 
     if (ClientState.raining.value) {
+      GameActions.rainStop();
       GameActions.rainStart();
     }
     GameState.refreshLighting();

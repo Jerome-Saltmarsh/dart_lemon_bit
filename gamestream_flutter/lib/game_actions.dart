@@ -35,7 +35,7 @@ class GameActions {
           }
 
           if (
-          column == 0 ||
+              column == 0 ||
               row == 0 ||
               !GameQueries.gridNodeZRCTypeRainOrEmpty(z, row - 1, column) ||
               !GameQueries.gridNodeZRCTypeRainOrEmpty(z, row, column - 1)
@@ -53,6 +53,11 @@ class GameActions {
       GameNodes.nodesType[i] = NodeType.Empty;
       GameNodes.nodesOrientation[i] = NodeOrientation.None;
     }
+  }
+
+  ///
+  static void rainFixBug(){
+
   }
 
   static void actionSetModePlay(){
