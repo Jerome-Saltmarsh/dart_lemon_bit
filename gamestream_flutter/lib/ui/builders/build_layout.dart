@@ -4,11 +4,7 @@ import 'package:gamestream_flutter/game_widgets.dart';
 
 
 
-String padZero(num value) {
-  String t = value.toInt().toString();
-  if (t.length >= 2) return t;
-  return '0$t';
-}
+
 
 Widget buildLayout({
   bool expand = true,

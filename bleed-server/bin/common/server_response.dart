@@ -43,5 +43,6 @@ class ServerResponse {
   static const GameObject = 107;
   static const Environment = 108;
   static const Error = 109;
+  static const Dark_Age = 110;
 }
 

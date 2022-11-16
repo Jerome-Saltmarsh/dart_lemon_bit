@@ -121,4 +121,7 @@ class AreaPlains1 extends DarkAgeArea {
 
     );
   }
+
+  @override
+  int get areaType => AreaType.Plains;
 }

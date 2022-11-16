@@ -6,8 +6,8 @@ import 'package:gamestream_flutter/isometric/ui/stacks/build_page.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_editor_dialog.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_editor_tab.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
+import 'package:gamestream_flutter/language_utils.dart';
 import 'package:gamestream_flutter/library.dart';
-import 'package:gamestream_flutter/ui/builders/build_layout.dart';
 
 import 'editor_enums.dart';
 

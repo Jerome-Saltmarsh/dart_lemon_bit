@@ -6,6 +6,8 @@ export 'interact_mode.dart';
 export 'cursor_action.dart';
 export 'inventory_request.dart';
 export 'character_action.dart';
+export 'src/area_type.dart';
+export 'src/api_dark_age.dart';
 export 'character_state.dart';
 export 'client_request.dart';
 export 'compile_util.dart';

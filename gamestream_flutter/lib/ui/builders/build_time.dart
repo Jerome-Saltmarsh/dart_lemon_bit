@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/language_utils.dart';
 import 'package:gamestream_flutter/library.dart';
-import 'package:gamestream_flutter/ui/builders/build_layout.dart';
 
 Widget buildTime(){
   return Tooltip(

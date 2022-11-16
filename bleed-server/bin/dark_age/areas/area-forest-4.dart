@@ -85,4 +85,6 @@ class AreaForest4 extends DarkAgeArea {
     );
   }
 
+  @override
+  int get areaType => AreaType.Forest;
 }

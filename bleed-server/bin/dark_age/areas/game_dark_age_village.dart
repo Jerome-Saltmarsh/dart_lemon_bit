@@ -176,11 +176,12 @@ class GameDarkAgeVillage extends DarkAgeArea {
       );
     }
 
-
     if (player.questInProgress(Quest.Jenkins_Deliver_Scroll_To_College))
       return inProgressJenkinsDeliverScroll(player);
 
     return interactionJenkinsAllQuestsCompleted(player);
   }
 
+  @override
+  int get areaType => AreaType.Town;
 }

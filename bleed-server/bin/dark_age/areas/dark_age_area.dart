@@ -1,13 +1,17 @@
 
 
 import '../../classes/library.dart';
+import '../../common/library.dart';
+import '../../common/src/api_dark_age.dart';
 import '../../engine.dart';
 import '../game_dark_age.dart';
 
-class DarkAgeArea extends GameDarkAge {
+abstract class DarkAgeArea extends GameDarkAge {
   var row = 0;
   var column = 0;
   var mapTile = 0;
+
+  int get areaType;
 
   DarkAgeArea(Scene scene, {required this.mapTile})
       : super(scene, engine.environmentAboveGround);
@@ -46,6 +50,13 @@ class DarkAgeArea extends GameDarkAge {
         continue;
       }
     }
+  }
+
+  @override
+  void customDownloadScene(Player player){
+      player.writeByte(ServerResponse.Dark_Age);
+      player.writeByte(ApiDarkAge.areaType);
+      player.writeByte(areaType);
   }
 }
 

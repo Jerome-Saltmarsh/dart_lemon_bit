@@ -113,6 +113,14 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Error:
           ServerState.error.value = readString();
           break;
+        case ServerResponse.Dark_Age:
+          final darkAgeCode = readByte();
+          switch (darkAgeCode) {
+            case ApiDarkAge.areaType:
+              ServerState.areaType.value = readByte();
+              break;
+          }
+          break;
         default:
           if (debugging) {
             return;

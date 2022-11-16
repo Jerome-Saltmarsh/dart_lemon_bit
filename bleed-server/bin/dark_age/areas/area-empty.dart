@@ -1,4 +1,5 @@
 
+import '../../common/src/area_type.dart';
 import '../../common/map_tiles.dart';
 import '../dark_age_scenes.dart';
 import 'dark_age_area.dart';
@@ -8,4 +9,7 @@ class AreaEmpty extends DarkAgeArea {
 
   @override
   void updateInProgress(){}
+
+  @override
+  int get areaType => AreaType.None;
 }

@@ -62,4 +62,7 @@ class GameDarkAgeFarm extends DarkAgeArea {
         }
      }
   }
+
+  @override
+  int get areaType => AreaType.Farm;
 }
