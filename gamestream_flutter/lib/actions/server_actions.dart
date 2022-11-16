@@ -19,4 +19,8 @@ class ServerActions {
         indexFrom: index,
         indexTo: ServerQuery.mapWatchBeltTypeToItemType(watchBelt),
       );
+
+  static void saveScene(){
+    GameNetwork.sendClientRequest(ClientRequest.Edit, EditRequest.Save.index);
+  }
 }

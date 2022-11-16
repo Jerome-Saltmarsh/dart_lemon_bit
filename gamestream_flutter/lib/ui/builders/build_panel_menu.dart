@@ -4,31 +4,6 @@ import 'package:gamestream_flutter/library.dart';
 
 import 'build_time.dart';
 
-Widget buildPanelMenu() =>
-    GameUI.buildDialogUIControl(
-      child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            buildButtonTogglePlayMode(),
-            width3,
-            watch(ServerState.sceneEditable, (bool sceneEditable) => sceneEditable ? EditorUI.buildRowWeatherControls() : buildWatchBool(GameUI.timeVisible, buildTime)),
-            width3,
-            GameUI.buildIconAudio(),
-            width3,
-            GameUI.buildIconZoom(),
-            width3,
-            onPressed(
-                child: GameUI.buildIconFullscreen(),
-                action:  Engine.fullscreenToggle,
-            ),
-            onPressed(
-                child: GameUI.buildIconHome(),
-                action: GameNetwork.disconnect,
-            ),
-          ]
-      ),
-    );
-
 Widget buildButtonTogglePlayMode() {
   return watch(ServerState.sceneEditable, (bool isOwner) {
     if (!isOwner) return const SizedBox();

@@ -50,6 +50,7 @@
 [current]
 
 16.11.2022
+[x] edit save button
 [x] mute sounds
 [x] auto check for latest version
 [x] connection lost error message

@@ -415,6 +415,15 @@ class Connection {
     }
     final editRequest = EditRequest.values[editRequestIndex];
     switch (editRequest) {
+      case EditRequest.Save:
+        if (player.game.scene.name.isEmpty){
+          player.writeError('cannot save because scene name is empty');
+          return;
+        }
+        player.game.saveSceneToFile();
+        player.writeError('scene saved: ${player.game.scene.name}');
+        break;
+
       case EditRequest.Modify_Canvas_Size:
         if (arguments.length < 3) {
           return errorInsufficientArgs(3, arguments);

@@ -41,6 +41,9 @@ class EditorUI {
           buildRowLightningIcons(),
           width2,
           buildRowWindIcons(),
+          width2,
+          text("Save", onPressed: ServerActions.saveScene),
+          width2,
         ],
       );
 

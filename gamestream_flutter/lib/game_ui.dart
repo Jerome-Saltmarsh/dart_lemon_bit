@@ -14,6 +14,7 @@ import 'package:gamestream_flutter/library.dart';
 import 'game_ui_config.dart';
 import 'isometric/ui/dialogs/build_game_dialog.dart';
 import 'ui/builders/build_panel_menu.dart';
+import 'ui/builders/build_time.dart';
 
 class GameUI {
   static const Icon_Scale = 1.5;
@@ -35,7 +36,11 @@ class GameUI {
             buildDialogFramesSinceUpdate),
         watch(GameState.player.gameDialog, buildGameDialog),
         buildWatchBool(GameState.player.alive, buildContainerRespawn, false),
-        buildTopRightMenu(),
+        Positioned(
+            top: 0,
+            right: 0,
+            child: buildRowMainMenu()
+        ),
         buildWatchBool(GameUI.mapVisible, buildMiniMap),
         watch(ClientState.edit, buildPlayMode),
         watch(GameIO.inputMode, buildStackInputMode),
@@ -45,7 +50,10 @@ class GameUI {
             child: Container(
                 width: Engine.screen.width,
                 alignment: Alignment.center,
-                child: watch(ClientState.messageStatus, text),
+                child: watch(ClientState.messageStatus, (String message){
+                  if (message.isEmpty) return const SizedBox();
+                  return text(message, onPressed: ClientActions.messageClear);
+                }),
             ),
         ),
       ]);
@@ -217,8 +225,35 @@ class GameUI {
             action: GameState.actionGameDialogShowQuests),
       );
 
-  static Positioned buildTopRightMenu() =>
-      Positioned(top: 0, right: 0, child: buildPanelMenu());
+  static Widget buildRowMainMenu() =>
+      GameUI.buildDialogUIControl(
+        child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              buildButtonTogglePlayMode(),
+              width3,
+              watch(ServerState.sceneEditable, buildWatchSceneEditableControls),
+              width3,
+              GameUI.buildIconAudio(),
+              width3,
+              GameUI.buildIconZoom(),
+              width3,
+              onPressed(
+                child: GameUI.buildIconFullscreen(),
+                action:  Engine.fullscreenToggle,
+              ),
+              onPressed(
+                child: GameUI.buildIconHome(),
+                action: GameNetwork.disconnect,
+              ),
+            ]
+        ),
+      );
+
+  static Widget buildWatchSceneEditableControls(bool sceneEditable) {
+    return sceneEditable ? EditorUI.buildRowWeatherControls() : buildWatchBool(GameUI.timeVisible, buildTime);
+  }
+
 
   static Widget buildStackGameTypeDarkAge() => Stack(
         children: [

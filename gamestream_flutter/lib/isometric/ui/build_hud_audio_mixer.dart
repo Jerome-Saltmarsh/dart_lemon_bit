@@ -2,22 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/classes/audio_loop.dart';
 import 'package:gamestream_flutter/game_audio.dart';
-import 'package:gamestream_flutter/ui/builders/build_panel_menu.dart';
 
 import '../../game_widgets.dart';
 import 'constants/colors.dart';
 import 'widgets/build_container.dart';
-
-Widget buildHudAudioMix(){
-   return Stack(
-      children: [
-        Positioned(top: 0, right: 0, child: buildPanelMenu()),
-        Positioned(top: 0, left: 0,
-          child: buildSounds(),
-        )
-      ],
-   );
-}
 
 Widget buildSounds() =>
   Refresh(() =>

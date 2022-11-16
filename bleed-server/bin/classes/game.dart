@@ -1834,7 +1834,7 @@ abstract class Game {
       if (!removePlayer(player)) continue;
       i--;
       playerLength--;
-      print("Removed disconnected player");
+      // print("Removed disconnected player");
     }
   }
 
@@ -1843,9 +1843,14 @@ abstract class Game {
     characters.remove(player);
     customOnPlayerDisconnected(player);
     if (player.scene.dirty && player.scene.name.isNotEmpty) {
-      writeSceneToFile(scene);
+      saveSceneToFile();
     }
     return true;
+  }
+
+  void saveSceneToFile() {
+    assert(scene.name.isNotEmpty);
+    writeSceneToFile(scene);
   }
 
   void npcSetRandomDestination(AI ai, {int radius = 10}) {
