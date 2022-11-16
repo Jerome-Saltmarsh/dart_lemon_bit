@@ -238,6 +238,7 @@ Widget width(double value) {
 }
 
 final width2 = width(2);
+final width3 = width(3);
 final width4 = width(4);
 final width6 = width(6);
 final width8 = width(8);

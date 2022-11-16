@@ -16,6 +16,7 @@ import 'isometric/ui/dialogs/build_game_dialog.dart';
 import 'ui/builders/build_panel_menu.dart';
 
 class GameUI {
+  static const Icon_Scale = 1.5;
   static final messageBoxVisible = Watch(false, clamp: (bool value) {
     if (ServerState.gameType.value == GameType.Skirmish) return false;
     return value;
@@ -227,11 +228,13 @@ class GameUI {
         ],
       );
 
+
+
   static Widget buildIconAudio() =>
       onPressed(
         action: GameAudio.toggleMuted,
         child: watch(GameAudio.muted, (bool t) =>
-            GameUI.buildAtlasIconType(t ? IconType.Sound_Disabled : IconType.Sound_Enabled)
+            GameUI.buildAtlasIconType(t ? IconType.Sound_Disabled : IconType.Sound_Enabled, scale: Icon_Scale)
         ),
       );
 
@@ -239,13 +242,13 @@ class GameUI {
       Engine.fullScreen,
       (bool fullscreen) => onPressed(
           action: Engine.fullscreenToggle,
-          child: GameUI.buildAtlasIconType(IconType.Fullscreen)));
+          child: GameUI.buildAtlasIconType(IconType.Fullscreen, scale: Icon_Scale)));
 
   static Widget buildIconZoom() => onPressed(
-      action: GameActions.toggleZoom, child: buildAtlasIconType(IconType.Zoom));
+      action: GameActions.toggleZoom, child: buildAtlasIconType(IconType.Zoom, scale: Icon_Scale));
 
   static Widget buildIconHome() => onPressed(
-      action: GameNetwork.disconnect, child: buildAtlasIconType(IconType.Home));
+      action: GameNetwork.disconnect, child: buildAtlasIconType(IconType.Home, scale: Icon_Scale));
 
   static Widget buildIconSlotEmpty() =>
       buildAtlasIconType(IconType.Slot, scale: GameInventoryUI.Slot_Scale);

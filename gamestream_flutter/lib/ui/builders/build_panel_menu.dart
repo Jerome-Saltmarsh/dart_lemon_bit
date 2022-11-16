@@ -10,13 +10,13 @@ Widget buildPanelMenu() =>
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             buildButtonTogglePlayMode(),
-            width2,
+            width3,
             watch(ServerState.sceneEditable, (bool sceneEditable) => sceneEditable ? EditorUI.buildRowWeatherControls() : buildWatchBool(GameUI.timeVisible, buildTime)),
-            width2,
+            width3,
             GameUI.buildIconAudio(),
-            width2,
+            width3,
             GameUI.buildIconZoom(),
-            width2,
+            width3,
             onPressed(
                 child: GameUI.buildIconFullscreen(),
                 action:  Engine.fullscreenToggle,
