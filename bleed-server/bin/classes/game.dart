@@ -2175,14 +2175,21 @@ abstract class Game {
 
   static double getAngleBetweenV3(Position a, Position b) => getAngle(a.x - b.x, a.y - b.y);
 
+  /// WARNING EXPENSIVE OPERATION
   void triggerSpawnPoints(){
     for (final index in scene.spawnPoints){
       spawnZombies(index: index, total: 4);
     }
   }
 
+  /// WARNING EXPENSIVE OPERATION
   void clearSpawnedAI(){
-
+      for (var i = 0; i < characters.length; i++){
+         if (characters[i] is Zombie){
+           characters.removeAt(i);
+           i--;
+         }
+      }
   }
 }
 
