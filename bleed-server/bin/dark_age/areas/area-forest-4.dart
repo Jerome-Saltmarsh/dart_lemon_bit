@@ -4,7 +4,7 @@ import '../../common/flag.dart';
 import '../../common/library.dart';
 import '../../common/map_tiles.dart';
 import '../dark_age_scenes.dart';
-import 'area-plains-1.dart';
+import 'area_old_village.dart';
 import 'dark_age_area.dart';
 
 class AreaForest4 extends DarkAgeArea {

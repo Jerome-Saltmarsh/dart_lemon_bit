@@ -5,7 +5,7 @@ import '../../common/library.dart';
 import '../../common/map_tiles.dart';
 import '../dark_age_scenes.dart';
 import '../on_interaction/on_interact_with_jenkins.dart';
-import 'area-plains-1.dart';
+import 'area_old_village.dart';
 import 'dark_age_area.dart';
 
 class GameDarkAgeVillage extends DarkAgeArea {

@@ -2,6 +2,12 @@
 import 'package:gamestream_flutter/library.dart';
 
 class ServerEvents {
+
+  static void onChangedAreaType(int areaType) {
+    print("ServerEvents.onChangedAreaType(${AreaType.getName(areaType)})");
+     ClientState.areaTypeVisibleDuration = 300;
+  }
+
   static void onChangedGameType(int? value){
     print("gamestream.onChangedGameType(${GameType.getName(value)})");
     if (value == null) {

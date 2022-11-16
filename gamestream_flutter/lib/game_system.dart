@@ -32,7 +32,6 @@ class GameSystem {
     GameIO.addListeners();
     GameIO.detectInputMode();
     GameWebsite.region.value = GameUtils.detectConnectionRegion();
-    // GameWebsite.errorMessageEnabled.value = Engine.isLocalHost;
     GameWebsite.errorMessageEnabled.value = true;
     Engine.joystickMaxDistance = 150;
 

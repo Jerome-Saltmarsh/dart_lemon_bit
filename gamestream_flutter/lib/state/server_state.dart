@@ -3,7 +3,7 @@ import 'package:gamestream_flutter/library.dart';
 /// the data inside server state belongs to the server and can only be read
 /// writing to server state is forbidden
 class ServerState {
-  static final areaType = Watch(AreaType.None);
+  static final areaType = Watch(AreaType.None, onChanged: ServerEvents.onChangedAreaType);
   static final interactMode = Watch(InteractMode.None, onChanged: GameEvents.onChangedPlayerInteractMode);
   static final playerHealth = Watch(0);
   static final playerEquippedWeaponAmmunitionType = Watch(0);

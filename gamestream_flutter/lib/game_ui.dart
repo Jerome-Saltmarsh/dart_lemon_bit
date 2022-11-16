@@ -38,9 +38,17 @@ class GameUI {
             child: buildRowMainMenu()
         ),
         buildWatchBool(GameUI.mapVisible, buildMiniMap),
-        watch(ClientState.edit, buildPlayMode),
-        watch(GameIO.inputMode, buildStackInputMode),
+        WatchBuilder(ClientState.edit, buildPlayMode),
+        WatchBuilder(GameIO.inputMode, buildStackInputMode),
         buildWatchBool(ClientState.debugVisible, GameDebug.buildStackDebug),
+        Positioned(
+            top: 75,
+            child: Container(
+                width: Engine.screen.width,
+                alignment: Alignment.center,
+                child: WatchBuilder(ServerState.areaType, (int areaType) => text(AreaType.getName(areaType), size: 30))
+            ),
+        ),
         Positioned(
             bottom: 100,
             child: Container(

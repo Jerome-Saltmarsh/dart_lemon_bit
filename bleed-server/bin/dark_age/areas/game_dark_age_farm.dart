@@ -4,7 +4,7 @@ import '../../common/library.dart';
 import '../../common/map_tiles.dart';
 import '../../functions/move_player_to_crystal.dart';
 import '../dark_age_scenes.dart';
-import 'area-plains-1.dart';
+import 'area_old_village.dart';
 import 'dark_age_area.dart';
 
 class GameDarkAgeFarm extends DarkAgeArea {

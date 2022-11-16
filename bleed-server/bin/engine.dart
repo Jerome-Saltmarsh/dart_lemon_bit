@@ -14,9 +14,9 @@ import 'dark_age/areas/area-mountains-1.dart';
 import 'dark_age/areas/area-mountains-2.dart';
 import 'dark_age/areas/area-mountains-3.dart';
 import 'dark_age/areas/area-mountains-4.dart';
-import 'dark_age/areas/area-plains-1.dart';
+import 'dark_age/areas/area_old_village.dart';
 import 'dark_age/areas/area-plains-2.dart';
-import 'dark_age/areas/area-plains-3.dart';
+import 'dark_age/areas/area_cemetery_1.dart';
 import 'dark_age/areas/area-plains-4.dart';
 import 'dark_age/areas/area-shrine-1.dart';
 import 'dark_age/areas/area-town.dart';
@@ -72,8 +72,8 @@ class Engine {
       GameDarkAgeVillage(),
       AreaFarmA(),
       AreaLake(),
-      AreaPlains1(),
-      AreaPlains3(),
+      Area_OldVillage(),
+      Area_Cemetery_1(),
       AreaShrine1(),
     ];
     final mapRow3 = <DarkAgeArea>[
@@ -165,7 +165,7 @@ class Engine {
 
   GameDarkAge findGameDarkAreaPlains1() {
     for (final game in games) {
-      if (game is AreaPlains1) {
+      if (game is Area_OldVillage) {
         return game;
       }
     }

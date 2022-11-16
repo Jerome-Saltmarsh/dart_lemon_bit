@@ -12,9 +12,12 @@ class DarkAgeTeam {
   static const Bandits = 3;
 }
 
-class AreaPlains1 extends DarkAgeArea {
+class Area_OldVillage extends DarkAgeArea {
 
-  AreaPlains1() : super(darkAgeScenes.plains_1, mapTile: MapTiles.Plains_1) {
+  @override
+  int get areaType => AreaType.Old_Village;
+
+  Area_OldVillage() : super(darkAgeScenes.plains_1, mapTile: MapTiles.Plains_1) {
     init();
   }
 
@@ -121,7 +124,4 @@ class AreaPlains1 extends DarkAgeArea {
 
     );
   }
-
-  @override
-  int get areaType => AreaType.Plains;
 }

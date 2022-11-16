@@ -10,6 +10,7 @@ class AreaType {
    static const Plains = 6;
    static const Lake = 7;
    static const Dark_Fortress = 8;
+   static const Old_Village = 9;
 
    static String getName(int value) => {
         Town: "Town",
@@ -20,5 +21,6 @@ class AreaType {
         Plains: "Plains",
         Lake: "Lake",
         Dark_Fortress: "Dark Fortress",
+        Old_Village: "Old Village",
       }[value] ?? "unknown-region-$value";
 }

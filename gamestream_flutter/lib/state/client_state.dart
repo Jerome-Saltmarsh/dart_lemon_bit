@@ -29,6 +29,7 @@ class ClientState {
   static var srcXRainLanding = 6739.0;
   static var nextLightning = 0;
   static var messageStatusDuration = 0;
+  static var areaTypeVisibleDuration = 0;
 
   // PROPERTIES
   static bool get hoverDialogIsInventory => hoverDialogType.value == DialogType.Inventory;
