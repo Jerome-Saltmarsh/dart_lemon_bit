@@ -3,10 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/game_ui_interact.dart';
 import 'package:gamestream_flutter/isometric/events/on_visibility_changed_message_box.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
-import 'package:gamestream_flutter/isometric/ui/stacks/build_stack_game_type_skirmish.dart';
-import 'package:gamestream_flutter/isometric/ui/stacks/build_stack_play_mode.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_player_alive.dart';
-import 'package:gamestream_flutter/isometric/ui/watches/build_watch_scene_meta_data_player_is_owner.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/game_map.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -188,17 +185,6 @@ class GameUI {
         }),
       );
 
-  static Widget buildGameTypeUI(int? gameType) {
-    switch (gameType) {
-      case GameType.Dark_Age:
-        return buildStackGameTypeDarkAge();
-      case GameType.Skirmish:
-        return buildStackGameTypeSkirmish();
-      default:
-        return const SizedBox();
-    }
-  }
-
   static Positioned buildMiniMap() => Positioned(
         left: 6,
         top: 6,
@@ -253,17 +239,6 @@ class GameUI {
   static Widget buildWatchSceneEditableControls(bool sceneEditable) {
     return sceneEditable ? EditorUI.buildRowWeatherControls() : buildWatchBool(GameUI.timeVisible, buildTime);
   }
-
-
-  static Widget buildStackGameTypeDarkAge() => Stack(
-        children: [
-          Positioned(left: 8, bottom: 50, child: buildColumnTeleport()),
-          buildWatchBool(
-              GameState.player.questAdded, buildContainerQuestUpdated),
-        ],
-      );
-
-
 
   static Widget buildIconAudio() =>
       onPressed(
@@ -333,7 +308,7 @@ class GameUI {
       );
 
   static Widget buildPlayMode(bool edit) =>
-      edit ? watch(GameEditor.editTab, buildStackEdit) : buildStackPlay();
+      edit ? watch(GameEditor.editTab, EditorUI.buildStackEdit) : buildStackPlay();
 
   static Widget buildStackPlay() => StackFullscreen(children: [
         GameUIInteract.buildWatchInteractMode(),

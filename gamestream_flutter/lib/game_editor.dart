@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:file_picker/file_picker.dart';
-import 'package:gamestream_flutter/isometric/ui/watches/build_watch_scene_meta_data_player_is_owner.dart';
+import 'package:gamestream_flutter/editor/editor_enums.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class GameEditor {

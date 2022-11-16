@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/library.dart';
 
-import 'build_time.dart';
-
 Widget buildButtonTogglePlayMode() {
   return watch(ServerState.sceneEditable, (bool isOwner) {
     if (!isOwner) return const SizedBox();
