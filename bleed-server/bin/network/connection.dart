@@ -400,7 +400,11 @@ class Connection {
     final player = _player;
     if (player == null) return;
     final game = player.game;
-    if (!isLocalMachine && game is GameDarkAgeEditor == false) return;
+
+    if (!isLocalMachine && game is GameDarkAgeEditor == false) {
+      player.writeError('cannot edit scene');
+      return;
+    }
 
     if (arguments.length < 2){
       return errorInvalidArg('insufficient args');
@@ -415,6 +419,14 @@ class Connection {
     }
     final editRequest = EditRequest.values[editRequestIndex];
     switch (editRequest) {
+      case EditRequest.Clear_Spawned:
+        player.game.clearSpawnedAI();
+        break;
+      case EditRequest.Spawn_AI:
+        player.game.clearSpawnedAI();
+        player.game.scene.refreshSpawnPoints();
+        player.game.triggerSpawnPoints();
+        break;
       case EditRequest.Save:
         if (player.game.scene.name.isEmpty){
           player.writeError('cannot save because scene name is empty');

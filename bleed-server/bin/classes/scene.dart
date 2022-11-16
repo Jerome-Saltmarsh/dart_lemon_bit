@@ -22,7 +22,7 @@ class Scene {
   var dirty = false;
   final List<GameObject> gameObjects;
 
-  final Uint16List spawnPoints;
+  Uint16List spawnPoints;
 
   late double gridRowLength;
   late double gridColumnLength;
@@ -163,5 +163,20 @@ class Scene {
 
   void modifyGridAddRowAtStart(){
 
+  }
+
+  /// Warning Expensive, (Do not call during runtime)
+  void refreshSpawnPoints() {
+    final newSpawnPoints = <int>[];
+    for (var i = 0; i < nodeTypes.length; i++){
+      if (nodeTypes[i] != NodeType.Spawn) continue;
+      newSpawnPoints.add(i);
+    }
+    if (spawnPoints.length != newSpawnPoints){
+      spawnPoints = Uint16List(newSpawnPoints.length);
+    }
+    for (var i = 0; i < spawnPoints.length; i++){
+       spawnPoints[i] = newSpawnPoints[i];
+    }
   }
 }

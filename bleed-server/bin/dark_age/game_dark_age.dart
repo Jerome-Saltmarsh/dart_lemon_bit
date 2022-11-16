@@ -17,9 +17,7 @@ class GameDarkAge extends Game {
   int get gameType => GameType.Dark_Age;
 
   GameDarkAge(Scene scene, this.environment) : super(scene) {
-    for (final index in scene.spawnPoints){
-      spawnZombies(index: index, total: 4);
-    }
+    triggerSpawnPoints();
   }
 
   @override

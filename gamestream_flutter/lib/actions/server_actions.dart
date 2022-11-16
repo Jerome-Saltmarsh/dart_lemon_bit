@@ -23,4 +23,12 @@ class ServerActions {
   static void saveScene(){
     GameNetwork.sendClientRequest(ClientRequest.Edit, EditRequest.Save.index);
   }
+
+  static void editSceneSpawnAI(){
+    GameNetwork.sendClientRequest(ClientRequest.Edit, EditRequest.Spawn_AI.index);
+  }
+
+  static void editSceneClearSpawnedAI(){
+    GameNetwork.sendClientRequest(ClientRequest.Edit, EditRequest.Clear_Spawned.index);
+  }
 }

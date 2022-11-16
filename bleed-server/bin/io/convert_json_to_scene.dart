@@ -31,13 +31,6 @@ Scene convertJsonToScene(Json json, String name) {
   for (var i = 0; i < total; i++) {
     nodeTypes[i] = nodeTypesDynamic[i];
     nodeOrientation[i] = nodeOrientations[i];
-    //
-    // nodeTypes[i] = nodeType;
-    // if (NodeType.supportsOrientation(nodeType, nodeOrientation)){
-    //   nodeOrientation[i] = nodeOrientation;
-    // } else {
-    //   nodeOrientation[i] = NodeType.getDefaultOrientation(nodeType);
-    // }
   }
 
   return Scene(

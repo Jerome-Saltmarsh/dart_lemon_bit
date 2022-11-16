@@ -2174,5 +2174,15 @@ abstract class Game {
   }
 
   static double getAngleBetweenV3(Position a, Position b) => getAngle(a.x - b.x, a.y - b.y);
+
+  void triggerSpawnPoints(){
+    for (final index in scene.spawnPoints){
+      spawnZombies(index: index, total: 4);
+    }
+  }
+
+  void clearSpawnedAI(){
+
+  }
 }
 
