@@ -1,3 +1,14 @@
+[ideas]
+[ ] talk with other players
+[ ] trade with other players
+[ ] stash
+[ ] player-charge-attack
+[ ] select skin color
+[ ] separate head-type and helm-type
+[ ] render foreground zombie walking while connecting
+[ ] item weight
+[ ] inventory max weight
+
 [engine]
 [ ] save scene as byte stream
 [ ] cache region
@@ -8,26 +19,20 @@
 [ ] optimize front end - do not use objects to store gameobjects
 [ ] optimize front end - do not use objects to store particles
 [ ] option fullscreen dialog on game start if it fails to do so automatically
-[ ] render foreground zombie walking while connecting
-[ ] talk with other players
-[ ] trade with other players
 [ ] editor - gameobjects
-[ ] stash
-[ ] player-charge-attack
-[ ] mini-map close-up
-[ ] select skin color
-[ ] separate head-type and helm-type
-[ ] item weight
-[ ] inventory max weight
 [ ] fix editor add remove columns
 [ ] highlight cursor gameobject item
 [ ] engine improve grid invisibility
-[ ] player attributes
-[ ] skills
+[ ] player attributes ui
 [ ] repeat killing same enemies yields no reward
 
+
+[PROJECTS]
+[*] SKILLS
+[*] GENERATE MINI-MAP
+[*] scene cemetery
+
 [content]
-[ ] scene cemetery
 [ ] scene cave
 [ ] scene forest
 [ ] scene wilderness
@@ -43,6 +48,7 @@
 [ ] particle-type myst
 
 [current]
+[ ] mute sounds
 
 16.11.2022
 [x] auto check for latest version

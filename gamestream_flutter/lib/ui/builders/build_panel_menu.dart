@@ -13,6 +13,7 @@ Widget buildPanelMenu() =>
             width2,
             watch(ServerState.sceneEditable, (bool sceneEditable) => sceneEditable ? EditorUI.buildRowWeatherControls() : buildWatchBool(GameUI.timeVisible, buildTime)),
             width2,
+            watch(GameAudio.muted, (bool t) => text("Audio Enabled: ${!t}", onPressed: GameAudio.toggleMuted)),
             GameUI.buildIconZoom(),
             width2,
             onPressed(
@@ -45,14 +46,3 @@ Widget buildButtonTogglePlayMode() {
 Widget buildButtonShowMap() => Tooltip(
     message: ("(M)"), child: text("Map", onPressed: GameState.actionGameDialogShowMap));
 
-
-Widget buildButtonToggleAudio() {
-  return onPressed(
-    child: WatchBuilder(GameAudio.soundEnabled, (bool soundEnabled) {
-      return soundEnabled
-          ? Tooltip(child: text("Disable Sound"), message: 'Disable Sound')
-          : Tooltip(
-              child: text("Enable Sound"), message: 'Enable Sound');
-    }),
-  );
-}

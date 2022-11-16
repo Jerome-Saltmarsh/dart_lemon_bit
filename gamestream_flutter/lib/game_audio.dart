@@ -7,11 +7,24 @@ import 'library.dart';
 
 class GameAudio {
 
+
+  static void toggleMuted() => muted.value = !muted.value;
+
+  static final muted = Watch(false, onChanged: (bool value){
+    if (value){
+      for (final audioSource in audioLoops) {
+        audioSource.audioPlayer.pause();
+      }
+    } else {
+      for (final audioSource in audioLoops) {
+        audioSource.audioPlayer.play();
+      }
+    }
+  });
+
   static var nextZombieGrowl = 100;
-  static final soundEnabled = Cache(key: 'audio-enabled', value: true);
   static var nextRandomSound = 0;
   static var nextRandomMusic = 0;
-
 
   static final musicNight = [
     AudioSingle(name: 'creepy-whistle', volume: 0.1),
@@ -139,11 +152,13 @@ class GameAudio {
   static var _nextAudioSourceUpdate = 0;
 
   static void update() {
-    if (_nextAudioSourceUpdate-- <= 0){
+    if (GameAudio.muted.value) return;
+
+    if (_nextAudioSourceUpdate-- <= 0) {
       _nextAudioSourceUpdate = 5;
-      for (final audioSource in audioLoops){
-        audioSource.update();
-      }
+        for (final audioSource in audioLoops){
+          audioSource.update();
+        }
     }
     updateRandomAmbientSounds();
     updateRandomMusic();

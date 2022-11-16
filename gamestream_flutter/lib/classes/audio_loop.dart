@@ -44,4 +44,10 @@ class AudioLoop {
     volume = clamp(volume + change, 0, 1.0);
     audioPlayer.setVolume(volume);
   }
+
+  void updateForce(){
+    final change = (getTargetVolume() - volume) * 0.05;
+    volume = clamp(volume + change, 0, 1.0);
+    audioPlayer.setVolume(volume);
+  }
 }
