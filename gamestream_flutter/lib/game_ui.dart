@@ -10,7 +10,6 @@ import 'package:gamestream_flutter/library.dart';
 
 import 'game_ui_config.dart';
 import 'isometric/ui/dialogs/build_game_dialog.dart';
-import 'ui/builders/build_panel_menu.dart';
 import 'ui/builders/build_time.dart';
 
 class GameUI {
@@ -610,5 +609,21 @@ class GameUI {
       BoxDecoration(
           border: Border.all(color: colorBorder, width: width),
           borderRadius: BorderRadius.circular(borderRadius),
-          color: colorFill);
+          color: colorFill
+      );
+
+  static Widget buildButtonTogglePlayMode() {
+    return watch(ServerState.sceneEditable, (bool isOwner) {
+      if (!isOwner) return const SizedBox();
+      return watch(ClientState.edit, (bool edit) {
+        return container(
+            toolTip: "Tab",
+            child: edit ? "PLAY" : "EDIT",
+            action: GameActions.actionToggleEdit,
+            color: GameColors.green,
+            alignment: Alignment.center,
+            width: 100);
+      });
+    });
+  }
 }
