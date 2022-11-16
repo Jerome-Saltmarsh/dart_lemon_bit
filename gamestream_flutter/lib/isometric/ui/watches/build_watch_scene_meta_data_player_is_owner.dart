@@ -14,18 +14,13 @@ Widget buildStackEdit(EditTab activeEditTab) =>
     buildPage(
     children: [
       watch(GameEditor.editorDialog, buildWatchEditorDialog),
-      // if (activeEditTab == EditTab.Grid)
-      // Positioned(
-      //   right: 6,
-      //   top: 50,
-      //   child: watch(GameEditor.nodeSelectedOrientation, buildColumnEditNodeOrientation),
-      // ),
       if (activeEditTab == EditTab.Objects)
         Positioned(
           left: 0,
           bottom: 6,
           child: buildColumnSelectedGameObject(),
         ),
+      buildWindowAIControls(),
       if (activeEditTab == EditTab.Objects)
         Positioned(
           left: 0,
@@ -169,6 +164,26 @@ Widget buildColumnEditNodeOrientation(int selectedNodeOrientation) =>
           buildColumnNodeOrientationSlopeCornerOuter(),
       ],
     );
+
+Positioned buildWindowAIControls() {
+  return Positioned(
+    top: 70,
+    right: 70,
+    child: Container(
+      padding: const EdgeInsets.all(16),
+      color: GameColors.brown02,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          text("Spawn AI", onPressed: ServerActions.editSceneSpawnAI),
+          text("Clear Spawned AI",
+              onPressed: ServerActions.editSceneClearSpawnedAI),
+          text("Pause AI", onPressed: ServerActions.editSceneClearSpawnedAI),
+        ],
+      ),
+    ),
+  );
+}
 
 Widget buildColumnNodeOrientationSolid() =>
     buildOrientationIcon(NodeOrientation.Solid);

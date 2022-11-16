@@ -46,22 +46,6 @@ class GameUI {
         watch(GameIO.inputMode, buildStackInputMode),
         buildWatchBool(ClientState.debugVisible, GameDebug.buildStackDebug),
         Positioned(
-          top: 70,
-          right: 70,
-          child: Container(
-              padding: const EdgeInsets.all(16),
-              color: GameColors.brown02,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                 children: [
-                   text("Spawn AI", onPressed: ServerActions.editSceneSpawnAI),
-                   text("Clear Spawned AI", onPressed: ServerActions.editSceneClearSpawnedAI),
-                   text("Pause AI", onPressed: ServerActions.editSceneClearSpawnedAI),
-                 ],
-              ),
-          ),
-        ),
-        Positioned(
             bottom: 100,
             child: Container(
                 width: Engine.screen.width,

@@ -26,33 +26,33 @@
 [ ] player attributes ui
 [ ] repeat killing same enemies yields no reward
 
-
 [PROJECTS]
-[*] SKILLS
-[*] GENERATE MINI-MAP
-[*] scene cemetery
+[ ] SKILLS
+[ ] GENERATE MINI-MAP
+[ ] CEMETERY
 
 [content]
 [ ] scene cave
 [ ] scene forest
 [ ] scene wilderness
 [ ] scene swamp
-[ ] character-butterfly
-[ ] character-bird
-[ ] character-chicken
-[ ] character-type skeleton
-[ ] character-type ranger
-[ ] character-type goblin
-[ ] character-type vampire
-[ ] character-type wolf
+[ ] character butterfly
+[ ] character bird
+[ ] character chicken
+[ ] character type skeleton
+[ ] character type ranger
+[ ] character type goblin
+[ ] character type vampire
+[ ] character type wolf
 [ ] particle-type myst
 
-[current]
-[ ] scene edit tool - respawn 
-[ ] scene edit tool - pause ai  
-[ ] scene edit tool - clear ai
+[SCENE CEMETERY]
+[ ] display scene name on enter
+[ ] scene edit tool pause ai  
 
 16.11.2022
+[x] scene edit tool respawn ai
+[x] scene edit tool clear ai
 [x] fix rain bug
 [x] edit save button
 [x] mute sounds
