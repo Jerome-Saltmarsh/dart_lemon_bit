@@ -44,13 +44,13 @@
 [ ] character type goblin
 [ ] character type vampire
 [ ] character type wolf
-[ ] particle-type myst
 
 [SCENE CEMETERY]
-[ ] display scene name on enter
-[ ] scene edit tool pause ai  
+[ ] scene edit tool pause ai
+[ ] particle-type myst
 
 16.11.2022
+[x] display scene name on enter
 [x] scene edit tool respawn ai
 [x] scene edit tool clear ai
 [x] fix rain bug

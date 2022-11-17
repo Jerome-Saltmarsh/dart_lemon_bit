@@ -310,7 +310,9 @@ class GameEvents {
   static void onPlayerEvent(int event) {
     switch (event) {
       case PlayerEvent.Level_Increased:
+        print("onPlayerEvent_LevelIncreased()");
         GameAudio.buff_1();
+        ClientActions.writeMessage("Level Gained");
         break;
       case PlayerEvent.Item_Consumed:
         onItemTypeConsumed(serverResponseReader.readUInt16());
