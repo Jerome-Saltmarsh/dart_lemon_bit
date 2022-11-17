@@ -1121,7 +1121,7 @@ class Player extends Character with ByteWriter {
     if (game is GameDarkAge == false) return;
     final environment = (game as GameDarkAge).environment;
     writeByte(ServerResponse.Weather);
-    writeByte(environment.raining.index);
+    writeByte(environment.raining);
     writeBool(environment.breezy);
     writeByte(environment.lightning);
     writeBool(environment.timePassing);
@@ -1304,10 +1304,10 @@ class Player extends Character with ByteWriter {
     writeByte(windType);
   }
 
-  void writeEnvironmentRain(Rain rain){
+  void writeEnvironmentRain(int rainType){
     writeByte(ServerResponse.Environment);
     writeByte(EnvironmentResponse.Rain);
-    writeByte(rain.index);
+    writeByte(rainType);
   }
 
   void writeEnvironmentTime(int value){

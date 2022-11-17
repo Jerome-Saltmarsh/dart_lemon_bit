@@ -252,8 +252,8 @@ class GameNetwork {
     sendClientRequest(ClientRequest.Upgrade_Weapon_Damage);
   }
 
-  static void sendClientRequestWeatherSetRain(Rain value){
-    sendClientRequest(ClientRequest.Weather_Set_Rain, value.index);
+  static void sendClientRequestWeatherSetRain(int value){
+    sendClientRequest(ClientRequest.Weather_Set_Rain, value);
   }
 
   static void sendClientRequestWeatherToggleBreeze(){

@@ -73,7 +73,7 @@ class GameSkirmish extends Game {
   @override
   void customInitPlayer(Player player) {
     player.writeEnvironmentShade(Shade.Very_Very_Dark);
-    player.writeEnvironmentRain(Rain.Light);
+    player.writeEnvironmentRain(RainType.Light);
     player.writeEnvironmentLightning(Lightning.Off);
     player.writeEnvironmentWind(WindType.Gentle);
     player.writeEnvironmentBreeze(false);

@@ -113,11 +113,11 @@ class Connection {
       case ClientRequest.Weather_Set_Rain:
         if (game is GameDarkAge == false) return;
         final universe = (game as GameDarkAge).environment;
-        final rainIndex = parse(arguments[1]);
-        if (rainIndex == null || !isValidIndex(rainIndex, rainValues))
-           return errorInvalidArg('invalid rain index: $rainIndex');
+        final rainType = parse(arguments[1]);
+        if (rainType == null || !isValidIndex(rainType, RainType.values))
+           return errorInvalidArg('invalid rain index: $rainType');
 
-        universe.raining = rainValues[rainIndex];
+        universe.raining = rainType;
         break;
 
       case ClientRequest.Weather_Toggle_Breeze:

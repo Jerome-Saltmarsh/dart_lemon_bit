@@ -55,7 +55,7 @@ class GameEvents {
     )
     ){
       GameAudio.footstep_mud_6.playXYZ(x, y, z);
-      final amount = ServerState.rain.value == Rain.Heavy ? 3 : 2;
+      final amount = ServerState.rain.value == RainType.Heavy ? 3 : 2;
       for (var i = 0; i < amount; i++){
         GameState.spawnParticleWaterDrop(x: x, y: y, z: z);
       }
@@ -290,17 +290,16 @@ class GameEvents {
     ClientState.torchesIgnited.value = Shade.fromHour(hour) != Shade.Very_Bright;
   }
 
-  static void onChangedRain(Rain value) {
-    ClientState.raining.value = value != Rain.None;
-
+  static void onChangedRain(int value) {
+    ClientState.raining.value = value != RainType.None;
     switch (value) {
-      case Rain.None:
+      case RainType.None:
         break;
-      case Rain.Light:
+      case RainType.Light:
         ClientState.srcXRainFalling = AtlasNode.Node_Rain_Falling_Light_X;
         ClientState.srcXRainLanding = AtlasNode.Node_Rain_Landing_Light_X;
         break;
-      case Rain.Heavy:
+      case RainType.Heavy:
         ClientState.srcXRainFalling = AtlasNode.Node_Rain_Falling_Heavy_X;
         ClientState.srcXRainLanding = AtlasNode.Node_Rain_Landing_Heavy_X;
         break;

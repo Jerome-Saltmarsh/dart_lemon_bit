@@ -31,7 +31,7 @@ class DarkAgeEnvironment {
    var durationWind = randomInt(500, 1000);
    var durationThunder = 0;
    var nextThunderStrike = 0;
-   var _raining = Rain.None;
+   var _raining = RainType.None;
    var _breezy = false;
    var _lightning = Lightning.Off;
    var _wind = 0;
@@ -45,7 +45,7 @@ class DarkAgeEnvironment {
    }
 
    int get lightning => _lightning;
-   Rain get raining => _raining;
+   int get raining => _raining;
    bool get breezy => _breezy;
    bool get timePassing => time.enabled;
    int get wind => _wind;
@@ -66,7 +66,7 @@ class DarkAgeEnvironment {
       onChangedWeather();
    }
 
-   set raining(Rain value) {
+   set raining(int value) {
       if (_raining == value) return;
       _raining = value;
       onChangedWeather();
@@ -119,14 +119,14 @@ class DarkAgeEnvironment {
       if (durationRain-- > 0) return;
       durationRain = randomInt(1000, 3000);
       switch (raining) {
-         case Rain.None:
-            raining = Rain.Light;
+         case RainType.None:
+            raining = RainType.Light;
             break;
-         case Rain.Light:
-            raining = randomBool() ? Rain.None : Rain.Heavy;
+         case RainType.Light:
+            raining = randomBool() ? RainType.None : RainType.Heavy;
             break;
-         case Rain.Heavy:
-            raining = Rain.Light;
+         case RainType.Heavy:
+            raining = RainType.Light;
             break;
       }
    }

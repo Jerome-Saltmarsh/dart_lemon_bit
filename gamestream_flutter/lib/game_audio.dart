@@ -181,12 +181,12 @@ class GameAudio {
   }
 
   static double getVolumeTargetRain() {
-    if (ServerState.rain.value == Rain.None) return 0.0;
+    if (ServerState.rain.value == RainType.None) return 0.0;
     const r = 7;
     const maxDistance = r * tileSize;
     final distance = GameQueries.getClosestByType(radius: r, type: NodeType.Rain_Landing) * tileSize;
     final v = convertDistanceToVolume(distance, maxDistance: maxDistance);
-    return v * (ServerState.rain.value == Rain.Light ? 0.5 : 1.0) * 0.5;
+    return v * (ServerState.rain.value == RainType.Light ? 0.5 : 1.0) * 0.5;
   }
 
   static double getVolumeTargetCrickets() {

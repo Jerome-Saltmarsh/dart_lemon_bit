@@ -40,7 +40,7 @@ export 'src/player_action.dart';
 export 'src/player_event.dart';
 export 'src/projectile_type.dart';
 export 'src/quest.dart';
-export 'src/rain.dart';
+export 'src/rain_type.dart';
 export 'src/request_modify_canvas_size.dart';
 export 'src/scene_json.dart';
 export 'src/seconds_per_day.dart';

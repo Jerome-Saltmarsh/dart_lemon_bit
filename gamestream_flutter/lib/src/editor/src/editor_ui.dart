@@ -56,10 +56,10 @@ class EditorUI {
         ),
       );
 
-  static Widget buildIconRain(Rain rain) => watch(
+  static Widget buildIconRain(int rain) => watch(
       ServerState.rain,
-      (Rain activeRain) => buildIconWeatherControl(
-            tooltip: '${rain.name} Rain',
+      (int activeRain) => buildIconWeatherControl(
+            tooltip: '${RainType.getName(rain)} Rain',
             action: () => GameNetwork.sendClientRequestWeatherSetRain(rain),
             icon: GameUI.buildAtlasIconType(convertRainToIconType(rain),
                 size: 64),
@@ -88,14 +88,16 @@ class EditorUI {
             isActive: windType == activeWindType,
           ));
 
-  static int convertRainToIconType(Rain rain) {
+  static int convertRainToIconType(int rain) {
     switch (rain) {
-      case Rain.None:
+      case RainType.None:
         return IconType.Rain_None;
-      case Rain.Light:
+      case RainType.Light:
         return IconType.Rain_Light;
-      case Rain.Heavy:
+      case RainType.Heavy:
         return IconType.Rain_Heavy;
+      default:
+        throw Exception('EditorUi.convertRainToIconType($rain)');
     }
   }
 
@@ -126,7 +128,7 @@ class EditorUI {
   }
 
   static Widget buildRowRainIcons() =>
-      Row(children: Rain.values.map(buildIconRain).toList());
+      Row(children: RainType.values.map(buildIconRain).toList());
 
   static Widget buildRowLightningIcons() =>
       Row(children: Lightning.values.map(buildIconLightning).toList());

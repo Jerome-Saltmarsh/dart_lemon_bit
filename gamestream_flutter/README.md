@@ -25,7 +25,6 @@
 [ ] engine improve grid invisibility
 [ ] player attributes ui
 [ ] repeat killing same enemies yields no reward
-[ ] remove enum Rain
 [ ] move thunder flash state from client to server
 
 [PROJECTS]
@@ -54,7 +53,11 @@
 [ ] fix illegal writing ambient shade in client
 [ ] design scene
 
+[current]
+
+
 17.11.2022
+[x] remove enum Rain
 [x] remove enum Wind
 [x] fix reconnecting to scene cursor is not visible
 [x] fixed common library directory structure
