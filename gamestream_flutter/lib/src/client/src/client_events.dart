@@ -22,17 +22,17 @@ class ClientEvents {
   }
 
   static void onDragStarted(int itemIndex){
-    print("onDragStarted()");
+    // print("onDragStarted()");
     ClientState.dragStart.value = itemIndex;
     ClientState.dragEnd.value = -1;
   }
 
   static void onDragCompleted(){
-    print("onDragCompleted()");
+    // print("onDragCompleted()");
   }
 
   static void onDragEnd(DraggableDetails details){
-    print("onDragEnd()");
+    // print("onDragEnd()");
   }
 
   static void onItemIndexPrimary(int itemIndex) {
@@ -52,7 +52,7 @@ class ClientEvents {
   }
 
   static void onDragCancelled(Velocity velocity, Offset offset){
-    print("onDragCancelled()");
+    // print("onDragCancelled()");
     if (ClientState.hoverIndex.value == -1){
       ClientActions.dropDraggedItem();
     } else {
