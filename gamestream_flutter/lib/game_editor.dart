@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:file_picker/file_picker.dart';
-import 'package:gamestream_flutter/editor/editor_enums.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class GameEditor {
