@@ -114,7 +114,7 @@ class GameEvents {
       case GameEventType.Splash:
         return onSplash(x, y, z);
       case GameEventType.Spawn_Dust_Cloud:
-        return GameActions.spawnDustCloud(x, y, z);
+        break;
       case GameEventType.Player_Hit:
         if (Engine.randomBool()) {
           // audio.humanHurt(x, y);
@@ -330,6 +330,7 @@ class GameEvents {
         return GameAudio.collect_star_3();
       case PlayerEvent.Scene_Changed:
         GameCamera.centerOnPlayer();
+        // GameActions.setAmbientShadeToHour();
         break;
       case PlayerEvent.Quest_Started:
         onPlayerEventQuestStarted();

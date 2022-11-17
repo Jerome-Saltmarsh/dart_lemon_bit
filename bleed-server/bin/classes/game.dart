@@ -6,6 +6,7 @@ import '../common/library.dart';
 import '../common/maths.dart';
 import '../common/node_size.dart';
 import '../common/teams.dart';
+import '../constants/frames_per_second.dart';
 import '../engine.dart';
 import '../functions/withinRadius.dart';
 import '../io/write_scene_to_file.dart';
@@ -31,6 +32,8 @@ abstract class Game {
   final players = <Player>[];
   final characters = <Character>[];
   final projectiles = <Projectile>[];
+
+  static const AI_Respawn_Duration = framesPerSecond * 60 * 5; // 5 minutes
 
   List<GameObject> get gameObjects => scene.gameObjects;
 
@@ -1320,7 +1323,7 @@ abstract class Game {
     ai.x = ai.spawnX + getAdjacent(angle, distance);
     ai.y = ai.spawnY + getOpposite(angle, distance);
     ai.z = ai.spawnZ;
-    ai.respawn = 500;
+    ai.respawn = AI_Respawn_Duration;
     ai.clearDest();
     clearCharacterTarget(ai);
     ai.clearPath();
@@ -2176,9 +2179,9 @@ abstract class Game {
   static double getAngleBetweenV3(Position a, Position b) => getAngle(a.x - b.x, a.y - b.y);
 
   /// WARNING EXPENSIVE OPERATION
-  void triggerSpawnPoints(){
+  void triggerSpawnPoints({int instances = 4}){
     for (final index in scene.spawnPoints){
-      spawnZombies(index: index, total: 4);
+      spawnZombies(index: index, total: instances);
     }
   }
 

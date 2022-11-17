@@ -49,14 +49,14 @@ class DarkAgeEnvironment {
    int get wind => _wind;
    int get shade => _shade;
 
-   set shade(int value){
+   set shade(int value) {
      final clampedValue = clamp(value, maxShade, Shade.Pitch_Black);
      if (_shade == clampedValue) return;
      _shade = clampedValue;
      onChangedWeather();
    }
 
-   set wind(int value){
+   set wind(int value) {
       if (_wind == value) return;
       if (value < windIndexCalm) return;
       if (value > windIndexStrong) return;
@@ -76,7 +76,7 @@ class DarkAgeEnvironment {
       onChangedWeather();
    }
 
-   set lightning(Lightning value){
+   set lightning(Lightning value) {
       if(_lightning == value) return;
       _lightning = value;
       onChangedWeather();

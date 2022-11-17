@@ -48,6 +48,7 @@
 [SCENE CEMETERY]
 [ ] scene edit tool pause ai
 [ ] particle-type myst
+[ ] fix lighting on spawn bug
 
 16.11.2022
 [x] display scene name on enter

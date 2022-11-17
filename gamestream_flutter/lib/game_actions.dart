@@ -3,13 +3,8 @@ import 'package:gamestream_flutter/library.dart';
 
 class GameActions {
   static void setAmbientShadeToHour(){
+    /// TODO illegal server state assignment
     ServerState.ambientShade.value = Shade.fromHour(ServerState.hours.value);
-  }
-
-  static void spawnDustCloud(double x, double y, double z) {
-    for (var i = 0; i < 3; i++){
-      // GameState.spawnParticleBubble(x: x, y: y, z: z, speed: 1, angle: Engine.randomAngle());
-    }
   }
 
   static void loadSelectedSceneName(){

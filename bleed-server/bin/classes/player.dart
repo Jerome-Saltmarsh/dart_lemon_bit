@@ -853,6 +853,7 @@ class Player extends Character with ByteWriter {
     writeMapCoordinate();
     writeRenderMap(game.customPropMapVisible);
     writeGameType(game.gameType);
+    writeWeather();
     game.customDownloadScene(this);
     writePlayerEvent(PlayerEvent.Scene_Changed);
     sceneDownloaded = true;

@@ -15,12 +15,12 @@ class AreaType {
    static String getName(int value) => {
         Town: "Town",
         Cemetery: "Haunted Cemetery",
-        Farm: "Farm",
+        Farm: "Farmlands",
         Forest: "Spooky Forest",
-        Mountains: "Windy Mountains",
+        Mountains: "Mystic Mountains",
         Plains: "Endless Plains",
         Lake: "Ancient Lake",
         Dark_Fortress: "Dark Fortress",
-        Old_Village: "Old Village",
+        Old_Village: "Wolford Village",
    }[value] ?? "unknown-region-$value";
 }

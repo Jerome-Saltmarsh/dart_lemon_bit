@@ -23,10 +23,10 @@ class GameDarkAge extends Game {
   @override
   void customOnCharacterKilled(Character target, dynamic src) {
      if (target is AI){
-        if (src is Player){
+        if (src is Player) {
            src.experience += 1;
         }
-        if (random.nextDouble() < 0.5){
+        if (random.nextDouble() < 0.25){
           spawnRandomItemAtPosition(target, timer: 2000);
         }
      }
@@ -53,11 +53,6 @@ class GameDarkAge extends Game {
     ItemType.Resource_Crystal,
     ItemType.Resource_Stone,
   ]);
-
-  @override
-  void customDownloadScene(Player player) {
-    player.writeWeather();
-  }
 
   @override
   void customOnCharacterSpawned(Character character){

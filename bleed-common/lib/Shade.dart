@@ -17,7 +17,7 @@ class Shade {
        Pitch_Black: 'Pitch_Black',
   }[value] ?? 'Shade-Unknown($value)';
   
-  static int fromHour(int hour){
+  static int fromHour(int hour) {
       if (hour < 1) return Pitch_Black;
       if (hour < 3) return Very_Very_Dark;
       if (hour < 5) return Very_Dark;

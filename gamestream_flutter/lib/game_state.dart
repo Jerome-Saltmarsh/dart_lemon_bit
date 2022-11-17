@@ -259,6 +259,7 @@ class GameState {
   static void actionLightningFlash() {
     GameAudio.thunder(1.0);
     if (ServerState.ambientShade.value == Shade.Very_Bright) return;
+    /// TODO Illegal server state assignment
     ServerState.ambientShade.value = Shade.Very_Bright;
     ClientState.lightningFlashFrames = GameConfig.Lightning_Flash_Duration;
   }
@@ -1055,15 +1056,12 @@ class GameState {
   }
 
   static void update() {
-    // updateGameActions();
-
     GameAnimation.updateAnimationFrame();
     updateParticleEmitters();
     updateProjectiles();
     GameAudio.update();
     ClientState.update();
     updateLightning();
-
 
     if (player.messageTimer > 0) {
       player.messageTimer--;
