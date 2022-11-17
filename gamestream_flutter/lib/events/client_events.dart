@@ -152,4 +152,9 @@ class ClientEvents {
       ClientState.messageStatusDuration = 150;
     }
   }
+
+  static void onChangedAreaTypeVisible(bool value) =>
+      ClientState.areaTypeVisibleDuration = value
+          ? ClientConstants.Area_Type_Duration
+          : 0;
 }

@@ -5,7 +5,7 @@ class ServerEvents {
 
   static void onChangedAreaType(int areaType) {
     print("ServerEvents.onChangedAreaType(${AreaType.getName(areaType)})");
-     ClientState.areaTypeVisibleDuration = 300;
+     ClientState.areaTypeVisible.value = true;
   }
 
   static void onChangedGameType(int? value){

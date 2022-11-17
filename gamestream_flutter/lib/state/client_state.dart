@@ -5,6 +5,7 @@ import 'package:gamestream_flutter/library.dart';
 class ClientState {
   // WATCHES
   static final raining = Watch(false, onChanged: ClientEvents.onChangedRaining);
+  static final areaTypeVisible = Watch(false, onChanged: ClientEvents.onChangedAreaTypeVisible);
   static final readsHotKeys = Watch(0);
   static final inventoryReads = Watch(0, onChanged: ClientEvents.onInventoryReadsChanged);
   static final hoverIndex = Watch(-1);
@@ -34,4 +35,20 @@ class ClientState {
   // PROPERTIES
   static bool get hoverDialogIsInventory => hoverDialogType.value == DialogType.Inventory;
   static bool get hoverDialogDialogIsTrade => hoverDialogType.value == DialogType.Trade;
+
+  static void update(){
+
+    if (areaTypeVisible.value) {
+      if (areaTypeVisibleDuration-- <= 0) {
+        areaTypeVisible.value = false;
+      }
+    }
+
+    if (messageStatusDuration > 0) {
+      messageStatusDuration--;
+      if (messageStatusDuration <= 0) {
+        messageStatus.value = "";
+      }
+    }
+  }
 }

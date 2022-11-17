@@ -46,7 +46,7 @@ class GameUI {
             child: Container(
                 width: Engine.screen.width,
                 alignment: Alignment.center,
-                child: WatchBuilder(ServerState.areaType, (int areaType) => text(AreaType.getName(areaType), size: 30))
+                child: buildWatchAreaType()
             ),
         ),
         Positioned(
@@ -61,6 +61,17 @@ class GameUI {
             ),
         ),
       ]);
+
+  static WatchBuilder<int> buildWatchAreaType() =>
+      WatchBuilder(ServerState.areaType, (int areaType) {
+        return WatchBuilder(ClientState.areaTypeVisible, (bool areaTypeVisible){
+          return AnimatedOpacity(
+              opacity: areaTypeVisible ? 1.0 : 0.0,
+              duration: const Duration(seconds: 1),
+              child: text(AreaType.getName(areaType), size: 30),
+          );
+        });
+      });
 
   static Widget buildStackInputModeTouch(bool side) => Stack(children: [
         Positioned(
