@@ -47,7 +47,7 @@ class GameState {
   static int get bodyPartDuration => randomInt(120, 200);
   static bool get playMode => !editMode;
   static bool get editMode => ClientState.edit.value;
-  static bool get lightningOn => ServerState.lightning.value != Lightning.Off;
+  static bool get lightningOn => ServerState.lightning.value != LightningType.Off;
 
   static Character getCharacterInstance(){
     if (characters.length <= totalCharacters){
@@ -1082,7 +1082,7 @@ class GameState {
   }
 
   static void updateLightning(){
-    if (ServerState.lightning.value != Lightning.On) return;
+    if (ServerState.lightning.value != LightningType.On) return;
     if (ClientState.nextLightning-- > 0) return;
     GameState.actionLightningFlash();
     ClientState.nextLightning = randomInt(200, 1500);

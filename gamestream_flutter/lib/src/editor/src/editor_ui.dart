@@ -69,7 +69,7 @@ class EditorUI {
   static Widget buildIconLightning(int lightning) => watch(
       ServerState.lightning,
       (int activeLightning) => buildIconWeatherControl(
-            tooltip: '${Lightning.getName(lightning)} Lightning',
+            tooltip: '${LightningType.getName(lightning)} Lightning',
             action: () =>
                 GameNetwork.sendClientRequestWeatherSetLightning(lightning),
             icon: GameUI.buildAtlasIconType(
@@ -103,11 +103,11 @@ class EditorUI {
 
   static int convertLightningToIconType(int lightning) {
     switch (lightning) {
-      case Lightning.Off:
+      case LightningType.Off:
         return IconType.Lightning_Off;
-      case Lightning.Nearby:
+      case LightningType.Nearby:
         return IconType.Lightning_Nearby;
-      case Lightning.On:
+      case LightningType.On:
         return IconType.Lightning_On;
       default:
         throw Exception("EditorUI.convertLightningToIconType($lightning)");
@@ -131,7 +131,7 @@ class EditorUI {
       Row(children: RainType.values.map(buildIconRain).toList());
 
   static Widget buildRowLightningIcons() =>
-      Row(children: Lightning.values.map(buildIconLightning).toList());
+      Row(children: LightningType.values.map(buildIconLightning).toList());
 
   static Widget buildRowWindIcons() =>
       Row(children: WindType.values.map(buildIconWind).toList());

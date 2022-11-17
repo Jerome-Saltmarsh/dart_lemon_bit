@@ -90,6 +90,8 @@ class GameQueries {
    static double getDistanceFromMouse(Vector3 value) =>
      Engine.distanceFromMouse(value.renderX, value.renderY);
 
+
+   // TODO REFACTOR
    static int getClosestByType({required int radius, required int type}){
      final minRow = max(GamePlayer.position.indexRow - radius, 0);
      final maxRow = min(GamePlayer.position.indexRow + radius, GameState.nodesTotalRows - 1);

@@ -29,7 +29,7 @@ export 'src/gameobject_request.dart';
 export 'src/interact_mode.dart';
 export 'src/inventory_request.dart';
 export 'src/item_type.dart';
-export 'src/lightning.dart';
+export 'src/lightning_type.dart';
 export 'src/map_tiles.dart';
 export 'src/maths.dart';
 export 'src/node_orientation.dart';

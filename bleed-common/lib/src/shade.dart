@@ -7,7 +7,7 @@ class Shade {
   static const Very_Very_Dark = 5;
   static const Pitch_Black = 6;
   
-  static String getName(int value) => {
+  static String getName(int value) => const {
        Very_Bright: 'Very Bright',
        Bright: 'Bright',
        Medium: 'Medium',

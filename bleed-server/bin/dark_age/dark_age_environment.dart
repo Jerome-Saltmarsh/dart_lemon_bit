@@ -33,7 +33,7 @@ class DarkAgeEnvironment {
    var nextThunderStrike = 0;
    var _raining = RainType.None;
    var _breezy = false;
-   var _lightning = Lightning.Off;
+   var _lightning = LightningType.Off;
    var _wind = 0;
    var _shade = Shade.Bright;
    var maxShade = Shade.Very_Bright;
@@ -135,14 +135,14 @@ class DarkAgeEnvironment {
       if (nextLightningChanged-- > 0) return;
       nextLightningChanged = randomInt(1000, 3000);
       switch (lightning) {
-         case Lightning.Off:
-            lightning = Lightning.Nearby;
+         case LightningType.Off:
+            lightning = LightningType.Nearby;
             break;
-         case Lightning.Nearby:
-            lightning = randomBool() ? Lightning.Off : Lightning.On;
+         case LightningType.Nearby:
+            lightning = randomBool() ? LightningType.Off : LightningType.On;
             break;
-         case Lightning.On:
-            lightning = Lightning.Nearby;
+         case LightningType.On:
+            lightning = LightningType.Nearby;
             break;
       }
    }

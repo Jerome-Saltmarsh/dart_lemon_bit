@@ -74,7 +74,7 @@ class GameSkirmish extends Game {
   void customInitPlayer(Player player) {
     player.writeEnvironmentShade(Shade.Very_Very_Dark);
     player.writeEnvironmentRain(RainType.Light);
-    player.writeEnvironmentLightning(Lightning.Off);
+    player.writeEnvironmentLightning(LightningType.Off);
     player.writeEnvironmentWind(WindType.Gentle);
     player.writeEnvironmentBreeze(false);
     // player.writePlayerMessage("press W,A,S,D to run and LEFT CLICK to punch");

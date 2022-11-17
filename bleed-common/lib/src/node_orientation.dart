@@ -1,5 +1,4 @@
 class NodeOrientation {
-   /// none collidable nodes such as empty space and rain
    static const None = 0;
    static const Slope_North = 1;
    static const Slope_East = 2;
@@ -64,10 +63,16 @@ class NodeOrientation {
    ];
 
    static bool isSlopeSymmetric(int value) =>
-       valuesSlopeSymmetric.contains(value);
+       value == Slope_North ||
+       value == Slope_East ||
+       value == Slope_South ||
+       value == Slope_West ;
 
    static bool isCorner(int value) =>
-       valuesCorners.contains(value);
+       value == Corner_Top ||
+       value == Corner_Right ||
+       value == Corner_Bottom ||
+       value == Corner_Left ;
 
    static bool isEmpty(int value) =>
       value == None;
@@ -76,18 +81,27 @@ class NodeOrientation {
        value == Solid;
 
    static bool isHalf(int value) =>
-       valuesHalf.contains(value);
+       value == Half_North ||
+       value == Half_East ||
+       value == Half_South ||
+       value == Half_West ;
 
    static bool isSlopeCornerInner(int value) =>
-       valuesSlopeCornerInner.contains(value);
+       value == Slope_Inner_North_East ||
+       value == Slope_Inner_South_East ||
+       value == Slope_Inner_South_West ||
+       value == Slope_Inner_North_West ;
 
    static bool isSlopeCornerOuter(int value) =>
-       valuesSlopeCornerOuter.contains(value);
+       value == Slope_Outer_North_East ||
+       value == Slope_Outer_South_East ||
+       value == Slope_Outer_South_West ||
+       value == Slope_Outer_North_West ;
 
-   static String getName(int value) => {
-         None: 'None',
-         Slope_North: 'Slope North',
-         Slope_East: 'Slope East',
+   static String getName(int value) => const {
+      None: 'None',
+      Slope_North: 'Slope North',
+      Slope_East: 'Slope East',
          Slope_South: 'Slope South',
          Slope_West: 'Slope West',
          Corner_Top: 'Corner Top',

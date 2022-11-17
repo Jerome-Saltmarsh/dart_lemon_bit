@@ -1,5 +1,5 @@
 
-class Lightning {
+class LightningType {
    static const Off = 0;
    static const Nearby = 1;
    static const On = 2;
