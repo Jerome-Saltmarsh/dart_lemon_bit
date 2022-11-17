@@ -188,6 +188,7 @@ class GameNetwork {
         Engine.zoomOnScroll = true;
         Engine.zoom = GameConfig.Zoom_Spawn;
         Engine.targetZoom = GameConfig.Zoom_Default;
+        ClientState.hoverDialogType.value = DialogType.None;
         if (!Engine.isLocalHost) {
           Engine.fullScreenEnter();
         }

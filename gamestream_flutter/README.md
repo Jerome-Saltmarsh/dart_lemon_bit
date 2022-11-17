@@ -49,8 +49,11 @@
 [ ] scene edit tool pause ai
 [ ] particle-type myst
 [ ] fix lighting on spawn bug
+[ ] fix illegal writing ambient shade in client
 
 17.11.2022
+[x] fix reconnecting to scene cursor is not visible
+[x] fixed common library directory structure
 [x] refactor lightning enum
 [x] display scene name on enter
 
