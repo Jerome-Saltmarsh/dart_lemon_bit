@@ -68,10 +68,10 @@ class EditorUI {
             isActive: rain == activeRain,
           ));
 
-  static Widget buildIconLightning(Lightning lightning) => watch(
+  static Widget buildIconLightning(int lightning) => watch(
       ServerState.lightning,
-      (Lightning activeLightning) => buildIconWeatherControl(
-            tooltip: '${lightning.name} Lightning',
+      (int activeLightning) => buildIconWeatherControl(
+            tooltip: '${Lightning.getName(lightning)} Lightning',
             action: () =>
                 GameNetwork.sendClientRequestWeatherSetLightning(lightning),
             icon: GameUI.buildAtlasIconType(
@@ -101,7 +101,7 @@ class EditorUI {
     }
   }
 
-  static int convertLightningToIconType(Lightning lightning) {
+  static int convertLightningToIconType(int lightning) {
     switch (lightning) {
       case Lightning.Off:
         return IconType.Lightning_Off;
@@ -109,6 +109,8 @@ class EditorUI {
         return IconType.Lightning_Nearby;
       case Lightning.On:
         return IconType.Lightning_On;
+      default:
+        throw Exception("EditorUI.convertLightningToIconType($lightning)");
     }
   }
 

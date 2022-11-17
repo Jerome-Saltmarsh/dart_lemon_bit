@@ -26,9 +26,11 @@ class DarkAgeTime {
 
 class DarkAgeEnvironment {
    var durationRain = randomInt(1000, 3000);
-   var durationLightning = 300;
+   var nextLightningChanged = 300;
    var durationBreeze = 500;
    var durationWind = randomInt(500, 1000);
+   var durationThunder = 0;
+   var nextThunderStrike = 0;
    var _raining = Rain.None;
    var _breezy = false;
    var _lightning = Lightning.Off;
@@ -42,7 +44,7 @@ class DarkAgeEnvironment {
      shade = maxShade;
    }
 
-  Lightning get lightning => _lightning;
+   int get lightning => _lightning;
    Rain get raining => _raining;
    bool get breezy => _breezy;
    bool get timePassing => time.enabled;
@@ -76,7 +78,7 @@ class DarkAgeEnvironment {
       onChangedWeather();
    }
 
-   set lightning(Lightning value) {
+   set lightning(int value) {
       if(_lightning == value) return;
       _lightning = value;
       onChangedWeather();
@@ -130,8 +132,8 @@ class DarkAgeEnvironment {
    }
 
    void updateLightning(){
-      if (durationLightning-- > 0) return;
-      durationLightning = randomInt(1000, 3000);
+      if (nextLightningChanged-- > 0) return;
+      nextLightningChanged = randomInt(1000, 3000);
       switch (lightning) {
          case Lightning.Off:
             lightning = Lightning.Nearby;

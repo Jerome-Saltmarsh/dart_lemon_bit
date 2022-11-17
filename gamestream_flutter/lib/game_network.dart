@@ -263,8 +263,8 @@ class GameNetwork {
     sendClientRequest(ClientRequest.Weather_Set_Wind, wind.index);
   }
 
-  static void sendClientRequestWeatherSetLightning(Lightning value){
-    sendClientRequest(ClientRequest.Weather_Set_Lightning, value.index);
+  static void sendClientRequestWeatherSetLightning(int value){
+    sendClientRequest(ClientRequest.Weather_Set_Lightning, value);
   }
 
   static void sendClientRequestWeatherToggleTimePassing([bool? value]){

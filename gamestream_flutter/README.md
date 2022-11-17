@@ -50,8 +50,11 @@
 [ ] particle-type myst
 [ ] fix lighting on spawn bug
 
-16.11.2022
+17.11.2022
+[x] refactor lightning enum
 [x] display scene name on enter
+
+16.11.2022
 [x] scene edit tool respawn ai
 [x] scene edit tool clear ai
 [x] fix rain bug

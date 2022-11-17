@@ -1124,7 +1124,7 @@ class Player extends Character with ByteWriter {
     writeByte(ServerResponse.Weather);
     writeByte(environment.raining.index);
     writeBool(environment.breezy);
-    writeByte(environment.lightning.index);
+    writeByte(environment.lightning);
     writeBool(environment.timePassing);
     writeByte(environment.wind);
     writeByte(environment.shade);
@@ -1293,10 +1293,10 @@ class Player extends Character with ByteWriter {
     writeByte(value);
   }
 
-  void writeEnvironmentLightning(Lightning value){
+  void writeEnvironmentLightning(int value){
     writeByte(ServerResponse.Environment);
     writeByte(EnvironmentResponse.Lightning);
-    writeByte(value.index);
+    writeByte(value);
   }
 
   void writeEnvironmentWind(Wind wind){

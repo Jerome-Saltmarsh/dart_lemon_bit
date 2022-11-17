@@ -1,9 +1,14 @@
 
-// TODO Remove enum
-enum Lightning {
-   Off,
-   Nearby,
-   On,
-}
+class Lightning {
+   static const Off = 0;
+   static const Nearby = 1;
+   static const On = 2;
 
-const lightningValues = Lightning.values;
+   static const values = [Off, Nearby, On];
+
+   static String getName(int value) => {
+         Off: "Off",
+         Nearby:"Nearby",
+         On: "On"
+      }[value] ?? "unknown-lightning-$value";
+}

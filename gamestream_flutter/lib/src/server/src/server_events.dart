@@ -22,7 +22,7 @@ class ServerEvents {
     }
   }
 
-  static void onChangedLightning(Lightning lightning){
+  static void onChangedLightning(int lightning){
     if (lightning != Lightning.Off){
       ClientState.nextLightning = 0;
     }

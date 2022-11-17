@@ -143,9 +143,9 @@ class Connection {
         final universe = (game as GameDarkAge).environment;
 
         final index = parse(arguments[1]);
-        if (index == null || !isValidIndex(index, lightningValues))
+        if (index == null || !isValidIndex(index, Lightning.values))
           return errorInvalidArg('invalid lightning index: $index');
-        universe.lightning = lightningValues[index];
+        universe.lightning = Lightning.values[index];
         break;
 
       case ClientRequest.Weather_Toggle_Time_Passing:
