@@ -170,13 +170,13 @@ class GameAudio {
     if (GameQueries.windLineRenderX - 250 <= Engine.screenCenterRenderX) {
       target += windLineDistanceVolume;
     }
-    final index = ServerState.windAmbient.value.index;
-    if (index <= windIndexCalm) {
+    final index = ServerState.windTypeAmbient.value;
+    if (index <= WindType.Calm) {
       if (ServerState.hours.value < 6) return target;
       if (ServerState.hours.value < 18) return target + 0.1;
       return target;
     }
-    if (index <= windIndexGentle) return target + 0.5;
+    if (index <= WindType.Gentle) return target + 0.5;
     return 1.0;
   }
 

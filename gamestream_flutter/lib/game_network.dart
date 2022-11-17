@@ -260,8 +260,8 @@ class GameNetwork {
     sendClientRequest(ClientRequest.Weather_Toggle_Breeze);
   }
 
-  static void sendClientRequestWeatherSetWind(Wind wind){
-    sendClientRequest(ClientRequest.Weather_Set_Wind, wind.index);
+  static void sendClientRequestWeatherSetWind(int windType){
+    sendClientRequest(ClientRequest.Weather_Set_Wind, windType);
   }
 
   static void sendClientRequestWeatherSetLightning(int value){

@@ -78,14 +78,14 @@ class EditorUI {
             isActive: lightning == activeLightning,
           ));
 
-  static Widget buildIconWind(Wind wind) => watch(
-      ServerState.windAmbient,
-      (Wind active) => buildIconWeatherControl(
-            tooltip: '${wind.name} Wind',
-            action: () => GameNetwork.sendClientRequestWeatherSetWind(wind),
-            icon: GameUI.buildAtlasIconType(convertWindToIconType(wind),
+  static Widget buildIconWind(int windType) => watch(
+      ServerState.windTypeAmbient,
+      (int activeWindType) => buildIconWeatherControl(
+            tooltip: '${WindType.getName(windType)} Wind',
+            action: () => GameNetwork.sendClientRequestWeatherSetWind(windType),
+            icon: GameUI.buildAtlasIconType(convertWindToIconType(windType),
                 size: 64),
-            isActive: wind == active,
+            isActive: windType == activeWindType,
           ));
 
   static int convertRainToIconType(Rain rain) {
@@ -112,14 +112,16 @@ class EditorUI {
     }
   }
 
-  static int convertWindToIconType(Wind wind) {
-    switch (wind) {
-      case Wind.Calm:
+  static int convertWindToIconType(int windType) {
+    switch (windType) {
+      case WindType.Calm:
         return IconType.Wind_Calm;
-      case Wind.Gentle:
+      case WindType.Gentle:
         return IconType.Wind_Gentle;
-      case Wind.Strong:
+      case WindType.Strong:
         return IconType.Wind_Strong;
+      default:
+        throw Exception('EditorUI.convertWindToIconType($windType)');
     }
   }
 
@@ -130,7 +132,7 @@ class EditorUI {
       Row(children: Lightning.values.map(buildIconLightning).toList());
 
   static Widget buildRowWindIcons() =>
-      Row(children: Wind.values.map(buildIconWind).toList());
+      Row(children: WindType.values.map(buildIconWind).toList());
 
   static String convertHourToString(int hour) {
     if (hour < 0) return 'invalid time';

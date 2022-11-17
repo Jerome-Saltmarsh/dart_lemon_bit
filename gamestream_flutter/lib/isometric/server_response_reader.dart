@@ -150,7 +150,7 @@ class ServerResponseReader with ByteReader {
         ServerState.lightning.value = readByte();
         break;
       case EnvironmentResponse.Wind:
-        ServerState.windAmbient.value = readWind();
+        ServerState.windTypeAmbient.value = readByte();
         break;
       case EnvironmentResponse.Breeze:
         ServerState.weatherBreeze.value = readBool();
@@ -384,16 +384,12 @@ class ServerResponseReader with ByteReader {
     ServerState.weatherBreeze.value = readBool();
     ServerState.lightning.value = readByte();
     ServerState.watchTimePassing.value = readBool();
-    ServerState.windAmbient.value = readWind();
+    ServerState.windTypeAmbient.value = readByte();
     ServerState.ambientShade.value = readByte();
   }
 
   Rain readRain(){
      return rainValues[readByte()];
-  }
-
-  Wind readWind(){
-    return windValues[readByte()];
   }
 
   void readEnd() {

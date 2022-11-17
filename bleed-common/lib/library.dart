@@ -56,6 +56,5 @@ export 'src/teams.dart';
 export 'src/teleport_scenes.dart';
 export 'src/tile_size.dart';
 export 'src/type_position.dart';
-export 'src/utilities.dart';
 export 'src/version.dart';
-export 'src/wind.dart';
+export 'src/wind_type.dart';

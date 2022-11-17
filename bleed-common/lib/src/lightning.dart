@@ -6,9 +6,9 @@ class Lightning {
 
    static const values = [Off, Nearby, On];
 
-   static String getName(int value) => {
+   static String getName(int value) => const {
          Off: "Off",
          Nearby:"Nearby",
          On: "On"
-      }[value] ?? "unknown-lightning-$value";
+   }[value] ?? "unknown-lightning-$value";
 }

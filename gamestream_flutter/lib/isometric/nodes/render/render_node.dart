@@ -86,7 +86,7 @@ void renderNodeAt() {
       break;
     case NodeType.Grass_Long:
       switch (GameRender.currentNodeWind) {
-        case windIndexCalm:
+        case WindType.Calm:
           RenderNode.renderStandardNode(
             srcX: AtlasNodeX.Grass_Long,
             srcY: GameConstants.Sprite_Height * renderNodeShade,

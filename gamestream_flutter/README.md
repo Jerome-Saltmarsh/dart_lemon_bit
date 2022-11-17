@@ -25,6 +25,8 @@
 [ ] engine improve grid invisibility
 [ ] player attributes ui
 [ ] repeat killing same enemies yields no reward
+[ ] remove enum Rain
+[ ] move thunder flash state from client to server
 
 [PROJECTS]
 [ ] SKILLS
@@ -50,8 +52,10 @@
 [ ] particle-type myst
 [ ] fix lighting on spawn bug
 [ ] fix illegal writing ambient shade in client
+[ ] design scene
 
 17.11.2022
+[x] remove enum Wind
 [x] fix reconnecting to scene cursor is not visible
 [x] fixed common library directory structure
 [x] refactor lightning enum

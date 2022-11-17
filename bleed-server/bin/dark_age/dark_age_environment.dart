@@ -60,8 +60,8 @@ class DarkAgeEnvironment {
 
    set wind(int value) {
       if (_wind == value) return;
-      if (value < windIndexCalm) return;
-      if (value > windIndexStrong) return;
+      if (value < WindType.Calm) return;
+      if (value > WindType.Strong) return;
       _wind = value;
       onChangedWeather();
    }
@@ -159,11 +159,11 @@ class DarkAgeEnvironment {
       if (durationWind <= 0) {
          durationWind = randomInt(3000, 6000);
 
-         if (wind == Wind.Calm) {
+         if (wind == WindType.Calm) {
             wind++;
             return;
          }
-         if (wind == Wind.Strong){
+         if (wind == WindType.Strong){
             wind--;
             return;
          }

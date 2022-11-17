@@ -576,7 +576,7 @@ class GameUI {
     return buildDialog(
       dialogType: DialogType.UI_Control,
       child: container(
-          action: ClientActions.windowOpenPlayerAttributes,
+          action: ClientActions.windowTogglePlayerAttributes,
           alignment: Alignment.center,
           color: GameColors.brownDark,
           child: text("ATTRIBUTES +$attributes", align: TextAlign.center)),

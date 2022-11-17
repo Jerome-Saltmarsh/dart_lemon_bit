@@ -698,6 +698,7 @@ abstract class Game {
 
   /// unsafe to override
   void onAIKilled(AI ai){
+    ai.respawn = AI_Respawn_Duration;
     clearCharacterTarget(ai);
     ai.clearDest();
     ai.clearPath();

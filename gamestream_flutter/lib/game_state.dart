@@ -1346,7 +1346,7 @@ class GameState {
     }
 
     static void gridWindResetToAmbient(){
-      final ambientWindIndex = ServerState.windAmbient.value.index;
+      final ambientWindIndex = ServerState.windTypeAmbient.value;
       for (var i = 0; i < GameNodes.nodesTotal; i++){
         GameNodes.nodesWind[i] = ambientWindIndex;
       }

@@ -130,7 +130,7 @@ class Connection {
         if (game is GameDarkAge == false) return;
         final universe = (game as GameDarkAge).environment;
         final index = parse(arguments[1]);
-        if (index == null || !isValidIndex(index, windValues))
+        if (index == null || !isValidIndex(index, WindType.values))
           return errorInvalidArg('invalid rain index: $index');
 
         universe.wind = index;

@@ -1298,10 +1298,10 @@ class Player extends Character with ByteWriter {
     writeByte(value);
   }
 
-  void writeEnvironmentWind(Wind wind){
+  void writeEnvironmentWind(int windType){
     writeByte(ServerResponse.Environment);
     writeByte(EnvironmentResponse.Wind);
-    writeByte(wind.index);
+    writeByte(windType);
   }
 
   void writeEnvironmentRain(Rain rain){

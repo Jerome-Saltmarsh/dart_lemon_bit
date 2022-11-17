@@ -16,7 +16,7 @@ class RenderNode {
       );
       return;
     }
-    if (renderNodeWind == Wind.Calm){
+    if (renderNodeWind == WindType.Calm){
       Engine.renderSprite(
         image: GameImages.atlasNodes,
         srcX: AtlasNodeX.Torch,

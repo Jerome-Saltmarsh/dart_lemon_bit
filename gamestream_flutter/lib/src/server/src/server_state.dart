@@ -22,7 +22,7 @@ class ServerState {
   static final gameType = Watch<int?>(null, onChanged: ServerEvents.onChangedGameType);
   static final lightning = Watch(Lightning.Off, onChanged: ServerEvents.onChangedLightning);
   static final watchTimePassing = Watch(false);
-  static final windAmbient = Watch(Wind.Calm, onChanged: GameEvents.onChangedWind);
+  static final windTypeAmbient = Watch(WindType.Calm, onChanged: GameEvents.onChangedWindType);
   static final ambientShade = Watch(Shade.Bright, onChanged: GameEvents.onChangedAmbientShade);
   static final error = Watch("invalid request", onChanged: GameEvents.onChangedError);
 

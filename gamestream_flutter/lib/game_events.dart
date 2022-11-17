@@ -282,7 +282,7 @@ class GameEvents {
     }
   }
 
-  static void onChangedWind(Wind value) {
+  static void onChangedWindType(int windType) {
     GameState.gridWindResetToAmbient();
   }
 
