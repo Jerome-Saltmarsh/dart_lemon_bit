@@ -3,9 +3,6 @@ import 'dart:math';
 import 'package:lemon_math/library.dart';
 
 import '../common/library.dart';
-import '../common/maths.dart';
-import '../common/node_size.dart';
-import '../common/teams.dart';
 import '../constants/frames_per_second.dart';
 import '../engine.dart';
 import '../functions/withinRadius.dart';

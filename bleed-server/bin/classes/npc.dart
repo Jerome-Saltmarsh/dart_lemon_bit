@@ -1,4 +1,4 @@
-import '../common/character_type.dart';
+import '../common/src/character_type.dart';
 import 'game.dart';
 import 'player.dart';
 import 'ai.dart';

@@ -7,5 +7,4 @@ class CharacterAction {
   static const Run_To_Mouse = 4;
   static const Run_In_Direction = 5;
   static const Run_In_Angle = 6;
-  
 }

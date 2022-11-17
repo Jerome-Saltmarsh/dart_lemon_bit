@@ -2,9 +2,7 @@
 import 'dart:typed_data';
 
 import '../classes/player.dart';
-import '../common/node_size.dart';
-import '../common/node_type.dart';
-import '../common/request_modify_canvas_size.dart';
+import '../common/library.dart';
 
 void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, Player player){
   final game = player.game;

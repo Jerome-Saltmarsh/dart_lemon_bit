@@ -5,7 +5,7 @@ import 'dart:math';
 import '../classes/collider.dart';
 import '../classes/player.dart';
 import '../classes/position3.dart';
-import '../common/maths.dart';
+import '../common/src/maths.dart';
 
 bool withinRadius(Position3 a, Position3 b, num radius){
   return withinDistance(a, b.x, b.y, b.z, radius);

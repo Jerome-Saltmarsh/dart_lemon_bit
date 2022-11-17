@@ -1,4 +1,4 @@
-import 'package:bleed_common/node_type.dart';
+import 'package:gamestream_flutter/library.dart';
 
 const editorGridTypesColumn1 = [
   NodeType.Water,

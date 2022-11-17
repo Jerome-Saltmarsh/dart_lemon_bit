@@ -1,4 +1,4 @@
-import '../common/node_type.dart';
+import '../common/src/node_type.dart';
 
 List<List<List<int>>> generateGridPlain({int rows = 50, int columns = 50, int height = 7}) {
   final List<List<List<int>>> grid = [];

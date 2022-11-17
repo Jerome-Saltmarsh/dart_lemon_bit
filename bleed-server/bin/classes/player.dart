@@ -7,7 +7,6 @@ import 'package:bleed_server/system.dart';
 import 'package:lemon_byte/byte_writer.dart';
 import 'package:lemon_math/library.dart';
 
-import '../common/flag.dart';
 import '../common/library.dart';
 import '../dark_age/areas/dark_age_area.dart';
 import '../dark_age/game_dark_age.dart';

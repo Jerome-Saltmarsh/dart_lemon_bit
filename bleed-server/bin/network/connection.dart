@@ -7,8 +7,6 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 import '../classes/gameobject.dart';
 import '../classes/library.dart';
 import '../common/library.dart';
-import '../common/maths.dart';
-import '../common/spawn_type.dart';
 import '../dark_age/dark_age_scenes.dart';
 import '../dark_age/game_dark_age.dart';
 import '../dark_age/game_dark_age_editor.dart';

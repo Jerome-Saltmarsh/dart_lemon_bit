@@ -1,5 +1,5 @@
 import '../../classes/player.dart';
-import '../../common/quest.dart';
+import '../../common/src/quest.dart';
 
 
 void toDoJenkinsRetrieveStolenScroll(Player player) {

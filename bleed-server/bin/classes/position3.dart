@@ -1,7 +1,7 @@
 
 import 'package:lemon_math/library.dart';
 
-import '../common/tile_size.dart';
+import '../common/src/tile_size.dart';
 
 class Position3 with Position {
   double z = 0;

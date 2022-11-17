@@ -1,7 +1,7 @@
 
 
 
-import '../../common/map_tiles.dart';
+import '../../common/src/map_tiles.dart';
 import '../../common/src/area_type.dart';
 import '../dark_age_scenes.dart';
 import 'dark_age_area.dart';
