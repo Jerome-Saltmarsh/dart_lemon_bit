@@ -29,6 +29,7 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] engine improve grid invisibility
 [ ] player attributes ui
 [ ] repeat killing same enemies yields no reward
+[ ] scene edit tool pause ai
 
 [PROJECTS]
 [ ] SKILLS
@@ -50,18 +51,19 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] character type vampire
 [ ] character type wolf
 
-[SCENE CEMETERY]
-[ ] scene edit tool pause ai
-[ ] particle-type myst
+[BUGS]
+[ ] fix window trade
 [ ] fix lighting on spawn bug
+
+[SCENE CEMETERY]
+[ ] particle-type myst
 [ ] design scene
 
 [current]
 [ ] optimize client getClosestByType
-[ ] fix window trade
-[ ] fix do not save collectable game items to scene
 
 18.11.2022
+[x] fix do not save collectable game items to scene
 [x] fix on zombie killed bug
 [x] move thunder flash state from client to server
 [x] refactor client applyBakeMapEmissions
