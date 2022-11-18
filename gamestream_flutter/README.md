@@ -55,7 +55,7 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] design scene
 
 [current]
-
+[ ] optimize client getClosestByType
 
 18.11.2022
 [x] move thunder flash state from client to server

@@ -1278,12 +1278,7 @@ class GameState {
       GameState.nodesLengthZ = GameState.nodesTotalZ * tileHeight;
     }
 
-    /// TODO Refactor
     static void applyBakeMapEmissions() {
-      // for (var i = 0; i < GameNodes.nodesTotal; i++){
-      //    if (!NodeType.emitsLight(GameNodes.nodesType[i])) continue;
-      //     applyEmissionBakeAtIndex(index: i, maxBrightness: Shade.Very_Bright);
-      // }
 
       for (var i = 0; i < ClientState.nodesLightSourcesTotal; i++){
         applyEmissionBakeAtIndex(index: ClientState.nodesLightSources[i], maxBrightness: Shade.Very_Bright);

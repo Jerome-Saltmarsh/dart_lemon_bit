@@ -222,8 +222,8 @@ class GameAudio {
   static double getVolumeStream(){
     const r = 7;
     const maxDistance = r * tileSize;
-    final distance = GameQueries.getClosestByType(radius: r, type: NodeType.Water_Flowing) * tileSize;
-    return convertDistanceToVolume(distance, maxDistance: maxDistance) * 0.3;
+    final distance = GameQueries.getClosestByType(radius: r, type: NodeType.Water) * tileSize;
+    return convertDistanceToVolume(distance, maxDistance: maxDistance * 0.5);
   }
 
   static void playAudioSingle(AudioSingle audioSingle, double x, double y, double z){
