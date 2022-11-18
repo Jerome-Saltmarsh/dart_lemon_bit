@@ -25,7 +25,7 @@
 [ ] engine improve grid invisibility
 [ ] player attributes ui
 [ ] repeat killing same enemies yields no reward
-[ ] move thunder flash state from client to server
+
 [ ] refactor client applyBakeMapEmissions
 
 [PROJECTS]
@@ -54,9 +54,9 @@
 [ ] design scene
 
 [current]
-[ ] fix illegal writing ambient shade in client
 
 18.11.2022
+[x] move thunder flash state from client to server
 
 
 17.11.2022

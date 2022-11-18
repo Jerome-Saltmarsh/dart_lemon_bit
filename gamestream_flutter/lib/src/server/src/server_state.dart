@@ -1,7 +1,10 @@
 import 'package:gamestream_flutter/library.dart';
 
-/// the data inside server state belongs to the server and can only be read
-/// writing to server state is forbidden
+/// Synchronized server state
+///
+/// the data inside server state belongs to the server and can only be read by the client
+///
+/// WARNING - WRITING TO SERVER STATE IS FORBIDDEN
 class ServerState {
   static final areaType = Watch(AreaType.None, onChanged: ServerEvents.onChangedAreaType);
   static final interactMode = Watch(InteractMode.None, onChanged: GameEvents.onChangedPlayerInteractMode);
@@ -15,12 +18,12 @@ class ServerState {
   static final playerAttributes = Watch(0);
   static final sceneEditable = Watch(false);
   static final sceneName = Watch<String?>(null);
-  static final rain = Watch(RainType.None, onChanged: GameEvents.onChangedRain);
+  static final rainType = Watch(RainType.None, onChanged: GameEvents.onChangedRain);
   static final weatherBreeze = Watch(false);
   static final hours = Watch(0, onChanged: GameEvents.onChangedHour);
   static final minutes = Watch(0);
   static final gameType = Watch<int?>(null, onChanged: ServerEvents.onChangedGameType);
-  static final lightning = Watch(LightningType.Off);
+  static final lightningType = Watch(LightningType.Off);
   static final watchTimePassing = Watch(false);
   static final windTypeAmbient = Watch(WindType.Calm, onChanged: GameEvents.onChangedWindType);
   static final ambientShade = Watch(Shade.Bright, onChanged: GameEvents.onChangedAmbientShade);

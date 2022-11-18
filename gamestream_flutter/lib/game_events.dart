@@ -31,7 +31,6 @@ class GameEvents {
     }
   }
 
-
   static void onChangedAmbientShade(int shade) {
     print("onChangedAmbientShade(${Shade.getName(shade)})");
     GameState.refreshLighting();
@@ -57,7 +56,7 @@ class GameEvents {
     )
     ){
       GameAudio.footstep_mud_6.playXYZ(x, y, z);
-      final amount = ServerState.rain.value == RainType.Heavy ? 3 : 2;
+      final amount = ServerState.rainType.value == RainType.Heavy ? 3 : 2;
       for (var i = 0; i < amount; i++){
         GameState.spawnParticleWaterDrop(x: x, y: y, z: z);
       }
