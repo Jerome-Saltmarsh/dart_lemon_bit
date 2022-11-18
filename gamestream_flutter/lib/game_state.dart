@@ -1291,24 +1291,7 @@ class GameState {
 
       for (var i = 0; i < GameNodes.nodesTotal; i++){
          if (!NodeType.emitsLight(GameNodes.nodesType[i])) continue;
-
-      }
-
-      for (var zIndex = 0; zIndex < GameState.nodesTotalZ; zIndex++) {
-        for (var rowIndex = 0; rowIndex < GameState.nodesTotalRows; rowIndex++) {
-          for (var columnIndex = 0; columnIndex < GameState.nodesTotalColumns; columnIndex++) {
-            if (!NodeType.emitsLight(
-                GameQueries.gridNodeZRCType(zIndex, rowIndex, columnIndex))
-            ) continue;
-            applyEmissionBake(
-              zIndex: zIndex,
-              rowIndex: rowIndex,
-              columnIndex: columnIndex,
-              maxBrightness: Shade.Very_Bright,
-              radius: 7,
-            );
-          }
-        }
+          applyEmissionBakeAtIndex(index: i, maxBrightness: Shade.Very_Bright);
       }
 
       for (final gameObject in GameState.gameObjects){
@@ -1323,6 +1306,19 @@ class GameState {
         }
       }
     }
+
+  static void applyEmissionBakeAtIndex({
+    required int index,
+    required int maxBrightness,
+    int radius = 5,
+  }){
+      applyEmissionBake(
+        zIndex: GameState.convertNodeIndexToZ(index),
+        rowIndex: GameState.convertNodeIndexToRow(index),
+        columnIndex: GameState.convertNodeIndexToColumn(index),
+        maxBrightness: Shade.Very_Bright,
+      );
+  }
 
     static void applyEmissionBake({
       required int zIndex,
@@ -1351,14 +1347,6 @@ class GameState {
         }
       }
     }
-
-  static void applyEmissionBakeAtIndex({
-    required int index,
-    required int maxBrightness,
-    int radius = 5,
-  }){
-      // final z = index ~/ GameNodes.
-  }
 
 
   static void gridWindResetToAmbient(){
