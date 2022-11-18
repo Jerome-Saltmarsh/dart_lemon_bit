@@ -21,6 +21,7 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] optimize front end - do not use objects to store characters
 [ ] optimize front end - do not use objects to store gameobjects
 [ ] optimize front end - do not use objects to store particles
+[ ] optimize client applyShadowAt
 [ ] option fullscreen dialog on game start if it fails to do so automatically
 [ ] editor - gameobjects
 [ ] fix editor add remove columns
@@ -33,6 +34,7 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] SKILLS
 [ ] GENERATE MINI-MAP
 [ ] CEMETERY
+[ ] EDITOR WINDOW ELEVATION
 
 [content]
 [ ] scene cave
@@ -56,6 +58,7 @@ navigate to next method: ctrl + shift + up / down arrows
 
 [current]
 [ ] optimize client getClosestByType
+[ ] fix window trade
 
 18.11.2022
 [x] move thunder flash state from client to server

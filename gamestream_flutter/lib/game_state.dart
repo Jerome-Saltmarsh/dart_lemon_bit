@@ -1246,9 +1246,8 @@ class GameState {
     }
 
     static bool castesShadow(int type) =>
-    type == NodeType.Brick_2 ||
-        type == NodeType.Water ||
-        type == NodeType.Brick_Top;
+        type == NodeType.Brick_2 ||
+        type == NodeType.Water;
 
     static bool gridIsUnderSomething(int z, int row, int column){
       if (GameState.outOfBounds(z, row, column)) return false;

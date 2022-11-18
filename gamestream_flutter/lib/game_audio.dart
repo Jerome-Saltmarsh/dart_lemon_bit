@@ -49,10 +49,10 @@ class GameAudio {
     AudioLoop(name: 'rain', getTargetVolume: getVolumeTargetRain),
     AudioLoop(name: 'crickets', getTargetVolume: getVolumeTargetCrickets),
     AudioLoop(name: 'day-ambience', getTargetVolume: GameAudio.getVolumeTargetDayAmbience),
-    AudioLoop(name: 'fire', getTargetVolume: getVolumeTargetFire),
+    // AudioLoop(name: 'fire', getTargetVolume: getVolumeTargetFire),
     AudioLoop(name: 'distant-thunder', getTargetVolume: getVolumeTargetDistanceThunder),
     AudioLoop(name: 'heart-beat', getTargetVolume: getVolumeHeartBeat),
-    AudioLoop(name: 'stream', getTargetVolume: getVolumeStream),
+    // AudioLoop(name: 'stream', getTargetVolume: getVolumeStream),
   ];
 
   static final eat = AudioSingle(name: 'eat', volume: 0.5, maxDistance: 100);
@@ -182,11 +182,24 @@ class GameAudio {
 
   static double getVolumeTargetRain() {
     if (ServerState.rainType.value == RainType.None) return 0.0;
-    const r = 6;
-    const maxDistance = r * tileSize;
-    final distance = GameQueries.getClosestByType(radius: r, type: NodeType.Rain_Landing) * tileSize;
-    final v = convertDistanceToVolume(distance, maxDistance: maxDistance);
-    return v * (ServerState.rainType.value == RainType.Light ? 0.5 : 1.0) * 0.5;
+    switch(ServerState.rainType.value){
+      case RainType.None:
+        return 0;
+      case RainType.Light:
+        return 0.5;
+      case RainType.Heavy:
+        return 1;
+      default:
+        throw Exception('GameAudio.getVolumeTargetRain()');
+    }
+
+    // return 1.0;
+
+    // const r = 6;
+    // const maxDistance = r * tileSize;
+    // final distance = GameQueries.getClosestByType(radius: r, type: NodeType.Rain_Landing) * tileSize;
+    // final v = convertDistanceToVolume(distance, maxDistance: maxDistance);
+    // return v * (ServerState.rainType.value == RainType.Light ? 0.5 : 1.0) * 0.5;
   }
 
   static double getVolumeTargetCrickets() {

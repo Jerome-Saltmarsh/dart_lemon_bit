@@ -32,7 +32,7 @@ class GameEvents {
   }
 
   static void onChangedAmbientShade(int shade) {
-    print("onChangedAmbientShade(${Shade.getName(shade)})");
+    // print("onChangedAmbientShade(${Shade.getName(shade)})");
     GameState.refreshLighting();
   }
 
