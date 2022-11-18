@@ -1288,6 +1288,12 @@ class GameState {
 
     /// TODO Refactor
     static void applyBakeMapEmissions() {
+
+      for (var i = 0; i < GameNodes.nodesTotal; i++){
+         if (!NodeType.emitsLight(GameNodes.nodesType[i])) continue;
+
+      }
+
       for (var zIndex = 0; zIndex < GameState.nodesTotalZ; zIndex++) {
         for (var rowIndex = 0; rowIndex < GameState.nodesTotalRows; rowIndex++) {
           for (var columnIndex = 0; columnIndex < GameState.nodesTotalColumns; columnIndex++) {
@@ -1346,7 +1352,16 @@ class GameState {
       }
     }
 
-    static void gridWindResetToAmbient(){
+  static void applyEmissionBakeAtIndex({
+    required int index,
+    required int maxBrightness,
+    int radius = 5,
+  }){
+      // final z = index ~/ GameNodes.
+  }
+
+
+  static void gridWindResetToAmbient(){
       final ambientWindIndex = ServerState.windTypeAmbient.value;
       for (var i = 0; i < GameNodes.nodesTotal; i++){
         GameNodes.nodesWind[i] = ambientWindIndex;

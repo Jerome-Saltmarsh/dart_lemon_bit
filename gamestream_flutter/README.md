@@ -1,3 +1,6 @@
+[shortcut-keys]
+navigate to next method: ctrl + shift + up / down arrows
+
 [ideas]
 [ ] talk with other players
 [ ] trade with other players
@@ -26,8 +29,6 @@
 [ ] player attributes ui
 [ ] repeat killing same enemies yields no reward
 
-[ ] refactor client applyBakeMapEmissions
-
 [PROJECTS]
 [ ] SKILLS
 [ ] GENERATE MINI-MAP
@@ -54,6 +55,7 @@
 [ ] design scene
 
 [current]
+[ ] refactor client applyBakeMapEmissions
 
 18.11.2022
 [x] move thunder flash state from client to server

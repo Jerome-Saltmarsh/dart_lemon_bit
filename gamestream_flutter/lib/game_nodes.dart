@@ -2,7 +2,7 @@
 import 'dart:typed_data';
 
 class GameNodes {
-  static const nodesInitialSize = 70 * 70 * 8;
+  static const nodesInitialSize = 0;
   static var nodesBake = Uint8List(nodesInitialSize);
   static var nodesColor = Int32List(nodesInitialSize);
   static var nodesOrientation = Uint8List(nodesInitialSize);
