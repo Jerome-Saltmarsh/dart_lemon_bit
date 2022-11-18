@@ -59,8 +59,10 @@ navigate to next method: ctrl + shift + up / down arrows
 [current]
 [ ] optimize client getClosestByType
 [ ] fix window trade
+[ ] fix do not save collectable game items to scene
 
 18.11.2022
+[x] fix on zombie killed bug
 [x] move thunder flash state from client to server
 [x] refactor client applyBakeMapEmissions
 

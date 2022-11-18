@@ -671,24 +671,17 @@ abstract class Game {
     target.health -= damage;
 
     if (target.health <= 0) {
-      if (target is Zombie){
-        setCharacterStateDead(target);
-      } else {
-        setCharacterStateDying(target);
-      }
-
-      customOnCharacterKilled(target, src);
-
-      if (target is AI){
+      setCharacterStateDead(target);
+      if (target is AI) {
         clearCharacterTarget(target);
         target.clearDest();
         target.clearPath();
       }
-
-    } else {
-      customOnCharacterDamageApplied(target, src, damage);
-      target.setCharacterStateHurt();
+      customOnCharacterKilled(target, src);
+      return;
     }
+    customOnCharacterDamageApplied(target, src, damage);
+    target.setCharacterStateHurt();
     dispatchGameEventCharacterHurt(target);
 
     if (target is AI) {
@@ -915,7 +908,10 @@ abstract class Game {
     character.collidable = false;
     clearCharacterTarget(character);
 
-    // onPlayerKilled
+    if (character is AI){
+      character.respawn = AI_Respawn_Duration;
+    }
+
     if (character is Player) {
        character.interactMode = InteractMode.None;
        character.writePlayerAlive();
@@ -1665,42 +1661,11 @@ abstract class Game {
     return zombie;
   }
 
-  // Zombie spawnZombieAtNodeSpawn({
-  //   required NodeSpawn node,
-  //   required int health,
-  //   required int team,
-  //   required int damage,
-  //   int respawnDuration = 100,
-  //   double speed = RunSpeed.Regular,
-  //   List<Vector2>? objectives,
-  //   double wanderRadius = 100.0,
-  // }) {
-  //   assert(team >= 0 && team <= 256);
-  //   final zombie = getZombieInstance();
-  //   zombie.team = team;
-  //   zombie.spawn = node;
-  //   zombie.respawn = respawnDuration;
-  //   zombie.state = CharacterState.Idle;
-  //   zombie.stateDurationRemaining = 0;
-  //   zombie.maxHealth = health;
-  //   zombie.health = health;
-  //   zombie.collidable = true;
-  //   zombie.x = node.x;
-  //   zombie.y = node.y;
-  //   zombie.z = node.z;
-  //   zombie.spawnX = node.x;
-  //   zombie.spawnY = node.y;
-  //   zombie.spawnZ = node.z;
-  //   zombie.clearDest();
-  //   zombie.wanderRadius = wanderRadius;
-  //   return zombie;
-  // }
-
   Zombie getZombieInstance() {
-    for (final character in characters) {
-      if (character.alive) continue;
-      if (character is Zombie) return character;
-    }
+    // for (final character in characters) {
+    //   if (character.alive) continue;
+    //   if (character is Zombie) return character;
+    // }
     final zombie = Zombie(
       x: 0,
       y: 0,
@@ -1708,7 +1673,7 @@ abstract class Game {
       health: 10,
       damage: 1,
       game: this,
-      team: Teams.neutral,
+      team: Teams.evil,
     );
     characters.add(zombie);
     return zombie;
