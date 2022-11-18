@@ -94,16 +94,18 @@ class GameWebsite {
          ),
       );
 
-   static Widget buildUI(BuildContext context) => Stack(
-    children: [
-      watch(GameWebsite.operationStatus, buildOperationStatus),
-      WebsiteBuild.buildWatchErrorMessage(),
-    ]);
+   static Widget buildUI(BuildContext context) => buildFullScreen(
+     child: Stack(
+      children: [
+        watch(GameWebsite.operationStatus, buildOperationStatus),
+        WebsiteBuild.buildWatchErrorMessage(),
+      ]),
+   );
 
   static Widget buildOperationStatus(OperationStatus operationStatus) =>
       operationStatus != OperationStatus.None
           ? buildFullscreen(child: text(operationStatus.name.replaceAll("_", " ")))
-          : watch(GameNetwork.connectionStatus, buildConnection);
+          : buildFullscreen(child: watch(GameNetwork.connectionStatus, buildConnection));
 
   static Widget buildPageLoading(BuildContext context) {
     final _width = 300.0;
@@ -184,65 +186,65 @@ class GameWebsite {
          : WebsitePage.Region;
 
   static Widget buildDevice(int deviceType) =>
-    Stack(
-      children: [
-        Positioned(
-          top: Padding,
-          right: Padding,
-          child: buildTextVersion(),
-        ),
-        // Positioned(
-        //   bottom: Padding,
-        //   left: Padding,
-        //   child: text(deviceType == DeviceType.Computer ? 'Computer: ${Engine.screenArea}' : 'Mobile: ${Engine.screenArea}'),
-        // ),
-        Positioned(
-          top: Padding,
-          left: 180,
-          child: buildWatchBool(isVisibleDialogCustomRegion, buildInputCustomConnectionString),
-        ),
-        if (deviceType == DeviceType.Computer)
+    Container(
+      width: Engine.screen.width,
+      height: Engine.screen.height,
+      color: Colors.transparent,
+      child: Stack(
+        children: [
           Positioned(
-            left: 32,
-            child: buildFullscreen(
-              child: watch(GameWebsite.region, buildColumnRegions),
-              alignment: Alignment.centerLeft
+            top: Padding,
+            right: Padding,
+            child: buildTextVersion(),
+          ),
+          Positioned(
+            top: Padding,
+            left: 180,
+            child: buildWatchBool(isVisibleDialogCustomRegion, buildInputCustomConnectionString),
+          ),
+          if (deviceType == DeviceType.Computer)
+            Positioned(
+              left: 32,
+              child: buildFullscreen(
+                child: watch(GameWebsite.region, buildColumnRegions),
+                alignment: Alignment.centerLeft
+              ),
+            ),
+          if (deviceType == DeviceType.Phone)
+            Positioned(
+                bottom: Padding,
+                left: Padding,
+                child:
+                watch(websitePage, (WebsitePage page){
+                    if (page == WebsitePage.Games){
+                      return watch(region, (ConnectionRegion region) => text(region.name, color: colorRegion, onPressed: () => websitePage.value = WebsitePage.Region, size: 25));
+                    } else {
+                      return text("<- BACK", onPressed: toggleWebsitePage);
+                    }
+                }),
+            ),
+          // if (deviceType == DeviceType.Phone)
+          //   Positioned(
+          //     top: Padding,
+          //     left: Padding,
+          //     child: text('Device-Type ${DeviceType.getName(deviceType)}'),
+          //   ),
+          Positioned(
+            bottom: Padding,
+            right: Padding,
+            child: text(
+                "Created by Jerome Saltmarsh",
+                color: GameColors.white382,
+                size: FontSize.Small
             ),
           ),
-        if (deviceType == DeviceType.Phone)
           Positioned(
-              bottom: Padding,
-              left: Padding,
-              child:
-              watch(websitePage, (WebsitePage page){
-                  if (page == WebsitePage.Games){
-                    return watch(region, (ConnectionRegion region) => text(region.name, color: colorRegion, onPressed: () => websitePage.value = WebsitePage.Region, size: 25));
-                  } else {
-                    return text("<- BACK", onPressed: toggleWebsitePage);
-                  }
-              }),
-          ),
-        // if (deviceType == DeviceType.Phone)
-        //   Positioned(
-        //     top: Padding,
-        //     left: Padding,
-        //     child: text('utc: ${DateTime.now().timeZoneOffset.inHours} - ${DateTime.now().timeZoneName}'),
-        //   ),
-        Positioned(
-          bottom: Padding,
-          right: Padding,
-          child: text(
-              "Created by Jerome Saltmarsh",
-              color: GameColors.white382,
-              size: FontSize.Small
-          ),
-        ),
-        Positioned(
-          child: buildFullscreen(
-            child: watch(websitePage, buildWebsitePage)
-          ),
-        )
-      ],
+            child: buildFullscreen(
+              child: watch(websitePage, buildWebsitePage)
+            ),
+          )
+        ],
+      ),
     );
 
   static void onChangedRegion(ConnectionRegion region) {
