@@ -28,11 +28,10 @@ class ClientState {
   static var showAllItems = false;
   static var srcXRainFalling = 6640.0;
   static var srcXRainLanding = 6739.0;
-  // static var nextLightning = 0;
   static var messageStatusDuration = 0;
   static var areaTypeVisibleDuration = 0;
 
-  static var nodesLightSources = Uint16List(1000);
+  static var nodesLightSources = Uint16List(0);
   static var nodesLightSourcesTotal = 0;
 
   // PROPERTIES

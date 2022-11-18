@@ -82,15 +82,14 @@ class ClientActions {
     ClientState.nodesLightSourcesTotal = 0;
     for (var i = 0; i < GameNodes.nodesTotal; i++){
       if (!NodeType.emitsLight(GameNodes.nodesType[i])) continue;
-      ClientState.nodesLightSources[ClientState.nodesLightSourcesTotal] = i;
-      ClientState.nodesLightSourcesTotal++;
-
       if (ClientState.nodesLightSourcesTotal >= ClientState.nodesLightSources.length) {
         ClientState.nodesLightSources = Uint16List(ClientState.nodesLightSources.length + 500);
         print("refreshBakeMapLightSources overflow");
         refreshBakeMapLightSources();
         return;
       }
+      ClientState.nodesLightSources[ClientState.nodesLightSourcesTotal] = i;
+      ClientState.nodesLightSourcesTotal++;
     }
   }
 }
