@@ -60,9 +60,9 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] design scene
 
 [current]
-[ ] optimize client getClosestByType
 
 18.11.2022
+[x] fix mobile attack button position
 [x] fix do not save collectable game items to scene
 [x] fix on zombie killed bug
 [x] move thunder flash state from client to server
