@@ -33,4 +33,5 @@ class PlayerEvent {
   static const Inventory_Full = 32;
   static const Invalid_Request = 33;
   static const Item_Consumed = 34;
+  static const Lightning = 35;
 }

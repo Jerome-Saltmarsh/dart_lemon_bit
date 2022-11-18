@@ -3,7 +3,6 @@ library game_classes;
 export 'audio_loop.dart';
 export 'audio_loop.dart';
 export 'character.dart';
-export 'explosion.dart';
 export 'floating_text.dart';
 export 'game_object.dart';
 export 'item.dart';

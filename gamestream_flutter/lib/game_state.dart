@@ -256,13 +256,13 @@ class GameState {
     }
   }
 
-  static void actionLightningFlash() {
-    GameAudio.thunder(1.0);
-    if (ServerState.ambientShade.value == Shade.Very_Bright) return;
-    /// TODO Illegal server state assignment
-    ServerState.ambientShade.value = Shade.Very_Bright;
-    ClientState.lightningFlashFrames = GameConfig.Lightning_Flash_Duration;
-  }
+  // static void actionLightningFlash() {
+  //   GameAudio.thunder(1.0);
+  //   if (ServerState.ambientShade.value == Shade.Very_Bright) return;
+  //   /// TODO Illegal server state assignment
+  //   ServerState.ambientShade.value = Shade.Very_Bright;
+  //   ClientState.lightningFlashFrames = GameConfig.Lightning_Flash_Duration;
+  // }
 
   static void resetGridToAmbient(){
     final shade = ServerState.ambientShade.value;
@@ -1061,7 +1061,7 @@ class GameState {
     updateProjectiles();
     GameAudio.update();
     ClientState.update();
-    updateLightning();
+    // updateLightning();
 
     if (player.messageTimer > 0) {
       player.messageTimer--;
@@ -1070,23 +1070,23 @@ class GameState {
       }
     }
 
-    if (ClientState.lightningFlashFrames > 0) {
-      ClientState.lightningFlashFrames--;
-       if (ClientState.lightningFlashFrames <= 0){
-         GameActions.setAmbientShadeToHour();
-       }
-    }
+    // if (ClientState.lightningFlashFrames > 0) {
+    //   ClientState.lightningFlashFrames--;
+    //    if (ClientState.lightningFlashFrames <= 0){
+    //      GameActions.setAmbientShadeToHour();
+    //    }
+    // }
 
     GameIO.readPlayerInput();
     GameNetwork.sendClientRequestUpdate();
   }
 
-  static void updateLightning(){
-    if (ServerState.lightning.value != LightningType.On) return;
-    if (ClientState.nextLightning-- > 0) return;
-    GameState.actionLightningFlash();
-    ClientState.nextLightning = randomInt(200, 1500);
-  }
+  // static void updateLightning(){
+  //   if (ServerState.lightning.value != LightningType.On) return;
+  //   if (ClientState.nextLightning-- > 0) return;
+  //   GameState.actionLightningFlash();
+  //   ClientState.nextLightning = randomInt(200, 1500);
+  // }
 
   static void applyEmissionGameObjects() {
     // for (var i = 0; i < totalGameObjects; i++){
@@ -1286,6 +1286,7 @@ class GameState {
       GameState.nodesLengthZ = GameState.nodesTotalZ * tileHeight;
     }
 
+    /// TODO Refactor
     static void applyBakeMapEmissions() {
       for (var zIndex = 0; zIndex < GameState.nodesTotalZ; zIndex++) {
         for (var rowIndex = 0; rowIndex < GameState.nodesTotalRows; rowIndex++) {

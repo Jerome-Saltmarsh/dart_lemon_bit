@@ -30,13 +30,16 @@ class DarkAgeEnvironment {
    var durationBreeze = 500;
    var durationWind = randomInt(500, 1000);
    var durationThunder = 0;
-   var nextThunderStrike = 0;
-   var _raining = RainType.None;
+   var _rainType = RainType.None;
    var _breezy = false;
-   var _lightning = LightningType.Off;
-   var _wind = 0;
+   var _lightningType = LightningType.Off;
+   var _windType = WindType.Calm;
    var _shade = Shade.Bright;
    var maxShade = Shade.Very_Bright;
+   var nextLightningFlash = 0;
+   var lightningFlashDuration = 0;
+
+   static const Lightning_Flash_Duration_Total = 7;
 
    final DarkAgeTime time;
 
@@ -44,11 +47,11 @@ class DarkAgeEnvironment {
      shade = maxShade;
    }
 
-   int get lightning => _lightning;
-   int get raining => _raining;
+   int get lightningType => _lightningType;
+   int get rainType => _rainType;
    bool get breezy => _breezy;
    bool get timePassing => time.enabled;
-   int get wind => _wind;
+   int get windType => _windType;
    int get shade => _shade;
 
    set shade(int value) {
@@ -58,17 +61,17 @@ class DarkAgeEnvironment {
      onChangedWeather();
    }
 
-   set wind(int value) {
-      if (_wind == value) return;
+   set windType(int value) {
+      if (_windType == value) return;
       if (value < WindType.Calm) return;
       if (value > WindType.Strong) return;
-      _wind = value;
+      _windType = value;
       onChangedWeather();
    }
 
-   set raining(int value) {
-      if (_raining == value) return;
-      _raining = value;
+   set rainType(int value) {
+      if (_rainType == value) return;
+      _rainType = value;
       onChangedWeather();
    }
 
@@ -78,9 +81,9 @@ class DarkAgeEnvironment {
       onChangedWeather();
    }
 
-   set lightning(int value) {
-      if(_lightning == value) return;
-      _lightning = value;
+   set lightningType(int value) {
+      if(_lightningType == value) return;
+      _lightningType = value;
       onChangedWeather();
    }
 
@@ -92,10 +95,6 @@ class DarkAgeEnvironment {
 
    void toggleBreeze(){
       breezy = !breezy;
-   }
-
-   void toggleWind(){
-      wind = (_wind + 1) % 3;
    }
 
    void toggleTimePassing(){
@@ -112,37 +111,65 @@ class DarkAgeEnvironment {
    }
 
    void updateShade() {
-     shade = Shade.fromHour(time.hour);
+      if (lightningFlashDuration > 0){
+         shade = Shade.Very_Bright;
+      } else {
+         shade = Shade.fromHour(time.hour);
+      }
+
    }
 
    void updateRain(){
       if (durationRain-- > 0) return;
       durationRain = randomInt(1000, 3000);
-      switch (raining) {
+      switch (rainType) {
          case RainType.None:
-            raining = RainType.Light;
+            rainType = RainType.Light;
             break;
          case RainType.Light:
-            raining = randomBool() ? RainType.None : RainType.Heavy;
+            rainType = rainType == RainType.None ? RainType.Heavy : RainType.None;
             break;
          case RainType.Heavy:
-            raining = RainType.Light;
+            rainType = RainType.Light;
             break;
       }
    }
 
    void updateLightning(){
+
+      if (lightningFlashDuration > 0){
+          lightningFlashDuration--;
+      }
+
+      if (lightningType == LightningType.On) {
+         if (nextLightningFlash-- <= 0) {
+            nextLightningFlash = randomInt(500, 1000);
+            lightningFlashDuration = Lightning_Flash_Duration_Total;
+            _shade = Shade.Very_Bright;
+            for (final game in engine.games) {
+               if (game is GameDarkAge == false) continue;
+               final gameDarkAge = game as GameDarkAge;
+               if (this != gameDarkAge.environment) continue;
+               for (final player in gameDarkAge.players){
+                  player.writeWeather();
+                  player.writePlayerEvent(PlayerEvent.Lightning);
+               }
+            }
+         }
+      }
+
       if (nextLightningChanged-- > 0) return;
       nextLightningChanged = randomInt(1000, 3000);
-      switch (lightning) {
+      switch (lightningType) {
          case LightningType.Off:
-            lightning = LightningType.Nearby;
+            lightningType = LightningType.Nearby;
             break;
          case LightningType.Nearby:
-            lightning = randomBool() ? LightningType.Off : LightningType.On;
+            lightningType = lightningType == LightningType.On ? LightningType.Off : LightningType.Nearby;
             break;
          case LightningType.On:
-            lightning = LightningType.Nearby;
+            lightningType = LightningType.Nearby;
+            nextLightningFlash = 0;
             break;
       }
    }
@@ -159,22 +186,23 @@ class DarkAgeEnvironment {
       if (durationWind <= 0) {
          durationWind = randomInt(3000, 6000);
 
-         if (wind == WindType.Calm) {
-            wind++;
+         if (windType == WindType.Calm) {
+            windType++;
             return;
          }
-         if (wind == WindType.Strong){
-            wind--;
+         if (windType == WindType.Strong){
+            windType--;
             return;
          }
          if (randomBool()){
-            wind--;
+            windType--;
          } else {
-            wind++;
+            windType++;
          }
       }
    }
 
+   /// WARNING HACK
    void onChangedWeather(){
       for (final game in engine.games){
          if (game is GameDarkAge == false) continue;

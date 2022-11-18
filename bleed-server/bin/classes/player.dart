@@ -1121,11 +1121,11 @@ class Player extends Character with ByteWriter {
     if (game is GameDarkAge == false) return;
     final environment = (game as GameDarkAge).environment;
     writeByte(ServerResponse.Weather);
-    writeByte(environment.raining);
+    writeByte(environment.rainType);
     writeBool(environment.breezy);
-    writeByte(environment.lightning);
+    writeByte(environment.lightningType);
     writeBool(environment.timePassing);
-    writeByte(environment.wind);
+    writeByte(environment.windType);
     writeByte(environment.shade);
   }
 

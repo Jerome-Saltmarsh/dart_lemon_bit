@@ -117,7 +117,7 @@ class Connection {
         if (rainType == null || !isValidIndex(rainType, RainType.values))
            return errorInvalidArg('invalid rain index: $rainType');
 
-        universe.raining = rainType;
+        universe.rainType = rainType;
         break;
 
       case ClientRequest.Weather_Toggle_Breeze:
@@ -133,7 +133,7 @@ class Connection {
         if (index == null || !isValidIndex(index, WindType.values))
           return errorInvalidArg('invalid rain index: $index');
 
-        universe.wind = index;
+        universe.windType = index;
         break;
 
       case ClientRequest.Weather_Set_Lightning:
@@ -143,7 +143,7 @@ class Connection {
         final index = parse(arguments[1]);
         if (index == null || !isValidIndex(index, LightningType.values))
           return errorInvalidArg('invalid lightning index: $index');
-        universe.lightning = LightningType.values[index];
+        universe.lightningType = LightningType.values[index];
         break;
 
       case ClientRequest.Weather_Toggle_Time_Passing:

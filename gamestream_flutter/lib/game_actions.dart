@@ -2,10 +2,10 @@
 import 'package:gamestream_flutter/library.dart';
 
 class GameActions {
-  static void setAmbientShadeToHour(){
-    /// TODO illegal server state assignment
-    ServerState.ambientShade.value = Shade.fromHour(ServerState.hours.value);
-  }
+  // static void setAmbientShadeToHour(){
+  //   /// TODO illegal server state assignment
+  //   ServerState.ambientShade.value = Shade.fromHour(ServerState.hours.value);
+  // }
 
   static void loadSelectedSceneName(){
     final sceneName = GameEditor.selectedSceneName.value;

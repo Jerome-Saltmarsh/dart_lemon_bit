@@ -45,7 +45,6 @@ class ClientEvents {
         : GameNetwork.sendClientRequestInventoryDrop(itemIndex);
   }
 
-
   static void onDragAcceptEquippedItemContainer(int? i){
     if (i == null) return;
     GameNetwork.sendClientRequestInventoryEquip(i);

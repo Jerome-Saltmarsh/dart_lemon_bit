@@ -31,7 +31,9 @@ class GameEvents {
     }
   }
 
+
   static void onChangedAmbientShade(int shade) {
+    print("onChangedAmbientShade(${Shade.getName(shade)})");
     GameState.refreshLighting();
   }
 
@@ -308,6 +310,9 @@ class GameEvents {
 
   static void onPlayerEvent(int event) {
     switch (event) {
+      case PlayerEvent.Lightning:
+        GameAudio.thunder(1.0);
+        break;
       case PlayerEvent.Level_Increased:
         print("onPlayerEvent_LevelIncreased()");
         GameAudio.buff_1();

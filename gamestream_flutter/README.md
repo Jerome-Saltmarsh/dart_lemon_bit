@@ -26,6 +26,7 @@
 [ ] player attributes ui
 [ ] repeat killing same enemies yields no reward
 [ ] move thunder flash state from client to server
+[ ] refactor client applyBakeMapEmissions
 
 [PROJECTS]
 [ ] SKILLS
@@ -50,10 +51,12 @@
 [ ] scene edit tool pause ai
 [ ] particle-type myst
 [ ] fix lighting on spawn bug
-[ ] fix illegal writing ambient shade in client
 [ ] design scene
 
 [current]
+[ ] fix illegal writing ambient shade in client
+
+18.11.2022
 
 
 17.11.2022

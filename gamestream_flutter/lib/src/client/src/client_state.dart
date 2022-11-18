@@ -23,12 +23,12 @@ class ClientState {
   static final triggerAlarmNoMessageReceivedFromServer = Watch(false);
 
   static final particles = <Particle>[];
-  static var lightningFlashFrames = 0;
+  // static var lightningFlashFrames = 0;
   static var totalActiveParticles = 0;
   static var showAllItems = false;
   static var srcXRainFalling = 6640.0;
   static var srcXRainLanding = 6739.0;
-  static var nextLightning = 0;
+  // static var nextLightning = 0;
   static var messageStatusDuration = 0;
   static var areaTypeVisibleDuration = 0;
 
