@@ -182,7 +182,7 @@ class GameAudio {
 
   static double getVolumeTargetRain() {
     if (ServerState.rainType.value == RainType.None) return 0.0;
-    const r = 7;
+    const r = 6;
     const maxDistance = r * tileSize;
     final distance = GameQueries.getClosestByType(radius: r, type: NodeType.Rain_Landing) * tileSize;
     final v = convertDistanceToVolume(distance, maxDistance: maxDistance);
@@ -198,16 +198,18 @@ class GameAudio {
   }
 
   static double getVolumeTargetFire(){
+    if (!ClientState.torchesIgnited.value) return 0;
     const r = 4;
     const maxDistance = r * tileSize;
     var closest = GameQueries.getClosestByType(radius: r, type: NodeType.Fireplace) * tileSize;
-    if (ClientState.torchesIgnited.value) {
-      final closestTorch = GameQueries.getClosestByType(radius: r, type: NodeType.Torch) * tileSize;
-      if (closestTorch < closest) {
-        closest = closestTorch;
-      }
+    final closestTorch = GameQueries.getClosestByType(
+        radius: r,
+        type: NodeType.Torch
+    ) * tileSize;
+    if (closestTorch < closest) {
+      closest = closestTorch;
     }
-    return convertDistanceToVolume(closest, maxDistance: maxDistance) * 1.0;
+    return convertDistanceToVolume(closest, maxDistance: maxDistance);
   }
 
   static double getVolumeTargetDistanceThunder(){
@@ -220,10 +222,10 @@ class GameAudio {
   }
 
   static double getVolumeStream(){
-    const r = 7;
+    const r = 5;
     const maxDistance = r * tileSize;
     final distance = GameQueries.getClosestByType(radius: r, type: NodeType.Water) * tileSize;
-    return convertDistanceToVolume(distance, maxDistance: maxDistance * 0.5);
+    return convertDistanceToVolume(distance, maxDistance: maxDistance * 0.25);
   }
 
   static void playAudioSingle(AudioSingle audioSingle, double x, double y, double z){
