@@ -55,10 +55,11 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] design scene
 
 [current]
-[ ] refactor client applyBakeMapEmissions
+
 
 18.11.2022
 [x] move thunder flash state from client to server
+[x] refactor client applyBakeMapEmissions
 
 
 17.11.2022

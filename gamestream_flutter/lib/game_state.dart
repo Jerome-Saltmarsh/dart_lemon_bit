@@ -256,14 +256,6 @@ class GameState {
     }
   }
 
-  // static void actionLightningFlash() {
-  //   GameAudio.thunder(1.0);
-  //   if (ServerState.ambientShade.value == Shade.Very_Bright) return;
-  //   /// TODO Illegal server state assignment
-  //   ServerState.ambientShade.value = Shade.Very_Bright;
-  //   ClientState.lightningFlashFrames = GameConfig.Lightning_Flash_Duration;
-  // }
-
   static void resetGridToAmbient(){
     final shade = ServerState.ambientShade.value;
     for (var i = 0; i < GameNodes.nodesTotal; i++){
@@ -1288,13 +1280,16 @@ class GameState {
 
     /// TODO Refactor
     static void applyBakeMapEmissions() {
+      // for (var i = 0; i < GameNodes.nodesTotal; i++){
+      //    if (!NodeType.emitsLight(GameNodes.nodesType[i])) continue;
+      //     applyEmissionBakeAtIndex(index: i, maxBrightness: Shade.Very_Bright);
+      // }
 
-      for (var i = 0; i < GameNodes.nodesTotal; i++){
-         if (!NodeType.emitsLight(GameNodes.nodesType[i])) continue;
-          applyEmissionBakeAtIndex(index: i, maxBrightness: Shade.Very_Bright);
+      for (var i = 0; i < ClientState.nodesLightSourcesTotal; i++){
+        applyEmissionBakeAtIndex(index: ClientState.nodesLightSources[i], maxBrightness: Shade.Very_Bright);
       }
 
-      for (final gameObject in GameState.gameObjects){
+      for (final gameObject in GameState.gameObjects) {
         if (gameObject.type == ItemType.GameObjects_Crystal){
           applyEmissionBake(
             zIndex: gameObject.indexZ,

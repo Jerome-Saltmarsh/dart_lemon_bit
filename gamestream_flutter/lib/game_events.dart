@@ -37,6 +37,7 @@ class GameEvents {
   }
 
   static void onChangedNodes(){
+    ClientActions.refreshBakeMapLightSources();
     GameState.refreshGridMetrics();
     GameState.gridWindResetToAmbient();
 

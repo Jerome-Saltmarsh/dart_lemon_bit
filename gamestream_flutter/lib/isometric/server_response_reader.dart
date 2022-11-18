@@ -470,10 +470,7 @@ class ServerResponseReader with ByteReader {
     while (total < totalNodes) {
       final nodeType = readByte();
       final nodeOrientation = readByte();
-
-      if(!NodeType.supportsOrientation(nodeType, nodeOrientation)) {
-         print("node type ${NodeType.getName(nodeType)} does not support orientation ${NodeOrientation.getName(nodeOrientation)}");
-      }
+      assert (NodeType.supportsOrientation(nodeType, nodeOrientation));
 
       var count = readUInt16();
       total += count;

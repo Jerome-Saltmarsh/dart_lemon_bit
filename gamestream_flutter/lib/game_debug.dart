@@ -51,7 +51,8 @@ class GameDebug {
                                 "player-body: ${ItemType.getName(GamePlayer.body.value)}\n"
                                 "player-head: ${ItemType.getName(GamePlayer.head.value)}\n"
                                 "player-weapon: ${ItemType.getName(GamePlayer.weapon.value)}\n"
-                                "player-interact-mode: ${InteractMode.getName(ServerState.interactMode.value)}"
+                                "player-interact-mode: ${InteractMode.getName(ServerState.interactMode.value)}\n"
+                                "scene-light-sources: ${ClientState.nodesLightSourcesTotal}\n"
                             )),
                             Refresh(() => text('touch-world: x: ${GameIO.touchCursorWorldX.toInt()}, y: ${GameIO.touchCursorWorldY.toInt()}')),
                             Refresh(() => text('characters-total: ${GameState.characters.length}')),

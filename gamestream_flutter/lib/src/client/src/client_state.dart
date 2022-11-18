@@ -32,6 +32,9 @@ class ClientState {
   static var messageStatusDuration = 0;
   static var areaTypeVisibleDuration = 0;
 
+  static var nodesLightSources = Uint16List(1000);
+  static var nodesLightSourcesTotal = 0;
+
   // PROPERTIES
   static bool get hoverDialogIsInventory => hoverDialogType.value == DialogType.Inventory;
   static bool get hoverDialogDialogIsTrade => hoverDialogType.value == DialogType.Trade;
