@@ -252,16 +252,16 @@ class GameInventoryUI {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(child: text(ItemType.getName(itemType), color: Colors.blue)),
-                if (ClientState.hoverDialogDialogIsTrade)
-                  text("${ItemType.getBuyPrice(itemType)} Gold", color: ServerQuery.playerCanAffordToBuy(itemType) ? GameColors.yellow : GameColors.yellowDark),
-                if (ClientState.hoverDialogIsInventory && GamePlayer.interactModeTrading)
-                  text("${ItemType.getSellPrice(itemType)} Gold", color: GameColors.yellowDark),
-              ],
-            ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: [
+            //     Expanded(child: text(ItemType.getName(itemType), color: Colors.blue)),
+            //     if (ClientState.hoverDialogDialogIsTrade)
+            //       text("${ItemType.getBuyPrice(itemType)} Gold", color: ServerQuery.playerCanAffordToBuy(itemType) ? GameColors.yellow : GameColors.yellowDark),
+            //     if (ClientState.hoverDialogIsInventory && GamePlayer.interactModeTrading)
+            //       text("${ItemType.getSellPrice(itemType)} Gold", color: GameColors.yellowDark),
+            //   ],
+            // ),
             text('type: ${ItemType.getGroupTypeName(itemType)}'),
             text('Damage: ${ItemType.getDamage(itemType)}'),
             text('Range: ${ItemType.getRange(itemType).toInt()}'),
@@ -302,18 +302,26 @@ class GameInventoryUI {
       final itemQuantity = recipe[i];
       final itemType = recipe[i + 1];
        children.add(Row(
+         mainAxisAlignment: MainAxisAlignment.spaceBetween,
          children: [
-           text(ItemType.getName(itemType)),
-           width16,
+           Row(
+             children: [
+               buildItemTypeAtlasImage(itemType: itemType, scale: 0.75),
+               width6,
+               text(ItemType.getName(itemType), color: Colors.white60),
+             ],
+           ),
            text(itemQuantity)
          ],
        ));
     }
     return Container(
       padding: const EdgeInsets.all(8),
+      color: GameColors.brownLight,
       child: Column(
         children: [
           text("COST"),
+          height6,
           ...children
         ],
       ),
