@@ -8,11 +8,9 @@ class RainType {
        None, Light, Heavy,  
     ];
     
-    static String getName(int value) {
-        return const {
+    static String getName(int value) => const {
             None: "None",
             Light: "Light",
             Heavy: "Heavy",
         }[value] ?? 'wind-type-unknown-$value';
-    }
 }

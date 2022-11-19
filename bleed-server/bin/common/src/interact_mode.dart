@@ -5,7 +5,7 @@ class InteractMode {
   static const Inventory = 3;
   static const Craft = 4;
 
-  static String getName(int value) => {
+  static String getName(int value) => const {
     None: "None",
     Talking: "Talking",
     Trading: "Trading",

@@ -12,7 +12,7 @@ class AreaType {
    static const Dark_Fortress = 8;
    static const Old_Village = 9;
 
-   static String getName(int value) => {
+   static String getName(int value) => const {
         Town: "Town",
         Cemetery: "Haunted Cemetery",
         Farm: "Farmlands",
