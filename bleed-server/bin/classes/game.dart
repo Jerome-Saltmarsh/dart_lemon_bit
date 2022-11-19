@@ -895,6 +895,8 @@ abstract class Game {
     character.stateDuration = 0;
     character.animationFrame = 0;
     character.collidable = false;
+    character.xv = 0;
+    character.yv = 0;
     clearCharacterTarget(character);
 
     if (character is AI){
@@ -1195,10 +1197,18 @@ abstract class Game {
   }
 
   void updateCharacter(Character character) {
+
+    if (character.dead) {
+       if (character is AI){
+         if (character.respawn-- > 0) return;
+         respawnAI(character);
+       }
+       return;
+    }
+
     if (character is AI){
       updateAI(character);
     }
-
     character.updateMovement();
     resolveCharacterTileCollision(character);
     if (character.dying){
@@ -1217,12 +1227,6 @@ abstract class Game {
   }
 
   void updateAI(AI ai){
-      if (ai.dead){
-        if (ai.respawn-- > 0) return;
-        respawnAI(ai);
-        return;
-      }
-
       if (ai.busy) return;
 
       final target = ai.target;
