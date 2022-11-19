@@ -235,7 +235,8 @@ class GameInventoryUI {
 
   static Widget buildPositionedContainerItemTypeInformation(int itemIndex){
     if (itemIndex == -1) return const SizedBox();
-    final itemType = ServerQuery.getItemTypeAtInventoryIndex(itemIndex);
+
+    final itemType = ClientState.hoverDialogType.value == DialogType.Trade ? GamePlayer.storeItems.value[itemIndex] : ServerQuery.getItemTypeAtInventoryIndex(itemIndex);
     final consumeType = ItemType.getConsumeType(itemType);
     return Positioned(
       top: Engine.mousePosition.y < (Engine.screen.height * 0.5) ?  Engine.mousePosition.y + 60 : null,
