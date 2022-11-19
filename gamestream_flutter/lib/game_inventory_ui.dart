@@ -93,28 +93,11 @@ class GameInventoryUI {
       child: watch(watchInt, (int itemType) => buildDraggableItemIndex(itemIndex: index)),
    );
 
-  static Widget buildDraggableItemIndex({required int itemIndex, double scale = Slot_Item_Scale}) =>
-      Draggable(
-        onDragStarted: () => ClientEvents.onDragStarted(itemIndex),
-        onDragEnd: ClientEvents.onDragEnd,
-        onDraggableCanceled: ClientEvents.onDragCancelled,
-        onDragCompleted: ClientEvents.onDragCompleted,
-        data: itemIndex,
-        hitTestBehavior: HitTestBehavior.opaque,
-        feedback: buildPressableItemIndex(
-            itemIndex: itemIndex,
-            scale: scale,
-        ),
-        child: buildPressableItemIndex(
-          itemIndex: itemIndex,
-          scale: scale,
-        ),
-      );
-
   static Widget buildPressableItemIndex({
     required int itemIndex,
     double scale = Slot_Item_Scale,
     int? itemType,
+    int? itemQuantity,
   }) =>
       onPressed(
         action: () => ClientEvents.onItemIndexPrimary(itemIndex),
@@ -130,11 +113,15 @@ class GameInventoryUI {
               ClientActions.clearHoverIndex();
             }
           },
-          child: Container(
-            child: buildItemTypeAtlasImage(
-              itemType: itemType ?? ServerQuery.getItemTypeAtInventoryIndex(itemIndex),
-              scale: scale,
-            ),
+          child: Stack(
+            children: [
+              buildItemTypeAtlasImage(
+                itemType: itemType ?? ServerQuery.getItemTypeAtInventoryIndex(itemIndex),
+                scale: scale,
+              ),
+              if (itemQuantity != null)
+                Positioned(child: text(itemQuantity, size: 14, color: Colors.white70), right: 0, bottom: 0),
+            ],
           ),
         ),
       );
@@ -145,41 +132,63 @@ class GameInventoryUI {
         child: Stack(
           children: [
             buildStackSlotGrid(),
-            watch(ClientState.inventoryReads, buildStackInventoryItems),
+            buildStackInventoryItems(),
           ],
         ),
-      );
-
-  static bool onDragWillAccept(int? i) => i != null;
-
-  static Widget buildStackInventoryItems(int reads) {
-     final positioned = <Widget>[];
-     for (var i = 0; i < ServerState.inventory.length; i++){
-         if (ServerState.inventory[i] == ItemType.Empty) continue;
-         positioned.add(
-           buildPositionInventoryItem(i)
-         );
-     }
-     return Stack(
-       children: positioned,
-     );
-  }
-
-  static Widget buildPositionInventoryItem(int index) =>
-      buildPositionGridItem(
-        index: index,
-        child: buildDraggableItemIndex(itemIndex: index),
       );
 
   static Widget buildStackSlotGrid() {
     final children = <Widget>[];
     for (var i = 0; i < ServerState.inventory.length; i++) {
-       children.add(buildPositionedGridSlot(i));
+      children.add(buildPositionedGridSlot(i));
     }
     return Stack(
       children: children,
     );
   }
+
+
+  static bool onDragWillAccept(int? i) => i != null;
+
+  static Widget buildStackInventoryItems() =>
+      watch(ClientState.inventoryReads, (int reads){
+        final positioned = <Widget>[];
+        for (var i = 0; i < ServerState.inventory.length; i++){
+          if (ServerState.inventory[i] == ItemType.Empty) continue;
+          positioned.add(
+              buildPositionInventoryItem(i)
+          );
+        }
+        return Stack(
+          children: positioned,
+        );
+    });
+
+  static Widget buildPositionInventoryItem(int index) =>
+      buildPositionGridItem(
+        index: index,
+        child: buildDraggableItemIndex(itemIndex: index, itemQuantity: ServerQuery.getItemQuantityAtIndex(index)),
+      );
+
+  static Widget buildDraggableItemIndex({required int itemIndex, double scale = Slot_Item_Scale, int? itemQuantity}) =>
+      Draggable(
+        onDragStarted: () => ClientEvents.onDragStarted(itemIndex),
+        onDragEnd: ClientEvents.onDragEnd,
+        onDraggableCanceled: ClientEvents.onDragCancelled,
+        onDragCompleted: ClientEvents.onDragCompleted,
+        data: itemIndex,
+        hitTestBehavior: HitTestBehavior.opaque,
+        feedback: buildPressableItemIndex(
+          itemIndex: itemIndex,
+          scale: scale,
+          itemQuantity: itemQuantity,
+        ),
+        child: buildPressableItemIndex(
+          itemIndex: itemIndex,
+          scale: scale,
+          itemQuantity: itemQuantity,
+        ),
+      );
 
   static Widget buildPositionedGridSlot(int i) =>
     buildPositionGridItem(

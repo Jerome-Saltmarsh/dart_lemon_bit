@@ -31,6 +31,26 @@ class ServerQuery {
      throw Exception('ServerQuery.mapWatchBeltTypeToItemType($watchBeltType)');
   }
 
+  static int getItemQuantityAtIndex(int index){
+    assert (index >= 0);
+    if (index < ServerState.inventory.length)
+      return ServerState.inventoryQuantity[index];
+    if (index == ItemType.Belt_1)
+      return ServerState.playerBelt1_Quantity.value;
+    if (index == ItemType.Belt_2)
+      return ServerState.playerBelt2_Quantity.value;
+    if (index == ItemType.Belt_3)
+      return ServerState.playerBelt3_Quantity.value;
+    if (index == ItemType.Belt_4)
+      return ServerState.playerBelt4_Quantity.value;
+    if (index == ItemType.Belt_5)
+      return ServerState.playerBelt5_Quantity.value;
+    if (index == ItemType.Belt_6)
+      return ServerState.playerBelt6_Quantity.value;
+
+    throw Exception('ServerQuery.getItemQuantityAtIndex($index)');
+  }
+
   static int getItemTypeAtInventoryIndex(int index){
     if (index == ItemType.Equipped_Weapon)
       return GamePlayer.weapon.value;
