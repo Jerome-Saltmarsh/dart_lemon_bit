@@ -291,6 +291,7 @@ class ItemType {
      Resource_Iron: "Iron",
      Resource_Stone: "Stone",
      Resource_Gold: "Gold",
+     Resource_Scrap_Metal: "Scrap Metal",
      Resource_Gun_Powder: "Gun-Powder",
      Resource_Arrow: "Arrow",
      Head_Wizards_Hat: "Wizards Hat",
@@ -321,6 +322,11 @@ class ItemType {
             0100, Resource_Scrap_Metal,
             0050, Resource_Gold,
        ],
+      Weapon_Handgun_Flint_Lock_Superior: const [
+        0003, Weapon_Handgun_Flint_Lock,
+        0400, Resource_Scrap_Metal,
+        0100, Resource_Gold,
+      ],
   };
 }
 

@@ -266,12 +266,15 @@ class GameInventoryUI {
             text('Damage: ${ItemType.getDamage(itemType)}'),
             text('Range: ${ItemType.getRange(itemType).toInt()}'),
             text('Cooldown: ${ItemType.getCooldown(itemType).toInt()}'),
-
             if (consumeType != ItemType.Empty)
                text("Uses: ${ItemType.getConsumeAmount(itemType)}x ${ItemType.getName(consumeType)}"),
 
-            if (ItemType.isTypeRecipe(itemType))
-              buildContainerRecipe(itemType),
+            height16,
+            if (ClientState.hoverDialogDialogIsTrade)
+              buildItemTypeRecipe(itemType),
+
+            // if (ItemType.isTypeRecipe(itemType))
+            //   buildContainerRecipe(itemType),
 
             height16,
 
@@ -287,6 +290,32 @@ class GameInventoryUI {
               text("right click to drop", color: GameColors.inventoryHint),
           ],
         ),
+      ),
+    );
+  }
+
+  static Widget buildItemTypeRecipe(int itemType){
+    final recipe = ItemType.Recipes[itemType];
+    if (recipe == null) return text("(FREE)");
+    final children = <Widget>[];
+    for (var i = 0; i < recipe.length; i += 2){
+      final itemQuantity = recipe[i];
+      final itemType = recipe[i + 1];
+       children.add(Row(
+         children: [
+           text(ItemType.getName(itemType)),
+           width16,
+           text(itemQuantity)
+         ],
+       ));
+    }
+    return Container(
+      padding: const EdgeInsets.all(8),
+      child: Column(
+        children: [
+          text("COST"),
+          ...children
+        ],
       ),
     );
   }
