@@ -42,7 +42,6 @@ export 'src/seconds_per_day.dart';
 export 'src/seconds_per_hour.dart';
 export 'src/server_response.dart';
 export 'src/shade.dart';
-export 'src/side.dart';
 export 'src/spawn_type.dart';
 export 'src/target_category.dart';
 export 'src/teams.dart';

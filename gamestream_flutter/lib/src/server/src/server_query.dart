@@ -70,4 +70,31 @@ class ServerQuery {
     }
     return ServerState.inventory[index];
   }
+
+  static int countItemTypeQuantityInPlayerPossession(int itemType){
+     var total = 0;
+     for (var i = 0; i < ServerState.inventory.length; i++){
+         if (ServerState.inventory[i] != itemType) continue;
+         total += ServerState.inventoryQuantity[i];
+     }
+     if (ServerState.playerBelt1_ItemType == itemType) {
+         total += ServerState.playerBelt1_Quantity.value;
+     }
+     if (ServerState.playerBelt2_ItemType == itemType) {
+       total += ServerState.playerBelt2_Quantity.value;
+     }
+     if (ServerState.playerBelt3_ItemType == itemType) {
+       total += ServerState.playerBelt3_Quantity.value;
+     }
+     if (ServerState.playerBelt4_ItemType == itemType) {
+       total += ServerState.playerBelt4_Quantity.value;
+     }
+     if (ServerState.playerBelt5_ItemType == itemType) {
+       total += ServerState.playerBelt5_Quantity.value;
+     }
+     if (ServerState.playerBelt6_ItemType == itemType) {
+       total += ServerState.playerBelt6_Quantity.value;
+     }
+     return total;
+  }
 }

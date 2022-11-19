@@ -40,6 +40,8 @@ class Area_OldVillage extends DarkAgeArea {
     player.inventory[7] = ItemType.Resource_Gun_Powder;
     player.inventory[8] = ItemType.Consumables_Meat;
     player.inventory[9] = ItemType.Consumables_Apple;
+    player.inventory[10] = ItemType.Resource_Gold;
+    player.inventoryQuantity[10] = 200;
     player.inventoryQuantity[7] = 100;
     player.belt1_itemType = ItemType.Weapon_Handgun_Flint_Lock_Old;
     player.equippedWeaponIndex = ItemType.Belt_1;

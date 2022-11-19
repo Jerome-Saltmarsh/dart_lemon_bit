@@ -247,21 +247,14 @@ class GameInventoryUI {
         padding: const EdgeInsets.all(12),
         color: brownDark,
         constraints: BoxConstraints(
-          maxWidth: 400,
+          minWidth: 450,
+          maxWidth: 550,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //   children: [
-            //     Expanded(child: text(ItemType.getName(itemType), color: Colors.blue)),
-            //     if (ClientState.hoverDialogDialogIsTrade)
-            //       text("${ItemType.getBuyPrice(itemType)} Gold", color: ServerQuery.playerCanAffordToBuy(itemType) ? GameColors.yellow : GameColors.yellowDark),
-            //     if (ClientState.hoverDialogIsInventory && GamePlayer.interactModeTrading)
-            //       text("${ItemType.getSellPrice(itemType)} Gold", color: GameColors.yellowDark),
-            //   ],
-            // ),
+            text(ItemType.getName(itemType), color: GameColors.blue),
+            height8,
             text('type: ${ItemType.getGroupTypeName(itemType)}'),
             text('Damage: ${ItemType.getDamage(itemType)}'),
             text('Range: ${ItemType.getRange(itemType).toInt()}'),
@@ -272,9 +265,6 @@ class GameInventoryUI {
             height16,
             if (ClientState.hoverDialogDialogIsTrade)
               buildItemTypeRecipe(itemType),
-
-            // if (ItemType.isTypeRecipe(itemType))
-            //   buildContainerRecipe(itemType),
 
             height16,
 
@@ -299,26 +289,42 @@ class GameInventoryUI {
     if (recipe == null) return text("(FREE)");
     final children = <Widget>[];
     for (var i = 0; i < recipe.length; i += 2){
-      final itemQuantity = recipe[i];
-      final itemType = recipe[i + 1];
+      final recipeItemQuantityRequired = recipe[i];
+      final recipeItemType = recipe[i + 1];
+      final recipeItemQuantityPossessed = ServerQuery.countItemTypeQuantityInPlayerPossession(recipeItemType);
+      final sufficientQuantity = recipeItemQuantityPossessed >= recipeItemQuantityRequired;
+      final textColor = sufficientQuantity ? GameColors.green : GameColors.red;
        children.add(Row(
          mainAxisAlignment: MainAxisAlignment.spaceBetween,
          children: [
+           Expanded(
+             child: Row(
+               children: [
+                 buildItemTypeAtlasImage(itemType: recipeItemType, scale: 0.75),
+                 width6,
+                 text(ItemType.getName(recipeItemType), color: textColor),
+                 width32,
+               ],
+             ),
+           ),
            Row(
              children: [
-               buildItemTypeAtlasImage(itemType: itemType, scale: 0.75),
-               width6,
-               text(ItemType.getName(itemType), color: Colors.white60),
+               Container(width: 65, child: text(recipeItemQuantityRequired, color: textColor), alignment: Alignment.centerRight),
+               Container(width: 65, child: text('$recipeItemQuantityPossessed', color: textColor.withOpacity(0.85)), alignment: Alignment.centerRight),
              ],
            ),
-           text(itemQuantity)
          ],
        ));
     }
+
     return Container(
       padding: const EdgeInsets.all(8),
       color: GameColors.brownLight,
+      constraints: BoxConstraints(
+        minWidth: 450,
+      ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           text("COST"),
           height6,
