@@ -3,6 +3,7 @@ import 'library.dart';
 class AtlasItems {
   static const size = 32.0;
 
+
   static double getSrcX(int itemType) => const <int, double> {
       ItemType.Weapon_Melee_Sword: 0,
       ItemType.Weapon_Melee_Magic_Staff: 32,
@@ -13,6 +14,9 @@ class AtlasItems {
       ItemType.Head_Wizards_Hat: 192,
       ItemType.Weapon_Ranged_Shotgun: 0,
       ItemType.Weapon_Ranged_Handgun: 32,
+      ItemType.Weapon_Ranged_Pistol_Flint_Lock_Old: 288,
+      ItemType.Weapon_Ranged_Pistol_Flint_Lock: 288,
+      ItemType.Weapon_Ranged_Pistol_Flint_Lock_Superior: 288,
       ItemType.Body_Shirt_Blue: 64,
       ItemType.Body_Shirt_Cyan: 96,
       ItemType.Body_Tunic_Padded: 128,

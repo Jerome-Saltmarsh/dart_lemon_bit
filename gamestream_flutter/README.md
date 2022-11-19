@@ -30,6 +30,7 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] player attributes ui
 [ ] repeat killing same enemies yields no reward
 [ ] scene edit tool pause ai
+[ ] weapon capacity
 
 [PROJECTS]
 [ ] SKILLS
@@ -59,9 +60,11 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] particle-type myst
 [ ] design scene
 
-[current]
+[objective]
+[ ] upgrade pistol-flint-lock-old to pistol-flint-lock
 
 18.11.2022
+[x] fixed mobile layout bug
 [x] fix mobile attack button position
 [x] fix do not save collectable game items to scene
 [x] fix on zombie killed bug

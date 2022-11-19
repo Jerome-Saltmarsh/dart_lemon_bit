@@ -256,7 +256,7 @@ class GameEvents {
         return GameAudio.assault_rifle_shot.playXYZ(x, y, z);
       case ItemType.Weapon_Ranged_Rifle:
         return GameAudio.sniper_shot_4.playXYZ(x, y, z);
-      case ItemType.Weapon_Ranged_Revolver:
+      case ItemType.Weapon_Ranged_Pistol_Revolver:
         return GameAudio.revolver_shot_2.playXYZ(x, y, z);
       case ItemType.Weapon_Melee_Sword:
         return onGameEventAttackPerformedBlade(x, y, z, angle);
@@ -413,7 +413,7 @@ class GameEvents {
 
   static void onPlayerEventItemEquipped(int type) {
     switch (type) {
-      case ItemType.Weapon_Ranged_Revolver:
+      case ItemType.Weapon_Ranged_Pistol_Revolver:
         GameAudio.revolver_reload_1();
         break;
       case ItemType.Weapon_Ranged_Handgun:

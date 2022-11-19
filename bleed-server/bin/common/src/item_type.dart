@@ -76,7 +76,7 @@ class ItemType {
 
   static bool isSingleHandedFirearm(int weaponType) =>
       weaponType == Weapon_Ranged_Handgun ||
-      weaponType == Weapon_Ranged_Revolver ;
+      weaponType == Weapon_Ranged_Pistol_Revolver ;
 
   static bool isTwoHandedFirearm(int weaponType) =>
       weaponType == Weapon_Ranged_Bow ||
@@ -90,11 +90,14 @@ class ItemType {
   static const Index_Heads          = 10000;
   static const Index_Bodies         = 20000;
   static const Index_Legs           = 30000;
-  static const Index_Weapon_Melee   = 40000;
-  static const Index_Weapon_Ranged  = 45000;
-  static const Index_Recipe         = 50000;
-  static const Index_Belt       = 65000;
-  static const Index_Equipped       = Index_Belt + 7;
+  static const Index_Weapon_Melee          = 40000;
+  static const Index_Weapon_Ranged         = 45000;
+  static const Index_Weapon_Ranged_Pistol  = 45000;
+  static const Index_Weapon_Ranged_Rifle   = 45000;
+  static const Index_Weapon_Ranged_Shotgun = 45000;
+  static const Index_Recipe                = 50000;
+  static const Index_Belt                  = 65000;
+  static const Index_Equipped              = Index_Belt + 7;
 
   static const Belt_1 = Index_Belt + 1;
   static const Belt_2 = Index_Belt + 2;
@@ -130,9 +133,10 @@ class ItemType {
   static const Resource_Stone = Index_Resources + 6;
   static const Resource_Crystal = Index_Resources + 7;
   static const Resource_Iron = Index_Resources + 8;
-  static const Resource_Gold = Index_Resources + 9;
-  static const Resource_Gun_Powder = Index_Resources + 10;
-  static const Resource_Arrow = Index_Resources + 11;
+  static const Resource_Scrap_Metal = Index_Resources + 9;
+  static const Resource_Gold = Index_Resources + 10;
+  static const Resource_Gun_Powder = Index_Resources + 11;
+  static const Resource_Arrow = Index_Resources + 12;
 
   static const Head_Steel_Helm = Index_Heads + 1;
   static const Head_Rogues_Hood = Index_Heads + 2;
@@ -151,18 +155,28 @@ class ItemType {
   static const Legs_Green = Index_Legs + 4;
   static const Legs_White = Index_Legs + 5;
   static const Legs_Swat = Index_Legs + 6;
-
+  
   static const Weapon_Ranged_Handgun = Index_Weapon_Ranged + 1;
-  static const Weapon_Ranged_Revolver = Index_Weapon_Ranged + 2;
-  static const Weapon_Ranged_Shotgun = Index_Weapon_Ranged + 3;
-  static const Weapon_Ranged_Bow = Index_Weapon_Ranged + 4;
-  static const Weapon_Ranged_Crossbow = Index_Weapon_Ranged + 5;
-  static const Weapon_Ranged_Assault_Rifle = Index_Weapon_Ranged + 6;
-  static const Weapon_Ranged_Harquebus = Index_Weapon_Ranged + 6;
-  static const Weapon_Ranged_Musket = Index_Weapon_Ranged + 6;
-  static const Weapon_Ranged_Blunderbuss = Index_Weapon_Ranged + 6;
-  static const Weapon_Ranged_Rifle = Index_Weapon_Ranged + 7;
-  static const Weapon_Ranged_Flintlock_Pistol = Index_Weapon_Ranged + 7;
+
+  static const Weapon_Ranged_Pistol_Flint_Lock_Old = Index_Weapon_Ranged + 2;
+  static const Weapon_Ranged_Pistol_Flint_Lock = Index_Weapon_Ranged + 3;
+  static const Weapon_Ranged_Pistol_Flint_Lock_Superior = Index_Weapon_Ranged + 4;
+
+  static const Weapon_Ranged_Pistol_Blunderbuss = Index_Weapon_Ranged + 7;
+  static const Weapon_Ranged_Pistol_Revolver = Index_Weapon_Ranged + 8;
+
+  static const Weapon_Ranged_Rifle_Arquebus = Index_Weapon_Ranged + 3;
+  static const Weapon_Ranged_Rifle_Musket = Index_Weapon_Ranged + 3;
+  static const Weapon_Ranged_Rifle_Jager = Index_Weapon_Ranged + 3;
+
+  static const Weapon_Ranged_Shotgun = Index_Weapon_Ranged + 6;
+  static const Weapon_Ranged_Bow = Index_Weapon_Ranged + 7;
+  static const Weapon_Ranged_Crossbow = Index_Weapon_Ranged + 8;
+  static const Weapon_Ranged_Assault_Rifle = Index_Weapon_Ranged + 9;
+  static const Weapon_Ranged_Harquebus = Index_Weapon_Ranged + 10;
+  static const Weapon_Ranged_Musket = Index_Weapon_Ranged + 11;
+  static const Weapon_Ranged_Blunderbuss = Index_Weapon_Ranged + 12;
+  static const Weapon_Ranged_Rifle = Index_Weapon_Ranged + 13;
   static const Weapon_Ranged_Staff_Of_Flames = Index_Weapon_Ranged + 8;
   static const Weapon_Melee_Magic_Staff = Index_Weapon_Ranged + 9;
 
@@ -194,14 +208,7 @@ class ItemType {
     Weapon_Ranged_Shotgun: 3,
   }[itemType] ?? 0;
 
-  static const Recipes = {
-    Recipe_Staff_Of_Fire : [
-      Resource_Wood, 50,
-      Resource_Crystal, 50,
-    ],
-  };
-
-  static int getDamage(int value) => {
+  static int getDamage(int value) => const {
       Empty: 1,
       Weapon_Ranged_Handgun: 2,
       Weapon_Ranged_Shotgun: 2,
@@ -209,7 +216,7 @@ class ItemType {
       Weapon_Ranged_Staff_Of_Flames: 2,
   }[value] ?? 0;
 
-  static double getRange(int value) => <int, double> {
+  static double getRange(int value) => const <int, double> {
       Empty: 50,
       Weapon_Ranged_Handgun: 200,
       Weapon_Ranged_Shotgun: 100,
@@ -217,26 +224,36 @@ class ItemType {
       Weapon_Melee_Magic_Staff: 100,
   }[value] ?? 0;
 
-  static int getCooldown(int value) => {
+  static int getCooldown(int value) => const {
       Weapon_Ranged_Handgun: 20,
       Weapon_Ranged_Shotgun: 40,
   }[value] ?? 30;
 
   static String getGroupTypeName(int value) {
-     if (isTypeEmpty(value)) return "Empty";
-     if (isTypeEquipped(value)) return "Equipped";
-     if (isTypeConsumable(value)) return "Consumable";
-     if (isTypeResource(value)) return "Resource";
-     if (isTypeHead(value)) return "Headpiece";
-     if (isTypeLegs(value)) return "Pants";
-     if (isTypeBody(value)) return "Body";
-     if (isTypeWeaponRanged(value)) return "Ranged Weapon";
-     if (isTypeWeaponMelee(value)) return "Melee Weapon";
-     if (isTypeRecipe(value)) return "Recipe";
+     if (isTypeEmpty(value))
+       return "Empty";
+     if (isTypeEquipped(value))
+       return "Equipped";
+     if (isTypeConsumable(value))
+       return "Consumable";
+     if (isTypeResource(value))
+       return "Resource";
+     if (isTypeHead(value))
+       return "Headpiece";
+     if (isTypeLegs(value))
+       return "Pants";
+     if (isTypeBody(value))
+       return "Body";
+     if (isTypeWeaponRanged(value))
+       return "Ranged Weapon";
+     if (isTypeWeaponMelee(value))
+       return "Melee Weapon";
+     if (isTypeRecipe(value))
+       return "Recipe";
      return "item-type-group-unknown-$value";
   }
   
-  static String getName(int value) => {
+  static String getName(int value) => const {
      Empty: "Empty",
      Weapon_Ranged_Shotgun: "Shotgun",
      Weapon_Ranged_Handgun: "Handgun",
@@ -268,4 +285,14 @@ class ItemType {
      Consumables_Apple: "Apple",
      Consumables_Meat: "Meat",
   }[value] ?? "item-type-unknown($value)";
+
+  static const Recipes = <int, List<int>> {
+       Weapon_Ranged_Pistol_Flint_Lock: const [
+            0001, Weapon_Ranged_Pistol_Flint_Lock_Old,
+            0100, Resource_Scrap_Metal,
+            0050, Resource_Gold,
+       ],
+  };
 }
+
+

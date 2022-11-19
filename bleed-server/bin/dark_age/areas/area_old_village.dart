@@ -25,7 +25,7 @@ class Area_OldVillage extends DarkAgeArea {
     final player = Player(
         game: this,
         team: DarkAgeTeam.Good,
-        weaponType: ItemType.Weapon_Ranged_Handgun,
+        weaponType: ItemType.Weapon_Ranged_Pistol_Flint_Lock_Old,
         health: 20,
     );
     player.bodyType = ItemType.Body_Tunic_Padded;
@@ -33,17 +33,17 @@ class Area_OldVillage extends DarkAgeArea {
     player.headType = ItemType.Head_Steel_Helm;
     movePlayerToCrystal(player);
     player.setCharacterStateSpawning();
-    player.inventory[0] = ItemType.Weapon_Ranged_Handgun;
+    // player.inventory[0] = ItemType.Weapon_Ranged_Pistol_Flint_Lock_Old;
     player.inventory[1] = ItemType.Weapon_Ranged_Shotgun;
     player.inventory[3] = ItemType.Head_Wizards_Hat;
     player.inventory[4] = ItemType.Body_Shirt_Cyan;
     player.inventory[5] = ItemType.Legs_Brown;
-    player.inventory[6] = ItemType.Recipe_Staff_Of_Fire;
+    // player.inventory[6] = ItemType.Recipe_Staff_Of_Fire;
     player.inventory[7] = ItemType.Resource_Gun_Powder;
     player.inventory[8] = ItemType.Consumables_Meat;
     player.inventory[9] = ItemType.Consumables_Apple;
     player.inventoryQuantity[7] = 100;
-    player.belt1_itemType = ItemType.Weapon_Ranged_Handgun;
+    player.belt1_itemType = ItemType.Weapon_Ranged_Pistol_Flint_Lock_Old;
     player.equippedWeaponIndex = ItemType.Belt_1;
     player.inventoryDirty = true;
     return player;

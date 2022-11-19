@@ -311,7 +311,7 @@ abstract class Game {
             angle: player.lookRadian,
         );
         break;
-      case ItemType.Weapon_Ranged_Revolver:
+      case ItemType.Weapon_Ranged_Pistol_Revolver:
         characterFireWeapon(player);
         return;
       case ItemType.Weapon_Ranged_Bow:
