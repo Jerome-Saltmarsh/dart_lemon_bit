@@ -200,8 +200,8 @@ class GameInventoryUI {
     required Widget child,
   }) =>
       Positioned(
-        left: getIndexX(index) + 7,
-        top: getIndexY(index) + 7,
+        left: getIndexX(index),
+        top: getIndexY(index),
         child: child,
       );
 
