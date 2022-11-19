@@ -223,20 +223,32 @@ class ItemType {
     Weapon_Ranged_Bow: 1,
     Weapon_Handgun_Glock: 1,
     Weapon_Ranged_Shotgun: 3,
+    Weapon_Handgun_Flint_Lock_Old: 1,
+    Weapon_Handgun_Flint_Lock: 1,
+    Weapon_Handgun_Flint_Lock_Superior: 1,
   }[itemType] ?? 0;
 
   static int getDamage(int value) => const {
       Empty: 1,
       Weapon_Ranged_Shotgun: 2,
+      Weapon_Handgun_Flint_Lock_Old: 1,
+      Weapon_Handgun_Flint_Lock: 2,
+      Weapon_Handgun_Flint_Lock_Superior: 3,
   }[value] ?? 0;
 
   static double getRange(int value) => const <int, double> {
       Empty: 50,
       Weapon_Ranged_Shotgun: 100,
+      Weapon_Handgun_Flint_Lock_Old: 100,
+      Weapon_Handgun_Flint_Lock: 110,
+      Weapon_Handgun_Flint_Lock_Superior: 120,
   }[value] ?? 50;
 
   static int getCooldown(int value) => const {
       Weapon_Ranged_Shotgun: 40,
+      Weapon_Handgun_Flint_Lock_Old: 50,
+      Weapon_Handgun_Flint_Lock: 45,
+      Weapon_Handgun_Flint_Lock_Superior: 40,
   }[value] ?? 30;
 
   static String getGroupTypeName(int value) {
@@ -254,6 +266,12 @@ class ItemType {
        return "Pants";
      if (isTypeBody(value))
        return "Body";
+     if (isTypeWeaponHandgun(value))
+       return "Firearm-Pistol";
+     if (isTypeWeaponRifle(value))
+       return "Firearm-Rifle";
+     if (isTypeWeaponShotgun(value))
+       return "Firearm-Shotgun";
      if (isTypeWeaponRanged(value))
        return "Ranged Weapon";
      if (isTypeWeaponMelee(value))

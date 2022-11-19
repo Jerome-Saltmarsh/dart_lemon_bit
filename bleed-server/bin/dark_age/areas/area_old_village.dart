@@ -76,6 +76,9 @@ class Area_OldVillage extends DarkAgeArea {
                     ItemType.Resource_Arrow,
                     ItemType.Consumables_Apple,
                     ItemType.Consumables_Meat,
+                    ItemType.Weapon_Handgun_Flint_Lock_Old,
+                    ItemType.Weapon_Handgun_Flint_Lock,
+                    ItemType.Weapon_Handgun_Flint_Lock_Superior,
                  ]);
                },
                'never mind': player.endInteraction

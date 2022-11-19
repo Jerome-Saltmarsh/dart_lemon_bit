@@ -114,6 +114,7 @@ class GameInventoryUI {
   static Widget buildPressableItemIndex({
     required int itemIndex,
     double scale = Slot_Item_Scale,
+    int? itemType,
   }) =>
       onPressed(
         action: () => ClientEvents.onItemIndexPrimary(itemIndex),
@@ -131,7 +132,7 @@ class GameInventoryUI {
           },
           child: Container(
             child: buildItemTypeAtlasImage(
-              itemType: ServerQuery.getItemTypeAtInventoryIndex(itemIndex),
+              itemType: itemType ?? ServerQuery.getItemTypeAtInventoryIndex(itemIndex),
               scale: scale,
             ),
           ),

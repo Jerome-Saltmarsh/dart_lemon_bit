@@ -63,10 +63,10 @@ class ServerQuery {
       return ServerState.playerBelt6_ItemType.value;
     }
     if (index >= ServerState.inventory.length){
-      throw Exception("ServerQuery.getItemTypeWatchAtInventoryIndex($index) index >= ServerState.inventory.length");
+      throw Exception("ServerQuery.getItemTypeAtInventoryIndex($index) index >= ServerState.inventory.length");
     }
     if (index < 0){
-      throw Exception("ServerQuery.getItemTypeWatchAtInventoryIndex($index) index < 0");
+      throw Exception("ServerQuery.getItemTypeAtInventoryIndex($index) index < 0");
     }
     return ServerState.inventory[index];
   }

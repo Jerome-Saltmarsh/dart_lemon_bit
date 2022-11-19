@@ -175,7 +175,7 @@ class GameUIInteract {
                      GameNetwork.sendClientRequestInventoryBuy(i);
                    },
                    child: onPressed(
-                         child: GameInventoryUI.buildPressableItemIndex(itemIndex: itemTypes[i]),
+                         child: GameInventoryUI.buildPressableItemIndex(itemIndex: i, itemType: itemTypes[i]),
                          action: () => GameNetwork.sendClientRequestInventoryBuy(i),
                          onRightClick: () => GameNetwork.sendClientRequestInventoryBuy(i),
                      ),
