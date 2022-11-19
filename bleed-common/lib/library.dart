@@ -1,7 +1,6 @@
 
 library common;
 
-export 'src/ability_mode.dart';
 export 'src/api_dark_age.dart';
 export 'src/api_player.dart';
 export 'src/area_type.dart';
@@ -21,7 +20,6 @@ export 'src/flag.dart';
 export 'src/game_error.dart';
 export 'src/game_event_type.dart';
 export 'src/game_object_type.dart';
-export 'src/game_status.dart';
 export 'src/game_type.dart';
 export 'src/game_wave_request.dart';
 export 'src/game_waves_response.dart';
@@ -48,10 +46,8 @@ export 'src/seconds_per_hour.dart';
 export 'src/server_response.dart';
 export 'src/shade.dart';
 export 'src/side.dart';
-export 'src/slot_type_category.dart';
 export 'src/spawn_type.dart';
 export 'src/target_category.dart';
-export 'src/team_size.dart';
 export 'src/teams.dart';
 export 'src/teleport_scenes.dart';
 export 'src/tile_size.dart';

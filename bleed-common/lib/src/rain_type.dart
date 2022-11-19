@@ -1,5 +1,4 @@
 
-// TODO remove enum
 class RainType {
     static const None = 0;
     static const Light = 1;
