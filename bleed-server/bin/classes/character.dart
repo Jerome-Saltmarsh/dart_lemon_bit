@@ -103,7 +103,7 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
   bool get deadOrBusy => dying || dead || busy;
   bool get deadBusyOrUsingWeapon => dying || dead || usingWeapon;
   bool get equippedTypeIsBow => weaponType == ItemType.Weapon_Ranged_Bow;
-  bool get equippedTypeIsStaff => weaponType == ItemType.Weapon_Melee_Magic_Staff;
+  bool get equippedTypeIsStaff => weaponType == ItemType.Weapon_Melee_Staff;
   bool get unarmed => weaponType == ItemType.Empty;
   bool get equippedTypeIsShotgun => weaponType == ItemType.Weapon_Ranged_Shotgun;
   bool get equippedIsMelee => ItemType.isTypeWeaponMelee(weaponType);

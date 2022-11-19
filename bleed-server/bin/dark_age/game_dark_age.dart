@@ -43,7 +43,7 @@ class GameDarkAge extends Game {
   }
 
   int getRandomItemType() => randomItem(const [
-    ItemType.Weapon_Ranged_Handgun,
+    // ItemType.Weapon_Ranged_Handgun,
     ItemType.Weapon_Ranged_Shotgun,
     ItemType.Body_Tunic_Padded,
     ItemType.Body_Shirt_Blue,
@@ -92,7 +92,7 @@ class GameDarkAge extends Game {
   Player spawnPlayer() {
     final player = Player(
         game: this,
-        weaponType: ItemType.Weapon_Ranged_Handgun,
+        weaponType: ItemType.Weapon_Handgun_Flint_Lock_Old,
         team: 1,
     );
 

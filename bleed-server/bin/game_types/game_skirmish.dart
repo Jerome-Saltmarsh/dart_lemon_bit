@@ -62,7 +62,7 @@ class GameSkirmish extends Game {
     final player = Player(
       game: this,
       team: 0,
-      weaponType: ItemType.Weapon_Ranged_Handgun,
+      weaponType: ItemType.Weapon_Handgun_Flint_Lock_Old,
     );
     player.legsType = ItemType.Legs_Brown;
     player.bodyType = ItemType.Body_Tunic_Padded;

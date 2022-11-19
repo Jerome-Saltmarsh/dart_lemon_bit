@@ -645,14 +645,6 @@ class Player extends Character with ByteWriter {
 
     final itemType = inventoryGetItemType(index);
 
-    if (ItemType.isTypeRecipe(itemType)){
-       if (itemType == ItemType.Recipe_Staff_Of_Fire) {
-         inventorySet(itemType: ItemType.Weapon_Melee_Magic_Staff, index: index, itemQuantity: 1);
-         writePlayerEventRecipeCrafted();
-         return;
-       }
-       return;
-    }
     if (ItemType.isTypeWeapon(itemType)){
 
       if (ItemType.isIndexBelt(index)){

@@ -5,11 +5,6 @@ import 'package:lemon_math/library.dart';
 import '../../library.dart';
 import 'render_character_health_bar.dart';
 
-bool weaponIs96(int weapon) =>
-   weapon == ItemType.Weapon_Ranged_Staff_Of_Flames ||
-   weapon == ItemType.Weapon_Melee_Magic_Staff ||
-   weapon == ItemType.Weapon_Melee_Sword ;
-
 void renderTemplateWeapon(
     int weaponType,
     int direction,
@@ -18,8 +13,9 @@ void renderTemplateWeapon(
     double dstX,
     double dstY,
     ) {
+
   if (weaponType == ItemType.Empty) return;
-  final size = weaponIs64(weaponType) ? 64.0 : 96.0;
+  final size = ItemType.isTypeWeaponMelee(weaponType) ? 96.0 : 64.0;
   Engine.renderSprite(
     image: GameImages.getImageForWeaponType(weaponType),
     srcX: frame * size,
@@ -191,7 +187,7 @@ void renderCharacterTemplate(Character character, {
 }
 
 bool weaponIs64(int weapon) =>
-   weapon == ItemType.Weapon_Ranged_Handgun ||
+   weapon == ItemType.isTypeWeaponHandgun(weapon) ||
    weapon == ItemType.Weapon_Ranged_Bow ||
    weapon == ItemType.Weapon_Ranged_Shotgun;
 
@@ -279,20 +275,21 @@ class TemplateAnimation {
   }();
 
   static List<int> getAttackAnimation(int weaponType){
+
+     if (ItemType.isTypeWeaponHandgun(weaponType)) {
+       return FiringHandgun;
+     }
+
       switch (weaponType) {
         case ItemType.Empty:
           return Striking;
-        case ItemType.Weapon_Ranged_Handgun:
-          return FiringHandgun;
         case ItemType.Weapon_Ranged_Shotgun:
           return FiringShotgun;
         case ItemType.Weapon_Ranged_Bow:
           return FiringBow;
         case ItemType.Weapon_Melee_Sword:
           return StrikingBlade;
-        case ItemType.Weapon_Melee_Magic_Staff:
-          return StrikingBlade;
-        case ItemType.Weapon_Ranged_Staff_Of_Flames:
+        case ItemType.Weapon_Melee_Staff:
           return StrikingBlade;
         default:
           throw Exception("TemplateAnimation.getAttackAnimation(${ItemType.getName(weaponType)})");

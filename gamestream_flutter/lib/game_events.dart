@@ -246,17 +246,13 @@ class GameEvents {
   static void onAttackPerformed(double x, double y, double z, double angle) {
     final attackType = serverResponseReader.readUInt16();
     switch (attackType){
-      case ItemType.Weapon_Ranged_Handgun:
+      case ItemType.Weapon_Handgun_Flint_Lock:
         GameAudio.pistol_shot_20.playXYZ(x, y, z);
         GameState.spawnParticleShell(x, y, z);
         break;
       case ItemType.Weapon_Ranged_Shotgun:
         return GameAudio.shotgun_shot.playXYZ(x, y, z);
-      case ItemType.Weapon_Ranged_Assault_Rifle:
-        return GameAudio.assault_rifle_shot.playXYZ(x, y, z);
-      case ItemType.Weapon_Ranged_Rifle:
-        return GameAudio.sniper_shot_4.playXYZ(x, y, z);
-      case ItemType.Weapon_Ranged_Pistol_Revolver:
+      case ItemType.Weapon_Handgun_Revolver:
         return GameAudio.revolver_shot_2.playXYZ(x, y, z);
       case ItemType.Weapon_Melee_Sword:
         return onGameEventAttackPerformedBlade(x, y, z, angle);
@@ -413,23 +409,17 @@ class GameEvents {
 
   static void onPlayerEventItemEquipped(int type) {
     switch (type) {
-      case ItemType.Weapon_Ranged_Pistol_Revolver:
+      case ItemType.Weapon_Handgun_Revolver:
         GameAudio.revolver_reload_1();
         break;
-      case ItemType.Weapon_Ranged_Handgun:
+      case ItemType.Weapon_Handgun_Glock:
         GameAudio.reload_6();
         break;
       case ItemType.Weapon_Ranged_Shotgun:
         GameAudio.cock_shotgun_3();
         break;
-      case ItemType.Weapon_Ranged_Rifle:
-        GameAudio.mag_in_03();
-        break;
       case ItemType.Weapon_Melee_Sword:
         GameAudio.sword_unsheathe();
-        break;
-      case ItemType.Weapon_Ranged_Assault_Rifle:
-        GameAudio.gun_pickup_01();
         break;
       case ItemType.Weapon_Ranged_Bow:
         GameAudio.bow_draw();

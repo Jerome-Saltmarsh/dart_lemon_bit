@@ -263,6 +263,7 @@ abstract class Game {
         player.consumeAmmunition();
       } else {
         // TODO player.insufficientGunPowder
+        player.writeError('no ammunition');
         return;
       }
     }
@@ -275,7 +276,15 @@ abstract class Game {
       return;
     }
 
+    if (ItemType.isTypeWeaponHandgun(weaponType)) {
+      characterFireWeapon(player);
+      return;
+    }
 
+    if (ItemType.isTypeWeaponShotgun(weaponType)) {
+      characterFireShotgun(player, player.lookRadian);
+      return;
+    }
 
     switch (weaponType) {
       case ItemType.Weapon_Ranged_Crossbow:
@@ -286,34 +295,14 @@ abstract class Game {
             angle: player.lookRadian,
         );
         return;
-      case ItemType.Weapon_Ranged_Handgun:
-        var totalGunPowder = 0;
-        for (var i = 0; i < player.inventory.length; i++){
-           if (player.inventory[i] != ItemType.Resource_Gun_Powder) continue;
-           totalGunPowder += player.inventoryQuantity[i];
-        }
-        if (totalGunPowder <= 0) return;
-        characterFireWeapon(player);
-        totalGunPowder--;
-        player.writePlayerEquippedWeaponAmmunition();
-        return;
       case ItemType.Weapon_Ranged_Shotgun:
         return characterFireShotgun(player, player.lookRadian);
-      case ItemType.Weapon_Ranged_Assault_Rifle:
-        characterFireWeapon(player);
-        return;
-      case ItemType.Weapon_Ranged_Rifle:
-        characterFireWeapon(player);
-        return;
-      case ItemType.Weapon_Ranged_Staff_Of_Flames:
+      case ItemType.Weapon_Melee_Staff:
         characterSpawnProjectileFireball(
             player,
             angle: player.lookRadian,
         );
         break;
-      case ItemType.Weapon_Ranged_Pistol_Revolver:
-        characterFireWeapon(player);
-        return;
       case ItemType.Weapon_Ranged_Bow:
         spawnProjectileArrow(
             src: player,
@@ -322,9 +311,9 @@ abstract class Game {
             angle: player.lookRadian,
         );
         break;
-      case ItemType.Weapon_Melee_Magic_Staff:
-        spawnProjectileOrb(src: player, damage: 2);
-        break;
+      // case ItemType.Weapon_Melee_Magic_Staff:
+      //   spawnProjectileOrb(src: player, damage: 2);
+      //   break;
     }
   }
 
@@ -1149,7 +1138,7 @@ abstract class Game {
 
   int getRandomWeaponIndex() =>
     randomItem([
-      ItemType.Weapon_Ranged_Rifle,
+      ItemType.Weapon_Rifle_Assault,
       ItemType.Weapon_Ranged_Bow,
     ]);
 
@@ -1875,26 +1864,26 @@ abstract class Game {
         // dispatchV3(GameEventType.Arm_Swing, character);
       }
     }
-    if (weaponType == ItemType.Weapon_Ranged_Handgun) {
-      if (stateDuration == 1) {
-        if (character.equippedIsEmpty) {
-          // dispatchV3(GameEventType.Clip_Empty, character);
-          return;
-        }
-        return;
-      }
-      if (stateDuration == 2) {
-        if (character.equippedIsEmpty) {
-          return;
-        }
-        spawnProjectileBullet(
-          src: character,
-          accuracy: 0,
-          speed: 12.0,
-        );
-        return;
-      }
-    }
+    // if (weaponType == ItemType.Weapon_Ranged_Handgun) {
+    //   if (stateDuration == 1) {
+    //     if (character.equippedIsEmpty) {
+    //       // dispatchV3(GameEventType.Clip_Empty, character);
+    //       return;
+    //     }
+    //     return;
+    //   }
+    //   if (stateDuration == 2) {
+    //     if (character.equippedIsEmpty) {
+    //       return;
+    //     }
+    //     spawnProjectileBullet(
+    //       src: character,
+    //       accuracy: 0,
+    //       speed: 12.0,
+    //     );
+    //     return;
+    //   }
+    // }
 
     if (character.equippedTypeIsShotgun) {
       if (stateDuration == 1) {

@@ -107,16 +107,17 @@ class GameImages {
    }
 
    static Image getImageForWeaponType(int weaponType) {
+
+      if (ItemType.isTypeWeaponHandgun(weaponType)){
+         return template_weapon_handgun;
+      }
+
       switch (weaponType) {
          case ItemType.Weapon_Ranged_Shotgun:
             return template_weapon_shotgun;
          case ItemType.Weapon_Ranged_Bow:
             return template_weapon_bow;
-         case ItemType.Weapon_Ranged_Handgun:
-            return template_weapon_handgun;
-         case ItemType.Weapon_Ranged_Staff_Of_Flames:
-            return template_weapon_staff;
-         case ItemType.Weapon_Melee_Magic_Staff:
+         case ItemType.Weapon_Melee_Staff:
             return template_weapon_staff;
          case ItemType.Weapon_Melee_Sword:
             return template_weapon_sword_steel;
