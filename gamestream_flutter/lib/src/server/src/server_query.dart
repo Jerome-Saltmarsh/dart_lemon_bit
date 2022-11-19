@@ -3,6 +3,27 @@
 import 'package:gamestream_flutter/library.dart';
 
 class ServerQuery {
+
+  static int getWatchBeltItemTypeIndex(Watch<int> watchBelt){
+     if (watchBelt == ServerState.playerBelt1_ItemType) return ItemType.Belt_1;
+     if (watchBelt == ServerState.playerBelt2_ItemType) return ItemType.Belt_2;
+     if (watchBelt == ServerState.playerBelt3_ItemType) return ItemType.Belt_3;
+     if (watchBelt == ServerState.playerBelt4_ItemType) return ItemType.Belt_4;
+     if (watchBelt == ServerState.playerBelt5_ItemType) return ItemType.Belt_5;
+     if (watchBelt == ServerState.playerBelt6_ItemType) return ItemType.Belt_6;
+     throw Exception('ServerQuery.getWatchBeltIndex($watchBelt)');
+  }
+
+  static Watch<int> getWatchBeltTypeWatchQuantity(Watch<int> watchBelt){
+    if (watchBelt == ServerState.playerBelt1_ItemType) return ServerState.playerBelt1_Quantity;
+    if (watchBelt == ServerState.playerBelt2_ItemType) return ServerState.playerBelt2_Quantity;
+    if (watchBelt == ServerState.playerBelt3_ItemType) return ServerState.playerBelt3_Quantity;
+    if (watchBelt == ServerState.playerBelt4_ItemType) return ServerState.playerBelt4_Quantity;
+    if (watchBelt == ServerState.playerBelt5_ItemType) return ServerState.playerBelt5_Quantity;
+    if (watchBelt == ServerState.playerBelt6_ItemType) return ServerState.playerBelt6_Quantity;
+    throw Exception('ServerQuery.getWatchBeltQuantity($watchBelt)');
+  }
+
   static bool playerCanAffordToBuy(int itemType) =>
     ItemType.getBuyPrice(itemType) <= ServerState.playerGold.value;
 

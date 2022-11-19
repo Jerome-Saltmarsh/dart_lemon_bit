@@ -43,7 +43,7 @@ class ClientQuery {
     throw Exception("ClientEvents.convertKeyboardKeyToBeltIndex($key)");
   }
 
-  static String mapWatchBeltTypeToString(Watch<int> hotKeyWatch){
+  static String mapWatchBeltTypeTokeyboardKeyString(Watch<int> hotKeyWatch){
      if (hotKeyWatch == ServerState.playerBelt1_ItemType) return '1';
      if (hotKeyWatch == ServerState.playerBelt2_ItemType) return '2';
      if (hotKeyWatch == ServerState.playerBelt3_ItemType) return '3';

@@ -417,10 +417,19 @@ class GameUI {
         },
       );
 
-  static Widget buildWatchBeltType(Watch<int> watchBeltType) =>
-      watch(
+  static Widget buildWatchBeltType(Watch<int> watchBeltType) {
+    return watch(
           watchBeltType,
-          (int beltItemType) => Stack(
+          (int beltItemType) {
+
+            final consumeType = ItemType.getConsumeType(beltItemType);
+            final doesConsume = consumeType != ItemType.Empty;
+
+            // int? quantity = doesConsume ? ServerQuery.getItemTypeConsumesRemaining(beltItemType) : null;
+            // if (quantity == null){
+            //   quantity = ServerQuery.getWatchBeltTypeWatchQuantity(watchBeltType).value;
+            // }
+            return Stack(
             children: [
               watch(ServerState.equippedWeaponIndex, (equippedWeaponIndex) =>
                 buildDragTargetSlot(
@@ -431,10 +440,29 @@ class GameUI {
               Positioned(
                 left: 5,
                 top: 5,
-                child: text(ClientQuery.mapWatchBeltTypeToString(watchBeltType)),
+                child: text(ClientQuery.mapWatchBeltTypeTokeyboardKeyString(watchBeltType)),
               ),
-              if (ItemType.getConsumeType(beltItemType) !=
-                  ItemType.Empty)
+              if (beltItemType != ItemType.Empty)
+                Container(
+                  width: 64,
+                  height: 64,
+                  alignment: Alignment.center,
+                  child: GameInventoryUI.buildDraggableItemIndex(
+                      itemIndex: ServerQuery.mapWatchBeltTypeToItemType(watchBeltType),
+                      scale: 2,
+                  ),
+                ),
+              if (beltItemType != ItemType.Empty && !doesConsume)
+                Positioned(
+                    right: 5,
+                    bottom: 5,
+                    child: buildInventoryAware(
+                        builder: () => text(
+                          ServerQuery.getWatchBeltTypeWatchQuantity(watchBeltType).value,
+                          italic: true,
+                          color: Colors.white70,
+                        ))),
+              if (beltItemType != ItemType.Empty && doesConsume)
                 Positioned(
                     right: 5,
                     bottom: 5,
@@ -446,31 +474,10 @@ class GameUI {
                           italic: true,
                           color: Colors.white70,
                         ))),
-              // watch(ServerState.equippedWeaponIndex, (equippedWeaponIndex) =>
-              // ServerQuery.mapWatchBeltTypeToItemType(watchBeltType) != equippedWeaponIndex
-              //     ? const SizedBox()
-              //     :
-              // Container(
-              //   width: 64,
-              //   height: 64,
-              //   decoration: buildDecorationBorder(
-              //     colorBorder: Colors.white,
-              //     colorFill: Colors.transparent,
-              //     width: 3,
-              //   ),
-              // )),
-              if (watchBeltType.value != ItemType.Empty)
-                Container(
-                  width: 64,
-                  height: 64,
-                  alignment: Alignment.center,
-                  child: GameInventoryUI.buildDraggableItemIndex(
-                      itemIndex: ServerQuery.mapWatchBeltTypeToItemType(watchBeltType),
-                      scale: 2,
-                  ),
-                ),
             ],
-          ));
+          );
+          });
+  }
 
   static Widget buildStackHotKeyContainer({
     required int itemType,

@@ -202,7 +202,7 @@ class ItemType {
   static bool isCollectable(int type){
     return type >= Index_Consumables;
   }
-
+  
   static int getConsumeType(int itemType) {
 
     if (isTypeWeaponHandgun(itemType)){
