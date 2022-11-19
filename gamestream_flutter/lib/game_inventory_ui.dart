@@ -119,8 +119,8 @@ class GameInventoryUI {
                 itemType: itemType ?? ServerQuery.getItemTypeAtInventoryIndex(itemIndex),
                 scale: scale,
               ),
-              if (itemQuantity != null)
-                Positioned(child: text(itemQuantity, size: 14, color: Colors.white70), right: 0, bottom: 0),
+              if (itemQuantity != null && itemQuantity > 1)
+                Positioned(child: text(itemQuantity, size: 13, color: Colors.white70), right: 0, bottom: 0),
             ],
           ),
         ),
