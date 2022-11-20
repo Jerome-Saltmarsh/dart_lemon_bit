@@ -36,10 +36,18 @@ class ClientEvents {
   }
 
   static void onItemIndexPrimary(int itemIndex) {
+    if (ClientState.hoverDialogDialogIsTrade){
+      GameNetwork.sendClientRequestInventoryBuy(itemIndex);
+      return;
+    }
      GameNetwork.sendClientRequestInventoryEquip(itemIndex);
   }
 
   static void onItemIndexSecondary(int itemIndex){
+    if (ClientState.hoverDialogDialogIsTrade){
+      GameNetwork.sendClientRequestInventoryBuy(itemIndex);
+      return;
+    }
     GamePlayer.interactModeTrading
         ? GameNetwork.sendClientRequestInventorySell(itemIndex)
         : GameNetwork.sendClientRequestInventoryDrop(itemIndex);

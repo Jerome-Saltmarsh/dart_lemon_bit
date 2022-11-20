@@ -349,6 +349,33 @@ class Player extends Character with ByteWriter {
     return inventory[index];
   }
 
+  int inventoryGetTotalQuantityOfItemType(int itemType){
+     var total = 0;
+     for (var i = 0; i < inventory.length; i++){
+        if (inventory[i] != itemType) continue;
+        total += inventoryQuantity[i];
+     }
+     if (belt1_itemType == itemType){
+        total += belt1_quantity;
+     }
+     if (belt2_itemType == itemType){
+       total += belt2_quantity;
+     }
+     if (belt3_itemType == itemType){
+       total += belt3_quantity;
+     }
+     if (belt4_itemType == itemType){
+       total += belt4_quantity;
+     }
+     if (belt5_itemType == itemType){
+       total += belt5_quantity;
+     }
+     if (belt6_itemType == itemType){
+       total += belt6_quantity;
+     }
+     return total;
+  }
+
   int inventoryGetItemQuantity(int index){
     assert (index >= 0);
 
@@ -382,6 +409,14 @@ class Player extends Character with ByteWriter {
      writeError('invalid inventory index: $index (${ItemType.getName(index)})');
   }
 
+  void writeErrorInsufficientArgs(){
+      writeError('insufficient args');
+  }
+
+  void writeErrorInvalidIndex(int index){
+    writeError('invalid index $index');
+  }
+
   void writeError(String error){
       writeByte(ServerResponse.Error);
       writeString(error);
@@ -403,15 +438,15 @@ class Player extends Character with ByteWriter {
 
   void inventoryBuy(int index){
     if (interactMode != InteractMode.Trading) {
-      writePlayerEventInvalidRequest();
+      writeError('not in trade mode');
       return;
     }
     if (index < 0) {
-      writePlayerEventInvalidRequest();
+      writeErrorInvalidIndex(index);
       return;
     }
     if (index >= storeItems.length) {
-      writePlayerEventInvalidRequest();
+      writeErrorInvalidIndex(index);
       return;
     }
     final emptyInventoryIndex = getEmptyInventoryIndex();
@@ -421,9 +456,25 @@ class Player extends Character with ByteWriter {
     }
     final itemType = storeItems[index];
     if (itemType == ItemType.Empty) {
-      writePlayerEventInvalidRequest();
+      writeError('item type is empty');
       return;
     }
+
+    final recipe = ItemType.Recipes[itemType];
+
+    if (recipe != null){
+       for (var i = 0; i < recipe.length; i++){
+         final itemQuantity = recipe[i];
+         final itemType = recipe[i + 1];
+         final quantityInPossession = inventoryGetTotalQuantityOfItemType(itemType);
+         if (quantityInPossession < itemQuantity) {
+           writeError('insufficient ${ItemType.getName(itemType)} ($quantityInPossession / $itemQuantity)');
+           return;
+         }
+         // if (cou)
+       }
+    }
+
     if (ItemType.getBuyPrice(itemType) > gold) {
       writePlayerEvent(PlayerEvent.Insufficient_Gold);
       return;

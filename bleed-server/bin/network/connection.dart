@@ -328,8 +328,16 @@ class Connection {
     }
   }
 
+  bool insufficientArgs(List args, int min){
+     if (args.length < min) {
+       _player?.writeError('insufficient args');
+       return true;
+     }
+     return false;
+  }
+
   void handleRequestInventory(Player player, List<String> arguments){
-    if (arguments.length < 2)  return errorArgsExpected(3, arguments);
+    if (insufficientArgs(arguments, 2)) return;
     if (player.deadBusyOrUsingWeapon) return;
     final inventoryRequest = parse(arguments[1]);
 
@@ -348,6 +356,7 @@ class Connection {
         player.inventoryUnequip(index);
         break;
       case InventoryRequest.Buy:
+        if (insufficientArgs(arguments, 3)) return;
         final index = parse(arguments[2]);
         if (index == null) return;
         player.inventoryBuy(index);
@@ -374,7 +383,7 @@ class Connection {
         player.inventoryDrop(index);
         break;
       case InventoryRequest.Move:
-        if (arguments.length < 4)  return errorArgsExpected(4, arguments);
+        if (insufficientArgs(arguments, 4)) return;
         final indexFrom = parse(arguments[2]);
         final indexTo = parse(arguments[3]);
         if (indexFrom == null) return errorInvalidArg('index from is null');
