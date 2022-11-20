@@ -24,7 +24,6 @@ class GameInventoryUI {
           child: Column(
             children: [
               buildContainerInventory(),
-              buildContainerPlayerGold(),
               Container(
                 padding: const EdgeInsets.all(8),
                 child: Row(
@@ -324,7 +323,7 @@ class GameInventoryUI {
            Row(
              children: [
                Container(width: 65, child: text(recipeItemQuantityRequired, color: textColor), alignment: Alignment.centerRight),
-               Container(width: 65, child: text('$recipeItemQuantityPossessed', color: textColor.withOpacity(0.85)), alignment: Alignment.centerRight),
+               Container(width: 65, child: text('($recipeItemQuantityPossessed)', italic: true, color: textColor), alignment: Alignment.centerRight, ),
              ],
            ),
          ],

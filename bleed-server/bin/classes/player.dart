@@ -463,7 +463,7 @@ class Player extends Character with ByteWriter {
     final recipe = ItemType.Recipes[itemType];
 
     if (recipe != null) {
-       for (var i = 0; i < recipe.length; i++) {
+       for (var i = 0; i < recipe.length; i += 2) {
          final recipeItemQuantity = recipe[i];
          final recipeItemType = recipe[i + 1];
          final quantityInPossession = inventoryGetTotalQuantityOfItemType(recipeItemType);
@@ -473,7 +473,7 @@ class Player extends Character with ByteWriter {
          }
        }
 
-       for (var i = 0; i < recipe.length; i++) {
+       for (var i = 0; i < recipe.length; i += 2) {
          var recipeQuantityRemaining = recipe[i];
          final recipeItemType = recipe[i + 1];
 
@@ -542,17 +542,18 @@ class Player extends Character with ByteWriter {
          }
       }
     }
-
+    inventoryDirty = true;
     final emptyInventoryIndex = getEmptyInventoryIndex();
     if (emptyInventoryIndex == null) {
-      game.spawnGameObjectItemAtPosition(position: this, type: itemType);
+      game.spawnGameObjectItemAtPosition(position: this, type: itemType, quantity: 1);
       writePlayerEvent(PlayerEvent.Inventory_Full);
       return;
     }
 
     inventory[emptyInventoryIndex] = itemType;
-    inventoryDirty = true;
+    inventoryQuantity[emptyInventoryIndex] = 1;
     writePlayerEvent(PlayerEvent.Item_Purchased);
+    writeError('Purchased ${ItemType.getName(itemType)}');
   }
 
   void inventorySell(int index) {
