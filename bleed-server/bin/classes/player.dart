@@ -581,12 +581,11 @@ class Player extends Character with ByteWriter {
     required int itemType,
     required int itemQuantity,
   }){
-    if (!isValidInventoryIndex(index)) {
-      throw Exception('player.inventorySet(index: $index, itemType: $itemType, quantity: $itemQuantity)');
-    }
-    if (!itemTypeCanBeAssignedToIndex(itemType: itemType, index: index)){
-      throw Exception('player.inventorySet(index: $index, itemType: $itemType, quantity: $itemQuantity)');
-    }
+    assert (isValidInventoryIndex(index));
+    assert (itemTypeCanBeAssignedToIndex(itemType: itemType, index: index));
+    assert (itemType == ItemType.Empty || itemQuantity > 0);
+    assert (itemType != ItemType.Empty || itemQuantity == 0);
+    assert (ItemType.isTypeWeapon(itemType) || itemQuantity != 1);
 
     if (index == equippedWeaponIndex) {
        if (ItemType.isTypeWeapon(itemType)) {
@@ -726,6 +725,10 @@ class Player extends Character with ByteWriter {
       return ItemType.isTypeWeapon(itemType);
     }
     return false;
+  }
+
+  void inventoryAdd1({required int itemType}){
+    inventoryAdd(itemType: itemType, itemQuantity: 1);
   }
 
   void inventoryAdd({required int itemType, required int itemQuantity}) {

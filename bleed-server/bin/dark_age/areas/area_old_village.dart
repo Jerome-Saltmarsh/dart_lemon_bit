@@ -34,28 +34,11 @@ class Area_OldVillage extends DarkAgeArea {
     movePlayerToCrystal(player);
     player.setCharacterStateSpawning();
 
-    player.inventorySet(index: 1, itemType: ItemType.Weapon_Ranged_Shotgun, itemQuantity: 1);
-
-    player.inventory[1] = ItemType.Weapon_Ranged_Shotgun;
-    player.inventory[3] = ItemType.Head_Wizards_Hat;
-    player.inventory[4] = ItemType.Body_Shirt_Cyan;
-    player.inventory[5] = ItemType.Legs_Brown;
-    player.inventory[7] = ItemType.Resource_Gun_Powder;
-    player.inventory[8] = ItemType.Consumables_Meat;
-    player.inventory[9] = ItemType.Consumables_Apple;
-    player.inventory[10] = ItemType.Resource_Gold;
-    player.inventory[11] = ItemType.Weapon_Handgun_Flint_Lock_Old;
-    player.inventory[12] = ItemType.Weapon_Handgun_Flint_Lock_Old;
-    player.inventory[13] = ItemType.Weapon_Handgun_Flint_Lock_Old;
-    player.inventory[14] = ItemType.Resource_Scrap_Metal;
-    player.inventoryQuantity[7] = 100;
-    player.inventoryQuantity[9] = 1;
-    player.inventoryQuantity[10] = 200;
-    player.inventoryQuantity[11] = 1;
-    player.inventoryQuantity[12] = 1;
-    player.inventoryQuantity[13] = 1;
-    player.inventoryQuantity[14] = 400;
-    player.belt1_itemType = ItemType.Weapon_Handgun_Flint_Lock_Old;
+    player.inventoryAdd1(itemType: ItemType.Weapon_Ranged_Shotgun);
+    player.inventoryAdd(itemType: ItemType.Resource_Gun_Powder, itemQuantity: 100);
+    player.inventoryAdd(itemType: ItemType.Resource_Scrap_Metal, itemQuantity: 100);
+    player.inventoryAdd(itemType: ItemType.Resource_Gold, itemQuantity: 100);
+    player.inventorySet(index: ItemType.Belt_1, itemType: ItemType.Weapon_Handgun_Flint_Lock_Old, itemQuantity: 1);
     player.equippedWeaponIndex = ItemType.Belt_1;
     player.inventoryDirty = true;
     return player;
