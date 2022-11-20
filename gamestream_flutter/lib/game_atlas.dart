@@ -44,6 +44,7 @@ class AtlasItems {
     ItemType.Resource_Crystal: 64,
     ItemType.Resource_Gold: 64,
     ItemType.Resource_Gun_Powder: 64,
+    ItemType.Resource_Scrap_Metal: 96,
     ItemType.Resource_Arrow: 64,
     ItemType.Consumables_Meat: 64,
     ItemType.Consumables_Apple: 64,
