@@ -41,8 +41,13 @@ class Area_OldVillage extends DarkAgeArea {
     player.inventory[8] = ItemType.Consumables_Meat;
     player.inventory[9] = ItemType.Consumables_Apple;
     player.inventory[10] = ItemType.Resource_Gold;
-    player.inventoryQuantity[10] = 200;
+    player.inventory[11] = ItemType.Weapon_Handgun_Flint_Lock_Old;
+    player.inventory[12] = ItemType.Weapon_Handgun_Flint_Lock_Old;
+    player.inventory[13] = ItemType.Weapon_Handgun_Flint_Lock_Old;
+    player.inventory[14] = ItemType.Resource_Scrap_Metal;
     player.inventoryQuantity[7] = 100;
+    player.inventoryQuantity[10] = 200;
+    player.inventoryQuantity[14] = 400;
     player.belt1_itemType = ItemType.Weapon_Handgun_Flint_Lock_Old;
     player.equippedWeaponIndex = ItemType.Belt_1;
     player.inventoryDirty = true;

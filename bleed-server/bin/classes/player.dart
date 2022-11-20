@@ -449,11 +449,6 @@ class Player extends Character with ByteWriter {
       writeErrorInvalidIndex(index);
       return;
     }
-    final emptyInventoryIndex = getEmptyInventoryIndex();
-    if (emptyInventoryIndex == null) {
-      writePlayerEvent(PlayerEvent.Inventory_Full);
-      return;
-    }
     final itemType = storeItems[index];
     if (itemType == ItemType.Empty) {
       writeError('item type is empty');
@@ -462,8 +457,8 @@ class Player extends Character with ByteWriter {
 
     final recipe = ItemType.Recipes[itemType];
 
-    if (recipe != null){
-       for (var i = 0; i < recipe.length; i++){
+    if (recipe != null) {
+       for (var i = 0; i < recipe.length; i++) {
          final itemQuantity = recipe[i];
          final itemType = recipe[i + 1];
          final quantityInPossession = inventoryGetTotalQuantityOfItemType(itemType);
@@ -471,14 +466,85 @@ class Player extends Character with ByteWriter {
            writeError('insufficient ${ItemType.getName(itemType)} ($quantityInPossession / $itemQuantity)');
            return;
          }
-         // if (cou)
        }
+
+       for (var i = 0; i < recipe.length; i++) {
+         var quantityRemaining = recipe[i];
+         final itemType = recipe[i + 1];
+
+         for (var i = 0; i < inventory.length; i++) {
+          if (inventory[i] != itemType) continue;
+          final quantity = inventoryQuantity[i];
+
+          if (quantity >= quantityRemaining) {
+            inventoryQuantity[i] -= quantityRemaining;
+            if (inventoryQuantity[i] == 0) {
+              inventory[i] = ItemType.Empty;
+            }
+            break;
+          }
+          quantityRemaining -= quantity;
+          inventory[i] = ItemType.Empty;
+        }
+
+        if (quantityRemaining > 0 && belt1_itemType == itemType) {
+          if (belt1_quantity >= quantityRemaining) {
+            belt1_quantity -= quantityRemaining;
+            if (belt1_quantity == 0) {
+              belt1_itemType = ItemType.Empty;
+            }
+          }
+        }
+         if (quantityRemaining > 0 && belt2_itemType == itemType) {
+          if (belt2_quantity >= quantityRemaining) {
+            belt2_quantity -= quantityRemaining;
+            if (belt2_quantity == 0) {
+              belt2_itemType = ItemType.Empty;
+            }
+          }
+        }
+         if (quantityRemaining > 0 && belt3_itemType == itemType) {
+           if (belt3_quantity >= quantityRemaining) {
+             belt3_quantity -= quantityRemaining;
+             if (belt3_quantity == 0) {
+               belt3_itemType = ItemType.Empty;
+             }
+           }
+         }
+         if (quantityRemaining > 0 && belt4_itemType == itemType) {
+           if (belt4_quantity >= quantityRemaining) {
+             belt4_quantity -= quantityRemaining;
+             if (belt4_quantity == 0) {
+               belt4_itemType = ItemType.Empty;
+             }
+           }
+         }
+         if (quantityRemaining > 0 && belt5_itemType == itemType) {
+           if (belt5_quantity >= quantityRemaining) {
+             belt5_quantity -= quantityRemaining;
+             if (belt5_quantity == 0) {
+               belt5_itemType = ItemType.Empty;
+             }
+           }
+         }
+         if (quantityRemaining > 0 && belt6_itemType == itemType) {
+           if (belt6_quantity >= quantityRemaining) {
+             belt6_quantity -= quantityRemaining;
+             if (belt6_quantity == 0) {
+               belt6_itemType = ItemType.Empty;
+             }
+           }
+         }
+      }
     }
 
-    if (ItemType.getBuyPrice(itemType) > gold) {
-      writePlayerEvent(PlayerEvent.Insufficient_Gold);
+    final emptyInventoryIndex = getEmptyInventoryIndex();
+    if (emptyInventoryIndex == null) {
+      game.spawnGameObjectItemAtPosition(position: this, type: itemType);
+      writePlayerEvent(PlayerEvent.Inventory_Full);
       return;
     }
+
     inventory[emptyInventoryIndex] = itemType;
     inventoryDirty = true;
     writePlayerEvent(PlayerEvent.Item_Purchased);
@@ -500,7 +566,7 @@ class Player extends Character with ByteWriter {
     }
     inventorySetEmptyAtIndex(index);
     writePlayerEvent(PlayerEvent.Item_Sold);
-    gold += ItemType.getSellPrice(itemType);
+    // gold += ItemType.getSellPrice(itemType);
   }
 
   void inventorySetEmptyAtIndex(int index) =>
