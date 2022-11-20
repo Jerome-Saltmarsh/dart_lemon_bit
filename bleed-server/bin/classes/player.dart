@@ -75,8 +75,29 @@ class Player extends Character with ByteWriter {
   set equippedWeaponIndex(int index){
     assert (index == -1 || isValidInventoryIndex(index));
     if (_equippedWeaponIndex == index) return;
-    _equippedWeaponIndex = index;
-    weaponType = inventoryGetItemType(_equippedWeaponIndex);
+
+    if (index == -1){
+      unassignWeapon();
+      return;
+    }
+
+    final itemTypeAtIndex = inventoryGetItemType(index);
+
+    if (ItemType.isTypeWeapon(itemTypeAtIndex)){
+      _equippedWeaponIndex = index;
+      weaponType = itemTypeAtIndex;
+      inventoryDirty = true;
+      game.setCharacterStateChanging(this);
+      return;
+    }
+
+    unassignWeapon();
+    return;
+  }
+
+  void unassignWeapon(){
+    _equippedWeaponIndex = -1;
+    weaponType = ItemType.Empty;
     inventoryDirty = true;
     game.setCharacterStateChanging(this);
   }
