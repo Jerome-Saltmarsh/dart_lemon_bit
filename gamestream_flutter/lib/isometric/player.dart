@@ -4,7 +4,6 @@ import 'package:gamestream_flutter/services/mini_map.dart';
 
 class Player {
   final weaponCooldown = Watch(1.0);
-  // final finalstoreVisible = Watch(false, onChanged: GameEvents.onChangedStoreVisible);
   final interpolating = Watch(true);
   final target = Vector3();
   final questAdded = Watch(false);

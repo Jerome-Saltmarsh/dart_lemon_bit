@@ -135,4 +135,7 @@ class ServerQuery {
      }
      return total;
   }
+
+  static int getEquippedWeaponType()=>
+      getItemTypeAtInventoryIndex(ServerState.equippedWeaponIndex.value);
 }

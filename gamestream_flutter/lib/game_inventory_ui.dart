@@ -251,6 +251,18 @@ class GameInventoryUI {
 
     final itemType = ClientState.hoverDialogType.value == DialogType.Trade ? GamePlayer.storeItems.value[itemIndex] : ServerQuery.getItemTypeAtInventoryIndex(itemIndex);
     final consumeType = ItemType.getConsumeType(itemType);
+
+    var damageDifference = 0;
+    final itemTypeDamage = ItemType.getDamage(itemType);
+
+    if (ItemType.isTypeWeapon(itemType)) {
+      final equippedWeaponType = ServerQuery.getEquippedWeaponType();
+      final equippedWeaponDamage = ItemType.getDamage(equippedWeaponType);
+      damageDifference = itemTypeDamage - equippedWeaponDamage;
+    }
+
+    final damageIncreased = damageDifference > 0;
+
     return Positioned(
       top: Engine.mousePosition.y < (Engine.screen.height * 0.5) ?  Engine.mousePosition.y + 60 : null,
       bottom: Engine.mousePosition.y >= (Engine.screen.height * 0.5) ?  Engine.screen.height - Engine.mousePosition.y + 50 : null,
@@ -269,11 +281,22 @@ class GameInventoryUI {
             text(ItemType.getName(itemType), color: GameColors.blue),
             height8,
             text('type: ${ItemType.getGroupTypeName(itemType)}'),
-            text('Damage: ${ItemType.getDamage(itemType)}'),
+            if (damageDifference == 0)
+              text('Damage: $itemTypeDamage'),
+            if (damageDifference != 0)
+              text('Damage: $itemTypeDamage ${damageIncreased ? "(+" : "("}$damageDifference)', color: damageIncreased ? GameColors.green : GameColors.red),
             text('Range: ${ItemType.getRange(itemType).toInt()}'),
             text('Cooldown: ${ItemType.getCooldown(itemType).toInt()}'),
             if (consumeType != ItemType.Empty)
-               text("Uses: ${ItemType.getConsumeAmount(itemType)}x ${ItemType.getName(consumeType)}"),
+               Row(
+                 children: [
+                   text("Uses"),
+                   width6,
+                   GameUI.buildAtlasItemType(consumeType),
+                   width6,
+                   text("${ItemType.getName(consumeType)} x${ItemType.getConsumeAmount(itemType)}"),
+                 ],
+               ),
 
             height16,
             if (ClientState.hoverDialogDialogIsTrade)
