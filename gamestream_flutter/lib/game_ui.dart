@@ -27,7 +27,7 @@ class GameUI {
   static final timeVisible = Watch(true);
 
   static Widget buildUI() => StackFullscreen(children: [
-        watch(GameState.player.message, buildPlayerMessage),
+        // watch(GameState.player.message, buildPlayerMessage),
         buildWatchBool(ClientState.triggerAlarmNoMessageReceivedFromServer,
             buildDialogFramesSinceUpdate),
         watch(GameState.player.gameDialog, buildGameDialog),
@@ -41,26 +41,40 @@ class GameUI {
         WatchBuilder(ClientState.edit, buildPlayMode),
         WatchBuilder(GameIO.inputMode, buildStackInputMode),
         buildWatchBool(ClientState.debugVisible, GameDebug.buildStackDebug),
-        Positioned(
-            top: 75,
-            child: Container(
-                width: Engine.screen.width,
-                alignment: Alignment.center,
-                child: buildWatchAreaType()
-            ),
-        ),
-        Positioned(
-            bottom: 100,
-            child: Container(
-                width: Engine.screen.width,
-                alignment: Alignment.center,
-                child: watch(ClientState.messageStatus, (String message){
-                  if (message.isEmpty) return const SizedBox();
-                  return text(message, onPressed: ClientActions.messageClear);
-                }),
-            ),
-        ),
+        buildPositionedAreaType(),
+        buildPositionedMessageStatus(),
       ]);
+
+  static Positioned buildPositionedAreaType() => Positioned(
+          top: 75,
+          child: Container(
+              width: Engine.screen.width,
+              alignment: Alignment.center,
+              child: buildWatchAreaType()
+          ),
+      );
+
+  static Positioned buildPositionedMessageStatus() => Positioned(
+          bottom: 100,
+          child: Container(
+              width: Engine.screen.width,
+              alignment: Alignment.center,
+              child: watch(ClientState.messageStatus, buildMessageStatus),
+          ),
+      );
+
+  static Widget buildMessageStatus(String message){
+    if (message.isEmpty) return const SizedBox();
+    return MouseRegion(
+      onEnter: (_){
+         ClientActions.messageClear();
+      },
+      child: Container(
+          padding: const EdgeInsets.all(10),
+          color: Colors.black12,
+          child: text(message, onPressed: ClientActions.messageClear),),
+    );
+  }
 
   static WatchBuilder<int> buildWatchAreaType() =>
       WatchBuilder(ServerState.areaType, (int areaType) {
@@ -102,20 +116,6 @@ class GameUI {
       inputMode == InputMode.Keyboard
           ? const SizedBox()
           : watch(ClientState.touchButtonSide, buildStackInputModeTouch);
-
-  static Widget buildPlayerMessage(String message) => Positioned(
-        bottom: 64,
-        left: 0,
-        child: message.isEmpty
-            ? const SizedBox()
-            : Container(
-                width: Engine.screen.width,
-                alignment: Alignment.center,
-                child: Container(
-                    padding: const EdgeInsets.all(12),
-                    color: Colors.white10,
-                    child: text(message))),
-      );
 
   static Widget buildWalkButtons() => Positioned(
         bottom: 0,

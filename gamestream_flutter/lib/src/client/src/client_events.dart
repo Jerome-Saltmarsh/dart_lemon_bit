@@ -155,7 +155,6 @@ class ClientEvents {
     if (value.isEmpty){
       ClientState.messageStatusDuration = 0;
     } else {
-      ClientActions.playAudioError();
       ClientState.messageStatusDuration = 150;
     }
   }

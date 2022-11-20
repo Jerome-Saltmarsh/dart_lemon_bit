@@ -543,17 +543,15 @@ class Player extends Character with ByteWriter {
       }
     }
     inventoryDirty = true;
+    writePlayerEventItemPurchased(itemType);
     final emptyInventoryIndex = getEmptyInventoryIndex();
     if (emptyInventoryIndex == null) {
       game.spawnGameObjectItemAtPosition(position: this, type: itemType, quantity: 1);
       writePlayerEvent(PlayerEvent.Inventory_Full);
       return;
     }
-
     inventory[emptyInventoryIndex] = itemType;
     inventoryQuantity[emptyInventoryIndex] = 1;
-    writePlayerEvent(PlayerEvent.Item_Purchased);
-    writeError('Purchased ${ItemType.getName(itemType)}');
   }
 
   void inventorySell(int index) {
@@ -1144,6 +1142,12 @@ class Player extends Character with ByteWriter {
 
   void writePlayerEventInvalidRequest() =>
       writePlayerEvent(PlayerEvent.Invalid_Request);
+
+
+  void writePlayerEventItemPurchased(int itemType){
+    writePlayerEvent(PlayerEvent.Item_Purchased);
+    writeUInt16(itemType);
+  }
 
   void writePlayerEvent(int value){
     writeByte(ServerResponse.Player_Event);

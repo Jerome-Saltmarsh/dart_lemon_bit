@@ -25,6 +25,7 @@ class GameEvents {
   static void onChangedError(String error) {
     ClientState.messageStatus.value = error;
     if (error.isNotEmpty) {
+      ClientActions.playAudioError();
       ClientState.messageStatusDuration = 200;
     } else {
       ClientState.messageStatusDuration = 0;
@@ -348,8 +349,11 @@ class GameEvents {
         // audio.buff11(GameState.player.x, GameState.player.y);
         break;
       case PlayerEvent.Item_Purchased:
+        final itemType = serverResponseReader.readUInt16();
         GameAudio.coins_24();
+        ClientActions.writeMessage('purchased ${ItemType.getName(itemType)}');
         break;
+
       case PlayerEvent.Ammo_Acquired:
         // audio.itemAcquired(Engine.screenCenterWorldX, Engine.screenCenterWorldY);
         break;
