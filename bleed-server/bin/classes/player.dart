@@ -378,6 +378,11 @@ class Player extends Character with ByteWriter {
 
   int inventoryGetItemQuantity(int index){
     assert (index >= 0);
+    assert (isValidInventoryIndex(index));
+
+    final itemType = inventoryGetItemType(index);
+    if (itemType == ItemType.Empty) return 0;
+    if (ItemType.doesConsumeOnUse(itemType)) return 1;
 
     if (index == ItemType.Equipped_Weapon)
       return weaponQuantity;
@@ -459,77 +464,77 @@ class Player extends Character with ByteWriter {
 
     if (recipe != null) {
        for (var i = 0; i < recipe.length; i++) {
-         final itemQuantity = recipe[i];
-         final itemType = recipe[i + 1];
-         final quantityInPossession = inventoryGetTotalQuantityOfItemType(itemType);
-         if (quantityInPossession < itemQuantity) {
-           writeError('insufficient ${ItemType.getName(itemType)} ($quantityInPossession / $itemQuantity)');
+         final recipeItemQuantity = recipe[i];
+         final recipeItemType = recipe[i + 1];
+         final quantityInPossession = inventoryGetTotalQuantityOfItemType(recipeItemType);
+         if (quantityInPossession < recipeItemQuantity) {
+           writeError('insufficient ${ItemType.getName(recipeItemType)} ($quantityInPossession / $recipeItemQuantity)');
            return;
          }
        }
 
        for (var i = 0; i < recipe.length; i++) {
-         var quantityRemaining = recipe[i];
-         final itemType = recipe[i + 1];
+         var recipeQuantityRemaining = recipe[i];
+         final recipeItemType = recipe[i + 1];
 
          for (var i = 0; i < inventory.length; i++) {
-          if (inventory[i] != itemType) continue;
+          if (inventory[i] != recipeItemType) continue;
           final quantity = inventoryQuantity[i];
 
-          if (quantity >= quantityRemaining) {
-            inventoryQuantity[i] -= quantityRemaining;
+          if (quantity >= recipeQuantityRemaining) {
+            inventoryQuantity[i] -= recipeQuantityRemaining;
             if (inventoryQuantity[i] == 0) {
               inventory[i] = ItemType.Empty;
             }
             break;
           }
-          quantityRemaining -= quantity;
+          recipeQuantityRemaining -= quantity;
           inventory[i] = ItemType.Empty;
         }
 
-        if (quantityRemaining > 0 && belt1_itemType == itemType) {
-          if (belt1_quantity >= quantityRemaining) {
-            belt1_quantity -= quantityRemaining;
+        if (recipeQuantityRemaining > 0 && belt1_itemType == recipeItemType) {
+          if (belt1_quantity >= recipeQuantityRemaining) {
+            belt1_quantity -= recipeQuantityRemaining;
             if (belt1_quantity == 0) {
               belt1_itemType = ItemType.Empty;
             }
           }
         }
-         if (quantityRemaining > 0 && belt2_itemType == itemType) {
-          if (belt2_quantity >= quantityRemaining) {
-            belt2_quantity -= quantityRemaining;
+         if (recipeQuantityRemaining > 0 && belt2_itemType == recipeItemType) {
+          if (belt2_quantity >= recipeQuantityRemaining) {
+            belt2_quantity -= recipeQuantityRemaining;
             if (belt2_quantity == 0) {
               belt2_itemType = ItemType.Empty;
             }
           }
         }
-         if (quantityRemaining > 0 && belt3_itemType == itemType) {
-           if (belt3_quantity >= quantityRemaining) {
-             belt3_quantity -= quantityRemaining;
+         if (recipeQuantityRemaining > 0 && belt3_itemType == recipeItemType) {
+           if (belt3_quantity >= recipeQuantityRemaining) {
+             belt3_quantity -= recipeQuantityRemaining;
              if (belt3_quantity == 0) {
                belt3_itemType = ItemType.Empty;
              }
            }
          }
-         if (quantityRemaining > 0 && belt4_itemType == itemType) {
-           if (belt4_quantity >= quantityRemaining) {
-             belt4_quantity -= quantityRemaining;
+         if (recipeQuantityRemaining > 0 && belt4_itemType == recipeItemType) {
+           if (belt4_quantity >= recipeQuantityRemaining) {
+             belt4_quantity -= recipeQuantityRemaining;
              if (belt4_quantity == 0) {
                belt4_itemType = ItemType.Empty;
              }
            }
          }
-         if (quantityRemaining > 0 && belt5_itemType == itemType) {
-           if (belt5_quantity >= quantityRemaining) {
-             belt5_quantity -= quantityRemaining;
+         if (recipeQuantityRemaining > 0 && belt5_itemType == recipeItemType) {
+           if (belt5_quantity >= recipeQuantityRemaining) {
+             belt5_quantity -= recipeQuantityRemaining;
              if (belt5_quantity == 0) {
                belt5_itemType = ItemType.Empty;
              }
            }
          }
-         if (quantityRemaining > 0 && belt6_itemType == itemType) {
-           if (belt6_quantity >= quantityRemaining) {
-             belt6_quantity -= quantityRemaining;
+         if (recipeQuantityRemaining > 0 && belt6_itemType == recipeItemType) {
+           if (belt6_quantity >= recipeQuantityRemaining) {
+             belt6_quantity -= recipeQuantityRemaining;
              if (belt6_quantity == 0) {
                belt6_itemType = ItemType.Empty;
              }

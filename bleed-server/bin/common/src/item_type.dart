@@ -187,6 +187,10 @@ class ItemType {
   static bool isCollectable(int type){
     return type >= Index_Consumables;
   }
+
+  static bool doesConsumeOnUse(int itemType){
+     return getConsumeAmount(itemType) > 0;
+  }
   
   static int getConsumeType(int itemType) {
 

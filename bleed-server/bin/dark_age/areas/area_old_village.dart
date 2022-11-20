@@ -33,6 +33,9 @@ class Area_OldVillage extends DarkAgeArea {
     player.headType = ItemType.Head_Steel_Helm;
     movePlayerToCrystal(player);
     player.setCharacterStateSpawning();
+
+    player.inventorySet(index: 1, itemType: ItemType.Weapon_Ranged_Shotgun, itemQuantity: 1);
+
     player.inventory[1] = ItemType.Weapon_Ranged_Shotgun;
     player.inventory[3] = ItemType.Head_Wizards_Hat;
     player.inventory[4] = ItemType.Body_Shirt_Cyan;
@@ -46,7 +49,11 @@ class Area_OldVillage extends DarkAgeArea {
     player.inventory[13] = ItemType.Weapon_Handgun_Flint_Lock_Old;
     player.inventory[14] = ItemType.Resource_Scrap_Metal;
     player.inventoryQuantity[7] = 100;
+    player.inventoryQuantity[9] = 1;
     player.inventoryQuantity[10] = 200;
+    player.inventoryQuantity[11] = 1;
+    player.inventoryQuantity[12] = 1;
+    player.inventoryQuantity[13] = 1;
     player.inventoryQuantity[14] = 400;
     player.belt1_itemType = ItemType.Weapon_Handgun_Flint_Lock_Old;
     player.equippedWeaponIndex = ItemType.Belt_1;
