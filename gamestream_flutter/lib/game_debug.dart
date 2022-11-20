@@ -54,6 +54,7 @@ class GameDebug {
                                 "player-interact-mode: ${InteractMode.getName(ServerState.interactMode.value)}\n"
                                 "scene-light-sources: ${ClientState.nodesLightSourcesTotal}\n"
                             )),
+                            // WatchBuilder(ClientState.hoverIndex, (t) => text("client-hover-index: $t")),
                             Refresh(() => text('touch-world: x: ${GameIO.touchCursorWorldX.toInt()}, y: ${GameIO.touchCursorWorldY.toInt()}')),
                             Refresh(() => text('characters-total: ${GameState.characters.length}')),
                             Refresh(() => text('characters-active: ${GameState.totalCharacters}')),

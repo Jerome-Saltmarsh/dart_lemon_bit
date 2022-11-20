@@ -113,15 +113,20 @@ class GameInventoryUI {
               ClientActions.clearHoverIndex();
             }
           },
-          child: Stack(
-            children: [
-              buildItemTypeAtlasImage(
-                itemType: itemType ?? ServerQuery.getItemTypeAtInventoryIndex(itemIndex),
-                scale: scale,
-              ),
-              if (itemQuantity != null && itemQuantity > 1)
-                Positioned(child: text(itemQuantity, size: 13, color: Colors.white70), right: 0, bottom: 0),
-            ],
+          child: Container(
+            alignment: Alignment.center,
+            width: 32 * scale,
+            height: 32 * scale,
+            child: Stack(
+              children: [
+                buildItemTypeAtlasImage(
+                  itemType: itemType ?? ServerQuery.getItemTypeAtInventoryIndex(itemIndex),
+                  scale: scale,
+                ),
+                if (itemQuantity != null && itemQuantity > 1)
+                  Positioned(child: text(itemQuantity, size: 13, color: Colors.white70), right: 0, bottom: 0),
+              ],
+            ),
           ),
         ),
       );

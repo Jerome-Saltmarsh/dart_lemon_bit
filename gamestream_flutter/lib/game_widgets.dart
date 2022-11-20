@@ -41,6 +41,7 @@ Widget text(dynamic value, {
     double height = 1.0,
 }) {
   final _text = Text(
+
       value.toString(),
       textAlign: align,
       style: TextStyle(
