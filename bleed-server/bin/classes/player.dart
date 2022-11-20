@@ -73,13 +73,12 @@ class Player extends Character with ByteWriter {
   int get equippedWeaponIndex => _equippedWeaponIndex;
 
   set equippedWeaponIndex(int index){
-    assert (index == -1 || isValidInventoryIndex(index));
     if (_equippedWeaponIndex == index) return;
-
     if (index == -1){
-      unassignWeapon();
+      unequipWeapon();
       return;
     }
+    assert (isValidInventoryIndex(index));
 
     final itemTypeAtIndex = inventoryGetItemType(index);
 
@@ -91,11 +90,11 @@ class Player extends Character with ByteWriter {
       return;
     }
 
-    unassignWeapon();
+    unequipWeapon();
     return;
   }
 
-  void unassignWeapon(){
+  void unequipWeapon(){
     _equippedWeaponIndex = -1;
     weaponType = ItemType.Empty;
     inventoryDirty = true;
@@ -517,7 +516,7 @@ class Player extends Character with ByteWriter {
           if (belt1_quantity >= recipeQuantityRemaining) {
             belt1_quantity -= recipeQuantityRemaining;
             if (belt1_quantity == 0) {
-              belt1_itemType = ItemType.Empty;
+              inventorySetEmptyAtIndex(ItemType.Belt_1);
             }
           }
         }
@@ -525,7 +524,7 @@ class Player extends Character with ByteWriter {
           if (belt2_quantity >= recipeQuantityRemaining) {
             belt2_quantity -= recipeQuantityRemaining;
             if (belt2_quantity == 0) {
-              belt2_itemType = ItemType.Empty;
+              inventorySetEmptyAtIndex(ItemType.Belt_2);
             }
           }
         }
@@ -533,7 +532,7 @@ class Player extends Character with ByteWriter {
            if (belt3_quantity >= recipeQuantityRemaining) {
              belt3_quantity -= recipeQuantityRemaining;
              if (belt3_quantity == 0) {
-               belt3_itemType = ItemType.Empty;
+               inventorySetEmptyAtIndex(ItemType.Belt_3);
              }
            }
          }
@@ -541,7 +540,7 @@ class Player extends Character with ByteWriter {
            if (belt4_quantity >= recipeQuantityRemaining) {
              belt4_quantity -= recipeQuantityRemaining;
              if (belt4_quantity == 0) {
-               belt4_itemType = ItemType.Empty;
+               inventorySetEmptyAtIndex(ItemType.Belt_4);
              }
            }
          }
@@ -549,7 +548,7 @@ class Player extends Character with ByteWriter {
            if (belt5_quantity >= recipeQuantityRemaining) {
              belt5_quantity -= recipeQuantityRemaining;
              if (belt5_quantity == 0) {
-               belt5_itemType = ItemType.Empty;
+               inventorySetEmptyAtIndex(ItemType.Belt_5);
              }
            }
          }
@@ -557,7 +556,7 @@ class Player extends Character with ByteWriter {
            if (belt6_quantity >= recipeQuantityRemaining) {
              belt6_quantity -= recipeQuantityRemaining;
              if (belt6_quantity == 0) {
-               belt6_itemType = ItemType.Empty;
+               inventorySetEmptyAtIndex(ItemType.Belt_6);
              }
            }
          }
