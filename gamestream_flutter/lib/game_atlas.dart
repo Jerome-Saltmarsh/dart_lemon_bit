@@ -18,7 +18,7 @@ class AtlasItems {
       ItemType.Legs_Blue: 224,
       ItemType.Legs_Brown: 192,
       ItemType.Weapon_Ranged_Shotgun: 0,
-      ItemType.Weapon_Handgun_Flint_Lock_Old: 288,
+      ItemType.Weapon_Handgun_Flint_Lock_Old: 320,
       ItemType.Weapon_Handgun_Flint_Lock: 288,
       ItemType.Weapon_Handgun_Flint_Lock_Superior: 288,
       ItemType.Weapon_Handgun_Glock: 32,
