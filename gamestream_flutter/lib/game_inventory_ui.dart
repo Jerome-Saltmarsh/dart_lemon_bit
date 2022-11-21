@@ -275,46 +275,71 @@ class GameInventoryUI {
           minWidth: 450,
           maxWidth: 550,
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            text(ItemType.getName(itemType), color: GameColors.blue),
-            height8,
-            text('type: ${ItemType.getGroupTypeName(itemType)}'),
-            if (damageDifference == 0)
-              text('Damage: $itemTypeDamage'),
-            if (damageDifference != 0)
-              text('Damage: $itemTypeDamage ${damageIncreased ? "(+" : "("}$damageDifference)', color: damageIncreased ? GameColors.green : GameColors.red),
-            text('Range: ${ItemType.getRange(itemType).toInt()}'),
-            text('Cooldown: ${ItemType.getCooldown(itemType).toInt()}'),
-            if (consumeType != ItemType.Empty)
-               Row(
-                 children: [
-                   text("Uses"),
-                   width6,
-                   GameUI.buildAtlasItemType(consumeType),
-                   width6,
-                   text("${ItemType.getName(consumeType)} x${ItemType.getConsumeAmount(itemType)}"),
-                 ],
-               ),
+        child: Container(
+          width: 350,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
+                children: [
+                  GameUI.buildAtlasItemType(itemType),
+                  width8,
+                  text(ItemType.getName(itemType), color: GameColors.blue),
+                ],
+              ),
+              height8,
+              text('type: ${ItemType.getGroupTypeName(itemType)}'),
+              if (damageDifference == 0)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    text('Damage'),
+                    text(itemTypeDamage),
+                  ],
+                ),
+              if (damageDifference != 0)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    text("Damage"),
+                    text('$itemTypeDamage ${damageIncreased ? "(+" : "("}$damageDifference)', color: damageIncreased ? GameColors.green : GameColors.red),
+                  ],
+                ),
+              text('Range: ${ItemType.getRange(itemType).toInt()}'),
+              text('Cooldown: ${ItemType.getCooldown(itemType).toInt()}'),
+              if (consumeType != ItemType.Empty)
+                 Container(
+                   padding: const EdgeInsets.all(3),
+                   color: GameColors.white05,
+                   child: Row(
+                     children: [
+                       text("Uses"),
+                       width6,
+                       GameUI.buildAtlasItemType(consumeType),
+                       width6,
+                       text("${ItemType.getName(consumeType)} x${ItemType.getConsumeAmount(itemType)}"),
+                     ],
+                   ),
+                 ),
 
-            height16,
-            if (ClientState.hoverDialogDialogIsTrade)
-              buildItemTypeRecipe(itemType),
+              height16,
+              if (ClientState.hoverDialogDialogIsTrade)
+                buildItemTypeRecipe(itemType),
 
-            height16,
+              height16,
 
-            if (ClientState.hoverDialogDialogIsTrade)
-              text("left click to buy", color: GameColors.inventoryHint),
-            if (ClientState.hoverDialogIsInventory && ItemType.isTypeEquippable(itemType))
-              text("left click to equip", color: GameColors.inventoryHint),
-            if (ClientState.hoverDialogIsInventory && ItemType.isFood(itemType))
-              text("left click to eat", color: GameColors.inventoryHint),
-            if (GamePlayer.interactModeTrading && ClientState.hoverDialogIsInventory)
-              text("right click to sell", color: GameColors.inventoryHint),
-            if (!GamePlayer.interactModeTrading && ClientState.hoverDialogIsInventory)
-              text("right click to drop", color: GameColors.inventoryHint),
-          ],
+              if (ClientState.hoverDialogDialogIsTrade)
+                text("left click to buy", color: GameColors.inventoryHint),
+              if (ClientState.hoverDialogIsInventory && ItemType.isTypeEquippable(itemType))
+                text("left click to equip", color: GameColors.inventoryHint),
+              if (ClientState.hoverDialogIsInventory && ItemType.isFood(itemType))
+                text("left click to eat", color: GameColors.inventoryHint),
+              if (GamePlayer.interactModeTrading && ClientState.hoverDialogIsInventory)
+                text("right click to sell", color: GameColors.inventoryHint),
+              if (!GamePlayer.interactModeTrading && ClientState.hoverDialogIsInventory)
+                text("right click to drop", color: GameColors.inventoryHint),
+            ],
+          ),
         ),
       ),
     );

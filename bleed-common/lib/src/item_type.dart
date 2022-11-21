@@ -180,7 +180,8 @@ class ItemType {
   static const Weapon_Ranged_Shotgun = Index_Weapon_Ranged_Shotgun + 1;
 
   static const Weapon_Ranged_Bow = Index_Weapon_Ranged_Bow + 1;
-  static const Weapon_Ranged_Crossbow = Index_Weapon_Ranged_Crossbow + 1;
+  static const Weapon_Ranged_Bow_Long = Weapon_Ranged_Bow + 1;
+  static const Weapon_Ranged_Crossbow = Weapon_Ranged_Bow_Long + 1;
 
   static bool isFood(int type) =>
      type == Consumables_Apple ||
@@ -309,16 +310,36 @@ class ItemType {
 
   static const Recipes = <int, List<int>> {
        Weapon_Handgun_Flint_Lock: const [
-            0001, Weapon_Handgun_Flint_Lock_Old,
-            0100, Resource_Scrap_Metal,
-            0050, Resource_Gold,
+        0001, Weapon_Handgun_Flint_Lock_Old,
+        0100, Resource_Scrap_Metal,
+        0050, Resource_Gold,
        ],
       Weapon_Handgun_Flint_Lock_Superior: const [
         0003, Weapon_Handgun_Flint_Lock,
         0400, Resource_Scrap_Metal,
         0100, Resource_Gold,
       ],
+      Weapon_Handgun_Blunderbuss: const [
+        0003, Weapon_Handgun_Flint_Lock_Superior,
+        0400, Resource_Scrap_Metal,
+        0100, Resource_Gold,
+      ],
+      Weapon_Handgun_Revolver: const [
+        0003, Weapon_Handgun_Blunderbuss,
+        0400, Resource_Scrap_Metal,
+        0100, Resource_Gold,
+      ],
+      Weapon_Handgun_Glock: const [
+        0003, Weapon_Handgun_Blunderbuss,
+        0400, Resource_Scrap_Metal,
+        0100, Resource_Gold,
+      ],
   };
+
+  static int getItemTypeMaxQuantity(int itemType) => const {
+      Resource_Gun_Powder: 100,
+      Resource_Arrow: 100,
+  }[itemType] ?? 1;
 }
 
 

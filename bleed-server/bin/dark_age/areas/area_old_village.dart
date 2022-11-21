@@ -76,6 +76,9 @@ class Area_OldVillage extends DarkAgeArea {
                     ItemType.Weapon_Handgun_Flint_Lock_Old,
                     ItemType.Weapon_Handgun_Flint_Lock,
                     ItemType.Weapon_Handgun_Flint_Lock_Superior,
+                    ItemType.Weapon_Handgun_Blunderbuss,
+                    ItemType.Weapon_Handgun_Revolver,
+                    ItemType.Weapon_Handgun_Glock,
                  ]);
                },
                'never mind': player.endInteraction
