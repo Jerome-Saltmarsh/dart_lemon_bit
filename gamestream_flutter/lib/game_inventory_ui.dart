@@ -250,11 +250,12 @@ class GameInventoryUI {
     if (itemIndex == -1) return const SizedBox();
 
     final itemType = ClientState.hoverDialogType.value == DialogType.Trade ? GamePlayer.storeItems.value[itemIndex] : ServerQuery.getItemTypeAtInventoryIndex(itemIndex);
-    final consumeType = ItemType.getConsumeType(itemType);
+    final itemTypeConsumeType = ItemType.getConsumeType(itemType);
 
     final healAmount = ItemType.getHealAmount(itemType);
 
     var damageDifference = 0;
+    var rangeDifference = 0.0;
     final itemTypeDamage = ItemType.getDamage(itemType);
     final itemTypeRange = ItemType.getRange(itemType).toInt();
     final itemTypeCooldown = ItemType.getCooldown(itemType);
@@ -262,7 +263,9 @@ class GameInventoryUI {
     if (ItemType.isTypeWeapon(itemType)) {
       final equippedWeaponType = ServerQuery.getEquippedWeaponType();
       final equippedWeaponDamage = ItemType.getDamage(equippedWeaponType);
+      final equippedWeaponRange = ItemType.getRange(equippedWeaponType);
       damageDifference = itemTypeDamage - equippedWeaponDamage;
+      rangeDifference = itemTypeRange - equippedWeaponRange;
     }
 
     final damageIncreased = damageDifference > 0;
@@ -296,16 +299,16 @@ class GameInventoryUI {
               if (healAmount > 0)
               buildTableRow("Heals", healAmount),
               if (itemTypeDamage != 0)
-                buildTableRow("Damage", damageDifference == 0 ? itemTypeDamage : '${damageIncreased ? "(+" : "("}$damageDifference) $itemTypeDamage', color: getValueColor(damageDifference)),
+                buildTableRowDifference("Damage", itemTypeDamage, damageDifference),
               if (itemTypeRange > 0)
-              buildTableRow("Range", itemTypeRange),
+                buildTableRowDifference("Range", itemTypeRange, rangeDifference),
               if (itemTypeCooldown > 0)
               buildTableRow("Cooldown", itemTypeCooldown),
-              if (consumeType != ItemType.Empty)
+              if (itemTypeConsumeType != ItemType.Empty)
                 buildTableRow("Uses", Row(children: [
-                  GameUI.buildAtlasItemType(consumeType),
+                  GameUI.buildAtlasItemType(itemTypeConsumeType),
                   width6,
-                  text("${ItemType.getName(consumeType)} x${ItemType.getConsumeAmount(itemType)}", color: Colors.white70),
+                  text("${ItemType.getName(itemTypeConsumeType)} x${ItemType.getConsumeAmount(itemType)}", color: Colors.white70),
                 ],)),
               height16,
               if (ClientState.hoverDialogDialogIsTrade)
@@ -329,6 +332,12 @@ class GameInventoryUI {
       ),
     );
   }
+
+  static Widget buildTableRowDifference(
+      dynamic key,
+      dynamic value,
+      num difference,
+      ) => buildTableRow(key, difference == 0 ? value : '${difference > 0 ? "(+" : "("}${difference.toInt()}) $value', color: getValueColor(difference.toInt()));
 
   static Widget buildTableRow(dynamic key, dynamic value, {Color color = Colors.white70}) =>
     Container(

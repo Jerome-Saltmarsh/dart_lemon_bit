@@ -230,7 +230,7 @@ class ItemType {
 
   static double getRange(int value) => const <int, double> {
       Empty: 50,
-      Weapon_Ranged_Shotgun: 100,
+      Weapon_Ranged_Shotgun: 90,
       Weapon_Handgun_Flint_Lock_Old: 100,
       Weapon_Handgun_Flint_Lock: 110,
       Weapon_Handgun_Flint_Lock_Superior: 120,
