@@ -175,7 +175,7 @@ class ItemType {
   static const Weapon_Rifle_Blunderbuss = Weapon_Rifle_Arquebus + 1;
   static const Weapon_Rifle_Musket = Weapon_Rifle_Blunderbuss + 1;
   static const Weapon_Rifle_Jager = Weapon_Rifle_Musket + 1;
-  static const Weapon_Rifle_Assault = Weapon_Rifle_Jager + 9;
+  static const Weapon_Rifle_Assault = Weapon_Rifle_Jager + 1;
 
   static const Weapon_Ranged_Shotgun = Index_Weapon_Ranged_Shotgun + 1;
 
@@ -334,6 +334,11 @@ class ItemType {
       Resource_Gun_Powder: 100,
       Resource_Arrow: 100,
   }[itemType] ?? 1;
+
+  static int getHealAmount(int itemType) => const {
+      Consumables_Apple: 3,
+      Consumables_Meat: 5,
+  }[itemType] ?? 0;
 }
 
 

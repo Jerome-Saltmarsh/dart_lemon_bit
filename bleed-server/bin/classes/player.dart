@@ -838,15 +838,11 @@ class Player extends Character with ByteWriter {
       inventorySwapIndexes(index, ItemType.Equipped_Legs);
       return;
     }
-    if (ItemType.isTypeConsumable(itemType)){
-       switch (itemType) {
-         case ItemType.Consumables_Meat:
-           break;
-         case ItemType.Consumables_Apple:
-           break;
-       }
+    if (ItemType.isTypeConsumable(itemType)) {
+       health += ItemType.getHealAmount(itemType);
        writePlayerEventItemTypeConsumed(itemType);
        inventorySetEmptyAtIndex(index);
+       game.setCharacterStateChanging(this);
        return;
     }
   }
