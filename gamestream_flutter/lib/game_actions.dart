@@ -97,6 +97,7 @@ class GameActions {
   }
 
   static void toggleZoom(){
+    GameAudio.weaponSwap2();
     if (Engine.targetZoom != GameConfig.Zoom_Far){
       Engine.targetZoom = GameConfig.Zoom_Far;
     } else {

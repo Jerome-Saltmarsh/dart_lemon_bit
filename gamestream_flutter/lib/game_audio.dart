@@ -55,6 +55,7 @@ class GameAudio {
     // AudioLoop(name: 'stream', getTargetVolume: getVolumeStream),
   ];
 
+  static final weaponSwap2 = AudioSingle(name: 'weapon-swap-2', volume: 0.5, maxDistance: 100);
   static final eat = AudioSingle(name: 'eat', volume: 0.5, maxDistance: 100);
   static final buff_1 = AudioSingle(name: 'buff-1', volume: 0.5, maxDistance: 100);
   static final errorSound15 = AudioSingle(name: 'error-sound-15', volume: 0.5, maxDistance: 100);
