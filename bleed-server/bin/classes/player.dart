@@ -1515,16 +1515,8 @@ class Player extends Character with ByteWriter {
   bool get sufficientAmmunition =>
     equippedWeaponAmmunitionQuantity >= equippedWeaponAmmoConsumption;
 
-  int get equippedWeaponAmmunitionQuantity {
-    var total = 0;
-    final ammunitionType = ItemType.getConsumeType(weaponType);
-    if (ammunitionType == ItemType.Empty) return 0;
-    for (var i = 0; i < inventory.length; i++){
-      if (inventory[i] != ammunitionType) continue;
-      total += inventoryQuantity[i];
-    }
-    return total;
-  }
+  int get equippedWeaponAmmunitionQuantity =>
+      inventoryGetTotalQuantityOfItemType(ItemType.getConsumeType(weaponType));
 
   void lookAt(Position position) {
     assert(!deadOrDying);
