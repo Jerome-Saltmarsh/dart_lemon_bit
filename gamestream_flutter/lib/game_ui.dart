@@ -425,10 +425,6 @@ class GameUI {
             final consumeType = ItemType.getConsumeType(beltItemType);
             final doesConsume = consumeType != ItemType.Empty;
 
-            // int? quantity = doesConsume ? ServerQuery.getItemTypeConsumesRemaining(beltItemType) : null;
-            // if (quantity == null){
-            //   quantity = ServerQuery.getWatchBeltTypeWatchQuantity(watchBeltType).value;
-            // }
             return Stack(
             children: [
               watch(ServerState.equippedWeaponIndex, (equippedWeaponIndex) =>
@@ -452,7 +448,7 @@ class GameUI {
                       scale: 2,
                   ),
                 ),
-              if (beltItemType != ItemType.Empty && !doesConsume)
+              if (beltItemType != ItemType.Empty && !ItemType.isTypeEquippable(beltItemType))
                 Positioned(
                     right: 5,
                     bottom: 5,
