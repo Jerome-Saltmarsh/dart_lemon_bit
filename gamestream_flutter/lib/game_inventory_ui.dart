@@ -288,40 +288,20 @@ class GameInventoryUI {
                 ],
               ),
               height8,
-              text('type: ${ItemType.getGroupTypeName(itemType)}'),
+              // text('type: ${ItemType.getGroupTypeName(itemType)}'),
+              buildTableRow(key: text("Type"), value: text(ItemType.getGroupTypeName(itemType))),
               if (damageDifference == 0)
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    text('Damage'),
-                    text(itemTypeDamage),
-                  ],
-                ),
+                buildTableRow(key: text("Damage"), value: text(itemTypeDamage)),
               if (damageDifference != 0)
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    text("Damage"),
-                    text('$itemTypeDamage ${damageIncreased ? "(+" : "("}$damageDifference)', color: damageIncreased ? GameColors.green : GameColors.red),
-                  ],
-                ),
-              text('Range: ${ItemType.getRange(itemType).toInt()}'),
-              text('Cooldown: ${ItemType.getCooldown(itemType).toInt()}'),
+                buildTableRow(key: text("Damage"), value: text('$itemTypeDamage ${damageIncreased ? "(+" : "("}$damageDifference)', color: damageIncreased ? GameColors.green : GameColors.red)),
+              buildTableRow(key: text("Range"), value: text(ItemType.getRange(itemType).toInt())),
+              buildTableRow(key: text("Cooldown"), value: text(ItemType.getCooldown(itemType).toInt())),
               if (consumeType != ItemType.Empty)
-                 Container(
-                   padding: const EdgeInsets.all(3),
-                   color: GameColors.white05,
-                   child: Row(
-                     children: [
-                       text("Uses"),
-                       width6,
-                       GameUI.buildAtlasItemType(consumeType),
-                       width6,
-                       text("${ItemType.getName(consumeType)} x${ItemType.getConsumeAmount(itemType)}"),
-                     ],
-                   ),
-                 ),
-
+                buildTableRow(key: text("Uses"), value: Row(children: [
+                  GameUI.buildAtlasItemType(consumeType),
+                  width6,
+                  text("${ItemType.getName(consumeType)} x${ItemType.getConsumeAmount(itemType)}"),
+                ],)),
               height16,
               if (ClientState.hoverDialogDialogIsTrade)
                 buildItemTypeRecipe(itemType),
@@ -344,6 +324,20 @@ class GameInventoryUI {
       ),
     );
   }
+
+  static Widget buildTableRow({required Widget key, required Widget value}) =>
+    Container(
+      padding: const EdgeInsets.all(5),
+      color: GameColors.white05,
+      margin: const EdgeInsets.only(bottom: 5),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          key,
+          value,
+        ],
+      ),
+    );
 
   static Widget buildItemTypeRecipe(int itemType){
     final recipe = ItemType.Recipes[itemType];
