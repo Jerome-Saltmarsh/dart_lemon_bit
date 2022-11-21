@@ -289,18 +289,16 @@ class GameInventoryUI {
               ),
               height8,
               // text('type: ${ItemType.getGroupTypeName(itemType)}'),
-              buildTableRow(key: text("Type"), value: text(ItemType.getGroupTypeName(itemType))),
-              if (damageDifference == 0)
-                buildTableRow(key: text("Damage"), value: text(itemTypeDamage)),
-              if (damageDifference != 0)
-                buildTableRow(key: text("Damage"), value: text('$itemTypeDamage ${damageIncreased ? "(+" : "("}$damageDifference)', color: damageIncreased ? GameColors.green : GameColors.red)),
-              buildTableRow(key: text("Range"), value: text(ItemType.getRange(itemType).toInt())),
-              buildTableRow(key: text("Cooldown"), value: text(ItemType.getCooldown(itemType).toInt())),
+              buildTableRow("Type", ItemType.getGroupTypeName(itemType)),
+              if (itemTypeDamage != 0)
+                buildTableRow("Damage", damageDifference == 0 ? itemTypeDamage : '$itemTypeDamage ${damageIncreased ? "(+" : "("}$damageDifference)'),
+              buildTableRow("Range", ItemType.getRange(itemType).toInt()),
+              buildTableRow("Cooldown", ItemType.getCooldown(itemType).toInt()),
               if (consumeType != ItemType.Empty)
-                buildTableRow(key: text("Uses"), value: Row(children: [
+                buildTableRow("Uses", Row(children: [
                   GameUI.buildAtlasItemType(consumeType),
                   width6,
-                  text("${ItemType.getName(consumeType)} x${ItemType.getConsumeAmount(itemType)}"),
+                  text("${ItemType.getName(consumeType)} x${ItemType.getConsumeAmount(itemType)}", color: Colors.white70),
                 ],)),
               height16,
               if (ClientState.hoverDialogDialogIsTrade)
@@ -325,7 +323,7 @@ class GameInventoryUI {
     );
   }
 
-  static Widget buildTableRow({required Widget key, required Widget value}) =>
+  static Widget buildTableRow(dynamic key, dynamic value) =>
     Container(
       padding: const EdgeInsets.all(5),
       color: GameColors.white05,
@@ -333,8 +331,8 @@ class GameInventoryUI {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          key,
-          value,
+          key is Widget ? key : text(key, color: Colors.white70, bold: true),
+          value is Widget ? value : text(value, color: Colors.white70),
         ],
       ),
     );
