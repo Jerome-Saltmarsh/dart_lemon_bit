@@ -56,10 +56,10 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
   var headType = ItemType.Head_Steel_Helm;
   var legsType = ItemType.Legs_Blue;
 
-  var weaponQuantity = 0;
-  var bodyQuantity = 0;
-  var headQuantity = 0;
-  var legsQuantity = 0;
+  // var weaponQuantity = 0;
+  // var bodyQuantity = 0;
+  // var headQuantity = 0;
+  // var legsQuantity = 0;
 
   int get weaponFrame => weaponDurationRemaining > 0 ? weaponDuration - weaponDurationRemaining : 0;
 

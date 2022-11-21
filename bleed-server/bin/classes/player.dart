@@ -405,13 +405,13 @@ class Player extends Character with ByteWriter {
     if (ItemType.doesConsumeOnUse(itemType)) return 1;
 
     if (index == ItemType.Equipped_Weapon)
-      return weaponQuantity;
+      return 1;
     if (index == ItemType.Equipped_Body)
-      return bodyQuantity;
+      return 1;
     if (index == ItemType.Equipped_Head)
-      return headQuantity;
+      return 1;
     if (index == ItemType.Equipped_Legs)
-      return legsQuantity;
+      return 1;
 
     if (index == ItemType.Belt_1)
       return belt1_quantity;
@@ -615,12 +615,15 @@ class Player extends Character with ByteWriter {
     assert (itemTypeCanBeAssignedToIndex(itemType: itemType, index: index));
     assert (itemType == ItemType.Empty || itemQuantity > 0);
     assert (itemType != ItemType.Empty || itemQuantity == 0);
-    assert (ItemType.isTypeWeapon(itemType) || itemQuantity != 1);
+
+    if (ItemType.isTypeEquippable(itemType)){
+      assert (itemQuantity <= 1);
+      itemQuantity = 1;
+    }
 
     if (index == equippedWeaponIndex) {
        if (ItemType.isTypeWeapon(itemType)) {
          weaponType = itemType;
-         weaponQuantity = itemQuantity;
          inventoryDirty = true;
          game.setCharacterStateChanging(this);
        }
@@ -630,28 +633,24 @@ class Player extends Character with ByteWriter {
     if (index == ItemType.Equipped_Weapon) {
       if (weaponType == itemType) return;
       weaponType = itemType;
-      weaponQuantity = itemQuantity;
       inventoryDirty = true;
       game.setCharacterStateChanging(this);
       return;
     }
     if (index == ItemType.Equipped_Body) {
       bodyType = itemType;
-      bodyQuantity = itemQuantity;
       inventoryDirty = true;
       game.setCharacterStateChanging(this);
       return;
     }
     if (index == ItemType.Equipped_Head) {
       headType = itemType;
-      headQuantity = itemQuantity;
       inventoryDirty = true;
       game.setCharacterStateChanging(this);
       return;
     }
     if (index == ItemType.Equipped_Legs) {
       legsType = itemType;
-      legsQuantity = itemQuantity;
       inventoryDirty = true;
       game.setCharacterStateChanging(this);
       return;
