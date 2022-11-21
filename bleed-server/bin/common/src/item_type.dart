@@ -244,8 +244,10 @@ class ItemType {
   }[value] ?? 30;
 
   static String getGroupTypeName(int value) {
-     if (isTypeEmpty(value))
-       return "Empty";
+    if (isTypeEmpty(value))
+      return "Empty";
+     if (isTypeWeapon(value))
+       return "Weapon";
      if (isTypeEquipped(value))
        return "Equipped";
      if (isTypeConsumable(value))
@@ -258,16 +260,6 @@ class ItemType {
        return "Pants";
      if (isTypeBody(value))
        return "Body";
-     if (isTypeWeaponHandgun(value))
-       return "Firearm-Pistol";
-     if (isTypeWeaponRifle(value))
-       return "Firearm-Rifle";
-     if (isTypeWeaponShotgun(value))
-       return "Firearm-Shotgun";
-     if (isTypeWeaponRanged(value))
-       return "Ranged Weapon";
-     if (isTypeWeaponMelee(value))
-       return "Melee Weapon";
      if (isTypeRecipe(value))
        return "Recipe";
      return "item-type-group-unknown-$value";
@@ -275,9 +267,6 @@ class ItemType {
   
   static String getName(int value) => const {
      Empty: "Empty",
-     Weapon_Ranged_Shotgun: "Shotgun",
-     Weapon_Handgun_Glock: "Glock",
-     Weapon_Melee_Staff: "Staff",
      Resource_Crystal: "Crystal",
      Resource_Wood: "Wood",
      Resource_Iron: "Iron",
@@ -301,9 +290,14 @@ class ItemType {
      Legs_Blue: "Blue Vest",
      Legs_White: "White Pants",
      Legs_Red: "Red Trousers",
+     Weapon_Melee_Staff: "Staff",
      Weapon_Handgun_Flint_Lock_Old: "Old Flint Lock Pistol",
      Weapon_Handgun_Flint_Lock: "Flint Lock Pistol",
      Weapon_Handgun_Flint_Lock_Superior: "Superior Flint Lock Pistol",
+     Weapon_Handgun_Blunderbuss: "Blunderbuss Pistol",
+     Weapon_Handgun_Glock: "Glock 22",
+     Weapon_Handgun_Revolver: "Revolver",
+     Weapon_Ranged_Shotgun: "Shotgun",
      Consumables_Apple: "Apple",
      Consumables_Meat: "Meat",
   }[value] ?? "item-type-unknown($value)";

@@ -21,6 +21,8 @@ class AtlasItems {
       ItemType.Weapon_Handgun_Flint_Lock_Old: 288,
       ItemType.Weapon_Handgun_Flint_Lock: 288,
       ItemType.Weapon_Handgun_Flint_Lock_Superior: 288,
+      ItemType.Weapon_Handgun_Glock: 32,
+      ItemType.Weapon_Handgun_Revolver: 64,
       ItemType.Resource_Wood: 32,
       ItemType.Resource_Stone: 64,
       ItemType.Resource_Crystal: 96,
@@ -48,6 +50,8 @@ class AtlasItems {
     ItemType.Resource_Arrow: 64,
     ItemType.Consumables_Meat: 64,
     ItemType.Consumables_Apple: 64,
+    ItemType.Weapon_Handgun_Glock: 96,
+    ItemType.Weapon_Handgun_Revolver: 96,
   }[itemType] ?? 0;
 }
 
