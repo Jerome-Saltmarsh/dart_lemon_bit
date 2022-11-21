@@ -106,6 +106,33 @@ class ItemType {
   static const Weapon_Ranged_Crossbow = Weapon_Ranged_Bow_Long + 1;
 
 
+  static const Recipes = <int, List<int>> {
+    Weapon_Handgun_Flint_Lock: const [
+      0001, Weapon_Handgun_Flint_Lock_Old,
+      0100, Resource_Scrap_Metal,
+      0050, Resource_Gold,
+    ],
+    Weapon_Handgun_Flint_Lock_Superior: const [
+      0003, Weapon_Handgun_Flint_Lock,
+      0400, Resource_Scrap_Metal,
+      0100, Resource_Gold,
+    ],
+    Weapon_Handgun_Blunderbuss: const [
+      0003, Weapon_Handgun_Flint_Lock_Superior,
+      0400, Resource_Scrap_Metal,
+      0100, Resource_Gold,
+    ],
+    Weapon_Handgun_Revolver: const [
+      0003, Weapon_Handgun_Blunderbuss,
+      0400, Resource_Scrap_Metal,
+      0100, Resource_Gold,
+    ],
+    Weapon_Handgun_Glock: const [
+      0003, Weapon_Handgun_Blunderbuss,
+      0400, Resource_Scrap_Metal,
+      0100, Resource_Gold,
+    ],
+  };
 
   static bool isTypeEmpty(int value) => value == Empty;
   static bool isNotTypeEmpty(int value) => value != Empty;
@@ -113,24 +140,21 @@ class ItemType {
   static bool isPersistable(int value) =>
       isTypeEnvironment(value);
 
-  static bool isCollidable(int value) {
-     return value == ItemType.GameObjects_Crystal;
-  }
+  static bool isCollidable(int value) =>
+    value == ItemType.GameObjects_Crystal;
 
   static bool isTypeEquipped(int value) =>
-    value == Equipped_Weapon ||
-    value == Equipped_Head ||
-    value == Equipped_Body ||
-    value == Equipped_Legs ||
-    value == Equipped_Weapon;
+    value == Equipped_Weapon  ||
+    value == Equipped_Head    ||
+    value == Equipped_Body    ||
+    value == Equipped_Legs    ;
 
   static bool isTypeEquippable(int value) =>
-      isTypeBody(value) ||
-      isTypeHead(value) ||
-      isTypeLegs(value) ||
-      isTypeWeapon(value);
+    isTypeBody(value)         ||
+    isTypeHead(value)         ||
+    isTypeLegs(value)         ||
+    isTypeWeapon(value)       ;
 
-  
   static bool isTypeEnvironment(int value) =>
       value >= Index_Environment && value < Index_Consumables;
 
@@ -305,43 +329,32 @@ class ItemType {
      Consumables_Meat: "Meat",
   }[value] ?? "item-type-unknown($value)";
 
-  static const Recipes = <int, List<int>> {
-       Weapon_Handgun_Flint_Lock: const [
-        0001, Weapon_Handgun_Flint_Lock_Old,
-        0100, Resource_Scrap_Metal,
-        0050, Resource_Gold,
-       ],
-      Weapon_Handgun_Flint_Lock_Superior: const [
-        0003, Weapon_Handgun_Flint_Lock,
-        0400, Resource_Scrap_Metal,
-        0100, Resource_Gold,
-      ],
-      Weapon_Handgun_Blunderbuss: const [
-        0003, Weapon_Handgun_Flint_Lock_Superior,
-        0400, Resource_Scrap_Metal,
-        0100, Resource_Gold,
-      ],
-      Weapon_Handgun_Revolver: const [
-        0003, Weapon_Handgun_Blunderbuss,
-        0400, Resource_Scrap_Metal,
-        0100, Resource_Gold,
-      ],
-      Weapon_Handgun_Glock: const [
-        0003, Weapon_Handgun_Blunderbuss,
-        0400, Resource_Scrap_Metal,
-        0100, Resource_Gold,
-      ],
-  };
-
-  static int getItemTypeMaxQuantity(int itemType) => const {
-      Resource_Gun_Powder: 100,
-      Resource_Arrow: 100,
-  }[itemType] ?? 1;
+  static int getMaxQuantity(int itemType) => const {
+    Resource_Gun_Powder: 100,
+    Resource_Arrow:     100,
+  }[itemType] ??        01;
 
   static int getHealAmount(int itemType) => const {
-      Consumables_Apple: 3,
-      Consumables_Meat: 5,
-  }[itemType] ?? 0;
+    Consumables_Apple:  03,
+    Consumables_Meat:   05,
+  }[itemType] ??        00;
+
+  static int getMaxHealth(int itemType) => const {
+    Head_Steel_Helm     : 10,
+    Head_Rogues_Hood    : 05,
+    Head_Wizards_Hat    : 03,
+    Head_Swat           : 15,
+    Head_Blonde         : 08,
+    Body_Swat           : 40,
+    Body_Tunic_Padded   : 50,
+    Body_Shirt_Blue     : 10,
+    Body_Shirt_Cyan     : 15,
+    Legs_Blue           : 10,
+    Legs_Brown          : 15,
+    Legs_Red            : 20,
+    Legs_White          : 25,
+    Legs_Green          : 30,
+  }[itemType] ??          00;
 }
 
 

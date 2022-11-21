@@ -69,6 +69,9 @@ class Area_OldVillage extends DarkAgeArea {
                  player.setStoreItems(const [
                     ItemType.Legs_Brown,
                     ItemType.Legs_Blue,
+                    ItemType.Body_Shirt_Cyan,
+                    ItemType.Body_Shirt_Blue,
+                    ItemType.Body_Tunic_Padded,
                     ItemType.Resource_Gun_Powder,
                     ItemType.Resource_Arrow,
                     ItemType.Consumables_Apple,

@@ -59,6 +59,8 @@ class Player extends Character with ByteWriter {
   var belt5_quantity = 0; // Q
   var belt6_quantity = 0; // E
 
+  var baseMaxHealth = 10;
+
   /// Warning - do not reference
   Game game;
   Collider? _aimTarget; // the currently highlighted character
@@ -92,6 +94,14 @@ class Player extends Character with ByteWriter {
 
     unequipWeapon();
     return;
+  }
+
+  void refreshStats(){
+      maxHealth = baseMaxHealth
+          + ItemType.getMaxHealth(headType)
+          + ItemType.getMaxHealth(bodyType)
+          + ItemType.getMaxHealth(legsType)
+          + ItemType.getMaxHealth(weaponType);
   }
 
   void unequipWeapon(){
@@ -697,6 +707,7 @@ class Player extends Character with ByteWriter {
       inventoryQuantity[index] = itemQuantity;
       inventoryDirty = true;
     }
+    refreshStats();
   }
 
   void inventorySwapIndexes(int indexA, int indexB){

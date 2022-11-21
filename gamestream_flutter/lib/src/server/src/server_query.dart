@@ -127,6 +127,6 @@ class ServerQuery {
      return total;
   }
 
-  static int getEquippedWeaponType()=>
+  static int getEquippedWeaponType() =>
       getItemTypeAtInventoryIndex(ServerState.equippedWeaponIndex.value);
 }

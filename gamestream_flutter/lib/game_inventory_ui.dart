@@ -258,18 +258,40 @@ class GameInventoryUI {
     var differenceDamage = 0;
     var differenceRange = 0.0;
     var differenceCooldown = 0;
+    var differenceMaxHealth = 0;
     final itemTypeDamage = ItemType.getDamage(itemType);
     final itemTypeRange = ItemType.getRange(itemType).toInt();
     final itemTypeCooldown = ItemType.getCooldown(itemType);
+    final itemTypeMaxHealth = ItemType.getMaxHealth(itemType);
 
     if (ItemType.isTypeWeapon(itemType)) {
       final equippedWeaponType = ServerQuery.getEquippedWeaponType();
       final equippedWeaponDamage = ItemType.getDamage(equippedWeaponType);
       final equippedWeaponRange = ItemType.getRange(equippedWeaponType);
       final equippedWeaponCooldown = ItemType.getCooldown(equippedWeaponType);
+      final equippedWeaponMaxHealth = ItemType.getMaxHealth(equippedWeaponType);
       differenceDamage = itemTypeDamage - equippedWeaponDamage;
       differenceRange = itemTypeRange - equippedWeaponRange;
       differenceCooldown = itemTypeCooldown - equippedWeaponCooldown;
+      differenceMaxHealth = itemTypeMaxHealth - equippedWeaponMaxHealth;
+    }
+
+    if (ItemType.isTypeHead(itemType)){
+      final equippedType = GamePlayer.head.value;
+      final equippedMaxHealth = ItemType.getMaxHealth(equippedType);
+      differenceMaxHealth = itemTypeMaxHealth - equippedMaxHealth;
+    }
+
+    if (ItemType.isTypeBody(itemType)){
+      final equippedType = GamePlayer.body.value;
+      final equippedMaxHealth = ItemType.getMaxHealth(equippedType);
+      differenceMaxHealth = itemTypeMaxHealth - equippedMaxHealth;
+    }
+
+    if (ItemType.isTypeLegs(itemType)){
+      final equippedType = GamePlayer.legs.value;
+      final equippedMaxHealth = ItemType.getMaxHealth(equippedType);
+      differenceMaxHealth = itemTypeMaxHealth - equippedMaxHealth;
     }
 
     return Positioned(
@@ -306,6 +328,8 @@ class GameInventoryUI {
                 buildTableRowDifference("Range", itemTypeRange, differenceRange),
               if (itemTypeCooldown > 0)
                 buildTableRowDifference("Cooldown", itemTypeCooldown, differenceCooldown, swap: true),
+              if (itemTypeMaxHealth > 0)
+                buildTableRowDifference("Max Health", itemTypeMaxHealth, differenceMaxHealth),
               if (itemTypeConsumeType != ItemType.Empty)
                 buildTableRow("Uses", Row(children: [
                   GameUI.buildAtlasItemType(itemTypeConsumeType),
