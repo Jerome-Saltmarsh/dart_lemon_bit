@@ -493,73 +493,79 @@ class Player extends Character with ByteWriter {
          }
        }
 
+
        for (var i = 0; i < recipe.length; i += 2) {
-         var recipeQuantityRemaining = recipe[i];
-         final recipeItemType = recipe[i + 1];
+         // var recipeQuantityRemaining = recipe[i];
+         // final recipeItemType = recipe[i + 1];
 
-         for (var i = 0; i < inventory.length; i++) {
-          if (inventory[i] != recipeItemType) continue;
-          final quantity = inventoryQuantity[i];
+         inventoryReduceItemTypeQuantity(
+            reduction: recipe[i],
+            itemType: recipe[i + 1]
+         );
 
-          if (quantity >= recipeQuantityRemaining) {
-            inventoryQuantity[i] -= recipeQuantityRemaining;
-            if (inventoryQuantity[i] == 0) {
-              inventory[i] = ItemType.Empty;
-            }
-            break;
-          }
-          recipeQuantityRemaining -= quantity;
-          inventory[i] = ItemType.Empty;
-        }
-
-        if (recipeQuantityRemaining > 0 && belt1_itemType == recipeItemType) {
-          if (belt1_quantity >= recipeQuantityRemaining) {
-            belt1_quantity -= recipeQuantityRemaining;
-            if (belt1_quantity == 0) {
-              inventorySetEmptyAtIndex(ItemType.Belt_1);
-            }
-          }
-        }
-         if (recipeQuantityRemaining > 0 && belt2_itemType == recipeItemType) {
-          if (belt2_quantity >= recipeQuantityRemaining) {
-            belt2_quantity -= recipeQuantityRemaining;
-            if (belt2_quantity == 0) {
-              inventorySetEmptyAtIndex(ItemType.Belt_2);
-            }
-          }
-        }
-         if (recipeQuantityRemaining > 0 && belt3_itemType == recipeItemType) {
-           if (belt3_quantity >= recipeQuantityRemaining) {
-             belt3_quantity -= recipeQuantityRemaining;
-             if (belt3_quantity == 0) {
-               inventorySetEmptyAtIndex(ItemType.Belt_3);
-             }
-           }
-         }
-         if (recipeQuantityRemaining > 0 && belt4_itemType == recipeItemType) {
-           if (belt4_quantity >= recipeQuantityRemaining) {
-             belt4_quantity -= recipeQuantityRemaining;
-             if (belt4_quantity == 0) {
-               inventorySetEmptyAtIndex(ItemType.Belt_4);
-             }
-           }
-         }
-         if (recipeQuantityRemaining > 0 && belt5_itemType == recipeItemType) {
-           if (belt5_quantity >= recipeQuantityRemaining) {
-             belt5_quantity -= recipeQuantityRemaining;
-             if (belt5_quantity == 0) {
-               inventorySetEmptyAtIndex(ItemType.Belt_5);
-             }
-           }
-         }
-         if (recipeQuantityRemaining > 0 && belt6_itemType == recipeItemType) {
-           if (belt6_quantity >= recipeQuantityRemaining) {
-             belt6_quantity -= recipeQuantityRemaining;
-             if (belt6_quantity == 0) {
-               inventorySetEmptyAtIndex(ItemType.Belt_6);
-             }
-           }
-         }
+        //  for (var i = 0; i < inventory.length; i++) {
+        //   if (inventory[i] != recipeItemType) continue;
+        //   final quantity = inventoryQuantity[i];
+        //
+        //   if (quantity >= recipeQuantityRemaining) {
+        //     inventoryQuantity[i] -= recipeQuantityRemaining;
+        //     if (inventoryQuantity[i] == 0) {
+        //       inventory[i] = ItemType.Empty;
+        //     }
+        //     break;
+        //   }
+        //   recipeQuantityRemaining -= quantity;
+        //   inventory[i] = ItemType.Empty;
+        // }
+        //
+        // if (recipeQuantityRemaining > 0 && belt1_itemType == recipeItemType) {
+        //   if (belt1_quantity >= recipeQuantityRemaining) {
+        //     belt1_quantity -= recipeQuantityRemaining;
+        //     if (belt1_quantity == 0) {
+        //       inventorySetEmptyAtIndex(ItemType.Belt_1);
+        //     }
+        //   }
+        // }
+        //  if (recipeQuantityRemaining > 0 && belt2_itemType == recipeItemType) {
+        //   if (belt2_quantity >= recipeQuantityRemaining) {
+        //     belt2_quantity -= recipeQuantityRemaining;
+        //     if (belt2_quantity == 0) {
+        //       inventorySetEmptyAtIndex(ItemType.Belt_2);
+        //     }
+        //   }
+        // }
+        //  if (recipeQuantityRemaining > 0 && belt3_itemType == recipeItemType) {
+        //    if (belt3_quantity >= recipeQuantityRemaining) {
+        //      belt3_quantity -= recipeQuantityRemaining;
+        //      if (belt3_quantity == 0) {
+        //        inventorySetEmptyAtIndex(ItemType.Belt_3);
+        //      }
+        //    }
+        //  }
+        //  if (recipeQuantityRemaining > 0 && belt4_itemType == recipeItemType) {
+        //    if (belt4_quantity >= recipeQuantityRemaining) {
+        //      belt4_quantity -= recipeQuantityRemaining;
+        //      if (belt4_quantity == 0) {
+        //        inventorySetEmptyAtIndex(ItemType.Belt_4);
+        //      }
+        //    }
+        //  }
+        //  if (recipeQuantityRemaining > 0 && belt5_itemType == recipeItemType) {
+        //    if (belt5_quantity >= recipeQuantityRemaining) {
+        //      belt5_quantity -= recipeQuantityRemaining;
+        //      if (belt5_quantity == 0) {
+        //        inventorySetEmptyAtIndex(ItemType.Belt_5);
+        //      }
+        //    }
+        //  }
+        //  if (recipeQuantityRemaining > 0 && belt6_itemType == recipeItemType) {
+        //    if (belt6_quantity >= recipeQuantityRemaining) {
+        //      belt6_quantity -= recipeQuantityRemaining;
+        //      if (belt6_quantity == 0) {
+        //        inventorySetEmptyAtIndex(ItemType.Belt_6);
+        //      }
+        //    }
+        //  }
       }
     }
     inventoryDirty = true;
@@ -572,6 +578,79 @@ class Player extends Character with ByteWriter {
     }
     inventory[emptyInventoryIndex] = itemType;
     inventoryQuantity[emptyInventoryIndex] = 1;
+  }
+
+
+  void inventoryReduceItemTypeQuantity({required int itemType, required int reduction}){
+    final quantityInPossession = inventoryGetTotalQuantityOfItemType(itemType);
+    assert (quantityInPossession >= reduction);
+
+    var reductionRemaining = reduction;
+
+    for (var i = 0; i < inventory.length; i++) {
+      if (inventory[i] != itemType) continue;
+      final quantity = inventoryQuantity[i];
+
+      if (quantity >= reductionRemaining) {
+        inventoryQuantity[i] -= reductionRemaining;
+        if (inventoryQuantity[i] == 0) {
+          inventorySetEmptyAtIndex(i);
+        }
+        break;
+      }
+      reductionRemaining -= quantity;
+      inventorySetEmptyAtIndex(i);
+    }
+
+    if (reductionRemaining == 0) return;
+
+    for (final beltIndex in ItemType.Belt_Indexes){
+       if (inventoryGetItemType(beltIndex) != itemType) continue;
+       final beltQuantity = inventoryGetItemQuantity(beltIndex);
+       if (beltQuantity >= reductionRemaining) {
+         inventorySetQuantityAtIndex(quantity: beltQuantity - reductionRemaining, index: beltIndex);
+         return;
+       }
+       reductionRemaining -= beltQuantity;
+       inventorySetEmptyAtIndex(beltQuantity);
+    }
+  }
+
+  void inventorySetQuantityAtIndex({required int quantity, required int index}){
+    assert (isValidInventoryIndex(index));
+    assert (quantity >= 0);
+
+    if (quantity == 0){
+       inventorySetEmptyAtIndex(index);
+    }
+    if (index < inventory.length) {
+      inventory[index] = index;
+      return;
+    }
+    if (index == ItemType.Belt_1){
+      belt1_quantity = quantity;
+      return;
+    }
+    if (index == ItemType.Belt_2){
+      belt2_quantity = quantity;
+      return;
+    }
+    if (index == ItemType.Belt_3){
+      belt3_quantity = quantity;
+      return;
+    }
+    if (index == ItemType.Belt_4){
+      belt4_quantity = quantity;
+      return;
+    }
+    if (index == ItemType.Belt_5){
+      belt5_quantity = quantity;
+      return;
+    }
+    if (index == ItemType.Belt_6){
+      belt6_quantity = quantity;
+      return;
+    }
   }
 
   void inventorySell(int index) {
@@ -590,7 +669,6 @@ class Player extends Character with ByteWriter {
     }
     inventorySetEmptyAtIndex(index);
     writePlayerEvent(PlayerEvent.Item_Sold);
-    // gold += ItemType.getSellPrice(itemType);
   }
 
   void inventorySetEmptyAtIndex(int index) =>

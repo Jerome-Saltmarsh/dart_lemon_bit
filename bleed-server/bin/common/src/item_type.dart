@@ -103,6 +103,8 @@ class ItemType {
   static const Belt_5 = Index_Belt + 5;
   static const Belt_6 = Index_Belt + 6;
 
+  static const Belt_Indexes = [Belt_1, Belt_2, Belt_3, Belt_4, Belt_5, Belt_6];
+
   static const Equipped_Head = Index_Equipped + 1;
   static const Equipped_Body = Index_Equipped + 2;
   static const Equipped_Legs = Index_Equipped + 3;

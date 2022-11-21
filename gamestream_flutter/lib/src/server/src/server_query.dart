@@ -109,7 +109,6 @@ class ServerQuery {
     return ServerState.inventory[index];
   }
 
-
   static int countItemTypeQuantityInPlayerPossession(int itemType){
      var total = 0;
      for (var i = 0; i < ServerState.inventory.length; i++){
