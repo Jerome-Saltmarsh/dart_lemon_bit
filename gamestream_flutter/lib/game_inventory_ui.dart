@@ -254,8 +254,9 @@ class GameInventoryUI {
 
     final healAmount = ItemType.getHealAmount(itemType);
 
-    var damageDifference = 0;
-    var rangeDifference = 0.0;
+    var differenceDamage = 0;
+    var differenceRange = 0.0;
+    var differenceCooldown = 0;
     final itemTypeDamage = ItemType.getDamage(itemType);
     final itemTypeRange = ItemType.getRange(itemType).toInt();
     final itemTypeCooldown = ItemType.getCooldown(itemType);
@@ -264,11 +265,11 @@ class GameInventoryUI {
       final equippedWeaponType = ServerQuery.getEquippedWeaponType();
       final equippedWeaponDamage = ItemType.getDamage(equippedWeaponType);
       final equippedWeaponRange = ItemType.getRange(equippedWeaponType);
-      damageDifference = itemTypeDamage - equippedWeaponDamage;
-      rangeDifference = itemTypeRange - equippedWeaponRange;
+      final equippedWeaponCooldown = ItemType.getCooldown(equippedWeaponType);
+      differenceDamage = itemTypeDamage - equippedWeaponDamage;
+      differenceRange = itemTypeRange - equippedWeaponRange;
+      differenceCooldown = itemTypeCooldown - equippedWeaponCooldown;
     }
-
-    final damageIncreased = damageDifference > 0;
 
     return Positioned(
       top: Engine.mousePosition.y < (Engine.screen.height * 0.5) ?  Engine.mousePosition.y + 60 : null,
@@ -299,11 +300,11 @@ class GameInventoryUI {
               if (healAmount > 0)
               buildTableRow("Heals", healAmount),
               if (itemTypeDamage != 0)
-                buildTableRowDifference("Damage", itemTypeDamage, damageDifference),
+                buildTableRowDifference("Damage", itemTypeDamage, differenceDamage),
               if (itemTypeRange > 0)
-                buildTableRowDifference("Range", itemTypeRange, rangeDifference),
+                buildTableRowDifference("Range", itemTypeRange, differenceRange),
               if (itemTypeCooldown > 0)
-              buildTableRow("Cooldown", itemTypeCooldown),
+                buildTableRowDifference("Cooldown", itemTypeCooldown, differenceCooldown, swap: true),
               if (itemTypeConsumeType != ItemType.Empty)
                 buildTableRow("Uses", Row(children: [
                   GameUI.buildAtlasItemType(itemTypeConsumeType),
@@ -337,7 +338,8 @@ class GameInventoryUI {
       dynamic key,
       dynamic value,
       num difference,
-      ) => buildTableRow(key, difference == 0 ? value : '${difference > 0 ? "(+" : "("}${difference.toInt()}) $value', color: getValueColor(difference.toInt()));
+      {bool swap = false})
+  => buildTableRow(key, difference == 0 ? value : '${difference > 0 ? "(+" : "("}${difference.toInt()}) $value', color: getValueColor(difference.toInt(), swap: swap));
 
   static Widget buildTableRow(dynamic key, dynamic value, {Color color = Colors.white70}) =>
     Container(
@@ -422,9 +424,19 @@ class GameInventoryUI {
      );
   }
 
-  static Color getValueColor(int value){
+  static Color getValueColor(int value, {bool swap = false}){
      if (value == 0) return  GameColors.white;
-     if (value < 0) return GameColors.red;
-     return GameColors.green;
+     if (value < 0) {
+       if (swap){
+         return GameColors.green;
+       }else {
+         return GameColors.red;
+       }
+     }
+     if (swap){
+       return GameColors.red;
+     }else {
+       return GameColors.green;
+     }
   }
 }
