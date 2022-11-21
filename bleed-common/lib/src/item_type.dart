@@ -234,14 +234,15 @@ class ItemType {
       Weapon_Handgun_Flint_Lock_Old: 100,
       Weapon_Handgun_Flint_Lock: 110,
       Weapon_Handgun_Flint_Lock_Superior: 120,
-  }[value] ?? 50;
+  }[value] ?? 0;
 
   static int getCooldown(int value) => const {
+      Empty: 40,
       Weapon_Ranged_Shotgun: 40,
       Weapon_Handgun_Flint_Lock_Old: 50,
       Weapon_Handgun_Flint_Lock: 45,
       Weapon_Handgun_Flint_Lock_Superior: 40,
-  }[value] ?? 30;
+  }[value] ?? 0;
 
   static String getGroupTypeName(int value) {
     if (isTypeEmpty(value))

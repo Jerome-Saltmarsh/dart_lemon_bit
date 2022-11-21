@@ -252,8 +252,12 @@ class GameInventoryUI {
     final itemType = ClientState.hoverDialogType.value == DialogType.Trade ? GamePlayer.storeItems.value[itemIndex] : ServerQuery.getItemTypeAtInventoryIndex(itemIndex);
     final consumeType = ItemType.getConsumeType(itemType);
 
+    final healAmount = ItemType.getHealAmount(itemType);
+
     var damageDifference = 0;
     final itemTypeDamage = ItemType.getDamage(itemType);
+    final itemTypeRange = ItemType.getRange(itemType).toInt();
+    final itemTypeCooldown = ItemType.getCooldown(itemType);
 
     if (ItemType.isTypeWeapon(itemType)) {
       final equippedWeaponType = ServerQuery.getEquippedWeaponType();
@@ -262,7 +266,6 @@ class GameInventoryUI {
     }
 
     final damageIncreased = damageDifference > 0;
-    final damageColor = getValueColor(damageDifference);
 
     return Positioned(
       top: Engine.mousePosition.y < (Engine.screen.height * 0.5) ?  Engine.mousePosition.y + 60 : null,
@@ -290,10 +293,14 @@ class GameInventoryUI {
               ),
               height8,
               buildTableRow("Type", ItemType.getGroupTypeName(itemType)),
+              if (healAmount > 0)
+              buildTableRow("Heals", healAmount),
               if (itemTypeDamage != 0)
                 buildTableRow("Damage", damageDifference == 0 ? itemTypeDamage : '${damageIncreased ? "(+" : "("}$damageDifference) $itemTypeDamage', color: getValueColor(damageDifference)),
-              buildTableRow("Range", ItemType.getRange(itemType).toInt()),
-              buildTableRow("Cooldown", ItemType.getCooldown(itemType).toInt()),
+              if (itemTypeRange > 0)
+              buildTableRow("Range", itemTypeRange),
+              if (itemTypeCooldown > 0)
+              buildTableRow("Cooldown", itemTypeCooldown),
               if (consumeType != ItemType.Empty)
                 buildTableRow("Uses", Row(children: [
                   GameUI.buildAtlasItemType(consumeType),
