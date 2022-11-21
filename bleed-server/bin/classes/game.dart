@@ -260,9 +260,8 @@ abstract class Game {
 
     if (player.equippedWeaponUsesAmmunition){
       if (player.sufficientAmmunition){
-        player.consumeAmmunition();
+        player.consumeEquippedWeaponAmmunition();
       } else {
-        // TODO player.insufficientGunPowder
         player.writeError('no ammunition');
         return;
       }

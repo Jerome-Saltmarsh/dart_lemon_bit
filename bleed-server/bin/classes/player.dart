@@ -493,79 +493,11 @@ class Player extends Character with ByteWriter {
          }
        }
 
-
        for (var i = 0; i < recipe.length; i += 2) {
-         // var recipeQuantityRemaining = recipe[i];
-         // final recipeItemType = recipe[i + 1];
-
          inventoryReduceItemTypeQuantity(
             reduction: recipe[i],
             itemType: recipe[i + 1]
          );
-
-        //  for (var i = 0; i < inventory.length; i++) {
-        //   if (inventory[i] != recipeItemType) continue;
-        //   final quantity = inventoryQuantity[i];
-        //
-        //   if (quantity >= recipeQuantityRemaining) {
-        //     inventoryQuantity[i] -= recipeQuantityRemaining;
-        //     if (inventoryQuantity[i] == 0) {
-        //       inventory[i] = ItemType.Empty;
-        //     }
-        //     break;
-        //   }
-        //   recipeQuantityRemaining -= quantity;
-        //   inventory[i] = ItemType.Empty;
-        // }
-        //
-        // if (recipeQuantityRemaining > 0 && belt1_itemType == recipeItemType) {
-        //   if (belt1_quantity >= recipeQuantityRemaining) {
-        //     belt1_quantity -= recipeQuantityRemaining;
-        //     if (belt1_quantity == 0) {
-        //       inventorySetEmptyAtIndex(ItemType.Belt_1);
-        //     }
-        //   }
-        // }
-        //  if (recipeQuantityRemaining > 0 && belt2_itemType == recipeItemType) {
-        //   if (belt2_quantity >= recipeQuantityRemaining) {
-        //     belt2_quantity -= recipeQuantityRemaining;
-        //     if (belt2_quantity == 0) {
-        //       inventorySetEmptyAtIndex(ItemType.Belt_2);
-        //     }
-        //   }
-        // }
-        //  if (recipeQuantityRemaining > 0 && belt3_itemType == recipeItemType) {
-        //    if (belt3_quantity >= recipeQuantityRemaining) {
-        //      belt3_quantity -= recipeQuantityRemaining;
-        //      if (belt3_quantity == 0) {
-        //        inventorySetEmptyAtIndex(ItemType.Belt_3);
-        //      }
-        //    }
-        //  }
-        //  if (recipeQuantityRemaining > 0 && belt4_itemType == recipeItemType) {
-        //    if (belt4_quantity >= recipeQuantityRemaining) {
-        //      belt4_quantity -= recipeQuantityRemaining;
-        //      if (belt4_quantity == 0) {
-        //        inventorySetEmptyAtIndex(ItemType.Belt_4);
-        //      }
-        //    }
-        //  }
-        //  if (recipeQuantityRemaining > 0 && belt5_itemType == recipeItemType) {
-        //    if (belt5_quantity >= recipeQuantityRemaining) {
-        //      belt5_quantity -= recipeQuantityRemaining;
-        //      if (belt5_quantity == 0) {
-        //        inventorySetEmptyAtIndex(ItemType.Belt_5);
-        //      }
-        //    }
-        //  }
-        //  if (recipeQuantityRemaining > 0 && belt6_itemType == recipeItemType) {
-        //    if (belt6_quantity >= recipeQuantityRemaining) {
-        //      belt6_quantity -= recipeQuantityRemaining;
-        //      if (belt6_quantity == 0) {
-        //        inventorySetEmptyAtIndex(ItemType.Belt_6);
-        //      }
-        //    }
-        //  }
       }
     }
     inventoryDirty = true;
@@ -584,8 +516,8 @@ class Player extends Character with ByteWriter {
   void inventoryReduceItemTypeQuantity({required int itemType, required int reduction}){
     final quantityInPossession = inventoryGetTotalQuantityOfItemType(itemType);
     assert (quantityInPossession >= reduction);
-
     var reductionRemaining = reduction;
+    inventoryDirty = true;
 
     for (var i = 0; i < inventory.length; i++) {
       if (inventory[i] != itemType) continue;
@@ -1558,30 +1490,12 @@ class Player extends Character with ByteWriter {
     writeUInt16(equippedWeaponAmmunitionQuantity);
   }
 
-  void consumeAmmunition() {
+  void consumeEquippedWeaponAmmunition() {
     final ammunitionType = equippedWeaponAmmunitionType;
     if (ammunitionType == ItemType.Empty) return;
     var amount = ItemType.getConsumeAmount(weaponType);
     if (amount == 0) return;
-    assert (amount <= equippedWeaponAmmunitionQuantity);
-
-    for (var i = 0; i < inventory.length; i++){
-      if (inventory[i] != ammunitionType) continue;
-      final quantity = inventoryQuantity[i];
-      if (quantity >= amount){
-        inventoryQuantity[i] -= amount;
-        if (inventoryQuantity[i] == 0) {
-            inventorySetEmptyAtIndex(i);
-        }
-        writePlayerInventorySlot(i);
-        break;
-      } else {
-        amount -= quantity;
-        inventorySetEmptyAtIndex(i);
-        inventoryQuantity[i] = 0;
-        writePlayerInventorySlot(i);
-      }
-    }
+    inventoryReduceItemTypeQuantity(itemType: ammunitionType, reduction: amount);
     writePlayerEquippedWeaponAmmunition();
   }
 
