@@ -262,6 +262,7 @@ class GameInventoryUI {
     }
 
     final damageIncreased = damageDifference > 0;
+    final damageColor = getValueColor(damageDifference);
 
     return Positioned(
       top: Engine.mousePosition.y < (Engine.screen.height * 0.5) ?  Engine.mousePosition.y + 60 : null,
@@ -288,10 +289,9 @@ class GameInventoryUI {
                 ],
               ),
               height8,
-              // text('type: ${ItemType.getGroupTypeName(itemType)}'),
               buildTableRow("Type", ItemType.getGroupTypeName(itemType)),
               if (itemTypeDamage != 0)
-                buildTableRow("Damage", damageDifference == 0 ? itemTypeDamage : '$itemTypeDamage ${damageIncreased ? "(+" : "("}$damageDifference)'),
+                buildTableRow("Damage", damageDifference == 0 ? itemTypeDamage : '${damageIncreased ? "(+" : "("}$damageDifference) $itemTypeDamage', color: getValueColor(damageDifference)),
               buildTableRow("Range", ItemType.getRange(itemType).toInt()),
               buildTableRow("Cooldown", ItemType.getCooldown(itemType).toInt()),
               if (consumeType != ItemType.Empty)
@@ -323,7 +323,7 @@ class GameInventoryUI {
     );
   }
 
-  static Widget buildTableRow(dynamic key, dynamic value) =>
+  static Widget buildTableRow(dynamic key, dynamic value, {Color color = Colors.white70}) =>
     Container(
       padding: const EdgeInsets.all(5),
       color: GameColors.white05,
@@ -331,8 +331,8 @@ class GameInventoryUI {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          key is Widget ? key : text(key, color: Colors.white70, bold: true),
-          value is Widget ? value : text(value, color: Colors.white70),
+          key is Widget ? key : text(key, color: color, bold: true),
+          value is Widget ? value : text(value, color: color),
         ],
       ),
     );
@@ -406,4 +406,9 @@ class GameInventoryUI {
      );
   }
 
+  static Color getValueColor(int value){
+     if (value == 0) return  GameColors.white;
+     if (value < 0) return GameColors.red;
+     return GameColors.green;
+  }
 }
