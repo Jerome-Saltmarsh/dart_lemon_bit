@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
+import 'package:gamestream_flutter/language_utils.dart';
 
 import 'library.dart';
 
@@ -339,7 +340,7 @@ class GameInventoryUI {
       dynamic value,
       num difference,
       {bool swap = false})
-  => buildTableRow(key, difference == 0 ? value : '${difference > 0 ? "(+" : "("}${difference.toInt()}) $value', color: getValueColor(difference.toInt(), swap: swap));
+  => buildTableRow(key, difference == 0 ? value : '${difference > 0 ? "(+" : "("}${difference.toInt()}) ${padSpace(value, length: 5)}', color: getValueColor(difference.toInt(), swap: swap));
 
   static Widget buildTableRow(dynamic key, dynamic value, {Color color = Colors.white70}) =>
     Container(
