@@ -786,6 +786,8 @@ class Player extends Character with ByteWriter {
 
   void inventoryEquip(int index) {
 
+    if (deadOrBusy) return;
+
     if (!isValidInventoryIndex(index)) {
       writePlayerEventInvalidRequest();
       return;
@@ -843,6 +845,7 @@ class Player extends Character with ByteWriter {
        writePlayerEventItemTypeConsumed(itemType);
        inventorySetEmptyAtIndex(index);
        game.setCharacterStateChanging(this);
+       writeError('${ItemType.getName(itemType)} consumed');
        return;
     }
   }
