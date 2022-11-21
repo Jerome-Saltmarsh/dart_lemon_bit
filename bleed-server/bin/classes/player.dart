@@ -645,63 +645,53 @@ class Player extends Character with ByteWriter {
       weaponType = itemType;
       inventoryDirty = true;
       game.setCharacterStateChanging(this);
-      return;
-    }
+    } else
     if (index == ItemType.Equipped_Body) {
       bodyType = itemType;
       inventoryDirty = true;
       game.setCharacterStateChanging(this);
-      return;
-    }
+    } else
     if (index == ItemType.Equipped_Head) {
       headType = itemType;
       inventoryDirty = true;
       game.setCharacterStateChanging(this);
-      return;
-    }
+    } else
     if (index == ItemType.Equipped_Legs) {
       legsType = itemType;
       inventoryDirty = true;
       game.setCharacterStateChanging(this);
-      return;
-    }
+    } else
     if (index == ItemType.Belt_1){
       belt1_itemType = itemType;
       belt1_quantity = itemQuantity;
       inventoryDirty = true;
-      return;
-    }
+    } else
     if (index == ItemType.Belt_2){
       belt2_itemType = itemType;
       belt2_quantity = itemQuantity;
       inventoryDirty = true;
-      return;
-    }
+    } else
     if (index == ItemType.Belt_3){
       belt3_itemType = itemType;
       belt3_quantity = itemQuantity;
       inventoryDirty = true;
-      return;
-    }
+    } else
     if (index == ItemType.Belt_4){
       if (belt4_itemType == itemType) return;
       belt4_itemType = itemType;
       belt4_quantity = itemQuantity;
       inventoryDirty = true;
-      return;
-    }
+    } else
     if (index == ItemType.Belt_5){
       belt5_itemType = itemType;
       belt5_quantity = itemQuantity;
       inventoryDirty = true;
-      return;
-    }
+    } else
     if (index == ItemType.Belt_6){
       belt6_itemType = itemType;
       belt6_quantity = itemQuantity;
       inventoryDirty = true;
-      return;
-    }
+    } else
     if (index < inventory.length){
       inventory[index] = itemType;
       inventoryQuantity[index] = itemQuantity;
