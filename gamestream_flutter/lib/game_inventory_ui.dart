@@ -252,26 +252,22 @@ class GameInventoryUI {
 
     final itemType = ClientState.hoverDialogType.value == DialogType.Trade ? GamePlayer.storeItems.value[itemIndex] : ServerQuery.getItemTypeAtInventoryIndex(itemIndex);
     final itemTypeConsumeType = ItemType.getConsumeType(itemType);
+    final itemIndexInBelt = ItemType.isIndexBelt(itemIndex);
     final healAmount = ItemType.getHealAmount(itemType);
+    final itemTypeIsEquippable = ItemType.isTypeEquippable(itemType);
 
-    final itemTypeIsResource        = ItemType.isTypeResource(itemType);
-    final itemTypeIsConsumable =    ItemType.isTypeConsumable(itemType);
-    final itemTypeDamage =          ItemType.getDamage(itemType);
-    final itemTypeRange =           ItemType.getRange(itemType).toInt();
-    final itemTypeCooldown =        ItemType.getCooldown(itemType);
-    final itemTypeMaxHealth =       ItemType.getMaxHealth(itemType);
-    final equippedItemType =        ServerQuery.getEquippedItemType(itemType);
-    final equippedItemTypeDamage =  ItemType.getDamage(equippedItemType);
-    final equippedItemTypeRange =   ItemType.getRange(equippedItemType);
-    final equippedItemTypeCooldown = ItemType.getCooldown(equippedItemType);
-    final equippedItemTypeMaxHealth = ItemType.getMaxHealth(equippedItemType);
-    final differenceDamage =        itemTypeDamage - equippedItemTypeDamage;
-    final differenceRange =         itemTypeRange - equippedItemTypeRange;
-    final differenceCooldown =      itemTypeCooldown - equippedItemTypeCooldown;
-    final differenceMaxHealth =     itemTypeMaxHealth - equippedItemTypeMaxHealth;
-    final itemTypeisEquipped = itemType == equippedItemType;
-
-    final showStats = !itemTypeIsResource && !itemTypeIsConsumable;
+    final equippedItemType          = ServerQuery.getEquippedItemType(itemType);
+    final itemTypeIsTrinket         = ItemType.isTypeTrinket(itemType);
+    final itemTypeDamage            = ItemType.getDamage(itemType);
+    final itemTypeRange             = ItemType.getRange(itemType).toInt();
+    final itemTypeCooldown          = ItemType.getCooldown(itemType);
+    final itemTypeMaxHealth         = ItemType.getMaxHealth(itemType);
+    final equippedItemTypeDamage    = itemTypeIsEquippable ? ItemType.getDamage(equippedItemType) : null;
+    final equippedItemTypeRange     = itemTypeIsEquippable ? ItemType.getRange(equippedItemType) : null;
+    final equippedItemTypeCooldown  = itemTypeIsEquippable ? ItemType.getCooldown(equippedItemType) : null;
+    final equippedItemTypeMaxHealth = itemTypeIsEquippable ? ItemType.getMaxHealth(equippedItemType) : null;
+    final itemTypeIsEquipped        = itemType == equippedItemType
+                                      || (itemTypeIsTrinket && itemIndexInBelt);
 
     return Positioned(
       top: Engine.mousePosition.y < (Engine.screen.height * 0.5) ?  Engine.mousePosition.y + 60 : null,
@@ -295,7 +291,7 @@ class GameInventoryUI {
                   GameUI.buildAtlasItemType(itemType),
                   width8,
                   Expanded(child: text(ItemType.getName(itemType), color: GameColors.blue)),
-                  if (itemTypeisEquipped)
+                  if (itemTypeIsEquipped)
                     text("Equipped", color: Colors.white60),
                 ],
               ),
@@ -303,22 +299,11 @@ class GameInventoryUI {
               buildTableRow("Type", ItemType.getGroupTypeName(itemType)),
               if (healAmount > 0)
               buildTableRow("Heals", healAmount),
-              if (itemTypeisEquipped && itemTypeDamage != 0)
-                buildTableRow("Damage", itemTypeDamage),
-              if (showStats && differenceDamage != 0)
-                buildTableRowDifference2("Damage", itemTypeDamage, equippedItemTypeDamage),
-              if (itemTypeisEquipped && itemTypeRange != 0)
-                buildTableRow("Range", itemTypeRange),
-              if (showStats && differenceRange != 0)
-                buildTableRowDifference2("Range", itemTypeRange, equippedItemTypeRange),
-              if (itemTypeisEquipped && itemTypeCooldown != 0)
-                buildTableRow("Cooldown", itemTypeCooldown),
-              if (showStats && differenceCooldown != 0)
-                buildTableRowDifference2("Cooldown", itemTypeCooldown, equippedItemTypeCooldown, swap: true),
-              if (itemTypeisEquipped && itemTypeMaxHealth > 0)
-                buildTableRow("Max Health", itemTypeMaxHealth),
-              if (showStats && differenceMaxHealth != 0)
-                buildTableRowDifference2("Max Health", itemTypeMaxHealth, equippedItemTypeMaxHealth),
+              buildTableRowDifference2("Damage", itemTypeDamage, equippedItemTypeDamage),
+              buildTableRowDifference2("Range", itemTypeRange, equippedItemTypeRange),
+              buildTableRowDifference2("Cooldown", itemTypeCooldown, equippedItemTypeCooldown, swap: true),
+              buildTableRowDifference2("Max Health", itemTypeMaxHealth, equippedItemTypeMaxHealth),
+
               if (itemTypeConsumeType != ItemType.Empty)
                 buildTableRow("Uses", Row(children: [
                   GameUI.buildAtlasItemType(itemTypeConsumeType),
@@ -348,7 +333,13 @@ class GameInventoryUI {
     );
   }
 
-  static Widget buildTableRowDifference2(String key, num itemTypeValue, num equippedTypeValue, {bool swap = false}){
+  static Widget buildTableRowDifference2(String key, num itemTypeValue, num? equippedTypeValue, {bool swap = false}){
+    if (itemTypeValue == 0) return const SizedBox();
+
+     if (equippedTypeValue == null || itemTypeValue == equippedTypeValue){
+       return buildTableRow(key, itemTypeValue);
+     }
+
      final percentage = getPercentageDifference(itemTypeValue, equippedTypeValue);
      final changeColor = getValueColor(percentage, swap: swap);
      return buildTableRow(
