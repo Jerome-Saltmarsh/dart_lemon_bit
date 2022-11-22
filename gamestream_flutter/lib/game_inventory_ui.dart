@@ -303,14 +303,20 @@ class GameInventoryUI {
               buildTableRow("Type", ItemType.getGroupTypeName(itemType)),
               if (healAmount > 0)
               buildTableRow("Heals", healAmount),
-              if (itemTypeisEquipped && itemTypeDamage > 0)
+              if (itemTypeisEquipped && itemTypeDamage != 0)
                 buildTableRow("Damage", itemTypeDamage),
               if (showStats && differenceDamage != 0)
                 buildTableRowDifference2("Damage", itemTypeDamage, equippedItemTypeDamage),
+              if (itemTypeisEquipped && itemTypeRange != 0)
+                buildTableRow("Range", itemTypeRange),
               if (showStats && differenceRange != 0)
                 buildTableRowDifference2("Range", itemTypeRange, equippedItemTypeRange),
+              if (itemTypeisEquipped && itemTypeCooldown != 0)
+                buildTableRow("Cooldown", itemTypeCooldown),
               if (showStats && differenceCooldown != 0)
                 buildTableRowDifference2("Cooldown", itemTypeCooldown, equippedItemTypeCooldown, swap: true),
+              if (itemTypeisEquipped && itemTypeMaxHealth > 0)
+                buildTableRow("Max Health", itemTypeMaxHealth),
               if (showStats && differenceMaxHealth != 0)
                 buildTableRowDifference2("Max Health", itemTypeMaxHealth, equippedItemTypeMaxHealth),
               if (itemTypeConsumeType != ItemType.Empty)
@@ -350,7 +356,7 @@ class GameInventoryUI {
          Row(
            mainAxisAlignment: MainAxisAlignment.end,
            children: [
-            text('(${percentage > 0 ? "+" : ""}${formatPercentage(percentage)})', color: changeColor),
+            text('${percentage > 0 ? "+" : ""}${formatPercentage(percentage)}', color: changeColor, italic: true),
             Container(
                 width: 150,
                 alignment: Alignment.centerRight,
@@ -391,26 +397,35 @@ class GameInventoryUI {
       final recipeItemQuantityPossessed = ServerQuery.countItemTypeQuantityInPlayerPossession(recipeItemType);
       final sufficientQuantity = recipeItemQuantityPossessed >= recipeItemQuantityRequired;
       final textColor = sufficientQuantity ? GameColors.green : GameColors.red;
-       children.add(Row(
-         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-         children: [
-           Expanded(
-             child: Row(
-               children: [
-                 buildItemTypeAtlasImage(itemType: recipeItemType, scale: 0.75),
-                 width4,
-                 text(ItemType.getName(recipeItemType), color: textColor),
-               ],
-             ),
-           ),
+       children.add(
            Row(
-             children: [
-               Container(width: 65, child: text(recipeItemQuantityRequired, color: textColor), alignment: Alignment.centerRight),
-               Container(width: 65, child: text('($recipeItemQuantityPossessed)', italic: true, color: textColor), alignment: Alignment.centerRight, ),
-             ],
-           ),
-         ],
-       ));
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: Row(
+              children: [
+                buildItemTypeAtlasImage(itemType: recipeItemType, scale: 0.75),
+                width4,
+                text(ItemType.getName(recipeItemType), color: textColor),
+              ],
+            ),
+          ),
+          Row(
+            children: [
+              Container(
+                  width: 65,
+                  child: text(recipeItemQuantityRequired, color: textColor),
+                  alignment: Alignment.centerRight),
+              Container(
+                width: 65,
+                child: text('($recipeItemQuantityPossessed)',
+                    italic: true, color: textColor),
+                alignment: Alignment.centerRight,
+              ),
+            ],
+          ),
+        ],
+      ));
     }
 
     return Container(
