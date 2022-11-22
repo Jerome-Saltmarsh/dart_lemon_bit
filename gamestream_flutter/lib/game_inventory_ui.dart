@@ -282,7 +282,7 @@ class GameInventoryUI {
         padding: const EdgeInsets.all(12),
         color: brownDark,
         constraints: BoxConstraints(
-          minWidth: 450,
+          minWidth: 480,
           maxWidth: 550,
         ),
         child: Container(
