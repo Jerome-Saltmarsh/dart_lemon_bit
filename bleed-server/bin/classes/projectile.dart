@@ -1,6 +1,7 @@
 
 import 'package:lemon_math/library.dart';
 
+import 'character.dart';
 import 'collider.dart';
 import 'position3.dart';
 import 'components.dart';
@@ -8,7 +9,7 @@ import 'components.dart';
 
 class Projectile extends Collider with Active, Velocity, FaceDirection {
   final start = Vector2(0, 0);
-  late dynamic owner;
+  late Character? owner;
   late double range;
   late int type; // ProjectileType.dart
   int damage = 0;

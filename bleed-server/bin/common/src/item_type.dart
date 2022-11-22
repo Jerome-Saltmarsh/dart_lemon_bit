@@ -265,6 +265,7 @@ class ItemType {
       Weapon_Handgun_Flint_Lock_Old: 1,
       Weapon_Handgun_Flint_Lock: 2,
       Weapon_Handgun_Flint_Lock_Superior: 3,
+      Trinket_Ring_of_Damage: 1,
   }[value] ?? 0;
 
   static double getRange(int value) => const <int, double> {

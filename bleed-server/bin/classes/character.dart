@@ -11,40 +11,10 @@ import 'position3.dart';
 
 abstract class Character extends Collider with Team, Velocity, FaceDirection {
 
+  /// VARIABLES
   var _health = 1;
   var _maxHealth = 1;
-
-  bool get dead => state == CharacterState.Dead;
-  bool get dying => state == CharacterState.Dying;
-  bool get alive => !deadOrDying;
-  bool get deadOrDying => dead || dying;
-  int get health => _health;
-  double get healthPercentage => health / maxHealth;
-
-  int get type;
-
-  int get maxHealth => _maxHealth;
-
-  set maxHealth(int value){
-     if (_maxHealth == value) return;
-     assert (value > 0);
-     _maxHealth = value;
-     if (_health > _maxHealth){
-       _health = _maxHealth;
-     }
-     if (this is Player){
-       (this as Player).writePlayerMaxHealth();
-       (this as Player).writePlayerHealth();
-     }
-  }
-
-  set health (int value) {
-    if (_health == value) return;
-    _health = clamp(value, 0, maxHealth);
-    if (this is Player){
-      (this as Player).writePlayerHealth();
-    }
-  }
+  var damage = 1;
   var state = CharacterState.Idle;
   var stateDurationRemaining = 0;
   var stateDuration = 0;
@@ -58,17 +28,45 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
   var bodyType = ItemType.Body_Shirt_Cyan;
   var headType = ItemType.Head_Steel_Helm;
   var legsType = ItemType.Legs_Blue;
-
-  // var weaponQuantity = 0;
-  // var bodyQuantity = 0;
-  // var headQuantity = 0;
-  // var legsQuantity = 0;
-
-  int get weaponFrame => weaponDurationRemaining > 0 ? weaponDuration - weaponDurationRemaining : 0;
-
   var performX = 0.0;
   var performY = 0.0;
   var performZ = 0.0;
+
+  /// PROPERTIES
+
+  bool get dead => state == CharacterState.Dead;
+  bool get dying => state == CharacterState.Dying;
+  bool get alive => !deadOrDying;
+  bool get deadOrDying => dead || dying;
+  int get health => _health;
+  double get healthPercentage => health / maxHealth;
+
+  int get type;
+
+  int get maxHealth => _maxHealth;
+
+  set maxHealth(int value){
+    if (_maxHealth == value) return;
+    assert (value > 0);
+    _maxHealth = value;
+    if (_health > _maxHealth){
+      _health = _maxHealth;
+    }
+    if (this is Player){
+      (this as Player).writePlayerMaxHealth();
+      (this as Player).writePlayerHealth();
+    }
+  }
+
+  set health (int value) {
+    if (_health == value) return;
+    _health = clamp(value, 0, maxHealth);
+    if (this is Player){
+      (this as Player).writePlayerHealth();
+    }
+  }
+
+  int get weaponFrame => weaponDurationRemaining > 0 ? weaponDuration - weaponDurationRemaining : 0;
 
   double get weaponRange => ItemType.getRange(weaponType);
   int get weaponDamage => ItemType.getDamage(weaponType);
@@ -112,7 +110,6 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
   bool get equippedIsMelee => ItemType.isTypeWeaponMelee(weaponType);
   bool get equippedIsEmpty => false;
   int get equippedAttackDuration => 25;
-  int get equippedDamage => ItemType.getDamage(weaponType);
   double get equippedRange => ItemType.getRange(weaponType);
 
   void write(Player player);

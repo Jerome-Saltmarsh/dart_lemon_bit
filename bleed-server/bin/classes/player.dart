@@ -60,6 +60,7 @@ class Player extends Character with ByteWriter {
   var belt6_quantity = 0; // E
 
   var baseMaxHealth = 10;
+  var baseDamage = 1;
 
   /// Warning - do not reference
   Game game;
@@ -97,6 +98,12 @@ class Player extends Character with ByteWriter {
   }
 
   void refreshStats() {
+      damage = baseDamage
+          + ItemType.getDamage(headType)
+          + ItemType.getDamage(bodyType)
+          + ItemType.getDamage(legsType)
+          + ItemType.getDamage(weaponType);
+
       maxHealth = baseMaxHealth
           + ItemType.getMaxHealth(headType)
           + ItemType.getMaxHealth(bodyType)
@@ -105,21 +112,27 @@ class Player extends Character with ByteWriter {
 
       if (ItemType.isTypeTrinket(belt1_itemType)){
         maxHealth += ItemType.getMaxHealth(belt1_itemType);
+        damage += ItemType.getDamage(belt1_itemType);
       }
       if (ItemType.isTypeTrinket(belt2_itemType)){
         maxHealth += ItemType.getMaxHealth(belt2_itemType);
+        damage += ItemType.getDamage(belt2_itemType);
       }
       if (ItemType.isTypeTrinket(belt3_itemType)){
         maxHealth += ItemType.getMaxHealth(belt3_itemType);
+        damage += ItemType.getDamage(belt3_itemType);
       }
       if (ItemType.isTypeTrinket(belt4_itemType)){
         maxHealth += ItemType.getMaxHealth(belt4_itemType);
+        damage += ItemType.getDamage(belt4_itemType);
       }
       if (ItemType.isTypeTrinket(belt5_itemType)){
         maxHealth += ItemType.getMaxHealth(belt5_itemType);
+        damage += ItemType.getDamage(belt5_itemType);
       }
       if (ItemType.isTypeTrinket(belt6_itemType)){
         maxHealth += ItemType.getMaxHealth(belt6_itemType);
+        damage += ItemType.getDamage(belt6_itemType);
       }
   }
 

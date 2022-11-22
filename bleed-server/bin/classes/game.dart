@@ -349,7 +349,6 @@ abstract class Game {
 
     final angle = player.lookRadian;
     final distance = ItemType.getRange(player.weaponType);
-    final damage = ItemType.getDamage(player.weaponType);
     final attackRadius = 35.0;
 
     final performX = player.x + getAdjacent(angle, distance);
@@ -389,7 +388,7 @@ abstract class Game {
         performY,
         performZ,
       ) > attackRadius) continue;
-      applyHit(src: player, target: character, damage: damage);
+      applyHit(src: player, target: character);
       attackHit = true;
        player.applyForce(
            force: 7.5,
@@ -650,7 +649,7 @@ abstract class Game {
   }
 
   void applyDamageToCharacter({
-    required dynamic src,
+    required Character src,
     required Character target,
     required int amount,
   }) {
@@ -1147,9 +1146,8 @@ abstract class Game {
     projectile.active = false;
     if (target is Character) {
       applyHit(
-        src: projectile.owner,
+        src: projectile,
         target: target,
-        damage: projectile.damage,
       );
     }
     projectile.owner = null;
@@ -1159,16 +1157,30 @@ abstract class Game {
       dispatch(GameEventType.Arrow_Hit, target.x, target.y, target.z);
     }
     if (projectile.type == ProjectileType.Orb) {
-      dispatch(
-          GameEventType.Blue_Orb_Deactivated, target.x, target.y, target.z);
+      dispatch(GameEventType.Blue_Orb_Deactivated, target.x, target.y, target.z);
     }
   }
 
   void applyHit({
-    required dynamic src,
+    required Position3 src,
     required Collider target,
-    required int damage,
   }) {
+
+    Character? srcCharacter;
+    var damage = 0;
+
+    if (src is Character){
+      srcCharacter = src;
+      damage = src.damage;
+    } else if (src is Projectile){
+      srcCharacter = src.owner;
+      damage = src.damage;
+    }
+
+    if (srcCharacter == null){
+      throw Exception("srcCharacter == null");
+    }
+
     if (!target.collidable) return;
     if (target is Character) {
       if (onSameTeam(src, target)) return;
@@ -1176,11 +1188,11 @@ abstract class Game {
     }
 
     // TODO Hack
-    if (src is Zombie) {
-      dispatchV3(GameEventType.Zombie_Strike, src);
+    if (srcCharacter is Zombie) {
+      dispatchV3(GameEventType.Zombie_Strike, srcCharacter);
     }
     if (target is Character) {
-      applyDamageToCharacter(src: src, target: target, amount: damage);
+      applyDamageToCharacter(src: srcCharacter, target: target, amount: damage);
     }
 
     if (target is Velocity) {
@@ -1648,6 +1660,7 @@ abstract class Game {
     zombie.z = z;
     zombie.spawnX = x;
     zombie.spawnY = y;
+    zombie.damage = 1;
     zombie.clearDest();
     zombie.wanderRadius = wanderRadius;
     return zombie;
@@ -1840,7 +1853,6 @@ abstract class Game {
   void updateCharacterStateAttacking(Character character) {
     const framePerformStrike = 10;
     final stateDuration = character.stateDuration;
-    final equippedDamage = character.equippedDamage;
     if (character is Zombie) {
       if (stateDuration != framePerformStrike) return;
       final attackTarget = character.target;
@@ -1849,7 +1861,6 @@ abstract class Game {
         applyHit(
           src: character,
           target: attackTarget,
-          damage: equippedDamage,
         );
         clearCharacterTarget(character);
       }
@@ -1867,26 +1878,6 @@ abstract class Game {
         // dispatchV3(GameEventType.Arm_Swing, character);
       }
     }
-    // if (weaponType == ItemType.Weapon_Ranged_Handgun) {
-    //   if (stateDuration == 1) {
-    //     if (character.equippedIsEmpty) {
-    //       // dispatchV3(GameEventType.Clip_Empty, character);
-    //       return;
-    //     }
-    //     return;
-    //   }
-    //   if (stateDuration == 2) {
-    //     if (character.equippedIsEmpty) {
-    //       return;
-    //     }
-    //     spawnProjectileBullet(
-    //       src: character,
-    //       accuracy: 0,
-    //       speed: 12.0,
-    //     );
-    //     return;
-    //   }
-    // }
 
     if (character.equippedTypeIsShotgun) {
       if (stateDuration == 1) {
@@ -1914,7 +1905,7 @@ abstract class Game {
       return;
 
     if (character.equippedTypeIsStaff) {
-      spawnProjectileOrb(src: character, damage: equippedDamage);
+      // spawnProjectileOrb(src: character, damage: equippedDamage);
       clearCharacterTarget(character);
       return;
     }
@@ -1923,7 +1914,7 @@ abstract class Game {
       dispatchV3(GameEventType.Release_Bow, character);
          spawnProjectileArrow(
           src: character,
-          damage: equippedDamage,
+          damage: character.damage,
           target: character.target,
           range: character.equippedRange,
          );
@@ -1943,8 +1934,7 @@ abstract class Game {
       final attackTarget = character.target;
       if (attackTarget != null) {
         if (attackTarget is Collider && attackTarget.collidable) {
-          applyHit(
-              src: character, target: attackTarget, damage: equippedDamage);
+          applyHit(src: character, target: attackTarget);
           clearCharacterTarget(character);
           return;
         }
@@ -1958,7 +1948,6 @@ abstract class Game {
         applyHit(
           src: character,
           target: zombieHit,
-          damage: equippedDamage,
         );
         return;
       }
