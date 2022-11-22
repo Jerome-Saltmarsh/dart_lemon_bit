@@ -298,16 +298,14 @@ class GameInventoryUI {
               buildTableRow("Type", ItemType.getGroupTypeName(itemType)),
               if (healAmount > 0)
               buildTableRow("Heals", healAmount),
-              // if (differenceDamage != 0)
-              //   buildTableRowDifference("Damage", itemTypeDamage, differenceDamage),
               if (differenceDamage != 0)
                 buildTableRowDifference2("Damage", itemTypeDamage, equippedItemTypeDamage),
               if (differenceRange != 0)
-                buildTableRowDifference("Range", itemTypeRange, differenceRange),
+                buildTableRowDifference2("Range", itemTypeRange, equippedItemTypeRange),
               if (differenceCooldown != 0)
-                buildTableRowDifference("Cooldown", itemTypeCooldown, differenceCooldown, swap: true),
+                buildTableRowDifference2("Cooldown", itemTypeCooldown, equippedItemTypeCooldown, swap: true),
               if (differenceMaxHealth != 0)
-                buildTableRowDifference("Max Health", itemTypeMaxHealth, differenceMaxHealth),
+                buildTableRowDifference2("Max Health", itemTypeMaxHealth, equippedItemTypeMaxHealth),
               if (itemTypeConsumeType != ItemType.Empty)
                 buildTableRow("Uses", Row(children: [
                   GameUI.buildAtlasItemType(itemTypeConsumeType),
@@ -337,9 +335,21 @@ class GameInventoryUI {
     );
   }
 
-  static Widget buildTableRowDifference2(String key, num itemTypeValue, num equippedTypeValue){
+  static Widget buildTableRowDifference2(String key, num itemTypeValue, num equippedTypeValue, {bool swap = false}){
      final percentage = getPercentageDifference(itemTypeValue, equippedTypeValue);
-     return buildTableRow(key, '(${formatPercentage(percentage)}) ${equippedTypeValue.toInt()} -> ${itemTypeValue.toInt()}');
+     final changeColor = getValueColor(percentage, swap: swap);
+     return buildTableRow(
+         text(key, color: changeColor),
+         Row(
+           children: [
+            Container(
+                width: 150,
+                child: text('(${percentage > 0 ? "+" : ""}${formatPercentage(percentage)})', color: changeColor),
+            ),
+            text('${equippedTypeValue.toInt()} -> ${itemTypeValue.toInt()}', color: Colors.white70),
+          ],
+         )
+     );
   }
 
   static Widget buildTableRowDifference(
@@ -432,7 +442,7 @@ class GameInventoryUI {
      );
   }
 
-  static Color getValueColor(int value, {bool swap = false}){
+  static Color getValueColor(num value, {bool swap = false}){
      if (value == 0) return  GameColors.white;
      if (value < 0) {
        if (swap){
