@@ -5,6 +5,8 @@ class AtlasItems {
 
 
   static double getSrcX(int itemType) => const <int, double> {
+      ItemType.Trinket_Ring_of_Health: 256,
+      ItemType.Trinket_Ring_of_Damage: 288,
       ItemType.Weapon_Melee_Sword: 0,
       ItemType.Weapon_Ranged_Bow: 64,
       ItemType.Empty: 224,
@@ -34,6 +36,8 @@ class AtlasItems {
   }[itemType] ?? 0;
 
   static double getSrcY(int itemType) => const <int, double> {
+    ItemType.Trinket_Ring_of_Health: 32,
+    ItemType.Trinket_Ring_of_Damage: 32,
     ItemType.Weapon_Ranged_Shotgun: 32,
     ItemType.Body_Shirt_Blue: 32,
     ItemType.Body_Shirt_Cyan: 32,

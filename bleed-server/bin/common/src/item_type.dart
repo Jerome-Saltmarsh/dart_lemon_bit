@@ -5,6 +5,7 @@ class ItemType {
   static const Index_Environment            = 01000;
   static const Index_Consumables            = 02000;
   static const Index_Resources              = 05000;
+  static const Index_Trinkets               = 07000;
   static const Index_Heads                  = 10000;
   static const Index_Bodies                 = 20000;
   static const Index_Legs                   = 30000;
@@ -35,6 +36,9 @@ class ItemType {
   static const Consumables_Apple = Index_Consumables + 1;
   static const Consumables_Meat = Index_Consumables + 2;
   static const Consumables_Potion_Red = Index_Consumables + 3;
+
+  static const Trinket_Ring_of_Health = Index_Trinkets;
+  static const Trinket_Ring_of_Damage = Trinket_Ring_of_Health + 1;
 
   static const GameObjects_Flower = Index_Environment + 1;
   static const GameObjects_Rock = Index_Environment + 2;
@@ -107,6 +111,12 @@ class ItemType {
 
 
   static const Recipes = <int, List<int>> {
+    Consumables_Apple: const [
+      0005, Resource_Gold,
+    ],
+    Consumables_Meat: const [
+     0010, Resource_Gold,
+    ],
     Weapon_Handgun_Flint_Lock: const [
       0001, Weapon_Handgun_Flint_Lock_Old,
       0100, Resource_Scrap_Metal,
@@ -162,7 +172,10 @@ class ItemType {
       value >= Index_Consumables && value < Index_Resources;
 
   static bool isTypeResource(int value) =>
-      value >= Index_Resources && value < Index_Heads;
+      value >= Index_Resources && value < Index_Trinkets;
+
+  static bool isTypeTrinket(int value) =>
+      value >= Index_Trinkets && value < Index_Heads;
 
   static bool isTypeHead(int value) =>
     value >= Index_Heads && value < Index_Bodies;
@@ -273,6 +286,8 @@ class ItemType {
   static String getGroupTypeName(int value) {
     if (isTypeEmpty(value))
       return "Empty";
+    if (isTypeTrinket(value))
+      return "Trinket";
      if (isTypeWeapon(value))
        return "Weapon";
      if (isTypeEquipped(value))
@@ -302,6 +317,8 @@ class ItemType {
      Resource_Scrap_Metal: "Scrap Metal",
      Resource_Gun_Powder: "Gun-Powder",
      Resource_Arrow: "Arrow",
+     Trinket_Ring_of_Damage: "Ring of Damage",
+     Trinket_Ring_of_Health: "Ring of Health",
      Head_Wizards_Hat: "Wizards Hat",
      Head_Steel_Helm: "Steel Helm",
      Head_Rogues_Hood: "Rogues Hood",
@@ -340,12 +357,13 @@ class ItemType {
   }[itemType] ??        00;
 
   static int getMaxHealth(int itemType) => const {
-    Head_Steel_Helm     : 10,
-    Head_Rogues_Hood    : 05,
-    Head_Wizards_Hat    : 03,
-    Head_Swat           : 15,
-    Head_Blonde         : 08,
-    Body_Swat           : 40,
+    Trinket_Ring_of_Health  : 05,
+    Head_Steel_Helm         : 10,
+    Head_Rogues_Hood        : 05,
+    Head_Wizards_Hat        : 03,
+    Head_Swat               : 15,
+    Head_Blonde             : 08,
+    Body_Swat               : 40,
     Body_Tunic_Padded   : 50,
     Body_Shirt_Blue     : 10,
     Body_Shirt_Cyan     : 15,

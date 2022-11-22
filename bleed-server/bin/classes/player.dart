@@ -102,6 +102,25 @@ class Player extends Character with ByteWriter {
           + ItemType.getMaxHealth(bodyType)
           + ItemType.getMaxHealth(legsType)
           + ItemType.getMaxHealth(weaponType);
+
+      if (ItemType.isTypeTrinket(belt1_itemType)){
+        maxHealth += ItemType.getMaxHealth(belt1_itemType);
+      }
+      if (ItemType.isTypeTrinket(belt2_itemType)){
+        maxHealth += ItemType.getMaxHealth(belt2_itemType);
+      }
+      if (ItemType.isTypeTrinket(belt3_itemType)){
+        maxHealth += ItemType.getMaxHealth(belt3_itemType);
+      }
+      if (ItemType.isTypeTrinket(belt4_itemType)){
+        maxHealth += ItemType.getMaxHealth(belt4_itemType);
+      }
+      if (ItemType.isTypeTrinket(belt5_itemType)){
+        maxHealth += ItemType.getMaxHealth(belt5_itemType);
+      }
+      if (ItemType.isTypeTrinket(belt6_itemType)){
+        maxHealth += ItemType.getMaxHealth(belt6_itemType);
+      }
   }
 
   void unequipWeapon(){
@@ -762,6 +781,7 @@ class Player extends Character with ByteWriter {
   }
 
   void inventoryAdd({required int itemType, required int itemQuantity}) {
+      assert (itemQuantity > 0);
       final availableIndex = getEmptyInventoryIndex();
       if (availableIndex != null) {
         inventorySet(
