@@ -60,7 +60,7 @@ class Player extends Character with ByteWriter {
   var belt6_quantity = 0; // E
 
   var baseMaxHealth = 10;
-  var baseDamage = 1;
+  var baseDamage = 0;
 
   /// Warning - do not reference
   Game game;
@@ -90,6 +90,7 @@ class Player extends Character with ByteWriter {
       weaponType = itemTypeAtIndex;
       inventoryDirty = true;
       game.setCharacterStateChanging(this);
+      refreshStats();
       return;
     }
 
@@ -110,30 +111,33 @@ class Player extends Character with ByteWriter {
           + ItemType.getMaxHealth(legsType)
           + ItemType.getMaxHealth(weaponType);
 
-      if (ItemType.isTypeTrinket(belt1_itemType)){
+      if (ItemType.isTypeTrinket(belt1_itemType)) {
         maxHealth += ItemType.getMaxHealth(belt1_itemType);
         damage += ItemType.getDamage(belt1_itemType);
       }
-      if (ItemType.isTypeTrinket(belt2_itemType)){
+      if (ItemType.isTypeTrinket(belt2_itemType)) {
         maxHealth += ItemType.getMaxHealth(belt2_itemType);
         damage += ItemType.getDamage(belt2_itemType);
       }
-      if (ItemType.isTypeTrinket(belt3_itemType)){
+      if (ItemType.isTypeTrinket(belt3_itemType)) {
         maxHealth += ItemType.getMaxHealth(belt3_itemType);
         damage += ItemType.getDamage(belt3_itemType);
       }
-      if (ItemType.isTypeTrinket(belt4_itemType)){
+      if (ItemType.isTypeTrinket(belt4_itemType)) {
         maxHealth += ItemType.getMaxHealth(belt4_itemType);
-        damage += ItemType.getDamage(belt4_itemType);
+        damage    += ItemType.getDamage(belt4_itemType);
       }
       if (ItemType.isTypeTrinket(belt5_itemType)){
         maxHealth += ItemType.getMaxHealth(belt5_itemType);
-        damage += ItemType.getDamage(belt5_itemType);
+        damage    += ItemType.getDamage(belt5_itemType);
       }
-      if (ItemType.isTypeTrinket(belt6_itemType)){
+      if (ItemType.isTypeTrinket(belt6_itemType)) {
         maxHealth += ItemType.getMaxHealth(belt6_itemType);
-        damage += ItemType.getDamage(belt6_itemType);
+        damage    += ItemType.getDamage(belt6_itemType);
       }
+
+      writePlayerMaxHealth();
+      writePlayerDamage();
   }
 
   void unequipWeapon(){
@@ -141,6 +145,7 @@ class Player extends Character with ByteWriter {
     weaponType = ItemType.Empty;
     inventoryDirty = true;
     game.setCharacterStateChanging(this);
+    refreshStats();
   }
 
   set level(int value){
@@ -921,10 +926,16 @@ class Player extends Character with ByteWriter {
     writeInt(health);
   }
 
-  void writePlayerMaxHealth(){
+  void writePlayerMaxHealth() {
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Max_Health);
     writeInt(maxHealth); // 2
+  }
+
+  void writePlayerDamage() {
+    writeByte(ServerResponse.Player);
+    writeByte(ApiPlayer.Damage);
+    writeUInt16(damage);
   }
 
   void writePlayerAlive(){

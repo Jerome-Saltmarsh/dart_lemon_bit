@@ -31,19 +31,30 @@ class GameInventoryUI {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      child: watch(ServerState.playerMaxHealth, (int maxHealth){
-                          return watch(ServerState.playerHealth, (int currentHealth){
-                             return text("health: $currentHealth / $maxHealth");
-                          });
-                      }) ,
-                    ),
+                    buildContainerPlayerStats(),
                     buildContainerEquippedItems(),
                   ],
                 ),
               ),
             ],
           ),
+        ),
+      );
+
+  static Container buildContainerPlayerStats() =>
+      Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            watch(ServerState.playerMaxHealth, (int maxHealth) {
+              return watch(ServerState.playerHealth, (int currentHealth) {
+                return text("health: $currentHealth / $maxHealth");
+              });
+            }),
+            watch(ServerState.playerDamage, (int damage) {
+              return text("damage: $damage");
+            }),
+          ],
         ),
       );
 

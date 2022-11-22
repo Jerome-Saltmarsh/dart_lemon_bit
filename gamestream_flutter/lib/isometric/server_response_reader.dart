@@ -21,7 +21,7 @@ class ServerResponseReader with ByteReader {
     while (true) {
       switch (readByte()) {
         case ServerResponse.Player:
-          readServerResponsePlayer();
+          readApiPlayer();
           break;
         case ServerResponse.Character_Rat:
           readCharacterRat();
@@ -164,7 +164,7 @@ class ServerResponseReader with ByteReader {
     readVector3(instance);
   }
 
-  void readServerResponsePlayer() {
+  void readApiPlayer() {
     final apiPlayer = readByte();
     switch (apiPlayer) {
       case ApiPlayer.Position:
@@ -246,6 +246,9 @@ class ServerResponseReader with ByteReader {
         break;
       case ApiPlayer.Attributes:
         ServerState.playerAttributes.value = readUInt16();
+        break;
+      case ApiPlayer.Damage:
+        ServerState.playerDamage.value = readUInt16();
         break;
       default:
         throw Exception("Cannot parse apiPlayer $apiPlayer");

@@ -24,4 +24,5 @@ class ApiPlayer {
   static const Inventory_Slot = 31;
   static const Gold = 32;
   static const Attributes = 33;
+  static const Damage = 34;
 }

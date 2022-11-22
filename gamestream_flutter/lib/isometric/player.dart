@@ -50,15 +50,4 @@ class Player {
       // actionHideQuestAdded();
     }
   }
-
-  // static void onChangedNpcTalk(String? value){
-  //   // GameState.npcTextVisible = Engine.isNullOrEmpty(value);
-  // }
-}
-
-class AttackSlot {
-  /// see attack_type.dart
-  final type = Watch(ItemType.Empty);
-  final capacity = Watch(0);
-  final rounds = Watch(0);
 }

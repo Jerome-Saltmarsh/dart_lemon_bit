@@ -52,10 +52,6 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
     if (_health > _maxHealth){
       _health = _maxHealth;
     }
-    if (this is Player){
-      (this as Player).writePlayerMaxHealth();
-      (this as Player).writePlayerHealth();
-    }
   }
 
   set health (int value) {

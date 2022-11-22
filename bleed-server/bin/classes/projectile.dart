@@ -9,13 +9,12 @@ import 'components.dart';
 
 class Projectile extends Collider with Active, Velocity, FaceDirection {
   final start = Vector2(0, 0);
-  late Character? owner;
-  late double range;
-  late int type; // ProjectileType.dart
-  int damage = 0;
+  var range = 0.0;
+  var type = 0; // ProjectileType.dart
+  var damage = 0;
+  var collideWithEnvironment = false;
   Position3? target = null;
-  late bool collideWithEnvironment = false;
-
+  Character? owner;
 
   Projectile() : super(x: 0, y: 0, z: 0, radius: 5);
 
