@@ -131,9 +131,9 @@ class ServerQuery {
       getItemTypeAtInventoryIndex(ServerState.equippedWeaponIndex.value);
 
   static int getEquippedItemType(int itemType) =>
-      ItemType.isTypeWeapon(itemType) ? GamePlayer.weapon.value :
-      ItemType.isTypeHead(itemType)   ? GamePlayer.head.value   :
-      ItemType.isTypeBody(itemType)   ? GamePlayer.body.value   :
-      ItemType.isTypeLegs(itemType)   ? GamePlayer.legs.value   :
-      ItemType.Empty;
+      ItemType.isTypeWeapon (itemType) ? GamePlayer.weapon.value :
+      ItemType.isTypeHead   (itemType) ? GamePlayer.head.value   :
+      ItemType.isTypeBody   (itemType) ? GamePlayer.body.value   :
+      ItemType.isTypeLegs   (itemType) ? GamePlayer.legs.value   :
+                                         ItemType.Empty          ;
 }
