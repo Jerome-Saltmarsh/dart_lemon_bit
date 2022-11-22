@@ -341,12 +341,13 @@ class GameInventoryUI {
      return buildTableRow(
          text(key, color: changeColor),
          Row(
+           mainAxisAlignment: MainAxisAlignment.end,
            children: [
+            text('(${percentage > 0 ? "+" : ""}${formatPercentage(percentage)})', color: changeColor),
             Container(
                 width: 150,
-                child: text('(${percentage > 0 ? "+" : ""}${formatPercentage(percentage)})', color: changeColor),
-            ),
-            text('${equippedTypeValue.toInt()} -> ${itemTypeValue.toInt()}', color: Colors.white70),
+                alignment: Alignment.centerRight,
+                child: text('${equippedTypeValue.toInt()} -> ${padSpace(itemTypeValue.toInt(), length: 3)}', color: Colors.white70)),
           ],
          )
      );
