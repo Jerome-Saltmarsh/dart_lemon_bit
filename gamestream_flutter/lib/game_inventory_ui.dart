@@ -252,47 +252,23 @@ class GameInventoryUI {
 
     final itemType = ClientState.hoverDialogType.value == DialogType.Trade ? GamePlayer.storeItems.value[itemIndex] : ServerQuery.getItemTypeAtInventoryIndex(itemIndex);
     final itemTypeConsumeType = ItemType.getConsumeType(itemType);
-
     final healAmount = ItemType.getHealAmount(itemType);
 
-    var differenceDamage = 0;
-    var differenceRange = 0.0;
-    var differenceCooldown = 0;
-    var differenceMaxHealth = 0;
+    var differenceDamagePercentage = 0.0;
+
     final itemTypeDamage = ItemType.getDamage(itemType);
     final itemTypeRange = ItemType.getRange(itemType).toInt();
     final itemTypeCooldown = ItemType.getCooldown(itemType);
     final itemTypeMaxHealth = ItemType.getMaxHealth(itemType);
-
-    if (ItemType.isTypeWeapon(itemType)) {
-      final equippedWeaponType = ServerQuery.getEquippedWeaponType();
-      final equippedWeaponDamage = ItemType.getDamage(equippedWeaponType);
-      final equippedWeaponRange = ItemType.getRange(equippedWeaponType);
-      final equippedWeaponCooldown = ItemType.getCooldown(equippedWeaponType);
-      final equippedWeaponMaxHealth = ItemType.getMaxHealth(equippedWeaponType);
-      differenceDamage = itemTypeDamage - equippedWeaponDamage;
-      differenceRange = itemTypeRange - equippedWeaponRange;
-      differenceCooldown = itemTypeCooldown - equippedWeaponCooldown;
-      differenceMaxHealth = itemTypeMaxHealth - equippedWeaponMaxHealth;
-    }
-
-    if (ItemType.isTypeHead(itemType)){
-      final equippedType = GamePlayer.head.value;
-      final equippedMaxHealth = ItemType.getMaxHealth(equippedType);
-      differenceMaxHealth = itemTypeMaxHealth - equippedMaxHealth;
-    }
-
-    if (ItemType.isTypeBody(itemType)){
-      final equippedType = GamePlayer.body.value;
-      final equippedMaxHealth = ItemType.getMaxHealth(equippedType);
-      differenceMaxHealth = itemTypeMaxHealth - equippedMaxHealth;
-    }
-
-    if (ItemType.isTypeLegs(itemType)){
-      final equippedType = GamePlayer.legs.value;
-      final equippedMaxHealth = ItemType.getMaxHealth(equippedType);
-      differenceMaxHealth = itemTypeMaxHealth - equippedMaxHealth;
-    }
+    final equippedItemType = ServerQuery.getEquippedItemType(itemType);
+    final equippedItemTypeDamage = ItemType.getDamage(equippedItemType);
+    final equippedItemTypeRange = ItemType.getRange(equippedItemType);
+    final equippedItemTypeCooldown = ItemType.getCooldown(equippedItemType);
+    final equippedItemTypeMaxHealth = ItemType.getMaxHealth(equippedItemType);
+    final differenceDamage = itemTypeDamage - equippedItemTypeDamage;
+    final differenceRange = itemTypeRange - equippedItemTypeRange;
+    final differenceCooldown = itemTypeCooldown - equippedItemTypeCooldown;
+    final differenceMaxHealth = itemTypeMaxHealth - equippedItemTypeMaxHealth;
 
     return Positioned(
       top: Engine.mousePosition.y < (Engine.screen.height * 0.5) ?  Engine.mousePosition.y + 60 : null,
@@ -322,13 +298,15 @@ class GameInventoryUI {
               buildTableRow("Type", ItemType.getGroupTypeName(itemType)),
               if (healAmount > 0)
               buildTableRow("Heals", healAmount),
-              if (itemTypeDamage != 0)
+              if (differenceDamage != 0)
                 buildTableRowDifference("Damage", itemTypeDamage, differenceDamage),
-              if (itemTypeRange > 0)
+              if (differenceDamage != 0)
+                buildTableRowDifference2("Damage", itemTypeDamage, differenceDamage),
+              if (differenceRange != 0)
                 buildTableRowDifference("Range", itemTypeRange, differenceRange),
-              if (itemTypeCooldown > 0)
+              if (differenceCooldown != 0)
                 buildTableRowDifference("Cooldown", itemTypeCooldown, differenceCooldown, swap: true),
-              if (itemTypeMaxHealth > 0)
+              if (differenceMaxHealth != 0)
                 buildTableRowDifference("Max Health", itemTypeMaxHealth, differenceMaxHealth),
               if (itemTypeConsumeType != ItemType.Empty)
                 buildTableRow("Uses", Row(children: [
@@ -357,6 +335,11 @@ class GameInventoryUI {
         ),
       ),
     );
+  }
+
+  static Widget buildTableRowDifference2(String key, num itemTypeValue, num equippedTypeValue){
+     final percentage = getPercentageDifference(itemTypeValue, equippedTypeValue);
+     return buildTableRow(key, '${formatPercentage(percentage)} ${equippedTypeValue.toInt()}');
   }
 
   static Widget buildTableRowDifference(
