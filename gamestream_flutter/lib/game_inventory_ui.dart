@@ -298,10 +298,10 @@ class GameInventoryUI {
               buildTableRow("Type", ItemType.getGroupTypeName(itemType)),
               if (healAmount > 0)
               buildTableRow("Heals", healAmount),
+              // if (differenceDamage != 0)
+              //   buildTableRowDifference("Damage", itemTypeDamage, differenceDamage),
               if (differenceDamage != 0)
-                buildTableRowDifference("Damage", itemTypeDamage, differenceDamage),
-              if (differenceDamage != 0)
-                buildTableRowDifference2("Damage", itemTypeDamage, differenceDamage),
+                buildTableRowDifference2("Damage", itemTypeDamage, equippedItemTypeDamage),
               if (differenceRange != 0)
                 buildTableRowDifference("Range", itemTypeRange, differenceRange),
               if (differenceCooldown != 0)
@@ -339,7 +339,7 @@ class GameInventoryUI {
 
   static Widget buildTableRowDifference2(String key, num itemTypeValue, num equippedTypeValue){
      final percentage = getPercentageDifference(itemTypeValue, equippedTypeValue);
-     return buildTableRow(key, '${formatPercentage(percentage)} ${equippedTypeValue.toInt()}');
+     return buildTableRow(key, '(${formatPercentage(percentage)}) ${equippedTypeValue.toInt()} -> ${itemTypeValue.toInt()}');
   }
 
   static Widget buildTableRowDifference(
