@@ -254,21 +254,23 @@ class GameInventoryUI {
     final itemTypeConsumeType = ItemType.getConsumeType(itemType);
     final healAmount = ItemType.getHealAmount(itemType);
 
-    var differenceDamagePercentage = 0.0;
-
-    final itemTypeDamage = ItemType.getDamage(itemType);
-    final itemTypeRange = ItemType.getRange(itemType).toInt();
-    final itemTypeCooldown = ItemType.getCooldown(itemType);
-    final itemTypeMaxHealth = ItemType.getMaxHealth(itemType);
-    final equippedItemType = ServerQuery.getEquippedItemType(itemType);
-    final equippedItemTypeDamage = ItemType.getDamage(equippedItemType);
-    final equippedItemTypeRange = ItemType.getRange(equippedItemType);
+    final itemTypeIsResource        = ItemType.isTypeResource(itemType);
+    final itemTypeIsConsumable =    ItemType.isTypeConsumable(itemType);
+    final itemTypeDamage =          ItemType.getDamage(itemType);
+    final itemTypeRange =           ItemType.getRange(itemType).toInt();
+    final itemTypeCooldown =        ItemType.getCooldown(itemType);
+    final itemTypeMaxHealth =       ItemType.getMaxHealth(itemType);
+    final equippedItemType =        ServerQuery.getEquippedItemType(itemType);
+    final equippedItemTypeDamage =  ItemType.getDamage(equippedItemType);
+    final equippedItemTypeRange =   ItemType.getRange(equippedItemType);
     final equippedItemTypeCooldown = ItemType.getCooldown(equippedItemType);
     final equippedItemTypeMaxHealth = ItemType.getMaxHealth(equippedItemType);
-    final differenceDamage = itemTypeDamage - equippedItemTypeDamage;
-    final differenceRange = itemTypeRange - equippedItemTypeRange;
-    final differenceCooldown = itemTypeCooldown - equippedItemTypeCooldown;
-    final differenceMaxHealth = itemTypeMaxHealth - equippedItemTypeMaxHealth;
+    final differenceDamage =        itemTypeDamage - equippedItemTypeDamage;
+    final differenceRange =         itemTypeRange - equippedItemTypeRange;
+    final differenceCooldown =      itemTypeCooldown - equippedItemTypeCooldown;
+    final differenceMaxHealth =     itemTypeMaxHealth - equippedItemTypeMaxHealth;
+
+    final showStats = !itemTypeIsResource && !itemTypeIsConsumable;
 
     return Positioned(
       top: Engine.mousePosition.y < (Engine.screen.height * 0.5) ?  Engine.mousePosition.y + 60 : null,
@@ -298,13 +300,13 @@ class GameInventoryUI {
               buildTableRow("Type", ItemType.getGroupTypeName(itemType)),
               if (healAmount > 0)
               buildTableRow("Heals", healAmount),
-              if (differenceDamage != 0)
+              if (showStats && differenceDamage != 0)
                 buildTableRowDifference2("Damage", itemTypeDamage, equippedItemTypeDamage),
-              if (differenceRange != 0)
+              if (showStats && differenceRange != 0)
                 buildTableRowDifference2("Range", itemTypeRange, equippedItemTypeRange),
-              if (differenceCooldown != 0)
+              if (showStats && differenceCooldown != 0)
                 buildTableRowDifference2("Cooldown", itemTypeCooldown, equippedItemTypeCooldown, swap: true),
-              if (differenceMaxHealth != 0)
+              if (showStats && differenceMaxHealth != 0)
                 buildTableRowDifference2("Max Health", itemTypeMaxHealth, equippedItemTypeMaxHealth),
               if (itemTypeConsumeType != ItemType.Empty)
                 buildTableRow("Uses", Row(children: [
