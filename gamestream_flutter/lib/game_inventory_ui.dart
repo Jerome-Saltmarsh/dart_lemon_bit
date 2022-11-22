@@ -269,6 +269,7 @@ class GameInventoryUI {
     final differenceRange =         itemTypeRange - equippedItemTypeRange;
     final differenceCooldown =      itemTypeCooldown - equippedItemTypeCooldown;
     final differenceMaxHealth =     itemTypeMaxHealth - equippedItemTypeMaxHealth;
+    final itemTypeisEquipped = itemType == equippedItemType;
 
     final showStats = !itemTypeIsResource && !itemTypeIsConsumable;
 
@@ -293,13 +294,17 @@ class GameInventoryUI {
                 children: [
                   GameUI.buildAtlasItemType(itemType),
                   width8,
-                  text(ItemType.getName(itemType), color: GameColors.blue),
+                  Expanded(child: text(ItemType.getName(itemType), color: GameColors.blue)),
+                  if (itemTypeisEquipped)
+                    text("Equipped", color: Colors.white60),
                 ],
               ),
               height8,
               buildTableRow("Type", ItemType.getGroupTypeName(itemType)),
               if (healAmount > 0)
               buildTableRow("Heals", healAmount),
+              if (itemTypeisEquipped && itemTypeDamage > 0)
+                buildTableRow("Damage", itemTypeDamage),
               if (showStats && differenceDamage != 0)
                 buildTableRowDifference2("Damage", itemTypeDamage, equippedItemTypeDamage),
               if (showStats && differenceRange != 0)
@@ -393,9 +398,8 @@ class GameInventoryUI {
              child: Row(
                children: [
                  buildItemTypeAtlasImage(itemType: recipeItemType, scale: 0.75),
-                 width6,
+                 width4,
                  text(ItemType.getName(recipeItemType), color: textColor),
-                 width32,
                ],
              ),
            ),

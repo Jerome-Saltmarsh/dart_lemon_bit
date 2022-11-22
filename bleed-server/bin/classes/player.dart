@@ -96,7 +96,7 @@ class Player extends Character with ByteWriter {
     return;
   }
 
-  void refreshStats(){
+  void refreshStats() {
       maxHealth = baseMaxHealth
           + ItemType.getMaxHealth(headType)
           + ItemType.getMaxHealth(bodyType)
