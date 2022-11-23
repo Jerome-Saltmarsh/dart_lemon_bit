@@ -51,4 +51,12 @@ class Collider extends Position3 {
     final b = this.y - y;
     return sqrt((a * a) + (b * b));
   }
+
+  static bool onSameTeam(dynamic a, dynamic b){
+    if (a == b) return true;
+    if (a is Collider == false) return false;
+    if (b is Collider == false) return false;
+    if (a.team == 0) return false;
+    return a.team == b.team;
+  }
 }

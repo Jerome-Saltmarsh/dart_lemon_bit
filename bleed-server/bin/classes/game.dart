@@ -328,7 +328,7 @@ abstract class Game {
     Character? closestCharacter = null;
     for (final character in characters) {
       if (character.deadOrDying) continue;
-      if (onSameTeam(player, character)) continue;
+      if (Collider.onSameTeam(player, character)) continue;
       final distance = getDistanceBetweenV3(player, character);
       if (distance > closestCharacterDistance) continue;
       closestCharacter = character;
@@ -386,7 +386,7 @@ abstract class Game {
 
     for (final character in characters) {
       if (!character.collidable) continue;
-      if (onSameTeam(player, character)) continue;
+      if (Collider.onSameTeam(player, character)) continue;
       if (character.distanceFromXYZ(
         performX,
         performY,
@@ -631,7 +631,7 @@ abstract class Game {
         x: x,
         y: y,
         z: character.z,
-        where: (other) => other.alive && !onSameTeam(other, character));
+        where: (other) => other.alive && !Collider.onSameTeam(other, character));
   }
 
   Collider? getClosestCollider(double x, double y, Character character,
@@ -878,8 +878,8 @@ abstract class Game {
     character.stateDuration = 0;
     character.animationFrame = 0;
     character.collidable = false;
-    character.xv = 0;
-    character.yv = 0;
+    character.velocityX = 0;
+    character.velocityY = 0;
     clearCharacterTarget(character);
 
     if (character is AI){
@@ -927,8 +927,8 @@ abstract class Game {
     for (var i = 0; i < projectilesLength; i++) {
       final projectile = projectiles[i];
       if (!projectile.active) continue;
-      projectile.x += projectile.xv;
-      projectile.y += projectile.yv;
+      projectile.x += projectile.velocityX;
+      projectile.y += projectile.velocityY;
       final target = projectile.target;
       if (target != null) {
         projectile.setVelocityTowards(target);
@@ -1114,7 +1114,7 @@ abstract class Game {
         if (projectile.top > collider.bottom) continue;
         if (projectile.bottom < collider.top) continue;
         if (projectile.owner == collider) continue;
-        if (target != null && onSameTeam(projectile, collider)) continue;
+        if (target != null && Collider.onSameTeam(projectile, collider)) continue;
         handleProjectileHit(projectile, collider);
         break;
       }
@@ -1180,7 +1180,7 @@ abstract class Game {
 
     if (!target.collidable) return;
     if (target is Character) {
-      if (onSameTeam(src, target)) return;
+      if (Collider.onSameTeam(src, target)) return;
       if (target.deadOrDying) return;
     }
 
@@ -1318,8 +1318,8 @@ abstract class Game {
     ai.collidable = true;
     ai.health = ai.maxHealth;
     ai.target = null;
-    ai.xv = 0;
-    ai.xv = 0;
+    ai.velocityX = 0;
+    ai.velocityX = 0;
     ai.setCharacterStateSpawning();
     customOnAIRespawned(ai);
   }
@@ -1731,7 +1731,7 @@ abstract class Game {
 
     for (final other in characters) {
       if (!other.alive) continue;
-      if (onSameTeam(other, ai)) continue;
+      if (Collider.onSameTeam(other, ai)) continue;
       if (!ai.withinViewRange(other)) continue;
       final npcDistance = ai.getDistance(other);
       if (npcDistance >= targetDistance) continue;
@@ -1762,7 +1762,7 @@ abstract class Game {
 
   void setNpcTarget(AI ai, Position3 value) {
     if (value is Collider) {
-      assert(!onSameTeam(ai, value));
+      assert(!Collider.onSameTeam(ai, value));
     }
     assert(ai.alive);
     ai.target = value;

@@ -204,8 +204,8 @@ abstract class Character extends Collider with Velocity {
     zVelocity += gravity;
     const minVelocity = 0.005;
     if (velocitySpeed <= minVelocity) return;
-    x += xv;
-    y += yv;
+    x += velocityX;
+    y += velocityY;
     applyFriction(0.75);
   }
 }
