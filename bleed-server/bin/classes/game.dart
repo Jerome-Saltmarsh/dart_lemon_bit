@@ -1382,31 +1382,22 @@ abstract class Game {
         required int damage,
         required double range,
         double? angle,
-      }) {
-    // dispatchAttackPerformed(
-    //   AttackType.Fireball,
-    //   src.x,
-    //   src.y,
-    //   src.z,
-    //   angle ?? src.faceAngle,
-    // );
-    return
+  }) =>
       spawnProjectile(
-      src: src,
-      accuracy: 0,
-      speed: 5,
-      range: range,
-      target: src.target,
-      angle: angle,
-      projectileType: ProjectileType.Fireball,
-      damage: damage,
-    );
-  }
+        src: src,
+        accuracy: 0,
+        speed: 5,
+        range: range,
+        target: src.target,
+        angle: angle,
+        projectileType: ProjectileType.Fireball,
+        damage: damage,
+      );
 
   Projectile spawnProjectileBullet({
     required Character src,
+    required double speed,
     double accuracy = 0,
-    double speed = 18,
   }) =>
     spawnProjectile(
       src: src,
@@ -1430,19 +1421,6 @@ abstract class Game {
     );
     dispatchAttackPerformed(src.weaponType, src.x, src.y, src.z, angle);
   }
-
-  // void fireArrow(Character src, double angle) {
-  //   spawnProjectile(
-  //     src: src,
-  //     accuracy: 0,
-  //     angle: angle,
-  //     speed: 5.0,
-  //     range: 300,
-  //     projectileType: ProjectileType.Arrow,
-  //     damage: 5,
-  //   );
-  //   dispatchAttackPerformed(AttackType.Bow, src.x, src.y, src.z, angle);
-  // }
 
   void fireRifle(Character src, double angle) {
     spawnProjectile(
@@ -1901,7 +1879,7 @@ abstract class Game {
           spawnProjectileBullet(
             src: character,
             accuracy: 0,
-            speed: 12.0,
+            speed: 15.0,
           );
         }
       }
