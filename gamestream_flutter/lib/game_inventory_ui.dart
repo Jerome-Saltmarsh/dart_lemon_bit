@@ -290,9 +290,15 @@ class GameInventoryUI {
      final children = <Widget>[];
 
      if (hoverTarget == ClientType.Hover_Target_Player_Stats_Damage){
-         children.add(text("Damage", color: GameColors.blue));
-         children.add(height8);
          final total = ServerState.playerDamage.value;
+         children.add(Row(
+           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+           children: [
+             text("Damage", color: GameColors.blue),
+             text(total, color: GameColors.blue),
+           ],
+         ));
+         children.add(height8);
 
          final equippedWeaponType = ServerQuery.getEquippedWeaponType();
          children.add(
@@ -324,10 +330,15 @@ class GameInventoryUI {
      }
 
      if (hoverTarget == ClientType.Hover_Target_Player_Stats_Health){
-       children.add(text("Health", color: GameColors.blue));
-       children.add(height8);
-       final equippedWeapon = ServerQuery.getEquippedWeaponType();
        final total = ServerState.playerMaxHealth.value;
+       children.add(Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          text("Health", color: GameColors.blue),
+          text(total, color: GameColors.blue),
+        ],
+      ));
+       children.add(height8);
 
        children.add(
            _buildRowHoverValue(itemType: GamePlayer.head.value, value: ItemType.getMaxHealth(GamePlayer.head.value), total: total)
@@ -344,6 +355,7 @@ class GameInventoryUI {
              _buildRowHoverValue(itemType: beltType.value, value: ItemType.getMaxHealth(beltType.value), total: total)
          );
        }
+       final equippedWeapon = ServerQuery.getEquippedWeaponType();
        children.add(
            _buildRowHoverValue(itemType: equippedWeapon, value: ItemType.getMaxHealth(equippedWeapon), total: total)
        );
