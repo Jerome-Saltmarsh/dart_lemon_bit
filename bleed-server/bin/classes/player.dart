@@ -1217,7 +1217,12 @@ class Player extends Character with ByteWriter {
   void writeProjectiles(){
     writeByte(ServerResponse.Projectiles);
     final projectiles = game.projectiles;
-    writeTotalActive(projectiles);
+    var totalActiveProjectiles = 0;
+    for (final gameObject in projectiles) {
+      if (!gameObject.active) continue;
+      totalActiveProjectiles++;
+    }
+    writeInt(totalActiveProjectiles);
     projectiles.forEach(writeProjectile);
   }
 
@@ -1303,15 +1308,6 @@ class Player extends Character with ByteWriter {
     final totalMinutes = time ~/ 60;
     writeByte(totalMinutes ~/ 60);
     writeByte(totalMinutes % 60);
-  }
-
-  void writeTotalActive(List<Active> values){
-    var total = 0;
-    for (final gameObject in values) {
-      if (!gameObject.active) continue;
-      total++;
-    }
-    writeInt(total);
   }
 
   void writeProjectile(Projectile projectile){

@@ -7,7 +7,7 @@ import 'position3.dart';
 import 'components.dart';
 
 
-class Projectile extends Collider with Active, Velocity {
+class Projectile extends Collider with Velocity {
   final start = Vector2(0, 0);
   var range = 0.0;
   var type = 0; // ProjectileType.dart
@@ -15,8 +15,11 @@ class Projectile extends Collider with Active, Velocity {
   var collideWithEnvironment = false;
   Position3? target = null;
   Character? owner;
+  bool active = true;
 
   Projectile() : super(x: 0, y: 0, z: 0, radius: 5);
+
+  bool get inactive => !active;
 
   bool get overRange {
     return distanceTravelled > range;
@@ -26,8 +29,11 @@ class Projectile extends Collider with Active, Velocity {
     return getDistance(start);
   }
 
+  void deactivate(){
+    active = false;
+  }
+
   void setVelocityTowards(Position3 position){
-    // faceAngle = this.getAngle(position);
     z += (position.z - z) * 0.05;
   }
 }
