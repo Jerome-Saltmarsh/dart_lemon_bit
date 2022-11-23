@@ -55,9 +55,22 @@ class GameInventoryUI {
 
   static Container buildContainerPlayerStats() =>
       Container(
+        width: 200,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            watch(ServerState.playerMaxHealth, (int maxHealth) {
+              return watch(ServerState.playerHealth, (int currentHealth) {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    text("Health"),
+                    text("$currentHealth / $maxHealth"),
+                  ],
+                );
+              });
+            }),
+            height6,
             MouseRegion(
               onEnter: (_){
                 ClientState.hoverTarget.value = ClientType.Mouse_Over_Player_Stats_Damage;
@@ -67,17 +80,16 @@ class GameInventoryUI {
                   ClientState.hoverTarget.value = ClientType.Mouse_Over_None;
                 }
               },
-              child: Container(
-                child: watch(ServerState.playerMaxHealth, (int maxHealth) {
-                  return watch(ServerState.playerHealth, (int currentHealth) {
-                    return text("health: $currentHealth / $maxHealth");
-                  });
-                }),
-              ),
+              child: watch(ServerState.playerDamage, (int damage) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      text("Damage"),
+                      text(damage),
+                    ],
+                  );
+              }),
             ),
-            watch(ServerState.playerDamage, (int damage) {
-              return text("damage: $damage");
-            }),
           ],
         ),
       );
