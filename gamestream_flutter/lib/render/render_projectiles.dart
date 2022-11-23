@@ -24,7 +24,6 @@ class RenderProjectiles {
     }
   }
 
-
   static void renderBullet(double x, double y, double rotation) {
     Engine.renderSpriteRotated(
       image: GameImages.gameobjects,
@@ -34,7 +33,7 @@ class RenderProjectiles {
       srcHeight: 32,
       dstX: x,
       dstY: y,
-      rotation: rotation,
+      rotation: rotation - Engine.PI_Quarter,
       scale: 1,
     );
   }
@@ -48,7 +47,7 @@ class RenderProjectiles {
       srcHeight: AtlasGameObjects.arrow_height,
       dstX: x,
       dstY: y + 10,
-      rotation: rotation,
+      rotation: rotation - Engine.PI_Quarter,
       scale: 0.7,
     );
 
@@ -63,27 +62,5 @@ class RenderProjectiles {
       rotation: rotation - Engine.PI_Quarter,
       scale: 0.7,
     );
-
-    // renderRotated(
-    //     dstX: x,
-    //     dstY: y + 10,
-    //     srcX: 2172,
-    //     srcY: 0,
-    //     srcWidth: 9,
-    //     srcHeight: 43,
-    //     rotation: angle - piQuarter,
-    //     scale: 0.5
-    // );
-    // renderRotated(
-    //     dstX: x,
-    //     dstY: y,
-    //     srcX: 2182,
-    //     srcY: 0,
-    //     srcWidth: 9,
-    //     srcHeight: 44,
-    //     rotation: angle - piQuarter,
-    //     scale: 0.5
-    // );
   }
-
 }

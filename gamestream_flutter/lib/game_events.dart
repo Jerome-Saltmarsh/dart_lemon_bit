@@ -248,7 +248,15 @@ class GameEvents {
     final attackType = serverResponseReader.readUInt16();
     switch (attackType){
       case ItemType.Weapon_Handgun_Flint_Lock:
-        GameAudio.pistol_shot_20.playXYZ(x, y, z);
+        GameAudio.revolver_shot_3.playXYZ(x, y, z);
+        GameState.spawnParticleShell(x, y, z);
+        break;
+      case ItemType.Weapon_Handgun_Flint_Lock_Old:
+        GameAudio.revolver_shot_3.playXYZ(x, y, z);
+        GameState.spawnParticleShell(x, y, z);
+        break;
+      case ItemType.Weapon_Handgun_Flint_Lock_Superior:
+        GameAudio.revolver_shot_3.playXYZ(x, y, z);
         GameState.spawnParticleShell(x, y, z);
         break;
       case ItemType.Weapon_Ranged_Shotgun:

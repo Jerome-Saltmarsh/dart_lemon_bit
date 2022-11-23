@@ -78,6 +78,7 @@ class GameAudio {
   static final sci_fi_blaster_1 = AudioSingle(name: 'sci-fi-blaster-1', volume: 0.5, maxDistance: 400);
   static final sci_fi_blaster_8 = AudioSingle(name: 'sci-fi-blaster-8', volume: 0.5, maxDistance: 400);
   static final shotgun_shot = AudioSingle(name: 'shotgun-shot', volume: 0.5, maxDistance: 400);
+  static final revolver_shot_3 = AudioSingle(name: 'revolver-shot-03', volume: 0.5, maxDistance: 400);
   static final cock_shotgun_3 = AudioSingle(name: 'cock-shotgun-03', volume: 0.5, maxDistance: 400);
   static final mag_in_03 = AudioSingle(name: 'mag-in-02', volume: 0.5, maxDistance: 400);
   static final sword_unsheathe = AudioSingle(name: 'sword-unsheathe', volume: 0.5, maxDistance: 400);

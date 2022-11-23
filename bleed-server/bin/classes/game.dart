@@ -1406,7 +1406,7 @@ abstract class Game {
   Projectile spawnProjectileBullet({
     required Character src,
     double accuracy = 0,
-    double speed = 12,
+    double speed = 18,
   }) =>
     spawnProjectile(
       src: src,
