@@ -1178,9 +1178,21 @@ abstract class Game {
     if (src is Character){
       srcCharacter = src;
       damage = src.damage;
-    } else if (src is Projectile){
+      if (target is Velocity) {
+        (target as Velocity).applyForce(
+          force: 20,
+          angle: radiansV2(src, target),
+        );
+      }
+    } else if (src is Projectile) {
       srcCharacter = src.owner;
       damage = src.damage;
+      if (target is Velocity) {
+        (target as Velocity).applyForce(
+          force: 20,
+          angle: src.velocityAngle,
+        );
+      }
     }
 
     if (srcCharacter == null){
@@ -1199,13 +1211,6 @@ abstract class Game {
     }
     if (target is Character) {
       applyDamageToCharacter(src: srcCharacter, target: target, amount: damage);
-    }
-
-    if (target is Velocity) {
-      (target as Velocity).applyForce(
-        force: 20,
-        angle: radiansV2(src, target),
-      );
     }
   }
 
