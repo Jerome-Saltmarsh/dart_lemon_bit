@@ -477,7 +477,7 @@ abstract class Game {
       src: character,
       accuracy: 0,
       angle: angle,
-      speed: 8.0,
+      speed: 12.0,
       range: character.weaponTypeRange,
       projectileType: ProjectileType.Bullet,
       damage: character.damage,

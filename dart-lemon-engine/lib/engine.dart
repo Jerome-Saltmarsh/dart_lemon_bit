@@ -667,10 +667,6 @@ class Engine {
   static var batches64Rendered = 0;
   static var batches128Rendered = 0;
 
-  // static final _externalImageSrc1 = Float32List(1 * 4);
-  // static final _externalImageDst1 = Float32List(1 * 4);
-  // static final _externalImageClr1 = Int32List(1);
-
   static final _bufferSrc1 = Float32List(1 * 4);
   static final _bufferDst1 = Float32List(1 * 4);
   static final _bufferClr1 = Int32List(1);
@@ -943,8 +939,8 @@ class Engine {
     _bufferSrc1[1] = srcY;
     _bufferSrc1[2] = srcX + srcWidth;
     _bufferSrc1[3] = srcY + srcHeight;
-    _bufferDst1[0] = cos(0) * scale;
-    _bufferDst1[1] = sin(0) * scale; // scale
+    _bufferDst1[0] = scale;
+    _bufferDst1[1] = 0;
     _bufferDst1[2] = dstX - (srcWidth * anchorX * scale);
     _bufferDst1[3] = dstY - (srcHeight * anchorY * scale); // scale
     canvas.drawRawAtlas(image, _bufferDst1, _bufferSrc1, _bufferClr1, bufferBlendMode, null, paint);
@@ -1351,12 +1347,18 @@ class Engine {
     return CustomPaint(
       painter: CustomPainterPainter(
           paint,
-          shouldRepaint ?? (CustomPainter oldDelegate) => false,
+          shouldRepaint ?? _doNotRepaint,
           frame
       ),
     );
   }
+
+  static bool _doNotRepaint(CustomPainter oldDelegate) {
+    return false;
+  }
 }
+
+
 
 typedef CallbackOnScreenSizeChanged = void Function(
     double previousWidth,

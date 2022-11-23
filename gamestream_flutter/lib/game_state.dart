@@ -168,6 +168,10 @@ class GameState {
       applyVector3Emission(projectile, maxBrightness: Shade.Very_Bright);
       return;
     }
+    if (projectile.type == ProjectileType.Bullet) {
+      applyVector3Emission(projectile, maxBrightness: Shade.Very_Bright);
+      return;
+    }
     if (projectile.type == ProjectileType.Fireball) {
       applyVector3Emission(projectile, maxBrightness: Shade.Very_Bright);
       return;
