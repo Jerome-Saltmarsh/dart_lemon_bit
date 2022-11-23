@@ -292,29 +292,32 @@ class GameInventoryUI {
      if (hoverTarget == ClientType.Hover_Target_Player_Stats_Damage){
          children.add(text("Damage", color: GameColors.blue));
          children.add(height8);
+         final total = ServerState.playerDamage.value;
 
          final equippedWeaponType = ServerQuery.getEquippedWeaponType();
          children.add(
              _buildRowHoverValue(
                itemType: equippedWeaponType,
                value: ItemType.getDamage(equippedWeaponType),
+               total: total,
              )
          );
          children.add(
-             _buildRowHoverValue(itemType: GamePlayer.head.value, value: ItemType.getDamage(GamePlayer.head.value))
+             _buildRowHoverValue(itemType: GamePlayer.head.value, value: ItemType.getDamage(GamePlayer.head.value), total: total,)
          );
          children.add(
-             _buildRowHoverValue(itemType: GamePlayer.body.value, value: ItemType.getDamage(GamePlayer.body.value))
+             _buildRowHoverValue(itemType: GamePlayer.body.value, value: ItemType.getDamage(GamePlayer.body.value), total: total,)
          );
          children.add(
-             _buildRowHoverValue(itemType: GamePlayer.legs.value, value: ItemType.getDamage(GamePlayer.legs.value))
+             _buildRowHoverValue(itemType: GamePlayer.legs.value, value: ItemType.getDamage(GamePlayer.legs.value), total: total,)
          );
          for (final beltType in ServerState.watchBeltItemTypes) {
            if (!ItemType.isTypeTrinket(beltType.value)) continue;
            children.add(
                _buildRowHoverValue(
                    itemType: beltType.value,
-                   value: ItemType.getDamage(beltType.value)
+                   value: ItemType.getDamage(beltType.value),
+                   total: total,
                )
            );
          }
@@ -324,24 +327,25 @@ class GameInventoryUI {
        children.add(text("Health", color: GameColors.blue));
        children.add(height8);
        final equippedWeapon = ServerQuery.getEquippedWeaponType();
+       final total = ServerState.playerMaxHealth.value;
 
        children.add(
-           _buildRowHoverValue(itemType: GamePlayer.head.value, value: ItemType.getMaxHealth(GamePlayer.head.value))
+           _buildRowHoverValue(itemType: GamePlayer.head.value, value: ItemType.getMaxHealth(GamePlayer.head.value), total: total)
        );
        children.add(
-           _buildRowHoverValue(itemType: GamePlayer.body.value, value: ItemType.getMaxHealth(GamePlayer.body.value))
+           _buildRowHoverValue(itemType: GamePlayer.body.value, value: ItemType.getMaxHealth(GamePlayer.body.value), total: total)
        );
        children.add(
-           _buildRowHoverValue(itemType: GamePlayer.legs.value, value: ItemType.getMaxHealth(GamePlayer.legs.value))
+           _buildRowHoverValue(itemType: GamePlayer.legs.value, value: ItemType.getMaxHealth(GamePlayer.legs.value), total: total)
        );
        for (final beltType in ServerState.watchBeltItemTypes) {
          if (!ItemType.isTypeTrinket(beltType.value)) continue;
          children.add(
-             _buildRowHoverValue(itemType: beltType.value, value: ItemType.getMaxHealth(beltType.value))
+             _buildRowHoverValue(itemType: beltType.value, value: ItemType.getMaxHealth(beltType.value), total: total)
          );
        }
        children.add(
-           _buildRowHoverValue(itemType: equippedWeapon, value: ItemType.getMaxHealth(equippedWeapon))
+           _buildRowHoverValue(itemType: equippedWeapon, value: ItemType.getMaxHealth(equippedWeapon), total: total)
        );
      }
 
@@ -361,7 +365,7 @@ class GameInventoryUI {
             )));
   }
 
-  static Widget _buildRowHoverValue({required int itemType, required int value})
+  static Widget _buildRowHoverValue({required int itemType, required int value, required int total})
   =>
       value == 0 ? const SizedBox() :
       Row(
@@ -374,7 +378,15 @@ class GameInventoryUI {
             text(ItemType.getName(itemType), color: GameColors.textColorDefault),
           ],
         ),
-        text(value, color: GameColors.textColorDefault)
+        Row(
+          children: [
+            text('${((value / total) * 100).toInt()}%' ),
+            Container(
+                width: 60,
+                alignment: Alignment.centerRight,
+                child: text(value, color: GameColors.textColorDefault)),
+          ],
+        )
       ],
     );
 
