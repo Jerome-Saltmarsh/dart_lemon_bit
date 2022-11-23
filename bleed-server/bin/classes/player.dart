@@ -1319,7 +1319,7 @@ class Player extends Character with ByteWriter {
     writePosition(projectile);
     writeInt(projectile.z);
     writeByte(projectile.type);
-    writeAngle(projectile.faceAngle);
+    writeAngle(projectile.velocityAngle);
   }
 
   void writeDamageApplied(Position target, int amount) {

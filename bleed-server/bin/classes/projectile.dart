@@ -7,7 +7,7 @@ import 'position3.dart';
 import 'components.dart';
 
 
-class Projectile extends Collider with Active, Velocity, FaceDirection {
+class Projectile extends Collider with Active, Velocity {
   final start = Vector2(0, 0);
   var range = 0.0;
   var type = 0; // ProjectileType.dart
@@ -27,7 +27,7 @@ class Projectile extends Collider with Active, Velocity, FaceDirection {
   }
 
   void setVelocityTowards(Position3 position){
-    faceAngle = this.getAngle(position);
+    // faceAngle = this.getAngle(position);
     z += (position.z - z) * 0.05;
   }
 }

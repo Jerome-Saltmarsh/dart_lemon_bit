@@ -277,13 +277,13 @@ class ItemType {
 
   static double getRange(int value) => const <int, double> {
       Empty: 50,
-      Weapon_Ranged_Shotgun: 90,
-      Weapon_Handgun_Flint_Lock_Old: 300,
-      Weapon_Handgun_Flint_Lock: 315,
-      Weapon_Handgun_Flint_Lock_Superior: 330,
-      Weapon_Ranged_Bow: 200,
-      Weapon_Ranged_Bow_Long: 250,
-      Weapon_Ranged_Crossbow: 200,
+      Weapon_Ranged_Shotgun: 250,
+      Weapon_Handgun_Flint_Lock_Old: 350,
+      Weapon_Handgun_Flint_Lock: 355,
+      Weapon_Handgun_Flint_Lock_Superior: 360,
+      Weapon_Ranged_Bow: 300,
+      Weapon_Ranged_Bow_Long: 350,
+      Weapon_Ranged_Crossbow: 400,
       Weapon_Melee_Sword: 45,
   }[value] ?? 0;
 
