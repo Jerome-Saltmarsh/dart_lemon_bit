@@ -8,7 +8,7 @@ import '../common/src/tile_size.dart';
 class Position3 with Position {
   var z = 0.0;
 
-  int get indexZ => z ~/ tileSizeHalf;
+  // int get indexZ => z ~/ tileSizeHalf;
   int get indexRow => x ~/ tileSize;
   int get indexColumn => y ~/ tileSize;
 
@@ -16,17 +16,17 @@ class Position3 with Position {
   double get renderY => ((y + x) * 0.5) - z;
   double get order => (y + x);
 
-  void set indexZ(int value){
-    z = value * tileSizeHalf;
-  }
-
-  void set indexRow(int value){
-    x = value * tileSize + tileSizeHalf;
-  }
-
-  void set indexColumn(int value){
-    y = value * tileSize + tileSizeHalf;
-  }
+  // void set indexZ(int value){
+  //   z = value * tileSizeHalf;
+  // }
+  //
+  // void set indexRow(int value){
+  //   x = value * tileSize + tileSizeHalf;
+  // }
+  //
+  // void set indexColumn(int value){
+  //   y = value * tileSize + tileSizeHalf;
+  // }
 
   Position3 set({double? x, double? y, double? z}){
      if (x != null) this.x = x;

@@ -1,4 +1,5 @@
 
+import '../classes/game.dart';
 import '../classes/player.dart';
 import '../classes/scene.dart';
 import '../common/library.dart';
@@ -26,9 +27,10 @@ class GameDarkAgeEditor extends GameDarkAge {
   @override
   void customOnPlayerRevived(Player player) {
      if (isSafeToRevive(25, 25)){
-       player.indexColumn = 25;
-       player.indexRow = 25;
-       player.indexZ = 8;
+       // player.indexColumn = 25;
+       // player.indexRow = 25;
+       // player.indexZ = 8;
+       Game.setGridPosition(position: player, z: 8, row: 25, column: 25);
        player.state = CharacterState.Idle;
        return;
      }
@@ -36,9 +38,10 @@ class GameDarkAgeEditor extends GameDarkAge {
      for (var row = 0; row < scene.gridRows; row++) {
         for (var column = 0; column < scene.gridColumns; column++){
           if (isSafeToRevive(row, column)){
-            player.indexColumn = column;
-            player.indexRow = row;
-            player.indexZ = 8;
+            // player.indexColumn = column;
+            // player.indexRow = row;
+            // player.indexZ = 8;
+            Game.setGridPosition(position: player, z: 8, row: row, column: column);
             return;
           }
         }

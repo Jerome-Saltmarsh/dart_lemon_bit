@@ -5,6 +5,7 @@ import 'package:lemon_math/library.dart';
 import '../classes/library.dart';
 import '../common/library.dart';
 import '../engine.dart';
+import '../functions/move_player_to_crystal.dart';
 import 'dark_age_environment.dart';
 
 class GameDarkAge extends Game {
@@ -43,7 +44,6 @@ class GameDarkAge extends Game {
   }
 
   int getRandomItemType() => randomItem(const [
-    // ItemType.Weapon_Ranged_Handgun,
     ItemType.Weapon_Ranged_Shotgun,
     ItemType.Body_Tunic_Padded,
     ItemType.Body_Shirt_Blue,
@@ -81,11 +81,7 @@ class GameDarkAge extends Game {
   @override
   void customOnPlayerRevived(Player player){
       changeGame(player, engine.findGameDarkAge());
-      player.indexZ = 5;
-      player.indexRow = 16;
-      player.indexColumn = 22;
-      player.x += giveOrTake(5);
-      player.y += giveOrTake(5);
+      movePlayerToCrystal(player);
   }
 
   @override
@@ -96,11 +92,11 @@ class GameDarkAge extends Game {
         team: 1,
     );
 
-    player.indexZ = 1;
-    player.indexRow = 16;
-    player.indexColumn = 21;
-    player.x += giveOrTake(5);
-    player.y += giveOrTake(5);
+    // player.indexZ = 1;
+    // player.indexRow = 16;
+    // player.indexColumn = 21;
+    // player.x += giveOrTake(5);
+    // player.y += giveOrTake(5);
     return player;
   }
 

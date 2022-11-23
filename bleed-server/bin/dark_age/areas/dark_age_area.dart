@@ -27,25 +27,25 @@ abstract class DarkAgeArea extends GameDarkAge {
       if (player.y <= radius){
         if (column <= 0) continue;
         changeGame(player, engine.gameMap[row][column - 1]);
-        player.indexColumn = player.scene.gridColumns - 1;
+        Game.setPositionColumn(player, player.scene.gridColumns - 1);
         continue;
       }
       if (player.x <= radius){
         if (row <= 0) continue;
         changeGame(player, engine.gameMap[row - 1][column]);
-        player.indexRow = player.scene.gridRows - 1;
+        Game.setPositionRow(player, player.scene.gridRows - 1);
         continue;
       }
       if (player.x >= scene.gridRowLength - radius){
         if (row >= engine.gameMap.length - 1) continue;
         changeGame(player, engine.gameMap[row + 1][column]);
-        player.indexRow = 0;
+        Game.setPositionRow(player, 0);
         continue;
       }
       if (player.y >= scene.gridColumnLength - radius){
         if (column >= engine.gameMap[row].length - 1) continue;
         changeGame(player, engine.gameMap[row][column + 1]);
-        player.indexColumn = 0;
+        Game.setPositionColumn(player, 0);
         continue;
       }
     }

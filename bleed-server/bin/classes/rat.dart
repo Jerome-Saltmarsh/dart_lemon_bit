@@ -21,9 +21,10 @@ class Rat extends AI {
       weaponType: ItemType.Empty,
       team: team,
   ) {
-    indexZ = z;
-    indexRow = row;
-    indexColumn = column;
+    // indexZ = z;
+    // indexRow = row;
+    // indexColumn = column;
+    Game.setGridPosition(position: this, z: z, row: row, column: column);
     spawnX = x;
     spawnY = y;
     spawnZ = this.z;

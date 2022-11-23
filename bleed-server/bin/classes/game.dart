@@ -1958,9 +1958,10 @@ abstract class Game {
     npc.headType = headType;
     npc.bodyType = armour;
     npc.legsType = pants;
-    npc.indexRow = row;
-    npc.indexColumn = column;
-    npc.indexZ = z;
+    // npc.indexRow = row;
+    // npc.indexColumn = column;
+    // npc.indexZ = z;
+    setGridPosition(position: npc, z: z, row: row, column: column);
     npc.spawnX = npc.x;
     npc.spawnY = npc.y;
     npc.clearDest();
@@ -2098,6 +2099,25 @@ abstract class Game {
            i--;
          }
       }
+  }
+
+  /// FUNCTIONS
+  static void setGridPosition({required Position3 position, required int z, required int row, required int column}){
+    position.x = row * tileSize + tileSizeHalf;
+    position.y = column * tileSize + tileSizeHalf;
+    position.z = z * tileSizeHalf;
+  }
+
+  static void setPositionZ(Position3 position, int z){
+    position.z = z * tileSizeHalf;
+  }
+
+  static void setPositionColumn(Position3 position, int column){
+    position.y = column * tileSize + tileSizeHalf;
+  }
+
+  static void setPositionRow(Position3 position, int row){
+    position.x = row * tileSize + tileSizeHalf;
   }
 }
 
