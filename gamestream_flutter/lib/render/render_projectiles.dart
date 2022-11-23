@@ -4,6 +4,41 @@ import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_gameobjects.
 import 'package:gamestream_flutter/library.dart';
 
 class RenderProjectiles {
+
+  static void renderProjectile(Projectile value) {
+    switch (value.type) {
+      case ProjectileType.Arrow:
+        renderArrow(value.renderX, value.renderY, value.angle);
+        return;
+      case ProjectileType.Orb:
+        // return renderOrb(value.renderX, value.renderY);
+      case ProjectileType.Fireball:
+        break;
+      case ProjectileType.Bullet:
+        renderBullet(value.renderX, value.renderY, value.angle);
+        break;
+      case ProjectileType.Wave:
+        break;
+      default:
+        return;
+    }
+  }
+
+
+  static void renderBullet(double x, double y, double rotation) {
+    Engine.renderSpriteRotated(
+      image: GameImages.gameobjects,
+      srcX: 87,
+      srcY: 48,
+      srcWidth: 2,
+      srcHeight: 32,
+      dstX: x,
+      dstY: y,
+      rotation: rotation,
+      scale: 1,
+    );
+  }
+
   static void renderArrow(double x, double y, double rotation) {
     Engine.renderSpriteRotated(
       image: GameImages.gameobjects,
@@ -13,7 +48,7 @@ class RenderProjectiles {
       srcHeight: AtlasGameObjects.arrow_height,
       dstX: x,
       dstY: y + 10,
-      rotation: rotation - Engine.PI_Quarter,
+      rotation: rotation,
       scale: 0.7,
     );
 

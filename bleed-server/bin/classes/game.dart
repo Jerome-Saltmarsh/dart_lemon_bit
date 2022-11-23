@@ -309,6 +309,7 @@ abstract class Game {
             angle: player.lookRadian,
         );
         player.weaponDurationRemaining = ItemType.getCooldown(player.weaponType);
+        assert(player.weaponDurationRemaining > 0);
         break;
     }
   }
@@ -465,6 +466,7 @@ abstract class Game {
     final angle = (character is Player) ? character.lookRadian : character.faceAngle;
 
     character.weaponDurationRemaining = ItemType.getCooldown(character.weaponType);
+    assert(character.weaponDurationRemaining > 0);
     character.weaponState = AttackState.Firing;
     character.applyForce(
       force: 2.0,
@@ -1489,6 +1491,7 @@ abstract class Game {
       );
     }
     src.weaponDurationRemaining = ItemType.getCooldown(src.weaponType);
+    assert(src.weaponDurationRemaining > 0);
     dispatchAttackPerformed(src.weaponType, src.x, src.y, src.z, angle);
   }
 

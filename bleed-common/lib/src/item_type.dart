@@ -270,6 +270,9 @@ class ItemType {
       Weapon_Handgun_Flint_Lock_Superior: 3,
       Trinket_Ring_of_Damage: 1,
       Weapon_Melee_Sword: 1,
+      Weapon_Ranged_Bow: 1,
+      Weapon_Ranged_Bow_Long: 1,
+      Weapon_Ranged_Crossbow: 1,
   }[value] ?? 0;
 
   static double getRange(int value) => const <int, double> {
@@ -278,6 +281,9 @@ class ItemType {
       Weapon_Handgun_Flint_Lock_Old: 100,
       Weapon_Handgun_Flint_Lock: 110,
       Weapon_Handgun_Flint_Lock_Superior: 120,
+      Weapon_Ranged_Bow: 200,
+      Weapon_Ranged_Bow_Long: 250,
+      Weapon_Ranged_Crossbow: 200,
       Weapon_Melee_Sword: 45,
   }[value] ?? 0;
 
@@ -288,6 +294,9 @@ class ItemType {
       Weapon_Handgun_Flint_Lock: 45,
       Weapon_Handgun_Flint_Lock_Superior: 40,
       Weapon_Melee_Sword: 50,
+      Weapon_Ranged_Bow: 50,
+      Weapon_Ranged_Bow_Long: 50,
+      Weapon_Ranged_Crossbow: 50,
   }[value] ?? 0;
 
   static String getGroupTypeName(int value) {

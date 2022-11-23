@@ -6,7 +6,6 @@ import 'package:gamestream_flutter/isometric/nodes/render/render_node.dart';
 import 'package:gamestream_flutter/isometric/render/highlight_character_nearest_mouse.dart';
 import 'package:gamestream_flutter/isometric/render/renderCharacter.dart';
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
-import 'package:gamestream_flutter/isometric/render/render_projectiles.dart';
 import 'package:lemon_math/library.dart';
 
 import 'library.dart';
@@ -89,7 +88,7 @@ class GameRender {
     renderParticle(currentParticle);
 
   static void renderCurrentProjectile() =>
-    renderProjectile(currentRenderProjectile);
+    RenderProjectiles.renderProjectile(currentRenderProjectile);
 
   static void renderCurrentGameObject() =>
     renderGameObject(currentRenderGameObject);
