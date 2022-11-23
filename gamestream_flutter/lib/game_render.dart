@@ -74,7 +74,7 @@ class GameRender {
     return clamp<int>(value, 0, max(GameState.nodesTotalZ - 1, 0));
   });
 
-  static double get currentNodeRenderX => (currentNodeRow - currentNodeColumn) * tileSizeHalf;
+  static double get currentNodeRenderX => (currentNodeRow - currentNodeColumn) * Node_Size_Half;
   static double get currentNodeRenderY => GameConvert.rowColumnZToRenderY(currentNodeRow, currentNodeColumn, currentNodeZ);
 
   static int get currentNodeShade => GameNodes.nodesShade[currentNodeIndex];
@@ -151,7 +151,7 @@ class GameRender {
       renderOrderGrid.remaining = false;
       return;
     }
-    currentNodeDstY = ((currentNodeRow + currentNodeColumn) * nodeSizeHalf) - (currentNodeZ * nodeHeight);
+    currentNodeDstY = ((currentNodeRow + currentNodeColumn) * Node_Size_Half) - (currentNodeZ * Node_Height);
     nodesSetStart();
   }
 
@@ -738,11 +738,11 @@ class GameRender {
       currentNodeRow = nodesStartRow;
       currentNodeColumn = nodeStartColumn;
     }
-    currentNodeDstX = (currentNodeRow - currentNodeColumn) * nodeSizeHalf;
-    currentNodeDstY = ((currentNodeRow + currentNodeColumn) * nodeSizeHalf) - (currentNodeZ * nodeHeight);
+    currentNodeDstX = (currentNodeRow - currentNodeColumn) * Node_Size_Half;
+    currentNodeDstY = ((currentNodeRow + currentNodeColumn) * Node_Size_Half) - (currentNodeZ * Node_Height);
     currentNodeIndex = (currentNodeZ * GameState.nodesArea) + (currentNodeRow * GameState.nodesTotalColumns) + currentNodeColumn;
     currentNodeType = GameNodes.nodesType[currentNodeIndex];
-    renderOrderGrid.order = ((currentNodeRow + currentNodeColumn) * tileSize) + tileSizeHalf;
+    renderOrderGrid.order = ((currentNodeRow + currentNodeColumn) * Node_Size) + Node_Size_Half;
     renderOrderGrid.orderZ = currentNodeZ;
   }
 
@@ -781,8 +781,8 @@ class GameRender {
             GameState.gridIsPerceptible(indexShow - GameState.nodesTotalColumns) &&
             GameState.gridIsPerceptible(indexShow + GameState.nodesTotalColumns + 1) ;
 
-    screenRight = Engine.screen.right + tileSize;
-    screenLeft = Engine.screen.left - tileSize;
+    screenRight = Engine.screen.right + Node_Size;
+    screenLeft = Engine.screen.left - Node_Size;
     screenTop = Engine.screen.top - 72;
     screenBottom = Engine.screen.bottom + 72;
     var screenTopLeftColumn = GameConvert.convertWorldToColumn(screenLeft, screenTop, 0);
@@ -814,8 +814,8 @@ class GameRender {
     nodesTrimTop();
     nodesTrimLeft();
 
-    currentNodeDstX = (currentNodeRow - currentNodeColumn) * nodeSizeHalf;
-    currentNodeDstY = ((currentNodeRow + currentNodeColumn) * nodeSizeHalf) - (currentNodeZ * nodeHeight);
+    currentNodeDstX = (currentNodeRow - currentNodeColumn) * Node_Size_Half;
+    currentNodeDstY = ((currentNodeRow + currentNodeColumn) * Node_Size_Half) - (currentNodeZ * Node_Height);
     currentNodeIndex = (currentNodeZ * GameState.nodesArea) + (currentNodeRow * GameState.nodesTotalColumns) + currentNodeColumn;
     currentNodeType = GameNodes.nodesType[currentNodeIndex];
 
@@ -909,7 +909,7 @@ class GameRender {
   static void nodesCalculateMinMaxZ(){
     final bottom = GameConvert.rowColumnToRenderY(currentNodeRow, currentNodeColumn);
     final distance =  bottom - screenTop;
-    nodesMaxZ = (distance ~/ tileHeight);
+    nodesMaxZ = (distance ~/ Node_Height);
     if (nodesMaxZ > nodesGridTotalZMinusOne){
       nodesMaxZ = nodesGridTotalZMinusOne;
     }
@@ -929,7 +929,7 @@ class GameRender {
     final x = GameConvert.rowColumnToRenderX(currentNodeRow, currentNodeColumn);
     if (Engine.screen.left < x) return 0;
     final diff = Engine.screen.left - x;
-    return diff ~/ tileSize;
+    return diff ~/ Node_Size;
   }
 
   static double getRenderYBouncing(Vector3 v3) => ((v3.y + v3.x) * 0.5) - v3.z + GameAnimation.animationFrameWaterHeight;
@@ -943,15 +943,15 @@ class GameRender {
   }
 
   static void casteShadowDownV3(Vector3 vector3){
-    if (vector3.z < nodeHeight) return;
+    if (vector3.z < Node_Height) return;
     if (vector3.z >= GameState.nodesLengthZ) return;
     final nodeIndex = GameQueries.getGridNodeIndexV3(vector3);
     if (nodeIndex > GameState.nodesArea) {
       final nodeBelowIndex = nodeIndex - GameState.nodesArea;
       final nodeBelowOrientation = GameNodes.nodesOrientation[nodeBelowIndex];
       if (nodeBelowOrientation == NodeOrientation.Solid){
-        final topRemainder = vector3.z % tileHeight;
-        GameRender.renderShadow(vector3.x, vector3.y, vector3.z - topRemainder, scale: topRemainder > 0 ? (topRemainder / tileHeight) * 2 : 2.0);
+        final topRemainder = vector3.z % Node_Height;
+        GameRender.renderShadow(vector3.x, vector3.y, vector3.z - topRemainder, scale: topRemainder > 0 ? (topRemainder / Node_Height) * 2 : 2.0);
       }
     }
   }
@@ -1010,8 +1010,8 @@ class GameRender {
     if (torchIndex != -1) {
       final torchRow = GameState.convertNodeIndexToRow(torchIndex);
       final torchColumn = GameState.convertNodeIndexToColumn(torchIndex);
-      final torchPosX = torchRow * nodeSize + nodeSizeHalf;
-      final torchPosY = torchColumn * nodeSize + nodeSizeHalf;
+      final torchPosX = torchRow * Node_Size + Node_Size_Half;
+      final torchPosY = torchColumn * Node_Size + Node_Size_Half;
       angle = getAngleBetween(character.x, character.y, torchPosX, torchPosY);
       distance = min(20, distanceBetween(character.x, character.y, torchPosX, torchPosY) * 0.15);
     }
@@ -1062,8 +1062,8 @@ class GameRender {
     if (torchIndex != -1) {
       final torchRow = GameState.convertNodeIndexToRow(torchIndex);
       final torchColumn = GameState.convertNodeIndexToColumn(torchIndex);
-      final torchPosX = torchRow * nodeSize + nodeSizeHalf;
-      final torchPosY = torchColumn * nodeSize + nodeSizeHalf;
+      final torchPosX = torchRow * Node_Size + Node_Size_Half;
+      final torchPosY = torchColumn * Node_Size + Node_Size_Half;
       angle = getAngleBetween(character.x, character.y, torchPosX, torchPosY);
       distance = min(20, distanceBetween(character.x, character.y, torchPosX, torchPosY) * 0.15);
     }

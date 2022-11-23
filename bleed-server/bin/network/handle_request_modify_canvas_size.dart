@@ -34,10 +34,10 @@ void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, Player playe
       game.onGridChanged();
 
       for (final character in game.characters) {
-        character.x += nodeSize;
+        character.x += Node_Size;
       }
       for (final gameObject in game.gameObjects) {
-        gameObject.x += nodeSize;
+        gameObject.x += Node_Size;
       }
       break;
     case RequestModifyCanvasSize.Remove_Row_Start:
@@ -58,10 +58,10 @@ void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, Player playe
       scene.gridRows--;
       game.onGridChanged();
       for (final character in game.characters) {
-        character.x -= nodeSize;
+        character.x -= Node_Size;
       }
       for (final gameObject in game.gameObjects) {
-        gameObject.x -= nodeSize;
+        gameObject.x -= Node_Size;
       }
       break;
     case RequestModifyCanvasSize.Add_Row_End:
@@ -90,10 +90,10 @@ void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, Player playe
       game.onGridChanged();
 
       for (final character in game.characters) {
-        character.x += nodeSize;
+        character.x += Node_Size;
       }
       for (final gameObject in game.gameObjects) {
-        gameObject.x += nodeSize;
+        gameObject.x += Node_Size;
       }
       break;
     case RequestModifyCanvasSize.Remove_Row_End:
@@ -116,10 +116,10 @@ void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, Player playe
       scene.gridRows--;
       game.onGridChanged();
       for (final character in game.characters) {
-        character.x -= nodeSize;
+        character.x -= Node_Size;
       }
       for (final gameObject in game.gameObjects) {
-        gameObject.x -= nodeSize;
+        gameObject.x -= Node_Size;
       }
       break;
     case RequestModifyCanvasSize.Add_Z:
@@ -175,10 +175,10 @@ void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, Player playe
       game.onGridChanged();
 
       for (final character in game.characters) {
-        character.x += nodeSize;
+        character.x += Node_Size;
       }
       for (final gameObject in game.gameObjects) {
-        gameObject.x += nodeSize;
+        gameObject.x += Node_Size;
       }
       break;
     case RequestModifyCanvasSize.Remove_Column_Start:

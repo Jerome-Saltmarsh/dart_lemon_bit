@@ -8,15 +8,15 @@ class GameConvert {
       Engine.clamp(distance - 1, maxBrightness, Shade.Pitch_Black);
 
   static double rowColumnZToRenderY(int row, int column, int z){
-    return ((row + column) * tileSizeHalf) - (z * tileHeight);
+    return ((row + column) * Node_Size_Half) - (z * Node_Height);
   }
 
   static double rowColumnToRenderY(int row, int column){
-    return (row + column) * tileSizeHalf;
+    return (row + column) * Node_Size_Half;
   }
 
   static double rowColumnToRenderX(int row, int column){
-    return (row - column) * tileSizeHalf;
+    return (row - column) * Node_Size_Half;
   }
 
   static double convertWorldToGridX(double x, double y) {
@@ -28,11 +28,11 @@ class GameConvert {
   }
 
   static int convertWorldToRow(double x, double y, double z) {
-    return (x + y + z) ~/ tileSize;
+    return (x + y + z) ~/ Node_Size;
   }
 
   static int convertWorldToColumn(double x, double y, double z) {
-    return (y - x + z) ~/ tileSize;
+    return (y - x + z) ~/ Node_Size;
   }
 
   static double convertV3ToRenderX(Vector3 v3) => getRenderX(v3.x, v3.y, v3.z);

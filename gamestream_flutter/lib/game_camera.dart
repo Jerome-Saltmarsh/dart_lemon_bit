@@ -25,7 +25,7 @@ class GameCamera {
   }
 
   static void cameraSetPositionGrid(int row, int column, int z){
-    cameraSetPosition(row * tileSize, column * tileSize, z * tileHeight);
+    cameraSetPosition(row * Node_Size, column * Node_Size, z * Node_Height);
   }
 
   static void cameraSetPosition(double x, double y, double z){

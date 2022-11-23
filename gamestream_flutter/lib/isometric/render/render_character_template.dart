@@ -114,8 +114,8 @@ void renderCharacterTemplate(Character character, {
     if (torchIndex != -1) {
       final torchRow = GameState.convertNodeIndexToRow(torchIndex);
       final torchColumn = GameState.convertNodeIndexToColumn(torchIndex);
-      final torchPosX = torchRow * nodeSize + nodeSizeHalf;
-      final torchPosY = torchColumn * nodeSize + nodeSizeHalf;
+      final torchPosX = torchRow * Node_Size + Node_Size_Half;
+      final torchPosY = torchColumn * Node_Size + Node_Size_Half;
       angle = getAngleBetween(character.x, character.y, torchPosX, torchPosY);
       distance = min(
         GameConfig.Character_Shadow_Distance_Max,

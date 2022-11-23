@@ -421,8 +421,8 @@ class GameIO {
   static void mouseRaycast(Function(int z, int row, int column) callback){
     var z = GameState.nodesTotalZ - 1;
     while (z >= 0){
-      final row = GameConvert.convertWorldToRow(Engine.mouseWorldX, Engine.mouseWorldY, z * tileHeight);
-      final column = GameConvert.convertWorldToColumn(Engine.mouseWorldX, Engine.mouseWorldY, z * tileHeight);
+      final row = GameConvert.convertWorldToRow(Engine.mouseWorldX, Engine.mouseWorldY, z * Node_Height);
+      final column = GameConvert.convertWorldToColumn(Engine.mouseWorldX, Engine.mouseWorldY, z * Node_Height);
       if (row < 0) break;
       if (column < 0) break;
       if (row >= GameState.nodesTotalRows) break;

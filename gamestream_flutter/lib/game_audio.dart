@@ -215,12 +215,12 @@ class GameAudio {
   static double getVolumeTargetFire(){
     if (!ClientState.torchesIgnited.value) return 0;
     const r = 4;
-    const maxDistance = r * tileSize;
-    var closest = GameQueries.getClosestByType(radius: r, type: NodeType.Fireplace) * tileSize;
+    const maxDistance = r * Node_Size;
+    var closest = GameQueries.getClosestByType(radius: r, type: NodeType.Fireplace) * Node_Size;
     final closestTorch = GameQueries.getClosestByType(
         radius: r,
         type: NodeType.Torch
-    ) * tileSize;
+    ) * Node_Size;
     if (closestTorch < closest) {
       closest = closestTorch;
     }
@@ -238,8 +238,8 @@ class GameAudio {
 
   static double getVolumeStream(){
     const r = 5;
-    const maxDistance = r * tileSize;
-    final distance = GameQueries.getClosestByType(radius: r, type: NodeType.Water) * tileSize;
+    const maxDistance = r * Node_Size;
+    final distance = GameQueries.getClosestByType(radius: r, type: NodeType.Water) * Node_Size;
     return convertDistanceToVolume(distance, maxDistance: maxDistance * 0.25);
   }
 

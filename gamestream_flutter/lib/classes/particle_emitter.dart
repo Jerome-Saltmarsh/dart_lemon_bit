@@ -22,7 +22,7 @@ class ParticleEmitter extends Vector3 {
     indexZ = z;
     indexRow = row;
     indexColumn = column;
-    y += tileHeightHalf;
+    y += Node_Height_Half;
   }
 }
 

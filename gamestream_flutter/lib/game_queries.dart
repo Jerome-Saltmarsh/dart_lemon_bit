@@ -45,9 +45,9 @@ class GameQueries {
 
    static int getGridNodeIndexXYZ(double x, double y, double z) =>
        GameState.getNodeIndexZRC(
-         z ~/ tileSizeHalf,
-         x ~/ tileSize,
-         y ~/ tileSize,
+         z ~/ Node_Size_Half,
+         x ~/ Node_Size,
+         y ~/ Node_Size,
        );
 
    static int gridNodeXYZTypeSafe(double x, double y, double z) {
@@ -82,9 +82,9 @@ class GameQueries {
 
    static int gridNodeXYZIndex(double x, double y, double z) =>
        GameState.getNodeIndexZRC(
-         z ~/ tileSizeHalf,
-         x ~/ tileSize,
-         y ~/ tileSize,
+         z ~/ Node_Size_Half,
+         x ~/ Node_Size,
+         y ~/ Node_Size,
        );
 
    static double getDistanceFromMouse(Vector3 value) =>
@@ -123,7 +123,7 @@ class GameQueries {
        windLineRow = 0;
        windLineColumn = GameState.windLine - GameState.nodesTotalRows + 1;
      }
-     return (windLineRow - windLineColumn) * tileSizeHalf;
+     return (windLineRow - windLineColumn) * Node_Size_Half;
    }
 
    static int getNodeIndexV3(Vector3 vector3) =>

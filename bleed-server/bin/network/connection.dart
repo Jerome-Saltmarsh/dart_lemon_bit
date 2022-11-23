@@ -594,8 +594,8 @@ class Connection {
         }
         scene.gameObjects.add(
           GameObject(
-              x: scene.convertNodeIndexToXPosition(index) + tileSizeHalf,
-              y: scene.convertNodeIndexToYPosition(index) + tileSizeHalf,
+              x: scene.convertNodeIndexToXPosition(index) + Node_Size_Half,
+              y: scene.convertNodeIndexToYPosition(index) + Node_Size_Half,
               z: scene.convertNodeIndexToZPosition(index),
               type: type,
           )

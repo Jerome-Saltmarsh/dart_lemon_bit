@@ -46,9 +46,9 @@ class Scene {
   void refreshGridMetrics(){
     gridArea = gridRows * gridColumns;
     gridVolume = gridHeight * gridArea;
-    gridRowLength = gridRows * tileSize;
-    gridColumnLength = gridColumns * tileSize;
-    gridHeightLength = gridHeight * nodeHeight;
+    gridRowLength = gridRows * Node_Size;
+    gridColumnLength = gridColumns * Node_Size;
+    gridHeightLength = gridHeight * Node_Height;
   }
 
   int getGridType(int z, int row, int column) =>
@@ -97,9 +97,9 @@ class Scene {
 
   int getNodeIndexXYZ(double x, double y, double z) =>
     getNodeIndex(
-        z ~/ tileSizeHalf,
-        x ~/ tileSize,
-        y ~/ tileSize,
+        z ~/ Node_Size_Half,
+        x ~/ Node_Size,
+        y ~/ Node_Size,
     );
 
   int getNodeOrientationXYZ(double x, double y, double z){
@@ -136,21 +136,21 @@ class Scene {
      final orientation = getNodeOrientationXYZ(x, y, z);
      if (orientation == NodeOrientation.None) return false;
      if (orientation == NodeOrientation.Solid) return true;
-     final percX = ((x % tileSize) / tileSize);
-     final percY = ((y % tileSize) / tileSize);
-     return ((z ~/ tileHeight) * tileHeight)
-         + (NodeOrientation.getGradient(orientation, percX, percY) * nodeHeight)
+     final percX = ((x % Node_Size) / Node_Size);
+     final percY = ((y % Node_Size) / Node_Size);
+     return ((z ~/ Node_Height) * Node_Height)
+         + (NodeOrientation.getGradient(orientation, percX, percY) * Node_Height)
          >= z;
   }
 
   double convertNodeIndexToZPosition(int index) =>
-      convertNodeIndexToZ(index) * nodeHeight;
+      convertNodeIndexToZ(index) * Node_Height;
 
   double convertNodeIndexToYPosition(int index) =>
-      convertNodeIndexToColumn(index) * nodeSize;
+      convertNodeIndexToColumn(index) * Node_Size;
 
   double convertNodeIndexToXPosition(int index) =>
-      convertNodeIndexToRow(index) * nodeSize;
+      convertNodeIndexToRow(index) * Node_Size;
 
   int convertNodeIndexToRow(int index) =>
       (index - (convertNodeIndexToZ(index) * gridArea)) ~/ gridColumns;

@@ -475,7 +475,7 @@ class GameEvents {
       angle: angle,
     );
     angle += Engine.PI;
-    final zPos = z + tileSizeHalf;
+    final zPos = z + Node_Size_Half;
     GameState.spawnParticleHeadZombie(x: x, y: y, z: zPos, angle: angle, speed: 4.0);
     GameState.spawnParticleArm(
         x: x,

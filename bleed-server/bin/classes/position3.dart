@@ -3,30 +3,21 @@ import 'dart:math';
 
 import 'package:lemon_math/library.dart';
 
-import '../common/src/tile_size.dart';
+import '../common/src/node_size.dart';
 
 class Position3 with Position {
   var z = 0.0;
 
-  // int get indexZ => z ~/ tileSizeHalf;
-  int get indexRow => x ~/ tileSize;
-  int get indexColumn => y ~/ tileSize;
-
+  // TODO remove
+  int get indexRow => x ~/ Node_Size;
+  // TODO remove
+  int get indexColumn => y ~/ Node_Size;
+// TODO remove
   double get renderX => (x - y) * 0.5;
+  // TODO remove
   double get renderY => ((y + x) * 0.5) - z;
+  // TODO remove
   double get order => (y + x);
-
-  // void set indexZ(int value){
-  //   z = value * tileSizeHalf;
-  // }
-  //
-  // void set indexRow(int value){
-  //   x = value * tileSize + tileSizeHalf;
-  // }
-  //
-  // void set indexColumn(int value){
-  //   y = value * tileSize + tileSizeHalf;
-  // }
 
   Position3 set({double? x, double? y, double? z}){
      if (x != null) this.x = x;
@@ -52,6 +43,8 @@ class Position3 with Position {
     return sqrt((xDiff * xDiff) + (yDiff * yDiff) + (zDiff * zDiff)) <= radius;
   }
 
+  /// FUNCTIONS
+  ///
   static void sort(List<Position3> items) {
     var start = 0;
     var end = items.length;

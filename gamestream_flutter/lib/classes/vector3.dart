@@ -7,11 +7,11 @@ class Vector3 with Position {
   late double z;
 
   /// remove
-  int get indexZ => z ~/ tileSizeHalf;
+  int get indexZ => z ~/ Node_Size_Half;
   /// remove
-  int get indexRow => x ~/ tileSize;
+  int get indexRow => x ~/ Node_Size;
   /// remove
-  int get indexColumn => y ~/ tileSize;
+  int get indexColumn => y ~/ Node_Size;
   /// remove
   int get nodeIndex => GameQueries.getGridNodeIndexXYZ(x, y, z);
   double get renderOrder => x + y + (z * 0.25);
@@ -22,15 +22,15 @@ class Vector3 with Position {
   // int get renderColor => colorShades[shade];
   /// remove
   void set indexZ(int value){
-    z = value * tileSizeHalf;
+    z = value * Node_Size_Half;
   }
   /// remove
   void set indexRow(int value){
-    x = value * tileSize;
+    x = value * Node_Size;
   }
   /// remove
   void set indexColumn(int value){
-    y = value * tileSize;
+    y = value * Node_Size;
   }
   /// remove
   bool get outOfBounds =>

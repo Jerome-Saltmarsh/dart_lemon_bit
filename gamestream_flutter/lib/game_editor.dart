@@ -57,9 +57,9 @@ class GameEditor {
   static final paintOrientation = Watch(NodeOrientation.None);
   static final controlsVisibleWeather = Watch(true);
 
-  static double get posX => row * tileSize + tileSizeHalf;
-  static double get posY => column * tileSize + tileSizeHalf;
-  static double get posZ => z * tileHeight;
+  static double get posX => row * Node_Size + Node_Size_Half;
+  static double get posY => column * Node_Size + Node_Size_Half;
+  static double get posZ => z * Node_Height;
 
   static void refreshNodeSelectedIndex(){
     nodeSelectedType.value = GameNodes.nodesType[nodeSelectedIndex.value];

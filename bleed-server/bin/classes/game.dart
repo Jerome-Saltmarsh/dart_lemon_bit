@@ -745,7 +745,7 @@ abstract class Game {
         if (colliderJ.top > colliderIBottom) break;
         if (colliderJ.left > colliderI.right) continue;
         if (colliderJ.bottom < colliderI.top) continue;
-        if ((colliderJ.z - colliderI.z).abs() > tileHeight) continue;
+        if ((colliderJ.z - colliderI.z).abs() > Node_Height) continue;
         internalOnCollisionBetweenColliders(colliderJ, colliderI);
       }
     }
@@ -767,7 +767,7 @@ abstract class Game {
         if (a.top > b.bottom) continue;
         if (a.right < b.left) continue;
         if (a.left > b.right) continue;
-        if ((a.z - b.z).abs() > tileHeight) continue;
+        if ((a.z - b.z).abs() > Node_Height) continue;
         if (a == b) continue;
         internalOnCollisionBetweenColliders(a, b);
       }
@@ -1481,7 +1481,7 @@ abstract class Game {
     projectile.start.y = src.y;
     projectile.x = src.x;
     projectile.y = src.y;
-    projectile.z = src.z + tileHeightHalf;
+    projectile.z = src.z + Node_Height_Half;
     projectile.setVelocity(finalAngle + giveOrTake(accuracy), speed);
     projectile.owner = src;
     projectile.range = range;
@@ -1515,9 +1515,9 @@ abstract class Game {
     remainder -= indexRow * scene.gridColumns;
     final indexColumn = remainder;
     final zombie = spawnZombie(
-      x: indexRow * nodeSize,
-      y: indexColumn * nodeSize,
-      z: indexZ * nodeHeight,
+      x: indexRow * Node_Size,
+      y: indexColumn * Node_Size,
+      z: indexZ * Node_Height,
       health: 3,
       team: 100,
       damage: 1,
@@ -1989,7 +1989,7 @@ abstract class Game {
 
   void resolveCharacterTileCollision(Character character) {
     const distance = 3;
-    final stepHeight = character.z + tileHeightHalf;
+    final stepHeight = character.z + Node_Height_Half;
 
     if (scene.getCollisionAt(character.left, character.top, stepHeight)) {
       character.x += distance;
@@ -2014,14 +2014,14 @@ abstract class Game {
       final nodeAtFeetOrientation = scene.nodeOrientations[nodeAtFeetIndex];
 
       if (nodeAtFeetOrientation == NodeOrientation.Solid){
-        character.z = ((character.z ~/ tileHeight) * tileHeight) + tileHeight;
+        character.z = ((character.z ~/ Node_Height) * Node_Height) + Node_Height;
         character.zVelocity = 0;
       } else
       if (nodeAtFeetOrientation != NodeOrientation.None) {
-        final bottom = (character.z ~/ tileHeight) * tileHeight;
-        final percX = ((character.x % tileSize) / tileSize);
-        final percY = ((character.y % tileSize) / tileSize);
-        final nodeTop = bottom + (NodeOrientation.getGradient(nodeAtFeetOrientation, percX, percY) * nodeHeight);
+        final bottom = (character.z ~/ Node_Height) * Node_Height;
+        final percX = ((character.x % Node_Size) / Node_Size);
+        final percY = ((character.y % Node_Size) / Node_Size);
+        final nodeTop = bottom + (NodeOrientation.getGradient(nodeAtFeetOrientation, percX, percY) * Node_Height);
         if (nodeTop > character.z){
           character.z = nodeTop;
           character.zVelocity = 0;
@@ -2103,21 +2103,21 @@ abstract class Game {
 
   /// FUNCTIONS
   static void setGridPosition({required Position3 position, required int z, required int row, required int column}){
-    position.x = row * tileSize + tileSizeHalf;
-    position.y = column * tileSize + tileSizeHalf;
-    position.z = z * tileSizeHalf;
+    position.x = row * Node_Size + Node_Size_Half;
+    position.y = column * Node_Size + Node_Size_Half;
+    position.z = z * Node_Size_Half;
   }
 
   static void setPositionZ(Position3 position, int z){
-    position.z = z * tileSizeHalf;
+    position.z = z * Node_Size_Half;
   }
 
   static void setPositionColumn(Position3 position, int column){
-    position.y = column * tileSize + tileSizeHalf;
+    position.y = column * Node_Size + Node_Size_Half;
   }
 
   static void setPositionRow(Position3 position, int row){
-    position.x = row * tileSize + tileSizeHalf;
+    position.x = row * Node_Size + Node_Size_Half;
   }
 }
 

@@ -372,11 +372,11 @@ void renderNodeTypeGrass() {
 
 
 double projectX(int row, int column){
-  return (row - column) * nodeSizeHalf;
+  return (row - column) * Node_Size_Half;
 }
 
 double projectY(int row, int column, int z){
-  return ((row + column) * nodeSizeHalf) - (z * nodeHeight);
+  return ((row + column) * Node_Size_Half) - (z * Node_Height);
 }
 
 void updateGridAnimation(){

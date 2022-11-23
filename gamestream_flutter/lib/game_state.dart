@@ -384,7 +384,7 @@ class GameState {
     }
 
     if (!airBorn){
-      particle.z = (particle.indexZ + 1) * tileHeight;
+      particle.z = (particle.indexZ + 1) * Node_Height;
       particle.applyFloorFriction();
     } else {
       if (particle.type == ParticleType.Smoke){
@@ -1276,9 +1276,9 @@ class GameState {
     }
 
     static void refreshGridMetrics(){
-      GameState.nodesLengthRow = GameState.nodesTotalRows * tileSize;
-      GameState.nodesLengthColumn = GameState.nodesTotalColumns * tileSize;
-      GameState.nodesLengthZ = GameState.nodesTotalZ * tileHeight;
+      GameState.nodesLengthRow = GameState.nodesTotalRows * Node_Size;
+      GameState.nodesLengthColumn = GameState.nodesTotalColumns * Node_Size;
+      GameState.nodesLengthZ = GameState.nodesTotalZ * Node_Height;
     }
 
     static void applyBakeMapEmissions() {

@@ -78,7 +78,7 @@ abstract class AI extends Character {
     if (stateDuration < wanderPause) return;
     destX = spawnX + giveOrTake(wanderRadius);
     destY = spawnY + giveOrTake(wanderRadius);
-    if (game.scene.getCollisionAt(destX, destY, z + tileHeightHalf)) {
+    if (game.scene.getCollisionAt(destX, destY, z + Node_Height_Half)) {
        clearDest();
        return;
     }

@@ -33,7 +33,7 @@ class GameAnimation {
     animationFrameWaterHeight = const [
       0, 1, 2, 3, 4, 5, 4, 3, 2, 1,
     ][animationFrameWater];
-    animationFrameWaterSrcX = animationFrameWater * tileSize;
+    animationFrameWaterSrcX = animationFrameWater * Node_Size;
 
     if (animationFrameGrass++ >= 6){
       animationFrameGrass = 0;
