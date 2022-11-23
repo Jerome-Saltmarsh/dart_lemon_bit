@@ -4,11 +4,10 @@ import 'package:lemon_math/library.dart';
 
 import '../common/library.dart';
 import 'collider.dart';
-import 'components.dart';
 import 'player.dart';
 import 'position3.dart';
 
-abstract class Character extends Collider with Velocity {
+abstract class Character extends Collider {
 
   /// VARIABLES
   var _faceAngle = 0.0;

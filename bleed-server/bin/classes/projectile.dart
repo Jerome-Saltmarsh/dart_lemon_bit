@@ -4,10 +4,8 @@ import 'package:lemon_math/library.dart';
 import 'character.dart';
 import 'collider.dart';
 import 'position3.dart';
-import 'components.dart';
 
-
-class Projectile extends Collider with Velocity {
+class Projectile extends Collider {
   final start = Vector2(0, 0);
   var range = 0.0;
   var type = 0; // ProjectileType.dart

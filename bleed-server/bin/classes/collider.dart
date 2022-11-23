@@ -5,6 +5,13 @@ import 'package:lemon_math/library.dart';
 import 'position3.dart';
 
 class Collider extends Position3 {
+
+  var mass = 1.0;
+  /// Velocity X
+  var velocityX = 0.0;
+  /// Velocity Y
+  var velocityY = 0.0;
+  var maxSpeed = 20.0;
   var team = 0;
   var radius = 0.0;
   double zVelocity = 0;
@@ -19,6 +26,7 @@ class Collider extends Position3 {
   /// If false this object will not be moved during a collision
   var moveOnCollision = true;
 
+  /// CONSTRUCTOR
   Collider({
     required double x,
     required double y,
@@ -31,6 +39,19 @@ class Collider extends Position3 {
     this.radius = radius;
   }
 
+  /// GETTERS
+  double get velocitySpeed => getHypotenuse(velocityX, velocityY);
+  double get velocityAngle => getAngle(velocityX, velocityY);
+
+  /// SETTERS
+  void set velocitySpeed(double value){
+    assert (value >= 0);
+    final currentAngle = velocityAngle;
+    velocityX = getAdjacent(currentAngle, value);
+    velocityY = getOpposite(currentAngle, value);
+  }
+
+  /// METHODS
   double distanceFromPos3(Position3 value) {
     return distanceFromXYZ(value.x, value.y, value.z);
   }
@@ -51,6 +72,29 @@ class Collider extends Position3 {
     final b = this.y - y;
     return sqrt((a * a) + (b * b));
   }
+
+  void setVelocity(double angle, double speed){
+    velocityX = getAdjacent(angle, speed);
+    velocityY = getOpposite(angle, speed);
+  }
+
+  void applyFriction(double amount){
+    velocityX *= amount;
+    velocityY *= amount;
+  }
+
+  void applyForce({
+    required double force,
+    required double angle,
+  }) {
+    velocityX += getAdjacent(angle, force);
+    velocityY += getOpposite(angle, force);
+    if (velocitySpeed > maxSpeed) {
+      velocitySpeed = maxSpeed;
+    }
+  }
+
+  /// FUNCTIONS
 
   static bool onSameTeam(dynamic a, dynamic b){
     if (a == b) return true;

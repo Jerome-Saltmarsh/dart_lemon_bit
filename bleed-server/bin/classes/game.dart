@@ -12,7 +12,6 @@ import '../physics.dart';
 import 'ai.dart';
 import 'character.dart';
 import 'collider.dart';
-import 'components.dart';
 import 'gameobject.dart';
 import 'npc.dart';
 import 'player.dart';
@@ -408,8 +407,8 @@ abstract class Game {
       ) >
           attackRadius) continue;
 
-      if (gameObject is Velocity == false) continue;
-      (gameObject as Velocity).applyForce(
+      // if (gameObject is Collider == false) continue;
+      gameObject.applyForce(
         force: 5,
         angle: radiansV2(player, gameObject),
       );
@@ -1157,21 +1156,17 @@ abstract class Game {
     if (src is Character){
       srcCharacter = src;
       damage = src.damage;
-      if (target is Velocity) {
-        (target as Velocity).applyForce(
-          force: 20,
-          angle: radiansV2(src, target),
-        );
-      }
+      target.applyForce(
+        force: 20,
+        angle: radiansV2(src, target),
+      );
     } else if (src is Projectile) {
       srcCharacter = src.owner;
       damage = src.damage;
-      if (target is Velocity) {
-        (target as Velocity).applyForce(
+      target.applyForce(
           force: 20,
           angle: src.velocityAngle,
-        );
-      }
+      );
     }
 
     if (srcCharacter == null){
