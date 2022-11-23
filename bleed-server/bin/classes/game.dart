@@ -1263,16 +1263,16 @@ abstract class Game {
       }
 
       if (!ai.arrivedAtDest) {
-        ai.faceAngle = ai.getDestinationAngle();
+        ai.faceDestination();
         setCharacterStateRunning(ai);
         return;
       }
 
       if (ai.pathIndex > 0){
         ai.pathIndex--;
-        ai.destX = ai.pathX[ai.pathIndex];
-        ai.destY = ai.pathY[ai.pathIndex];
-        ai.faceAngle = ai.getDestinationAngle();
+        ai.destX = ai.pathX[ai.pathIndex].toDouble();
+        ai.destY = ai.pathY[ai.pathIndex].toDouble();
+        ai.faceDestination();
         setCharacterStateRunning(ai);
         return;
       }

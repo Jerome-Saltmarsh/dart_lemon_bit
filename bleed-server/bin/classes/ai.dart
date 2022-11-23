@@ -9,12 +9,11 @@ import 'game.dart';
 import 'position3.dart';
 
 abstract class AI extends Character {
-  static const maxAIPathLength = 80;
-  static const maxAIPathLengthMinusOne = maxAIPathLength - 3;
+  static const AI_Path_Size = 80;
 
-  final pathX = Float32List(maxAIPathLength);
-  final pathY = Float32List(maxAIPathLength);
-  var viewRange = 200.0;
+  final pathX = Uint16List(AI_Path_Size);
+  final pathY = Uint16List(AI_Path_Size);
+  var viewRange = 300.0;
   var chaseRange = 500.0;
   var pathIndex = 0;
   var destX = 0.0;
@@ -69,8 +68,8 @@ abstract class AI extends Character {
     destY = y;
   }
 
-  double getDestinationAngle(){
-    return getAngleBetween(destX, destY, x, y);
+  void faceDestination(){
+    faceAngle = getAngle(destX - x, destY - y);
   }
 
   void applyBehaviorWander(Game game){
