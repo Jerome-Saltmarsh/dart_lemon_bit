@@ -2,6 +2,9 @@ class ItemType {
 
   static const Invalid                      = -0001;
   static const Empty                        = 00000;
+  static const Index_Base                   = 00800;
+  static const Index_Base_Health            = 00801;
+  static const Index_Base_Damage            = 00802;
   static const Index_Environment            = 01000;
   static const Index_Consumables            = 02000;
   static const Index_Resources              = 05000;
@@ -310,6 +313,8 @@ class ItemType {
   
   static String getName(int value) => const {
      Empty: "Empty",
+     Index_Base_Health: "Base Health",
+     Index_Base_Damage: "Base Damage",
      Resource_Crystal: "Crystal",
      Resource_Wood: "Wood",
      Resource_Iron: "Iron",

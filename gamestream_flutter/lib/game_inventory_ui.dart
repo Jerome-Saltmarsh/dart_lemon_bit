@@ -300,6 +300,18 @@ class GameInventoryUI {
          ));
          children.add(height8);
 
+         children.add(
+             _buildRowHoverValue(
+                 itemType: ItemType.Index_Base_Damage,
+                 value: ServerState.playerBaseDamage.value,
+                 total: total,
+             )
+         );
+
+         children.add(
+             _buildRowHoverValue(itemType: GamePlayer.head.value, value: ItemType.getDamage(GamePlayer.head.value), total: total,)
+         );
+
          final equippedWeaponType = ServerQuery.getEquippedWeaponType();
          children.add(
              _buildRowHoverValue(
@@ -339,6 +351,14 @@ class GameInventoryUI {
         ],
       ));
        children.add(height8);
+
+       children.add(
+           _buildRowHoverValue(
+             itemType: ItemType.Index_Base_Health,
+             value: ServerState.playerBaseMaxHealth.value,
+             total: total,
+           )
+       );
 
        children.add(
            _buildRowHoverValue(itemType: GamePlayer.head.value, value: ItemType.getMaxHealth(GamePlayer.head.value), total: total)
