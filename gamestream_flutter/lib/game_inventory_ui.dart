@@ -289,7 +289,7 @@ class GameInventoryUI {
 
      if (hoverTarget == ClientType.Mouse_Over_Player_Stats_Damage){
          final children = <Widget>[
-            text("Damage"),
+            text("Damage", color: GameColors.blue),
             height8,
          ];
          final equippedWeapon = ServerQuery.getEquippedWeaponType();
@@ -305,10 +305,10 @@ class GameInventoryUI {
                       children: [
                         GameUI.buildAtlasItemType(beltType.value),
                         width8,
-                        text(ItemType.getName(beltType.value)),
+                        text(ItemType.getName(beltType.value), color: GameColors.textColorDefault),
                       ],
                     ),
-                    text(ItemType.getDamage(beltType.value))
+                    text(ItemType.getDamage(beltType.value), color: GameColors.textColorDefault)
                   ],
                 ));
          }
@@ -321,10 +321,10 @@ class GameInventoryUI {
                    children: [
                      GameUI.buildAtlasItemType(equippedWeapon),
                      width8,
-                     text(ItemType.getName(equippedWeapon)),
+                     text(ItemType.getName(equippedWeapon), color: GameColors.textColorDefault),
                    ],
                  ),
-                 text(ItemType.getDamage(equippedWeapon))
+                 text(ItemType.getDamage(equippedWeapon), color: GameColors.textColorDefault)
               ],
          ));
          child = Column(

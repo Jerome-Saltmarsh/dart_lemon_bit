@@ -60,4 +60,6 @@ class GameColors {
   Color get blood => redDark;
 
   static final Color inventoryHint = Colors.orange.withOpacity(0.85);
+
+  static final Color textColorDefault = Colors.white.withOpacity(0.85);
 }
