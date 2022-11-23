@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:lemon_math/library.dart';
 
 import '../common/library.dart';
-import '../functions/withinRadius.dart';
 import 'collider.dart';
 import 'components.dart';
 import 'player.dart';
@@ -167,9 +166,9 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
 
   bool withinAttackRange(Position3 target){
     if (target is Collider){
-      return withinRadius(this, target, equippedRange + (target.radius * 0.5));
+      return withinRadius(target, equippedRange + (target.radius * 0.5));
     }
-    return withinRadius(this, target, equippedRange);
+    return withinRadius(target, equippedRange);
   }
 
   void face(Position position) {

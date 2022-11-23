@@ -1,4 +1,6 @@
 
+import 'dart:math';
+
 import 'package:lemon_math/library.dart';
 
 import '../common/src/tile_size.dart';
@@ -34,5 +36,22 @@ class Position3 with Position {
      if (y != null) this.y = y;
      if (z != null) this.x = z;
      return this;
+  }
+
+  bool withinRadius(Position3 position3, num radius){
+    return withinDistance(position3.x, position3.y, position3.z, radius);
+  }
+
+  bool withinDistance(double x, double y, double z, num radius){
+    final xDiff = (this.x - x).abs();
+    if (xDiff > radius) return false;
+
+    final yDiff = (this.y - y).abs();
+    if (yDiff > radius) return false;
+
+    final zDiff = (this.z - z).abs();
+    if (zDiff > radius) return false;
+
+    return sqrt((xDiff * xDiff) + (yDiff * yDiff) + (zDiff * zDiff)) <= radius;
   }
 }

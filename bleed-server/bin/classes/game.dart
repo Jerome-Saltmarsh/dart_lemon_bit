@@ -5,7 +5,6 @@ import 'package:lemon_math/library.dart';
 import '../common/library.dart';
 import '../constants/frames_per_second.dart';
 import '../engine.dart';
-import '../functions/withinRadius.dart';
 import '../io/write_scene_to_file.dart';
 import '../maths.dart';
 import '../maths/get_distance_between_v3.dart';
@@ -1076,7 +1075,7 @@ abstract class Game {
       }
 
       if (target is Npc && player.targetIsAlly) {
-        if (withinRadius(player, target, 100)) {
+        if (player.withinRadius(target, 100)) {
           if (!target.deadOrBusy) {
             target.face(player);
           }
@@ -1121,7 +1120,7 @@ abstract class Game {
       if (!projectile.active) continue;
       final target = projectile.target;
       if (target != null) {
-        if (withinRadius(projectile, target, 10.0)) {
+        if (projectile.withinRadius(target, 10.0)) {
           handleProjectileHit(projectile, target);
           continue;
         }

@@ -42,8 +42,6 @@ bool onSameTeam(dynamic a, dynamic b){
 }
 
 mixin Velocity {
-  // var angle = 0.0;
-  // var speed = 0.0;
   var mass = 1.0;
   /// Velocity X
   var xv = 0.0;

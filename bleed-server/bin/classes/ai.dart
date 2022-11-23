@@ -3,7 +3,6 @@ import 'dart:typed_data';
 import 'package:lemon_math/library.dart';
 
 import '../common/library.dart';
-import '../functions/withinRadius.dart';
 import 'character.dart';
 import 'game.dart';
 import 'position3.dart';
@@ -68,7 +67,7 @@ abstract class AI extends Character {
     destY = y;
   }
 
-  void faceDestination(){
+  void faceDestination() {
     faceAngle = getAngle(destX - x, destY - y);
   }
 
@@ -87,10 +86,10 @@ abstract class AI extends Character {
   }
 
   bool withinViewRange(Position3 target) {
-    return withinRadius(this, target, viewRange);
+    return withinRadius(target, viewRange);
   }
 
   bool withinChaseRange(Position3 target) {
-    return withinRadius(this, target, chaseRange);
+    return withinRadius(target, chaseRange);
   }
 }
