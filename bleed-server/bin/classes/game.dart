@@ -1633,21 +1633,17 @@ abstract class Game {
   }
 
   Zombie getZombieInstance() {
-    // for (final character in characters) {
-    //   if (character.alive) continue;
-    //   if (character is Zombie) return character;
-    // }
-    final zombie = Zombie(
+    final zombieInstance = Zombie(
       x: 0,
       y: 0,
       z: 0,
       health: 10,
       damage: 1,
       game: this,
-      team: Teams.evil,
+      team: TeamType.Evil,
     );
-    characters.add(zombie);
-    return zombie;
+    characters.add(zombieInstance);
+    return zombieInstance;
   }
 
   Rat getInstanceRat() {
@@ -1662,7 +1658,7 @@ abstract class Game {
       health: 10,
       damage: 1,
       game: this,
-      team: Teams.evil,
+      team: TeamType.Evil,
     );
     characters.add(instance);
     return instance;

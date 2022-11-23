@@ -1,7 +1,6 @@
 
 export 'character.dart';
 export 'collider.dart';
-export 'components.dart';
 export 'game.dart';
 export 'npc.dart';
 export 'player.dart';

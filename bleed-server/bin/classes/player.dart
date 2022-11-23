@@ -1188,12 +1188,12 @@ class Player extends Character with ByteWriter {
 
   int getCategory(Position3? value){
     if (value == null) return TargetCategory.Nothing;
+    if (value is GameObject) {
+      if (value.collectable) return TargetCategory.Item;
+      return TargetCategory.GameObject;
+    }
     if (isAllie(value)) return TargetCategory.Allie;
     if (isEnemy(value)) return TargetCategory.Enemy;
-    if (value is GameObject) {
-       if (value.collectable) return TargetCategory.Item;
-       return TargetCategory.GameObject;
-    }
     return TargetCategory.Run;
   }
 

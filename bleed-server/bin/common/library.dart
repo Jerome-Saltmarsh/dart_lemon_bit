@@ -44,7 +44,7 @@ export 'src/server_response.dart';
 export 'src/shade.dart';
 export 'src/spawn_type.dart';
 export 'src/target_category.dart';
-export 'src/teams.dart';
+export 'src/team_type.dart';
 export 'src/teleport_scenes.dart';
 export 'src/tile_size.dart';
 export 'src/type_position.dart';
