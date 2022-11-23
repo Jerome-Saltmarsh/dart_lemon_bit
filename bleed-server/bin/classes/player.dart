@@ -910,11 +910,20 @@ class Player extends Character with ByteWriter {
       final emptyBeltIndex = getEmptyBeltIndex();
       if (emptyBeltIndex != null) {
         inventorySwapIndexes(index, emptyBeltIndex);
-        equippedWeaponIndex = emptyBeltIndex;
-        return;
       } else {
         writeError('belt is full');
       }
+      return;
+    }
+
+    if (ItemType.isIndexBelt(index)){
+      final emptyInventoryIndex = getEmptyInventoryIndex();
+      if (emptyInventoryIndex != null) {
+        inventorySwapIndexes(index, emptyInventoryIndex);
+      } else {
+        writeError('inventory is full');
+      }
+      return;
     }
   }
 
