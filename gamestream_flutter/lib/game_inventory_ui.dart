@@ -75,15 +75,8 @@ class GameInventoryUI {
                }),
             ),
             height6,
-            MouseRegion(
-              onEnter: (_){
-                ClientState.hoverTargetType.value = ClientType.Hover_Target_Player_Stats_Damage;
-              },
-              onExit: (_){
-                if (ClientState.hoverTargetType.value == ClientType.Hover_Target_Player_Stats_Damage){
-                  ClientState.hoverTargetType.value = ClientType.Hover_Target_None;
-                }
-              },
+            buildHoverTarget(
+              hoverTargetType: ClientType.Hover_Target_Player_Stats_Damage,
               child: watch(ServerState.playerDamage, (int damage) {
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -96,13 +89,6 @@ class GameInventoryUI {
             ),
           ],
         ),
-      );
-
-  static Container buildContainerPlayerGold() =>
-      Container(
-        padding: const EdgeInsets.all(16),
-        alignment: Alignment.centerLeft,
-        child: watch(ServerState.playerGold, (int gold) => text("Gold $gold")),
       );
 
   static Widget buildContainerEquippedItems() =>
@@ -301,97 +287,61 @@ class GameInventoryUI {
   static Widget buildPositionedContainerHoverTarget(int hoverTarget){
      if (hoverTarget == ClientType.Hover_Target_None) return const SizedBox();
 
-     Widget? child;
+     final children = <Widget>[];
 
      if (hoverTarget == ClientType.Hover_Target_Player_Stats_Damage){
-         final children = <Widget>[
-            text("Damage", color: GameColors.blue),
-            height8,
-         ];
-         final equippedWeapon = ServerQuery.getEquippedWeaponType();
+         children.add(text("Damage", color: GameColors.blue));
+         children.add(height8);
 
-         for (final beltType in ServerState.watchBeltItemTypes) {
-            if (!ItemType.isTypeTrinket(beltType.value)) continue;
-            if (ItemType.getDamage(beltType.value) == 0) continue;
-            children.add(
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        GameUI.buildAtlasItemType(beltType.value),
-                        width8,
-                        text(ItemType.getName(beltType.value), color: GameColors.textColorDefault),
-                      ],
-                    ),
-                    text(ItemType.getDamage(beltType.value), color: GameColors.textColorDefault)
-                  ],
-                ));
-         }
-
+         final equippedWeaponType = ServerQuery.getEquippedWeaponType();
          children.add(
-             Row(
-               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                 Row(
-                   children: [
-                     GameUI.buildAtlasItemType(equippedWeapon),
-                     width8,
-                     text(ItemType.getName(equippedWeapon), color: GameColors.textColorDefault),
-                   ],
-                 ),
-                 text(ItemType.getDamage(equippedWeapon), color: GameColors.textColorDefault)
-              ],
-         ));
-         child = Column(
-             crossAxisAlignment: CrossAxisAlignment.start,
-             children: children,
+             _buildRowHoverValue(
+               itemType: equippedWeaponType,
+               value: ItemType.getDamage(equippedWeaponType),
+             )
          );
+         children.add(
+             _buildRowHoverValue(itemType: GamePlayer.head.value, value: ItemType.getDamage(GamePlayer.head.value))
+         );
+         children.add(
+             _buildRowHoverValue(itemType: GamePlayer.body.value, value: ItemType.getDamage(GamePlayer.body.value))
+         );
+         children.add(
+             _buildRowHoverValue(itemType: GamePlayer.legs.value, value: ItemType.getDamage(GamePlayer.legs.value))
+         );
+         for (final beltType in ServerState.watchBeltItemTypes) {
+           if (!ItemType.isTypeTrinket(beltType.value)) continue;
+           children.add(
+               _buildRowHoverValue(
+                   itemType: beltType.value,
+                   value: ItemType.getDamage(beltType.value)
+               )
+           );
+         }
      }
 
      if (hoverTarget == ClientType.Hover_Target_Player_Stats_Health){
-       final children = <Widget>[
-         text("Health", color: GameColors.blue),
-         height8,
-       ];
+       children.add(text("Health", color: GameColors.blue));
+       children.add(height8);
        final equippedWeapon = ServerQuery.getEquippedWeaponType();
 
+       children.add(
+           _buildRowHoverValue(itemType: GamePlayer.head.value, value: ItemType.getMaxHealth(GamePlayer.head.value))
+       );
+       children.add(
+           _buildRowHoverValue(itemType: GamePlayer.body.value, value: ItemType.getMaxHealth(GamePlayer.body.value))
+       );
+       children.add(
+           _buildRowHoverValue(itemType: GamePlayer.legs.value, value: ItemType.getMaxHealth(GamePlayer.legs.value))
+       );
        for (final beltType in ServerState.watchBeltItemTypes) {
          if (!ItemType.isTypeTrinket(beltType.value)) continue;
-         if (ItemType.getMaxHealth(beltType.value) == 0) continue;
          children.add(
-             Row(
-               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-               children: [
-                 Row(
-                   children: [
-                     GameUI.buildAtlasItemType(beltType.value),
-                     width8,
-                     text(ItemType.getName(beltType.value), color: GameColors.textColorDefault),
-                   ],
-                 ),
-                 text(ItemType.getMaxHealth(beltType.value), color: GameColors.textColorDefault)
-               ],
-             ));
+             _buildRowHoverValue(itemType: beltType.value, value: ItemType.getMaxHealth(beltType.value))
+         );
        }
-
        children.add(
-           Row(
-             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-             children: [
-               Row(
-                 children: [
-                   GameUI.buildAtlasItemType(equippedWeapon),
-                   width8,
-                   text(ItemType.getName(equippedWeapon), color: GameColors.textColorDefault),
-                 ],
-               ),
-               text(ItemType.getMaxHealth(equippedWeapon), color: GameColors.textColorDefault)
-             ],
-           ));
-       child = Column(
-         crossAxisAlignment: CrossAxisAlignment.start,
-         children: children,
+           _buildRowHoverValue(itemType: equippedWeapon, value: ItemType.getMaxHealth(equippedWeapon))
        );
      }
 
@@ -399,7 +349,10 @@ class GameInventoryUI {
         top: 250,
         right: 400,
         child: Container(
-            child: child,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: children,
+            ),
             padding: const EdgeInsets.all(12),
             color: brownDark,
             constraints: BoxConstraints(
@@ -407,6 +360,23 @@ class GameInventoryUI {
               maxWidth: 550,
             )));
   }
+
+  static Widget _buildRowHoverValue({required int itemType, required int value})
+  =>
+      value == 0 ? const SizedBox() :
+      Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: [
+            GameUI.buildAtlasItemType(itemType),
+            width8,
+            text(ItemType.getName(itemType), color: GameColors.textColorDefault),
+          ],
+        ),
+        text(value, color: GameColors.textColorDefault)
+      ],
+    );
 
   static Widget buildPositionedContainerItemTypeInformation(int itemIndex){
     if (itemIndex == -1) return const SizedBox();
