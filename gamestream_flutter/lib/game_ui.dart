@@ -27,7 +27,6 @@ class GameUI {
   static final timeVisible = Watch(true);
 
   static Widget buildUI() => StackFullscreen(children: [
-        // watch(GameState.player.message, buildPlayerMessage),
         buildWatchBool(ClientState.triggerAlarmNoMessageReceivedFromServer,
             buildDialogFramesSinceUpdate),
         watch(GameState.player.gameDialog, buildGameDialog),
@@ -308,6 +307,8 @@ class GameUI {
         GameUIInteract.buildWatchInteractMode(),
         watch(ClientState.hoverIndex,
             GameInventoryUI.buildPositionedContainerItemTypeInformation),
+        watch(ClientState.hoverTarget,
+            GameInventoryUI.buildPositionedContainerHoverTarget),
         Positioned(
             bottom: 24,
             left: 24,

@@ -41,16 +41,40 @@ class GameInventoryUI {
         ),
       );
 
+  static Widget buildMouseOver({required Widget child, required int mouseOverType}) =>
+      MouseRegion(
+        onEnter: (_){
+          ClientState.hoverTarget.value = mouseOverType;
+        },
+        onExit: (_){
+          if (ClientState.hoverTarget.value == mouseOverType){
+            ClientState.hoverTarget.value = ClientType.Mouse_Over_None;
+          }
+        },
+    );
+
   static Container buildContainerPlayerStats() =>
       Container(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            watch(ServerState.playerMaxHealth, (int maxHealth) {
-              return watch(ServerState.playerHealth, (int currentHealth) {
-                return text("health: $currentHealth / $maxHealth");
-              });
-            }),
+            MouseRegion(
+              onEnter: (_){
+                ClientState.hoverTarget.value = ClientType.Mouse_Over_Player_Stats_Damage;
+              },
+              onExit: (_){
+                if (ClientState.hoverTarget.value == ClientType.Mouse_Over_Player_Stats_Damage){
+                  ClientState.hoverTarget.value = ClientType.Mouse_Over_None;
+                }
+              },
+              child: Container(
+                child: watch(ServerState.playerMaxHealth, (int maxHealth) {
+                  return watch(ServerState.playerHealth, (int currentHealth) {
+                    return text("health: $currentHealth / $maxHealth");
+                  });
+                }),
+              ),
+            ),
             watch(ServerState.playerDamage, (int damage) {
               return text("damage: $damage");
             }),
@@ -257,6 +281,70 @@ class GameInventoryUI {
         srcHeight: Slot_Size,
         scale: scale,
       );
+
+  static Widget buildPositionedContainerHoverTarget(int hoverTarget){
+     if (hoverTarget == ClientType.Mouse_Over_None) return const SizedBox();
+
+     Widget? child;
+
+     if (hoverTarget == ClientType.Mouse_Over_Player_Stats_Damage){
+         final children = <Widget>[
+            text("Damage"),
+            height8,
+         ];
+         final equippedWeapon = ServerQuery.getEquippedWeaponType();
+
+         for (final beltType in ServerState.watchBeltItemTypes) {
+            if (!ItemType.isTypeTrinket(beltType.value)) continue;
+            if (ItemType.getDamage(beltType.value) == 0) continue;
+            children.add(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        GameUI.buildAtlasItemType(beltType.value),
+                        width8,
+                        text(ItemType.getName(beltType.value)),
+                      ],
+                    ),
+                    text(ItemType.getDamage(beltType.value))
+                  ],
+                ));
+         }
+
+         children.add(
+             Row(
+               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                 Row(
+                   children: [
+                     GameUI.buildAtlasItemType(equippedWeapon),
+                     width8,
+                     text(ItemType.getName(equippedWeapon)),
+                   ],
+                 ),
+                 text(ItemType.getDamage(equippedWeapon))
+              ],
+         ));
+         child = Column(
+             crossAxisAlignment: CrossAxisAlignment.start,
+             children: children,
+         );
+     }
+
+     return Positioned(
+        top: 250,
+        right: 400,
+        child: Container(
+            child: child,
+            padding: const EdgeInsets.all(12),
+            color: brownDark,
+            constraints: BoxConstraints(
+              minWidth: 480,
+              maxWidth: 550,
+            )));
+  }
 
   static Widget buildPositionedContainerItemTypeInformation(int itemIndex){
     if (itemIndex == -1) return const SizedBox();

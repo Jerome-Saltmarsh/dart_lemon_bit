@@ -24,6 +24,11 @@ class ClientType {
   static const Inventory_Equipped_Head = Inventory_Equipped + 3;
   static const Inventory_Equipped_Legs = Inventory_Equipped + 4;
 
+  static const Mouse_Over_None = 1000;
+  static const Mouse_Over_Inventory_Slot = Mouse_Over_None + 1;
+  static const Mouse_Over_Player_Stats_Damage = Mouse_Over_Inventory_Slot + 1;
+  static const Mouse_Over_Player_Stats_Health = Mouse_Over_Player_Stats_Damage + 1;
+
   static String getHotKeyString(int hotKey) => const {
         Hot_Key_1: "1",
         Hot_Key_2: "2",
