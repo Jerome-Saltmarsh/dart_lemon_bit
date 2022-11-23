@@ -8,9 +8,10 @@ import 'components.dart';
 import 'player.dart';
 import 'position3.dart';
 
-abstract class Character extends Collider with Team, Velocity, FaceDirection {
+abstract class Character extends Collider with Team, Velocity {
 
   /// VARIABLES
+  var _faceAngle = 0.0;
   var _health = 1;
   var _maxHealth = 1;
   var damage = 1;
@@ -32,17 +33,57 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
   var performZ = 0.0;
 
   /// PROPERTIES
-
   bool get dead => state == CharacterState.Dead;
   bool get dying => state == CharacterState.Dying;
   bool get alive => !deadOrDying;
   bool get deadOrDying => dead || dying;
-  int get health => _health;
+  bool get targetIsNull => target == null;
+  bool get targetIsEnemy {
+    if (target == null) return false;
+    if (target == this) return false;
+    if (target is Team == false) return false;
+    final targetTeam = (target as Team).team;
+    if (targetTeam == 0) return true;
+    return team != targetTeam;
+  }
+  bool get targetIsAlly {
+    if (target == null) return false;
+    if (target == this) return true;
+    if (target is Team == false) return false;
+    final targetTeam = (target as Team).team;
+    if (targetTeam == 0) return false;
+    return team == targetTeam;
+  }
+  bool get usingWeapon => weaponDurationRemaining > 0;
+  bool get running => state == CharacterState.Running;
+  bool get idling => state == CharacterState.Idle;
+  bool get characterStateIdle => state == CharacterState.Idle;
+  bool get busy => stateDurationRemaining > 0;
+  bool get deadOrBusy => dying || dead || busy;
+  bool get deadBusyOrUsingWeapon => dying || dead || usingWeapon;
+  bool get equippedTypeIsBow => weaponType == ItemType.Weapon_Ranged_Bow;
+  bool get equippedTypeIsStaff => weaponType == ItemType.Weapon_Melee_Staff;
+  bool get unarmed => weaponType == ItemType.Empty;
+  bool get equippedTypeIsShotgun => weaponType == ItemType.Weapon_Ranged_Shotgun;
+  bool get equippedIsMelee => ItemType.isTypeWeaponMelee(weaponType);
+  bool get equippedIsEmpty => false;
+  bool get targetSet => target != null;
+
   double get healthPercentage => health / maxHealth;
+  double get faceAngle => _faceAngle;
+  double get weaponTypeRange => ItemType.getRange(weaponType);
+  double get weaponDurationPercentage => weaponDurationRemaining == 0 ? 0 : weaponDurationRemaining / weaponTypeCooldown;
+  double get equippedRange => ItemType.getRange(weaponType);
 
+  int get weaponFrame => weaponDurationRemaining > 0 ? weaponTypeCooldown - weaponDurationRemaining : 0;
+  int get faceDirection => Direction.fromRadian(_faceAngle);
+  int get health => _health;
   int get type;
-
   int get maxHealth => _maxHealth;
+  int get weaponTypeCooldown => ItemType.getCooldown(weaponType);
+  int get equippedAttackDuration => 25;
+
+  /// SETTERS
 
   set maxHealth(int value){
     if (_maxHealth == value) return;
@@ -61,49 +102,22 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
     }
   }
 
-  int get weaponFrame => weaponDurationRemaining > 0 ? weaponTypeCooldown - weaponDurationRemaining : 0;
-  double get weaponTypeRange => ItemType.getRange(weaponType);
-  int get weaponTypeCooldown => ItemType.getCooldown(weaponType);
+  void set faceDirection(int value) =>
+        faceAngle = Direction.toRadian(value);
 
-  bool get targetSet => target != null;
-
-  double get weaponDurationPercentage => weaponDurationRemaining == 0 ? 0 : weaponDurationRemaining / weaponTypeCooldown;
-
-  bool get targetIsNull => target == null;
-
-  bool get targetIsEnemy {
-    if (target == null) return false;
-    if (target == this) return false;
-    if (target is Team == false) return false;
-    final targetTeam = (target as Team).team;
-    if (targetTeam == 0) return true;
-    return team != targetTeam;
+  void set faceAngle(double value){
+    if (value < 0){
+      _faceAngle = pi2 - (-value % pi2);
+      return;
+    }
+    if (value > pi2){
+      _faceAngle = value % pi2;
+      return;
+    }
+    _faceAngle = value;
   }
 
-  bool get targetIsAlly {
-    if (target == null) return false;
-    if (target == this) return true;
-    if (target is Team == false) return false;
-    final targetTeam = (target as Team).team;
-    if (targetTeam == 0) return false;
-    return team == targetTeam;
-  }
-
-  bool get usingWeapon => weaponDurationRemaining > 0;
-  bool get running => state == CharacterState.Running;
-  bool get idling => state == CharacterState.Idle;
-  bool get characterStateIdle => state == CharacterState.Idle;
-  bool get busy => stateDurationRemaining > 0;
-  bool get deadOrBusy => dying || dead || busy;
-  bool get deadBusyOrUsingWeapon => dying || dead || usingWeapon;
-  bool get equippedTypeIsBow => weaponType == ItemType.Weapon_Ranged_Bow;
-  bool get equippedTypeIsStaff => weaponType == ItemType.Weapon_Melee_Staff;
-  bool get unarmed => weaponType == ItemType.Empty;
-  bool get equippedTypeIsShotgun => weaponType == ItemType.Weapon_Ranged_Shotgun;
-  bool get equippedIsMelee => ItemType.isTypeWeaponMelee(weaponType);
-  bool get equippedIsEmpty => false;
-  int get equippedAttackDuration => 25;
-  double get equippedRange => ItemType.getRange(weaponType);
+  /// METHODS
 
   void write(Player player);
 

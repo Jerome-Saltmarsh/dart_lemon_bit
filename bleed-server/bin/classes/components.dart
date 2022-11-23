@@ -1,30 +1,5 @@
 import 'package:lemon_math/library.dart';
 
-import '../common/src/direction.dart';
-
-class FaceDirection {
-  var _faceAngle = 0.0;
-
-  double get faceAngle => _faceAngle;
-
-  void set faceAngle(double value){
-    if (value < 0){
-      _faceAngle = pi2 - (-value % pi2);
-      return;
-    }
-    if (value > pi2){
-      _faceAngle = value % pi2;
-      return;
-    }
-    _faceAngle = value;
-  }
-
-  int get faceDirection => Direction.fromRadian(faceAngle);
-
-  void set faceDirection(int value) =>
-      faceAngle = Direction.toRadian(value);
-}
-
 mixin Owner <T> {
   late T owner;
 }
@@ -81,16 +56,6 @@ mixin Velocity {
   }
 }
 
-// mixin Active {
-//   // bool active = true;
-//   //
-//   // bool get inactive => !active;
-//   //
-//   // void deactivate(){
-//   //   active = false;
-//   // }
-// }
-
 mixin Target<T> {
   late T target;
 }
@@ -99,12 +64,12 @@ mixin Radius {
   var radius = 0.0;
 }
 
-mixin Type<T> {
-  late T type;
-}
+// mixin Type<T> {
+//   late T type;
+// }
 
-mixin Id {
-  static var _id = 0;
-  var id = _id++;
-}
+// mixin Id {
+//   static var _id = 0;
+//   var id = _id++;
+// }
 
