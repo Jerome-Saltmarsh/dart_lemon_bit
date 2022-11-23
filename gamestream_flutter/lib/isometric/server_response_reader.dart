@@ -250,6 +250,12 @@ class ServerResponseReader with ByteReader {
       case ApiPlayer.Damage:
         ServerState.playerDamage.value = readUInt16();
         break;
+      case ApiPlayer.Base_Damage:
+        ServerState.playerBaseDamage.value = readUInt16();
+        break;
+      case ApiPlayer.Base_Max_Health:
+        ServerState.playerBaseMaxHealth.value = readUInt16();
+        break;
       default:
         throw Exception("Cannot parse apiPlayer $apiPlayer");
     }

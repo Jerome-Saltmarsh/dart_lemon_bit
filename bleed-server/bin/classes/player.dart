@@ -59,8 +59,26 @@ class Player extends Character with ByteWriter {
   var belt5_quantity = 0; // Q
   var belt6_quantity = 0; // E
 
-  var baseMaxHealth = 10;
-  var baseDamage = 0;
+  var _baseMaxHealth = 10;
+  var _baseDamage = 0;
+
+  int get baseMaxHealth => _baseMaxHealth;
+  int get baseDamage => _baseDamage;
+
+  set baseMaxHealth(int value){
+     assert (value > 0);
+     if (_baseMaxHealth == value) return;
+     _baseMaxHealth = value;
+     writePlayerBaseMaxHealth();
+  }
+
+  set baseDamage(int value){
+    assert (value > 0);
+    if (_baseDamage == value) return;
+    _baseDamage = value;
+    writePlayerBaseDamage();
+  }
+
 
   /// Warning - do not reference
   Game game;
@@ -932,6 +950,18 @@ class Player extends Character with ByteWriter {
     writeInt(maxHealth); // 2
   }
 
+  void writePlayerBaseMaxHealth(){
+    writeByte(ServerResponse.Player);
+    writeByte(ApiPlayer.Base_Max_Health);
+    writeUInt16(_baseMaxHealth);
+  }
+
+  void writePlayerBaseDamage(){
+    writeByte(ServerResponse.Player);
+    writeByte(ApiPlayer.Base_Damage);
+    writeUInt16(_baseDamage);
+  }
+
   void writePlayerDamage() {
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Damage);
@@ -993,6 +1023,8 @@ class Player extends Character with ByteWriter {
       writePlayerEquippedWeaponAmmunition();
       writePlayerLevel();
       writePlayerExperiencePercentage();
+      writePlayerBaseMaxHealth();
+      writePlayerBaseMaxHealth();
       writePlayerHealth();
       writePlayerMaxHealth();
       writePlayerAlive();
