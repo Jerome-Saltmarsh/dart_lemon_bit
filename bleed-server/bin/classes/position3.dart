@@ -6,14 +6,11 @@ import 'package:lemon_math/library.dart';
 import '../common/src/tile_size.dart';
 
 class Position3 with Position {
-  double z = 0;
+  var z = 0.0;
+
   int get indexZ => z ~/ tileSizeHalf;
   int get indexRow => x ~/ tileSize;
   int get indexColumn => y ~/ tileSize;
-
-  double get percentageRow => (x % tileSize) / tileSize;
-  double get percentageColumn => (y % tileSize) / tileSize;
-  double get percentageZ => (z % tileHeight) / tileHeight;
 
   double get renderX => (x - y) * 0.5;
   double get renderY => ((y + x) * 0.5) - z;
@@ -54,4 +51,25 @@ class Position3 with Position {
 
     return sqrt((xDiff * xDiff) + (yDiff * yDiff) + (zDiff * zDiff)) <= radius;
   }
+
+  static void sort(List<Position3> items) {
+    var start = 0;
+    var end = items.length;
+    for (var pos = start + 1; pos < end; pos++) {
+      var min = start;
+      var max = pos;
+      var element = items[pos];
+      while (min < max) {
+        var mid = min + ((max - min) >> 1);
+        if (element.order <= items[mid].order) {
+          max = mid;
+        } else {
+          min = mid + 1;
+        }
+      }
+      items.setRange(min + 1, pos + 1, items, min);
+      items[min] = element;
+    }
+  }
+
 }

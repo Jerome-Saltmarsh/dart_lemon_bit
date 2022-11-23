@@ -5,6 +5,7 @@ import 'package:lemon_math/library.dart';
 import 'position3.dart';
 
 class Collider extends Position3 {
+  // var team = 0;
   var radius = 0.0;
   double zVelocity = 0;
   double get left => x - radius;
@@ -13,6 +14,7 @@ class Collider extends Position3 {
   double get bottom => y + radius;
   /// If false this object is completely ignored by collision detection
   var collidable = true;
+  /// an item which is not physical may still cause a collision detection
   var physical = true;
   /// If false this object will not be moved during a collision
   var moveOnCollision = true;
