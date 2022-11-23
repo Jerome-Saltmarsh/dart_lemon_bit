@@ -268,7 +268,6 @@ abstract class Game {
     }
 
     final weaponType = player.weaponType;
-    player.weaponDurationRemaining = ItemType.getCooldown(weaponType);
 
     if (ItemType.isTypeWeaponMelee(weaponType)) {
       playerAttackMelee(player: player);
@@ -309,10 +308,8 @@ abstract class Game {
             range: ItemType.getRange(weaponType),
             angle: player.lookRadian,
         );
+        player.weaponDurationRemaining = ItemType.getCooldown(player.weaponType);
         break;
-      // case ItemType.Weapon_Melee_Magic_Staff:
-      //   spawnProjectileOrb(src: player, damage: 2);
-      //   break;
     }
   }
 
@@ -327,7 +324,7 @@ abstract class Game {
 
   void playerAutoAim(Player player) {
     if (player.deadOrBusy) return;
-    var closestCharacterDistance = player.weaponRange * 1.5;
+    var closestCharacterDistance = player.weaponTypeRange * 1.5;
     Character? closestCharacter = null;
     for (final character in characters) {
       if (character.deadOrDying) continue;
@@ -349,6 +346,12 @@ abstract class Game {
 
     final angle = player.lookRadian;
     final distance = ItemType.getRange(player.weaponType);
+    if (distance <= 0){
+      throw Exception('ItemType.getRange(${ItemType.getName(player.weaponType)})');
+    }
+    if (player.damage <= 0){
+      throw Exception('game.playerAttackMelee player.damage <= 0');
+    }
     final attackRadius = 35.0;
 
     final performX = player.x + getAdjacent(angle, distance);
@@ -359,6 +362,7 @@ abstract class Game {
     player.performY = performY;
     player.performZ = performZ;
     player.weaponDurationRemaining = ItemType.getCooldown(player.weaponType);
+    assert (player.weaponDurationRemaining  > 0);
 
     /// TODO name arguments
     dispatchAttackPerformed(
@@ -472,9 +476,9 @@ abstract class Game {
       accuracy: 0,
       angle: angle,
       speed: 8.0,
-      range: character.weaponRange,
+      range: character.weaponTypeRange,
       projectileType: ProjectileType.Bullet,
-      damage: character.weaponDamage,
+      damage: character.damage,
     );
     dispatchAttackPerformed(
         character.weaponType,
@@ -1356,6 +1360,8 @@ abstract class Game {
     Position3? target,
     double? angle,
   }) {
+    assert (range > 0);
+    assert (damage > 0);
     dispatch(GameEventType.Arrow_Fired, src.x, src.y, src.z);
     spawnProjectile(
       src: src,
@@ -1407,7 +1413,7 @@ abstract class Game {
       speed: speed,
       range: src.equippedRange,
       projectileType: ProjectileType.Bullet,
-      damage: src.weaponDamage,
+      damage: src.damage,
     );
 
   void fireAssaultRifle(Character src, double angle) {
@@ -1477,11 +1483,12 @@ abstract class Game {
         accuracy: 0,
         angle: angle + giveOrTake(0.25),
         speed: 8.0,
-        range: src.weaponRange,
+        range: src.weaponTypeRange,
         projectileType: ProjectileType.Bullet,
-        damage:src.weaponDamage,
+        damage:src.damage,
       );
     }
+    src.weaponDurationRemaining = ItemType.getCooldown(src.weaponType);
     dispatchAttackPerformed(src.weaponType, src.x, src.y, src.z, angle);
   }
 
@@ -1533,8 +1540,8 @@ abstract class Game {
     return projectile;
   }
 
-  void spawnZombies({required int index, required int total}){
-    for (var j = 0; j < 4; j++){
+  void spawnZombies({required int index, int total = 2}) {
+    for (var j = 0; j < total; j++) {
       spawnZombieAtIndex(index);
     }
   }
@@ -2122,8 +2129,7 @@ abstract class Game {
 
   static double getAngleBetweenV3(Position a, Position b) => getAngle(a.x - b.x, a.y - b.y);
 
-  /// WARNING EXPENSIVE OPERATION
-  void triggerSpawnPoints({int instances = 4}){
+  void triggerSpawnPoints({int instances = 2}){
     for (final index in scene.spawnPoints){
       spawnZombies(index: index, total: instances);
     }

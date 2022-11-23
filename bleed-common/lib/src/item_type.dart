@@ -269,6 +269,7 @@ class ItemType {
       Weapon_Handgun_Flint_Lock: 2,
       Weapon_Handgun_Flint_Lock_Superior: 3,
       Trinket_Ring_of_Damage: 1,
+      Weapon_Melee_Sword: 1,
   }[value] ?? 0;
 
   static double getRange(int value) => const <int, double> {
@@ -277,6 +278,7 @@ class ItemType {
       Weapon_Handgun_Flint_Lock_Old: 100,
       Weapon_Handgun_Flint_Lock: 110,
       Weapon_Handgun_Flint_Lock_Superior: 120,
+      Weapon_Melee_Sword: 45,
   }[value] ?? 0;
 
   static int getCooldown(int value) => const {
@@ -285,6 +287,7 @@ class ItemType {
       Weapon_Handgun_Flint_Lock_Old: 50,
       Weapon_Handgun_Flint_Lock: 45,
       Weapon_Handgun_Flint_Lock_Superior: 40,
+      Weapon_Melee_Sword: 50,
   }[value] ?? 0;
 
   static String getGroupTypeName(int value) {
@@ -340,6 +343,7 @@ class ItemType {
      Legs_Blue: "Blue Vest",
      Legs_White: "White Pants",
      Legs_Red: "Red Trousers",
+     Weapon_Melee_Sword: "Sword",
      Weapon_Melee_Staff: "Staff",
      Weapon_Handgun_Flint_Lock_Old: "Old Flint Lock Pistol",
      Weapon_Handgun_Flint_Lock: "Flint Lock Pistol",

@@ -62,15 +62,13 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
     }
   }
 
-  int get weaponFrame => weaponDurationRemaining > 0 ? weaponDuration - weaponDurationRemaining : 0;
-
-  double get weaponRange => ItemType.getRange(weaponType);
-  int get weaponDamage => ItemType.getDamage(weaponType);
-  int get weaponDuration => ItemType.getCooldown(weaponType);
+  int get weaponFrame => weaponDurationRemaining > 0 ? weaponTypeCooldown - weaponDurationRemaining : 0;
+  double get weaponTypeRange => ItemType.getRange(weaponType);
+  int get weaponTypeCooldown => ItemType.getCooldown(weaponType);
 
   bool get targetSet => target != null;
 
-  double get weaponDurationPercentage => weaponDurationRemaining == 0 ? 0 : weaponDurationRemaining / weaponDuration;
+  double get weaponDurationPercentage => weaponDurationRemaining == 0 ? 0 : weaponDurationRemaining / weaponTypeCooldown;
 
   bool get targetIsNull => target == null;
 
@@ -125,7 +123,6 @@ abstract class Character extends Collider with Team, Velocity, FaceDirection {
     this.health = health;
     this.team = team;
   }
-
 
   void setCharacterStatePerforming({required int duration}){
     setCharacterState(value: CharacterState.Performing, duration: duration);

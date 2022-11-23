@@ -320,6 +320,7 @@ class GameInventoryUI {
                total: total,
              )
          );
+
          children.add(
              _buildRowHoverValue(itemType: GamePlayer.head.value, value: ItemType.getDamage(GamePlayer.head.value), total: total,)
          );
@@ -382,7 +383,7 @@ class GameInventoryUI {
      }
 
      return Positioned(
-        top: 250,
+        top: 200,
         right: 400,
         child: Container(
             child: Column(
