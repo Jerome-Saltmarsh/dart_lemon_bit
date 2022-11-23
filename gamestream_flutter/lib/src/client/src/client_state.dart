@@ -8,7 +8,7 @@ class ClientState {
   static final areaTypeVisible = Watch(false, onChanged: ClientEvents.onChangedAreaTypeVisible);
   static final readsHotKeys = Watch(0);
   static final inventoryReads = Watch(0, onChanged: ClientEvents.onInventoryReadsChanged);
-  static final hoverTarget = Watch(ClientType.Mouse_Over_None);
+  static final hoverTargetType = Watch(ClientType.Hover_Target_None);
   static final hoverIndex = Watch(-1);
   static final hoverDialogType = Watch(DialogType.None);
   static final windowVisibleAttributes = Watch(false, onChanged: ClientEvents.onChangedAttributesWindowVisible);

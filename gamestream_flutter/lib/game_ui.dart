@@ -307,7 +307,7 @@ class GameUI {
         GameUIInteract.buildWatchInteractMode(),
         watch(ClientState.hoverIndex,
             GameInventoryUI.buildPositionedContainerItemTypeInformation),
-        watch(ClientState.hoverTarget,
+        watch(ClientState.hoverTargetType,
             GameInventoryUI.buildPositionedContainerHoverTarget),
         Positioned(
             bottom: 24,
