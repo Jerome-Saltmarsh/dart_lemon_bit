@@ -1761,7 +1761,7 @@ abstract class Game {
   }
 
   void setNpcTarget(AI ai, Position3 value) {
-    if (value is Team) {
+    if (value is Collider) {
       assert(!onSameTeam(ai, value));
     }
     assert(ai.alive);

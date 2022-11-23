@@ -1,17 +1,19 @@
 import 'package:lemon_math/library.dart';
 
+import 'collider.dart';
+
 mixin Owner <T> {
   late T owner;
 }
 
-mixin Team {
-  var team = 0;
-}
+// mixin Team {
+//   var team = 0;
+// }
 
 bool onSameTeam(dynamic a, dynamic b){
   if (a == b) return true;
-  if (a is Team == false) return false;
-  if (b is Team == false) return false;
+  if (a is Collider == false) return false;
+  if (b is Collider == false) return false;
   if (a.team == 0) return false;
   return a.team == b.team;
 }

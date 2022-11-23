@@ -5,7 +5,7 @@ import 'package:lemon_math/library.dart';
 import 'position3.dart';
 
 class Collider extends Position3 {
-  // var team = 0;
+  var team = 0;
   var radius = 0.0;
   double zVelocity = 0;
   double get left => x - radius;

@@ -1200,16 +1200,16 @@ class Player extends Character with ByteWriter {
   bool isAllie(Position3? value){
     if (value == null) return false;
     if (value == this) return true;
-    if (value is Team == false) return false;
-    final targetTeam = (value as Team).team;
+    if (value is Collider == false) return false;
+    final targetTeam = (value as Collider).team;
     if (targetTeam == 0) return false;
     return team == targetTeam;
   }
 
   bool isEnemy(Position3? value) {
     if (value == null) return false;
-    if (value is Team == false) return false;
-    final targetTeam = (value as Team).team;
+    if (value is Collider == false) return false;
+    final targetTeam = (value as Collider).team;
     if (targetTeam == 0) return true;
     return team != targetTeam;
   }

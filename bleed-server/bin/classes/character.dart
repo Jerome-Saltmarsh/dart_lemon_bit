@@ -8,7 +8,7 @@ import 'components.dart';
 import 'player.dart';
 import 'position3.dart';
 
-abstract class Character extends Collider with Team, Velocity {
+abstract class Character extends Collider with Velocity {
 
   /// VARIABLES
   var _faceAngle = 0.0;
@@ -41,16 +41,16 @@ abstract class Character extends Collider with Team, Velocity {
   bool get targetIsEnemy {
     if (target == null) return false;
     if (target == this) return false;
-    if (target is Team == false) return false;
-    final targetTeam = (target as Team).team;
+    if (target is Collider == false) return false;
+    final targetTeam = (target as Collider).team;
     if (targetTeam == 0) return true;
     return team != targetTeam;
   }
   bool get targetIsAlly {
     if (target == null) return false;
     if (target == this) return true;
-    if (target is Team == false) return false;
-    final targetTeam = (target as Team).team;
+    if (target is Collider == false) return false;
+    final targetTeam = (target as Collider).team;
     if (targetTeam == 0) return false;
     return team == targetTeam;
   }
