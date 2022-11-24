@@ -91,6 +91,9 @@ class Area_OldVillage extends DarkAgeArea {
                     ItemType.Weapon_Handgun_Revolver,
                     ItemType.Weapon_Handgun_Glock,
                     ItemType.Weapon_Ranged_Bow,
+                    ItemType.Weapon_Rifle_Arquebus,
+                    ItemType.Weapon_Rifle_Musket,
+                    ItemType.Weapon_Rifle_Jager,
                  ]);
                },
                'never mind': player.endInteraction

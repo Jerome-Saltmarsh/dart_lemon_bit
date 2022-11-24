@@ -145,6 +145,21 @@ class ItemType {
       0400, Resource_Scrap_Metal,
       0100, Resource_Gold,
     ],
+    Weapon_Rifle_Arquebus: const [
+      0002, Weapon_Handgun_Flint_Lock,
+      0400, Resource_Scrap_Metal,
+      0300, Resource_Gold,
+    ],
+    Weapon_Rifle_Musket: const [
+      0002, Weapon_Rifle_Arquebus,
+      0400, Resource_Scrap_Metal,
+      0300, Resource_Gold,
+    ],
+    Weapon_Rifle_Jager: const [
+      0300, Weapon_Rifle_Musket,
+      0400, Resource_Scrap_Metal,
+      0300, Resource_Gold,
+    ],
   };
 
   static bool isTypeEmpty(int value) => value == Empty;
