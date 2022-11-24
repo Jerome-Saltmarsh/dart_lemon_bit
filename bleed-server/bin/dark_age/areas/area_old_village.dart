@@ -55,10 +55,11 @@ class Area_OldVillage extends DarkAgeArea {
   void init(){
     characters.add(
         Npc(
-          game: this,
           x: 1000,
           y: 825,
           z: Node_Height,
+          speed: 3.0,
+          damage: 3,
           weaponType: ItemType.Empty,
           team: DarkAgeTeam.Good,
           name: "Roth",
@@ -111,7 +112,6 @@ class Area_OldVillage extends DarkAgeArea {
 
     characters.add(
         Npc(
-            game: this,
             x: 1020,
             y: 1225,
             z: Node_Height,

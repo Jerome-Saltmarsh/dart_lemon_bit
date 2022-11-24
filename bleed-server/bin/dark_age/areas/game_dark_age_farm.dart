@@ -9,6 +9,7 @@ import 'dark_age_area.dart';
 class GameDarkAgeFarm extends DarkAgeArea {
   GameDarkAgeFarm() : super(darkAgeScenes.farm, mapTile: MapTiles.Farm) {
     addNpc(
+      damage: 3,
       headType: ItemType.Head_Rogues_Hood,
       armour: ItemType.Body_Tunic_Padded,
       pants: ItemType.Legs_Brown,
@@ -24,6 +25,7 @@ class GameDarkAgeFarm extends DarkAgeArea {
     );
 
     addNpc(
+      damage: 3,
       headType: ItemType.Head_Rogues_Hood,
       armour: ItemType.Body_Tunic_Padded,
       pants: ItemType.Legs_Brown,

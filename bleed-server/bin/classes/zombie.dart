@@ -2,7 +2,6 @@
 
 import '../common/library.dart';
 import 'ai.dart';
-import 'game.dart';
 import 'player.dart';
 
 class Zombie extends AI {
@@ -12,7 +11,6 @@ class Zombie extends AI {
     required double z,
     required int health,
     required int damage,
-    required Game game,
     required int team,
     double wanderRadius = 100,
   }) : super(
@@ -23,6 +21,8 @@ class Zombie extends AI {
       weaponType: ItemType.Empty,
       wanderRadius: wanderRadius,
       team: team,
+      damage: damage,
+      speed: 3.0,
   );
 
   @override

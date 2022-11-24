@@ -1563,7 +1563,6 @@ abstract class Game {
       z: posZ,
       health: health,
       damage: damage,
-      game: this,
       team: team,
     );
     characters.add(instance);
@@ -1641,50 +1640,6 @@ abstract class Game {
     instance.collidable = ItemType.isCollidable(type);
     gameObjects.add(instance);
     return instance;
-  }
-
-  Zombie spawnZombie({
-    required double x,
-    required double y,
-    required double z,
-    required int health,
-    required int team,
-    required int damage,
-    double speed = RunSpeed.Regular,
-    List<Vector2>? objectives,
-    double wanderRadius = 100.0,
-  }) {
-    assert(team >= 0 && team <= 256);
-    final zombie = getZombieInstance();
-    zombie.team = team;
-    zombie.state = CharacterState.Idle;
-    zombie.stateDurationRemaining = 0;
-    zombie.maxHealth = health;
-    zombie.health = health;
-    zombie.collidable = true;
-    zombie.x = x;
-    zombie.y = y;
-    zombie.z = z;
-    zombie.spawnX = x;
-    zombie.spawnY = y;
-    zombie.damage = 1;
-    zombie.clearDest();
-    zombie.wanderRadius = wanderRadius;
-    return zombie;
-  }
-
-  Zombie getZombieInstance() {
-    final zombieInstance = Zombie(
-      x: 0,
-      y: 0,
-      z: 0,
-      health: 10,
-      damage: 1,
-      game: this,
-      team: TeamType.Evil,
-    );
-    characters.add(zombieInstance);
-    return zombieInstance;
   }
 
   Rat getInstanceRat() {
@@ -1982,7 +1937,9 @@ abstract class Game {
     required int team,
     Function(Player player)? onInteractedWith,
     int health = 10,
+    double speed = 3.0,
     double wanderRadius = 0,
+    int damage = 1,
   }) {
     final npc = Npc(
       name: name,
@@ -1994,14 +1951,12 @@ abstract class Game {
       team: team,
       health: health,
       wanderRadius: wanderRadius,
-      game: this,
+      damage: damage,
+      speed: speed,
     );
     npc.headType = headType;
     npc.bodyType = armour;
     npc.legsType = pants;
-    // npc.indexRow = row;
-    // npc.indexColumn = column;
-    // npc.indexZ = z;
     setGridPosition(position: npc, z: z, row: row, column: column);
     npc.spawnX = npc.x;
     npc.spawnY = npc.y;

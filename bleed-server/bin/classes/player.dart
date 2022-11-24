@@ -389,6 +389,7 @@ class Player extends Character with ByteWriter {
             weaponType: weaponType,
             bodyType: ItemType.Body_Tunic_Padded,
             headType: ItemType.Head_Rogues_Hood,
+            damage: 1,
   ){
     maxMagic = magic;
     _magic = maxMagic;

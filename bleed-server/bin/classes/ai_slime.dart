@@ -18,6 +18,8 @@ class AISlime extends AI {
       health: health,
       weaponType: ItemType.Empty,
       team: team,
+      damage: 5,
+      speed: 3.0,
   );
 
   @override

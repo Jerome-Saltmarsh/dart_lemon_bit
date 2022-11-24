@@ -8,6 +8,7 @@ import 'dark_age_area.dart';
 class AreaForest4 extends DarkAgeArea {
   AreaForest4() : super(darkAgeScenes.forest_4, mapTile: MapTiles.Forest_4) {
     addNpc(
+        damage: 3,
         headType: ItemType.Head_Rogues_Hood,
         armour: ItemType.Body_Tunic_Padded,
         pants: ItemType.Legs_Brown,
@@ -45,6 +46,7 @@ class AreaForest4 extends DarkAgeArea {
         });
 
     addNpc(
+      damage: 3,
       headType: ItemType.Head_Rogues_Hood,
       armour: ItemType.Body_Tunic_Padded,
       pants: ItemType.Legs_Brown,
@@ -70,6 +72,7 @@ class AreaForest4 extends DarkAgeArea {
     // );
 
     addNpc(
+      damage: 3,
       name: "Bandit",
       row: 12,
       column: 37,

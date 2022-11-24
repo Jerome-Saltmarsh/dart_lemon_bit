@@ -39,8 +39,9 @@ abstract class AI extends Character {
     required double z,
     required int health,
     required int weaponType,
-    int team = 0,
-    double speed = 3.0,
+    required int damage,
+    required int team,
+    required double speed,
     this.wanderRadius = 0,
   }): super(
       x: x,
@@ -52,6 +53,8 @@ abstract class AI extends Character {
       weaponType: weaponType,
       headType: ItemType.Head_Wizards_Hat,
       bodyType: ItemType.Body_Tunic_Padded,
+      damage: damage,
+
   ) {
     clearDest();
     spawnX = x;

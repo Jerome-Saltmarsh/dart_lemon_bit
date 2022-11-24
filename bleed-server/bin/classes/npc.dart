@@ -1,5 +1,4 @@
 import '../common/src/character_type.dart';
-import 'game.dart';
 import 'player.dart';
 import 'ai.dart';
 
@@ -15,10 +14,11 @@ class Npc extends AI {
       required double z,
       required int health,
       required int weaponType,
-      required Game game,
       required int team,
       this.onInteractedWith,
       double wanderRadius = 0,
+      double speed = 3.0,
+      int damage = 1,
   })
       : super(
             x: x,
@@ -28,6 +28,8 @@ class Npc extends AI {
             weaponType: weaponType,
             team: team,
             wanderRadius: wanderRadius,
+            damage: damage,
+            speed: speed,
   );
 
   @override

@@ -20,6 +20,8 @@ class Rat extends AI {
       health: health,
       weaponType: ItemType.Empty,
       team: team,
+      damage: damage,
+      speed: 3.0,
   ) {
     // indexZ = z;
     // indexRow = row;

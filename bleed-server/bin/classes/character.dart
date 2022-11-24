@@ -129,11 +129,14 @@ abstract class Character extends Collider {
     required this.headType,
     required this.weaponType,
     required int team,
+    required int damage,
     double speed = 5.0,
+
   }) : super(x: x, y: y, z: z, radius: 7) {
     maxHealth = health;
     this.health = health;
     this.team = team;
+    this.damage = damage;
   }
 
   void setCharacterStatePerforming({required int duration}){
