@@ -259,6 +259,14 @@ class GameEvents {
         GameAudio.revolver_shot_3.playXYZ(x, y, z);
         GameState.spawnParticleShell(x, y, z);
         break;
+      case ItemType.Weapon_Handgun_Glock:
+        GameAudio.pistol_shot_20.playXYZ(x, y, z);
+        GameState.spawnParticleShell(x, y, z);
+        break;
+      case ItemType.Weapon_Handgun_Revolver:
+        GameAudio.revolver_shot_3.playXYZ(x, y, z);
+        GameState.spawnParticleShell(x, y, z);
+        break;
       case ItemType.Weapon_Rifle_Arquebus:
         GameAudio.assault_rifle_shot_13.playXYZ(x, y, z);
         GameState.spawnParticleShell(x, y, z);
@@ -285,8 +293,6 @@ class GameEvents {
         break;
       case ItemType.Weapon_Ranged_Shotgun:
         return GameAudio.shotgun_shot.playXYZ(x, y, z);
-      case ItemType.Weapon_Handgun_Revolver:
-        return GameAudio.revolver_shot_2.playXYZ(x, y, z);
       case ItemType.Weapon_Melee_Sword:
         return onGameEventAttackPerformedBlade(x, y, z, angle);
       case ItemType.Empty:
