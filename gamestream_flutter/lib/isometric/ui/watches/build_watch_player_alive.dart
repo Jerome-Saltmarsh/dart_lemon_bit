@@ -8,14 +8,11 @@ import 'package:golden_ratio/constants.dart';
 import '../widgets/build_container.dart';
 
 Widget buildContainerRespawn(){
-  const width = 300;
-  return Container(
-    width: Engine.screen.width,
-    height: Engine.screen.height,
-    alignment: Alignment.center,
-    child: container(
-      width: width,
-      height: width * goldenRatio_0618,
+  const width = 200;
+  return Positioned(
+    bottom: 150,
+    child: Container(
+      width: Engine.screen.width,
       alignment: Alignment.center,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
