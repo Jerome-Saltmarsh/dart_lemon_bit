@@ -85,6 +85,8 @@ class GameAudio {
   static final gun_pickup_01 = AudioSingle(name: 'gun-pickup-01', volume: 0.5, maxDistance: 400);
   static final assault_rifle_shot = AudioSingle(name: 'assault-rifle-shot', volume: 0.5, maxDistance: 400);
   static final sniper_shot_4 = AudioSingle(name: 'sniper-shot-04', volume: 0.5, maxDistance: 400);
+  static final assault_rifle_shot_13 = AudioSingle(name: 'assault_rifle_shot_13', volume: 0.5, maxDistance: 400);
+  static final assault_rifle_shot_14 = AudioSingle(name: 'assault_rifle_shot_14', volume: 0.5, maxDistance: 400);
   static final revolver_shot_2 = AudioSingle(name: 'revolver-shot-02', volume: 0.5, maxDistance: 400);
   static final revolver_reload_1 = AudioSingle(name: 'revolver-reload-01', volume: 0.5, maxDistance: 400);
   static final reload_6 = AudioSingle(name: 'reload_06', volume: 0.5, maxDistance: 400);
