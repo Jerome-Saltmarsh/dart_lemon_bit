@@ -27,6 +27,7 @@ class ClientRequest {
   static const Spawn_Node_Data_Modify = 31;
   static const Edit = 33;
   static const Inventory = 35;
+  static const Select_Perk = 36;
 }
 
 

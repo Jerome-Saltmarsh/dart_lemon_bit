@@ -416,6 +416,9 @@ class GameNetwork {
     sendClientRequest(ClientRequest.Toggle_Debug);
   }
 
+  static void sendClientRequestSelectPerkType(int perk){
+    sendClientRequest(ClientRequest.Select_Perk, perk);
+  }
 
   static void sendClientRequest(int value, [dynamic message]){
     if (message != null){

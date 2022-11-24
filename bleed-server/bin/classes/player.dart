@@ -65,6 +65,11 @@ class Player extends Character with ByteWriter {
   int get baseMaxHealth => _baseMaxHealth;
   int get baseDamage => _baseDamage;
 
+
+  static const Health_Per_Perk = 5;
+  var perkMaxHealth = 0;
+  var perkMaxDamage = 0;
+
   set baseMaxHealth(int value){
      assert (value > 0);
      if (_baseMaxHealth == value) return;
@@ -154,6 +159,10 @@ class Player extends Character with ByteWriter {
         damage    += ItemType.getDamage(belt6_itemType);
       }
 
+      maxHealth += perkMaxHealth * Health_Per_Perk;
+      damage += perkMaxDamage;
+
+      writePlayerPerks();
       writePlayerMaxHealth();
       writePlayerDamage();
   }
@@ -980,6 +989,13 @@ class Player extends Character with ByteWriter {
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Base_Damage);
     writeUInt16(_baseDamage);
+  }
+
+  void writePlayerPerks() {
+    writeByte(ServerResponse.Player);
+    writeByte(ApiPlayer.Perks);
+    writeByte(perkMaxHealth);
+    writeByte(perkMaxDamage);
   }
 
   void writePlayerDamage() {

@@ -27,4 +27,5 @@ class ApiPlayer {
   static const Damage = 34;
   static const Base_Damage = 35;
   static const Base_Max_Health = 36;
+  static const Perks = 37;
 }

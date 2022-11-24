@@ -526,25 +526,59 @@ class GameUI {
             height: GameUIStyle.Window_Attributes_Height,
             child: Column(
               children: [
+                Container(
+                  height: GameUIStyle.Window_Attributes_Height - 60,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            text("Max Health"),
+                            Row(
+                              children: [
+                                watch(ServerState.playerPerkMaxHealth, text),
+                                width16,
+                                container(
+                                    action: remaining ? ServerActions.selectPerkTypeMaxHealth : null,
+                                    child: text('+', align: TextAlign.center),
+                                    width: 50,
+                                    height: 50,
+                                    color: GameColors.brownLight,
+                                    alignment: Alignment.center,
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                        height4,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            text("Damage"),
+                            Row(
+                              children: [
+                                watch(ServerState.playerPerkMaxDamage, text),
+                                width16,
+                                container(
+                                    action: remaining ? ServerActions.selectPerkTypeDamage : null,
+                                    child: text('+', align: TextAlign.center),
+                                    width: 50,
+                                    height: 50,
+                                    color: GameColors.brownLight,
+                                    alignment: Alignment.center,
+                                ),
+                              ],
+                            )
+
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
                 if (remaining) text("REMAINING $attributes"),
-                Row(
-                  children: [
-                    text("Max Health"),
-                    if (remaining) container(child: "+", width: 50, height: 50),
-                  ],
-                ),
-                Row(
-                  children: [
-                    text("Inventory Size"),
-                    if (remaining) container(child: "+", width: 50, height: 50),
-                  ],
-                ),
-                Row(
-                  children: [
-                    text("Sword Mastery"),
-                    if (remaining) container(child: "+", width: 50, height: 50),
-                  ],
-                ),
               ],
             ),
           ),
