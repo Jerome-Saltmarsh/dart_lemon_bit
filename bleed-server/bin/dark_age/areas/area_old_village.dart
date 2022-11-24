@@ -94,6 +94,9 @@ class Area_OldVillage extends DarkAgeArea {
                     ItemType.Weapon_Rifle_Arquebus,
                     ItemType.Weapon_Rifle_Musket,
                     ItemType.Weapon_Rifle_Jager,
+                    ItemType.Weapon_Rifle_AK_47,
+                    ItemType.Weapon_Rifle_M4,
+                    ItemType.Weapon_Rifle_Steyr,
                  ]);
                },
                'never mind': player.endInteraction

@@ -105,6 +105,9 @@ class ItemType {
   static const Weapon_Rifle_Musket = Weapon_Rifle_Blunderbuss + 1;
   static const Weapon_Rifle_Jager = Weapon_Rifle_Musket + 1;
   static const Weapon_Rifle_Assault = Weapon_Rifle_Jager + 1;
+  static const Weapon_Rifle_AK_47 = Weapon_Rifle_Jager + 1;
+  static const Weapon_Rifle_M4 = Weapon_Rifle_AK_47 + 1;
+  static const Weapon_Rifle_Steyr = Weapon_Rifle_M4 + 1;
 
   static const Weapon_Ranged_Shotgun = Index_Weapon_Ranged_Shotgun + 1;
 
@@ -286,6 +289,9 @@ class ItemType {
     Weapon_Rifle_Arquebus: 2,
     Weapon_Rifle_Musket: 2,
     Weapon_Rifle_Jager: 2,
+    Weapon_Rifle_AK_47: 2,
+    Weapon_Rifle_M4: 2,
+    Weapon_Rifle_Steyr: 2,
   }[itemType] ?? 0;
 
   static int getDamage(int value) => const {
@@ -302,6 +308,9 @@ class ItemType {
       Weapon_Rifle_Arquebus: 3,
       Weapon_Rifle_Musket: 5,
       Weapon_Rifle_Jager: 8,
+      Weapon_Rifle_AK_47: 2,
+      Weapon_Rifle_M4: 2,
+      Weapon_Rifle_Steyr: 2,
   }[value] ?? 0;
 
   static double getRange(int value) => const <int, double> {
@@ -317,6 +326,9 @@ class ItemType {
       Weapon_Rifle_Arquebus: 400,
       Weapon_Rifle_Musket: 420,
       Weapon_Rifle_Jager: 440,
+      Weapon_Rifle_AK_47: 400,
+      Weapon_Rifle_M4: 420,
+      Weapon_Rifle_Steyr: 430,
   }[value] ?? 0;
 
   static int getCooldown(int value) => const {
@@ -332,6 +344,9 @@ class ItemType {
       Weapon_Rifle_Arquebus: 60,
       Weapon_Rifle_Musket: 55,
       Weapon_Rifle_Jager: 50,
+      Weapon_Rifle_AK_47: 5,
+      Weapon_Rifle_M4: 5,
+      Weapon_Rifle_Steyr: 5,
   }[value] ?? 0;
 
   static String getGroupTypeName(int value) {
@@ -399,6 +414,9 @@ class ItemType {
      Weapon_Rifle_Arquebus: "Arquebus",
      Weapon_Rifle_Jager: "Jager Rifle",
      Weapon_Rifle_Musket: "Musket",
+     Weapon_Rifle_AK_47: "AK-47",
+     Weapon_Rifle_M4: "M4 Assault Rifle",
+     Weapon_Rifle_Steyr: "Steyr",
      Consumables_Apple: "Apple",
      Consumables_Meat: "Meat",
   }[value] ?? "item-type-unknown($value)";
