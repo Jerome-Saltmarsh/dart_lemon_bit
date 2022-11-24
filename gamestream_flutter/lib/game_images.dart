@@ -111,7 +111,12 @@ class GameImages {
       if (ItemType.isTypeWeaponHandgun(weaponType)){
          return template_weapon_handgun;
       }
-
+      if (ItemType.isTypeWeaponRifle(weaponType)){
+         return template_weapon_shotgun;
+      }
+      if (ItemType.isTypeWeaponShotgun(weaponType)){
+         return template_weapon_shotgun;
+      }
       switch (weaponType) {
          case ItemType.Weapon_Ranged_Shotgun:
             return template_weapon_shotgun;
@@ -128,7 +133,7 @@ class GameImages {
          case ItemType.Weapon_Melee_Hammer:
             return template_weapon_hammer;
          default:
-            throw Exception("ImagesTemplateWeapons.fromWeaponType($weaponType)");
+            throw Exception("GameImages.getImageForWeaponType(${ItemType.getName(weaponType)})");
       }
    }
    

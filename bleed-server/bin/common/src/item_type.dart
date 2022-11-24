@@ -260,6 +260,9 @@ class ItemType {
     Weapon_Handgun_Flint_Lock_Old: 1,
     Weapon_Handgun_Flint_Lock: 1,
     Weapon_Handgun_Flint_Lock_Superior: 1,
+    Weapon_Rifle_Arquebus: 2,
+    Weapon_Rifle_Musket: 2,
+    Weapon_Rifle_Jager: 2,
   }[itemType] ?? 0;
 
   static int getDamage(int value) => const {
@@ -269,10 +272,13 @@ class ItemType {
       Weapon_Handgun_Flint_Lock: 2,
       Weapon_Handgun_Flint_Lock_Superior: 3,
       Trinket_Ring_of_Damage: 1,
-      Weapon_Melee_Sword: 1,
+      Weapon_Melee_Sword: 3,
       Weapon_Ranged_Bow: 1,
-      Weapon_Ranged_Bow_Long: 1,
-      Weapon_Ranged_Crossbow: 1,
+      Weapon_Ranged_Bow_Long: 2,
+      Weapon_Ranged_Crossbow: 5,
+      Weapon_Rifle_Arquebus: 3,
+      Weapon_Rifle_Musket: 5,
+      Weapon_Rifle_Jager: 8,
   }[value] ?? 0;
 
   static double getRange(int value) => const <int, double> {
@@ -285,6 +291,9 @@ class ItemType {
       Weapon_Ranged_Bow_Long: 350,
       Weapon_Ranged_Crossbow: 400,
       Weapon_Melee_Sword: 45,
+      Weapon_Rifle_Arquebus: 400,
+      Weapon_Rifle_Musket: 420,
+      Weapon_Rifle_Jager: 440,
   }[value] ?? 0;
 
   static int getCooldown(int value) => const {
@@ -297,6 +306,9 @@ class ItemType {
       Weapon_Ranged_Bow: 50,
       Weapon_Ranged_Bow_Long: 50,
       Weapon_Ranged_Crossbow: 50,
+      Weapon_Rifle_Arquebus: 60,
+      Weapon_Rifle_Musket: 55,
+      Weapon_Rifle_Jager: 50,
   }[value] ?? 0;
 
   static String getGroupTypeName(int value) {
@@ -361,6 +373,9 @@ class ItemType {
      Weapon_Handgun_Glock: "Glock 22",
      Weapon_Handgun_Revolver: "Revolver",
      Weapon_Ranged_Shotgun: "Shotgun",
+     Weapon_Rifle_Arquebus: "Arquebus",
+     Weapon_Rifle_Jager: "Jager Rifle",
+     Weapon_Rifle_Musket: "Musket",
      Consumables_Apple: "Apple",
      Consumables_Meat: "Meat",
   }[value] ?? "item-type-unknown($value)";

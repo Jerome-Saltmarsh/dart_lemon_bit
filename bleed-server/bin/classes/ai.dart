@@ -24,6 +24,7 @@ abstract class AI extends Character {
   var respawn = 0;
   var wanderPause = randomInt(300, 500);
   var wanderRadius = 0.0;
+  var nextTeleport = randomInt(500, 1000);
 
   bool get arrivedAtDest {
     const radius = 15;

@@ -28,7 +28,7 @@ abstract class Game {
   final characters = <Character>[];
   final projectiles = <Projectile>[];
 
-  static const AI_Respawn_Duration = framesPerSecond * 60 * 5; // 5 minutes
+  static const AI_Respawn_Duration = framesPerSecond * 60 * 2; // 5 minutes
 
   List<GameObject> get gameObjects => scene.gameObjects;
 
@@ -1239,6 +1239,27 @@ abstract class Game {
       if (!ai.arrivedAtDest) {
         ai.faceDestination();
         setCharacterStateRunning(ai);
+
+        // if (target != null){
+        //    if (ai.nextTeleport-- <= 0){
+        //       ai.nextTeleport = randomInt(500, 1000);
+        //       final angle = randomAngle();
+        //       final distanceFromTarget = getDistanceBetweenV3(ai, target);
+        //       final x = target.x + getAdjacent(angle, distanceFromTarget);
+        //       final y = target.y + getOpposite(angle, distanceFromTarget);
+        //       final z = ai.z;
+        //
+        //       if (scene.getNodeInBoundsXYZ(x, y, z)) {
+        //            final nodeType = scene.getNodeTypeXYZ(x, y, z);
+        //            if (nodeType == NodeType.Empty){
+        //              ai.x = x;
+        //              ai.y = y;
+        //              ai.z = z;
+        //            }
+        //       }
+        //    }
+        // }
+
         return;
       }
 

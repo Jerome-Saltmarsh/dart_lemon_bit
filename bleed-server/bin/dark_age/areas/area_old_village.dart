@@ -41,6 +41,9 @@ class Area_OldVillage extends DarkAgeArea {
     player.inventoryAdd1(itemType: ItemType.Trinket_Ring_of_Damage);
     player.inventoryAdd1(itemType: ItemType.Trinket_Ring_of_Health);
     player.inventoryAdd1(itemType: ItemType.Weapon_Melee_Sword);
+    player.inventoryAdd1(itemType: ItemType.Weapon_Rifle_Arquebus);
+    player.inventoryAdd1(itemType: ItemType.Weapon_Rifle_Jager);
+    player.inventoryAdd1(itemType: ItemType.Weapon_Rifle_Musket);
     player.inventorySet(index: ItemType.Belt_1, itemType: ItemType.Weapon_Handgun_Flint_Lock_Old, itemQuantity: 1);
     player.equippedWeaponIndex = ItemType.Belt_1;
     player.inventoryDirty = true;
