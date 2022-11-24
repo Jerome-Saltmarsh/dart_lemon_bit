@@ -3,7 +3,6 @@ import 'library.dart';
 class AtlasItems {
   static const size = 32.0;
 
-
   static double getSrcX(int itemType) => const <int, double> {
       ItemType.Trinket_Ring_of_Health: 256,
       ItemType.Trinket_Ring_of_Damage: 288,
@@ -36,6 +35,9 @@ class AtlasItems {
       ItemType.Resource_Crystal: 96,
       ItemType.Resource_Gold: 128,
       ItemType.Resource_Gun_Powder: 160,
+      ItemType.Resource_Round_9mm: 416,
+      ItemType.Resource_Round_Rifle: 416,
+      ItemType.Resource_Round_Shotgun: 416,
       ItemType.Resource_Arrow: 192,
       ItemType.Consumables_Meat: 224,
       ItemType.Consumables_Apple: 256,
@@ -58,6 +60,9 @@ class AtlasItems {
     ItemType.Resource_Crystal: 64,
     ItemType.Resource_Gold: 64,
     ItemType.Resource_Gun_Powder: 64,
+    ItemType.Resource_Round_9mm: 0,
+    ItemType.Resource_Round_Shotgun: 32,
+    ItemType.Resource_Round_Rifle: 64,
     ItemType.Resource_Scrap_Metal: 96,
     ItemType.Resource_Arrow: 64,
     ItemType.Consumables_Meat: 64,

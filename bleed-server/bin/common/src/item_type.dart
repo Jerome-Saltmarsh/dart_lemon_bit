@@ -70,6 +70,9 @@ class ItemType {
   static const Resource_Gold = Index_Resources + 10;
   static const Resource_Gun_Powder = Index_Resources + 11;
   static const Resource_Arrow = Index_Resources + 12;
+  static const Resource_Round_9mm = Index_Resources + 13;
+  static const Resource_Round_Rifle = Index_Resources + 14;
+  static const Resource_Round_Shotgun = Index_Resources + 15;
 
   static const Head_Steel_Helm = Index_Heads + 1;
   static const Head_Rogues_Hood = Index_Heads + 2;
@@ -260,25 +263,20 @@ class ItemType {
     return type >= Index_Consumables;
   }
 
-  static int getConsumeType(int itemType) {
-
-    if (isTypeWeaponHandgun(itemType)){
-      return Resource_Gun_Powder;
-    }
-
-    if (isTypeWeaponShotgun(itemType)){
-      return Resource_Gun_Powder;
-    }
-
-    if (isTypeWeaponRifle(itemType)){
-      return Resource_Gun_Powder;
-    }
-
-    return const {
-      Weapon_Ranged_Shotgun: Resource_Gun_Powder,
-      Weapon_Ranged_Bow: Resource_Arrow,
+  static int getConsumeType(int itemType) => const {
+      Weapon_Handgun_Flint_Lock_Old       : Resource_Gun_Powder,
+      Weapon_Handgun_Flint_Lock           : Resource_Gun_Powder,
+      Weapon_Handgun_Flint_Lock_Superior  : Resource_Gun_Powder,
+      Weapon_Handgun_Glock                : Resource_Round_9mm,
+      Weapon_Handgun_Revolver             : Resource_Round_9mm,
+      Weapon_Rifle_Musket                 : Resource_Gun_Powder,
+      Weapon_Rifle_Jager                  : Resource_Round_Rifle,
+      Weapon_Rifle_M4                     : Resource_Round_Rifle,
+      Weapon_Rifle_Steyr                  : Resource_Round_Rifle,
+      Weapon_Rifle_AK_47                  : Resource_Round_Rifle,
+      Weapon_Ranged_Shotgun               : Resource_Round_Shotgun,
+      Weapon_Ranged_Bow                   : Resource_Arrow,
   }[itemType] ?? Empty;
-  }
 
   static int getConsumeAmount(int itemType) => const {
     Weapon_Ranged_Bow: 1,
@@ -391,6 +389,9 @@ class ItemType {
      Resource_Gold: "Gold",
      Resource_Scrap_Metal: "Scrap Metal",
      Resource_Gun_Powder: "Gun-Powder",
+     Resource_Round_Shotgun: "Shotgun-Rounds",
+     Resource_Round_Rifle: "Rifle-Rounds",
+     Resource_Round_9mm: "Handgun-Rounds",
      Resource_Arrow: "Arrow",
      Trinket_Ring_of_Damage: "Ring of Damage",
      Trinket_Ring_of_Health: "Ring of Health",

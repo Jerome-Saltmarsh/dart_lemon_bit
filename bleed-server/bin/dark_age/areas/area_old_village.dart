@@ -36,6 +36,9 @@ class Area_OldVillage extends DarkAgeArea {
 
     player.inventoryAddWeapon(itemType: ItemType.Weapon_Ranged_Shotgun);
     player.inventoryAdd(itemType: ItemType.Resource_Gun_Powder, itemQuantity: 100);
+    player.inventoryAdd(itemType: ItemType.Resource_Round_9mm, itemQuantity: 100);
+    player.inventoryAdd(itemType: ItemType.Resource_Round_Rifle, itemQuantity: 100);
+    player.inventoryAdd(itemType: ItemType.Resource_Round_Shotgun, itemQuantity: 100);
     player.inventoryAdd(itemType: ItemType.Resource_Scrap_Metal, itemQuantity: 100);
     player.inventoryAdd(itemType: ItemType.Resource_Gold, itemQuantity: 100);
     player.inventoryAddWeapon(itemType: ItemType.Trinket_Ring_of_Damage);
