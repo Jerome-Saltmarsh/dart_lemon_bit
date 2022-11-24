@@ -257,8 +257,12 @@ abstract class Game {
     if (player.deadBusyOrUsingWeapon) return;
 
     if (player.equippedWeaponUsesAmmunition){
-      if (player.sufficientAmmunition){
-        player.consumeEquippedWeaponAmmunition();
+      final currentAmmunition = player.equippedWeaponQuantity;
+      if (currentAmmunition > 0){
+         player.inventorySetQuantityAtIndex(
+             quantity: currentAmmunition - 1,
+             index: player.equippedWeaponIndex,
+         );
       } else {
         player.writeError('no ammunition');
         return;
@@ -470,7 +474,7 @@ abstract class Game {
     assert(character.weaponDurationRemaining > 0);
     character.weaponState = AttackState.Firing;
     character.applyForce(
-      force: 2.0,
+      force: 1.0,
       angle: angle + pi,
     );
 
@@ -478,7 +482,6 @@ abstract class Game {
       src: character,
       accuracy: 0,
       angle: angle,
-      speed: 12.0,
       range: character.weaponTypeRange,
       projectileType: ProjectileType.Bullet,
       damage: character.damage,
@@ -1348,7 +1351,6 @@ abstract class Game {
     return spawnProjectile(
       src: src,
       accuracy: 0,
-      speed: 4.5,
       range: src.equippedRange,
       target: src.target,
       projectileType: ProjectileType.Orb,
@@ -1371,7 +1373,6 @@ abstract class Game {
     spawnProjectile(
       src: src,
       accuracy: accuracy,
-      speed: 7,
       range: range,
       target: target,
       angle: target != null ? null : angle ?? src.faceAngle,
@@ -1389,7 +1390,6 @@ abstract class Game {
       spawnProjectile(
         src: src,
         accuracy: 0,
-        speed: 5,
         range: range,
         target: src.target,
         angle: angle,
@@ -1406,7 +1406,6 @@ abstract class Game {
       src: src,
       accuracy: 0,
       angle: src.faceAngle,
-      speed: speed,
       range: src.equippedRange,
       projectileType: ProjectileType.Bullet,
       damage: src.damage,
@@ -1417,7 +1416,6 @@ abstract class Game {
       src: src,
       accuracy: 0,
       angle: angle,
-      speed: 8.0,
       range: 300,
       projectileType: ProjectileType.Bullet,
       damage: 5,
@@ -1430,7 +1428,6 @@ abstract class Game {
       src: src,
       accuracy: 0,
       angle: angle,
-      speed: 15.0,
       range: 600,
       projectileType: ProjectileType.Bullet,
       damage: 10,
@@ -1449,7 +1446,6 @@ abstract class Game {
       projectileType: ProjectileType.Fireball,
       accuracy: 0, // TODO delete accuracy
       angle: angle,
-      speed: speed,
       range: range,
       damage: damage,
     );
@@ -1465,7 +1461,6 @@ abstract class Game {
         src: src,
         accuracy: 0,
         angle: angle + giveOrTake(0.25),
-        speed: 8.0,
         range: src.weaponTypeRange,
         projectileType: ProjectileType.Bullet,
         damage:src.damage,
@@ -1478,7 +1473,6 @@ abstract class Game {
 
   Projectile spawnProjectile({
     required Character src,
-    required double speed,
     required double range,
     required int projectileType,
     required int damage,
@@ -1486,6 +1480,8 @@ abstract class Game {
     double? angle = 0,
     Position3? target,
   }) {
+    assert (range > 0);
+    assert (damage > 0);
     final projectile = getInstanceProjectile();
     var finalAngle = angle;
     if (finalAngle == null) {
@@ -1506,7 +1502,7 @@ abstract class Game {
     projectile.x = src.x;
     projectile.y = src.y;
     projectile.z = src.z + Node_Height_Half;
-    projectile.setVelocity(finalAngle + giveOrTake(accuracy), speed);
+    projectile.setVelocity(finalAngle + giveOrTake(accuracy), ProjectileType.getSpeed(projectileType));
     projectile.owner = src;
     projectile.range = range;
     projectile.type = projectileType;
@@ -1880,14 +1876,6 @@ abstract class Game {
       return;
     }
     if (character.equippedIsMelee) {
-      spawnProjectile(
-        src: character,
-        speed: 3,
-        range: character.equippedRange * 2,
-        projectileType: ProjectileType.Wave,
-        damage: 1,
-        angle: character.faceAngle,
-      );
 
       final attackTarget = character.target;
       if (attackTarget != null) {

@@ -477,10 +477,10 @@ class Player extends Character with ByteWriter {
 
     final itemType = inventoryGetItemType(index);
     if (itemType == ItemType.Empty) return 0;
-    if (ItemType.doesConsumeOnUse(itemType)) return 1;
+    // if (ItemType.doesConsumeOnUse(itemType)) return 1;
 
-    if (index == ItemType.Equipped_Weapon)
-      return 1;
+    // if (index == ItemType.Equipped_Weapon)
+    //   return 1;
     if (index == ItemType.Equipped_Body)
       return 1;
     if (index == ItemType.Equipped_Head)
@@ -691,10 +691,10 @@ class Player extends Character with ByteWriter {
     assert (itemType == ItemType.Empty || itemQuantity > 0);
     assert (itemType != ItemType.Empty || itemQuantity == 0);
 
-    if (ItemType.isTypeEquippable(itemType)){
-      assert (itemQuantity <= 1);
-      itemQuantity = 1;
-    }
+    // if (ItemType.isTypeEquippable(itemType)){
+    //   assert (itemQuantity <= 1);
+    //   itemQuantity = 1;
+    // }
 
     if (index == equippedWeaponIndex) {
        if (ItemType.isTypeWeapon(itemType)) {
@@ -822,8 +822,8 @@ class Player extends Character with ByteWriter {
     return false;
   }
 
-  void inventoryAdd1({required int itemType}){
-    inventoryAdd(itemType: itemType, itemQuantity: 1);
+  void inventoryAddWeapon({required int itemType}){
+    inventoryAdd(itemType: itemType, itemQuantity: ItemType.getWeaponCapacity(itemType));
   }
 
   void inventoryAdd({required int itemType, required int itemQuantity}) {
@@ -1594,17 +1594,18 @@ class Player extends Character with ByteWriter {
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Equipped_Weapon_Ammunition);
     writeUInt16(equippedWeaponAmmunitionType);
-    writeUInt16(equippedWeaponAmmunitionQuantity);
+    writeUInt16(equippedWeaponQuantity);
   }
 
-  void consumeEquippedWeaponAmmunition() {
-    final ammunitionType = equippedWeaponAmmunitionType;
-    if (ammunitionType == ItemType.Empty) return;
-    var amount = ItemType.getConsumeAmount(weaponType);
-    if (amount == 0) return;
-    inventoryReduceItemTypeQuantity(itemType: ammunitionType, reduction: amount);
-    writePlayerEquippedWeaponAmmunition();
-  }
+  // void consumeEquippedWeaponAmmunition() {
+  //   assert (_equippedWeaponIndex >= 0);
+  //   final ammunitionType = equippedWeaponAmmunitionType;
+  //   if (ammunitionType == ItemType.Empty) return;
+  //   var amount = ItemType.getConsumeAmount(weaponType);
+  //   if (amount == 0) return;
+  //   inventoryReduceItemTypeQuantity(itemType: ammunitionType, reduction: amount);
+  //   writePlayerEquippedWeaponAmmunition();
+  // }
 
   void writePlayerInventorySlot(int index) {
      assert (isValidInventoryIndex(index));
@@ -1619,11 +1620,11 @@ class Player extends Character with ByteWriter {
   int get equippedWeaponAmmoConsumption => ItemType.getConsumeAmount(weaponType);
   int get equippedWeaponAmmunitionType => ItemType.getConsumeType(weaponType);
 
-  bool get sufficientAmmunition =>
-    equippedWeaponAmmunitionQuantity >= equippedWeaponAmmoConsumption;
+  bool get sufficientAmmunition => equippedWeaponQuantity > 1;
 
-  int get equippedWeaponAmmunitionQuantity =>
-      inventoryGetTotalQuantityOfItemType(ItemType.getConsumeType(weaponType));
+  int get equippedWeaponQuantity =>
+    inventoryGetItemQuantity(equippedWeaponIndex);
+
 
   void lookAt(Position position) {
     assert(!deadOrDying);

@@ -2,9 +2,8 @@ class ItemType {
 
   static const Invalid                      = -0001;
   static const Empty                        = 00000;
+  static const Index_Perk                   = 00500;
   static const Index_Base                   = 00800;
-  static const Index_Base_Health            = 00801;
-  static const Index_Base_Damage            = 00802;
   static const Index_Environment            = 01000;
   static const Index_Consumables            = 02000;
   static const Index_Resources              = 05000;
@@ -35,6 +34,12 @@ class ItemType {
   static const Equipped_Body = Index_Equipped + 2;
   static const Equipped_Legs = Index_Equipped + 3;
   static const Equipped_Weapon = Index_Equipped + 4;
+
+  static const Perk_Max_Health        = Index_Perk + 1;
+  static const Perk_Damage            = Perk_Max_Health + 1;
+
+  static const Base_Health            = Index_Base + 1;
+  static const Base_Damage            = Base_Health + 2;
 
   static const Consumables_Apple = Index_Consumables + 1;
   static const Consumables_Meat = Index_Consumables + 2;
@@ -255,10 +260,6 @@ class ItemType {
     return type >= Index_Consumables;
   }
 
-  static bool doesConsumeOnUse(int itemType){
-     return getConsumeAmount(itemType) > 0;
-  }
-  
   static int getConsumeType(int itemType) {
 
     if (isTypeWeaponHandgun(itemType)){
@@ -300,7 +301,8 @@ class ItemType {
       Weapon_Handgun_Flint_Lock_Old: 1,
       Weapon_Handgun_Flint_Lock: 2,
       Weapon_Handgun_Flint_Lock_Superior: 3,
-      Trinket_Ring_of_Damage: 1,
+      Weapon_Handgun_Glock: 3,
+      Weapon_Handgun_Revolver: 7,
       Weapon_Melee_Sword: 3,
       Weapon_Ranged_Bow: 1,
       Weapon_Ranged_Bow_Long: 2,
@@ -311,6 +313,7 @@ class ItemType {
       Weapon_Rifle_AK_47: 2,
       Weapon_Rifle_M4: 2,
       Weapon_Rifle_Steyr: 2,
+      Trinket_Ring_of_Damage: 1,
   }[value] ?? 0;
 
   static double getRange(int value) => const <int, double> {
@@ -319,6 +322,8 @@ class ItemType {
       Weapon_Handgun_Flint_Lock_Old: 350,
       Weapon_Handgun_Flint_Lock: 355,
       Weapon_Handgun_Flint_Lock_Superior: 360,
+      Weapon_Handgun_Glock: 350,
+      Weapon_Handgun_Revolver: 400,
       Weapon_Ranged_Bow: 300,
       Weapon_Ranged_Bow_Long: 350,
       Weapon_Ranged_Crossbow: 400,
@@ -337,6 +342,8 @@ class ItemType {
       Weapon_Handgun_Flint_Lock_Old: 50,
       Weapon_Handgun_Flint_Lock: 45,
       Weapon_Handgun_Flint_Lock_Superior: 40,
+      Weapon_Handgun_Glock: 20,
+      Weapon_Handgun_Revolver: 35,
       Weapon_Melee_Sword: 50,
       Weapon_Ranged_Bow: 50,
       Weapon_Ranged_Bow_Long: 50,
@@ -375,8 +382,8 @@ class ItemType {
   
   static String getName(int value) => const {
      Empty: "Empty",
-     Index_Base_Health: "Base Health",
-     Index_Base_Damage: "Base Damage",
+     Base_Health: "Base Health",
+     Base_Damage: "Base Damage",
      Resource_Crystal: "Crystal",
      Resource_Wood: "Wood",
      Resource_Iron: "Iron",
@@ -448,6 +455,23 @@ class ItemType {
     Legs_White          : 25,
     Legs_Green          : 30,
   }[itemType] ??          00;
+
+  static bool hasCapacity(int itemType){
+    return getWeaponCapacity(itemType) > 0;
+  }
+
+  static int getWeaponCapacity(int itemType) => const {
+    Weapon_Handgun_Flint_Lock_Old       : 01,
+    Weapon_Handgun_Flint_Lock           : 01,
+    Weapon_Handgun_Flint_Lock_Superior  : 01,
+    Weapon_Handgun_Glock                : 10,
+    Weapon_Handgun_Revolver             : 06,
+    Weapon_Rifle_Steyr                  : 30,
+    Weapon_Rifle_M4                     : 35,
+    Weapon_Rifle_Jager                  : 06,
+    Weapon_Rifle_Musket                 : 01,
+    Weapon_Ranged_Shotgun               : 05,
+  }[itemType]                          ?? 01;
 }
 
 

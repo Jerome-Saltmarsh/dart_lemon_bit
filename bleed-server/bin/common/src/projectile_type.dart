@@ -5,6 +5,12 @@ class ProjectileType {
    static const Fireball = 2;
    static const Bullet = 3;
    static const Wave = 4;
-   static const Electric_Ball = 5;
-   static const Ice_Ball = 5;
+
+   static double getSpeed(int type) => {
+      Arrow: 7.0,
+      Orb: 4.5,
+      Fireball: 4.5,
+      Bullet: 14.0,
+      Wave: 6.0,
+   }[type] ?? 0;
 }

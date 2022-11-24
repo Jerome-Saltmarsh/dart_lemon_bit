@@ -46,24 +46,29 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] character butterfly
 [ ] character bird
 [ ] character chicken
-[ ] character type skeleton
-[ ] character type ranger
-[ ] character type goblin
-[ ] character type vampire
-[ ] character type wolf
 
-[BUGS]
-[ ] fix window trade
-[ ] fix lighting on spawn bug
+[MODELS]
+[ ] character skeleton
+[ ] character ranger
+[ ] character goblin
+[ ] character vampire
+[ ] character wolf
+[ ] flint lock pistol
+[ ] bolt action rifle
+[ ] standard issue police handgun
 
 [SCENE CEMETERY]
 [ ] particle-type myst
 [ ] design scene
 
-[objective]
-[ ] upgrade pistol-flint-lock-old to pistol-flint-lock
+[FEATURES]
+[ ] Loud Noises Draw Attention
+[ ] skills
+[ ] attributes
+[ ] weapon capacity
 
 18.11.2022
+[x] fix window trade
 [x] fixed mobile layout bug
 [x] fix mobile attack button position
 [x] fix do not save collectable game items to scene

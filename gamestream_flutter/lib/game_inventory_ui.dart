@@ -302,7 +302,7 @@ class GameInventoryUI {
 
          children.add(
              _buildRowHoverValue(
-                 itemType: ItemType.Index_Base_Damage,
+                 itemType: ItemType.Base_Damage,
                  value: ServerState.playerBaseDamage.value,
                  total: total,
              )
@@ -355,7 +355,7 @@ class GameInventoryUI {
 
        children.add(
            _buildRowHoverValue(
-             itemType: ItemType.Index_Base_Health,
+             itemType: ItemType.Base_Health,
              value: ServerState.playerBaseMaxHealth.value,
              total: total,
            )

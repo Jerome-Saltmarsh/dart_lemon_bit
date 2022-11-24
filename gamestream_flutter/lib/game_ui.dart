@@ -448,7 +448,7 @@ class GameUI {
                       scale: 2,
                   ),
                 ),
-              if (beltItemType != ItemType.Empty && !ItemType.isTypeEquippable(beltItemType))
+              if (beltItemType != ItemType.Empty)
                 Positioned(
                     right: 5,
                     bottom: 5,
@@ -458,18 +458,18 @@ class GameUI {
                           italic: true,
                           color: Colors.white70,
                         ))),
-              if (beltItemType != ItemType.Empty && doesConsume)
-                Positioned(
-                    right: 5,
-                    bottom: 5,
-                    child: buildInventoryAware(
-                        builder: () => text(
-                          ServerQuery
-                              .getItemTypeConsumesRemaining(
-                              beltItemType),
-                          italic: true,
-                          color: Colors.white70,
-                        ))),
+              // if (beltItemType != ItemType.Empty && doesConsume)
+                // Positioned(
+                //     right: 5,
+                //     bottom: 5,
+                //     child: buildInventoryAware(
+                //         builder: () => text(
+                //           ServerQuery
+                //               .getItemTypeConsumesRemaining(
+                //               beltItemType),
+                //           italic: true,
+                //           color: Colors.white70,
+                //         ))),
             ],
           );
           });
@@ -531,6 +531,16 @@ class GameUI {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
+                        text("Weapon Capacity"),
+                        text("Weapon Accuracy"),
+                        text("Reload Speed"),
+                        text("Fire Rate"),
+                        text("Movement Speed"),
+                        text("Change Weapon Speed"),
+                        text("Ability: Throw Grenade"),
+                        text("Ability: Heal"),
+                        text("Ability: Blink"),
+                        text("Ability: Double Damage"),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [

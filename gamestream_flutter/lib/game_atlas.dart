@@ -39,8 +39,8 @@ class AtlasItems {
       ItemType.Resource_Arrow: 192,
       ItemType.Consumables_Meat: 224,
       ItemType.Consumables_Apple: 256,
-      ItemType.Index_Base_Health: 288,
-      ItemType.Index_Base_Damage: 352,
+      ItemType.Base_Health: 288,
+      ItemType.Base_Damage: 352,
   }[itemType] ?? 0;
 
   static double getSrcY(int itemType) => const <int, double> {
@@ -70,8 +70,8 @@ class AtlasItems {
     ItemType.Weapon_Rifle_AK_47:  128,
     ItemType.Weapon_Rifle_M4: 160,
     ItemType.Weapon_Rifle_Steyr: 192,
-    ItemType.Index_Base_Health: 64,
-    ItemType.Index_Base_Damage: 64,
+    ItemType.Base_Health: 64,
+    ItemType.Base_Damage: 64,
   }[itemType] ?? 0;
 }
 
