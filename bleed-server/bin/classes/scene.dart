@@ -160,10 +160,6 @@ class Scene {
 
   int convertNodeIndexToZ(int index) => index ~/ gridArea;
 
-  void modifyGridAddRowAtStart(){
-
-  }
-
   /// Warning Expensive, (Do not call during runtime)
   void refreshSpawnPoints() {
     final newSpawnPoints = <int>[];

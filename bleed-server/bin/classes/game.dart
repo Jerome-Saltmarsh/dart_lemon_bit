@@ -1523,35 +1523,52 @@ abstract class Game {
     return projectile;
   }
 
-  void spawnZombies({required int index, int total = 2}) {
+  void spawnAtIndexZombies({
+    required int index,
+    int total = 2,
+    int health = 10,
+    int damage = 1,
+    int team = TeamType.Evil,
+  }) {
     for (var j = 0; j < total; j++) {
-      spawnZombieAtIndex(index);
+      spawnAtIndexZombie(
+          index: index,
+          health: health,
+          damage: damage,
+          team: team,
+      );
     }
   }
 
-  Zombie spawnZombieAtIndex(int i) {
-    if (i >= scene.gridVolume) {
-      throw Exception('game.spawnZombieAtIndex($i) \ni >= scene.gridVolume');
+  Zombie spawnAtIndexZombie({
+    required int index,
+    int health = 10,
+    int damage = 1,
+    int team = TeamType.Evil,
+  }) {
+    if (index >= scene.gridVolume) {
+      throw Exception('game.spawnZombieAtIndex($index) \ni >= scene.gridVolume');
     }
-    final indexZ = i ~/ scene.gridArea;
-    var remainder = i - (indexZ * scene.gridArea);
-    final indexRow = remainder ~/ scene.gridColumns;
-    remainder -= indexRow * scene.gridColumns;
-    final indexColumn = remainder;
-    final zombie = spawnZombie(
-      x: indexRow * Node_Size,
-      y: indexColumn * Node_Size,
-      z: indexZ * Node_Height,
-      health: 3,
-      team: 100,
-      damage: 1,
+
+    final indexZ = scene.convertNodeIndexToZ(index);
+    final indexRow = scene.convertNodeIndexToRow(index);
+    final indexColumn = scene.convertNodeIndexToColumn(index);
+    final posX = indexRow * Node_Size;
+    final posY = indexColumn * Node_Size;
+    final posZ = indexZ * Node_Height;
+
+    final instance = Zombie(
+      x: posX,
+      y: posY,
+      z: posZ,
+      health: health,
+      damage: damage,
+      game: this,
+      team: team,
     );
-    zombie.x += giveOrTake(10);
-    zombie.y += giveOrTake(10);
-    zombie.spawnX = zombie.x;
-    zombie.spawnY = zombie.y;
-    zombie.spawnNodeIndex = i;
-    return zombie;
+    characters.add(instance);
+    instance.spawnNodeIndex = index;
+    return instance;
   }
 
   GameObject spawnGameObjectAtIndex({required int index, required int type}){
@@ -2111,7 +2128,13 @@ abstract class Game {
 
   void triggerSpawnPoints({int instances = 2}){
     for (final index in scene.spawnPoints){
-      spawnZombies(index: index, total: instances);
+      spawnAtIndexZombies(
+          index: index,
+          total: instances,
+          damage: 10,
+          team: TeamType.Evil,
+          health: 15,
+      );
     }
   }
 

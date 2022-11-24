@@ -414,7 +414,7 @@ class Connection {
         if (spawnIndex == null) {
           return errorInvalidArg('spawn index required');
         }
-        game.spawnZombieAtIndex(spawnIndex);
+        game.spawnAtIndexZombie(index: spawnIndex);
         break;
     }
 

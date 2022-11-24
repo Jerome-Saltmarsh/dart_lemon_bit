@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/game_ui_interact.dart';
 import 'package:gamestream_flutter/isometric/events/on_visibility_changed_message_box.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
-import 'package:gamestream_flutter/isometric/ui/watches/build_watch_player_alive.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/game_map.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -30,7 +29,7 @@ class GameUI {
         buildWatchBool(ClientState.triggerAlarmNoMessageReceivedFromServer,
             buildDialogFramesSinceUpdate),
         watch(GameState.player.gameDialog, buildGameDialog),
-        buildWatchBool(GameState.player.alive, buildContainerRespawn, false),
+        buildWatchBool(GameState.player.alive, buildPositionedContainerRespawn, false),
         Positioned(
             top: 0,
             right: 0,
@@ -658,5 +657,33 @@ class GameUI {
             width: 100);
       });
     });
+  }
+
+  static Widget buildPositionedContainerRespawn(){
+    const width = 200;
+    return Positioned(
+      bottom: 150,
+      child: Container(
+        width: Engine.screen.width,
+        alignment: Alignment.center,
+        child: GameUI.buildDialogUIControl(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              text('You Died'),
+              height8,
+              container(
+                alignment: Alignment.center,
+                child: "Respawn",
+                action: GameNetwork.sendClientRequestRespawn,
+                color: greyDark,
+                width: width * Engine.GoldenRatio_0_618,
+              )
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
