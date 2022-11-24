@@ -65,7 +65,6 @@ class Player extends Character with ByteWriter {
   int get baseMaxHealth => _baseMaxHealth;
   int get baseDamage => _baseDamage;
 
-
   static const Health_Per_Perk = 5;
   var perkMaxHealth = 0;
   var perkMaxDamage = 0;
@@ -97,6 +96,8 @@ class Player extends Character with ByteWriter {
   int get attributes => _attributes;
 
   int get equippedWeaponIndex => _equippedWeaponIndex;
+
+  bool get weaponIsEquipped => _equippedWeaponIndex != -1;
 
   set equippedWeaponIndex(int index){
     if (_equippedWeaponIndex == index) return;
@@ -1057,7 +1058,7 @@ class Player extends Character with ByteWriter {
       writePlayerPosition();
       writePlayerSpawned();
       writePlayerInventory();
-      writePlayerEquippedWeaponAmmunition();
+      // writePlayerEquippedWeaponAmmunition();
       writePlayerLevel();
       writePlayerExperiencePercentage();
       writePlayerBaseMaxHealth();
@@ -1591,10 +1592,12 @@ class Player extends Character with ByteWriter {
   }
 
   void writePlayerEquippedWeaponAmmunition(){
-    writeByte(ServerResponse.Player);
-    writeByte(ApiPlayer.Equipped_Weapon_Ammunition);
-    writeUInt16(equippedWeaponAmmunitionType);
-    writeUInt16(equippedWeaponQuantity);
+    assert (weaponIsEquipped);
+    writePlayerInventorySlot(equippedWeaponIndex);
+    // writeByte(ServerResponse.Player);
+    // writeByte(ApiPlayer.Inventory_Slot);
+    // writeUInt16(equippedWeaponAmmunitionType);
+    // writeUInt16(equippedWeaponQuantity);
   }
 
   // void consumeEquippedWeaponAmmunition() {

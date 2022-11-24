@@ -421,10 +421,6 @@ class GameUI {
     return watch(
           watchBeltType,
           (int beltItemType) {
-
-            final consumeType = ItemType.getConsumeType(beltItemType);
-            final doesConsume = consumeType != ItemType.Empty;
-
             return Stack(
             children: [
               watch(ServerState.equippedWeaponIndex, (equippedWeaponIndex) =>
@@ -448,6 +444,7 @@ class GameUI {
                       scale: 2,
                   ),
                 ),
+
               if (beltItemType != ItemType.Empty)
                 Positioned(
                     right: 5,
@@ -458,18 +455,6 @@ class GameUI {
                           italic: true,
                           color: Colors.white70,
                         ))),
-              // if (beltItemType != ItemType.Empty && doesConsume)
-                // Positioned(
-                //     right: 5,
-                //     bottom: 5,
-                //     child: buildInventoryAware(
-                //         builder: () => text(
-                //           ServerQuery
-                //               .getItemTypeConsumesRemaining(
-                //               beltItemType),
-                //           italic: true,
-                //           color: Colors.white70,
-                //         ))),
             ],
           );
           });

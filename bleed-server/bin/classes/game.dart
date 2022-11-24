@@ -263,6 +263,7 @@ abstract class Game {
              quantity: currentAmmunition - 1,
              index: player.equippedWeaponIndex,
          );
+         player.writePlayerEquippedWeaponAmmunition();
       } else {
         player.writeError('no ammunition');
         return;

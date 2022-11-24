@@ -230,6 +230,43 @@ class ServerResponseReader with ByteReader {
         final index = readUInt16();
         final itemType = readUInt16();
         final itemQuantity = readUInt16();
+
+        if (index == ItemType.Belt_1){
+          ServerState.playerBelt1_ItemType.value = itemType;
+          ServerState.playerBelt1_Quantity.value = itemQuantity;
+          ClientActions.redrawInventory();
+          return;
+        }
+        if (index == ItemType.Belt_2){
+          ServerState.playerBelt2_ItemType.value = itemType;
+          ServerState.playerBelt2_Quantity.value = itemQuantity;
+          ClientActions.redrawInventory();
+          return;
+        }
+        if (index == ItemType.Belt_3){
+          ServerState.playerBelt3_ItemType.value = itemType;
+          ServerState.playerBelt3_Quantity.value = itemQuantity;
+          ClientActions.redrawInventory();
+          return;
+        }
+        if (index == ItemType.Belt_4){
+          ServerState.playerBelt4_ItemType.value = itemType;
+          ServerState.playerBelt4_Quantity.value = itemQuantity;
+          ClientActions.redrawInventory();
+          return;
+        }
+        if (index == ItemType.Belt_5){
+          ServerState.playerBelt5_ItemType.value = itemType;
+          ServerState.playerBelt5_Quantity.value = itemQuantity;
+          ClientActions.redrawInventory();
+          return;
+        }
+        if (index == ItemType.Belt_6){
+          ServerState.playerBelt6_ItemType.value = itemType;
+          ServerState.playerBelt6_Quantity.value = itemQuantity;
+          ClientActions.redrawInventory();
+          return;
+        }
         ServerState.inventory[index] = itemType;
         ServerState.inventoryQuantity[index] = itemQuantity;
         ClientActions.redrawInventory();
