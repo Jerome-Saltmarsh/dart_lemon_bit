@@ -201,6 +201,10 @@ class ItemType {
   static bool isTypeWeaponMelee(int value) =>
       value == ItemType.Empty || (value > Index_Weapon_Melee && value < Index_Weapon_Ranged_Handgun);
 
+  static bool isTypeWeaponBow(int value) =>
+      value == ItemType.Weapon_Ranged_Bow ||
+      value == ItemType.Weapon_Ranged_Bow_Long;
+
   static bool isTypeWeaponHandgun(int value) =>
       value > Index_Weapon_Ranged_Handgun && value < Index_Weapon_Ranged_Rifle;
 
@@ -243,7 +247,11 @@ class ItemType {
       return Resource_Gun_Powder;
     }
 
-    if (isTypeWeaponHandgun(itemType)){
+    if (isTypeWeaponShotgun(itemType)){
+      return Resource_Gun_Powder;
+    }
+
+    if (isTypeWeaponRifle(itemType)){
       return Resource_Gun_Powder;
     }
 

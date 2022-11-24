@@ -258,7 +258,7 @@ class TemplateAnimation {
     6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 6, 6, 6, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 8, 8, 8, 8
   ];
 
-  static const Striking = [
+  static const Punch = [
      10, 10, 10, 10, 10, 11
   ];
 
@@ -276,24 +276,31 @@ class TemplateAnimation {
 
   static List<int> getAttackAnimation(int weaponType){
 
+      if (weaponType == ItemType.Empty) {
+        return Punch;
+      }
+
      if (ItemType.isTypeWeaponHandgun(weaponType)) {
        return FiringHandgun;
      }
 
-      switch (weaponType) {
-        case ItemType.Empty:
-          return Striking;
-        case ItemType.Weapon_Ranged_Shotgun:
-          return FiringShotgun;
-        case ItemType.Weapon_Ranged_Bow:
-          return FiringBow;
-        case ItemType.Weapon_Melee_Sword:
-          return StrikingBlade;
-        case ItemType.Weapon_Melee_Staff:
-          return StrikingBlade;
-        default:
-          throw Exception("TemplateAnimation.getAttackAnimation(${ItemType.getName(weaponType)})");
-      }
+     if (ItemType.isTypeWeaponRifle(weaponType)){
+       return FiringShotgun;
+     }
+
+     if (ItemType.isTypeWeaponShotgun(weaponType)){
+       return FiringShotgun;
+     }
+
+     if (ItemType.isTypeWeaponMelee(weaponType)){
+       return StrikingBlade;
+     }
+
+     if (ItemType.isTypeWeaponBow(weaponType)){
+       return FiringBow;
+     }
+
+     throw Exception("TemplateAnimation.getAttackAnimation(${ItemType.getName(weaponType)})");
   }
 }
 

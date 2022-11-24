@@ -277,6 +277,11 @@ abstract class Game {
       return;
     }
 
+    if (ItemType.isTypeWeaponRifle(weaponType)) {
+      characterFireWeapon(player);
+      return;
+    }
+
     if (ItemType.isTypeWeaponShotgun(weaponType)) {
       characterFireShotgun(player, player.lookRadian);
       return;
@@ -291,8 +296,6 @@ abstract class Game {
             angle: player.lookRadian,
         );
         return;
-      case ItemType.Weapon_Ranged_Shotgun:
-        return characterFireShotgun(player, player.lookRadian);
       case ItemType.Weapon_Melee_Staff:
         characterSpawnProjectileFireball(
             player,
