@@ -1628,6 +1628,19 @@ class Player extends Character with ByteWriter {
     assert(!deadOrDying);
     lookRadian = this.getAngle(position) + pi;
   }
+
+  void selectPerk(int perkType) {
+    switch (perkType) {
+      case PerkType.Max_Health:
+        perkMaxHealth++;
+        refreshStats();
+        break;
+      case PerkType.Damage:
+        perkMaxDamage++;
+        refreshStats();
+        break;
+    }
+  }
 }
 
 int getExperienceForLevel(int level){

@@ -105,6 +105,12 @@ class Connection {
         handleClientRequestTeleport(player);
         return;
 
+      case ClientRequest.Select_Perk:
+        final perkType = parseArg1(arguments);
+        if (perkType == null) return;
+        player.selectPerk(perkType);
+        return;
+
       case ClientRequest.Store_Close:
         player.storeItems = [];
         player.writeStoreItems();
@@ -194,71 +200,6 @@ class Connection {
         reply('scene: $scene');
         break;
 
-      case ClientRequest.Spawn_Node_Data:
-        if (arguments.length < 4){
-          return errorInvalidArg('expected 4 args');
-        }
-        final z = parse(arguments[1]);
-        final row = parse(arguments[2]);
-        final column = parse(arguments[3]);
-
-        if (z == null) return errorInvalidArg('z is null');
-        if (row == null) return errorInvalidArg('row is null');
-        if (column == null) return errorInvalidArg('column is null');
-        /// TODO
-        // final node = player.game.scene.getNode(z, row, column);
-        //
-        // if (node is NodeSpawn)
-        //   return player.writeNodeData(node);
-        // return errorInvalidArg('node.type is not spawn');
-        break;
-
-      case ClientRequest.Spawn_Node_Data_Modify:
-        if (arguments.length < 6){
-          return errorInvalidArg('expected 6 args');
-        }
-        final z = parse(arguments[1]);
-        final row = parse(arguments[2]);
-        final column = parse(arguments[3]);
-        final spawnType = parse(arguments[4]);
-        final spawnAmount = parse(arguments[5]);
-        final spawnRadius = double.tryParse(arguments[6]);
-
-        if (z == null) return errorInvalidArg('z is null');
-        if (row == null) return errorInvalidArg('row is null');
-        if (column == null) return errorInvalidArg('column is null');
-        if (spawnType == null) return errorInvalidArg('spawnType is null');
-        if (spawnAmount == null) return errorInvalidArg('spawnAmount is null');
-        if (spawnRadius == null) return errorInvalidArg('spawnRadius is null');
-
-        if (spawnAmount < 0)
-          return errorInvalidArg('spawn amount must be greater than 0');
-        if (spawnAmount > 100)
-          return errorInvalidArg('spawn cannot be greater than 100');
-        if (spawnRadius < 0)
-          return errorInvalidArg('spawn radius must be greater than 0');
-
-        if (!SpawnType.values.contains(spawnType))
-          return errorInvalidArg('invalid spawn type: $spawnType');
-
-
-        /// TODO
-
-        // final node = player.scene.getNode(z, row, column);
-
-        // if (node is NodeSpawn) {
-        //   node.spawnType = spawnType;
-        //   node.spawnAmount = spawnAmount;
-        //   node.spawnRadius = spawnRadius;
-        //   player.writeNodeData(node);
-        //   game.nodeSpawnInstancesClear(node);
-        //   game.nodeSpawnInstancesCreate(node);
-        //   player.scene.dirty = true;
-        // } else {
-        //   return errorInvalidArg('ClientRequest.Spawn_Node_Data_Modify. Selected node must be of type spawn');
-        // }
-        break;
-
       case ClientRequest.Teleport_Scene:
         final sceneIndex = parse(arguments[1]);
 
@@ -327,6 +268,13 @@ class Connection {
         break;
     }
   }
+
+  bool insufficientArgs1(List args) => insufficientArgs(args, 1);
+  bool insufficientArgs2(List args) => insufficientArgs(args, 2);
+  bool insufficientArgs3(List args) => insufficientArgs(args, 3);
+  bool insufficientArgs4(List args) => insufficientArgs(args, 4);
+  bool insufficientArgs5(List args) => insufficientArgs(args, 5);
+
 
   bool insufficientArgs(List args, int min){
      if (args.length < min) {
@@ -754,7 +702,26 @@ class Connection {
     player.state = CharacterState.Idle;
   }
 
-  parse(String source, {int? radix}) {
+  int? parseArg0(List<String> arguments,) => parseArg(arguments, 0);
+  int? parseArg1(List<String> arguments,) => parseArg(arguments, 1);
+  int? parseArg2(List<String> arguments,) => parseArg(arguments, 2);
+  int? parseArg3(List<String> arguments,) => parseArg(arguments, 3);
+  int? parseArg4(List<String> arguments,) => parseArg(arguments, 4);
+  int? parseArg5(List<String> arguments,) => parseArg(arguments, 5);
+
+  int? parseArg(List<String> arguments, int index){
+     if (index >= arguments.length) {
+       errorInsufficientArgs(index, arguments);
+       return null;
+     }
+     final value = int.tryParse(arguments[index]);
+     if (value == null) {
+       errorInvalidArg('could not convert argument $index ($value) to int');
+     }
+     return value;
+  }
+
+  int? parse(String source, {int? radix}) {
     final value = int.tryParse(source);
     if (value == null){
         errorParse(source);

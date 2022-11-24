@@ -23,8 +23,6 @@ class ClientRequest {
   static const Node = 27;
   static const Editor_Load_Scene = 28;
   static const Teleport_Scene = 29;
-  static const Spawn_Node_Data = 30;
-  static const Spawn_Node_Data_Modify = 31;
   static const Edit = 33;
   static const Inventory = 35;
   static const Select_Perk = 36;

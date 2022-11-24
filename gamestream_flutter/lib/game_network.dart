@@ -240,10 +240,6 @@ class GameNetwork {
     sendClientRequest(ClientRequest.Teleport_Scene, scene.index);
   }
 
-  static void sendClientRequestSpawnNodeData(int z, int row, int column){
-    sendClientRequest(ClientRequest.Spawn_Node_Data, '$z $row $column');
-  }
-
   static void sendClientRequestStoreClose(){
     sendClientRequest(ClientRequest.Store_Close);
   }
@@ -387,19 +383,6 @@ class GameNetwork {
 
   static void sendClientRequestEdit(EditRequest request, [dynamic message = null]) =>
       sendClientRequest(ClientRequest.Edit, '${request.index} $message');
-
-  static void sendClientRequestSpawnNodeDataModify({
-    required int z,
-    required int row,
-    required int column,
-    required int spawnType,
-    required int spawnAmount,
-    required int spawnRadius,
-  }) =>
-      sendClientRequest(
-          ClientRequest.Spawn_Node_Data_Modify,
-          '$z $row $column $spawnType $spawnAmount $spawnRadius'
-      );
 
   static void sendGameObjectRequestMoveToMouse() {
     sendGameObjectRequest(GameObjectRequest.Move_To_Mouse);
