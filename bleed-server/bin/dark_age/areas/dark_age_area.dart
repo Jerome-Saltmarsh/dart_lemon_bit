@@ -56,8 +56,6 @@ abstract class DarkAgeArea extends GameDarkAge {
       player.writeByte(ServerResponse.Dark_Age);
       player.writeByte(ApiDarkAge.areaType);
       player.writeByte(areaType);
-      print("area type: ${AreaType.getName(areaType)}");
-      print("scene name: ${scene.name}");
   }
 }
 

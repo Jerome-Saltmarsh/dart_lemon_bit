@@ -1909,18 +1909,6 @@ abstract class Game {
         );
         return;
       }
-      // final dynamicObjectHit = raycastHit(
-      //     character: character,
-      //     colliders: gameObjects,
-      //     range: character.equippedRange
-      // );
-      // if (dynamicObjectHit != null) {
-      //   applyHit(
-      //     src: character,
-      //     target: dynamicObjectHit,
-      //     damage: equippedDamage,
-      //   );
-      // }
       return;
     }
   }
