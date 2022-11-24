@@ -626,13 +626,15 @@ class Player extends Character with ByteWriter {
 
   void inventorySetQuantityAtIndex({required int quantity, required int index}){
     assert (isValidInventoryIndex(index));
-    assert (quantity >= 0);
+    final itemType = inventoryGetItemType(index);
 
-    if (quantity == 0){
-       inventorySetEmptyAtIndex(index);
+    if (quantity == 0) {
+      if (ItemType.isTypeResource(itemType)){
+        inventorySetEmptyAtIndex(index);
+      }
     }
     if (index < inventory.length) {
-      inventory[index] = index;
+      inventoryQuantity[index] = quantity;
       return;
     }
     if (index == ItemType.Belt_1){
@@ -689,13 +691,7 @@ class Player extends Character with ByteWriter {
   }){
     assert (isValidInventoryIndex(index));
     assert (itemTypeCanBeAssignedToIndex(itemType: itemType, index: index));
-    assert (itemType == ItemType.Empty || itemQuantity > 0);
     assert (itemType != ItemType.Empty || itemQuantity == 0);
-
-    // if (ItemType.isTypeEquippable(itemType)){
-    //   assert (itemQuantity <= 1);
-    //   itemQuantity = 1;
-    // }
 
     if (index == equippedWeaponIndex) {
        if (ItemType.isTypeWeapon(itemType)) {
