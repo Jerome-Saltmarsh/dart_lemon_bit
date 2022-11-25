@@ -147,7 +147,7 @@ abstract class Game {
 
     playerUpdateAimTarget(player);
 
-    if (player.weaponDurationRemaining <= 0) {
+    if (player.weaponStateDuration <= 0) {
       player.lookRadian = player.mouseAngle;
     }
 
@@ -284,7 +284,7 @@ abstract class Game {
         quantity: total,
         index: player.equippedWeaponIndex,
       );
-      setCharacterStateChanging(player);
+      player.assignWeaponStateReloading();
       return;
     }
 
@@ -317,8 +317,8 @@ abstract class Game {
             range: ItemType.getRange(weaponType),
             angle: player.lookRadian,
         );
-        player.weaponDurationRemaining = ItemType.getCooldown(player.weaponType);
-        assert(player.weaponDurationRemaining > 0);
+        player.weaponStateDuration = ItemType.getCooldown(player.weaponType);
+        assert(player.weaponStateDuration > 0);
         break;
     }
   }
@@ -371,8 +371,8 @@ abstract class Game {
     player.performX = performX;
     player.performY = performY;
     player.performZ = performZ;
-    player.weaponDurationRemaining = ItemType.getCooldown(player.weaponType);
-    assert (player.weaponDurationRemaining  > 0);
+    player.weaponStateDuration = ItemType.getCooldown(player.weaponType);
+    assert (player.weaponStateDuration  > 0);
 
     /// TODO name arguments
     dispatchAttackPerformed(
@@ -479,9 +479,7 @@ abstract class Game {
       return;
     }
 
-    character.weaponDurationRemaining = ItemType.getCooldown(character.weaponType);
-    assert(character.weaponDurationRemaining > 0);
-    character.weaponState = AttackState.Firing;
+    character.assignWeaponStateFiring();
     character.applyForce(
       force: 1.0,
       angle: angle + pi,
@@ -1006,9 +1004,9 @@ abstract class Game {
       }
     }
 
-    if (player.weaponDurationRemaining > 0) {
-      player.weaponDurationRemaining--;
-      if (player.weaponDurationRemaining <= 0){
+    if (player.weaponStateDuration > 0) {
+      player.weaponStateDuration--;
+      if (player.weaponStateDuration <= 0){
         player.weaponState = AttackState.Idle;
         player.lookRadian = player.mouseAngle;
         customOnPlayerWeaponReady(player);
@@ -1475,8 +1473,7 @@ abstract class Game {
         damage:src.damage,
       );
     }
-    src.weaponDurationRemaining = ItemType.getCooldown(src.weaponType);
-    assert(src.weaponDurationRemaining > 0);
+    src.assignWeaponStateFiring();
     dispatchAttackPerformed(src.weaponType, src.x, src.y, src.z, angle);
   }
 

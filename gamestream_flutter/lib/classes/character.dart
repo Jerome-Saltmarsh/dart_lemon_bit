@@ -26,7 +26,8 @@ class Character extends Vector3 {
   var weaponFrame = 0;
   var color = 0;
 
-  bool get usingWeapon => weaponFrame > 0 || performing;
+  bool get usingWeapon => weaponState == AttackState.Firing || performing;
+  bool get reloading => weaponState == AttackState.Reloading;
   bool get dead => state == CharacterState.Dead;
   bool get deadOrDying => dead || dying;
   bool get spawning => state == CharacterState.Spawning;

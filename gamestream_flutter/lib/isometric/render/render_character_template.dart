@@ -87,6 +87,11 @@ void renderCharacterTemplate(Character character, {
     frameWeapon = (character.weaponFrame >= animation.length ? animation.last : animation[character.weaponFrame]) - 1;
     frameBody = frameWeapon;
     frameHead = frameWeapon;
+  } else
+  if (character.reloading){
+    frameHead = TemplateAnimation.StateChangingFrame;
+    frameBody = TemplateAnimation.StateChangingFrame;
+    frameWeapon = TemplateAnimation.StateChangingFrame;
   }
 
   if (!weaponInFront) {

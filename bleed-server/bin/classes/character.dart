@@ -21,8 +21,9 @@ abstract class Character extends Collider {
   var frozenDuration = 0;
   Position3? target;
   var invincible = false;
-  var weaponDurationRemaining = 0;
   var weaponState = AttackState.Idle;
+  var weaponStateDuration = 0;
+  var weaponStateDurationTotal = 0;
   var weaponType = ItemType.Empty;
   var bodyType = ItemType.Body_Shirt_Cyan;
   var headType = ItemType.Head_Steel_Helm;
@@ -53,7 +54,7 @@ abstract class Character extends Collider {
     if (targetTeam == 0) return false;
     return team == targetTeam;
   }
-  bool get usingWeapon => weaponDurationRemaining > 0;
+  bool get usingWeapon => weaponStateDuration > 0;
   bool get running => state == CharacterState.Running;
   bool get idling => state == CharacterState.Idle;
   bool get characterStateIdle => state == CharacterState.Idle;
@@ -71,10 +72,10 @@ abstract class Character extends Collider {
   double get healthPercentage => health / maxHealth;
   double get faceAngle => _faceAngle;
   double get weaponTypeRange => ItemType.getRange(weaponType);
-  double get weaponDurationPercentage => weaponDurationRemaining == 0 ? 0 : weaponDurationRemaining / weaponTypeCooldown;
+  double get weaponDurationPercentage => weaponStateDurationTotal == 0 ? 0 : weaponStateDuration / weaponStateDurationTotal;
   double get equippedRange => ItemType.getRange(weaponType);
 
-  int get weaponFrame => weaponDurationRemaining > 0 ? weaponTypeCooldown - weaponDurationRemaining : 0;
+  int get weaponFrame => weaponStateDurationTotal - weaponStateDuration;
   int get faceDirection => Direction.fromRadian(_faceAngle);
   int get health => _health;
   int get type;
@@ -117,6 +118,19 @@ abstract class Character extends Collider {
   }
 
   /// METHODS
+
+  void assignWeaponStateFiring() {
+    weaponState = AttackState.Firing;
+    weaponStateDurationTotal = ItemType.getCooldown(weaponType);
+    assert(weaponStateDurationTotal > 0);
+    weaponStateDuration = weaponStateDurationTotal;
+  }
+
+  void assignWeaponStateReloading(){
+    weaponState = AttackState.Reloading;
+    weaponStateDurationTotal = 30;
+    weaponStateDuration = 30;
+  }
 
   void write(Player player);
 
