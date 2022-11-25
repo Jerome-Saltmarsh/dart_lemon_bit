@@ -1618,6 +1618,7 @@ class Player extends Character with ByteWriter {
   bool get equippedWeaponUsesAmmunition => equippedWeaponAmmoConsumption > 0;
   int get equippedWeaponAmmoConsumption => ItemType.getConsumeAmount(weaponType);
   int get equippedWeaponAmmunitionType => ItemType.getConsumeType(weaponType);
+  int get equippedWeaponCapacity => ItemType.getWeaponCapacity(weaponType);
 
   bool get sufficientAmmunition => equippedWeaponQuantity > 1;
 

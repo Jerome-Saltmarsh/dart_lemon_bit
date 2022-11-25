@@ -265,7 +265,24 @@ abstract class Game {
          );
          player.writePlayerEquippedWeaponAmmunition();
       } else {
-        player.writeError('no ammunition');
+        final equippedWeaponAmmoType = player.equippedWeaponAmmunitionType;
+        final totalAmmoRemaining = player.inventoryGetTotalQuantityOfItemType(equippedWeaponAmmoType);
+
+        if (totalAmmoRemaining == 0) {
+          player.writeError('no ammunition');
+          return;
+        } else {
+          var total = min(totalAmmoRemaining, player.equippedWeaponCapacity);
+          player.inventoryReduceItemTypeQuantity(
+              itemType: equippedWeaponAmmoType,
+              reduction: total,
+          );
+          player.inventorySetQuantityAtIndex(
+              quantity: total,
+              index: player.equippedWeaponIndex,
+          );
+          setCharacterStateChanging(player);
+        }
         return;
       }
     }
