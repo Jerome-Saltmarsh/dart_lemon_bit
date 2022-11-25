@@ -3,7 +3,6 @@ import 'dart:convert';
 
 import 'package:typedef/json.dart';
 
-import '../classes/gameobject.dart';
 import 'convert_gameobject_to_json.dart';
 
 

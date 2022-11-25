@@ -4,7 +4,6 @@ import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/system.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-import '../classes/gameobject.dart';
 import '../dark_age/dark_age_scenes.dart';
 import '../dark_age/game_dark_age.dart';
 import '../dark_age/game_dark_age_editor.dart';

@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:bleed_server/gamestream.dart';
-import 'gameobject.dart';
 
 late AI pathFindAI;
 var pathFindSearchID = 0;

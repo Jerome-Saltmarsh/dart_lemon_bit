@@ -4,7 +4,6 @@ import 'dart:typed_data';
 
 import 'package:typedef/json.dart';
 
-import '../classes/gameobject.dart';
 import '../classes/library.dart';
 
 Scene convertStringToScene(String value, String name) =>
