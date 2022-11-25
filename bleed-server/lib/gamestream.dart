@@ -9,3 +9,4 @@ export 'src/maths.dart';
 export 'src/physics.dart';
 export 'src/typedefs.dart';
 export 'src/classes/library.dart';
+export 'lemon_io/lemon_io.dart';
