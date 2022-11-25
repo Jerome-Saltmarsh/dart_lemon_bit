@@ -130,6 +130,9 @@ abstract class Character extends Collider {
     weaponState = AttackState.Reloading;
     weaponStateDurationTotal = 30;
     weaponStateDuration = 30;
+    if (this is Player) {
+      (this as Player).writePlayerEvent(PlayerEvent.Reloading);
+    }
   }
 
   void write(Player player);

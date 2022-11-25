@@ -345,6 +345,15 @@ class GameEvents {
 
   static void onPlayerEvent(int event) {
     switch (event) {
+      case PlayerEvent.Reloading:
+        switch (GamePlayer.weapon.value){
+          case ItemType.Weapon_Handgun_Glock:
+            GameAudio.reload_6();
+            break;
+          default:
+            GameAudio.reload_6();
+        }
+        break;
       case PlayerEvent.Lightning:
         GameAudio.thunder(1.0);
         break;
