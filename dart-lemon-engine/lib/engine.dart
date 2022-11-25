@@ -905,8 +905,6 @@ class Engine {
     int color = 1,
   }){
     bufferImage = image;
-    final angle = rotation + piQuarter;
-    final translate = calculateHypotenuse(srcWidth * 0.5, srcHeight * 0.5);
     final f = bufferIndex * 4;
     bufferClr[bufferIndex] = color;
     bufferSrc[f] = srcX;

@@ -41,7 +41,7 @@ class RenderProjectiles {
         anchorX: 0.5,
         anchorY: 0,
       );
-    renderPixelRed(x, y);
+    // renderPixelRed(x, y);
   }
 
   static void renderArrow(double x, double y, double rotation) {

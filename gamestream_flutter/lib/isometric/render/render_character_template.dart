@@ -194,7 +194,7 @@ void renderCharacterTemplate(Character character, {
     renderTemplateWeapon(character.weaponType, finalDirection, frameWeapon, color, dstX, dstY);
   }
 
-  RenderProjectiles.renderBullet(character.renderX, character.renderY, character.lookRadian);
+  // RenderProjectiles.renderBullet(character.renderX, character.renderY, character.lookRadian);
 }
 
 bool weaponIs64(int weapon) =>
