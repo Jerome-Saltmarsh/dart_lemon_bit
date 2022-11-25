@@ -30,7 +30,6 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] player attributes ui
 [ ] repeat killing same enemies yields no reward
 [ ] scene edit tool pause ai
-[ ] weapon capacity
 
 [PROJECTS]
 [ ] SKILLS
@@ -65,7 +64,10 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] Loud Noises Draw Attention
 [ ] skills
 [ ] attributes
-[ ] weapon capacity
+
+25.11.2022
+[x] weapon capacity
+[x] weapon reload
 
 18.11.2022
 [x] fix window trade
@@ -75,7 +77,6 @@ navigate to next method: ctrl + shift + up / down arrows
 [x] fix on zombie killed bug
 [x] move thunder flash state from client to server
 [x] refactor client applyBakeMapEmissions
-
 
 17.11.2022
 [x] remove enum Rain

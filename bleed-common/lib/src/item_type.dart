@@ -465,13 +465,13 @@ class ItemType {
     Weapon_Handgun_Flint_Lock_Old       : 01,
     Weapon_Handgun_Flint_Lock           : 01,
     Weapon_Handgun_Flint_Lock_Superior  : 01,
-    Weapon_Handgun_Glock                : 10,
+    Weapon_Handgun_Glock                : 15,
     Weapon_Handgun_Revolver             : 06,
     Weapon_Rifle_Steyr                  : 30,
     Weapon_Rifle_M4                     : 35,
-    Weapon_Rifle_Jager                  : 06,
+    Weapon_Rifle_Jager                  : 04,
     Weapon_Rifle_Musket                 : 01,
-    Weapon_Ranged_Shotgun               : 05,
+    Weapon_Ranged_Shotgun               : 04,
   }[itemType]                          ?? 01;
 }
 
