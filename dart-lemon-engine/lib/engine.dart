@@ -915,8 +915,8 @@ class Engine {
     bufferSrc[f + 3] = srcY + srcHeight;
     bufferDst[f] = cos(rotation) * scale;
     bufferDst[f + 1] = sin(rotation) * scale;
-    bufferDst[f + 2] = dstX - getAdjacent(angle, translate);
-    bufferDst[f + 3] = dstY - getOpposite(angle, translate);
+    bufferDst[f + 2] = dstX;
+    bufferDst[f + 3] = dstY;
     incrementBufferIndex();
   }
 

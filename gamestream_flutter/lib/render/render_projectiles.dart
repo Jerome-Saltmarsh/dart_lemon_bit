@@ -14,6 +14,7 @@ class RenderProjectiles {
         return;
       case ProjectileType.Orb:
         // return renderOrb(value.renderX, value.renderY);
+        break;
       case ProjectileType.Fireball:
         break;
       case ProjectileType.Bullet:
