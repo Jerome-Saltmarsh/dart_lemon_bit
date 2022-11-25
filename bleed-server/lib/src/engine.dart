@@ -34,6 +34,8 @@ import 'dark_age/dark_age_environment.dart';
 import 'dark_age/game_dark_age.dart';
 import 'dark_age/game_dark_age_editor.dart';
 import 'io/read_scene_from_file.dart';
+import 'network/websocket_server.dart';
+import 'system.dart';
 
 final engine = Engine();
 
@@ -46,15 +48,15 @@ class Engine {
 
   final gameMap = <List<DarkAgeArea>>[];
 
-  DarkAgeArea? getDarkArea(int row, int column){
-     if (row < 0) return null;
-     if (column < 0) return null;
-     if (row >= gameMap.length) return null;
-     if (column >= gameMap[0].length) return null;
-     return gameMap[row][column];
-  }
+  Future run() async {
+    print('gamestream.online server starting');
+    print('v${version}');
+    if (isLocalMachine){
+      print("Environment Detected: Jerome's Computer");
+    }else{
+      print("Environment Detected: Google Cloud Machine");
+    }
 
-  Future init() async {
     officialTime = DarkAgeTime();
     environmentAboveGround = DarkAgeEnvironment(officialTime);
     environmentUnderground = DarkAgeEnvironment(officialTime, maxShade: Shade.Pitch_Black);
@@ -105,6 +107,15 @@ class Engine {
     }
 
     Timer.periodic(Duration(milliseconds: 1000 ~/ framesPerSecond), fixedUpdate);
+    startWebsocketServer();
+  }
+
+  DarkAgeArea? getDarkArea(int row, int column){
+     if (row < 0) return null;
+     if (column < 0) return null;
+     if (row >= gameMap.length) return null;
+     if (column >= gameMap[0].length) return null;
+     return gameMap[row][column];
   }
 
   void fixedUpdate(Timer timer) {
