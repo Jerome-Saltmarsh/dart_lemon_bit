@@ -257,55 +257,41 @@ abstract class Game {
     if (player.deadBusyOrUsingWeapon) return;
 
     if (player.equippedWeaponUsesAmmunition){
-      final currentAmmunition = player.equippedWeaponQuantity;
-      if (currentAmmunition > 0){
+      final equippedWeaponQuantity = player.equippedWeaponQuantity;
+      if (equippedWeaponQuantity > 0){
          player.inventorySetQuantityAtIndex(
-             quantity: currentAmmunition - 1,
+             quantity: equippedWeaponQuantity - 1,
              index: player.equippedWeaponIndex,
          );
          player.writePlayerEquippedWeaponAmmunition();
-      } else {
-        final equippedWeaponAmmoType = player.equippedWeaponAmmunitionType;
-        final totalAmmoRemaining = player.inventoryGetTotalQuantityOfItemType(equippedWeaponAmmoType);
+         characterFireWeapon(player);
+         return;
+      }
+      final equippedWeaponAmmoType = player.equippedWeaponAmmunitionType;
+      final totalAmmoRemaining =
+          player.inventoryGetTotalQuantityOfItemType(equippedWeaponAmmoType);
 
-        if (totalAmmoRemaining == 0) {
-          player.writeError('no ammunition');
-          return;
-        } else {
-          var total = min(totalAmmoRemaining, player.equippedWeaponCapacity);
-          player.inventoryReduceItemTypeQuantity(
-              itemType: equippedWeaponAmmoType,
-              reduction: total,
-          );
-          player.inventorySetQuantityAtIndex(
-              quantity: total,
-              index: player.equippedWeaponIndex,
-          );
-          setCharacterStateChanging(player);
-        }
+      if (totalAmmoRemaining == 0) {
+        player.writeError('no ammunition');
         return;
       }
+      var total = min(totalAmmoRemaining, player.equippedWeaponCapacity);
+      player.inventoryReduceItemTypeQuantity(
+        itemType: equippedWeaponAmmoType,
+        reduction: total,
+      );
+      player.inventorySetQuantityAtIndex(
+        quantity: total,
+        index: player.equippedWeaponIndex,
+      );
+      setCharacterStateChanging(player);
+      return;
     }
 
     final weaponType = player.weaponType;
 
     if (ItemType.isTypeWeaponMelee(weaponType)) {
       playerAttackMelee(player: player);
-      return;
-    }
-
-    if (ItemType.isTypeWeaponHandgun(weaponType)) {
-      characterFireWeapon(player);
-      return;
-    }
-
-    if (ItemType.isTypeWeaponRifle(weaponType)) {
-      characterFireWeapon(player);
-      return;
-    }
-
-    if (ItemType.isTypeWeaponShotgun(weaponType)) {
-      characterFireShotgun(player, player.lookRadian);
       return;
     }
 
@@ -487,6 +473,11 @@ abstract class Game {
 
   void characterFireWeapon(Character character){
     final angle = (character is Player) ? character.lookRadian : character.faceAngle;
+
+    if (character.weaponType == ItemType.Weapon_Ranged_Shotgun){
+      characterFireShotgun(character, angle);
+      return;
+    }
 
     character.weaponDurationRemaining = ItemType.getCooldown(character.weaponType);
     assert(character.weaponDurationRemaining > 0);
