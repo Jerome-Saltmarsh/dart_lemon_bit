@@ -18,7 +18,7 @@ abstract class Character extends Collider {
   var frozenDuration = 0;
   Position3? target;
   var invincible = false;
-  var weaponState = AttackState.Idle;
+  var weaponState = WeaponState.Idle;
   var weaponStateDuration = 0;
   var weaponStateDurationTotal = 0;
   var weaponType = ItemType.Empty;
@@ -66,15 +66,15 @@ abstract class Character extends Collider {
   bool get equippedIsEmpty => false;
   bool get targetSet => target != null;
 
-  bool get weaponStateIdle => weaponState == AttackState.Idle;
-  bool get weaponStateReloading => weaponState == AttackState.Reloading;
-  bool get weaponStateFiring => weaponState == AttackState.Firing;
-  bool get weaponStateAiming => weaponState == AttackState.Aiming;
+  bool get weaponStateIdle => weaponState == WeaponState.Idle;
+  bool get weaponStateReloading => weaponState == WeaponState.Reloading;
+  bool get weaponStateFiring => weaponState == WeaponState.Firing;
+  bool get weaponStateAiming => weaponState == WeaponState.Aiming;
 
   double get healthPercentage => health / maxHealth;
   double get faceAngle => _faceAngle;
   double get weaponTypeRange => ItemType.getRange(weaponType);
-  double get weaponDurationPercentage => weaponStateDurationTotal == 0 ? 0 : weaponStateDuration / weaponStateDurationTotal;
+  double get weaponDurationPercentage =>  weaponStateDurationTotal == 0 || weaponStateAiming ? 0 : weaponStateDuration / weaponStateDurationTotal;
   double get equippedRange => ItemType.getRange(weaponType);
 
   int get weaponFrame => weaponStateDurationTotal - weaponStateDuration;
@@ -122,14 +122,14 @@ abstract class Character extends Collider {
   /// METHODS
 
   void assignWeaponStateFiring() {
-    weaponState = AttackState.Firing;
+    weaponState = WeaponState.Firing;
     weaponStateDurationTotal = ItemType.getCooldown(weaponType);
     assert (weaponStateDurationTotal > 0);
     weaponStateDuration = weaponStateDurationTotal;
   }
 
   void assignWeaponStateReloading(){
-    weaponState = AttackState.Reloading;
+    weaponState = WeaponState.Reloading;
     weaponStateDurationTotal = 30;
     weaponStateDuration = weaponStateDurationTotal;
     if (this is Player) {
@@ -138,13 +138,13 @@ abstract class Character extends Collider {
   }
 
   void assignWeaponStateIdle() {
-    weaponState = AttackState.Idle;
+    weaponState = WeaponState.Idle;
     weaponStateDurationTotal = 0;
     weaponStateDuration = weaponStateDurationTotal;
   }
 
   void assignWeaponStateAiming() {
-    weaponState = AttackState.Aiming;
+    weaponState = WeaponState.Aiming;
     weaponStateDurationTotal = 60;
     weaponStateDuration = weaponStateDurationTotal;
   }

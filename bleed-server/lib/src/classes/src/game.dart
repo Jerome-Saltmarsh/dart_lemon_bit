@@ -991,19 +991,19 @@ abstract class Game {
       player.weaponStateDuration--;
       if (player.weaponStateDuration <= 0){
         switch (player.weaponState) {
-          case AttackState.Firing:
+          case WeaponState.Firing:
             player.assignWeaponStateAiming();
             player.lookRadian = player.mouseAngle;
             break;
-          case AttackState.Aiming:
+          case WeaponState.Aiming:
             player.assignWeaponStateIdle();
             player.lookRadian = player.mouseAngle;
             break;
-          case AttackState.Reloading:
+          case WeaponState.Reloading:
             player.assignWeaponStateIdle();
             player.lookRadian = player.mouseAngle;
             break;
-          case AttackState.Idle:
+          case WeaponState.Idle:
             throw Exception("weapon state idle cannot have weapon duration");
         }
       }
@@ -1493,6 +1493,9 @@ abstract class Game {
         finalAngle = src is Player ? src.lookRadian : src.faceAngle;
       }
     }
+    if (accuracy != 0) {
+      finalAngle += giveOrTake(accuracy);
+    }
     projectile.damage = damage;
     projectile.collidable = true;
     projectile.active = true;
@@ -1501,10 +1504,10 @@ abstract class Game {
     }
     projectile.start.x = src.x;
     projectile.start.y = src.y;
-    projectile.x = src.x;
-    projectile.y = src.y;
+    projectile.x = src.x + getAdjacent(finalAngle, 10);
+    projectile.y = src.y + getOpposite(finalAngle, 10);
     projectile.z = src.z + Node_Height_Half;
-    projectile.setVelocity(finalAngle + giveOrTake(accuracy), ProjectileType.getSpeed(projectileType));
+    projectile.setVelocity(finalAngle, ProjectileType.getSpeed(projectileType));
     projectile.owner = src;
     projectile.range = range;
     projectile.type = projectileType;

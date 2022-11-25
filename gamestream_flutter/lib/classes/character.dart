@@ -26,11 +26,13 @@ class Character extends Vector3 {
   var weaponFrame = 0;
   var color = 0;
 
+  static const piSixteenth = pi / 16.0;
+
   bool get usingWeapon => weaponStateFiring || performing;
-  bool get weaponStateIdle => weaponState == AttackState.Idle;
-  bool get weaponStateFiring => weaponState == AttackState.Firing;
-  bool get weaponStateReloading => weaponState == AttackState.Reloading;
-  bool get weaponStateAiming => weaponState == AttackState.Aiming;
+  bool get weaponStateIdle => weaponState == WeaponState.Idle;
+  bool get weaponStateFiring => weaponState == WeaponState.Firing;
+  bool get weaponStateReloading => weaponState == WeaponState.Reloading;
+  bool get weaponStateAiming => weaponState == WeaponState.Aiming;
   bool get dead => state == CharacterState.Dead;
   bool get deadOrDying => dead || dying;
   bool get spawning => state == CharacterState.Spawning;
@@ -39,13 +41,9 @@ class Character extends Vector3 {
   bool get hurt => state == CharacterState.Hurt;
   bool get dying => state == CharacterState.Dying;
   bool get alive => !dead;
-
-  static const piSixteenth = pi / 16.0;
-
-  int get aimDirection => ((lookRadian - (piSixteenth)) ~/ piQuarter + 4) % 8;
-  double get angle => direction * piQuarter;
-  int get renderDirection => direction == 0 ? 7 : (direction - 1);
-
   bool get unarmed => weaponType == ItemType.Empty;
   bool get weaponTypeIsShotgun => weaponType == ItemType.Weapon_Ranged_Shotgun;
+  int get aimDirection => ((lookRadian - (piSixteenth)) ~/ piQuarter + 4) % 8;
+  int get renderDirection => direction == 0 ? 7 : (direction - 1);
+  double get angle => direction * piQuarter;
 }

@@ -4,7 +4,7 @@ library common;
 export 'src/api_dark_age.dart';
 export 'src/api_player.dart';
 export 'src/area_type.dart';
-export 'src/attack_state.dart';
+export 'src/weapon_state.dart';
 export 'src/character_state.dart';
 export 'src/character_action.dart';
 export 'src/character_type.dart';

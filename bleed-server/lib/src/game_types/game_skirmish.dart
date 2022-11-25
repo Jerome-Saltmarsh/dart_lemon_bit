@@ -35,11 +35,6 @@ class GameSkirmish extends Game {
     }
   }
 
-  @override
-  void customOnPlayerWeaponReady(Player player){
-
-  }
-
   void respawnAI(AI ai){
     ai.respawn = configAIRespawnFrames;
     ai.health = ai.maxHealth;
