@@ -2,7 +2,7 @@
 
 import 'package:typedef/json.dart';
 
-import '../classes/gameobject.dart';
+import '../classes/src/gameobject.dart';
 
 Json convertGameObjectToJson(GameObject gameObject) => {
   'x': gameObject.x.toInt(),

@@ -3,9 +3,9 @@ import 'dart:math';
 import 'package:lemon_math/library.dart';
 
 import 'package:bleed_server/gamestream.dart';
-import '../constants/frames_per_second.dart';
-import '../io/write_scene_to_file.dart';
-import '../maths/get_distance_between_v3.dart';
+import '../../constants/frames_per_second.dart';
+import '../../io/write_scene_to_file.dart';
+import '../../maths/get_distance_between_v3.dart';
 
 abstract class Game {
   var frame = 0;

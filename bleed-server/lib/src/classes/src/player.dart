@@ -7,9 +7,9 @@ import 'package:lemon_byte/byte_writer.dart';
 import 'package:lemon_math/library.dart';
 
 import 'package:bleed_server/gamestream.dart';
-import '../dark_age/areas/dark_age_area.dart';
-import '../dark_age/game_dark_age.dart';
-import '../dark_age/game_dark_age_editor.dart';
+import '../../dark_age/areas/dark_age_area.dart';
+import '../../dark_age/game_dark_age.dart';
+import '../../dark_age/game_dark_age_editor.dart';
 
 class Player extends Character with ByteWriter {
   final mouse = Vector2(0, 0);

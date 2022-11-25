@@ -3,8 +3,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:typedef/json.dart';
-
-import '../classes/library.dart';
+import 'package:bleed_server/gamestream.dart';
 
 Scene convertStringToScene(String value, String name) =>
   convertJsonToScene(json.decode(value), name);
