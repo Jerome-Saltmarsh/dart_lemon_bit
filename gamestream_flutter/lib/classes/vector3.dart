@@ -19,7 +19,7 @@ class Vector3 with Position {
   double get renderX => (x - y) * 0.5;
   /// remove
   double get renderY => ((y + x) * 0.5) - z;
-  // int get renderColor => colorShades[shade];
+
   /// remove
   void set indexZ(int value){
     z = value * Node_Size_Half;

@@ -1502,11 +1502,12 @@ abstract class Game {
     if (target is Collider) {
       projectile.target = target;
     }
-    projectile.start.x = src.x;
-    projectile.start.y = src.y;
-    projectile.x = src.x + getAdjacent(finalAngle, 10);
-    projectile.y = src.y + getOpposite(finalAngle, 10);
-    projectile.z = src.z + Node_Height_Half;
+    const r = 0.01;
+    projectile.x = src.x + getAdjacent(finalAngle, r);
+    projectile.y = src.y + getOpposite(finalAngle, r);
+    projectile.z = src.z + 16;
+    projectile.start.x = projectile.x;
+    projectile.start.y = projectile.y;
     projectile.setVelocity(finalAngle, ProjectileType.getSpeed(projectileType));
     projectile.owner = src;
     projectile.range = range;

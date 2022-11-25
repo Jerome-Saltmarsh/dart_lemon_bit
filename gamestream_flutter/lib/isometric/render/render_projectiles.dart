@@ -5,10 +5,15 @@ import 'package:gamestream_flutter/library.dart';
 const piQuarter = pi * 0.25;
 
 void renderPixelRed(double x, double y){
-  // Engine.renderBuffer(
-  //     dstX: x,
-  //     dstY: y,
-  //     srcX: 144, srcY: 0, srcWidth: 8, srcHeight: 8);
+  Engine.renderSprite(
+      image: GameImages.gameobjects,
+      srcX: 171,
+      srcY: 0,
+      srcWidth: 8,
+      srcHeight: 8,
+      dstX: x,
+      dstY: y,
+  );
 }
 
 void renderFireball(double x, double y, double rotation) {
