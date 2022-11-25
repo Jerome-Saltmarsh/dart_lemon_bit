@@ -248,12 +248,13 @@ class ItemType {
   static bool isTypeRecipe(int value) =>
       value >= Index_Recipe && value < Index_Equipped;
 
-  static bool isSingleHandedFirearm(int weaponType) =>
-      isTypeWeaponHandgun(weaponType);
+  static bool isOneHanded(int weaponType) =>
+      isTypeWeaponHandgun   (weaponType) ;
 
-  static bool isTwoHandedFirearm(int weaponType) =>
-      weaponType == Weapon_Ranged_Bow ||
-      weaponType == Weapon_Ranged_Shotgun ;
+  static bool isTwoHanded(int weaponType) =>
+      isTypeWeaponRifle     (weaponType) ||
+      isTypeWeaponShotgun   (weaponType) ||
+      isTypeWeaponBow       (weaponType)  ;
 
   static bool isFood(int type) =>
      type == Consumables_Apple ||

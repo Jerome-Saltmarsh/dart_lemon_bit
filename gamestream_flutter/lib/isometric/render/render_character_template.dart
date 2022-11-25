@@ -55,7 +55,7 @@ void renderCharacterTemplate(Character character, {
   final upperBodyDirection = runningBackwards ? renderDirectionOpposite : character.renderDirection;
   final weaponInFront = upperBodyDirection >= 2 && upperBodyDirection < 6;
   final finalDirection = (character.weaponStateAiming || character.usingWeapon) ? character.aimDirection : upperBodyDirection;
-  var weaponIsTwoHandedFirearm = ItemType.isTwoHandedFirearm(character.weaponType);
+  var weaponIsTwoHandedFirearm = ItemType.isTwoHanded(character.weaponType);
 
   switch (character.state) {
     case CharacterState.Idle:

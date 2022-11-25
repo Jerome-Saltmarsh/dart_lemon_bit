@@ -124,14 +124,14 @@ abstract class Character extends Collider {
   void assignWeaponStateFiring() {
     weaponState = AttackState.Firing;
     weaponStateDurationTotal = ItemType.getCooldown(weaponType);
-    assert(weaponStateDurationTotal > 0);
+    assert (weaponStateDurationTotal > 0);
     weaponStateDuration = weaponStateDurationTotal;
   }
 
   void assignWeaponStateReloading(){
     weaponState = AttackState.Reloading;
     weaponStateDurationTotal = 30;
-    weaponStateDuration = 30;
+    weaponStateDuration = weaponStateDurationTotal;
     if (this is Player) {
       (this as Player).writePlayerEvent(PlayerEvent.Reloading);
     }
@@ -140,7 +140,7 @@ abstract class Character extends Collider {
   void assignWeaponStateIdle() {
     weaponState = AttackState.Idle;
     weaponStateDurationTotal = 0;
-    weaponStateDuration = 0;
+    weaponStateDuration = weaponStateDurationTotal;
   }
 
   void assignWeaponStateAiming() {

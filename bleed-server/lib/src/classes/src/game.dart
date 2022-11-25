@@ -355,8 +355,7 @@ abstract class Game {
     player.performX = performX;
     player.performY = performY;
     player.performZ = performZ;
-    player.weaponStateDuration = ItemType.getCooldown(player.weaponType);
-    assert (player.weaponStateDuration  > 0);
+    player.assignWeaponStateFiring();
 
     /// TODO name arguments
     dispatchAttackPerformed(
