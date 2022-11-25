@@ -45,6 +45,7 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] character butterfly
 [ ] character bird
 [ ] character chicken
+[ ] weapon heavy machine gun
 
 [MODELS]
 [ ] character skeleton
@@ -54,6 +55,7 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] character wolf
 [ ] flint lock pistol
 [ ] bolt action rifle
+[ ] heavy machine gun
 [ ] standard issue police handgun
 
 [SCENE CEMETERY]
