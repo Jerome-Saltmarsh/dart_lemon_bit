@@ -51,13 +51,13 @@ abstract class Character extends Collider {
     if (targetTeam == 0) return false;
     return team == targetTeam;
   }
-  bool get usingWeapon => weaponStateDuration > 0;
+  bool get weaponStateBusy => weaponStateFiring || weaponStateReloading;
   bool get running => state == CharacterState.Running;
   bool get idling => state == CharacterState.Idle;
   bool get characterStateIdle => state == CharacterState.Idle;
   bool get busy => stateDurationRemaining > 0;
   bool get deadOrBusy => dying || dead || busy;
-  bool get deadBusyOrUsingWeapon => dying || dead || usingWeapon;
+  bool get deadBusyOrWeaponStateBusy => dying || dead || weaponStateBusy;
   bool get equippedTypeIsBow => weaponType == ItemType.Weapon_Ranged_Bow;
   bool get equippedTypeIsStaff => weaponType == ItemType.Weapon_Melee_Staff;
   bool get unarmed => weaponType == ItemType.Empty;
@@ -65,6 +65,11 @@ abstract class Character extends Collider {
   bool get equippedIsMelee => ItemType.isTypeWeaponMelee(weaponType);
   bool get equippedIsEmpty => false;
   bool get targetSet => target != null;
+
+  bool get weaponStateIdle => weaponState == AttackState.Idle;
+  bool get weaponStateReloading => weaponState == AttackState.Reloading;
+  bool get weaponStateFiring => weaponState == AttackState.Firing;
+  bool get weaponStateAiming => weaponState == AttackState.Aiming;
 
   double get healthPercentage => health / maxHealth;
   double get faceAngle => _faceAngle;
@@ -130,6 +135,18 @@ abstract class Character extends Collider {
     if (this is Player) {
       (this as Player).writePlayerEvent(PlayerEvent.Reloading);
     }
+  }
+
+  void assignWeaponStateIdle() {
+    weaponState = AttackState.Idle;
+    weaponStateDurationTotal = 0;
+    weaponStateDuration = 0;
+  }
+
+  void assignWeaponStateAiming() {
+    weaponState = AttackState.Aiming;
+    weaponStateDurationTotal = 60;
+    weaponStateDuration = weaponStateDurationTotal;
   }
 
   void write(Player player);

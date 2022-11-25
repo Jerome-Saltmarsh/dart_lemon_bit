@@ -282,7 +282,7 @@ class Connection {
 
   void handleRequestInventory(Player player, List<String> arguments){
     if (insufficientArgs(arguments, 2)) return;
-    if (player.deadBusyOrUsingWeapon) return;
+    if (player.deadBusyOrWeaponStateBusy) return;
     final inventoryRequest = parse(arguments[1]);
 
     if (inventoryRequest == null) return errorInvalidArg('inventory request is null');

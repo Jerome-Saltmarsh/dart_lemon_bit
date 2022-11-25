@@ -58,8 +58,6 @@ abstract class Game {
   void customOnPlayerRequestPurchaseWeapon(Player player, int type){ }
   /// safe to override
   void customOnPlayerWeaponChanged(Player player, int previousWeaponType, int newWeaponType){ }
-  /// once the player has finished striking then reequip the weapon
-  void customOnPlayerWeaponReady(Player player) {  }
   /// PROPERTIES
 
   /// Safe to override
@@ -133,7 +131,7 @@ abstract class Game {
 
     playerUpdateAimTarget(player);
 
-    if (player.weaponStateDuration <= 0) {
+    if (!player.weaponStateBusy) {
       player.lookRadian = player.mouseAngle;
     }
 
@@ -240,7 +238,7 @@ abstract class Game {
   }
 
   void playerUseWeapon(Player player) {
-    if (player.deadBusyOrUsingWeapon) return;
+    if (player.deadBusyOrWeaponStateBusy) return;
 
     if (player.equippedWeaponUsesAmmunition){
       final equippedWeaponQuantity = player.equippedWeaponQuantity;
@@ -338,7 +336,7 @@ abstract class Game {
   void playerAttackMelee({
     required Player player,
   }) {
-    if (player.deadBusyOrUsingWeapon) return;
+    if (player.deadBusyOrWeaponStateBusy) return;
 
     final angle = player.lookRadian;
     final distance = ItemType.getRange(player.weaponType);
@@ -981,7 +979,7 @@ abstract class Game {
 
     if (player.deadOrDying) return;
 
-    if (player.idling && !player.usingWeapon){
+    if (player.idling && !player.weaponStateBusy){
       final diff = Direction.getDifference(player.lookDirection, player.faceDirection);
       if (diff >= 2){
         player.faceAngle += piQuarter;
@@ -993,9 +991,22 @@ abstract class Game {
     if (player.weaponStateDuration > 0) {
       player.weaponStateDuration--;
       if (player.weaponStateDuration <= 0){
-        player.weaponState = AttackState.Idle;
-        player.lookRadian = player.mouseAngle;
-        customOnPlayerWeaponReady(player);
+        switch (player.weaponState) {
+          case AttackState.Firing:
+            player.assignWeaponStateAiming();
+            player.lookRadian = player.mouseAngle;
+            break;
+          case AttackState.Aiming:
+            player.assignWeaponStateIdle();
+            player.lookRadian = player.mouseAngle;
+            break;
+          case AttackState.Reloading:
+            player.assignWeaponStateIdle();
+            player.lookRadian = player.mouseAngle;
+            break;
+          case AttackState.Idle:
+            throw Exception("weapon state idle cannot have weapon duration");
+        }
       }
     }
 

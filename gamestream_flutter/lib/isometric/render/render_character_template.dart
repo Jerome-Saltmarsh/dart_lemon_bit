@@ -54,8 +54,7 @@ void renderCharacterTemplate(Character character, {
   final renderDirectionOpposite = (character.renderDirection + 4) % 8;
   final upperBodyDirection = runningBackwards ? renderDirectionOpposite : character.renderDirection;
   final weaponInFront = upperBodyDirection >= 2 && upperBodyDirection < 6;
-  final finalDirection = character.usingWeapon ? character.aimDirection : upperBodyDirection;
-
+  final finalDirection = (character.weaponStateAiming || character.usingWeapon) ? character.aimDirection : upperBodyDirection;
   var weaponIsTwoHandedFirearm = ItemType.isTwoHandedFirearm(character.weaponType);
 
   switch (character.state) {
@@ -88,10 +87,15 @@ void renderCharacterTemplate(Character character, {
     frameBody = frameWeapon;
     frameHead = frameWeapon;
   } else
-  if (character.reloading){
+  if (character.weaponStateReloading){
     frameHead = TemplateAnimation.StateChangingFrame;
     frameBody = TemplateAnimation.StateChangingFrame;
     frameWeapon = TemplateAnimation.StateChangingFrame;
+  } else
+  if (character.weaponStateAiming) {
+    frameHead = TemplateAnimation.Frame_Aiming_One_Handed;
+    frameBody = TemplateAnimation.Frame_Aiming_One_Handed;
+    frameWeapon = TemplateAnimation.Frame_Aiming_One_Handed;
   }
 
   if (!weaponInFront) {
@@ -199,6 +203,9 @@ bool weaponIs64(int weapon) =>
 class TemplateAnimation {
 
   static const StateChangingFrame = 4;
+  static const Frame_Aiming_One_Handed = 7;
+  static const Frame_Aiming_Two_Handed = 6;
+
 
   static final Uint8List Running1 = (){
       final list = Uint8List(4);
