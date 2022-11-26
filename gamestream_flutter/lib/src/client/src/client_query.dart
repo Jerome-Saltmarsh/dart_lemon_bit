@@ -64,4 +64,8 @@ class ClientQuery {
     final opposite = GamePlayer.renderY - Engine.mouseWorldY;
     return Engine.calculateHypotenuse(adjacent, opposite);
   }
+
+  static bool dialogOpenInventory() {
+    return ServerState.interactMode.value == InteractMode.Inventory;
+  }
 }

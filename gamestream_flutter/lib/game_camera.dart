@@ -20,6 +20,11 @@ class GameCamera {
     final translateDistance = mouseDistance * ClientConstants.Mouse_Translation_Sensitivity;
     translateX = Engine.calculateAdjacent(mouseAngle, translateDistance);
     translateY = Engine.calculateOpposite(mouseAngle, translateDistance);
+
+    if (ClientQuery.dialogOpenInventory()){
+      translateX += 100;
+    }
+
     Engine.cameraFollow(chaseTarget.renderX + translateX, chaseTarget.renderY + translateY, chaseStrength);
   }
 
