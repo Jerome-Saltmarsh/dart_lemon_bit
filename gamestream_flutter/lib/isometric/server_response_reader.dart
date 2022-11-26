@@ -1,7 +1,6 @@
 import 'package:gamestream_flutter/isometric/events/on_changed_scene.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_byte/byte_reader.dart';
-import 'package:lemon_math/library.dart';
 
 final serverResponseReader = ServerResponseReader();
 

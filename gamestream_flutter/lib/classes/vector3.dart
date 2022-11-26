@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:gamestream_flutter/library.dart';
-import 'package:lemon_math/library.dart';
 
 class Vector3 with Position {
   late double z;

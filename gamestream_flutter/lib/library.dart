@@ -1,6 +1,7 @@
 library game_library;
 
 export 'classes/library.dart';
+export 'lang/src.dart';
 export 'enums/library.dart';
 export 'game_account.dart';
 export 'game_actions.dart';
@@ -43,6 +44,7 @@ export 'package:lemon_engine/engine.dart';
 export 'package:lemon_watch/watch.dart';
 export 'package:lemon_watch/watch_builder.dart';
 export 'package:bleed_common/library.dart';
+export 'package:lemon_math/library.dart';
 export 'dart:typed_data';
 export 'game_inventory_ui.dart';
 export 'game_ui_style.dart';

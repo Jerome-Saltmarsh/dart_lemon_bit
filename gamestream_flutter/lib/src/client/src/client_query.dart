@@ -52,4 +52,16 @@ class ClientQuery {
      if (hotKeyWatch == ServerState.playerBelt6_ItemType) return 'E';
      throw Exception("ClientQuery.mapHotKeyWatchToString($hotKeyWatch)");
   }
+
+  static double getMousePlayerAngle(){
+    final adjacent = GamePlayer.renderX - Engine.mouseWorldX;
+    final opposite = GamePlayer.renderY - Engine.mouseWorldY;
+    return Engine.calculateAngle(adjacent, opposite);
+  }
+
+  static double getMousePlayerRenderDistance(){
+    final adjacent = GamePlayer.renderX - Engine.mouseWorldX;
+    final opposite = GamePlayer.renderY - Engine.mouseWorldY;
+    return Engine.calculateHypotenuse(adjacent, opposite);
+  }
 }

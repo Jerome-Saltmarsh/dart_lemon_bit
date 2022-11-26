@@ -67,6 +67,10 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] skills
 [ ] attributes
 
+27.11.2022
+[x] weapon accuracy
+[x] mouse aim
+
 25.11.2022
 [x] weapon capacity
 [x] weapon reload

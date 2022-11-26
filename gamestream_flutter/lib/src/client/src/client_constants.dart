@@ -12,6 +12,8 @@ class ClientConstants {
   static final Key_Toggle_Debug_Mode = LogicalKeyboardKey.keyP;
   static final Key_Toggle_Input_Mode = LogicalKeyboardKey.keyX;
 
+  static const Mouse_Translation_Sensitivity = 0.15;
+
   static const Hot_Keys = [
     LogicalKeyboardKey.digit1,
     LogicalKeyboardKey.digit2,
