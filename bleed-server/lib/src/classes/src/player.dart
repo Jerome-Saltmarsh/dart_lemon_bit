@@ -12,6 +12,9 @@ import '../../dark_age/game_dark_age.dart';
 import '../../dark_age/game_dark_age_editor.dart';
 
 class Player extends Character with ByteWriter {
+
+
+
   final mouse = Vector2(0, 0);
   final runTarget = Position3();
   late Function sendBufferToClient;
@@ -56,9 +59,17 @@ class Player extends Character with ByteWriter {
 
   var _baseMaxHealth = 10;
   var _baseDamage = 0;
+  /// a value between 0 and 1
+  /// 0 means very accurate and 1 is very inaccurate
+  var _accuracy = 0.0;
 
   int get baseMaxHealth => _baseMaxHealth;
   int get baseDamage => _baseDamage;
+  double get accuracy => _accuracy;
+
+  set accuracy(double value) {
+    _accuracy = clamp(value, 0, 1);
+  }
 
   static const Health_Per_Perk = 5;
   var perkMaxHealth = 0;
@@ -1030,6 +1041,7 @@ class Player extends Character with ByteWriter {
   void writePlayerGame() {
     writePlayerPosition();
     writePlayerWeaponCooldown();
+    writePlayerAccuracy();
     writePlayerAimTargetPosition();
 
     writeProjectiles();
@@ -1068,6 +1080,12 @@ class Player extends Character with ByteWriter {
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Weapon_Cooldown);
     writePercentage(weaponDurationPercentage);
+  }
+
+  void writePlayerAccuracy(){
+    writeByte(ServerResponse.Player);
+    writeByte(ApiPlayer.Accuracy);
+    writePercentage(accuracy);
   }
 
   void writeGameObjects(){
@@ -1637,6 +1655,21 @@ class Player extends Character with ByteWriter {
         refreshStats();
         break;
     }
+  }
+
+  void updateAccuracy() {
+
+     final change = 0.01;
+     final targetAccuracy = running ? 0.5 : 0;
+     final difference = accuracy - targetAccuracy;
+
+     if (difference.abs() < change) return;
+
+      if (difference > 0) {
+          accuracy -= change;
+      } else {
+          accuracy += change;
+      }
   }
 }
 

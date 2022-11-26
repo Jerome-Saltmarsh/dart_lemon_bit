@@ -55,9 +55,13 @@ class GameCanvas {
 
 
   static void renderCursor(Canvas canvas) {
+    final cooldown = GameState.player.weaponCooldown.value;
+    final accuracy = ServerState.playerAccuracy.value;
+    final distance = (cooldown + accuracy) * 10.0 + 5;
+
     switch (GamePlayer.aimTargetCategory) {
       case TargetCategory.Nothing:
-        GameRender.canvasRenderCursorCrossHair(canvas, 5 + GameState.player.weaponCooldown.value * 10);
+        GameRender.canvasRenderCursorCrossHair(canvas, distance);
         break;
       case TargetCategory.Item:
         GameRender.canvasRenderCursorHand(canvas);
@@ -66,7 +70,7 @@ class GameCanvas {
         GameRender.canvasRenderCursorTalk(canvas);
         return;
       case TargetCategory.Enemy:
-        GameRender.canvasRenderCursorCrossHairRed(canvas, 5 + GameState.player.weaponCooldown.value * 10);
+        GameRender.canvasRenderCursorCrossHairRed(canvas, distance);
         break;
     }
   }

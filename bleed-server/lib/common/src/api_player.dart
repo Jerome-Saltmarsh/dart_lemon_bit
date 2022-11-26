@@ -10,6 +10,7 @@ class ApiPlayer {
   static const Aim_Angle = 15;
   static const Message = 16;
   static const Weapon_Cooldown = 17;
+  static const Accuracy = 18;
   static const Spawned = 20;
   static const Inventory = 21;
   static const Aim_Target_Category = 22;

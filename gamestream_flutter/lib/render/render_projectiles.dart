@@ -3,8 +3,6 @@
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_gameobjects.dart';
 import 'package:gamestream_flutter/library.dart';
 
-import '../isometric/render/render_projectiles.dart';
-
 class RenderProjectiles {
 
   static void renderProjectile(Projectile value) {

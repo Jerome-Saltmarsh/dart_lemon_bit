@@ -249,6 +249,7 @@ abstract class Game {
          );
          player.writePlayerEquippedWeaponAmmunition();
          characterFireWeapon(player);
+         player.accuracy += 0.33;
          return;
       }
       final equippedWeaponAmmoType = player.equippedWeaponAmmunitionType;
@@ -470,7 +471,7 @@ abstract class Game {
 
     spawnProjectile(
       src: character,
-      accuracy: 0,
+      accuracy: character is Player ? character.accuracy : 0,
       angle: angle,
       range: character.weaponTypeRange,
       projectileType: ProjectileType.Bullet,
@@ -977,6 +978,8 @@ abstract class Game {
     }
 
     if (player.deadOrDying) return;
+
+    player.updateAccuracy();
 
     if (player.idling && !player.weaponStateBusy){
       final diff = Direction.getDifference(player.lookDirection, player.faceDirection);
@@ -1494,7 +1497,8 @@ abstract class Game {
       }
     }
     if (accuracy != 0) {
-      finalAngle += giveOrTake(accuracy);
+      const accuracyAngleDeviation = piEighth;
+      finalAngle += giveOrTake(accuracy * accuracyAngleDeviation);
     }
     projectile.damage = damage;
     projectile.collidable = true;
