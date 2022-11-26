@@ -12,6 +12,7 @@ class ItemType {
   static const Index_Bodies                 = 20000;
   static const Index_Legs                   = 30000;
   static const Index_Weapon_Melee           = 40000;
+  static const Index_Weapon_Thrown          = 42500;
   static const Index_Weapon_Ranged_Handgun  = 45000;
   static const Index_Weapon_Ranged_Rifle    = 46000;
   static const Index_Weapon_Ranged_Shotgun  = 47000;
@@ -100,6 +101,10 @@ class ItemType {
   static const Weapon_Melee_Pickaxe = Weapon_Melee_Crowbar + 1;
   static const Weapon_Melee_Axe = Weapon_Melee_Pickaxe + 1;
   static const Weapon_Melee_Hammer = Weapon_Melee_Axe + 1;
+  
+  static const Weapon_Thrown_Pike_Bomb = Index_Weapon_Thrown + 1;
+  static const Weapon_Thrown_Grenade = Index_Weapon_Thrown + 2;
+  static const Weapon_Thrown_Molotov_Cocktail = Index_Weapon_Thrown + 3;
 
   static const Weapon_Handgun_Flint_Lock_Old = Index_Weapon_Ranged_Handgun + 1;
   static const Weapon_Handgun_Flint_Lock = Weapon_Handgun_Flint_Lock_Old + 1;
@@ -222,20 +227,31 @@ class ItemType {
       value > Index_Weapon_Melee && value < Index_Recipe;
 
   static bool isTypeWeaponFirearm(int value) =>
-      value >= Index_Weapon_Ranged_Handgun && value < Index_Weapon_Ranged_Bow;
+      value >= Index_Weapon_Ranged_Handgun &&
+      value < Index_Weapon_Ranged_Bow;
 
   static bool isTypeWeaponMelee(int value) =>
-      value == ItemType.Empty || (value > Index_Weapon_Melee && value < Index_Weapon_Ranged_Handgun);
+      value == ItemType.Empty ||
+      (
+          value > Index_Weapon_Melee &&
+          value < Index_Weapon_Thrown
+      );
+
+  static bool isTypeWeaponThrown(int value) =>
+      value >= Index_Weapon_Thrown         &&
+      value < Index_Weapon_Ranged_Handgun  ;
 
   static bool isTypeWeaponBow(int value) =>
       value == ItemType.Weapon_Ranged_Bow ||
       value == ItemType.Weapon_Ranged_Bow_Long;
 
   static bool isTypeWeaponHandgun(int value) =>
-      value > Index_Weapon_Ranged_Handgun && value < Index_Weapon_Ranged_Rifle;
+      value > Index_Weapon_Ranged_Handgun &&
+      value < Index_Weapon_Ranged_Rifle;
 
   static bool isTypeWeaponRifle(int value) =>
-      value > Index_Weapon_Ranged_Rifle && value < Index_Weapon_Ranged_Shotgun;
+      value > Index_Weapon_Ranged_Rifle &&
+      value < Index_Weapon_Ranged_Shotgun;
 
   static bool isTypeWeaponShotgun(int value) =>
       value > Index_Weapon_Ranged_Shotgun && value < Index_Weapon_Ranged_Bow;

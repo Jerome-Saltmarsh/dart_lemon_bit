@@ -1225,7 +1225,6 @@ class GameRender {
     );
   }
 
-
   static void renderCircle32(double x, double y, double z){
     Engine.renderSprite(
       image: GameImages.gameobjects,
