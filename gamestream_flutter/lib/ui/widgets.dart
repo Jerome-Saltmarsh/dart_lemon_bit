@@ -6,8 +6,6 @@ import 'package:gamestream_flutter/ui/actions/sign_in_with_facebook.dart';
 import 'package:gamestream_flutter/ui/build.dart';
 import 'package:gamestream_flutter/ui/dialogs.dart';
 import 'package:gamestream_flutter/ui/style.dart';
-import 'package:lemon_math/library.dart';
-
 
 final closeDialogButton = button(
     "close",

@@ -249,7 +249,7 @@ abstract class Game {
          );
          player.writePlayerEquippedWeaponAmmunition();
          characterFireWeapon(player);
-         player.accuracy += 0.33;
+         player.accuracy += 0.25;
          return;
       }
       final equippedWeaponAmmoType = player.equippedWeaponAmmunitionType;
@@ -1497,7 +1497,7 @@ abstract class Game {
       }
     }
     if (accuracy != 0) {
-      const accuracyAngleDeviation = piEighth;
+      const accuracyAngleDeviation = pi * 0.1;
       finalAngle += giveOrTake(accuracy * accuracyAngleDeviation);
     }
     projectile.damage = damage;

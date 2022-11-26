@@ -72,6 +72,7 @@ navigate to next method: ctrl + shift + up / down arrows
 27.11.2022
 [x] weapon accuracy
 [x] mouse aim
+[x] fixed cursor alignment
 
 25.11.2022
 [x] weapon capacity
@@ -214,3 +215,6 @@ navigate to next method: ctrl + shift + up / down arrows
 [COMMANDS]
 flutter build web --web-renderer canvaskit --release
 firebase deploy
+
+
+

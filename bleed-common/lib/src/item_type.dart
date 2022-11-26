@@ -470,6 +470,7 @@ class ItemType {
     Weapon_Handgun_Revolver             : 06,
     Weapon_Rifle_Steyr                  : 30,
     Weapon_Rifle_M4                     : 35,
+    Weapon_Rifle_AK_47                  : 35,
     Weapon_Rifle_Jager                  : 04,
     Weapon_Rifle_Musket                 : 01,
     Weapon_Ranged_Shotgun               : 04,
