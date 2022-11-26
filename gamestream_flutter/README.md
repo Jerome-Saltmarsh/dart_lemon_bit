@@ -66,6 +66,8 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] Loud Noises Draw Attention
 [ ] skills
 [ ] attributes
+[ ] weapon pipe bomb
+[ ] weapon grenade
 
 27.11.2022
 [x] weapon accuracy
