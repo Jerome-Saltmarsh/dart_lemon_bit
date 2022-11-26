@@ -218,3 +218,20 @@ firebase deploy
 
 
 
+#DESIGN
+HUNTER
+Players spawn around different parts of the game world. 
+
+The objective is to kill all the creeps in the world
+
+Once all the creeps have been killed the level increases and a new wave of creeps respawns
+
+Creeps appear on the mini map
+
+The aim of the game is to kill as many creeps as possible
+
+killing creeps rewards the player with loot and experience
+
+Team Hunt
+Solo Hunt
+
