@@ -1,7 +1,6 @@
 
 import 'package:lemon_math/library.dart';
 
-import 'character.dart';
 import 'collider.dart';
 import 'position3.dart';
 
@@ -12,7 +11,6 @@ class Projectile extends Collider {
   var damage = 0;
   var collideWithEnvironment = false;
   Position3? target = null;
-  Character? owner;
   bool active = true;
 
   Projectile() : super(x: 0, y: 0, z: 0, radius: 5);

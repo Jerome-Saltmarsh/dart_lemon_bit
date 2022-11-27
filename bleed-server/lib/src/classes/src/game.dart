@@ -292,7 +292,9 @@ abstract class Game {
           ..applyGravity = true
           ..quantity = 1
           ..velocityZ = -0.75
-          ..timer = 100
+          ..timer = 50
+          ..owner = player
+          ..damage = 15
       );
       return;
     }
@@ -523,6 +525,15 @@ abstract class Game {
 
      if (gameObject.type == ItemType.Weapon_Thrown_Grenade){
         dispatchV3(GameEventType.Explosion, gameObject);
+
+        for (var i = 0; i < characters.length; i++){
+           if (characters[i].dead) continue;
+           final character = characters[i];
+           if (gameObject.withinRadius(character, 50)) {
+              applyHit(src: gameObject, target: character);
+           }
+        }
+
      }
 
      customOnGameObjectDeactivated(gameObject);
@@ -1238,6 +1249,16 @@ abstract class Game {
       target.applyForce(
           force: 20,
           angle: src.velocityAngle,
+      );
+    } else if (src is GameObject){
+      final srcOwner = src.owner;
+      if (srcOwner is Character){
+        srcCharacter = srcOwner;
+      }
+      damage = src.damage;
+      target.applyForce(
+        force: 20,
+        angle: src.velocityAngle,
       );
     }
 

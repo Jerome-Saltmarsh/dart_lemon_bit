@@ -312,7 +312,6 @@ class GameEvents {
       default:
         return;
     }
-
   }
 
   static void onChangedEdit(bool value) {

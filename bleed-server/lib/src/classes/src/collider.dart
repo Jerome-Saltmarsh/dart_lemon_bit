@@ -1,9 +1,9 @@
 import 'dart:math';
 
+import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/game_physics.dart';
 import 'package:lemon_math/library.dart';
 
-import 'position3.dart';
 
 class Collider extends Position3 {
   var mass = 1.0;
@@ -20,6 +20,8 @@ class Collider extends Position3 {
   /// If false this object will not be moved during a collision
   var moveOnCollision = true;
   var applyGravity = false;
+  Character? owner;
+  var damage = 0;
 
   /// CONSTRUCTOR
   Collider({
