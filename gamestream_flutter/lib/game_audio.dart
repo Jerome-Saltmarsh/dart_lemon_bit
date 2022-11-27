@@ -117,6 +117,7 @@ class GameAudio {
   static final teleport = AudioSingle(name: 'teleport-1', volume: 0.5, maxDistance: 250);
   static final hover_over_button_sound_30 = AudioSingle(name: 'hover-over-button-sound-30', volume: 0.5, maxDistance: 250);
   static final hover_over_button_sound_43 = AudioSingle(name: 'hover-over-button-sound-43', volume: 0.5, maxDistance: 250);
+  static final explosion_grenade_04 = AudioSingle(name: 'explosion_grenade_04', volume: 0.5, maxDistance: 250);
 
   static final zombie_deaths = [
     AudioSingle(name: 'zombie-death-02', volume: 1, maxDistance: 400),

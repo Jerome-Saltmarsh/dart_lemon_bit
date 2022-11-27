@@ -80,12 +80,18 @@ class GameEvents {
   static void onGameEvent(int type, double x, double y, double z, double angle) {
     switch (type) {
       case GameEventType.Footstep:
-        return GameEvents.onFootstep(x, y, z);
+        GameEvents.onFootstep(x, y, z);
+        return;
       case GameEventType.Attack_Performed:
-        return onAttackPerformed(x, y, z, angle);
+        onAttackPerformed(x, y, z, angle);
+        return;
       case GameEventType.Player_Spawn_Started:
         GameCamera.centerOnPlayer();
-        return GameAudio.teleport.playXYZ(x, y, z);
+        GameAudio.teleport.playXYZ(x, y, z);
+        return;
+      case GameEventType.Explosion:
+        GameAudio.explosion_grenade_04.playXYZ(x, y, z);
+        return;
       case GameEventType.AI_Target_Acquired:
         final characterType = serverResponseReader.readByte();
         switch (characterType){

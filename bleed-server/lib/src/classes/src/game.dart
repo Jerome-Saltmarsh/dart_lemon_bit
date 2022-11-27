@@ -275,6 +275,24 @@ abstract class Game {
 
     final weaponType = player.weaponType;
 
+    if (weaponType == ItemType.Weapon_Thrown_Grenade){
+      gameObjects.add(
+          GameObject(
+              x: player.x,
+              y: player.y,
+              z: player.z + Character_Height,
+              type: ItemType.Weapon_Thrown_Grenade,
+          )..setVelocity(player.lookRadian, 2.0)
+          ..collidable = false
+          ..physical = false
+          ..applyGravity = true
+          ..quantity = 1
+          ..velocityZ = -0.75
+          ..timer = 200
+      );
+      return;
+    }
+
     if (ItemType.isTypeWeaponMelee(weaponType)) {
       playerAttackMelee(player: player);
       return;
@@ -498,6 +516,11 @@ abstract class Game {
      gameObject.active = false;
      gameObject.collidable = false;
      gameObject.timer = duration;
+
+     if (gameObject.type == ItemType.Weapon_Thrown_Grenade){
+        dispatchV3(GameEventType.Explosion, gameObject);
+     }
+
      customOnGameObjectDeactivated(gameObject);
   }
 
@@ -554,6 +577,7 @@ abstract class Game {
   void updateGameObjects() {
     for (final gameObject in gameObjects){
        if (!gameObject.active) continue;
+       gameObject.updatePhysics();
        if (gameObject.timer <= 0) continue;
        gameObject.timer--;
        if (gameObject.timer > 0) continue;
@@ -1997,7 +2021,7 @@ abstract class Game {
 
       if (nodeAtFeetOrientation == NodeOrientation.Solid){
         character.z = ((character.z ~/ Node_Height) * Node_Height) + Node_Height;
-        character.zVelocity = 0;
+        character.velocityZ = 0;
       } else
       if (nodeAtFeetOrientation != NodeOrientation.None) {
         final bottom = (character.z ~/ Node_Height) * Node_Height;
@@ -2006,7 +2030,7 @@ abstract class Game {
         final nodeTop = bottom + (NodeOrientation.getGradient(nodeAtFeetOrientation, percX, percY) * Node_Height);
         if (nodeTop > character.z){
           character.z = nodeTop;
-          character.zVelocity = 0;
+          character.velocityZ = 0;
         }
       }
     } else {

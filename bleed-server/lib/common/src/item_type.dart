@@ -262,7 +262,8 @@ class ItemType {
   static bool isIndexBelt(int index)=> index >= Belt_1 && index <= Belt_6;
 
   static bool isTypeRecipe(int value) =>
-      value >= Index_Recipe && value < Index_Equipped;
+      value >= Index_Recipe &&
+      value < Index_Equipped ;
 
   static bool isOneHanded(int weaponType) =>
       isTypeWeaponHandgun   (weaponType) ;
@@ -333,6 +334,7 @@ class ItemType {
 
   static double getRange(int value) => const <int, double> {
       Empty: 50,
+      Weapon_Thrown_Grenade: 300,
       Weapon_Ranged_Shotgun: 250,
       Weapon_Handgun_Flint_Lock_Old: 350,
       Weapon_Handgun_Flint_Lock: 355,
@@ -353,6 +355,7 @@ class ItemType {
 
   static int getCooldown(int value) => const {
       Empty: 40,
+      Weapon_Thrown_Grenade: 40,
       Weapon_Ranged_Shotgun: 40,
       Weapon_Handgun_Flint_Lock_Old: 50,
       Weapon_Handgun_Flint_Lock: 45,

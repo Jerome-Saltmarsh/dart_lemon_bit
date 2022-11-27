@@ -1,30 +1,25 @@
 import 'dart:math';
 
+import 'package:bleed_server/src/game_physics.dart';
 import 'package:lemon_math/library.dart';
 
 import 'position3.dart';
 
 class Collider extends Position3 {
-
   var mass = 1.0;
-  /// Velocity X
   var velocityX = 0.0;
-  /// Velocity Y
   var velocityY = 0.0;
+  var velocityZ = 0.0;
   var maxSpeed = 20.0;
   var team = 0;
   var radius = 0.0;
-  double zVelocity = 0;
-  double get left => x - radius;
-  double get right => x + radius;
-  double get top => y - radius;
-  double get bottom => y + radius;
   /// If false this object is completely ignored by collision detection
   var collidable = true;
   /// an item which is not physical may still cause a collision detection
   var physical = true;
   /// If false this object will not be moved during a collision
   var moveOnCollision = true;
+  var applyGravity = false;
 
   /// CONSTRUCTOR
   Collider({
@@ -42,6 +37,10 @@ class Collider extends Position3 {
   /// GETTERS
   double get velocitySpeed => getHypotenuse(velocityX, velocityY);
   double get velocityAngle => getAngle(velocityX, velocityY);
+  double get left => x - radius;
+  double get right => x + radius;
+  double get top => y - radius;
+  double get bottom => y + radius;
 
   /// SETTERS
   void set velocitySpeed(double value){
@@ -92,6 +91,19 @@ class Collider extends Position3 {
     if (velocitySpeed > maxSpeed) {
       velocitySpeed = maxSpeed;
     }
+  }
+
+  void updatePhysics(){
+    z -= velocityZ;
+    if (applyGravity){
+      velocityZ += GamePhysics.Gravity;
+    }
+    const minVelocity = 0.005;
+    if (velocitySpeed <= minVelocity) return;
+    x += velocityX;
+    y += velocityY;
+    velocityX *= GamePhysics.Friction;
+    velocityY *= GamePhysics.Friction;
   }
 
   /// FUNCTIONS

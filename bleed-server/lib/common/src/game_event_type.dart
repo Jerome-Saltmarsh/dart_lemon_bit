@@ -31,4 +31,5 @@ class GameEventType {
   static const AI_Target_Acquired = 72;
   static const GameObject_Timeout = 73;
   static const Thunder = 74;
+  static const Explosion = 75;
 }

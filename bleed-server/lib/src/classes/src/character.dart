@@ -232,20 +232,13 @@ abstract class Character extends Collider {
       getAngleBetween(this.x, this.y, x, y);
 
   void updateMovement() {
-    z -= zVelocity;
+    z -= velocityZ;
     const gravity = 0.98;
-    zVelocity += gravity;
+    velocityZ += gravity;
     const minVelocity = 0.005;
     if (velocitySpeed <= minVelocity) return;
     x += velocityX;
     y += velocityY;
     applyFriction(0.75);
   }
-}
-
-class RunSpeed {
-   static const Slow = 1.0;
-   static const Regular = 2.0;
-   static const Fast = 3.0;
-   static const Very_Fast = 4.0;
 }
