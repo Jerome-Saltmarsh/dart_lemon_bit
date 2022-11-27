@@ -248,6 +248,12 @@ abstract class Game {
              index: player.equippedWeaponIndex,
          );
          player.writePlayerEquippedWeaponAmmunition();
+
+         if (player.weaponType == ItemType.Weapon_Thrown_Grenade){
+           playerThrowGrenade(player);
+           return;
+         }
+
          characterFireWeapon(player);
          player.accuracy += 0.25;
          return;
@@ -273,23 +279,16 @@ abstract class Game {
       return;
     }
 
-    final weaponType = player.weaponType;
-
-    if (weaponType == ItemType.Weapon_Thrown_Grenade){
-      playerThrowGrenade(player);
-      return;
-    }
-
-    if (ItemType.isTypeWeaponMelee(weaponType)) {
+    if (ItemType.isTypeWeaponMelee(player.weaponType)) {
       playerAttackMelee(player: player);
       return;
     }
 
-    switch (weaponType) {
+    switch (player.weaponType) {
       case ItemType.Weapon_Ranged_Crossbow:
         spawnProjectileArrow(
-            damage: ItemType.getDamage(weaponType),
-            range: ItemType.getRange(weaponType),
+            damage: ItemType.getDamage(player.weaponType),
+            range: ItemType.getRange(player.weaponType),
             src: player,
             angle: player.lookRadian,
         );
@@ -303,8 +302,8 @@ abstract class Game {
       case ItemType.Weapon_Ranged_Bow:
         spawnProjectileArrow(
             src: player,
-            damage: ItemType.getDamage(weaponType),
-            range: ItemType.getRange(weaponType),
+            damage: ItemType.getDamage(player.weaponType),
+            range: ItemType.getRange(player.weaponType),
             angle: player.lookRadian,
         );
         player.weaponStateDuration = ItemType.getCooldown(player.weaponType);

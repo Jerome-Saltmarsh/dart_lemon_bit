@@ -1628,7 +1628,7 @@ class Player extends Character with ByteWriter {
      writeUInt16(inventoryGetItemQuantity(index));
   }
 
-  bool get equippedWeaponUsesAmmunition => equippedWeaponAmmoConsumption > 0;
+  bool get equippedWeaponUsesAmmunition => ItemType.getConsumeType(weaponType) != ItemType.Empty;
   int get equippedWeaponAmmoConsumption => ItemType.getConsumeAmount(weaponType);
   int get equippedWeaponAmmunitionType => ItemType.getConsumeType(weaponType);
   int get equippedWeaponCapacity => ItemType.getWeaponCapacity(weaponType);

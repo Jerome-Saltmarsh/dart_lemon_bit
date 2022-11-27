@@ -283,6 +283,7 @@ class ItemType {
   }
 
   static int getConsumeType(int itemType) => const {
+      Weapon_Thrown_Grenade               : Weapon_Thrown_Grenade,
       Weapon_Handgun_Flint_Lock_Old       : Resource_Gun_Powder,
       Weapon_Handgun_Flint_Lock           : Resource_Gun_Powder,
       Weapon_Handgun_Flint_Lock_Superior  : Resource_Gun_Powder,
@@ -495,6 +496,7 @@ class ItemType {
     Weapon_Rifle_Jager                  : 04,
     Weapon_Rifle_Musket                 : 01,
     Weapon_Ranged_Shotgun               : 04,
+    Weapon_Thrown_Grenade               : 05,
   }[itemType]                          ?? 01;
 }
 
