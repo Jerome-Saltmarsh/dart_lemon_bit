@@ -276,13 +276,15 @@ abstract class Game {
     final weaponType = player.weaponType;
 
     if (weaponType == ItemType.Weapon_Thrown_Grenade){
+      player.assignWeaponStateFiring();
       gameObjects.add(
           GameObject(
               x: player.x,
               y: player.y,
               z: player.z + Character_Height,
               type: ItemType.Weapon_Thrown_Grenade,
-          )..setVelocity(player.lookRadian, 2.0)
+          )
+          ..setVelocity(player.lookRadian, 30.0)
           ..collidable = false
           ..physical = false
           ..applyGravity = true

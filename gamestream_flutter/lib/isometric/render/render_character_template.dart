@@ -311,6 +311,9 @@ class TemplateAnimation {
      if (ItemType.isTypeWeaponBow(weaponType)){
        return FiringBow;
      }
+     if (weaponType == ItemType.Weapon_Thrown_Grenade) {
+       return Punch;
+     }
 
      throw Exception("TemplateAnimation.getAttackAnimation(${ItemType.getName(weaponType)})");
   }
