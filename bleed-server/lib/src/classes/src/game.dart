@@ -589,41 +589,44 @@ abstract class Game {
     sortGameObjects();
   }
 
+  void updateColliderPhysics(Collider collider){
+    if (!collider.applyGravity) return;
+
+    if (collider.velocityX < 0) {
+      if (scene.getCollisionAt(collider.left, collider.y, collider.z)) {
+        collider.velocityX = -collider.velocityX;
+      }
+    } else
+    if (collider.velocityX > 0) {
+      if (scene.getCollisionAt(collider.right, collider.y, collider.z)) {
+        collider.velocityX = -collider.velocityX;
+      }
+    }
+    if (collider.velocityY < 0) {
+      if (scene.getCollisionAt(collider.x, collider.top, collider.z)) {
+        collider.velocityY = -collider.velocityY;
+      }
+    } else
+    if (collider.velocityY > 0) {
+      if (scene.getCollisionAt(collider.x, collider.bottom, collider.z)) {
+        collider.velocityY = -collider.velocityY;
+      }
+    }
+
+    if (scene.getCollisionAt(collider.x, collider.y, collider.z)) {
+      // collider.z += (collider.z % Node_Height);
+      collider.z = ((collider.z ~/ Node_Height) * Node_Height) + Node_Height;
+      if (collider.velocityZ > 0) {
+        collider.velocityZ = -collider.velocityZ * 0.5;
+      }
+    }
+  }
+
   void updateGameObjects() {
     for (final gameObject in gameObjects){
        if (!gameObject.active) continue;
        gameObject.updatePhysics();
-
-       if (gameObject.applyGravity) {
-
-         if (gameObject.velocityX < 0) {
-           if (scene.getCollisionAt(gameObject.left, gameObject.y, gameObject.z)) {
-              gameObject.velocityX = -gameObject.velocityX;
-           }
-         }
-         if (gameObject.velocityX > 0) {
-           if (scene.getCollisionAt(gameObject.right, gameObject.y, gameObject.z)) {
-             gameObject.velocityX = -gameObject.velocityX;
-           }
-         }
-         if (gameObject.velocityY < 0) {
-           if (scene.getCollisionAt(gameObject.x, gameObject.top, gameObject.z)) {
-             gameObject.velocityY = -gameObject.velocityY;
-           }
-         }
-         if (gameObject.velocityY > 0) {
-           if (scene.getCollisionAt(gameObject.x, gameObject.bottom, gameObject.z)) {
-             gameObject.velocityY = -gameObject.velocityY;
-           }
-         }
-
-          if (scene.getCollisionAt(gameObject.x, gameObject.y, gameObject.z)) {
-            gameObject.z += (gameObject.z % Node_Height);
-             if (gameObject.velocityZ > 0) {
-               gameObject.velocityZ = -gameObject.velocityZ * 0.5;
-             }
-          }
-       }
+       updateColliderPhysics(gameObject);
 
        if (gameObject.timer <= 0) continue;
        gameObject.timer--;
@@ -2077,6 +2080,7 @@ abstract class Game {
       final nodeAtFeetOrientation = scene.nodeOrientations[nodeAtFeetIndex];
 
       if (nodeAtFeetOrientation == NodeOrientation.Solid){
+        // character.z += (character.z % Node_Size);
         character.z = ((character.z ~/ Node_Height) * Node_Height) + Node_Height;
         character.velocityZ = 0;
       } else
