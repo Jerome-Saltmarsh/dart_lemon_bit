@@ -40,6 +40,7 @@ class GameImages {
    static late Image template_legs_swat;
 
    static late Image template_weapon_bow;
+   static late Image template_weapon_grenade;
    static late Image template_weapon_shotgun;
    static late Image template_weapon_handgun;
    static late Image template_weapon_staff;
@@ -117,6 +118,10 @@ class GameImages {
       if (ItemType.isTypeWeaponShotgun(weaponType)){
          return template_weapon_shotgun;
       }
+      if (ItemType.isTypeWeaponThrown(weaponType)){
+         return template_weapon_grenade;
+      }
+
       switch (weaponType) {
          case ItemType.Weapon_Ranged_Shotgun:
             return template_weapon_shotgun;
@@ -138,17 +143,28 @@ class GameImages {
    }
    
    static Future loadImages() async {
-      characters = await Engine.loadImageAsset('images/atlas-characters.png');
-      zombie = await Engine.loadImageAsset('images/atlas-zombie.png');
-      zombie_shadow = await Engine.loadImageAsset('images/atlas-zombie-shadow.png');
-      gameobjects = await Engine.loadImageAsset('images/atlas-gameobjects.png');
-      particles = await Engine.loadImageAsset('images/atlas-particles.png');
-      projectiles = await Engine.loadImageAsset('images/atlas-projectiles.png');
-      template_shadow = await Engine.loadImageAsset('images/template/template-shadow.png');
-      minimap = await Engine.loadImageAsset('images/atlas-map.png');
-      atlasNodes = await Engine.loadImageAsset('images/atlas-nodes.png');
-      atlasIcons = await Engine.loadImageAsset('images/atlas-icons.png');
-      atlasItems = await Engine.loadImageAsset('images/atlas-items.png');
+      characters
+      = await Engine.loadImageAsset('images/atlas-characters.png');
+      zombie
+      = await Engine.loadImageAsset('images/atlas-zombie.png');
+      zombie_shadow
+      = await Engine.loadImageAsset('images/atlas-zombie-shadow.png');
+      gameobjects
+      = await Engine.loadImageAsset('images/atlas-gameobjects.png');
+      particles
+      = await Engine.loadImageAsset('images/atlas-particles.png');
+      projectiles
+      = await Engine.loadImageAsset('images/atlas-projectiles.png');
+      template_shadow
+      = await Engine.loadImageAsset('images/template/template-shadow.png');
+      minimap
+      = await Engine.loadImageAsset('images/atlas-map.png');
+      atlasNodes
+      = await Engine.loadImageAsset('images/atlas-nodes.png');
+      atlasIcons
+      = await Engine.loadImageAsset('images/atlas-icons.png');
+      atlasItems
+      = await Engine.loadImageAsset('images/atlas-items.png');
 
       template_head_plain = await Engine.loadImageAsset('images/template/head/template-head-plain.png');
       template_head_rogue = await Engine.loadImageAsset('images/template/head/template-head-rogue.png');
@@ -172,6 +188,7 @@ class GameImages {
       template_legs_swat = await Engine.loadImageAsset('images/template/legs/template-legs-swat.png');
 
       template_weapon_bow = await Engine.loadImageAsset('images/template/weapons/template-weapons-bow.png');
+      template_weapon_grenade = await Engine.loadImageAsset('images/template/weapons/template-weapons-grenade.png');
       template_weapon_handgun = await Engine.loadImageAsset('images/template/weapons/template-weapons-handgun.png');
       template_weapon_shotgun = await Engine.loadImageAsset('images/template/weapons/template-weapons-shotgun.png');
       template_weapon_staff = await Engine.loadImageAsset('images/template/weapons/template-weapons-staff-wooden.png');
