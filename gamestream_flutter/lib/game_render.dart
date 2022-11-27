@@ -600,6 +600,18 @@ class GameRender {
           srcHeight: 19,
         );
         return;
+      case ItemType.GameObjects_Grenade:
+        Engine.renderSprite(
+          image: GameImages.atlasItems,
+          dstX: GameConvert.convertV3ToRenderX(gameObject),
+          dstY: gameObject.renderY,
+          srcX: AtlasItems.getSrcX(ItemType.Weapon_Thrown_Grenade),
+          srcY: AtlasItems.getSrcY(ItemType.Weapon_Thrown_Grenade),
+          srcWidth: AtlasItems.size,
+          srcHeight: AtlasItems.size,
+          color: GameState.getV3RenderColor(gameObject),
+        );
+        return;
     }
   }
 

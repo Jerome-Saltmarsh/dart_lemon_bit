@@ -276,26 +276,7 @@ abstract class Game {
     final weaponType = player.weaponType;
 
     if (weaponType == ItemType.Weapon_Thrown_Grenade){
-
-      dispatchAttackPerformed(weaponType, player.x, player.y, player.z, player.faceAngle);
-      player.assignWeaponStateFiring();
-      gameObjects.add(
-          GameObject(
-              x: player.x,
-              y: player.y,
-              z: player.z + Character_Height,
-              type: ItemType.Weapon_Thrown_Grenade,
-          )
-          ..setVelocity(player.lookRadian, 30.0)
-          ..collidable = false
-          ..physical = false
-          ..applyGravity = true
-          ..quantity = 1
-          ..velocityZ = -0.75
-          ..timer = 40
-          ..owner = player
-          ..damage = 15
-      );
+      playerThrowGrenade(player);
       return;
     }
 
@@ -330,6 +311,28 @@ abstract class Game {
         assert(player.weaponStateDuration > 0);
         break;
     }
+  }
+
+  void playerThrowGrenade(Player player) {
+    dispatchPlayerAttackPerformed(player);
+    player.assignWeaponStateFiring();
+    gameObjects.add(
+        GameObject(
+            x: player.x,
+            y: player.y,
+            z: player.z + Character_Height,
+            type: ItemType.GameObjects_Grenade,
+        )
+        ..setVelocity(player.lookRadian, 30.0)
+        ..collidable = false
+        ..physical = false
+        ..applyGravity = true
+        ..quantity = 1
+        ..velocityZ = -0.75
+        ..timer = 40
+        ..owner = player
+        ..damage = 15
+    );
   }
 
   void playerTeleportToMouse(Player player){
@@ -517,25 +520,11 @@ abstract class Game {
       );
   }
 
-  void deactivateGameObject(GameObject gameObject, {int duration = 0}){
+  void deactivateGameObject(GameObject gameObject){
      if (!gameObject.active) return;
      gameObject.active = false;
      gameObject.collidable = false;
-     gameObject.timer = duration;
-
-     if (gameObject.type == ItemType.Weapon_Thrown_Grenade){
-        dispatchV3(GameEventType.Explosion, gameObject);
-
-        for (var i = 0; i < characters.length; i++){
-           if (characters[i].dead) continue;
-           final character = characters[i];
-           if (gameObject.withinRadius(character, 50)) {
-              applyHit(src: gameObject, target: character);
-           }
-        }
-
-     }
-
+     gameObject.timer = 0;
      customOnGameObjectDeactivated(gameObject);
   }
 
@@ -623,16 +612,32 @@ abstract class Game {
   }
 
   void updateGameObjects() {
-    for (final gameObject in gameObjects){
-       if (!gameObject.active) continue;
-       gameObject.updatePhysics();
-       updateColliderPhysics(gameObject);
+    gameObjects.forEach(updateGameObject);
+  }
 
-       if (gameObject.timer <= 0) continue;
-       gameObject.timer--;
-       if (gameObject.timer > 0) continue;
-       deactivateGameObject(gameObject);
-       dispatchV3(GameEventType.GameObject_Timeout, gameObject);
+  void updateGameObject(GameObject gameObject){
+    if (!gameObject.active) return;
+    gameObject.updatePhysics();
+    updateColliderPhysics(gameObject);
+
+    if (gameObject.timer <= 0)
+      return;
+    gameObject.timer--;
+    if (gameObject.timer > 0)
+      return;
+
+    deactivateGameObject(gameObject);
+    dispatchV3(GameEventType.GameObject_Timeout, gameObject);
+
+    if (gameObject.type == ItemType.GameObjects_Grenade) {
+      dispatchV3(GameEventType.Explosion, gameObject);
+      for (var i = 0; i < characters.length; i++){
+        if (characters[i].dead) continue;
+        final character = characters[i];
+        if (gameObject.withinRadius(character, 100)) {
+          applyHit(src: gameObject, target: character);
+        }
+      }
     }
   }
 
@@ -1761,6 +1766,15 @@ abstract class Game {
       player.writeGameEvent(type: type, x: x, y: y, z: z, angle: angle);
     }
   }
+
+  void dispatchPlayerAttackPerformed(Player player) =>
+      dispatchAttackPerformed(
+          player.weaponType,
+          player.x,
+          player.y,
+          player.z,
+          player.lookRadian,
+      );
 
   void dispatchAttackPerformed(int attackType, double x, double y, double z, double angle){
     for (final player in players) {

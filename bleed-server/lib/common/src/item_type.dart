@@ -4,7 +4,7 @@ class ItemType {
   static const Empty                        = 00000;
   static const Index_Perk                   = 00500;
   static const Index_Base                   = 00800;
-  static const Index_Environment            = 01000;
+  static const Index_GameObjects            = 01000;
   static const Index_Consumables            = 02000;
   static const Index_Resources              = 05000;
   static const Index_Trinkets               = 07000;
@@ -49,19 +49,20 @@ class ItemType {
   static const Trinket_Ring_of_Health = Index_Trinkets;
   static const Trinket_Ring_of_Damage = Trinket_Ring_of_Health + 1;
 
-  static const GameObjects_Flower = Index_Environment + 1;
-  static const GameObjects_Rock = Index_Environment + 2;
-  static const GameObjects_Stick = Index_Environment + 3;
-  static const GameObjects_Barrel = Index_Environment + 4;
-  static const GameObjects_Tavern_Sign = Index_Environment + 5;
-  static const GameObjects_Candle = Index_Environment + 6;
-  static const GameObjects_Bottle = Index_Environment + 7;
-  static const GameObjects_Wheel = Index_Environment + 8;
-  static const GameObjects_Crystal = Index_Environment + 9;
-  static const GameObjects_Cup = Index_Environment + 10;
-  static const GameObjects_Lantern_Red = Index_Environment + 11;
-  static const GameObjects_Book_Purple = Index_Environment + 12;
-  static const GameObjects_Crystal_Small_Blue = Index_Environment + 13;
+  static const GameObjects_Flower               = Index_GameObjects + 01;
+  static const GameObjects_Rock                 = Index_GameObjects + 02;
+  static const GameObjects_Stick                = Index_GameObjects + 03;
+  static const GameObjects_Barrel               = Index_GameObjects + 04;
+  static const GameObjects_Tavern_Sign          = Index_GameObjects + 05;
+  static const GameObjects_Candle               = Index_GameObjects + 06;
+  static const GameObjects_Bottle               = Index_GameObjects + 07;
+  static const GameObjects_Wheel                = Index_GameObjects + 08;
+  static const GameObjects_Crystal              = Index_GameObjects + 09;
+  static const GameObjects_Cup                  = Index_GameObjects + 10;
+  static const GameObjects_Lantern_Red          = Index_GameObjects + 11;
+  static const GameObjects_Book_Purple          = Index_GameObjects + 12;
+  static const GameObjects_Crystal_Small_Blue   = Index_GameObjects + 13;
+  static const GameObjects_Grenade              = Index_GameObjects + 14;
 
   static const Resource_Wood = Index_Resources + 5;
   static const Resource_Stone = Index_Resources + 6;
@@ -200,7 +201,7 @@ class ItemType {
     isTypeWeapon(value)       ;
 
   static bool isTypeEnvironment(int value) =>
-      value >= Index_Environment && value < Index_Consumables;
+      value >= Index_GameObjects && value < Index_Consumables;
 
   static bool isTypeConsumable(int value) =>
       value >= Index_Consumables && value < Index_Resources;
