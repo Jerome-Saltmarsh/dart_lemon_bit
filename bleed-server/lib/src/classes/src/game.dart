@@ -583,7 +583,7 @@ abstract class Game {
           if (scene.getCollisionAt(gameObject.x, gameObject.y, gameObject.z)) {
             gameObject.z += (gameObject.z % Node_Height);
              if (gameObject.velocityZ > 0) {
-               gameObject.velocityZ = -gameObject.velocityZ * 0.85;
+               gameObject.velocityZ = -gameObject.velocityZ * 0.5;
              }
           }
        }

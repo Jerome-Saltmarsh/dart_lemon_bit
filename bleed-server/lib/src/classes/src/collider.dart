@@ -95,8 +95,9 @@ class Collider extends Position3 {
 
   void updatePhysics(){
     z -= velocityZ;
-    if (applyGravity){
+    if (applyGravity) {
       velocityZ += GamePhysics.Gravity;
+      velocityZ *= GamePhysics.Friction;
     }
     const minVelocity = 0.005;
     if (velocitySpeed <= minVelocity) return;
