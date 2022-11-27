@@ -213,16 +213,22 @@ class GameRender {
         );
         break;
       case ParticleType.Smoke:
-        // Engine.renderBuffer(
-        //   dstX: particle.renderX,
-        //   dstY: particle.renderY,
-        //   srcX: 5612,
-        //   srcY: 0,
-        //   srcWidth: 50,
-        //   srcHeight: 50,
-        //   scale: particle.scale,
-        //   color: getRenderColor(particle),
-        // );
+      if (particle.frame >= 24) {
+        particle.deactivate();
+        return;
+      }
+        final frame = particle.frame <= 11 ? particle.frame : 23 - particle.frame;
+
+        Engine.renderSprite(
+          image: GameImages.particles,
+          dstX: particle.renderX,
+          dstY: particle.renderY,
+          srcX: 432,
+          srcY: 32.0 * frame,
+          srcWidth: 32,
+          srcHeight: 32,
+          scale: particle.scale,
+        );
         break;
       case ParticleType.Block_Wood:
         Engine.renderSprite(
@@ -271,8 +277,8 @@ class GameRender {
           image: GameImages.particles,
           dstX: particle.renderX,
           dstY: particle.renderY,
-          srcX: 1,
-          srcY: 1 + 32.0 * particle.frame,
+          srcX: 0,
+          srcY: 32.0 * particle.frame,
           srcWidth: 32,
           srcHeight: 32,
           scale: particle.scale,

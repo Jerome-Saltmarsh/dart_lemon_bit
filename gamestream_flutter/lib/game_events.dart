@@ -117,6 +117,10 @@ class GameEvents {
         GameState.spawnParticleFire(x: x, y: y, z: z)..delay = 2;
         GameState.spawnParticleFire(x: x, y: y, z: z)..delay = 4;
         GameState.spawnParticleFire(x: x, y: y, z: z)..delay = 6;
+
+        // GameState.spawnParticleSmoke(x: x, y: y, z: z)
+        //   ..delay = 10;
+
         return;
       case GameEventType.AI_Target_Acquired:
         final characterType = serverResponseReader.readByte();

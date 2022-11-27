@@ -2,6 +2,11 @@
 import 'package:gamestream_flutter/library.dart';
 
 class RenderNode {
+
+  static final bufferClr = Engine.bufferClr;
+  static final bufferSrc = Engine.bufferSrc;
+  static final bufferDst = Engine.bufferDst;
+
   static void renderNodeTorch(){
     if (!ClientState.torchesIgnited.value) {
       Engine.renderSprite(
@@ -242,15 +247,15 @@ class RenderNode {
   }){
     GameRender.onscreenNodes++;
     final f = Engine.bufferIndex * 4;
-    Engine.bufferClr[Engine.bufferIndex] = 1;
-    Engine.bufferSrc[f] = srcX;
-    Engine.bufferSrc[f + 1] = srcY;
-    Engine.bufferSrc[f + 2] = srcX + GameConstants.Sprite_Width;
-    Engine.bufferSrc[f + 3] = srcY + GameConstants.Sprite_Height;
-    Engine.bufferDst[f] = 1.0; // scale
-    Engine.bufferDst[f + 1] = 0;
-    Engine.bufferDst[f + 2] = GameRender.currentNodeDstX - (GameConstants.Sprite_Width_Half);
-    Engine.bufferDst[f + 3] = GameRender.currentNodeDstY - (GameConstants.Sprite_Height_Third);
+    bufferClr[Engine.bufferIndex] = 1;
+    bufferSrc[f] = srcX;
+    bufferSrc[f + 1] = srcY;
+    bufferSrc[f + 2] = srcX + GameConstants.Sprite_Width;
+    bufferSrc[f + 3] = srcY + GameConstants.Sprite_Height;
+    bufferDst[f] = 1.0; // scale
+    bufferDst[f + 1] = 0;
+    bufferDst[f + 2] = GameRender.currentNodeDstX - (GameConstants.Sprite_Width_Half);
+    bufferDst[f + 3] = GameRender.currentNodeDstY - (GameConstants.Sprite_Height_Third);
     Engine.incrementBufferIndex();
   }
 
@@ -260,15 +265,15 @@ class RenderNode {
   }){
     GameRender.onscreenNodes++;
     final f = Engine.bufferIndex * 4;
-    Engine.bufferClr[Engine.bufferIndex] = GameRender.currentNodeColor;
-    Engine.bufferSrc[f] = srcX;
-    Engine.bufferSrc[f + 1] = srcY;
-    Engine.bufferSrc[f + 2] = srcX + GameConstants.Sprite_Width;
-    Engine.bufferSrc[f + 3] = srcY + GameConstants.Sprite_Height;
-    Engine.bufferDst[f] = 1.0; // scale
-    Engine.bufferDst[f + 1] = 0;
-    Engine.bufferDst[f + 2] = GameRender.currentNodeDstX - (GameConstants.Sprite_Width_Half);
-    Engine.bufferDst[f + 3] = GameRender.currentNodeDstY - (GameConstants.Sprite_Height_Third);
+    bufferClr[Engine.bufferIndex] = GameRender.currentNodeColor;
+    bufferSrc[f] = srcX;
+    bufferSrc[f + 1] = srcY;
+    bufferSrc[f + 2] = srcX + GameConstants.Sprite_Width;
+    bufferSrc[f + 3] = srcY + GameConstants.Sprite_Height;
+    bufferDst[f] = 1.0; // scale
+    bufferDst[f + 1] = 0;
+    bufferDst[f + 2] = GameRender.currentNodeDstX - (GameConstants.Sprite_Width_Half);
+    bufferDst[f + 3] = GameRender.currentNodeDstY - (GameConstants.Sprite_Height_Third);
     Engine.incrementBufferIndex();
   }
 

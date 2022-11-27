@@ -955,6 +955,28 @@ class GameState {
       scale: scale,
     );
 
+  static Particle spawnParticleSmoke({
+    required double x,
+    required double y,
+    required double z,
+    int duration = 100,
+    double scale = 1.0
+  }) =>
+      spawnParticle(
+        type: ParticleType.Smoke,
+        x: x,
+        y: y,
+        z: z,
+        zv: 0,
+        angle: 0,
+        rotation: 0,
+        speed: 0,
+        scaleV: 0.01,
+        weight: -0.25,
+        duration: duration,
+        scale: scale,
+      );
+
   static void spawnParticleFirePurple({
     required double x,
     required double y,
