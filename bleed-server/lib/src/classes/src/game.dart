@@ -288,7 +288,7 @@ abstract class Game {
           ..applyGravity = true
           ..quantity = 1
           ..velocityZ = -0.75
-          ..timer = 200
+          ..timer = 100
       );
       return;
     }
@@ -578,6 +578,16 @@ abstract class Game {
     for (final gameObject in gameObjects){
        if (!gameObject.active) continue;
        gameObject.updatePhysics();
+
+       if (gameObject.applyGravity) {
+          if (scene.getCollisionAt(gameObject.x, gameObject.y, gameObject.z)) {
+            gameObject.z += (gameObject.z % Node_Height);
+             if (gameObject.velocityZ > 0) {
+               gameObject.velocityZ = -gameObject.velocityZ * 0.85;
+             }
+          }
+       }
+
        if (gameObject.timer <= 0) continue;
        gameObject.timer--;
        if (gameObject.timer > 0) continue;
