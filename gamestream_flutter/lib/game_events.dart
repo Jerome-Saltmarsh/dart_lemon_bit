@@ -306,9 +306,13 @@ class GameEvents {
       case ItemType.Weapon_Melee_Crowbar:
         GameAudio.swing_sword.playXYZ(x, y, z);
         break;
+      case ItemType.Weapon_Thrown_Grenade:
+        GameAudio.swing_sword.playXYZ(x, y, z);
+        break;
       default:
         return;
     }
+
   }
 
   static void onChangedEdit(bool value) {

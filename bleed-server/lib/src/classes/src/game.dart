@@ -276,6 +276,8 @@ abstract class Game {
     final weaponType = player.weaponType;
 
     if (weaponType == ItemType.Weapon_Thrown_Grenade){
+
+      dispatchAttackPerformed(weaponType, player.x, player.y, player.z, player.faceAngle);
       player.assignWeaponStateFiring();
       gameObjects.add(
           GameObject(
@@ -582,6 +584,28 @@ abstract class Game {
        gameObject.updatePhysics();
 
        if (gameObject.applyGravity) {
+
+         if (gameObject.velocityX < 0) {
+           if (scene.getCollisionAt(gameObject.left, gameObject.y, gameObject.z)) {
+              gameObject.velocityX = -gameObject.velocityX;
+           }
+         }
+         if (gameObject.velocityX > 0) {
+           if (scene.getCollisionAt(gameObject.right, gameObject.y, gameObject.z)) {
+             gameObject.velocityX = -gameObject.velocityX;
+           }
+         }
+         if (gameObject.velocityY < 0) {
+           if (scene.getCollisionAt(gameObject.x, gameObject.top, gameObject.z)) {
+             gameObject.velocityY = -gameObject.velocityY;
+           }
+         }
+         if (gameObject.velocityY > 0) {
+           if (scene.getCollisionAt(gameObject.x, gameObject.bottom, gameObject.z)) {
+             gameObject.velocityY = -gameObject.velocityY;
+           }
+         }
+
           if (scene.getCollisionAt(gameObject.x, gameObject.y, gameObject.z)) {
             gameObject.z += (gameObject.z % Node_Height);
              if (gameObject.velocityZ > 0) {
