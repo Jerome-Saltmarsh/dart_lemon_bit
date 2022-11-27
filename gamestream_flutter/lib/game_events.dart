@@ -96,7 +96,27 @@ class GameEvents {
           y: y,
           z: z,
         );
-        GameState.spawnParticleFire(x: x, y: y, z: z);
+        const flameSpeed = 1.0;
+        GameState.spawnParticleFire(x: x, y: y, z: z)
+          ..delay = 0
+          ..xv = flameSpeed
+          ..yv = flameSpeed;
+        GameState.spawnParticleFire(x: x, y: y, z: z)
+          ..delay = 0
+          ..xv = -flameSpeed
+          ..yv = flameSpeed;
+        GameState.spawnParticleFire(x: x, y: y, z: z)
+          ..delay = 0
+          ..xv = flameSpeed
+          ..yv = -flameSpeed;
+        GameState.spawnParticleFire(x: x, y: y, z: z)
+          ..delay = 0
+          ..xv = -flameSpeed
+          ..yv = -flameSpeed;
+        GameState.spawnParticleFire(x: x, y: y, z: z)..delay = 0;
+        GameState.spawnParticleFire(x: x, y: y, z: z)..delay = 2;
+        GameState.spawnParticleFire(x: x, y: y, z: z)..delay = 4;
+        GameState.spawnParticleFire(x: x, y: y, z: z)..delay = 6;
         return;
       case GameEventType.AI_Target_Acquired:
         final characterType = serverResponseReader.readByte();

@@ -17,6 +17,8 @@ class GameState {
   static final particleEmitters = <ParticleEmitter>[];
   static final floatingTexts = <FloatingText>[];
 
+  static final particleOverflow = Particle();
+
   static var totalGameObjects = 0;
   static var totalCharacters = 0;
   static var totalPlayers = 0;
@@ -310,7 +312,7 @@ class GameState {
     dynamicIndex = 0;
   }
 
-  static void spawnParticle({
+  static Particle spawnParticle({
     required int type,
     required double x,
     required double y,
@@ -329,7 +331,9 @@ class GameState {
     double airFriction = 0.98,
     bool animation = false,
   }) {
-    if (ClientState.totalActiveParticles > GameConfig.Particles_Max) return;
+    if (ClientState.totalActiveParticles >= GameConfig.Particles_Max) {
+      return particleOverflow;
+    }
     assert(duration > 0);
     final particle = getInstanceParticle();
     assert(!particle.active);
@@ -357,19 +361,29 @@ class GameState {
     particle.rotationVelocity = rotationV;
     particle.bounciness = bounciness;
     particle.airFriction = airFriction;
+    return particle;
   }
 
   static void updateParticle(Particle particle) {
     if (!particle.active) return;
+    if (particle.delay > 0) {
+      particle.delay--;
+      return;
+    }
     if (particle.outOfBounds) return particle.deactivate();
 
     if (particle.animation) {
-      if (particle.duration-- <= 0)
+      if (particle.duration-- <= 0) {
         particle.deactivate();
+      }
       return;
     }
 
     final nodeIndex = GameQueries.getNodeIndexV3(particle);
+
+    assert (nodeIndex >= 0);
+    assert (nodeIndex < GameNodes.nodesTotal);
+
     final tile = GameNodes.nodesType[nodeIndex];
     final airBorn =
         !particle.checkNodeCollision || (
@@ -919,13 +933,13 @@ class GameState {
     return instance;
   }
 
-  static void spawnParticleFire({
+  static Particle spawnParticleFire({
     required double x,
     required double y,
     required double z,
     int duration = 100,
     double scale = 1.0
-  }) {
+  }) =>
     spawnParticle(
       type: ParticleType.Fire,
       x: x,
@@ -940,7 +954,6 @@ class GameState {
       duration: duration,
       scale: scale,
     );
-  }
 
   static void spawnParticleFirePurple({
     required double x,

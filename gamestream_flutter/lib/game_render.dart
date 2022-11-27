@@ -157,6 +157,8 @@ class GameRender {
   // ACTIONS
 
   static void renderParticle(Particle particle) {
+    assert (particle.active);
+    if (particle.delay > 0) return;
     switch (particle.type) {
       case ParticleType.Bubble:
         if (particle.duration > 26) {

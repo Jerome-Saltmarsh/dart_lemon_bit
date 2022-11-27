@@ -4,6 +4,7 @@ import 'package:lemon_math/library.dart';
 import 'vector3.dart';
 
 class Particle extends Vector3 {
+  var delay = 0;
   var xv = 0.0;
   var yv = 0.0;
   var zv = 0.0;
