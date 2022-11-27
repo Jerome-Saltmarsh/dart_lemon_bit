@@ -227,9 +227,12 @@ class GameState {
     );
   }
 
+  static void applyEmissionDynamicV3(Vector3 v3) =>
+    applyEmissionDynamic(index: GameQueries.getNodeIndexV3(v3));
+
   static void applyEmissionDynamic({
     required int index,
-    required int maxBrightness,
+    int maxBrightness = Shade.Very_Bright,
   }){
     final zIndex = GameState.convertNodeIndexToZ(index);
     final rowIndex = GameState.convertNodeIndexToRow(index);
@@ -1056,40 +1059,25 @@ class GameState {
     updateProjectiles();
     GameAudio.update();
     ClientState.update();
-    // updateLightning();
-
-    if (player.messageTimer > 0) {
-      player.messageTimer--;
-      if (player.messageTimer == 0){
-        player.message.value = "";
-      }
-    }
-
-    // if (ClientState.lightningFlashFrames > 0) {
-    //   ClientState.lightningFlashFrames--;
-    //    if (ClientState.lightningFlashFrames <= 0){
-    //      GameActions.setAmbientShadeToHour();
-    //    }
-    // }
-
+    updatePlayerMessageTimer();
     GameIO.readPlayerInput();
     GameNetwork.sendClientRequestUpdate();
   }
 
-  // static void updateLightning(){
-  //   if (ServerState.lightning.value != LightningType.On) return;
-  //   if (ClientState.nextLightning-- > 0) return;
-  //   GameState.actionLightningFlash();
-  //   ClientState.nextLightning = randomInt(200, 1500);
-  // }
+  static void updatePlayerMessageTimer() {
+    if (player.messageTimer <= 0) return;
+    player.messageTimer--;
+    if (player.messageTimer > 0) return;
+    player.message.value = "";
+  }
 
   static void applyEmissionGameObjects() {
-    // for (var i = 0; i < totalGameObjects; i++){
-    //   if (!GameObjectType.emitsLightBright(gameObjects[i].type)) continue;
-    //   applyVector3Emission(gameObjects[i], maxBrightness: Shade.Very_Bright);
-    // }
     for (var i = 0; i < totalGameObjects; i++){
       final gameObject = gameObjects[i];
+      if (gameObject.type == ItemType.GameObjects_Grenade) {
+         applyEmissionDynamicV3(gameObject);
+         return;
+      }
       if (gameObject.type != ItemType.GameObjects_Candle) continue;
       final nodeIndex = GameQueries.getNodeIndexV3(gameObject);
       final nodeShade = GameNodes.nodesShade[nodeIndex];

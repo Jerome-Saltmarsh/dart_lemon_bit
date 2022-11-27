@@ -91,6 +91,11 @@ class GameEvents {
         return;
       case GameEventType.Explosion:
         GameAudio.explosion_grenade_04.playXYZ(x, y, z);
+        GameState.spawnParticleLightEmission(
+          x: x,
+          y: y,
+          z: z,
+        );
         return;
       case GameEventType.AI_Target_Acquired:
         final characterType = serverResponseReader.readByte();
