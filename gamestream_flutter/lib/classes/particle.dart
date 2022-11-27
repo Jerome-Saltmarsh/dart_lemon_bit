@@ -34,11 +34,6 @@ class Particle extends Vector3 {
     yv = getOpposite(value, speed);
   }
 
-  void updateFrame(){
-    if (!active) return;
-    frame++;
-  }
-
   void updateMotion(){
     x += xv;
     y += yv;

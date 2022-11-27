@@ -174,16 +174,6 @@ class GameRender {
           color: GameState.getV3RenderColor(particle),
         );
         break;
-      // const size = 8.0;
-        // return Engine.renderBuffer(
-        //   dstX: particle.renderX,
-        //   dstY: particle.renderY,
-        //   srcX: 2864.0,
-        //   srcY: ((particle.frame ~/ 2) % 6) * size,
-        //   srcWidth: size,
-        //   srcHeight: size,
-        //   color: getRenderColor(particle),
-        // );
       case ParticleType.Bubble_Small:
         Engine.renderSprite(
           image: GameImages.gameobjects,
@@ -280,7 +270,7 @@ class GameRender {
           dstX: particle.renderX,
           dstY: particle.renderY,
           srcX: 1,
-          srcY: 1 + 32.0 * particle.frame ,
+          srcY: 1 + 32.0 * particle.frame,
           srcWidth: 32,
           srcHeight: 32,
           scale: particle.scale,

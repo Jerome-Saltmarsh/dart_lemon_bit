@@ -26,7 +26,7 @@ class GameState {
   static var totalProjectiles = 0;
   static var visibleIndex = 0;
   static var dynamicIndex = 0;
-
+  static var nextParticleFrame = 0;
 
   static final gridShadows = Watch(true, onChanged: (bool value){
     refreshLighting();
@@ -991,10 +991,17 @@ class GameState {
 
   /// do this during the draw call so that particles are smoother
   static void updateParticles() {
+    nextParticleFrame--;
+
     for (final particle in ClientState.particles) {
       if (!particle.active) continue;
       updateParticle(particle);
-      particle.frame++;
+      if (nextParticleFrame <= 0){
+        particle.frame++;
+      }
+    }
+    if (nextParticleFrame <= 0) {
+      nextParticleFrame = GameConstants.Frames_Per_Particle_Animation_Frame;
     }
   }
 

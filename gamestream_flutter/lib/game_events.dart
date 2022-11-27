@@ -96,6 +96,7 @@ class GameEvents {
           y: y,
           z: z,
         );
+        GameState.spawnParticleFire(x: x, y: y, z: z);
         return;
       case GameEventType.AI_Target_Acquired:
         final characterType = serverResponseReader.readByte();
