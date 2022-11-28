@@ -218,6 +218,12 @@ flutter build web --web-renderer canvaskit --release
 firebase deploy
 
 
+#Story
+Earth is invaded by an alien race.
+
+The alien's spread a virus which turns the dead into zombies which the aliens control.
+
+
 
 #DESIGN
 HUNTER

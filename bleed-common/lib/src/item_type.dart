@@ -289,6 +289,8 @@ class ItemType {
       Weapon_Handgun_Flint_Lock_Superior  : Resource_Gun_Powder,
       Weapon_Handgun_Glock                : Resource_Round_9mm,
       Weapon_Handgun_Revolver             : Resource_Round_9mm,
+      Weapon_Rifle_Arquebus               : Resource_Gun_Powder,
+      Weapon_Rifle_Blunderbuss            : Resource_Gun_Powder,
       Weapon_Rifle_Musket                 : Resource_Gun_Powder,
       Weapon_Rifle_Jager                  : Resource_Round_Rifle,
       Weapon_Rifle_M4                     : Resource_Round_Rifle,

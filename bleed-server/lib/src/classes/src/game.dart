@@ -240,7 +240,9 @@ abstract class Game {
   void playerUseWeapon(Player player) {
     if (player.deadBusyOrWeaponStateBusy) return;
 
-    if (player.equippedWeaponUsesAmmunition){
+    final playerWeaponConsumeType = ItemType.getConsumeType(player.weaponType);
+
+    if (playerWeaponConsumeType != ItemType.Empty) {
       final equippedWeaponQuantity = player.equippedWeaponQuantity;
       if (equippedWeaponQuantity > 0){
          player.inventorySetQuantityAtIndex(
