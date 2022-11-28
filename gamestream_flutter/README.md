@@ -66,9 +66,9 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] Loud Noises Draw Attention
 [ ] skills
 [ ] attributes
-[ ] change weapons while walking
 
 28.11.2022
+[x] change weapons while walking
 [x] reload while walking
 [x] grenade throw distance
 [x] reload text

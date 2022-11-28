@@ -119,7 +119,8 @@ class Player extends Character with ByteWriter {
       _equippedWeaponIndex = index;
       weaponType = itemTypeAtIndex;
       inventoryDirty = true;
-      game.setCharacterStateChanging(this);
+      // game.setCharacterStateChanging(this);
+      assignWeaponStateChanging();
       refreshStats();
       return;
     }

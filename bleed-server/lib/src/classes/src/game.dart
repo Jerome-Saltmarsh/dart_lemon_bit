@@ -944,8 +944,9 @@ abstract class Game {
 
   void setCharacterStateChanging(Character character){
     if (character.deadOrBusy) return;
+    character.assignWeaponStateChanging();
     dispatchV3(GameEventType.Character_Changing, character);
-    character.setCharacterState(value: CharacterState.Changing, duration: 20);
+    // character.setCharacterState(value: CharacterState.Changing, duration: 20);
   }
 
   void setCharacterStateDead(Character character) {
@@ -1086,6 +1087,10 @@ abstract class Game {
             player.lookRadian = player.mouseAngle;
             break;
           case WeaponState.Reloading:
+            player.assignWeaponStateIdle();
+            player.lookRadian = player.mouseAngle;
+            break;
+          case WeaponState.Changing:
             player.assignWeaponStateIdle();
             player.lookRadian = player.mouseAngle;
             break;
