@@ -800,7 +800,6 @@ class Player extends Character with ByteWriter {
      }
 
      assignWeaponStateChanging();
-     // writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
      game.dispatchV3(GameEventType.Character_Changing, this);
   }
 

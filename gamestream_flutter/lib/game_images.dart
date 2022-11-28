@@ -43,6 +43,7 @@ class GameImages {
    static late Image template_weapon_grenade;
    static late Image template_weapon_shotgun;
    static late Image template_weapon_handgun;
+   static late Image template_weapon_handgun_black;
    static late Image template_weapon_staff;
    static late Image template_weapon_sword_steel;
    static late Image template_weapon_sword_wooden;
@@ -109,7 +110,10 @@ class GameImages {
 
    static Image getImageForWeaponType(int weaponType) {
 
-      if (ItemType.isTypeWeaponHandgun(weaponType)){
+      if (ItemType.isTypeWeaponHandgun(weaponType)) {
+         if (weaponType == ItemType.Weapon_Handgun_Glock){
+            return template_weapon_handgun_black;
+         }
          return template_weapon_handgun;
       }
       if (ItemType.isTypeWeaponRifle(weaponType)){
@@ -190,6 +194,7 @@ class GameImages {
       template_weapon_bow = await Engine.loadImageAsset('images/template/weapons/template-weapons-bow.png');
       template_weapon_grenade = await Engine.loadImageAsset('images/template/weapons/template-weapons-grenade.png');
       template_weapon_handgun = await Engine.loadImageAsset('images/template/weapons/template-weapons-handgun.png');
+      template_weapon_handgun_black = await Engine.loadImageAsset('images/template/weapons/template-weapons-handgun-black.png');
       template_weapon_shotgun = await Engine.loadImageAsset('images/template/weapons/template-weapons-shotgun.png');
       template_weapon_staff = await Engine.loadImageAsset('images/template/weapons/template-weapons-staff-wooden.png');
       template_weapon_sword_steel = await Engine.loadImageAsset('images/template/weapons/template-weapons-sword-steel.png');

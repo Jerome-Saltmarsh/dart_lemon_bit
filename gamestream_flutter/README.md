@@ -56,7 +56,7 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] flint lock pistol
 [ ] bolt action rifle
 [ ] heavy machine gun
-[ ] standard issue police handgun
+[x] standard issue police handgun
 
 [SCENE CEMETERY]
 [ ] particle-type myst
