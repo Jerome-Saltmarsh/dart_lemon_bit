@@ -73,8 +73,9 @@ class ItemType {
   static const Resource_Gun_Powder = Index_Resources + 11;
   static const Resource_Arrow = Index_Resources + 12;
   static const Resource_Round_9mm = Index_Resources + 13;
-  static const Resource_Round_Rifle = Index_Resources + 14;
-  static const Resource_Round_Shotgun = Index_Resources + 15;
+  static const Resource_Round_50cal = Index_Resources + 14;
+  static const Resource_Round_Rifle = Index_Resources + 15;
+  static const Resource_Round_Shotgun = Index_Resources + 16;
 
   static const Head_Steel_Helm = Index_Heads + 1;
   static const Head_Rogues_Hood = Index_Heads + 2;
@@ -113,6 +114,7 @@ class ItemType {
   static const Weapon_Handgun_Blunderbuss = Weapon_Handgun_Flint_Lock_Superior + 1;
   static const Weapon_Handgun_Revolver = Weapon_Handgun_Blunderbuss + 1;
   static const Weapon_Handgun_Glock = Weapon_Handgun_Revolver + 1;
+  static const Weapon_Handgun_Desert_Eagle  = Weapon_Handgun_Glock + 1;
 
   static const Weapon_Rifle_Arquebus = Index_Weapon_Ranged_Rifle + 1;
   static const Weapon_Rifle_Blunderbuss = Weapon_Rifle_Arquebus + 1;
@@ -288,7 +290,8 @@ class ItemType {
       Weapon_Handgun_Flint_Lock           : Resource_Gun_Powder,
       Weapon_Handgun_Flint_Lock_Superior  : Resource_Gun_Powder,
       Weapon_Handgun_Glock                : Resource_Round_9mm,
-      Weapon_Handgun_Revolver             : Resource_Round_9mm,
+      Weapon_Handgun_Revolver             : Resource_Round_50cal,
+      Weapon_Handgun_Desert_Eagle         : Resource_Round_50cal,
       Weapon_Rifle_Arquebus               : Resource_Gun_Powder,
       Weapon_Rifle_Blunderbuss            : Resource_Gun_Powder,
       Weapon_Rifle_Musket                 : Resource_Gun_Powder,
@@ -322,7 +325,8 @@ class ItemType {
       Weapon_Handgun_Flint_Lock: 2,
       Weapon_Handgun_Flint_Lock_Superior: 3,
       Weapon_Handgun_Glock: 3,
-      Weapon_Handgun_Revolver: 7,
+      Weapon_Handgun_Desert_Eagle: 6,
+      Weapon_Handgun_Revolver: 8,
       Weapon_Melee_Sword: 3,
       Weapon_Ranged_Bow: 1,
       Weapon_Ranged_Bow_Long: 2,
@@ -344,6 +348,7 @@ class ItemType {
       Weapon_Handgun_Flint_Lock: 355,
       Weapon_Handgun_Flint_Lock_Superior: 360,
       Weapon_Handgun_Glock: 350,
+      Weapon_Handgun_Desert_Eagle: 350,
       Weapon_Handgun_Revolver: 400,
       Weapon_Ranged_Bow: 300,
       Weapon_Ranged_Bow_Long: 350,
@@ -365,7 +370,8 @@ class ItemType {
       Weapon_Handgun_Flint_Lock: 45,
       Weapon_Handgun_Flint_Lock_Superior: 40,
       Weapon_Handgun_Glock: 20,
-      Weapon_Handgun_Revolver: 35,
+      Weapon_Handgun_Revolver: 40,
+      Weapon_Handgun_Desert_Eagle: 30,
       Weapon_Melee_Sword: 50,
       Weapon_Ranged_Bow: 50,
       Weapon_Ranged_Bow_Long: 50,
@@ -413,9 +419,10 @@ class ItemType {
      Resource_Gold: "Gold",
      Resource_Scrap_Metal: "Scrap Metal",
      Resource_Gun_Powder: "Gun-Powder",
-     Resource_Round_Shotgun: "Shotgun-Rounds",
-     Resource_Round_Rifle: "Rifle-Rounds",
-     Resource_Round_9mm: "Handgun-Rounds",
+     Resource_Round_Shotgun: "Shotgun Rounds",
+     Resource_Round_Rifle: "Rifle Rounds",
+     Resource_Round_9mm: "9mm Rounds",
+     Resource_Round_50cal: "50 Caliber Rounds",
      Resource_Arrow: "Arrow",
      Trinket_Ring_of_Damage: "Ring of Damage",
      Trinket_Ring_of_Health: "Ring of Health",
@@ -442,6 +449,7 @@ class ItemType {
      Weapon_Handgun_Blunderbuss: "Blunderbuss Pistol",
      Weapon_Handgun_Glock: "Glock 22",
      Weapon_Handgun_Revolver: "Revolver",
+     Weapon_Handgun_Desert_Eagle: "Desert Eagle",
      Weapon_Ranged_Shotgun: "Shotgun",
      Weapon_Rifle_Arquebus: "Arquebus",
      Weapon_Rifle_Jager: "Jager Rifle",
@@ -491,7 +499,8 @@ class ItemType {
     Weapon_Handgun_Flint_Lock           : 01,
     Weapon_Handgun_Flint_Lock_Superior  : 01,
     Weapon_Handgun_Glock                : 15,
-    Weapon_Handgun_Revolver             : 06,
+    Weapon_Handgun_Revolver             : 05,
+    Weapon_Handgun_Desert_Eagle         : 07,
     Weapon_Rifle_Steyr                  : 30,
     Weapon_Rifle_M4                     : 35,
     Weapon_Rifle_AK_47                  : 35,
