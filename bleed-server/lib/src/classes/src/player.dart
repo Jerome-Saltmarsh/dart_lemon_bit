@@ -798,7 +798,7 @@ class Player extends Character with ByteWriter {
         equippedWeaponIndex = currentEquippedWeaponIndex;
      }
 
-     game.setCharacterStateChanging(this);
+     assignWeaponStateChanging();
   }
 
   bool itemTypeCanBeAssignedToIndex({

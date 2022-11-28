@@ -79,6 +79,7 @@ void renderCharacterTemplate(Character character, {
       break;
   }
 
+
   if (character.usingWeapon) {
     final animation = TemplateAnimation.getAttackAnimation(character.weaponType);
     frameWeapon = (character.weaponFrame >= animation.length ? animation.last : animation[character.weaponFrame]) - 1;
@@ -94,7 +95,13 @@ void renderCharacterTemplate(Character character, {
     frameHead = TemplateAnimation.Frame_Aiming_One_Handed;
     frameBody = TemplateAnimation.Frame_Aiming_One_Handed;
     frameWeapon = TemplateAnimation.Frame_Aiming_One_Handed;
+  } else
+  if (character.weaponStateChanging) {
+    frameHead = TemplateAnimation.StateChangingFrame;
+    frameBody = TemplateAnimation.StateChangingFrame;
+    frameWeapon = TemplateAnimation.StateChangingFrame;
   }
+
 
   if (!weaponInFront) {
     renderTemplateWeapon(character.weaponType, finalDirection, frameWeapon, color, dstX, dstY);

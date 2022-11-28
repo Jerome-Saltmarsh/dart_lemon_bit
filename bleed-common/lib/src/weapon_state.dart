@@ -4,4 +4,5 @@ class WeaponState {
    static const Idle = 2;
    static const Reloading = 3;
    static const Aiming = 4;
+   static const Changing = 5;
 }

@@ -32,6 +32,7 @@ class Character extends Vector3 {
   bool get weaponStateIdle => weaponState == WeaponState.Idle;
   bool get weaponStateFiring => weaponState == WeaponState.Firing;
   bool get weaponStateReloading => weaponState == WeaponState.Reloading;
+  bool get weaponStateChanging => weaponState == WeaponState.Changing;
   bool get weaponStateAiming => weaponState == WeaponState.Aiming;
   bool get dead => state == CharacterState.Dead;
   bool get deadOrDying => dead || dying;
