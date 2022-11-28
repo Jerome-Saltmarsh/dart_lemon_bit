@@ -516,6 +516,17 @@ class ItemType {
     Weapon_Ranged_Shotgun               : 04,
     Weapon_Thrown_Grenade               : 05,
   }[itemType]                          ?? 01;
+
+  static double getScopeDistance(int itemType){
+    return const <int, double> {
+        Weapon_Rifle_Arquebus: 1.25,
+        Weapon_Rifle_Blunderbuss: 1.33,
+        Weapon_Rifle_Musket: 1.5,
+        Weapon_Rifle_AK_47: 1.33,
+        Weapon_Rifle_Steyr: 1.5,
+        Weapon_Rifle_Sniper: 3.0,
+    }[itemType] ?? 1.0;
+  }
 }
 
 
