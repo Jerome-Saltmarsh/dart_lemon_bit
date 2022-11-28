@@ -62,6 +62,22 @@ class GameCanvas {
     switch (GamePlayer.aimTargetCategory) {
       case TargetCategory.Nothing:
         GameRender.canvasRenderCursorCrossHair(canvas, distance);
+
+        if (ServerQuery.getEquippedWeaponConsumeType() != ItemType.Empty){
+           if (ServerQuery.getEquippedWeaponQuantity() <= 0){
+             Engine.renderExternalCanvas(
+               canvas: canvas,
+               image: GameImages.atlasIcons,
+               srcX: 272,
+               srcY: 0,
+               srcWidth: 128,
+               srcHeight: 32,
+               dstX: Engine.mousePosition.x,
+               dstY: Engine.mousePosition.y - 70,
+             );
+           }
+        }
+
         break;
       case TargetCategory.Item:
         GameRender.canvasRenderCursorHand(canvas);
@@ -71,6 +87,23 @@ class GameCanvas {
         return;
       case TargetCategory.Enemy:
         GameRender.canvasRenderCursorCrossHairRed(canvas, distance);
+
+        if (ServerQuery.getEquippedWeaponConsumeType() != ItemType.Empty){
+          if (ServerQuery.getEquippedWeaponQuantity() <= 0){
+            Engine.renderExternalCanvas(
+              canvas: canvas,
+              image: GameImages.atlasIcons,
+              srcX: 272,
+              srcY: 0,
+              srcWidth: 128,
+              srcHeight: 32,
+              dstX: Engine.mousePosition.x,
+              dstY: Engine.mousePosition.y - 70,
+            );
+          }
+        }
+
+
         break;
     }
   }

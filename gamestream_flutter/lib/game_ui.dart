@@ -614,19 +614,6 @@ class GameUI {
         ),
       );
 
-  static Widget buildControlPlayerEquippedWeaponAmmunition() {
-    return watch(ServerState.playerEquippedWeaponAmmunitionType,
-        (int ammunitionType) {
-      if (ammunitionType == ItemType.Empty) return const SizedBox();
-      return Row(children: [
-        watch(ServerState.playerEquippedWeaponAmmunitionType,
-            GameUI.buildAtlasItemType),
-        width4,
-        watch(ServerState.playerEquippedWeaponAmmunitionQuantity, text),
-      ]);
-    });
-  }
-
   static Decoration buildDecorationBorder({
     required Color colorBorder,
     required Color colorFill,

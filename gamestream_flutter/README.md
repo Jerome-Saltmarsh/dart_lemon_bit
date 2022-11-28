@@ -68,6 +68,7 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] attributes
 
 28.11.2022
+[x] reload text
 [x] weapon grenade
 
 27.11.2022
