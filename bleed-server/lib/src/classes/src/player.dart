@@ -119,8 +119,8 @@ class Player extends Character with ByteWriter {
       _equippedWeaponIndex = index;
       weaponType = itemTypeAtIndex;
       inventoryDirty = true;
-      // game.setCharacterStateChanging(this);
       assignWeaponStateChanging();
+      game.dispatchV3(GameEventType.Character_Changing, this);
       refreshStats();
       return;
     }
@@ -800,6 +800,8 @@ class Player extends Character with ByteWriter {
      }
 
      assignWeaponStateChanging();
+     // writePlayerEvent(PlayerEvent.Inventory_Item_Moved);
+     game.dispatchV3(GameEventType.Character_Changing, this);
   }
 
   bool itemTypeCanBeAssignedToIndex({
