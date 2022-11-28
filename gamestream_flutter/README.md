@@ -56,7 +56,6 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] flint lock pistol
 [ ] bolt action rifle
 [ ] heavy machine gun
-[x] standard issue police handgun
 
 [SCENE CEMETERY]
 [ ] particle-type myst
@@ -68,6 +67,8 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] attributes
 
 28.11.2022
+[x] model standard issue police handgun
+[x] handgun desert eagle
 [x] change weapons while walking
 [x] reload while walking
 [x] grenade throw distance
