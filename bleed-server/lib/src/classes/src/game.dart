@@ -317,6 +317,9 @@ abstract class Game {
   void playerThrowGrenade(Player player) {
     dispatchPlayerAttackPerformed(player);
     player.assignWeaponStateFiring();
+
+    final mouseDistance = getDistanceXY(player.x, player.y, player.mouseGridX, player.mouseGridY);
+
     gameObjects.add(
         GameObject(
             x: player.x,
@@ -324,7 +327,7 @@ abstract class Game {
             z: player.z + Character_Height,
             type: ItemType.GameObjects_Grenade,
         )
-        ..setVelocity(player.lookRadian, 30.0)
+        ..setVelocity(player.lookRadian, mouseDistance * 0.1)
         ..collidable = false
         ..physical = false
         ..applyGravity = true
