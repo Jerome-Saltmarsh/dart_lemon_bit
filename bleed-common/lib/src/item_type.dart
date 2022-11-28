@@ -124,6 +124,7 @@ class ItemType {
   static const Weapon_Rifle_AK_47 = Weapon_Rifle_Jager + 1;
   static const Weapon_Rifle_M4 = Weapon_Rifle_AK_47 + 1;
   static const Weapon_Rifle_Steyr = Weapon_Rifle_M4 + 1;
+  static const Weapon_Rifle_Sniper = Weapon_Rifle_Steyr + 1;
 
   static const Weapon_Ranged_Shotgun = Index_Weapon_Ranged_Shotgun + 1;
 
@@ -299,6 +300,7 @@ class ItemType {
       Weapon_Rifle_M4                     : Resource_Round_Rifle,
       Weapon_Rifle_Steyr                  : Resource_Round_Rifle,
       Weapon_Rifle_AK_47                  : Resource_Round_Rifle,
+      Weapon_Rifle_Sniper                 : Resource_Round_50cal,
       Weapon_Ranged_Shotgun               : Resource_Round_Shotgun,
       Weapon_Ranged_Bow                   : Resource_Arrow,
   }[itemType] ?? Empty;
@@ -337,6 +339,7 @@ class ItemType {
       Weapon_Rifle_AK_47: 2,
       Weapon_Rifle_M4: 2,
       Weapon_Rifle_Steyr: 2,
+      Weapon_Rifle_Sniper: 50,
       Trinket_Ring_of_Damage: 1,
   }[value] ?? 0;
 
@@ -360,6 +363,7 @@ class ItemType {
       Weapon_Rifle_AK_47: 400,
       Weapon_Rifle_M4: 420,
       Weapon_Rifle_Steyr: 430,
+      Weapon_Rifle_Sniper: 650,
   }[value] ?? 0;
 
   static int getCooldown(int value) => const {
@@ -382,6 +386,7 @@ class ItemType {
       Weapon_Rifle_AK_47: 5,
       Weapon_Rifle_M4: 5,
       Weapon_Rifle_Steyr: 5,
+      Weapon_Rifle_Sniper: 75,
   }[value] ?? 0;
 
   static String getGroupTypeName(int value) {
@@ -457,6 +462,7 @@ class ItemType {
      Weapon_Rifle_AK_47: "AK-47",
      Weapon_Rifle_M4: "M4 Assault Rifle",
      Weapon_Rifle_Steyr: "Steyr",
+     Weapon_Rifle_Sniper: "Sniper Rifle",
      Consumables_Apple: "Apple",
      Consumables_Meat: "Meat",
      Weapon_Thrown_Grenade: "Grenade",
@@ -506,6 +512,7 @@ class ItemType {
     Weapon_Rifle_AK_47                  : 35,
     Weapon_Rifle_Jager                  : 04,
     Weapon_Rifle_Musket                 : 01,
+    Weapon_Rifle_Sniper                 : 5,
     Weapon_Ranged_Shotgun               : 04,
     Weapon_Thrown_Grenade               : 05,
   }[itemType]                          ?? 01;

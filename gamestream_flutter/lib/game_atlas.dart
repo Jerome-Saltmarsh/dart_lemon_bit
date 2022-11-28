@@ -84,6 +84,14 @@ class AtlasItems {
     ItemType.Base_Health: 64,
     ItemType.Base_Damage: 64,
   }[itemType] ?? 0;
+
+  static double getSrcWidth(int itemType) => const <int, double> {
+    ItemType.Weapon_Rifle_Sniper: 48,
+  }[itemType] ?? size;
+
+  static double getSrcHeight(int itemType) => const <int, double> {
+    ItemType.Weapon_Rifle_Sniper: 16,
+  }[itemType] ?? size;
 }
 
 class AtlasIcons {

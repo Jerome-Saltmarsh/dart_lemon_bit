@@ -156,8 +156,8 @@ class GameInventoryUI {
             height: 32 * scale,
             child: Stack(
               children: [
-                buildItemTypeAtlasImage(
-                  itemType: itemType ?? ServerQuery.getItemTypeAtInventoryIndex(itemIndex),
+                GameUI.buildAtlasItemType(
+                  itemType ?? ServerQuery.getItemTypeAtInventoryIndex(itemIndex),
                   scale: scale,
                 ),
                 if (itemQuantity != null && itemQuantity > 1)
@@ -272,16 +272,6 @@ class GameInventoryUI {
             return child;
           },
         ),
-      );
-
-  static Widget buildItemTypeAtlasImage({required int itemType, double scale = 1.0}) =>
-      Engine.buildAtlasImage(
-        image: GameImages.atlasItems,
-        srcX: AtlasItems.getSrcX(itemType),
-        srcY: AtlasItems.getSrcY(itemType),
-        srcWidth: Slot_Size,
-        srcHeight: Slot_Size,
-        scale: scale,
       );
 
   static Widget buildPositionedContainerHoverTarget(int hoverTarget){
@@ -571,7 +561,7 @@ class GameInventoryUI {
           Expanded(
             child: Row(
               children: [
-                buildItemTypeAtlasImage(itemType: recipeItemType, scale: 0.75),
+                GameUI.buildAtlasItemType(recipeItemType, scale: 0.75),
                 width4,
                 text(ItemType.getName(recipeItemType), color: textColor),
               ],

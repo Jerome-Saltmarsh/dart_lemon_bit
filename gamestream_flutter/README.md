@@ -66,6 +66,7 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] attributes
 
 28.11.2022
+[x] model sniper rifle
 [x] model flint lock pistol
 [x] model standard issue police handgun
 [x] handgun desert eagle
