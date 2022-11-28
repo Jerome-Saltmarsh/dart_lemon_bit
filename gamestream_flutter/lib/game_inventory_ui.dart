@@ -570,7 +570,6 @@ class GameInventoryUI {
           Row(
             children: [
               Container(
-                // width: 65,
                 child: text('($recipeItemQuantityPossessed)',
                     italic: true, color: textColor),
                 alignment: Alignment.centerRight,

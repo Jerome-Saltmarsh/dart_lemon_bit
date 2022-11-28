@@ -32,6 +32,7 @@ class AtlasItems {
       ItemType.Weapon_Rifle_M4: 64,
       ItemType.Weapon_Rifle_AK_47: 64,
       ItemType.Weapon_Rifle_Steyr: 64,
+      ItemType.Weapon_Rifle_Sniper: 64,
       ItemType.Resource_Wood: 32,
       ItemType.Resource_Stone: 64,
       ItemType.Resource_Crystal: 96,
@@ -81,6 +82,7 @@ class AtlasItems {
     ItemType.Weapon_Rifle_AK_47:  128,
     ItemType.Weapon_Rifle_M4: 160,
     ItemType.Weapon_Rifle_Steyr: 192,
+    ItemType.Weapon_Rifle_Sniper: 224,
     ItemType.Base_Health: 64,
     ItemType.Base_Damage: 64,
   }[itemType] ?? 0;

@@ -331,6 +331,10 @@ class GameEvents {
         GameAudio.assault_rifle_shot_14.playXYZ(x, y, z);
         GameState.spawnParticleShell(x, y, z);
         break;
+      case ItemType.Weapon_Rifle_Sniper:
+        GameAudio.sniper_shot_4.playXYZ(x, y, z);
+        GameState.spawnParticleShell(x, y, z);
+        break;
       case ItemType.Weapon_Ranged_Shotgun:
         return GameAudio.shotgun_shot.playXYZ(x, y, z);
       case ItemType.Weapon_Melee_Sword:

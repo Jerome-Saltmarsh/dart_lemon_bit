@@ -272,9 +272,9 @@ class GameUI {
         image: GameImages.atlasItems,
         srcX: AtlasItems.getSrcX(itemType),
         srcY: AtlasItems.getSrcY(itemType),
-        srcWidth: AtlasItems.size,
-        srcHeight: AtlasItems.size,
-        scale: scale,
+        srcWidth: AtlasItems.getSrcWidth(itemType),
+        srcHeight: AtlasItems.getSrcHeight(itemType),
+        scale: scale * (32.0 / AtlasItems.getSrcWidth(itemType)),
       );
 
   static Widget buildAtlasNodeType(int nodeType) => Engine.buildAtlasImage(
