@@ -53,7 +53,6 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] character goblin
 [ ] character vampire
 [ ] character wolf
-[ ] flint lock pistol
 [ ] bolt action rifle
 [ ] heavy machine gun
 
@@ -67,6 +66,7 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] attributes
 
 28.11.2022
+[x] model flint lock pistol
 [x] model standard issue police handgun
 [x] handgun desert eagle
 [x] change weapons while walking
