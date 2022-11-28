@@ -48,6 +48,7 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] weapon heavy machine gun
 
 [MODELS]
+[ ] character alien
 [ ] character skeleton
 [ ] character ranger
 [ ] character goblin
@@ -64,6 +65,10 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] Loud Noises Draw Attention
 [ ] skills
 [ ] attributes
+
+29.11.2022
+[x] item type weapon ak47
+[x] item type weapon sniper rifle
 
 28.11.2022
 [x] model sniper rifle

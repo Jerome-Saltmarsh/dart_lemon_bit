@@ -46,6 +46,7 @@ class GameImages {
    static late Image template_weapon_handgun_black;
    static late Image template_weapon_handgun_flintlock;
    static late Image template_weapon_sniper_rifle;
+   static late Image template_weapon_ak47;
    static late Image template_weapon_staff;
    static late Image template_weapon_sword_steel;
    static late Image template_weapon_sword_wooden;
@@ -127,9 +128,6 @@ class GameImages {
          }
          return template_weapon_handgun;
       }
-      if (ItemType.isTypeWeaponRifle(weaponType)){
-         return template_weapon_sniper_rifle;
-      }
       if (ItemType.isTypeWeaponShotgun(weaponType)){
          return template_weapon_shotgun;
       }
@@ -138,6 +136,18 @@ class GameImages {
       }
 
       switch (weaponType) {
+         case ItemType.Weapon_Rifle_Sniper:
+            return template_weapon_sniper_rifle;
+         case ItemType.Weapon_Rifle_AK_47:
+            return template_weapon_ak47;
+         case ItemType.Weapon_Rifle_M4:
+            return template_weapon_ak47;
+         case ItemType.Weapon_Rifle_Arquebus:
+            return template_weapon_shotgun;
+         case ItemType.Weapon_Rifle_Musket:
+            return template_weapon_shotgun;
+         case ItemType.Weapon_Rifle_Blunderbuss:
+            return template_weapon_shotgun;
          case ItemType.Weapon_Ranged_Shotgun:
             return template_weapon_shotgun;
          case ItemType.Weapon_Ranged_Bow:
@@ -208,6 +218,7 @@ class GameImages {
       template_weapon_handgun_black = await Engine.loadImageAsset('images/template/weapons/template-weapons-handgun-black.png');
       template_weapon_handgun_flintlock = await Engine.loadImageAsset('images/template/weapons/template-weapons-pistol-flintlock.png');
       template_weapon_sniper_rifle = await Engine.loadImageAsset('images/template/weapons/template-weapons-sniper-rifle.png');
+      template_weapon_ak47 = await Engine.loadImageAsset('images/template/weapons/template-weapons-ak47.png');
       template_weapon_shotgun = await Engine.loadImageAsset('images/template/weapons/template-weapons-shotgun.png');
       template_weapon_staff = await Engine.loadImageAsset('images/template/weapons/template-weapons-staff-wooden.png');
       template_weapon_sword_steel = await Engine.loadImageAsset('images/template/weapons/template-weapons-sword-steel.png');
