@@ -92,9 +92,15 @@ void renderCharacterTemplate(Character character, {
     frameWeapon = TemplateAnimation.StateChangingFrame;
   } else
   if (character.weaponStateAiming) {
-    frameHead = TemplateAnimation.Frame_Aiming_One_Handed;
-    frameBody = TemplateAnimation.Frame_Aiming_One_Handed;
-    frameWeapon = TemplateAnimation.Frame_Aiming_One_Handed;
+    if (ItemType.isOneHanded(character.weaponType)){
+      frameHead = TemplateAnimation.Frame_Aiming_One_Handed;
+      frameBody = TemplateAnimation.Frame_Aiming_One_Handed;
+      frameWeapon = TemplateAnimation.Frame_Aiming_One_Handed;
+    } else {
+      frameHead = TemplateAnimation.Frame_Aiming_Two_Handed;
+      frameBody = TemplateAnimation.Frame_Aiming_Two_Handed;
+      frameWeapon = TemplateAnimation.Frame_Aiming_Two_Handed;
+    }
   } else
   if (character.weaponStateChanging) {
     frameHead = TemplateAnimation.StateChangingFrame;
@@ -211,7 +217,7 @@ class TemplateAnimation {
 
   static const StateChangingFrame = 4;
   static const Frame_Aiming_One_Handed = 7;
-  static const Frame_Aiming_Two_Handed = 6;
+  static const Frame_Aiming_Two_Handed = 5;
 
 
   static final Uint8List Running1 = (){
