@@ -280,9 +280,10 @@ class ItemType {
       isTypeWeaponHandgun   (weaponType) ;
 
   static bool isTwoHanded(int weaponType) =>
-      isTypeWeaponRifle     (weaponType) ||
-      isTypeWeaponShotgun   (weaponType) ||
-      isTypeWeaponBow       (weaponType) ||
+      isTypeWeaponRifle       (weaponType) ||
+      isTypeWeaponShotgun     (weaponType) ||
+      isTypeWeaponBow         (weaponType) ||
+      weaponType == Weapon_Special_Bazooka ||
       weaponType == Weapon_Flamethrower;
 
   static bool isFood(int type) =>

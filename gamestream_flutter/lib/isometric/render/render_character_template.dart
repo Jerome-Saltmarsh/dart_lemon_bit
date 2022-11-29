@@ -335,7 +335,9 @@ class TemplateAnimation {
      if (weaponType == ItemType.Weapon_Flamethrower){
        return FiringShotgun;
      }
-
+     if (weaponType == ItemType.Weapon_Special_Bazooka){
+       return FiringShotgun;
+     }
      throw Exception("TemplateAnimation.getAttackAnimation(${ItemType.getName(weaponType)})");
   }
 }

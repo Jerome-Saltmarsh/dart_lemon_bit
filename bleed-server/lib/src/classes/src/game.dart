@@ -261,6 +261,11 @@ abstract class Game {
            return;
          }
 
+         if (player.weaponType == ItemType.Weapon_Special_Bazooka){
+           playerUseBazooka(player);
+           return;
+         }
+
          characterFireWeapon(player);
          player.accuracy += 0.25;
          return;
@@ -348,23 +353,13 @@ abstract class Game {
     dispatchPlayerAttackPerformed(player);
     player.assignWeaponStateFiring();
     spawnProjectileFireball(player, damage: 3, range: player.weaponTypeRange);
-    // gameObjects.add(
-    //     GameObject(
-    //       x: player.x,
-    //       y: player.y,
-    //       z: player.z + Character_Height,
-    //       type: ItemType.GameObjects_Grenade,
-    //     )
-    //       ..setVelocity(player.lookRadian, mouseDistance * 0.1)
-    //       ..collidable = false
-    //       ..physical = false
-    //       ..applyGravity = true
-    //       ..quantity = 1
-    //       ..velocityZ = -0.75
-    //       ..timer = 40
-    //       ..owner = player
-    //       ..damage = 15
-    // );
+  }
+
+  void playerUseBazooka(Player player) {
+    dispatchPlayerAttackPerformed(player);
+    player.assignWeaponStateFiring();
+    // spawnProjectileRocket(player, damage: 3, range: player.weaponTypeRange);
+    spawnProjectileFireball(player, damage: 3, range: player.weaponTypeRange);
   }
 
   void playerTeleportToMouse(Player player){
@@ -1526,6 +1521,22 @@ abstract class Game {
         target: src.target,
         angle: angle,
         projectileType: ProjectileType.Fireball,
+        damage: damage,
+      );
+
+  Projectile spawnProjectileRocket(
+      Character src, {
+        required int damage,
+        required double range,
+        double? angle,
+  }) =>
+      spawnProjectile(
+        src: src,
+        accuracy: 0,
+        range: range,
+        target: src.target,
+        angle: angle,
+        projectileType: ProjectileType.Rocket,
         damage: damage,
       );
 
