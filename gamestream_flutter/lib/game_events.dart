@@ -328,11 +328,11 @@ class GameEvents {
         GameState.spawnParticleShell(x, y, z);
         break;
       case ItemType.Weapon_Rifle_M4:
-        GameAudio.assault_rifle_shot_14.playXYZ(x, y, z);
+        GameAudio.assault_rifle_shot_17.playXYZ(x, y, z);
         GameState.spawnParticleShell(x, y, z);
         break;
       case ItemType.Weapon_Rifle_Steyr:
-        GameAudio.assault_rifle_shot_14.playXYZ(x, y, z);
+        GameAudio.assault_rifle_shot_17.playXYZ(x, y, z);
         GameState.spawnParticleShell(x, y, z);
         break;
       case ItemType.Weapon_Rifle_Sniper:
