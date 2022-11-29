@@ -358,8 +358,8 @@ abstract class Game {
   void playerUseBazooka(Player player) {
     dispatchPlayerAttackPerformed(player);
     player.assignWeaponStateFiring();
-    // spawnProjectileRocket(player, damage: 3, range: player.weaponTypeRange);
-    spawnProjectileFireball(player, damage: 3, range: player.weaponTypeRange);
+    spawnProjectileRocket(player, damage: 3, range: player.weaponTypeRange);
+    // spawnProjectileFireball(player, damage: 3, range: player.weaponTypeRange);
   }
 
   void playerTeleportToMouse(Player player){

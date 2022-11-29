@@ -20,6 +20,19 @@ class RenderProjectiles {
         break;
       case ProjectileType.Wave:
         break;
+      case ProjectileType.Rocket:
+        Engine.renderSpriteRotated(
+          image: GameImages.atlasItems,
+          srcX: 201,
+          srcY: 109,
+          srcWidth: 16,
+          srcHeight: 7,
+          dstX: value.renderX,
+          dstY: value.renderY,
+          rotation: value.angle - Engine.PI_Quarter + Engine.PI_Half,
+          scale: 1,
+        );
+        break;
       default:
         return;
     }
