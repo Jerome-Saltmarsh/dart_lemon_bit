@@ -113,6 +113,7 @@ class GameAudio {
   static final arm_swing_whoosh_11 = AudioSingle(name: 'arm-swing-whoosh-11', volume: 0.4, maxDistance: 250);
   static final heavy_punch_13 = AudioSingle(name: 'heavy-punch-13', volume: 1, maxDistance: 250);
   static final pistol_shot_20 = AudioSingle(name: 'pistol-shot-20', volume: 0.4, maxDistance: 250);
+  static final pistol_shot_07 = AudioSingle(name: 'pistol_shot_07', volume: 0.4, maxDistance: 250);
   static final grass_cut = AudioSingle(name: 'grass-cut', volume: 0.4, maxDistance: 250);
   static final switch_sounds_4 = AudioSingle(name: 'switch-sounds-4', volume: 0.4, maxDistance: 250);
   static final teleport = AudioSingle(name: 'teleport-1', volume: 0.5, maxDistance: 250);

@@ -299,6 +299,10 @@ class GameEvents {
         GameAudio.pistol_shot_20.playXYZ(x, y, z);
         GameState.spawnParticleShell(x, y, z);
         break;
+      case ItemType.Weapon_Smg_Mp5:
+        GameAudio.pistol_shot_07.playXYZ(x, y, z);
+        GameState.spawnParticleShell(x, y, z);
+        break;
       case ItemType.Weapon_Handgun_Desert_Eagle:
         GameAudio.revolver_shot_6.playXYZ(x, y, z);
         GameState.spawnParticleShell(x, y, z);
