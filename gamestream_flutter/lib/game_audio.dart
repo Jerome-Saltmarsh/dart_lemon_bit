@@ -63,7 +63,7 @@ class GameAudio {
   static final coins_24 = AudioSingle(name: 'coins-24', volume: 0.5, maxDistance: 100);
   static final hoverOverButtonSound5 = AudioSingle(name: 'hover-over-button-sound-5', volume: 0.5, maxDistance: 100);
   static final thunder = AudioSingle(name: 'thunder', volume: 0.5, maxDistance: 100);
-  static final fireBolt = AudioSingle(name: 'fire-bolt-14', volume: 0.5, maxDistance: 200);
+  static final fire_bolt_14 = AudioSingle(name: 'fire-bolt-14', volume: 0.5, maxDistance: 200);
   static final footstep_grass_8 = AudioSingle(name: 'footstep-grass-8', volume: 0.05, maxDistance: 200);
   static final footstep_grass_7 = AudioSingle(name: 'footstep-grass-7', volume: 0.05, maxDistance: 200);
   static final footstep_mud_6 = AudioSingle(name: 'mud-footstep-6', volume: 0.05, maxDistance: 200);

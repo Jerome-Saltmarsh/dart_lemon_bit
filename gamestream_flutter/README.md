@@ -55,12 +55,12 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] model character wolf
 [ ] model weapon bolt action rifle
 [ ] model weapon heavy machine gun
-[ ] model weapon flame thrower
 [ ] model weapon bazooka
 [ ] model weapon oozie
 [ ] model weapon m4
 
 29.11.2022
+[x] model weapon flame thrower
 [x] item type knife
 [x] item type weapon ak47
 [x] item type weapon sniper rifle

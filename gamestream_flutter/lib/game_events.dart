@@ -347,6 +347,9 @@ class GameEvents {
       case ItemType.Weapon_Thrown_Grenade:
         GameAudio.swing_sword.playXYZ(x, y, z);
         break;
+      case ItemType.Weapon_Flamethrower:
+        GameAudio.fire_bolt_14.playXYZ(x, y, z);
+        break;
       default:
         return;
     }
