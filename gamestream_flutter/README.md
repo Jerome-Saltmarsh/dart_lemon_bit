@@ -30,45 +30,41 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] player attributes ui
 [ ] repeat killing same enemies yields no reward
 [ ] scene edit tool pause ai
-
-[PROJECTS]
-[ ] SKILLS
-[ ] GENERATE MINI-MAP
-[ ] CEMETERY
-[ ] EDITOR WINDOW ELEVATION
-
-[content]
+[ ] editor tool elevation
+[ ] generate mini-map
+[ ] particle myst
+[ ] character butterfly
+[ ] character bird
+[ ] character chicken
+[ ] Loud Noises Draw Attention
+[ ] skill critical shot
+[ ] attribute gunslinger 
+[ ] attribute vampire steals health
 [ ] scene cave
 [ ] scene forest
 [ ] scene wilderness
 [ ] scene swamp
-[ ] character butterfly
-[ ] character bird
-[ ] character chicken
-[ ] weapon heavy machine gun
-
-[MODELS]
-[ ] character alien
-[ ] character skeleton
-[ ] character ranger
-[ ] character goblin
-[ ] character vampire
-[ ] character wolf
-[ ] bolt action rifle
-[ ] heavy machine gun
-
-[SCENE CEMETERY]
-[ ] particle-type myst
-[ ] design scene
-
-[FEATURES]
-[ ] Loud Noises Draw Attention
-[ ] skills
-[ ] attributes
+[ ] scene city
+[ ] skill freeze
+[ ] speed boost
+[ ] model character alien
+[ ] model character skeleton
+[ ] model character ranger
+[ ] model character goblin
+[ ] model character vampire
+[ ] model character wolf
+[ ] model weapon bolt action rifle
+[ ] model weapon heavy machine gun
+[ ] model weapon flame thrower
+[ ] model weapon bazooka
+[ ] model weapon oozie
+[ ] model weapon m4
 
 29.11.2022
+[x] item type knife
 [x] item type weapon ak47
 [x] item type weapon sniper rifle
+
 
 28.11.2022
 [x] model sniper rifle

@@ -53,6 +53,7 @@ class GameImages {
    static late Image template_weapon_pickaxe;
    static late Image template_weapon_axe;
    static late Image template_weapon_hammer;
+   static late Image template_weapon_knife;
 
    static Image getImageForHeadType(int headType) {
       switch (headType) {
@@ -112,6 +113,10 @@ class GameImages {
    }
 
    static Image getImageForWeaponType(int weaponType) {
+
+      if (weaponType == ItemType.Weapon_Melee_Knife) {
+         return template_weapon_knife;
+      }
 
       if (ItemType.isTypeWeaponHandgun(weaponType)) {
          if (weaponType == ItemType.Weapon_Handgun_Glock){
@@ -225,6 +230,7 @@ class GameImages {
       template_weapon_axe = await Engine.loadImageAsset('images/template/weapons/template-weapons-axe.png');
       template_weapon_pickaxe = await Engine.loadImageAsset('images/template/weapons/template-weapons-pickaxe.png');
       template_weapon_hammer = await Engine.loadImageAsset('images/template/weapons/template-weapons-hammer.png');
+      template_weapon_knife = await Engine.loadImageAsset('images/template/weapons/template-weapons-knife.png');
    }
 }
 

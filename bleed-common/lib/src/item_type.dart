@@ -103,7 +103,8 @@ class ItemType {
   static const Weapon_Melee_Pickaxe = Weapon_Melee_Crowbar + 1;
   static const Weapon_Melee_Axe = Weapon_Melee_Pickaxe + 1;
   static const Weapon_Melee_Hammer = Weapon_Melee_Axe + 1;
-  
+  static const Weapon_Melee_Knife = Weapon_Melee_Hammer + 1;
+
   static const Weapon_Thrown_Pike_Bomb = Index_Weapon_Thrown + 1;
   static const Weapon_Thrown_Grenade = Index_Weapon_Thrown + 2;
   static const Weapon_Thrown_Molotov_Cocktail = Index_Weapon_Thrown + 3;
@@ -330,6 +331,7 @@ class ItemType {
       Weapon_Handgun_Desert_Eagle: 18,
       Weapon_Handgun_Revolver: 25,
       Weapon_Melee_Sword: 3,
+      Weapon_Melee_Knife: 3,
       Weapon_Ranged_Bow: 1,
       Weapon_Ranged_Bow_Long: 2,
       Weapon_Ranged_Crossbow: 5,
@@ -357,6 +359,7 @@ class ItemType {
       Weapon_Ranged_Bow_Long: 350,
       Weapon_Ranged_Crossbow: 400,
       Weapon_Melee_Sword: 45,
+      Weapon_Melee_Knife: 40,
       Weapon_Rifle_Arquebus: 400,
       Weapon_Rifle_Musket: 420,
       Weapon_Rifle_Jager: 440,
@@ -377,6 +380,7 @@ class ItemType {
       Weapon_Handgun_Revolver: 40,
       Weapon_Handgun_Desert_Eagle: 30,
       Weapon_Melee_Sword: 50,
+      Weapon_Melee_Knife: 40,
       Weapon_Ranged_Bow: 50,
       Weapon_Ranged_Bow_Long: 50,
       Weapon_Ranged_Crossbow: 50,
@@ -447,6 +451,7 @@ class ItemType {
      Legs_White: "White Pants",
      Legs_Red: "Red Trousers",
      Weapon_Melee_Sword: "Sword",
+     Weapon_Melee_Knife: "Knife",
      Weapon_Melee_Staff: "Staff",
      Weapon_Handgun_Flint_Lock_Old: "Old Flint Lock Pistol",
      Weapon_Handgun_Flint_Lock: "Flint Lock Pistol",

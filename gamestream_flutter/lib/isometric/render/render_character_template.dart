@@ -13,7 +13,7 @@ void renderTemplateWeapon(
     ) {
 
   if (weaponType == ItemType.Empty) return;
-  final size = ItemType.isTypeWeaponMelee(weaponType) ? 96.0 : 64.0;
+  final size = getWeaponTypeSize(weaponType);
   Engine.renderSprite(
     image: GameImages.getImageForWeaponType(weaponType),
     srcX: frame * size,
@@ -26,6 +26,11 @@ void renderTemplateWeapon(
     color: color,
     anchorY: 0.75
   );
+}
+
+double getWeaponTypeSize(int weaponType){
+  if (weaponType == ItemType.Weapon_Melee_Sword) return 96.0;
+  return 64.0;
 }
 
 void renderCharacterTemplate(Character character, {
@@ -204,14 +209,13 @@ void renderCharacterTemplate(Character character, {
   if (weaponInFront) {
     renderTemplateWeapon(character.weaponType, finalDirection, frameWeapon, color, dstX, dstY);
   }
-
-  // RenderProjectiles.renderBullet(character.renderX, character.renderY, character.lookRadian);
 }
 
-bool weaponIs64(int weapon) =>
-   weapon == ItemType.isTypeWeaponHandgun(weapon) ||
-   weapon == ItemType.Weapon_Ranged_Bow ||
-   weapon == ItemType.Weapon_Ranged_Shotgun;
+// bool weaponIs64(int weapon) =>
+//    weapon == ItemType.isTypeWeaponHandgun(weapon) ||
+//    weapon == ItemType.Weapon_Ranged_Bow ||
+//    weapon == ItemType.Weapon_Ranged_Shotgun ||
+//    weapon == ItemType.Weapon_Melee_Knife;
 
 class TemplateAnimation {
 
