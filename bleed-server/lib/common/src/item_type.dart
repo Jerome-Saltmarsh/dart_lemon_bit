@@ -313,6 +313,7 @@ class ItemType {
       Weapon_Rifle_Steyr                  : Resource_Round_Rifle,
       Weapon_Rifle_AK_47                  : Resource_Round_Rifle,
       Weapon_Rifle_Sniper                 : Resource_Round_50cal,
+      Weapon_Smg_Mp5                      : Resource_Round_9mm,
       Weapon_Ranged_Shotgun               : Resource_Round_Shotgun,
       Weapon_Ranged_Bow                   : Resource_Arrow,
       Weapon_Flamethrower                 : Resource_Fuel,
