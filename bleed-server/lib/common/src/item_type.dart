@@ -1,3 +1,5 @@
+
+///
 class ItemType {
 
   static const Invalid                      = -0001;
@@ -50,6 +52,13 @@ class ItemType {
 
   static const Trinket_Ring_of_Health = Index_Trinkets;
   static const Trinket_Ring_of_Damage = Trinket_Ring_of_Health + 1;
+  /// Causes the flame thrower damage to be +5
+  /// Does not stack
+  /// Does not stack means that the effects only apply to up to one time
+  /// Buying a second would not add any additional effects
+  /// Boots 
+  /// Boots can give the player special powers
+  static const Trinket_Gem_of_Fire = Trinket_Ring_of_Health + 2;
 
   static const GameObjects_Flower               = Index_GameObjects + 01;
   static const GameObjects_Rock                 = Index_GameObjects + 02;
@@ -133,8 +142,9 @@ class ItemType {
 
   static const Weapon_Smg_Mp5 = Index_Weapon_Ranged_Smg + 1;
 
-  static const Weapon_Flamethrower = Index_Weapon_Special + 1;
-  static const Weapon_Special_Bazooka = Weapon_Flamethrower + 1;
+  static const Weapon_Flamethrower    = Index_Weapon_Special + 1;
+  static const Weapon_Special_Bazooka = Index_Weapon_Special + 2;
+  static const Weapon_Special_Minigun = Index_Weapon_Special + 3;
 
   static const Weapon_Ranged_Shotgun = Index_Weapon_Ranged_Shotgun + 1;
 
@@ -287,7 +297,8 @@ class ItemType {
       isTypeWeaponShotgun     (weaponType) ||
       isTypeWeaponBow         (weaponType) ||
       weaponType == Weapon_Special_Bazooka ||
-      weaponType == Weapon_Flamethrower;
+      weaponType == Weapon_Flamethrower    ||
+      weaponType == Weapon_Special_Minigun  ;
 
   static bool isFood(int type) =>
      type == Consumables_Apple ||
@@ -318,6 +329,7 @@ class ItemType {
       Weapon_Ranged_Bow                   : Resource_Arrow,
       Weapon_Flamethrower                 : Resource_Fuel,
       Weapon_Special_Bazooka              : Resource_Rocket,
+      Weapon_Special_Minigun              : Resource_Round_Rifle,
   }[itemType] ?? Empty;
 
   static int getConsumeAmount(int itemType) => const {
@@ -360,6 +372,7 @@ class ItemType {
       Trinket_Ring_of_Damage: 1,
       Weapon_Flamethrower: 10,
       Weapon_Special_Bazooka: 100,
+      Weapon_Special_Minigun: 7,
   }[value] ?? 0;
 
   static double getRange(int value) => const <int, double> {
@@ -387,6 +400,7 @@ class ItemType {
       Weapon_Smg_Mp5: 270,
       Weapon_Flamethrower: 150,
       Weapon_Special_Bazooka: 350,
+      Weapon_Special_Minigun: 400,
   }[value] ?? 0;
 
   static int getCooldown(int value) => const {
@@ -414,6 +428,7 @@ class ItemType {
       Weapon_Smg_Mp5: 5,
       Weapon_Flamethrower: 2,
       Weapon_Special_Bazooka: 100,
+      Weapon_Special_Minigun: 1,
   }[value] ?? 0;
 
   static String getGroupTypeName(int value) {
@@ -494,6 +509,7 @@ class ItemType {
      Weapon_Smg_Mp5: "Mp5",
      Weapon_Flamethrower: "Flamethrower",
      Weapon_Special_Bazooka: "Bazooka",
+     Weapon_Special_Minigun: "Minigun",
      Consumables_Apple: "Apple",
      Consumables_Meat: "Meat",
      Weapon_Thrown_Grenade: "Grenade",
@@ -549,6 +565,7 @@ class ItemType {
     Weapon_Thrown_Grenade               : 05,
     Weapon_Flamethrower                 : 200,
     Weapon_Special_Bazooka              : 01,
+    Weapon_Special_Minigun              : 1000,
   }[itemType]                          ?? 01;
 
   static double getScopeDistance(int itemType){

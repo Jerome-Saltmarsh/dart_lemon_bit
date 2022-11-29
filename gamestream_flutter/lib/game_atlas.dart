@@ -37,6 +37,7 @@ class AtlasItems {
       ItemType.Weapon_Smg_Mp5: 160,
       ItemType.Weapon_Flamethrower: 64,
       ItemType.Weapon_Special_Bazooka: 64,
+      ItemType.Weapon_Special_Minigun: 1,
       ItemType.Resource_Wood: 32,
       ItemType.Resource_Stone: 64,
       ItemType.Resource_Crystal: 96,
@@ -91,6 +92,7 @@ class AtlasItems {
     ItemType.Weapon_Smg_Mp5: 96,
     ItemType.Weapon_Flamethrower: 240,
     ItemType.Weapon_Special_Bazooka: 272,
+    ItemType.Weapon_Special_Minigun: 130,
     ItemType.Base_Health: 64,
     ItemType.Base_Damage: 64,
   }[itemType] ?? 0;
@@ -99,11 +101,13 @@ class AtlasItems {
     ItemType.Weapon_Rifle_Sniper: 48,
     ItemType.Weapon_Flamethrower: 64,
     ItemType.Weapon_Special_Bazooka: 48,
+    ItemType.Weapon_Special_Minigun: 35,
   }[itemType] ?? size;
 
   static double getSrcHeight(int itemType) => const <int, double> {
     ItemType.Weapon_Rifle_Sniper: 16,
     ItemType.Weapon_Special_Bazooka: 16,
+    ItemType.Weapon_Special_Minigun: 12,
   }[itemType] ?? size;
 }
 

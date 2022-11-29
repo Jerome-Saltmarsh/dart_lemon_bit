@@ -57,6 +57,7 @@ class GameImages {
    static late Image template_weapon_knife;
    static late Image template_weapon_flamethrower;
    static late Image template_weapon_bazooka;
+   static late Image template_weapon_minigun;
 
    static Image getImageForHeadType(int headType) {
       switch (headType) {
@@ -174,6 +175,8 @@ class GameImages {
             return template_weapon_axe;
          case ItemType.Weapon_Melee_Hammer:
             return template_weapon_hammer;
+         case ItemType.Weapon_Special_Minigun:
+            return template_weapon_minigun;
          default:
             throw Exception("GameImages.getImageForWeaponType(${ItemType.getName(weaponType)})");
       }
@@ -241,6 +244,7 @@ class GameImages {
       template_weapon_flamethrower = await Engine.loadImageAsset('images/template/weapons/template-weapons-flamethrower.png');
       template_weapon_bazooka = await Engine.loadImageAsset('images/template/weapons/template-weapons-bazooka.png');
       template_weapon_mp5 = await Engine.loadImageAsset('images/template/weapons/template-weapons-mp5.png');
+      template_weapon_minigun = await Engine.loadImageAsset('images/template/weapons/template-weapons-minigun.png');
    }
 }
 

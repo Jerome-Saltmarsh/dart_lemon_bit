@@ -57,6 +57,7 @@ class Area_OldVillage extends DarkAgeArea {
     player.inventoryAdd(itemType: ItemType.Weapon_Flamethrower, itemQuantity: 500);
     player.inventoryAdd(itemType: ItemType.Weapon_Special_Bazooka, itemQuantity: 500);
     player.inventoryAdd(itemType: ItemType.Weapon_Smg_Mp5, itemQuantity: 200);
+    player.inventoryAdd(itemType: ItemType.Weapon_Special_Minigun, itemQuantity: 1000);
     player.inventorySet(index: ItemType.Belt_1, itemType: ItemType.Weapon_Handgun_Flint_Lock_Old, itemQuantity: 1);
     player.equippedWeaponIndex = ItemType.Belt_1;
     player.inventoryDirty = true;

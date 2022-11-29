@@ -54,16 +54,20 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] model character vampire
 [ ] model character wolf
 [ ] model weapon bolt action rifle
-[ ] model weapon heavy machine gun
-[ ] model weapon oozie
+[ ] model weapon handgun silenced
+[ ] model weapon pistol
 [ ] model weapon m4
 
+30.11.2022
+[x] weapon heavy machine gun
+
 29.11.2022
+[x] weapon oozie
 [x] weapon bazooka
 [x] weapon flame thrower
-[x] item type knife
-[x] item type weapon ak47
-[x] item type weapon sniper rifle
+[x] weapon knife
+[x] weapon ak47
+[x] weapon sniper rifle
 
 28.11.2022
 [x] model sniper rifle

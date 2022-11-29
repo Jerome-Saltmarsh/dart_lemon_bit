@@ -12,8 +12,8 @@ class GameInventoryUI {
   static const Slot_Scale = 1.5;
   static const Scaled_Slot_Size = Slot_Size * Slot_Scale;
   static const Slot_Item_Scale = Slot_Scale * 0.9;
-  static const Columns_Per_Row = 7;
-  static const Inventory_Width = Slot_Size * Slot_Scale * Columns_Per_Row;
+  static const Columns_Per_Row = 5;
+  static const Inventory_Width = Slot_Size * Slot_Scale * Columns_Per_Row + 8;
   static final atlasIconSlotEmpty = GameUI.buildIconSlotEmpty();
 
   static Widget buildInventoryUI() =>
@@ -22,10 +22,11 @@ class GameInventoryUI {
         child: Container(
           width: Inventory_Width,
           color: GameColors.brownDark,
+          padding: const EdgeInsets.all(4),
           child: Column(
             children: [
-              buildContainerInventory(),
               Container(
+                // color: GameColors.brownLight,
                 padding: const EdgeInsets.all(8),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -36,6 +37,7 @@ class GameInventoryUI {
                   ],
                 ),
               ),
+              buildContainerInventory(),
             ],
           ),
         ),
@@ -60,6 +62,7 @@ class GameInventoryUI {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            text("Player"),
             buildHoverTarget(
                 hoverTargetType: ClientType.Hover_Target_Player_Stats_Health,
                 child: watch(ServerState.playerMaxHealth, (int maxHealth) {

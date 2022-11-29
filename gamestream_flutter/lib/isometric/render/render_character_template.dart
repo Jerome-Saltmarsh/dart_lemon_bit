@@ -287,6 +287,8 @@ class TemplateAnimation {
     6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 6, 6, 6, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 8, 8, 8, 8
   ];
 
+  static const FiringMinigun = [6];
+
   static const Punch = [
      10, 10, 10, 10, 10, 11
   ];
@@ -335,7 +337,10 @@ class TemplateAnimation {
      if (weaponType == ItemType.Weapon_Flamethrower){
        return FiringShotgun;
      }
-     if (weaponType == ItemType.Weapon_Smg_Mp5){
+     if (weaponType == ItemType.Weapon_Smg_Mp5) {
+       return FiringShotgun;
+     }
+     if (weaponType == ItemType.Weapon_Special_Minigun) {
        return FiringShotgun;
      }
      throw Exception("TemplateAnimation.getAttackAnimation(${ItemType.getName(weaponType)})");
