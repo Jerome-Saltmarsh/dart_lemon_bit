@@ -1025,7 +1025,7 @@ abstract class Game {
   }
 
   void deactivateProjectile(Projectile projectile) {
-    assert(projectile.active);
+    assert (projectile.active);
     projectile.active = false;
     switch (projectile.type) {
       case ProjectileType.Orb:
@@ -1265,7 +1265,7 @@ abstract class Game {
     ]);
 
   void handleProjectileHit(Projectile projectile, Position3 target) {
-    projectile.active = false;
+    deactivateProjectile(projectile);
     if (target is Character) {
       applyHit(
         src: projectile,

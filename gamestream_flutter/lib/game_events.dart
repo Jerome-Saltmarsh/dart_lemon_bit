@@ -350,6 +350,9 @@ class GameEvents {
       case ItemType.Weapon_Flamethrower:
         GameAudio.fire_bolt_14.playXYZ(x, y, z);
         break;
+      case ItemType.Weapon_Special_Bazooka:
+        GameAudio.fire_bolt_14.playXYZ(x, y, z);
+        break;
       default:
         return;
     }
