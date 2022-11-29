@@ -78,6 +78,7 @@ class ItemType {
   static const Resource_Round_Rifle = Index_Resources + 15;
   static const Resource_Round_Shotgun = Index_Resources + 16;
   static const Resource_Fuel = Index_Resources + 17;
+  static const Resource_Rocket = Index_Resources + 18;
 
   static const Head_Steel_Helm = Index_Heads + 1;
   static const Head_Rogues_Hood = Index_Heads + 2;
@@ -130,6 +131,7 @@ class ItemType {
   static const Weapon_Rifle_Sniper = Weapon_Rifle_Steyr + 1;
 
   static const Weapon_Flamethrower = Index_Weapon_Special + 1;
+  static const Weapon_Special_Bazooka = Weapon_Flamethrower + 1;
 
   static const Weapon_Ranged_Shotgun = Index_Weapon_Ranged_Shotgun + 1;
 
@@ -310,6 +312,7 @@ class ItemType {
       Weapon_Ranged_Shotgun               : Resource_Round_Shotgun,
       Weapon_Ranged_Bow                   : Resource_Arrow,
       Weapon_Flamethrower                 : Resource_Fuel,
+      Weapon_Special_Bazooka              : Resource_Rocket,
   }[itemType] ?? Empty;
 
   static int getConsumeAmount(int itemType) => const {
@@ -350,6 +353,7 @@ class ItemType {
       Weapon_Rifle_Sniper: 50,
       Trinket_Ring_of_Damage: 1,
       Weapon_Flamethrower: 10,
+      Weapon_Special_Bazooka: 100,
   }[value] ?? 0;
 
   static double getRange(int value) => const <int, double> {
@@ -375,6 +379,7 @@ class ItemType {
       Weapon_Rifle_Steyr: 430,
       Weapon_Rifle_Sniper: 650,
       Weapon_Flamethrower: 150,
+      Weapon_Special_Bazooka: 350,
   }[value] ?? 0;
 
   static int getCooldown(int value) => const {
@@ -400,6 +405,7 @@ class ItemType {
       Weapon_Rifle_Steyr: 5,
       Weapon_Rifle_Sniper: 75,
       Weapon_Flamethrower: 2,
+      Weapon_Special_Bazooka: 100,
   }[value] ?? 0;
 
   static String getGroupTypeName(int value) {
@@ -478,6 +484,7 @@ class ItemType {
      Weapon_Rifle_Steyr: "Steyr",
      Weapon_Rifle_Sniper: "Sniper Rifle",
      Weapon_Flamethrower: "Flamethrower",
+     Weapon_Special_Bazooka: "Bazooka",
      Consumables_Apple: "Apple",
      Consumables_Meat: "Meat",
      Weapon_Thrown_Grenade: "Grenade",
@@ -531,6 +538,7 @@ class ItemType {
     Weapon_Ranged_Shotgun               : 04,
     Weapon_Thrown_Grenade               : 05,
     Weapon_Flamethrower                 : 200,
+    Weapon_Special_Bazooka              : 01,
   }[itemType]                          ?? 01;
 
   static double getScopeDistance(int itemType){
