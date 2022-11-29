@@ -657,13 +657,25 @@ abstract class Game {
     dispatchV3(GameEventType.GameObject_Timeout, gameObject);
 
     if (gameObject.type == ItemType.GameObjects_Grenade) {
-      dispatchV3(GameEventType.Explosion, gameObject);
-      for (var i = 0; i < characters.length; i++){
-        if (characters[i].dead) continue;
-        final character = characters[i];
-        if (gameObject.withinRadius(character, 100)) {
-          applyHit(src: gameObject, target: character);
-        }
+      createExplosion(gameObject);
+      // dispatchV3(GameEventType.Explosion, gameObject);
+      // for (var i = 0; i < characters.length; i++){
+      //   if (characters[i].dead) continue;
+      //   final character = characters[i];
+      //   if (gameObject.withinRadius(character, 100)) {
+      //     applyHit(src: gameObject, target: character);
+      //   }
+      // }
+    }
+  }
+
+  void createExplosion(Position3 src){
+    dispatchV3(GameEventType.Explosion, src);
+    for (var i = 0; i < characters.length; i++){
+      if (characters[i].dead) continue;
+      final character = characters[i];
+      if (src.withinRadius(character, 100)) {
+        applyHit(src: src, target: character);
       }
     }
   }
@@ -1019,6 +1031,9 @@ abstract class Game {
       case ProjectileType.Orb:
         dispatch(GameEventType.Blue_Orb_Deactivated, projectile.x, projectile.y,
             projectile.z);
+        break;
+      case ProjectileType.Rocket:
+        createExplosion(projectile);
         break;
       default:
         break;
