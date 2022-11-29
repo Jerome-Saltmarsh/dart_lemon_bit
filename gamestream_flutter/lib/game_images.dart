@@ -54,6 +54,7 @@ class GameImages {
    static late Image template_weapon_axe;
    static late Image template_weapon_hammer;
    static late Image template_weapon_knife;
+   static late Image template_weapon_flamethrower;
 
    static Image getImageForHeadType(int headType) {
       switch (headType) {
@@ -140,7 +141,7 @@ class GameImages {
          case ItemType.Weapon_Melee_Knife:
             return template_weapon_knife;
          case ItemType.Weapon_Flamethrower:
-            return template_weapon_sniper_rifle;
+            return template_weapon_flamethrower;
          case ItemType.Weapon_Rifle_Sniper:
             return template_weapon_sniper_rifle;
          case ItemType.Weapon_Rifle_AK_47:
@@ -231,6 +232,7 @@ class GameImages {
       template_weapon_pickaxe = await Engine.loadImageAsset('images/template/weapons/template-weapons-pickaxe.png');
       template_weapon_hammer = await Engine.loadImageAsset('images/template/weapons/template-weapons-hammer.png');
       template_weapon_knife = await Engine.loadImageAsset('images/template/weapons/template-weapons-knife.png');
+      template_weapon_flamethrower = await Engine.loadImageAsset('images/template/weapons/template-weapons-flamethrower.png');
    }
 }
 
