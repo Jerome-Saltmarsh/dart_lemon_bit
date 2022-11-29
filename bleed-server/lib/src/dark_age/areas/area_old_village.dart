@@ -53,6 +53,7 @@ class Area_OldVillage extends DarkAgeArea {
     player.inventoryAddWeapon(itemType: ItemType.Weapon_Rifle_AK_47);
     player.inventoryAddWeapon(itemType: ItemType.Weapon_Melee_Knife);
     player.inventoryAdd(itemType: ItemType.Weapon_Thrown_Grenade, itemQuantity: 10);
+    player.inventoryAdd(itemType: ItemType.Weapon_Flamethrower, itemQuantity: 500);
     player.inventorySet(index: ItemType.Belt_1, itemType: ItemType.Weapon_Handgun_Flint_Lock_Old, itemQuantity: 1);
     player.equippedWeaponIndex = ItemType.Belt_1;
     player.inventoryDirty = true;

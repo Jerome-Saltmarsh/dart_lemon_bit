@@ -256,6 +256,11 @@ abstract class Game {
            return;
          }
 
+         if (player.weaponType == ItemType.Weapon_Flamethrower){
+           playerUseFlamethrower(player);
+           return;
+         }
+
          characterFireWeapon(player);
          player.accuracy += 0.25;
          return;
@@ -337,6 +342,29 @@ abstract class Game {
         ..owner = player
         ..damage = 15
     );
+  }
+
+  void playerUseFlamethrower(Player player) {
+    dispatchPlayerAttackPerformed(player);
+    player.assignWeaponStateFiring();
+    spawnProjectileFireball(player, damage: 3, range: player.weaponTypeRange);
+    // gameObjects.add(
+    //     GameObject(
+    //       x: player.x,
+    //       y: player.y,
+    //       z: player.z + Character_Height,
+    //       type: ItemType.GameObjects_Grenade,
+    //     )
+    //       ..setVelocity(player.lookRadian, mouseDistance * 0.1)
+    //       ..collidable = false
+    //       ..physical = false
+    //       ..applyGravity = true
+    //       ..quantity = 1
+    //       ..velocityZ = -0.75
+    //       ..timer = 40
+    //       ..owner = player
+    //       ..damage = 15
+    // );
   }
 
   void playerTeleportToMouse(Player player){

@@ -1156,17 +1156,6 @@ class GameState {
     player.gameDialog.value = GameDialog.Quests;
   }
 
-  // static void actionToggleInventoryVisible() =>
-  //   GamePlayer.interactMode.value == InteractMode.None
-  //       ? actionInventoryShow()
-  //       : actionInventoryClose();
-  //
-  //   static void actionInventoryClose() =>
-  //     GamePlayer.interactMode.value = InteractMode.None;
-  //
-  //   static void actionInventoryShow() =>
-  //     GamePlayer.interactMode.value = InteractMode.Inventory;
-
     static void updateParticleEmitters(){
       for (final emitter in particleEmitters) {
         if (emitter.next-- > 0) continue;
@@ -1180,40 +1169,14 @@ class GameState {
     }
 
     static void updateProjectiles() {
-      for (var i = 0; i < GameState.totalProjectiles; i++) {
-        final projectile = GameState.projectiles[i];
+      for (var i = 0; i < totalProjectiles; i++) {
+        final projectile = projectiles[i];
         if (projectile.type == ProjectileType.Fireball) {
-          GameState.spawnParticleFire(x: projectile.x, y: projectile.y, z: projectile.z);
-          GameState.spawnParticleBubble(
-            x: projectile.x + giveOrTake(5),
-            y: projectile.y + giveOrTake(5),
-            z: projectile.z,
-            angle: (projectile.angle + pi) + giveOrTake(piHalf ),
-            speed: 1.5,
-          );
+          spawnParticleFire(x: projectile.x, y: projectile.y, z: projectile.z);
           continue;
         }
-
-        if (projectile.type == ProjectileType.Bullet) {
-          // GameState.spawnParticleBubble(
-          //   x: projectile.x + giveOrTake(5),
-          //   y: projectile.y + giveOrTake(5),
-          //   z: projectile.z,
-          //   angle: (projectile.angle + pi) + giveOrTake(piHalf ),
-          //   speed: 1.5,
-          // );
-          // GameState.spawnParticleBulletRing(
-          //   x: projectile.x,
-          //   y: projectile.y,
-          //   z: projectile.z,
-          //   angle: projectile.angle,
-          //   speed: 1.5,
-          // );
-          continue;
-        }
-
         if (projectile.type == ProjectileType.Orb) {
-          GameState.spawnParticleOrbShard(x: projectile.x, y: projectile.y, z: projectile.z, angle: randomAngle());
+          spawnParticleOrbShard(x: projectile.x, y: projectile.y, z: projectile.z, angle: randomAngle());
         }
       }
     }

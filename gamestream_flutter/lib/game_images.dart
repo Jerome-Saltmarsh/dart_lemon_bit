@@ -114,10 +114,6 @@ class GameImages {
 
    static Image getImageForWeaponType(int weaponType) {
 
-      if (weaponType == ItemType.Weapon_Melee_Knife) {
-         return template_weapon_knife;
-      }
-
       if (ItemType.isTypeWeaponHandgun(weaponType)) {
          if (weaponType == ItemType.Weapon_Handgun_Glock){
             return template_weapon_handgun_black;
@@ -141,6 +137,10 @@ class GameImages {
       }
 
       switch (weaponType) {
+         case ItemType.Weapon_Melee_Knife:
+            return template_weapon_knife;
+         case ItemType.Weapon_Flamethrower:
+            return template_weapon_sniper_rifle;
          case ItemType.Weapon_Rifle_Sniper:
             return template_weapon_sniper_rifle;
          case ItemType.Weapon_Rifle_AK_47:

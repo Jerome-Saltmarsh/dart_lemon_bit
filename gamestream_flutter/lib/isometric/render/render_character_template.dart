@@ -332,6 +332,10 @@ class TemplateAnimation {
        return Punch;
      }
 
+     if (weaponType == ItemType.Weapon_Flamethrower){
+       return FiringShotgun;
+     }
+
      throw Exception("TemplateAnimation.getAttackAnimation(${ItemType.getName(weaponType)})");
   }
 }
