@@ -57,10 +57,10 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] model weapon heavy machine gun
 [ ] model weapon oozie
 [ ] model weapon m4
-[ ] model weapon bazooka
 
 29.11.2022
-[x] model weapon flame thrower
+[x] weapon bazooka
+[x] weapon flame thrower
 [x] item type knife
 [x] item type weapon ak47
 [x] item type weapon sniper rifle

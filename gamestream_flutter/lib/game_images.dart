@@ -47,6 +47,7 @@ class GameImages {
    static late Image template_weapon_handgun_flintlock;
    static late Image template_weapon_sniper_rifle;
    static late Image template_weapon_ak47;
+   static late Image template_weapon_mp5;
    static late Image template_weapon_staff;
    static late Image template_weapon_sword_steel;
    static late Image template_weapon_sword_wooden;
@@ -157,6 +158,8 @@ class GameImages {
             return template_weapon_shotgun;
          case ItemType.Weapon_Rifle_Blunderbuss:
             return template_weapon_shotgun;
+         case ItemType.Weapon_Smg_Mp5:
+            return template_weapon_mp5;
          case ItemType.Weapon_Ranged_Shotgun:
             return template_weapon_shotgun;
          case ItemType.Weapon_Ranged_Bow:
@@ -237,6 +240,7 @@ class GameImages {
       template_weapon_knife = await Engine.loadImageAsset('images/template/weapons/template-weapons-knife.png');
       template_weapon_flamethrower = await Engine.loadImageAsset('images/template/weapons/template-weapons-flamethrower.png');
       template_weapon_bazooka = await Engine.loadImageAsset('images/template/weapons/template-weapons-bazooka.png');
+      template_weapon_mp5 = await Engine.loadImageAsset('images/template/weapons/template-weapons-mp5.png');
    }
 }
 

@@ -15,6 +15,7 @@ class ItemType {
   static const Index_Weapon_Thrown          = 42500;
   static const Index_Weapon_Ranged_Handgun  = 45000;
   static const Index_Weapon_Ranged_Rifle    = 46000;
+  static const Index_Weapon_Ranged_Smg      = 46500;
   static const Index_Weapon_Ranged_Shotgun  = 47000;
   static const Index_Weapon_Ranged_Bow      = 48000;
   static const Index_Weapon_Ranged_Crossbow = 49000;
@@ -129,6 +130,8 @@ class ItemType {
   static const Weapon_Rifle_M4 = Weapon_Rifle_AK_47 + 1;
   static const Weapon_Rifle_Steyr = Weapon_Rifle_M4 + 1;
   static const Weapon_Rifle_Sniper = Weapon_Rifle_Steyr + 1;
+
+  static const Weapon_Smg_Mp5 = Index_Weapon_Ranged_Smg + 1;
 
   static const Weapon_Flamethrower = Index_Weapon_Special + 1;
   static const Weapon_Special_Bazooka = Weapon_Flamethrower + 1;
@@ -262,7 +265,7 @@ class ItemType {
 
   static bool isTypeWeaponRifle(int value) =>
       value > Index_Weapon_Ranged_Rifle &&
-      value < Index_Weapon_Ranged_Shotgun;
+      value < Index_Weapon_Ranged_Smg;
 
   static bool isTypeWeaponShotgun(int value) =>
       value > Index_Weapon_Ranged_Shotgun && value < Index_Weapon_Ranged_Bow;
@@ -352,6 +355,7 @@ class ItemType {
       Weapon_Rifle_M4: 2,
       Weapon_Rifle_Steyr: 2,
       Weapon_Rifle_Sniper: 50,
+      Weapon_Smg_Mp5: 1,
       Trinket_Ring_of_Damage: 1,
       Weapon_Flamethrower: 10,
       Weapon_Special_Bazooka: 100,
@@ -379,6 +383,7 @@ class ItemType {
       Weapon_Rifle_M4: 420,
       Weapon_Rifle_Steyr: 430,
       Weapon_Rifle_Sniper: 650,
+      Weapon_Smg_Mp5: 270,
       Weapon_Flamethrower: 150,
       Weapon_Special_Bazooka: 350,
   }[value] ?? 0;
@@ -405,6 +410,7 @@ class ItemType {
       Weapon_Rifle_M4: 5,
       Weapon_Rifle_Steyr: 5,
       Weapon_Rifle_Sniper: 75,
+      Weapon_Smg_Mp5: 5,
       Weapon_Flamethrower: 2,
       Weapon_Special_Bazooka: 100,
   }[value] ?? 0;
@@ -484,6 +490,7 @@ class ItemType {
      Weapon_Rifle_M4: "M4 Assault Rifle",
      Weapon_Rifle_Steyr: "Steyr",
      Weapon_Rifle_Sniper: "Sniper Rifle",
+     Weapon_Smg_Mp5: "Mp5",
      Weapon_Flamethrower: "Flamethrower",
      Weapon_Special_Bazooka: "Bazooka",
      Consumables_Apple: "Apple",
@@ -536,6 +543,7 @@ class ItemType {
     Weapon_Rifle_Jager                  : 04,
     Weapon_Rifle_Musket                 : 01,
     Weapon_Rifle_Sniper                 : 5,
+    Weapon_Smg_Mp5                      : 25,
     Weapon_Ranged_Shotgun               : 04,
     Weapon_Thrown_Grenade               : 05,
     Weapon_Flamethrower                 : 200,
