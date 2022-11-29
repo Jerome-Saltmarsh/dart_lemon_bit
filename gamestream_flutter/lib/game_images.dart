@@ -58,6 +58,7 @@ class GameImages {
    static late Image template_weapon_flamethrower;
    static late Image template_weapon_bazooka;
    static late Image template_weapon_minigun;
+   static late Image template_weapon_m4;
 
    static Image getImageForHeadType(int headType) {
       switch (headType) {
@@ -152,7 +153,7 @@ class GameImages {
          case ItemType.Weapon_Rifle_AK_47:
             return template_weapon_ak47;
          case ItemType.Weapon_Rifle_M4:
-            return template_weapon_ak47;
+            return template_weapon_m4;
          case ItemType.Weapon_Rifle_Arquebus:
             return template_weapon_shotgun;
          case ItemType.Weapon_Rifle_Musket:
@@ -245,6 +246,7 @@ class GameImages {
       template_weapon_bazooka = await Engine.loadImageAsset('images/template/weapons/template-weapons-bazooka.png');
       template_weapon_mp5 = await Engine.loadImageAsset('images/template/weapons/template-weapons-mp5.png');
       template_weapon_minigun = await Engine.loadImageAsset('images/template/weapons/template-weapons-minigun.png');
+      template_weapon_m4 = await Engine.loadImageAsset('images/template/weapons/template-weapons-m4.png');
    }
 }
 

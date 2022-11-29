@@ -51,6 +51,7 @@ class Area_OldVillage extends DarkAgeArea {
     player.inventoryAddWeapon(itemType: ItemType.Weapon_Handgun_Glock);
     player.inventoryAddWeapon(itemType: ItemType.Weapon_Handgun_Desert_Eagle);
     player.inventoryAddWeapon(itemType: ItemType.Weapon_Rifle_AK_47);
+    player.inventoryAddWeapon(itemType: ItemType.Weapon_Rifle_M4);
     player.inventoryAddWeapon(itemType: ItemType.Weapon_Melee_Knife);
     player.inventoryAddWeapon(itemType: ItemType.Weapon_Melee_Knife);
     player.inventoryAdd(itemType: ItemType.Weapon_Thrown_Grenade, itemQuantity: 10);

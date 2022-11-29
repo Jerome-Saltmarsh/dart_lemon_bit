@@ -55,10 +55,10 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] model character wolf
 [ ] model weapon bolt action rifle
 [ ] model weapon handgun silenced
-[ ] model weapon pistol
-[ ] model weapon m4
+[ ] model weapon revolver
 
 30.11.2022
+[x] weapon m4
 [x] weapon heavy machine gun
 
 29.11.2022
