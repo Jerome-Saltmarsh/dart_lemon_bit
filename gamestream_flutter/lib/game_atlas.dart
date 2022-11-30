@@ -26,7 +26,7 @@ class AtlasItems {
       ItemType.Weapon_Handgun_Flint_Lock_Superior: 288,
       ItemType.Weapon_Handgun_Glock: 32,
       ItemType.Weapon_Handgun_Desert_Eagle: 32,
-      ItemType.Weapon_Handgun_Revolver: 64,
+      ItemType.Weapon_Handgun_Revolver: 224,
       ItemType.Weapon_Rifle_Jager: 64,
       ItemType.Weapon_Rifle_Musket: 64,
       ItemType.Weapon_Rifle_Arquebus: 64,

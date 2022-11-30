@@ -59,6 +59,7 @@ class GameImages {
    static late Image template_weapon_bazooka;
    static late Image template_weapon_minigun;
    static late Image template_weapon_m4;
+   static late Image template_weapon_revolver;
 
    static Image getImageForHeadType(int headType) {
       switch (headType) {
@@ -118,29 +119,9 @@ class GameImages {
    }
 
    static Image getImageForWeaponType(int weaponType) {
-
-      if (ItemType.isTypeWeaponHandgun(weaponType)) {
-         if (weaponType == ItemType.Weapon_Handgun_Glock){
-            return template_weapon_handgun_black;
-         }
-         if (weaponType == ItemType.Weapon_Handgun_Flint_Lock_Superior){
-            return template_weapon_handgun_flintlock;
-         }
-         if (weaponType == ItemType.Weapon_Handgun_Flint_Lock){
-            return template_weapon_handgun_flintlock;
-         }
-         if (weaponType == ItemType.Weapon_Handgun_Flint_Lock_Old){
-            return template_weapon_handgun_flintlock;
-         }
-         return template_weapon_handgun;
-      }
-      if (ItemType.isTypeWeaponShotgun(weaponType)){
-         return template_weapon_shotgun;
-      }
       if (ItemType.isTypeWeaponThrown(weaponType)){
          return template_weapon_grenade;
       }
-
       switch (weaponType) {
          case ItemType.Weapon_Melee_Knife:
             return template_weapon_knife;
@@ -162,6 +143,18 @@ class GameImages {
             return template_weapon_shotgun;
          case ItemType.Weapon_Smg_Mp5:
             return template_weapon_mp5;
+         case ItemType.Weapon_Handgun_Desert_Eagle:
+            return template_weapon_handgun;
+         case ItemType.Weapon_Handgun_Glock:
+            return template_weapon_handgun_black;
+         case ItemType.Weapon_Handgun_Flint_Lock_Old:
+            return template_weapon_handgun_flintlock;
+         case ItemType.Weapon_Handgun_Flint_Lock:
+            return template_weapon_handgun_flintlock;
+         case ItemType.Weapon_Handgun_Flint_Lock_Superior:
+            return template_weapon_handgun_flintlock;
+         case ItemType.Weapon_Handgun_Revolver:
+            return template_weapon_revolver;
          case ItemType.Weapon_Ranged_Shotgun:
             return template_weapon_shotgun;
          case ItemType.Weapon_Ranged_Bow:
@@ -178,6 +171,8 @@ class GameImages {
             return template_weapon_hammer;
          case ItemType.Weapon_Special_Minigun:
             return template_weapon_minigun;
+         case ItemType.Weapon_Handgun_Revolver:
+            return template_weapon_revolver;
          default:
             throw Exception("GameImages.getImageForWeaponType(${ItemType.getName(weaponType)})");
       }
@@ -247,6 +242,7 @@ class GameImages {
       template_weapon_mp5 = await Engine.loadImageAsset('images/template/weapons/template-weapons-mp5.png');
       template_weapon_minigun = await Engine.loadImageAsset('images/template/weapons/template-weapons-minigun.png');
       template_weapon_m4 = await Engine.loadImageAsset('images/template/weapons/template-weapons-m4.png');
+      template_weapon_revolver = await Engine.loadImageAsset('images/template/weapons/template-weapons-revolver.png');
    }
 }
 
