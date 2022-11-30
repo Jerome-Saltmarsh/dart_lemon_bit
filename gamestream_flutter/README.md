@@ -53,8 +53,10 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] model character goblin
 [ ] model character vampire
 [ ] model character wolf
-[ ] model weapon bolt action rifle
 [ ] model weapon handgun silenced
+
+01.12.2022
+[x] weapon bolt action rifle
 
 30.11.2022
 [x] weapon revolver

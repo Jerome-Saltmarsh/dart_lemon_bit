@@ -60,6 +60,7 @@ class GameImages {
    static late Image template_weapon_minigun;
    static late Image template_weapon_m4;
    static late Image template_weapon_revolver;
+   static late Image template_weapon_winchester;
 
    static Image getImageForHeadType(int headType) {
       switch (headType) {
@@ -125,10 +126,6 @@ class GameImages {
       switch (weaponType) {
          case ItemType.Weapon_Melee_Knife:
             return template_weapon_knife;
-         case ItemType.Weapon_Flamethrower:
-            return template_weapon_flamethrower;
-         case ItemType.Weapon_Special_Bazooka:
-            return template_weapon_bazooka;
          case ItemType.Weapon_Rifle_Sniper:
             return template_weapon_sniper_rifle;
          case ItemType.Weapon_Rifle_AK_47:
@@ -136,11 +133,13 @@ class GameImages {
          case ItemType.Weapon_Rifle_M4:
             return template_weapon_m4;
          case ItemType.Weapon_Rifle_Arquebus:
-            return template_weapon_shotgun;
+            return template_weapon_winchester;
          case ItemType.Weapon_Rifle_Musket:
-            return template_weapon_shotgun;
+            return template_weapon_winchester;
          case ItemType.Weapon_Rifle_Blunderbuss:
-            return template_weapon_shotgun;
+            return template_weapon_winchester;
+         case ItemType.Weapon_Rifle_Jager:
+            return template_weapon_winchester;
          case ItemType.Weapon_Smg_Mp5:
             return template_weapon_mp5;
          case ItemType.Weapon_Handgun_Desert_Eagle:
@@ -173,6 +172,10 @@ class GameImages {
             return template_weapon_minigun;
          case ItemType.Weapon_Handgun_Revolver:
             return template_weapon_revolver;
+         case ItemType.Weapon_Flamethrower:
+            return template_weapon_flamethrower;
+         case ItemType.Weapon_Special_Bazooka:
+            return template_weapon_bazooka;
          default:
             throw Exception("GameImages.getImageForWeaponType(${ItemType.getName(weaponType)})");
       }
@@ -243,6 +246,7 @@ class GameImages {
       template_weapon_minigun = await Engine.loadImageAsset('images/template/weapons/template-weapons-minigun.png');
       template_weapon_m4 = await Engine.loadImageAsset('images/template/weapons/template-weapons-m4.png');
       template_weapon_revolver = await Engine.loadImageAsset('images/template/weapons/template-weapons-revolver.png');
+      template_weapon_winchester = await Engine.loadImageAsset('images/template/weapons/template-weapons-winchester.png');
    }
 }
 
