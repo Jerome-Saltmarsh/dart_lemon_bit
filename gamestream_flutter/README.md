@@ -58,6 +58,9 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] item body kevlar
 [ ] item legs kevlar
 
+02.12.2022
+[x] fix player stats window
+
 01.12.2022
 [x] weapon bolt action rifle
 
