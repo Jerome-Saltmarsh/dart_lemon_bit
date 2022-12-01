@@ -59,6 +59,9 @@ class Area_OldVillage extends DarkAgeArea {
     player.inventoryAdd(itemType: ItemType.Weapon_Smg_Mp5, itemQuantity: 200);
     player.inventoryAdd(itemType: ItemType.Weapon_Special_Minigun, itemQuantity: 1000);
     player.inventoryAdd(itemType: ItemType.Weapon_Handgun_Revolver, itemQuantity: 1000);
+    player.inventoryAdd(itemType: ItemType.Head_Swat);
+    player.inventoryAdd(itemType: ItemType.Body_Swat);
+    player.inventoryAdd(itemType: ItemType.Legs_Swat);
     player.inventorySet(index: ItemType.Belt_1, itemType: ItemType.Weapon_Handgun_Flint_Lock_Old, itemQuantity: 1);
     player.equippedWeaponIndex = ItemType.Belt_1;
     player.inventoryDirty = true;

@@ -11,6 +11,7 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] render foreground zombie walking while connecting
 [ ] item weight
 [ ] inventory max weight
+[ ] weapon torch flame
 
 [engine]
 [ ] save scene as byte stream
@@ -36,7 +37,7 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] character butterfly
 [ ] character bird
 [ ] character chicken
-[ ] Loud Noises Draw Attention
+[ ] loud noises draw attention
 [ ] skill critical shot
 [ ] attribute gunslinger 
 [ ] attribute vampire steals health
@@ -47,13 +48,15 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] scene city
 [ ] skill freeze
 [ ] speed boost
-[ ] model character alien
-[ ] model character skeleton
-[ ] model character ranger
-[ ] model character goblin
-[ ] model character vampire
-[ ] model character wolf
-[ ] model weapon handgun silenced
+[ ] character alien
+[ ] character skeleton
+[ ] character ranger
+[ ] character goblin
+[ ] character vampire
+[ ] character wolf
+[ ] item helmet counterstrike
+[ ] item body kevlar
+[ ] item legs kevlar
 
 01.12.2022
 [x] weapon bolt action rifle

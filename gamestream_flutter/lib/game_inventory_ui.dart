@@ -26,13 +26,12 @@ class GameInventoryUI {
           child: Column(
             children: [
               Container(
-                // color: GameColors.brownLight,
                 padding: const EdgeInsets.all(8),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    buildContainerPlayerStats(),
+                    Expanded(child: buildContainerPlayerStats()),
                     buildContainerEquippedItems(),
                   ],
                 ),
@@ -58,37 +57,44 @@ class GameInventoryUI {
 
   static Container buildContainerPlayerStats() =>
       Container(
-        width: 200,
+        color: Colors.white12,
+        margin: const EdgeInsets.only(right: 12),
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        height: 148,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            text("Player"),
-            buildHoverTarget(
-                hoverTargetType: ClientType.Hover_Target_Player_Stats_Health,
-                child: watch(ServerState.playerMaxHealth, (int maxHealth) {
-                 return watch(ServerState.playerHealth, (int currentHealth) {
-                   return Row(
-                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                     children: [
-                       text("Health"),
-                       text("$currentHealth / $maxHealth"),
-                     ],
-                   );
-                 });
-               }),
-            ),
-            height6,
-            buildHoverTarget(
-              hoverTargetType: ClientType.Hover_Target_Player_Stats_Damage,
-              child: watch(ServerState.playerDamage, (int damage) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      text("Damage"),
-                      text(damage),
-                    ],
-                  );
-              }),
+            Column(
+              children: [
+                  buildHoverTarget(
+                  hoverTargetType: ClientType.Hover_Target_Player_Stats_Health,
+                    child: watch(ServerState.playerMaxHealth, (int maxHealth) {
+                      return watch(ServerState.playerHealth, (int currentHealth) {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            text("Health"),
+                            text("$currentHealth / $maxHealth"),
+                          ],
+                        );
+                      });
+                    }),
+                  ),
+                height8,
+                buildHoverTarget(
+                  hoverTargetType: ClientType.Hover_Target_Player_Stats_Damage,
+                  child: watch(ServerState.playerDamage, (int damage) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        text("Damage"),
+                        text(damage),
+                      ],
+                    );
+                  }),
+                )
+              ]
             ),
           ],
         ),

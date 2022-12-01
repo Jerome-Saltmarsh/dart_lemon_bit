@@ -831,7 +831,7 @@ class Player extends Character with ByteWriter {
     inventoryAdd(itemType: itemType, itemQuantity: ItemType.getWeaponCapacity(itemType));
   }
 
-  void inventoryAdd({required int itemType, required int itemQuantity}) {
+  void inventoryAdd({required int itemType, int itemQuantity = 1}) {
       assert (itemQuantity > 0);
       final availableIndex = getEmptyInventoryIndex();
       if (availableIndex != null) {
