@@ -12,16 +12,16 @@ import '../../dark_age/game_dark_age.dart';
 import '../../dark_age/game_dark_age_editor.dart';
 
 class Player extends Character with ByteWriter {
+  /// CONSTANTS
+  static const Health_Per_Perk = 5;
 
-
-
+  /// Variables
   final mouse = Vector2(0, 0);
   final runTarget = Position3();
   late Function sendBufferToClient;
   GameObject? editorSelectedGameObject;
   var _gold = 0;
   var debug = false;
-  var characterState = CharacterState.Idle;
   var framesSinceClientRequest = 0;
   var textDuration = 0;
   var _experience = 0;
@@ -61,24 +61,91 @@ class Player extends Character with ByteWriter {
   /// a value between 0 and 1
   /// 0 means very accurate and 1 is very inaccurate
   var _accuracy = 0.0;
-
-  int get baseMaxHealth => _baseMaxHealth;
-  int get baseDamage => _baseDamage;
-  double get accuracy => _accuracy;
-
-  set accuracy(double value) {
-    _accuracy = clamp(value, 0, 1);
-  }
-
-  static const Health_Per_Perk = 5;
+  /// Warning - do not reference
+  Game game;
+  Collider? _aimTarget; // the currently highlighted character
+  Account? account;
   var perkMaxHealth = 0;
   var perkMaxDamage = 0;
+  static const InventorySize = 40;
+  final inventory = Uint16List(InventorySize);
+  final inventoryQuantity = Uint16List(InventorySize);
+  var storeItems = <int>[];
+  final questsInProgress = <Quest>[];
+  final questsCompleted = <Quest>[];
+  final flags = <Flag>[];
+  var options = <String, Function> {};
+  var _interactMode = InteractMode.None;
+  var npcName = "";
+  var mapX = 0;
+  var mapY = 0;
 
+  /// CONSTRUCTOR
+  Player({
+    required this.game,
+    required int weaponType,
+    int team = 0,
+    int magic = 10,
+    int health = 10,
+  }) : super(
+    characterType: CharacterType.Template,
+    x: 0,
+    y: 0,
+    z: 0,
+    health: health,
+    team: team,
+    weaponType: weaponType,
+    bodyType: ItemType.Body_Tunic_Padded,
+    headType: ItemType.Head_Rogues_Hood,
+    damage: 1,
+  ){
+    maxMagic = magic;
+    _magic = maxMagic;
+    game.players.add(this);
+    game.characters.add(this);
+  }
+
+  /// GETTERS
+  Collider? get aimTarget => _aimTarget;
+  int get baseMaxHealth => _baseMaxHealth;
+  int get baseDamage => _baseDamage;
+  int get gold => _gold;
+  int get level => _level;
+  int get attributes => _attributes;
+  int get equippedWeaponIndex => _equippedWeaponIndex;
+  int get lookDirection => Direction.fromRadian(lookRadian);
+  int get experience => _experience;
+  int get magic => _magic;
+  int get experienceRequiredForNextLevel => getExperienceForLevel(level + 1);
+  bool get weaponIsEquipped => _equippedWeaponIndex != -1;
+  double get mouseGridX => (mouse.x + mouse.y) + z;
+  double get mouseGridY => (mouse.y - mouse.x) + z;
+  double get accuracy => _accuracy;
+  int get interactMode => _interactMode;
+  /// in radians
+  double get mouseAngle => getAngleBetween(mouseGridX, mouseGridY, x, y);
+  Scene get scene => game.scene;
+  double get magicPercentage {
+    if (_magic == 0) return 0;
+    if (maxMagic == 0) return 0;
+    return _magic / maxMagic;
+  }
+
+  double get experiencePercentage {
+    if (experienceRequiredForNextLevel <= 0) return 1.0;
+    return _experience / experienceRequiredForNextLevel;
+  }
+
+  /// SETTERS
   set baseMaxHealth(int value){
      assert (value > 0);
      if (_baseMaxHealth == value) return;
      _baseMaxHealth = value;
      writePlayerBaseMaxHealth();
+  }
+
+  set accuracy(double value) {
+    _accuracy = clamp(value, 0, 1);
   }
 
   set baseDamage(int value){
@@ -87,22 +154,6 @@ class Player extends Character with ByteWriter {
     _baseDamage = value;
     writePlayerBaseDamage();
   }
-
-
-  /// Warning - do not reference
-  Game game;
-  Collider? _aimTarget; // the currently highlighted character
-  Account? account;
-
-  Collider? get aimTarget => _aimTarget;
-
-  int get gold => _gold;
-  int get level => _level;
-  int get attributes => _attributes;
-
-  int get equippedWeaponIndex => _equippedWeaponIndex;
-
-  bool get weaponIsEquipped => _equippedWeaponIndex != -1;
 
   set equippedWeaponIndex(int index){
     if (_equippedWeaponIndex == index) return;
@@ -128,6 +179,42 @@ class Player extends Character with ByteWriter {
     return;
   }
 
+  set level(int value){
+    assert (value >= 1);
+    if (_level == value) return;
+    _level = value;
+    writePlayerLevel();
+  }
+
+  set attributes(int value){
+    assert (value >= 0);
+    if (_attributes == value) return;
+    _attributes = value;
+    writePlayerAttributes();
+  }
+
+  set gold(int value) {
+    if (_gold == value) return;
+    _gold = clamp(value, 0, 65000);
+    writePlayerGold();
+  }
+
+  set aimTarget(Collider? collider) {
+    if (_aimTarget == collider) return;
+    if (collider == this) return;
+    _aimTarget = collider;
+    writePlayerAimTargetCategory();
+    writePlayerAimTargetType();
+    writePlayerAimTargetPosition();
+    writePlayerAimTargetName();
+    writePlayerAimTargetQuantity();
+  }
+
+  set magic(int value){
+    _magic = clamp(value, 0, maxMagic);
+  }
+
+  /// METHODS
   void refreshStats() {
       damage = baseDamage
           + ItemType.getDamage(headType)
@@ -182,67 +269,11 @@ class Player extends Character with ByteWriter {
     refreshStats();
   }
 
-  set level(int value){
-    assert (value >= 1);
-    if (_level == value) return;
-    _level = value;
-    writePlayerLevel();
-  }
-
-  set attributes(int value){
-    assert (value >= 0);
-    if (_attributes == value) return;
-    _attributes = value;
-    writePlayerAttributes();
-  }
-
-  set gold(int value) {
-     if (_gold == value) return;
-     _gold = clamp(value, 0, 65000);
-     writePlayerGold();
-  }
-
-  set aimTarget(Collider? collider) {
-    if (_aimTarget == collider) return;
-    if (collider == this) return;
-    _aimTarget = collider;
-    writePlayerAimTargetCategory();
-    writePlayerAimTargetType();
-    writePlayerAimTargetPosition();
-    writePlayerAimTargetName();
-    writePlayerAimTargetQuantity();
-  }
-
-  static const InventorySize = 40;
-  final inventory = Uint16List(InventorySize);
-  final inventoryQuantity = Uint16List(InventorySize);
-  var storeItems = <int>[];
-
-  final questsInProgress = <Quest>[];
-  final questsCompleted = <Quest>[];
-  final flags = <Flag>[];
-
-  var options = <String, Function> {};
-  var _interactMode = InteractMode.None;
-  var npcName = "";
-
-  var mapX = 0;
-  var mapY = 0;
-
-  int get interactMode => _interactMode;
-
   set interactMode(int value){
     if (_interactMode == value) return;
     _interactMode = value;
     writeInteractMode();
   }
-
-  double get mouseGridX => (mouse.x + mouse.y) + z;
-  double get mouseGridY => (mouse.y - mouse.x) + z;
-
-  int get lookDirection => Direction.fromRadian(lookRadian);
-
-  int get experience => _experience;
 
   int? getEmptyInventoryIndex(){
     for (var i = 0; i < inventory.length; i++){
@@ -354,54 +385,6 @@ class Player extends Character with ByteWriter {
     runTarget.y = y;
     runTarget.z = z;
     game.setCharacterTarget(this, runTarget);
-  }
-
-  /// in radians
-  double get mouseAngle => getAngleBetween(mouseGridX, mouseGridY, x, y);
-
-  Scene get scene => game.scene;
-
-  int get magic => _magic;
-
-  double get magicPercentage {
-    if (_magic == 0) return 0;
-    if (maxMagic == 0) return 0;
-    return _magic / maxMagic;
-  }
-
-  int get experienceRequiredForNextLevel => getExperienceForLevel(level + 1);
-
-  double get experiencePercentage {
-    if (experienceRequiredForNextLevel <= 0) return 1.0;
-    return _experience / experienceRequiredForNextLevel;
-  }
-
-  set magic(int value){
-    _magic = clamp(value, 0, maxMagic);
-  }
-
-  Player({
-    required this.game,
-    required int weaponType,
-    int team = 0,
-    int magic = 10,
-    int health = 10,
-  }) : super(
-            characterType: CharacterType.Template,
-            x: 0,
-            y: 0,
-            z: 0,
-            health: health,
-            team: team,
-            weaponType: weaponType,
-            bodyType: ItemType.Body_Tunic_Padded,
-            headType: ItemType.Head_Rogues_Hood,
-            damage: 1,
-  ){
-    maxMagic = magic;
-    _magic = maxMagic;
-    game.players.add(this);
-    game.characters.add(this);
   }
 
   void inventoryDrop(int index) {
