@@ -37,6 +37,7 @@ class ServerResponse {
   static const Character_Template = 89;
   static const Character_Player = 90;
   static const Character_Slime = 91;
+  static const Characters = 92;
   static const Editor_GameObject_Selected = 101;
   static const Player_Can_Teleport = 102;
   static const Render_Map = 104;

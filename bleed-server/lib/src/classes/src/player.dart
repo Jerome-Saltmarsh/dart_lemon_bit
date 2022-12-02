@@ -1087,19 +1087,19 @@ class Player extends Character with ByteWriter {
   }
 
   void writeCharacters(){
+    writeByte(ServerResponse.Characters);
     final characters = game.characters;
     for (final character in characters) {
       if (character.dead) continue;
       if (character.renderY < screenTop) continue;
       if (character.renderX < screenLeft) continue;
       if (character.renderX > screenRight) continue;
-      if (character.renderY > screenBottom) return;
-      // character.write(this);
+      if (character.renderY > screenBottom) {
+        writeByte(END);
+        return;
+      }
 
-      // if (character is Player) {
-      //   writePlayer(character);
-      //   continue;
-      // }
+      writeByte(character.characterType);
 
       switch (character.characterType){
         case CharacterType.Zombie:
@@ -1117,6 +1117,7 @@ class Player extends Character with ByteWriter {
 
       }
     }
+    writeByte(END);
   }
 
   void downloadScene(){
@@ -1258,17 +1259,17 @@ class Player extends Character with ByteWriter {
   }
 
   void writeCharacterZombie(Character zombie){
-    writeByte(ServerResponse.Character_Zombie);
+    // writeByte(ServerResponse.Character_Zombie);
     writeCharacter(this, zombie);
   }
 
   void writeCharacterRat(Character rat){
-    writeByte(ServerResponse.Character_Rat);
+    // writeByte(ServerResponse.Character_Rat);
     writeCharacter(this, rat);
   }
 
   void writeCharacterSlime(Character rat){
-    writeByte(ServerResponse.Character_Slime);
+    // writeByte(ServerResponse.Character_Slime);
     writeCharacter(this, rat);
   }
 
@@ -1361,18 +1362,18 @@ class Player extends Character with ByteWriter {
     writeInt(amount);
   }
 
-  void writePlayer(Player player) {
-    writeByte(ServerResponse.Character_Player);
-    writeCharacter(player, player);
-    writeCharacterEquipment(player);
-    writeString(player.name);
-    writeString(player.text);
-    writeAngle(player.lookRadian);
-    writeByte(player.weaponFrame);
-  }
+  // void writePlayer(Player player) {
+  //   writeByte(ServerResponse.Character_Player);
+  //   writeCharacter(player, player);
+  //   writeCharacterEquipment(player);
+  //   writeString(player.name);
+  //   writeString(player.text);
+  //   writeAngle(player.lookRadian);
+  //   writeByte(player.weaponFrame);
+  // }
 
   void writeCharacterTemplate(Character character) {
-    writeByte(ServerResponse.Character_Template);
+    // writeByte(ServerResponse.Character_Template);
     writeCharacter(this, character);
     writeCharacterEquipment(character);
     writeAngle(character.lookRadian);

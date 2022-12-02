@@ -22,21 +22,24 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Player:
           readApiPlayer();
           break;
-        case ServerResponse.Character_Rat:
-          readCharacterRat();
+        case ServerResponse.Characters:
+          readCharacters();
           break;
-        case ServerResponse.Character_Zombie:
-          readCharacterZombie();
-          break;
-        case ServerResponse.Character_Template:
-          readCharacterTemplate();
-          break;
-        case ServerResponse.Character_Player:
-          readCharacterPlayer();
-          break;
-        case ServerResponse.Character_Slime:
-          readCharacterSlime();
-          break;
+        // case ServerResponse.Character_Rat:
+        //   readCharacterRat();
+        //   break;
+        // case ServerResponse.Character_Zombie:
+        //   readCharacterZombie();
+        //   break;
+        // case ServerResponse.Character_Template:
+        //   readCharacterTemplate();
+        //   break;
+        // case ServerResponse.Character_Player:
+        //   readCharacterPlayer();
+        //   break;
+        // case ServerResponse.Character_Slime:
+        //   readCharacterSlime();
+        //   break;
         case ServerResponse.GameObject:
           readGameObject();
           break;
@@ -355,6 +358,28 @@ class ServerResponseReader with ByteReader {
     GameEditor.gameObjectSelectedType.value = type;
     GameEditor.gameObjectSelected.value = true;
     GameEditor.cameraCenterSelectedObject();
+  }
+
+  void readCharacters(){
+     while (true) {
+      final characterType = readByte();
+      if (characterType == END) return;
+
+      switch (characterType) {
+        case CharacterType.Template:
+          readCharacterTemplate();
+          continue;
+        case CharacterType.Slime:
+          readCharacterSlime();
+          continue;
+        case CharacterType.Rat:
+          readCharacterRat();
+          continue;
+        case CharacterType.Zombie:
+          readCharacterZombie();
+          continue;
+      }
+    }
   }
 
   void readCharacterRat() {
