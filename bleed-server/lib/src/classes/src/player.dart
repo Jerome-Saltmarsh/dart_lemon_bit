@@ -1092,18 +1092,23 @@ class Player extends Character with ByteWriter {
       }
 
       writeByte(character.characterType);
-      writeByte((Collider.onSameTeam(this, character) ? 100 : 0) + (character.faceDirection * 10) + character.state); // 1
-      writePosition3(character);
-      writeByte((((character.health / character.maxHealth) * 24).toInt() * 10) + character.animationFrame);
+      writeCharacterTeamDirectionAndState(character);
+      writeVector3(character);
+      writeCharacterHealthAndAnimationFrame(character);
 
       if (CharacterType.supportsUpperBody(character.characterType)) {
-        writeCharacterEquipment(character);
-        writeAngle(character.lookRadian);
-        writeByte(character.weaponFrame);
+        writeCharacterUpperBody(character);
       }
     }
     writeByte(END);
   }
+
+  void writeCharacterTeamDirectionAndState(Character character){
+    writeByte((Collider.onSameTeam(this, character) ? 100 : 0) + (character.faceDirection * 10) + character.state); // 1
+  }
+
+  void writeCharacterHealthAndAnimationFrame(Character character) =>
+    writeByte((((character.health / character.maxHealth) * 24).toInt() * 10) + character.animationFrame);
 
   void downloadScene(){
     writeGrid();
@@ -1347,31 +1352,7 @@ class Player extends Character with ByteWriter {
     writeInt(amount);
   }
 
-  // void writePlayer(Player player) {
-  //   writeByte(ServerResponse.Character_Player);
-  //   writeCharacter(player, player);
-  //   writeCharacterEquipment(player);
-  //   writeString(player.name);
-  //   writeString(player.text);
-  //   writeAngle(player.lookRadian);
-  //   writeByte(player.weaponFrame);
-  // }
-
-  // void writeCharacterTemplate(Character character) {
-  //   // writeByte(ServerResponse.Character_Template);
-  //   writeCharacterEquipment(character);
-  //   writeAngle(character.lookRadian);
-  //   writeByte(character.weaponFrame);
-  // }
-
-  // void writeCharacter(Player player, Character character) {
-  //   writeByte((Collider.onSameTeam(player, character) ? 100 : 0) + (character.faceDirection * 10) + character.state); // 1
-  //   writePosition(character);
-  //   writeInt(character.z);
-  //   writeByte((((character.health / character.maxHealth) * 24).toInt() * 10) + character.animationFrame);
-  // }
-
-  void writeCharacterEquipment(Character character) {
+  void writeCharacterUpperBody(Character character) {
     assert (ItemType.isTypeWeapon(character.weaponType) || character.weaponType == ItemType.Empty);
     assert (ItemType.isTypeLegs(character.legsType) || character.legsType == ItemType.Empty);
     assert (ItemType.isTypeBody(character.bodyType) || character.bodyType == ItemType.Empty);
@@ -1381,6 +1362,8 @@ class Player extends Character with ByteWriter {
     writeUInt16(character.bodyType); // armour
     writeUInt16(character.headType); // helm
     writeUInt16(character.legsType); // helm
+    writeAngle(character.lookRadian);
+    writeByte(character.weaponFrame);
   }
 
   void writeWeather() {
@@ -1409,6 +1392,12 @@ class Player extends Character with ByteWriter {
   }
 
   void writePosition3(Position3 value){
+    writeInt(value.x);
+    writeInt(value.y);
+    writeInt(value.z);
+  }
+
+  void writeVector3(Position3 value){
     writeInt(value.x);
     writeInt(value.y);
     writeInt(value.z);

@@ -361,17 +361,15 @@ class ServerResponseReader with ByteReader {
      while (true) {
       final characterType = readByte();
       if (characterType == END) return;
-
       final character = GameState.getCharacterInstance();
+
       character.characterType = characterType;
-      readTeamDirectionState(character);
+      readCharacterTeamDirectionAndState(character);
       readVector3(character);
-      _parseCharacterFrameHealth(character, readByte());
+      readCharacterHealthAndAnimationFrame(character);
 
       if (CharacterType.supportsUpperBody(characterType)){
-        readCharacterEquipment(character);
-        character.lookRadian = readAngle();
-        character.weaponFrame = readByte();
+        readCharacterUpperBody(character);
       }
       GameState.totalCharacters++;
     }
@@ -567,22 +565,25 @@ class ServerResponseReader with ByteReader {
     }
   }
 
-  void readTeamDirectionState(Character character){
+  void readCharacterTeamDirectionAndState(Character character){
     final byte = readByte();
     character.allie = byte >= 100;
     character.direction = ((byte % 100) ~/ 10);
     character.state = byte % 10;
   }
 
-  void readCharacterEquipment(Character character){
+  void readCharacterUpperBody(Character character){
     character.weaponType = readUInt16();
     character.weaponState = readUInt16();
     character.bodyType = readUInt16();
     character.headType = readUInt16();
     character.legType = readUInt16();
+    character.lookRadian = readAngle();
+    character.weaponFrame = readByte();
   }
 
-  void _parseCharacterFrameHealth(Character character, int byte){
+  void readCharacterHealthAndAnimationFrame(Character character){
+    final byte = readByte();
     final frame = byte % 10;
     final health = (byte - frame) / 240.0;
     character.frame = frame;
