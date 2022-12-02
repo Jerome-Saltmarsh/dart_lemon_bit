@@ -5,7 +5,6 @@ import 'package:lemon_math/library.dart';
 import 'package:bleed_server/gamestream.dart';
 
 abstract class Character extends Collider {
-
   /// VARIABLES
   var _faceAngle = 0.0;
   var _health = 1;
@@ -32,6 +31,7 @@ abstract class Character extends Collider {
   var lookRadian = 0.0;
 
   /// PROPERTIES
+  bool get characterTypeZombie => characterType == CharacterType.Zombie;
   bool get dead => state == CharacterState.Dead;
   bool get dying => state == CharacterState.Dying;
   bool get alive => !deadOrDying;
@@ -159,9 +159,6 @@ abstract class Character extends Collider {
 
     Character({
     required this.characterType,
-    required double x,
-    required double y,
-    required double z,
     required int health,
     required this.bodyType,
     required this.headType,
@@ -169,6 +166,9 @@ abstract class Character extends Collider {
     required int team,
     required int damage,
     double speed = 5.0,
+    double x = 0,
+    double y = 0,
+    double z = 0,
 
   }) : super(x: x, y: y, z: z, radius: 7) {
     maxHealth = health;

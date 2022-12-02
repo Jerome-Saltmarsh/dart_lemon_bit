@@ -1328,7 +1328,7 @@ abstract class Game {
     }
 
     // TODO Hack
-    if (srcCharacter is Zombie) {
+    if (srcCharacter.characterTypeZombie) {
       dispatchV3(GameEventType.Zombie_Strike, srcCharacter);
     }
     if (target is Character) {
@@ -1689,8 +1689,8 @@ abstract class Game {
     int team = TeamType.Evil,
   }) {
     for (var j = 0; j < total; j++) {
-      spawnAtIndexZombie(
-        index: index,
+      spawnAI(
+        nodeIndex: index,
         health: health,
         damage: damage,
         team: team,
@@ -1707,8 +1707,8 @@ abstract class Game {
     int team = TeamType.Evil,
   }) {
     for (var j = 0; j < total; j++) {
-      spawnAtIndexZombie(
-          index: index,
+      spawnAI(
+          nodeIndex: index,
           health: health,
           damage: damage,
           team: team,
@@ -1722,41 +1722,51 @@ abstract class Game {
     position.z = scene.convertNodeIndexToZ(index) * Node_Height;
   }
 
-  Zombie spawnAtIndexZombie({
-    required int index,
+  AI spawnAI({
+    required int nodeIndex,
     int health = 10,
     int damage = 1,
     int team = TeamType.Evil,
   }) {
-    if (index < 0) throw Exception('index < 0');
-    if (index >= scene.gridVolume) {
-      throw Exception('game.spawnZombieAtIndex($index) \ni >= scene.gridVolume');
+    if (nodeIndex < 0) throw Exception('nodeIndex < 0');
+    if (nodeIndex >= scene.gridVolume) {
+      throw Exception('game.spawnZombieAtIndex($nodeIndex) \ni >= scene.gridVolume');
     }
-    final instance = Zombie(
+    final instance = AI(
+      weaponType: ItemType.Empty,
+      characterType: CharacterType.Zombie,
       health: health,
       damage: damage,
       team: team,
+      speed: CharacterType.getSpeed(CharacterType.Zombie),
     );
-    moveToIndex(instance, index);
+    moveToIndex(instance, nodeIndex);
+    instance.clearDest();
+    instance.clearPath();
     characters.add(instance);
-    instance.spawnNodeIndex = index;
+    instance.spawnNodeIndex = nodeIndex;
     return instance;
   }
 
-  AI spawnAtIndexTriangle({
+  AI spawnAIAtIndex({
     required int index,
+    required int characterType,
     int health = 10,
     int damage = 1,
     int team = TeamType.Evil,
+    int weaponType = ItemType.Empty,
   }) {
     if (index < 0) throw Exception('index < 0');
     if (index >= scene.gridVolume) {
       throw Exception('game.spawnZombieAtIndex($index) \ni >= scene.gridVolume');
     }
-    final instance = Zombie(
+    final instance = AI(
+      characterType: characterType,
+      weaponType: weaponType,
       health: health,
       damage: damage,
       team: team,
+      speed: CharacterType.getSpeed(characterType),
     );
     moveToIndex(instance, index);
     characters.add(instance);
@@ -1834,24 +1844,6 @@ abstract class Game {
     );
     instance.collidable = ItemType.isCollidable(type);
     gameObjects.add(instance);
-    return instance;
-  }
-
-  Rat getInstanceRat() {
-    for (final character in characters) {
-      if (character.alive) continue;
-      if (character is Rat) return character;
-    }
-    final instance = Rat(
-      z: 0,
-      row: 0,
-      column: 0,
-      health: 10,
-      damage: 1,
-      game: this,
-      team: TeamType.Evil,
-    );
-    characters.add(instance);
     return instance;
   }
 
@@ -2015,7 +2007,7 @@ abstract class Game {
   void updateCharacterStateAttacking(Character character) {
     const framePerformStrike = 10;
     final stateDuration = character.stateDuration;
-    if (character is Zombie) {
+    if (character.characterTypeZombie) {
       if (stateDuration != framePerformStrike) return;
       final attackTarget = character.target;
       if (attackTarget == null) return;
@@ -2281,7 +2273,7 @@ abstract class Game {
   /// WARNING EXPENSIVE OPERATION
   void clearSpawnedAI(){
       for (var i = 0; i < characters.length; i++){
-         if (characters[i] is Zombie){
+         if (characters[i].characterTypeZombie) {
            characters.removeAt(i);
            i--;
          }

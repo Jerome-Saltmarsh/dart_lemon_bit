@@ -30,11 +30,4 @@ class Npc extends AI {
             damage: damage,
             speed: speed,
   );
-
-  // @override
-  // void write(Player player) {
-  //   player.writeCharacterTemplate(player, this);
-  // }
-  // @override
-  // int get type => CharacterType.Template;
 }

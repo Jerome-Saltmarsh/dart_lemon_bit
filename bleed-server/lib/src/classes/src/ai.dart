@@ -4,7 +4,7 @@ import 'package:lemon_math/library.dart';
 
 import 'package:bleed_server/gamestream.dart';
 
-abstract class AI extends Character {
+class AI extends Character {
   static const AI_Path_Size = 80;
 
   final pathX = Uint16List(AI_Path_Size);
@@ -32,15 +32,15 @@ abstract class AI extends Character {
 
   AI({
     required int characterType,
-    required double x,
-    required double y,
-    required double z,
     required int health,
     required int weaponType,
     required int damage,
     required int team,
     required double speed,
     this.wanderRadius = 0,
+    double x = 0,
+    double y = 0,
+    double z = 0,
   }): super(
       characterType: characterType,
       x: x,
