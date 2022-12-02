@@ -1093,8 +1093,7 @@ class Player extends Character with ByteWriter {
 
       writeByte(character.characterType);
       writeByte((Collider.onSameTeam(this, character) ? 100 : 0) + (character.faceDirection * 10) + character.state); // 1
-      writePosition(character);
-      writeInt(character.z);
+      writePosition3(character);
       writeByte((((character.health / character.maxHealth) * 24).toInt() * 10) + character.animationFrame);
 
       if (CharacterType.supportsUpperBody(character.characterType)) {

@@ -364,11 +364,8 @@ class ServerResponseReader with ByteReader {
 
       final character = GameState.getCharacterInstance();
       character.characterType = characterType;
-      // readCharacter(character);
-      _parseCharacterTeamDirectionState(character);
-      character.x = readDouble();
-      character.y = readDouble();
-      character.z = readDouble();
+      readTeamDirectionState(character);
+      readVector3(character);
       _parseCharacterFrameHealth(character, readByte());
 
       if (CharacterType.supportsUpperBody(characterType)){
@@ -377,70 +374,7 @@ class ServerResponseReader with ByteReader {
         character.weaponFrame = readByte();
       }
       GameState.totalCharacters++;
-
-      // switch (characterType) {
-      //   case CharacterType.Template:
-      //     readCharacterTemplate();
-      //     continue;
-      //   case CharacterType.Slime:
-      //     readCharacterSlime();
-      //     continue;
-      //   case CharacterType.Rat:
-      //     readCharacterRat();
-      //     continue;
-      //   case CharacterType.Zombie:
-      //     readCharacterZombie();
-      //     continue;
-      // }
     }
-  }
-
-  // void readCharacterRat() {
-  //   final character = GameState.getCharacterInstance();
-  //   character.characterType = CharacterType.Rat;
-  //   readCharacter(character);
-  //   GameState.totalCharacters++;
-  // }
-
-  // void readCharacterZombie() {
-  //   final character = GameState.getCharacterInstance();
-  //   character.characterType = CharacterType.Zombie;
-  //   readCharacter(character);
-  //   GameState.totalCharacters++;
-  // }
-
-  // void readCharacterSlime() {
-  //   final character = GameState.getCharacterInstance();
-  //   character.characterType = CharacterType.Slime;
-  //   readCharacter(character);
-  //   GameState.totalCharacters++;
-  // }
-
-  // void readCharacterTemplate() {
-  //   final character = GameState.getCharacterInstance();
-  //   character.characterType = CharacterType.Template;
-  //   readCharacter(character);
-  //   readCharacterEquipment(character);
-  //   character.lookRadian = readAngle();
-  //   character.weaponFrame = readByte();
-  //   GameState.totalCharacters++;
-  // }
-
-  void readCharacterPlayer(){
-    final character = GameState.getCharacterInstance();
-    final teamDirectionState = readByte();
-    character.characterType = CharacterType.Template;
-    readTeamDirectionState(character, teamDirectionState);
-    character.x = readDouble();
-    character.y = readDouble();
-    character.z = readDouble();
-    _parseCharacterFrameHealth(character, readByte());
-    readCharacterEquipment(character);
-    character.name = readString();
-    character.text = readString();
-    character.lookRadian = readAngle();
-    character.weaponFrame = readByte();
-    GameState.totalCharacters++;
   }
 
   void readPlayerQuests() {
@@ -633,43 +567,11 @@ class ServerResponseReader with ByteReader {
     }
   }
 
-  void _parseCharacterTeamDirectionState(Character character){
-    readTeamDirectionState(character, readByte());
-  }
-
-  void readTeamDirectionState(Character character, int byte){
+  void readTeamDirectionState(Character character){
+    final byte = readByte();
     character.allie = byte >= 100;
     character.direction = ((byte % 100) ~/ 10);
     character.state = byte % 10;
-  }
-
-  void readNpcs() {
-    GameState.totalNpcs = 0;
-    var npcLength = GameState.npcs.length;
-    while (true) {
-      final stateInt = readByte();
-      if (stateInt == END) break;
-      if (GameState.totalNpcs >= npcLength){
-        GameState.npcs.add(Character());
-        npcLength++;
-      }
-      final npc = GameState.npcs[GameState.totalNpcs];
-      readTeamDirectionState(npc, stateInt);
-      npc.x = readDouble();
-      npc.y = readDouble();
-      npc.z = readDouble();
-      _parseCharacterFrameHealth(npc, readByte());
-      readCharacterEquipment(npc);
-      GameState.totalNpcs++;
-    }
-  }
-
-  void readCharacter(Character character){
-     _parseCharacterTeamDirectionState(character);
-     character.x = readDouble();
-     character.y = readDouble();
-     character.z = readDouble();
-     _parseCharacterFrameHealth(character, readByte());
   }
 
   void readCharacterEquipment(Character character){
