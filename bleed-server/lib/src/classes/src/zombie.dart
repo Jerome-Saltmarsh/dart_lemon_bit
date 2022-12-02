@@ -4,14 +4,15 @@ import 'package:bleed_server/gamestream.dart';
 
 class Zombie extends AI {
   Zombie({
-    required double x,
-    required double y,
-    required double z,
     required int health,
     required int damage,
     required int team,
     double wanderRadius = 100,
+    double x = 0,
+    double y = 0,
+    double z = 0,
   }) : super(
+      characterType: CharacterType.Zombie,
       x: x,
       y: y,
       z: z,
@@ -23,11 +24,11 @@ class Zombie extends AI {
       speed: 3.0,
   );
 
-  @override
-  void write(Player player) {
-    player.writeZombie(this);
-  }
-
-  @override
-  int get type => CharacterType.Zombie;
+  // @override
+  // void write(Player player) {
+  //   player.writeCharacterZombie(this);
+  // }
+  //
+  // @override
+  // int get type => CharacterType.Zombie;
 }

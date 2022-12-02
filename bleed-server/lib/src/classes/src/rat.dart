@@ -11,6 +11,7 @@ class Rat extends AI {
     int health = 3,
     int damage = 1,
   }) : super(
+      characterType: CharacterType.Rat,
       x: 0,
       y: 0,
       z: 0,
@@ -31,11 +32,11 @@ class Rat extends AI {
     destY = y;
   }
 
-  @override
-  void write(Player player){
-      player.writeRat(this);
-  }
+  // @override
+  // void write(Player player){
+  //     player.writeCharacterRat(this);
+  // }
 
-  @override
-  int get type => CharacterType.Rat;
+  // @override
+  // int get type => CharacterType.Rat;
 }

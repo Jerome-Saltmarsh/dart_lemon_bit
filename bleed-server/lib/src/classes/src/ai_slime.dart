@@ -10,6 +10,7 @@ class AISlime extends AI {
     required int health,
     required int team,
   }) : super(
+      characterType: CharacterType.Slime,
       x: x,
       y: y,
       z: z,
@@ -20,12 +21,12 @@ class AISlime extends AI {
       speed: 3.0,
   );
 
-  @override
-  void write(Player player) {
-    player.writeByte(ServerResponse.Character_Slime);
-    player.writeCharacter(player, this);
-  }
+  // @override
+  // void write(Player player) {
+  //   player.writeByte(ServerResponse.Character_Slime);
+  //   player.writeCharacter(player, this);
+  // }
 
-  @override
-  int get type => CharacterType.Slime;
+  // @override
+  // int get type => CharacterType.Slime;
 }

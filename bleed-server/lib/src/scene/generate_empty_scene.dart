@@ -23,5 +23,6 @@ Scene generateEmptyScene({int height = 8, int rows = 50, int columns = 50}){
     nodeTypes: nodeTypes,
     nodeOrientations: nodeOrientations,
     spawnPoints: Uint16List(0),
+    spawnPointTypes: Uint16List(0),
   );
 }

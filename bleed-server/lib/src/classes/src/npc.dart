@@ -19,6 +19,7 @@ class Npc extends AI {
       int damage = 1,
   })
       : super(
+            characterType: CharacterType.Template,
             x: x,
             y: y,
             z: z,
@@ -30,11 +31,10 @@ class Npc extends AI {
             speed: speed,
   );
 
-  @override
-  void write(Player player) {
-    player.writeNpc(player, this);
-  }
-
-  @override
-  int get type => CharacterType.Template;
+  // @override
+  // void write(Player player) {
+  //   player.writeCharacterTemplate(player, this);
+  // }
+  // @override
+  // int get type => CharacterType.Template;
 }

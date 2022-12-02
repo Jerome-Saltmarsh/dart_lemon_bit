@@ -38,7 +38,6 @@ class Player extends Character with ByteWriter {
   var screenBottom = 0.0;
   var sceneDownloaded = false;
   var initialized = false;
-  var lookRadian = 0.0;
 
   var inventoryDirty = false;
   var _equippedWeaponIndex = 0;
@@ -388,6 +387,7 @@ class Player extends Character with ByteWriter {
     int magic = 10,
     int health = 10,
   }) : super(
+            characterType: CharacterType.Template,
             x: 0,
             y: 0,
             z: 0,
@@ -953,13 +953,13 @@ class Player extends Character with ByteWriter {
     writeBool(debug);
   }
 
-  @override
-  void write(Player player) {
-    player.writePlayer(this);
-  }
+  // @override
+  // void write(Player player) {
+  //   player.writePlayer(this);
+  // }
 
-  @override
-  int get type => CharacterType.Template;
+  // @override
+  // int get type => CharacterType.Template;
 
   void writePlayerDebug(){
     writeByte(state);
@@ -1112,7 +1112,28 @@ class Player extends Character with ByteWriter {
       if (character.renderX < screenLeft) continue;
       if (character.renderX > screenRight) continue;
       if (character.renderY > screenBottom) return;
-      character.write(this);
+      // character.write(this);
+
+      // if (character is Player) {
+      //   writePlayer(character);
+      //   continue;
+      // }
+
+      switch (character.characterType){
+        case CharacterType.Zombie:
+          writeCharacterZombie(character);
+          break;
+        case CharacterType.Rat:
+          writeCharacterRat(character);
+          break;
+        case CharacterType.Slime:
+          writeCharacterSlime(character);
+          break;
+        case CharacterType.Template:
+          writeCharacterTemplate(character);
+          break;
+
+      }
     }
   }
 
@@ -1186,7 +1207,7 @@ class Player extends Character with ByteWriter {
     if (aimTarget is Character) {
       writeByte(ServerResponse.Player);
       writeByte(ApiPlayer.Aim_Target_Type);
-      writeUInt16((aimTarget as Character).type);
+      writeUInt16((aimTarget as Character).characterType);
     }
   }
 
@@ -1254,13 +1275,18 @@ class Player extends Character with ByteWriter {
     projectiles.forEach(writeProjectile);
   }
 
-  void writeZombie(Zombie zombie){
+  void writeCharacterZombie(Character zombie){
     writeByte(ServerResponse.Character_Zombie);
     writeCharacter(this, zombie);
   }
 
-  void writeRat(Rat rat){
+  void writeCharacterRat(Character rat){
     writeByte(ServerResponse.Character_Rat);
+    writeCharacter(this, rat);
+  }
+
+  void writeCharacterSlime(Character rat){
+    writeByte(ServerResponse.Character_Slime);
     writeCharacter(this, rat);
   }
 
@@ -1363,10 +1389,12 @@ class Player extends Character with ByteWriter {
     writeByte(player.weaponFrame);
   }
 
-  void writeNpc(Player player, Character npc) {
+  void writeCharacterTemplate(Character character) {
     writeByte(ServerResponse.Character_Template);
-    writeCharacter(player, npc);
-    writeCharacterEquipment(npc);
+    writeCharacter(this, character);
+    writeCharacterEquipment(character);
+    writeAngle(character.lookRadian);
+    writeByte(character.weaponFrame);
   }
 
   void writeCharacter(Player player, Character character) {

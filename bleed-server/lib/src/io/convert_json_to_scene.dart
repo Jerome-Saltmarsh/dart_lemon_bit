@@ -39,7 +39,8 @@ Scene convertJsonToScene(Json json, String name) {
     gridHeight: height,
     gridColumns: columns,
     gameObjects: jsonGameObjects.map(convertDynamicToGameObject).toList(),
-    spawnPoints: spawnNodes
+    spawnPoints: spawnNodes,
+    spawnPointTypes: Uint16List(spawnNodes.length),
   );
 }
 

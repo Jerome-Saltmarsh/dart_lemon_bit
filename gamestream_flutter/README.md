@@ -54,9 +54,11 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] character goblin
 [ ] character vampire
 [ ] character wolf
-[ ] item helmet counterstrike
-[ ] item body kevlar
-[ ] item legs kevlar
+[ ] ai mode pause
+[ ] ai mode chase
+[ ] ai mode circle
+[ ] ai mode wander
+[ ] ai mode evade
 
 02.12.2022
 [x] fix player stats window
@@ -242,8 +244,16 @@ Earth is invaded by an alien race.
 The alien's spread a virus which turns the dead into zombies which the aliens control.
 
 
+#PROJECT GOAL
+The project goal of december is two add a variety of different enemy types.
+
+Each enemy type not only has a different design but also a different AI.
+
+This makes enemies multi dimensional
 
 #DESIGN
+
+
 HUNTER
 Players spawn around different parts of the game world. 
 

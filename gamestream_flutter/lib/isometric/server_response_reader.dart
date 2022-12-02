@@ -383,6 +383,8 @@ class ServerResponseReader with ByteReader {
     character.characterType = CharacterType.Template;
     readCharacter(character);
     readCharacterEquipment(character);
+    character.lookRadian = readAngle();
+    character.weaponFrame = readByte();
     GameState.totalCharacters++;
   }
 

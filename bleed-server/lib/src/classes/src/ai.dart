@@ -31,6 +31,7 @@ abstract class AI extends Character {
   }
 
   AI({
+    required int characterType,
     required double x,
     required double y,
     required double z,
@@ -41,6 +42,7 @@ abstract class AI extends Character {
     required double speed,
     this.wanderRadius = 0,
   }): super(
+      characterType: characterType,
       x: x,
       y: y,
       z: z,

@@ -572,7 +572,7 @@ abstract class Game {
         z: character.z,
         angle: character.velocityAngle,
       );
-      player.writeByte(character.type);
+      player.writeByte(character.characterType);
     }
   }
 
@@ -827,7 +827,7 @@ abstract class Game {
         z: character.z,
         angle: targetVelocityAngle,
       );
-      player.writeByte(character.type);
+      player.writeByte(character.characterType);
     }
   }
 
@@ -1681,6 +1681,24 @@ abstract class Game {
     return projectile;
   }
 
+  void spawnAtIndexTriangles({
+    required int index,
+    int total = 2,
+    int health = 10,
+    int damage = 1,
+    int team = TeamType.Evil,
+  }) {
+    for (var j = 0; j < total; j++) {
+      spawnAtIndexZombie(
+        index: index,
+        health: health,
+        damage: damage,
+        team: team,
+      );
+    }
+  }
+
+
   void spawnAtIndexZombies({
     required int index,
     int total = 2,
@@ -1698,35 +1716,54 @@ abstract class Game {
     }
   }
 
+  void moveToIndex(Position3 position, int index){
+    position.x = scene.convertNodeIndexToRow(index) * Node_Size;
+    position.y = scene.convertNodeIndexToColumn(index) * Node_Size;
+    position.z = scene.convertNodeIndexToZ(index) * Node_Height;
+  }
+
   Zombie spawnAtIndexZombie({
     required int index,
     int health = 10,
     int damage = 1,
     int team = TeamType.Evil,
   }) {
+    if (index < 0) throw Exception('index < 0');
     if (index >= scene.gridVolume) {
       throw Exception('game.spawnZombieAtIndex($index) \ni >= scene.gridVolume');
     }
-
-    final indexZ = scene.convertNodeIndexToZ(index);
-    final indexRow = scene.convertNodeIndexToRow(index);
-    final indexColumn = scene.convertNodeIndexToColumn(index);
-    final posX = indexRow * Node_Size;
-    final posY = indexColumn * Node_Size;
-    final posZ = indexZ * Node_Height;
-
     final instance = Zombie(
-      x: posX,
-      y: posY,
-      z: posZ,
       health: health,
       damage: damage,
       team: team,
     );
+    moveToIndex(instance, index);
     characters.add(instance);
     instance.spawnNodeIndex = index;
     return instance;
   }
+
+  AI spawnAtIndexTriangle({
+    required int index,
+    int health = 10,
+    int damage = 1,
+    int team = TeamType.Evil,
+  }) {
+    if (index < 0) throw Exception('index < 0');
+    if (index >= scene.gridVolume) {
+      throw Exception('game.spawnZombieAtIndex($index) \ni >= scene.gridVolume');
+    }
+    final instance = Zombie(
+      health: health,
+      damage: damage,
+      team: team,
+    );
+    moveToIndex(instance, index);
+    characters.add(instance);
+    instance.spawnNodeIndex = index;
+    return instance;
+  }
+
 
   GameObject spawnGameObjectAtIndex({required int index, required int type}){
     final instance = GameObject(
@@ -1910,7 +1947,7 @@ abstract class Game {
         z: ai.z,
         angle: 0,
       );
-      player.writeByte(ai.type);
+      player.writeByte(ai.characterType);
     }
   }
 

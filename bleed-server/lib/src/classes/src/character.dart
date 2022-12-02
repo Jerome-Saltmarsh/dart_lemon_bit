@@ -28,6 +28,8 @@ abstract class Character extends Collider {
   var performX = 0.0;
   var performY = 0.0;
   var performZ = 0.0;
+  var characterType = 0;
+  var lookRadian = 0.0;
 
   /// PROPERTIES
   bool get dead => state == CharacterState.Dead;
@@ -80,7 +82,6 @@ abstract class Character extends Collider {
   int get weaponFrame => weaponStateDurationTotal - weaponStateDuration;
   int get faceDirection => Direction.fromRadian(_faceAngle);
   int get health => _health;
-  int get type;
   int get maxHealth => _maxHealth;
   int get weaponTypeCooldown => ItemType.getCooldown(weaponType);
   int get equippedAttackDuration => 25;
@@ -154,9 +155,10 @@ abstract class Character extends Collider {
     weaponStateDuration = weaponStateDurationTotal;
   }
 
-  void write(Player player);
+  // void write(Player player);
 
     Character({
+    required this.characterType,
     required double x,
     required double y,
     required double z,
