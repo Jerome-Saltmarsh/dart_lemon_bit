@@ -32,11 +32,6 @@ class ServerResponse {
   static const Player_Quests = 84;
   static const Map_Coordinate = 85;
   static const Interacting_Npc_Name = 86;
-  static const Character_Rat = 87;
-  static const Character_Zombie = 88;
-  static const Character_Template = 89;
-  static const Character_Player = 90;
-  static const Character_Slime = 91;
   static const Characters = 92;
   static const Editor_GameObject_Selected = 101;
   static const Player_Can_Teleport = 102;

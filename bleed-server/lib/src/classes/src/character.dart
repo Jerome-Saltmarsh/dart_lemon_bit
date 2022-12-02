@@ -32,6 +32,7 @@ abstract class Character extends Collider {
 
   /// PROPERTIES
   bool get characterTypeZombie => characterType == CharacterType.Zombie;
+  bool get characterTypeTemplate => characterType == CharacterType.Template;
   bool get dead => state == CharacterState.Dead;
   bool get dying => state == CharacterState.Dying;
   bool get alive => !deadOrDying;

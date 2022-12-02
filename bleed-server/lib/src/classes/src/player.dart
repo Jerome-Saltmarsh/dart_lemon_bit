@@ -1100,21 +1100,15 @@ class Player extends Character with ByteWriter {
       }
 
       writeByte(character.characterType);
+      writeByte((Collider.onSameTeam(this, character) ? 100 : 0) + (character.faceDirection * 10) + character.state); // 1
+      writePosition(character);
+      writeInt(character.z);
+      writeByte((((character.health / character.maxHealth) * 24).toInt() * 10) + character.animationFrame);
 
-      switch (character.characterType){
-        case CharacterType.Zombie:
-          writeCharacterZombie(character);
-          break;
-        case CharacterType.Rat:
-          writeCharacterRat(character);
-          break;
-        case CharacterType.Slime:
-          writeCharacterSlime(character);
-          break;
-        case CharacterType.Template:
-          writeCharacterTemplate(character);
-          break;
-
+      if (character.characterTypeTemplate) {
+        writeCharacterEquipment(character);
+        writeAngle(character.lookRadian);
+        writeByte(character.weaponFrame);
       }
     }
     writeByte(END);
@@ -1258,20 +1252,20 @@ class Player extends Character with ByteWriter {
     projectiles.forEach(writeProjectile);
   }
 
-  void writeCharacterZombie(Character zombie){
-    // writeByte(ServerResponse.Character_Zombie);
-    writeCharacter(this, zombie);
-  }
+  // void writeCharacterZombie(Character zombie){
+  //   // writeByte(ServerResponse.Character_Zombie);
+  //   writeCharacter(this, zombie);
+  // }
 
-  void writeCharacterRat(Character rat){
-    // writeByte(ServerResponse.Character_Rat);
-    writeCharacter(this, rat);
-  }
+  // void writeCharacterRat(Character rat){
+  //   // writeByte(ServerResponse.Character_Rat);
+  //   writeCharacter(this, rat);
+  // }
 
-  void writeCharacterSlime(Character rat){
-    // writeByte(ServerResponse.Character_Slime);
-    writeCharacter(this, rat);
-  }
+  // void writeCharacterSlime(Character rat){
+  //   // writeByte(ServerResponse.Character_Slime);
+  //   writeCharacter(this, rat);
+  // }
 
   void writeGameEvent({
     required int type,
@@ -1372,20 +1366,19 @@ class Player extends Character with ByteWriter {
   //   writeByte(player.weaponFrame);
   // }
 
-  void writeCharacterTemplate(Character character) {
-    // writeByte(ServerResponse.Character_Template);
-    writeCharacter(this, character);
-    writeCharacterEquipment(character);
-    writeAngle(character.lookRadian);
-    writeByte(character.weaponFrame);
-  }
+  // void writeCharacterTemplate(Character character) {
+  //   // writeByte(ServerResponse.Character_Template);
+  //   writeCharacterEquipment(character);
+  //   writeAngle(character.lookRadian);
+  //   writeByte(character.weaponFrame);
+  // }
 
-  void writeCharacter(Player player, Character character) {
-    writeByte((Collider.onSameTeam(player, character) ? 100 : 0) + (character.faceDirection * 10) + character.state); // 1
-    writePosition(character);
-    writeInt(character.z);
-    writeByte((((character.health / character.maxHealth) * 24).toInt() * 10) + character.animationFrame);
-  }
+  // void writeCharacter(Player player, Character character) {
+  //   writeByte((Collider.onSameTeam(player, character) ? 100 : 0) + (character.faceDirection * 10) + character.state); // 1
+  //   writePosition(character);
+  //   writeInt(character.z);
+  //   writeByte((((character.health / character.maxHealth) * 24).toInt() * 10) + character.animationFrame);
+  // }
 
   void writeCharacterEquipment(Character character) {
     assert (ItemType.isTypeWeapon(character.weaponType) || character.weaponType == ItemType.Empty);
