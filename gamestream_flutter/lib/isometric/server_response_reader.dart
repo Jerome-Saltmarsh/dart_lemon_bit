@@ -103,9 +103,6 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Map_Coordinate:
           readMapCoordinate();
           break;
-        case ServerResponse.Interacting_Npc_Name:
-          readInteractingNpcName();
-          break;
         case ServerResponse.Editor_GameObject_Selected:
           readEditorGameObjectSelected();
           break;
@@ -365,53 +362,69 @@ class ServerResponseReader with ByteReader {
       final characterType = readByte();
       if (characterType == END) return;
 
-      switch (characterType) {
-        case CharacterType.Template:
-          readCharacterTemplate();
-          continue;
-        case CharacterType.Slime:
-          readCharacterSlime();
-          continue;
-        case CharacterType.Rat:
-          readCharacterRat();
-          continue;
-        case CharacterType.Zombie:
-          readCharacterZombie();
-          continue;
+      final character = GameState.getCharacterInstance();
+      character.characterType = characterType;
+      // readCharacter(character);
+      _parseCharacterTeamDirectionState(character);
+      character.x = readDouble();
+      character.y = readDouble();
+      character.z = readDouble();
+      _parseCharacterFrameHealth(character, readByte());
+
+      if (CharacterType.supportsUpperBody(characterType)){
+        readCharacterEquipment(character);
+        character.lookRadian = readAngle();
+        character.weaponFrame = readByte();
       }
+      GameState.totalCharacters++;
+
+      // switch (characterType) {
+      //   case CharacterType.Template:
+      //     readCharacterTemplate();
+      //     continue;
+      //   case CharacterType.Slime:
+      //     readCharacterSlime();
+      //     continue;
+      //   case CharacterType.Rat:
+      //     readCharacterRat();
+      //     continue;
+      //   case CharacterType.Zombie:
+      //     readCharacterZombie();
+      //     continue;
+      // }
     }
   }
 
-  void readCharacterRat() {
-    final character = GameState.getCharacterInstance();
-    character.characterType = CharacterType.Rat;
-    readCharacter(character);
-    GameState.totalCharacters++;
-  }
+  // void readCharacterRat() {
+  //   final character = GameState.getCharacterInstance();
+  //   character.characterType = CharacterType.Rat;
+  //   readCharacter(character);
+  //   GameState.totalCharacters++;
+  // }
 
-  void readCharacterZombie() {
-    final character = GameState.getCharacterInstance();
-    character.characterType = CharacterType.Zombie;
-    readCharacter(character);
-    GameState.totalCharacters++;
-  }
+  // void readCharacterZombie() {
+  //   final character = GameState.getCharacterInstance();
+  //   character.characterType = CharacterType.Zombie;
+  //   readCharacter(character);
+  //   GameState.totalCharacters++;
+  // }
 
-  void readCharacterSlime() {
-    final character = GameState.getCharacterInstance();
-    character.characterType = CharacterType.Slime;
-    readCharacter(character);
-    GameState.totalCharacters++;
-  }
+  // void readCharacterSlime() {
+  //   final character = GameState.getCharacterInstance();
+  //   character.characterType = CharacterType.Slime;
+  //   readCharacter(character);
+  //   GameState.totalCharacters++;
+  // }
 
-  void readCharacterTemplate() {
-    final character = GameState.getCharacterInstance();
-    character.characterType = CharacterType.Template;
-    readCharacter(character);
-    readCharacterEquipment(character);
-    character.lookRadian = readAngle();
-    character.weaponFrame = readByte();
-    GameState.totalCharacters++;
-  }
+  // void readCharacterTemplate() {
+  //   final character = GameState.getCharacterInstance();
+  //   character.characterType = CharacterType.Template;
+  //   readCharacter(character);
+  //   readCharacterEquipment(character);
+  //   character.lookRadian = readAngle();
+  //   character.weaponFrame = readByte();
+  //   GameState.totalCharacters++;
+  // }
 
   void readCharacterPlayer(){
     final character = GameState.getCharacterInstance();
@@ -428,10 +441,6 @@ class ServerResponseReader with ByteReader {
     character.lookRadian = readAngle();
     character.weaponFrame = readByte();
     GameState.totalCharacters++;
-  }
-
-  void readInteractingNpcName() {
-   GameState.player.interactingNpcName.value = readString();
   }
 
   void readPlayerQuests() {

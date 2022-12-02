@@ -1199,7 +1199,6 @@ abstract class Game {
           final onInteractedWith = target.onInteractedWith;
           if (onInteractedWith != null) {
             player.interactMode = InteractMode.Talking;
-            player.setInteractingNpcName(target.name);
             onInteractedWith(player);
           }
           clearCharacterTarget(player);

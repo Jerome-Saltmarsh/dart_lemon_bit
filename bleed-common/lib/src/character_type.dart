@@ -15,4 +15,8 @@ class CharacterType {
           Wolf: 4.0,
           Triangle: 3.5,
        }[value] ?? 2.0;
+
+   static bool supportsUpperBody(int characterType) {
+     return characterType == Template;
+   }
 }

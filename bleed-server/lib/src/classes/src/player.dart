@@ -76,7 +76,6 @@ class Player extends Character with ByteWriter {
   final flags = <Flag>[];
   var options = <String, Function> {};
   var _interactMode = InteractMode.None;
-  var npcName = "";
   var mapX = 0;
   var mapY = 0;
 
@@ -326,12 +325,6 @@ class Player extends Character with ByteWriter {
     writePlayerEvent(PlayerEvent.Quest_Started);
   }
 
-  void setInteractingNpcName(String value){
-     this.npcName = value;
-     writeByte(ServerResponse.Interacting_Npc_Name);
-     writeString(value);
-  }
-
   void completeQuest(Quest quest){
     assert (questsInProgress.contains(quest));
     assert (!questsCompleted.contains(quest));
@@ -351,7 +344,6 @@ class Player extends Character with ByteWriter {
       options.clear();
     }
     interactMode = InteractMode.None;
-    npcName = "";
   }
 
   void interact({required String message, Map<String, Function>? responses}){
@@ -1105,7 +1097,7 @@ class Player extends Character with ByteWriter {
       writeInt(character.z);
       writeByte((((character.health / character.maxHealth) * 24).toInt() * 10) + character.animationFrame);
 
-      if (character.characterTypeTemplate) {
+      if (CharacterType.supportsUpperBody(character.characterType)) {
         writeCharacterEquipment(character);
         writeAngle(character.lookRadian);
         writeByte(character.weaponFrame);
