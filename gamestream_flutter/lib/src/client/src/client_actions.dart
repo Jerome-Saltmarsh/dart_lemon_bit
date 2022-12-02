@@ -91,4 +91,8 @@ class ClientActions {
       ClientState.nodesLightSourcesTotal++;
     }
   }
+
+  static void clearHoverDialogType() {
+    ClientState.hoverDialogType.value = DialogType.None;
+  }
 }

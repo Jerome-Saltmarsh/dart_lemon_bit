@@ -430,6 +430,7 @@ class GameEvents {
         break;
       case PlayerEvent.Spawn_Started:
         GameAudio.teleport();
+
         break;
       case PlayerEvent.Inventory_Item_Moved:
         GameAudio.switch_sounds_4();

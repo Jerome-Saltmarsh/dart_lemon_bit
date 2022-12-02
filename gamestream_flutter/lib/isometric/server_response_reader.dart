@@ -274,6 +274,7 @@ class ServerResponseReader with ByteReader {
        break;
       case ApiPlayer.Alive:
         GameState.player.alive.value = readBool();
+        ClientActions.clearHoverDialogType();
         break;
       case ApiPlayer.Spawned:
         GameCamera.centerOnPlayer();

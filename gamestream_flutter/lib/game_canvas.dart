@@ -18,13 +18,13 @@ class GameCanvas {
       renderCursor(canvas);
     }
 
-    if (ClientState.showAllItems) {
-       for (var i = 0; i < GameState.totalGameObjects; i++){
+    // if (ClientState.showAllItems) {
+       // for (var i = 0; i < GameState.totalGameObjects; i++){
          // final gameObject = GameState.gameObjects[i];
          // if (gameObject.type != GameObjectType.Item) continue;
          // renderForegroundText(gameObject, ItemType.getName(gameObject.subType));
-       }
-    }
+       // }
+    // }
 
     const style = TextStyle(color: Colors.white, fontSize: 18);
     switch (GamePlayer.aimTargetCategory) {

@@ -2221,11 +2221,11 @@ abstract class Game {
 
   static double getAngleBetweenV3(Position a, Position b) => getAngle(a.x - b.x, a.y - b.y);
 
-  void triggerSpawnPoints({int instances = 2}){
-    for (final index in scene.spawnPoints){
-      for (var i = 0; i < instances; i++){
+  void triggerSpawnPoints({int instances = 1}){
+    for (final index in scene.spawnPoints) {
+      for (var i = 0; i < instances; i++) {
         spawnAI(
-          characterType: CharacterType.Zombie,
+          characterType: CharacterType.Triangle,
           nodeIndex: index,
           damage: 10,
           team: TeamType.Evil,
