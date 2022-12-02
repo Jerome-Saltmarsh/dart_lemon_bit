@@ -1680,49 +1680,9 @@ abstract class Game {
     return projectile;
   }
 
-  void spawnAtIndexTriangles({
-    required int index,
-    int total = 2,
-    int health = 10,
-    int damage = 1,
-    int team = TeamType.Evil,
-  }) {
-    for (var j = 0; j < total; j++) {
-      spawnAI(
-        nodeIndex: index,
-        health: health,
-        damage: damage,
-        team: team,
-      );
-    }
-  }
-
-
-  void spawnAtIndexZombies({
-    required int index,
-    int total = 2,
-    int health = 10,
-    int damage = 1,
-    int team = TeamType.Evil,
-  }) {
-    for (var j = 0; j < total; j++) {
-      spawnAI(
-          nodeIndex: index,
-          health: health,
-          damage: damage,
-          team: team,
-      );
-    }
-  }
-
-  void moveToIndex(Position3 position, int index){
-    position.x = scene.convertNodeIndexToRow(index) * Node_Size;
-    position.y = scene.convertNodeIndexToColumn(index) * Node_Size;
-    position.z = scene.convertNodeIndexToZ(index) * Node_Height;
-  }
-
   AI spawnAI({
     required int nodeIndex,
+    required int characterType,
     int health = 10,
     int damage = 1,
     int team = TeamType.Evil,
@@ -1733,7 +1693,7 @@ abstract class Game {
     }
     final instance = AI(
       weaponType: ItemType.Empty,
-      characterType: CharacterType.Zombie,
+      characterType: characterType,
       health: health,
       damage: damage,
       team: team,
@@ -1746,30 +1706,36 @@ abstract class Game {
     return instance;
   }
 
-  AI spawnAIAtIndex({
-    required int index,
-    required int characterType,
-    int health = 10,
-    int damage = 1,
-    int team = TeamType.Evil,
-    int weaponType = ItemType.Empty,
-  }) {
-    if (index < 0) throw Exception('index < 0');
-    if (index >= scene.gridVolume) {
-      throw Exception('game.spawnZombieAtIndex($index) \ni >= scene.gridVolume');
-    }
-    final instance = AI(
-      characterType: characterType,
-      weaponType: weaponType,
-      health: health,
-      damage: damage,
-      team: team,
-    );
-    moveToIndex(instance, index);
-    characters.add(instance);
-    instance.spawnNodeIndex = index;
-    return instance;
+  void moveToIndex(Position3 position, int index){
+    position.x = scene.convertNodeIndexToRow(index) * Node_Size;
+    position.y = scene.convertNodeIndexToColumn(index) * Node_Size;
+    position.z = scene.convertNodeIndexToZ(index) * Node_Height;
   }
+
+  // AI spawnAIAtIndex({
+  //   required int index,
+  //   required int characterType,
+  //   int health = 10,
+  //   int damage = 1,
+  //   int team = TeamType.Evil,
+  //   int weaponType = ItemType.Empty,
+  // }) {
+  //   if (index < 0) throw Exception('index < 0');
+  //   if (index >= scene.gridVolume) {
+  //     throw Exception('game.spawnZombieAtIndex($index) \ni >= scene.gridVolume');
+  //   }
+  //   final instance = AI(
+  //     characterType: characterType,
+  //     weaponType: weaponType,
+  //     health: health,
+  //     damage: damage,
+  //     team: team,
+  //   );
+  //   moveToIndex(instance, index);
+  //   characters.add(instance);
+  //   instance.spawnNodeIndex = index;
+  //   return instance;
+  // }
 
 
   GameObject spawnGameObjectAtIndex({required int index, required int type}){
@@ -2257,13 +2223,15 @@ abstract class Game {
 
   void triggerSpawnPoints({int instances = 2}){
     for (final index in scene.spawnPoints){
-      spawnAtIndexZombies(
-          index: index,
-          total: instances,
+      for (var i = 0; i < instances; i++){
+        spawnAI(
+          characterType: CharacterType.Zombie,
+          nodeIndex: index,
           damage: 10,
           team: TeamType.Evil,
           health: 15,
-      );
+        );
+      }
     }
   }
 

@@ -7,14 +7,14 @@ import 'package:lemon_engine/engine.dart';
 class GameImages {
    static late Image pixel;
    static late Image minimap;
-   static late Image atlasNodes;
-   static late Image characters;
    static late Image projectiles;
    static late Image zombie;
    static late Image zombie_shadow;
    static late Image gameobjects;
    static late Image particles;
    static late Image template_shadow;
+   static late Image atlasNodes;
+   static late Image atlasCharacters;
    static late Image atlasIcons;
    static late Image atlasItems;
 
@@ -182,7 +182,7 @@ class GameImages {
    }
    
    static Future loadImages() async {
-      characters
+      atlasCharacters
       = await Engine.loadImageAsset('images/atlas-characters.png');
       zombie
       = await Engine.loadImageAsset('images/atlas-zombie.png');

@@ -38,7 +38,7 @@ class RenderCharacter {
         return;
       }
       Engine.renderSprite(
-        image: GameImages.characters,
+        image: GameImages.atlasCharacters,
         srcX: 513,
         srcY: (character.frame % 8) * 73.0,
         dstX: character.renderX,
@@ -62,7 +62,17 @@ class RenderCharacter {
       case CharacterType.Zombie:
         return RenderCharacter.renderCharacterZombie(character);
       case CharacterType.Triangle:
-        return RenderCharacter.renderCharacterZombie(character);
+        Engine.renderSpriteRotated(
+            image: GameImages.atlasCharacters,
+            srcX: 0,
+            srcY: 512,
+            srcWidth: 32,
+            srcHeight: 32,
+            dstX: character.renderX,
+            dstY: character.renderY,
+            rotation: character.angle,
+        );
+        return;
       default:
         throw Exception("Cannot render character type: ${character.characterType}");
     }

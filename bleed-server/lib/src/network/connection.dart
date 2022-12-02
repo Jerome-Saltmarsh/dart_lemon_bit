@@ -410,7 +410,10 @@ class Connection {
         if (spawnIndex == null) {
           return errorInvalidArg('spawn index required');
         }
-        game.spawnAI(nodeIndex: spawnIndex);
+        game.spawnAI(
+            nodeIndex: spawnIndex,
+            characterType: CharacterType.Zombie,
+        );
         break;
     }
 

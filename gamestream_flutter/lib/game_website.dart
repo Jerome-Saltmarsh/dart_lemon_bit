@@ -47,7 +47,7 @@ class GameWebsite {
         dstY: 100 + GameAnimation.animationFrameWaterHeight.toDouble(),
       );
       Engine.renderSprite(
-        image: GameImages.characters,
+        image: GameImages.atlasCharacters,
         srcX: 0,
         srcY: 0,
         srcWidth: 64,
