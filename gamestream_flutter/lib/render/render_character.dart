@@ -1,9 +1,72 @@
 import 'package:gamestream_flutter/isometric/render/render_character_health_bar.dart';
+import 'package:gamestream_flutter/isometric/render/render_character_rat.dart';
+import 'package:gamestream_flutter/isometric/render/render_character_slime.dart';
+import 'package:gamestream_flutter/isometric/render/render_character_template.dart';
 import 'package:gamestream_flutter/isometric/render/src_utils.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'dart:math';
 
 class RenderCharacter {
+
+  static void renderCharacter(Character character){
+    if (!GameQueries.isVisibleV3(character)) return;
+
+    if (character.spawning) {
+      if (character.characterType == CharacterType.Rat){
+        Engine.renderSprite(
+          image: GameImages.gameobjects,
+          srcX: 1920,
+          srcY: (character.frame % 8) * 43.0,
+          dstX: character.renderX,
+          dstY: character.renderY,
+          srcWidth: 64,
+          srcHeight: 43,
+          scale: 0.75,
+        );
+      }
+      if (character.characterType == CharacterType.Slime) {
+        Engine.renderSprite(
+          image: GameImages.gameobjects,
+          srcX: 3040,
+          srcY: (character.frame % 6) * 48.0,
+          dstX: character.renderX,
+          dstY: character.renderY,
+          srcWidth: 48,
+          srcHeight: 48,
+          scale: 0.75,
+        );
+        return;
+      }
+      Engine.renderSprite(
+        image: GameImages.characters,
+        srcX: 513,
+        srcY: (character.frame % 8) * 73.0,
+        dstX: character.renderX,
+        dstY: character.renderY,
+        srcWidth: 48,
+        srcHeight: 72,
+        anchorY: 0.61,
+        scale: 0.75,
+      );
+      return;
+    }
+
+    switch (character.characterType) {
+      case CharacterType.Template:
+        renderCharacterTemplate(character);
+        return;
+      case CharacterType.Slime:
+        return renderCharacterSlime(character);
+      case CharacterType.Rat:
+        return renderCharacterRat(character);
+      case CharacterType.Zombie:
+        return RenderCharacter.renderCharacterZombie(character);
+      case CharacterType.Triangle:
+        return RenderCharacter.renderCharacterZombie(character);
+      default:
+        throw Exception("Cannot render character type: ${character.characterType}");
+    }
+  }
 
   static void renderCharacterZombie(Character character) {
     final shade = GameState.getV3RenderShade(character);

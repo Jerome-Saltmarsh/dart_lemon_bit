@@ -4,7 +4,6 @@ import 'dart:ui' as ui;
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_gameobjects.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/render_node.dart';
 import 'package:gamestream_flutter/isometric/render/highlight_character_nearest_mouse.dart';
-import 'package:gamestream_flutter/isometric/render/renderCharacter.dart';
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 
 import 'library.dart';
@@ -111,7 +110,7 @@ class GameRender {
   }
 
   static void renderCurrentCharacter(){
-    renderCharacter(currentRenderCharacter);
+    RenderCharacter.renderCharacter(currentRenderCharacter);
   }
 
   static void updateCurrentCharacter() {
