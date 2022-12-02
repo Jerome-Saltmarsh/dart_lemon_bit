@@ -392,7 +392,6 @@ class Player extends Character with ByteWriter {
             y: 0,
             z: 0,
             health: health,
-            speed: 4.25,
             team: team,
             weaponType: weaponType,
             bodyType: ItemType.Body_Tunic_Padded,
@@ -1228,10 +1227,10 @@ class Player extends Character with ByteWriter {
       writeString((aimTarget as Player).name);
       return;
     }
-    if (aimTarget is Npc){
+    if (aimTarget is AI){
       writeByte(ServerResponse.Player);
       writeByte(ApiPlayer.Aim_Target_Name);
-      writeString((aimTarget as Npc).name);
+      writeString((aimTarget as AI).name);
       return;
     }
   }

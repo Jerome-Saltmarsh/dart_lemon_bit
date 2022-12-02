@@ -9,6 +9,7 @@ class AI extends Character {
 
   final pathX = Uint16List(AI_Path_Size);
   final pathY = Uint16List(AI_Path_Size);
+  final String name;
   var viewRange = 300.0;
   var chaseRange = 500.0;
   var pathIndex = 0;
@@ -22,6 +23,7 @@ class AI extends Character {
   var wanderPause = randomInt(300, 500);
   var wanderRadius = 0.0;
   var nextTeleport = randomInt(500, 1000);
+  Function(Player player)? onInteractedWith;
 
   bool get arrivedAtDest {
     const radius = 15;
@@ -36,11 +38,12 @@ class AI extends Character {
     required int weaponType,
     required int damage,
     required int team,
-    required double speed,
     this.wanderRadius = 0,
     double x = 0,
     double y = 0,
     double z = 0,
+    this.onInteractedWith,
+    this.name = "",
   }): super(
       characterType: characterType,
       x: x,
@@ -48,12 +51,10 @@ class AI extends Character {
       z: z,
       health: health,
       team: team,
-      speed: speed,
       weaponType: weaponType,
       headType: ItemType.Head_Wizards_Hat,
       bodyType: ItemType.Body_Tunic_Padded,
       damage: damage,
-
   ) {
     clearDest();
     spawnX = x;

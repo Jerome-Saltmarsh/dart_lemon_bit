@@ -165,7 +165,6 @@ abstract class Character extends Collider {
     required this.weaponType,
     required int team,
     required int damage,
-    double speed = 5.0,
     double x = 0,
     double y = 0,
     double z = 0,

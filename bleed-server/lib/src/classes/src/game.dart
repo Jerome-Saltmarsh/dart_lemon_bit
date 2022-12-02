@@ -1191,7 +1191,7 @@ abstract class Game {
         return;
       }
 
-      if (target is Npc && player.targetIsAlly) {
+      if (target is AI && player.targetIsAlly) {
         if (player.withinRadius(target, 100)) {
           if (!target.deadOrBusy) {
             target.face(player);
@@ -1738,7 +1738,6 @@ abstract class Game {
       health: health,
       damage: damage,
       team: team,
-      speed: CharacterType.getSpeed(CharacterType.Zombie),
     );
     moveToIndex(instance, nodeIndex);
     instance.clearDest();
@@ -1766,7 +1765,6 @@ abstract class Game {
       health: health,
       damage: damage,
       team: team,
-      speed: CharacterType.getSpeed(characterType),
     );
     moveToIndex(instance, index);
     characters.add(instance);
@@ -2101,7 +2099,7 @@ abstract class Game {
     }
   }
 
-  Npc addNpc({
+  AI addNpc({
     required String name,
     required int row,
     required int column,
@@ -2117,7 +2115,8 @@ abstract class Game {
     double wanderRadius = 0,
     int damage = 1,
   }) {
-    final npc = Npc(
+    final npc = AI(
+      characterType: CharacterType.Template,
       name: name,
       onInteractedWith: onInteractedWith,
       x: 0,
@@ -2128,7 +2127,6 @@ abstract class Game {
       health: health,
       wanderRadius: wanderRadius,
       damage: damage,
-      speed: speed,
     );
     npc.headType = headType;
     npc.bodyType = armour;
