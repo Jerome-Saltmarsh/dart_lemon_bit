@@ -5,7 +5,7 @@ import '../../constants/frames_per_second.dart';
 import '../dark_age_scenes.dart';
 import 'dark_age_area.dart';
 
-class DarkAgeDungeon1 extends DarkAgeAreaUnderground {
+class DarkAgeDungeon1 extends DarkAgeArea {
   DarkAgeDungeon1() : super(darkAgeScenes.dungeon_1, mapTile: 0);
 
   @override
@@ -20,4 +20,7 @@ class DarkAgeDungeon1 extends DarkAgeAreaUnderground {
       // );
     }
   }
+
+  @override
+  int get areaType => AreaType.None;
 }

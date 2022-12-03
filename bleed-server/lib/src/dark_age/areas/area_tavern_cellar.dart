@@ -4,7 +4,7 @@ import 'package:bleed_server/gamestream.dart';
 import '../dark_age_scenes.dart';
 import 'dark_age_area.dart';
 
-class AreaTavernCellar extends DarkAgeAreaUnderground {
+class AreaTavernCellar extends DarkAgeArea {
   AreaTavernCellar() : super(darkAgeScenes.tavernCellar, mapTile: MapTiles.Village) {
 
     // characters.add(Rat(z: 1, row: 13, column: 20, game: this)..wanderRadius = 50);
@@ -13,6 +13,10 @@ class AreaTavernCellar extends DarkAgeAreaUnderground {
     // characters.add(Rat(z: 1, row: 3, column: 11, game: this)..wanderRadius = 50);
     // characters.add(Rat(z: 1, row: 3, column: 12, game: this)..wanderRadius = 50);
   }
+
+  @override
+  // TODO: implement areaType
+  int get areaType => throw UnimplementedError();
   //
   // @override
   // void checkPlayerPosition(Player player, int z, int row, int column) {

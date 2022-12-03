@@ -56,12 +56,12 @@ abstract class DarkAgeArea extends GameDarkAge {
   }
 }
 
-class DarkAgeAreaUnderground extends GameDarkAge {
-
-  @override
-  bool get customPropMapVisible => false;
-
-  var mapTile = 0;
-  DarkAgeAreaUnderground(Scene scene, {required this.mapTile})
-      : super(scene, engine.environmentUnderground);
-}
+// class DarkAgeAreaUnderground extends GameDarkAge {
+//
+//   @override
+//   bool get customPropMapVisible => false;
+//
+//   var mapTile = 0;
+//   DarkAgeAreaUnderground(Scene scene, {required this.mapTile})
+//       : super(scene, engine.environmentUnderground);
+// }

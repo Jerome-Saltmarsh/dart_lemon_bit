@@ -1,8 +1,10 @@
 
+import 'package:bleed_server/common/src/area_type.dart';
+
 import '../dark_age_scenes.dart';
 import 'dark_age_area.dart';
 
-class GameDarkAgeFortressDungeon extends DarkAgeAreaUnderground {
+class GameDarkAgeFortressDungeon extends DarkAgeArea {
   GameDarkAgeFortressDungeon() : super(darkAgeScenes.darkFortressDungeon, mapTile: -1) {
 
   }
@@ -10,4 +12,7 @@ class GameDarkAgeFortressDungeon extends DarkAgeAreaUnderground {
   @override
   void customUpdate() {
   }
+
+  @override
+  int get areaType => AreaType.None;
 }
