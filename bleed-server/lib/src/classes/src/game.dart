@@ -856,14 +856,12 @@ abstract class Game {
     for (var i = 0; i < numberOfCollidersMinusOne; i++) {
       final colliderI = colliders[i];
       if (!colliderI.collidable) continue;
-      final colliderIBottom = colliderI.bottom;
       for (var j = i + 1; j < numberOfColliders; j++) {
         final colliderJ = colliders[j];
         if (!colliderJ.collidable) continue;
-        if (colliderJ.top > colliderIBottom) break;
+        if (colliderJ.top > colliderI.bottom) break;
         if (colliderJ.left > colliderI.right) continue;
         if (colliderJ.right < colliderI.left) continue;
-        if (colliderJ.bottom < colliderI.top) continue;
         if ((colliderJ.z - colliderI.z).abs() > Node_Height) continue;
         internalOnCollisionBetweenColliders(colliderJ, colliderI);
       }
