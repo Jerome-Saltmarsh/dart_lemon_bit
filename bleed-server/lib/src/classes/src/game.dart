@@ -875,19 +875,19 @@ abstract class Game {
       ) {
     final aLength = collidersA.length;
     final bLength = collidersB.length;
-    for (var i = 0; i < aLength; i++) {
-      final a = collidersA[i];
-      if (!a.collidable) continue;
-      for (var j = 0; j < bLength; j++) {
-        final b = collidersB[j];
-        if (!b.collidable) continue;
-        if (a.bottom < b.top) continue;
-        if (a.top > b.bottom) continue;
-        if (a.right < b.left) continue;
-        if (a.left > b.right) continue;
-        if ((a.z - b.z).abs() > Node_Height) continue;
-        if (a == b) continue;
-        internalOnCollisionBetweenColliders(a, b);
+    for (var indexA = 0; indexA < aLength; indexA++) {
+      final colliderA = collidersA[indexA];
+      if (!colliderA.collidable) continue;
+      for (var indexB = 0; indexB < bLength; indexB++) {
+        final colliderB = collidersB[indexB];
+        if (!colliderB.collidable) continue;
+        if (colliderA.bottom < colliderB.top) break;
+        if (colliderA.top > colliderB.bottom) continue;
+        if (colliderA.right < colliderB.left) continue;
+        if (colliderA.left > colliderB.right) continue;
+        if ((colliderA.z - colliderB.z).abs() > Node_Height) continue;
+        if (colliderA == colliderB) continue;
+        internalOnCollisionBetweenColliders(colliderA, colliderB);
       }
     }
   }
