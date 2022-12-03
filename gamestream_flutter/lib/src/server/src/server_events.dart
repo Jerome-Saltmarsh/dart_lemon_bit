@@ -21,4 +21,12 @@ class ServerEvents {
       Engine.fullScreenEnter();
     }
   }
+
+  static void onChangedSceneUnderground(bool sceneUnderground){
+     if (sceneUnderground){
+       ClientState.torchesIgnited.value = true;
+     } else {
+       ClientState.torchesIgnited.value = Shade.fromHour(ServerState.hours.value) != Shade.Very_Bright;
+     }
+  }
 }

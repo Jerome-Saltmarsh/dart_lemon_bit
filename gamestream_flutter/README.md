@@ -51,6 +51,7 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] scene catacombs 
 [ ] catacombs cemetery entrance
 [ ] spawn-node character type
+[ ] fix editor export scene to json
 
 03.12.2022
 [x] max item quantity 

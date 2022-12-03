@@ -63,7 +63,7 @@ class ServerState {
   static var inventoryQuantity = Uint16List(0);
 
 
-  static final sceneUnderground = Watch(false);
+  static final sceneUnderground = Watch(false, onChanged: ServerEvents.onChangedSceneUnderground);
 }
 
 

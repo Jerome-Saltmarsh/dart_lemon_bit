@@ -107,10 +107,10 @@ class EditorUI {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 container(
-                    child: "SAVE",
+                    child: "DOWNLOAD",
                     action: GameEditor.actionGameDialogShowSceneSave),
                 container(
-                    child: "LOAD", action: GameEditor.editorLoadScene),
+                    child: "UPLOAD", action: GameEditor.editorLoadScene),
                 container(
                     child: "EDIT", action: EditorActions.toggleWindowEnabledScene),
                 height16,
@@ -159,6 +159,7 @@ class EditorUI {
                     ),
                   ),
                 ),
+                height8,
                 onPressed(
                   action: GameNetwork.sendClientRequestEditSceneSetFloorTypeStone,
                   child: Container(
@@ -166,7 +167,7 @@ class EditorUI {
                     padding: const EdgeInsets.all(5),
                     child: text("Set Floor Stone"),
                   ),
-                )
+                ),
               ],
             ),
          ),
