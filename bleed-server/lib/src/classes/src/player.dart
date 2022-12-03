@@ -1051,11 +1051,11 @@ class Player extends Character with ByteWriter {
 
     if (!initialized) {
       game.customInitPlayer(this);
+      game.customOnPlayerRevived(this);
       initialized = true;
       writePlayerPosition();
       writePlayerSpawned();
       writePlayerInventory();
-      // writePlayerEquippedWeaponAmmunition();
       writePlayerLevel();
       writePlayerExperiencePercentage();
       writePlayerBaseMaxHealth();
@@ -1080,6 +1080,12 @@ class Player extends Character with ByteWriter {
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Accuracy);
     writePercentage(accuracy);
+  }
+
+  void writePlayerSelectHero(bool value){
+    writeByte(ServerResponse.Player);
+    writeByte(ApiPlayer.Select_Hero);
+    writeBool(value);
   }
 
   void writeGameObjects(){
@@ -1689,6 +1695,7 @@ class Player extends Character with ByteWriter {
           accuracy += change;
       }
   }
+
 }
 
 int getExperienceForLevel(int level){

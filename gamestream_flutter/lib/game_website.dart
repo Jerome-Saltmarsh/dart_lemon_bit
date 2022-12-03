@@ -156,7 +156,7 @@ class GameWebsite {
       children: [
         buildTextButton("DARK-AGE", action: GameNetwork.connectToGameDarkAge),
         height24,
-        buildTextButton("QUICK-GAME", action: GameNetwork.connectToGameSkirmish),
+        buildTextButton("CASUAL", action: GameNetwork.connectToGameSkirmish),
         height24,
         buildTextButton("MAP-EDITOR", action: GameNetwork.connectToGameEditor),
       ],

@@ -25,21 +25,6 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Characters:
           readCharacters();
           break;
-        // case ServerResponse.Character_Rat:
-        //   readCharacterRat();
-        //   break;
-        // case ServerResponse.Character_Zombie:
-        //   readCharacterZombie();
-        //   break;
-        // case ServerResponse.Character_Template:
-        //   readCharacterTemplate();
-        //   break;
-        // case ServerResponse.Character_Player:
-        //   readCharacterPlayer();
-        //   break;
-        // case ServerResponse.Character_Slime:
-        //   readCharacterSlime();
-        //   break;
         case ServerResponse.GameObject:
           readGameObject();
           break;
@@ -299,6 +284,9 @@ class ServerResponseReader with ByteReader {
       case ApiPlayer.Perks:
         ServerState.playerPerkMaxHealth.value = readByte();
         ServerState.playerPerkMaxDamage.value = readByte();
+        break;
+      case ApiPlayer.Select_Hero:
+        ServerState.playerSelectHero.value = readBool();
         break;
       default:
         throw Exception("Cannot parse apiPlayer $apiPlayer");

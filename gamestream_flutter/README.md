@@ -52,6 +52,10 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] catacombs cemetery entrance
 [ ] spawn-node character type
 [ ] fix editor export scene to json
+[ ] game casual 
+[ ] game 5v5
+[ ] game royal
+[ ] game waves
 
 04.12.2022
 [x] editor fixed navigation icons
