@@ -25,34 +25,7 @@ class EditorUI {
         Positioned(
           left: 0,
           top: 50,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              container(
-                  child: 'Spawn Zombie',
-                  action: () {
-                    GameNetwork.sendClientRequestEdit(
-                        EditRequest.Spawn_Zombie,
-                        GameEditor.nodeSelectedIndex.value);
-                  }),
-              Container(
-                width: 100,
-                height: 100,
-                color: Colors.white,
-                child: Engine.buildAtlasImageButton(
-                    image: GameImages.gameobjects,
-                    srcX: AtlasGameObjects.Crystal_Large_X,
-                    srcY: AtlasGameObjects.Crystal_Large_Y,
-                    srcWidth: AtlasGameObjects.Crystal_Large_Width,
-                    srcHeight: AtlasGameObjects.Crystal_Large_Height,
-                    action: () =>
-                        GameNetwork.sendClientRequestAddGameObject(
-                          index: GameEditor.nodeSelectedIndex.value,
-                          type: ItemType.GameObjects_Crystal,
-                        )),
-              ),
-            ],
-          ),
+          child: buildColumnObjects(),
         ),
       if (activeEditTab == EditTab.Grid)
         Positioned(
@@ -117,34 +90,103 @@ class EditorUI {
             left: 0,
             child: Container(
               alignment: Alignment.center,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  container(
-                      child: "SAVE",
-                      action: GameEditor.actionGameDialogShowSceneSave),
-                  container(
-                      child: "LOAD", action: GameEditor.editorLoadScene),
-                  height16,
-                  text("MAP SIZE"),
-                  ...RequestModifyCanvasSize.values
-                      .map((e) => container(
-                      child: e.name,
-                      action: () =>
-                          GameNetwork.sendClientRequestModifyCanvasSize(
-                              e)))
-                      .toList(),
-                ],
-              ),
+              child: buildColumnFile(),
             )),
       Positioned(
         left: 0,
         top: 0,
         child: buildEditorMenu(activeEditTab),
       ),
+      buildWatchBool(EditorState.windowEnabledScene, buildWindowEditScene),
     ],
   );
+
+  static Column buildColumnFile() {
+    return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                container(
+                    child: "SAVE",
+                    action: GameEditor.actionGameDialogShowSceneSave),
+                container(
+                    child: "LOAD", action: GameEditor.editorLoadScene),
+                container(
+                    child: "EDIT", action: EditorActions.toggleWindowEnabledScene),
+                height16,
+                text("MAP SIZE"),
+                ...RequestModifyCanvasSize.values
+                    .map((e) => container(
+                    child: e.name,
+                    action: () =>
+                        GameNetwork.sendClientRequestModifyCanvasSize(
+                            e)))
+                    .toList(),
+              ],
+            );
+  }
+
+  static Widget buildWindowEditScene(){
+     return Center(
+       child: GameUI.buildDialogUIControl(
+         child: Container(
+            padding: const EdgeInsets.all(10),
+            width: 400,
+            height: 300,
+            color: GameColors.brownLight,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    text("Edit Scene"),
+                    text("Close", onPressed: EditorActions.toggleWindowEnabledScene),
+                  ],
+                ),
+                height16,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    text("Underground"),
+                    text("True"),
+                  ],
+                ),
+              ],
+            ),
+         ),
+       ),
+     );
+  }
+
+  static Widget buildColumnObjects() => Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            container(
+                child: 'Spawn Zombie',
+                action: () {
+                  GameNetwork.sendClientRequestEdit(
+                      EditRequest.Spawn_Zombie,
+                      GameEditor.nodeSelectedIndex.value);
+                }),
+            Container(
+              width: 100,
+              height: 100,
+              color: Colors.white,
+              child: Engine.buildAtlasImageButton(
+                  image: GameImages.gameobjects,
+                  srcX: AtlasGameObjects.Crystal_Large_X,
+                  srcY: AtlasGameObjects.Crystal_Large_Y,
+                  srcWidth: AtlasGameObjects.Crystal_Large_Width,
+                  srcHeight: AtlasGameObjects.Crystal_Large_Height,
+                  action: () =>
+                      GameNetwork.sendClientRequestAddGameObject(
+                        index: GameEditor.nodeSelectedIndex.value,
+                        type: ItemType.GameObjects_Crystal,
+                      )),
+            ),
+          ],
+        );
 
 
   static Widget buildRowWeatherControls() => Row(

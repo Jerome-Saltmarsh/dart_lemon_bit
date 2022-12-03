@@ -53,4 +53,4 @@ export 'widgets/library_widgets.dart';
 export 'src/client/client.dart';
 export 'src/server/server.dart';
 export 'src/website/website.dart';
-export 'src/editor/editor.dart';
+export 'src/editor/src_editor.dart';
