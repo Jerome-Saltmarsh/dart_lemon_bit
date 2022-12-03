@@ -8,6 +8,8 @@ import 'dark_age_environment.dart';
 class GameDarkAge extends Game {
   final DarkAgeEnvironment environment;
 
+  var underground = false;
+
   @override
   bool get customPropMapVisible => true;
 

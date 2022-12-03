@@ -61,6 +61,9 @@ class ServerState {
   // VARIABLES
   static var inventory = Uint16List(0);
   static var inventoryQuantity = Uint16List(0);
+
+
+  static final sceneUnderground = Watch(false);
 }
 
 

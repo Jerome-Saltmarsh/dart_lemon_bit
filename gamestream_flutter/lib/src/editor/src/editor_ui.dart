@@ -149,7 +149,7 @@ class EditorUI {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     text("Underground"),
-                    text("True"),
+                    watch(ServerState.sceneUnderground, text),
                   ],
                 ),
               ],

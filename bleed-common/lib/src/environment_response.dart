@@ -6,4 +6,5 @@ class EnvironmentResponse {
    static const Wind = 3;
    static const Breeze = 4;
    static const Lightning = 5;
+   static const Underground = 6;
 }

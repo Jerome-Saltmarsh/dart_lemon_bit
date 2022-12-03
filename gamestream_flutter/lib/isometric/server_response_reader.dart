@@ -154,6 +154,10 @@ class ServerResponseReader with ByteReader {
       case EnvironmentResponse.Breeze:
         ServerState.weatherBreeze.value = readBool();
         break;
+      case EnvironmentResponse.Underground:
+        ServerState.sceneUnderground.value = readBool();
+        break;
+
     }
   }
 
