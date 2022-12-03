@@ -11,110 +11,104 @@ import 'package:gamestream_flutter/library.dart';
 
 class EditorUI {
 
-  static Widget buildUI(EditTab activeEditTab) =>
-      GameUI.buildDialogUIControl(
-        child: buildPage(
-          children: [
-            watch(GameEditor.editorDialog, buildWatchEditorDialog),
-            Positioned(
-                bottom: 10,
-                child: Container(
-                    alignment: Alignment.center,
-                    width: Engine.screen.width,
-                    child: EditorUI.buildRowWeatherControls())),
-            if (activeEditTab == EditTab.Objects)
-              Positioned(
-                left: 0,
-                bottom: 6,
-                child: buildColumnSelectedGameObject(),
-              ),
-            buildWindowAIControls(),
-            if (activeEditTab == EditTab.Objects)
-              Positioned(
-                left: 0,
-                top: 50,
-                child: buildColumnObjects(),
-              ),
-            if (activeEditTab == EditTab.Grid)
-              Positioned(
-                left: 0,
-                top: 50,
-                child: buildColumnSelectNodeType(),
-              ),
-            if (activeEditTab == EditTab.Grid)
-              Positioned(
-                left: 160,
-                top: 50,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    watch(
-                        GameEditor.nodeSelectedType,
-                        (int selectedNodeType) => Row(
-                              children: [
-                                if (NodeType.supportsOrientationEmpty(
-                                    selectedNodeType))
-                                  buildOrientationIcon(NodeOrientation.None),
-                                if (NodeType.supportsOrientationSolid(
-                                    selectedNodeType))
-                                  buildOrientationIcon(NodeOrientation.Solid),
-                                if (NodeType.supportsOrientationHalf(
-                                    selectedNodeType))
-                                  buildOrientationIcon(
-                                      NodeOrientation.Half_East),
-                                if (NodeType.supportsOrientationCorner(
-                                    selectedNodeType))
-                                  buildOrientationIcon(
-                                      NodeOrientation.Corner_Top),
-                                if (NodeType.supportsOrientationSlopeSymmetric(
-                                    selectedNodeType))
-                                  buildOrientationIcon(
-                                      NodeOrientation.Slope_East),
-                                if (NodeType
-                                    .supportsOrientationSlopeCornerInner(
-                                        selectedNodeType))
-                                  buildOrientationIcon(
-                                    NodeOrientation.Slope_Inner_North_East,
-                                  ),
-                                if (NodeType
-                                    .supportsOrientationSlopeCornerOuter(
-                                        selectedNodeType))
-                                  buildOrientationIcon(
-                                    NodeOrientation.Slope_Outer_North_East,
-                                  ),
-                              ],
-                            )),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        buildEditorSelectedNode(),
-                        watch(GameEditor.nodeSelectedOrientation,
-                            buildColumnEditNodeOrientation),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            if (activeEditTab == EditTab.File)
-              Positioned(
-                  top: 50,
-                  left: 0,
-                  child: Container(
-                    alignment: Alignment.center,
-                    child: buildColumnFile(),
-                  )),
-            Positioned(
-              left: 0,
-              top: 0,
-              child: buildEditorMenu(activeEditTab),
-            ),
-            buildWatchBool(
-                EditorState.windowEnabledScene, buildWindowEditScene),
-            buildWatchBool(
-                EditorState.windowEnabledCanvasSize, buildWindowEditCanvasSize),
-          ],
+  static Widget buildUI(EditTab activeEditTab) => buildPage(
+    children: [
+      watch(GameEditor.editorDialog, buildWatchEditorDialog),
+      Positioned(
+          bottom: 10,
+          child: Container(
+              alignment: Alignment.center,
+              width: Engine.screen.width,
+              child: EditorUI.buildRowWeatherControls()
+          )
+      ),
+      if (activeEditTab == EditTab.Objects)
+        Positioned(
+          left: 0,
+          bottom: 6,
+          child: buildColumnSelectedGameObject(),
         ),
-      );
+      buildWindowAIControls(),
+      if (activeEditTab == EditTab.Objects)
+        Positioned(
+          left: 0,
+          top: 50,
+          child: buildColumnObjects(),
+        ),
+      if (activeEditTab == EditTab.Grid)
+        Positioned(
+          left: 0,
+          top: 50,
+          child: buildColumnSelectNodeType(),
+        ),
+      if (activeEditTab == EditTab.Grid)
+        Positioned(
+          left: 160,
+          top: 50,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              watch(
+                  GameEditor.nodeSelectedType,
+                      (int selectedNodeType) => Row(
+                    children: [
+                      if (NodeType.supportsOrientationEmpty(
+                          selectedNodeType))
+                        buildOrientationIcon(NodeOrientation.None),
+                      if (NodeType.supportsOrientationSolid(
+                          selectedNodeType))
+                        buildOrientationIcon(NodeOrientation.Solid),
+                      if (NodeType.supportsOrientationHalf(
+                          selectedNodeType))
+                        buildOrientationIcon(NodeOrientation.Half_East),
+                      if (NodeType.supportsOrientationCorner(
+                          selectedNodeType))
+                        buildOrientationIcon(
+                            NodeOrientation.Corner_Top),
+                      if (NodeType.supportsOrientationSlopeSymmetric(
+                          selectedNodeType))
+                        buildOrientationIcon(
+                            NodeOrientation.Slope_East),
+                      if (NodeType.supportsOrientationSlopeCornerInner(
+                          selectedNodeType))
+                        buildOrientationIcon(
+                          NodeOrientation.Slope_Inner_North_East,
+                        ),
+                      if (NodeType.supportsOrientationSlopeCornerOuter(
+                          selectedNodeType))
+                        buildOrientationIcon(
+                          NodeOrientation.Slope_Outer_North_East,
+                        ),
+                    ],
+                  )),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  buildEditorSelectedNode(),
+                  watch(GameEditor.nodeSelectedOrientation,
+                      buildColumnEditNodeOrientation),
+                ],
+              ),
+            ],
+          ),
+        ),
+      if (activeEditTab == EditTab.File)
+        Positioned(
+            top: 50,
+            left: 0,
+            child: Container(
+              alignment: Alignment.center,
+              child: buildColumnFile(),
+            )),
+      Positioned(
+        left: 0,
+        top: 0,
+        child: buildEditorMenu(activeEditTab),
+      ),
+      buildWatchBool(EditorState.windowEnabledScene, buildWindowEditScene),
+      buildWatchBool(EditorState.windowEnabledCanvasSize, buildWindowEditCanvasSize),
+    ],
+  );
 
   static Column buildColumnFile() {
     return Column(

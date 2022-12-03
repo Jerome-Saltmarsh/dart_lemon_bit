@@ -372,6 +372,7 @@ class GameEvents {
       GameState.player.message.value = "-press arrow keys to move\n\n-press tab to play";
       GameState.player.messageTimer = 300;
     } else {
+      ClientActions.clearMouseOverDialogType();
       GameCamera.setModeChase();
       if (ServerState.sceneEditable.value){
         GameState.player.message.value = "press tab to edit";
