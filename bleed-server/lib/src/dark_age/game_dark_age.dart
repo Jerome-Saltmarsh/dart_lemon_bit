@@ -19,6 +19,25 @@ class GameDarkAge extends Game {
   }
 
   @override
+  void customOnHitApplied(Character src, Collider target) {
+     if (src is AI) {
+        if (randomBool()) {
+          src.aiMode = AIMode.Idle;
+          src.aiMode = randomInt(AI.Frames_Between_AI_Mode_Min, AI.Frames_Between_AI_Mode_Max);
+        }
+     }
+     if (target is AI) {
+       if (random.nextDouble() > 0.2){
+         target.aiMode = AIMode.Pursue;
+         target.aiModeNext = AI.Frames_Between_AI_Mode_Max;
+       } else {
+         target.aiMode = AIMode.Evade;
+         target.aiModeNext = AI.Frames_Between_AI_Mode_Max;
+       }
+     }
+  }
+
+  @override
   void customOnCharacterKilled(Character target, dynamic src) {
      if (target is AI){
         if (src is Player) {

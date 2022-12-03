@@ -20,47 +20,50 @@ abstract class Game {
 
   /// In seconds
   void customInitPlayer(Player player) {}
-  /// safe to override
+  /// @override
   void customPlayerWrite(Player player){ }
-  /// safe to override
+  /// @override
   void customUpdatePlayer(Player player){ }
-  /// safe to override
+  /// @override
   void customDownloadScene(Player player){ }
-  /// safe to override
+  /// @override
   void customUpdate();
-  /// safe to override
+  /// @override
   void customOnPlayerDisconnected(Player player) { }
-  /// safe to override
+  /// @override
   void customOnGameObjectDeactivated(GameObject gameObject){ }
-  /// safe to override
+  /// @override
   void customOnCharacterSpawned(Character character) { }
-  /// safe to override
+  /// @override
   void customOnCharacterKilled(Character target, dynamic src) { }
-  /// safe to override
+  /// @override
   void customOnCharacterDamageApplied(Character target, dynamic src, int amount) { }
-  /// safe to overridable
+  /// @override
   void customOnPlayerRevived(Player player) { }
-  /// safe to overridable
+  /// @override
   void customOnGameStarted() { }
-  /// safe to overridable
+  /// @override
   void customOnNpcObjectivesCompleted(Character npc) { }
-  /// safe to overridable
+  /// @override
   void customOnPlayerLevelGained(Player player) { }
-  /// safe to override
+  /// @override
   void customOnCollisionBetweenColliders(Collider a, Collider b) { }
-  /// safe to override
+  /// @override
   void customOnCollisionBetweenPlayerAndOther(Player player, Collider collider) { }
-  /// safe to override
+  /// @override
   void customOnCollisionBetweenPlayerAndGameObject(Player player, GameObject gameObject) { }
-  /// safe to override
+  /// @override
   void customOnAIRespawned(AI ai){  }
-  /// safe to override
+  /// @override
   void customOnPlayerRequestPurchaseWeapon(Player player, int type){ }
-  /// safe to override
+  /// @override
   void customOnPlayerWeaponChanged(Player player, int previousWeaponType, int newWeaponType){ }
+  /// @override
+  void customOnHitApplied(Character src, Collider target) {}
+  
   /// PROPERTIES
 
-  /// Safe to override
+  /// @override
   double get minAimTargetCursorDistance => 35;
 
   bool get customPropMapVisible => false;
@@ -795,7 +798,7 @@ abstract class Game {
     }
   }
 
-  /// unsafe to override
+  /// un@override
   void onAIKilled(AI ai){
     ai.respawn = AI_Respawn_Duration;
     clearCharacterTarget(ai);
@@ -1333,8 +1336,10 @@ abstract class Game {
     if (target is Character) {
       applyDamageToCharacter(src: srcCharacter, target: target, amount: damage);
     }
+    
+    customOnHitApplied(srcCharacter, target);
   }
-
+  
   void updateCharacterStatePerforming(Character character) {
     updateCharacterStateAttacking(character);
   }

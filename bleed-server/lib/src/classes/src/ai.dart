@@ -9,7 +9,8 @@ import 'package:bleed_server/gamestream.dart';
 class AI extends Character {
   static const AI_Path_Size = 80;
   static const Destination_Radius = 15;
-  static const Frames_Between_AI_Mode = 120;
+  static const Frames_Between_AI_Mode_Min = 80;
+  static const Frames_Between_AI_Mode_Max = 120;
 
   final pathX = Uint16List(AI_Path_Size);
   final pathY = Uint16List(AI_Path_Size);
@@ -27,7 +28,7 @@ class AI extends Character {
   var wanderRadius = 0.0;
   var nextTeleport = randomInt(500, 1000);
   var aiMode = AIMode.Idle;
-  var aiModeNext = Frames_Between_AI_Mode;
+  var aiModeNext = Frames_Between_AI_Mode_Min;
   Function(Player player)? onInteractedWith;
 
   AI({
@@ -106,6 +107,7 @@ class AI extends Character {
 
   void shuffleAIMode(){
     aiMode = randomInt(0, 5);
+    aiModeNext = randomInt(AI.Frames_Between_AI_Mode_Min, AI.Frames_Between_AI_Mode_Max);
   }
   
   void updateAI(){
@@ -114,13 +116,12 @@ class AI extends Character {
     aiModeNext--;
     if (aiModeNext <= 0){
       shuffleAIMode();
-      aiModeNext = Frames_Between_AI_Mode;
     }
 
     final target = this.target;
     if (target != null) {
 
-      if (withinAttackRange(target) && aiMode != AIMode.Idle) {
+      if (withinAttackRange(target) && aiMode != AIMode.Idle && aiMode != AIMode.Evade) {
         setCharacterStatePerforming(duration: equippedAttackDuration);
         return;
       }
