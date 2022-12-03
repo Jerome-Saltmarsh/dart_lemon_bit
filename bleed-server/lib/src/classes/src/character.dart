@@ -234,7 +234,7 @@ abstract class Character extends Collider {
 
   void faceXY(double x, double y) {
     assert(!deadOrBusy);
-    faceAngle = getAngleXY(x, y);
+    faceAngle = getAngleXY(x, y) + pi;
   }
 
   double getAngleXY(double x, double y) =>
@@ -250,4 +250,7 @@ abstract class Character extends Collider {
     y += velocityY;
     applyFriction(0.75);
   }
+
+  void setCharacterStateRunning()=>
+      setCharacterState(value: CharacterState.Running, duration: 0);
 }

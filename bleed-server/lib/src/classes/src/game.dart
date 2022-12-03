@@ -1350,7 +1350,9 @@ abstract class Game {
     }
 
     if (character is AI){
-      updateAI(character);
+      // updateAI(character);
+      character.updateAI();
+      character.applyBehaviorWander(this);
     }
     character.updateMovement();
     resolveCharacterTileCollision(character);
@@ -1367,59 +1369,6 @@ abstract class Game {
   void faceCharacterTowards(Character character, Position position){
     assert(!character.deadOrBusy);
     character.faceAngle = getAngleBetweenV3(character, position);
-  }
-
-  void updateAI(AI ai){
-      if (ai.busy) return;
-
-      final target = ai.target;
-      if (target != null) {
-        if (ai.withinAttackRange(target)) {
-          faceCharacterTowards(ai, target);
-          ai.setCharacterStatePerforming(duration: ai.equippedAttackDuration);
-          return;
-        }
-        ai.destX = target.x;
-        ai.destY = target.y;
-      }
-
-      if (!ai.arrivedAtDest) {
-        ai.faceDestination();
-        setCharacterStateRunning(ai);
-
-        // if (target != null){
-        //    if (ai.nextTeleport-- <= 0){
-        //       ai.nextTeleport = randomInt(500, 1000);
-        //       final angle = randomAngle();
-        //       final distanceFromTarget = getDistanceBetweenV3(ai, target);
-        //       final x = target.x + getAdjacent(angle, distanceFromTarget);
-        //       final y = target.y + getOpposite(angle, distanceFromTarget);
-        //       final z = ai.z;
-        //
-        //       if (scene.getNodeInBoundsXYZ(x, y, z)) {
-        //            final nodeType = scene.getNodeTypeXYZ(x, y, z);
-        //            if (nodeType == NodeType.Empty){
-        //              ai.x = x;
-        //              ai.y = y;
-        //              ai.z = z;
-        //            }
-        //       }
-        //    }
-        // }
-
-        return;
-      }
-
-      if (ai.pathIndex > 0){
-        ai.pathIndex--;
-        ai.destX = ai.pathX[ai.pathIndex].toDouble();
-        ai.destY = ai.pathY[ai.pathIndex].toDouble();
-        ai.faceDestination();
-        setCharacterStateRunning(ai);
-        return;
-      }
-      ai.state = CharacterState.Idle;
-      ai.applyBehaviorWander(this);
   }
 
   void updateCharacterState(Character character){
@@ -2225,11 +2174,11 @@ abstract class Game {
     for (final index in scene.spawnPoints) {
       for (var i = 0; i < instances; i++) {
         spawnAI(
-          characterType: CharacterType.Triangle,
+          characterType: CharacterType.Zombie,
           nodeIndex: index,
           damage: 10,
           team: TeamType.Evil,
-          health: 15,
+          health: 3,
         );
       }
     }

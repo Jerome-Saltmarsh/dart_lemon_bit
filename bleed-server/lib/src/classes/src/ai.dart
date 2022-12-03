@@ -70,7 +70,12 @@ class AI extends Character {
   }
 
   void faceDestination() {
-    faceAngle = getAngle(destX - x, destY - y);
+    faceXY(destX, destY);
+  }
+
+  void faceTarget(){
+    assert (target != null);
+    face(target!);
   }
 
   void applyBehaviorWander(Game game){
@@ -93,5 +98,36 @@ class AI extends Character {
 
   bool withinChaseRange(Position3 target) {
     return withinRadius(target, chaseRange);
+  }
+  
+  void updateAI(){
+    if (busy) return;
+
+    if (target != null) {
+      if (withinAttackRange(target!)) {
+        face(target!);
+        setCharacterStatePerforming(duration: equippedAttackDuration);
+        return;
+      }
+      destX = target!.x;
+      destY = target!.y;
+    }
+
+    if (!arrivedAtDest) {
+      faceDestination();
+      setCharacterStateRunning();
+      return;
+    }
+
+    if (pathIndex > 0){
+      pathIndex--;
+      destX = pathX[pathIndex].toDouble();
+      destY = pathY[pathIndex].toDouble();
+      faceDestination();
+      setCharacterStateRunning;
+      return;
+    }
+    state = CharacterState.Idle;
+    // applyBehaviorWander(this);
   }
 }
