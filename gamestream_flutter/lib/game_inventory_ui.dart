@@ -418,6 +418,7 @@ class GameInventoryUI {
         ),
         Row(
           children: [
+            if (total > 0)
             text('${((value / total) * 100).toInt()}%' ),
             Container(
                 width: 60,

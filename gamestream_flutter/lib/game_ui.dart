@@ -300,7 +300,7 @@ class GameUI {
       );
 
   static Widget buildPlayMode(bool edit) =>
-      edit ? watch(GameEditor.editTab, EditorUI.buildStackEdit) : buildStackPlay();
+      edit ? watch(GameEditor.editTab, EditorUI.buildUI) : buildStackPlay();
 
   static Widget buildStackPlay() => StackFullscreen(children: [
         GameUIInteract.buildWatchInteractMode(),

@@ -1,19 +1,13 @@
 [shortcut-keys]
 navigate to next method: ctrl + shift + up / down arrows
 
-[ideas]
+[TODO]
 [ ] talk with other players
 [ ] trade with other players
-[ ] stash
-[ ] player-charge-attack
-[ ] select skin color
-[ ] separate head-type and helm-type
+[ ] feature separate head-type and helm-type
 [ ] render foreground zombie walking while connecting
-[ ] item weight
-[ ] inventory max weight
-[ ] weapon torch flame
-
-[engine]
+[ ] feature inventory max weight
+[ ] idea weapon torch flame
 [ ] save scene as byte stream
 [ ] cache region
 [ ] fix android app title gamestream_flutter
@@ -54,11 +48,18 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] character goblin
 [ ] character vampire
 [ ] character wolf
-[ ] ai mode pause
-[ ] ai mode chase
-[ ] ai mode circle
-[ ] ai mode wander
-[ ] ai mode evade
+[ ] scene catacombs 
+[ ] catacombs cemetery entrance
+[ ] spawn-node character type
+
+03.12.2022
+[x] max item quantity 
+[x] stack item type resources 
+[x] ai mode pause
+[x] ai mode chase
+[x] ai mode circle
+[x] ai mode wander
+[x] ai mode evade
 
 02.12.2022
 [x] fix player stats window

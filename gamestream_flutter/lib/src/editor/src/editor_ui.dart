@@ -10,6 +10,143 @@ import 'package:gamestream_flutter/language_utils.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class EditorUI {
+
+  static Widget buildUI(EditTab activeEditTab) => buildPage(
+    children: [
+      watch(GameEditor.editorDialog, buildWatchEditorDialog),
+      if (activeEditTab == EditTab.Objects)
+        Positioned(
+          left: 0,
+          bottom: 6,
+          child: buildColumnSelectedGameObject(),
+        ),
+      buildWindowAIControls(),
+      if (activeEditTab == EditTab.Objects)
+        Positioned(
+          left: 0,
+          top: 50,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              container(
+                  child: 'Spawn Zombie',
+                  action: () {
+                    GameNetwork.sendClientRequestEdit(
+                        EditRequest.Spawn_Zombie,
+                        GameEditor.nodeSelectedIndex.value);
+                  }),
+              Container(
+                width: 100,
+                height: 100,
+                color: Colors.white,
+                child: Engine.buildAtlasImageButton(
+                    image: GameImages.gameobjects,
+                    srcX: AtlasGameObjects.Crystal_Large_X,
+                    srcY: AtlasGameObjects.Crystal_Large_Y,
+                    srcWidth: AtlasGameObjects.Crystal_Large_Width,
+                    srcHeight: AtlasGameObjects.Crystal_Large_Height,
+                    action: () =>
+                        GameNetwork.sendClientRequestAddGameObject(
+                          index: GameEditor.nodeSelectedIndex.value,
+                          type: ItemType.GameObjects_Crystal,
+                        )),
+              ),
+            ],
+          ),
+        ),
+      if (activeEditTab == EditTab.Grid)
+        Positioned(
+          left: 0,
+          top: 50,
+          child: buildColumnSelectNodeType(),
+        ),
+      if (activeEditTab == EditTab.Grid)
+        Positioned(
+          left: 160,
+          top: 50,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              watch(
+                  GameEditor.nodeSelectedType,
+                      (int selectedNodeType) => Row(
+                    children: [
+                      if (NodeType.supportsOrientationEmpty(
+                          selectedNodeType))
+                        buildOrientationIcon(NodeOrientation.None),
+                      if (NodeType.supportsOrientationSolid(
+                          selectedNodeType))
+                        buildOrientationIcon(NodeOrientation.Solid),
+                      if (NodeType.supportsOrientationHalf(
+                          selectedNodeType))
+                        buildOrientationIcon(NodeOrientation.Half_East),
+                      if (NodeType.supportsOrientationCorner(
+                          selectedNodeType))
+                        buildOrientationIcon(
+                            NodeOrientation.Corner_Top),
+                      if (NodeType.supportsOrientationSlopeSymmetric(
+                          selectedNodeType))
+                        buildOrientationIcon(
+                            NodeOrientation.Slope_East),
+                      if (NodeType.supportsOrientationSlopeCornerInner(
+                          selectedNodeType))
+                        buildOrientationIcon(
+                          NodeOrientation.Slope_Inner_North_East,
+                        ),
+                      if (NodeType.supportsOrientationSlopeCornerOuter(
+                          selectedNodeType))
+                        buildOrientationIcon(
+                          NodeOrientation.Slope_Outer_North_East,
+                        ),
+                    ],
+                  )),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  buildEditorSelectedNode(),
+                  watch(GameEditor.nodeSelectedOrientation,
+                      buildColumnEditNodeOrientation),
+                ],
+              ),
+            ],
+          ),
+        ),
+      if (activeEditTab == EditTab.File)
+        Positioned(
+            top: 50,
+            left: 0,
+            child: Container(
+              alignment: Alignment.center,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  container(
+                      child: "SAVE",
+                      action: GameEditor.actionGameDialogShowSceneSave),
+                  container(
+                      child: "LOAD", action: GameEditor.editorLoadScene),
+                  height16,
+                  text("MAP SIZE"),
+                  ...RequestModifyCanvasSize.values
+                      .map((e) => container(
+                      child: e.name,
+                      action: () =>
+                          GameNetwork.sendClientRequestModifyCanvasSize(
+                              e)))
+                      .toList(),
+                ],
+              ),
+            )),
+      Positioned(
+        left: 0,
+        top: 0,
+        child: buildEditorMenu(activeEditTab),
+      ),
+    ],
+  );
+
+
   static Widget buildRowWeatherControls() => Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -255,165 +392,6 @@ class EditorUI {
           color: selectedNodeType == nodeType ? greyDark : grey);
     });
   }
-
-  static Widget buildStackEdit(EditTab activeEditTab) => buildPage(
-        children: [
-          watch(GameEditor.editorDialog, buildWatchEditorDialog),
-          if (activeEditTab == EditTab.Objects)
-            Positioned(
-              left: 0,
-              bottom: 6,
-              child: buildColumnSelectedGameObject(),
-            ),
-          buildWindowAIControls(),
-          if (activeEditTab == EditTab.Objects)
-            Positioned(
-              left: 0,
-              top: 50,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  container(
-                      child: 'Spawn Zombie',
-                      action: () {
-                        GameNetwork.sendClientRequestEdit(
-                            EditRequest.Spawn_Zombie,
-                            GameEditor.nodeSelectedIndex.value);
-                      }),
-                  Container(
-                    width: 100,
-                    height: 100,
-                    color: Colors.white,
-                    child: Engine.buildAtlasImageButton(
-                        image: GameImages.gameobjects,
-                        srcX: AtlasGameObjects.Crystal_Large_X,
-                        srcY: AtlasGameObjects.Crystal_Large_Y,
-                        srcWidth: AtlasGameObjects.Crystal_Large_Width,
-                        srcHeight: AtlasGameObjects.Crystal_Large_Height,
-                        action: () =>
-                            GameNetwork.sendClientRequestAddGameObject(
-                              index: GameEditor.nodeSelectedIndex.value,
-                              type: ItemType.GameObjects_Crystal,
-                            )),
-                  ),
-                ],
-              ),
-            ),
-          if (activeEditTab == EditTab.Grid)
-            Positioned(
-              left: 0,
-              top: 50,
-              child: buildColumnSelectNodeType(),
-            ),
-          if (activeEditTab == EditTab.Grid)
-            Positioned(
-              left: 160,
-              top: 50,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  watch(
-                      GameEditor.nodeSelectedType,
-                      (int selectedNodeType) => Row(
-                            children: [
-                              if (NodeType.supportsOrientationEmpty(
-                                  selectedNodeType))
-                                buildOrientationIcon(NodeOrientation.None),
-                              if (NodeType.supportsOrientationSolid(
-                                  selectedNodeType))
-                                buildOrientationIcon(NodeOrientation.Solid),
-                              if (NodeType.supportsOrientationHalf(
-                                  selectedNodeType))
-                                buildOrientationIcon(NodeOrientation.Half_East),
-                              if (NodeType.supportsOrientationCorner(
-                                  selectedNodeType))
-                                buildOrientationIcon(
-                                    NodeOrientation.Corner_Top),
-                              if (NodeType.supportsOrientationSlopeSymmetric(
-                                  selectedNodeType))
-                                buildOrientationIcon(
-                                    NodeOrientation.Slope_East),
-                              if (NodeType.supportsOrientationSlopeCornerInner(
-                                  selectedNodeType))
-                                buildOrientationIcon(
-                                  NodeOrientation.Slope_Inner_North_East,
-                                ),
-                              if (NodeType.supportsOrientationSlopeCornerOuter(
-                                  selectedNodeType))
-                                buildOrientationIcon(
-                                  NodeOrientation.Slope_Outer_North_East,
-                                ),
-                            ],
-                          )),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      buildEditorSelectedNode(),
-                      watch(GameEditor.nodeSelectedOrientation,
-                          buildColumnEditNodeOrientation),
-                    ],
-                  ),
-                  // height8,
-                  // watch(GameEditor.nodeSelectedOrientation, buildColumnEditNodeOrientation),
-                ],
-              ),
-            ),
-          // if (activeEditTab == EditTab.Weather)
-          //   Positioned(
-          //       bottom: 6,
-          //       left: 0,
-          //       child: Container(
-          //         width: Engine.screen.width,
-          //         alignment: Alignment.center,
-          //         child: buildWatchBool(
-          //           GameEditor.controlsVisibleWeather,
-          //           EditorUI.buildControlsWeather,
-          //         ),
-          //       )
-          //   ),
-          if (activeEditTab == EditTab.File)
-            Positioned(
-                top: 50,
-                left: 0,
-                child: Container(
-                  alignment: Alignment.center,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      container(
-                          child: "SAVE",
-                          action: GameEditor.actionGameDialogShowSceneSave),
-                      container(
-                          child: "LOAD", action: GameEditor.editorLoadScene),
-                      height16,
-                      text("MAP SIZE"),
-                      ...RequestModifyCanvasSize.values
-                          .map((e) => container(
-                              child: e.name,
-                              action: () =>
-                                  GameNetwork.sendClientRequestModifyCanvasSize(
-                                      e)))
-                          .toList(),
-                    ],
-                  ),
-                )),
-          // Positioned(
-          //   left: 0,
-          //   top: 0,
-          //   child: Container(
-          //       child: watch(game.editTab, buildEditorMenu),
-          //       width: screen.width,
-          //       height: screen.height,
-          //   ),
-          // ),
-          Positioned(
-            left: 0,
-            top: 0,
-            child: buildEditorMenu(activeEditTab),
-          ),
-        ],
-      );
 
   static Widget buildColumnEditNodeOrientation(int selectedNodeOrientation) =>
       Column(
