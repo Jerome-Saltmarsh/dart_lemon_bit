@@ -12,7 +12,6 @@ import '../functions/move_player_to_crystal.dart';
 import '../game_types/game_skirmish.dart';
 import '../io/convert_json_to_scene.dart';
 import '../io/convert_scene_to_json.dart';
-import '../io/write_scene_to_file.dart';
 import '../utilities/is_valid_index.dart';
 import 'handle_request_modify_canvas_size.dart';
 
@@ -106,11 +105,6 @@ class Connection {
         if (perkType == null) return;
         player.selectPerk(perkType);
         return;
-
-      case ClientRequest.Store_Close:
-        player.storeItems = [];
-        player.writeStoreItems();
-        break;
 
       case ClientRequest.Weather_Set_Rain:
         if (game is GameDarkAge == false) return;

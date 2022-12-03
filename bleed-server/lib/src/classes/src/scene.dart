@@ -1,9 +1,12 @@
 import 'dart:typed_data';
 
 import 'package:bleed_server/gamestream.dart';
+import 'package:lemon_byte/byte_writer.dart';
 
 late AI pathFindAI;
 var pathFindSearchID = 0;
+
+final writer = ByteWriter();
 
 class Scene {
   late Uint8List nodeTypes;
@@ -173,5 +176,38 @@ class Scene {
     for (var i = 0; i < spawnPoints.length; i++){
        spawnPoints[i] = newSpawnPoints[i];
     }
+  }
+
+  Uint8List compile(){
+      writer.writeInt(gridHeight);
+      writer.writeInt(gridRows);
+      writer.writeInt(gridColumns);
+      var previousType = nodeTypes[0];
+      var previousOrientation = nodeOrientations[0];
+      var count = 0;
+      for (var z = 0; z < gridHeight; z++){
+        for (var row = 0; row < gridRows; row++){
+          for (var column = 0; column < gridColumns; column++) {
+            final nodeIndex = getNodeIndex(z, row, column);
+            final nodeType = nodeTypes[nodeIndex];
+            final nodeOrientation = nodeOrientations[nodeIndex];
+
+            if (nodeType == previousType && nodeOrientation == previousOrientation){
+              count++;
+            } else {
+              writer.writeByte(previousType);
+              writer.writeByte(previousOrientation);
+              writer.writeUInt16(count);
+              previousType = nodeType;
+              previousOrientation = nodeOrientation;
+              count = 1;
+            }
+          }
+        }
+      }
+      writer.writeByte(previousType);
+      writer.writeByte(previousOrientation);
+      writer.writeUInt16(count);
+      return writer.writeToSendBuffer();
   }
 }

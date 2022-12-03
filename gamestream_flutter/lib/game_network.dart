@@ -240,10 +240,6 @@ class GameNetwork {
     sendClientRequest(ClientRequest.Teleport_Scene, scene.index);
   }
 
-  static void sendClientRequestStoreClose(){
-    sendClientRequest(ClientRequest.Store_Close);
-  }
-
   static void sendClientRequestUpgradeWeaponDamage(){
     sendClientRequest(ClientRequest.Upgrade_Weapon_Damage);
   }

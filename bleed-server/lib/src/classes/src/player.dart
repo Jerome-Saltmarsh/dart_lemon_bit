@@ -1445,24 +1445,18 @@ class Player extends Character with ByteWriter {
     var count = 0;
     final nodeTypes = scene.nodeTypes;
     final nodeOrientations = scene.nodeOrientations;
-    for (var z = 0; z < scene.gridHeight; z++){
-      for (var row = 0; row < scene.gridRows; row++){
-        for (var column = 0; column < scene.gridColumns; column++) {
-          final nodeIndex = scene.getNodeIndex(z, row, column);
-          final nodeType = nodeTypes[nodeIndex];
-          final nodeOrientation = nodeOrientations[nodeIndex];
-
-          if (nodeType == previousType && nodeOrientation == previousOrientation){
-            count++;
-          } else {
-            writeByte(previousType);
-            writeByte(previousOrientation);
-            writeUInt16(count);
-            previousType = nodeType;
-            previousOrientation = nodeOrientation;
-            count = 1;
-          }
-        }
+    for (var nodeIndex = 0; nodeIndex < scene.gridVolume; nodeIndex++) {
+      final nodeType = nodeTypes[nodeIndex];
+      final nodeOrientation = nodeOrientations[nodeIndex];
+      if (nodeType == previousType && nodeOrientation == previousOrientation){
+        count++;
+      } else {
+        writeByte(previousType);
+        writeByte(previousOrientation);
+        writeUInt16(count);
+        previousType = nodeType;
+        previousOrientation = nodeOrientation;
+        count = 1;
       }
     }
 
