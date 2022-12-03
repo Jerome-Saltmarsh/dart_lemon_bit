@@ -7,6 +7,10 @@ class EditorActions {
     EditorState.windowEnabledScene.value = !EditorState.windowEnabledScene.value;
   }
 
+  static void toggleWindowEnabledCanvasSize(){
+    EditorState.windowEnabledCanvasSize.value = !EditorState.windowEnabledCanvasSize.value;
+  }
+
   static void exportSceneToJson(){
 
   }

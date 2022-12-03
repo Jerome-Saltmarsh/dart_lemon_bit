@@ -98,6 +98,7 @@ class EditorUI {
         child: buildEditorMenu(activeEditTab),
       ),
       buildWatchBool(EditorState.windowEnabledScene, buildWindowEditScene),
+      buildWatchBool(EditorState.windowEnabledCanvasSize, buildWindowEditCanvasSize),
     ],
   );
 
@@ -109,25 +110,54 @@ class EditorUI {
                 container(
                     child: "DOWNLOAD",
                     action: GameEditor.actionGameDialogShowSceneSave),
-                container(
-                    child: "UPLOAD", action: GameEditor.editorLoadScene),
-                container(
-                    child: "EDIT", action: EditorActions.toggleWindowEnabledScene),
-                height16,
-                text("MAP SIZE"),
-                ...RequestModifyCanvasSize.values
-                    .map((e) => container(
-                    child: e.name,
-                    action: () =>
-                        GameNetwork.sendClientRequestModifyCanvasSize(
-                            e)))
-                    .toList(),
+                container(child: "UPLOAD", action: GameEditor.editorLoadScene),
+                container(child: "EDIT", action: EditorActions.toggleWindowEnabledScene),
+                container(child: "MAP SIZE", action: EditorActions.toggleWindowEnabledCanvasSize),
               ],
             );
   }
 
-  static Widget buildWindowEditScene(){
-     return Center(
+  static Widget buildWindowEditCanvasSize()=> Center(
+    child: GameUI.buildDialogUIControl(
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        width: 400,
+        height: 520,
+        color: GameColors.brownLight,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+               children: [
+                 text("CANVAS SIZE"),
+                 text("Close", onPressed: EditorActions.toggleWindowEnabledCanvasSize),
+               ],
+            ),
+            height16,
+            Container(
+              height: 450,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: RequestModifyCanvasSize.values
+                    .map((e) => container(
+                                    child: e.name,
+                                    action: () => GameNetwork.sendClientRequestModifyCanvasSize(e)
+                                )
+                    )
+                .toList(),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+
+
+  static Widget buildWindowEditScene()=> Center(
        child: GameUI.buildDialogUIControl(
          child: Container(
             padding: const EdgeInsets.all(10),
@@ -173,7 +203,6 @@ class EditorUI {
          ),
        ),
      );
-  }
 
   static Widget buildColumnObjects() => Column(
           mainAxisAlignment: MainAxisAlignment.start,
