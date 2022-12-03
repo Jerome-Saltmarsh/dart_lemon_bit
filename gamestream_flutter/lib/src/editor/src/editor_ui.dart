@@ -159,6 +159,14 @@ class EditorUI {
                     ),
                   ),
                 ),
+                onPressed(
+                  action: GameNetwork.sendClientRequestEditSceneSetFloorTypeStone,
+                  child: Container(
+                    color: Colors.white12,
+                    padding: const EdgeInsets.all(5),
+                    child: text("Set Floor Stone"),
+                  ),
+                )
               ],
             ),
          ),

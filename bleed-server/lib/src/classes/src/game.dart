@@ -2240,5 +2240,11 @@ abstract class Game {
   static void setPositionRow(Position3 position, int row){
     position.x = row * Node_Size + Node_Size_Half;
   }
+
+  void playersDownloadScene(){
+    for (final player in players){
+      player.downloadScene();
+    }
+  }
 }
 

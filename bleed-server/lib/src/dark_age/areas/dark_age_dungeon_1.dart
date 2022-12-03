@@ -12,12 +12,6 @@ class DarkAgeDungeon1 extends DarkAgeArea {
   void customOnCharacterKilled(dynamic target, dynamic src) {
     if (target is AI) {
       target.respawn = framesPerSecond * 10;
-      // actionSpawnLoot(
-      //   game: this,
-      //   x: target.x,
-      //   y: target.y,
-      //   z: target.z,
-      // );
     }
   }
 

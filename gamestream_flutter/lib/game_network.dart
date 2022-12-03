@@ -384,6 +384,12 @@ class GameNetwork {
   static void sendClientRequestEditSceneToggleUnderground() =>
       sendClientRequestEdit(EditRequest.Scene_Toggle_Underground);
 
+  static void sendClientRequestEditSceneSetFloorTypeStone() =>
+      sendClientRequestEditSceneSetFloorType(NodeType.Stone);
+
+  static void sendClientRequestEditSceneSetFloorType(int nodeType) =>
+      sendClientRequestEdit(EditRequest.Scene_Set_Floor_Type, nodeType);
+
   static void sendClientRequestEdit(EditRequest request, [dynamic message = null]) =>
       sendClientRequest(ClientRequest.Edit, '${request.index} $message');
 
