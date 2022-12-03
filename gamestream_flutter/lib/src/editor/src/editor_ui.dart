@@ -14,6 +14,14 @@ class EditorUI {
   static Widget buildUI(EditTab activeEditTab) => buildPage(
     children: [
       watch(GameEditor.editorDialog, buildWatchEditorDialog),
+      Positioned(
+          bottom: 10,
+          child: Container(
+              alignment: Alignment.center,
+              width: Engine.screen.width,
+              child: EditorUI.buildRowWeatherControls()
+          )
+      ),
       if (activeEditTab == EditTab.Objects)
         Positioned(
           left: 0,

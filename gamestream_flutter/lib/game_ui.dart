@@ -229,7 +229,7 @@ class GameUI {
       );
 
   static Widget buildWatchSceneEditableControls(bool sceneEditable) {
-    return sceneEditable ? EditorUI.buildRowWeatherControls() : buildWatchBool(GameUI.timeVisible, buildTime);
+    return buildWatchBool(GameUI.timeVisible, buildTime);
   }
 
   static Widget buildIconAudio() =>
