@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/library.dart';
 
-const _shiftX = 23.0;
+const _shiftX = 17.0;
 const _shiftY = 20.0;
 
 Widget buildEditorSelectedNode() =>
@@ -92,12 +92,12 @@ Widget buildEditorSelectedNode() =>
                   left: 27 + _shiftX,
                   action: GameEditor.cursorZIncrease,
                   iconType: IconType.Arrows_Up_Yellow,
-                  hint: "Arrow Down"
+                  hint: "Shift + Arrow Up"
               ),
               buildPositionedIconArrow(
                   top: 50 + _shiftY,
                   left: 0 + _shiftX,
-                  action: GameEditor.cursorZIncrease,
+                  action: GameEditor.cursorColumnIncrease,
                   iconType: IconType.Arrows_West_Yellow,
                   hint: "Arrow Left"
               ),
