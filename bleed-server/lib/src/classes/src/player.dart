@@ -755,6 +755,24 @@ class Player extends Character with ByteWriter {
      final weaponsSwapped = indexA == equippedWeaponIndex || indexB == equippedWeaponIndex;
      final currentEquippedWeaponIndex = equippedWeaponIndex;
 
+     if (indexAType == indexBType){
+       if (ItemType.isTypeResource(indexAType)){
+          final total = indexAQuantity + indexBQuantity;
+          final totalMax = ItemType.getMaxQuantity(indexAType);
+          if (total < totalMax){
+            inventorySetEmptyAtIndex(indexA);
+            inventorySetQuantityAtIndex(quantity: total, index: indexB);
+          } else {
+            inventorySetQuantityAtIndex(quantity: total - totalMax, index: indexA);
+            inventorySetQuantityAtIndex(quantity: totalMax, index: indexB);
+          }
+          inventoryDirty = true;
+          assignWeaponStateChanging();
+          game.dispatchV3(GameEventType.Character_Changing, this);
+          return;
+       }
+     }
+
      if (itemTypeCanBeAssignedToIndex(itemType: indexAType, index: indexB)){
        inventorySet(index: indexB, itemType: indexAType, itemQuantity: indexAQuantity);
      } else {

@@ -516,9 +516,16 @@ class ItemType {
   }[value] ?? "item-type-unknown($value)";
 
   static int getMaxQuantity(int itemType) => const {
-    Resource_Gun_Powder: 100,
-    Resource_Arrow:     100,
-  }[itemType] ??        01;
+    Resource_Fuel         : 500,
+    Resource_Round_50cal  : 500,
+    Resource_Round_Shotgun: 500,
+    Resource_Round_Rifle  : 500,
+    Resource_Round_9mm    : 500,
+    Resource_Scrap_Metal  : 500,
+    Resource_Gold         : 500,
+    Resource_Gun_Powder   : 100,
+    Resource_Arrow        : 100,
+  }[itemType]            ?? 001;
 
   static int getHealAmount(int itemType) => const {
     Consumables_Apple:  03,

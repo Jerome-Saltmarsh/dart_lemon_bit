@@ -40,6 +40,10 @@ class Area_OldVillage extends DarkAgeArea {
     player.inventoryAdd(itemType: ItemType.Resource_Round_Shotgun, itemQuantity: 100);
     player.inventoryAdd(itemType: ItemType.Resource_Round_50cal, itemQuantity: 100);
     player.inventoryAdd(itemType: ItemType.Resource_Scrap_Metal, itemQuantity: 100);
+    player.inventoryAdd(itemType: ItemType.Resource_Scrap_Metal, itemQuantity: 120);
+    player.inventoryAdd(itemType: ItemType.Resource_Scrap_Metal, itemQuantity: 320);
+    player.inventoryAdd(itemType: ItemType.Resource_Scrap_Metal, itemQuantity: 220);
+    player.inventoryAdd(itemType: ItemType.Resource_Scrap_Metal, itemQuantity: 450);
     player.inventoryAdd(itemType: ItemType.Resource_Gold, itemQuantity: 100);
     player.inventoryAddWeapon(itemType: ItemType.Trinket_Ring_of_Damage);
     player.inventoryAddWeapon(itemType: ItemType.Trinket_Ring_of_Health);
