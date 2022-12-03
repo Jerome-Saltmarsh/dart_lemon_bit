@@ -373,6 +373,14 @@ class Connection {
       case EditRequest.Clear_Spawned:
         player.game.clearSpawnedAI();
         break;
+      case EditRequest.Scene_Toggle_Underground:
+        if (player.game is! GameDarkAge) {
+          errorInvalidArg('game is not GameDarkAge');
+          return;
+        }
+        final gameDarkAge = player.game as GameDarkAge;
+        gameDarkAge.underground = !gameDarkAge.underground;
+        break;
       case EditRequest.Spawn_AI:
         player.game.clearSpawnedAI();
         player.game.scene.refreshSpawnPoints();

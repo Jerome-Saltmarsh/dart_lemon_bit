@@ -381,6 +381,9 @@ class GameNetwork {
   static void sendClientRequestModifyCanvasSize(RequestModifyCanvasSize request) =>
       sendClientRequestEdit(EditRequest.Modify_Canvas_Size, request.index);
 
+  static void sendClientRequestEditSceneToggleUnderground() =>
+      sendClientRequestEdit(EditRequest.Scene_Toggle_Underground);
+
   static void sendClientRequestEdit(EditRequest request, [dynamic message = null]) =>
       sendClientRequest(ClientRequest.Edit, '${request.index} $message');
 

@@ -4,4 +4,5 @@ enum EditRequest {
    Save,
    Spawn_AI,
    Clear_Spawned,
+   Scene_Toggle_Underground,
 }

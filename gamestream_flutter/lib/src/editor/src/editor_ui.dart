@@ -145,12 +145,19 @@ class EditorUI {
                   ],
                 ),
                 height16,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    text("Underground"),
-                    watch(ServerState.sceneUnderground, text),
-                  ],
+                onPressed(
+                  action: GameNetwork.sendClientRequestEditSceneToggleUnderground,
+                  child: Container(
+                    color: Colors.white12,
+                    padding: const EdgeInsets.all(5),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        text("Underground"),
+                        watch(ServerState.sceneUnderground, text),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),
