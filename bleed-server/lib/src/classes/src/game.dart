@@ -862,6 +862,7 @@ abstract class Game {
         if (!colliderJ.collidable) continue;
         if (colliderJ.top > colliderIBottom) break;
         if (colliderJ.left > colliderI.right) continue;
+        if (colliderJ.right < colliderI.left) continue;
         if (colliderJ.bottom < colliderI.top) continue;
         if ((colliderJ.z - colliderI.z).abs() > Node_Height) continue;
         internalOnCollisionBetweenColliders(colliderJ, colliderI);
