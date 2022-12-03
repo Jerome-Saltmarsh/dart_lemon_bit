@@ -191,10 +191,10 @@ class Connection {
         player.textDuration = 150;
         break;
 
-      case ClientRequest.Save_Scene:
-        final scene = convertSceneToString(player.scene);
-        reply('scene: $scene');
-        break;
+      // case ClientRequest.Save_Scene:
+      //   final scene = convertSceneToString(player.scene);
+      //   reply('scene: $scene');
+      //   break;
 
       case ClientRequest.Teleport_Scene:
         final sceneIndex = parse(arguments[1]);
@@ -244,20 +244,6 @@ class Connection {
           final hour = parse(arguments[1]);
           if (hour == null) return errorInvalidArg('hour required');
           player.game.setHourMinutes(hour, 0);
-          break;
-
-      case ClientRequest.Editor_Set_Scene_Name:
-          if (game is GameDarkAgeEditor == false) {
-             return errorInvalidArg('game type must be GameDarkAgeEditor');
-          }
-          var name = "";
-          for (var i = 1; i < arguments.length; i++){
-             name += arguments[i];
-          }
-          final scene = player.game.scene;
-          scene.name = name;
-          writeSceneToFile(scene);
-          player.writeSceneMetaData();
           break;
 
       default:
@@ -370,6 +356,11 @@ class Connection {
     }
     final editRequest = EditRequest.values[editRequestIndex];
     switch (editRequest) {
+      case EditRequest.Download:
+        final scene = convertSceneToString(player.scene);
+        reply('scene: $scene');
+        break;
+
       case EditRequest.Scene_Set_Floor_Type:
         final nodeType = parseArg2(arguments);
         if (nodeType == null) return;

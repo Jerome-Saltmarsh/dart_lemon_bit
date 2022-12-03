@@ -3,6 +3,9 @@ import 'package:gamestream_flutter/library.dart';
 
 class EditorActions {
 
+  static void downloadScene() =>
+      GameNetwork.sendClientRequestEdit(EditRequest.Download);
+
   static void toggleWindowEnabledScene(){
     EditorState.windowEnabledScene.value = !EditorState.windowEnabledScene.value;
   }

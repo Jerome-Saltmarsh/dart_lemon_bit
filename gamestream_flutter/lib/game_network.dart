@@ -272,13 +272,13 @@ class GameNetwork {
     sendClientRequest(ClientRequest.Editor_Load_Game, name);
   }
 
-  static void sendClientRequestEditorSetSceneName(String name){
-    sendClientRequest(ClientRequest.Editor_Set_Scene_Name, name);
-  }
+  // static void sendClientRequestEditorSetSceneName(String name){
+  //   sendClientRequest(ClientRequest.Editor_Set_Scene_Name, name);
+  // }
 
-  static void sendClientRequestSubmitPlayerDesign(){
-    sendClientRequest(ClientRequest.Submit_Player_Design);
-  }
+  // static void sendClientRequestSubmitPlayerDesign(){
+  //   sendClientRequest(ClientRequest.Submit_Player_Design);
+  // }
 
   static void sendClientRequestNpcSelectTopic(int index) =>
       sendClientRequest(ClientRequest.Npc_Talk_Select_Option, index);

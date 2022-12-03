@@ -115,7 +115,7 @@ class EditorUI {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                container(child: "DOWNLOAD", action: GameEditor.actionGameDialogShowSceneSave),
+                container(child: "DOWNLOAD", action: EditorActions.downloadScene),
                 container(child: "UPLOAD", action: GameEditor.editorLoadScene),
                 container(child: "EDIT", action: EditorActions.toggleWindowEnabledScene),
                 container(child: "MAP SIZE", action: EditorActions.toggleWindowEnabledCanvasSize),

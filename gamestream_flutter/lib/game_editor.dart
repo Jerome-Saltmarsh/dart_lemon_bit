@@ -207,9 +207,6 @@ class GameEditor {
         GameEditor.z,
       );
 
-  static void requestSaveScene() =>
-    GameNetwork.sendClientRequest(ClientRequest.Save_Scene);
-
   static void onChangedPaintType(int type) {
     if (!NodeType.supportsOrientation(type, paintOrientation.value))
       return setPaintOrientationNone();

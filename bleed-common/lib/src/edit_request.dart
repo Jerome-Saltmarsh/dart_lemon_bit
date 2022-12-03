@@ -1,4 +1,5 @@
 enum EditRequest {
+   Download,
    Spawn_Zombie,
    Modify_Canvas_Size,
    Save,

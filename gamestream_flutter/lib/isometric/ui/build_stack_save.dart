@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import 'constants/colors.dart';
@@ -19,7 +18,7 @@ Widget buildControlSceneName(){
             children: [
               text("Enter a name"),
               buildTextFieldName(),
-              buildButtonSubmit(),
+              // buildButtonSubmit(),
             ],
           ),
         );
@@ -28,19 +27,19 @@ Widget buildControlSceneName(){
   });
 }
 
-Widget buildButtonSubmit(){
-  return watch(enteredSceneNameText, (String name) =>
-       container(
-           child: "SUBMIT",
-           action: name.isEmpty ? null : onButtonPressedSubmit,
-           color: name.isEmpty ? grey : greyDark,
-       )
-  );
-}
+// Widget buildButtonSubmit(){
+//   return watch(enteredSceneNameText, (String name) =>
+//        container(
+//            child: "SUBMIT",
+//            action: name.isEmpty ? null : onButtonPressedSubmit,
+//            color: name.isEmpty ? grey : greyDark,
+//        )
+//   );
+// }
 
-void onButtonPressedSubmit(){
-  GameNetwork.sendClientRequestEditorSetSceneName(sceneNameController.text);
-}
+// void onButtonPressedSubmit(){
+//   GameNetwork.sendClientRequestEditorSetSceneName(sceneNameController.text);
+// }
 
 void onSceneNamedChanged(){
   enteredSceneNameText.value = sceneNameController.text;

@@ -14,10 +14,10 @@ class ClientRequest {
   static const Weather_Toggle_Breeze = 18;
   static const Weather_Toggle_Time_Passing = 19;
   static const Editor_Load_Game = 20;
-  static const Save_Scene = 21;
-  static const Editor_Set_Scene_Name = 22;
+  // static const Save_Scene = 21;
+  // static const Editor_Set_Scene_Name = 22;
   static const Time_Set_Hour = 23;
-  static const Submit_Player_Design = 24;
+  // static const Submit_Player_Design = 24;
   static const Npc_Talk_Select_Option = 25;
   static const GameObject = 26;
   static const Node = 27;

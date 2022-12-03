@@ -53,6 +53,11 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] spawn-node character type
 [ ] fix editor export scene to json
 
+04.12.2022
+[x] editor fixed navigation icons
+[x] editor fixed weather controls layout
+[x] editor canvas size window
+
 03.12.2022
 [x] max item quantity 
 [x] stack item type resources 
