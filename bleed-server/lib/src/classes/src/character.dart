@@ -29,6 +29,7 @@ abstract class Character extends Collider {
   var performZ = 0.0;
   var characterType = 0;
   var lookRadian = 0.0;
+  var name = "";
 
   /// PROPERTIES
   bool get characterTypeZombie => characterType == CharacterType.Zombie;
@@ -156,9 +157,7 @@ abstract class Character extends Collider {
     weaponStateDuration = weaponStateDurationTotal;
   }
 
-  // void write(Player player);
-
-    Character({
+  Character({
     required this.characterType,
     required int health,
     required this.bodyType,
@@ -169,12 +168,15 @@ abstract class Character extends Collider {
     double x = 0,
     double y = 0,
     double z = 0,
-
+    String? name,
   }) : super(x: x, y: y, z: z, radius: 7) {
     maxHealth = health;
     this.health = health;
     this.team = team;
     this.damage = damage;
+    if (name != null){
+      this.name = name;
+    }
   }
 
   void setCharacterStatePerforming({required int duration}){

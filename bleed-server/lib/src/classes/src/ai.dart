@@ -6,10 +6,10 @@ import 'package:bleed_server/gamestream.dart';
 
 class AI extends Character {
   static const AI_Path_Size = 80;
+  static const Destination_Radius = 15;
 
   final pathX = Uint16List(AI_Path_Size);
   final pathY = Uint16List(AI_Path_Size);
-  final String name;
   var viewRange = 300.0;
   var chaseRange = 500.0;
   var pathIndex = 0;
@@ -23,14 +23,8 @@ class AI extends Character {
   var wanderPause = randomInt(300, 500);
   var wanderRadius = 0.0;
   var nextTeleport = randomInt(500, 1000);
+  var aiMode = AIMode.Idle;
   Function(Player player)? onInteractedWith;
-
-  bool get arrivedAtDest {
-    const radius = 15;
-    if ((x - destX).abs() > radius) return false;
-    if ((y - destY).abs() > radius) return false;
-    return true;
-  }
 
   AI({
     required int characterType,
@@ -43,7 +37,7 @@ class AI extends Character {
     double y = 0,
     double z = 0,
     this.onInteractedWith,
-    this.name = "",
+    String? name,
   }): super(
       characterType: characterType,
       x: x,
@@ -61,6 +55,10 @@ class AI extends Character {
     spawnY = y;
     spawnZ = z;
   }
+
+  bool get arrivedAtDest =>
+    (x - destX).abs() < Destination_Radius ||
+    (y - destY).abs() < Destination_Radius ;
 
   void clearPath() {
     pathIndex = -1;
