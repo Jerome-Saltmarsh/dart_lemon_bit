@@ -1162,14 +1162,38 @@ abstract class Game {
              setCharacterStateRunning(player);
              return;
            } else {
+             var quantityRemaining = target.quantity;
+             final maxQuantity = ItemType.getMaxQuantity(target.type);
+             if (maxQuantity > 1) {
+               for (var i = 0; i < player.inventory.length; i++){
+                  if (player.inventory[i] != target.type) continue;
+                  if (player.inventoryQuantity[i] + quantityRemaining < maxQuantity){
+                    player.inventoryQuantity[i] += quantityRemaining;
+                    player.inventoryDirty = true;
+                    deactivateGameObject(target);
+                    player.writePlayerEvent(PlayerEvent.Item_Picked_Up);
+                    clearCharacterTarget(player);
+                    return;
+                  } else {
+                    quantityRemaining -= maxQuantity - player.inventoryQuantity[i];
+                    player.inventoryQuantity[i] = maxQuantity;
+                    player.inventoryDirty = true;
+                  }
+               }
+             }
+
              final emptyInventoryIndex = player.getEmptyInventoryIndex();
              if (emptyInventoryIndex != null){
                 player.inventory[emptyInventoryIndex] = target.type;
-                player.inventoryQuantity[emptyInventoryIndex] = target.quantity;
+                player.inventoryQuantity[emptyInventoryIndex] = min(quantityRemaining, maxQuantity);
                 player.inventoryDirty = true;
                 deactivateGameObject(target);
                 player.writePlayerEvent(PlayerEvent.Item_Picked_Up);
                 clearCharacterTarget(player);
+             } else {
+               clearCharacterTarget(player);
+               player.writePlayerEventInventoryFull();
+               return;
              }
              clearCharacterTarget(player);
              return;

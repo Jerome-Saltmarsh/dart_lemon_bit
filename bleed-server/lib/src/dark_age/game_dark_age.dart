@@ -108,11 +108,6 @@ class GameDarkAge extends Game {
         team: 1,
     );
 
-    // player.indexZ = 1;
-    // player.indexRow = 16;
-    // player.indexColumn = 21;
-    // player.x += giveOrTake(5);
-    // player.y += giveOrTake(5);
     return player;
   }
 
