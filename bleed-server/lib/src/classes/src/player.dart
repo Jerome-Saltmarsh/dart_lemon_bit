@@ -1437,9 +1437,9 @@ class Player extends Character with ByteWriter {
 
   void writeGrid() {
     writeByte(ServerResponse.Grid);
-    writeInt(scene.gridHeight);
-    writeInt(scene.gridRows);
-    writeInt(scene.gridColumns);
+    writeUInt16(scene.gridHeight);
+    writeUInt16(scene.gridRows);
+    writeUInt16(scene.gridColumns);
     var previousType = scene.nodeTypes[0];
     var previousOrientation = scene.nodeOrientations[0];
     var count = 0;

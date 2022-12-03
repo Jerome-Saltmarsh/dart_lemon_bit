@@ -465,9 +465,9 @@ class ServerResponseReader with ByteReader {
   }
 
   void readGrid() {
-    GameState.nodesTotalZ = readInt();
-    GameState.nodesTotalRows = readInt();
-    GameState.nodesTotalColumns = readInt();
+    GameState.nodesTotalZ = readUInt16();
+    GameState.nodesTotalRows = readUInt16();
+    GameState.nodesTotalColumns = readUInt16();
     GameState.nodesArea = GameState.nodesTotalRows * GameState.nodesTotalColumns;
     final totalNodes = GameState.nodesTotalZ * GameState.nodesTotalRows * GameState.nodesTotalColumns;
     if (GameNodes.nodesType.length < totalNodes) {
@@ -520,6 +520,7 @@ class ServerResponseReader with ByteReader {
     GameEvents.onChangedNodes();
     onChangedScene();
   }
+
 
   void readPaths() {
     GameUI.debug.value = true;
