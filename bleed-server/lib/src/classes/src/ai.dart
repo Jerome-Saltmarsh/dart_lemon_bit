@@ -148,14 +148,14 @@ class AI extends Character {
         case AIMode.Encircle_CW:
           final targetAngle = getAngleBetween(target.x, target.y, x, y) + piEighth;
           final distance = getDistanceBetweenV3(this, target);
-          destX = x + getAdjacent(targetAngle, distance);
-          destY = y + getOpposite(targetAngle, distance);
+          destX = target.x + getAdjacent(targetAngle, distance);
+          destY = target.y + getOpposite(targetAngle, distance);
           break;
         case AIMode.Encircle_CCW:
           final targetAngle = getAngleBetween(target.x, target.y, x, y) - piEighth;
           final distance = getDistanceBetweenV3(this, target);
-          destX = x + getAdjacent(targetAngle, distance);
-          destY = y + getOpposite(targetAngle, distance);
+          destX = target.x + getAdjacent(targetAngle, distance);
+          destY = target.y + getOpposite(targetAngle, distance);
           break;
       }
     }
