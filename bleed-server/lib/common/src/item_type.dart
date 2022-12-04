@@ -396,7 +396,7 @@ class ItemType {
       Weapon_Rifle_AK_47: 400,
       Weapon_Rifle_M4: 420,
       Weapon_Rifle_Steyr: 430,
-      Weapon_Rifle_Sniper: 650,
+      Weapon_Rifle_Sniper: 750,
       Weapon_Smg_Mp5: 270,
       Weapon_Flamethrower: 150,
       Weapon_Special_Bazooka: 350,

@@ -68,10 +68,6 @@ class GameRender {
   static var nodesMaxZ = 0;
   static var nodesMinZ = 0;
 
-  static final maxZRender = Watch<int>(GameState.nodesTotalZ, clamp: (int value){
-    return clamp<int>(value, 0, max(GameState.nodesTotalZ - 1, 0));
-  });
-
   static double get currentNodeRenderX => (currentNodeRow - currentNodeColumn) * Node_Size_Half;
   static double get currentNodeRenderY => GameConvert.rowColumnZToRenderY(currentNodeRow, currentNodeColumn, currentNodeZ);
 
@@ -775,18 +771,6 @@ class GameRender {
     playerRenderColumn = playerColumn - (GamePlayer.position.indexZ ~/ 2);
     nodesPlayerUnderRoof = GameState.gridIsUnderSomething(playerZ, playerRow, playerColumn);
 
-    indexShow = GameQueries.inBoundsVector3(GamePlayer.position) ? GamePlayer.position.nodeIndex : 0;
-    indexShowRow = GameState.convertNodeIndexToRow(indexShow);
-    indexShowColumn = GameState.convertNodeIndexToColumn(indexShow);
-    indexShowZ = GameState.convertNodeIndexToZ(indexShow);
-
-    indexShowPerceptible =
-        GameState.gridIsPerceptible(indexShow) &&
-            GameState.gridIsPerceptible(indexShow + 1) &&
-            GameState.gridIsPerceptible(indexShow - 1) &&
-            GameState.gridIsPerceptible(indexShow + GameState.nodesTotalColumns) &&
-            GameState.gridIsPerceptible(indexShow - GameState.nodesTotalColumns) &&
-            GameState.gridIsPerceptible(indexShow + GameState.nodesTotalColumns + 1) ;
 
     screenRight = Engine.screen.right + Node_Size;
     screenLeft = Engine.screen.left - Node_Size;
@@ -832,13 +816,25 @@ class GameRender {
     }
     GameNodes.nodesVisible[GameNodes.nodesVisibleIndex[0]] = true;
 
+    indexShow = GameQueries.inBoundsVector3(GamePlayer.position) ? GamePlayer.position.nodeIndex : 0;
+
+    indexShowPerceptible =
+        GameState.gridIsPerceptible(indexShow) &&
+            GameState.gridIsPerceptible(indexShow + 1) &&
+            GameState.gridIsPerceptible(indexShow - 1) &&
+            GameState.gridIsPerceptible(indexShow + GameState.nodesTotalColumns) &&
+            GameState.gridIsPerceptible(indexShow - GameState.nodesTotalColumns) &&
+            GameState.gridIsPerceptible(indexShow + GameState.nodesTotalColumns + 1) ;
 
     if (!indexShowPerceptible) {
+      indexShowRow = GameState.convertNodeIndexToRow(indexShow);
+      indexShowColumn = GameState.convertNodeIndexToColumn(indexShow);
+      indexShowZ = GameState.convertNodeIndexToZ(indexShow);
       const radius = 3;
-      for (var r = -radius; r <= radius + 2; r++){
-        for (var c = -radius; c <= radius + 2; c++){
-          if (indexShowRow + r < 0) continue;
-          if (indexShowRow + r >= GameState.nodesTotalRows) continue;
+      for (var r = -radius; r <= radius + 2; r++) {
+        if (indexShowRow + r < 0) continue;
+        if (indexShowRow + r >= GameState.nodesTotalRows) continue;
+        for (var c = -radius; c <= radius + 2; c++) {
           if (indexShowColumn + c < 0) continue;
           if (indexShowColumn + c >= GameState.nodesTotalColumns) continue;
           nodesHideIndex(indexShow - (GameState.nodesTotalColumns * r) + c);
