@@ -837,22 +837,23 @@ class GameRender {
     GameNodes.nodesVisible[GameNodes.nodesVisibleIndex[0]] = true;
 
     if (GameQueries.inBoundsVector3(GamePlayer.position)){
-      showIndex(GamePlayer.position.nodeIndex + GameState.nodesArea + GameState.nodesArea);
       showIndex(GamePlayer.position.nodeIndex + GameState.nodesArea);
+      showIndex(GamePlayer.position.nodeIndex + GameState.nodesArea + GameState.nodesArea);
     }
 
-    // final mouseAngle = GameMouse.playerAngle;
-    // const mouseDistance = 100.0;
-    // final mousePositionX = Engine.calculateAdjacent(mouseAngle, mouseDistance);
-    // final mousePositionY = Engine.calculateOpposite(mouseAngle, mouseDistance);
-    // if (GameQueries.inBounds(mousePositionX, mousePositionY, GameMouse.positionZ)){
-    //   showIndex(GameMouse.nodeIndex);
-    // }
+    final mouseAngle = GameMouse.playerAngle;
+    const mouseDistance = 100.0;
+    final mousePositionX = Engine.calculateAdjacent(mouseAngle, mouseDistance);
+    final mousePositionY = Engine.calculateOpposite(mouseAngle, mouseDistance);
+    final x = GamePlayer.position.x - mousePositionX;
+    final y = GamePlayer.position.y - mousePositionY;
+    final z = GamePlayer.position.z;
+    final i = GameQueries.getNodeIndex(x, y, z);
 
-    // if (GameQueries.inBounds(GameMouse.positionX, GameMouse.positionY, GameMouse.positionZ)){
-    //   showIndex(GameMouse.nodeIndex);
-      // showIndex(GameMouse.nodeIndex + GameState.);
-    // }
+    if (GameQueries.inBounds(mousePositionX, mousePositionY, GameMouse.positionZ)){
+      showIndex(i + GameState.nodesArea);
+      showIndex(i + GameState.nodesArea + GameState.nodesArea);
+    }
 
     renderOrderGrid.total = renderOrderGrid.getTotal();
     renderOrderGrid.index = 0;
@@ -995,7 +996,7 @@ class GameRender {
   static void casteShadowDownV3(Vector3 vector3){
     if (vector3.z < Node_Height) return;
     if (vector3.z >= GameState.nodesLengthZ) return;
-    final nodeIndex = GameQueries.getGridNodeIndexV3(vector3);
+    final nodeIndex = GameQueries.getNodeIndexV3(vector3);
     if (nodeIndex > GameState.nodesArea) {
       final nodeBelowIndex = nodeIndex - GameState.nodesArea;
       final nodeBelowOrientation = GameNodes.nodesOrientation[nodeBelowIndex];

@@ -12,7 +12,7 @@ class Vector3 with Position {
   /// remove
   int get indexColumn => y ~/ Node_Size;
   /// remove
-  int get nodeIndex => GameQueries.getGridNodeIndexXYZ(x, y, z);
+  int get nodeIndex => GameQueries.getNodeIndex(x, y, z);
   double get renderOrder => x + y + (z * 0.25);
   /// remove
   double get renderX => (x - y) * 0.5;

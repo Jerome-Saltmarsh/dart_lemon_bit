@@ -12,6 +12,16 @@ class GameCanvas {
     );
   }
 
+  static void renderText({required double x, required double y, required double z, required String text}){
+    Engine.renderText(
+      text,
+      Engine.worldToScreenX(GameConvert.getRenderX(x, y, z)),
+      Engine.worldToScreenY(GameConvert.getRenderY(x, y, z)),
+      style: const TextStyle(color: Colors.white, fontSize: 18),
+    );
+  }
+
+
 
   static void renderForeground(Canvas canvas, Size size) {
     if (ClientState.hoverDialogType.value == DialogType.None){
@@ -25,6 +35,13 @@ class GameCanvas {
          // renderForegroundText(gameObject, ItemType.getName(gameObject.subType));
        // }
     // }
+
+    // renderText(
+    //     text: 'angle: ${GameMouse.playerAngle}',
+    //     x: GamePlayer.position.x,
+    //     y: GamePlayer.position.y,
+    //     z: GamePlayer.position.z,
+    // );
 
     const style = TextStyle(color: Colors.white, fontSize: 18);
     switch (GamePlayer.aimTargetCategory) {
@@ -120,6 +137,15 @@ class GameCanvas {
     GameRender.renderMouseTargetName();
     ClientState.rendersSinceUpdate.value++;
     renderPlayerRunTarget();
+
+    final mouseAngle = GameMouse.playerAngle;
+    const mouseDistance = 100.0;
+    final mousePositionX = Engine.calculateAdjacent(mouseAngle, mouseDistance);
+    final mousePositionY = Engine.calculateOpposite(mouseAngle, mouseDistance);
+    final x = GamePlayer.position.x - mousePositionX;
+    final y = GamePlayer.position.y - mousePositionY;
+    final z = GamePlayer.position.z;
+    GameRender.renderCircle32(x, y, z);
   }
 
   static void renderPlayerRunTarget(){

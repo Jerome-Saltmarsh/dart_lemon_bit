@@ -25,7 +25,7 @@ class GameQueries {
    }
 
    static bool isVisibleV3(Vector3 vector) =>
-       inBoundsVector3(vector) ? GameNodes.nodesVisible[getGridNodeIndexV3(vector)] : true;
+       inBoundsVector3(vector) ? GameNodes.nodesVisible[getNodeIndexV3(vector)] : true;
 
    static bool inBoundsVector3(Vector3 vector3) =>
        inBounds(vector3.x, vector3.y, vector3.z);
@@ -40,18 +40,25 @@ class GameQueries {
      return true;
    }
 
+   // static int getGridNodeIndexV3(Vector3 vector3) =>
+   //     getNodeIndex(
+   //         vector3.x, vector3.y, vector3.z
+   //     );
 
-   static int getGridNodeIndexV3(Vector3 vector3) =>
-       getGridNodeIndexXYZ(
-           vector3.x, vector3.y, vector3.z
-       );
-
-   static int getGridNodeIndexXYZ(double x, double y, double z) =>
+   static int getNodeIndex(double x, double y, double z) =>
        GameState.getNodeIndexZRC(
          z ~/ Node_Size_Half,
          x ~/ Node_Size,
          y ~/ Node_Size,
        );
+
+   static int getNodeIndexV3(Vector3 vector3) =>
+       GameState.getNodeIndexZRC(
+         vector3.indexZ,
+         vector3.indexRow,
+         vector3.indexColumn,
+       );
+
 
    static int gridNodeXYZTypeSafe(double x, double y, double z) {
      if (x < 0) return NodeType.Boundary;
@@ -129,12 +136,11 @@ class GameQueries {
      return (windLineRow - windLineColumn) * Node_Size_Half;
    }
 
-   static int getNodeIndexV3(Vector3 vector3) =>
-       GameState.getNodeIndexZRC(
-         vector3.indexZ,
-         vector3.indexRow,
-         vector3.indexColumn,
-       );
+   // static int getNodeIndex(double x, double y, double z){
+   //     final indexZ = z ~/ Node_Height;
+   //
+   //     return 0;
+   // }
 
    static int getNodeIndexBelowV3(Vector3 vector3) =>
        GameState.getNodeIndexZRC(
