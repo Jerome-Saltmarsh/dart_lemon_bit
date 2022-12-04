@@ -98,7 +98,7 @@ void renderCharacterTemplate(Character character, {
   } else
   if (character.weaponStateAiming) {
 
-    if (ItemType.isTypeWeaponMelee(character.weaponType) || ItemType.isTypeWeaponThrown(character.weaponType)){
+    if (ItemType.isTypeWeaponMelee(character.weaponType) || ItemType.isTypeWeaponThrown(character.weaponType)) {
       frameHead = TemplateAnimation.Frame_Aiming_Sword;
       frameBody = TemplateAnimation.Frame_Aiming_Sword;
       frameWeapon = TemplateAnimation.Frame_Aiming_Sword;

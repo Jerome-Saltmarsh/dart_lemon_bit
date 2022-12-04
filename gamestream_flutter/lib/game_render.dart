@@ -748,6 +748,32 @@ class GameRender {
     renderOrderGrid.order = ((currentNodeRow + currentNodeColumn) * Node_Size) + Node_Size_Half;
     renderOrderGrid.orderZ = currentNodeZ;
   }
+  
+  static void showIndex(int index){
+    indexShowPerceptible =
+        GameState.gridIsPerceptible(index) &&
+            GameState.gridIsPerceptible(index + 1) &&
+            GameState.gridIsPerceptible(index - 1) &&
+            GameState.gridIsPerceptible(index + GameState.nodesTotalColumns) &&
+            GameState.gridIsPerceptible(index - GameState.nodesTotalColumns) &&
+            GameState.gridIsPerceptible(index + GameState.nodesTotalColumns + 1) ;
+
+    if (!indexShowPerceptible) {
+      indexShowRow = GameState.convertNodeIndexToRow(index);
+      indexShowColumn = GameState.convertNodeIndexToColumn(index);
+      indexShowZ = GameState.convertNodeIndexToZ(index);
+      const radius = 3;
+      for (var r = -radius; r <= radius + 2; r++) {
+        if (indexShowRow + r < 0) continue;
+        if (indexShowRow + r >= GameState.nodesTotalRows) continue;
+        for (var c = -radius; c <= radius + 2; c++) {
+          if (indexShowColumn + c < 0) continue;
+          if (indexShowColumn + c >= GameState.nodesTotalColumns) continue;
+          nodesHideIndex(index - (GameState.nodesTotalColumns * r) + c);
+        }
+      }
+    }
+  }
 
   static void resetNodes() {
     nodesRowsMax = GameState.nodesTotalRows - 1;
@@ -816,30 +842,34 @@ class GameRender {
     }
     GameNodes.nodesVisible[GameNodes.nodesVisibleIndex[0]] = true;
 
-    indexShow = GameQueries.inBoundsVector3(GamePlayer.position) ? GamePlayer.position.nodeIndex : 0;
+    // indexShow = GameQueries.inBoundsVector3(GamePlayer.position) ? GamePlayer.position.nodeIndex : 0;
 
-    indexShowPerceptible =
-        GameState.gridIsPerceptible(indexShow) &&
-            GameState.gridIsPerceptible(indexShow + 1) &&
-            GameState.gridIsPerceptible(indexShow - 1) &&
-            GameState.gridIsPerceptible(indexShow + GameState.nodesTotalColumns) &&
-            GameState.gridIsPerceptible(indexShow - GameState.nodesTotalColumns) &&
-            GameState.gridIsPerceptible(indexShow + GameState.nodesTotalColumns + 1) ;
+    // indexShowPerceptible =
+    //     GameState.gridIsPerceptible(indexShow) &&
+    //         GameState.gridIsPerceptible(indexShow + 1) &&
+    //         GameState.gridIsPerceptible(indexShow - 1) &&
+    //         GameState.gridIsPerceptible(indexShow + GameState.nodesTotalColumns) &&
+    //         GameState.gridIsPerceptible(indexShow - GameState.nodesTotalColumns) &&
+    //         GameState.gridIsPerceptible(indexShow + GameState.nodesTotalColumns + 1) ;
 
-    if (!indexShowPerceptible) {
-      indexShowRow = GameState.convertNodeIndexToRow(indexShow);
-      indexShowColumn = GameState.convertNodeIndexToColumn(indexShow);
-      indexShowZ = GameState.convertNodeIndexToZ(indexShow);
-      const radius = 3;
-      for (var r = -radius; r <= radius + 2; r++) {
-        if (indexShowRow + r < 0) continue;
-        if (indexShowRow + r >= GameState.nodesTotalRows) continue;
-        for (var c = -radius; c <= radius + 2; c++) {
-          if (indexShowColumn + c < 0) continue;
-          if (indexShowColumn + c >= GameState.nodesTotalColumns) continue;
-          nodesHideIndex(indexShow - (GameState.nodesTotalColumns * r) + c);
-        }
-      }
+    // if (!indexShowPerceptible) {
+    //   indexShowRow = GameState.convertNodeIndexToRow(indexShow);
+    //   indexShowColumn = GameState.convertNodeIndexToColumn(indexShow);
+    //   indexShowZ = GameState.convertNodeIndexToZ(indexShow);
+    //   const radius = 3;
+    //   for (var r = -radius; r <= radius + 2; r++) {
+    //     if (indexShowRow + r < 0) continue;
+    //     if (indexShowRow + r >= GameState.nodesTotalRows) continue;
+    //     for (var c = -radius; c <= radius + 2; c++) {
+    //       if (indexShowColumn + c < 0) continue;
+    //       if (indexShowColumn + c >= GameState.nodesTotalColumns) continue;
+    //       nodesHideIndex(indexShow - (GameState.nodesTotalColumns * r) + c);
+    //     }
+    //   }
+    // }
+
+    if (GameQueries.inBoundsVector3(GamePlayer.position)){
+      showIndex(GamePlayer.position.nodeIndex);
     }
 
     renderOrderGrid.total = renderOrderGrid.getTotal();
