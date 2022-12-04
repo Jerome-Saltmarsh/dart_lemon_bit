@@ -885,6 +885,37 @@ class GameRender {
         GameNodes.nodesVisible[index] = false;
         GameNodes.nodesVisibleIndex[GameState.visibleIndex] = index;
         GameState.visibleIndex++;
+        row += 1;
+        column += 1;
+        z += 2;
+        index = (z * GameState.nodesArea) + (row * GameState.nodesTotalColumns) + column;
+        continue;
+      } else {
+        var nodeIndexBelow = index - GameState.nodesArea;
+
+        if (nodeIndexBelow < 0) continue;
+
+        if (GameNodes.nodesType[nodeIndexBelow] == NodeType.Empty) {
+          GameNodes.nodesVisible[index] = false;
+          GameNodes.nodesVisibleIndex[GameState.visibleIndex] = index;
+          GameState.visibleIndex++;
+          row += 1;
+          column += 1;
+          z += 2;
+          index = (z * GameState.nodesArea) + (row * GameState.nodesTotalColumns) + column;
+          continue;
+        }
+
+        if (!GameNodes.nodesVisible[nodeIndexBelow]){
+          GameNodes.nodesVisible[index] = false;
+          GameNodes.nodesVisibleIndex[GameState.visibleIndex] = index;
+          GameState.visibleIndex++;
+          row += 1;
+          column += 1;
+          z += 2;
+          index = (z * GameState.nodesArea) + (row * GameState.nodesTotalColumns) + column;
+          continue;
+        }
       }
       row += 1;
       column += 1;

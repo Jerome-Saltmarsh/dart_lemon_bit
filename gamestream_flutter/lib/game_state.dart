@@ -44,7 +44,6 @@ class GameState {
   static var nodesRaycast = 0;
   static var windLine = 0;
 
-
   static int get bodyPartDuration => randomInt(120, 200);
   static bool get playMode => !editMode;
   static bool get editMode => ClientState.edit.value;
