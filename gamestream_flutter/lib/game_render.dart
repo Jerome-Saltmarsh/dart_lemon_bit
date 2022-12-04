@@ -764,10 +764,7 @@ class GameRender {
         final column = indexColumn + c;
         if (column < 0) continue;
         if (column >= GameState.nodesTotalColumns) break;
-        final finalIndex = (indexZ * GameState.nodesArea) + (row * GameState.nodesTotalColumns) + column;
-        // if (column < GamePlayer.indexColumn) continue;
-        // if (row < GamePlayer.indexRow) continue;
-        nodesHideIndex(finalIndex);
+        nodesHideIndex(indexZ, row, column);
       }
     }
   }
@@ -852,10 +849,10 @@ class GameRender {
     //   showIndex(GameMouse.nodeIndex);
     // }
 
-    if (GameQueries.inBounds(GameMouse.positionX, GameMouse.positionY, GameMouse.positionZ)){
-      showIndex(GameMouse.nodeIndex);
+    // if (GameQueries.inBounds(GameMouse.positionX, GameMouse.positionY, GameMouse.positionZ)){
+    //   showIndex(GameMouse.nodeIndex);
       // showIndex(GameMouse.nodeIndex + GameState.);
-    }
+    // }
 
     renderOrderGrid.total = renderOrderGrid.getTotal();
     renderOrderGrid.index = 0;
@@ -873,11 +870,30 @@ class GameRender {
     highlightCharacterNearMouse();
   }
 
-  static void nodesHideIndex(int index){
+  static void nodesHideIndex(int z, int row, int column){
+    final index = (indexZ * GameState.nodesArea) + (row * GameState.nodesTotalColumns) + column;
+
     var i = index + GameState.nodesRaycast;
     while (i < GameNodes.nodesTotal) {
+      if (GameNodes.nodesType[i] == NodeType.Empty) {
+        i += GameState.nodesRaycast;
+        continue;
+      }
+
+      // final indexBelow = index - GameState.nodesArea;
+      // if (indexBelow >= 0){
+      //    if (GameNodes.nodesType[indexBelow] == NodeType.Empty){
+      //      GameNodes.nodesVisible[i] = false;
+      //      GameNodes.nodesVisibleIndex[GameState.visibleIndex] = i;
+      //      GameState.visibleIndex++;
+      //      i += GameState.nodesRaycast;
+      //      continue;
+      //    }
+      // }
+
       final row = GameState.convertNodeIndexToRow(i);
       final column = GameState.convertNodeIndexToColumn(i);
+
       if (column >= GamePlayer.indexColumn && row >= GamePlayer.indexRow) {
         GameNodes.nodesVisible[i] = false;
         GameNodes.nodesVisibleIndex[GameState.visibleIndex] = i;
