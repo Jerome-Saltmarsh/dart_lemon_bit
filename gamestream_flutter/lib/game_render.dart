@@ -750,29 +750,20 @@ class GameRender {
   }
   
   static void showIndex(int index){
-    indexShowPerceptible =
-        GameState.gridIsPerceptible(index) &&
-            GameState.gridIsPerceptible(index + 1) &&
-            GameState.gridIsPerceptible(index - 1) &&
-            GameState.gridIsPerceptible(index + GameState.nodesTotalColumns) &&
-            GameState.gridIsPerceptible(index - GameState.nodesTotalColumns) &&
-            GameState.gridIsPerceptible(index + GameState.nodesTotalColumns + 1) ;
-
-    if (!indexShowPerceptible) {
       indexShowRow = GameState.convertNodeIndexToRow(index);
       indexShowColumn = GameState.convertNodeIndexToColumn(index);
       indexShowZ = GameState.convertNodeIndexToZ(index);
       const radius = 3;
       for (var r = -radius; r <= radius + 2; r++) {
         if (indexShowRow + r < 0) continue;
-        if (indexShowRow + r >= GameState.nodesTotalRows) continue;
+        if (indexShowRow + r >= GameState.nodesTotalRows) break;
+        final row = (GameState.nodesTotalColumns * r);
         for (var c = -radius; c <= radius + 2; c++) {
           if (indexShowColumn + c < 0) continue;
-          if (indexShowColumn + c >= GameState.nodesTotalColumns) continue;
-          nodesHideIndex(index - (GameState.nodesTotalColumns * r) + c);
+          if (indexShowColumn + c >= GameState.nodesTotalColumns) break;
+          nodesHideIndex(index - row + c);
         }
       }
-    }
   }
 
   static void resetNodes() {
@@ -845,7 +836,12 @@ class GameRender {
     if (GameQueries.inBoundsVector3(GamePlayer.position)){
       showIndex(GamePlayer.position.nodeIndex);
     }
-    if (GameQueries.inBounds(GameMouse.positionX, GameMouse.positionY, GameMouse.positionZ)){
+
+    final mouseAngle = GameMouse.playerAngle;
+    const mouseDistance = 100.0;
+    final mousePositionX = Engine.calculateAdjacent(mouseAngle, mouseDistance);
+    final mousePositionY = Engine.calculateOpposite(mouseAngle, mouseDistance);
+    if (GameQueries.inBounds(mousePositionX, mousePositionY, GameMouse.positionZ)){
       showIndex(GameMouse.nodeIndex);
     }
 
