@@ -27,13 +27,16 @@ class GameQueries {
    static bool isVisibleV3(Vector3 vector) =>
        inBoundsVector3(vector) ? GameNodes.nodesVisible[getGridNodeIndexV3(vector)] : true;
 
-   static bool inBoundsVector3(Vector3 vector3){
-     if (vector3.x < 0) return false;
-     if (vector3.y < 0) return false;
-     if (vector3.z < 0) return false;
-     if (vector3.x >= GameState.nodesLengthRow) return false;
-     if (vector3.y >= GameState.nodesLengthColumn) return false;
-     if (vector3.z >= GameState.nodesLengthZ) return false;
+   static bool inBoundsVector3(Vector3 vector3) =>
+       inBounds(vector3.x, vector3.y, vector3.z);
+
+   static bool inBounds(double x, double y, double z){
+     if (x < 0) return false;
+     if (y < 0) return false;
+     if (z < 0) return false;
+     if (x >= GameState.nodesLengthRow) return false;
+     if (y >= GameState.nodesLengthColumn) return false;
+     if (z >= GameState.nodesLengthZ) return false;
      return true;
    }
 

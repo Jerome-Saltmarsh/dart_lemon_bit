@@ -40,6 +40,7 @@ class GameIO {
 
   static double get mouseGridX => GameConvert.convertWorldToGridX(Engine.mouseWorldX, Engine.mouseWorldY) + GamePlayer.position.z;
   static double get mouseGridY => GameConvert.convertWorldToGridY(Engine.mouseWorldX, Engine.mouseWorldY) + GamePlayer.position.z;
+  static double get mouseGridZ => GamePlayer.position.z;
 
   static void recenterCursor(){
     touchCursorWorldX = GamePlayer.renderX;
