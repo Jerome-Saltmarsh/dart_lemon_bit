@@ -840,7 +840,7 @@ class GameRender {
     showIndex(GamePlayer.position.nodeIndex + GameState.nodesArea + GameState.nodesArea);
 
     final mouseAngle = GameMouse.playerAngle;
-    const mouseDistance = 100.0;
+    final mouseDistance = min(200.0, GameMouse.playerDistance);
     final mousePositionX = Engine.calculateAdjacent(mouseAngle, mouseDistance);
     final mousePositionY = Engine.calculateOpposite(mouseAngle, mouseDistance);
     final x = GamePlayer.position.x - mousePositionX;
