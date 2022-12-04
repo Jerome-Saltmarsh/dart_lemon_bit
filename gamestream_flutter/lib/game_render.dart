@@ -837,7 +837,7 @@ class GameRender {
     GameNodes.nodesVisible[GameNodes.nodesVisibleIndex[0]] = true;
 
     if (GameQueries.inBoundsVector3(GamePlayer.position)){
-      showIndex(GamePlayer.position.nodeIndex);
+      showIndex(GamePlayer.position.nodeIndex + GameState.nodesArea + GameState.nodesArea);
       showIndex(GamePlayer.position.nodeIndex + GameState.nodesArea);
     }
 
@@ -871,35 +871,25 @@ class GameRender {
   }
 
   static void nodesHideIndex(int z, int row, int column){
-    final index = (indexZ * GameState.nodesArea) + (row * GameState.nodesTotalColumns) + column;
-
-    var i = index + GameState.nodesRaycast;
-    while (i < GameNodes.nodesTotal) {
-      if (GameNodes.nodesType[i] == NodeType.Empty) {
-        i += GameState.nodesRaycast;
+    var index = (z * GameState.nodesArea) + (row * GameState.nodesTotalColumns) + column;
+    while (index < GameNodes.nodesTotal) {
+      if (GameNodes.nodesType[index] == NodeType.Empty) {
+        row += 1;
+        column += 1;
+        z += 2;
+        index = (z * GameState.nodesArea) + (row * GameState.nodesTotalColumns) + column;
         continue;
       }
 
-      // final indexBelow = index - GameState.nodesArea;
-      // if (indexBelow >= 0){
-      //    if (GameNodes.nodesType[indexBelow] == NodeType.Empty){
-      //      GameNodes.nodesVisible[i] = false;
-      //      GameNodes.nodesVisibleIndex[GameState.visibleIndex] = i;
-      //      GameState.visibleIndex++;
-      //      i += GameState.nodesRaycast;
-      //      continue;
-      //    }
-      // }
-
-      final row = GameState.convertNodeIndexToRow(i);
-      final column = GameState.convertNodeIndexToColumn(i);
-
       if (column >= GamePlayer.indexColumn && row >= GamePlayer.indexRow) {
-        GameNodes.nodesVisible[i] = false;
-        GameNodes.nodesVisibleIndex[GameState.visibleIndex] = i;
+        GameNodes.nodesVisible[index] = false;
+        GameNodes.nodesVisibleIndex[GameState.visibleIndex] = index;
         GameState.visibleIndex++;
       }
-      i += GameState.nodesRaycast;
+      row += 1;
+      column += 1;
+      z += 2;
+      index = (z * GameState.nodesArea) + (row * GameState.nodesTotalColumns) + column;
     }
   }
 
