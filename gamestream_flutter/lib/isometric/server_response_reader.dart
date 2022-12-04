@@ -470,6 +470,7 @@ class ServerResponseReader with ByteReader {
       GameNodes.nodesDynamicIndex = Uint16List(totalNodes);
     }
     GameNodes.nodesTotal = totalNodes;
+    GameState.nodesRaycast = GameState.nodesArea +  GameState.nodesArea + GameState.nodesTotalColumns + 1;
 
     var gridIndex = 0;
     var total = 0;

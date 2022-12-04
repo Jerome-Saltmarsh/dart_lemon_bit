@@ -7,46 +7,8 @@ import 'render_node_window.dart';
 import 'render_node_wooden_plank.dart';
 
 void renderNodeAt() {
-  if (!GameRender.currentNodeVisible && GameRender.currentNodeOrientation != NodeOrientation.None) {
-    if (GameRender.currentNodeIndex > GameState.nodesArea){
-        final nodeBelowIndex = GameRender.currentNodeIndex - GameState.nodesArea;
-        final nodeBelowOrientation = GameNodes.nodesOrientation[nodeBelowIndex];
-        if (nodeBelowOrientation == NodeOrientation.None) {
-           return;
-        }
-        final renderNodeIndexColumn = GameState.convertNodeIndexToColumn(GameRender.currentNodeIndex);
-        final renderNodeIndexRow = GameState.convertNodeIndexToRow(GameRender.currentNodeIndex);
-        final renderNodeIndexZ = GameState.convertNodeIndexToZ(GameRender.currentNodeIndex);
-        final zDiff = (renderNodeIndexZ - GameRender.indexShowZ).abs();
+  if (!GameRender.currentNodeVisible) return;
 
-        if (renderNodeIndexColumn > GameRender.indexShowColumn && renderNodeIndexRow > GameRender.indexShowRow){
-          if (zDiff > 2 ){
-            return;
-          }
-          var orientation = GameNodes.nodesOrientation[GameRender.currentNodeIndex];
-          var srcY = 0.0;
-          if (orientation == NodeOrientation.Solid) {
-            srcY = 0;
-          } else
-          if (orientation == NodeOrientation.Slope_North) {
-            srcY = GameConstants.Sprite_Height * 1;
-          } else
-          if (orientation == NodeOrientation.Slope_East) {
-            srcY = GameConstants.Sprite_Height * 2;
-          } else
-          if (orientation == NodeOrientation.Slope_South) {
-            srcY = GameConstants.Sprite_Height * 3;
-          } else
-          if (orientation == NodeOrientation.Slope_West) {
-            srcY = GameConstants.Sprite_Height * 4;
-          }
-          return RenderNode.renderStandardNode(
-            srcX: 8801,
-            srcY: srcY,
-          );
-        }
-    }
-  }
   switch (GameRender.currentNodeType) {
     case NodeType.Grass:
       return renderNodeTypeGrass();

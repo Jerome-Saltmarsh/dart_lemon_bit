@@ -41,6 +41,7 @@ class GameState {
   static var nodesLengthColumn = 0.0;
   static var nodesLengthZ = 0.0;
   static var nodesArea = 0;
+  static var nodesRaycast = 0;
   static var windLine = 0;
 
 

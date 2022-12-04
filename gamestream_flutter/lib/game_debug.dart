@@ -81,6 +81,7 @@ class GameDebug {
                             watch(GameIO.inputMode, (int inputMode) => text("input-mode: ${InputMode.getName(inputMode)}", onPressed: GameIO.actionToggleInputMode)),
                             watch(Engine.watchMouseLeftDown, (bool mouseLeftDown) => text("mouse-left-down: $mouseLeftDown")),
                             watch(Engine.mouseRightDown, (bool rightDown) => text("mouse-right-down: $rightDown")),
+                            watch(GameEditor.nodeSelectedIndex, (int index) => text("edit-state-node-index: $index")),
                           ],
                         ),
                       ),

@@ -46,9 +46,9 @@ class GameRender {
   static var currentNodeType = 0;
 
   static var indexShow = 0;
-  static var indexShowRow = 0;
-  static var indexShowColumn = 0;
-  static var indexShowZ = 0;
+  static var indexRow = 0;
+  static var indexColumn = 0;
+  static var indexZ = 0;
 
   static late Particle currentParticle;
   static late Character currentRenderCharacter;
@@ -749,21 +749,25 @@ class GameRender {
     renderOrderGrid.orderZ = currentNodeZ;
   }
   
-  static void showIndex(int index){
-      indexShowRow = GameState.convertNodeIndexToRow(index);
-      indexShowColumn = GameState.convertNodeIndexToColumn(index);
-      indexShowZ = GameState.convertNodeIndexToZ(index);
-      const radius = 3;
-      for (var r = -radius; r <= radius + 2; r++) {
-        if (indexShowRow + r < 0) continue;
-        if (indexShowRow + r >= GameState.nodesTotalRows) break;
-        final row = (GameState.nodesTotalColumns * r);
-        for (var c = -radius; c <= radius + 2; c++) {
-          if (indexShowColumn + c < 0) continue;
-          if (indexShowColumn + c >= GameState.nodesTotalColumns) break;
-          nodesHideIndex(index - row + c);
-        }
+  static void showIndex(int index) {
+    if (index < 0) return;
+    if (index >= GameNodes.nodesTotal) return;
+    indexZ = GameState.convertNodeIndexToZ(index);
+    indexRow = GameState.convertNodeIndexToRow(index);
+    indexColumn = GameState.convertNodeIndexToColumn(index);
+    const radius = 3;
+    for (var r = -radius; r <= radius + 2; r++) {
+      final row = indexRow + r;
+      if (row < 0) continue;
+      if (row >= GameState.nodesTotalRows) break;
+      for (var c = -radius; c <= radius + 2; c++) {
+        final column = indexColumn + c;
+        if (column < 0) continue;
+        if (column >= GameState.nodesTotalColumns) break;
+        final finalIndex = (indexZ * GameState.nodesArea) + (row * GameState.nodesTotalColumns) + column;
+        nodesHideIndex(finalIndex);
       }
+    }
   }
 
   static void resetNodes() {
@@ -835,14 +839,20 @@ class GameRender {
 
     if (GameQueries.inBoundsVector3(GamePlayer.position)){
       showIndex(GamePlayer.position.nodeIndex);
+      showIndex(GamePlayer.position.nodeIndex + GameState.nodesArea);
     }
 
-    final mouseAngle = GameMouse.playerAngle;
-    const mouseDistance = 100.0;
-    final mousePositionX = Engine.calculateAdjacent(mouseAngle, mouseDistance);
-    final mousePositionY = Engine.calculateOpposite(mouseAngle, mouseDistance);
-    if (GameQueries.inBounds(mousePositionX, mousePositionY, GameMouse.positionZ)){
+    // final mouseAngle = GameMouse.playerAngle;
+    // const mouseDistance = 100.0;
+    // final mousePositionX = Engine.calculateAdjacent(mouseAngle, mouseDistance);
+    // final mousePositionY = Engine.calculateOpposite(mouseAngle, mouseDistance);
+    // if (GameQueries.inBounds(mousePositionX, mousePositionY, GameMouse.positionZ)){
+    //   showIndex(GameMouse.nodeIndex);
+    // }
+
+    if (GameQueries.inBounds(GameMouse.positionX, GameMouse.positionY, GameMouse.positionZ)){
       showIndex(GameMouse.nodeIndex);
+      // showIndex(GameMouse.nodeIndex + GameState.);
     }
 
     renderOrderGrid.total = renderOrderGrid.getTotal();
@@ -862,21 +872,12 @@ class GameRender {
   }
 
   static void nodesHideIndex(int index){
-    var i = index + GameState.nodesArea + GameState.nodesTotalColumns + 1;
-    while (true) {
-      if (i >= GameNodes.nodesTotal) break;
+    var i = index + GameState.nodesRaycast;
+    while (i < GameNodes.nodesTotal) {
       GameNodes.nodesVisible[i] = false;
       GameNodes.nodesVisibleIndex[GameState.visibleIndex] = i;
       GameState.visibleIndex++;
-      i += GameState.nodesArea + GameState.nodesArea + GameState.nodesTotalColumns + 1;
-    }
-    i = index + GameState.nodesArea + GameState.nodesArea + GameState.nodesTotalColumns + 1;
-    while (true) {
-      if (i >= GameNodes.nodesTotal) break;
-      GameNodes.nodesVisible[i] = false;
-      GameNodes.nodesVisibleIndex[GameState.visibleIndex] = i;
-      GameState.visibleIndex++;
-      i += GameState.nodesArea + GameState.nodesArea + GameState.nodesTotalColumns + 1;
+      i += GameState.nodesRaycast;
     }
   }
 
