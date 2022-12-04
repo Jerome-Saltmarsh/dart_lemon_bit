@@ -764,7 +764,7 @@ class GameRender {
         final column = indexColumn + c;
         if (column < 0) continue;
         if (column >= GameState.nodesTotalColumns) break;
-        nodesHideIndex(indexZ, row, column);
+        nodesHideIndex(indexZ, row, column, indexRow, indexColumn);
       }
     }
   }
@@ -836,10 +836,8 @@ class GameRender {
     }
     GameNodes.nodesVisible[GameNodes.nodesVisibleIndex[0]] = true;
 
-    if (GameQueries.inBoundsVector3(GamePlayer.position)){
-      showIndex(GamePlayer.position.nodeIndex + GameState.nodesArea);
-      showIndex(GamePlayer.position.nodeIndex + GameState.nodesArea + GameState.nodesArea);
-    }
+    showIndex(GamePlayer.position.nodeIndex + GameState.nodesArea);
+    showIndex(GamePlayer.position.nodeIndex + GameState.nodesArea + GameState.nodesArea);
 
     final mouseAngle = GameMouse.playerAngle;
     const mouseDistance = 100.0;
@@ -850,10 +848,8 @@ class GameRender {
     final z = GamePlayer.position.z;
     final i = GameQueries.getNodeIndex(x, y, z);
 
-    if (GameQueries.inBounds(mousePositionX, mousePositionY, GameMouse.positionZ)){
-      showIndex(i + GameState.nodesArea);
-      showIndex(i + GameState.nodesArea + GameState.nodesArea);
-    }
+    showIndex(i + GameState.nodesArea);
+    showIndex(i + GameState.nodesArea + GameState.nodesArea);
 
     renderOrderGrid.total = renderOrderGrid.getTotal();
     renderOrderGrid.index = 0;
@@ -871,7 +867,8 @@ class GameRender {
     highlightCharacterNearMouse();
   }
 
-  static void nodesHideIndex(int z, int row, int column){
+  static void nodesHideIndex(int z, int row, int column, int initRow, int initColumn){
+
     var index = (z * GameState.nodesArea) + (row * GameState.nodesTotalColumns) + column;
     while (index < GameNodes.nodesTotal) {
       if (GameNodes.nodesType[index] == NodeType.Empty) {
@@ -882,7 +879,7 @@ class GameRender {
         continue;
       }
 
-      if (column >= GamePlayer.indexColumn && row >= GamePlayer.indexRow) {
+      if (column >= initColumn && row >= initRow) {
         GameNodes.nodesVisible[index] = false;
         GameNodes.nodesVisibleIndex[GameState.visibleIndex] = index;
         GameState.visibleIndex++;
