@@ -52,12 +52,14 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] catacombs cemetery entrance
 [ ] spawn-node character type
 [ ] fix editor export scene to json
-[ ] game casual 
 [ ] game 5v5
 [ ] game royal
 [ ] game waves
+[ ] game casual
 
 04.12.2022
+[x] fix sword slash animation
+[x] fix sword aim animation
 [x] editor fixed navigation icons
 [x] editor fixed weather controls layout
 [x] editor canvas size window

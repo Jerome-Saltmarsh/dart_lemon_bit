@@ -404,7 +404,7 @@ abstract class Game {
     if (player.damage <= 0){
       throw Exception('game.playerAttackMelee player.damage <= 0');
     }
-    final attackRadius = 35.0;
+    final attackRadius = player.weaponTypeRange;
 
     final performX = player.x + getAdjacent(angle, distance);
     final performY = player.y + getOpposite(angle, distance);

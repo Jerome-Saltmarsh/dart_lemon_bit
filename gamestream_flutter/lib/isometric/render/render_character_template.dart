@@ -97,6 +97,12 @@ void renderCharacterTemplate(Character character, {
     frameWeapon = TemplateAnimation.StateChangingFrame;
   } else
   if (character.weaponStateAiming) {
+
+    if (character.weaponType == ItemType.Weapon_Melee_Sword){
+      frameHead = TemplateAnimation.Frame_Aiming_Sword;
+      frameBody = TemplateAnimation.Frame_Aiming_Sword;
+      frameWeapon = TemplateAnimation.Frame_Aiming_Sword;
+    } else
     if (ItemType.isOneHanded(character.weaponType)){
       frameHead = TemplateAnimation.Frame_Aiming_One_Handed;
       frameBody = TemplateAnimation.Frame_Aiming_One_Handed;
@@ -112,7 +118,6 @@ void renderCharacterTemplate(Character character, {
     frameBody = TemplateAnimation.StateChangingFrame;
     frameWeapon = TemplateAnimation.StateChangingFrame;
   }
-
 
   if (!weaponInFront) {
     renderTemplateWeapon(character.weaponType, finalDirection, frameWeapon, color, dstX, dstY);
@@ -222,7 +227,7 @@ class TemplateAnimation {
   static const StateChangingFrame = 4;
   static const Frame_Aiming_One_Handed = 7;
   static const Frame_Aiming_Two_Handed = 5;
-
+  static const Frame_Aiming_Sword = 9;
 
   static final Uint8List Running1 = (){
       final list = Uint8List(4);

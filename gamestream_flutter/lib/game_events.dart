@@ -252,15 +252,15 @@ class GameEvents {
   }
 
   static void onGameEventAttackPerformedBlade(double x, double y, double z, double angle) {
-    GameState.spawnParticleStrikeBlade(x: x, y: y, z: z, angle: angle);
+    // GameState.spawnParticleStrikeBlade(x: x, y: y, z: z, angle: angle);
     GameAudio.swing_sword.playXYZ(x, y, z);
-    GameState.spawnParticleBubbles(
-      count: 3,
-      x: x,
-      y: y,
-      z: z,
-      angle: angle,
-    );
+    // GameState.spawnParticleBubbles(
+    //   count: 3,
+    //   x: x,
+    //   y: y,
+    //   z: z,
+    //   angle: angle,
+    // );
   }
 
   static void onAttackPerformedUnarmed(double x, double y, double z, double angle) {
@@ -563,19 +563,19 @@ class GameEvents {
   }
 
   static void onCharacterDeathZombie(int type, double x, double y, double z, double angle){
-    GameState.spawnParticleAnimation(
-      type: Engine.randomItem(
-          const [
-            ParticleType.Character_Animation_Death_Zombie_1,
-            ParticleType.Character_Animation_Death_Zombie_2,
-            ParticleType.Character_Animation_Death_Zombie_3,
-          ]
-      ),
-      x: x,
-      y: y,
-      z: z,
-      angle: angle,
-    );
+    // GameState.spawnParticleAnimation(
+    //   type: Engine.randomItem(
+    //       const [
+    //         ParticleType.Character_Animation_Death_Zombie_1,
+    //         ParticleType.Character_Animation_Death_Zombie_2,
+    //         ParticleType.Character_Animation_Death_Zombie_3,
+    //       ]
+    //   ),
+    //   x: x,
+    //   y: y,
+    //   z: z,
+    //   angle: angle,
+    // );
     angle += Engine.PI;
     final zPos = z + Node_Size_Half;
     GameState.spawnParticleHeadZombie(x: x, y: y, z: zPos, angle: angle, speed: 4.0);

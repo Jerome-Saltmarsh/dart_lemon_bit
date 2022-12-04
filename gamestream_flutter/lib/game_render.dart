@@ -410,7 +410,6 @@ class GameRender {
           break;
         }
         const size = 64.0;
-        casteShadowDownV3(particle);
         Engine.renderSpriteRotated(
           image: GameImages.particles,
           dstX: particle.renderX,
@@ -420,7 +419,7 @@ class GameRender {
           srcWidth: size,
           srcHeight: size,
           scale: particle.scale,
-          rotation: particle.rotation + (Engine.PI_Half + Engine.PI_Quarter),
+          rotation: particle.rotation,
         );
         break;
       default:
