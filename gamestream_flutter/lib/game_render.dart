@@ -765,6 +765,8 @@ class GameRender {
         if (column < 0) continue;
         if (column >= GameState.nodesTotalColumns) break;
         final finalIndex = (indexZ * GameState.nodesArea) + (row * GameState.nodesTotalColumns) + column;
+        // if (column < GamePlayer.indexColumn) continue;
+        // if (row < GamePlayer.indexRow) continue;
         nodesHideIndex(finalIndex);
       }
     }
@@ -874,9 +876,13 @@ class GameRender {
   static void nodesHideIndex(int index){
     var i = index + GameState.nodesRaycast;
     while (i < GameNodes.nodesTotal) {
-      GameNodes.nodesVisible[i] = false;
-      GameNodes.nodesVisibleIndex[GameState.visibleIndex] = i;
-      GameState.visibleIndex++;
+      final row = GameState.convertNodeIndexToRow(i);
+      final column = GameState.convertNodeIndexToColumn(i);
+      if (column >= GamePlayer.indexColumn && row >= GamePlayer.indexRow) {
+        GameNodes.nodesVisible[i] = false;
+        GameNodes.nodesVisibleIndex[GameState.visibleIndex] = i;
+        GameState.visibleIndex++;
+      }
       i += GameState.nodesRaycast;
     }
   }

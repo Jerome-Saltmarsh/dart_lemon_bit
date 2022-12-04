@@ -17,11 +17,13 @@ class GamePlayer {
   static var aimTargetPosition = Vector3();
   static final storeItems = Watch(<int>[]);
 
+  static var indexZ = 0;
+  static var indexRow = 0;
+  static var indexColumn = 0;
+
   static double get renderX => GameConvert.convertV3ToRenderX(position);
   static double get renderY => GameConvert.convertV3ToRenderY(position);
-
   static double get positionScreenX => Engine.worldToScreenX(position.renderX);
   static double get positionScreenY => Engine.worldToScreenY(position.renderX);
-
   static bool get interactModeTrading => ServerState.interactMode.value == InteractMode.Trading;
 }

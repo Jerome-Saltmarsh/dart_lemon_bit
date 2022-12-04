@@ -160,6 +160,9 @@ class ServerResponseReader with ByteReader {
         GamePlayer.previousPosition.y = GamePlayer.position.y;
         GamePlayer.previousPosition.z = GamePlayer.position.z;
         readVector3(GamePlayer.position);
+        GamePlayer.indexColumn = GamePlayer.position.indexColumn;
+        GamePlayer.indexRow = GamePlayer.position.indexRow;
+        GamePlayer.indexZ = GamePlayer.position.indexZ;
         break;
       case ApiPlayer.Aim_Target_Category:
         GamePlayer.aimTargetCategory = readByte();
