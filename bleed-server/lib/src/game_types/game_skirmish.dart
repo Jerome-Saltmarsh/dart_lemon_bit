@@ -12,7 +12,9 @@ class GameSkirmish extends Game {
   @override
   int get gameType => GameType.Skirmish;
 
-  GameSkirmish({required Scene scene}) : super(scene);
+  GameSkirmish({required Scene scene}) : super(scene) {
+    triggerSpawnPoints();
+  }
 
   int getRandomItemType() => 0;
 

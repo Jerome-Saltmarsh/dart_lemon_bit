@@ -55,9 +55,14 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] game 5v5
 [ ] game royal
 [ ] game waves
-[ ] game casual
+
+[GAME-CASUAL]
+[ ] design scene
+[ ] separate player and zombie spawn points
+[ ] spawn in safe player spawn
 
 04.12.2022
+[x] atlas item type swat pants 
 [x] fix sword slash animation
 [x] fix sword aim animation
 [x] editor fixed navigation icons
