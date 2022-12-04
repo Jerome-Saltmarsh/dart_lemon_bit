@@ -1,4 +1,6 @@
 
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -42,6 +44,7 @@ class GameCanvas {
     //     y: GamePlayer.position.y,
     //     z: GamePlayer.position.z,
     // );
+
 
     const style = TextStyle(color: Colors.white, fontSize: 18);
     switch (GamePlayer.aimTargetCategory) {
@@ -137,15 +140,33 @@ class GameCanvas {
     GameRender.renderMouseTargetName();
     ClientState.rendersSinceUpdate.value++;
     renderPlayerRunTarget();
+    drawMouse();
+  }
 
+  static void drawMouse() {
     final mouseAngle = GameMouse.playerAngle;
-    const mouseDistance = 100.0;
-    final mousePositionX = Engine.calculateAdjacent(mouseAngle, mouseDistance);
-    final mousePositionY = Engine.calculateOpposite(mouseAngle, mouseDistance);
-    final x = GamePlayer.position.x - mousePositionX;
-    final y = GamePlayer.position.y - mousePositionY;
-    final z = GamePlayer.position.z;
-    GameRender.renderCircle32(x, y, z);
+    final mouseDistance = min(200.0, GameMouse.playerDistance);
+
+    final jumps = mouseDistance ~/ Node_Height_Half;
+
+    var x1 = GamePlayer.position.x;
+    var y1 = GamePlayer.position.y;
+    var i1 = GamePlayer.position.nodeIndex;
+    final z = GamePlayer.position.z + Node_Height_Half;
+
+    final tX = Engine.calculateAdjacent(mouseAngle, Node_Height_Half);
+    final tY = Engine.calculateOpposite(mouseAngle, Node_Height_Half);
+
+    for (var i = 0; i < jumps; i++) {
+      final x2 = x1 - tX;
+      final y2 = y1 - tY;
+      final i2 = GameQueries.getNodeIndex(x2, y2, z);
+      if (!NodeType.isTransient(GameNodes.nodesType[i2])) break;
+      x1 = x2;
+      y1 = y2;
+      i1 = i2;
+    }
+    GameRender.renderCircle32(x1, y1, z);
   }
 
   static void renderPlayerRunTarget(){

@@ -129,6 +129,14 @@ class NodeType {
           type == Sunflower ||
           type == Grass_Long ;
 
+  static bool isTransient(int value){
+    return 
+        value == Empty          || 
+        value == Grass_Long     || 
+        value == Rain_Falling   || 
+        value == Rain_Landing;
+  }
+  
   static bool isRainOrEmpty(value) =>
     isRain(value) || value == Empty;
   
