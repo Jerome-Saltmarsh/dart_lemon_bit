@@ -1379,7 +1379,6 @@ abstract class Game {
     }
 
     if (character is AI){
-      // updateAI(character);
       character.updateAI();
       character.applyBehaviorWander(this);
     }
@@ -1664,6 +1663,7 @@ abstract class Game {
     int health = 10,
     int damage = 1,
     int team = TeamType.Evil,
+    double wanderRadius = 200,
   }) {
     if (nodeIndex < 0) throw Exception('nodeIndex < 0');
     if (nodeIndex >= scene.gridVolume) {
@@ -1675,10 +1675,14 @@ abstract class Game {
       health: health,
       damage: damage,
       team: team,
+      wanderRadius: wanderRadius,
     );
     moveToIndex(instance, nodeIndex);
     instance.clearDest();
     instance.clearPath();
+    instance.spawnX = instance.x;
+    instance.spawnY = instance.y;
+    instance.spawnZ = instance.z;
     characters.add(instance);
     instance.spawnNodeIndex = nodeIndex;
     return instance;

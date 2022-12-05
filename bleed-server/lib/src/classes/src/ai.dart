@@ -37,7 +37,7 @@ class AI extends Character {
     required int weaponType,
     required int damage,
     required int team,
-    this.wanderRadius = 0,
+    this.wanderRadius = 200,
     double x = 0,
     double y = 0,
     double z = 0,

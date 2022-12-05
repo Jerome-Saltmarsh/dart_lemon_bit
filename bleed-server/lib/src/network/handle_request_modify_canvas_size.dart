@@ -173,10 +173,10 @@ void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, Player playe
       game.onGridChanged();
 
       for (final character in game.characters) {
-        character.x += Node_Size;
+        character.y += Node_Size;
       }
       for (final gameObject in game.gameObjects) {
-        gameObject.x += Node_Size;
+        gameObject.y += Node_Size;
       }
       break;
     case RequestModifyCanvasSize.Remove_Column_Start:

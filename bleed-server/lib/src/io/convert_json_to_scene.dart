@@ -19,11 +19,17 @@ Scene convertJsonToScene(Json json, String name) {
   final nodeTypes = Uint8List(total);
   final nodeOrientation = Uint8List(total);
   final spawnNodesDynamic = json['spawn-nodes'];
+  final spawnNodesPlayerDynamic = json['spawn-nodes-player'];
   assert (nodeTypesDynamic.length == total);
   final spawnNodes = Uint16List(spawnNodesDynamic == null ? 0 : (spawnNodesDynamic as List).length);
+  final spawnNodesPlayer = Uint16List(spawnNodesPlayerDynamic == null ? 0 : (spawnNodesPlayerDynamic as List).length);
 
   for (var i = 0; i < spawnNodes.length; i++) {
      spawnNodes[i] = spawnNodesDynamic[i];
+  }
+
+  for (var i = 0; i < spawnNodesPlayer.length; i++){
+    spawnNodesPlayer[i] = spawnNodesPlayerDynamic[i];
   }
 
   for (var i = 0; i < total; i++) {
@@ -41,6 +47,8 @@ Scene convertJsonToScene(Json json, String name) {
     gameObjects: jsonGameObjects.map(convertDynamicToGameObject).toList(),
     spawnPoints: spawnNodes,
     spawnPointTypes: Uint16List(spawnNodes.length),
+    spawnPointsPlayers: spawnNodesPlayer,
+
   );
 }
 

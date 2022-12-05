@@ -140,7 +140,7 @@ class GameSkirmish extends Game {
   }
 
   void moveToRandomSpawnPoint(Position3 value) {
-    if (scene.spawnPoints.isEmpty) return;
-    moveV3ToNodeIndex(value, randomItem(scene.spawnPoints));
+    if (scene.spawnPointsPlayers.isEmpty) return;
+    moveV3ToNodeIndex(value, randomItem(scene.spawnPointsPlayers));
   }
 }

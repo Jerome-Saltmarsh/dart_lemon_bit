@@ -56,16 +56,17 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] game 5v5
 [ ] game royal
 [ ] game waves
-[ ] game wilderness
+[ ] game survival
 
 [GAME-CASUAL]
 [ ] design scene
 [ ] separate player and zombie spawn points
 [ ] spawn node types
 [ ] fix editor map size
-[ ] fix zombie wander
 
 05.12.2022
+[x] fix player spawn points
+[x] fix zombie wander
 [x] fix bug picking up weapon loses quantity
 [x] random item types
 [x] node visible on mouse

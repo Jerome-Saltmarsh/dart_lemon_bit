@@ -19,6 +19,7 @@ class Scene {
   final List<GameObject> gameObjects;
 
   Uint16List spawnPoints;
+  Uint16List spawnPointsPlayers;
   Uint16List spawnPointTypes;
 
   late double gridRowLength;
@@ -38,6 +39,7 @@ class Scene {
     required this.gameObjects,
     required this.spawnPoints,
     required this.spawnPointTypes,
+    required this.spawnPointsPlayers,
   }) {
     assert (spawnPoints.length == spawnPointTypes.length);
     refreshGridMetrics();
