@@ -105,6 +105,9 @@ class ServerResponseReader with ByteReader {
               break;
           }
           break;
+        case ServerResponse.Scene:
+          
+          break;
         default:
           if (debugging) {
             return;

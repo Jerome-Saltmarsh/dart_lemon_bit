@@ -59,7 +59,9 @@ class GameNetwork {
 
   static void connectToGameEditor() => connectToGame(GameType.Editor);
 
-  static void connectToGameSkirmish() => connectToGame(GameType.Skirmish);
+  static void connectToGameSurvival() => connectToGame(GameType.Survival);
+
+  static void connectToGamePractice() => connectToGame(GameType.Practice);
 
   static void connectToGame(int gameType, [String message = ""]) =>
       connectToRegion(GameWebsite.region.value, '${gameType} $message');

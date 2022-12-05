@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:bleed_server/gamestream.dart';
+import 'package:bleed_server/src/game_types/game_survival.dart';
 import 'package:bleed_server/src/system.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -9,7 +10,7 @@ import '../dark_age/game_dark_age.dart';
 import '../dark_age/game_dark_age_editor.dart';
 import '../functions/generateName.dart';
 import '../functions/move_player_to_crystal.dart';
-import '../game_types/game_skirmish.dart';
+import '../game_types/game_practice.dart';
 import '../io/convert_json_to_scene.dart';
 import '../io/convert_scene_to_json.dart';
 import '../utilities/is_valid_index.dart';
@@ -606,14 +607,24 @@ class Connection {
     joinGame(GameDarkAgeEditor(scene: scene));
   }
 
-  Future joinGameSkirmish() async {
+  Future joinGamePractice() async {
     for (final game in engine.games){
-       if (game is GameSkirmish){
+       if (game is GamePractice){
           if (game.players.length < game.configMaxPlayers)
             return joinGame(game);
        }
     }
-    joinGame(GameSkirmish(scene: darkAgeScenes.skirmish_1));
+    joinGame(GamePractice(scene: darkAgeScenes.skirmish_1));
+  }
+
+  Future joinGameSurvival() async {
+    for (final game in engine.games){
+      if (game is GameSurvival){
+        if (game.players.length >= 10) continue;
+        return joinGame(game);
+      }
+    }
+    joinGame(GameSurvival(darkAgeScenes.skirmish_1));
   }
 
   void joinGame(Game game){
@@ -687,8 +698,11 @@ class Connection {
       case GameType.Dark_Age:
         joinGameDarkAge();
         break;
-      case GameType.Skirmish:
-        joinGameSkirmish();
+      case GameType.Practice:
+        joinGamePractice();
+        break;
+      case GameType.Survival:
+        joinGameSurvival();
         break;
       default:
         return errorInvalidArg('invalid game type index $gameType');

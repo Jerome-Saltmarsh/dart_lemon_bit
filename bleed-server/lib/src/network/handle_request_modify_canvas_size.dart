@@ -148,7 +148,7 @@ void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, Player playe
       game.onGridChanged();
       break;
     case RequestModifyCanvasSize.Add_Column_Start:
-      final newGridVolume = scene.gridVolume + (scene.columnsPerRow * scene.gridHeight);
+      final newGridVolume = scene.gridVolume + (scene.gridRows * scene.gridHeight);
       final newNodeTypes = Uint8List(newGridVolume);
       final newNodeOrientations = Uint8List(newGridVolume);
       var newIndex = 0;

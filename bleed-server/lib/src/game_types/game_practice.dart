@@ -2,7 +2,7 @@
 import 'package:bleed_server/gamestream.dart';
 import 'package:lemon_math/library.dart';
 
-class GameSkirmish extends Game {
+class GamePractice extends Game {
   static const configAIRespawnFrames = 500;
   static const configRespawnFramesWeapons = 500;
   var configMaxPlayers = 7;
@@ -10,9 +10,9 @@ class GameSkirmish extends Game {
   var configZombieSpeed = 5.0;
 
   @override
-  int get gameType => GameType.Skirmish;
+  int get gameType => GameType.Practice;
 
-  GameSkirmish({required Scene scene}) : super(scene) {
+  GamePractice({required Scene scene}) : super(scene) {
     triggerSpawnPoints();
   }
 

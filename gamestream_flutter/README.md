@@ -57,10 +57,10 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] game royal
 [ ] game waves
 [ ] game survival
+[ ] generate top down map
 
 [GAME-CASUAL]
 [ ] design scene
-[ ] separate player and zombie spawn points
 [ ] spawn node types
 [ ] fix editor map size
 

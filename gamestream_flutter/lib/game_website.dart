@@ -152,13 +152,15 @@ class GameWebsite {
   static Widget buildWebsitePageGames() =>
     Column(
       mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        buildTextButton("DARK-AGE", action: GameNetwork.connectToGameDarkAge),
+        // buildTextButton("DARK-AGE", action: GameNetwork.connectToGameDarkAge),
+        // height24,
+        buildTextButton("PRACTICE", action: GameNetwork.connectToGamePractice),
         height24,
-        buildTextButton("CASUAL", action: GameNetwork.connectToGameSkirmish),
+        buildTextButton("SURVIVE", action: GameNetwork.connectToGameSurvival),
         height24,
-        buildTextButton("MAP-EDITOR", action: GameNetwork.connectToGameEditor),
+        buildTextButton("EDITOR", action: GameNetwork.connectToGameEditor),
       ],
     );
 

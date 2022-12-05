@@ -27,7 +27,7 @@ abstract class Game {
   /// @override
   void customDownloadScene(Player player){ }
   /// @override
-  void customUpdate();
+  void customUpdate() {}
   /// @override
   void customOnPlayerDisconnected(Player player) { }
   /// @override

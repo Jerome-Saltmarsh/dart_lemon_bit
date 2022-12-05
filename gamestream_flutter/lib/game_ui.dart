@@ -14,7 +14,7 @@ import 'ui/builders/build_time.dart';
 class GameUI {
   static const Icon_Scale = 1.5;
   static final messageBoxVisible = Watch(false, clamp: (bool value) {
-    if (ServerState.gameType.value == GameType.Skirmish) return false;
+    if (ServerState.gameType.value == GameType.Practice) return false;
     return value;
   }, onChanged: onVisibilityChangedMessageBox);
   static final textEditingControllerMessage = TextEditingController();
