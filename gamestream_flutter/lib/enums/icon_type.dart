@@ -21,4 +21,5 @@ class IconType {
   static const Inventory = 25;
   static const Sound_Enabled = 26;
   static const Sound_Disabled = 27;
+  static const Box = 28;
 }

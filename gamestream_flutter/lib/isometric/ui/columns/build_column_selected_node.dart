@@ -53,21 +53,21 @@ Widget buildEditorSelectedNode() =>
             fit: StackFit.expand,
             alignment: Alignment.center,
             children: [
-              buildPositionedIconArrow(
+              buildPositionedIconButton(
                 top: 65 + _shiftY,
                 left: 27 + _shiftX,
                 action: GameEditor.cursorZDecrease,
                 iconType: IconType.Arrows_Down_Yellow,
                 hint: "Shift + Arrow Down",
               ),
-              buildPositionedIconArrow(
+              buildPositionedIconButton(
                 top: 3 + _shiftY,
                 left: 3 + _shiftY,
                 action: GameEditor.cursorRowDecrease,
                 iconType: IconType.Arrows_North_Yellow,
                 hint: "Arrow Up",
               ),
-              buildPositionedIconArrow(
+              buildPositionedIconButton(
                 top: 5 + _shiftY,
                 left: 50 + _shiftX,
                 action: GameEditor.cursorColumnDecrease,
@@ -80,21 +80,21 @@ Widget buildEditorSelectedNode() =>
                   alignment: Alignment.center,
                   child: watch(GameEditor.nodeSelectedType, GameUI.buildAtlasNodeType)
               ),
-              buildPositionedIconArrow(
+              buildPositionedIconButton(
                 top: 50 + _shiftY,
                 left: 50 + _shiftX,
                 action: GameEditor.cursorRowIncrease,
                 iconType: IconType.Arrows_South_Yellow,
                   hint: "Arrow Down"
               ),
-              buildPositionedIconArrow(
+              buildPositionedIconButton(
                   top: -10 + _shiftY,
                   left: 27 + _shiftX,
                   action: GameEditor.cursorZIncrease,
                   iconType: IconType.Arrows_Up_Yellow,
                   hint: "Shift + Arrow Up"
               ),
-              buildPositionedIconArrow(
+              buildPositionedIconButton(
                   top: 50 + _shiftY,
                   left: 0 + _shiftX,
                   action: GameEditor.cursorColumnIncrease,
@@ -108,7 +108,7 @@ Widget buildEditorSelectedNode() =>
     ),
   );
 
-Widget buildPositionedIconArrow({
+Widget buildPositionedIconButton({
   required double top,
   required double left,
   required Function action,

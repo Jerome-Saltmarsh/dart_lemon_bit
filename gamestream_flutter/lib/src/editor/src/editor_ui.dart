@@ -124,7 +124,7 @@ class EditorUI {
             );
   }
 
-  static Widget buildWindowEditCanvasSize()=> Center(
+  static Widget buildWindowEditCanvasSize() => Center(
     child: GameUI.buildDialogUIControl(
       child: Container(
         padding: const EdgeInsets.all(10),
@@ -132,7 +132,7 @@ class EditorUI {
         height: 520,
         color: GameColors.brownLight,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Row(
                mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -141,22 +141,51 @@ class EditorUI {
                  text("Close", onPressed: EditorActions.toggleWindowEnabledCanvasSize),
                ],
             ),
-            height16,
-            Container(
-              height: 450,
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: RequestModifyCanvasSize.values
-                    .map((e) => container(
-                                    child: e.name,
-                                    action: () => GameNetwork.sendClientRequestModifyCanvasSize(e)
-                                )
+            Expanded(
+              child: Center(
+                child: Stack(
+                  children: [
+                    Engine.buildAtlasImage(
+                      image: GameImages.atlasIcons,
+                      srcX: 193,
+                      srcY: 32,
+                      srcWidth: 96,
+                      srcHeight: 96,
+                      scale: 2.0,
+                    ),
+                    buildPositionedIconButton(
+                       top: 20,
+                       left: 10,
+                       action: () => GameNetwork.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Add_Row_Start),
+                       iconType: IconType.Arrows_North_Yellow,
+                       hint: "Add Row",
+                    ),
+                    buildPositionedIconButton(
+                      top: 0,
+                      left: 35,
+                      action: () => GameNetwork.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Remove_Row_Start),
+                      iconType: IconType.Arrows_South_Yellow,
+                      hint: "Remove Row",
                     )
-                .toList(),
+                  ],
                 ),
               ),
             ),
+            // Container(
+            //   height: 450,
+            //   child: SingleChildScrollView(
+            //     child: Column(
+            //       crossAxisAlignment: CrossAxisAlignment.start,
+            //       children: RequestModifyCanvasSize.values
+            //         .map((e) => container(
+            //                         child: e.name,
+            //                         action: () => GameNetwork.sendClientRequestModifyCanvasSize(e)
+            //                     )
+            //         )
+            //     .toList(),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),
