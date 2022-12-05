@@ -1,10 +1,10 @@
 class IconType {
-  static const Arrows_Up_Yellow = 0;
-  static const Arrows_Down_Yellow = 1;
-  static const Arrows_South_Yellow = 2;
-  static const Arrows_West_Yellow = 3;
-  static const Arrows_North_Yellow = 4;
-  static const Arrows_East_Yellow = 5;
+  static const Arrows_Up = 0;
+  static const Arrows_Down = 1;
+  static const Arrows_South = 2;
+  static const Arrows_West = 3;
+  static const Arrows_North = 4;
+  static const Arrows_East = 5;
   static const Home = 12;
   static const Fullscreen = 13;
   static const Zoom = 14;

@@ -141,12 +141,12 @@ class AtlasIcons {
   }[itemType] ?? 0;
 
   static double getSrcY(int itemType) => const  <int, double> {
-    IconType.Arrows_Up_Yellow: Size * 0,
-    IconType.Arrows_Down_Yellow: Size * 1,
-    IconType.Arrows_North_Yellow: Size * 2,
-    IconType.Arrows_East_Yellow: Size * 3,
-    IconType.Arrows_South_Yellow: Size * 4,
-    IconType.Arrows_West_Yellow: Size * 5,
+    IconType.Arrows_Up: Size * 0,
+    IconType.Arrows_Down: Size * 1,
+    IconType.Arrows_North: Size * 2,
+    IconType.Arrows_East: Size * 3,
+    IconType.Arrows_South: Size * 4,
+    IconType.Arrows_West: Size * 5,
     IconType.Home: 0,
     IconType.Fullscreen: 0,
     IconType.Zoom: 0,

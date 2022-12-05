@@ -57,21 +57,21 @@ Widget buildEditorSelectedNode() =>
                 top: 65 + _shiftY,
                 left: 27 + _shiftX,
                 action: GameEditor.cursorZDecrease,
-                iconType: IconType.Arrows_Down_Yellow,
+                iconType: IconType.Arrows_Down,
                 hint: "Shift + Arrow Down",
               ),
               buildPositionedIconButton(
                 top: 3 + _shiftY,
                 left: 3 + _shiftY,
                 action: GameEditor.cursorRowDecrease,
-                iconType: IconType.Arrows_North_Yellow,
+                iconType: IconType.Arrows_North,
                 hint: "Arrow Up",
               ),
               buildPositionedIconButton(
                 top: 5 + _shiftY,
                 left: 50 + _shiftX,
                 action: GameEditor.cursorColumnDecrease,
-                iconType: IconType.Arrows_East_Yellow,
+                iconType: IconType.Arrows_East,
                 hint: "Arrow Right",
               ),
               Container(
@@ -84,21 +84,21 @@ Widget buildEditorSelectedNode() =>
                 top: 50 + _shiftY,
                 left: 50 + _shiftX,
                 action: GameEditor.cursorRowIncrease,
-                iconType: IconType.Arrows_South_Yellow,
+                iconType: IconType.Arrows_South,
                   hint: "Arrow Down"
               ),
               buildPositionedIconButton(
                   top: -10 + _shiftY,
                   left: 27 + _shiftX,
                   action: GameEditor.cursorZIncrease,
-                  iconType: IconType.Arrows_Up_Yellow,
+                  iconType: IconType.Arrows_Up,
                   hint: "Shift + Arrow Up"
               ),
               buildPositionedIconButton(
                   top: 50 + _shiftY,
                   left: 0 + _shiftX,
                   action: GameEditor.cursorColumnIncrease,
-                  iconType: IconType.Arrows_West_Yellow,
+                  iconType: IconType.Arrows_West,
                   hint: "Arrow Left"
               ),
             ],
