@@ -62,9 +62,13 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] design scene
 [ ] separate player and zombie spawn points
 [ ] spawn node types
-[ ] fix bug picking up weapon loses quantity
 [ ] fix editor map size
-[ ] random item types
+[ ] fix zombie wander
+
+05.12.2022
+[x] fix bug picking up weapon loses quantity
+[x] random item types
+[x] node visible on mouse
 
 04.12.2022
 [x] atlas item type swat pants 

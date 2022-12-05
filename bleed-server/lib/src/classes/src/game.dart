@@ -1161,43 +1161,8 @@ abstract class Game {
            if (getDistanceBetweenV3(player, target) > 50){
              setCharacterStateRunning(player);
              return;
-           } else {
-             var quantityRemaining = target.quantity;
-             final maxQuantity = ItemType.getMaxQuantity(target.type);
-             if (maxQuantity > 1) {
-               for (var i = 0; i < player.inventory.length; i++){
-                  if (player.inventory[i] != target.type) continue;
-                  if (player.inventoryQuantity[i] + quantityRemaining < maxQuantity){
-                    player.inventoryQuantity[i] += quantityRemaining;
-                    player.inventoryDirty = true;
-                    deactivateGameObject(target);
-                    player.writePlayerEvent(PlayerEvent.Item_Picked_Up);
-                    clearCharacterTarget(player);
-                    return;
-                  } else {
-                    quantityRemaining -= maxQuantity - player.inventoryQuantity[i];
-                    player.inventoryQuantity[i] = maxQuantity;
-                    player.inventoryDirty = true;
-                  }
-               }
-             }
-
-             final emptyInventoryIndex = player.getEmptyInventoryIndex();
-             if (emptyInventoryIndex != null){
-                player.inventory[emptyInventoryIndex] = target.type;
-                player.inventoryQuantity[emptyInventoryIndex] = min(quantityRemaining, maxQuantity);
-                player.inventoryDirty = true;
-                deactivateGameObject(target);
-                player.writePlayerEvent(PlayerEvent.Item_Picked_Up);
-                clearCharacterTarget(player);
-             } else {
-               clearCharacterTarget(player);
-               player.writePlayerEventInventoryFull();
-               return;
-             }
-             clearCharacterTarget(player);
-             return;
            }
+           playerPickup(player, target);
         }
       } else {
         if (!target.collidable) {
@@ -1243,11 +1208,47 @@ abstract class Game {
       return;
     }
 
-    // if (player.runningToTarget) {
-    //   player.face(player.runTarget);
-    // }
-
     setCharacterStateRunning(player);
+  }
+
+  void playerPickup(Player player, GameObject target) {
+    var quantityRemaining = target.quantity;
+    final maxQuantity = ItemType.getMaxQuantity(target.type);
+    if (maxQuantity > 1) {
+      for (var i = 0; i < player.inventory.length; i++){
+         if (player.inventory[i] != target.type) continue;
+         if (player.inventoryQuantity[i] + quantityRemaining < maxQuantity){
+           player.inventoryQuantity[i] += quantityRemaining;
+           player.inventoryDirty = true;
+           deactivateGameObject(target);
+           player.writePlayerEvent(PlayerEvent.Item_Picked_Up);
+           clearCharacterTarget(player);
+           return;
+         }
+         quantityRemaining -= maxQuantity - player.inventoryQuantity[i];
+         player.inventoryQuantity[i] = maxQuantity;
+         player.inventoryDirty = true;
+      }
+    }
+
+    assert (quantityRemaining >= 0);
+    if (quantityRemaining <= 0) return;
+
+    final emptyInventoryIndex = player.getEmptyInventoryIndex();
+    if (emptyInventoryIndex != null){
+       player.inventory[emptyInventoryIndex] = target.type;
+       player.inventoryQuantity[emptyInventoryIndex] = min(quantityRemaining, maxQuantity);
+       player.inventoryDirty = true;
+       deactivateGameObject(target);
+       player.writePlayerEvent(PlayerEvent.Item_Picked_Up);
+       clearCharacterTarget(player);
+    } else {
+      clearCharacterTarget(player);
+      player.writePlayerEventInventoryFull();
+      return;
+    }
+    clearCharacterTarget(player);
+    return;
   }
 
   void setCharacterStateRunning(Character character){

@@ -525,6 +525,27 @@ class ItemType {
     Resource_Gold         : 500,
     Resource_Gun_Powder   : 100,
     Resource_Arrow        : 100,
+    Consumables_Apple     : 010,
+    Consumables_Meat      : 010,
+    Consumables_Potion_Red: 013,
+    Weapon_Handgun_Flint_Lock_Old       : 01,
+    Weapon_Handgun_Flint_Lock           : 01,
+    Weapon_Handgun_Flint_Lock_Superior  : 01,
+    Weapon_Handgun_Glock                : 15,
+    Weapon_Handgun_Revolver             : 05,
+    Weapon_Handgun_Desert_Eagle         : 07,
+    Weapon_Rifle_Steyr                  : 30,
+    Weapon_Rifle_M4                     : 35,
+    Weapon_Rifle_AK_47                  : 35,
+    Weapon_Rifle_Jager                  : 04,
+    Weapon_Rifle_Musket                 : 01,
+    Weapon_Rifle_Sniper                 : 5,
+    Weapon_Smg_Mp5                      : 25,
+    Weapon_Ranged_Shotgun               : 04,
+    Weapon_Thrown_Grenade               : 05,
+    Weapon_Flamethrower                 : 200,
+    Weapon_Special_Bazooka              : 01,
+    Weapon_Special_Minigun              : 1000,
   }[itemType]            ?? 001;
 
   static int getHealAmount(int itemType) => const {
@@ -551,29 +572,8 @@ class ItemType {
   }[itemType] ??          00;
 
   static bool hasCapacity(int itemType){
-    return getWeaponCapacity(itemType) > 0;
+    return getMaxQuantity(itemType) > 0;
   }
-
-  static int getWeaponCapacity(int itemType) => const {
-    Weapon_Handgun_Flint_Lock_Old       : 01,
-    Weapon_Handgun_Flint_Lock           : 01,
-    Weapon_Handgun_Flint_Lock_Superior  : 01,
-    Weapon_Handgun_Glock                : 15,
-    Weapon_Handgun_Revolver             : 05,
-    Weapon_Handgun_Desert_Eagle         : 07,
-    Weapon_Rifle_Steyr                  : 30,
-    Weapon_Rifle_M4                     : 35,
-    Weapon_Rifle_AK_47                  : 35,
-    Weapon_Rifle_Jager                  : 04,
-    Weapon_Rifle_Musket                 : 01,
-    Weapon_Rifle_Sniper                 : 5,
-    Weapon_Smg_Mp5                      : 25,
-    Weapon_Ranged_Shotgun               : 04,
-    Weapon_Thrown_Grenade               : 05,
-    Weapon_Flamethrower                 : 200,
-    Weapon_Special_Bazooka              : 01,
-    Weapon_Special_Minigun              : 1000,
-  }[itemType]                          ?? 01;
 
   static double getScopeDistance(int itemType){
     return const <int, double> {

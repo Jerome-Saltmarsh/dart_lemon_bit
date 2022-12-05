@@ -104,9 +104,9 @@ class GameSkirmish extends Game {
     player.headType = randomItem(ItemType.HeadTypes);
     player.bodyType = randomItem(ItemType.BodyTypes);
     player.legsType = randomItem(ItemType.LegTypes);
-    player.inventorySet(index: ItemType.Belt_1, itemType: ItemType.Weapon_Rifle_AK_47, itemQuantity: ItemType.getWeaponCapacity(ItemType.Weapon_Rifle_AK_47));
-    player.inventorySet(index: ItemType.Belt_2, itemType: ItemType.Weapon_Rifle_Sniper, itemQuantity: ItemType.getWeaponCapacity(ItemType.Weapon_Rifle_Sniper));
-    player.inventorySet(index: ItemType.Belt_3, itemType: ItemType.Weapon_Handgun_Glock, itemQuantity: ItemType.getWeaponCapacity(ItemType.Weapon_Handgun_Glock));
+    player.inventorySet(index: ItemType.Belt_1, itemType: ItemType.Weapon_Rifle_AK_47, itemQuantity: ItemType.getMaxQuantity(ItemType.Weapon_Rifle_AK_47));
+    player.inventorySet(index: ItemType.Belt_2, itemType: ItemType.Weapon_Rifle_Sniper, itemQuantity: ItemType.getMaxQuantity(ItemType.Weapon_Rifle_Sniper));
+    player.inventorySet(index: ItemType.Belt_3, itemType: ItemType.Weapon_Handgun_Glock, itemQuantity: ItemType.getMaxQuantity(ItemType.Weapon_Handgun_Glock));
     player.inventorySet(index: ItemType.Belt_4, itemType: ItemType.Weapon_Thrown_Grenade, itemQuantity: 10);
     player.inventorySet(index: ItemType.Belt_5, itemType: ItemType.Weapon_Melee_Knife, itemQuantity: 1);
     player.inventorySet(index: ItemType.Belt_6, itemType: ItemType.Consumables_Apple, itemQuantity: 3);

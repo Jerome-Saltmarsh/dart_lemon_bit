@@ -674,6 +674,9 @@ class Player extends Character with ByteWriter {
     assert (itemTypeCanBeAssignedToIndex(itemType: itemType, index: index));
     assert (itemType != ItemType.Empty || itemQuantity == 0);
 
+    final maxQuantity = ItemType.getMaxQuantity(itemType);
+    itemQuantity = clamp(itemQuantity, 1, maxQuantity);
+
     if (index == equippedWeaponIndex) {
        if (ItemType.isTypeWeapon(itemType)) {
          weaponType = itemType;
@@ -820,7 +823,7 @@ class Player extends Character with ByteWriter {
   }
 
   void inventoryAddWeapon({required int itemType}){
-    inventoryAdd(itemType: itemType, itemQuantity: ItemType.getWeaponCapacity(itemType));
+    inventoryAdd(itemType: itemType, itemQuantity: ItemType.getMaxQuantity(itemType));
   }
 
   void inventoryAdd({required int itemType, int itemQuantity = 1}) {
@@ -1655,7 +1658,7 @@ class Player extends Character with ByteWriter {
   // bool get equippedWeaponUsesAmmunition => ItemType.getConsumeType(weaponType) != ItemType.Empty;
   int get equippedWeaponAmmoConsumption => ItemType.getConsumeAmount(weaponType);
   int get equippedWeaponAmmunitionType => ItemType.getConsumeType(weaponType);
-  int get equippedWeaponCapacity => ItemType.getWeaponCapacity(weaponType);
+  int get equippedWeaponCapacity => ItemType.getMaxQuantity(weaponType);
 
   bool get sufficientAmmunition => equippedWeaponQuantity > 1;
 
