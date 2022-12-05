@@ -15,7 +15,6 @@ class Scene {
   var gridVolume = 0;
   var gridArea = 0;
   var name = "";
-  // var dirty = false;
   final List<GameObject> gameObjects;
 
   Uint16List spawnPoints;

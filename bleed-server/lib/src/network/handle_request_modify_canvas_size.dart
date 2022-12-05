@@ -151,27 +151,23 @@ void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, Player playe
       final newGridVolume = scene.gridVolume + (scene.gridRows * scene.gridHeight);
       final newNodeTypes = Uint8List(newGridVolume);
       final newNodeOrientations = Uint8List(newGridVolume);
-      var newIndex = 0;
-      for (var i = 0; i < scene.gridVolume; i++) {
-        if (i % scene.rowsPerZ == 0){
-          final k = newIndex;
-          var type = i < scene.gridArea ? NodeType.Grass : NodeType.Empty;
+      var iNew = 0;
+      for (var iOld = 0; iOld < scene.gridVolume; iOld++) {
+        if (iOld % scene.gridColumns == 0){
+          var type = iOld < scene.gridArea ? NodeType.Grass : NodeType.Empty;
           var orientation = NodeType.getDefaultOrientation(type);
-          for (var j = 0; j < scene.gridColumns; j++){
-            newNodeTypes[k + j] = type;
-            newNodeOrientations[k + j] = orientation;
-            newIndex++;
-          }
+          newNodeTypes[iNew] = type;
+          newNodeOrientations[iNew] = orientation;
+          iNew++;
         }
-        newNodeTypes[newIndex] = scene.nodeTypes[i];
-        newNodeOrientations[newIndex] = scene.nodeOrientations[i];
-        newIndex++;
+        newNodeTypes[iNew] = scene.nodeTypes[iOld];
+        newNodeOrientations[iNew] = scene.nodeOrientations[iOld];
+        iNew++;
       }
       scene.nodeTypes = newNodeTypes;
       scene.nodeOrientations = newNodeOrientations;
       scene.gridColumns++;
       game.onGridChanged();
-
       for (final character in game.characters) {
         character.y += Node_Size;
       }

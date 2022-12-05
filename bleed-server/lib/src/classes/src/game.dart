@@ -560,7 +560,6 @@ abstract class Game {
 
   void onGridChanged() {
     scene.refreshGridMetrics();
-    // scene.dirty = true;
     for (final player in players) {
       player.writeGrid();
     }
