@@ -822,7 +822,7 @@ class Player extends Character with ByteWriter {
     return false;
   }
 
-  void inventoryAddWeapon({required int itemType}){
+  void inventoryAddMax({required int itemType}){
     inventoryAdd(itemType: itemType, itemQuantity: ItemType.getMaxQuantity(itemType));
   }
 

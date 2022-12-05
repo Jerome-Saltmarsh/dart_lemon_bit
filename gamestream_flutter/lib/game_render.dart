@@ -871,6 +871,7 @@ class GameRender {
     final z = GamePlayer.position.z + Node_Height_Half;
 
     if (!GameQueries.inBounds(x1, y1, z)) return;
+    if (!GameQueries.inBounds(GameMouse.positionX, GameMouse.positionY, GameMouse.positionZ)) return;
 
     final mouseAngle = GameMouse.playerAngle;
     final mouseDistance = min(200.0, GameMouse.playerDistance);
