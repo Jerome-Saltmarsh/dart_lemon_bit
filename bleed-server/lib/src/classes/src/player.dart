@@ -1696,6 +1696,27 @@ class Player extends Character with ByteWriter {
       }
   }
 
+  void inventoryClear() {
+     for (var i = 0; i < inventory.length; i++){
+       inventory[i] = ItemType.Empty;
+       inventoryQuantity[i] = 0;
+     }
+     belt1_itemType = ItemType.Empty;
+     belt2_itemType = ItemType.Empty;
+     belt3_itemType = ItemType.Empty;
+     belt4_itemType = ItemType.Empty;
+     belt5_itemType = ItemType.Empty;
+     belt6_itemType = ItemType.Empty;
+     belt1_quantity = 0;
+     belt2_quantity = 0;
+     belt3_quantity = 0;
+     belt4_quantity = 0;
+     belt5_quantity = 0;
+     belt6_quantity = 0;
+     inventoryDirty = true;
+  }
+
+
 }
 
 int getExperienceForLevel(int level){

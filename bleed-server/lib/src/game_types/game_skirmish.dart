@@ -66,7 +66,17 @@ class GameSkirmish extends Game {
     player.writeEnvironmentLightning(LightningType.Off);
     player.writeEnvironmentWind(WindType.Gentle);
     player.writeEnvironmentBreeze(false);
+  }
 
+  @override
+  void customOnCollisionBetweenPlayerAndGameObject(Player player, GameObject gameObject) {
+
+  }
+
+  @override
+  void customOnPlayerRevived(Player player){
+    moveToRandomSpawnPoint(player);
+    player.inventoryClear();
     player.inventoryAddWeapon(itemType: ItemType.Weapon_Ranged_Shotgun);
     player.inventoryAdd(itemType: ItemType.Resource_Gun_Powder, itemQuantity: 100);
     player.inventoryAdd(itemType: ItemType.Resource_Round_9mm, itemQuantity: 100);
@@ -98,21 +108,12 @@ class GameSkirmish extends Game {
     player.inventorySet(index: ItemType.Belt_2, itemType: ItemType.Weapon_Rifle_Sniper, itemQuantity: ItemType.getWeaponCapacity(ItemType.Weapon_Rifle_Sniper));
     player.inventorySet(index: ItemType.Belt_3, itemType: ItemType.Weapon_Handgun_Glock, itemQuantity: ItemType.getWeaponCapacity(ItemType.Weapon_Handgun_Glock));
     player.inventorySet(index: ItemType.Belt_4, itemType: ItemType.Weapon_Thrown_Grenade, itemQuantity: 10);
+    player.inventorySet(index: ItemType.Belt_5, itemType: ItemType.Weapon_Melee_Knife, itemQuantity: 1);
+    player.inventorySet(index: ItemType.Belt_6, itemType: ItemType.Consumables_Apple, itemQuantity: 3);
     player.equippedWeaponIndex = ItemType.Belt_1;
     player.inventoryDirty = true;
     player.refreshStats();
     player.health = player.maxHealth;
-  }
-
-  @override
-  void customOnCollisionBetweenPlayerAndGameObject(Player player, GameObject gameObject) {
-
-  }
-
-  @override
-  void customOnPlayerRevived(Player player){
-    moveToRandomSpawnPoint(player);
-    player.writePlayerSelectHero(true);
   }
 
   @override

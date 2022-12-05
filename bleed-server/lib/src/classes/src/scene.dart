@@ -15,7 +15,7 @@ class Scene {
   var gridVolume = 0;
   var gridArea = 0;
   var name = "";
-  var dirty = false;
+  // var dirty = false;
   final List<GameObject> gameObjects;
 
   Uint16List spawnPoints;
@@ -85,7 +85,6 @@ class Scene {
     if (currentType == type && currentOrientation == orientation) {
       return;
     }
-    dirty = true;
     nodeTypes[index] = type;
     nodeOrientations[index] = orientation;
   }

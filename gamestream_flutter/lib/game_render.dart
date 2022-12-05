@@ -843,30 +843,6 @@ class GameRender {
 
     showIndexPlayer();
     showIndexMouse();
-    // final mouseAngle = GameMouse.playerAngle;
-    // final mouseDistance = min(200.0, GameMouse.playerDistance);
-    //
-    // final jumps = mouseDistance ~/ Node_Size_Half;
-    //
-    // var x1 = GamePlayer.position.x;
-    // var y1 = GamePlayer.position.y;
-    // var i1 = GamePlayer.position.nodeIndex;
-    // final z = GamePlayer.position.z;
-    //
-    // for (var i = 0; i < jumps; i++) {
-    //   final x2 = x1 + Engine.calculateAdjacent(mouseAngle, Node_Size_Half);
-    //   final y2 = y1 + Engine.calculateOpposite(mouseAngle, Node_Size_Half);
-    //   final i2 = GameQueries.getNodeIndex(x2, y2, z);
-    //   if (i2 == NodeType.Empty) continue;
-    //   x1 = x2;
-    //   y1 = y2;
-    //   i1 = i2;
-    // }
-    // // final x = GamePlayer.position.x - mousePositionX;
-    // // final y = GamePlayer.position.y - mousePositionY;
-    //
-    // showIndex(i1 + GameState.nodesArea);
-    // showIndex(i1 + GameState.nodesArea + GameState.nodesArea);
 
     renderOrderGrid.total = renderOrderGrid.getTotal();
     renderOrderGrid.index = 0;
@@ -890,15 +866,20 @@ class GameRender {
   }
 
   static void showIndexMouse(){
+    var x1 = GamePlayer.position.x;
+    var y1 = GamePlayer.position.y;
+    final z = GamePlayer.position.z + Node_Height_Half;
+
+    if (!GameQueries.inBounds(x1, y1, z)) return;
+
     final mouseAngle = GameMouse.playerAngle;
     final mouseDistance = min(200.0, GameMouse.playerDistance);
 
     final jumps = mouseDistance ~/ Node_Height_Half;
 
-    var x1 = GamePlayer.position.x;
-    var y1 = GamePlayer.position.y;
+
     var i1 = GamePlayer.position.nodeIndex;
-    final z = GamePlayer.position.z + Node_Height_Half;
+
 
     final tX = Engine.calculateAdjacent(mouseAngle, Node_Height_Half);
     final tY = Engine.calculateOpposite(mouseAngle, Node_Height_Half);

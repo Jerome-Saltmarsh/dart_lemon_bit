@@ -140,7 +140,7 @@ class GameCanvas {
     GameRender.renderMouseTargetName();
     ClientState.rendersSinceUpdate.value++;
     renderPlayerRunTarget();
-    drawMouse();
+    // drawMouse();
   }
 
   static void drawMouse() {

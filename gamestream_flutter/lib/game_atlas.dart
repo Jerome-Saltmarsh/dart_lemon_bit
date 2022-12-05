@@ -540,6 +540,10 @@ class AtlasNode {
   static const Node_Wooden_Plank_Corner_Left_Y = Node_Wooden_Plank_Corner_Bottom_Y + Sprite_Height_Padded;
   static const Spawn_X = 618.0;
   static const Spawn_Y = 1021.0;
+  static const Spawn_Weapon_X = 0.0;
+  static const Spawn_Weapon_Y = 592.0;
+  static const Spawn_Player_X = 49.0;
+  static const Spawn_Player_Y = 592.0;
   static const Table_X = 667.0;
   static const Node_Table_Y = 945.0;
   static const Node_Wood_Slope_North_X = 912.0;

@@ -560,7 +560,7 @@ abstract class Game {
 
   void onGridChanged() {
     scene.refreshGridMetrics();
-    scene.dirty = true;
+    // scene.dirty = true;
     for (final player in players) {
       player.writeGrid();
     }
@@ -1907,9 +1907,9 @@ abstract class Game {
     if (!players.remove(player)) return false;
     characters.remove(player);
     customOnPlayerDisconnected(player);
-    if (player.scene.dirty && player.scene.name.isNotEmpty) {
-      saveSceneToFile();
-    }
+    // if (player.scene.dirty && player.scene.name.isNotEmpty) {
+    //   saveSceneToFile();
+    // }
     return true;
   }
 
@@ -2165,7 +2165,7 @@ abstract class Game {
     if (!NodeType.supportsOrientation(nodeType, nodeOrientation)){
       nodeOrientation = NodeType.getDefaultOrientation(nodeType);
     }
-    scene.dirty = true;
+    // scene.dirty = true;
     scene.nodeOrientations[nodeIndex] = nodeOrientation;
     scene.nodeTypes[nodeIndex] = nodeType;
     for (final player in players){

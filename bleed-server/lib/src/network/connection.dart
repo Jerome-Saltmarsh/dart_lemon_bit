@@ -549,7 +549,7 @@ class Connection {
           )
         );
         player.editorSelectedGameObject = player.game.scene.gameObjects.last;
-        player.scene.dirty = true;
+        // player.scene.dirty = true;
         break;
 
       case GameObjectRequest.Delete:

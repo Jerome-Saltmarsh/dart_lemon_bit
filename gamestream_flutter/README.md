@@ -52,14 +52,18 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] catacombs cemetery entrance
 [ ] spawn-node character type
 [ ] fix editor export scene to json
+[ ] game casual
 [ ] game 5v5
 [ ] game royal
 [ ] game waves
+[ ] game wilderness
 
 [GAME-CASUAL]
 [ ] design scene
 [ ] separate player and zombie spawn points
-[ ] spawn in safe player spawn
+[ ] spawn node types
+[ ] fix bug picking up weapon loses quantity
+[ ] random item types
 
 04.12.2022
 [x] atlas item type swat pants 

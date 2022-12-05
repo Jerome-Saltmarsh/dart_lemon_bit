@@ -154,15 +154,15 @@ void renderNodeAt() {
     case NodeType.Spawn_Weapon:
       if (GameState.playMode) return;
       RenderNode.renderStandardNode(
-        srcX: AtlasNode.Spawn_X,
-        srcY: AtlasNode.Spawn_Y,
+        srcX: AtlasNode.Spawn_Weapon_X,
+        srcY: AtlasNode.Spawn_Weapon_Y,
       );
       break;
     case NodeType.Spawn_Player:
       if (GameState.playMode) return;
       RenderNode.renderStandardNode(
-        srcX: AtlasNode.Spawn_X,
-        srcY: AtlasNode.Spawn_Y,
+        srcX: AtlasNode.Spawn_Player_X,
+        srcY: AtlasNode.Spawn_Player_Y,
       );
       break;
     case NodeType.Table:
