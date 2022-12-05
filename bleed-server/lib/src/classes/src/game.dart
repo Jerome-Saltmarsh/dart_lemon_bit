@@ -2251,5 +2251,10 @@ abstract class Game {
       player.downloadScene();
     }
   }
+
+  void moveToRandomPlayerSpawnPoint(Position3 value) {
+    if (scene.spawnPointsPlayers.isEmpty) return;
+    moveV3ToNodeIndex(value, randomItem(scene.spawnPointsPlayers));
+  }
 }
 

@@ -75,7 +75,7 @@ class GamePractice extends Game {
 
   @override
   void customOnPlayerRevived(Player player){
-    moveToRandomSpawnPoint(player);
+    moveToRandomPlayerSpawnPoint(player);
     player.inventoryClear();
     player.inventoryAddMax(itemType: ItemType.Weapon_Ranged_Shotgun);
     player.inventoryAdd(itemType: ItemType.Resource_Gun_Powder, itemQuantity: 100);
@@ -137,10 +137,5 @@ class GamePractice extends Game {
 
   void customOnCharacterKilled(Character target, dynamic src) {
 
-  }
-
-  void moveToRandomSpawnPoint(Position3 value) {
-    if (scene.spawnPointsPlayers.isEmpty) return;
-    moveV3ToNodeIndex(value, randomItem(scene.spawnPointsPlayers));
   }
 }

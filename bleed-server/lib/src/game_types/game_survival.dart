@@ -14,14 +14,21 @@ class GameSurvival extends Game {
 
   @override
   void customOnPlayerRevived(Player player) {
-    player.inventoryAddMax(itemType: ItemType.Weapon_Melee_Knife);
     player.inventoryAddMax(itemType: ItemType.Resource_Round_9mm);
-    player.inventoryAdd(itemType: ItemType.Consumables_Apple, itemQuantity: 2);
-    player.inventoryAdd(itemType: ItemType.Weapon_Thrown_Grenade, itemQuantity: 3);
     player.bodyType = ItemType.Body_Shirt_Cyan;
     player.legsType = ItemType.Legs_Blue;
     player.belt1_itemType = ItemType.Weapon_Handgun_Glock;
-    player.belt1_itemType = ItemType.getMaxQuantity(ItemType.Weapon_Handgun_Glock);
+    player.belt1_quantity = ItemType.getMaxQuantity(ItemType.Weapon_Handgun_Glock);
+    player.belt2_itemType = ItemType.Weapon_Melee_Knife;
+    player.belt2_quantity = 1;
+    player.belt3_itemType = ItemType.Weapon_Thrown_Grenade;
+    player.belt3_quantity = 3;
+    player.belt4_itemType = ItemType.Consumables_Apple;
+    player.belt4_quantity = 3;
+    player.equippedWeaponIndex = ItemType.Belt_1;
+    player.refreshStats();
+    moveToRandomPlayerSpawnPoint(player);
+    player.health = player.maxHealth;
   }
 
 }
