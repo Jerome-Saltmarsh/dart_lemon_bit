@@ -138,6 +138,8 @@ class AtlasIcons {
     IconType.Inventory: 64,
     IconType.Sound_Enabled: 192,
     IconType.Sound_Disabled: 224,
+    IconType.Plus: 32,
+    IconType.Minus: 64,
   }[itemType] ?? 0;
 
   static double getSrcY(int itemType) => const  <int, double> {
@@ -161,6 +163,8 @@ class AtlasIcons {
     IconType.Wind_Gentle: 64 * 5,
     IconType.Wind_Strong: 64 * 6,
     IconType.Inventory: 32,
+    IconType.Plus: 96,
+    IconType.Minus: 96,
   }[itemType] ?? 0;
 }
 

@@ -22,4 +22,6 @@ class IconType {
   static const Sound_Enabled = 26;
   static const Sound_Disabled = 27;
   static const Box = 28;
+  static const Plus = 29;
+  static const Minus = 30;
 }
