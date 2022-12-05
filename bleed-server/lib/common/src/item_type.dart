@@ -585,6 +585,31 @@ class ItemType {
         Weapon_Rifle_Sniper: 3.0,
     }[itemType] ?? 1.0;
   }
+
+  static const HeadTypes = [
+      Head_Swat,
+      Head_Blonde,
+      Head_Wizards_Hat,
+      Head_Rogues_Hood,
+      Head_Steel_Helm,
+  ];
+
+
+  static const BodyTypes = [
+     Body_Swat,
+     Body_Tunic_Padded,
+     Body_Shirt_Blue,
+     Body_Shirt_Cyan,
+  ];
+
+  static const LegTypes = [
+     Legs_Swat,
+     Legs_Green,
+     Legs_White,
+     Legs_Red,
+     Legs_Brown,
+     Legs_Blue,
+  ];
 }
 
 

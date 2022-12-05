@@ -63,6 +63,7 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] separate player and zombie spawn points
 [ ] spawn node types
 [ ] fix bug picking up weapon loses quantity
+[ ] fix editor map size
 [ ] random item types
 
 04.12.2022
