@@ -226,7 +226,26 @@ void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, Player playe
       }
       break;
     case RequestModifyCanvasSize.Remove_Column_End:
-    // TODO: Handle this case.
+      final newGridVolume = scene.gridVolume - (scene.gridRows * scene.gridHeight);
+      final newNodeTypes = Uint8List(newGridVolume);
+      final newNodeOrientations = Uint8List(newGridVolume);
+      var newIndex = 0;
+      for (var i = 0; i < scene.gridVolume; i++) {
+        if (i % scene.gridColumns == scene.gridColumns - 1) continue;
+        newNodeTypes[newIndex] = scene.nodeTypes[i];
+        newNodeOrientations[newIndex] = scene.nodeOrientations[i];
+        newIndex++;
+      }
+      scene.nodeTypes = newNodeTypes;
+      scene.nodeOrientations = newNodeOrientations;
+      scene.gridColumns--;
+      game.onGridChanged();
+      for (final character in game.characters) {
+        character.y -= Node_Size;
+      }
+      for (final gameObject in game.gameObjects) {
+        gameObject.y -= Node_Size;
+      }
       break;
   }
 }
