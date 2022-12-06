@@ -50,19 +50,24 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] catacombs cemetery entrance
 [ ] spawn-node character type
 [ ] fix editor export scene to json
-[ ] game casual
+[ ] generate top down map
+[ ] editor generate random map
+
+[RELEASE]
 [ ] game survival
+[ ] game practice
+[ ] game editor
 [ ] game 5v5
 [ ] game royal
 [ ] game waves
-[ ] generate top down map
-[ ] generate random map
 
-[GAME-CASUAL]
+[GAME-PRACTICE]
 [ ] design scene
 [ ] spawn node types
+[ ] tutorial tips
 
 07.12.2022
+[x] item type sprite green pants
 [x] inventory open and closable
 
 06.12.2022

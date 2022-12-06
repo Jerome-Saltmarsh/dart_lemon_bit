@@ -18,28 +18,14 @@ class GamePractice extends Game {
 
   int getRandomItemType() => 0;
 
-  @override
-  void customUpdate() {
-    for (final character in characters) {
-      if (character.alive) {
-        continue;
-      }
-      if (character is AI) {
-          if
-          (character.respawn-- <= 0)
-            respawnAI(character);
-      }
-    }
-  }
-
-  void respawnAI(AI ai){
-    ai.respawn = configAIRespawnFrames;
-    ai.health = ai.maxHealth;
-    ai.state = CharacterState.Spawning;
-    ai.collidable = true;
-    ai.stateDurationRemaining = 30;
-    moveV3ToNodeIndex(ai, ai.spawnNodeIndex);
-  }
+  // void respawnAI(AI ai){
+    // ai.respawn = configAIRespawnFrames;
+    // ai.health = ai.maxHealth;
+    // ai.state = CharacterState.Spawning;
+    // ai.collidable = true;
+    // ai.stateDurationRemaining = 30;
+    // moveV3ToNodeIndex(ai, ai.spawnNodeIndex);
+  // }
 
   @override
   void customUpdatePlayer(Player player) {

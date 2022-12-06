@@ -2,7 +2,9 @@ import 'package:bleed_server/gamestream.dart';
 
 class GameSurvival extends Game {
 
-  GameSurvival(Scene scene) : super(scene);
+  GameSurvival(Scene scene) : super(scene) {
+    triggerSpawnPoints();
+  }
 
   @override
   int get gameType => GameType.Survival;
