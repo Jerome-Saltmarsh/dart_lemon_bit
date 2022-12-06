@@ -9,7 +9,7 @@ import '../../maths/get_distance_between_v3.dart';
 
 abstract class Game {
   var frame = 0;
-  final Scene scene;
+  Scene scene;
   final players = <Player>[];
   final characters = <Character>[];
   final projectiles = <Projectile>[];

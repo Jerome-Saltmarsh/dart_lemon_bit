@@ -67,7 +67,7 @@ class Player extends Character with ByteWriter {
   Account? account;
   var perkMaxHealth = 0;
   var perkMaxDamage = 0;
-  static const InventorySize = 40;
+  static const InventorySize = 6 * 5;
   final inventory = Uint16List(InventorySize);
   final inventoryQuantity = Uint16List(InventorySize);
   var storeItems = <int>[];

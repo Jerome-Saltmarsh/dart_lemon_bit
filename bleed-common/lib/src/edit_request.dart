@@ -7,4 +7,5 @@ enum EditRequest {
    Clear_Spawned,
    Scene_Toggle_Underground,
    Scene_Set_Floor_Type,
+   Generate_Scene,
 }

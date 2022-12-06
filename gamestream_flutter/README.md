@@ -50,8 +50,9 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] catacombs cemetery entrance
 [ ] spawn-node character type
 [ ] fix editor export scene to json
-[ ] generate top down map
 [ ] editor generate random map
+[ ] game survival shop crystal
+[ ] generate top down map
 
 [RELEASE]
 [ ] game survival

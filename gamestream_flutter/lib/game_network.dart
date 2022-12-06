@@ -382,6 +382,9 @@ class GameNetwork {
   static void sendClientRequestEditSceneToggleUnderground() =>
       sendClientRequestEdit(EditRequest.Scene_Toggle_Underground);
 
+  static void sendClientRequestEditGenerateScene() =>
+      sendClientRequestEdit(EditRequest.Generate_Scene);
+
   static void sendClientRequestEditSceneSetFloorTypeStone() =>
       sendClientRequestEditSceneSetFloorType(NodeType.Stone);
 

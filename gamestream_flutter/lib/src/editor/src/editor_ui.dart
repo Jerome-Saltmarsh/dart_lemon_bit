@@ -107,7 +107,7 @@ class EditorUI {
       ),
       buildWatchBool(EditorState.windowEnabledScene, buildWindowEditScene),
       buildWatchBool(EditorState.windowEnabledCanvasSize, buildWindowEditCanvasSize),
-      buildWatchBool(EditorState.windowEnabledGenerate, buildWindowGenerate),
+      buildWatchBool(EditorState.windowEnabledGenerate, buildWindowGenerateScene),
     ],
   );
 
@@ -250,14 +250,20 @@ class EditorUI {
     ),
   );
 
-  static Widget buildWindowGenerate() => Center(
+  static Widget buildWindowGenerateScene() => Center(
     child: GameUI.buildDialogUIControl(
       child: Container(
         padding: const EdgeInsets.all(10),
         width: 400,
         height: 520,
         color: GameColors.brownLight,
-        child: text("Generate"),
+        child: Column(
+          children: [
+            container(child: "Generate", action: (){
+              GameNetwork.sendClientRequestEditGenerateScene();
+            }),
+          ],
+        ),
       ),
     ),
   );

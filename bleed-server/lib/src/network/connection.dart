@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/game_types/game_survival.dart';
+import 'package:bleed_server/src/scene_generator.dart';
 import 'package:bleed_server/src/system.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -352,6 +353,12 @@ class Connection {
     }
     final editRequest = EditRequest.values[editRequestIndex];
     switch (editRequest) {
+      case EditRequest.Generate_Scene:
+        final scene = SceneGenerator.generate(height: 8, rows: 50, columns: 50);
+        game.scene = scene;
+        game.playersDownloadScene();
+        break;
+
       case EditRequest.Download:
         final scene = convertSceneToString(player.scene);
         reply('scene: $scene');
