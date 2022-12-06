@@ -14,8 +14,7 @@ class GameUIInteract {
     static Widget buildInteractMode(int mode) {
       switch (mode) {
         case InteractMode.None:
-          // return const SizedBox();
-          return buildPositionedInventory();
+          return const SizedBox();
         case InteractMode.Talking:
           return buildPositionedTalk();
         case InteractMode.Trading:

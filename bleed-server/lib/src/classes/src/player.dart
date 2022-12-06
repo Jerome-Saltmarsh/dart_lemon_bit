@@ -75,7 +75,8 @@ class Player extends Character with ByteWriter {
   final questsCompleted = <Quest>[];
   final flags = <Flag>[];
   var options = <String, Function> {};
-  var _interactMode = InteractMode.None;
+  var _interactMode = InteractMode.Inventory;
+  var inventoryOpen = true;
   var mapX = 0;
   var mapY = 0;
 
@@ -271,7 +272,7 @@ class Player extends Character with ByteWriter {
   set interactMode(int value){
     if (_interactMode == value) return;
     _interactMode = value;
-    writeInteractMode();
+    writePlayerInteractMode();
   }
 
   int? getEmptyInventoryIndex(){
@@ -343,7 +344,11 @@ class Player extends Character with ByteWriter {
     if (options.isNotEmpty) {
       options.clear();
     }
-    interactMode = InteractMode.None;
+    if (inventoryOpen) {
+      interactMode = InteractMode.Inventory;
+    } else {
+      interactMode = InteractMode.None;
+    }
   }
 
   void interact({required String message, Map<String, Function>? responses}){
@@ -1066,6 +1071,7 @@ class Player extends Character with ByteWriter {
       writePlayerHealth();
       writePlayerMaxHealth();
       writePlayerAlive();
+      writePlayerInteractMode();
     }
 
     if (!sceneDownloaded){
@@ -1526,7 +1532,7 @@ class Player extends Character with ByteWriter {
     storeItems.forEach(writeUInt16);
   }
 
-  void writeInteractMode() {
+  void writePlayerInteractMode() {
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Interact_Mode);
     writeByte(interactMode);

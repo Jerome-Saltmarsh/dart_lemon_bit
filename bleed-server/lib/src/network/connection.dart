@@ -292,10 +292,11 @@ class Connection {
         player.inventorySell(index);
         break;
       case InventoryRequest.Toggle:
-        if (player.interactMode != InteractMode.None){
-           player.interactMode = InteractMode.None;
-        } else {
+        player.inventoryOpen = !player.inventoryOpen;
+        if (player.inventoryOpen){
           player.interactMode = InteractMode.Inventory;
+        } else {
+          player.interactMode = InteractMode.None;
         }
         break;
       case InventoryRequest.Drop:

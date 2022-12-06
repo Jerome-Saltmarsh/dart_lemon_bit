@@ -62,6 +62,9 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] design scene
 [ ] spawn node types
 
+07.12.2022
+[x] inventory open and closable
+
 06.12.2022
 [x] fix editor map size
 
