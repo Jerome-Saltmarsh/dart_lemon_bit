@@ -107,6 +107,7 @@ class EditorUI {
       ),
       buildWatchBool(EditorState.windowEnabledScene, buildWindowEditScene),
       buildWatchBool(EditorState.windowEnabledCanvasSize, buildWindowEditCanvasSize),
+      buildWatchBool(EditorState.windowEnabledGenerate, buildWindowGenerate),
     ],
   );
 
@@ -119,6 +120,7 @@ class EditorUI {
                 container(child: "UPLOAD", action: GameEditor.editorLoadScene),
                 container(child: "EDIT", action: EditorActions.toggleWindowEnabledScene),
                 container(child: "MAP SIZE", action: EditorActions.toggleWindowEnabledCanvasSize),
+                container(child: "GENERATE", action: EditorState.windowEnabledGenerate.toggle),
                 container(child: "SAVE", action: ServerActions.saveScene),
               ],
             );
@@ -244,6 +246,18 @@ class EditorUI {
             // ),
           ],
         ),
+      ),
+    ),
+  );
+
+  static Widget buildWindowGenerate() => Center(
+    child: GameUI.buildDialogUIControl(
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        width: 400,
+        height: 520,
+        color: GameColors.brownLight,
+        child: text("Generate"),
       ),
     ),
   );

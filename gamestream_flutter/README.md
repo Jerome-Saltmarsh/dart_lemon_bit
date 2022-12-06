@@ -19,9 +19,7 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] optimize client applyShadowAt
 [ ] option fullscreen dialog on game start if it fails to do so automatically
 [ ] editor - gameobjects
-[ ] fix editor add remove columns
 [ ] highlight cursor gameobject item
-[ ] engine improve grid invisibility
 [ ] player attributes ui
 [ ] repeat killing same enemies yields no reward
 [ ] scene edit tool pause ai
@@ -53,16 +51,19 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] spawn-node character type
 [ ] fix editor export scene to json
 [ ] game casual
+[ ] game survival
 [ ] game 5v5
 [ ] game royal
 [ ] game waves
-[ ] game survival
 [ ] generate top down map
+[ ] generate random map
 
 [GAME-CASUAL]
 [ ] design scene
 [ ] spawn node types
-[ ] fix editor map size
+
+06.12.2022
+[x] fix editor map size
 
 05.12.2022
 [x] fix player spawn points
