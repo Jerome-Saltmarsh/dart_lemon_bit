@@ -354,7 +354,17 @@ class Connection {
     final editRequest = EditRequest.values[editRequestIndex];
     switch (editRequest) {
       case EditRequest.Generate_Scene:
-        final scene = SceneGenerator.generate(height: 8, rows: 50, columns: 50);
+        const min = 5;
+        final rows = parseArg2(arguments);
+        if (rows == null) return;
+        if (rows < min) errorInvalidArg('rows < $min');
+        final columns = parseArg3(arguments);
+        if (columns == null) return;
+        if (columns < min) errorInvalidArg('columns < $min');
+        final height = parseArg4(arguments);
+        if (height == null) return;
+        if (height < min) errorInvalidArg('height < $min');
+        final scene = SceneGenerator.generate(height: height, rows: rows, columns: columns);
         game.scene = scene;
         game.playersDownloadScene();
         break;

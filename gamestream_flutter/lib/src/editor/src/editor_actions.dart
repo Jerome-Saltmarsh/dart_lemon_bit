@@ -18,4 +18,11 @@ class EditorActions {
   static void exportSceneToJson(){
 
   }
+
+  static void generateScene() =>
+      GameNetwork.sendClientRequestEditGenerateScene(
+        rows: EditorState.generateRows.value,
+        columns: EditorState.generateColumns.value,
+        height: EditorState.generateHeight.value,
+      );
 }

@@ -259,9 +259,55 @@ class EditorUI {
         color: GameColors.brownLight,
         child: Column(
           children: [
-            container(child: "Generate", action: (){
-              GameNetwork.sendClientRequestEditGenerateScene();
-            }),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                text("Generate"),
+                text("Close", onPressed: EditorState.windowEnabledGenerate.toggle),
+              ],
+            ),
+            height32,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                watch(EditorState.generateRows, (t) => text("Rows: $t")),
+                Row(
+                  children: [
+                    container(child: "-", width: 50, action: EditorState.generateRows.decrement, alignment: Alignment.center),
+                    width6,
+                    container(child: "+", width: 50, action: EditorState.generateRows.increment, alignment: Alignment.center),
+                  ],
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                watch(EditorState.generateColumns, (t) => text("Columns: $t")),
+                Row(
+                  children: [
+                    container(child: "-", width: 50, action: EditorState.generateColumns.decrement, alignment: Alignment.center),
+                    width6,
+                    container(child: "+", width: 50, action: EditorState.generateColumns.increment, alignment: Alignment.center),
+                  ],
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                watch(EditorState.generateHeight, (t) => text("Height: $t")),
+                Row(
+                  children: [
+                    container(child: "-", width: 50, action: EditorState.generateHeight.decrement, alignment: Alignment.center),
+                    width6,
+                    container(child: "+", width: 50, action: EditorState.generateHeight.increment, alignment: Alignment.center),
+                  ],
+                ),
+              ],
+            ),
+            height16,
+            container(child: "Generate", action: EditorActions.generateScene, color: GameColors.blue, alignment: Alignment.center),
           ],
         ),
       ),

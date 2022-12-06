@@ -382,8 +382,13 @@ class GameNetwork {
   static void sendClientRequestEditSceneToggleUnderground() =>
       sendClientRequestEdit(EditRequest.Scene_Toggle_Underground);
 
-  static void sendClientRequestEditGenerateScene() =>
-      sendClientRequestEdit(EditRequest.Generate_Scene);
+  static void sendClientRequestEditGenerateScene({
+    required int rows,
+    required int columns,
+    required int height,
+  }) => sendClientRequestEdit(
+      EditRequest.Generate_Scene, '$rows $columns $height'
+  );
 
   static void sendClientRequestEditSceneSetFloorTypeStone() =>
       sendClientRequestEditSceneSetFloorType(NodeType.Stone);
