@@ -718,6 +718,10 @@ abstract class Game {
     clearCharacterTarget(player);
     player.writePlayerMoved();
     player.writePlayerAlive();
+
+    if (player.inventoryOpen){
+      player.interactMode = InteractMode.Inventory;
+    }
     customOnPlayerRevived(player);
   }
 
