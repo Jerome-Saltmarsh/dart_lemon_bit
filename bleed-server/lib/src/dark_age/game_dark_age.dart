@@ -116,16 +116,16 @@ class GameDarkAge extends Game {
       movePlayerToCrystal(player);
   }
 
-  @override
-  Player spawnPlayer() {
-    final player = Player(
-        game: this,
-        weaponType: ItemType.Weapon_Handgun_Flint_Lock_Old,
-        team: 1,
-    );
-
-    return player;
-  }
+  // @override
+  // Player spawnPlayer() {
+  //   final player = Player(
+  //       game: this,
+  //       weaponType: ItemType.Weapon_Handgun_Flint_Lock_Old,
+  //       team: 1,
+  //   );
+  //
+  //   return player;
+  // }
 
   void addNpcGuardBow({required int row, required int column, int z = 1}){
     addNpc(

@@ -16,34 +16,18 @@ class GamePractice extends Game {
     triggerSpawnPoints();
   }
 
-  int getRandomItemType() => 0;
-
-  // void respawnAI(AI ai){
-    // ai.respawn = configAIRespawnFrames;
-    // ai.health = ai.maxHealth;
-    // ai.state = CharacterState.Spawning;
-    // ai.collidable = true;
-    // ai.stateDurationRemaining = 30;
-    // moveV3ToNodeIndex(ai, ai.spawnNodeIndex);
+  // @override
+  // Player spawnPlayer() {
+  //   final player = Player(
+  //     game: this,
+  //     team: 0,
+  //     weaponType: ItemType.Weapon_Handgun_Flint_Lock_Old,
+  //   );
+  //   player.legsType = ItemType.Legs_Brown;
+  //   player.bodyType = ItemType.Body_Tunic_Padded;
+  //   player.headType = ItemType.Head_Wizards_Hat;
+  //   return player;
   // }
-
-  @override
-  void customUpdatePlayer(Player player) {
-
-  }
-
-  @override
-  Player spawnPlayer() {
-    final player = Player(
-      game: this,
-      team: 0,
-      weaponType: ItemType.Weapon_Handgun_Flint_Lock_Old,
-    );
-    player.legsType = ItemType.Legs_Brown;
-    player.bodyType = ItemType.Body_Tunic_Padded;
-    player.headType = ItemType.Head_Wizards_Hat;
-    return player;
-  }
 
   @override
   void customInitPlayer(Player player) {
@@ -113,12 +97,6 @@ class GamePractice extends Game {
   }
 
   void reactivatePlayerWeapons(Player player){
-  }
-
-  reactivateGameObject(GameObject gameObject){
-    gameObject.active = true;
-    gameObject.collidable = true;
-    gameObject.type = getRandomItemType();
   }
 
   void customOnCharacterKilled(Character target, dynamic src) {

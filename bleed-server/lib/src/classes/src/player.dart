@@ -83,18 +83,14 @@ class Player extends Character with ByteWriter {
   /// CONSTRUCTOR
   Player({
     required this.game,
-    required int weaponType,
-    int team = 0,
-    int magic = 10,
-    int health = 10,
   }) : super(
     characterType: CharacterType.Template,
     x: 0,
     y: 0,
     z: 0,
-    health: health,
-    team: team,
-    weaponType: weaponType,
+    health: 10,
+    team: 0,
+    weaponType: 0,
     bodyType: ItemType.Body_Tunic_Padded,
     headType: ItemType.Head_Rogues_Hood,
     damage: 1,

@@ -632,7 +632,7 @@ class Connection {
     if (_player != null) {
       _player!.game.removePlayer(_player!);
     }
-    final player = game.spawnPlayer();
+    final player = Player(game: game);
     _player = _player = player;
     player.sendBufferToClient = sendBufferToClient;
     player.sceneDownloaded = false;

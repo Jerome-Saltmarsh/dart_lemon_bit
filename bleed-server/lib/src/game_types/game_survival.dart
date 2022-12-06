@@ -9,10 +9,10 @@ class GameSurvival extends Game {
   @override
   int get gameType => GameType.Survival;
 
-  @override
-  Player spawnPlayer() {
-    return Player(game: this, weaponType: ItemType.Weapon_Melee_Knife);
-  }
+  // @override
+  // Player spawnPlayer() {
+  //   return Player(game: this, weaponType: ItemType.Weapon_Melee_Knife);
+  // }
 
   @override
   void customOnPlayerRevived(Player player) {

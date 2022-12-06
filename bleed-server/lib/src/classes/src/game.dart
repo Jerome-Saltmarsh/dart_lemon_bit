@@ -729,8 +729,6 @@ abstract class Game {
     return total;
   }
 
-  Player spawnPlayer();
-
   void playersWriteWeather() {
     for (final player in players) {
       player.writeWeather();
