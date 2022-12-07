@@ -24,5 +24,6 @@ class EditorActions {
         rows: EditorState.generateRows.value,
         columns: EditorState.generateColumns.value,
         height: EditorState.generateHeight.value,
+        octaves: EditorState.generateOctaves.value,
       );
 }

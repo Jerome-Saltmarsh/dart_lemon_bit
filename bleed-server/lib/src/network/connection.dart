@@ -364,7 +364,14 @@ class Connection {
         final height = parseArg4(arguments);
         if (height == null) return;
         if (height < min) errorInvalidArg('height < $min');
-        final scene = SceneGenerator.generate(height: height, rows: rows, columns: columns);
+        final octaves = parseArg5(arguments);
+        if (octaves == null) return;
+        final scene = SceneGenerator.generate(
+            height: height,
+            rows: rows,
+            columns: columns,
+            octaves: octaves,
+        );
         game.scene = scene;
         game.playersDownloadScene();
         break;

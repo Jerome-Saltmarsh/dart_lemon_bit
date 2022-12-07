@@ -267,45 +267,10 @@ class EditorUI {
               ],
             ),
             height32,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                watch(EditorState.generateRows, (t) => text("Rows: $t")),
-                Row(
-                  children: [
-                    container(child: "-", width: 50, action: EditorState.generateRows.decrement, alignment: Alignment.center),
-                    width6,
-                    container(child: "+", width: 50, action: EditorState.generateRows.increment, alignment: Alignment.center),
-                  ],
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                watch(EditorState.generateColumns, (t) => text("Columns: $t")),
-                Row(
-                  children: [
-                    container(child: "-", width: 50, action: EditorState.generateColumns.decrement, alignment: Alignment.center),
-                    width6,
-                    container(child: "+", width: 50, action: EditorState.generateColumns.increment, alignment: Alignment.center),
-                  ],
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                watch(EditorState.generateHeight, (t) => text("Height: $t")),
-                Row(
-                  children: [
-                    container(child: "-", width: 50, action: EditorState.generateHeight.decrement, alignment: Alignment.center),
-                    width6,
-                    container(child: "+", width: 50, action: EditorState.generateHeight.increment, alignment: Alignment.center),
-                  ],
-                ),
-              ],
-            ),
+            buildRowGenerate(EditorState.generateRows, "Rows"),
+            buildRowGenerate(EditorState.generateColumns, "Columns"),
+            buildRowGenerate(EditorState.generateHeight, "Height"),
+            buildRowGenerate(EditorState.generateOctaves, "Octaves"),
             height16,
             container(child: "Generate", action: EditorActions.generateScene, color: GameColors.blue, alignment: Alignment.center),
           ],
@@ -313,6 +278,25 @@ class EditorUI {
       ),
     ),
   );
+
+  static Widget buildRowGenerate(WatchInt value, String name) => Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: [
+            Container(child: text(name), alignment: Alignment.centerLeft, width: 100),
+            watch(value, text),
+          ],
+        ),
+        Row(
+          children: [
+            container(child: "-", width: 50, action: value.decrement, alignment: Alignment.center),
+            width6,
+            container(child: "+", width: 50, action: value.increment, alignment: Alignment.center),
+          ],
+        ),
+      ],
+    );
 
 
   static Widget buildWindowEditScene()=> Center(
