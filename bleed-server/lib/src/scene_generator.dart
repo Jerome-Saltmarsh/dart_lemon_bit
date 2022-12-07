@@ -31,6 +31,14 @@ class SceneGenerator {
          final percentage = value * 0.5;
          const maxHeight = 4;
          final h = (percentage * maxHeight).toInt();
+
+         if (h == 0){
+           nodeTypes[index] = NodeType.Water;
+           nodeOrientations[index] = NodeOrientation.None;
+           index++;
+           continue;
+         }
+
          for (var i = 0; i < h; i++) {
            final iIndex = index + (i * area);
            nodeTypes[iIndex] = NodeType.Grass;
