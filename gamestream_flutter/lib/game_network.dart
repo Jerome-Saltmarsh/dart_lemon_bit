@@ -61,6 +61,8 @@ class GameNetwork {
 
   static void connectToGameSurvival() => connectToGame(GameType.Survival);
 
+  static void connectToGame5v5() => connectToGame(GameType.FiveVFive);
+
   static void connectToGamePractice() => connectToGame(GameType.Practice);
 
   static void connectToGame(int gameType, [String message = ""]) =>

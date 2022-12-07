@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:bleed_server/gamestream.dart';
+import 'package:bleed_server/src/game_types/game_5v5.dart';
 import 'package:bleed_server/src/game_types/game_survival.dart';
 import 'package:bleed_server/src/scene_generator.dart';
 import 'package:bleed_server/src/system.dart';
@@ -645,6 +646,17 @@ class Connection {
     joinGame(GamePractice(scene: darkAgeScenes.skirmish_1));
   }
 
+  Future joinGame5V5() async {
+    for (final game in engine.games){
+      if (game is Game5v5) {
+        if (game.players.length >= 10) continue;
+        return joinGame(game);
+      }
+    }
+    joinGame(Game5v5(darkAgeScenes.skirmish_1));
+  }
+
+
   Future joinGameSurvival() async {
     for (final game in engine.games){
       if (game is GameSurvival){
@@ -731,6 +743,9 @@ class Connection {
         break;
       case GameType.Survival:
         joinGameSurvival();
+        break;
+      case GameType.FiveVFive:
+        joinGame5V5();
         break;
       default:
         return errorInvalidArg('invalid game type index $gameType');

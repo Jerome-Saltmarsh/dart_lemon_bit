@@ -160,6 +160,8 @@ class GameWebsite {
         height24,
         buildTextButton("SURVIVE", action: GameNetwork.connectToGameSurvival),
         height24,
+        buildTextButton("5v5", action: GameNetwork.connectToGameSurvival),
+        height24,
         buildTextButton("EDITOR", action: GameNetwork.connectToGameEditor),
       ],
     );

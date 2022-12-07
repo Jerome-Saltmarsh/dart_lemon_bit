@@ -14,7 +14,7 @@ class ServerEvents {
       return;
     }
     ClientState.edit.value = value == GameType.Editor;
-    GameUI.timeVisible.value = GameType.isTimed(value);
+    GameUI.timeVisible.value = value == GameType.Dark_Age;
     GameUI.mapVisible.value = value == GameType.Dark_Age;
 
     if (!Engine.isLocalHost){

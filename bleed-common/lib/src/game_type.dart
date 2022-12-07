@@ -8,23 +8,21 @@ class GameType {
   /// All other players are your enemy
   /// Treasures appear on the map but watch out for other players who might also be after it
   static const Survival = 3;
+  static const FiveVFive = 4;
 
   static const values = [
      Dark_Age,
      Editor,
      Practice,
      Survival,
+     FiveVFive,
   ];
-
-  static bool isTimed(int gameType) => const [
-      Dark_Age,
-      Editor,
-  ].contains(gameType);
 
   static String getName(int? value) => value == null ? 'None' : const {
       Dark_Age  : 'Dark Age'  ,
       Editor    : 'Editor'    ,
       Practice  : 'Practice'  ,
       Survival  : 'Survival'  ,
+      FiveVFive : '5v5'       ,
   } [value] ?? 'Unknown ($value)';
 }
