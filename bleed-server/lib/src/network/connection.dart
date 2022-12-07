@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:bleed_server/gamestream.dart';
+import 'package:bleed_server/src/classes/src/scene_writer.dart';
 import 'package:bleed_server/src/game_types/game_5v5.dart';
 import 'package:bleed_server/src/game_types/game_survival.dart';
 import 'package:bleed_server/src/scene_generator.dart';
@@ -381,8 +382,10 @@ class Connection {
         break;
 
       case EditRequest.Download:
-        final scene = convertSceneToString(player.scene);
-        reply('scene: $scene');
+        final compiled = SceneWriter.compileScene(player.scene);
+        player.writeByte(ServerResponse.Download_Scene);
+        player.writeUInt16(compiled.length);
+        player.writeBytes(compiled);
         break;
 
       case EditRequest.Scene_Set_Floor_Type:

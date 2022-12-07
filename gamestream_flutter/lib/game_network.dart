@@ -149,13 +149,13 @@ class GameNetwork {
     }
 
     if (response is Uint8List) {
-      return serverResponseReader.readBytes(response);
+      return serverResponseReader.read(response);
     }
     if (response is String){
-      if (response.startsWith("scene:")){
-        final contents = response.substring(6, response.length);
-        Engine.downloadString(contents: contents, filename: "hello.json");
-      }
+      // if (response.startsWith("scene:")){
+      //   final contents = response.substring(6, response.length);
+      //   Engine.downloadString(contents: contents, filename: "hello.json");
+      // }
       WebsiteState.error.value = response;
       return;
     }

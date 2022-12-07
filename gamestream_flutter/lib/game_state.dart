@@ -34,6 +34,7 @@ class GameState {
     refreshLighting();
   });
 
+  static var compiledScenes = Uint8List(0);
   static var nodesTotalZ = 0;
   static var nodesTotalRows = 0;
   static var nodesTotalColumns = 0;

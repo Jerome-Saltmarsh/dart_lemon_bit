@@ -40,5 +40,6 @@ class ServerResponse {
   static const Error = 109;
   static const Dark_Age = 110;
   static const Game_State = 111;
+  static const Download_Scene = 112;
 }
 

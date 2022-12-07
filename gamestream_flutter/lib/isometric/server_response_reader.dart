@@ -9,7 +9,7 @@ class ServerResponseReader with ByteReader {
   final bufferSize = Watch(0);
   final updateFrame = Watch(0, onChanged: GameState.onChangedUpdateFrame);
 
-  void readBytes(Uint8List values) {
+  void read(Uint8List values) {
     updateFrame.value++;
     index = 0;
     GameState.totalCharacters = 0;
@@ -119,13 +119,19 @@ class ServerResponseReader with ByteReader {
               break;
           }
           break;
+        case ServerResponse.Download_Scene:
+          final length = readUInt16();
+          final bytes = readBytes(length);
+          Engine.downloadBytes(bytes, downloadName: "test-hello.scene");
+
+          break;
         default:
           if (debugging) {
             return;
           }
           print(values);
           debugging = true;
-          readBytes(values);
+          read(values);
           GameNetwork.disconnect();
           WebsiteState.error.value = "An error occurred";
           return;
@@ -470,6 +476,7 @@ class ServerResponseReader with ByteReader {
   }
 
   void readGrid() {
+
     GameState.nodesTotalZ = readUInt16();
     GameState.nodesTotalRows = readUInt16();
     GameState.nodesTotalColumns = readUInt16();
