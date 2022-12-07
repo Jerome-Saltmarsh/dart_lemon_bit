@@ -63,6 +63,19 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] game editor
 [ ] game 5v5
 
+[GAME-5v5]
+[ ] game5v5 design map
+[ ] game5v5 on revive join new game
+[ ] game5v5 store first 30 seconds
+[ ] game5v5 team spawn area
+[ ] spawn point type
+[ ] spawn point team
+[ ] tag-script
+// spawns-zombie
+// level 1
+// team 1
+// count 3
+
 [GAME-PRACTICE]
 [ ] design scene
 [ ] spawn node types

@@ -1146,6 +1146,7 @@ class Player extends Character with ByteWriter {
     writeRenderMap(game.customPropMapVisible);
     writeGameType(game.gameType);
     writeWeather();
+    writeSceneTags();
     game.customDownloadScene(this);
     writePlayerEvent(PlayerEvent.Scene_Changed);
     sceneDownloaded = true;
@@ -1721,6 +1722,15 @@ class Player extends Character with ByteWriter {
      inventoryDirty = true;
   }
 
+  void writeSceneTags(){
+     writeByte(ServerResponse.Scene);
+     writeByte(ApiScene.Tag_Types);
+     writeUInt16(scene.tags.length);
+     for (final tag in scene.tags.entries) {
+        writeString(tag.key);
+        writeUInt16(tag.value);
+     }
+  }
 
 }
 

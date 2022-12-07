@@ -1,5 +1,7 @@
-import 'package:bleed_server/gamestream.dart';
 import 'dart:typed_data';
+
+import 'package:bleed_server/gamestream.dart';
+import 'package:bleed_server/src/io/write_scene_to_file.dart';
 
 import '../io/load_scene.dart';
 
@@ -9,6 +11,7 @@ class DarkAgeScenes {
   late Scene village;
   late Scene dungeon_1;
   late Scene skirmish_1;
+  late Scene skirmish_2;
   late Scene castle;
   late Scene forest;
   late Scene forest_2;
@@ -35,6 +38,8 @@ class DarkAgeScenes {
   late Scene outpost_1;
   late Scene shrine_1;
 
+  List<Scene> values = [];
+
   Future load() async {
       print('Loading dark age scenes');
       final start = DateTime.now();
@@ -43,6 +48,7 @@ class DarkAgeScenes {
       farmB = await loadScene('farm-b');
       village = await loadScene('village');
       skirmish_1 = await loadScene('skirmish-1');
+      skirmish_2 = await loadScene('skirmish-2');
       forest = await loadScene('forest');
       forest_2 = await loadScene('forest-b');
       forest_3 = await loadScene('forest-3');
@@ -62,7 +68,30 @@ class DarkAgeScenes {
       final ms = DateTime.now().difference(start).inMilliseconds;
       print("scenes took $ms ms to load");
 
-      final emptyList = Uint8List(0);
+      values.add(farm);
+      values.add(farmA);
+      values.add(farmB);
+      values.add(village);
+      values.add(skirmish_1);
+      values.add(skirmish_2);
+      values.add(forest);
+      values.add(forest_2);
+      values.add(forest_3);
+      values.add(forest_4);
+      values.add(mountainShrine);
+      values.add(lake);
+      values.add(town);
+      values.add(plains_1);
+      values.add(plains_2);
+      values.add(cemetery_1);
+      values.add(plains_4);
+      values.add(mountains_1);
+      values.add(mountains_2);
+      values.add(mountains_3);
+      values.add(mountains_4);
+      values.add(shrine_1);
+
+    final emptyList = Uint8List(0);
       empty = Scene(
           name: 'empty',
           gameObjects: [],
@@ -76,5 +105,9 @@ class DarkAgeScenes {
           spawnPointsPlayers: Uint16List(0),
       );
       print("Loading dark age scenes finished");
+  }
+
+  void saveAllToFile(){
+    values.forEach(writeSceneToFileBytes);
   }
 }

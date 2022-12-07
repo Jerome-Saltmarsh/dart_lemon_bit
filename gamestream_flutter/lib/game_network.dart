@@ -244,10 +244,6 @@ class GameNetwork {
     sendClientRequest(ClientRequest.Teleport_Scene, scene.index);
   }
 
-  static void sendClientRequestUpgradeWeaponDamage(){
-    sendClientRequest(ClientRequest.Upgrade_Weapon_Damage);
-  }
-
   static void sendClientRequestWeatherSetRain(int value){
     sendClientRequest(ClientRequest.Weather_Set_Rain, value);
   }

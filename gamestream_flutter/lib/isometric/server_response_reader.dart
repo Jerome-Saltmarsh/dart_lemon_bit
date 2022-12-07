@@ -106,7 +106,18 @@ class ServerResponseReader with ByteReader {
           }
           break;
         case ServerResponse.Scene:
-          
+          final sceneType = readByte();
+          switch (sceneType){
+            case ApiScene.Tag_Types:
+              final total = readUInt16();
+              ServerState.tagTypes.clear();
+              for (var i = 0; i < total; i++){
+                final key = readString();
+                final value = readUInt16();
+                ServerState.tagTypes[key] = value;
+              }
+              break;
+          }
           break;
         default:
           if (debugging) {

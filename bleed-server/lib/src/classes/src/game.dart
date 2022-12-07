@@ -1919,7 +1919,12 @@ abstract class Game {
 
   void saveSceneToFile() {
     assert(scene.name.isNotEmpty);
-    writeSceneToFile(scene);
+    writeSceneToFileJson(scene);
+  }
+
+  void saveSceneToFileBytes(){
+    assert(scene.name.isNotEmpty);
+    writeSceneToFileBytes(scene);
   }
 
   void npcSetRandomDestination(AI ai, {int radius = 10}) {

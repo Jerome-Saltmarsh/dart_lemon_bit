@@ -145,7 +145,7 @@ class Engine {
   }
 
   Future<GameDarkAge> findGameEditorByName(String name) async {
-    return GameDarkAgeEditor(scene: await readSceneFromFile(name));
+    return GameDarkAgeEditor(scene: await readSceneFromFileJson(name));
   }
 
   // This method is called by the game constructor automatically

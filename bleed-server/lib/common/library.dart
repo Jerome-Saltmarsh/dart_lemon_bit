@@ -2,6 +2,8 @@
 library common;
 
 export 'src/enums/ai_mode.dart';
+export 'src/enums/tag_type.dart';
+export 'src/apis/api_scene.dart';
 export 'src/api_dark_age.dart';
 export 'src/api_player.dart';
 export 'src/area_type.dart';

@@ -414,7 +414,8 @@ class Connection {
           player.writeError('cannot save because scene name is empty');
           return;
         }
-        player.game.saveSceneToFile();
+        // player.game.saveSceneToFile();
+        player.game.saveSceneToFileBytes();
         player.writeError('scene saved: ${player.game.scene.name}');
         break;
 
@@ -653,7 +654,7 @@ class Connection {
         return joinGame(game);
       }
     }
-    joinGame(Game5v5(darkAgeScenes.skirmish_1));
+    joinGame(Game5v5(darkAgeScenes.skirmish_2));
   }
 
 

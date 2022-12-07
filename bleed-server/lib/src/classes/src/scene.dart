@@ -8,6 +8,7 @@ var pathFindSearchID = 0;
 class Scene {
   late Uint8List nodeTypes;
   late Uint8List nodeOrientations;
+  late Uint8List compiled;
 
   var gridHeight = 0;
   var gridRows = 0;
@@ -27,6 +28,10 @@ class Scene {
 
   int get columnsPerRow => gridRows;
   int get rowsPerZ => gridColumns;
+
+  final tags = <String, int>{
+
+  };
 
   Scene({
     required this.name,

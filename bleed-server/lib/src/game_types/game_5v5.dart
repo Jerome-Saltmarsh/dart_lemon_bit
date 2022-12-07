@@ -4,20 +4,44 @@ import 'package:bleed_server/gamestream.dart';
 class Game5v5 extends Game {
 
   static const Player_Per_Team = 5;
+  static const Total_Players = Player_Per_Team * 2;
   var started = false;
 
-  Game5v5(super.scene);
+  Game5v5(super.scene) {
+    // assert(scene.tags.containsKey(TagType.Team_Spawn_1));
+    // assert(scene.tags.containsKey(TagType.Team_Spawn_2));
+  }
 
   @override
   int get gameType => GameType.FiveVFive;
 
   @override
   void customOnPlayerJoined(Player player) {
-    print("customOnPlayerJoined 5v5");
     assert(!started);
 
     if (players.length == Player_Per_Team * 2) {
       started = true;
+    } else {
+      // player.writeByte(ServerResponse.Game_State);
+      // player.writeByte(GameState.Awaiting_Players);
+    }
+  }
+
+  void start(){
+    assert(players.length == Total_Players);
+    started = true;
+
+    for (var i = 0; i < Player_Per_Team; i++){
+      final player = players[i];
+
+    }
+    for (var i = Player_Per_Team; i < Total_Players; i++){
+
+    }
+
+    for (final player in players) {
+      // player.writeByte(ServerResponse.Game_State);
+      // player.writeByte(GameState.In_Progress);
     }
   }
 
