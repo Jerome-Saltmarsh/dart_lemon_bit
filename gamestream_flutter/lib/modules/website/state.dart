@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:lemon_watch/watch.dart';
+import 'package:lemon_watch/src.dart';
 
 import 'enums.dart';
 

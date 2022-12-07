@@ -318,7 +318,7 @@ packages:
       path: "C:\\Users\\Jerome\\github\\dart-lemon-byte"
       relative: false
     source: path
-    version: "1.0.15"
+    version: "1.0.16"
   lemon_engine:
     dependency: "direct main"
     description:

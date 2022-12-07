@@ -2,8 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_watch/watch.dart';
-import 'package:lemon_watch/watch_builder.dart';
+import 'package:lemon_watch/src.dart';
 
 import 'game_website.dart';
 import 'ui/style.dart';
