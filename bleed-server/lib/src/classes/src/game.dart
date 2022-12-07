@@ -688,8 +688,9 @@ abstract class Game {
     removeDisconnectedPlayers();
     if (players.length == 0) return;
     updateInProgress();
-    for (final player in players) {
-      player.writeAndSendResponse();
+
+    for (var i = 0; i < players.length; i++){
+      players[i].writeAndSendResponse();
     }
   }
 

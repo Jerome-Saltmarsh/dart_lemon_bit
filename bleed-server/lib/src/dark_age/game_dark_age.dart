@@ -113,19 +113,11 @@ class GameDarkAge extends Game {
   @override
   void customOnPlayerRevived(Player player){
       changeGame(player, engine.findGameDarkAge());
-      movePlayerToCrystal(player);
+      // movePlayerToCrystal(player);
+      player.x = 100;
+      player.y = 100;
+      player.z = 50;
   }
-
-  // @override
-  // Player spawnPlayer() {
-  //   final player = Player(
-  //       game: this,
-  //       weaponType: ItemType.Weapon_Handgun_Flint_Lock_Old,
-  //       team: 1,
-  //   );
-  //
-  //   return player;
-  // }
 
   void addNpcGuardBow({required int row, required int column, int z = 1}){
     addNpc(

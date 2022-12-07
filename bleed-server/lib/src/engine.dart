@@ -123,22 +123,10 @@ class Engine {
     officialTime.update();
     frame++;
 
-    // removeEmptyGames();
-    // updateAIPathfinding();
-
     for (var i = 0; i < games.length; i++){
       games[i].updateStatus();
     }
   }
-
-  // void removeEmptyGames() {
-  //   if (frame % 1000 != 0) return;
-  //   for (var i = 0; i < games.length; i++) {
-  //     if (games[i].players.isNotEmpty) continue;
-  //     games.removeAt(i);
-  //     i--;
-  //   }
-  // }
 
   Future<GameDarkAge> findGameEditorNew() async {
     return GameDarkAgeEditor();

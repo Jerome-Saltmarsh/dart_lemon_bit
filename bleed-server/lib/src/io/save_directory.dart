@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:bleed_server/gamestream.dart';
 
 
-final saveDirectoryPath = '${Directory.current.path}/saved_scenes';
+final saveDirectoryPath = '${Directory.current.path}/scenes';
 final saveDirectory = Directory(saveDirectoryPath);
 
 Future<List<FileSystemEntity>> get saveDirectoryFileSystemEntities =>
