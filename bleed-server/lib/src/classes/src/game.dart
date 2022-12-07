@@ -60,6 +60,8 @@ abstract class Game {
   void customOnPlayerWeaponChanged(Player player, int previousWeaponType, int newWeaponType){ }
   /// @override
   void customOnHitApplied(Character src, Collider target) {}
+  /// @override
+  void customOnPlayerJoined(Player player) {}
   
   /// PROPERTIES
 
@@ -1905,7 +1907,6 @@ abstract class Game {
       if (!removePlayer(player)) continue;
       i--;
       playerLength--;
-      // print("Removed disconnected player");
     }
   }
 
@@ -1913,9 +1914,6 @@ abstract class Game {
     if (!players.remove(player)) return false;
     characters.remove(player);
     customOnPlayerDisconnected(player);
-    // if (player.scene.dirty && player.scene.name.isNotEmpty) {
-    //   saveSceneToFile();
-    // }
     return true;
   }
 

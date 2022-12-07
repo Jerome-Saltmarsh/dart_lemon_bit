@@ -649,7 +649,7 @@ class Connection {
   Future joinGame5V5() async {
     for (final game in engine.games){
       if (game is Game5v5) {
-        if (game.players.length >= 10) continue;
+        if (game.started) continue;
         return joinGame(game);
       }
     }
@@ -675,6 +675,7 @@ class Connection {
     _player = _player = player;
     player.sendBufferToClient = sendBufferToClient;
     player.sceneDownloaded = false;
+    game.customOnPlayerJoined(player);
 
     final account = _account;
     if (account != null) {
