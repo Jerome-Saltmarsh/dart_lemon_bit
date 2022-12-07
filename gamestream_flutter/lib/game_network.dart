@@ -387,8 +387,9 @@ class GameNetwork {
     required int columns,
     required int height,
     required int octaves,
+    required int frequency,
   }) => sendClientRequestEdit(
-      EditRequest.Generate_Scene, '$rows $columns $height $octaves'
+      EditRequest.Generate_Scene, '$rows $columns $height $octaves $frequency'
   );
 
   static void sendClientRequestEditSceneSetFloorTypeStone() =>

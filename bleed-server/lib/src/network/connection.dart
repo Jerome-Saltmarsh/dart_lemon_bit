@@ -366,11 +366,14 @@ class Connection {
         if (height < min) errorInvalidArg('height < $min');
         final octaves = parseArg5(arguments);
         if (octaves == null) return;
+        final frequency = parseArg6(arguments);
+        if (frequency == null) return;
         final scene = SceneGenerator.generate(
             height: height,
             rows: rows,
             columns: columns,
             octaves: octaves,
+            frequency: frequency * 0.005,
         );
         game.scene = scene;
         game.playersDownloadScene();
@@ -747,6 +750,7 @@ class Connection {
   int? parseArg3(List<String> arguments,) => parseArg(arguments, 3);
   int? parseArg4(List<String> arguments,) => parseArg(arguments, 4);
   int? parseArg5(List<String> arguments,) => parseArg(arguments, 5);
+  int? parseArg6(List<String> arguments,) => parseArg(arguments, 6);
 
   int? parseArg(List<String> arguments, int index){
      if (index >= arguments.length) {

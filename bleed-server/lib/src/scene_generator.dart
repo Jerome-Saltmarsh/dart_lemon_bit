@@ -10,11 +10,12 @@ class SceneGenerator {
     required int rows,
     required int columns,
     required int octaves,
+    required double frequency,
   }){
     final noise = noise2(rows, columns,
         noiseType: NoiseType.Perlin,
         octaves: octaves,
-        frequency: 0.015,
+        frequency: frequency,
         cellularReturnType: CellularReturnType.Distance2Add,
     );
 

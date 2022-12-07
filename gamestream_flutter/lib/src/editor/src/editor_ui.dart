@@ -271,6 +271,7 @@ class EditorUI {
             buildRowGenerate(EditorState.generateColumns, "Columns"),
             buildRowGenerate(EditorState.generateHeight, "Height"),
             buildRowGenerate(EditorState.generateOctaves, "Octaves"),
+            buildRowGenerate(EditorState.generateFrequency, "Frequency"),
             height16,
             container(child: "Generate", action: EditorActions.generateScene, color: GameColors.blue, alignment: Alignment.center),
           ],
