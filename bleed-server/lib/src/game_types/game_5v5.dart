@@ -12,6 +12,11 @@ class Game5v5 extends Game {
 
   bool get started => gameStatus == GameStatus.Playing;
 
+  static const Store_Items = [
+     ItemType.Weapon_Handgun_Glock,
+     ItemType.Weapon_Smg_Mp5,
+  ];
+
   Game5v5(super.scene) {
     if (scene.spawnPointsPlayers.length >= 2) {
       spawnPoint1 = scene.spawnPointsPlayers[0];
@@ -48,6 +53,12 @@ class Game5v5 extends Game {
       moveToIndex(player, spawnPoint2);
     }
     playersWriteGameStatus(GameStatus.Playing);
+
+    for (final player in players){
+      player.storeItems = Store_Items;
+      player.writeStoreItems();
+      player.interactMode = InteractMode.Trading;
+    }
   }
 
   @override
