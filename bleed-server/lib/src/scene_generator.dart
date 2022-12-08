@@ -50,7 +50,7 @@ class SceneGenerator {
 
 
      return Scene(
-        name: "random",
+        name: "",
         nodeTypes: nodeTypes,
         nodeOrientations: nodeOrientations,
         gridHeight: height,

@@ -119,10 +119,12 @@ class ServerResponseReader with ByteReader {
               break;
           }
           break;
+
         case ServerResponse.Download_Scene:
+          final name = readString();
           final length = readUInt16();
           final bytes = readBytes(length);
-          Engine.downloadBytes(bytes, downloadName: "test-hello.scene");
+          Engine.downloadBytes(bytes, name: '$name.scene');
 
           break;
         default:

@@ -424,7 +424,5 @@ class GameNetwork {
     }
     GameNetwork.send(value);
   }
-
-
 }
 

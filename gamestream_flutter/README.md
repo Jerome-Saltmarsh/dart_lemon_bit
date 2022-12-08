@@ -49,7 +49,6 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] scene catacombs 
 [ ] catacombs cemetery entrance
 [ ] spawn-node character type
-[ ] fix editor export scene to json
 [ ] game survival shop crystal
 [ ] generate top down map
 
@@ -71,15 +70,15 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] spawn point type
 [ ] spawn point team
 [ ] tag-script
-// spawns-zombie
-// level 1
-// team 1
-// count 3
 
 [GAME-PRACTICE]
 [ ] design scene
 [ ] spawn node types
 [ ] tutorial tips
+
+08.12.2022
+[x] fix editor upload and download
+[x] save saves as byte array instead of json
 
 07.12.2022
 [x] editor generate random map

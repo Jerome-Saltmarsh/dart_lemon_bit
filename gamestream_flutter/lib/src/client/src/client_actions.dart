@@ -95,4 +95,8 @@ class ClientActions {
   static void clearHoverDialogType() {
     ClientState.hoverDialogType.value = DialogType.None;
   }
+
+  static void showMessage(String message){
+    ClientState.messageStatus.value = message;
+  }
 }

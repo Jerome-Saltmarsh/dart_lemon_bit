@@ -233,14 +233,6 @@ class GameEditor {
     }
   }
 
-  static void editorLoadScene() async {
-    final result = await FilePicker.platform.pickFiles();
-    if (result == null) return;
-    final contents = result.files[0].bytes;
-    if (contents == null) throw Exception("Load Scene Exception: selected file contents are null");
-    GameNetwork.sendClientRequest(ClientRequest.Editor_Load_Scene, utf8.decode(contents));
-  }
-
   static void actionGameDialogShowSceneSave(){
     GameEditor.editorDialog.value = EditorDialog.Scene_Save;
   }

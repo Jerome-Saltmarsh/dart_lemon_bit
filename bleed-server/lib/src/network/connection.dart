@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:bleed_server/gamestream.dart';
@@ -221,13 +222,10 @@ class Connection {
         break;
 
       case ClientRequest.Editor_Load_Scene:
-        if (arguments.length < 3) {
-          errorInvalidArg('3 args expected');
-        }
-
-        final sceneString = arguments[2];
+        final sceneString = arguments[1];
+        final sceneBytes = base64Decode(sceneString);
         try {
-          final scene = convertStringToScene(sceneString, "editor");
+          final scene = SceneReader.readScene(sceneBytes);
           joinGameEditorScene(scene);
         } catch (error){
           errorInvalidArg('Failed to load scene');
@@ -370,6 +368,7 @@ class Connection {
         if (octaves == null) return;
         final frequency = parseArg6(arguments);
         if (frequency == null) return;
+        final sceneName = player.game.scene.name;
         final scene = SceneGenerator.generate(
             height: height,
             rows: rows,
@@ -377,6 +376,7 @@ class Connection {
             octaves: octaves,
             frequency: frequency * 0.005,
         );
+        scene.name = sceneName;
         game.scene = scene;
         game.playersDownloadScene();
         break;
@@ -384,6 +384,12 @@ class Connection {
       case EditRequest.Download:
         final compiled = SceneWriter.compileScene(player.scene);
         player.writeByte(ServerResponse.Download_Scene);
+
+        if (player.scene.name.isEmpty){
+          player.scene.name = generateRandomName();
+        }
+
+        player.writeString(player.scene.name);
         player.writeUInt16(compiled.length);
         player.writeBytes(compiled);
         break;
