@@ -9,12 +9,11 @@ class SceneWriter extends ByteWriter {
 
   static final _instance = SceneWriter();
 
-  static Uint8List compileScene(Scene scene){
-    return _instance._compileScene(scene);
+  static Uint8List compileScene(Scene scene, {required bool gameObjects}){
+    return _instance._compileScene(scene, gameObjects: gameObjects);
   }
 
-  Uint8List _compileScene(Scene scene){
-    resetIndex();
+  void writeNodes(Scene scene){
     writeUInt16(scene.gridHeight);
     writeUInt16(scene.gridRows);
     writeUInt16(scene.gridColumns);
@@ -40,6 +39,24 @@ class SceneWriter extends ByteWriter {
     writeByte(previousType);
     writeByte(previousOrientation);
     writeUInt16(count);
+  }
+
+  void writeGameObjects(Scene scene){
+    for (final gameObject in scene.gameObjects){
+       if (!ItemType.isPersistable(gameObject.type)) continue;
+       writeUInt16(gameObject.type);
+       writeUDouble16(gameObject.x);
+       writeUDouble16(gameObject.y);
+       writeUDouble16(gameObject.z);
+    }
+  }
+
+  Uint8List _compileScene(Scene scene, {required bool gameObjects}){
+    resetIndex();
+    writeNodes(scene);
+    if (gameObjects){
+      writeGameObjects(scene);
+    }
     return compile();
   }
 }
@@ -51,7 +68,6 @@ class SceneReader extends ByteReader {
   static Scene readScene(List<int> bytes) => _instance._readScene(bytes);
 
   Scene _readScene(List<int> bytes){
-    // copyBytes(bytes);
     this.index = 0;
     this.values = bytes;
     final totalZ = readUInt16();
@@ -90,6 +106,18 @@ class SceneReader extends ByteReader {
       }
     }
 
+    final gameObjects = <GameObject>[];
+
+    while (index < bytes.length){
+      final type = readUInt16();
+      final x = readUDouble16();
+      final y = readUDouble16();
+      final z = readUDouble16();
+      gameObjects.add(
+        GameObject(x: x, y: y, z: z, type: type)
+      );
+    }
+
     return Scene(
         name: 'test',
         nodeTypes: nodeTypes,
@@ -97,7 +125,7 @@ class SceneReader extends ByteReader {
         gridHeight: totalZ,
         gridRows: totalRows,
         gridColumns: totalColumns,
-        gameObjects: [],
+        gameObjects: gameObjects,
         spawnPoints: Uint16List(0),
         spawnPointTypes: Uint16List(0),
         spawnPointsPlayers: Uint16List(0),

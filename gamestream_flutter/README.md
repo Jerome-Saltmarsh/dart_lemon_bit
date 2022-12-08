@@ -77,6 +77,7 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] tutorial tips
 
 08.12.2022
+[x] compile gameobjects to scene file
 [x] fix editor upload and download
 [x] save saves as byte array instead of json
 

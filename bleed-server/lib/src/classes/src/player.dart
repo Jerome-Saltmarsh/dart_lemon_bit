@@ -1452,7 +1452,7 @@ class Player extends Character with ByteWriter {
     writeByte(ServerResponse.Grid);
     var compiled = scene.compiled;
     if (compiled == null){
-      compiled = SceneWriter.compileScene(scene);
+      compiled = SceneWriter.compileScene(scene, gameObjects: false);
       scene.compiled = compiled;
     }
     writeBytes(compiled);

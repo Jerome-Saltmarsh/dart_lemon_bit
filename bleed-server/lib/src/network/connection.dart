@@ -382,7 +382,7 @@ class Connection {
         break;
 
       case EditRequest.Download:
-        final compiled = SceneWriter.compileScene(player.scene);
+        final compiled = SceneWriter.compileScene(player.scene, gameObjects: true);
         player.writeByte(ServerResponse.Download_Scene);
 
         if (player.scene.name.isEmpty){

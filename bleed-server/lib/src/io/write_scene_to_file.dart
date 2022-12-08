@@ -17,6 +17,6 @@ void writeSceneToFileBytes(Scene scene) {
   writeBytesToFile(
     fileName: '${scene.name}.scene',
     directory: saveDirectoryPath,
-    contents: SceneWriter.compileScene(scene),
+    contents: SceneWriter.compileScene(scene, gameObjects: true),
   );
 }
