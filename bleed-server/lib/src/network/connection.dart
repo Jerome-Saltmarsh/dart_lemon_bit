@@ -220,9 +220,9 @@ class Connection {
         break;
 
       case ClientRequest.Editor_Load_Scene:
-        final sceneString = arguments[1];
-        final sceneBytes = base64Decode(sceneString);
         try {
+          final sceneString = arguments[1];
+          final sceneBytes = base64Decode(sceneString);
           final scene = SceneReader.readScene(sceneBytes);
           joinGameEditorScene(scene);
         } catch (error){

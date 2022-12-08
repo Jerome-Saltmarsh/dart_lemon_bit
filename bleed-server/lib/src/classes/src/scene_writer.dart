@@ -131,7 +131,6 @@ class SceneReader extends ByteReader {
 
   void readGameObjects() {
     gameObjects.clear();
-
     final total = readUInt16();
     for (var i = 0; i < total; i++){
       final type = readUInt16();
