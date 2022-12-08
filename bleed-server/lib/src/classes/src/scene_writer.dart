@@ -44,12 +44,18 @@ class SceneWriter extends ByteWriter {
 
   void writeGameObjects(Scene scene){
     writeByte(ScenePart.GameObjects);
+    var total = 0;
     for (final gameObject in scene.gameObjects){
        if (!ItemType.isPersistable(gameObject.type)) continue;
-       writeUInt16(gameObject.type);
-       writeUDouble16(gameObject.x);
-       writeUDouble16(gameObject.y);
-       writeUDouble16(gameObject.z);
+       total++;
+    }
+    writeUInt16(total);
+    for (final gameObject in scene.gameObjects){
+      if (!ItemType.isPersistable(gameObject.type)) continue;
+      writeUInt16(gameObject.type);
+      writeUDouble16(gameObject.x);
+      writeUDouble16(gameObject.y);
+      writeUDouble16(gameObject.z);
     }
   }
 
@@ -99,7 +105,7 @@ class SceneReader extends ByteReader {
           readNodes();
           break;
         case ScenePart.GameObjects:
-          readGameObjects(bytes);
+          readGameObjects();
           break;
         case ScenePart.Player_SpawnPoints:
           readPlayerSpawnPoints();
@@ -123,10 +129,11 @@ class SceneReader extends ByteReader {
     );
   }
 
-  void readGameObjects(List<int> bytes) {
+  void readGameObjects() {
     gameObjects.clear();
 
-    while (index < values.length){
+    final total = readUInt16();
+    for (var i = 0; i < total; i++){
       final type = readUInt16();
       final x = readUDouble16();
       final y = readUDouble16();

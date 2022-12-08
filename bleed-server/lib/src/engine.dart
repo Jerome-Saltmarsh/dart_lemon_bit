@@ -62,6 +62,7 @@ class Engine {
     environmentUnderground = DarkAgeEnvironment(officialTime, maxShade: Shade.Pitch_Black);
     await darkAgeScenes.load();
 
+    // darkAgeScenes.saveAllToFile();
 
 
     final mapRow1 = <DarkAgeArea>[
