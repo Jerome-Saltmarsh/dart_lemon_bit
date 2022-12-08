@@ -4,6 +4,7 @@ library common;
 export 'src/enums/ai_mode.dart';
 export 'src/enums/tag_type.dart';
 export 'src/enums/game_status.dart';
+export 'src/enums/scene_part.dart';
 export 'src/apis/api_scene.dart';
 export 'src/api_dark_age.dart';
 export 'src/api_player.dart';

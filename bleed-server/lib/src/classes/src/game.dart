@@ -1698,32 +1698,6 @@ abstract class Game {
     position.z = scene.convertNodeIndexToZ(index) * Node_Height;
   }
 
-  // AI spawnAIAtIndex({
-  //   required int index,
-  //   required int characterType,
-  //   int health = 10,
-  //   int damage = 1,
-  //   int team = TeamType.Evil,
-  //   int weaponType = ItemType.Empty,
-  // }) {
-  //   if (index < 0) throw Exception('index < 0');
-  //   if (index >= scene.gridVolume) {
-  //     throw Exception('game.spawnZombieAtIndex($index) \ni >= scene.gridVolume');
-  //   }
-  //   final instance = AI(
-  //     characterType: characterType,
-  //     weaponType: weaponType,
-  //     health: health,
-  //     damage: damage,
-  //     team: team,
-  //   );
-  //   moveToIndex(instance, index);
-  //   characters.add(instance);
-  //   instance.spawnNodeIndex = index;
-  //   return instance;
-  // }
-
-
   GameObject spawnGameObjectAtIndex({required int index, required int type}){
     final instance = GameObject(
       x: 0,

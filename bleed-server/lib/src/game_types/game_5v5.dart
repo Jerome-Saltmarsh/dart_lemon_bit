@@ -4,13 +4,20 @@ import 'package:bleed_server/gamestream.dart';
 
 class Game5v5 extends Game {
 
-  static const Player_Per_Team = 5;
+  static const Player_Per_Team = 1;
   static const Total_Players = Player_Per_Team * 2;
-  var started = false;
+
+  var gameStatus = GameStatus.Waiting_For_Players;
+  var spawnPoint1 = 0;
+  var spawnPoint2 = 1;
+
+  bool get started => gameStatus == GameStatus.Playing;
 
   Game5v5(super.scene) {
-    // assert(scene.tags.containsKey(TagType.Team_Spawn_1));
-    // assert(scene.tags.containsKey(TagType.Team_Spawn_2));
+    if (scene.spawnPointsPlayers.length >= 2) {
+      spawnPoint1 = scene.spawnPointsPlayers[0];
+      spawnPoint2 = scene.spawnPointsPlayers[1];
+    }
   }
 
   @override
@@ -21,8 +28,7 @@ class Game5v5 extends Game {
     assert(!started);
 
     if (players.length == Player_Per_Team * 2) {
-      started = true;
-      playersWriteGameStatus(GameStatus.Playing);
+      start();
     } else {
       player.writeGameStatus(GameStatus.Waiting_For_Players);
     }
@@ -30,20 +36,19 @@ class Game5v5 extends Game {
 
   void start(){
     assert(players.length == Total_Players);
-    started = true;
+    gameStatus = GameStatus.Playing;
 
     for (var i = 0; i < Player_Per_Team; i++){
       final player = players[i];
-
+      player.team = 1;
+      moveToIndex(player, spawnPoint1);
     }
     for (var i = Player_Per_Team; i < Total_Players; i++){
-
+      final player = players[i];
+      player.team = 2;
+      moveToIndex(player, spawnPoint2);
     }
-
-    for (final player in players) {
-      // player.writeByte(ServerResponse.Game_State);
-      // player.writeByte(GameState.In_Progress);
-    }
+    playersWriteGameStatus(GameStatus.Playing);
   }
 
   @override

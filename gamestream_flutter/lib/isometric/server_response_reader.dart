@@ -2,6 +2,7 @@ import 'package:gamestream_flutter/isometric/events/on_changed_scene.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_byte/byte_reader.dart';
 
+
 final serverResponseReader = ServerResponseReader();
 
 class ServerResponseReader with ByteReader {
@@ -480,7 +481,7 @@ class ServerResponseReader with ByteReader {
   }
 
   void readGrid() {
-
+    final scenePart = readByte();
     GameState.nodesTotalZ = readUInt16();
     GameState.nodesTotalRows = readUInt16();
     GameState.nodesTotalColumns = readUInt16();

@@ -14,6 +14,7 @@ class SceneWriter extends ByteWriter {
   }
 
   void writeNodes(Scene scene){
+    writeByte(ScenePart.Nodes);
     writeUInt16(scene.gridHeight);
     writeUInt16(scene.gridRows);
     writeUInt16(scene.gridColumns);
@@ -42,6 +43,7 @@ class SceneWriter extends ByteWriter {
   }
 
   void writeGameObjects(Scene scene){
+    writeByte(ScenePart.GameObjects);
     for (final gameObject in scene.gameObjects){
        if (!ItemType.isPersistable(gameObject.type)) continue;
        writeUInt16(gameObject.type);
@@ -51,10 +53,22 @@ class SceneWriter extends ByteWriter {
     }
   }
 
+  void writePlayerSpawnPoints(Scene scene) {
+    writeByte(ScenePart.Player_SpawnPoints);
+    List<int> values = [];
+     for (var i = 0; i < scene.gridVolume; i++){
+        if (scene.nodeTypes[i] != NodeType.Spawn_Player) continue;
+        values.add(i);
+     }
+     writeUInt16(values.length);
+     writeUInt16s(values);
+  }
+
   Uint8List _compileScene(Scene scene, {required bool gameObjects}){
     resetIndex();
     writeNodes(scene);
     if (gameObjects){
+      writePlayerSpawnPoints(scene);
       writeGameObjects(scene);
     }
     return compile();
@@ -65,18 +79,77 @@ class SceneReader extends ByteReader {
 
   static final _instance = SceneReader();
 
+  var totalZ = 0;
+  var totalRows = 0;
+  var totalColumns = 0;
+  var nodeTypes = Uint8List(0);
+  var nodeOrientations = Uint8List(0);
+  var playerSpawnPoints = Uint16List(0);
+  var gameObjects = <GameObject>[];
+
   static Scene readScene(List<int> bytes) => _instance._readScene(bytes);
 
   Scene _readScene(List<int> bytes){
     this.index = 0;
     this.values = bytes;
-    final totalZ = readUInt16();
-    final totalRows = readUInt16();
-    final totalColumns = readUInt16();
+
+    while (this.index < bytes.length){
+      switch (readByte()){
+        case ScenePart.Nodes:
+          readNodes();
+          break;
+        case ScenePart.GameObjects:
+          readGameObjects(bytes);
+          break;
+        case ScenePart.Player_SpawnPoints:
+          readPlayerSpawnPoints();
+          break;
+        default:
+          throw Exception("could not read scene");
+      }
+    }
+
+    return Scene(
+        name: 'test',
+        nodeTypes: nodeTypes,
+        nodeOrientations: nodeOrientations,
+        gridHeight: totalZ,
+        gridRows: totalRows,
+        gridColumns: totalColumns,
+        gameObjects: gameObjects,
+        spawnPoints: Uint16List(0),
+        spawnPointTypes: Uint16List(0),
+        spawnPointsPlayers: playerSpawnPoints,
+    );
+  }
+
+  void readGameObjects(List<int> bytes) {
+    gameObjects.clear();
+
+    while (index < values.length){
+      final type = readUInt16();
+      final x = readUDouble16();
+      final y = readUDouble16();
+      final z = readUDouble16();
+      gameObjects.add(
+        GameObject(x: x, y: y, z: z, type: type)
+      );
+    }
+  }
+
+  void readPlayerSpawnPoints() {
+    final playerSpawnPointLength = readUInt16();
+    playerSpawnPoints = readUInt16s(playerSpawnPointLength);
+  }
+
+  void readNodes(){
+    totalZ = readUInt16();
+    totalRows = readUInt16();
+    totalColumns = readUInt16();
     final nodesArea = totalRows * totalColumns;
     final totalNodes = totalZ * nodesArea;
-    final nodeTypes = Uint8List(totalNodes);
-    final nodeOrientations = Uint8List(totalNodes);
+    nodeTypes = Uint8List(totalNodes);
+    nodeOrientations = Uint8List(totalNodes);
 
     var gridIndex = 0;
     var total = 0;
@@ -105,30 +178,5 @@ class SceneReader extends ByteReader {
         }
       }
     }
-
-    final gameObjects = <GameObject>[];
-
-    while (index < bytes.length){
-      final type = readUInt16();
-      final x = readUDouble16();
-      final y = readUDouble16();
-      final z = readUDouble16();
-      gameObjects.add(
-        GameObject(x: x, y: y, z: z, type: type)
-      );
-    }
-
-    return Scene(
-        name: 'test',
-        nodeTypes: nodeTypes,
-        nodeOrientations: nodeOrientations,
-        gridHeight: totalZ,
-        gridRows: totalRows,
-        gridColumns: totalColumns,
-        gameObjects: gameObjects,
-        spawnPoints: Uint16List(0),
-        spawnPointTypes: Uint16List(0),
-        spawnPointsPlayers: Uint16List(0),
-    );
   }
 }

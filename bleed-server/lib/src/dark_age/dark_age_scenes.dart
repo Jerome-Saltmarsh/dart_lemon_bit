@@ -91,6 +91,8 @@ class DarkAgeScenes {
       values.add(mountains_4);
       values.add(shrine_1);
 
+      // saveAllToFile();
+
     final emptyList = Uint8List(0);
       empty = Scene(
           name: 'empty',

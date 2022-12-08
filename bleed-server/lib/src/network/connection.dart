@@ -15,8 +15,6 @@ import '../dark_age/game_dark_age_editor.dart';
 import '../functions/generateName.dart';
 import '../functions/move_player_to_crystal.dart';
 import '../game_types/game_practice.dart';
-import '../io/convert_json_to_scene.dart';
-import '../io/convert_scene_to_json.dart';
 import '../utilities/is_valid_index.dart';
 import 'handle_request_modify_canvas_size.dart';
 

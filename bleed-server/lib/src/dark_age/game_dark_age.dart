@@ -2,7 +2,6 @@
 import 'package:bleed_server/gamestream.dart';
 import 'package:lemon_math/library.dart';
 
-import '../functions/move_player_to_crystal.dart';
 import 'dark_age_environment.dart';
 
 class GameDarkAge extends Game {
