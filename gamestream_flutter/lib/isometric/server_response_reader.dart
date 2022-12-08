@@ -125,7 +125,9 @@ class ServerResponseReader with ByteReader {
           final length = readUInt16();
           final bytes = readBytes(length);
           Engine.downloadBytes(bytes, name: '$name.scene');
-
+          break;
+        case ServerResponse.Game_Status:
+          ServerState.gameStatus.value = readByte();
           break;
         default:
           if (debugging) {

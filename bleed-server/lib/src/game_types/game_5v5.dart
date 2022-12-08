@@ -1,4 +1,5 @@
 
+import 'package:bleed_server/common/src/enums/game_status.dart';
 import 'package:bleed_server/gamestream.dart';
 
 class Game5v5 extends Game {
@@ -21,9 +22,9 @@ class Game5v5 extends Game {
 
     if (players.length == Player_Per_Team * 2) {
       started = true;
+      playersWriteGameStatus(GameStatus.Playing);
     } else {
-      // player.writeByte(ServerResponse.Game_State);
-      // player.writeByte(GameState.Awaiting_Players);
+      player.writeGameStatus(GameStatus.Waiting_For_Players);
     }
   }
 

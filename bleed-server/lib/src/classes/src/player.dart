@@ -1713,6 +1713,10 @@ class Player extends Character with ByteWriter {
      }
   }
 
+  void writeGameStatus(int gameStatus){
+    writeByte(ServerResponse.Game_Status);
+    writeByte(gameStatus);
+  }
 }
 
 int getExperienceForLevel(int level){

@@ -41,6 +41,16 @@ class GameUI {
         buildWatchBool(ClientState.debugVisible, GameDebug.buildStackDebug),
         buildPositionedAreaType(),
         buildPositionedMessageStatus(),
+        watch(ServerState.gameStatus, (int gameStatus) {
+             if (gameStatus == GameStatus.Playing) return const SizedBox();
+             return Positioned(
+               top: 60,
+               child: Container(
+                 alignment: Alignment.center,
+                 width: Engine.screen.width,
+                 child: text("Waiting for more players to join")),
+               );
+        }),
       ]);
 
   static Positioned buildPositionedAreaType() => Positioned(

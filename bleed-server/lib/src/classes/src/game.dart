@@ -2261,5 +2261,16 @@ abstract class Game {
     if (scene.spawnPointsPlayers.isEmpty) return;
     moveV3ToNodeIndex(value, randomItem(scene.spawnPointsPlayers));
   }
+
+  void playersWriteGameStatus(int gameStatus){
+    playersWriteByte(ServerResponse.Game_Status);
+    playersWriteByte(gameStatus);
+  }
+
+  void playersWriteByte(int byte){
+    for (final player in players) {
+      player.writeByte(byte);
+    }
+  }
 }
 

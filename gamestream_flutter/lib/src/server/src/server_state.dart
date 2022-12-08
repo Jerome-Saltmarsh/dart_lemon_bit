@@ -33,6 +33,7 @@ class ServerState {
   static final windTypeAmbient = Watch(WindType.Calm, onChanged: GameEvents.onChangedWindType);
   static final ambientShade = Watch(Shade.Bright, onChanged: GameEvents.onChangedAmbientShade);
   static final error = Watch("invalid request", onChanged: GameEvents.onChangedError);
+  static final gameStatus = Watch(GameStatus.Playing);
 
   static final playerBelt1_ItemType = Watch(ItemType.Empty);
   static final playerBelt2_ItemType = Watch(ItemType.Empty);
