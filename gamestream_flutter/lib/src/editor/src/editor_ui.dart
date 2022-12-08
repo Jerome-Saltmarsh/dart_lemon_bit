@@ -116,12 +116,13 @@ class EditorUI {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                container(child: "DOWNLOAD", action: EditorActions.downloadScene),
-                container(child: "UPLOAD", action: EditorActions.uploadScene),
+                container(child: "SAVE", action: EditorActions.downloadScene),
+                container(child: "LOAD", action: EditorActions.uploadScene),
                 container(child: "EDIT", action: EditorActions.toggleWindowEnabledScene),
                 container(child: "MAP SIZE", action: EditorActions.toggleWindowEnabledCanvasSize),
                 container(child: "GENERATE", action: EditorState.windowEnabledGenerate.toggle),
-                container(child: "SAVE", action: ServerActions.saveScene),
+                if (Engine.isLocalHost)
+                  container(child: "SAVE SERVER FILE", action: ServerActions.saveScene),
               ],
             );
   }

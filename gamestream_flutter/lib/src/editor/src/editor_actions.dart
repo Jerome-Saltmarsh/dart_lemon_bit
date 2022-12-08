@@ -6,11 +6,17 @@ import 'package:gamestream_flutter/library.dart';
 
 class EditorActions {
 
+
   static void downloadScene() =>
       GameNetwork.sendClientRequestEdit(EditRequest.Download);
 
   static void uploadScene() async {
-    final result = await FilePicker.platform.pickFiles(dialogTitle: "Load Scene", type: FileType.custom, allowedExtensions: ['scene']);
+    final result = await FilePicker.platform.pickFiles(
+        withData: true,
+        dialogTitle: "Load Scene",
+        type: FileType.custom,
+        allowedExtensions: ['scene'],
+    );
     if (result == null) {
       ClientActions.showMessage('result == null');
       return;
@@ -21,9 +27,7 @@ class EditorActions {
       return;
     }
     GameNetwork.sendClientRequest(ClientRequest.Editor_Load_Scene, base64Encode(contents));
-
   }
-
 
   static void toggleWindowEnabledScene(){
     EditorState.windowEnabledScene.value = !EditorState.windowEnabledScene.value;

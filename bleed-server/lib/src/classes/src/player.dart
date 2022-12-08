@@ -10,6 +10,7 @@ import 'package:bleed_server/gamestream.dart';
 import '../../dark_age/areas/dark_age_area.dart';
 import '../../dark_age/game_dark_age.dart';
 import '../../dark_age/game_dark_age_editor.dart';
+import 'scene_writer.dart';
 
 class Player extends Character with ByteWriter {
   /// CONSTANTS
@@ -1449,32 +1450,12 @@ class Player extends Character with ByteWriter {
 
   void writeGrid() {
     writeByte(ServerResponse.Grid);
-    writeUInt16(scene.gridHeight);
-    writeUInt16(scene.gridRows);
-    writeUInt16(scene.gridColumns);
-    var previousType = scene.nodeTypes[0];
-    var previousOrientation = scene.nodeOrientations[0];
-    var count = 0;
-    final nodeTypes = scene.nodeTypes;
-    final nodeOrientations = scene.nodeOrientations;
-    for (var nodeIndex = 0; nodeIndex < scene.gridVolume; nodeIndex++) {
-      final nodeType = nodeTypes[nodeIndex];
-      final nodeOrientation = nodeOrientations[nodeIndex];
-      if (nodeType == previousType && nodeOrientation == previousOrientation){
-        count++;
-      } else {
-        writeByte(previousType);
-        writeByte(previousOrientation);
-        writeUInt16(count);
-        previousType = nodeType;
-        previousOrientation = nodeOrientation;
-        count = 1;
-      }
+    var compiled = scene.compiled;
+    if (compiled == null){
+      compiled = SceneWriter.compileScene(scene);
+      scene.compiled = compiled;
     }
-
-    writeByte(previousType);
-    writeByte(previousOrientation);
-    writeUInt16(count);
+    writeBytes(compiled);
   }
 
   void writePlayerGold(){
