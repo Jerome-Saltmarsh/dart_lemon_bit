@@ -51,7 +51,6 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] spawn-node character type
 [ ] game survival shop crystal
 [ ] generate top down map
-[ ] fix bug consuming apple consumes all
 [ ] fix mouse cursor hides tree tops
 
 [RELEASE-2.0]
@@ -79,6 +78,7 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] tutorial tips
 
 09.12.2022
+[x] fix bug consuming apple consumes all
 [x] fix bug purchasing weapon only 1 ammo
 [x] compile and read scene dynamically
 
