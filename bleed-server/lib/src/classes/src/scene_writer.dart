@@ -97,6 +97,13 @@ class SceneReader extends ByteReader {
 
   Scene _readScene(List<int> bytes){
     this.index = 0;
+    this.totalColumns = 0;
+    this.totalRows = 0;
+    this.totalColumns = 0;
+    this.nodeTypes = Uint8List(0);
+    this.nodeOrientations = Uint8List(0);
+    this.playerSpawnPoints = Uint16List(0);
+    this.gameObjects = <GameObject>[];
     this.values = bytes;
 
     while (this.index < bytes.length){

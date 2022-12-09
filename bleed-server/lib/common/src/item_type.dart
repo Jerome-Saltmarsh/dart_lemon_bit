@@ -513,6 +513,8 @@ class ItemType {
      Consumables_Apple: "Apple",
      Consumables_Meat: "Meat",
      Weapon_Thrown_Grenade: "Grenade",
+     GameObjects_Crystal: "Crystal",
+     GameObjects_Crystal_Small_Blue: "Crystal Small Blue",
   }[value] ?? "item-type-unknown($value)";
 
   static int getMaxQuantity(int itemType) => const {

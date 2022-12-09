@@ -481,7 +481,7 @@ class ServerResponseReader with ByteReader {
   }
 
   void readGrid() {
-    final scenePart = readByte();
+    final scenePart = readByte(); /// DO NOT DELETE
     GameState.nodesTotalZ = readUInt16();
     GameState.nodesTotalRows = readUInt16();
     GameState.nodesTotalColumns = readUInt16();
