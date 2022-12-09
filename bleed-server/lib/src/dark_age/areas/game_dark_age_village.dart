@@ -2,14 +2,13 @@
 import 'package:bleed_server/gamestream.dart';
 import '../dark_age_scenes.dart';
 import '../on_interaction/on_interact_with_jenkins.dart';
-import 'area_old_village.dart';
 import 'dark_age_area.dart';
 
 class GameDarkAgeVillage extends DarkAgeArea {
 
   GameDarkAgeVillage() : super(darkAgeScenes.village, mapTile: MapTiles.Village) {
     addNpc(
-        team: DarkAgeTeam.Good,
+        team: TeamType.Good,
         weaponType: ItemType.Empty,
         name: "Bell",
         row: 21,
@@ -38,7 +37,7 @@ class GameDarkAgeVillage extends DarkAgeArea {
         pants: ItemType.Legs_Brown,
         weaponType: ItemType.Empty,
         onInteractedWith: onInteractWithGarry,
-        team: DarkAgeTeam.Good,
+        team: TeamType.Good,
     );
 
     // addNpc(
@@ -57,7 +56,7 @@ class GameDarkAgeVillage extends DarkAgeArea {
       headType: ItemType.Head_Rogues_Hood,
       armour: ItemType.Body_Tunic_Padded,
       pants: ItemType.Legs_Brown,
-      team: DarkAgeTeam.Bandits,
+      team: TeamType.Good,
       name: "Julia",
       z: 4,
       row: 20,

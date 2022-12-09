@@ -1,7 +1,6 @@
 import 'package:bleed_server/gamestream.dart';
 import '../../functions/move_player_to_crystal.dart';
 import '../dark_age_scenes.dart';
-import 'area_old_village.dart';
 import 'dark_age_area.dart';
 
 class GameDarkAgeFarm extends DarkAgeArea {
@@ -11,7 +10,7 @@ class GameDarkAgeFarm extends DarkAgeArea {
       headType: ItemType.Head_Rogues_Hood,
       armour: ItemType.Body_Tunic_Padded,
       pants: ItemType.Legs_Brown,
-      team: DarkAgeTeam.Bandits,
+      team: TeamType.Good,
         weaponType: ItemType.Empty,
         name: "Magellan",
         row: 28,
@@ -22,22 +21,22 @@ class GameDarkAgeFarm extends DarkAgeArea {
         wanderRadius: 50,
     );
 
-    addNpc(
-      damage: 3,
-      headType: ItemType.Head_Rogues_Hood,
-      armour: ItemType.Body_Tunic_Padded,
-      pants: ItemType.Legs_Brown,
-      team: DarkAgeTeam.Bandits,
-      weaponType: ItemType.Empty,
-      name: "Sammy",
-      row: 28,
-      column: 15,
-      z: 3,
-      onInteractedWith: (player){
-        player.interact(message: "Hi Dear");
-      },
-      wanderRadius: 5,
-    );
+    // addNpc(
+    //   damage: 3,
+    //   headType: ItemType.Head_Rogues_Hood,
+    //   armour: ItemType.Body_Tunic_Padded,
+    //   pants: ItemType.Legs_Brown,
+    //   team: TeamType.Bandits,
+    //   weaponType: ItemType.Empty,
+    //   name: "Sammy",
+    //   row: 28,
+    //   column: 15,
+    //   z: 3,
+    //   onInteractedWith: (player){
+    //     player.interact(message: "Hi Dear");
+    //   },
+    //   wanderRadius: 5,
+    // );
   }
 
   @override

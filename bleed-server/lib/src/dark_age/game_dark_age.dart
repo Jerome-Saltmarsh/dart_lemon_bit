@@ -111,12 +111,14 @@ class GameDarkAge extends Game {
   }
 
   @override
-  void customOnPlayerRevived(Player player){
+  void
+  customOnPlayerRevived(Player player){
       changeGame(player, engine.findGameDarkAge());
-      // movePlayerToCrystal(player);
-      player.x = 100;
-      player.y = 100;
-      player.z = 50;
+      movePlayerToCrystal(player);
+      // player.x = 100;
+      // player.y = 100;
+      // player.z = 50;
+      player.team = TeamType.Good;
   }
 
   void addNpcGuardBow({required int row, required int column, int z = 1}){

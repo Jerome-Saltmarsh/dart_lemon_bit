@@ -1,7 +1,6 @@
 
 import 'package:bleed_server/gamestream.dart';
 import '../dark_age_scenes.dart';
-import 'area_old_village.dart';
 import 'dark_age_area.dart';
 
 class AreaForest4 extends DarkAgeArea {
@@ -11,7 +10,7 @@ class AreaForest4 extends DarkAgeArea {
         headType: ItemType.Head_Rogues_Hood,
         armour: ItemType.Body_Tunic_Padded,
         pants: ItemType.Legs_Brown,
-        team: DarkAgeTeam.Bandits,
+        team: TeamType.Good,
         name: "Roy",
         row: 12,
         column: 33,
@@ -49,7 +48,7 @@ class AreaForest4 extends DarkAgeArea {
       headType: ItemType.Head_Rogues_Hood,
       armour: ItemType.Body_Tunic_Padded,
       pants: ItemType.Legs_Brown,
-      team: DarkAgeTeam.Good,
+      team: TeamType.Good,
       name: "Bandit",
       row: 18,
       column: 33,

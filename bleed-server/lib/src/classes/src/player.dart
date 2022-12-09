@@ -1252,19 +1252,17 @@ class Player extends Character with ByteWriter {
   }
 
   bool isAllie(Position3 value){
-    if (value is Collider){
-      if (value.team == TeamType.Alone) return false;
-      return team == value.team;
-    }
-    return false;
+    if (value is! Collider) return false;
+    if (value.team == TeamType.Alone) return false;
+    if (value.team == TeamType.Neutral) return true;
+    return team == value.team;
   }
 
   bool isEnemy(Position3 value) {
-    if (value is Collider){
-      if (value.team == TeamType.Alone) return true;
-      return team != value.team;
-    }
-    return false;
+    if (value is! Collider) return false;
+    if (value.team == TeamType.Neutral) return false;
+    if (value.team == TeamType.Alone) return true;
+    return team != value.team;
   }
 
   void writeProjectiles(){

@@ -3,12 +3,6 @@ import 'package:bleed_server/gamestream.dart';
 import '../dark_age_scenes.dart';
 import 'dark_age_area.dart';
 
-class DarkAgeTeam {
-  static const Good = 1;
-  static const Bad = 2;
-  static const Bandits = 3;
-}
-
 class Area_OldVillage extends DarkAgeArea {
 
   @override
@@ -27,7 +21,7 @@ class Area_OldVillage extends DarkAgeArea {
           z: Node_Height,
           damage: 3,
           weaponType: ItemType.Empty,
-          team: DarkAgeTeam.Good,
+          team: TeamType.Good,
           name: "Roth",
           health: 100,
           onInteractedWith: (Player player) {
@@ -85,7 +79,7 @@ class Area_OldVillage extends DarkAgeArea {
             y: 1225,
             z: Node_Height,
             weaponType: ItemType.Empty,
-            team: DarkAgeTeam.Good,
+            team: TeamType.Good,
             name: "Smith",
             health: 100,
             onInteractedWith: (Player player) {
