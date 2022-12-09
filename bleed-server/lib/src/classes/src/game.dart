@@ -55,8 +55,6 @@ abstract class Game {
   /// @override
   void customOnAIRespawned(AI ai){  }
   /// @override
-  void customOnPlayerRequestPurchaseWeapon(Player player, int type){ }
-  /// @override
   void customOnPlayerWeaponChanged(Player player, int previousWeaponType, int newWeaponType){ }
   /// @override
   void customOnHitApplied(Character src, Collider target) {}

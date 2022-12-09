@@ -568,7 +568,12 @@ class Player extends Character with ByteWriter {
       return;
     }
     inventory[emptyInventoryIndex] = itemType;
-    inventoryQuantity[emptyInventoryIndex] = 1;
+
+    var quantity = 1;
+    if (ItemType.isTypeWeapon(itemType)){
+      quantity = ItemType.getMaxQuantity(itemType);
+    }
+    inventoryQuantity[emptyInventoryIndex] = quantity;
   }
 
 
