@@ -27,9 +27,10 @@ class SceneGenerator {
      var index = 0;
      for (var row = 0; row < rows; row++){
        for (var column = 0; column < columns; column++){
+         const heightPercentage = 0.75;
          final value = noise[row][column] + 1.0;
          final percentage = value * 0.5;
-         const maxHeight = 4;
+         final maxHeight = (height * heightPercentage).toInt();
          final h = (percentage * maxHeight).toInt();
 
          if (h == 0){

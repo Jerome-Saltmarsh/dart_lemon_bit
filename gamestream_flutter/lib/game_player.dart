@@ -26,4 +26,6 @@ class GamePlayer {
   static double get positionScreenX => Engine.worldToScreenX(position.renderX);
   static double get positionScreenY => Engine.worldToScreenY(position.renderX);
   static bool get interactModeTrading => ServerState.interactMode.value == InteractMode.Trading;
+
+  static bool get inBounds => GameQueries.inBoundsVector3(position);
 }

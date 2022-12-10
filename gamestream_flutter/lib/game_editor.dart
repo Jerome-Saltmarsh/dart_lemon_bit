@@ -179,7 +179,10 @@ class GameEditor {
     );
   }
 
-  static void cursorSetToPlayer() => nodeSelectedIndex.value = GamePlayer.position.nodeIndex;
+  static void cursorSetToPlayer() {
+    if (!GamePlayer.inBounds) return;
+    nodeSelectedIndex.value = GamePlayer.position.nodeIndex;
+  }
   static void cursorRowIncrease() => row++;
   static void cursorRowDecrease() => row--;
   static void cursorColumnIncrease() => column++;
