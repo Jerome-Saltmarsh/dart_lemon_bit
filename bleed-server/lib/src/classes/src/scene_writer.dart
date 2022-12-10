@@ -70,12 +70,34 @@ class SceneWriter extends ByteWriter {
      writeUInt16s(values);
   }
 
+  void writeSpawnPoints(Scene scene){
+    List<int> values = [];
+    for (var i = 0; i < scene.gridVolume; i++){
+      if (scene.nodeTypes[i] != NodeType.Spawn) continue;
+      values.add(i);
+    }
+    scene.spawnPoints = copy(values);
+
+    writeByte(ScenePart.Spawn_Points);
+    writeUInt16(scene.spawnPoints.length);
+    writeUInt16s(scene.spawnPoints);
+  }
+
+  Uint16List copy(List<int> values){
+     final array = Uint16List(values.length);
+     for (var i = 0; i < values.length; i++){
+        array[i] = values[i];
+     }
+     return array;
+  }
+
   Uint8List _compileScene(Scene scene, {required bool gameObjects}){
     resetIndex();
     writeNodes(scene);
     if (gameObjects){
       writePlayerSpawnPoints(scene);
       writeGameObjects(scene);
+      writeSpawnPoints(scene);
     }
     return compile();
   }
@@ -91,6 +113,7 @@ class SceneReader extends ByteReader {
   var nodeTypes = Uint8List(0);
   var nodeOrientations = Uint8List(0);
   var playerSpawnPoints = Uint16List(0);
+  var spawnPoints = Uint16List(0);
   var gameObjects = <GameObject>[];
 
   static Scene readScene(List<int> bytes) => _instance._readScene(bytes);
@@ -103,6 +126,7 @@ class SceneReader extends ByteReader {
     this.nodeTypes = Uint8List(0);
     this.nodeOrientations = Uint8List(0);
     this.playerSpawnPoints = Uint16List(0);
+    this.spawnPoints = Uint16List(0);
     this.gameObjects = <GameObject>[];
     this.values = bytes;
 
@@ -116,6 +140,9 @@ class SceneReader extends ByteReader {
           break;
         case ScenePart.Player_SpawnPoints:
           readPlayerSpawnPoints();
+          break;
+        case ScenePart.Spawn_Points:
+          readSpawnPoints();
           break;
         default:
           throw Exception("could not read scene");
@@ -153,6 +180,11 @@ class SceneReader extends ByteReader {
   void readPlayerSpawnPoints() {
     final playerSpawnPointLength = readUInt16();
     playerSpawnPoints = readUInt16s(playerSpawnPointLength);
+  }
+
+  void readSpawnPoints(){
+    final length = readUInt16();
+    spawnPoints = readUInt16s(length);
   }
 
   void readNodes(){

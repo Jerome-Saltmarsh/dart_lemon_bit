@@ -11,6 +11,7 @@ class GameImages {
    static late Image zombie;
    static late Image zombie_shadow;
    static late Image gameobjects;
+   static late Image character_dog;
    static late Image particles;
    static late Image template_shadow;
    static late Image atlasNodes;
@@ -247,6 +248,8 @@ class GameImages {
       template_weapon_m4 = await Engine.loadImageAsset('images/template/weapons/template-weapons-m4.png');
       template_weapon_revolver = await Engine.loadImageAsset('images/template/weapons/template-weapons-revolver.png');
       template_weapon_winchester = await Engine.loadImageAsset('images/template/weapons/template-weapons-winchester.png');
+
+      character_dog = await Engine.loadImageAsset('images/character-dog.png');
    }
 }
 

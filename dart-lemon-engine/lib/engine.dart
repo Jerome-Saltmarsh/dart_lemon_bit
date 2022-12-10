@@ -107,6 +107,8 @@ class Engine {
   static Function(Object error, StackTrace stack)? onError;
 
   // VARIABLES
+  static late ui.Image _bufferImage;
+  static var _bufferBlendMode = BlendMode.dstATop;
   static final keyState = <LogicalKeyboardKey, bool>{ };
   static final keyStateDuration = <LogicalKeyboardKey, int>{ };
   static final random = Random();
@@ -171,16 +173,27 @@ class Engine {
   static var joystickMaxDistance = 25.0;
 
   // SETTERS
+  static set bufferImage(ui.Image image){
+    if (_bufferImage == image) return;
+    flushBuffer();
+    _bufferImage = image;
+  }
+
+  static set bufferBlendMode(BlendMode value){
+    if (_bufferBlendMode == value) return;
+    flushBuffer();
+    _bufferBlendMode = value;
+  }
+
   static set buildUI(WidgetBuilder? value) => watchBuildUI.value = value;
   static set title(String value) => watchTitle.value = value;
   static set backgroundColor(Color value) => watchBackgroundColor.value = value;
 
   // GETTERS
+  static BlendMode get blendMode => _bufferBlendMode;
   static double get joystickDistance => Engine.calculateDistance(joystickBaseX, joystickBaseY, joystickEndX, joystickEndY);
   static double get joystickAngle => Engine.calculateAngleBetween(joystickBaseX, joystickBaseY, joystickEndX, joystickEndY);
-
   static double get screenCenterRenderX => (screen.left + screen.right) * 0.5;
-
   static double get screenDiagonalLength => calculateHypotenuse(screen.width, screen.height);
   static double get screenArea => screen.width * screen.height;
   static WidgetBuilder? get buildUI => watchBuildUI.value;
@@ -644,17 +657,8 @@ class Engine {
   void setFramesPerSecond(int framesPerSecond) =>
      watchDurationPerFrame.value = buildDurationFramesPerSecond(framesPerSecond);
 
-  static late ui.Image _bufferImage;
-
   static ui.Image get bufferImage => _bufferImage;
 
-  static set bufferImage(ui.Image image){
-    if (_bufferImage == image) return;
-    flushBuffer();
-    _bufferImage = image;
-  }
-
-  static var bufferBlendMode = BlendMode.dstATop;
   static var bufferIndex = 0;
   static var batchesRendered = 0;
   static var batches1Rendered = 0;
@@ -724,7 +728,7 @@ class Engine {
         _bufferSrc1[1] = bufferSrc[f + 1];
         _bufferSrc1[2] = bufferSrc[f + 2];
         _bufferSrc1[3] = bufferSrc[f + 3];
-        canvas.drawRawAtlas(_bufferImage, _bufferDst1, _bufferSrc1, _bufferClr1, bufferBlendMode, null, spritePaint);
+        canvas.drawRawAtlas(_bufferImage, _bufferDst1, _bufferSrc1, _bufferClr1, _bufferBlendMode, null, spritePaint);
         bufferIndex = 0;
         batches1Rendered++;
         return;
@@ -745,7 +749,7 @@ class Engine {
           _bufferSrc2[j + 3] = bufferSrc[f + 3];
           flushIndex++;
         }
-        canvas.drawRawAtlas(_bufferImage, _bufferDst2, _bufferSrc2, _bufferClr2, bufferBlendMode, null, spritePaint);
+        canvas.drawRawAtlas(_bufferImage, _bufferDst2, _bufferSrc2, _bufferClr2, _bufferBlendMode, null, spritePaint);
         batches2Rendered++;
         continue;
       }
@@ -765,7 +769,7 @@ class Engine {
           _bufferSrc4[j + 3] = bufferSrc[f + 3];
           flushIndex++;
         }
-        canvas.drawRawAtlas(_bufferImage, _bufferDst4, _bufferSrc4, _bufferClr4, bufferBlendMode, null, spritePaint);
+        canvas.drawRawAtlas(_bufferImage, _bufferDst4, _bufferSrc4, _bufferClr4, _bufferBlendMode, null, spritePaint);
         batches4Rendered++;
         continue;
       }
@@ -785,7 +789,7 @@ class Engine {
           _bufferSrc8[j + 3] = bufferSrc[f + 3];
           flushIndex++;
         }
-        canvas.drawRawAtlas(_bufferImage, _bufferDst8, _bufferSrc8, _bufferClr8, bufferBlendMode, null, spritePaint);
+        canvas.drawRawAtlas(_bufferImage, _bufferDst8, _bufferSrc8, _bufferClr8, _bufferBlendMode, null, spritePaint);
         batches8Rendered++;
         continue;
       }
@@ -805,7 +809,7 @@ class Engine {
           _bufferSrc16[j + 3] = bufferSrc[f + 3];
           flushIndex++;
         }
-        canvas.drawRawAtlas(_bufferImage, _bufferDst16, _bufferSrc16, _bufferClr16, bufferBlendMode, null, spritePaint);
+        canvas.drawRawAtlas(_bufferImage, _bufferDst16, _bufferSrc16, _bufferClr16, _bufferBlendMode, null, spritePaint);
         batches16Rendered++;
         continue;
       }
@@ -825,7 +829,7 @@ class Engine {
           _bufferSrc32[j + 3] = bufferSrc[f + 3];
           flushIndex++;
         }
-        canvas.drawRawAtlas(_bufferImage, _bufferDst32, _bufferSrc32, _bufferClr32, bufferBlendMode, null, spritePaint);
+        canvas.drawRawAtlas(_bufferImage, _bufferDst32, _bufferSrc32, _bufferClr32, _bufferBlendMode, null, spritePaint);
         batches32Rendered++;
         continue;
       }
@@ -845,7 +849,7 @@ class Engine {
           _bufferSrc64[j + 3] = bufferSrc[f + 3];
           flushIndex++;
         }
-        canvas.drawRawAtlas(_bufferImage, _bufferDst64, _bufferSrc64, _bufferClr64, bufferBlendMode, null, spritePaint);
+        canvas.drawRawAtlas(_bufferImage, _bufferDst64, _bufferSrc64, _bufferClr64, _bufferBlendMode, null, spritePaint);
         batches64Rendered++;
         continue;
       }
@@ -857,7 +861,7 @@ class Engine {
 
   static void flushAll(){
     batchesRendered++;
-    canvas.drawRawAtlas(_bufferImage, bufferDst, bufferSrc, bufferClr, bufferBlendMode, null, spritePaint);
+    canvas.drawRawAtlas(_bufferImage, bufferDst, bufferSrc, bufferClr, _bufferBlendMode, null, spritePaint);
     bufferIndex = 0;
     batches128Rendered++;
   }
@@ -940,7 +944,7 @@ class Engine {
     _bufferDst1[1] = 0;
     _bufferDst1[2] = dstX - (srcWidth * anchorX * scale);
     _bufferDst1[3] = dstY - (srcHeight * anchorY * scale); // scale
-    canvas.drawRawAtlas(image, _bufferDst1, _bufferSrc1, _bufferClr1, bufferBlendMode, null, paint);
+    canvas.drawRawAtlas(image, _bufferDst1, _bufferSrc1, _bufferClr1, _bufferBlendMode, null, paint);
   }
 
   static void renderCircle(double x, double y, double radius, Color color) {

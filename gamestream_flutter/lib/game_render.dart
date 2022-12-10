@@ -875,15 +875,10 @@ class GameRender {
 
     final mouseAngle = GameMouse.playerAngle;
     final mouseDistance = min(200.0, GameMouse.playerDistance);
-
     final jumps = mouseDistance ~/ Node_Height_Half;
-
-
-    var i1 = GamePlayer.position.nodeIndex;
-
-
     final tX = Engine.calculateAdjacent(mouseAngle, Node_Height_Half);
     final tY = Engine.calculateOpposite(mouseAngle, Node_Height_Half);
+    var i1 = GamePlayer.position.nodeIndex;
 
     for (var i = 0; i < jumps; i++) {
       final x2 = x1 - tX;

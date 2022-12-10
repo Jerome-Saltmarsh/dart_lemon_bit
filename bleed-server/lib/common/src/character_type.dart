@@ -6,17 +6,18 @@ class CharacterType {
    static const Slime = 3;
    static const Wolf = 4;
    static const Triangle = 5;
+   static const Dog = 6;
 
    static double getSpeed(int value) => const {
-          Template: 3.0,
-          Zombie: 2.5,
-          Rat: 1.5,
-          Slime: 1.5,
-          Wolf: 4.0,
-          Triangle: 3.5,
-       }[value] ?? 2.0;
+          Template:   3.0,
+          Zombie:     2.5,
+          Rat:        1.5,
+          Slime:      1.5,
+          Wolf:       4.0,
+          Triangle:   3.5,
+          Dog:        4.0,
+       }[value] ??    2.0;
 
-   static bool supportsUpperBody(int characterType) {
-     return characterType == Template;
-   }
+   static bool supportsUpperBody(int characterType) =>
+       characterType == Template;
 }

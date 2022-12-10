@@ -73,8 +73,46 @@ class RenderCharacter {
             rotation: character.angle,
         );
         return;
+      case CharacterType.Dog:
+        renderCharacterDog(character);
+        break;
       default:
         throw Exception("Cannot render character type: ${character.characterType}");
+    }
+  }
+
+  static void renderCharacterDog(Character character){
+
+    if (character.state == CharacterState.Idle){
+      Engine.renderSprite(
+        image: GameImages.gameobjects,
+        dstX: character.renderX,
+        dstY: character.renderY,
+        srcX: 0,
+        srcY: 64.0 * character.direction,
+        srcWidth: 64,
+        srcHeight: 64,
+        anchorY: 0.66,
+        scale: 1,
+        color: GameState.getV3NodeBelowShade(character),
+      );
+      return;
+    }
+
+    if (character.state == CharacterState.Running) {
+      Engine.renderSprite(
+        image: GameImages.gameobjects,
+        dstX: character.renderX,
+        dstY: character.renderY,
+        srcX: loop4(animation: const [5, 6], character: character, framesPerDirection: 6),
+        srcY: 64.0 * character.direction,
+        srcWidth: 64,
+        srcHeight: 64,
+        anchorY: 0.66,
+        scale: 1,
+        color: GameState.getV3NodeBelowShade(character),
+      );
+      return;
     }
   }
 
