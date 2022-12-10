@@ -85,7 +85,7 @@ class RenderCharacter {
 
     if (character.state == CharacterState.Idle){
       Engine.renderSprite(
-        image: GameImages.gameobjects,
+        image: GameImages.character_dog,
         dstX: character.renderX,
         dstY: character.renderY,
         srcX: 0,
@@ -100,11 +100,13 @@ class RenderCharacter {
     }
 
     if (character.state == CharacterState.Running) {
+      const frames = const [4, 5];
+      final frame = frames[(character.frame % 2)];
       Engine.renderSprite(
-        image: GameImages.gameobjects,
+        image: GameImages.character_dog,
         dstX: character.renderX,
         dstY: character.renderY,
-        srcX: loop4(animation: const [5, 6], character: character, framesPerDirection: 6),
+        srcX: frame * 64.0,
         srcY: 64.0 * character.direction,
         srcWidth: 64,
         srcHeight: 64,

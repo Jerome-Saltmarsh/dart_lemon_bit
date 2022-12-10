@@ -35,6 +35,16 @@ double loop({
   return (character.renderDirection * framesPerDirection * size) + (frame * size);
 }
 
+double loop2({
+  required List<int> animation,
+  required Character character,
+  required int framesPerDirection,
+  double size = 64,
+}) {
+  return (character.renderDirection * framesPerDirection * size) +
+      ((animation[character.frame % 2] - 1) * size);
+}
+
 double loop4({
       required List<int> animation,
       required Character character,
