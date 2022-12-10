@@ -32,10 +32,8 @@ class SceneGenerator {
      var index = 0;
      for (var row = 0; row < rows; row++){
        for (var column = 0; column < columns; column++){
-         // const heightPercentage = 0.75;
          final value = noise[row][column] + 1.0;
          final percentage = value * 0.5;
-         // final maxHeight = (height * heightPercentage).toInt();
          final h = (percentage * maxHeight).toInt();
 
          if (h == 0){
@@ -54,8 +52,28 @@ class SceneGenerator {
        }
      }
 
+     final getHeightAt = (int row, int column){
+       var j = row * columns + column;
+       if (nodeTypes[j] == NodeType.Empty) return 0;
+       for (var k = 1; k < height; k++){
+         j += area;
+         if (nodeTypes[j] == NodeType.Empty) return j;
+       }
+       return height;
+     };
 
-     return Scene(
+     var ii = 0;
+    for (var row = 0; row < rows - 1; row++) {
+      for (var column = 0; column < columns; column++) {
+         final height1 = getHeightAt(row, column);
+         final height2 = getHeightAt(row + 1, column);
+         if (height1 != height2){
+            // nodeTypes
+         }
+      }
+    }
+
+    return Scene(
         name: "",
         nodeTypes: nodeTypes,
         nodeOrientations: nodeOrientations,

@@ -73,6 +73,14 @@ class GameDebug {
                             Refresh(() => text('engine-render-batch-128: ${Engine.batches128Rendered}')),
                             Refresh(() => text('camera-zoom: ${Engine.targetZoom.toStringAsFixed(3)}')),
                             Refresh(() => text('engine-frame: ${Engine.paintFrame}')),
+                            onPressed(
+                                child: Refresh(() => text('engine-render-blend-mode: ${Engine.bufferBlendMode.name}')),
+                                action: (){
+                                   final currentIndex = BlendMode.values.indexOf(Engine.bufferBlendMode);
+                                   final nextIndex = currentIndex + 1 >= BlendMode.values.length ? 0 : currentIndex + 1;
+                                   Engine.bufferBlendMode = BlendMode.values[nextIndex];
+                                }
+                            ),
                             watch(serverResponseReader.updateFrame, (t) => text("update-frame: $t")),
                             watch(GameState.player.interpolating, (bool interpolating) => text("interpolating: $interpolating", onPressed: () => GameState.player.interpolating.value = !GameState.player.interpolating.value)),
                             watch(ServerState.ambientShade, (int shade) => text("ambient-shade: ${Shade.getName(shade)}")),

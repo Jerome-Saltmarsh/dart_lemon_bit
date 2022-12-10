@@ -178,7 +178,7 @@ class Engine {
     flushBuffer();
     _bufferImage = image;
   }
-
+  
   static set bufferBlendMode(BlendMode value){
     if (_bufferBlendMode == value) return;
     flushBuffer();
@@ -190,7 +190,7 @@ class Engine {
   static set backgroundColor(Color value) => watchBackgroundColor.value = value;
 
   // GETTERS
-  static BlendMode get blendMode => _bufferBlendMode;
+  static BlendMode get bufferBlendMode => _bufferBlendMode;
   static double get joystickDistance => Engine.calculateDistance(joystickBaseX, joystickBaseY, joystickEndX, joystickEndY);
   static double get joystickAngle => Engine.calculateAngleBetween(joystickBaseX, joystickBaseY, joystickEndX, joystickEndY);
   static double get screenCenterRenderX => (screen.left + screen.right) * 0.5;
