@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:fast_noise/fast_noise.dart';
 import 'dart:typed_data';
 
@@ -9,12 +11,15 @@ class SceneGenerator {
     required int height,
     required int rows,
     required int columns,
-    required int octaves,
+    // required int octaves,
+    required int maxHeight,
     required double frequency,
   }){
+    maxHeight = min(maxHeight, height);
+
     final noise = noise2(rows, columns,
         noiseType: NoiseType.Perlin,
-        octaves: octaves,
+        // octaves: octaves,
         frequency: frequency,
         cellularReturnType: CellularReturnType.Distance2Add,
     );
@@ -27,10 +32,10 @@ class SceneGenerator {
      var index = 0;
      for (var row = 0; row < rows; row++){
        for (var column = 0; column < columns; column++){
-         const heightPercentage = 0.75;
+         // const heightPercentage = 0.75;
          final value = noise[row][column] + 1.0;
          final percentage = value * 0.5;
-         final maxHeight = (height * heightPercentage).toInt();
+         // final maxHeight = (height * heightPercentage).toInt();
          final h = (percentage * maxHeight).toInt();
 
          if (h == 0){

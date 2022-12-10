@@ -371,7 +371,7 @@ class Connection {
             height: height,
             rows: rows,
             columns: columns,
-            octaves: octaves,
+            maxHeight: octaves,
             frequency: frequency * 0.005,
         );
         scene.name = sceneName;
