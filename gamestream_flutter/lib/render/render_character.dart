@@ -94,7 +94,7 @@ class RenderCharacter {
         srcHeight: 64,
         anchorY: 0.66,
         scale: 1,
-        color: GameState.getV3NodeBelowShade(character),
+        color: character.color,
       );
       return;
     }
@@ -112,7 +112,7 @@ class RenderCharacter {
         srcHeight: 64,
         anchorY: 0.66,
         scale: 1,
-        color: GameState.getV3NodeBelowShade(character),
+        color: character.color,
       );
       return;
     }
