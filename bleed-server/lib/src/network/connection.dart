@@ -451,7 +451,7 @@ class Connection {
         }
         game.spawnAI(
             nodeIndex: spawnIndex,
-            characterType: CharacterType.Zombie,
+            characterType: CharacterType.Dog,
         );
         break;
     }

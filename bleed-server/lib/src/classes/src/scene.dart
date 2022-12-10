@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:bleed_server/gamestream.dart';
+import 'package:bleed_server/src/lang_utils.dart';
 
 late AI pathFindAI;
 var pathFindSearchID = 0;
@@ -45,7 +46,7 @@ class Scene {
     required this.spawnPointTypes,
     required this.spawnPointsPlayers,
   }) {
-    assert (spawnPoints.length == spawnPointTypes.length);
+    // assert (spawnPoints.length == spawnPointTypes.length);
     refreshGridMetrics();
   }
 
@@ -179,4 +180,17 @@ class Scene {
        spawnPoints[i] = newSpawnPoints[i];
     }
   }
+
+  /// WARNING - EXPENSIVE
+  List<int> findNodesOfType(int type){
+    final values = <int>[];
+    for (var i = 0; i < gridVolume; i++){
+      if (nodeTypes[i] != type) continue;
+      values.add(i);
+    }
+    return values;
+  }
+
+  void detectSpawnPoints() =>
+      spawnPoints = copyUInt16List(findNodesOfType(NodeType.Spawn));
 }

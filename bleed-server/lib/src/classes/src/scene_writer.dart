@@ -2,6 +2,7 @@
 import 'dart:typed_data';
 
 import 'package:bleed_server/gamestream.dart';
+import 'package:bleed_server/src/lang_utils.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_byte/byte_writer.dart';
 
@@ -71,25 +72,14 @@ class SceneWriter extends ByteWriter {
   }
 
   void writeSpawnPoints(Scene scene){
-    List<int> values = [];
-    for (var i = 0; i < scene.gridVolume; i++){
-      if (scene.nodeTypes[i] != NodeType.Spawn) continue;
-      values.add(i);
-    }
-    scene.spawnPoints = copy(values);
+    scene.detectSpawnPoints();
 
     writeByte(ScenePart.Spawn_Points);
     writeUInt16(scene.spawnPoints.length);
     writeUInt16s(scene.spawnPoints);
   }
 
-  Uint16List copy(List<int> values){
-     final array = Uint16List(values.length);
-     for (var i = 0; i < values.length; i++){
-        array[i] = values[i];
-     }
-     return array;
-  }
+
 
   Uint8List _compileScene(Scene scene, {required bool gameObjects}){
     resetIndex();
@@ -157,7 +147,7 @@ class SceneReader extends ByteReader {
         gridRows: totalRows,
         gridColumns: totalColumns,
         gameObjects: gameObjects,
-        spawnPoints: Uint16List(0),
+        spawnPoints: spawnPoints,
         spawnPointTypes: Uint16List(0),
         spawnPointsPlayers: playerSpawnPoints,
     );
