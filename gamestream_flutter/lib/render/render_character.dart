@@ -116,6 +116,30 @@ class RenderCharacter {
       );
       return;
     }
+
+    if (character.state == CharacterState.Performing) {
+      const frames = const [1, 2];
+      var frame = character.frame;
+      if (character.frame >= frames.length){
+        frame = frames.last;
+      } else {
+        frame = frames[frame];
+      }
+      Engine.renderSprite(
+        image: GameImages.character_dog,
+        dstX: character.renderX,
+        dstY: character.renderY,
+        srcX: frame * 64.0,
+        srcY: 64.0 * character.direction,
+        srcWidth: 64,
+        srcHeight: 64,
+        anchorY: 0.66,
+        scale: 1,
+        color: character.color,
+      );
+      return;
+    }
+
   }
 
   static void renderCharacterZombie(Character character) {
