@@ -80,6 +80,7 @@ navigate to next method: ctrl + shift + up / down arrows
 11.12.2022
 [x] fix mouse cursor hides tree tops
 [x] transparent nodes
+[x] dog shadow
 
 10.12.2022
 [x] character dog
