@@ -52,7 +52,6 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] game survival shop crystal
 [ ] generate top down map
 
-
 [RELEASE-2.0]
 [ ] game royal
 [ ] game waves

@@ -1415,13 +1415,14 @@ abstract class Game {
         break;
       case CharacterState.Running:
         character.applyForce(force: 1.0, angle: character.faceAngle);
-        if (character.stateDuration % 10 == 0) {
+        if (character.nextFootstep++ >= 10) {
           dispatch(
             GameEventType.Footstep,
             character.x,
             character.y,
             character.z,
           );
+          character.nextFootstep = 0;
         }
         break;
       case CharacterState.Performing:

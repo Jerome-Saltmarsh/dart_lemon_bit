@@ -20,7 +20,7 @@ class GameAudio {
     }
   });
 
-  static var nextZombieGrowl = 100;
+  static var nextCharacterNoise = 100;
   static var nextRandomSound = 0;
   static var nextRandomMusic = 0;
 
@@ -32,7 +32,7 @@ class GameAudio {
 
   static final soundsNight = [
     AudioSingle(name: 'owl-1', volume: 0.15),
-    AudioSingle(name: 'wolf-howl', volume: 0.1),
+    // wolf_howl,
     AudioSingle(name: 'creepy-5', volume: 0.2),
   ];
 
@@ -55,6 +55,8 @@ class GameAudio {
     // AudioLoop(name: 'stream', getTargetVolume: getVolumeStream),
   ];
 
+  static final dog_woolf_howl_4 = AudioSingle(name: 'dog-woolf-howl-4', volume: 0.5, maxDistance: 100);
+  static final wolf_howl = AudioSingle(name: 'wolf-howl', volume: 0.5, maxDistance: 100);
   static final weaponSwap2 = AudioSingle(name: 'weapon-swap-2', volume: 0.5, maxDistance: 100);
   static final eat = AudioSingle(name: 'eat', volume: 0.5, maxDistance: 100);
   static final buff_1 = AudioSingle(name: 'buff-1', volume: 0.5, maxDistance: 100);
@@ -169,7 +171,7 @@ class GameAudio {
     }
     updateRandomAmbientSounds();
     updateRandomMusic();
-    updateZombieGrowls();
+    updateCharacterNoises();
   }
 
   static double getVolumeTargetWind() {
@@ -297,11 +299,27 @@ class GameAudio {
     Engine.randomItem(items).play();
   }
 
-  static void updateZombieGrowls(){
-    if (GameState.totalZombies <= 0) return;
-    nextZombieGrowl--;
-    if (nextZombieGrowl > 0) return;
-    nextZombieGrowl = Engine.randomInt(200, 300);
-    Engine.randomItem(GameAudio.audioSingleZombieTalking).playV3(GameState.zombies[Engine.randomInt(0, GameState.totalZombies)]);
+  static void updateCharacterNoises(){
+    if (GameState.totalCharacters <= 0) return;
+    if (nextCharacterNoise-- > 0) return;
+    nextCharacterNoise = Engine.randomInt(200, 300);
+
+    final index = randomInt(0, GameState.totalCharacters);
+    final character = GameState.characters[index];
+
+    switch (character.characterType) {
+      case CharacterType.Zombie:
+        Engine.randomItem(GameAudio.audioSingleZombieTalking).playV3(character);
+        break;
+      case CharacterType.Dog:
+        if (randomBool()){
+          GameAudio.wolf_howl.playV3(character);
+        } else {
+          GameAudio.dog_woolf_howl_4.playV3(character);
+        }
+        break;
+    }
+
+
   }
 }

@@ -11,7 +11,7 @@ class GameState {
   static final gameObjects = <GameObject>[];
   static final characters = <Character>[];
   static final npcs = <Character>[];
-  static final zombies = <Character>[];
+  // static final zombies = <Character>[];
 
   static final projectiles = <Projectile>[];
   static final particleEmitters = <ParticleEmitter>[];

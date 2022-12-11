@@ -33,5 +33,8 @@ void onGameEventCharacterHurt(int type, double x, double y, double z, double ang
     case CharacterType.Slime:
       GameAudio.bloody_punches_3.playXYZ(x, y, z);
       break;
+    case CharacterType.Dog:
+      GameAudio.dog_woolf_howl_4();
+      break;
   }
 }

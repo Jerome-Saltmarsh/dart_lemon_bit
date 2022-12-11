@@ -8,6 +8,10 @@ import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 
 import 'library.dart';
 
+int capIndex(List<int> values, int index){
+   return index < values.length ? values[index] : values.last;
+}
+
 class GameRender {
   static var totalRemaining = 0;
   static var totalIndex = 0;
@@ -157,6 +161,31 @@ class GameRender {
     assert (particle.active);
     if (particle.delay > 0) return;
     switch (particle.type) {
+      case ParticleType.Water_Drop:
+        Engine.renderSprite(
+          image: GameImages.gameobjects,
+          dstX: GameConvert.convertV3ToRenderX(particle),
+          dstY: GameConvert.convertV3ToRenderY(particle),
+          srcX: 0.0,
+          srcY: 40,
+          srcWidth: 4,
+          srcHeight: 4,
+          color: GameState.getV3RenderColor(particle),
+        );
+        break;
+      case ParticleType.Blood:
+        casteShadowDownV3(particle);
+        Engine.renderSprite(
+          image: GameImages.gameobjects,
+          dstX: particle.renderX,
+          dstY: particle.renderY,
+          srcX: AtlasParticleX.Blood,
+          srcY: AtlasParticleY.Blood,
+          srcWidth: 8,
+          srcHeight: 8,
+          color: GameState.getV3RenderColor(particle),
+        );
+        break;
       case ParticleType.Bubble:
         if (particle.duration > 26) {
           particle.deactivate();
@@ -192,18 +221,6 @@ class GameRender {
           dstY: GameConvert.convertV3ToRenderY(particle),
           srcX: 0.0,
           srcY: 32,
-          srcWidth: 4,
-          srcHeight: 4,
-          color: GameState.getV3RenderColor(particle),
-        );
-        break;
-      case ParticleType.Water_Drop:
-        Engine.renderSprite(
-          image: GameImages.gameobjects,
-          dstX: GameConvert.convertV3ToRenderX(particle),
-          dstY: GameConvert.convertV3ToRenderY(particle),
-          srcX: 0.0,
-          srcY: 40,
           srcWidth: 4,
           srcHeight: 4,
           color: GameState.getV3RenderColor(particle),
@@ -310,19 +327,6 @@ class GameRender {
           scale: particle.scale,
         );
         break;
-      case ParticleType.Blood:
-        casteShadowDownV3(particle);
-        Engine.renderSprite(
-          image: GameImages.gameobjects,
-          dstX: particle.renderX,
-          dstY: particle.renderY,
-          srcX: AtlasParticleX.Blood,
-          srcY: AtlasParticleY.Blood,
-          srcWidth: 8,
-          srcHeight: 8,
-          color: GameState.getV3RenderColor(particle),
-        );
-        break;
       case ParticleType.Orb_Shard:
         const size = 16.0;
         Engine.renderSprite(
@@ -389,6 +393,22 @@ class GameRender {
           color: GameState.getV3RenderColor(particle),
         );
         break;
+
+      case ParticleType.Character_Animation_Dog_Death:
+        final frame = capIndex(const [1, 1, 6, 6, 7], particle.frame);
+
+        Engine.renderSprite(
+          image: GameImages.character_dog,
+          dstX: particle.renderX,
+          dstY: particle.renderY,
+          srcX: 64.0 * frame,
+          srcY: 64.0 * particle.direction,
+          srcWidth: 64,
+          srcHeight: 64,
+          color: GameState.getV3RenderColor(particle),
+        );
+        break;
+
       case ParticleType.Zombie_Torso:
         casteShadowDownV3(particle);
         Engine.renderSprite(

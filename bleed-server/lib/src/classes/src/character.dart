@@ -13,6 +13,7 @@ abstract class Character extends Collider {
   var state = CharacterState.Idle;
   var stateDurationRemaining = 0;
   var stateDuration = 0;
+  var nextFootstep = 0;
   var animationFrame = 0;
   var frozenDuration = 0;
   Position3? target;

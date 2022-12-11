@@ -541,7 +541,7 @@ class GameEvents {
     }
   }
 
-  static void onCharacterDeath(int type, double x, double y, double z, double angle) {
+  static void onCharacterDeath(int characterType, double x, double y, double z, double angle) {
     GameSpawn.spawnPurpleFireExplosion(x, y, z);
     GameSpawn.spawnBubbles(x, y, z);
 
@@ -556,9 +556,18 @@ class GameEvents {
       );
     }
 
-    switch (type) {
+    switch (characterType) {
       case CharacterType.Zombie:
-        return onCharacterDeathZombie(type, x, y, z, angle);
+        return onCharacterDeathZombie(characterType, x, y, z, angle);
+      case CharacterType.Dog:
+        // GameState.spawnParticleAnimation(
+        //     x: x,
+        //     y: y,
+        //     z: z,
+        //     type: ParticleType.Character_Animation_Dog_Death,
+        // );
+        GameAudio.dog_woolf_howl_4();
+        break;
     }
   }
 
