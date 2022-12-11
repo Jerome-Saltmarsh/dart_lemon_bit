@@ -6,11 +6,12 @@ class RenderNode {
   static final bufferClr = Engine.bufferClr;
   static final bufferSrc = Engine.bufferSrc;
   static final bufferDst = Engine.bufferDst;
+  static final atlas = GameImages.atlasNodes;
 
   static void renderNodeTorch(){
     if (!ClientState.torchesIgnited.value) {
       Engine.renderSprite(
-        image: GameImages.atlasNodes,
+        image: atlas,
         srcX: AtlasNodeX.Torch,
         srcY: AtlasNodeY.Torch,
         srcWidth: AtlasNode.Width_Torch,
@@ -23,7 +24,7 @@ class RenderNode {
     }
     if (renderNodeWind == WindType.Calm){
       Engine.renderSprite(
-        image: GameImages.atlasNodes,
+        image: atlas,
         srcX: AtlasNodeX.Torch,
         srcY: AtlasNodeY.Torch + AtlasNode.Height_Torch + (((GameRender.currentNodeRow + (GameAnimation.animationFrame)) % 6) * AtlasNode.Height_Torch),
         srcWidth: AtlasNode.Width_Torch,
@@ -35,7 +36,7 @@ class RenderNode {
       return;
     }
     Engine.renderSprite(
-      image: GameImages.atlasNodes,
+      image: atlas,
       srcX: AtlasNode.X_Torch_Windy,
       srcY: AtlasNode.Y_Torch_Windy + AtlasNode.Height_Torch + (((GameRender.currentNodeRow + (GameAnimation.animationFrame)) % 6) * AtlasNode.Height_Torch),
       srcWidth: AtlasNode.Width_Torch,
@@ -49,7 +50,7 @@ class RenderNode {
 
   static void renderNodeWater() =>
     Engine.renderSprite(
-      image: GameImages.atlasNodes,
+      image: atlas,
       srcX: AtlasNodeX.Water,
       srcY: AtlasNodeY.Water + (((GameAnimation.animationFrameWater + ((GameRender.currentNodeRow + GameRender.currentNodeColumn) * 3)) % 10) * 72.0),
       srcWidth: GameConstants.Sprite_Width,
@@ -284,7 +285,7 @@ class RenderNode {
   }){
     GameRender.onscreenNodes++;
     Engine.renderSprite(
-      image: GameImages.atlasNodes,
+      image: atlas,
       srcX: srcX,
       srcY: srcY,
       srcWidth: GameConstants.Sprite_Width,
@@ -303,7 +304,7 @@ class RenderNode {
   }){
     GameRender.onscreenNodes++;
     Engine.renderSprite(
-      image: GameImages.atlasNodes,
+      image: atlas,
       srcX: srcX,
       srcY: srcY,
       srcWidth: GameConstants.Sprite_Width,

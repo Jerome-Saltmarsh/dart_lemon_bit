@@ -896,7 +896,6 @@ class GameRender {
 
   static void nodesHideIndex(int z, int row, int column, int initRow, int initColumn){
 
-    var initZ = z;
     var index = (z * GameState.nodesArea) + (row * GameState.nodesTotalColumns) + column;
     while (index < GameNodes.nodesTotal) {
       if (GameNodes.nodesType[index] == NodeType.Empty) {

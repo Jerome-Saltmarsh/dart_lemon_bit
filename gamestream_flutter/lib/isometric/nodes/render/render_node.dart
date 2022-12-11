@@ -6,11 +6,16 @@ import 'render_node_plain.dart';
 import 'render_node_window.dart';
 import 'render_node_wooden_plank.dart';
 
+var previousVisibility = 0;
+
 void renderNodeAt() {
   final currentNodeVisibility = GameRender.currentNodeVisibility;
   if (currentNodeVisibility == Visibility.Invisible) return;
 
-  Engine.bufferBlendMode = VisibilityBlendModes.fromVisibility(currentNodeVisibility);
+  if (currentNodeVisibility != previousVisibility){
+    previousVisibility = currentNodeVisibility;
+    Engine.bufferBlendMode = VisibilityBlendModes.fromVisibility(currentNodeVisibility);
+  }
 
   switch (GameRender.currentNodeType) {
     case NodeType.Grass:
