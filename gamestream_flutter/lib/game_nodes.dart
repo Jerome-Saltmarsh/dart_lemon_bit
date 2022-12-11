@@ -21,12 +21,14 @@ class GameNodes {
 
 
   static void addInvisibleIndex(int index){
+    if (nodesVisible[index] == Visibility.Transparent) return;
     nodesVisible[index] = Visibility.Invisible;
     nodesVisibleIndex[visibleIndex] = index;
     visibleIndex++;
   }
 
   static void addTransparentIndex(int index){
+    if (nodesVisible[index] == Visibility.Transparent) return;
     nodesVisible[index] = Visibility.Transparent;
     nodesVisibleIndex[visibleIndex] = index;
     visibleIndex++;

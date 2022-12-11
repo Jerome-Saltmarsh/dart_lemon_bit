@@ -125,20 +125,21 @@ class NodeType {
     type == Wooden_Plank;
 
   static bool isDestroyable(int type) =>
-      type == Boulder ||
-          type == Sunflower ||
-          type == Grass_Long ;
+      type == Boulder         ||
+      type == Sunflower       ||
+      type == Grass_Long       ;
 
-  static bool isTransient(int value){
-    return 
-        value == Empty          || 
-        value == Grass_Long     || 
-        value == Rain_Falling   || 
-        value == Rain_Landing;
-  }
-  
+  static bool isTransient(int value) =>
+      value == Empty          ||
+      value == Grass_Long     ||
+      value == Rain_Falling   ||
+      value == Tree_Bottom    ||
+      value == Tree_Top       ||
+      value == Rain_Landing    ;
+
   static bool isRainOrEmpty(value) =>
-    isRain(value) || value == Empty;
+      isRain(value)           ||
+      value == Empty           ;
   
   static bool isRain(int value) =>
      value == Rain_Falling ||

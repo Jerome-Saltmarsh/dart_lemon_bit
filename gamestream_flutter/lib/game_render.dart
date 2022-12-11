@@ -844,7 +844,7 @@ class GameRender {
     GameNodes.nodesVisible[GameNodes.nodesVisibleIndex[0]] = Visibility.Opaque;
 
     showIndexPlayer();
-    // showIndexMouse();
+    showIndexMouse();
 
     renderOrderGrid.total = renderOrderGrid.getTotal();
     renderOrderGrid.index = 0;
@@ -906,7 +906,6 @@ class GameRender {
         continue;
       }
 
-      // final distance = (initRow - row).abs() + (initColumn - column).abs() + (initZ - z).abs();
       final distance = (z - GamePlayer.indexZ).abs();
      final transparent = distance <= 2;
 
