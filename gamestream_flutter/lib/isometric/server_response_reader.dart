@@ -494,7 +494,7 @@ class ServerResponseReader with ByteReader {
       GameNodes.nodesBake = Uint8List(totalNodes);
       GameNodes.nodesWind = Uint8List(totalNodes);
       GameNodes.nodesVariation = List.generate(totalNodes, (index) => false, growable: false);
-      GameNodes.nodesVisible = List.generate(totalNodes, (index) => true, growable: false);
+      GameNodes.nodesVisible = Uint8List(totalNodes);
       GameNodes.nodesVisibleIndex = Uint16List(totalNodes);
       GameNodes.nodesDynamicIndex = Uint16List(totalNodes);
     }

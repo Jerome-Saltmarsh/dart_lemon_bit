@@ -74,7 +74,9 @@ class GameRender {
   static int get currentNodeShade => GameNodes.nodesShade[currentNodeIndex];
   static int get currentNodeColor => GameConstants.colorShades[currentNodeShade];
   static int get currentNodeOrientation => GameNodes.nodesOrientation[currentNodeIndex];
-  static bool get currentNodeVisible => GameNodes.nodesVisible[currentNodeIndex];
+  static bool get currentNodeVisible => currentNodeVisibility != Visibility.Invisible;
+  static bool get currentNodeInvisible => currentNodeVisibility == Visibility.Invisible;
+  static int get currentNodeVisibility => GameNodes.nodesVisible[currentNodeIndex];
   static int get currentNodeWind => GameNodes.nodesWind[currentNodeIndex];
 
 
@@ -835,11 +837,11 @@ class GameRender {
     currentNodeIndex = (currentNodeZ * GameState.nodesArea) + (currentNodeRow * GameState.nodesTotalColumns) + currentNodeColumn;
     currentNodeType = GameNodes.nodesType[currentNodeIndex];
 
-    while (GameState.visibleIndex > 0) {
-      GameNodes.nodesVisible[GameNodes.nodesVisibleIndex[GameState.visibleIndex]] = true;
-      GameState.visibleIndex--;
+    while (GameNodes.visibleIndex > 0) {
+      GameNodes.nodesVisible[GameNodes.nodesVisibleIndex[GameNodes.visibleIndex]] = Visibility.Opaque;
+      GameNodes.visibleIndex--;
     }
-    GameNodes.nodesVisible[GameNodes.nodesVisibleIndex[0]] = true;
+    GameNodes.nodesVisible[GameNodes.nodesVisibleIndex[0]] = Visibility.Opaque;
 
     showIndexPlayer();
     showIndexMouse();
@@ -898,6 +900,12 @@ class GameRender {
     var index = (z * GameState.nodesArea) + (row * GameState.nodesTotalColumns) + column;
     while (index < GameNodes.nodesTotal) {
       if (GameNodes.nodesType[index] == NodeType.Empty) {
+        // GameNodes.nodesVisible[index] = Visibility.Transparent;
+        // GameNodes.nodesVisibleIndex[GameNodes.visibleIndex] = index;
+        // GameNodes.visibleIndex++;
+        GameNodes.addTransparentIndex(index);
+
+
         row += 1;
         column += 1;
         z += 2;
@@ -917,9 +925,10 @@ class GameRender {
       }
 
       if (column >= initColumn && row >= initRow) {
-        GameNodes.nodesVisible[index] = false;
-        GameNodes.nodesVisibleIndex[GameState.visibleIndex] = index;
-        GameState.visibleIndex++;
+        // GameNodes.nodesVisible[index] = Visibility.Invisible;
+        // GameNodes.nodesVisibleIndex[GameNodes.visibleIndex] = index;
+        // GameNodes.visibleIndex++;
+        GameNodes.addInvisibleIndex(index);
         row += 1;
         column += 1;
         z += 2;
@@ -931,9 +940,10 @@ class GameRender {
         if (nodeIndexBelow < 0) continue;
 
         if (GameNodes.nodesType[nodeIndexBelow] == NodeType.Empty) {
-          GameNodes.nodesVisible[index] = false;
-          GameNodes.nodesVisibleIndex[GameState.visibleIndex] = index;
-          GameState.visibleIndex++;
+          // GameNodes.nodesVisible[index] = Visibility.Invisible;;
+          // GameNodes.nodesVisibleIndex[GameNodes.visibleIndex] = index;
+          // GameNodes.visibleIndex++;
+          GameNodes.addInvisibleIndex(index);
           row += 1;
           column += 1;
           z += 2;
@@ -941,10 +951,11 @@ class GameRender {
           continue;
         }
 
-        if (!GameNodes.nodesVisible[nodeIndexBelow]){
-          GameNodes.nodesVisible[index] = false;
-          GameNodes.nodesVisibleIndex[GameState.visibleIndex] = index;
-          GameState.visibleIndex++;
+        if (GameNodes.nodesVisible[nodeIndexBelow] == Visibility.Invisible){
+          // GameNodes.nodesVisible[index] = Visibility.Invisible;
+          // GameNodes.nodesVisibleIndex[GameNodes.visibleIndex] = index;
+          // GameNodes.visibleIndex++;
+          GameNodes.addInvisibleIndex(index);
           row += 1;
           column += 1;
           z += 2;
@@ -967,16 +978,16 @@ class GameRender {
       column++;
       if (row >= GameState.nodesTotalRows) return;
       if (column >= GameState.nodesTotalColumns) return;
-      GameNodes.nodesVisible[GameState.getNodeIndexZRC(z, row, column)] = false;
+      GameNodes.nodesVisible[GameState.getNodeIndexZRC(z, row, column)] = Visibility.Invisible;;
       if (z < GameState.nodesTotalZ - 2){
-        GameNodes.nodesVisible[GameState.getNodeIndexZRC(z + 1, row, column)] = false;
+        GameNodes.nodesVisible[GameState.getNodeIndexZRC(z + 1, row, column)] = Visibility.Invisible;;
       }
     }
   }
 
   static void nodesRevealAbove(int z, int row, int column){
     for (; z < GameState.nodesTotalZ; z++){
-      GameNodes.nodesVisible[GameState.getNodeIndexZRC(z, row, column)] = false;
+      GameNodes.nodesVisible[GameState.getNodeIndexZRC(z, row, column)] = Visibility.Invisible;;
     }
   }
 

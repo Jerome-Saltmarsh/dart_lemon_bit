@@ -25,7 +25,7 @@ class GameQueries {
    }
 
    static bool isVisibleV3(Vector3 vector) =>
-       inBoundsVector3(vector) ? GameNodes.nodesVisible[getNodeIndexV3(vector)] : true;
+       inBoundsVector3(vector) ? GameNodes.nodesVisible[getNodeIndexV3(vector)] != Visibility.Invisible : true;
 
    static bool inBoundsVector3(Vector3 vector3) =>
        inBounds(vector3.x, vector3.y, vector3.z);

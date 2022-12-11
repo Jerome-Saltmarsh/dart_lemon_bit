@@ -26,7 +26,6 @@ class GameState {
   static var totalZombies = 0;
   static var totalParticles = 0;
   static var totalProjectiles = 0;
-  static var visibleIndex = 0;
   static var dynamicIndex = 0;
   static var nextParticleFrame = 0;
 

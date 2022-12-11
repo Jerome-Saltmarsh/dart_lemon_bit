@@ -437,7 +437,7 @@ class GameIO {
         z--;
         continue;
       }
-      if (!GameNodes.nodesVisible[index]) {
+      if (GameNodes.nodesVisible[index] == Visibility.Invisible) {
         z--;
         continue;
       }
