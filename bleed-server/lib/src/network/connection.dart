@@ -362,8 +362,8 @@ class Connection {
         final height = parseArg4(arguments);
         if (height == null) return;
         if (height < min) errorInvalidArg('height < $min');
-        final octaves = parseArg5(arguments);
-        if (octaves == null) return;
+        final altitude = parseArg5(arguments);
+        if (altitude == null) return;
         final frequency = parseArg6(arguments);
         if (frequency == null) return;
         final sceneName = player.game.scene.name;
@@ -371,12 +371,13 @@ class Connection {
             height: height,
             rows: rows,
             columns: columns,
-            maxHeight: octaves,
+            altitude: altitude,
             frequency: frequency * 0.005,
         );
         scene.name = sceneName;
         game.scene = scene;
         game.playersDownloadScene();
+        player.z = Node_Height * altitude + 24;
         break;
 
       case EditRequest.Download:

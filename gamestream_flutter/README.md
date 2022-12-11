@@ -51,7 +51,7 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] spawn-node character type
 [ ] game survival shop crystal
 [ ] generate top down map
-[ ] fix mouse cursor hides tree tops
+
 
 [RELEASE-2.0]
 [ ] game royal
@@ -76,6 +76,13 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] design scene
 [ ] spawn node types
 [ ] tutorial tips
+
+11.12.2022
+[x] fix mouse cursor hides tree tops
+[x] transparent nodes
+
+10.12.2022
+[x] character dog
 
 09.12.2022
 [x] fix bug consuming apple consumes all
