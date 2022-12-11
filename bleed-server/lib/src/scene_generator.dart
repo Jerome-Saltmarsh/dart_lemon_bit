@@ -38,44 +38,43 @@ class SceneGenerator {
       }
     }
 
-    var index = 0;
      for (var row = 0; row < rows; row++){
        for (var column = 0; column < columns; column++){
-         final value = noise[row][column] + 1.0;
-         final percentage = value * 0.5;
-         final h = (percentage * altitude).toInt();
+         var index = row * columns + column;
+         final z = heightMap[index];
 
-         if (h == 0){
+         if (z == 0){
            nodeTypes[index] = NodeType.Water;
            nodeOrientations[index] = NodeOrientation.None;
-           index++;
            continue;
          }
 
-         // for (var i = 0; i < h; i++) {
-         //   final iIndex = index + (i * area);
-         //   nodeTypes[iIndex] = NodeType.Grass;
-         //   nodeOrientations[iIndex] = NodeOrientation.Solid;
-         // }
-         final indexA = (area * h) + (row * columns + column);
-         nodeTypes[indexA] = NodeType.Grass;
-         nodeOrientations[indexA] = NodeOrientation.Solid;
-
-         index++;
+         final nodeIndex = (area * z) + index;
+         nodeTypes[nodeIndex] = NodeType.Grass;
+         nodeOrientations[nodeIndex] = NodeOrientation.Solid;
        }
      }
 
     for (var row = 0; row < rows; row++) {
       for (var column = 0; column < columns - 1; column++) {
-         final i = row * columns + column;
-         final heightA = heightMap[i];
-         final heightB = heightMap[i + 1];
-         if (heightA == heightB) continue;
-         final indexA = area * heightA + i;
-         if (heightA - 1 == heightB){
-           assert (nodeTypes[indexA] == NodeType.Grass);
-           nodeOrientations[indexA] = NodeOrientation.Slope_East;
+         final heightMapIndex = row * columns + column;
+         final heightMapValueA = heightMap[heightMapIndex];
+         final heightMapValueB = heightMap[heightMapIndex + 1];
+         final nodeIndex = (heightMapValueA * area) + heightMapIndex;
+
+         assert (nodeTypes[nodeIndex] != NodeType.Empty);
+
+         if (heightMapValueA == heightMapValueB) continue;
+         if (heightMapValueA - 1 == heightMapValueB){
+           assert (nodeTypes[nodeIndex] == NodeType.Grass);
+           nodeOrientations[nodeIndex] = NodeOrientation.Slope_East;
+           continue;
          }
+         // if (heightMapValueA + 1 == heightMapValueB){
+         //   assert (nodeTypes[nodeIndex] == NodeType.Grass);
+         //   nodeOrientations[nodeIndex] = NodeOrientation.Slope_West;
+         //   continue;
+         // }
       }
     }
 
