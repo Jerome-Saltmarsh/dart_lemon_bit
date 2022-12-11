@@ -28,11 +28,11 @@ class SceneGenerator {
     final nodeOrientations = Uint8List(volume);
 
     final heightMap = Uint8List(area);
-    var heightMapIndex = 0;
     for (var row = 0; row < rows; row++) {
       for (var column = 0; column < columns; column++) {
         final value = noise[row][column] + 1.0;
         final percentage = value * 0.5;
+        var heightMapIndex = row * columns + column;
         heightMap[heightMapIndex] = (percentage * altitude).toInt();
         heightMapIndex++;
       }
@@ -62,19 +62,20 @@ class SceneGenerator {
          final heightMapValueB = heightMap[heightMapIndex + 1];
          final nodeIndex = (heightMapValueA * area) + heightMapIndex;
 
-         assert (nodeTypes[nodeIndex] != NodeType.Empty);
+         if (nodeTypes[nodeIndex] != NodeType.Grass)
+           continue;
+         if (heightMapValueA == heightMapValueB)
+           continue;
 
-         if (heightMapValueA == heightMapValueB) continue;
-         if (heightMapValueA - 1 == heightMapValueB){
-           assert (nodeTypes[nodeIndex] == NodeType.Grass);
+         if (heightMapValueA == heightMapValueB + 1){
            nodeOrientations[nodeIndex] = NodeOrientation.Slope_East;
            continue;
          }
-         // if (heightMapValueA + 1 == heightMapValueB){
-         //   assert (nodeTypes[nodeIndex] == NodeType.Grass);
-         //   nodeOrientations[nodeIndex] = NodeOrientation.Slope_West;
-         //   continue;
-         // }
+         if (heightMapValueA == heightMapValueB - 1){
+           nodeOrientations[nodeIndex + area] = NodeOrientation.Slope_West;
+           nodeTypes[nodeIndex + area] = NodeType.Grass;
+           continue;
+         }
       }
     }
 
