@@ -21,7 +21,7 @@ class GameNodes {
 
 
   static void addInvisibleIndex(int index){
-    nodesVisible[index] = Visibility.Transparent;
+    nodesVisible[index] = Visibility.Invisible;
     nodesVisibleIndex[visibleIndex] = index;
     visibleIndex++;
   }

@@ -16,4 +16,6 @@ class GameConstants {
   static final colorShades = Shade_Opacities
       .map((opacity) => GameColors.black.withOpacity(opacity).value)
       .toList(growable: false);
+
+  static final Transparent =  GameColors.black.withOpacity(0.2).value;
 }

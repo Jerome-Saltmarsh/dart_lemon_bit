@@ -844,7 +844,7 @@ class GameRender {
     GameNodes.nodesVisible[GameNodes.nodesVisibleIndex[0]] = Visibility.Opaque;
 
     showIndexPlayer();
-    showIndexMouse();
+    // showIndexMouse();
 
     renderOrderGrid.total = renderOrderGrid.getTotal();
     renderOrderGrid.index = 0;
@@ -900,12 +900,6 @@ class GameRender {
     var index = (z * GameState.nodesArea) + (row * GameState.nodesTotalColumns) + column;
     while (index < GameNodes.nodesTotal) {
       if (GameNodes.nodesType[index] == NodeType.Empty) {
-        // GameNodes.nodesVisible[index] = Visibility.Transparent;
-        // GameNodes.nodesVisibleIndex[GameNodes.visibleIndex] = index;
-        // GameNodes.visibleIndex++;
-        GameNodes.addTransparentIndex(index);
-
-
         row += 1;
         column += 1;
         z += 2;
@@ -913,55 +907,56 @@ class GameRender {
         continue;
       }
 
-      final xyDistance = (initRow - row).abs() + (initColumn - column);
-      final heightDistance = (initZ - z).abs();
-
-      if (xyDistance > heightDistance){
-        row += 1;
-        column += 1;
-        z += 2;
-        index = (z * GameState.nodesArea) + (row * GameState.nodesTotalColumns) + column;
-        continue;
-      }
+      // final distance = (initRow - row).abs() + (initColumn - column).abs() + (initZ - z).abs();
+      final distance = (z - GamePlayer.indexZ).abs();
+     final transparent = distance <= 2;
 
       if (column >= initColumn && row >= initRow) {
-        // GameNodes.nodesVisible[index] = Visibility.Invisible;
-        // GameNodes.nodesVisibleIndex[GameNodes.visibleIndex] = index;
-        // GameNodes.visibleIndex++;
-        GameNodes.addInvisibleIndex(index);
+
+        if (transparent){
+          GameNodes.addTransparentIndex(index);
+        } else {
+          GameNodes.addInvisibleIndex(index);
+        }
+
         row += 1;
         column += 1;
         z += 2;
         index = (z * GameState.nodesArea) + (row * GameState.nodesTotalColumns) + column;
         continue;
-      } else {
-        var nodeIndexBelow = index - GameState.nodesArea;
+      }
+      var nodeIndexBelow = index - GameState.nodesArea;
 
-        if (nodeIndexBelow < 0) continue;
+      if (nodeIndexBelow < 0) continue;
 
-        if (GameNodes.nodesType[nodeIndexBelow] == NodeType.Empty) {
-          // GameNodes.nodesVisible[index] = Visibility.Invisible;;
-          // GameNodes.nodesVisibleIndex[GameNodes.visibleIndex] = index;
-          // GameNodes.visibleIndex++;
+      if (GameNodes.nodesType[nodeIndexBelow] == NodeType.Empty) {
+
+        if (transparent){
+          GameNodes.addTransparentIndex(index);
+        } else {
           GameNodes.addInvisibleIndex(index);
-          row += 1;
-          column += 1;
-          z += 2;
-          index = (z * GameState.nodesArea) + (row * GameState.nodesTotalColumns) + column;
-          continue;
         }
 
-        if (GameNodes.nodesVisible[nodeIndexBelow] == Visibility.Invisible){
-          // GameNodes.nodesVisible[index] = Visibility.Invisible;
-          // GameNodes.nodesVisibleIndex[GameNodes.visibleIndex] = index;
-          // GameNodes.visibleIndex++;
+        row += 1;
+        column += 1;
+        z += 2;
+        index = (z * GameState.nodesArea) + (row * GameState.nodesTotalColumns) + column;
+        continue;
+      }
+
+      if (GameNodes.nodesVisible[nodeIndexBelow] == Visibility.Invisible) {
+
+        if (transparent){
+          GameNodes.addTransparentIndex(index);
+        } else {
           GameNodes.addInvisibleIndex(index);
-          row += 1;
-          column += 1;
-          z += 2;
-          index = (z * GameState.nodesArea) + (row * GameState.nodesTotalColumns) + column;
-          continue;
         }
+
+        row += 1;
+        column += 1;
+        z += 2;
+        index = (z * GameState.nodesArea) + (row * GameState.nodesTotalColumns) + column;
+        continue;
       }
       row += 1;
       column += 1;
