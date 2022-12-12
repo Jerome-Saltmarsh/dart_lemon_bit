@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:ui' as ui;
 
+import 'package:flutter/rendering.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_gameobjects.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/render_node.dart';
 import 'package:gamestream_flutter/isometric/render/highlight_character_nearest_mouse.dart';
@@ -325,6 +326,22 @@ class GameRender {
           srcWidth: 32,
           srcHeight: 32,
           scale: particle.scale,
+        );
+        break;
+      case ParticleType.Myst:
+        const size = 48.0;
+        final shade = GameState.getV3RenderShade(particle);
+        if (shade >= 5) return;
+        Engine.renderSprite(
+          image: GameImages.particles,
+          dstX: particle.renderX,
+          dstY: particle.renderY,
+          srcX: 480 ,
+          srcY: shade * size,
+          srcWidth: size,
+          srcHeight: size,
+          scale: particle.scale,
+          color: 1,
         );
         break;
       case ParticleType.Orb_Shard:

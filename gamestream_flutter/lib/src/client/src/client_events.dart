@@ -119,6 +119,21 @@ class ClientEvents {
       GameActions.toggleZoom();
       return;
     }
+
+    if (key == LogicalKeyboardKey.keyV) {
+      GameState.spawnParticle(
+          type: ParticleType.Myst,
+          x: GameMouse.positionX,
+          y: GameMouse.positionY,
+          z: GameMouse.positionZ + Node_Height_Half,
+          angle: randomAngle(),
+          speed: 1,
+          duration: 100,
+          checkCollision: false,
+          weight: 0,
+      );
+      return;
+    }
   }
 
   static void onDragAcceptWatchBelt(Watch<int> watchBelt, int index) =>

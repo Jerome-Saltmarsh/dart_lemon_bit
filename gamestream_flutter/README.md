@@ -11,7 +11,6 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] save scene as byte stream
 [ ] cache region
 [ ] fix android app title gamestream_flutter
-[ ] add mobile share (whatsapp, facebook) button
 [ ] optimize front end - do not use objects to store projectiles
 [ ] optimize front end - do not use objects to store characters
 [ ] optimize front end - do not use objects to store gameobjects
@@ -25,57 +24,26 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] scene edit tool pause ai
 [ ] editor tool elevation
 [ ] generate mini-map
-[ ] particle myst
-[ ] character butterfly
-[ ] character bird
-[ ] character chicken
 [ ] loud noises draw attention
+[ ] add mobile share (whatsapp, facebook) button
+[ ] attributes
+[ ] skills
 [ ] skill critical shot
-[ ] attribute gunslinger 
-[ ] attribute vampire steals health
-[ ] scene cave
-[ ] scene forest
-[ ] scene wilderness
-[ ] scene swamp
-[ ] scene city
-[ ] skill freeze
-[ ] speed boost
-[ ] character alien
-[ ] character skeleton
-[ ] character ranger
-[ ] character goblin
-[ ] character vampire
-[ ] character wolf
-[ ] scene catacombs 
-[ ] catacombs cemetery entrance
 [ ] spawn-node character type
-[ ] game survival shop crystal
 [ ] generate top down map
 [ ] editor play-mode and build-mode
+[ ] particle myst
 
-[RELEASE-2.0]
+[GAMES]
 [ ] game royal
 [ ] game waves
-
-[RELEASE-1.0]
 [ ] game practice
 [ ] game survival
 [ ] game editor
 [ ] game 5v5
+[ ] game moba
 
-[GAME-5v5]
-[ ] game5v5 design map
-[ ] game5v5 on revive join new game
-[ ] game5v5 store first 30 seconds
-[ ] game5v5 team spawn area
-[ ] spawn point type
-[ ] spawn point team
-[ ] tag-script
 
-[GAME-PRACTICE]
-[ ] design scene
-[ ] spawn node types
-[ ] tutorial tips
 
 11.12.2022
 [x] fix mouse cursor hides tree tops
