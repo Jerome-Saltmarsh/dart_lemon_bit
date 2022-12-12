@@ -1,40 +1,45 @@
 [shortcut-keys]
 navigate to next method: ctrl + shift + up / down arrows
 
-[TODO]
+[IDEAS]
+[ ] repeat killing same enemies yields no reward
+[ ] loud noises draw attention
 [ ] talk with other players
 [ ] trade with other players
-[ ] feature separate head-type and helm-type
-[ ] render foreground zombie walking while connecting
-[ ] feature inventory max weight
-[ ] idea weapon torch flame
-[ ] save scene as byte stream
-[ ] cache region
-[ ] fix android app title gamestream_flutter
+[ ] weapon torch flame
+
+[OPTIMIZATIONS]
 [ ] optimize front end - do not use objects to store projectiles
 [ ] optimize front end - do not use objects to store characters
 [ ] optimize front end - do not use objects to store gameobjects
 [ ] optimize front end - do not use objects to store particles
 [ ] optimize client applyShadowAt
+
+[TODO]
+[ ] cache region
+[ ] fix android app title gamestream_flutter
 [ ] option fullscreen dialog on game start if it fails to do so automatically
-[ ] editor - gameobjects
-[ ] editor - characters
-[ ] highlight cursor gameobject item
-[ ] player attributes ui
-[ ] repeat killing same enemies yields no reward
-[ ] scene edit tool pause ai
-[ ] editor tool elevation
-[ ] generate mini-map
-[ ] loud noises draw attention
 [ ] add mobile share (whatsapp, facebook) button
-[ ] attributes
-[ ] skills
-[ ] skill critical shot
-[ ] spawn-node character type
-[ ] generate top down map
+
+[GAMEPLAY]
+[ ] highlight cursor gameobject item
+[ ] feature separate head-type and helm-type
+
+[EDITOR]
+[ ] editor spawn-node character type
+[ ] editor tool elevation
+[ ] scene edit tool pause ai
+[ ] scene edit tool pause time
 [ ] editor play-mode and build-mode
-[ ] particle myst
-[ ] fix template perform animation 
+[ ] editor tab gameobjects
+[ ] editor tab characters
+
+[FEATURES]
+[ ] feature generate mini-map
+[ ] feature inventory tabs
+[ ] feature inventory max weight
+[ ] feature attributes
+[ ] feature skills
 
 [GAMES]
 [ ] game royal
@@ -45,7 +50,9 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] game 5v5
 [ ] game moba
 
-
+12.12.2022
+[x] fix template perform animation
+[x] particle myst
 
 11.12.2022
 [x] fix mouse cursor hides tree tops
