@@ -18,6 +18,7 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] optimize client applyShadowAt
 [ ] option fullscreen dialog on game start if it fails to do so automatically
 [ ] editor - gameobjects
+[ ] editor - characters
 [ ] highlight cursor gameobject item
 [ ] player attributes ui
 [ ] repeat killing same enemies yields no reward
@@ -33,6 +34,7 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] generate top down map
 [ ] editor play-mode and build-mode
 [ ] particle myst
+[ ] fix template perform animation 
 
 [GAMES]
 [ ] game royal

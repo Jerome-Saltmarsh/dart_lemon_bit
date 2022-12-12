@@ -47,13 +47,15 @@ class GameUI {
   static Widget buildWatchGameStatus() {
     return watch(ServerState.gameStatus, (int gameStatus) {
            if (gameStatus == GameStatus.Playing) return const SizedBox();
-           return Positioned(
-             top: 60,
-             child: Container(
-               alignment: Alignment.center,
-               width: Engine.screen.width,
-               child: text("Waiting for more players to join")),
-             );
+           return IgnorePointer(
+             child: Positioned(
+               top: 60,
+               child: Container(
+                 alignment: Alignment.center,
+                 width: Engine.screen.width,
+                 child: text("Waiting for more players to join")),
+               ),
+           );
       });
   }
 
@@ -68,10 +70,12 @@ class GameUI {
 
   static Positioned buildPositionedMessageStatus() => Positioned(
           bottom: 100,
-          child: Container(
-              width: Engine.screen.width,
-              alignment: Alignment.center,
-              child: watch(ClientState.messageStatus, buildMessageStatus),
+          child: IgnorePointer(
+            child: Container(
+                width: Engine.screen.width,
+                alignment: Alignment.center,
+                child: watch(ClientState.messageStatus, buildMessageStatus),
+            ),
           ),
       );
 

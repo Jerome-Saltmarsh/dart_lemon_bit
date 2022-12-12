@@ -97,8 +97,10 @@ class GamePractice extends Game {
      //   CharacterType.Zombie,
      //   CharacterType.Template,
      // ]);
-     ai.characterType = CharacterType.Zombie;
-     ai.weaponType = ItemType.Empty;
+     // ai.characterType = CharacterType.Zombie;
+     // ai.weaponType = ItemType.Empty;
+     ai.characterType = CharacterType.Template;
+     ai.weaponType = ItemType.Weapon_Ranged_Bow;
 
      // if (ai.characterType == CharacterType.Template){
      //   ai.weaponType = randomItem(const [

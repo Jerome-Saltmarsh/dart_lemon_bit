@@ -52,13 +52,23 @@ void renderCharacterTemplate(Character character, {
   var frameHead = 0;
   var frameBody = 0;
   var frameWeapon = 0;
+
+
   final diff = Direction.getDifference(character.renderDirection, character.aimDirection).abs();
   final runningBackwards = diff >= 3 && character.running;
-  final renderDirectionOpposite = (character.renderDirection + 4) % 8;
+  var renderDirectionOpposite = (character.renderDirection + 4);
+
+  if (renderDirectionOpposite > 8){
+    renderDirectionOpposite -= 8;
+  }
+
   final upperBodyDirection = runningBackwards ? renderDirectionOpposite : character.renderDirection;
   final weaponInFront = upperBodyDirection >= 2 && upperBodyDirection < 6;
-  final finalDirection = (character.weaponStateAiming || character.usingWeapon) ? character.aimDirection : upperBodyDirection;
   var weaponIsTwoHandedFirearm = ItemType.isTwoHanded(character.weaponType);
+
+  var directionLegs = upperBodyDirection;
+  var directionBody = (character.weaponStateAiming || character.weaponStateFiring) ? character.aimDirection : upperBodyDirection;
+  var directionHead = character.aimDirection;
 
   switch (character.state) {
     case CharacterState.Idle:
@@ -82,10 +92,18 @@ void renderCharacterTemplate(Character character, {
       frameLegs = TemplateAnimation.StateChangingFrame;
       frameWeapon = TemplateAnimation.StateChangingFrame;
       break;
+    case CharacterState.Performing:
+      final animation = TemplateAnimation.getAttackAnimation(character.weaponType);
+      frameWeapon = capIndex(animation, character.frame);
+      frameBody = frameWeapon;
+      frameHead = frameWeapon;
+      frameLegs = frameWeapon;
+      directionHead = directionBody;
+      directionLegs = directionBody;
+      break;
   }
 
-
-  if (character.usingWeapon) {
+  if (character.weaponStateFiring) {
     final animation = TemplateAnimation.getAttackAnimation(character.weaponType);
     frameWeapon = (character.weaponFrame >= animation.length ? animation.last : animation[character.weaponFrame]) - 1;
     frameBody = frameWeapon;
@@ -120,7 +138,7 @@ void renderCharacterTemplate(Character character, {
   }
 
   if (!weaponInFront) {
-    renderTemplateWeapon(character.weaponType, finalDirection, frameWeapon, color, dstX, dstY);
+    renderTemplateWeapon(character.weaponType, directionBody, frameWeapon, color, dstX, dstY);
   }
 
   var angle = 0.0;
@@ -178,7 +196,7 @@ void renderCharacterTemplate(Character character, {
   Engine.renderSprite(
     image: GameImages.getImageForLegType(character.legType),
     srcX: frameLegs * 64,
-    srcY: upperBodyDirection * 64,
+    srcY: directionLegs * 64,
     srcWidth: 64,
     srcHeight: 64,
     dstX: dstX,
@@ -190,7 +208,7 @@ void renderCharacterTemplate(Character character, {
   Engine.renderSprite(
     image: GameImages.getImageForBodyType(character.bodyType),
     srcX: frameBody * 64,
-    srcY: finalDirection * 64,
+    srcY: directionBody * 64,
     srcWidth: 64,
     srcHeight: 64,
     dstX: dstX,
@@ -202,7 +220,7 @@ void renderCharacterTemplate(Character character, {
   Engine.renderSprite(
     image: GameImages.getImageForHeadType(character.headType),
     srcX: frameHead * 64,
-    srcY: character.aimDirection * 64,
+    srcY: directionHead * 64,
     srcWidth: 64,
     srcHeight: 64,
     dstX: dstX,
@@ -212,15 +230,9 @@ void renderCharacterTemplate(Character character, {
     anchorY: 0.75
   );
   if (weaponInFront) {
-    renderTemplateWeapon(character.weaponType, finalDirection, frameWeapon, color, dstX, dstY);
+    renderTemplateWeapon(character.weaponType, directionBody, frameWeapon, color, dstX, dstY);
   }
 }
-
-// bool weaponIs64(int weapon) =>
-//    weapon == ItemType.isTypeWeaponHandgun(weapon) ||
-//    weapon == ItemType.Weapon_Ranged_Bow ||
-//    weapon == ItemType.Weapon_Ranged_Shotgun ||
-//    weapon == ItemType.Weapon_Melee_Knife;
 
 class TemplateAnimation {
 
