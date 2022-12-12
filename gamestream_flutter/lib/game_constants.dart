@@ -13,9 +13,10 @@ class GameConstants {
   static const Frames_Per_Particle_Animation_Frame = 2;
 
   static const Shade_Opacities = [0.0, 0.4, 0.6, 0.7, 0.8, 0.95, 1.0];
-  static final colorShades = Shade_Opacities
+  static const Shade_Opacities_Transparent = [0.0, 0.2, 0.3, 0.35, 0.4, 0.45, 0.5];
+  static final Color_Shades = Shade_Opacities
       .map((opacity) => GameColors.black.withOpacity(opacity).value)
       .toList(growable: false);
 
-  static final Transparent =  GameColors.black.withOpacity(0.3).value;
+  static final Transparent =  GameColors.black.withOpacity(0.5).value;
 }

@@ -42,6 +42,7 @@ void renderNodeAt() {
       );
       break;
     case NodeType.Tree_Top:
+
       var shift = GameAnimation.treeAnimation[((GameRender.currentNodeRow - GameRender.currentNodeColumn) + GameAnimation.animationFrame) % GameAnimation.treeAnimation.length] * renderNodeWind;
       Engine.renderSprite(
         image: GameImages.atlasNodes,

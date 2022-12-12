@@ -16,19 +16,6 @@ class GamePractice extends Game {
     triggerSpawnPoints();
   }
 
-  // @override
-  // Player spawnPlayer() {
-  //   final player = Player(
-  //     game: this,
-  //     team: 0,
-  //     weaponType: ItemType.Weapon_Handgun_Flint_Lock_Old,
-  //   );
-  //   player.legsType = ItemType.Legs_Brown;
-  //   player.bodyType = ItemType.Body_Tunic_Padded;
-  //   player.headType = ItemType.Head_Wizards_Hat;
-  //   return player;
-  // }
-
   @override
   void customInitPlayer(Player player) {
     player.writeEnvironmentShade(Shade.Very_Very_Dark);
@@ -101,5 +88,10 @@ class GamePractice extends Game {
 
   void customOnCharacterKilled(Character target, dynamic src) {
 
+  }
+
+  /// @override
+  void customOnAIRespawned(AI ai){
+     ai.characterType = randomItem(const [CharacterType.Dog, CharacterType.Zombie]);
   }
 }

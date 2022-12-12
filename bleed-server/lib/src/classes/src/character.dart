@@ -170,7 +170,7 @@ abstract class Character extends Collider {
     double y = 0,
     double z = 0,
     String? name,
-  }) : super(x: x, y: y, z: z, radius: 7) {
+  }) : super(x: x, y: y, z: z, radius: 9) {
     maxHealth = health;
     this.health = health;
     this.team = team;

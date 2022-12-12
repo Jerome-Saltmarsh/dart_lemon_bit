@@ -2185,12 +2185,13 @@ abstract class Game {
     for (final index in scene.spawnPoints) {
       for (var i = 0; i < instances; i++) {
         spawnAI(
-          characterType: randomItem(const [CharacterType.Dog, CharacterType.Zombie]),
+          // characterType: randomItem(const [CharacterType.Dog, CharacterType.Zombie, CharacterType.Template]),
+          characterType: randomItem(const [CharacterType.Template]),
           nodeIndex: index,
           damage: 10,
           team: TeamType.Evil,
           health: 3,
-        );
+        )..weaponType = ItemType.Weapon_Ranged_Bow;
       }
     }
   }

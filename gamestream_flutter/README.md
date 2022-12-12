@@ -51,6 +51,7 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] spawn-node character type
 [ ] game survival shop crystal
 [ ] generate top down map
+[ ] editor play-mode and build-mode
 
 [RELEASE-2.0]
 [ ] game royal

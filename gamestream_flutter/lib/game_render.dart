@@ -76,7 +76,7 @@ class GameRender {
   static double get currentNodeRenderY => GameConvert.rowColumnZToRenderY(currentNodeRow, currentNodeColumn, currentNodeZ);
 
   static int get currentNodeShade => GameNodes.nodesShade[currentNodeIndex];
-  static int get currentNodeColor => GameConstants.colorShades[currentNodeShade];
+  static int get currentNodeColor => GameConstants.Color_Shades[currentNodeShade];
   static int get currentNodeOrientation => GameNodes.nodesOrientation[currentNodeIndex];
   static bool get currentNodeVisible => currentNodeVisibility != Visibility.Invisible;
   static bool get currentNodeInvisible => currentNodeVisibility == Visibility.Invisible;
@@ -589,7 +589,7 @@ class GameRender {
           srcWidth: 12,
           srcHeight: 22,
           scale: 1.0,
-          color: GameConstants.colorShades[Shade.Very_Bright],
+          color: GameConstants.Color_Shades[Shade.Very_Bright],
         );
         return;
       case ItemType.GameObjects_Book_Purple:
@@ -918,7 +918,7 @@ class GameRender {
 
     var index = (z * GameState.nodesArea) + (row * GameState.nodesTotalColumns) + column;
     while (index < GameNodes.nodesTotal) {
-      if (GameNodes.nodesType[index] == NodeType.Empty) {
+      if (NodeType.isRainOrEmpty(GameNodes.nodesType[index])) {
         row += 1;
         column += 1;
         z += 2;
@@ -1420,7 +1420,7 @@ class RenderOrderParticle extends RenderOrder {
 
 int get renderNodeShade => GameNodes.nodesShade[GameRender.currentNodeIndex];
 int get renderNodeOrientation => GameNodes.nodesOrientation[GameRender.currentNodeIndex];
-int get renderNodeColor => GameConstants.colorShades[renderNodeShade];
+int get renderNodeColor => GameConstants.Color_Shades[renderNodeShade];
 int get renderNodeWind => GameNodes.nodesWind[renderNodeShade];
 int get renderNodeBelowIndex => GameRender.currentNodeIndex + GameState.nodesArea;
 
@@ -1430,10 +1430,10 @@ int get renderNodeBelowShade {
   return GameNodes.nodesShade[renderNodeBelowIndex];
 }
 
-int get renderNodeBelowColor => GameConstants.colorShades[renderNodeBelowShade];
+int get renderNodeBelowColor => GameConstants.Color_Shades[renderNodeBelowShade];
 
 int getRenderLayerColor(int layers) =>
-    GameConstants.colorShades[getRenderLayerShade(layers)];
+    GameConstants.Color_Shades[getRenderLayerShade(layers)];
 
 int getRenderLayerShade(int layers){
    final index = GameRender.currentNodeIndex + (layers * GameState.nodesArea);
