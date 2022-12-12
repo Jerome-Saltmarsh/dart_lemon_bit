@@ -41,17 +41,21 @@ class GameUI {
         buildWatchBool(ClientState.debugVisible, GameDebug.buildStackDebug),
         buildPositionedAreaType(),
         buildPositionedMessageStatus(),
-        watch(ServerState.gameStatus, (int gameStatus) {
-             if (gameStatus == GameStatus.Playing) return const SizedBox();
-             return Positioned(
-               top: 60,
-               child: Container(
-                 alignment: Alignment.center,
-                 width: Engine.screen.width,
-                 child: text("Waiting for more players to join")),
-               );
-        }),
+        buildWatchGameStatus(),
       ]);
+
+  static Widget buildWatchGameStatus() {
+    return watch(ServerState.gameStatus, (int gameStatus) {
+           if (gameStatus == GameStatus.Playing) return const SizedBox();
+           return Positioned(
+             top: 60,
+             child: Container(
+               alignment: Alignment.center,
+               width: Engine.screen.width,
+               child: text("Waiting for more players to join")),
+             );
+      });
+  }
 
   static Positioned buildPositionedAreaType() => Positioned(
           top: 75,
@@ -71,6 +75,7 @@ class GameUI {
           ),
       );
 
+
   static Widget buildMessageStatus(String message){
     if (message.isEmpty) return const SizedBox();
     return MouseRegion(
@@ -87,10 +92,12 @@ class GameUI {
   static WatchBuilder<int> buildWatchAreaType() =>
       WatchBuilder(ServerState.areaType, (int areaType) {
         return WatchBuilder(ClientState.areaTypeVisible, (bool areaTypeVisible){
-          return AnimatedOpacity(
-              opacity: areaTypeVisible ? 1.0 : 0.0,
-              duration: const Duration(seconds: 1),
-              child: text(AreaType.getName(areaType), size: 30),
+          return IgnorePointer(
+            child: AnimatedOpacity(
+                opacity: areaTypeVisible ? 1.0 : 0.0,
+                duration: const Duration(seconds: 1),
+                child: text(AreaType.getName(areaType), size: 30),
+            ),
           );
         });
       });
