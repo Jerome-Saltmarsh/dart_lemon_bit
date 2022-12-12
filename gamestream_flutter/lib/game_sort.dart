@@ -52,6 +52,6 @@ class GameSort {
   }
 
   static int compareParticleRenderOrder(Particle a, Particle b) {
-    return a.renderOrder > b.renderOrder ? 1 : -1;
+    return a.sortOrder > b.sortOrder ? 1 : -1;
   }
 }

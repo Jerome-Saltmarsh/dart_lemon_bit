@@ -14,6 +14,8 @@ class Vector3 with Position {
   /// remove
   int get nodeIndex => GameQueries.getNodeIndex(x, y, z);
   double get renderOrder => x + y + (z * 0.25);
+
+  double get sortOrder => x + y + z;
   /// remove
   double get renderX => (x - y) * 0.5;
   /// remove

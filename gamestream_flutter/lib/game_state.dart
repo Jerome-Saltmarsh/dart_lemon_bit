@@ -327,7 +327,7 @@ class GameState {
     double rotation = 0,
     double rotationV = 0,
     bounciness = 0.5,
-    double airFriction = 0.98,
+    // double airFriction = 0.98,
     bool animation = false,
   }) {
     if (ClientState.totalActiveParticles >= GameConfig.Particles_Max) {
@@ -359,7 +359,6 @@ class GameState {
     particle.rotation = rotation;
     particle.rotationVelocity = rotationV;
     particle.bounciness = bounciness;
-    particle.airFriction = airFriction;
     return particle;
   }
 

@@ -1,7 +1,59 @@
+import 'dart:typed_data';
+
 import 'package:bleed_common/library.dart';
 import 'package:lemon_math/library.dart';
 
 import 'vector3.dart';
+
+class Particles {
+  static const length = 500;
+  final delay = Uint16List(length);
+  final xv = Float32List(length);
+  final yv = Float32List(length);
+  final zv = Float32List(length);
+  final frame = Uint16List(length);
+  final weight = Float32List(length);
+  final duration = Uint16List(length);
+  final rotation = Float32List(length);
+  final rotationVelocity = Float32List(length);
+  final scale = Float32List(length);
+  final scaleVelocity = Float32List(length);
+  final type = Uint8List(length);
+  final bounciness = Float32List(length);
+  final checkNodeCollision = List.generate(length, (index) => true);
+  final animation = List.generate(length, (index) => false);
+  final order = Uint16List(length);
+
+  Particles(){
+    for (var i = 0; i < length; i++){
+       order[i] = i;
+    }
+  }
+
+  // void insertionSort() {
+  //   final start = 0;
+  //   final end = length;
+  //   for (var pos = start + 1; pos < end; pos++) {
+  //     var min = start;
+  //     var max = pos;
+  //     var element = order[pos];
+  //     while (min < max) {
+  //       var mid = min + ((max - min) >> 1);
+  //
+  //
+  //       var comparison = compare(element, list[mid]);
+  //       if (comparison < 0) {
+  //         max = mid;
+  //       } else {
+  //         min = mid + 1;
+  //       }
+  //     }
+  //     list.setRange(min + 1, pos + 1, list, min);
+  //     list[min] = element;
+  //   }
+  // }
+
+}
 
 class Particle extends Vector3 {
   var delay = 0;
@@ -17,7 +69,7 @@ class Particle extends Vector3 {
   var scaleV = 0.0;
   var type = 0;
   var bounciness = 0.0;
-  var airFriction = 0.98;
+  // var airFriction = 0.98;
   /// Deactivates if this node hits a solid node
   var checkNodeCollision = true;
   var animation = false;
@@ -55,6 +107,7 @@ class Particle extends Vector3 {
 
   void applyAirFriction(){
     const gravity = 0.04;
+    const airFriction = 0.98;
     zv -= gravity * weight;
     xv *= airFriction;
     yv *= airFriction;
