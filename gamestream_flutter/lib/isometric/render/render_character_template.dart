@@ -98,6 +98,7 @@ void renderCharacterTemplate(Character character, {
       frameBody = frameWeapon;
       frameHead = frameWeapon;
       frameLegs = frameWeapon;
+      directionBody = character.renderDirection;
       directionHead = directionBody;
       directionLegs = directionBody;
       break;

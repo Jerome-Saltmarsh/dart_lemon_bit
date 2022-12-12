@@ -122,6 +122,7 @@ class AI extends Character {
     if (target != null) {
 
       if (withinAttackRange(target) && aiMode != AIMode.Idle && aiMode != AIMode.Evade) {
+        face(target);
         setCharacterStatePerforming(duration: equippedAttackDuration);
         return;
       }
