@@ -1689,6 +1689,7 @@ abstract class Game {
     instance.spawnZ = instance.z;
     characters.add(instance);
     instance.spawnNodeIndex = nodeIndex;
+    customOnAIRespawned(instance);
     return instance;
   }
 
@@ -2186,8 +2187,7 @@ abstract class Game {
     for (final index in scene.spawnPoints) {
       for (var i = 0; i < instances; i++) {
         spawnAI(
-          // characterType: randomItem(const [CharacterType.Dog, CharacterType.Zombie, CharacterType.Template]),
-          characterType: randomItem(const [CharacterType.Template]),
+          characterType: randomItem(const [CharacterType.Dog, CharacterType.Zombie, CharacterType.Template]),
           nodeIndex: index,
           damage: 10,
           team: TeamType.Evil,

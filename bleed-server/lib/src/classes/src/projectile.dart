@@ -13,7 +13,7 @@ class Projectile extends Collider {
   Position3? target = null;
   bool active = true;
 
-  Projectile() : super(x: 0, y: 0, z: 0, radius: 5);
+  Projectile() : super(x: 0, y: 0, z: 0, radius: 10);
 
   bool get inactive => !active;
 
