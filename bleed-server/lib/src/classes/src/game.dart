@@ -2185,7 +2185,7 @@ abstract class Game {
     for (final index in scene.spawnPoints) {
       for (var i = 0; i < instances; i++) {
         spawnAI(
-          characterType: CharacterType.Dog,
+          characterType: randomItem(const [CharacterType.Dog, CharacterType.Zombie]),
           nodeIndex: index,
           damage: 10,
           team: TeamType.Evil,

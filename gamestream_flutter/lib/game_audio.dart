@@ -102,6 +102,7 @@ class GameAudio {
   static final material_struck_stone = AudioSingle(name: 'material-struck-stone', volume: 0.5);
   static final rat_squeak = AudioSingle(name: 'rat-squeak', volume: 0.5);
   static final collect_star_3 = AudioSingle(name: 'collect-star-3', volume: 0.5);
+  static final magical_impact_16 = AudioSingle(name: 'magical-impact-16', volume: 0.5);
   static final magical_impact_28 = AudioSingle(name: 'magical-impact-28', volume: 0.5);
   static final bloody_punches_1 = AudioSingle(name: 'bloody-punches-1', volume: 1.0);
   static final bloody_punches_3 = AudioSingle(name: 'bloody-punches-3', volume: 1.0);
@@ -309,7 +310,7 @@ class GameAudio {
 
     switch (character.characterType) {
       case CharacterType.Zombie:
-        Engine.randomItem(GameAudio.audioSingleZombieTalking).playV3(character);
+        Engine.randomItem(GameAudio.audioSingleZombieTalking).playV3(character, maxDistance: 500);
         break;
       case CharacterType.Dog:
         if (randomBool()){

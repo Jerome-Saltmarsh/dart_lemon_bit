@@ -65,18 +65,18 @@ class GameEvents {
 
     final nodeType = GameQueries.gridNodeXYZTypeSafe(x, y, z - 2);
     if (NodeType.isMaterialStone(nodeType)) {
-      GameAudio.footstep_stone.playXYZ(x, y, z, maxDistance: 300);
+      GameAudio.footstep_stone.playXYZ(x, y, z);
       return;
     }
     if (NodeType.isMaterialWood(nodeType)) {
-      GameAudio.footstep_wood_4.playXYZ(x, y, z, maxDistance: 300);
+      GameAudio.footstep_wood_4.playXYZ(x, y, z);
       return;
     }
     if (Engine.randomBool()){
-      GameAudio.footstep_grass_8.playXYZ(x, y, z, maxDistance: 300);
+      GameAudio.footstep_grass_8.playXYZ(x, y, z);
       return;
     }
-    GameAudio.footstep_grass_7.playXYZ(x, y, z, maxDistance: 300);
+    GameAudio.footstep_grass_7.playXYZ(x, y, z);
   }
 
   static void onGameEvent(int type, double x, double y, double z, double angle) {

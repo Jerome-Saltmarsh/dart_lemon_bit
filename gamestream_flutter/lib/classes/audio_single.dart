@@ -31,11 +31,11 @@ class AudioSingle {
     play(volume: volume);
   }
 
-  void playV3(Vector3 value, {double maxDistance = 200}){
+  void playV3(Vector3 value, {double maxDistance = 400}){
     playXYZ(value.x, value.y, value.z, maxDistance: maxDistance);
   }
 
-  void playXYZ(double x, double y, double z, {double maxDistance = 200}){
+  void playXYZ(double x, double y, double z, {double maxDistance = 400}){
     if (GameAudio.muted.value) return;
     final distanceFromPlayer = GamePlayer.position.distance3(x, y, z);
     final distanceVolume = GameAudio.convertDistanceToVolume(
