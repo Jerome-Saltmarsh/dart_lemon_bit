@@ -1,4 +1,6 @@
 
+import 'dart:math';
+
 import 'package:gamestream_flutter/library.dart';
 import 'package:just_audio/just_audio.dart';
 
@@ -6,7 +8,6 @@ class AudioSingle {
   final String name;
   late AudioSource source;
   late double volume;
-  late double maxDistance;
   final audioPlayer = AudioPlayer();
 
   String get url => 'assets/audio/sounds/$name.mp3';
@@ -14,7 +15,6 @@ class AudioSingle {
   AudioSingle({
     required this.name,
     required this.volume,
-    this.maxDistance = 200,
   }){
     source = AudioSource.uri(Uri.parse(url));
     audioPlayer.setAudioSource(source);
@@ -31,11 +31,11 @@ class AudioSingle {
     play(volume: volume);
   }
 
-  void playV3(Vector3 value){
-    playXYZ(value.x, value.y, value.z);
+  void playV3(Vector3 value, {double maxDistance = 200}){
+    playXYZ(value.x, value.y, value.z, maxDistance: maxDistance);
   }
 
-  void playXYZ(double x, double y, double z){
+  void playXYZ(double x, double y, double z, {double maxDistance = 200}){
     if (GameAudio.muted.value) return;
     final distanceFromPlayer = GamePlayer.position.distance3(x, y, z);
     final distanceVolume = GameAudio.convertDistanceToVolume(
@@ -49,7 +49,7 @@ class AudioSingle {
     if (GameAudio.muted.value) return;
     final playVolume = this.volume * volume;
     if (playVolume <= 0) return;
-    await audioPlayer.setVolume(playVolume);
+    await audioPlayer.setVolume(min(playVolume, 1));
     if (audioPlayer.audioSource == null) throw Exception("no audio source");
     await audioPlayer.seek(null);
     if (!audioPlayer.playing){

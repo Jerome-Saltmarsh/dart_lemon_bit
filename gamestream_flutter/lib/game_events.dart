@@ -33,7 +33,6 @@ class GameEvents {
   }
 
   static void onChangedAmbientShade(int shade) {
-    // print("onChangedAmbientShade(${Shade.getName(shade)})");
     GameState.refreshLighting();
   }
 
@@ -66,15 +65,18 @@ class GameEvents {
 
     final nodeType = GameQueries.gridNodeXYZTypeSafe(x, y, z - 2);
     if (NodeType.isMaterialStone(nodeType)) {
-      return GameAudio.footstep_stone.playXYZ(x, y, z);
+      GameAudio.footstep_stone.playXYZ(x, y, z, maxDistance: 300);
+      return;
     }
     if (NodeType.isMaterialWood(nodeType)) {
-      return GameAudio.footstep_wood_4.playXYZ(x, y, z);
+      GameAudio.footstep_wood_4.playXYZ(x, y, z, maxDistance: 300);
+      return;
     }
     if (Engine.randomBool()){
-      return GameAudio.footstep_grass_8.playXYZ(x, y, z);
+      GameAudio.footstep_grass_8.playXYZ(x, y, z, maxDistance: 300);
+      return;
     }
-    return GameAudio.footstep_grass_7.playXYZ(x, y, z);
+    GameAudio.footstep_grass_7.playXYZ(x, y, z, maxDistance: 300);
   }
 
   static void onGameEvent(int type, double x, double y, double z, double angle) {
