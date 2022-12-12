@@ -80,7 +80,6 @@ abstract class Character extends Collider {
   double get faceAngle => _faceAngle;
   double get weaponTypeRange => ItemType.getRange(weaponType);
   double get weaponDurationPercentage =>  weaponStateDurationTotal == 0 || weaponStateAiming ? 0 : weaponStateDuration / weaponStateDurationTotal;
-  double get equippedRange => ItemType.getRange(weaponType);
 
   int get weaponFrame => weaponStateDurationTotal - weaponStateDuration;
   int get faceDirection => Direction.fromRadian(_faceAngle);
@@ -223,9 +222,9 @@ abstract class Character extends Collider {
 
   bool withinAttackRange(Position3 target){
     if (target is Collider){
-      return withinRadius(target, equippedRange + (target.radius * 0.5));
+      return withinRadius(target, weaponTypeRange + (target.radius * 0.5));
     }
-    return withinRadius(target, equippedRange);
+    return withinRadius(target, weaponTypeRange);
   }
 
   void face(Position position) {

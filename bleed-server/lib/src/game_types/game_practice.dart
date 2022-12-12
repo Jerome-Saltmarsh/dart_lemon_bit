@@ -92,21 +92,23 @@ class GamePractice extends Game {
 
   /// @override
   void customOnAIRespawned(AI ai){
-     ai.characterType = randomItem(const [
-       CharacterType.Dog,
-       CharacterType.Zombie,
-       CharacterType.Template,
-     ]);
+     // ai.characterType = randomItem(const [
+     //   CharacterType.Dog,
+     //   CharacterType.Zombie,
+     //   CharacterType.Template,
+     // ]);
+     ai.characterType = CharacterType.Zombie;
+     ai.weaponType = ItemType.Empty;
 
-     if (ai.characterType == CharacterType.Template){
-       ai.weaponType = randomItem(const [
-         ItemType.Weapon_Handgun_Glock,
-         ItemType.Weapon_Ranged_Bow,
-         ItemType.Weapon_Melee_Sword,
-         ItemType.Weapon_Smg_Mp5,
-       ]);
-     } else {
-       ai.weaponType = ItemType.Empty;
-     }
+     // if (ai.characterType == CharacterType.Template){
+     //   ai.weaponType = randomItem(const [
+     //     ItemType.Weapon_Handgun_Glock,
+     //     ItemType.Weapon_Ranged_Bow,
+     //     ItemType.Weapon_Melee_Sword,
+     //     ItemType.Weapon_Smg_Mp5,
+     //   ]);
+     // } else {
+     //   ai.weaponType = ItemType.Empty;
+     // }
   }
 }

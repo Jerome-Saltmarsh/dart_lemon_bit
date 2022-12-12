@@ -510,6 +510,7 @@ class ItemType {
      Weapon_Flamethrower: "Flamethrower",
      Weapon_Special_Bazooka: "Bazooka",
      Weapon_Special_Minigun: "Minigun",
+     Weapon_Ranged_Bow: "Bow",
      Consumables_Apple: "Apple",
      Consumables_Meat: "Meat",
      Weapon_Thrown_Grenade: "Grenade",

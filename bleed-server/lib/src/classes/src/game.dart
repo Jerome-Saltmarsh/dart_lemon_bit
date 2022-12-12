@@ -1473,7 +1473,7 @@ abstract class Game {
     return spawnProjectile(
       src: src,
       accuracy: 0,
-      range: src.equippedRange,
+      range: src.weaponTypeRange,
       target: src.target,
       projectileType: ProjectileType.Orb,
       angle: src.target != null ? null : (src is Player ? src.lookRadian : src.faceAngle),
@@ -1544,7 +1544,7 @@ abstract class Game {
       src: src,
       accuracy: 0,
       angle: src.faceAngle,
-      range: src.equippedRange,
+      range: src.weaponTypeRange,
       projectileType: ProjectileType.Bullet,
       damage: src.damage,
     );
@@ -1995,7 +1995,7 @@ abstract class Game {
           src: character,
           damage: character.damage,
           target: character.target,
-          range: character.equippedRange,
+          range: character.weaponTypeRange,
          );
       clearCharacterTarget(character);
       return;
@@ -2014,7 +2014,7 @@ abstract class Game {
       final zombieHit = raycastHit(
           character: character,
           colliders: characters,
-          range: character.equippedRange);
+          range: character.weaponTypeRange);
       if (zombieHit != null) {
         applyHit(
           src: character,
@@ -2192,7 +2192,7 @@ abstract class Game {
           damage: 10,
           team: TeamType.Evil,
           health: 3,
-        )..weaponType = ItemType.Weapon_Ranged_Bow;
+        );
       }
     }
   }
