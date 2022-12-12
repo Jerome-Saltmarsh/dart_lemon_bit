@@ -603,6 +603,7 @@ abstract class Game {
     updateCharacters();
     updateProjectiles();
     updateProjectiles(); // called twice to fix collision detection
+    updateProjectiles(); // called twice to fix collision detection
     updateCharacterFrames();
     sortGameObjects();
   }

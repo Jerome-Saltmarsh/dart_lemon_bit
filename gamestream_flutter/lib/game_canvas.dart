@@ -30,22 +30,6 @@ class GameCanvas {
       renderCursor(canvas);
     }
 
-    // if (ClientState.showAllItems) {
-       // for (var i = 0; i < GameState.totalGameObjects; i++){
-         // final gameObject = GameState.gameObjects[i];
-         // if (gameObject.type != GameObjectType.Item) continue;
-         // renderForegroundText(gameObject, ItemType.getName(gameObject.subType));
-       // }
-    // }
-
-    // renderText(
-    //     text: 'angle: ${GameMouse.playerAngle}',
-    //     x: GamePlayer.position.x,
-    //     y: GamePlayer.position.y,
-    //     z: GamePlayer.position.z,
-    // );
-
-
     const style = TextStyle(color: Colors.white, fontSize: 18);
     switch (GamePlayer.aimTargetCategory) {
       case TargetCategory.GameObject:
@@ -141,6 +125,11 @@ class GameCanvas {
     ClientState.rendersSinceUpdate.value++;
     renderPlayerRunTarget();
     // drawMouse();
+
+    for (var i = 0; i < GameState.totalCharacters; i++) {
+      final character = GameState.characters[i];
+      Engine.renderCircle(character.renderX, character.renderY, 8, Colors.yellow);
+    }
   }
 
   static void drawMouse() {

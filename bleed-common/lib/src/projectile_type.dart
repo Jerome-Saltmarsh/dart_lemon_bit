@@ -8,11 +8,11 @@ class ProjectileType {
    static const Rocket = 5;
 
    static double getSpeed(int type) => {
-      Arrow: 7.0,
+      Arrow: 5.0,
       Orb: 4.5,
       Fireball: 4.5,
-      Bullet: 14.0,
+      Bullet: 12.0,
       Wave: 6.0,
-      Rocket: 3.5,
+      Rocket: 2.5,
    }[type] ?? 0;
 }
