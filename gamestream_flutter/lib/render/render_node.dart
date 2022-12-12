@@ -19,6 +19,7 @@ class RenderNode {
         dstX: GameRender.currentNodeDstX,
         dstY: GameRender.currentNodeDstY,
         anchorY: AtlasNodeAnchorY.Torch,
+        color: GameRender.currentNodeColorTransparent,
       );
       return;
     }
@@ -32,6 +33,7 @@ class RenderNode {
         dstX: GameRender.currentNodeDstX,
         dstY: GameRender.currentNodeDstY,
         anchorY: AtlasNodeAnchorY.Torch,
+        color: GameRender.currentNodeColorTransparent,
       );
       return;
     }
@@ -44,6 +46,7 @@ class RenderNode {
       dstX: GameRender.currentNodeDstX,
       dstY: GameRender.currentNodeDstY,
       anchorY: AtlasNodeAnchorY.Torch,
+      color: GameRender.currentNodeColorTransparent,
     );
     return;
   }
