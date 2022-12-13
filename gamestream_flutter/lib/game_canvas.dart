@@ -126,10 +126,10 @@ class GameCanvas {
     renderPlayerRunTarget();
     // drawMouse();
 
-    // for (var i = 0; i < GameState.totalCharacters; i++) {
-    //   final character = GameState.characters[i];
-    //   Engine.renderCircle(character.renderX, character.renderY, 8, Colors.yellow);
-    // }
+    for (var i = 0; i < GameState.totalCharacters; i++) {
+      final character = GameState.characters[i];
+      Engine.renderCircle(character.renderX, character.renderY, 8, Colors.yellow);
+    }
   }
 
   static void drawMouse() {

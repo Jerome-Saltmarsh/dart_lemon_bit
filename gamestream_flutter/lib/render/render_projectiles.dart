@@ -1,5 +1,6 @@
 
 
+import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_gameobjects.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -16,6 +17,7 @@ class RenderProjectiles {
       case ProjectileType.Fireball:
         break;
       case ProjectileType.Bullet:
+        Engine.renderCircle(value.renderX, value.renderY, ProjectileType.getRadius(ProjectileType.Bullet), Colors.yellow);
         renderBullet(value.renderX, value.renderY, value.angle);
         break;
       case ProjectileType.Wave:
@@ -50,9 +52,8 @@ class RenderProjectiles {
         rotation: rotation - Engine.PI_Quarter,
         scale: 1,
         anchorX: 0.5,
-        anchorY: 0,
+        anchorY: 0.5,
       );
-    // renderPixelRed(x, y);
   }
 
   static void renderArrow(double x, double y, double rotation) {

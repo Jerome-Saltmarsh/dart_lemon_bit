@@ -1266,21 +1266,20 @@ abstract class Game {
       if (!projectile.active) continue;
       final target = projectile.target;
       if (target != null) {
-        if (projectile.withinRadius(target, 10.0)) {
+        if (projectile.withinRadius(target, projectile.radius)) {
           handleProjectileHit(projectile, target);
-          continue;
         }
         continue;
       }
+
+      assert (target == null);
       for (var j = 0; j < collidersLength; j++) {
         final collider = colliders[j];
         if (!collider.collidable) continue;
-        if (projectile.right < collider.left) continue;
-        if (projectile.left > collider.right) continue;
-        if (projectile.top > collider.bottom) continue;
-        if (projectile.bottom < collider.top) continue;
+        if (!projectile.withinRadius(collider, projectile.radius + collider.radius)) continue;
         if (projectile.owner == collider) continue;
-        if (target != null && Collider.onSameTeam(projectile, collider)) continue;
+        if (Collider.onSameTeam(projectile, collider)) continue;
+
         handleProjectileHit(projectile, collider);
         break;
       }
@@ -1648,6 +1647,7 @@ abstract class Game {
     projectile.owner = src;
     projectile.range = range;
     projectile.type = projectileType;
+    projectile.radius = ProjectileType.getRadius(projectileType);
     return projectile;
   }
 

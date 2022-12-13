@@ -15,4 +15,13 @@ class ProjectileType {
       Wave: 6.0,
       Rocket: 2.5,
    }[type] ?? 0;
+
+   static double getRadius(int type) => {
+      Arrow    : 10.0,
+      Orb      : 10.0,
+      Fireball : 10.0,
+      Bullet   : 15.0,
+      Wave     : 10.0,
+      Rocket   : 10.0,
+   }[type] ?? 10;
 }
