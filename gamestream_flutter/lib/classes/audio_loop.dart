@@ -2,6 +2,10 @@ import 'package:just_audio/just_audio.dart';
 import 'package:lemon_math/library.dart';
 
 class AudioLoop {
+
+  static const Min_Volume_Change = 0.005;
+  static const Volume_Fade = 0.05;
+
   final String name;
   var volume = 0.0;
   double Function() getTargetVolume;
@@ -24,7 +28,7 @@ class AudioLoop {
     durationInSeconds = d.inSeconds;
     duration = d;
     audioPlayer.setLoopMode(LoopMode.one);
-    audioPlayer.setVolume(getTargetVolume());
+    setVolume(0);
   }
 
   void onPositionChanged(Duration duration){
@@ -37,17 +41,16 @@ class AudioLoop {
   }
 
   void update(){
-    final change = (getTargetVolume() - volume) * 0.05;
-    if (change.abs() < 0.005) {
-       return;
-    }
-    volume = clamp(volume + change, 0, 1.0);
-    audioPlayer.setVolume(volume);
+    final targetVolume = clamp01(getTargetVolume());
+    final change = (targetVolume - volume) * Volume_Fade;
+    if (change.abs() < Min_Volume_Change) return;
+    setVolume(volume + change);
   }
 
-  void updateForce(){
-    final change = (getTargetVolume() - volume) * 0.05;
-    volume = clamp(volume + change, 0, 1.0);
-    audioPlayer.setVolume(volume);
+  void setVolume(double value){
+    if (volume == value) return;
+    final clampedVolume = clamp01(value);
+    if (volume == clampedVolume) return;
+    audioPlayer.setVolume(clampedVolume);
   }
 }

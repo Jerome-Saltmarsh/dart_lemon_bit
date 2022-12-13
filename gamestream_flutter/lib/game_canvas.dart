@@ -126,6 +126,10 @@ class GameCanvas {
     renderPlayerRunTarget();
     // drawMouse();
 
+    // renderObjectRadius();
+  }
+
+  static void renderObjectRadius() {
     for (var i = 0; i < GameState.totalCharacters; i++) {
       final character = GameState.characters[i];
       Engine.renderCircle(character.renderX, character.renderY, CharacterType.getRadius(character.characterType), Colors.yellow);

@@ -20,7 +20,7 @@ class ProjectileType {
       Arrow    : 10.0,
       Orb      : 10.0,
       Fireball : 10.0,
-      Bullet   : 15.0,
+      Bullet   : 10.0,
       Wave     : 10.0,
       Rocket   : 10.0,
    }[type] ?? 10;
