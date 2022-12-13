@@ -1032,6 +1032,8 @@ abstract class Game {
   void deactivateProjectile(Projectile projectile) {
     assert (projectile.active);
     projectile.active = false;
+    projectile.owner = null;
+    projectile.target = null;
     switch (projectile.type) {
       case ProjectileType.Orb:
         dispatch(GameEventType.Blue_Orb_Deactivated, projectile.x, projectile.y,
@@ -1046,8 +1048,7 @@ abstract class Game {
   }
 
   void updateProjectiles() {
-    var projectilesLength = projectiles.length;
-    for (var i = 0; i < projectilesLength; i++) {
+    for (var i = 0; i < projectiles.length; i++) {
       final projectile = projectiles[i];
       if (!projectile.active) continue;
       projectile.x += projectile.velocityX;
@@ -1059,14 +1060,11 @@ abstract class Game {
         deactivateProjectile(projectile);
       }
     }
-    projectilesLength = projectiles.length;
-    for (var i = 0; i < projectilesLength; i++) {
+    for (var i = 0; i < projectiles.length; i++) {
       final projectile = projectiles[i];
       if (!projectile.active) continue;
-      if (projectile.collideWithEnvironment) continue;
-      if (scene.getCollisionAt(projectile.x, projectile.y, projectile.z)) {
-        deactivateProjectile(projectile);
-      }
+      if (!scene.getCollisionAt(projectile.x, projectile.y, projectile.z)) continue;
+      deactivateProjectile(projectile);
     }
 
     checkProjectileCollision(characters);
@@ -1259,9 +1257,7 @@ abstract class Game {
   }
 
   void checkProjectileCollision(List<Collider> colliders) {
-    final projectilesLength = projectiles.length;
-    final collidersLength = colliders.length;
-    for (var i = 0; i < projectilesLength; i++) {
+    for (var i = 0; i < projectiles.length; i++) {
       final projectile = projectiles[i];
       if (!projectile.active) continue;
       final target = projectile.target;
@@ -1273,13 +1269,17 @@ abstract class Game {
       }
 
       assert (target == null);
-      for (var j = 0; j < collidersLength; j++) {
+      for (var j = 0; j < colliders.length; j++) {
         final collider = colliders[j];
         if (!collider.collidable) continue;
-        if (!projectile.withinRadius(collider, projectile.radius + collider.radius)) continue;
+        final radius = collider.radius + projectile.radius;
+        if ((collider.x - projectile.x).abs() > radius) continue;
+        if ((collider.y - projectile.y).abs() > radius) continue;
+        if (projectile.z + projectile.radius < collider.z) continue;
+        if (projectile.z - projectile.radius > collider.z + Character_Height) continue;
         if (projectile.owner == collider) continue;
+        // if (!projectile.withinRadius(collider, projectile.radius + collider.radius)) continue;
         if (Collider.onSameTeam(projectile, collider)) continue;
-
         handleProjectileHit(projectile, collider);
         break;
       }
@@ -1293,15 +1293,18 @@ abstract class Game {
     ]);
 
   void handleProjectileHit(Projectile projectile, Position3 target) {
-    deactivateProjectile(projectile);
-    if (target is Character) {
+    assert (projectile.active);
+    assert (projectile != target);
+    assert (projectile.owner != target);
+
+    if (target is Collider) {
       applyHit(
         src: projectile,
         target: target,
       );
     }
-    projectile.owner = null;
-    projectile.target = null;
+
+    deactivateProjectile(projectile);
 
     if (projectile.type == ProjectileType.Arrow) {
       dispatch(GameEventType.Arrow_Hit, target.x, target.y, target.z);
@@ -1640,7 +1643,7 @@ abstract class Game {
     const r = 0.01;
     projectile.x = src.x + getAdjacent(finalAngle, r);
     projectile.y = src.y + getOpposite(finalAngle, r);
-    projectile.z = src.z + 16;
+    projectile.z = src.z + Character_Gun_Height;
     projectile.start.x = projectile.x;
     projectile.start.y = projectile.y;
     projectile.setVelocity(finalAngle, ProjectileType.getSpeed(projectileType));

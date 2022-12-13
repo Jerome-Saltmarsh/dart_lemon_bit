@@ -9,7 +9,6 @@ class Projectile extends Collider {
   var range = 0.0;
   var type = 0; // ProjectileType.dart
   var damage = 0;
-  var collideWithEnvironment = false;
   Position3? target = null;
   bool active = true;
 

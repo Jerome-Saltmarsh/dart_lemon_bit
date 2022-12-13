@@ -28,9 +28,16 @@ abstract class Character extends Collider {
   var performX = 0.0;
   var performY = 0.0;
   var performZ = 0.0;
-  var characterType = 0;
+  var _characterType = 0;
   var lookRadian = 0.0;
   var name = "";
+
+  int get characterType => _characterType;
+
+  set characterType(int value){
+    _characterType = value;
+    radius = CharacterType.getRadius(value);
+  }
 
   /// PROPERTIES
   bool get characterTypeZombie => characterType == CharacterType.Zombie;
@@ -158,7 +165,7 @@ abstract class Character extends Collider {
   }
 
   Character({
-    required this.characterType,
+    required int characterType,
     required int health,
     required this.bodyType,
     required this.headType,
@@ -169,14 +176,21 @@ abstract class Character extends Collider {
     double y = 0,
     double z = 0,
     String? name,
-  }) : super(x: x, y: y, z: z, radius: 9) {
+  }) : super(
+      x: x,
+      y: y,
+      z: z,
+      radius: CharacterType.getRadius(characterType),
+  ) {
     maxHealth = health;
+    this.characterType = characterType;
     this.health = health;
     this.team = team;
     this.damage = damage;
     if (name != null){
       this.name = name;
     }
+    radius = CharacterType.getRadius(characterType);
   }
 
   void setCharacterStatePerforming({required int duration}){

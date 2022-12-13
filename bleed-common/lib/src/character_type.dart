@@ -17,6 +17,16 @@ class CharacterType {
           Triangle:   3.5,
           Dog:        4.0,
        }[value] ??    2.0;
+   
+   static double getRadius(int value) => const {
+          Template:   10.0,
+          Zombie:     10.0,
+          Rat:        10.0,
+          Slime:      10.0,
+          Wolf:       10.0,
+          Triangle:   10.0,
+          Dog:        10.0,
+       }[value] ??    10.0;
 
    static bool supportsUpperBody(int characterType) =>
        characterType == Template;

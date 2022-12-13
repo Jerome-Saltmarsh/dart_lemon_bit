@@ -128,7 +128,7 @@ class GameCanvas {
 
     for (var i = 0; i < GameState.totalCharacters; i++) {
       final character = GameState.characters[i];
-      Engine.renderCircle(character.renderX, character.renderY, 8, Colors.yellow);
+      Engine.renderCircle(character.renderX, character.renderY, CharacterType.getRadius(character.characterType), Colors.yellow);
     }
   }
 

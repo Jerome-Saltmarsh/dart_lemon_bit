@@ -41,6 +41,11 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] feature attributes
 [ ] feature skills
 
+[CONTENT]
+[ ] node type stone orientations
+[ ] item type army clothes
+[ ] item type weapon crossbow
+
 [GAMES]
 [ ] game royal
 [ ] game waves
@@ -51,7 +56,9 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] game moba
 
 [BUGS]
-[ ] fix bullets do not collide with enemy
+
+14.12.2022
+[x] fix bullets do not collide with enemy
 
 13.12.2022
 [x] fix render node error when running on right corner of map

@@ -113,8 +113,8 @@ class Collider extends Position3 {
 
   static bool onSameTeam(dynamic a, dynamic b){
     if (a == b) return true;
-    if (a is Collider == false) return false;
-    if (b is Collider == false) return false;
+    if (a is! Collider) return false;
+    if (b is! Collider) return false;
     if (a.team == 0) return false;
     return a.team == b.team;
   }
