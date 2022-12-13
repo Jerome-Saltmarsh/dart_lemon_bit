@@ -50,6 +50,9 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] game 5v5
 [ ] game moba
 
+[BUGS]
+[ ] fix bullets do not collide with enemy
+
 13.12.2022
 [x] fix render node error when running on right corner of map
 [x] fix template perform animation

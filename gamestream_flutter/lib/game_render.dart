@@ -42,24 +42,12 @@ class GameRender {
   static var screenLeft = 0.0;
 
   static var currentNodeZ = 0;
-  static var _currentNodeRow = 0;
+  static var currentNodeRow = 0;
   static var currentNodeColumn = 0;
   static var currentNodeDstX = 0.0;
   static var currentNodeDstY = 0.0;
   static var currentNodeIndex = 0;
   static var currentNodeType = 0;
-
-  static int get currentNodeRow => _currentNodeRow;
-
-  static set currentNodeRow(int value){
-     if (value < 0) {
-       throw Exception('row < 0');
-     }
-     if (value >= GameState.nodesTotalRows) {
-       throw Exception('row >= GameState.nodesTotalRows');
-     }
-     _currentNodeRow = value;
-  }
 
   static var indexShow = 0;
   static var indexRow = 0;
@@ -139,10 +127,10 @@ class GameRender {
     if (offscreen <= 0) return;
 
     if (currentNodeColumn - offscreen < 0){
-      throw Exception("currentNodeColumn < 0");
+      nodesSetStart();
+      return;
     }
     if (currentNodeRow + offscreen >= GameState.nodesTotalRows){
-      // throw Exception("currentNodeRow >= GameState.nodesTotalRows");
       nodesSetStart();
       return;
     }
