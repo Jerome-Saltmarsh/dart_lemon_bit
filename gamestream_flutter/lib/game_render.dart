@@ -137,6 +137,10 @@ class GameRender {
   static void nodesSetStart(){
     nodesStartRow = currentNodeRow;
     nodeStartColumn = currentNodeColumn;
+    assert (nodesStartRow >= 0);
+    assert (nodeStartColumn >= 0);
+    assert (nodesStartRow < GameState.nodesTotalRows);
+    assert (nodeStartColumn < GameState.nodesTotalColumns);
   }
 
   static void nodesShiftIndexDown(){
