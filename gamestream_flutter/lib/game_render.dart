@@ -784,7 +784,7 @@ class GameRender {
       if (currentNodeType != NodeType.Empty){
         renderNodeAt();
       }
-      if (currentNodeRow + 1 >= nodesRowsMax) return;
+      if (currentNodeRow + 1 > nodesRowsMax) return;
       currentNodeRow++;
       currentNodeColumn--;
       currentNodeIndex += nodesGridTotalColumnsMinusOne;

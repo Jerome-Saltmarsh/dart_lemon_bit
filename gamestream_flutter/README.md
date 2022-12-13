@@ -50,11 +50,11 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] game 5v5
 [ ] game moba
 
-[BUGS]
-[ ] fix render node error when running on right corner of map 
+13.12.2022
+[x] fix render node error when running on right corner of map
+[x] fix template perform animation
 
 12.12.2022
-[x] fix template perform animation
 [x] particle myst
 
 11.12.2022
