@@ -1830,30 +1830,36 @@ abstract class Game {
   }
 
   void updateAITarget(AI ai){
+    assert (ai.alive);
     var target = ai.target;
+
     final targetSet = target != null;
-    if (target != null && !ai.withinChaseRange(target)) {
-      ai.target = null;
-      ai.clearDest();
+
+    if (targetSet && !ai.withinChaseRange(target)) {
+      clearCharacterTarget(ai);
     }
 
-    var targetDistance = 9999999.0;
+    var targetDistanceX = 9999.0;
+    var targetDistanceY = 9999.0;
 
     for (final other in characters) {
       if (!other.alive) continue;
       if (Collider.onSameTeam(other, ai)) continue;
-      if (!ai.withinViewRange(other)) continue;
-      final npcDistance = ai.getDistance(other);
-      if (npcDistance >= targetDistance) continue;
-      setNpcTarget(ai, other);
-      targetDistance = npcDistance;
+      final npcDistanceX = (ai.x - other.x).abs();
+      if (targetDistanceX < npcDistanceX) continue;
+      if (npcDistanceX > ai.viewRange) continue;
+      final npcDistanceY = (ai.y - other.y).abs();
+      if (targetDistanceY < npcDistanceY) continue;
+      if (npcDistanceY > ai.viewRange) continue;
+      targetDistanceX = npcDistanceX;
+      targetDistanceY = npcDistanceY;
+      ai.target = other;
     }
     target = ai.target;
     if (target == null) return;
-    if (targetDistance < 100) return;
-    npcSetPathTo(ai, target);
     if (!targetSet){
       dispatchGameEventAITargetAcquired(ai);
+      npcSetPathTo(ai, target);
     }
   }
 
@@ -1868,14 +1874,6 @@ abstract class Game {
       );
       player.writeByte(ai.characterType);
     }
-  }
-
-  void setNpcTarget(AI ai, Position3 value) {
-    if (value is Collider) {
-      assert(!Collider.onSameTeam(ai, value));
-    }
-    assert(ai.alive);
-    ai.target = value;
   }
 
   void removeDisconnectedPlayers() {

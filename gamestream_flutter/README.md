@@ -56,6 +56,7 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] game moba
 
 [BUGS]
+[ ] fix ai spot player through walls
 
 14.12.2022
 [x] Running backwards causes legs to disappear
