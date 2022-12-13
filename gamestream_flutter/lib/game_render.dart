@@ -780,9 +780,21 @@ class GameRender {
       currentNodeRow = nodesStartRow;
       currentNodeColumn = nodeStartColumn;
     }
+
+    currentNodeIndex = (currentNodeZ * GameState.nodesArea) + (currentNodeRow * GameState.nodesTotalColumns) + currentNodeColumn;
+
+    assert (currentNodeZ >= 0);
+    assert (currentNodeRow >= 0);
+    assert (currentNodeColumn >= 0);
+    assert (currentNodeIndex >= 0);
+    assert (currentNodeZ < GameState.nodesTotalZ);
+    assert (currentNodeRow < GameState.nodesTotalRows);
+    assert (currentNodeColumn < GameState.nodesTotalColumns);
+    assert (currentNodeIndex < GameNodes.nodesTotal);
+
+
     currentNodeDstX = (currentNodeRow - currentNodeColumn) * Node_Size_Half;
     currentNodeDstY = ((currentNodeRow + currentNodeColumn) * Node_Size_Half) - (currentNodeZ * Node_Height);
-    currentNodeIndex = (currentNodeZ * GameState.nodesArea) + (currentNodeRow * GameState.nodesTotalColumns) + currentNodeColumn;
     currentNodeType = GameNodes.nodesType[currentNodeIndex];
     renderOrderGrid.order = ((currentNodeRow + currentNodeColumn) * Node_Size) + Node_Size_Half;
     renderOrderGrid.orderZ = currentNodeZ;
