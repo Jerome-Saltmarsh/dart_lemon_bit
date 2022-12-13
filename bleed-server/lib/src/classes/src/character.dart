@@ -236,9 +236,9 @@ abstract class Character extends Collider {
 
   bool withinAttackRange(Position3 target){
     if (target is Collider){
-      return withinRadius(target, weaponTypeRange + (target.radius * 0.5));
+      return withinRadiusCheap(target, weaponTypeRange + target.radius);
     }
-    return withinRadius(target, weaponTypeRange);
+    return withinRadiusCheap(target, weaponTypeRange);
   }
 
   void face(Position position) {

@@ -97,13 +97,9 @@ class AI extends Character {
     wanderPause = randomInt(300, 500);
   }
 
-  bool withinViewRange(Position3 target) {
-    return withinRadius(target, viewRange);
-  }
-
-  bool withinChaseRange(Position3 target) {
-    return withinRadius(target, chaseRange);
-  }
+  bool withinChaseRange(Position3 target) =>
+    ((x - target.x).abs() < chaseRange) ||
+    ((y - target.y).abs() < chaseRange) ;
 
   void shuffleAIMode(){
     aiMode = randomInt(0, 5);
