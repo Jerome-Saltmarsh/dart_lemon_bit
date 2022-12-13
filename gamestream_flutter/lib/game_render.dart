@@ -42,12 +42,24 @@ class GameRender {
   static var screenLeft = 0.0;
 
   static var currentNodeZ = 0;
-  static var currentNodeRow = 0;
+  static var _currentNodeRow = 0;
   static var currentNodeColumn = 0;
   static var currentNodeDstX = 0.0;
   static var currentNodeDstY = 0.0;
   static var currentNodeIndex = 0;
   static var currentNodeType = 0;
+
+  static int get currentNodeRow => _currentNodeRow;
+
+  static set currentNodeRow(int value){
+     if (value < 0) {
+       throw Exception('row < 0');
+     }
+     if (value >= GameState.nodesTotalRows) {
+       throw Exception('row >= GameState.nodesTotalRows');
+     }
+     _currentNodeRow = value;
+  }
 
   static var indexShow = 0;
   static var indexRow = 0;
@@ -125,9 +137,20 @@ class GameRender {
   static void nodesTrimLeft(){
     final offscreen = countLeftOffscreen;
     if (offscreen <= 0) return;
+
+    if (currentNodeColumn - offscreen < 0){
+      throw Exception("currentNodeColumn < 0");
+    }
+    if (currentNodeRow + offscreen >= GameState.nodesTotalRows){
+      // throw Exception("currentNodeRow >= GameState.nodesTotalRows");
+      nodesSetStart();
+      return;
+    }
+
     currentNodeColumn -= offscreen;
     currentNodeRow += offscreen;
-    while (currentNodeRenderX < screenLeft){
+
+    while (currentNodeRenderX < screenLeft && currentNodeColumn > 0 && currentNodeRow < GameState.nodesTotalRows){
       currentNodeRow++;
       currentNodeColumn--;
     }
@@ -135,8 +158,10 @@ class GameRender {
   }
 
   static void nodesSetStart(){
-    nodesStartRow = currentNodeRow;
-    nodeStartColumn = currentNodeColumn;
+    // nodesStartRow = min(currentNodeRow, GameState.nodesTotalRows);
+    nodesStartRow = clamp(currentNodeRow, 0, GameState.nodesTotalRows - 1);
+    nodeStartColumn = clamp(currentNodeColumn, 0, GameState.nodesTotalColumns - 1);
+
     assert (nodesStartRow >= 0);
     assert (nodeStartColumn >= 0);
     assert (nodesStartRow < GameState.nodesTotalRows);
@@ -144,18 +169,21 @@ class GameRender {
   }
 
   static void nodesShiftIndexDown(){
+
     currentNodeColumn = currentNodeRow + currentNodeColumn + 1;
     currentNodeRow = 0;
     if (currentNodeColumn < GameState.nodesTotalColumns) {
-      return nodesSetStart();
+      nodesSetStart();
+      return;
     }
-    currentNodeRow = currentNodeColumn - nodesGridTotalColumnsMinusOne;
-    currentNodeColumn = nodesGridTotalColumnsMinusOne;
 
-    if (currentNodeRow >= GameState.nodesTotalRows){
+    if (currentNodeColumn - nodesGridTotalColumnsMinusOne >= GameState.nodesTotalRows){
       renderOrderGrid.remaining = false;
       return;
     }
+
+    currentNodeRow = currentNodeColumn - nodesGridTotalColumnsMinusOne;
+    currentNodeColumn = nodesGridTotalColumnsMinusOne;
     currentNodeDstY = ((currentNodeRow + currentNodeColumn) * Node_Size_Half) - (currentNodeZ * Node_Height);
     nodesSetStart();
   }
@@ -756,6 +784,7 @@ class GameRender {
       if (currentNodeType != NodeType.Empty){
         renderNodeAt();
       }
+      if (currentNodeRow + 1 >= nodesRowsMax) return;
       currentNodeRow++;
       currentNodeColumn--;
       currentNodeIndex += nodesGridTotalColumnsMinusOne;
@@ -771,6 +800,12 @@ class GameRender {
       if (!renderOrderGrid.remaining) return;
       nodesCalculateMinMaxZ();
       if (!renderOrderGrid.remaining) return;
+
+      assert (currentNodeColumn >= 0);
+      assert (currentNodeRow >= 0);
+      assert (currentNodeRow < GameState.nodesTotalRows);
+      assert (currentNodeColumn < GameState.nodesTotalColumns);
+
       nodesTrimLeft();
 
       while (currentNodeRenderY > screenBottom) {
@@ -781,12 +816,17 @@ class GameRender {
         }
       }
     } else {
+      assert (nodesStartRow < GameState.nodesTotalRows);
+      assert (currentNodeColumn < GameState.nodesTotalColumns);
       currentNodeRow = nodesStartRow;
       currentNodeColumn = nodeStartColumn;
     }
 
-    currentNodeIndex = (currentNodeZ * GameState.nodesArea) + (currentNodeRow * GameState.nodesTotalColumns) + currentNodeColumn;
+    // currentNodeZ = clamp(currentNodeZ, 0, GameState.nodesTotalZ - 1);
+    // currentNodeRow = clamp(currentNodeRow, 0, GameState.nodesTotalRows - 1);
+    // currentNodeColumn = clamp(currentNodeColumn, 0, GameState.nodesTotalColumns - 1);
 
+    currentNodeIndex = (currentNodeZ * GameState.nodesArea) + (currentNodeRow * GameState.nodesTotalColumns) + currentNodeColumn;
     assert (currentNodeZ >= 0);
     assert (currentNodeRow >= 0);
     assert (currentNodeColumn >= 0);
@@ -795,8 +835,6 @@ class GameRender {
     assert (currentNodeRow < GameState.nodesTotalRows);
     assert (currentNodeColumn < GameState.nodesTotalColumns);
     assert (currentNodeIndex < GameNodes.nodesTotal);
-
-
     currentNodeDstX = (currentNodeRow - currentNodeColumn) * Node_Size_Half;
     currentNodeDstY = ((currentNodeRow + currentNodeColumn) * Node_Size_Half) - (currentNodeZ * Node_Height);
     currentNodeType = GameNodes.nodesType[currentNodeIndex];
