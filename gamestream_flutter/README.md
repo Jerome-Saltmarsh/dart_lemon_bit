@@ -58,6 +58,7 @@ navigate to next method: ctrl + shift + up / down arrows
 [BUGS]
 
 14.12.2022
+[x] Running backwards causes legs to disappear
 [x] fig bug volume greater than one error
 [x] fix bullets do not collide with enemy
 

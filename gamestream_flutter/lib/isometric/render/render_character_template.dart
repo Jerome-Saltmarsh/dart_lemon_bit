@@ -56,11 +56,7 @@ void renderCharacterTemplate(Character character, {
 
   final diff = Direction.getDifference(character.renderDirection, character.aimDirection).abs();
   final runningBackwards = diff >= 3 && character.running;
-  var renderDirectionOpposite = (character.renderDirection + 4);
-
-  if (renderDirectionOpposite > 8){
-    renderDirectionOpposite -= 8;
-  }
+  var renderDirectionOpposite = (character.renderDirection + 4) % 8;
 
   final upperBodyDirection = runningBackwards ? renderDirectionOpposite : character.renderDirection;
   final weaponInFront = upperBodyDirection >= 2 && upperBodyDirection < 6;
