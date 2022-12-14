@@ -9,13 +9,13 @@ void renderNodePlain() {
         srcY: AtlasNodeY.Plain_Solid,
       );
     case NodeOrientation.Half_North:
-      return RenderNode.renderStandardNodeHalfNorth(
+      return RenderNode.renderStandardNodeHalfNorthOld(
         srcX: AtlasNode.Node_Plain_Half_Row_X,
         srcY: AtlasNode.Node_Plain_Half_Row_Y,
         color: GameRender.currentNodeColor,
       );
     case NodeOrientation.Half_East:
-      return RenderNode.renderStandardNodeHalfEast(
+      return RenderNode.renderStandardNodeHalfEastOld(
         srcX: AtlasNode.Node_Plain_Half_Column_X,
         srcY: AtlasNode.Node_Plain_Half_Column_Y,
         color: GameRender.currentNodeColor,

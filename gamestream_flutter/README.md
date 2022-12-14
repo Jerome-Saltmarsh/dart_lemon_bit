@@ -42,7 +42,6 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] feature skills
 
 [CONTENT]
-[ ] node type stone orientations
 [ ] item type army clothes
 [ ] item type weapon crossbow
 
@@ -57,11 +56,13 @@ navigate to next method: ctrl + shift + up / down arrows
 
 [BUGS]
 [ ] fix ai spot player through walls
+[ ] fix render stone half
 
 15.12.2022
 [x] fix node transparency for shaded nodes
 
 14.12.2022
+[x] node type stone orientations
 [x] ai fire weapons
 [x] practice mode enemy player cursor incorrect
 [x] fix players always visible

@@ -92,12 +92,12 @@ class RenderNode {
           srcY: GameConstants.Sprite_Height * GameRender.currentNodeShade,
         );
       case NodeOrientation.Half_North:
-        return renderStandardNodeHalfNorth(
+        return renderStandardNodeHalfNorthOld(
           srcX: AtlasNodeX.Brick_Half_South,
           srcY: GameConstants.Sprite_Height * GameRender.currentNodeShade,
         );
       case NodeOrientation.Half_East:
-        return renderStandardNodeHalfEast(
+        return renderStandardNodeHalfEastOld(
           srcX: AtlasNodeX.Brick_Half_West,
           srcY: GameConstants.Sprite_Height * GameRender.currentNodeShade,
         );
@@ -145,14 +145,14 @@ class RenderNode {
         );
         break;
       case NodeOrientation.Half_North:
-        renderStandardNodeHalfNorth(
+        renderStandardNodeHalfNorthOld(
           srcX: AtlasNodeX.Bau_Haus_Half,
           srcY: AtlasNodeY.Bau_Haus_Half_South,
           color: renderNodeColor,
         );
         break;
       case NodeOrientation.Half_East:
-        renderStandardNodeHalfEast(
+        renderStandardNodeHalfEastOld(
           srcX: AtlasNodeX.Bau_Haus_Half,
           srcY: AtlasNodeY.Bau_Haus_Half_West,
           color: renderNodeColor,
@@ -281,7 +281,7 @@ class RenderNode {
     Engine.incrementBufferIndex();
   }
 
-  static void renderStandardNodeHalfEast({
+  static void renderStandardNodeHalfEastOld({
     required double srcX,
     required double srcY,
     int color = 1,
@@ -300,7 +300,7 @@ class RenderNode {
     );
   }
 
-  static void renderStandardNodeHalfNorth({
+  static void renderStandardNodeHalfNorthOld({
     required double srcX,
     required double srcY,
     int color = 1,
@@ -318,4 +318,83 @@ class RenderNode {
       color: color,
     );
   }
+
+  /// HALF
+
+  static void renderStandardNodeHalfEast({
+    required double srcX,
+    required double srcY,
+    int color = 1,
+  }){
+    GameRender.onscreenNodes++;
+    Engine.renderSprite(
+      image: atlas,
+      srcX: srcX,
+      srcY: srcY,
+      srcWidth: GameConstants.Sprite_Width,
+      srcHeight: GameConstants.Sprite_Height,
+      dstX: GameRender.currentNodeDstX + 8,
+      dstY: GameRender.currentNodeDstY - 8,
+      anchorY: GameConstants.Sprite_Anchor_Y,
+      color: color,
+    );
+  }
+
+  static void renderStandardNodeHalfWest({
+    required double srcX,
+    required double srcY,
+    int color = 1,
+  }){
+    GameRender.onscreenNodes++;
+    Engine.renderSprite(
+      image: atlas,
+      srcX: srcX,
+      srcY: srcY,
+      srcWidth: GameConstants.Sprite_Width,
+      srcHeight: GameConstants.Sprite_Height,
+      dstX: GameRender.currentNodeDstX - 8,
+      dstY: GameRender.currentNodeDstY + 8,
+      anchorY: GameConstants.Sprite_Anchor_Y,
+      color: color,
+    );
+  }
+
+  static void renderStandardNodeHalfNorth({
+    required double srcX,
+    required double srcY,
+    int color = 1,
+  }){
+    GameRender.onscreenNodes++;
+    Engine.renderSprite(
+      image: atlas,
+      srcX: srcX,
+      srcY: srcY,
+      srcWidth: GameConstants.Sprite_Width,
+      srcHeight: GameConstants.Sprite_Height,
+      dstX: GameRender.currentNodeDstX - 8,
+      dstY: GameRender.currentNodeDstY - 8,
+      anchorY: GameConstants.Sprite_Anchor_Y,
+      color: color,
+    );
+  }
+
+  static void renderStandardNodeHalfSouth({
+    required double srcX,
+    required double srcY,
+    int color = 1,
+  }){
+    GameRender.onscreenNodes++;
+    Engine.renderSprite(
+      image: atlas,
+      srcX: srcX,
+      srcY: srcY,
+      srcWidth: GameConstants.Sprite_Width,
+      srcHeight: GameConstants.Sprite_Height,
+      dstX: GameRender.currentNodeDstX + 8,
+      dstY: GameRender.currentNodeDstY + 8,
+      anchorY: GameConstants.Sprite_Anchor_Y,
+      color: color,
+    );
+  }
+
 }

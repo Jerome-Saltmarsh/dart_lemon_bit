@@ -97,146 +97,7 @@ void renderNodeAt() {
       );
       return;
     case NodeType.Stone:
-      const atlasX = 1937.0;
-
-      switch (GameRender.currentNodeOrientation){
-        case NodeOrientation.Solid:
-          RenderNode.renderStandardNodeShaded(
-            srcX: atlasX,
-            srcY: GameConstants.Sprite_Height_Padded_00,
-          );
-          return;
-        case NodeOrientation.Half_North:
-          RenderNode.renderStandardNodeShaded(
-            srcX: atlasX,
-            srcY: GameConstants.Sprite_Height_Padded_01,
-          );
-          return;
-        case NodeOrientation.Half_South:
-          RenderNode.renderStandardNodeShaded(
-            srcX: atlasX,
-            srcY: GameConstants.Sprite_Height_Padded_01,
-          );
-          return;
-        case NodeOrientation.Half_East:
-          RenderNode.renderStandardNodeShaded(
-            srcX: atlasX,
-            srcY: GameConstants.Sprite_Height_Padded_02,
-          );
-          return;
-        case NodeOrientation.Half_West:
-          RenderNode.renderStandardNodeShaded(
-            srcX: atlasX,
-            srcY: GameConstants.Sprite_Height_Padded_02,
-          );
-          return;
-        case NodeOrientation.Corner_Top:
-          RenderNode.renderStandardNodeShaded(
-            srcX: atlasX,
-            srcY: GameConstants.Sprite_Height_Padded_03,
-          );
-          return;
-        case NodeOrientation.Corner_Right:
-          RenderNode.renderStandardNodeShaded(
-            srcX: atlasX,
-            srcY: GameConstants.Sprite_Height_Padded_04,
-          );
-          return;
-        case NodeOrientation.Corner_Bottom:
-          RenderNode.renderStandardNodeShaded(
-            srcX: atlasX,
-            srcY: GameConstants.Sprite_Height_Padded_05,
-          );
-          return;
-        case NodeOrientation.Corner_Left:
-          RenderNode.renderStandardNodeShaded(
-            srcX: atlasX,
-            srcY: GameConstants.Sprite_Height_Padded_06,
-          );
-          return;
-        case NodeOrientation.Slope_North:
-          RenderNode.renderStandardNodeShaded(
-            srcX: atlasX,
-            srcY: GameConstants.Sprite_Height_Padded_07,
-          );
-          return;
-        case NodeOrientation.Slope_East:
-          RenderNode.renderStandardNodeShaded(
-            srcX: atlasX,
-            srcY: GameConstants.Sprite_Height_Padded_08,
-          );
-          return;
-        case NodeOrientation.Slope_South:
-          RenderNode.renderStandardNodeShaded(
-            srcX: atlasX,
-            srcY: GameConstants.Sprite_Height_Padded_09,
-          );
-          return;
-        case NodeOrientation.Slope_West:
-          RenderNode.renderStandardNodeShaded(
-            srcX: atlasX,
-            srcY: GameConstants.Sprite_Height_Padded_10,
-          );
-          return;
-        case NodeOrientation.Slope_Outer_South_West:
-          RenderNode.renderStandardNodeShaded(
-            srcX: atlasX,
-            srcY: GameConstants.Sprite_Height_Padded_11,
-          );
-          return;
-        case NodeOrientation.Slope_Outer_North_West:
-          RenderNode.renderStandardNodeShaded(
-            srcX: atlasX,
-            srcY: GameConstants.Sprite_Height_Padded_12,
-          );
-          return;
-        case NodeOrientation.Slope_Outer_North_East:
-          RenderNode.renderStandardNodeShaded(
-            srcX: atlasX,
-            srcY: GameConstants.Sprite_Height_Padded_13,
-          );
-          return;
-        case NodeOrientation.Slope_Outer_South_East:
-          RenderNode.renderStandardNodeShaded(
-            srcX: atlasX,
-            srcY: GameConstants.Sprite_Height_Padded_14,
-          );
-          return;
-        case NodeOrientation.Slope_Inner_South_East:
-          RenderNode.renderStandardNodeShaded(
-            srcX: atlasX,
-            srcY: GameConstants.Sprite_Height_Padded_15,
-          );
-          return;
-        case NodeOrientation.Slope_Inner_North_East :
-          RenderNode.renderStandardNodeShaded(
-            srcX: atlasX,
-            srcY: GameConstants.Sprite_Height_Padded_16,
-          );
-          return;
-        case NodeOrientation.Slope_Inner_North_West:
-          RenderNode.renderStandardNodeShaded(
-            srcX: atlasX,
-            srcY: GameConstants.Sprite_Height_Padded_17,
-          );
-          return;
-        case NodeOrientation.Slope_Inner_South_West:
-          RenderNode.renderStandardNodeShaded(
-            srcX: atlasX,
-            srcY: GameConstants.Sprite_Height_Padded_18,
-          );
-          return;
-        case NodeOrientation.Radial:
-          RenderNode.renderStandardNodeShaded(
-            srcX: atlasX,
-            srcY: GameConstants.Sprite_Height_Padded_19,
-          );
-          return;
-      }
-      RenderNode.renderStandardNodeShaded(
-          srcX: AtlasNodeX.Stone,
-          srcY: AtlasNodeY.Stone,
-      );
+      renderNodeTypeStone();
       return;
     case NodeType.Plain:
       renderNodePlain();
@@ -333,6 +194,149 @@ void renderNodeAt() {
     default:
       throw Exception('renderNode(index: ${GameRender.currentNodeIndex}, type: ${NodeType.getName(GameRender.currentNodeType)}, orientation: ${NodeOrientation.getName(GameNodes.nodesOrientation[GameRender.currentNodeIndex])}');
   }
+}
+
+void renderNodeTypeStone() {
+  const atlas_x_stone = 1937.0;
+
+  switch (GameRender.currentNodeOrientation){
+    case NodeOrientation.Solid:
+      RenderNode.renderStandardNodeShaded(
+        srcX: atlas_x_stone,
+        srcY: GameConstants.Sprite_Height_Padded_00,
+      );
+      return;
+    case NodeOrientation.Half_North:
+      RenderNode.renderStandardNodeHalfNorth(
+        srcX: atlas_x_stone,
+        srcY: GameConstants.Sprite_Height_Padded_01,
+      );
+      return;
+    case NodeOrientation.Half_South:
+      RenderNode.renderStandardNodeHalfSouth(
+        srcX: atlas_x_stone,
+        srcY: GameConstants.Sprite_Height_Padded_01,
+      );
+      return;
+    case NodeOrientation.Half_East:
+      RenderNode.renderStandardNodeHalfEast(
+        srcX: atlas_x_stone,
+        srcY: GameConstants.Sprite_Height_Padded_02,
+      );
+      return;
+    case NodeOrientation.Half_West:
+      RenderNode.renderStandardNodeHalfWest(
+        srcX: atlas_x_stone,
+        srcY: GameConstants.Sprite_Height_Padded_02,
+      );
+      return;
+    case NodeOrientation.Corner_Top:
+      RenderNode.renderStandardNodeShaded(
+        srcX: atlas_x_stone,
+        srcY: GameConstants.Sprite_Height_Padded_03,
+      );
+      return;
+    case NodeOrientation.Corner_Right:
+      RenderNode.renderStandardNodeShaded(
+        srcX: atlas_x_stone,
+        srcY: GameConstants.Sprite_Height_Padded_04,
+      );
+      return;
+    case NodeOrientation.Corner_Bottom:
+      RenderNode.renderStandardNodeShaded(
+        srcX: atlas_x_stone,
+        srcY: GameConstants.Sprite_Height_Padded_05,
+      );
+      return;
+    case NodeOrientation.Corner_Left:
+      RenderNode.renderStandardNodeShaded(
+        srcX: atlas_x_stone,
+        srcY: GameConstants.Sprite_Height_Padded_06,
+      );
+      return;
+    case NodeOrientation.Slope_North:
+      RenderNode.renderStandardNodeShaded(
+        srcX: atlas_x_stone,
+        srcY: GameConstants.Sprite_Height_Padded_07,
+      );
+      return;
+    case NodeOrientation.Slope_East:
+      RenderNode.renderStandardNodeShaded(
+        srcX: atlas_x_stone,
+        srcY: GameConstants.Sprite_Height_Padded_08,
+      );
+      return;
+    case NodeOrientation.Slope_South:
+      RenderNode.renderStandardNodeShaded(
+        srcX: atlas_x_stone,
+        srcY: GameConstants.Sprite_Height_Padded_09,
+      );
+      return;
+    case NodeOrientation.Slope_West:
+      RenderNode.renderStandardNodeShaded(
+        srcX: atlas_x_stone,
+        srcY: GameConstants.Sprite_Height_Padded_10,
+      );
+      return;
+    case NodeOrientation.Slope_Outer_South_West:
+      RenderNode.renderStandardNodeShaded(
+        srcX: atlas_x_stone,
+        srcY: GameConstants.Sprite_Height_Padded_11,
+      );
+      return;
+    case NodeOrientation.Slope_Outer_North_West:
+      RenderNode.renderStandardNodeShaded(
+        srcX: atlas_x_stone,
+        srcY: GameConstants.Sprite_Height_Padded_12,
+      );
+      return;
+    case NodeOrientation.Slope_Outer_North_East:
+      RenderNode.renderStandardNodeShaded(
+        srcX: atlas_x_stone,
+        srcY: GameConstants.Sprite_Height_Padded_13,
+      );
+      return;
+    case NodeOrientation.Slope_Outer_South_East:
+      RenderNode.renderStandardNodeShaded(
+        srcX: atlas_x_stone,
+        srcY: GameConstants.Sprite_Height_Padded_14,
+      );
+      return;
+    case NodeOrientation.Slope_Inner_South_East:
+      RenderNode.renderStandardNodeShaded(
+        srcX: atlas_x_stone,
+        srcY: GameConstants.Sprite_Height_Padded_15,
+      );
+      return;
+    case NodeOrientation.Slope_Inner_North_East :
+      RenderNode.renderStandardNodeShaded(
+        srcX: atlas_x_stone,
+        srcY: GameConstants.Sprite_Height_Padded_16,
+      );
+      return;
+    case NodeOrientation.Slope_Inner_North_West:
+      RenderNode.renderStandardNodeShaded(
+        srcX: atlas_x_stone,
+        srcY: GameConstants.Sprite_Height_Padded_17,
+      );
+      return;
+    case NodeOrientation.Slope_Inner_South_West:
+      RenderNode.renderStandardNodeShaded(
+        srcX: atlas_x_stone,
+        srcY: GameConstants.Sprite_Height_Padded_18,
+      );
+      return;
+    case NodeOrientation.Radial:
+      RenderNode.renderStandardNodeShaded(
+        srcX: atlas_x_stone,
+        srcY: GameConstants.Sprite_Height_Padded_19,
+      );
+      return;
+  }
+  RenderNode.renderStandardNodeShaded(
+      srcX: AtlasNodeX.Stone,
+      srcY: AtlasNodeY.Stone,
+  );
 }
 
 void renderNodeTypeGrass() {

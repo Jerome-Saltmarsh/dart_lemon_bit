@@ -10,14 +10,14 @@ void renderNodeWoodenPlank(){
       );
       return;
     case NodeOrientation.Half_North:
-      RenderNode.renderStandardNodeHalfNorth(
+      RenderNode.renderStandardNodeHalfNorthOld(
         srcX: AtlasNode.Node_Wooden_Plank_Half_South_X,
         srcY: AtlasNode.Node_Wooden_Plank_Half_South_Y,
         color: renderNodeColor,
       );
       return;
     case NodeOrientation.Half_East:
-      RenderNode.renderStandardNodeHalfEast(
+      RenderNode.renderStandardNodeHalfEastOld(
         srcX: AtlasNode.Node_Wooden_Plank_Half_West_X,
         srcY: AtlasNode.Node_Wooden_Plank_Half_West_Y,
         color: renderNodeColor,

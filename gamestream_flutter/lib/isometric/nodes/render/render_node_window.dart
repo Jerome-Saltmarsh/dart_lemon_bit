@@ -5,14 +5,14 @@ import 'package:gamestream_flutter/library.dart';
 void renderNodeWindow(){
   switch (renderNodeOrientation) {
     case NodeOrientation.Half_North:
-      RenderNode.renderStandardNodeHalfNorth(
+      RenderNode.renderStandardNodeHalfNorthOld(
         srcX: AtlasNode.Window_South_X,
         srcY: AtlasNode.Window_South_Y,
         color: renderNodeColor,
       );
       return;
     case NodeOrientation.Half_East:
-      RenderNode.renderStandardNodeHalfEast(
+      RenderNode.renderStandardNodeHalfEastOld(
         srcX: AtlasNode.Node_Window_West_X,
         srcY: AtlasNode.Node_Window_West_Y,
         color: renderNodeColor,
