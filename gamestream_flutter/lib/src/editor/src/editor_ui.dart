@@ -79,6 +79,11 @@ class EditorUI {
                         buildOrientationIcon(
                           NodeOrientation.Slope_Outer_North_East,
                         ),
+                      if (NodeType.supportsOrientationRadial(
+                          selectedNodeType))
+                        buildOrientationIcon(
+                          NodeOrientation.Radial,
+                        ),
                     ],
                   )),
               Row(
@@ -657,9 +662,6 @@ class EditorUI {
       ),
     );
   }
-
-  static Widget buildColumnNodeOrientationSolid() =>
-      buildOrientationIcon(NodeOrientation.Solid);
 
   static Widget buildOrientationIcon(int orientation) {
     final canvas = Engine.buildAtlasImage(

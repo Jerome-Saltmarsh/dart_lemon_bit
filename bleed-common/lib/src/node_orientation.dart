@@ -79,6 +79,9 @@ class NodeOrientation {
 
    static bool isSolid(int value) =>
        value == Solid;
+   
+   static bool isRadial(int value) =>
+       value == Radial;
 
    static bool isHalf(int value) =>
        value == Half_North ||

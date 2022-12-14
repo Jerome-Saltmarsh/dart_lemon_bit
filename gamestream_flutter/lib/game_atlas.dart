@@ -218,6 +218,7 @@ class AtlasNodeX {
   static const Orientation_Slope_Inner = 1067.0;
   static const Orientation_Slope_Outer = 1067.0;
   static const Orientation_Empty = 1018.0;
+  static const Orientation_Radial = 1888.0;
 
   static double mapNodeType(int type) => const {
     NodeType.Brick_2: Brick_Solid,
@@ -273,6 +274,9 @@ class AtlasNodeX {
     }
     if (orientation == NodeOrientation.None){
       return Orientation_Empty;
+    }
+    if (orientation == NodeOrientation.Radial){
+      return Orientation_Radial;
     }
     throw Exception('AtlasNodeX.mapOrientation(${NodeOrientation.getName(orientation)}');
   }
@@ -410,6 +414,8 @@ class AtlasNodeY {
       return Orientation_Slope_Inner_South_West;
     if (orientation == NodeOrientation.None)
       return Orientation_Empty;
+    if (orientation == NodeOrientation.Radial)
+      return GameConstants.Sprite_Height_Padded_19;
     throw Exception('AtlasNodeY.mapOrientation(${NodeOrientation.getName(orientation)}');
   }
 }
