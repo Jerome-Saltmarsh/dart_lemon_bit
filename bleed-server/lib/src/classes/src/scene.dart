@@ -2,6 +2,8 @@ import 'dart:typed_data';
 
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/lang_utils.dart';
+import 'package:lemon_math/functions/angle_between.dart';
+import 'package:lemon_math/library.dart';
 
 late AI pathFindAI;
 var pathFindSearchID = 0;
@@ -193,4 +195,17 @@ class Scene {
 
   void detectSpawnPoints() =>
       spawnPoints = copyUInt16List(findNodesOfType(NodeType.Spawn));
+
+  bool raycastCollisionXY(double x1, double y1, double x2, double y2, double z) {
+    final distance = getDistanceXY(x1, y1, x2, y2);
+    final jumps = distance ~/ Node_Size_Half;
+    if (jumps <= 0) return false;
+    final angle = getAngleBetween(x1, y1, x2, y2);
+    for (var i = 0; i < jumps; i++) {
+      final x = x1 + getAdjacent(angle, i * Node_Size_Half);
+      final y = y1 + getOpposite(angle, i * Node_Size_Half);
+      if (getCollisionAt(x, y, z)) return true;
+    }
+    return false;
+  }
 }

@@ -1851,6 +1851,8 @@ abstract class Game {
       final npcDistanceY = (ai.y - other.y).abs();
       if (targetDistanceY < npcDistanceY) continue;
       if (npcDistanceY > ai.viewRange) continue;
+      // if (sceneRaycastBetween(ai, other)) continue;
+
       targetDistanceX = npcDistanceX;
       targetDistanceY = npcDistanceY;
       ai.target = other;
@@ -2248,5 +2250,26 @@ abstract class Game {
       player.writeByte(byte);
     }
   }
+
+  bool sceneRaycastBetween(Collider a, Collider b){
+    final distance = getDistanceBetweenV3(a, b);
+    if (distance < Node_Size_Half) return false;
+    final distanceX = (a.x - b.x).abs();
+    final distanceY = (a.y - b.y).abs();
+      final normalX = distanceX / distance;
+      final normalY = distanceY / distance;
+      final jumpX = normalX * Node_Size_Half;
+      final jumpY = normalY * Node_Size_Half;
+      final totalJumps = distance ~/ Node_Size_Half;
+      var x = a.x;
+      var y = a.y;
+      var z = a.z + Character_Gun_Height;
+      for (var i = 0; i < totalJumps; i++) {
+        x += jumpX;
+        y += jumpY;
+        if (scene.getCollisionAt(x, y, z)) return true;
+      }
+      return false;
+    }
 }
 
