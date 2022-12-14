@@ -9,7 +9,7 @@ import 'dart:math';
 class RenderCharacter {
 
   static void renderCharacter(Character character){
-    if (!GameQueries.isVisibleV3(character)) return;
+    if (!GameQueries.isVisibleXYZ(character.x, character.y, character.z - Node_Size_Half)) return;
 
     if (character.spawning) {
       if (character.characterType == CharacterType.Rat){
