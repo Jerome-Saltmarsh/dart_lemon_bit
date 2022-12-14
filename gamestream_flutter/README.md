@@ -58,6 +58,7 @@ navigate to next method: ctrl + shift + up / down arrows
 [BUGS]
 [ ] fix ai spot player through walls
 [ ] ai fire weapon handgun
+[ ] fix players always visible
 
 14.12.2022
 [x] Running backwards causes legs to disappear

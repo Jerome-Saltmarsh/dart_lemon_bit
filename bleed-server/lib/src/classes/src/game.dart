@@ -140,7 +140,9 @@ abstract class Game {
 
     if (cursorAction == CursorAction.Set_Target) {
       if (direction != Direction.None) {
-        characterUseWeapon(player);
+        if (player.weaponStateBusy){
+          characterUseWeapon(player);
+        }
       } else {
         final aimTarget = player.aimTarget;
         if (aimTarget == null){
@@ -1174,7 +1176,9 @@ abstract class Game {
       if (player.targetIsEnemy) {
         player.lookAt(target);
         if (player.withinAttackRange(target)) {
-          characterUseWeapon(player);
+          if (!player.weaponStateBusy) {
+            characterUseWeapon(player);
+          }
           clearCharacterTarget(player);
           return;
         }
