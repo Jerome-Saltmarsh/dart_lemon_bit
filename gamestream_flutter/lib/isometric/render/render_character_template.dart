@@ -150,6 +150,8 @@ void renderCharacterTemplate(Character character, {
     for (var row = 0; row < 3; row++){
       for (var column = 0; column < 3; column++){
         final searchIndex = initialSearchIndex + (row * GameState.nodesTotalColumns) + column;
+        if (searchIndex < 0) break;
+        if (searchIndex >= GameNodes.nodesTotal) break;
         if (GameNodes.nodesType[searchIndex] != NodeType.Torch) continue;
         torchIndex = searchIndex;
         break;
