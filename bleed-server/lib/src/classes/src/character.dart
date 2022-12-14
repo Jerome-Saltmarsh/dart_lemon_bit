@@ -265,6 +265,7 @@ abstract class Character extends Collider {
   }
 
   bool withinAttackRange(Position3 target){
+    if ((target.z - z).abs() > Character_Height) return false;
     if (target is Collider){
       return withinRadiusCheap(target, weaponTypeRange + target.radius);
     }

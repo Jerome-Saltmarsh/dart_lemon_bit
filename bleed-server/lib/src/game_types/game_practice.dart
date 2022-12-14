@@ -40,6 +40,7 @@ class GamePractice extends Game {
     player.inventoryAdd(itemType: ItemType.Resource_Round_Rifle, itemQuantity: 100);
     player.inventoryAdd(itemType: ItemType.Resource_Round_Shotgun, itemQuantity: 100);
     player.inventoryAdd(itemType: ItemType.Resource_Round_50cal, itemQuantity: 100);
+    player.inventoryAdd(itemType: ItemType.Resource_Rocket, itemQuantity: 100);
     player.inventoryAddMax(itemType: ItemType.Trinket_Ring_of_Damage);
     player.inventoryAddMax(itemType: ItemType.Trinket_Ring_of_Health);
     player.inventoryAddMax(itemType: ItemType.Weapon_Melee_Sword);
