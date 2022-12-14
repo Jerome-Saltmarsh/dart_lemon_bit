@@ -1,12 +1,15 @@
 import 'dart:math';
 
-import 'package:bleed_server/src/maths/get_distance_between_v3.dart';
 import 'package:lemon_math/library.dart';
 
 import 'package:bleed_server/gamestream.dart';
 
 abstract class Character extends Collider {
   /// VARIABLES
+
+  /// between 0 and 1
+  /// 0 means very accurate and 1 is very inaccurate
+  var _accuracy = 0.0;
   var _faceAngle = 0.0;
   var _health = 1;
   var _maxHealth = 1;
@@ -52,6 +55,7 @@ abstract class Character extends Collider {
   }
 
   /// PROPERTIES
+  double get accuracy => _accuracy;
   bool get characterTypeZombie => characterType == CharacterType.Zombie;
   bool get characterTypeTemplate => characterType == CharacterType.Template;
   bool get dead => state == CharacterState.Dead;
@@ -113,6 +117,10 @@ abstract class Character extends Collider {
   int get equippedAttackDuration => 25;
 
   /// SETTERS
+
+  set accuracy(double value) {
+    _accuracy = clamp01(value);
+  }
 
   set maxHealth(int value){
     if (_maxHealth == value) return;
@@ -289,4 +297,17 @@ abstract class Character extends Collider {
 
   void setCharacterStateRunning()=>
       setCharacterState(value: CharacterState.Running, duration: 0);
+
+  void updateAccuracy() {
+    final change = 0.01;
+    final targetAccuracy = running ? 0.5 : 0;
+    final difference = accuracy - targetAccuracy;
+    if (difference.abs() < change) return;
+    if (difference > 0) {
+      accuracy -= change;
+    } else {
+      accuracy += change;
+    }
+  }
+
 }

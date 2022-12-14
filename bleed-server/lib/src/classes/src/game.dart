@@ -307,9 +307,7 @@ abstract class Game {
 
     if (ItemType.isTypeWeaponFirearm(character.weaponType)){
       characterFireWeapon(character);
-      if (character is Player){
-        character.accuracy += 0.25;
-      }
+      character.accuracy += ItemType.getAccuracy(character.weaponType);
       return;
     }
 
@@ -546,7 +544,7 @@ abstract class Game {
 
     spawnProjectile(
       src: character,
-      accuracy: character is Player ? character.accuracy : 0,
+      accuracy: character.accuracy,
       angle: angle,
       range: character.weaponTypeRange,
       projectileType: ProjectileType.Bullet,
@@ -1122,8 +1120,6 @@ abstract class Game {
 
     if (player.deadOrDying) return;
 
-    player.updateAccuracy();
-
     if (player.idling && !player.weaponStateBusy){
       final diff = Direction.getDifference(player.lookDirection, player.faceDirection);
       if (diff >= 2){
@@ -1394,6 +1390,8 @@ abstract class Game {
     if (character is! Player){
       character.lookRadian = character.faceAngle;
     }
+
+    character.updateAccuracy();
 
     if (character.weaponStateDuration > 0) {
       character.weaponStateDuration--;

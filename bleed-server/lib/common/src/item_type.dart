@@ -375,6 +375,10 @@ class ItemType {
       Weapon_Special_Minigun: 7,
   }[value] ?? 0;
 
+  static double getAccuracy(int value) => const <int, double> {
+     ItemType.Weapon_Rifle_M4: 0.125,
+  }[value] ?? 0.25;
+
   static double getRange(int value) => const <int, double> {
       Empty: 30,
       Weapon_Thrown_Grenade: 300,

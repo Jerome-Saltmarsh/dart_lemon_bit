@@ -59,9 +59,6 @@ class Player extends Character with ByteWriter {
 
   var _baseMaxHealth = 10;
   var _baseDamage = 0;
-  /// a value between 0 and 1
-  /// 0 means very accurate and 1 is very inaccurate
-  var _accuracy = 0.0;
   /// Warning - do not reference
   Game game;
   Collider? _aimTarget; // the currently highlighted character
@@ -117,7 +114,6 @@ class Player extends Character with ByteWriter {
   bool get weaponIsEquipped => _equippedWeaponIndex != -1;
   double get mouseGridX => (mouse.x + mouse.y) + z;
   double get mouseGridY => (mouse.y - mouse.x) + z;
-  double get accuracy => _accuracy;
   int get interactMode => _interactMode;
   /// in radians
   double get mouseAngle => getAngleBetween(mouseGridX, mouseGridY, x, y);
@@ -139,10 +135,6 @@ class Player extends Character with ByteWriter {
      if (_baseMaxHealth == value) return;
      _baseMaxHealth = value;
      writePlayerBaseMaxHealth();
-  }
-
-  set accuracy(double value) {
-    _accuracy = clamp(value, 0, 1);
   }
 
   set baseDamage(int value){
@@ -1676,21 +1668,6 @@ class Player extends Character with ByteWriter {
         refreshStats();
         break;
     }
-  }
-
-  void updateAccuracy() {
-
-     final change = 0.01;
-     final targetAccuracy = running ? 0.5 : 0;
-     final difference = accuracy - targetAccuracy;
-
-     if (difference.abs() < change) return;
-
-      if (difference > 0) {
-          accuracy -= change;
-      } else {
-          accuracy += change;
-      }
   }
 
   void inventoryClear() {
