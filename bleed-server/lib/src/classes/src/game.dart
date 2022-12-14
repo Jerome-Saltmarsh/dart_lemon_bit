@@ -453,19 +453,19 @@ abstract class Game {
 
     var attackHit = false;
 
-    for (final character in characters) {
-      if (!character.collidable) continue;
-      if (Collider.onSameTeam(character, character)) continue;
-      if (character.distanceFromXYZ(
+    for (final other in characters) {
+      if (!other.collidable) continue;
+      if (Collider.onSameTeam(character, other)) continue;
+      if (other.distanceFromXYZ(
         performX,
         performY,
         performZ,
       ) > attackRadius) continue;
-      applyHit(src: character, target: character);
+      applyHit(src: other, target: other);
       attackHit = true;
-       character.applyForce(
+       other.applyForce(
            force: 7.5,
-           angle: getAngleBetween(character.x, character.y, character.x, character.y),
+           angle: getAngleBetween(other.x, other.y, other.x, other.y),
        );
     }
 
@@ -530,6 +530,7 @@ abstract class Game {
   }
 
   void characterFireWeapon(Character character){
+    assert (!character.weaponStateBusy);
     final angle = (character is Player) ? character.lookRadian : character.faceAngle;
 
     if (character.weaponType == ItemType.Weapon_Ranged_Shotgun){
@@ -1388,6 +1389,10 @@ abstract class Game {
          respawnAI(character);
        }
        return;
+    }
+
+    if (character is! Player){
+      character.lookRadian = character.faceAngle;
     }
 
     if (character.weaponStateDuration > 0) {
