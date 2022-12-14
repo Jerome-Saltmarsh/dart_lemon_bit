@@ -1255,6 +1255,13 @@ class Player extends Character with ByteWriter {
     return TargetCategory.Run;
   }
 
+  bool onScreen(double x, double y){
+    const Max_Distance = 800.0;
+    if ((this.x - x).abs() > Max_Distance) return false;
+    if ((this.y - y).abs() > Max_Distance) return false;
+    return true;
+  }
+
   bool isAllie(Position3 value){
     if (value is! Collider) return false;
     if (value.team == TeamType.Alone) return false;

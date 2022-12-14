@@ -503,6 +503,7 @@ abstract class Game {
 
     attackHit = true;
     for (final player in players) {
+      if (!player.onScreen(performX, performY)) continue;
       player.writeGameEvent(
           type: GameEventType.Node_Struck,
           x: performX,
@@ -524,6 +525,7 @@ abstract class Game {
 
     if (!attackHit){
       for (final player in players) {
+        if (!player.onScreen(performX, performY)) continue;
         player.writeGameEvent(
           type: GameEventType.Attack_Missed,
           x: performX,
@@ -1841,6 +1843,7 @@ abstract class Game {
 
   void dispatchAttackPerformed(int attackType, double x, double y, double z, double angle){
     for (final player in players) {
+      if (!player.onScreen(x, y)) continue;
       player.writeGameEvent(
         type: GameEventType.Attack_Performed,
         x: x,
@@ -1854,6 +1857,7 @@ abstract class Game {
 
   void dispatchAttackTypeEquipped(int attackType, double x, double y, double z, double angle){
     for (final player in players) {
+      if (!player.onScreen(x, y)) continue;
       player.writeGameEvent(
         type: GameEventType.Weapon_Type_Equipped,
         x: x,
@@ -1911,6 +1915,7 @@ abstract class Game {
 
   void dispatchGameEventAITargetAcquired(AI ai){
     for (final player in players) {
+      if (!player.onScreen(ai.x, ai.y)) continue;
       player.writeGameEvent(
         type: GameEventType.AI_Target_Acquired,
         x: ai.x,
