@@ -14,7 +14,7 @@ abstract class Game {
   final characters = <Character>[];
   final projectiles = <Projectile>[];
 
-  static const AI_Respawn_Duration = framesPerSecond * 60 * 2; // 5 minutes
+  var aiRespawnDuration = framesPerSecond * 60 * 2; // 5 minutes
 
   List<GameObject> get gameObjects => scene.gameObjects;
 
@@ -828,7 +828,7 @@ abstract class Game {
 
   /// un@override
   void onAIKilled(AI ai){
-    ai.respawn = AI_Respawn_Duration;
+    ai.respawn = aiRespawnDuration;
     clearCharacterTarget(ai);
     ai.clearDest();
     ai.clearPath();
@@ -1028,7 +1028,7 @@ abstract class Game {
     clearCharacterTarget(character);
 
     if (character is AI){
-      character.respawn = AI_Respawn_Duration;
+      character.respawn = aiRespawnDuration;
     }
 
     if (character is Player) {
@@ -1056,9 +1056,6 @@ abstract class Game {
 
   void deactivateProjectile(Projectile projectile) {
     assert (projectile.active);
-    projectile.active = false;
-    projectile.owner = null;
-    projectile.target = null;
     switch (projectile.type) {
       case ProjectileType.Orb:
         dispatch(GameEventType.Blue_Orb_Deactivated, projectile.x, projectile.y,
@@ -1070,6 +1067,9 @@ abstract class Game {
       default:
         break;
     }
+    projectile.active = false;
+    projectile.owner = null;
+    projectile.target = null;
   }
 
   void updateProjectiles() {
@@ -1327,6 +1327,7 @@ abstract class Game {
         angle: radiansV2(src, target),
       );
     } else if (src is Projectile) {
+      assert (src.owner != null);
       srcCharacter = src.owner;
       damage = src.damage;
       target.applyForce(
@@ -1500,7 +1501,7 @@ abstract class Game {
     ai.x = ai.spawnX + getAdjacent(angle, distance);
     ai.y = ai.spawnY + getOpposite(angle, distance);
     ai.z = ai.spawnZ;
-    ai.respawn = AI_Respawn_Duration;
+    ai.respawn = aiRespawnDuration;
     ai.clearDest();
     clearCharacterTarget(ai);
     ai.clearPath();

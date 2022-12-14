@@ -1,10 +1,9 @@
 
 import 'package:bleed_server/gamestream.dart';
+import 'package:bleed_server/src/constants/frames_per_second.dart';
 import 'package:lemon_math/library.dart';
 
 class GamePractice extends Game {
-  static const configAIRespawnFrames = 500;
-  static const configRespawnFramesWeapons = 500;
   var configMaxPlayers = 7;
   var configZombieHealth = 5;
   var configZombieSpeed = 5.0;
@@ -13,6 +12,7 @@ class GamePractice extends Game {
   int get gameType => GameType.Practice;
 
   GamePractice({required Scene scene}) : super(scene) {
+    aiRespawnDuration = framesPerSecond * 60;
     triggerSpawnPoints();
   }
 
@@ -84,10 +84,6 @@ class GamePractice extends Game {
   }
 
   void reactivatePlayerWeapons(Player player){
-  }
-
-  void customOnCharacterKilled(Character target, dynamic src) {
-
   }
 
   /// @override
