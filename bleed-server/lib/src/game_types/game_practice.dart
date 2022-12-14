@@ -72,6 +72,7 @@ class GamePractice extends Game {
     player.inventoryDirty = true;
     player.refreshStats();
     player.health = player.maxHealth;
+    player.team = TeamType.Alone;
   }
 
   @override

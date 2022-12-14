@@ -57,9 +57,10 @@ navigate to next method: ctrl + shift + up / down arrows
 
 [BUGS]
 [ ] fix ai spot player through walls
-[ ] ai fire weapon handgun
 
 14.12.2022
+[x] ai fire weapons
+[x] practice mode enemy player cursor incorrect
 [x] fix players always visible
 [x] Running backwards causes legs to disappear
 [x] fig bug volume greater than one error
