@@ -29,6 +29,7 @@ class AI extends Character {
   var nextTeleport = randomInt(500, 1000);
   var aiMode = AIMode.Idle;
   var aiModeNext = Frames_Between_AI_Mode_Min;
+  var rounds = 0;
   Function(Player player)? onInteractedWith;
 
   AI({
@@ -59,6 +60,7 @@ class AI extends Character {
     spawnX = x;
     spawnY = y;
     spawnZ = z;
+    rounds = ItemType.getMaxQuantity(weaponType);
   }
 
   bool get arrivedAtDest =>

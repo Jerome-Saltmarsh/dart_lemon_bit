@@ -280,6 +280,15 @@ abstract class Game {
         );
         character.writePlayerEquippedWeaponAmmunition();
       }
+    } else if (character is AI){
+      if (ItemType.isTypeWeaponFirearm(character.weaponType)){
+        if (character.rounds <= 0){
+          character.assignWeaponStateReloading();
+          character.rounds = ItemType.getMaxQuantity(character.weaponType);
+          return;
+        }
+        character.rounds--;
+      }
     }
 
     if (character.weaponType == ItemType.Weapon_Thrown_Grenade){
