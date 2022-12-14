@@ -249,16 +249,14 @@ abstract class Game {
     assert (character.alive);
     assert (!character.weaponStateBusy);
 
-    final playerWeaponConsumeType = ItemType.getConsumeType(character.weaponType);
+    if (character is Player) {
+      final playerWeaponConsumeType = ItemType.getConsumeType(character.weaponType);
 
-    if (character is Player){
       if (playerWeaponConsumeType != ItemType.Empty) {
         final equippedWeaponQuantity = character.equippedWeaponQuantity;
         if (equippedWeaponQuantity == 0){
           final equippedWeaponAmmoType = character.equippedWeaponAmmunitionType;
-
-          final totalAmmoRemaining =
-          character.inventoryGetTotalQuantityOfItemType(equippedWeaponAmmoType);
+          final totalAmmoRemaining = character.inventoryGetTotalQuantityOfItemType(equippedWeaponAmmoType);
 
           if (totalAmmoRemaining == 0) {
             character.writeError('no ammunition');
@@ -276,28 +274,28 @@ abstract class Game {
           character.assignWeaponStateReloading();
           return;
         }
-          character.inventorySetQuantityAtIndex(
-            quantity: equippedWeaponQuantity - 1,
-            index: character.equippedWeaponIndex,
-          );
-          character.writePlayerEquippedWeaponAmmunition();
+        character.inventorySetQuantityAtIndex(
+          quantity: equippedWeaponQuantity - 1,
+          index: character.equippedWeaponIndex,
+        );
+        character.writePlayerEquippedWeaponAmmunition();
       }
     }
 
     if (character.weaponType == ItemType.Weapon_Thrown_Grenade){
       if (character is Player){
         playerThrowGrenade(character);
+        return;
       }
-
-      return;
+      throw Exception('ai cannot throw grenades');
     }
 
     if (character.weaponType == ItemType.Weapon_Flamethrower){
       if (character is Player){
         playerUseFlamethrower(character);
+        return;
       }
-
-      return;
+      throw Exception('ai cannot use flamethrower');
     }
 
     if (character.weaponType == ItemType.Weapon_Special_Bazooka){
@@ -315,7 +313,6 @@ abstract class Game {
       return;
     }
 
-
     if (ItemType.isTypeWeaponMelee(character.weaponType)) {
       characterAttackMelee(character);
       return;
@@ -329,12 +326,14 @@ abstract class Game {
             src: character,
             angle: character.lookRadian,
         );
+        character.assignWeaponStateFiring();
         return;
       case ItemType.Weapon_Melee_Staff:
         characterSpawnProjectileFireball(
             character,
             angle: character.lookRadian,
         );
+        character.assignWeaponStateFiring();
         break;
       case ItemType.Weapon_Ranged_Bow:
         spawnProjectileArrow(
@@ -343,8 +342,7 @@ abstract class Game {
             range: ItemType.getRange(character.weaponType),
             angle: character.lookRadian,
         );
-        character.weaponStateDurationTotal = ItemType.getCooldown(character.weaponType);
-        assert (character.weaponStateDuration > 0);
+        character.assignWeaponStateFiring();
         break;
     }
   }
@@ -1134,33 +1132,6 @@ abstract class Game {
       }
     }
 
-    if (player.weaponStateDuration > 0) {
-      player.weaponStateDuration--;
-      if (player.weaponStateDuration <= 0){
-        switch (player.weaponState) {
-          case WeaponState.Firing:
-            player.assignWeaponStateAiming();
-            player.lookRadian = player.mouseAngle;
-            break;
-          case WeaponState.Aiming:
-            player.assignWeaponStateIdle();
-            player.lookRadian = player.mouseAngle;
-            break;
-          case WeaponState.Reloading:
-            player.assignWeaponStateIdle();
-            player.lookRadian = player.mouseAngle;
-            break;
-          case WeaponState.Changing:
-            player.assignWeaponStateIdle();
-            player.lookRadian = player.mouseAngle;
-            break;
-          case WeaponState.Idle:
-            player.assignWeaponStateIdle();
-            break;
-        }
-      }
-    }
-
     if (player.framesSinceClientRequest > 10) {
       player.setCharacterStateIdle();
     }
@@ -1417,6 +1388,30 @@ abstract class Game {
          respawnAI(character);
        }
        return;
+    }
+
+    if (character.weaponStateDuration > 0) {
+      character.weaponStateDuration--;
+
+      if (character.weaponStateDuration <= 0){
+        switch (character.weaponState) {
+          case WeaponState.Firing:
+            character.assignWeaponStateAiming();
+            break;
+          case WeaponState.Aiming:
+            character.assignWeaponStateIdle();
+            break;
+          case WeaponState.Reloading:
+            character.assignWeaponStateIdle();
+            break;
+          case WeaponState.Changing:
+            character.assignWeaponStateIdle();
+            break;
+          case WeaponState.Idle:
+            character.assignWeaponStateIdle();
+            break;
+        }
+      }
     }
 
     if (character is AI){

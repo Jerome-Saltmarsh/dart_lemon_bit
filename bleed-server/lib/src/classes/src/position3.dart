@@ -31,7 +31,7 @@ class Position3 with Position {
   }
 
   bool withinRadiusCheap(Position3 position3, num radius) =>
-     ((this.x - position3.x).abs() < radius) ||
+     ((this.x - position3.x).abs() < radius) &&
      ((this.y - position3.y).abs() < radius) ;
 
   bool withinDistance(double x, double y, double z, num radius){

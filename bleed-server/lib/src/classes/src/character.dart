@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:bleed_server/src/maths/get_distance_between_v3.dart';
 import 'package:lemon_math/library.dart';
 
 import 'package:bleed_server/gamestream.dart';
@@ -206,6 +207,15 @@ abstract class Character extends Collider {
   }
 
   void setCharacterStatePerforming({required int duration}){
+    // if (this is AI && weaponType == ItemType.Empty){
+    //   final target = this.target;
+    //   if (target is Collider){
+    //     final distance = getDistanceBetweenV3(this, target);
+    //     if (distance - target.radius > this.weaponTypeRange) {
+    //       throw Exception();
+    //     }
+    //   }
+    // }
     setCharacterState(value: CharacterState.Performing, duration: duration);
   }
 
