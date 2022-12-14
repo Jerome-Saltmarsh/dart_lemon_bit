@@ -58,6 +58,9 @@ navigate to next method: ctrl + shift + up / down arrows
 [BUGS]
 [ ] fix ai spot player through walls
 
+15.12.2022
+[x] fix node transparency for shaded nodes
+
 14.12.2022
 [x] ai fire weapons
 [x] practice mode enemy player cursor incorrect

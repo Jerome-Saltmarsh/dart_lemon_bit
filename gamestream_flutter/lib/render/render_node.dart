@@ -269,7 +269,7 @@ class RenderNode {
   }){
     GameRender.onscreenNodes++;
     final f = Engine.bufferIndex * 4;
-    bufferClr[Engine.bufferIndex] = GameRender.currentNodeColor;
+    bufferClr[Engine.bufferIndex] = GameRender.currentNodeVisibility == Visibility.Opaque ? GameRender.currentNodeColor : GameConstants.Transparent;
     bufferSrc[f] = srcX;
     bufferSrc[f + 1] = srcY;
     bufferSrc[f + 2] = srcX + GameConstants.Sprite_Width;

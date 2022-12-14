@@ -336,7 +336,7 @@ void renderNodeAt() {
 }
 
 void renderNodeTypeGrass() {
-  switch (GameNodes.nodesOrientation[GameRender.currentNodeIndex]) {
+  switch (GameRender.currentNodeOrientation) {
     case NodeOrientation.Solid:
       return RenderNode.renderStandardNode(
           srcX: GameNodes.nodesVariation[GameRender.currentNodeIndex] ? AtlasNodeX.Grass : AtlasNodeX.Grass_Flowers,
