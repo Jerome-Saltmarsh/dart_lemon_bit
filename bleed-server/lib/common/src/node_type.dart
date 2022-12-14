@@ -92,6 +92,7 @@ class NodeType {
   static bool supportsOrientationRadial(int type) =>
     type == Tree_Bottom ||
     type == Torch ||
+    type == Stone ||
     type == Fireplace ;
 
   static bool supportsOrientationSlopeSymmetric(int type) =>
@@ -99,15 +100,19 @@ class NodeType {
     type == Wood_2 ||
     type == Grass ||
     type == Brick_2 ||
+    type == Stone ||
     type == Bau_Haus_2;
 
   static bool supportsOrientationSlopeCornerInner(int type) =>
     type == Cottage_Roof ||
     type == Grass ||
+    type == Stone ||
     type == Bau_Haus_2;
 
   static bool supportsOrientationSlopeCornerOuter(int type) =>
+    type == Stone ||
     type == Grass;
+
 
   static bool supportsOrientationHalf(int type) =>
     type == Wood_2 ||
@@ -115,6 +120,7 @@ class NodeType {
     type == Window ||
     type == Wooden_Plank ||
     type == Brick_2 ||
+    type == Stone ||
     type == Bau_Haus_2;
 
   static bool supportsOrientationCorner(int type) =>
@@ -122,6 +128,7 @@ class NodeType {
     type == Plain ||
     type == Brick_2 ||
     type == Bau_Haus_2 ||
+    type == Stone ||
     type == Wooden_Plank;
 
   static bool isDestroyable(int type) =>

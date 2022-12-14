@@ -128,11 +128,6 @@ class NodeOrientation {
      switch (orientation) {
        case Solid:
          return 1;
-       case Radial:
-         const radius = 0.25;
-         if  ((0.5 - x).abs() > radius) return 0;
-         if  ((0.5 - y).abs() > radius) return 0;
-         return 1.0;
        case Slope_North:
          return 1 - x;
        case Slope_East:
@@ -201,6 +196,11 @@ class NodeOrientation {
          final ratio = (y - x);
          if (ratio < 0) return 0;
          return ratio;
+       case Radial:
+         const radius = 0.25;
+         if  ((0.5 - x).abs() > radius) return 0;
+         if  ((0.5 - y).abs() > radius) return 0;
+         return 1.0;
        default:
          throw Exception(
              'node_orientation.getGradient(orientation: ${getName(orientation)}, x: $x, y: $y'
