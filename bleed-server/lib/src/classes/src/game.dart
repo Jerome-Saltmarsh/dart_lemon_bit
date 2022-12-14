@@ -140,7 +140,7 @@ abstract class Game {
 
     if (cursorAction == CursorAction.Set_Target) {
       if (direction != Direction.None) {
-        playerUseWeapon(player);
+        characterUseWeapon(player);
       } else {
         final aimTarget = player.aimTarget;
         if (aimTarget == null){
@@ -152,12 +152,17 @@ abstract class Game {
     }
 
     if (cursorAction == CursorAction.Stationary_Attack_Cursor){
-      playerUseWeapon(player);
+      if (!player.weaponStateBusy){
+        characterUseWeapon(player);
+      }
+
     }
 
     if (cursorAction == CursorAction.Stationary_Attack_Auto){
-      playerAutoAim(player);
-      playerUseWeapon(player);
+      if (!player.weaponStateBusy){
+        playerAutoAim(player);
+        characterUseWeapon(player);
+      }
     }
 
     playerRunInDirection(player, direction);
@@ -240,89 +245,106 @@ abstract class Game {
     }
   }
 
-  void playerUseWeapon(Player player) {
-    if (player.deadBusyOrWeaponStateBusy) return;
+  void characterUseWeapon(Character character) {
+    assert (character.alive);
+    assert (!character.weaponStateBusy);
 
-    final playerWeaponConsumeType = ItemType.getConsumeType(player.weaponType);
+    final playerWeaponConsumeType = ItemType.getConsumeType(character.weaponType);
 
-    if (playerWeaponConsumeType != ItemType.Empty) {
-      final equippedWeaponQuantity = player.equippedWeaponQuantity;
-      if (equippedWeaponQuantity > 0){
-         player.inventorySetQuantityAtIndex(
-             quantity: equippedWeaponQuantity - 1,
-             index: player.equippedWeaponIndex,
-         );
-         player.writePlayerEquippedWeaponAmmunition();
+    if (character is Player){
+      if (playerWeaponConsumeType != ItemType.Empty) {
+        final equippedWeaponQuantity = character.equippedWeaponQuantity;
+        if (equippedWeaponQuantity == 0){
+          final equippedWeaponAmmoType = character.equippedWeaponAmmunitionType;
 
-         if (player.weaponType == ItemType.Weapon_Thrown_Grenade){
-           playerThrowGrenade(player);
-           return;
-         }
+          final totalAmmoRemaining =
+          character.inventoryGetTotalQuantityOfItemType(equippedWeaponAmmoType);
 
-         if (player.weaponType == ItemType.Weapon_Flamethrower){
-           playerUseFlamethrower(player);
-           return;
-         }
-
-         if (player.weaponType == ItemType.Weapon_Special_Bazooka){
-           playerUseBazooka(player);
-           return;
-         }
-
-         characterFireWeapon(player);
-         player.accuracy += 0.25;
-         return;
+          if (totalAmmoRemaining == 0) {
+            character.writeError('no ammunition');
+            return;
+          }
+          var total = min(totalAmmoRemaining, character.equippedWeaponCapacity);
+          character.inventoryReduceItemTypeQuantity(
+            itemType: equippedWeaponAmmoType,
+            reduction: total,
+          );
+          character.inventorySetQuantityAtIndex(
+            quantity: total,
+            index: character.equippedWeaponIndex,
+          );
+          character.assignWeaponStateReloading();
+          return;
+        }
+          character.inventorySetQuantityAtIndex(
+            quantity: equippedWeaponQuantity - 1,
+            index: character.equippedWeaponIndex,
+          );
+          character.writePlayerEquippedWeaponAmmunition();
       }
-      final equippedWeaponAmmoType = player.equippedWeaponAmmunitionType;
-      final totalAmmoRemaining =
-          player.inventoryGetTotalQuantityOfItemType(equippedWeaponAmmoType);
+    }
 
-      if (totalAmmoRemaining == 0) {
-        player.writeError('no ammunition');
-        return;
+    if (character.weaponType == ItemType.Weapon_Thrown_Grenade){
+      if (character is Player){
+        playerThrowGrenade(character);
       }
-      var total = min(totalAmmoRemaining, player.equippedWeaponCapacity);
-      player.inventoryReduceItemTypeQuantity(
-        itemType: equippedWeaponAmmoType,
-        reduction: total,
-      );
-      player.inventorySetQuantityAtIndex(
-        quantity: total,
-        index: player.equippedWeaponIndex,
-      );
-      player.assignWeaponStateReloading();
+
       return;
     }
 
-    if (ItemType.isTypeWeaponMelee(player.weaponType)) {
-      playerAttackMelee(player: player);
+    if (character.weaponType == ItemType.Weapon_Flamethrower){
+      if (character is Player){
+        playerUseFlamethrower(character);
+      }
+
       return;
     }
 
-    switch (player.weaponType) {
+    if (character.weaponType == ItemType.Weapon_Special_Bazooka){
+      if (character is Player){
+        playerUseBazooka(character);
+      }
+      return;
+    }
+
+    if (ItemType.isTypeWeaponFirearm(character.weaponType)){
+      characterFireWeapon(character);
+      if (character is Player){
+        character.accuracy += 0.25;
+      }
+      return;
+    }
+
+
+    if (ItemType.isTypeWeaponMelee(character.weaponType)) {
+      characterAttackMelee(character);
+      return;
+    }
+
+    switch (character.weaponType) {
       case ItemType.Weapon_Ranged_Crossbow:
         spawnProjectileArrow(
-            damage: ItemType.getDamage(player.weaponType),
-            range: ItemType.getRange(player.weaponType),
-            src: player,
-            angle: player.lookRadian,
+            damage: ItemType.getDamage(character.weaponType),
+            range: ItemType.getRange(character.weaponType),
+            src: character,
+            angle: character.lookRadian,
         );
         return;
       case ItemType.Weapon_Melee_Staff:
         characterSpawnProjectileFireball(
-            player,
-            angle: player.lookRadian,
+            character,
+            angle: character.lookRadian,
         );
         break;
       case ItemType.Weapon_Ranged_Bow:
         spawnProjectileArrow(
-            src: player,
-            damage: ItemType.getDamage(player.weaponType),
-            range: ItemType.getRange(player.weaponType),
-            angle: player.lookRadian,
+            src: character,
+            damage: ItemType.getDamage(character.weaponType),
+            range: ItemType.getRange(character.weaponType),
+            angle: character.lookRadian,
         );
-        player.weaponStateDuration = ItemType.getCooldown(player.weaponType);
-        assert(player.weaponStateDuration > 0);
+        character.weaponStateDurationTotal = ItemType.getCooldown(character.weaponType);
+        assert (character.weaponStateDuration > 0);
         break;
     }
   }
@@ -391,45 +413,43 @@ abstract class Game {
     }
   }
 
-  void playerAttackMelee({
-    required Player player,
-  }) {
-    if (player.deadBusyOrWeaponStateBusy) return;
+  void characterAttackMelee(Character character) {
+    if (character.deadBusyOrWeaponStateBusy) return;
 
-    final angle = player.lookRadian;
-    final distance = ItemType.getRange(player.weaponType);
+    final angle = character.lookRadian;
+    final distance = ItemType.getRange(character.weaponType);
     if (distance <= 0){
-      throw Exception('ItemType.getRange(${ItemType.getName(player.weaponType)})');
+      throw Exception('ItemType.getRange(${ItemType.getName(character.weaponType)})');
     }
-    if (player.damage <= 0){
-      throw Exception('game.playerAttackMelee player.damage <= 0');
+    if (character.damage <= 0){
+      throw Exception('game.playerAttackMelee character.damage <= 0');
     }
-    final attackRadius = player.weaponTypeRange;
+    final attackRadius = character.weaponTypeRange;
 
-    final performX = player.x + getAdjacent(angle, distance);
-    final performY = player.y + getOpposite(angle, distance);
-    final performZ = player.z;
+    final performX = character.x + getAdjacent(angle, distance);
+    final performY = character.y + getOpposite(angle, distance);
+    final performZ = character.z;
 
-    player.performX = performX;
-    player.performY = performY;
-    player.performZ = performZ;
-    player.assignWeaponStateFiring();
+    character.performX = performX;
+    character.performY = performY;
+    character.performZ = performZ;
+    character.assignWeaponStateFiring();
 
     /// TODO name arguments
     dispatchAttackPerformed(
-        player.weaponType,
+      character.weaponType,
         performX,
         performY,
         performZ,
         angle,
     );
 
-    player.applyForce(
+    character.applyForce(
       force: 2.5,
       angle: angle,
     );
 
-    if (player.idling) {
+    if (character.idling) {
       // playerFaceMouse(player);
     }
 
@@ -437,17 +457,17 @@ abstract class Game {
 
     for (final character in characters) {
       if (!character.collidable) continue;
-      if (Collider.onSameTeam(player, character)) continue;
+      if (Collider.onSameTeam(character, character)) continue;
       if (character.distanceFromXYZ(
         performX,
         performY,
         performZ,
       ) > attackRadius) continue;
-      applyHit(src: player, target: character);
+      applyHit(src: character, target: character);
       attackHit = true;
-       player.applyForce(
+       character.applyForce(
            force: 7.5,
-           angle: getAngleBetween(player.x, player.y, character.x, character.y),
+           angle: getAngleBetween(character.x, character.y, character.x, character.y),
        );
     }
 
@@ -459,10 +479,9 @@ abstract class Game {
       ) >
           attackRadius) continue;
 
-      // if (gameObject is Collider == false) continue;
       gameObject.applyForce(
         force: 5,
-        angle: radiansV2(player, gameObject),
+        angle: radiansV2(character, gameObject),
       );
 
       attackHit = true;
@@ -472,7 +491,7 @@ abstract class Game {
     final nodeIndex = scene.getNodeIndexXYZ(performX, performY, performZ);
     final nodeType = scene.nodeTypes[nodeIndex];
 
-    player.applyForce(
+    character.applyForce(
       force: 4.5,
       angle: angle + pi,
     );
@@ -507,7 +526,7 @@ abstract class Game {
           z: performZ,
           angle: angle,
         );
-        player.writeByte(player.weaponType);
+        player.writeByte(character.weaponType);
       }
     }
   }
@@ -1136,7 +1155,8 @@ abstract class Game {
             player.lookRadian = player.mouseAngle;
             break;
           case WeaponState.Idle:
-            throw Exception("weapon state idle cannot have weapon duration");
+            player.assignWeaponStateIdle();
+            break;
         }
       }
     }
@@ -1175,7 +1195,7 @@ abstract class Game {
       if (player.targetIsEnemy) {
         player.lookAt(target);
         if (player.withinAttackRange(target)) {
-          playerUseWeapon(player);
+          characterUseWeapon(player);
           clearCharacterTarget(player);
           return;
         }
@@ -1370,7 +1390,23 @@ abstract class Game {
   }
   
   void updateCharacterStatePerforming(Character character) {
-    updateCharacterStateAttacking(character);
+    if (character.isTemplate) {
+      if (!character.weaponStateBusy){
+        characterUseWeapon(character);
+      }
+      return;
+    }
+    const framePerformStrike = 10;
+    if (character.stateDuration != framePerformStrike) return;
+    final attackTarget = character.target;
+    if (attackTarget == null) return;
+    if (attackTarget is Collider) {
+      applyHit(
+        src: character,
+        target: attackTarget,
+      );
+      clearCharacterTarget(character);
+    }
   }
 
   void updateCharacter(Character character) {
@@ -1930,104 +1966,6 @@ abstract class Game {
   //   ai.pathIndex = -1;
   //   // scene.visitNodeFirst(scene.getNodeByPosition(ai));
   // }
-
-  /// This represents a standard attack from the character, no powers
-  void updateCharacterStateAttacking(Character character) {
-    const framePerformStrike = 10;
-    final stateDuration = character.stateDuration;
-    if (character.characterTypeZombie) {
-      if (stateDuration != framePerformStrike) return;
-      final attackTarget = character.target;
-      if (attackTarget == null) return;
-      if (attackTarget is Collider) {
-        applyHit(
-          src: character,
-          target: attackTarget,
-        );
-        clearCharacterTarget(character);
-      }
-      return;
-    }
-
-    final weaponType = character.weaponType;
-    if (weaponType == ItemType.Weapon_Melee_Sword) {
-      if (stateDuration == 7) {
-        dispatchV3(GameEventType.Sword_Woosh, character);
-      }
-    }
-    if (weaponType == ItemType.Empty) {
-      if (stateDuration == 7) {
-        // dispatchV3(GameEventType.Arm_Swing, character);
-      }
-    }
-
-    if (character.equippedTypeIsShotgun) {
-      if (stateDuration == 1) {
-        if (character.equippedIsEmpty) {
-          // dispatchV3(GameEventType.Ammo_Acquired, character);
-          return;
-        }
-        // dispatchV3(GameEventType.Shotgun_Fired, character);
-        final totalBullets = 4;
-        for (int i = 0; i < totalBullets; i++) {
-          spawnProjectileBullet(
-            src: character,
-            accuracy: 0,
-            speed: 15.0,
-          );
-        }
-      }
-    }
-
-    if (character.equippedTypeIsBow && stateDuration == 1) {
-      dispatchV3(GameEventType.Draw_Bow, character);
-    }
-
-    if (stateDuration != framePerformStrike)
-      return;
-
-    if (character.equippedTypeIsStaff) {
-      // spawnProjectileOrb(src: character, damage: equippedDamage);
-      clearCharacterTarget(character);
-      return;
-    }
-
-    if (character.equippedTypeIsBow) {
-      dispatchV3(GameEventType.Release_Bow, character);
-         spawnProjectileArrow(
-          src: character,
-          damage: character.damage,
-          target: character.target,
-          range: character.weaponTypeRange,
-         );
-      clearCharacterTarget(character);
-      return;
-    }
-    if (character.equippedIsMelee) {
-
-      final attackTarget = character.target;
-      if (attackTarget != null) {
-        if (attackTarget is Collider && attackTarget.collidable) {
-          applyHit(src: character, target: attackTarget);
-          clearCharacterTarget(character);
-          return;
-        }
-        clearCharacterTarget(character);
-      }
-      final zombieHit = raycastHit(
-          character: character,
-          colliders: characters,
-          range: character.weaponTypeRange);
-      if (zombieHit != null) {
-        applyHit(
-          src: character,
-          target: zombieHit,
-        );
-        return;
-      }
-      return;
-    }
-  }
 
   AI addNpc({
     required String name,

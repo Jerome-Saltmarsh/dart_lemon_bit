@@ -20,7 +20,7 @@ abstract class Character extends Collider {
   var invincible = false;
   var weaponState = WeaponState.Idle;
   var weaponStateDuration = 0;
-  var weaponStateDurationTotal = 0;
+  var _weaponStateDurationTotal = 0;
   var weaponType = ItemType.Empty;
   var bodyType = ItemType.Body_Shirt_Cyan;
   var headType = ItemType.Head_Steel_Helm;
@@ -32,7 +32,18 @@ abstract class Character extends Collider {
   var lookRadian = 0.0;
   var name = "";
 
+  int get weaponStateDurationTotal => _weaponStateDurationTotal;
+
+  set weaponStateDurationTotal(int value){
+    assert (value >= 0);
+    if (value > 0){
+      weaponStateDuration = value;
+      _weaponStateDurationTotal = value;
+    }
+  }
+
   int get characterType => _characterType;
+  bool get isTemplate => _characterType == CharacterType.Template;
 
   set characterType(int value){
     _characterType = value;
@@ -88,7 +99,12 @@ abstract class Character extends Collider {
   double get weaponTypeRange => ItemType.getRange(weaponType);
   double get weaponDurationPercentage =>  weaponStateDurationTotal == 0 || weaponStateAiming ? 0 : weaponStateDuration / weaponStateDurationTotal;
 
-  int get weaponFrame => weaponStateDurationTotal - weaponStateDuration;
+  int get weaponFrame {
+    assert (weaponStateDuration == 0 || weaponStateDurationTotal > 0);
+    assert (weaponStateDurationTotal - weaponStateDuration >= 0);
+    return weaponStateDurationTotal - weaponStateDuration;
+  }
+
   int get faceDirection => Direction.fromRadian(_faceAngle);
   int get health => _health;
   int get maxHealth => _maxHealth;
@@ -133,20 +149,17 @@ abstract class Character extends Collider {
   void assignWeaponStateChanging() {
       weaponState = WeaponState.Changing;
       weaponStateDurationTotal = 20;
-      weaponStateDuration = weaponStateDurationTotal;
   }
 
   void assignWeaponStateFiring() {
     weaponState = WeaponState.Firing;
     weaponStateDurationTotal = ItemType.getCooldown(weaponType);
     assert (weaponStateDurationTotal > 0);
-    weaponStateDuration = weaponStateDurationTotal;
   }
 
   void assignWeaponStateReloading(){
     weaponState = WeaponState.Reloading;
     weaponStateDurationTotal = 30;
-    weaponStateDuration = weaponStateDurationTotal;
     if (this is Player) {
       (this as Player).writePlayerEvent(PlayerEvent.Reloading);
     }
@@ -155,13 +168,12 @@ abstract class Character extends Collider {
   void assignWeaponStateIdle() {
     weaponState = WeaponState.Idle;
     weaponStateDurationTotal = 0;
-    weaponStateDuration = weaponStateDurationTotal;
+    weaponStateDuration = 0;
   }
 
   void assignWeaponStateAiming() {
     weaponState = WeaponState.Aiming;
     weaponStateDurationTotal = 60;
-    weaponStateDuration = weaponStateDurationTotal;
   }
 
   Character({
