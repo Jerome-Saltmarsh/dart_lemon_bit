@@ -19,9 +19,10 @@ void renderNodeAt() {
 
   switch (GameRender.currentNodeType) {
     case NodeType.Grass:
-      return renderNodeTypeGrass();
+      renderNodeTemplateShaded(1998.0);
+      // return renderNodeTypeGrass();
+      return;
     case NodeType.Brick_2:
-      // RenderNode.renderNodeTypeBrick();
       renderNodeTemplateShaded(1949.0);
       return;
     case NodeType.Torch:
