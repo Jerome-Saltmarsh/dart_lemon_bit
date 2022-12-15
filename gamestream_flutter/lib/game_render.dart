@@ -492,6 +492,7 @@ class GameRender {
   }
 
   static bool isCollectable(int itemType) =>
+      ItemType.isTypeTrinket(itemType) ||
       ItemType.isTypeResource(itemType) ||
       ItemType.isTypeConsumable(itemType) ||
       ItemType.isTypeRecipe(itemType) ||

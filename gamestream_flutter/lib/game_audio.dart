@@ -163,15 +163,15 @@ class GameAudio {
   static var _nextAudioSourceUpdate = 0;
 
   static void update() {
+    if (GameAudio.muted.value) {
+      return;
+    }
+
     if (_nextAudioSourceUpdate-- <= 0) {
       _nextAudioSourceUpdate = 5;
         for (final audioSource in audioLoops){
           audioSource.update();
         }
-    }
-
-    if (GameAudio.muted.value) {
-      return;
     }
 
     updateRandomAmbientSounds();
