@@ -98,6 +98,13 @@ class GameDebug {
                                   GameConstants.refreshShades();
                               },
                             ),
+                            ColorPicker(
+                              pickerColor: GameConstants.colorEnd.toColor(),
+                              onColorChanged: (color){
+                                GameConstants.colorEnd = HSVColor.fromColor(color);
+                                GameConstants.refreshShades();
+                              },
+                            ),
                           ],
                         ),
                       ),
