@@ -363,40 +363,34 @@ class EditorUI {
                       EditRequest.Spawn_Zombie,
                       GameEditor.nodeSelectedIndex.value);
                 }),
-            Container(
-              width: 100,
-              height: 100,
-              color: Colors.white,
-              child: Engine.buildAtlasImageButton(
-                  image: GameImages.atlas_gameobjects,
-                  srcX: AtlasGameObjects.Crystal_Large_X,
-                  srcY: AtlasGameObjects.Crystal_Large_Y,
-                  srcWidth: AtlasGameObjects.Crystal_Large_Width,
-                  srcHeight: AtlasGameObjects.Crystal_Large_Height,
-                  action: () =>
-                      GameNetwork.sendClientRequestAddGameObject(
-                        index: GameEditor.nodeSelectedIndex.value,
-                        type: ItemType.GameObjects_Crystal,
-                      )),
-            ),
-            Container(
-              width: 100,
-              height: 100,
-              color: Colors.white,
-              child: Engine.buildAtlasImageButton(
-                  image: GameImages.atlas_gameobjects,
-                  srcX: AtlasGameObjects.Car_X,
-                  srcY: AtlasGameObjects.Car_Y,
-                  srcWidth: AtlasGameObjects.Car_Width,
-                  srcHeight: AtlasGameObjects.Car_Height,
-                  action: () =>
-                      GameNetwork.sendClientRequestAddGameObject(
-                        index: GameEditor.nodeSelectedIndex.value,
-                        type: ItemType.GameObjects_Car,
-                      )),
-            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: ItemType.GameObjectTypes
+                  .map(buildRowAddGameObject)
+                  .toList(),
+            )
           ],
         );
+
+  static Widget buildRowAddGameObject(int gameObjectType){
+    return Container(
+      width: 100,
+      height: 100,
+      color: Colors.white,
+      child: Engine.buildAtlasImageButton(
+          image: GameImages.atlas_gameobjects,
+          srcX: AtlasItems.getSrcX(gameObjectType),
+          srcY: AtlasItems.getSrcY(gameObjectType),
+          srcWidth: AtlasItems.getSrcWidth(gameObjectType),
+          srcHeight: AtlasItems.getSrcHeight(gameObjectType),
+          action: () =>
+              GameNetwork.sendClientRequestAddGameObject(
+                index: GameEditor.nodeSelectedIndex.value,
+                type: gameObjectType,
+              )),
+    );
+  }
+
 
 
   static Widget buildRowWeatherControls() => Row(
