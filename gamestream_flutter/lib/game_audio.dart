@@ -1,5 +1,6 @@
 
 import 'package:gamestream_flutter/classes/audio_single.dart';
+import 'package:gamestream_flutter/lemon_cache/cache.dart';
 
 import 'library.dart';
 
@@ -8,9 +9,11 @@ class GameAudio {
 
   static void toggleMuted() => muted.value = !muted.value;
 
-  static final muted = Watch(false, onChanged: (bool value){
+  static final muted = Cache(key: 'game-audio-muted', value: false, onChanged: (bool value){
+    print("GameAudio.mutedChanged($value)");
     if (value){
       for (final audioSource in audioLoops) {
+        audioSource.setVolume(0);
         audioSource.audioPlayer.pause();
       }
     } else {
@@ -49,10 +52,8 @@ class GameAudio {
     AudioLoop(name: 'rain', getTargetVolume: getVolumeTargetRain),
     AudioLoop(name: 'crickets', getTargetVolume: getVolumeTargetCrickets),
     AudioLoop(name: 'day-ambience', getTargetVolume: GameAudio.getVolumeTargetDayAmbience),
-    // AudioLoop(name: 'fire', getTargetVolume: getVolumeTargetFire),
     AudioLoop(name: 'distant-thunder', getTargetVolume: getVolumeTargetDistanceThunder),
     AudioLoop(name: 'heart-beat', getTargetVolume: getVolumeHeartBeat),
-    // AudioLoop(name: 'stream', getTargetVolume: getVolumeStream),
   ];
 
   static final dog_woolf_howl_4 = AudioSingle(name: 'dog-woolf-howl-4', volume: 0.5);
@@ -162,14 +163,17 @@ class GameAudio {
   static var _nextAudioSourceUpdate = 0;
 
   static void update() {
-    if (GameAudio.muted.value) return;
-
     if (_nextAudioSourceUpdate-- <= 0) {
       _nextAudioSourceUpdate = 5;
         for (final audioSource in audioLoops){
           audioSource.update();
         }
     }
+
+    if (GameAudio.muted.value) {
+      return;
+    }
+
     updateRandomAmbientSounds();
     updateRandomMusic();
     updateCharacterNoises();
@@ -193,8 +197,7 @@ class GameAudio {
   }
 
   static double getVolumeTargetRain() {
-    if (ServerState.rainType.value == RainType.None) return 0.0;
-    switch(ServerState.rainType.value){
+    switch (ServerState.rainType.value){
       case RainType.None:
         return 0;
       case RainType.Light:
@@ -204,14 +207,6 @@ class GameAudio {
       default:
         throw Exception('GameAudio.getVolumeTargetRain()');
     }
-
-    // return 1.0;
-
-    // const r = 6;
-    // const maxDistance = r * tileSize;
-    // final distance = GameQueries.getClosestByType(radius: r, type: NodeType.Rain_Landing) * tileSize;
-    // final v = convertDistanceToVolume(distance, maxDistance: maxDistance);
-    // return v * (ServerState.rainType.value == RainType.Light ? 0.5 : 1.0) * 0.5;
   }
 
   static double getVolumeTargetCrickets() {
@@ -243,6 +238,7 @@ class GameAudio {
   }
 
   static double getVolumeHeartBeat(){
+    if (ServerState.playerMaxHealth.value <= 0) return 0.0;
     return 1.0 - ServerState.playerHealth.value / ServerState.playerMaxHealth.value;
   }
 

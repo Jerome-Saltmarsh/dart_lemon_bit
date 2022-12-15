@@ -1,3 +1,4 @@
+import 'package:gamestream_flutter/game_audio.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:lemon_math/library.dart';
 
@@ -7,7 +8,7 @@ class AudioLoop {
   static const Volume_Fade = 0.05;
 
   final String name;
-  var volume = 0.0;
+  double get volume => audioPlayer.volume;
   double Function() getTargetVolume;
   final audioPlayer = AudioPlayer();
   late Duration duration;

@@ -377,9 +377,10 @@ class EditorUI {
   );
 
   static Widget buildRowAddGameObject(int gameObjectType){
+
     return Container(
-      width: 100,
-      height: 100,
+      width: 70,
+      height: 70,
       color: Colors.white,
       child: FittedBox(
         child: Engine.buildAtlasImageButton(

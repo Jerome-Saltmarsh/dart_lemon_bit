@@ -120,7 +120,7 @@ class AtlasItems {
     ItemType.GameObjects_Crystal: 22,
     ItemType.GameObjects_Barrel: 28,
     ItemType.GameObjects_Cup: 6,
-    ItemType.GameObjects_Tavern_Sign: 22,
+    ItemType.GameObjects_Tavern_Sign: 19,
     ItemType.Weapon_Rifle_Sniper: 48,
     ItemType.Weapon_Flamethrower: 64,
     ItemType.Weapon_Special_Bazooka: 48,
@@ -132,11 +132,12 @@ class AtlasItems {
     ItemType.GameObjects_Crystal: 45,
     ItemType.GameObjects_Barrel: 40,
     ItemType.GameObjects_Cup: 11,
-    ItemType.GameObjects_Tavern_Sign: 22,
+    ItemType.GameObjects_Tavern_Sign: 39,
     ItemType.Weapon_Rifle_Sniper: 16,
     ItemType.Weapon_Special_Bazooka: 16,
     ItemType.Weapon_Special_Minigun: 12,
   }[itemType] ?? size;
+
 }
 
 class AtlasIcons {
