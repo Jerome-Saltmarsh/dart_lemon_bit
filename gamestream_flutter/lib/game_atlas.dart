@@ -251,6 +251,8 @@ class AtlasNodeX {
     NodeType.Oven: Oven,
     NodeType.Window: Window,
     NodeType.Boulder: Boulder,
+    NodeType.Road: 768.0,
+    NodeType.Road_2: 768.0,
   }[type] ?? 7055;
 
   static double mapOrientation(int orientation) {
@@ -367,6 +369,8 @@ class AtlasNodeY {
     NodeType.Plain: Plain_Solid,
     NodeType.Oven: Oven,
     NodeType.Boulder: Boulder,
+    NodeType.Road: 672.0,
+    NodeType.Road_2: 672.0 + GameConstants.Sprite_Height_Padded,
   }[type] ?? 0;
 
   static double mapOrientation(int orientation) {

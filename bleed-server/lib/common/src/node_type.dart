@@ -37,9 +37,11 @@ class NodeType {
   static const Bau_Haus_2 = 69;
   static const Boulder = 70;
   static const Spawn = 71;
+  static const Respawning = 72;
   static const Spawn_Weapon = 73;
   static const Spawn_Player = 74;
-  static const Respawning = 72;
+  static const Road = 75;
+  static const Road_2 = 76;
 
   static bool isMaterialWood(int value) =>
     value == Torch ||
@@ -58,11 +60,15 @@ class NodeType {
     value == Stone ||
     value == Oven ||
     value == Brick_2 ||
+    value == Road ||
+    value == Road_2 ||
     value == Chimney;
 
   static bool supportsOrientationSolid(int type) =>
     type == Brick_2 ||
     type == Soil ||
+    type == Road ||
+    type == Road_2 ||
     type == Stone ||
     type == Wood_2 ||
     type == Grass ||
@@ -262,5 +268,7 @@ class NodeType {
     Respawning: 'Respawning',
     Spawn_Weapon: 'Spawn Weapon',
     Spawn_Player: 'Spawn Player',
+    Road: 'Road',
+    Road_2: 'Road Paint',
   }[type] ?? 'unknown($type)';
 }

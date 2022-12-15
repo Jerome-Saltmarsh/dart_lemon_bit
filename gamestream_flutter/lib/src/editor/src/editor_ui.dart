@@ -607,6 +607,7 @@ class EditorUI {
       srcWidth: AtlasNodeWidth.mapNodeType(nodeType),
       srcHeight: AtlasNodeHeight.mapNodeType(nodeType),
     );
+
     return WatchBuilder(GameEditor.nodeSelectedType, (int selectedNodeType) {
       return container(
           height: 78,

@@ -334,7 +334,7 @@ class RenderNode {
       srcWidth: GameConstants.Sprite_Width,
       srcHeight: GameConstants.Sprite_Height,
       dstX: GameRender.currentNodeDstX + 8,
-      dstY: GameRender.currentNodeDstY - 8,
+      dstY: GameRender.currentNodeDstY - 8 + Half_Height_Adj,
       anchorY: GameConstants.Sprite_Anchor_Y,
       color: color,
     );
@@ -353,11 +353,13 @@ class RenderNode {
       srcWidth: GameConstants.Sprite_Width,
       srcHeight: GameConstants.Sprite_Height,
       dstX: GameRender.currentNodeDstX - 8,
-      dstY: GameRender.currentNodeDstY + 8,
+      dstY: GameRender.currentNodeDstY + 8 + Half_Height_Adj,
       anchorY: GameConstants.Sprite_Anchor_Y,
       color: color,
     );
   }
+
+  static const Half_Height_Adj = -2.0;
 
   static void renderStandardNodeHalfNorth({
     required double srcX,
@@ -372,7 +374,7 @@ class RenderNode {
       srcWidth: GameConstants.Sprite_Width,
       srcHeight: GameConstants.Sprite_Height,
       dstX: GameRender.currentNodeDstX - 8,
-      dstY: GameRender.currentNodeDstY - 8,
+      dstY: GameRender.currentNodeDstY - 8 + Half_Height_Adj,
       anchorY: GameConstants.Sprite_Anchor_Y,
       color: color,
     );
@@ -391,7 +393,7 @@ class RenderNode {
       srcWidth: GameConstants.Sprite_Width,
       srcHeight: GameConstants.Sprite_Height,
       dstX: GameRender.currentNodeDstX + 8,
-      dstY: GameRender.currentNodeDstY + 8,
+      dstY: GameRender.currentNodeDstY + 8 + Half_Height_Adj,
       anchorY: GameConstants.Sprite_Anchor_Y,
       color: color,
     );
