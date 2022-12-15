@@ -372,7 +372,7 @@ void renderNodeTypeGrass() {
         srcY: 0,
       );
     case NodeOrientation.Slope_Inner_North_East:
-      return RenderNode.renderStandardNode(
+      return RenderNode.renderStandardNodeShaded(
         srcX: AtlasNode.Node_Grass_Slope_Inner_North_East,
         srcY: 0,
       );
@@ -397,17 +397,17 @@ void renderNodeTypeGrass() {
         srcY: 0,
       );
     case NodeOrientation.Slope_Outer_South_East:
-      return RenderNode.renderStandardNode(
+      return RenderNode.renderStandardNodeShaded(
         srcX: AtlasNode.Node_Grass_Slope_Outer_South_East,
         srcY: 0,
       );
     case NodeOrientation.Slope_Outer_South_West:
-      return RenderNode.renderStandardNode(
+      return RenderNode.renderStandardNodeShaded(
         srcX: AtlasNode.Node_Grass_Slope_Outer_South_West,
         srcY: 0,
       );
     case NodeOrientation.Slope_Outer_North_West:
-      return RenderNode.renderStandardNode(
+      return RenderNode.renderStandardNodeShaded(
         srcX: AtlasNode.Node_Grass_Slope_Outer_North_West,
         srcY: 0,
       );
@@ -418,75 +418,6 @@ void renderNodeTypeGrass() {
   }
 }
 
-// void renderStandardNodeHalfNorth({
-//   required double srcX,
-//   required double srcY,
-//   int color = 1,
-// }){
-//
-//   colors[renderIndex] = color;
-//
-//   src[bufferIndex] = srcX;
-//   dst[bufferIndex] = 1;
-//   bufferIndex++;
-//
-//   src[bufferIndex] = srcY;
-//   dst[bufferIndex] = 0;
-//   bufferIndex++;
-//
-//   src[bufferIndex] = srcX + spriteWidth;
-//   dst[bufferIndex] = renderNodeDstX - spriteWidthHalf - 17;
-//
-//   bufferIndex++;
-//   src[bufferIndex] = srcY + spriteHeight;
-//   dst[bufferIndex] = renderNodeDstY - spriteHeightThird - 17;
-//
-//   bufferIndex++;
-//   renderIndex++;
-//
-//   if (bufferIndex < buffers) return;
-//   bufferIndex = 0;
-//   renderIndex = 0;
-//
-//   renderAtlas();
-// }
-
-
-// void renderStandardNodeHalfEast({
-//   required double srcX,
-//   required double srcY,
-//   int color = 1,
-// }){
-//
-//   colors[renderIndex] = color;
-//
-//   src[bufferIndex] = srcX;
-//   dst[bufferIndex] = 1;
-//   bufferIndex++;
-//
-//   src[bufferIndex] = srcY;
-//   dst[bufferIndex] = 0;
-//   bufferIndex++;
-//
-//   src[bufferIndex] = srcX + spriteWidth;
-//   dst[bufferIndex] = renderNodeDstX - spriteWidthHalf + 17;
-//
-//   bufferIndex++;
-//   src[bufferIndex] = srcY + spriteHeight;
-//   dst[bufferIndex] = renderNodeDstY - spriteHeightThird - 17;
-//
-//   bufferIndex++;
-//   renderIndex++;
-//
-//   if (bufferIndex < buffers) return;
-//   bufferIndex = 0;
-//   renderIndex = 0;
-//
-//   renderAtlas();
-// }
-
-
-
 double projectX(int row, int column){
   return (row - column) * Node_Size_Half;
 }
@@ -495,8 +426,4 @@ double projectY(int row, int column, int z){
   return ((row + column) * Node_Size_Half) - (z * Node_Height);
 }
 
-void updateGridAnimation(){
-  for (var i = 0; i < GameNodes.nodesTotal; i++){
-  }
-}
 
