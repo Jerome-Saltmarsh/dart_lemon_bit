@@ -33,7 +33,9 @@ class EditorUI {
         Positioned(
           left: 0,
           top: 50,
-          child: buildEditorTabGameObjects(),
+          child: Container(
+              height: Engine.screen.height - 100,
+              child: buildEditorTabGameObjects()),
         ),
       if (activeEditTab == EditTab.Grid)
         Positioned(
@@ -353,41 +355,45 @@ class EditorUI {
        ),
      );
 
-  static Widget buildEditorTabGameObjects() => Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            container(
-                child: 'Spawn Zombie',
-                action: () {
-                  GameNetwork.sendClientRequestEdit(
-                      EditRequest.Spawn_Zombie,
-                      GameEditor.nodeSelectedIndex.value);
-                }),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: ItemType.GameObjectTypes
-                  .map(buildRowAddGameObject)
-                  .toList(),
-            )
-          ],
-        );
+  static Widget buildEditorTabGameObjects() => SingleChildScrollView(
+    child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              container(
+                  child: 'Spawn Zombie',
+                  action: () {
+                    GameNetwork.sendClientRequestEdit(
+                        EditRequest.Spawn_Zombie,
+                        GameEditor.nodeSelectedIndex.value);
+                  }),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: ItemType.GameObjectTypes
+                    .map(buildRowAddGameObject)
+                    .toList(),
+              )
+            ],
+          ),
+  );
 
   static Widget buildRowAddGameObject(int gameObjectType){
     return Container(
       width: 100,
       height: 100,
       color: Colors.white,
-      child: Engine.buildAtlasImageButton(
-          image: GameImages.atlas_gameobjects,
-          srcX: AtlasItems.getSrcX(gameObjectType),
-          srcY: AtlasItems.getSrcY(gameObjectType),
-          srcWidth: AtlasItems.getSrcWidth(gameObjectType),
-          srcHeight: AtlasItems.getSrcHeight(gameObjectType),
-          action: () =>
-              GameNetwork.sendClientRequestAddGameObject(
-                index: GameEditor.nodeSelectedIndex.value,
-                type: gameObjectType,
-              )),
+      child: FittedBox(
+        child: Engine.buildAtlasImageButton(
+            image: GameImages.atlas_gameobjects,
+            srcX: AtlasItems.getSrcX(gameObjectType),
+            srcY: AtlasItems.getSrcY(gameObjectType),
+            srcWidth: AtlasItems.getSrcWidth(gameObjectType),
+            srcHeight: AtlasItems.getSrcHeight(gameObjectType),
+            action: () =>
+                GameNetwork.sendClientRequestAddGameObject(
+                  index: GameEditor.nodeSelectedIndex.value,
+                  type: gameObjectType,
+                )),
+      ),
     );
   }
 
