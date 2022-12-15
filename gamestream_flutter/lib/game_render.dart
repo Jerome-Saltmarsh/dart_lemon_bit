@@ -491,17 +491,6 @@ class GameRender {
     }
   }
 
-  static bool isCollectable(int itemType) =>
-      ItemType.isTypeTrinket    (itemType) ||
-      ItemType.isTypeResource   (itemType) ||
-      ItemType.isTypeConsumable (itemType) ||
-      ItemType.isTypeRecipe     (itemType) ||
-      ItemType.isTypeWeapon     (itemType) ||
-      ItemType.isTypeRecipe     (itemType) ||
-      ItemType.isTypeHead       (itemType) ||
-      ItemType.isTypeBody       (itemType) ||
-      ItemType.isTypeLegs       (itemType)  ;
-
   static void renderGameObject(GameObject gameObject) {
 
     if (ItemType.isTypeGameObject(gameObject.type)) {
@@ -518,7 +507,7 @@ class GameRender {
       return;
     }
 
-    if (isCollectable(gameObject.type)) {
+    if (ItemType.isTypeCollectable(gameObject.type)) {
       renderBouncingGameObjectShadow(gameObject);
       Engine.renderSprite(
         image: GameImages.atlas_items,

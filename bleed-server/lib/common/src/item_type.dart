@@ -312,6 +312,18 @@ class ItemType {
     return type >= Index_Consumables;
   }
 
+  static bool isTypeCollectable(int itemType) =>
+      isTypeTrinket    (itemType) ||
+      isTypeResource   (itemType) ||
+      isTypeConsumable (itemType) ||
+      isTypeRecipe     (itemType) ||
+      isTypeWeapon     (itemType) ||
+      isTypeRecipe     (itemType) ||
+      isTypeHead       (itemType) ||
+      isTypeBody       (itemType) ||
+      isTypeLegs       (itemType)  ;
+
+
   static int getConsumeType(int itemType) => const {
       Weapon_Thrown_Grenade               : Weapon_Thrown_Grenade,
       Weapon_Handgun_Flint_Lock_Old       : Resource_Gun_Powder,

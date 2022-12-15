@@ -18,7 +18,7 @@ class GamePractice extends Game {
 
   @override
   void customInitPlayer(Player player) {
-    player.writeEnvironmentShade(Shade.Very_Very_Dark);
+    player.writeEnvironmentShade(Shade.Pitch_Black);
     player.writeEnvironmentRain(RainType.Light);
     player.writeEnvironmentLightning(LightningType.Off);
     player.writeEnvironmentWind(WindType.Gentle);

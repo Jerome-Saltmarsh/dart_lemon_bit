@@ -347,69 +347,69 @@ void renderNodeTemplateShaded(double srcX) {
 void renderNodeTypeGrass() {
   switch (GameRender.currentNodeOrientation) {
     case NodeOrientation.Solid:
-      return RenderNode.renderStandardNode(
+      return RenderNode.renderStandardNodeShaded(
           srcX: GameNodes.nodesVariation[GameRender.currentNodeIndex] ? AtlasNodeX.Grass : AtlasNodeX.Grass_Flowers,
-          srcY: GameConstants.Sprite_Height * GameNodes.nodesShade[GameRender.currentNodeIndex],
+          srcY: 0,
       );
     case NodeOrientation.Slope_North:
-      return RenderNode.renderStandardNode(
+      return RenderNode.renderStandardNodeShaded(
         srcX: AtlasNode.Node_Grass_Slope_North,
-        srcY: GameConstants.Sprite_Height * GameNodes.nodesShade[GameRender.currentNodeIndex],
+        srcY: 0,
       );
     case NodeOrientation.Slope_East:
-      return RenderNode.renderStandardNode(
+      return RenderNode.renderStandardNodeShaded(
         srcX: AtlasNode.Node_Grass_Slope_East,
-        srcY: GameConstants.Sprite_Height * GameNodes.nodesShade[GameRender.currentNodeIndex],
+        srcY: 0,
       );
     case NodeOrientation.Slope_South:
-      return RenderNode.renderStandardNode(
+      return RenderNode.renderStandardNodeShaded(
         srcX: AtlasNode.Node_Grass_Slope_South,
-        srcY: GameConstants.Sprite_Height * GameNodes.nodesShade[GameRender.currentNodeIndex],
+        srcY: 0,
       );
     case NodeOrientation.Slope_West:
-      return RenderNode.renderStandardNode(
+      return RenderNode.renderStandardNodeShaded(
         srcX: AtlasNode.Node_Grass_Slope_West,
-        srcY: GameConstants.Sprite_Height * GameNodes.nodesShade[GameRender.currentNodeIndex],
+        srcY: 0,
       );
     case NodeOrientation.Slope_Inner_North_East:
       return RenderNode.renderStandardNode(
         srcX: AtlasNode.Node_Grass_Slope_Inner_North_East,
-        srcY: GameConstants.Sprite_Height * GameNodes.nodesShade[GameRender.currentNodeIndex],
+        srcY: 0,
       );
     case NodeOrientation.Slope_Inner_South_East:
-      return RenderNode.renderStandardNode(
+      return RenderNode.renderStandardNodeShaded(
         srcX: AtlasNode.Node_Grass_Slope_Inner_South_East,
-        srcY: GameConstants.Sprite_Height * GameNodes.nodesShade[GameRender.currentNodeIndex],
+        srcY: 0,
       );
     case NodeOrientation.Slope_Inner_South_West:
-      return RenderNode.renderStandardNode(
+      return RenderNode.renderStandardNodeShaded(
         srcX: AtlasNode.Node_Grass_Slope_Inner_South_West,
-        srcY: GameConstants.Sprite_Height * GameNodes.nodesShade[GameRender.currentNodeIndex],
+        srcY: 0,
       );
     case NodeOrientation.Slope_Inner_North_West:
-      return RenderNode.renderStandardNode(
+      return RenderNode.renderStandardNodeShaded(
         srcX: AtlasNode.Node_Grass_Slope_Inner_North_West,
-        srcY: GameConstants.Sprite_Height * GameNodes.nodesShade[GameRender.currentNodeIndex],
+        srcY: 0,
       );
     case NodeOrientation.Slope_Outer_North_East:
-      return RenderNode.renderStandardNode(
+      return RenderNode.renderStandardNodeShaded(
         srcX: AtlasNode.Node_Grass_Slope_Outer_North_East,
-        srcY: GameConstants.Sprite_Height * GameNodes.nodesShade[GameRender.currentNodeIndex],
+        srcY: 0,
       );
     case NodeOrientation.Slope_Outer_South_East:
       return RenderNode.renderStandardNode(
         srcX: AtlasNode.Node_Grass_Slope_Outer_South_East,
-        srcY: GameConstants.Sprite_Height * GameNodes.nodesShade[GameRender.currentNodeIndex],
+        srcY: 0,
       );
     case NodeOrientation.Slope_Outer_South_West:
       return RenderNode.renderStandardNode(
         srcX: AtlasNode.Node_Grass_Slope_Outer_South_West,
-        srcY: GameConstants.Sprite_Height * GameNodes.nodesShade[GameRender.currentNodeIndex],
+        srcY: 0,
       );
     case NodeOrientation.Slope_Outer_North_West:
       return RenderNode.renderStandardNode(
         srcX: AtlasNode.Node_Grass_Slope_Outer_North_West,
-        srcY: GameConstants.Sprite_Height * GameNodes.nodesShade[GameRender.currentNodeIndex],
+        srcY: 0,
       );
     default:
       throw Exception(

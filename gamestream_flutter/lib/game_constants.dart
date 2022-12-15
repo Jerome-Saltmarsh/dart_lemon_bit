@@ -1,4 +1,7 @@
 
+import 'dart:ui';
+
+import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/game_colors.dart';
 
 class GameConstants {
@@ -35,9 +38,31 @@ class GameConstants {
 
   static const Shade_Opacities = [0.0, 0.4, 0.6, 0.7, 0.8, 0.95, 1.0];
   static const Shade_Opacities_Transparent = [0.0, 0.2, 0.3, 0.35, 0.4, 0.45, 0.5];
-  static final Color_Shades = Shade_Opacities
-      .map((opacity) => GameColors.black.withOpacity(opacity).value)
-      .toList(growable: false);
+  // static final Color_Shades = Shade_Opacities
+  //     .map((opacity) => GameColors.black.withOpacity(opacity).value)
+  //     .toList(growable: false);
+
+
+  static final colorStart = HSVColor.fromColor(Color.fromRGBO(38, 34, 47, 0.0));
+  static final colorEnd = HSVColor.fromColor(Color.fromRGBO(47, 34, 37, 1.0));
+
+  static final C0 = HSVColor.lerp(colorStart, colorEnd, 0.0);
+  static final C1 = HSVColor.lerp(colorStart, colorEnd, 0.2);
+  static final C2 = HSVColor.lerp(colorStart, colorEnd, 0.4);
+  static final C3 = HSVColor.lerp(colorStart, colorEnd, 0.6);
+  static final C4 = HSVColor.lerp(colorStart, colorEnd, 0.8);
+  static final C5 = HSVColor.lerp(colorStart, colorEnd, 0.9);
+  static final C6 = HSVColor.lerp(colorStart, colorEnd, 0.95);
+
+  static final Color_Shades = [
+    C0,
+    C1,
+    C2,
+    C3,
+    C4,
+    C5,
+    C6,
+  ].map((e) => e!.toColor().value).toList(growable: false);
 
   static final Transparent =  GameColors.black.withOpacity(0.5).value;
 }
