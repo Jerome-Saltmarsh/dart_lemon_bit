@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
@@ -90,6 +91,13 @@ class GameDebug {
                             watch(Engine.watchMouseLeftDown, (bool mouseLeftDown) => text("mouse-left-down: $mouseLeftDown")),
                             watch(Engine.mouseRightDown, (bool rightDown) => text("mouse-right-down: $rightDown")),
                             watch(GameEditor.nodeSelectedIndex, (int index) => text("edit-state-node-index: $index")),
+                            ColorPicker(
+                              pickerColor: GameConstants.colorStart.toColor(),
+                              onColorChanged: (color){
+                                  GameConstants.colorStart = HSVColor.fromColor(color);
+                                  GameConstants.refreshShades();
+                              },
+                            ),
                           ],
                         ),
                       ),

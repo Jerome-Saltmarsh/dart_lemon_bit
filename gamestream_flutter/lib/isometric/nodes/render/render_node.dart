@@ -59,15 +59,15 @@ void renderNodeAt() {
     case NodeType.Grass_Long:
       switch (GameRender.currentNodeWind) {
         case WindType.Calm:
-          RenderNode.renderStandardNode(
+          RenderNode.renderStandardNodeShaded(
             srcX: AtlasNodeX.Grass_Long,
-            srcY: GameConstants.Sprite_Height * renderNodeShade,
+            srcY: 0,
           );
           return;
         default:
-          RenderNode.renderStandardNode(
+          RenderNode.renderStandardNodeShaded(
               srcX: AtlasNodeX.Grass_Long + ((((GameRender.currentNodeRow - GameRender.currentNodeColumn) + GameAnimation.animationFrameGrass) % 6) * 48),
-              srcY: GameConstants.Sprite_Height * renderNodeShade,
+              srcY: 0,
           );
           return;
       }

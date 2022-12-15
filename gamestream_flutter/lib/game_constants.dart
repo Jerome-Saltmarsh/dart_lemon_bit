@@ -43,16 +43,27 @@ class GameConstants {
   //     .toList(growable: false);
 
 
-  static final colorStart = HSVColor.fromColor(Color.fromRGBO(38, 34, 47, 0.0));
-  static final colorEnd = HSVColor.fromColor(Color.fromRGBO(47, 34, 37, 1.0));
+
+  static var colorStart = HSVColor.fromColor(Color.fromRGBO(38, 34, 47, 1.0).withOpacity(0));
+  static var colorEnd = HSVColor.fromColor(Color.fromRGBO(47, 34, 39, 1.0));
 
   static final C0 = HSVColor.lerp(colorStart, colorEnd, 0.0);
   static final C1 = HSVColor.lerp(colorStart, colorEnd, 0.2);
   static final C2 = HSVColor.lerp(colorStart, colorEnd, 0.4);
   static final C3 = HSVColor.lerp(colorStart, colorEnd, 0.6);
   static final C4 = HSVColor.lerp(colorStart, colorEnd, 0.8);
-  static final C5 = HSVColor.lerp(colorStart, colorEnd, 0.9);
-  static final C6 = HSVColor.lerp(colorStart, colorEnd, 0.95);
+  static final C5 = HSVColor.lerp(colorStart, colorEnd, 0.92);
+  static final C6 = HSVColor.lerp(colorStart, colorEnd, 0.97);
+
+  static void refreshShades(){
+     Color_Shades[0] = HSVColor.lerp(colorStart, colorEnd, 0.0)!.toColor().value;
+     Color_Shades[1] = HSVColor.lerp(colorStart, colorEnd, 0.2)!.toColor().value;
+     Color_Shades[2] = HSVColor.lerp(colorStart, colorEnd, 0.4)!.toColor().value;
+     Color_Shades[3] = HSVColor.lerp(colorStart, colorEnd, 0.6)!.toColor().value;
+     Color_Shades[4] = HSVColor.lerp(colorStart, colorEnd, 0.8)!.toColor().value;
+     Color_Shades[5] = HSVColor.lerp(colorStart, colorEnd, 0.92)!.toColor().value;
+     Color_Shades[6] = HSVColor.lerp(colorStart, colorEnd, 0.97)!.toColor().value;
+  }
 
   static final Color_Shades = [
     C0,
