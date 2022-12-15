@@ -492,15 +492,15 @@ class GameRender {
   }
 
   static bool isCollectable(int itemType) =>
-      ItemType.isTypeTrinket(itemType) ||
-      ItemType.isTypeResource(itemType) ||
-      ItemType.isTypeConsumable(itemType) ||
-      ItemType.isTypeRecipe(itemType) ||
-      ItemType.isTypeWeapon(itemType) ||
-      ItemType.isTypeRecipe(itemType) ||
-      ItemType.isTypeHead(itemType)   ||
-      ItemType.isTypeBody(itemType)   ||
-      ItemType.isTypeLegs(itemType)    ;
+      ItemType.isTypeTrinket    (itemType) ||
+      ItemType.isTypeResource   (itemType) ||
+      ItemType.isTypeConsumable (itemType) ||
+      ItemType.isTypeRecipe     (itemType) ||
+      ItemType.isTypeWeapon     (itemType) ||
+      ItemType.isTypeRecipe     (itemType) ||
+      ItemType.isTypeHead       (itemType) ||
+      ItemType.isTypeBody       (itemType) ||
+      ItemType.isTypeLegs       (itemType)  ;
 
   static void renderGameObject(GameObject gameObject) {
 
