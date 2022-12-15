@@ -82,6 +82,7 @@ class GameRender {
   static bool get currentNodeInvisible => currentNodeVisibility == Visibility.Invisible;
   static int get currentNodeVisibility => GameNodes.nodesVisible[currentNodeIndex];
   static int get currentNodeColorTransparent => currentNodeVisibility == Visibility.Opaque ? 1 : GameConstants.Transparent;
+  static int get currentNodeColorTransparentShaded => GameRender.currentNodeVisibility == Visibility.Opaque ? GameRender.currentNodeColor : GameConstants.Transparent;
   static int get currentNodeWind => GameNodes.nodesWind[currentNodeIndex];
 
 

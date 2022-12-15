@@ -215,24 +215,28 @@ void renderNodeTemplateShaded(double srcX) {
       RenderNode.renderStandardNodeHalfNorth(
         srcX: srcX,
         srcY: GameConstants.Sprite_Height_Padded_01,
+        color: GameRender.currentNodeColorTransparentShaded,
       );
       return;
     case NodeOrientation.Half_South:
       RenderNode.renderStandardNodeHalfSouth(
         srcX: srcX,
         srcY: GameConstants.Sprite_Height_Padded_01,
+        color: GameRender.currentNodeColorTransparentShaded,
       );
       return;
     case NodeOrientation.Half_East:
       RenderNode.renderStandardNodeHalfEast(
         srcX: srcX,
         srcY: GameConstants.Sprite_Height_Padded_02,
+        color: GameRender.currentNodeColorTransparentShaded,
       );
       return;
     case NodeOrientation.Half_West:
       RenderNode.renderStandardNodeHalfWest(
         srcX: srcX,
         srcY: GameConstants.Sprite_Height_Padded_02,
+        color: GameRender.currentNodeColorTransparentShaded,
       );
       return;
     case NodeOrientation.Corner_Top:
