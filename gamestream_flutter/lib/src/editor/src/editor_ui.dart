@@ -33,7 +33,7 @@ class EditorUI {
         Positioned(
           left: 0,
           top: 50,
-          child: buildColumnObjects(),
+          child: buildEditorTabGameObjects(),
         ),
       if (activeEditTab == EditTab.Grid)
         Positioned(
@@ -154,7 +154,7 @@ class EditorUI {
                 child: Stack(
                   children: [
                     Engine.buildAtlasImage(
-                      image: GameImages.atlasIcons,
+                      image: GameImages.atlas_icons,
                       srcX: 193,
                       srcY: 32,
                       srcWidth: 96,
@@ -353,7 +353,7 @@ class EditorUI {
        ),
      );
 
-  static Widget buildColumnObjects() => Column(
+  static Widget buildEditorTabGameObjects() => Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             container(
@@ -368,7 +368,7 @@ class EditorUI {
               height: 100,
               color: Colors.white,
               child: Engine.buildAtlasImageButton(
-                  image: GameImages.gameobjects,
+                  image: GameImages.atlas_gameobjects,
                   srcX: AtlasGameObjects.Crystal_Large_X,
                   srcY: AtlasGameObjects.Crystal_Large_Y,
                   srcWidth: AtlasGameObjects.Crystal_Large_Width,
@@ -377,6 +377,22 @@ class EditorUI {
                       GameNetwork.sendClientRequestAddGameObject(
                         index: GameEditor.nodeSelectedIndex.value,
                         type: ItemType.GameObjects_Crystal,
+                      )),
+            ),
+            Container(
+              width: 100,
+              height: 100,
+              color: Colors.white,
+              child: Engine.buildAtlasImageButton(
+                  image: GameImages.atlas_gameobjects,
+                  srcX: AtlasGameObjects.Car_X,
+                  srcY: AtlasGameObjects.Car_Y,
+                  srcWidth: AtlasGameObjects.Car_Width,
+                  srcHeight: AtlasGameObjects.Car_Height,
+                  action: () =>
+                      GameNetwork.sendClientRequestAddGameObject(
+                        index: GameEditor.nodeSelectedIndex.value,
+                        type: ItemType.GameObjects_Car,
                       )),
             ),
           ],
@@ -601,7 +617,7 @@ class EditorUI {
 
   static Widget buildButtonSelectNodeType(int nodeType) {
     final canvas = Engine.buildAtlasImage(
-      image: GameImages.atlasNodes,
+      image: GameImages.atlas_nodes,
       srcX: AtlasNodeX.mapNodeType(nodeType),
       srcY: AtlasNodeY.mapNodeType(nodeType),
       srcWidth: AtlasNodeWidth.mapNodeType(nodeType),
@@ -666,7 +682,7 @@ class EditorUI {
 
   static Widget buildOrientationIcon(int orientation) {
     final canvas = Engine.buildAtlasImage(
-      image: GameImages.atlasNodes,
+      image: GameImages.atlas_nodes,
       srcX: AtlasNodeX.mapOrientation(orientation),
       srcY: AtlasNodeY.mapOrientation(orientation),
       srcWidth: GameConstants.Sprite_Width,

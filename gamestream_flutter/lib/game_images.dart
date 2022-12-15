@@ -10,14 +10,14 @@ class GameImages {
    static late Image projectiles;
    static late Image zombie;
    static late Image zombie_shadow;
-   static late Image gameobjects;
    static late Image character_dog;
    static late Image particles;
    static late Image template_shadow;
-   static late Image atlasNodes;
-   static late Image atlasCharacters;
-   static late Image atlasIcons;
-   static late Image atlasItems;
+   static late Image atlas_gameobjects;
+   static late Image atlas_nodes;
+   static late Image atlas_characters;
+   static late Image atlas_icons;
+   static late Image atlas_items;
 
    static late Image template_head_plain;
    static late Image template_head_rogue;
@@ -183,13 +183,13 @@ class GameImages {
    }
    
    static Future loadImages() async {
-      atlasCharacters
+      atlas_characters
       = await Engine.loadImageAsset('images/atlas-characters.png');
       zombie
       = await Engine.loadImageAsset('images/atlas-zombie.png');
       zombie_shadow
       = await Engine.loadImageAsset('images/atlas-zombie-shadow.png');
-      gameobjects
+      atlas_gameobjects
       = await Engine.loadImageAsset('images/atlas-gameobjects.png');
       particles
       = await Engine.loadImageAsset('images/atlas-particles.png');
@@ -199,11 +199,11 @@ class GameImages {
       = await Engine.loadImageAsset('images/template/template-shadow.png');
       minimap
       = await Engine.loadImageAsset('images/atlas-map.png');
-      atlasNodes
+      atlas_nodes
       = await Engine.loadImageAsset('images/atlas-nodes.png');
-      atlasIcons
+      atlas_icons
       = await Engine.loadImageAsset('images/atlas-icons.png');
-      atlasItems
+      atlas_items
       = await Engine.loadImageAsset('images/atlas-items.png');
 
       template_head_plain = await Engine.loadImageAsset('images/template/head/template-head-plain.png');

@@ -40,11 +40,15 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] feature inventory max weight
 [ ] feature attributes
 [ ] feature skills
+[ ] feature loot gameobjects
+[ ] feature node orientation vertical half
 
 [CONTENT]
 [ ] item type army clothes
 [ ] item type weapon crossbow
 [ ] node type road
+[ ] item type car
+[ ] node road orientation slope
 
 [GAMES]
 [ ] game royal

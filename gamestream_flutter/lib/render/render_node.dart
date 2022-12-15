@@ -6,7 +6,7 @@ class RenderNode {
   static final bufferClr = Engine.bufferClr;
   static final bufferSrc = Engine.bufferSrc;
   static final bufferDst = Engine.bufferDst;
-  static final atlas = GameImages.atlasNodes;
+  static final atlas = GameImages.atlas_nodes;
 
   static void renderNodeTorch(){
     if (!ClientState.torchesIgnited.value) {

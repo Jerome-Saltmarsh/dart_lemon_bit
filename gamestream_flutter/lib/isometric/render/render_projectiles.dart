@@ -6,7 +6,7 @@ const piQuarter = pi * 0.25;
 
 void renderPixelRed(double x, double y){
   Engine.renderSprite(
-      image: GameImages.gameobjects,
+      image: GameImages.atlas_gameobjects,
       srcX: 171,
       srcY: 0,
       srcWidth: 8,
@@ -31,7 +31,7 @@ void renderFireball(double x, double y, double rotation) {
 
 void renderOrb(double x, double y) {
   Engine.renderSprite(
-      image: GameImages.gameobjects,
+      image: GameImages.atlas_gameobjects,
       dstX: x,
       dstY: y,
       srcX: 417,

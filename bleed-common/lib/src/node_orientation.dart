@@ -26,6 +26,8 @@ class NodeOrientation {
    static const Tree_Top = 24;
    static const Tree_Bottom = 25;
    static const Radial = 26;
+   static const Half_Top = 17;
+   static const Half_Bottom = 17;
 
    static const valuesSlopeSymmetric = [
       Slope_North,

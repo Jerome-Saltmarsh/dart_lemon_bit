@@ -185,7 +185,7 @@ class GameRender {
     switch (particle.type) {
       case ParticleType.Water_Drop:
         Engine.renderSprite(
-          image: GameImages.gameobjects,
+          image: GameImages.atlas_gameobjects,
           dstX: GameConvert.convertV3ToRenderX(particle),
           dstY: GameConvert.convertV3ToRenderY(particle),
           srcX: 0.0,
@@ -198,7 +198,7 @@ class GameRender {
       case ParticleType.Blood:
         casteShadowDownV3(particle);
         Engine.renderSprite(
-          image: GameImages.gameobjects,
+          image: GameImages.atlas_gameobjects,
           dstX: particle.renderX,
           dstY: particle.renderY,
           srcX: AtlasParticleX.Blood,
@@ -214,7 +214,7 @@ class GameRender {
           break;
         }
         Engine.renderSprite(
-          image: GameImages.gameobjects,
+          image: GameImages.atlas_gameobjects,
           dstX: GameConvert.convertV3ToRenderX(particle),
           dstY: GameConvert.convertV3ToRenderY(particle),
           srcX: 0.0,
@@ -226,7 +226,7 @@ class GameRender {
         break;
       case ParticleType.Bubble_Small:
         Engine.renderSprite(
-          image: GameImages.gameobjects,
+          image: GameImages.atlas_gameobjects,
           dstX: GameConvert.convertV3ToRenderX(particle),
           dstY: GameConvert.convertV3ToRenderY(particle),
           srcX: 0.0,
@@ -238,7 +238,7 @@ class GameRender {
         break;
       case ParticleType.Bullet_Ring:
         Engine.renderSprite(
-          image: GameImages.gameobjects,
+          image: GameImages.atlas_gameobjects,
           dstX: GameConvert.convertV3ToRenderX(particle),
           dstY: GameConvert.convertV3ToRenderY(particle),
           srcX: 0.0,
@@ -268,7 +268,7 @@ class GameRender {
         break;
       case ParticleType.Block_Wood:
         Engine.renderSprite(
-          image: GameImages.gameobjects,
+          image: GameImages.atlas_gameobjects,
           dstX: particle.renderX,
           dstY: particle.renderY,
           srcX: 0,
@@ -281,7 +281,7 @@ class GameRender {
         break;
       case ParticleType.Block_Grass:
         Engine.renderSprite(
-          image: GameImages.gameobjects,
+          image: GameImages.atlas_gameobjects,
           dstX: particle.renderX,
           dstY: particle.renderY,
           srcX: 0,
@@ -294,7 +294,7 @@ class GameRender {
         break;
       case ParticleType.Block_Brick:
         Engine.renderSprite(
-          image: GameImages.gameobjects,
+          image: GameImages.atlas_gameobjects,
           dstX: particle.renderX,
           dstY: particle.renderY,
           srcX: 0,
@@ -368,7 +368,7 @@ class GameRender {
       case ParticleType.Orb_Shard:
         const size = 16.0;
         Engine.renderSprite(
-          image: GameImages.gameobjects,
+          image: GameImages.atlas_gameobjects,
           dstX: particle.renderX,
           dstY: particle.renderY,
           srcX: 224 ,
@@ -502,10 +502,25 @@ class GameRender {
       ItemType.isTypeLegs(itemType)    ;
 
   static void renderGameObject(GameObject gameObject) {
+
+    if (ItemType.isTypeGameObject(gameObject.type)) {
+      Engine.renderSprite(
+        image: GameImages.atlas_gameobjects,
+        dstX: GameConvert.convertV3ToRenderX(gameObject),
+        dstY: GameConvert.convertV3ToRenderY(gameObject),
+        srcX: AtlasItems.getSrcX(gameObject.type),
+        srcY: AtlasItems.getSrcY(gameObject.type),
+        srcWidth: AtlasItems.getSrcWidth(gameObject.type),
+        srcHeight: AtlasItems.getSrcHeight(gameObject.type),
+        color: GameRender.currentNodeColorTransparentShaded,
+      );
+      return;
+    }
+
     if (isCollectable(gameObject.type)) {
       renderBouncingGameObjectShadow(gameObject);
       Engine.renderSprite(
-        image: GameImages.atlasItems,
+        image: GameImages.atlas_items,
         dstX: GameConvert.convertV3ToRenderX(gameObject),
         dstY: getRenderYBouncing(gameObject),
         srcX: AtlasItems.getSrcX(gameObject.type),
@@ -517,154 +532,7 @@ class GameRender {
       return;
     }
 
-    switch (gameObject.type) {
-      case ItemType.GameObjects_Rock:
-        Engine.renderSprite(
-          image: GameImages.gameobjects,
-          dstX: gameObject.renderX,
-          dstY: gameObject.renderY,
-          srcX: AtlasGameObjects.Rock_X,
-          srcY: AtlasGameObjects.Rock_Y,
-          srcWidth: AtlasGameObjects.Rock_Width,
-          srcHeight: AtlasGameObjects.Rock_Height,
-          color: GameState.getV3RenderColor(gameObject),
-        );
-        return;
-      case ItemType.GameObjects_Barrel:
-        Engine.renderSprite(
-          image: GameImages.gameobjects,
-          dstX: GameConvert.convertV3ToRenderX(gameObject),
-          dstY: GameConvert.convertV3ToRenderY(gameObject),
-          srcX: AtlasGameObjects.Barrel_X,
-          srcY: AtlasGameObjects.Barrel_Y,
-          srcWidth: AtlasGameObjects.Barrel_Width,
-          srcHeight: AtlasGameObjects.Barrel_Height,
-          anchorY: AtlasGameObjects.Barrel_Anchor,
-          color: GameState.getV3RenderColor(gameObject),
-        );
-        return;
-      case ItemType.GameObjects_Tavern_Sign:
-        Engine.renderSprite(
-          image: GameImages.gameobjects,
-          dstX: GameConvert.convertV3ToRenderX(gameObject),
-          dstY: GameConvert.convertV3ToRenderY(gameObject),
-          srcX: AtlasGameObjects.Tavern_Sign_X,
-          srcY: AtlasGameObjects.Tavern_Sign_Y,
-          srcWidth: AtlasGameObjects.Tavern_Sign_Width,
-          srcHeight: AtlasGameObjects.Tavern_Sign_Height,
-          color: GameState.getV3RenderColor(gameObject),
-        );
-        return;
-      case ItemType.GameObjects_Candle:
-        Engine.renderSprite(
-          image: GameImages.gameobjects,
-          dstX: GameConvert.convertV3ToRenderX(gameObject),
-          dstY: GameConvert.convertV3ToRenderY(gameObject),
-          srcX: 1812,
-          srcY: 0,
-          srcWidth: 3,
-          srcHeight: 10,
-          anchorY: 0.95,
-        );
-        return;
-      case ItemType.GameObjects_Bottle:
-        Engine.renderSprite(
-          image: GameImages.gameobjects,
-          dstX: GameConvert.convertV3ToRenderX(gameObject),
-          dstY: GameConvert.convertV3ToRenderY(gameObject),
-          srcX: 1811,
-          srcY: 11,
-          srcWidth: 5,
-          srcHeight: 14,
-          anchorY: 0.95,
-          color: GameState.getV3RenderColor(gameObject),
-        );
-        return;
-      case ItemType.GameObjects_Wheel:
-        Engine.renderSprite(
-          image: GameImages.gameobjects,
-          dstX: GameConvert.convertV3ToRenderX(gameObject),
-          dstY: GameConvert.convertV3ToRenderY(gameObject),
-          srcX: 1775,
-          srcY: 0,
-          srcWidth: 34,
-          srcHeight: 40,
-          anchorY: 0.9,
-          color: GameState.getV3RenderColor(gameObject),
-        );
-        return;
-      case ItemType.GameObjects_Crystal:
-        Engine.renderSprite(
-            image: GameImages.gameobjects,
-            dstX: GameConvert.convertV3ToRenderX(gameObject),
-            dstY: GameConvert.convertV3ToRenderY(gameObject),
-            srcX: AtlasGameObjects.Crystal_Large_X,
-            srcY: AtlasGameObjects.Crystal_Large_Y,
-            srcWidth: AtlasGameObjects.Crystal_Large_Width,
-            srcHeight: AtlasGameObjects.Crystal_Large_Height,
-            anchorY: AtlasGameObjects.Crystal_Anchor_Y
-        );
-        return;
-      case ItemType.GameObjects_Cup:
-        Engine.renderSprite(
-          image: GameImages.gameobjects,
-          dstX: GameConvert.convertV3ToRenderX(gameObject),
-          dstY: GameConvert.convertV3ToRenderY(gameObject),
-          srcX: AtlasGameObjects.Cup_X,
-          srcY: AtlasGameObjects.Cup_Y,
-          srcWidth: AtlasGameObjects.Cup_Width,
-          srcHeight: AtlasGameObjects.Cup_Height,
-          anchorY: AtlasGameObjects.Cup_Anchor_Y,
-        );
-        return;
-      case ItemType.GameObjects_Lantern_Red:
-        Engine.renderSprite(
-          image: GameImages.gameobjects,
-          dstX:GameConvert.convertV3ToRenderX(gameObject),
-          dstY:GameConvert.convertV3ToRenderY(gameObject),
-          srcX: 1744,
-          srcY: 48,
-          srcWidth: 12,
-          srcHeight: 22,
-          scale: 1.0,
-          color: GameConstants.Color_Shades[Shade.Very_Bright],
-        );
-        return;
-      case ItemType.GameObjects_Book_Purple:
-        Engine.renderSprite(
-          image: GameImages.gameobjects,
-          dstX: GameConvert.convertV3ToRenderX(gameObject),
-          dstY: GameConvert.convertV3ToRenderY(gameObject),
-          srcX: 1697,
-          srcY: 16,
-          srcWidth: 8,
-          srcHeight: 15,
-        );
-        return;
-      case ItemType.GameObjects_Crystal_Small_Blue:
-        Engine.renderSprite(
-          image: GameImages.gameobjects,
-          dstX: GameConvert.convertV3ToRenderX(gameObject),
-          dstY: GameConvert.convertV3ToRenderY(gameObject),
-          srcX: 1697,
-          srcY: 33,
-          srcWidth: 10,
-          srcHeight: 19,
-        );
-        return;
-      case ItemType.GameObjects_Grenade:
-        Engine.renderSprite(
-          image: GameImages.atlasItems,
-          dstX: GameConvert.convertV3ToRenderX(gameObject),
-          dstY: gameObject.renderY,
-          srcX: AtlasItems.getSrcX(ItemType.Weapon_Thrown_Grenade),
-          srcY: AtlasItems.getSrcY(ItemType.Weapon_Thrown_Grenade),
-          srcWidth: AtlasItems.size,
-          srcHeight: AtlasItems.size,
-          color: GameState.getV3RenderColor(gameObject),
-        );
-        return;
-    }
+    throw Exception('could not render gameobject type ${gameObject.type}');
   }
 
   static void renderBouncingGameObjectShadow(Vector3 gameObject){
@@ -752,7 +620,7 @@ class GameRender {
 
   static void renderShadow(double x, double y, double z, {double scale = 1}) =>
       Engine.renderSprite(
-        image: GameImages.gameobjects,
+        image: GameImages.atlas_gameobjects,
         dstX: (x - y) * 0.5,
         dstY: ((y + x) * 0.5) - z,
         srcX: 0,
@@ -763,7 +631,7 @@ class GameRender {
       );
 
   static void renderCurrentNodeLine() {
-    Engine.bufferImage = GameImages.atlasNodes;
+    Engine.bufferImage = GameImages.atlas_nodes;
     while (
         currentNodeColumn >= 0 &&
         currentNodeRow <= nodesRowsMax &&
@@ -1131,7 +999,7 @@ class GameRender {
       int column,
       ) {
     Engine.renderSprite(
-      image: GameImages.atlasNodes,
+      image: GameImages.atlas_nodes,
       dstX: GameConvert.rowColumnToRenderX(row, column),
       dstY: GameConvert.rowColumnZToRenderY(row, column,z),
       srcX: AtlasNodeX.Wireframe_Blue,
@@ -1145,7 +1013,7 @@ class GameRender {
 
   static void renderWireFrameRed(int row, int column, int z) {
     Engine.renderSprite(
-      image: GameImages.atlasNodes,
+      image: GameImages.atlas_nodes,
       dstX: GameConvert.rowColumnToRenderX(row, column),
       dstY: GameConvert.rowColumnZToRenderY(row, column,z),
       srcX: AtlasNodeX.Wireframe_Red,
@@ -1270,7 +1138,7 @@ class GameRender {
   static void canvasRenderCursorHand(ui.Canvas canvas){
     Engine.renderExternalCanvas(
         canvas: canvas,
-        image: GameImages.atlasIcons,
+        image: GameImages.atlas_icons,
         srcX: 0,
         srcY: 256,
         srcWidth: 64,
@@ -1284,7 +1152,7 @@ class GameRender {
   static void canvasRenderCursorTalk(ui.Canvas canvas){
     Engine.renderExternalCanvas(
       canvas: canvas,
-      image: GameImages.atlasIcons,
+      image: GameImages.atlas_icons,
       srcX: 0,
       srcY: 320,
       srcWidth: 64,
@@ -1301,7 +1169,7 @@ class GameRender {
     const offset = 18.0 * 1.5;
     Engine.renderExternalCanvas(
         canvas: canvas,
-        image: GameImages.atlasIcons,
+        image: GameImages.atlas_icons,
         srcX: srcX + 29,
         srcY: srcY + 0,
         srcWidth: 6,
@@ -1312,7 +1180,7 @@ class GameRender {
     );
     Engine.renderExternalCanvas(
         canvas: canvas,
-        image: GameImages.atlasIcons,
+        image: GameImages.atlas_icons,
         srcX: srcX + 29,
         srcY: srcY + 0,
         srcWidth: 6,
@@ -1323,7 +1191,7 @@ class GameRender {
     );
     Engine.renderExternalCanvas(
         canvas: canvas,
-        image: GameImages.atlasIcons,
+        image: GameImages.atlas_icons,
         srcX: srcX + 0,
         srcY: srcY + 29,
         srcWidth: 22,
@@ -1334,7 +1202,7 @@ class GameRender {
     );
     Engine.renderExternalCanvas(
         canvas: canvas,
-        image: GameImages.atlasIcons,
+        image: GameImages.atlas_icons,
         srcX: srcX + 0,
         srcY: srcY + 29,
         srcWidth: 22,
@@ -1351,7 +1219,7 @@ class GameRender {
     const offset = 18.0 * 1.5;
     Engine.renderExternalCanvas(
         canvas: canvas,
-        image: GameImages.atlasIcons,
+        image: GameImages.atlas_icons,
         srcX: srcX + 29,
         srcY: srcY + 0,
         srcWidth: 6,
@@ -1362,7 +1230,7 @@ class GameRender {
     );
     Engine.renderExternalCanvas(
         canvas: canvas,
-        image: GameImages.atlasIcons,
+        image: GameImages.atlas_icons,
         srcX: srcX + 29,
         srcY: srcY + 0,
         srcWidth: 6,
@@ -1373,7 +1241,7 @@ class GameRender {
     );
     Engine.renderExternalCanvas(
         canvas: canvas,
-        image: GameImages.atlasIcons,
+        image: GameImages.atlas_icons,
         srcX: srcX + 0,
         srcY: srcY + 29,
         srcWidth: 22,
@@ -1384,7 +1252,7 @@ class GameRender {
     );
     Engine.renderExternalCanvas(
         canvas: canvas,
-        image: GameImages.atlasIcons,
+        image: GameImages.atlas_icons,
         srcX: srcX + 0,
         srcY: srcY + 29,
         srcWidth: 22,
@@ -1397,7 +1265,7 @@ class GameRender {
 
   static void renderCircle32(double x, double y, double z){
     Engine.renderSprite(
-      image: GameImages.gameobjects,
+      image: GameImages.atlas_gameobjects,
       srcX: AtlasGameObjects.Circle32_X,
       srcY: AtlasGameObjects.Circle32_Y,
       srcWidth: 32,

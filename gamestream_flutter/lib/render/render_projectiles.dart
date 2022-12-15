@@ -23,7 +23,7 @@ class RenderProjectiles {
         break;
       case ProjectileType.Rocket:
         Engine.renderSpriteRotated(
-          image: GameImages.atlasItems,
+          image: GameImages.atlas_items,
           srcX: 201,
           srcY: 109,
           srcWidth: 16,
@@ -41,7 +41,7 @@ class RenderProjectiles {
 
   static void renderBullet(double x, double y, double rotation) {
     Engine.renderSpriteRotated(
-        image: GameImages.gameobjects,
+        image: GameImages.atlas_gameobjects,
         srcX: 87,
         srcY: 48,
         srcWidth: 2,
@@ -57,7 +57,7 @@ class RenderProjectiles {
 
   static void renderArrow(double x, double y, double rotation) {
     Engine.renderSpriteRotated(
-      image: GameImages.gameobjects,
+      image: GameImages.atlas_gameobjects,
       srcX: AtlasGameObjects.arrow_shadow_x,
       srcY: AtlasGameObjects.arrow_shadow_y,
       srcWidth: AtlasGameObjects.arrow_width,
@@ -69,7 +69,7 @@ class RenderProjectiles {
     );
 
     Engine.renderSpriteRotated(
-      image: GameImages.gameobjects,
+      image: GameImages.atlas_gameobjects,
       srcX: AtlasGameObjects.arrow_x,
       srcY: AtlasGameObjects.arrow_y,
       srcWidth: AtlasGameObjects.arrow_width,

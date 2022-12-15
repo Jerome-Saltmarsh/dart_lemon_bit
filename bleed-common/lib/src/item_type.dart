@@ -74,6 +74,7 @@ class ItemType {
   static const GameObjects_Book_Purple          = Index_GameObjects + 12;
   static const GameObjects_Crystal_Small_Blue   = Index_GameObjects + 13;
   static const GameObjects_Grenade              = Index_GameObjects + 14;
+  static const GameObjects_Car                  = Index_GameObjects + 15;
 
   static const Resource_Wood = Index_Resources + 5;
   static const Resource_Stone = Index_Resources + 6;
@@ -228,6 +229,9 @@ class ItemType {
 
   static bool isTypeConsumable(int value) =>
       value >= Index_Consumables && value < Index_Resources;
+
+  static bool isTypeGameObject(int value) =>
+      value >= Index_GameObjects && value < Index_Consumables;
 
   static bool isTypeResource(int value) =>
       value >= Index_Resources && value < Index_Trinkets;

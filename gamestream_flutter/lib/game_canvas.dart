@@ -71,7 +71,7 @@ class GameCanvas {
            if (ServerQuery.getEquippedWeaponQuantity() <= 0){
              Engine.renderExternalCanvas(
                canvas: canvas,
-               image: GameImages.atlasIcons,
+               image: GameImages.atlas_icons,
                srcX: 272,
                srcY: 0,
                srcWidth: 128,
@@ -96,7 +96,7 @@ class GameCanvas {
           if (ServerQuery.getEquippedWeaponQuantity() <= 0){
             Engine.renderExternalCanvas(
               canvas: canvas,
-              image: GameImages.atlasIcons,
+              image: GameImages.atlas_icons,
               srcX: 272,
               srcY: 0,
               srcWidth: 128,

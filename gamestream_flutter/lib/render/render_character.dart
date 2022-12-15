@@ -14,7 +14,7 @@ class RenderCharacter {
     if (character.spawning) {
       if (character.characterType == CharacterType.Rat){
         Engine.renderSprite(
-          image: GameImages.gameobjects,
+          image: GameImages.atlas_gameobjects,
           srcX: 1920,
           srcY: (character.frame % 8) * 43.0,
           dstX: character.renderX,
@@ -26,7 +26,7 @@ class RenderCharacter {
       }
       if (character.characterType == CharacterType.Slime) {
         Engine.renderSprite(
-          image: GameImages.gameobjects,
+          image: GameImages.atlas_gameobjects,
           srcX: 3040,
           srcY: (character.frame % 6) * 48.0,
           dstX: character.renderX,
@@ -38,7 +38,7 @@ class RenderCharacter {
         return;
       }
       Engine.renderSprite(
-        image: GameImages.atlasCharacters,
+        image: GameImages.atlas_characters,
         srcX: 513,
         srcY: (character.frame % 8) * 73.0,
         dstX: character.renderX,
@@ -63,7 +63,7 @@ class RenderCharacter {
         return RenderCharacter.renderCharacterZombie(character);
       case CharacterType.Triangle:
         Engine.renderSpriteRotated(
-            image: GameImages.atlasCharacters,
+            image: GameImages.atlas_characters,
             srcX: 0,
             srcY: 512,
             srcWidth: 32,

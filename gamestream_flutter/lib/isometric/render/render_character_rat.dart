@@ -9,7 +9,7 @@ void renderCharacterRat(Character character){
 
   if (character.state == CharacterState.Running){
     Engine.renderSprite(
-      image: GameImages.gameobjects,
+      image: GameImages.atlas_gameobjects,
       dstX: character.renderX,
       dstY: character.renderY,
       srcX: loop4(animation: const [1, 2, 3, 4], character: character, framesPerDirection: 4),
@@ -24,7 +24,7 @@ void renderCharacterRat(Character character){
 
   if (character.state == CharacterState.Performing){
     Engine.renderSprite(
-      image: GameImages.gameobjects,
+      image: GameImages.atlas_gameobjects,
       dstX: character.renderX,
       dstY: character.renderY,
       srcX: 2680,
@@ -38,7 +38,7 @@ void renderCharacterRat(Character character){
   }
 
   Engine.renderSprite(
-    image: GameImages.gameobjects,
+    image: GameImages.atlas_gameobjects,
     dstX: character.renderX,
     dstY: character.renderY,
     srcX: 2680,

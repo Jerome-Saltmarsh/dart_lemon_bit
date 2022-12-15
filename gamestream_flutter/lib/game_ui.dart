@@ -279,7 +279,7 @@ class GameUI {
   static Widget buildAtlasIconType(int iconType,
           {double scale = 1, int color = 1, double size = AtlasIcons.Size}) =>
       Engine.buildAtlasImage(
-        image: GameImages.atlasIcons,
+        image: GameImages.atlas_icons,
         srcX: AtlasIcons.getSrcX(iconType),
         srcY: AtlasIcons.getSrcY(iconType),
         srcWidth: size,
@@ -290,7 +290,7 @@ class GameUI {
 
   static Widget buildAtlasItemType(int itemType, {double scale = 1}) =>
       Engine.buildAtlasImage(
-        image: GameImages.atlasItems,
+        image: GameImages.atlas_items,
         srcX: AtlasItems.getSrcX(itemType),
         srcY: AtlasItems.getSrcY(itemType),
         srcWidth: AtlasItems.getSrcWidth(itemType),
@@ -299,7 +299,7 @@ class GameUI {
       );
 
   static Widget buildAtlasNodeType(int nodeType) => Engine.buildAtlasImage(
-        image: GameImages.atlasNodes,
+        image: GameImages.atlas_nodes,
         srcX: AtlasNodeX.mapNodeType(nodeType),
         srcY: AtlasNodeY.mapNodeType(nodeType),
         srcWidth: AtlasNodeWidth.mapNodeType(nodeType),

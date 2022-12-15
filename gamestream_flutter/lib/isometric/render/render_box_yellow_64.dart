@@ -4,7 +4,7 @@ import 'package:lemon_engine/engine.dart';
 
 void renderBoxYellow64(double x, double y){
   Engine.renderSprite(
-    image: GameImages.gameobjects,
+    image: GameImages.atlas_gameobjects,
     dstX: x,
     dstY: y,
     srcX: 560,

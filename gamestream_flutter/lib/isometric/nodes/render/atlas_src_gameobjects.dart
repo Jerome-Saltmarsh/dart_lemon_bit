@@ -103,4 +103,9 @@ class AtlasGameObjects {
   static const Bar_Yellow_Transparent_Y = 40.0;
   static const Bar_Yellow_Transparent_Width = 52.0;
   static const Bar_Yellow_Transparent_Height = 8.0;
+
+  static const Car_X = 0.0;
+  static const Car_Y = 144.0;
+  static const Car_Width = 143.0;
+  static const Car_Height = 105.0;
 }

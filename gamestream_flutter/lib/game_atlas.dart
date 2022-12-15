@@ -4,6 +4,11 @@ class AtlasItems {
   static const size = 32.0;
 
   static double getSrcX(int itemType) => const <int, double> {
+      ItemType.GameObjects_Car: 0,
+      ItemType.GameObjects_Crystal: 75,
+      ItemType.GameObjects_Barrel: 11,
+      ItemType.GameObjects_Cup: 0,
+      ItemType.GameObjects_Tavern_Sign: 40,
       ItemType.Trinket_Ring_of_Health: 256,
       ItemType.Trinket_Ring_of_Damage: 288,
       ItemType.Empty: 224,
@@ -59,6 +64,11 @@ class AtlasItems {
   }[itemType] ?? 0;
 
   static double getSrcY(int itemType) => const <int, double> {
+    ItemType.GameObjects_Car: 144,
+    ItemType.GameObjects_Crystal: 0,
+    ItemType.GameObjects_Barrel: 0,
+    ItemType.GameObjects_Cup: 0,
+    ItemType.GameObjects_Tavern_Sign: 0,
     ItemType.Trinket_Ring_of_Health: 32,
     ItemType.Trinket_Ring_of_Damage: 32,
     ItemType.Weapon_Ranged_Shotgun: 32,
@@ -106,6 +116,11 @@ class AtlasItems {
   }[itemType] ?? 0;
 
   static double getSrcWidth(int itemType) => const <int, double> {
+    ItemType.GameObjects_Car: 143,
+    ItemType.GameObjects_Crystal: 22,
+    ItemType.GameObjects_Barrel: 28,
+    ItemType.GameObjects_Cup: 6,
+    ItemType.GameObjects_Tavern_Sign: 22,
     ItemType.Weapon_Rifle_Sniper: 48,
     ItemType.Weapon_Flamethrower: 64,
     ItemType.Weapon_Special_Bazooka: 48,
@@ -113,6 +128,11 @@ class AtlasItems {
   }[itemType] ?? size;
 
   static double getSrcHeight(int itemType) => const <int, double> {
+    ItemType.GameObjects_Car: 105,
+    ItemType.GameObjects_Crystal: 45,
+    ItemType.GameObjects_Barrel: 40,
+    ItemType.GameObjects_Cup: 11,
+    ItemType.GameObjects_Tavern_Sign: 22,
     ItemType.Weapon_Rifle_Sniper: 16,
     ItemType.Weapon_Special_Bazooka: 16,
     ItemType.Weapon_Special_Minigun: 12,

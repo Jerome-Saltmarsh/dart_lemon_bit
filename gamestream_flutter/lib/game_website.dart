@@ -38,7 +38,7 @@ class GameWebsite {
       final centerX = size.width * 0.5;
       // final y =
       Engine.renderSprite(
-        image: GameImages.atlasNodes,
+        image: GameImages.atlas_nodes,
         srcX: 0,
         srcY: 0,
         srcWidth: 48,
@@ -47,7 +47,7 @@ class GameWebsite {
         dstY: 100 + GameAnimation.animationFrameWaterHeight.toDouble(),
       );
       Engine.renderSprite(
-        image: GameImages.atlasCharacters,
+        image: GameImages.atlas_characters,
         srcX: 0,
         srcY: 0,
         srcWidth: 64,

@@ -8,7 +8,7 @@ void renderBarGreen(double x, double y, double z, double percentage, {
   bool transparent = false, int color = 1,
 }) {
   Engine.renderSprite(
-    image: GameImages.gameobjects,
+    image: GameImages.atlas_gameobjects,
     dstX: GameConvert.getRenderX(x, y, z) - AtlasGameObjects.Bar_Green_Width_Half,
     dstY: GameConvert.getRenderY(x, y, z) - 45,
     srcX: transparent ? AtlasGameObjects.Bar_Green_Transparent_X :AtlasGameObjects.Bar_Green_X,
@@ -61,7 +61,7 @@ void renderCharacterBarWeaponRounds({
   const srcWidthHalf = srcWidth * 0.5;
 
   Engine.renderSprite(
-    image: GameImages.gameobjects,
+    image: GameImages.atlas_gameobjects,
     dstX: x - srcWidthHalf,
     dstY: y - marginY,
     srcX: srcX,
@@ -72,7 +72,7 @@ void renderCharacterBarWeaponRounds({
   );
 
   Engine.renderSprite(
-    image: GameImages.gameobjects,
+    image: GameImages.atlas_gameobjects,
     dstX: x - srcWidthHalf,
     dstY: y - marginY,
     srcX: srcX,
