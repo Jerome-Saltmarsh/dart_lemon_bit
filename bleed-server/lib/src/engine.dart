@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:bleed_server/gamestream.dart';
+import 'package:bleed_server/src/io/save_directory.dart';
 
 import 'constants/frames_per_second.dart';
 import 'dark_age/areas/area-empty.dart';
@@ -49,8 +51,17 @@ class Engine {
   final gameMap = <List<DarkAgeArea>>[];
 
   Future run() async {
+    print('dart-version: ${Platform.version}');
     print('gamestream.online server starting');
-    print('v${version}');
+    print("Directory.current.path: ${Directory.current.path}");
+    print('$version');
+
+    final sceneDirectoryExists = await Scene_Directory.exists();
+
+    if (!sceneDirectoryExists){
+      throw Exception('could not find scenes directory: $Scene_Directory_Path');
+    }
+
     if (isLocalMachine){
       print("Environment Detected: Jerome's Computer");
     }else{

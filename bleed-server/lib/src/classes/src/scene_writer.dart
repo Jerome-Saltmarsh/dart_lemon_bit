@@ -67,7 +67,7 @@ class SceneWriter extends ByteWriter {
         values.add(i);
      }
      writeUInt16(values.length);
-     writeUInt16s(values);
+     writeUint16List(values);
   }
 
   void writeSpawnPoints(Scene scene){
@@ -75,10 +75,8 @@ class SceneWriter extends ByteWriter {
 
     writeByte(ScenePart.Spawn_Points);
     writeUInt16(scene.spawnPoints.length);
-    writeUInt16s(scene.spawnPoints);
+    writeUint16List(scene.spawnPoints);
   }
-
-
 
   Uint8List _compileScene(Scene scene, {required bool gameObjects}){
     resetIndex();
@@ -168,12 +166,12 @@ class SceneReader extends ByteReader {
 
   void readPlayerSpawnPoints() {
     final playerSpawnPointLength = readUInt16();
-    playerSpawnPoints = readUInt16s(playerSpawnPointLength);
+    playerSpawnPoints = readUint16List(playerSpawnPointLength);
   }
 
   void readSpawnPoints(){
     final length = readUInt16();
-    spawnPoints = readUInt16s(length);
+    spawnPoints = readUint16List(length);
   }
 
   void readNodes(){

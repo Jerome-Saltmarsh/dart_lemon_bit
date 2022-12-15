@@ -1,7 +1,24 @@
-# Use Google's official Dart image.
-# https://hub.docker.com/r/google/dart-runtime/
-FROM google/dart-runtime
+# Specify the Dart SDK base image version using dart:<version> (ex: dart:2.12)
+FROM dart:stable AS build
 
-# ONBUILD instructions for COPY and pub get is defined in the google/dart-runtime image,
-# allowing you to keep this file very simple, see:
-# https://github.com/dart-lang/dart_docker/blob/master/runtime/Dockerfile.template#L15-L18
+# Resolve app dependencies.
+WORKDIR /app
+COPY pubspec.* ./
+RUN dart pub get
+
+# Copy app source code and AOT compile it.
+COPY . .
+# Ensure packages are still up-to-date if anything has changed
+RUN dart pub get --offline
+RUN dart compile exe bin/server.dart -o bin/server
+
+# Build minimal serving image from AOT-compiled `/server` and required system
+# libraries and configuration files stored in `/runtime/` from the build stage.
+FROM scratch
+COPY --from=build /runtime/ /
+COPY --from=build /app/bin/server /app/bin/
+COPY --from=build /app/scenes /app/bin/scenes
+
+# Start server.
+EXPOSE 8080
+CMD ["/app/bin/server"]

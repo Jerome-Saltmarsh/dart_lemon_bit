@@ -8,7 +8,7 @@ import 'convert_scene_to_json.dart';
 void writeSceneToFileJson(Scene scene) {
   writeStringToFile(
     fileName: '${scene.name}.json',
-    directory: saveDirectoryPath,
+    directory: Scene_Directory_Path,
     contents: convertSceneToString(scene),
   );
 }
@@ -16,7 +16,7 @@ void writeSceneToFileJson(Scene scene) {
 void writeSceneToFileBytes(Scene scene) {
   writeBytesToFile(
     fileName: '${scene.name}.scene',
-    directory: saveDirectoryPath,
+    directory: Scene_Directory_Path,
     contents: SceneWriter.compileScene(scene, gameObjects: true),
   );
 }
