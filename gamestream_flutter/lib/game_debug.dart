@@ -131,13 +131,13 @@ class GameDebug {
                                     GameLighting.Hue_Shift.value = value;
                                });
                             }),
-                            watch(GameLighting.Hue_Offset, (double value) => text("Hue Offset: ${value.toInt()}")),
-                            watch(GameLighting.Hue_Offset, (double hueShift){
+                            watch(GameLighting.Hue, (double value) => text("Hue: ${value.toInt()}")),
+                            watch(GameLighting.Hue, (double hueShift){
                               return Slider(
                                   min: 0.0,
                                   max: 360.0,
                                   value: hueShift, onChanged: (double value){
-                                GameLighting.Hue_Offset.value = value;
+                                GameLighting.Hue.value = value;
                               });
                             }),
                           ],

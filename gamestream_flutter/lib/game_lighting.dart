@@ -9,7 +9,7 @@ class GameLighting {
   static final Color_Start = Watch(Default_Color_Start, onChanged: onChangedColor);
   static final Color_End = Watch(Default_Color_End, onChanged: onChangedColor);
   static final Hue_Shift = Watch(randomBetween(0, 360), onChanged: refreshHues);
-  static final Hue_Offset = Watch(randomBetween(0, 360), onChanged: refreshHues);
+  // static final Hue_Offset = Watch(randomBetween(0, 360), onChanged: refreshHues);
 
   static final V0 = Watch(0.00, onChanged: onChangedLighting);
   static final V1 = Watch(0.20, onChanged: onChangedLighting);
@@ -64,7 +64,7 @@ class GameLighting {
   // METHODS
 
   static void refreshHues([double value = 0.0]){
-    Color_Start_Hue = Hue.value + Hue_Offset.value;
+    Color_Start_Hue = Hue.value;
     Color_End_Hue = Color_Start_Hue + Hue_Shift.value;
   }
 
