@@ -475,9 +475,10 @@ class ServerResponseReader with ByteReader {
     const Seconds_At_12PM = (Seconds_Per_Hour * 12);
     final totalSeconds = (ServerState.hours.value * Seconds_Per_Hour) + (ServerState.minutes.value * 60);
 
-    final p = ((totalSeconds / Seconds_Per_24_Hours) * 360.0) + GameLighting.Hue_Offset;
-    GameLighting.Color_Start_Hue = p;
-    GameLighting.Color_End_Hue = p + GameLighting.Hue_Shift;
+    GameLighting.Hue.value = ((totalSeconds / Seconds_Per_24_Hours) * 360.0);
+    // final p = ((totalSeconds / Seconds_Per_24_Hours) * 360.0) + GameLighting.Hue_Offset.value;
+    // GameLighting.Color_Start_Hue = p;
+    // GameLighting.Color_End_Hue = p + GameLighting.Hue_Shift.value;
 
     if (totalSeconds < Seconds_At_12PM){
       final percentage = 1.0 - (totalSeconds / Seconds_At_12PM);

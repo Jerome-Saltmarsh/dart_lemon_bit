@@ -11,6 +11,7 @@ class GameSystem {
     print("environment: ${Engine.isLocalHost ? 'localhost' : 'production'}");
 
     GameLighting.refreshShades();
+    GameLighting.refreshHues();
 
     final visitDateTimeString = sharedPreferences.getString('visit-datetime');
     if (visitDateTimeString != null) {

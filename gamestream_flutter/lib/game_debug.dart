@@ -92,20 +92,19 @@ class GameDebug {
                             watch(Engine.mouseRightDown, (bool rightDown) => text("mouse-right-down: $rightDown")),
                             watch(GameEditor.nodeSelectedIndex, (int index) => text("edit-state-node-index: $index")),
                             ColorPicker(
-                              pickerColor: GameLighting.colorStart.value,
+                              pickerColor: GameLighting.Color_Start.value,
                               onColorChanged: (color){
-                                GameLighting.colorStart.value = color;
+                                GameLighting.Color_Start.value = color;
                                 GameLighting.refreshShades();
                               },
                             ),
                             ColorPicker(
-                              pickerColor: GameLighting.colorEnd.value,
+                              pickerColor: GameLighting.Color_End.value,
                               onColorChanged: (color){
-                                GameLighting.colorEnd.value = color;
+                                GameLighting.Color_End.value = color;
                                 GameLighting.refreshShades();
                               },
                             ),
-
                             Column(
                               children: GameLighting.VArray.map((e){
                                 return watch(e, (double v0){
@@ -122,7 +121,25 @@ class GameDebug {
                                   );
                                 });
                               }).toList(growable: false),
-                            )
+                            ),
+                            watch(GameLighting.Hue_Shift, (double value) => text("Hue Shift: ${value.toInt()}")),
+                            watch(GameLighting.Hue_Shift, (double hueShift){
+                               return Slider(
+                                   min: 0.0,
+                                   max: 360.0,
+                                   value: hueShift, onChanged: (double value){
+                                    GameLighting.Hue_Shift.value = value;
+                               });
+                            }),
+                            watch(GameLighting.Hue_Offset, (double value) => text("Hue Offset: ${value.toInt()}")),
+                            watch(GameLighting.Hue_Offset, (double hueShift){
+                              return Slider(
+                                  min: 0.0,
+                                  max: 360.0,
+                                  value: hueShift, onChanged: (double value){
+                                GameLighting.Hue_Offset.value = value;
+                              });
+                            }),
                           ],
                         ),
                       ),

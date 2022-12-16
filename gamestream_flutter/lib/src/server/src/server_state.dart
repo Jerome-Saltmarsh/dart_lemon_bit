@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/library.dart';
 
 /// Synchronized server state
@@ -72,7 +71,7 @@ class ServerState {
 
 
   static final lightningFlashing = Watch(false, onChanged: (bool lightningFlashing){
-      GameLighting.colorStart.value = lightningFlashing ? GameLighting.Color_Lightning : GameLighting.Default_Color_Start;
+      GameLighting.Color_Start.value = lightningFlashing ? GameLighting.Color_Lightning : GameLighting.Default_Color_Start;
       if (lightningFlashing){
         GameAudio.thunder(1.0);
       }
