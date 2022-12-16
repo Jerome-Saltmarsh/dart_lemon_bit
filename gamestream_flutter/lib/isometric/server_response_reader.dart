@@ -424,7 +424,8 @@ class ServerResponseReader with ByteReader {
     ServerState.lightningType.value = readByte();
     ServerState.watchTimePassing.value = readBool();
     ServerState.windTypeAmbient.value = readByte();
-    ServerState.ambientShade.value = readByte();
+    readByte(); // ambient shade DO NOT DELETE
+    // ServerState.ambientShade.value = readByte();
   }
 
   void readEnd() {
@@ -469,6 +470,18 @@ class ServerResponseReader with ByteReader {
   void readGameTime() {
     ServerState.hours.value = readByte();
     ServerState.minutes.value = readByte();
+    const Seconds_Per_Hour = 3600;
+    const Seconds_At_12PM = (Seconds_Per_Hour * 12);
+    final totalSeconds = (ServerState.hours.value * Seconds_Per_Hour) + (ServerState.minutes.value * 60);
+
+    if (totalSeconds < Seconds_At_12PM){
+      final percentage = 1.0 - (totalSeconds / Seconds_At_12PM);
+      GameLighting.ColorEndOpacity = percentage;
+      return;
+    }
+    final percentage = (totalSeconds - Seconds_At_12PM) / Seconds_At_12PM;
+    GameLighting.ColorEndOpacity = percentage;
+    return;
   }
 
   void readDamageApplied() {

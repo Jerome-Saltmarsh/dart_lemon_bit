@@ -7,8 +7,13 @@ class GameLighting {
 
   static final Color_Lightning = Colors.white.withOpacity(Engine.GoldenRatio_0_381);
 
+
+  static final Time_Color = Default_Color_Start;
+
   static final colorStart = Watch(Default_Color_Start, onChanged: refreshShades);
   static final colorEnd = Watch(Default_Color_End, onChanged: refreshShades);
+
+  static set ColorEndOpacity(double value) => colorEnd.value = colorEnd.value.withOpacity(value);
 
   static final V0 = Watch(0.00, onChanged: refreshShades);
   static final V1 = Watch(0.20, onChanged: refreshShades);

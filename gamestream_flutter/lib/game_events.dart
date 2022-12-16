@@ -33,7 +33,7 @@ class GameEvents {
   }
 
   static void onChangedAmbientShade(int shade) {
-    GameState.refreshLighting();
+    // GameState.refreshLighting();
   }
 
   static void onChangedNodes(){
