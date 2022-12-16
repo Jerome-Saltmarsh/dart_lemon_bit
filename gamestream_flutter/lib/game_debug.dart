@@ -91,55 +91,7 @@ class GameDebug {
                             watch(Engine.watchMouseLeftDown, (bool mouseLeftDown) => text("mouse-left-down: $mouseLeftDown")),
                             watch(Engine.mouseRightDown, (bool rightDown) => text("mouse-right-down: $rightDown")),
                             watch(GameEditor.nodeSelectedIndex, (int index) => text("edit-state-node-index: $index")),
-                            ColorPicker(
-                              pickerColor: GameLighting.Color_Start.value,
-                              onColorChanged: (color){
-                                GameLighting.Color_Start.value = color;
-                                GameLighting.refreshShades();
-                              },
-                            ),
-                            ColorPicker(
-                              pickerColor: GameLighting.Color_End.value,
-                              onColorChanged: (color){
-                                GameLighting.Color_End.value = color;
-                                GameLighting.refreshShades();
-                              },
-                            ),
-                            Column(
-                              children: GameLighting.VArray.map((e){
-                                return watch(e, (double v0){
-                                  return Column(
-                                    children: [
-                                      Slider(
-                                        value: v0,
-                                        onChanged: (double vv){
-                                          e.value = vv;
-                                        },
-                                      ),
-                                      text(v0.toStringAsFixed(2)),
-                                    ],
-                                  );
-                                });
-                              }).toList(growable: false),
-                            ),
-                            watch(GameLighting.Hue_Shift, (double value) => text("Hue Shift: ${value.toInt()}")),
-                            watch(GameLighting.Hue_Shift, (double hueShift){
-                               return Slider(
-                                   min: 0.0,
-                                   max: 360.0,
-                                   value: hueShift, onChanged: (double value){
-                                    GameLighting.Hue_Shift.value = value;
-                               });
-                            }),
-                            watch(GameLighting.Hue, (double value) => text("Hue: ${value.toInt()}")),
-                            watch(GameLighting.Hue, (double hueShift){
-                              return Slider(
-                                  min: 0.0,
-                                  max: 360.0,
-                                  value: hueShift, onChanged: (double value){
-                                GameLighting.Hue.value = value;
-                              });
-                            }),
+                            buildColumnLightingControls(),
                           ],
                         ),
                       ),
@@ -195,3 +147,60 @@ Future<double> getFutureDouble(double initial) async =>
       ),
     );
   }) ?? initial;
+
+
+Widget buildColumnLightingControls(){
+  return Column(
+    children: [
+      ColorPicker(
+        pickerColor: GameLighting.Color_Start.value,
+        onColorChanged: (color){
+          GameLighting.Color_Start.value = color;
+          GameLighting.refreshShades();
+        },
+      ),
+      ColorPicker(
+        pickerColor: GameLighting.Color_End.value,
+        onColorChanged: (color){
+          GameLighting.Color_End.value = color;
+          GameLighting.refreshShades();
+        },
+      ),
+      Column(
+        children: GameLighting.VArray.map((e){
+          return watch(e, (double v0){
+            return Column(
+              children: [
+                Slider(
+                  value: v0,
+                  onChanged: (double vv){
+                    e.value = vv;
+                  },
+                ),
+                text(v0.toStringAsFixed(2)),
+              ],
+            );
+          });
+        }).toList(growable: false),
+      ),
+      watch(GameLighting.Hue, (double value) => text("Hue: ${value.toInt()}")),
+      watch(GameLighting.Hue, (double hueShift){
+        return Slider(
+            min: 0.0,
+            max: 360.0,
+            value: GameLighting.Hue.value, onChanged: (double value){
+          GameLighting.Hue.value = value;
+        });
+      }),
+      watch(GameLighting.Hue_Shift, (double value) => text("Hue Shift: ${value.toInt()}")),
+      watch(GameLighting.Hue_Shift, (double hueShift){
+        return Slider(
+            min: 0.0,
+            max: 360.0,
+            value: hueShift, onChanged: (double value){
+          GameLighting.Hue_Shift.value = value;
+        });
+      }),
+    ],
+  );
+}
