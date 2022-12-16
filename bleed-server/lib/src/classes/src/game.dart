@@ -775,6 +775,7 @@ abstract class Game {
     for (final player in players) {
       player.writeWeather();
       player.writeGameTime(environment.time.time);
+      player.writeEnvironmentLightningFlashing(environment.lightningFlashing);
     }
   }
 

@@ -53,6 +53,7 @@ class DarkAgeEnvironment {
    int get rainType => _rainType;
    bool get breezy => _breezy;
    bool get timePassing => time.enabled;
+   bool get lightningFlashing => lightningFlashDuration > 0;
    int get windType => _windType;
    int get shade => _shade;
 
@@ -140,18 +141,18 @@ class DarkAgeEnvironment {
 
       if (lightningFlashDuration > 0){
           lightningFlashDuration--;
+          if (lightningFlashDuration <= 0){
+             onChangedWeather();
+          }
       }
 
       if (lightningType == LightningType.On) {
          if (nextLightningFlash-- <= 0) {
             nextLightningFlash = randomInt(500, 1000);
             lightningFlashDuration = Lightning_Flash_Duration_Total;
-            _shade = Shade.Very_Bright;
             for (final game in engine.games) {
-               if (game is GameDarkAge == false) continue;
-               final gameDarkAge = game as GameDarkAge;
-               if (this != gameDarkAge.environment) continue;
-               for (final player in gameDarkAge.players){
+               if (this != game.environment) continue;
+               for (final player in game.players){
                   player.writeWeather();
                   player.writePlayerEvent(PlayerEvent.Lightning);
                }

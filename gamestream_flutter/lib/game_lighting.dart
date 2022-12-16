@@ -2,8 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class GameLighting {
-  static final colorStart = Watch(Color.fromRGBO(38, 34, 47, 1.0).withOpacity(0), onChanged: refreshShades);
-  static final colorEnd = Watch(Color.fromRGBO(47, 34, 39, 1.0), onChanged: refreshShades);
+  static final Default_Color_Start =  Color.fromRGBO(38, 34, 47, 1.0).withOpacity(0);
+  static final Default_Color_End =    Color.fromRGBO(47, 34, 39, 1.0).withOpacity(1);
+
+  static final colorStart = Watch(Default_Color_Start, onChanged: refreshShades);
+  static final colorEnd = Watch(Default_Color_End, onChanged: refreshShades);
 
   static final V0 = Watch(0.00, onChanged: refreshShades);
   static final V1 = Watch(0.20, onChanged: refreshShades);

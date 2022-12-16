@@ -167,7 +167,9 @@ class ServerResponseReader with ByteReader {
       case EnvironmentResponse.Underground:
         ServerState.sceneUnderground.value = readBool();
         break;
-
+      case EnvironmentResponse.Lightning_Flashing:
+        ServerState.lightningFlashing.value = readBool();
+        break;
     }
   }
 

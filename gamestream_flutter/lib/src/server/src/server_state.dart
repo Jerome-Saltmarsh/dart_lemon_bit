@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/library.dart';
 
 /// Synchronized server state
@@ -68,6 +69,10 @@ class ServerState {
 
 
   static final sceneUnderground = Watch(false, onChanged: ServerEvents.onChangedSceneUnderground);
+
+  static final lightningFlashing = Watch(false, onChanged: (bool lightningFlashing){
+      GameLighting.colorStart.value = lightningFlashing ? Colors.white : GameLighting.Default_Color_Start;
+  });
 }
 
 

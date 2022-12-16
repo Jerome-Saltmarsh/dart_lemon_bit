@@ -55,10 +55,10 @@ ctrl + w:   minimal mode
 [ ] node type road
 [ ] item type car
 [ ] node road orientation slope
-[ ] practice mode environment
 [ ] practice mode lightning
 [ ] lightning shade
 [ ] dynamic shade that changes over time
+[ ] fix particle shade
 
 [GAMES]
 [ ] game royal
@@ -75,6 +75,7 @@ ctrl + w:   minimal mode
 [ ] fix render bricks
 
 16.12.2022
+[x] practice mode environment
 [x] render torch shaded
 [x] upgrade server dart docker image
 

@@ -1611,6 +1611,12 @@ class Player extends Character with ByteWriter {
     writeBool(underground);
   }
 
+  void writeEnvironmentLightningFlashing(bool value){
+    writeByte(ServerResponse.Environment);
+    writeByte(EnvironmentResponse.Lightning_Flashing);
+    writeBool(value);
+  }
+
   void writeNode(int index){
     assert (index >= 0);
     assert (index < scene.gridVolume);
