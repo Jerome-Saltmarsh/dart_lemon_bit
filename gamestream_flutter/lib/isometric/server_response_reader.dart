@@ -471,8 +471,13 @@ class ServerResponseReader with ByteReader {
     ServerState.hours.value = readByte();
     ServerState.minutes.value = readByte();
     const Seconds_Per_Hour = 3600;
+    const Seconds_Per_24_Hours = Seconds_Per_Hour * 24;
     const Seconds_At_12PM = (Seconds_Per_Hour * 12);
     final totalSeconds = (ServerState.hours.value * Seconds_Per_Hour) + (ServerState.minutes.value * 60);
+
+    final p = ((totalSeconds / Seconds_Per_24_Hours) * 360.0) + GameLighting.Hue_Offset;
+    GameLighting.Color_Start_Hue = p;
+    GameLighting.Color_End_Hue = p + GameLighting.Hue_Shift;
 
     if (totalSeconds < Seconds_At_12PM){
       final percentage = 1.0 - (totalSeconds / Seconds_At_12PM);

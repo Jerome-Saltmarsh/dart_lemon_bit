@@ -7,9 +7,22 @@ class GameLighting {
 
   static final Color_Lightning = Colors.white.withOpacity(Engine.GoldenRatio_0_381);
 
-
   static final colorStart = Watch(Default_Color_Start, onChanged: refreshShades);
   static final colorEnd = Watch(Default_Color_End, onChanged: refreshShades);
+
+  static final Hue_Shift = 180;
+  static final Hue_Offset = 180;
+
+
+  static set Color_Start_Hue(double value) {
+    assert(value >= 0);
+    colorStart.value = HSVColor.fromColor(colorStart.value).withHue(value % 360.0).toColor().withOpacity(0);
+  }
+
+  static set Color_End_Hue(double value) {
+    assert(value >= 0);
+    colorEnd.value = HSVColor.fromColor(colorEnd.value).withHue(value % 360.0).toColor();
+  }
 
   static set ColorEndOpacity(double value){
     // if (colorEnd.value.opacity == value) return;
