@@ -1,8 +1,6 @@
 
-import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
-import 'package:gamestream_flutter/game_colors.dart';
+import 'package:gamestream_flutter/library.dart';
 
 class GameConstants {
   static const Node_Height = 24.0;
@@ -47,22 +45,32 @@ class GameConstants {
   static var colorStart = HSVColor.fromColor(Color.fromRGBO(38, 34, 47, 1.0).withOpacity(0));
   static var colorEnd = HSVColor.fromColor(Color.fromRGBO(47, 34, 39, 1.0));
 
-  static final C0 = HSVColor.lerp(colorStart, colorEnd, 0.0);
-  static final C1 = HSVColor.lerp(colorStart, colorEnd, 0.2);
-  static final C2 = HSVColor.lerp(colorStart, colorEnd, 0.4);
-  static final C3 = HSVColor.lerp(colorStart, colorEnd, 0.6);
-  static final C4 = HSVColor.lerp(colorStart, colorEnd, 0.8);
-  static final C5 = HSVColor.lerp(colorStart, colorEnd, 0.92);
-  static final C6 = HSVColor.lerp(colorStart, colorEnd, 0.97);
+  static final V0 = Watch(0.00, onChanged: onChangedV);
+  static final V1 = Watch(0.20, onChanged: onChangedV);
+  static final V2 = Watch(0.40, onChanged: onChangedV);
+  static final V3 = Watch(0.60, onChanged: onChangedV);
+  static final V4 = Watch(0.80, onChanged: onChangedV);
+  static final V5 = Watch(0.92, onChanged: onChangedV);
+  static final V6 = Watch(1.00, onChanged: onChangedV);
+
+  static final C0 = HSVColor.lerp(colorStart, colorEnd, V0.value);
+  static final C1 = HSVColor.lerp(colorStart, colorEnd, V1.value);
+  static final C2 = HSVColor.lerp(colorStart, colorEnd, V2.value);
+  static final C3 = HSVColor.lerp(colorStart, colorEnd, V3.value);
+  static final C4 = HSVColor.lerp(colorStart, colorEnd, V4.value);
+  static final C5 = HSVColor.lerp(colorStart, colorEnd, V5.value);
+  static final C6 = HSVColor.lerp(colorStart, colorEnd, V6.value);
+
+  static void onChangedV(double v) => refreshShades();
 
   static void refreshShades(){
-     Color_Shades[0] = HSVColor.lerp(colorStart, colorEnd, 0.0)!.toColor().value;
-     Color_Shades[1] = HSVColor.lerp(colorStart, colorEnd, 0.2)!.toColor().value;
-     Color_Shades[2] = HSVColor.lerp(colorStart, colorEnd, 0.4)!.toColor().value;
-     Color_Shades[3] = HSVColor.lerp(colorStart, colorEnd, 0.6)!.toColor().value;
-     Color_Shades[4] = HSVColor.lerp(colorStart, colorEnd, 0.8)!.toColor().value;
-     Color_Shades[5] = HSVColor.lerp(colorStart, colorEnd, 0.92)!.toColor().value;
-     Color_Shades[6] = HSVColor.lerp(colorStart, colorEnd, 0.97)!.toColor().value;
+     Color_Shades[0] = HSVColor.lerp(colorStart, colorEnd, V0.value)!.toColor().value;
+     Color_Shades[1] = HSVColor.lerp(colorStart, colorEnd, V1.value)!.toColor().value;
+     Color_Shades[2] = HSVColor.lerp(colorStart, colorEnd, V2.value)!.toColor().value;
+     Color_Shades[3] = HSVColor.lerp(colorStart, colorEnd, V3.value)!.toColor().value;
+     Color_Shades[4] = HSVColor.lerp(colorStart, colorEnd, V4.value)!.toColor().value;
+     Color_Shades[5] = HSVColor.lerp(colorStart, colorEnd, V5.value)!.toColor().value;
+     Color_Shades[6] = HSVColor.lerp(colorStart, colorEnd, V6.value)!.toColor().value;
   }
 
   static final Color_Shades = [

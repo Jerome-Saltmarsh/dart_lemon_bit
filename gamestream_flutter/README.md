@@ -49,6 +49,7 @@ ctrl + w:   minimal mode
 [ ] feature node orientation vertical half
 
 [CONTENT]
+[ ] node type pine tree
 [ ] item type army clothes
 [ ] item type weapon crossbow
 [ ] node type road
