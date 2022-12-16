@@ -9,9 +9,9 @@ import 'library.dart';
 
 class GameDebug {
 
-  static final paths = Float32List(10000);
-  static final targets = Float32List(10000);
-  static var targetsTotal = 0;
+  // static final paths = Float32List(10000);
+  // static final targets = Float32List(10000);
+  // static var targetsTotal = 0;
 
   static Widget buildStackDebug() =>
       Stack(
@@ -96,18 +96,8 @@ class GameDebug {
                         ),
                       ),
                     ),
-                    // Row(children: GameLighting.VArray.map((e) =>
-                    //     watch(e, (double v) =>
-                    //         Container(
-                    //           margin: const EdgeInsets.only(right: 16),
-                    //           child: text(v, onPressed: () async {
-                    //               e.value = await getFutureDouble(v);
-                    //               }
-                    //           ),
-                    //         ))).toList()
-                    // ),
                     height24,
-                    text("close x", onPressed: () => ClientState.debugVisible.value = false),
+                    text("close x", onPressed: () => ClientState.debugVisible.value = false, bold: true),
                   ],
                 ),
               )),

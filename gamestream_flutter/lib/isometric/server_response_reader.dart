@@ -2,7 +2,6 @@ import 'package:gamestream_flutter/isometric/events/on_changed_scene.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_byte/byte_reader.dart';
 
-
 final serverResponseReader = ServerResponseReader();
 
 class ServerResponseReader with ByteReader {
@@ -48,9 +47,6 @@ class ServerResponseReader with ByteReader {
           break;
         case ServerResponse.Damage_Applied:
           readDamageApplied();
-          break;
-        case ServerResponse.Paths:
-          readPaths();
           break;
         case ServerResponse.Game_Time:
           readGameTime();
@@ -558,32 +554,6 @@ class ServerResponseReader with ByteReader {
     assert(total == totalNodes);
     GameEvents.onChangedNodes();
     onChangedScene();
-  }
-
-
-  void readPaths() {
-    GameUI.debug.value = true;
-    var index = 0;
-    while (true) {
-      final pathIndex = readInt();
-      GameDebug.paths[index] = pathIndex.toDouble();
-      index++;
-      if (pathIndex == 250) break;
-      for (var i = 0; i < pathIndex; i++) {
-        GameDebug.paths[index] = readDouble();
-        GameDebug.paths[index + 1] = readDouble();
-        index += 2;
-      }
-    }
-    var i = 0;
-
-    while(readByte() != 0) {
-      GameDebug.targets[i] = readDouble();
-      GameDebug.targets[i + 1] = readDouble();
-      GameDebug.targets[i + 2] = readDouble();
-      GameDebug.targets[i + 3] = readDouble();
-       i += 4;
-    }
   }
 
   void readGameEvent(){

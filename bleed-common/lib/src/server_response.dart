@@ -4,7 +4,6 @@ class ServerResponse {
   static const Game_Event = 6;
   static const Game_Joined = 9;
   static const Scene = 10;
-  static const Paths = 12;
   static const Player_Event = 14;
   static const NpcMessage = 18;
   static const NpcsDebug = 22;
