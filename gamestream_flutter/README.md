@@ -1,5 +1,10 @@
+[COMMANDS]
+flutter build web --web-renderer canvaskit --release
+firebase deploy
+
 [shortcut-keys]
 navigate to next method: ctrl + shift + up / down arrows
+ctrl + w:   minimal mode
 
 [IDEAS]
 [ ] repeat killing same enemies yields no reward
@@ -49,6 +54,10 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] node type road
 [ ] item type car
 [ ] node road orientation slope
+[ ] practice mode environment
+[ ] practice mode lightning
+[ ] lightning shade
+[ ] dynamic shade that changes over time
 
 [GAMES]
 [ ] game royal
@@ -60,8 +69,13 @@ navigate to next method: ctrl + shift + up / down arrows
 [ ] game moba
 
 [BUGS]
+[ ] fix grass node solid variation two
 [ ] fix ai spot player through walls
 [ ] fix render bricks
+
+16.12.2022
+[x] render torch shaded
+[x] upgrade server dart docker image
 
 15.12.2022
 [x] fix render stone half
@@ -306,9 +320,7 @@ navigate to next method: ctrl + shift + up / down arrows
 [x] fixed editor weather icons
 [x] fixed editor menu icons
 
-[COMMANDS]
-flutter build web --web-renderer canvaskit --release
-firebase deploy
+
 
 
 #Story
