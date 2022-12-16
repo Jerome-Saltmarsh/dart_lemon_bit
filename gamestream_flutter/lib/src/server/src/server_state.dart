@@ -72,7 +72,7 @@ class ServerState {
 
 
   static final lightningFlashing = Watch(false, onChanged: (bool lightningFlashing){
-      GameLighting.colorStart.value = lightningFlashing ? Colors.white.withOpacity(0.75) : GameLighting.Default_Color_Start;
+      GameLighting.colorStart.value = lightningFlashing ? GameLighting.Color_Lightning : GameLighting.Default_Color_Start;
       if (lightningFlashing){
         GameAudio.thunder(1.0);
       }

@@ -1,9 +1,11 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class GameLighting {
   static final Default_Color_Start =  Color.fromRGBO(38, 34, 47, 1.0).withOpacity(0);
   static final Default_Color_End =    Color.fromRGBO(47, 34, 39, 1.0).withOpacity(1);
+
+  static final Color_Lightning = Colors.white.withOpacity(Engine.GoldenRatio_0_381);
 
   static final colorStart = Watch(Default_Color_Start, onChanged: refreshShades);
   static final colorEnd = Watch(Default_Color_End, onChanged: refreshShades);
