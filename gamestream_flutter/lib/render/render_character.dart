@@ -82,14 +82,6 @@ class RenderCharacter {
   }
 
   static void renderCharacterDog(Character character){
-    const Frame_Idle      = 0;
-    const Frame_Attack_1  = 1;
-    const Frame_Attack_2  = 2;
-    const Unknown         = 3;
-    const Run_1           = 4;
-    const Run_2           = 5;
-    const Dying_1         = 6;
-    const Dying_2         = 7;
 
     if (character.state == CharacterState.Idle){
       Engine.renderSprite(

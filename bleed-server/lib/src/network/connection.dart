@@ -110,51 +110,44 @@ class Connection {
         return;
 
       case ClientRequest.Weather_Set_Rain:
-        if (game is GameDarkAge == false) return;
-        final universe = (game as GameDarkAge).environment;
+        if (!isLocalMachine && game is! GameDarkAgeEditor) return;
         final rainType = parse(arguments[1]);
         if (rainType == null || !isValidIndex(rainType, RainType.values))
            return errorInvalidArg('invalid rain index: $rainType');
 
-        universe.rainType = rainType;
+        game.environment.rainType = rainType;
         break;
 
       case ClientRequest.Weather_Toggle_Breeze:
-        if (game is GameDarkAge == false) return;
-        final universe = (game as GameDarkAge).environment;
-        universe.toggleBreeze();
+        if (!isLocalMachine && game is! GameDarkAgeEditor) return;
+        game.environment.toggleBreeze();
         break;
 
       case ClientRequest.Weather_Set_Wind:
-        if (game is GameDarkAge == false) return;
-        final universe = (game as GameDarkAge).environment;
+        if (!isLocalMachine && game is! GameDarkAgeEditor) return;
         final index = parse(arguments[1]);
         if (index == null || !isValidIndex(index, WindType.values))
           return errorInvalidArg('invalid rain index: $index');
 
-        universe.windType = index;
+        game.environment.windType = index;
         break;
 
       case ClientRequest.Weather_Set_Lightning:
-        if (game is GameDarkAge == false) return;
-        final universe = (game as GameDarkAge).environment;
-
+        if (!isLocalMachine && game is! GameDarkAgeEditor) return;
         final index = parse(arguments[1]);
         if (index == null || !isValidIndex(index, LightningType.values))
           return errorInvalidArg('invalid lightning index: $index');
-        universe.lightningType = LightningType.values[index];
+        game.environment.lightningType = LightningType.values[index];
         break;
 
       case ClientRequest.Weather_Toggle_Time_Passing:
-        if (game is GameDarkAge == false) return;
-        final environment = (game as GameDarkAge).environment;
-
+        if (!isLocalMachine && game is! GameDarkAgeEditor) return;
         if (arguments.length > 0){
            final val = arguments[1];
-           environment.timePassing = val == 'true';
+           game.environment.timePassing = val == 'true';
            return;
         }
-        environment.toggleTimePassing();
+        game.environment.toggleTimePassing();
         break;
 
       case ClientRequest.Revive:
@@ -235,6 +228,7 @@ class Connection {
           break;
 
       case ClientRequest.Time_Set_Hour:
+        if (!isLocalMachine && game is! GameDarkAgeEditor) return;
           final hour = parse(arguments[1]);
           if (hour == null) return errorInvalidArg('hour required');
           player.game.setHourMinutes(hour, 0);
