@@ -73,6 +73,7 @@ ctrl + w:   minimal mode
 [ ] fix render bricks
 
 16.12.2022
+[x] fixed rain heavy
 [x] practice mode lightning
 [x] lightning shade
 [x] practice mode environment

@@ -10,8 +10,9 @@ class GameSystem {
   static Future init(SharedPreferences sharedPreferences) async {
     print("environment: ${Engine.isLocalHost ? 'localhost' : 'production'}");
 
-    GameLighting.refreshShades();
     GameLighting.refreshHues();
+    GameLighting.refreshShades();
+
 
     final visitDateTimeString = sharedPreferences.getString('visit-datetime');
     if (visitDateTimeString != null) {

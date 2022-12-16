@@ -127,7 +127,7 @@ class DarkAgeEnvironment {
             rainType = RainType.Light;
             break;
          case RainType.Light:
-            rainType = rainType == RainType.None ? RainType.Heavy : RainType.None;
+            rainType = randomBool() ? RainType.Heavy : RainType.None;
             break;
          case RainType.Heavy:
             rainType = RainType.Light;
