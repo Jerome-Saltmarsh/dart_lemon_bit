@@ -251,7 +251,7 @@ class RenderNode {
   }){
     GameRender.onscreenNodes++;
     final f = Engine.bufferIndex * 4;
-    bufferClr[Engine.bufferIndex] = GameRender.currentNodeVisibility == Visibility.Opaque ? 1 : GameConstants.Transparent;
+    bufferClr[Engine.bufferIndex] = GameRender.currentNodeVisibility == Visibility.Opaque ? 1 : GameLighting.Transparent;
     bufferSrc[f] = srcX;
     bufferSrc[f + 1] = srcY;
     bufferSrc[f + 2] = srcX + GameConstants.Sprite_Width;
@@ -269,7 +269,7 @@ class RenderNode {
   }){
     GameRender.onscreenNodes++;
     final f = Engine.bufferIndex * 4;
-    bufferClr[Engine.bufferIndex] = GameRender.currentNodeVisibility == Visibility.Opaque ? GameRender.currentNodeColor : GameConstants.Transparent;
+    bufferClr[Engine.bufferIndex] = GameRender.currentNodeVisibility == Visibility.Opaque ? GameRender.currentNodeColor : GameLighting.Transparent;
     bufferSrc[f] = srcX;
     bufferSrc[f + 1] = srcY;
     bufferSrc[f + 2] = srcX + GameConstants.Sprite_Width;

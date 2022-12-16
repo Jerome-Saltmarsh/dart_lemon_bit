@@ -92,24 +92,24 @@ class GameDebug {
                             watch(Engine.mouseRightDown, (bool rightDown) => text("mouse-right-down: $rightDown")),
                             watch(GameEditor.nodeSelectedIndex, (int index) => text("edit-state-node-index: $index")),
                             ColorPicker(
-                              pickerColor: GameConstants.colorStart.value,
+                              pickerColor: GameLighting.colorStart.value,
                               onColorChanged: (color){
-                                  GameConstants.colorStart.value = color;
-                                  GameConstants.refreshShades();
+                                GameLighting.colorStart.value = color;
+                                GameLighting.refreshShades();
                               },
                             ),
                             ColorPicker(
-                              pickerColor: GameConstants.colorEnd.value,
+                              pickerColor: GameLighting.colorEnd.value,
                               onColorChanged: (color){
-                                GameConstants.colorEnd.value = color;
-                                GameConstants.refreshShades();
+                                GameLighting.colorEnd.value = color;
+                                GameLighting.refreshShades();
                               },
                             ),
                           ],
                         ),
                       ),
                     ),
-                    Row(children: GameConstants.VArray.map((e) =>
+                    Row(children: GameLighting.VArray.map((e) =>
                         watch(e, (double v) =>
                             Container(
                               margin: const EdgeInsets.only(right: 16),

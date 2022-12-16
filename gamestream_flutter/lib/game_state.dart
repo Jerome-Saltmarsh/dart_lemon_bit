@@ -84,7 +84,7 @@ class GameState {
       index - ((convertNodeIndexToZ(index) * nodesArea) + (convertNodeIndexToRow(index) * nodesTotalColumns));
 
   static int getV3RenderColor(Vector3 vector3) =>
-      GameConstants.Color_Shades[getV3NodeBelowShade(vector3)];
+      GameLighting.Color_Shades[getV3NodeBelowShade(vector3)];
 
   static int getV3RenderShade(Vector3 vector3) =>
       getV3NodeBelowShade(vector3);
