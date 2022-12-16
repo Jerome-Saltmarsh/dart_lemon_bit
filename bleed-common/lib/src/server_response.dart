@@ -18,7 +18,6 @@ class ServerResponse {
   static const Lobby_CountDown = 42;
   static const Debug_Mode = 45;
   static const End = 47;
-  static const Damage_Applied = 50;
   static const Player_Spawned = 60;
   static const Player_Target = 61;
   static const Grid = 62;

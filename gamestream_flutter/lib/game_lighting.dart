@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/library.dart';
 
+
 class GameLighting {
   static final Default_Color_Start =  Color.fromRGBO(38, 34, 47, 1.0).withOpacity(0);
   static final Default_Color_End =    Color.fromRGBO(47, 34, 39, 1.0).withOpacity(1);
   static final Color_Lightning = Colors.white.withOpacity(Engine.GoldenRatio_0_381);
-  static final Hue = Watch(0.0, onChanged: onChangedHue);
-  static final Color_Start = Watch(Default_Color_Start, onChanged: onChangedColor);
-  static final Color_End = Watch(Default_Color_End, onChanged: onChangedColor);
-  static final Hue_Shift = Watch(randomBetween(0, 360), onChanged: refreshHues);
-  // static final Hue_Offset = Watch(randomBetween(0, 360), onChanged: refreshHues);
-
+  static final Hue = Watch(0.0, onChanged: onChangedLighting);
+  static final Color_Start = Watch(Default_Color_Start);
+  static final Color_End = Watch(Default_Color_End);
+  static final Hue_Shift = Watch(randomBetween(0, 360), onChanged: onChangedLighting);
   static final V0 = Watch(0.00, onChanged: onChangedLighting);
   static final V1 = Watch(0.20, onChanged: onChangedLighting);
   static final V2 = Watch(0.40, onChanged: onChangedLighting);
@@ -44,7 +43,6 @@ class GameLighting {
   }
 
   static set ColorEndOpacity(double value){
-    // if (colorEnd.value.opacity == value) return;
     if ((Color_End.value.opacity - value).abs() < 0.01) return;
     Color_End.value = Color_End.value.withOpacity(value);
   }
@@ -54,22 +52,26 @@ class GameLighting {
   static void onChangedLighting(double v) => refreshShades();
   static void onChangedColor(Color c) => refreshShades();
 
-  static void onChangedHue(double value){
-    assert(value >= 0);
-    value = (value) % 360.0;
-    Color_Start_Hue = value;
-    Color_End_Hue = value + Hue_Shift.value;
+  static void onChangedHue(double hue){
+    // assert(hue >= 0);
+    // hue = (hue) % 360.0;
+    // Color_Start_Hue = hue;
+    // Color_End_Hue = hue + Hue_Shift.value;
+    refreshShades();
   }
 
   // METHODS
 
-  static void refreshHues([double value = 0.0]){
+  static void onChangedHueShift(double hueShift){
     Color_Start_Hue = Hue.value;
     Color_End_Hue = Color_Start_Hue + Hue_Shift.value;
   }
 
   /// EXPENSIVE OPERATION
   static void refreshShades(){
+    Color_Start_Hue = Hue.value;
+    Color_End_Hue = Hue.value + Hue_Shift.value;
+
     final start = HSVColor.fromColor(Color_Start.value);
     final end = HSVColor.fromColor(Color_End.value);
     Color_Shades[0] = HSVColor.lerp(start, end, V0.value)!.toColor().value;

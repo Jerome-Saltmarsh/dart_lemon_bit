@@ -1385,13 +1385,6 @@ class Player extends Character with ByteWriter {
     writeAngle(projectile.velocityAngle);
   }
 
-  void writeDamageApplied(Position target, int amount) {
-    if (amount <= 0) return;
-    writeByte(ServerResponse.Damage_Applied);
-    writePosition(target);
-    writeInt(amount);
-  }
-
   void writeCharacterUpperBody(Character character) {
     assert (ItemType.isTypeWeapon(character.weaponType) || character.weaponType == ItemType.Empty);
     assert (ItemType.isTypeLegs(character.legsType) || character.legsType == ItemType.Empty);
