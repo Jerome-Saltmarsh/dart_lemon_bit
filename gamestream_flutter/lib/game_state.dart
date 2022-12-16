@@ -247,10 +247,10 @@ class GameState {
     final columnMax = min(columnIndex + radius, GameState.nodesTotalColumns);
 
     for (var z = zMin; z < zMax; z++){
-      for (var row = rowMin; row < rowMax; row++){
+      for (var row = rowMin; row <= rowMax; row++){
         final a = (z * GameState.nodesArea) + (row * GameState.nodesTotalColumns);
         final b = (z - zIndex).abs() + (row - rowIndex).abs();
-        for (var column = columnMin; column < columnMax; column++) {
+        for (var column = columnMin; column <= columnMax; column++) {
           final nodeIndex = a + column;
           var distance = b + (column - columnIndex).abs() - 1;
           final distanceValue = GameConvert.distanceToShade(distance, maxBrightness: maxBrightness);
