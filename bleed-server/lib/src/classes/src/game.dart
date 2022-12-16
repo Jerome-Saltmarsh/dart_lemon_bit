@@ -615,7 +615,11 @@ abstract class Game {
     engine.games.remove(this);
   }
 
-  void setHourMinutes(int hour, int minutes) {}
+  void setHourMinutes(int hour, int minutes) {
+    environment.time.time = (hour * 60 * 60) + (minutes * 60);
+    environment.updateShade();
+    playersWriteWeather();
+  }
 
   /// UPDATE
 
@@ -770,6 +774,7 @@ abstract class Game {
   void playersWriteWeather() {
     for (final player in players) {
       player.writeWeather();
+      player.writeGameTime(environment.time.time);
     }
   }
 

@@ -118,7 +118,6 @@ class DarkAgeEnvironment {
       } else {
          shade = Shade.fromHour(time.hour);
       }
-
    }
 
    void updateRain(){
