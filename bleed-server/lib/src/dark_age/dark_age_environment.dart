@@ -1,7 +1,5 @@
 import 'package:bleed_server/gamestream.dart';
-import 'game_dark_age.dart';
 import 'package:lemon_math/library.dart';
-
 
 class DarkAgeTime {
   var secondsPerFrame = 2;
@@ -154,7 +152,6 @@ class DarkAgeEnvironment {
                if (this != game.environment) continue;
                for (final player in game.players){
                   player.writeWeather();
-                  player.writePlayerEvent(PlayerEvent.Lightning);
                }
             }
          }

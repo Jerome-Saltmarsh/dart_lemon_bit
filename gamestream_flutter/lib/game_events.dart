@@ -418,9 +418,9 @@ class GameEvents {
             GameAudio.reload_6();
         }
         break;
-      case PlayerEvent.Lightning:
-        GameAudio.thunder(1.0);
-        break;
+      // case PlayerEvent.Lightning:
+      //   GameAudio.thunder(1.0);
+      //   break;
       case PlayerEvent.Level_Increased:
         print("onPlayerEvent_LevelIncreased()");
         GameAudio.buff_1();

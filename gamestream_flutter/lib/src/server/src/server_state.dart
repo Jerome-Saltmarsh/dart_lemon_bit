@@ -70,8 +70,12 @@ class ServerState {
 
   static final sceneUnderground = Watch(false, onChanged: ServerEvents.onChangedSceneUnderground);
 
+
   static final lightningFlashing = Watch(false, onChanged: (bool lightningFlashing){
       GameLighting.colorStart.value = lightningFlashing ? Colors.white : GameLighting.Default_Color_Start;
+      if (lightningFlashing){
+        GameAudio.thunder(1.0);
+      }
   });
 }
 
