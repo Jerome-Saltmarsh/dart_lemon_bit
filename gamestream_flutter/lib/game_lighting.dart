@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/library.dart';
 
-
 class GameLighting {
-  static final Default_Color_Start =  Color.fromRGBO(38, 34, 47, 1.0).withOpacity(0);
+  static final Default_Color_Start =  HSVColor.fromColor(Color.fromRGBO(38, 34, 47, 1.0).withOpacity(0));
   static final Default_Color_End =    Color.fromRGBO(47, 34, 39, 1.0).withOpacity(1);
-  static final Color_Lightning = Colors.white.withOpacity(Engine.GoldenRatio_0_381);
+  static final Color_Lightning = HSVColor.fromColor(Colors.white.withOpacity(Engine.GoldenRatio_0_381));
   static final Hue = Watch(0.0, onChanged: onChangedLighting);
   static final Color_Start = Watch(Default_Color_Start);
   static final Color_End = Watch(Default_Color_End);
@@ -27,14 +26,14 @@ class GameLighting {
 
   // GETTERS
 
-  static double get Color_Start_Hue => HSVColor.fromColor(Color_Start.value).hue;
+  static double get Color_Start_Hue => Color_Start.value.hue;
   static double get Color_End_Hue => HSVColor.fromColor(Color_End.value).hue;
 
   // SETTERS
 
   static set Color_Start_Hue(double value) {
     assert(value >= 0);
-    Color_Start.value = HSVColor.fromColor(Color_Start.value).withHue(value % 360.0).toColor().withOpacity(0);
+    Color_Start.value = HSVColor.fromAHSV(0, value, Color_Start.value.saturation, Color_Start.value.value);
   }
 
   static set Color_End_Hue(double value) {
@@ -50,29 +49,15 @@ class GameLighting {
   // REACTIONS
 
   static void onChangedLighting(double v) => refreshShades();
-  static void onChangedColor(Color c) => refreshShades();
-
-  static void onChangedHue(double hue){
-    // assert(hue >= 0);
-    // hue = (hue) % 360.0;
-    // Color_Start_Hue = hue;
-    // Color_End_Hue = hue + Hue_Shift.value;
-    refreshShades();
-  }
 
   // METHODS
-
-  static void onChangedHueShift(double hueShift){
-    Color_Start_Hue = Hue.value;
-    Color_End_Hue = Color_Start_Hue + Hue_Shift.value;
-  }
 
   /// EXPENSIVE OPERATION
   static void refreshShades(){
     Color_Start_Hue = Hue.value;
     Color_End_Hue = Hue.value + Hue_Shift.value;
 
-    final start = HSVColor.fromColor(Color_Start.value);
+    final start = Color_Start.value;
     final end = HSVColor.fromColor(Color_End.value);
     Color_Shades[0] = HSVColor.lerp(start, end, V0.value)!.toColor().value;
     Color_Shades[1] = HSVColor.lerp(start, end, V1.value)!.toColor().value;

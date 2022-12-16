@@ -143,9 +143,9 @@ Widget buildColumnLightingControls(){
   return Column(
     children: [
       ColorPicker(
-        pickerColor: GameLighting.Color_Start.value,
+        pickerColor: GameLighting.Color_Start.value.toColor(),
         onColorChanged: (color){
-          GameLighting.Color_Start.value = color;
+          GameLighting.Color_Start.value = HSVColor.fromColor(color);
           GameLighting.refreshShades();
         },
       ),
