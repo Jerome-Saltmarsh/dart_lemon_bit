@@ -92,16 +92,16 @@ class GameDebug {
                             watch(Engine.mouseRightDown, (bool rightDown) => text("mouse-right-down: $rightDown")),
                             watch(GameEditor.nodeSelectedIndex, (int index) => text("edit-state-node-index: $index")),
                             ColorPicker(
-                              pickerColor: GameConstants.colorStart.toColor(),
+                              pickerColor: GameConstants.colorStart.value,
                               onColorChanged: (color){
-                                  GameConstants.colorStart = HSVColor.fromColor(color);
+                                  GameConstants.colorStart.value = color;
                                   GameConstants.refreshShades();
                               },
                             ),
                             ColorPicker(
-                              pickerColor: GameConstants.colorEnd.toColor(),
+                              pickerColor: GameConstants.colorEnd.value,
                               onColorChanged: (color){
-                                GameConstants.colorEnd = HSVColor.fromColor(color);
+                                GameConstants.colorEnd.value = color;
                                 GameConstants.refreshShades();
                               },
                             ),
