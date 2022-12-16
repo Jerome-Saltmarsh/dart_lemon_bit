@@ -112,23 +112,7 @@ class GameDebug {
                     Row(children: [
                       watch(GameConstants.V0, (double v) {
                         return text(v, onPressed: () async {
-                          final result = await showDialog(context: Engine.buildContext, builder: (context){
-                            return AlertDialog(
-                              content: Container(
-                                width: 100,
-                                height: 100,
-                                color: Colors.blue,
-                                child: text("Enter", onPressed: (){
-                                  Navigator.pop(context, 0.5);
-                                }),
-                              ),
-                            );
-                          });
-
-                          if (result is double){
-                            GameConstants.V0.value = result;
-                            GameConstants.refreshShades();
-                          }
+                          GameConstants.V0.value = await getFutureDouble(v);
                         });
                       }),
                     ],),
@@ -139,4 +123,34 @@ class GameDebug {
               )),
         ],
       );
+}
+
+Future<double> getFutureDouble(double initial) async {
+  final value = await showDialog<double>(context: Engine.buildContext, builder: (context){
+
+    final controller = TextEditingController(text: initial.toString());
+
+    return AlertDialog(
+      content: Container(
+        width: 100,
+        // height: 62,
+        padding: const EdgeInsets.all(16),
+        color: Colors.blue,
+        child: Row(
+          children: [
+            Container(
+              width: 60,
+              child: TextField(
+                controller: controller,
+              ),
+            ),
+            text("Enter", onPressed: (){
+              Navigator.pop(context, double.tryParse(controller.text) ?? initial);
+            }),
+          ],
+        ),
+      ),
+    );
+  });
+  return value != null ? value : initial;
 }
