@@ -164,7 +164,7 @@ class DarkAgeEnvironment {
             lightningType = LightningType.Nearby;
             break;
          case LightningType.Nearby:
-            lightningType = lightningType == LightningType.On ? LightningType.Off : LightningType.Nearby;
+            lightningType = randomBool() ? LightningType.Off : LightningType.Nearby;
             break;
          case LightningType.On:
             lightningType = LightningType.Nearby;

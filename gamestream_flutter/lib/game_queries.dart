@@ -43,11 +43,6 @@ class GameQueries {
      return true;
    }
 
-   // static int getGridNodeIndexV3(Vector3 vector3) =>
-   //     getNodeIndex(
-   //         vector3.x, vector3.y, vector3.z
-   //     );
-
    static int getNodeIndex(double x, double y, double z) =>
        GameState.getNodeIndexZRC(
          z ~/ Node_Size_Half,
@@ -138,12 +133,6 @@ class GameQueries {
      }
      return (windLineRow - windLineColumn) * Node_Size_Half;
    }
-
-   // static int getNodeIndex(double x, double y, double z){
-   //     final indexZ = z ~/ Node_Height;
-   //
-   //     return 0;
-   // }
 
    static int getNodeIndexBelowV3(Vector3 vector3) =>
        GameState.getNodeIndexZRC(

@@ -234,6 +234,9 @@ class GameState {
     required int index,
     int maxBrightness = Shade.Very_Bright,
   }){
+    assert (index >= 0);
+    assert (index < GameNodes.nodesTotal);
+
     final zIndex = GameState.convertNodeIndexToZ(index);
     final rowIndex = GameState.convertNodeIndexToRow(index);
     final columnIndex = GameState.convertNodeIndexToColumn(index);
@@ -251,8 +254,7 @@ class GameState {
         final b = (z - zIndex).abs() + (row - rowIndex).abs();
         for (var column = columnMin; column <= columnMax; column++) {
           final nodeIndex = a + column;
-          var distance = b + (column - columnIndex).abs() - 1;
-          final distanceValue = GameConvert.distanceToShade(distance, maxBrightness: maxBrightness);
+          final distanceValue = Engine.clamp(b + (column - columnIndex).abs() - 2, maxBrightness, Shade.Pitch_Black);
           if (distanceValue >= GameNodes.nodesShade[nodeIndex]) continue;
           GameNodes.nodesShade[nodeIndex] = distanceValue;
           GameNodes.nodesDynamicIndex[GameNodes.dynamicIndex] = nodeIndex;

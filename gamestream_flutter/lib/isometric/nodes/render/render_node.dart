@@ -75,7 +75,7 @@ void renderNodeAt() {
     case NodeType.Rain_Falling:
       RenderNode.renderStandardNodeShaded(
         srcX: ClientState.srcXRainFalling,
-        srcY: 72.0 * ((GameAnimation.animationFrame + GameRender.currentNodeRow + GameRender.currentNodeColumn) % 6),
+        srcY: 72.0 * ((GameAnimation.animationFrame + GameRender.currentNodeRow + GameRender.currentNodeRow + GameRender.currentNodeColumn) % 6),
       );
       return;
     case NodeType.Rain_Landing:
