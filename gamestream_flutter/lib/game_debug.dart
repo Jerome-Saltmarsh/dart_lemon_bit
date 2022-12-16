@@ -105,20 +105,38 @@ class GameDebug {
                                 GameLighting.refreshShades();
                               },
                             ),
+
+                            Column(
+                              children: GameLighting.VArray.map((e){
+                                return watch(e, (double v0){
+                                  return Column(
+                                    children: [
+                                      Slider(
+                                        value: v0,
+                                        onChanged: (double vv){
+                                          e.value = vv;
+                                        },
+                                      ),
+                                      text(v0.toStringAsFixed(2)),
+                                    ],
+                                  );
+                                });
+                              }).toList(growable: false),
+                            )
                           ],
                         ),
                       ),
                     ),
-                    Row(children: GameLighting.VArray.map((e) =>
-                        watch(e, (double v) =>
-                            Container(
-                              margin: const EdgeInsets.only(right: 16),
-                              child: text(v, onPressed: () async {
-                                  e.value = await getFutureDouble(v);
-                                  }
-                              ),
-                            ))).toList()
-                    ),
+                    // Row(children: GameLighting.VArray.map((e) =>
+                    //     watch(e, (double v) =>
+                    //         Container(
+                    //           margin: const EdgeInsets.only(right: 16),
+                    //           child: text(v, onPressed: () async {
+                    //               e.value = await getFutureDouble(v);
+                    //               }
+                    //           ),
+                    //         ))).toList()
+                    // ),
                     height24,
                     text("close x", onPressed: () => ClientState.debugVisible.value = false),
                   ],
