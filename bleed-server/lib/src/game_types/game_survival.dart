@@ -1,4 +1,5 @@
 import 'package:bleed_server/gamestream.dart';
+import 'package:bleed_server/src/dark_age/dark_age_environment.dart';
 
 class GameSurvival extends Game {
 
@@ -28,4 +29,5 @@ class GameSurvival extends Game {
     player.health = player.maxHealth;
   }
 
+  final environment = DarkAgeEnvironment(DarkAgeTime());
 }

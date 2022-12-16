@@ -11,6 +11,10 @@ class DarkAgeTime {
 
   int get hour => time ~/ secondsPerHour;
 
+  set hour(int value) {
+     time = value * 60 * 60;
+  }
+
   void update(){
     if (!enabled) return;
     setTime(time + secondsPerFrame);
@@ -202,11 +206,9 @@ class DarkAgeEnvironment {
 
    /// WARNING HACK
    void onChangedWeather(){
-      for (final game in engine.games){
-         if (game is GameDarkAge == false) continue;
-         final gameDarkAge = game as GameDarkAge;
-         if (this != gameDarkAge.environment) continue;
-         gameDarkAge.playersWriteWeather();
+      for (final game in engine.games) {
+         if (game.environment != this) continue;
+         game.playersWriteWeather();
       }
    }
 }

@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:bleed_server/src/dark_age/dark_age_environment.dart';
 import 'package:lemon_math/library.dart';
 
 import 'package:bleed_server/gamestream.dart';
@@ -17,6 +18,8 @@ abstract class Game {
   var aiRespawnDuration = framesPerSecond * 60 * 2; // 5 minutes
 
   List<GameObject> get gameObjects => scene.gameObjects;
+
+  DarkAgeEnvironment get environment;
 
   /// In seconds
   void customInitPlayer(Player player) {}

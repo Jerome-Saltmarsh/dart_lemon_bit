@@ -1407,11 +1407,11 @@ class Player extends Character with ByteWriter {
   }
 
   void writeWeather() {
-    if (game is GameDarkAge == false) return;
-    final gameDarkAge = game as GameDarkAge;
-    final environment = gameDarkAge.environment;
+    final environment = game.environment;
 
-    if (gameDarkAge.underground) {
+    final underground = game is GameDarkAge && (game as GameDarkAge).underground;
+
+    if (underground) {
       writeByte(ServerResponse.Weather);
       writeByte(RainType.None);
       writeBool(false);
@@ -1429,7 +1429,7 @@ class Player extends Character with ByteWriter {
       writeByte(environment.shade);
     }
 
-    writeEnvironmentUnderground(gameDarkAge.underground);
+    writeEnvironmentUnderground(underground);
   }
 
   void writePercentage(double value){

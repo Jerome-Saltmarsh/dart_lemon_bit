@@ -1,5 +1,6 @@
 
 import 'package:bleed_server/gamestream.dart';
+import 'package:bleed_server/src/dark_age/dark_age_environment.dart';
 
 class Game5v5 extends Game {
 
@@ -9,6 +10,9 @@ class Game5v5 extends Game {
   var gameStatus = GameStatus.Waiting_For_Players;
   var spawnPoint1 = 0;
   var spawnPoint2 = 1;
+
+  final env = DarkAgeEnvironment(DarkAgeTime());
+
 
   bool get started => gameStatus == GameStatus.Playing;
 
@@ -76,4 +80,6 @@ class Game5v5 extends Game {
   void revive(Player player) {
      player.writeError('cannot revive');
   }
+
+  final environment = DarkAgeEnvironment(DarkAgeTime());
 }

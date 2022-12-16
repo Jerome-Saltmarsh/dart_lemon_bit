@@ -1,12 +1,17 @@
 
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/constants/frames_per_second.dart';
+import 'package:bleed_server/src/dark_age/dark_age_environment.dart';
 import 'package:lemon_math/library.dart';
 
 class GamePractice extends Game {
   var configMaxPlayers = 7;
   var configZombieHealth = 5;
   var configZombieSpeed = 5.0;
+
+  final environment = DarkAgeEnvironment(
+    DarkAgeTime()..hour = 0
+  );
 
   @override
   int get gameType => GameType.Practice;
@@ -105,5 +110,10 @@ class GamePractice extends Game {
      } else {
        ai.weaponType = ItemType.Empty;
      }
+  }
+
+  @override
+  void customUpdate() {
+    environment.update();
   }
 }
