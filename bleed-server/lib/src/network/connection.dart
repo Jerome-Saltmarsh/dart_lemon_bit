@@ -138,6 +138,11 @@ class Connection {
         if (index == null || !isValidIndex(index, LightningType.values))
           return errorInvalidArg('invalid lightning index: $index');
         game.environment.lightningType = LightningType.values[index];
+
+        if (game.environment.lightningType == LightningType.On){
+          game.environment.nextLightningFlash = 1;
+        }
+
         break;
 
       case ClientRequest.Weather_Toggle_Time_Passing:
