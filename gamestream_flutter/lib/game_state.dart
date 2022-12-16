@@ -26,7 +26,6 @@ class GameState {
   static var totalZombies = 0;
   static var totalParticles = 0;
   static var totalProjectiles = 0;
-  static var dynamicIndex = 0;
   static var nextParticleFrame = 0;
 
   static final gridShadows = Watch(true, onChanged: (bool value){
@@ -256,19 +255,10 @@ class GameState {
           final distanceValue = GameConvert.distanceToShade(distance, maxBrightness: maxBrightness);
           if (distanceValue >= GameNodes.nodesShade[nodeIndex]) continue;
           GameNodes.nodesShade[nodeIndex] = distanceValue;
-          GameNodes.nodesDynamicIndex[GameState.dynamicIndex] = nodeIndex;
-          GameState.dynamicIndex++;
+          GameNodes.nodesDynamicIndex[GameNodes.dynamicIndex] = nodeIndex;
+          GameNodes.dynamicIndex++;
         }
       }
-    }
-  }
-
-  static void resetGridToAmbient(){
-    final shade = ServerState.ambientShade.value;
-    for (var i = 0; i < GameNodes.nodesTotal; i++){
-      GameNodes.nodesBake[i] = shade;
-      GameNodes.nodesShade[i] = shade;
-      dynamicIndex = 0;
     }
   }
 
@@ -303,12 +293,12 @@ class GameState {
   }
 
   static void refreshDynamicLightGrid() {
-    while (dynamicIndex >= 0) {
-      final i = GameNodes.nodesDynamicIndex[dynamicIndex];
+    while (GameNodes.dynamicIndex >= 0) {
+      final i = GameNodes.nodesDynamicIndex[GameNodes.dynamicIndex];
       GameNodes.nodesShade[i] = GameNodes.nodesBake[i];
-      dynamicIndex--;
+      GameNodes.dynamicIndex--;
     }
-    dynamicIndex = 0;
+    GameNodes.dynamicIndex = 0;
   }
 
   static Particle spawnParticle({
@@ -1181,7 +1171,7 @@ class GameState {
 
 
     static void refreshLighting(){
-      GameState.resetGridToAmbient();
+      GameNodes.resetGridToAmbient();
       if (GameState.gridShadows.value){
         applyShadows();
       }

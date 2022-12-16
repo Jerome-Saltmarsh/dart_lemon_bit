@@ -1,10 +1,9 @@
 
-import 'dart:typed_data';
-
-import 'enums/visibility.dart';
+import 'package:gamestream_flutter/library.dart';
 
 class GameNodes {
   static const nodesInitialSize = 0;
+  static var dynamicIndex = 0;
   static var nodesBake = Uint8List(nodesInitialSize);
   static var nodesColor = Int32List(nodesInitialSize);
   static var nodesOrientation = Uint8List(nodesInitialSize);
@@ -32,5 +31,14 @@ class GameNodes {
     nodesVisible[index] = Visibility.Transparent;
     nodesVisibleIndex[visibleIndex] = index;
     visibleIndex++;
+  }
+
+  static void resetGridToAmbient(){
+    // final shade = ServerState.ambientShade.value;
+    for (var i = 0; i < GameNodes.nodesTotal; i++){
+      nodesBake[i] = Shade.Pitch_Black;
+      nodesShade[i] = Shade.Pitch_Black;
+      dynamicIndex = 0;
+    }
   }
 }

@@ -83,7 +83,7 @@ class ClientActions {
     for (var i = 0; i < GameNodes.nodesTotal; i++){
       if (!NodeType.emitsLight(GameNodes.nodesType[i])) continue;
       if (ClientState.nodesLightSourcesTotal >= ClientState.nodesLightSources.length) {
-        ClientState.nodesLightSources = Uint16List(ClientState.nodesLightSources.length + 500);
+        ClientState.nodesLightSources = Uint16List(ClientState.nodesLightSources.length + 100);
         refreshBakeMapLightSources();
         return;
       }
