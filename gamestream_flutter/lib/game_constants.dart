@@ -36,11 +36,6 @@ class GameConstants {
 
   static const Shade_Opacities = [0.0, 0.4, 0.6, 0.7, 0.8, 0.95, 1.0];
   static const Shade_Opacities_Transparent = [0.0, 0.2, 0.3, 0.35, 0.4, 0.45, 0.5];
-  // static final Color_Shades = Shade_Opacities
-  //     .map((opacity) => GameColors.black.withOpacity(opacity).value)
-  //     .toList(growable: false);
-
-
 
   static var colorStart = HSVColor.fromColor(Color.fromRGBO(38, 34, 47, 1.0).withOpacity(0));
   static var colorEnd = HSVColor.fromColor(Color.fromRGBO(47, 34, 39, 1.0));
@@ -57,14 +52,6 @@ class GameConstants {
      V0, V1, V2, V3, V4, V5, V6
   ];
 
-  static final C0 = HSVColor.lerp(colorStart, colorEnd, V0.value);
-  static final C1 = HSVColor.lerp(colorStart, colorEnd, V1.value);
-  static final C2 = HSVColor.lerp(colorStart, colorEnd, V2.value);
-  static final C3 = HSVColor.lerp(colorStart, colorEnd, V3.value);
-  static final C4 = HSVColor.lerp(colorStart, colorEnd, V4.value);
-  static final C5 = HSVColor.lerp(colorStart, colorEnd, V5.value);
-  static final C6 = HSVColor.lerp(colorStart, colorEnd, V6.value);
-
   static void onChangedV(double v) => refreshShades();
 
   static void refreshShades(){
@@ -77,15 +64,6 @@ class GameConstants {
      Color_Shades[6] = HSVColor.lerp(colorStart, colorEnd, V6.value)!.toColor().value;
   }
 
-  static final Color_Shades = [
-    C0,
-    C1,
-    C2,
-    C3,
-    C4,
-    C5,
-    C6,
-  ].map((e) => e!.toColor().value).toList(growable: false);
-
+  static final Color_Shades = Uint32List(7);
   static final Transparent =  GameColors.black.withOpacity(0.5).value;
 }
