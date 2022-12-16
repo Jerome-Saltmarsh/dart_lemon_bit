@@ -1318,8 +1318,8 @@ class GameState {
       final columnMax = min(columnIndex + radius, GameState.nodesTotalColumns);
 
       for (var z = zMin; z < zMax; z++){
-        for (var row = rowMin; row < rowMax; row++){
-          for (var column = columnMin; column < columnMax; column++) {
+        for (var row = rowMin; row <= rowMax; row++){
+          for (var column = columnMin; column <= columnMax; column++) {
             final nodeIndex = GameState.getNodeIndexZRC(z, row, column);
             var distance = (z - zIndex).abs() + (row - rowIndex).abs() + (column - columnIndex).abs() - 1;
             final distanceValue = GameConvert.distanceToShade(distance, maxBrightness: maxBrightness);
