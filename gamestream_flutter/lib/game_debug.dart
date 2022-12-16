@@ -109,13 +109,16 @@ class GameDebug {
                         ),
                       ),
                     ),
-                    Row(children: [
-                      watch(GameConstants.V0, (double v) {
-                        return text(v, onPressed: () async {
-                          GameConstants.V0.value = await getFutureDouble(v);
-                        });
-                      }),
-                    ],),
+                    Row(children: GameConstants.VArray.map((e) =>
+                        watch(e, (double v) =>
+                            Container(
+                              margin: const EdgeInsets.only(right: 16),
+                              child: text(v, onPressed: () async {
+                                  e.value = await getFutureDouble(v);
+                                  }
+                              ),
+                            ))).toList()
+                    ),
                     height24,
                     text("close x", onPressed: () => ClientState.debugVisible.value = false),
                   ],
@@ -125,15 +128,16 @@ class GameDebug {
       );
 }
 
-Future<double> getFutureDouble(double initial) async {
-  final value = await showDialog<double>(context: Engine.buildContext, builder: (context){
+Future<double> getFutureDouble01(double initial) async =>
+    clamp01(await getFutureDouble(initial));
 
+
+Future<double> getFutureDouble(double initial) async =>
+  await showDialog<double>(context: Engine.buildContext, builder: (context){
     final controller = TextEditingController(text: initial.toString());
-
     return AlertDialog(
       content: Container(
         width: 100,
-        // height: 62,
         padding: const EdgeInsets.all(16),
         color: Colors.blue,
         child: Row(
@@ -142,15 +146,17 @@ Future<double> getFutureDouble(double initial) async {
               width: 60,
               child: TextField(
                 controller: controller,
+                autofocus: true,
               ),
             ),
-            text("Enter", onPressed: (){
-              Navigator.pop(context, double.tryParse(controller.text) ?? initial);
-            }),
+            text("Enter", onPressed: () =>
+              Navigator.pop(
+                  context,
+                  double.tryParse(controller.text) ?? initial
+              )
+            ),
           ],
         ),
       ),
     );
-  });
-  return value != null ? value : initial;
-}
+  }) ?? initial;

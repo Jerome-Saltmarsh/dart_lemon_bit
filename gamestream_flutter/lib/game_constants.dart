@@ -53,6 +53,10 @@ class GameConstants {
   static final V5 = Watch(0.92, onChanged: onChangedV);
   static final V6 = Watch(1.00, onChanged: onChangedV);
 
+  static final VArray = [
+     V0, V1, V2, V3, V4, V5, V6
+  ];
+
   static final C0 = HSVColor.lerp(colorStart, colorEnd, V0.value);
   static final C1 = HSVColor.lerp(colorStart, colorEnd, V1.value);
   static final C2 = HSVColor.lerp(colorStart, colorEnd, V2.value);
