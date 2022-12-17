@@ -67,7 +67,7 @@ ctrl + w:   minimal mode
 [ ] game 5v5
 [ ] game moba
 
-[BUGS]
+[CRITICAL]
 [ ] fix grass node solid variation two
 [ ] fix ai spot player through walls
 [ ] fix render bricks
@@ -329,37 +329,4 @@ ctrl + w:   minimal mode
 [x] fixed editor menu icons
 
 
-
-
-#Story
-Earth is invaded by an alien race.
-
-The alien's spread a virus which turns the dead into zombies which the aliens control.
-
-
-#PROJECT GOAL
-The project goal of december is two add a variety of different enemy types.
-
-Each enemy type not only has a different design but also a different AI.
-
-This makes enemies multi dimensional
-
-#DESIGN
-
-
-HUNTER
-Players spawn around different parts of the game world. 
-
-The objective is to kill all the creeps in the world
-
-Once all the creeps have been killed the level increases and a new wave of creeps respawns
-
-Creeps appear on the mini map
-
-The aim of the game is to kill as many creeps as possible
-
-killing creeps rewards the player with loot and experience
-
-Team Hunt
-Solo Hunt
 

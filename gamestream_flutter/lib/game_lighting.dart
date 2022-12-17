@@ -2,25 +2,43 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class GameLighting {
+
+  static double getRandomHue() => randomBetween(0, 360);
+
   static final Color_Lightning = HSVColor.fromColor(Colors.white.withOpacity(Engine.GoldenRatio_0_381));
   static final Transparent =  GameColors.black.withOpacity(0.5).value;
 
-  static var hue_shift = 90.0;
+  static final Default_Color = Color.fromRGBO(38, 34, 47, 1.0);
+  static final Default_Color_HSV = HSVColor.fromColor(Default_Color);
+  static final Default_Color_Start = Default_Color_HSV.withAlpha(0);
+  static final Default_Color_End = Default_Color_Start.withAlpha(1.0);
 
-  static final Default_Color_Start =  HSVColor.fromColor(Color.fromRGBO(38, 34, 47, 1.0).withOpacity(0));
-  static final Default_Color_End =  Default_Color_Start.withHue((Default_Color_Start.hue + hue_shift) % 360.0).withAlpha(1.0);
-
-  static var start_hue = Default_Color_Start.hue;
+  static var start_hue_shift = getRandomHue();
+  static var _start_hue = Default_Color_Start.hue;
   static var start_saturation = Default_Color_Start.saturation;
   static var start_value = Default_Color_Start.value;
   static var start_alpha = Default_Color_Start.alpha;
 
-  static var end_hue = Default_Color_End.hue;
+  static var end_hue_shift = getRandomHue();
+  static var _end_hue = Default_Color_End.hue;
   static var end_saturation = Default_Color_End.saturation;
   static var end_value = Default_Color_End.value;
   static var end_alpha = Default_Color_End.alpha;
 
+  static double get start_hue => _start_hue;
+  static double get end_hue => _end_hue;
+
   static final values = Uint32List(7);
+
+  static set start_hue(double value){
+    assert (value >= 0);
+    _start_hue = value % 360.0;
+  }
+
+  static set end_hue(double value){
+    assert (value >= 0);
+    _end_hue = value % 360.0;
+  }
 
   static void setStartHSVColor(HSVColor color){
     start_hue = color.hue;
@@ -39,7 +57,17 @@ class GameLighting {
     1.00,
   ];
 
+  static void applyHueShift(){
+    start_hue = (start_hue + start_hue_shift);
+    end_hue = (start_hue + end_hue_shift);
+  }
+
   static void refreshValues() {
+    // GameLighting.start_hue = ((totalSeconds / Seconds_Per_Hours_24) * Max_Hue) + GameLighting.start_hue_shift;
+    // GameLighting.end_hue = GameLighting.start_hue + GameLighting.end_hue_shift;
+    start_hue = (start_hue + start_hue_shift);
+    end_hue = (start_hue + end_hue_shift);
+
     for (var i = 0; i < 7; i++) {
       final t = interpolations[i];
       values[i] = hsvToColorValue(
