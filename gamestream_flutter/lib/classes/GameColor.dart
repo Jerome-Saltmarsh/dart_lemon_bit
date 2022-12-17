@@ -1,19 +1,24 @@
 
 import 'dart:typed_data';
 
+import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/library.dart';
 
 final gameCols = GameCols();
 
 class GameCols {
-  var hueStart = 258.0;
-  var saturationStart = 27.0;
-  var valueStart = 18.0;
-  var alphaStart = 0.0;
-  var hueEnd = 258.0;
-  var saturationEnd = 27.0;
-  var valueEnd = 18.0;
-  var alphaEnd = 1.0;
+
+  static final Default_Color_Start =  HSVColor.fromColor(Color.fromRGBO(38, 34, 47, 1.0).withOpacity(0));
+  static final Default_Color_End =  HSVColor.fromColor(Color.fromRGBO(38, 34, 47, 1.0).withOpacity(1));
+
+  var hueStart = Default_Color_Start.hue;
+  var saturationStart = Default_Color_Start.saturation;
+  var valueStart = Default_Color_Start.value;
+  var alphaStart = Default_Color_Start.alpha;
+  var hueEnd = Default_Color_End.hue;
+  var saturationEnd = Default_Color_End.saturation;
+  var valueEnd = Default_Color_End.value;
+  var alphaEnd = Default_Color_End.alpha;
   final values = Uint32List(7);
 
   final ts = [
