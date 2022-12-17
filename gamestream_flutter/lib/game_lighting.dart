@@ -3,12 +3,13 @@ import 'package:gamestream_flutter/library.dart';
 
 class GameLighting {
 
+
   static double getRandomHue() => randomBetween(0, 360);
 
   static final Color_Lightning = HSVColor.fromColor(Colors.white.withOpacity(Engine.GoldenRatio_0_381));
   static final Transparent =  GameColors.black.withOpacity(0.5).value;
 
-  static final Default_Color = Color.fromRGBO(38, 34, 47, 1.0);
+  static final Default_Color = Color.fromRGBO(26, 24, 33, 1.0);
   static final Default_Color_HSV = HSVColor.fromColor(Default_Color);
   static final Default_Color_Start = Default_Color_HSV.withAlpha(0);
   static final Default_Color_End = Default_Color_Start.withAlpha(1.0);
@@ -62,11 +63,12 @@ class GameLighting {
     end_hue = (start_hue + end_hue_shift);
   }
 
-  static void refreshValues() {
-    // GameLighting.start_hue = ((totalSeconds / Seconds_Per_Hours_24) * Max_Hue) + GameLighting.start_hue_shift;
-    // GameLighting.end_hue = GameLighting.start_hue + GameLighting.end_hue_shift;
-    start_hue = (start_hue + start_hue_shift);
-    end_hue = (start_hue + end_hue_shift);
+  static void refreshValues({bool applyHueShift = true}) {
+
+    if (applyHueShift){
+      start_hue = (start_hue + start_hue_shift);
+      end_hue = (start_hue + end_hue_shift);
+    }
 
     for (var i = 0; i < 7; i++) {
       final t = interpolations[i];

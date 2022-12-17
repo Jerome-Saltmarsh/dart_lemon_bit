@@ -169,7 +169,7 @@ Widget buildColumnLightingControls(){
           GameLighting.start_saturation = hsvColor.saturation;
           GameLighting.start_value = hsvColor.value;
           GameLighting.start_alpha = hsvColor.alpha;
-          GameLighting.refreshValues();
+          GameLighting.refreshValues(applyHueShift: false);
         },
       ),
       ColorPicker(
@@ -186,7 +186,7 @@ Widget buildColumnLightingControls(){
           GameLighting.end_saturation = hsvColor.saturation;
           GameLighting.end_value = hsvColor.value;
           GameLighting.end_alpha = hsvColor.alpha;
-          GameLighting.refreshValues();
+          GameLighting.refreshValues(applyHueShift: false);
         },
       ),
       // Column(
