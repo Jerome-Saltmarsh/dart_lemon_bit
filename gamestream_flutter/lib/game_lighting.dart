@@ -135,10 +135,11 @@ class GameLighting {
     return colorValueFromARGB((alpha * 0xFF).round(), ((red + match) * 0xFF).round(), ((green + match) * 0xFF).round(), ((blue + match) * 0xFF).round());
   }
 
-  static int colorValueFromARGB(int a, int r, int g, int b) =>
-      (((a & 0xff) << 24) |
+  static int colorValueFromARGB(int a, int r, int g, int b) => (
+      ((a & 0xff) << 24) |
       ((r & 0xff) << 16) |
-      ((g & 0xff) << 8)  |
-      ((b & 0xff) << 0)) & 0xFFFFFFFF;
+      ((g & 0xff) << 08) |
+      ((b & 0xff) << 00)
+      ) & 0xFFFFFFFF;
 }
 
