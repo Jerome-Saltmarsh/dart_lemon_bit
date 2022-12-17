@@ -71,7 +71,9 @@ ctrl + w:   minimal mode
 [ ] fix grass node solid variation two
 [ ] fix ai spot player through walls
 [ ] fix render bricks
-[ ] fix torches not illuminating
+
+17.12.2022
+[x] fix torches not illuminating
 
 16.12.2022
 [x] fixed rain heavy

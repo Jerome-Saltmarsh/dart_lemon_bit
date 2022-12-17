@@ -1,3 +1,4 @@
+import 'package:gamestream_flutter/classes/GameColor.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_scene.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_byte/byte_reader.dart';
@@ -468,15 +469,21 @@ class ServerResponseReader with ByteReader {
     const Seconds_At_12PM = (Seconds_Per_Hour * 12);
     final totalSeconds = (ServerState.hours.value * Seconds_Per_Hour) + (ServerState.minutes.value * 60);
 
-    GameLighting.Hue.value = ((totalSeconds / Seconds_Per_24_Hours) * 360.0);
+    // GameLighting.Hue.value = ((totalSeconds / Seconds_Per_24_Hours) * 360.0);
+    gameCols.hueEnd = ((totalSeconds / Seconds_Per_24_Hours) * 360.0);
+    gameCols.hueStart = gameCols.hueEnd;
 
     if (totalSeconds < Seconds_At_12PM){
       final percentage = 1.0 - (totalSeconds / Seconds_At_12PM);
-      GameLighting.ColorEndOpacity = percentage;
+      // GameLighting.ColorEndOpacity = percentage;
+      gameCols.alphaEnd = percentage;
+      gameCols.refreshValues();
       return;
     }
     final percentage = (totalSeconds - Seconds_At_12PM) / Seconds_At_12PM;
-    GameLighting.ColorEndOpacity = percentage;
+    // GameLighting.ColorEndOpacity = percentage;
+    gameCols.alphaEnd = percentage;
+    gameCols.refreshValues();
     return;
   }
 

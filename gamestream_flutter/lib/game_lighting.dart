@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/library.dart';
 
+import 'classes/GameColor.dart';
+
+
 class GameLighting {
   static final Default_Color_Start =  HSVColor.fromColor(Color.fromRGBO(38, 34, 47, 1.0).withOpacity(0));
   static final Default_Color_End =    Color.fromRGBO(47, 34, 39, 1.0).withOpacity(1);
@@ -21,7 +24,7 @@ class GameLighting {
     V0, V1, V2, V3, V4, V5, V6
   ];
 
-  static final Color_Shades = Uint32List(7);
+  static final Color_Shades = gameCols.values;
   static final Transparent =  GameColors.black.withOpacity(0.5).value;
 
   // GETTERS
@@ -54,18 +57,19 @@ class GameLighting {
 
   /// EXPENSIVE OPERATION
   static void refreshShades(){
-    Color_Start_Hue = Hue.value;
-    Color_End_Hue = Hue.value + Hue_Shift.value;
-
-    final start = Color_Start.value;
-    final end = HSVColor.fromColor(Color_End.value);
-    Color_Shades[0] = HSVColor.lerp(start, end, V0.value)!.toColor().value;
-    Color_Shades[1] = HSVColor.lerp(start, end, V1.value)!.toColor().value;
-    Color_Shades[2] = HSVColor.lerp(start, end, V2.value)!.toColor().value;
-    Color_Shades[3] = HSVColor.lerp(start, end, V3.value)!.toColor().value;
-    Color_Shades[4] = HSVColor.lerp(start, end, V4.value)!.toColor().value;
-    Color_Shades[5] = HSVColor.lerp(start, end, V5.value)!.toColor().value;
-    Color_Shades[6] = HSVColor.lerp(start, end, V6.value)!.toColor().value;
+    gameCols.refreshValues();
+    // Color_Start_Hue = Hue.value;
+    // Color_End_Hue = Hue.value + Hue_Shift.value;
+    //
+    // final start = Color_Start.value;
+    // final end = HSVColor.fromColor(Color_End.value);
+    // Color_Shades[0] = HSVColor.lerp(start, end, V0.value)!.toColor().value;
+    // Color_Shades[1] = HSVColor.lerp(start, end, V1.value)!.toColor().value;
+    // Color_Shades[2] = HSVColor.lerp(start, end, V2.value)!.toColor().value;
+    // Color_Shades[3] = HSVColor.lerp(start, end, V3.value)!.toColor().value;
+    // Color_Shades[4] = HSVColor.lerp(start, end, V4.value)!.toColor().value;
+    // Color_Shades[5] = HSVColor.lerp(start, end, V5.value)!.toColor().value;
+    // Color_Shades[6] = HSVColor.lerp(start, end, V6.value)!.toColor().value;
   }
 }
 

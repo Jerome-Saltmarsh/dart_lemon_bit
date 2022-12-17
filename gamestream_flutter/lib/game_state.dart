@@ -1285,6 +1285,8 @@ class GameState {
     required int maxBrightness,
     int radius = 5,
   }){
+      assert (index >= 0);
+      assert (index < GameNodes.nodesTotal);
       applyEmissionBake(
         zIndex: GameState.convertNodeIndexToZ(index),
         rowIndex: GameState.convertNodeIndexToRow(index),
@@ -1303,9 +1305,9 @@ class GameState {
       final zMin = max(zIndex - radius, 0);
       final zMax = min(zIndex + radius, GameState.nodesTotalZ);
       final rowMin = max(rowIndex - radius, 0);
-      final rowMax = min(rowIndex + radius, GameState.nodesTotalRows);
+      final rowMax = min(rowIndex + radius, GameState.nodesTotalRows - 1);
       final columnMin = max(columnIndex - radius, 0);
-      final columnMax = min(columnIndex + radius, GameState.nodesTotalColumns);
+      final columnMax = min(columnIndex + radius, GameState.nodesTotalColumns -1);
 
       for (var z = zMin; z < zMax; z++){
         for (var row = rowMin; row <= rowMax; row++){
