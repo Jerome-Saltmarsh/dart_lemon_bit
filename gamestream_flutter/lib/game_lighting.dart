@@ -50,11 +50,11 @@ class GameLighting {
 
   static final interpolations = [
     0.00,
-    0.20,
+    0.25,
     0.40,
     0.60,
     0.80,
-    0.92,
+    0.95,
     1.00,
   ];
 
