@@ -47,6 +47,7 @@ ctrl + w:   minimal mode
 [ ] feature skills
 [ ] feature loot gameobjects
 [ ] feature node orientation vertical half
+[ ] feature light source hue
 
 [CONTENT]
 [ ] node type pine tree
@@ -71,6 +72,7 @@ ctrl + w:   minimal mode
 [ ] fix grass node solid variation two
 [ ] fix ai spot player through walls
 [ ] fix render bricks
+[ ] fix transparent not shaded by hue
 
 17.12.2022
 [x] fix torches not illuminating
