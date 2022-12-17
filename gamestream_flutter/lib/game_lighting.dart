@@ -5,27 +5,31 @@ class GameLighting {
   static final Color_Lightning = HSVColor.fromColor(Colors.white.withOpacity(Engine.GoldenRatio_0_381));
   static final Transparent =  GameColors.black.withOpacity(0.5).value;
 
-  static final Default_Color_Start =  HSVColor.fromColor(Color.fromRGBO(38, 34, 47, 1.0).withOpacity(0));
-  static final Default_Color_End =  HSVColor.fromColor(Color.fromRGBO(38, 34, 47, 1.0).withOpacity(1));
+  static var hue_shift = 90.0;
 
-  static var hueStart = Default_Color_Start.hue;
-  static var saturationStart = Default_Color_Start.saturation;
-  static var valueStart = Default_Color_Start.value;
-  static var alphaStart = Default_Color_Start.alpha;
-  static var hueEnd = Default_Color_End.hue;
-  static var saturationEnd = Default_Color_End.saturation;
-  static var valueEnd = Default_Color_End.value;
-  static var alphaEnd = Default_Color_End.alpha;
-  static final Color_Shades = Uint32List(7);
+  static final Default_Color_Start =  HSVColor.fromColor(Color.fromRGBO(38, 34, 47, 1.0).withOpacity(0));
+  static final Default_Color_End =  Default_Color_Start.withHue((Default_Color_Start.hue + hue_shift) % 360.0).withAlpha(1.0);
+
+  static var start_hue = Default_Color_Start.hue;
+  static var start_saturation = Default_Color_Start.saturation;
+  static var start_value = Default_Color_Start.value;
+  static var start_alpha = Default_Color_Start.alpha;
+
+  static var end_hue = Default_Color_End.hue;
+  static var end_saturation = Default_Color_End.saturation;
+  static var end_value = Default_Color_End.value;
+  static var end_alpha = Default_Color_End.alpha;
+
+  static final values = Uint32List(7);
 
   static void setStartHSVColor(HSVColor color){
-    hueStart = color.hue;
-    saturationStart = color.saturation;
-    valueStart = color.value;
-    alphaStart = color.alpha;
+    start_hue = color.hue;
+    start_saturation = color.saturation;
+    start_value = color.value;
+    start_alpha = color.alpha;
   }
 
-  static final ts = [
+  static final interpolations = [
     0.00,
     0.20,
     0.40,
@@ -37,12 +41,12 @@ class GameLighting {
 
   static void refreshValues(){
     for (var i = 0; i < 7; i++) {
-      final t = ts[i];
-      Color_Shades[i] = hsvToColorValue(
-        linerInterpolation(hueStart, hueEnd, t),
-        linerInterpolation(saturationStart, saturationEnd, t),
-        linerInterpolation(valueStart, valueEnd, t),
-        linerInterpolation(alphaStart, alphaEnd, t),
+      final t = interpolations[i];
+      values[i] = hsvToColorValue(
+        linerInterpolation(start_hue, end_hue, t),
+        linerInterpolation(start_saturation, end_saturation, t),
+        linerInterpolation(start_value, end_value, t),
+        linerInterpolation(start_alpha, end_alpha, t),
       );
     }
   }

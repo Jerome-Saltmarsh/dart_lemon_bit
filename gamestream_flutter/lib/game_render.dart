@@ -76,7 +76,7 @@ class GameRender {
   static double get currentNodeRenderY => GameConvert.rowColumnZToRenderY(currentNodeRow, currentNodeColumn, currentNodeZ);
 
   static int get currentNodeShade => GameNodes.nodesShade[currentNodeIndex];
-  static int get currentNodeColor => GameLighting.Color_Shades[currentNodeShade];
+  static int get currentNodeColor => GameLighting.values[currentNodeShade];
   static int get currentNodeOrientation => GameNodes.nodesOrientation[currentNodeIndex];
   static bool get currentNodeVisible => currentNodeVisibility != Visibility.Invisible;
   static bool get currentNodeInvisible => currentNodeVisibility == Visibility.Invisible;
@@ -1338,7 +1338,7 @@ class RenderOrderParticle extends RenderOrder {
 
 int get renderNodeShade => GameNodes.nodesShade[GameRender.currentNodeIndex];
 int get renderNodeOrientation => GameNodes.nodesOrientation[GameRender.currentNodeIndex];
-int get renderNodeColor => GameLighting.Color_Shades[renderNodeShade];
+int get renderNodeColor => GameLighting.values[renderNodeShade];
 int get renderNodeWind => GameNodes.nodesWind[renderNodeShade];
 int get renderNodeBelowIndex => GameRender.currentNodeIndex + GameState.nodesArea;
 
@@ -1348,10 +1348,10 @@ int get renderNodeBelowShade {
   return GameNodes.nodesShade[renderNodeBelowIndex];
 }
 
-int get renderNodeBelowColor => GameLighting.Color_Shades[renderNodeBelowShade];
+int get renderNodeBelowColor => GameLighting.values[renderNodeBelowShade];
 
 int getRenderLayerColor(int layers) =>
-    GameLighting.Color_Shades[getRenderLayerShade(layers)];
+    GameLighting.values[getRenderLayerShade(layers)];
 
 int getRenderLayerShade(int layers){
    final index = GameRender.currentNodeIndex + (layers * GameState.nodesArea);

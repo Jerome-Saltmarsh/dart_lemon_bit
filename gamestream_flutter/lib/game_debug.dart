@@ -144,33 +144,33 @@ Widget buildColumnLightingControls(){
     children: [
       ColorPicker(
         pickerColor: HSVColor.fromAHSV(
-            GameLighting.alphaStart,
-            GameLighting.hueStart,
-            GameLighting.saturationStart,
-            GameLighting.alphaStart,
+            GameLighting.start_alpha,
+            GameLighting.start_hue,
+            GameLighting.start_saturation,
+            GameLighting.start_alpha,
         ).toColor(),
         onColorChanged: (color){
           final hsvColor = HSVColor.fromColor(color);
-          GameLighting.hueStart = hsvColor.hue;
-          GameLighting.saturationStart = hsvColor.saturation;
-          GameLighting.valueStart = hsvColor.value;
-          GameLighting.alphaStart = hsvColor.alpha;
+          GameLighting.start_hue = hsvColor.hue;
+          GameLighting.start_saturation = hsvColor.saturation;
+          GameLighting.start_value = hsvColor.value;
+          GameLighting.start_alpha = hsvColor.alpha;
           GameLighting.refreshValues();
         },
       ),
       ColorPicker(
         pickerColor: HSVColor.fromAHSV(
-          GameLighting.alphaEnd,
-          GameLighting.hueEnd,
-          GameLighting.saturationEnd,
-          GameLighting.alphaEnd,
+          GameLighting.end_alpha,
+          GameLighting.end_hue,
+          GameLighting.end_saturation,
+          GameLighting.end_alpha,
         ).toColor(),
         onColorChanged: (color){
           final hsvColor = HSVColor.fromColor(color);
-          GameLighting.hueEnd = hsvColor.hue;
-          GameLighting.saturationEnd = hsvColor.saturation;
-          GameLighting.valueEnd = hsvColor.value;
-          GameLighting.alphaEnd = hsvColor.alpha;
+          GameLighting.end_hue = hsvColor.hue;
+          GameLighting.end_saturation = hsvColor.saturation;
+          GameLighting.end_value = hsvColor.value;
+          GameLighting.end_alpha = hsvColor.alpha;
           GameLighting.refreshValues();
         },
       ),
