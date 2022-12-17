@@ -74,6 +74,7 @@ ctrl + w:   minimal mode
 
 17.12.2022
 [x] fix torches not illuminating
+[x] fix torch emission
 
 16.12.2022
 [x] fixed rain heavy
