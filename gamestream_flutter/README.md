@@ -74,6 +74,10 @@ ctrl + w:   minimal mode
 [ ] fix render bricks
 [ ] fix transparent not shaded by hue
 
+18.12.2022
+[x] fix lightning
+[x] optimize update lighting
+
 17.12.2022
 [x] fix torches not illuminating
 [x] fix torch emission
