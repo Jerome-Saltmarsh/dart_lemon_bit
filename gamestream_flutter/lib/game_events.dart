@@ -389,6 +389,7 @@ class GameEvents {
   static void onChangedHour(int hour){
     if (ServerState.sceneUnderground.value) return;
     ClientState.torchesIgnited.value = Shade.fromHour(hour) != Shade.Very_Bright;
+    ClientState.updateGameLighting();
   }
 
   static void onChangedRain(int value) {

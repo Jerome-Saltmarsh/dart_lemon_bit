@@ -34,6 +34,7 @@ class ClientState {
 
   static var nodesLightSources = Uint16List(0);
   static var nodesLightSourcesTotal = 0;
+  static var nextLightingUpdate = 0;
 
   // PROPERTIES
   static bool get hoverDialogIsInventory => hoverDialogType.value == DialogType.Inventory;
@@ -53,5 +54,25 @@ class ClientState {
         messageStatus.value = "";
       }
     }
+
+    if (nextLightingUpdate-- <= 0){
+      nextLightingUpdate = 30;
+      updateGameLighting();
+    }
+  }
+
+  static void updateGameLighting(){
+    if (ClientState.overrideColor.value) return;
+    const Max_Hue = 360.0;
+    const Seconds_Per_Hour = 3600;
+    const Seconds_Per_Hours_12 = Seconds_Per_Hour * 12;
+    const Seconds_Per_Hours_24 = Seconds_Per_Hour * 24;
+
+    final totalSeconds = (ServerState.hours.value * Seconds_Per_Hour) + (ServerState.minutes.value * 60);
+    GameLighting.start_hue = ((totalSeconds / Seconds_Per_Hours_24) * Max_Hue);
+    GameLighting.end_alpha = totalSeconds < Seconds_Per_Hours_12
+        ? 1.0 - (totalSeconds / Seconds_Per_Hours_12)
+        : (totalSeconds - Seconds_Per_Hours_12) / Seconds_Per_Hours_12;
+    GameLighting.refreshValues();
   }
 }
