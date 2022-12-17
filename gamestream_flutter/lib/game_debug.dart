@@ -143,54 +143,72 @@ Widget buildColumnLightingControls(){
   return Column(
     children: [
       ColorPicker(
-        pickerColor: GameLighting.Color_Start.value.toColor(),
+        pickerColor: HSVColor.fromAHSV(
+            GameLighting.alphaStart,
+            GameLighting.hueStart,
+            GameLighting.saturationStart,
+            GameLighting.alphaStart,
+        ).toColor(),
         onColorChanged: (color){
-          GameLighting.Color_Start.value = HSVColor.fromColor(color);
-          GameLighting.refreshShades();
+          final hsvColor = HSVColor.fromColor(color);
+          GameLighting.hueStart = hsvColor.hue;
+          GameLighting.saturationStart = hsvColor.saturation;
+          GameLighting.valueStart = hsvColor.value;
+          GameLighting.alphaStart = hsvColor.alpha;
+          GameLighting.refreshValues();
         },
       ),
       ColorPicker(
-        pickerColor: GameLighting.Color_End.value,
+        pickerColor: HSVColor.fromAHSV(
+          GameLighting.alphaEnd,
+          GameLighting.hueEnd,
+          GameLighting.saturationEnd,
+          GameLighting.alphaEnd,
+        ).toColor(),
         onColorChanged: (color){
-          GameLighting.Color_End.value = color;
-          GameLighting.refreshShades();
+          final hsvColor = HSVColor.fromColor(color);
+          GameLighting.hueEnd = hsvColor.hue;
+          GameLighting.saturationEnd = hsvColor.saturation;
+          GameLighting.valueEnd = hsvColor.value;
+          GameLighting.alphaEnd = hsvColor.alpha;
+          GameLighting.refreshValues();
         },
       ),
-      Column(
-        children: GameLighting.VArray.map((e){
-          return watch(e, (double v0){
-            return Column(
-              children: [
-                Slider(
-                  value: v0,
-                  onChanged: (double vv){
-                    e.value = vv;
-                  },
-                ),
-                text(v0.toStringAsFixed(2)),
-              ],
-            );
-          });
-        }).toList(growable: false),
-      ),
-      watch(GameLighting.Hue, (double value) => text("Hue: ${value.toInt()}")),
-      watch(GameLighting.Hue, (double hueShift){
-        return Slider(
-            min: 0.0,
-            max: 360.0,
-            value: GameLighting.Hue.value, onChanged: (double value){
-          GameLighting.Hue.value = value;
-        });
-      }),
-      watch(GameLighting.Hue_Shift, (double value) => text("Hue Shift: ${value.toInt()}")),
-      watch(GameLighting.Hue_Shift, (double hueShift){
-        return Slider(
-            min: 0.0,
-            max: 360.0,
-            value: hueShift, onChanged: (double value){
-          GameLighting.Hue_Shift.value = value;
-        });
-      }),
+      // Column(
+      //   children: GameLighting.VArray.map((e){
+      //     return watch(e, (double v0){
+      //       return Column(
+      //         children: [
+      //           Slider(
+      //             value: v0,
+      //             onChanged: (double vv){
+      //               e.value = vv;
+      //             },
+      //           ),
+      //           text(v0.toStringAsFixed(2)),
+      //         ],
+      //       );
+      //     });
+      //   }).toList(growable: false),
+      // ),
+      // watch(GameLighting.Hue, (double value) => text("Hue: ${value.toInt()}")),
+      // watch(GameLighting.Hue, (double hueShift){
+      //   return Slider(
+      //       min: 0.0,
+      //       max: 360.0,
+      //       value: GameLighting.Hue.value, onChanged: (double value){
+      //     GameLighting.Hue.value = value;
+      //   });
+      // }),
+      // watch(GameLighting.Hue_Shift, (double value) => text("Hue Shift: ${value.toInt()}")),
+      // watch(GameLighting.Hue_Shift, (double hueShift){
+      //   return Slider(
+      //       min: 0.0,
+      //       max: 360.0,
+      //       value: hueShift, onChanged: (double value){
+      //     GameLighting.Hue_Shift.value = value;
+      //   });
+      // }),
     ],
   );
 }

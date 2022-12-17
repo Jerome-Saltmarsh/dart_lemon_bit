@@ -470,20 +470,20 @@ class ServerResponseReader with ByteReader {
     final totalSeconds = (ServerState.hours.value * Seconds_Per_Hour) + (ServerState.minutes.value * 60);
 
     // GameLighting.Hue.value = ((totalSeconds / Seconds_Per_24_Hours) * 360.0);
-    gameCols.hueEnd = ((totalSeconds / Seconds_Per_24_Hours) * 360.0);
-    gameCols.hueStart = gameCols.hueEnd;
+    GameLighting.hueEnd = ((totalSeconds / Seconds_Per_24_Hours) * 360.0);
+    GameLighting.hueStart = GameLighting.hueEnd;
 
     if (totalSeconds < Seconds_At_12PM){
       final percentage = 1.0 - (totalSeconds / Seconds_At_12PM);
       // GameLighting.ColorEndOpacity = percentage;
-      gameCols.alphaEnd = percentage;
-      gameCols.refreshValues();
+      GameLighting.alphaEnd = percentage;
+      GameLighting.refreshValues();
       return;
     }
     final percentage = (totalSeconds - Seconds_At_12PM) / Seconds_At_12PM;
     // GameLighting.ColorEndOpacity = percentage;
-    gameCols.alphaEnd = percentage;
-    gameCols.refreshValues();
+    GameLighting.alphaEnd = percentage;
+    GameLighting.refreshValues();
     return;
   }
 

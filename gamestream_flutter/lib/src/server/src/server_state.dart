@@ -71,9 +71,12 @@ class ServerState {
 
 
   static final lightningFlashing = Watch(false, onChanged: (bool lightningFlashing){
-      GameLighting.Color_Start.value = lightningFlashing ? GameLighting.Color_Lightning : GameLighting.Default_Color_Start;
-      if (lightningFlashing){
+
+    if (lightningFlashing){
+        GameLighting.setStartHSVColor(GameLighting.Color_Lightning);
         GameAudio.thunder(1.0);
+      } else {
+        GameLighting.setStartHSVColor(GameLighting.Default_Color_Start);
       }
   });
 }
