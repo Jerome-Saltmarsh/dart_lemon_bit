@@ -56,13 +56,14 @@ class ClientState {
     }
 
     if (nextLightingUpdate-- <= 0){
-      nextLightingUpdate = 30;
+      nextLightingUpdate = GameConstants.Frames_Per_Lighting_Update;
       updateGameLighting();
     }
   }
 
   static void updateGameLighting(){
     if (ClientState.overrideColor.value) return;
+    if (ServerState.lightningFlashing.value) return;
     const Max_Hue = 360.0;
     const Seconds_Per_Hour = 3600;
     const Seconds_Per_Hours_12 = Seconds_Per_Hour * 12;

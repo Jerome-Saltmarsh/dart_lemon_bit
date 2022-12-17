@@ -29,4 +29,15 @@ class ServerEvents {
        ClientState.torchesIgnited.value = Shade.fromHour(ServerState.hours.value) != Shade.Very_Bright;
      }
   }
+
+  static void onChangedLightningFlashing(bool lightningFlashing){
+    if (lightningFlashing) {
+      GameLighting.setStartHSVColor(GameLighting.Color_Lightning);
+      GameLighting.refreshValues();
+      GameAudio.thunder(1.0);
+    } else {
+      GameLighting.setStartHSVColor(GameLighting.Default_Color_HSV.withAlpha(0));
+      ClientState.updateGameLighting();
+    }
+  }
 }
