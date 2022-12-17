@@ -20,6 +20,7 @@ class ClientState {
   static final dragStart = Watch(-1);
   static final dragEnd = Watch(-1);
   static final messageStatus = Watch("", onChanged: ClientEvents.onChangedMessageStatus);
+  static final overrideColor = WatchBool(false);
 
   static final triggerAlarmNoMessageReceivedFromServer = Watch(false);
 

@@ -461,16 +461,22 @@ class ServerResponseReader with ByteReader {
   }
 
   void readGameTime() {
+    const Max_Hue = 360.0;
+    const Seconds_Per_Hour = 3600;
+    const Seconds_Per_Hours_12 = Seconds_Per_Hour * 12;
+    const Seconds_Per_Hours_24 = Seconds_Per_Hour * 24;
+
+
     ServerState.hours.value = readByte();
     ServerState.minutes.value = readByte();
-    const Seconds_Per_Hour = 3600;
-    const Seconds_Per_24_Hours = Seconds_Per_Hour * 24;
-    const Seconds_At_12PM = (Seconds_Per_Hour * 12);
     final totalSeconds = (ServerState.hours.value * Seconds_Per_Hour) + (ServerState.minutes.value * 60);
 
+    if (ClientState.overrideColor.value) return;
     GameLighting.start_hue = GameLighting.end_hue + GameLighting.hue_shift;
-    GameLighting.end_hue = ((totalSeconds / Seconds_Per_24_Hours) * 360.0);
-    GameLighting.end_alpha = totalSeconds < Seconds_At_12PM ? 1.0 - (totalSeconds / Seconds_At_12PM) : (totalSeconds - Seconds_At_12PM) / Seconds_At_12PM;
+    GameLighting.end_hue = ((totalSeconds / Seconds_Per_Hours_24) * Max_Hue);
+    GameLighting.end_alpha = totalSeconds < Seconds_Per_Hours_12
+        ? 1.0 - (totalSeconds / Seconds_Per_Hours_12)
+        : (totalSeconds - Seconds_Per_Hours_12) / Seconds_Per_Hours_12;
     GameLighting.refreshValues();
   }
 

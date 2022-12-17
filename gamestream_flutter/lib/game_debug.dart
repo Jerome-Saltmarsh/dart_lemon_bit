@@ -141,7 +141,20 @@ Future<double> getFutureDouble(double initial) async =>
 
 Widget buildColumnLightingControls(){
   return Column(
+    mainAxisAlignment: MainAxisAlignment.start,
     children: [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          text("Override Color"),
+          watch(ClientState.overrideColor, (bool overrideColor){
+            return Checkbox(value: overrideColor, onChanged: (bool? value){
+               if (value == null) return;
+               ClientState.overrideColor.value = value;
+            });
+          })
+        ],
+      ),
       ColorPicker(
         pickerColor: HSVColor.fromAHSV(
             GameLighting.start_alpha,
@@ -150,6 +163,7 @@ Widget buildColumnLightingControls(){
             GameLighting.start_alpha,
         ).toColor(),
         onColorChanged: (color){
+          ClientState.overrideColor.value = true;
           final hsvColor = HSVColor.fromColor(color);
           GameLighting.start_hue = hsvColor.hue;
           GameLighting.start_saturation = hsvColor.saturation;
@@ -166,6 +180,7 @@ Widget buildColumnLightingControls(){
           GameLighting.end_alpha,
         ).toColor(),
         onColorChanged: (color){
+          ClientState.overrideColor.value = true;
           final hsvColor = HSVColor.fromColor(color);
           GameLighting.end_hue = hsvColor.hue;
           GameLighting.end_saturation = hsvColor.saturation;

@@ -1305,9 +1305,9 @@ class GameState {
       final zMin = max(zIndex - radius, 0);
       final zMax = min(zIndex + radius, GameState.nodesTotalZ);
       final rowMin = max(rowIndex - radius, 0);
-      final rowMax = min(rowIndex + radius, GameState.nodesTotalRows - 1);
+      final rowMax = min(rowIndex + radius + 1, GameState.nodesTotalRows - 1);
       final columnMin = max(columnIndex - radius, 0);
-      final columnMax = min(columnIndex + radius, GameState.nodesTotalColumns -1);
+      final columnMax = min(columnIndex + radius + 1, GameState.nodesTotalColumns - 1);
 
       for (var z = zMin; z < zMax; z++){
         for (var row = rowMin; row <= rowMax; row++){

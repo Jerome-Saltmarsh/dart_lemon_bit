@@ -39,7 +39,7 @@ class GameLighting {
     1.00,
   ];
 
-  static void refreshValues(){
+  static void refreshValues() {
     for (var i = 0; i < 7; i++) {
       final t = interpolations[i];
       values[i] = hsvToColorValue(
