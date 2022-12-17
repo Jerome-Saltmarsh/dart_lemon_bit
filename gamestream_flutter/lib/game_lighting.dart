@@ -14,13 +14,13 @@ class GameLighting {
   static final Default_Color_Start = Default_Color_HSV.withAlpha(0);
   static final Default_Color_End = Default_Color_Start.withAlpha(1.0);
 
-  static var start_hue_shift = getRandomHue();
+  static var start_hue_shift = Watch(getRandomHue());
   static var _start_hue = Default_Color_Start.hue;
   static var start_saturation = Default_Color_Start.saturation;
   static var start_value = Default_Color_Start.value;
   static var start_alpha = Default_Color_Start.alpha;
 
-  static var end_hue_shift = getRandomHue();
+  static var end_hue_shift = Watch(getRandomHue());
   static var _end_hue = Default_Color_End.hue;
   static var end_saturation = Default_Color_End.saturation;
   static var end_value = Default_Color_End.value;
@@ -59,15 +59,15 @@ class GameLighting {
   ];
 
   static void applyHueShift(){
-    start_hue = (start_hue + start_hue_shift);
-    end_hue = (start_hue + end_hue_shift);
+    start_hue = (start_hue + start_hue_shift.value);
+    end_hue = (start_hue + end_hue_shift.value);
   }
 
   static void refreshValues({bool applyHueShift = true}) {
 
     if (applyHueShift){
-      start_hue = (start_hue + start_hue_shift);
-      end_hue = (start_hue + end_hue_shift);
+      start_hue = (start_hue + start_hue_shift.value);
+      end_hue = (start_hue + end_hue_shift.value);
     }
 
     for (var i = 0; i < 7; i++) {

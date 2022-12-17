@@ -189,41 +189,30 @@ Widget buildColumnLightingControls(){
           GameLighting.refreshValues(applyHueShift: false);
         },
       ),
-      // Column(
-      //   children: GameLighting.VArray.map((e){
-      //     return watch(e, (double v0){
-      //       return Column(
-      //         children: [
-      //           Slider(
-      //             value: v0,
-      //             onChanged: (double vv){
-      //               e.value = vv;
-      //             },
-      //           ),
-      //           text(v0.toStringAsFixed(2)),
-      //         ],
-      //       );
-      //     });
-      //   }).toList(growable: false),
-      // ),
-      // watch(GameLighting.Hue, (double value) => text("Hue: ${value.toInt()}")),
-      // watch(GameLighting.Hue, (double hueShift){
-      //   return Slider(
-      //       min: 0.0,
-      //       max: 360.0,
-      //       value: GameLighting.Hue.value, onChanged: (double value){
-      //     GameLighting.Hue.value = value;
-      //   });
-      // }),
-      // watch(GameLighting.Hue_Shift, (double value) => text("Hue Shift: ${value.toInt()}")),
-      // watch(GameLighting.Hue_Shift, (double hueShift){
-      //   return Slider(
-      //       min: 0.0,
-      //       max: 360.0,
-      //       value: hueShift, onChanged: (double value){
-      //     GameLighting.Hue_Shift.value = value;
-      //   });
-      // }),
+      text('start hue shift'),
+      watch(GameLighting.start_hue_shift, (double hueShift){
+        return Slider(
+            min: 0.0,
+            max: 360.0,
+            value: hueShift, onChanged: (double value) {
+              GameLighting.start_hue_shift.value = value;
+              // GameLighting.refreshValues();
+              ClientState.updateGameLighting();
+            }
+        );
+      }),
+      text('end hue shift'),
+      watch(GameLighting.end_hue_shift, (double hueShift){
+        return Slider(
+            min: 0.0,
+            max: 360.0,
+            value: hueShift, onChanged: (double value) {
+          GameLighting.end_hue_shift.value = value;
+          ClientState.updateGameLighting();
+          // GameLighting.refreshValues();
+        }
+        );
+      }),
     ],
   );
 }
