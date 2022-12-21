@@ -1,19 +1,23 @@
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
+import 'package:lemon_byte/byte_writer.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'library.dart';
 
 class GameNetwork {
-  static final updateBuffer = Uint8List(18);
   static late WebSocketChannel webSocketChannel;
-  static final connectionStatus = Watch(ConnectionStatus.None, onChanged: onChangedConnectionStatus);
-  static bool get connected => connectionStatus.value == ConnectionStatus.Connected;
-  static bool get connecting => connectionStatus.value == ConnectionStatus.Connecting;
-  static String connectionUri = "";
   static late WebSocketSink sink;
+  static final updateBuffer = Uint8List(18);
+  static final connectionStatus = Watch(ConnectionStatus.None, onChanged: onChangedConnectionStatus);
+  static String connectionUri = "";
   static DateTime? connectionEstablished;
 
+  // GETTERS
+  static bool get connected => connectionStatus.value == ConnectionStatus.Connected;
+  static bool get connecting => connectionStatus.value == ConnectionStatus.Connecting;
+
+  // FUNCTIONS
   static void connectToRegion(ConnectionRegion region, String message) {
     if (region == ConnectionRegion.LocalHost) {
       connectToServer(GameNetworkConfig.wsLocalHost, message);
@@ -75,6 +79,7 @@ class GameNetwork {
       actionSecondary: false,
       actionTertiary: false,
     );
+
     writeNumberToByteArray(number: GameIO.getCursorWorldX(), list: updateBuffer, index: 5);
     writeNumberToByteArray(number: GameIO.getCursorWorldY(), list: updateBuffer, index: 7);
     writeNumberToByteArray(number: Engine.screen.left, list: updateBuffer, index: 9);
@@ -266,6 +271,15 @@ class GameNetwork {
 
   static void sendClientRequestEditorLoadGame(String name){
     sendClientRequest(ClientRequest.Editor_Load_Game, name);
+  }
+
+  static void uploadScene(List<int> bytes) {
+    final package = Uint8List(bytes.length + 1);
+    package[0] = ClientRequest.Editor_Load_Scene;
+    for (var i = 0; i < bytes.length; i++){
+      package[i + 1] = bytes[i];
+    }
+    GameNetwork.sink.add(package);
   }
 
   // static void sendClientRequestEditorSetSceneName(String name){

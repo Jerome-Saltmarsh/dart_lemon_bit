@@ -17,8 +17,9 @@ import '../functions/move_player_to_crystal.dart';
 import '../game_types/game_practice.dart';
 import '../utilities/is_valid_index.dart';
 import 'handle_request_modify_canvas_size.dart';
+import 'package:lemon_byte/byte_reader.dart';
 
-class Connection {
+class Connection with ByteReader {
   final started = DateTime.now();
   late WebSocketChannel webSocket;
   late WebSocketSink sink;
@@ -61,7 +62,21 @@ class Connection {
 
   void onData(dynamic args) {
     if (args is Uint8List) {
-      return handleClientRequestUpdate(args);
+      values = args;
+      switch (values[0]) {
+        case ClientRequest.Update:
+          handleClientRequestUpdate(args);
+          return;
+        case ClientRequest.Editor_Load_Scene:
+          try {
+            final scene = SceneReader.readScene(values, startIndex: 1);
+            joinGameEditorScene(scene);
+          } catch (error){
+            errorInvalidArg('Failed to load scene');
+          }
+          return;
+      }
+
     }
     if (args is String) {
       return onDataStringArray(args.split(" "));

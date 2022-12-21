@@ -86,6 +86,7 @@ class SceneWriter extends ByteWriter {
       writeGameObjects(scene);
       writeSpawnPoints(scene);
     }
+    writeByte(ScenePart.End);
     return compile();
   }
 }
@@ -103,10 +104,10 @@ class SceneReader extends ByteReader {
   var spawnPoints = Uint16List(0);
   var gameObjects = <GameObject>[];
 
-  static Scene readScene(List<int> bytes) => _instance._readScene(bytes);
+  static Scene readScene(List<int> bytes, {int startIndex = 0}) => _instance._readScene(bytes, startIndex: startIndex);
 
-  Scene _readScene(List<int> bytes){
-    this.index = 0;
+  Scene _readScene(List<int> bytes, {int startIndex = 0}){
+    this.index = startIndex;
     this.totalColumns = 0;
     this.totalRows = 0;
     this.totalColumns = 0;
@@ -116,25 +117,7 @@ class SceneReader extends ByteReader {
     this.spawnPoints = Uint16List(0);
     this.gameObjects = <GameObject>[];
     this.values = bytes;
-
-    while (this.index < bytes.length){
-      switch (readByte()){
-        case ScenePart.Nodes:
-          readNodes();
-          break;
-        case ScenePart.GameObjects:
-          readGameObjects();
-          break;
-        case ScenePart.Player_SpawnPoints:
-          readPlayerSpawnPoints();
-          break;
-        case ScenePart.Spawn_Points:
-          readSpawnPoints();
-          break;
-        default:
-          throw Exception("could not read scene");
-      }
-    }
+    readLoop();
 
     return Scene(
         name: 'test',
@@ -148,6 +131,29 @@ class SceneReader extends ByteReader {
         spawnPointTypes: Uint16List(0),
         spawnPointsPlayers: playerSpawnPoints,
     );
+  }
+
+  void readLoop() {
+    while (this.index < values.length){
+      switch (readByte()){
+        case ScenePart.Nodes:
+          readNodes();
+          break;
+        case ScenePart.GameObjects:
+          readGameObjects();
+          break;
+        case ScenePart.Player_SpawnPoints:
+          readPlayerSpawnPoints();
+          break;
+        case ScenePart.Spawn_Points:
+          readSpawnPoints();
+          break;
+        case ScenePart.End:
+          return;
+        default:
+          throw Exception("could not read scene");
+      }
+    }
   }
 
   void readGameObjects() {
