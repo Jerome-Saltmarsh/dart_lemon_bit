@@ -32,12 +32,10 @@ class ServerEvents {
 
   static void onChangedLightningFlashing(bool lightningFlashing){
     if (lightningFlashing) {
-      // GameLighting.end_value = 0.5;
       GameLighting.setStartHSVColor(GameLighting.Color_Lightning);
       GameLighting.refreshValues();
       GameAudio.thunder(1.0);
     } else {
-      // GameLighting.end_value = 0.9;
       GameLighting.setStartHSVColor(GameLighting.Default_Color_HSV.withAlpha(0));
       ClientState.updateGameLighting();
     }

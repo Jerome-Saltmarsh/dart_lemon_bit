@@ -19,6 +19,7 @@ ctrl + w:   minimal mode
 [ ] optimize front end - do not use objects to store gameobjects
 [ ] optimize front end - do not use objects to store particles
 [ ] optimize client applyShadowAt
+[ ] optimize apply emission dynamic
 
 [TODO]
 [ ] cache region

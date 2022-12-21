@@ -196,7 +196,6 @@ Widget buildColumnLightingControls(){
             max: 360.0,
             value: hueShift, onChanged: (double value) {
               GameLighting.start_hue_shift.value = value;
-              // GameLighting.refreshValues();
               ClientState.updateGameLighting();
             }
         );
@@ -209,7 +208,6 @@ Widget buildColumnLightingControls(){
             value: hueShift, onChanged: (double value) {
           GameLighting.end_hue_shift.value = value;
           ClientState.updateGameLighting();
-          // GameLighting.refreshValues();
         }
         );
       }),
