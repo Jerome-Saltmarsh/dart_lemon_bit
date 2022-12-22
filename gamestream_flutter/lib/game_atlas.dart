@@ -250,7 +250,6 @@ class AtlasNodeX {
     NodeType.Grass_Flowers: Grass_Flowers,
     NodeType.Brick_Top: 0.0,
     NodeType.Plain: Plain_Solid,
-    NodeType.Bau_Haus: Bau_Haus_Solid,
     NodeType.Bed_Bottom: AtlasNode.X_Bed_Bottom,
     NodeType.Bed_Top: AtlasNode.X_Bed_Top,
     NodeType.Cottage_Roof: -1.0,

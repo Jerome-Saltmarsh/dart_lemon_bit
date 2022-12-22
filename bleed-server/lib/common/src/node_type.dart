@@ -17,7 +17,6 @@ class NodeType {
   static const Brick_Top = 27;
   static const Soil = 38;
   static const Concrete = 41;
-  static const Bau_Haus = 50;
   static const Bau_Haus_Window = 53;
   static const Bau_Haus_Plain = 54;
   static const Chimney = 55;
@@ -245,7 +244,6 @@ class NodeType {
     Fireplace: 'Fireplace',
     Soil: 'Soil',
     Concrete: 'Stone',
-    Bau_Haus: 'Bau Haus',
     Bau_Haus_2: 'Bau Haus',
     Bau_Haus_Window: 'Bau Haus Window',
     Bau_Haus_Plain: 'Bau Hau Plain',
