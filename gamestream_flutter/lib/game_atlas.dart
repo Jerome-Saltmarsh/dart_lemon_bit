@@ -589,8 +589,8 @@ class AtlasNode {
   static const Y_Bed_Bottom = 585.0;
   static const X_Bed_Top = X_Bed_Bottom + Sprite_Width_Padded;
   static const Y_Bed_Top = Y_Bed_Bottom;
-  static const X_Torch_Windy = 986.0;
-  static const Y_Torch_Windy = 512.0;
+  static const X_Torch_Windy = 1681.0;
+  static const Y_Torch_Windy = 728.0;
   static const Width_Torch = 25.0;
   static const Height_Torch = 70.0;
 }
