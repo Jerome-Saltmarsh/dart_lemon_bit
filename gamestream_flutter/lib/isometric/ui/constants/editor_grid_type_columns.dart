@@ -7,7 +7,7 @@ const editorGridTypesColumn1 = [
   NodeType.Wood_2,
   NodeType.Wooden_Plank,
   NodeType.Bau_Haus_2,
-  NodeType.Stone,
+  NodeType.Concrete,
   NodeType.Torch,
   NodeType.Fireplace,
   NodeType.Tree_Top,

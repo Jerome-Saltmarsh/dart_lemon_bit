@@ -1,6 +1,5 @@
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
-import 'package:lemon_byte/byte_writer.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'library.dart';
@@ -405,7 +404,7 @@ class GameNetwork {
   );
 
   static void sendClientRequestEditSceneSetFloorTypeStone() =>
-      sendClientRequestEditSceneSetFloorType(NodeType.Stone);
+      sendClientRequestEditSceneSetFloorType(NodeType.Concrete);
 
   static void sendClientRequestEditSceneSetFloorType(int nodeType) =>
       sendClientRequestEdit(EditRequest.Scene_Set_Floor_Type, nodeType);

@@ -606,15 +606,6 @@ class EditorUI {
     );
   }
 
-  // static Widget buildIconNodeType(int nodeType) =>
-  //     Engine.buildAtlasImage(
-  //       image: GameImages.atlasNodes,
-  //       srcX: AtlasNodeX.mapNodeType(nodeType),
-  //       srcY: AtlasNodeY.mapNodeType(nodeType),
-  //       srcWidth: AtlasNodeWidth.mapNodeType(nodeType),
-  //       srcHeight: AtlasNodeHeight.mapNodeType(nodeType),
-  //     );
-
   static Widget buildButtonSelectNodeType(int nodeType) {
     final canvas = Engine.buildAtlasImage(
       image: GameImages.atlas_nodes,

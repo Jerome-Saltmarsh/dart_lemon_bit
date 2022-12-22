@@ -16,7 +16,7 @@ class NodeType {
   static const Water_Flowing = 26;
   static const Brick_Top = 27;
   static const Soil = 38;
-  static const Stone = 41;
+  static const Concrete = 41;
   static const Bau_Haus = 50;
   static const Bau_Haus_Window = 53;
   static const Bau_Haus_Plain = 54;
@@ -57,7 +57,7 @@ class NodeType {
 
   static bool isMaterialStone(int value) =>
     value == Brick_Top ||
-    value == Stone ||
+    value == Concrete ||
     value == Oven ||
     value == Brick_2 ||
     value == Road ||
@@ -69,7 +69,7 @@ class NodeType {
     type == Soil ||
     type == Road ||
     type == Road_2 ||
-    type == Stone ||
+    type == Concrete ||
     type == Wood_2 ||
     type == Grass ||
     type == Plain ||
@@ -98,7 +98,7 @@ class NodeType {
   static bool supportsOrientationRadial(int type) =>
     type == Tree_Bottom ||
     type == Torch ||
-    type == Stone ||
+    type == Concrete ||
     type == Fireplace ;
 
   static bool supportsOrientationSlopeSymmetric(int type) =>
@@ -106,17 +106,17 @@ class NodeType {
     type == Wood_2 ||
     type == Grass ||
     type == Brick_2 ||
-    type == Stone ||
+    type == Concrete ||
     type == Bau_Haus_2;
 
   static bool supportsOrientationSlopeCornerInner(int type) =>
     type == Cottage_Roof ||
     type == Grass ||
-    type == Stone ||
+    type == Concrete ||
     type == Bau_Haus_2;
 
   static bool supportsOrientationSlopeCornerOuter(int type) =>
-    type == Stone ||
+    type == Concrete ||
     type == Grass;
 
 
@@ -126,7 +126,7 @@ class NodeType {
     type == Window ||
     type == Wooden_Plank ||
     type == Brick_2 ||
-    type == Stone ||
+    type == Concrete ||
     type == Bau_Haus_2;
 
   static bool supportsOrientationCorner(int type) =>
@@ -134,7 +134,7 @@ class NodeType {
     type == Plain ||
     type == Brick_2 ||
     type == Bau_Haus_2 ||
-    type == Stone ||
+    type == Concrete ||
     type == Wooden_Plank;
 
   static bool isDestroyable(int type) =>
@@ -244,7 +244,7 @@ class NodeType {
     Rain_Landing: 'Rain Landing',
     Fireplace: 'Fireplace',
     Soil: 'Soil',
-    Stone: 'Stone',
+    Concrete: 'Stone',
     Bau_Haus: 'Bau Haus',
     Bau_Haus_2: 'Bau Haus',
     Bau_Haus_Window: 'Bau Haus Window',

@@ -1,5 +1,4 @@
 
-import 'package:gamestream_flutter/isometric/nodes/render/render_node_wood.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import 'render_node_plain.dart';
@@ -100,8 +99,8 @@ void renderNodeAt() {
         srcY: 72.0 * ((GameAnimation.animationFrame + GameRender.currentNodeRow + GameRender.currentNodeColumn) % 6), // TODO Expensive Operation
       );
       return;
-    case NodeType.Stone:
-      renderNodeTemplateShaded(1900.0);
+    case NodeType.Concrete:
+      renderNodeTemplateShaded(GameConstants.Sprite_Width_Padded_8);
       return;
     case NodeType.Road:
       RenderNode.renderStandardNodeShaded(srcX: 768, srcY: 672);

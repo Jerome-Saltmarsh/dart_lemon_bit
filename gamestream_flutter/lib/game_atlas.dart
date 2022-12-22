@@ -196,7 +196,7 @@ class AtlasNodeX {
   static const Bau_Haus_Half = Bau_Haus_Solid;
   static const Bau_Haus_Corner = Bau_Haus_Half;
   static const Bau_Haus_Slope = Bau_Haus_Solid + GameConstants.Sprite_Width_Padded;
-  static const Brick_Solid = 680.0;
+  static const Brick_Solid = GameConstants.Sprite_Width_Padded_2;
   static const Brick_Half_West = Brick_Solid + GameConstants.Sprite_Width_Padded;
   static const Brick_Half_South = Brick_Half_West + GameConstants.Sprite_Width_Padded;
   static const Brick_Corner_Top = Brick_Half_South + GameConstants.Sprite_Width_Padded;
@@ -210,10 +210,7 @@ class AtlasNodeX {
   static const Spawn_Weapon = 0.0;
   static const Spawn_Player = 49.0;
   static const Spawn_Zombie = 0.0;
-  static const Soil = 618.0;
-  static const Wood = 177.0;
   static const Wooden_Plank = 716.0;
-  static const Bau_Haus = 520.0;
   static const Chimney = 618.0;
   static const Table = 667.0;
   static const Fireplace = 667.0;
@@ -242,15 +239,17 @@ class AtlasNodeX {
   static const Orientation_Radial = 1888.0;
 
   static double mapNodeType(int type) => const {
-    NodeType.Brick_2: Brick_Solid,
-    NodeType.Grass: Grass,
+    NodeType.Brick_2: GameConstants.Sprite_Width_Padded_2,
+    NodeType.Grass: GameConstants.Sprite_Width_Padded_3,
+    NodeType.Wood_2: GameConstants.Sprite_Width_Padded_5,
+    NodeType.Bau_Haus_2: GameConstants.Sprite_Width_Padded_6,
+    NodeType.Soil: GameConstants.Sprite_Width_Padded_7,
+    NodeType.Concrete: GameConstants.Sprite_Width_Padded_8,
     NodeType.Torch: Torch,
     NodeType.Grass_Long: Grass_Long,
     NodeType.Grass_Flowers: Grass_Flowers,
     NodeType.Brick_Top: 0.0,
-    NodeType.Stone: Stone,
     NodeType.Plain: Plain_Solid,
-    NodeType.Soil: Soil,
     NodeType.Bau_Haus: Bau_Haus_Solid,
     NodeType.Bed_Bottom: AtlasNode.X_Bed_Bottom,
     NodeType.Bed_Top: AtlasNode.X_Bed_Top,
@@ -262,8 +261,6 @@ class AtlasNodeX {
     NodeType.Water: Water,
     NodeType.Spawn_Weapon: Spawn_Weapon,
     NodeType.Spawn_Player: Spawn_Player,
-    NodeType.Wood_2: Wood,
-    NodeType.Bau_Haus_2: Bau_Haus,
     NodeType.Chimney: Chimney,
     NodeType.Table: Table,
     NodeType.Fireplace: Fireplace,
@@ -376,17 +373,13 @@ class AtlasNodeY {
     NodeType.Spawn: Spawn,
     NodeType.Spawn_Weapon: Spawn_Weapon,
     NodeType.Spawn_Player: Spawn_Player,
-    NodeType.Soil: Soil,
-    NodeType.Wood_2: Wood,
     NodeType.Wooden_Plank: Wooden_Plank,
-    NodeType.Bau_Haus_2: Bau_Haus,
     NodeType.Chimney: Chimney,
     NodeType.Table: Table,
     NodeType.Fireplace: Fireplace,
     NodeType.Sunflower: Sunflower,
     NodeType.Tree_Top: Tree_Top,
     NodeType.Tree_Bottom: Tree_Bottom,
-    NodeType.Stone: Stone,
     NodeType.Plain: Plain_Solid,
     NodeType.Oven: Oven,
     NodeType.Boulder: Boulder,
@@ -576,12 +569,12 @@ class AtlasNode {
   static const Node_Wooden_Plank_Corner_Bottom_Y = Node_Wooden_Plank_Corner_Right_Y + Sprite_Height_Padded;
   static const Node_Wooden_Plank_Corner_Left_X = Wooden_Plank_Solid_X;
   static const Node_Wooden_Plank_Corner_Left_Y = Node_Wooden_Plank_Corner_Bottom_Y + Sprite_Height_Padded;
-  static const Spawn_X = 618.0;
-  static const Spawn_Y = 1021.0;
+  static const Spawn_X = 1704.0;
+  static const Spawn_Y = 655.0;
   static const Spawn_Weapon_X = 0.0;
   static const Spawn_Weapon_Y = 592.0;
-  static const Spawn_Player_X = 49.0;
-  static const Spawn_Player_Y = 592.0;
+  static const Spawn_Player_X = 1655.0;
+  static const Spawn_Player_Y = 655.0;
   static const Table_X = 667.0;
   static const Node_Table_Y = 945.0;
   static const Node_Wood_Slope_North_X = 912.0;
