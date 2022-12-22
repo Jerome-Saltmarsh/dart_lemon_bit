@@ -122,11 +122,10 @@ void renderNodeAt() {
       const index_grass = 6;
       const srcX = GameConstants.Sprite_Width_Padded * index_grass;
       renderNodeTemplateShaded(srcX);
-      // RenderNode.renderNodeBauHaus();
       break;
     case NodeType.Sunflower:
       RenderNode.renderStandardNodeShaded(
-          srcX: AtlasNodeX.Sunflower,
+          srcX: 1753.0,
           srcY: AtlasNodeY.Sunflower,
       );
       return;

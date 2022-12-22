@@ -18,7 +18,6 @@ const editorGridTypesColumn1 = [
 
 const editorGridTypesColumn2 = [
   NodeType.Spawn,
-  NodeType.Spawn_Weapon,
   NodeType.Spawn_Player,
   NodeType.Grass,
   NodeType.Grass_Long,
