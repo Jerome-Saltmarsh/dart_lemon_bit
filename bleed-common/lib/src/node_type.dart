@@ -28,7 +28,7 @@ class NodeType {
   static const Grass_Flowers = 61;
   static const Brick_2 = 62;
   static const Wood_2 = 63;
-  static const Cottage_Roof = 64;
+  // static const Cottage_Roof = 64;
   static const Grass = 65;
   static const Plain = 66;
   static const Window = 67;
@@ -101,7 +101,7 @@ class NodeType {
     type == Fireplace ;
 
   static bool supportsOrientationSlopeSymmetric(int type) =>
-    type == Cottage_Roof ||
+    // type == Cottage_Roof ||
     type == Wood_2 ||
     type == Grass ||
     type == Brick_2 ||
@@ -109,7 +109,7 @@ class NodeType {
     type == Bau_Haus_2;
 
   static bool supportsOrientationSlopeCornerInner(int type) =>
-    type == Cottage_Roof ||
+    // type == Cottage_Roof ||
     type == Grass ||
     type == Concrete ||
     type == Bau_Haus_2;
@@ -256,7 +256,7 @@ class NodeType {
     Grass_Flowers: 'Grass Flowers',
     Brick_2: 'Brick',
     Wood_2: 'Wood',
-    Cottage_Roof: 'Cottage Roof',
+    // Cottage_Roof: 'Cottage Roof',
     Grass: 'Grass',
     Plain: 'Plain',
     Window: 'Window',

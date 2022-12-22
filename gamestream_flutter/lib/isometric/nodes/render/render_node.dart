@@ -1,7 +1,6 @@
 
 import 'package:gamestream_flutter/library.dart';
 
-import 'render_node_plain.dart';
 import 'render_node_window.dart';
 import 'render_node_wooden_plank.dart';
 
@@ -109,7 +108,7 @@ void renderNodeAt() {
       RenderNode.renderStandardNodeShaded(srcX: 768, srcY: 672 + GameConstants.Sprite_Height_Padded);
       return;
     case NodeType.Plain:
-      renderNodePlain();
+      renderNodeTemplateShaded(GameConstants.Sprite_Width_Padded_8);
       return;
     case NodeType.Wooden_Plank:
       renderNodeWoodenPlank();
