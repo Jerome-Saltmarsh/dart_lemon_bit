@@ -19,11 +19,14 @@ void renderNodeAt() {
 
   switch (GameRender.currentNodeType) {
     case NodeType.Grass:
-      renderNodeTemplateShaded(1998.0);
-      // return renderNodeTypeGrass();
+      const index_grass = 3;
+      const srcX = GameConstants.Sprite_Width_Padded * index_grass;
+      renderNodeTemplateShaded(srcX);
       return;
     case NodeType.Brick_2:
-      renderNodeTemplateShaded(1949.0);
+      const index_grass = 2;
+      const srcX = GameConstants.Sprite_Width_Padded * index_grass;
+      renderNodeTemplateShaded(srcX);
       return;
     case NodeType.Torch:
       RenderNode.renderNodeTorch();
@@ -44,7 +47,6 @@ void renderNodeAt() {
       );
       break;
     case NodeType.Tree_Top:
-
       var shift = GameAnimation.treeAnimation[((GameRender.currentNodeRow - GameRender.currentNodeColumn) + GameAnimation.animationFrame) % GameAnimation.treeAnimation.length] * renderNodeWind;
       Engine.renderSprite(
         image: GameImages.atlas_nodes,
@@ -67,7 +69,7 @@ void renderNodeAt() {
           return;
         default:
           RenderNode.renderStandardNodeShaded(
-              srcX: AtlasNodeX.Grass_Long + ((((GameRender.currentNodeRow - GameRender.currentNodeColumn) + GameAnimation.animationFrameGrass) % 6) * 48),
+              srcX: AtlasNodeX.Grass_Long + ((((GameRender.currentNodeRow - GameRender.currentNodeColumn) + GameAnimation.animationFrameGrass) % 6) * 48), // TODO Expensive Operation
               srcY: 0,
           );
           return;
@@ -75,7 +77,7 @@ void renderNodeAt() {
     case NodeType.Rain_Falling:
       RenderNode.renderStandardNodeShaded(
         srcX: ClientState.srcXRainFalling,
-        srcY: 72.0 * ((GameAnimation.animationFrame + GameRender.currentNodeRow + GameRender.currentNodeRow + GameRender.currentNodeColumn) % 6),
+        srcY: 72.0 * ((GameAnimation.animationFrame + GameRender.currentNodeRow + GameRender.currentNodeRow + GameRender.currentNodeColumn) % 6), // TODO Expensive Operation
       );
       return;
     case NodeType.Rain_Landing:
@@ -83,7 +85,7 @@ void renderNodeAt() {
         Engine.renderSprite(
           image: GameImages.atlas_nodes,
           srcX: AtlasNode.Node_Rain_Landing_Water_X,
-          srcY: 72.0 * ((GameAnimation.animationFrame + GameRender.currentNodeRow + GameRender.currentNodeColumn) % 10),
+          srcY: 72.0 * ((GameAnimation.animationFrame + GameRender.currentNodeRow + GameRender.currentNodeColumn) % 10), // TODO Expensive Operation
           srcWidth: GameConstants.Sprite_Width,
           srcHeight: GameConstants.Sprite_Height,
           dstX: GameRender.currentNodeDstX,
@@ -95,7 +97,7 @@ void renderNodeAt() {
       }
       RenderNode.renderStandardNodeShaded(
         srcX: ClientState.srcXRainLanding,
-        srcY: 72.0 * ((GameAnimation.animationFrame + GameRender.currentNodeRow + GameRender.currentNodeColumn) % 6),
+        srcY: 72.0 * ((GameAnimation.animationFrame + GameRender.currentNodeRow + GameRender.currentNodeColumn) % 6), // TODO Expensive Operation
       );
       return;
     case NodeType.Stone:
@@ -114,10 +116,15 @@ void renderNodeAt() {
       renderNodeWoodenPlank();
       return;
     case NodeType.Wood_2:
-      renderNodeWood();
+      const index_grass = 5;
+      const srcX = GameConstants.Sprite_Width_Padded * index_grass;
+      renderNodeTemplateShaded(srcX);
       break;
     case NodeType.Bau_Haus_2:
-      RenderNode.renderNodeBauHaus();
+      const index_grass = 6;
+      const srcX = GameConstants.Sprite_Width_Padded * index_grass;
+      renderNodeTemplateShaded(srcX);
+      // RenderNode.renderNodeBauHaus();
       break;
     case NodeType.Sunflower:
       RenderNode.renderStandardNodeShaded(
@@ -345,86 +352,5 @@ void renderNodeTemplateShaded(double srcX) {
   }
 }
 
-void renderNodeTypeGrass() {
-  switch (GameRender.currentNodeOrientation) {
-    case NodeOrientation.Solid:
-      return RenderNode.renderStandardNodeShaded(
-          srcX: GameNodes.nodesVariation[GameRender.currentNodeIndex] ? AtlasNodeX.Grass : AtlasNodeX.Grass_Flowers,
-          srcY: 0,
-      );
-    case NodeOrientation.Slope_North:
-      return RenderNode.renderStandardNodeShaded(
-        srcX: AtlasNode.Node_Grass_Slope_North,
-        srcY: 0,
-      );
-    case NodeOrientation.Slope_East:
-      return RenderNode.renderStandardNodeShaded(
-        srcX: AtlasNode.Node_Grass_Slope_East,
-        srcY: 0,
-      );
-    case NodeOrientation.Slope_South:
-      return RenderNode.renderStandardNodeShaded(
-        srcX: AtlasNode.Node_Grass_Slope_South,
-        srcY: 0,
-      );
-    case NodeOrientation.Slope_West:
-      return RenderNode.renderStandardNodeShaded(
-        srcX: AtlasNode.Node_Grass_Slope_West,
-        srcY: 0,
-      );
-    case NodeOrientation.Slope_Inner_North_East:
-      return RenderNode.renderStandardNodeShaded(
-        srcX: AtlasNode.Node_Grass_Slope_Inner_North_East,
-        srcY: 0,
-      );
-    case NodeOrientation.Slope_Inner_South_East:
-      return RenderNode.renderStandardNodeShaded(
-        srcX: AtlasNode.Node_Grass_Slope_Inner_South_East,
-        srcY: 0,
-      );
-    case NodeOrientation.Slope_Inner_South_West:
-      return RenderNode.renderStandardNodeShaded(
-        srcX: AtlasNode.Node_Grass_Slope_Inner_South_West,
-        srcY: 0,
-      );
-    case NodeOrientation.Slope_Inner_North_West:
-      return RenderNode.renderStandardNodeShaded(
-        srcX: AtlasNode.Node_Grass_Slope_Inner_North_West,
-        srcY: 0,
-      );
-    case NodeOrientation.Slope_Outer_North_East:
-      return RenderNode.renderStandardNodeShaded(
-        srcX: AtlasNode.Node_Grass_Slope_Outer_North_East,
-        srcY: 0,
-      );
-    case NodeOrientation.Slope_Outer_South_East:
-      return RenderNode.renderStandardNodeShaded(
-        srcX: AtlasNode.Node_Grass_Slope_Outer_South_East,
-        srcY: 0,
-      );
-    case NodeOrientation.Slope_Outer_South_West:
-      return RenderNode.renderStandardNodeShaded(
-        srcX: AtlasNode.Node_Grass_Slope_Outer_South_West,
-        srcY: 0,
-      );
-    case NodeOrientation.Slope_Outer_North_West:
-      return RenderNode.renderStandardNodeShaded(
-        srcX: AtlasNode.Node_Grass_Slope_Outer_North_West,
-        srcY: 0,
-      );
-    default:
-      throw Exception(
-          'renderNodeTypeGrass(orientation: ${NodeOrientation.getName(GameNodes.nodesOrientation[GameRender.currentNodeIndex])}, shade: ${Shade.getName(GameNodes.nodesShade[GameRender.currentNodeIndex])}'
-      );
-  }
-}
-
-double projectX(int row, int column){
-  return (row - column) * Node_Size_Half;
-}
-
-double projectY(int row, int column, int z){
-  return ((row + column) * Node_Size_Half) - (z * Node_Height);
-}
 
 

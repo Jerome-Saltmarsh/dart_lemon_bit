@@ -75,6 +75,9 @@ ctrl + w:   minimal mode
 [ ] fix render bricks
 [ ] fix transparent not shaded by hue
 
+22.12.2022
+[x] upload scene with bytes instead of base64 encoded string
+
 18.12.2022
 [x] fix lightning
 [x] optimize update lighting

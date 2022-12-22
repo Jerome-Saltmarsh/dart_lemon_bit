@@ -85,8 +85,9 @@ class SceneWriter extends ByteWriter {
       writePlayerSpawnPoints(scene);
       writeGameObjects(scene);
       writeSpawnPoints(scene);
+      writeByte(ScenePart.End);
     }
-    writeByte(ScenePart.End);
+
     return compile();
   }
 }

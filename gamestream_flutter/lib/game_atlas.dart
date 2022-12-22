@@ -218,9 +218,9 @@ class AtlasNodeX {
   static const Table = 667.0;
   static const Fireplace = 667.0;
   static const Sunflower = 618.0;
-  static const Tree_Top = 62.0;
-  static const Tree_Bottom = 0.0;
-  static const Water = 128.0;
+  static const Tree_Top = 1668.0;
+  static const Tree_Bottom = 1606.0;
+  static const Water = 1606.0;
   static const Grass = 0.0;
   static const Grass_Long = 1218.0;
   static const Grass_Flowers = 49.0;
@@ -332,12 +332,12 @@ class AtlasNodeY {
   static const Table = 945.0;
   static const Fireplace = 512.0;
   static const Sunflower = 512.0;
-  static const Tree_Top = 512.0;
-  static const Tree_Bottom = 512.0;
+  static const Tree_Top = 433.0;
+  static const Tree_Bottom = 433.0;
   static const Water = 512.0;
   static const Stone = 0.0;
   static const Plain_Solid = 0.0;
-  static const Torch = 512.0;
+  static const Torch = 509.0;
   static const Water_Flowing = 0.0;
   static const Window = 876.0;
   static const Spawn = 1021.0;
@@ -523,7 +523,6 @@ class AtlasNode {
   static const Node_Wood_Corner_Right_Y = Node_Wood_Solid_Y;
   static const Node_Wood_Corner_Bottom_X = Node_Wood_Corner_Right_X + Sprite_Width_Padded;
   static const Node_Wood_Corner_Bottom_Y = Node_Wood_Solid_Y;
-  // static const Node_Bau_Haus_Solid_Y = 512.0;
   static const Node_Bau_Haus_Half_South_X = 520.0;
   static const Node_Bau_Haus_Half_South_Y = 512.0 + Sprite_Height_Padded;
   static const Node_Bau_Haus_Half_West_X = 520.0;
