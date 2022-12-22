@@ -133,10 +133,9 @@ void renderNodeAt() {
       );
       return;
     case NodeType.Soil:
-      RenderNode.renderStandardNodeShaded(
-        srcX: AtlasNode.Soil_X,
-        srcY: AtlasNode.Node_Soil_Y,
-      );
+      const index_grass = 7;
+      const srcX = GameConstants.Sprite_Width_Padded * index_grass;
+      renderNodeTemplateShaded(srcX);
       return;
     case NodeType.Fireplace:
       RenderNode.renderStandardNode(

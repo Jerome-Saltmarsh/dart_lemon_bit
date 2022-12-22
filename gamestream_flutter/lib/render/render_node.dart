@@ -27,7 +27,7 @@ class RenderNode {
       Engine.renderSprite(
         image: atlas,
         srcX: AtlasNodeX.Torch,
-        srcY: AtlasNodeY.Torch + AtlasNode.Height_Torch + (((GameRender.currentNodeRow + (GameAnimation.animationFrame)) % 6) * AtlasNode.Height_Torch),
+        srcY: AtlasNodeY.Torch + AtlasNode.Height_Torch + (((GameRender.currentNodeRow + (GameAnimation.animationFrame)) % 6) * AtlasNode.Height_Torch), // TODO Optimize
         srcWidth: AtlasNode.Width_Torch,
         srcHeight: AtlasNode.Height_Torch,
         dstX: GameRender.currentNodeDstX,
@@ -40,7 +40,7 @@ class RenderNode {
     Engine.renderSprite(
       image: atlas,
       srcX: AtlasNode.X_Torch_Windy,
-      srcY: AtlasNode.Y_Torch_Windy + AtlasNode.Height_Torch + (((GameRender.currentNodeRow + (GameAnimation.animationFrame)) % 6) * AtlasNode.Height_Torch),
+      srcY: AtlasNode.Y_Torch_Windy + AtlasNode.Height_Torch + (((GameRender.currentNodeRow + (GameAnimation.animationFrame)) % 6) * AtlasNode.Height_Torch), // TODO Optimize
       srcWidth: AtlasNode.Width_Torch,
       srcHeight: AtlasNode.Height_Torch,
       dstX: GameRender.currentNodeDstX,
@@ -55,7 +55,7 @@ class RenderNode {
     Engine.renderSprite(
       image: atlas,
       srcX: AtlasNodeX.Water,
-      srcY: AtlasNodeY.Water + (((GameAnimation.animationFrameWater + ((GameRender.currentNodeRow + GameRender.currentNodeColumn) * 3)) % 10) * 72.0),
+      srcY: AtlasNodeY.Water + (((GameAnimation.animationFrameWater + ((GameRender.currentNodeRow + GameRender.currentNodeColumn) * 3)) % 10) * 72.0), // TODO Optimize
       srcWidth: GameConstants.Sprite_Width,
       srcHeight: GameConstants.Sprite_Height,
       dstX: GameRender.currentNodeDstX,
@@ -63,115 +63,6 @@ class RenderNode {
       anchorY: 0.3334,
       color: renderNodeColor,
     );
-
-  static void renderNodeBauHaus() {
-    switch (renderNodeOrientation) {
-      case NodeOrientation.Solid:
-        renderStandardNodeShaded(
-          srcX: AtlasNodeX.Bau_Haus_Solid,
-          srcY: AtlasNodeY.Bau_Haus_Solid,
-        );
-        break;
-      case NodeOrientation.Half_North:
-        renderStandardNodeHalfNorthOld(
-          srcX: AtlasNodeX.Bau_Haus_Half,
-          srcY: AtlasNodeY.Bau_Haus_Half_South,
-          color: renderNodeColor,
-        );
-        break;
-      case NodeOrientation.Half_East:
-        renderStandardNodeHalfEastOld(
-          srcX: AtlasNodeX.Bau_Haus_Half,
-          srcY: AtlasNodeY.Bau_Haus_Half_West,
-          color: renderNodeColor,
-        );
-        break;
-      case NodeOrientation.Half_South:
-        renderStandardNodeShaded(
-          srcX: AtlasNodeX.Bau_Haus_Half,
-          srcY: AtlasNodeY.Bau_Haus_Half_South,
-        );
-        break;
-      case NodeOrientation.Half_West:
-        renderStandardNodeShaded(
-          srcX: AtlasNodeX.Bau_Haus_Half,
-          srcY: AtlasNodeY.Bau_Haus_Half_West,
-        );
-        break;
-      case NodeOrientation.Corner_Top:
-        renderStandardNodeShaded(
-          srcX: AtlasNodeX.Bau_Haus_Corner,
-          srcY: AtlasNodeY.Bau_Haus_Corner_Top,
-        );
-        break;
-      case NodeOrientation.Corner_Right:
-        renderStandardNodeShaded(
-          srcX: AtlasNodeX.Bau_Haus_Corner,
-          srcY: AtlasNodeY.Bau_Haus_Corner_Right,
-        );
-        break;
-      case NodeOrientation.Corner_Bottom:
-        renderStandardNodeShaded(
-          srcX: AtlasNodeX.Bau_Haus_Corner,
-          srcY: AtlasNodeY.Bau_Haus_Corner_Bottom,
-        );
-        break;
-      case NodeOrientation.Corner_Left:
-        renderStandardNodeShaded(
-          srcX: AtlasNodeX.Bau_Haus_Corner,
-          srcY: AtlasNodeY.Bau_Haus_Corner_Left,
-        );
-        break;
-      case NodeOrientation.Slope_North:
-        renderStandardNodeShaded(
-          srcX: AtlasNodeX.Bau_Haus_Slope,
-          srcY: AtlasNodeY.Bau_Haus_Slope_Symmetric_North,
-        );
-        break;
-      case NodeOrientation.Slope_East:
-        renderStandardNodeShaded(
-          srcX: AtlasNodeX.Bau_Haus_Slope,
-          srcY: AtlasNodeY.Bau_Haus_Slope_Symmetric_East,
-        );
-        break;
-      case NodeOrientation.Slope_South:
-        renderStandardNodeShaded(
-          srcX: AtlasNodeX.Bau_Haus_Slope,
-          srcY: AtlasNodeY.Bau_Haus_Slope_Symmetric_South,
-        );
-        break;
-      case NodeOrientation.Slope_West:
-        renderStandardNodeShaded(
-          srcX: AtlasNodeX.Bau_Haus_Slope,
-          srcY: AtlasNodeY.Bau_Haus_Slope_Symmetric_West,
-        );
-        break;
-      case NodeOrientation.Slope_Inner_North_East:
-        renderStandardNodeShaded(
-          srcX: AtlasNodeX.Bau_Haus_Slope,
-          srcY: AtlasNodeY.Bau_Haus_Slope_Inner_North_East,
-        );
-        break;
-      case NodeOrientation.Slope_Inner_South_East:
-        renderStandardNodeShaded(
-          srcX: AtlasNodeX.Bau_Haus_Slope,
-          srcY: AtlasNodeY.Bau_Haus_Slope_Inner_South_East,
-        );
-        break;
-      case NodeOrientation.Slope_Inner_South_West:
-        renderStandardNodeShaded(
-          srcX: AtlasNodeX.Bau_Haus_Slope,
-          srcY: AtlasNodeY.Bau_Haus_Slope_Inner_South_West,
-        );
-        break;
-      case NodeOrientation.Slope_Inner_North_West:
-        renderStandardNodeShaded(
-          srcX: AtlasNodeX.Bau_Haus_Slope,
-          srcY: AtlasNodeY.Bau_Haus_Slope_Inner_North_West,
-        );
-        break;
-    }
-  }
 
   static void renderStandardNode({
     required double srcX,

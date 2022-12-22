@@ -224,7 +224,7 @@ class AtlasNodeX {
   static const Grass = 0.0;
   static const Grass_Long = 1218.0;
   static const Grass_Flowers = 49.0;
-  static const Torch = 960.0;
+  static const Torch = 1655.0;
   static const Stone = 1508.0;
   static const Plain_Solid = 1557.0;
   static const Oven = 618.0;
@@ -337,7 +337,7 @@ class AtlasNodeY {
   static const Water = 512.0;
   static const Stone = 0.0;
   static const Plain_Solid = 0.0;
-  static const Torch = 509.0;
+  static const Torch = 728.0;
   static const Water_Flowing = 0.0;
   static const Window = 876.0;
   static const Spawn = 1021.0;
