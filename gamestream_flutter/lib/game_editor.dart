@@ -50,7 +50,7 @@ class GameEditor {
     nodeSelectedIndex.value += value - column;
   }
 
-  static final paintType = Watch(NodeType.Brick_2, onChanged: onChangedPaintType);
+  static final paintType = Watch(NodeType.Brick, onChanged: onChangedPaintType);
   static final paintOrientation = Watch(NodeOrientation.None);
   static final controlsVisibleWeather = Watch(true);
 
@@ -114,7 +114,7 @@ class GameEditor {
   }
 
   static void paintBricks(){
-    paint(nodeType: NodeType.Brick_2);
+    paint(nodeType: NodeType.Brick);
   }
 
   static void paintGrass(){

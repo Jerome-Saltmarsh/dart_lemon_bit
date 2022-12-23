@@ -21,7 +21,7 @@ void renderNodeAt() {
       const srcX = GameConstants.Sprite_Width_Padded * index_grass;
       renderNodeTemplateShaded(srcX);
       return;
-    case NodeType.Brick_2:
+    case NodeType.Brick:
       const index_grass = 2;
       const srcX = GameConstants.Sprite_Width_Padded * index_grass;
       renderNodeTemplateShaded(srcX);
@@ -113,12 +113,12 @@ void renderNodeAt() {
     case NodeType.Wooden_Plank:
       renderNodeWoodenPlank();
       return;
-    case NodeType.Wood_2:
+    case NodeType.Wood:
       const index_grass = 5;
       const srcX = GameConstants.Sprite_Width_Padded * index_grass;
       renderNodeTemplateShaded(srcX);
       break;
-    case NodeType.Bau_Haus_2:
+    case NodeType.Bau_Haus:
       const index_grass = 6;
       const srcX = GameConstants.Sprite_Width_Padded * index_grass;
       renderNodeTemplateShaded(srcX);

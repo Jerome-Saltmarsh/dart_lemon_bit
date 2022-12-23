@@ -26,14 +26,13 @@ class NodeType {
   static const Sunflower = 59;
   static const Oven = 60;
   static const Grass_Flowers = 61;
-  static const Brick_2 = 62;
-  static const Wood_2 = 63;
-  // static const Cottage_Roof = 64;
+  static const Brick = 62;
+  static const Wood = 63;
   static const Grass = 65;
   static const Plain = 66;
   static const Window = 67;
   static const Wooden_Plank = 68;
-  static const Bau_Haus_2 = 69;
+  static const Bau_Haus = 69;
   static const Boulder = 70;
   static const Spawn = 71;
   static const Respawning = 72;
@@ -46,7 +45,7 @@ class NodeType {
     value == Torch ||
     value == Tree_Bottom ||
     value == Table ||
-    value == Wood_2 ||
+    value == Wood ||
     value == Wooden_Plank;
 
   static bool isMaterialGrass(int value) =>
@@ -58,22 +57,22 @@ class NodeType {
     // value == Brick_Top ||
     value == Concrete ||
     value == Oven ||
-    value == Brick_2 ||
+    value == Brick ||
     value == Road ||
     value == Road_2 ||
     value == Chimney;
 
   static bool supportsOrientationSolid(int type) =>
-    type == Brick_2 ||
+    type == Brick ||
     type == Soil ||
     type == Road ||
     type == Road_2 ||
     type == Concrete ||
-    type == Wood_2 ||
+    type == Wood ||
     type == Grass ||
     type == Plain ||
     type == Wooden_Plank ||
-    type == Bau_Haus_2 ||
+    type == Bau_Haus ||
     type == Table ||
     type == Oven ||
     type == Bed_Top ||
@@ -98,21 +97,23 @@ class NodeType {
     type == Tree_Bottom ||
     type == Torch ||
     type == Concrete ||
+    type == Brick ||
+    type == Wood ||
     type == Fireplace ;
 
   static bool supportsOrientationSlopeSymmetric(int type) =>
     // type == Cottage_Roof ||
-    type == Wood_2 ||
+    type == Wood ||
     type == Grass ||
-    type == Brick_2 ||
+    type == Brick ||
     type == Concrete ||
-    type == Bau_Haus_2;
+    type == Bau_Haus;
 
   static bool supportsOrientationSlopeCornerInner(int type) =>
     // type == Cottage_Roof ||
     type == Grass ||
     type == Concrete ||
-    type == Bau_Haus_2;
+    type == Bau_Haus;
 
   static bool supportsOrientationSlopeCornerOuter(int type) =>
     type == Concrete ||
@@ -120,19 +121,19 @@ class NodeType {
 
 
   static bool supportsOrientationHalf(int type) =>
-    type == Wood_2 ||
+    type == Wood ||
     type == Plain ||
     type == Window ||
     type == Wooden_Plank ||
-    type == Brick_2 ||
+    type == Brick ||
     type == Concrete ||
-    type == Bau_Haus_2;
+    type == Bau_Haus;
 
   static bool supportsOrientationCorner(int type) =>
-    type == Wood_2 ||
+    type == Wood ||
     type == Plain ||
-    type == Brick_2 ||
-    type == Bau_Haus_2 ||
+    type == Brick ||
+    type == Bau_Haus ||
     type == Concrete ||
     type == Wooden_Plank;
 
@@ -244,7 +245,7 @@ class NodeType {
     Fireplace: 'Fireplace',
     Soil: 'Soil',
     Concrete: 'Stone',
-    Bau_Haus_2: 'Bau Haus',
+    Bau_Haus: 'Bau Haus',
     Bau_Haus_Window: 'Bau Haus Window',
     Bau_Haus_Plain: 'Bau Hau Plain',
     Chimney: 'Chimney',
@@ -254,8 +255,8 @@ class NodeType {
     Sunflower: 'Sunflower',
     Oven: 'Oven',
     Grass_Flowers: 'Grass Flowers',
-    Brick_2: 'Brick',
-    Wood_2: 'Wood',
+    Brick: 'Brick',
+    Wood: 'Wood',
     Grass: 'Grass',
     Plain: 'Plain',
     Window: 'Window',

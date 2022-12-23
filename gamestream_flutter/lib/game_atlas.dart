@@ -236,10 +236,10 @@ class AtlasNodeX {
   static const Orientation_Radial = 1888.0;
 
   static double mapNodeType(int type) => const {
-    NodeType.Brick_2: GameConstants.Sprite_Width_Padded_2,
+    NodeType.Brick: GameConstants.Sprite_Width_Padded_2,
     NodeType.Grass: GameConstants.Sprite_Width_Padded_3,
-    NodeType.Wood_2: GameConstants.Sprite_Width_Padded_5,
-    NodeType.Bau_Haus_2: GameConstants.Sprite_Width_Padded_6,
+    NodeType.Wood: GameConstants.Sprite_Width_Padded_5,
+    NodeType.Bau_Haus: GameConstants.Sprite_Width_Padded_6,
     NodeType.Soil: GameConstants.Sprite_Width_Padded_7,
     NodeType.Concrete: GameConstants.Sprite_Width_Padded_8,
     NodeType.Plain: GameConstants.Sprite_Width_Padded_8,

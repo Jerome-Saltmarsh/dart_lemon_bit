@@ -2,11 +2,11 @@ import 'package:gamestream_flutter/library.dart';
 
 const editorGridTypesColumn1 = [
   NodeType.Water,
-  NodeType.Brick_2,
+  NodeType.Brick,
   NodeType.Soil,
-  NodeType.Wood_2,
+  NodeType.Wood,
   NodeType.Wooden_Plank,
-  NodeType.Bau_Haus_2,
+  NodeType.Bau_Haus,
   NodeType.Concrete,
   NodeType.Torch,
   NodeType.Fireplace,
