@@ -345,6 +345,24 @@ void renderNodeTemplateShaded(double srcX) {
         srcY: GameConstants.Sprite_Height_Padded_19,
       );
       return;
+    case NodeOrientation.Half_Vertical_Top:
+      RenderNode.renderStandardNodeHalfVerticalTop(
+        srcX: srcX,
+        srcY: GameConstants.Sprite_Height_Padded_20,
+      );
+      return;
+    case NodeOrientation.Half_Vertical_Center:
+      RenderNode.renderStandardNodeHalfVerticalCenter(
+        srcX: srcX,
+        srcY: GameConstants.Sprite_Height_Padded_20,
+      );
+      return;
+    case NodeOrientation.Half_Vertical_Bottom:
+      RenderNode.renderStandardNodeHalfVerticalBottom(
+        srcX: srcX,
+        srcY: GameConstants.Sprite_Height_Padded_20,
+      );
+      return;
   }
 }
 

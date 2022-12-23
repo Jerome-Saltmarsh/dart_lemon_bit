@@ -218,4 +218,62 @@ class RenderNode {
     );
   }
 
+
+  static void renderStandardNodeHalfVerticalTop({
+    required double srcX,
+    required double srcY,
+    int color = 1,
+  }){
+    GameRender.onscreenNodes++;
+    Engine.renderSprite(
+      image: atlas,
+      srcX: srcX,
+      srcY: srcY,
+      srcWidth: GameConstants.Sprite_Width,
+      srcHeight: GameConstants.Sprite_Height,
+      dstX: GameRender.currentNodeDstX,
+      dstY: GameRender.currentNodeDstY - 12,
+      anchorY: GameConstants.Sprite_Anchor_Y,
+      color: color,
+    );
+  }
+
+  static void renderStandardNodeHalfVerticalCenter({
+    required double srcX,
+    required double srcY,
+    int color = 1,
+  }){
+    GameRender.onscreenNodes++;
+    Engine.renderSprite(
+      image: atlas,
+      srcX: srcX,
+      srcY: srcY,
+      srcWidth: GameConstants.Sprite_Width,
+      srcHeight: GameConstants.Sprite_Height,
+      dstX: GameRender.currentNodeDstX,
+      dstY: GameRender.currentNodeDstY - 4,
+      anchorY: GameConstants.Sprite_Anchor_Y,
+      color: color,
+    );
+  }
+
+  static void renderStandardNodeHalfVerticalBottom({
+    required double srcX,
+    required double srcY,
+    int color = 1,
+  }){
+    GameRender.onscreenNodes++;
+    Engine.renderSprite(
+      image: atlas,
+      srcX: srcX,
+      srcY: srcY,
+      srcWidth: GameConstants.Sprite_Width,
+      srcHeight: GameConstants.Sprite_Height,
+      dstX: GameRender.currentNodeDstX,
+      dstY: GameRender.currentNodeDstY + 4,
+      anchorY: GameConstants.Sprite_Anchor_Y,
+      color: color,
+    );
+  }
+
 }
