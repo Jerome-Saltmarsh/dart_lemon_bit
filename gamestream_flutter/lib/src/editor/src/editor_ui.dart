@@ -674,7 +674,7 @@ class EditorUI {
   static Widget buildOrientationIcon(int orientation) {
     final canvas = Engine.buildAtlasImage(
       image: GameImages.atlas_nodes,
-      srcX: AtlasNodeX.mapOrientation(orientation),
+      srcX: 0,
       srcY: AtlasNodeY.mapOrientation(orientation),
       srcWidth: GameConstants.Sprite_Width,
       srcHeight: GameConstants.Sprite_Height,

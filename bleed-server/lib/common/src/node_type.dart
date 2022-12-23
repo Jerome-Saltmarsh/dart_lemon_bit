@@ -14,7 +14,7 @@ class NodeType {
   static const Rain_Landing = 19;
   static const Fireplace = 20;
   static const Water_Flowing = 26;
-  static const Brick_Top = 27;
+  // static const Brick_Top = 27;
   static const Soil = 38;
   static const Concrete = 41;
   static const Bau_Haus_Window = 53;
@@ -55,7 +55,7 @@ class NodeType {
     value == Grass;
 
   static bool isMaterialStone(int value) =>
-    value == Brick_Top ||
+    // value == Brick_Top ||
     value == Concrete ||
     value == Oven ||
     value == Brick_2 ||
@@ -232,7 +232,7 @@ class NodeType {
   static String getName(int type) => const {
     Empty: 'Empty',
     Boundary: 'Boundary',
-    Brick_Top: 'Brick Top',
+    // Brick_Top: 'Brick Top',
     Water: 'Water',
     Water_Flowing: 'Flowing Water',
     Torch: 'Torch',
@@ -256,7 +256,6 @@ class NodeType {
     Grass_Flowers: 'Grass Flowers',
     Brick_2: 'Brick',
     Wood_2: 'Wood',
-    // Cottage_Roof: 'Cottage Roof',
     Grass: 'Grass',
     Plain: 'Plain',
     Window: 'Window',

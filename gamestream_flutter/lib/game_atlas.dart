@@ -226,7 +226,7 @@ class AtlasNodeX {
   static const Boulder = 618.0;
   static const Wireframe_Blue = 1704.0;
   static const Wireframe_Red = 1704.0;
-  static const Orientation_Solid = 1018.0;
+  static const Orientation_Solid = 0.0;
   static const Orientation_Half = 1018.0;
   static const Orientation_Slope_Symmetric = 1018.0;
   static const Orientation_Corner = 1067.0;
@@ -246,7 +246,7 @@ class AtlasNodeX {
     NodeType.Torch: Torch,
     NodeType.Grass_Long: Grass_Long,
     NodeType.Grass_Flowers: Grass_Flowers,
-    NodeType.Brick_Top: 0.0,
+    // NodeType.Brick_Top: 0.0,
     NodeType.Bed_Bottom: AtlasNode.X_Bed_Bottom,
     NodeType.Bed_Top: AtlasNode.X_Bed_Top,
     NodeType.Tree_Bottom: Tree_Bottom,
@@ -339,10 +339,6 @@ class AtlasNodeY {
   static const Orientation_Half_East = Orientation_Half_North + AtlasNode.Sprite_Height_Padded;
   static const Orientation_Half_South = Orientation_Half_East + AtlasNode.Sprite_Height_Padded;
   static const Orientation_Half_West = Orientation_Half_South + AtlasNode.Sprite_Height_Padded;
-  static const Orientation_Slope_Symmetric_North = 878.0;
-  static const Orientation_Slope_Symmetric_East = 951.0;
-  static const Orientation_Slope_Symmetric_South = 1024.0;
-  static const Orientation_Slope_Symmetric_West = Orientation_Slope_Symmetric_South + AtlasNode.Sprite_Height;
   static const Orientation_Corner_Top = 512.0;
   static const Orientation_Corner_Right = Orientation_Corner_Top + AtlasNode.Sprite_Height_Padded;
   static const Orientation_Corner_Bottom = Orientation_Corner_Right + AtlasNode.Sprite_Height_Padded;
@@ -381,31 +377,31 @@ class AtlasNodeY {
 
   static double mapOrientation(int orientation) {
     if (orientation == NodeOrientation.Solid)
-      return Orientation_Solid;
+      return 0;
     if (orientation == NodeOrientation.Slope_North)
-      return Orientation_Slope_Symmetric_North;
+      return GameConstants.Sprite_Height_Padded_07;
     if (orientation == NodeOrientation.Slope_East)
-      return Orientation_Slope_Symmetric_East;
+      return GameConstants.Sprite_Height_Padded_08;
     if (orientation == NodeOrientation.Slope_South)
-      return Orientation_Slope_Symmetric_South;
+      return GameConstants.Sprite_Height_Padded_09;
     if (orientation == NodeOrientation.Slope_West)
-      return Orientation_Slope_Symmetric_West;
+      return GameConstants.Sprite_Height_Padded_10;
     if (orientation == NodeOrientation.Half_North)
-      return Orientation_Half_North;
+      return GameConstants.Sprite_Height_Padded_01;
     if (orientation == NodeOrientation.Half_East)
-      return Orientation_Half_East;
+      return GameConstants.Sprite_Height_Padded_02;
     if (orientation == NodeOrientation.Half_South)
-      return Orientation_Half_South;
+      return GameConstants.Sprite_Height_Padded_01;
     if (orientation == NodeOrientation.Half_West)
-      return Orientation_Half_West;
+      return GameConstants.Sprite_Height_Padded_02;
     if (orientation == NodeOrientation.Corner_Top)
-      return Orientation_Corner_Top;
+      return GameConstants.Sprite_Height_Padded_03;
     if (orientation == NodeOrientation.Corner_Right)
-      return Orientation_Corner_Right;
+      return GameConstants.Sprite_Height_Padded_04;
     if (orientation == NodeOrientation.Corner_Bottom)
-      return Orientation_Corner_Bottom;
+      return GameConstants.Sprite_Height_Padded_05;
     if (orientation == NodeOrientation.Corner_Left)
-      return Orientation_Corner_Left;
+      return GameConstants.Sprite_Height_Padded_06;
     if (orientation == NodeOrientation.Slope_Outer_South_West)
       return Orientation_Slope_Outer_South_West;
     if (orientation == NodeOrientation.Slope_Outer_North_West)
