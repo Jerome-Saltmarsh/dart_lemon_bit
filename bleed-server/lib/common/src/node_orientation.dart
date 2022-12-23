@@ -26,8 +26,9 @@ class NodeOrientation {
    static const Tree_Top = 24;
    static const Tree_Bottom = 25;
    static const Radial = 26;
-   static const Half_Top = 17;
-   static const Half_Bottom = 17;
+   static const Half_Vertical_Top = 27;
+   static const Half_Vertical_Center = 28;
+   static const Half_Vertical_Bottom = 29;
 
    static const valuesSlopeSymmetric = [
       Slope_North,
@@ -103,6 +104,12 @@ class NodeOrientation {
        value == Slope_Outer_South_West ||
        value == Slope_Outer_North_West ;
 
+   
+   static bool isHalfVertical(int value) =>
+       value == Half_Vertical_Top      ||
+       value == Half_Vertical_Bottom   ||
+       value == Half_Vertical_Center    ;
+
    static String getName(int value) => const {
       None: 'None',
       Slope_North: 'Slope North',
@@ -127,6 +134,9 @@ class NodeOrientation {
          Slope_Outer_South_West: 'Slope Outer South-West',
          Slope_Outer_North_West: 'Slope Outer North-West',
          Radial: 'Radial',
+         Half_Vertical_Top: "Vertical Half Top",
+         Half_Vertical_Center: "Vertical Half Center",
+         Half_Vertical_Bottom: "Vertical Half Bottom",
    }[value] ?? 'unknown: $value';
 
    static double getGradient(int orientation, double x, double y) {

@@ -85,6 +85,11 @@ class EditorUI {
                         buildOrientationIcon(
                           NodeOrientation.Radial,
                         ),
+
+                      if (NodeType.supportsOrientationHalfVertical(
+                            selectedNodeType
+                      ))
+                        buildOrientationIcon(NodeOrientation.Half_Vertical_Top),
                     ],
                   )),
               Row(
@@ -648,6 +653,8 @@ class EditorUI {
             buildColumnNodeOrientationSlopeCornerInner(),
           if (NodeOrientation.isSlopeCornerOuter(selectedNodeOrientation))
             buildColumnNodeOrientationSlopeCornerOuter(),
+          if (NodeOrientation.isHalfVertical(selectedNodeOrientation))
+            buildColumnHalfVertical(),
         ],
       );
 
@@ -785,6 +792,16 @@ class EditorUI {
           )
         ],
       );
+
+  static Widget buildColumnHalfVertical(){
+    return Column(
+      children: [
+        buildOrientationIcon(NodeOrientation.Half_Vertical_Top),
+        buildOrientationIcon(NodeOrientation.Half_Vertical_Center),
+        buildOrientationIcon(NodeOrientation.Half_Vertical_Bottom),
+      ],
+    );
+  }
 
   static Widget buildColumnSelectedGameObject() {
     return watch(GameEditor.gameObjectSelected, (bool gameObjectSelected) {

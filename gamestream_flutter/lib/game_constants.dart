@@ -34,6 +34,7 @@ class GameConstants {
   static const Sprite_Height_Padded_17 = Sprite_Height_Padded * 17;
   static const Sprite_Height_Padded_18 = Sprite_Height_Padded * 18;
   static const Sprite_Height_Padded_19 = Sprite_Height_Padded * 19;
+  static const Sprite_Height_Padded_20 = Sprite_Height_Padded * 20;
 
   static const Sprite_Anchor_Y = 0.3;
   static const Frames_Per_Particle_Animation_Frame = 2;

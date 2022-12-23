@@ -267,34 +267,6 @@ class AtlasNodeX {
     NodeType.Road: 768.0,
     NodeType.Road_2: 768.0,
   }[type] ?? 7055;
-
-  static double mapOrientation(int orientation) {
-    if (NodeOrientation.isSolid(orientation)){
-      return Orientation_Solid;
-    }
-    if (NodeOrientation.isCorner(orientation)){
-      return Orientation_Corner;
-    }
-    if (NodeOrientation.isSlopeCornerOuter(orientation)){
-      return Orientation_Slope_Outer;
-    }
-    if (NodeOrientation.isSlopeCornerInner(orientation)){
-      return Orientation_Slope_Inner;
-    }
-    if (NodeOrientation.isHalf(orientation)){
-      return Orientation_Half;
-    }
-    if (NodeOrientation.isSlopeSymmetric(orientation)){
-      return Orientation_Slope_Symmetric;
-    }
-    if (orientation == NodeOrientation.None){
-      return Orientation_Empty;
-    }
-    if (orientation == NodeOrientation.Radial){
-      return Orientation_Radial;
-    }
-    throw Exception('AtlasNodeX.mapOrientation(${NodeOrientation.getName(orientation)}');
-  }
 }
 
 class AtlasNodeY {
@@ -422,6 +394,8 @@ class AtlasNodeY {
       return Orientation_Empty;
     if (orientation == NodeOrientation.Radial)
       return GameConstants.Sprite_Height_Padded_19;
+    if (NodeOrientation.isHalfVertical(orientation))
+      return GameConstants.Sprite_Height_Padded_20;
     throw Exception('AtlasNodeY.mapOrientation(${NodeOrientation.getName(orientation)}');
   }
 }

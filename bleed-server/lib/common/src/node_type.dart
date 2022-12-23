@@ -1,7 +1,6 @@
 
 import 'node_orientation.dart';
 
-/// TODO Add cobblestone
 class NodeType {
   static const Empty = 0;
   static const Boundary = 1;
@@ -14,7 +13,6 @@ class NodeType {
   static const Rain_Landing = 19;
   static const Fireplace = 20;
   static const Water_Flowing = 26;
-  // static const Brick_Top = 27;
   static const Soil = 38;
   static const Concrete = 41;
   static const Bau_Haus_Window = 53;
@@ -42,100 +40,101 @@ class NodeType {
   static const Road_2 = 76;
 
   static bool isMaterialWood(int value) =>
-    value == Torch ||
-    value == Tree_Bottom ||
-    value == Table ||
-    value == Wood ||
-    value == Wooden_Plank;
+      value == Torch ||
+      value == Tree_Bottom ||
+      value == Table ||
+      value == Wood ||
+      value == Wooden_Plank;
 
   static bool isMaterialGrass(int value) =>
-    value == Grass_Long ||
-    value == Grass_Flowers ||
-    value == Grass;
+      value == Grass_Long ||
+      value == Grass_Flowers ||
+      value == Grass;
 
   static bool isMaterialStone(int value) =>
-    // value == Brick_Top ||
-    value == Concrete ||
-    value == Oven ||
-    value == Brick ||
-    value == Road ||
-    value == Road_2 ||
-    value == Chimney;
+      value == Concrete ||
+      value == Oven ||
+      value == Brick ||
+      value == Road ||
+      value == Road_2 ||
+      value == Chimney;
 
   static bool supportsOrientationSolid(int type) =>
-    type == Brick ||
-    type == Soil ||
-    type == Road ||
-    type == Road_2 ||
-    type == Concrete ||
-    type == Wood ||
-    type == Grass ||
-    type == Plain ||
-    type == Wooden_Plank ||
-    type == Bau_Haus ||
-    type == Table ||
-    type == Oven ||
-    type == Bed_Top ||
-    type == Bed_Bottom ||
-    type == Chimney ||
-    type == Boulder;
+      type == Brick         ||
+      type == Soil          ||
+      type == Road          ||
+      type == Road_2        ||
+      type == Concrete      ||
+      type == Wood          ||
+      type == Grass         ||
+      type == Plain         ||
+      type == Wooden_Plank  ||
+      type == Bau_Haus      ||
+      type == Table         ||
+      type == Oven          ||
+      type == Bed_Top       ||
+      type == Bed_Bottom    ||
+      type == Chimney       ||
+      type == Boulder        ;
 
   static bool supportsOrientationEmpty(int type) =>
-    type == Empty ||
-    type == Water ||
-    type == Spawn ||
-    type == Spawn_Weapon ||
-    type == Spawn_Player ||
-    type == Respawning ||
-    type == Rain_Landing ||
-    type == Tree_Top ||
-    type == Grass_Long ||
-    type == Sunflower ||
-    type == Rain_Falling ;
+      type == Empty         ||
+      type == Water         ||
+      type == Spawn         ||
+      type == Spawn_Weapon  ||
+      type == Spawn_Player  ||
+      type == Respawning    ||
+      type == Rain_Landing  ||
+      type == Tree_Top      ||
+      type == Grass_Long    ||
+      type == Sunflower     ||
+      type == Rain_Falling   ;
 
   static bool supportsOrientationRadial(int type) =>
-    type == Tree_Bottom ||
-    type == Torch ||
-    type == Concrete ||
-    type == Brick ||
-    type == Wood ||
-    type == Fireplace ;
+      type == Grass         ||
+      type == Tree_Bottom   ||
+      type == Torch         ||
+      type == Concrete      ||
+      type == Brick         ||
+      type == Wood          ||
+      type == Fireplace      ;
 
   static bool supportsOrientationSlopeSymmetric(int type) =>
-    // type == Cottage_Roof ||
-    type == Wood ||
-    type == Grass ||
-    type == Brick ||
-    type == Concrete ||
-    type == Bau_Haus;
+      type == Wood          ||
+      type == Grass         ||
+      type == Brick         ||
+      type == Concrete      ||
+      type == Bau_Haus       ;
 
   static bool supportsOrientationSlopeCornerInner(int type) =>
-    // type == Cottage_Roof ||
-    type == Grass ||
-    type == Concrete ||
-    type == Bau_Haus;
+      type == Grass             ||
+      type == Concrete          ||
+      type == Bau_Haus           ;
 
   static bool supportsOrientationSlopeCornerOuter(int type) =>
-    type == Concrete ||
-    type == Grass;
-
+      type == Concrete          ||
+      type == Grass              ;
 
   static bool supportsOrientationHalf(int type) =>
-    type == Wood ||
-    type == Plain ||
-    type == Window ||
-    type == Wooden_Plank ||
-    type == Brick ||
-    type == Concrete ||
-    type == Bau_Haus;
+      type == Wood              ||
+      type == Plain             ||
+      type == Window            ||
+      type == Wooden_Plank      ||
+      type == Brick             ||
+      type == Concrete          ||
+      type == Bau_Haus           ;
+
+  static bool supportsOrientationHalfVertical(int type) =>
+      type == Wood              ||
+      type == Bau_Haus           ;
 
   static bool supportsOrientationCorner(int type) =>
-    type == Wood ||
-    type == Plain ||
-    type == Brick ||
-    type == Bau_Haus ||
-    type == Concrete ||
-    type == Wooden_Plank;
+      type == Wood            ||
+      type == Plain           ||
+      type == Brick           ||
+      type == Bau_Haus        ||
+      type == Concrete        ||
+      type == Wooden_Plank     ;
 
   static bool isDestroyable(int type) =>
       type == Boulder         ||
@@ -155,8 +154,8 @@ class NodeType {
       value == Empty           ;
   
   static bool isRain(int value) =>
-     value == Rain_Falling ||
-     value == Rain_Landing ;
+     value == Rain_Falling    ||
+     value == Rain_Landing     ;
   
   static bool blocksPerception(int value) =>
      supportsOrientationSolid(value);
@@ -227,13 +226,16 @@ class NodeType {
       return supportsOrientationRadial(type);
     }
 
+    if (NodeOrientation.isHalfVertical(orientation)) {
+      return supportsOrientationHalfVertical(type);
+    }
+
     return false;
   }
 
   static String getName(int type) => const {
     Empty: 'Empty',
     Boundary: 'Boundary',
-    // Brick_Top: 'Brick Top',
     Water: 'Water',
     Water_Flowing: 'Flowing Water',
     Torch: 'Torch',
