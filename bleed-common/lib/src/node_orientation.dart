@@ -216,6 +216,12 @@ class NodeOrientation {
          if  ((0.5 - x).abs() > radius) return 0;
          if  ((0.5 - y).abs() > radius) return 0;
          return 1.0;
+       case Half_Vertical_Top:
+         return 1.00;
+       case Half_Vertical_Center:
+         return 0.66;
+       case Half_Vertical_Bottom:
+         return 0.33;
        default:
          throw Exception(
              'node_orientation.getGradient(orientation: ${getName(orientation)}, x: $x, y: $y'
