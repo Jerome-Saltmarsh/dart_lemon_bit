@@ -220,7 +220,7 @@ void renderNodeTemplateShaded(double srcX) {
         srcX: srcX,
         srcY: GameConstants.Sprite_Height_Padded_01,
         offsetX: -8,
-        offsetY: -10,
+        offsetY: -8,
       );
       return;
     case NodeOrientation.Half_South:
@@ -228,7 +228,7 @@ void renderNodeTemplateShaded(double srcX) {
         srcX: srcX,
         srcY: GameConstants.Sprite_Height_Padded_01,
         offsetX: 8,
-        offsetY: 6,
+        offsetY: 8,
       );
       return;
     case NodeOrientation.Half_East:
@@ -236,7 +236,7 @@ void renderNodeTemplateShaded(double srcX) {
         srcX: srcX,
         srcY: GameConstants.Sprite_Height_Padded_02,
         offsetX: 8,
-        offsetY: -10,
+        offsetY: -8,
       );
       return;
     case NodeOrientation.Half_West:
@@ -244,7 +244,7 @@ void renderNodeTemplateShaded(double srcX) {
         srcX: srcX,
         srcY: GameConstants.Sprite_Height_Padded_02,
         offsetX: -8,
-        offsetY: -6,
+        offsetY: 8,
       );
       return;
     case NodeOrientation.Corner_Top:
