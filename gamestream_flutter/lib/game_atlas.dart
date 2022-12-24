@@ -246,7 +246,7 @@ class AtlasNodeX {
     NodeType.Torch: Torch,
     NodeType.Grass_Long: Grass_Long,
     NodeType.Grass_Flowers: Grass_Flowers,
-    // NodeType.Brick_Top: 0.0,
+    NodeType.Metal: GameConstants.Sprite_Width_Padded_4,
     NodeType.Bed_Bottom: AtlasNode.X_Bed_Bottom,
     NodeType.Bed_Top: AtlasNode.X_Bed_Top,
     NodeType.Tree_Bottom: Tree_Bottom,

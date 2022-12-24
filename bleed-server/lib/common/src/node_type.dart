@@ -38,6 +38,7 @@ class NodeType {
   static const Spawn_Player = 74;
   static const Road = 75;
   static const Road_2 = 76;
+  static const Metal = 77;
 
   static bool isMaterialWood(int value) =>
       value == Torch ||
@@ -75,6 +76,7 @@ class NodeType {
       type == Bed_Top       ||
       type == Bed_Bottom    ||
       type == Chimney       ||
+      type == Metal         ||
       type == Boulder        ;
 
   static bool supportsOrientationEmpty(int type) =>
@@ -126,6 +128,7 @@ class NodeType {
 
   static bool supportsOrientationHalfVertical(int type) =>
       type == Wood              ||
+      type == Brick             ||
       type == Bau_Haus           ;
 
   static bool supportsOrientationCorner(int type) =>

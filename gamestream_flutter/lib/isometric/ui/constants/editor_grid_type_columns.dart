@@ -22,6 +22,7 @@ const editorGridTypesColumn2 = [
   NodeType.Spawn_Player,
   NodeType.Grass,
   NodeType.Grass_Long,
+  NodeType.Metal,
   NodeType.Plain,
   NodeType.Chimney,
   NodeType.Table,

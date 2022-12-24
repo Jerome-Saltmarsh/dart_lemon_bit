@@ -99,10 +99,14 @@ void renderNodeAt() {
       );
       return;
     case NodeType.Concrete:
-      renderNodeTemplateShaded(GameConstants.Sprite_Width_Padded_8);
+      renderNodeTemplateShaded(GameConstants.Sprite_Width_Padded_4);
+      return;
+    case NodeType.Metal:
+      renderNodeTemplateShaded(GameConstants.Sprite_Width_Padded_4);
       return;
     case NodeType.Road:
-      RenderNode.renderStandardNodeShaded(srcX: 768, srcY: 672);
+      // RenderNode.renderStandardNodeShaded(srcX: 768, srcY: 672);
+      renderNodeTemplateShaded(GameConstants.Sprite_Width_Padded_9);
       return;
     case NodeType.Road_2:
       RenderNode.renderStandardNodeShaded(srcX: 768, srcY: 672 + GameConstants.Sprite_Height_Padded);
@@ -354,7 +358,7 @@ void renderNodeTemplateShaded(double srcX) {
           srcX: srcX,
           srcY: GameConstants.Sprite_Height_Padded_20,
           offsetX: 0,
-          offsetY: -12,
+          offsetY: -9,
       );
       return;
     case NodeOrientation.Half_Vertical_Center:
@@ -362,7 +366,7 @@ void renderNodeTemplateShaded(double srcX) {
         srcX: srcX,
         srcY: GameConstants.Sprite_Height_Padded_20,
         offsetX: 0,
-        offsetY: -4,
+        offsetY: -1,
       );
       return;
     case NodeOrientation.Half_Vertical_Bottom:
@@ -370,18 +374,26 @@ void renderNodeTemplateShaded(double srcX) {
         srcX: srcX,
         srcY: GameConstants.Sprite_Height_Padded_20,
         offsetX: 0,
-        offsetY: 4,
+        offsetY: 6,
       );
       return;
     case NodeOrientation.Column_Top_Left:
       RenderNode.renderNodeShadedOffset(
         srcX: srcX,
         srcY: GameConstants.Sprite_Height_Padded_21,
-        offsetX: -8,
-        offsetY: -12,
+        offsetX: -16,
+        offsetY: -2,
       );
       return;
     case NodeOrientation.Column_Top_Center:
+      RenderNode.renderNodeShadedOffset(
+        srcX: srcX,
+        srcY: GameConstants.Sprite_Height_Padded_21,
+        offsetX: -12,
+        offsetY: -6,
+      );
+      return;
+    case NodeOrientation.Column_Top_Right:
       RenderNode.renderNodeShadedOffset(
         srcX: srcX,
         srcY: GameConstants.Sprite_Height_Padded_21,
@@ -389,7 +401,14 @@ void renderNodeTemplateShaded(double srcX) {
         offsetY: -12,
       );
       return;
-
+    case NodeOrientation.Column_Center_Center:
+      RenderNode.renderNodeShadedOffset(
+        srcX: srcX,
+        srcY: GameConstants.Sprite_Height_Padded_21,
+        offsetX: 0,
+        offsetY: 0,
+      );
+      return;
   }
 }
 
