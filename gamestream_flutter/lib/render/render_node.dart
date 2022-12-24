@@ -100,6 +100,27 @@ class RenderNode {
     Engine.incrementBufferIndex();
   }
 
+  static void renderNodeShadedOffset({
+    required double srcX,
+    required double srcY,
+    required double offsetX,
+    required double offsetY,
+  }){
+    GameRender.onscreenNodes++;
+    final f = Engine.bufferIndex * 4;
+    bufferClr[Engine.bufferIndex] = GameRender.currentNodeColorTransparentShaded;
+    bufferSrc[f] = srcX;
+    bufferSrc[f + 1] = srcY;
+    bufferSrc[f + 2] = srcX + GameConstants.Sprite_Width;
+    bufferSrc[f + 3] = srcY + GameConstants.Sprite_Height;
+    bufferDst[f] = 1.0; // scale
+    bufferDst[f + 1] = 0;
+    bufferDst[f + 2] = GameRender.currentNodeDstX - (GameConstants.Sprite_Width_Half) + offsetX;
+    bufferDst[f + 3] = GameRender.currentNodeDstY - (GameConstants.Sprite_Height_Third) + offsetY;
+    Engine.incrementBufferIndex();
+  }
+
+
   static void renderStandardNodeHalfEastOld({
     required double srcX,
     required double srcY,
@@ -140,127 +161,9 @@ class RenderNode {
 
   /// HALF
 
-  static void renderStandardNodeHalfEast({
+  static void renderNodeTopLeft({
     required double srcX,
     required double srcY,
-    int color = 1,
-  }){
-    GameRender.onscreenNodes++;
-    Engine.renderSprite(
-      image: atlas,
-      srcX: srcX,
-      srcY: srcY,
-      srcWidth: GameConstants.Sprite_Width,
-      srcHeight: GameConstants.Sprite_Height,
-      dstX: GameRender.currentNodeDstX + 8,
-      dstY: GameRender.currentNodeDstY - 8 + Half_Height_Adj,
-      anchorY: GameConstants.Sprite_Anchor_Y,
-      color: color,
-    );
-  }
-
-  static void renderStandardNodeHalfWest({
-    required double srcX,
-    required double srcY,
-    int color = 1,
-  }){
-    GameRender.onscreenNodes++;
-    Engine.renderSprite(
-      image: atlas,
-      srcX: srcX,
-      srcY: srcY,
-      srcWidth: GameConstants.Sprite_Width,
-      srcHeight: GameConstants.Sprite_Height,
-      dstX: GameRender.currentNodeDstX - 8,
-      dstY: GameRender.currentNodeDstY + 8 + Half_Height_Adj,
-      anchorY: GameConstants.Sprite_Anchor_Y,
-      color: color,
-    );
-  }
-
-  static const Half_Height_Adj = -2.0;
-
-  static void renderStandardNodeHalfNorth({
-    required double srcX,
-    required double srcY,
-    int color = 1,
-  }){
-    GameRender.onscreenNodes++;
-    Engine.renderSprite(
-      image: atlas,
-      srcX: srcX,
-      srcY: srcY,
-      srcWidth: GameConstants.Sprite_Width,
-      srcHeight: GameConstants.Sprite_Height,
-      dstX: GameRender.currentNodeDstX - 8,
-      dstY: GameRender.currentNodeDstY - 8 + Half_Height_Adj,
-      anchorY: GameConstants.Sprite_Anchor_Y,
-      color: color,
-    );
-  }
-
-  static void renderStandardNodeHalfSouth({
-    required double srcX,
-    required double srcY,
-    int color = 1,
-  }){
-    GameRender.onscreenNodes++;
-    Engine.renderSprite(
-      image: atlas,
-      srcX: srcX,
-      srcY: srcY,
-      srcWidth: GameConstants.Sprite_Width,
-      srcHeight: GameConstants.Sprite_Height,
-      dstX: GameRender.currentNodeDstX + 8,
-      dstY: GameRender.currentNodeDstY + 8 + Half_Height_Adj,
-      anchorY: GameConstants.Sprite_Anchor_Y,
-      color: color,
-    );
-  }
-
-
-  static void renderStandardNodeHalfVerticalTop({
-    required double srcX,
-    required double srcY,
-    int color = 1,
-  }){
-    GameRender.onscreenNodes++;
-    Engine.renderSprite(
-      image: atlas,
-      srcX: srcX,
-      srcY: srcY,
-      srcWidth: GameConstants.Sprite_Width,
-      srcHeight: GameConstants.Sprite_Height,
-      dstX: GameRender.currentNodeDstX,
-      dstY: GameRender.currentNodeDstY - 12,
-      anchorY: GameConstants.Sprite_Anchor_Y,
-      color: color,
-    );
-  }
-
-  static void renderStandardNodeHalfVerticalCenter({
-    required double srcX,
-    required double srcY,
-    int color = 1,
-  }){
-    GameRender.onscreenNodes++;
-    Engine.renderSprite(
-      image: atlas,
-      srcX: srcX,
-      srcY: srcY,
-      srcWidth: GameConstants.Sprite_Width,
-      srcHeight: GameConstants.Sprite_Height,
-      dstX: GameRender.currentNodeDstX,
-      dstY: GameRender.currentNodeDstY - 4,
-      anchorY: GameConstants.Sprite_Anchor_Y,
-      color: color,
-    );
-  }
-
-  static void renderStandardNodeHalfVerticalBottom({
-    required double srcX,
-    required double srcY,
-    int color = 1,
   }){
     GameRender.onscreenNodes++;
     Engine.renderSprite(
@@ -272,8 +175,7 @@ class RenderNode {
       dstX: GameRender.currentNodeDstX,
       dstY: GameRender.currentNodeDstY + 4,
       anchorY: GameConstants.Sprite_Anchor_Y,
-      color: color,
+      color: GameRender.currentNodeColorTransparent,
     );
   }
-
 }

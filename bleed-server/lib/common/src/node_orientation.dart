@@ -29,6 +29,15 @@ class NodeOrientation {
    static const Half_Vertical_Top = 27;
    static const Half_Vertical_Center = 28;
    static const Half_Vertical_Bottom = 29;
+   static const Column_Top_Left = 30;
+   static const Column_Top_Center = 31;
+   static const Column_Top_Right = 32;
+   static const Column_Center_Left = 33;
+   static const Column_Center_Center = 34;
+   static const Column_Center_Right = 35;
+   static const Column_Bottom_Left = 36;
+   static const Column_Bottom_Center = 37;
+   static const Column_Bottom_Right = 38;
 
    static const valuesSlopeSymmetric = [
       Slope_North,
@@ -109,6 +118,11 @@ class NodeOrientation {
        value == Half_Vertical_Top      ||
        value == Half_Vertical_Bottom   ||
        value == Half_Vertical_Center    ;
+
+   static bool isColumn(int value) =>
+       value >= Column_Top_Left        &&
+       value <= Column_Bottom_Right     ;
+
 
    static String getName(int value) => const {
       None: 'None',

@@ -396,6 +396,8 @@ class AtlasNodeY {
       return GameConstants.Sprite_Height_Padded_19;
     if (NodeOrientation.isHalfVertical(orientation))
       return GameConstants.Sprite_Height_Padded_20;
+    if (NodeOrientation.isColumn(orientation))
+      return GameConstants.Sprite_Height_Padded_21;
     throw Exception('AtlasNodeY.mapOrientation(${NodeOrientation.getName(orientation)}');
   }
 }

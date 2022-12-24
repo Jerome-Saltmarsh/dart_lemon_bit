@@ -655,6 +655,8 @@ class EditorUI {
             buildColumnNodeOrientationSlopeCornerOuter(),
           if (NodeOrientation.isHalfVertical(selectedNodeOrientation))
             buildColumnHalfVertical(),
+          if (NodeOrientation.isColumn(selectedNodeOrientation))
+            buildColumnColumns(),
         ],
       );
 
@@ -799,6 +801,34 @@ class EditorUI {
         buildOrientationIcon(NodeOrientation.Half_Vertical_Top),
         buildOrientationIcon(NodeOrientation.Half_Vertical_Center),
         buildOrientationIcon(NodeOrientation.Half_Vertical_Bottom),
+      ],
+    );
+  }
+
+  static Widget buildColumnColumns(){
+    return Column(
+      children: [
+        Row(
+          children: [
+            buildOrientationIcon(NodeOrientation.Column_Top_Left),
+            buildOrientationIcon(NodeOrientation.Column_Top_Center),
+            buildOrientationIcon(NodeOrientation.Column_Top_Right),
+          ],
+        ),
+        Row(
+          children: [
+            buildOrientationIcon(NodeOrientation.Column_Center_Left),
+            buildOrientationIcon(NodeOrientation.Column_Center_Center),
+            buildOrientationIcon(NodeOrientation.Column_Center_Right),
+          ],
+        ),
+        Row(
+          children: [
+            buildOrientationIcon(NodeOrientation.Column_Bottom_Left),
+            buildOrientationIcon(NodeOrientation.Column_Bottom_Center),
+            buildOrientationIcon(NodeOrientation.Column_Bottom_Right),
+          ],
+        ),
       ],
     );
   }

@@ -352,6 +352,7 @@ class Engine {
     bool setPathUrlStrategy = true,
     Color backgroundColor = Default_Background_Color,
   }){
+    print("engine.run()");
     Engine.watchTitle.value = title;
     Engine.onInit = init;
     Engine.onUpdate = update;

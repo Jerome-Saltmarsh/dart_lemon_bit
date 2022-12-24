@@ -136,6 +136,10 @@ class NodeType {
       type == Concrete        ||
       type == Wooden_Plank     ;
 
+  static bool supportsOrientationColumn(int type) =>
+      type == Concrete          ||
+      type == Grass              ;
+
   static bool isDestroyable(int type) =>
       type == Boulder         ||
       type == Sunflower       ||
@@ -224,6 +228,10 @@ class NodeType {
 
     if (orientation == NodeOrientation.Radial) {
       return supportsOrientationRadial(type);
+    }
+
+    if (NodeOrientation.isHalfVertical(orientation)) {
+      return supportsOrientationHalfVertical(type);
     }
 
     if (NodeOrientation.isHalfVertical(orientation)) {
