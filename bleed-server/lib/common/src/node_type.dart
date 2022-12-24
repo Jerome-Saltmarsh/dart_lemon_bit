@@ -99,6 +99,8 @@ class NodeType {
       type == Concrete      ||
       type == Brick         ||
       type == Wood          ||
+      type == Road          ||
+      type == Metal         ||
       type == Fireplace      ;
 
   static bool supportsOrientationSlopeSymmetric(int type) =>
@@ -106,15 +108,21 @@ class NodeType {
       type == Grass         ||
       type == Brick         ||
       type == Concrete      ||
+      type == Road          ||
+      type == Metal         ||
       type == Bau_Haus       ;
 
   static bool supportsOrientationSlopeCornerInner(int type) =>
       type == Grass             ||
       type == Concrete          ||
+      type == Road              ||
+      type == Metal         ||
       type == Bau_Haus           ;
 
   static bool supportsOrientationSlopeCornerOuter(int type) =>
       type == Concrete          ||
+      type == Road          ||
+      type == Metal         ||
       type == Grass              ;
 
   static bool supportsOrientationHalf(int type) =>
@@ -124,11 +132,16 @@ class NodeType {
       type == Wooden_Plank      ||
       type == Brick             ||
       type == Concrete          ||
+      type == Road          ||
+      type == Metal         ||
       type == Bau_Haus           ;
 
   static bool supportsOrientationHalfVertical(int type) =>
+      type == Grass         ||
       type == Wood              ||
       type == Brick             ||
+      type == Road          ||
+          type == Metal         ||
       type == Bau_Haus           ;
 
   static bool supportsOrientationCorner(int type) =>
@@ -137,11 +150,15 @@ class NodeType {
       type == Brick           ||
       type == Bau_Haus        ||
       type == Concrete        ||
+      type == Road          ||
+          type == Metal         ||
       type == Wooden_Plank     ;
 
   static bool supportsOrientationColumn(int type) =>
       type == Concrete          ||
       type == Brick             ||
+      type == Road          ||
+          type == Metal         ||
       type == Grass              ;
 
   static bool isDestroyable(int type) =>
@@ -263,6 +280,7 @@ class NodeType {
     Fireplace: 'Fireplace',
     Soil: 'Soil',
     Concrete: 'Stone',
+    Metal: "Metal",
     Bau_Haus: 'Bau Haus',
     Bau_Haus_Window: 'Bau Haus Window',
     Bau_Haus_Plain: 'Bau Hau Plain',

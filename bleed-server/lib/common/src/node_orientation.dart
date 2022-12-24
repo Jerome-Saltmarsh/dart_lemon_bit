@@ -151,6 +151,15 @@ class NodeOrientation {
          Half_Vertical_Top: "Vertical Half Top",
          Half_Vertical_Center: "Vertical Half Center",
          Half_Vertical_Bottom: "Vertical Half Bottom",
+         Column_Top_Left: "Column Top Left",
+         Column_Top_Center: "Column Top Center",
+         Column_Top_Right: "Column Top Right",
+         Column_Center_Left: "Column Center Left",
+         Column_Center_Center: "Column Center Center",
+         Column_Center_Right: "Column Center Right",
+         Column_Bottom_Left: "Column Bottom Left",
+         Column_Bottom_Center: "Column Bottom Center",
+         Column_Bottom_Right: "Column Bottom Right",
    }[value] ?? 'unknown: $value';
 
    static double getGradient(int orientation, double x, double y) {
@@ -237,9 +246,10 @@ class NodeOrientation {
        case Half_Vertical_Bottom:
          return 0.33;
        default:
-         throw Exception(
-             'node_orientation.getGradient(orientation: ${getName(orientation)}, x: $x, y: $y'
-         );
+         return 0;
+         // throw Exception(
+         //     'node_orientation.getGradient(orientation: ${getName(orientation)}, x: $x, y: $y'
+         // );
      }
    }
 }
