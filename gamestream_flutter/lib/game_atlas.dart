@@ -402,6 +402,7 @@ class AtlasNodeY {
   }
 }
 
+
 class AtlasNodeAnchorY{
    static const Torch = 0.33;
 }

@@ -138,6 +138,7 @@ class NodeType {
 
   static bool supportsOrientationColumn(int type) =>
       type == Concrete          ||
+      type == Brick             ||
       type == Grass              ;
 
   static bool isDestroyable(int type) =>
@@ -236,6 +237,10 @@ class NodeType {
 
     if (NodeOrientation.isHalfVertical(orientation)) {
       return supportsOrientationHalfVertical(type);
+    }
+
+    if (NodeOrientation.isColumn(orientation)) {
+      return supportsOrientationColumn(type);
     }
 
     return false;

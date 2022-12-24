@@ -90,6 +90,8 @@ class EditorUI {
                             selectedNodeType
                       ))
                         buildOrientationIcon(NodeOrientation.Half_Vertical_Top),
+                      if (NodeType.supportsOrientationColumn(selectedNodeType))
+                        buildOrientationIcon(NodeOrientation.Column_Center_Center),
                     ],
                   )),
               Row(
