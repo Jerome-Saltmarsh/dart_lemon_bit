@@ -249,6 +249,11 @@ class NodeOrientation {
          if (x > 0.33) return 0;
          if (y < 0.66) return 0;
          return 1;
+       case Column_Top_Center:
+         if (x > 0.33) return 0;
+         if (y < 0.33) return 0;
+         if (y > 0.66) return 0;
+         return 1;
        case Column_Top_Right:
          if (x > 0.33) return 0;
          if (y > 0.33) return 0;
