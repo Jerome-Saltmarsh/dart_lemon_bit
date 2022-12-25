@@ -807,32 +807,135 @@ class EditorUI {
     );
   }
 
-  static Widget buildColumnColumns(){
-    return Column(
-      children: [
-        Row(
-          children: [
-            buildOrientationIcon(NodeOrientation.Column_Top_Left),
-            buildOrientationIcon(NodeOrientation.Column_Top_Center),
-            buildOrientationIcon(NodeOrientation.Column_Top_Right),
-          ],
-        ),
-        Row(
-          children: [
-            buildOrientationIcon(NodeOrientation.Column_Center_Left),
-            buildOrientationIcon(NodeOrientation.Column_Center_Center),
-            buildOrientationIcon(NodeOrientation.Column_Center_Right),
-          ],
-        ),
-        Row(
-          children: [
-            buildOrientationIcon(NodeOrientation.Column_Bottom_Left),
-            buildOrientationIcon(NodeOrientation.Column_Bottom_Center),
-            buildOrientationIcon(NodeOrientation.Column_Bottom_Right),
-          ],
-        ),
-      ],
+  static void renderIconSquareEmpty({
+    required Canvas canvas,
+    required double x,
+    required double y,
+  }) =>
+      Engine.renderExternalCanvas(
+      canvas: canvas,
+      image: GameImages.atlas_icons,
+      srcX: 304,
+      srcY: 32,
+      srcWidth: 48,
+      srcHeight: 48,
+      dstX: x,
+      dstY: y,
     );
+
+  static void renderIconSquareFull({
+    required Canvas canvas,
+    required double x,
+    required double y,
+  }) =>
+      Engine.renderExternalCanvas(
+        canvas: canvas,
+        image: GameImages.atlas_icons,
+        srcX: 352,
+        srcY: 32,
+        srcWidth: 48,
+        srcHeight: 48,
+        dstX: x,
+        dstY: y,
+      );
+
+
+  static double projectX(num x, num y){
+    return ((x - y) * 0.5 * 48) + 72;
+  }
+
+  static double projectY(num x, num y){
+    return ((y + x) * 0.5 * 48) + 24;
+  }
+
+  static Widget buildColumnColumns(){
+    return watch(GameEditor.nodeSelectedOrientation, (int nodeOrientation){
+      var mousePosX = 0.0;
+      var mousePosY = 0.0;
+      return MouseRegion(
+        onHover: (event){
+            // print("event.position.x: ${event.localPosition.dx}");
+            mousePosX = event.localPosition.dx;
+            mousePosY = event.localPosition.dy;
+        },
+        child: GestureDetector(
+          onTap: (){
+            final row = ((mousePosX + mousePosY - 24) ~/ Node_Size) - 1;
+            final column = ((mousePosY - mousePosX - 72) ~/ Node_Size) + 2;
+            print("row: $row, column: $column");
+            if (row < 0) return;
+            if (column < 0) return;
+            if (row > 2) return;
+            if (column > 2) return;
+            if (row == 0 && column == 2){
+              GameNetwork.sendClientRequestSetBlock(
+                index: GameEditor.nodeSelectedIndex.value,
+                type: GameEditor.nodeSelectedType.value,
+                orientation: NodeOrientation.Column_Top_Left,
+              );
+            }
+
+          },
+          child: Container(
+            width: 200,
+            height: 200,
+            color: GameColors.brownDark,
+            child: Engine.buildCanvas(paint: (Canvas canvas, Size size){
+              for (var x = 0; x < 3; x++){
+                for (var y = 0; y < 3; y++){
+                  renderIconSquareEmpty(
+                    canvas: canvas,
+                    x: projectX(x, y),
+                    y: projectY(x, y),
+                  );
+                }
+              }
+              switch (nodeOrientation){
+                case NodeOrientation.Column_Top_Left:
+                  final x = 0;
+                  final y = 2;
+                  renderIconSquareFull(
+                      canvas: canvas,
+                      x: projectX(x, y),
+                      y: projectY(x, y),
+                  );
+                  break;
+                default:
+                  break;
+              }
+            },
+            ),
+          ),
+        ),
+      );
+    });
+
+
+    // return Column(
+    //   children: [
+    //     Row(
+    //       children: [
+    //         buildOrientationIcon(NodeOrientation.Column_Top_Left),
+    //         buildOrientationIcon(NodeOrientation.Column_Top_Center),
+    //         buildOrientationIcon(NodeOrientation.Column_Top_Right),
+    //       ],
+    //     ),
+    //     Row(
+    //       children: [
+    //         buildOrientationIcon(NodeOrientation.Column_Center_Left),
+    //         buildOrientationIcon(NodeOrientation.Column_Center_Center),
+    //         buildOrientationIcon(NodeOrientation.Column_Center_Right),
+    //       ],
+    //     ),
+    //     Row(
+    //       children: [
+    //         buildOrientationIcon(NodeOrientation.Column_Bottom_Left),
+    //         buildOrientationIcon(NodeOrientation.Column_Bottom_Center),
+    //         buildOrientationIcon(NodeOrientation.Column_Bottom_Right),
+    //       ],
+    //     ),
+    //   ],
+    // );
   }
 
   static Widget buildColumnSelectedGameObject() {
