@@ -852,9 +852,10 @@ class EditorUI {
     return watch(GameEditor.nodeSelectedOrientation, (int nodeOrientation){
       var mousePosX = 0.0;
       var mousePosY = 0.0;
+      var indexX = 0;
+      var indexY = 0;
       return MouseRegion(
         onHover: (event){
-            // print("event.position.x: ${event.localPosition.dx}");
             mousePosX = event.localPosition.dx;
             mousePosY = event.localPosition.dy;
         },
@@ -867,12 +868,31 @@ class EditorUI {
             if (column < 0) return;
             if (row > 2) return;
             if (column > 2) return;
+            indexX = row;
+            indexY = column;
             if (row == 0 && column == 2){
               GameNetwork.sendClientRequestSetBlock(
                 index: GameEditor.nodeSelectedIndex.value,
                 type: GameEditor.nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Top_Left,
               );
+              return;
+            }
+            if (row == 0 && column == 1){
+              GameNetwork.sendClientRequestSetBlock(
+                index: GameEditor.nodeSelectedIndex.value,
+                type: GameEditor.nodeSelectedType.value,
+                orientation: NodeOrientation.Column_Top_Center,
+              );
+              return;
+            }
+            if (row == 0 && column == 0){
+              GameNetwork.sendClientRequestSetBlock(
+                index: GameEditor.nodeSelectedIndex.value,
+                type: GameEditor.nodeSelectedType.value,
+                orientation: NodeOrientation.Column_Top_Right,
+              );
+              return;
             }
 
           },
@@ -890,20 +910,11 @@ class EditorUI {
                   );
                 }
               }
-              switch (nodeOrientation){
-                case NodeOrientation.Column_Top_Left:
-                  final x = 0;
-                  final y = 2;
-                  renderIconSquareFull(
-                      canvas: canvas,
-                      x: projectX(x, y),
-                      y: projectY(x, y),
-                  );
-                  break;
-                default:
-                  break;
-              }
-            },
+              renderIconSquareFull(
+                canvas: canvas,
+                x: projectX(indexX, indexY),
+                y: projectY(indexX, indexY),
+              );            },
             ),
           ),
         ),
