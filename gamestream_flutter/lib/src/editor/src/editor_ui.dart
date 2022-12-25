@@ -854,6 +854,46 @@ class EditorUI {
       var mousePosY = 0.0;
       var indexX = 0;
       var indexY = 0;
+
+      switch(nodeOrientation){
+        case NodeOrientation.Column_Top_Left:
+          indexX = 0;
+          indexY = 2;
+          break;
+        case NodeOrientation.Column_Top_Center:
+          indexX = 0;
+          indexY = 1;
+          break;
+        case NodeOrientation.Column_Top_Right:
+          indexX = 0;
+          indexY = 2;
+          break;
+        case NodeOrientation.Column_Center_Left:
+          indexX = 1;
+          indexY = 2;
+          break;
+        case NodeOrientation.Column_Center_Center:
+          indexX = 1;
+          indexY = 1;
+          break;
+        case NodeOrientation.Column_Center_Right:
+          indexX = 1;
+          indexY = 2;
+          break;
+        case NodeOrientation.Column_Bottom_Left:
+          indexX = 2;
+          indexY = 2;
+          break;
+        case NodeOrientation.Column_Bottom_Center:
+          indexX = 2;
+          indexY = 1;
+          break;
+        case NodeOrientation.Column_Bottom_Right:
+          indexX = 2;
+          indexY = 2;
+          break;
+      }
+
       return MouseRegion(
         onHover: (event){
             mousePosX = event.localPosition.dx;
@@ -895,6 +935,55 @@ class EditorUI {
               return;
             }
 
+            if (row == 1 && column == 2){
+              GameNetwork.sendClientRequestSetBlock(
+                index: GameEditor.nodeSelectedIndex.value,
+                type: GameEditor.nodeSelectedType.value,
+                orientation: NodeOrientation.Column_Center_Left,
+              );
+              return;
+            }
+            if (row == 1 && column == 1){
+              GameNetwork.sendClientRequestSetBlock(
+                index: GameEditor.nodeSelectedIndex.value,
+                type: GameEditor.nodeSelectedType.value,
+                orientation: NodeOrientation.Column_Center_Center,
+              );
+              return;
+            }
+            if (row == 1 && column == 0){
+              GameNetwork.sendClientRequestSetBlock(
+                index: GameEditor.nodeSelectedIndex.value,
+                type: GameEditor.nodeSelectedType.value,
+                orientation: NodeOrientation.Column_Center_Right,
+              );
+              return;
+            }
+
+            if (row == 2 && column == 2){
+              GameNetwork.sendClientRequestSetBlock(
+                index: GameEditor.nodeSelectedIndex.value,
+                type: GameEditor.nodeSelectedType.value,
+                orientation: NodeOrientation.Column_Bottom_Left,
+              );
+              return;
+            }
+            if (row == 2 && column == 1){
+              GameNetwork.sendClientRequestSetBlock(
+                index: GameEditor.nodeSelectedIndex.value,
+                type: GameEditor.nodeSelectedType.value,
+                orientation: NodeOrientation.Column_Bottom_Center,
+              );
+              return;
+            }
+            if (row == 2 && column == 0){
+              GameNetwork.sendClientRequestSetBlock(
+                index: GameEditor.nodeSelectedIndex.value,
+                type: GameEditor.nodeSelectedType.value,
+                orientation: NodeOrientation.Column_Bottom_Right,
+              );
+              return;
+            }
           },
           child: Container(
             width: 200,
