@@ -446,6 +446,7 @@ class ServerResponseReader with ByteReader {
     GameNodes.nodesType[nodeIndex] = nodeType;
     GameNodes.nodesOrientation[nodeIndex] = nodeOrientation;
     GameEvents.onChangedNodes();
+    GameEditor.refreshNodeSelectedIndex();
   }
 
   void readPlayerTarget() {

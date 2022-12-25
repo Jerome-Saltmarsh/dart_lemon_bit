@@ -866,7 +866,7 @@ class EditorUI {
           break;
         case NodeOrientation.Column_Top_Right:
           indexX = 0;
-          indexY = 2;
+          indexY = 0;
           break;
         case NodeOrientation.Column_Center_Left:
           indexX = 1;
@@ -878,7 +878,7 @@ class EditorUI {
           break;
         case NodeOrientation.Column_Center_Right:
           indexX = 1;
-          indexY = 2;
+          indexY = 0;
           break;
         case NodeOrientation.Column_Bottom_Left:
           indexX = 2;
@@ -890,7 +890,7 @@ class EditorUI {
           break;
         case NodeOrientation.Column_Bottom_Right:
           indexX = 2;
-          indexY = 2;
+          indexY = 0;
           break;
       }
 
