@@ -62,11 +62,11 @@ class GameNodes {
     final rowMax = min(rowIndex + radius, GameState.nodesTotalRows);
     final columnMin = max(columnIndex - radius, 0);
     final columnMax = min(columnIndex + radius, GameState.nodesTotalColumns);
-
+    final rowInitInit = GameState.nodesTotalColumns * rowMin;
+    var zTotal = zMin * nodesArea;
 
     for (var z = zMin; z < zMax; z++) {
-      final zTotal = z * nodesArea;
-      var rowInit = GameState.nodesTotalColumns * rowMin;
+      var rowInit = rowInitInit;
 
       for (var row = rowMin; row <= rowMax; row++){
         final a = (zTotal) + (rowInit);
@@ -80,7 +80,7 @@ class GameNodes {
           nodesDynamicIndex[dynamicIndex++] = nodeIndex;
         }
       }
+      zTotal += nodesArea;
     }
   }
-
 }
