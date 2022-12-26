@@ -446,9 +446,7 @@ class Connection with ByteReader {
           return errorInsufficientArgs(3, arguments);
         }
         final modifyCanvasSizeIndex = parse(arguments[2]);
-        if (modifyCanvasSizeIndex == null){
-          return errorInvalidArg('modify canvas size is null');
-        }
+        if (modifyCanvasSizeIndex == null) return;
         if (!isValidIndex(modifyCanvasSizeIndex, RequestModifyCanvasSize.values)){
           return errorInvalidArg('invalid modify canvas index $modifyCanvasSizeIndex');
         }

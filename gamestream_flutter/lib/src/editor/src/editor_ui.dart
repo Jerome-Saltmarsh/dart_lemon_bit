@@ -157,6 +157,7 @@ class EditorUI {
                  text("Close", onPressed: EditorActions.toggleWindowEnabledCanvasSize),
                ],
             ),
+            // watch(GameNodes.totalRows)
             Expanded(
               child: Center(
                 child: Stack(

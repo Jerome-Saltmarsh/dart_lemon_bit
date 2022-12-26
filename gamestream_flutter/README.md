@@ -72,8 +72,10 @@ ctrl + w:   minimal mode
 [CRITICAL]
 [ ] fix grass node solid variation two
 [ ] fix ai spot player through walls
-[ ] fix render bricks
 [ ] fix transparent not shaded by hue
+
+26.12.2022
+[x] fix modify grid size z
 
 22.12.2022
 [x] upload scene with bytes instead of base64 encoded string

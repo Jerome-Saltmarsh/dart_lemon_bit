@@ -5,6 +5,7 @@ import 'dart:typed_data';
 void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, Player player){
   final game = player.game;
   final scene = game.scene;
+  scene.compiled = null;
   switch (request) {
     case RequestModifyCanvasSize.Add_Row_Start:
       final newGridVolume = scene.gridVolume + (scene.gridColumns * scene.gridHeight);
