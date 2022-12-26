@@ -673,7 +673,7 @@ class GameRender {
     // currentNodeRow = clamp(currentNodeRow, 0, GameState.nodesTotalRows - 1);
     // currentNodeColumn = clamp(currentNodeColumn, 0, GameState.nodesTotalColumns - 1);
 
-    currentNodeIndex = (currentNodeZ * GameState.nodesArea) + (currentNodeRow * GameState.nodesTotalColumns) + currentNodeColumn;
+    currentNodeIndex = (currentNodeZ * GameNodes.nodesArea) + (currentNodeRow * GameState.nodesTotalColumns) + currentNodeColumn;
     assert (currentNodeZ >= 0);
     assert (currentNodeRow >= 0);
     assert (currentNodeColumn >= 0);
@@ -690,8 +690,8 @@ class GameRender {
   }
 
   static void showIndexFinal(int index){
-    showIndex(index + GameState.nodesArea);
-    showIndex(index + GameState.nodesArea + GameState.nodesArea);
+    showIndex(index + GameNodes.nodesArea);
+    showIndex(index + GameNodes.nodesArea + GameNodes.nodesArea);
   }
   
   static void showIndex(int index) {
@@ -772,7 +772,7 @@ class GameRender {
 
     currentNodeDstX = (currentNodeRow - currentNodeColumn) * Node_Size_Half;
     currentNodeDstY = ((currentNodeRow + currentNodeColumn) * Node_Size_Half) - (currentNodeZ * Node_Height);
-    currentNodeIndex = (currentNodeZ * GameState.nodesArea) + (currentNodeRow * GameState.nodesTotalColumns) + currentNodeColumn;
+    currentNodeIndex = (currentNodeZ * GameNodes.nodesArea) + (currentNodeRow * GameState.nodesTotalColumns) + currentNodeColumn;
     currentNodeType = GameNodes.nodesType[currentNodeIndex];
 
     while (GameNodes.visibleIndex > 0) {
@@ -791,7 +791,7 @@ class GameRender {
     GameState.applyEmissions();
 
     if (GameState.editMode){
-      GameState.applyEmissionDynamic(
+      GameNodes.applyEmissionDynamic(
         index: GameEditor.nodeSelectedIndex.value,
         maxBrightness: Shade.Very_Bright,
       );
@@ -834,13 +834,13 @@ class GameRender {
 
   static void nodesHideIndex(int z, int row, int column, int initRow, int initColumn){
 
-    var index = (z * GameState.nodesArea) + (row * GameState.nodesTotalColumns) + column;
+    var index = (z * GameNodes.nodesArea) + (row * GameState.nodesTotalColumns) + column;
     while (index < GameNodes.nodesTotal) {
       if (NodeType.isRainOrEmpty(GameNodes.nodesType[index])) {
         row += 1;
         column += 1;
         z += 2;
-        index = (z * GameState.nodesArea) + (row * GameState.nodesTotalColumns) + column;
+        index = (z * GameNodes.nodesArea) + (row * GameState.nodesTotalColumns) + column;
         continue;
       }
 
@@ -858,10 +858,10 @@ class GameRender {
         row += 1;
         column += 1;
         z += 2;
-        index = (z * GameState.nodesArea) + (row * GameState.nodesTotalColumns) + column;
+        index = (z * GameNodes.nodesArea) + (row * GameState.nodesTotalColumns) + column;
         continue;
       }
-      var nodeIndexBelow = index - GameState.nodesArea;
+      var nodeIndexBelow = index - GameNodes.nodesArea;
 
       if (nodeIndexBelow < 0) continue;
 
@@ -876,7 +876,7 @@ class GameRender {
         row += 1;
         column += 1;
         z += 2;
-        index = (z * GameState.nodesArea) + (row * GameState.nodesTotalColumns) + column;
+        index = (z * GameNodes.nodesArea) + (row * GameState.nodesTotalColumns) + column;
         continue;
       }
 
@@ -891,13 +891,13 @@ class GameRender {
         row += 1;
         column += 1;
         z += 2;
-        index = (z * GameState.nodesArea) + (row * GameState.nodesTotalColumns) + column;
+        index = (z * GameNodes.nodesArea) + (row * GameState.nodesTotalColumns) + column;
         continue;
       }
       row += 1;
       column += 1;
       z += 2;
-      index = (z * GameState.nodesArea) + (row * GameState.nodesTotalColumns) + column;
+      index = (z * GameNodes.nodesArea) + (row * GameState.nodesTotalColumns) + column;
     }
   }
 
@@ -973,8 +973,8 @@ class GameRender {
     if (vector3.z < Node_Height) return;
     if (vector3.z >= GameState.nodesLengthZ) return;
     final nodeIndex = GameQueries.getNodeIndexV3(vector3);
-    if (nodeIndex > GameState.nodesArea) {
-      final nodeBelowIndex = nodeIndex - GameState.nodesArea;
+    if (nodeIndex > GameNodes.nodesArea) {
+      final nodeBelowIndex = nodeIndex - GameNodes.nodesArea;
       final nodeBelowOrientation = GameNodes.nodesOrientation[nodeBelowIndex];
       if (nodeBelowOrientation == NodeOrientation.Solid){
         final topRemainder = vector3.z % Node_Height;
@@ -1340,7 +1340,7 @@ int get renderNodeShade => GameNodes.nodesShade[GameRender.currentNodeIndex];
 int get renderNodeOrientation => GameNodes.nodesOrientation[GameRender.currentNodeIndex];
 int get renderNodeColor => GameLighting.values[renderNodeShade];
 int get renderNodeWind => GameNodes.nodesWind[renderNodeShade];
-int get renderNodeBelowIndex => GameRender.currentNodeIndex + GameState.nodesArea;
+int get renderNodeBelowIndex => GameRender.currentNodeIndex + GameNodes.nodesArea;
 
 int get renderNodeBelowShade {
   if (renderNodeBelowIndex < 0) return ServerState.ambientShade.value;
@@ -1354,7 +1354,7 @@ int getRenderLayerColor(int layers) =>
     GameLighting.values[getRenderLayerShade(layers)];
 
 int getRenderLayerShade(int layers){
-   final index = GameRender.currentNodeIndex + (layers * GameState.nodesArea);
+   final index = GameRender.currentNodeIndex + (layers * GameNodes.nodesArea);
    if (index < 0) return ServerState.ambientShade.value;
    if (index >= GameNodes.nodesTotal) return ServerState.ambientShade.value;
    return GameNodes.nodesShade[index];

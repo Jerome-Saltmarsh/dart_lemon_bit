@@ -34,7 +34,7 @@ class GameEditor {
      if (value < 0) return;
      if (value >= GameState.nodesTotalZ) return;
      final difference = value - z;
-     nodeSelectedIndex.value += difference * GameState.nodesArea;
+     nodeSelectedIndex.value += difference * GameNodes.nodesArea;
   }
 
   static set row(int value){

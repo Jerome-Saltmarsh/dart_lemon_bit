@@ -491,7 +491,7 @@ class ServerResponseReader with ByteReader {
     GameState.nodesTotalZ = readUInt16();
     GameState.nodesTotalRows = readUInt16();
     GameState.nodesTotalColumns = readUInt16();
-    GameState.nodesArea = GameState.nodesTotalRows * GameState.nodesTotalColumns;
+    GameNodes.nodesArea = GameState.nodesTotalRows * GameState.nodesTotalColumns;
     final totalNodes = GameState.nodesTotalZ * GameState.nodesTotalRows * GameState.nodesTotalColumns;
     if (GameNodes.nodesType.length < totalNodes) {
       GameNodes.nodesType = Uint8List(totalNodes);
@@ -505,7 +505,7 @@ class ServerResponseReader with ByteReader {
       GameNodes.nodesDynamicIndex = Uint16List(totalNodes);
     }
     GameNodes.nodesTotal = totalNodes;
-    GameState.nodesRaycast = GameState.nodesArea +  GameState.nodesArea + GameState.nodesTotalColumns + 1;
+    GameState.nodesRaycast = GameNodes.nodesArea +  GameNodes.nodesArea + GameState.nodesTotalColumns + 1;
 
     var gridIndex = 0;
     var total = 0;

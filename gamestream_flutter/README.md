@@ -59,6 +59,7 @@ ctrl + w:   minimal mode
 [ ] node road orientation slope
 [ ] dynamic shade that changes over time
 [ ] fix particle shade
+[ ] node orientation windows
 
 [GAMES]
 [ ] game royal

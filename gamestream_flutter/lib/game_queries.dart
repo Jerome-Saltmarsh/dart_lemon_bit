@@ -6,13 +6,13 @@ import 'library.dart';
 class GameQueries {
 
    static int getNodeTypeBelow(int index){
-     if (index < GameState.nodesArea) return NodeType.Boundary;
-     final indexBelow = index - GameState.nodesArea;
+     if (index < GameNodes.nodesArea) return NodeType.Boundary;
+     final indexBelow = index - GameNodes.nodesArea;
      if (indexBelow >= GameNodes.nodesTotal) return NodeType.Boundary;
      return GameNodes.nodesType[indexBelow];
    }
 
-   static int getNodeIndexBelow(int index) => index - GameState.nodesArea;
+   static int getNodeIndexBelow(int index) => index - GameNodes.nodesArea;
 
    static bool isInboundZRC(int z, int row, int column){
      if (z < 0) return false;

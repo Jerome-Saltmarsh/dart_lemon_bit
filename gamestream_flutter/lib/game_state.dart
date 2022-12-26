@@ -37,7 +37,6 @@ class GameState {
   static var nodesLengthRow = 0.0;
   static var nodesLengthColumn = 0.0;
   static var nodesLengthZ = 0.0;
-  static var nodesArea = 0;
   static var nodesRaycast = 0;
   static var windLine = 0;
 
@@ -68,17 +67,17 @@ class GameState {
 
   static int getNodeIndexZRC(int z, int row, int column) {
     assert (GameQueries.isInboundZRC(z, row, column));
-    return (z * nodesArea) + (row * nodesTotalColumns) + column;
+    return (z * GameNodes.nodesArea) + (row * nodesTotalColumns) + column;
   }
 
   static int convertNodeIndexToZ(int index) =>
-      index ~/ nodesArea;
+      index ~/ GameNodes.nodesArea;
 
   static int convertNodeIndexToRow(int index) =>
-      (index - ((index ~/ nodesArea) * nodesArea)) ~/ nodesTotalColumns;
+      (index - ((index ~/ GameNodes.nodesArea) * GameNodes.nodesArea)) ~/ nodesTotalColumns;
 
   static int convertNodeIndexToColumn(int index) =>
-      index - ((convertNodeIndexToZ(index) * nodesArea) + (convertNodeIndexToRow(index) * nodesTotalColumns));
+      index - ((convertNodeIndexToZ(index) * GameNodes.nodesArea) + (convertNodeIndexToRow(index) * nodesTotalColumns));
 
   static int getV3RenderColor(Vector3 vector3) =>
       GameLighting.values[getV3NodeBelowShade(vector3)];
@@ -98,20 +97,20 @@ class GameState {
     outOfBoundsXYZ(v3.x, v3.y, v3.z);
 
   static bool outOfBounds(int z, int row, int column) =>
-    z < 0 ||
-    row < 0 ||
-    column < 0 ||
-    z >= nodesTotalZ ||
-    row >= nodesTotalRows ||
-    column >= nodesTotalColumns ;
+    z < 0                       ||
+    row < 0                     ||
+    column < 0                  ||
+    z >= nodesTotalZ            ||
+    row >= nodesTotalRows       ||
+    column >= nodesTotalColumns  ;
 
   static bool outOfBoundsXYZ(double x, double y, double z) =>
-     z < 0 ||
-     y < 0 ||
-     z < 0 ||
-     z >= nodesLengthZ ||
-     x >= nodesLengthRow ||
-     y >= nodesLengthColumn ;
+    z < 0                       ||
+    y < 0                       ||
+    z < 0                       ||
+    z >= nodesLengthZ           ||
+    x >= nodesLengthRow         ||
+    y >= nodesLengthColumn       ;
 
   // ACTIONS
 
@@ -219,48 +218,48 @@ class GameState {
 
   static void applyVector3Emission(Vector3 v, {required int maxBrightness}){
     if (!GameQueries.inBoundsVector3(v)) return;
-    applyEmissionDynamic(
+    GameNodes.applyEmissionDynamic(
       index: GameQueries.getNodeIndexV3(v),
       maxBrightness: maxBrightness,
     );
   }
 
   static void applyEmissionDynamicV3(Vector3 v3) =>
-    applyEmissionDynamic(index: GameQueries.getNodeIndexV3(v3));
+      GameNodes.applyEmissionDynamic(index: GameQueries.getNodeIndexV3(v3));
 
-  static void applyEmissionDynamic({
-    required int index,
-    int maxBrightness = Shade.Very_Bright,
-  }){
-    assert (index >= 0);
-    assert (index < GameNodes.nodesTotal);
-
-    final zIndex = GameState.convertNodeIndexToZ(index);
-    final rowIndex = GameState.convertNodeIndexToRow(index);
-    final columnIndex = GameState.convertNodeIndexToColumn(index);
-    final radius = Shade.Pitch_Black;
-    final zMin = max(zIndex - radius, 0);
-    final zMax = min(zIndex + radius, GameState.nodesTotalZ);
-    final rowMin = max(rowIndex - radius, 0);
-    final rowMax = min(rowIndex + radius, GameState.nodesTotalRows);
-    final columnMin = max(columnIndex - radius, 0);
-    final columnMax = min(columnIndex + radius, GameState.nodesTotalColumns);
-
-    for (var z = zMin; z < zMax; z++){
-      for (var row = rowMin; row <= rowMax; row++){
-        final a = (z * GameState.nodesArea) + (row * GameState.nodesTotalColumns);
-        final b = (z - zIndex).abs() + (row - rowIndex).abs();
-        for (var column = columnMin; column <= columnMax; column++) {
-          final nodeIndex = a + column;
-          final distanceValue = Engine.clamp(b + (column - columnIndex).abs() - 2, maxBrightness, Shade.Pitch_Black);
-          if (distanceValue >= GameNodes.nodesShade[nodeIndex]) continue;
-          GameNodes.nodesShade[nodeIndex] = distanceValue;
-          GameNodes.nodesDynamicIndex[GameNodes.dynamicIndex] = nodeIndex;
-          GameNodes.dynamicIndex++;
-        }
-      }
-    }
-  }
+  // static void applyEmissionDynamic({
+  //   required int index,
+  //   int maxBrightness = Shade.Very_Bright,
+  // }){
+  //   assert (index >= 0);
+  //   assert (index < GameNodes.nodesTotal);
+  //
+  //   final zIndex = GameState.convertNodeIndexToZ(index);
+  //   final rowIndex = GameState.convertNodeIndexToRow(index);
+  //   final columnIndex = GameState.convertNodeIndexToColumn(index);
+  //   final radius = Shade.Pitch_Black;
+  //   final zMin = max(zIndex - radius, 0);
+  //   final zMax = min(zIndex + radius, GameState.nodesTotalZ);
+  //   final rowMin = max(rowIndex - radius, 0);
+  //   final rowMax = min(rowIndex + radius, GameState.nodesTotalRows);
+  //   final columnMin = max(columnIndex - radius, 0);
+  //   final columnMax = min(columnIndex + radius, GameState.nodesTotalColumns);
+  //
+  //   for (var z = zMin; z < zMax; z++){
+  //     for (var row = rowMin; row <= rowMax; row++){
+  //       final a = (z * GameState.nodesArea) + (row * GameState.nodesTotalColumns);
+  //       final b = (z - zIndex).abs() + (row - rowIndex).abs();
+  //       for (var column = columnMin; column <= columnMax; column++) {
+  //         final nodeIndex = a + column;
+  //         final distanceValue = Engine.clamp(b + (column - columnIndex).abs() - 2, maxBrightness, Shade.Pitch_Black);
+  //         if (distanceValue >= GameNodes.nodesShade[nodeIndex]) continue;
+  //         GameNodes.nodesShade[nodeIndex] = distanceValue;
+  //         GameNodes.nodesDynamicIndex[GameNodes.dynamicIndex] = nodeIndex;
+  //         GameNodes.dynamicIndex++;
+  //       }
+  //     }
+  //   }
+  // }
 
   static void onChangedUpdateFrame(int value){
     ClientState.rendersSinceUpdate.value = 0;
@@ -1245,7 +1244,7 @@ class GameState {
       if (index < 0) return true;
       if (index >= GameNodes.nodesTotal) return true;
       while (true){
-        index += GameState.nodesArea;
+        index += GameNodes.nodesArea;
         index++;
         index += GameState.nodesTotalColumns;
         if (index >= GameNodes.nodesTotal) return true;
