@@ -62,16 +62,15 @@ class GameNodes {
     final rowMax = min(rowIndex + radius, GameState.nodesTotalRows);
     final columnMin = max(columnIndex - radius, 0);
     final columnMax = min(columnIndex + radius, GameState.nodesTotalColumns);
-    // var rowInit = GameState.nodesTotalColumns * rowMin;
+
 
     for (var z = zMin; z < zMax; z++) {
       final zTotal = z * nodesArea;
+      var rowInit = GameState.nodesTotalColumns * rowMin;
 
       for (var row = rowMin; row <= rowMax; row++){
-        // TODO remove multiplication
-        // final a = (zTotal) + (rowInit);
-        // rowInit += GameState.nodesTotalColumns;
-        final a = (zTotal) + (row * GameState.nodesTotalColumns);
+        final a = (zTotal) + (rowInit);
+        rowInit += GameState.nodesTotalColumns;
         final b = (z - zIndex).abs() + (row - rowIndex).abs();
         for (var column = columnMin; column <= columnMax; column++) {
           final nodeIndex = a + column;
