@@ -38,7 +38,7 @@ class GameNodes {
   }
 
   static void resetGridToAmbient(){
-    for (var i = 0; i < GameNodes.nodesTotal; i++){
+    for (var i = 0; i < nodesTotal; i++){
       nodesBake[i] = Shade.Pitch_Black;
       nodesShade[i] = Shade.Pitch_Black;
       dynamicIndex = 0;
@@ -50,10 +50,10 @@ class GameNodes {
     int maxBrightness = Shade.Very_Bright,
   }){
     assert (index >= 0);
-    assert (index < GameNodes.nodesTotal);
+    assert (index < nodesTotal);
 
-    final zIndex = GameState.convertNodeIndexToZ(index);
-    final rowIndex = GameState.convertNodeIndexToRow(index);
+    final zIndex = index ~/ nodesArea;
+    final rowIndex = (index - (zIndex * nodesArea)) ~/ GameState.nodesTotalColumns;
     final columnIndex = GameState.convertNodeIndexToColumn(index);
     final radius = Shade.Pitch_Black;
     final zMin = max(zIndex - radius, 0);
