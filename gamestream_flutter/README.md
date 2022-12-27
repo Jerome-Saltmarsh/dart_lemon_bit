@@ -69,9 +69,9 @@ ctrl + w:   minimal mode
 
 [CRITICAL]
 [ ] fix ai spots player through walls
-[ ] fix gameobject shading
 
-26.12.2022
+27.12.2022
+[x] fix gameobject shading
 [x] fix grass node solid variation two
 [x] fix editor player health stats incorrect
 [x] remove node type plain

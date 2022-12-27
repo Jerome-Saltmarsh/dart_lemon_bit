@@ -504,7 +504,7 @@ class GameRender {
         srcY: AtlasItems.getSrcY(gameObject.type),
         srcWidth: AtlasItems.getSrcWidth(gameObject.type),
         srcHeight: AtlasItems.getSrcHeight(gameObject.type),
-        color: GameRender.currentNodeColor,
+        color: GameState.getV3RenderColor(gameObject),
       );
       return;
     }
