@@ -40,29 +40,10 @@ void renderNodeAt() {
       RenderNode.renderNodeWater();
       break;
     case NodeType.Tree_Bottom:
-      Engine.renderSprite(
-        image: GameImages.atlas_nodes,
-        srcX: AtlasNodeX.Tree_Bottom,
-        srcY: AtlasNodeY.Tree_Bottom,
-        srcWidth: AtlasNode.Width_Tree_Bottom,
-        srcHeight: AtlasNode.Node_Tree_Bottom_Height,
-        dstX: GameRender.currentNodeDstX,
-        dstY: GameRender.currentNodeDstY,
-        color: renderNodeBelowColor,
-      );
+      renderTreeBottom();
       break;
     case NodeType.Tree_Top:
-      var shift = GameAnimation.treeAnimation[((GameRender.currentNodeRow - GameRender.currentNodeColumn) + GameAnimation.animationFrame) % GameAnimation.treeAnimation.length] * renderNodeWind;
-      Engine.renderSprite(
-        image: GameImages.atlas_nodes,
-        srcX: AtlasNodeX.Tree_Top,
-        srcY: AtlasNodeY.Tree_Top,
-        srcWidth: AtlasNode.Node_Tree_Top_Width,
-        srcHeight: AtlasNode.Node_Tree_Top_Height,
-        dstX: GameRender.currentNodeDstX + (shift * 0.5),
-        dstY: GameRender.currentNodeDstY,
-        color: getRenderLayerColor(-2),
-      );
+      renderTreeTop();
       break;
     case NodeType.Grass_Long:
       switch (GameRender.currentNodeWind) {
@@ -212,6 +193,64 @@ void renderNodeAt() {
     default:
       throw Exception('renderNode(index: ${GameRender.currentNodeIndex}, type: ${NodeType.getName(GameRender.currentNodeType)}, orientation: ${NodeOrientation.getName(GameNodes.nodesOrientation[GameRender.currentNodeIndex])}');
   }
+}
+
+void renderTreeTop() => renderTreeTopPine();
+
+void renderTreeBottom() => renderTreeBottomPine();
+
+void renderTreeTopOak(){
+  var shift = GameAnimation.treeAnimation[((GameRender.currentNodeRow - GameRender.currentNodeColumn) + GameAnimation.animationFrame) % GameAnimation.treeAnimation.length] * renderNodeWind;
+  Engine.renderSprite(
+    image: GameImages.atlas_nodes,
+    srcX: AtlasNodeX.Tree_Top,
+    srcY: AtlasNodeY.Tree_Top,
+    srcWidth: AtlasNode.Node_Tree_Top_Width,
+    srcHeight: AtlasNode.Node_Tree_Top_Height,
+    dstX: GameRender.currentNodeDstX + (shift * 0.5),
+    dstY: GameRender.currentNodeDstY,
+    color: getRenderLayerColor(-2),
+  );
+}
+
+void renderTreeTopPine() {
+  var shift = GameAnimation.treeAnimation[((GameRender.currentNodeRow - GameRender.currentNodeColumn) + GameAnimation.animationFrame) % GameAnimation.treeAnimation.length] * renderNodeWind;
+  Engine.renderSprite(
+    image: GameImages.atlas_nodes,
+    srcX: 1262,
+    srcY: 80 ,
+    srcWidth: 45,
+    srcHeight: 58,
+    dstX: GameRender.currentNodeDstX + (shift * 0.5),
+    dstY: GameRender.currentNodeDstY,
+    color: getRenderLayerColor(-2),
+  );
+}
+
+void renderTreeBottomOak() {
+  Engine.renderSprite(
+    image: GameImages.atlas_nodes,
+    srcX: AtlasNodeX.Tree_Bottom,
+    srcY: AtlasNodeY.Tree_Bottom,
+    srcWidth: AtlasNode.Width_Tree_Bottom,
+    srcHeight: AtlasNode.Node_Tree_Bottom_Height,
+    dstX: GameRender.currentNodeDstX,
+    dstY: GameRender.currentNodeDstY,
+    color: renderNodeBelowColor,
+  );
+}
+
+void renderTreeBottomPine() {
+  Engine.renderSprite(
+    image: GameImages.atlas_nodes,
+    srcX: 1216,
+    srcY: 80,
+    srcWidth: 45,
+    srcHeight: 66,
+    dstX: GameRender.currentNodeDstX,
+    dstY: GameRender.currentNodeDstY,
+    color: renderNodeBelowColor,
+  );
 }
 
 void renderNodeTemplateShaded(double srcX) {
