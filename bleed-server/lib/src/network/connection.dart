@@ -697,6 +697,10 @@ class Connection with ByteReader {
     player.sendBufferToClient = sendBufferToClient;
     player.sceneDownloaded = false;
     game.customOnPlayerJoined(player);
+    player.writePlayerInventory();
+    player.writePlayerStats();
+    player.health = player.maxHealth;
+
 
     final account = _account;
     if (account != null) {

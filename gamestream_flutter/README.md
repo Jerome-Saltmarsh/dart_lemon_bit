@@ -75,6 +75,7 @@ ctrl + w:   minimal mode
 [ ] fix ai spot player through walls
 
 26.12.2022
+[x] fix editor player health stats incorrect
 [x] remove node type plain
 [x] fix transparent not shaded by hue
 

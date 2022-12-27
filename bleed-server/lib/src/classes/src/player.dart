@@ -245,8 +245,13 @@ class Player extends Character with ByteWriter {
       maxHealth += perkMaxHealth * Health_Per_Perk;
       damage += perkMaxDamage;
 
+      if (health > maxHealth){
+        health = maxHealth;
+      }
+
       writePlayerPerks();
       writePlayerMaxHealth();
+      writePlayerHealth();
       writePlayerDamage();
   }
 
@@ -1078,6 +1083,18 @@ class Player extends Character with ByteWriter {
     if (!sceneDownloaded){
       downloadScene();
     }
+  }
+
+  void writePlayerStats(){
+    refreshStats();
+    writePlayerLevel();
+    writePlayerExperiencePercentage();
+    writePlayerBaseMaxHealth();
+    writePlayerBaseMaxHealth();
+    writePlayerHealth();
+    writePlayerMaxHealth();
+    writePlayerAlive();
+    writePlayerInteractMode();
   }
 
   void writePlayerWeaponCooldown() {
