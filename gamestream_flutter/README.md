@@ -67,8 +67,10 @@ ctrl + w:   minimal mode
 
 [CRITICAL]
 [ ] fix ai spots player through walls
+[ ] design house kitchen
 
 27.12.2022
+[x] fix run mouse target
 [x] node orientation windows
 [x] fix gameobject shading
 [x] fix grass node solid variation two

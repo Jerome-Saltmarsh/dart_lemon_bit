@@ -368,7 +368,7 @@ class Player extends Character with ByteWriter {
   }
 
   void runToMouse(){
-    setRunTarget(mouseGridX, mouseGridY);
+    setRunTarget(mouseGridX - 16, mouseGridY - 16);
   }
 
   void setRunTarget(double x, double y){
