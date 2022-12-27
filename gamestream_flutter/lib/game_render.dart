@@ -78,11 +78,14 @@ class GameRender {
   static int get currentNodeShade => GameNodes.nodesShade[currentNodeIndex];
   static int get currentNodeColor => (currentNodeVisibilityOpaque ? GameLighting.values : GameLighting.values_transparent)[currentNodeShade];
   static int get currentNodeOrientation => GameNodes.nodesOrientation[currentNodeIndex];
+  static int get currentNodeVisibility => GameNodes.nodesVisible[currentNodeIndex];
+  static int get currentNodeWind => GameNodes.nodesWind[currentNodeIndex];
+
   static bool get currentNodeVisible => currentNodeVisibility == Visibility.Invisible;
   static bool get currentNodeInvisible => currentNodeVisibility == Visibility.Invisible;
-  static int get currentNodeVisibility => GameNodes.nodesVisible[currentNodeIndex];
   static bool get currentNodeVisibilityOpaque => GameNodes.nodesVisible[currentNodeIndex] == Visibility.Opaque;
-  static int get currentNodeWind => GameNodes.nodesWind[currentNodeIndex];
+  static bool get currentNodeVariation => GameNodes.nodesVariation[currentNodeIndex];
+
 
 
   static void renderCurrentParticle() =>

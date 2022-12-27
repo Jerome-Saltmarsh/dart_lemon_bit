@@ -19,7 +19,6 @@ ctrl + w:   minimal mode
 [ ] optimize front end - do not use objects to store gameobjects
 [ ] optimize front end - do not use objects to store particles
 [ ] optimize client applyShadowAt
-[ ] optimize apply emission dynamic
 
 [TODO]
 [ ] cache region
@@ -36,7 +35,6 @@ ctrl + w:   minimal mode
 [ ] editor tool elevation
 [ ] scene edit tool pause ai
 [ ] scene edit tool pause time
-[ ] editor play-mode and build-mode
 [ ] editor tab gameobjects
 [ ] editor tab characters
 
@@ -47,34 +45,34 @@ ctrl + w:   minimal mode
 [ ] feature attributes
 [ ] feature skills
 [ ] feature loot gameobjects
-[ ] feature node orientation vertical half
 [ ] feature light source hue
 
 [CONTENT]
 [ ] node type pine tree
 [ ] item type army clothes
-[ ] item type weapon crossbow
-[ ] node type road
-[ ] item type car
-[x] node road orientation slope
-[ ] dynamic shade that changes over time
+[ ] weapon type crossbow
+[ ] gameobject type car
 [ ] fix particle shade
 [ ] node orientation windows
 
 [GAMES]
+[ ] game dark-age
 [ ] game royal
 [ ] game waves
-[ ] game practice
-[ ] game survival
-[ ] game editor
 [ ] game 5v5
 [ ] game moba
 
+[RELEASE 31ST JANUARY]
+[ ] game practice
+[ ] game editor
+[ ] game survival
+
 [CRITICAL]
-[ ] fix grass node solid variation two
-[ ] fix ai spot player through walls
+[ ] fix ai spots player through walls
+[ ] fix gameobject shading
 
 26.12.2022
+[x] fix grass node solid variation two
 [x] fix editor player health stats incorrect
 [x] remove node type plain
 [x] fix transparent not shaded by hue

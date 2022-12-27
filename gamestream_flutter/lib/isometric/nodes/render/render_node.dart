@@ -17,9 +17,16 @@ void renderNodeAt() {
 
   switch (GameRender.currentNodeType) {
     case NodeType.Grass:
-      const index_grass = 3;
-      const srcX = GameConstants.Sprite_Width_Padded * index_grass;
-      renderNodeTemplateShaded(srcX);
+      if (GameRender.currentNodeOrientation == NodeOrientation.Solid){
+         if (GameRender.currentNodeVariation){
+           RenderNode.renderStandardNodeShaded(
+             srcX: 624,
+             srcY: 0,
+           );
+           return;
+         }
+      }
+      renderNodeTemplateShaded(GameConstants.Sprite_Width_Padded_3);
       return;
     case NodeType.Brick:
       const index_grass = 2;
