@@ -1342,7 +1342,10 @@ int get renderNodeShade => GameNodes.nodesShade[GameRender.currentNodeIndex];
 int get renderNodeOrientation => GameNodes.nodesOrientation[GameRender.currentNodeIndex];
 int get renderNodeColor => GameLighting.values[renderNodeShade];
 int get renderNodeWind => GameNodes.nodesWind[renderNodeShade];
+bool get renderNodeVariation => GameNodes.nodesVariation[GameRender.currentNodeIndex];
+
 int get renderNodeBelowIndex => GameRender.currentNodeIndex - GameNodes.nodesArea;
+bool get renderNodeBelowVariation => renderNodeBelowIndex > 0 ? GameNodes.nodesVariation[renderNodeBelowIndex] : renderNodeVariation;
 
 int get renderNodeBelowShade {
   if (renderNodeBelowIndex < 0) return ServerState.ambientShade.value;

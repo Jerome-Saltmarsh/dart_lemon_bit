@@ -44,7 +44,6 @@ void renderNodeAt() {
       break;
     case NodeType.Tree_Top:
       renderTreeTop();
-      // if (renderNodeBelowIndex )
       break;
     case NodeType.Grass_Long:
       switch (GameRender.currentNodeWind) {
@@ -196,9 +195,9 @@ void renderNodeAt() {
   }
 }
 
-void renderTreeTop() => renderTreeTopPine();
+void renderTreeTop() => renderNodeBelowVariation ? renderTreeTopPine() : renderTreeTopOak();
 
-void renderTreeBottom() => renderTreeBottomPine();
+void renderTreeBottom() => renderNodeVariation ? renderTreeBottomPine() : renderTreeBottomOak();
 
 void renderTreeTopOak(){
   var shift = GameAnimation.treeAnimation[((GameRender.currentNodeRow - GameRender.currentNodeColumn) + GameAnimation.animationFrame) % GameAnimation.treeAnimation.length] * renderNodeWind;
