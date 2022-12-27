@@ -44,6 +44,7 @@ void renderNodeAt() {
       break;
     case NodeType.Tree_Top:
       renderTreeTop();
+      // if (renderNodeBelowIndex )
       break;
     case NodeType.Grass_Long:
       switch (GameRender.currentNodeWind) {

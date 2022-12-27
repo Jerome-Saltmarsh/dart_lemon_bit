@@ -524,7 +524,7 @@ class ServerResponseReader with ByteReader {
         GameNodes.nodesType[gridIndex] = nodeType;
         GameNodes.nodesOrientation[gridIndex] = nodeOrientation;
 
-        if (nodeType == NodeType.Grass) {
+        if (nodeType == NodeType.Grass || nodeType == NodeType.Tree_Bottom) {
           GameNodes.nodesVariation[gridIndex] = randomBool();
         }
 
