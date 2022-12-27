@@ -99,20 +99,16 @@ void renderNodeAt() {
       );
       return;
     case NodeType.Concrete:
-      renderNodeTemplateShaded(GameConstants.Sprite_Width_Padded_4);
+      renderNodeTemplateShaded(GameConstants.Sprite_Width_Padded_8);
       return;
     case NodeType.Metal:
       renderNodeTemplateShaded(GameConstants.Sprite_Width_Padded_4);
       return;
     case NodeType.Road:
-      // RenderNode.renderStandardNodeShaded(srcX: 768, srcY: 672);
       renderNodeTemplateShaded(GameConstants.Sprite_Width_Padded_9);
       return;
     case NodeType.Road_2:
       RenderNode.renderStandardNodeShaded(srcX: 768, srcY: 672 + GameConstants.Sprite_Height_Padded);
-      return;
-    case NodeType.Plain:
-      renderNodeTemplateShaded(GameConstants.Sprite_Width_Padded_8);
       return;
     case NodeType.Wooden_Plank:
       renderNodeWoodenPlank();

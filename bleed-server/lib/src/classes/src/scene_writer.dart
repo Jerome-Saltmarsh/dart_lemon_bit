@@ -25,6 +25,7 @@ class SceneWriter extends ByteWriter {
     final nodeOrientations = scene.nodeOrientations;
     for (var nodeIndex = 0; nodeIndex < scene.gridVolume; nodeIndex++) {
       final nodeType = nodeTypes[nodeIndex];
+
       final nodeOrientation = nodeOrientations[nodeIndex];
       if (nodeType == previousType && nodeOrientation == previousOrientation){
         count++;

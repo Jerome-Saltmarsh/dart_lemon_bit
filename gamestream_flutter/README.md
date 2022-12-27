@@ -56,7 +56,7 @@ ctrl + w:   minimal mode
 [ ] item type weapon crossbow
 [ ] node type road
 [ ] item type car
-[ ] node road orientation slope
+[x] node road orientation slope
 [ ] dynamic shade that changes over time
 [ ] fix particle shade
 [ ] node orientation windows
@@ -75,6 +75,7 @@ ctrl + w:   minimal mode
 [ ] fix ai spot player through walls
 
 26.12.2022
+[x] remove node type plain
 [x] fix transparent not shaded by hue
 
 26.12.2022

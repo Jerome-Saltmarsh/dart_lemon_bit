@@ -27,7 +27,7 @@ class NodeType {
   static const Brick = 62;
   static const Wood = 63;
   static const Grass = 65;
-  static const Plain = 66;
+  // static const Plain = 66;
   static const Window = 67;
   static const Wooden_Plank = 68;
   static const Bau_Haus = 69;
@@ -68,7 +68,6 @@ class NodeType {
       type == Concrete      ||
       type == Wood          ||
       type == Grass         ||
-      type == Plain         ||
       type == Wooden_Plank  ||
       type == Bau_Haus      ||
       type == Table         ||
@@ -127,7 +126,6 @@ class NodeType {
 
   static bool supportsOrientationHalf(int type) =>
       type == Wood              ||
-      type == Plain             ||
       type == Window            ||
       type == Wooden_Plank      ||
       type == Brick             ||
@@ -146,7 +144,6 @@ class NodeType {
 
   static bool supportsOrientationCorner(int type) =>
       type == Wood            ||
-      type == Plain           ||
       type == Brick           ||
       type == Bau_Haus        ||
       type == Concrete        ||
@@ -158,7 +155,7 @@ class NodeType {
       type == Concrete          ||
       type == Brick             ||
       type == Road          ||
-          type == Metal         ||
+      type == Metal         ||
       type == Grass              ;
 
   static bool isDestroyable(int type) =>
@@ -279,7 +276,7 @@ class NodeType {
     Rain_Landing: 'Rain Landing',
     Fireplace: 'Fireplace',
     Soil: 'Soil',
-    Concrete: 'Stone',
+    Concrete: 'Concrete',
     Metal: "Metal",
     Bau_Haus: 'Bau Haus',
     Bau_Haus_Window: 'Bau Haus Window',
@@ -294,7 +291,6 @@ class NodeType {
     Brick: 'Brick',
     Wood: 'Wood',
     Grass: 'Grass',
-    Plain: 'Plain',
     Window: 'Window',
     Wooden_Plank: 'Wooden Plank',
     Boulder: 'Boulder',

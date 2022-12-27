@@ -23,7 +23,6 @@ const editorGridTypesColumn2 = [
   NodeType.Grass,
   NodeType.Grass_Long,
   NodeType.Metal,
-  NodeType.Plain,
   NodeType.Chimney,
   NodeType.Table,
   NodeType.Sunflower,

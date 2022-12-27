@@ -19,7 +19,7 @@ class RenderNode {
         dstX: GameRender.currentNodeDstX,
         dstY: GameRender.currentNodeDstY,
         anchorY: AtlasNodeAnchorY.Torch,
-        color: GameRender.currentNodeColorTransparent,
+        color: GameRender.currentNodeColor,
       );
       return;
     }
@@ -33,7 +33,7 @@ class RenderNode {
         dstX: GameRender.currentNodeDstX,
         dstY: GameRender.currentNodeDstY,
         anchorY: AtlasNodeAnchorY.Torch,
-        color: GameRender.currentNodeColorTransparent,
+        color: GameRender.currentNodeColor,
       );
       return;
     }
@@ -46,7 +46,7 @@ class RenderNode {
       dstX: GameRender.currentNodeDstX,
       dstY: GameRender.currentNodeDstY,
       anchorY: AtlasNodeAnchorY.Torch,
-      color: GameRender.currentNodeColorTransparent,
+      color: GameRender.currentNodeColor,
     );
     return;
   }
@@ -108,7 +108,7 @@ class RenderNode {
   }){
     GameRender.onscreenNodes++;
     final f = Engine.bufferIndex * 4;
-    bufferClr[Engine.bufferIndex] = GameRender.currentNodeColorTransparent;
+    bufferClr[Engine.bufferIndex] = GameRender.currentNodeColor;
     bufferSrc[f] = srcX;
     bufferSrc[f + 1] = srcY;
     bufferSrc[f + 2] = srcX + GameConstants.Sprite_Width;
