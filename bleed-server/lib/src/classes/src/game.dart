@@ -792,20 +792,6 @@ abstract class Game {
         where: (other) => other.alive && !Collider.onSameTeam(other, character));
   }
 
-  Collider? getClosestCollider(double x, double y, Character character,
-      {required double minDistance}) {
-    return findClosestVector3<Character>(
-      positions: characters,
-      x: x,
-      y: y,
-      z: character.z,
-      where: (other) =>
-      other.alive &&
-          other != character &&
-          other.distanceFromXYZ(x, y, character.z) < minDistance,
-    );
-  }
-
   void activateGameObject(GameObject gameObject){
     gameObject.active = true;
     gameObject.collidable = true;

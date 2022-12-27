@@ -39,13 +39,13 @@ ctrl + w:   minimal mode
 [ ] editor tab characters
 
 [FEATURES]
-[ ] feature generate mini-map
+[ ] feature light source hue
 [ ] feature inventory tabs
 [ ] feature inventory max weight
 [ ] feature attributes
 [ ] feature skills
 [ ] feature loot gameobjects
-[ ] feature light source hue
+[ ] feature generate mini-map
 
 [CONTENT]
 [ ] node type pine tree
@@ -53,24 +53,23 @@ ctrl + w:   minimal mode
 [ ] weapon type crossbow
 [ ] gameobject type car
 [ ] fix particle shade
-[ ] node orientation windows
 
 [GAMES]
 [ ] game dark-age
 [ ] game royal
 [ ] game waves
-[ ] game 5v5
 [ ] game moba
 
 [RELEASE 31ST JANUARY]
-[ ] game practice
-[ ] game editor
-[ ] game survival
+[ ] game practice design scene
+[ ] game survival design scene
+[ ] game 5v5
 
 [CRITICAL]
 [ ] fix ai spots player through walls
 
 27.12.2022
+[x] node orientation windows
 [x] fix gameobject shading
 [x] fix grass node solid variation two
 [x] fix editor player health stats incorrect

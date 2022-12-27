@@ -52,10 +52,7 @@ class Collider extends Position3 {
     velocityY = getOpposite(currentAngle, value);
   }
 
-  /// METHODS
-  double distanceFromPos3(Position3 value) {
-    return distanceFromXYZ(value.x, value.y, value.z);
-  }
+  // METHODS
 
   double distanceFromPos2(Position value) {
     return distanceFromXY(value.x, value.y);
