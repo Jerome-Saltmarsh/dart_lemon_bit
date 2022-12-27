@@ -19,7 +19,7 @@ class RenderNode {
         dstX: GameRender.currentNodeDstX,
         dstY: GameRender.currentNodeDstY,
         anchorY: AtlasNodeAnchorY.Torch,
-        color: GameRender.currentNodeColorTransparentShaded,
+        color: GameRender.currentNodeColorTransparent,
       );
       return;
     }
@@ -33,7 +33,7 @@ class RenderNode {
         dstX: GameRender.currentNodeDstX,
         dstY: GameRender.currentNodeDstY,
         anchorY: AtlasNodeAnchorY.Torch,
-        color: GameRender.currentNodeColorTransparentShaded,
+        color: GameRender.currentNodeColorTransparent,
       );
       return;
     }
@@ -46,7 +46,7 @@ class RenderNode {
       dstX: GameRender.currentNodeDstX,
       dstY: GameRender.currentNodeDstY,
       anchorY: AtlasNodeAnchorY.Torch,
-      color: GameRender.currentNodeColorTransparentShaded,
+      color: GameRender.currentNodeColorTransparent,
     );
     return;
   }
@@ -108,7 +108,7 @@ class RenderNode {
   }){
     GameRender.onscreenNodes++;
     final f = Engine.bufferIndex * 4;
-    bufferClr[Engine.bufferIndex] = GameRender.currentNodeColorTransparentShaded;
+    bufferClr[Engine.bufferIndex] = GameRender.currentNodeColorTransparent;
     bufferSrc[f] = srcX;
     bufferSrc[f + 1] = srcY;
     bufferSrc[f + 2] = srcX + GameConstants.Sprite_Width;
@@ -156,26 +156,6 @@ class RenderNode {
       dstY: GameRender.currentNodeDstY - 17,
       anchorY: GameConstants.Sprite_Anchor_Y,
       color: color,
-    );
-  }
-
-  /// HALF
-
-  static void renderNodeTopLeft({
-    required double srcX,
-    required double srcY,
-  }){
-    GameRender.onscreenNodes++;
-    Engine.renderSprite(
-      image: atlas,
-      srcX: srcX,
-      srcY: srcY,
-      srcWidth: GameConstants.Sprite_Width,
-      srcHeight: GameConstants.Sprite_Height,
-      dstX: GameRender.currentNodeDstX,
-      dstY: GameRender.currentNodeDstY + 4,
-      anchorY: GameConstants.Sprite_Anchor_Y,
-      color: GameRender.currentNodeColorTransparent,
     );
   }
 }

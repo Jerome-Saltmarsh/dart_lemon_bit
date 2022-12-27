@@ -30,6 +30,7 @@ class GameLighting {
   static double get end_hue => _end_hue;
 
   static final values = Uint32List(7);
+  static final values_transparent = Uint32List(7);
 
   static set start_hue(double value){
     assert (value >= 0);
@@ -77,6 +78,12 @@ class GameLighting {
         linerInterpolation(start_saturation, end_saturation, t),
         linerInterpolation(start_value, end_value, t),
         linerInterpolation(start_alpha, end_alpha, t),
+      );
+      values_transparent[i] = hsvToColorValue(
+        linerInterpolation(start_hue, end_hue, t),
+        linerInterpolation(start_saturation, end_saturation, t),
+        linerInterpolation(start_value, end_value, t),
+        linerInterpolation(start_alpha, end_alpha, t) * 0.5,
       );
     }
   }

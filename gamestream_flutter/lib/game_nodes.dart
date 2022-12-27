@@ -54,6 +54,8 @@ class GameNodes {
 
     final zIndex = index ~/ nodesArea;
     final rowIndex = (index - (zIndex * nodesArea)) ~/ GameState.nodesTotalColumns;
+    // index - ((convertNodeIndexToZ(index) * GameNodes.nodesArea) + (convertNodeIndexToRow(index) * nodesTotalColumns));
+    // final columnIndex = GameState.convertNodeIndexToColumn(index);
     final columnIndex = GameState.convertNodeIndexToColumn(index);
     final radius = Shade.Pitch_Black;
     final zMin = max(zIndex - radius, 0);

@@ -76,13 +76,12 @@ class GameRender {
   static double get currentNodeRenderY => GameConvert.rowColumnZToRenderY(currentNodeRow, currentNodeColumn, currentNodeZ);
 
   static int get currentNodeShade => GameNodes.nodesShade[currentNodeIndex];
-  static int get currentNodeColor => GameLighting.values[currentNodeShade];
+  static int get currentNodeColor => (currentNodeVisibility == Visibility.Opaque ? GameLighting.values : GameLighting.values_transparent)[currentNodeShade];
   static int get currentNodeOrientation => GameNodes.nodesOrientation[currentNodeIndex];
   static bool get currentNodeVisible => currentNodeVisibility != Visibility.Invisible;
   static bool get currentNodeInvisible => currentNodeVisibility == Visibility.Invisible;
   static int get currentNodeVisibility => GameNodes.nodesVisible[currentNodeIndex];
-  static int get currentNodeColorTransparent => currentNodeVisibility == Visibility.Opaque ? 1 : GameLighting.Transparent;
-  static int get currentNodeColorTransparentShaded => currentNodeVisibility == Visibility.Opaque ? currentNodeColor : GameLighting.Transparent;
+  static int get currentNodeColorTransparent =>  (currentNodeVisibility == Visibility.Opaque ? GameLighting.values : GameLighting.values_transparent)[currentNodeShade];
   static int get currentNodeWind => GameNodes.nodesWind[currentNodeIndex];
 
 
@@ -502,7 +501,7 @@ class GameRender {
         srcY: AtlasItems.getSrcY(gameObject.type),
         srcWidth: AtlasItems.getSrcWidth(gameObject.type),
         srcHeight: AtlasItems.getSrcHeight(gameObject.type),
-        color: GameRender.currentNodeColorTransparentShaded,
+        color: GameRender.currentNodeColorTransparent,
       );
       return;
     }

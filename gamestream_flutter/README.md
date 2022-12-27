@@ -73,7 +73,9 @@ ctrl + w:   minimal mode
 [CRITICAL]
 [ ] fix grass node solid variation two
 [ ] fix ai spot player through walls
-[ ] fix transparent not shaded by hue
+
+26.12.2022
+[x] fix transparent not shaded by hue
 
 26.12.2022
 [x] fix modify grid size z
