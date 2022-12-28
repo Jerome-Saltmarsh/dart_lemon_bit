@@ -462,7 +462,8 @@ class RendererNodes extends Renderer {
         renderStandardNodeShaded(srcX: 768, srcY: 672 + GameConstants.Sprite_Height_Padded);
         return;
       case NodeType.Wooden_Plank:
-        renderNodeWoodenPlank();
+        // renderNodeWoodenPlank();
+        renderNodeTemplateShaded(GameConstants.Sprite_Width_Padded_10);
         return;
       case NodeType.Wood:
         const index_grass = 5;
