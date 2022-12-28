@@ -7,10 +7,10 @@ class RendererNodes extends Renderer {
 
   // VARIABLES
 
-  static final bufferClr = Engine.bufferClr;
-  static final bufferSrc = Engine.bufferSrc;
-  static final bufferDst = Engine.bufferDst;
-  static final atlas = GameImages.atlas_nodes;
+  final bufferClr = Engine.bufferClr;
+  final bufferSrc = Engine.bufferSrc;
+  final bufferDst = Engine.bufferDst;
+  final atlas = GameImages.atlas_nodes;
 
   var playerRenderRow = 0;
   var playerRenderColumn = 0;
@@ -27,51 +27,51 @@ class RendererNodes extends Renderer {
   var currentNodeRow = 0;
   var currentNodeColumn = 0;
   var currentNodeDstX = 0.0;
-  static var currentNodeDstY = 0.0;
-  static var currentNodeIndex = 0;
-  static var currentNodeType = 0;
+  var currentNodeDstY = 0.0;
+  var currentNodeIndex = 0;
+  var currentNodeType = 0;
 
-  static var offscreenNodesTop = 0;
-  static var offscreenNodesRight = 0;
-  static var offscreenNodesBottom = 0;
-  static var offscreenNodesLeft = 0;
+  var offscreenNodesTop = 0;
+  var offscreenNodesRight = 0;
+  var offscreenNodesBottom = 0;
+  var offscreenNodesLeft = 0;
 
-  static var onscreenNodes = 0;
-  static var offscreenNodes = 0;
+  var onscreenNodes = 0;
+  var offscreenNodes = 0;
 
-  static var nodesRowsMax = 0;
-  static var nodesShiftIndex = 0;
-  static var nodesScreenTopLeftRow = 0;
-  static var nodesScreenBottomRightRow = 0;
-  static var nodesGridTotalColumnsMinusOne = 0;
-  static var nodesGridTotalZMinusOne = 0;
-  static var nodesPlayerColumnRow = 0;
-  static var nodesPlayerUnderRoof = false;
+  var nodesRowsMax = 0;
+  var nodesShiftIndex = 0;
+  var nodesScreenTopLeftRow = 0;
+  var nodesScreenBottomRightRow = 0;
+  var nodesGridTotalColumnsMinusOne = 0;
+  var nodesGridTotalZMinusOne = 0;
+  var nodesPlayerColumnRow = 0;
+  var nodesPlayerUnderRoof = false;
 
-  static var playerZ = 0;
-  static var playerRow = 0;
-  static var playerColumn = 0;
+  var playerZ = 0;
+  var playerRow = 0;
+  var playerColumn = 0;
 
-  static var screenTop = 0.0;
-  static var screenRight = 0.0;
-  static var screenBottom = 0.0;
-  static var screenLeft = 0.0;
+  var screenTop = 0.0;
+  var screenRight = 0.0;
+  var screenBottom = 0.0;
+  var screenLeft = 0.0;
 
   // GETTERS
 
   double get currentNodeRenderX => (currentNodeRow - currentNodeColumn) * Node_Size_Half;
   double get currentNodeRenderY => GameConvert.rowColumnZToRenderY(currentNodeRow, currentNodeColumn, currentNodeZ);
 
-  static int get currentNodeShade => GameNodes.nodesShade[currentNodeIndex];
-  static int get currentNodeColor => (currentNodeVisibilityOpaque ? GameLighting.values : GameLighting.values_transparent)[currentNodeShade];
-  static int get currentNodeOrientation => GameNodes.nodesOrientation[currentNodeIndex];
-  static int get currentNodeVisibility => GameNodes.nodesVisible[currentNodeIndex];
-  static int get currentNodeWind => GameNodes.nodesWind[currentNodeIndex];
+  int get currentNodeShade => GameNodes.nodesShade[currentNodeIndex];
+  int get currentNodeColor => (currentNodeVisibilityOpaque ? GameLighting.values : GameLighting.values_transparent)[currentNodeShade];
+  int get currentNodeOrientation => GameNodes.nodesOrientation[currentNodeIndex];
+  int get currentNodeVisibility => GameNodes.nodesVisible[currentNodeIndex];
+  int get currentNodeWind => GameNodes.nodesWind[currentNodeIndex];
 
-  static bool get currentNodeVisible => currentNodeVisibility == Visibility.Invisible;
-  static bool get currentNodeInvisible => currentNodeVisibility == Visibility.Invisible;
-  static bool get currentNodeVisibilityOpaque => GameNodes.nodesVisible[currentNodeIndex] == Visibility.Opaque;
-  static bool get currentNodeVariation => GameNodes.nodesVariation[currentNodeIndex];
+  bool get currentNodeVisible => currentNodeVisibility == Visibility.Invisible;
+  bool get currentNodeInvisible => currentNodeVisibility == Visibility.Invisible;
+  bool get currentNodeVisibilityOpaque => GameNodes.nodesVisible[currentNodeIndex] == Visibility.Opaque;
+  bool get currentNodeVariation => GameNodes.nodesVariation[currentNodeIndex];
 
   int get renderNodeShade => GameNodes.nodesShade[currentNodeIndex];
   int get renderNodeOrientation => GameNodes.nodesOrientation[currentNodeIndex];
@@ -344,9 +344,9 @@ class RendererNodes extends Renderer {
         srcWidth: AtlasNode.Width_Torch,
         srcHeight: AtlasNode.Height_Torch,
         dstX: currentNodeDstX,
-        dstY: RendererNodes.currentNodeDstY,
+        dstY: currentNodeDstY,
         anchorY: AtlasNodeAnchorY.Torch,
-        color: RendererNodes.currentNodeColor,
+        color: currentNodeColor,
       );
       return;
     }
