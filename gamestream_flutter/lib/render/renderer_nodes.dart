@@ -6,94 +6,94 @@ import 'package:gamestream_flutter/library.dart';
 class RendererNodes extends Renderer {
 
   // VARIABLES
-  var previousVisibility = 0;
+  static var previousVisibility = 0;
 
-  final bufferClr = Engine.bufferClr;
-  final bufferSrc = Engine.bufferSrc;
-  final bufferDst = Engine.bufferDst;
-  final atlas = GameImages.atlas_nodes;
+  static final bufferClr = Engine.bufferClr;
+  static final bufferSrc = Engine.bufferSrc;
+  static final bufferDst = Engine.bufferDst;
+  static final atlas = GameImages.atlas_nodes;
 
-  var playerRenderRow = 0;
-  var playerRenderColumn = 0;
+  static var playerRenderRow = 0;
+  static var playerRenderColumn = 0;
 
-  var indexShow = 0;
-  var indexRow = 0;
-  var indexColumn = 0;
-  var indexZ = 0;
-  var nodesStartRow = 0;
-  var nodeStartColumn = 0;
-  var nodesMaxZ = 0;
-  var nodesMinZ = 0;
-  var currentNodeZ = 0;
-  var row = 0;
-  var column = 0;
-  var currentNodeDstX = 0.0;
-  var currentNodeDstY = 0.0;
-  var currentNodeIndex = 0;
-  var currentNodeType = 0;
+  static var indexShow = 0;
+  static var indexRow = 0;
+  static var indexColumn = 0;
+  static var indexZ = 0;
+  static var nodesStartRow = 0;
+  static var nodeStartColumn = 0;
+  static var nodesMaxZ = 0;
+  static var nodesMinZ = 0;
+  static var currentNodeZ = 0;
+  static var row = 0;
+  static var column = 0;
+  static var currentNodeDstX = 0.0;
+  static var currentNodeDstY = 0.0;
+  static var currentNodeIndex = 0;
+  static var currentNodeType = 0;
 
-  var offscreenNodesTop = 0;
-  var offscreenNodesRight = 0;
-  var offscreenNodesBottom = 0;
-  var offscreenNodesLeft = 0;
+  static var offscreenNodesTop = 0;
+  static var offscreenNodesRight = 0;
+  static var offscreenNodesBottom = 0;
+  static var offscreenNodesLeft = 0;
 
-  var onscreenNodes = 0;
-  var offscreenNodes = 0;
+  static var onscreenNodes = 0;
+  static var offscreenNodes = 0;
 
-  var nodesRowsMax = 0;
-  var nodesShiftIndex = 0;
-  var nodesScreenTopLeftRow = 0;
-  var nodesScreenBottomRightRow = 0;
-  var nodesGridTotalColumnsMinusOne = 0;
-  var nodesGridTotalZMinusOne = 0;
-  var nodesPlayerColumnRow = 0;
-  var nodesPlayerUnderRoof = false;
+  static var nodesRowsMax = 0;
+  static var nodesShiftIndex = 0;
+  static var nodesScreenTopLeftRow = 0;
+  static var nodesScreenBottomRightRow = 0;
+  static var nodesGridTotalColumnsMinusOne = 0;
+  static var nodesGridTotalZMinusOne = 0;
+  static var nodesPlayerColumnRow = 0;
+  static var nodesPlayerUnderRoof = false;
 
-  var playerZ = 0;
-  var playerRow = 0;
-  var playerColumn = 0;
+  static var playerZ = 0;
+  static var playerRow = 0;
+  static var playerColumn = 0;
 
-  var screenTop = 0.0;
-  var screenRight = 0.0;
-  var screenBottom = 0.0;
-  var screenLeft = 0.0;
+  static var screenTop = 0.0;
+  static var screenRight = 0.0;
+  static var screenBottom = 0.0;
+  static var screenLeft = 0.0;
 
-  var nodeTypes = GameNodes.nodesType;
+  static var nodeTypes = GameNodes.nodesType;
 
   // GETTERS
 
   // double get currentNodeRenderX => (currentNodeRow - currentNodeColumn) * Node_Size_Half;
-  double get currentNodeRenderY => GameConvert.rowColumnZToRenderY(row, column, currentNodeZ);
+  static double get currentNodeRenderY => GameConvert.rowColumnZToRenderY(row, column, currentNodeZ);
 
-  int get currentNodeShade => GameNodes.nodesShade[currentNodeIndex];
-  int get currentNodeColor => (currentNodeVisibilityOpaque ? GameLighting.values : GameLighting.values_transparent)[currentNodeShade];
-  int get currentNodeOrientation => GameNodes.nodesOrientation[currentNodeIndex];
-  int get currentNodeVisibility => GameNodes.nodesVisible[currentNodeIndex];
+  static int get currentNodeShade => GameNodes.nodesShade[currentNodeIndex];
+  static int get currentNodeColor => (currentNodeVisibilityOpaque ? GameLighting.values : GameLighting.values_transparent)[currentNodeShade];
+  static int get currentNodeOrientation => GameNodes.nodesOrientation[currentNodeIndex];
+  static int get currentNodeVisibility => GameNodes.nodesVisible[currentNodeIndex];
   // int get currentNodeWind => GameNodes.nodesWind[currentNodeIndex];
-  int get currentNodeWind => ServerState.windTypeAmbient.value;
+  static int get currentNodeWind => ServerState.windTypeAmbient.value;
 
-  bool get currentNodeVisible => currentNodeVisibility == Visibility.Invisible;
-  bool get currentNodeInvisible => currentNodeVisibility == Visibility.Invisible;
-  bool get currentNodeVisibilityOpaque => GameNodes.nodesVisible[currentNodeIndex] == Visibility.Opaque;
-  bool get currentNodeVariation => GameNodes.nodesVariation[currentNodeIndex];
+  static bool get currentNodeVisible => currentNodeVisibility == Visibility.Invisible;
+  static bool get currentNodeInvisible => currentNodeVisibility == Visibility.Invisible;
+  static bool get currentNodeVisibilityOpaque => GameNodes.nodesVisible[currentNodeIndex] == Visibility.Opaque;
+  static bool get currentNodeVariation => GameNodes.nodesVariation[currentNodeIndex];
 
-  int get renderNodeShade => GameNodes.nodesShade[currentNodeIndex];
-  int get renderNodeOrientation => GameNodes.nodesOrientation[currentNodeIndex];
-  int get renderNodeColor => GameLighting.values[renderNodeShade];
+  static int get renderNodeShade => GameNodes.nodesShade[currentNodeIndex];
+  static int get renderNodeOrientation => GameNodes.nodesOrientation[currentNodeIndex];
+  static int get renderNodeColor => GameLighting.values[renderNodeShade];
   // int get renderNodeWind => GameNodes.nodesWind[renderNodeShade];
-  int get renderNodeWind => ServerState.windTypeAmbient.value;
-  bool get renderNodeVariation => GameNodes.nodesVariation[currentNodeIndex];
+  static int get renderNodeWind => ServerState.windTypeAmbient.value;
+  static bool get renderNodeVariation => GameNodes.nodesVariation[currentNodeIndex];
 
-  int get renderNodeBelowIndex => currentNodeIndex - GameNodes.nodesArea;
-  bool get renderNodeBelowVariation => renderNodeBelowIndex > 0 ? GameNodes.nodesVariation[renderNodeBelowIndex] : renderNodeVariation;
+  static int get renderNodeBelowIndex => currentNodeIndex - GameNodes.nodesArea;
+  static bool get renderNodeBelowVariation => renderNodeBelowIndex > 0 ? GameNodes.nodesVariation[renderNodeBelowIndex] : renderNodeVariation;
 
-  int get renderNodeBelowShade {
+  static int get renderNodeBelowShade {
     if (renderNodeBelowIndex < 0) return ServerState.ambientShade.value;
     if (renderNodeBelowIndex >= GameNodes.nodesTotal) return ServerState.ambientShade.value;
     return GameNodes.nodesShade[renderNodeBelowIndex];
   }
 
-  int get renderNodeBelowColor => GameLighting.values[renderNodeBelowShade];
+  static int get renderNodeBelowColor => GameLighting.values[renderNodeBelowShade];
 
   // METHODS
 
@@ -258,7 +258,7 @@ class RendererNodes extends Renderer {
     nodesSetStart();
   }
 
-  void nodesSetStart(){
+  static void nodesSetStart(){
     // nodesStartRow = min(currentNodeRow, GameState.nodesTotalRows);
     nodesStartRow = clamp(row, 0, GameState.nodesTotalRows - 1);
     nodeStartColumn = clamp(column, 0, GameState.nodesTotalColumns - 1);
@@ -269,7 +269,7 @@ class RendererNodes extends Renderer {
     assert (nodeStartColumn < GameState.nodesTotalColumns);
   }
 
-  void nodesShiftIndexDown(){
+  static void nodesShiftIndexDown(){
 
     column = row + column + 1;
     row = 0;
@@ -279,7 +279,7 @@ class RendererNodes extends Renderer {
     }
 
     if (column - nodesGridTotalColumnsMinusOne >= GameState.nodesTotalRows){
-      remaining = false;
+      GameRender.rendererNodes.remaining = false;
       return;
     }
 
@@ -289,7 +289,7 @@ class RendererNodes extends Renderer {
     nodesSetStart();
   }
 
-  void nodesCalculateMinMaxZ(){
+  static void nodesCalculateMinMaxZ(){
     final bottom = (row + column) * Node_Size_Half;
     final distance =  bottom - screenTop;
     nodesMaxZ = (distance ~/ Node_Height); // TODO optimize
@@ -305,12 +305,16 @@ class RendererNodes extends Renderer {
       nodesMinZ++;
       renderY -= Node_Height;
       if (nodesMinZ >= GameState.nodesTotalZ){
-        return end();
+        GameRender.rendererNodes.remaining = false;
+        return;
       }
     }
   }
 
+
+
   void nodesTrimTop() {
+    // TODO optimize
     while (currentNodeRenderY < screenTop){
       nodesShiftIndexDown();
     }
@@ -318,8 +322,7 @@ class RendererNodes extends Renderer {
     nodesSetStart();
   }
 
-
-  void renderNodeTorch(){
+  static void renderNodeTorch(){
     if (!ClientState.torchesIgnited.value) {
       Engine.renderSprite(
         image: GameImages.atlas_nodes,
@@ -362,7 +365,7 @@ class RendererNodes extends Renderer {
     return;
   }
 
-  void renderCurrentNode() {
+  static void renderCurrentNode() {
     assert (currentNodeDstX > screenLeft);
     assert (currentNodeDstX < screenRight);
     assert (currentNodeDstY > screenTop);
@@ -555,11 +558,11 @@ class RendererNodes extends Renderer {
     }
   }
 
-  void renderTreeTop() => renderNodeBelowVariation ? renderTreeTopPine() : renderTreeTopOak();
+  static void renderTreeTop() => renderNodeBelowVariation ? renderTreeTopPine() : renderTreeTopOak();
 
-  void renderTreeBottom() => renderNodeVariation ? renderTreeBottomPine() : renderTreeBottomOak();
+  static void renderTreeBottom() => renderNodeVariation ? renderTreeBottomPine() : renderTreeBottomOak();
 
-  void renderTreeTopOak(){
+  static void renderTreeTopOak(){
     var shift = GameAnimation.treeAnimation[((row - column) + GameAnimation.animationFrame) % GameAnimation.treeAnimation.length] * renderNodeWind;
     Engine.renderSprite(
       image: GameImages.atlas_nodes,
@@ -573,7 +576,7 @@ class RendererNodes extends Renderer {
     );
   }
 
-  void renderTreeTopPine() {
+  static void renderTreeTopPine() {
     var shift = GameAnimation.treeAnimation[((row - column) + GameAnimation.animationFrame) % GameAnimation.treeAnimation.length] * renderNodeWind;
     Engine.renderSprite(
       image: GameImages.atlas_nodes,
@@ -587,7 +590,7 @@ class RendererNodes extends Renderer {
     );
   }
 
-  void renderTreeBottomOak() {
+  static void renderTreeBottomOak() {
     Engine.renderSprite(
       image: GameImages.atlas_nodes,
       srcX: AtlasNodeX.Tree_Bottom,
@@ -600,7 +603,7 @@ class RendererNodes extends Renderer {
     );
   }
 
-  void renderTreeBottomPine() {
+  static void renderTreeBottomPine() {
     Engine.renderSprite(
       image: GameImages.atlas_nodes,
       srcX: 1216,
@@ -613,7 +616,7 @@ class RendererNodes extends Renderer {
     );
   }
 
-  void renderNodeTemplateShaded(double srcX) {
+  static void renderNodeTemplateShaded(double srcX) {
     switch (currentNodeOrientation){
       case NodeOrientation.Solid:
         renderStandardNodeShaded(
@@ -855,7 +858,7 @@ class RendererNodes extends Renderer {
     }
   }
 
-  void renderNodeWoodenPlank(){
+  static void renderNodeWoodenPlank(){
     switch(renderNodeOrientation){
       case NodeOrientation.Solid:
         renderStandardNodeShaded(
@@ -916,7 +919,7 @@ class RendererNodes extends Renderer {
     }
   }
 
-  void renderNodeWindow(){
+  static void renderNodeWindow(){
     const srcX = 1508.0;
     switch (renderNodeOrientation) {
       case NodeOrientation.Half_North:
@@ -956,7 +959,7 @@ class RendererNodes extends Renderer {
     }
   }
 
-  void renderNodeWater() =>
+  static void renderNodeWater() =>
       Engine.renderSprite(
         image: GameImages.atlas_nodes,
         srcX: AtlasNodeX.Water,
@@ -969,7 +972,7 @@ class RendererNodes extends Renderer {
         color: renderNodeColor,
       );
 
-  void renderStandardNode({
+  static void renderStandardNode({
     required double srcX,
     required double srcY,
   }){
@@ -987,7 +990,7 @@ class RendererNodes extends Renderer {
     Engine.incrementBufferIndex();
   }
 
-  void renderStandardNodeShaded({
+  static void renderStandardNodeShaded({
     required double srcX,
     required double srcY,
   }){
@@ -1005,7 +1008,7 @@ class RendererNodes extends Renderer {
     Engine.incrementBufferIndex();
   }
 
-  void renderNodeShadedOffset({
+  static void renderNodeShadedOffset({
     required double srcX,
     required double srcY,
     required double offsetX,
@@ -1025,8 +1028,7 @@ class RendererNodes extends Renderer {
     Engine.incrementBufferIndex();
   }
 
-
-  void renderStandardNodeHalfEastOld({
+  static void renderStandardNodeHalfEastOld({
     required double srcX,
     required double srcY,
     int color = 1,
@@ -1045,7 +1047,7 @@ class RendererNodes extends Renderer {
     );
   }
 
-  void renderStandardNodeHalfNorthOld({
+  static void renderStandardNodeHalfNorthOld({
     required double srcX,
     required double srcY,
     int color = 1,
@@ -1064,10 +1066,10 @@ class RendererNodes extends Renderer {
     );
   }
 
-  int getRenderLayerColor(int layers) =>
+  static int getRenderLayerColor(int layers) =>
       GameLighting.values[getRenderLayerShade(layers)];
 
-  int getRenderLayerShade(int layers){
+  static int getRenderLayerShade(int layers){
     final index = currentNodeIndex + (layers * GameNodes.nodesArea);
     if (index < 0) return ServerState.ambientShade.value;
     if (index >= GameNodes.nodesTotal) return ServerState.ambientShade.value;
