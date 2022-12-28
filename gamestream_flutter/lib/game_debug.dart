@@ -62,7 +62,7 @@ class GameDebug {
                             Refresh(() => text('characters-active: ${GameState.totalCharacters}')),
                             Refresh(() => text('particles-total: ${ClientState.particles.length}')),
                             Refresh(() => text('particles-active: ${ClientState.totalActiveParticles}')),
-                            Refresh(() => text('nodes-rendered: ${GameRender.onscreenNodes}')),
+                            // Refresh(() => text('nodes-rendered: ${GameRender.onscreenNodes}')),
                             Refresh(() => text('engine-render-batches: ${Engine.batchesRendered}')),
                             Refresh(() => text('engine-render-batch-1: ${Engine.batches1Rendered}')),
                             Refresh(() => text('engine-render-batch-2: ${Engine.batches2Rendered}')),
