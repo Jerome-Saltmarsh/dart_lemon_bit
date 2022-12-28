@@ -62,7 +62,7 @@ class ClientState {
   }
 
   static void updateGameLighting(){
-    if (ClientState.overrideColor.value) return;
+    if (overrideColor.value) return;
     if (ServerState.lightningFlashing.value) return;
     const Max_Hue = 360.0;
     const Seconds_Per_Hour = 3600;
@@ -81,7 +81,8 @@ class ClientState {
     sortParticlesActive();
     totalActiveParticles = 0;
     GameState.totalParticles = particles.length;
-    for (; totalActiveParticles < GameState.totalParticles; totalActiveParticles++){
+    final totalParticles = GameState.totalParticles;
+    for (; totalActiveParticles < totalParticles; totalActiveParticles++){
       if (!particles[totalActiveParticles].active) break;
     }
 
@@ -100,33 +101,34 @@ class ClientState {
     return a.sortOrder > b.sortOrder ? 1 : -1;
   }
 
-
   static void sortParticlesActive(){
-    GameState.totalParticles = ClientState.particles.length;
-    for (var pos = 1; pos < GameState.totalParticles; pos++) {
+    var total = particles.length;
+    GameState.totalParticles = total;
+
+    for (var pos = 1; pos < total; pos++) {
       var min = 0;
       var max = pos;
-      var element = ClientState.particles[pos];
+      var element = particles[pos];
       while (min < max) {
         var mid = min + ((max - min) >> 1);
-        if (!ClientState.particles[mid].active) {
+        if (!particles[mid].active) {
           max = mid;
         } else {
           min = mid + 1;
         }
       }
-      ClientState.particles.setRange(min + 1, pos + 1, ClientState.particles, min);
-      ClientState.particles[min] = element;
+      particles.setRange(min + 1, pos + 1, particles, min);
+      particles[min] = element;
     }
   }
 
   static bool verifyTotalActiveParticles() =>
-      countActiveParticles() == ClientState.totalActiveParticles;
+      countActiveParticles() == totalActiveParticles;
 
   static int countActiveParticles(){
     var active = 0;
-    for (var i = 0; i < ClientState.particles.length; i++){
-      if (ClientState.particles[i].active)
+    for (var i = 0; i < particles.length; i++){
+      if (particles[i].active)
         active++;
     }
     return active;
