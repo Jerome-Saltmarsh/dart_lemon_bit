@@ -291,15 +291,6 @@ class GameState {
     Engine.redrawCanvas();
   }
 
-  static void refreshDynamicLightGrid() {
-    while (GameNodes.dynamicIndex >= 0) {
-      final i = GameNodes.nodesDynamicIndex[GameNodes.dynamicIndex];
-      GameNodes.nodesShade[i] = GameNodes.nodesBake[i];
-      GameNodes.dynamicIndex--;
-    }
-    GameNodes.dynamicIndex = 0;
-  }
-
   static Particle spawnParticle({
     required int type,
     required double x,

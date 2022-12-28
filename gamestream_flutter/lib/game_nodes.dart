@@ -31,6 +31,16 @@ class GameNodes {
     nodesVisible[nodesVisibleIndex[0]] = Visibility.Opaque;
   }
 
+  static void resetStackDynamicLight() {
+    while (dynamicIndex >= 0) {
+      final i = nodesDynamicIndex[dynamicIndex];
+      nodesShade[i] = nodesBake[i];
+      dynamicIndex--;
+    }
+    dynamicIndex = 0;
+  }
+
+
   static void addInvisibleIndex(int index){
     if (nodesVisible[index] == Visibility.Transparent) return;
     nodesVisible[index] = Visibility.Invisible;
