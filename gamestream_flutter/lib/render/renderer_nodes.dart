@@ -6,6 +6,7 @@ import 'package:gamestream_flutter/library.dart';
 class RendererNodes extends Renderer {
 
   // VARIABLES
+  var previousVisibility = 0;
 
   final bufferClr = Engine.bufferClr;
   final bufferSrc = Engine.bufferSrc;
@@ -566,9 +567,6 @@ class RendererNodes extends Renderer {
     }
   }
 
-  static var previousVisibility = 0;
-
-
   void renderTreeTop() => renderNodeBelowVariation ? renderTreeTopPine() : renderTreeTopOak();
 
   void renderTreeBottom() => renderNodeVariation ? renderTreeBottomPine() : renderTreeBottomOak();
@@ -1120,7 +1118,7 @@ class RendererNodes extends Renderer {
     showIndexFinal(i1);
   }
 
-  static void nodesHideIndex(int z, int row, int column, int initRow, int initColumn){
+  void nodesHideIndex(int z, int row, int column, int initRow, int initColumn){
 
     var index = (z * GameNodes.nodesArea) + (row * GameState.nodesTotalColumns) + column;
     while (index < GameNodes.nodesTotal) {
@@ -1189,7 +1187,7 @@ class RendererNodes extends Renderer {
     }
   }
 
-  static void nodesRevealRaycast(int z, int row, int column){
+  void nodesRevealRaycast(int z, int row, int column){
     if (!GameQueries.isInboundZRC(z, row, column)) return;
 
     for (; z < GameState.nodesTotalZ; z += 2){
@@ -1204,7 +1202,7 @@ class RendererNodes extends Renderer {
     }
   }
 
-  static void nodesRevealAbove(int z, int row, int column){
+  void nodesRevealAbove(int z, int row, int column){
     for (; z < GameState.nodesTotalZ; z++){
       GameNodes.nodesVisible[GameState.getNodeIndexZRC(z, row, column)] = Visibility.Invisible;;
     }

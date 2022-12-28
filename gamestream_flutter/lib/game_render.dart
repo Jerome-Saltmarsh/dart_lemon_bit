@@ -5,11 +5,8 @@ import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_gameobjects.
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 
 import 'library.dart';
+import 'render/renderer_characters.dart';
 import 'render/renderer_nodes.dart';
-
-int capIndex(List<int> values, int index){
-   return index < values.length ? values[index] : values.last;
-}
 
 class GameRender {
   static var totalRemaining = 0;
@@ -17,20 +14,14 @@ class GameRender {
   static final renderOrderNodes = RendererNodes();
   static final renderOrderParticle = RenderOrderParticle();
   static final renderOrderProjectiles = RenderOrderProjectiles();
-  static final renderOrderCharacters = RenderOrderCharacters();
+  static final renderOrderCharacters = RendererCharacters();
   static final renderOrderGameObjects = RenderOrderGameObjects();
 
   static var indexShowPerceptible = false;
 
   static late Particle currentParticle;
-  static late Character currentRenderCharacter;
   static late GameObject currentRenderGameObject;
   static late Projectile currentRenderProjectile;
-
-  static final bufferClr = Engine.bufferClr;
-  static final bufferSrc = Engine.bufferSrc;
-  static final bufferDst = Engine.bufferDst;
-  static final atlas = GameImages.atlas_nodes;
 
   static void renderCurrentParticle() =>
     renderParticle(currentParticle);
@@ -57,16 +48,6 @@ class GameRender {
     currentRenderGameObject = GameState.gameObjects[renderOrderGameObjects.index];
     renderOrderGameObjects.order = currentRenderGameObject.renderOrder;
     renderOrderGameObjects.orderZ = currentRenderGameObject.indexZ;
-  }
-
-  static void renderCurrentCharacter(){
-    RenderCharacter.renderCharacter(currentRenderCharacter);
-  }
-
-  static void updateCurrentCharacter() {
-    currentRenderCharacter = GameState.characters[renderOrderCharacters.index];
-    renderOrderCharacters.order = currentRenderCharacter.renderOrder;
-    renderOrderCharacters.orderZ = currentRenderCharacter.indexZ;
   }
 
   // ACTIONS
@@ -821,14 +802,6 @@ class GameRender {
       dstY: GameConvert.getRenderY(x, y, z),
     );
   }
-}
-
-class RenderOrderCharacters extends Renderer {
-  @override
-  void renderFunction() => GameRender.renderCurrentCharacter();
-  void updateFunction() => GameRender.updateCurrentCharacter();
-  @override
-  int getTotal() => GameState.totalCharacters;
 }
 
 class RenderOrderGameObjects extends Renderer {
