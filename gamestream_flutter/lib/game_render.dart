@@ -3,6 +3,7 @@ import 'dart:ui' as ui;
 
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_gameobjects.dart';
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
+import 'package:gamestream_flutter/render/renderer_projectiles.dart';
 
 import 'library.dart';
 import 'render/renderer_characters.dart';
@@ -11,43 +12,33 @@ import 'render/renderer_nodes.dart';
 class GameRender {
   static var totalRemaining = 0;
   static var totalIndex = 0;
-  static final renderOrderNodes = RendererNodes();
-  static final renderOrderParticle = RenderOrderParticle();
-  static final renderOrderProjectiles = RenderOrderProjectiles();
-  static final renderOrderCharacters = RendererCharacters();
-  static final renderOrderGameObjects = RenderOrderGameObjects();
+  static final rendererNodes        = RendererNodes();
+  static final rendererParticles    = RenderOrderParticle();
+  static final rendererProjectiles  = RenderOrderProjectiles();
+  static final rendererCharacters   = RendererCharacters();
+  static final rendererGameObjects  = RenderOrderGameObjects();
 
   static var indexShowPerceptible = false;
 
   static late Particle currentParticle;
   static late GameObject currentRenderGameObject;
-  static late Projectile currentRenderProjectile;
 
   static void renderCurrentParticle() =>
     renderParticle(currentParticle);
-
-  static void renderCurrentProjectile() =>
-    RenderProjectiles.renderProjectile(currentRenderProjectile);
 
   static void renderCurrentGameObject() =>
     renderGameObject(currentRenderGameObject);
 
   static void updateCurrentParticle(){
-    currentParticle = ClientState.particles[renderOrderParticle.index];
-    renderOrderParticle.order = currentParticle.renderOrder;
-    renderOrderParticle.orderZ = currentParticle.indexZ;
-  }
-
-  static void updateCurrentProjectile(){
-    currentRenderProjectile = GameState.projectiles[renderOrderProjectiles.index];
-    renderOrderProjectiles.order = currentRenderProjectile.renderOrder;
-    renderOrderProjectiles.orderZ = currentRenderProjectile.indexZ;
+    currentParticle = ClientState.particles[rendererParticles.index];
+    rendererParticles.order = currentParticle.renderOrder;
+    rendererParticles.orderZ = currentParticle.indexZ;
   }
 
   static void updateCurrentGameObject(){
-    currentRenderGameObject = GameState.gameObjects[renderOrderGameObjects.index];
-    renderOrderGameObjects.order = currentRenderGameObject.renderOrder;
-    renderOrderGameObjects.orderZ = currentRenderGameObject.indexZ;
+    currentRenderGameObject = GameState.gameObjects[rendererGameObjects.index];
+    rendererGameObjects.order = currentRenderGameObject.renderOrder;
+    rendererGameObjects.orderZ = currentRenderGameObject.indexZ;
   }
 
   // ACTIONS
@@ -425,28 +416,28 @@ class GameRender {
 
   static void renderSprites() {
     totalRemaining = 0;
-    resetRenderOrder(renderOrderCharacters);
-    resetRenderOrder(renderOrderGameObjects);
-    resetRenderOrder(renderOrderNodes);
-    resetRenderOrder(renderOrderParticle);
-    resetRenderOrder(renderOrderProjectiles);
+    resetRenderOrder(rendererCharacters);
+    resetRenderOrder(rendererGameObjects);
+    resetRenderOrder(rendererNodes);
+    resetRenderOrder(rendererParticles);
+    resetRenderOrder(rendererProjectiles);
 
-    Renderer first = renderOrderNodes;
+    Renderer first = rendererNodes;
 
     if (totalRemaining == 0) return;
     while (true) {
       Renderer next = first;
-      if (renderOrderCharacters.remaining){
-        next = next.compare(renderOrderCharacters);
+      if (rendererCharacters.remaining){
+        next = next.compare(rendererCharacters);
       }
-      if (renderOrderProjectiles.remaining){
-        next = next.compare(renderOrderProjectiles);
+      if (rendererProjectiles.remaining){
+        next = next.compare(rendererProjectiles);
       }
-      if (renderOrderGameObjects.remaining){
-        next = next.compare(renderOrderGameObjects);
+      if (rendererGameObjects.remaining){
+        next = next.compare(rendererGameObjects);
       }
-      if (renderOrderParticle.remaining){
-        next = next.compare(renderOrderParticle);
+      if (rendererParticles.remaining){
+        next = next.compare(rendererParticles);
       }
       next.renderNext();
       if (next.remaining) continue;
@@ -454,28 +445,28 @@ class GameRender {
       if (totalRemaining == 0) return;
 
       if (totalRemaining > 1) {
-        if (next == renderOrderNodes) {
-          if (renderOrderCharacters.remaining) {
-            next = renderOrderCharacters;
+        if (next == rendererNodes) {
+          if (rendererCharacters.remaining) {
+            next = rendererCharacters;
           }
-          if (renderOrderProjectiles.remaining) {
-            next = renderOrderProjectiles;
+          if (rendererProjectiles.remaining) {
+            next = rendererProjectiles;
           }
-          if (renderOrderGameObjects.remaining) {
-            next = renderOrderGameObjects;
+          if (rendererGameObjects.remaining) {
+            next = rendererGameObjects;
           }
-          if (renderOrderParticle.remaining) {
-            next = renderOrderParticle;
+          if (rendererParticles.remaining) {
+            next = rendererParticles;
           }
         }
         continue;
       }
 
-      while (renderOrderNodes.remaining) {
-        renderOrderNodes.renderNext();
+      while (rendererNodes.remaining) {
+        rendererNodes.renderNext();
       }
-      while (renderOrderCharacters.remaining) {
-        renderOrderCharacters.renderNext();
+      while (rendererCharacters.remaining) {
+        rendererCharacters.renderNext();
       }
       return;
     }
@@ -818,19 +809,6 @@ class RenderOrderGameObjects extends Renderer {
   @override
   void reset() {
     super.reset();
-  }
-}
-
-class RenderOrderProjectiles extends Renderer {
-  @override
-  void renderFunction() => GameRender.renderCurrentProjectile();
-
-  @override
-  void updateFunction() => GameRender.updateCurrentProjectile();
-
-  @override
-  int getTotal() {
-    return GameState.totalProjectiles;
   }
 }
 
