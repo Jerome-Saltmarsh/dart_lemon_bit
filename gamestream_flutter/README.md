@@ -48,7 +48,6 @@ ctrl + w:   minimal mode
 [ ] feature generate mini-map
 
 [CONTENT]
-[ ] node type pine tree
 [ ] item type army clothes
 [ ] weapon type crossbow
 [ ] gameobject type car
@@ -66,10 +65,15 @@ ctrl + w:   minimal mode
 [ ] game 5v5
 
 [CRITICAL]
-[ ] fix ai spots player through walls
 [ ] design house kitchen
+[ ] fix ai spots player through walls
+[ ] fix characters teleport through walls on struck
+
+28.12.2022
+[x] fix melee strike no damage
 
 27.12.2022
+[x] node type pine tree
 [x] fix run mouse target
 [x] node orientation windows
 [x] fix gameobject shading

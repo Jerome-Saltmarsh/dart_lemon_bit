@@ -143,7 +143,7 @@ abstract class Game {
 
     if (cursorAction == CursorAction.Set_Target) {
       if (direction != Direction.None) {
-        if (player.weaponStateBusy){
+        if (!player.weaponStateBusy){
           characterUseWeapon(player);
         }
       } else {
@@ -473,7 +473,7 @@ abstract class Game {
         performY,
         performZ,
       ) > attackRadius) continue;
-      applyHit(src: other, target: other);
+      applyHit(src: character, target: other);
       attackHit = true;
        other.applyForce(
            force: 7.5,
