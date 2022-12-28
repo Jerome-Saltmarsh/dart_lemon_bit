@@ -143,20 +143,22 @@ void renderCharacterTemplate(Character character, {
 
   if (ClientState.torchesIgnited.value && !GameState.outOfBoundsV3(character)){
     // find the nearest torch and move the shadow behind the character
-    final characterNodeIndex = GameState.getNodeIndexV3(character);
-    final initialSearchIndex = characterNodeIndex - GameState.nodesTotalColumns - 1; // shifts the selectIndex - 1 row and - 1 column
-    var torchIndex = -1;
+    // final characterNodeIndex = GameState.getNodeIndexV3(character);
+    // final initialSearchIndex = characterNodeIndex - GameState.nodesTotalColumns - 1; // shifts the selectIndex - 1 row and - 1 column
+    // var torchIndex = -1;
 
-    for (var row = 0; row < 3; row++){
-      for (var column = 0; column < 3; column++){
-        final searchIndex = initialSearchIndex + (row * GameState.nodesTotalColumns) + column;
-        if (searchIndex < 0) break;
-        if (searchIndex >= GameNodes.nodesTotal) break;
-        if (GameNodes.nodesType[searchIndex] != NodeType.Torch) continue;
-        torchIndex = searchIndex;
-        break;
-      }
-    }
+    var torchIndex = GameNodes.getTorchIndex(GameState.getNodeIndexV3(character));
+
+    // for (var row = 0; row < 3; row++){
+    //   for (var column = 0; column < 3; column++){
+    //     final searchIndex = initialSearchIndex + (row * GameState.nodesTotalColumns) + column;
+    //     if (searchIndex < 0) break;
+    //     if (searchIndex >= GameNodes.nodesTotal) break;
+    //     if (GameNodes.nodesType[searchIndex] != NodeType.Torch) continue;
+    //     torchIndex = searchIndex;
+    //     break;
+    //   }
+    // }
 
     if (torchIndex != -1) {
       final torchRow = GameState.convertNodeIndexToRow(torchIndex);

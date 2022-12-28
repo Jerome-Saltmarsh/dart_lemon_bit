@@ -110,4 +110,22 @@ class GameNodes {
       zTotal += nodesArea;
     }
   }
+
+  static int getTorchIndex(int nodeIndex){
+    final initialSearchIndex = nodeIndex - GameState.nodesTotalColumns - 1; // shifts the selectIndex - 1 row and - 1 column
+    var torchIndex = -1;
+    var rowIndex = 0;
+
+    for (var row = 0; row < 3; row++){
+      for (var column = 0; column < 3; column++){
+        final searchIndex = initialSearchIndex + rowIndex + column;
+        if (searchIndex >= nodesTotal) break;
+        if (nodesType[searchIndex] != NodeType.Torch) continue;
+        torchIndex = searchIndex;
+        break;
+      }
+      rowIndex += GameState.nodesTotalColumns;
+    }
+    return torchIndex;
+  }
 }
