@@ -2,7 +2,6 @@ import 'dart:math';
 import 'dart:ui' as ui;
 
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_gameobjects.dart';
-import 'package:gamestream_flutter/isometric/nodes/render/render_node.dart';
 import 'package:gamestream_flutter/isometric/render/highlight_character_nearest_mouse.dart';
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 
@@ -86,7 +85,10 @@ class GameRender {
   static bool get currentNodeVisibilityOpaque => GameNodes.nodesVisible[currentNodeIndex] == Visibility.Opaque;
   static bool get currentNodeVariation => GameNodes.nodesVariation[currentNodeIndex];
 
-
+  static final bufferClr = Engine.bufferClr;
+  static final bufferSrc = Engine.bufferSrc;
+  static final bufferDst = Engine.bufferDst;
+  static final atlas = GameImages.atlas_nodes;
 
   static void renderCurrentParticle() =>
     renderParticle(currentParticle);
@@ -1267,20 +1269,750 @@ class GameRender {
     );
   }
 
-  // static void renderTouchMouse() {
-  //   final x = GameIO.touchMouseWorldX;
-  //   final y = GameIO.touchMouseWorldY;
-  //   final z = GameIO.touchMouseWorldZ;
-  //   Engine.renderSprite(
-  //     image: GameImages.gameobjects,
-  //     srcX: 0,
-  //     srcY: 72,
-  //     srcWidth: 8,
-  //     srcHeight: 8,
-  //     dstX: GameConvert.getRenderX(x, y, z),
-  //     dstY: GameConvert.getRenderY(x, y, z),
-  //   );
-  // }
+  static void renderNodeTorch(){
+    if (!ClientState.torchesIgnited.value) {
+      Engine.renderSprite(
+        image: atlas,
+        srcX: AtlasNodeX.Torch,
+        srcY: AtlasNodeY.Torch,
+        srcWidth: AtlasNode.Width_Torch,
+        srcHeight: AtlasNode.Height_Torch,
+        dstX: GameRender.currentNodeDstX,
+        dstY: GameRender.currentNodeDstY,
+        anchorY: AtlasNodeAnchorY.Torch,
+        color: GameRender.currentNodeColor,
+      );
+      return;
+    }
+    if (renderNodeWind == WindType.Calm){
+      Engine.renderSprite(
+        image: atlas,
+        srcX: AtlasNodeX.Torch,
+        srcY: AtlasNodeY.Torch + AtlasNode.Height_Torch + (((GameRender.currentNodeRow + (GameAnimation.animationFrame)) % 6) * AtlasNode.Height_Torch), // TODO Optimize
+        srcWidth: AtlasNode.Width_Torch,
+        srcHeight: AtlasNode.Height_Torch,
+        dstX: GameRender.currentNodeDstX,
+        dstY: GameRender.currentNodeDstY,
+        anchorY: AtlasNodeAnchorY.Torch,
+        color: GameRender.currentNodeColor,
+      );
+      return;
+    }
+    Engine.renderSprite(
+      image: atlas,
+      srcX: AtlasNode.X_Torch_Windy,
+      srcY: AtlasNode.Y_Torch_Windy + AtlasNode.Height_Torch + (((GameRender.currentNodeRow + (GameAnimation.animationFrame)) % 6) * AtlasNode.Height_Torch), // TODO Optimize
+      srcWidth: AtlasNode.Width_Torch,
+      srcHeight: AtlasNode.Height_Torch,
+      dstX: GameRender.currentNodeDstX,
+      dstY: GameRender.currentNodeDstY,
+      anchorY: AtlasNodeAnchorY.Torch,
+      color: GameRender.currentNodeColor,
+    );
+    return;
+  }
+
+  static void renderNodeWater() =>
+      Engine.renderSprite(
+        image: atlas,
+        srcX: AtlasNodeX.Water,
+        srcY: AtlasNodeY.Water + (((GameAnimation.animationFrameWater + ((GameRender.currentNodeRow + GameRender.currentNodeColumn) * 3)) % 10) * 72.0), // TODO Optimize
+        srcWidth: GameConstants.Sprite_Width,
+        srcHeight: GameConstants.Sprite_Height,
+        dstX: GameRender.currentNodeDstX,
+        dstY: GameRender.currentNodeDstY + GameAnimation.animationFrameWaterHeight + 14,
+        anchorY: 0.3334,
+        color: renderNodeColor,
+      );
+
+  static void renderStandardNode({
+    required double srcX,
+    required double srcY,
+  }){
+    GameRender.onscreenNodes++;
+    final f = Engine.bufferIndex * 4;
+    bufferClr[Engine.bufferIndex] = GameRender.currentNodeVisibility == Visibility.Opaque ? 1 : GameLighting.Transparent;
+    bufferSrc[f] = srcX;
+    bufferSrc[f + 1] = srcY;
+    bufferSrc[f + 2] = srcX + GameConstants.Sprite_Width;
+    bufferSrc[f + 3] = srcY + GameConstants.Sprite_Height;
+    bufferDst[f] = 1.0; // scale
+    bufferDst[f + 1] = 0;
+    bufferDst[f + 2] = GameRender.currentNodeDstX - (GameConstants.Sprite_Width_Half);
+    bufferDst[f + 3] = GameRender.currentNodeDstY - (GameConstants.Sprite_Height_Third);
+    Engine.incrementBufferIndex();
+  }
+
+  static void renderStandardNodeShaded({
+    required double srcX,
+    required double srcY,
+  }){
+    GameRender.onscreenNodes++;
+    final f = Engine.bufferIndex * 4;
+    bufferClr[Engine.bufferIndex] = GameRender.currentNodeVisibility == Visibility.Opaque ? GameRender.currentNodeColor : GameLighting.Transparent;
+    bufferSrc[f] = srcX;
+    bufferSrc[f + 1] = srcY;
+    bufferSrc[f + 2] = srcX + GameConstants.Sprite_Width;
+    bufferSrc[f + 3] = srcY + GameConstants.Sprite_Height;
+    bufferDst[f] = 1.0; // scale
+    bufferDst[f + 1] = 0;
+    bufferDst[f + 2] = GameRender.currentNodeDstX - (GameConstants.Sprite_Width_Half);
+    bufferDst[f + 3] = GameRender.currentNodeDstY - (GameConstants.Sprite_Height_Third);
+    Engine.incrementBufferIndex();
+  }
+
+  static void renderNodeShadedOffset({
+    required double srcX,
+    required double srcY,
+    required double offsetX,
+    required double offsetY,
+  }){
+    GameRender.onscreenNodes++;
+    final f = Engine.bufferIndex * 4;
+    bufferClr[Engine.bufferIndex] = GameRender.currentNodeColor;
+    bufferSrc[f] = srcX;
+    bufferSrc[f + 1] = srcY;
+    bufferSrc[f + 2] = srcX + GameConstants.Sprite_Width;
+    bufferSrc[f + 3] = srcY + GameConstants.Sprite_Height;
+    bufferDst[f] = 1.0; // scale
+    bufferDst[f + 1] = 0;
+    bufferDst[f + 2] = GameRender.currentNodeDstX - (GameConstants.Sprite_Width_Half) + offsetX;
+    bufferDst[f + 3] = GameRender.currentNodeDstY - (GameConstants.Sprite_Height_Third) + offsetY;
+    Engine.incrementBufferIndex();
+  }
+
+
+  static void renderStandardNodeHalfEastOld({
+    required double srcX,
+    required double srcY,
+    int color = 1,
+  }){
+    GameRender.onscreenNodes++;
+    Engine.renderSprite(
+      image: atlas,
+      srcX: srcX,
+      srcY: srcY,
+      srcWidth: GameConstants.Sprite_Width,
+      srcHeight: GameConstants.Sprite_Height,
+      dstX: GameRender.currentNodeDstX + 17,
+      dstY: GameRender.currentNodeDstY - 17,
+      anchorY: GameConstants.Sprite_Anchor_Y,
+      color: color,
+    );
+  }
+
+  static void renderStandardNodeHalfNorthOld({
+    required double srcX,
+    required double srcY,
+    int color = 1,
+  }){
+    GameRender.onscreenNodes++;
+    Engine.renderSprite(
+      image: atlas,
+      srcX: srcX,
+      srcY: srcY,
+      srcWidth: GameConstants.Sprite_Width,
+      srcHeight: GameConstants.Sprite_Height,
+      dstX: GameRender.currentNodeDstX - 17,
+      dstY: GameRender.currentNodeDstY - 17,
+      anchorY: GameConstants.Sprite_Anchor_Y,
+      color: color,
+    );
+  }
+
+  static var previousVisibility = 0;
+
+  static void renderNodeAt() {
+    final currentNodeVisibility = GameRender.currentNodeVisibility;
+    if (currentNodeVisibility == Visibility.Invisible) return;
+
+    if (currentNodeVisibility != previousVisibility){
+      previousVisibility = currentNodeVisibility;
+      Engine.bufferBlendMode = VisibilityBlendModes.fromVisibility(currentNodeVisibility);
+    }
+
+    switch (GameRender.currentNodeType) {
+      case NodeType.Grass:
+        if (GameRender.currentNodeOrientation == NodeOrientation.Solid){
+          if (GameRender.currentNodeVariation){
+            renderStandardNodeShaded(
+              srcX: 624,
+              srcY: 0,
+            );
+            return;
+          }
+        }
+        renderNodeTemplateShaded(GameConstants.Sprite_Width_Padded_3);
+        return;
+      case NodeType.Brick:
+        const index_grass = 2;
+        const srcX = GameConstants.Sprite_Width_Padded * index_grass;
+        renderNodeTemplateShaded(srcX);
+        return;
+      case NodeType.Torch:
+        renderNodeTorch();
+        break;
+      case NodeType.Water:
+        renderNodeWater();
+        break;
+      case NodeType.Tree_Bottom:
+        renderTreeBottom();
+        break;
+      case NodeType.Tree_Top:
+        renderTreeTop();
+        break;
+      case NodeType.Grass_Long:
+        switch (GameRender.currentNodeWind) {
+          case WindType.Calm:
+            renderStandardNodeShaded(
+              srcX: AtlasNodeX.Grass_Long,
+              srcY: 0,
+            );
+            return;
+          default:
+            renderStandardNodeShaded(
+              srcX: AtlasNodeX.Grass_Long + ((((GameRender.currentNodeRow - GameRender.currentNodeColumn) + GameAnimation.animationFrameGrass) % 6) * 48), // TODO Expensive Operation
+              srcY: 0,
+            );
+            return;
+        }
+      case NodeType.Rain_Falling:
+        renderStandardNodeShaded(
+          srcX: ClientState.srcXRainFalling,
+          srcY: 72.0 * ((GameAnimation.animationFrame + GameRender.currentNodeRow + GameRender.currentNodeRow + GameRender.currentNodeColumn) % 6), // TODO Expensive Operation
+        );
+        return;
+      case NodeType.Rain_Landing:
+        if (GameQueries.getNodeTypeBelow(GameRender.currentNodeIndex) == NodeType.Water){
+          Engine.renderSprite(
+            image: GameImages.atlas_nodes,
+            srcX: AtlasNode.Node_Rain_Landing_Water_X,
+            srcY: 72.0 * ((GameAnimation.animationFrame + GameRender.currentNodeRow + GameRender.currentNodeColumn) % 10), // TODO Expensive Operation
+            srcWidth: GameConstants.Sprite_Width,
+            srcHeight: GameConstants.Sprite_Height,
+            dstX: GameRender.currentNodeDstX,
+            dstY: GameRender.currentNodeDstY + GameAnimation.animationFrameWaterHeight + 14,
+            anchorY: 0.3,
+            color: GameRender.currentNodeColor,
+          );
+          return;
+        }
+        renderStandardNodeShaded(
+          srcX: ClientState.srcXRainLanding,
+          srcY: 72.0 * ((GameAnimation.animationFrame + GameRender.currentNodeRow + GameRender.currentNodeColumn) % 6), // TODO Expensive Operation
+        );
+        return;
+      case NodeType.Concrete:
+        renderNodeTemplateShaded(GameConstants.Sprite_Width_Padded_8);
+        return;
+      case NodeType.Metal:
+        renderNodeTemplateShaded(GameConstants.Sprite_Width_Padded_4);
+        return;
+      case NodeType.Road:
+        renderNodeTemplateShaded(GameConstants.Sprite_Width_Padded_9);
+        return;
+      case NodeType.Road_2:
+        renderStandardNodeShaded(srcX: 768, srcY: 672 + GameConstants.Sprite_Height_Padded);
+        return;
+      case NodeType.Wooden_Plank:
+        renderNodeWoodenPlank();
+        return;
+      case NodeType.Wood:
+        const index_grass = 5;
+        const srcX = GameConstants.Sprite_Width_Padded * index_grass;
+        renderNodeTemplateShaded(srcX);
+        break;
+      case NodeType.Bau_Haus:
+        const index_grass = 6;
+        const srcX = GameConstants.Sprite_Width_Padded * index_grass;
+        renderNodeTemplateShaded(srcX);
+        break;
+      case NodeType.Sunflower:
+        renderStandardNodeShaded(
+          srcX: 1753.0,
+          srcY: AtlasNodeY.Sunflower,
+        );
+        return;
+      case NodeType.Soil:
+        const index_grass = 7;
+        const srcX = GameConstants.Sprite_Width_Padded * index_grass;
+        renderNodeTemplateShaded(srcX);
+        return;
+      case NodeType.Fireplace:
+        renderStandardNode(
+          srcX: AtlasNode.Campfire_X,
+          srcY: AtlasNode.Node_Campfire_Y + ((GameAnimation.animationFrame % 6) * 72),
+        );
+        return;
+      case NodeType.Boulder:
+        renderStandardNodeShaded(
+          srcX: AtlasNodeX.Boulder,
+          srcY: AtlasNodeY.Boulder,
+        );
+        return;
+      case NodeType.Oven:
+        renderStandardNodeShaded(
+          srcX: AtlasNodeX.Oven,
+          srcY: AtlasNodeY.Oven,
+        );
+        return;
+      case NodeType.Chimney:
+        renderStandardNodeShaded(
+          srcX: AtlasNode.Chimney_X,
+          srcY: AtlasNode.Node_Chimney_Y,
+        );
+        return;
+      case NodeType.Window:
+        renderNodeWindow();
+        break;
+      case NodeType.Spawn:
+        if (GameState.playMode) return;
+        renderStandardNode(
+          srcX: AtlasNode.Spawn_X,
+          srcY: AtlasNode.Spawn_Y,
+        );
+        break;
+      case NodeType.Spawn_Weapon:
+        if (GameState.playMode) return;
+        renderStandardNode(
+          srcX: AtlasNode.Spawn_Weapon_X,
+          srcY: AtlasNode.Spawn_Weapon_Y,
+        );
+        break;
+      case NodeType.Spawn_Player:
+        if (GameState.playMode) return;
+        renderStandardNode(
+          srcX: AtlasNode.Spawn_Player_X,
+          srcY: AtlasNode.Spawn_Player_Y,
+        );
+        break;
+      case NodeType.Table:
+        renderStandardNode(
+          srcX: AtlasNode.Table_X,
+          srcY: AtlasNode.Node_Table_Y,
+        );
+        return;
+      case NodeType.Bed_Top:
+        renderStandardNode(
+          srcX: AtlasNode.X_Bed_Top,
+          srcY: AtlasNode.Y_Bed_Top,
+        );
+        return;
+      case NodeType.Bed_Bottom:
+        renderStandardNode(
+          srcX: AtlasNode.X_Bed_Bottom,
+          srcY: AtlasNode.Y_Bed_Bottom,
+        );
+        return;
+      case NodeType.Respawning:
+        return;
+      default:
+        throw Exception('renderNode(index: ${GameRender.currentNodeIndex}, type: ${NodeType.getName(GameRender.currentNodeType)}, orientation: ${NodeOrientation.getName(GameNodes.nodesOrientation[GameRender.currentNodeIndex])}');
+    }
+  }
+
+  static void renderTreeTop() => renderNodeBelowVariation ? renderTreeTopPine() : renderTreeTopOak();
+
+  static void renderTreeBottom() => renderNodeVariation ? renderTreeBottomPine() : renderTreeBottomOak();
+
+  static void renderTreeTopOak(){
+    var shift = GameAnimation.treeAnimation[((GameRender.currentNodeRow - GameRender.currentNodeColumn) + GameAnimation.animationFrame) % GameAnimation.treeAnimation.length] * renderNodeWind;
+    Engine.renderSprite(
+      image: GameImages.atlas_nodes,
+      srcX: AtlasNodeX.Tree_Top,
+      srcY: AtlasNodeY.Tree_Top,
+      srcWidth: AtlasNode.Node_Tree_Top_Width,
+      srcHeight: AtlasNode.Node_Tree_Top_Height,
+      dstX: GameRender.currentNodeDstX + (shift * 0.5),
+      dstY: GameRender.currentNodeDstY,
+      color: getRenderLayerColor(-2),
+    );
+  }
+
+  static void renderTreeTopPine() {
+    var shift = GameAnimation.treeAnimation[((GameRender.currentNodeRow - GameRender.currentNodeColumn) + GameAnimation.animationFrame) % GameAnimation.treeAnimation.length] * renderNodeWind;
+    Engine.renderSprite(
+      image: GameImages.atlas_nodes,
+      srcX: 1262,
+      srcY: 80 ,
+      srcWidth: 45,
+      srcHeight: 58,
+      dstX: GameRender.currentNodeDstX + (shift * 0.5),
+      dstY: GameRender.currentNodeDstY,
+      color: getRenderLayerColor(-2),
+    );
+  }
+
+  static void renderTreeBottomOak() {
+    Engine.renderSprite(
+      image: GameImages.atlas_nodes,
+      srcX: AtlasNodeX.Tree_Bottom,
+      srcY: AtlasNodeY.Tree_Bottom,
+      srcWidth: AtlasNode.Width_Tree_Bottom,
+      srcHeight: AtlasNode.Node_Tree_Bottom_Height,
+      dstX: GameRender.currentNodeDstX,
+      dstY: GameRender.currentNodeDstY,
+      color: renderNodeBelowColor,
+    );
+  }
+
+  static void renderTreeBottomPine() {
+    Engine.renderSprite(
+      image: GameImages.atlas_nodes,
+      srcX: 1216,
+      srcY: 80,
+      srcWidth: 45,
+      srcHeight: 66,
+      dstX: GameRender.currentNodeDstX,
+      dstY: GameRender.currentNodeDstY,
+      color: renderNodeBelowColor,
+    );
+  }
+
+  static void renderNodeTemplateShaded(double srcX) {
+    switch (GameRender.currentNodeOrientation){
+      case NodeOrientation.Solid:
+        renderStandardNodeShaded(
+          srcX: srcX,
+          srcY: GameConstants.Sprite_Height_Padded_00,
+        );
+        return;
+      case NodeOrientation.Half_North:
+        renderNodeShadedOffset(
+          srcX: srcX,
+          srcY: GameConstants.Sprite_Height_Padded_01,
+          offsetX: -8,
+          offsetY: -8,
+        );
+        return;
+      case NodeOrientation.Half_South:
+        renderNodeShadedOffset(
+          srcX: srcX,
+          srcY: GameConstants.Sprite_Height_Padded_01,
+          offsetX: 8,
+          offsetY: 8,
+        );
+        return;
+      case NodeOrientation.Half_East:
+        renderNodeShadedOffset(
+          srcX: srcX,
+          srcY: GameConstants.Sprite_Height_Padded_02,
+          offsetX: 8,
+          offsetY: -8,
+        );
+        return;
+      case NodeOrientation.Half_West:
+        renderNodeShadedOffset(
+          srcX: srcX,
+          srcY: GameConstants.Sprite_Height_Padded_02,
+          offsetX: -8,
+          offsetY: 8,
+        );
+        return;
+      case NodeOrientation.Corner_Top:
+        renderStandardNodeShaded(
+          srcX: srcX,
+          srcY: GameConstants.Sprite_Height_Padded_03,
+        );
+        return;
+      case NodeOrientation.Corner_Right:
+        renderStandardNodeShaded(
+          srcX: srcX,
+          srcY: GameConstants.Sprite_Height_Padded_04,
+        );
+        return;
+      case NodeOrientation.Corner_Bottom:
+        renderStandardNodeShaded(
+          srcX: srcX,
+          srcY: GameConstants.Sprite_Height_Padded_05,
+        );
+        return;
+      case NodeOrientation.Corner_Left:
+        renderStandardNodeShaded(
+          srcX: srcX,
+          srcY: GameConstants.Sprite_Height_Padded_06,
+        );
+        return;
+      case NodeOrientation.Slope_North:
+        renderStandardNodeShaded(
+          srcX: srcX,
+          srcY: GameConstants.Sprite_Height_Padded_07,
+        );
+        return;
+      case NodeOrientation.Slope_East:
+        renderStandardNodeShaded(
+          srcX: srcX,
+          srcY: GameConstants.Sprite_Height_Padded_08,
+        );
+        return;
+      case NodeOrientation.Slope_South:
+        renderStandardNodeShaded(
+          srcX: srcX,
+          srcY: GameConstants.Sprite_Height_Padded_09,
+        );
+        return;
+      case NodeOrientation.Slope_West:
+        renderStandardNodeShaded(
+          srcX: srcX,
+          srcY: GameConstants.Sprite_Height_Padded_10,
+        );
+        return;
+      case NodeOrientation.Slope_Outer_South_West:
+        renderStandardNodeShaded(
+          srcX: srcX,
+          srcY: GameConstants.Sprite_Height_Padded_11,
+        );
+        return;
+      case NodeOrientation.Slope_Outer_North_West:
+        renderStandardNodeShaded(
+          srcX: srcX,
+          srcY: GameConstants.Sprite_Height_Padded_12,
+        );
+        return;
+      case NodeOrientation.Slope_Outer_North_East:
+        renderStandardNodeShaded(
+          srcX: srcX,
+          srcY: GameConstants.Sprite_Height_Padded_13,
+        );
+        return;
+      case NodeOrientation.Slope_Outer_South_East:
+        renderStandardNodeShaded(
+          srcX: srcX,
+          srcY: GameConstants.Sprite_Height_Padded_14,
+        );
+        return;
+      case NodeOrientation.Slope_Inner_South_East:
+        renderStandardNodeShaded(
+          srcX: srcX,
+          srcY: GameConstants.Sprite_Height_Padded_15,
+        );
+        return;
+      case NodeOrientation.Slope_Inner_North_East :
+        renderStandardNodeShaded(
+          srcX: srcX,
+          srcY: GameConstants.Sprite_Height_Padded_16,
+        );
+        return;
+      case NodeOrientation.Slope_Inner_North_West:
+        renderStandardNodeShaded(
+          srcX: srcX,
+          srcY: GameConstants.Sprite_Height_Padded_17,
+        );
+        return;
+      case NodeOrientation.Slope_Inner_South_West:
+        renderStandardNodeShaded(
+          srcX: srcX,
+          srcY: GameConstants.Sprite_Height_Padded_18,
+        );
+        return;
+      case NodeOrientation.Radial:
+        renderStandardNodeShaded(
+          srcX: srcX,
+          srcY: GameConstants.Sprite_Height_Padded_19,
+        );
+        return;
+      case NodeOrientation.Half_Vertical_Top:
+        renderNodeShadedOffset(
+          srcX: srcX,
+          srcY: GameConstants.Sprite_Height_Padded_20,
+          offsetX: 0,
+          offsetY: -9,
+        );
+        return;
+      case NodeOrientation.Half_Vertical_Center:
+        renderNodeShadedOffset(
+          srcX: srcX,
+          srcY: GameConstants.Sprite_Height_Padded_20,
+          offsetX: 0,
+          offsetY: -1,
+        );
+        return;
+      case NodeOrientation.Half_Vertical_Bottom:
+        renderNodeShadedOffset(
+          srcX: srcX,
+          srcY: GameConstants.Sprite_Height_Padded_20,
+          offsetX: 0,
+          offsetY: 2,
+        );
+        return;
+      case NodeOrientation.Column_Top_Right:
+        renderNodeShadedOffset(
+          srcX: srcX,
+          srcY: GameConstants.Sprite_Height_Padded_21,
+          offsetX: 0,
+          offsetY: -16,
+        );
+        return;
+      case NodeOrientation.Column_Top_Center:
+        renderNodeShadedOffset(
+          srcX: srcX,
+          srcY: GameConstants.Sprite_Height_Padded_21,
+          offsetX: -8,
+          offsetY: -8,
+        );
+        return;
+      case NodeOrientation.Column_Top_Left:
+        renderNodeShadedOffset(
+          srcX: srcX,
+          srcY: GameConstants.Sprite_Height_Padded_21,
+          offsetX: -16,
+          offsetY: 0,
+        );
+        return;
+      case NodeOrientation.Column_Center_Right:
+        renderNodeShadedOffset(
+          srcX: srcX,
+          srcY: GameConstants.Sprite_Height_Padded_21,
+          offsetX: 8,
+          offsetY: -8,
+        );
+        break;
+      case NodeOrientation.Column_Center_Center:
+        renderNodeShadedOffset(
+          srcX: srcX,
+          srcY: GameConstants.Sprite_Height_Padded_21,
+          offsetX: 0,
+          offsetY: 0,
+        );
+        break;
+      case NodeOrientation.Column_Center_Left:
+        renderNodeShadedOffset(
+          srcX: srcX,
+          srcY: GameConstants.Sprite_Height_Padded_21,
+          offsetX: -8,
+          offsetY: 8,
+        );
+        break;
+
+      case NodeOrientation.Column_Bottom_Left:
+        renderNodeShadedOffset(
+          srcX: srcX,
+          srcY: GameConstants.Sprite_Height_Padded_21,
+          offsetX: 0,
+          offsetY: 16,
+        );
+        return;
+      case NodeOrientation.Column_Bottom_Center:
+        renderNodeShadedOffset(
+          srcX: srcX,
+          srcY: GameConstants.Sprite_Height_Padded_21,
+          offsetX: 8,
+          offsetY: 8,
+        );
+        return;
+      case NodeOrientation.Column_Bottom_Right:
+        renderNodeShadedOffset(
+          srcX: srcX,
+          srcY: GameConstants.Sprite_Height_Padded_21,
+          offsetX: 16,
+          offsetY: 0,
+        );
+        return;
+    }
+  }
+
+  static void renderNodeWoodenPlank(){
+    switch(renderNodeOrientation){
+      case NodeOrientation.Solid:
+        renderStandardNodeShaded(
+          srcX: AtlasNode.Wooden_Plank_Solid_X,
+          srcY: AtlasNode.Node_Wooden_Plank_Solid_Y,
+        );
+        return;
+      case NodeOrientation.Half_North:
+        renderStandardNodeHalfNorthOld(
+          srcX: AtlasNode.Node_Wooden_Plank_Half_South_X,
+          srcY: AtlasNode.Node_Wooden_Plank_Half_South_Y,
+          color: renderNodeColor,
+        );
+        return;
+      case NodeOrientation.Half_East:
+        renderStandardNodeHalfEastOld(
+          srcX: AtlasNode.Node_Wooden_Plank_Half_West_X,
+          srcY: AtlasNode.Node_Wooden_Plank_Half_West_Y,
+          color: renderNodeColor,
+        );
+        return;
+      case NodeOrientation.Half_South:
+        renderStandardNodeShaded(
+          srcX: AtlasNode.Node_Wooden_Plank_Half_South_X,
+          srcY: AtlasNode.Node_Wooden_Plank_Half_South_Y,
+        );
+        return;
+      case NodeOrientation.Half_West:
+        renderStandardNodeShaded(
+          srcX: AtlasNode.Node_Wooden_Plank_Half_West_X,
+          srcY: AtlasNode.Node_Wooden_Plank_Half_West_Y,
+        );
+        return;
+      case NodeOrientation.Corner_Top:
+        renderStandardNodeShaded(
+          srcX: AtlasNode.Node_Wooden_Plank_Corner_Top_X,
+          srcY: AtlasNode.Node_Wooden_Plank_Corner_Top_Y,
+        );
+        return;
+      case NodeOrientation.Corner_Right:
+        renderStandardNodeShaded(
+          srcX: AtlasNode.Node_Wooden_Plank_Corner_Right_X,
+          srcY: AtlasNode.Node_Wooden_Plank_Corner_Right_Y,
+        );
+        return;
+      case NodeOrientation.Corner_Bottom:
+        renderStandardNodeShaded(
+          srcX: AtlasNode.Node_Wooden_Plank_Corner_Bottom_X,
+          srcY: AtlasNode.Node_Wooden_Plank_Corner_Bottom_Y,
+        );
+        return;
+      case NodeOrientation.Corner_Left:
+        renderStandardNodeShaded(
+          srcX: AtlasNode.Node_Wooden_Plank_Corner_Left_X,
+          srcY: AtlasNode.Node_Wooden_Plank_Corner_Left_Y,
+        );
+        return;
+    }
+  }
+
+  static void renderNodeWindow(){
+    const srcX = 1508.0;
+    switch (renderNodeOrientation) {
+      case NodeOrientation.Half_North:
+        renderNodeShadedOffset(
+          srcX: srcX,
+          srcY: 80 + GameConstants.Sprite_Height_Padded,
+          offsetX: -8,
+          offsetY: -8,
+        );
+        return;
+      case NodeOrientation.Half_South:
+        renderNodeShadedOffset(
+          srcX: srcX,
+          srcY: 80 + GameConstants.Sprite_Height_Padded,
+          offsetX: 8,
+          offsetY: 8,
+        );
+        return;
+      case NodeOrientation.Half_East:
+        renderNodeShadedOffset(
+          srcX: srcX,
+          srcY: 80,
+          offsetX: 8,
+          offsetY: -8,
+        );
+        return;
+      case NodeOrientation.Half_West:
+        renderNodeShadedOffset(
+          srcX: srcX,
+          srcY: 80,
+          offsetX: -8,
+          offsetY: 8,
+        );
+        return;
+      default:
+        throw Exception("render_node_window(${NodeOrientation.getName(renderNodeOrientation)})");
+    }
+  }
+
+
 }
 
 class RenderOrderCharacters extends RenderOrder {

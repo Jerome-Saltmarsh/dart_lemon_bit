@@ -38,7 +38,6 @@ export 'game_player.dart';
 export 'game_camera.dart';
 export 'game_atlas.dart';
 export 'game_nodes.dart';
-export 'render/render_node.dart';
 export 'render/render_character.dart';
 export 'render/render_projectiles.dart';
 export 'package:lemon_engine/engine.dart';
