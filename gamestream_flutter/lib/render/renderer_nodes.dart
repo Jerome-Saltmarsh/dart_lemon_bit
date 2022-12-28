@@ -5,24 +5,26 @@ import 'package:gamestream_flutter/library.dart';
 
 class RendererNodes extends Renderer {
 
+  // VARIABLES
+
   static final bufferClr = Engine.bufferClr;
   static final bufferSrc = Engine.bufferSrc;
   static final bufferDst = Engine.bufferDst;
   static final atlas = GameImages.atlas_nodes;
 
-  static var playerRenderRow = 0;
-  static var playerRenderColumn = 0;
+  var playerRenderRow = 0;
+  var playerRenderColumn = 0;
 
-  static var indexShow = 0;
-  static var indexRow = 0;
-  static var indexColumn = 0;
-  static var indexZ = 0;
-  static var nodesStartRow = 0;
-  static var nodeStartColumn = 0;
-  static var nodesMaxZ = 0;
-  static var nodesMinZ = 0;
-  static var currentNodeZ = 0;
-  static var currentNodeRow = 0;
+  var indexShow = 0;
+  var indexRow = 0;
+  var indexColumn = 0;
+  var indexZ = 0;
+  var nodesStartRow = 0;
+  var nodeStartColumn = 0;
+  var nodesMaxZ = 0;
+  var nodesMinZ = 0;
+  var currentNodeZ = 0;
+  var currentNodeRow = 0;
   static var currentNodeColumn = 0;
   static var currentNodeDstX = 0.0;
   static var currentNodeDstY = 0.0;
@@ -54,9 +56,11 @@ class RendererNodes extends Renderer {
   static var screenRight = 0.0;
   static var screenBottom = 0.0;
   static var screenLeft = 0.0;
-  
-  static double get currentNodeRenderX => (currentNodeRow - currentNodeColumn) * Node_Size_Half;
-  static double get currentNodeRenderY => GameConvert.rowColumnZToRenderY(currentNodeRow, currentNodeColumn, currentNodeZ);
+
+  // GETTERS
+
+  double get currentNodeRenderX => (currentNodeRow - currentNodeColumn) * Node_Size_Half;
+  double get currentNodeRenderY => GameConvert.rowColumnZToRenderY(currentNodeRow, currentNodeColumn, currentNodeZ);
 
   static int get currentNodeShade => GameNodes.nodesShade[currentNodeIndex];
   static int get currentNodeColor => (currentNodeVisibilityOpaque ? GameLighting.values : GameLighting.values_transparent)[currentNodeShade];
@@ -85,11 +89,74 @@ class RendererNodes extends Renderer {
   }
 
   int get renderNodeBelowColor => GameLighting.values[renderNodeBelowShade];
-  
+
+  // METHODS
+
   @override
-  void renderFunction() => renderCurrentNodeLine();
+  void renderFunction() {
+    Engine.bufferImage = atlas;
+    while (
+    currentNodeColumn >= 0 &&
+        currentNodeRow <= nodesRowsMax &&
+        currentNodeDstX <= screenRight
+    ){
+      currentNodeType = GameNodes.nodesType[currentNodeIndex];
+      if (currentNodeType != NodeType.Empty){
+        renderNodeAt();
+      }
+      if (currentNodeRow + 1 > nodesRowsMax) return;
+      currentNodeRow++;
+      currentNodeColumn--;
+      currentNodeIndex += nodesGridTotalColumnsMinusOne;
+      currentNodeDstX += GameConstants.Sprite_Width;
+    }
+  }
   @override
-  void updateFunction() => nodesUpdateFunction();
+  void updateFunction() {
+    currentNodeZ++;
+    if (currentNodeZ > nodesMaxZ) {
+      currentNodeZ = 0;
+      nodesShiftIndexDown();
+      if (!remaining) return;
+      nodesCalculateMinMaxZ();
+      if (!remaining) return;
+
+      assert (currentNodeColumn >= 0);
+      assert (currentNodeRow >= 0);
+      assert (currentNodeRow < GameState.nodesTotalRows);
+      assert (currentNodeColumn < GameState.nodesTotalColumns);
+
+      nodesTrimLeft();
+
+      while (currentNodeRenderY > screenBottom) {
+        currentNodeZ++;
+        if (currentNodeZ > nodesMaxZ) {
+          remaining = false;
+          return;
+        }
+      }
+    } else {
+      assert (nodesStartRow < GameState.nodesTotalRows);
+      assert (currentNodeColumn < GameState.nodesTotalColumns);
+      currentNodeRow = nodesStartRow;
+      currentNodeColumn = nodeStartColumn;
+    }
+
+    currentNodeIndex = (currentNodeZ * GameNodes.nodesArea) + (currentNodeRow * GameState.nodesTotalColumns) + currentNodeColumn;
+    assert (currentNodeZ >= 0);
+    assert (currentNodeRow >= 0);
+    assert (currentNodeColumn >= 0);
+    assert (currentNodeIndex >= 0);
+    assert (currentNodeZ < GameState.nodesTotalZ);
+    assert (currentNodeRow < GameState.nodesTotalRows);
+    assert (currentNodeColumn < GameState.nodesTotalColumns);
+    assert (currentNodeIndex < GameNodes.nodesTotal);
+    currentNodeDstX = (currentNodeRow - currentNodeColumn) * Node_Size_Half;
+    currentNodeDstY = ((currentNodeRow + currentNodeColumn) * Node_Size_Half) - (currentNodeZ * Node_Height);
+    currentNodeType = GameNodes.nodesType[currentNodeIndex];
+    order = ((currentNodeRow + currentNodeColumn) * Node_Size) + Node_Size_Half;
+    orderZ = currentNodeZ;
+  }
 
   @override
   void reset() {
@@ -179,76 +246,7 @@ class RendererNodes extends Renderer {
   @override
   int getTotal() => GameNodes.nodesTotal;
 
-  void nodesUpdateFunction() {
-    currentNodeZ++;
-    if (currentNodeZ > nodesMaxZ) {
-      currentNodeZ = 0;
-      nodesShiftIndexDown();
-      if (!remaining) return;
-      nodesCalculateMinMaxZ();
-      if (!remaining) return;
-
-      assert (currentNodeColumn >= 0);
-      assert (currentNodeRow >= 0);
-      assert (currentNodeRow < GameState.nodesTotalRows);
-      assert (currentNodeColumn < GameState.nodesTotalColumns);
-
-      nodesTrimLeft();
-
-      while (currentNodeRenderY > screenBottom) {
-        currentNodeZ++;
-        if (currentNodeZ > nodesMaxZ) {
-          remaining = false;
-          return;
-        }
-      }
-    } else {
-      assert (nodesStartRow < GameState.nodesTotalRows);
-      assert (currentNodeColumn < GameState.nodesTotalColumns);
-      currentNodeRow = nodesStartRow;
-      currentNodeColumn = nodeStartColumn;
-    }
-
-    // currentNodeZ = clamp(currentNodeZ, 0, GameState.nodesTotalZ - 1);
-    // currentNodeRow = clamp(currentNodeRow, 0, GameState.nodesTotalRows - 1);
-    // currentNodeColumn = clamp(currentNodeColumn, 0, GameState.nodesTotalColumns - 1);
-
-    currentNodeIndex = (currentNodeZ * GameNodes.nodesArea) + (currentNodeRow * GameState.nodesTotalColumns) + currentNodeColumn;
-    assert (currentNodeZ >= 0);
-    assert (currentNodeRow >= 0);
-    assert (currentNodeColumn >= 0);
-    assert (currentNodeIndex >= 0);
-    assert (currentNodeZ < GameState.nodesTotalZ);
-    assert (currentNodeRow < GameState.nodesTotalRows);
-    assert (currentNodeColumn < GameState.nodesTotalColumns);
-    assert (currentNodeIndex < GameNodes.nodesTotal);
-    currentNodeDstX = (currentNodeRow - currentNodeColumn) * Node_Size_Half;
-    currentNodeDstY = ((currentNodeRow + currentNodeColumn) * Node_Size_Half) - (currentNodeZ * Node_Height);
-    currentNodeType = GameNodes.nodesType[currentNodeIndex];
-    order = ((currentNodeRow + currentNodeColumn) * Node_Size) + Node_Size_Half;
-    orderZ = currentNodeZ;
-  }
-
-  void renderCurrentNodeLine() {
-    Engine.bufferImage = GameImages.atlas_nodes;
-    while (
-    currentNodeColumn >= 0 &&
-        currentNodeRow <= nodesRowsMax &&
-        currentNodeDstX <= screenRight
-    ){
-      currentNodeType = GameNodes.nodesType[currentNodeIndex];
-      if (currentNodeType != NodeType.Empty){
-        renderNodeAt();
-      }
-      if (currentNodeRow + 1 > nodesRowsMax) return;
-      currentNodeRow++;
-      currentNodeColumn--;
-      currentNodeIndex += nodesGridTotalColumnsMinusOne;
-      currentNodeDstX += GameConstants.Sprite_Width;
-    }
-  }
-
-  static void nodesTrimLeft(){
+  void nodesTrimLeft(){
     final offscreen = countLeftOffscreen;
     if (offscreen <= 0) return;
 
@@ -271,7 +269,7 @@ class RendererNodes extends Renderer {
     nodesSetStart();
   }
 
-  static void nodesSetStart(){
+  void nodesSetStart(){
     // nodesStartRow = min(currentNodeRow, GameState.nodesTotalRows);
     nodesStartRow = clamp(currentNodeRow, 0, GameState.nodesTotalRows - 1);
     nodeStartColumn = clamp(currentNodeColumn, 0, GameState.nodesTotalColumns - 1);
@@ -302,7 +300,7 @@ class RendererNodes extends Renderer {
     nodesSetStart();
   }
 
-  static int get countLeftOffscreen {
+  int get countLeftOffscreen {
     final x = GameConvert.rowColumnToRenderX(currentNodeRow, currentNodeColumn);
     if (Engine.screen.left < x) return 0;
     final diff = Engine.screen.left - x;
