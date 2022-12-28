@@ -25,8 +25,8 @@ class RendererNodes extends Renderer {
   var nodesMinZ = 0;
   var currentNodeZ = 0;
   var currentNodeRow = 0;
-  static var currentNodeColumn = 0;
-  static var currentNodeDstX = 0.0;
+  var currentNodeColumn = 0;
+  var currentNodeDstX = 0.0;
   static var currentNodeDstY = 0.0;
   static var currentNodeIndex = 0;
   static var currentNodeType = 0;
@@ -343,7 +343,7 @@ class RendererNodes extends Renderer {
         srcY: AtlasNodeY.Torch,
         srcWidth: AtlasNode.Width_Torch,
         srcHeight: AtlasNode.Height_Torch,
-        dstX: RendererNodes.currentNodeDstX,
+        dstX: currentNodeDstX,
         dstY: RendererNodes.currentNodeDstY,
         anchorY: AtlasNodeAnchorY.Torch,
         color: RendererNodes.currentNodeColor,
@@ -627,7 +627,7 @@ class RendererNodes extends Renderer {
     );
   }
 
-  static void renderNodeTemplateShaded(double srcX) {
+  void renderNodeTemplateShaded(double srcX) {
     switch (currentNodeOrientation){
       case NodeOrientation.Solid:
         renderStandardNodeShaded(
@@ -983,7 +983,7 @@ class RendererNodes extends Renderer {
         color: renderNodeColor,
       );
 
-  static void renderStandardNode({
+  void renderStandardNode({
     required double srcX,
     required double srcY,
   }){
@@ -1001,7 +1001,7 @@ class RendererNodes extends Renderer {
     Engine.incrementBufferIndex();
   }
 
-  static void renderStandardNodeShaded({
+  void renderStandardNodeShaded({
     required double srcX,
     required double srcY,
   }){
@@ -1019,7 +1019,7 @@ class RendererNodes extends Renderer {
     Engine.incrementBufferIndex();
   }
 
-  static void renderNodeShadedOffset({
+  void renderNodeShadedOffset({
     required double srcX,
     required double srcY,
     required double offsetX,
@@ -1040,7 +1040,7 @@ class RendererNodes extends Renderer {
   }
 
 
-  static void renderStandardNodeHalfEastOld({
+  void renderStandardNodeHalfEastOld({
     required double srcX,
     required double srcY,
     int color = 1,
@@ -1059,7 +1059,7 @@ class RendererNodes extends Renderer {
     );
   }
 
-  static void renderStandardNodeHalfNorthOld({
+  void renderStandardNodeHalfNorthOld({
     required double srcX,
     required double srcY,
     int color = 1,
