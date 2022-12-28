@@ -68,8 +68,11 @@ ctrl + w:   minimal mode
 [ ] design house kitchen
 [ ] fix ai spots player through walls
 [ ] fix characters teleport through walls on struck
+[ ] fix render grenade 
 
 28.12.2022
+[x] refactor render game
+[x] optimize render nodes
 [x] fix melee strike no damage
 
 27.12.2022

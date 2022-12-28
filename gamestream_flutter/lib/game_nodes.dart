@@ -22,6 +22,14 @@ class GameNodes {
   static var dynamicIndex = 0;
 
   // METHODS
+  
+  static void resetVisible(){
+    while (visibleIndex > 0) {
+      nodesVisible[nodesVisibleIndex[visibleIndex]] = Visibility.Opaque;
+      visibleIndex--;
+    }
+    nodesVisible[nodesVisibleIndex[0]] = Visibility.Opaque;
+  }
 
   static void addInvisibleIndex(int index){
     if (nodesVisible[index] == Visibility.Transparent) return;

@@ -221,13 +221,9 @@ class RendererNodes extends Renderer {
     currentNodeDstX = (row - column) * Node_Size_Half;
     currentNodeDstY = ((row + column) * Node_Size_Half) - (currentNodeZ * Node_Height);
     currentNodeIndex = (currentNodeZ * GameNodes.nodesArea) + (row * GameState.nodesTotalColumns) + column;
-    currentNodeType = GameNodes.nodesType[currentNodeIndex];
+    currentNodeType = nodeTypes[currentNodeIndex];
 
-    while (GameNodes.visibleIndex > 0) {
-      GameNodes.nodesVisible[GameNodes.nodesVisibleIndex[GameNodes.visibleIndex]] = Visibility.Opaque;
-      GameNodes.visibleIndex--;
-    }
-    GameNodes.nodesVisible[GameNodes.nodesVisibleIndex[0]] = Visibility.Opaque;
+    GameNodes.resetVisible();
 
     showIndexPlayer();
     showIndexMouse();
@@ -292,7 +288,6 @@ class RendererNodes extends Renderer {
   }
 
   void nodesCalculateMinMaxZ(){
-    // final bottom = GameConvert.rowColumnToRenderY(row, column);
     final bottom = (row + column) * Node_Size_Half;
     final distance =  bottom - screenTop;
     nodesMaxZ = (distance ~/ Node_Height); // TODO optimize
@@ -303,11 +298,9 @@ class RendererNodes extends Renderer {
       nodesMaxZ = 0;
     }
 
-    // TODO optimize
-    var renderY = ((row + column) * Node_Size_Half) - (nodesMinZ * Node_Height);
+    var renderY = bottom - (nodesMinZ * Node_Height);
     while (renderY > screenBottom){
       nodesMinZ++;
-      ClientState.process.value++;
       renderY -= Node_Height;
       if (nodesMinZ >= GameState.nodesTotalZ){
         return end();

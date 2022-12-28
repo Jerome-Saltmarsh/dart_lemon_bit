@@ -2,10 +2,6 @@
 import 'package:gamestream_flutter/library.dart';
 
 class GameActions {
-  // static void setAmbientShadeToHour(){
-  //   /// TODO illegal server state assignment
-  //   ServerState.ambientShade.value = Shade.fromHour(ServerState.hours.value);
-  // }
 
   static void loadSelectedSceneName(){
     final sceneName = GameEditor.selectedSceneName.value;
@@ -15,10 +11,12 @@ class GameActions {
   }
 
   static void rainStart(){
-    for (var row = 0; row < GameState.nodesTotalRows; row++) {
-      for (var column = 0; column < GameState.nodesTotalColumns; column++) {
-        for (var z = GameState.nodesTotalZ - 1; z >= 0; z--) {
-
+    final rows = GameState.nodesTotalRows;
+    final columns = GameState.nodesTotalColumns;
+    final zs = GameState.nodesTotalZ - 1;
+    for (var row = 0; row < rows; row++) {
+      for (var column = 0; column < columns; column++) {
+        for (var z = zs; z >= 0; z--) {
           final index = GameState.getNodeIndexZRC(z, row, column);
           final type = GameNodes.nodesType[index];
           if (type != NodeType.Empty) {
@@ -28,7 +26,6 @@ class GameActions {
             GameState.setNodeType(z + 2, row, column, NodeType.Rain_Falling);
             break;
           }
-
           if (
               column == 0 ||
               row == 0 ||
