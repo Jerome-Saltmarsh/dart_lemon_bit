@@ -33,6 +33,7 @@ class GameDebug {
                           children: [
                             watch(serverResponseReader.byteLength, (int bytes) => text('network-bytes: $bytes')),
                             watch(serverResponseReader.bufferSize, (int bufferSize) => text('network-buffer: $bufferSize')),
+                            watch(ClientState.process, (int index) => text("client-state.process: $index")),
                             Refresh(() =>  text(
                                 "mouse-grid: x: ${GameIO.mouseGridX.toInt()}, y: ${GameIO.mouseGridY.toInt()}\n"
                                 "mouse-world: x: ${Engine.mouseWorldX.toInt()}, y: ${Engine.mouseWorldY.toInt()}\n"

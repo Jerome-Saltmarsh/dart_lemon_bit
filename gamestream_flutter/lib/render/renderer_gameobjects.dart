@@ -49,11 +49,6 @@ class RendererGameObjects extends Renderer {
     orderZ = gameObject.indexZ;
   }
 
-  @override
-  void reset() {
-    super.reset();
-  }
-
   static double getRenderYBouncing(Vector3 v3) =>
       ((v3.y + v3.x) * 0.5) - v3.z + GameAnimation.animationFrameWaterHeight;
 

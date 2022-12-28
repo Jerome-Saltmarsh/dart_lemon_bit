@@ -25,8 +25,8 @@ class RendererNodes extends Renderer {
   var nodesMaxZ = 0;
   var nodesMinZ = 0;
   var currentNodeZ = 0;
-  var currentNodeRow = 0;
-  var currentNodeColumn = 0;
+  var row = 0;
+  var column = 0;
   var currentNodeDstX = 0.0;
   var currentNodeDstY = 0.0;
   var currentNodeIndex = 0;
@@ -58,10 +58,12 @@ class RendererNodes extends Renderer {
   var screenBottom = 0.0;
   var screenLeft = 0.0;
 
+  var nodeTypes = GameNodes.nodesType;
+
   // GETTERS
 
   // double get currentNodeRenderX => (currentNodeRow - currentNodeColumn) * Node_Size_Half;
-  double get currentNodeRenderY => GameConvert.rowColumnZToRenderY(currentNodeRow, currentNodeColumn, currentNodeZ);
+  double get currentNodeRenderY => GameConvert.rowColumnZToRenderY(row, column, currentNodeZ);
 
   int get currentNodeShade => GameNodes.nodesShade[currentNodeIndex];
   int get currentNodeColor => (currentNodeVisibilityOpaque ? GameLighting.values : GameLighting.values_transparent)[currentNodeShade];
@@ -97,17 +99,17 @@ class RendererNodes extends Renderer {
   void renderFunction() {
     Engine.bufferImage = atlas;
     while (
-    currentNodeColumn >= 0 &&
-        currentNodeRow <= nodesRowsMax &&
-        currentNodeDstX <= screenRight
+        column >= 0            &&
+        row    <= nodesRowsMax &&
+        currentNodeDstX   <= screenRight
     ){
-      currentNodeType = GameNodes.nodesType[currentNodeIndex];
+      currentNodeType = nodeTypes[currentNodeIndex];
       if (currentNodeType != NodeType.Empty){
-        renderNodeAt();
+        renderCurrentNode();
       }
-      if (currentNodeRow + 1 > nodesRowsMax) return;
-      currentNodeRow++;
-      currentNodeColumn--;
+      if (row + 1 > nodesRowsMax) return;
+      row++;
+      column--;
       currentNodeIndex += nodesGridTotalColumnsMinusOne;
       currentNodeDstX += GameConstants.Sprite_Width;
     }
@@ -122,12 +124,12 @@ class RendererNodes extends Renderer {
       nodesCalculateMinMaxZ();
       if (!remaining) return;
 
-      assert (currentNodeColumn >= 0);
-      assert (currentNodeRow >= 0);
-      assert (currentNodeRow < GameState.nodesTotalRows);
-      assert (currentNodeColumn < GameState.nodesTotalColumns);
+      assert (column >= 0);
+      assert (row >= 0);
+      assert (row < GameState.nodesTotalRows);
+      assert (column < GameState.nodesTotalColumns);
 
-      nodesTrimLeft();
+      trimLeft();
 
       while (currentNodeRenderY > screenBottom) {
         currentNodeZ++;
@@ -138,29 +140,30 @@ class RendererNodes extends Renderer {
       }
     } else {
       assert (nodesStartRow < GameState.nodesTotalRows);
-      assert (currentNodeColumn < GameState.nodesTotalColumns);
-      currentNodeRow = nodesStartRow;
-      currentNodeColumn = nodeStartColumn;
+      assert (column < GameState.nodesTotalColumns);
+      row = nodesStartRow;
+      column = nodeStartColumn;
     }
 
-    currentNodeIndex = (currentNodeZ * GameNodes.nodesArea) + (currentNodeRow * GameState.nodesTotalColumns) + currentNodeColumn;
+    currentNodeIndex = (currentNodeZ * GameNodes.nodesArea) + (row * GameState.nodesTotalColumns) + column;
     assert (currentNodeZ >= 0);
-    assert (currentNodeRow >= 0);
-    assert (currentNodeColumn >= 0);
+    assert (row >= 0);
+    assert (column >= 0);
     assert (currentNodeIndex >= 0);
     assert (currentNodeZ < GameState.nodesTotalZ);
-    assert (currentNodeRow < GameState.nodesTotalRows);
-    assert (currentNodeColumn < GameState.nodesTotalColumns);
+    assert (row < GameState.nodesTotalRows);
+    assert (column < GameState.nodesTotalColumns);
     assert (currentNodeIndex < GameNodes.nodesTotal);
-    currentNodeDstX = (currentNodeRow - currentNodeColumn) * Node_Size_Half;
-    currentNodeDstY = ((currentNodeRow + currentNodeColumn) * Node_Size_Half) - (currentNodeZ * Node_Height);
+    currentNodeDstX = (row - column) * Node_Size_Half;
+    currentNodeDstY = ((row + column) * Node_Size_Half) - (currentNodeZ * Node_Height);
     currentNodeType = GameNodes.nodesType[currentNodeIndex];
-    order = ((currentNodeRow + currentNodeColumn) * Node_Size) + Node_Size_Half;
+    order = ((row + column) * Node_Size) + Node_Size_Half;
     orderZ = currentNodeZ;
   }
 
   @override
   void reset() {
+    nodeTypes = GameNodes.nodesType;
     nodesRowsMax = GameState.nodesTotalRows - 1;
     nodesGridTotalZMinusOne = GameState.nodesTotalZ - 1;
     offscreenNodesTop = 0;
@@ -207,17 +210,17 @@ class RendererNodes extends Renderer {
       screenTopLeftColumn = 0;
     }
 
-    currentNodeRow = nodesScreenTopLeftRow;
-    currentNodeColumn = screenTopLeftColumn;
+    row = nodesScreenTopLeftRow;
+    column = screenTopLeftColumn;
 
     nodesShiftIndex = 0;
     nodesCalculateMinMaxZ();
     nodesTrimTop();
-    nodesTrimLeft();
+    trimLeft();
 
-    currentNodeDstX = (currentNodeRow - currentNodeColumn) * Node_Size_Half;
-    currentNodeDstY = ((currentNodeRow + currentNodeColumn) * Node_Size_Half) - (currentNodeZ * Node_Height);
-    currentNodeIndex = (currentNodeZ * GameNodes.nodesArea) + (currentNodeRow * GameState.nodesTotalColumns) + currentNodeColumn;
+    currentNodeDstX = (row - column) * Node_Size_Half;
+    currentNodeDstY = ((row + column) * Node_Size_Half) - (currentNodeZ * Node_Height);
+    currentNodeIndex = (currentNodeZ * GameNodes.nodesArea) + (row * GameState.nodesTotalColumns) + column;
     currentNodeType = GameNodes.nodesType[currentNodeIndex];
 
     while (GameNodes.visibleIndex > 0) {
@@ -247,27 +250,11 @@ class RendererNodes extends Renderer {
   @override
   int getTotal() => GameNodes.nodesTotal;
 
-  void nodesTrimLeft(){
-    final offscreen = countLeftOffscreen;
-    if (offscreen <= 0) return;
-
-    if (currentNodeColumn - offscreen < 0){
-      nodesSetStart();
-      return;
-    }
-    if (currentNodeRow + offscreen >= GameState.nodesTotalRows){
-      nodesSetStart();
-      return;
-    }
-
-    currentNodeColumn -= offscreen;
-    currentNodeRow += offscreen;
-
-    var currentNodeRenderX = (currentNodeRow - currentNodeColumn) * Node_Size_Half;
-
-    while (currentNodeRenderX < screenLeft && currentNodeColumn > 0){
-      currentNodeRow++;
-      currentNodeColumn--;
+  void trimLeft(){
+    var currentNodeRenderX = (row - column) * Node_Size_Half;
+    while (currentNodeRenderX < screenLeft && column > 0){
+      row++;
+      column--;
       currentNodeRenderX += Node_Size;
     }
     nodesSetStart();
@@ -275,8 +262,8 @@ class RendererNodes extends Renderer {
 
   void nodesSetStart(){
     // nodesStartRow = min(currentNodeRow, GameState.nodesTotalRows);
-    nodesStartRow = clamp(currentNodeRow, 0, GameState.nodesTotalRows - 1);
-    nodeStartColumn = clamp(currentNodeColumn, 0, GameState.nodesTotalColumns - 1);
+    nodesStartRow = clamp(row, 0, GameState.nodesTotalRows - 1);
+    nodeStartColumn = clamp(column, 0, GameState.nodesTotalColumns - 1);
 
     assert (nodesStartRow >= 0);
     assert (nodeStartColumn >= 0);
@@ -286,35 +273,29 @@ class RendererNodes extends Renderer {
 
   void nodesShiftIndexDown(){
 
-    currentNodeColumn = currentNodeRow + currentNodeColumn + 1;
-    currentNodeRow = 0;
-    if (currentNodeColumn < GameState.nodesTotalColumns) {
+    column = row + column + 1;
+    row = 0;
+    if (column < GameState.nodesTotalColumns) {
       nodesSetStart();
       return;
     }
 
-    if (currentNodeColumn - nodesGridTotalColumnsMinusOne >= GameState.nodesTotalRows){
+    if (column - nodesGridTotalColumnsMinusOne >= GameState.nodesTotalRows){
       remaining = false;
       return;
     }
 
-    currentNodeRow = currentNodeColumn - nodesGridTotalColumnsMinusOne;
-    currentNodeColumn = nodesGridTotalColumnsMinusOne;
-    currentNodeDstY = ((currentNodeRow + currentNodeColumn) * Node_Size_Half) - (currentNodeZ * Node_Height);
+    row = column - nodesGridTotalColumnsMinusOne;
+    column = nodesGridTotalColumnsMinusOne;
+    currentNodeDstY = ((row + column) * Node_Size_Half) - (currentNodeZ * Node_Height);
     nodesSetStart();
   }
 
-  int get countLeftOffscreen {
-    final x = GameConvert.rowColumnToRenderX(currentNodeRow, currentNodeColumn);
-    if (Engine.screen.left < x) return 0;
-    final diff = Engine.screen.left - x;
-    return diff ~/ Node_Size;
-  }
-
   void nodesCalculateMinMaxZ(){
-    final bottom = GameConvert.rowColumnToRenderY(currentNodeRow, currentNodeColumn);
+    // final bottom = GameConvert.rowColumnToRenderY(row, column);
+    final bottom = (row + column) * Node_Size_Half;
     final distance =  bottom - screenTop;
-    nodesMaxZ = (distance ~/ Node_Height);
+    nodesMaxZ = (distance ~/ Node_Height); // TODO optimize
     if (nodesMaxZ > nodesGridTotalZMinusOne){
       nodesMaxZ = nodesGridTotalZMinusOne;
     }
@@ -322,8 +303,12 @@ class RendererNodes extends Renderer {
       nodesMaxZ = 0;
     }
 
-    while (GameConvert.rowColumnZToRenderY(currentNodeRow, currentNodeColumn, nodesMinZ) > screenBottom){
+    // TODO optimize
+    var renderY = ((row + column) * Node_Size_Half) - (nodesMinZ * Node_Height);
+    while (renderY > screenBottom){
       nodesMinZ++;
+      ClientState.process.value++;
+      renderY -= Node_Height;
       if (nodesMinZ >= GameState.nodesTotalZ){
         return end();
       }
@@ -358,7 +343,7 @@ class RendererNodes extends Renderer {
       Engine.renderSprite(
         image: GameImages.atlas_nodes,
         srcX: AtlasNodeX.Torch,
-        srcY: AtlasNodeY.Torch + AtlasNode.Height_Torch + (((currentNodeRow + (GameAnimation.animationFrame)) % 6) * AtlasNode.Height_Torch), // TODO Optimize
+        srcY: AtlasNodeY.Torch + AtlasNode.Height_Torch + (((row + (GameAnimation.animationFrame)) % 6) * AtlasNode.Height_Torch), // TODO Optimize
         srcWidth: AtlasNode.Width_Torch,
         srcHeight: AtlasNode.Height_Torch,
         dstX: currentNodeDstX,
@@ -371,7 +356,7 @@ class RendererNodes extends Renderer {
     Engine.renderSprite(
       image: GameImages.atlas_nodes,
       srcX: AtlasNode.X_Torch_Windy,
-      srcY: AtlasNode.Y_Torch_Windy + AtlasNode.Height_Torch + (((currentNodeRow + (GameAnimation.animationFrame)) % 6) * AtlasNode.Height_Torch), // TODO Optimize
+      srcY: AtlasNode.Y_Torch_Windy + AtlasNode.Height_Torch + (((row + (GameAnimation.animationFrame)) % 6) * AtlasNode.Height_Torch), // TODO Optimize
       srcWidth: AtlasNode.Width_Torch,
       srcHeight: AtlasNode.Height_Torch,
       dstX: currentNodeDstX,
@@ -382,7 +367,7 @@ class RendererNodes extends Renderer {
     return;
   }
 
-  void renderNodeAt() {
+  void renderCurrentNode() {
     if (currentNodeVisibility == Visibility.Invisible) return;
 
     if (currentNodeVisibility != previousVisibility){
@@ -430,7 +415,7 @@ class RendererNodes extends Renderer {
             return;
           default:
             renderStandardNodeShaded(
-              srcX: AtlasNodeX.Grass_Long + ((((currentNodeRow - currentNodeColumn) + GameAnimation.animationFrameGrass) % 6) * 48), // TODO Expensive Operation
+              srcX: AtlasNodeX.Grass_Long + ((((row - column) + GameAnimation.animationFrameGrass) % 6) * 48), // TODO Expensive Operation
               srcY: 0,
             );
             return;
@@ -438,7 +423,7 @@ class RendererNodes extends Renderer {
       case NodeType.Rain_Falling:
         renderStandardNodeShaded(
           srcX: ClientState.srcXRainFalling,
-          srcY: 72.0 * ((GameAnimation.animationFrame + currentNodeRow + currentNodeRow + currentNodeColumn) % 6), // TODO Expensive Operation
+          srcY: 72.0 * ((GameAnimation.animationFrame + row + row + column) % 6), // TODO Expensive Operation
         );
         return;
       case NodeType.Rain_Landing:
@@ -446,7 +431,7 @@ class RendererNodes extends Renderer {
           Engine.renderSprite(
             image: GameImages.atlas_nodes,
             srcX: AtlasNode.Node_Rain_Landing_Water_X,
-            srcY: 72.0 * ((GameAnimation.animationFrame + currentNodeRow + currentNodeColumn) % 10), // TODO Expensive Operation
+            srcY: 72.0 * ((GameAnimation.animationFrame + row + column) % 10), // TODO Expensive Operation
             srcWidth: GameConstants.Sprite_Width,
             srcHeight: GameConstants.Sprite_Height,
             dstX: currentNodeDstX,
@@ -458,7 +443,7 @@ class RendererNodes extends Renderer {
         }
         renderStandardNodeShaded(
           srcX: ClientState.srcXRainLanding,
-          srcY: 72.0 * ((GameAnimation.animationFrame + currentNodeRow + currentNodeColumn) % 6), // TODO Expensive Operation
+          srcY: 72.0 * ((GameAnimation.animationFrame + row + column) % 6), // TODO Expensive Operation
         );
         return;
       case NodeType.Concrete:
@@ -575,7 +560,7 @@ class RendererNodes extends Renderer {
   void renderTreeBottom() => renderNodeVariation ? renderTreeBottomPine() : renderTreeBottomOak();
 
   void renderTreeTopOak(){
-    var shift = GameAnimation.treeAnimation[((currentNodeRow - currentNodeColumn) + GameAnimation.animationFrame) % GameAnimation.treeAnimation.length] * renderNodeWind;
+    var shift = GameAnimation.treeAnimation[((row - column) + GameAnimation.animationFrame) % GameAnimation.treeAnimation.length] * renderNodeWind;
     Engine.renderSprite(
       image: GameImages.atlas_nodes,
       srcX: AtlasNodeX.Tree_Top,
@@ -589,7 +574,7 @@ class RendererNodes extends Renderer {
   }
 
   void renderTreeTopPine() {
-    var shift = GameAnimation.treeAnimation[((currentNodeRow - currentNodeColumn) + GameAnimation.animationFrame) % GameAnimation.treeAnimation.length] * renderNodeWind;
+    var shift = GameAnimation.treeAnimation[((row - column) + GameAnimation.animationFrame) % GameAnimation.treeAnimation.length] * renderNodeWind;
     Engine.renderSprite(
       image: GameImages.atlas_nodes,
       srcX: 1262,
@@ -975,7 +960,7 @@ class RendererNodes extends Renderer {
       Engine.renderSprite(
         image: GameImages.atlas_nodes,
         srcX: AtlasNodeX.Water,
-        srcY: AtlasNodeY.Water + (((GameAnimation.animationFrameWater + ((currentNodeRow + currentNodeColumn) * 3)) % 10) * 72.0), // TODO Optimize
+        srcY: AtlasNodeY.Water + (((GameAnimation.animationFrameWater + ((row + column) * 3)) % 10) * 72.0), // TODO Optimize
         srcWidth: GameConstants.Sprite_Width,
         srcHeight: GameConstants.Sprite_Height,
         dstX: currentNodeDstX,

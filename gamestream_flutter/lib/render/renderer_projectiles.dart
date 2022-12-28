@@ -12,12 +12,10 @@ class RendererProjectiles extends Renderer {
         renderArrow(projectile.renderX, projectile.renderY, projectile.angle);
         return;
       case ProjectileType.Orb:
-      // return renderOrb(projectile.renderX, projectile.renderY);
         break;
       case ProjectileType.Fireball:
         break;
       case ProjectileType.Bullet:
-      // Engine.renderCircle(projectile.renderX, projectile.renderY, ProjectileType.getRadius(ProjectileType.Bullet), Colors.yellow);
         renderBullet(projectile.renderX, projectile.renderY, projectile.angle);
         break;
       case ProjectileType.Wave:
