@@ -6,6 +6,7 @@ import 'package:gamestream_flutter/isometric/render/highlight_character_nearest_
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 
 import 'library.dart';
+import 'render/renderer_nodes.dart';
 
 int capIndex(List<int> values, int index){
    return index < values.length ? values[index] : values.last;
@@ -14,7 +15,7 @@ int capIndex(List<int> values, int index){
 class GameRender {
   static var totalRemaining = 0;
   static var totalIndex = 0;
-  static final renderOrderGrid = RenderOrderNodes();
+  static final renderOrderNodes = RendererNodes();
   static final renderOrderParticle = RenderOrderParticle();
   static final renderOrderProjectiles = RenderOrderProjectiles();
   static final renderOrderCharacters = RenderOrderCharacters();
@@ -171,7 +172,7 @@ class GameRender {
     }
 
     if (currentNodeColumn - nodesGridTotalColumnsMinusOne >= GameState.nodesTotalRows){
-      renderOrderGrid.remaining = false;
+      renderOrderNodes.remaining = false;
       return;
     }
 
@@ -488,7 +489,7 @@ class GameRender {
   }
 
 
-  static void resetRenderOrder(RenderOrder value){
+  static void resetRenderOrder(Renderer value){
     value.reset();
     if (value.remaining){
       totalRemaining++;
@@ -558,15 +559,15 @@ class GameRender {
     totalRemaining = 0;
     resetRenderOrder(renderOrderCharacters);
     resetRenderOrder(renderOrderGameObjects);
-    resetRenderOrder(renderOrderGrid);
+    resetRenderOrder(renderOrderNodes);
     resetRenderOrder(renderOrderParticle);
     resetRenderOrder(renderOrderProjectiles);
 
-    RenderOrder first = renderOrderGrid;
+    Renderer first = renderOrderNodes;
 
     if (totalRemaining == 0) return;
     while (true) {
-      RenderOrder next = first;
+      Renderer next = first;
       if (renderOrderCharacters.remaining){
         next = next.compare(renderOrderCharacters);
       }
@@ -585,7 +586,7 @@ class GameRender {
       if (totalRemaining == 0) return;
 
       if (totalRemaining > 1) {
-        if (next == renderOrderGrid) {
+        if (next == renderOrderNodes) {
           if (renderOrderCharacters.remaining) {
             next = renderOrderCharacters;
           }
@@ -602,8 +603,8 @@ class GameRender {
         continue;
       }
 
-      while (renderOrderGrid.remaining) {
-        renderOrderGrid.renderNext();
+      while (renderOrderNodes.remaining) {
+        renderOrderNodes.renderNext();
       }
       while (renderOrderCharacters.remaining) {
         renderOrderCharacters.renderNext();
@@ -648,9 +649,9 @@ class GameRender {
     if (currentNodeZ > nodesMaxZ) {
       currentNodeZ = 0;
       nodesShiftIndexDown();
-      if (!renderOrderGrid.remaining) return;
+      if (!renderOrderNodes.remaining) return;
       nodesCalculateMinMaxZ();
-      if (!renderOrderGrid.remaining) return;
+      if (!renderOrderNodes.remaining) return;
 
       assert (currentNodeColumn >= 0);
       assert (currentNodeRow >= 0);
@@ -662,7 +663,7 @@ class GameRender {
       while (currentNodeRenderY > screenBottom) {
         currentNodeZ++;
         if (currentNodeZ > nodesMaxZ) {
-          renderOrderGrid.remaining = false;
+          renderOrderNodes.remaining = false;
           return;
         }
       }
@@ -689,8 +690,8 @@ class GameRender {
     currentNodeDstX = (currentNodeRow - currentNodeColumn) * Node_Size_Half;
     currentNodeDstY = ((currentNodeRow + currentNodeColumn) * Node_Size_Half) - (currentNodeZ * Node_Height);
     currentNodeType = GameNodes.nodesType[currentNodeIndex];
-    renderOrderGrid.order = ((currentNodeRow + currentNodeColumn) * Node_Size) + Node_Size_Half;
-    renderOrderGrid.orderZ = currentNodeZ;
+    renderOrderNodes.order = ((currentNodeRow + currentNodeColumn) * Node_Size) + Node_Size_Half;
+    renderOrderNodes.orderZ = currentNodeZ;
   }
 
   static void showIndexFinal(int index){
@@ -728,8 +729,8 @@ class GameRender {
     offscreenNodes = 0;
     onscreenNodes = 0;
     nodesMinZ = 0;
-    renderOrderGrid.order = 0;
-    renderOrderGrid.orderZ = 0;
+    renderOrderNodes.order = 0;
+    renderOrderNodes.orderZ = 0;
     currentNodeZ = 0;
     nodesGridTotalColumnsMinusOne = GameState.nodesTotalColumns - 1;
     playerZ = GamePlayer.position.indexZ;
@@ -739,7 +740,6 @@ class GameRender {
     playerRenderRow = playerRow - (GamePlayer.position.indexZ ~/ 2);
     playerRenderColumn = playerColumn - (GamePlayer.position.indexZ ~/ 2);
     nodesPlayerUnderRoof = GameState.gridIsUnderSomething(playerZ, playerRow, playerColumn);
-
 
     screenRight = Engine.screen.right + Node_Size;
     screenLeft = Engine.screen.left - Node_Size;
@@ -788,9 +788,9 @@ class GameRender {
     showIndexPlayer();
     showIndexMouse();
 
-    renderOrderGrid.total = renderOrderGrid.getTotal();
-    renderOrderGrid.index = 0;
-    renderOrderGrid.remaining = renderOrderGrid.total > 0;
+    renderOrderNodes.total = renderOrderNodes.getTotal();
+    renderOrderNodes.index = 0;
+    renderOrderNodes.remaining = renderOrderNodes.total > 0;
     GameState.refreshDynamicLightGrid();
     GameState.applyEmissions();
 
@@ -951,7 +951,7 @@ class GameRender {
     while (GameConvert.rowColumnZToRenderY(currentNodeRow, currentNodeColumn, nodesMinZ) > screenBottom){
       nodesMinZ++;
       if (nodesMinZ >= GameState.nodesTotalZ){
-        return renderOrderGrid.end();
+        return renderOrderNodes.end();
       }
     }
   }
@@ -2015,7 +2015,7 @@ class GameRender {
 
 }
 
-class RenderOrderCharacters extends RenderOrder {
+class RenderOrderCharacters extends Renderer {
   @override
   void renderFunction() => GameRender.renderCurrentCharacter();
   void updateFunction() => GameRender.updateCurrentCharacter();
@@ -2023,7 +2023,7 @@ class RenderOrderCharacters extends RenderOrder {
   int getTotal() => GameState.totalCharacters;
 }
 
-class RenderOrderGameObjects extends RenderOrder {
+class RenderOrderGameObjects extends Renderer {
 
   @override
   int getTotal() => GameState.totalGameObjects;
@@ -2040,7 +2040,7 @@ class RenderOrderGameObjects extends RenderOrder {
   }
 }
 
-class RenderOrderProjectiles extends RenderOrder {
+class RenderOrderProjectiles extends Renderer {
   @override
   void renderFunction() => GameRender.renderCurrentProjectile();
 
@@ -2053,7 +2053,7 @@ class RenderOrderProjectiles extends RenderOrder {
   }
 }
 
-class RenderOrderParticle extends RenderOrder {
+class RenderOrderParticle extends Renderer {
 
   @override
   void renderFunction() => GameRender.renderCurrentParticle();
@@ -2097,76 +2097,6 @@ int getRenderLayerShade(int layers){
    return GameNodes.nodesShade[index];
 }
 
-class RenderOrderNodes extends RenderOrder {
-
-  @override
-  void renderFunction() => GameRender.renderCurrentNodeLine();
-  @override
-  void updateFunction() => GameRender.nodesUpdateFunction();
-  @override
-  void reset() => GameRender.resetNodes();
-  @override
-  int getTotal() {
-    return GameState.nodesTotalZ * GameState.nodesTotalRows * GameState.nodesTotalColumns;
-  }
-}
-
-abstract class RenderOrder {
-  var _index = 0;
-  var total = 0;
-  var order = 0.0;
-  var orderZ = 0;
-  var remaining = true;
-
-  void renderFunction();
-  void updateFunction();
-  int getTotal();
-
-  int get index => _index;
-
-  void reset(){
-    total = getTotal();
-    _index = 0;
-    remaining = total > 0;
-    if (remaining){
-      updateFunction();
-    }
-  }
-
-  @override
-  String toString(){
-    return "$order: $order, orderZ: $orderZ, index: $_index, total: $total";
-  }
-
-  RenderOrder compare(RenderOrder that){
-    // if (!remaining) return that;
-    // if (!that.remaining) return this;
-    if (order < that.order) return this;
-    if (orderZ < that.orderZ) return this;
-    return that;
-  }
-
-  void set index(int value){
-    _index = value;
-    remaining = _index < total;
-  }
-
-  void end(){
-     index = total;
-     remaining = false;
-  }
-
-  void renderNext() {
-    if (!remaining) return;
-    // assert(remaining);
-    renderFunction();
-    _index = (_index + 1);
-    remaining = _index < total;
-    if (remaining) {
-      updateFunction();
-    }
-  }
-}
 
 int getRenderRow(int row, int z){
   return row - (z ~/ 2);

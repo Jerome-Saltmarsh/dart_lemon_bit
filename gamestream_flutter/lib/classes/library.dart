@@ -12,3 +12,4 @@ export 'particle_emitter.dart';
 export 'projectile.dart';
 export 'structure.dart';
 export 'vector3.dart';
+export 'renderer.dart';
