@@ -363,6 +363,11 @@ class RendererNodes extends Renderer {
   }
 
   void renderCurrentNode() {
+    assert (currentNodeDstX > screenLeft);
+    assert (currentNodeDstX < screenRight);
+    assert (currentNodeDstY > screenTop);
+    assert (currentNodeDstY < screenBottom);
+
     if (currentNodeVisibility == Visibility.Invisible) return;
 
     if (currentNodeVisibility != previousVisibility){
