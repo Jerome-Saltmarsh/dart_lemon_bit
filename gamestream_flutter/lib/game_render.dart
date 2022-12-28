@@ -841,24 +841,13 @@ class RenderOrderParticle extends Renderer {
 
   @override
   void updateFunction() => GameRender.updateCurrentParticle();
+
   @override
   int getTotal() => ClientState.totalActiveParticles;
 
   @override
   void reset() {
-    GameSort.sortParticles();
+    ClientState.sortParticles();
     super.reset();
   }
-}
-
-int getRenderRow(int row, int z){
-  return row - (z ~/ 2);
-}
-
-int getRenderColumn(int column, int z){
-  return column - (z ~/ 2);
-}
-
-void renderTotalIndex(Vector3 position){
-  renderText(text: GameRender.totalIndex.toString(), x: position.renderX, y: position.renderY - 100);
 }

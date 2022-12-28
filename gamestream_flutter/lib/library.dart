@@ -33,7 +33,6 @@ export 'game_ui_events.dart';
 export 'game_debug.dart';
 export 'game_animation.dart';
 export 'game_constants.dart';
-export 'game_sort.dart';
 export 'game_player.dart';
 export 'game_camera.dart';
 export 'game_atlas.dart';

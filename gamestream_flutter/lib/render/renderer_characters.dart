@@ -8,28 +8,20 @@ import 'package:gamestream_flutter/isometric/render/src_utils.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class RendererCharacters extends Renderer {
-  late Character currentRenderCharacter;
+  late Character character;
 
   @override
   void renderFunction() => renderCurrentCharacter();
 
   void updateFunction() {
-    currentRenderCharacter = GameState.characters[index];
-    order = currentRenderCharacter.renderOrder;
-    orderZ = currentRenderCharacter.indexZ;
+    character = GameState.characters[index];
+    order = character.renderOrder;
+    orderZ = character.indexZ;
   }
   @override
   int getTotal() => GameState.totalCharacters;
 
-
-
   void renderCurrentCharacter(){
-    renderCharacter(currentRenderCharacter);
-  }
-
-  void renderCharacter(Character character){
-    if (!GameQueries.isVisibleXYZ(character.x, character.y, character.z - Node_Size_Half)) return;
-
     if (character.spawning) {
       if (character.characterType == CharacterType.Rat){
         Engine.renderSprite(
@@ -100,7 +92,8 @@ class RendererCharacters extends Renderer {
     }
   }
 
-  static void renderCharacterDog(Character character){
+
+  void renderCharacterDog(Character character){
 
     if (character.state == CharacterState.Idle){
       Engine.renderSprite(
@@ -174,11 +167,9 @@ class RendererCharacters extends Renderer {
       );
       return;
     }
-
-
   }
 
-  static void renderCharacterZombie(Character character) {
+  void renderCharacterZombie(Character character) {
     final shade = GameState.getV3RenderShade(character);
     if (shade < Shade.Dark) renderCharacterHealthBar(character);
     if (character.deadOrDying) return;
