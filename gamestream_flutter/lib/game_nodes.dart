@@ -31,6 +31,13 @@ class GameNodes {
     nodesVisible[nodesVisibleIndex[0]] = Visibility.Opaque;
   }
 
+  // static void resetWind(){
+  //   final ambientWindIndex = ServerState.windTypeAmbient.value;
+  //   for (var i = 0; i < nodesTotal; i++){
+  //     nodesWind[i] = ambientWindIndex;
+  //   }
+  // }
+
   static void resetStackDynamicLight() {
     while (dynamicIndex >= 0) {
       final i = nodesDynamicIndex[dynamicIndex];

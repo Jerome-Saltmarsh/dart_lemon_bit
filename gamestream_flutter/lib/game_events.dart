@@ -39,7 +39,7 @@ class GameEvents {
   static void onChangedNodes(){
     ClientActions.refreshBakeMapLightSources();
     GameState.refreshGridMetrics();
-    GameState.gridWindResetToAmbient();
+    // GameNodes.resetWind();
 
     if (ClientState.raining.value) {
       GameActions.rainStop();
@@ -383,7 +383,7 @@ class GameEvents {
   }
 
   static void onChangedWindType(int windType) {
-    GameState.gridWindResetToAmbient();
+    // GameNodes.resetWind();
   }
 
   static void onChangedHour(int hour){

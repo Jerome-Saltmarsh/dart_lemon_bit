@@ -234,20 +234,20 @@ class GameState {
   //   assert (index >= 0);
   //   assert (index < GameNodes.nodesTotal);
   //
-  //   final zIndex = GameState.convertNodeIndexToZ(index);
-  //   final rowIndex = GameState.convertNodeIndexToRow(index);
-  //   final columnIndex = GameState.convertNodeIndexToColumn(index);
+  //   final zIndex = convertNodeIndexToZ(index);
+  //   final rowIndex = convertNodeIndexToRow(index);
+  //   final columnIndex = convertNodeIndexToColumn(index);
   //   final radius = Shade.Pitch_Black;
   //   final zMin = max(zIndex - radius, 0);
-  //   final zMax = min(zIndex + radius, GameState.nodesTotalZ);
+  //   final zMax = min(zIndex + radius, nodesTotalZ);
   //   final rowMin = max(rowIndex - radius, 0);
-  //   final rowMax = min(rowIndex + radius, GameState.nodesTotalRows);
+  //   final rowMax = min(rowIndex + radius, nodesTotalRows);
   //   final columnMin = max(columnIndex - radius, 0);
-  //   final columnMax = min(columnIndex + radius, GameState.nodesTotalColumns);
+  //   final columnMax = min(columnIndex + radius, nodesTotalColumns);
   //
   //   for (var z = zMin; z < zMax; z++){
   //     for (var row = rowMin; row <= rowMax; row++){
-  //       final a = (z * GameState.nodesArea) + (row * GameState.nodesTotalColumns);
+  //       final a = (z * nodesArea) + (row * nodesTotalColumns);
   //       final b = (z - zIndex).abs() + (row - rowIndex).abs();
   //       for (var column = columnMin; column <= columnMax; column++) {
   //         final nodeIndex = a + column;
@@ -907,7 +907,7 @@ class GameState {
       return floatingText;
     }
     final instance = FloatingText();
-    GameState.floatingTexts.add(instance);
+    floatingTexts.add(instance);
     return instance;
   }
 
@@ -1162,7 +1162,7 @@ class GameState {
 
     static void refreshLighting(){
       GameNodes.resetGridToAmbient();
-      if (GameState.gridShadows.value){
+      if (gridShadows.value){
         applyShadows();
       }
       applyBakeMapEmissions();
@@ -1186,11 +1186,11 @@ class GameState {
       final current = ServerState.ambientShade.value;
       final shadowShade = current >= Shade.Pitch_Black ? current : current + 1;
 
-      for (var z = 0; z < GameState.nodesTotalZ; z++) {
-        for (var row = 0; row < GameState.nodesTotalRows; row++){
-          for (var column = 0; column < GameState.nodesTotalColumns; column++){
+      for (var z = 0; z < nodesTotalZ; z++) {
+        for (var row = 0; row < nodesTotalRows; row++){
+          for (var column = 0; column < nodesTotalColumns; column++){
             // final tile = grid[z][row][column];
-            final index = GameState.getNodeIndexZRC(z, row, column);
+            final index = getNodeIndexZRC(z, row, column);
             final tile = GameNodes.nodesType[index];
             if (!castesShadow(tile)) continue;
             var projectionZ = z + directionZ;
@@ -1200,9 +1200,9 @@ class GameState {
             projectionZ >= 0 &&
                 projectionRow >= 0 &&
                 projectionColumn >= 0 &&
-                projectionZ < GameState.nodesTotalZ &&
-                projectionRow < GameState.nodesTotalRows &&
-                projectionColumn < GameState.nodesTotalColumns
+                projectionZ < nodesTotalZ &&
+                projectionRow < nodesTotalRows &&
+                projectionColumn < nodesTotalColumns
             ) {
               final shade = GameNodes.nodesBake[index];
               if (shade < shadowShade){
@@ -1224,8 +1224,8 @@ class GameState {
         type == NodeType.Water;
 
     static bool gridIsUnderSomething(int z, int row, int column){
-      if (GameState.outOfBounds(z, row, column)) return false;
-      for (var zIndex = z + 1; zIndex < GameState.nodesTotalZ; zIndex++){
+      if (outOfBounds(z, row, column)) return false;
+      for (var zIndex = z + 1; zIndex < nodesTotalZ; zIndex++){
         if (!GameQueries.gridNodeZRCTypeRainOrEmpty(z, row, column)) return false;
       }
       return true;
@@ -1237,7 +1237,7 @@ class GameState {
       while (true){
         index += GameNodes.nodesArea;
         index++;
-        index += GameState.nodesTotalColumns;
+        index += nodesTotalColumns;
         if (index >= GameNodes.nodesTotal) return true;
         if (GameNodes.nodesOrientation[index] != NodeOrientation.None){
           return false;
@@ -1246,27 +1246,14 @@ class GameState {
     }
 
     static void refreshGridMetrics(){
-      GameState.nodesLengthRow = GameState.nodesTotalRows * Node_Size;
-      GameState.nodesLengthColumn = GameState.nodesTotalColumns * Node_Size;
-      GameState.nodesLengthZ = GameState.nodesTotalZ * Node_Height;
+      nodesLengthRow = nodesTotalRows * Node_Size;
+      nodesLengthColumn = nodesTotalColumns * Node_Size;
+      nodesLengthZ = nodesTotalZ * Node_Height;
     }
 
     static void applyBakeMapEmissions() {
-
       for (var i = 0; i < ClientState.nodesLightSourcesTotal; i++){
         applyEmissionBakeAtIndex(index: ClientState.nodesLightSources[i], maxBrightness: Shade.Very_Bright);
-      }
-
-      for (final gameObject in GameState.gameObjects) {
-        if (gameObject.type == ItemType.GameObjects_Crystal){
-          applyEmissionBake(
-            zIndex: gameObject.indexZ,
-            rowIndex: gameObject.indexRow,
-            columnIndex: gameObject.indexColumn,
-            maxBrightness: Shade.Very_Bright,
-            radius: 7,
-          );
-        }
       }
   }
 
@@ -1278,9 +1265,9 @@ class GameState {
       assert (index >= 0);
       assert (index < GameNodes.nodesTotal);
       applyEmissionBake(
-        zIndex: GameState.convertNodeIndexToZ(index),
-        rowIndex: GameState.convertNodeIndexToRow(index),
-        columnIndex: GameState.convertNodeIndexToColumn(index),
+        zIndex: convertNodeIndexToZ(index),
+        rowIndex: convertNodeIndexToRow(index),
+        columnIndex: convertNodeIndexToColumn(index),
         maxBrightness: Shade.Very_Bright,
       );
   }
@@ -1293,16 +1280,16 @@ class GameState {
       int radius = 5,
     }){
       final zMin = max(zIndex - radius, 0);
-      final zMax = min(zIndex + radius, GameState.nodesTotalZ);
+      final zMax = min(zIndex + radius, nodesTotalZ);
       final rowMin = max(rowIndex - radius - 1, 0);
-      final rowMax = min(rowIndex + radius + 1, GameState.nodesTotalRows - 1);
+      final rowMax = min(rowIndex + radius + 1, nodesTotalRows - 1);
       final columnMin = max(columnIndex - radius - 1, 0);
-      final columnMax = min(columnIndex + radius + 1, GameState.nodesTotalColumns - 1);
+      final columnMax = min(columnIndex + radius + 1, nodesTotalColumns - 1);
 
       for (var z = zMin; z < zMax; z++){
         for (var row = rowMin; row <= rowMax; row++){
           for (var column = columnMin; column <= columnMax; column++) {
-            final nodeIndex = GameState.getNodeIndexZRC(z, row, column);
+            final nodeIndex = getNodeIndexZRC(z, row, column);
             var distance = (z - zIndex).abs() + (row - rowIndex).abs() + (column - columnIndex).abs() - 1;
             final distanceValue = GameConvert.distanceToShade(distance, maxBrightness: maxBrightness);
             if (distanceValue >= GameNodes.nodesBake[nodeIndex]) continue;
@@ -1310,14 +1297,6 @@ class GameState {
             GameNodes.nodesShade[nodeIndex] = distanceValue;
           }
         }
-      }
-    }
-
-
-  static void gridWindResetToAmbient(){
-      final ambientWindIndex = ServerState.windTypeAmbient.value;
-      for (var i = 0; i < GameNodes.nodesTotal; i++){
-        GameNodes.nodesWind[i] = ambientWindIndex;
       }
     }
 

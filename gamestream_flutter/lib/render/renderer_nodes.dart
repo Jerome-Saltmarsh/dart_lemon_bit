@@ -69,7 +69,8 @@ class RendererNodes extends Renderer {
   int get currentNodeColor => (currentNodeVisibilityOpaque ? GameLighting.values : GameLighting.values_transparent)[currentNodeShade];
   int get currentNodeOrientation => GameNodes.nodesOrientation[currentNodeIndex];
   int get currentNodeVisibility => GameNodes.nodesVisible[currentNodeIndex];
-  int get currentNodeWind => GameNodes.nodesWind[currentNodeIndex];
+  // int get currentNodeWind => GameNodes.nodesWind[currentNodeIndex];
+  int get currentNodeWind => ServerState.windTypeAmbient.value;
 
   bool get currentNodeVisible => currentNodeVisibility == Visibility.Invisible;
   bool get currentNodeInvisible => currentNodeVisibility == Visibility.Invisible;
@@ -79,7 +80,8 @@ class RendererNodes extends Renderer {
   int get renderNodeShade => GameNodes.nodesShade[currentNodeIndex];
   int get renderNodeOrientation => GameNodes.nodesOrientation[currentNodeIndex];
   int get renderNodeColor => GameLighting.values[renderNodeShade];
-  int get renderNodeWind => GameNodes.nodesWind[renderNodeShade];
+  // int get renderNodeWind => GameNodes.nodesWind[renderNodeShade];
+  int get renderNodeWind => ServerState.windTypeAmbient.value;
   bool get renderNodeVariation => GameNodes.nodesVariation[currentNodeIndex];
 
   int get renderNodeBelowIndex => currentNodeIndex - GameNodes.nodesArea;
