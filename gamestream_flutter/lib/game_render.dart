@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'dart:ui' as ui;
 
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_gameobjects.dart';
@@ -19,8 +18,6 @@ class GameRender {
   static final rendererProjectiles  = RendererProjectiles();
   static final rendererCharacters   = RendererCharacters();
   static final rendererGameObjects  = RendererGameObjects();
-
-  static var indexShowPerceptible = false;
 
   // ACTIONS
 
@@ -45,7 +42,7 @@ class GameRender {
         y: GamePlayer.aimTargetPosition.renderY - 55);
   }
 
-  static void renderSprites() {
+  static void render3D() {
     totalRemaining = 0;
     resetRenderOrder(rendererCharacters);
     resetRenderOrder(rendererGameObjects);
@@ -53,7 +50,7 @@ class GameRender {
     resetRenderOrder(rendererParticles);
     resetRenderOrder(rendererProjectiles);
 
-    Renderer first = rendererNodes;
+    var first = rendererNodes;
 
     if (totalRemaining == 0) return;
     while (true) {
@@ -146,116 +143,116 @@ class GameRender {
     );
   }
 
-  static void renderCharacterShadow(Character character, int frameLegs, int upperBodyDirection){
-    if (GameState.outOfBoundsV3(character)) return;
-    // find the nearest torch and move the shadow behind the character
-    final characterNodeIndex = GameState.getNodeIndexV3(character);
-    final initialSearchIndex = characterNodeIndex - GameState.nodesTotalColumns - 1; // shifts the selectIndex - 1 row and - 1 column
-    var torchIndex = -1;
+  // static void renderCharacterShadow(Character character, int frameLegs, int upperBodyDirection){
+  //   if (GameState.outOfBoundsV3(character)) return;
+  //   // find the nearest torch and move the shadow behind the character
+  //   final characterNodeIndex = GameState.getNodeIndexV3(character);
+  //   final initialSearchIndex = characterNodeIndex - GameState.nodesTotalColumns - 1; // shifts the selectIndex - 1 row and - 1 column
+  //   var torchIndex = -1;
+  //
+  //   for (var row = 0; row < 3; row++){
+  //     for (var column = 0; column < 3; column++){
+  //       final searchIndex = initialSearchIndex + (row * GameState.nodesTotalColumns) + column;
+  //       if (GameNodes.nodesType[searchIndex] != NodeType.Torch) continue;
+  //       torchIndex = searchIndex;
+  //       break;
+  //     }
+  //   }
+  //
+  //   // final angle = ang
+  //   var angle = 0.0;
+  //   var distance = 0.0;
+  //
+  //   if (torchIndex != -1) {
+  //     final torchRow = GameState.convertNodeIndexToRow(torchIndex);
+  //     final torchColumn = GameState.convertNodeIndexToColumn(torchIndex);
+  //     final torchPosX = torchRow * Node_Size + Node_Size_Half;
+  //     final torchPosY = torchColumn * Node_Size + Node_Size_Half;
+  //     angle = getAngleBetween(character.x, character.y, torchPosX, torchPosY);
+  //     distance = min(20, distanceBetween(character.x, character.y, torchPosX, torchPosY) * 0.15);
+  //   }
+  //
+  //   final shadowX = character.x + getAdjacent(angle, distance);
+  //   final shadowY = character.y + getOpposite(angle, distance);
+  //   final shadowZ = character.z;
+  //
+  //   Engine.renderSprite(
+  //     image: GameImages.template_shadow,
+  //     srcX: frameLegs * 64,
+  //     srcY: upperBodyDirection * 64,
+  //     srcWidth: 64,
+  //     srcHeight: 64,
+  //     dstX: GameConvert.getRenderX(shadowX, shadowY, shadowZ),
+  //     dstY: GameConvert.getRenderY(shadowX, shadowY, shadowZ),
+  //     scale: 0.75,
+  //     color: GameState.getV3RenderColor(character),
+  //     anchorY: 0.75,
+  //   );
+  // }
 
-    for (var row = 0; row < 3; row++){
-      for (var column = 0; column < 3; column++){
-        final searchIndex = initialSearchIndex + (row * GameState.nodesTotalColumns) + column;
-        if (GameNodes.nodesType[searchIndex] != NodeType.Torch) continue;
-        torchIndex = searchIndex;
-        break;
-      }
-    }
+  // static void renderCharacterCustomShadow({
+  //   required Character character,
+  //   required int frame,
+  //   required int direction,
+  //   required ui.Image image,
+  // }){
+  //   if (GameState.outOfBoundsV3(character)) return;
+  //   // find the nearest torch and move the shadow behind the character
+  //   final characterNodeIndex = GameState.getNodeIndexV3(character);
+  //   final initialSearchIndex = characterNodeIndex - GameState.nodesTotalColumns - 1; // shifts the selectIndex - 1 row and - 1 column
+  //   var torchIndex = -1;
+  //
+  //   for (var row = 0; row < 3; row++){
+  //     for (var column = 0; column < 3; column++){
+  //       final searchIndex = initialSearchIndex + (row * GameState.nodesTotalColumns) + column;
+  //       if (GameNodes.nodesType[searchIndex] != NodeType.Torch) continue;
+  //       torchIndex = searchIndex;
+  //       break;
+  //     }
+  //   }
+  //
+  //   // final angle = ang
+  //   var angle = 0.0;
+  //   var distance = 0.0;
+  //
+  //   if (torchIndex != -1) {
+  //     final torchRow = GameState.convertNodeIndexToRow(torchIndex);
+  //     final torchColumn = GameState.convertNodeIndexToColumn(torchIndex);
+  //     final torchPosX = torchRow * Node_Size + Node_Size_Half;
+  //     final torchPosY = torchColumn * Node_Size + Node_Size_Half;
+  //     angle = getAngleBetween(character.x, character.y, torchPosX, torchPosY);
+  //     distance = min(20, distanceBetween(character.x, character.y, torchPosX, torchPosY) * 0.15);
+  //   }
+  //
+  //   final shadowX = character.x + getAdjacent(angle, distance);
+  //   final shadowY = character.y + getOpposite(angle, distance);
+  //   final shadowZ = character.z;
+  //
+  //   Engine.renderSprite(
+  //     image: image,
+  //     srcX: frame * 64,
+  //     srcY: direction * 64,
+  //     srcWidth: 64,
+  //     srcHeight: 64,
+  //     dstX: GameConvert.getRenderX(shadowX, shadowY, shadowZ),
+  //     dstY: GameConvert.getRenderY(shadowX, shadowY, shadowZ),
+  //     scale: 0.75,
+  //     color: GameState.getV3RenderColor(character),
+  //     anchorY: 0.75,
+  //   );
+  // }
 
-    // final angle = ang
-    var angle = 0.0;
-    var distance = 0.0;
-
-    if (torchIndex != -1) {
-      final torchRow = GameState.convertNodeIndexToRow(torchIndex);
-      final torchColumn = GameState.convertNodeIndexToColumn(torchIndex);
-      final torchPosX = torchRow * Node_Size + Node_Size_Half;
-      final torchPosY = torchColumn * Node_Size + Node_Size_Half;
-      angle = getAngleBetween(character.x, character.y, torchPosX, torchPosY);
-      distance = min(20, distanceBetween(character.x, character.y, torchPosX, torchPosY) * 0.15);
-    }
-
-    final shadowX = character.x + getAdjacent(angle, distance);
-    final shadowY = character.y + getOpposite(angle, distance);
-    final shadowZ = character.z;
-
-    Engine.renderSprite(
-      image: GameImages.template_shadow,
-      srcX: frameLegs * 64,
-      srcY: upperBodyDirection * 64,
-      srcWidth: 64,
-      srcHeight: 64,
-      dstX: GameConvert.getRenderX(shadowX, shadowY, shadowZ),
-      dstY: GameConvert.getRenderY(shadowX, shadowY, shadowZ),
-      scale: 0.75,
-      color: GameState.getV3RenderColor(character),
-      anchorY: 0.75,
-    );
-  }
-
-  static void renderCharacterCustomShadow({
-    required Character character,
-    required int frame,
-    required int direction,
-    required ui.Image image,
-  }){
-    if (GameState.outOfBoundsV3(character)) return;
-    // find the nearest torch and move the shadow behind the character
-    final characterNodeIndex = GameState.getNodeIndexV3(character);
-    final initialSearchIndex = characterNodeIndex - GameState.nodesTotalColumns - 1; // shifts the selectIndex - 1 row and - 1 column
-    var torchIndex = -1;
-
-    for (var row = 0; row < 3; row++){
-      for (var column = 0; column < 3; column++){
-        final searchIndex = initialSearchIndex + (row * GameState.nodesTotalColumns) + column;
-        if (GameNodes.nodesType[searchIndex] != NodeType.Torch) continue;
-        torchIndex = searchIndex;
-        break;
-      }
-    }
-
-    // final angle = ang
-    var angle = 0.0;
-    var distance = 0.0;
-
-    if (torchIndex != -1) {
-      final torchRow = GameState.convertNodeIndexToRow(torchIndex);
-      final torchColumn = GameState.convertNodeIndexToColumn(torchIndex);
-      final torchPosX = torchRow * Node_Size + Node_Size_Half;
-      final torchPosY = torchColumn * Node_Size + Node_Size_Half;
-      angle = getAngleBetween(character.x, character.y, torchPosX, torchPosY);
-      distance = min(20, distanceBetween(character.x, character.y, torchPosX, torchPosY) * 0.15);
-    }
-
-    final shadowX = character.x + getAdjacent(angle, distance);
-    final shadowY = character.y + getOpposite(angle, distance);
-    final shadowZ = character.z;
-
-    Engine.renderSprite(
-      image: image,
-      srcX: frame * 64,
-      srcY: direction * 64,
-      srcWidth: 64,
-      srcHeight: 64,
-      dstX: GameConvert.getRenderX(shadowX, shadowY, shadowZ),
-      dstY: GameConvert.getRenderY(shadowX, shadowY, shadowZ),
-      scale: 0.75,
-      color: GameState.getV3RenderColor(character),
-      anchorY: 0.75,
-    );
-  }
-
-  static void renderProjectileFireball(Position position) =>
-      Engine.renderSprite(
-        image: GameImages.projectiles,
-        dstX: position.x,
-        dstY: position.y,
-        srcY: ((position.x + position.y + Engine.paintFrame) % 6) * 23,
-        srcX: 0,
-        srcWidth: 18,
-        srcHeight: 23,
-        anchorY: 0.9,
-      );
+  // static void renderProjectileFireball(Position position) =>
+  //     Engine.renderSprite(
+  //       image: GameImages.projectiles,
+  //       dstX: position.x,
+  //       dstY: position.y,
+  //       srcY: ((position.x + position.y + Engine.paintFrame) % 6) * 23,
+  //       srcX: 0,
+  //       srcWidth: 18,
+  //       srcHeight: 23,
+  //       anchorY: 0.9,
+  //     );
 
   static void canvasRenderCursorHand(ui.Canvas canvas){
     Engine.renderExternalCanvas(

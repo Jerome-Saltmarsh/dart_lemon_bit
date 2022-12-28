@@ -60,7 +60,7 @@ class RendererNodes extends Renderer {
 
   // GETTERS
 
-  double get currentNodeRenderX => (currentNodeRow - currentNodeColumn) * Node_Size_Half;
+  // double get currentNodeRenderX => (currentNodeRow - currentNodeColumn) * Node_Size_Half;
   double get currentNodeRenderY => GameConvert.rowColumnZToRenderY(currentNodeRow, currentNodeColumn, currentNodeZ);
 
   int get currentNodeShade => GameNodes.nodesShade[currentNodeIndex];
@@ -263,9 +263,12 @@ class RendererNodes extends Renderer {
     currentNodeColumn -= offscreen;
     currentNodeRow += offscreen;
 
-    while (currentNodeRenderX < screenLeft && currentNodeColumn > 0 && currentNodeRow < GameState.nodesTotalRows){
+    var currentNodeRenderX = (currentNodeRow - currentNodeColumn) * Node_Size_Half;
+
+    while (currentNodeRenderX < screenLeft && currentNodeColumn > 0){
       currentNodeRow++;
       currentNodeColumn--;
+      currentNodeRenderX += Node_Size;
     }
     nodesSetStart();
   }

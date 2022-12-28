@@ -119,7 +119,7 @@ class GameCanvas {
     GameState.updateParticles();
     GameState.interpolatePlayer();
     GameCamera.update();
-    GameRender.renderSprites();
+    GameRender.render3D();
     GameState.renderEditMode();
     GameRender.renderMouseTargetName();
     ClientState.rendersSinceUpdate.value++;
