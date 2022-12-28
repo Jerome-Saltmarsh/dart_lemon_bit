@@ -141,27 +141,18 @@ void renderCharacterTemplate(Character character, {
   var angle = 0.0;
   var distance = 0.0;
 
-  if (ClientState.torchesIgnited.value && !GameState.outOfBoundsV3(character)){
-    // find the nearest torch and move the shadow behind the character
-    // final characterNodeIndex = GameState.getNodeIndexV3(character);
-    // final initialSearchIndex = characterNodeIndex - GameState.nodesTotalColumns - 1; // shifts the selectIndex - 1 row and - 1 column
-    // var torchIndex = -1;
+  if (ClientState.torchesIgnited.value && !GameState.outOfBoundsV3(character)) {
+    var torchIndex = GameNodes.getTorchIndex(
+        GameState.getNodeIndexV3(character));
 
-    var torchIndex = GameNodes.getTorchIndex(GameState.getNodeIndexV3(character));
-
-    // for (var row = 0; row < 3; row++){
-    //   for (var column = 0; column < 3; column++){
-    //     final searchIndex = initialSearchIndex + (row * GameState.nodesTotalColumns) + column;
-    //     if (searchIndex < 0) break;
-    //     if (searchIndex >= GameNodes.nodesTotal) break;
-    //     if (GameNodes.nodesType[searchIndex] != NodeType.Torch) continue;
-    //     torchIndex = searchIndex;
-    //     break;
-    //   }
-    // }
+    var shadowX = character.x;
+    var shadowY = character.y;
+    final shadowZ = character.z;
 
     if (torchIndex != -1) {
+      // TODO optimize
       final torchRow = GameState.convertNodeIndexToRow(torchIndex);
+      // TODO optimize
       final torchColumn = GameState.convertNodeIndexToColumn(torchIndex);
       final torchPosX = torchRow * Node_Size + Node_Size_Half;
       final torchPosY = torchColumn * Node_Size + Node_Size_Half;
@@ -175,63 +166,62 @@ void renderCharacterTemplate(Character character, {
             torchPosY
         ) * GameConfig.Character_Shadow_Distance_Ratio,
       );
+      shadowX += getAdjacent(angle, distance);
+      shadowY += getOpposite(angle, distance);
     }
-  }
 
-  final shadowX = character.x + getAdjacent(angle, distance);
-  final shadowY = character.y + getOpposite(angle, distance);
-  final shadowZ = character.z;
-
-  Engine.renderSprite(
-    image: GameImages.template_shadow,
-    srcX: frameLegs * 64,
-    srcY: upperBodyDirection * 64,
-    srcWidth: 64,
-    srcHeight: 64,
-    dstX: GameConvert.getRenderX(shadowX, shadowY, shadowZ),
-    dstY: GameConvert.getRenderY(shadowX, shadowY, shadowZ),
-    scale: 0.75,
-    color: color,
-    anchorY: 0.75,
-  );
-  Engine.renderSprite(
-    image: GameImages.getImageForLegType(character.legType),
-    srcX: frameLegs * 64,
-    srcY: directionLegs * 64,
-    srcWidth: 64,
-    srcHeight: 64,
-    dstX: dstX,
-    dstY: dstY,
-    scale: 0.75,
-    color: color,
-    anchorY: 0.75
-  );
-  Engine.renderSprite(
-    image: GameImages.getImageForBodyType(character.bodyType),
-    srcX: frameBody * 64,
-    srcY: directionBody * 64,
-    srcWidth: 64,
-    srcHeight: 64,
-    dstX: dstX,
-    dstY: dstY,
-    scale: 0.75,
-    color: color,
-    anchorY: 0.75
-  );
-  Engine.renderSprite(
-    image: GameImages.getImageForHeadType(character.headType),
-    srcX: frameHead * 64,
-    srcY: directionHead * 64,
-    srcWidth: 64,
-    srcHeight: 64,
-    dstX: dstX,
-    dstY: dstY,
-    scale: 0.75,
-    color: color,
-    anchorY: 0.75
-  );
-  if (weaponInFront) {
-    renderTemplateWeapon(character.weaponType, directionBody, frameWeapon, color, dstX, dstY);
+    Engine.renderSprite(
+      image: GameImages.template_shadow,
+      srcX: frameLegs * 64,
+      srcY: upperBodyDirection * 64,
+      srcWidth: 64,
+      srcHeight: 64,
+      dstX: GameConvert.getRenderX(shadowX, shadowY, shadowZ),
+      dstY: GameConvert.getRenderY(shadowX, shadowY, shadowZ),
+      scale: 0.75,
+      color: color,
+      anchorY: 0.75,
+    );
+    Engine.renderSprite(
+        image: GameImages.getImageForLegType(character.legType),
+        srcX: frameLegs * 64,
+        srcY: directionLegs * 64,
+        srcWidth: 64,
+        srcHeight: 64,
+        dstX: dstX,
+        dstY: dstY,
+        scale: 0.75,
+        color: color,
+        anchorY: 0.75
+    );
+    Engine.renderSprite(
+        image: GameImages.getImageForBodyType(character.bodyType),
+        srcX: frameBody * 64,
+        srcY: directionBody * 64,
+        srcWidth: 64,
+        srcHeight: 64,
+        dstX: dstX,
+        dstY: dstY,
+        scale: 0.75,
+        color: color,
+        anchorY: 0.75
+    );
+    Engine.renderSprite(
+        image: GameImages.getImageForHeadType(character.headType),
+        srcX: frameHead * 64,
+        srcY: directionHead * 64,
+        srcWidth: 64,
+        srcHeight: 64,
+        dstX: dstX,
+        dstY: dstY,
+        scale: 0.75,
+        color: color,
+        anchorY: 0.75
+    );
+    if (weaponInFront) {
+      renderTemplateWeapon(
+          character.weaponType, directionBody, frameWeapon, color, dstX, dstY);
+    }
   }
 }
 
