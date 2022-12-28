@@ -1,7 +1,7 @@
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_gameobjects.dart';
 import 'package:gamestream_flutter/library.dart';
 
-class RenderOrderProjectiles extends Renderer {
+class RendererProjectiles extends Renderer {
 
   late Projectile projectile;
   

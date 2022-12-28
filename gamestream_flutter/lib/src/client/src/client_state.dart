@@ -77,18 +77,22 @@ class ClientState {
     GameLighting.refreshValues();
   }
 
-  static void sortParticles(){
-    sortParticlesActive();
+  static void updateActiveParticles(){
     totalActiveParticles = 0;
     GameState.totalParticles = particles.length;
     final totalParticles = GameState.totalParticles;
     for (; totalActiveParticles < totalParticles; totalActiveParticles++){
       if (!particles[totalActiveParticles].active) break;
     }
+  }
+
+  static void sortParticles() {
+    sortParticlesActive();
+    updateActiveParticles();
 
     if (totalActiveParticles == 0) return;
 
-    assert(verifyTotalActiveParticles());
+    assert (verifyTotalActiveParticles());
 
     Engine.insertionSort(
       particles,
