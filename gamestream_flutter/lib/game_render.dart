@@ -8,6 +8,7 @@ import 'package:gamestream_flutter/render/renderer_projectiles.dart';
 
 import 'library.dart';
 import 'render/renderer_characters.dart';
+import 'render/renderer_gameobjects.dart';
 import 'render/renderer_nodes.dart';
 
 class GameRender {
@@ -21,17 +22,6 @@ class GameRender {
 
   static var indexShowPerceptible = false;
 
-  static late GameObject currentRenderGameObject;
-
-  static void renderCurrentGameObject() =>
-    renderGameObject(currentRenderGameObject);
-
-  static void updateCurrentGameObject(){
-    currentRenderGameObject = GameState.gameObjects[rendererGameObjects.index];
-    rendererGameObjects.order = currentRenderGameObject.renderOrder;
-    rendererGameObjects.orderZ = currentRenderGameObject.indexZ;
-  }
-
   // ACTIONS
 
   static void resetRenderOrder(Renderer value){
@@ -39,51 +29,6 @@ class GameRender {
     if (value.remaining){
       totalRemaining++;
     }
-  }
-
-  static void renderGameObject(GameObject gameObject) {
-
-    if (ItemType.isTypeGameObject(gameObject.type)) {
-      Engine.renderSprite(
-        image: GameImages.atlas_gameobjects,
-        dstX: GameConvert.convertV3ToRenderX(gameObject),
-        dstY: GameConvert.convertV3ToRenderY(gameObject),
-        srcX: AtlasItems.getSrcX(gameObject.type),
-        srcY: AtlasItems.getSrcY(gameObject.type),
-        srcWidth: AtlasItems.getSrcWidth(gameObject.type),
-        srcHeight: AtlasItems.getSrcHeight(gameObject.type),
-        color: GameState.getV3RenderColor(gameObject),
-      );
-      return;
-    }
-
-    if (ItemType.isTypeCollectable(gameObject.type)) {
-      renderBouncingGameObjectShadow(gameObject);
-      Engine.renderSprite(
-        image: GameImages.atlas_items,
-        dstX: GameConvert.convertV3ToRenderX(gameObject),
-        dstY: getRenderYBouncing(gameObject),
-        srcX: AtlasItems.getSrcX(gameObject.type),
-        srcY: AtlasItems.getSrcY(gameObject.type),
-        srcWidth: AtlasItems.size,
-        srcHeight: AtlasItems.size,
-        color: GameState.getV3RenderColor(gameObject),
-      );
-      return;
-    }
-
-    throw Exception('could not render gameobject type ${gameObject.type}');
-  }
-
-  static void renderBouncingGameObjectShadow(Vector3 gameObject){
-    const shadowScale = 1.5;
-    const shadowScaleHeight = 0.15;
-    renderShadow(
-        gameObject.x,
-        gameObject.y,
-        gameObject.z - 15,
-        scale: shadowScale + (shadowScaleHeight * GameAnimation.animationFrameWaterHeight.toDouble())
-    );
   }
 
   static void renderMouseWireFrame() {
@@ -158,23 +103,9 @@ class GameRender {
     }
   }
 
-  static void renderShadow(double x, double y, double z, {double scale = 1}) =>
-      Engine.renderSprite(
-        image: GameImages.atlas_gameobjects,
-        dstX: (x - y) * 0.5,
-        dstY: ((y + x) * 0.5) - z,
-        srcX: 0,
-        srcY: 32,
-        srcWidth: 8,
-        srcHeight: 8,
-        scale: scale,
-      );
-
   // given a grid coordinate row / column workout the maximum z before it goes above the top of the screen.
   // otherwise use totalZ;
   // calculate the world position Y at row / column, then workout its distance from the top of the screen;
-
-  static double getRenderYBouncing(Vector3 v3) => ((v3.y + v3.x) * 0.5) - v3.z + GameAnimation.animationFrameWaterHeight;
 
   static void renderTextV3(Vector3 v3, dynamic text, {double offsetY = 0}){
     renderText(
@@ -467,20 +398,4 @@ class GameRender {
   }
 }
 
-class RendererGameObjects extends Renderer {
-
-  @override
-  int getTotal() => GameState.totalGameObjects;
-
-  @override
-  void renderFunction() => GameRender.renderCurrentGameObject();
-
-  @override
-  void updateFunction() => GameRender.updateCurrentGameObject();
-
-  @override
-  void reset() {
-    super.reset();
-  }
-}
 

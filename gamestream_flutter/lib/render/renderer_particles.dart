@@ -1,5 +1,7 @@
 import 'package:gamestream_flutter/library.dart';
 
+import 'functions/render_shadow.dart';
+
 class RendererParticles extends Renderer {
 
   static late Particle particle;
@@ -334,9 +336,8 @@ class RendererParticles extends Renderer {
       final nodeBelowOrientation = GameNodes.nodesOrientation[nodeBelowIndex];
       if (nodeBelowOrientation == NodeOrientation.Solid){
         final topRemainder = vector3.z % Node_Height;
-        GameRender.renderShadow(vector3.x, vector3.y, vector3.z - topRemainder, scale: topRemainder > 0 ? (topRemainder / Node_Height) * 2 : 2.0);
+        renderShadow(vector3.x, vector3.y, vector3.z - topRemainder, scale: topRemainder > 0 ? (topRemainder / Node_Height) * 2 : 2.0);
       }
     }
   }
-
 }
