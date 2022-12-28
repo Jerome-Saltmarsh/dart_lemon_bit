@@ -109,6 +109,7 @@ class NodeType {
       type == Concrete      ||
       type == Road          ||
       type == Metal         ||
+      type == Wooden_Plank  ||
       type == Bau_Haus       ;
 
   static bool supportsOrientationSlopeCornerInner(int type) =>

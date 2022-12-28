@@ -365,11 +365,34 @@ class RendererNodes extends Renderer {
     return;
   }
 
+  static bool assertOnScreen(){
+    if (!ClientState.debugVisible.value) return true;
+    if (currentNodeDstX < screenLeft){
+      offscreenNodesLeft++;
+      return true;
+    }
+    if (currentNodeDstX > screenRight){
+      offscreenNodesRight++;
+      return true;
+    }
+    if (currentNodeDstY < screenTop){
+      offscreenNodesTop++;
+      return true;
+    }
+    if (currentNodeDstY > screenBottom){
+      offscreenNodesBottom++;
+      return true;
+    }
+
+    return true;
+  }
+
   static void renderCurrentNode() {
     assert (currentNodeDstX > screenLeft);
     assert (currentNodeDstX < screenRight);
     assert (currentNodeDstY > screenTop);
     assert (currentNodeDstY < screenBottom);
+    assert (currentNodeDstX > screenLeft);
 
     if (currentNodeVisibility == Visibility.Invisible) return;
 
@@ -859,67 +882,6 @@ class RendererNodes extends Renderer {
     }
   }
 
-  static void renderNodeWoodenPlank(){
-    switch(renderNodeOrientation){
-      case NodeOrientation.Solid:
-        renderStandardNodeShaded(
-          srcX: AtlasNode.Wooden_Plank_Solid_X,
-          srcY: AtlasNode.Node_Wooden_Plank_Solid_Y,
-        );
-        return;
-      case NodeOrientation.Half_North:
-        renderStandardNodeHalfNorthOld(
-          srcX: AtlasNode.Node_Wooden_Plank_Half_South_X,
-          srcY: AtlasNode.Node_Wooden_Plank_Half_South_Y,
-          color: renderNodeColor,
-        );
-        return;
-      case NodeOrientation.Half_East:
-        renderStandardNodeHalfEastOld(
-          srcX: AtlasNode.Node_Wooden_Plank_Half_West_X,
-          srcY: AtlasNode.Node_Wooden_Plank_Half_West_Y,
-          color: renderNodeColor,
-        );
-        return;
-      case NodeOrientation.Half_South:
-        renderStandardNodeShaded(
-          srcX: AtlasNode.Node_Wooden_Plank_Half_South_X,
-          srcY: AtlasNode.Node_Wooden_Plank_Half_South_Y,
-        );
-        return;
-      case NodeOrientation.Half_West:
-        renderStandardNodeShaded(
-          srcX: AtlasNode.Node_Wooden_Plank_Half_West_X,
-          srcY: AtlasNode.Node_Wooden_Plank_Half_West_Y,
-        );
-        return;
-      case NodeOrientation.Corner_Top:
-        renderStandardNodeShaded(
-          srcX: AtlasNode.Node_Wooden_Plank_Corner_Top_X,
-          srcY: AtlasNode.Node_Wooden_Plank_Corner_Top_Y,
-        );
-        return;
-      case NodeOrientation.Corner_Right:
-        renderStandardNodeShaded(
-          srcX: AtlasNode.Node_Wooden_Plank_Corner_Right_X,
-          srcY: AtlasNode.Node_Wooden_Plank_Corner_Right_Y,
-        );
-        return;
-      case NodeOrientation.Corner_Bottom:
-        renderStandardNodeShaded(
-          srcX: AtlasNode.Node_Wooden_Plank_Corner_Bottom_X,
-          srcY: AtlasNode.Node_Wooden_Plank_Corner_Bottom_Y,
-        );
-        return;
-      case NodeOrientation.Corner_Left:
-        renderStandardNodeShaded(
-          srcX: AtlasNode.Node_Wooden_Plank_Corner_Left_X,
-          srcY: AtlasNode.Node_Wooden_Plank_Corner_Left_Y,
-        );
-        return;
-    }
-  }
-
   static void renderNodeWindow(){
     const srcX = 1508.0;
     switch (renderNodeOrientation) {
@@ -1027,44 +989,6 @@ class RendererNodes extends Renderer {
     bufferDst[f + 2] = currentNodeDstX - (GameConstants.Sprite_Width_Half) + offsetX;
     bufferDst[f + 3] = currentNodeDstY - (GameConstants.Sprite_Height_Third) + offsetY;
     Engine.incrementBufferIndex();
-  }
-
-  static void renderStandardNodeHalfEastOld({
-    required double srcX,
-    required double srcY,
-    int color = 1,
-  }){
-    onscreenNodes++;
-    Engine.renderSprite(
-      image: atlas,
-      srcX: srcX,
-      srcY: srcY,
-      srcWidth: GameConstants.Sprite_Width,
-      srcHeight: GameConstants.Sprite_Height,
-      dstX: currentNodeDstX + 17,
-      dstY: currentNodeDstY - 17,
-      anchorY: GameConstants.Sprite_Anchor_Y,
-      color: color,
-    );
-  }
-
-  static void renderStandardNodeHalfNorthOld({
-    required double srcX,
-    required double srcY,
-    int color = 1,
-  }){
-    onscreenNodes++;
-    Engine.renderSprite(
-      image: atlas,
-      srcX: srcX,
-      srcY: srcY,
-      srcWidth: GameConstants.Sprite_Width,
-      srcHeight: GameConstants.Sprite_Height,
-      dstX: currentNodeDstX - 17,
-      dstY: currentNodeDstY - 17,
-      anchorY: GameConstants.Sprite_Anchor_Y,
-      color: color,
-    );
   }
 
   static int getRenderLayerColor(int layers) =>

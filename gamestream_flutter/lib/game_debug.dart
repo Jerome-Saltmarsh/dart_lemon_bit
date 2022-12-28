@@ -6,6 +6,7 @@ import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 
 import 'library.dart';
+import 'render/renderer_nodes.dart';
 
 class GameDebug {
 
@@ -56,8 +57,8 @@ class GameDebug {
                                 "player-weapon: ${ItemType.getName(GamePlayer.weapon.value)}\n"
                                 "player-interact-mode: ${InteractMode.getName(ServerState.interactMode.value)}\n"
                                 "scene-light-sources: ${ClientState.nodesLightSourcesTotal}\n"
+                                "offscreen-nodes: left: ${RendererNodes.offscreenNodesLeft}, top: ${RendererNodes.offscreenNodesTop}, right: ${RendererNodes.offscreenNodesRight}, bottom: ${RendererNodes.offscreenNodesBottom}"
                             )),
-                            // WatchBuilder(ClientState.hoverIndex, (t) => text("client-hover-index: $t")),
                             Refresh(() => text('touch-world: x: ${GameIO.touchCursorWorldX.toInt()}, y: ${GameIO.touchCursorWorldY.toInt()}')),
                             Refresh(() => text('characters-total: ${GameState.characters.length}')),
                             Refresh(() => text('characters-active: ${GameState.totalCharacters}')),
