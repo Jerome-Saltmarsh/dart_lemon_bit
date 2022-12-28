@@ -37,6 +37,7 @@ class DarkAgeScenes {
   late Scene empty;
   late Scene outpost_1;
   late Scene shrine_1;
+  late Scene suburbs_01;
 
   List<Scene> values = [];
 
@@ -65,6 +66,7 @@ class DarkAgeScenes {
       mountains_3 = await loadScene('mountains-3');
       mountains_4 = await loadScene('mountains-4');
       shrine_1 = await loadScene('shrine-1');
+      suburbs_01 = await loadScene('suburbs_01');
       final ms = DateTime.now().difference(start).inMilliseconds;
       print("scenes took $ms ms to load");
 

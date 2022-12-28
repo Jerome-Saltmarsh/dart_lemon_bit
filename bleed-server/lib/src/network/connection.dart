@@ -677,7 +677,6 @@ class Connection with ByteReader {
     joinGame(Game5v5(darkAgeScenes.skirmish_2));
   }
 
-
   Future joinGameSurvival() async {
     for (final game in engine.games){
       if (game is GameSurvival){
@@ -685,7 +684,7 @@ class Connection with ByteReader {
         return joinGame(game);
       }
     }
-    joinGame(GameSurvival(darkAgeScenes.skirmish_1));
+    joinGame(GameSurvival(darkAgeScenes.suburbs_01));
   }
 
   void joinGame(Game game){
