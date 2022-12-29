@@ -59,7 +59,7 @@ class GameUI {
             const ratio = 2 / 48.0;
             final targetX = GameCamera.chaseTarget.renderX * ratio;
             final targetY = GameCamera.chaseTarget.renderY * ratio;
-            const translate = 100;
+            const translate = 50;
             final cameraX = targetX - (screenCenterX / scale) - translate;
             final cameraY = targetY - (screenCenterY / scale) - translate;
             canvas.translate(-cameraX, -cameraY);

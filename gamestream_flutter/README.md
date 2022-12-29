@@ -70,9 +70,9 @@ ctrl + w:   minimal mode
 [ ] fix ai spots player through walls
 [ ] fix characters teleport through walls on struck
 [ ] model weapon blunderbuss
-[ ] feature generate mini-map
 
 29.12.2022
+[x] feature generate mini-map
 [x] fix rocket sprite
 [x] fix sniper rifle aiming render
 [x] fix grenade explosion forces in wrong direction
