@@ -51,6 +51,14 @@ class GameUI {
         return Engine.buildCanvas(paint: (Canvas canvas, Size size){
           const scale = 0.1;
           canvas.scale(scale, scale);
+          final screenCenterX = size.width * 0.5;
+          final screenCenterY = size.height * 0.5;
+          final targetX = GameCamera.chaseTarget.renderX;
+          final targetY = GameCamera.chaseTarget.renderY;
+          final cameraX = targetX - (screenCenterX / scale);
+          final cameraY = targetY - (screenCenterY / scale);
+          canvas.translate(-cameraX, -cameraY);
+
           var index = 0;
             for (var row = 0; row < GameState.nodesTotalRows; row++){
                for (var column = 0; column < GameState.nodesTotalColumns; column++){
@@ -71,6 +79,20 @@ class GameUI {
                            anchorY: 0.33,
                        );
                        break;
+                     case NodeType.Water:
+                       Engine.renderExternalCanvas(
+                         canvas: canvas,
+                         image: GameImages.atlas_nodes,
+                         srcX: 1607,
+                         srcY: 509,
+                         srcWidth: 48,
+                         srcHeight: 72,
+                         dstX: dstX,
+                         dstY: dstY,
+                         anchorY: 0.33,
+                       );
+                       break;
+
                    }
 
                    index++;
