@@ -1343,7 +1343,7 @@ abstract class Game {
       damage = src.damage;
       target.applyForce(
         force: 20,
-        angle: src.velocityAngle,
+        angle: getAngleBetweenV3(target, src),
       );
     }
 
