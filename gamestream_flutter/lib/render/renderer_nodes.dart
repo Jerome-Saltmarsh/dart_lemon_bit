@@ -116,6 +116,7 @@ class RendererNodes extends Renderer {
       currentNodeDstX += GameConstants.Sprite_Width;
     }
   }
+
   @override
   void updateFunction() {
     currentNodeZ++;
@@ -940,7 +941,7 @@ class RendererNodes extends Renderer {
     required double srcY,
   }){
     onscreenNodes++;
-    final f = Engine.bufferIndex * 4;
+    final f = Engine.bufferIndex << 2;
     bufferClr[Engine.bufferIndex] = currentNodeVisibility == Visibility.Opaque ? 1 : GameLighting.Transparent;
     bufferSrc[f] = srcX;
     bufferSrc[f + 1] = srcY;
@@ -958,7 +959,7 @@ class RendererNodes extends Renderer {
     required double srcY,
   }){
     onscreenNodes++;
-    final f = Engine.bufferIndex * 4;
+    final f = Engine.bufferIndex << 2;
     bufferClr[Engine.bufferIndex] = currentNodeVisibility == Visibility.Opaque ? currentNodeColor : GameLighting.Transparent;
     bufferSrc[f] = srcX;
     bufferSrc[f + 1] = srcY;
@@ -978,7 +979,7 @@ class RendererNodes extends Renderer {
     required double offsetY,
   }){
     onscreenNodes++;
-    final f = Engine.bufferIndex * 4;
+    final f = Engine.bufferIndex << 2;
     bufferClr[Engine.bufferIndex] = currentNodeColor;
     bufferSrc[f] = srcX;
     bufferSrc[f + 1] = srcY;
