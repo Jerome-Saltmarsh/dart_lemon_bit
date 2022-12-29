@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gamestream_flutter/game_minimap.dart';
 import 'package:gamestream_flutter/game_ui_interact.dart';
 import 'package:gamestream_flutter/isometric/events/on_visibility_changed_message_box.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
@@ -62,112 +63,114 @@ class GameUI {
             final cameraY = targetY - (screenCenterY / scale) - translate;
             canvas.translate(-cameraX, -cameraY);
 
-            var index = 0;
-              for (var row = 0; row < GameState.nodesTotalRows; row++){
-                 for (var column = 0; column < GameState.nodesTotalColumns; column++){
-                     final nodeType = GameNodes.miniMap[index];
-                     final dstX = (row - column) * Node_Size_Half;
-                     final dstY = (row + column) * Node_Size_Half;
-                     switch (nodeType){
-                       case NodeType.Grass:
-                         Engine.renderExternalCanvas(
-                             canvas: canvas,
-                             image: GameImages.atlas_nodes,
-                             srcX: 147,
-                             srcY: 0,
-                             srcWidth: 48,
-                             srcHeight: 72,
-                             dstX: dstX,
-                             dstY: dstY,
-                             anchorY: 0.33,
-                         );
-                         break;
-                       case NodeType.Water:
-                         Engine.renderExternalCanvas(
-                           canvas: canvas,
-                           image: GameImages.atlas_nodes,
-                           srcX: 1607,
-                           srcY: 509,
-                           srcWidth: 48,
-                           srcHeight: 72,
-                           dstX: dstX,
-                           dstY: dstY,
-                           anchorY: 0.33,
-                         );
-                         break;
-                       case NodeType.Road:
-                         Engine.renderExternalCanvas(
-                           canvas: canvas,
-                           image: GameImages.atlas_nodes,
-                           srcX: 441,
-                           srcY: 0,
-                           srcWidth: 48,
-                           srcHeight: 72,
-                           dstX: dstX,
-                           dstY: dstY,
-                           anchorY: 0.33,
-                         );
-                         break;
-                       case NodeType.Road_2:
-                         Engine.renderExternalCanvas(
-                           canvas: canvas,
-                           image: GameImages.atlas_nodes,
-                           srcX: 441,
-                           srcY: 0,
-                           srcWidth: 48,
-                           srcHeight: 72,
-                           dstX: dstX,
-                           dstY: dstY,
-                           anchorY: 0.33,
-                         );
-                         break;
-                       case NodeType.Concrete:
-                         Engine.renderExternalCanvas(
-                           canvas: canvas,
-                           image: GameImages.atlas_nodes,
-                           srcX: 392,
-                           srcY: 0,
-                           srcWidth: 48,
-                           srcHeight: 72,
-                           dstX: dstX,
-                           dstY: dstY,
-                           anchorY: 0.33,
-                         );
-                         break;
-                       case NodeType.Brick:
-                         Engine.renderExternalCanvas(
-                           canvas: canvas,
-                           image: GameImages.atlas_nodes,
-                           srcX: 98,
-                           srcY: 0,
-                           srcWidth: 48,
-                           srcHeight: 72,
-                           dstX: dstX,
-                           dstY: dstY,
-                           anchorY: 0.33,
-                         );
-                         break;
-                       case NodeType.Wood:
-                         Engine.renderExternalCanvas(
-                           canvas: canvas,
-                           image: GameImages.atlas_nodes,
-                           srcX: 245,
-                           srcY: 0,
-                           srcWidth: 48,
-                           srcHeight: 72,
-                           dstX: dstX,
-                           dstY: dstY,
-                           anchorY: 0.33,
-                         );
-                         break;
+            GameMinimap.renderCanvas(canvas);
 
-
-
-                     }
-
-                     index++;
-                 }
-              }
+            // var index = 0;
+              // for (var row = 0; row < GameState.nodesTotalRows; row++){
+              //    for (var column = 0; column < GameState.nodesTotalColumns; column++){
+              //        final nodeType = GameNodes.miniMap[index];
+              //        final dstX = (row - column) * Node_Size_Half;
+              //        final dstY = (row + column) * Node_Size_Half;
+              //        switch (nodeType){
+              //          case NodeType.Grass:
+              //            Engine.renderExternalCanvas(
+              //                canvas: canvas,
+              //                image: GameImages.atlas_nodes,
+              //                srcX: 147,
+              //                srcY: 0,
+              //                srcWidth: 48,
+              //                srcHeight: 72,
+              //                dstX: dstX,
+              //                dstY: dstY,
+              //                anchorY: 0.33,
+              //            );
+              //            break;
+              //          case NodeType.Water:
+              //            Engine.renderExternalCanvas(
+              //              canvas: canvas,
+              //              image: GameImages.atlas_nodes,
+              //              srcX: 1607,
+              //              srcY: 509,
+              //              srcWidth: 48,
+              //              srcHeight: 72,
+              //              dstX: dstX,
+              //              dstY: dstY,
+              //              anchorY: 0.33,
+              //            );
+              //            break;
+              //          case NodeType.Road:
+              //            Engine.renderExternalCanvas(
+              //              canvas: canvas,
+              //              image: GameImages.atlas_nodes,
+              //              srcX: 441,
+              //              srcY: 0,
+              //              srcWidth: 48,
+              //              srcHeight: 72,
+              //              dstX: dstX,
+              //              dstY: dstY,
+              //              anchorY: 0.33,
+              //            );
+              //            break;
+              //          case NodeType.Road_2:
+              //            Engine.renderExternalCanvas(
+              //              canvas: canvas,
+              //              image: GameImages.atlas_nodes,
+              //              srcX: 441,
+              //              srcY: 0,
+              //              srcWidth: 48,
+              //              srcHeight: 72,
+              //              dstX: dstX,
+              //              dstY: dstY,
+              //              anchorY: 0.33,
+              //            );
+              //            break;
+              //          case NodeType.Concrete:
+              //            Engine.renderExternalCanvas(
+              //              canvas: canvas,
+              //              image: GameImages.atlas_nodes,
+              //              srcX: 392,
+              //              srcY: 0,
+              //              srcWidth: 48,
+              //              srcHeight: 72,
+              //              dstX: dstX,
+              //              dstY: dstY,
+              //              anchorY: 0.33,
+              //            );
+              //            break;
+              //          case NodeType.Brick:
+              //            Engine.renderExternalCanvas(
+              //              canvas: canvas,
+              //              image: GameImages.atlas_nodes,
+              //              srcX: 98,
+              //              srcY: 0,
+              //              srcWidth: 48,
+              //              srcHeight: 72,
+              //              dstX: dstX,
+              //              dstY: dstY,
+              //              anchorY: 0.33,
+              //            );
+              //            break;
+              //          case NodeType.Wood:
+              //            Engine.renderExternalCanvas(
+              //              canvas: canvas,
+              //              image: GameImages.atlas_nodes,
+              //              srcX: 245,
+              //              srcY: 0,
+              //              srcWidth: 48,
+              //              srcHeight: 72,
+              //              dstX: dstX,
+              //              dstY: dstY,
+              //              anchorY: 0.33,
+              //            );
+              //            break;
+              //
+              //
+              //
+              //        }
+              //
+              //        index++;
+              //    }
+              // }
 
             Engine.renderExternalCanvas(
               canvas: canvas,

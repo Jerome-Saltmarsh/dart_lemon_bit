@@ -1,4 +1,5 @@
 
+import 'package:gamestream_flutter/game_minimap.dart';
 import 'package:gamestream_flutter/isometric/events/on_game_event_game_object_destroyed.dart';
 import 'package:gamestream_flutter/isometric/events/on_player_event_quest_started.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
@@ -37,6 +38,7 @@ class GameEvents {
   }
 
   static void onChangedNodes(){
+    GameMinimap.generateSrcDst();
     ClientActions.refreshBakeMapLightSources();
     GameState.refreshGridMetrics();
 
