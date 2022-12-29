@@ -51,15 +51,15 @@ class GameUI {
         return Container(
           color: Colors.red,
           child: Engine.buildCanvas(paint: (Canvas canvas, Size size){
-            const scale = 0.1;
+            const scale = 0.075;
             canvas.scale(scale, scale);
             final screenCenterX = size.width * 0.5;
             final screenCenterY = size.height * 0.5;
             final targetX = GameCamera.chaseTarget.renderX;
             final targetY = GameCamera.chaseTarget.renderY;
-            const translate = 500;
-            final cameraX = targetX - (screenCenterX / scale) - 500;
-            final cameraY = targetY - (screenCenterY / scale) - 500;
+            const translate = 700;
+            final cameraX = targetX - (screenCenterX / scale) - translate;
+            final cameraY = targetY - (screenCenterY / scale) - translate;
             canvas.translate(-cameraX, -cameraY);
 
             var index = 0;
@@ -95,6 +95,73 @@ class GameUI {
                            anchorY: 0.33,
                          );
                          break;
+                       case NodeType.Road:
+                         Engine.renderExternalCanvas(
+                           canvas: canvas,
+                           image: GameImages.atlas_nodes,
+                           srcX: 441,
+                           srcY: 0,
+                           srcWidth: 48,
+                           srcHeight: 72,
+                           dstX: dstX,
+                           dstY: dstY,
+                           anchorY: 0.33,
+                         );
+                         break;
+                       case NodeType.Road_2:
+                         Engine.renderExternalCanvas(
+                           canvas: canvas,
+                           image: GameImages.atlas_nodes,
+                           srcX: 441,
+                           srcY: 0,
+                           srcWidth: 48,
+                           srcHeight: 72,
+                           dstX: dstX,
+                           dstY: dstY,
+                           anchorY: 0.33,
+                         );
+                         break;
+                       case NodeType.Concrete:
+                         Engine.renderExternalCanvas(
+                           canvas: canvas,
+                           image: GameImages.atlas_nodes,
+                           srcX: 392,
+                           srcY: 0,
+                           srcWidth: 48,
+                           srcHeight: 72,
+                           dstX: dstX,
+                           dstY: dstY,
+                           anchorY: 0.33,
+                         );
+                         break;
+                       case NodeType.Brick:
+                         Engine.renderExternalCanvas(
+                           canvas: canvas,
+                           image: GameImages.atlas_nodes,
+                           srcX: 98,
+                           srcY: 0,
+                           srcWidth: 48,
+                           srcHeight: 72,
+                           dstX: dstX,
+                           dstY: dstY,
+                           anchorY: 0.33,
+                         );
+                         break;
+                       case NodeType.Wood:
+                         Engine.renderExternalCanvas(
+                           canvas: canvas,
+                           image: GameImages.atlas_nodes,
+                           srcX: 245,
+                           srcY: 0,
+                           srcWidth: 48,
+                           srcHeight: 72,
+                           dstX: dstX,
+                           dstY: dstY,
+                           anchorY: 0.33,
+                         );
+                         break;
+
+
 
                      }
 
