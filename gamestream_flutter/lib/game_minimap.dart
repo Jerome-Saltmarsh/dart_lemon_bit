@@ -1,6 +1,8 @@
 
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
+
 import 'library.dart';
 
 class GameMinimap {
@@ -19,6 +21,7 @@ class GameMinimap {
     }[nodeType] ?? 0;
 
   static void generateSrcDst(){
+    print('GameMiniMap.generateSrcDst()');
     var index = 0;
     final rows = GameState.nodesTotalRows;
     final columns = GameState.nodesTotalColumns;
@@ -34,13 +37,13 @@ class GameMinimap {
     for (var row = 0; row < rows; row++){
       for (var column = 0; column < columns; column++){
         final nodeType = nodeTypes[index];
-        const srcWidth = 12.0;
-        const srcHeight = 12.0;
-        const srcWidthPadded = srcWidth + 1;
-        final srcX = mapNodeTypeToSrcX(nodeType) * srcWidthPadded;
+        const srcWidth = 1.0;
+        const srcHeight = 1.0;
+        // const srcWidthPadded = srcWidth + 1;
+        final srcX = mapNodeTypeToSrcX(nodeType) * 1.0;
         final srcY = 0;
-        final dstX = (row - column) * 6;
-        final dstY = (row + column) * 6;
+        final dstX = (row - column) * 1.0;
+        final dstY = (row + column) * 1.0;
         final anchorX = 0.5;
         final anchorY = 0.5;
         var f = index * 4;
@@ -50,14 +53,21 @@ class GameMinimap {
         src[f + 3] = srcY + srcHeight;
         dst[f] = 1;
         dst[f + 1] = 0;
-        dst[f + 2] = dstX - (srcWidth * anchorX);
-        dst[f + 3] = dstY - (srcHeight * anchorY);
+        dst[f + 2] = dstX;
+        dst[f + 3] = dstY;
         index++;
       }
     }
   }
 
+  static final paint = Paint()
+    ..color = Colors.white
+    ..strokeCap = StrokeCap.round
+    ..style = PaintingStyle.fill
+    ..isAntiAlias = false
+    ..strokeWidth = 1;
+
   static void renderCanvas(Canvas canvas){
-    canvas.drawRawAtlas(GameImages.atlas_nodes_mini, dst, src, null, null, null, Engine.paint);
+    canvas.drawRawAtlas(GameImages.atlas_nodes_mini, dst, src, null, null, null, paint);
   }
 }

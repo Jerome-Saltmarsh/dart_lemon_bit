@@ -52,13 +52,14 @@ class GameUI {
         return Container(
           color: Colors.red,
           child: Engine.buildCanvas(paint: (Canvas canvas, Size size){
-            const scale = 0.15;
+            const scale = 1.0;
             canvas.scale(scale, scale);
             final screenCenterX = size.width * 0.5;
             final screenCenterY = size.height * 0.5;
-            final targetX = GameCamera.chaseTarget.renderX * 0.25;
-            final targetY = GameCamera.chaseTarget.renderY * 0.25;
-            const translate = 700;
+            const ratio = 2 / 48.0;
+            final targetX = GameCamera.chaseTarget.renderX * ratio;
+            final targetY = GameCamera.chaseTarget.renderY * ratio;
+            const translate = 350;
             final cameraX = targetX - (screenCenterX / scale) - translate;
             final cameraY = targetY - (screenCenterY / scale) - translate;
             canvas.translate(-cameraX, -cameraY);
@@ -74,7 +75,7 @@ class GameUI {
               srcHeight: 8,
               dstX: targetX,
               dstY: targetY,
-              scale: 5
+              scale: 1
             );
 
           }),
