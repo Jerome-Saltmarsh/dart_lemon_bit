@@ -9,6 +9,7 @@ class AtlasItems {
       ItemType.GameObjects_Barrel: 11,
       ItemType.GameObjects_Cup: 0,
       ItemType.GameObjects_Tavern_Sign: 40,
+      ItemType.GameObjects_Grenade: 0,
       ItemType.Trinket_Ring_of_Health: 256,
       ItemType.Trinket_Ring_of_Damage: 288,
       ItemType.Empty: 224,
@@ -69,6 +70,7 @@ class AtlasItems {
     ItemType.GameObjects_Barrel: 0,
     ItemType.GameObjects_Cup: 0,
     ItemType.GameObjects_Tavern_Sign: 0,
+    ItemType.GameObjects_Grenade: 48,
     ItemType.Trinket_Ring_of_Health: 32,
     ItemType.Trinket_Ring_of_Damage: 32,
     ItemType.Weapon_Ranged_Shotgun: 32,
@@ -115,12 +117,14 @@ class AtlasItems {
     ItemType.Base_Damage: 64,
   }[itemType] ?? 0;
 
+
   static double getSrcWidth(int itemType) => const <int, double> {
     ItemType.GameObjects_Car: 143,
     ItemType.GameObjects_Crystal: 22,
     ItemType.GameObjects_Barrel: 28,
     ItemType.GameObjects_Cup: 6,
     ItemType.GameObjects_Tavern_Sign: 19,
+    ItemType.GameObjects_Grenade: 8,
     ItemType.Weapon_Rifle_Sniper: 48,
     ItemType.Weapon_Flamethrower: 64,
     ItemType.Weapon_Special_Bazooka: 48,
@@ -133,12 +137,13 @@ class AtlasItems {
     ItemType.GameObjects_Barrel: 40,
     ItemType.GameObjects_Cup: 11,
     ItemType.GameObjects_Tavern_Sign: 39,
+    ItemType.GameObjects_Grenade: 8,
     ItemType.Weapon_Rifle_Sniper: 16,
     ItemType.Weapon_Special_Bazooka: 16,
     ItemType.Weapon_Special_Minigun: 12,
   }[itemType] ?? size;
-
 }
+
 
 class AtlasIcons {
 

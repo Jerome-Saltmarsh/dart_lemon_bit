@@ -10,28 +10,29 @@ class RendererGameObjects extends Renderer {
 
   @override
   void renderFunction() {
-      if (ItemType.isTypeGameObject(gameObject.type)) {
+    final type = gameObject.type;
+      if (ItemType.isTypeGameObject(type)) {
         Engine.renderSprite(
           image: GameImages.atlas_gameobjects,
           dstX: GameConvert.convertV3ToRenderX(gameObject),
           dstY: GameConvert.convertV3ToRenderY(gameObject),
-          srcX: AtlasItems.getSrcX(gameObject.type),
-          srcY: AtlasItems.getSrcY(gameObject.type),
-          srcWidth: AtlasItems.getSrcWidth(gameObject.type),
-          srcHeight: AtlasItems.getSrcHeight(gameObject.type),
+          srcX: AtlasItems.getSrcX(type),
+          srcY: AtlasItems.getSrcY(type),
+          srcWidth: AtlasItems.getSrcWidth(type),
+          srcHeight: AtlasItems.getSrcHeight(type),
           color: GameState.getV3RenderColor(gameObject),
         );
         return;
       }
 
-      if (ItemType.isTypeCollectable(gameObject.type)) {
+      if (ItemType.isTypeCollectable(type)) {
         renderBouncingGameObjectShadow(gameObject);
         Engine.renderSprite(
           image: GameImages.atlas_items,
           dstX: GameConvert.convertV3ToRenderX(gameObject),
           dstY: getRenderYBouncing(gameObject),
-          srcX: AtlasItems.getSrcX(gameObject.type),
-          srcY: AtlasItems.getSrcY(gameObject.type),
+          srcX: AtlasItems.getSrcX(type),
+          srcY: AtlasItems.getSrcY(type),
           srcWidth: AtlasItems.size,
           srcHeight: AtlasItems.size,
           color: GameState.getV3RenderColor(gameObject),

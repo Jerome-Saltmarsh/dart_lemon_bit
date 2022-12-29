@@ -68,11 +68,13 @@ ctrl + w:   minimal mode
 [ ] design house kitchen
 [ ] fix ai spots player through walls
 [ ] fix characters teleport through walls on struck
-[ ] fix render grenade 
+[ ] fix grenade explosion forces in wrong direction
 [ ] model weapon blunderbuss
-[ ] survival mode time passes
 
 29.12.2022
+[x] fix render grenade
+[x] survival mode time passes
+[x] decouple environment and time
 
 28.12.2022
 [x] standardized node type wooden plank  

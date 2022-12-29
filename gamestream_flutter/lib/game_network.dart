@@ -277,14 +277,6 @@ class GameNetwork {
     GameNetwork.sink.add(package);
   }
 
-  // static void sendClientRequestEditorSetSceneName(String name){
-  //   sendClientRequest(ClientRequest.Editor_Set_Scene_Name, name);
-  // }
-
-  // static void sendClientRequestSubmitPlayerDesign(){
-  //   sendClientRequest(ClientRequest.Submit_Player_Design);
-  // }
-
   static void sendClientRequestNpcSelectTopic(int index) =>
       sendClientRequest(ClientRequest.Npc_Talk_Select_Option, index);
 
