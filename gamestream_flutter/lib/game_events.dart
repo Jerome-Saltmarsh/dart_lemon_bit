@@ -39,7 +39,6 @@ class GameEvents {
   static void onChangedNodes(){
     ClientActions.refreshBakeMapLightSources();
     GameState.refreshGridMetrics();
-    // GameNodes.resetWind();
 
     if (ClientState.raining.value) {
       GameActions.rainStop();

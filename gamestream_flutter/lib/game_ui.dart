@@ -35,6 +35,7 @@ class GameUI {
             right: 0,
             child: buildRowMainMenu()
         ),
+        Positioned(child: buildGeneratedMiniMap(), top: 0, left: 0),
         buildWatchBool(GameUI.mapVisible, buildMiniMap),
         WatchBuilder(ClientState.edit, buildPlayMode),
         WatchBuilder(GameIO.inputMode, buildStackInputMode),
@@ -43,6 +44,41 @@ class GameUI {
         buildPositionedMessageStatus(),
         buildWatchGameStatus(),
       ]);
+
+
+  static Widget buildGeneratedMiniMap(){
+    return watch(ClientState.sceneChanged, (_){
+        return Engine.buildCanvas(paint: (Canvas canvas, Size size){
+          const scale = 0.1;
+          canvas.scale(scale, scale);
+          var index = 0;
+            for (var row = 0; row < GameState.nodesTotalRows; row++){
+               for (var column = 0; column < GameState.nodesTotalColumns; column++){
+                   final nodeType = GameNodes.miniMap[index];
+                   final dstX = (row - column) * Node_Size_Half;
+                   final dstY = (row + column) * Node_Size_Half;
+                   switch (nodeType){
+                     case NodeType.Grass:
+                       Engine.renderExternalCanvas(
+                           canvas: canvas,
+                           image: GameImages.atlas_nodes,
+                           srcX: 147,
+                           srcY: 0,
+                           srcWidth: 48,
+                           srcHeight: 72,
+                           dstX: dstX,
+                           dstY: dstY,
+                           anchorY: 0.33,
+                       );
+                       break;
+                   }
+
+                   index++;
+               }
+            }
+        });
+    });
+  }
 
   static Widget buildWatchGameStatus() {
     return watch(ServerState.gameStatus, (int gameStatus) {

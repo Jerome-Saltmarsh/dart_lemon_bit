@@ -25,7 +25,6 @@ class EditorActions {
       return;
     }
     GameNetwork.uploadScene(contents);
-    // GameNetwork.sendClientRequest(ClientRequest.Editor_Load_Scene, base64Encode(contents));
   }
 
   static void toggleWindowEnabledScene(){

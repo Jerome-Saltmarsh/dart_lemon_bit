@@ -40,7 +40,7 @@ class ServerResponseReader with ByteReader {
           readPlayerEvent();
           break;
         case ServerResponse.Grid:
-          readGrid();
+          readNodes();
           break;
         case ServerResponse.Debug_Mode:
           readDebugMode();
@@ -486,7 +486,7 @@ class ServerResponseReader with ByteReader {
     GameUI.debug.value = readBool();
   }
 
-  void readGrid() {
+  void readNodes() {
     final scenePart = readByte(); /// DO NOT DELETE
     GameState.nodesTotalZ = readUInt16();
     GameState.nodesTotalRows = readUInt16();
@@ -542,11 +542,9 @@ class ServerResponseReader with ByteReader {
     }
     assert(total == totalNodes);
     GameEvents.onChangedNodes();
+    ClientState.sceneChanged.value++;
     onChangedScene();
   }
-
-
-
 
   void readGameEvent(){
       final type = readByte();

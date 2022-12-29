@@ -21,7 +21,31 @@ class GameNodes {
   static var visibleIndex = 0;
   static var dynamicIndex = 0;
 
+  static var miniMap = Uint8List(0);
+
   // METHODS
+
+  static void generateMiniMap(){
+      miniMap = Uint8List(nodesArea);
+
+      var index = 0;
+      for (var row = 0; row < GameState.nodesTotalRows; row++){
+          for (var column = 0; column < GameState.nodesTotalColumns; column++){
+            var searchIndex = nodesTotal - nodesArea +  index;
+            var typeFound = ItemType.Empty;
+            while (true) {
+              if (searchIndex < 0) break;
+              final type = nodesType[searchIndex];
+              searchIndex -= nodesArea;
+              if (NodeType.isRainOrEmpty(type)) continue;
+              typeFound = type;
+              break;
+            }
+            miniMap[index] = typeFound;
+            index++;
+          }
+      }
+  }
   
   static void resetVisible(){
     while (visibleIndex > 0) {
@@ -30,13 +54,6 @@ class GameNodes {
     }
     nodesVisible[nodesVisibleIndex[0]] = Visibility.Opaque;
   }
-
-  // static void resetWind(){
-  //   final ambientWindIndex = ServerState.windTypeAmbient.value;
-  //   for (var i = 0; i < nodesTotal; i++){
-  //     nodesWind[i] = ambientWindIndex;
-  //   }
-  // }
 
   static void resetStackDynamicLight() {
     while (dynamicIndex >= 0) {
