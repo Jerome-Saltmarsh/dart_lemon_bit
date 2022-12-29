@@ -213,10 +213,10 @@ class ServerResponseReader with ByteReader {
         ServerState.interactMode.value = readByte();
         break;
       case ApiPlayer.Health:
-        ServerState.playerHealth.value = readInt();
+        readPlayerHealth();
         break;
       case ApiPlayer.Max_Health:
-        ServerState.playerMaxHealth.value = readInt();
+        readPlayerMaxHealth();
         break;
       case ApiPlayer.Weapon_Cooldown:
         GameState.player.weaponCooldown.value = readPercentage();
@@ -314,6 +314,14 @@ class ServerResponseReader with ByteReader {
       default:
         throw Exception("Cannot parse apiPlayer $apiPlayer");
     }
+  }
+
+  void readPlayerMaxHealth() {
+    ServerState.playerMaxHealth.value = readUInt16();
+  }
+
+  void readPlayerHealth() {
+    ServerState.playerHealth.value = readUInt16();
   }
 
   void readPlayerInventory() {

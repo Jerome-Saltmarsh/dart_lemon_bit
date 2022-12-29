@@ -959,20 +959,6 @@ class Player extends Character with ByteWriter {
     writeBool(debug);
   }
 
-  // @override
-  // void write(Player player) {
-  //   player.writePlayer(this);
-  // }
-
-  // @override
-  // int get type => CharacterType.Template;
-
-  void writePlayerDebug(){
-    writeByte(state);
-    writeInt(faceAngle * 100);
-    writeInt(mouseAngle * 100);
-  }
-
   void writePlayerPosition(){
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Position);
@@ -982,13 +968,13 @@ class Player extends Character with ByteWriter {
   void writePlayerHealth(){
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Health);
-    writeInt(health);
+    writeUInt16(health);
   }
 
   void writePlayerMaxHealth() {
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Max_Health);
-    writeInt(maxHealth); // 2
+    writeUInt16(maxHealth); // 2
   }
 
   void writePlayerBaseMaxHealth(){
