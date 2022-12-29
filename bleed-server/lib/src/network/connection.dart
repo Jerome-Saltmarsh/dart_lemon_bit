@@ -160,16 +160,6 @@ class Connection with ByteReader {
 
         break;
 
-      case ClientRequest.Weather_Toggle_Time_Passing:
-        if (!isLocalMachine && game is! GameDarkAgeEditor) return;
-        if (arguments.length > 0){
-           final val = arguments[1];
-           game.environment.timePassing = val == 'true';
-           return;
-        }
-        game.environment.toggleTimePassing();
-        break;
-
       case ClientRequest.Revive:
         if (player.alive) {
           error(GameError.PlayerStillAlive);
@@ -674,7 +664,7 @@ class Connection with ByteReader {
         return joinGame(game);
       }
     }
-    joinGame(Game5v5(darkAgeScenes.skirmish_2));
+    joinGame(Game5v5(scene: darkAgeScenes.skirmish_2));
   }
 
   Future joinGameSurvival() async {
@@ -684,7 +674,7 @@ class Connection with ByteReader {
         return joinGame(game);
       }
     }
-    joinGame(GameSurvival(darkAgeScenes.suburbs_01));
+    joinGame(GameSurvival(scene: darkAgeScenes.suburbs_01));
   }
 
   void joinGame(Game game){

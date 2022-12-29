@@ -6,7 +6,7 @@ import 'dark_age_area.dart';
 
 class GameDarkAgeVillage extends DarkAgeArea {
 
-  GameDarkAgeVillage() : super(darkAgeScenes.village, mapTile: MapTiles.Village) {
+  GameDarkAgeVillage() : super(scene: darkAgeScenes.village, mapTile: MapTiles.Village) {
     addNpc(
         team: TeamType.Good,
         weaponType: ItemType.Empty,

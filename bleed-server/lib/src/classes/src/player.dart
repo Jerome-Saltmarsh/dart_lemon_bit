@@ -1058,6 +1058,10 @@ class Player extends Character with ByteWriter {
     writeGameObjects();
     writeEditorGameObjectSelected();
 
+    if (game.time.enabled){
+      writeGameTime(game.time.time);
+    }
+
     if (inventoryDirty) {
       inventoryDirty = false;
       writePlayerInventory();
@@ -1426,17 +1430,17 @@ class Player extends Character with ByteWriter {
       writeByte(RainType.None);
       writeBool(false);
       writeByte(LightningType.Off);
-      writeBool(environment.timePassing);
+      // writeBool(environment.timePassing);
       writeByte(WindType.Calm);
-      writeByte(Shade.Pitch_Black);
+      // writeByte(Shade.Pitch_Black);
     } else {
       writeByte(ServerResponse.Weather);
       writeByte(environment.rainType);
       writeBool(environment.breezy);
       writeByte(environment.lightningType);
-      writeBool(environment.timePassing);
+      // writeBool(environment.timePassing);
       writeByte(environment.windType);
-      writeByte(environment.shade);
+      // writeByte(environment.shade);
     }
 
     writeEnvironmentUnderground(underground);

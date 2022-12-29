@@ -8,7 +8,11 @@ class GameDarkAgeEditor extends GameDarkAge {
   @override
   int get gameType => GameType.Editor;
 
-  GameDarkAgeEditor({Scene? scene}) : super(scene ?? generateEmptyScene(), DarkAgeEnvironment(DarkAgeTime()));
+  GameDarkAgeEditor({Scene? scene}) : super(
+      scene: scene ?? generateEmptyScene(),
+      environment: DarkAgeEnvironment(),
+      time: DarkAgeTime(),
+  );
 
   @override
   void customUpdate(){

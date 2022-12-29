@@ -69,8 +69,13 @@ ctrl + w:   minimal mode
 [ ] fix ai spots player through walls
 [ ] fix characters teleport through walls on struck
 [ ] fix render grenade 
+[ ] model weapon blunderbuss
+[ ] survival mode time passes
+
+29.12.2022
 
 28.12.2022
+[x] standardized node type wooden plank  
 [x] refactor render game
 [x] optimize render nodes
 [x] fix melee strike no damage

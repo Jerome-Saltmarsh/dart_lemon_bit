@@ -8,7 +8,7 @@ class Area_OldVillage extends DarkAgeArea {
   @override
   int get areaType => AreaType.Old_Village;
 
-  Area_OldVillage() : super(darkAgeScenes.plains_1, mapTile: MapTiles.Plains_1) {
+  Area_OldVillage() : super(scene: darkAgeScenes.plains_1, mapTile: MapTiles.Plains_1) {
     init();
   }
 

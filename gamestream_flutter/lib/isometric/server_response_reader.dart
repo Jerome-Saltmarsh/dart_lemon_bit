@@ -415,9 +415,9 @@ class ServerResponseReader with ByteReader {
     ServerState.rainType.value = readByte();
     ServerState.weatherBreeze.value = readBool();
     ServerState.lightningType.value = readByte();
-    ServerState.watchTimePassing.value = readBool();
+    // ServerState.watchTimePassing.value = readBool();
     ServerState.windTypeAmbient.value = readByte();
-    readByte(); // ambient shade DO NOT DELETE
+    // readByte(); // ambient shade DO NOT DELETE
     // ServerState.ambientShade.value = readByte();
   }
 

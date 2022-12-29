@@ -3,11 +3,7 @@ import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/functions/move_player_to_crystal.dart';
 import 'package:lemon_math/library.dart';
 
-import 'dark_age_environment.dart';
-
 class GameDarkAge extends Game {
-  final DarkAgeEnvironment environment;
-
   var _underground = false;
 
   bool get underground => _underground;
@@ -30,7 +26,7 @@ class GameDarkAge extends Game {
   @override
   int get gameType => GameType.Dark_Age;
 
-  GameDarkAge(Scene scene, this.environment) : super(scene) {
+  GameDarkAge({required super.scene, required super.time, required super.environment}) : super() {
     triggerSpawnPoints();
   }
 
@@ -95,7 +91,7 @@ class GameDarkAge extends Game {
 
   @override
   void customPlayerWrite(Player player) {
-     player.writeGameTime(environment.time.time);
+     // player.writeGameTime(time.time);
   }
 
   @override

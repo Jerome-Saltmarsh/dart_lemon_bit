@@ -34,33 +34,23 @@ class DarkAgeEnvironment {
    var _breezy = false;
    var _lightningType = LightningType.Off;
    var _windType = WindType.Calm;
-   var _shade = Shade.Bright;
-   var maxShade = Shade.Very_Bright;
    var nextLightningFlash = 0;
    var lightningFlashDuration = 0;
 
    static const Lightning_Flash_Duration_Total = 7;
 
-   final DarkAgeTime time;
-
-   DarkAgeEnvironment(this.time, {this.maxShade = Shade.Very_Bright}){
-     shade = maxShade;
-   }
-
    int get lightningType => _lightningType;
    int get rainType => _rainType;
    bool get breezy => _breezy;
-   bool get timePassing => time.enabled;
    bool get lightningFlashing => lightningFlashDuration > 0;
    int get windType => _windType;
-   int get shade => _shade;
 
-   set shade(int value) {
-     final clampedValue = clamp(value, maxShade, Shade.Pitch_Black);
-     if (_shade == clampedValue) return;
-     _shade = clampedValue;
-     onChangedWeather();
-   }
+   // set shade(int value) {
+   //   final clampedValue = clamp(value, maxShade, Shade.Pitch_Black);
+   //   if (_shade == clampedValue) return;
+   //   _shade = clampedValue;
+   //   onChangedWeather();
+   // }
 
    set windType(int value) {
       if (_windType == value) return;
@@ -88,36 +78,25 @@ class DarkAgeEnvironment {
       onChangedWeather();
    }
 
-   set timePassing(bool value) {
-      if (timePassing == value) return;
-      time.enabled = value;
-      onChangedWeather();
-   }
-
    void toggleBreeze(){
       breezy = !breezy;
    }
 
-   void toggleTimePassing(){
-      timePassing = !timePassing;
-   }
-
    void update(){
-      if (!timePassing) return;
       updateRain();
       updateLightning();
       updateBreeze();
       updateWind();
-      updateShade();
+      // updateShade();
    }
 
-   void updateShade() {
-      if (lightningFlashDuration > 0){
-         shade = Shade.Very_Bright;
-      } else {
-         shade = Shade.fromHour(time.hour);
-      }
-   }
+   // void updateShade() {
+   //    if (lightningFlashDuration > 0){
+   //       shade = Shade.Very_Bright;
+   //    } else {
+   //       shade = Shade.fromHour(time.hour);
+   //    }
+   // }
 
    void updateRain(){
       if (durationRain-- > 0) return;
@@ -174,14 +153,14 @@ class DarkAgeEnvironment {
    }
 
    void updateBreeze(){
-      durationBreeze -= time.secondsPerFrame;
+      durationBreeze--;
       if (durationBreeze > 0) return;
       durationBreeze = randomInt(2000, 5000);
       breezy = !breezy;
    }
 
    void updateWind(){
-      durationWind -= time.secondsPerFrame;
+      durationWind--;
       if (durationWind <= 0) {
          durationWind = randomInt(3000, 6000);
 

@@ -19,7 +19,8 @@ abstract class Game {
 
   List<GameObject> get gameObjects => scene.gameObjects;
 
-  DarkAgeEnvironment get environment;
+  DarkAgeEnvironment environment;
+  DarkAgeTime time;
 
   /// In seconds
   void customInitPlayer(Player player) {}
@@ -72,9 +73,8 @@ abstract class Game {
   bool get customPropMapVisible => false;
   int get gameType;
 
-
   /// CONSTRUCTOR
-  Game(this.scene) {
+  Game({required this.scene, required this.time, required this.environment}) {
     engine.onGameCreated(this); /// TODO Illegal external scope reference
   }
 
@@ -616,8 +616,8 @@ abstract class Game {
   }
 
   void setHourMinutes(int hour, int minutes) {
-    environment.time.time = (hour * 60 * 60) + (minutes * 60);
-    environment.updateShade();
+    time.time = (hour * 60 * 60) + (minutes * 60);
+    // environment.updateShade();
     playersWriteWeather();
   }
 
@@ -774,7 +774,7 @@ abstract class Game {
   void playersWriteWeather() {
     for (final player in players) {
       player.writeWeather();
-      player.writeGameTime(environment.time.time);
+      player.writeGameTime(time.time);
       player.writeEnvironmentLightningFlashing(environment.lightningFlashing);
     }
   }

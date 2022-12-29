@@ -3,7 +3,8 @@ import 'package:bleed_server/src/dark_age/dark_age_environment.dart';
 
 class GameSurvival extends Game {
 
-  GameSurvival(Scene scene) : super(scene) {
+  GameSurvival({required super.scene})
+      : super(environment: DarkAgeEnvironment(), time: DarkAgeTime()) {
     triggerSpawnPoints();
   }
 
@@ -29,5 +30,10 @@ class GameSurvival extends Game {
     player.health = player.maxHealth;
   }
 
-  final environment = DarkAgeEnvironment(DarkAgeTime());
+  @override
+  void customUpdate() {
+    time.update();
+    environment.update();
+  }
+
 }

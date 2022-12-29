@@ -6,7 +6,7 @@ import '../dark_age_scenes.dart';
 import 'dark_age_area.dart';
 
 class DarkAgeDungeon1 extends DarkAgeArea {
-  DarkAgeDungeon1() : super(darkAgeScenes.dungeon_1, mapTile: 0);
+  DarkAgeDungeon1() : super(scene: darkAgeScenes.dungeon_1, mapTile: 0);
 
   @override
   void customOnCharacterKilled(dynamic target, dynamic src) {

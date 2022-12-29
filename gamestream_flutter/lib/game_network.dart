@@ -264,10 +264,6 @@ class GameNetwork {
     sendClientRequest(ClientRequest.Weather_Set_Lightning, value);
   }
 
-  static void sendClientRequestWeatherToggleTimePassing([bool? value]){
-    sendClientRequest(ClientRequest.Weather_Toggle_Time_Passing, value);
-  }
-
   static void sendClientRequestEditorLoadGame(String name){
     sendClientRequest(ClientRequest.Editor_Load_Game, name);
   }

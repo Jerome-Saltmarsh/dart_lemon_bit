@@ -11,7 +11,7 @@ class Game5v5 extends Game {
   var spawnPoint1 = 0;
   var spawnPoint2 = 1;
 
-  final env = DarkAgeEnvironment(DarkAgeTime());
+  final env = DarkAgeEnvironment();
 
 
   bool get started => gameStatus == GameStatus.Playing;
@@ -21,7 +21,7 @@ class Game5v5 extends Game {
      ItemType.Weapon_Smg_Mp5,
   ];
 
-  Game5v5(super.scene) {
+  Game5v5({required super.scene}) : super(time: DarkAgeTime(), environment: DarkAgeEnvironment()) {
     if (scene.spawnPointsPlayers.length >= 2) {
       spawnPoint1 = scene.spawnPointsPlayers[0];
       spawnPoint2 = scene.spawnPointsPlayers[1];
@@ -80,6 +80,4 @@ class Game5v5 extends Game {
   void revive(Player player) {
      player.writeError('cannot revive');
   }
-
-  final environment = DarkAgeEnvironment(DarkAgeTime());
 }

@@ -10,7 +10,6 @@ class ClientRequest {
   static const Weather_Set_Wind = 16;
   static const Weather_Set_Lightning = 17;
   static const Weather_Toggle_Breeze = 18;
-  static const Weather_Toggle_Time_Passing = 19;
   static const Editor_Load_Game = 20;
   static const Time_Set_Hour = 23;
   static const Npc_Talk_Select_Option = 25;

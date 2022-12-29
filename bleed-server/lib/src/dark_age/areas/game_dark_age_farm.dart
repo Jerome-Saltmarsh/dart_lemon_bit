@@ -4,7 +4,7 @@ import '../dark_age_scenes.dart';
 import 'dark_age_area.dart';
 
 class GameDarkAgeFarm extends DarkAgeArea {
-  GameDarkAgeFarm() : super(darkAgeScenes.farm, mapTile: MapTiles.Farm) {
+  GameDarkAgeFarm() : super(scene: darkAgeScenes.farm, mapTile: MapTiles.Farm) {
     addNpc(
       damage: 3,
       headType: ItemType.Head_Rogues_Hood,

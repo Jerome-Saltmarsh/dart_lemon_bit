@@ -69,8 +69,8 @@ class Engine {
     }
 
     officialTime = DarkAgeTime();
-    environmentAboveGround = DarkAgeEnvironment(officialTime);
-    environmentUnderground = DarkAgeEnvironment(officialTime, maxShade: Shade.Pitch_Black);
+    environmentAboveGround = DarkAgeEnvironment();
+    environmentUnderground = DarkAgeEnvironment();
     await darkAgeScenes.load();
 
     darkAgeScenes.saveAllToFile();

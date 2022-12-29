@@ -9,8 +9,8 @@ abstract class DarkAgeArea extends GameDarkAge {
 
   int get areaType;
 
-  DarkAgeArea(Scene scene, {required this.mapTile})
-      : super(scene, engine.environmentAboveGround);
+  DarkAgeArea({required super.scene, required this.mapTile})
+      : super(environment: engine.environmentAboveGround, time: engine.officialTime);
 
   void customUpdate() {
     super.customUpdate();
