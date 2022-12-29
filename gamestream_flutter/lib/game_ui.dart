@@ -48,57 +48,74 @@ class GameUI {
 
   static Widget buildGeneratedMiniMap(){
     return watch(ClientState.sceneChanged, (_){
-        return Engine.buildCanvas(paint: (Canvas canvas, Size size){
-          const scale = 0.1;
-          canvas.scale(scale, scale);
-          final screenCenterX = size.width * 0.5;
-          final screenCenterY = size.height * 0.5;
-          final targetX = GameCamera.chaseTarget.renderX;
-          final targetY = GameCamera.chaseTarget.renderY;
-          final cameraX = targetX - (screenCenterX / scale);
-          final cameraY = targetY - (screenCenterY / scale);
-          canvas.translate(-cameraX, -cameraY);
+        return Container(
+          color: Colors.red,
+          child: Engine.buildCanvas(paint: (Canvas canvas, Size size){
+            const scale = 0.1;
+            canvas.scale(scale, scale);
+            final screenCenterX = size.width * 0.5;
+            final screenCenterY = size.height * 0.5;
+            final targetX = GameCamera.chaseTarget.renderX;
+            final targetY = GameCamera.chaseTarget.renderY;
+            const translate = 500;
+            final cameraX = targetX - (screenCenterX / scale) - 500;
+            final cameraY = targetY - (screenCenterY / scale) - 500;
+            canvas.translate(-cameraX, -cameraY);
 
-          var index = 0;
-            for (var row = 0; row < GameState.nodesTotalRows; row++){
-               for (var column = 0; column < GameState.nodesTotalColumns; column++){
-                   final nodeType = GameNodes.miniMap[index];
-                   final dstX = (row - column) * Node_Size_Half;
-                   final dstY = (row + column) * Node_Size_Half;
-                   switch (nodeType){
-                     case NodeType.Grass:
-                       Engine.renderExternalCanvas(
+            var index = 0;
+              for (var row = 0; row < GameState.nodesTotalRows; row++){
+                 for (var column = 0; column < GameState.nodesTotalColumns; column++){
+                     final nodeType = GameNodes.miniMap[index];
+                     final dstX = (row - column) * Node_Size_Half;
+                     final dstY = (row + column) * Node_Size_Half;
+                     switch (nodeType){
+                       case NodeType.Grass:
+                         Engine.renderExternalCanvas(
+                             canvas: canvas,
+                             image: GameImages.atlas_nodes,
+                             srcX: 147,
+                             srcY: 0,
+                             srcWidth: 48,
+                             srcHeight: 72,
+                             dstX: dstX,
+                             dstY: dstY,
+                             anchorY: 0.33,
+                         );
+                         break;
+                       case NodeType.Water:
+                         Engine.renderExternalCanvas(
                            canvas: canvas,
                            image: GameImages.atlas_nodes,
-                           srcX: 147,
-                           srcY: 0,
+                           srcX: 1607,
+                           srcY: 509,
                            srcWidth: 48,
                            srcHeight: 72,
                            dstX: dstX,
                            dstY: dstY,
                            anchorY: 0.33,
-                       );
-                       break;
-                     case NodeType.Water:
-                       Engine.renderExternalCanvas(
-                         canvas: canvas,
-                         image: GameImages.atlas_nodes,
-                         srcX: 1607,
-                         srcY: 509,
-                         srcWidth: 48,
-                         srcHeight: 72,
-                         dstX: dstX,
-                         dstY: dstY,
-                         anchorY: 0.33,
-                       );
-                       break;
+                         );
+                         break;
 
-                   }
+                     }
 
-                   index++;
-               }
-            }
-        });
+                     index++;
+                 }
+              }
+
+            Engine.renderExternalCanvas(
+              canvas: canvas,
+              image: GameImages.atlas_gameobjects,
+              srcX: 0,
+              srcY: 72,
+              srcWidth: 8,
+              srcHeight: 8,
+              dstX: targetX,
+              dstY: targetY,
+              scale: 5
+            );
+
+          }),
+        );
     });
   }
 
