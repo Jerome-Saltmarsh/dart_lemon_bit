@@ -45,7 +45,6 @@ ctrl + w:   minimal mode
 [ ] feature attributes
 [ ] feature skills
 [ ] feature loot gameobjects
-[ ] feature generate mini-map
 
 [CONTENT]
 [ ] item type army clothes
@@ -65,12 +64,16 @@ ctrl + w:   minimal mode
 [ ] game 5v5
 
 [CRITICAL]
-[ ] design house kitchen
+[ ] design suburbia house kitchen
+[ ] design suburbia cemetery
+[ ] design suburbia school
 [ ] fix ai spots player through walls
 [ ] fix characters teleport through walls on struck
 [ ] model weapon blunderbuss
+[ ] feature generate mini-map
 
 29.12.2022
+[x] fix sniper rifle aiming render
 [x] fix grenade explosion forces in wrong direction
 [x] fix render grenade
 [x] survival mode time passes

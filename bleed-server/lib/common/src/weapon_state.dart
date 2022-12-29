@@ -5,4 +5,14 @@ class WeaponState {
    static const Reloading = 3;
    static const Aiming = 4;
    static const Changing = 5;
+   
+   static String getName(int weaponState){
+      return const {
+         Firing: "Firing",
+         Idle: "Idle",
+         Reloading: "Reloading",
+         Aiming: "Aiming",
+         Changing: "Changing",
+      }[weaponState] ?? "unknown-weapon-state-$weaponState";
+   }
 }

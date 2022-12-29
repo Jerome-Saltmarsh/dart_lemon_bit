@@ -134,6 +134,8 @@ void renderCharacterTemplate(Character character, {
     frameWeapon = TemplateAnimation.StateChangingFrame;
   }
 
+  // GameRender.renderTextV3(character, "$frameWeapon, ${ItemType.isOneHanded(character.weaponType)} ${WeaponState.getName(character.weaponState)}", offsetY: -80);
+
   if (!weaponInFront) {
     renderTemplateWeapon(character.weaponType, directionBody, frameWeapon, color, dstX, dstY);
   }
@@ -296,6 +298,9 @@ class TemplateAnimation {
     6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 6, 6, 6, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 8, 8, 8, 8
   ];
 
+  static const FiringRifle = [
+    6, 7, 7, 6];
+
   static const FiringMinigun = [6];
 
   static const Punch = [
@@ -324,9 +329,13 @@ class TemplateAnimation {
        return FiringHandgun;
      }
 
-     if (ItemType.isTypeWeaponRifle(weaponType)){
+     if (ItemType.isTypeWeaponShotgun(weaponType)){
        return FiringShotgun;
      }
+
+      if (ItemType.isTypeWeaponRifle(weaponType)){
+        return FiringRifle;
+      }
 
      if (ItemType.isTypeWeaponShotgun(weaponType)){
        return FiringShotgun;
