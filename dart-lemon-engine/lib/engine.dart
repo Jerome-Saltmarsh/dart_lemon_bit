@@ -719,7 +719,7 @@ class Engine {
       }
 
       if (remaining == 1) {
-        final f = flushIndex * 4;
+        final f = flushIndex << 2;
         _bufferClr1[0] = bufferClr[flushIndex];
         _bufferDst1[0] = bufferDst[f];
         _bufferDst1[1] = bufferDst[f + 1];
@@ -737,8 +737,8 @@ class Engine {
 
       if (remaining < 4) {
         for (var i = 0; i < 2; i++) {
-          final j = i * 4;
-          final f = flushIndex * 4;
+          final j = i << 2;
+          final f = flushIndex << 2;
           _bufferClr2[i] = bufferClr[flushIndex];
           _bufferDst2[j] = bufferDst[f];
           _bufferDst2[j + 1] = bufferDst[f + 1];
@@ -757,8 +757,8 @@ class Engine {
 
       if (remaining < 8) {
         for (var i = 0; i < 4; i++) {
-          final j = i * 4;
-          final f = flushIndex * 4;
+          final j = i << 2;
+          final f = flushIndex << 2;
           _bufferClr4[i] = bufferClr[flushIndex];
           _bufferDst4[j] = bufferDst[f];
           _bufferDst4[j + 1] = bufferDst[f + 1];
@@ -777,8 +777,8 @@ class Engine {
 
       if (remaining < 16) {
         for (var i = 0; i < 8; i++) {
-          final j = i * 4;
-          final f = flushIndex * 4;
+          final j = i << 2;
+          final f = flushIndex << 2;
           _bufferClr8[i] = bufferClr[flushIndex];
           _bufferDst8[j] = bufferDst[f];
           _bufferDst8[j + 1] = bufferDst[f + 1];
@@ -797,8 +797,8 @@ class Engine {
 
       if (remaining < 32) {
         for (var i = 0; i < 16; i++) {
-          final j = i * 4;
-          final f = flushIndex * 4;
+          final j = i << 2;
+          final f = flushIndex << 2;
           _bufferClr16[i] = bufferClr[flushIndex];
           _bufferDst16[j] = bufferDst[f];
           _bufferDst16[j + 1] = bufferDst[f + 1];
@@ -817,8 +817,8 @@ class Engine {
 
       if (remaining < 64) {
         for (var i = 0; i < 32; i++) {
-          final j = i * 4;
-          final f = flushIndex * 4;
+          final j = i << 2;
+          final f = flushIndex << 2;
           _bufferClr32[i] = bufferClr[flushIndex];
           _bufferDst32[j] = bufferDst[f];
           _bufferDst32[j + 1] = bufferDst[f + 1];
@@ -837,8 +837,8 @@ class Engine {
 
       if (remaining < 128) {
         for (var i = 0; i < 64; i++) {
-          final j = i * 4;
-          final f = flushIndex * 4;
+          final j = i << 2;
+          final f = flushIndex << 2;
           _bufferClr64[i] = bufferClr[flushIndex];
           _bufferDst64[j] = bufferDst[f];
           _bufferDst64[j + 1] = bufferDst[f + 1];
@@ -881,7 +881,7 @@ class Engine {
     int color = 1,
   }){
     bufferImage = image;
-    final f = bufferIndex * 4;
+    final f = bufferIndex << 2;
     bufferClr[bufferIndex] = color;
     bufferSrc[f] = srcX;
     bufferSrc[f + 1] = srcY;
@@ -909,7 +909,7 @@ class Engine {
     int color = 1,
   }){
     bufferImage = image;
-    final f = bufferIndex * 4;
+    final f = bufferIndex << 2;
     bufferClr[bufferIndex] = color;
     bufferSrc[f] = srcX;
     bufferSrc[f + 1] = srcY;
