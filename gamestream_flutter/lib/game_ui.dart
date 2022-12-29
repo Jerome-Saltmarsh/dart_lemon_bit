@@ -56,8 +56,8 @@ class GameUI {
             canvas.scale(scale, scale);
             final screenCenterX = size.width * 0.5;
             final screenCenterY = size.height * 0.5;
-            final targetX = GameCamera.chaseTarget.renderX;
-            final targetY = GameCamera.chaseTarget.renderY;
+            final targetX = GameCamera.chaseTarget.renderX * 0.5;
+            final targetY = GameCamera.chaseTarget.renderY * 0.5;
             const translate = 700;
             final cameraX = targetX - (screenCenterX / scale) - translate;
             final cameraY = targetY - (screenCenterY / scale) - translate;
