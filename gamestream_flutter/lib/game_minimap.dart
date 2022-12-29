@@ -40,7 +40,7 @@ class GameMinimap {
         const srcWidth = 1.0;
         const srcHeight = 1.0;
         // const srcWidthPadded = srcWidth + 1;
-        final srcX = mapNodeTypeToSrcX(nodeType) * 1.0;
+        final srcX = mapNodeTypeToSrcX(nodeType) * 2.0;
         final srcY = 0;
         final dstX = (row - column) * 1.0;
         final dstY = (row + column) * 1.0;
