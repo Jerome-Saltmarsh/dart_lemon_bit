@@ -7,9 +7,16 @@ class GameMinimap {
   static var src = Float32List(0);
   static var dst = Float32List(0);
 
-  static double mapNodeTypeToSrcX(int nodeType){
-    return 147;
-  }
+
+
+  static int mapNodeTypeToSrcX(int nodeType) => const {
+      NodeType.Grass: 1,
+      NodeType.Water: 2,
+      NodeType.Wood: 3,
+      NodeType.Wooden_Plank: 3,
+      NodeType.Road: 4,
+      NodeType.Road_2: 4,
+    }[nodeType] ?? 0;
 
   static void generateSrcDst(){
     var index = 0;
@@ -27,12 +34,13 @@ class GameMinimap {
     for (var row = 0; row < rows; row++){
       for (var column = 0; column < columns; column++){
         final nodeType = nodeTypes[index];
-        const srcWidth = 48.0;
-        const srcHeight = 48.0;
-        final srcX = mapNodeTypeToSrcX(nodeType);
+        const srcWidth = 12.0;
+        const srcHeight = 12.0;
+        const srcWidthPadded = srcWidth + 1;
+        final srcX = mapNodeTypeToSrcX(nodeType) * srcWidthPadded;
         final srcY = 0;
-        final dstX = (row - column) * Node_Size_Half;
-        final dstY = (row + column) * Node_Size_Half;
+        final dstX = (row - column) * 6;
+        final dstY = (row + column) * 6;
         final anchorX = 0.5;
         final anchorY = 0.5;
         var f = index * 4;
@@ -50,6 +58,6 @@ class GameMinimap {
   }
 
   static void renderCanvas(Canvas canvas){
-    canvas.drawRawAtlas(GameImages.atlas_nodes, dst, src, null, null, null, Engine.paint);
+    canvas.drawRawAtlas(GameImages.atlas_nodes_mini, dst, src, null, null, null, Engine.paint);
   }
 }

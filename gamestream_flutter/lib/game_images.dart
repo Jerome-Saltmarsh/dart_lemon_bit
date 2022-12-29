@@ -18,6 +18,7 @@ class GameImages {
    static late Image atlas_characters;
    static late Image atlas_icons;
    static late Image atlas_items;
+   static late Image atlas_nodes_mini;
 
    static late Image template_head_plain;
    static late Image template_head_rogue;
@@ -201,6 +202,8 @@ class GameImages {
       = await Engine.loadImageAsset('images/atlas-map.png');
       atlas_nodes
       = await Engine.loadImageAsset('images/atlas-nodes.png');
+      atlas_nodes_mini
+      = await Engine.loadImageAsset('images/atlas-nodes-mini.png');
       atlas_icons
       = await Engine.loadImageAsset('images/atlas-icons.png');
       atlas_items
