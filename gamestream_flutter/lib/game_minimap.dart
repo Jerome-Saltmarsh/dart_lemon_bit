@@ -28,13 +28,13 @@ class GameMinimap {
       for (var column = 0; column < columns; column++){
         final nodeType = nodeTypes[index];
         const srcWidth = 48.0;
-        const srcHeight = 72.0;
+        const srcHeight = 48.0;
         final srcX = mapNodeTypeToSrcX(nodeType);
         final srcY = 0;
         final dstX = (row - column) * Node_Size_Half;
         final dstY = (row + column) * Node_Size_Half;
         final anchorX = 0.5;
-        final anchorY = 0.333;
+        final anchorY = 0.5;
         var f = index * 4;
         src[f] = srcX;
         src[f + 1] = 0;
