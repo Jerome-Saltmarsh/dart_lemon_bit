@@ -73,6 +73,7 @@ ctrl + w:   minimal mode
 [ ] feature generate mini-map
 
 29.12.2022
+[x] fix rocket sprite
 [x] fix sniper rifle aiming render
 [x] fix grenade explosion forces in wrong direction
 [x] fix render grenade
