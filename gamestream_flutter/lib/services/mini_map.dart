@@ -64,12 +64,10 @@ class MiniMap {
     canvas.clipRect(Rect.fromLTWH(0, 0, size.width, size.height));
     canvas.scale(mapZoom);
     canvas.translate(-mapCameraX, -mapCameraY);
-    // canvas.clipRRect(RRect.fromLTRBAndCorners(0, 0, 100, 100));
     for (final mapTile in mapTiles){
       renderMapTile(canvas, mapTile);
     }
     renderMapTile(canvas, mapTileActive);
-    // canvas.drawRect(Rect.fromLTWH(0, 0, 100, 100), paint);
     mapCameraCenter(mapTileActive.renderX, mapTileActive.renderY);
   }
 

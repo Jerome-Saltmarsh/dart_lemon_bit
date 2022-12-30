@@ -49,37 +49,37 @@ class GameUI {
 
   static Widget buildGeneratedMiniMap(){
     return watch(ClientState.sceneChanged, (_){
-        return Container(
-          color: Colors.red,
-          child: Engine.buildCanvas(paint: (Canvas canvas, Size size){
-            const scale = 2.0;
-            canvas.scale(scale, scale);
-            final screenCenterX = size.width * 0.5;
-            final screenCenterY = size.height * 0.5;
-            const ratio = 2 / 48.0;
-            final targetX = GameCamera.chaseTarget.renderX * ratio;
-            final targetY = GameCamera.chaseTarget.renderY * ratio;
-            const translate = 50;
-            final cameraX = targetX - (screenCenterX / scale) - translate;
-            final cameraY = targetY - (screenCenterY / scale) - translate;
-            canvas.translate(-cameraX, -cameraY);
+        return Engine.buildCanvas(paint: (Canvas canvas, Size size){
+          const scale = 2.0;
+          canvas.scale(scale, scale);
+          final screenCenterX = size.width * 0.5;
+          final screenCenterY = size.height * 0.5;
+          const ratio = 2 / 48.0;
+          final targetX = GameCamera.chaseTarget.renderX * ratio;
+          final targetY = GameCamera.chaseTarget.renderY * ratio;
+          const translate = 50;
+          final cameraX = targetX - (screenCenterX / scale) - translate;
+          final cameraY = targetY - (screenCenterY / scale) - translate;
+          canvas.translate(-cameraX, -cameraY);
 
-            GameMinimap.renderCanvas(canvas);
+          GameMinimap.renderCanvas(canvas);
 
+          for (var i = 0; i < GameState.totalCharacters; i++) {
+            final character = GameState.characters[i];
+            final isPlayer = GamePlayer.isCharacter(character);
             Engine.renderExternalCanvas(
-              canvas: canvas,
-              image: GameImages.atlas_gameobjects,
-              srcX: 0,
-              srcY: 72,
-              srcWidth: 8,
-              srcHeight: 8,
-              dstX: targetX,
-              dstY: targetY,
-              scale: 0.5
+                canvas: canvas,
+                image: GameImages.atlas_gameobjects,
+                srcX: 0,
+                srcY: isPlayer ? 96 : character.allie ? 81 : 72,
+                srcWidth: 8,
+                srcHeight: 8,
+                dstX: character.renderX * ratio,
+                dstY: character.renderY * ratio,
+                scale: 0.25
             );
-
-          }),
-        );
+          }
+        });
     });
   }
 

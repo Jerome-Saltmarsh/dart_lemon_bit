@@ -28,4 +28,8 @@ class GamePlayer {
   static bool get interactModeTrading => ServerState.interactMode.value == InteractMode.Trading;
 
   static bool get inBounds => GameQueries.inBoundsVector3(position);
+
+  static bool isCharacter(Character character){
+    return position.x == character.x && position.y == character.y && position.z == character.z;
+  }
 }
