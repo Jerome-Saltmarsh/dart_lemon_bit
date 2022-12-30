@@ -318,6 +318,10 @@ class GameEvents {
         GameAudio.assault_rifle_shot_13.playXYZ(x, y, z);
         GameState.spawnParticleShell(x, y, z);
         break;
+      case ItemType.Weapon_Rifle_Blunderbuss:
+        GameAudio.assault_rifle_shot_13.playXYZ(x, y, z);
+        GameState.spawnParticleShell(x, y, z);
+        break;
       case ItemType.Weapon_Rifle_Musket:
         GameAudio.assault_rifle_shot_14.playXYZ(x, y, z);
         GameState.spawnParticleShell(x, y, z);
