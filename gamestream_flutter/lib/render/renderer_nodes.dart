@@ -59,28 +59,29 @@ class RendererNodes extends Renderer {
   static var screenLeft = 0.0;
 
   static var nodeTypes = GameNodes.nodesType;
+  static var nodeShades = GameNodes.nodesShade;
+  static var nodeOrientations = GameNodes.nodesOrientation;
+  static var nodeVisibility = GameNodes.nodesVisible;
 
   // GETTERS
-
   // double get currentNodeRenderX => (currentNodeRow - currentNodeColumn) * Node_Size_Half;
   static double get currentNodeRenderY => GameConvert.rowColumnZToRenderY(row, column, currentNodeZ);
 
-  static int get currentNodeShade => GameNodes.nodesShade[currentNodeIndex];
+  static int get currentNodeShade => nodeShades[currentNodeIndex];
   static int get currentNodeColor => (currentNodeVisibilityOpaque ? GameLighting.values : GameLighting.values_transparent)[currentNodeShade];
-  static int get currentNodeOrientation => GameNodes.nodesOrientation[currentNodeIndex];
-  static int get currentNodeVisibility => GameNodes.nodesVisible[currentNodeIndex];
+  static int get currentNodeOrientation => nodeOrientations[currentNodeIndex];
+  static int get currentNodeVisibility => nodeVisibility[currentNodeIndex];
   // int get currentNodeWind => GameNodes.nodesWind[currentNodeIndex];
   static int get currentNodeWind => ServerState.windTypeAmbient.value;
 
   static bool get currentNodeVisible => currentNodeVisibility == Visibility.Invisible;
   static bool get currentNodeInvisible => currentNodeVisibility == Visibility.Invisible;
-  static bool get currentNodeVisibilityOpaque => GameNodes.nodesVisible[currentNodeIndex] == Visibility.Opaque;
+  static bool get currentNodeVisibilityOpaque => nodeVisibility[currentNodeIndex] == Visibility.Opaque;
   static bool get currentNodeVariation => GameNodes.nodesVariation[currentNodeIndex];
 
-  static int get renderNodeShade => GameNodes.nodesShade[currentNodeIndex];
-  static int get renderNodeOrientation => GameNodes.nodesOrientation[currentNodeIndex];
+  static int get renderNodeShade => nodeShades[currentNodeIndex];
+  static int get renderNodeOrientation => nodeOrientations[currentNodeIndex];
   static int get renderNodeColor => GameLighting.values[renderNodeShade];
-  // int get renderNodeWind => GameNodes.nodesWind[renderNodeShade];
   static int get renderNodeWind => ServerState.windTypeAmbient.value;
   static bool get renderNodeVariation => GameNodes.nodesVariation[currentNodeIndex];
 
@@ -90,7 +91,7 @@ class RendererNodes extends Renderer {
   static int get renderNodeBelowShade {
     if (renderNodeBelowIndex < 0) return Shade.Medium;
     if (renderNodeBelowIndex >= GameNodes.nodesTotal) return Shade.Medium;
-    return GameNodes.nodesShade[renderNodeBelowIndex];
+    return nodeShades[renderNodeBelowIndex];
   }
 
   static int get renderNodeBelowColor => GameLighting.values[renderNodeBelowShade];
@@ -167,6 +168,9 @@ class RendererNodes extends Renderer {
   @override
   void reset() {
     nodeTypes = GameNodes.nodesType;
+    nodeShades = GameNodes.nodesShade;
+    nodeOrientations = GameNodes.nodesOrientation;
+    nodeVisibility = GameNodes.nodesVisible;
     nodesRowsMax = GameState.nodesTotalRows - 1;
     nodesGridTotalZMinusOne = GameState.nodesTotalZ - 1;
     offscreenNodesTop = 0;
@@ -559,7 +563,7 @@ class RendererNodes extends Renderer {
       case NodeType.Respawning:
         return;
       default:
-        throw Exception('renderNode(index: ${currentNodeIndex}, type: ${NodeType.getName(currentNodeType)}, orientation: ${NodeOrientation.getName(GameNodes.nodesOrientation[currentNodeIndex])}');
+        throw Exception('renderNode(index: ${currentNodeIndex}, type: ${NodeType.getName(currentNodeType)}, orientation: ${NodeOrientation.getName(nodeOrientations[currentNodeIndex])}');
     }
   }
 
@@ -1007,7 +1011,7 @@ class RendererNodes extends Renderer {
     final index = currentNodeIndex + (layers * GameNodes.nodesArea);
     if (index < 0) return Shade.Medium;
     if (index >= GameNodes.nodesTotal) return Shade.Medium;
-    return GameNodes.nodesShade[index];
+    return nodeShades[index];
   }
 
   void showIndexPlayer() {
@@ -1090,7 +1094,7 @@ class RendererNodes extends Renderer {
         continue;
       }
 
-      if (GameNodes.nodesVisible[nodeIndexBelow] == Visibility.Invisible) {
+      if (nodeVisibility[nodeIndexBelow] == Visibility.Invisible) {
 
         if (transparent){
           GameNodes.addTransparentIndex(index);
@@ -1108,27 +1112,6 @@ class RendererNodes extends Renderer {
       column += 1;
       z += 2;
       index = (z * GameNodes.nodesArea) + (row * GameState.nodesTotalColumns) + column;
-    }
-  }
-
-  void nodesRevealRaycast(int z, int row, int column){
-    if (!GameQueries.isInboundZRC(z, row, column)) return;
-
-    for (; z < GameState.nodesTotalZ; z += 2){
-      row++;
-      column++;
-      if (row >= GameState.nodesTotalRows) return;
-      if (column >= GameState.nodesTotalColumns) return;
-      GameNodes.nodesVisible[GameState.getNodeIndexZRC(z, row, column)] = Visibility.Invisible;;
-      if (z < GameState.nodesTotalZ - 2){
-        GameNodes.nodesVisible[GameState.getNodeIndexZRC(z + 1, row, column)] = Visibility.Invisible;;
-      }
-    }
-  }
-
-  void nodesRevealAbove(int z, int row, int column){
-    for (; z < GameState.nodesTotalZ; z++){
-      GameNodes.nodesVisible[GameState.getNodeIndexZRC(z, row, column)] = Visibility.Invisible;;
     }
   }
 

@@ -26,11 +26,16 @@ class GameNodes {
   // METHODS
 
   static void generateMiniMap(){
-      miniMap = Uint8List(nodesArea);
+      if (miniMap.length != nodesArea){
+        miniMap = Uint8List(nodesArea);
+      }
 
       var index = 0;
-      for (var row = 0; row < GameState.nodesTotalRows; row++){
-          for (var column = 0; column < GameState.nodesTotalColumns; column++){
+      final rows = GameState.nodesTotalRows;
+      final columns = GameState.nodesTotalColumns;
+
+      for (var row = 0; row < rows; row++){
+          for (var column = 0; column < columns; column++){
             var searchIndex = nodesTotal - nodesArea +  index;
             var typeFound = ItemType.Empty;
             while (true) {

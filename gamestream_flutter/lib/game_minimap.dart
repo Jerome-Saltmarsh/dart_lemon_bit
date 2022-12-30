@@ -27,7 +27,7 @@ class GameMinimap {
     final rows = GameState.nodesTotalRows;
     final columns = GameState.nodesTotalColumns;
     final area = GameNodes.nodesArea;
-    final nodeTypes = GameNodes.nodesType;
+    final nodeTypes = GameNodes.miniMap;
     final total = area * 4;
     if (src.length != total){
       src = Float32List(total);

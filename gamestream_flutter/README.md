@@ -7,6 +7,9 @@ navigate to next method: ctrl + shift + up / down arrows
 ctrl + w:   minimal mode
 
 [IDEAS]
+[ ] DARK-AGE
+[ ] DARK-WORLD
+[ ] DARK-WAR
 [ ] repeat killing same enemies yields no reward
 [ ] loud noises draw attention
 [ ] talk with other players
@@ -14,11 +17,15 @@ ctrl + w:   minimal mode
 [ ] weapon torch flame
 
 [OPTIMIZATIONS]
-[ ] optimize front end - do not use objects to store projectiles
-[ ] optimize front end - do not use objects to store characters
-[ ] optimize front end - do not use objects to store gameobjects
-[ ] optimize front end - do not use objects to store particles
+[ ] optimize client do not use objects to store projectiles
+[ ] optimize client do not use objects to store characters
+[ ] optimize client do not use objects to store gameobjects
+[ ] optimize client do not use objects to store particles
 [ ] optimize client applyShadowAt
+[ ] optimize server writeCharacterTeamDirectionAndState
+[ ] optimize server writeCharacterHealthAndAnimationFrame
+[ ] optimize client renderNodeWater
+[ ] optimize client renderNodeWater
 
 [TODO]
 [ ] cache region
@@ -71,11 +78,9 @@ ctrl + w:   minimal mode
 [ ] fix characters teleport through walls on struck
 [ ] fix color near midnight
 [ ] feature survival random treasure spawns
-[ ] fix mini map trees
-[ ] optimize server writeCharacterTeamDirectionAndState
-[ ] optimize server writeCharacterHealthAndAnimationFrame
-[ ] optimize client renderNodeWater
-[ ] optimize client renderNodeWater
+
+31.12.2022
+[x] fix mini map trees
 
 30.12.2022
 [x] remove ambient shade
