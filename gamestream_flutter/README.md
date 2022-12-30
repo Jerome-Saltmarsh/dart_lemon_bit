@@ -69,11 +69,11 @@ ctrl + w:   minimal mode
 [ ] design suburbia school
 [ ] fix ai spots player through walls
 [ ] fix characters teleport through walls on struck
-[ ] model weapon blunderbuss
 [ ] fix color near midnight
 [ ] feature survival random treasure spawns
 
 30.12.2022
+[x] model weapon blunderbuss
 [x] fix survival time not visible
 [x] fix cursor speak on enemy players
 [x] fix survival inventory not reset on respawn
