@@ -88,8 +88,8 @@ class RendererNodes extends Renderer {
   static bool get renderNodeBelowVariation => renderNodeBelowIndex > 0 ? GameNodes.nodesVariation[renderNodeBelowIndex] : renderNodeVariation;
 
   static int get renderNodeBelowShade {
-    if (renderNodeBelowIndex < 0) return ServerState.ambientShade.value;
-    if (renderNodeBelowIndex >= GameNodes.nodesTotal) return ServerState.ambientShade.value;
+    if (renderNodeBelowIndex < 0) return Shade.Medium;
+    if (renderNodeBelowIndex >= GameNodes.nodesTotal) return Shade.Medium;
     return GameNodes.nodesShade[renderNodeBelowIndex];
   }
 
@@ -997,8 +997,8 @@ class RendererNodes extends Renderer {
 
   static int getRenderLayerShade(int layers){
     final index = currentNodeIndex + (layers * GameNodes.nodesArea);
-    if (index < 0) return ServerState.ambientShade.value;
-    if (index >= GameNodes.nodesTotal) return ServerState.ambientShade.value;
+    if (index < 0) return Shade.Medium;
+    if (index >= GameNodes.nodesTotal) return Shade.Medium;
     return GameNodes.nodesShade[index];
   }
 

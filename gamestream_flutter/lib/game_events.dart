@@ -33,14 +33,11 @@ class GameEvents {
     }
   }
 
-  static void onChangedAmbientShade(int shade) {
-    // GameState.refreshLighting();
-  }
-
   static void onChangedNodes(){
+    GameState.refreshGridMetrics();
+    GameNodes.generateMiniMap();
     GameMinimap.generateSrcDst();
     ClientActions.refreshBakeMapLightSources();
-    GameState.refreshGridMetrics();
 
     if (ClientState.raining.value) {
       GameActions.rainStop();

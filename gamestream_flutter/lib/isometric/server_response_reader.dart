@@ -142,9 +142,6 @@ class ServerResponseReader with ByteReader {
   void readServerResponseEnvironment() {
     final environmentResponse = readByte();
     switch (environmentResponse) {
-      case EnvironmentResponse.Shade:
-        ServerState.ambientShade.value = readByte();
-        break;
       case EnvironmentResponse.Rain:
         ServerState.rainType.value = readByte();
         break;
@@ -582,6 +579,7 @@ class ServerResponseReader with ByteReader {
     character.weaponFrame = readByte();
   }
 
+  // todo optimize
   void readCharacterHealthAndAnimationFrame(Character character){
     final byte = readByte();
     final frame = byte % 10;

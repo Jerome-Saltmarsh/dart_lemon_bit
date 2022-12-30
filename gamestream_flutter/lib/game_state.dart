@@ -90,7 +90,7 @@ class GameState {
 
   static int getNodeShade(int z, int row, int column) =>
       outOfBounds(z, row, column)
-          ? ServerState.ambientShade.value
+          ? Shade.Medium
           : GameNodes.nodesShade[getNodeIndexZRC(z, row, column)];
 
   static bool outOfBoundsV3(Vector3 v3) =>
@@ -139,7 +139,7 @@ class GameState {
   }
 
   static void applyEmissionsCharacters() {
-    var maxBrightness = ServerState.ambientShade.value - 1;
+    var maxBrightness = Shade.Medium;
     if (maxBrightness < Shade.Bright) {
       maxBrightness = Shade.Bright;
     }
@@ -1169,7 +1169,7 @@ class GameState {
     }
 
     static void applyShadows(){
-      if (ServerState.ambientShade.value > Shade.Very_Bright) return;
+      // if (ServerState.ambientShade.value > Shade.Very_Bright) return;
       applyShadowsMidAfternoon();
     }
 
@@ -1183,8 +1183,7 @@ class GameState {
       required int directionColumn,
       required int maxDistance,
     }){
-      final current = ServerState.ambientShade.value;
-      final shadowShade = current >= Shade.Pitch_Black ? current : current + 1;
+      final shadowShade = Shade.Medium;
 
       for (var z = 0; z < nodesTotalZ; z++) {
         for (var row = 0; row < nodesTotalRows; row++){

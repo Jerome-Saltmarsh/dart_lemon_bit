@@ -7,13 +7,18 @@ class GameMinimap {
   static var src = Float32List(0);
   static var dst = Float32List(0);
 
-  static int mapNodeTypeToSrcX(int nodeType) => const {
+  static double mapNodeTypeToSrcX(int nodeType) => const <int, double>{
       NodeType.Grass: 1,
       NodeType.Water: 2,
       NodeType.Wood: 3,
       NodeType.Wooden_Plank: 3,
+      NodeType.Soil: 3,
       NodeType.Road: 4,
       NodeType.Road_2: 4,
+      NodeType.Tree_Bottom: 6,
+      NodeType.Tree_Top: 6,
+      NodeType.Bau_Haus: 7,
+      NodeType.Brick: 8,
     }[nodeType] ?? 0;
 
   static void generateSrcDst(){
@@ -35,13 +40,10 @@ class GameMinimap {
         final nodeType = nodeTypes[index];
         const srcWidth = 1.0;
         const srcHeight = 1.0;
-        // const srcWidthPadded = srcWidth + 1;
         final srcX = mapNodeTypeToSrcX(nodeType) * 2.0;
         final srcY = 0;
         final dstX = (row - column) * 1.0;
         final dstY = (row + column) * 1.0;
-        final anchorX = 0.5;
-        final anchorY = 0.5;
         var f = index * 4;
         src[f] = srcX;
         src[f + 1] = 0;

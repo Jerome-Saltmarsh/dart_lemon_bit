@@ -31,7 +31,6 @@ class ServerState {
   static final lightningType = Watch(LightningType.Off);
   static final watchTimePassing = Watch(false);
   static final windTypeAmbient = Watch(WindType.Calm, onChanged: GameEvents.onChangedWindType);
-  static final ambientShade = Watch(Shade.Pitch_Black, onChanged: GameEvents.onChangedAmbientShade);
   static final error = Watch("invalid request", onChanged: GameEvents.onChangedError);
   static final gameStatus = Watch(GameStatus.Playing);
 

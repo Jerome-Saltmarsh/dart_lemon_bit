@@ -144,7 +144,8 @@ class GameAudio {
   ];
 
   static double getVolumeTargetDayAmbience() {
-    if (ServerState.ambientShade.value == Shade.Very_Bright) return 0.2;
+    final hours = ServerState.hours.value;
+    if (hours > 8 && hours < 4) return 0.2;
     return 0;
   }
 
@@ -267,7 +268,8 @@ class GameAudio {
   }
 
   static void playRandomMusic(){
-    if (ServerState.ambientShade.value == Shade.Pitch_Black) {
+    final hours = ServerState.hours.value;
+    if (hours > 22 && hours < 3) {
       playRandom(musicNight);
     }
   }
@@ -275,9 +277,7 @@ class GameAudio {
   static void playRandomAmbientSound(){
     final hour = ServerState.hours.value;
 
-    final shade = ServerState.ambientShade.value;
-
-    if (shade == Shade.Pitch_Black || shade == Shade.Very_Dark){
+    if (hour > 22 && hour < 4){
       return playRandom(soundsNight);
     }
     if (hour == 6){
