@@ -1,6 +1,4 @@
 
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 import 'library.dart';
@@ -8,8 +6,6 @@ import 'library.dart';
 class GameMinimap {
   static var src = Float32List(0);
   static var dst = Float32List(0);
-
-
 
   static int mapNodeTypeToSrcX(int nodeType) => const {
       NodeType.Grass: 1,

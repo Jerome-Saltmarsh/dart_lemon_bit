@@ -26,6 +26,8 @@ class GameSurvival extends Game {
     player.belt3_quantity = 3;
     player.belt4_itemType = ItemType.Consumables_Apple;
     player.belt4_quantity = 3;
+    player.belt5_itemType = ItemType.Weapon_Rifle_Blunderbuss;
+    player.belt5_quantity = 10;
     player.equippedWeaponIndex = ItemType.Belt_1;
     player.refreshStats();
     moveToRandomPlayerSpawnPoint(player);

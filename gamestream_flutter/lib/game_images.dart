@@ -63,6 +63,7 @@ class GameImages {
    static late Image template_weapon_m4;
    static late Image template_weapon_revolver;
    static late Image template_weapon_winchester;
+   static late Image template_weapon_blunderbuss;
 
    static Image getImageForHeadType(int headType) {
       switch (headType) {
@@ -135,11 +136,11 @@ class GameImages {
          case ItemType.Weapon_Rifle_M4:
             return template_weapon_m4;
          case ItemType.Weapon_Rifle_Arquebus:
-            return template_weapon_winchester;
+            return template_weapon_blunderbuss;
          case ItemType.Weapon_Rifle_Musket:
             return template_weapon_winchester;
          case ItemType.Weapon_Rifle_Blunderbuss:
-            return template_weapon_winchester;
+            return template_weapon_blunderbuss;
          case ItemType.Weapon_Rifle_Jager:
             return template_weapon_winchester;
          case ItemType.Weapon_Smg_Mp5:
@@ -251,6 +252,7 @@ class GameImages {
       template_weapon_m4 = await Engine.loadImageAsset('images/template/weapons/template-weapons-m4.png');
       template_weapon_revolver = await Engine.loadImageAsset('images/template/weapons/template-weapons-revolver.png');
       template_weapon_winchester = await Engine.loadImageAsset('images/template/weapons/template-weapons-winchester.png');
+      template_weapon_blunderbuss = await Engine.loadImageAsset('images/template/weapons/template-weapons-blunderbuss.png');
 
       character_dog = await Engine.loadImageAsset('images/character-dog.png');
    }
