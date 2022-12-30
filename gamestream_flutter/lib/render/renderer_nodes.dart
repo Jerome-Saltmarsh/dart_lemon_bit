@@ -448,30 +448,10 @@ class RendererNodes extends Renderer {
             return;
         }
       case NodeType.Rain_Falling:
-        renderStandardNodeShaded(
-          srcX: ClientState.srcXRainFalling,
-          srcY: 72.0 * ((GameAnimation.animationFrame + row + row + column) % 6), // TODO Expensive Operation
-        );
+        renderNodeRainFalling();
         return;
       case NodeType.Rain_Landing:
-        if (GameQueries.getNodeTypeBelow(currentNodeIndex) == NodeType.Water){
-          Engine.renderSprite(
-            image: GameImages.atlas_nodes,
-            srcX: AtlasNode.Node_Rain_Landing_Water_X,
-            srcY: 72.0 * ((GameAnimation.animationFrame + row + column) % 10), // TODO Expensive Operation
-            srcWidth: GameConstants.Sprite_Width,
-            srcHeight: GameConstants.Sprite_Height,
-            dstX: currentNodeDstX,
-            dstY: currentNodeDstY + GameAnimation.animationFrameWaterHeight + 14,
-            anchorY: 0.3,
-            color: currentNodeColor,
-          );
-          return;
-        }
-        renderStandardNodeShaded(
-          srcX: ClientState.srcXRainLanding,
-          srcY: 72.0 * ((GameAnimation.animationFrame + row + column) % 6), // TODO Expensive Operation
-        );
+        renderNodeRainLanding();
         return;
       case NodeType.Concrete:
         renderNodeTemplateShaded(GameConstants.Sprite_Width_Padded_8);
@@ -581,6 +561,34 @@ class RendererNodes extends Renderer {
       default:
         throw Exception('renderNode(index: ${currentNodeIndex}, type: ${NodeType.getName(currentNodeType)}, orientation: ${NodeOrientation.getName(GameNodes.nodesOrientation[currentNodeIndex])}');
     }
+  }
+
+  static void renderNodeRainLanding() {
+    if (currentNodeIndex > GameNodes.nodesArea && nodeTypes[currentNodeIndex - GameNodes.nodesArea] == NodeType.Water){
+      Engine.renderSprite(
+        image: GameImages.atlas_nodes,
+        srcX: AtlasNode.Node_Rain_Landing_Water_X,
+        srcY: 72.0 * ((GameAnimation.animationFrame + row + column) % 8), // TODO Expensive Operation
+        srcWidth: GameConstants.Sprite_Width,
+        srcHeight: GameConstants.Sprite_Height,
+        dstX: currentNodeDstX,
+        dstY: currentNodeDstY + GameAnimation.animationFrameWaterHeight + 14,
+        anchorY: 0.3,
+        color: currentNodeColor,
+      );
+      return;
+    }
+    renderStandardNodeShaded(
+      srcX: ClientState.srcXRainLanding,
+      srcY: 72.0 * ((GameAnimation.animationFrame + row + column) % 6), // TODO Expensive Operation
+    );
+  }
+
+  static void renderNodeRainFalling() {
+    renderStandardNodeShaded(
+      srcX: ClientState.srcXRainFalling,
+      srcY: 72.0 * ((GameAnimation.animationFrame + row + row + column) % 6), // TODO Expensive Operation
+    );
   }
 
   static void renderTreeTop() => renderNodeBelowVariation ? renderTreeTopPine() : renderTreeTopOak();

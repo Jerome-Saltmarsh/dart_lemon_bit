@@ -1148,6 +1148,7 @@ class Player extends Character with ByteWriter {
     writeByte((Collider.onSameTeam(this, character) ? 100 : 0) + (character.faceDirection * 10) + character.state); // 1
   }
 
+  // todo optimize
   void writeCharacterHealthAndAnimationFrame(Character character) =>
     writeByte((((character.health / character.maxHealth) * 24).toInt() * 10) + character.animationFrame);
 

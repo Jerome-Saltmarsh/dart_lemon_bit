@@ -19,7 +19,6 @@ class GameAnimation {
   static final treeAnimationLength = treeAnimation.length;
 
   static var animationFrameJellyFish = 0;
-  static var animationFrameRateJellyFish = 0;
   static var _next = 0;
 
   static void updateAnimationFrame() {
@@ -37,10 +36,6 @@ class GameAnimation {
 
     if (animationFrameGrass++ >= 6){
       animationFrameGrass = 0;
-    }
-    if (animationFrameRateJellyFish-- <= 0) {
-      animationFrameRateJellyFish = 5;
-      animationFrameJellyFish = (animationFrameJellyFish + 1) % 6;
     }
   }
 }

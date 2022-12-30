@@ -71,6 +71,11 @@ ctrl + w:   minimal mode
 [ ] fix characters teleport through walls on struck
 [ ] fix color near midnight
 [ ] feature survival random treasure spawns
+[ ] fix mini map trees
+[ ] optimize server writeCharacterTeamDirectionAndState
+[ ] optimize server writeCharacterHealthAndAnimationFrame
+[ ] optimize client renderNodeWater
+[ ] optimize client renderNodeWater
 
 30.12.2022
 [x] remove ambient shade
