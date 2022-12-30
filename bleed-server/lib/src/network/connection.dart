@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:bleed_server/gamestream.dart';
@@ -220,17 +219,6 @@ class Connection with ByteReader {
             break;
         }
 
-        break;
-
-      case ClientRequest.Editor_Load_Scene:
-        try {
-          final sceneString = arguments[1];
-          final sceneBytes = base64Decode(sceneString);
-          final scene = SceneReader.readScene(sceneBytes);
-          joinGameEditorScene(scene);
-        } catch (error){
-          errorInvalidArg('Failed to load scene');
-        }
         break;
 
       case ClientRequest.Editor_Load_Game:

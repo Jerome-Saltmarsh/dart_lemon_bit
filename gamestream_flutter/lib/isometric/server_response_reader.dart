@@ -472,22 +472,6 @@ class ServerResponseReader with ByteReader {
   void readGameTime() {
     ServerState.hours.value = readByte();
     ServerState.minutes.value = readByte();
-
-    // if (ClientState.overrideColor.value) return;
-    //
-    // final totalSeconds = (ServerState.hours.value * Seconds_Per_Hour) + (ServerState.minutes.value * 60);
-    // GameLighting.start_hue = ((totalSeconds / Seconds_Per_Hours_24) * Max_Hue);
-    // GameLighting.end_alpha = totalSeconds < Seconds_Per_Hours_12
-    //     ? 1.0 - (totalSeconds / Seconds_Per_Hours_12)
-    //     : (totalSeconds - Seconds_Per_Hours_12) / Seconds_Per_Hours_12;
-    // GameLighting.refreshValues();
-  }
-
-  void readDamageApplied() {
-    final x = readDouble();
-    final y = readDouble() - 5;
-    final amount = readInt();
-    GameState.spawnFloatingText(x, y, amount.toString());
   }
 
   void readDebugMode() {
@@ -564,7 +548,7 @@ class ServerResponseReader with ByteReader {
   }
 
   void readProjectiles(){
-    GameState.totalProjectiles = readInt();
+    GameState.totalProjectiles = readUInt16();
     while (GameState.totalProjectiles >= GameState.projectiles.length){
       GameState.projectiles.add(Projectile());
     }
@@ -630,11 +614,11 @@ class ServerResponseReader with ByteReader {
   double readPercentage(){
     final value = readByte();
     if (value == 0) return 0;
-     return value / 256.0;
+     return value / 256.0; // todo optimize
   }
 
   List<Quest> readQuests(){
-    final total = readInt();
+    final total = readUInt16();
     final values = <Quest>[];
     for (var i = 0; i < total; i++){
       values.add(quests[readByte()]);

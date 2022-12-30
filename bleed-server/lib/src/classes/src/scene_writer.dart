@@ -106,9 +106,9 @@ class SceneReader extends ByteReader {
   var spawnPoints = Uint16List(0);
   var gameObjects = <GameObject>[];
 
-  static Scene readScene(List<int> bytes, {int startIndex = 0}) => _instance._readScene(bytes, startIndex: startIndex);
+  static Scene readScene(Uint8List bytes, {int startIndex = 0}) => _instance._readScene(bytes, startIndex: startIndex);
 
-  Scene _readScene(List<int> bytes, {int startIndex = 0}){
+  Scene _readScene(Uint8List bytes, {int startIndex = 0}){
     this.index = startIndex;
     this.totalColumns = 0;
     this.totalRows = 0;

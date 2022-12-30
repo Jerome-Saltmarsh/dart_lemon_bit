@@ -1291,24 +1291,9 @@ class Player extends Character with ByteWriter {
       if (!gameObject.active) continue;
       totalActiveProjectiles++;
     }
-    writeInt(totalActiveProjectiles);
+    writeUInt16(totalActiveProjectiles);
     projectiles.forEach(writeProjectile);
   }
-
-  // void writeCharacterZombie(Character zombie){
-  //   // writeByte(ServerResponse.Character_Zombie);
-  //   writeCharacter(this, zombie);
-  // }
-
-  // void writeCharacterRat(Character rat){
-  //   // writeByte(ServerResponse.Character_Rat);
-  //   writeCharacter(this, rat);
-  // }
-
-  // void writeCharacterSlime(Character rat){
-  //   // writeByte(ServerResponse.Character_Slime);
-  //   writeCharacter(this, rat);
-  // }
 
   void writeGameEvent({
     required int type,
@@ -1319,10 +1304,10 @@ class Player extends Character with ByteWriter {
   }){
     writeByte(ServerResponse.Game_Event);
     writeByte(type);
-    writeInt(x);
-    writeInt(y);
-    writeInt(z);
-    writeInt(angle * radiansToDegrees);
+    writeDouble(x);
+    writeDouble(y);
+    writeDouble(z);
+    writeDouble(angle * radiansToDegrees);
   }
 
   void writeGameEventGameObjectDestroyed(GameObject gameObject){
@@ -1387,7 +1372,7 @@ class Player extends Character with ByteWriter {
   void writeProjectile(Projectile projectile){
     if (!projectile.active) return;
     writePosition(projectile);
-    writeInt(projectile.z);
+    writeDouble(projectile.z);
     writeByte(projectile.type);
     writeAngle(projectile.velocityAngle);
   }
@@ -1441,20 +1426,20 @@ class Player extends Character with ByteWriter {
   }
 
   void writePosition(Position value){
-    writeInt(value.x);
-    writeInt(value.y);
+    writeDouble(value.x);
+    writeDouble(value.y);
   }
 
   void writePosition3(Position3 value){
-    writeInt(value.x);
-    writeInt(value.y);
-    writeInt(value.z);
+    writeDouble(value.x);
+    writeDouble(value.y);
+    writeDouble(value.z);
   }
 
   void writeVector3(Position3 value){
-    writeInt(value.x);
-    writeInt(value.y);
-    writeInt(value.z);
+    writeDouble(value.x);
+    writeDouble(value.y);
+    writeDouble(value.z);
   }
 
   void writeGrid() {
@@ -1503,14 +1488,14 @@ class Player extends Character with ByteWriter {
     writePosition(target != null ? target! : mouse);
 
     if (target != null){
-      writeInt(target!.z);
+      writeDouble(target!.z);
     } else{
-      writeInt(z);
+      writeDouble(z);
     }
   }
 
   void writeAngle(double radians){
-    writeInt(radians * radiansToDegrees);
+    writeDouble(radians * radiansToDegrees);
   }
 
   void writeStoreItems(){
@@ -1544,11 +1529,11 @@ class Player extends Character with ByteWriter {
 
   void writePlayerQuests(){
     writeByte(ServerResponse.Player_Quests);
-    writeInt(questsInProgress.length);
+    writeUInt16(questsInProgress.length);
     for (final quest in questsInProgress){
       writeByte(quest.index);
     }
-    writeInt(questsCompleted.length);
+    writeUInt16(questsCompleted.length);
     for (final quest in questsCompleted){
       writeByte(quest.index);
     }
@@ -1716,6 +1701,10 @@ class Player extends Character with ByteWriter {
   void writeGameStatus(int gameStatus){
     writeByte(ServerResponse.Game_Status);
     writeByte(gameStatus);
+  }
+
+  void writeDouble(double value){
+    writeInt16(value.toInt());
   }
 }
 
