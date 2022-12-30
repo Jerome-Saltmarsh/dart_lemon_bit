@@ -163,6 +163,9 @@ class ServerResponseReader with ByteReader {
       case EnvironmentResponse.Lightning_Flashing:
         ServerState.lightningFlashing.value = readBool();
         break;
+      case EnvironmentResponse.Time_Enabled:
+        ServerState.gameTimeEnabled.value = readBool();
+        break;
     }
   }
 

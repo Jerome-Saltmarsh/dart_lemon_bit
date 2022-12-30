@@ -6,6 +6,7 @@ import 'package:gamestream_flutter/isometric/events/on_visibility_changed_messag
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/game_map.dart';
+import 'package:gamestream_flutter/language_utils.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import 'game_ui_config.dart';
@@ -270,7 +271,7 @@ class GameUI {
             children: [
               buildButtonTogglePlayMode(),
               width3,
-              watch(ServerState.sceneEditable, buildWatchSceneEditableControls),
+              buildTime(),
               width3,
               GameUI.buildIconAudio(),
               width3,
@@ -287,10 +288,6 @@ class GameUI {
             ]
         ),
       );
-
-  static Widget buildWatchSceneEditableControls(bool sceneEditable) {
-    return buildWatchBool(GameUI.timeVisible, buildTime);
-  }
 
   static Widget buildIconAudio() =>
       onPressed(
@@ -728,4 +725,21 @@ class GameUI {
       ),
     );
   }
+
+  static Widget buildTime() => Tooltip(
+    message: "Time",
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        WatchBuilder(ServerState.hours, (int hours){
+          return text(padZero(hours));
+        }),
+        text(":"),
+        WatchBuilder(ServerState.minutes, (int minutes){
+          return text(padZero(minutes));
+        }),
+      ],
+    ),
+  );
+
 }

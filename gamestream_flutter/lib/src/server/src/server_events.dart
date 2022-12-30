@@ -40,4 +40,8 @@ class ServerEvents {
       ClientState.updateGameLighting();
     }
   }
+
+  static void onChangedGameTimeEnabled(bool value){
+    GameUI.timeVisible.value = value;
+  }
 }

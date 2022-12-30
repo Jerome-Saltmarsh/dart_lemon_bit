@@ -70,11 +70,11 @@ ctrl + w:   minimal mode
 [ ] fix ai spots player through walls
 [ ] fix characters teleport through walls on struck
 [ ] model weapon blunderbuss
-[ ] fix survival time not visible
 [ ] fix color near midnight
 [ ] feature survival random treasure spawns
 
 30.12.2022
+[x] fix survival time not visible
 [x] fix cursor speak on enemy players
 [x] fix survival inventory not reset on respawn
 [x] mini map indicate enemies

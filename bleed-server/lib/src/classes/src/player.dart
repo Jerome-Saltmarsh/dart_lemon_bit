@@ -1390,20 +1390,17 @@ class Player extends Character with ByteWriter {
       writeByte(RainType.None);
       writeBool(false);
       writeByte(LightningType.Off);
-      // writeBool(environment.timePassing);
       writeByte(WindType.Calm);
-      // writeByte(Shade.Pitch_Black);
     } else {
       writeByte(ServerResponse.Weather);
       writeByte(environment.rainType);
       writeBool(environment.breezy);
       writeByte(environment.lightningType);
-      // writeBool(environment.timePassing);
       writeByte(environment.windType);
-      // writeByte(environment.shade);
     }
 
     writeEnvironmentUnderground(underground);
+    writeGameTimeEnabled();
   }
 
   void writePercentage(double value){
@@ -1559,6 +1556,12 @@ class Player extends Character with ByteWriter {
     writeByte(ServerResponse.Environment);
     writeByte(EnvironmentResponse.Wind);
     writeByte(windType);
+  }
+
+  void writeGameTimeEnabled(){
+    writeByte(ServerResponse.Environment);
+    writeByte(EnvironmentResponse.Time_Enabled);
+    writeBool(game.time.enabled);
   }
 
   void writeEnvironmentRain(int rainType){
