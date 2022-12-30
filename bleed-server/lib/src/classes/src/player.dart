@@ -1540,12 +1540,6 @@ class Player extends Character with ByteWriter {
     writeUInt16(selectedGameObject.type);
   }
 
-  void writeEnvironmentShade(int value){
-    writeByte(ServerResponse.Environment);
-    writeByte(EnvironmentResponse.Shade);
-    writeByte(value);
-  }
-
   void writeEnvironmentLightning(int value){
     writeByte(ServerResponse.Environment);
     writeByte(EnvironmentResponse.Lightning);

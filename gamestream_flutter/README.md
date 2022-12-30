@@ -73,6 +73,7 @@ ctrl + w:   minimal mode
 [ ] feature survival random treasure spawns
 
 30.12.2022
+[x] remove ambient shade
 [x] fix fire minigun
 [x] model weapon blunderbuss
 [x] fix survival time not visible
