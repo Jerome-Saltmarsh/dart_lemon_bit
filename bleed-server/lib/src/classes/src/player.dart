@@ -1269,19 +1269,8 @@ class Player extends Character with ByteWriter {
     return true;
   }
 
-  bool isAllie(Position3 value){
-    if (value is! Collider) return false;
-    if (value.team == TeamType.Alone) return false;
-    if (value.team == TeamType.Neutral) return true;
-    return team == value.team;
-  }
-
-  bool isEnemy(Position3 value) {
-    if (value is! Collider) return false;
-    if (value.team == TeamType.Neutral) return false;
-    if (value.team == TeamType.Alone) return true;
-    return team != value.team;
-  }
+  bool isAllie(Position3? value)=> Collider.onSameTeam(this, value);
+  bool isEnemy(Position3? value) => !Collider.onSameTeam(this, value);
 
   void writeProjectiles(){
     writeByte(ServerResponse.Projectiles);

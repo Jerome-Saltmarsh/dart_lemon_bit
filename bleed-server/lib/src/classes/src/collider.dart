@@ -112,8 +112,10 @@ class Collider extends Position3 {
     if (a == b) return true;
     if (a is! Collider) return false;
     if (b is! Collider) return false;
-
-    if (a.team == 0) return false;
+    if (a.team == TeamType.Alone) return false;
+    if (b.team == TeamType.Alone) return false;
+    if (a.team == TeamType.Neutral) return true;
+    if (b.team == TeamType.Neutral) return true;
     return a.team == b.team;
   }
 }
