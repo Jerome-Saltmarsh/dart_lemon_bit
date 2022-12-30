@@ -35,7 +35,6 @@ import 'dark_age/dark_age_scenes.dart';
 import 'dark_age/dark_age_environment.dart';
 import 'dark_age/game_dark_age.dart';
 import 'dark_age/game_dark_age_editor.dart';
-import 'io/read_scene_from_file.dart';
 import 'network/websocket_server.dart';
 import 'system.dart';
 
@@ -144,10 +143,6 @@ class Engine {
 
   Future<GameDarkAge> findGameEditorNew() async {
     return GameDarkAgeEditor();
-  }
-
-  Future<GameDarkAge> findGameEditorByName(String name) async {
-    return GameDarkAgeEditor(scene: await readSceneFromFileJson(name));
   }
 
   // This method is called by the game constructor automatically

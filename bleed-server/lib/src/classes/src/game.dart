@@ -1944,10 +1944,10 @@ abstract class Game {
     return true;
   }
 
-  void saveSceneToFile() {
-    assert(scene.name.isNotEmpty);
-    writeSceneToFileJson(scene);
-  }
+  // void saveSceneToFile() {
+  //   assert(scene.name.isNotEmpty);
+  //   writeSceneToFileJson(scene);
+  // }
 
   void saveSceneToFileBytes(){
     assert(scene.name.isNotEmpty);

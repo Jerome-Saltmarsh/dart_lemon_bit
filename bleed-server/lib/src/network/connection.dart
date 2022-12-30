@@ -625,10 +625,7 @@ class Connection with ByteReader {
   }
 
   Future joinGameEditor({String? name}) async {
-    final game = name == null
-        ? await engine.findGameEditorNew()
-        : await engine.findGameEditorByName(name);
-    joinGame(game);
+    joinGame(await engine.findGameEditorNew());
   }
 
   Future joinGameEditorScene(Scene scene) async {
