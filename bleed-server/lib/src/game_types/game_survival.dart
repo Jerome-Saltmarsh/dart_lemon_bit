@@ -13,6 +13,7 @@ class GameSurvival extends Game {
 
   @override
   void customOnPlayerRevived(Player player) {
+    player.team = TeamType.Alone;
     player.inventoryClear();
     player.inventoryAddMax(itemType: ItemType.Resource_Round_9mm);
     player.bodyType = ItemType.Body_Shirt_Cyan;

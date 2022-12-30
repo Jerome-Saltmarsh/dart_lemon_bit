@@ -73,9 +73,9 @@ ctrl + w:   minimal mode
 [ ] fix survival time not visible
 [ ] fix color near midnight
 [ ] feature survival random treasure spawns
-[ ] fix cursor speak on enemy players
 
 30.12.2022
+[x] fix cursor speak on enemy players
 [x] fix survival inventory not reset on respawn
 [x] mini map indicate enemies
 [x] optimize lemon bytes using bit operations
