@@ -525,6 +525,7 @@ class ItemType {
      Weapon_Handgun_Desert_Eagle: "Desert Eagle",
      Weapon_Ranged_Shotgun: "Shotgun",
      Weapon_Rifle_Arquebus: "Arquebus",
+     Weapon_Rifle_Blunderbuss: "Blunderbuss",
      Weapon_Rifle_Jager: "Jager Rifle",
      Weapon_Rifle_Musket: "Musket",
      Weapon_Rifle_AK_47: "AK-47",

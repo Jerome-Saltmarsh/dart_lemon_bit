@@ -319,6 +319,13 @@ abstract class Game {
       return;
     }
 
+    if (character.weaponType == ItemType.Weapon_Special_Minigun){
+      if (character is Player){
+        playerUseMinigun(character);
+      }
+      return;
+    }
+
     if (ItemType.isTypeWeaponFirearm(character.weaponType)){
       characterFireWeapon(character);
       character.accuracy += ItemType.getAccuracy(character.weaponType);
@@ -394,7 +401,10 @@ abstract class Game {
     dispatchPlayerAttackPerformed(player);
     player.assignWeaponStateFiring();
     spawnProjectileRocket(player, damage: 3, range: player.weaponTypeRange);
-    // spawnProjectileFireball(player, damage: 3, range: player.weaponTypeRange);
+  }
+
+  void playerUseMinigun(Player player) {
+    characterFireWeapon(player);
   }
 
   void playerTeleportToMouse(Player player){
@@ -1604,18 +1614,6 @@ abstract class Game {
       range: 300,
       projectileType: ProjectileType.Bullet,
       damage: 5,
-    );
-    dispatchAttackPerformed(src.weaponType, src.x, src.y, src.z, angle);
-  }
-
-  void fireRifle(Character src, double angle) {
-    spawnProjectile(
-      src: src,
-      accuracy: 0,
-      angle: angle,
-      range: 600,
-      projectileType: ProjectileType.Bullet,
-      damage: 10,
     );
     dispatchAttackPerformed(src.weaponType, src.x, src.y, src.z, angle);
   }
