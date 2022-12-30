@@ -3,16 +3,17 @@ import 'package:bleed_server/src/dark_age/dark_age_environment.dart';
 
 class GameSurvival extends Game {
 
+  @override
+  int get gameType => GameType.Survival;
+
   GameSurvival({required super.scene})
       : super(environment: DarkAgeEnvironment(), time: DarkAgeTime()) {
     triggerSpawnPoints();
   }
 
   @override
-  int get gameType => GameType.Survival;
-
-  @override
   void customOnPlayerRevived(Player player) {
+    player.inventoryClear();
     player.inventoryAddMax(itemType: ItemType.Resource_Round_9mm);
     player.bodyType = ItemType.Body_Shirt_Cyan;
     player.legsType = ItemType.Legs_Blue;
