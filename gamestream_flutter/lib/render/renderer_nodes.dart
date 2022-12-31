@@ -255,7 +255,8 @@ class RendererNodes extends Renderer {
 
   void trimLeft(){
     var currentNodeRenderX = (row - column) * Node_Size_Half;
-    while (currentNodeRenderX < screenLeft && column > 0){
+    final maxRow = GameState.nodesTotalRows - 1;
+    while (currentNodeRenderX < screenLeft && column > 0 && row < maxRow){
       row++;
       column--;
       currentNodeRenderX += Node_Size;

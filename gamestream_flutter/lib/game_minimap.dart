@@ -19,6 +19,7 @@ class GameMinimap {
       NodeType.Tree_Top: 6,
       NodeType.Bau_Haus: 7,
       NodeType.Brick: 8,
+      NodeType.Torch: 1,
     }[nodeType] ?? 0;
 
   static void generateSrcDst(){

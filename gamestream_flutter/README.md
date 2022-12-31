@@ -80,6 +80,7 @@ ctrl + w:   minimal mode
 [ ] feature survival random treasure spawns
 
 31.12.2022
+[x] fix render row index out of bounds exception
 [x] fix mini map trees
 
 30.12.2022
