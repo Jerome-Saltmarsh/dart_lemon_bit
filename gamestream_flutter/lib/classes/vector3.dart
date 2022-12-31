@@ -6,7 +6,19 @@ class Vector3 with Position {
   late double z;
 
   /// remove
-  int get indexZ => z ~/ Node_Size_Half;
+  int get indexZ {
+    const Halves_0 = Node_Size_Half * 0;
+    const Halves_1 = Node_Size_Half * 1;
+    const Halves_2 = Node_Size_Half * 2;
+    const Halves_3 = Node_Size_Half * 3;
+    const Halves_4 = Node_Size_Half * 4;
+    if (z < Halves_0) return z ~/ Node_Size_Half;
+    if (z < Halves_1) return 0;
+    if (z < Halves_2) return 1;
+    if (z < Halves_3) return 2;
+    if (z < Halves_4) return 3;
+    return z ~/ Node_Size_Half;
+  }
   /// remove
   int get indexRow => x ~/ Node_Size;
   /// remove

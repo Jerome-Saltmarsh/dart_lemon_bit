@@ -25,10 +25,10 @@ class Character extends Vector3 {
   var lookRadian = 0.0;
   var weaponFrame = 0;
   var color = 0;
+  var skinColor = 0;
 
   static const piSixteenth = pi / 16.0;
 
-  // bool get usingWeapon => weaponStateFiring || performing;
   bool get weaponStateIdle => weaponState == WeaponState.Idle;
   bool get weaponStateFiring => weaponState == WeaponState.Firing;
   bool get weaponStateReloading => weaponState == WeaponState.Reloading;

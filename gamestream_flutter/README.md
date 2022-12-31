@@ -75,9 +75,15 @@ ctrl + w:   minimal mode
 [ ] design suburbia cemetery
 [ ] design suburbia school
 [ ] fix ai spots player through walls
-[ ] fix characters teleport through walls on struck
-[ ] fix color near midnight
+[ ] fix physics characters teleport through walls on struck
+[ ] fix render color near midnight
+[ ] fix render visibility algorithm
 [ ] feature survival random treasure spawns
+[ ] spawn boss characters
+[ ] street lamp
+[ ] survival mode random cloths on spawn
+[ ] separate head type and helm type and hair type
+[ ] character skin color
 
 31.12.2022
 [x] fix render row index out of bounds exception
