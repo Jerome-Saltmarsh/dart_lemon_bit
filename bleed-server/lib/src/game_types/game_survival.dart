@@ -33,7 +33,7 @@ class GameSurvival extends Game {
     player.legsType = getRandomStartingLegs();
     player.headType = ItemType.Empty;
     player.belt1_itemType = ItemType.Weapon_Handgun_Glock;
-    player.belt1_quantity = 50;
+    player.belt1_quantity = ItemType.getMaxQuantity(ItemType.Weapon_Handgun_Glock);
     player.belt2_itemType = ItemType.Weapon_Melee_Knife;
     player.belt2_quantity = 1;
     player.belt3_itemType = ItemType.Weapon_Thrown_Grenade;
@@ -46,6 +46,37 @@ class GameSurvival extends Game {
     player.refreshStats();
     moveToRandomPlayerSpawnPoint(player);
     player.health = player.maxHealth;
+  }
+
+  int getRandomItemType() => randomItem(const[
+      ItemType.Resource_Round_9mm,
+      ItemType.Resource_Round_9mm,
+      ItemType.Resource_Round_9mm,
+      ItemType.Resource_Round_Shotgun,
+      ItemType.Resource_Round_Shotgun,
+      ItemType.Resource_Round_Rifle,
+      ItemType.Resource_Round_Rifle,
+      ItemType.Resource_Round_50cal,
+    ]);
+
+  int getItemQuantityForItemType(int itemType) => const {
+      ItemType.Resource_Round_9mm: 10,
+      ItemType.Resource_Round_Shotgun: 3,
+      ItemType.Resource_Round_Rifle: 15,
+      ItemType.Resource_Round_50cal: 2,
+  }[itemType] ?? 1;
+
+  @override
+  void customOnCharacterKilled(Character target, src) {
+    if (target is AI) {
+      final itemType = getRandomItemType();
+      if (itemType == ItemType.Empty) return;
+       spawnGameObjectItemAtPosition(
+           position: target,
+           type: itemType,
+           quantity: getItemQuantityForItemType(itemType),
+       );
+    }
   }
 
   @override

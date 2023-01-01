@@ -23,7 +23,6 @@ class GameMinimap {
     }[nodeType] ?? 0;
 
   static void generateSrcDst(){
-    print('GameMiniMap.generateSrcDst()');
     var index = 0;
     final rows = GameState.nodesTotalRows;
     final columns = GameState.nodesTotalColumns;

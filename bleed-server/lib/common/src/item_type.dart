@@ -546,12 +546,12 @@ class ItemType {
 
   static int getMaxQuantity(int itemType) => const {
     Resource_Fuel         : 500,
-    Resource_Round_50cal  : 500,
-    Resource_Round_Shotgun: 500,
-    Resource_Round_Rifle  : 500,
-    Resource_Round_9mm    : 500,
-    Resource_Scrap_Metal  : 500,
-    Resource_Gold         : 500,
+    Resource_Round_50cal  : 20,
+    Resource_Round_Shotgun: 50,
+    Resource_Round_Rifle  : 200,
+    Resource_Round_9mm    : 100,
+    Resource_Scrap_Metal  : 100,
+    Resource_Gold         : 100,
     Resource_Gun_Powder   : 100,
     Resource_Arrow        : 100,
     Resource_Rocket       : 8,

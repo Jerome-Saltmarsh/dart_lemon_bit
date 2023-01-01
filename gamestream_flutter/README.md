@@ -71,9 +71,6 @@ ctrl + w:   minimal mode
 [ ] game 5v5
 
 [CRITICAL]
-[ ] design suburbia house kitchen
-[ ] design suburbia cemetery
-[ ] design suburbia school
 [ ] fix ai spots player through walls
 [ ] fix physics characters teleport through walls on struck
 [ ] fix render color near midnight
@@ -81,9 +78,23 @@ ctrl + w:   minimal mode
 [ ] feature survival random treasure spawns
 [ ] spawn boss characters
 [ ] street lamp
-[ ] survival mode random cloths on spawn
 [ ] separate head type and helm type and hair type
 [ ] character skin color
+[ ] design suburbia school
+[ ] design suburbia house kitchen
+[ ] design suburbia cemetery
+[ ] design stronghold
+
+[GAME SURVIVAL]
+[ ] design suburbia
+[ ] how do players acquire new items?
+    [ ] loot cupboards
+    [ ] destroyable crates etc
+    [ ] killing enemies drop items
+
+01.01.2023
+[x] survival mode enemies drop random ammunition on killed
+[x] survival mode random cloths on spawn
 
 31.12.2022
 [x] fix render row index out of bounds exception
