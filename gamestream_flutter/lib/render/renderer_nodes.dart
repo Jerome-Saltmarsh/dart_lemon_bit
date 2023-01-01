@@ -265,7 +265,6 @@ class RendererNodes extends Renderer {
   }
 
   static void nodesSetStart(){
-    // nodesStartRow = min(currentNodeRow, GameState.nodesTotalRows);
     nodesStartRow = clamp(row, 0, GameState.nodesTotalRows - 1);
     nodeStartColumn = clamp(column, 0, GameState.nodesTotalColumns - 1);
 
@@ -505,6 +504,12 @@ class RendererNodes extends Renderer {
         renderStandardNodeShaded(
           srcX: AtlasNodeX.Boulder,
           srcY: AtlasNodeY.Boulder,
+        );
+        return;
+      case NodeType.Vendor:
+        renderStandardNodeShaded(
+          srcX: 1344,
+          srcY: 80,
         );
         return;
       case NodeType.Oven:

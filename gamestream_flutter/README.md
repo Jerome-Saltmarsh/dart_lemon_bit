@@ -86,7 +86,9 @@ ctrl + w:   minimal mode
 [ ] design stronghold
 
 [GAME SURVIVAL]
+[ ] add vending machine node type
 [ ] design suburbia
+[ ] vending trade machine
 [ ] how do players acquire new items?
     [ ] loot cupboards
     [ ] destroyable crates etc

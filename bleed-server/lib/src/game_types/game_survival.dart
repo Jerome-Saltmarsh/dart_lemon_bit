@@ -57,6 +57,11 @@ class GameSurvival extends Game {
       ItemType.Resource_Round_Rifle,
       ItemType.Resource_Round_Rifle,
       ItemType.Resource_Round_50cal,
+      ItemType.Resource_Scrap_Metal,
+      ItemType.Resource_Gold,
+      ItemType.Resource_Gun_Powder,
+      ItemType.Weapon_Thrown_Grenade,
+      ItemType.Consumables_Apple,
     ]);
 
   int getItemQuantityForItemType(int itemType) => const {
@@ -64,6 +69,10 @@ class GameSurvival extends Game {
       ItemType.Resource_Round_Shotgun: 3,
       ItemType.Resource_Round_Rifle: 15,
       ItemType.Resource_Round_50cal: 2,
+      ItemType.Resource_Scrap_Metal: 1,
+      ItemType.Resource_Gold: 1,
+      ItemType.Resource_Gun_Powder: 2,
+      ItemType.Consumables_Apple: 2,
   }[itemType] ?? 1;
 
   @override

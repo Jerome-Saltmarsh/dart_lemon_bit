@@ -27,7 +27,6 @@ class NodeType {
   static const Brick = 62;
   static const Wood = 63;
   static const Grass = 65;
-  // static const Plain = 66;
   static const Window = 67;
   static const Wooden_Plank = 68;
   static const Bau_Haus = 69;
@@ -39,6 +38,7 @@ class NodeType {
   static const Road = 75;
   static const Road_2 = 76;
   static const Metal = 77;
+  static const Vendor = 78;
 
   static bool isMaterialWood(int value) =>
       value == Torch ||
@@ -76,6 +76,7 @@ class NodeType {
       type == Bed_Bottom    ||
       type == Chimney       ||
       type == Metal         ||
+      type == Vendor        ||
       type == Boulder        ;
 
   static bool supportsOrientationEmpty(int type) =>
@@ -301,5 +302,6 @@ class NodeType {
     Spawn_Player: 'Spawn Player',
     Road: 'Road',
     Road_2: 'Road Paint',
+    Vendor: 'Vendor',
   }[type] ?? 'unknown($type)';
 }

@@ -28,5 +28,6 @@ const editorGridTypesColumn2 = [
   NodeType.Sunflower,
   NodeType.Oven,
   NodeType.Window,
+  NodeType.Vendor,
   NodeType.Boulder,
 ];
