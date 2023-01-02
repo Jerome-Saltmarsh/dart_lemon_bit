@@ -26,9 +26,9 @@ class GameEditor {
      return value;
   }, onChanged: onChangedSelectedNodeIndex);
 
-  static int get z => GameState.convertNodeIndexToZ(nodeSelectedIndex.value);
-  static int get row => GameState.convertNodeIndexToRow(nodeSelectedIndex.value);
-  static int get column => GameState.convertNodeIndexToColumn(nodeSelectedIndex.value);
+  static int get z => GameState.convertNodeIndexToIndexZ(nodeSelectedIndex.value);
+  static int get row => GameState.convertNodeIndexToIndexX(nodeSelectedIndex.value);
+  static int get column => GameState.convertNodeIndexToIndexY(nodeSelectedIndex.value);
 
   static set z(int value){
      if (value < 0) return;

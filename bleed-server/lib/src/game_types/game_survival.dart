@@ -110,7 +110,7 @@ class GameSurvival extends Game {
   @override
   void onPlayerInteractedWithGameObject(Player player, GameObject gameObject){
     player.setStoreItems(const [
-        ItemType.Consumables_Apple,
+        // ItemType.Consumables_Apple,
         ItemType.Weapon_Thrown_Grenade,
         ItemType.Weapon_Handgun_Flint_Lock_Old,
         ItemType.Weapon_Handgun_Flint_Lock,

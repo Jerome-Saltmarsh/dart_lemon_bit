@@ -199,8 +199,8 @@ class RendererCharacters extends Renderer {
       // }
 
       if (torchIndex != -1) {
-        final torchRow = GameState.convertNodeIndexToRow(torchIndex);
-        final torchColumn = GameState.convertNodeIndexToColumn(torchIndex);
+        final torchRow = GameState.convertNodeIndexToIndexX(torchIndex);
+        final torchColumn = GameState.convertNodeIndexToIndexY(torchIndex);
         final torchPosX = torchRow * Node_Size + Node_Size_Half;
         final torchPosY = torchColumn * Node_Size + Node_Size_Half;
         angle = getAngleBetween(character.x, character.y, torchPosX, torchPosY);

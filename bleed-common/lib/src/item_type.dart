@@ -162,13 +162,13 @@ class ItemType {
     ],
     Weapon_Handgun_Flint_Lock: const [
       0001, Weapon_Handgun_Flint_Lock_Old,
-      0100, Resource_Scrap_Metal,
-      0050, Resource_Gold,
+      0005, Resource_Scrap_Metal,
+      0005, Resource_Gold,
     ],
     Weapon_Handgun_Flint_Lock_Superior: const [
-      0003, Weapon_Handgun_Flint_Lock,
-      0400, Resource_Scrap_Metal,
-      0100, Resource_Gold,
+      0002, Weapon_Handgun_Flint_Lock,
+      0010, Resource_Scrap_Metal,
+      0010, Resource_Gold,
     ],
     Weapon_Handgun_Blunderbuss: const [
       0003, Weapon_Handgun_Flint_Lock_Superior,

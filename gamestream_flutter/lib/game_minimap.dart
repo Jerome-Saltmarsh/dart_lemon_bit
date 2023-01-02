@@ -29,33 +29,60 @@ class GameMinimap {
     final columns = GameState.nodesTotalColumns;
     final area = GameNodes.nodesArea;
     final nodeTypes = GameNodes.miniMap;
-    final total = area * 4;
+
+    final vendors = <int>[];
+    for (var i = 0; i < GameNodes.nodesTotal; i++){
+         if (GameNodes.nodesType[i] != NodeType.Vendor) continue;
+         vendors.add(i);
+    }
+
+    print("total vendors  ${vendors.length}");
+
+    final total = ((area + vendors.length) * 4);
     if (src.length != total){
       src = Float32List(total);
     }
     if (dst.length != total){
       dst = Float32List(total);
     }
+
     for (var row = 0; row < rows; row++){
       for (var column = 0; column < columns; column++){
         final nodeType = nodeTypes[index];
-        const srcWidth = 1.0;
-        const srcHeight = 1.0;
-        final srcX = mapNodeTypeToSrcX(nodeType) * 2.0;
+        var srcWidth = 1.0;
+        var srcHeight = 1.0;
+        var srcX = mapNodeTypeToSrcX(nodeType) * 2.0;
         final srcY = 0;
-        final dstX = (row - column) * 1.0;
-        final dstY = (row + column) * 1.0;
+        var dstX = (row - column) * 1.0;
+        var dstY = (row + column) * 1.0;
         var f = index * 4;
-        src[f] = srcX;
+        src[f + 0] = srcX;
         src[f + 1] = 0;
         src[f + 2] = srcX + srcWidth;
         src[f + 3] = srcY + srcHeight;
-        dst[f] = 1;
+        dst[f + 0] = 1;
         dst[f + 1] = 0;
         dst[f + 2] = dstX;
         dst[f + 3] = dstY;
         index++;
       }
+    }
+
+    for (var i = 0; i < vendors.length; i++){
+       final nodeIndex = vendors[i];
+       final indexX = GameState.convertNodeIndexToIndexX(nodeIndex);
+       final indexY = GameState.convertNodeIndexToIndexY(nodeIndex);
+       final dstX = (indexX - indexY) * 1.0;
+       final dstY = (indexX + indexY) * 1.0;
+       final f = ((area + i) * 4);
+       src[f + 0] = 26;
+       src[f + 1] = 0;
+       src[f + 2] = 26 + 10;
+       src[f + 3] = 00 + 09;
+       dst[f + 0] = 0.612;
+       dst[f + 1] = 0;
+       dst[f + 2] = dstX;
+       dst[f + 3] = dstY;
     }
   }
 

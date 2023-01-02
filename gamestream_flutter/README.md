@@ -84,11 +84,16 @@ ctrl + w:   minimal mode
 [ ] design suburbia house kitchen
 [ ] design suburbia cemetery
 [ ] design stronghold
+[ ] remove grenade from inventory on empty
+[ ] remove apple from inventory on empty
 
 [GAME SURVIVAL]
-[ ] minimap icon vendor
+[x] minimap icon vendor
+[ ] vendor armour
+[ ] random treasure spawns 
 [ ] design suburbia
 [ ] vending trade machine
+[x] fix detect vendors which aren't the top
 [ ] how do players acquire new items?
     [ ] loot cupboards
     [ ] destroyable crates etc

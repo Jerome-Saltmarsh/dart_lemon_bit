@@ -153,9 +153,9 @@ void renderCharacterTemplate(Character character, {
 
     if (torchIndex != -1) {
       // TODO optimize
-      final torchRow = GameState.convertNodeIndexToRow(torchIndex);
+      final torchRow = GameState.convertNodeIndexToIndexX(torchIndex);
       // TODO optimize
-      final torchColumn = GameState.convertNodeIndexToColumn(torchIndex);
+      final torchColumn = GameState.convertNodeIndexToIndexY(torchIndex);
       final torchPosX = torchRow * Node_Size + Node_Size_Half;
       final torchPosY = torchColumn * Node_Size + Node_Size_Half;
       angle = getAngleBetween(character.x, character.y, torchPosX, torchPosY);

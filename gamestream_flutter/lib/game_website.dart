@@ -154,15 +154,15 @@ class GameWebsite {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        buildTextButton("DARK-AGE", action: GameNetwork.connectToGameDarkAge),
-        height24,
+        // buildTextButton("DARK-AGE", action: GameNetwork.connectToGameDarkAge),
+        // height24,
         buildTextButton("PRACTICE", action: GameNetwork.connectToGamePractice),
         height24,
-        buildTextButton("SURVIVAL", action: GameNetwork.connectToGameSurvival),
+        buildTextButton("SURVIVE", action: GameNetwork.connectToGameSurvival),
+        // height24,
+        // buildTextButton("5v5", action: GameNetwork.connectToGame5v5),
         height24,
-        buildTextButton("5v5", action: GameNetwork.connectToGame5v5),
-        height24,
-        buildTextButton("EDITOR", action: GameNetwork.connectToGameEditor),
+        buildTextButton("CREATE", action: GameNetwork.connectToGameEditor),
       ],
     );
 

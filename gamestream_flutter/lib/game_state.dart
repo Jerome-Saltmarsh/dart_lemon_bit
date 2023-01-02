@@ -70,14 +70,14 @@ class GameState {
     return (z * GameNodes.nodesArea) + (row * nodesTotalColumns) + column;
   }
 
-  static int convertNodeIndexToZ(int index) =>
+  static int convertNodeIndexToIndexZ(int index) =>
       index ~/ GameNodes.nodesArea;
 
-  static int convertNodeIndexToRow(int index) =>
+  static int convertNodeIndexToIndexX(int index) =>
       (index - ((index ~/ GameNodes.nodesArea) * GameNodes.nodesArea)) ~/ nodesTotalColumns;
 
-  static int convertNodeIndexToColumn(int index) =>
-      index - ((convertNodeIndexToZ(index) * GameNodes.nodesArea) + (convertNodeIndexToRow(index) * nodesTotalColumns));
+  static int convertNodeIndexToIndexY(int index) =>
+      index - ((convertNodeIndexToIndexZ(index) * GameNodes.nodesArea) + (convertNodeIndexToIndexX(index) * nodesTotalColumns));
 
   static int getV3RenderColor(Vector3 vector3) =>
       GameLighting.values[getV3NodeBelowShade(vector3)];
@@ -1264,9 +1264,9 @@ class GameState {
       assert (index >= 0);
       assert (index < GameNodes.nodesTotal);
       applyEmissionBake(
-        zIndex: convertNodeIndexToZ(index),
-        rowIndex: convertNodeIndexToRow(index),
-        columnIndex: convertNodeIndexToColumn(index),
+        zIndex: convertNodeIndexToIndexZ(index),
+        rowIndex: convertNodeIndexToIndexX(index),
+        columnIndex: convertNodeIndexToIndexY(index),
         maxBrightness: Shade.Very_Bright,
       );
   }

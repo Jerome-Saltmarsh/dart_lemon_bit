@@ -1129,9 +1129,9 @@ class RendererNodes extends Renderer {
   void showIndex(int index) {
     if (index < 0) return;
     if (index >= GameNodes.nodesTotal) return;
-    indexZ = GameState.convertNodeIndexToZ(index);
-    indexRow = GameState.convertNodeIndexToRow(index);
-    indexColumn = GameState.convertNodeIndexToColumn(index);
+    indexZ = GameState.convertNodeIndexToIndexZ(index);
+    indexRow = GameState.convertNodeIndexToIndexX(index);
+    indexColumn = GameState.convertNodeIndexToIndexY(index);
     const radius = 3;
     for (var r = -radius; r <= radius + 2; r++) {
       final row = indexRow + r;
