@@ -75,6 +75,7 @@ ctrl + w:   minimal mode
 [ ] fix physics characters teleport through walls on struck
 [ ] fix render color near midnight
 [ ] fix render visibility algorithm
+[ ] fix node opacity during day time
 [ ] feature survival random treasure spawns
 [ ] spawn boss characters
 [ ] street lamp
@@ -93,14 +94,14 @@ ctrl + w:   minimal mode
 [ ] design scene suburbia
 [ ] cupboards with loot
 [ ] destroyable crates etc
-[ ] projectiles can hit barrels
+
+02.01.2023
+[x] interactable node type vending machine
+[x] projectiles can hit barrels
 [x] vending trade machine
 [x] fix detect vendors which aren't the top
 [x] minimap icon vendor
 [x] killing enemies drop items
-
-02.01.2023
-[x] interactable node type vending machine
 
 01.01.2023
 [x] survival mode enemies drop random ammunition on killed

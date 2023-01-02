@@ -371,7 +371,8 @@ class EditorUI {
                   action: () {
                     GameNetwork.sendClientRequestEdit(
                         EditRequest.Spawn_Zombie,
-                        GameEditor.nodeSelectedIndex.value);
+                        GameEditor.nodeSelectedIndex.value,
+                    );
                   }),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,

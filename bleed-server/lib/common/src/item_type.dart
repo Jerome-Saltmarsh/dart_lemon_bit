@@ -635,13 +635,6 @@ class ItemType {
   static const GameObjectTypes = [
      GameObjects_Barrel,
      GameObjects_Tavern_Sign,
-     GameObjects_Candle,
-     GameObjects_Bottle,
-     GameObjects_Wheel,
-     GameObjects_Cup,
-     GameObjects_Lantern_Red,
-     GameObjects_Book_Purple,
-     GameObjects_Car,
   ];
 }
 

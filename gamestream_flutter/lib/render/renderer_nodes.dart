@@ -64,14 +64,21 @@ class RendererNodes extends Renderer {
   static var nodeVisibility = GameNodes.nodesVisible;
 
   // GETTERS
-  // double get currentNodeRenderX => (currentNodeRow - currentNodeColumn) * Node_Size_Half;
   static double get currentNodeRenderY => GameConvert.rowColumnZToRenderY(row, column, currentNodeZ);
 
   static int get currentNodeShade => nodeShades[currentNodeIndex];
   static int get currentNodeColor => (currentNodeVisibilityOpaque ? GameLighting.values : GameLighting.values_transparent)[currentNodeShade];
+
+  static int getNodeColor(int index) {
+    if (index < 0) return GameLighting.values[4];
+    if (index >= GameNodes.nodesTotal) return GameLighting.values[4];
+    return (nodeVisibility[index] == Visibility.Opaque ? GameLighting.values : GameLighting
+        .values_transparent)[index];
+  }
+
+
   static int get currentNodeOrientation => nodeOrientations[currentNodeIndex];
   static int get currentNodeVisibility => nodeVisibility[currentNodeIndex];
-  // int get currentNodeWind => GameNodes.nodesWind[currentNodeIndex];
   static int get currentNodeWind => ServerState.windTypeAmbient.value;
 
   static bool get currentNodeVisible => currentNodeVisibility == Visibility.Invisible;
@@ -978,7 +985,7 @@ class RendererNodes extends Renderer {
   }){
     onscreenNodes++;
     final f = Engine.bufferIndex << 2;
-    bufferClr[Engine.bufferIndex] = currentNodeVisibility == Visibility.Opaque ? currentNodeColor : GameLighting.Transparent;
+    bufferClr[Engine.bufferIndex] = RendererNodes.currentNodeColor;
     bufferSrc[f] = srcX;
     bufferSrc[f + 1] = srcY;
     bufferSrc[f + 2] = srcX + GameConstants.Sprite_Width;
@@ -1011,7 +1018,7 @@ class RendererNodes extends Renderer {
   }
 
   static int getRenderLayerColor(int layers) =>
-      GameLighting.values[getRenderLayerShade(layers)];
+      getNodeColor(layers);
 
   static int getRenderLayerShade(int layers){
     final index = currentNodeIndex + (layers * GameNodes.nodesArea);

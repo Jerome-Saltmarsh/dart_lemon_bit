@@ -83,7 +83,8 @@ class GameLighting {
         linerInterpolation(start_hue, end_hue, t),
         linerInterpolation(start_saturation, end_saturation, t),
         linerInterpolation(start_value, end_value, t),
-        linerInterpolation(start_alpha, end_alpha, t) * 0.5,
+        // linerInterpolation(0.5, end_alpha, t),
+        0.5,
       );
     }
   }

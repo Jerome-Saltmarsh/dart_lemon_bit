@@ -95,7 +95,7 @@ class GameSurvival extends Game {
     }
   }
 
-  void spawnRandomGameObjectAtPosition(Position3 value){
+  void spawnRandomGameObjectAtPosition(Position3 value) {
     final itemType = getRandomItemType();
     if (itemType == ItemType.Empty) return;
     spawnGameObjectItemAtPosition(
@@ -112,7 +112,7 @@ class GameSurvival extends Game {
   }
 
   @override
-  void onPlayerInteractedWithGameObject(Player player, GameObject gameObject){
+  void onPlayerInteractedWithGameObject(Player player, GameObject gameObject) {
     player.setStoreItems(const [
         ItemType.Weapon_Thrown_Grenade,
         ItemType.Weapon_Handgun_Flint_Lock_Old,
@@ -131,8 +131,8 @@ class GameSurvival extends Game {
 
   @override
   void customOnHitApplied(Character src, Collider target) {
-     if (target is GameObject){
-        if (target.type == ItemType.GameObjects_Barrel){
+     if (target is GameObject) {
+        if (target.type == ItemType.GameObjects_Barrel) {
            deactivateGameObject(target);
            spawnRandomGameObjectAtPosition(target);
            final x = target.x;
@@ -142,6 +142,7 @@ class GameSurvival extends Game {
                spawnGameObject(x: x, y: y, z: z, type: ItemType.GameObjects_Barrel)
                 ..physical = true
                 ..collidable = true
+                ..team = TeamType.Alone
                 ..moveOnCollision = false;
            });
         }
