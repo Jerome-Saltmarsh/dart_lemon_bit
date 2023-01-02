@@ -136,11 +136,9 @@ class ItemType {
   static const Weapon_Rifle_Blunderbuss = Weapon_Rifle_Arquebus + 1;
   static const Weapon_Rifle_Musket = Weapon_Rifle_Blunderbuss + 1;
   static const Weapon_Rifle_Jager = Weapon_Rifle_Musket + 1;
-  static const Weapon_Rifle_Assault = Weapon_Rifle_Jager + 1;
   static const Weapon_Rifle_AK_47 = Weapon_Rifle_Jager + 1;
   static const Weapon_Rifle_M4 = Weapon_Rifle_AK_47 + 1;
-  static const Weapon_Rifle_Steyr = Weapon_Rifle_M4 + 1;
-  static const Weapon_Rifle_Sniper = Weapon_Rifle_Steyr + 1;
+  static const Weapon_Rifle_Sniper = Weapon_Rifle_M4 + 1;
 
   static const Weapon_Smg_Mp5 = Index_Weapon_Ranged_Smg + 1;
 
@@ -338,7 +336,6 @@ class ItemType {
       Weapon_Rifle_Musket                 : Resource_Gun_Powder,
       Weapon_Rifle_Jager                  : Resource_Round_Rifle,
       Weapon_Rifle_M4                     : Resource_Round_Rifle,
-      Weapon_Rifle_Steyr                  : Resource_Round_Rifle,
       Weapon_Rifle_AK_47                  : Resource_Round_Rifle,
       Weapon_Rifle_Sniper                 : Resource_Round_50cal,
       Weapon_Smg_Mp5                      : Resource_Round_9mm,
@@ -362,7 +359,6 @@ class ItemType {
     Weapon_Rifle_Jager: 2,
     Weapon_Rifle_AK_47: 2,
     Weapon_Rifle_M4: 2,
-    Weapon_Rifle_Steyr: 2,
   }[itemType] ?? 0;
 
   static int getDamage(int value) => const {
@@ -385,7 +381,6 @@ class ItemType {
       Weapon_Rifle_Jager: 8,
       Weapon_Rifle_AK_47: 2,
       Weapon_Rifle_M4: 2,
-      Weapon_Rifle_Steyr: 2,
       Weapon_Rifle_Sniper: 50,
       Weapon_Smg_Mp5: 1,
       Trinket_Ring_of_Damage: 1,
@@ -419,7 +414,6 @@ class ItemType {
       Weapon_Rifle_Jager: 440,
       Weapon_Rifle_AK_47: 400,
       Weapon_Rifle_M4: 420,
-      Weapon_Rifle_Steyr: 430,
       Weapon_Rifle_Sniper: 750,
       Weapon_Smg_Mp5: 270,
       Weapon_Flamethrower: 150,
@@ -448,7 +442,6 @@ class ItemType {
       Weapon_Rifle_Jager: 50,
       Weapon_Rifle_AK_47: 5,
       Weapon_Rifle_M4: 5,
-      Weapon_Rifle_Steyr: 5,
       Weapon_Rifle_Sniper: 75,
       Weapon_Smg_Mp5: 5,
       Weapon_Flamethrower: 2,
@@ -531,7 +524,6 @@ class ItemType {
      Weapon_Rifle_Musket: "Musket",
      Weapon_Rifle_AK_47: "AK-47",
      Weapon_Rifle_M4: "M4 Assault Rifle",
-     Weapon_Rifle_Steyr: "Steyr",
      Weapon_Rifle_Sniper: "Sniper Rifle",
      Weapon_Smg_Mp5: "Mp5",
      Weapon_Flamethrower: "Flamethrower",
@@ -565,7 +557,6 @@ class ItemType {
     Weapon_Handgun_Glock                : 15,
     Weapon_Handgun_Revolver             : 05,
     Weapon_Handgun_Desert_Eagle         : 07,
-    Weapon_Rifle_Steyr                  : 30,
     Weapon_Rifle_M4                     : 35,
     Weapon_Rifle_AK_47                  : 35,
     Weapon_Rifle_Jager                  : 04,
@@ -612,7 +603,6 @@ class ItemType {
         Weapon_Rifle_Blunderbuss: 1.33,
         Weapon_Rifle_Musket: 1.5,
         Weapon_Rifle_AK_47: 1.33,
-        Weapon_Rifle_Steyr: 1.5,
         Weapon_Rifle_Sniper: 3.0,
     }[itemType] ?? 1.0;
   }

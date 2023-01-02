@@ -1265,12 +1265,6 @@ abstract class Game {
     }
   }
 
-  int getRandomWeaponIndex() =>
-    randomItem([
-      ItemType.Weapon_Rifle_Assault,
-      ItemType.Weapon_Ranged_Bow,
-    ]);
-
   void handleProjectileHit(Projectile projectile, Position3 target) {
     assert (projectile.active);
     assert (projectile != target);

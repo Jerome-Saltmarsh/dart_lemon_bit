@@ -86,6 +86,7 @@ ctrl + w:   minimal mode
 [ ] design stronghold
 
 [GAME SURVIVAL]
+[ ] minimap icon vendor
 [ ] design suburbia
 [ ] vending trade machine
 [ ] how do players acquire new items?

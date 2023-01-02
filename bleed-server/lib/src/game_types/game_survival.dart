@@ -41,12 +41,12 @@ class GameSurvival extends Game {
   void customOnPlayerRevived(Player player) {
     player.team = TeamType.Alone;
     player.inventoryClear();
-    player.inventoryAddMax(itemType: ItemType.Resource_Round_9mm);
+    player.inventoryAddMax(itemType: ItemType.Resource_Gun_Powder);
     player.bodyType = getRandomStartingShirt();
     player.legsType = getRandomStartingLegs();
     player.headType = ItemType.Empty;
-    player.belt1_itemType = ItemType.Weapon_Handgun_Glock;
-    player.belt1_quantity = ItemType.getMaxQuantity(ItemType.Weapon_Handgun_Glock);
+    player.belt1_itemType = ItemType.Weapon_Handgun_Flint_Lock_Old;
+    player.belt1_quantity = ItemType.getMaxQuantity(ItemType.Weapon_Handgun_Flint_Lock_Old);
     player.belt2_itemType = ItemType.Weapon_Melee_Knife;
     player.belt2_quantity = 1;
     player.belt3_itemType = ItemType.Weapon_Thrown_Grenade;
@@ -54,7 +54,7 @@ class GameSurvival extends Game {
     player.belt4_itemType = ItemType.Consumables_Apple;
     player.belt4_quantity = 3;
     player.belt5_itemType = ItemType.Weapon_Rifle_Blunderbuss;
-    player.belt5_quantity = 10;
+    player.belt5_quantity = ItemType.getMaxQuantity(ItemType.Weapon_Rifle_Blunderbuss);
     player.equippedWeaponIndex = ItemType.Belt_1;
     player.refreshStats();
     moveToRandomPlayerSpawnPoint(player);
@@ -112,6 +112,17 @@ class GameSurvival extends Game {
     player.setStoreItems(const [
         ItemType.Consumables_Apple,
         ItemType.Weapon_Thrown_Grenade,
+        ItemType.Weapon_Handgun_Flint_Lock_Old,
+        ItemType.Weapon_Handgun_Flint_Lock,
+        ItemType.Weapon_Handgun_Flint_Lock_Superior,
+        ItemType.Weapon_Handgun_Glock,
+        ItemType.Weapon_Rifle_Arquebus,
+        ItemType.Weapon_Rifle_Blunderbuss,
+        ItemType.Weapon_Rifle_Jager,
+        ItemType.Weapon_Rifle_Musket,
+        ItemType.Weapon_Rifle_AK_47,
+        ItemType.Weapon_Rifle_M4,
+        ItemType.Weapon_Rifle_Sniper,
     ]);
   }
 }
