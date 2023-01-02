@@ -1105,6 +1105,7 @@ abstract class Game {
     }
 
     checkProjectileCollision(characters);
+    checkProjectileCollision(gameObjects);
   }
 
   void removeInstance(dynamic instance) {
@@ -1251,13 +1252,13 @@ abstract class Game {
       for (var j = 0; j < colliders.length; j++) {
         final collider = colliders[j];
         if (!collider.collidable) continue;
+        if (!collider.physical) continue;
         final radius = collider.radius + projectile.radius;
         if ((collider.x - projectile.x).abs() > radius) continue;
         if ((collider.y - projectile.y).abs() > radius) continue;
         if (projectile.z + projectile.radius < collider.z) continue;
         if (projectile.z - projectile.radius > collider.z + Character_Height) continue;
         if (projectile.owner == collider) continue;
-        // if (!projectile.withinRadius(collider, projectile.radius + collider.radius)) continue;
         if (Collider.onSameTeam(projectile, collider)) continue;
         handleProjectileHit(projectile, collider);
         break;
@@ -1339,7 +1340,7 @@ abstract class Game {
     if (target is Character) {
       applyDamageToCharacter(src: srcCharacter, target: target, amount: damage);
     }
-    
+
     customOnHitApplied(srcCharacter, target);
   }
   
@@ -1766,6 +1767,9 @@ abstract class Game {
        gameObject.x = x;
        gameObject.y = y;
        gameObject.z = z;
+       gameObject.velocityX = 0;
+       gameObject.velocityY = 0;
+       gameObject.velocityZ = 0;
        gameObject.type = type;
        gameObject.active = true;
        gameObject.collidable = ItemType.isCollidable(type);

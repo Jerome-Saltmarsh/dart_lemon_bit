@@ -36,8 +36,6 @@ class GameMinimap {
          vendors.add(i);
     }
 
-    print("total vendors  ${vendors.length}");
-
     final total = ((area + vendors.length) * 4);
     if (src.length != total){
       src = Float32List(total);

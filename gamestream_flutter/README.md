@@ -88,16 +88,16 @@ ctrl + w:   minimal mode
 [ ] remove apple from inventory on empty
 
 [GAME SURVIVAL]
-[x] minimap icon vendor
+[ ] random treasure spawns
 [ ] vendor armour
-[ ] random treasure spawns 
-[ ] design suburbia
-[ ] vending trade machine
+[ ] design scene suburbia
+[ ] cupboards with loot
+[ ] destroyable crates etc
+[ ] projectiles can hit barrels
+[x] vending trade machine
 [x] fix detect vendors which aren't the top
-[ ] how do players acquire new items?
-    [ ] loot cupboards
-    [ ] destroyable crates etc
-    [ ] killing enemies drop items
+[x] minimap icon vendor
+[x] killing enemies drop items
 
 02.01.2023
 [x] interactable node type vending machine

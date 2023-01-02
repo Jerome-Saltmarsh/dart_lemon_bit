@@ -27,6 +27,7 @@ class GameObject extends Collider {
     collidable = true;
     moveOnCollision = false;
     this.type = type;
+    team = TeamType.Alone;
   }
 }
 

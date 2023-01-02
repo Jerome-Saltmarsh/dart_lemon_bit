@@ -91,14 +91,18 @@ class GameSurvival extends Game {
   @override
   void customOnCharacterKilled(Character target, src) {
     if (target is AI) {
-      final itemType = getRandomItemType();
-      if (itemType == ItemType.Empty) return;
-       spawnGameObjectItemAtPosition(
-           position: target,
-           type: itemType,
-           quantity: getItemQuantityForItemType(itemType),
-       );
+      spawnRandomGameObjectAtPosition(target);
     }
+  }
+
+  void spawnRandomGameObjectAtPosition(Position3 value){
+    final itemType = getRandomItemType();
+    if (itemType == ItemType.Empty) return;
+    spawnGameObjectItemAtPosition(
+      position: value,
+      type: itemType,
+      quantity: getItemQuantityForItemType(itemType),
+    );
   }
 
   @override
@@ -110,7 +114,6 @@ class GameSurvival extends Game {
   @override
   void onPlayerInteractedWithGameObject(Player player, GameObject gameObject){
     player.setStoreItems(const [
-        // ItemType.Consumables_Apple,
         ItemType.Weapon_Thrown_Grenade,
         ItemType.Weapon_Handgun_Flint_Lock_Old,
         ItemType.Weapon_Handgun_Flint_Lock,
@@ -124,5 +127,15 @@ class GameSurvival extends Game {
         ItemType.Weapon_Rifle_M4,
         ItemType.Weapon_Rifle_Sniper,
     ]);
+  }
+
+  @override
+  void customOnHitApplied(Character src, Collider target) {
+     if (target is GameObject){
+        if (target.type == ItemType.GameObjects_Barrel){
+           deactivateGameObject(target);
+           spawnRandomGameObjectAtPosition(target);
+        }
+     }
   }
 }

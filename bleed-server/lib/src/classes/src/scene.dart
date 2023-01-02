@@ -31,10 +31,6 @@ class Scene {
   int get columnsPerRow => gridRows;
   int get rowsPerZ => gridColumns;
 
-  final tags = <String, int>{
-
-  };
-
   Scene({
     required this.name,
     required this.nodeTypes,
