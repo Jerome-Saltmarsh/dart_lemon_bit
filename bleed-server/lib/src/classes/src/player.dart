@@ -390,7 +390,6 @@ class Player extends Character with ByteWriter {
       position: this,
       type: itemType,
       quantity: quantity,
-      timer: 3000,
     );
     writePlayerEvent(PlayerEvent.Item_Dropped);
   }

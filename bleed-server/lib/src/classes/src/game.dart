@@ -382,23 +382,25 @@ abstract class Game {
 
     final mouseDistance = getDistanceXY(player.x, player.y, player.mouseGridX, player.mouseGridY);
 
-    gameObjects.add(
-        GameObject(
-            x: player.x,
-            y: player.y,
-            z: player.z + Character_Height,
-            type: ItemType.GameObjects_Grenade,
-        )
+    final instance = spawnGameObject(
+        x: player.x,
+        y: player.y,
+        z: player.z + Character_Height,
+        type: ItemType.GameObjects_Grenade
+    )
         ..setVelocity(player.lookRadian, mouseDistance * 0.1)
         ..collidable = false
         ..physical = false
         ..applyGravity = true
         ..quantity = 1
         ..velocityZ = -0.75
-        ..timer = 40
         ..owner = player
-        ..damage = 15
-    );
+        ..damage = 15;
+
+    performJob(50, (){
+      deactivateGameObject(instance);
+      createExplosion(instance);
+    });
   }
 
   void playerUseFlamethrower(Player player) {
@@ -606,7 +608,6 @@ abstract class Game {
      if (!gameObject.active) return;
      gameObject.active = false;
      gameObject.collidable = false;
-     gameObject.timer = 0;
      customOnGameObjectDeactivated(gameObject);
   }
 
@@ -729,26 +730,26 @@ abstract class Game {
     gameObject.updatePhysics();
     updateColliderPhysics(gameObject);
 
-    if (gameObject.timer <= 0)
-      return;
-    gameObject.timer--;
-    if (gameObject.timer > 0)
-      return;
-
-    deactivateGameObject(gameObject);
-    dispatchV3(GameEventType.GameObject_Timeout, gameObject);
-
-    if (gameObject.type == ItemType.GameObjects_Grenade) {
-      createExplosion(gameObject);
-      // dispatchV3(GameEventType.Explosion, gameObject);
-      // for (var i = 0; i < characters.length; i++){
-      //   if (characters[i].dead) continue;
-      //   final character = characters[i];
-      //   if (gameObject.withinRadius(character, 100)) {
-      //     applyHit(src: gameObject, target: character);
-      //   }
-      // }
-    }
+    // if (gameObject.timer <= 0)
+    //   return;
+    // gameObject.timer--;
+    // if (gameObject.timer > 0)
+    //   return;
+    //
+    // deactivateGameObject(gameObject);
+    // dispatchV3(GameEventType.GameObject_Timeout, gameObject);
+    //
+    // if (gameObject.type == ItemType.GameObjects_Grenade) {
+    //   createExplosion(gameObject);
+    //   // dispatchV3(GameEventType.Explosion, gameObject);
+    //   // for (var i = 0; i < characters.length; i++){
+    //   //   if (characters[i].dead) continue;
+    //   //   final character = characters[i];
+    //   //   if (gameObject.withinRadius(character, 100)) {
+    //   //     applyHit(src: gameObject, target: character);
+    //   //   }
+    //   // }
+    // }
   }
 
   void createExplosion(Position3 src){
@@ -1757,7 +1758,6 @@ abstract class Game {
     required Position3 position,
     required int type,
     int quantity = 1,
-    int timer = 0,
   }) =>
     spawnGameObjectItem(
         x: position.x,
@@ -1765,7 +1765,6 @@ abstract class Game {
         z: position.z,
         type: type,
         quantity: quantity,
-        timer: timer,
     );
 
   void spawnGameObjectItem({
@@ -1774,7 +1773,6 @@ abstract class Game {
         required double z,
         required int type,
         int quantity = 1,
-        int timer = 0,
   }){
     assert (type != ItemType.Empty);
     assert (type != ItemType.Equipped_Legs);
@@ -1782,8 +1780,7 @@ abstract class Game {
     assert (type != ItemType.Equipped_Head);
     assert (type != ItemType.Equipped_Weapon);
     spawnGameObject(x: x, y: y, z: z, type: type)
-      ..quantity = quantity
-      ..timer = timer;
+      ..quantity = quantity;
   }
 
   GameObject spawnGameObject({

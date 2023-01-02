@@ -135,14 +135,14 @@ class GameSurvival extends Game {
         if (target.type == ItemType.GameObjects_Barrel){
            deactivateGameObject(target);
            spawnRandomGameObjectAtPosition(target);
-
            final x = target.x;
            final y = target.y;
            final z = target.z;
-           performJob(100, (){
+           performJob(1000, () {
                spawnGameObject(x: x, y: y, z: z, type: ItemType.GameObjects_Barrel)
                 ..physical = true
-                ..collidable = true;
+                ..collidable = true
+                ..moveOnCollision = false;
            });
         }
      }

@@ -5,7 +5,7 @@ class GameObject extends Collider {
   var _type = 0;
   var quantity = 0;
   /// used to deactivate object
-  var timer = 0;
+  // var timer = 0;
   var interactable = false;
 
   int get type => _type;
