@@ -75,6 +75,7 @@ class ItemType {
   static const GameObjects_Crystal_Small_Blue   = Index_GameObjects + 13;
   static const GameObjects_Grenade              = Index_GameObjects + 14;
   static const GameObjects_Car                  = Index_GameObjects + 15;
+  static const GameObjects_Node_Collider        = Index_GameObjects + 16;
 
   static const Resource_Wood = Index_Resources + 5;
   static const Resource_Stone = Index_Resources + 6;

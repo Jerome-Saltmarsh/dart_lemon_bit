@@ -86,13 +86,15 @@ ctrl + w:   minimal mode
 [ ] design stronghold
 
 [GAME SURVIVAL]
-[ ] add vending machine node type
 [ ] design suburbia
 [ ] vending trade machine
 [ ] how do players acquire new items?
     [ ] loot cupboards
     [ ] destroyable crates etc
     [ ] killing enemies drop items
+
+02.01.2023
+[x] interactable node type vending machine
 
 01.01.2023
 [x] survival mode enemies drop random ammunition on killed

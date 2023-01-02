@@ -150,13 +150,13 @@ class Scene {
          >= z;
   }
 
-  double convertNodeIndexToZPosition(int index) =>
+  double convertNodeIndexToPositionZ(int index) =>
       convertNodeIndexToZ(index) * Node_Height;
 
-  double convertNodeIndexToYPosition(int index) =>
+  double convertNodeIndexToPositionY(int index) =>
       convertNodeIndexToColumn(index) * Node_Size;
 
-  double convertNodeIndexToXPosition(int index) =>
+  double convertNodeIndexToPositionX(int index) =>
       convertNodeIndexToRow(index) * Node_Size;
 
   int convertNodeIndexToRow(int index) =>

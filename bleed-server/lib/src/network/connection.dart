@@ -571,9 +571,9 @@ class Connection with ByteReader {
         }
         scene.gameObjects.add(
           GameObject(
-              x: scene.convertNodeIndexToXPosition(index) + Node_Size_Half,
-              y: scene.convertNodeIndexToYPosition(index) + Node_Size_Half,
-              z: scene.convertNodeIndexToZPosition(index),
+              x: scene.convertNodeIndexToPositionX(index) + Node_Size_Half,
+              y: scene.convertNodeIndexToPositionY(index) + Node_Size_Half,
+              z: scene.convertNodeIndexToPositionZ(index),
               type: type,
           )
         );

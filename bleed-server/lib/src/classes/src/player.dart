@@ -1256,6 +1256,7 @@ class Player extends Character with ByteWriter {
     if (value == null) return TargetCategory.Nothing;
     if (value is GameObject) {
       if (value.collectable) return TargetCategory.Item;
+      if (value.interactable) return TargetCategory.Allie;
       return TargetCategory.GameObject;
     }
     if (isAllie(value)) return TargetCategory.Allie;

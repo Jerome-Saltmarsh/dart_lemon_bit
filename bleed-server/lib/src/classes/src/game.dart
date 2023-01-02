@@ -9,6 +9,9 @@ import '../../io/write_scene_to_file.dart';
 import '../../maths/get_distance_between_v3.dart';
 
 abstract class Game {
+
+  static const Interact_Radius = 100.0;
+
   var frame = 0;
   Scene scene;
   final players = <Player>[];
@@ -90,9 +93,9 @@ abstract class Game {
   /// ACTIONS
 
   void moveV3ToNodeIndex(Position3 vector3, int nodeIndex){
-    vector3.x = scene.convertNodeIndexToXPosition(nodeIndex);
-    vector3.y = scene.convertNodeIndexToYPosition(nodeIndex);
-    vector3.z = scene.convertNodeIndexToZPosition(nodeIndex);
+    vector3.x = scene.convertNodeIndexToPositionX(nodeIndex);
+    vector3.y = scene.convertNodeIndexToPositionY(nodeIndex);
+    vector3.z = scene.convertNodeIndexToPositionZ(nodeIndex);
   }
 
   void move(Position3 value, double angle, double distance){
@@ -206,7 +209,7 @@ abstract class Game {
 
     for (final gameObject in gameObjects) {
       if (!gameObject.active) continue;
-      if (!gameObject.collectable) continue;
+      if (!gameObject.collectable && !gameObject.interactable) continue;
       final distance = getDistanceV3(mouseX, mouseY, mouseZ, gameObject.x, gameObject.y, gameObject.z);
       if (distance > closestDistance) continue;
       closestDistance = distance;
@@ -1158,18 +1161,26 @@ abstract class Game {
     }
 
     if (target is Collider) {
-      if (target is GameObject){
+      if (target is GameObject) {
         if (!target.active) {
            clearCharacterTarget(player);
            return;
         }
-
-        if (target.collectable){
-           if (getDistanceBetweenV3(player, target) > 50){
+        if (target.collectable || target.interactable){
+           if (getDistanceBetweenV3(player, target) > Interact_Radius){
              setCharacterStateRunning(player);
              return;
            }
-           playerPickup(player, target);
+           if (target.interactable){
+             player.setCharacterStateIdle();
+             onPlayerInteractedWithGameObject(player, target);
+             return;
+           }
+           if (target.collectable){
+             player.setCharacterStateIdle();
+             playerPickup(player, target);
+             return;
+           }
         }
       } else {
         if (!target.collidable) {
@@ -1218,46 +1229,6 @@ abstract class Game {
     }
 
     setCharacterStateRunning(player);
-  }
-
-  void playerPickup(Player player, GameObject target) {
-    var quantityRemaining = target.quantity;
-    final maxQuantity = ItemType.getMaxQuantity(target.type);
-    if (maxQuantity > 1) {
-      for (var i = 0; i < player.inventory.length; i++){
-         if (player.inventory[i] != target.type) continue;
-         if (player.inventoryQuantity[i] + quantityRemaining < maxQuantity){
-           player.inventoryQuantity[i] += quantityRemaining;
-           player.inventoryDirty = true;
-           deactivateGameObject(target);
-           player.writePlayerEvent(PlayerEvent.Item_Picked_Up);
-           clearCharacterTarget(player);
-           return;
-         }
-         quantityRemaining -= maxQuantity - player.inventoryQuantity[i];
-         player.inventoryQuantity[i] = maxQuantity;
-         player.inventoryDirty = true;
-      }
-    }
-
-    assert (quantityRemaining >= 0);
-    if (quantityRemaining <= 0) return;
-
-    final emptyInventoryIndex = player.getEmptyInventoryIndex();
-    if (emptyInventoryIndex != null){
-       player.inventory[emptyInventoryIndex] = target.type;
-       player.inventoryQuantity[emptyInventoryIndex] = min(quantityRemaining, maxQuantity);
-       player.inventoryDirty = true;
-       deactivateGameObject(target);
-       player.writePlayerEvent(PlayerEvent.Item_Picked_Up);
-       clearCharacterTarget(player);
-    } else {
-      clearCharacterTarget(player);
-      player.writePlayerEventInventoryFull();
-      return;
-    }
-    clearCharacterTarget(player);
-    return;
   }
 
   void setCharacterStateRunning(Character character){
@@ -2219,5 +2190,52 @@ abstract class Game {
       }
       return false;
     }
+
+  int getNodeIndexV3(Position3 value) =>
+      scene.getNodeIndex(value.indexZ, value.indexRow, value.indexColumn);
+
+  void playerPickup(Player player, GameObject target) {
+    var quantityRemaining = target.quantity;
+    final maxQuantity = ItemType.getMaxQuantity(target.type);
+    if (maxQuantity > 1) {
+      for (var i = 0; i < player.inventory.length; i++){
+        if (player.inventory[i] != target.type) continue;
+        if (player.inventoryQuantity[i] + quantityRemaining < maxQuantity){
+          player.inventoryQuantity[i] += quantityRemaining;
+          player.inventoryDirty = true;
+          deactivateGameObject(target);
+          player.writePlayerEvent(PlayerEvent.Item_Picked_Up);
+          clearCharacterTarget(player);
+          return;
+        }
+        quantityRemaining -= maxQuantity - player.inventoryQuantity[i];
+        player.inventoryQuantity[i] = maxQuantity;
+        player.inventoryDirty = true;
+      }
+    }
+
+    assert (quantityRemaining >= 0);
+    if (quantityRemaining <= 0) return;
+
+    final emptyInventoryIndex = player.getEmptyInventoryIndex();
+    if (emptyInventoryIndex != null){
+      player.inventory[emptyInventoryIndex] = target.type;
+      player.inventoryQuantity[emptyInventoryIndex] = min(quantityRemaining, maxQuantity);
+      player.inventoryDirty = true;
+      deactivateGameObject(target);
+      player.writePlayerEvent(PlayerEvent.Item_Picked_Up);
+      clearCharacterTarget(player);
+    } else {
+      clearCharacterTarget(player);
+      player.writePlayerEventInventoryFull();
+      return;
+    }
+    clearCharacterTarget(player);
+    return;
+  }
+
+
+  void onPlayerInteractedWithGameObject(Player player, GameObject gameObject){
+  }
 }
 

@@ -12,6 +12,7 @@ class Position3 with Position {
   int get indexRow => x ~/ Node_Size;
   // TODO remove
   int get indexColumn => y ~/ Node_Size;
+  int get indexZ => z ~/ Node_Size_Half;
 // TODO remove
   double get renderX => (x - y) * 0.5;
   // TODO remove
