@@ -8,22 +8,29 @@ import '../../constants/frames_per_second.dart';
 import '../../io/write_scene_to_file.dart';
 import '../../maths/get_distance_between_v3.dart';
 
+class GameJob {
+  int timer;
+  Function action;
+
+  GameJob(this.timer, this.action);
+}
+
 abstract class Game {
 
   static const Interact_Radius = 100.0;
+  var aiRespawnDuration = framesPerSecond * 60 * 2; // 5 minutes
 
   var frame = 0;
   Scene scene;
   final players = <Player>[];
   final characters = <Character>[];
   final projectiles = <Projectile>[];
-
-  var aiRespawnDuration = framesPerSecond * 60 * 2; // 5 minutes
-
-  List<GameObject> get gameObjects => scene.gameObjects;
+  final jobs = <GameJob>[];
 
   DarkAgeEnvironment environment;
   DarkAgeTime time;
+
+
 
   /// In seconds
   void customInitPlayer(Player player) {}
@@ -69,7 +76,7 @@ abstract class Game {
   void customOnPlayerJoined(Player player) {}
   
   /// PROPERTIES
-
+  List<GameObject> get gameObjects => scene.gameObjects;
   /// @override
   double get minAimTargetCursorDistance => 35;
 
@@ -646,6 +653,8 @@ abstract class Game {
       updateAITargets();
     }
 
+    internalUpdateJobs();
+
     customUpdate();
     updateGameObjects();
     updateCollisions();
@@ -655,6 +664,27 @@ abstract class Game {
     updateProjectiles(); // called twice to fix collision detection
     updateCharacterFrames();
     sortGameObjects();
+  }
+
+  void performJob(int timer, Function action){
+    assert (timer > 0);
+    for (final job in jobs){
+      if (job.timer < 0) continue;
+      job.timer = timer;
+      job.action = action;
+    }
+    final job = GameJob(timer, action);
+    jobs.add(job);
+  }
+
+  void internalUpdateJobs() {
+    for (final job in jobs){
+      if (job.timer <= 0) continue;
+         job.timer--;
+         if (job.timer == 0){
+           job.action();
+         }
+    }
   }
 
   void updateColliderPhysics(Collider collider){
