@@ -20,6 +20,7 @@ abstract class Game {
   static const Interact_Radius = 100.0;
   var aiRespawnDuration = framesPerSecond * 60 * 2; // 5 minutes
 
+  final int gameType;
   var frame = 0;
   Scene scene;
   final players = <Player>[];
@@ -81,10 +82,9 @@ abstract class Game {
   double get minAimTargetCursorDistance => 35;
 
   bool get customPropMapVisible => false;
-  int get gameType;
 
   /// CONSTRUCTOR
-  Game({required this.scene, required this.time, required this.environment}) {
+  Game({required this.scene, required this.time, required this.environment, required this.gameType}) {
     engine.onGameCreated(this); /// TODO Illegal external scope reference
   }
 

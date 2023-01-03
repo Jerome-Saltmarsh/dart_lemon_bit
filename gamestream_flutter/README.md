@@ -95,6 +95,9 @@ ctrl + w:   minimal mode
 [ ] cupboards with loot
 [ ] destroyable crates etc
 
+03.01.2023
+[x] fix render tree top
+
 02.01.2023
 [x] interactable node type vending machine
 [x] projectiles can hit barrels

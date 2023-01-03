@@ -69,11 +69,11 @@ class RendererNodes extends Renderer {
   static int get currentNodeShade => nodeShades[currentNodeIndex];
   static int get currentNodeColor => (currentNodeVisibilityOpaque ? GameLighting.values : GameLighting.values_transparent)[currentNodeShade];
 
-  static int getNodeColor(int index) {
-    if (index < 0) return GameLighting.values[4];
-    if (index >= GameNodes.nodesTotal) return GameLighting.values[4];
-    return (nodeVisibility[index] == Visibility.Opaque ? GameLighting.values : GameLighting
-        .values_transparent)[index];
+  static int getShadeColor(int shade) {
+    if (shade < 0) return GameLighting.values[4];
+    if (shade >= GameNodes.nodesTotal) return GameLighting.values[4];
+    return (nodeVisibility[shade] == Visibility.Opaque ? GameLighting.values : GameLighting
+        .values_transparent)[shade];
   }
 
 
@@ -622,7 +622,7 @@ class RendererNodes extends Renderer {
       srcHeight: AtlasNode.Node_Tree_Top_Height,
       dstX: currentNodeDstX + (shift * 0.5),
       dstY: currentNodeDstY,
-      color: getRenderLayerColor(-2),
+      color: getColorAtIndexSafe(currentNodeIndex - (2 * GameNodes.nodesArea)),
     );
   }
 
@@ -636,7 +636,7 @@ class RendererNodes extends Renderer {
       srcHeight: 58,
       dstX: currentNodeDstX + (shift * 0.5),
       dstY: currentNodeDstY,
-      color: getRenderLayerColor(-2),
+      color: getColorAtIndexSafe(currentNodeIndex - (2 * GameNodes.nodesArea)),
     );
   }
 
@@ -1017,11 +1017,10 @@ class RendererNodes extends Renderer {
     Engine.incrementBufferIndex();
   }
 
-  static int getRenderLayerColor(int layers) =>
-      getNodeColor(layers);
+  static int getColorAtIndexSafe(int index) =>
+      getShadeColor(getShadeAtIndexSafe(index));
 
-  static int getRenderLayerShade(int layers){
-    final index = currentNodeIndex + (layers * GameNodes.nodesArea);
+  static int getShadeAtIndexSafe(int index){
     if (index < 0) return Shade.Medium;
     if (index >= GameNodes.nodesTotal) return Shade.Medium;
     return nodeShades[index];

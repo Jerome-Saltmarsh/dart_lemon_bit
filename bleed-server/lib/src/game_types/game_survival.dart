@@ -5,11 +5,11 @@ import 'package:lemon_math/functions/random_item.dart';
 
 class GameSurvival extends Game {
 
-  @override
-  int get gameType => GameType.Survival;
-
-  GameSurvival({required super.scene})
-      : super(environment: DarkAgeEnvironment(), time: DarkAgeTime()) {
+  GameSurvival({required super.scene}) : super(
+      environment: DarkAgeEnvironment(),
+      time: DarkAgeTime(),
+      gameType: GameType.Survival,
+  ) {
     triggerSpawnPoints();
 
     final totalNodes = scene.gridVolume;

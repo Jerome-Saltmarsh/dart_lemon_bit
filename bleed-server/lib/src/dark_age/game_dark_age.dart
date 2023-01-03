@@ -23,10 +23,7 @@ class GameDarkAge extends Game {
   @override
   bool get customPropMapVisible => true;
 
-  @override
-  int get gameType => GameType.Dark_Age;
-
-  GameDarkAge({required super.scene, required super.time, required super.environment}) : super() {
+  GameDarkAge({required super.scene, required super.time, required super.environment}) : super(gameType: GameType.Dark_Age) {
     triggerSpawnPoints();
   }
 

@@ -9,11 +9,11 @@ class GamePractice extends Game {
   var configZombieHealth = 5;
   var configZombieSpeed = 5.0;
 
-  @override
-  int get gameType => GameType.Practice;
-
-  GamePractice({required super.scene}) :
-        super(environment: DarkAgeEnvironment(), time: DarkAgeTime()) {
+  GamePractice({required super.scene}) : super(
+      environment: DarkAgeEnvironment(),
+      time: DarkAgeTime(),
+      gameType: GameType.Practice,
+  ) {
     aiRespawnDuration = framesPerSecond * 60;
     triggerSpawnPoints();
   }

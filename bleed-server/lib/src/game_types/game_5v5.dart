@@ -21,7 +21,11 @@ class Game5v5 extends Game {
      ItemType.Weapon_Smg_Mp5,
   ];
 
-  Game5v5({required super.scene}) : super(time: DarkAgeTime(), environment: DarkAgeEnvironment()) {
+  Game5v5({required super.scene}) : super(
+      time: DarkAgeTime(),
+      environment: DarkAgeEnvironment(),
+      gameType: GameType.FiveVFive,
+  ) {
     if (scene.spawnPointsPlayers.length >= 2) {
       spawnPoint1 = scene.spawnPointsPlayers[0];
       spawnPoint2 = scene.spawnPointsPlayers[1];
