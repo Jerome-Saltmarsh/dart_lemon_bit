@@ -10,9 +10,8 @@ class GameLighting {
 
   static final Color_Lightning = HSVColor.fromColor(Colors.white.withOpacity(Engine.GoldenRatio_0_381));
 
-  static final Color_Torch = Color.fromRGBO(7, 255, 153, 0.1);
+  static final Color_Torch = Color.fromRGBO(247, 150, 27, 0.15);
   static final Color_Torch_HSV =  HSVColor.fromColor(Color_Torch);
-
 
   static final Ambient_Color = Color.fromRGBO(40, 31, 54, 0.611764705882353);
   static final Ambient_Color_HSV = HSVColor.fromColor(Ambient_Color);
@@ -54,15 +53,15 @@ class GameLighting {
   //   start_alpha = color.alpha;
   // }
 
-  // static final interpolations = [
-  //   0.00,
-  //   0.25,
-  //   0.40,
-  //   0.60,
-  //   0.80,
-  //   0.95,
-  //   1.00,
-  // ];
+  static final interpolations = [
+    0.00,
+    0.25,
+    0.40,
+    0.60,
+    0.80,
+    0.95,
+    1.00,
+  ];
 
   // static void applyHueShift(){
   //   start_hue = (start_hue + start_hue_shift.value);

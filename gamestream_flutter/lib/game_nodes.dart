@@ -201,7 +201,8 @@ class GameNodes {
           final sat = GameLighting.Color_Torch_HSV.saturation;
           final val = GameLighting.Color_Torch_HSV.value;
           // final alp = GameLighting.Color_Torch_HSV.alpha;
-          final intensity = 1.0 - (distanceValue / 7);
+          // final intensity = 1.0 - (distanceValue / 7);
+          final intensity = 1.0 - GameLighting.interpolations[clamp(distanceValue, 0, 7)];
           nodeHues[nodeIndex] = GameLighting.linerInterpolation(nodeHues[nodeIndex], hue, intensity);
           nodeSats[nodeIndex] = GameLighting.linerInterpolation(nodeSats[nodeIndex], sat, intensity);
           nodeVals[nodeIndex] = GameLighting.linerInterpolation(nodeVals[nodeIndex], val, intensity);
