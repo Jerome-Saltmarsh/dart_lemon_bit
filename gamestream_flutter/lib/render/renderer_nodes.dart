@@ -257,6 +257,7 @@ class RendererNodes extends Renderer {
       GameNodes.emitLightDynamic(
         index: GameEditor.nodeSelectedIndex.value,
         hue: 200,
+        alpha: 0,
       );
     }
 

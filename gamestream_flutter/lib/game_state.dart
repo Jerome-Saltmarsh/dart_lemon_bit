@@ -117,7 +117,11 @@ class GameState {
   static void applyEmissions(){
 
     for (var i = 0; i < ClientState.nodesLightSourcesTotal; i++){
-       GameNodes.emitLightDynamic(index: ClientState.nodesLightSources[i], hue: 100);
+       GameNodes.emitLightDynamic(
+           index: ClientState.nodesLightSources[i],
+           hue: GameNodes.ambient_hue,
+           alpha: 0,
+       );
     }
 
     applyEmissionsCharacters();
@@ -140,7 +144,7 @@ class GameState {
     for (var i = 0; i < totalCharacters; i++) {
       final character = characters[i];
       if (!character.allie) continue;
-      applyVector3Emission(character, hue: GameNodes.ambient_hue);
+      applyVector3Emission(character, hue: GameNodes.ambient_hue, alpha: 0.0);
     }
   }
 
@@ -152,36 +156,37 @@ class GameState {
 
   static void applyProjectileEmission(Projectile projectile) {
     if (projectile.type == ProjectileType.Orb) {
-      applyVector3Emission(projectile, hue: 100);
+      applyVector3Emission(projectile, hue: 100, alpha: 0.1);
       return;
     }
     if (projectile.type == ProjectileType.Bullet) {
-      applyVector3Emission(projectile, hue: 100);
+      applyVector3Emission(projectile, hue: 100, alpha: 0.1);
       return;
     }
     if (projectile.type == ProjectileType.Fireball) {
-      applyVector3Emission(projectile, hue: 300);
+      applyVector3Emission(projectile, hue: 300, alpha: 0.1);
       return;
     }
     if (projectile.type == ProjectileType.Arrow) {
-      applyVector3Emission(projectile, hue: 360);
+      applyVector3Emission(projectile, hue: 360, alpha: 0.1);
       return;
     }
   }
 
-  static void applyVector3Emission(Vector3 v, {required double hue}){
+  static void applyVector3Emission(Vector3 v, {required double hue, required double alpha}){
     if (!GameQueries.inBoundsVector3(v)) return;
     GameNodes.emitLightDynamic(
       index: GameQueries.getNodeIndexV3(v),
       hue: hue,
+      alpha: alpha,
     );
   }
 
-  static void applyEmissionDynamicV3(Vector3 v3) =>
-      GameNodes.emitLightDynamic(
-          index: GameQueries.getNodeIndexV3(v3),
-          hue: 200,
-      );
+  // static void applyEmissionDynamicV3(Vector3 v3, ) =>
+  //     GameNodes.emitLightDynamic(
+  //         index: GameQueries.getNodeIndexV3(v3),
+  //         hue: 200,
+  //     );
 
   static void onChangedUpdateFrame(int value){
     ClientState.rendersSinceUpdate.value = 0;
@@ -1017,7 +1022,7 @@ class GameState {
     for (var i = 0; i < totalGameObjects; i++){
       final gameObject = gameObjects[i];
       if (gameObject.type == ItemType.GameObjects_Grenade) {
-         applyEmissionDynamicV3(gameObject);
+        applyVector3Emission(gameObject, hue: 200, alpha: 200);
          return;
       }
       // if (gameObject.type != ItemType.GameObjects_Candle) continue;

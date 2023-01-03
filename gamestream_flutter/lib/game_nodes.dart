@@ -15,7 +15,9 @@ class GameNodes {
      nodeColors[index] = outputColor;
   }
 
-  static final ambient_color      = Color.fromRGBO(31, 1, 86, 1.0);
+  static final ambient_color      = Color.fromRGBO(
+      31, 1, 86, 0.5647058823529412);
+
   static final ambient_color_hsv  = HSVColor.fromColor(ambient_color);
   static final ambient_hue        = ambient_color_hsv.hue;
   static final ambient_sat        = ambient_color_hsv.saturation;
@@ -161,6 +163,7 @@ class GameNodes {
   static void emitLightDynamic({
     required int index,
     required double hue,
+    required double alpha,
   }){
     assert (index >= 0);
     assert (index < total);
@@ -197,12 +200,12 @@ class GameNodes {
           // final hue = GameLighting.Color_Torch_HSV.hue;
           final sat = GameLighting.Color_Torch_HSV.saturation;
           final val = GameLighting.Color_Torch_HSV.value;
-          final alp = GameLighting.Color_Torch_HSV.alpha;
+          // final alp = GameLighting.Color_Torch_HSV.alpha;
           final intensity = 1.0 - (distanceValue / 7);
           nodeHues[nodeIndex] = GameLighting.linerInterpolation(nodeHues[nodeIndex], hue, intensity);
           nodeSats[nodeIndex] = GameLighting.linerInterpolation(nodeSats[nodeIndex], sat, intensity);
           nodeVals[nodeIndex] = GameLighting.linerInterpolation(nodeVals[nodeIndex], val, intensity);
-          nodeAlps[nodeIndex] = GameLighting.linerInterpolation(nodeAlps[nodeIndex], alp, intensity);
+          nodeAlps[nodeIndex] = GameLighting.linerInterpolation(nodeAlps[nodeIndex], alpha, intensity);
 
           nodeColors[nodeIndex] = GameLighting.hsvToColorValue(
               nodeHues[nodeIndex],

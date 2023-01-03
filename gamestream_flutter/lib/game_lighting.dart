@@ -10,7 +10,7 @@ class GameLighting {
 
   static final Color_Lightning = HSVColor.fromColor(Colors.white.withOpacity(Engine.GoldenRatio_0_381));
 
-  static final Color_Torch = Color.fromRGBO(7, 255, 153, 0.61);
+  static final Color_Torch = Color.fromRGBO(7, 255, 153, 0.1);
   static final Color_Torch_HSV =  HSVColor.fromColor(Color_Torch);
 
 
