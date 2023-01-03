@@ -275,6 +275,7 @@ class AtlasNodeX {
     NodeType.Road: 768.0,
     NodeType.Road_2: 768.0,
     NodeType.Vendor: 1344.0,
+    NodeType.Sandbag: 588.0,
   }[type] ?? 7055;
 }
 

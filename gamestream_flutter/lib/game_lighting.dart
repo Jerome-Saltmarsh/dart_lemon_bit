@@ -10,7 +10,7 @@ class GameLighting {
 
   static final Color_Lightning = HSVColor.fromColor(Colors.white.withOpacity(Engine.GoldenRatio_0_381));
 
-  static final Default_Color = Color.fromRGBO(26, 24, 33, 1.0);
+  static final Default_Color = Color.fromRGBO(19, 8, 35, 1.0);
   static final Default_Color_HSV = HSVColor.fromColor(Default_Color);
   static final Default_Color_Start = Default_Color_HSV.withAlpha(0);
   static final Default_Color_End = Default_Color_Start.withAlpha(1.0);

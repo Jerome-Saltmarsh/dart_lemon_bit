@@ -405,12 +405,6 @@ class RendererNodes extends Renderer {
   }
 
   static void renderCurrentNode() {
-    // assert (currentNodeDstX > screenLeft);
-    // assert (currentNodeDstX < screenRight);
-    // assert (currentNodeDstY > screenTop);
-    // assert (currentNodeDstY < screenBottom);
-    // assert (currentNodeDstX > screenLeft);
-
     if (currentNodeVisibility == Visibility.Invisible) return;
 
     if (currentNodeVisibility != previousVisibility){
@@ -423,7 +417,7 @@ class RendererNodes extends Renderer {
         if (currentNodeOrientation == NodeOrientation.Solid){
           if (currentNodeVariation){
             renderStandardNode(
-              srcX: 624,
+              srcX: 1168,
               srcY: 0,
             );
             return;
@@ -447,6 +441,12 @@ class RendererNodes extends Renderer {
         break;
       case NodeType.Tree_Top:
         renderTreeTop();
+        break;
+      case NodeType.Sandbag:
+        renderStandardNode(
+          srcX: 588,
+          srcY: 0,
+        );
         break;
       case NodeType.Grass_Long:
         switch (currentNodeWind) {
@@ -482,7 +482,6 @@ class RendererNodes extends Renderer {
         renderStandardNode(srcX: 768, srcY: 672 + GameConstants.Sprite_Height_Padded);
         return;
       case NodeType.Wooden_Plank:
-        // renderNodeWoodenPlank();
         renderNodeTemplateShaded(GameConstants.Sprite_Width_Padded_10);
         return;
       case NodeType.Wood:

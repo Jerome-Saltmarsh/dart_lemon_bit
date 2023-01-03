@@ -87,12 +87,25 @@ ctrl + w:   minimal mode
 [ ] design suburbia cemetery
 [ ] design stronghold
 
+[DIARY]
+the scene needs to be more atmospheric. More apocalyptic things. Crashed cars with smoke coming out.
+Sandbags and fortifications left over. Rubble and pot holes. Dead soldiers and zombies.
+
 [GAME SURVIVAL]
+[ ] make the scene apocalyptic. c
 [ ] random treasure spawns
 [ ] vendor armour
+[ ] vendor trinkets
 [ ] design scene suburbia
 [ ] cupboards with loot
 [ ] destroyable crates etc
+[ ] melee items deplete energy
+[ ] heavy melee items deplete energy quicker than light melee weapons
+[ ] fix knife attack animation
+[ ] flaming barrel object
+[ ] node type sandbags
+[ ] node type tires
+[ ] node type barbed wire
 
 03.01.2023
 [x] remove grenade and apple from inventory on empty

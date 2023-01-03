@@ -39,6 +39,7 @@ class NodeType {
   static const Road_2 = 76;
   static const Metal = 77;
   static const Vendor = 78;
+  static const Sandbag = 79;
 
   static bool isMaterialWood(int value) =>
       value == Torch ||
@@ -77,6 +78,7 @@ class NodeType {
       type == Chimney       ||
       type == Metal         ||
       type == Vendor        ||
+      type == Sandbag       ||
       type == Boulder        ;
 
   static bool supportsOrientationEmpty(int type) =>
