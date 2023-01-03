@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:gamestream_flutter/isometric/render/highlight_character_nearest_mouse.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -60,14 +59,14 @@ class RendererNodes extends Renderer {
   static var screenLeft = 0.0;
 
   static var nodeTypes = GameNodes.nodeTypes;
-  static var nodeShades = GameNodes.nodeShades;
+  // static var nodeShades = GameNodes.nodeShades;
   static var nodeOrientations = GameNodes.nodeOrientations;
   static var nodeVisibility = GameNodes.nodeVisible;
 
   // GETTERS
   static double get currentNodeRenderY => GameConvert.rowColumnZToRenderY(row, column, currentNodeZ);
 
-  static int get currentNodeShade => nodeShades[currentNodeIndex];
+  // static int get currentNodeShade => nodeShades[currentNodeIndex];
 
   // static final ambientColor = Color.fromRGBO(79, 0, 189, 1.0).value;
   // final ambientColorHsv = HSVColor.fromColor(ambientColor);
@@ -92,22 +91,22 @@ class RendererNodes extends Renderer {
   static bool get currentNodeVisibilityOpaque => nodeVisibility[currentNodeIndex] == Visibility.Opaque;
   static bool get currentNodeVariation => GameNodes.nodeVariations[currentNodeIndex];
 
-  static int get renderNodeShade => nodeShades[currentNodeIndex];
+  // static int get renderNodeShade => nodeShades[currentNodeIndex];
   static int get renderNodeOrientation => nodeOrientations[currentNodeIndex];
-  static int get renderNodeColor => GameLighting.values[renderNodeShade];
+  static int get renderNodeColor => GameNodes.nodeColors[currentNodeIndex];
   static int get renderNodeWind => ServerState.windTypeAmbient.value;
   static bool get renderNodeVariation => GameNodes.nodeVariations[currentNodeIndex];
 
   static int get renderNodeBelowIndex => currentNodeIndex - GameNodes.area;
   static bool get renderNodeBelowVariation => renderNodeBelowIndex > 0 ? GameNodes.nodeVariations[renderNodeBelowIndex] : renderNodeVariation;
 
-  static int get renderNodeBelowShade {
-    if (renderNodeBelowIndex < 0) return Shade.Medium;
-    if (renderNodeBelowIndex >= GameNodes.total) return Shade.Medium;
-    return nodeShades[renderNodeBelowIndex];
-  }
+  // static int get renderNodeBelowShade {
+  //   if (renderNodeBelowIndex < 0) return Shade.Medium;
+  //   if (renderNodeBelowIndex >= GameNodes.total) return Shade.Medium;
+  //   return nodeShades[renderNodeBelowIndex];
+  // }
 
-  static int get renderNodeBelowColor => GameLighting.values[renderNodeBelowShade];
+  static int get renderNodeBelowColor => GameNodes.nodeColors[currentNodeIndex - GameNodes.area];
 
   // METHODS
 
@@ -181,7 +180,7 @@ class RendererNodes extends Renderer {
   @override
   void reset() {
     nodeTypes = GameNodes.nodeTypes;
-    nodeShades = GameNodes.nodeShades;
+    // nodeShades = GameNodes.nodeShades;
     nodeOrientations = GameNodes.nodeOrientations;
     nodeVisibility = GameNodes.nodeVisible;
     nodesRowsMax = GameState.nodesTotalRows - 1;
@@ -1006,13 +1005,14 @@ class RendererNodes extends Renderer {
   }
 
   static int getColorAtIndexSafe(int index) =>
-      getShadeColor(getShadeAtIndexSafe(index));
+      // getShadeColor(getShadeAtIndexSafe(index));
+      GameNodes.nodeColors[index];
 
-  static int getShadeAtIndexSafe(int index){
-    if (index < 0) return Shade.Medium;
-    if (index >= GameNodes.total) return Shade.Medium;
-    return nodeShades[index];
-  }
+  // static int getShadeAtIndexSafe(int index){
+  //   if (index < 0) return Shade.Medium;
+  //   if (index >= GameNodes.total) return Shade.Medium;
+  //   return nodeShades[index];
+  // }
 
   void showIndexPlayer() {
     if (GamePlayer.position.outOfBounds) return;

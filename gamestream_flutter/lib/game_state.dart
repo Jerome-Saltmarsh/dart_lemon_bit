@@ -80,18 +80,18 @@ class GameState {
       index - ((convertNodeIndexToIndexZ(index) * GameNodes.area) + (convertNodeIndexToIndexX(index) * nodesTotalColumns));
 
   static int getV3RenderColor(Vector3 vector3) =>
-      GameLighting.values[getV3NodeBelowShade(vector3)];
+      GameNodes.nodeColors[vector3.nodeIndex];
 
-  static int getV3RenderShade(Vector3 vector3) =>
-      getV3NodeBelowShade(vector3);
+  // static int getV3RenderShade(Vector3 vector3) =>
+  //     getV3NodeBelowShade(vector3);
 
-  static int getV3NodeBelowShade(Vector3 vector3) =>
-      getNodeShade(vector3.indexZ - 1, vector3.indexRow, vector3.indexColumn);
+  // static int getV3NodeBelowShade(Vector3 vector3) =>
+  //     getNodeShade(vector3.indexZ - 1, vector3.indexRow, vector3.indexColumn);
 
-  static int getNodeShade(int z, int row, int column) =>
-      outOfBounds(z, row, column)
-          ? Shade.Medium
-          : GameNodes.nodeShades[getNodeIndexZRC(z, row, column)];
+  // static int getNodeShade(int z, int row, int column) =>
+  //     outOfBounds(z, row, column)
+  //         ? Shade.Medium
+  //         : GameNodes.nodeShades[getNodeIndexZRC(z, row, column)];
 
   static bool outOfBoundsV3(Vector3 v3) =>
     outOfBoundsXYZ(v3.x, v3.y, v3.z);
@@ -1098,29 +1098,29 @@ class GameState {
          applyEmissionDynamicV3(gameObject);
          return;
       }
-      if (gameObject.type != ItemType.GameObjects_Candle) continue;
-      final nodeIndex = GameQueries.getNodeIndexV3(gameObject);
-      final nodeShade = GameNodes.nodeShades[nodeIndex];
-      setNodeShade(nodeIndex, nodeShade - 1);
-      if (gameObject.indexZ > 0){
-        final nodeBelowIndex = GameQueries.getNodeIndexBelowV3(gameObject);
-        final nodeBelowShade = GameNodes.nodeShades[nodeBelowIndex];
-        setNodeShade(nodeBelowIndex, nodeBelowShade - 1);
-      }
+      // if (gameObject.type != ItemType.GameObjects_Candle) continue;
+      // final nodeIndex = GameQueries.getNodeIndexV3(gameObject);
+      // final nodeShade = GameNodes.nodeShades[nodeIndex];
+      // setNodeShade(nodeIndex, nodeShade - 1);
+      // if (gameObject.indexZ > 0){
+      //   final nodeBelowIndex = GameQueries.getNodeIndexBelowV3(gameObject);
+      //   final nodeBelowShade = GameNodes.nodeShades[nodeBelowIndex];
+      //   setNodeShade(nodeBelowIndex, nodeBelowShade - 1);
+      // }
     }
   }
 
-  static void setNodeShade(int index, int shade) {
-    if (shade < 0) {
-      GameNodes.nodeShades[index] = 0;
-      return;
-    }
-    if (shade > Shade.Pitch_Black){
-      GameNodes.nodeShades[index] = Shade.Pitch_Black;
-      return;
-    }
-    GameNodes.nodeShades[index] = shade;
-  }
+  // static void setNodeShade(int index, int shade) {
+  //   if (shade < 0) {
+  //     GameNodes.nodeShades[index] = 0;
+  //     return;
+  //   }
+  //   if (shade > Shade.Pitch_Black){
+  //     GameNodes.nodeShades[index] = Shade.Pitch_Black;
+  //     return;
+  //   }
+  //   GameNodes.nodeShades[index] = shade;
+  // }
 
   static void toggleShadows () => gridShadows.value = !gridShadows.value;
 
@@ -1206,12 +1206,12 @@ class GameState {
                 projectionRow < nodesTotalRows &&
                 projectionColumn < nodesTotalColumns
             ) {
-              final shade = GameNodes.nodeBake[index];
-              if (shade < shadowShade){
-                if (GameQueries.gridNodeZRCType(projectionZ + 1, projectionRow, projectionColumn) == NodeType.Empty){
-                  GameNodes.nodeBake[index] = shadowShade;
-                }
-              }
+              // final shade = GameNodes.nodeBake[index];
+              // if (shade < shadowShade){
+              //   if (GameQueries.gridNodeZRCType(projectionZ + 1, projectionRow, projectionColumn) == NodeType.Empty){
+              //     GameNodes.nodeBake[index] = shadowShade;
+              //   }
+              // }
               projectionZ += directionZ;
               projectionRow += directionRow;
               projectionColumn += directionColumn;
@@ -1294,9 +1294,9 @@ class GameState {
             final nodeIndex = getNodeIndexZRC(z, row, column);
             var distance = (z - zIndex).abs() + (row - rowIndex).abs() + (column - columnIndex).abs() - 1;
             final distanceValue = GameConvert.distanceToShade(distance, maxBrightness: maxBrightness);
-            if (distanceValue >= GameNodes.nodeBake[nodeIndex]) continue;
-            GameNodes.nodeBake[nodeIndex] = distanceValue;
-            GameNodes.nodeShades[nodeIndex] = distanceValue;
+            // if (distanceValue >= GameNodes.nodeBake[nodeIndex]) continue;
+            // GameNodes.nodeBake[nodeIndex] = distanceValue;
+            // GameNodes.nodeShades[nodeIndex] = distanceValue;
           }
         }
       }

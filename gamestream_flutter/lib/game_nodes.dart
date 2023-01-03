@@ -1,6 +1,5 @@
 
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:flutter/painting.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -49,9 +48,9 @@ class GameNodes {
   static var nodeSats = Float32List(Nodes_Initial_Size);
   static var nodeVals = Float32List(Nodes_Initial_Size);
   static var nodeAlps = Float32List(Nodes_Initial_Size);
-  static var nodeBake = Uint8List(Nodes_Initial_Size);
+  // static var nodeBake = Uint8List(Nodes_Initial_Size);
   static var nodeOrientations = Uint8List(Nodes_Initial_Size);
-  static var nodeShades = Uint8List(Nodes_Initial_Size);
+  // static var nodeShades = Uint8List(Nodes_Initial_Size);
   static var nodeTypes = Uint8List(Nodes_Initial_Size);
   static var nodeVariations = List<bool>.generate(Nodes_Initial_Size, (index) => false, growable: false);
   static var nodeVisible = Uint8List(Nodes_Initial_Size);
@@ -60,7 +59,7 @@ class GameNodes {
   static var nodeWind = Uint8List(Nodes_Initial_Size);
   static var miniMap = Uint8List(0);
   static var visibleIndex = 0;
-  static var dynamicIndex = 0;
+  static var dynamicIndex = -1;
   static var total = Nodes_Initial_Size;
   static var area = 0;
 
@@ -104,7 +103,7 @@ class GameNodes {
   static void resetStackDynamicLight() {
     while (dynamicIndex >= 0) {
       final i = nodeDynamicIndex[dynamicIndex];
-      nodeShades[i] = nodeBake[i];
+      // nodeShades[i] = nodeBake[i];
       nodeColors[i] = ambient_color_value;
       nodeHues[i] = ambient_hue;
       nodeSats[i] = ambient_sat;
@@ -131,9 +130,30 @@ class GameNodes {
   }
 
   static void resetGridToAmbient(){
+    if (nodeColors.length != total){
+      nodeColors = Uint32List(total);
+    }
+    if (nodeHues.length != total){
+      nodeHues = Float32List(total);
+    }
+    if (nodeSats.length != total){
+      nodeSats = Float32List(total);
+    }
+    if (nodeVals.length != total){
+      nodeVals = Float32List(total);
+    }
+    if (nodeAlps.length != total){
+      nodeAlps = Float32List(total);
+    }
+
     for (var i = 0; i < total; i++){
-      nodeBake[i] = Shade.Pitch_Black;
-      nodeShades[i] = Shade.Pitch_Black;
+      // nodeBake[i] = Shade.Pitch_Black;
+      // nodeShades[i] = Shade.Pitch_Black;
+      nodeColors[i] = ambient_color_value;
+      nodeHues[i] = ambient_hue;
+      nodeSats[i] = ambient_sat;
+      nodeVals[i] = ambient_val;
+      nodeAlps[i] = ambient_alp;
       dynamicIndex = 0;
     }
   }
@@ -171,7 +191,7 @@ class GameNodes {
           // if (distanceValue >= nodeShades[nodeIndex]) continue;
           if (distanceValue > 5) continue;
 
-          nodeShades[nodeIndex] = distanceValue;
+          // nodeShades[nodeIndex] = distanceValue;
           nodeDynamicIndex[dynamicIndex++] = nodeIndex;
 
           final hue = GameLighting.Color_Torch_HSV.hue;

@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:gamestream_flutter/isometric/render/render_character_health_bar.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_rat.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_slime.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_template.dart';
@@ -170,8 +169,8 @@ class RendererCharacters extends Renderer {
   }
 
   void renderCharacterZombie(Character character) {
-    final shade = GameState.getV3RenderShade(character);
-    if (shade < Shade.Dark) renderCharacterHealthBar(character);
+    // final shade = GameState.getV3RenderShade(character);
+    // if (shade < Shade.Dark) renderCharacterHealthBar(character);
     if (character.deadOrDying) return;
     if (character.spawning) return;
 
