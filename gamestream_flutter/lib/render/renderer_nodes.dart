@@ -664,10 +664,11 @@ class RendererNodes extends Renderer {
       srcX: 1216,
       srcY: 80,
       srcWidth: 45,
-      srcHeight: 66,
+      srcHeight: 72,
       dstX: currentNodeDstX,
       dstY: currentNodeDstY,
       color: renderNodeBelowColor,
+      anchorY: 0.5,
     );
   }
 
