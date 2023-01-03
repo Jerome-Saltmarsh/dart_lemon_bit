@@ -179,7 +179,7 @@ class GameNodes {
           final alp = GameLighting.Color_Torch_HSV.alpha;
           // const One_Over_Seven = 1.0 / 7.0;
           // final i = (One_Over_Seven * min(distanceValue, 1));
-          final intensity = 1.0 - (7 / distanceValue + 1);
+          final intensity = 1.0 - (distanceValue / 7);
           nodeHues[nodeIndex] = GameLighting.linerInterpolation(nodeHues[nodeIndex], hue, intensity);
           nodeSats[nodeIndex] = GameLighting.linerInterpolation(nodeSats[nodeIndex], sat, intensity);
           nodeVals[nodeIndex] = GameLighting.linerInterpolation(nodeVals[nodeIndex], val, intensity);
