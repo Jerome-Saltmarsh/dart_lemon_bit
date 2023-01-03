@@ -417,7 +417,7 @@ class RendererNodes extends Renderer {
       case NodeType.Grass:
         if (currentNodeOrientation == NodeOrientation.Solid){
           if (currentNodeVariation){
-            renderStandardNodeShaded(
+            renderStandardNode(
               srcX: 624,
               srcY: 0,
             );
@@ -446,13 +446,13 @@ class RendererNodes extends Renderer {
       case NodeType.Grass_Long:
         switch (currentNodeWind) {
           case WindType.Calm:
-            renderStandardNodeShaded(
+            renderStandardNode(
               srcX: AtlasNodeX.Grass_Long,
               srcY: 0,
             );
             return;
           default:
-            renderStandardNodeShaded(
+            renderStandardNode(
               srcX: AtlasNodeX.Grass_Long + ((((row - column) + GameAnimation.animationFrameGrass) % 6) * 48), // TODO Expensive Operation
               srcY: 0,
             );
@@ -474,7 +474,7 @@ class RendererNodes extends Renderer {
         renderNodeTemplateShaded(GameConstants.Sprite_Width_Padded_9);
         return;
       case NodeType.Road_2:
-        renderStandardNodeShaded(srcX: 768, srcY: 672 + GameConstants.Sprite_Height_Padded);
+        renderStandardNode(srcX: 768, srcY: 672 + GameConstants.Sprite_Height_Padded);
         return;
       case NodeType.Wooden_Plank:
         // renderNodeWoodenPlank();
@@ -491,7 +491,7 @@ class RendererNodes extends Renderer {
         renderNodeTemplateShaded(srcX);
         break;
       case NodeType.Sunflower:
-        renderStandardNodeShaded(
+        renderStandardNode(
           srcX: 1753.0,
           srcY: AtlasNodeY.Sunflower,
         );
@@ -508,25 +508,25 @@ class RendererNodes extends Renderer {
         );
         return;
       case NodeType.Boulder:
-        renderStandardNodeShaded(
+        renderStandardNode(
           srcX: AtlasNodeX.Boulder,
           srcY: AtlasNodeY.Boulder,
         );
         return;
       case NodeType.Vendor:
-        renderStandardNodeShaded(
+        renderStandardNode(
           srcX: 1344,
           srcY: 80,
         );
         return;
       case NodeType.Oven:
-        renderStandardNodeShaded(
+        renderStandardNode(
           srcX: AtlasNodeX.Oven,
           srcY: AtlasNodeY.Oven,
         );
         return;
       case NodeType.Chimney:
-        renderStandardNodeShaded(
+        renderStandardNode(
           srcX: AtlasNode.Chimney_X,
           srcY: AtlasNode.Node_Chimney_Y,
         );
@@ -595,14 +595,14 @@ class RendererNodes extends Renderer {
       );
       return;
     }
-    renderStandardNodeShaded(
+    renderStandardNode(
       srcX: ClientState.srcXRainLanding,
       srcY: 72.0 * ((GameAnimation.animationFrame + row + column) % 6), // TODO Expensive Operation
     );
   }
 
   static void renderNodeRainFalling() {
-    renderStandardNodeShaded(
+    renderStandardNode(
       srcX: ClientState.srcXRainFalling,
       srcY: 72.0 * ((GameAnimation.animationFrame + row + row + column) % 6), // TODO Expensive Operation
     );
@@ -669,7 +669,7 @@ class RendererNodes extends Renderer {
   static void renderNodeTemplateShaded(double srcX) {
     switch (currentNodeOrientation){
       case NodeOrientation.Solid:
-        renderStandardNodeShaded(
+        renderStandardNode(
           srcX: srcX,
           srcY: GameConstants.Sprite_Height_Padded_00,
         );
@@ -707,103 +707,103 @@ class RendererNodes extends Renderer {
         );
         return;
       case NodeOrientation.Corner_Top:
-        renderStandardNodeShaded(
+        renderStandardNode(
           srcX: srcX,
           srcY: GameConstants.Sprite_Height_Padded_03,
         );
         return;
       case NodeOrientation.Corner_Right:
-        renderStandardNodeShaded(
+        renderStandardNode(
           srcX: srcX,
           srcY: GameConstants.Sprite_Height_Padded_04,
         );
         return;
       case NodeOrientation.Corner_Bottom:
-        renderStandardNodeShaded(
+        renderStandardNode(
           srcX: srcX,
           srcY: GameConstants.Sprite_Height_Padded_05,
         );
         return;
       case NodeOrientation.Corner_Left:
-        renderStandardNodeShaded(
+        renderStandardNode(
           srcX: srcX,
           srcY: GameConstants.Sprite_Height_Padded_06,
         );
         return;
       case NodeOrientation.Slope_North:
-        renderStandardNodeShaded(
+        renderStandardNode(
           srcX: srcX,
           srcY: GameConstants.Sprite_Height_Padded_07,
         );
         return;
       case NodeOrientation.Slope_East:
-        renderStandardNodeShaded(
+        renderStandardNode(
           srcX: srcX,
           srcY: GameConstants.Sprite_Height_Padded_08,
         );
         return;
       case NodeOrientation.Slope_South:
-        renderStandardNodeShaded(
+        renderStandardNode(
           srcX: srcX,
           srcY: GameConstants.Sprite_Height_Padded_09,
         );
         return;
       case NodeOrientation.Slope_West:
-        renderStandardNodeShaded(
+        renderStandardNode(
           srcX: srcX,
           srcY: GameConstants.Sprite_Height_Padded_10,
         );
         return;
       case NodeOrientation.Slope_Outer_South_West:
-        renderStandardNodeShaded(
+        renderStandardNode(
           srcX: srcX,
           srcY: GameConstants.Sprite_Height_Padded_11,
         );
         return;
       case NodeOrientation.Slope_Outer_North_West:
-        renderStandardNodeShaded(
+        renderStandardNode(
           srcX: srcX,
           srcY: GameConstants.Sprite_Height_Padded_12,
         );
         return;
       case NodeOrientation.Slope_Outer_North_East:
-        renderStandardNodeShaded(
+        renderStandardNode(
           srcX: srcX,
           srcY: GameConstants.Sprite_Height_Padded_13,
         );
         return;
       case NodeOrientation.Slope_Outer_South_East:
-        renderStandardNodeShaded(
+        renderStandardNode(
           srcX: srcX,
           srcY: GameConstants.Sprite_Height_Padded_14,
         );
         return;
       case NodeOrientation.Slope_Inner_South_East:
-        renderStandardNodeShaded(
+        renderStandardNode(
           srcX: srcX,
           srcY: GameConstants.Sprite_Height_Padded_15,
         );
         return;
       case NodeOrientation.Slope_Inner_North_East :
-        renderStandardNodeShaded(
+        renderStandardNode(
           srcX: srcX,
           srcY: GameConstants.Sprite_Height_Padded_16,
         );
         return;
       case NodeOrientation.Slope_Inner_North_West:
-        renderStandardNodeShaded(
+        renderStandardNode(
           srcX: srcX,
           srcY: GameConstants.Sprite_Height_Padded_17,
         );
         return;
       case NodeOrientation.Slope_Inner_South_West:
-        renderStandardNodeShaded(
+        renderStandardNode(
           srcX: srcX,
           srcY: GameConstants.Sprite_Height_Padded_18,
         );
         return;
       case NodeOrientation.Radial:
-        renderStandardNodeShaded(
+        renderStandardNode(
           srcX: srcX,
           srcY: GameConstants.Sprite_Height_Padded_19,
         );
@@ -966,26 +966,8 @@ class RendererNodes extends Renderer {
     required double srcY,
   }){
     onscreenNodes++;
-    final f = Engine.bufferIndex << 2;
-    bufferClr[Engine.bufferIndex] = currentNodeVisibility == Visibility.Opaque ? 1 : GameLighting.Transparent;
-    bufferSrc[f] = srcX;
-    bufferSrc[f + 1] = srcY;
-    bufferSrc[f + 2] = srcX + GameConstants.Sprite_Width;
-    bufferSrc[f + 3] = srcY + GameConstants.Sprite_Height;
-    bufferDst[f] = 1.0; // scale
-    bufferDst[f + 1] = 0;
-    bufferDst[f + 2] = currentNodeDstX - (GameConstants.Sprite_Width_Half);
-    bufferDst[f + 3] = currentNodeDstY - (GameConstants.Sprite_Height_Third);
-    Engine.incrementBufferIndex();
-  }
-
-  static void renderStandardNodeShaded({
-    required double srcX,
-    required double srcY,
-  }){
-    onscreenNodes++;
-    final f = Engine.bufferIndex << 2;
-    bufferClr[Engine.bufferIndex] = RendererNodes.currentNodeColor;
+    final f = Engine.bufferIndex * 4;
+    bufferClr[Engine.bufferIndex] = currentNodeColor;
     bufferSrc[f] = srcX;
     bufferSrc[f + 1] = srcY;
     bufferSrc[f + 2] = srcX + GameConstants.Sprite_Width;

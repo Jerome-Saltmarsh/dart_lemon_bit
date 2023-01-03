@@ -6,8 +6,9 @@ import 'package:gamestream_flutter/library.dart';
 class GameNodes {
   static const Nodes_Initial_Size = 0;
 
+  static var nodeColors = Uint8List(Nodes_Initial_Size);
+  static var nodeHue = Uint8List(Nodes_Initial_Size);
   static var nodeBake = Uint8List(Nodes_Initial_Size);
-  static var nodeColors = Int32List(Nodes_Initial_Size);
   static var nodeOrientations = Uint8List(Nodes_Initial_Size);
   static var nodeShades = Uint8List(Nodes_Initial_Size);
   static var nodeTypes = Uint8List(Nodes_Initial_Size);
@@ -100,8 +101,6 @@ class GameNodes {
 
     final zIndex = index ~/ area;
     final rowIndex = (index - (zIndex * area)) ~/ GameState.nodesTotalColumns;
-    // index - ((convertNodeIndexToZ(index) * GameNodes.nodesArea) + (convertNodeIndexToRow(index) * nodesTotalColumns));
-    // final columnIndex = GameState.convertNodeIndexToColumn(index);
     final columnIndex = GameState.convertNodeIndexToIndexY(index);
     final radius = Shade.Pitch_Black;
     final zMin = max(zIndex - radius, 0);
