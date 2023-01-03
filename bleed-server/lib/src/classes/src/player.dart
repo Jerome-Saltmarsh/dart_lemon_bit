@@ -603,10 +603,13 @@ class Player extends Character with ByteWriter {
          inventorySetQuantityAtIndex(quantity: beltQuantity - reductionRemaining, index: beltIndex);
          return;
        }
-       reductionRemaining -= beltQuantity;
-       inventorySetEmptyAtIndex(beltQuantity);
+       inventorySetEmptyAtIndex(beltIndex);
     }
   }
+
+  static bool removeOnEmpty(int itemType) =>
+      itemType == ItemType.Weapon_Thrown_Grenade ||
+      ItemType.isTypeConsumable(itemType);
 
   void inventorySetQuantityAtIndex({required int quantity, required int index}){
     assert (isValidInventoryIndex(index));
@@ -623,26 +626,44 @@ class Player extends Character with ByteWriter {
     }
     if (index == ItemType.Belt_1){
       belt1_quantity = quantity;
+      if (belt1_quantity == 0 && removeOnEmpty(itemType)){
+        inventorySetEmptyAtIndex(ItemType.Belt_1);
+      }
       return;
     }
     if (index == ItemType.Belt_2){
       belt2_quantity = quantity;
+      if (belt2_quantity == 0 && removeOnEmpty(itemType)){
+        inventorySetEmptyAtIndex(ItemType.Belt_2);
+      }
       return;
     }
     if (index == ItemType.Belt_3){
       belt3_quantity = quantity;
+      if (belt3_quantity == 0 && removeOnEmpty(itemType)){
+        inventorySetEmptyAtIndex(ItemType.Belt_3);
+      }
       return;
     }
     if (index == ItemType.Belt_4){
       belt4_quantity = quantity;
+      if (belt4_quantity == 0 && removeOnEmpty(itemType)){
+        inventorySetEmptyAtIndex(ItemType.Belt_4);
+      }
       return;
     }
     if (index == ItemType.Belt_5){
       belt5_quantity = quantity;
+      if (belt5_quantity == 0 && removeOnEmpty(itemType)){
+        inventorySetEmptyAtIndex(ItemType.Belt_5);
+      }
       return;
     }
     if (index == ItemType.Belt_6){
       belt6_quantity = quantity;
+      if (belt6_quantity == 0 && removeOnEmpty(itemType)){
+        inventorySetEmptyAtIndex(ItemType.Belt_6);
+      }
       return;
     }
   }
@@ -1598,23 +1619,9 @@ class Player extends Character with ByteWriter {
   }
 
   void writePlayerEquippedWeaponAmmunition(){
-    assert (weaponIsEquipped);
+    // assert (weaponIsEquipped);
     writePlayerInventorySlot(equippedWeaponIndex);
-    // writeByte(ServerResponse.Player);
-    // writeByte(ApiPlayer.Inventory_Slot);
-    // writeUInt16(equippedWeaponAmmunitionType);
-    // writeUInt16(equippedWeaponQuantity);
   }
-
-  // void consumeEquippedWeaponAmmunition() {
-  //   assert (_equippedWeaponIndex >= 0);
-  //   final ammunitionType = equippedWeaponAmmunitionType;
-  //   if (ammunitionType == ItemType.Empty) return;
-  //   var amount = ItemType.getConsumeAmount(weaponType);
-  //   if (amount == 0) return;
-  //   inventoryReduceItemTypeQuantity(itemType: ammunitionType, reduction: amount);
-  //   writePlayerEquippedWeaponAmmunition();
-  // }
 
   void writePlayerInventorySlot(int index) {
      assert (isValidInventoryIndex(index));

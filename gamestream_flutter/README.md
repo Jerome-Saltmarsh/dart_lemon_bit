@@ -86,8 +86,6 @@ ctrl + w:   minimal mode
 [ ] design suburbia house kitchen
 [ ] design suburbia cemetery
 [ ] design stronghold
-[ ] remove grenade from inventory on empty
-[ ] remove apple from inventory on empty
 
 [GAME SURVIVAL]
 [ ] random treasure spawns
@@ -97,6 +95,7 @@ ctrl + w:   minimal mode
 [ ] destroyable crates etc
 
 03.01.2023
+[x] remove grenade and apple from inventory on empty
 [x] pine tree bottom shadow
 [x] fix editor select node sprites
 [x] fix render tree top

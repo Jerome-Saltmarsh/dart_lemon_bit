@@ -264,6 +264,8 @@ abstract class Game {
     assert (character.alive);
     assert (!character.weaponStateBusy);
 
+    final weaponType = character.weaponType;
+
     if (character is Player) {
       final playerWeaponConsumeType = ItemType.getConsumeType(character.weaponType);
 
@@ -293,20 +295,23 @@ abstract class Game {
           quantity: equippedWeaponQuantity - 1,
           index: character.equippedWeaponIndex,
         );
-        character.writePlayerEquippedWeaponAmmunition();
+        if (character.weaponIsEquipped){
+          character.writePlayerEquippedWeaponAmmunition();
+        }
+
       }
     } else if (character is AI){
-      if (ItemType.isTypeWeaponFirearm(character.weaponType)){
+      if (ItemType.isTypeWeaponFirearm(weaponType)){
         if (character.rounds <= 0){
           character.assignWeaponStateReloading();
-          character.rounds = ItemType.getMaxQuantity(character.weaponType);
+          character.rounds = ItemType.getMaxQuantity(weaponType);
           return;
         }
         character.rounds--;
       }
     }
 
-    if (character.weaponType == ItemType.Weapon_Thrown_Grenade){
+    if (weaponType == ItemType.Weapon_Thrown_Grenade){
       if (character is Player){
         playerThrowGrenade(character);
         return;
@@ -314,7 +319,7 @@ abstract class Game {
       throw Exception('ai cannot throw grenades');
     }
 
-    if (character.weaponType == ItemType.Weapon_Flamethrower){
+    if (weaponType == ItemType.Weapon_Flamethrower){
       if (character is Player){
         playerUseFlamethrower(character);
         return;
@@ -322,36 +327,36 @@ abstract class Game {
       throw Exception('ai cannot use flamethrower');
     }
 
-    if (character.weaponType == ItemType.Weapon_Special_Bazooka){
+    if (weaponType == ItemType.Weapon_Special_Bazooka){
       if (character is Player){
         playerUseBazooka(character);
       }
       return;
     }
 
-    if (character.weaponType == ItemType.Weapon_Special_Minigun){
+    if (weaponType == ItemType.Weapon_Special_Minigun){
       if (character is Player){
         playerUseMinigun(character);
       }
       return;
     }
 
-    if (ItemType.isTypeWeaponFirearm(character.weaponType)){
+    if (ItemType.isTypeWeaponFirearm(weaponType)){
       characterFireWeapon(character);
-      character.accuracy += ItemType.getAccuracy(character.weaponType);
+      character.accuracy += ItemType.getAccuracy(weaponType);
       return;
     }
 
-    if (ItemType.isTypeWeaponMelee(character.weaponType)) {
+    if (ItemType.isTypeWeaponMelee(weaponType)) {
       characterAttackMelee(character);
       return;
     }
 
-    switch (character.weaponType) {
+    switch (weaponType) {
       case ItemType.Weapon_Ranged_Crossbow:
         spawnProjectileArrow(
-            damage: ItemType.getDamage(character.weaponType),
-            range: ItemType.getRange(character.weaponType),
+            damage: ItemType.getDamage(weaponType),
+            range: ItemType.getRange(weaponType),
             src: character,
             angle: character.lookRadian,
         );
@@ -367,8 +372,8 @@ abstract class Game {
       case ItemType.Weapon_Ranged_Bow:
         spawnProjectileArrow(
             src: character,
-            damage: ItemType.getDamage(character.weaponType),
-            range: ItemType.getRange(character.weaponType),
+            damage: ItemType.getDamage(weaponType),
+            range: ItemType.getRange(weaponType),
             angle: character.lookRadian,
         );
         character.assignWeaponStateFiring();
