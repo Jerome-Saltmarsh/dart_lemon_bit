@@ -115,6 +115,11 @@ class GameState {
   // ACTIONS
 
   static void applyEmissions(){
+
+    for (var i = 0; i < ClientState.nodesLightSourcesTotal; i++){
+       GameNodes.emitLightDynamic(index: ClientState.nodesLightSources[i], hue: 100);
+    }
+
     applyEmissionsCharacters();
     applyEmissionGameObjects();
     applyEmissionsProjectiles();
