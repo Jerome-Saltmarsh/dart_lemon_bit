@@ -331,9 +331,9 @@ class RendererParticles extends Renderer {
     if (vector3.z < Node_Height) return;
     if (vector3.z >= GameState.nodesLengthZ) return;
     final nodeIndex = GameQueries.getNodeIndexV3(vector3);
-    if (nodeIndex > GameNodes.nodesArea) {
-      final nodeBelowIndex = nodeIndex - GameNodes.nodesArea;
-      final nodeBelowOrientation = GameNodes.nodesOrientation[nodeBelowIndex];
+    if (nodeIndex > GameNodes.area) {
+      final nodeBelowIndex = nodeIndex - GameNodes.area;
+      final nodeBelowOrientation = GameNodes.nodeOrientations[nodeBelowIndex];
       if (nodeBelowOrientation == NodeOrientation.Solid){
         final topRemainder = vector3.z % Node_Height;
         renderShadow(vector3.x, vector3.y, vector3.z - topRemainder, scale: topRemainder > 0 ? (topRemainder / Node_Height) * 2 : 2.0);

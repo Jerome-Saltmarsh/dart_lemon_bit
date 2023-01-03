@@ -18,9 +18,9 @@ class GameActions {
       for (var column = 0; column < columns; column++) {
         for (var z = zs; z >= 0; z--) {
           final index = GameState.getNodeIndexZRC(z, row, column);
-          final type = GameNodes.nodesType[index];
+          final type = GameNodes.nodeTypes[index];
           if (type != NodeType.Empty) {
-            if (type == NodeType.Water || GameNodes.nodesOrientation[index] == NodeOrientation.Solid) {
+            if (type == NodeType.Water || GameNodes.nodeOrientations[index] == NodeOrientation.Solid) {
               GameState.setNodeType(z + 1, row, column, NodeType.Rain_Landing);
             }
             GameState.setNodeType(z + 2, row, column, NodeType.Rain_Falling);
@@ -40,10 +40,10 @@ class GameActions {
   }
 
   static void rainStop() {
-    for (var i = 0; i < GameNodes.nodesTotal; i++) {
-      if (!NodeType.isRain(GameNodes.nodesType[i])) continue;
-      GameNodes.nodesType[i] = NodeType.Empty;
-      GameNodes.nodesOrientation[i] = NodeOrientation.None;
+    for (var i = 0; i < GameNodes.total; i++) {
+      if (!NodeType.isRain(GameNodes.nodeTypes[i])) continue;
+      GameNodes.nodeTypes[i] = NodeType.Empty;
+      GameNodes.nodeOrientations[i] = NodeOrientation.None;
     }
   }
 

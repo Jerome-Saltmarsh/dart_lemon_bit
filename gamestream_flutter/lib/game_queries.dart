@@ -6,13 +6,13 @@ import 'library.dart';
 class GameQueries {
 
    static int getNodeTypeBelow(int index){
-     if (index < GameNodes.nodesArea) return NodeType.Boundary;
-     final indexBelow = index - GameNodes.nodesArea;
-     if (indexBelow >= GameNodes.nodesTotal) return NodeType.Boundary;
-     return GameNodes.nodesType[indexBelow];
+     if (index < GameNodes.area) return NodeType.Boundary;
+     final indexBelow = index - GameNodes.area;
+     if (indexBelow >= GameNodes.total) return NodeType.Boundary;
+     return GameNodes.nodeTypes[indexBelow];
    }
 
-   static int getNodeIndexBelow(int index) => index - GameNodes.nodesArea;
+   static int getNodeIndexBelow(int index) => index - GameNodes.area;
 
    static bool isInboundZRC(int z, int row, int column){
      if (z < 0) return false;
@@ -25,10 +25,10 @@ class GameQueries {
    }
 
    static bool isVisibleV3(Vector3 vector) =>
-       inBoundsVector3(vector) ? GameNodes.nodesVisible[getNodeIndexV3(vector)] != Visibility.Invisible : true;
+       inBoundsVector3(vector) ? GameNodes.nodeVisible[getNodeIndexV3(vector)] != Visibility.Invisible : true;
 
    static bool isVisibleXYZ(double x, double y, double z) =>
-       inBounds(x, y, z) ? GameNodes.nodesVisible[getNodeIndex(x, y, z)] != Visibility.Invisible : true;
+       inBounds(x, y, z) ? GameNodes.nodeVisible[getNodeIndex(x, y, z)] != Visibility.Invisible : true;
 
    static bool inBoundsVector3(Vector3 vector3) =>
        inBounds(vector3.x, vector3.y, vector3.z);
@@ -69,10 +69,10 @@ class GameQueries {
    }
 
    static int gridNodeXYZType(double x, double y, double z) =>
-       GameNodes.nodesType[gridNodeXYZIndex(x, y, z)];
+       GameNodes.nodeTypes[gridNodeXYZIndex(x, y, z)];
 
    static bool gridNodeZRCTypeRainOrEmpty(int z, int row, int column) =>
-       NodeType.isRainOrEmpty(GameNodes.nodesType[GameState.getNodeIndexZRC(z, row, column)]);
+       NodeType.isRainOrEmpty(GameNodes.nodeTypes[GameState.getNodeIndexZRC(z, row, column)]);
 
    static int gridNodeZRCTypeSafe(int z, int row, int column) {
      if (z < 0) return NodeType.Boundary;
@@ -85,7 +85,7 @@ class GameQueries {
    }
 
    static int gridNodeZRCType(int z, int row, int column) =>
-       GameNodes.nodesType[GameState.getNodeIndexZRC(z, row, column)];
+       GameNodes.nodeTypes[GameState.getNodeIndexZRC(z, row, column)];
 
 
    static int gridNodeXYZIndex(double x, double y, double z) =>
@@ -145,6 +145,6 @@ class GameQueries {
        GameQueries.isInboundZRC(vector3.indexZ, vector3.indexRow, vector3.indexColumn);
 
    static int getWindAtV3(Vector3 vector3) =>
-       GameNodes.nodesWind[getNodeIndexV3(vector3)];
+       GameNodes.nodeWind[getNodeIndexV3(vector3)];
 
 }

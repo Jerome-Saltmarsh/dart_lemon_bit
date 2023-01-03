@@ -154,7 +154,7 @@ class GameCanvas {
       final x2 = x1 - tX;
       final y2 = y1 - tY;
       final i2 = GameQueries.getNodeIndex(x2, y2, z);
-      if (!NodeType.isTransient(GameNodes.nodesType[i2])) break;
+      if (!NodeType.isTransient(GameNodes.nodeTypes[i2])) break;
       x1 = x2;
       y1 = y2;
       i1 = i2;

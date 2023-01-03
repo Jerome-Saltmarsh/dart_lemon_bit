@@ -6,28 +6,27 @@ import 'package:gamestream_flutter/library.dart';
 class GameNodes {
   static const Nodes_Initial_Size = 0;
 
-  static var nodesBake = Uint8List(Nodes_Initial_Size);
-  static var nodesColor = Int32List(Nodes_Initial_Size);
-  static var nodesOrientation = Uint8List(Nodes_Initial_Size);
-  static var nodesShade = Uint8List(Nodes_Initial_Size);
-  static var nodesTotal = Nodes_Initial_Size;
-  static var nodesArea = 0;
-  static var nodesType = Uint8List(Nodes_Initial_Size);
-  static var nodesVariation = List<bool>.generate(Nodes_Initial_Size, (index) => false, growable: false);
-  static var nodesVisible = Uint8List(Nodes_Initial_Size);
-  static var nodesVisibleIndex = Uint16List(Nodes_Initial_Size);
-  static var nodesDynamicIndex = Uint16List(Nodes_Initial_Size);
-  static var nodesWind = Uint8List(Nodes_Initial_Size);
+  static var nodeBake = Uint8List(Nodes_Initial_Size);
+  static var nodeColors = Int32List(Nodes_Initial_Size);
+  static var nodeOrientations = Uint8List(Nodes_Initial_Size);
+  static var nodeShades = Uint8List(Nodes_Initial_Size);
+  static var nodeTypes = Uint8List(Nodes_Initial_Size);
+  static var nodeVariations = List<bool>.generate(Nodes_Initial_Size, (index) => false, growable: false);
+  static var nodeVisible = Uint8List(Nodes_Initial_Size);
+  static var nodeVisibleIndex = Uint16List(Nodes_Initial_Size);
+  static var nodeDynamicIndex = Uint16List(Nodes_Initial_Size);
+  static var nodeWind = Uint8List(Nodes_Initial_Size);
+  static var miniMap = Uint8List(0);
   static var visibleIndex = 0;
   static var dynamicIndex = 0;
-
-  static var miniMap = Uint8List(0);
+  static var total = Nodes_Initial_Size;
+  static var area = 0;
 
   // METHODS
 
   static void generateMiniMap(){
-      if (miniMap.length != nodesArea){
-        miniMap = Uint8List(nodesArea);
+      if (miniMap.length != area){
+        miniMap = Uint8List(area);
       }
 
       var index = 0;
@@ -36,12 +35,12 @@ class GameNodes {
 
       for (var row = 0; row < rows; row++){
           for (var column = 0; column < columns; column++){
-            var searchIndex = nodesTotal - nodesArea +  index;
+            var searchIndex = total - area +  index;
             var typeFound = ItemType.Empty;
             while (true) {
               if (searchIndex < 0) break;
-              final type = nodesType[searchIndex];
-              searchIndex -= nodesArea;
+              final type = nodeTypes[searchIndex];
+              searchIndex -= area;
               if (NodeType.isRainOrEmpty(type)) continue;
               typeFound = type;
               break;
@@ -54,16 +53,16 @@ class GameNodes {
   
   static void resetVisible(){
     while (visibleIndex > 0) {
-      nodesVisible[nodesVisibleIndex[visibleIndex]] = Visibility.Opaque;
+      nodeVisible[nodeVisibleIndex[visibleIndex]] = Visibility.Opaque;
       visibleIndex--;
     }
-    nodesVisible[nodesVisibleIndex[0]] = Visibility.Opaque;
+    nodeVisible[nodeVisibleIndex[0]] = Visibility.Opaque;
   }
 
   static void resetStackDynamicLight() {
     while (dynamicIndex >= 0) {
-      final i = nodesDynamicIndex[dynamicIndex];
-      nodesShade[i] = nodesBake[i];
+      final i = nodeDynamicIndex[dynamicIndex];
+      nodeShades[i] = nodeBake[i];
       dynamicIndex--;
     }
     dynamicIndex = 0;
@@ -71,23 +70,23 @@ class GameNodes {
 
 
   static void addInvisibleIndex(int index){
-    if (nodesVisible[index] == Visibility.Transparent) return;
-    nodesVisible[index] = Visibility.Invisible;
-    nodesVisibleIndex[visibleIndex] = index;
+    if (nodeVisible[index] == Visibility.Transparent) return;
+    nodeVisible[index] = Visibility.Invisible;
+    nodeVisibleIndex[visibleIndex] = index;
     visibleIndex++;
   }
 
   static void addTransparentIndex(int index){
-    if (nodesVisible[index] == Visibility.Transparent) return;
-    nodesVisible[index] = Visibility.Transparent;
-    nodesVisibleIndex[visibleIndex] = index;
+    if (nodeVisible[index] == Visibility.Transparent) return;
+    nodeVisible[index] = Visibility.Transparent;
+    nodeVisibleIndex[visibleIndex] = index;
     visibleIndex++;
   }
 
   static void resetGridToAmbient(){
-    for (var i = 0; i < nodesTotal; i++){
-      nodesBake[i] = Shade.Pitch_Black;
-      nodesShade[i] = Shade.Pitch_Black;
+    for (var i = 0; i < total; i++){
+      nodeBake[i] = Shade.Pitch_Black;
+      nodeShades[i] = Shade.Pitch_Black;
       dynamicIndex = 0;
     }
   }
@@ -97,10 +96,10 @@ class GameNodes {
     int maxBrightness = Shade.Very_Bright,
   }){
     assert (index >= 0);
-    assert (index < nodesTotal);
+    assert (index < total);
 
-    final zIndex = index ~/ nodesArea;
-    final rowIndex = (index - (zIndex * nodesArea)) ~/ GameState.nodesTotalColumns;
+    final zIndex = index ~/ area;
+    final rowIndex = (index - (zIndex * area)) ~/ GameState.nodesTotalColumns;
     // index - ((convertNodeIndexToZ(index) * GameNodes.nodesArea) + (convertNodeIndexToRow(index) * nodesTotalColumns));
     // final columnIndex = GameState.convertNodeIndexToColumn(index);
     final columnIndex = GameState.convertNodeIndexToIndexY(index);
@@ -112,7 +111,7 @@ class GameNodes {
     final columnMin = max(columnIndex - radius, 0);
     final columnMax = min(columnIndex + radius, GameState.nodesTotalColumns);
     final rowInitInit = GameState.nodesTotalColumns * rowMin;
-    var zTotal = zMin * nodesArea;
+    var zTotal = zMin * area;
 
     for (var z = zMin; z < zMax; z++) {
       var rowInit = rowInitInit;
@@ -124,12 +123,12 @@ class GameNodes {
         for (var column = columnMin; column <= columnMax; column++) {
           final nodeIndex = a + column;
           final distanceValue = Engine.clamp(b + (column - columnIndex).abs() - 2, maxBrightness, Shade.Pitch_Black);
-          if (distanceValue >= nodesShade[nodeIndex]) continue;
-          nodesShade[nodeIndex] = distanceValue;
-          nodesDynamicIndex[dynamicIndex++] = nodeIndex;
+          if (distanceValue >= nodeShades[nodeIndex]) continue;
+          nodeShades[nodeIndex] = distanceValue;
+          nodeDynamicIndex[dynamicIndex++] = nodeIndex;
         }
       }
-      zTotal += nodesArea;
+      zTotal += area;
     }
   }
 
@@ -141,8 +140,8 @@ class GameNodes {
     for (var row = 0; row < 3; row++){
       for (var column = 0; column < 3; column++){
         final searchIndex = initialSearchIndex + rowIndex + column;
-        if (searchIndex >= nodesTotal) break;
-        if (nodesType[searchIndex] != NodeType.Torch) continue;
+        if (searchIndex >= total) break;
+        if (nodeTypes[searchIndex] != NodeType.Torch) continue;
         torchIndex = searchIndex;
         break;
       }

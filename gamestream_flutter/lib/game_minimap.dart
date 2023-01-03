@@ -27,12 +27,12 @@ class GameMinimap {
     var index = 0;
     final rows = GameState.nodesTotalRows;
     final columns = GameState.nodesTotalColumns;
-    final area = GameNodes.nodesArea;
+    final area = GameNodes.area;
     final nodeTypes = GameNodes.miniMap;
 
     final vendors = <int>[];
-    for (var i = 0; i < GameNodes.nodesTotal; i++){
-         if (GameNodes.nodesType[i] != NodeType.Vendor) continue;
+    for (var i = 0; i < GameNodes.total; i++){
+         if (GameNodes.nodeTypes[i] != NodeType.Vendor) continue;
          vendors.add(i);
     }
 

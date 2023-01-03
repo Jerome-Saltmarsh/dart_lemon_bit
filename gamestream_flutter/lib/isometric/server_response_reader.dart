@@ -436,8 +436,8 @@ class ServerResponseReader with ByteReader {
     final nodeType = readByte();
     final nodeOrientation = readByte();
     assert(NodeType.supportsOrientation(nodeType, nodeOrientation));
-    GameNodes.nodesType[nodeIndex] = nodeType;
-    GameNodes.nodesOrientation[nodeIndex] = nodeOrientation;
+    GameNodes.nodeTypes[nodeIndex] = nodeType;
+    GameNodes.nodeOrientations[nodeIndex] = nodeOrientation;
     GameEvents.onChangedNodes();
     GameEditor.refreshNodeSelectedIndex();
   }
@@ -468,21 +468,21 @@ class ServerResponseReader with ByteReader {
     GameState.nodesTotalZ = readUInt16();
     GameState.nodesTotalRows = readUInt16();
     GameState.nodesTotalColumns = readUInt16();
-    GameNodes.nodesArea = GameState.nodesTotalRows * GameState.nodesTotalColumns;
+    GameNodes.area = GameState.nodesTotalRows * GameState.nodesTotalColumns;
     final totalNodes = GameState.nodesTotalZ * GameState.nodesTotalRows * GameState.nodesTotalColumns;
-    if (GameNodes.nodesType.length < totalNodes) {
-      GameNodes.nodesType = Uint8List(totalNodes);
-      GameNodes.nodesOrientation = Uint8List(totalNodes);
-      GameNodes.nodesShade = Uint8List(totalNodes);
-      GameNodes.nodesBake = Uint8List(totalNodes);
-      GameNodes.nodesWind = Uint8List(totalNodes);
-      GameNodes.nodesVariation = List.generate(totalNodes, (index) => false, growable: false);
-      GameNodes.nodesVisible = Uint8List(totalNodes);
-      GameNodes.nodesVisibleIndex = Uint16List(totalNodes);
-      GameNodes.nodesDynamicIndex = Uint16List(totalNodes);
+    if (GameNodes.nodeTypes.length < totalNodes) {
+      GameNodes.nodeTypes = Uint8List(totalNodes);
+      GameNodes.nodeOrientations = Uint8List(totalNodes);
+      GameNodes.nodeShades = Uint8List(totalNodes);
+      GameNodes.nodeBake = Uint8List(totalNodes);
+      GameNodes.nodeWind = Uint8List(totalNodes);
+      GameNodes.nodeVariations = List.generate(totalNodes, (index) => false, growable: false);
+      GameNodes.nodeVisible = Uint8List(totalNodes);
+      GameNodes.nodeVisibleIndex = Uint16List(totalNodes);
+      GameNodes.nodeDynamicIndex = Uint16List(totalNodes);
     }
-    GameNodes.nodesTotal = totalNodes;
-    GameState.nodesRaycast = GameNodes.nodesArea +  GameNodes.nodesArea + GameState.nodesTotalColumns + 1;
+    GameNodes.total = totalNodes;
+    GameState.nodesRaycast = GameNodes.area +  GameNodes.area + GameState.nodesTotalColumns + 1;
 
     var gridIndex = 0;
     var total = 0;
@@ -498,11 +498,11 @@ class ServerResponseReader with ByteReader {
       total += count;
 
       while (count > 0) {
-        GameNodes.nodesType[gridIndex] = nodeType;
-        GameNodes.nodesOrientation[gridIndex] = nodeOrientation;
+        GameNodes.nodeTypes[gridIndex] = nodeType;
+        GameNodes.nodeOrientations[gridIndex] = nodeOrientation;
 
         if (nodeType == NodeType.Grass || nodeType == NodeType.Tree_Bottom) {
-          GameNodes.nodesVariation[gridIndex] = randomBool();
+          GameNodes.nodeVariations[gridIndex] = randomBool();
         }
 
         gridIndex++;

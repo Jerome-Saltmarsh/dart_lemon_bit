@@ -430,14 +430,14 @@ class GameIO {
       if (column >= GameState.nodesTotalColumns) break;
       if (z >= GameState.nodesTotalZ) break;
       final index = GameState.getNodeIndexZRC(z, row, column);
-      if (GameNodes.nodesType[index] == NodeType.Empty
+      if (GameNodes.nodeTypes[index] == NodeType.Empty
           ||
-          NodeType.isRain(GameNodes.nodesType[index])
+          NodeType.isRain(GameNodes.nodeTypes[index])
       ) {
         z--;
         continue;
       }
-      if (GameNodes.nodesVisible[index] == Visibility.Invisible) {
+      if (GameNodes.nodeVisible[index] == Visibility.Invisible) {
         z--;
         continue;
       }
