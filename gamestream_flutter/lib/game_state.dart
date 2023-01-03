@@ -117,7 +117,6 @@ class GameState {
   static void applyEmissions(){
     applyEmissionsCharacters();
     applyEmissionGameObjects();
-    applyEmissionsParticles();
     applyEmissionsProjectiles();
     applyCharacterColors();
   }
@@ -132,24 +131,11 @@ class GameState {
     character.color = getV3RenderColor(character);
   }
 
-  static void applyEmissionsParticles(){
-    for (var i = 0; i < totalParticles; i++) {
-      applyParticleEmission(ClientState.particles[i]);
-    }
-  }
-
   static void applyEmissionsCharacters() {
-    var maxBrightness = Shade.Medium;
-    if (maxBrightness < Shade.Bright) {
-      maxBrightness = Shade.Bright;
-    }
-    if (maxBrightness > Shade.Medium) {
-      maxBrightness = Shade.Medium;
-    }
     for (var i = 0; i < totalCharacters; i++) {
       final character = characters[i];
       if (!character.allie) continue;
-      applyVector3Emission(character, maxBrightness: maxBrightness);
+      applyVector3Emission(character, hue: 200);
     }
   }
 
@@ -161,105 +147,36 @@ class GameState {
 
   static void applyProjectileEmission(Projectile projectile) {
     if (projectile.type == ProjectileType.Orb) {
-      applyVector3Emission(projectile, maxBrightness: Shade.Very_Bright);
+      applyVector3Emission(projectile, hue: 100);
       return;
     }
     if (projectile.type == ProjectileType.Bullet) {
-      applyVector3Emission(projectile, maxBrightness: Shade.Very_Bright);
+      applyVector3Emission(projectile, hue: 100);
       return;
     }
     if (projectile.type == ProjectileType.Fireball) {
-      applyVector3Emission(projectile, maxBrightness: Shade.Very_Bright);
+      applyVector3Emission(projectile, hue: 300);
       return;
     }
     if (projectile.type == ProjectileType.Arrow) {
-      applyVector3Emission(projectile, maxBrightness: Shade.Medium);
+      applyVector3Emission(projectile, hue: 360);
       return;
     }
   }
 
-  static void applyParticleEmission(Particle particle){
-    if (!particle.active) return;
-    if (particle.type == ParticleType.Orb_Shard){
-      if (particle.duration > 12){
-        return applyVector3Emission(particle, maxBrightness: Shade.Very_Bright);
-      }
-      if (particle.duration > 9){
-        return applyVector3Emission(particle, maxBrightness: Shade.Bright);
-      }
-      if (particle.duration > 6){
-        return applyVector3Emission(particle, maxBrightness: Shade.Medium);
-      }
-      if (particle.duration > 3) {
-        return applyVector3Emission(particle, maxBrightness: Shade.Medium);
-      }
-      return applyVector3Emission(particle, maxBrightness: Shade.Dark);
-    }
-
-    if (particle.type == ParticleType.Light_Emission){
-      if (particle.duration > 20){
-        return applyVector3Emission(particle, maxBrightness: Shade.Very_Bright);
-      }
-      if (particle.duration > 10){
-        return applyVector3Emission(particle, maxBrightness: Shade.Bright);
-      }
-      if (particle.duration > 7){
-        return applyVector3Emission(particle, maxBrightness: Shade.Medium);
-      }
-      if (particle.duration > 5) {
-        return applyVector3Emission(particle, maxBrightness: Shade.Dark);
-      }
-      if (particle.duration > 3) {
-        return applyVector3Emission(particle, maxBrightness: Shade.Very_Dark);
-      }
-      return applyVector3Emission(particle, maxBrightness: Shade.Very_Very_Dark);
-    }
-  }
-
-  static void applyVector3Emission(Vector3 v, {required int maxBrightness}){
+  static void applyVector3Emission(Vector3 v, {required double hue}){
     if (!GameQueries.inBoundsVector3(v)) return;
-    GameNodes.applyEmissionDynamic(
+    GameNodes.emitLightDynamic(
       index: GameQueries.getNodeIndexV3(v),
-      maxBrightness: maxBrightness,
+      hue: hue,
     );
   }
 
   static void applyEmissionDynamicV3(Vector3 v3) =>
-      GameNodes.applyEmissionDynamic(index: GameQueries.getNodeIndexV3(v3));
-
-  // static void applyEmissionDynamic({
-  //   required int index,
-  //   int maxBrightness = Shade.Very_Bright,
-  // }){
-  //   assert (index >= 0);
-  //   assert (index < GameNodes.nodesTotal);
-  //
-  //   final zIndex = convertNodeIndexToZ(index);
-  //   final rowIndex = convertNodeIndexToRow(index);
-  //   final columnIndex = convertNodeIndexToColumn(index);
-  //   final radius = Shade.Pitch_Black;
-  //   final zMin = max(zIndex - radius, 0);
-  //   final zMax = min(zIndex + radius, nodesTotalZ);
-  //   final rowMin = max(rowIndex - radius, 0);
-  //   final rowMax = min(rowIndex + radius, nodesTotalRows);
-  //   final columnMin = max(columnIndex - radius, 0);
-  //   final columnMax = min(columnIndex + radius, nodesTotalColumns);
-  //
-  //   for (var z = zMin; z < zMax; z++){
-  //     for (var row = rowMin; row <= rowMax; row++){
-  //       final a = (z * nodesArea) + (row * nodesTotalColumns);
-  //       final b = (z - zIndex).abs() + (row - rowIndex).abs();
-  //       for (var column = columnMin; column <= columnMax; column++) {
-  //         final nodeIndex = a + column;
-  //         final distanceValue = Engine.clamp(b + (column - columnIndex).abs() - 2, maxBrightness, Shade.Pitch_Black);
-  //         if (distanceValue >= GameNodes.nodesShade[nodeIndex]) continue;
-  //         GameNodes.nodesShade[nodeIndex] = distanceValue;
-  //         GameNodes.nodesDynamicIndex[GameNodes.dynamicIndex] = nodeIndex;
-  //         GameNodes.dynamicIndex++;
-  //       }
-  //     }
-  //   }
-  // }
+      GameNodes.emitLightDynamic(
+          index: GameQueries.getNodeIndexV3(v3),
+          hue: 200,
+      );
 
   static void onChangedUpdateFrame(int value){
     ClientState.rendersSinceUpdate.value = 0;

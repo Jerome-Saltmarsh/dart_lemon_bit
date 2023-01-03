@@ -254,9 +254,9 @@ class RendererNodes extends Renderer {
     GameState.applyEmissions();
 
     if (GameState.editMode){
-      GameNodes.applyEmissionDynamic(
+      GameNodes.emitLightDynamic(
         index: GameEditor.nodeSelectedIndex.value,
-        maxBrightness: Shade.Very_Bright,
+        hue: 200,
       );
     }
 

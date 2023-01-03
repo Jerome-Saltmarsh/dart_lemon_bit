@@ -158,9 +158,9 @@ class GameNodes {
     }
   }
 
-  static void applyEmissionDynamic({
+  static void emitLightDynamic({
     required int index,
-    int maxBrightness = Shade.Very_Bright,
+    required double hue,
   }){
     assert (index >= 0);
     assert (index < total);
@@ -194,7 +194,7 @@ class GameNodes {
           // nodeShades[nodeIndex] = distanceValue;
           nodeDynamicIndex[dynamicIndex++] = nodeIndex;
 
-          final hue = GameLighting.Color_Torch_HSV.hue;
+          // final hue = GameLighting.Color_Torch_HSV.hue;
           final sat = GameLighting.Color_Torch_HSV.saturation;
           final val = GameLighting.Color_Torch_HSV.value;
           final alp = GameLighting.Color_Torch_HSV.alpha;
