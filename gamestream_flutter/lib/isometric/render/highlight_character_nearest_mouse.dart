@@ -15,7 +15,8 @@ void highlightCharacterNearMouse() {
       nearestIndex = i;
     }
     if (nearestIndex != -1){
-      GameState.characters[nearestIndex].color = GameLighting.values[Shade.Very_Bright];
+      // todo add back
+      // GameState.characters[nearestIndex].color = GameLighting.values[Shade.Very_Bright];
     }
   }
 }

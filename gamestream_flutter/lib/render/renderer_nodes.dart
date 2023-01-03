@@ -74,12 +74,12 @@ class RendererNodes extends Renderer {
   static int get currentNodeColor => GameNodes.nodeColors[currentNodeIndex];
   // static int get currentNodeColor => ambientColor;
 
-  static int getShadeColor(int shade) {
-    if (shade < 0) return GameLighting.values[4];
-    if (shade >= GameNodes.total) return GameLighting.values[4];
-    return (nodeVisibility[shade] == Visibility.Opaque ? GameLighting.values : GameLighting
-        .values_transparent)[shade];
-  }
+  // static int getShadeColor(int shade) {
+  //   if (shade < 0) return GameLighting.values[4];
+  //   if (shade >= GameNodes.total) return GameLighting.values[4];
+  //   return (nodeVisibility[shade] == Visibility.Opaque ? GameLighting.values : GameLighting
+  //       .values_transparent)[shade];
+  // }
 
 
   static int get currentNodeOrientation => nodeOrientations[currentNodeIndex];

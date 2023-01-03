@@ -140,7 +140,7 @@ class GameState {
     for (var i = 0; i < totalCharacters; i++) {
       final character = characters[i];
       if (!character.allie) continue;
-      applyVector3Emission(character, hue: 200);
+      applyVector3Emission(character, hue: GameNodes.ambient_hue);
     }
   }
 

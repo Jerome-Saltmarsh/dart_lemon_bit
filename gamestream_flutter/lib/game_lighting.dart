@@ -10,97 +10,97 @@ class GameLighting {
 
   static final Color_Lightning = HSVColor.fromColor(Colors.white.withOpacity(Engine.GoldenRatio_0_381));
 
-
   static final Color_Torch = Color.fromRGBO(7, 255, 153, 0.61);
   static final Color_Torch_HSV =  HSVColor.fromColor(Color_Torch);
 
-  static final Ambient_Color = Color.fromRGBO(94, 66, 136, 0.61);
+
+  static final Ambient_Color = Color.fromRGBO(40, 31, 54, 0.611764705882353);
   static final Ambient_Color_HSV = HSVColor.fromColor(Ambient_Color);
   static final Ambient_Color_Start = Ambient_Color_HSV.withAlpha(0);
   static final Ambient_Color_End = Ambient_Color_Start.withAlpha(1);
 
-  static var start_hue_shift = Watch(getRandomHue());
-  static var _start_hue = Ambient_Color_Start.hue;
-  static var start_saturation = Ambient_Color_Start.saturation;
-  static var start_value = Ambient_Color_Start.value;
-  static var start_alpha = Ambient_Color_Start.alpha;
+  // static var start_hue_shift = Watch(getRandomHue());
+  // static var _start_hue = Ambient_Color_Start.hue;
+  // static var start_saturation = Ambient_Color_Start.saturation;
+  // static var start_value = Ambient_Color_Start.value;
+  // static var start_alpha = Ambient_Color_Start.alpha;
+  //
+  // static var end_hue_shift = Watch(getRandomHue());
+  // static var _end_hue = Ambient_Color_End.hue;
+  // static var end_saturation = Ambient_Color_End.saturation;
+  // static var end_value = Ambient_Color_End.value;
+  // static var end_alpha = Ambient_Color_End.alpha;
 
-  static var end_hue_shift = Watch(getRandomHue());
-  static var _end_hue = Ambient_Color_End.hue;
-  static var end_saturation = Ambient_Color_End.saturation;
-  static var end_value = Ambient_Color_End.value;
-  static var end_alpha = Ambient_Color_End.alpha;
+  // static double get start_hue => _start_hue;
+  // static double get end_hue => _end_hue;
 
-  static double get start_hue => _start_hue;
-  static double get end_hue => _end_hue;
+  // static final values = Uint32List(7);
+  // static final values_transparent = Uint32List(7);
 
-  static final values = Uint32List(7);
-  static final values_transparent = Uint32List(7);
+  // static set start_hue(double value){
+  //   assert (value >= 0);
+  //   _start_hue = value % 360.0;
+  // }
 
-  static set start_hue(double value){
-    assert (value >= 0);
-    _start_hue = value % 360.0;
-  }
+  // static set end_hue(double value){
+  //   assert (value >= 0);
+  //   _end_hue = value % 360.0;
+  // }
 
-  static set end_hue(double value){
-    assert (value >= 0);
-    _end_hue = value % 360.0;
-  }
+  // static void setStartHSVColor(HSVColor color){
+  //   start_hue = color.hue;
+  //   start_saturation = color.saturation;
+  //   start_value = color.value;
+  //   start_alpha = color.alpha;
+  // }
 
-  static void setStartHSVColor(HSVColor color){
-    start_hue = color.hue;
-    start_saturation = color.saturation;
-    start_value = color.value;
-    start_alpha = color.alpha;
-  }
+  // static final interpolations = [
+  //   0.00,
+  //   0.25,
+  //   0.40,
+  //   0.60,
+  //   0.80,
+  //   0.95,
+  //   1.00,
+  // ];
 
-  static final interpolations = [
-    0.00,
-    0.25,
-    0.40,
-    0.60,
-    0.80,
-    0.95,
-    1.00,
-  ];
+  // static void applyHueShift(){
+  //   start_hue = (start_hue + start_hue_shift.value);
+  //   end_hue = (start_hue + end_hue_shift.value);
+  // }
 
-  static void applyHueShift(){
-    start_hue = (start_hue + start_hue_shift.value);
-    end_hue = (start_hue + end_hue_shift.value);
-  }
+  // static Color get colorStart => Color(hsvToColorValue(
+  //    start_hue, start_saturation, start_value, start_alpha,
+  // ));
 
-  static Color get colorStart => Color(hsvToColorValue(
-     start_hue, start_saturation, start_value, start_alpha,
-  ));
+  // static Color get colorEnd => Color(hsvToColorValue(
+  //   end_hue, end_saturation, end_value, end_alpha,
+  // ));
 
-  static Color get colorEnd => Color(hsvToColorValue(
-    end_hue, end_saturation, end_value, end_alpha,
-  ));
-
-  static void refreshValues({bool applyHueShift = true}) {
-
-    if (applyHueShift){
-      start_hue = (start_hue + start_hue_shift.value);
-      end_hue = (start_hue + end_hue_shift.value);
-    }
-
-    for (var i = 0; i < 7; i++) {
-      final t = interpolations[i];
-      values[i] = hsvToColorValue(
-        linerInterpolation(start_hue, end_hue, t),
-        linerInterpolation(start_saturation, end_saturation, t),
-        linerInterpolation(start_value, end_value, t),
-        linerInterpolation(start_alpha, end_alpha, t),
-      );
-      values_transparent[i] = hsvToColorValue(
-        linerInterpolation(start_hue, end_hue, t),
-        linerInterpolation(start_saturation, end_saturation, t),
-        linerInterpolation(start_value, end_value, t),
-        // linerInterpolation(0.5, end_alpha, t),
-        0.5,
-      );
-    }
-  }
+  // static void refreshValues({bool applyHueShift = true}) {
+  //
+  //   if (applyHueShift){
+  //     start_hue = (start_hue + start_hue_shift.value);
+  //     end_hue = (start_hue + end_hue_shift.value);
+  //   }
+  //
+  //   for (var i = 0; i < 7; i++) {
+  //     final t = interpolations[i];
+  //     values[i] = hsvToColorValue(
+  //       linerInterpolation(start_hue, end_hue, t),
+  //       linerInterpolation(start_saturation, end_saturation, t),
+  //       linerInterpolation(start_value, end_value, t),
+  //       linerInterpolation(start_alpha, end_alpha, t),
+  //     );
+  //     values_transparent[i] = hsvToColorValue(
+  //       linerInterpolation(start_hue, end_hue, t),
+  //       linerInterpolation(start_saturation, end_saturation, t),
+  //       linerInterpolation(start_value, end_value, t),
+  //       // linerInterpolation(0.5, end_alpha, t),
+  //       0.5,
+  //     );
+  //   }
+  // }
 
   static double linerInterpolation(double a, double b, double t) {
     if (a == b || (a.isNaN == true) && (b.isNaN == true))
