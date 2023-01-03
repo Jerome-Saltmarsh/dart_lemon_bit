@@ -46,7 +46,7 @@ void renderCharacterTemplate(Character character, {
 
   final dstX = GameConvert.convertV3ToRenderX(character);
   final dstY = GameConvert.convertV3ToRenderY(character);
-  final color = GameState.getV3RenderColor(character);
+  final color = GameNodes.nodeColors[character.nodeIndex];
 
   var frameLegs = 0;
   var frameHead = 0;
