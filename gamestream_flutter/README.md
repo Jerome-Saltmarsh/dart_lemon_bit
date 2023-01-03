@@ -97,6 +97,7 @@ ctrl + w:   minimal mode
 [ ] destroyable crates etc
 
 03.01.2023
+[x] fix editor select node sprites
 [x] fix render tree top
 
 02.01.2023

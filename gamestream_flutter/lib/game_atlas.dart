@@ -232,7 +232,6 @@ class AtlasNodeX {
   static const Stone = 1508.0;
   static const Plain_Solid = 1557.0;
   static const Oven = 618.0;
-  static const Window = 618.0;
   static const Boulder = 618.0;
   static const Wireframe_Blue = 1704.0;
   static const Wireframe_Red = 1704.0;
@@ -271,7 +270,7 @@ class AtlasNodeX {
     NodeType.Sunflower: 1753.0,
     NodeType.Tree_Top: Tree_Top,
     NodeType.Oven: Oven,
-    NodeType.Window: Window,
+    NodeType.Window: 1508.0,
     NodeType.Boulder: Boulder,
     NodeType.Road: 768.0,
     NodeType.Road_2: 768.0,
@@ -285,7 +284,7 @@ class AtlasNodeY {
   static const Plain_Solid = 0.0;
   static const Torch = 728.0;
   static const Water_Flowing = 0.0;
-  static const Window = 876.0;
+  static const Window = 80.0;
   static const Oven = 804.0;
   static const Boulder = 657.0;
   static const Wireframe_Blue = 509.0;
