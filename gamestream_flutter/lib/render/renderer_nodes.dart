@@ -498,7 +498,7 @@ class RendererNodes extends Renderer {
       case NodeType.Sunflower:
         renderStandardNode(
           srcX: 1753.0,
-          srcY: AtlasNodeY.Sunflower,
+          srcY: 867.0,
         );
         return;
       case NodeType.Soil:
@@ -622,7 +622,7 @@ class RendererNodes extends Renderer {
     Engine.renderSprite(
       image: GameImages.atlas_nodes,
       srcX: AtlasNodeX.Tree_Top,
-      srcY: AtlasNodeY.Tree_Top,
+      srcY: 433.0,
       srcWidth: AtlasNode.Node_Tree_Top_Width,
       srcHeight: AtlasNode.Node_Tree_Top_Height,
       dstX: currentNodeDstX + (shift * 0.5),
@@ -649,7 +649,7 @@ class RendererNodes extends Renderer {
     Engine.renderSprite(
       image: GameImages.atlas_nodes,
       srcX: AtlasNodeX.Tree_Bottom,
-      srcY: AtlasNodeY.Tree_Bottom,
+      srcY: 433.0,
       srcWidth: AtlasNode.Width_Tree_Bottom,
       srcHeight: AtlasNode.Node_Tree_Bottom_Height,
       dstX: currentNodeDstX,

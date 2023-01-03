@@ -280,32 +280,6 @@ class AtlasNodeX {
 }
 
 class AtlasNodeY {
-  static const Bau_Haus_Solid = 512.0;
-  static const Bau_Haus_Half_South = Bau_Haus_Solid + GameConstants.Sprite_Height_Padded;
-  static const Bau_Haus_Half_West = Bau_Haus_Half_South + GameConstants.Sprite_Height_Padded;
-  static const Bau_Haus_Corner_Top = Bau_Haus_Half_West + GameConstants.Sprite_Height_Padded;
-  static const Bau_Haus_Corner_Right = Bau_Haus_Corner_Top + GameConstants.Sprite_Height_Padded;
-  static const Bau_Haus_Corner_Bottom = Bau_Haus_Corner_Right + GameConstants.Sprite_Height_Padded;
-  static const Bau_Haus_Corner_Left = Bau_Haus_Corner_Bottom + GameConstants.Sprite_Height_Padded;
-  static const Bau_Haus_Slope_Symmetric_North = 512.0;
-  static const Bau_Haus_Slope_Symmetric_East = Bau_Haus_Slope_Symmetric_North + GameConstants.Sprite_Height_Padded;
-  static const Bau_Haus_Slope_Symmetric_South = Bau_Haus_Slope_Symmetric_East + GameConstants.Sprite_Height_Padded;
-  static const Bau_Haus_Slope_Symmetric_West = Bau_Haus_Slope_Symmetric_South + GameConstants.Sprite_Height_Padded;
-  static const Bau_Haus_Slope_Inner_North_East = Bau_Haus_Slope_Symmetric_West + GameConstants.Sprite_Height_Padded;
-  static const Bau_Haus_Slope_Inner_South_East = Bau_Haus_Slope_Inner_North_East + GameConstants.Sprite_Height_Padded;
-  static const Bau_Haus_Slope_Inner_South_West = Bau_Haus_Slope_Inner_South_East + GameConstants.Sprite_Height_Padded;
-  static const Bau_Haus_Slope_Inner_North_West = Bau_Haus_Slope_Inner_South_West + GameConstants.Sprite_Height_Padded;
-  static const Spawn_Weapon = 592.0;
-  static const Spawn_Zombie = 665.0;
-  static const Soil = 584.0;
-  static const Wood = 512.0;
-  static const Wooden_Plank = 512.0;
-  static const Bau_Haus = 512.0;
-  static const Chimney = 730.0;
-  static const Table = 945.0;
-  static const Sunflower = 867.0;
-  static const Tree_Top = 433.0;
-  static const Tree_Bottom = 433.0;
   static const Water = 512.0;
   static const Stone = 0.0;
   static const Plain_Solid = 0.0;
@@ -341,15 +315,15 @@ class AtlasNodeY {
     NodeType.Water_Flowing: Water_Flowing,
     NodeType.Window: Window,
     NodeType.Spawn: 655.0,
-    NodeType.Spawn_Weapon: Spawn_Weapon,
+    NodeType.Spawn_Weapon: 592.0,
     NodeType.Spawn_Player: 655.0,
     NodeType.Wooden_Plank: 0.0,
-    NodeType.Chimney: Chimney,
-    NodeType.Table: Table,
+    NodeType.Chimney: 730.0,
+    NodeType.Table: 945.0,
     NodeType.Fireplace: 434.0,
-    NodeType.Sunflower: Sunflower,
-    NodeType.Tree_Top: Tree_Top,
-    NodeType.Tree_Bottom: Tree_Bottom,
+    NodeType.Sunflower: 867.0,
+    NodeType.Tree_Top: 433.0,
+    NodeType.Tree_Bottom: 433.0,
     NodeType.Oven: Oven,
     NodeType.Boulder: Boulder,
     NodeType.Road: 672.0,
