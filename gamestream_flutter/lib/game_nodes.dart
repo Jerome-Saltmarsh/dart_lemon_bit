@@ -4,7 +4,6 @@ import 'dart:ui';
 
 import 'package:flutter/painting.dart';
 import 'package:gamestream_flutter/library.dart';
-import 'package:gradients/gradients.dart';
 
 class GameNodes {
   static const Nodes_Initial_Size = 0;
@@ -168,8 +167,10 @@ class GameNodes {
         final b = (z - zIndex).abs() + (row - rowIndex).abs();
         for (var column = columnMin; column <= columnMax; column++) {
           final nodeIndex = a + column;
-          final distanceValue = Engine.clamp(b + (column - columnIndex).abs() - 2, maxBrightness, Shade.Pitch_Black);
-          if (distanceValue >= nodeShades[nodeIndex]) continue;
+          final distanceValue = Engine.clamp(b + (column - columnIndex).abs() - 2, 0, Shade.Pitch_Black);
+          // if (distanceValue >= nodeShades[nodeIndex]) continue;
+          if (distanceValue > 5) continue;
+
           nodeShades[nodeIndex] = distanceValue;
           nodeDynamicIndex[dynamicIndex++] = nodeIndex;
 
@@ -177,8 +178,6 @@ class GameNodes {
           final sat = GameLighting.Color_Torch_HSV.saturation;
           final val = GameLighting.Color_Torch_HSV.value;
           final alp = GameLighting.Color_Torch_HSV.alpha;
-          // const One_Over_Seven = 1.0 / 7.0;
-          // final i = (One_Over_Seven * min(distanceValue, 1));
           final intensity = 1.0 - (distanceValue / 7);
           nodeHues[nodeIndex] = GameLighting.linerInterpolation(nodeHues[nodeIndex], hue, intensity);
           nodeSats[nodeIndex] = GameLighting.linerInterpolation(nodeSats[nodeIndex], sat, intensity);
