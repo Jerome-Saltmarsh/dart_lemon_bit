@@ -158,6 +158,7 @@ class NodeType {
       type == Brick             ||
       type == Road          ||
       type == Metal         ||
+      type == Wood         ||
       type == Grass              ;
 
   static bool isDestroyable(int type) =>

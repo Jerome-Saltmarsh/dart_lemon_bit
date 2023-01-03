@@ -46,12 +46,13 @@ ctrl + w:   minimal mode
 [ ] editor tab characters
 
 [FEATURES]
-[ ] feature light source hue
 [ ] feature inventory tabs
 [ ] feature inventory max weight
 [ ] feature attributes
 [ ] feature skills
 [ ] feature loot gameobjects
+[ ] feature light source hue and intensity
+[ ] generate gradient using color modes lch hsl lab rgb 
 
 [CONTENT]
 [ ] item type army clothes

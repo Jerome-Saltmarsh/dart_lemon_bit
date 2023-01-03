@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:gradients/gradients.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class GameLighting {
 
+  static late RadialGradientPainter gradient;
 
   static double getRandomHue() => randomBetween(0, 360);
 
   static final Color_Lightning = HSVColor.fromColor(Colors.white.withOpacity(Engine.GoldenRatio_0_381));
-  static final Transparent =  GameColors.black.withOpacity(0.5).value;
 
   static final Default_Color = Color.fromRGBO(26, 24, 33, 1.0);
   static final Default_Color_HSV = HSVColor.fromColor(Default_Color);
@@ -63,6 +64,14 @@ class GameLighting {
     start_hue = (start_hue + start_hue_shift.value);
     end_hue = (start_hue + end_hue_shift.value);
   }
+
+  static Color get colorStart => Color(hsvToColorValue(
+     start_hue, start_saturation, start_value, start_alpha,
+  ));
+
+  static Color get colorEnd => Color(hsvToColorValue(
+    end_hue, end_saturation, end_value, end_alpha,
+  ));
 
   static void refreshValues({bool applyHueShift = true}) {
 

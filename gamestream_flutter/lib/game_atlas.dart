@@ -220,7 +220,6 @@ class AtlasNodeX {
   static const Brick_Slope_Symmetric_West = Brick_Slope_Symmetric_South + GameConstants.Sprite_Width_Padded;
   static const Spawn_Weapon = 0.0;
   static const Spawn_Zombie = 0.0;
-  static const Wooden_Plank = 716.0;
   static const Chimney = 618.0;
   static const Table = 667.0;
   static const Tree_Top = 1668.0;
@@ -344,7 +343,7 @@ class AtlasNodeY {
     NodeType.Spawn: 655.0,
     NodeType.Spawn_Weapon: Spawn_Weapon,
     NodeType.Spawn_Player: 655.0,
-    NodeType.Wooden_Plank: Wooden_Plank,
+    NodeType.Wooden_Plank: 0.0,
     NodeType.Chimney: Chimney,
     NodeType.Table: Table,
     NodeType.Fireplace: 434.0,
@@ -531,8 +530,8 @@ class AtlasNode {
   static const Window_South_X = Node_Window_West_X;
   static const Window_South_Y = Node_Window_West_Y + Sprite_Height_Padded;
 
-  static const Wooden_Plank_Solid_X = 716.0;
-  static const Node_Wooden_Plank_Solid_Y = 512.0;
+  static const Wooden_Plank_Solid_X = 490.0;
+  static const Node_Wooden_Plank_Solid_Y = 0.0;
   static const Node_Wooden_Plank_Half_West_X = Wooden_Plank_Solid_X;
   static const Node_Wooden_Plank_Half_West_Y = Node_Wooden_Plank_Solid_Y + Sprite_Height_Padded;
   static const Node_Wooden_Plank_Half_South_X = Wooden_Plank_Solid_X;

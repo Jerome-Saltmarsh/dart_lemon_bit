@@ -67,7 +67,12 @@ class RendererNodes extends Renderer {
   static double get currentNodeRenderY => GameConvert.rowColumnZToRenderY(row, column, currentNodeZ);
 
   static int get currentNodeShade => nodeShades[currentNodeIndex];
-  static int get currentNodeColor => (currentNodeVisibilityOpaque ? GameLighting.values : GameLighting.values_transparent)[currentNodeShade];
+
+  static int get currentNodeColor => (
+      currentNodeVisibilityOpaque
+      ? GameLighting.values
+      : GameLighting.values_transparent
+  )[currentNodeShade];
 
   static int getShadeColor(int shade) {
     if (shade < 0) return GameLighting.values[4];

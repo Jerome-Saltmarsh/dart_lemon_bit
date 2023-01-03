@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+  gradients: ^0.1.1+2
   flutter_colorpicker: ^1.0.3
   file_picker: ^5.0.1
   just_audio: ^0.9.28
