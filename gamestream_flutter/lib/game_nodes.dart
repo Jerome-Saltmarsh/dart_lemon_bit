@@ -1,13 +1,55 @@
 
 import 'dart:math';
+import 'dart:ui';
 
+import 'package:flutter/painting.dart';
 import 'package:gamestream_flutter/library.dart';
+import 'package:gradients/gradients.dart';
 
 class GameNodes {
   static const Nodes_Initial_Size = 0;
 
-  static var nodeColors = Uint8List(Nodes_Initial_Size);
-  static var nodeHue = Uint8List(Nodes_Initial_Size);
+  static void applyLightAt(int index, double hue, double sat, double val, double strength){
+     final outputHue = GameLighting.linerInterpolation(hue, nodeHues[index], strength);
+     final outputSat = GameLighting.linerInterpolation(sat, nodeSats[index], strength);
+     final outputVal = GameLighting.linerInterpolation(val, nodeVals[index], strength);
+     final outputColor = GameLighting.hsvToColorValue(outputHue, outputSat, outputVal, strength);
+     nodeColors[index] = outputColor;
+  }
+
+  static final ambient_color      = Color.fromRGBO(31, 1, 86, 1.0);
+  static final ambient_color_hsv  = HSVColor.fromColor(ambient_color);
+  static final ambient_hue        = ambient_color_hsv.hue;
+  static final ambient_sat        = ambient_color_hsv.saturation;
+  static final ambient_val        = ambient_color_hsv.value;
+  static final ambient_alp        = ambient_color_hsv.alpha;
+  static final ambient_color_value  = ambient_color.value;
+
+  static void resetNodeColorsToAmbient() {
+     print('resetNodeColorsToAmbient($total)');
+
+     if (nodeColors.length != total) {
+       nodeColors = Uint32List(total);
+       nodeHues = Float32List(total);
+       nodeSats = Float32List(total);
+       nodeVals = Float32List(total);
+       nodeAlps = Float32List(total);
+     }
+
+     for (var i = 0; i < total; i++) {
+       nodeColors[i] = ambient_color_value;
+       nodeHues[i] = ambient_hue;
+       nodeSats[i] = ambient_sat;
+       nodeVals[i] = ambient_val;
+       nodeAlps[i] = ambient_alp;
+     }
+  }
+
+  static var nodeColors = Uint32List(Nodes_Initial_Size);
+  static var nodeHues = Float32List(Nodes_Initial_Size);
+  static var nodeSats = Float32List(Nodes_Initial_Size);
+  static var nodeVals = Float32List(Nodes_Initial_Size);
+  static var nodeAlps = Float32List(Nodes_Initial_Size);
   static var nodeBake = Uint8List(Nodes_Initial_Size);
   static var nodeOrientations = Uint8List(Nodes_Initial_Size);
   static var nodeShades = Uint8List(Nodes_Initial_Size);
@@ -64,6 +106,11 @@ class GameNodes {
     while (dynamicIndex >= 0) {
       final i = nodeDynamicIndex[dynamicIndex];
       nodeShades[i] = nodeBake[i];
+      nodeColors[i] = ambient_color_value;
+      nodeHues[i] = ambient_hue;
+      nodeSats[i] = ambient_sat;
+      nodeVals[i] = ambient_val;
+      nodeAlps[i] = ambient_alp;
       dynamicIndex--;
     }
     dynamicIndex = 0;
@@ -125,6 +172,18 @@ class GameNodes {
           if (distanceValue >= nodeShades[nodeIndex]) continue;
           nodeShades[nodeIndex] = distanceValue;
           nodeDynamicIndex[dynamicIndex++] = nodeIndex;
+
+          final hue = 0.5;
+          const One_Over_Seven = 1.0 / 7.0;
+          final intensity = 1.0 - (One_Over_Seven * distanceValue);
+          nodeHues[nodeIndex] = GameLighting.linerInterpolation(nodeHues[nodeIndex], hue, intensity);
+
+          nodeColors[nodeIndex] = GameLighting.hsvToColorValue(
+              nodeHues[nodeIndex],
+              nodeSats[nodeIndex],
+              nodeVals[nodeIndex],
+              nodeAlps[nodeIndex],
+          );
         }
       }
       zTotal += area;

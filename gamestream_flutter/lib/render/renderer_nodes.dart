@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:gamestream_flutter/isometric/render/highlight_character_nearest_mouse.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -68,11 +69,11 @@ class RendererNodes extends Renderer {
 
   static int get currentNodeShade => nodeShades[currentNodeIndex];
 
-  static int get currentNodeColor => (
-      currentNodeVisibilityOpaque
-      ? GameLighting.values
-      : GameLighting.values_transparent
-  )[currentNodeShade];
+  // static final ambientColor = Color.fromRGBO(79, 0, 189, 1.0).value;
+  // final ambientColorHsv = HSVColor.fromColor(ambientColor);
+  // final ambientColorValue = ambientColor.value;
+  static int get currentNodeColor => GameNodes.nodeColors[currentNodeIndex];
+  // static int get currentNodeColor => ambientColor;
 
   static int getShadeColor(int shade) {
     if (shade < 0) return GameLighting.values[4];

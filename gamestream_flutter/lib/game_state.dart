@@ -1166,6 +1166,9 @@ class GameState {
         applyShadows();
       }
       applyBakeMapEmissions();
+      GameNodes.resetNodeColorsToAmbient();
+
+
     }
 
     static void applyShadows(){

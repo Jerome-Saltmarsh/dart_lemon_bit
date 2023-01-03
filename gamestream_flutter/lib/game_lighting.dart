@@ -10,22 +10,23 @@ class GameLighting {
 
   static final Color_Lightning = HSVColor.fromColor(Colors.white.withOpacity(Engine.GoldenRatio_0_381));
 
-  static final Default_Color = Color.fromRGBO(19, 8, 35, 1.0);
-  static final Default_Color_HSV = HSVColor.fromColor(Default_Color);
-  static final Default_Color_Start = Default_Color_HSV.withAlpha(0);
-  static final Default_Color_End = Default_Color_Start.withAlpha(1.0);
+
+  static final Ambient_Color = Color.fromRGBO(94, 66, 136, 1.0);
+  static final Ambient_Color_HSV = HSVColor.fromColor(Ambient_Color);
+  static final Ambient_Color_Start = Ambient_Color_HSV.withAlpha(0);
+  static final Ambient_Color_End = Ambient_Color_Start.withAlpha(1);
 
   static var start_hue_shift = Watch(getRandomHue());
-  static var _start_hue = Default_Color_Start.hue;
-  static var start_saturation = Default_Color_Start.saturation;
-  static var start_value = Default_Color_Start.value;
-  static var start_alpha = Default_Color_Start.alpha;
+  static var _start_hue = Ambient_Color_Start.hue;
+  static var start_saturation = Ambient_Color_Start.saturation;
+  static var start_value = Ambient_Color_Start.value;
+  static var start_alpha = Ambient_Color_Start.alpha;
 
   static var end_hue_shift = Watch(getRandomHue());
-  static var _end_hue = Default_Color_End.hue;
-  static var end_saturation = Default_Color_End.saturation;
-  static var end_value = Default_Color_End.value;
-  static var end_alpha = Default_Color_End.alpha;
+  static var _end_hue = Ambient_Color_End.hue;
+  static var end_saturation = Ambient_Color_End.saturation;
+  static var end_value = Ambient_Color_End.value;
+  static var end_alpha = Ambient_Color_End.alpha;
 
   static double get start_hue => _start_hue;
   static double get end_hue => _end_hue;

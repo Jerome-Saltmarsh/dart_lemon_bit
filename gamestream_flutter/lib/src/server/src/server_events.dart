@@ -36,7 +36,7 @@ class ServerEvents {
       GameLighting.refreshValues();
       GameAudio.thunder(1.0);
     } else {
-      GameLighting.setStartHSVColor(GameLighting.Default_Color_HSV.withAlpha(0));
+      GameLighting.setStartHSVColor(GameLighting.Ambient_Color_HSV.withAlpha(0));
       ClientState.updateGameLighting();
     }
   }
