@@ -217,6 +217,58 @@ class GameNodes {
     }
   }
 
+  static void emitLightDynamicAmbient({
+    required int index,
+    required double alpha,
+
+  }){
+    assert (index >= 0);
+    assert (index < total);
+
+    final zIndex = index ~/ area;
+    final rowIndex = (index - (zIndex * area)) ~/ GameState.nodesTotalColumns;
+    final columnIndex = GameState.convertNodeIndexToIndexY(index);
+    final radius = Shade.Pitch_Black;
+    final zMin = max(zIndex - radius, 0);
+    final zMax = min(zIndex + radius, GameState.nodesTotalZ);
+    final rowMin = max(rowIndex - radius, 0);
+    final rowMax = min(rowIndex + radius, GameState.nodesTotalRows);
+    final columnMin = max(columnIndex - radius, 0);
+    final columnMax = min(columnIndex + radius, GameState.nodesTotalColumns);
+    final rowInitInit = GameState.nodesTotalColumns * rowMin;
+    var zTotal = zMin * area;
+
+    for (var z = zMin; z < zMax; z++) {
+      var rowInit = rowInitInit;
+
+      for (var row = rowMin; row <= rowMax; row++){
+        final a = (zTotal) + (rowInit);
+        rowInit += GameState.nodesTotalColumns;
+        final b = (z - zIndex).abs() + (row - rowIndex).abs();
+        for (var column = columnMin; column <= columnMax; column++) {
+          final nodeIndex = a + column;
+          final distanceValue = Engine.clamp(b + (column - columnIndex).abs() - 2, 0, Shade.Pitch_Black);
+          // if (distanceValue >= nodeShades[nodeIndex]) continue;
+          if (distanceValue > 5) continue;
+
+          nodeDynamicIndex[dynamicIndex++] = nodeIndex;
+
+          final intensity = 1.0 - GameLighting.interpolations[clamp(distanceValue, 0, 7)];
+          nodeAlps[nodeIndex] = GameLighting.linerInterpolation(nodeAlps[nodeIndex], alpha      , intensity);
+
+          nodeColors[nodeIndex] = GameLighting.hsvToColorValue(
+            nodeHues[nodeIndex],
+            nodeSats[nodeIndex],
+            nodeVals[nodeIndex],
+            nodeAlps[nodeIndex],
+          );
+        }
+      }
+      zTotal += area;
+    }
+  }
+
+
   static int getTorchIndex(int nodeIndex){
     final initialSearchIndex = nodeIndex - GameState.nodesTotalColumns - 1; // shifts the selectIndex - 1 row and - 1 column
     var torchIndex = -1;

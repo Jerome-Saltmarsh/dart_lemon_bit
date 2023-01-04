@@ -117,13 +117,10 @@ class GameState {
   static void applyEmissions(){
 
     for (var i = 0; i < ClientState.nodesLightSourcesTotal; i++){
-       GameNodes.emitLightDynamic(
-         index: ClientState.nodesLightSources[i],
-         hue: GameNodes.ambient_hue,
-         saturation: GameNodes.ambient_sat,
-         value: GameNodes.ambient_val,
-         alpha: 0,
-       );
+      GameNodes.emitLightDynamicAmbient(
+        index: ClientState.nodesLightSources[i],
+        alpha: 0,
+      );
     }
 
     applyEmissionsCharacters();
@@ -146,11 +143,11 @@ class GameState {
     for (var i = 0; i < totalCharacters; i++) {
       final character = characters[i];
       if (!character.allie) continue;
-      applyVector3Emission(
+      applyVector3EmissionAmbient(
           character,
-          hue: GameNodes.ambient_hue,
-          saturation: GameNodes.ambient_sat,
-          value: GameNodes.ambient_val,
+          // hue: GameNodes.ambient_hue,
+          // saturation: GameNodes.ambient_sat,
+          // value: GameNodes.ambient_val,
           alpha: 0.0,
 
 
@@ -218,6 +215,17 @@ class GameState {
       alpha: alpha,
     );
   }
+
+  static void applyVector3EmissionAmbient(Vector3 v, {
+    required double alpha,
+  }){
+    if (!GameQueries.inBoundsVector3(v)) return;
+    GameNodes.emitLightDynamicAmbient(
+      index: GameQueries.getNodeIndexV3(v),
+      alpha: alpha,
+    );
+  }
+
 
   // static void applyEmissionDynamicV3(Vector3 v3, ) =>
   //     GameNodes.emitLightDynamic(
