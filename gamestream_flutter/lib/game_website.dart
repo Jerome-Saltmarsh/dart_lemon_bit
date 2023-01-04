@@ -55,6 +55,16 @@ class GameWebsite {
         dstX: centerX,
         dstY: 100 + GameAnimation.animationFrameWaterHeight.toDouble() - GameConstants.Node_Height,
       );
+
+      Engine.renderSprite(
+        image: GameImages.atlas_nodes,
+        srcX: 2032,
+        srcY: 2032,
+        srcWidth: 16,
+        srcHeight: 16,
+        dstX: centerX,
+        dstY: 100 + GameAnimation.animationFrameWaterHeight.toDouble(),
+      );
    }
 
    static void update(){

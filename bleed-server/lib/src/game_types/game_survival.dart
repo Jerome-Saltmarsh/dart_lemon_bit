@@ -32,9 +32,9 @@ class GameSurvival extends Game {
 
   int getRandomStartingLegs() => randomItem(const[
     ItemType.Legs_Blue,
-    ItemType.Legs_White,
-    ItemType.Legs_Red,
-    ItemType.Legs_Green,
+    // ItemType.Legs_White,
+    // ItemType.Legs_Red,
+    // ItemType.Legs_Green,
   ]);
 
   @override

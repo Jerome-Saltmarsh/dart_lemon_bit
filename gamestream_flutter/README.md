@@ -101,11 +101,14 @@ Sandbags and fortifications left over. Rubble and pot holes. Dead soldiers and z
 [ ] destroyable crates etc
 [ ] melee items deplete energy
 [ ] heavy melee items deplete energy quicker than light melee weapons
+[ ] being over encumbered depletes energy while running
 [ ] fix knife attack animation
 [ ] flaming barrel object
 [ ] node type sandbags
 [ ] node type tires
 [ ] node type barbed wire
+[ ] weapon type plasma rifle
+[ ] weapon type stun grenade
 
 04.01.2023
 [x] reduce light during rain

@@ -13,18 +13,18 @@ void renderTemplateWeapon(
     ) {
 
   if (weaponType == ItemType.Empty) return;
-  final size = getWeaponTypeSize(weaponType);
+  const Sprite_Size = 125.0;
   Engine.renderSprite(
     image: GameImages.getImageForWeaponType(weaponType),
-    srcX: frame * size,
-    srcY: direction * size,
-    srcWidth: size,
-    srcHeight: size,
+    srcX: frame * Sprite_Size,
+    srcY: direction * Sprite_Size,
+    srcWidth: Sprite_Size,
+    srcHeight: Sprite_Size,
     dstX: dstX,
     dstY: dstY,
     scale: 0.75,
     color: color,
-    anchorY: 0.75
+    anchorY:  0.625
   );
 }
 
@@ -138,6 +138,9 @@ void renderCharacterTemplate(Character character, {
   if (!weaponInFront) {
     renderTemplateWeapon(character.weaponType, directionBody, frameWeapon, color, dstX, dstY);
   }
+  const Scale = 0.75;
+  const Sprite_Size = 125.0;
+  const Anchor_Y = 0.625;
 
   var angle = 0.0;
   var distance = 0.0;
@@ -179,51 +182,64 @@ void renderCharacterTemplate(Character character, {
     srcHeight: 64,
     dstX: GameConvert.getRenderX(shadowX, shadowY, shadowZ),
     dstY: GameConvert.getRenderY(shadowX, shadowY, shadowZ),
-    scale: 0.75,
+    scale: Scale,
     color: color,
-    anchorY: 0.75,
+    anchorY: Anchor_Y,
   );
 
     Engine.renderSprite(
         image: GameImages.getImageForLegType(character.legType),
-        srcX: frameLegs * 64,
-        srcY: directionLegs * 64,
-        srcWidth: 64,
-        srcHeight: 64,
+        srcX: frameLegs * Sprite_Size,
+        srcY: directionLegs * Sprite_Size,
+        srcWidth: Sprite_Size,
+        srcHeight: Sprite_Size,
         dstX: dstX,
         dstY: dstY,
-        scale: 0.75,
+        scale: Scale,
         color: color,
-        anchorY: 0.75
+        anchorY: Anchor_Y
     );
     Engine.renderSprite(
         image: GameImages.getImageForBodyType(character.bodyType),
-        srcX: frameBody * 64,
-        srcY: directionBody * 64,
-        srcWidth: 64,
-        srcHeight: 64,
+        srcX: frameBody * Sprite_Size,
+        srcY: directionBody * Sprite_Size,
+        srcWidth: Sprite_Size,
+        srcHeight: Sprite_Size,
         dstX: dstX,
         dstY: dstY,
-        scale: 0.75,
+        scale: Scale,
         color: color,
-        anchorY: 0.75
+        anchorY: Anchor_Y
     );
     Engine.renderSprite(
         image: GameImages.getImageForHeadType(character.headType),
-        srcX: frameHead * 64,
-        srcY: directionHead * 64,
-        srcWidth: 64,
-        srcHeight: 64,
+        srcX: frameHead * Sprite_Size,
+        srcY: directionHead * Sprite_Size,
+        srcWidth: Sprite_Size,
+        srcHeight: Sprite_Size,
         dstX: dstX,
         dstY: dstY,
-        scale: 0.75,
+        scale: Scale,
         color: color,
-        anchorY: 0.75
+        anchorY: Anchor_Y
     );
     if (weaponInFront) {
       renderTemplateWeapon(
           character.weaponType, directionBody, frameWeapon, color, dstX, dstY);
     }
+
+  // Engine.renderSprite(
+  //   image: GameImages.template,
+  //   srcX: frameLegs * Sprite_Size,
+  //   srcY: upperBodyDirection * Sprite_Size,
+  //   srcWidth: Sprite_Size,
+  //   srcHeight: Sprite_Size,
+  //   dstX: GameConvert.getRenderX(shadowX, shadowY, shadowZ),
+  //   dstY: GameConvert.getRenderY(shadowX, shadowY, shadowZ),
+  //   scale: 0.75,
+  //   color: color,
+  //   anchorY: 0.75,
+  // );
 }
 
 class TemplateAnimation {
