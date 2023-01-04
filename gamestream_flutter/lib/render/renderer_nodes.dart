@@ -256,7 +256,9 @@ class RendererNodes extends Renderer {
     if (GameState.editMode){
       GameNodes.emitLightDynamic(
         index: GameEditor.nodeSelectedIndex.value,
-        hue: 200,
+        hue: GameNodes.ambient_hue,
+        saturation: GameNodes.ambient_sat,
+        value: GameNodes.ambient_val,
         alpha: 0,
       );
     }

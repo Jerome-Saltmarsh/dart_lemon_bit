@@ -163,7 +163,10 @@ class GameNodes {
   static void emitLightDynamic({
     required int index,
     required double hue,
+    required double saturation,
+    required double value,
     required double alpha,
+
   }){
     assert (index >= 0);
     assert (index < total);
@@ -194,19 +197,13 @@ class GameNodes {
           // if (distanceValue >= nodeShades[nodeIndex]) continue;
           if (distanceValue > 5) continue;
 
-          // nodeShades[nodeIndex] = distanceValue;
           nodeDynamicIndex[dynamicIndex++] = nodeIndex;
 
-          // final hue = GameLighting.Color_Torch_HSV.hue;
-          final sat = GameLighting.Color_Torch_HSV.saturation;
-          final val = GameLighting.Color_Torch_HSV.value;
-          // final alp = GameLighting.Color_Torch_HSV.alpha;
-          // final intensity = 1.0 - (distanceValue / 7);
           final intensity = 1.0 - GameLighting.interpolations[clamp(distanceValue, 0, 7)];
-          nodeHues[nodeIndex] = GameLighting.linerInterpolation(nodeHues[nodeIndex], hue, intensity);
-          nodeSats[nodeIndex] = GameLighting.linerInterpolation(nodeSats[nodeIndex], sat, intensity);
-          nodeVals[nodeIndex] = GameLighting.linerInterpolation(nodeVals[nodeIndex], val, intensity);
-          nodeAlps[nodeIndex] = GameLighting.linerInterpolation(nodeAlps[nodeIndex], alpha, intensity);
+          nodeHues[nodeIndex] = GameLighting.linerInterpolation(nodeHues[nodeIndex], hue        , intensity);
+          nodeSats[nodeIndex] = GameLighting.linerInterpolation(nodeSats[nodeIndex], saturation , intensity);
+          nodeVals[nodeIndex] = GameLighting.linerInterpolation(nodeVals[nodeIndex], value      , intensity);
+          nodeAlps[nodeIndex] = GameLighting.linerInterpolation(nodeAlps[nodeIndex], alpha      , intensity);
 
           nodeColors[nodeIndex] = GameLighting.hsvToColorValue(
               nodeHues[nodeIndex],

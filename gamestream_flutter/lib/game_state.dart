@@ -118,9 +118,11 @@ class GameState {
 
     for (var i = 0; i < ClientState.nodesLightSourcesTotal; i++){
        GameNodes.emitLightDynamic(
-           index: ClientState.nodesLightSources[i],
-           hue: GameNodes.ambient_hue,
-           alpha: 0,
+         index: ClientState.nodesLightSources[i],
+         hue: GameNodes.ambient_hue,
+         saturation: GameNodes.ambient_sat,
+         value: GameNodes.ambient_val,
+         alpha: 0,
        );
     }
 
@@ -144,7 +146,15 @@ class GameState {
     for (var i = 0; i < totalCharacters; i++) {
       final character = characters[i];
       if (!character.allie) continue;
-      applyVector3Emission(character, hue: GameNodes.ambient_hue, alpha: 0.05);
+      applyVector3Emission(
+          character,
+          hue: GameNodes.ambient_hue,
+          saturation: GameNodes.ambient_sat,
+          value: GameNodes.ambient_val,
+          alpha: 0.0,
+
+
+      );
     }
   }
 
@@ -156,32 +166,55 @@ class GameState {
 
   static void applyProjectileEmission(Projectile projectile) {
     if (projectile.type == ProjectileType.Orb) {
-      applyVector3Emission(projectile, hue: 100, alpha: 0.1);
+      applyVector3Emission(projectile,
+          hue: 100,
+          saturation: 1,
+          value: 1,
+          alpha: 0.1,
+      );
       return;
     }
     if (projectile.type == ProjectileType.Bullet) {
-      applyVector3Emission(projectile, hue: 167, alpha: 0.25);
+      applyVector3Emission(projectile,
+          hue: 167,
+          alpha: 0.25,
+          saturation: 1,
+          value: 1,
+      );
       return;
     }
     if (projectile.type == ProjectileType.Fireball) {
-      applyVector3Emission(projectile, hue: 300, alpha: 0.1);
+      applyVector3Emission(projectile,
+        hue: 167,
+        alpha: 0.25,
+        saturation: 1,
+        value: 1,
+      );
       return;
     }
     if (projectile.type == ProjectileType.Arrow) {
-      applyVector3Emission(projectile, hue: 360, alpha: 0.1);
+      applyVector3Emission(projectile,
+        hue: 167,
+        alpha: 0.25,
+        saturation: 1,
+        value: 1,
+      );
       return;
     }
   }
 
   static void applyVector3Emission(Vector3 v, {
     required double hue,
+    required double saturation,
+    required double value,
     required double alpha,
-
   }){
     if (!GameQueries.inBoundsVector3(v)) return;
     GameNodes.emitLightDynamic(
       index: GameQueries.getNodeIndexV3(v),
       hue: hue,
+      saturation: saturation,
+      value: value,
       alpha: alpha,
     );
   }
@@ -1026,15 +1059,32 @@ class GameState {
     for (var i = 0; i < totalGameObjects; i++){
       final gameObject = gameObjects[i];
       if (gameObject.type == ItemType.GameObjects_Grenade) {
-        applyVector3Emission(gameObject, hue: 200, alpha: 200);
+        applyVector3Emission(gameObject,
+          hue: GameNodes.ambient_hue,
+          alpha: 0.0,
+          saturation: GameNodes.ambient_sat,
+          value: 0,
+        );
         continue;
       }
       if (gameObject.type == ItemType.GameObjects_Crystal_Small_Blue) {
-        applyVector3Emission(gameObject, hue: 209, alpha: 0.2);
+        applyVector3Emission(
+            gameObject,
+            hue: 209,
+            saturation: 0.66,
+            value: 0.9,
+            alpha: 0.61,
+
+        );
         continue;
       }
       if (gameObject.type == ItemType.GameObjects_Crystal_Small_Red) {
-        applyVector3Emission(gameObject, hue: 360, alpha: 0.2);
+        applyVector3Emission(gameObject,
+            hue: 360,
+            saturation: 0.76,
+            value: 0.91,
+            alpha: 0.61,
+        );
         continue;
       }
       // if (gameObject.type != ItemType.GameObjects_Candle) continue;
