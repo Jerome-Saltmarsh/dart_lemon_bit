@@ -43,7 +43,7 @@ class GameEvents {
       GameActions.rainStop();
       GameActions.rainStart();
     }
-    GameState.refreshLighting();
+    GameNodes.resetNodeColorsToAmbient();
     GameEditor.refreshNodeSelectedIndex();
   }
 

@@ -27,7 +27,7 @@ class GameState {
   static var nextParticleFrame = 0;
 
   static final gridShadows = Watch(true, onChanged: (bool value){
-    refreshLighting();
+    GameNodes.resetNodeColorsToAmbient();
   });
 
   static var compiledScenes = Uint8List(0);
@@ -1154,15 +1154,6 @@ class GameState {
           spawnParticleOrbShard(x: projectile.x, y: projectile.y, z: projectile.z, angle: randomAngle());
         }
       }
-    }
-
-    static void refreshLighting(){
-      GameNodes.resetGridToAmbient();
-      // todo re-enable shadows
-      // if (gridShadows.value){
-      //   applyShadows();
-      // }
-      GameNodes.resetNodeColorsToAmbient();
     }
 
     static void applyShadows(){

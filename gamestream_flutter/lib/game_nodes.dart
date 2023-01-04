@@ -14,6 +14,7 @@ class GameNodes {
 
   static void resetNodeColorsToAmbient() {
     ambient_color = GameLighting.hsvToColorValue(ambient_hue, ambient_sat, ambient_val, ambient_alp);
+    dynamicIndex = 0;
 
      if (nodeColors.length != total) {
        nodeColors = Uint32List(total);
@@ -89,7 +90,6 @@ class GameNodes {
   static void resetStackDynamicLight() {
     while (dynamicIndex >= 0) {
       final i = nodeDynamicIndex[dynamicIndex];
-      // nodeShades[i] = nodeBake[i];
       nodeColors[i] = ambient_color;
       nodeHues[i] = ambient_hue;
       nodeSats[i] = ambient_sat;
@@ -115,34 +115,32 @@ class GameNodes {
     visibleIndex++;
   }
 
-  static void resetGridToAmbient(){
-    if (nodeColors.length != total){
-      nodeColors = Uint32List(total);
-    }
-    if (nodeHues.length != total){
-      nodeHues = Float32List(total);
-    }
-    if (nodeSats.length != total){
-      nodeSats = Float32List(total);
-    }
-    if (nodeVals.length != total){
-      nodeVals = Float32List(total);
-    }
-    if (nodeAlps.length != total){
-      nodeAlps = Float32List(total);
-    }
-
-    for (var i = 0; i < total; i++){
-      // nodeBake[i] = Shade.Pitch_Black;
-      // nodeShades[i] = Shade.Pitch_Black;
-      nodeColors[i] = ambient_color;
-      nodeHues[i] = ambient_hue;
-      nodeSats[i] = ambient_sat;
-      nodeVals[i] = ambient_val;
-      nodeAlps[i] = ambient_alp;
-      dynamicIndex = 0;
-    }
-  }
+  // static void resetGridToAmbient(){
+  //   if (nodeColors.length != total){
+  //     nodeColors = Uint32List(total);
+  //   }
+  //   if (nodeHues.length != total){
+  //     nodeHues = Float32List(total);
+  //   }
+  //   if (nodeSats.length != total){
+  //     nodeSats = Float32List(total);
+  //   }
+  //   if (nodeVals.length != total){
+  //     nodeVals = Float32List(total);
+  //   }
+  //   if (nodeAlps.length != total){
+  //     nodeAlps = Float32List(total);
+  //   }
+  //
+  //   for (var i = 0; i < total; i++){
+  //     nodeColors[i] = ambient_color;
+  //     nodeHues[i] = ambient_hue;
+  //     nodeSats[i] = ambient_sat;
+  //     nodeVals[i] = ambient_val;
+  //     nodeAlps[i] = ambient_alp;
+  //     dynamicIndex = 0;
+  //   }
+  // }
 
   static void emitLightDynamic({
     required int index,

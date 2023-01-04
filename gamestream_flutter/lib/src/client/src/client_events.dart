@@ -18,7 +18,7 @@ class ClientEvents {
 
   static void onChangedRaining(bool raining){
     raining ? GameActions.rainStart() : GameActions.rainStop();
-    GameState.refreshLighting();
+    GameNodes.resetNodeColorsToAmbient();
   }
 
   static void onDragStarted(int itemIndex){
