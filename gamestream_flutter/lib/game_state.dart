@@ -144,7 +144,7 @@ class GameState {
     for (var i = 0; i < totalCharacters; i++) {
       final character = characters[i];
       if (!character.allie) continue;
-      applyVector3Emission(character, hue: GameNodes.ambient_hue, alpha: 0.0);
+      applyVector3Emission(character, hue: GameNodes.ambient_hue, alpha: 0.05);
     }
   }
 
@@ -160,7 +160,7 @@ class GameState {
       return;
     }
     if (projectile.type == ProjectileType.Bullet) {
-      applyVector3Emission(projectile, hue: 100, alpha: 0.1);
+      applyVector3Emission(projectile, hue: 167, alpha: 0.25);
       return;
     }
     if (projectile.type == ProjectileType.Fireball) {
@@ -173,7 +173,11 @@ class GameState {
     }
   }
 
-  static void applyVector3Emission(Vector3 v, {required double hue, required double alpha}){
+  static void applyVector3Emission(Vector3 v, {
+    required double hue,
+    required double alpha,
+
+  }){
     if (!GameQueries.inBoundsVector3(v)) return;
     GameNodes.emitLightDynamic(
       index: GameQueries.getNodeIndexV3(v),
@@ -1023,7 +1027,15 @@ class GameState {
       final gameObject = gameObjects[i];
       if (gameObject.type == ItemType.GameObjects_Grenade) {
         applyVector3Emission(gameObject, hue: 200, alpha: 200);
-         return;
+        continue;
+      }
+      if (gameObject.type == ItemType.GameObjects_Crystal_Small_Blue) {
+        applyVector3Emission(gameObject, hue: 209, alpha: 0.2);
+        continue;
+      }
+      if (gameObject.type == ItemType.GameObjects_Crystal_Small_Red) {
+        applyVector3Emission(gameObject, hue: 360, alpha: 0.2);
+        continue;
       }
       // if (gameObject.type != ItemType.GameObjects_Candle) continue;
       // final nodeIndex = GameQueries.getNodeIndexV3(gameObject);

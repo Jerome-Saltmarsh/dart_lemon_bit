@@ -73,9 +73,10 @@ class ItemType {
   static const GameObjects_Lantern_Red          = Index_GameObjects + 11;
   static const GameObjects_Book_Purple          = Index_GameObjects + 12;
   static const GameObjects_Crystal_Small_Blue   = Index_GameObjects + 13;
-  static const GameObjects_Grenade              = Index_GameObjects + 14;
-  static const GameObjects_Car                  = Index_GameObjects + 15;
-  static const GameObjects_Node_Collider        = Index_GameObjects + 16;
+  static const GameObjects_Crystal_Small_Red    = Index_GameObjects + 14;
+  static const GameObjects_Grenade              = Index_GameObjects + 15;
+  static const GameObjects_Car                  = Index_GameObjects + 16;
+  static const GameObjects_Node_Collider        = Index_GameObjects + 17;
 
   static const Resource_Wood = Index_Resources + 5;
   static const Resource_Stone = Index_Resources + 6;
@@ -635,6 +636,8 @@ class ItemType {
   static const GameObjectTypes = [
      GameObjects_Barrel,
      GameObjects_Tavern_Sign,
+     GameObjects_Crystal_Small_Blue,
+     GameObjects_Crystal_Small_Red,
   ];
 }
 
