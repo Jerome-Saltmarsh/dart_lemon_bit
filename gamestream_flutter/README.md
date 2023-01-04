@@ -108,6 +108,7 @@ Sandbags and fortifications left over. Rubble and pot holes. Dead soldiers and z
 [ ] node type barbed wire
 
 04.01.2023
+[x] reduce light during rain
 [x] fix stats damage incorrect
 [x] feature light source hue and intensity
 

@@ -404,6 +404,7 @@ class GameEvents {
         ClientState.srcXRainLanding = AtlasNode.Node_Rain_Landing_Heavy_X;
         break;
     }
+    ClientState.updateGameLighting();
   }
 
   static void onPlayerEvent(int event) {

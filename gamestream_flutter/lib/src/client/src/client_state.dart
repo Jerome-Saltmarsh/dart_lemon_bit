@@ -76,6 +76,12 @@ class ClientState {
         ? 1.0 - (totalSeconds / Seconds_Per_Hours_12)
         : (totalSeconds - Seconds_Per_Hours_12) / Seconds_Per_Hours_12;
 
+    if (ServerState.rainType.value == RainType.Light){
+      GameNodes.ambient_alp += 0.1;
+    }
+    if (ServerState.rainType.value == RainType.Heavy){
+      GameNodes.ambient_alp += 0.2;
+    }
     GameNodes.resetNodeColorsToAmbient();
   }
 
