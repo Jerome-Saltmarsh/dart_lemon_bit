@@ -5,35 +5,15 @@ import 'package:flutter/painting.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class GameNodes {
-  static const Nodes_Initial_Size = 0;
-
-  static void applyLightAt(int index, double hue, double sat, double val, double strength){
-     final outputHue = GameLighting.linerInterpolation(hue, nodeHues[index], strength);
-     final outputSat = GameLighting.linerInterpolation(sat, nodeSats[index], strength);
-     final outputVal = GameLighting.linerInterpolation(val, nodeVals[index], strength);
-     final outputColor = GameLighting.hsvToColorValue(outputHue, outputSat, outputVal, strength);
-     nodeColors[index] = outputColor;
-  }
-
-  static const ambient_hue_max = 1.0;
-  static const ambient_hue_min = 0.0;
-
-  static final ambient_color      = Color.fromRGBO(
-      31, 1, 86, 0.5647058823529412);
-
-  static var ambient_color_hsv  = HSVColor.fromColor(ambient_color);
+  static var ambient_color_hsv  = HSVColor.fromColor(Color.fromRGBO(31, 1, 86, 0.5));
   static var ambient_hue        = ambient_color_hsv.hue;
   static var ambient_sat        = ambient_color_hsv.saturation;
   static var ambient_val        = ambient_color_hsv.value;
   static var ambient_alp        = ambient_color_hsv.alpha;
-  static var ambient_color_value  = ambient_color.value;
-
-  static void refreshAmbientColorValue(){
-    ambient_color_value = GameLighting.hsvToColorValue(ambient_hue, ambient_sat, ambient_val, ambient_alp);
-  }
+  static var ambient_color      = 0;
 
   static void resetNodeColorsToAmbient() {
-     print('resetNodeColorsToAmbient($total)');
+    ambient_color = GameLighting.hsvToColorValue(ambient_hue, ambient_sat, ambient_val, ambient_alp);
 
      if (nodeColors.length != total) {
        nodeColors = Uint32List(total);
@@ -42,9 +22,8 @@ class GameNodes {
        nodeVals = Float32List(total);
        nodeAlps = Float32List(total);
      }
-
      for (var i = 0; i < total; i++) {
-       nodeColors[i] = ambient_color_value;
+       nodeColors[i] = ambient_color;
        nodeHues[i] = ambient_hue;
        nodeSats[i] = ambient_sat;
        nodeVals[i] = ambient_val;
@@ -52,24 +31,22 @@ class GameNodes {
      }
   }
 
-  static var nodeColors = Uint32List(Nodes_Initial_Size);
-  static var nodeHues = Float32List(Nodes_Initial_Size);
-  static var nodeSats = Float32List(Nodes_Initial_Size);
-  static var nodeVals = Float32List(Nodes_Initial_Size);
-  static var nodeAlps = Float32List(Nodes_Initial_Size);
-  // static var nodeBake = Uint8List(Nodes_Initial_Size);
-  static var nodeOrientations = Uint8List(Nodes_Initial_Size);
-  // static var nodeShades = Uint8List(Nodes_Initial_Size);
-  static var nodeTypes = Uint8List(Nodes_Initial_Size);
-  static var nodeVariations = List<bool>.generate(Nodes_Initial_Size, (index) => false, growable: false);
-  static var nodeVisible = Uint8List(Nodes_Initial_Size);
-  static var nodeVisibleIndex = Uint16List(Nodes_Initial_Size);
-  static var nodeDynamicIndex = Uint16List(Nodes_Initial_Size);
-  static var nodeWind = Uint8List(Nodes_Initial_Size);
+  static var nodeColors = Uint32List(0);
+  static var nodeHues = Float32List(0);
+  static var nodeSats = Float32List(0);
+  static var nodeVals = Float32List(0);
+  static var nodeAlps = Float32List(0);
+  static var nodeOrientations = Uint8List(0);
+  static var nodeTypes = Uint8List(0);
+  static var nodeVariations = List<bool>.generate(0, (index) => false, growable: false);
+  static var nodeVisible = Uint8List(0);
+  static var nodeVisibleIndex = Uint16List(0);
+  static var nodeDynamicIndex = Uint16List(0);
+  static var nodeWind = Uint8List(0);
   static var miniMap = Uint8List(0);
   static var visibleIndex = 0;
   static var dynamicIndex = -1;
-  static var total = Nodes_Initial_Size;
+  static var total = 0;
   static var area = 0;
 
   // METHODS
@@ -113,7 +90,7 @@ class GameNodes {
     while (dynamicIndex >= 0) {
       final i = nodeDynamicIndex[dynamicIndex];
       // nodeShades[i] = nodeBake[i];
-      nodeColors[i] = ambient_color_value;
+      nodeColors[i] = ambient_color;
       nodeHues[i] = ambient_hue;
       nodeSats[i] = ambient_sat;
       nodeVals[i] = ambient_val;
@@ -158,7 +135,7 @@ class GameNodes {
     for (var i = 0; i < total; i++){
       // nodeBake[i] = Shade.Pitch_Black;
       // nodeShades[i] = Shade.Pitch_Black;
-      nodeColors[i] = ambient_color_value;
+      nodeColors[i] = ambient_color;
       nodeHues[i] = ambient_hue;
       nodeSats[i] = ambient_sat;
       nodeVals[i] = ambient_val;

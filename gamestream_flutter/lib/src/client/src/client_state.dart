@@ -76,7 +76,6 @@ class ClientState {
         ? 1.0 - (totalSeconds / Seconds_Per_Hours_12)
         : (totalSeconds - Seconds_Per_Hours_12) / Seconds_Per_Hours_12;
 
-    GameNodes.refreshAmbientColorValue();
     GameNodes.resetNodeColorsToAmbient();
   }
 

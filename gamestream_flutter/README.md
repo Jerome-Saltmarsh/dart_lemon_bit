@@ -102,13 +102,13 @@ Sandbags and fortifications left over. Rubble and pot holes. Dead soldiers and z
 [ ] melee items deplete energy
 [ ] heavy melee items deplete energy quicker than light melee weapons
 [ ] fix knife attack animation
-[ ] fix stats damage incorrect
 [ ] flaming barrel object
 [ ] node type sandbags
 [ ] node type tires
 [ ] node type barbed wire
 
 04.01.2023
+[x] fix stats damage incorrect
 [x] feature light source hue and intensity
 
 03.01.2023
