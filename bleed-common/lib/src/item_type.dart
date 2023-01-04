@@ -388,7 +388,7 @@ class ItemType {
       Weapon_Flamethrower: 10,
       Weapon_Special_Bazooka: 100,
       Weapon_Special_Minigun: 7,
-  }[value] ?? 0;
+  }[value] ?? 1;
 
   static double getAccuracy(int value) => const <int, double> {
      ItemType.Weapon_Rifle_M4: 0.125,

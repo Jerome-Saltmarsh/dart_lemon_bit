@@ -206,10 +206,10 @@ class Player extends Character with ByteWriter {
   /// METHODS
   void refreshStats() {
       damage = baseDamage
-          + headType == ItemType.Empty ? 0 : ItemType.getDamage(headType)
-          + bodyType == ItemType.Empty ? 0 : ItemType.getDamage(bodyType)
-          + legsType == ItemType.Empty ? 0 : ItemType.getDamage(legsType)
-          + ItemType.getDamage(weaponType);
+          + (headType == ItemType.Empty ? 0 : ItemType.getDamage(headType))
+          + (bodyType == ItemType.Empty ? 0 : ItemType.getDamage(bodyType))
+          + (legsType == ItemType.Empty ? 0 : ItemType.getDamage(legsType))
+          + (ItemType.getDamage(weaponType));
 
       maxHealth = baseMaxHealth
           + ItemType.getMaxHealth(headType)
@@ -248,6 +248,8 @@ class Player extends Character with ByteWriter {
       if (health > maxHealth){
         health = maxHealth;
       }
+
+      assert (damage > 0);
 
       writePlayerPerks();
       writePlayerMaxHealth();
