@@ -68,23 +68,16 @@ class ClientState {
   static void updateGameLighting(){
     if (overrideColor.value) return;
     if (ServerState.lightningFlashing.value) return;
-    const Max_Hue = 360.0;
     const Seconds_Per_Hour = 3600;
     const Seconds_Per_Hours_12 = Seconds_Per_Hour * 12;
-    const Seconds_Per_Hours_24 = Seconds_Per_Hour * 24;
-
     final totalSeconds = (ServerState.hours.value * Seconds_Per_Hour) + (ServerState.minutes.value * 60);
-    GameNodes.ambient_alp = ((totalSeconds / Seconds_Per_Hours_24));
+
+    GameNodes.ambient_alp = totalSeconds < Seconds_Per_Hours_12
+        ? 1.0 - (totalSeconds / Seconds_Per_Hours_12)
+        : (totalSeconds - Seconds_Per_Hours_12) / Seconds_Per_Hours_12;
+
     GameNodes.refreshAmbientColorValue();
     GameNodes.resetNodeColorsToAmbient();
-    // for (var i = 0; i < GameNodes.total; i++){
-    //   GameNodes.nodeAlps[i] = GameNodes.ambient_alp;
-    //   GameNodes.refreshNodeColor(i);
-    // }
-    // GameLighting.end_alpha = totalSeconds < Seconds_Per_Hours_12
-    //     ? 1.0 - (totalSeconds / Seconds_Per_Hours_12)
-    //     : (totalSeconds - Seconds_Per_Hours_12) / Seconds_Per_Hours_12;
-    // GameLighting.refreshValues();
   }
 
   static void updateActiveParticles(){
