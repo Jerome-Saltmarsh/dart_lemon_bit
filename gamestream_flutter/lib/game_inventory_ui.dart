@@ -313,10 +313,6 @@ class GameInventoryUI {
              )
          );
 
-         children.add(
-             _buildRowHoverValue(itemType: GamePlayer.head.value, value: ItemType.getDamage(GamePlayer.head.value), total: total,)
-         );
-
          final equippedWeaponType = ServerQuery.getEquippedWeaponType();
          children.add(
              _buildRowHoverValue(
@@ -326,15 +322,27 @@ class GameInventoryUI {
              )
          );
 
-         children.add(
-             _buildRowHoverValue(itemType: GamePlayer.head.value, value: ItemType.getDamage(GamePlayer.head.value), total: total,)
-         );
-         children.add(
-             _buildRowHoverValue(itemType: GamePlayer.body.value, value: ItemType.getDamage(GamePlayer.body.value), total: total,)
-         );
-         children.add(
-             _buildRowHoverValue(itemType: GamePlayer.legs.value, value: ItemType.getDamage(GamePlayer.legs.value), total: total,)
-         );
+         if (GamePlayer.head.value != ItemType.Empty) {
+           children.add(
+               _buildRowHoverValue(itemType: GamePlayer.head.value,
+                 value: ItemType.getDamage(GamePlayer.head.value),
+                 total: total,)
+           );
+         }
+         if (GamePlayer.body.value != ItemType.Empty) {
+           children.add(
+               _buildRowHoverValue(itemType: GamePlayer.body.value,
+                 value: ItemType.getDamage(GamePlayer.body.value),
+                 total: total,)
+           );
+         }
+         if (GamePlayer.legs.value != ItemType.Empty) {
+           children.add(
+               _buildRowHoverValue(itemType: GamePlayer.legs.value,
+                 value: ItemType.getDamage(GamePlayer.legs.value),
+                 total: total,)
+           );
+         }
          for (final beltType in ServerState.watchBeltItemTypes) {
            if (!ItemType.isTypeTrinket(beltType.value)) continue;
            children.add(
