@@ -51,7 +51,6 @@ ctrl + w:   minimal mode
 [ ] feature attributes
 [ ] feature skills
 [ ] feature loot gameobjects
-[ ] feature light source hue and intensity
 [ ] generate gradient using color modes lch hsl lab rgb 
 
 [CONTENT]
@@ -74,25 +73,26 @@ ctrl + w:   minimal mode
 [CRITICAL]
 [ ] fix ai spots player through walls
 [ ] fix physics characters teleport through walls on struck
-[ ] fix render color near midnight
 [ ] fix render visibility algorithm
-[ ] fix node opacity during day time
 [ ] feature survival random treasure spawns
 [ ] spawn boss characters
 [ ] street lamp
 [ ] separate head type and helm type and hair type
-[ ] character skin color
 [ ] design suburbia school
 [ ] design suburbia house kitchen
 [ ] design suburbia cemetery
 [ ] design stronghold
+[ ] character clothes scientist
+[ ] character clothes suit
+[ ] character clothes police officer
+[ ] character clothes doctor
 
 [DIARY]
 the scene needs to be more atmospheric. More apocalyptic things. Crashed cars with smoke coming out.
 Sandbags and fortifications left over. Rubble and pot holes. Dead soldiers and zombies.
 
 [GAME SURVIVAL]
-[ ] make the scene apocalyptic. c
+[ ] make the scene apocalyptic
 [ ] random treasure spawns
 [ ] vendor armour
 [ ] vendor trinkets
@@ -107,6 +107,9 @@ Sandbags and fortifications left over. Rubble and pot holes. Dead soldiers and z
 [ ] node type sandbags
 [ ] node type tires
 [ ] node type barbed wire
+
+04.01.2023
+[x] feature light source hue and intensity
 
 03.01.2023
 [x] remove grenade and apple from inventory on empty
