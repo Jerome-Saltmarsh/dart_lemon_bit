@@ -44,10 +44,6 @@ void renderCharacterTemplate(Character character, {
     renderCharacterHealthBar(character);
   }
 
-  final dstX = GameConvert.convertV3ToRenderX(character);
-  final dstY = GameConvert.convertV3ToRenderY(character);
-  final color = GameNodes.nodeColors[character.nodeIndex];
-
   var frameLegs = 0;
   var frameHead = 0;
   var frameBody = 0;
@@ -135,6 +131,9 @@ void renderCharacterTemplate(Character character, {
   }
 
   // GameRender.renderTextV3(character, "$frameWeapon, ${ItemType.isOneHanded(character.weaponType)} ${WeaponState.getName(character.weaponState)}", offsetY: -80);
+  final dstX = GameConvert.convertV3ToRenderX(character);
+  final dstY = GameConvert.convertV3ToRenderY(character);
+  final color = GameState.getV3RenderColor(character);
 
   if (!weaponInFront) {
     renderTemplateWeapon(character.weaponType, directionBody, frameWeapon, color, dstX, dstY);
@@ -147,9 +146,8 @@ void renderCharacterTemplate(Character character, {
   var shadowY = character.y;
   final shadowZ = character.z;
 
-  if (!GameState.outOfBoundsV3(character)) {
-    var torchIndex = GameNodes.getTorchIndex(
-        GameState.getNodeIndexV3(character));
+  if (!character.outOfBounds) {
+    var torchIndex = GameNodes.getTorchIndex(character.nodeIndex);
 
     if (torchIndex != -1) {
       // TODO optimize

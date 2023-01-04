@@ -19,33 +19,25 @@ class Vector3 with Position {
     if (z < Halves_4) return 3;
     return z ~/ Node_Size_Half;
   }
-  /// remove
   int get indexRow => x ~/ Node_Size;
-  /// remove
   int get indexColumn => y ~/ Node_Size;
-  /// remove
   int get nodeIndex => GameQueries.getNodeIndex(x, y, z);
+
   double get renderOrder => x + y + (z * 0.25);
 
   double get sortOrder => x + y + z;
-  /// remove
   double get renderX => (x - y) * 0.5;
-  /// remove
   double get renderY => ((y + x) * 0.5) - z;
 
-  /// remove
   void set indexZ(int value){
     z = value * Node_Size_Half;
   }
-  /// remove
   void set indexRow(int value){
     x = value * Node_Size;
   }
-  /// remove
   void set indexColumn(int value){
     y = value * Node_Size;
   }
-  /// remove
   bool get outOfBounds =>
      z < 0                ||
      x < 0                ||

@@ -66,7 +66,6 @@ class GameState {
   }
 
   static int getNodeIndexZRC(int z, int row, int column) {
-    assert (GameQueries.isInboundZRC(z, row, column));
     return (z * GameNodes.area) + (row * nodesTotalColumns) + column;
   }
 
@@ -80,18 +79,9 @@ class GameState {
       index - ((convertNodeIndexToIndexZ(index) * GameNodes.area) + (convertNodeIndexToIndexX(index) * nodesTotalColumns));
 
   static int getV3RenderColor(Vector3 vector3) =>
-      GameNodes.nodeColors[vector3.nodeIndex];
-
-  // static int getV3RenderShade(Vector3 vector3) =>
-  //     getV3NodeBelowShade(vector3);
-
-  // static int getV3NodeBelowShade(Vector3 vector3) =>
-  //     getNodeShade(vector3.indexZ - 1, vector3.indexRow, vector3.indexColumn);
-
-  // static int getNodeShade(int z, int row, int column) =>
-  //     outOfBounds(z, row, column)
-  //         ? Shade.Medium
-  //         : GameNodes.nodeShades[getNodeIndexZRC(z, row, column)];
+      vector3.outOfBounds
+          ? GameNodes.ambient_color
+          : GameNodes.nodeColors[vector3.nodeIndex];
 
   static bool outOfBoundsV3(Vector3 v3) =>
     outOfBoundsXYZ(v3.x, v3.y, v3.z);

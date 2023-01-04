@@ -13,6 +13,7 @@ class GameNodes {
   static var ambient_color      = 0;
 
   static void resetNodeColorsToAmbient() {
+    GameNodes.ambient_alp = clamp01(GameNodes.ambient_alp);
     ambient_color = GameLighting.hsvToColorValue(ambient_hue, ambient_sat, ambient_val, ambient_alp);
     dynamicIndex = 0;
 
