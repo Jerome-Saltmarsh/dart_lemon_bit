@@ -27,6 +27,7 @@ class ServerState {
   static final weatherBreeze = Watch(false);
   static final hours = Watch(0, onChanged: GameEvents.onChangedHour);
   static final minutes = Watch(0);
+
   static final gameType = Watch<int?>(null, onChanged: ServerEvents.onChangedGameType);
   static final lightningType = Watch(LightningType.Off);
   static final watchTimePassing = Watch(false);

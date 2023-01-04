@@ -15,15 +15,22 @@ class GameNodes {
      nodeColors[index] = outputColor;
   }
 
+  static const ambient_hue_max = 1.0;
+  static const ambient_hue_min = 0.0;
+
   static final ambient_color      = Color.fromRGBO(
       31, 1, 86, 0.5647058823529412);
 
-  static final ambient_color_hsv  = HSVColor.fromColor(ambient_color);
-  static final ambient_hue        = ambient_color_hsv.hue;
-  static final ambient_sat        = ambient_color_hsv.saturation;
-  static final ambient_val        = ambient_color_hsv.value;
-  static final ambient_alp        = ambient_color_hsv.alpha;
-  static final ambient_color_value  = ambient_color.value;
+  static var ambient_color_hsv  = HSVColor.fromColor(ambient_color);
+  static var ambient_hue        = ambient_color_hsv.hue;
+  static var ambient_sat        = ambient_color_hsv.saturation;
+  static var ambient_val        = ambient_color_hsv.value;
+  static var ambient_alp        = ambient_color_hsv.alpha;
+  static var ambient_color_value  = ambient_color.value;
+
+  static void refreshAmbientColorValue(){
+    ambient_color_value = GameLighting.hsvToColorValue(ambient_hue, ambient_sat, ambient_val, ambient_alp);
+  }
 
   static void resetNodeColorsToAmbient() {
      print('resetNodeColorsToAmbient($total)');
@@ -255,17 +262,20 @@ class GameNodes {
 
           final intensity = 1.0 - GameLighting.interpolations[clamp(distanceValue, 0, 7)];
           nodeAlps[nodeIndex] = GameLighting.linerInterpolation(nodeAlps[nodeIndex], alpha      , intensity);
-
-          nodeColors[nodeIndex] = GameLighting.hsvToColorValue(
-            nodeHues[nodeIndex],
-            nodeSats[nodeIndex],
-            nodeVals[nodeIndex],
-            nodeAlps[nodeIndex],
-          );
+          refreshNodeColor(nodeIndex);
         }
       }
       zTotal += area;
     }
+  }
+
+  static void refreshNodeColor(int index){
+    nodeColors[index] = GameLighting.hsvToColorValue(
+      nodeHues[index],
+      nodeSats[index],
+      nodeVals[index],
+      nodeAlps[index],
+    );
   }
 
 
