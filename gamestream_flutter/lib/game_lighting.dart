@@ -13,7 +13,8 @@ class GameLighting {
   static final Color_Torch = Color.fromRGBO(247, 150, 27, 0.15);
   static final Color_Torch_HSV =  HSVColor.fromColor(Color_Torch);
 
-  static final Ambient_Color = Color.fromRGBO(46, 34, 47, 0.611764705882353);
+
+  static final Ambient_Color = Color.fromRGBO(46, 34, 47, 0.95);
   static final Ambient_Color_HSV = HSVColor.fromColor(Ambient_Color);
   static final Ambient_Color_Start = Ambient_Color_HSV.withAlpha(0);
   static final Ambient_Color_End = Ambient_Color_Start.withAlpha(1);

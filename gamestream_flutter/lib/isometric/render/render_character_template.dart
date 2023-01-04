@@ -147,7 +147,7 @@ void renderCharacterTemplate(Character character, {
   var shadowY = character.y;
   final shadowZ = character.z;
 
-  if (ClientState.torchesIgnited.value && !GameState.outOfBoundsV3(character)) {
+  if (!GameState.outOfBoundsV3(character)) {
     var torchIndex = GameNodes.getTorchIndex(
         GameState.getNodeIndexV3(character));
 

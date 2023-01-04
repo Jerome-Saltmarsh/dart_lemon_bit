@@ -206,9 +206,9 @@ class Player extends Character with ByteWriter {
   /// METHODS
   void refreshStats() {
       damage = baseDamage
-          + ItemType.getDamage(headType)
-          + ItemType.getDamage(bodyType)
-          + ItemType.getDamage(legsType)
+          + headType == ItemType.Empty ? 0 : ItemType.getDamage(headType)
+          + bodyType == ItemType.Empty ? 0 : ItemType.getDamage(bodyType)
+          + legsType == ItemType.Empty ? 0 : ItemType.getDamage(legsType)
           + ItemType.getDamage(weaponType);
 
       maxHealth = baseMaxHealth
@@ -1129,10 +1129,12 @@ class Player extends Character with ByteWriter {
     final gameObjects = game.gameObjects;
     for (final gameObject in gameObjects) {
       if (!gameObject.active) continue;
-      if (gameObject.renderY < screenTop) continue;
-      if (gameObject.renderX < screenLeft) continue;
-      if (gameObject.renderX > screenRight) continue;
-      if (gameObject.renderY > screenBottom) continue;
+      if (gameObject.type != ItemType.GameObjects_Crystal_Small_Blue && gameObject.type != ItemType.GameObjects_Crystal_Small_Red) {
+        if (gameObject.renderY < screenTop) continue;
+        if (gameObject.renderX < screenLeft) continue;
+        if (gameObject.renderX > screenRight) continue;
+        if (gameObject.renderY > screenBottom) continue;
+      }
       writeByte(ServerResponse.GameObject);
       writeUInt16(gameObject.type);
       writePosition3(gameObject);

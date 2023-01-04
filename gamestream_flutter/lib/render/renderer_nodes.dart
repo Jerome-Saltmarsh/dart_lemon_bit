@@ -343,20 +343,6 @@ class RendererNodes extends Renderer {
   }
 
   static void renderNodeTorch(){
-    if (!ClientState.torchesIgnited.value) {
-      Engine.renderSprite(
-        image: GameImages.atlas_nodes,
-        srcX: AtlasNodeX.Torch,
-        srcY: AtlasNodeY.Torch,
-        srcWidth: AtlasNode.Width_Torch,
-        srcHeight: AtlasNode.Height_Torch,
-        dstX: currentNodeDstX,
-        dstY: currentNodeDstY,
-        anchorY: AtlasNodeAnchorY.Torch,
-        color: currentNodeColor,
-      );
-      return;
-    }
     if (renderNodeWind == WindType.Calm){
       Engine.renderSprite(
         image: GameImages.atlas_nodes,

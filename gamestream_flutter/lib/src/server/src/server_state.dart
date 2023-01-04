@@ -63,7 +63,7 @@ class ServerState {
   static var inventory = Uint16List(0);
   static var inventoryQuantity = Uint16List(0);
   static final tagTypes = <String, int> {};
-  static final sceneUnderground = Watch(false, onChanged: ServerEvents.onChangedSceneUnderground);
+  static final sceneUnderground = Watch(false);
   static final lightningFlashing = Watch(false, onChanged: ServerEvents.onChangedLightningFlashing);
   static final gameTimeEnabled = Watch(false, onChanged: ServerEvents.onChangedGameTimeEnabled);
 }

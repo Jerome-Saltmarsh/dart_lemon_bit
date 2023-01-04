@@ -22,14 +22,6 @@ class ServerEvents {
     }
   }
 
-  static void onChangedSceneUnderground(bool sceneUnderground){
-     if (sceneUnderground){
-       ClientState.torchesIgnited.value = true;
-     } else {
-       ClientState.torchesIgnited.value = Shade.fromHour(ServerState.hours.value) != Shade.Very_Bright;
-     }
-  }
-
   static void onChangedLightningFlashing(bool lightningFlashing){
     if (lightningFlashing) {
       // GameLighting.setStartHSVColor(GameLighting.Color_Lightning);

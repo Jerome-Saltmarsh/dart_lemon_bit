@@ -219,7 +219,7 @@ class GameAudio {
   }
 
   static double getVolumeTargetFire(){
-    if (!ClientState.torchesIgnited.value) return 0;
+    // if (!ClientState.torchesIgnited.value) return 0;
     const r = 4;
     const maxDistance = r * Node_Size;
     var closest = GameQueries.getClosestByType(radius: r, type: NodeType.Fireplace) * Node_Size;

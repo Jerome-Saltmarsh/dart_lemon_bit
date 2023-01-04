@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
@@ -9,10 +8,6 @@ import 'library.dart';
 import 'render/renderer_nodes.dart';
 
 class GameDebug {
-
-  // static final paths = Float32List(10000);
-  // static final targets = Float32List(10000);
-  // static var targetsTotal = 0;
 
   static Widget buildStackDebug() =>
       Stack(

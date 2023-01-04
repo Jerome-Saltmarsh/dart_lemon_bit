@@ -1156,16 +1156,13 @@ class GameState {
       }
     }
 
-
     static void refreshLighting(){
       GameNodes.resetGridToAmbient();
-      if (gridShadows.value){
-        applyShadows();
-      }
-      applyBakeMapEmissions();
+      // todo re-enable shadows
+      // if (gridShadows.value){
+      //   applyShadows();
+      // }
       GameNodes.resetNodeColorsToAmbient();
-
-
     }
 
     static void applyShadows(){
@@ -1248,55 +1245,6 @@ class GameState {
       nodesLengthRow = nodesTotalRows * Node_Size;
       nodesLengthColumn = nodesTotalColumns * Node_Size;
       nodesLengthZ = nodesTotalZ * Node_Height;
-    }
-
-    static void applyBakeMapEmissions() {
-      for (var i = 0; i < ClientState.nodesLightSourcesTotal; i++){
-        applyEmissionBakeAtIndex(index: ClientState.nodesLightSources[i], maxBrightness: Shade.Very_Bright);
-      }
-  }
-
-  static void applyEmissionBakeAtIndex({
-    required int index,
-    required int maxBrightness,
-    int radius = 5,
-  }){
-      assert (index >= 0);
-      assert (index < GameNodes.total);
-      applyEmissionBake(
-        zIndex: convertNodeIndexToIndexZ(index),
-        rowIndex: convertNodeIndexToIndexX(index),
-        columnIndex: convertNodeIndexToIndexY(index),
-        maxBrightness: Shade.Very_Bright,
-      );
-  }
-
-    static void applyEmissionBake({
-      required int zIndex,
-      required int rowIndex,
-      required int columnIndex,
-      required int maxBrightness,
-      int radius = 5,
-    }){
-      final zMin = max(zIndex - radius, 0);
-      final zMax = min(zIndex + radius, nodesTotalZ);
-      final rowMin = max(rowIndex - radius - 1, 0);
-      final rowMax = min(rowIndex + radius + 1, nodesTotalRows - 1);
-      final columnMin = max(columnIndex - radius - 1, 0);
-      final columnMax = min(columnIndex + radius + 1, nodesTotalColumns - 1);
-
-      for (var z = zMin; z < zMax; z++){
-        for (var row = rowMin; row <= rowMax; row++){
-          for (var column = columnMin; column <= columnMax; column++) {
-            final nodeIndex = getNodeIndexZRC(z, row, column);
-            var distance = (z - zIndex).abs() + (row - rowIndex).abs() + (column - columnIndex).abs() - 1;
-            final distanceValue = GameConvert.distanceToShade(distance, maxBrightness: maxBrightness);
-            // if (distanceValue >= GameNodes.nodeBake[nodeIndex]) continue;
-            // GameNodes.nodeBake[nodeIndex] = distanceValue;
-            // GameNodes.nodeShades[nodeIndex] = distanceValue;
-          }
-        }
-      }
     }
 
     static void spawnFloatingText(double x, double y, String text) {
