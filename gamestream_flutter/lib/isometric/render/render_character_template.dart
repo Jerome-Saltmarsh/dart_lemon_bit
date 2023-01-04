@@ -129,8 +129,6 @@ void renderCharacterTemplate(Character character, {
     frameBody = TemplateAnimation.StateChangingFrame;
     frameWeapon = TemplateAnimation.StateChangingFrame;
   }
-
-  // GameRender.renderTextV3(character, "$frameWeapon, ${ItemType.isOneHanded(character.weaponType)} ${WeaponState.getName(character.weaponState)}", offsetY: -80);
   final dstX = GameConvert.convertV3ToRenderX(character);
   final dstY = GameConvert.convertV3ToRenderY(character);
   final color = GameState.getV3RenderColor(character);
@@ -211,6 +209,8 @@ void renderCharacterTemplate(Character character, {
         color: color,
         anchorY: Anchor_Y
     );
+
+  // GameRender.renderTextV3(character, "head: $frameHead, body: $frameBody", offsetY: -80);
     Engine.renderSprite(
         image: GameImages.getImageForHeadType(character.headType),
         srcX: frameHead * Sprite_Size,
