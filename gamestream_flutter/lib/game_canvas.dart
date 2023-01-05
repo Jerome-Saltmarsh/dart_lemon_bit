@@ -130,8 +130,8 @@ class GameCanvas {
   }
 
   static void renderObjectRadius() {
-    for (var i = 0; i < GameState.totalCharacters; i++) {
-      final character = GameState.characters[i];
+    for (var i = 0; i < ServerState.totalCharacters; i++) {
+      final character = ServerState.characters[i];
       Engine.renderCircle(character.renderX, character.renderY, CharacterType.getRadius(character.characterType), Colors.yellow);
     }
   }

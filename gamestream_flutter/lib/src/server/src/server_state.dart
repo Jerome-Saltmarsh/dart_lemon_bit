@@ -6,6 +6,18 @@ import 'package:gamestream_flutter/library.dart';
 ///
 /// WARNING - WRITING TO SERVER STATE IS FORBIDDEN
 class ServerState {
+  static var totalGameObjects = 0;
+  static var totalCharacters = 0;
+  static var totalPlayers = 0;
+  static var totalNpcs = 0;
+  static var totalZombies = 0;
+  static var totalProjectiles = 0;
+
+  static final gameObjects = <GameObject>[];
+  static final characters = <Character>[];
+  static final npcs = <Character>[];
+  static final projectiles = <Projectile>[];
+
   static final areaType = Watch(AreaType.None, onChanged: ServerEvents.onChangedAreaType);
   static final interactMode = Watch(InteractMode.None, onChanged: GameEvents.onChangedPlayerInteractMode);
   static final playerHealth = Watch(0);
@@ -67,6 +79,74 @@ class ServerState {
   static final sceneUnderground = Watch(false);
   static final lightningFlashing = Watch(false, onChanged: ServerEvents.onChangedLightningFlashing);
   static final gameTimeEnabled = Watch(false, onChanged: ServerEvents.onChangedGameTimeEnabled);
+
+  static Character getCharacterInstance(){
+    if (characters.length <= totalCharacters){
+      characters.add(Character());
+    }
+    return characters[totalCharacters];
+  }
+
+  static GameObject getInstanceGameObject(){
+    if (gameObjects.length <= totalGameObjects){
+      gameObjects.add(GameObject());
+    }
+    return gameObjects[totalGameObjects++];
+  }
+
+  static Character? getPlayerCharacter(){
+    for (var i = 0; i < totalCharacters; i++){
+      if (characters[i].x != GamePlayer.position.x) continue;
+      if (characters[i].y != GamePlayer.position.y) continue;
+      return characters[i];
+    }
+    return null;
+  }
+
+  static void applyEmissionGameObjects() {
+    for (var i = 0; i < totalGameObjects; i++){
+      final gameObject = gameObjects[i];
+      if (gameObject.type == ItemType.GameObjects_Grenade) {
+        GameState.applyVector3Emission(gameObject,
+          hue: GameNodes.ambient_hue,
+          alpha: 0.0,
+          saturation: GameNodes.ambient_sat,
+          value: 0,
+        );
+        continue;
+      }
+      if (gameObject.type == ItemType.GameObjects_Crystal_Small_Blue) {
+        GameState.applyVector3Emission(
+          gameObject,
+          hue: 209,
+          saturation: 0.66,
+          value: 0.9,
+          alpha: 0.61,
+
+        );
+        continue;
+      }
+      if (gameObject.type == ItemType.GameObjects_Crystal_Small_Red) {
+        GameState.applyVector3Emission(gameObject,
+          hue: 360,
+          saturation: 0.76,
+          value: 0.91,
+          alpha: 0.61,
+        );
+        continue;
+      }
+      // if (gameObject.type != ItemType.GameObjects_Candle) continue;
+      // final nodeIndex = GameQueries.getNodeIndexV3(gameObject);
+      // final nodeShade = GameNodes.nodeShades[nodeIndex];
+      // setNodeShade(nodeIndex, nodeShade - 1);
+      // if (gameObject.indexZ > 0){
+      //   final nodeBelowIndex = GameQueries.getNodeIndexBelowV3(gameObject);
+      //   final nodeBelowShade = GameNodes.nodeShades[nodeBelowIndex];
+      //   setNodeShade(nodeBelowIndex, nodeBelowShade - 1);
+      // }
+    }
+  }
+
 }
 
 

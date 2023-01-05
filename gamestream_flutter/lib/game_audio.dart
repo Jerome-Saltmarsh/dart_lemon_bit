@@ -297,12 +297,12 @@ class GameAudio {
   }
 
   static void updateCharacterNoises(){
-    if (GameState.totalCharacters <= 0) return;
+    if (ServerState.totalCharacters <= 0) return;
     if (nextCharacterNoise-- > 0) return;
     nextCharacterNoise = Engine.randomInt(200, 300);
 
-    final index = randomInt(0, GameState.totalCharacters);
-    final character = GameState.characters[index];
+    final index = randomInt(0, ServerState.totalCharacters);
+    final character = ServerState.characters[index];
 
     switch (character.characterType) {
       case CharacterType.Zombie:

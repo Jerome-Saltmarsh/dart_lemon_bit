@@ -13,12 +13,12 @@ class RendererCharacters extends Renderer {
   void renderFunction() => renderCurrentCharacter();
 
   void updateFunction() {
-    character = GameState.characters[index];
+    character = ServerState.characters[index];
     order = character.renderOrder;
     orderZ = character.indexZ;
   }
   @override
-  int getTotal() => GameState.totalCharacters;
+  int getTotal() => ServerState.totalCharacters;
 
   void renderCurrentCharacter(){
     if (character.spawning) {

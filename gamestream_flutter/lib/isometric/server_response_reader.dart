@@ -12,8 +12,8 @@ class ServerResponseReader with ByteReader {
   void read(Uint8List values) {
     updateFrame.value++;
     index = 0;
-    GameState.totalCharacters = 0;
-    GameState.totalGameObjects = 0;
+    ServerState.totalCharacters = 0;
+    ServerState.totalGameObjects = 0;
     bufferSize.value = values.length;
     this.values = values;
 
@@ -152,7 +152,7 @@ class ServerResponseReader with ByteReader {
   }
 
   void readGameObject() {
-    final instance = GameState.getInstanceGameObject();
+    final instance = ServerState.getInstanceGameObject();
     instance.type = readUInt16();
     readVector3(instance);
   }
@@ -341,12 +341,6 @@ class ServerResponseReader with ByteReader {
     ClientActions.redrawInventory();
   }
 
-  void readGameObjectStatic() {
-    final gameObject = GameState.getInstanceGameObject();
-    readVector3(gameObject);
-    gameObject.type = readByte();
-  }
-
   void readPlayerAttackTargetName() {
     GamePlayer.mouseTargetName.value = readString();
     GamePlayer.mouseTargetAllie.value = readBool();
@@ -370,7 +364,7 @@ class ServerResponseReader with ByteReader {
      while (true) {
       final characterType = readByte();
       if (characterType == END) return;
-      final character = GameState.getCharacterInstance();
+      final character = ServerState.getCharacterInstance();
 
       character.characterType = characterType;
       readCharacterTeamDirectionAndState(character);
@@ -380,7 +374,7 @@ class ServerResponseReader with ByteReader {
       if (CharacterType.supportsUpperBody(characterType)){
         readCharacterUpperBody(character);
       }
-      GameState.totalCharacters++;
+      ServerState.totalCharacters++;
     }
   }
 
@@ -531,12 +525,12 @@ class ServerResponseReader with ByteReader {
   }
 
   void readProjectiles(){
-    GameState.totalProjectiles = readUInt16();
-    while (GameState.totalProjectiles >= GameState.projectiles.length){
-      GameState.projectiles.add(Projectile());
+    ServerState.totalProjectiles = readUInt16();
+    while (ServerState.totalProjectiles >= ServerState.projectiles.length){
+      ServerState.projectiles.add(Projectile());
     }
-    for (var i = 0; i < GameState.totalProjectiles; i++) {
-      final projectile = GameState.projectiles[i];
+    for (var i = 0; i < ServerState.totalProjectiles; i++) {
+      final projectile = ServerState.projectiles[i];
       projectile.x = readDouble();
       projectile.y = readDouble();
       projectile.z = readDouble();

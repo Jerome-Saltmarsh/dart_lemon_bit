@@ -64,8 +64,8 @@ class GameUI {
 
           GameMinimap.renderCanvas(canvas);
 
-          for (var i = 0; i < GameState.totalCharacters; i++) {
-            final character = GameState.characters[i];
+          for (var i = 0; i < ServerState.totalCharacters; i++) {
+            final character = ServerState.characters[i];
             final isPlayer = GamePlayer.isCharacter(character);
             Engine.renderExternalCanvas(
                 canvas: canvas,

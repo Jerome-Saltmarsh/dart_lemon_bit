@@ -55,8 +55,8 @@ class GameDebug {
                                 "offscreen-nodes: left: ${RendererNodes.offscreenNodesLeft}, top: ${RendererNodes.offscreenNodesTop}, right: ${RendererNodes.offscreenNodesRight}, bottom: ${RendererNodes.offscreenNodesBottom}"
                             )),
                             Refresh(() => text('touch-world: x: ${GameIO.touchCursorWorldX.toInt()}, y: ${GameIO.touchCursorWorldY.toInt()}')),
-                            Refresh(() => text('characters-total: ${GameState.characters.length}')),
-                            Refresh(() => text('characters-active: ${GameState.totalCharacters}')),
+                            Refresh(() => text('characters-total: ${ServerState.characters.length}')),
+                            Refresh(() => text('characters-active: ${ServerState.totalCharacters}')),
                             Refresh(() => text('particles-total: ${ClientState.particles.length}')),
                             Refresh(() => text('particles-active: ${ClientState.totalActiveParticles}')),
                             // Refresh(() => text('nodes-rendered: ${GameRender.onscreenNodes}')),

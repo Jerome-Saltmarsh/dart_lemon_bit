@@ -6,7 +6,7 @@ class RendererGameObjects extends Renderer {
   static late GameObject gameObject;
 
   @override
-  int getTotal() => GameState.totalGameObjects;
+  int getTotal() => ServerState.totalGameObjects;
 
   @override
   void renderFunction() {
@@ -45,7 +45,7 @@ class RendererGameObjects extends Renderer {
 
   @override
   void updateFunction() {
-    gameObject = GameState.gameObjects[index];
+    gameObject = ServerState.gameObjects[index];
     order = gameObject.renderOrder;
     orderZ = gameObject.indexZ;
   }

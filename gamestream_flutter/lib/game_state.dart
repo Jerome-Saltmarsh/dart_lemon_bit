@@ -7,22 +7,12 @@ import 'library.dart';
 
 
 class GameState {
-  static final gameObjects = <GameObject>[];
-  static final characters = <Character>[];
-  static final npcs = <Character>[];
-  static final projectiles = <Projectile>[];
   static final particleEmitters = <ParticleEmitter>[];
 
   static final particleOverflow = Particle();
 
-  static var totalGameObjects = 0;
-  static var totalCharacters = 0;
-  static var totalPlayers = 0;
-  static var totalNpcs = 0;
-  static var totalZombies = 0;
-  static var totalParticles = 0;
-  static var totalProjectiles = 0;
   static var nextParticleFrame = 0;
+  static var totalParticles = 0;
 
   static final gridShadows = Watch(true, onChanged: (bool value){
     GameNodes.resetNodeColorsToAmbient();
@@ -41,22 +31,6 @@ class GameState {
   static bool get playMode => !editMode;
   static bool get editMode => ClientState.edit.value;
   static bool get lightningOn => ServerState.lightningType.value != LightningType.Off;
-
-  static Character getCharacterInstance(){
-    if (characters.length <= totalCharacters){
-      characters.add(Character());
-    }
-    return characters[totalCharacters];
-  }
-
-  static Character? getPlayerCharacter(){
-    for (var i = 0; i < totalCharacters; i++){
-      if (characters[i].x != GamePlayer.position.x) continue;
-      if (characters[i].y != GamePlayer.position.y) continue;
-      return characters[i];
-    }
-    return null;
-  }
 
   static int getNodeIndexV3(Vector3 v3) {
     return getNodeIndexZRC(v3.indexZ, v3.indexRow, v3.indexColumn);
@@ -111,14 +85,14 @@ class GameState {
     }
 
     applyEmissionsCharacters();
-    applyEmissionGameObjects();
+    ServerState.applyEmissionGameObjects();
     applyEmissionsProjectiles();
     applyCharacterColors();
   }
 
   static void applyCharacterColors(){
-    for (var i = 0; i < totalCharacters; i++){
-      applyCharacterColor(characters[i]);
+    for (var i = 0; i < ServerState.totalCharacters; i++){
+      applyCharacterColor(ServerState.characters[i]);
     }
   }
 
@@ -127,24 +101,19 @@ class GameState {
   }
 
   static void applyEmissionsCharacters() {
-    for (var i = 0; i < totalCharacters; i++) {
-      final character = characters[i];
+    for (var i = 0; i < ServerState.totalCharacters; i++) {
+      final character = ServerState.characters[i];
       if (!character.allie) continue;
       applyVector3EmissionAmbient(
           character,
-          // hue: GameNodes.ambient_hue,
-          // saturation: GameNodes.ambient_sat,
-          // value: GameNodes.ambient_val,
           alpha: 0.0,
-
-
       );
     }
   }
 
   static void applyEmissionsProjectiles() {
-    for (var i = 0; i < totalProjectiles; i++){
-      applyProjectileEmission(projectiles[i]);
+    for (var i = 0; i < ServerState.totalProjectiles; i++){
+      applyProjectileEmission(ServerState.projectiles[i]);
     }
   }
 
@@ -237,10 +206,10 @@ class GameState {
   static void clear() {
     GamePlayer.position.x = -1;
     GamePlayer.position.y = -1;
-    totalZombies = 0;
-    totalPlayers = 0;
-    totalProjectiles = 0;
-    totalNpcs = 0;
+    ServerState.totalZombies = 0;
+    ServerState.totalPlayers = 0;
+    ServerState.totalProjectiles = 0;
+    ServerState.totalNpcs = 0;
     particleEmitters.clear();
     ClientState.particles.clear();
     GamePlayer.gameDialog.value = null;
@@ -853,13 +822,6 @@ class GameState {
     return ClientState.particles[ClientState.totalActiveParticles];
   }
 
-  static GameObject getInstanceGameObject(){
-    if (gameObjects.length <= totalGameObjects){
-      gameObjects.add(GameObject());
-    }
-    return gameObjects[totalGameObjects++];
-  }
-
   static Particle spawnParticleFire({
     required double x,
     required double y,
@@ -977,7 +939,7 @@ class GameState {
     }
     if (ClientState.rendersSinceUpdate.value != 1) return;
 
-    final playerCharacter = getPlayerCharacter();
+    final playerCharacter = ServerState.getPlayerCharacter();
     if (playerCharacter == null) return;
     final velocityX = GamePlayer.position.x - GamePlayer.previousPosition.x;
     final velocityY = GamePlayer.position.y - GamePlayer.previousPosition.y;
@@ -1040,50 +1002,6 @@ class GameState {
     GamePlayer.message.value = "";
   }
 
-  static void applyEmissionGameObjects() {
-    for (var i = 0; i < totalGameObjects; i++){
-      final gameObject = gameObjects[i];
-      if (gameObject.type == ItemType.GameObjects_Grenade) {
-        applyVector3Emission(gameObject,
-          hue: GameNodes.ambient_hue,
-          alpha: 0.0,
-          saturation: GameNodes.ambient_sat,
-          value: 0,
-        );
-        continue;
-      }
-      if (gameObject.type == ItemType.GameObjects_Crystal_Small_Blue) {
-        applyVector3Emission(
-            gameObject,
-            hue: 209,
-            saturation: 0.66,
-            value: 0.9,
-            alpha: 0.61,
-
-        );
-        continue;
-      }
-      if (gameObject.type == ItemType.GameObjects_Crystal_Small_Red) {
-        applyVector3Emission(gameObject,
-            hue: 360,
-            saturation: 0.76,
-            value: 0.91,
-            alpha: 0.61,
-        );
-        continue;
-      }
-      // if (gameObject.type != ItemType.GameObjects_Candle) continue;
-      // final nodeIndex = GameQueries.getNodeIndexV3(gameObject);
-      // final nodeShade = GameNodes.nodeShades[nodeIndex];
-      // setNodeShade(nodeIndex, nodeShade - 1);
-      // if (gameObject.indexZ > 0){
-      //   final nodeBelowIndex = GameQueries.getNodeIndexBelowV3(gameObject);
-      //   final nodeBelowShade = GameNodes.nodeShades[nodeBelowIndex];
-      //   setNodeShade(nodeBelowIndex, nodeBelowShade - 1);
-      // }
-    }
-  }
-
   static void toggleShadows () => gridShadows.value = !gridShadows.value;
 
   static void actionGameDialogShowQuests() {
@@ -1109,8 +1027,8 @@ class GameState {
     }
 
     static void updateProjectiles() {
-      for (var i = 0; i < totalProjectiles; i++) {
-        final projectile = projectiles[i];
+      for (var i = 0; i < ServerState.totalProjectiles; i++) {
+        final projectile = ServerState.projectiles[i];
         if (projectile.type == ProjectileType.Fireball) {
           spawnParticleFire(x: projectile.x, y: projectile.y, z: projectile.z);
           continue;
