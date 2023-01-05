@@ -13,7 +13,6 @@ class GameState {
   static final npcs = <Character>[];
   static final projectiles = <Projectile>[];
   static final particleEmitters = <ParticleEmitter>[];
-  static final floatingTexts = <FloatingText>[];
 
   static final particleOverflow = Particle();
 
@@ -30,7 +29,6 @@ class GameState {
     GameNodes.resetNodeColorsToAmbient();
   });
 
-  static var compiledScenes = Uint8List(0);
   static var nodesTotalZ = 0;
   static var nodesTotalRows = 0;
   static var nodesTotalColumns = 0;
@@ -863,16 +861,6 @@ class GameState {
     return gameObjects[totalGameObjects++];
   }
 
-  static FloatingText getInstanceFloatingText(){
-    for (final floatingText in floatingTexts) {
-      if (floatingText.duration > 0) continue;
-      return floatingText;
-    }
-    final instance = FloatingText();
-    floatingTexts.add(instance);
-    return instance;
-  }
-
   static Particle spawnParticleFire({
     required double x,
     required double y,
@@ -983,7 +971,7 @@ class GameState {
 
   static void interpolatePlayer(){
 
-    if (!player.interpolating.value) return;
+    if (!GamePlayer.interpolating.value) return;
 
     if (ClientState.rendersSinceUpdate.value == 0) {
       return;
@@ -1226,15 +1214,6 @@ class GameState {
       nodesLengthRow = nodesTotalRows * Node_Size;
       nodesLengthColumn = nodesTotalColumns * Node_Size;
       nodesLengthZ = nodesTotalZ * Node_Height;
-    }
-
-    static void spawnFloatingText(double x, double y, String text) {
-      final floatingText = getInstanceFloatingText();
-      floatingText.duration = 50;
-      floatingText.x = x;
-      floatingText.y = y;
-      floatingText.xv = giveOrTake(0.2);
-      floatingText.value = text;
     }
 
     static void setNodeType(int z, int row, int column, int type){

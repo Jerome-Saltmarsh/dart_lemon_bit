@@ -59,7 +59,7 @@ class GameCanvas {
 
 
   static void renderCursor(Canvas canvas) {
-    final cooldown = GameState.player.weaponCooldown.value;
+    final cooldown = GamePlayer.weaponCooldown.value;
     final accuracy = ServerState.playerAccuracy.value;
     final distance = (cooldown + accuracy) * 10.0 + 5;
 

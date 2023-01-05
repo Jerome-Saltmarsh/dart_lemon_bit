@@ -30,7 +30,7 @@ class GameUI {
         buildWatchBool(ClientState.triggerAlarmNoMessageReceivedFromServer,
             buildDialogFramesSinceUpdate),
         watch(GameState.player.gameDialog, buildGameDialog),
-        buildWatchBool(GameState.player.alive, buildPositionedContainerRespawn, false),
+        buildWatchBool(GamePlayer.alive, buildPositionedContainerRespawn, false),
         Positioned(
             top: 0,
             right: 0,
@@ -226,13 +226,13 @@ class GameUI {
   static Positioned buildWatchInterpolation() => Positioned(
         bottom: 0,
         left: 0,
-        child: watch(GameState.player.interpolating, (bool value) {
+        child: watch(GamePlayer.interpolating, (bool value) {
           if (!value)
             return text("Interpolation Off",
-                onPressed: () => GameState.player.interpolating.value = true);
+                onPressed: () => GamePlayer.interpolating.value = true);
           return watch(ClientState.rendersSinceUpdate, (int frames) {
             return text("Frames: $frames",
-                onPressed: () => GameState.player.interpolating.value = false);
+                onPressed: () => GamePlayer.interpolating.value = false);
           });
         }),
       );

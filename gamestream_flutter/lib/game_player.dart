@@ -5,7 +5,10 @@ class GamePlayer {
   static final body = Watch(0);
   static final head = Watch(0);
   static final legs = Watch(0);
+  static final alive = Watch(true);
   static final previousPosition = Vector3();
+  static final storeItems = Watch(<int>[]);
+
   static var position = Vector3();
   static var runningToTarget = false;
   static var targetCategory = TargetCategory.Nothing;
@@ -15,7 +18,9 @@ class GamePlayer {
   static var aimTargetName = "";
   static var aimTargetQuantity = 0;
   static var aimTargetPosition = Vector3();
-  static final storeItems = Watch(<int>[]);
+  static final weaponCooldown = Watch(1.0);
+  static final interpolating = Watch(true);
+  static final target = Vector3();
 
   static var indexZ = 0;
   static var indexRow = 0;
@@ -26,7 +31,7 @@ class GamePlayer {
   static double get positionScreenX => Engine.worldToScreenX(position.renderX);
   static double get positionScreenY => Engine.worldToScreenY(position.renderX);
   static bool get interactModeTrading => ServerState.interactMode.value == InteractMode.Trading;
-
+  static bool get dead => !alive.value;
   static bool get inBounds => GameQueries.inBoundsVector3(position);
 
   static bool isCharacter(Character character){

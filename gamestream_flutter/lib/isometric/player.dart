@@ -3,17 +3,9 @@ import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/services/mini_map.dart';
 
 class Player {
-  final weaponCooldown = Watch(1.0);
-  final interpolating = Watch(true);
-  final target = Vector3();
   final questAdded = Watch(false);
   var gameDialog = Watch<GameDialog?>(null, onChanged: onChangedGameDialog);
-  var angle = 0.0;
   var mouseAngle = 0.0;
-  var team = 0;
-  var abilityRange = 0.0;
-  var abilityRadius = 0.0;
-  var attackRange = 0.0;
   final mapTile = Watch(0, onChanged: MiniMap.onMapTileChanged);
   var npcTalk = Watch("");
   var npcTalkOptions = Watch<List<String>>([]);
@@ -22,25 +14,17 @@ class Player {
   final mouseTargetName = Watch<String?>(null);
   final mouseTargetAllie = Watch<bool>(false);
   final mouseTargetHealth = Watch(0.0);
-  final points = Watch(0);
   final message = Watch("", onChanged: GameEvents.onChangedPlayerMessage);
   var messageTimer = 0;
-  final alive = Watch(true);
-  final wood = Watch(0);
-  final stone = Watch(0);
-  final gold = Watch(0);
   final questsInProgress = Watch<List<Quest>>([], onChanged: onQuestsInProgressChanged);
   final questsCompleted = Watch<List<Quest>>([]);
 
-
-  // Properties
-  bool get dead => !alive.value;
 
   double get weaponRoundPercentage => 1.0;
 
 
   static void onPlayerCharacterStateChanged(int characterState){
-     GameState.player.alive.value = characterState != CharacterState.Dead;
+     GamePlayer.alive.value = characterState != CharacterState.Dead;
   }
 
   static void onChangedGameDialog(GameDialog? value){

@@ -62,7 +62,7 @@ class ServerResponseReader with ByteReader {
           readNode();
           break;
         case ServerResponse.Player_Target:
-          readVector3(GameState.player.target);
+          readVector3(GamePlayer.target);
           break;
         case ServerResponse.Store_Items:
           readStoreItems();
@@ -204,7 +204,7 @@ class ServerResponseReader with ByteReader {
         readPlayerMaxHealth();
         break;
       case ApiPlayer.Weapon_Cooldown:
-        GameState.player.weaponCooldown.value = readPercentage();
+        GamePlayer.weaponCooldown.value = readPercentage();
         break;
       case ApiPlayer.Accuracy:
         ServerState.playerAccuracy.value = readPercentage();
@@ -270,7 +270,7 @@ class ServerResponseReader with ByteReader {
        GameState.player.message.value = readString();
        break;
       case ApiPlayer.Alive:
-        GameState.player.alive.value = readBool();
+        GamePlayer.alive.value = readBool();
         ClientActions.clearHoverDialogType();
         break;
       case ApiPlayer.Spawned:
