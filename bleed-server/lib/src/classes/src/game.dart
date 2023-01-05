@@ -472,6 +472,10 @@ abstract class Game {
     character.performZ = performZ;
     character.assignWeaponStateFiring();
 
+    if (character.weaponType == ItemType.Weapon_Melee_Staff){
+       spawnProjectileOrb(src: character, damage: 5, range: 200);
+    }
+
     /// TODO name arguments
     dispatchAttackPerformed(
       character.weaponType,
@@ -1527,12 +1531,16 @@ abstract class Game {
     customOnAIRespawned(ai);
   }
 
-  Projectile spawnProjectileOrb({required Character src, required int damage}) {
+  Projectile spawnProjectileOrb({
+    required Character src,
+    required int damage,
+    required double range,
+  }) {
     dispatchV3(GameEventType.Blue_Orb_Fired, src);
     return spawnProjectile(
       src: src,
       accuracy: 0,
-      range: src.weaponTypeRange,
+      range: range,
       target: src.target,
       projectileType: ProjectileType.Orb,
       angle: src.target != null ? null : (src is Player ? src.lookRadian : src.faceAngle),
