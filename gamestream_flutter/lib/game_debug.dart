@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 
@@ -151,62 +151,23 @@ Widget buildColumnLightingControls(){
           })
         ],
       ),
-      // ColorPicker(
-      //   pickerColor: HSVColor.fromAHSV(
-      //       GameLighting.start_alpha,
-      //       GameLighting.start_hue,
-      //       GameLighting.start_saturation,
-      //       GameLighting.start_alpha,
-      //   ).toColor(),
-      //   onColorChanged: (color){
-      //     ClientState.overrideColor.value = true;
-      //     final hsvColor = HSVColor.fromColor(color);
-      //     GameLighting.start_hue = hsvColor.hue;
-      //     GameLighting.start_saturation = hsvColor.saturation;
-      //     GameLighting.start_value = hsvColor.value;
-      //     GameLighting.start_alpha = hsvColor.alpha;
-      //     GameLighting.refreshValues(applyHueShift: false);
-      //   },
-      // ),
-      // ColorPicker(
-      //   pickerColor: HSVColor.fromAHSV(
-      //     GameLighting.end_alpha,
-      //     GameLighting.end_hue,
-      //     GameLighting.end_saturation,
-      //     GameLighting.end_alpha,
-      //   ).toColor(),
-      //   onColorChanged: (color){
-      //     ClientState.overrideColor.value = true;
-      //     final hsvColor = HSVColor.fromColor(color);
-      //     GameLighting.end_hue = hsvColor.hue;
-      //     GameLighting.end_saturation = hsvColor.saturation;
-      //     GameLighting.end_value = hsvColor.value;
-      //     GameLighting.end_alpha = hsvColor.alpha;
-      //     GameLighting.refreshValues(applyHueShift: false);
-      //   },
-      // ),
-      // text('start hue shift'),
-      // watch(GameLighting.start_hue_shift, (double hueShift){
-      //   return Slider(
-      //       min: 0.0,
-      //       max: 360.0,
-      //       value: hueShift, onChanged: (double value) {
-      //         GameLighting.start_hue_shift.value = value;
-      //         ClientState.updateGameLighting();
-      //       }
-      //   );
-      // }),
-      // text('end hue shift'),
-      // watch(GameLighting.end_hue_shift, (double hueShift){
-      //   return Slider(
-      //       min: 0.0,
-      //       max: 360.0,
-      //       value: hueShift, onChanged: (double value) {
-      //     GameLighting.end_hue_shift.value = value;
-      //     ClientState.updateGameLighting();
-      //   }
-      //   );
-      // }),
+      ColorPicker(
+        pickerColor: HSVColor.fromAHSV(
+            GameNodes.ambient_alp,
+            GameNodes.ambient_hue,
+            GameNodes.ambient_sat,
+            GameNodes.ambient_val,
+        ).toColor(),
+        onColorChanged: (color){
+          ClientState.overrideColor.value = true;
+          final hsvColor = HSVColor.fromColor(color);
+          GameNodes.ambient_alp = hsvColor.alpha;
+          GameNodes.ambient_hue = hsvColor.hue;
+          GameNodes.ambient_sat = hsvColor.saturation;
+          GameNodes.ambient_val = hsvColor.value;
+          GameNodes.resetNodeColorsToAmbient();
+        },
+      ),
     ],
   );
 }
