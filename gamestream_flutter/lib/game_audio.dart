@@ -67,6 +67,7 @@ class GameAudio {
   static final hoverOverButtonSound5 = AudioSingle(name: 'hover-over-button-sound-5', volume: 0.5);
   static final thunder = AudioSingle(name: 'thunder', volume: 0.5);
   static final fire_bolt_14 = AudioSingle(name: 'fire-bolt-14', volume: 0.5);
+  static final dagger_woosh_9 = AudioSingle(name: 'dagger_woosh_9', volume: 0.5);
   static final footstep_grass_8 = AudioSingle(name: 'footstep-grass-8', volume: 0.05);
   static final footstep_grass_7 = AudioSingle(name: 'footstep-grass-7', volume: 0.05);
   static final footstep_mud_6 = AudioSingle(name: 'mud-footstep-6', volume: 0.05);

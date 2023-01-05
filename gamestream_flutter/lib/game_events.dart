@@ -360,6 +360,9 @@ class GameEvents {
       case ItemType.Weapon_Special_Minigun:
         GameAudio.machine_gun_shot_02.playXYZ(x, y, z);
         break;
+      case ItemType.Weapon_Melee_Knife:
+        GameAudio.dagger_woosh_9.playXYZ(x, y, z);
+        break;
       default:
         return;
     }

@@ -90,6 +90,9 @@ ctrl + w:   minimal mode
 [ ] saturation changes over time of day and night
 [ ] hue changes over time of day and night
 [ ] respawn cut grass
+[ ] replace health and damage text with icons
+[ ] melee attack sounds
+[ ] melee attack slash effect
 
 [CRITICAL]
 [ ] fix render visibility algorithm
