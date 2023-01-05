@@ -8,7 +8,6 @@ import 'library.dart';
 
 class GameState {
   static final particleEmitters = <ParticleEmitter>[];
-
   static final particleOverflow = Particle();
 
   static var nextParticleFrame = 0;
@@ -78,10 +77,26 @@ class GameState {
   static void applyEmissions(){
 
     for (var i = 0; i < ClientState.nodesLightSourcesTotal; i++){
-      GameNodes.emitLightDynamicAmbient(
-        index: ClientState.nodesLightSources[i],
-        alpha: 0,
-      );
+      final nodeIndex = ClientState.nodesLightSources[i];
+      final nodeType = GameNodes.nodeTypes[nodeIndex];
+
+      switch (nodeType){
+        case NodeType.Torch:
+          GameNodes.emitLightDynamicAmbient(
+            index: nodeIndex,
+            alpha: 0,
+          );
+          break;
+        case NodeType.Vendor:
+          GameNodes.emitLightDynamic(
+              index: nodeIndex,
+              hue: 259,
+              saturation: 0.45,
+              value: 0.95,
+              alpha: 0.5,
+          );
+          break;
+      }
     }
 
     applyEmissionsCharacters();
@@ -106,7 +121,7 @@ class GameState {
       if (!character.allie) continue;
       applyVector3EmissionAmbient(
           character,
-          alpha: 0.0,
+          alpha: 0.25,
       );
     }
   }
@@ -206,15 +221,15 @@ class GameState {
   static void clear() {
     GamePlayer.position.x = -1;
     GamePlayer.position.y = -1;
+    GamePlayer.gameDialog.value = null;
+    GamePlayer.npcTalkOptions.value = [];
     ServerState.totalZombies = 0;
     ServerState.totalPlayers = 0;
     ServerState.totalProjectiles = 0;
     ServerState.totalNpcs = 0;
-    particleEmitters.clear();
-    ClientState.particles.clear();
-    GamePlayer.gameDialog.value = null;
-    GamePlayer.npcTalkOptions.value = [];
     ServerState.interactMode.value = InteractMode.None;
+    ClientState.particles.clear();
+    particleEmitters.clear();
     Engine.zoom = 1;
     Engine.redrawCanvas();
   }

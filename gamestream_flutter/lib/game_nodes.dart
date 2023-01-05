@@ -231,13 +231,14 @@ class GameNodes {
         for (var column = columnMin; column <= columnMax; column++) {
           final nodeIndex = a + column;
           final distanceValue = Engine.clamp(b + (column - columnIndex).abs() - 2, 0, Shade.Pitch_Black);
-          // if (distanceValue >= nodeShades[nodeIndex]) continue;
           if (distanceValue > 5) continue;
 
           nodeDynamicIndex[dynamicIndex++] = nodeIndex;
 
           final intensity = 1.0 - GameLighting.interpolations[clamp(distanceValue, 0, 7)];
-          nodeAlps[nodeIndex] = GameLighting.linerInterpolation(nodeAlps[nodeIndex], alpha      , intensity);
+          final nodeAlpha = nodeAlps[nodeIndex];
+          if (nodeAlpha < alpha) continue;
+          nodeAlps[nodeIndex] = GameLighting.linerInterpolation(nodeAlpha, alpha, intensity);
           refreshNodeColor(nodeIndex);
         }
       }

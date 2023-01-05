@@ -176,20 +176,22 @@ class NodeType {
       value == Tree_Top       ||
       value == Rain_Landing    ;
 
-  static bool isRainOrEmpty(value) =>
-      isRain(value)           ||
-      value == Empty           ;
-  
+  static bool isRainOrEmpty(int value) =>
+    value == Empty            ||
+    isRain(value)              ;
+
   static bool isRain(int value) =>
-     value == Rain_Falling    ||
-     value == Rain_Landing     ;
-  
-  static bool blocksPerception(int value) =>
-     supportsOrientationSolid(value);
+    value == Rain_Falling    ||
+    value == Rain_Landing     ;
 
   static bool emitsLight(int value) =>
-    value == Torch || 
-    value == Fireplace;
+    value == Torch          ||
+    value == Vendor         ||
+    value == Fireplace       ;
+
+
+  static bool blocksPerception(int value) =>
+     supportsOrientationSolid(value);
 
   static int getDefaultOrientation(int value){
      if (supportsOrientationEmpty(value)) {
