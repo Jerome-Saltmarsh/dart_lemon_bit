@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:bleed_server/gamestream.dart';
@@ -26,6 +27,7 @@ class Connection with ByteReader {
   Account? _account;
 
   Function? onDone;
+  final gzipCodec = GZipCodec(level: 4);
 
   Connection(this.webSocket){
     sink = webSocket.sink;
@@ -68,7 +70,8 @@ class Connection with ByteReader {
           return;
         case ClientRequest.Editor_Load_Scene:
           try {
-            final scene = SceneReader.readScene(values, startIndex: 1);
+            values = Uint8List.fromList(gzipCodec.decode(args.sublist(1, args.length)));
+            final scene = SceneReader.readScene(values, startIndex: 0);
             joinGameEditorScene(scene);
           } catch (error){
             errorInvalidArg('Failed to load scene');
@@ -380,9 +383,10 @@ class Connection with ByteReader {
           player.scene.name = generateRandomName();
         }
 
+        final compressed = gzipCodec.encode(compiled);
         player.writeString(player.scene.name);
-        player.writeUInt16(compiled.length);
-        player.writeBytes(compiled);
+        player.writeUInt16(compressed.length);
+        player.writeBytes(compressed);
         break;
 
       case EditRequest.Scene_Set_Floor_Type:

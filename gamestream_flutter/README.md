@@ -111,6 +111,7 @@ Sandbags and fortifications left over. Rubble and pot holes. Dead soldiers and z
 [ ] weapon type stun grenade
 
 05.01.2023
+[x] compress scenes using gzip
 [x] item type sprite axe 
 [x] item type sprite hammer 
 [x] item type sprite staff 
