@@ -110,6 +110,11 @@ Sandbags and fortifications left over. Rubble and pot holes. Dead soldiers and z
 [ ] weapon type plasma rifle
 [ ] weapon type stun grenade
 
+05.01.2023
+[x] item type sprite axe 
+[x] item type sprite hammer 
+[x] item type sprite staff 
+
 04.01.2023
 [x] reduce light during rain
 [x] fix stats damage incorrect
