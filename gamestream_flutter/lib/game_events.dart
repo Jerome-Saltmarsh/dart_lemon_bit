@@ -369,13 +369,13 @@ class GameEvents {
     if (value) {
       GameCamera.setModeFree();
       GameEditor.cursorSetToPlayer();
-      GameState.player.message.value = "-press arrow keys to move\n\n-press tab to play";
-      GameState.player.messageTimer = 300;
+      GamePlayer.message.value = "-press arrow keys to move\n\n-press tab to play";
+      GamePlayer.messageTimer = 300;
     } else {
       ClientActions.clearMouseOverDialogType();
       GameCamera.setModeChase();
       if (ServerState.sceneEditable.value){
-        GameState.player.message.value = "press tab to edit";
+        GamePlayer.message.value = "press tab to edit";
       }
     }
   }
@@ -615,9 +615,9 @@ class GameEvents {
 
   static void onChangedPlayerMessage(String value){
     if (value.isNotEmpty) {
-      GameState.player.messageTimer = 200;
+      GamePlayer.messageTimer = 200;
     } else {
-      GameState.player.messageTimer = 0;
+      GamePlayer.messageTimer = 0;
     }
   }
 

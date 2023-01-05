@@ -216,7 +216,7 @@ class ServerResponseReader with ByteReader {
         ServerState.playerGold.value = readUInt16();
         break;
       case ApiPlayer.Aim_Angle:
-       GameState.player.mouseAngle = readAngle();
+        GamePlayer.mouseAngle = readAngle();
         break;
       case ApiPlayer.Inventory:
         readPlayerInventory();
@@ -267,8 +267,8 @@ class ServerResponseReader with ByteReader {
         ClientActions.redrawInventory();
         break;
       case ApiPlayer.Message:
-       GameState.player.message.value = readString();
-       break;
+        GamePlayer.message.value = readString();
+        break;
       case ApiPlayer.Alive:
         GamePlayer.alive.value = readBool();
         ClientActions.clearHoverDialogType();
@@ -348,13 +348,13 @@ class ServerResponseReader with ByteReader {
   }
 
   void readPlayerAttackTargetName() {
-   GameState.player.mouseTargetName.value = readString();
-   GameState.player.mouseTargetAllie.value = readBool();
-   GameState.player.mouseTargetHealth.value = readPercentage();
+    GamePlayer.mouseTargetName.value = readString();
+    GamePlayer.mouseTargetAllie.value = readBool();
+    GamePlayer.mouseTargetHealth.value = readPercentage();
   }
 
   void readMapCoordinate() {
-   GameState.player.mapTile.value = readByte();
+    GamePlayer.mapTile.value = readByte();
   }
 
   void readEditorGameObjectSelected() {
@@ -385,18 +385,18 @@ class ServerResponseReader with ByteReader {
   }
 
   void readPlayerQuests() {
-   GameState.player.questsInProgress.value = readQuests();
-   GameState.player.questsCompleted.value = readQuests();
+    GamePlayer.questsInProgress.value = readQuests();
+    GamePlayer.questsCompleted.value = readQuests();
   }
 
   void readNpcTalk() {
-   GameState.player.npcTalk.value = readString();
+    GamePlayer.npcTalk.value = readString();
     final totalOptions = readByte();
     final options = <String>[];
     for (var i = 0; i < totalOptions; i++) {
        options.add(readString());
     }
-   GameState.player.npcTalkOptions.value = options;
+    GamePlayer.npcTalkOptions.value = options;
   }
 
   void readSceneMetaData() {
@@ -443,7 +443,7 @@ class ServerResponseReader with ByteReader {
   }
 
   void readPlayerTarget() {
-    readVector3(GameState.player.abilityTarget);
+    readVector3(GamePlayer.abilityTarget);
   }
 
   void readPlayerSpawned() {

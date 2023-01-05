@@ -31,7 +31,7 @@ Widget buildGameDialog(GameDialog? gameDialog) =>
         children: GameDialog.values.map((e) =>
             container(
               child: e.name,
-              action: ()=> GameState.player.gameDialog.value = e,
+              action: ()=> GamePlayer.gameDialog.value = e,
               color: gameDialog == e ? brownDark : brownLight,
               hoverColor: brownDark,
             ),
@@ -51,5 +51,5 @@ Widget buildButtonCloseGameDialog() =>
     );
 
 void actionCloseGameDialog(){
-  GameState.player.gameDialog.value = null;
+  GamePlayer.gameDialog.value = null;
 }

@@ -7,8 +7,8 @@ import 'package:golden_ratio/constants.dart';
 
 import 'game_dialog_tab.dart';
 
-final activeQuests = Watch<List<Quest>>(GameState.player.questsInProgress.value);
-final inProgress = watch(GameState.player.questsInProgress, buildColumnQuests);
+final activeQuests = Watch<List<Quest>>(GamePlayer.questsInProgress.value);
+final inProgress = watch(GamePlayer.questsInProgress, buildColumnQuests);
 
 Widget buildGameDialogQuests() =>
   Container(
@@ -21,7 +21,7 @@ Widget buildGameDialogQuests() =>
       height: Engine.screen.height * goldenRatio_0618,
       child: Column(
         children: [
-          watch(GameState.player.gameDialog, buildGameDialog),
+          watch(GamePlayer.gameDialog, buildGameDialog),
           Container(
             padding: const EdgeInsets.all(16),
             alignment: Alignment.topLeft,
@@ -48,7 +48,7 @@ Widget buildButtonCloseGameDialog() =>
   );
 
 void actionCloseGameDialog(){
-  GameState.player.gameDialog.value = null;
+  GamePlayer.gameDialog.value = null;
 }
 
 Widget buildColumnQuests(List<Quest> quests) =>

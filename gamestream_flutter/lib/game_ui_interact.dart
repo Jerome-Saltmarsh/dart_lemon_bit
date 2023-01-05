@@ -122,8 +122,8 @@ class GameUIInteract {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              watch(GameState.player.npcTalk, buildControlNpcTalk),
-              watch(GameState.player.npcTalkOptions, buildControlNpcTopics)
+              watch(GamePlayer.npcTalk, buildControlNpcTalk),
+              watch(GamePlayer.npcTalkOptions, buildControlNpcTopics)
             ],
           ),
         ),

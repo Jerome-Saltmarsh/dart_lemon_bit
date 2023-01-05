@@ -4,7 +4,7 @@ import 'package:gamestream_flutter/library.dart';
 
 
 Widget buildWatchMouseTargetName(){
-   return watch(GameState.player.mouseTargetName, (String? name){
+   return watch(GamePlayer.mouseTargetName, (String? name){
       if (name == null) return SizedBox();
 
       return Container(
@@ -17,7 +17,7 @@ Widget buildWatchMouseTargetName(){
            alignment: Alignment.centerLeft,
            child: Stack(
              children: [
-               watch(GameState.player.mouseTargetHealth, (double health){
+               watch(GamePlayer.mouseTargetHealth, (double health){
                   return Container(
                     height: 50,
                     width: 100 * health,

@@ -33,8 +33,8 @@ class GameRender {
   }
 
   static void renderMouseTargetName() {
-    if (!GameState.player.mouseTargetAllie.value) return;
-    final mouseTargetName = GameState.player.mouseTargetName.value;
+    if (!GamePlayer.mouseTargetAllie.value) return;
+    final mouseTargetName = GamePlayer.mouseTargetName.value;
     if (mouseTargetName == null) return;
     renderText(
         text: mouseTargetName,

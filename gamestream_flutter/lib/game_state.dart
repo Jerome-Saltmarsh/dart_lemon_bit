@@ -1,13 +1,12 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/isometric/player.dart';
 import 'package:gamestream_flutter/isometric/render/render_circle.dart';
 
 import 'library.dart';
 
+
 class GameState {
-  static final player = Player();
   static final gameObjects = <GameObject>[];
   static final characters = <Character>[];
   static final npcs = <Character>[];
@@ -228,11 +227,11 @@ class GameState {
   static void actionGameDialogShowMap() {
     if (ServerState.gameType.value != GameType.Dark_Age) return;
 
-    if (player.gameDialog.value == GameDialog.Map){
-      player.gameDialog.value = null;
+    if (GamePlayer.gameDialog.value == GameDialog.Map){
+      GamePlayer.gameDialog.value = null;
       return;
     }
-    player.gameDialog.value = GameDialog.Map;
+    GamePlayer.gameDialog.value = GameDialog.Map;
   }
 
   static void clear() {
@@ -244,8 +243,8 @@ class GameState {
     totalNpcs = 0;
     particleEmitters.clear();
     ClientState.particles.clear();
-    player.gameDialog.value = null;
-    player.npcTalkOptions.value = [];
+    GamePlayer.gameDialog.value = null;
+    GamePlayer.npcTalkOptions.value = [];
     ServerState.interactMode.value = InteractMode.None;
     Engine.zoom = 1;
     Engine.redrawCanvas();
@@ -1035,10 +1034,10 @@ class GameState {
   }
 
   static void updatePlayerMessageTimer() {
-    if (player.messageTimer <= 0) return;
-    player.messageTimer--;
-    if (player.messageTimer > 0) return;
-    player.message.value = "";
+    if (GamePlayer.messageTimer <= 0) return;
+    GamePlayer.messageTimer--;
+    if (GamePlayer.messageTimer > 0) return;
+    GamePlayer.message.value = "";
   }
 
   static void applyEmissionGameObjects() {
@@ -1085,28 +1084,16 @@ class GameState {
     }
   }
 
-  // static void setNodeShade(int index, int shade) {
-  //   if (shade < 0) {
-  //     GameNodes.nodeShades[index] = 0;
-  //     return;
-  //   }
-  //   if (shade > Shade.Pitch_Black){
-  //     GameNodes.nodeShades[index] = Shade.Pitch_Black;
-  //     return;
-  //   }
-  //   GameNodes.nodeShades[index] = shade;
-  // }
-
   static void toggleShadows () => gridShadows.value = !gridShadows.value;
 
   static void actionGameDialogShowQuests() {
     if (ServerState.gameType.value != GameType.Dark_Age) return;
 
-    if (player.gameDialog.value == GameDialog.Quests){
-      player.gameDialog.value = null;
+    if (GamePlayer.gameDialog.value == GameDialog.Quests){
+      GamePlayer.gameDialog.value = null;
       return;
     }
-    player.gameDialog.value = GameDialog.Quests;
+    GamePlayer.gameDialog.value = GameDialog.Quests;
   }
 
     static void updateParticleEmitters(){

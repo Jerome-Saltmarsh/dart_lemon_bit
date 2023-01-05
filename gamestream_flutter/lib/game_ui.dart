@@ -29,7 +29,7 @@ class GameUI {
   static Widget buildUI() => StackFullscreen(children: [
         buildWatchBool(ClientState.triggerAlarmNoMessageReceivedFromServer,
             buildDialogFramesSinceUpdate),
-        watch(GameState.player.gameDialog, buildGameDialog),
+        watch(GamePlayer.gameDialog, buildGameDialog),
         buildWatchBool(GamePlayer.alive, buildPositionedContainerRespawn, false),
         Positioned(
             top: 0,

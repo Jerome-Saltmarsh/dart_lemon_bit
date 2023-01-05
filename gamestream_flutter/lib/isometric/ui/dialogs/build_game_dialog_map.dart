@@ -1,19 +1,16 @@
 
 import 'package:flutter/cupertino.dart';
-import 'package:gamestream_flutter/game_state.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/game_map.dart';
+import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/services/mini_map.dart';
 import 'package:golden_ratio/constants.dart';
-import 'package:lemon_engine/engine.dart';
 
-import '../../../game_widgets.dart';
 import 'game_dialog_tab.dart';
 
 final canvasFrameMap = ValueNotifier<int>(0);
 const mapTileSize = 64.0;
 const mapTileSizeHalf = mapTileSize / 2;
-
 
 
 Widget buildGameDialogMap(){
@@ -29,7 +26,7 @@ Widget buildGameDialogMap(){
       height: Engine.screen.height * goldenRatio_0618,
       child: Column(
         children: [
-          watch(GameState.player.gameDialog, buildGameDialog),
+          watch(GamePlayer.gameDialog, buildGameDialog),
           GameMapWidget(width: Engine.screen.width * goldenRatio_0618, height: Engine.screen.height * goldenRatio_0618 - 50),
         ],
       ),
