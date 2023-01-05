@@ -84,7 +84,6 @@ ctrl + w:   minimal mode
 [ ] design scene suburbia
 [ ] cupboards with loot
 [ ] destroyable crates etc
-[ ] melee items deplete energy
 [ ] heavy melee items deplete energy quicker than light melee weapons
 [ ] being over encumbered depletes energy while running
 [ ] flaming barrel object
@@ -97,6 +96,8 @@ ctrl + w:   minimal mode
 [ ] fix physics characters teleport through walls on struck
 
 05.01.2023
+[x] melee items deplete energy
+[x] fix repeat error message
 [x] game debug ui modify ambient color
 [x] compress scenes using gzip
 [x] item type sprite axe 
