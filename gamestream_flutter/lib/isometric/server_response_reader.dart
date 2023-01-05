@@ -89,7 +89,7 @@ class ServerResponseReader with ByteReader {
           GameUI.mapVisible.value = readBool();
           break;
         case ServerResponse.Error:
-          ServerState.error.value = readString();
+          readServerResponseError();
           break;
         case ServerResponse.Dark_Age:
           final darkAgeCode = readByte();
@@ -120,6 +120,11 @@ class ServerResponseReader with ByteReader {
           return;
       }
     }
+  }
+
+  void readServerResponseError() {
+    ServerState.error.value = "";
+    ServerState.error.value = readString();
   }
 
   var debugging = false;

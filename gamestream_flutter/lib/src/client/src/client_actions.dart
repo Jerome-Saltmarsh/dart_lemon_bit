@@ -97,6 +97,7 @@ class ClientActions {
   }
 
   static void showMessage(String message){
+    ClientState.messageStatus.value = "";
     ClientState.messageStatus.value = message;
   }
 }
