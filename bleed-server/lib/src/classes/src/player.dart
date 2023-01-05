@@ -27,9 +27,9 @@ class Player extends Character with ByteWriter {
   var textDuration = 0;
   var _experience = 0;
   var _level = 1;
-  var _magic = 0;
   var _attributes = 0;
-  var maxMagic = 100;
+  var _energy = 100;
+  var maxEnergy = 100;
   var message = "";
   var text = "";
   var name = 'anon';
@@ -78,6 +78,9 @@ class Player extends Character with ByteWriter {
   var mapX = 0;
   var mapY = 0;
 
+  static const Frames_Per_Energy_Gain = 60;
+  var nextEnergyGain = Frames_Per_Energy_Gain;
+
   /// CONSTRUCTOR
   Player({
     required this.game,
@@ -93,8 +96,8 @@ class Player extends Character with ByteWriter {
     headType: ItemType.Head_Rogues_Hood,
     damage: 1,
   ){
-    maxMagic = magic;
-    _magic = maxMagic;
+    maxEnergy = energy;
+    _energy = maxEnergy;
     game.players.add(this);
     game.characters.add(this);
   }
@@ -109,7 +112,7 @@ class Player extends Character with ByteWriter {
   int get equippedWeaponIndex => _equippedWeaponIndex;
   int get lookDirection => Direction.fromRadian(lookRadian);
   int get experience => _experience;
-  int get magic => _magic;
+  int get energy => _energy;
   int get experienceRequiredForNextLevel => getExperienceForLevel(level + 1);
   bool get weaponIsEquipped => _equippedWeaponIndex != -1;
   double get mouseGridX => (mouse.x + mouse.y) + z;
@@ -119,9 +122,9 @@ class Player extends Character with ByteWriter {
   double get mouseAngle => getAngleBetween(mouseGridX, mouseGridY, x, y);
   Scene get scene => game.scene;
   double get magicPercentage {
-    if (_magic == 0) return 0;
-    if (maxMagic == 0) return 0;
-    return _magic / maxMagic;
+    if (_energy == 0) return 0;
+    if (maxEnergy == 0) return 0;
+    return _energy / maxEnergy;
   }
 
   double get experiencePercentage {
@@ -199,8 +202,11 @@ class Player extends Character with ByteWriter {
     writePlayerAimTargetQuantity();
   }
 
-  set magic(int value){
-    _magic = clamp(value, 0, maxMagic);
+  set energy(int value) {
+    final clampedValue = clamp(value, 0, maxEnergy);
+    if (_energy == clampedValue) return;
+    _energy = clampedValue;
+    writePlayerEnergy();
   }
 
   /// METHODS
@@ -1692,6 +1698,13 @@ class Player extends Character with ByteWriter {
 
   void writeDouble(double value){
     writeInt16(value.toInt());
+  }
+
+  void writePlayerEnergy() {
+    writeUInt8(ServerResponse.Player);
+    writeUInt8(ApiPlayer.Energy);
+    writeUInt16(energy);
+    writeUInt16(maxEnergy);
   }
 }
 

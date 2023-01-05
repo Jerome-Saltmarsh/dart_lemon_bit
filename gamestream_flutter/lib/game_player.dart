@@ -12,6 +12,9 @@ class GamePlayer {
   static final previousPosition = Vector3();
   static final storeItems = Watch(<int>[]);
 
+  static final energy = Watch(0);
+  static final energyMax = Watch(0);
+
   static var position = Vector3();
   static var runningToTarget = false;
   static var targetCategory = TargetCategory.Nothing;

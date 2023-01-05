@@ -215,6 +215,10 @@ class ServerResponseReader with ByteReader {
       case ApiPlayer.Gold:
         ServerState.playerGold.value = readUInt16();
         break;
+      case ApiPlayer.Energy:
+        GamePlayer.energy.value = readUInt16();
+        GamePlayer.energyMax.value = readUInt16();
+        break;
       case ApiPlayer.Aim_Angle:
         GamePlayer.mouseAngle = readAngle();
         break;

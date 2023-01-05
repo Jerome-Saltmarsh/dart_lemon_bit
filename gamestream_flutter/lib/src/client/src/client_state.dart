@@ -70,7 +70,9 @@ class ClientState {
     if (ServerState.lightningFlashing.value) return;
     const Seconds_Per_Hour = 3600;
     const Seconds_Per_Hours_12 = Seconds_Per_Hour * 12;
+    const Seconds_Per_Hours_24 = Seconds_Per_Hour * 24;
     final totalSeconds = (ServerState.hours.value * Seconds_Per_Hour) + (ServerState.minutes.value * 60);
+    // GameNodes.ambient_hue = 360.0 * (totalSeconds / Seconds_Per_Hours_24);
 
     GameNodes.ambient_alp = totalSeconds < Seconds_Per_Hours_12
         ? 1.0 - (totalSeconds / Seconds_Per_Hours_12)

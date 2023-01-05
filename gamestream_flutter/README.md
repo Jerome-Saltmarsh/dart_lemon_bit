@@ -55,25 +55,16 @@ ctrl + w:   minimal mode
 
 [CONTENT]
 [ ] item type army clothes
-[ ] weapon type crossbow
 [ ] gameobject type car
-[ ] fix particle shade
-
-[GAMES]
-[ ] game dark-age
-[ ] game royal
-[ ] game waves
-[ ] game moba
-
-[RELEASE 31ST JANUARY]
-[ ] game practice design scene
-[ ] game survival design scene
-[ ] game 5v5
-
-[CRITICAL]
+[ ] node type sandbags
+[ ] node type tires
+[ ] node type train tracks
+[ ] node type barbed wire
+[ ] weapon type crossbow
+[ ] weapon type plasma rifle
+[ ] weapon type stun grenade
+[ ] enemy type flaming skull
 [ ] fix ai spots player through walls
-[ ] fix physics characters teleport through walls on struck
-[ ] fix render visibility algorithm
 [ ] feature survival random treasure spawns
 [ ] spawn boss characters
 [ ] street lamp
@@ -86,12 +77,6 @@ ctrl + w:   minimal mode
 [ ] character clothes suit
 [ ] character clothes police officer
 [ ] character clothes doctor
-
-[DIARY]
-the scene needs to be more atmospheric. More apocalyptic things. Crashed cars with smoke coming out.
-Sandbags and fortifications left over. Rubble and pot holes. Dead soldiers and zombies.
-
-[GAME SURVIVAL]
 [ ] make the scene apocalyptic
 [ ] random treasure spawns
 [ ] vendor armour
@@ -102,21 +87,24 @@ Sandbags and fortifications left over. Rubble and pot holes. Dead soldiers and z
 [ ] melee items deplete energy
 [ ] heavy melee items deplete energy quicker than light melee weapons
 [ ] being over encumbered depletes energy while running
-[ ] fix knife attack animation
 [ ] flaming barrel object
-[ ] node type sandbags
-[ ] node type tires
-[ ] node type barbed wire
-[ ] weapon type plasma rifle
-[ ] weapon type stun grenade
+[ ] saturation changes over time of day and night
+[ ] hue changes over time of day and night
+[ ] respawn cut grass
+
+[CRITICAL]
+[ ] fix render visibility algorithm
+[ ] fix physics characters teleport through walls on struck
 
 05.01.2023
+[x] game debug ui modify ambient color
 [x] compress scenes using gzip
 [x] item type sprite axe 
 [x] item type sprite hammer 
 [x] item type sprite staff 
 
 04.01.2023
+[x] fix melee attack animations
 [x] reduce light during rain
 [x] fix stats damage incorrect
 [x] feature light source hue and intensity

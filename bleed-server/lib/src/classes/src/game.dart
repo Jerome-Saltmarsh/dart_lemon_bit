@@ -348,6 +348,9 @@ abstract class Game {
     }
 
     if (ItemType.isTypeWeaponMelee(weaponType)) {
+      if (character is Player) {
+         character.energy -= 30;
+      }
       characterAttackMelee(character);
       return;
     }
@@ -1181,6 +1184,15 @@ abstract class Game {
     }
 
     if (player.deadOrDying) return;
+
+    if (player.energy < player.maxEnergy) {
+      player.nextEnergyGain--;
+      if (player.nextEnergyGain <= 0){
+        player.energy++;
+        player.nextEnergyGain = Player.Frames_Per_Energy_Gain;
+      }
+    }
+
 
     if (player.idling && !player.weaponStateBusy){
       final diff = Direction.getDifference(player.lookDirection, player.faceDirection);

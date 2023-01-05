@@ -29,4 +29,5 @@ class ApiPlayer {
   static const Base_Max_Health = 36;
   static const Perks = 37;
   static const Select_Hero = 38;
+  static const Energy = 39;
 }
