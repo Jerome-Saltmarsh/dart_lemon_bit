@@ -267,7 +267,18 @@ abstract class Game {
     final weaponType = character.weaponType;
 
     if (character is Player) {
-      final playerWeaponConsumeType = ItemType.getConsumeType(character.weaponType);
+
+      final energyConsumeAmount = ItemType.getEnergyConsumeAmount(weaponType);
+
+      if (energyConsumeAmount > 0) {
+         if (energyConsumeAmount > character.energy) {
+           character.writeError('Not Enough Energy');
+           return;
+         }
+         character.energy -= energyConsumeAmount;
+      }
+
+      final playerWeaponConsumeType = ItemType.getConsumeType(weaponType);
 
       if (playerWeaponConsumeType != ItemType.Empty) {
         final equippedWeaponQuantity = character.equippedWeaponQuantity;
@@ -276,7 +287,7 @@ abstract class Game {
           final totalAmmoRemaining = character.inventoryGetTotalQuantityOfItemType(equippedWeaponAmmoType);
 
           if (totalAmmoRemaining == 0) {
-            character.writeError('no ammunition');
+            character.writeError('No Ammunition');
             return;
           }
           var total = min(totalAmmoRemaining, character.equippedWeaponCapacity);
@@ -348,9 +359,6 @@ abstract class Game {
     }
 
     if (ItemType.isTypeWeaponMelee(weaponType)) {
-      if (character is Player) {
-         character.energy -= 30;
-      }
       characterAttackMelee(character);
       return;
     }

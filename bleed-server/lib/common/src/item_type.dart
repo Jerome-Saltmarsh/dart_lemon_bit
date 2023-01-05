@@ -347,6 +347,12 @@ class ItemType {
       Weapon_Special_Minigun              : Resource_Round_Rifle,
   }[itemType] ?? Empty;
 
+  static int getEnergyConsumeAmount(int itemType) => const {
+    ItemType.Weapon_Melee_Axe: 20,
+    ItemType.Weapon_Melee_Knife: 10,
+    ItemType.Weapon_Melee_Staff: 30,
+  }[itemType] ?? 0;
+
   static int getConsumeAmount(int itemType) => const {
     Weapon_Ranged_Bow: 1,
     Weapon_Handgun_Glock: 1,
