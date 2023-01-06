@@ -76,22 +76,22 @@ class RendererNodes extends Renderer {
   static bool get currentNodeVisibilityOpaque => nodeVisibility[currentNodeIndex] == Visibility.Opaque;
   static bool get currentNodeVariation => GameNodes.nodeVariations[currentNodeIndex];
 
-  // static int get renderNodeShade => nodeShades[currentNodeIndex];
   static int get renderNodeOrientation => nodeOrientations[currentNodeIndex];
-  static int get renderNodeColor => GameNodes.nodeColors[currentNodeIndex];
   static int get renderNodeWind => ServerState.windTypeAmbient.value;
   static bool get renderNodeVariation => GameNodes.nodeVariations[currentNodeIndex];
 
   static int get renderNodeBelowIndex => currentNodeIndex - GameNodes.area;
   static bool get renderNodeBelowVariation => renderNodeBelowIndex > 0 ? GameNodes.nodeVariations[renderNodeBelowIndex] : renderNodeVariation;
 
-  // static int get renderNodeBelowShade {
-  //   if (renderNodeBelowIndex < 0) return Shade.Medium;
-  //   if (renderNodeBelowIndex >= GameNodes.total) return Shade.Medium;
-  //   return nodeShades[renderNodeBelowIndex];
-  // }
+  static int get renderNodeBelowColor => getNodeColorAtIndex(currentNodeIndex - GameNodes.area);
 
-  static int get renderNodeBelowColor => GameNodes.nodeColors[currentNodeIndex - GameNodes.area];
+  static int getNodeColorAtIndex(int index){
+    if (index < 0) return GameNodes.ambient_color;
+    if (index >= GameNodes.total) return GameNodes.ambient_color;
+    return GameNodes.nodeVisible[index] == Visibility.Opaque
+        ? GameNodes.nodeColors[index]
+        : GameNodes.ambient_color;
+  }
 
   // METHODS
 
@@ -600,7 +600,7 @@ class RendererNodes extends Renderer {
       srcHeight: AtlasNode.Node_Tree_Top_Height,
       dstX: currentNodeDstX + (shift * 0.5),
       dstY: currentNodeDstY,
-      color: getColorAtIndexSafe(currentNodeIndex - (2 * GameNodes.area)),
+      color: getNodeColorAtIndex(currentNodeIndex - (GameNodes.area + GameNodes.area)),
     );
   }
 
@@ -614,7 +614,7 @@ class RendererNodes extends Renderer {
       srcHeight: 58,
       dstX: currentNodeDstX + (shift * 0.5),
       dstY: currentNodeDstY,
-      color: getColorAtIndexSafe(currentNodeIndex - (2 * GameNodes.area)),
+      color: getNodeColorAtIndex(currentNodeIndex - (GameNodes.area + GameNodes.area)),
     );
   }
 
@@ -937,7 +937,7 @@ class RendererNodes extends Renderer {
         dstX: currentNodeDstX,
         dstY: currentNodeDstY + GameAnimation.animationFrameWaterHeight + 14,
         anchorY: 0.3334,
-        color: renderNodeColor,
+        color: currentNodeColor,
       );
 
   static void renderStandardNode({
@@ -978,9 +978,10 @@ class RendererNodes extends Renderer {
     Engine.incrementBufferIndex();
   }
 
-  static int getColorAtIndexSafe(int index) =>
-      // getShadeColor(getShadeAtIndexSafe(index));
-      GameNodes.nodeColors[index];
+
+  // static int getColorAtIndexSafe(int index) =>
+  //     // getShadeColor(getShadeAtIndexSafe(index));
+  //     GameNodes.nodeColors[index];
 
   // static int getShadeAtIndexSafe(int index){
   //   if (index < 0) return Shade.Medium;
