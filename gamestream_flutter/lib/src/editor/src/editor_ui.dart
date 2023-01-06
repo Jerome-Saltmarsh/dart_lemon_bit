@@ -457,8 +457,7 @@ class EditorUI {
       (int activeRain) => buildIconWeatherControl(
             tooltip: '${RainType.getName(rain)} Rain',
             action: () => GameNetwork.sendClientRequestWeatherSetRain(rain),
-            icon: GameUI.buildAtlasIconType(convertRainToIconType(rain),
-                size: 64),
+            icon: GameUI.buildAtlasIconType(convertRainToIconType(rain)),
             isActive: rain == activeRain,
           ));
 
@@ -469,8 +468,7 @@ class EditorUI {
             action: () =>
                 GameNetwork.sendClientRequestWeatherSetLightning(lightning),
             icon: GameUI.buildAtlasIconType(
-                convertLightningToIconType(lightning),
-                size: 64),
+                convertLightningToIconType(lightning)),
             isActive: lightning == activeLightning,
           ));
 
@@ -479,8 +477,7 @@ class EditorUI {
       (int activeWindType) => buildIconWeatherControl(
             tooltip: '${WindType.getName(windType)} Wind',
             action: () => GameNetwork.sendClientRequestWeatherSetWind(windType),
-            icon: GameUI.buildAtlasIconType(convertWindToIconType(windType),
-                size: 64),
+            icon: GameUI.buildAtlasIconType(convertWindToIconType(windType)),
             isActive: windType == activeWindType,
           ));
 

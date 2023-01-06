@@ -190,6 +190,8 @@ class AtlasIcons {
     IconType.Sound_Disabled: 224,
     IconType.Plus: 32,
     IconType.Minus: 64,
+    IconType.Heart: 0,
+    IconType.Damage: 48,
   }[itemType] ?? 0;
 
   static double getSrcY(int itemType) => const  <int, double> {
@@ -215,7 +217,23 @@ class AtlasIcons {
     IconType.Inventory: 32,
     IconType.Plus: 96,
     IconType.Minus: 96,
+    IconType.Heart: 448,
+    IconType.Damage: 448,
   }[itemType] ?? 0;
+
+  static double getSrcSize(int itemType) => const  <int, double> {
+      IconType.Heart: 48.0,
+      IconType.Damage: 48.0,
+      IconType.Rain_None: 64.0,
+      IconType.Rain_Light: 64.0,
+      IconType.Rain_Heavy: 64.0,
+      IconType.Lightning_Off: 64.0,
+      IconType.Lightning_Nearby: 64.0,
+      IconType.Lightning_On: 64.0,
+      IconType.Wind_Calm: 64.0,
+      IconType.Wind_Gentle: 64.0,
+      IconType.Wind_Strong: 64.0,
+  }[itemType] ?? 32;
 }
 
 class AtlasNodeX {

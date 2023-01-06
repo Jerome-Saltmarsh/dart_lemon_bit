@@ -24,4 +24,6 @@ class IconType {
   static const Box = 28;
   static const Plus = 29;
   static const Minus = 30;
+  static const Heart = 31;
+  static const Damage = 32;
 }

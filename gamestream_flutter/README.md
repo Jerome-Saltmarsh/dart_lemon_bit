@@ -90,15 +90,22 @@ ctrl + w:   minimal mode
 [ ] saturation changes over time of day and night
 [ ] hue changes over time of day and night
 [ ] respawn cut grass
-[ ] replace health and damage text with icons
 [ ] melee attack sounds
 [ ] melee attack slash effect
 
 [CRITICAL]
 [ ] fix render visibility algorithm
 [ ] fix physics characters teleport through walls on struck
+[ ] fix node type boulder
+[ ] fix node type fireplace
+[ ] fix node type chimney
+[ ] fix node type oven
+
+06.01.2023
+[x] replace health and damage text with icons
 
 05.01.2023
+[x] knife attack sounds
 [x] melee items deplete energy
 [x] fix repeat error message
 [x] game debug ui modify ambient color

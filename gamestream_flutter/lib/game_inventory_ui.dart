@@ -73,10 +73,14 @@ class GameInventoryUI {
                     padding: const EdgeInsets.all(6),
                     color: Colors.white12,
                     width: 150,
-                    child: Column(
+                    child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        text("Health", color: Colors.black87, bold: true),
+                        Container(
+                            width: 20,
+                            height: 20,
+                            child: FittedBox(child: GameUI.buildAtlasIconType(IconType.Heart, scale: 0.62))),
                         text("$currentHealth / $maxHealth", color: Colors.black87),
                       ],
                     ),
@@ -92,10 +96,15 @@ class GameInventoryUI {
                 color: Colors.white12,
                 padding: const EdgeInsets.all(6),
                 width: 150,
-                child: Column(
+                child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    text("Damage", color: Colors.black87, bold: true),
+                    // text("Damage", color: Colors.black87, bold: true),
+                    Container(
+                        width: 20,
+                        height: 20,
+                        child: FittedBox(child: GameUI.buildAtlasIconType(IconType.Damage, scale: 0.62))),
                     text(damage, color: Colors.black87),
                   ],
                 ),
