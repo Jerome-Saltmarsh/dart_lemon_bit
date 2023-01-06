@@ -406,7 +406,7 @@ class GameInventoryUI {
 
      return Positioned(
         top: 200,
-        right: 400,
+        right: 300,
         child: Container(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -469,10 +469,9 @@ class GameInventoryUI {
                                       || (itemTypeIsTrinket && itemIndexInBelt);
 
     return Positioned(
-      top: Engine.mousePosition.y < (Engine.screen.height * 0.5) ?  Engine.mousePosition.y + 60 : null,
-      bottom: Engine.mousePosition.y >= (Engine.screen.height * 0.5) ?  Engine.screen.height - Engine.mousePosition.y + 50 : null,
-      left:  Engine.mousePosition.x < (Engine.screen.width * 0.5) ? max(Engine.mousePosition.x - 100, 50) : null,
-      right: Engine.mousePosition.x >= (Engine.screen.width * 0.5) ? max((Engine.screen.width - Engine.mousePosition.x) - 100, 50) : null,
+      top: 100,
+      left:  Engine.mousePosition.x < (Engine.screen.width * 0.5) ? 300 : null,
+      right: Engine.mousePosition.x >= (Engine.screen.width * 0.5) ? 300 : null,
       child: Container(
         padding: const EdgeInsets.all(12),
         color: brownDark,
