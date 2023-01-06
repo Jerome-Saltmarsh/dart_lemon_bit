@@ -14,7 +14,7 @@ class GameUIInteract {
     static Widget buildInteractMode(int mode) {
       switch (mode) {
         case InteractMode.None:
-          return const SizedBox();
+          return Positioned(child: GameInventoryUI.buildContainerPlayerStats(backgroundColor: Colors.transparent), bottom: 0, left: 0);
         case InteractMode.Talking:
           return buildPositionedTalk();
         case InteractMode.Trading:

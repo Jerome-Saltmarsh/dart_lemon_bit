@@ -368,14 +368,22 @@ class GameUI {
             bottom: 24,
             left: 24,
             child: watch(ServerState.playerAttributes, buildButtonAttributes)),
-    Positioned(
-        bottom: 24,
-        left: 24,
-        child: watch(GamePlayer.energyMax, (int energyMax){
-          return watch(GamePlayer.energy, (int energy){
-              return text("Energy $energy / $energyMax");
-          });
-        })),
+    // Positioned(
+    //     bottom: 24,
+    //     left: 24,
+    //     child: watch(GamePlayer.energyMax, (int energyMax){
+    //       return watch(GamePlayer.energy, (int energy){
+    //           return text("Energy $energy / $energyMax");
+    //       });
+    //     })),
+    // Positioned(
+    //     bottom: 24,
+    //     left: 24,
+    //     child: watch(ClientState, (int energyMax){
+    //       return watch(GamePlayer.energy, (int energy){
+    //           return text("Energy $energy / $energyMax");
+    //       });
+    //     })),
         Positioned(
           left: 50,
           top: 50,

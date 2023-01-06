@@ -55,9 +55,9 @@ class GameInventoryUI {
         child: child,
     );
 
-  static Container buildContainerPlayerStats() =>
+  static Container buildContainerPlayerStats({Color? backgroundColor}) =>
       Container(
-        color: Colors.white12,
+        color: backgroundColor ?? Colors.white12,
         margin: const EdgeInsets.only(right: 12),
         padding: const EdgeInsets.all(12),
         height: 148,
@@ -71,7 +71,7 @@ class GameInventoryUI {
                 return watch(ServerState.playerHealth, (int currentHealth) {
                   return Container(
                     padding: const EdgeInsets.all(6),
-                    color: Colors.white12,
+                    color: Colors.white24,
                     width: 150,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -98,7 +98,7 @@ class GameInventoryUI {
                 return watch(GamePlayer.energy, (int energy) {
                   return Container(
                     padding: const EdgeInsets.all(6),
-                    color: Colors.white12,
+                    color: Colors.white24,
                     width: 150,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -123,7 +123,7 @@ class GameInventoryUI {
               hoverTargetType: ClientType.Hover_Target_Player_Stats_Damage,
               child: watch(ServerState.playerDamage, (int damage) {
                 return Container(
-                  color: Colors.white12,
+                  color: Colors.white24,
                   padding: const EdgeInsets.all(6),
                   width: 150,
                   child: Row(
