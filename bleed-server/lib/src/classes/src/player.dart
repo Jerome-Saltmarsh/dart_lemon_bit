@@ -57,8 +57,10 @@ class Player extends Character with ByteWriter {
   var belt5_quantity = 0; // Q
   var belt6_quantity = 0; // E
 
-  var _baseMaxHealth = 10;
+  var _baseHealth = 10;
   var _baseDamage = 0;
+  var _baseEnergy = 10;
+
   /// Warning - do not reference
   Game game;
   Collider? _aimTarget; // the currently highlighted character
@@ -104,7 +106,7 @@ class Player extends Character with ByteWriter {
 
   /// GETTERS
   Collider? get aimTarget => _aimTarget;
-  int get baseMaxHealth => _baseMaxHealth;
+  int get baseMaxHealth => _baseHealth;
   int get baseDamage => _baseDamage;
   int get gold => _gold;
   int get level => _level;
@@ -135,16 +137,18 @@ class Player extends Character with ByteWriter {
   /// SETTERS
   set baseMaxHealth(int value){
      assert (value > 0);
-     if (_baseMaxHealth == value) return;
-     _baseMaxHealth = value;
-     writePlayerBaseMaxHealth();
+     if (_baseHealth == value) return;
+     _baseHealth = value;
+     writePlayerBaseDamageHealthEnergy();
+     // writePlayerBaseMaxHealth();
   }
 
   set baseDamage(int value){
     assert (value > 0);
     if (_baseDamage == value) return;
     _baseDamage = value;
-    writePlayerBaseDamage();
+    writePlayerBaseDamageHealthEnergy();
+    // writePlayerBaseDamage();
   }
 
   set equippedWeaponIndex(int index){
@@ -223,28 +227,41 @@ class Player extends Character with ByteWriter {
           + ItemType.getMaxHealth(legsType)
           + ItemType.getMaxHealth(weaponType);
 
+      maxEnergy = _baseEnergy
+          + ItemType.getEnergy(headType)
+          + ItemType.getEnergy(bodyType)
+          + ItemType.getEnergy(legsType)
+          + ItemType.getEnergy(weaponType);
+
       if (ItemType.isTypeTrinket(belt1_itemType)) {
         maxHealth += ItemType.getMaxHealth(belt1_itemType);
+        maxEnergy += ItemType.getEnergy(belt1_itemType);
         damage += ItemType.getDamage(belt1_itemType);
+
       }
       if (ItemType.isTypeTrinket(belt2_itemType)) {
         maxHealth += ItemType.getMaxHealth(belt2_itemType);
+        maxEnergy += ItemType.getEnergy(belt2_itemType);
         damage += ItemType.getDamage(belt2_itemType);
       }
       if (ItemType.isTypeTrinket(belt3_itemType)) {
         maxHealth += ItemType.getMaxHealth(belt3_itemType);
+        maxEnergy += ItemType.getEnergy(belt3_itemType);
         damage += ItemType.getDamage(belt3_itemType);
       }
       if (ItemType.isTypeTrinket(belt4_itemType)) {
         maxHealth += ItemType.getMaxHealth(belt4_itemType);
+        maxEnergy += ItemType.getEnergy(belt4_itemType);
         damage    += ItemType.getDamage(belt4_itemType);
       }
       if (ItemType.isTypeTrinket(belt5_itemType)){
         maxHealth += ItemType.getMaxHealth(belt5_itemType);
+        maxEnergy += ItemType.getEnergy(belt6_itemType);
         damage    += ItemType.getDamage(belt5_itemType);
       }
       if (ItemType.isTypeTrinket(belt6_itemType)) {
         maxHealth += ItemType.getMaxHealth(belt6_itemType);
+        maxEnergy += ItemType.getEnergy(belt6_itemType);
         damage    += ItemType.getDamage(belt6_itemType);
       }
 
@@ -253,6 +270,9 @@ class Player extends Character with ByteWriter {
 
       if (health > maxHealth){
         health = maxHealth;
+      }
+      if (energy > maxEnergy){
+        energy = maxEnergy;
       }
 
       assert (damage > 0);
@@ -1005,16 +1025,12 @@ class Player extends Character with ByteWriter {
     writeUInt16(maxHealth); // 2
   }
 
-  void writePlayerBaseMaxHealth(){
+  void writePlayerBaseDamageHealthEnergy(){
     writeByte(ServerResponse.Player);
-    writeByte(ApiPlayer.Base_Max_Health);
-    writeUInt16(_baseMaxHealth);
-  }
-
-  void writePlayerBaseDamage(){
-    writeByte(ServerResponse.Player);
-    writeByte(ApiPlayer.Base_Damage);
+    writeByte(ApiPlayer.Base_Damage_Health_Energy);
     writeUInt16(_baseDamage);
+    writeUInt16(_baseHealth);
+    writeUInt16(_baseEnergy);
   }
 
   void writePlayerPerks() {
@@ -1090,8 +1106,9 @@ class Player extends Character with ByteWriter {
       writePlayerInventory();
       writePlayerLevel();
       writePlayerExperiencePercentage();
-      writePlayerBaseMaxHealth();
-      writePlayerBaseMaxHealth();
+      // writePlayerBaseMaxHealth();
+      // writePlayerBaseMaxHealth();
+      writePlayerBaseDamageHealthEnergy();
       writePlayerHealth();
       writePlayerMaxHealth();
       writePlayerAlive();
@@ -1107,9 +1124,9 @@ class Player extends Character with ByteWriter {
     refreshStats();
     writePlayerLevel();
     writePlayerExperiencePercentage();
-    writePlayerBaseMaxHealth();
-    writePlayerBaseMaxHealth();
+    writePlayerBaseDamageHealthEnergy();
     writePlayerHealth();
+    writePlayerEnergy();
     writePlayerMaxHealth();
     writePlayerAlive();
     writePlayerInteractMode();

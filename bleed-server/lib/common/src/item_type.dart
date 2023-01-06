@@ -45,6 +45,7 @@ class ItemType {
 
   static const Base_Health            = Index_Base + 1;
   static const Base_Damage            = Base_Health + 2;
+  static const Base_Energy            = Base_Health + 3;
 
   static const Consumables_Apple = Index_Consumables + 1;
   static const Consumables_Meat = Index_Consumables + 2;
@@ -398,6 +399,10 @@ class ItemType {
       Weapon_Special_Bazooka: 100,
       Weapon_Special_Minigun: 7,
   }[value] ?? 1;
+
+  static int getEnergy(int value) => const {
+    
+  }[value] ?? 0;
 
   static double getAccuracy(int value) => const <int, double> {
      ItemType.Weapon_Rifle_M4: 0.125,

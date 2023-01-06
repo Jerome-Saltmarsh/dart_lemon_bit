@@ -292,11 +292,10 @@ class ServerResponseReader with ByteReader {
       case ApiPlayer.Damage:
         ServerState.playerDamage.value = readUInt16();
         break;
-      case ApiPlayer.Base_Damage:
+      case ApiPlayer.Base_Damage_Health_Energy:
         ServerState.playerBaseDamage.value = readUInt16();
-        break;
-      case ApiPlayer.Base_Max_Health:
-        ServerState.playerBaseMaxHealth.value = readUInt16();
+        ServerState.playerBaseHealth.value = readUInt16();
+        ServerState.playerBaseEnergy.value = readUInt16();
         break;
       case ApiPlayer.Perks:
         ServerState.playerPerkMaxHealth.value = readByte();

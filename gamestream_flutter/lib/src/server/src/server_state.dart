@@ -23,8 +23,9 @@ class ServerState {
   static final playerHealth = Watch(0);
   static final playerMaxHealth = Watch(0);
   static final playerDamage = Watch(0);
-  static final playerBaseMaxHealth = Watch(0);
+  static final playerBaseHealth = Watch(0);
   static final playerBaseDamage = Watch(0);
+  static final playerBaseEnergy = Watch(0);
   static final playerPerkMaxHealth = Watch(0);
   static final playerPerkMaxDamage = Watch(0);
   static final playerGold = Watch(0);

@@ -25,9 +25,10 @@ class ApiPlayer {
   static const Gold = 32;
   static const Attributes = 33;
   static const Damage = 34;
-  static const Base_Damage = 35;
-  static const Base_Max_Health = 36;
+  // static const Base_Damage = 35;
+  // static const Base_Max_Health = 36;
   static const Perks = 37;
   static const Select_Hero = 38;
   static const Energy = 39;
+  static const Base_Damage_Health_Energy = 40;
 }

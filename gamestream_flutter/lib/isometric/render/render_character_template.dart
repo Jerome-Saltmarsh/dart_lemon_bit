@@ -136,7 +136,7 @@ void renderCharacterTemplate(Character character, {
   if (!weaponInFront) {
     renderTemplateWeapon(character.weaponType, directionBody, frameWeapon, color, dstX, dstY);
   }
-  const Scale = 0.75;
+  const Scale = 0.7;
   const Sprite_Size = 125.0;
   const Anchor_Y = 0.625;
 

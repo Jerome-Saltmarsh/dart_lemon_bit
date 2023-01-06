@@ -1,6 +1,4 @@
 
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/language_utils.dart';
@@ -411,7 +409,7 @@ class GameInventoryUI {
        children.add(
            _buildRowHoverValue(
              itemType: ItemType.Base_Health,
-             value: ServerState.playerBaseMaxHealth.value,
+             value: ServerState.playerBaseHealth.value,
              total: total,
            )
        );
@@ -436,6 +434,59 @@ class GameInventoryUI {
            _buildRowHoverValue(itemType: equippedWeapon, value: ItemType.getMaxHealth(equippedWeapon), total: total)
        );
      }
+
+     if (hoverTarget == ClientType.Hover_Target_Player_Stats_Energy){
+       final total = GamePlayer.energyMax.value;
+       children.add(Row(
+         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+         children: [
+           text("Energy", color: GameColors.blue),
+           text(total, color: GameColors.blue),
+         ],
+       ));
+       children.add(height8);
+
+       children.add(
+           _buildRowHoverValue(
+             itemType: ItemType.Base_Energy,
+             value: ServerState.playerBaseEnergy.value,
+             total: total,
+           )
+       );
+
+       if (GamePlayer.head.value != ItemType.Empty) {
+         children.add(
+             _buildRowHoverValue(itemType: GamePlayer.head.value,
+               value: ItemType.getEnergy(GamePlayer.head.value),
+               total: total,)
+         );
+       }
+       if (GamePlayer.body.value != ItemType.Empty) {
+         children.add(
+             _buildRowHoverValue(itemType: GamePlayer.body.value,
+               value: ItemType.getEnergy(GamePlayer.body.value),
+               total: total,)
+         );
+       }
+       if (GamePlayer.legs.value != ItemType.Empty) {
+         children.add(
+             _buildRowHoverValue(itemType: GamePlayer.legs.value,
+               value: ItemType.getEnergy(GamePlayer.legs.value),
+               total: total,)
+         );
+       }
+       for (final beltType in ServerState.watchBeltItemTypes) {
+         if (!ItemType.isTypeTrinket(beltType.value)) continue;
+         children.add(
+             _buildRowHoverValue(
+               itemType: beltType.value,
+               value: ItemType.getEnergy(beltType.value),
+               total: total,
+             )
+         );
+       }
+     }
+
 
      return Positioned(
         top: 200,
