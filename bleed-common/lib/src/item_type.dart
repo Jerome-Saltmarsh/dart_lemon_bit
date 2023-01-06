@@ -500,6 +500,7 @@ class ItemType {
      Empty: "Empty",
      Base_Health: "Base Health",
      Base_Damage: "Base Damage",
+     Base_Energy: "Base Energy",
      Resource_Crystal: "Crystal",
      Resource_Wood: "Wood",
      Resource_Iron: "Iron",

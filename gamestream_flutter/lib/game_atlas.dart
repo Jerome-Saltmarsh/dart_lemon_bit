@@ -69,6 +69,7 @@ class AtlasItems {
       ItemType.Consumables_Meat: 224,
       ItemType.Consumables_Apple: 256,
       ItemType.Base_Health: 288,
+      ItemType.Base_Energy: 288,
       ItemType.Base_Damage: 352,
   }[itemType] ?? 0;
 
@@ -130,6 +131,7 @@ class AtlasItems {
     ItemType.Weapon_Special_Bazooka: 272,
     ItemType.Weapon_Special_Minigun: 130,
     ItemType.Base_Health: 64,
+    ItemType.Base_Energy: 64,
     ItemType.Base_Damage: 64,
   }[itemType] ?? 0;
 

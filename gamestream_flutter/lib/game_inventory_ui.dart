@@ -435,7 +435,7 @@ class GameInventoryUI {
        );
      }
 
-     if (hoverTarget == ClientType.Hover_Target_Player_Stats_Energy){
+     if (hoverTarget == ClientType.Hover_Target_Player_Stats_Energy) {
        final total = GamePlayer.energyMax.value;
        children.add(Row(
          mainAxisAlignment: MainAxisAlignment.spaceBetween,
