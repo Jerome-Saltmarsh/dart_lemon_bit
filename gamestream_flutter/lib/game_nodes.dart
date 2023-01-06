@@ -11,10 +11,12 @@ class GameNodes {
   static var ambient_val        = ambient_color_hsv.value;
   static var ambient_alp        = ambient_color_hsv.alpha;
   static var ambient_color      = 0;
+  static var transparent_color      = 0;
 
   static void resetNodeColorsToAmbient() {
     GameNodes.ambient_alp = clamp01(GameNodes.ambient_alp);
     ambient_color = GameLighting.hsvToColorValue(ambient_hue, ambient_sat, ambient_val, ambient_alp);
+    transparent_color = GameLighting.hsvToColorValue(ambient_hue, ambient_sat, ambient_val, 0.5);
     dynamicIndex = 0;
 
      if (nodeColors.length != total) {

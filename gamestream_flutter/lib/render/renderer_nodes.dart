@@ -59,28 +59,13 @@ class RendererNodes extends Renderer {
   static var screenLeft = 0.0;
 
   static var nodeTypes = GameNodes.nodeTypes;
-  // static var nodeShades = GameNodes.nodeShades;
   static var nodeOrientations = GameNodes.nodeOrientations;
   static var nodeVisibility = GameNodes.nodeVisible;
 
   // GETTERS
   static double get currentNodeRenderY => GameConvert.rowColumnZToRenderY(row, column, currentNodeZ);
-
-  // static int get currentNodeShade => nodeShades[currentNodeIndex];
-
-  // static final ambientColor = Color.fromRGBO(79, 0, 189, 1.0).value;
-  // final ambientColorHsv = HSVColor.fromColor(ambientColor);
-  // final ambientColorValue = ambientColor.value;
-  static int get currentNodeColor => GameNodes.nodeColors[currentNodeIndex];
-  // static int get currentNodeColor => ambientColor;
-
-  // static int getShadeColor(int shade) {
-  //   if (shade < 0) return GameLighting.values[4];
-  //   if (shade >= GameNodes.total) return GameLighting.values[4];
-  //   return (nodeVisibility[shade] == Visibility.Opaque ? GameLighting.values : GameLighting
-  //       .values_transparent)[shade];
-  // }
-
+  static bool get currentNodeOpaque => currentNodeVisibility == Visibility.Opaque;
+  static int get currentNodeColor => currentNodeOpaque ? GameNodes.nodeColors[currentNodeIndex] : GameNodes.transparent_color;
 
   static int get currentNodeOrientation => nodeOrientations[currentNodeIndex];
   static int get currentNodeVisibility => nodeVisibility[currentNodeIndex];
