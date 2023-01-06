@@ -593,7 +593,7 @@ class RendererNodes extends Renderer {
   static void renderTreeTopOak(){
     var shift = GameAnimation.treeAnimation[((row - column) + GameAnimation.animationFrame) % GameAnimation.treeAnimation.length] * renderNodeWind;
     Engine.renderSprite(
-      image: GameImages.atlas_nodes,
+      image: currentNodeOpaque ? GameImages.atlas_nodes : GameImages.atlas_nodes_transparent,
       srcX: AtlasNodeX.Tree_Top,
       srcY: 433.0,
       srcWidth: AtlasNode.Node_Tree_Top_Width,
@@ -607,7 +607,7 @@ class RendererNodes extends Renderer {
   static void renderTreeTopPine() {
     var shift = GameAnimation.treeAnimation[((row - column) + GameAnimation.animationFrame) % GameAnimation.treeAnimation.length] * renderNodeWind;
     Engine.renderSprite(
-      image: GameImages.atlas_nodes,
+      image: currentNodeOpaque ? GameImages.atlas_nodes : GameImages.atlas_nodes_transparent,
       srcX: 1262,
       srcY: 80 ,
       srcWidth: 45,
