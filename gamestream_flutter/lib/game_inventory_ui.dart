@@ -66,7 +66,7 @@ class GameInventoryUI {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             buildHoverTarget(
-            hoverTargetType: ClientType.Hover_Target_Player_Stats_Health,
+              hoverTargetType: ClientType.Hover_Target_Player_Stats_Health,
               child: watch(ServerState.playerMaxHealth, (int maxHealth) {
                 return watch(ServerState.playerHealth, (int currentHealth) {
                   return Container(
@@ -80,37 +80,70 @@ class GameInventoryUI {
                         Container(
                             width: 20,
                             height: 20,
-                            child: FittedBox(child: GameUI.buildAtlasIconType(IconType.Heart, scale: 0.62))),
-                        text("$currentHealth / $maxHealth", color: Colors.black87),
+                            child: FittedBox(
+                                child:
+                                    GameUI.buildAtlasIconType(IconType.Heart))),
+                        text("$currentHealth / $maxHealth",
+                            color: Colors.black87),
                       ],
                     ),
                   );
                 });
               }),
             ),
-                height8,
-                buildHoverTarget(
-            hoverTargetType: ClientType.Hover_Target_Player_Stats_Damage,
-            child: watch(ServerState.playerDamage, (int damage) {
-              return Container(
-                color: Colors.white12,
-                padding: const EdgeInsets.all(6),
-                width: 150,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    // text("Damage", color: Colors.black87, bold: true),
-                    Container(
-                        width: 20,
-                        height: 20,
-                        child: FittedBox(child: GameUI.buildAtlasIconType(IconType.Damage, scale: 0.62))),
-                    text(damage, color: Colors.black87),
-                  ],
-                ),
-              );
-            }),
-                ),
+            height8,
+            buildHoverTarget(
+              hoverTargetType: ClientType.Hover_Target_Player_Stats_Energy,
+              child: watch(GamePlayer.energyMax, (int energyMax) {
+                return watch(GamePlayer.energy, (int energy) {
+                  return Container(
+                    padding: const EdgeInsets.all(6),
+                    color: Colors.white12,
+                    width: 150,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                            width: 20,
+                            height: 20,
+                            child: FittedBox(
+                                child:
+                                GameUI.buildAtlasIconType(IconType.Energy))),
+                        text("$energy / $energyMax",
+                            color: Colors.black87),
+                      ],
+                    ),
+                  );
+                });
+              }),
+            ),
+            height8,
+            buildHoverTarget(
+              hoverTargetType: ClientType.Hover_Target_Player_Stats_Damage,
+              child: watch(ServerState.playerDamage, (int damage) {
+                return Container(
+                  color: Colors.white12,
+                  padding: const EdgeInsets.all(6),
+                  width: 150,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                          width: 20,
+                          height: 20,
+                          child: FittedBox(
+                              child:
+                                  GameUI.buildAtlasIconType(IconType.Damage))),
+                      text(damage, color: Colors.black87),
+                    ],
+                  ),
+                );
+              }),
+            ),
+            height8,
+
           ],
         ),
       );

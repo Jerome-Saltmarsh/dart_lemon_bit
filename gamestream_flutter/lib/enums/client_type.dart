@@ -28,6 +28,7 @@ class ClientType {
   static const Hover_Target_Inventory_Slot = Hover_Target_None + 1;
   static const Hover_Target_Player_Stats_Damage = Hover_Target_Inventory_Slot + 1;
   static const Hover_Target_Player_Stats_Health = Hover_Target_Player_Stats_Damage + 1;
+  static const Hover_Target_Player_Stats_Energy = Hover_Target_Player_Stats_Health + 1;
 
   static String getHotKeyString(int hotKey) => const {
         Hot_Key_1: "1",

@@ -192,6 +192,7 @@ class AtlasIcons {
     IconType.Minus: 64,
     IconType.Heart: 0,
     IconType.Damage: 48,
+    IconType.Energy: 96,
   }[itemType] ?? 0;
 
   static double getSrcY(int itemType) => const  <int, double> {
@@ -219,11 +220,13 @@ class AtlasIcons {
     IconType.Minus: 96,
     IconType.Heart: 448,
     IconType.Damage: 448,
+    IconType.Energy: 448,
   }[itemType] ?? 0;
 
   static double getSrcSize(int itemType) => const  <int, double> {
       IconType.Heart: 48.0,
       IconType.Damage: 48.0,
+      IconType.Energy: 48.0,
       IconType.Rain_None: 64.0,
       IconType.Rain_Light: 64.0,
       IconType.Rain_Heavy: 64.0,
