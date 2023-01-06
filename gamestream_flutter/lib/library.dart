@@ -43,7 +43,7 @@ export 'package:bleed_common/library.dart';
 export 'package:lemon_math/library.dart';
 export 'dart:typed_data';
 export 'game_inventory_ui.dart';
-export 'game_ui_style.dart';
+export 'game_style.dart';
 export 'build/website_build.dart';
 export 'widgets/library_widgets.dart';
 export 'src/client/client.dart';

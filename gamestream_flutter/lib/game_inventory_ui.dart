@@ -83,8 +83,8 @@ class GameInventoryUI {
                             child: FittedBox(
                                 child:
                                     GameUI.buildAtlasIconType(IconType.Heart))),
-                        text("$currentHealth / $maxHealth",
-                            color: Colors.black87),
+                        text("$currentHealth / ${padSpace(maxHealth, length: 3)}",
+                            color: GameStyle.Player_Stats_Text_Color),
                       ],
                     ),
                   );
@@ -110,8 +110,8 @@ class GameInventoryUI {
                             child: FittedBox(
                                 child:
                                 GameUI.buildAtlasIconType(IconType.Energy))),
-                        text("$energy / $energyMax",
-                            color: Colors.black87),
+                        text("$energy / ${padSpace(energyMax, length: 3)}",
+                            color: GameStyle.Player_Stats_Text_Color),
                       ],
                     ),
                   );
@@ -136,7 +136,7 @@ class GameInventoryUI {
                           child: FittedBox(
                               child:
                                   GameUI.buildAtlasIconType(IconType.Damage))),
-                      text(damage, color: Colors.black87),
+                      text(damage, color: GameStyle.Player_Stats_Text_Color),
                     ],
                   ),
                 );

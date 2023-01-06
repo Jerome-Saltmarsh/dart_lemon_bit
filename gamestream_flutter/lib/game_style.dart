@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/library.dart';
 
-class GameUIStyle {
+class GameStyle {
   static final ExperienceBarColorBackground = Colors.white.withOpacity(Engine.GoldenRatio_0_381);
   static final ExperienceBarColorFill = Colors.white;
   static final ExperienceBarWidth = 200.0;
@@ -10,4 +10,6 @@ class GameUIStyle {
 
   static final Window_Attributes_Width = 300.0;
   static final Window_Attributes_Height = 400.0;
+
+  static const Player_Stats_Text_Color = Colors.black54;
 }

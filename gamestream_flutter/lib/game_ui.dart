@@ -570,12 +570,12 @@ class GameUI {
           child: Container(
             padding: const EdgeInsets.all(16),
             color: GameColors.brownDark,
-            width: GameUIStyle.Window_Attributes_Width,
-            height: GameUIStyle.Window_Attributes_Height,
+            width: GameStyle.Window_Attributes_Width,
+            height: GameStyle.Window_Attributes_Height,
             child: Column(
               children: [
                 Container(
-                  height: GameUIStyle.Window_Attributes_Height - 60,
+                  height: GameStyle.Window_Attributes_Height - 60,
                   child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -666,14 +666,14 @@ class GameUI {
   static Widget buildPlayerExperience(double experience) =>
       buildDialogUIControl(
         child: Container(
-          width: GameUIStyle.ExperienceBarWidth,
-          height: GameUIStyle.ExperienceBarHeight,
-          color: GameUIStyle.ExperienceBarColorBackground,
+          width: GameStyle.ExperienceBarWidth,
+          height: GameStyle.ExperienceBarHeight,
+          color: GameStyle.ExperienceBarColorBackground,
           alignment: Alignment.centerLeft,
           child: Container(
-            width: GameUIStyle.ExperienceBarWidth * experience,
-            height: GameUIStyle.ExperienceBarHeight,
-            color: GameUIStyle.ExperienceBarColorFill,
+            width: GameStyle.ExperienceBarWidth * experience,
+            height: GameStyle.ExperienceBarHeight,
+            color: GameStyle.ExperienceBarColorFill,
           ),
         ),
       );

@@ -1,4 +1,4 @@
-const version = '0.6.771';
+const version = '0.6.772';
 
 
 
