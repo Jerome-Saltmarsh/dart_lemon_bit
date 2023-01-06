@@ -65,7 +65,7 @@ class RendererNodes extends Renderer {
   // GETTERS
   static double get currentNodeRenderY => GameConvert.rowColumnZToRenderY(row, column, currentNodeZ);
   static bool get currentNodeOpaque => currentNodeVisibility == Visibility.Opaque;
-  static int get currentNodeColor => currentNodeOpaque ? GameNodes.nodeColors[currentNodeIndex] : GameNodes.transparent_color;
+  static int get currentNodeColor => GameNodes.nodeColors[currentNodeIndex];
 
   static int get currentNodeOrientation => nodeOrientations[currentNodeIndex];
   static int get currentNodeVisibility => nodeVisibility[currentNodeIndex];
@@ -88,9 +88,7 @@ class RendererNodes extends Renderer {
   static int getNodeColorAtIndex(int index){
     if (index < 0) return GameNodes.ambient_color;
     if (index >= GameNodes.total) return GameNodes.ambient_color;
-    return GameNodes.nodeVisible[index] == Visibility.Opaque
-        ? GameNodes.nodeColors[index]
-        : GameNodes.ambient_color;
+    return GameNodes.nodeColors[index];
   }
 
   // METHODS
@@ -165,7 +163,6 @@ class RendererNodes extends Renderer {
   @override
   void reset() {
     nodeTypes = GameNodes.nodeTypes;
-    // nodeShades = GameNodes.nodeShades;
     nodeOrientations = GameNodes.nodeOrientations;
     nodeVisibility = GameNodes.nodeVisible;
     nodesRowsMax = GameState.nodesTotalRows - 1;
@@ -379,11 +376,14 @@ class RendererNodes extends Renderer {
   }
 
   static void renderCurrentNode() {
-    if (currentNodeVisibility == Visibility.Invisible) return;
+    final visibility = currentNodeVisibility;
+    if (visibility == Visibility.Invisible) return;
 
-    if (currentNodeVisibility != previousVisibility){
-      previousVisibility = currentNodeVisibility;
-      Engine.bufferBlendMode = VisibilityBlendModes.fromVisibility(currentNodeVisibility);
+    if (visibility != previousVisibility) {
+      previousVisibility = visibility;
+      Engine.bufferImage = visibility == Visibility.Opaque
+          ? GameImages.atlas_nodes
+          : GameImages.atlas_nodes_transparent;
     }
 
     switch (currentNodeType) {
