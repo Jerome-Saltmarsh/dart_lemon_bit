@@ -94,7 +94,6 @@ ctrl + w:   minimal mode
 [ ] melee attack slash effect
 
 [CRITICAL]
-[ ] fix prevent item type empty stats displayed
 [ ] fix ai running into water
 [ ] fix render visibility algorithm
 [ ] fix physics characters teleport through walls on struck
@@ -104,6 +103,7 @@ ctrl + w:   minimal mode
 [ ] fix node type oven
 
 06.01.2023
+[x] fix prevent item type empty stats displayed
 [x] fix item stats hover dialog appearing behind belt ui
 [x] replace health and damage text with icons
 

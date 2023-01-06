@@ -450,6 +450,9 @@ class GameInventoryUI {
     if (itemIndex == -1) return const SizedBox();
 
     final itemType = ClientState.hoverDialogType.value == DialogType.Trade ? GamePlayer.storeItems.value[itemIndex] : ServerQuery.getItemTypeAtInventoryIndex(itemIndex);
+
+    if (itemType == ItemType.Empty) return const SizedBox();
+
     final itemTypeConsumeType = ItemType.getConsumeType(itemType);
     final itemIndexInBelt = ItemType.isIndexBelt(itemIndex);
     final healAmount = ItemType.getHealAmount(itemType);
