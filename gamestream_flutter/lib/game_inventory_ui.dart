@@ -99,35 +99,45 @@ class GameInventoryUI {
           );
   }
 
+  // TODO optimize
   static Widget buildPlayerEnergyBar() {
+    const width = 150.0;
+    const height = 30.0;
+
     return buildHoverTarget(
             hoverTargetType: ClientType.Hover_Target_Player_Stats_Energy,
             child: watch(GamePlayer.energyMax, (int energyMax) {
               return watch(GamePlayer.energy, (int energy) {
-                return Container(
-                  padding: const EdgeInsets.all(6),
-                  color: Colors.white24,
-                  width: 150,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                          width: 20,
-                          height: 20,
-                          child: FittedBox(
-                              child:
-                              GameUI.buildAtlasIconType(IconType.Energy))),
-                      text("$energy / ${padSpace(energyMax, length: 3)}",
-                          color: GameStyle.Player_Stats_Text_Color),
-                    ],
-                  ),
+                return Stack(
+                  children: [
+                    Container(color: Colors.white24, height: height, width: width),
+                    Container(color: GameColors.Blue_3, height: height, width: width * (energy / energyMax)),
+                    Container(
+                      padding: const EdgeInsets.all(6),
+                      width: width,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                              width: 20,
+                              height: 20,
+                              child: FittedBox(
+                                  child:
+                                  GameUI.buildAtlasIconType(IconType.Energy))),
+                          text("$energy / ${padSpace(energyMax, length: 3)}",
+                              color: GameStyle.Player_Stats_Text_Color),
+                        ],
+                      ),
+                    ),
+                  ],
                 );
               });
             }),
           );
   }
 
+  // TODO optimize
   static Widget buildPlayerHealthBar() {
     const width = 150.0;
     const height = 30.0;
@@ -141,7 +151,6 @@ class GameInventoryUI {
                     Container(color: GameColors.Red_3, height: height, width: width * (currentHealth / maxHealth)),
                     Container(
                       padding: const EdgeInsets.all(6),
-                      // color: Colors.white24,
                       width: width,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -151,10 +160,13 @@ class GameInventoryUI {
                               width: 20,
                               height: 20,
                               child: FittedBox(
-                                  child:
-                                      GameUI.buildAtlasIconType(IconType.Heart))),
-                          text("$currentHealth / ${padSpace(maxHealth, length: 3)}",
-                              color: GameStyle.Player_Stats_Text_Color),
+                                  child: GameUI.buildAtlasIconType(IconType.Heart)
+                              ),
+                          ),
+                          text(
+                              "$currentHealth / ${padSpace(maxHealth, length: 3)}",
+                              color: GameStyle.Player_Stats_Text_Color
+                          ),
                         ],
                       ),
                     ),

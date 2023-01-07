@@ -42,6 +42,7 @@ class GameColors {
   static const orange = Color.fromRGBO(247, 150, 23, 1);
   static const green  = Color.fromRGBO(30, 188, 115, 1);
   static const blue   = Color.fromRGBO(77, 155, 230, 1);
+  static const Blue_3   = Color.fromRGBO(77, 101, 180, 1);
 
   static final inventoryHint = Colors.orange.withOpacity(0.85);
 }
