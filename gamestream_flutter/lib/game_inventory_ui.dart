@@ -533,7 +533,7 @@ class GameInventoryUI {
           children: [
             GameUI.buildAtlasItemType(itemType),
             width8,
-            text(ItemType.getName(itemType), color: GameColors.textColorDefault),
+            text(ItemType.getName(itemType), color: GameStyle.Text_Color_Default),
           ],
         ),
         Row(
@@ -543,7 +543,7 @@ class GameInventoryUI {
             Container(
                 width: 60,
                 alignment: Alignment.centerRight,
-                child: text(value, color: GameColors.textColorDefault)),
+                child: text(value, color: GameStyle.Text_Color_Default)),
           ],
         )
       ],
