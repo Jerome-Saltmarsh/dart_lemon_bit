@@ -14,6 +14,14 @@ class GameSpawn {
       GameState.spawnParticleBubble(x: x, y: y, z: z, speed: 1, angle: Engine.randomAngle());
       GameState.spawnParticleFirePurple(x: x + Engine.randomGiveOrTake(5), y: y + Engine.randomGiveOrTake(5), z: z, speed: 1, angle: Engine.randomAngle());
     }
-    GameState.spawnParticleLightEmission(x: x, y: y, z: z);
+    GameState.spawnParticleLightEmission(
+        x: x,
+        y: y,
+        z: z,
+        hue: 259,
+        saturation: 0.45,
+        value: 0.95,
+        alpha: 0.5,
+    );
   }
 }

@@ -118,33 +118,6 @@ class GameNodes {
     visibleIndex++;
   }
 
-  // static void resetGridToAmbient(){
-  //   if (nodeColors.length != total){
-  //     nodeColors = Uint32List(total);
-  //   }
-  //   if (nodeHues.length != total){
-  //     nodeHues = Float32List(total);
-  //   }
-  //   if (nodeSats.length != total){
-  //     nodeSats = Float32List(total);
-  //   }
-  //   if (nodeVals.length != total){
-  //     nodeVals = Float32List(total);
-  //   }
-  //   if (nodeAlps.length != total){
-  //     nodeAlps = Float32List(total);
-  //   }
-  //
-  //   for (var i = 0; i < total; i++){
-  //     nodeColors[i] = ambient_color;
-  //     nodeHues[i] = ambient_hue;
-  //     nodeSats[i] = ambient_sat;
-  //     nodeVals[i] = ambient_val;
-  //     nodeAlps[i] = ambient_alp;
-  //     dynamicIndex = 0;
-  //   }
-  // }
-
   static void emitLightDynamic({
     required int index,
     required double hue,
@@ -153,8 +126,17 @@ class GameNodes {
     required double alpha,
 
   }){
-    assert (index >= 0);
-    assert (index < total);
+    if (index < 0) return;
+    if (index >= total) return;
+
+    assert (hue >= 0);
+    assert (hue <= 360.0);
+    assert (saturation >= 0);
+    assert (saturation <= 1);
+    assert (value >= 0);
+    assert (value <= 1);
+    assert (alpha >= 0);
+    assert (alpha <= 1);
 
     final zIndex = index ~/ area;
     final rowIndex = (index - (zIndex * area)) ~/ GameState.nodesTotalColumns;
@@ -207,8 +189,8 @@ class GameNodes {
     required double alpha,
 
   }){
-    assert (index >= 0);
-    assert (index < total);
+    if (index < 0) return;
+    if (index >= total) return;
 
     final zIndex = index ~/ area;
     final rowIndex = (index - (zIndex * area)) ~/ GameState.nodesTotalColumns;

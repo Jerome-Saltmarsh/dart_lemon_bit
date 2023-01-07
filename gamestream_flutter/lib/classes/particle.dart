@@ -74,6 +74,11 @@ class Particle extends Vector3 {
   var checkNodeCollision = true;
   var animation = false;
 
+  var hue = 0.0;
+  var saturation = 0.0;
+  var value = 0.0;
+  var alpha = 0.0;
+
   bool get active => duration > 0;
   int get direction => Direction.fromRadian(rotation);
 

@@ -103,6 +103,18 @@ class GameState {
     ServerState.applyEmissionGameObjects();
     applyEmissionsProjectiles();
     applyCharacterColors();
+
+    for (var i = 0; i < totalParticles; i++){
+       final particle = ClientState.particles[i];
+       if (particle.type != ParticleType.Light_Emission) continue;
+       GameNodes.emitLightDynamic(
+           index: particle.nodeIndex,
+           hue: particle.hue,
+           saturation: particle.saturation,
+           value: particle.value,
+           alpha: particle.alpha,
+       );
+    }
   }
 
   static void applyCharacterColors(){
@@ -293,12 +305,23 @@ class GameState {
     }
     if (particle.outOfBounds) return particle.deactivate();
 
+    if (particle.type == ParticleType.Light_Emission){
+      particle.alpha -= 0.05;
+      if (particle.alpha <= 0){
+        particle.alpha = 0;
+        particle.duration = 0;
+      }
+      return;
+    }
+
     if (particle.animation) {
       if (particle.duration-- <= 0) {
         particle.deactivate();
       }
       return;
     }
+
+
 
     final nodeIndex = GameQueries.getNodeIndexV3(particle);
 
@@ -812,6 +835,10 @@ class GameState {
     required double x,
     required double y,
     required double z,
+    required double hue,
+    required double saturation,
+    required double value,
+    required double alpha,
   }) =>
       spawnParticle(
         type: ParticleType.Light_Emission,
@@ -824,7 +851,12 @@ class GameState {
         duration: 35,
         checkCollision: false,
         animation: true,
-      );
+      )
+        ..hue = hue
+        ..saturation = saturation
+        ..value = value
+        ..alpha = alpha
+  ;
 
   /// This may be the cause of the bug in which the sword particle does not render
   static Particle getInstanceParticle() {

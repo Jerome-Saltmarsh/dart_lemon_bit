@@ -95,6 +95,10 @@ class GameEvents {
           x: x,
           y: y,
           z: z,
+          hue: GameNodes.ambient_hue,
+          saturation: GameNodes.ambient_sat,
+          value: GameNodes.ambient_val,
+          alpha: 0.5,
         );
         const flameSpeed = 1.0;
         GameState.spawnParticleFire(x: x, y: y, z: z)
