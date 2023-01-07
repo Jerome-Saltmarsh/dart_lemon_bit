@@ -335,7 +335,9 @@ class GameEvents {
       case ItemType.Weapon_Melee_Sword:
         return onGameEventAttackPerformedBlade(x, y, z, angle);
       case ItemType.Empty:
-        return onAttackPerformedUnarmed(x, y, z, angle);
+        GameAudio.swing_arm_11.playXYZ(x, y, z);
+        onAttackPerformedUnarmed(x, y, z, angle);
+        break;
       case ItemType.Weapon_Melee_Crowbar:
         GameAudio.swing_sword.playXYZ(x, y, z);
         break;

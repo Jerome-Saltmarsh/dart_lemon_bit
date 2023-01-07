@@ -102,6 +102,8 @@ ctrl + w:   minimal mode
 [ ] fix node type oven
 
 07.01.2023
+[x] purple explosion emits light
+[x] fix attack unarmed audio
 [?] fix physics characters teleport through walls on struck
 
 06.01.2023
