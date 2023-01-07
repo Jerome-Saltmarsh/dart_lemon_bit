@@ -14,8 +14,8 @@ class ServerResponseReader with ByteReader {
     index = 0;
     ServerState.totalCharacters = 0;
     ServerState.totalGameObjects = 0;
-    bufferSize.value = values.length;
     this.values = values;
+    bufferSize.value = values.length;
 
     while (true) {
       switch (readByte()) {

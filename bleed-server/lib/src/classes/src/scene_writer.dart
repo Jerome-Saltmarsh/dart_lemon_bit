@@ -80,7 +80,7 @@ class SceneWriter extends ByteWriter {
   }
 
   Uint8List _compileScene(Scene scene, {required bool gameObjects}){
-    resetIndex();
+    clear();
     writeNodes(scene);
     if (gameObjects){
       writePlayerSpawnPoints(scene);

@@ -27,7 +27,7 @@ class Connection with ByteReader {
   Account? _account;
 
   Function? onDone;
-  final gzipCodec = GZipCodec(level: 4);
+  final gzipCodec = GZipCodec(level: 1);
 
   Connection(this.webSocket){
     sink = webSocket.sink;
@@ -54,7 +54,7 @@ class Connection with ByteReader {
   void sendBufferToClient(){
     final player = _player;
     if (player == null) return;
-    sink.add(player.writeToSendBuffer());
+    sink.add(player.compile());
   }
 
   void error(GameError error, {String message = ""}) {
@@ -70,15 +70,15 @@ class Connection with ByteReader {
           return;
         case ClientRequest.Editor_Load_Scene:
           try {
-            values = Uint8List.fromList(gzipCodec.decode(args.sublist(1, args.length)));
-            final scene = SceneReader.readScene(values, startIndex: 0);
+            final uValues = Uint8List.fromList(gzipCodec.decode(args.sublist(1, args.length)));
+            values =  uValues;
+            final scene = SceneReader.readScene(uValues, startIndex: 0);
             joinGameEditorScene(scene);
           } catch (error){
             errorInvalidArg('Failed to load scene');
           }
           return;
       }
-
     }
     if (args is String) {
       return onDataStringArray(args.split(" "));
