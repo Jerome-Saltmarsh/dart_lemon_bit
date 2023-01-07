@@ -9,23 +9,25 @@ class GameUIInteract {
   static const _width = 400;
 
     static Widget buildWatchInteractMode() =>
-      watch(ServerState.interactMode, buildInteractMode);
+      watch(ServerState.interactMode, (int interactMode){
+        switch (interactMode) {
+          case InteractMode.None:
+            return buildInteractModeNone();
+          case InteractMode.Talking:
+            return buildInteractModeTalking();
+          case InteractMode.Trading:
+            return buildInteractModeTrading();
+          case InteractMode.Inventory:
+            return buildInteractModeInventory();
+          case InteractMode.Craft:
+            return buildInteractModeCrafting();
+          default:
+            return const SizedBox();
+        }
+      });
 
-    static Widget buildInteractMode(int mode) {
-      switch (mode) {
-        case InteractMode.None:
-          return Positioned(child: GameInventoryUI.buildContainerPlayerStats(backgroundColor: Colors.transparent), bottom: 0, left: 0);
-        case InteractMode.Talking:
-          return buildPositionedTalk();
-        case InteractMode.Trading:
-          return watch(GamePlayer.storeItems, buildStoreItems);
-        case InteractMode.Inventory:
-          return buildPositionedInventory();
-        case InteractMode.Craft:
-          return buildInteractModeCrafting();
-        default:
-          return const SizedBox();
-      }
+    static Positioned buildInteractModeNone() {
+      return Positioned(child: GameInventoryUI.buildContainerPlayerStats(backgroundColor: Colors.transparent), bottom: 0, left: 0);
     }
 
     static Widget buildInteractModeCrafting(){
@@ -36,7 +38,7 @@ class GameUIInteract {
             top: 100,
             child: buildContainerCraft(),
           ),
-          buildPositionedInventory(),
+          buildInteractModeInventory(),
         ],
       );
     }
@@ -51,20 +53,20 @@ class GameUIInteract {
       );
     }
 
-    static Widget buildStoreItems(List<int> itemTypes){
+    static Widget buildInteractModeTrading(){
       return Stack(
         children: [
           Positioned(
             left: 0,
             top: 100,
-            child: buildContainerTrade(itemTypes),
+            child: watch(GamePlayer.storeItems, buildContainerStoreItems),
           ),
-          buildPositionedInventory(),
+          buildInteractModeInventory(),
         ],
       );
     }
 
-    static Widget buildContainerTrade(List<int> itemTypes) =>
+    static Widget buildContainerStoreItems(List<int> itemTypes) =>
       GameUI.buildDialog(
         dialogType: DialogType.Trade,
         child: DragTarget<int>(
@@ -106,7 +108,7 @@ class GameUIInteract {
       );
     }
 
-    static Widget buildPositionedInventory(){
+    static Widget buildInteractModeInventory(){
       return Positioned(
         bottom: 150,
         right: 5,
@@ -114,7 +116,7 @@ class GameUIInteract {
       );
     }
 
-    static Widget buildPositionedTalk() =>
+    static Widget buildInteractModeTalking() =>
       Positioned(top: 55, left: 5, child: GameUI.buildDialog(
         dialogType: DialogType.Talk,
         child: Container(
