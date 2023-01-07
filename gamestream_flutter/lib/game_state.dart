@@ -307,8 +307,16 @@ class GameState {
     if (particle.outOfBounds) return particle.deactivate();
 
     if (particle.type == ParticleType.Light_Emission){
-      // particle.alpha -= 0.05;
-      particle.strength -= 0.05;
+      const change = 0.15;
+      if (particle.flash){
+        particle.strength += change;
+        if (particle.strength >= 1){
+          particle.strength = 1.0;
+          particle.flash = false;
+        }
+        return;
+      }
+      particle.strength -= change;
       if (particle.strength <= 0){
         particle.strength = 0;
         particle.duration = 0;
@@ -858,6 +866,8 @@ class GameState {
         ..saturation = saturation
         ..value = value
         ..alpha = alpha
+        ..flash = true
+        ..strength = 0.0
   ;
 
   /// This may be the cause of the bug in which the sword particle does not render

@@ -77,7 +77,8 @@ class Particle extends Vector3 {
   var saturation = 0.0;
   var value = 0.0;
   var alpha = 0.0;
-  var strength = 1.0;
+  var strength = 0.0;
+  var flash = true;
 
   bool get active => duration > 0;
   int get direction => Direction.fromRadian(rotation);
