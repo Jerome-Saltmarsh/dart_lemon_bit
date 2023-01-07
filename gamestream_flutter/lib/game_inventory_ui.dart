@@ -129,28 +129,36 @@ class GameInventoryUI {
   }
 
   static Widget buildPlayerHealthBar() {
+    const width = 150.0;
+    const height = 30.0;
     return buildHoverTarget(
             hoverTargetType: ClientType.Hover_Target_Player_Stats_Health,
             child: watch(ServerState.playerMaxHealth, (int maxHealth) {
               return watch(ServerState.playerHealth, (int currentHealth) {
-                return Container(
-                  padding: const EdgeInsets.all(6),
-                  color: Colors.white24,
-                  width: 150,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                          width: 20,
-                          height: 20,
-                          child: FittedBox(
-                              child:
-                                  GameUI.buildAtlasIconType(IconType.Heart))),
-                      text("$currentHealth / ${padSpace(maxHealth, length: 3)}",
-                          color: GameStyle.Player_Stats_Text_Color),
-                    ],
-                  ),
+                return Stack(
+                  children: [
+                    Container(color: Colors.white24, height: height, width: width),
+                    Container(color: GameColors.Red_3, height: height, width: width * (currentHealth / maxHealth)),
+                    Container(
+                      padding: const EdgeInsets.all(6),
+                      // color: Colors.white24,
+                      width: width,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                              width: 20,
+                              height: 20,
+                              child: FittedBox(
+                                  child:
+                                      GameUI.buildAtlasIconType(IconType.Heart))),
+                          text("$currentHealth / ${padSpace(maxHealth, length: 3)}",
+                              color: GameStyle.Player_Stats_Text_Color),
+                        ],
+                      ),
+                    ),
+                  ],
                 );
               });
             }),

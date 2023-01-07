@@ -34,9 +34,9 @@ class GameColors {
 
   static final Color none = Colors.transparent;
 
-  static final Color redDarkest = Color.fromRGBO(66, 21, 46, 1);
-  static final Color redDark1 = Color.fromRGBO(92, 30, 55, 1);
-  static final Color redDark = Color.fromRGBO(179, 56, 49, 1);
+  static const redDarkest = Color.fromRGBO(66, 21, 46, 1);
+  static const redDark1 = Color.fromRGBO(92, 30, 55, 1);
+  static const Red_3 = Color.fromRGBO(179, 56, 49, 1);
 
   static final Color redWhite = Color.fromRGBO(255, 192, 171, 1.0);
   static final Color red = Color.fromRGBO(234, 79, 54, 1.0);
@@ -57,7 +57,7 @@ class GameColors {
   static final Color grey = Color.fromRGBO(120, 120, 120, 1.0);
   static final Color greyDark = Color.fromRGBO(60, 60, 60, 1.0);
 
-  Color get blood => redDark;
+  Color get blood => Red_3;
 
   static final Color inventoryHint = Colors.orange.withOpacity(0.85);
 
