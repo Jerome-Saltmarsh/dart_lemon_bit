@@ -21,7 +21,7 @@ class GameSpawn {
         hue: 259,
         saturation: 0.45,
         value: 0.95,
-        alpha: 0.5,
+        alpha: 0.25,
     );
   }
 }

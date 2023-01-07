@@ -113,6 +113,7 @@ class GameState {
            saturation: particle.saturation,
            value: particle.value,
            alpha: particle.alpha,
+           strength: particle.strength,
        );
     }
   }
@@ -306,9 +307,10 @@ class GameState {
     if (particle.outOfBounds) return particle.deactivate();
 
     if (particle.type == ParticleType.Light_Emission){
-      particle.alpha -= 0.05;
-      if (particle.alpha <= 0){
-        particle.alpha = 0;
+      // particle.alpha -= 0.05;
+      particle.strength -= 0.05;
+      if (particle.strength <= 0){
+        particle.strength = 0;
         particle.duration = 0;
       }
       return;

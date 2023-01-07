@@ -69,7 +69,6 @@ class Particle extends Vector3 {
   var scaleV = 0.0;
   var type = 0;
   var bounciness = 0.0;
-  // var airFriction = 0.98;
   /// Deactivates if this node hits a solid node
   var checkNodeCollision = true;
   var animation = false;
@@ -78,6 +77,7 @@ class Particle extends Vector3 {
   var saturation = 0.0;
   var value = 0.0;
   var alpha = 0.0;
+  var strength = 1.0;
 
   bool get active => duration > 0;
   int get direction => Direction.fromRadian(rotation);

@@ -124,6 +124,7 @@ class GameNodes {
     required double saturation,
     required double value,
     required double alpha,
+    double strength = 1.0,
 
   }){
     if (index < 0) return;
@@ -160,24 +161,17 @@ class GameNodes {
         final b = (z - zIndex).abs() + (row - rowIndex).abs();
         for (var column = columnMin; column <= columnMax; column++) {
           final nodeIndex = a + column;
-          final distanceValue = Engine.clamp(b + (column - columnIndex).abs() - 2, 0, Shade.Pitch_Black);
-          // if (distanceValue >= nodeShades[nodeIndex]) continue;
+          final distanceValue = Engine.clamp(b + (column - columnIndex).abs() - 2, 0, 6);
           if (distanceValue > 5) continue;
 
           nodeDynamicIndex[dynamicIndex++] = nodeIndex;
 
-          final intensity = 1.0 - GameLighting.interpolations[clamp(distanceValue, 0, 7)];
+          final intensity = (1.0 - GameLighting.interpolations[clamp(distanceValue, 0, 7)]) * strength;
           nodeHues[nodeIndex] = GameLighting.linerInterpolation(nodeHues[nodeIndex], hue        , intensity);
           nodeSats[nodeIndex] = GameLighting.linerInterpolation(nodeSats[nodeIndex], saturation , intensity);
           nodeVals[nodeIndex] = GameLighting.linerInterpolation(nodeVals[nodeIndex], value      , intensity);
           nodeAlps[nodeIndex] = GameLighting.linerInterpolation(nodeAlps[nodeIndex], alpha      , intensity);
-
-          nodeColors[nodeIndex] = GameLighting.hsvToColorValue(
-              nodeHues[nodeIndex],
-              nodeSats[nodeIndex],
-              nodeVals[nodeIndex],
-              nodeAlps[nodeIndex],
-          );
+          refreshNodeColor(nodeIndex);
         }
       }
       zTotal += area;
