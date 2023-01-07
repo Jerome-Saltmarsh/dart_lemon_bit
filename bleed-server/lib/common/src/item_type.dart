@@ -349,9 +349,10 @@ class ItemType {
   }[itemType] ?? Empty;
 
   static int getEnergyConsumeAmount(int itemType) => const {
-    ItemType.Weapon_Melee_Axe: 20,
-    ItemType.Weapon_Melee_Knife: 10,
-    ItemType.Weapon_Melee_Staff: 30,
+    ItemType.Empty: 1,
+    ItemType.Weapon_Melee_Knife: 1,
+    ItemType.Weapon_Melee_Axe: 3,
+    ItemType.Weapon_Melee_Staff: 3,
   }[itemType] ?? 0;
 
   static int getConsumeAmount(int itemType) => const {

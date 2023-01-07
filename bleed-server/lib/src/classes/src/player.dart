@@ -15,6 +15,7 @@ import 'scene_writer.dart';
 class Player extends Character with ByteWriter {
   /// CONSTANTS
   static const Health_Per_Perk = 5;
+  static const Frames_Per_Energy_Gain = 150;
 
   /// Variables
   final mouse = Vector2(0, 0);
@@ -79,8 +80,6 @@ class Player extends Character with ByteWriter {
   var inventoryOpen = true;
   var mapX = 0;
   var mapY = 0;
-
-  static const Frames_Per_Energy_Gain = 60;
   var nextEnergyGain = Frames_Per_Energy_Gain;
 
   /// CONSTRUCTOR
