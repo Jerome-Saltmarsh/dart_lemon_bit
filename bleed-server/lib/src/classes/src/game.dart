@@ -711,17 +711,10 @@ abstract class Game {
   void updateColliderPhysics(Collider collider){
     if (!collider.applyGravity) return;
 
-
-    if (scene.getCollisionAt(collider.x, collider.y, collider.z)) {
-      collider.z = ((collider.z ~/ Node_Height) * Node_Height) + Node_Height;
-      if (collider.velocityZ > 0) {
-        collider.velocityZ = -collider.velocityZ * 0.5;
-      }
-    }
-
     if (collider.velocityX < 0) {
       if (scene.getCollisionAt(collider.left, collider.y, collider.z)) {
         collider.velocityX = -collider.velocityX;
+        // collider.x
       }
     } else
     if (collider.velocityX > 0) {
@@ -737,6 +730,13 @@ abstract class Game {
     if (collider.velocityY > 0) {
       if (scene.getCollisionAt(collider.x, collider.bottom, collider.z)) {
         collider.velocityY = -collider.velocityY;
+      }
+    }
+
+    if (scene.getCollisionAt(collider.x, collider.y, collider.z)) {
+      collider.z = ((collider.z ~/ Node_Height) * Node_Height) + Node_Height;
+      if (collider.velocityZ > 0) {
+        collider.velocityZ = -collider.velocityZ * 0.5;
       }
     }
   }
@@ -1469,7 +1469,11 @@ abstract class Game {
       character.applyBehaviorWander(this);
     }
     character.updateMovement();
-    resolveCharacterTileCollision(character);
+
+    for (var i = 0; i < 2; i++) {
+      updateColliderSceneCollisionCircular(character);
+    }
+    updateColliderSceneCollisionCenter(character);
     if (character.dying){
       if (character.stateDurationRemaining-- <= 0){
         setCharacterStateDead(character);
@@ -2064,34 +2068,36 @@ abstract class Game {
     player.writePlayerEvent(PlayerEvent.GameObject_Deselected);
   }
 
-  void resolveCharacterTileCollision(Character character) {
+  void updateColliderSceneCollisionCircular(Collider collider){
     const distance = 3;
-    final stepHeight = character.z + Node_Height_Half;
+    final stepHeight = collider.z + Node_Height_Half;
 
-    if (scene.getCollisionAt(character.left, character.top, stepHeight)) {
-      character.x += distance;
-      character.y += distance;
+    if (scene.getCollisionAt(collider.left, collider.top, stepHeight)) {
+      collider.x += distance;
+      collider.y += distance;
     }
     else
-    if (scene.getCollisionAt(character.right, character.bottom, stepHeight)) {
-      character.x -= distance;
-      character.y -= distance;
+    if (scene.getCollisionAt(collider.right, collider.bottom, stepHeight)) {
+      collider.x -= distance;
+      collider.y -= distance;
     }
-    if (scene.getCollisionAt(character.left, character.bottom, stepHeight)) {
-      character.x += distance;
-      character.y -= distance;
+    if (scene.getCollisionAt(collider.left, collider.bottom, stepHeight)) {
+      collider.x += distance;
+      collider.y -= distance;
     } else
-    if (scene.getCollisionAt(character.right, character.top, stepHeight)) {
-      character.x -= distance;
-      character.y += distance;
+    if (scene.getCollisionAt(collider.right, collider.top, stepHeight)) {
+      collider.x -= distance;
+      collider.y += distance;
     }
+  }
+
+  void updateColliderSceneCollisionCenter(Character character) {
 
     if (scene.getNodeInBoundsXYZ(character.x, character.y, character.z)) {
       final nodeAtFeetIndex = scene.getNodeIndexXYZ(character.x, character.y, character.z);
       final nodeAtFeetOrientation = scene.nodeOrientations[nodeAtFeetIndex];
 
       if (nodeAtFeetOrientation == NodeOrientation.Solid){
-        // character.z += (character.z % Node_Size);
         character.z = ((character.z ~/ Node_Height) * Node_Height) + Node_Height;
         character.velocityZ = 0;
       } else

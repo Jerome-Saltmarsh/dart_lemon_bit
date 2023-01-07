@@ -96,11 +96,13 @@ ctrl + w:   minimal mode
 [CRITICAL]
 [ ] fix ai running into water
 [ ] fix render visibility algorithm
-[ ] fix physics characters teleport through walls on struck
 [ ] fix node type boulder
 [ ] fix node type fireplace
 [ ] fix node type chimney
 [ ] fix node type oven
+
+07.01.2023
+[?] fix physics characters teleport through walls on struck
 
 06.01.2023
 [x] fix render transparent node during day
