@@ -150,4 +150,18 @@ class GameSurvival extends Game {
         }
      }
   }
+
+  @override
+  void customOnAIRespawned(AI ai) {
+    ai.maxHealth = getCharacterTypeHealth(ai.characterType);
+    ai.health = ai.maxHealth;
+  }
+
+  int getCharacterTypeHealth(int characterType){
+    return const {
+       CharacterType.Zombie: 10,
+       CharacterType.Dog: 6,
+       CharacterType.Template: 8,
+    }[characterType] ?? 10;
+  }
 }

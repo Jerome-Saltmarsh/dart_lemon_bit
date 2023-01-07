@@ -155,11 +155,8 @@ class GameState {
       return;
     }
     if (projectile.type == ProjectileType.Bullet) {
-      applyVector3Emission(projectile,
-          hue: 167,
+      applyVector3EmissionAmbient(projectile,
           alpha: 0.25,
-          saturation: 1,
-          value: 1,
       );
       return;
     }
@@ -173,11 +170,8 @@ class GameState {
       return;
     }
     if (projectile.type == ProjectileType.Arrow) {
-      applyVector3Emission(projectile,
-        hue: 167,
+      applyVector3EmissionAmbient(projectile,
         alpha: 0.25,
-        saturation: 1,
-        value: 1,
       );
       return;
     }
