@@ -26,12 +26,13 @@ class GameUIInteract {
         }
       });
 
-    static Positioned buildInteractModeNone() {
-      return Positioned(child: GameInventoryUI.buildContainerPlayerStats(backgroundColor: Colors.transparent), bottom: 0, left: 0);
-    }
+    static Positioned buildInteractModeNone() => Positioned(
+          child: GameInventoryUI.buildPlayerDamageBar(),
+          bottom: GameStyle.Default_Padding,
+          left: GameStyle.Default_Padding,
+      );
 
-    static Widget buildInteractModeCrafting(){
-      return Stack(
+    static Widget buildInteractModeCrafting() => Stack(
         children: [
           Positioned(
             left: 0,
@@ -41,17 +42,14 @@ class GameUIInteract {
           buildInteractModeInventory(),
         ],
       );
-    }
 
-    static Widget buildContainerCraft(){
-      return GameUI.buildDialog(
+    static Widget buildContainerCraft() => GameUI.buildDialog(
         dialogType: DialogType.Craft,
         child: Container(
            color: GameColors.brownDark,
           child: text("Craft"),
         ),
       );
-    }
 
     static Widget buildInteractModeTrading(){
       return Stack(

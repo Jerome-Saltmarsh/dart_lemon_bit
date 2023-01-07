@@ -378,13 +378,22 @@ class GameUI {
           child: Container(
             width: Engine.screen.width,
             alignment: Alignment.center,
-            child: buildWatchPlayerLevel(),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                GameInventoryUI.buildPlayerHealthBar(),
+                width6,
+                buildWatchPlayerLevel(),
+                width6,
+                GameInventoryUI.buildPlayerEnergyBar(),
+              ],
+            ),
           ),
-          bottom: 12,
+          bottom: GameStyle.Default_Padding,
         ),
         Positioned(
-          bottom: 12,
-          right: 12,
+          bottom: GameStyle.Default_Padding,
+          right: GameStyle.Default_Padding,
           child: buildDialogUIControl(
             child: buildColumnBelt(),
           ),
@@ -651,11 +660,11 @@ class GameUI {
       ServerState.playerLevel,
       (int level) => Tooltip(
             child: watch(
-                ServerState.playerExperiencePercentage, buildPlayerExperience),
+                ServerState.playerExperiencePercentage, buildPlayerExperienceBar),
             message: "Level $level",
           ));
 
-  static Widget buildPlayerExperience(double experience) =>
+  static Widget buildPlayerExperienceBar(double experience) =>
       buildDialogUIControl(
         child: Container(
           width: GameStyle.ExperienceBarWidth,

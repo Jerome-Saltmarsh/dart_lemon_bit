@@ -63,66 +63,50 @@ class GameInventoryUI {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            buildHoverTarget(
-              hoverTargetType: ClientType.Hover_Target_Player_Stats_Health,
-              child: watch(ServerState.playerMaxHealth, (int maxHealth) {
-                return watch(ServerState.playerHealth, (int currentHealth) {
-                  return Container(
-                    padding: const EdgeInsets.all(6),
-                    color: Colors.white24,
-                    width: 150,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                            width: 20,
-                            height: 20,
-                            child: FittedBox(
-                                child:
-                                    GameUI.buildAtlasIconType(IconType.Heart))),
-                        text("$currentHealth / ${padSpace(maxHealth, length: 3)}",
-                            color: GameStyle.Player_Stats_Text_Color),
-                      ],
-                    ),
-                  );
-                });
-              }),
-            ),
+            buildPlayerHealthBar(),
             height8,
-            buildHoverTarget(
-              hoverTargetType: ClientType.Hover_Target_Player_Stats_Energy,
-              child: watch(GamePlayer.energyMax, (int energyMax) {
-                return watch(GamePlayer.energy, (int energy) {
-                  return Container(
-                    padding: const EdgeInsets.all(6),
-                    color: Colors.white24,
-                    width: 150,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                            width: 20,
-                            height: 20,
-                            child: FittedBox(
-                                child:
-                                GameUI.buildAtlasIconType(IconType.Energy))),
-                        text("$energy / ${padSpace(energyMax, length: 3)}",
-                            color: GameStyle.Player_Stats_Text_Color),
-                      ],
-                    ),
-                  );
-                });
-              }),
-            ),
+            buildPlayerEnergyBar(),
             height8,
-            buildHoverTarget(
-              hoverTargetType: ClientType.Hover_Target_Player_Stats_Damage,
-              child: watch(ServerState.playerDamage, (int damage) {
+            buildPlayerDamageBar(),
+            height8,
+          ],
+        ),
+      );
+
+  static Widget buildPlayerDamageBar() {
+    return buildHoverTarget(
+            hoverTargetType: ClientType.Hover_Target_Player_Stats_Damage,
+            child: watch(ServerState.playerDamage, (int damage) {
+              return Container(
+                color: Colors.white24,
+                padding: const EdgeInsets.all(6),
+                width: 150,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                        width: 20,
+                        height: 20,
+                        child: FittedBox(
+                            child:
+                                GameUI.buildAtlasIconType(IconType.Damage))),
+                    text(damage, color: GameStyle.Player_Stats_Text_Color),
+                  ],
+                ),
+              );
+            }),
+          );
+  }
+
+  static Widget buildPlayerEnergyBar() {
+    return buildHoverTarget(
+            hoverTargetType: ClientType.Hover_Target_Player_Stats_Energy,
+            child: watch(GamePlayer.energyMax, (int energyMax) {
+              return watch(GamePlayer.energy, (int energy) {
                 return Container(
-                  color: Colors.white24,
                   padding: const EdgeInsets.all(6),
+                  color: Colors.white24,
                   width: 150,
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -133,18 +117,45 @@ class GameInventoryUI {
                           height: 20,
                           child: FittedBox(
                               child:
-                                  GameUI.buildAtlasIconType(IconType.Damage))),
-                      text(damage, color: GameStyle.Player_Stats_Text_Color),
+                              GameUI.buildAtlasIconType(IconType.Energy))),
+                      text("$energy / ${padSpace(energyMax, length: 3)}",
+                          color: GameStyle.Player_Stats_Text_Color),
                     ],
                   ),
                 );
-              }),
-            ),
-            height8,
+              });
+            }),
+          );
+  }
 
-          ],
-        ),
-      );
+  static Widget buildPlayerHealthBar() {
+    return buildHoverTarget(
+            hoverTargetType: ClientType.Hover_Target_Player_Stats_Health,
+            child: watch(ServerState.playerMaxHealth, (int maxHealth) {
+              return watch(ServerState.playerHealth, (int currentHealth) {
+                return Container(
+                  padding: const EdgeInsets.all(6),
+                  color: Colors.white24,
+                  width: 150,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                          width: 20,
+                          height: 20,
+                          child: FittedBox(
+                              child:
+                                  GameUI.buildAtlasIconType(IconType.Heart))),
+                      text("$currentHealth / ${padSpace(maxHealth, length: 3)}",
+                          color: GameStyle.Player_Stats_Text_Color),
+                    ],
+                  ),
+                );
+              });
+            }),
+          );
+  }
 
   static Widget buildContainerEquippedItems() =>
       DragTarget<int>(
