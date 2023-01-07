@@ -27,6 +27,8 @@ class ClientState {
   static final triggerAlarmNoMessageReceivedFromServer = Watch(false);
 
   static final particles = <Particle>[];
+
+  static var totalParticles = 0;
   static var totalActiveParticles = 0;
   static var showAllItems = false;
   static var srcXRainFalling = 6640.0;
@@ -70,9 +72,7 @@ class ClientState {
     if (ServerState.lightningFlashing.value) return;
     const Seconds_Per_Hour = 3600;
     const Seconds_Per_Hours_12 = Seconds_Per_Hour * 12;
-    const Seconds_Per_Hours_24 = Seconds_Per_Hour * 24;
     final totalSeconds = (ServerState.hours.value * Seconds_Per_Hour) + (ServerState.minutes.value * 60);
-    // GameNodes.ambient_hue = 360.0 * (totalSeconds / Seconds_Per_Hours_24);
 
     GameNodes.ambient_alp = totalSeconds < Seconds_Per_Hours_12
         ? 1.0 - (totalSeconds / Seconds_Per_Hours_12)
@@ -89,8 +89,8 @@ class ClientState {
 
   static void updateActiveParticles(){
     totalActiveParticles = 0;
-    GameState.totalParticles = particles.length;
-    final totalParticles = GameState.totalParticles;
+    ClientState.totalParticles = particles.length;
+    final totalParticles = ClientState.totalParticles;
     for (; totalActiveParticles < totalParticles; totalActiveParticles++){
       if (!particles[totalActiveParticles].active) break;
     }
@@ -117,7 +117,7 @@ class ClientState {
 
   static void sortParticlesActive(){
     var total = particles.length;
-    GameState.totalParticles = total;
+    ClientState.totalParticles = total;
 
     for (var pos = 1; pos < total; pos++) {
       var min = 0;
@@ -146,5 +146,16 @@ class ClientState {
         active++;
     }
     return active;
+  }
+
+  /// This may be the cause of the bug in which the sword particle does not render
+  static Particle getInstanceParticle() {
+    totalActiveParticles++;
+    if (totalActiveParticles >= totalParticles){
+      final instance = Particle();
+      particles.add(instance);
+      return instance;
+    }
+    return particles[totalActiveParticles];
   }
 }

@@ -11,7 +11,6 @@ class GameState {
   static final particleOverflow = Particle();
 
   static var nextParticleFrame = 0;
-  static var totalParticles = 0;
 
   static final gridShadows = Watch(true, onChanged: (bool value){
     GameNodes.resetNodeColorsToAmbient();
@@ -104,7 +103,7 @@ class GameState {
     applyEmissionsProjectiles();
     applyCharacterColors();
 
-    for (var i = 0; i < totalParticles; i++){
+    for (var i = 0; i < ClientState.totalParticles; i++){
        final particle = ClientState.particles[i];
        if (particle.type != ParticleType.Light_Emission) continue;
        GameNodes.emitLightDynamic(
@@ -270,7 +269,7 @@ class GameState {
       return particleOverflow;
     }
     assert(duration > 0);
-    final particle = getInstanceParticle();
+    final particle = ClientState.getInstanceParticle();
     assert(!particle.active);
     particle.type = type;
     particle.x = x;
@@ -307,7 +306,7 @@ class GameState {
     if (particle.outOfBounds) return particle.deactivate();
 
     if (particle.type == ParticleType.Light_Emission){
-      const change = 0.15;
+      const change = 0.125;
       if (particle.flash){
         particle.strength += change;
         if (particle.strength >= 1){
@@ -870,17 +869,6 @@ class GameState {
         ..strength = 0.0
   ;
 
-  /// This may be the cause of the bug in which the sword particle does not render
-  static Particle getInstanceParticle() {
-    ClientState.totalActiveParticles++;
-    if (ClientState.totalActiveParticles >= totalParticles){
-      final instance = Particle();
-      ClientState.particles.add(instance);
-      return instance;
-    }
-    return ClientState.particles[ClientState.totalActiveParticles];
-  }
-
   static Particle spawnParticleFire({
     required double x,
     required double y,
@@ -1077,7 +1065,7 @@ class GameState {
       for (final emitter in particleEmitters) {
         if (emitter.next-- > 0) continue;
         emitter.next = emitter.rate;
-        final particle = getInstanceParticle();
+        final particle = ClientState.getInstanceParticle();
         particle.x = emitter.x;
         particle.y = emitter.y;
         particle.z = emitter.z;

@@ -91,22 +91,6 @@ class GameEvents {
         return;
       case GameEventType.Explosion:
         GameAudio.explosion_grenade_04.playXYZ(x, y, z);
-
-        GameSpawn.spawnPurpleFireExplosion(
-          x,
-          y,
-          z,
-        );
-
-        // GameState.spawnParticleLightEmission(
-        //   x: x,
-        //   y: y,
-        //   z: z,
-        //   hue: GameNodes.ambient_hue,
-        //   saturation: GameNodes.ambient_sat,
-        //   value: GameNodes.ambient_val,
-        //   alpha: 0.5,
-        // );
         const flameSpeed = 1.0;
         GameState.spawnParticleFire(x: x, y: y, z: z)
           ..delay = 0
@@ -128,10 +112,6 @@ class GameEvents {
         GameState.spawnParticleFire(x: x, y: y, z: z)..delay = 2;
         GameState.spawnParticleFire(x: x, y: y, z: z)..delay = 4;
         GameState.spawnParticleFire(x: x, y: y, z: z)..delay = 6;
-
-        // GameState.spawnParticleSmoke(x: x, y: y, z: z)
-        //   ..delay = 10;
-
         return;
       case GameEventType.AI_Target_Acquired:
         final characterType = serverResponseReader.readByte();
