@@ -317,7 +317,35 @@ class GameAudio {
         }
         break;
     }
-
-
   }
+
+  static final MapItemTypeAudioSinglesAttack = <int, AudioSingle> {
+     ItemType.Empty: swing_arm_11,
+     ItemType.Weapon_Melee_Knife: dagger_woosh_9,
+     ItemType.Weapon_Melee_Axe: dagger_woosh_9,
+     ItemType.Weapon_Melee_Staff: dagger_woosh_9,
+     ItemType.Weapon_Melee_Hammer: dagger_woosh_9,
+     ItemType.Weapon_Melee_Pickaxe: dagger_woosh_9,
+     ItemType.Weapon_Melee_Crowbar: dagger_woosh_9,
+     ItemType.Weapon_Melee_Sword: dagger_woosh_9,
+     ItemType.Weapon_Handgun_Flint_Lock_Old: revolver_shot_3,
+     ItemType.Weapon_Handgun_Flint_Lock: revolver_shot_3,
+     ItemType.Weapon_Handgun_Flint_Lock_Superior: revolver_shot_3,
+     ItemType.Weapon_Handgun_Glock: pistol_shot_20,
+     ItemType.Weapon_Smg_Mp5: pistol_shot_07,
+     ItemType.Weapon_Handgun_Desert_Eagle: revolver_shot_6,
+     ItemType.Weapon_Handgun_Revolver: revolver_shot_3,
+     ItemType.Weapon_Rifle_Arquebus: assault_rifle_shot_13,
+     ItemType.Weapon_Rifle_Blunderbuss: assault_rifle_shot_13,
+     ItemType.Weapon_Rifle_Musket: assault_rifle_shot_14,
+     ItemType.Weapon_Rifle_Jager: assault_rifle_shot_14,
+     ItemType.Weapon_Rifle_AK_47: assault_rifle_shot_14,
+     ItemType.Weapon_Rifle_M4: assault_rifle_shot_17,
+     ItemType.Weapon_Rifle_Sniper: sniper_shot_4,
+     ItemType.Weapon_Ranged_Shotgun: shotgun_shot,
+     ItemType.Weapon_Flamethrower: fire_bolt_14,
+     ItemType.Weapon_Special_Bazooka: fire_bolt_14,
+     ItemType.Weapon_Special_Minigun: machine_gun_shot_02,
+     ItemType.Weapon_Thrown_Grenade: swing_sword,
+  };
 }

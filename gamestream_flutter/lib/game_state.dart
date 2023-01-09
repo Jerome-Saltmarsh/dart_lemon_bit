@@ -769,7 +769,7 @@ class GameState {
     required double y,
     required double z,
     int duration = 100,
-    double scale = 1.0,
+    double scale = 0.75,
     double angle = 0,
     double speed = 2,
   }) {

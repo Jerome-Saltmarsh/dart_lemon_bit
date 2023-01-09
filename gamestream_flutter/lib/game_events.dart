@@ -273,93 +273,13 @@ class GameEvents {
 
   static void onAttackPerformed(double x, double y, double z, double angle) {
     final attackType = serverResponseReader.readUInt16();
-    switch (attackType){
-      case ItemType.Weapon_Handgun_Flint_Lock:
-        GameAudio.revolver_shot_3.playXYZ(x, y, z);
-        GameState.spawnParticleShell(x, y, z);
-        break;
-      case ItemType.Weapon_Handgun_Flint_Lock_Old:
-        GameAudio.revolver_shot_3.playXYZ(x, y, z);
-        GameState.spawnParticleShell(x, y, z);
-        break;
-      case ItemType.Weapon_Handgun_Flint_Lock_Superior:
-        GameAudio.revolver_shot_3.playXYZ(x, y, z);
-        GameState.spawnParticleShell(x, y, z);
-        break;
-      case ItemType.Weapon_Handgun_Glock:
-        GameAudio.pistol_shot_20.playXYZ(x, y, z);
-        GameState.spawnParticleShell(x, y, z);
-        break;
-      case ItemType.Weapon_Smg_Mp5:
-        GameAudio.pistol_shot_07.playXYZ(x, y, z);
-        GameState.spawnParticleShell(x, y, z);
-        break;
-      case ItemType.Weapon_Handgun_Desert_Eagle:
-        GameAudio.revolver_shot_6.playXYZ(x, y, z);
-        GameState.spawnParticleShell(x, y, z);
-        break;
-      case ItemType.Weapon_Handgun_Revolver:
-        GameAudio.revolver_shot_3.playXYZ(x, y, z);
-        GameState.spawnParticleShell(x, y, z);
-        break;
-      case ItemType.Weapon_Rifle_Arquebus:
-        GameAudio.assault_rifle_shot_13.playXYZ(x, y, z);
-        GameState.spawnParticleShell(x, y, z);
-        break;
-      case ItemType.Weapon_Rifle_Blunderbuss:
-        GameAudio.assault_rifle_shot_13.playXYZ(x, y, z);
-        GameState.spawnParticleShell(x, y, z);
-        break;
-      case ItemType.Weapon_Rifle_Musket:
-        GameAudio.assault_rifle_shot_14.playXYZ(x, y, z);
-        GameState.spawnParticleShell(x, y, z);
-        break;
-      case ItemType.Weapon_Rifle_Jager:
-        GameAudio.assault_rifle_shot_14.playXYZ(x, y, z);
-        GameState.spawnParticleShell(x, y, z);
-        break;
-      case ItemType.Weapon_Rifle_AK_47:
-        GameAudio.assault_rifle_shot_14.playXYZ(x, y, z);
-        GameState.spawnParticleShell(x, y, z);
-        break;
-      case ItemType.Weapon_Rifle_M4:
-        GameAudio.assault_rifle_shot_17.playXYZ(x, y, z);
-        GameState.spawnParticleShell(x, y, z);
-        break;
-      case ItemType.Weapon_Rifle_Sniper:
-        GameAudio.sniper_shot_4.playXYZ(x, y, z);
-        GameState.spawnParticleShell(x, y, z);
-        break;
-      case ItemType.Weapon_Ranged_Shotgun:
-        return GameAudio.shotgun_shot.playXYZ(x, y, z);
-      case ItemType.Weapon_Melee_Sword:
-        return onGameEventAttackPerformedBlade(x, y, z, angle);
-      case ItemType.Empty:
-        GameAudio.swing_arm_11.playXYZ(x, y, z);
-        onAttackPerformedUnarmed(x, y, z, angle);
-        GameState.spawnParticleStrikeBlade(x: x, y: y, z: z, angle: angle);
-        break;
-      case ItemType.Weapon_Melee_Crowbar:
-        GameAudio.swing_sword.playXYZ(x, y, z);
-        break;
-      case ItemType.Weapon_Thrown_Grenade:
-        GameAudio.swing_sword.playXYZ(x, y, z);
-        break;
-      case ItemType.Weapon_Flamethrower:
-        GameAudio.fire_bolt_14.playXYZ(x, y, z);
-        break;
-      case ItemType.Weapon_Special_Bazooka:
-        GameAudio.fire_bolt_14.playXYZ(x, y, z);
-        break;
-      case ItemType.Weapon_Special_Minigun:
-        GameAudio.machine_gun_shot_02.playXYZ(x, y, z);
-        break;
-      case ItemType.Weapon_Melee_Knife:
-        GameAudio.dagger_woosh_9.playXYZ(x, y, z);
-        GameState.spawnParticleStrikeBlade(x: x, y: y, z: z, angle: angle);
-        break;
-      default:
-        return;
+    final attackTypeAudio = GameAudio.MapItemTypeAudioSinglesAttack[attackType];
+
+    if (attackTypeAudio != null) {
+      attackTypeAudio.playXYZ(x, y, z);
+    }
+    if (ItemType.isTypeWeaponMelee(attackType)) {
+      GameState.spawnParticleStrikeBlade(x: x, y: y, z: z, angle: angle);
     }
   }
 
