@@ -88,9 +88,6 @@ class Collider extends Position3 {
   }) {
     velocityX += getAdjacent(angle, force);
     velocityY += getOpposite(angle, force);
-    if (velocitySpeed > maxSpeed) {
-      velocitySpeed = maxSpeed;
-    }
   }
 
   void updatePhysics(){
