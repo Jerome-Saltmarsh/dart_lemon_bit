@@ -271,7 +271,7 @@ class AtlasNodeX {
   static const Stone = 1508.0;
   static const Plain_Solid = 1557.0;
   static const Oven = 618.0;
-  static const Boulder = 618.0;
+  static const Boulder = 1344.0;
   static const Wireframe_Blue = 1704.0;
   static const Wireframe_Red = 1704.0;
   static const Orientation_Solid = 0.0;
@@ -326,7 +326,7 @@ class AtlasNodeY {
   static const Water_Flowing = 0.0;
   static const Window = 80.0;
   static const Oven = 804.0;
-  static const Boulder = 657.0;
+  static const Boulder = 160.0;
   static const Wireframe_Blue = 509.0;
   static const Wireframe_Red = 582.0;
   static const Orientation_Solid = 512.0;

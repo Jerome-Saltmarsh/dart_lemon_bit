@@ -94,12 +94,12 @@ ctrl + w:   minimal mode
 [CRITICAL]
 [ ] fix ai running into water
 [ ] fix render visibility algorithm
-[ ] fix node type boulder
 [ ] fix node type fireplace
 [ ] fix node type chimney
 [ ] fix node type oven
 
 09.01.2023
+[x] fix node type boulder
 [x] melee attack sounds
 [x] melee attack slash effect
 [x] fix engine render sprite rotated
