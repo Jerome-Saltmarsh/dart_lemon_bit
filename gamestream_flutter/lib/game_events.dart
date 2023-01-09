@@ -539,6 +539,8 @@ class GameEvents {
   }
 
   static void onCharacterDeath(int characterType, double x, double y, double z, double angle) {
+    randomItem(GameAudio.bloody_punches).playXYZ(x, y, z);
+    GameAudio.heavy_punch_13.playXYZ(x, y, z);
     GameSpawn.spawnPurpleFireExplosion(x, y, z);
     GameSpawn.spawnBubbles(x, y, z);
 

@@ -91,7 +91,6 @@ ctrl + w:   minimal mode
 [ ] hue changes over time of day and night
 [ ] respawn cut grass
 [ ] melee attack sounds
-[ ] melee attack slash effect
 
 [CRITICAL]
 [ ] fix ai running into water
@@ -100,6 +99,11 @@ ctrl + w:   minimal mode
 [ ] fix node type fireplace
 [ ] fix node type chimney
 [ ] fix node type oven
+
+09.01.2023
+[x] melee attack slash effect
+[x] fix engine render sprite rotated
+
 
 07.01.2023
 [x] purple explosion emits light

@@ -894,7 +894,7 @@ class Engine {
     incrementBufferIndex();
   }
 
-  /// the anchor points determine the point around which the sprite is rotated
+  /// The anchor determines the point around which the sprite is rotated
   static void renderSpriteRotated({
     required ui.Image image,
     required double srcX,

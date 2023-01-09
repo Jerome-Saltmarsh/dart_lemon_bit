@@ -1398,6 +1398,9 @@ abstract class Game {
       dispatchV3(GameEventType.Zombie_Strike, srcCharacter);
     }
     if (target is Character) {
+
+      // dispatchV3(GameEventType.Zombie_Strike, srcCharacter);
+
       applyDamageToCharacter(src: srcCharacter, target: target, amount: damage);
     }
 

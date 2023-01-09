@@ -312,7 +312,8 @@ class RendererParticles extends Renderer {
       srcHeight: size,
       scale: particle.scale,
       rotation: particle.rotation + piQuarter + piHalf,
-      anchorY: 1.0,
+      anchorX: 0.5,
+      anchorY: 0.0,
     );
   }
 
