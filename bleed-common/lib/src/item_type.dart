@@ -538,6 +538,7 @@ class ItemType {
      Weapon_Melee_Axe: "Axe",
      Weapon_Melee_Pickaxe: "Pickaxe",
      Weapon_Melee_Hammer: "Hammer",
+     Weapon_Melee_Crowbar: "Crowbar",
      Weapon_Handgun_Flint_Lock_Old: "Old Flint Lock Pistol",
      Weapon_Handgun_Flint_Lock: "Flint Lock Pistol",
      Weapon_Handgun_Flint_Lock_Superior: "Superior Flint Lock Pistol",

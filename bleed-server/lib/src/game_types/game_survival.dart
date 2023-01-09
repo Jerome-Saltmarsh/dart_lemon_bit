@@ -43,6 +43,12 @@ class GameSurvival extends Game {
     player.inventoryClear();
     player.inventoryAddMax(itemType: ItemType.Resource_Gun_Powder);
     player.inventoryAdd(itemType: ItemType.Weapon_Melee_Axe);
+    player.inventoryAdd(itemType: ItemType.Weapon_Melee_Pickaxe);
+    player.inventoryAdd(itemType: ItemType.Weapon_Melee_Hammer);
+    player.inventoryAdd(itemType: ItemType.Weapon_Melee_Crowbar);
+    player.inventoryAdd(itemType: ItemType.Weapon_Melee_Sword);
+    player.inventoryAdd(itemType: ItemType.Weapon_Melee_Staff);
+
     player.inventoryAdd(itemType: ItemType.Weapon_Melee_Staff);
     player.bodyType = getRandomStartingShirt();
     player.legsType = getRandomStartingLegs();
