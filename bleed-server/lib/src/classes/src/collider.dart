@@ -99,12 +99,14 @@ class Collider extends Position3 {
       velocityZ += GamePhysics.Gravity;
       velocityZ *= GamePhysics.Friction;
     }
-    const minVelocity = 0.005;
-    if (velocityX <= minVelocity && velocityY <= minVelocity) return;
-    x += velocityX;
-    y += velocityY;
-    velocityX *= GamePhysics.Friction;
-    velocityY *= GamePhysics.Friction;
+    if (velocityX > GamePhysics.Min_Velocity) {
+      x += velocityX;
+      velocityX *= GamePhysics.Friction;
+    }
+    if (velocityY > GamePhysics.Min_Velocity) {
+      y += velocityY;
+      velocityY *= GamePhysics.Friction;
+    }
   }
 
   /// FUNCTIONS
