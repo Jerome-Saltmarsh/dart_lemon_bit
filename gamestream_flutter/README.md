@@ -91,6 +91,7 @@ ctrl + w:   minimal mode
 [ ] respawn cut grass
 [ ] rain effected by wind
 
+
 [CRITICAL]
 [ ] fix ai running into water
 [ ] fix render visibility algorithm

@@ -54,12 +54,13 @@ class NodeType {
       value == Grass;
 
   static bool isMaterialStone(int value) =>
-      value == Concrete ||
-      value == Oven ||
-      value == Brick ||
-      value == Road ||
-      value == Road_2 ||
-      value == Chimney;
+      value == Concrete   ||
+      value == Boulder    ||
+      value == Oven       ||
+      value == Brick      ||
+      value == Road       ||
+      value == Road_2     ||
+      value == Chimney     ;
 
   static bool supportsOrientationSolid(int type) =>
       type == Brick         ||
@@ -158,13 +159,12 @@ class NodeType {
   static bool supportsOrientationColumn(int type) =>
       type == Concrete          ||
       type == Brick             ||
-      type == Road          ||
-      type == Metal         ||
-      type == Wood         ||
+      type == Road              ||
+      type == Metal             ||
+      type == Wood              ||
       type == Grass              ;
 
   static bool isDestroyable(int type) =>
-      type == Boulder         ||
       type == Sunflower       ||
       type == Grass_Long       ;
 
