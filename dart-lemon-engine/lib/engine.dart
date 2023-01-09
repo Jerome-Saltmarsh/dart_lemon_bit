@@ -923,12 +923,11 @@ class Engine {
     final tx = dstX + width;
     final ty = dstY + height;
 
-    // final forward = adj
     final scaledHeight = srcHeight * scale * 0.5;
     final scaledWidth = srcWidth * scale * 0.5;
 
-    final adjY = getAdjacent(rotation, scaledHeight);
-    final adjX = getOpposite(rotation, scaledHeight);
+    final adjX = getAdjacent(rotation - piHalf, scaledHeight);
+    final adjY = getOpposite(rotation - piHalf, scaledHeight);
 
     final adjY2 = getAdjacent(rotation - piHalf, scaledWidth);
     final adjX2 = getOpposite(rotation - piHalf, scaledWidth);
@@ -944,8 +943,8 @@ class Engine {
     bufferDst[f + 1] = sin(rotation) * scale;
     // bufferDst[2] = dstX - (srcWidth * anchorX * scale);
     // bufferDst[3] = dstY - (srcHeight * anchorY * scale); // scale
-    bufferDst[2] = tx + adjX2;
-    bufferDst[3] = ty - scaledHeight - adjY2; // scale
+    bufferDst[2] = tx + adjX2 + adjX;
+    bufferDst[3] = ty - scaledHeight - adjY2 + adjY;
 
 
     incrementBufferIndex();
