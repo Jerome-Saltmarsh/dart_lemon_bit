@@ -299,14 +299,8 @@ class GameEvents {
   }
 
   static void onChangedWindType(int windType) {
-    if (ServerState.windTypeAmbient.value == WindType.Calm){
-      ClientState.srcXRainFalling = AtlasNode.Node_Rain_Falling_Light_X;
-      ClientState.srcXRainLanding = AtlasNode.Node_Rain_Landing_Light_X;
-    } else {
-      ClientState.srcXRainFalling = 1851;
-    }
+    ClientState.refreshRain();
   }
-
 
   static void onChangedHour(int hour){
     if (ServerState.sceneUnderground.value) return;
@@ -315,27 +309,7 @@ class GameEvents {
 
   static void onChangedRain(int value) {
     ClientState.raining.value = value != RainType.None;
-    switch (value) {
-      case RainType.None:
-        break;
-      case RainType.Light:
-        if (ServerState.windTypeAmbient.value == WindType.Calm){
-          ClientState.srcXRainFalling = AtlasNode.Node_Rain_Falling_Light_X;
-          ClientState.srcXRainLanding = AtlasNode.Node_Rain_Landing_Light_X;
-        } else {
-          ClientState.srcXRainFalling = 1851;
-        }
-        break;
-      case RainType.Heavy:
-        ClientState.srcXRainFalling = AtlasNode.Node_Rain_Falling_Heavy_X;
-
-        if (ServerState.windTypeAmbient.value == WindType.Calm){
-          ClientState.srcXRainLanding = AtlasNode.Node_Rain_Landing_Light_X;
-        } else {
-          ClientState.srcXRainFalling = 1851;
-        }
-        break;
-    }
+    ClientState.refreshRain();
     ClientState.updateGameLighting();
   }
 

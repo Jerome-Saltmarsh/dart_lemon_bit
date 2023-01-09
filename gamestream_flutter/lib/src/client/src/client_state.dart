@@ -158,4 +158,27 @@ class ClientState {
     }
     return particles[totalActiveParticles];
   }
+
+  static void refreshRain(){
+    switch (ServerState.rainType.value) {
+      case RainType.None:
+        break;
+      case RainType.Light:
+        srcXRainLanding = AtlasNode.Node_Rain_Landing_Light_X;
+        if (ServerState.windTypeAmbient.value == WindType.Calm){
+          srcXRainFalling = AtlasNode.Node_Rain_Falling_Light_X;
+        } else {
+          srcXRainFalling = 1851;
+        }
+        break;
+      case RainType.Heavy:
+        srcXRainLanding = AtlasNode.Node_Rain_Landing_Heavy_X;
+        if (ServerState.windTypeAmbient.value == WindType.Calm){
+          srcXRainFalling = AtlasNode.Node_Rain_Falling_Heavy_X;
+        } else {
+          srcXRainFalling = 1900;
+        }
+        break;
+    }
+  }
 }
