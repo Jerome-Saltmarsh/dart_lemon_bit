@@ -91,13 +91,16 @@ ctrl + w:   minimal mode
 [ ] respawn cut grass
 [ ] rain effected by wind
 
-
 [CRITICAL]
 [ ] fix ai running into water
 [ ] fix render visibility algorithm
 [ ] fix node type fireplace
 [ ] fix node type chimney
 [ ] fix node type oven
+
+10.01.2023
+[x] fix render grenade
+[x] fix grenade physics
 
 09.01.2023
 [x] save scene recover destroyed nodes such as cut grass

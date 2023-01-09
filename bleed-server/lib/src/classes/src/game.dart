@@ -708,12 +708,6 @@ abstract class Game {
     }
   }
 
-  void updateColliderSceneCollision(Collider collider){
-    if (!collider.applyGravity) return;
-    updateColliderSceneCollisionHorizontal(collider);
-    updateColliderSceneCollisionVertical(collider);
-  }
-
   void updateColliderSceneCollisionHorizontal(Collider collider) {
       if (collider.velocityX < 0) {
       if (scene.getCollisionAt(collider.left, collider.y, collider.z)) {
@@ -738,11 +732,10 @@ abstract class Game {
   }
 
   void updateColliderSceneCollisionVertical(Collider collider) {
-      if (scene.getCollisionAt(collider.x, collider.y, collider.z)) {
-      collider.z = ((collider.z ~/ Node_Height) * Node_Height) + Node_Height;
-      if (collider.velocityZ > 0) {
-        collider.velocityZ = -collider.velocityZ * 0.5;
-      }
+    if (!scene.getCollisionAt(collider.x, collider.y, collider.z)) return;
+    collider.z = ((collider.z ~/ Node_Height) * Node_Height) + Node_Height;
+    if (collider.velocityZ < 0) {
+      collider.velocityZ = -collider.velocityZ * 0.75;
     }
   }
 
@@ -753,7 +746,8 @@ abstract class Game {
   void updateGameObject(GameObject gameObject) {
     if (!gameObject.active) return;
     gameObject.updatePhysics();
-    updateColliderSceneCollision(gameObject);
+    updateColliderSceneCollisionVertical(gameObject);
+    updateColliderSceneCollisionHorizontal(gameObject);
   }
 
   void createExplosion(Position3 src){
