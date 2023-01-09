@@ -51,8 +51,10 @@ class GameWebsite {
         dstX: 100,
         dstY: 100,
         anchorX: 0.5,
-        anchorY: 1.0,
+        anchorY: 0.5,
       );
+
+      const anchorY = 0.0;
 
       Engine.renderExternalCanvas(
          canvas: canvas,
@@ -64,7 +66,7 @@ class GameWebsite {
         dstX: 100,
         dstY: 100,
         anchorX: 0.5,
-        anchorY: 1.0,
+        anchorY: 0.5,
       );
 
       Engine.renderSpriteRotated(
@@ -75,10 +77,10 @@ class GameWebsite {
         srcY: 1 + 1 * 64,
         srcWidth: 64,
         srcHeight: 64,
-        scale: 0.75,
+        scale: 0.5,
         rotation: _rotation,
-        anchorX: 0.5,
-        anchorY: 1.0,
+        anchorX: 1,
+        anchorY: 0.5,
       );
 
       if (_rotate){

@@ -894,6 +894,7 @@ class Engine {
     incrementBufferIndex();
   }
 
+  /// the anchor points determine the point around which the sprite is rotated
   static void renderSpriteRotated({
     required ui.Image image,
     required double srcX,
@@ -908,12 +909,6 @@ class Engine {
     double scale = 1.0,
     int color = 1,
   }){
-
-    // final scos = cos(rotation) * scale;
-    // final ssin = sin(rotation) * scale;
-    // final tx = dstX + -scos * anchorX + ssin * anchorY;
-    // final ty = dstY + -ssin * anchorX - scos * anchorY;
-
     final scos = cos(rotation) * scale;
     final ssin = sin(rotation) * scale;
 
@@ -923,8 +918,8 @@ class Engine {
     final tx = dstX + width;
     final ty = dstY + height;
 
-    final scaledHeight = srcHeight * scale * 0.5;
-    final scaledWidth = srcWidth * scale * 0.5;
+    final scaledHeight = srcHeight * scale * anchorY;
+    final scaledWidth = srcWidth * scale * anchorX;
 
     final adjX = getAdjacent(rotation - piHalf, scaledHeight);
     final adjY = getOpposite(rotation - piHalf, scaledHeight);
@@ -941,10 +936,8 @@ class Engine {
     bufferSrc[f + 3] = srcY + srcHeight;
     bufferDst[f + 0] = cos(rotation) * scale;
     bufferDst[f + 1] = sin(rotation) * scale;
-    // bufferDst[2] = dstX - (srcWidth * anchorX * scale);
-    // bufferDst[3] = dstY - (srcHeight * anchorY * scale); // scale
     bufferDst[2] = tx + adjX2 + adjX;
-    bufferDst[3] = ty - scaledHeight - adjY2 + adjY;
+    bufferDst[3] = ty - adjY2 + adjY;
 
 
     incrementBufferIndex();
