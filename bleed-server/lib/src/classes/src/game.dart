@@ -564,8 +564,8 @@ abstract class Game {
     if (NodeType.isDestroyable(nodeType)) {
       setNode(
           nodeIndex: nodeIndex,
-          nodeType: NodeType.Empty,
-          nodeOrientation: NodeOrientation.None,
+          nodeType: nodeType,
+          nodeOrientation: NodeOrientation.Destroyed,
       );
       attackHit = true;
     }

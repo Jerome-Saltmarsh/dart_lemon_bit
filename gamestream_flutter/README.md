@@ -100,6 +100,7 @@ ctrl + w:   minimal mode
 [ ] fix node type oven
 
 09.01.2023
+[x] save scene recover destroyed nodes such as cut grass
 [x] fix node type boulder
 [x] melee attack sounds
 [x] melee attack slash effect

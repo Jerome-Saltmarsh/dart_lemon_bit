@@ -164,6 +164,9 @@ class NodeType {
       type == Wood              ||
       type == Grass              ;
 
+  static bool supportsOrientationDestroyed(int type) =>
+      isDestroyable(type);
+
   static bool isDestroyable(int type) =>
       type == Sunflower       ||
       type == Grass_Long       ;
@@ -265,6 +268,10 @@ class NodeType {
 
     if (NodeOrientation.isColumn(orientation)) {
       return supportsOrientationColumn(type);
+    }
+
+    if (orientation == NodeOrientation.Destroyed){
+      return supportsOrientationDestroyed(type);
     }
 
     return false;

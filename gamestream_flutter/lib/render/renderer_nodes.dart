@@ -423,6 +423,8 @@ class RendererNodes extends Renderer {
         );
         break;
       case NodeType.Grass_Long:
+        if (currentNodeOrientation == NodeOrientation.Destroyed) return;
+
         switch (currentNodeWind) {
           case WindType.Calm:
             renderStandardNode(
@@ -458,6 +460,7 @@ class RendererNodes extends Renderer {
       case NodeType.Wooden_Plank:
         renderNodeTemplateShaded(GameConstants.Sprite_Width_Padded_10);
         return;
+
       case NodeType.Wood:
         const index_grass = 5;
         const srcX = GameConstants.Sprite_Width_Padded * index_grass;
@@ -469,6 +472,7 @@ class RendererNodes extends Renderer {
         renderNodeTemplateShaded(srcX);
         break;
       case NodeType.Sunflower:
+        if (currentNodeOrientation == NodeOrientation.Destroyed) return;
         renderStandardNode(
           srcX: 1753.0,
           srcY: 867.0,
