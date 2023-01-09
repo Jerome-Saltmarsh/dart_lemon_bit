@@ -84,13 +84,12 @@ ctrl + w:   minimal mode
 [ ] design scene suburbia
 [ ] cupboards with loot
 [ ] destroyable crates etc
-[ ] heavy melee items deplete energy quicker than light melee weapons
 [ ] being over encumbered depletes energy while running
 [ ] flaming barrel object
 [ ] saturation changes over time of day and night
 [ ] hue changes over time of day and night
 [ ] respawn cut grass
-[ ] melee attack sounds
+[ ] rain effected by wind
 
 [CRITICAL]
 [ ] fix ai running into water
@@ -101,9 +100,9 @@ ctrl + w:   minimal mode
 [ ] fix node type oven
 
 09.01.2023
+[x] melee attack sounds
 [x] melee attack slash effect
 [x] fix engine render sprite rotated
-
 
 07.01.2023
 [x] purple explosion emits light

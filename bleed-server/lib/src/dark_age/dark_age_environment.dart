@@ -87,16 +87,7 @@ class DarkAgeEnvironment {
       updateLightning();
       updateBreeze();
       updateWind();
-      // updateShade();
    }
-
-   // void updateShade() {
-   //    if (lightningFlashDuration > 0){
-   //       shade = Shade.Very_Bright;
-   //    } else {
-   //       shade = Shade.fromHour(time.hour);
-   //    }
-   // }
 
    void updateRain(){
       if (durationRain-- > 0) return;
@@ -159,26 +150,25 @@ class DarkAgeEnvironment {
       breezy = !breezy;
    }
 
-   void updateWind(){
-      durationWind--;
-      if (durationWind <= 0) {
-         durationWind = randomInt(3000, 6000);
+   void updateWind() {
+    durationWind--;
+    if (durationWind > 0) return;
+    durationWind = randomInt(2000, 4000);
 
-         if (windType == WindType.Calm) {
-            windType++;
-            return;
-         }
-         if (windType == WindType.Strong){
-            windType--;
-            return;
-         }
-         if (randomBool()){
-            windType--;
-         } else {
-            windType++;
-         }
-      }
-   }
+    if (windType == WindType.Calm) {
+      windType++;
+      return;
+    }
+    if (windType == WindType.Strong) {
+      windType--;
+      return;
+    }
+    if (randomBool()) {
+      windType--;
+    } else {
+      windType++;
+    }
+  }
 
    /// WARNING HACK
    void onChangedWeather(){

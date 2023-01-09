@@ -599,8 +599,8 @@ class ItemType {
   }[itemType]            ?? 001;
 
   static int getHealAmount(int itemType) => const {
-    Consumables_Apple:  03,
-    Consumables_Meat:   05,
+    Consumables_Apple:  10,
+    Consumables_Meat:   10,
   }[itemType] ??        00;
 
   static int getMaxHealth(int itemType) => const {
