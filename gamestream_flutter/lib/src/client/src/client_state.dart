@@ -174,9 +174,9 @@ class ClientState {
       case RainType.Heavy:
         srcXRainLanding = AtlasNode.Node_Rain_Landing_Heavy_X;
         if (ServerState.windTypeAmbient.value == WindType.Calm){
-          srcXRainFalling = AtlasNode.Node_Rain_Falling_Heavy_X;
-        } else {
           srcXRainFalling = 1900;
+        } else {
+          srcXRainFalling = 1606;
         }
         break;
     }

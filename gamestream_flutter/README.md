@@ -104,6 +104,9 @@ ctrl + w:   minimal mode
 [x] melee attack slash effect
 [x] fix engine render sprite rotated
 
+08.01.2023
+[BREAK]
+
 07.01.2023
 [x] purple explosion emits light
 [x] fix attack unarmed audio
