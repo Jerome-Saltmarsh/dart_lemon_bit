@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:ui' as ui;
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
@@ -34,9 +35,60 @@ class GameWebsite {
     WebsiteState.error.value = message;
   }
 
+  static var _rotation = 0.0;
+  static var _rotate = true;
+
    static void renderCanvas(Canvas canvas, Size size){
       final centerX = size.width * 0.5;
-      // final y =
+
+      Engine.renderExternalCanvas(
+         canvas: canvas,
+        image: GameImages.particles,
+        srcX: 357,
+        srcY: 386,
+        srcWidth: 64,
+        srcHeight: 64,
+        dstX: 100,
+        dstY: 100,
+        anchorX: 0.5,
+        anchorY: 1.0,
+      );
+
+      Engine.renderExternalCanvas(
+         canvas: canvas,
+        image: GameImages.particles,
+        srcX: 357,
+        srcY: 451,
+        srcWidth: 32,
+        srcHeight: 32,
+        dstX: 100,
+        dstY: 100,
+        anchorX: 0.5,
+        anchorY: 1.0,
+      );
+
+      Engine.renderSpriteRotated(
+        image: GameImages.particles,
+        dstX: 100,
+        dstY: 100,
+        srcX: 357,
+        srcY: 1 + 1 * 64,
+        srcWidth: 64,
+        srcHeight: 64,
+        scale: 0.75,
+        rotation: _rotation,
+        anchorX: 0.5,
+        anchorY: 1.0,
+      );
+
+      if (_rotate){
+        _rotation += 0.1;
+        if (_rotation > pi2){
+          _rotation = 0;
+        }
+      }
+
+
       Engine.renderSprite(
         image: GameImages.atlas_nodes,
         srcX: 0,
@@ -173,6 +225,8 @@ class GameWebsite {
         // buildTextButton("5v5", action: GameNetwork.connectToGame5v5),
         height24,
         buildTextButton("CREATE", action: GameNetwork.connectToGameEditor),
+        text("Pause", onPressed: () => _rotate = !_rotate),
+        Refresh(() => text(_rotation.toStringAsFixed(2))),
       ],
     );
 

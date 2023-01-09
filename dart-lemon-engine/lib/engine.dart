@@ -908,17 +908,46 @@ class Engine {
     double scale = 1.0,
     int color = 1,
   }){
+
+    // final scos = cos(rotation) * scale;
+    // final ssin = sin(rotation) * scale;
+    // final tx = dstX + -scos * anchorX + ssin * anchorY;
+    // final ty = dstY + -ssin * anchorX - scos * anchorY;
+
+    final scos = cos(rotation) * scale;
+    final ssin = sin(rotation) * scale;
+
+    final width = -scos * anchorX + ssin * anchorY;
+    final height = -ssin * anchorX - scos * anchorY;
+
+    final tx = dstX + width;
+    final ty = dstY + height;
+
+    // final forward = adj
+    final scaledHeight = srcHeight * scale * 0.5;
+    final scaledWidth = srcWidth * scale * 0.5;
+
+    final adjY = getAdjacent(rotation, scaledHeight);
+    final adjX = getOpposite(rotation, scaledHeight);
+
+    final adjY2 = getAdjacent(rotation - piHalf, scaledWidth);
+    final adjX2 = getOpposite(rotation - piHalf, scaledWidth);
+
     bufferImage = image;
     final f = bufferIndex << 2;
     bufferClr[bufferIndex] = color;
-    bufferSrc[f] = srcX;
+    bufferSrc[f + 0] = srcX;
     bufferSrc[f + 1] = srcY;
     bufferSrc[f + 2] = srcX + srcWidth;
     bufferSrc[f + 3] = srcY + srcHeight;
-    bufferDst[f] = cos(rotation) * scale;
+    bufferDst[f + 0] = cos(rotation) * scale;
     bufferDst[f + 1] = sin(rotation) * scale;
-    bufferDst[f + 2] = dstX;
-    bufferDst[f + 3] = dstY;
+    // bufferDst[2] = dstX - (srcWidth * anchorX * scale);
+    // bufferDst[3] = dstY - (srcHeight * anchorY * scale); // scale
+    bufferDst[2] = tx + adjX2;
+    bufferDst[3] = ty - scaledHeight - adjY2; // scale
+
+
     incrementBufferIndex();
   }
 

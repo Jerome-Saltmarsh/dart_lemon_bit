@@ -289,27 +289,32 @@ class RendererParticles extends Renderer {
           );
           break;
         case ParticleType.Strike_Blade:
-          if (particle.frame >= 6 ) {
-            particle.deactivate();
-            break;
-          }
-          const size = 64.0;
-          Engine.renderSpriteRotated(
-            image: GameImages.particles,
-            dstX: particle.renderX,
-            dstY: particle.renderY,
-            srcX: 357,
-            srcY: 1 + particle.frame * size,
-            srcWidth: size,
-            srcHeight: size,
-            scale: particle.scale,
-            rotation: particle.rotation,
-          );
+          renderParticleStrikeBlade();
           break;
         default:
           break;
       }
     }
+
+  static void renderParticleStrikeBlade() {
+    if (particle.frame >= 6 ) {
+      particle.deactivate();
+      return;
+    }
+    const size = 64.0;
+    Engine.renderSpriteRotated(
+      image: GameImages.particles,
+      dstX: particle.renderX,
+      dstY: particle.renderY,
+      srcX: 357,
+      srcY: 1 + particle.frame * size,
+      srcWidth: size,
+      srcHeight: size,
+      scale: particle.scale,
+      rotation: particle.rotation + piQuarter + piHalf,
+      anchorY: 1.0,
+    );
+  }
 
   @override
   void updateFunction() {

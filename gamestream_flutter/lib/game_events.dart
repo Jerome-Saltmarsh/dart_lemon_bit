@@ -337,6 +337,7 @@ class GameEvents {
       case ItemType.Empty:
         GameAudio.swing_arm_11.playXYZ(x, y, z);
         onAttackPerformedUnarmed(x, y, z, angle);
+        GameState.spawnParticleStrikeBlade(x: x, y: y, z: z, angle: angle);
         break;
       case ItemType.Weapon_Melee_Crowbar:
         GameAudio.swing_sword.playXYZ(x, y, z);
@@ -355,6 +356,7 @@ class GameEvents {
         break;
       case ItemType.Weapon_Melee_Knife:
         GameAudio.dagger_woosh_9.playXYZ(x, y, z);
+        GameState.spawnParticleStrikeBlade(x: x, y: y, z: z, angle: angle);
         break;
       default:
         return;
