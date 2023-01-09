@@ -37,6 +37,7 @@ class Collider extends Position3 {
   }
 
   /// GETTERS
+  /// Expensive Operation
   double get velocitySpeed => getHypotenuse(velocityX, velocityY);
   double get velocityAngle => getAngle(velocityX, velocityY);
   double get left => x - radius;
@@ -99,7 +100,7 @@ class Collider extends Position3 {
       velocityZ *= GamePhysics.Friction;
     }
     const minVelocity = 0.005;
-    if (velocitySpeed <= minVelocity) return;
+    if (velocityX <= minVelocity && velocityY <= minVelocity) return;
     x += velocityX;
     y += velocityY;
     velocityX *= GamePhysics.Friction;

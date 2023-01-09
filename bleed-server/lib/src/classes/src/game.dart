@@ -708,13 +708,16 @@ abstract class Game {
     }
   }
 
-  void updateColliderPhysics(Collider collider){
+  void updateColliderSceneCollision(Collider collider){
     if (!collider.applyGravity) return;
+    updateColliderSceneCollisionHorizontal(collider);
+    updateColliderSceneCollisionVertical(collider);
+  }
 
-    if (collider.velocityX < 0) {
+  void updateColliderSceneCollisionHorizontal(Collider collider) {
+      if (collider.velocityX < 0) {
       if (scene.getCollisionAt(collider.left, collider.y, collider.z)) {
         collider.velocityX = -collider.velocityX;
-        // collider.x
       }
     } else
     if (collider.velocityX > 0) {
@@ -732,8 +735,10 @@ abstract class Game {
         collider.velocityY = -collider.velocityY;
       }
     }
+  }
 
-    if (scene.getCollisionAt(collider.x, collider.y, collider.z)) {
+  void updateColliderSceneCollisionVertical(Collider collider) {
+      if (scene.getCollisionAt(collider.x, collider.y, collider.z)) {
       collider.z = ((collider.z ~/ Node_Height) * Node_Height) + Node_Height;
       if (collider.velocityZ > 0) {
         collider.velocityZ = -collider.velocityZ * 0.5;
@@ -745,31 +750,10 @@ abstract class Game {
     gameObjects.forEach(updateGameObject);
   }
 
-  void updateGameObject(GameObject gameObject){
+  void updateGameObject(GameObject gameObject) {
     if (!gameObject.active) return;
     gameObject.updatePhysics();
-    updateColliderPhysics(gameObject);
-
-    // if (gameObject.timer <= 0)
-    //   return;
-    // gameObject.timer--;
-    // if (gameObject.timer > 0)
-    //   return;
-    //
-    // deactivateGameObject(gameObject);
-    // dispatchV3(GameEventType.GameObject_Timeout, gameObject);
-    //
-    // if (gameObject.type == ItemType.GameObjects_Grenade) {
-    //   createExplosion(gameObject);
-    //   // dispatchV3(GameEventType.Explosion, gameObject);
-    //   // for (var i = 0; i < characters.length; i++){
-    //   //   if (characters[i].dead) continue;
-    //   //   final character = characters[i];
-    //   //   if (gameObject.withinRadius(character, 100)) {
-    //   //     applyHit(src: gameObject, target: character);
-    //   //   }
-    //   // }
-    // }
+    updateColliderSceneCollision(gameObject);
   }
 
   void createExplosion(Position3 src){
