@@ -476,7 +476,7 @@ class ServerResponseReader with ByteReader {
       GameNodes.nodeTypes = Uint8List(totalNodes);
       GameNodes.nodeOrientations = Uint8List(totalNodes);
       GameNodes.nodeWind = Uint8List(totalNodes);
-      GameNodes.nodeVariations = List.generate(totalNodes, (index) => false, growable: false);
+      GameNodes.nodeVariations = Uint8List(totalNodes);
       GameNodes.nodeVisible = Uint8List(totalNodes);
       GameNodes.nodeVisibleIndex = Uint16List(totalNodes);
       GameNodes.nodeDynamicIndex = Uint16List(totalNodes);
@@ -501,8 +501,11 @@ class ServerResponseReader with ByteReader {
         GameNodes.nodeTypes[gridIndex] = nodeType;
         GameNodes.nodeOrientations[gridIndex] = nodeOrientation;
 
-        if (nodeType == NodeType.Grass || nodeType == NodeType.Tree_Bottom) {
-          GameNodes.nodeVariations[gridIndex] = randomBool();
+        if (nodeType == NodeType.Tree_Bottom) {
+          GameNodes.nodeVariations[gridIndex] = randomBool() ? 1 : 0;
+        } else
+        if (nodeType == NodeType.Grass) {
+          GameNodes.nodeVariations[gridIndex] = randomInt(0, 4);
         }
 
         gridIndex++;

@@ -74,14 +74,14 @@ class RendererNodes extends Renderer {
   static bool get currentNodeVisible => currentNodeVisibility == Visibility.Invisible;
   static bool get currentNodeInvisible => currentNodeVisibility == Visibility.Invisible;
   static bool get currentNodeVisibilityOpaque => nodeVisibility[currentNodeIndex] == Visibility.Opaque;
-  static bool get currentNodeVariation => GameNodes.nodeVariations[currentNodeIndex];
+  static int get currentNodeVariation => GameNodes.nodeVariations[currentNodeIndex];
 
   static int get renderNodeOrientation => nodeOrientations[currentNodeIndex];
   static int get renderNodeWind => ServerState.windTypeAmbient.value;
-  static bool get renderNodeVariation => GameNodes.nodeVariations[currentNodeIndex];
+  static int get renderNodeVariation => GameNodes.nodeVariations[currentNodeIndex];
 
   static int get renderNodeBelowIndex => currentNodeIndex - GameNodes.area;
-  static bool get renderNodeBelowVariation => renderNodeBelowIndex > 0 ? GameNodes.nodeVariations[renderNodeBelowIndex] : renderNodeVariation;
+  static int get renderNodeBelowVariation => renderNodeBelowIndex > 0 ? GameNodes.nodeVariations[renderNodeBelowIndex] : renderNodeVariation;
 
   static int get renderNodeBelowColor => getNodeColorAtIndex(currentNodeIndex - GameNodes.area);
 
@@ -389,9 +389,31 @@ class RendererNodes extends Renderer {
     switch (currentNodeType) {
       case NodeType.Grass:
         if (currentNodeOrientation == NodeOrientation.Solid){
-          if (currentNodeVariation){
+          final variation = currentNodeVariation;
+          if (variation == 0) {
+            renderStandardNode(
+              srcX: 147,
+              srcY: 0,
+            );
+            return;
+          }
+          if (variation == 1) {
             renderStandardNode(
               srcX: 1168,
+              srcY: 0,
+            );
+            return;
+          }
+          if (variation == 2) {
+            renderStandardNode(
+              srcX: 1119,
+              srcY: 0,
+            );
+            return;
+          }
+          if (variation == 3) {
+            renderStandardNode(
+              srcX: 1070,
               srcY: 0,
             );
             return;
@@ -590,9 +612,9 @@ class RendererNodes extends Renderer {
     );
   }
 
-  static void renderTreeTop() => renderNodeBelowVariation ? renderTreeTopPine() : renderTreeTopOak();
+  static void renderTreeTop() => renderNodeBelowVariation == 0 ? renderTreeTopPine() : renderTreeTopOak();
 
-  static void renderTreeBottom() => renderNodeVariation ? renderTreeBottomPine() : renderTreeBottomOak();
+  static void renderTreeBottom() => renderNodeVariation == 0 ? renderTreeBottomPine() : renderTreeBottomOak();
 
   static void renderTreeTopOak(){
     var shift = GameAnimation.treeAnimation[((row - column) + GameAnimation.animationFrame) % GameAnimation.treeAnimation.length] * renderNodeWind;

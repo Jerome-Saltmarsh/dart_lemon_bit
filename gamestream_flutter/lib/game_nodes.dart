@@ -42,7 +42,7 @@ class GameNodes {
   static var nodeAlps = Float32List(0);
   static var nodeOrientations = Uint8List(0);
   static var nodeTypes = Uint8List(0);
-  static var nodeVariations = List<bool>.generate(0, (index) => false, growable: false);
+  static var nodeVariations = Uint8List(0);
   static var nodeVisible = Uint8List(0);
   static var nodeVisibleIndex = Uint16List(0);
   static var nodeDynamicIndex = Uint16List(0);
