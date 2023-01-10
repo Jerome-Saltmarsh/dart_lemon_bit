@@ -393,7 +393,14 @@ abstract class Game {
   }
 
   void playerThrowGrenade(Player player) {
-    dispatchPlayerAttackPerformed(player);
+    dispatchAttackPerformed(
+      ItemType.Weapon_Thrown_Grenade,
+      player.x,
+      player.y,
+      player.z,
+      player.lookRadian,
+    );
+
     player.assignWeaponStateFiring();
 
     final mouseDistance = getDistanceXY(player.x, player.y, player.mouseGridX, player.mouseGridY);
