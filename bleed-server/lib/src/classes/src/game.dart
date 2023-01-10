@@ -404,7 +404,7 @@ abstract class Game {
         z: player.z + Character_Height,
         type: ItemType.GameObjects_Grenade
     )
-        ..setVelocity(player.lookRadian, mouseDistance * 0.1)
+        ..setVelocity(player.lookRadian, mouseDistance * 0.15)
         ..collidable = false
         ..physical = false
         ..applyGravity = true
@@ -709,12 +709,11 @@ abstract class Game {
   }
 
   void updateColliderSceneCollisionHorizontal(Collider collider) {
-      if (collider.velocityX < 0) {
+    if (collider.velocityX < 0) {
       if (scene.getCollisionAt(collider.left, collider.y, collider.z)) {
         collider.velocityX = -collider.velocityX;
       }
-    } else
-    if (collider.velocityX > 0) {
+    } else if (collider.velocityX > 0) {
       if (scene.getCollisionAt(collider.right, collider.y, collider.z)) {
         collider.velocityX = -collider.velocityX;
       }
@@ -723,8 +722,7 @@ abstract class Game {
       if (scene.getCollisionAt(collider.x, collider.top, collider.z)) {
         collider.velocityY = -collider.velocityY;
       }
-    } else
-    if (collider.velocityY > 0) {
+    } else if (collider.velocityY > 0) {
       if (scene.getCollisionAt(collider.x, collider.bottom, collider.z)) {
         collider.velocityY = -collider.velocityY;
       }
@@ -734,7 +732,7 @@ abstract class Game {
   void updateColliderSceneCollisionVertical(Collider collider) {
     if (!scene.getCollisionAt(collider.x, collider.y, collider.z)) return;
     collider.z = ((collider.z ~/ Node_Height) * Node_Height) + Node_Height;
-    if (collider.velocityZ < 0) {
+    if (collider.velocityZ > 0) {
       collider.velocityZ = -collider.velocityZ * 0.75;
     }
   }

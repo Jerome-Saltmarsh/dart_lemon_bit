@@ -6,7 +6,6 @@ import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/ui/views.dart';
 import 'package:intl/intl.dart';
 
-
 class GameWebsite {
   static final operationStatus = Watch(OperationStatus.None);
   static final account = Watch<Account?>(null, onChanged: onChangedAccount);
