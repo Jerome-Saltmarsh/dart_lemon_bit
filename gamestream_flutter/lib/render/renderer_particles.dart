@@ -94,6 +94,23 @@ class RendererParticles extends Renderer {
             scale: particle.scale,
           );
           break;
+        case ParticleType.Gunshot_Smoke:
+          if (particle.frame >= 24) {
+            particle.deactivate();
+            return;
+          }
+          final frame = particle.frame <= 11 ? particle.frame : 23 - particle.frame;
+          Engine.renderSprite(
+            image: GameImages.particles,
+            dstX: particle.renderX,
+            dstY: particle.renderY,
+            srcX: 544,
+            srcY: 32.0 * frame,
+            srcWidth: 32,
+            srcHeight: 32,
+            scale: particle.scale,
+          );
+          break;
         case ParticleType.Block_Wood:
           Engine.renderSprite(
             image: GameImages.atlas_gameobjects,

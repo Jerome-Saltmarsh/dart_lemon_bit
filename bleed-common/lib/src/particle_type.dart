@@ -33,6 +33,7 @@ class ParticleType {
   static const Character_Animation_Death_Slime_1 = 41;
   static const Character_Animation_Death_Slime_2 = 42;
   static const Character_Animation_Dog_Death = 43;
+  static const Gunshot_Smoke = 44;
 
   static String getName(int particleType){
     return const {

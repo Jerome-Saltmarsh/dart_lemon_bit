@@ -494,31 +494,28 @@ class GameState {
     );
   }
 
+
   static void spawnParticleShotSmoke({
     required double x,
     required double y,
     required double z,
-    required double zv,
     required double angle,
-    required double speed
-  }) {
-    for (var i = 0; i < 4; i++) {
-      spawnParticle(
-          type: ParticleType.Smoke,
-          x: x,
-          y: y,
-          z: 0.3,
-          angle: angle,
-          speed: speed,
-          zv: 0.0075,
-          weight: 0.0,
-          duration: 120,
-          rotation: 0,
-          rotationV: 0,
-          scale: 0.35 + giveOrTake(0.15),
-          scaleV: 0.001 + giveOrTake(0.0005));
-    }
-  }
+    required double speed,
+    int delay = 0,
+  }) => spawnParticle(
+        type: ParticleType.Gunshot_Smoke,
+        x: x,
+        y: y,
+        z: z,
+        angle: angle,
+        speed: speed,
+        zv: 0.32,
+        weight: 0.0,
+        duration: 120,
+        scale: 0.35 + giveOrTake(0.15),
+        scaleV: 0.0015,
+      )..delay = delay;
+
 
   static void spawnParticleRockShard(double x, double y){
     spawnParticle(

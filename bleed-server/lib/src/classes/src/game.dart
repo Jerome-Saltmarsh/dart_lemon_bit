@@ -569,11 +569,19 @@ abstract class Game {
     }
 
     if (NodeType.isDestroyable(nodeType)) {
+      final nodeOrientation = scene.nodeOrientations[nodeIndex];
       setNode(
           nodeIndex: nodeIndex,
           nodeType: nodeType,
           nodeOrientation: NodeOrientation.Destroyed,
       );
+      performJob(1000, (){
+        setNode(
+          nodeIndex: nodeIndex,
+          nodeType: nodeType,
+          nodeOrientation: nodeOrientation,
+        );
+      });
       attackHit = true;
     }
 
@@ -696,8 +704,8 @@ abstract class Game {
 
   void performJob(int timer, Function action){
     assert (timer > 0);
-    for (final job in jobs){
-      if (job.timer < 0) continue;
+    for (final job in jobs) {
+      if (job.timer > 0) continue;
       job.timer = timer;
       job.action = action;
     }
@@ -708,10 +716,9 @@ abstract class Game {
   void internalUpdateJobs() {
     for (final job in jobs){
       if (job.timer <= 0) continue;
-         job.timer--;
-         if (job.timer == 0){
-           job.action();
-         }
+      job.timer--;
+      if (job.timer > 0) continue;
+      job.action();
     }
   }
 

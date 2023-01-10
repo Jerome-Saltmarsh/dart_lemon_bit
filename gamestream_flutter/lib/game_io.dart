@@ -299,10 +299,18 @@ class GameIO {
       return GameActions.actionToggleEdit();
 
     if (key == PhysicalKeyboardKey.keyZ) {
-      GameState.spawnParticleFirePurple(
+      // GameState.spawnParticleFirePurple(
+      //     x: mouseGridX,
+      //     y: mouseGridY,
+      //     z: GamePlayer.position.z,
+      // );
+
+      GameState.spawnParticleShotSmoke(
           x: mouseGridX,
           y: mouseGridY,
           z: GamePlayer.position.z,
+          angle: 0,
+          speed: 0,
       );
       return;
     }

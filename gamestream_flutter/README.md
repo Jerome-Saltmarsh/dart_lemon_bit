@@ -15,6 +15,8 @@ ctrl + w:   minimal mode
 [ ] talk with other players
 [ ] trade with other players
 [ ] weapon torch flame
+[ ] hue changes on health lost
+[ ] hue changes on health low
 
 [OPTIMIZATIONS]
 [ ] optimize client do not use objects to store projectiles
@@ -88,8 +90,9 @@ ctrl + w:   minimal mode
 [ ] flaming barrel object
 [ ] saturation changes over time of day and night
 [ ] hue changes over time of day and night
+[ ] weapon type node 
+[ ] weapon type gravity gun
 [ ] respawn cut grass
-[ ] rain effected by wind
 
 [CRITICAL]
 [ ] fix ai running into water
@@ -103,6 +106,7 @@ ctrl + w:   minimal mode
 [x] fix grenade physics
 
 09.01.2023
+[x] rain effected by wind
 [x] save scene recover destroyed nodes such as cut grass
 [x] fix node type boulder
 [x] melee attack sounds
