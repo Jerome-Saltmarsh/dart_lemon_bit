@@ -2,9 +2,8 @@
 import 'package:gamestream_flutter/library.dart';
 
 void onChangedScene(){
-  for (final particle in ClientState.particles){
-    particle.duration = 0;
-  }
+  ClientState.totalActiveParticles = 0;
   ClientState.totalParticles = 0;
+  ClientState.particles.clear();
   GameIO.recenterCursor();
 }

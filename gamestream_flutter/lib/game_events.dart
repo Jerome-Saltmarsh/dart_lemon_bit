@@ -90,6 +90,7 @@ class GameEvents {
         GameAudio.teleport.playXYZ(x, y, z);
         return;
       case GameEventType.Explosion:
+        GameState.spawnParticleLightEmissionAmbient(x: x, y: y, z: z);
         GameAudio.explosion_grenade_04.playXYZ(x, y, z);
         const flameSpeed = 1.0;
         GameState.spawnParticleFire(x: x, y: y, z: z)

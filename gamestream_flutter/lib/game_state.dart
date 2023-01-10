@@ -74,7 +74,15 @@ class GameState {
   // ACTIONS
 
   static void applyEmissions(){
+    applyEmissionsLightSources();
+    applyEmissionsCharacters();
+    ServerState.applyEmissionGameObjects();
+    applyEmissionsProjectiles();
+    applyCharacterColors();
+    ClientState.applyEmissionsParticles();
+  }
 
+  static void applyEmissionsLightSources() {
     for (var i = 0; i < ClientState.nodesLightSourcesTotal; i++){
       final nodeIndex = ClientState.nodesLightSources[i];
       final nodeType = GameNodes.nodeTypes[nodeIndex];
@@ -96,24 +104,6 @@ class GameState {
           );
           break;
       }
-    }
-
-    applyEmissionsCharacters();
-    ServerState.applyEmissionGameObjects();
-    applyEmissionsProjectiles();
-    applyCharacterColors();
-
-    for (var i = 0; i < ClientState.totalParticles; i++){
-       final particle = ClientState.particles[i];
-       if (particle.type != ParticleType.Light_Emission) continue;
-       GameNodes.emitLightDynamic(
-           index: particle.nodeIndex,
-           hue: particle.hue,
-           saturation: particle.saturation,
-           value: particle.value,
-           alpha: particle.alpha,
-           strength: particle.strength,
-       );
     }
   }
 
@@ -270,6 +260,7 @@ class GameState {
     particle.z = z;
     particle.checkNodeCollision = checkCollision;
     particle.animation = animation;
+    particle.emitsLight = false;
 
     if (speed > 0){
       particle.xv = Engine.calculateAdjacent(angle, speed);
@@ -282,6 +273,7 @@ class GameState {
     particle.zv = zv;
     particle.weight = weight;
     particle.duration = duration;
+    particle.durationTotal = duration;
     particle.scale = scale;
     particle.scaleV = scaleV;
     particle.rotation = rotation;
@@ -854,13 +846,39 @@ class GameState {
         checkCollision: false,
         animation: true,
       )
-        ..hue = hue
-        ..saturation = saturation
-        ..value = value
+        ..lightHue = hue
+        ..lightSaturation = saturation
+        ..lightValue = value
         ..alpha = alpha
         ..flash = true
         ..strength = 0.0
   ;
+
+  static void spawnParticleLightEmissionAmbient({
+    required double x,
+    required double y,
+    required double z,
+  }) =>
+      spawnParticle(
+        type: ParticleType.Light_Emission,
+        x: x,
+        y: y,
+        z: z,
+        angle: 0,
+        speed: 0,
+        weight: 0,
+        duration: 35,
+        checkCollision: false,
+        animation: true,
+      )
+        ..lightHue = GameNodes.ambient_hue
+        ..lightSaturation = GameNodes.ambient_sat
+        ..lightValue = GameNodes.ambient_val
+        ..alpha = 0
+        ..flash = true
+        ..strength = 0.0
+  ;
+
 
   static Particle spawnParticleFire({
     required double x,
@@ -882,7 +900,14 @@ class GameState {
       weight: -1,
       duration: duration,
       scale: scale,
-    );
+    )
+      ..emitsLight = true
+      ..lightHue = GameNodes.ambient_hue
+      ..lightSaturation = GameNodes.ambient_sat
+      ..lightValue = GameNodes.ambient_val
+      ..alpha = 0
+      ..strength = 0.5
+  ;
 
   static Particle spawnParticleSmoke({
     required double x,

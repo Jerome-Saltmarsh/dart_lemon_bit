@@ -33,90 +33,37 @@ class GameWebsite {
     WebsiteState.error.value = message;
   }
 
-  static var _rotation = 0.0;
-  static var _rotate = true;
-
    static void renderCanvas(Canvas canvas, Size size){
       final centerX = size.width * 0.5;
 
-      Engine.renderExternalCanvas(
-         canvas: canvas,
-        image: GameImages.particles,
-        srcX: 357,
-        srcY: 386,
-        srcWidth: 64,
-        srcHeight: 64,
-        dstX: 100,
-        dstY: 100,
-        anchorX: 0.5,
-        anchorY: 0.5,
-      );
+      // Engine.renderSprite(
+      //   image: GameImages.atlas_nodes,
+      //   srcX: 0,
+      //   srcY: 0,
+      //   srcWidth: 48,
+      //   srcHeight: 72,
+      //   dstX: centerX,
+      //   dstY: 100 + GameAnimation.animationFrameWaterHeight.toDouble(),
+      // );
+      // Engine.renderSprite(
+      //   image: GameImages.atlas_characters,
+      //   srcX: 0,
+      //   srcY: 0,
+      //   srcWidth: 64,
+      //   srcHeight: 64,
+      //   dstX: centerX,
+      //   dstY: 100 + GameAnimation.animationFrameWaterHeight.toDouble() - GameConstants.Node_Height,
+      // );
 
-      const anchorY = 0.0;
-
-      Engine.renderExternalCanvas(
-         canvas: canvas,
-        image: GameImages.particles,
-        srcX: 357,
-        srcY: 451,
-        srcWidth: 32,
-        srcHeight: 32,
-        dstX: 100,
-        dstY: 100,
-        anchorX: 0.5,
-        anchorY: 0.5,
-      );
-
-      Engine.renderSpriteRotated(
-        image: GameImages.particles,
-        dstX: 100,
-        dstY: 100,
-        srcX: 357,
-        srcY: 1 + 1 * 64,
-        srcWidth: 64,
-        srcHeight: 64,
-        scale: 0.5,
-        rotation: _rotation,
-        anchorX: 1,
-        anchorY: 0.5,
-      );
-
-      if (_rotate){
-        _rotation += 0.1;
-        if (_rotation > pi2){
-          _rotation = 0;
-        }
-      }
-
-
-      Engine.renderSprite(
-        image: GameImages.atlas_nodes,
-        srcX: 0,
-        srcY: 0,
-        srcWidth: 48,
-        srcHeight: 72,
-        dstX: centerX,
-        dstY: 100 + GameAnimation.animationFrameWaterHeight.toDouble(),
-      );
-      Engine.renderSprite(
-        image: GameImages.atlas_characters,
-        srcX: 0,
-        srcY: 0,
-        srcWidth: 64,
-        srcHeight: 64,
-        dstX: centerX,
-        dstY: 100 + GameAnimation.animationFrameWaterHeight.toDouble() - GameConstants.Node_Height,
-      );
-
-      Engine.renderSprite(
-        image: GameImages.atlas_nodes,
-        srcX: 2032,
-        srcY: 2032,
-        srcWidth: 16,
-        srcHeight: 16,
-        dstX: centerX,
-        dstY: 100 + GameAnimation.animationFrameWaterHeight.toDouble(),
-      );
+      // Engine.renderSprite(
+      //   image: GameImages.atlas_nodes,
+      //   srcX: 2032,
+      //   srcY: 2032,
+      //   srcWidth: 16,
+      //   srcHeight: 16,
+      //   dstX: centerX,
+      //   dstY: 100 + GameAnimation.animationFrameWaterHeight.toDouble(),
+      // );
    }
 
    static void update(){
@@ -225,8 +172,6 @@ class GameWebsite {
         // buildTextButton("5v5", action: GameNetwork.connectToGame5v5),
         height24,
         buildTextButton("CREATE", action: GameNetwork.connectToGameEditor),
-        text("Pause", onPressed: () => _rotate = !_rotate),
-        Refresh(() => text(_rotation.toStringAsFixed(2))),
       ],
     );
 

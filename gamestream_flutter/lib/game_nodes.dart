@@ -103,7 +103,6 @@ class GameNodes {
     dynamicIndex = 0;
   }
 
-
   static void addInvisibleIndex(int index){
     if (nodeVisible[index] == Visibility.Transparent) return;
     nodeVisible[index] = Visibility.Invisible;
@@ -181,7 +180,6 @@ class GameNodes {
   static void emitLightDynamicAmbient({
     required int index,
     required double alpha,
-
   }){
     if (index < 0) return;
     if (index >= total) return;

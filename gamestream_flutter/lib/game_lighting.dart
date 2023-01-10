@@ -14,12 +14,13 @@ class GameLighting {
     1.00,
   ];
 
+
   static double linerInterpolation(double a, double b, double t) {
-    if (a == b || (a.isNaN == true) && (b.isNaN == true))
-      return a;
-    assert(a.isFinite, 'Cannot interpolate between finite and non-finite values');
-    assert(b.isFinite, 'Cannot interpolate between finite and non-finite values');
-    assert(t.isFinite, 't must be finite when interpolating between values');
+    // if (a == b || (a.isNaN == true) && (b.isNaN == true))
+    //   return a;
+    // assert(a.isFinite, 'Cannot interpolate between finite and non-finite values');
+    // assert(b.isFinite, 'Cannot interpolate between finite and non-finite values');
+    // assert(t.isFinite, 't must be finite when interpolating between values');
     return a * (1.0 - t) + b * t;
   }
 

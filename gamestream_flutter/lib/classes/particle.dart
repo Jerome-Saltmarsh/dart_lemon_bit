@@ -39,6 +39,7 @@ class Particle extends Vector3 {
   var frame = 0;
   var weight = 0.0;
   var duration = 0;
+  var durationTotal = 0;
   var rotation = 0.0;
   var rotationVelocity = 0.0;
   var scale = 0.0;
@@ -49,18 +50,21 @@ class Particle extends Vector3 {
   var checkNodeCollision = true;
   var animation = false;
 
-  var hue = 0.0;
-  var saturation = 0.0;
-  var value = 0.0;
+  var lightHue = 0.0;
+  var lightSaturation = 0.0;
+  var lightValue = 0.0;
   var alpha = 0.0;
   var strength = 0.0;
   var flash = true;
+  var emitsLight = false;
 
   bool get active => duration > 0;
   int get direction => Direction.fromRadian(rotation);
+  double get duration01 => duration / durationTotal;
 
   void deactivate(){
     duration = -1;
+    durationTotal = -1;
     frame = 0;
   }
 

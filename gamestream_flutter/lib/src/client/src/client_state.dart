@@ -181,4 +181,33 @@ class ClientState {
         break;
     }
   }
+
+  static void applyEmissionsParticles() {
+    //   for (var i = 0; i < totalActiveParticles; i++){
+    //     final particle = particles[i];
+    //     if (!particle.emitsLight) continue;
+    //     GameNodes.emitLightDynamic(
+    //       index: particle.nodeIndex,
+    //       hue: particle.lightHue,
+    //       saturation: particle.lightSaturation,
+    //       value: particle.lightValue,
+    //       alpha: particle.alpha,
+    //       strength: particle.strength,
+    //     );
+    //   }
+    // }
+
+    for (var i = 0; i < totalActiveParticles; i++) {
+      final particle = particles[i];
+      if (particle.type != ParticleType.Light_Emission) continue;
+      GameNodes.emitLightDynamic(
+        index: particle.nodeIndex,
+        hue: particle.lightHue,
+        saturation: particle.lightSaturation,
+        value: particle.lightValue,
+        alpha: particle.alpha,
+        strength: particle.strength,
+      );
+    }
+  }
 }
