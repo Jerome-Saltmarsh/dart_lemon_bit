@@ -66,8 +66,6 @@ class GameImages {
    static late Image template_weapon_winchester;
    static late Image template_weapon_blunderbuss;
 
-   static late Image template;
-
    static Image getImageForHeadType(int headType) {
       switch (headType) {
          case ItemType.Empty:
@@ -260,7 +258,6 @@ class GameImages {
       template_weapon_blunderbuss = await Engine.loadImageAsset('images/template/weapons/template-weapons-blunderbuss.png');
 
       character_dog = await Engine.loadImageAsset('images/character-dog.png');
-      template = await Engine.loadImageAsset('images/atlas-character-template.png');
    }
 }
 
