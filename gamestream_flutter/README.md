@@ -92,16 +92,15 @@ ctrl + w:   minimal mode
 [ ] hue changes over time of day and night
 [ ] weapon type node 
 [ ] weapon type gravity gun
-[ ] respawn cut grass
 
 [CRITICAL]
-[ ] fix ai running into water
 [ ] fix render visibility algorithm
-[ ] fix node type fireplace
-[ ] fix node type chimney
-[ ] fix node type oven
+[ ] fix render bullet glitch
 
 10.01.2023
+[x] fix ai running into water
+[x] fix bug server spawn jobs
+[x] respawn cut grass
 [x] fix render grenade
 [x] fix grenade physics
 

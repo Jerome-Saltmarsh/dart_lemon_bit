@@ -1460,6 +1460,16 @@ abstract class Game {
     if (character is AI){
       character.updateAI();
       character.applyBehaviorWander(this);
+
+      if (character.running){
+        final frontX = character.x + getAdjacent(character.faceAngle, Node_Size);
+        final frontY = character.x + getAdjacent(character.faceAngle, Node_Size);
+        final frontZ = character.z - Node_Height_Half;
+        final nodeTypeInFront = scene.getNodeTypeXYZ(frontX, frontY, frontZ);
+        if (nodeTypeInFront == NodeType.Water){
+           character.setCharacterStateIdle();
+        }
+      }
     }
     character.updateMovement();
 
