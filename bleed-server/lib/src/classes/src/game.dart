@@ -1,12 +1,29 @@
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:bleed_server/src/dark_age/dark_age_environment.dart';
+import 'package:lemon_byte/byte_reader.dart';
+import 'package:lemon_byte/byte_writer.dart';
 import 'package:lemon_math/library.dart';
 
 import 'package:bleed_server/gamestream.dart';
 import '../../constants/frames_per_second.dart';
 import '../../io/write_scene_to_file.dart';
 import '../../maths/get_distance_between_v3.dart';
+
+
+class GameScript with ByteWriter {
+  static const Deactivate = 0;
+  static const Explode = 1;
+
+   var timer = 0;
+
+   void writeDeactivate(int target){
+     writeUInt8(Deactivate);
+     writeUInt8(target);
+   }
+}
+
 
 class GameJob {
   int timer;
@@ -15,7 +32,7 @@ class GameJob {
   GameJob(this.timer, this.action);
 }
 
-abstract class Game {
+abstract class Game with ByteReader {
 
   static const Interact_Radius = 100.0;
   var aiRespawnDuration = framesPerSecond * 60 * 2; // 5 minutes
@@ -27,6 +44,8 @@ abstract class Game {
   final characters = <Character>[];
   final projectiles = <Projectile>[];
   final jobs = <GameJob>[];
+
+  // final scripts = <GameScript>[];
 
   DarkAgeEnvironment environment;
   DarkAgeTime time;
@@ -719,6 +738,28 @@ abstract class Game {
       job.timer--;
       if (job.timer > 0) continue;
       job.action();
+    }
+
+    // for (final script in scripts){
+    //   if (script.timer <= 0) continue;
+    //   script.timer--;
+    //   if (script.timer > 0) continue;
+    //   executeGameScript(script.compile());
+    // }
+  }
+
+  void executeGameScript(Uint8List script){
+    values = script;
+    index = 0;
+    while (index < values.length){
+      switch (readUInt8()){
+        case GameScript.Deactivate:
+          // final targetId = readUInt8();
+          // for
+          //
+          break;
+
+      }
     }
   }
 

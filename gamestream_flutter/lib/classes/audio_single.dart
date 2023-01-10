@@ -10,7 +10,7 @@ class AudioSingle {
   late double volume;
   final audioPlayer = AudioPlayer();
 
-  String get url => 'assets/audio/sounds/$name.mp3';
+  String get url => 'assets/audio/$name.mp3';
 
   AudioSingle({
     required this.name,
