@@ -409,7 +409,7 @@ abstract class Game {
         ..physical = false
         ..applyGravity = true
         ..quantity = 1
-        ..velocityZ = -0.75
+        ..velocityZ = 1.00
         ..owner = player
         ..damage = 15;
 
