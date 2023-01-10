@@ -98,7 +98,7 @@ ctrl + w:   minimal mode
 [ ] fix render bullet glitch
 
 10.01.2023
-[x] fix ai running into water
+[x] fix ai running into water and walls
 [x] fix bug server spawn jobs
 [x] respawn cut grass
 [x] fix render grenade

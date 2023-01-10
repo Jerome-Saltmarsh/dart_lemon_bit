@@ -1462,13 +1462,18 @@ abstract class Game {
       character.applyBehaviorWander(this);
 
       if (character.running){
-        final frontX = character.x + getAdjacent(character.faceAngle, Node_Size);
-        final frontY = character.x + getAdjacent(character.faceAngle, Node_Size);
-        final frontZ = character.z - Node_Height_Half;
-        final nodeTypeInFront = scene.getNodeTypeXYZ(frontX, frontY, frontZ);
+        final frontX = character.x + getAdjacent(character.faceAngle, Node_Size_Three_Quarters);
+        final frontY = character.y + getAdjacent(character.faceAngle, Node_Size_Three_Quarters);
+        final nodeTypeInFront = scene.getNodeTypeXYZ(frontX, frontY, character.z - Node_Height_Half);
         if (nodeTypeInFront == NodeType.Water){
            character.setCharacterStateIdle();
+        } else {
+          final nodeOrientationInFrontAbove = scene.getNodeOrientationXYZ(frontX, frontY,  character.z + Node_Height_Half);
+          if (nodeOrientationInFrontAbove == NodeOrientation.Solid){
+            character.setCharacterStateIdle();
+          }
         }
+
       }
     }
     character.updateMovement();
