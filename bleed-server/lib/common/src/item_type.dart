@@ -638,7 +638,7 @@ class ItemType {
 
   static const HeadTypes = [
       Head_Swat,
-      Head_Blonde,
+      // Head_Blonde,
       Head_Wizards_Hat,
       Head_Rogues_Hood,
       Head_Steel_Helm,

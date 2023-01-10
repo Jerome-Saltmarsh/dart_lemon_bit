@@ -95,9 +95,9 @@ ctrl + w:   minimal mode
 
 [CRITICAL]
 [ ] fix render visibility algorithm
-[ ] fix render bullet glitch
 
 10.01.2023
+[x] fix render bullet glitch
 [x] fix template head sprite
 [x] fix ai running into water and walls
 [x] fix bug server spawn jobs

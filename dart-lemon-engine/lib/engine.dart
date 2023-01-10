@@ -936,10 +936,8 @@ class Engine {
     bufferSrc[f + 3] = srcY + srcHeight;
     bufferDst[f + 0] = cos(rotation) * scale;
     bufferDst[f + 1] = sin(rotation) * scale;
-    bufferDst[2] = tx + adjX2 + adjX;
-    bufferDst[3] = ty - adjY2 + adjY;
-
-
+    bufferDst[f + 2] = tx + adjX2 + adjX;
+    bufferDst[f + 3] = ty - adjY2 + adjY;
     incrementBufferIndex();
   }
 
