@@ -739,7 +739,7 @@ abstract class Game {
   void updateColliderSceneCollisionVertical(Collider collider) {
     if (!scene.getCollisionAt(collider.x, collider.y, collider.z)) return;
     collider.z = ((collider.z ~/ Node_Height) * Node_Height) + Node_Height;
-    if (collider.velocityZ > 0) {
+    if (collider.velocityZ < 0) {
       collider.velocityZ = -collider.velocityZ * 0.75;
     }
   }
