@@ -805,6 +805,31 @@ class GameState {
     );
   }
 
+  static void spawnParticleStrikeBullet({
+    required double x,
+    required double y,
+    required double z,
+    int duration = 100,
+    double scale = 0.75,
+    double angle = 0,
+    double speed = 2,
+  }) {
+    spawnParticle(
+      type: ParticleType.Strike_Bullet,
+      x: x,
+      y: y,
+      z: z,
+      angle: angle,
+      rotation: angle,
+      speed: speed,
+      scaleV: 0,
+      weight: 0,
+      duration: duration,
+      scale: scale,
+      checkCollision: false,
+      animation: true,
+    );
+  }
 
   static void spawnParticleAnimation({
     required double x,

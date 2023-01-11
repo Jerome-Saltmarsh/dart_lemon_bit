@@ -96,6 +96,7 @@ ctrl + w:   minimal mode
 [ ] fix render visibility algorithm
 
 12.01.2023
+[x] animate shot fired
 [x] punch strike animation
 
 11.01.2023

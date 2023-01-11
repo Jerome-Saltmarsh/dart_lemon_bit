@@ -285,10 +285,15 @@ class GameEvents {
       GameState.spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
       return;
     }
-
+    if (attackType == ItemType.Weapon_Melee_Knife){
+      GameState.spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
+      return;
+    }
     if (ItemType.isTypeWeaponMelee(attackType)) {
       GameState.spawnParticleStrikeBlade(x: x, y: y, z: z, angle: angle);
+      return;
     }
+    GameState.spawnParticleStrikeBullet(x: x, y: y, z: z, angle: angle);
   }
 
   static void onChangedEdit(bool value) {

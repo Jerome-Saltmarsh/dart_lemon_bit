@@ -311,6 +311,9 @@ class RendererParticles extends Renderer {
         case ParticleType.Strike_Punch:
           renderParticleStrikePunch();
           break;
+        case ParticleType.Strike_Bullet:
+          renderParticleStrikeBullet();
+          break;
         default:
           break;
       }
@@ -347,6 +350,26 @@ class RendererParticles extends Renderer {
       dstX: particle.renderX,
       dstY: particle.renderY,
       srcX: 592,
+      srcY: particle.frame * 47,
+      srcWidth: 31,
+      srcHeight: 47,
+      scale: particle.scale,
+      rotation: particle.rotation + piQuarter + piHalf,
+      anchorX: 0.4,
+      anchorY: 0.1,
+    );
+  }
+
+  static void renderParticleStrikeBullet() {
+    if (particle.frame >= 6 ) {
+      particle.deactivate();
+      return;
+    }
+    Engine.renderSpriteRotated(
+      image: GameImages.particles,
+      dstX: particle.renderX,
+      dstY: particle.renderY,
+      srcX: 624,
       srcY: particle.frame * 47,
       srcWidth: 31,
       srcHeight: 47,
