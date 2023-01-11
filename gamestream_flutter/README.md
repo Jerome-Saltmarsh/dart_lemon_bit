@@ -96,6 +96,7 @@ ctrl + w:   minimal mode
 [ ] fix render visibility algorithm
 
 11.01.2023
+[x] feature unequip current weapon if selected
 [x] short cut key unequip weapon
 [x] fix weapon bow sprite
 [x] ui item info display replenish energy amount

@@ -316,11 +316,14 @@ class Connection with ByteReader {
         if (indexFrom < 0) return errorInvalidArg('invalid inventory from index');
         if (indexTo < 0) return errorInvalidArg('invalid inventory to index');
         player.inventorySwapIndexes(indexFrom, indexTo);
-        // player.inventoryMove(indexFrom, indexTo);
         break;
       case InventoryRequest.Equip:
         final index = parse(arguments[2]);
         if (index == null) return;
+        if (index == player.equippedWeaponIndex){
+          player.unequipWeapon();
+          break;
+        }
         player.inventoryEquip(index);
         break;
       default:
