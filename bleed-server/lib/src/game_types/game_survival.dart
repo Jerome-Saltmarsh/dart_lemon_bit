@@ -134,6 +134,7 @@ class GameSurvival extends Game {
         ItemType.Weapon_Rifle_AK_47,
         ItemType.Weapon_Rifle_M4,
         ItemType.Weapon_Rifle_Sniper,
+        ItemType.Weapon_Ranged_Bow,
     ]);
   }
 

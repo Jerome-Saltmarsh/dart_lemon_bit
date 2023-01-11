@@ -56,48 +56,47 @@ ctrl + w:   minimal mode
 [ ] generate gradient using color modes lch hsl lab rgb 
 
 [CONTENT]
-[ ] item type army clothes
-[ ] gameobject type car
-[ ] node type sandbags
-[ ] node type tires
-[ ] node type train tracks
-[ ] node type barbed wire
-[ ] weapon type crossbow
-[ ] weapon type plasma rifle
-[ ] weapon type stun grenade
-[ ] enemy type flaming skull
+[ ] new weapon type node cannon
+[ ] new weapon type gravity gun
+[ ] new gameobject explosive barrel
+[ ] new gameobject type car
+[ ] new gameobject flaming barrel object
+[ ] new node type sandbags
+[ ] new node type tires
+[ ] new node type train tracks
+[ ] new node type barbed wire
+[ ] new node type street lamp
+[ ] new weapon type crossbow
+[ ] new weapon type plasma rifle
+[ ] new weapon type stun grenade
+[ ] new enemy type flaming skull
+[ ] new character clothes scientist
+[ ] new node type cupboards
+[ ] new item type army clothes
+[ ] new clothes suit
+[ ] new clothes police officer
+[ ] new clothes doctor
+[ ] new gameobject destroyable crates etc
 [ ] fix ai spots player through walls
 [ ] feature survival random treasure spawns
-[ ] spawn boss characters
-[ ] street lamp
-[ ] separate head type and helm type and hair type
+[ ] feature spawn boss characters
+[ ] feature separate head type and helm type and hair type
+[ ] feature random treasure spawns
+[ ] feature vendor armour
+[ ] feature vendor trinkets
+[ ] feature being over encumbered depletes energy while running
 [ ] design suburbia school
 [ ] design suburbia house kitchen
 [ ] design suburbia cemetery
 [ ] design stronghold
-[ ] character clothes scientist
-[ ] character clothes suit
-[ ] character clothes police officer
-[ ] character clothes doctor
-[ ] make the scene apocalyptic
-[ ] random treasure spawns
-[ ] vendor armour
-[ ] vendor trinkets
 [ ] design scene suburbia
-[ ] cupboards with loot
-[ ] destroyable crates etc
-[ ] being over encumbered depletes energy while running
-[ ] flaming barrel object
-[ ] saturation changes over time of day and night
-[ ] hue changes over time of day and night
-[ ] new weapon type node cannon 
-[ ] new weapon type gravity gun
-[ ] new game item explosive barrel
+[ ] feature saturation changes over time of day and night
 
 [CRITICAL]
 [ ] fix render visibility algorithm
 
 11.01.2023
+[x] fix weapon bow sprite
 [x] ui item info display replenish energy amount
 [x] fixed editor node orientation none sprite
 [x] optimize load images
