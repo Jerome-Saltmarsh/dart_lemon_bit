@@ -498,6 +498,7 @@ class GameInventoryUI {
                total: total,)
          );
        }
+
        if (GamePlayer.body.value != ItemType.Empty) {
          children.add(
              _buildRowHoverValue(itemType: GamePlayer.body.value,
@@ -574,11 +575,12 @@ class GameInventoryUI {
 
     if (itemType == ItemType.Empty) return const SizedBox();
 
+    final itemTypeIsConsumable = ItemType.isTypeConsumable(itemType);
     final itemTypeConsumeType = ItemType.getConsumeType(itemType);
     final itemIndexInBelt = ItemType.isIndexBelt(itemIndex);
-    final healAmount = ItemType.getHealAmount(itemType);
+    final replenishHealth = ItemType.getHealAmount(itemType);
+    final replenishEnergy = ItemType.getReplenishEnergy(itemType);
     final itemTypeIsEquippable = ItemType.isTypeEquippable(itemType);
-
     final equippedItemType          = ServerQuery.getEquippedItemType(itemType);
     final itemTypeIsTrinket         = ItemType.isTypeTrinket(itemType);
     final itemTypeDamage            = ItemType.getDamage(itemType);
@@ -619,11 +621,17 @@ class GameInventoryUI {
               ),
               height8,
               buildTableRow("Type", ItemType.getGroupTypeName(itemType)),
-              if (healAmount > 0)
-              buildTableRow("Heals", healAmount),
+              if (replenishHealth > 0)
+              buildTableRow("Replenishes Health", replenishHealth),
+              if (replenishEnergy > 0)
+                buildTableRow("Replenishes Energy", replenishEnergy),
+              if (!itemTypeIsConsumable)
               buildTableRowDifference2("Damage", itemTypeDamage, equippedItemTypeDamage),
+              if (!itemTypeIsConsumable)
               buildTableRowDifference2("Range", itemTypeRange, equippedItemTypeRange),
+              if (!itemTypeIsConsumable)
               buildTableRowDifference2("Cooldown", itemTypeCooldown, equippedItemTypeCooldown, swap: true),
+              if (!itemTypeIsConsumable)
               buildTableRowDifference2("Max Health", itemTypeMaxHealth, equippedItemTypeMaxHealth),
 
               if (itemTypeConsumeType != ItemType.Empty)

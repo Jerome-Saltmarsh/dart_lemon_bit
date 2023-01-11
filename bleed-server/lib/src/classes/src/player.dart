@@ -960,6 +960,7 @@ class Player extends Character with ByteWriter {
     }
     if (ItemType.isTypeConsumable(itemType)) {
        health += ItemType.getHealAmount(itemType);
+       energy += ItemType.getReplenishEnergy(itemType);
        writePlayerEventItemTypeConsumed(itemType);
        final quantity = inventoryGetItemQuantity(index);
        final nextQuantity = quantity - 1;

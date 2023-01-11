@@ -603,8 +603,13 @@ class ItemType {
   }[itemType]            ?? 001;
 
   static int getHealAmount(int itemType) => const {
-    Consumables_Apple:  10,
-    Consumables_Meat:   10,
+    Consumables_Apple       : 010,
+    Consumables_Meat        : 010,
+    Consumables_Potion_Red  : 100,
+  }[itemType] ??              000;
+
+  static int getReplenishEnergy(int itemType) => const {
+    Consumables_Potion_Blue : 100,
   }[itemType] ??        00;
 
   static int getMaxHealth(int itemType) => const {
