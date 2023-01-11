@@ -444,6 +444,12 @@ class RendererNodes extends Renderer {
           srcY: 0,
         );
         break;
+      case NodeType.Shopping_Shelf:
+        renderStandardNode(
+          srcX: 1392,
+          srcY: 160,
+        );
+        break;
       case NodeType.Grass_Long:
         if (currentNodeOrientation == NodeOrientation.Destroyed) return;
 

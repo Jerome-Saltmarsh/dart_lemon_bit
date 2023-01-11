@@ -40,6 +40,7 @@ class NodeType {
   static const Metal = 77;
   static const Vendor = 78;
   static const Sandbag = 79;
+  static const Shopping_Shelf = 80;
 
   static bool isMaterialWood(int value) =>
       value == Torch ||
@@ -80,6 +81,7 @@ class NodeType {
       type == Metal         ||
       type == Vendor        ||
       type == Sandbag       ||
+      type == Shopping_Shelf||
       type == Boulder        ;
 
   static bool supportsOrientationEmpty(int type) =>
@@ -315,5 +317,6 @@ class NodeType {
     Road: 'Road',
     Road_2: 'Road Paint',
     Vendor: 'Vendor',
+    Shopping_Shelf: "Shopping Shelf",
   }[type] ?? 'unknown($type)';
 }

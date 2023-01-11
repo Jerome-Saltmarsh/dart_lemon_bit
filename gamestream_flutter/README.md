@@ -71,7 +71,6 @@ ctrl + w:   minimal mode
 [ ] new weapon type stun grenade
 [ ] new enemy type flaming skull
 [ ] new character clothes scientist
-[ ] new node type cupboards
 [ ] new item type army clothes
 [ ] new clothes suit
 [ ] new clothes police officer
@@ -97,6 +96,7 @@ ctrl + w:   minimal mode
 [ ] fix render visibility algorithm
 
 11.01.2023
+[x] new node type cupboards
 [x] new weapon type crowbar
 [x] feature unequip current weapon if selected
 [x] short cut key unequip weapon
