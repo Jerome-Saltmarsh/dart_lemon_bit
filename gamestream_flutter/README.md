@@ -95,6 +95,9 @@ ctrl + w:   minimal mode
 [CRITICAL]
 [ ] fix render visibility algorithm
 
+12.01.2023
+[x] punch strike animation
+
 11.01.2023
 [x] new node type cupboards
 [x] new weapon type crowbar

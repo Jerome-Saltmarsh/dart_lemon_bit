@@ -13,13 +13,15 @@ import '../../maths/get_distance_between_v3.dart';
 
 
 class GameScript with ByteWriter {
-  static const Deactivate = 0;
-  static const Explode = 1;
+  static const Action_Deactivate = 0;
+  static const Action_Explode = 1;
+
+  static const If_Within_Radius = 2;
 
    var timer = 0;
 
    void writeDeactivate(int target){
-     writeUInt8(Deactivate);
+     writeUInt8(Action_Deactivate);
      writeUInt8(target);
    }
 }
@@ -753,10 +755,7 @@ abstract class Game with ByteReader {
     index = 0;
     while (index < values.length){
       switch (readUInt8()){
-        case GameScript.Deactivate:
-          // final targetId = readUInt8();
-          // for
-          //
+        case GameScript.Action_Deactivate:
           break;
 
       }

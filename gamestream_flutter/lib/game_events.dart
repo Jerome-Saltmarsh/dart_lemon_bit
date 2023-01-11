@@ -280,24 +280,14 @@ class GameEvents {
     if (attackTypeAudio != null) {
       attackTypeAudio.playXYZ(x, y, z);
     }
+
+    if (attackType == ItemType.Empty){
+      GameState.spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
+      return;
+    }
+
     if (ItemType.isTypeWeaponMelee(attackType)) {
       GameState.spawnParticleStrikeBlade(x: x, y: y, z: z, angle: angle);
-    } else {
-
-      // if (ItemType.isTypeWeaponFirearm(attackType)){
-      //
-      //   for (var i = 0; i < 5; i++){
-      //     const distance = 40.0;
-      //     GameState.spawnParticleShotSmoke(
-      //       x: x + getAdjacent(angle, distance),
-      //       y: y + getOpposite(angle, distance),
-      //       z: z + Character_Gun_Height,
-      //       angle: angle + giveOrTake(0.02),
-      //       speed: 1.3,
-      //       delay: i * 3,
-      //     );
-      //   }
-      // }
     }
   }
 
