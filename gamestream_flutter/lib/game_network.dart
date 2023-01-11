@@ -319,6 +319,16 @@ class GameNetwork {
         ClientRequest.Inventory, "${InventoryRequest.Toggle}",
       );
 
+
+  static final unequipRequest = (){
+     final list = Uint8List(1);
+     list[0] = ClientRequest.Unequip;
+     return list;
+  }();
+
+  static void sendClientRequestUnequip() =>
+      GameNetwork.send(unequipRequest);
+
   static void sendClientRequestInventoryDrop(int index) =>
       sendClientRequest(
         ClientRequest.Inventory, "${InventoryRequest.Drop} $index",

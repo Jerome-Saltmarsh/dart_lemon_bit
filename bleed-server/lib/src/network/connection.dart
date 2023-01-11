@@ -78,6 +78,11 @@ class Connection with ByteReader {
             errorInvalidArg('Failed to load scene');
           }
           return;
+        case ClientRequest.Unequip:
+          _player?.unequipWeapon();
+          return;
+        default:
+          break;
       }
     }
     if (args is String) {

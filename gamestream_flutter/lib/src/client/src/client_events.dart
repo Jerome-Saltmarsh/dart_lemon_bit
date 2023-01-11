@@ -103,6 +103,10 @@ class ClientEvents {
       GameNetwork.sendClientRequestInventoryToggle();
       return;
     }
+    if (key == ClientConstants.Key_Unequip){
+      GameNetwork.sendClientRequestUnequip();
+      return;
+    }
     if (ClientQuery.keyboardKeyIsHotKey(key)) {
       onKeyPressedPlayModeHotKey(key);
       return;

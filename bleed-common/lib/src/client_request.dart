@@ -20,6 +20,7 @@ class ClientRequest {
   static const Edit = 33;
   static const Inventory = 35;
   static const Select_Perk = 36;
+  static const Unequip = 37;
 }
 
 
