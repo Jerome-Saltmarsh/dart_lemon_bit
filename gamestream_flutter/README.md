@@ -91,6 +91,7 @@ ctrl + w:   minimal mode
 [ ] design stronghold
 [ ] design scene suburbia
 [ ] feature saturation changes over time of day and night
+[ ] fix item type colors
 
 [CRITICAL]
 [ ] fix render visibility algorithm
