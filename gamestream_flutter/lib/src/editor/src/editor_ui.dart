@@ -641,22 +641,22 @@ class EditorUI {
     });
   }
 
-  static Widget buildColumnEditNodeOrientation(int selectedNodeOrientation) =>
+  static Widget buildColumnEditNodeOrientation(int nodeOrientation) =>
       Column(
         children: [
-          if (NodeOrientation.isSlopeSymmetric(selectedNodeOrientation))
+          if (NodeOrientation.isSlopeSymmetric(nodeOrientation))
             buildColumnNodeOrientationSlopeSymmetric(),
-          if (NodeOrientation.isCorner(selectedNodeOrientation))
+          if (NodeOrientation.isCorner(nodeOrientation))
             buildColumnNodeOrientationCorner(),
-          if (NodeOrientation.isHalf(selectedNodeOrientation))
+          if (NodeOrientation.isHalf(nodeOrientation))
             buildColumnNodeOrientationHalf(),
-          if (NodeOrientation.isSlopeCornerInner(selectedNodeOrientation))
+          if (NodeOrientation.isSlopeCornerInner(nodeOrientation))
             buildColumnNodeOrientationSlopeCornerInner(),
-          if (NodeOrientation.isSlopeCornerOuter(selectedNodeOrientation))
+          if (NodeOrientation.isSlopeCornerOuter(nodeOrientation))
             buildColumnNodeOrientationSlopeCornerOuter(),
-          if (NodeOrientation.isHalfVertical(selectedNodeOrientation))
+          if (NodeOrientation.isHalfVertical(nodeOrientation))
             buildColumnHalfVertical(),
-          if (NodeOrientation.isColumn(selectedNodeOrientation))
+          if (NodeOrientation.isColumn(nodeOrientation))
             buildColumnColumns(),
         ],
       );
@@ -681,10 +681,12 @@ class EditorUI {
     );
   }
 
+
   static Widget buildOrientationIcon(int orientation) {
+
     final canvas = Engine.buildAtlasImage(
       image: GameImages.atlas_nodes,
-      srcX: 0,
+      srcX: orientation == NodeOrientation.None ? 1442.0 : 0,
       srcY: AtlasNodeY.mapOrientation(orientation),
       srcWidth: GameConstants.Sprite_Width,
       srcHeight: GameConstants.Sprite_Height,

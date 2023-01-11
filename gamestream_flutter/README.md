@@ -90,13 +90,15 @@ ctrl + w:   minimal mode
 [ ] flaming barrel object
 [ ] saturation changes over time of day and night
 [ ] hue changes over time of day and night
-[ ] weapon type node 
-[ ] weapon type gravity gun
+[ ] new weapon type node cannon 
+[ ] new weapon type gravity gun
+[ ] new game item explosive barrel
 
 [CRITICAL]
 [ ] fix render visibility algorithm
 
 11.01.2023
+[x] fixed editor node orientation none sprite
 [x] optimize load images
 
 10.01.2023

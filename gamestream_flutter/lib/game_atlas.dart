@@ -415,14 +415,14 @@ class AtlasNodeY {
       return Orientation_Slope_Inner_North_West;
     if (orientation == NodeOrientation.Slope_Inner_South_West)
       return Orientation_Slope_Inner_South_West;
-    if (orientation == NodeOrientation.None)
-      return Orientation_Empty;
     if (orientation == NodeOrientation.Radial)
       return GameConstants.Sprite_Height_Padded_19;
     if (NodeOrientation.isHalfVertical(orientation))
       return GameConstants.Sprite_Height_Padded_20;
     if (NodeOrientation.isColumn(orientation))
       return GameConstants.Sprite_Height_Padded_21;
+    if (orientation == NodeOrientation.None)
+      return 79.0;
     throw Exception('AtlasNodeY.mapOrientation(${NodeOrientation.getName(orientation)}');
   }
 }
