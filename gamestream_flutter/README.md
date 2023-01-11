@@ -96,6 +96,9 @@ ctrl + w:   minimal mode
 [CRITICAL]
 [ ] fix render visibility algorithm
 
+11.01.2023
+[x] optimize load images
+
 10.01.2023
 [x] fix render bullet glitch
 [x] fix template head sprite

@@ -184,80 +184,62 @@ class GameImages {
             throw Exception("GameImages.getImageForWeaponType(${ItemType.getName(weaponType)})");
       }
    }
-   
+
    static Future loadImages() async {
-      atlas_characters
-      = await Engine.loadImageAsset('images/atlas-characters.png');
-      zombie
-      = await Engine.loadImageAsset('images/atlas-zombie.png');
-      zombie_shadow
-      = await Engine.loadImageAsset('images/atlas-zombie-shadow.png');
-      atlas_gameobjects
-      = await Engine.loadImageAsset('images/atlas-gameobjects.png');
-      particles
-      = await Engine.loadImageAsset('images/atlas-particles.png');
-      projectiles
-      = await Engine.loadImageAsset('images/atlas-projectiles.png');
-      template_shadow
-      = await Engine.loadImageAsset('images/template/template-shadow.png');
-      minimap
-      = await Engine.loadImageAsset('images/atlas-map.png');
-      atlas_nodes
-      = await Engine.loadImageAsset('images/atlas-nodes.png');
-      atlas_nodes_transparent
-      = await Engine.loadImageAsset('images/atlas-nodes-transparent.png');
-      atlas_nodes_mini
-      = await Engine.loadImageAsset('images/atlas-nodes-mini.png');
-      atlas_icons
-      = await Engine.loadImageAsset('images/atlas-icons.png');
-      atlas_items
-      = await Engine.loadImageAsset('images/atlas-items.png');
-
-      template_head_plain = await Engine.loadImageAsset('images/template/head/template-head-plain.png');
-      template_head_rogue = await Engine.loadImageAsset('images/template/head/template-head-rogue.png');
-      template_head_steel = await Engine.loadImageAsset('images/template/head/template-head-steel.png');
-      template_head_swat = await Engine.loadImageAsset('images/template/head/template-head-swat.png');
-      template_head_wizard = await Engine.loadImageAsset('images/template/head/template-head-wizard.png');
-      template_head_blonde = await Engine.loadImageAsset('images/template/head/template-head-blonde.png');
-
-      template_body_blue = await Engine.loadImageAsset('images/template/body/template-body-blue.png');
-      template_body_cyan = await Engine.loadImageAsset('images/template/body/template-body-cyan.png');
-      template_body_swat = await Engine.loadImageAsset('images/template/body/template-body-swat.png');
-      template_body_tunic = await Engine.loadImageAsset('images/template/body/template-body-tunic.png');
-      template_body_empty = await Engine.loadImageAsset('images/template/body/template-body-empty.png');
-
-      template_legs_none = await Engine.loadImageAsset('images/template/legs/template-legs-none.png');
-      template_legs_blue = await Engine.loadImageAsset('images/template/legs/template-legs-blue.png');
-      template_legs_white = await Engine.loadImageAsset('images/template/legs/template-legs-white.png');
-      template_legs_green = await Engine.loadImageAsset('images/template/legs/template-legs-green.png');
-      template_legs_brown = await Engine.loadImageAsset('images/template/legs/template-legs-brown.png');
-      template_legs_red = await Engine.loadImageAsset('images/template/legs/template-legs-red.png');
-      template_legs_swat = await Engine.loadImageAsset('images/template/legs/template-legs-swat.png');
-
-      template_weapon_bow = await Engine.loadImageAsset('images/template/weapons/template-weapons-bow.png');
-      template_weapon_grenade = await Engine.loadImageAsset('images/template/weapons/template-weapons-grenade.png');
-      template_weapon_handgun = await Engine.loadImageAsset('images/template/weapons/template-weapons-handgun.png');
-      template_weapon_handgun_black = await Engine.loadImageAsset('images/template/weapons/template-weapons-handgun-black.png');
-      template_weapon_handgun_flintlock = await Engine.loadImageAsset('images/template/weapons/template-weapons-pistol-flintlock.png');
-      template_weapon_sniper_rifle = await Engine.loadImageAsset('images/template/weapons/template-weapons-sniper-rifle.png');
-      template_weapon_ak47 = await Engine.loadImageAsset('images/template/weapons/template-weapons-ak47.png');
-      template_weapon_shotgun = await Engine.loadImageAsset('images/template/weapons/template-weapons-shotgun.png');
-      template_weapon_staff = await Engine.loadImageAsset('images/template/weapons/template-weapons-staff-wooden.png');
-      template_weapon_sword_steel = await Engine.loadImageAsset('images/template/weapons/template-weapons-sword-steel.png');
-      template_weapon_axe = await Engine.loadImageAsset('images/template/weapons/template-weapons-axe.png');
-      template_weapon_pickaxe = await Engine.loadImageAsset('images/template/weapons/template-weapons-pickaxe.png');
-      template_weapon_hammer = await Engine.loadImageAsset('images/template/weapons/template-weapons-hammer.png');
-      template_weapon_knife = await Engine.loadImageAsset('images/template/weapons/template-weapons-knife.png');
-      template_weapon_flamethrower = await Engine.loadImageAsset('images/template/weapons/template-weapons-flamethrower.png');
-      template_weapon_bazooka = await Engine.loadImageAsset('images/template/weapons/template-weapons-bazooka.png');
-      template_weapon_mp5 = await Engine.loadImageAsset('images/template/weapons/template-weapons-mp5.png');
-      template_weapon_minigun = await Engine.loadImageAsset('images/template/weapons/template-weapons-minigun.png');
-      template_weapon_m4 = await Engine.loadImageAsset('images/template/weapons/template-weapons-m4.png');
-      template_weapon_revolver = await Engine.loadImageAsset('images/template/weapons/template-weapons-revolver.png');
-      template_weapon_winchester = await Engine.loadImageAsset('images/template/weapons/template-weapons-winchester.png');
-      template_weapon_blunderbuss = await Engine.loadImageAsset('images/template/weapons/template-weapons-blunderbuss.png');
-
-      character_dog = await Engine.loadImageAsset('images/character-dog.png');
+      Engine.loadImageAsset('images/atlas-characters.png').then((value) => atlas_characters = value);
+      Engine.loadImageAsset('images/atlas-zombie.png').then((value) => zombie = value);
+      Engine.loadImageAsset('images/atlas-zombie-shadow.png').then((value) => zombie_shadow = value);
+      Engine.loadImageAsset('images/atlas-gameobjects.png').then((value) => atlas_gameobjects = value);
+      Engine.loadImageAsset('images/atlas-particles.png').then((value) => particles = value);
+      Engine.loadImageAsset('images/atlas-projectiles.png').then((value) => projectiles = value);
+      Engine.loadImageAsset('images/atlas-map.png').then((value) => minimap = value);
+      Engine.loadImageAsset('images/atlas-nodes.png').then((value) => atlas_nodes = value);
+      Engine.loadImageAsset('images/atlas-nodes-transparent.png').then((value) => atlas_nodes_transparent = value);
+      Engine.loadImageAsset('images/atlas-nodes-mini.png').then((value) => atlas_nodes_mini = value);
+      Engine.loadImageAsset('images/atlas-icons.png').then((value) => atlas_icons = value);
+      Engine.loadImageAsset('images/atlas-items.png').then((value) => atlas_items = value);
+      Engine.loadImageAsset('images/character-dog.png').then((value) => character_dog = value);
+      Engine.loadImageAsset('images/template/template-shadow.png').then((value) => template_shadow = value);
+      Engine.loadImageAsset('images/template/head/template-head-plain.png').then((value) => template_head_plain = value);
+      Engine.loadImageAsset('images/template/head/template-head-rogue.png').then((value) => template_head_rogue = value);
+      Engine.loadImageAsset('images/template/head/template-head-steel.png').then((value) => template_head_steel = value);
+      Engine.loadImageAsset('images/template/head/template-head-swat.png').then((value) => template_head_swat = value);
+      Engine.loadImageAsset('images/template/head/template-head-wizard.png').then((value) => template_head_wizard = value);
+      Engine.loadImageAsset('images/template/head/template-head-blonde.png').then((value) => template_head_blonde = value);
+      Engine.loadImageAsset('images/template/body/template-body-blue.png').then((value) => template_body_blue = value);
+      Engine.loadImageAsset('images/template/body/template-body-cyan.png').then((value) => template_body_cyan = value);
+      Engine.loadImageAsset('images/template/body/template-body-swat.png').then((value) => template_body_swat = value);
+      Engine.loadImageAsset('images/template/body/template-body-tunic.png').then((value) => template_body_tunic = value);
+      Engine.loadImageAsset('images/template/body/template-body-empty.png').then((value) => template_body_empty = value);
+      Engine.loadImageAsset('images/template/legs/template-legs-none.png').then((value) => template_legs_none = value);
+      Engine.loadImageAsset('images/template/legs/template-legs-blue.png').then((value) => template_legs_blue = value);
+      Engine.loadImageAsset('images/template/legs/template-legs-white.png').then((value) => template_legs_white = value);
+      Engine.loadImageAsset('images/template/legs/template-legs-green.png').then((value) => template_legs_green = value);
+      Engine.loadImageAsset('images/template/legs/template-legs-brown.png').then((value) => template_legs_brown = value);
+      Engine.loadImageAsset('images/template/legs/template-legs-red.png').then((value) => template_legs_red = value);
+      Engine.loadImageAsset('images/template/legs/template-legs-swat.png').then((value) => template_legs_swat = value);
+      Engine.loadImageAsset('images/template/weapons/template-weapons-bow.png').then((value) => template_weapon_bow = value);
+      Engine.loadImageAsset('images/template/weapons/template-weapons-grenade.png').then((value) => template_weapon_grenade = value);
+      Engine.loadImageAsset('images/template/weapons/template-weapons-handgun.png').then((value) => template_weapon_handgun = value);
+      Engine.loadImageAsset('images/template/weapons/template-weapons-handgun-black.png').then((value) => template_weapon_handgun_black = value);
+      Engine.loadImageAsset('images/template/weapons/template-weapons-pistol-flintlock.png').then((value) => template_weapon_handgun_flintlock = value);
+      Engine.loadImageAsset('images/template/weapons/template-weapons-sniper-rifle.png').then((value) => template_weapon_sniper_rifle = value);
+      Engine.loadImageAsset('images/template/weapons/template-weapons-ak47.png').then((value) => template_weapon_ak47 = value);
+      Engine.loadImageAsset('images/template/weapons/template-weapons-shotgun.png').then((value) => template_weapon_shotgun = value);
+      Engine.loadImageAsset('images/template/weapons/template-weapons-staff-wooden.png').then((value) => template_weapon_staff = value);
+      Engine.loadImageAsset('images/template/weapons/template-weapons-sword-steel.png').then((value) => template_weapon_sword_steel = value);
+      Engine.loadImageAsset('images/template/weapons/template-weapons-axe.png').then((value) => template_weapon_axe = value);
+      Engine.loadImageAsset('images/template/weapons/template-weapons-pickaxe.png').then((value) => template_weapon_pickaxe = value);
+      Engine.loadImageAsset('images/template/weapons/template-weapons-hammer.png').then((value) => template_weapon_hammer = value);
+      Engine.loadImageAsset('images/template/weapons/template-weapons-knife.png').then((value) => template_weapon_knife = value);
+      Engine.loadImageAsset('images/template/weapons/template-weapons-flamethrower.png').then((value) => template_weapon_flamethrower = value);
+      Engine.loadImageAsset('images/template/weapons/template-weapons-bazooka.png').then((value) => template_weapon_bazooka = value);
+      Engine.loadImageAsset('images/template/weapons/template-weapons-mp5.png').then((value) => template_weapon_mp5 = value);
+      Engine.loadImageAsset('images/template/weapons/template-weapons-minigun.png').then((value) => template_weapon_minigun = value);
+      Engine.loadImageAsset('images/template/weapons/template-weapons-m4.png').then((value) => template_weapon_m4 = value);
+      Engine.loadImageAsset('images/template/weapons/template-weapons-revolver.png').then((value) => template_weapon_revolver = value);
+      Engine.loadImageAsset('images/template/weapons/template-weapons-winchester.png').then((value) => template_weapon_winchester = value);
+      Engine.loadImageAsset('images/template/weapons/template-weapons-blunderbuss.png').then((value) => template_weapon_blunderbuss = value);
    }
 }
 
