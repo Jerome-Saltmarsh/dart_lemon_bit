@@ -502,10 +502,13 @@ class ServerResponseReader with ByteReader {
         GameNodes.nodeOrientations[gridIndex] = nodeOrientation;
 
         if (nodeType == NodeType.Tree_Bottom) {
-          GameNodes.nodeVariations[gridIndex] = randomBool() ? 1 : 0;
+          GameNodes.nodeVariations[gridIndex] = randomInt(0, 2);
         } else
         if (nodeType == NodeType.Grass) {
           GameNodes.nodeVariations[gridIndex] = randomInt(0, 4);
+        } else
+        if (nodeType == NodeType.Shopping_Shelf) {
+          GameNodes.nodeVariations[gridIndex] = randomInt(0, 2);
         }
 
         gridIndex++;
