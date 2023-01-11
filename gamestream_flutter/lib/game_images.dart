@@ -65,6 +65,7 @@ class GameImages {
    static late Image template_weapon_revolver;
    static late Image template_weapon_winchester;
    static late Image template_weapon_blunderbuss;
+   static late Image template_weapon_crowbar;
 
    static Image getImageForHeadType(int headType) {
       switch (headType) {
@@ -172,6 +173,8 @@ class GameImages {
             return template_weapon_axe;
          case ItemType.Weapon_Melee_Hammer:
             return template_weapon_hammer;
+         case ItemType.Weapon_Melee_Crowbar:
+            return template_weapon_crowbar;
          case ItemType.Weapon_Special_Minigun:
             return template_weapon_minigun;
          case ItemType.Weapon_Handgun_Revolver:
@@ -240,8 +243,10 @@ class GameImages {
       Engine.loadImageAsset('images/template/weapons/template-weapons-revolver.png').then((value) => template_weapon_revolver = value);
       Engine.loadImageAsset('images/template/weapons/template-weapons-winchester.png').then((value) => template_weapon_winchester = value);
       Engine.loadImageAsset('images/template/weapons/template-weapons-blunderbuss.png').then((value) => template_weapon_blunderbuss = value);
+      Engine.loadImageAsset('images/template/weapons/template-weapons-crowbar.png').then((value) => template_weapon_crowbar = value);
    }
 }
+
 
 
 

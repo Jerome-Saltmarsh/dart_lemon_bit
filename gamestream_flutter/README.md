@@ -97,6 +97,7 @@ ctrl + w:   minimal mode
 [ ] fix render visibility algorithm
 
 11.01.2023
+[x] new weapon type crowbar
 [x] feature unequip current weapon if selected
 [x] short cut key unequip weapon
 [x] fix weapon bow sprite
