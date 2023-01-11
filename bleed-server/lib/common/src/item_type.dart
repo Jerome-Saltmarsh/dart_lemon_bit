@@ -47,12 +47,13 @@ class ItemType {
   static const Base_Damage            = Base_Health + 2;
   static const Base_Energy            = Base_Health + 3;
 
-  static const Consumables_Apple = Index_Consumables + 1;
-  static const Consumables_Meat = Index_Consumables + 2;
-  static const Consumables_Potion_Red = Index_Consumables + 3;
+  static const Consumables_Apple        = Index_Consumables + 1;
+  static const Consumables_Meat         = Index_Consumables + 2;
+  static const Consumables_Potion_Red   = Index_Consumables + 3;
+  static const Consumables_Potion_Blue  = Index_Consumables + 4;
 
-  static const Trinket_Ring_of_Health = Index_Trinkets;
-  static const Trinket_Ring_of_Damage = Trinket_Ring_of_Health + 1;
+  static const Trinket_Ring_of_Health   = Index_Trinkets;
+  static const Trinket_Ring_of_Damage   = Trinket_Ring_of_Health + 1;
   /// Causes the flame thrower damage to be +5
   /// Does not stack
   /// Does not stack means that the effects only apply to up to one time
@@ -561,6 +562,8 @@ class ItemType {
      Weapon_Ranged_Bow: "Bow",
      Consumables_Apple: "Apple",
      Consumables_Meat: "Meat",
+     Consumables_Potion_Red: "Health Potion",
+     Consumables_Potion_Blue: "Energy Potion",
      Weapon_Thrown_Grenade: "Grenade",
      GameObjects_Crystal: "Crystal",
      GameObjects_Crystal_Small_Blue: "Crystal Small Blue",

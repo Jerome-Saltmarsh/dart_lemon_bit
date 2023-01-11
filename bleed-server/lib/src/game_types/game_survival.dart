@@ -48,8 +48,8 @@ class GameSurvival extends Game {
     player.inventoryAdd(itemType: ItemType.Weapon_Melee_Crowbar);
     player.inventoryAdd(itemType: ItemType.Weapon_Melee_Sword);
     player.inventoryAdd(itemType: ItemType.Weapon_Melee_Staff);
-
-    player.inventoryAdd(itemType: ItemType.Weapon_Melee_Staff);
+    player.inventoryAdd(itemType: ItemType.Consumables_Potion_Blue);
+    player.inventoryAdd(itemType: ItemType.Consumables_Potion_Red);
     player.bodyType = getRandomStartingShirt();
     player.legsType = getRandomStartingLegs();
     player.headType = ItemType.Empty;

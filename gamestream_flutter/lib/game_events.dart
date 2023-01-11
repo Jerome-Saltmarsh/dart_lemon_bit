@@ -201,6 +201,7 @@ class GameEvents {
         break;
 
       case GameEventType.Blue_Orb_Deactivated:
+        GameState.spawnParticleLightEmissionAmbient(x: x, y: y, z: z);
         for (var i = 0; i < 8; i++) {
           GameState.spawnParticleOrbShard(
               x: x, y: y, z: z, duration: 30, speed: Engine.randomBetween(1, 2), angle: Engine.randomAngle());

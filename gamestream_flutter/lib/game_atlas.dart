@@ -69,6 +69,8 @@ class AtlasItems {
       ItemType.Resource_Rocket: 192,
       ItemType.Consumables_Meat: 224,
       ItemType.Consumables_Apple: 256,
+      ItemType.Consumables_Potion_Red: 448,
+      ItemType.Consumables_Potion_Blue: 480,
       ItemType.Base_Health: 288,
       ItemType.Base_Energy: 288,
       ItemType.Base_Damage: 352,
@@ -135,6 +137,8 @@ class AtlasItems {
     ItemType.Base_Health: 64,
     ItemType.Base_Energy: 64,
     ItemType.Base_Damage: 64,
+    ItemType.Consumables_Potion_Red: 0,
+    ItemType.Consumables_Potion_Blue: 0,
   }[itemType] ?? 0;
 
 
