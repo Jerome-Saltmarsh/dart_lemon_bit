@@ -96,6 +96,7 @@ ctrl + w:   minimal mode
 [ ] fix render visibility algorithm
 
 12.01.2023
+[x] fix sprite swat pants
 [x] animate shot fired
 [x] punch strike animation
 
