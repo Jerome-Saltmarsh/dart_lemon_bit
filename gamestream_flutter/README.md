@@ -93,12 +93,13 @@ ctrl + w:   minimal mode
 [ ] feature explosive barrels should explode when shot
 
 [CRITICAL]
-[ ] fix physics barrel collision detection
 [ ] feature gameobjects fall into water
 [ ] fix render visibility algorithm
 [ ] fix physics knocked through walls
 
 12.01.2023
+[x] fix physics barrel collision detection
+[x] zombies and dogs emit attack wave animation
 [x] read write byte 24
 [x] new gameobject explosive barrel
 [x] disable teleport on production
