@@ -651,7 +651,7 @@ class Connection with ByteReader {
             return joinGame(game);
        }
     }
-    joinGame(GamePractice(scene: darkAgeScenes.skirmish_1));
+    joinGame(GamePractice(scene: darkAgeScenes.suburbs_01));
   }
 
   Future joinGame5V5() async {
@@ -661,7 +661,7 @@ class Connection with ByteReader {
         return joinGame(game);
       }
     }
-    joinGame(Game5v5(scene: darkAgeScenes.skirmish_2));
+    joinGame(Game5v5(scene: darkAgeScenes.suburbs_01));
   }
 
   Future joinGameSurvival() async {

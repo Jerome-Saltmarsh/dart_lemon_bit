@@ -90,12 +90,16 @@ ctrl + w:   minimal mode
 [ ] feature saturation changes over time of day and night
 [ ] fix item type colors
 [ ] new node type sandbags
+[ ] feature explosive barrels should explode when shot
 
 [CRITICAL]
+[ ] fix physics barrel collision detection
+[ ] feature gameobjects fall into water
 [ ] fix render visibility algorithm
 [ ] fix physics knocked through walls
 
 12.01.2023
+[x] read write byte 24
 [x] new gameobject explosive barrel
 [x] disable teleport on production
 [x] improve animation sword strike

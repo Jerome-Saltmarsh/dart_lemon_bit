@@ -10,6 +10,7 @@ class AtlasItems {
         ItemType.GameObjects_Candle: 23,
         ItemType.GameObjects_Barrel: 11,
         ItemType.GameObjects_Barrel_Explosive: 128,
+        ItemType.GameObjects_Barrel_Purple: 128,
         ItemType.GameObjects_Cup: 0,
         ItemType.GameObjects_Tavern_Sign: 40,
         ItemType.GameObjects_Grenade: 0,
@@ -85,6 +86,7 @@ class AtlasItems {
         ItemType.GameObjects_Candle: 131,
         ItemType.GameObjects_Barrel: 0,
         ItemType.GameObjects_Barrel_Explosive: 39,
+        ItemType.GameObjects_Barrel_Purple: 103,
         ItemType.GameObjects_Cup: 0,
         ItemType.GameObjects_Tavern_Sign: 0,
         ItemType.GameObjects_Grenade: 48,
@@ -152,6 +154,7 @@ class AtlasItems {
         ItemType.GameObjects_Crystal: 22,
         ItemType.GameObjects_Barrel: 28,
         ItemType.GameObjects_Barrel_Explosive: 33,
+        ItemType.GameObjects_Barrel_Purple: 33,
         ItemType.GameObjects_Crystal_Small_Blue: 10,
         ItemType.GameObjects_Crystal_Small_Red: 10,
         ItemType.GameObjects_Cup: 6,
@@ -170,6 +173,7 @@ class AtlasItems {
         ItemType.GameObjects_Crystal: 45,
         ItemType.GameObjects_Barrel: 40,
         ItemType.GameObjects_Barrel_Explosive: 63,
+        ItemType.GameObjects_Barrel_Purple: 63,
         ItemType.GameObjects_Candle: 10,
         ItemType.GameObjects_Cup: 11,
         ItemType.GameObjects_Tavern_Sign: 39,
@@ -183,10 +187,12 @@ class AtlasItems {
 
   static double getSrcScale(int itemType) => const <int, double>{
         ItemType.GameObjects_Barrel_Explosive: 0.75,
+        ItemType.GameObjects_Barrel_Purple: 0.75,
   }[itemType] ?? 1.0;
 
   static double getAnchorY(int itemType) => const <int, double>{
     ItemType.GameObjects_Barrel_Explosive: 0.75,
+    ItemType.GameObjects_Barrel_Purple: 0.75,
   }[itemType] ?? 0.5;
 }
 

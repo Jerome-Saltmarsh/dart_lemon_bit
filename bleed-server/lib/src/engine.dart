@@ -72,7 +72,7 @@ class Engine {
     environmentUnderground = DarkAgeEnvironment();
     await darkAgeScenes.load();
 
-    darkAgeScenes.saveAllToFile();
+    // darkAgeScenes.saveAllToFile();
 
 
     final mapRow1 = <DarkAgeArea>[

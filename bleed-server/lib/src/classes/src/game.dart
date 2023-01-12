@@ -712,7 +712,7 @@ abstract class Game with ByteReader {
     updateGameObjects();
     updateCollisions();
     updateCharacters();
-    updateProjectiles();
+    updateProjectiles(); // called twice to fix collision detection
     updateProjectiles(); // called twice to fix collision detection
     updateProjectiles(); // called twice to fix collision detection
     updateCharacterFrames();
@@ -965,6 +965,7 @@ abstract class Game with ByteReader {
   void updateCollisions() {
     resolveCollisions(characters);
     resolveCollisionsBetween(characters, gameObjects);
+    resolveCollisions(gameObjects);
   }
 
   void resolveCollisions(List<Collider> colliders) {
@@ -1875,6 +1876,8 @@ abstract class Game with ByteReader {
        gameObject.type = type;
        gameObject.active = true;
        gameObject.collidable = ItemType.isCollidable(type);
+       gameObject.physical = ItemType.isPhysical(type);
+       gameObject.moveOnCollision = gameObject.physical;
        return gameObject;
     }
     final instance = GameObject(
@@ -1884,7 +1887,10 @@ abstract class Game with ByteReader {
       type: type,
     );
     instance.collidable = ItemType.isCollidable(type);
+    instance.physical = ItemType.isPhysical(type);
+    instance.moveOnCollision = instance.physical;
     gameObjects.add(instance);
+
     return instance;
   }
 

@@ -1640,7 +1640,7 @@ class Player extends Character with ByteWriter {
     assert (index >= 0);
     assert (index < scene.gridVolume);
     writeByte(ServerResponse.Node);
-    writeUInt16(index);
+    writeUInt24(index);
     writeByte(scene.nodeTypes[index]);
     writeByte(scene.nodeOrientations[index]);
   }

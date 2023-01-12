@@ -173,6 +173,9 @@ class SceneReader extends ByteReader {
       final z = readUDouble16();
       gameObjects.add(
         GameObject(x: x, y: y, z: z, type: type)
+            ..physical = ItemType.isPhysical(type)
+            ..moveOnCollision = ItemType.physicsMoveOnCollision(type)
+            ..collidable = ItemType.isCollidable(type)
       );
     }
   }

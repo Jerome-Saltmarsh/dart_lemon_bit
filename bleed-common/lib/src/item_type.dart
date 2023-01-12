@@ -80,6 +80,7 @@ class ItemType {
   static const GameObjects_Car                  = Index_GameObjects + 16;
   static const GameObjects_Node_Collider        = Index_GameObjects + 17;
   static const GameObjects_Barrel_Explosive     = Index_GameObjects + 18;
+  static const GameObjects_Barrel_Purple        = Index_GameObjects + 19;
 
   static const Resource_Wood = Index_Resources + 5;
   static const Resource_Stone = Index_Resources + 6;
@@ -213,7 +214,22 @@ class ItemType {
       isTypeEnvironment(value);
 
   static bool isCollidable(int value) =>
-    value == ItemType.GameObjects_Crystal;
+      value == ItemType.GameObjects_Barrel_Purple     ||
+      value == ItemType.GameObjects_Barrel_Explosive  ||
+      value == ItemType.GameObjects_Barrel            ||
+      value == ItemType.GameObjects_Tavern_Sign        ;
+
+  static bool isPhysical(int value) =>
+    value == ItemType.GameObjects_Barrel_Purple     ||
+    value == ItemType.GameObjects_Barrel_Explosive  ||
+    value == ItemType.GameObjects_Barrel            ||
+    value == ItemType.GameObjects_Tavern_Sign        ;
+
+  static bool physicsMoveOnCollision(int value) =>
+      value == ItemType.GameObjects_Barrel_Purple     ||
+      value == ItemType.GameObjects_Barrel_Explosive  ||
+      value == ItemType.GameObjects_Barrel            ||
+      value == ItemType.GameObjects_Tavern_Sign        ;
 
   static bool isTypeEquipped(int value) =>
     value == Equipped_Weapon  ||
@@ -582,6 +598,7 @@ class ItemType {
      GameObjects_Crystal_Small_Blue: "Crystal Small Blue",
      GameObjects_Barrel: "Wooden Barrel",
      GameObjects_Barrel_Explosive: "Explosive Barrel",
+     GameObjects_Barrel_Purple: "Purple Barrel",
   }[value] ?? "item-type-unknown($value)";
 
   static int getMaxQuantity(int itemType) => const {
@@ -687,6 +704,7 @@ class ItemType {
   static const GameObjectTypes = [
      GameObjects_Barrel,
      GameObjects_Barrel_Explosive,
+     GameObjects_Barrel_Purple,
      GameObjects_Tavern_Sign,
      GameObjects_Crystal_Small_Blue,
      GameObjects_Crystal_Small_Red,

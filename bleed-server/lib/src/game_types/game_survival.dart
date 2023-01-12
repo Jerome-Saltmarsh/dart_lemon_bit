@@ -63,6 +63,8 @@ class GameSurvival extends Game {
     player.belt4_quantity = 3;
     player.belt5_itemType = ItemType.Weapon_Rifle_Blunderbuss;
     player.belt5_quantity = ItemType.getMaxQuantity(ItemType.Weapon_Rifle_Blunderbuss);
+    player.belt6_itemType = ItemType.Weapon_Rifle_AK_47;
+    player.belt6_quantity = ItemType.getMaxQuantity(ItemType.Weapon_Rifle_AK_47);
     player.equippedWeaponIndex = ItemType.Belt_1;
     player.refreshStats();
     moveToRandomPlayerSpawnPoint(player);

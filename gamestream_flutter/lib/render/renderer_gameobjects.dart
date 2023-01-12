@@ -25,8 +25,6 @@ class RendererGameObjects extends Renderer {
           scale: AtlasItems.getSrcScale(type),
           color: GameState.getV3RenderColor(gameObject),
         );
-
-        renderPixelRedV2(gameObject);
         return;
       }
 

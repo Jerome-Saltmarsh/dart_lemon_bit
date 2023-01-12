@@ -434,7 +434,7 @@ class ServerResponseReader with ByteReader {
   }
 
   void readNode() {
-    final nodeIndex = readUInt16();
+    final nodeIndex = readUInt24();
     final nodeType = readByte();
     final nodeOrientation = readByte();
     assert(NodeType.supportsOrientation(nodeType, nodeOrientation));
