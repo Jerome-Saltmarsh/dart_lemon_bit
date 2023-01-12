@@ -327,19 +327,18 @@ class RendererParticles extends Renderer {
       particle.deactivate();
       return;
     }
-    const size = 64.0;
     Engine.renderSpriteRotated(
       image: GameImages.particles,
       dstX: particle.renderX,
       dstY: particle.renderY,
-      srcX: 357,
-      srcY: 1 + particle.frame * size,
-      srcWidth: size,
-      srcHeight: size,
+      srcX: 688,
+      srcY: 1 + particle.frame * 61,
+      srcWidth: 84,
+      srcHeight: 61,
       scale: particle.scale,
       rotation: particle.rotation + piQuarter + piHalf,
       anchorX: 0.5,
-      anchorY: 0.0,
+      anchorY: 0.25,
       color: GameState.getV3RenderColor(particle),
     );
   }
