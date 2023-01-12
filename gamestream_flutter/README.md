@@ -90,7 +90,7 @@ ctrl + w:   minimal mode
 [ ] feature saturation changes over time of day and night
 [ ] fix item type colors
 [ ] new node type sandbags
-[ ] feature explosive barrels should explode when shot
+[ ] feature explosive barrels explode when shot
 
 [CRITICAL]
 [ ] feature gameobjects fall into water
@@ -98,6 +98,7 @@ ctrl + w:   minimal mode
 [ ] fix physics knocked through walls
 
 12.01.2023
+[x] new gameobject flaming barrel
 [x] fix physics barrel collision detection
 [x] zombies and dogs emit attack wave animation
 [x] read write byte 24

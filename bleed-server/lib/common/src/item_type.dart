@@ -81,6 +81,7 @@ class ItemType {
   static const GameObjects_Node_Collider        = Index_GameObjects + 17;
   static const GameObjects_Barrel_Explosive     = Index_GameObjects + 18;
   static const GameObjects_Barrel_Purple        = Index_GameObjects + 19;
+  static const GameObjects_Barrel_Flaming       = Index_GameObjects + 20;
 
   static const Resource_Wood = Index_Resources + 5;
   static const Resource_Stone = Index_Resources + 6;
@@ -599,6 +600,7 @@ class ItemType {
      GameObjects_Barrel: "Wooden Barrel",
      GameObjects_Barrel_Explosive: "Explosive Barrel",
      GameObjects_Barrel_Purple: "Purple Barrel",
+     GameObjects_Barrel_Flaming: "Flaming Barrel",
   }[value] ?? "item-type-unknown($value)";
 
   static int getMaxQuantity(int itemType) => const {
@@ -705,6 +707,7 @@ class ItemType {
      GameObjects_Barrel,
      GameObjects_Barrel_Explosive,
      GameObjects_Barrel_Purple,
+     GameObjects_Barrel_Flaming,
      GameObjects_Tavern_Sign,
      GameObjects_Crystal_Small_Blue,
      GameObjects_Crystal_Small_Red,

@@ -107,6 +107,12 @@ class ServerState {
   static void applyEmissionGameObjects() {
     for (var i = 0; i < totalGameObjects; i++){
       final gameObject = gameObjects[i];
+
+      if (gameObject.type == ItemType.GameObjects_Barrel_Flaming) {
+        GameState.applyVector3EmissionAmbient(gameObject, alpha: 0.0);
+        continue;
+      }
+
       if (gameObject.type == ItemType.GameObjects_Grenade) {
         GameState.applyVector3Emission(gameObject,
           hue: GameNodes.ambient_hue,
@@ -136,15 +142,6 @@ class ServerState {
         );
         continue;
       }
-      // if (gameObject.type != ItemType.GameObjects_Candle) continue;
-      // final nodeIndex = GameQueries.getNodeIndexV3(gameObject);
-      // final nodeShade = GameNodes.nodeShades[nodeIndex];
-      // setNodeShade(nodeIndex, nodeShade - 1);
-      // if (gameObject.indexZ > 0){
-      //   final nodeBelowIndex = GameQueries.getNodeIndexBelowV3(gameObject);
-      //   final nodeBelowShade = GameNodes.nodeShades[nodeBelowIndex];
-      //   setNodeShade(nodeBelowIndex, nodeBelowShade - 1);
-      // }
     }
   }
 

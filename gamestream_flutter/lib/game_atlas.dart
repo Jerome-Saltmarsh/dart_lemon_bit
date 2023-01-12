@@ -4,7 +4,9 @@ class AtlasItems {
   static const size = 32.0;
 
   static double getSrcX(int itemType) =>
-      const <int, double>{
+      itemType == ItemType.GameObjects_Barrel_Flaming ? 34.0 * GameAnimation.animationFrame6 :
+
+      const <int, double> {
         ItemType.GameObjects_Car: 0,
         ItemType.GameObjects_Crystal: 75,
         ItemType.GameObjects_Candle: 23,
@@ -87,6 +89,7 @@ class AtlasItems {
         ItemType.GameObjects_Barrel: 0,
         ItemType.GameObjects_Barrel_Explosive: 39,
         ItemType.GameObjects_Barrel_Purple: 103,
+        ItemType.GameObjects_Barrel_Flaming: 176,
         ItemType.GameObjects_Cup: 0,
         ItemType.GameObjects_Tavern_Sign: 0,
         ItemType.GameObjects_Grenade: 48,
@@ -155,6 +158,7 @@ class AtlasItems {
         ItemType.GameObjects_Barrel: 28,
         ItemType.GameObjects_Barrel_Explosive: 33,
         ItemType.GameObjects_Barrel_Purple: 33,
+        ItemType.GameObjects_Barrel_Flaming: 33,
         ItemType.GameObjects_Crystal_Small_Blue: 10,
         ItemType.GameObjects_Crystal_Small_Red: 10,
         ItemType.GameObjects_Cup: 6,
@@ -174,6 +178,7 @@ class AtlasItems {
         ItemType.GameObjects_Barrel: 40,
         ItemType.GameObjects_Barrel_Explosive: 63,
         ItemType.GameObjects_Barrel_Purple: 63,
+        ItemType.GameObjects_Barrel_Flaming: 70,
         ItemType.GameObjects_Candle: 10,
         ItemType.GameObjects_Cup: 11,
         ItemType.GameObjects_Tavern_Sign: 39,
@@ -188,13 +193,16 @@ class AtlasItems {
   static double getSrcScale(int itemType) => const <int, double>{
         ItemType.GameObjects_Barrel_Explosive: 0.75,
         ItemType.GameObjects_Barrel_Purple: 0.75,
+        ItemType.GameObjects_Barrel_Flaming: 0.75,
   }[itemType] ?? 1.0;
 
   static double getAnchorY(int itemType) => const <int, double>{
     ItemType.GameObjects_Barrel_Explosive: 0.75,
     ItemType.GameObjects_Barrel_Purple: 0.75,
+    ItemType.GameObjects_Barrel_Flaming: 0.75,
   }[itemType] ?? 0.5;
 }
+
 
 
 class AtlasIcons {
