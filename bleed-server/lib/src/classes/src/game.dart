@@ -416,9 +416,9 @@ abstract class Game with ByteReader {
   void playerThrowGrenade(Player player) {
     dispatchAttackPerformed(
       ItemType.Weapon_Thrown_Grenade,
-      player.x,
-      player.y,
-      player.z,
+      player.x + getAdjacent(player.lookRadian, 60),
+      player.y + getOpposite(player.lookRadian, 60),
+      player.z + Character_Gun_Height,
       player.lookRadian,
     );
 
@@ -1688,18 +1688,6 @@ abstract class Game with ByteReader {
       damage: src.damage,
     );
 
-  void fireAssaultRifle(Character src, double angle) {
-    spawnProjectile(
-      src: src,
-      accuracy: 0,
-      angle: angle,
-      range: 300,
-      projectileType: ProjectileType.Bullet,
-      damage: 5,
-    );
-    dispatchAttackPerformed(src.weaponType, src.x, src.y, src.z, angle);
-  }
-
   void characterSpawnProjectileFireball(Character character, {
     required double angle,
     double speed = 3.0,
@@ -1732,7 +1720,13 @@ abstract class Game with ByteReader {
       );
     }
     src.assignWeaponStateFiring();
-    dispatchAttackPerformed(src.weaponType, src.x, src.y, src.z, angle);
+    dispatchAttackPerformed(
+      src.weaponType,
+      src.x + getAdjacent(angle, 60),
+      src.y + getOpposite(angle, 60),
+      src.z + Character_Gun_Height,
+      angle,
+    );
   }
 
   Projectile spawnProjectile({
