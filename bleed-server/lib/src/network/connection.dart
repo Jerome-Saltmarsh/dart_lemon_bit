@@ -122,6 +122,7 @@ class Connection with ByteReader {
         break;
 
       case ClientRequest.Teleport:
+        if (!isLocalMachine && game is! GameDarkAgeEditor) return;
         handleClientRequestTeleport(player);
         return;
 
@@ -176,18 +177,22 @@ class Connection with ByteReader {
         return;
 
       case ClientRequest.GameObject:
+        if (!isLocalMachine && game is! GameDarkAgeEditor) return;
         return handleGameObjectRequest(arguments);
 
       case ClientRequest.Node:
+        if (!isLocalMachine && game is! GameDarkAgeEditor) return;
         return handleNodeRequestSetBlock(arguments);
 
       case ClientRequest.Edit:
+        if (!isLocalMachine && game is! GameDarkAgeEditor) return;
         return handleRequestEdit(arguments);
 
       case ClientRequest.Npc_Talk_Select_Option:
         return handleNpcTalkSelectOption(player, arguments);
 
       case ClientRequest.Toggle_Debug:
+        if (!isLocalMachine && game is! GameDarkAgeEditor) return;
         player.toggleDebug();
         break;
 
@@ -197,11 +202,6 @@ class Connection with ByteReader {
             .fold("", (previousValue, element) => '$previousValue $element');
         player.textDuration = 150;
         break;
-
-      // case ClientRequest.Save_Scene:
-      //   final scene = convertSceneToString(player.scene);
-      //   reply('scene: $scene');
-      //   break;
 
       case ClientRequest.Teleport_Scene:
         final sceneIndex = parse(arguments[1]);
@@ -765,10 +765,10 @@ class Connection with ByteReader {
   }
 
   void handleClientRequestTeleport(Player player) {
-    player.x = player.mouseGridX;
-    player.y = player.mouseGridY;
-    player.health = player.maxHealth;
-    player.state = CharacterState.Idle;
+      player.x = player.mouseGridX;
+      player.y = player.mouseGridY;
+      player.health = player.maxHealth;
+      player.state = CharacterState.Idle;
   }
 
   int? parseArg0(List<String> arguments,) => parseArg(arguments, 0);

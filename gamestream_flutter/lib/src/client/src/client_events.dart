@@ -70,31 +70,24 @@ class ClientEvents {
   }
 
   static void onKeyPressed(LogicalKeyboardKey key){
-    if (key == ClientConstants.Key_Toggle_Input_Mode) {
-      GameIO.actionToggleInputMode();
-      return;
+    if (Engine.isLocalHost){
+      if (key == ClientConstants.Key_Toggle_Input_Mode) {
+        GameIO.actionToggleInputMode();
+        return;
+      }
+      if (key == ClientConstants.Key_Toggle_Window_Attributes) {
+        ClientActions.windowTogglePlayerAttributes();
+        return;
+      }
     }
+
     if (key == ClientConstants.Key_Toggle_Debug_Mode) {
       GameActions.toggleDebugMode();
-      return;
-    }
-    if (key == ClientConstants.Key_Toggle_Window_Attributes) {
-      ClientActions.windowTogglePlayerAttributes();
       return;
     }
 
     if (GameState.playMode) {
       onKeyPressedPlayMode(key);
-    } else {
-
-      // if (key == LogicalKeyboardKey.digit5) {
-      //   GameEditor.paintTorch();
-      //   return;
-      // }
-      // if (key == LogicalKeyboardKey.digit4) {
-      //   GameEditor.paintTree();
-      //   return;
-      // }
     }
   }
 

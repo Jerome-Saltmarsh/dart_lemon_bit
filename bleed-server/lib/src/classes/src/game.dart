@@ -463,10 +463,6 @@ abstract class Game with ByteReader {
     characterFireWeapon(player);
   }
 
-  void playerTeleportToMouse(Player player){
-    positionToPlayerMouse(player, player);
-  }
-
   void positionToPlayerMouse(Position position, Player player){
     position.x = player.mouseGridX;
     position.y = player.mouseGridY;

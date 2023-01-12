@@ -320,10 +320,6 @@ class GameIO {
         return GameNetwork.sendClientRequestTeleport();
       if (key == PhysicalKeyboardKey.keyI)
         return GameNetwork.sendClientRequestInventoryToggle();
-      if (key == PhysicalKeyboardKey.keyT)
-        return GameState.actionGameDialogShowQuests();
-      if (key == PhysicalKeyboardKey.keyM)
-        return GameState.actionGameDialogShowMap();
       return;
     }
 

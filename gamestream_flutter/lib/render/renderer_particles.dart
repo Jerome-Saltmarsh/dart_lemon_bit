@@ -338,7 +338,7 @@ class RendererParticles extends Renderer {
       scale: particle.scale,
       rotation: particle.rotation + piQuarter + piHalf,
       anchorX: 0.5,
-      anchorY: 0.25,
+      anchorY: 0.1,
       color: GameState.getV3RenderColor(particle),
     );
   }

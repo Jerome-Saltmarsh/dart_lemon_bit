@@ -58,10 +58,8 @@ ctrl + w:   minimal mode
 [CONTENT]
 [ ] new weapon type node cannon
 [ ] new weapon type gravity gun
-[ ] new gameobject explosive barrel
 [ ] new gameobject type car
 [ ] new gameobject flaming barrel object
-[ ] new node type sandbags
 [ ] new node type tires
 [ ] new node type train tracks
 [ ] new node type barbed wire
@@ -91,12 +89,16 @@ ctrl + w:   minimal mode
 [ ] design scene suburbia
 [ ] feature saturation changes over time of day and night
 [ ] fix item type colors
+[ ] new node type sandbags
+[ ] new gameobject explosive barrel
 
 [CRITICAL]
 [ ] fix render visibility algorithm
 [ ] fix physics knocked through walls
 
 12.01.2023
+[x] disable teleport on production
+[x] improve animation sword strike
 [x] fix sprite swat pants
 [x] animate shot fired
 [x] punch strike animation
