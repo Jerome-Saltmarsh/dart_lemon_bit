@@ -337,6 +337,7 @@ class RendererParticles extends Renderer {
       rotation: particle.rotation + piQuarter + piHalf,
       anchorX: 0.5,
       anchorY: 0.0,
+      color: GameState.getV3RenderColor(particle),
     );
   }
 
@@ -357,6 +358,7 @@ class RendererParticles extends Renderer {
       rotation: particle.rotation + piQuarter + piHalf,
       anchorX: 0.4,
       anchorY: 0.1,
+      color: GameState.getV3RenderColor(particle),
     );
   }
 
@@ -375,8 +377,9 @@ class RendererParticles extends Renderer {
       srcHeight: 47,
       scale: particle.scale,
       rotation: particle.rotation + piQuarter + piHalf,
-      anchorX: 0.4,
+      anchorX: 0.5,
       anchorY: 0.1,
+      color: GameState.getV3RenderColor(particle),
     );
   }
 

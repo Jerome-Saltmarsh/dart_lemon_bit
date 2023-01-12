@@ -646,8 +646,8 @@ abstract class Game with ByteReader {
     );
     dispatchAttackPerformed(
         character.weaponType,
-        character.x + getAdjacent(angle, 60),
-        character.y + getOpposite(angle, 60),
+        character.x + getAdjacent(angle, 70),
+        character.y + getOpposite(angle, 70),
         character.z + Character_Gun_Height,
         angle,
     );
