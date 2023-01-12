@@ -260,6 +260,11 @@ class ItemType {
       value >= Index_Weapon_Ranged_Handgun &&
       value < Index_Weapon_Ranged_Bow;
 
+  static bool isAutomaticFirearm(int value) =>
+      value ==  Weapon_Smg_Mp5      ||
+      value ==  Weapon_Rifle_AK_47  ||
+      value ==  Weapon_Rifle_M4      ;
+  
   static bool isTypeWeaponMelee(int value) =>
       value == ItemType.Empty ||
       (

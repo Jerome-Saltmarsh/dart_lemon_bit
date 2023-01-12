@@ -293,6 +293,10 @@ class GameEvents {
       GameState.spawnParticleStrikeBlade(x: x, y: y, z: z, angle: angle);
       return;
     }
+    if (ItemType.isAutomaticFirearm(attackType)){
+      GameState.spawnParticleStrikeBulletLight(x: x, y: y, z: z, angle: angle);
+      return;
+    }
     GameState.spawnParticleStrikeBullet(x: x, y: y, z: z, angle: angle);
   }
 

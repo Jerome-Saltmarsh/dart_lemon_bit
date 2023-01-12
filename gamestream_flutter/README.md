@@ -94,6 +94,7 @@ ctrl + w:   minimal mode
 
 [CRITICAL]
 [ ] fix render visibility algorithm
+[ ] fix physics knocked through walls
 
 12.01.2023
 [x] fix sprite swat pants
