@@ -81,6 +81,7 @@ abstract class Character extends Collider {
   }
   bool get weaponStateBusy => weaponStateFiring || weaponStateReloading;
   bool get running => state == CharacterState.Running;
+  bool get performing => state == CharacterState.Performing;
   bool get idling => state == CharacterState.Idle;
   bool get characterStateIdle => state == CharacterState.Idle;
   bool get busy => stateDurationRemaining > 0;
@@ -215,15 +216,6 @@ abstract class Character extends Collider {
   }
 
   void setCharacterStatePerforming({required int duration}){
-    // if (this is AI && weaponType == ItemType.Empty){
-    //   final target = this.target;
-    //   if (target is Collider){
-    //     final distance = getDistanceBetweenV3(this, target);
-    //     if (distance - target.radius > this.weaponTypeRange) {
-    //       throw Exception();
-    //     }
-    //   }
-    // }
     setCharacterState(value: CharacterState.Performing, duration: duration);
   }
 

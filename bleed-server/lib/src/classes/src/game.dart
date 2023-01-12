@@ -998,7 +998,7 @@ abstract class Game with ByteReader {
       for (var indexB = 0; indexB < bLength; indexB++) {
         final colliderB = collidersB[indexB];
         if (!colliderB.collidable) continue;
-        if (colliderA.bottom < colliderB.top) break;
+        if (colliderA.bottom < colliderB.top) continue;
         if (colliderA.top > colliderB.bottom) continue;
         if (colliderA.right < colliderB.left) continue;
         if (colliderA.left > colliderB.right) continue;
@@ -1443,6 +1443,15 @@ abstract class Game with ByteReader {
     }
     const framePerformStrike = 10;
     if (character.stateDuration != framePerformStrike) return;
+
+    dispatchAttackPerformed(
+      character.weaponType,
+      character.x + getAdjacent(character.faceAngle, 30),
+      character.y + getOpposite(character.faceAngle, 30),
+      character.z,
+      character.faceAngle,
+    );
+
     final attackTarget = character.target;
     if (attackTarget == null) return;
     if (attackTarget is Collider) {
@@ -1510,9 +1519,7 @@ abstract class Game with ByteReader {
             character.setCharacterStateIdle();
           }
         }
-
-      }
-    }
+      }     }
     character.updateMovement();
 
     for (var i = 0; i < 2; i++) {
