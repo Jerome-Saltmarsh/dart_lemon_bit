@@ -1,3 +1,4 @@
+import 'package:gamestream_flutter/isometric/render/render_pixel.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import 'functions/render_shadow.dart';
@@ -18,10 +19,14 @@ class RendererGameObjects extends Renderer {
           dstY: GameConvert.convertV3ToRenderY(gameObject),
           srcX: AtlasItems.getSrcX(type),
           srcY: AtlasItems.getSrcY(type),
+          anchorY: AtlasItems.getAnchorY(type),
           srcWidth: AtlasItems.getSrcWidth(type),
           srcHeight: AtlasItems.getSrcHeight(type),
+          scale: AtlasItems.getSrcScale(type),
           color: GameState.getV3RenderColor(gameObject),
         );
+
+        renderPixelRedV2(gameObject);
         return;
       }
 

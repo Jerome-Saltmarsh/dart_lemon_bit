@@ -90,13 +90,13 @@ ctrl + w:   minimal mode
 [ ] feature saturation changes over time of day and night
 [ ] fix item type colors
 [ ] new node type sandbags
-[ ] new gameobject explosive barrel
 
 [CRITICAL]
 [ ] fix render visibility algorithm
 [ ] fix physics knocked through walls
 
 12.01.2023
+[x] new gameobject explosive barrel
 [x] disable teleport on production
 [x] improve animation sword strike
 [x] fix sprite swat pants
