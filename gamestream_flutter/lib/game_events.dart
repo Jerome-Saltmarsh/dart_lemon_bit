@@ -189,7 +189,7 @@ class GameEvents {
       case GameEventType.EnemyTargeted:
         break;
       case GameEventType.Attack_Missed:
-        final attackType = serverResponseReader.readByte();
+        final attackType = serverResponseReader.readUInt16();
         switch (attackType) {
           case ItemType.Empty:
             GameAudio.arm_swing_whoosh_11.playXYZ(x, y, z);

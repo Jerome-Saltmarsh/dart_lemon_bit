@@ -42,6 +42,7 @@ class GameSurvival extends Game {
     player.team = TeamType.Alone;
     player.inventoryClear();
     player.inventoryAddMax(itemType: ItemType.Resource_Gun_Powder);
+    player.inventoryAddMax(itemType: ItemType.Resource_Round_Rifle);
     player.inventoryAdd(itemType: ItemType.Weapon_Melee_Axe);
     player.inventoryAdd(itemType: ItemType.Weapon_Melee_Pickaxe);
     player.inventoryAdd(itemType: ItemType.Weapon_Melee_Hammer);
@@ -67,8 +68,8 @@ class GameSurvival extends Game {
     player.belt3_quantity = 3;
     player.belt4_itemType = ItemType.Consumables_Apple;
     player.belt4_quantity = 3;
-    player.belt5_itemType = ItemType.Weapon_Rifle_Blunderbuss;
-    player.belt5_quantity = ItemType.getMaxQuantity(ItemType.Weapon_Rifle_Blunderbuss);
+    player.belt5_itemType = ItemType.Weapon_Rifle_Jager;
+    player.belt5_quantity = ItemType.getMaxQuantity(ItemType.Weapon_Rifle_Jager);
     player.belt6_itemType = ItemType.Weapon_Rifle_AK_47;
     player.belt6_quantity = ItemType.getMaxQuantity(ItemType.Weapon_Rifle_AK_47);
     player.equippedWeaponIndex = ItemType.Belt_1;

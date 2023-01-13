@@ -627,7 +627,7 @@ abstract class Game with ByteReader {
           z: performZ,
           angle: angle,
         );
-        player.writeByte(character.weaponType);
+        player.writeUInt16(character.weaponType);
       }
     }
   }
