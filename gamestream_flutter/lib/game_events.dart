@@ -88,6 +88,9 @@ class GameEvents {
       case GameEventType.Bullet_Deactivated:
         GameAudio.metal_light_3.playXYZ(x, y, z);
         return;
+      case GameEventType.Material_Struck_Metal:
+        GameAudio.metal_struck.playXYZ(x, y, z);
+        return;
       case GameEventType.Player_Spawn_Started:
         GameCamera.centerOnPlayer();
         GameAudio.teleport.playXYZ(x, y, z);

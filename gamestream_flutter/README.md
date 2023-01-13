@@ -90,13 +90,13 @@ ctrl + w:   minimal mode
 [ ] feature saturation changes over time of day and night
 [ ] fix item type colors
 [ ] feature node type shot emits particle
-[ ] feature barrel struck audio
 
 [CRITICAL]
 [ ] fix render visibility algorithm
 [ ] fix physics knocked through walls
 
 13.01.2023
+[x] feature barrel struck audio
 [x] feature bullet struck audio
 [x] new node type sandbags
 [x] fix sprite legs brown

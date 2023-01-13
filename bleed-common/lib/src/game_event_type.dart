@@ -33,4 +33,5 @@ class GameEventType {
   static const Thunder = 74;
   static const Explosion = 75;
   static const Bullet_Deactivated = 76;
+  static const Material_Struck_Metal = 77;
 }

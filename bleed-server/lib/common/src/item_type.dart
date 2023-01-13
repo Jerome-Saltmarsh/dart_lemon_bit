@@ -728,6 +728,13 @@ class ItemType {
       GameObjects_Barrel_Purple,
       GameObjects_Barrel_Flaming,
   ].contains(type);
+
+  static bool isMaterialMetal(int type)=> const [
+    GameObjects_Barrel,
+    GameObjects_Barrel_Explosive,
+    GameObjects_Barrel_Purple,
+    GameObjects_Barrel_Flaming,
+  ].contains(type);
 }
 
 

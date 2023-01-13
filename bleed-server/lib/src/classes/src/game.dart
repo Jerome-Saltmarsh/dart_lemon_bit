@@ -561,10 +561,10 @@ abstract class Game with ByteReader {
           srcCharacter: character,
       );
       attackHit = true;
-       other.applyForce(
-           force: 7.5,
-           angle: getAngleBetween(other.x, other.y, other.x, other.y),
-       );
+       // other.applyForce(
+       //     force: 7.5,
+       //     angle: getAngleBetween(other.x, other.y, other.x, other.y),
+       // );
     }
 
     for (final gameObject in gameObjects) {
@@ -575,11 +575,12 @@ abstract class Game with ByteReader {
       ) >
           attackRadius) continue;
 
-      gameObject.applyForce(
-        force: 5,
-        angle: radiansV2(character, gameObject),
+      applyHit(
+        srcPosition: character,
+        target: gameObject,
+        damage: character.damage,
+        srcCharacter: character,
       );
-
       attackHit = true;
     }
 
@@ -605,6 +606,7 @@ abstract class Game with ByteReader {
       player.writeByte(nodeType);
     }
 
+    // TODO Abstract
     if (NodeType.isDestroyable(nodeType)) {
       final nodeOrientation = scene.nodeOrientations[nodeIndex];
       setNode(
@@ -1438,9 +1440,17 @@ abstract class Game with ByteReader {
   }) {
     assert (target.active);
 
+    final angle = radiansV2(srcPosition ?? srcCharacter, target);
+
+    if (target is GameObject){
+       if (ItemType.isMaterialMetal(target.type)){
+          dispatch(GameEventType.Material_Struck_Metal, target.x, target.y, target.z, angle);
+       }
+    }
+
     target.applyForce(
       force: force,
-      angle: radiansV2(srcPosition ?? srcCharacter, target),
+      angle: angle,
     );
 
     customOnHitApplied(
