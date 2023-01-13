@@ -217,18 +217,21 @@ class ItemType {
   static bool isCollidable(int value) =>
       value == ItemType.GameObjects_Barrel_Purple     ||
       value == ItemType.GameObjects_Barrel_Explosive  ||
+      value == ItemType.GameObjects_Barrel_Flaming    ||
       value == ItemType.GameObjects_Barrel            ||
       value == ItemType.GameObjects_Tavern_Sign        ;
 
   static bool isPhysical(int value) =>
     value == ItemType.GameObjects_Barrel_Purple     ||
     value == ItemType.GameObjects_Barrel_Explosive  ||
+    value == ItemType.GameObjects_Barrel_Flaming    ||
     value == ItemType.GameObjects_Barrel            ||
     value == ItemType.GameObjects_Tavern_Sign        ;
 
   static bool physicsMoveOnCollision(int value) =>
       value == ItemType.GameObjects_Barrel_Purple     ||
       value == ItemType.GameObjects_Barrel_Explosive  ||
+      value == ItemType.GameObjects_Barrel_Flaming    ||
       value == ItemType.GameObjects_Barrel            ||
       value == ItemType.GameObjects_Tavern_Sign        ;
 
