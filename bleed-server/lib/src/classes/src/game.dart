@@ -837,13 +837,13 @@ abstract class Game with ByteReader {
     required Character srcCharacter,
   }){
     dispatchV3(GameEventType.Explosion, target);
-    for (var i = 0; i < characters.length; i++){
-      if (characters[i].inactive) continue;
-      if (characters[i].dead) continue;
+    final length = characters.length;
+    for (var i = 0; i < length; i++){
       final character = characters[i];
-      if (target.withinRadius(character, 100)) {
-        applyHit(src: target, target: character, srcCharacter: srcCharacter);
-      }
+      if (character.inactive) continue;
+      if (character.dead) continue;
+      if (!target.withinRadius(character, 100)) continue;
+      applyHit(src: target, target: character, srcCharacter: srcCharacter);
     }
   }
 
@@ -1110,7 +1110,6 @@ abstract class Game with ByteReader {
     character.state = CharacterState.Dying;
     character.stateDurationRemaining = 10;
     character.onCharacterStateChanged();
-    character.collidable = false;
 
     for (final character in characters) {
       if (character.target != character) continue;
@@ -1609,6 +1608,7 @@ abstract class Game with ByteReader {
   }
 
   void respawnAI(AI ai){
+    assert (ai.dead);
     final distance = randomBetween(0, 100);
     final angle = randomAngle();
     ai.x = ai.spawnX + getAdjacent(angle, distance);
@@ -1618,11 +1618,9 @@ abstract class Game with ByteReader {
     ai.clearDest();
     clearCharacterTarget(ai);
     ai.clearPath();
-    ai.collidable = true;
+    activateCollider(ai);
     ai.health = ai.maxHealth;
     ai.target = null;
-    ai.velocityX = 0;
-    ai.velocityX = 0;
     ai.setCharacterStateSpawning();
     customOnAIRespawned(ai);
   }
