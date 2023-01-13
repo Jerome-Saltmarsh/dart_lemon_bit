@@ -793,6 +793,13 @@ abstract class Game with ByteReader {
 
   void updateGameObject(GameObject gameObject) {
     if (!gameObject.active) return;
+
+    if (gameObject.z < 0) {
+      deactivateGameObject(gameObject);
+      return;
+    }
+
+
     gameObject.updatePhysics();
     updateColliderSceneCollisionVertical(gameObject);
     updateColliderSceneCollisionHorizontal(gameObject);

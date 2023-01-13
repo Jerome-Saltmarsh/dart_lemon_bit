@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:bleed_server/common/src/classes/vector3.dart';
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/lang_utils.dart';
 import 'package:lemon_math/library.dart';
@@ -80,6 +81,16 @@ class Scene {
      if (column >= gridColumns) return true;
      return false;
   }
+
+  bool inboundsV3(Position3 v3) => inboundsXYZ(v3.x, v3.y, v3.z);
+
+  bool inboundsXYZ(double x, double y, double z) =>
+      x >= 0                &&
+      y >= 0                &&
+      z >= 0                &&
+      x < gridRowLength     &&
+      y < gridColumnLength  &&
+      z < gridHeightLength   ;
 
   void setNode(int z, int row, int column, int type, int orientation) {
     if (outOfBounds(z, row, column)) return;

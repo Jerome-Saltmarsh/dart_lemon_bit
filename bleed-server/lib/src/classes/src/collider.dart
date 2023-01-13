@@ -97,9 +97,9 @@ class Collider extends Position3 {
     }
     velocityX *= GamePhysics.Friction;
     velocityY *= GamePhysics.Friction;
-    z += velocityZ;
     x += velocityX;
     y += velocityY;
+    z += velocityZ;
   }
 
   /// FUNCTIONS
