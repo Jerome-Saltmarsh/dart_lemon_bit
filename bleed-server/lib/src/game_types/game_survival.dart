@@ -145,7 +145,9 @@ class GameSurvival extends Game {
      if (target is GameObject && src is Projectile) {
         if (target.type == ItemType.GameObjects_Barrel_Explosive) {
            deactivateCollider(target);
-           createExplosion(target);
+           final owner = src.owner;
+           if (owner == null) return;
+           createExplosion(target: target, srcCharacter: owner);
         }
      }
   }

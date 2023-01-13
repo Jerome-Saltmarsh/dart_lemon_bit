@@ -445,7 +445,9 @@ abstract class Game with ByteReader {
 
     performJob(50, (){
       deactivateCollider(instance);
-      createExplosion(instance);
+      final owner = instance.owner;
+      if (owner == null) return;
+      createExplosion(target: instance, srcCharacter: owner);
     });
   }
 
@@ -830,13 +832,17 @@ abstract class Game with ByteReader {
     updateColliderSceneCollisionHorizontal(gameObject);
   }
 
-  void createExplosion(Position3 src){
-    dispatchV3(GameEventType.Explosion, src);
+  void createExplosion({
+    required Position3 target,
+    required Character srcCharacter,
+  }){
+    dispatchV3(GameEventType.Explosion, target);
     for (var i = 0; i < characters.length; i++){
+      if (characters[i].inactive) continue;
       if (characters[i].dead) continue;
       final character = characters[i];
-      if (src.withinRadius(character, 100)) {
-        applyHit(src: src, target: character);
+      if (target.withinRadius(character, 100)) {
+        applyHit(src: target, target: character, srcCharacter: srcCharacter);
       }
     }
   }
@@ -1164,7 +1170,9 @@ abstract class Game with ByteReader {
             projectile.z);
         break;
       case ProjectileType.Rocket:
-        createExplosion(projectile);
+        final owner = projectile.owner;
+        if (owner == null) return;
+        createExplosion(target: projectile, srcCharacter: owner);
         break;
       default:
         break;
@@ -1391,12 +1399,11 @@ abstract class Game with ByteReader {
   void applyHit({
     required Position3 src,
     required Collider target,
+    Character? srcCharacter
   }) {
     assert (target.active);
 
-    Character? srcCharacter;
     var damage = 0;
-    customOnHitApplied(src, target);
 
     if (src is Character){
       assert (src.active);
@@ -1425,6 +1432,8 @@ abstract class Game with ByteReader {
         angle: getAngleBetweenV3(target, src),
       );
     }
+
+    customOnHitApplied(src, target);
 
     if (srcCharacter == null){
       throw Exception("srcCharacter == null");
