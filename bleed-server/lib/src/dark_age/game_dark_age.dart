@@ -28,7 +28,7 @@ class GameDarkAge extends Game {
   }
 
   @override
-  void customOnHitApplied(Character src, Collider target) {
+  void customOnHitApplied(Position3 src, Collider target) {
      if (src is AI) {
         if (randomBool()) {
           src.aiMode = AIMode.Idle;

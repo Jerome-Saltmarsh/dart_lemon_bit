@@ -11,7 +11,6 @@ class Collider extends Position3 {
   var velocityX = 0.0;
   var velocityY = 0.0;
   var velocityZ = 0.0;
-  var maxSpeed = 20.0;
   var team = 0;
   var radius = 0.0;
   /// If false this object is completely ignored by collision detection

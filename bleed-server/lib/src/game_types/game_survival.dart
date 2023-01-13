@@ -141,21 +141,11 @@ class GameSurvival extends Game {
   }
 
   @override
-  void customOnHitApplied(Character src, Collider target) {
-     if (target is GameObject) {
-        if (target.type == ItemType.GameObjects_Barrel) {
+  void customOnHitApplied(Position3 src, Collider target) {
+     if (target is GameObject && src is Projectile) {
+        if (target.type == ItemType.GameObjects_Barrel_Explosive) {
            deactivateCollider(target);
-           spawnRandomGameObjectAtPosition(target);
-           final x = target.x;
-           final y = target.y;
-           final z = target.z;
-           performJob(1000, () {
-               spawnGameObject(x: x, y: y, z: z, type: ItemType.GameObjects_Barrel)
-                ..physical = true
-                ..collidable = true
-                ..team = TeamType.Alone
-                ..moveOnCollision = false;
-           });
+           createExplosion(target);
         }
      }
   }
@@ -177,12 +167,15 @@ class GameSurvival extends Game {
   @override
   void customOnColliderDeactivated(Collider collider) {
     if (collider is GameObject){
-      if (collider.type == ItemType.GameObjects_Barrel_Flaming){
-        collider.x = collider.startX;
-        collider.y = collider.startY;
-        collider.z = collider.startZ;
-        activateCollider(collider);
+      if (ItemType.isTypeBarrel(collider.type)){
+        performJob(200, (){
+          collider.x = collider.startX;
+          collider.y = collider.startY;
+          collider.z = collider.startZ;
+          activateCollider(collider);
+        });
       }
     }
   }
+
 }

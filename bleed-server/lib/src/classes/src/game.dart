@@ -95,7 +95,7 @@ abstract class Game with ByteReader {
   /// @override
   void customOnPlayerWeaponChanged(Player player, int previousWeaponType, int newWeaponType){ }
   /// @override
-  void customOnHitApplied(Character src, Collider target) {}
+  void customOnHitApplied(Position3 src, Collider target) {}
   /// @override
   void customOnPlayerJoined(Player player) {}
   
@@ -488,6 +488,9 @@ abstract class Game with ByteReader {
   }
 
   void characterAttackMelee(Character character) {
+    assert (character.active);
+    assert (character.alive);
+
     if (character.deadBusyOrWeaponStateBusy) return;
 
     final angle = character.lookRadian;
@@ -534,6 +537,7 @@ abstract class Game with ByteReader {
     var attackHit = false;
 
     for (final other in characters) {
+      if (!other.active) continue;
       if (!other.collidable) continue;
       if (Collider.onSameTeam(character, other)) continue;
       if (other.distanceFromXYZ(
@@ -1388,11 +1392,14 @@ abstract class Game with ByteReader {
     required Position3 src,
     required Collider target,
   }) {
+    assert (target.active);
 
     Character? srcCharacter;
     var damage = 0;
+    customOnHitApplied(src, target);
 
     if (src is Character){
+      assert (src.active);
       srcCharacter = src;
       damage = src.damage;
       target.applyForce(
@@ -1434,13 +1441,8 @@ abstract class Game with ByteReader {
       dispatchV3(GameEventType.Zombie_Strike, srcCharacter);
     }
     if (target is Character) {
-
-      // dispatchV3(GameEventType.Zombie_Strike, srcCharacter);
-
       applyDamageToCharacter(src: srcCharacter, target: target, amount: damage);
     }
-
-    customOnHitApplied(srcCharacter, target);
   }
   
   void updateCharacterStatePerforming(Character character) {

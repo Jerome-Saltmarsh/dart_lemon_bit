@@ -90,13 +90,13 @@ ctrl + w:   minimal mode
 [ ] feature saturation changes over time of day and night
 [ ] fix item type colors
 [ ] new node type sandbags
-[ ] feature explosive barrels explode when shot
 
 [CRITICAL]
 [ ] fix render visibility algorithm
 [ ] fix physics knocked through walls
 
 13.01.2023
+[x] feature explosive barrels explode when shot
 [x] feature gameobjects fall into water
 [x] fix flaming barrel collision physics
 [x] fix flaming barrel stops emitting light when offscreen
