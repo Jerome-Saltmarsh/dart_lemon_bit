@@ -97,6 +97,7 @@ ctrl + w:   minimal mode
 [ ] fix physics knocked through walls
 
 13.01.2023
+[x] feature bullet struck audio
 [x] new node type sandbags
 [x] fix sprite legs brown
 [x] fix sprite legs white

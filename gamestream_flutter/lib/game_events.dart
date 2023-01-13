@@ -85,6 +85,9 @@ class GameEvents {
       case GameEventType.Attack_Performed:
         onAttackPerformed(x, y, z, angle);
         return;
+      case GameEventType.Bullet_Deactivated:
+        GameAudio.metal_light_3.playXYZ(x, y, z);
+        return;
       case GameEventType.Player_Spawn_Started:
         GameCamera.centerOnPlayer();
         GameAudio.teleport.playXYZ(x, y, z);

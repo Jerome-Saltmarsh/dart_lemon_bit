@@ -1193,6 +1193,14 @@ abstract class Game with ByteReader {
         if (owner == null) return;
         createExplosion(target: projectile, srcCharacter: owner);
         break;
+      case ProjectileType.Bullet:
+        dispatch(
+            GameEventType.Bullet_Deactivated,
+            projectile.x,
+            projectile.y,
+            projectile.z,
+        );
+        break;
       default:
         break;
     }

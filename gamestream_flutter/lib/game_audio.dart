@@ -68,6 +68,7 @@ class GameAudio {
   static final thunder = AudioSingle(name: 'thunder', volume: 0.5);
   static final fire_bolt_14 = AudioSingle(name: 'fire-bolt-14', volume: 0.5);
   static final dagger_woosh_9 = AudioSingle(name: 'dagger_woosh_9', volume: 0.5);
+  static final metal_light_3 = AudioSingle(name: 'metal-light-3', volume: 0.5);
   static final footstep_grass_8 = AudioSingle(name: 'footstep-grass-8', volume: 0.05);
   static final footstep_grass_7 = AudioSingle(name: 'footstep-grass-7', volume: 0.05);
   static final footstep_mud_6 = AudioSingle(name: 'mud-footstep-6', volume: 0.05);
