@@ -104,6 +104,7 @@ class GameAudio {
   static final splash = AudioSingle(name: 'splash', volume: 0.5);
   static final material_struck_wood = AudioSingle(name: 'material-struck-wood', volume: 0.5);
   static final material_struck_stone = AudioSingle(name: 'material-struck-stone', volume: 0.5);
+  static final material_struck_dirt = AudioSingle(name: 'material-struck-dirt', volume: 0.5);
   static final rat_squeak = AudioSingle(name: 'rat-squeak', volume: 0.5);
   static final collect_star_3 = AudioSingle(name: 'collect-star-3', volume: 0.5);
   static final magical_impact_16 = AudioSingle(name: 'magical-impact-16', volume: 0.5);

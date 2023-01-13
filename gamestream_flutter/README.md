@@ -90,6 +90,8 @@ ctrl + w:   minimal mode
 [ ] feature saturation changes over time of day and night
 [ ] fix item type colors
 [ ] feature node type shot emits particle
+[ ] gunshot in smoke
+[ ] gunshot in particles
 
 [CRITICAL]
 [ ] fix render visibility algorithm

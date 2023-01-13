@@ -248,6 +248,11 @@ class GameEvents {
       GameAudio.material_struck_stone.playXYZ(x, y, z);
       GameState.spawnParticleBlockBrick(x, y, z);
     }
+
+    if (NodeType.isMaterialDirt(nodeType)){
+      GameAudio.material_struck_dirt.playXYZ(x, y, z);
+      GameState.spawnParticleBlockBrick(x, y, z);
+    }
   }
 
   static void onGameEventAttackPerformedBlade(double x, double y, double z, double angle) {

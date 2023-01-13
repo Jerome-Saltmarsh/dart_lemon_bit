@@ -62,6 +62,9 @@ class NodeType {
       value == Road       ||
       value == Road_2     ||
       value == Chimney     ;
+  
+  static bool isMaterialDirt(int value) =>
+      value == Sandbag     ;
 
   static bool supportsOrientationSolid(int type) =>
       type == Brick         ||

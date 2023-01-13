@@ -539,10 +539,6 @@ abstract class Game with ByteReader {
       angle: angle,
     );
 
-    if (character.idling) {
-      // playerFaceMouse(player);
-    }
-
     var attackHit = false;
 
     for (final other in characters) {
@@ -561,10 +557,6 @@ abstract class Game with ByteReader {
           srcCharacter: character,
       );
       attackHit = true;
-       // other.applyForce(
-       //     force: 7.5,
-       //     angle: getAngleBetween(other.x, other.y, other.x, other.y),
-       // );
     }
 
     for (final gameObject in gameObjects) {
@@ -588,22 +580,23 @@ abstract class Game with ByteReader {
     final nodeIndex = scene.getNodeIndexXYZ(performX, performY, performZ);
     final nodeType = scene.nodeTypes[nodeIndex];
 
-    character.applyForce(
-      force: 4.5,
-      angle: angle + pi,
-    );
-
-    attackHit = true;
-    for (final player in players) {
-      if (!player.onScreen(performX, performY)) continue;
-      player.writeGameEvent(
-          type: GameEventType.Node_Struck,
-          x: performX,
-          y: performY,
-          z: performZ,
-          angle: angle,
+    if (!NodeType.isRainOrEmpty(nodeType)) {
+      character.applyForce(
+        force: 4.5,
+        angle: angle + pi,
       );
-      player.writeByte(nodeType);
+      attackHit = true;
+      for (final player in players) {
+        if (!player.onScreen(performX, performY)) continue;
+        player.writeGameEvent(
+            type: GameEventType.Node_Struck,
+            x: performX,
+            y: performY,
+            z: performZ,
+            angle: angle,
+        );
+        player.writeByte(nodeType);
+      }
     }
 
     // TODO Abstract
