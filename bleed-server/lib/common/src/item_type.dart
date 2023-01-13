@@ -229,10 +229,10 @@ class ItemType {
     value == ItemType.GameObjects_Tavern_Sign        ;
 
   static bool applyGravity(int value) =>
-      value == ItemType.GameObjects_Barrel_Purple     ||
-          value == ItemType.GameObjects_Barrel_Explosive  ||
-          value == ItemType.GameObjects_Barrel_Flaming    ||
-          value == ItemType.GameObjects_Barrel            ;
+    value == ItemType.GameObjects_Barrel_Purple     ||
+    value == ItemType.GameObjects_Barrel_Explosive  ||
+    value == ItemType.GameObjects_Barrel_Flaming    ||
+    value == ItemType.GameObjects_Barrel             ;
 
   static bool physicsMoveOnCollision(int value) =>
       value == ItemType.GameObjects_Barrel_Purple     ||

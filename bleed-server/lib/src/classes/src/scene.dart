@@ -129,13 +129,6 @@ class Scene {
     y < gridColumnLength;
 
   bool getCollisionAt(double x, double y, double z) {
-     if (x < 0) return true;
-     if (y < 0) return true;
-     if (x >= gridRowLength) return true;
-     if (y >= gridColumnLength) return true;
-     if (z >= gridHeightLength) return false;
-     if (z < 0) return false;
-
      final orientation = getNodeOrientationXYZ(x, y, z);
      if (orientation == NodeOrientation.None) return false;
      if (orientation == NodeOrientation.Solid) return true;
