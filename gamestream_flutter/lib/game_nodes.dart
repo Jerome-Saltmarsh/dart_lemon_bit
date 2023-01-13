@@ -151,6 +151,16 @@ class GameNodes {
     final rowInitInit = GameState.nodesTotalColumns * rowMin;
     var zTotal = zMin * area;
 
+    const r = 4;
+    final dstXLeft = GameConvert.rowColumnZToRenderX(rowIndex + r, columnIndex - r, zIndex);
+    if (dstXLeft < Engine.screen.left)    return;
+    final dstXRight = GameConvert.rowColumnZToRenderX(rowIndex - r, columnIndex + r, zIndex);
+    if (dstXRight > Engine.screen.right)   return;
+    final dstYTop = GameConvert.rowColumnZToRenderY(rowIndex + r, columnIndex + r, zIndex);
+    if (dstYTop <  Engine.screen.top) return;
+    final dstYBottom = GameConvert.rowColumnZToRenderY(rowIndex - r, columnIndex - r, zIndex);
+    if (dstYBottom >  Engine.screen.bottom) return;
+
     for (var z = zMin; z < zMax; z++) {
       var rowInit = rowInitInit;
 
@@ -196,6 +206,16 @@ class GameNodes {
     final columnMax = min(columnIndex + radius, GameState.nodesTotalColumns);
     final rowInitInit = GameState.nodesTotalColumns * rowMin;
     var zTotal = zMin * area;
+
+    const r = 4;
+    final dstXLeft = GameConvert.rowColumnZToRenderX(rowIndex + r, columnIndex - r, zIndex);
+    if (dstXLeft < Engine.screen.left)    return;
+    final dstXRight = GameConvert.rowColumnZToRenderX(rowIndex - r, columnIndex + r, zIndex);
+    if (dstXRight > Engine.screen.right)   return;
+    final dstYTop = GameConvert.rowColumnZToRenderY(rowIndex + r, columnIndex + r, zIndex);
+    if (dstYTop <  Engine.screen.top) return;
+    final dstYBottom = GameConvert.rowColumnZToRenderY(rowIndex - r, columnIndex - r, zIndex);
+    if (dstYBottom >  Engine.screen.bottom) return;
 
     for (var z = zMin; z < zMax; z++) {
       var rowInit = rowInitInit;

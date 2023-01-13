@@ -97,6 +97,9 @@ ctrl + w:   minimal mode
 [ ] fix render visibility algorithm
 [ ] fix physics knocked through walls
 
+13.01.2023
+[x] optimize client do not emit offscreen light sources
+
 12.01.2023
 [x] new gameobject flaming barrel
 [x] fix physics barrel collision detection
