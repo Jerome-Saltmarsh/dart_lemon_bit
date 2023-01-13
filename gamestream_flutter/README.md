@@ -96,6 +96,8 @@ ctrl + w:   minimal mode
 [ ] fix physics knocked through walls
 
 13.01.2023
+[x] fix sprite legs brown
+[x] fix sprite legs white
 [x] fix sprite body empty
 [x] feature explosive barrels explode when shot
 [x] feature gameobjects fall into water

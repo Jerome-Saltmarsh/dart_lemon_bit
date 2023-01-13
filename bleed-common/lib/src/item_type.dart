@@ -569,7 +569,7 @@ class ItemType {
      Legs_Brown: "Brown Pants",
      Legs_Swat: "Tactical Pants",
      Legs_Green: "Green Pants",
-     Legs_Blue: "Blue Pants",
+     Legs_Blue: "Jeans",
      Legs_White: "White Pants",
      Legs_Red: "Red Trousers",
      Weapon_Melee_Sword: "Sword",
