@@ -141,15 +141,21 @@ class GameSurvival extends Game {
   }
 
   @override
-  void customOnHitApplied(Position3 src, Collider target) {
-     if (target is GameObject && src is Projectile) {
-        if (target.type == ItemType.GameObjects_Barrel_Explosive) {
-           deactivateCollider(target);
-           final owner = src.owner;
-           if (owner == null) return;
-           createExplosion(target: target, srcCharacter: owner);
-        }
-     }
+  void customOnHitApplied({
+    required Character srcCharacter,
+    required Collider target,
+    required int damage,
+    Position3? srcPosition,
+    double force = 20,
+  }) {
+    if (target is GameObject && srcPosition is Projectile) {
+      if (target.type == ItemType.GameObjects_Barrel_Explosive) {
+        deactivateCollider(target);
+        final owner = srcPosition.owner;
+        if (owner == null) return;
+        createExplosion(target: target, srcCharacter: owner);
+      }
+    }
   }
 
   @override

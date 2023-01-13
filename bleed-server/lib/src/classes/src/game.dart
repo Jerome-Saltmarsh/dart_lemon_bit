@@ -95,7 +95,14 @@ abstract class Game with ByteReader {
   /// @override
   void customOnPlayerWeaponChanged(Player player, int previousWeaponType, int newWeaponType){ }
   /// @override
-  void customOnHitApplied(Position3 src, Collider target) {}
+  void customOnHitApplied({
+    required Character srcCharacter,
+    required Collider target,
+    required int damage,
+    Position3? srcPosition,
+    double force = 20,
+  }) {}
+
   /// @override
   void customOnPlayerJoined(Player player) {}
   
@@ -547,7 +554,12 @@ abstract class Game with ByteReader {
         performY,
         performZ,
       ) > attackRadius) continue;
-      applyHit(src: character, target: other);
+      applyHit(
+          srcPosition: character,
+          target: other,
+          damage: character.damage,
+          srcCharacter: character,
+      );
       attackHit = true;
        other.applyForce(
            force: 7.5,
@@ -835,6 +847,8 @@ abstract class Game with ByteReader {
   void createExplosion({
     required Position3 target,
     required Character srcCharacter,
+    double radius = 100.0,
+    int damage = 5,
   }){
     dispatchV3(GameEventType.Explosion, target);
     final length = characters.length;
@@ -842,8 +856,13 @@ abstract class Game with ByteReader {
       final character = characters[i];
       if (character.inactive) continue;
       if (character.dead) continue;
-      if (!target.withinRadius(character, 100)) continue;
-      applyHit(src: target, target: character, srcCharacter: srcCharacter);
+      if (!target.withinRadius(character, radius)) continue;
+      applyHit(
+          srcPosition: target,
+          target: character,
+          srcCharacter: srcCharacter,
+          damage: damage,
+      );
     }
   }
 
@@ -1378,10 +1397,15 @@ abstract class Game with ByteReader {
     assert (projectile != target);
     assert (projectile.owner != target);
 
+    final owner = projectile.owner;
+    if (owner == null) return;
+
     if (target is Collider) {
       applyHit(
-        src: projectile,
+        srcCharacter: owner,
         target: target,
+        srcPosition: projectile,
+        damage: projectile.damage,
       );
     }
 
@@ -1396,51 +1420,29 @@ abstract class Game with ByteReader {
   }
 
   void applyHit({
-    required Position3 src,
+    required Character srcCharacter,
     required Collider target,
-    Character? srcCharacter
+    required int damage,
+    Position3? srcPosition,
+    double force = 20,
   }) {
     assert (target.active);
 
-    var damage = 0;
+    target.applyForce(
+      force: force,
+      angle: radiansV2(srcPosition ?? srcCharacter, target),
+    );
 
-    if (src is Character){
-      assert (src.active);
-      srcCharacter = src;
-      damage = src.damage;
-      target.applyForce(
-        force: 20,
-        angle: radiansV2(src, target),
-      );
-    } else if (src is Projectile) {
-      assert (src.owner != null);
-      srcCharacter = src.owner;
-      damage = src.damage;
-      target.applyForce(
-          force: 20,
-          angle: src.velocityAngle,
-      );
-    } else if (src is GameObject){
-      final srcOwner = src.owner;
-      if (srcOwner is Character){
-        srcCharacter = srcOwner;
-      }
-      damage = src.damage;
-      target.applyForce(
-        force: 20,
-        angle: getAngleBetweenV3(target, src),
-      );
-    }
+    customOnHitApplied(
+        srcCharacter: srcCharacter,
+        target: target,
+        damage: damage,
+        srcPosition: srcPosition,
+        force: force,
+    );
 
-    customOnHitApplied(src, target);
-
-    if (srcCharacter == null){
-      throw Exception("srcCharacter == null");
-    }
-
-    if (!target.collidable) return;
     if (target is Character) {
-      if (Collider.onSameTeam(src, target)) return;
+      if (Collider.onSameTeam(srcPosition, target)) return;
       if (target.deadOrDying) return;
     }
 
@@ -1475,8 +1477,10 @@ abstract class Game with ByteReader {
     if (attackTarget == null) return;
     if (attackTarget is Collider) {
       applyHit(
-        src: character,
+        srcPosition: character,
         target: attackTarget,
+        srcCharacter: character,
+        damage: character.damage,
       );
       clearCharacterTarget(character);
     }
