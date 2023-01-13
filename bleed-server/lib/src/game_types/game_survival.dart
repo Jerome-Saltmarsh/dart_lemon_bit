@@ -173,4 +173,14 @@ class GameSurvival extends Game {
        CharacterType.Template: 8,
     }[characterType] ?? 10;
   }
+
+  @override
+  void customOnGameObjectDeactivated(GameObject gameObject) {
+    if (gameObject.type == ItemType.GameObjects_Barrel_Flaming){
+      gameObject.x = gameObject.startX;
+      gameObject.y = gameObject.startY;
+      gameObject.z = gameObject.startZ;
+      activateGameObject(gameObject);
+    }
+  }
 }

@@ -1,6 +1,5 @@
 import 'dart:typed_data';
 
-import 'package:bleed_server/common/src/classes/vector3.dart';
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/lang_utils.dart';
 import 'package:lemon_math/library.dart';

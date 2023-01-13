@@ -20,6 +20,11 @@ class Collider extends Position3 {
   /// If false this object will not be moved during a collision
   var moveOnCollision = true;
   var applyGravity = false;
+
+  var startX = 0.0;
+  var startY = 0.0;
+  var startZ = 0.0;
+
   Character? owner;
   var damage = 0;
 

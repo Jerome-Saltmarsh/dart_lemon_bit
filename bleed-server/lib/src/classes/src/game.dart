@@ -69,6 +69,8 @@ abstract class Game with ByteReader {
   /// @override
   void customOnGameObjectDeactivated(GameObject gameObject){ }
   /// @override
+  void customOnGameObjectActivated(GameObject gameObject){ }
+  /// @override
   void customOnCharacterSpawned(Character character) { }
   /// @override
   void customOnCharacterKilled(Character target, dynamic src) { }
@@ -656,6 +658,13 @@ abstract class Game with ByteReader {
       );
   }
 
+  void activateGameObject(GameObject gameObject){
+    if (gameObject.active) return;
+    gameObject.active = true;
+    gameObject.collidable = ItemType.isCollidable(gameObject.type);
+    customOnGameObjectActivated(gameObject);
+  }
+
   void deactivateGameObject(GameObject gameObject){
      if (!gameObject.active) return;
      gameObject.active = false;
@@ -887,11 +896,6 @@ abstract class Game with ByteReader {
         y: y,
         z: character.z,
         where: (other) => other.alive && !Collider.onSameTeam(other, character));
-  }
-
-  void activateGameObject(GameObject gameObject){
-    gameObject.active = true;
-    gameObject.collidable = true;
   }
 
   void applyDamageToCharacter({

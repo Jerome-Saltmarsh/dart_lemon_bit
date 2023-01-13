@@ -30,6 +30,9 @@ class GameObject extends Collider {
     moveOnCollision = false;
     this.type = type;
     team = TeamType.Alone;
+    startX = x;
+    startY = y;
+    startZ = z;
   }
 }
 
