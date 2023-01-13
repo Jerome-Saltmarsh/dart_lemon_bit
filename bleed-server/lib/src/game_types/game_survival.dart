@@ -160,17 +160,28 @@ class GameSurvival extends Game {
 
   @override
   void customOnAIRespawned(AI ai) {
+    ai.characterType = randomItem(const[
+       CharacterType.Template,
+       CharacterType.Zombie,
+       CharacterType.Dog,
+    ]);
     ai.maxHealth = getCharacterTypeHealth(ai.characterType);
     ai.health = ai.maxHealth;
+
+    if (ai.characterTypeTemplate){
+      ai.weaponType = randomItem(const[
+        ItemType.Empty,
+        ItemType.Weapon_Handgun_Glock,
+        ItemType.Weapon_Melee_Crowbar,
+      ]);
+    }
   }
 
-  int getCharacterTypeHealth(int characterType){
-    return const {
+  int getCharacterTypeHealth(int characterType) => const {
        CharacterType.Zombie: 10,
        CharacterType.Dog: 6,
        CharacterType.Template: 8,
     }[characterType] ?? 10;
-  }
 
   @override
   void customOnColliderDeactivated(Collider collider) {
