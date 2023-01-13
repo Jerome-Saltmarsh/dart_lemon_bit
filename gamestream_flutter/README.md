@@ -89,13 +89,15 @@ ctrl + w:   minimal mode
 [ ] design scene suburbia
 [ ] feature saturation changes over time of day and night
 [ ] fix item type colors
-[ ] new node type sandbags
+[ ] feature node type shot emits particle
+[ ] feature barrel struck audio
 
 [CRITICAL]
 [ ] fix render visibility algorithm
 [ ] fix physics knocked through walls
 
 13.01.2023
+[x] new node type sandbags
 [x] fix sprite legs brown
 [x] fix sprite legs white
 [x] fix sprite body empty
