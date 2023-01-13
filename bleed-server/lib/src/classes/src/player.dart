@@ -1154,7 +1154,14 @@ class Player extends Character with ByteWriter {
     final gameObjects = game.gameObjects;
     for (final gameObject in gameObjects) {
       if (!gameObject.active) continue;
-      if (gameObject.type != ItemType.GameObjects_Crystal_Small_Blue && gameObject.type != ItemType.GameObjects_Crystal_Small_Red) {
+
+      const AlwaysSend = [
+        ItemType.GameObjects_Crystal_Small_Blue,
+        ItemType.GameObjects_Crystal_Small_Red,
+        ItemType.GameObjects_Barrel_Flaming,
+      ];
+
+      if (!AlwaysSend.contains(gameObject.type)) {
         if (gameObject.renderY < screenTop) continue;
         if (gameObject.renderX < screenLeft) continue;
         if (gameObject.renderX > screenRight) continue;

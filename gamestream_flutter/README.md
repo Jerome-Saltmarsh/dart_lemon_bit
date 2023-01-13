@@ -98,6 +98,7 @@ ctrl + w:   minimal mode
 [ ] fix physics knocked through walls
 
 13.01.2023
+[x] fix flaming barrel stops emitting light when offscreen
 [x] optimize client do not emit offscreen light sources
 
 12.01.2023
