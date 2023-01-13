@@ -11,7 +11,11 @@ class GameObject extends Collider {
 
   set type(int value){
      _type = value;
-     _isCollectable = ItemType.isCollectable(_type);
+     _isCollectable   = ItemType.isCollectable(type);
+     physical         = ItemType.isPhysical(type);
+     moveOnCollision  = ItemType.physicsMoveOnCollision(type);
+     applyGravity     = ItemType.applyGravity(type);
+     collidable       = ItemType.isCollidable(type);
   }
 
   var _isCollectable = false;

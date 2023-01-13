@@ -1882,9 +1882,6 @@ abstract class Game with ByteReader {
        gameObject.velocityZ = 0;
        gameObject.type = type;
        gameObject.active = true;
-       gameObject.collidable = ItemType.isCollidable(type);
-       gameObject.physical = ItemType.isPhysical(type);
-       gameObject.moveOnCollision = gameObject.physical;
        return gameObject;
     }
     final instance = GameObject(
