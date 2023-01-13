@@ -616,6 +616,27 @@ class GameState {
     }
   }
 
+  static void spawnParticleBlockSand(double x, double y, double z, [int count = 3]){
+    for (var i = 0; i < count; i++){
+      spawnParticle(
+        type: ParticleType.Block_Sand,
+        x: x,
+        y: y,
+        z: z,
+        angle: randomAngle(),
+        speed: randomBetween(0.5, 1.25),
+        zv: randomBetween(2, 3),
+        weight: 10,
+        duration: 15,
+        scale: 0.6,
+        scaleV: 0,
+        rotation: randomAngle(),
+        bounciness: 0,
+        checkCollision: false,
+      );
+    }
+  }
+
   static void spawnParticleHeadZombie({
     required double x,
     required double y,

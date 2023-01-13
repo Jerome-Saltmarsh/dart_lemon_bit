@@ -251,7 +251,7 @@ class GameEvents {
 
     if (NodeType.isMaterialDirt(nodeType)){
       GameAudio.material_struck_dirt.playXYZ(x, y, z);
-      GameState.spawnParticleBlockBrick(x, y, z);
+      GameState.spawnParticleBlockSand(x, y, z);
     }
   }
 

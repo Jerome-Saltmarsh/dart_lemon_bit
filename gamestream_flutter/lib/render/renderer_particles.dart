@@ -150,6 +150,19 @@ class RendererParticles extends Renderer {
             color: GameState.getV3RenderColor(particle),
           );
           break;
+        case ParticleType.Block_Sand:
+          Engine.renderSprite(
+            image: GameImages.atlas_gameobjects,
+            dstX: particle.renderX,
+            dstY: particle.renderY,
+            srcX: 0,
+            srcY: 112,
+            srcWidth: 8,
+            srcHeight: 8,
+            scale: particle.scale,
+            color: GameState.getV3RenderColor(particle),
+          );
+          break;
         case ParticleType.Fire:
           if (particle.frame > 12 ) {
             return particle.deactivate();

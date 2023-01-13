@@ -1222,6 +1222,23 @@ abstract class Game with ByteReader {
       if (!projectile.active) continue;
       if (!scene.getCollisionAt(projectile.x, projectile.y, projectile.z)) continue;
       deactivateProjectile(projectile);
+
+      final velocityAngle = projectile.velocityAngle;
+      final nodeType = scene.getNodeTypeXYZ(projectile.x, projectile.y, projectile.z);
+
+      if (!NodeType.isRainOrEmpty(nodeType)){
+        for (final player in players) {
+          if (!player.onScreen(projectile.x, projectile.y)) continue;
+          player.writeGameEvent(
+            type: GameEventType.Node_Struck,
+            x: projectile.x,
+            y: projectile.y,
+            z: projectile.z,
+            angle: velocityAngle,
+          );
+          player.writeByte(nodeType);
+        }
+      }
     }
 
     checkProjectileCollision(characters);

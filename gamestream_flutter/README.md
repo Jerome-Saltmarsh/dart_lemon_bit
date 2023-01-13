@@ -92,12 +92,14 @@ ctrl + w:   minimal mode
 [ ] feature node type shot emits particle
 [ ] gunshot in smoke
 [ ] gunshot in particles
+[ ] refactor particles to use src and remove types
 
 [CRITICAL]
 [ ] fix render visibility algorithm
 [ ] fix physics knocked through walls
 
 13.01.2023
+[x] bullet impact nodes cause particles to emit
 [x] feature barrel struck audio
 [x] feature bullet struck audio
 [x] new node type sandbags
