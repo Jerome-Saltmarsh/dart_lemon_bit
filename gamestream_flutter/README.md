@@ -91,7 +91,6 @@ ctrl + w:   minimal mode
 [ ] fix item type colors
 [ ] feature node type shot emits particle
 [ ] gunshot in smoke
-[ ] gunshot in particles
 [ ] refactor particles to use src and remove types
 
 [CRITICAL]

@@ -1313,17 +1313,17 @@ abstract class Game with ByteReader {
            clearCharacterTarget(player);
            return;
         }
-        if (target.collectable || target.interactable){
-           if (getDistanceBetweenV3(player, target) > Interact_Radius){
+        if (target.collectable || target.interactable) {
+           if (getDistanceBetweenV3(player, target) > Interact_Radius) {
              setCharacterStateRunning(player);
              return;
            }
-           if (target.interactable){
+           if (target.interactable) {
              player.setCharacterStateIdle();
              onPlayerInteractedWithGameObject(player, target);
              return;
            }
-           if (target.collectable){
+           if (target.collectable) {
              player.setCharacterStateIdle();
              playerPickup(player, target);
              return;
@@ -1819,8 +1819,9 @@ abstract class Game with ByteReader {
     projectile.x = src.x + getAdjacent(finalAngle, r);
     projectile.y = src.y + getOpposite(finalAngle, r);
     projectile.z = src.z + Character_Gun_Height;
-    projectile.start.x = projectile.x;
-    projectile.start.y = projectile.y;
+    projectile.startX = projectile.x;
+    projectile.startY = projectile.y;
+    projectile.startZ = projectile.z;
     projectile.setVelocity(finalAngle, ProjectileType.getSpeed(projectileType));
     projectile.owner = src;
     projectile.range = range;
@@ -1830,10 +1831,11 @@ abstract class Game with ByteReader {
   }
 
   Projectile getInstanceProjectile() {
-    for (var i = 0; i < projectiles.length; i++) {
-      if (projectiles[i].active) continue;
-      return projectiles[i];
+    for (final projectile in projectiles){
+       if (projectile.active) continue;
+       return projectile;
     }
+
     final projectile = Projectile();
     projectiles.add(projectile);
     return projectile;

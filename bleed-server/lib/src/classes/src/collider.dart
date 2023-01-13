@@ -39,6 +39,9 @@ class Collider extends Position3 {
     this.y = y;
     this.z = z;
     this.radius = radius;
+    startX = x;
+    startY = y;
+    startZ = z;
   }
 
   /// GETTERS

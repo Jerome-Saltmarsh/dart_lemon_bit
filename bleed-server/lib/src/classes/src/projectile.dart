@@ -1,11 +1,8 @@
 
-import 'package:lemon_math/library.dart';
-
 import 'collider.dart';
 import 'position3.dart';
 
 class Projectile extends Collider {
-  final start = Vector2(0, 0);
   var range = 0.0;
   var type = 0; // ProjectileType.dart
   var damage = 0;
@@ -18,7 +15,7 @@ class Projectile extends Collider {
   }
 
   double get distanceTravelled {
-    return getDistance(start);
+    return getDistanceXY(startX, startY);
   }
 
   void setVelocityTowards(Position3 position){
