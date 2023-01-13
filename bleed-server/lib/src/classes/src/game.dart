@@ -862,6 +862,7 @@ abstract class Game with ByteReader {
           target: character,
           srcCharacter: srcCharacter,
           damage: damage,
+          friendlyFire: true,
       );
     }
   }
@@ -1425,6 +1426,7 @@ abstract class Game with ByteReader {
     required int damage,
     Position3? srcPosition,
     double force = 20,
+    bool friendlyFire = false,
   }) {
     assert (target.active);
 
@@ -1441,16 +1443,13 @@ abstract class Game with ByteReader {
         force: force,
     );
 
-    if (target is Character) {
-      if (Collider.onSameTeam(srcPosition, target)) return;
-      if (target.deadOrDying) return;
-    }
-
     // TODO Hack
     if (srcCharacter.characterTypeZombie) {
       dispatchV3(GameEventType.Zombie_Strike, srcCharacter);
     }
     if (target is Character) {
+      if (!friendlyFire && Collider.onSameTeam(srcPosition, target)) return;
+      if (target.deadOrDying) return;
       applyDamageToCharacter(src: srcCharacter, target: target, amount: damage);
     }
   }
