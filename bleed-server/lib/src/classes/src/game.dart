@@ -1523,6 +1523,9 @@ abstract class Game with ByteReader {
        return;
     }
 
+    if (!character.active) return;
+
+
     if (character is! Player){
       character.lookRadian = character.faceAngle;
     }

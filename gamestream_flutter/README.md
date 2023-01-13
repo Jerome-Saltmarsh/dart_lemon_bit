@@ -99,6 +99,7 @@ ctrl + w:   minimal mode
 [ ] fix physics knocked through walls
 
 13.01.2023
+[x] fix ai inactive bug
 [x] toggle map visibility key 
 [x] fix dog render animation
 [x] bullet impact nodes cause particles to emit
