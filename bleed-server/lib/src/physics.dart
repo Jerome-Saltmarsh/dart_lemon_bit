@@ -12,6 +12,7 @@ I? raycastHit<I extends Collider>({
   double targetDistance = 99999999;
   I? target;
   for (var collider in colliders) {
+    if (!collider.active) continue;
     if (!collider.collidable) continue;
     if (collider == character) continue;
     final distance =  getDistanceBetweenV3(character, collider);
@@ -55,6 +56,7 @@ T? sphereCaste<T extends Collider>({
   var closestDistance = 9999999.0;
 
   for (final collider in colliders) {
+    if (!collider.active) continue;
     if (!collider.collidable) continue;
     if (predicate != null && predicate(collider)) continue;
     if (collider.bottom < top) continue;

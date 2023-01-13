@@ -1,7 +1,6 @@
 import 'package:bleed_server/gamestream.dart';
 
 class GameObject extends Collider {
-  var active = true;
   var _type = 0;
   var quantity = 0;
   var interactable = false;

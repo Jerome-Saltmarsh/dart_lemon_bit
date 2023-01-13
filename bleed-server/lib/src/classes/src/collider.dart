@@ -6,6 +6,7 @@ import 'package:lemon_math/library.dart';
 
 
 class Collider extends Position3 {
+  var active = true;
   var mass = 1.0;
   var velocityX = 0.0;
   var velocityY = 0.0;
@@ -43,6 +44,7 @@ class Collider extends Position3 {
 
   /// GETTERS
   /// Expensive Operation
+  bool get inactive => !active;
   double get velocitySpeed => getHypotenuse(velocityX, velocityY);
   double get velocityAngle => getAngle(velocityX, velocityY);
   double get left => x - radius;

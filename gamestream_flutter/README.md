@@ -93,11 +93,11 @@ ctrl + w:   minimal mode
 [ ] feature explosive barrels explode when shot
 
 [CRITICAL]
-[ ] feature gameobjects fall into water
 [ ] fix render visibility algorithm
 [ ] fix physics knocked through walls
 
 13.01.2023
+[x] feature gameobjects fall into water
 [x] fix flaming barrel collision physics
 [x] fix flaming barrel stops emitting light when offscreen
 [x] optimize client do not emit offscreen light sources

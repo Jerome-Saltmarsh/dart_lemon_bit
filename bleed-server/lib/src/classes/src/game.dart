@@ -67,9 +67,9 @@ abstract class Game with ByteReader {
   /// @override
   void customOnPlayerDisconnected(Player player) { }
   /// @override
-  void customOnGameObjectDeactivated(GameObject gameObject){ }
+  void customOnColliderDeactivated(Collider collider){ }
   /// @override
-  void customOnGameObjectActivated(GameObject gameObject){ }
+  void customOnColliderActivated(Collider collider){ }
   /// @override
   void customOnCharacterSpawned(Character character) { }
   /// @override
@@ -444,7 +444,7 @@ abstract class Game with ByteReader {
         ..damage = 15;
 
     performJob(50, (){
-      deactivateGameObject(instance);
+      deactivateCollider(instance);
       createExplosion(instance);
     });
   }
@@ -658,18 +658,30 @@ abstract class Game with ByteReader {
       );
   }
 
-  void activateGameObject(GameObject gameObject){
-    if (gameObject.active) return;
-    gameObject.active = true;
-    gameObject.collidable = ItemType.isCollidable(gameObject.type);
-    customOnGameObjectActivated(gameObject);
+  void activateCollider(Collider collider){
+    if (collider.active) return;
+    collider.active = true;
+    customOnColliderActivated(collider);
   }
 
-  void deactivateGameObject(GameObject gameObject){
-     if (!gameObject.active) return;
-     gameObject.active = false;
-     gameObject.collidable = false;
-     customOnGameObjectDeactivated(gameObject);
+  void deactivateCollider(Collider collider){
+     if (!collider.active) return;
+     collider.active = false;
+     collider.velocityX = 0;
+     collider.velocityY = 0;
+     collider.velocityZ = 0;
+
+     for (final character in characters) {
+       if (character.target != collider) continue;
+       clearCharacterTarget(character);
+     }
+
+     for (final projectile in projectiles) {
+       if (projectile.target != collider) continue;
+       projectile.target = null;
+     }
+
+     customOnColliderDeactivated(collider);
   }
 
   void onGridChanged() {
@@ -804,7 +816,7 @@ abstract class Game with ByteReader {
     if (!gameObject.active) return;
 
     if (gameObject.z < 0) {
-      deactivateGameObject(gameObject);
+      deactivateCollider(gameObject);
       return;
     }
 
@@ -856,9 +868,9 @@ abstract class Game with ByteReader {
   }
 
   void revive(Player player) {
+    activateCollider(player);
     player.setCharacterStateSpawning();
     player.health = player.maxHealth;
-    player.collidable = true;
     clearCharacterTarget(player);
     player.writePlayerMoved();
     player.writePlayerAlive();
@@ -926,14 +938,6 @@ abstract class Game with ByteReader {
     }
   }
 
-  /// un@override
-  void onAIKilled(AI ai){
-    ai.respawn = aiRespawnDuration;
-    clearCharacterTarget(ai);
-    ai.clearDest();
-    ai.clearPath();
-  }
-
   /// Can be safely overridden to customize behavior
   void onAIDamagedBy(AI ai, dynamic src){
     final targetAITarget = ai.target;
@@ -984,9 +988,11 @@ abstract class Game with ByteReader {
     final numberOfCollidersMinusOne = numberOfColliders - 1;
     for (var i = 0; i < numberOfCollidersMinusOne; i++) {
       final colliderI = colliders[i];
+      if (!colliderI.active) continue;
       if (!colliderI.collidable) continue;
       for (var j = i + 1; j < numberOfColliders; j++) {
         final colliderJ = colliders[j];
+        if (!colliderJ.active) continue;
         if (!colliderJ.collidable) continue;
         if (colliderJ.top > colliderI.bottom) break;
         if (colliderJ.left > colliderI.right) continue;
@@ -1005,9 +1011,11 @@ abstract class Game with ByteReader {
     final bLength = collidersB.length;
     for (var indexA = 0; indexA < aLength; indexA++) {
       final colliderA = collidersA[indexA];
+      if (!colliderA.active) continue;
       if (!colliderA.collidable) continue;
       for (var indexB = 0; indexB < bLength; indexB++) {
         final colliderB = collidersB[indexB];
+        if (!colliderB.active) continue;
         if (!colliderB.collidable) continue;
         if (colliderA.bottom < colliderB.top) continue;
         if (colliderA.top > colliderB.bottom) continue;
@@ -1021,6 +1029,8 @@ abstract class Game with ByteReader {
   }
 
   void internalOnCollisionBetweenColliders(Collider a, Collider b){
+    assert (a.active);
+    assert (b.active);
     assert (a.collidable);
     assert (b.collidable);
     assert (a != b);
@@ -1112,7 +1122,6 @@ abstract class Game with ByteReader {
     if (character.deadOrBusy) return;
     character.assignWeaponStateChanging();
     dispatchV3(GameEventType.Character_Changing, character);
-    // character.setCharacterState(value: CharacterState.Changing, duration: 20);
   }
 
   void setCharacterStateDead(Character character) {
@@ -1123,9 +1132,7 @@ abstract class Game with ByteReader {
     character.state = CharacterState.Dead;
     character.stateDuration = 0;
     character.animationFrame = 0;
-    character.collidable = false;
-    character.velocityX = 0;
-    character.velocityY = 0;
+    deactivateCollider(character);
     clearCharacterTarget(character);
 
     if (character is AI){
@@ -1135,16 +1142,6 @@ abstract class Game with ByteReader {
     if (character is Player) {
        character.interactMode = InteractMode.None;
        character.writePlayerAlive();
-    }
-
-    for (final otherCharacter in characters) {
-      if (otherCharacter.target != character) continue;
-      clearCharacterTarget(otherCharacter);
-    }
-
-    for (final projectile in projectiles) {
-      if (projectile.target != character) continue;
-      projectile.target = null;
     }
   }
 
@@ -1282,7 +1279,7 @@ abstract class Game with ByteReader {
            }
         }
       } else {
-        if (!target.collidable) {
+        if (!target.active || !target.collidable) {
           clearCharacterTarget(player);
           return;
         }
@@ -1349,6 +1346,7 @@ abstract class Game with ByteReader {
       assert (target == null);
       for (var j = 0; j < colliders.length; j++) {
         final collider = colliders[j];
+        if (!collider.active) continue;
         if (!collider.collidable) continue;
         if (!collider.physical) continue;
         final radius = collider.radius + projectile.radius;
@@ -2326,7 +2324,7 @@ abstract class Game with ByteReader {
         if (player.inventoryQuantity[i] + quantityRemaining < maxQuantity){
           player.inventoryQuantity[i] += quantityRemaining;
           player.inventoryDirty = true;
-          deactivateGameObject(target);
+          deactivateCollider(target);
           player.writePlayerEvent(PlayerEvent.Item_Picked_Up);
           clearCharacterTarget(player);
           return;
@@ -2345,7 +2343,7 @@ abstract class Game with ByteReader {
       player.inventory[emptyInventoryIndex] = target.type;
       player.inventoryQuantity[emptyInventoryIndex] = min(quantityRemaining, maxQuantity);
       player.inventoryDirty = true;
-      deactivateGameObject(target);
+      deactivateCollider(target);
       player.writePlayerEvent(PlayerEvent.Item_Picked_Up);
       clearCharacterTarget(player);
     } else {

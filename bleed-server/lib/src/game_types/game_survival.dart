@@ -144,7 +144,7 @@ class GameSurvival extends Game {
   void customOnHitApplied(Character src, Collider target) {
      if (target is GameObject) {
         if (target.type == ItemType.GameObjects_Barrel) {
-           deactivateGameObject(target);
+           deactivateCollider(target);
            spawnRandomGameObjectAtPosition(target);
            final x = target.x;
            final y = target.y;
@@ -175,12 +175,14 @@ class GameSurvival extends Game {
   }
 
   @override
-  void customOnGameObjectDeactivated(GameObject gameObject) {
-    if (gameObject.type == ItemType.GameObjects_Barrel_Flaming){
-      gameObject.x = gameObject.startX;
-      gameObject.y = gameObject.startY;
-      gameObject.z = gameObject.startZ;
-      activateGameObject(gameObject);
+  void customOnColliderDeactivated(Collider collider) {
+    if (collider is GameObject){
+      if (collider.type == ItemType.GameObjects_Barrel_Flaming){
+        collider.x = collider.startX;
+        collider.y = collider.startY;
+        collider.z = collider.startZ;
+        activateCollider(collider);
+      }
     }
   }
 }

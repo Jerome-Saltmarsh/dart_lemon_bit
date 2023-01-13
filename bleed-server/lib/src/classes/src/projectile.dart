@@ -10,11 +10,8 @@ class Projectile extends Collider {
   var type = 0; // ProjectileType.dart
   var damage = 0;
   Position3? target = null;
-  bool active = true;
 
   Projectile() : super(x: 0, y: 0, z: 0, radius: 10);
-
-  bool get inactive => !active;
 
   bool get overRange {
     return distanceTravelled > range;
@@ -22,10 +19,6 @@ class Projectile extends Collider {
 
   double get distanceTravelled {
     return getDistance(start);
-  }
-
-  void deactivate(){
-    active = false;
   }
 
   void setVelocityTowards(Position3 position){
