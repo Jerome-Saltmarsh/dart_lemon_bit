@@ -93,6 +93,8 @@ class RendererCharacters extends Renderer {
 
 
   void renderCharacterDog(Character character){
+    const Src_Size = 80.0;
+    const Anchor_Y = 0.66;
 
     if (character.state == CharacterState.Idle){
       Engine.renderSprite(
@@ -100,10 +102,10 @@ class RendererCharacters extends Renderer {
         dstX: character.renderX,
         dstY: character.renderY,
         srcX: 0,
-        srcY: 64.0 * character.direction,
-        srcWidth: 64,
-        srcHeight: 64,
-        anchorY: 0.66,
+        srcY: Src_Size * character.direction,
+        srcWidth: Src_Size,
+        srcHeight: Src_Size,
+        anchorY: Anchor_Y,
         scale: 1,
         color: character.color,
       );
@@ -117,11 +119,11 @@ class RendererCharacters extends Renderer {
         image: GameImages.character_dog,
         dstX: character.renderX,
         dstY: character.renderY,
-        srcX: frame * 64.0,
-        srcY: 64.0 * character.direction,
-        srcWidth: 64,
-        srcHeight: 64,
-        anchorY: 0.66,
+        srcX: frame * Src_Size,
+        srcY: Src_Size * character.direction,
+        srcWidth: Src_Size,
+        srcHeight: Src_Size,
+        anchorY: Anchor_Y,
         scale: 1,
         color: character.color,
       );
@@ -140,11 +142,11 @@ class RendererCharacters extends Renderer {
         image: GameImages.character_dog,
         dstX: character.renderX,
         dstY: character.renderY,
-        srcX: frame * 64.0,
-        srcY: 64.0 * character.direction,
-        srcWidth: 64,
-        srcHeight: 64,
-        anchorY: 0.66,
+        srcX: frame * Src_Size,
+        srcY: Src_Size * character.direction,
+        srcWidth: Src_Size,
+        srcHeight: Src_Size,
+        anchorY: Anchor_Y,
         scale: 1,
         color: character.color,
       );
@@ -156,11 +158,11 @@ class RendererCharacters extends Renderer {
         image: GameImages.character_dog,
         dstX: character.renderX,
         dstY: character.renderY,
-        srcX: 64.0,
-        srcY: 64.0 * character.direction,
-        srcWidth: 64,
-        srcHeight: 64,
-        anchorY: 0.66,
+        srcX: Src_Size,
+        srcY: Src_Size * character.direction,
+        srcWidth: Src_Size,
+        srcHeight: Src_Size,
+        anchorY: Anchor_Y,
         scale: 1,
         color: character.color,
       );
