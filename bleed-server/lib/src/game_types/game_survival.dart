@@ -50,7 +50,16 @@ class GameSurvival extends Game {
     player.inventoryAdd(itemType: ItemType.Weapon_Melee_Staff);
     player.inventoryAdd(itemType: ItemType.Consumables_Potion_Blue);
     player.inventoryAdd(itemType: ItemType.Consumables_Potion_Red);
-    player.bodyType = getRandomStartingShirt();
+    player.inventoryAdd(itemType: ItemType.Body_Swat);
+    player.inventoryAdd(itemType: ItemType.Body_Tunic_Padded);
+    player.inventoryAdd(itemType: ItemType.Body_Shirt_Cyan);
+    player.inventoryAdd(itemType: ItemType.Body_Swat);
+    player.inventoryAdd(itemType: ItemType.Body_Shirt_Blue);
+    player.inventoryAdd(itemType: ItemType.Head_Swat);
+    player.inventoryAdd(itemType: ItemType.Head_Wizards_Hat);
+    player.inventoryAdd(itemType: ItemType.Head_Rogues_Hood);
+    player.inventoryAdd(itemType: ItemType.Head_Steel_Helm);
+    player.bodyType = ItemType.Body_Tunic_Padded;
     player.legsType = getRandomStartingLegs();
     player.headType = ItemType.Empty;
     player.belt1_itemType = ItemType.Weapon_Handgun_Flint_Lock_Old;
@@ -173,6 +182,25 @@ class GameSurvival extends Game {
         ItemType.Empty,
         ItemType.Weapon_Handgun_Glock,
         ItemType.Weapon_Melee_Crowbar,
+      ]);
+      ai.headType = randomItem(const[
+        ItemType.Empty,
+        ItemType.Head_Rogues_Hood,
+        ItemType.Head_Wizards_Hat,
+        ItemType.Head_Swat,
+      ]);
+      ai.bodyType = randomItem(const[
+        ItemType.Empty,
+        ItemType.Body_Shirt_Blue,
+        ItemType.Body_Shirt_Cyan,
+        ItemType.Body_Tunic_Padded,
+        ItemType.Body_Swat,
+      ]);
+      ai.legsType = randomItem(const[
+        ItemType.Legs_Green,
+        ItemType.Legs_Red,
+        ItemType.Legs_Swat,
+        ItemType.Legs_Blue,
       ]);
     }
   }
