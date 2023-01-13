@@ -36,7 +36,10 @@ class GameUI {
             right: 0,
             child: buildRowMainMenu()
         ),
-        Positioned(child: buildGeneratedMiniMap(), top: 0, left: 0),
+
+        buildWatchBool(ClientState.Map_Visible, (){
+          return Positioned(child: buildGeneratedMiniMap(), top: 0, left: 0);
+        }),
         buildWatchBool(GameUI.mapVisible, buildMiniMap),
         WatchBuilder(ClientState.edit, buildPlayMode),
         WatchBuilder(GameIO.inputMode, buildStackInputMode),

@@ -108,6 +108,10 @@ class ClientEvents {
       GameActions.messageBoxShow();
       return;
     }
+    if (key == ClientConstants.Key_Toggle_Map) {
+      ClientState.Map_Visible.toggle();
+      return;
+    }
     if (key == ClientConstants.Key_Auto_Attack) {
       GameActions.attackAuto();
       return;
