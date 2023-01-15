@@ -1,25 +1,22 @@
 
+import 'package:bleed_server/src/game_physics.dart';
+
 import 'collider.dart';
 import 'position3.dart';
 
 class Projectile extends Collider {
   var range = 0.0;
   var type = 0; // ProjectileType.dart
-  var damage = 0;
   Position3? target = null;
 
-  Projectile() : super(x: 0, y: 0, z: 0, radius: 10);
+  Projectile() : super(x: 0, y: 0, z: 0, radius: GamePhysics.Projectile_Radius);
 
-  bool get overRange {
-    return distanceTravelled > range;
-  }
+  bool get overRange => distanceTravelled > range;
 
-  double get distanceTravelled {
-    return getDistanceXY(startX, startY);
-  }
+  double get distanceTravelled => getDistanceXY(startX, startY);
 
-  void setVelocityTowards(Position3 position){
-    z += (position.z - z) * 0.05;
+  void reduceDistanceZFrom(Position3 position){
+    z += (position.z - z) * GamePhysics.Projectile_Z_Velocity;
   }
 }
 

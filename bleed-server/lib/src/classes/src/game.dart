@@ -1212,7 +1212,7 @@ abstract class Game with ByteReader {
       projectile.y += projectile.velocityY;
       final target = projectile.target;
       if (target != null) {
-        projectile.setVelocityTowards(target);
+        projectile.reduceDistanceZFrom(target);
       } else if (projectile.overRange) {
         deactivateProjectile(projectile);
       }

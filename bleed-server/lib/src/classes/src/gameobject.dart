@@ -4,20 +4,18 @@ class GameObject extends Collider {
   var _type = 0;
   var quantity = 0;
   var interactable = false;
+  var collectable = false;
 
   int get type => _type;
-  bool get collectable => _isCollectable;
 
-  set type(int value){
+  set type(int value) {
      _type = value;
-     _isCollectable   = ItemType.isCollectable(type);
+     collectable      = ItemType.isCollectable(type);
      physical         = ItemType.isPhysical(type);
      moveOnCollision  = ItemType.physicsMoveOnCollision(type);
      applyGravity     = ItemType.applyGravity(type);
      collidable       = ItemType.isCollidable(type);
   }
-
-  var _isCollectable = false;
 
   GameObject({
     required double x,

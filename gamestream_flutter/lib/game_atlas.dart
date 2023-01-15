@@ -18,6 +18,7 @@ class AtlasItems {
         ItemType.GameObjects_Grenade: 0,
         ItemType.GameObjects_Crystal_Small_Red: 32,
         ItemType.GameObjects_Crystal_Small_Blue: 32,
+        ItemType.GameObjects_Toilet: 242,
         ItemType.Trinket_Ring_of_Health: 256,
         ItemType.Trinket_Ring_of_Damage: 288,
         ItemType.Empty: 224,
@@ -96,6 +97,7 @@ class AtlasItems {
         ItemType.GameObjects_Grenade: 48,
         ItemType.GameObjects_Crystal_Small_Blue: 119,
         ItemType.GameObjects_Crystal_Small_Red: 151,
+        ItemType.GameObjects_Toilet: 0,
         ItemType.Trinket_Ring_of_Health: 32,
         ItemType.Trinket_Ring_of_Damage: 32,
         ItemType.Weapon_Ranged_Shotgun: 32,
@@ -167,14 +169,14 @@ class AtlasItems {
         ItemType.GameObjects_Tavern_Sign: 19,
         ItemType.GameObjects_Candle: 3,
         ItemType.GameObjects_Grenade: 8,
+        ItemType.GameObjects_Toilet: 66,
         ItemType.Weapon_Rifle_Sniper: 48,
         ItemType.Weapon_Flamethrower: 64,
         ItemType.Weapon_Special_Bazooka: 48,
         ItemType.Weapon_Special_Minigun: 35,
       }[itemType] ?? size;
 
-  static double getSrcHeight(int itemType) =>
-      const <int, double>{
+  static double getSrcHeight(int itemType) => const <int, double>{
         ItemType.GameObjects_Car: 105,
         ItemType.GameObjects_Crystal: 45,
         ItemType.GameObjects_Barrel: 40,
@@ -187,15 +189,17 @@ class AtlasItems {
         ItemType.GameObjects_Grenade: 8,
         ItemType.GameObjects_Crystal_Small_Blue: 18,
         ItemType.GameObjects_Crystal_Small_Red: 18,
+        ItemType.GameObjects_Toilet: 88,
         ItemType.Weapon_Rifle_Sniper: 16,
         ItemType.Weapon_Special_Bazooka: 16,
         ItemType.Weapon_Special_Minigun: 12,
-      }[itemType] ?? size;
+  }[itemType] ?? size;
 
   static double getSrcScale(int itemType) => const <int, double>{
         ItemType.GameObjects_Barrel_Explosive: 0.75,
         ItemType.GameObjects_Barrel_Purple: 0.75,
         ItemType.GameObjects_Barrel_Flaming: 0.75,
+        ItemType.GameObjects_Toilet: 0.5,
   }[itemType] ?? 1.0;
 
   static double getAnchorY(int itemType) => const <int, double>{

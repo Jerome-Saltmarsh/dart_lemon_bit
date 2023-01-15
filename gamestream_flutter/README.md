@@ -97,6 +97,15 @@ ctrl + w:   minimal mode
 [ ] fix render visibility algorithm
 [ ] fix physics knocked through walls
 
+16.01.2023
+[x] use ease function ease out quad to determine lighting interpolation
+
+15.01.2023
+[x] rest
+
+14.01.2023
+[x] show live demo to Jack and friends
+
 13.01.2023
 [x] fix ai inactive bug
 [x] toggle map visibility key 

@@ -4,23 +4,17 @@ class GameLighting {
 
   static double getRandomHue() => randomBetween(0, 360);
 
-  static const interpolations = [
-    0.00,
-    0.25,
-    0.40,
-    0.60,
-    0.80,
-    0.95,
-    1.00,
+  static var interpolations = [
+    0,
+    0.26530612244897944,
+    0.4897959183673469,
+    0.6734693877551021,
+    0.8163265306122449,
+    0.9183673469387755,
+    0.9795918367346939,
   ];
 
-
   static double linerInterpolation(double a, double b, double t) {
-    // if (a == b || (a.isNaN == true) && (b.isNaN == true))
-    //   return a;
-    // assert(a.isFinite, 'Cannot interpolate between finite and non-finite values');
-    // assert(b.isFinite, 'Cannot interpolate between finite and non-finite values');
-    // assert(t.isFinite, 't must be finite when interpolating between values');
     return a * (1.0 - t) + b * t;
   }
 

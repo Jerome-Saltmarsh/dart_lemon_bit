@@ -8,16 +8,11 @@ import 'package:bleed_server/gamestream.dart';
 class Position3 with Position {
   var z = 0.0;
 
-  // TODO remove
   int get indexRow => x ~/ Node_Size;
-  // TODO remove
   int get indexColumn => y ~/ Node_Size;
   int get indexZ => z ~/ Node_Size_Half;
-// TODO remove
   double get renderX => (x - y) * 0.5;
-  // TODO remove
   double get renderY => ((y + x) * 0.5) - z;
-  // TODO remove
   double get order => (y + x);
 
   Position3 set({double? x, double? y, double? z}){

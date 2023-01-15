@@ -82,6 +82,7 @@ class ItemType {
   static const GameObjects_Barrel_Explosive     = Index_GameObjects + 18;
   static const GameObjects_Barrel_Purple        = Index_GameObjects + 19;
   static const GameObjects_Barrel_Flaming       = Index_GameObjects + 20;
+  static const GameObjects_Toilet               = Index_GameObjects + 21;
 
   static const Resource_Wood = Index_Resources + 5;
   static const Resource_Stone = Index_Resources + 6;
@@ -610,6 +611,7 @@ class ItemType {
      GameObjects_Barrel_Explosive: "Explosive Barrel",
      GameObjects_Barrel_Purple: "Purple Barrel",
      GameObjects_Barrel_Flaming: "Flaming Barrel",
+     GameObjects_Toilet: "Toilet",
   }[value] ?? "item-type-unknown($value)";
 
   static int getMaxQuantity(int itemType) => const {
@@ -720,6 +722,7 @@ class ItemType {
      GameObjects_Tavern_Sign,
      GameObjects_Crystal_Small_Blue,
      GameObjects_Crystal_Small_Red,
+     GameObjects_Toilet,
   ];
 
   static bool isTypeBarrel(int type)=> const [
