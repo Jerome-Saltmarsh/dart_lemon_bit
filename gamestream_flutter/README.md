@@ -98,6 +98,7 @@ ctrl + w:   minimal mode
 [ ] fix physics knocked through walls
 
 16.01.2023
+[x] make respawn button more obvious
 [x] disable auto connect
 [x] optimize hsv to color 
 [x] use ease function ease out quad to determine lighting interpolation

@@ -26,6 +26,7 @@ class GameUI {
   static final mapVisible = Watch(false);
   static final timeVisible = Watch(true);
 
+
   static Widget buildUI() => StackFullscreen(children: [
         buildWatchBool(ClientState.triggerAlarmNoMessageReceivedFromServer,
             buildDialogFramesSinceUpdate),
@@ -712,7 +713,7 @@ class GameUI {
   static Widget buildPositionedContainerRespawn(){
     const width = 200;
     return Positioned(
-      bottom: 150,
+      top: 150,
       child: Container(
         width: Engine.screen.width,
         alignment: Alignment.center,
@@ -721,13 +722,13 @@ class GameUI {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              text('You Died'),
+              text('YOU DIED', size: 30),
               height8,
               container(
                 alignment: Alignment.center,
-                child: "Respawn",
+                child: "RESPAWN",
                 action: GameNetwork.sendClientRequestRespawn,
-                color: greyDark,
+                color: GameColors.Red_3,
                 width: width * Engine.GoldenRatio_0_618,
               )
             ],

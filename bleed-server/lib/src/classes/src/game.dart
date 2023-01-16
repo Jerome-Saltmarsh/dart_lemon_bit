@@ -1525,8 +1525,7 @@ abstract class Game with ByteReader {
 
     if (!character.active) return;
 
-
-    if (character is! Player){
+    if (character is! Player) {
       character.lookRadian = character.faceAngle;
     }
 
