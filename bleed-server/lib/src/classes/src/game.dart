@@ -12,20 +12,35 @@ import '../../io/write_scene_to_file.dart';
 import '../../maths/get_distance_between_v3.dart';
 
 
-class GameScript with ByteWriter {
-  static const Action_Deactivate = 0;
-  static const Action_Explode = 1;
+class GameScript extends ByteWriter {
+  var timer = 0;
+  var script = Uint8List(0);
 
-  static const If_Within_Radius = 2;
+  void writeDeactivate(int target){
+    writeUInt8(ScriptType.Action_Deactivate);
+    writeUInt8(target);
+  }
 
-   var timer = 0;
-
-   void writeDeactivate(int target){
-     writeUInt8(Action_Deactivate);
-     writeUInt8(target);
-   }
+  void writeSpawnGameObject({
+    required int type,
+    required double x,
+    required double y,
+    required double z,
+  }){
+    writeUInt8(ScriptType.Spawn_GameObject);
+    writeUInt16(type);
+    writeUInt16(x.toInt());
+    writeUInt16(y.toInt());
+    writeUInt16(z.toInt());
+  }
 }
 
+class ScriptType {
+  static const Action_Deactivate = 0;
+  static const Action_Explode = 1;
+  static const If_Within_Radius = 2;
+  static const Spawn_GameObject = 3;
+}
 
 class GameJob {
   int timer;
@@ -34,7 +49,7 @@ class GameJob {
   GameJob(this.timer, this.action);
 }
 
-abstract class Game with ByteReader {
+abstract class Game {
 
   static const Interact_Radius = 100.0;
   var aiRespawnDuration = framesPerSecond * 60 * 2; // 5 minutes
@@ -47,11 +62,25 @@ abstract class Game with ByteReader {
   final projectiles = <Projectile>[];
   final jobs = <GameJob>[];
 
-  // final scripts = <GameScript>[];
+  final scripts = <GameScript>[];
+
+  final scriptReader = ByteReader();
 
   DarkAgeEnvironment environment;
   DarkAgeTime time;
 
+
+  GameScript getNewGameScript({required int timer}){
+     for (final script in scripts) {
+       if (script.timer > 0) continue;
+       script.timer = timer;
+       return script;
+     }
+     final instance = GameScript();
+     scripts.add(instance);
+     instance.timer = timer;
+     return instance;
+  }
 
 
   /// In seconds
@@ -717,6 +746,19 @@ abstract class Game with ByteReader {
     }
   }
 
+  void dispatchGameEventGameObjectDestroyed(GameObject gameObject) {
+    for (final player in players) {
+      player.writeGameEvent(
+        type: GameEventType.Character_Death,
+        x: gameObject.x,
+        y: gameObject.y,
+        z: gameObject.z,
+        angle: gameObject.velocityAngle,
+      );
+      player.writeUInt16(gameObject.type);
+    }
+  }
+
   void removeFromEngine() {
     print("removeFromEngine()");
     engine.games.remove(this);
@@ -772,20 +814,33 @@ abstract class Game with ByteReader {
       job.action();
     }
 
-    // for (final script in scripts){
-    //   if (script.timer <= 0) continue;
-    //   script.timer--;
-    //   if (script.timer > 0) continue;
-    //   executeGameScript(script.compile());
-    // }
+    for (final script in scripts){
+      if (script.timer <= 0) continue;
+      script.timer--;
+      if (script.timer > 0) continue;
+      readGameScript(script.compile());
+    }
   }
 
-  void executeGameScript(Uint8List script){
-    values = script;
-    index = 0;
-    while (index < values.length){
-      switch (readUInt8()){
-        case GameScript.Action_Deactivate:
+  void readGameScript(Uint8List script){
+    scriptReader.values = script;
+    scriptReader.index = 0;
+    final length = script.length;
+    while (scriptReader.index < length){
+      switch (scriptReader.readUInt8()){
+        case ScriptType.Action_Deactivate:
+          break;
+        case ScriptType.Spawn_GameObject:
+          final type = scriptReader.readUInt16();
+          final x = scriptReader.readUInt16();
+          final y = scriptReader.readUInt16();
+          final z = scriptReader.readUInt16();
+          spawnGameObject(
+              x: x.toDouble(),
+              y: y.toDouble(),
+              z: z.toDouble(),
+              type: type,
+          );
           break;
 
       }

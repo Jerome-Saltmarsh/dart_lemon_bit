@@ -34,8 +34,7 @@ class GameWebsite {
   }
 
    static void renderCanvas(Canvas canvas, Size size){
-      final centerX = size.width * 0.5;
-
+      // final centerX = size.width * 0.5;
       // Engine.renderSprite(
       //   image: GameImages.atlas_nodes,
       //   srcX: 0,

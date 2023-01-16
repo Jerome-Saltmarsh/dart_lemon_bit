@@ -155,12 +155,27 @@ class GameSurvival extends Game {
     Position3? srcPosition,
     double force = 20,
   }) {
-    if (target is GameObject && srcPosition is Projectile) {
-      if (target.type == ItemType.GameObjects_Barrel_Explosive) {
+    if (target is GameObject) {
+      if (srcPosition is Projectile) {
+        if (target.type == ItemType.GameObjects_Barrel_Explosive) {
+          deactivateCollider(target);
+          final owner = srcPosition.owner;
+          if (owner == null) return;
+          createExplosion(target: target, srcCharacter: owner);
+        }
+      }
+
+      if (target.type == ItemType.GameObjects_Toilet) {
         deactivateCollider(target);
-        final owner = srcPosition.owner;
-        if (owner == null) return;
-        createExplosion(target: target, srcCharacter: owner);
+        dispatchGameEventGameObjectDestroyed(target);
+
+        getNewGameScript(timer: 200)
+        ..writeSpawnGameObject(
+            type: target.type,
+            x: target.x,
+            y: target.y,
+            z: target.z,
+        );
       }
     }
   }

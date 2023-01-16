@@ -211,7 +211,8 @@ class GameNetwork {
         Engine.drawCanvasAfterUpdate = true;
         Engine.cursorType.value = CursorType.Basic;
         Engine.drawCanvasAfterUpdate = true;
-        Engine.onDrawCanvas = GameWebsite.renderCanvas;
+        // Engine.onDrawCanvas = GameWebsite.renderCanvas;
+        Engine.onDrawCanvas = null;
         Engine.onUpdate = GameWebsite.update;
         Engine.fullScreenExit();
         GameState.clear();

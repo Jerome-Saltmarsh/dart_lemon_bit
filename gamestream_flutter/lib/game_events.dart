@@ -223,10 +223,11 @@ class GameEvents {
         return onGameEventCharacterHurt(characterType, x, y, z, angle);
 
       case GameEventType.Game_Object_Destroyed:
-        final type = serverResponseReader.readByte();
+        final type = serverResponseReader.readUInt16();
         return onGameEventGameObjectDestroyed(x, y, z, angle, type);
     }
   }
+
 
   static void onNodeSet(double x, double y, double z) {
     GameAudio.hover_over_button_sound_43.playXYZ(x, y, z);
