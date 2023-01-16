@@ -19,6 +19,7 @@ class AtlasItems {
         ItemType.GameObjects_Crystal_Small_Red: 32,
         ItemType.GameObjects_Crystal_Small_Blue: 32,
         ItemType.GameObjects_Toilet: 309,
+        ItemType.GameObjects_Crate_Wooden: 361,
         ItemType.Trinket_Ring_of_Health: 256,
         ItemType.Trinket_Ring_of_Damage: 288,
         ItemType.Empty: 224,
@@ -98,6 +99,7 @@ class AtlasItems {
         ItemType.GameObjects_Crystal_Small_Blue: 119,
         ItemType.GameObjects_Crystal_Small_Red: 151,
         ItemType.GameObjects_Toilet: 0,
+        ItemType.GameObjects_Crate_Wooden: 0,
         ItemType.Trinket_Ring_of_Health: 32,
         ItemType.Trinket_Ring_of_Damage: 32,
         ItemType.Weapon_Ranged_Shotgun: 32,
@@ -170,6 +172,7 @@ class AtlasItems {
         ItemType.GameObjects_Candle: 3,
         ItemType.GameObjects_Grenade: 8,
         ItemType.GameObjects_Toilet: 51,
+        ItemType.GameObjects_Crate_Wooden: 48,
         ItemType.Weapon_Rifle_Sniper: 48,
         ItemType.Weapon_Flamethrower: 64,
         ItemType.Weapon_Special_Bazooka: 48,
@@ -183,6 +186,7 @@ class AtlasItems {
         ItemType.GameObjects_Barrel_Explosive: 63,
         ItemType.GameObjects_Barrel_Purple: 63,
         ItemType.GameObjects_Barrel_Flaming: 70,
+        ItemType.GameObjects_Crate_Wooden: 72,
         ItemType.GameObjects_Candle: 10,
         ItemType.GameObjects_Cup: 11,
         ItemType.GameObjects_Tavern_Sign: 39,
@@ -200,12 +204,14 @@ class AtlasItems {
         ItemType.GameObjects_Barrel_Purple: 0.75,
         ItemType.GameObjects_Barrel_Flaming: 0.75,
         ItemType.GameObjects_Toilet: 0.5,
+        ItemType.GameObjects_Crate_Wooden: 0.75,
   }[itemType] ?? 1.0;
 
   static double getAnchorY(int itemType) => const <int, double>{
     ItemType.GameObjects_Barrel_Explosive: 0.75,
     ItemType.GameObjects_Barrel_Purple: 0.75,
     ItemType.GameObjects_Barrel_Flaming: 0.75,
+    ItemType.GameObjects_Crate_Wooden: 0.61,
   }[itemType] ?? 0.5;
 }
 

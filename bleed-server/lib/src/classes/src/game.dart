@@ -842,6 +842,8 @@ abstract class Game {
               type: type,
           );
           break;
+        default:
+          return;
 
       }
     }

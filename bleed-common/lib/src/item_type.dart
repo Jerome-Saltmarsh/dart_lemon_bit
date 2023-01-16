@@ -83,6 +83,7 @@ class ItemType {
   static const GameObjects_Barrel_Purple        = Index_GameObjects + 19;
   static const GameObjects_Barrel_Flaming       = Index_GameObjects + 20;
   static const GameObjects_Toilet               = Index_GameObjects + 21;
+  static const GameObjects_Crate_Wooden         = Index_GameObjects + 22;
 
   static const Resource_Wood = Index_Resources + 5;
   static const Resource_Stone = Index_Resources + 6;
@@ -220,6 +221,7 @@ class ItemType {
       value == ItemType.GameObjects_Barrel_Explosive  ||
       value == ItemType.GameObjects_Barrel_Flaming    ||
       value == ItemType.GameObjects_Barrel            ||
+      value == ItemType.GameObjects_Crate_Wooden      ||
       value == ItemType.GameObjects_Tavern_Sign        ;
 
   static bool isPhysical(int value) =>
@@ -227,6 +229,7 @@ class ItemType {
     value == ItemType.GameObjects_Barrel_Explosive  ||
     value == ItemType.GameObjects_Barrel_Flaming    ||
     value == ItemType.GameObjects_Barrel            ||
+    value == ItemType.GameObjects_Crate_Wooden      ||
     value == ItemType.GameObjects_Tavern_Sign        ;
 
   static bool applyGravity(int value) =>
@@ -612,6 +615,7 @@ class ItemType {
      GameObjects_Barrel_Purple: "Purple Barrel",
      GameObjects_Barrel_Flaming: "Flaming Barrel",
      GameObjects_Toilet: "Toilet",
+     GameObjects_Crate_Wooden: "Wooden Crate",
   }[value] ?? "item-type-unknown($value)";
 
   static int getMaxQuantity(int itemType) => const {
@@ -723,6 +727,7 @@ class ItemType {
      GameObjects_Crystal_Small_Blue,
      GameObjects_Crystal_Small_Red,
      GameObjects_Toilet,
+     GameObjects_Crate_Wooden,
   ];
 
   static bool isTypeBarrel(int type)=> const [
