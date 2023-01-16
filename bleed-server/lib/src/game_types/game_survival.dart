@@ -165,20 +165,30 @@ class GameSurvival extends Game {
         }
       }
 
-      if (target.type == ItemType.GameObjects_Toilet) {
+      if (DestroyableGameObjects.contains(target.type)) {
         deactivateCollider(target);
         dispatchGameEventGameObjectDestroyed(target);
-
-        getNewGameScript(timer: 200)
+        getNewGameScript(timer: 300)
         ..writeSpawnGameObject(
             type: target.type,
             x: target.x,
             y: target.y,
             z: target.z,
         );
+        spawnGameObjectItem(
+            x: target.x,
+            y: target.y,
+            z: target.z,
+            type: ItemType.Resource_Scrap_Metal,
+        );
       }
     }
   }
+
+  static const DestroyableGameObjects = [
+    ItemType.GameObjects_Toilet,
+    ItemType.GameObjects_Crate_Wooden,
+  ];
 
   @override
   void customOnAIRespawned(AI ai) {

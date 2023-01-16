@@ -97,7 +97,9 @@ ctrl + w:   minimal mode
 [ ] fix render visibility algorithm
 [ ] fix physics knocked through walls
 
+
 16.01.2023
+[x] feature explosions hit gameobjects
 [x] feature game script
 [x] new gameobject wooden crate
 [x] new gameobject toilet

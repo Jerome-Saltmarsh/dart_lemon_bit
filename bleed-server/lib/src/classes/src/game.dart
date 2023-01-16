@@ -574,11 +574,11 @@ abstract class Game {
       if (!other.active) continue;
       if (!other.collidable) continue;
       if (Collider.onSameTeam(character, other)) continue;
-      if (other.distanceFromXYZ(
+      if (!other.withinDistance(
         performX,
         performY,
         performZ,
-      ) > attackRadius) continue;
+        attackRadius)) continue;
       applyHit(
           srcPosition: character,
           target: other,
@@ -589,12 +589,12 @@ abstract class Game {
     }
 
     for (final gameObject in gameObjects) {
-      if (gameObject.distanceFromXYZ(
-        performX,
-        performY,
-        performZ,
-      ) >
-          attackRadius) continue;
+      if (!gameObject.active) continue;
+      if (!gameObject.withinDistance(
+          performX,
+          performY,
+          performZ,
+          attackRadius)) continue;
 
       applyHit(
         srcPosition: character,
@@ -749,7 +749,7 @@ abstract class Game {
   void dispatchGameEventGameObjectDestroyed(GameObject gameObject) {
     for (final player in players) {
       player.writeGameEvent(
-        type: GameEventType.Character_Death,
+        type: GameEventType.Game_Object_Destroyed,
         x: gameObject.x,
         y: gameObject.y,
         z: gameObject.z,
@@ -904,6 +904,19 @@ abstract class Game {
   }){
     dispatchV3(GameEventType.Explosion, target);
     final length = characters.length;
+
+    for (final gameObject in gameObjects) {
+        if (gameObject.inactive) continue;
+        if (!gameObject.withinRadius(target, radius)) continue;
+        applyHit(
+          srcPosition: target,
+          target: gameObject,
+          srcCharacter: srcCharacter,
+          damage: damage,
+          friendlyFire: true,
+        );
+    }
+
     for (var i = 0; i < length; i++){
       final character = characters[i];
       if (character.inactive) continue;

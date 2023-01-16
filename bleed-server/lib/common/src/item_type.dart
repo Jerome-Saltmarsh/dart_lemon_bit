@@ -224,6 +224,12 @@ class ItemType {
       value == ItemType.GameObjects_Crate_Wooden      ||
       value == ItemType.GameObjects_Tavern_Sign        ;
 
+  static double getRadius(int value){
+     return const {
+
+     }[value] ?? 10;
+  }
+
   static bool isPhysical(int value) =>
     value == ItemType.GameObjects_Barrel_Purple     ||
     value == ItemType.GameObjects_Barrel_Explosive  ||

@@ -59,9 +59,9 @@ class SceneWriter extends ByteWriter {
     for (final gameObject in scene.gameObjects){
       if (!ItemType.isPersistable(gameObject.type)) continue;
       writeUInt16(gameObject.type);
-      writeUDouble16(gameObject.x);
-      writeUDouble16(gameObject.y);
-      writeUDouble16(gameObject.z);
+      writeUDouble16(gameObject.startX);
+      writeUDouble16(gameObject.startY);
+      writeUDouble16(gameObject.startZ);
     }
   }
 
