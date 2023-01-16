@@ -74,15 +74,15 @@ class ClientState {
     const Seconds_Per_Hours_12 = Seconds_Per_Hour * 12;
     final totalSeconds = (ServerState.hours.value * Seconds_Per_Hour) + (ServerState.minutes.value * 60);
 
-    GameNodes.ambient_alp = totalSeconds < Seconds_Per_Hours_12
+    GameNodes.ambient_alp = ((totalSeconds < Seconds_Per_Hours_12
         ? 1.0 - (totalSeconds / Seconds_Per_Hours_12)
-        : (totalSeconds - Seconds_Per_Hours_12) / Seconds_Per_Hours_12;
+        : (totalSeconds - Seconds_Per_Hours_12) / Seconds_Per_Hours_12) * 255).round();
 
     if (ServerState.rainType.value == RainType.Light){
-      GameNodes.ambient_alp += 0.1;
+      GameNodes.ambient_alp += 20;
     }
     if (ServerState.rainType.value == RainType.Heavy){
-      GameNodes.ambient_alp += 0.2;
+      GameNodes.ambient_alp += 40;
     }
     GameNodes.resetNodeColorsToAmbient();
   }

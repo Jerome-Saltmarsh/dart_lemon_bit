@@ -60,5 +60,5 @@ int hsvToColor({
   }
 
   // Combine color with opacity and return as integer
-  return ((opacity * 255).round() << 24) | (r << 16) | (g << 8) | b;
+  return (opacity << 24) | (r << 16) | (g << 8) | b;
 }

@@ -97,15 +97,16 @@ class GameState {
         case NodeType.Vendor:
           GameNodes.emitLightDynamic(
               index: nodeIndex,
-              hue: 259,
-              saturation: 0.45,
-              value: 0.95,
-              alpha: 0.5,
+              hue: 200,
+              saturation: (0.45 * 255).round(),
+              value: (0.95 * 255).round(),
+              alpha: 100,
           );
           break;
       }
     }
   }
+
 
   static void applyCharacterColors(){
     for (var i = 0; i < ServerState.totalCharacters; i++){
@@ -123,7 +124,7 @@ class GameState {
       if (!character.allie) continue;
       applyVector3EmissionAmbient(
           character,
-          alpha: 0.25,
+          alpha: 50,
       );
     }
   }
@@ -140,20 +141,20 @@ class GameState {
           hue: 100,
           saturation: 1,
           value: 1,
-          alpha: 0.1,
+          alpha: 20,
       );
       return;
     }
     if (projectile.type == ProjectileType.Bullet) {
       applyVector3EmissionAmbient(projectile,
-          alpha: 0.25,
+          alpha: 50,
       );
       return;
     }
     if (projectile.type == ProjectileType.Fireball) {
       applyVector3Emission(projectile,
         hue: 167,
-        alpha: 0.25,
+        alpha: 50,
         saturation: 1,
         value: 1,
       );
@@ -161,17 +162,17 @@ class GameState {
     }
     if (projectile.type == ProjectileType.Arrow) {
       applyVector3EmissionAmbient(projectile,
-        alpha: 0.25,
+        alpha: 50,
       );
       return;
     }
   }
 
   static void applyVector3Emission(Vector3 v, {
-    required double hue,
-    required double saturation,
-    required double value,
-    required double alpha,
+    required int hue,
+    required int saturation,
+    required int value,
+    required int alpha,
   }){
     if (!GameQueries.inBoundsVector3(v)) return;
     GameNodes.emitLightDynamic(
@@ -184,7 +185,7 @@ class GameState {
   }
 
   static void applyVector3EmissionAmbient(Vector3 v, {
-    required double alpha,
+    required int alpha,
   }){
     if (!GameQueries.inBoundsVector3(v)) return;
     GameNodes.emitLightDynamicAmbient(
@@ -926,10 +927,10 @@ class GameState {
     required double x,
     required double y,
     required double z,
-    required double hue,
-    required double saturation,
-    required double value,
-    required double alpha,
+    required int hue,
+    required int saturation,
+    required int value,
+    required int alpha,
   }) =>
       spawnParticle(
         type: ParticleType.Light_Emission,

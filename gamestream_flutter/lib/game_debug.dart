@@ -151,23 +151,23 @@ Widget buildColumnLightingControls(){
           })
         ],
       ),
-      ColorPicker(
-        pickerColor: HSVColor.fromAHSV(
-            GameNodes.ambient_alp,
-            GameNodes.ambient_hue,
-            GameNodes.ambient_sat,
-            GameNodes.ambient_val,
-        ).toColor(),
-        onColorChanged: (color){
-          ClientState.overrideColor.value = true;
-          final hsvColor = HSVColor.fromColor(color);
-          GameNodes.ambient_alp = hsvColor.alpha;
-          GameNodes.ambient_hue = hsvColor.hue;
-          GameNodes.ambient_sat = hsvColor.saturation;
-          GameNodes.ambient_val = hsvColor.value;
-          GameNodes.resetNodeColorsToAmbient();
-        },
-      ),
+      // ColorPicker(
+      //   pickerColor: HSVColor.fromAHSV(
+      //       GameNodes.ambient_alp,
+      //       GameNodes.ambient_hue,
+      //       GameNodes.ambient_sat,
+      //       GameNodes.ambient_val,
+      //   ).toColor(),
+      //   onColorChanged: (color){
+      //     ClientState.overrideColor.value = true;
+      //     final hsvColor = HSVColor.fromColor(color);
+      //     GameNodes.ambient_alp = hsvColor.alpha;
+      //     GameNodes.ambient_hue = hsvColor.hue;
+      //     GameNodes.ambient_sat = hsvColor.saturation;
+      //     GameNodes.ambient_val = hsvColor.value;
+      //     GameNodes.resetNodeColorsToAmbient();
+      //   },
+      // ),
     ],
   );
 }

@@ -4,16 +4,6 @@ class GameLighting {
 
   static double getRandomHue() => randomBetween(0, 360);
 
-  static var interpolations = [
-    0,
-    0.26530612244897944,
-    0.4897959183673469,
-    0.6734693877551021,
-    0.8163265306122449,
-    0.9183673469387755,
-    0.9795918367346939,
-  ];
-
   static double linerInterpolation(double a, double b, double t) {
     return a * (1.0 - t) + b * t;
   }

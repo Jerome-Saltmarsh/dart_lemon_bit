@@ -109,14 +109,14 @@ class ServerState {
       final gameObject = gameObjects[i];
 
       if (gameObject.type == ItemType.GameObjects_Barrel_Flaming) {
-        GameState.applyVector3EmissionAmbient(gameObject, alpha: 0.0);
+        GameState.applyVector3EmissionAmbient(gameObject, alpha: 0);
         continue;
       }
 
       if (gameObject.type == ItemType.GameObjects_Grenade) {
         GameState.applyVector3Emission(gameObject,
           hue: GameNodes.ambient_hue,
-          alpha: 0.0,
+          alpha: 0,
           saturation: GameNodes.ambient_sat,
           value: 0,
         );
@@ -126,19 +126,20 @@ class ServerState {
         GameState.applyVector3Emission(
           gameObject,
           hue: 209,
-          saturation: 0.66,
-          value: 0.9,
-          alpha: 0.61,
+          saturation: 169,
+          value: 229,
+          alpha: 156,
 
         );
         continue;
       }
+
       if (gameObject.type == ItemType.GameObjects_Crystal_Small_Red) {
         GameState.applyVector3Emission(gameObject,
-          hue: 360,
-          saturation: 0.76,
-          value: 0.91,
-          alpha: 0.61,
+          hue: 255,
+          saturation: 194,
+          value: 232,
+          alpha: 156,
         );
         continue;
       }

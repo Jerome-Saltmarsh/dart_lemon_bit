@@ -2,29 +2,33 @@
 import 'dart:math';
 
 import 'package:flutter/painting.dart';
+import 'package:gamestream_flutter/functions/hsv_to_color.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class GameNodes {
   static var ambient_color_hsv  = HSVColor.fromColor(Color.fromRGBO(31, 1, 86, 0.5));
-  static var ambient_hue        = ambient_color_hsv.hue;
-  static var ambient_sat        = ambient_color_hsv.saturation;
-  static var ambient_val        = ambient_color_hsv.value;
-  static var ambient_alp        = ambient_color_hsv.alpha;
+  static var ambient_hue        = ((ambient_color_hsv.hue / 360) * 255).round();
+  static var ambient_sat        = (ambient_color_hsv.saturation * 255).round();
+  static var ambient_val        = (ambient_color_hsv.value * 255).round();
+  static var ambient_alp        = (ambient_color_hsv.alpha * 255).round();
   static var ambient_color      = 0;
-  static var transparent_color      = 0;
 
   static void resetNodeColorsToAmbient() {
-    GameNodes.ambient_alp = clamp01(GameNodes.ambient_alp);
-    ambient_color = GameLighting.hsvToColorValue(ambient_hue, ambient_sat, ambient_val, ambient_alp);
-    transparent_color = GameLighting.hsvToColorValue(ambient_hue, ambient_sat, ambient_val, 0.5);
+    GameNodes.ambient_alp = clamp(GameNodes.ambient_alp, 0, 255);
+    ambient_color = hsvToColor(
+        hue: ambient_hue,
+        saturation: ambient_sat,
+        value: ambient_val,
+        opacity: ambient_alp
+    );
     dynamicIndex = 0;
 
      if (nodeColors.length != total) {
        nodeColors = Uint32List(total);
-       nodeHues = Float32List(total);
-       nodeSats = Float32List(total);
-       nodeVals = Float32List(total);
-       nodeAlps = Float32List(total);
+       nodeHues = Uint8List(total);
+       nodeSats = Uint8List(total);
+       nodeVals = Uint8List(total);
+       nodeAlps = Uint8List(total);
      }
      for (var i = 0; i < total; i++) {
        nodeColors[i] = ambient_color;
@@ -36,10 +40,10 @@ class GameNodes {
   }
 
   static var nodeColors = Uint32List(0);
-  static var nodeHues = Float32List(0);
-  static var nodeSats = Float32List(0);
-  static var nodeVals = Float32List(0);
-  static var nodeAlps = Float32List(0);
+  static var nodeHues = Uint8List(0);
+  static var nodeSats = Uint8List(0);
+  static var nodeVals = Uint8List(0);
+  static var nodeAlps = Uint8List(0);
   static var nodeOrientations = Uint8List(0);
   static var nodeTypes = Uint8List(0);
   static var nodeVariations = Uint8List(0);
@@ -117,12 +121,26 @@ class GameNodes {
     visibleIndex++;
   }
 
+  static int linerInterpolationInt(int a, int b, double t) {
+    return (a * (1.0 - t) + b * t).round();
+  }
+
+  static const interpolations = [
+    0,
+    0.26530612244897944,
+    0.4897959183673469,
+    0.6734693877551021,
+    0.8163265306122449,
+    0.9183673469387755,
+    0.9795918367346939,
+  ];
+
   static void emitLightDynamic({
     required int index,
-    required double hue,
-    required double saturation,
-    required double value,
-    required double alpha,
+    required int hue,
+    required int saturation,
+    required int value,
+    required int alpha,
     double strength = 1.0,
 
   }){
@@ -130,13 +148,13 @@ class GameNodes {
     if (index >= total) return;
 
     assert (hue >= 0);
-    assert (hue <= 360.0);
+    assert (hue <= 255);
     assert (saturation >= 0);
-    assert (saturation <= 1);
+    assert (saturation <= 255);
     assert (value >= 0);
-    assert (value <= 1);
+    assert (value <= 255);
     assert (alpha >= 0);
-    assert (alpha <= 1);
+    assert (alpha <= 255);
 
     final zIndex = index ~/ area;
     final rowIndex = (index - (zIndex * area)) ~/ GameState.nodesTotalColumns;
@@ -175,11 +193,11 @@ class GameNodes {
 
           nodeDynamicIndex[dynamicIndex++] = nodeIndex;
 
-          final intensity = (1.0 - GameLighting.interpolations[clamp(distanceValue, 0, 7)]) * strength;
-          nodeHues[nodeIndex] = GameLighting.linerInterpolation(nodeHues[nodeIndex], hue        , intensity);
-          nodeSats[nodeIndex] = GameLighting.linerInterpolation(nodeSats[nodeIndex], saturation , intensity);
-          nodeVals[nodeIndex] = GameLighting.linerInterpolation(nodeVals[nodeIndex], value      , intensity);
-          nodeAlps[nodeIndex] = GameLighting.linerInterpolation(nodeAlps[nodeIndex], alpha      , intensity);
+          final intensity = (1.0 - interpolations[clamp(distanceValue, 0, 7)]) * strength;
+          nodeHues[nodeIndex] = linerInterpolationInt(nodeHues[nodeIndex], hue        , intensity);
+          nodeSats[nodeIndex] = linerInterpolationInt(nodeSats[nodeIndex], saturation , intensity);
+          nodeVals[nodeIndex] = linerInterpolationInt(nodeVals[nodeIndex], value      , intensity);
+          nodeAlps[nodeIndex] = linerInterpolationInt(nodeAlps[nodeIndex], alpha      , intensity);
           refreshNodeColor(nodeIndex);
         }
       }
@@ -189,7 +207,7 @@ class GameNodes {
 
   static void emitLightDynamicAmbient({
     required int index,
-    required double alpha,
+    required int alpha,
   }){
     if (index < 0) return;
     if (index >= total) return;
@@ -231,10 +249,10 @@ class GameNodes {
 
           nodeDynamicIndex[dynamicIndex++] = nodeIndex;
 
-          final intensity = 1.0 - GameLighting.interpolations[clamp(distanceValue, 0, 7)];
+          final intensity = 1.0 - interpolations[clamp(distanceValue, 0, 7)];
           final nodeAlpha = nodeAlps[nodeIndex];
           if (nodeAlpha < alpha) continue;
-          nodeAlps[nodeIndex] = GameLighting.linerInterpolation(nodeAlpha, alpha, intensity);
+          nodeAlps[nodeIndex] = linerInterpolationInt(nodeAlps[nodeIndex], alpha      , intensity);
           refreshNodeColor(nodeIndex);
         }
       }
@@ -242,14 +260,13 @@ class GameNodes {
     }
   }
 
-  static void refreshNodeColor(int index){
-    nodeColors[index] = GameLighting.hsvToColorValue(
-      nodeHues[index],
-      nodeSats[index],
-      nodeVals[index],
-      nodeAlps[index],
+  static void refreshNodeColor(int index) =>
+    nodeColors[index] = hsvToColor(
+      hue: nodeHues[index],
+      saturation: nodeSats[index],
+      value: nodeVals[index],
+      opacity: nodeAlps[index],
     );
-  }
 
 
   static int getTorchIndex(int nodeIndex){
