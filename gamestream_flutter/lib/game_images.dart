@@ -188,7 +188,7 @@ class GameImages {
       }
    }
 
-   static Future loadImages() async {
+   static void loadImages() {
       Engine.loadImageAsset('images/atlas-characters.png').then((value) => atlas_characters = value);
       Engine.loadImageAsset('images/atlas-zombie.png').then((value) => zombie = value);
       Engine.loadImageAsset('images/atlas-zombie-shadow.png').then((value) => zombie_shadow = value);

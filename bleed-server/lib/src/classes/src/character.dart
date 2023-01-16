@@ -216,6 +216,8 @@ abstract class Character extends Collider {
   }
 
   void setCharacterStatePerforming({required int duration}){
+    assert (active);
+    assert (alive);
     setCharacterState(value: CharacterState.Performing, duration: duration);
   }
 

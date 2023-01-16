@@ -27,9 +27,9 @@ class GameSystem {
     print("time zone: ${GameUtils.detectConnectionRegion()}");
     Engine.onScreenSizeChanged = onScreenSizeChanged;
     Engine.deviceType.onChanged(onDeviceTypeChanged);
-    await GameImages.loadImages();
+    GameImages.loadImages();
     Engine.cursorType.value = CursorType.Basic;
-    Engine.onDrawCanvas = GameWebsite.renderCanvas;
+    // Engine.onDrawCanvas = GameWebsite.renderCanvas;
     GameIO.addListeners();
     GameIO.detectInputMode();
 
@@ -42,11 +42,12 @@ class GameSystem {
     GameWebsite.errorMessageEnabled.value = true;
     Engine.joystickMaxDistance = 150;
 
+
     final visitCount = sharedPreferences.getInt('visit-count');
     if (visitCount == null){
       sharedPreferences.putAny('visit-count', 1);
       GameWebsite.visitCount.value = 1;
-      GameNetwork.connectToGameDarkAge();
+      // GameNetwork.connectToGameDarkAge();
     } else {
       sharedPreferences.putAny('visit-count', visitCount + 1);
       GameWebsite.visitCount.value = visitCount + 1;
