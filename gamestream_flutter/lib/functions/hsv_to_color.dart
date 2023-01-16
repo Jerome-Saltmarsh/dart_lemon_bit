@@ -9,11 +9,6 @@ int hsvToColor({
   required int value,
   required int opacity,
 }) {
-  // Convert hue, saturation, and value to 0-255 range
-  // final h = (hue / 360 * 255).round();
-  // final s = (saturation * 255).round();
-  // final v = (value * 255).round();
-
   // Calculate color
   int r, g, b;
   final i = (hue / 43).floor();

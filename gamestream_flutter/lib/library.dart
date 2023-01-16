@@ -7,7 +7,6 @@ export 'game_account.dart';
 export 'game_actions.dart';
 export 'game_assets.dart';
 export 'game_audio.dart';
-export 'game_lighting.dart';
 export 'game_classes.dart';
 export 'game_colors.dart';
 export 'game_config.dart';
