@@ -5,17 +5,25 @@ import 'functions/render_shadow.dart';
 class RendererParticles extends Renderer {
 
   static late Particle particle;
+  static final screen = Engine.screen;
 
   @override
   void renderFunction() {
       assert (particle.active);
       if (particle.delay > 0) return;
+      final dstX = GameConvert.convertV3ToRenderX(particle);
+      if (dstX < screen.left - 50) return;
+      if (dstX > screen.right + 50) return;
+      final dstY = GameConvert.convertV3ToRenderY(particle);
+      if (dstY < screen.top - 50) return;
+      if (dstY > screen.bottom + 50) return;
+
       switch (particle.type) {
         case ParticleType.Water_Drop:
           Engine.renderSprite(
             image: GameImages.atlas_gameobjects,
-            dstX: GameConvert.convertV3ToRenderX(particle),
-            dstY: GameConvert.convertV3ToRenderY(particle),
+            dstX: dstX,
+            dstY: dstY,
             srcX: 0.0,
             srcY: 40,
             srcWidth: 4,
@@ -27,8 +35,8 @@ class RendererParticles extends Renderer {
           casteShadowDownV3(particle);
           Engine.renderSprite(
             image: GameImages.atlas_gameobjects,
-            dstX: particle.renderX,
-            dstY: particle.renderY,
+            dstX: dstX,
+            dstY: dstY,
             srcX: AtlasParticleX.Blood,
             srcY: AtlasParticleY.Blood,
             srcWidth: 8,
@@ -43,8 +51,8 @@ class RendererParticles extends Renderer {
           }
           Engine.renderSprite(
             image: GameImages.atlas_gameobjects,
-            dstX: GameConvert.convertV3ToRenderX(particle),
-            dstY: GameConvert.convertV3ToRenderY(particle),
+            dstX: dstX,
+            dstY: dstY,
             srcX: 0.0,
             srcY: 32,
             srcWidth: 8,
@@ -55,8 +63,8 @@ class RendererParticles extends Renderer {
         case ParticleType.Bubble_Small:
           Engine.renderSprite(
             image: GameImages.atlas_gameobjects,
-            dstX: GameConvert.convertV3ToRenderX(particle),
-            dstY: GameConvert.convertV3ToRenderY(particle),
+            dstX: dstX,
+            dstY: dstY,
             srcX: 0.0,
             srcY: 32,
             srcWidth: 4,
@@ -67,8 +75,8 @@ class RendererParticles extends Renderer {
         case ParticleType.Bullet_Ring:
           Engine.renderSprite(
             image: GameImages.atlas_gameobjects,
-            dstX: GameConvert.convertV3ToRenderX(particle),
-            dstY: GameConvert.convertV3ToRenderY(particle),
+            dstX: dstX,
+            dstY: dstY,
             srcX: 0.0,
             srcY: 32,
             srcWidth: 4,
@@ -87,8 +95,8 @@ class RendererParticles extends Renderer {
           final frame = particle.frame <= 11 ? particle.frame : 23 - particle.frame;
           Engine.renderSprite(
             image: GameImages.particles,
-            dstX: particle.renderX,
-            dstY: particle.renderY,
+            dstX: dstX,
+            dstY: dstY,
             srcX: 544,
             srcY: 32.0 * frame,
             srcWidth: 32,
@@ -99,8 +107,8 @@ class RendererParticles extends Renderer {
         case ParticleType.Block_Wood:
           Engine.renderSprite(
             image: GameImages.atlas_gameobjects,
-            dstX: particle.renderX,
-            dstY: particle.renderY,
+            dstX: dstX,
+            dstY: dstY,
             srcX: 0,
             srcY: 56,
             srcWidth: 8,
@@ -112,8 +120,8 @@ class RendererParticles extends Renderer {
         case ParticleType.Block_Grass:
           Engine.renderSprite(
             image: GameImages.atlas_gameobjects,
-            dstX: particle.renderX,
-            dstY: particle.renderY,
+            dstX: dstX,
+            dstY: dstY,
             srcX: 0,
             srcY: 48,
             srcWidth: 8,
@@ -125,8 +133,8 @@ class RendererParticles extends Renderer {
         case ParticleType.Block_Brick:
           Engine.renderSprite(
             image: GameImages.atlas_gameobjects,
-            dstX: particle.renderX,
-            dstY: particle.renderY,
+            dstX: dstX,
+            dstY: dstY,
             srcX: 0,
             srcY: 64,
             srcWidth: 8,
@@ -138,8 +146,8 @@ class RendererParticles extends Renderer {
         case ParticleType.Block_Sand:
           Engine.renderSprite(
             image: GameImages.atlas_gameobjects,
-            dstX: particle.renderX,
-            dstY: particle.renderY,
+            dstX: dstX,
+            dstY: dstY,
             srcX: 0,
             srcY: 112,
             srcWidth: 8,
@@ -154,8 +162,8 @@ class RendererParticles extends Renderer {
           }
           Engine.renderSprite(
             image: GameImages.particles,
-            dstX: particle.renderX,
-            dstY: particle.renderY,
+            dstX: dstX,
+            dstY: dstY,
             srcX: 0,
             srcY: 32.0 * particle.frame,
             srcWidth: 32,
@@ -166,8 +174,8 @@ class RendererParticles extends Renderer {
         case ParticleType.Shell:
           Engine.renderSprite(
             image: GameImages.particles,
-            dstX: particle.renderX,
-            dstY: particle.renderY,
+            dstX: dstX,
+            dstY: dstY,
             srcX: 34 + (particle.direction * 32),
             srcY: 1,
             srcWidth: 32,
@@ -183,8 +191,8 @@ class RendererParticles extends Renderer {
           }
           Engine.renderSprite(
             image: GameImages.particles,
-            dstX: particle.renderX,
-            dstY: particle.renderY,
+            dstX: dstX,
+            dstY: dstY,
             srcX: 291,
             srcY: 1 + 32.0 * (particle.frame ~/ 2) ,
             srcWidth: 32,
@@ -193,7 +201,7 @@ class RendererParticles extends Renderer {
           );
           break;
         case ParticleType.Myst:
-          const size = 48.0;
+          // const size = 48.0;
           // final shade = GameState.getV3RenderShade(particle);
           // if (shade >= 5) return;
           // Engine.renderSprite(
@@ -212,8 +220,8 @@ class RendererParticles extends Renderer {
           const size = 16.0;
           Engine.renderSprite(
             image: GameImages.atlas_gameobjects,
-            dstX: particle.renderX,
-            dstY: particle.renderY,
+            dstX: dstX,
+            dstY: dstY,
             srcX: 224 ,
             srcY: (particle.frame % 4) * size,
             srcWidth: size,
@@ -227,8 +235,8 @@ class RendererParticles extends Renderer {
           }
           Engine.renderSprite(
             image: GameImages.particles,
-            dstX: particle.renderX,
-            dstY: particle.renderY,
+            dstX: dstX,
+            dstY: dstY,
             srcX: 234.0,
             srcY: 1 + 32.0 + (32.0 * particle.frame),
             srcWidth: 32,
@@ -239,8 +247,8 @@ class RendererParticles extends Renderer {
           casteShadowDownV3(particle);
           Engine.renderSprite(
             image: GameImages.particles,
-            dstX: particle.renderX,
-            dstY: particle.renderY,
+            dstX: dstX,
+            dstY: dstY,
             srcX: 34.0,
             srcY: 1 + 64.0 * particle.direction,
             srcWidth: 64,
@@ -252,8 +260,8 @@ class RendererParticles extends Renderer {
           casteShadowDownV3(particle);
           Engine.renderSprite(
             image: GameImages.particles,
-            dstX: particle.renderX,
-            dstY: particle.renderY,
+            dstX: dstX,
+            dstY: dstY,
             srcX: 34.0 + 64,
             srcY: 64.0 * particle.direction,
             srcWidth: 64,
@@ -265,8 +273,8 @@ class RendererParticles extends Renderer {
           casteShadowDownV3(particle);
           Engine.renderSprite(
             image: GameImages.particles,
-            dstX: particle.renderX,
-            dstY: particle.renderY,
+            dstX: dstX,
+            dstY: dstY,
             srcX: 34.0 + (64 * 2),
             srcY: 64.0 * particle.direction,
             srcWidth: 64,
@@ -280,8 +288,8 @@ class RendererParticles extends Renderer {
 
           Engine.renderSprite(
             image: GameImages.character_dog,
-            dstX: particle.renderX,
-            dstY: particle.renderY,
+            dstX: dstX,
+            dstY: dstY,
             srcX: 64.0 * frame,
             srcY: 64.0 * particle.direction,
             srcWidth: 64,
@@ -294,8 +302,8 @@ class RendererParticles extends Renderer {
           casteShadowDownV3(particle);
           Engine.renderSprite(
             image: GameImages.particles,
-            dstX: particle.renderX,
-            dstY: particle.renderY,
+            dstX: dstX,
+            dstY: dstY,
             srcX: 34.0 + (64 * 3),
             srcY: 64.0 * particle.direction,
             srcWidth: 64,
