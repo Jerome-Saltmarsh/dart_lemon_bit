@@ -86,6 +86,7 @@ class ItemType {
   static const GameObjects_Crate_Wooden         = Index_GameObjects + 22;
   static const GameObjects_Desk                 = Index_GameObjects + 23;
   static const GameObjects_Vending_Machine      = Index_GameObjects + 24;
+  static const GameObjects_Bed                  = Index_GameObjects + 25;
 
   static const Resource_Wood = Index_Resources + 5;
   static const Resource_Stone = Index_Resources + 6;
@@ -226,6 +227,7 @@ class ItemType {
       value == ItemType.GameObjects_Barrel            ||
       value == ItemType.GameObjects_Crate_Wooden      ||
       value == ItemType.GameObjects_Desk              ||
+      value == ItemType.GameObjects_Bed               ||
       value == ItemType.GameObjects_Tavern_Sign        ;
 
   static double getRadius(int value){
@@ -242,6 +244,7 @@ class ItemType {
     value == ItemType.GameObjects_Crate_Wooden      ||
     value == ItemType.GameObjects_Desk              ||
     value == ItemType.GameObjects_Vending_Machine   ||
+    value == ItemType.GameObjects_Bed               ||
     value == ItemType.GameObjects_Tavern_Sign        ;
 
   static bool applyGravity(int value) =>
@@ -629,6 +632,7 @@ class ItemType {
      GameObjects_Toilet: "Toilet",
      GameObjects_Crate_Wooden: "Wooden Crate",
      GameObjects_Desk: "Wooden Desk",
+     GameObjects_Bed: "Bed",
      GameObjects_Node_Collider: "Node Collider",
      GameObjects_Vending_Machine: "Vending Machine",
   }[value] ?? "item-type-unknown($value)";
@@ -745,6 +749,7 @@ class ItemType {
      GameObjects_Crate_Wooden,
      GameObjects_Desk,
      GameObjects_Vending_Machine,
+     GameObjects_Bed,
   ];
 
   static bool isTypeBarrel(int type)=> const [

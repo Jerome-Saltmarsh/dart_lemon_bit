@@ -6,9 +6,9 @@ firebase deploy
 navigate to next method: ctrl + shift + up / down arrows
 ctrl + w:   minimal mode
 
-
 17.01.2023
 [x] feature flaming barrels emit smoke particle
+[x] new gameobject bed
 [x] new gameobject desk
 [x] implement vending machine as gameobject instead of node
 
