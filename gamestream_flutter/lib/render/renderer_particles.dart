@@ -77,22 +77,7 @@ class RendererParticles extends Renderer {
           );
           break;
         case ParticleType.Smoke:
-          if (particle.frame >= 24) {
-            particle.deactivate();
-            return;
-          }
-          final frame = particle.frame <= 11 ? particle.frame : 23 - particle.frame;
-
-          Engine.renderSprite(
-            image: GameImages.particles,
-            dstX: particle.renderX,
-            dstY: particle.renderY,
-            srcX: 432,
-            srcY: 32.0 * frame,
-            srcWidth: 32,
-            srcHeight: 32,
-            scale: particle.scale,
-          );
+          renderParticleSmoke();
           break;
         case ParticleType.Gunshot_Smoke:
           if (particle.frame >= 24) {
@@ -334,6 +319,21 @@ class RendererParticles extends Renderer {
           break;
       }
     }
+
+  void renderParticleSmoke() {
+    Engine.renderSpriteRotated(
+      image: GameImages.particles,
+      dstX: particle.renderX,
+      dstY: particle.renderY,
+      srcX: 552,
+      srcY: 7,
+      srcWidth: 16,
+      srcHeight: 16,
+      color: GameState.getV3RenderColor(particle),
+      rotation: particle.rotation,
+      // scale: particle.scale,
+    );
+  }
 
   static void renderParticleStrikeBlade() {
     if (particle.frame >= 6 ) {

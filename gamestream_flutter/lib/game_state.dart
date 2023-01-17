@@ -1013,6 +1013,7 @@ class GameState {
         zv: 0,
         angle: 0,
         rotation: 0,
+        rotationV: giveOrTake(0.05),
         speed: 0,
         scaleV: 0.01,
         weight: -0.25,
@@ -1168,6 +1169,8 @@ class GameState {
     GamePlayer.gameDialog.value = GameDialog.Quests;
   }
 
+  static var nextEmissionSmoke = 0;
+
     static void updateParticleEmitters(){
       for (final emitter in particleEmitters) {
         if (emitter.next-- > 0) continue;
@@ -1178,8 +1181,18 @@ class GameState {
         particle.z = emitter.z;
         emitter.emit(particle);
       }
+
+      nextEmissionSmoke--;
+      if (nextEmissionSmoke > 0) return;
+      nextEmissionSmoke = 20;
+      for (var i = 0; i < ServerState.totalGameObjects; i++){
+          final gameObject = ServerState.gameObjects[i];
+          if (gameObject.type != ItemType.GameObjects_Barrel_Flaming) continue;
+          spawnParticleSmoke(x: gameObject.x + giveOrTake(5), y: gameObject.y + giveOrTake(5), z: gameObject.z + 35);
+      }
     }
 
+    
     static void updateProjectiles() {
       for (var i = 0; i < ServerState.totalProjectiles; i++) {
         final projectile = ServerState.projectiles[i];
