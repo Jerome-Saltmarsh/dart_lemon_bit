@@ -33,7 +33,9 @@ abstract class Renderer {
 
   void set index(int value){
     _index = value;
-    remaining = _index < total;
+    if (value >= total) {
+      remaining = false;
+    }
   }
 
   void end(){
@@ -44,7 +46,7 @@ abstract class Renderer {
   void renderNext() {
     if (!remaining) return;
     renderFunction();
-    _index = (_index + 1);
+    _index++;
     remaining = _index < total;
     if (remaining) {
       updateFunction();

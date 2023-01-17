@@ -4,19 +4,20 @@ import 'functions/render_shadow.dart';
 
 class RendererParticles extends Renderer {
 
+  static final particles = ClientState.particles;
   static late Particle particle;
   static final screen = Engine.screen;
 
   @override
   void renderFunction() {
       assert (particle.active);
-      if (particle.delay > 0) return;
+      assert (particle.delay <= 0);
       final dstX = GameConvert.convertV3ToRenderX(particle);
-      if (dstX < screen.left - 50) return;
-      if (dstX > screen.right + 50) return;
+      assert (dstX > screen.left - 50);
+      assert (dstX < screen.right + 50);
       final dstY = GameConvert.convertV3ToRenderY(particle);
-      if (dstY < screen.top - 50) return;
-      if (dstY > screen.bottom + 50) return;
+      assert (dstY > screen.top - 50);
+      assert (dstY < screen.bottom + 50);
 
       switch (particle.type) {
         case ParticleType.Water_Drop:
@@ -428,13 +429,25 @@ class RendererParticles extends Renderer {
 
   @override
   void updateFunction() {
-    particle = ClientState.particles[index];
-    order = particle.renderOrder;
-    orderZ = particle.indexZ;
+    while (index < total) {
+      particle = particles[index++];
+      if (particle.delay > 0) continue;
+      if (!particle.active) continue;
+      final dstX = GameConvert.convertV3ToRenderX(particle);
+      if (dstX < screen.left - 50) continue;
+      if (dstX > screen.right + 50) continue;
+      final dstY = GameConvert.convertV3ToRenderY(particle);
+      if (dstY < screen.top - 50) continue;
+      if (dstY > screen.bottom + 50) continue;
+      order = particle.renderOrder;
+      orderZ = particle.indexZ;
+      index--;
+      return;
+    }
   }
 
   @override
-  int getTotal() => ClientState.totalActiveParticles;
+  int getTotal() => ClientState.totalParticles;
 
   @override
   void reset() {
