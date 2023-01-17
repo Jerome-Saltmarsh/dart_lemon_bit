@@ -78,7 +78,7 @@ class ItemType {
   static const GameObjects_Crystal_Small_Red    = Index_GameObjects + 14;
   static const GameObjects_Grenade              = Index_GameObjects + 15;
   static const GameObjects_Car                  = Index_GameObjects + 16;
-  static const GameObjects_Node_Collider        = Index_GameObjects + 17;
+  // static const GameObjects_Node_Collider        = Index_GameObjects + 17;
   static const GameObjects_Barrel_Explosive     = Index_GameObjects + 18;
   static const GameObjects_Barrel_Purple        = Index_GameObjects + 19;
   static const GameObjects_Barrel_Flaming       = Index_GameObjects + 20;
@@ -217,7 +217,6 @@ class ItemType {
   static bool isNotTypeEmpty(int value) => value != Empty;
 
   static bool isPersistable(int value) =>
-       value != ItemType.GameObjects_Node_Collider &&
        isTypeEnvironment(value);
 
   static bool isCollidable(int value) =>
@@ -257,8 +256,7 @@ class ItemType {
       value == ItemType.GameObjects_Barrel_Purple     ||
       value == ItemType.GameObjects_Barrel_Explosive  ||
       value == ItemType.GameObjects_Barrel_Flaming    ||
-      value == ItemType.GameObjects_Barrel            ||
-      value == ItemType.GameObjects_Tavern_Sign        ;
+      value == ItemType.GameObjects_Barrel            ;
 
   static bool isTypeEquipped(int value) =>
     value == Equipped_Weapon  ||
@@ -633,7 +631,6 @@ class ItemType {
      GameObjects_Crate_Wooden: "Wooden Crate",
      GameObjects_Desk: "Wooden Desk",
      GameObjects_Bed: "Bed",
-     GameObjects_Node_Collider: "Node Collider",
      GameObjects_Vending_Machine: "Vending Machine",
   }[value] ?? "item-type-unknown($value)";
 

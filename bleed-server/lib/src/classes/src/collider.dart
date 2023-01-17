@@ -17,8 +17,8 @@ class Collider extends Position3 {
   var collidable = true;
   /// an item which is not physical may still cause a collision detection
   var physical = true;
-  /// If false this object will not be moved during a collision
-  var moveOnCollision = true;
+  /// If false this object will not be moved during a collision or when force is applied
+  var movable = true;
   var applyGravity = false;
 
   var startX = 0.0;
@@ -95,6 +95,7 @@ class Collider extends Position3 {
     required double force,
     required double angle,
   }) {
+    if (!movable) return;
     velocityX += getAdjacent(angle, force);
     velocityY += getOpposite(angle, force);
   }

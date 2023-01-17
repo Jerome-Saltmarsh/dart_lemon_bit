@@ -12,7 +12,7 @@ class GameObject extends Collider {
      _type = value;
      collectable      = ItemType.isCollectable(type);
      physical         = ItemType.isPhysical(type);
-     moveOnCollision  = ItemType.physicsMoveOnCollision(type);
+     movable  = ItemType.physicsMoveOnCollision(type);
      applyGravity     = ItemType.applyGravity(type);
      collidable       = ItemType.isCollidable(type);
      interactable     = value == ItemType.GameObjects_Vending_Machine;
@@ -25,7 +25,7 @@ class GameObject extends Collider {
     required int type,
   }) : super(x: x, y: y, z: z, radius: 15) {
     collidable = true;
-    moveOnCollision = false;
+    movable = false;
     this.type = type;
     team = TeamType.Alone;
     startX = x;

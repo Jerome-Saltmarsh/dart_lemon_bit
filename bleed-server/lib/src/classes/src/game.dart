@@ -1157,11 +1157,11 @@ abstract class Game {
     var yDiff = a.y - b.y;
 
     if (xDiff == 0 && yDiff == 0) {
-      if (a.moveOnCollision){
+      if (a.movable){
         a.x += 5;
         xDiff += 5;
       }
-      if (b.moveOnCollision){
+      if (b.movable){
         b.x -= 5;
         xDiff += 5;
       }
@@ -1173,11 +1173,11 @@ abstract class Game {
     final halfOverlap = overlap * 0.5;
     final targetX = xDiffNormalized * halfOverlap;
     final targetY = yDiffNormalized * halfOverlap;
-    if (a.moveOnCollision){
+    if (a.movable){
       a.x += targetX;
       a.y += targetY;
     }
-    if (b.moveOnCollision){
+    if (b.movable){
       b.x -= targetX;
       b.y -= targetY;
     }
@@ -2015,7 +2015,7 @@ abstract class Game {
     );
     instance.collidable = ItemType.isCollidable(type);
     instance.physical = ItemType.isPhysical(type);
-    instance.moveOnCollision = instance.physical;
+    instance.movable = instance.physical;
     gameObjects.add(instance);
 
     return instance;
