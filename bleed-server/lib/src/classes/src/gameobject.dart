@@ -10,6 +10,7 @@ class GameObject extends Collider {
 
   set type(int value) {
      _type = value;
+     radius           = ItemType.getRadius(value);
      collectable      = ItemType.isCollectable(value);
      physical         = ItemType.isPhysical(value);
      movable          = ItemType.isMovable(value);

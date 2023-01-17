@@ -220,45 +220,43 @@ class ItemType {
        isTypeEnvironment(value);
 
   static bool isCollidable(int value) =>
-      value == ItemType.GameObjects_Barrel_Purple     ||
-      value == ItemType.GameObjects_Barrel_Explosive  ||
-      value == ItemType.GameObjects_Barrel_Flaming    ||
-      value == ItemType.GameObjects_Barrel            ||
-      value == ItemType.GameObjects_Crate_Wooden      ||
-      value == ItemType.GameObjects_Desk              ||
-      value == ItemType.GameObjects_Bed               ||
-      value == ItemType.GameObjects_Vending_Machine   ||
-      value == ItemType.GameObjects_Tavern_Sign        ;
+      value == GameObjects_Barrel_Purple     ||
+      value == GameObjects_Barrel_Explosive  ||
+      value == GameObjects_Barrel_Flaming    ||
+      value == GameObjects_Barrel            ||
+      value == GameObjects_Crate_Wooden      ||
+      value == GameObjects_Desk              ||
+      value == GameObjects_Bed               ||
+      value == GameObjects_Vending_Machine   ||
+      value == GameObjects_Tavern_Sign        ;
 
-  static double getRadius(int value){
-     return const {
-
-     }[value] ?? 10;
-  }
+  static double getRadius(int value) => const <int, double> {
+        GameObjects_Vending_Machine: 25,
+     }[value] ?? 15;
 
   static bool isPhysical(int value) =>
-    value == ItemType.GameObjects_Barrel_Purple     ||
-    value == ItemType.GameObjects_Barrel_Explosive  ||
-    value == ItemType.GameObjects_Barrel_Flaming    ||
-    value == ItemType.GameObjects_Barrel            ||
-    value == ItemType.GameObjects_Crate_Wooden      ||
-    value == ItemType.GameObjects_Desk              ||
-    value == ItemType.GameObjects_Vending_Machine   ||
-    value == ItemType.GameObjects_Bed               ||
-    value == ItemType.GameObjects_Tavern_Sign        ;
+    value == GameObjects_Barrel_Purple     ||
+    value == GameObjects_Barrel_Explosive  ||
+    value == GameObjects_Barrel_Flaming    ||
+    value == GameObjects_Barrel            ||
+    value == GameObjects_Crate_Wooden      ||
+    value == GameObjects_Desk              ||
+    value == GameObjects_Vending_Machine   ||
+    value == GameObjects_Bed               ||
+    value == GameObjects_Tavern_Sign        ;
 
   static bool applyGravity(int value) =>
-    value == ItemType.GameObjects_Barrel_Purple     ||
-    value == ItemType.GameObjects_Barrel_Explosive  ||
-    value == ItemType.GameObjects_Barrel_Flaming    ||
-    value == ItemType.GameObjects_Crate_Wooden      ||
-    value == ItemType.GameObjects_Barrel             ;
+    value == GameObjects_Barrel_Purple     ||
+    value == GameObjects_Barrel_Explosive  ||
+    value == GameObjects_Barrel_Flaming    ||
+    value == GameObjects_Crate_Wooden      ||
+    value == GameObjects_Barrel             ;
 
   static bool isMovable(int value) =>
-      value == ItemType.GameObjects_Barrel_Purple     ||
-      value == ItemType.GameObjects_Barrel_Explosive  ||
-      value == ItemType.GameObjects_Barrel_Flaming    ||
-      value == ItemType.GameObjects_Barrel            ;
+      value == GameObjects_Barrel_Purple     ||
+      value == GameObjects_Barrel_Explosive  ||
+      value == GameObjects_Barrel_Flaming    ||
+      value == GameObjects_Barrel            ;
 
   static bool isTypeEquipped(int value) =>
     value == Equipped_Weapon  ||
@@ -312,7 +310,7 @@ class ItemType {
       value ==  Weapon_Rifle_M4      ;
   
   static bool isTypeWeaponMelee(int value) =>
-      value == ItemType.Empty ||
+      value == Empty ||
       (
           value > Index_Weapon_Melee &&
           value < Index_Weapon_Thrown
@@ -323,8 +321,8 @@ class ItemType {
       value < Index_Weapon_Ranged_Handgun  ;
 
   static bool isTypeWeaponBow(int value) =>
-      value == ItemType.Weapon_Ranged_Bow ||
-      value == ItemType.Weapon_Ranged_Bow_Long;
+      value == Weapon_Ranged_Bow ||
+      value == Weapon_Ranged_Bow_Long;
 
   static bool isTypeWeaponHandgun(int value) =>
       value > Index_Weapon_Ranged_Handgun &&
@@ -401,14 +399,14 @@ class ItemType {
   }[itemType] ?? Empty;
 
   static int getEnergyConsumeAmount(int itemType) => const {
-    ItemType.Empty: 1,
-    ItemType.Weapon_Melee_Knife: 1,
-    ItemType.Weapon_Melee_Axe: 3,
-    ItemType.Weapon_Melee_Staff: 3,
-    ItemType.Weapon_Melee_Crowbar: 2,
-    ItemType.Weapon_Melee_Sword: 3,
-    ItemType.Weapon_Melee_Pickaxe: 3,
-    ItemType.Weapon_Melee_Hammer: 3,
+    Empty: 1,
+    Weapon_Melee_Knife: 1,
+    Weapon_Melee_Axe: 3,
+    Weapon_Melee_Staff: 3,
+    Weapon_Melee_Crowbar: 2,
+    Weapon_Melee_Sword: 3,
+    Weapon_Melee_Pickaxe: 3,
+    Weapon_Melee_Hammer: 3,
   }[itemType] ?? 0;
 
   static int getConsumeAmount(int itemType) => const {
@@ -463,7 +461,7 @@ class ItemType {
   }[value] ?? 0;
 
   static double getAccuracy(int value) => const <int, double> {
-     ItemType.Weapon_Rifle_M4: 0.125,
+     Weapon_Rifle_M4: 0.125,
   }[value] ?? 0.25;
 
   static double getRange(int value) => const <int, double> {
