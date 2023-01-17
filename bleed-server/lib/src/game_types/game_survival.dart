@@ -11,18 +11,17 @@ class GameSurvival extends Game {
       gameType: GameType.Survival,
   ) {
     triggerSpawnPoints();
-
-    final totalNodes = scene.gridVolume;
-    for (var i = 0; i < totalNodes; i++){
-       if (scene.nodeTypes[i] != NodeType.Vendor) continue;
-       gameObjects.add(
-           InteractableCollider(
-               x: scene.convertNodeIndexToPositionX(i),
-               y: scene.convertNodeIndexToPositionY(i),
-               z: scene.convertNodeIndexToPositionZ(i),
-           )
-       );
-    }
+    // final totalNodes = scene.gridVolume;
+    // for (var i = 0; i < totalNodes; i++){
+    //    if (scene.nodeTypes[i] != NodeType.Vendor) continue;
+    //    gameObjects.add(
+    //        InteractableCollider(
+    //            x: scene.convertNodeIndexToPositionX(i),
+    //            y: scene.convertNodeIndexToPositionY(i),
+    //            z: scene.convertNodeIndexToPositionZ(i),
+    //        )
+    //    );
+    // }
   }
 
   int getRandomStartingShirt() => randomItem(const[

@@ -84,6 +84,8 @@ class ItemType {
   static const GameObjects_Barrel_Flaming       = Index_GameObjects + 20;
   static const GameObjects_Toilet               = Index_GameObjects + 21;
   static const GameObjects_Crate_Wooden         = Index_GameObjects + 22;
+  static const GameObjects_Desk                 = Index_GameObjects + 23;
+  static const GameObjects_Vending_Machine      = Index_GameObjects + 24;
 
   static const Resource_Wood = Index_Resources + 5;
   static const Resource_Stone = Index_Resources + 6;
@@ -214,7 +216,8 @@ class ItemType {
   static bool isNotTypeEmpty(int value) => value != Empty;
 
   static bool isPersistable(int value) =>
-      isTypeEnvironment(value);
+       value != ItemType.GameObjects_Node_Collider &&
+       isTypeEnvironment(value);
 
   static bool isCollidable(int value) =>
       value == ItemType.GameObjects_Barrel_Purple     ||
@@ -222,6 +225,7 @@ class ItemType {
       value == ItemType.GameObjects_Barrel_Flaming    ||
       value == ItemType.GameObjects_Barrel            ||
       value == ItemType.GameObjects_Crate_Wooden      ||
+      value == ItemType.GameObjects_Desk              ||
       value == ItemType.GameObjects_Tavern_Sign        ;
 
   static double getRadius(int value){
@@ -236,6 +240,8 @@ class ItemType {
     value == ItemType.GameObjects_Barrel_Flaming    ||
     value == ItemType.GameObjects_Barrel            ||
     value == ItemType.GameObjects_Crate_Wooden      ||
+    value == ItemType.GameObjects_Desk              ||
+    value == ItemType.GameObjects_Vending_Machine   ||
     value == ItemType.GameObjects_Tavern_Sign        ;
 
   static bool applyGravity(int value) =>
@@ -622,6 +628,9 @@ class ItemType {
      GameObjects_Barrel_Flaming: "Flaming Barrel",
      GameObjects_Toilet: "Toilet",
      GameObjects_Crate_Wooden: "Wooden Crate",
+     GameObjects_Desk: "Wooden Desk",
+     GameObjects_Node_Collider: "Node Collider",
+     GameObjects_Vending_Machine: "Vending Machine",
   }[value] ?? "item-type-unknown($value)";
 
   static int getMaxQuantity(int itemType) => const {
@@ -734,6 +743,8 @@ class ItemType {
      GameObjects_Crystal_Small_Red,
      GameObjects_Toilet,
      GameObjects_Crate_Wooden,
+     GameObjects_Desk,
+     GameObjects_Vending_Machine,
   ];
 
   static bool isTypeBarrel(int type)=> const [
@@ -748,6 +759,7 @@ class ItemType {
     GameObjects_Barrel_Explosive,
     GameObjects_Barrel_Purple,
     GameObjects_Barrel_Flaming,
+    GameObjects_Vending_Machine,
   ].contains(type);
 }
 

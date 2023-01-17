@@ -43,6 +43,9 @@ flutter:
     - family: JetBrainsMono-Regular
       fonts:
         - asset: fonts/JetBrainsMono-Regular.ttf
+    - family: Audiowide-Regular
+      fonts:
+        - asset: fonts/Audiowide-Regular.ttf
   assets:
     - images/
     - images/template/

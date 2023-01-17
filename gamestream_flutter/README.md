@@ -6,97 +6,9 @@ firebase deploy
 navigate to next method: ctrl + shift + up / down arrows
 ctrl + w:   minimal mode
 
-[IDEAS]
-[ ] DARK-AGE
-[ ] DARK-WORLD
-[ ] DARK-WAR
-[ ] repeat killing same enemies yields no reward
-[ ] loud noises draw attention
-[ ] talk with other players
-[ ] trade with other players
-[ ] weapon torch flame
-[ ] hue changes on health lost
-[ ] hue changes on health low
 
-[OPTIMIZATIONS]
-[ ] optimize client do not use objects to store projectiles
-[ ] optimize client do not use objects to store characters
-[ ] optimize client do not use objects to store gameobjects
-[ ] optimize client do not use objects to store particles
-[ ] optimize client applyShadowAt
-[ ] optimize server writeCharacterTeamDirectionAndState
-[ ] optimize server writeCharacterHealthAndAnimationFrame
-[ ] optimize client renderNodeWater
-[ ] optimize client renderNodeWater
-
-[TODO]
-[ ] cache region
-[ ] fix android app title gamestream_flutter
-[ ] option fullscreen dialog on game start if it fails to do so automatically
-[ ] add mobile share (whatsapp, facebook) button
-
-[GAMEPLAY]
-[ ] highlight cursor gameobject item
-[ ] feature separate head-type and helm-type
-
-[EDITOR]
-[ ] editor spawn-node character type
-[ ] editor tool elevation
-[ ] scene edit tool pause ai
-[ ] scene edit tool pause time
-[ ] editor tab gameobjects
-[ ] editor tab characters
-
-[FEATURES]
-[ ] feature inventory tabs
-[ ] feature inventory max weight
-[ ] feature attributes
-[ ] feature skills
-[ ] feature loot gameobjects
-[ ] generate gradient using color modes lch hsl lab rgb 
-
-[CONTENT]
-[ ] new weapon type node cannon
-[ ] new weapon type gravity gun
-[ ] new gameobject type car
-[ ] new gameobject flaming barrel object
-[ ] new node type tires
-[ ] new node type train tracks
-[ ] new node type barbed wire
-[ ] new node type street lamp
-[ ] new weapon type crossbow
-[ ] new weapon type plasma rifle
-[ ] new weapon type stun grenade
-[ ] new enemy type flaming skull
-[ ] new character clothes scientist
-[ ] new item type army clothes
-[ ] new clothes suit
-[ ] new clothes police officer
-[ ] new clothes doctor
-[ ] new gameobject destroyable crates etc
-[ ] fix ai spots player through walls
-[ ] feature survival random treasure spawns
-[ ] feature spawn boss characters
-[ ] feature separate head type and helm type and hair type
-[ ] feature random treasure spawns
-[ ] feature vendor armour
-[ ] feature vendor trinkets
-[ ] feature being over encumbered depletes energy while running
-[ ] design suburbia school
-[ ] design suburbia house kitchen
-[ ] design suburbia cemetery
-[ ] design stronghold
-[ ] design scene suburbia
-[ ] feature saturation changes over time of day and night
-[ ] fix item type colors
-[ ] feature node type shot emits particle
-[ ] gunshot in smoke
-[ ] refactor particles to use src and remove types
-
-[CRITICAL]
-[ ] fix render visibility algorithm
-[ ] fix physics knocked through walls
-
+17.01.2023
+[x] new gameobject desk
 
 16.01.2023
 [x] feature explosions hit gameobjects

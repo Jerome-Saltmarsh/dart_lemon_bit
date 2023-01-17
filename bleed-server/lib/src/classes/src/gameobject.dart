@@ -15,6 +15,7 @@ class GameObject extends Collider {
      moveOnCollision  = ItemType.physicsMoveOnCollision(type);
      applyGravity     = ItemType.applyGravity(type);
      collidable       = ItemType.isCollidable(type);
+     interactable     = value == ItemType.GameObjects_Vending_Machine;
   }
 
   GameObject({

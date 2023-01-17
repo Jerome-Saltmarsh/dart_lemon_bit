@@ -8,7 +8,8 @@ void main() {
     init: GameSystem.init,
     buildUI: GameWebsite.buildUI,
     buildLoadingScreen: GameWebsite.buildLoadingPage,
-    themeData: ThemeData(fontFamily: 'JetBrainsMono-Regular'),
+    // themeData: ThemeData(fontFamily: 'JetBrainsMono-Regular'),
+    themeData: ThemeData(fontFamily: 'Audiowide-Regular'),
     backgroundColor: GameColors.black,
     onError: GameSystem.onError,
   );

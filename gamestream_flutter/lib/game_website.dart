@@ -290,6 +290,7 @@ class GameWebsite {
         child: child,
       );
 
+  
   static Widget buildColumnRegions(ConnectionRegion selectedRegion) =>
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -298,7 +299,7 @@ class GameWebsite {
             .map((ConnectionRegion region) => Container(
                   margin: const EdgeInsets.symmetric(vertical: 4),
                   child: buildTextButton(
-                    'Region ${Engine.enumString(region)}',
+                    '${Engine.enumString(region)}',
                     action: selectedRegion == region
                         ? null
                         : () => actionSelectRegion(region),
