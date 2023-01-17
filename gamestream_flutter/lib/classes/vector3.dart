@@ -23,6 +23,8 @@ class Vector3 with Position {
   int get indexColumn => y ~/ Node_Size;
   int get nodeIndex => GameQueries.getNodeIndex(x, y, z);
 
+  int get nodeVisibility => outOfBounds ? Visibility.Invisible : GameNodes.nodeVisible[nodeIndex];
+
   double get renderOrder => x + y + (z * 0.25);
 
   double get sortOrder => x + y + z;

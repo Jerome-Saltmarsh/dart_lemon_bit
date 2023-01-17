@@ -28,11 +28,6 @@ void renderTemplateWeapon(
   );
 }
 
-double getWeaponTypeSize(int weaponType){
-  if (weaponType == ItemType.Weapon_Melee_Sword) return 96.0;
-  return 64.0;
-}
-
 void renderCharacterTemplate(Character character, {
   bool renderHealthBar = true,
 }) {
@@ -41,7 +36,9 @@ void renderCharacterTemplate(Character character, {
   if (character.deadOrDying) return;
 
   if (renderHealthBar) {
-    renderCharacterHealthBar(character);
+    if (character.allie){
+      renderCharacterHealthBar(character);
+    }
   }
 
   var frameLegs = 0;

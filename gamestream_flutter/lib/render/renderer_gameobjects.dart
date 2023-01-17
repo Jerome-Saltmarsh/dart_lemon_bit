@@ -10,6 +10,11 @@ class RendererGameObjects extends Renderer {
 
   @override
   void renderFunction() {
+
+    if (gameObject.nodeVisibility != Visibility.Opaque){
+      return;
+    }
+
     final type = gameObject.type;
       if (ItemType.isTypeGameObject(type)) {
         Engine.renderSprite(
@@ -48,6 +53,11 @@ class RendererGameObjects extends Renderer {
   @override
   void updateFunction() {
     gameObject = ServerState.gameObjects[index];
+    while (gameObject.nodeVisibility != Visibility.Opaque) {
+      index++;
+      if (!remaining) return;
+      gameObject = ServerState.gameObjects[index];
+    }
     order = gameObject.renderOrder;
     orderZ = gameObject.indexZ;
   }

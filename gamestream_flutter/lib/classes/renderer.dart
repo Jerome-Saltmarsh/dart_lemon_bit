@@ -43,13 +43,15 @@ abstract class Renderer {
     remaining = false;
   }
 
+
   void renderNext() {
     if (!remaining) return;
     renderFunction();
     _index++;
-    remaining = _index < total;
-    if (remaining) {
-      updateFunction();
+    if (_index >= total) {
+      remaining = false;
+      return;
     }
+    updateFunction();
   }
 }
