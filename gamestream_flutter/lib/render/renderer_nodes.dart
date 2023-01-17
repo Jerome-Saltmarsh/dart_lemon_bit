@@ -531,12 +531,6 @@ class RendererNodes extends Renderer {
           srcY: AtlasNodeY.Boulder,
         );
         return;
-      case NodeType.Vendor:
-        renderStandardNode(
-          srcX: 1344,
-          srcY: 80,
-        );
-        return;
       case NodeType.Oven:
         renderStandardNode(
           srcX: AtlasNodeX.Oven,

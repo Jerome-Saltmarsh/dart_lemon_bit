@@ -46,6 +46,9 @@ flutter:
     - family: Audiowide-Regular
       fonts:
         - asset: fonts/Audiowide-Regular.ttf
+    - family: VT323-Regular
+      fonts:
+        - asset: fonts/VT323-Regular.ttf
   assets:
     - images/
     - images/template/

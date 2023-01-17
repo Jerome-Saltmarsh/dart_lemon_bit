@@ -25,7 +25,6 @@ const editorGridTypesColumn2 = [
   NodeType.Metal,
   NodeType.Sunflower,
   NodeType.Window,
-  NodeType.Vendor,
   NodeType.Sandbag,
   NodeType.Boulder,
   NodeType.Shopping_Shelf,

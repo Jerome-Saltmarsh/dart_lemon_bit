@@ -9,6 +9,7 @@ ctrl + w:   minimal mode
 
 17.01.2023
 [x] new gameobject desk
+[x] implement vending machine as gameobject instead of node
 
 16.01.2023
 [x] feature explosions hit gameobjects

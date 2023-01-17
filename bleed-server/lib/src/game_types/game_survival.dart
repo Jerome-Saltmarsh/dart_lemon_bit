@@ -1,5 +1,4 @@
 import 'package:bleed_server/gamestream.dart';
-import 'package:bleed_server/src/classes/src/node_collider.dart';
 import 'package:bleed_server/src/dark_age/dark_age_environment.dart';
 import 'package:lemon_math/functions/random_item.dart';
 
@@ -11,17 +10,6 @@ class GameSurvival extends Game {
       gameType: GameType.Survival,
   ) {
     triggerSpawnPoints();
-    // final totalNodes = scene.gridVolume;
-    // for (var i = 0; i < totalNodes; i++){
-    //    if (scene.nodeTypes[i] != NodeType.Vendor) continue;
-    //    gameObjects.add(
-    //        InteractableCollider(
-    //            x: scene.convertNodeIndexToPositionX(i),
-    //            y: scene.convertNodeIndexToPositionY(i),
-    //            z: scene.convertNodeIndexToPositionZ(i),
-    //        )
-    //    );
-    // }
   }
 
   int getRandomStartingShirt() => randomItem(const[

@@ -19,7 +19,6 @@ class GameMinimap {
       NodeType.Tree_Top: 6,
       NodeType.Bau_Haus: 7,
       NodeType.Brick: 8,
-      NodeType.Vendor: 9,
       NodeType.Torch: 1,
     }[nodeType] ?? 0;
 
@@ -31,10 +30,10 @@ class GameMinimap {
     final nodeTypes = GameNodes.miniMap;
 
     final vendors = <int>[];
-    for (var i = 0; i < GameNodes.total; i++){
-         if (GameNodes.nodeTypes[i] != NodeType.Vendor) continue;
-         vendors.add(i);
-    }
+    // for (var i = 0; i < GameNodes.total; i++){
+    //      if (GameNodes.nodeTypes[i] != NodeType.Vendor) continue;
+    //      vendors.add(i);
+    // }
 
     final total = ((area + vendors.length) * 4);
     if (src.length != total){

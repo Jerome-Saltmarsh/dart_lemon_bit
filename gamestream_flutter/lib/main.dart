@@ -9,7 +9,7 @@ void main() {
     buildUI: GameWebsite.buildUI,
     buildLoadingScreen: GameWebsite.buildLoadingPage,
     // themeData: ThemeData(fontFamily: 'JetBrainsMono-Regular'),
-    themeData: ThemeData(fontFamily: 'Audiowide-Regular'),
+    themeData: ThemeData(fontFamily: 'VT323-Regular'),
     backgroundColor: GameColors.black,
     onError: GameSystem.onError,
   );

@@ -38,7 +38,6 @@ class NodeType {
   static const Road = 75;
   static const Road_2 = 76;
   static const Metal = 77;
-  static const Vendor = 78;
   static const Sandbag = 79;
   static const Shopping_Shelf = 80;
 
@@ -82,7 +81,6 @@ class NodeType {
       type == Bed_Bottom    ||
       type == Chimney       ||
       type == Metal         ||
-      type == Vendor        ||
       type == Sandbag       ||
       type == Shopping_Shelf||
       type == Boulder        ;
@@ -194,7 +192,6 @@ class NodeType {
 
   static bool emitsLight(int value) =>
     value == Torch          ||
-    value == Vendor         ||
     value == Fireplace       ;
 
 
@@ -319,7 +316,6 @@ class NodeType {
     Spawn_Player: 'Spawn Player',
     Road: 'Road',
     Road_2: 'Road Paint',
-    Vendor: 'Vendor',
     Shopping_Shelf: "Shopping Shelf",
   }[type] ?? 'unknown($type)';
 }

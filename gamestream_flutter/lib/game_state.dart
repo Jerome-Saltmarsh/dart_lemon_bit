@@ -94,15 +94,6 @@ class GameState {
             alpha: 0,
           );
           break;
-        case NodeType.Vendor:
-          GameNodes.emitLightDynamic(
-              index: nodeIndex,
-              hue: 200,
-              saturation: (0.45 * 255).round(),
-              value: (0.95 * 255).round(),
-              alpha: 100,
-          );
-          break;
       }
     }
   }

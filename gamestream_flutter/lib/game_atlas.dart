@@ -370,7 +370,6 @@ class AtlasNodeX {
     NodeType.Boulder: Boulder,
     NodeType.Road: 768.0,
     NodeType.Road_2: 768.0,
-    NodeType.Vendor: 1344.0,
     NodeType.Sandbag: 588.0,
   }[type] ?? 7055;
 }
@@ -424,7 +423,6 @@ class AtlasNodeY {
     NodeType.Boulder: Boulder,
     NodeType.Road: 672.0,
     NodeType.Road_2: 672.0 + GameConstants.Sprite_Height_Padded,
-    NodeType.Vendor: 80.0,
   }[type] ?? 0;
 
   static double mapOrientation(int orientation) {
