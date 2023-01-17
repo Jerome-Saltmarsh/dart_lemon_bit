@@ -67,10 +67,12 @@ class GameRender {
       if (rendererParticles.remaining){
         next = next.compare(rendererParticles);
       }
-      next.renderNext();
-      if (next.remaining) continue;
+      if (next.remaining){
+        next.renderNext();
+        continue;
+      }
       totalRemaining--;
-      if (totalRemaining == 0) return;
+      if (totalRemaining <= 0) return;
 
       if (totalRemaining > 1) {
         if (next == rendererNodes) {
