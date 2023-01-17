@@ -52,6 +52,12 @@ abstract class Character extends Collider {
   set characterType(int value){
     _characterType = value;
     radius = CharacterType.getRadius(value);
+    if (value != CharacterType.Template) {
+      weaponType = ItemType.Empty;
+      bodyType = ItemType.Empty;
+      headType = ItemType.Empty;
+      legsType = ItemType.Empty;
+    }
   }
 
   /// PROPERTIES
