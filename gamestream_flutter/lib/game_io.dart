@@ -449,13 +449,4 @@ class GameIO {
       return;
     }
   }
-
-
-  // static void canvasRenderJoystick(Canvas canvas){
-  //     final base = Offset(joystickBaseX, joystickBaseY);
-  //     final end = Offset(joystickEndX, joystickEndY);
-  //     canvas.drawCircle(base, 20, Engine.paint);
-  //     canvas.drawCircle(end, 10, Engine.paint);
-  //     canvas.drawLine(base, end, Engine.paint);
-  // }
 }

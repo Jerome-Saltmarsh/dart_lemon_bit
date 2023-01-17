@@ -108,7 +108,7 @@ class GameNodes {
   }
 
   static void addInvisibleIndex(int index){
-    if (nodeVisible[index] == Visibility.Transparent) return;
+    if (nodeVisible[index] == Visibility.Invisible) return;
     nodeVisible[index] = Visibility.Invisible;
     nodeVisibleIndex[visibleIndex] = index;
     visibleIndex++;

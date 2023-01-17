@@ -5,15 +5,16 @@ import 'functions/render_shadow.dart';
 class RendererGameObjects extends Renderer {
   static late GameObject gameObject;
 
+  static final gameObjects = ServerState.gameObjects;
+
   @override
   int getTotal() => ServerState.totalGameObjects;
 
   @override
   void renderFunction() {
+    assert (gameObject.nodeVisibilityOpaque);
 
-    if (gameObject.nodeVisibility != Visibility.Opaque){
-      return;
-    }
+    // GameRender.renderTextV3(gameObject, gameObject.nodeVisibility, offsetY: -50);
 
     final type = gameObject.type;
       if (ItemType.isTypeGameObject(type)) {
@@ -52,11 +53,11 @@ class RendererGameObjects extends Renderer {
 
   @override
   void updateFunction() {
-    gameObject = ServerState.gameObjects[index];
-    while (gameObject.nodeVisibility != Visibility.Opaque) {
+    gameObject = gameObjects[index];
+    while (!gameObject.nodeVisibilityOpaque) {
       index++;
       if (!remaining) return;
-      gameObject = ServerState.gameObjects[index];
+      gameObject = gameObjects[index];
     }
     order = gameObject.renderOrder;
     orderZ = gameObject.indexZ;
