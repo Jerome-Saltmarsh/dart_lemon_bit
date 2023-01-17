@@ -12,16 +12,13 @@ class RendererGameObjects extends Renderer {
 
   @override
   void renderFunction() {
-    assert (gameObject.nodeVisibilityOpaque);
-
-    // GameRender.renderTextV3(gameObject, gameObject.nodeVisibility, offsetY: -50);
 
     final type = gameObject.type;
       if (ItemType.isTypeGameObject(type)) {
         Engine.renderSprite(
-          image: GameImages.atlas_gameobjects,
-          dstX: GameConvert.convertV3ToRenderX(gameObject),
-          dstY: GameConvert.convertV3ToRenderY(gameObject),
+          image: gameObject.nodeVisibilityOpaque ? GameImages.atlas_gameobjects : GameImages.atlas_gameobjects_transparent,
+          dstX: gameObject.renderX,
+          dstY: gameObject.renderY,
           srcX: AtlasItems.getSrcX(type),
           srcY: AtlasItems.getSrcY(type),
           anchorY: AtlasItems.getAnchorY(type),
@@ -54,7 +51,7 @@ class RendererGameObjects extends Renderer {
   @override
   void updateFunction() {
     gameObject = gameObjects[index];
-    while (!gameObject.nodeVisibilityOpaque) {
+    while (gameObject.nodeVisibilityInvisible) {
       index++;
       if (!remaining) return;
       gameObject = gameObjects[index];

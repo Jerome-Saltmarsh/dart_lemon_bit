@@ -14,6 +14,7 @@ class GameImages {
    static late Image particles;
    static late Image template_shadow;
    static late Image atlas_gameobjects;
+   static late Image atlas_gameobjects_transparent;
    static late Image atlas_nodes;
    static late Image atlas_nodes_transparent;
    static late Image atlas_characters;
@@ -193,6 +194,7 @@ class GameImages {
       Engine.loadImageAsset('images/atlas-zombie.png').then((value) => zombie = value);
       Engine.loadImageAsset('images/atlas-zombie-shadow.png').then((value) => zombie_shadow = value);
       Engine.loadImageAsset('images/atlas-gameobjects.png').then((value) => atlas_gameobjects = value);
+      Engine.loadImageAsset('images/atlas-gameobjects-transparent.png').then((value) => atlas_gameobjects_transparent = value);
       Engine.loadImageAsset('images/atlas-particles.png').then((value) => particles = value);
       Engine.loadImageAsset('images/atlas-projectiles.png').then((value) => projectiles = value);
       Engine.loadImageAsset('images/atlas-map.png').then((value) => minimap = value);
