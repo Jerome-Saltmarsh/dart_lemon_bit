@@ -227,6 +227,7 @@ class ItemType {
       value == ItemType.GameObjects_Crate_Wooden      ||
       value == ItemType.GameObjects_Desk              ||
       value == ItemType.GameObjects_Bed               ||
+      value == ItemType.GameObjects_Vending_Machine   ||
       value == ItemType.GameObjects_Tavern_Sign        ;
 
   static double getRadius(int value){
@@ -250,9 +251,10 @@ class ItemType {
     value == ItemType.GameObjects_Barrel_Purple     ||
     value == ItemType.GameObjects_Barrel_Explosive  ||
     value == ItemType.GameObjects_Barrel_Flaming    ||
+    value == ItemType.GameObjects_Crate_Wooden      ||
     value == ItemType.GameObjects_Barrel             ;
 
-  static bool physicsMoveOnCollision(int value) =>
+  static bool isMovable(int value) =>
       value == ItemType.GameObjects_Barrel_Purple     ||
       value == ItemType.GameObjects_Barrel_Explosive  ||
       value == ItemType.GameObjects_Barrel_Flaming    ||

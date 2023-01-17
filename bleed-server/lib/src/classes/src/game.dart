@@ -473,7 +473,7 @@ abstract class Game {
         ..setVelocity(player.lookRadian, mouseDistance * 0.15)
         ..collidable = false
         ..physical = false
-        ..applyGravity = true
+        // ..applyGravity = true
         ..quantity = 1
         ..velocityZ = 1.00
         ..owner = player

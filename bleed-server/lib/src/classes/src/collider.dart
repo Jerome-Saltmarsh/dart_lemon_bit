@@ -19,7 +19,7 @@ class Collider extends Position3 {
   var physical = true;
   /// If false this object will not be moved during a collision or when force is applied
   var movable = true;
-  var applyGravity = false;
+  // var applyGravity = false;
 
   var startX = 0.0;
   var startY = 0.0;
@@ -101,7 +101,7 @@ class Collider extends Position3 {
   }
 
   void updatePhysics(){
-    if (applyGravity) {
+    if (movable) {
       velocityZ -= GamePhysics.Gravity;
       velocityZ *= GamePhysics.Friction;
     }
