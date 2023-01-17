@@ -7,6 +7,7 @@ navigate to next method: ctrl + shift + up / down arrows
 ctrl + w:   minimal mode
 
 17.01.2023
+[x] feature hide gameobjects above player
 [x] fix zombies strike from far away
 [x] optimize render particle do not render offscreen particles
 [x] feature flaming barrels emit smoke particle

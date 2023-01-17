@@ -1059,7 +1059,7 @@ class RendererNodes extends Renderer {
 
     var index = (z * GameNodes.area) + (row * GameState.nodesTotalColumns) + column;
     while (index < GameNodes.total) {
-      if (NodeType.isRainOrEmpty(GameNodes.nodeTypes[index])) {
+      if (NodeType.isRain(GameNodes.nodeTypes[index])) {
         row += 1;
         column += 1;
         z += 2;
