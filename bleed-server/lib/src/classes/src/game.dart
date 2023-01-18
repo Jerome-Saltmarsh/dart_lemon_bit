@@ -894,14 +894,6 @@ abstract class Game {
     }
   }
 
-  // void updateColliderSceneCollisionVertical(Collider collider) {
-  //   if (!scene.getCollisionAt(collider.x, collider.y, collider.z)) return;
-  //   collider.z = ((collider.z ~/ Node_Height) * Node_Height) + Node_Height;
-  //   if (collider.velocityZ < 0) {
-  //     collider.velocityZ = -collider.velocityZ * 0.75;
-  //   }
-  // }
-
   void updateGameObjects() {
     gameObjects.forEach(updateColliderPhysics);
   }
@@ -1679,14 +1671,10 @@ abstract class Game {
             character.setCharacterStateIdle();
           }
         }
-      }     }
-    // character.updateMovement();
-    character.updateMotion();
+      }
+    }
+    updateColliderPhysics(character);
 
-    updateColliderSceneCollision(character);
-    // updateColliderSceneCollisionHorizontal(character);
-    // updateColliderSceneCollisionCenter(character);
-    // updateColliderSceneCollisionVertical(character);
     if (character.dying){
       if (character.stateDurationRemaining-- <= 0){
         setCharacterStateDead(character);
