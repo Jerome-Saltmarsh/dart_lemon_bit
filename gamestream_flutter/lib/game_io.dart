@@ -393,12 +393,19 @@ class GameIO {
   }
 
   static void onMouseClickedEditMode(){
-    if (Engine.keyPressedShiftLeft){
-      GameEditor.selectMouseGameObject();
-      return;
-    }
-    GameEditor.selectMouseBlock();
     GameEditor.actionRecenterCamera();
+    switch (GameEditor.editTab.value) {
+      case EditTab.File:
+        GameEditor.setTabGrid();
+        GameEditor.selectMouseBlock();
+        break;
+      case EditTab.Grid:
+        GameEditor.selectMouseBlock();
+        break;
+      case EditTab.Objects:
+        GameEditor.selectMouseGameObject();
+        break;
+    }
   }
 
   static void readPlayerInput() {

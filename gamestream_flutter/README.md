@@ -7,6 +7,7 @@ navigate to next method: ctrl + shift + up / down arrows
 ctrl + w:   minimal mode
 
 18.01.2023
+[x] fix editor gameobject stays selected during play mode
 [x] fix crystal render
 
 17.01.2023

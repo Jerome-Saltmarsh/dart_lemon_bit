@@ -4,7 +4,7 @@ class GameEditor {
   static final editorDialog = Watch<EditorDialog?>(null, onChanged: onChangedEditorDialog);
   static final selectedSceneName = Watch<String?>(null);
 
-  static final editTab = Watch(EditTab.Grid);
+  static final editTab = Watch(EditTab.Grid, onChanged: onChangedEditTab);
   static final gameObject = GameObject();
   static final gameObjectSelected = Watch(false);
   static final gameObjectSelectedType = Watch(0);
@@ -239,5 +239,15 @@ class GameEditor {
 
   static void actionGameDialogClose(){
     GameEditor.editorDialog.value = null;
+  }
+
+  static void setTabGrid(){
+    editTab.value = EditTab.Grid;
+  }
+
+  // EVENTS
+
+  static void onChangedEditTab(EditTab editTab){
+     deselectGameObject();
   }
 }

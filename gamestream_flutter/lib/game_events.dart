@@ -312,6 +312,7 @@ class GameEvents {
     GameState.spawnParticleStrikeBullet(x: x, y: y, z: z, angle: angle);
   }
 
+
   static void onChangedEdit(bool value) {
     if (value) {
       GameCamera.setModeFree();
@@ -319,6 +320,7 @@ class GameEvents {
       GamePlayer.message.value = "-press arrow keys to move\n\n-press tab to play";
       GamePlayer.messageTimer = 300;
     } else {
+      GameEditor.deselectGameObject();
       ClientActions.clearMouseOverDialogType();
       GameCamera.setModeChase();
       if (ServerState.sceneEditable.value){
