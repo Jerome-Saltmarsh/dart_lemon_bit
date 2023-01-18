@@ -2302,14 +2302,12 @@ abstract class Game {
           collider.z = nodeTop;
           collider.velocityZ = 0;
         }
-      } else {
-        if (nodeType == NodeType.Water) {
-          if (collider.z % Node_Height > Node_Height_Half){
+      } else if (nodeType == NodeType.Water) {
+          if (collider.z % Node_Height < Node_Height_Half){
             internalOnColliderEnteredWater(collider);
           }
           return;
-        }
-      }
+     }
     } else {
       if (collider.z < -100){
         deactivateCollider(collider);
