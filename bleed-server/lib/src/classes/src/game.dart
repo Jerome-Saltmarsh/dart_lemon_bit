@@ -903,21 +903,21 @@ abstract class Game {
   // }
 
   void updateGameObjects() {
-    gameObjects.forEach(updateGameObject);
+    gameObjects.forEach(updateColliderPhysics);
   }
 
-  void updateGameObject(GameObject gameObject) {
-    if (!gameObject.active) return;
+  void updateColliderPhysics(Collider collider) {
+    if (!collider.active) return;
 
-    gameObject.updateMotion();
+    collider.updateMotion();
 
-    if (gameObject.z < 0) {
-      deactivateCollider(gameObject);
+    if (collider.z < 0) {
+      deactivateCollider(collider);
       return;
     }
 
-    if (gameObject.collidable){
-      updateColliderSceneCollision(gameObject);
+    if (collider.collidable){
+      updateColliderSceneCollision(collider);
     }
   }
 
