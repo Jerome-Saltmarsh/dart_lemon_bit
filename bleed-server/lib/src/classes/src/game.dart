@@ -851,29 +851,45 @@ abstract class Game {
 
   void updateColliderSceneCollisionHorizontal(Collider collider) {
 
+    const Shifts = 5;
+
     if (scene.getCollisionAt(collider.left, collider.y, collider.z)) {
       if (collider.velocityX < 0) {
         collider.velocityX = -collider.velocityX;
       }
-      collider.x++;
+      for (var i = 0; i < Shifts; i++){
+        collider.x++;
+        if (!scene.getCollisionAt(collider.left, collider.y, collider.z)) break;
+      }
+
     }
     if (scene.getCollisionAt(collider.right, collider.y, collider.z)) {
       if (collider.velocityX > 0){
         collider.velocityX = -collider.velocityX;
       }
-      collider.x--;
+      for (var i = 0; i < Shifts; i++){
+        collider.x--;
+        if (!scene.getCollisionAt(collider.right, collider.y, collider.z)) break;
+      }
     }
     if (scene.getCollisionAt(collider.x, collider.top, collider.z)) {
       if (collider.y < 0){
         collider.velocityY = -collider.velocityY;
       }
-      collider.y++;
+      for (var i = 0; i < Shifts; i++){
+        collider.y++;
+        if (!scene.getCollisionAt(collider.x, collider.top, collider.z)) break;
+      }
+
     }
     if (scene.getCollisionAt(collider.x, collider.bottom, collider.z)) {
       if (collider.y > 0){
         collider.velocityY = -collider.velocityY;
       }
-      collider.y--;
+      for (var i = 0; i < Shifts; i++){
+        collider.y--;
+        if (!scene.getCollisionAt(collider.x, collider.bottom, collider.z)) break;
+      }
     }
   }
 
