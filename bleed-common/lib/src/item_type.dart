@@ -221,6 +221,7 @@ class ItemType {
 
   static double getRadius(int value) => const <int, double> {
     GameObjects_Vending_Machine: 25,
+    GameObjects_Bed: 25,
   }[value] ?? 15;
 
   static bool isCollidable(int value) =>

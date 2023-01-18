@@ -191,16 +191,16 @@ class NodeOrientation {
          if (y > 0.5) return 1.0;
          return 0;
        case Half_North:
-         if (x < 0.5) return 1.0;
+         if (x < 0.33) return 1.0;
          return 0;
        case Half_East:
-         if (y < 0.5) return 1.0;
+         if (y < 0.33) return 1.0;
          return 0;
        case Half_South:
-         if (x > 0.5) return 1.0;
+         if (x > 0.66) return 1.0;
          return 0;
        case Half_West:
-         if (y > 0.5) return 1.0;
+         if (y > 0.66) return 1.0;
          return 0;
        case Slope_Inner_North_East: // Grass Edge Bottom
          final total = x + y;
