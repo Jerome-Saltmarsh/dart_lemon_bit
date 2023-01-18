@@ -1017,35 +1017,7 @@ class EditorUI {
         ),
       );
     });
-
-
-    // return Column(
-    //   children: [
-    //     Row(
-    //       children: [
-    //         buildOrientationIcon(NodeOrientation.Column_Top_Left),
-    //         buildOrientationIcon(NodeOrientation.Column_Top_Center),
-    //         buildOrientationIcon(NodeOrientation.Column_Top_Right),
-    //       ],
-    //     ),
-    //     Row(
-    //       children: [
-    //         buildOrientationIcon(NodeOrientation.Column_Center_Left),
-    //         buildOrientationIcon(NodeOrientation.Column_Center_Center),
-    //         buildOrientationIcon(NodeOrientation.Column_Center_Right),
-    //       ],
-    //     ),
-    //     Row(
-    //       children: [
-    //         buildOrientationIcon(NodeOrientation.Column_Bottom_Left),
-    //         buildOrientationIcon(NodeOrientation.Column_Bottom_Center),
-    //         buildOrientationIcon(NodeOrientation.Column_Bottom_Right),
-    //       ],
-    //     ),
-    //   ],
-    // );
   }
-
 
   static Widget buildColumnSelectedGameObject() => GameUI.buildDialogUIControl(
       child: Container(
@@ -1063,6 +1035,9 @@ class EditorUI {
                   ),
                   GameUI.buildImageItemType(type),
                   text(ItemType.getName(type)),
+                  watch(GameEditor.gameObjectSelectedColliderEnabled, (bool colliderEnabled) =>
+                    text("Collider Enabled: $colliderEnabled", onPressed: () => GameNetwork.sendGameObjectRequest(GameObjectRequest.Toggle_Collider))
+                  ),
                 ],
               );
             }),

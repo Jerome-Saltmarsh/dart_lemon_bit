@@ -1582,6 +1582,7 @@ class Player extends Character with ByteWriter {
     writeByte(ServerResponse.Editor_GameObject_Selected);
     writePosition3(selectedGameObject);
     writeUInt16(selectedGameObject.type);
+    writeBool(selectedGameObject.collidable);
   }
 
   void writeEnvironmentLightning(int value){

@@ -533,8 +533,10 @@ class Connection with ByteReader {
       return errorInvalidArg("gameObjectRequestIndex ($gameObjectRequestIndex) is invalid");
 
     final gameObjectRequest = gameObjectRequests[gameObjectRequestIndex];
+    final selectedGameObject = player.editorSelectedGameObject;
 
     switch (gameObjectRequest) {
+
 
       case GameObjectRequest.Select:
         final gameObjects = player.scene.gameObjects;
@@ -611,6 +613,12 @@ class Connection with ByteReader {
 
       case GameObjectRequest.Set_Type:
         // TODO: Handle this case.
+        break;
+
+      case GameObjectRequest.Toggle_Collider:
+        if (selectedGameObject == null) return;
+        selectedGameObject.collidable = !selectedGameObject.collidable;
+        player.writeEditorGameObjectSelected();
         break;
     }
   }
