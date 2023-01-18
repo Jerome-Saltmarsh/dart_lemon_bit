@@ -2289,11 +2289,6 @@ abstract class Game {
       final nodeBottomOrientation = scene.nodeOrientations[nodeBottomIndex];
       final nodeType = scene.nodeTypes[nodeBottomIndex];
 
-      if (nodeType == NodeType.Water) {
-        internalOnColliderEnteredWater(collider);
-        return;
-      }
-
       if (nodeBottomOrientation == NodeOrientation.Solid){
         collider.z = ((collider.z ~/ Node_Height) * Node_Height) + Node_Height;
         collider.velocityZ = 0;
@@ -2306,6 +2301,13 @@ abstract class Game {
         if (nodeTop > collider.z){
           collider.z = nodeTop;
           collider.velocityZ = 0;
+        }
+      } else {
+        if (nodeType == NodeType.Water) {
+          if (collider.z % Node_Height > Node_Height_Half){
+            internalOnColliderEnteredWater(collider);
+          }
+          return;
         }
       }
     } else {
