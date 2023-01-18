@@ -6,6 +6,7 @@ export 'firestoreClient/firestoreService.dart';
 
 export 'src/engine.dart';
 export 'src/maths.dart';
+export 'src/enums/hit_type.dart';
 export 'src/physics.dart';
 export 'src/typedefs.dart';
 export 'src/classes/lib.dart';

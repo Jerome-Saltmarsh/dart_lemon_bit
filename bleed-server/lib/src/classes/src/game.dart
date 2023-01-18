@@ -129,7 +129,8 @@ abstract class Game {
     required Collider target,
     required int damage,
     required double angle,
-    double force = 20,
+    required int hitType,
+    required double force,
   }) {}
 
   /// @override
@@ -584,6 +585,7 @@ abstract class Game {
           target: other,
           damage: character.damage,
           srcCharacter: character,
+          hitType: HitType.Melee
       );
       attackHit = true;
     }
@@ -601,6 +603,7 @@ abstract class Game {
         target: gameObject,
         damage: character.damage,
         srcCharacter: character,
+        hitType: HitType.Melee
       );
       attackHit = true;
     }
@@ -935,6 +938,7 @@ abstract class Game {
           srcCharacter: srcCharacter,
           damage: damage,
           friendlyFire: true,
+          hitType: HitType.Explosion,
         );
     }
 
@@ -949,6 +953,7 @@ abstract class Game {
           srcCharacter: srcCharacter,
           damage: damage,
           friendlyFire: true,
+          hitType: HitType.Explosion,
       );
     }
   }
@@ -1531,6 +1536,7 @@ abstract class Game {
         srcCharacter: owner,
         target: target,
         damage: projectile.damage,
+        hitType: HitType.Projectile,
       );
     }
 
@@ -1549,6 +1555,7 @@ abstract class Game {
     required Collider target,
     required int damage,
     required double angle,
+    required int hitType,
     double force = 20,
     bool friendlyFire = false,
   }) {
@@ -1573,6 +1580,7 @@ abstract class Game {
         damage: damage,
         angle: angle,
         force: force,
+        hitType: hitType,
     );
 
     // TODO Hack
@@ -1612,6 +1620,7 @@ abstract class Game {
         angle: radiansV2(character, attackTarget),
         srcCharacter: character,
         damage: character.damage,
+        hitType: HitType.Projectile,
       );
       clearCharacterTarget(character);
     }
