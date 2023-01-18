@@ -894,13 +894,13 @@ abstract class Game {
     }
   }
 
-  void updateColliderSceneCollisionVertical(Collider collider) {
-    if (!scene.getCollisionAt(collider.x, collider.y, collider.z)) return;
-    collider.z = ((collider.z ~/ Node_Height) * Node_Height) + Node_Height;
-    if (collider.velocityZ < 0) {
-      collider.velocityZ = -collider.velocityZ * 0.75;
-    }
-  }
+  // void updateColliderSceneCollisionVertical(Collider collider) {
+  //   if (!scene.getCollisionAt(collider.x, collider.y, collider.z)) return;
+  //   collider.z = ((collider.z ~/ Node_Height) * Node_Height) + Node_Height;
+  //   if (collider.velocityZ < 0) {
+  //     collider.velocityZ = -collider.velocityZ * 0.75;
+  //   }
+  // }
 
   void updateGameObjects() {
     gameObjects.forEach(updateGameObject);
@@ -917,8 +917,7 @@ abstract class Game {
     }
 
     if (gameObject.collidable){
-      updateColliderSceneCollisionVertical(gameObject);
-      updateColliderSceneCollisionHorizontal(gameObject);
+      updateColliderSceneCollision(gameObject);
     }
   }
 
@@ -1683,8 +1682,10 @@ abstract class Game {
       }     }
     character.updateMovement();
 
-    updateColliderSceneCollisionHorizontal(character);
-    updateColliderSceneCollisionCenter(character);
+    updateColliderSceneCollision(character);
+    // updateColliderSceneCollisionHorizontal(character);
+    // updateColliderSceneCollisionCenter(character);
+    // updateColliderSceneCollisionVertical(character);
     if (character.dying){
       if (character.stateDurationRemaining-- <= 0){
         setCharacterStateDead(character);
@@ -2276,29 +2277,37 @@ abstract class Game {
     player.writePlayerEvent(PlayerEvent.GameObject_Deselected);
   }
 
-  void updateColliderSceneCollisionCenter(Character character) {
+  void updateColliderSceneCollision(Collider collider){
+    updateColliderSceneCollisionCenter(collider);
+    updateColliderSceneCollisionHorizontal(collider);
+  }
 
-    if (scene.getNodeInBoundsXYZ(character.x, character.y, character.z)) {
-      final nodeAtFeetIndex = scene.getNodeIndexXYZ(character.x, character.y, character.z);
-      final nodeAtFeetOrientation = scene.nodeOrientations[nodeAtFeetIndex];
+  void updateColliderSceneCollisionCenter(Collider collider) {
 
-      if (nodeAtFeetOrientation == NodeOrientation.Solid){
-        character.z = ((character.z ~/ Node_Height) * Node_Height) + Node_Height;
-        character.velocityZ = 0;
+    if (scene.getNodeInBoundsXYZ(collider.x, collider.y, collider.z)) {
+      final nodeBottomIndex = scene.getNodeIndexXYZ(collider.x, collider.y, collider.z);
+      final nodeBottomOrientation = scene.nodeOrientations[nodeBottomIndex];
+
+      if (nodeBottomOrientation == NodeOrientation.Solid){
+        collider.z = ((collider.z ~/ Node_Height) * Node_Height) + Node_Height;
+        collider.velocityZ = 0;
       } else
-      if (nodeAtFeetOrientation != NodeOrientation.None) {
-        final bottom = (character.z ~/ Node_Height) * Node_Height;
-        final percX = ((character.x % Node_Size) / Node_Size);
-        final percY = ((character.y % Node_Size) / Node_Size);
-        final nodeTop = bottom + (NodeOrientation.getGradient(nodeAtFeetOrientation, percX, percY) * Node_Height);
-        if (nodeTop > character.z){
-          character.z = nodeTop;
-          character.velocityZ = 0;
+      if (nodeBottomOrientation != NodeOrientation.None) {
+        final bottom = (collider.z ~/ Node_Height) * Node_Height;
+        final percX = ((collider.x % Node_Size) / Node_Size);
+        final percY = ((collider.y % Node_Size) / Node_Size);
+        final nodeTop = bottom + (NodeOrientation.getGradient(nodeBottomOrientation, percX, percY) * Node_Height);
+        if (nodeTop > collider.z){
+          collider.z = nodeTop;
+          collider.velocityZ = 0;
         }
       }
     } else {
-      if (character.z < -100){
-        setCharacterStateDead(character);
+      if (collider.z < -100){
+        deactivateCollider(collider);
+        if (collider is Character){
+          setCharacterStateDead(collider);
+        }
       }
     }
   }
