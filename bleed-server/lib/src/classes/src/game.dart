@@ -56,7 +56,7 @@ abstract class Game {
 
   final int gameType;
   var frame = 0;
-  var running = true;
+  var _running = true;
   Scene scene;
   final players = <Player>[];
   final characters = <Character>[];
@@ -69,8 +69,11 @@ abstract class Game {
   DarkAgeEnvironment environment;
   DarkAgeTime time;
 
-  void toggleRunning(){
-    running = !running;
+  bool get running => _running;
+
+  set running(bool value){
+    if (_running == value) return;
+    _running = value;
     for (final player in players){
       player.writeGameProperties();
     }
@@ -781,7 +784,7 @@ abstract class Game {
   /// UPDATE
 
   void updateInProgress() {
-    if (!running) return;
+    if (!_running) return;
 
     frame++;
     updateAITargets();

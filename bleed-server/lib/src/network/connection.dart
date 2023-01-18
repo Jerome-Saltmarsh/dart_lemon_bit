@@ -352,7 +352,7 @@ class Connection with ByteReader {
     switch (editRequest) {
       case EditRequest.Toggle_Game_Running:
         if (!isLocalMachine && game is! GameDarkAgeEditor) return;
-        game.toggleRunning();
+        game.running = !game.running;
         break;
 
       case EditRequest.Generate_Scene:
