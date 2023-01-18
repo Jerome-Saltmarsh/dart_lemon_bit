@@ -2475,7 +2475,7 @@ abstract class Game {
       scene.getNodeIndex(value.indexZ, value.indexRow, value.indexColumn);
 
   void playerPickup(Player player, GameObject target) {
-    var quantityRemaining = target.quantity;
+    var quantityRemaining = target.quantity > 0 ? target.quantity : 1;
     final maxQuantity = ItemType.getMaxQuantity(target.type);
     if (maxQuantity > 1) {
       for (var i = 0; i < player.inventory.length; i++){
