@@ -620,6 +620,12 @@ class Connection with ByteReader {
         selectedGameObject.collidable = !selectedGameObject.collidable;
         player.writeEditorGameObjectSelected();
         break;
+
+      case GameObjectRequest.Toggle_Movable:
+        if (selectedGameObject == null) return;
+        selectedGameObject.movable = !selectedGameObject.movable;
+        player.writeEditorGameObjectSelected();
+        break;
     }
   }
 

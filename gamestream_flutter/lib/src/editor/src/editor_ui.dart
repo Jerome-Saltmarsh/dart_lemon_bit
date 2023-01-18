@@ -1036,7 +1036,10 @@ class EditorUI {
                   GameUI.buildImageItemType(type),
                   text(ItemType.getName(type)),
                   watch(GameEditor.gameObjectSelectedColliderEnabled, (bool colliderEnabled) =>
-                    text("Collider Enabled: $colliderEnabled", onPressed: () => GameNetwork.sendGameObjectRequest(GameObjectRequest.Toggle_Collider))
+                    text("Collidable: $colliderEnabled", onPressed: () => GameNetwork.sendGameObjectRequest(GameObjectRequest.Toggle_Collider))
+                  ),
+                  watch(GameEditor.gameObjectSelectedMovableEnabled, (bool colliderEnabled) =>
+                    text("Movable: $colliderEnabled", onPressed: () => GameNetwork.sendGameObjectRequest(GameObjectRequest.Toggle_Movable))
                   ),
                 ],
               );

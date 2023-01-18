@@ -9,6 +9,7 @@ class GameEditor {
   static final gameObjectSelected = Watch(false);
   static final gameObjectSelectedType = Watch(0);
   static final gameObjectSelectedColliderEnabled = Watch(true);
+  static final gameObjectSelectedMovableEnabled = Watch(true);
   static final gameObjectSelectedAmount = Watch(0);
   static final gameObjectSelectedParticleType = Watch(0);
   static final gameObjectSelectedParticleSpawnRate = Watch(0);
