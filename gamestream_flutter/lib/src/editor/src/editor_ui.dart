@@ -21,12 +21,12 @@ class EditorUI {
               child: EditorUI.buildRowWeatherControls()
           )
       ),
-      if (activeEditTab == EditTab.Objects)
-        Positioned(
-          left: 0,
-          bottom: 6,
-          child: buildColumnSelectedGameObject(),
-        ),
+      // if (activeEditTab == EditTab.Objects)
+      //   Positioned(
+      //     left: 0,
+      //     bottom: 6,
+      //     child: buildColumnSelectedGameObject(),
+      //   ),
       buildWindowAIControls(),
       if (activeEditTab == EditTab.Objects)
         Positioned(
@@ -362,27 +362,34 @@ class EditorUI {
        ),
      );
 
-  static Widget buildEditorTabGameObjects() => SingleChildScrollView(
-    child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              container(
-                  child: 'Spawn Zombie',
-                  action: () {
-                    GameNetwork.sendClientRequestEdit(
+  static Widget buildEditorTabGameObjects() =>
+
+      watch(GameEditor.gameObjectSelected, (bool objectSelected){
+          if (objectSelected){
+            return buildColumnSelectedGameObject();
+          }
+          return SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                container(
+                    child: 'Spawn Zombie',
+                    action: () {
+                      GameNetwork.sendClientRequestEdit(
                         EditRequest.Spawn_Zombie,
                         GameEditor.nodeSelectedIndex.value,
-                    );
-                  }),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: ItemType.GameObjectTypes
-                    .map(buildRowAddGameObject)
-                    .toList(),
-              )
-            ],
-          ),
-  );
+                      );
+                    }),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: ItemType.GameObjectTypes
+                      .map(buildRowAddGameObject)
+                      .toList(),
+                )
+              ],
+            ),
+          );
+      });
 
   static Widget buildRowAddGameObject(int gameObjectType){
 
@@ -1039,25 +1046,30 @@ class EditorUI {
     // );
   }
 
-  static Widget buildColumnSelectedGameObject() {
-    return watch(GameEditor.gameObjectSelected, (bool gameObjectSelected) {
-      return Container(
+
+  static Widget buildColumnSelectedGameObject() => GameUI.buildDialogUIControl(
+      child: Container(
         color: brownLight,
+        width: 200,
         padding: const EdgeInsets.all(6),
         child: Column(
           children: [
             watch(GameEditor.gameObjectSelectedType, (int type) {
               return Column(
                 children: [
+                  Container(
+                      alignment: Alignment.centerRight,
+                      child: text("X", onPressed: GameNetwork.sendGameObjectRequestDeselect),
+                  ),
+                  GameUI.buildImageItemType(type),
                   text(ItemType.getName(type)),
                 ],
               );
             }),
           ],
         ),
-      );
-    });
-  }
+      ),
+    );
 
   static Widget buildColumnEditParticleEmitter() {
     return Column(

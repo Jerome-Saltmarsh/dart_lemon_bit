@@ -754,4 +754,14 @@ class GameUI {
     ),
   );
 
+
+  static Widget buildImageItemType(int itemType) =>
+      Engine.buildAtlasImage(
+        image: GameImages.atlas_gameobjects,
+        srcX: AtlasItems.getSrcX(itemType),
+        srcY: AtlasItems.getSrcY(itemType),
+        srcWidth: AtlasItems.getSrcWidth(itemType),
+        srcHeight: AtlasItems.getSrcHeight(itemType),
+    );
+
 }
