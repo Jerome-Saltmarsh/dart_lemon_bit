@@ -219,6 +219,10 @@ class ItemType {
   static bool isPersistable(int value) =>
        isTypeEnvironment(value);
 
+  static double getRadius(int value) => const <int, double> {
+    GameObjects_Vending_Machine: 25,
+  }[value] ?? 15;
+
   static bool isCollidable(int value) =>
       value == GameObjects_Barrel_Purple     ||
       value == GameObjects_Barrel_Explosive  ||
@@ -228,11 +232,8 @@ class ItemType {
       value == GameObjects_Desk              ||
       value == GameObjects_Bed               ||
       value == GameObjects_Vending_Machine   ||
+      value == GameObjects_Toilet            ||
       value == GameObjects_Tavern_Sign        ;
-
-  static double getRadius(int value) => const <int, double> {
-        GameObjects_Vending_Machine: 25,
-     }[value] ?? 15;
 
   static bool isPhysical(int value) =>
     value == GameObjects_Barrel_Purple     ||
@@ -243,19 +244,14 @@ class ItemType {
     value == GameObjects_Desk              ||
     value == GameObjects_Vending_Machine   ||
     value == GameObjects_Bed               ||
+    value == GameObjects_Toilet            ||
     value == GameObjects_Tavern_Sign        ;
-
-  static bool applyGravity(int value) =>
-    value == GameObjects_Barrel_Purple     ||
-    value == GameObjects_Barrel_Explosive  ||
-    value == GameObjects_Barrel_Flaming    ||
-    value == GameObjects_Crate_Wooden      ||
-    value == GameObjects_Barrel             ;
 
   static bool isMovable(int value) =>
       value == GameObjects_Barrel_Purple     ||
       value == GameObjects_Barrel_Explosive  ||
       value == GameObjects_Barrel_Flaming    ||
+      value == GameObjects_Crate_Wooden      ||
       value == GameObjects_Barrel            ;
 
   static bool isTypeEquipped(int value) =>
@@ -553,7 +549,26 @@ class ItemType {
        return "Recipe";
      return "item-type-group-unknown-$value";
   }
-  
+
+  static bool isBoundaryRadial(int value) => const [
+      GameObjects_Toilet,
+      GameObjects_Barrel,
+      GameObjects_Barrel_Flaming,
+  ].contains(value);
+
+  static bool isBoundaryBox(int value) => const [
+    GameObjects_Bed,
+    GameObjects_Desk,
+  ].contains(value);
+
+  static double getBoxWidth(int itemType) {
+    return 0.0;
+  }
+
+  static double getBoxHeight(int itemType) {
+    return 0.0;
+  }
+
   static String getName(int value) => const {
      Empty: "Empty",
      Base_Health: "Base Health",

@@ -1068,7 +1068,7 @@ class RendererNodes extends Renderer {
       }
 
       final distance = (z - GamePlayer.indexZ).abs();
-      final transparent = distance <= 2;
+      final transparent = distance <= 1;
 
       if (column >= initColumn && row >= initRow) {
 

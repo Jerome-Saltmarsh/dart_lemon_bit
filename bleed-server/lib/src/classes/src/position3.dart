@@ -1,6 +1,4 @@
 
-import 'dart:math';
-
 import 'package:lemon_math/library.dart';
 
 import 'package:bleed_server/gamestream.dart';
@@ -22,15 +20,15 @@ class Position3 with Position {
      return this;
   }
 
-  bool withinRadius(Position3 position3, num radius){
+  bool withinRadius(Position3 position3, double radius){
     return withinDistance(position3.x, position3.y, position3.z, radius);
   }
 
-  bool withinRadiusCheap(Position3 position3, num radius) =>
+  bool withinRadiusCheap(Position3 position3, double radius) =>
      ((this.x - position3.x).abs() < radius) &&
      ((this.y - position3.y).abs() < radius) ;
 
-  bool withinDistance(double x, double y, double z, num radius){
+  bool withinDistance(double x, double y, double z, double radius){
     final xDiff = (this.x - x).abs();
     if (xDiff > radius) return false;
 
@@ -40,7 +38,7 @@ class Position3 with Position {
     final zDiff = (this.z - z).abs();
     if (zDiff > radius) return false;
 
-    return sqrt((xDiff * xDiff) + (yDiff * yDiff) + (zDiff * zDiff)) <= radius;
+    return ((xDiff * xDiff) + (yDiff * yDiff) + (zDiff * zDiff)) <= radius * radius;
   }
 
   /// FUNCTIONS

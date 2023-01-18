@@ -4,10 +4,12 @@ import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/game_physics.dart';
 import 'package:lemon_math/library.dart';
 
+enum ColliderShape {
+   Radial, Box,
+}
 
 class Collider extends Position3 {
   var active = true;
-  var mass = 1.0;
   var velocityX = 0.0;
   var velocityY = 0.0;
   var velocityZ = 0.0;
@@ -19,11 +21,16 @@ class Collider extends Position3 {
   var physical = true;
   /// If false this object will not be moved during a collision or when force is applied
   var movable = true;
-  // var applyGravity = false;
 
   var startX = 0.0;
   var startY = 0.0;
   var startZ = 0.0;
+
+  var sizeX = 0.0;
+  var sizeY = 0.0;
+
+  /// True for radial and false for box
+  var shapeRadial = true;
 
   Character? owner;
   var damage = 0;
@@ -123,5 +130,23 @@ class Collider extends Position3 {
     if (a.team == TeamType.Neutral) return true;
     if (b.team == TeamType.Neutral) return true;
     return a.team == b.team;
+  }
+
+  bool collidingWith(Collider that){
+    if (!active) return false;
+    if (!collidable) return false;
+    if (!that.active) return false;
+    if (!that.collidable) return false;
+    if (left > that.right) return false;
+    if (right < that.left) return false;
+    if (top > that.bottom) return false;
+    if (bottom < that.top) return false;
+
+     if (shapeRadial){
+        if (that.shapeRadial){
+
+        }
+     }
+     return true;
   }
 }

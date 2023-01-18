@@ -1149,6 +1149,14 @@ abstract class Game {
   }
 
   void resolveCollisionPhysics(Collider a, Collider b) {
+    if (a.shapeRadial && b.shapeRadial) {
+       resolveCollisionPhysicsRadial(a, b);
+       return;
+    }
+    resolveCollisionPhysicsRadial(a, b);
+  }
+
+  void resolveCollisionPhysicsRadial(Collider a, Collider b) {
     final combinedRadius = a.radius + b.radius;
     final totalDistance = getDistanceXY(a.x, a.y, b.x, b.y);
     final overlap = combinedRadius - totalDistance;
@@ -1182,6 +1190,7 @@ abstract class Game {
       b.y -= targetY;
     }
   }
+
 
   void sortGameObjects() {
     Position3.sort(characters);
