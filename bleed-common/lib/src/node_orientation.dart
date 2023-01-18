@@ -165,30 +165,30 @@ class NodeOrientation {
    static double getGradient(int orientation, double x, double y) {
      switch (orientation) {
        case Solid:
-         return 1;
+         return 1.0;
        case Slope_North:
-         return 1 - x;
+         return 1.0 - x;
        case Slope_East:
-         return 1 - y;
+         return 1.0 - y;
        case Slope_South:
          return x;
        case Slope_West:
          return y;
        case Corner_Top:
-         if (x < 0.5) return 1.0;
-         if (y < 0.5) return 1.0;
+         if (x < 0.33) return 1.0;
+         if (y < 0.33) return 1.0;
          return 0;
        case Corner_Right:
-         if (x > 0.5) return 1.0;
-         if (y < 0.5) return 1.0;
+         if (x > 0.66) return 1.0;
+         if (y < 0.33) return 1.0;
          return 0;
        case Corner_Bottom:
-         if (x > 0.5) return 1.0;
-         if (y > 0.5) return 1.0;
+         if (x > 0.66) return 1.0;
+         if (y > 0.66) return 1.0;
          return 0;
        case Corner_Left:
-         if (x < 0.5) return 1.0;
-         if (y > 0.5) return 1.0;
+         if (x < 0.33) return 1.0;
+         if (y > 0.66) return 1.0;
          return 0;
        case Half_North:
          if (x < 0.33) return 1.0;

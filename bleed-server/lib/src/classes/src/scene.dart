@@ -139,14 +139,14 @@ class Scene {
     y < gridColumnLength;
 
   bool getCollisionAt(double x, double y, double z) {
-     final orientation = getNodeOrientationXYZ(x, y, z);
-     if (orientation == NodeOrientation.None) return false;
-     if (orientation == NodeOrientation.Solid) return true;
-     final percX = ((x % Node_Size) / Node_Size);
-     final percY = ((y % Node_Size) / Node_Size);
-     return ((z ~/ Node_Height) * Node_Height)
-         + (NodeOrientation.getGradient(orientation, percX, percY) * Node_Height)
-         >= z;
+    final orientation = getNodeOrientationXYZ(x, y, z);
+    if (orientation == NodeOrientation.None) return false;
+    if (orientation == NodeOrientation.Solid) return true;
+    final percX = ((x % Node_Size) / Node_Size);
+    final percY = ((y % Node_Size) / Node_Size);
+    return ((z ~/ Node_Height) * Node_Height)
+        + (NodeOrientation.getGradient(orientation, percX, percY) * Node_Height)
+        >= z;
   }
 
   double convertNodeIndexToPositionZ(int index) =>

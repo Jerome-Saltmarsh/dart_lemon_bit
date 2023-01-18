@@ -852,43 +852,44 @@ abstract class Game {
   void updateColliderSceneCollisionHorizontal(Collider collider) {
 
     const Shifts = 5;
+    final z = collider.z + Node_Height_Half;
 
-    if (scene.getCollisionAt(collider.left, collider.y, collider.z)) {
+    if (scene.getCollisionAt(collider.left, collider.y, z)) {
       if (collider.velocityX < 0) {
         collider.velocityX = -collider.velocityX;
       }
       for (var i = 0; i < Shifts; i++){
         collider.x++;
-        if (!scene.getCollisionAt(collider.left, collider.y, collider.z)) break;
+        if (!scene.getCollisionAt(collider.left, collider.y, z)) break;
       }
 
     }
-    if (scene.getCollisionAt(collider.right, collider.y, collider.z)) {
+    if (scene.getCollisionAt(collider.right, collider.y, z)) {
       if (collider.velocityX > 0){
         collider.velocityX = -collider.velocityX;
       }
       for (var i = 0; i < Shifts; i++){
         collider.x--;
-        if (!scene.getCollisionAt(collider.right, collider.y, collider.z)) break;
+        if (!scene.getCollisionAt(collider.right, collider.y, z)) break;
       }
     }
-    if (scene.getCollisionAt(collider.x, collider.top, collider.z)) {
+    if (scene.getCollisionAt(collider.x, collider.top, z)) {
       if (collider.y < 0){
         collider.velocityY = -collider.velocityY;
       }
       for (var i = 0; i < Shifts; i++){
         collider.y++;
-        if (!scene.getCollisionAt(collider.x, collider.top, collider.z)) break;
+        if (!scene.getCollisionAt(collider.x, collider.top, z)) break;
       }
 
     }
-    if (scene.getCollisionAt(collider.x, collider.bottom, collider.z)) {
+    if (scene.getCollisionAt(collider.x, collider.bottom, z)) {
       if (collider.y > 0){
         collider.velocityY = -collider.velocityY;
       }
       for (var i = 0; i < Shifts; i++){
         collider.y--;
-        if (!scene.getCollisionAt(collider.x, collider.bottom, collider.z)) break;
+        if (!scene.getCollisionAt(collider.x, collider.bottom, z)) break;
       }
     }
   }
@@ -1682,9 +1683,7 @@ abstract class Game {
       }     }
     character.updateMovement();
 
-    for (var i = 0; i < 2; i++) {
-      updateColliderSceneCollisionCircular(character);
-    }
+    updateColliderSceneCollisionHorizontal(character);
     updateColliderSceneCollisionCenter(character);
     if (character.dying){
       if (character.stateDurationRemaining-- <= 0){
@@ -2275,29 +2274,6 @@ abstract class Game {
     if (player.editorSelectedGameObject == null) return;
     player.editorSelectedGameObject = null;
     player.writePlayerEvent(PlayerEvent.GameObject_Deselected);
-  }
-
-  void updateColliderSceneCollisionCircular(Collider collider){
-    const distance = 3;
-    final stepHeight = collider.z + Node_Height_Half;
-
-    if (scene.getCollisionAt(collider.left, collider.top, stepHeight)) {
-      collider.x += distance;
-      collider.y += distance;
-    }
-    else
-    if (scene.getCollisionAt(collider.right, collider.bottom, stepHeight)) {
-      collider.x -= distance;
-      collider.y -= distance;
-    }
-    if (scene.getCollisionAt(collider.left, collider.bottom, stepHeight)) {
-      collider.x += distance;
-      collider.y -= distance;
-    } else
-    if (scene.getCollisionAt(collider.right, collider.top, stepHeight)) {
-      collider.x -= distance;
-      collider.y += distance;
-    }
   }
 
   void updateColliderSceneCollisionCenter(Character character) {
