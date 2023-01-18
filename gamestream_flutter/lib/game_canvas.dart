@@ -125,7 +125,6 @@ class GameCanvas {
     ClientState.rendersSinceUpdate.value++;
     renderPlayerRunTarget();
     // drawMouse();
-
     // renderObjectRadius();
   }
 

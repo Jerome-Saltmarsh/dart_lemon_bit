@@ -11,7 +11,6 @@ class GameEditor {
   static final gameObjectSelectedAmount = Watch(0);
   static final gameObjectSelectedParticleType = Watch(0);
   static final gameObjectSelectedParticleSpawnRate = Watch(0);
-  static final gameObjectSelectedRadius = Watch(0.0);
   static final gameObjectSelectedSpawnType = Watch(0);
 
   static final nodeSelectedType = Watch<int>(0, onChanged: onChangedSelectedNodeType);

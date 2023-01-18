@@ -393,13 +393,13 @@ class GameIO {
   }
 
   static void onMouseClickedEditMode(){
-    GameEditor.actionRecenterCamera();
     switch (GameEditor.editTab.value) {
       case EditTab.File:
         GameEditor.setTabGrid();
         GameEditor.selectMouseBlock();
         break;
       case EditTab.Grid:
+        GameEditor.actionRecenterCamera();
         GameEditor.selectMouseBlock();
         break;
       case EditTab.Objects:

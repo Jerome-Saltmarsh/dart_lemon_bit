@@ -550,7 +550,11 @@ class Connection with ByteReader {
           closest = gameObject;
           distance = nextDistance;
         }
-        player.editorSelectedGameObject = closest;
+        if (distance < 100){
+          player.editorSelectedGameObject = closest;
+        } else {
+          player.game.playerDeselectEditorSelectedGameObject(player);
+        }
         break;
 
       case GameObjectRequest.Deselect:

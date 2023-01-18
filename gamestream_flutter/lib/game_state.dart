@@ -1109,7 +1109,7 @@ class GameState {
     if (GameEditor.gameObjectSelected.value){
       Engine.renderCircleOutline(
         sides: 24,
-        radius: GameEditor.gameObjectSelectedRadius.value,
+        radius: ItemType.getRadius(GameEditor.gameObjectSelectedType.value),
         x: GameEditor.gameObject.renderX,
         y: GameEditor.gameObject.renderY,
         color: Colors.white,
