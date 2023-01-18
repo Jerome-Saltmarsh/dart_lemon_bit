@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:bleed_server/src/game_physics.dart';
 import 'package:lemon_math/library.dart';
 
 import 'package:bleed_server/gamestream.dart';
@@ -288,15 +287,6 @@ abstract class Character extends Collider {
 
   double getAngleXY(double x, double y) =>
       getAngleBetween(this.x, this.y, x, y);
-
-
-  void updateMovement() {
-    x += velocityX;
-    y += velocityY;
-    z += velocityZ;
-    velocityZ -= GamePhysics.Gravity;
-    applyFriction(GamePhysics.Friction);
-  }
 
   void setCharacterStateRunning()=>
       setCharacterState(value: CharacterState.Running, duration: 0);

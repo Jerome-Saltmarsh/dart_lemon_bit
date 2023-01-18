@@ -93,11 +93,6 @@ class Collider extends Position3 {
     velocityY = getOpposite(angle, speed);
   }
 
-  void applyFriction(double amount){
-    velocityX *= amount;
-    velocityY *= amount;
-  }
-
   void applyForce({
     required double force,
     required double angle,
@@ -107,13 +102,13 @@ class Collider extends Position3 {
     velocityY += getOpposite(angle, force);
   }
 
-  void updateMotion(){
-    if (!movable) return;
-
+  void applyVelocity(){
     x += velocityX;
     y += velocityY;
     z += velocityZ;
+  }
 
+  void applyFriction() {
     velocityX *= GamePhysics.Friction;
     velocityY *= GamePhysics.Friction;
     velocityZ -= GamePhysics.Gravity;

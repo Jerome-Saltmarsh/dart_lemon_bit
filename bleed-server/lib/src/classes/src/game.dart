@@ -901,7 +901,10 @@ abstract class Game {
   void updateColliderPhysics(Collider collider) {
     if (!collider.active) return;
 
-    collider.updateMotion();
+    if (collider.movable) {
+      collider.applyVelocity();
+      collider.applyFriction();
+    }
 
     if (collider.z < 0) {
       deactivateCollider(collider);
@@ -2271,11 +2274,25 @@ abstract class Game {
     updateColliderSceneCollisionHorizontal(collider);
   }
 
+  void internalOnColliderEnteredWater(Collider collider) {
+    deactivateCollider(collider);
+    if (collider is Character) {
+      setCharacterStateDead(collider);
+    }
+    dispatchV3(GameEventType.Splash, collider);
+  }
+
   void updateColliderSceneCollisionCenter(Collider collider) {
 
     if (scene.getNodeInBoundsXYZ(collider.x, collider.y, collider.z)) {
       final nodeBottomIndex = scene.getNodeIndexXYZ(collider.x, collider.y, collider.z);
       final nodeBottomOrientation = scene.nodeOrientations[nodeBottomIndex];
+      final nodeType = scene.nodeTypes[nodeBottomIndex];
+
+      if (nodeType == NodeType.Water) {
+        internalOnColliderEnteredWater(collider);
+        return;
+      }
 
       if (nodeBottomOrientation == NodeOrientation.Solid){
         collider.z = ((collider.z ~/ Node_Height) * Node_Height) + Node_Height;
