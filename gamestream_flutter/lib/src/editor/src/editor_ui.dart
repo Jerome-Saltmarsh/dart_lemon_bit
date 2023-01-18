@@ -678,6 +678,7 @@ class EditorUI {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            text("Game Running", onPressed: () => GameNetwork.sendClientRequestEdit(EditRequest.Toggle_Game_Running)),
             text("Spawn AI", onPressed: ServerActions.editSceneSpawnAI),
             text("Clear Spawned AI",
                 onPressed: ServerActions.editSceneClearSpawnedAI),

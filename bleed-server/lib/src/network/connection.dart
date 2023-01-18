@@ -353,7 +353,13 @@ class Connection with ByteReader {
        return errorInvalidArg('invalid edit request $editRequestIndex');
     }
     final editRequest = EditRequest.values[editRequestIndex];
+
     switch (editRequest) {
+      case EditRequest.Toggle_Game_Running:
+        if (!isLocalMachine && game is! GameDarkAgeEditor) return;
+        game.running = !game.running;
+        break;
+
       case EditRequest.Generate_Scene:
         const min = 5;
         final rows = parseArg2(arguments);

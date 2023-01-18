@@ -56,15 +56,15 @@ abstract class Game {
 
   final int gameType;
   var frame = 0;
+  var running = true;
   Scene scene;
   final players = <Player>[];
   final characters = <Character>[];
   final projectiles = <Projectile>[];
   final jobs = <GameJob>[];
-
   final scripts = <GameScript>[];
-
   final scriptReader = ByteReader();
+  var _timerUpdateAITargets = 0;
 
   DarkAgeEnvironment environment;
   DarkAgeTime time;
@@ -81,7 +81,6 @@ abstract class Game {
      instance.timer = timer;
      return instance;
   }
-
 
   /// In seconds
   void customInitPlayer(Player player) {}
@@ -775,18 +774,12 @@ abstract class Game {
 
   /// UPDATE
 
-  var _timerUpdateAITargets = 0;
-
   void updateInProgress() {
+    if (!running) return;
 
     frame++;
-    if (_timerUpdateAITargets-- <= 0) {
-      _timerUpdateAITargets = 15;
-      updateAITargets();
-    }
-
+    updateAITargets();
     internalUpdateJobs();
-
     customUpdate();
     updateGameObjects();
     updateCollisions();
@@ -2111,6 +2104,10 @@ abstract class Game {
   }
 
   void updateAITargets() {
+    if (_timerUpdateAITargets-- > 0) return;
+
+    _timerUpdateAITargets = 15;
+
     for (final character in characters) {
       if (!character.alive) continue;
       if (character is AI == false) continue;

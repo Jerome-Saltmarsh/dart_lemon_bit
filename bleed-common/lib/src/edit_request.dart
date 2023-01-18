@@ -8,4 +8,5 @@ enum EditRequest {
    Scene_Toggle_Underground,
    Scene_Set_Floor_Type,
    Generate_Scene,
+   Toggle_Game_Running,
 }

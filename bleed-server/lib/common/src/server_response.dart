@@ -9,9 +9,6 @@ class ServerResponse {
   static const NpcsDebug = 22;
   static const Game_Time = 23;
   static const Scene_Changed = 24;
-  static const Scene_Shade_Max = 25;
-  static const Player_Ability = 28;
-  static const Waiting_For_More_Players = 31;
   static const Player_Text = 32;
   static const Game_Type = 34;
   static const Subscription_Required = 41;

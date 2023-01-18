@@ -7,6 +7,7 @@ navigate to next method: ctrl + shift + up / down arrows
 ctrl + w:   minimal mode
 
 18.01.2023
+[x] feature editor pause game
 [x] feature editor toggle gameobject movable enabled
 [x] feature editor toggle gameobject collider enabled
 [x] new gameobject fire hydrant
