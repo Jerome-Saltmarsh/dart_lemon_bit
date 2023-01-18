@@ -422,10 +422,6 @@ class GameNetwork {
     sendClientRequest(ClientRequest.GameObject, request.index);
   }
 
-  static void sendClientRequestTogglePaths() {
-    sendClientRequest(ClientRequest.Toggle_Debug);
-  }
-
   static void sendClientRequestSelectPerkType(int perk){
     sendClientRequest(ClientRequest.Select_Perk, perk);
   }

@@ -42,18 +42,11 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Grid:
           readNodes();
           break;
-        case ServerResponse.Debug_Mode:
-          readDebugMode();
-          break;
         case ServerResponse.Game_Time:
           readGameTime();
           break;
         case ServerResponse.Game_Type:
           ServerState.gameType.value = readByte();
-          break;
-        case ServerResponse.Player_Spawned:
-          readPlayerSpawned();
-          GameActions.playerStop();
           break;
         case ServerResponse.Environment:
           readServerResponseEnvironment();
@@ -450,21 +443,9 @@ class ServerResponseReader with ByteReader {
     readVector3(GamePlayer.abilityTarget);
   }
 
-  void readPlayerSpawned() {
-   GamePlayer.position.x = readDouble();
-   GamePlayer.position.y = readDouble();
-   GameCamera.centerOnPlayer();
-    Engine.zoom = 1.0;
-    Engine.targetZoom = 1.0;
-  }
-
   void readGameTime() {
     ServerState.hours.value = readByte();
     ServerState.minutes.value = readByte();
-  }
-
-  void readDebugMode() {
-    GameUI.debug.value = readBool();
   }
 
   void readNodes() {

@@ -20,7 +20,6 @@ class GameUI {
   }, onChanged: onVisibilityChangedMessageBox);
   static final textEditingControllerMessage = TextEditingController();
   static final textFieldMessage = FocusNode();
-  static final debug = Watch(false);
   static final panelTypeKey = <int, GlobalKey>{};
   static final playerTextStyle = TextStyle(color: Colors.white);
   static final mapVisible = Watch(false);

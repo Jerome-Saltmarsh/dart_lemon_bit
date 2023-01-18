@@ -1001,12 +1001,6 @@ class Player extends Character with ByteWriter {
     inventoryDirty = true;
   }
 
-  void toggleDebug(){
-    debug = !debug;
-    writeByte(ServerResponse.Debug_Mode);
-    writeBool(debug);
-  }
-
   void writePlayerPosition(){
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Position);

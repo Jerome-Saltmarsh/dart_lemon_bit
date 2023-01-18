@@ -191,11 +191,6 @@ class Connection with ByteReader {
       case ClientRequest.Npc_Talk_Select_Option:
         return handleNpcTalkSelectOption(player, arguments);
 
-      case ClientRequest.Toggle_Debug:
-        if (!isLocalMachine && game is! GameDarkAgeEditor) return;
-        player.toggleDebug();
-        break;
-
       case ClientRequest.Speak:
         player.text = arguments
             .sublist(1, arguments.length)

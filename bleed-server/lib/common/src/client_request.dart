@@ -2,7 +2,6 @@ class ClientRequest {
   static const Update = 0;
   static const Join = 1;
   static const Revive = 2;
-  static const Toggle_Debug = 3;
   static const Version = 4;
   static const Speak = 5;
   static const Teleport = 6;
