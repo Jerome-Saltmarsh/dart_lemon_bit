@@ -110,13 +110,14 @@ class Collider extends Position3 {
   void updateMotion(){
     if (!movable) return;
 
-    velocityZ -= GamePhysics.Gravity;
-    velocityZ *= GamePhysics.Friction;
-    velocityX *= GamePhysics.Friction;
-    velocityY *= GamePhysics.Friction;
     x += velocityX;
     y += velocityY;
     z += velocityZ;
+
+    velocityX *= GamePhysics.Friction;
+    velocityY *= GamePhysics.Friction;
+    velocityZ -= GamePhysics.Gravity;
+    velocityZ *= GamePhysics.Friction;
   }
 
   /// FUNCTIONS

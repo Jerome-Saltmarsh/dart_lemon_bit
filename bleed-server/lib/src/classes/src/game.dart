@@ -1680,7 +1680,8 @@ abstract class Game {
           }
         }
       }     }
-    character.updateMovement();
+    // character.updateMovement();
+    character.updateMotion();
 
     updateColliderSceneCollision(character);
     // updateColliderSceneCollisionHorizontal(character);

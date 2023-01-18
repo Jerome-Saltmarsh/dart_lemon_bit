@@ -219,6 +219,9 @@ abstract class Character extends Collider {
     if (name != null){
       this.name = name;
     }
+    movable = true;
+    physical = true;
+    collidable = true;
     radius = CharacterType.getRadius(characterType);
   }
 
@@ -286,12 +289,13 @@ abstract class Character extends Collider {
   double getAngleXY(double x, double y) =>
       getAngleBetween(this.x, this.y, x, y);
 
+
   void updateMovement() {
     x += velocityX;
     y += velocityY;
     z += velocityZ;
     velocityZ -= GamePhysics.Gravity;
-    applyFriction(0.75);
+    applyFriction(GamePhysics.Friction);
   }
 
   void setCharacterStateRunning()=>
