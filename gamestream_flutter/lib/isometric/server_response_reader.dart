@@ -69,8 +69,8 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Weather:
           readWeather();
           break;
-        case ServerResponse.Scene_Meta_Data:
-          readSceneMetaData();
+        case ServerResponse.Game_Properties:
+          readGameProperties();
           break;
         case ServerResponse.Map_Coordinate:
           readMapCoordinate();
@@ -396,9 +396,10 @@ class ServerResponseReader with ByteReader {
     GamePlayer.npcTalkOptions.value = options;
   }
 
-  void readSceneMetaData() {
+  void readGameProperties() {
     ServerState.sceneEditable.value = readBool();
     ServerState.sceneName.value = readString();
+    ServerState.gameRunning.value = readBool();
   }
 
   void readWeather() {

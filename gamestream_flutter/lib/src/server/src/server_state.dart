@@ -36,6 +36,7 @@ class ServerState {
   static final playerSelectHero = Watch(false);
   static final sceneEditable = Watch(false);
   static final sceneName = Watch<String?>(null);
+  static final gameRunning = Watch(true);
   static final rainType = Watch(RainType.None, onChanged: GameEvents.onChangedRain);
   static final weatherBreeze = Watch(false);
   static final hours = Watch(0, onChanged: GameEvents.onChangedHour);

@@ -1202,7 +1202,7 @@ class Player extends Character with ByteWriter {
 
   void downloadScene(){
     writeGrid();
-    writeSceneMetaData();
+    writeGameProperties();
     writeMapCoordinate();
     writeRenderMap(game.customPropMapVisible);
     writeGameType(game.gameType);
@@ -1545,10 +1545,11 @@ class Player extends Character with ByteWriter {
     }
   }
 
-  void writeSceneMetaData() {
-    writeByte(ServerResponse.Scene_Meta_Data);
+  void writeGameProperties() {
+    writeByte(ServerResponse.Game_Properties);
     writeBool((game is GameDarkAgeEditor || isLocalMachine));
     writeString(game.scene.name);
+    writeBool(game.running);
   }
 
   void writePlayerQuests(){

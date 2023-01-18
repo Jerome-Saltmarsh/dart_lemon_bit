@@ -69,6 +69,12 @@ abstract class Game {
   DarkAgeEnvironment environment;
   DarkAgeTime time;
 
+  void toggleRunning(){
+    running = !running;
+    for (final player in players){
+      player.writeGameProperties();
+    }
+  }
 
   GameScript getNewGameScript({required int timer}){
      for (final script in scripts) {

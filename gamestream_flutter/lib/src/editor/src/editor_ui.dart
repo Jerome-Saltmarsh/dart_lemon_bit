@@ -668,6 +668,7 @@ class EditorUI {
         ],
       );
 
+
   static Positioned buildWindowAIControls() {
     return Positioned(
       top: 70,
@@ -678,7 +679,9 @@ class EditorUI {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            text("Game Running", onPressed: () => GameNetwork.sendClientRequestEdit(EditRequest.Toggle_Game_Running)),
+            watch(ServerState.gameRunning, (gameRunning) {
+              return text("Game Running: $gameRunning", onPressed: () => GameNetwork.sendClientRequestEdit(EditRequest.Toggle_Game_Running));
+            }),
             text("Spawn AI", onPressed: ServerActions.editSceneSpawnAI),
             text("Clear Spawned AI",
                 onPressed: ServerActions.editSceneClearSpawnedAI),
