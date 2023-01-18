@@ -57,7 +57,7 @@ class GameEvents {
       GameAudio.footstep_mud_6.playXYZ(x, y, z);
       final amount = ServerState.rainType.value == RainType.Heavy ? 3 : 2;
       for (var i = 0; i < amount; i++){
-        GameState.spawnParticleWaterDrop(x: x, y: y, z: z);
+        GameState.spawnParticleWaterDrop(x: x, y: y, z: z, zv: 1.5);
       }
     }
 
@@ -281,7 +281,7 @@ class GameEvents {
 
   static void onSplash(double x, double y, double z) {
     for (var i = 0; i < 10; i++){
-      GameState.spawnParticleWaterDrop(x: x, y: y, z: z);
+      GameState.spawnParticleWaterDrop(x: x, y: y, z: z, zv: randomBetween(1.5, 2.5));
     }
     return GameAudio.splash.playXYZ(x, y, z);
   }

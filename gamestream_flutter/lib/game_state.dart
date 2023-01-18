@@ -368,6 +368,7 @@ class GameState {
     required double x,
     required double y,
     required double z,
+    required double zv,
   }) {
     spawnParticle(
         type: ParticleType.Water_Drop,
@@ -376,7 +377,7 @@ class GameState {
         z: z,
         angle: randomAngle(),
         speed: 0.5,
-        zv: randomBetween(1.5, 3),
+        zv: zv,
         weight: 5,
         duration: 30,
         rotation: 0,

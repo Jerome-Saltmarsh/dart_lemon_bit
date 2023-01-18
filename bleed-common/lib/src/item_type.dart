@@ -87,6 +87,7 @@ class ItemType {
   static const GameObjects_Desk                 = Index_GameObjects + 23;
   static const GameObjects_Vending_Machine      = Index_GameObjects + 24;
   static const GameObjects_Bed                  = Index_GameObjects + 25;
+  static const GameObjects_Firehydrant          = Index_GameObjects + 26;
 
   static const Resource_Wood = Index_Resources + 5;
   static const Resource_Stone = Index_Resources + 6;
@@ -234,6 +235,7 @@ class ItemType {
       value == GameObjects_Bed               ||
       value == GameObjects_Vending_Machine   ||
       value == GameObjects_Toilet            ||
+      value == GameObjects_Firehydrant       ||
       value == GameObjects_Tavern_Sign        ;
 
   static bool isPhysical(int value) =>
@@ -246,14 +248,15 @@ class ItemType {
     value == GameObjects_Vending_Machine   ||
     value == GameObjects_Bed               ||
     value == GameObjects_Toilet            ||
+    value == GameObjects_Firehydrant       ||
     value == GameObjects_Tavern_Sign        ;
 
   static bool isMovable(int value) =>
-      value == GameObjects_Barrel_Purple     ||
-      value == GameObjects_Barrel_Explosive  ||
-      value == GameObjects_Barrel_Flaming    ||
-      value == GameObjects_Crate_Wooden      ||
-      value == GameObjects_Barrel            ;
+    value == GameObjects_Barrel_Purple     ||
+    value == GameObjects_Barrel_Explosive  ||
+    value == GameObjects_Barrel_Flaming    ||
+    value == GameObjects_Crate_Wooden      ||
+    value == GameObjects_Barrel            ;
 
   static bool isTypeEquipped(int value) =>
     value == Equipped_Weapon  ||
@@ -648,6 +651,7 @@ class ItemType {
      GameObjects_Desk: "Wooden Desk",
      GameObjects_Bed: "Bed",
      GameObjects_Vending_Machine: "Vending Machine",
+     GameObjects_Firehydrant: "Fire Hydrant",
   }[value] ?? "item-type-unknown($value)";
 
   static int getMaxQuantity(int itemType) => const {
@@ -727,7 +731,6 @@ class ItemType {
 
   static const HeadTypes = [
       Head_Swat,
-      // Head_Blonde,
       Head_Wizards_Hat,
       Head_Rogues_Hood,
       Head_Steel_Helm,
@@ -763,6 +766,7 @@ class ItemType {
      GameObjects_Desk,
      GameObjects_Vending_Machine,
      GameObjects_Bed,
+     GameObjects_Firehydrant,
   ];
 
   static bool isTypeBarrel(int type)=> const [
@@ -778,6 +782,7 @@ class ItemType {
     GameObjects_Barrel_Purple,
     GameObjects_Barrel_Flaming,
     GameObjects_Vending_Machine,
+    GameObjects_Firehydrant,
   ].contains(type);
 }
 
