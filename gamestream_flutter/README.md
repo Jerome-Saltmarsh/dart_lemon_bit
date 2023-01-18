@@ -7,6 +7,7 @@ navigate to next method: ctrl + shift + up / down arrows
 ctrl + w:   minimal mode
 
 18.01.2023
+[x] fix gameobject node collision
 [x] fix half collision distance from half to third
 [x] fix editor gameobject stays selected during play mode
 [x] fix crystal render

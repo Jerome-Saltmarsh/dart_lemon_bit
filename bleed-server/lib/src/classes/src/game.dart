@@ -850,23 +850,30 @@ abstract class Game {
   }
 
   void updateColliderSceneCollisionHorizontal(Collider collider) {
-    if (collider.velocityX < 0) {
-      if (scene.getCollisionAt(collider.left, collider.y, collider.z)) {
+
+    if (scene.getCollisionAt(collider.left, collider.y, collider.z)) {
+      if (collider.velocityX < 0) {
         collider.velocityX = -collider.velocityX;
       }
-    } else if (collider.velocityX > 0) {
-      if (scene.getCollisionAt(collider.right, collider.y, collider.z)) {
-        collider.velocityX = -collider.velocityX;
-      }
+      collider.x++;
     }
-    if (collider.velocityY < 0) {
-      if (scene.getCollisionAt(collider.x, collider.top, collider.z)) {
+    if (scene.getCollisionAt(collider.right, collider.y, collider.z)) {
+      if (collider.velocityX > 0){
+        collider.velocityX = -collider.velocityX;
+      }
+      collider.x--;
+    }
+    if (scene.getCollisionAt(collider.x, collider.top, collider.z)) {
+      if (collider.y < 0){
         collider.velocityY = -collider.velocityY;
       }
-    } else if (collider.velocityY > 0) {
-      if (scene.getCollisionAt(collider.x, collider.bottom, collider.z)) {
+      collider.y++;
+    }
+    if (scene.getCollisionAt(collider.x, collider.bottom, collider.z)) {
+      if (collider.y > 0){
         collider.velocityY = -collider.velocityY;
       }
+      collider.y--;
     }
   }
 
@@ -885,15 +892,17 @@ abstract class Game {
   void updateGameObject(GameObject gameObject) {
     if (!gameObject.active) return;
 
+    gameObject.updateMotion();
+
     if (gameObject.z < 0) {
       deactivateCollider(gameObject);
       return;
     }
 
-
-    gameObject.updatePhysics();
-    updateColliderSceneCollisionVertical(gameObject);
-    updateColliderSceneCollisionHorizontal(gameObject);
+    if (gameObject.collidable){
+      updateColliderSceneCollisionVertical(gameObject);
+      updateColliderSceneCollisionHorizontal(gameObject);
+    }
   }
 
   void createExplosion({
@@ -1182,10 +1191,14 @@ abstract class Game {
     final targetX = xDiffNormalized * halfOverlap;
     final targetY = yDiffNormalized * halfOverlap;
     if (a.movable){
+      // a.velocityX += targetX;
+      // a.velocityY += targetY;
       a.x += targetX;
       a.y += targetY;
     }
     if (b.movable){
+      // b.velocityX -= targetX;
+      // b.velocityY -= targetY;
       b.x -= targetX;
       b.y -= targetY;
     }
