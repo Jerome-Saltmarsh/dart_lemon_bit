@@ -2,6 +2,13 @@ import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/dark_age/dark_age_environment.dart';
 import 'package:lemon_math/functions/random_item.dart';
 
+class HitType {
+   static const Bullet      = 0;
+   static const Blade       = 1;
+   static const Blunt       = 2;
+   static const Explosion   = 3;
+}
+
 class GameSurvival extends Game {
 
   GameSurvival({required super.scene}) : super(
@@ -139,18 +146,16 @@ class GameSurvival extends Game {
     required Character srcCharacter,
     required Collider target,
     required int damage,
-    Position3? srcPosition,
+    required double angle,
     double force = 20,
   }) {
     if (target is GameObject) {
-      if (srcPosition is Projectile) {
+      // if (srcPosition is Projectile) {
         if (target.type == ItemType.GameObjects_Barrel_Explosive) {
           deactivateCollider(target);
-          final owner = srcPosition.owner;
-          if (owner == null) return;
-          createExplosion(target: target, srcCharacter: owner);
+          createExplosion(target: target, srcCharacter: srcCharacter);
         }
-      }
+      // }
 
       if (DestroyableGameObjects.contains(target.type)) {
         deactivateCollider(target);

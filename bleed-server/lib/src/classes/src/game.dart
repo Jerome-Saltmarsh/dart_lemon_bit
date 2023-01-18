@@ -128,7 +128,7 @@ abstract class Game {
     required Character srcCharacter,
     required Collider target,
     required int damage,
-    Position3? srcPosition,
+    required double angle,
     double force = 20,
   }) {}
 
@@ -580,7 +580,7 @@ abstract class Game {
         performZ,
         attackRadius)) continue;
       applyHit(
-          srcPosition: character,
+          angle: radiansV2(character, other),
           target: other,
           damage: character.damage,
           srcCharacter: character,
@@ -597,7 +597,7 @@ abstract class Game {
           attackRadius)) continue;
 
       applyHit(
-        srcPosition: character,
+        angle: radiansV2(character, gameObject),
         target: gameObject,
         damage: character.damage,
         srcCharacter: character,
@@ -807,7 +807,8 @@ abstract class Game {
   }
 
   void internalUpdateJobs() {
-    for (final job in jobs){
+    for (var i = 0; i < jobs.length; i++){
+      final job = jobs[i];
       if (job.timer <= 0) continue;
       job.timer--;
       if (job.timer > 0) continue;
@@ -929,7 +930,7 @@ abstract class Game {
         if (gameObject.inactive) continue;
         if (!gameObject.withinRadius(target, radius)) continue;
         applyHit(
-          srcPosition: target,
+          angle: radiansV2(target, gameObject),
           target: gameObject,
           srcCharacter: srcCharacter,
           damage: damage,
@@ -943,7 +944,7 @@ abstract class Game {
       if (character.dead) continue;
       if (!target.withinRadius(character, radius)) continue;
       applyHit(
-          srcPosition: target,
+          angle: radiansV2(target, character),
           target: character,
           srcCharacter: srcCharacter,
           damage: damage,
@@ -1526,9 +1527,9 @@ abstract class Game {
 
     if (target is Collider) {
       applyHit(
+        angle: projectile.velocityAngle,
         srcCharacter: owner,
         target: target,
-        srcPosition: projectile,
         damage: projectile.damage,
       );
     }
@@ -1547,13 +1548,13 @@ abstract class Game {
     required Character srcCharacter,
     required Collider target,
     required int damage,
-    Position3? srcPosition,
+    required double angle,
     double force = 20,
     bool friendlyFire = false,
   }) {
     assert (target.active);
 
-    final angle = radiansV2(srcPosition ?? srcCharacter, target);
+    // final angle = radiansV2(srcPosition ?? srcCharacter, target);
 
     if (target is GameObject){
        if (ItemType.isMaterialMetal(target.type)){
@@ -1570,7 +1571,7 @@ abstract class Game {
         srcCharacter: srcCharacter,
         target: target,
         damage: damage,
-        srcPosition: srcPosition,
+        angle: angle,
         force: force,
     );
 
@@ -1579,7 +1580,7 @@ abstract class Game {
       dispatchV3(GameEventType.Zombie_Strike, srcCharacter);
     }
     if (target is Character) {
-      if (!friendlyFire && Collider.onSameTeam(srcPosition, target)) return;
+      if (!friendlyFire && Collider.onSameTeam(srcCharacter, target)) return;
       if (target.deadOrDying) return;
       applyDamageToCharacter(src: srcCharacter, target: target, amount: damage);
     }
@@ -1607,8 +1608,8 @@ abstract class Game {
     if (attackTarget == null) return;
     if (attackTarget is Collider) {
       applyHit(
-        srcPosition: character,
         target: attackTarget,
+        angle: radiansV2(character, attackTarget),
         srcCharacter: character,
         damage: character.damage,
       );

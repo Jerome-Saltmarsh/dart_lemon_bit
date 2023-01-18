@@ -28,17 +28,6 @@ class GameDarkAge extends Game {
   }
 
   @override
-  void customOnHitApplied({
-    required Character srcCharacter,
-    required Collider target,
-    required int damage,
-    Position3? srcPosition,
-    double force = 20,
-  }) {
-
-  }
-
-  @override
   void customOnCharacterKilled(Character target, dynamic src) {
      if (target is AI){
         if (src is Player) {
