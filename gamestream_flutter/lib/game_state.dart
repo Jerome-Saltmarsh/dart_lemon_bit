@@ -364,7 +364,6 @@ class GameState {
     }
   }
 
-
   static void spawnParticleWaterDrop({
     required double x,
     required double y,
@@ -377,9 +376,9 @@ class GameState {
         z: z,
         angle: randomAngle(),
         speed: 0.5,
-        zv: 1.5,
+        zv: randomBetween(1.5, 3),
         weight: 5,
-        duration: 15,
+        duration: 30,
         rotation: 0,
         rotationV: 0,
         scaleV: 0,

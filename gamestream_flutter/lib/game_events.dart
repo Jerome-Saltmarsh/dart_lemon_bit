@@ -149,7 +149,8 @@ class GameEvents {
         }
         return;
       case GameEventType.Splash:
-        return onSplash(x, y, z);
+        onSplash(x, y, z);
+        return;
       case GameEventType.Spawn_Dust_Cloud:
         break;
       case GameEventType.Player_Hit:
@@ -279,7 +280,7 @@ class GameEvents {
   }
 
   static void onSplash(double x, double y, double z) {
-    for (var i = 0; i < 8; i++){
+    for (var i = 0; i < 10; i++){
       GameState.spawnParticleWaterDrop(x: x, y: y, z: z);
     }
     return GameAudio.splash.playXYZ(x, y, z);
