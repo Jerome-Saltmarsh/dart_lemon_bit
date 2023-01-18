@@ -9,6 +9,7 @@ enum GameObjectRequest {
   Move_To_Mouse,
   Toggle_Collider,
   Toggle_Movable,
+  Toggle_Collectable,
 }
 
 const gameObjectRequests = GameObjectRequest.values;

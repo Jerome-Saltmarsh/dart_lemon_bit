@@ -1045,6 +1045,9 @@ class EditorUI {
                   watch(GameEditor.gameObjectSelectedMovableEnabled, (bool colliderEnabled) =>
                     text("Movable: $colliderEnabled", onPressed: () => GameNetwork.sendGameObjectRequest(GameObjectRequest.Toggle_Movable))
                   ),
+                  watch(GameEditor.gameObjectSelectedCollectableEnabled, (bool enabled) =>
+                    text("Collectable: $enabled", onPressed: () => GameNetwork.sendGameObjectRequest(GameObjectRequest.Toggle_Collectable))
+                  ),
                 ],
               );
             }),
@@ -1052,6 +1055,7 @@ class EditorUI {
         ),
       ),
     );
+
 
   static Widget buildColumnEditParticleEmitter() {
     return Column(
