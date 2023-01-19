@@ -1027,27 +1027,56 @@ class EditorUI {
       child: Container(
         color: brownLight,
         width: 200,
-        padding: GameStyle.Padding_6,
+        padding: GameStyle.Padding_10,
         child: Column(
           children: [
             watch(GameEditor.gameObjectSelectedType, (int type) {
               return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
                       alignment: Alignment.centerRight,
                       child: text("X", onPressed: GameNetwork.sendGameObjectRequestDeselect),
                   ),
                   GameUI.buildAtlasItemType(type),
-                  text(ItemType.getName(type)),
-                  watch(GameEditor.gameObjectSelectedColliderEnabled, (bool colliderEnabled) =>
-                    text("Collidable: $colliderEnabled", onPressed: () => GameNetwork.sendGameObjectRequest(GameObjectRequest.Toggle_Collider))
+                  height8,
+                  text(ItemType.getName(type), size: 22),
+                  height8,
+                  watch(GameEditor.gameObjectSelectedColliderEnabled, (bool enabled) =>
+                    onPressed(
+                      action: () => GameNetwork.sendGameObjectRequest(GameObjectRequest.Toggle_Collider),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          text("Collidable"),
+                          text(enabled),
+                        ],
+                      ),
+                    )
                   ),
-                  watch(GameEditor.gameObjectSelectedMovableEnabled, (bool colliderEnabled) =>
-                    text("Movable: $colliderEnabled", onPressed: () => GameNetwork.sendGameObjectRequest(GameObjectRequest.Toggle_Movable))
+                  watch(GameEditor.gameObjectSelectedMovableEnabled, (bool enabled) =>
+                      onPressed(
+                        action: () => GameNetwork.sendGameObjectRequest(GameObjectRequest.Toggle_Movable),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            text("Movable"),
+                            text(enabled),
+                          ],
+                        ),
+                      )
                   ),
                   watch(GameEditor.gameObjectSelectedCollectableEnabled, (bool enabled) =>
-                    text("Collectable: $enabled", onPressed: () => GameNetwork.sendGameObjectRequest(GameObjectRequest.Toggle_Collectable))
+                      onPressed(
+                        action: () => GameNetwork.sendGameObjectRequest(GameObjectRequest.Toggle_Collectable),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            text("Collectable"),
+                            text(enabled),
+                          ],
+                        ),
+                      )
                   ),
                 ],
               );
