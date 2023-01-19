@@ -1580,6 +1580,7 @@ class Player extends Character with ByteWriter {
     writeBool(selectedGameObject.collidable);
     writeBool(selectedGameObject.movable);
     writeBool(selectedGameObject.collectable);
+    writeBool(selectedGameObject.physical);
   }
 
   void writeEnvironmentLightning(int value){

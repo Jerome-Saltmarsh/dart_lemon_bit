@@ -633,6 +633,12 @@ class Connection with ByteReader {
         selectedGameObject.collectable = !selectedGameObject.collectable;
         player.writeEditorGameObjectSelected();
         break;
+
+      case GameObjectRequest.Toggle_Physical:
+        if (selectedGameObject == null) return;
+        selectedGameObject.physical = !selectedGameObject.physical;
+        player.writeEditorGameObjectSelected();
+        break;
     }
   }
 

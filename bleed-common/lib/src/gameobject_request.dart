@@ -10,6 +10,7 @@ enum GameObjectRequest {
   Toggle_Collider,
   Toggle_Movable,
   Toggle_Collectable,
+  Toggle_Physical,
 }
 
 const gameObjectRequests = GameObjectRequest.values;

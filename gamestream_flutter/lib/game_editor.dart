@@ -4,13 +4,15 @@ class GameEditor {
   static final editorDialog = Watch<EditorDialog?>(null, onChanged: onChangedEditorDialog);
   static final selectedSceneName = Watch<String?>(null);
 
+
   static final editTab = Watch(EditTab.Grid, onChanged: onChangedEditTab);
   static final gameObject = GameObject();
   static final gameObjectSelected = Watch(false);
   static final gameObjectSelectedType = Watch(0);
-  static final gameObjectSelectedColliderEnabled = Watch(true);
-  static final gameObjectSelectedMovableEnabled = Watch(true);
-  static final gameObjectSelectedCollectableEnabled = Watch(true);
+  static final gameObjectSelectedCollidable = Watch(true);
+  static final gameObjectSelectedMovable = Watch(true);
+  static final gameObjectSelectedCollectable = Watch(true);
+  static final gameObjectSelectedPhysical = Watch(true);
   static final gameObjectSelectedAmount = Watch(0);
   static final gameObjectSelectedParticleType = Watch(0);
   static final gameObjectSelectedParticleSpawnRate = Watch(0);

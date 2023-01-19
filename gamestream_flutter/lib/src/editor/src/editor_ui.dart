@@ -1038,11 +1038,17 @@ class EditorUI {
                       alignment: Alignment.centerRight,
                       child: text("X", onPressed: GameNetwork.sendGameObjectRequestDeselect),
                   ),
-                  GameUI.buildAtlasItemType(type),
+                  Container(
+                      constraints: BoxConstraints(
+                        maxWidth: 80,
+                        maxHeight: 80,
+                      ),
+                      child: GameUI.buildAtlasItemType(type),
+                  ),
                   height8,
                   text(ItemType.getName(type), size: 22),
                   height8,
-                  watch(GameEditor.gameObjectSelectedColliderEnabled, (bool enabled) =>
+                  watch(GameEditor.gameObjectSelectedCollidable, (bool enabled) =>
                     onPressed(
                       action: () => GameNetwork.sendGameObjectRequest(GameObjectRequest.Toggle_Collider),
                       child: Row(
@@ -1054,7 +1060,7 @@ class EditorUI {
                       ),
                     )
                   ),
-                  watch(GameEditor.gameObjectSelectedMovableEnabled, (bool enabled) =>
+                  watch(GameEditor.gameObjectSelectedMovable, (bool enabled) =>
                       onPressed(
                         action: () => GameNetwork.sendGameObjectRequest(GameObjectRequest.Toggle_Movable),
                         child: Row(
@@ -1066,13 +1072,25 @@ class EditorUI {
                         ),
                       )
                   ),
-                  watch(GameEditor.gameObjectSelectedCollectableEnabled, (bool enabled) =>
+                  watch(GameEditor.gameObjectSelectedCollectable, (bool enabled) =>
                       onPressed(
                         action: () => GameNetwork.sendGameObjectRequest(GameObjectRequest.Toggle_Collectable),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             text("Collectable"),
+                            text(enabled),
+                          ],
+                        ),
+                      )
+                  ),
+                  watch(GameEditor.gameObjectSelectedPhysical, (bool enabled) =>
+                      onPressed(
+                        action: () => GameNetwork.sendGameObjectRequest(GameObjectRequest.Toggle_Physical),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            text("Physical"),
                             text(enabled),
                           ],
                         ),

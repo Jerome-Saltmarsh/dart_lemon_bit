@@ -354,13 +354,14 @@ class ServerResponseReader with ByteReader {
 
   void readEditorGameObjectSelected() {
     readVector3(GameEditor.gameObject);
-    final type = readUInt16();
-    GameEditor.gameObjectSelectedColliderEnabled.value = readBool();
-    GameEditor.gameObjectSelectedMovableEnabled.value = readBool();
-    GameEditor.gameObjectSelectedCollectableEnabled.value = readBool();
-    GameEditor.gameObject.type = type;
-    GameEditor.gameObjectSelectedType.value = type;
-    GameEditor.gameObjectSelected.value = true;
+    final type                                       = readUInt16();
+    GameEditor.gameObjectSelectedCollidable   .value = readBool();
+    GameEditor.gameObjectSelectedMovable      .value = readBool();
+    GameEditor.gameObjectSelectedCollectable  .value = readBool();
+    GameEditor.gameObjectSelectedPhysical     .value = readBool();
+    GameEditor.gameObject.type                       = type;
+    GameEditor.gameObjectSelectedType.value          = type;
+    GameEditor.gameObjectSelected.value              = true;
     GameEditor.cameraCenterSelectedObject();
   }
 
