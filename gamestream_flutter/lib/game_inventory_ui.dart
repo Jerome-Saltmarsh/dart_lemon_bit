@@ -367,7 +367,7 @@ class GameInventoryUI {
       );
 
   static Widget buildPositionedContainerHoverTarget(int hoverTarget){
-     if (hoverTarget == ClientType.Hover_Target_None) return const SizedBox();
+     if (hoverTarget == ClientType.Hover_Target_None) return GameStyle.Null;;
 
      final children = <Widget>[];
 
@@ -544,7 +544,7 @@ class GameInventoryUI {
 
   static Widget _buildRowHoverValue({required int itemType, required int value, required int total})
   =>
-      value == 0 ? const SizedBox() :
+      value == 0 ? GameStyle.Null :
       Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -569,11 +569,11 @@ class GameInventoryUI {
     );
 
   static Widget buildPositionedContainerItemTypeInformation(int itemIndex){
-    if (itemIndex == -1) return const SizedBox();
+    if (itemIndex == -1) return GameStyle.Null;
 
     final itemType = ClientState.hoverDialogType.value == DialogType.Trade ? GamePlayer.storeItems.value[itemIndex] : ServerQuery.getItemTypeAtInventoryIndex(itemIndex);
 
-    if (itemType == ItemType.Empty) return const SizedBox();
+    if (itemType == ItemType.Empty) return GameStyle.Null;
 
     final itemTypeIsConsumable = ItemType.isTypeConsumable(itemType);
     final itemTypeConsumeType = ItemType.getConsumeType(itemType);
@@ -664,7 +664,7 @@ class GameInventoryUI {
   }
 
   static Widget buildTableRowDifference2(String key, num itemTypeValue, num? equippedTypeValue, {bool swap = false}){
-    if (itemTypeValue == 0) return const SizedBox();
+    if (itemTypeValue == 0) return GameStyle.Null;
 
      if (equippedTypeValue == null || itemTypeValue == equippedTypeValue){
        return buildTableRow(key, itemTypeValue);

@@ -1027,11 +1027,12 @@ class EditorUI {
       child: Container(
         color: brownLight,
         width: 200,
-        padding: const EdgeInsets.all(6),
+        padding: GameStyle.Padding_6,
         child: Column(
           children: [
             watch(GameEditor.gameObjectSelectedType, (int type) {
               return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
                       alignment: Alignment.centerRight,

@@ -88,7 +88,7 @@ class GameUI {
 
   static Widget buildWatchGameStatus() {
     return watch(ServerState.gameStatus, (int gameStatus) {
-           if (gameStatus == GameStatus.Playing) return const SizedBox();
+           if (gameStatus == GameStatus.Playing) return GameStyle.Null;
            return IgnorePointer(
              child: Positioned(
                top: 60,
@@ -123,7 +123,7 @@ class GameUI {
 
 
   static Widget buildMessageStatus(String message){
-    if (message.isEmpty) return const SizedBox();
+    if (message.isEmpty) return GameStyle.Null;
     return MouseRegion(
       onEnter: (_){
          ClientActions.messageClear();
@@ -175,7 +175,7 @@ class GameUI {
 
   static Widget buildStackInputMode(int inputMode) =>
       inputMode == InputMode.Keyboard
-          ? const SizedBox()
+          ? GameStyle.Null
           : watch(ClientState.touchButtonSide, buildStackInputModeTouch);
 
   static Widget buildWalkButtons() => Positioned(
@@ -652,7 +652,7 @@ class GameUI {
       });
 
   static Widget buildButtonAttributes(int attributes) {
-    if (attributes == 0) return const SizedBox();
+    if (attributes == 0) return GameStyle.Null;
     return buildDialog(
       dialogType: DialogType.UI_Control,
       child: container(

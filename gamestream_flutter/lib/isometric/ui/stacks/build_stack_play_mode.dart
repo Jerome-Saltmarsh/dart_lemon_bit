@@ -5,7 +5,7 @@ import 'package:gamestream_flutter/library.dart';
 
 Widget buildWatchMouseTargetName(){
    return watch(GamePlayer.mouseTargetName, (String? name){
-      if (name == null) return SizedBox();
+      if (name == null) return GameStyle.Null;
 
       return Container(
         alignment: Alignment.center,

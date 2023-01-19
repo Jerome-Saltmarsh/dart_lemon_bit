@@ -4,11 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/src.dart';
 
+import 'game_style.dart';
 import 'game_website.dart';
 import 'ui/style.dart';
 
-
-const empty = SizedBox();
 
 class _FlutterKitConfiguration {
   Color defaultTextColor = Colors.white;
@@ -354,7 +353,7 @@ Widget buildDecorationImage({
 Widget visibleBuilder(Watch<bool> watch, Widget widget){
   return WatchBuilder(watch, (bool visible){
     if (!visible){
-      return const SizedBox();
+      return GameStyle.Null;
     }
     return widget;
   });
@@ -362,7 +361,7 @@ Widget visibleBuilder(Watch<bool> watch, Widget widget){
 
 Widget buildWatchBool(Watch<bool> watch, Widget Function() builder, [bool match = true]) =>
   WatchBuilder(watch, (bool value) =>
-    value == match ? builder() : const SizedBox()
+    value == match ? builder() : GameStyle.Null
   );
 
 Widget textBuilder(Watch watch){

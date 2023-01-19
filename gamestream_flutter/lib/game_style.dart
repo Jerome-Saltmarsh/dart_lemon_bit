@@ -16,4 +16,7 @@ class GameStyle {
   static const Default_Padding = 12.0;
 
   static final Text_Color_Default = Colors.white.withOpacity(0.85);
+
+  static const Padding_6 = EdgeInsets.all(6);
+  static const Null = SizedBox();
 }

@@ -22,7 +22,7 @@ class GameUIInteract {
           case InteractMode.Craft:
             return buildInteractModeCrafting();
           default:
-            return const SizedBox();
+            return GameStyle.Null;
         }
       });
 
