@@ -111,8 +111,11 @@ class Collider extends Position3 {
   void applyFriction() {
     velocityX *= GamePhysics.Friction;
     velocityY *= GamePhysics.Friction;
-    velocityZ -= GamePhysics.Gravity;
     velocityZ *= GamePhysics.Friction;
+  }
+
+  void applyGravity(){
+    velocityZ -= GamePhysics.Gravity;
   }
 
   /// FUNCTIONS

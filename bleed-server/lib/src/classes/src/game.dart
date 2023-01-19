@@ -482,7 +482,6 @@ abstract class Game {
         ..setVelocity(player.lookRadian, mouseDistance * 0.15)
         ..collidable = false
         ..physical = false
-        // ..applyGravity = true
         ..quantity = 1
         ..velocityZ = 1.00
         ..owner = player
@@ -600,6 +599,7 @@ abstract class Game {
 
     for (final gameObject in gameObjects) {
       if (!gameObject.active) continue;
+      if (!gameObject.collidable) continue;
       if (!gameObject.withinDistance(
           performX,
           performY,
@@ -912,12 +912,16 @@ abstract class Game {
       collider.applyFriction();
     }
 
+    if (collider.collidable) {
+      collider.applyGravity();
+    }
+
     if (collider.z < 0) {
       deactivateCollider(collider);
       return;
     }
 
-    if (collider.collidable){
+    if (collider.collidable) {
       updateColliderSceneCollision(collider);
     }
   }
@@ -932,7 +936,8 @@ abstract class Game {
     final length = characters.length;
 
     for (final gameObject in gameObjects) {
-        if (gameObject.inactive) continue;
+        if (!gameObject.active) continue;
+        if (!gameObject.collidable) continue;
         if (!gameObject.withinRadius(target, radius)) continue;
         applyHit(
           angle: radiansV2(target, gameObject),
@@ -946,7 +951,8 @@ abstract class Game {
 
     for (var i = 0; i < length; i++){
       final character = characters[i];
-      if (character.inactive) continue;
+      if (!character.collidable) continue;
+      if (!character.active) continue;
       if (character.dead) continue;
       if (!target.withinRadius(character, radius)) continue;
       applyHit(
@@ -1562,8 +1568,7 @@ abstract class Game {
     bool friendlyFire = false,
   }) {
     assert (target.active);
-
-    // final angle = radiansV2(srcPosition ?? srcCharacter, target);
+    assert (target.collidable);
 
     if (target is GameObject){
        if (ItemType.isMaterialMetal(target.type)){
@@ -1617,13 +1622,15 @@ abstract class Game {
     final attackTarget = character.target;
     if (attackTarget == null) return;
     if (attackTarget is Collider) {
-      applyHit(
-        target: attackTarget,
-        angle: radiansV2(character, attackTarget),
-        srcCharacter: character,
-        damage: character.damage,
-        hitType: HitType.Projectile,
-      );
+      if (attackTarget.collidable){
+        applyHit(
+          target: attackTarget,
+          angle: radiansV2(character, attackTarget),
+          srcCharacter: character,
+          damage: character.damage,
+          hitType: HitType.Projectile,
+        );
+      }
       clearCharacterTarget(character);
     }
   }

@@ -1084,6 +1084,7 @@ class EditorUI {
                         ),
                       )
                   ),
+
                   watch(GameEditor.gameObjectSelectedPhysical, (bool enabled) =>
                       onPressed(
                         action: () => GameNetwork.sendGameObjectRequest(GameObjectRequest.Toggle_Physical),

@@ -619,6 +619,7 @@ class Connection with ByteReader {
       case GameObjectRequest.Toggle_Collider:
         if (selectedGameObject == null) return;
         selectedGameObject.collidable = !selectedGameObject.collidable;
+        selectedGameObject.velocityZ = 0;
         player.writeEditorGameObjectSelected();
         break;
 
