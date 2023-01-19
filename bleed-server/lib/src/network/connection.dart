@@ -647,6 +647,12 @@ class Connection with ByteReader {
         selectedGameObject.physical = !selectedGameObject.physical;
         player.writeEditorGameObjectSelected();
         break;
+
+      case GameObjectRequest.Toggle_Persistable:
+        if (selectedGameObject == null) return;
+        selectedGameObject.persistable = !selectedGameObject.persistable;
+        player.writeEditorGameObjectSelected();
+        break;
     }
   }
 

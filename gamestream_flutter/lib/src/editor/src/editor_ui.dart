@@ -1085,7 +1085,6 @@ class EditorUI {
                         ),
                       )
                   ),
-
                   watch(GameEditor.gameObjectSelectedPhysical, (bool enabled) =>
                       onPressed(
                         action: () => GameNetwork.sendGameObjectRequest(GameObjectRequest.Toggle_Physical),
@@ -1093,6 +1092,19 @@ class EditorUI {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             text("Physical"),
+                            text(enabled),
+                          ],
+                        ),
+                      )
+                  ),
+                  height16,
+                  watch(GameEditor.gameObjectSelectedPersistable, (bool enabled) =>
+                      onPressed(
+                        action: () => GameNetwork.sendGameObjectRequest(GameObjectRequest.Toggle_Persistable),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            text("Persistable"),
                             text(enabled),
                           ],
                         ),

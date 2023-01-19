@@ -48,16 +48,16 @@ class SceneWriter extends ByteWriter {
     writeUInt16(count);
   }
 
-  void writeGameObjects(Scene scene){
+  void writeGameObjects(List<GameObject> gameObjects){
     writeByte(ScenePart.GameObjects);
     var total = 0;
-    for (final gameObject in scene.gameObjects){
-       if (!ItemType.isPersistable(gameObject.type)) continue;
+    for (final gameObject in gameObjects){
+       if (!gameObject.persistable) continue;
        total++;
     }
     writeUInt16(total);
-    for (final gameObject in scene.gameObjects){
-      if (!ItemType.isPersistable(gameObject.type)) continue;
+    for (final gameObject in gameObjects){
+      if (!gameObject.persistable) continue;
       writeUInt16(gameObject.type);
       writeUDouble16(gameObject.startX);
       writeUDouble16(gameObject.startY);
@@ -89,7 +89,7 @@ class SceneWriter extends ByteWriter {
     writeNodes(scene);
     if (gameObjects){
       writePlayerSpawnPoints(scene);
-      writeGameObjects(scene);
+      writeGameObjects(scene.gameObjects);
       writeSpawnPoints(scene);
       writeByte(ScenePart.End);
     }

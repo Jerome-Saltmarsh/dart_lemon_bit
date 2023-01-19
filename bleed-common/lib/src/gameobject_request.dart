@@ -11,6 +11,7 @@ enum GameObjectRequest {
   Toggle_Movable,
   Toggle_Collectable,
   Toggle_Physical,
+  Toggle_Persistable,
 }
 
 const gameObjectRequests = GameObjectRequest.values;

@@ -5,6 +5,7 @@ class GameObject extends Collider {
   var quantity = 0;
   var interactable = false;
   var collectable = false;
+  var persistable = false;
 
   int get type => _type;
 
@@ -15,6 +16,7 @@ class GameObject extends Collider {
      physical         = ItemType.isPhysical(value);
      movable          = ItemType.isMovable(value);
      collidable       = ItemType.isCollidable(value);
+     persistable      = ItemType.isPersistable(value);
      interactable     = value == ItemType.GameObjects_Vending_Machine;
   }
 

@@ -6,6 +6,9 @@ firebase deploy
 navigate to next method: ctrl + shift + up / down arrows
 ctrl + w:   minimal mode
 
+20.01.2023
+[x] feature gameobject persistable variable
+
 19.01.2023
 [x] feature gameobject car
 [x] replace SizedBox empty with singleton

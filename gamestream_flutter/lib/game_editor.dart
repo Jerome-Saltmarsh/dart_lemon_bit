@@ -13,6 +13,7 @@ class GameEditor {
   static final gameObjectSelectedMovable = Watch(true);
   static final gameObjectSelectedCollectable = Watch(true);
   static final gameObjectSelectedPhysical = Watch(true);
+  static final gameObjectSelectedPersistable = Watch(true);
   static final gameObjectSelectedAmount = Watch(0);
   static final gameObjectSelectedParticleType = Watch(0);
   static final gameObjectSelectedParticleSpawnRate = Watch(0);

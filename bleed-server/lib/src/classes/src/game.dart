@@ -2529,10 +2529,14 @@ abstract class Game {
     return;
   }
 
-
   void reset() {
     for (var i = 0; i < gameObjects.length; i++){
       final gameObject = gameObjects[i];
+      if (!gameObject.persistable){
+         gameObjects.removeAt(i);
+         i--;
+         continue;
+      }
       gameObject.x = gameObject.startX;
       gameObject.y = gameObject.startY;
       gameObject.z = gameObject.startZ;

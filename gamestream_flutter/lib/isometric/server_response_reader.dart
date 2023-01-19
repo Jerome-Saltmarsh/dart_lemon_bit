@@ -359,6 +359,7 @@ class ServerResponseReader with ByteReader {
     GameEditor.gameObjectSelectedMovable      .value = readBool();
     GameEditor.gameObjectSelectedCollectable  .value = readBool();
     GameEditor.gameObjectSelectedPhysical     .value = readBool();
+    GameEditor.gameObjectSelectedPersistable  .value = readBool();
     GameEditor.gameObject.type                       = type;
     GameEditor.gameObjectSelectedType.value          = type;
     GameEditor.gameObjectSelected.value              = true;
