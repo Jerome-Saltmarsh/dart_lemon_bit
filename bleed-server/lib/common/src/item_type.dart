@@ -363,7 +363,7 @@ class ItemType {
     return type >= Index_Consumables;
   }
 
-  static bool isTypeCollectable(int itemType) =>
+  static bool isTypeItem(int itemType) =>
       isTypeTrinket    (itemType) ||
       isTypeResource   (itemType) ||
       isTypeConsumable (itemType) ||

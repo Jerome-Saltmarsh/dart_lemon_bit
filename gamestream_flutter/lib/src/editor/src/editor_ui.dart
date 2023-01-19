@@ -1037,7 +1037,7 @@ class EditorUI {
                       alignment: Alignment.centerRight,
                       child: text("X", onPressed: GameNetwork.sendGameObjectRequestDeselect),
                   ),
-                  GameUI.buildImageItemType(type),
+                  GameUI.buildAtlasItemType(type),
                   text(ItemType.getName(type)),
                   watch(GameEditor.gameObjectSelectedColliderEnabled, (bool colliderEnabled) =>
                     text("Collidable: $colliderEnabled", onPressed: () => GameNetwork.sendGameObjectRequest(GameObjectRequest.Toggle_Collider))
@@ -1055,7 +1055,6 @@ class EditorUI {
         ),
       ),
     );
-
 
   static Widget buildColumnEditParticleEmitter() {
     return Column(

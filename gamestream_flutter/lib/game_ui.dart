@@ -327,13 +327,17 @@ class GameUI {
       );
 
   static Widget buildAtlasItemType(int itemType, {double scale = 1}) =>
-      Engine.buildAtlasImage(
-        image: GameImages.atlas_items,
-        srcX: AtlasItems.getSrcX(itemType),
-        srcY: AtlasItems.getSrcY(itemType),
-        srcWidth: AtlasItems.getSrcWidth(itemType),
-        srcHeight: AtlasItems.getSrcHeight(itemType),
-        scale: scale * (32.0 / AtlasItems.getSrcWidth(itemType)),
+      FittedBox(
+        child: Engine.buildAtlasImage(
+          image: ItemType.isTypeGameObject(itemType)
+              ? GameImages.atlas_gameobjects
+              : GameImages.atlas_items,
+          srcX: AtlasItems.getSrcX(itemType),
+          srcY: AtlasItems.getSrcY(itemType),
+          srcWidth: AtlasItems.getSrcWidth(itemType),
+          srcHeight: AtlasItems.getSrcHeight(itemType),
+          scale: 1.25,
+        ),
       );
 
   static Widget buildAtlasNodeType(int nodeType) => Engine.buildAtlasImage(
@@ -752,15 +756,4 @@ class GameUI {
       ],
     ),
   );
-
-
-  static Widget buildImageItemType(int itemType) =>
-      Engine.buildAtlasImage(
-        image: GameImages.atlas_gameobjects,
-        srcX: AtlasItems.getSrcX(itemType),
-        srcY: AtlasItems.getSrcY(itemType),
-        srcWidth: AtlasItems.getSrcWidth(itemType),
-        srcHeight: AtlasItems.getSrcHeight(itemType),
-    );
-
 }

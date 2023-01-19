@@ -6,6 +6,9 @@ firebase deploy
 navigate to next method: ctrl + shift + up / down arrows
 ctrl + w:   minimal mode
 
+19.01.2023
+[x] fix gameobject inventory image 
+
 18.01.2023
 [x] feature editor pause game
 [x] feature editor toggle gameobject movable enabled

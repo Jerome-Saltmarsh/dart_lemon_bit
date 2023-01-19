@@ -12,41 +12,39 @@ class RendererGameObjects extends Renderer {
 
   @override
   void renderFunction() {
-
     final type = gameObject.type;
-      if (ItemType.isTypeGameObject(type)) {
-        Engine.renderSprite(
-          image: gameObject.nodeVisibilityOpaque ? GameImages.atlas_gameobjects : GameImages.atlas_gameobjects_transparent,
-          dstX: gameObject.renderX,
-          dstY: gameObject.renderY,
-          srcX: AtlasItems.getSrcX(type),
-          srcY: AtlasItems.getSrcY(type),
-          anchorY: AtlasItems.getAnchorY(type),
-          srcWidth: AtlasItems.getSrcWidth(type),
-          srcHeight: AtlasItems.getSrcHeight(type),
-          scale: AtlasItems.getSrcScale(type),
-          color: GameState.getV3RenderColor(gameObject),
-        );
-        return;
-      }
-
-      if (ItemType.isTypeCollectable(type)) {
-        renderBouncingGameObjectShadow(gameObject);
-        Engine.renderSprite(
-          image: GameImages.atlas_items,
-          dstX: GameConvert.convertV3ToRenderX(gameObject),
-          dstY: getRenderYBouncing(gameObject),
-          srcX: AtlasItems.getSrcX(type),
-          srcY: AtlasItems.getSrcY(type),
-          srcWidth: AtlasItems.size,
-          srcHeight: AtlasItems.size,
-          color: GameState.getV3RenderColor(gameObject),
-        );
-        return;
-      }
-
-      throw Exception('could not render gameobject type ${gameObject.type}');
+    if (ItemType.isTypeGameObject(type)) {
+      Engine.renderSprite(
+        image: gameObject.nodeVisibilityOpaque
+            ? GameImages.atlas_gameobjects
+            : GameImages.atlas_gameobjects_transparent,
+        dstX: gameObject.renderX,
+        dstY: gameObject.renderY,
+        srcX: AtlasItems.getSrcX(type),
+        srcY: AtlasItems.getSrcY(type),
+        anchorY: AtlasItems.getAnchorY(type),
+        srcWidth: AtlasItems.getSrcWidth(type),
+        srcHeight: AtlasItems.getSrcHeight(type),
+        scale: AtlasItems.getSrcScale(type),
+        color: GameState.getV3RenderColor(gameObject),
+      );
+      return;
     }
+
+    assert (ItemType.isTypeItem(type));
+
+    renderBouncingGameObjectShadow(gameObject);
+    Engine.renderSprite(
+      image: GameImages.atlas_items,
+      dstX: GameConvert.convertV3ToRenderX(gameObject),
+      dstY: getRenderYBouncing(gameObject),
+      srcX: AtlasItems.getSrcX(type),
+      srcY: AtlasItems.getSrcY(type),
+      srcWidth: AtlasItems.size,
+      srcHeight: AtlasItems.size,
+      color: GameState.getV3RenderColor(gameObject),
+    );
+  }
 
   @override
   void updateFunction() {
