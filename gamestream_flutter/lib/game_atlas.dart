@@ -7,7 +7,7 @@ class AtlasItems {
       itemType == ItemType.GameObjects_Barrel_Flaming ? 34.0 * GameAnimation.animationFrame6 :
 
       const <int, double> {
-        ItemType.GameObjects_Car: 0,
+        ItemType.GameObjects_Car: 384,
         ItemType.GameObjects_Crystal: 75,
         ItemType.GameObjects_Candle: 23,
         ItemType.GameObjects_Barrel: 11,
@@ -90,7 +90,7 @@ class AtlasItems {
 
   static double getSrcY(int itemType) =>
       const <int, double>{
-        ItemType.GameObjects_Car: 144,
+        ItemType.GameObjects_Car: 80,
         ItemType.GameObjects_Crystal: 0,
         ItemType.GameObjects_Candle: 131,
         ItemType.GameObjects_Barrel: 0,
@@ -167,7 +167,7 @@ class AtlasItems {
 
   static double getSrcWidth(int itemType) =>
       const <int, double>{
-        ItemType.GameObjects_Car: 143,
+        ItemType.GameObjects_Car: 115,
         ItemType.GameObjects_Crystal: 22,
         ItemType.GameObjects_Barrel: 28,
         ItemType.GameObjects_Barrel_Explosive: 33,
@@ -192,7 +192,7 @@ class AtlasItems {
       }[itemType] ?? size;
 
   static double getSrcHeight(int itemType) => const <int, double>{
-        ItemType.GameObjects_Car: 105,
+        ItemType.GameObjects_Car: 124,
         ItemType.GameObjects_Crystal: 45,
         ItemType.GameObjects_Barrel: 40,
         ItemType.GameObjects_Barrel_Explosive: 63,
@@ -222,6 +222,7 @@ class AtlasItems {
         ItemType.GameObjects_Toilet: 0.5,
         ItemType.GameObjects_Crate_Wooden: 0.75,
         ItemType.GameObjects_Firehydrant: 0.4,
+        ItemType.GameObjects_Car: 0.66,
   }[itemType] ?? 1.0;
 
 

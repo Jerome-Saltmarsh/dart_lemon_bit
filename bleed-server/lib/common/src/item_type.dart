@@ -78,7 +78,6 @@ class ItemType {
   static const GameObjects_Crystal_Small_Red    = Index_GameObjects + 14;
   static const GameObjects_Grenade              = Index_GameObjects + 15;
   static const GameObjects_Car                  = Index_GameObjects + 16;
-  // static const GameObjects_Node_Collider        = Index_GameObjects + 17;
   static const GameObjects_Barrel_Explosive     = Index_GameObjects + 18;
   static const GameObjects_Barrel_Purple        = Index_GameObjects + 19;
   static const GameObjects_Barrel_Flaming       = Index_GameObjects + 20;
@@ -223,6 +222,7 @@ class ItemType {
   static double getRadius(int value) => const <int, double> {
     GameObjects_Vending_Machine: 25,
     GameObjects_Bed: 25,
+    GameObjects_Car: 25,
     GameObjects_Crate_Wooden: 18,
   }[value] ?? 15;
 
@@ -237,6 +237,7 @@ class ItemType {
       value == GameObjects_Vending_Machine   ||
       value == GameObjects_Toilet            ||
       value == GameObjects_Firehydrant       ||
+      value == GameObjects_Car               ||
       value == GameObjects_Tavern_Sign        ;
 
   static bool isPhysical(int value) =>
@@ -250,6 +251,7 @@ class ItemType {
     value == GameObjects_Bed               ||
     value == GameObjects_Toilet            ||
     value == GameObjects_Firehydrant       ||
+    value == GameObjects_Car               ||
     value == GameObjects_Tavern_Sign        ;
 
   static bool isMovable(int value) =>
@@ -651,9 +653,11 @@ class ItemType {
      GameObjects_Crate_Wooden: "Wooden Crate",
      GameObjects_Desk: "Wooden Desk",
      GameObjects_Bed: "Bed",
+     GameObjects_Car: "Car",
      GameObjects_Vending_Machine: "Vending Machine",
      GameObjects_Firehydrant: "Fire Hydrant",
   }[value] ?? "item-type-unknown($value)";
+
 
   static int getMaxQuantity(int itemType) => const {
     Resource_Fuel         : 500,
@@ -768,6 +772,7 @@ class ItemType {
      GameObjects_Vending_Machine,
      GameObjects_Bed,
      GameObjects_Firehydrant,
+     GameObjects_Car,
   ];
 
   static bool isTypeBarrel(int type)=> const [
@@ -784,6 +789,7 @@ class ItemType {
     GameObjects_Barrel_Flaming,
     GameObjects_Vending_Machine,
     GameObjects_Firehydrant,
+    GameObjects_Car,
   ].contains(type);
 }
 
