@@ -192,7 +192,7 @@ class AtlasItems {
       }[itemType] ?? size;
 
   static double getSrcHeight(int itemType) => const <int, double>{
-        ItemType.GameObjects_Car: 124,
+        ItemType.GameObjects_Car: 133,
         ItemType.GameObjects_Crystal: 45,
         ItemType.GameObjects_Barrel: 40,
         ItemType.GameObjects_Barrel_Explosive: 63,
