@@ -682,6 +682,7 @@ class EditorUI {
             watch(ServerState.gameRunning, (gameRunning) {
               return text("Game Running: $gameRunning", onPressed: () => GameNetwork.sendClientRequestEdit(EditRequest.Toggle_Game_Running));
             }),
+            text ("Reset", onPressed: ServerActions.editSceneReset),
             text("Spawn AI", onPressed: ServerActions.editSceneSpawnAI),
             text("Clear Spawned AI",
                 onPressed: ServerActions.editSceneClearSpawnedAI),

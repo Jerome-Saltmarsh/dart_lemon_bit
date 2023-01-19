@@ -9,4 +9,5 @@ enum EditRequest {
    Scene_Set_Floor_Type,
    Generate_Scene,
    Toggle_Game_Running,
+   Scene_Reset,
 }

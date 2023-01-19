@@ -355,6 +355,11 @@ class Connection with ByteReader {
         game.running = !game.running;
         break;
 
+      case EditRequest.Scene_Reset:
+        if (!isLocalMachine && game is! GameDarkAgeEditor) return;
+        game.reset();
+        break;
+
       case EditRequest.Generate_Scene:
         const min = 5;
         final rows = parseArg2(arguments);

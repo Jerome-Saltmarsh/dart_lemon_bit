@@ -30,6 +30,7 @@ class GameSurvival extends Game {
     player.inventoryClear();
     player.inventoryAddMax(itemType: ItemType.Resource_Gun_Powder);
     player.inventoryAddMax(itemType: ItemType.Resource_Round_Rifle);
+    player.inventoryAddMax(itemType: ItemType.Resource_Round_Shotgun);
     player.inventoryAdd(itemType: ItemType.Weapon_Melee_Axe);
     player.inventoryAdd(itemType: ItemType.Weapon_Melee_Pickaxe);
     player.inventoryAdd(itemType: ItemType.Weapon_Melee_Hammer);
@@ -47,8 +48,8 @@ class GameSurvival extends Game {
     player.bodyType = ItemType.Body_Tunic_Padded;
     player.legsType = getRandomStartingLegs();
     player.headType = ItemType.Empty;
-    player.belt1_itemType = ItemType.Weapon_Handgun_Flint_Lock_Old;
-    player.belt1_quantity = ItemType.getMaxQuantity(ItemType.Weapon_Handgun_Flint_Lock_Old);
+    player.belt1_itemType = ItemType.Weapon_Ranged_Shotgun;
+    player.belt1_quantity = ItemType.getMaxQuantity(ItemType.Weapon_Ranged_Shotgun);
     player.belt2_itemType = ItemType.Weapon_Melee_Knife;
     player.belt2_quantity = 1;
     player.belt3_itemType = ItemType.Weapon_Thrown_Grenade;
@@ -116,7 +117,7 @@ class GameSurvival extends Game {
   }
 
   @override
-  void onPlayerInteractedWithGameObject(Player player, GameObject gameObject) {
+  void customOnPlayerInteractedWithGameObject(Player player, GameObject gameObject) {
     player.setStoreItems(const [
         ItemType.Weapon_Thrown_Grenade,
         ItemType.Weapon_Handgun_Flint_Lock_Old,

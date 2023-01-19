@@ -98,6 +98,8 @@ abstract class Game {
   /// @override
   void customUpdatePlayer(Player player){ }
   /// @override
+  void customOnPlayerInteractedWithGameObject(Player player, GameObject gameObject){ }
+  /// @override
   void customDownloadScene(Player player){ }
   /// @override
   void customUpdate() {}
@@ -1443,7 +1445,7 @@ abstract class Game {
            }
            if (target.interactable) {
              player.setCharacterStateIdle();
-             onPlayerInteractedWithGameObject(player, target);
+             customOnPlayerInteractedWithGameObject(player, target);
              return;
            }
            if (target.collectable) {
@@ -2528,7 +2530,13 @@ abstract class Game {
   }
 
 
-  void onPlayerInteractedWithGameObject(Player player, GameObject gameObject){
+  void reset() {
+    for (var i = 0; i < gameObjects.length; i++){
+      final gameObject = gameObjects[i];
+      gameObject.x = gameObject.startX;
+      gameObject.y = gameObject.startY;
+      gameObject.z = gameObject.startZ;
+    }
   }
 }
 

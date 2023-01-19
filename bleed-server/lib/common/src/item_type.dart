@@ -238,6 +238,7 @@ class ItemType {
       value == GameObjects_Toilet            ||
       value == GameObjects_Firehydrant       ||
       value == GameObjects_Car               ||
+      value == GameObjects_Grenade           ||
       value == GameObjects_Tavern_Sign        ;
 
   static bool isPhysical(int value) =>
@@ -257,6 +258,7 @@ class ItemType {
   static bool isMovable(int value) =>
     value == GameObjects_Barrel_Purple     ||
     value == GameObjects_Barrel_Explosive  ||
+    value == GameObjects_Grenade           ||
     value == GameObjects_Barrel_Flaming    ||
     value == GameObjects_Crate_Wooden      ||
     value == GameObjects_Barrel            ;
