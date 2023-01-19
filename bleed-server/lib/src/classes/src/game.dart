@@ -789,6 +789,7 @@ abstract class Game {
     frame++;
     updateAITargets();
     internalUpdateJobs();
+    internalUpdateScripts();
     customUpdate();
     updateGameObjects();
     updateCollisions();
@@ -820,6 +821,9 @@ abstract class Game {
       job.action();
     }
 
+  }
+
+  void internalUpdateScripts() {
     for (final script in scripts){
       if (script.timer <= 0) continue;
       script.timer--;
@@ -901,7 +905,9 @@ abstract class Game {
   }
 
   void updateGameObjects() {
-    gameObjects.forEach(updateColliderPhysics);
+    for (final gameObject in gameObjects){
+      updateColliderPhysics(gameObject);
+    }
   }
 
   void updateColliderPhysics(Collider collider) {
@@ -1414,9 +1420,9 @@ abstract class Game {
       }
     }
 
-    if (player.framesSinceClientRequest > 10) {
-      player.setCharacterStateIdle();
-    }
+    // if (player.framesSinceClientRequest > 10) {
+    //   player.setCharacterStateIdle();
+    // }
 
     final target = player.target;
     if (target == null) return;

@@ -576,6 +576,7 @@ class Connection with ByteReader {
         selectedGameObject.x += tx;
         selectedGameObject.y += ty;
         selectedGameObject.z += tz;
+        selectedGameObject.saveStartAsCurrentPosition();
         break;
 
       case GameObjectRequest.Add:
@@ -610,6 +611,7 @@ class Connection with ByteReader {
         selectedGameObject.x = player.mouseGridX;
         selectedGameObject.y = player.mouseGridY;
         selectedGameObject.z = player.z;
+        selectedGameObject.saveStartAsCurrentPosition();
         break;
 
       case GameObjectRequest.Set_Type:

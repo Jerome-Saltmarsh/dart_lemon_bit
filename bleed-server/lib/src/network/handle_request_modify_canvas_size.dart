@@ -113,12 +113,6 @@ void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, Player playe
       scene.nodeOrientations = newNodeOrientations;
       scene.gridRows--;
       game.onGridChanged();
-      for (final character in game.characters) {
-        character.x -= Node_Size;
-      }
-      for (final gameObject in game.gameObjects) {
-        gameObject.x -= Node_Size;
-      }
       break;
     case RequestModifyCanvasSize.Add_Z:
       final newGridVolume = scene.gridVolume + (scene.gridArea);

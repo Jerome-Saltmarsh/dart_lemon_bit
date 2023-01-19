@@ -46,9 +46,7 @@ class Collider extends Position3 {
     this.y = y;
     this.z = z;
     this.radius = radius;
-    startX = x;
-    startY = y;
-    startZ = z;
+    saveStartAsCurrentPosition();
   }
 
   /// GETTERS
@@ -147,5 +145,11 @@ class Collider extends Position3 {
         }
      }
      return true;
+  }
+
+  void saveStartAsCurrentPosition(){
+    startX = x;
+    startY = y;
+    startZ = z;
   }
 }
