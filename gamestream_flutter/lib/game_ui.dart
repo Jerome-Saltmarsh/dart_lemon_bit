@@ -326,7 +326,7 @@ class GameUI {
         color: color,
       );
 
-  static Widget buildAtlasItemType(int itemType, {double scale = 1}) =>
+  static Widget buildAtlasItemType(int itemType, {double scale = 1.25}) =>
       FittedBox(
         child: Engine.buildAtlasImage(
           image: ItemType.isTypeGameObject(itemType)
@@ -413,17 +413,16 @@ class GameUI {
     final consumeType = ItemType.getConsumeType(weaponType);
     if (consumeType == ItemType.Empty) return GameStyle.Null;
 
-    final max = ItemType.getMaxQuantity(weaponType);
-
       return Container(
-        height: 70,
-        width: 200,
+        height: 50,
+        color: Colors.black12,
+        padding: GameStyle.Padding_6,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             buildAtlasItemType(consumeType),
             watch(ClientState.inventoryReads, (int value){
-              return text('${ServerQuery.getEquippedWeaponQuantity()} / $max');
+              return text('${ServerQuery.getEquippedWeaponQuantity()} / ${ServerQuery.countItemTypeQuantityInPlayerPossession(consumeType)}', size: 25);
             }),
           ],
         ),
