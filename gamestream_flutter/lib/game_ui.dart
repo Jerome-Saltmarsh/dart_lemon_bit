@@ -408,22 +408,34 @@ class GameUI {
         ),
       ]);
 
+
   static Widget buildHudPlayerWeapon() => watch(GamePlayer.weapon, (int weaponType){
-
     final consumeType = ItemType.getConsumeType(weaponType);
-    if (consumeType == ItemType.Empty) return GameStyle.Null;
-
-      return Container(
-        height: 50,
-        color: Colors.black12,
-        padding: GameStyle.Padding_6,
+      return buildDialogUIControl(
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            buildAtlasItemType(consumeType),
-            watch(ClientState.inventoryReads, (int value){
-              return text('${ServerQuery.getEquippedWeaponQuantity()} / ${ServerQuery.countItemTypeQuantityInPlayerPossession(consumeType)}', size: 25);
-            }),
+            Container(
+              height: 50,
+              color: Colors.black12,
+              padding: GameStyle.Padding_6,
+              child: buildAtlasItemType(weaponType),
+            ),
+            if (consumeType != ItemType.Empty)
+            Container(
+              height: 50,
+              color: Colors.black12,
+              padding: GameStyle.Padding_6,
+              margin: const EdgeInsets.only(left: 6),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  buildAtlasItemType(consumeType),
+                  watch(ClientState.inventoryReads, (int value){
+                    return text('${ServerQuery.getEquippedWeaponQuantity()} / ${ServerQuery.countItemTypeQuantityInPlayerPossession(consumeType)}', size: 25);
+                  }),
+                ],
+              ),
+            ),
           ],
         ),
       );
