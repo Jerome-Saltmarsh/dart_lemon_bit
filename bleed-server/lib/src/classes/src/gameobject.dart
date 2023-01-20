@@ -6,6 +6,7 @@ class GameObject extends Collider {
   var interactable = false;
   var collectable = false;
   var persistable = false;
+  var destroyable = false;
 
   int get type => _type;
 

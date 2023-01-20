@@ -79,7 +79,7 @@ abstract class Game {
     }
   }
 
-  GameScript getNewGameScript({required int timer}){
+  GameScript performScript({required int timer}){
      for (final script in scripts) {
        if (script.timer > 0) continue;
        script.timer = timer;

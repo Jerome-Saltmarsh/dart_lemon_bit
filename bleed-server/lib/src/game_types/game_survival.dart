@@ -19,7 +19,7 @@ class GameSurvival extends Game {
 
   int getRandomStartingLegs() => randomItem(const[
     ItemType.Legs_Blue,
-    // ItemType.Legs_White,
+    ItemType.Legs_White,
     // ItemType.Legs_Red,
     // ItemType.Legs_Green,
   ]);
@@ -45,7 +45,7 @@ class GameSurvival extends Game {
     player.inventoryAdd(itemType: ItemType.Legs_Green);
     player.inventoryAdd(itemType: ItemType.Legs_Brown);
     player.inventoryAdd(itemType: ItemType.Legs_White);
-    player.bodyType = ItemType.Body_Tunic_Padded;
+    player.bodyType = getRandomStartingShirt();
     player.legsType = getRandomStartingLegs();
     player.headType = ItemType.Empty;
     player.belt1_itemType = ItemType.Weapon_Ranged_Shotgun;
@@ -155,13 +155,13 @@ class GameSurvival extends Game {
       if (DestroyableGameObjects.contains(target.type)) {
         deactivateCollider(target);
         dispatchGameEventGameObjectDestroyed(target);
-        getNewGameScript(timer: 300)
-        ..writeSpawnGameObject(
-            type: target.type,
-            x: target.x,
-            y: target.y,
-            z: target.z,
-        );
+        performScript(timer: 300)
+          ..writeSpawnGameObject(
+              type: target.type,
+              x: target.x,
+              y: target.y,
+              z: target.z,
+          );
         spawnGameObjectItem(
             x: target.x,
             y: target.y,

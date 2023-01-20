@@ -1058,14 +1058,10 @@ class RendererNodes extends Renderer {
   void nodesHideIndex(int z, int row, int column, int initRow, int initColumn){
 
     var index = (z * GameNodes.area) + (row * GameState.nodesTotalColumns) + column;
+    final indexBelowEmpty = index <= GameNodes.area ? false : GameNodes.nodeTypes[index - GameNodes.area] == NodeType.Empty;
+
+
     while (index < GameNodes.total) {
-      if (NodeType.isRain(GameNodes.nodeTypes[index])) {
-        row += 1;
-        column += 1;
-        z += 2;
-        index = (z * GameNodes.area) + (row * GameState.nodesTotalColumns) + column;
-        continue;
-      }
 
       final distance = (z - GamePlayer.indexZ).abs();
       final transparent = distance <= 1;
@@ -1086,9 +1082,7 @@ class RendererNodes extends Renderer {
       }
       var nodeIndexBelow = index - GameNodes.area;
 
-      if (nodeIndexBelow < 0) continue;
-
-      if (GameNodes.nodeTypes[nodeIndexBelow] == NodeType.Empty) {
+      if (indexBelowEmpty) {
 
         if (transparent){
           GameNodes.addTransparentIndex(index);
