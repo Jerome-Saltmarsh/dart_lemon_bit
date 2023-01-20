@@ -372,10 +372,6 @@ class GameUI {
         watch(ClientState.hoverTargetType,
             GameInventoryUI.buildPositionedContainerHoverTarget),
         Positioned(
-            bottom: 24,
-            left: 24,
-            child: watch(ServerState.playerAttributes, buildButtonAttributes)),
-        Positioned(
           left: 50,
           top: 50,
           child: buildWatchBool(
@@ -399,6 +395,11 @@ class GameUI {
           bottom: GameStyle.Default_Padding,
         ),
         Positioned(
+            bottom: GameStyle.Default_Padding,
+            left: GameStyle.Default_Padding,
+            child: buildHudPlayerWeapon()
+        ),
+        Positioned(
           bottom: GameStyle.Default_Padding,
           right: GameStyle.Default_Padding,
           child: buildDialogUIControl(
@@ -406,6 +407,28 @@ class GameUI {
           ),
         ),
       ]);
+
+  static Widget buildHudPlayerWeapon() => watch(GamePlayer.weapon, (int weaponType){
+
+    final consumeType = ItemType.getConsumeType(weaponType);
+    if (consumeType == ItemType.Empty) return GameStyle.Null;
+
+    final max = ItemType.getMaxQuantity(weaponType);
+
+      return Container(
+        height: 70,
+        width: 200,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            buildAtlasItemType(consumeType),
+            watch(ClientState.inventoryReads, (int value){
+              return text('${ServerQuery.getEquippedWeaponQuantity()} / $max');
+            }),
+          ],
+        ),
+      );
+  });
 
   static Column buildColumnBelt() => Column(
         crossAxisAlignment: CrossAxisAlignment.end,

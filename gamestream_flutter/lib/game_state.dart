@@ -113,10 +113,21 @@ class GameState {
     for (var i = 0; i < ServerState.totalCharacters; i++) {
       final character = ServerState.characters[i];
       if (!character.allie) continue;
-      applyVector3EmissionAmbient(
+
+      if (character.weaponType == ItemType.Weapon_Melee_Staff){
+        applyVector3Emission(
+          character,
+          alpha: 150,
+          saturation: 100,
+          value: 100,
+          hue: 50,
+        );
+      } else {
+        applyVector3EmissionAmbient(
           character,
           alpha: 50,
-      );
+        );
+      }
     }
   }
 

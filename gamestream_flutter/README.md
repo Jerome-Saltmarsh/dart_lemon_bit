@@ -6,6 +6,9 @@ firebase deploy
 navigate to next method: ctrl + shift + up / down arrows
 ctrl + w:   minimal mode
 
+[TODO]
+[ ] currently equipped ammo hud
+
 20.01.2023
 [x] improve grid visibility algorithm
 [x] feature gameobject persistable variable

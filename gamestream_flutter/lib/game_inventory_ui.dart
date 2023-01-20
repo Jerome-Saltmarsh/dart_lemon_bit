@@ -101,7 +101,6 @@ class GameInventoryUI {
     );
   }
 
-  // TODO optimize
   static Widget buildPlayerEnergyBar() {
     const width = 150.0;
     const height = 30.0;
