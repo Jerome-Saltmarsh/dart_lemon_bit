@@ -126,6 +126,11 @@ class Connection with ByteReader {
         handleClientRequestTeleport(player);
         return;
 
+      case ClientRequest.Reload:
+        // player.assignWeaponStateReloading();
+        player.game.playerReload(player);
+        return;
+
       case ClientRequest.Select_Perk:
         final perkType = parseArg1(arguments);
         if (perkType == null) return;

@@ -353,23 +353,7 @@ abstract class Game {
       if (playerWeaponConsumeType != ItemType.Empty) {
         final equippedWeaponQuantity = character.equippedWeaponQuantity;
         if (equippedWeaponQuantity == 0){
-          final equippedWeaponAmmoType = character.equippedWeaponAmmunitionType;
-          final totalAmmoRemaining = character.inventoryGetTotalQuantityOfItemType(equippedWeaponAmmoType);
-
-          if (totalAmmoRemaining == 0) {
-            character.writeError('No Ammunition');
-            return;
-          }
-          var total = min(totalAmmoRemaining, character.equippedWeaponCapacity);
-          character.inventoryReduceItemTypeQuantity(
-            itemType: equippedWeaponAmmoType,
-            reduction: total,
-          );
-          character.inventorySetQuantityAtIndex(
-            quantity: total,
-            index: character.equippedWeaponIndex,
-          );
-          character.assignWeaponStateReloading();
+          playerReload(character);
           return;
         }
         character.inventorySetQuantityAtIndex(
@@ -460,6 +444,26 @@ abstract class Game {
         character.assignWeaponStateFiring();
         break;
     }
+  }
+
+  void playerReload(Player player) {
+    final equippedWeaponAmmoType = player.equippedWeaponAmmunitionType;
+    final totalAmmoRemaining = player.inventoryGetTotalQuantityOfItemType(equippedWeaponAmmoType);
+
+    if (totalAmmoRemaining == 0) {
+      player.writeError('No Ammunition');
+      return;
+    }
+    var total = min(totalAmmoRemaining, player.equippedWeaponCapacity);
+    player.inventoryReduceItemTypeQuantity(
+      itemType: equippedWeaponAmmoType,
+      reduction: total,
+    );
+    player.inventorySetQuantityAtIndex(
+      quantity: total,
+      index: player.equippedWeaponIndex,
+    );
+    player.assignWeaponStateReloading();
   }
 
   void playerThrowGrenade(Player player) {

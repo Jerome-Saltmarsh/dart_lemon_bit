@@ -20,6 +20,7 @@ class ClientRequest {
   static const Inventory = 35;
   static const Select_Perk = 36;
   static const Unequip = 37;
+  static const Reload = 38;
 }
 
 

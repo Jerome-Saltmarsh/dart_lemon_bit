@@ -96,6 +96,10 @@ class ClientEvents {
       GameNetwork.sendClientRequestInventoryToggle();
       return;
     }
+    if (key == ClientConstants.Key_Reload){
+      GameNetwork.sendClientRequestReload();
+      return;
+    }
     if (key == ClientConstants.Key_Unequip){
       GameNetwork.sendClientRequestUnequip();
       return;

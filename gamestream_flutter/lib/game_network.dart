@@ -245,6 +245,10 @@ class GameNetwork {
     sendClientRequest(ClientRequest.Teleport);
   }
 
+  static void sendClientRequestReload(){
+    sendClientRequest(ClientRequest.Reload);
+  }
+
   static void sendClientRequestTeleportScene(TeleportScenes scene){
     sendClientRequest(ClientRequest.Teleport_Scene, scene.index);
   }
