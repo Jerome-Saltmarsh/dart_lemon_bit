@@ -251,99 +251,10 @@ class RendererNodes extends Renderer {
      * If the player is inside of a building, scan the nodes which are
      * visible to him and do not render the others.
      */
-    if (true){
+    updatePerceptible();
 
-      final centerIndex = GamePlayer.nodeIndex;
-      final centerRow = GamePlayer.indexRow;
-      final centerCol = GamePlayer.indexColumn;
-      final centerZ = GamePlayer.indexZ;
-
-
-      for (var i = 0; i < nodesPerceptibleStackIndex; i++){
-        nodesPerceptible[nodesPerceptibleStack[i]] = false;
-      }
-      nodesPerceptibleStackIndex = 0;
-
-      nodesPerceptible[centerIndex] = true;
-      nodesPerceptibleStack[0] = centerIndex;
-      nodesPerceptibleStackIndex = 1;
-
-      // var cornerIndex = centerIndex;
-      // var cornerRow = centerRow - 1;
-      // var cornerColumn = centerCol - 1;
-      // var cornerZ = centerZ;
-
-      const range = 5;
-
-      projectBeamDown(centerIndex);
-      shootBeam(centerZ, centerRow, centerCol, range, 1, 0);
-      shootBeam(centerZ, centerRow, centerCol, range, 0, 1);
-      shootBeam(centerZ, centerRow, centerCol, range, -1, 0);
-      shootBeam(centerZ, centerRow, centerCol, range, 0, -1);
-
-      shootCorner(centerRow, centerCol, centerZ, range, -1, -1);
-      shootCorner(centerRow, centerCol, centerZ, range, 1, -1);
-      shootCorner(centerRow, centerCol, centerZ, range, -1, 1);
-      shootCorner(centerRow, centerCol, centerZ, range, 1, 1);
-      // for (var r = 1; r < range; r++){
-      //   final row = centerRow - r;
-      //   final column = centerCol - r;
-      //   if (row < 0) break;
-      //   if (column < 0) break;
-      //   final nodeIndex = getIndex(row, column, centerZ);
-      //   addPerceptible(nodeIndex);
-      //   projectBeamDown(nodeIndex);
-      //   final nodeType = GameNodes.nodeTypes[nodeIndex];
-      //   if (!NodeType.isRainOrEmpty(nodeType)) {
-      //     break;
-      //   }
-      //   shootBeam(centerZ, centerRow - r, centerCol - r, range - r, -1, 0);
-      //   shootBeam(centerZ, centerRow - r, centerCol - r, range - r, 0, -1);
-      // }
-
-      // for (var r = 1; r < range; r++){
-      //   final row = centerRow + r;
-      //   final column = centerCol - r;
-      //   if (row < 0) break;
-      //   if (column < 0) break;
-      //   if (row >= GameState.nodesTotalRows) break;
-      //
-      //   final nodeIndex = getIndex(row, column, centerZ);
-      //   addPerceptible(nodeIndex);
-      //   projectBeamDown(nodeIndex);
-      //   final nodeType = GameNodes.nodeTypes[nodeIndex];
-      //   if (!NodeType.isRainOrEmpty(nodeType)) {
-      //     break;
-      //   }
-      //   shootBeam(centerZ, centerRow + r, centerCol - r, range - r, 1, 0);
-      //   shootBeam(centerZ, centerRow + r, centerCol - r, range - r, 0, -1);
-      // }
-
-
-      // for (var r = 1; r < range; r++){
-      //   const dirRow = 1;
-      //   const dirCol = 1;
-      //   final row = centerRow + dirRow;
-      //   final column = centerCol + dirCol;
-      //   if (row < 0) break;
-      //   if (column < 0) break;
-      //   if (row >= GameState.nodesTotalRows) break;
-      //
-      //   final nodeIndex = getIndex(row, column, centerZ);
-      //   addPerceptible(nodeIndex);
-      //   projectBeamDown(nodeIndex);
-      //   final nodeType = GameNodes.nodeTypes[nodeIndex];
-      //   if (!NodeType.isRainOrEmpty(nodeType)) break;
-      //   shootBeam(centerZ, centerRow + dirRow, centerCol + dirCol, range - r, dirRow, 0);
-      //   shootBeam(centerZ, centerRow + dirRow, centerCol + dirCol, range - r, 0, dirCol);
-      // }
-
-    }
-
-
-
-    showIndexPlayer();
-    showIndexMouse();
+    // showIndexPlayer();
+    // showIndexMouse();
 
     total = getTotal();
     index = 0;
@@ -362,6 +273,36 @@ class RendererNodes extends Renderer {
     }
 
     highlightCharacterNearMouse();
+  }
+
+  void updatePerceptible() {
+    final centerIndex = GamePlayer.nodeIndex;
+    final centerRow = GamePlayer.indexRow;
+    final centerCol = GamePlayer.indexColumn;
+    final centerZ = GamePlayer.indexZ;
+
+
+    for (var i = 0; i < nodesPerceptibleStackIndex; i++){
+      nodesPerceptible[nodesPerceptibleStack[i]] = false;
+    }
+    nodesPerceptibleStackIndex = 0;
+
+    nodesPerceptible[centerIndex] = true;
+    nodesPerceptibleStack[0] = centerIndex;
+    nodesPerceptibleStackIndex = 1;
+
+    const range = 10;
+
+    projectBeamDown(centerIndex);
+    shootBeam(centerZ, centerRow, centerCol, range, 1, 0);
+    shootBeam(centerZ, centerRow, centerCol, range, 0, 1);
+    shootBeam(centerZ, centerRow, centerCol, range, -1, 0);
+    shootBeam(centerZ, centerRow, centerCol, range, 0, -1);
+
+    shootCorner(centerRow, centerCol, centerZ, range, -1, -1);
+    shootCorner(centerRow, centerCol, centerZ, range, 1, -1);
+    shootCorner(centerRow, centerCol, centerZ, range, -1, 1);
+    shootCorner(centerRow, centerCol, centerZ, range, 1, 1);
   }
   @override
   int getTotal() => GameNodes.total;
@@ -390,8 +331,7 @@ class RendererNodes extends Renderer {
         shootBeam(z, row, column, range - r, 0, dirColumn);
       }
 
-      if (NodeType.isRainOrEmpty(nodeType)) continue;
-      if (nodeType == NodeType.Shopping_Shelf) continue;
+      if (!nodeTypeBlocks(nodeType)) continue;
       break;
     }
   }
@@ -426,6 +366,21 @@ class RendererNodes extends Renderer {
     }
   }
 
+  static bool nodeTypeBlocks(int nodeType){
+    if (nodeType == NodeType.Empty) return false;
+    if (nodeType == NodeType.Rain_Falling) return false;
+    if (nodeType == NodeType.Rain_Landing) return false;
+    if (nodeType == NodeType.Window) return false;
+    if (nodeType == NodeType.Shopping_Shelf) return false;
+    if (nodeType == NodeType.Wooden_Plank) return false;
+    if (nodeType == NodeType.Torch) return false;
+    if (nodeType == NodeType.Boulder) return false;
+    if (nodeType == NodeType.Tree_Bottom) return false;
+    if (nodeType == NodeType.Tree_Top) return false;
+    if (nodeType == NodeType.Grass_Long) return false;
+    return true;
+  }
+
   static bool blocksBeam(int index, int dirRow, int dirColumn){
     assert (dirRow == 0 || dirColumn == 0);
     final nodeOrientation = GameNodes.nodeOrientations[index];
@@ -434,9 +389,15 @@ class RendererNodes extends Renderer {
 
     final nodeType = GameNodes.nodeTypes[index];
 
-    if (nodeType == NodeType.Window || nodeType == NodeType.Shopping_Shelf){
-      return false;
-    }
+    if (nodeType == NodeType.Window) return false;
+    if (nodeType == NodeType.Shopping_Shelf) return false;
+    if (nodeType == NodeType.Wooden_Plank) return false;
+    if (nodeType == NodeType.Torch) return false;
+    if (nodeType == NodeType.Boulder) return false;
+    if (nodeType == NodeType.Tree_Bottom) return false;
+    if (nodeType == NodeType.Tree_Top) return false;
+    if (nodeType == NodeType.Grass_Long) return false;
+    if (nodeOrientation == NodeOrientation.Half_Vertical_Bottom) return false;
 
     if (nodeOrientation == NodeOrientation.Solid) return true;
 
