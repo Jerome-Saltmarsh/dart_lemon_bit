@@ -296,7 +296,27 @@ class RendererNodes extends Renderer {
         shootBeam(centerZ, centerRow - r, centerCol - r, range - r, -1, 0);
         shootBeam(centerZ, centerRow - r, centerCol - r, range - r, 0, -1);
       }
+
+      for (var r = 1; r < range; r++){
+        final row = centerRow + r;
+        final column = centerCol - r;
+        if (row < 0) break;
+        if (column < 0) break;
+        if (row >= GameState.nodesTotalRows) break;
+
+        final nodeIndex = getIndex(row, column, centerZ);
+        addPerceptible(nodeIndex);
+        projectBeamDown(nodeIndex);
+        final nodeType = GameNodes.nodeTypes[nodeIndex];
+        if (!NodeType.isRainOrEmpty(nodeType)) {
+          break;
+        }
+        shootBeam(centerZ, centerRow + r, centerCol - r, range - r, 1, 0);
+        shootBeam(centerZ, centerRow + r, centerCol - r, range - r, 0, -1);
+      }
     }
+
+
 
     showIndexPlayer();
     showIndexMouse();
