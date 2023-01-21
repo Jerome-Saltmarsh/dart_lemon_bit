@@ -13,9 +13,13 @@ class RendererCharacters extends Renderer {
   void renderFunction() => renderCurrentCharacter();
 
   void updateFunction() {
-    character = ServerState.characters[index];
-    order = character.renderOrder;
-    orderZ = character.indexZ;
+    while (index < ServerState.totalCharacters){
+      character = ServerState.characters[index];
+      order = character.renderOrder;
+      orderZ = character.indexZ;
+      if (character.nodePerceptible) break;
+      index++;
+    }
   }
   @override
   int getTotal() => ServerState.totalCharacters;

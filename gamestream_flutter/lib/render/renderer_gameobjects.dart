@@ -49,7 +49,9 @@ class RendererGameObjects extends Renderer {
   @override
   void updateFunction() {
     gameObject = gameObjects[index];
-    while (gameObject.nodeVisibilityInvisible) {
+
+
+    while (!gameObject.nodePerceptible) {
       index++;
       if (!remaining) return;
       gameObject = gameObjects[index];
