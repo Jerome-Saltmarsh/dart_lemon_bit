@@ -383,11 +383,15 @@ class RendererNodes extends Renderer {
       addPerceptible(nodeIndex);
       projectBeamDown(nodeIndex);
       final nodeType = GameNodes.nodeTypes[nodeIndex];
+      if (!blocksBeam(nodeIndex, dirRow, 0)){
+        shootBeam(z, row, column, range - r, dirRow, 0);
+      }
+      if (!blocksBeam(nodeIndex, 0, dirColumn)){
+        shootBeam(z, row, column, range - r, 0, dirColumn);
+      }
       if (!NodeType.isRainOrEmpty(nodeType)) break;
-      shootBeam(z, row, column, range - r, dirRow, 0);
-      shootBeam(z, row, column, range - r, 0, dirColumn);
+      // shootBeam(z, row, column, range - r, 0, dirColumn);
     }
-
   }
 
   void shootBeam(int z, int row, int column, int range, int dirRow, int dirCol){
@@ -424,6 +428,13 @@ class RendererNodes extends Renderer {
     final nodeOrientation = GameNodes.nodeOrientations[index];
     if (nodeOrientation == NodeOrientation.None) return false;
     if (nodeOrientation == NodeOrientation.Radial) return false;
+
+    final nodeType = GameNodes.nodeTypes[index];
+
+    if (nodeType == NodeType.Window || nodeType == NodeType.Shopping_Shelf){
+      return false;
+    }
+
     if (nodeOrientation == NodeOrientation.Solid) return true;
 
     if (NodeOrientation.isHalf(nodeOrientation)){
