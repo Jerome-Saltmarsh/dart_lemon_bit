@@ -439,6 +439,8 @@ class RendererParticles extends Renderer {
       final dstY = GameConvert.convertV3ToRenderY(particle);
       if (dstY < screen.top - 50) continue;
       if (dstY > screen.bottom + 50) continue;
+      if (!particle.nodePerceptible) continue;
+
       order = particle.renderOrder;
       orderZ = particle.indexZ;
       index--;

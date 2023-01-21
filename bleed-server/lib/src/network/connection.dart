@@ -127,7 +127,6 @@ class Connection with ByteReader {
         return;
 
       case ClientRequest.Reload:
-        // player.assignWeaponStateReloading();
         player.game.playerReload(player);
         return;
 
