@@ -47,7 +47,7 @@ class RendererNodes extends Renderer {
   static var nodesGridTotalColumnsMinusOne = 0;
   static var nodesGridTotalZMinusOne = 0;
   static var nodesPlayerColumnRow = 0;
-  static var nodesPlayerUnderRoof = false;
+  static var playerUnderRoof = false;
 
   static var playerZ = 0;
   static var playerRow = 0;
@@ -110,7 +110,7 @@ class RendererNodes extends Renderer {
       currentNodeType = nodeTypes[currentNodeIndex];
       if (currentNodeType != NodeType.Empty){
 
-        if (nodesPerceptible[currentNodeIndex]){
+        if (!playerUnderRoof || nodesPerceptible[currentNodeIndex]){
           renderCurrentNode();
         }
 
@@ -174,6 +174,15 @@ class RendererNodes extends Renderer {
     return (row * GameState.nodesTotalColumns) + column + (z * GameNodes.area);
   }
 
+  static bool indexIsUnderRoof(int index){
+     while (true){
+        index += GameNodes.area;
+        if (index >= GameNodes.total) return false;
+        if (GameNodes.nodeOrientations[index] != NodeOrientation.None) return true;
+     }
+     return false;
+  }
+
   @override
   void reset() {
     nodeTypes = GameNodes.nodeTypes;
@@ -198,7 +207,7 @@ class RendererNodes extends Renderer {
     nodesPlayerColumnRow = playerRow + playerColumn;
     playerRenderRow = playerRow - (GamePlayer.position.indexZ ~/ 2);
     playerRenderColumn = playerColumn - (GamePlayer.position.indexZ ~/ 2);
-    nodesPlayerUnderRoof = GameState.gridIsUnderSomething(playerZ, playerRow, playerColumn);
+    playerUnderRoof = indexIsUnderRoof(GamePlayer.position.nodeIndex);
 
     screenRight = Engine.screen.right + Node_Size;
     screenLeft = Engine.screen.left - Node_Size;

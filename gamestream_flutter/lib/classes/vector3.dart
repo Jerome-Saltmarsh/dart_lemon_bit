@@ -28,7 +28,7 @@ class Vector3 with Position {
 
   bool get nodeVisibilityOpaque => nodeVisibility == Visibility.Opaque;
   bool get nodeVisibilityInvisible => nodeVisibility == Visibility.Invisible;
-  bool get nodePerceptible => outOfBounds ? false : nodeIndex < RendererNodes.nodesPerceptible.length ? RendererNodes.nodesPerceptible[nodeIndex] : false;
+  bool get nodePerceptible =>  !RendererNodes.playerUnderRoof ? true :  outOfBounds ? false : nodeIndex < RendererNodes.nodesPerceptible.length ? RendererNodes.nodesPerceptible[nodeIndex] : false;
 
 
   double get renderOrder => x + y + (z * 0.25);
