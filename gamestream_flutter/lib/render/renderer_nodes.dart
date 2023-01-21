@@ -281,14 +281,20 @@ class RendererNodes extends Renderer {
       shootBeam(centerZ, centerRow, centerCol, range, -1, 0);
       shootBeam(centerZ, centerRow, centerCol, range, 0, -1);
 
-
-      // for (var r = 1; r < range; r++){
-      //   for (var x = -1; x <= 1; x++){
-      //     for (var y = -1; y <= 1; y++){
-      //       shootBeam(centerZ, centerRow + (x * r), centerCol + (y * r), range - r, x, y);
-      //     }
-      //   }
-      // }
+      for (var r = 1; r < range; r++){
+        final row = centerRow - r;
+        final column = centerCol - r;
+        if (row < 0) break;
+        if (column < 0) break;
+        final nodeIndex = getIndex(row, column, centerZ);
+        final nodeType = GameNodes.nodeTypes[nodeIndex];
+        if (!NodeType.isRainOrEmpty(nodeType)) {
+          projectBeamDown(nodeIndex);
+          break;
+        }
+        shootBeam(centerZ, centerRow - r, centerCol - r, range - r, -1, 0);
+        shootBeam(centerZ, centerRow - r, centerCol - r, range - r, 0, 1);
+      }
     }
 
     showIndexPlayer();
@@ -335,10 +341,9 @@ class RendererNodes extends Renderer {
       if (row >= GameState.nodesTotalRows) return;
       if (column >= GameState.nodesTotalColumns) return;
       final index = getIndex(row, column, z);
-      final nodeType = GameNodes.nodeTypes[index];
       addPerceptible(index);
       projectBeamDown(index);
-      if (!NodeType.isRainOrEmpty(nodeType)) return;
+      if (blocksBeam(index, dirRow, dirCol)) return;
     }
   }
 
@@ -349,6 +354,22 @@ class RendererNodes extends Renderer {
       if (blocksBeamDown(index)) return;
       index -= GameNodes.area;
     }
+  }
+
+  static bool blocksBeam(int index, int dirRow, int dirColumn){
+    assert (dirRow == 0 || dirColumn == 0);
+    final nodeOrientation = GameNodes.nodeOrientations[index];
+    if (nodeOrientation == NodeOrientation.None) return false;
+    if (nodeOrientation == NodeOrientation.Radial) return false;
+
+    if (NodeOrientation.isHalf(nodeOrientation)){
+        if (dirRow != 0){
+            return nodeOrientation == NodeOrientation.Half_North || nodeOrientation == NodeOrientation.Half_South;
+        }
+        return nodeOrientation == NodeOrientation.Half_East || nodeOrientation == NodeOrientation.Half_West;
+    }
+
+    return true;
   }
 
   static bool blocksBeamDown(int index){
