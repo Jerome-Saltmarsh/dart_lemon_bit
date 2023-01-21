@@ -256,7 +256,8 @@ class RendererNodes extends Renderer {
       final centerIndex = GamePlayer.nodeIndex;
       final centerRow = GamePlayer.indexRow;
       final centerCol = GamePlayer.indexColumn;
-      final centerZ = GamePlayer.indexZ + 1;
+      final centerZ = GamePlayer.indexZ;
+
 
       for (var i = 0; i < nodesPerceptibleStackIndex; i++){
         nodesPerceptible[nodesPerceptibleStack[i]] = false;
