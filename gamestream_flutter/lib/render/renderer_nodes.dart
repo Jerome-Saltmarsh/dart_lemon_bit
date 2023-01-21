@@ -389,10 +389,13 @@ class RendererNodes extends Renderer {
       if (!blocksBeam(nodeIndex, 0, dirColumn)){
         shootBeam(z, row, column, range - r, 0, dirColumn);
       }
-      if (!NodeType.isRainOrEmpty(nodeType)) break;
-      // shootBeam(z, row, column, range - r, 0, dirColumn);
+
+      if (NodeType.isRainOrEmpty(nodeType)) continue;
+      if (nodeType == NodeType.Shopping_Shelf) continue;
+      break;
     }
   }
+
 
   void shootBeam(int z, int row, int column, int range, int dirRow, int dirCol){
     if (z < 0) return;
