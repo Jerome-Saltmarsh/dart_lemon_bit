@@ -287,13 +287,14 @@ class RendererNodes extends Renderer {
         if (row < 0) break;
         if (column < 0) break;
         final nodeIndex = getIndex(row, column, centerZ);
+        addPerceptible(nodeIndex);
+        projectBeamDown(nodeIndex);
         final nodeType = GameNodes.nodeTypes[nodeIndex];
         if (!NodeType.isRainOrEmpty(nodeType)) {
-          projectBeamDown(nodeIndex);
           break;
         }
         shootBeam(centerZ, centerRow - r, centerCol - r, range - r, -1, 0);
-        shootBeam(centerZ, centerRow - r, centerCol - r, range - r, 0, 1);
+        shootBeam(centerZ, centerRow - r, centerCol - r, range - r, 0, -1);
       }
     }
 
@@ -361,6 +362,7 @@ class RendererNodes extends Renderer {
     final nodeOrientation = GameNodes.nodeOrientations[index];
     if (nodeOrientation == NodeOrientation.None) return false;
     if (nodeOrientation == NodeOrientation.Radial) return false;
+    if (nodeOrientation == NodeOrientation.Solid) return true;
 
     if (NodeOrientation.isHalf(nodeOrientation)){
         if (dirRow != 0){
