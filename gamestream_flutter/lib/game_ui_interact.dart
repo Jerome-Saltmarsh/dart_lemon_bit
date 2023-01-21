@@ -8,11 +8,12 @@ import 'package:gamestream_flutter/library.dart';
 class GameUIInteract {
   static const _width = 400;
 
+
     static Widget buildWatchInteractMode() =>
       watch(ServerState.interactMode, (int interactMode){
         switch (interactMode) {
           case InteractMode.None:
-            return buildInteractModeNone();
+            return GameStyle.Null;
           case InteractMode.Talking:
             return buildInteractModeTalking();
           case InteractMode.Trading:
@@ -25,12 +26,6 @@ class GameUIInteract {
             return GameStyle.Null;
         }
       });
-
-    static Positioned buildInteractModeNone() => Positioned(
-          child: GameInventoryUI.buildPlayerDamageBar(),
-          bottom: GameStyle.Default_Padding,
-          left: GameStyle.Default_Padding,
-      );
 
     static Widget buildInteractModeCrafting() => Stack(
         children: [
