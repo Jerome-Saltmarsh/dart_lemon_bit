@@ -490,7 +490,7 @@ class GameEvents {
         y: y,
         z: z,
         zv: Engine.randomBetween(1.5, 2),
-        angle: angle + Engine.PI + Engine.randomGiveOrTake(Engine.PI_Quarter),
+        angle: angle + Engine.randomGiveOrTake(Engine.PI_Quarter),
         speed: Engine.randomBetween(1.5, 2.5),
       );
     }

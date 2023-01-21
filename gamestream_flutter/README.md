@@ -10,6 +10,7 @@ ctrl + w:   minimal mode
 
 
 21.01.2023
+[x] fix particle blood direction
 [x] reload with key code R
 [x] currently equipped ammo hud
 

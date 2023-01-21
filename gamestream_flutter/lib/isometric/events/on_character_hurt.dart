@@ -14,10 +14,11 @@ void onGameEventCharacterHurt(int type, double x, double y, double z, double ang
         y: y,
         z: z,
         zv: randomBetween(1.5, 2),
-        angle: angle + pi + giveOrTake(piQuarter),
+        angle: angle + giveOrTake(piQuarter),
         speed: randomBetween(1.5, 2.5),
     );
   }
+
 
   switch (type) {
     case CharacterType.Zombie:
