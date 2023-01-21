@@ -54,6 +54,7 @@ class GamePlayer {
   static bool get interactModeTrading => ServerState.interactMode.value == InteractMode.Trading;
   static bool get dead => !alive.value;
   static bool get inBounds => GameQueries.inBoundsVector3(position);
+  static int get nodeIndex => position.nodeIndex;
 
   static bool isCharacter(Character character){
     return position.x == character.x && position.y == character.y && position.z == character.z;
@@ -64,5 +65,15 @@ class GamePlayer {
     if (value == GameDialog.Quests) {
       // actionHideQuestAdded();
     }
+  }
+
+  static bool isInsideBuilding(){
+     if (!inBounds) return false;
+     final index = position.nodeIndex + GameNodes.area;
+     while (index < GameNodes.total){
+       if (NodeType.isRainOrEmpty(GameNodes.nodeTypes[index]))  continue;
+       return true;
+     }
+     return false;
   }
 }

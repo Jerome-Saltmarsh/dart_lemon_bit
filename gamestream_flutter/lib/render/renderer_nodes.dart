@@ -85,6 +85,12 @@ class RendererNodes extends Renderer {
 
   static int get renderNodeBelowColor => getNodeColorAtIndex(currentNodeIndex - GameNodes.area);
 
+
+  static var nodesPerceptible = <bool>[];
+  static var nodesPerceptibleStack = Uint16List(100000);
+  static var nodesPerceptibleStackIndex = 0;
+
+
   static int getNodeColorAtIndex(int index){
     if (index < 0) return GameNodes.ambient_color;
     if (index >= GameNodes.total) return GameNodes.ambient_color;
@@ -103,7 +109,11 @@ class RendererNodes extends Renderer {
     ){
       currentNodeType = nodeTypes[currentNodeIndex];
       if (currentNodeType != NodeType.Empty){
-        renderCurrentNode();
+
+        if (nodesPerceptible[currentNodeIndex]){
+          renderCurrentNode();
+        }
+
       }
       if (row + 1 > nodesRowsMax) return;
       row++;
@@ -158,6 +168,10 @@ class RendererNodes extends Renderer {
     currentNodeType = GameNodes.nodeTypes[currentNodeIndex];
     order = ((row + column) * Node_Size) + Node_Size_Half;
     orderZ = currentNodeZ;
+  }
+
+  int getIndex(int row, int column, int z){
+    return (row * GameState.nodesTotalColumns) + column + (z * GameNodes.area);
   }
 
   @override
@@ -224,7 +238,66 @@ class RendererNodes extends Renderer {
     currentNodeIndex = (currentNodeZ * GameNodes.area) + (row * GameState.nodesTotalColumns) + column;
     currentNodeType = nodeTypes[currentNodeIndex];
 
+
     GameNodes.resetVisible();
+
+
+
+    if (nodesPerceptible.length != GameNodes.total) {
+      nodesPerceptible = List.generate(GameNodes.total, (index) => false);
+    }
+
+    /**
+     * If the player is inside of a building, scan the nodes which are
+     * visible to him and do not render the others.
+     */
+    if (true){
+
+      final nodeCenter = GamePlayer.nodeIndex;
+
+      final centerRow = GamePlayer.indexRow;
+      final centerCol = GamePlayer.indexColumn;
+      final centerZ = GamePlayer.indexZ;
+
+      for (var i = 0; i < nodesPerceptibleStackIndex; i++){
+        nodesPerceptible[nodesPerceptibleStack[i]] = false;
+      }
+      nodesPerceptibleStackIndex = 0;
+
+      nodesPerceptible[nodeCenter] = true;
+      nodesPerceptibleStack[0] = nodeCenter;
+      nodesPerceptibleStackIndex = 1;
+
+      for (var r = 1; r < 3; r++) {
+
+        for (var row = -r; row <= r; row++) {
+          final indexRow = centerRow + row;
+          if (indexRow < 0) continue;
+          if (indexRow >= GameState.nodesTotalRows) continue;
+          final dirRow = row < 0 ? 1 : row == 0 ? 0 : -1;
+           for (var column = - r; column <= r; column++) {
+             final indexColumn = centerCol + column;
+             if (indexColumn < 0) continue;
+             if (indexColumn >= GameState.nodesTotalColumns) continue;
+             final dirColumn = column < 0 ? 1 : column == 0 ? 0 : -1;
+              for (var z = -r; z <= r; z++) {
+                final indexZ = centerZ + z;
+                if (indexZ < 0) continue;
+                if (indexZ >= GameState.nodesTotalZ) continue;
+                final dirZ = z < 0 ? 1 : z == 0 ? 0 : -1;
+                final inwardIndex = getIndex(indexRow + dirRow, indexColumn + dirColumn, indexZ + dirZ);
+
+                if (nodesPerceptible[inwardIndex]){
+                  final index = getIndex(indexRow, indexColumn, indexZ);
+                  nodesPerceptible[index] = true;
+                  nodesPerceptibleStack[nodesPerceptibleStackIndex] = index;
+                  nodesPerceptibleStackIndex++;
+                }
+              }
+           }
+        }
+      }
+    }
 
     showIndexPlayer();
     showIndexMouse();

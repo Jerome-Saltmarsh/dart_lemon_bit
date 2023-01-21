@@ -143,4 +143,5 @@ class ServerQuery {
   static int getEquippedWeaponConsumeType() =>
       ItemType.getConsumeType(getEquippedWeaponType());
 
+
 }
