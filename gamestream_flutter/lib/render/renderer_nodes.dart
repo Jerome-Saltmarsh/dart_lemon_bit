@@ -281,39 +281,63 @@ class RendererNodes extends Renderer {
       shootBeam(centerZ, centerRow, centerCol, range, -1, 0);
       shootBeam(centerZ, centerRow, centerCol, range, 0, -1);
 
-      for (var r = 1; r < range; r++){
-        final row = centerRow - r;
-        final column = centerCol - r;
-        if (row < 0) break;
-        if (column < 0) break;
-        final nodeIndex = getIndex(row, column, centerZ);
-        addPerceptible(nodeIndex);
-        projectBeamDown(nodeIndex);
-        final nodeType = GameNodes.nodeTypes[nodeIndex];
-        if (!NodeType.isRainOrEmpty(nodeType)) {
-          break;
-        }
-        shootBeam(centerZ, centerRow - r, centerCol - r, range - r, -1, 0);
-        shootBeam(centerZ, centerRow - r, centerCol - r, range - r, 0, -1);
-      }
+      shootCorner(centerRow, centerCol, centerZ, range, -1, -1);
+      shootCorner(centerRow, centerCol, centerZ, range, 1, -1);
+      shootCorner(centerRow, centerCol, centerZ, range, -1, 1);
+      shootCorner(centerRow, centerCol, centerZ, range, 1, 1);
+      // for (var r = 1; r < range; r++){
+      //   final row = centerRow - r;
+      //   final column = centerCol - r;
+      //   if (row < 0) break;
+      //   if (column < 0) break;
+      //   final nodeIndex = getIndex(row, column, centerZ);
+      //   addPerceptible(nodeIndex);
+      //   projectBeamDown(nodeIndex);
+      //   final nodeType = GameNodes.nodeTypes[nodeIndex];
+      //   if (!NodeType.isRainOrEmpty(nodeType)) {
+      //     break;
+      //   }
+      //   shootBeam(centerZ, centerRow - r, centerCol - r, range - r, -1, 0);
+      //   shootBeam(centerZ, centerRow - r, centerCol - r, range - r, 0, -1);
+      // }
 
-      for (var r = 1; r < range; r++){
-        final row = centerRow + r;
-        final column = centerCol - r;
-        if (row < 0) break;
-        if (column < 0) break;
-        if (row >= GameState.nodesTotalRows) break;
+      // for (var r = 1; r < range; r++){
+      //   final row = centerRow + r;
+      //   final column = centerCol - r;
+      //   if (row < 0) break;
+      //   if (column < 0) break;
+      //   if (row >= GameState.nodesTotalRows) break;
+      //
+      //   final nodeIndex = getIndex(row, column, centerZ);
+      //   addPerceptible(nodeIndex);
+      //   projectBeamDown(nodeIndex);
+      //   final nodeType = GameNodes.nodeTypes[nodeIndex];
+      //   if (!NodeType.isRainOrEmpty(nodeType)) {
+      //     break;
+      //   }
+      //   shootBeam(centerZ, centerRow + r, centerCol - r, range - r, 1, 0);
+      //   shootBeam(centerZ, centerRow + r, centerCol - r, range - r, 0, -1);
+      // }
 
-        final nodeIndex = getIndex(row, column, centerZ);
-        addPerceptible(nodeIndex);
-        projectBeamDown(nodeIndex);
-        final nodeType = GameNodes.nodeTypes[nodeIndex];
-        if (!NodeType.isRainOrEmpty(nodeType)) {
-          break;
-        }
-        shootBeam(centerZ, centerRow + r, centerCol - r, range - r, 1, 0);
-        shootBeam(centerZ, centerRow + r, centerCol - r, range - r, 0, -1);
-      }
+
+      // for (var r = 1; r < range; r++){
+      //   const dirRow = 1;
+      //   const dirCol = 1;
+      //   final row = centerRow + dirRow;
+      //   final column = centerCol + dirCol;
+      //   if (row < 0) break;
+      //   if (column < 0) break;
+      //   if (row >= GameState.nodesTotalRows) break;
+      //
+      //   final nodeIndex = getIndex(row, column, centerZ);
+      //   addPerceptible(nodeIndex);
+      //   projectBeamDown(nodeIndex);
+      //   final nodeType = GameNodes.nodeTypes[nodeIndex];
+      //   if (!NodeType.isRainOrEmpty(nodeType)) break;
+      //   shootBeam(centerZ, centerRow + dirRow, centerCol + dirCol, range - r, dirRow, 0);
+      //   shootBeam(centerZ, centerRow + dirRow, centerCol + dirCol, range - r, 0, dirCol);
+      // }
+
     }
 
 
@@ -346,6 +370,24 @@ class RendererNodes extends Renderer {
     nodesPerceptible[index] = true;
     nodesPerceptibleStack[nodesPerceptibleStackIndex] = index;
     nodesPerceptibleStackIndex++;
+  }
+
+  void shootCorner(int row, int column, int z, int range, int dirRow, int dirColumn){
+    for (var r = 1; r < range; r++){
+      row += dirRow;
+      column += dirColumn;
+      if (row < 0) break;
+      if (column < 0) break;
+      if (row >= GameState.nodesTotalRows) break;
+      final nodeIndex = getIndex(row, column, z);
+      addPerceptible(nodeIndex);
+      projectBeamDown(nodeIndex);
+      final nodeType = GameNodes.nodeTypes[nodeIndex];
+      if (!NodeType.isRainOrEmpty(nodeType)) break;
+      shootBeam(z, row, column, range - r, dirRow, 0);
+      shootBeam(z, row, column, range - r, 0, dirColumn);
+    }
+
   }
 
   void shootBeam(int z, int row, int column, int range, int dirRow, int dirCol){
