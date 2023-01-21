@@ -253,50 +253,41 @@ class RendererNodes extends Renderer {
      */
     if (true){
 
-      final nodeCenter = GamePlayer.nodeIndex;
-
+      final centerIndex = GamePlayer.nodeIndex;
       final centerRow = GamePlayer.indexRow;
       final centerCol = GamePlayer.indexColumn;
-      final centerZ = GamePlayer.indexZ;
+      final centerZ = GamePlayer.indexZ + 1;
 
       for (var i = 0; i < nodesPerceptibleStackIndex; i++){
         nodesPerceptible[nodesPerceptibleStack[i]] = false;
       }
       nodesPerceptibleStackIndex = 0;
 
-      nodesPerceptible[nodeCenter] = true;
-      nodesPerceptibleStack[0] = nodeCenter;
+      nodesPerceptible[centerIndex] = true;
+      nodesPerceptibleStack[0] = centerIndex;
       nodesPerceptibleStackIndex = 1;
 
-      for (var r = 1; r < 3; r++) {
+      // var cornerIndex = centerIndex;
+      // var cornerRow = centerRow - 1;
+      // var cornerColumn = centerCol - 1;
+      // var cornerZ = centerZ;
 
-        for (var row = -r; row <= r; row++) {
-          final indexRow = centerRow + row;
-          if (indexRow < 0) continue;
-          if (indexRow >= GameState.nodesTotalRows) continue;
-          final dirRow = row < 0 ? 1 : row == 0 ? 0 : -1;
-           for (var column = - r; column <= r; column++) {
-             final indexColumn = centerCol + column;
-             if (indexColumn < 0) continue;
-             if (indexColumn >= GameState.nodesTotalColumns) continue;
-             final dirColumn = column < 0 ? 1 : column == 0 ? 0 : -1;
-              for (var z = -r; z <= r; z++) {
-                final indexZ = centerZ + z;
-                if (indexZ < 0) continue;
-                if (indexZ >= GameState.nodesTotalZ) continue;
-                final dirZ = z < 0 ? 1 : z == 0 ? 0 : -1;
-                final inwardIndex = getIndex(indexRow + dirRow, indexColumn + dirColumn, indexZ + dirZ);
+      const range = 5;
 
-                if (nodesPerceptible[inwardIndex]){
-                  final index = getIndex(indexRow, indexColumn, indexZ);
-                  nodesPerceptible[index] = true;
-                  nodesPerceptibleStack[nodesPerceptibleStackIndex] = index;
-                  nodesPerceptibleStackIndex++;
-                }
-              }
-           }
-        }
-      }
+      projectBeamDown(centerIndex);
+      shootBeam(centerZ, centerRow, centerCol, range, 1, 0);
+      shootBeam(centerZ, centerRow, centerCol, range, 0, 1);
+      shootBeam(centerZ, centerRow, centerCol, range, -1, 0);
+      shootBeam(centerZ, centerRow, centerCol, range, 0, -1);
+
+
+      // for (var r = 1; r < range; r++){
+      //   for (var x = -1; x <= 1; x++){
+      //     for (var y = -1; y <= 1; y++){
+      //       shootBeam(centerZ, centerRow + (x * r), centerCol + (y * r), range - r, x, y);
+      //     }
+      //   }
+      // }
     }
 
     showIndexPlayer();
@@ -322,6 +313,54 @@ class RendererNodes extends Renderer {
   }
   @override
   int getTotal() => GameNodes.total;
+
+  void addPerceptible(int index){
+    nodesPerceptible[index] = true;
+    nodesPerceptibleStack[nodesPerceptibleStackIndex] = index;
+    nodesPerceptibleStackIndex++;
+  }
+
+  void shootBeam(int z, int row, int column, int range, int dirRow, int dirCol){
+    if (z < 0) return;
+    if (z >= GameState.nodesTotalZ) return;
+
+    assert (dirRow == 0 || dirCol == 0);
+
+    for (var i = 0; i < range; i++) {
+      row += dirRow;
+      column += dirCol;
+      if (row < 0) return;
+      if (column < 0) return;
+      if (row >= GameState.nodesTotalRows) return;
+      if (column >= GameState.nodesTotalColumns) return;
+      final index = getIndex(row, column, z);
+      final nodeType = GameNodes.nodeTypes[index];
+      addPerceptible(index);
+      projectBeamDown(index);
+      if (!NodeType.isRainOrEmpty(nodeType)) return;
+    }
+  }
+
+  void projectBeamDown(int index) {
+    index -= GameNodes.area;
+    while (index > 0) {
+      addPerceptible(index);
+      if (blocksBeamDown(index)) return;
+      index -= GameNodes.area;
+    }
+  }
+
+  static bool blocksBeamDown(int index){
+    if (NodeType.isRainOrEmpty(GameNodes.nodeTypes[index])) return false;
+    if (NodeOrientation.isHalf(GameNodes.nodeOrientations[index])) return false;
+    return true;
+  }
+
+  int getBeamVelocity(int rows, int columns){
+     var vRows = rows < 0 ? -GameState.nodesTotalColumns : rows > 0 ? GameState.nodesTotalColumns : 0;
+     var vColumns = columns < 0 ? -1 : columns > 0 ? 1 : 0;
+     return vRows + vColumns;
+  }
 
   void trimLeft(){
     var currentNodeRenderX = (row - column) * Node_Size_Half;
