@@ -327,7 +327,7 @@ class RendererNodes extends Renderer {
   int getTotal() => GameNodes.total;
 
   void addPerceptible(int index){
-    reserve(index);
+    nodesReserved[getProjectionIndex(index)] = true;
     nodesPerceptible[index] = true;
     nodesPerceptibleStack[nodesPerceptibleStackIndex] = index;
     nodesPerceptibleStackIndex++;
@@ -375,11 +375,6 @@ class RendererNodes extends Renderer {
       projectBeamDown(index);
       if (blocksBeam(index, dirRow, dirCol)) return;
     }
-  }
-
-  static void reserve(int index){
-      final projectionIndex = getProjectionIndex(index);
-      nodesReserved[projectionIndex] = true;
   }
 
   static int getProjectionIndex(int index){
