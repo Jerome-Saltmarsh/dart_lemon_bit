@@ -56,6 +56,8 @@ class GameNodes {
   static var dynamicIndex = -1;
   static var total = 0;
   static var area = 0;
+  static var area2 = 0;
+  static var projection = 0;
 
   // METHODS
 

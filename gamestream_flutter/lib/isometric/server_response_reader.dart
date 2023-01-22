@@ -458,6 +458,8 @@ class ServerResponseReader with ByteReader {
     GameState.nodesTotalRows = readUInt16();
     GameState.nodesTotalColumns = readUInt16();
     GameNodes.area = GameState.nodesTotalRows * GameState.nodesTotalColumns;
+    GameNodes.area2 = GameNodes.area * 2;
+    GameNodes.projection = GameNodes.area2 + GameState.nodesTotalColumns + 1;
     final totalNodes = GameState.nodesTotalZ * GameState.nodesTotalRows * GameState.nodesTotalColumns;
     if (GameNodes.nodeTypes.length < totalNodes) {
       GameNodes.nodeTypes = Uint8List(totalNodes);

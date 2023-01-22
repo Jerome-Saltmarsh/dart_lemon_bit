@@ -90,6 +90,8 @@ class RendererNodes extends Renderer {
   static var nodesPerceptibleStack = Uint16List(100000);
   static var nodesPerceptibleStackIndex = 0;
 
+  static var nodesReserved = <bool>[];
+
 
   static int getNodeColorAtIndex(int index){
     if (index < 0) return GameNodes.ambient_color;
@@ -110,10 +112,15 @@ class RendererNodes extends Renderer {
       currentNodeType = nodeTypes[currentNodeIndex];
       if (currentNodeType != NodeType.Empty){
 
-        if (!playerUnderRoof || nodesPerceptible[currentNodeIndex]){
-          renderCurrentNode();
-        }
+        final perceptible = nodesPerceptible[currentNodeIndex];
 
+        if (perceptible) {
+          renderCurrentNode();
+        } else {
+          if (!nodesReserved[getProjectionIndex(currentNodeIndex)]){
+            renderCurrentNode();
+          }
+        }
       }
       if (row + 1 > nodesRowsMax) return;
       row++;
@@ -175,12 +182,11 @@ class RendererNodes extends Renderer {
   }
 
   static bool indexIsUnderRoof(int index){
-     while (true){
+     while (true) {
         index += GameNodes.area;
         if (index >= GameNodes.total) return false;
         if (GameNodes.nodeOrientations[index] != NodeOrientation.None) return true;
      }
-     return false;
   }
 
   @override
@@ -250,10 +256,17 @@ class RendererNodes extends Renderer {
 
     GameNodes.resetVisible();
 
-
+    if (nodesReserved.length != GameNodes.area2){
+      nodesReserved = List.generate(GameNodes.area2, (index) => false, growable: false);
+    } else {
+      final length = nodesReserved.length;
+      for (var i = 0; i < length; i++){
+        nodesReserved[i] = false;
+      }
+    }
 
     if (nodesPerceptible.length != GameNodes.total) {
-      nodesPerceptible = List.generate(GameNodes.total, (index) => false);
+      nodesPerceptible = List.generate(GameNodes.total, (index) => false, growable: false);
     }
 
     /**
@@ -295,10 +308,7 @@ class RendererNodes extends Renderer {
       nodesPerceptible[nodesPerceptibleStack[i]] = false;
     }
     nodesPerceptibleStackIndex = 0;
-
-    nodesPerceptible[centerIndex] = true;
-    nodesPerceptibleStack[0] = centerIndex;
-    nodesPerceptibleStackIndex = 1;
+    addPerceptible(centerIndex);
 
     const range = 10;
 
@@ -317,6 +327,7 @@ class RendererNodes extends Renderer {
   int getTotal() => GameNodes.total;
 
   void addPerceptible(int index){
+    reserve(index);
     nodesPerceptible[index] = true;
     nodesPerceptibleStack[nodesPerceptibleStackIndex] = index;
     nodesPerceptibleStackIndex++;
@@ -364,6 +375,18 @@ class RendererNodes extends Renderer {
       projectBeamDown(index);
       if (blocksBeam(index, dirRow, dirCol)) return;
     }
+  }
+
+  static void reserve(int index){
+      final projectionIndex = getProjectionIndex(index);
+      nodesReserved[projectionIndex] = true;
+  }
+
+  static int getProjectionIndex(int index){
+    while (index > GameNodes.area2) {
+      index -= GameNodes.projection;
+    }
+    return index;
   }
 
   void projectBeamDown(int index) {
