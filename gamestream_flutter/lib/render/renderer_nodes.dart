@@ -256,8 +256,8 @@ class RendererNodes extends Renderer {
 
     GameNodes.resetVisible();
 
-    if (nodesReserved.length != GameNodes.area2){
-      nodesReserved = List.generate(GameNodes.area2, (index) => false, growable: false);
+    if (nodesReserved.length != GameNodes.projection){
+      nodesReserved = List.generate(GameNodes.projection, (index) => false, growable: false);
     } else {
       final length = nodesReserved.length;
       for (var i = 0; i < length; i++){
@@ -378,7 +378,7 @@ class RendererNodes extends Renderer {
   }
 
   static int getProjectionIndex(int index){
-    while (index > GameNodes.area2) {
+    while (index >= GameNodes.projection) {
       index -= GameNodes.projection;
     }
     return index;
