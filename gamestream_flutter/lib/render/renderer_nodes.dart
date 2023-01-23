@@ -429,6 +429,7 @@ class RendererNodes extends Renderer {
     if (nodeOrientation == NodeOrientation.Radial) return false;
     if (nodeOrientation == NodeOrientation.Half_Vertical_Bottom) return false;
     if (NodeOrientation.isColumn(nodeOrientation)) return false;
+    if (NodeOrientation.isCorner(nodeOrientation)) return false;
 
     if (NodeOrientation.isHalf(nodeOrientation)){
       if (dirRow != 0){
@@ -452,6 +453,7 @@ class RendererNodes extends Renderer {
     if (NodeOrientation.isHalf(nodeOrientation)) return false;
     if (NodeOrientation.isRadial(nodeOrientation)) return false;
     if (NodeOrientation.isColumn(nodeOrientation)) return false;
+    if (NodeOrientation.isCorner(nodeOrientation)) return false;
     return true;
   }
 
