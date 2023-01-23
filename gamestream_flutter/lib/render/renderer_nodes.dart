@@ -310,11 +310,14 @@ class RendererNodes extends Renderer {
     }
     nodesPerceptibleStackIndex = 0;
     shootIndex(centerZ, centerRow, centerCol);
+    shootIndex(centerZ + 1, centerRow, centerCol);
   }
   
   void shootIndex(int z, int row, int column) {
     const range = 10;
     final index = getIndex(row, column, z);
+    if (blocksBeamVertical(index)) return;
+
     addPerceptible(index);
     projectBeamDown(index);
     shootBeam(z, row, column, range, 1, 0);
@@ -352,10 +355,10 @@ class RendererNodes extends Renderer {
       addPerceptible(nodeIndex);
       projectBeamDown(nodeIndex);
       final nodeType = GameNodes.nodeTypes[nodeIndex];
-      if (!blocksBeam(nodeIndex, dirRow, 0)){
+      if (!blocksBeamHorizontal(nodeIndex, dirRow, 0)){
         shootBeam(z, row, column, range - r, dirRow, 0);
       }
-      if (!blocksBeam(nodeIndex, 0, dirColumn)){
+      if (!blocksBeamHorizontal(nodeIndex, 0, dirColumn)){
         shootBeam(z, row, column, range - r, 0, dirColumn);
       }
 
@@ -380,7 +383,7 @@ class RendererNodes extends Renderer {
       final index = getIndex(row, column, z);
       addPerceptible(index);
       projectBeamDown(index);
-      if (blocksBeam(index, dirRow, dirCol)) return;
+      if (blocksBeamHorizontal(index, dirRow, dirCol)) return;
     }
   }
 
@@ -392,11 +395,11 @@ class RendererNodes extends Renderer {
   }
 
   static void projectBeamDown(int index) {
-    index -= GameNodes.area;
-    while (index > 0) {
-      addPerceptible(index);
-      if (blocksBeamDown(index)) return;
+    while (true) {
+      if (blocksBeamVertical(index)) return;
       index -= GameNodes.area;
+      if (index < 0) return;
+      addPerceptible(index);
     }
   }
 
@@ -415,7 +418,7 @@ class RendererNodes extends Renderer {
     return true;
   }
 
-  static bool blocksBeam(int index, int dirRow, int dirColumn){
+  static bool blocksBeamHorizontal(int index, int dirRow, int dirColumn){
     assert (dirRow == 0 || dirColumn == 0);
     final nodeOrientation = GameNodes.nodeOrientations[index];
     if (nodeOrientation == NodeOrientation.None) return false;
@@ -441,16 +444,10 @@ class RendererNodes extends Renderer {
     return true;
   }
 
-  static bool blocksBeamDown(int index){
+  static bool blocksBeamVertical(int index){
     if (NodeType.isRainOrEmpty(GameNodes.nodeTypes[index])) return false;
     if (NodeOrientation.isHalf(GameNodes.nodeOrientations[index])) return false;
     return true;
-  }
-
-  int getBeamVelocity(int rows, int columns){
-     var vRows = rows < 0 ? -GameState.nodesTotalColumns : rows > 0 ? GameState.nodesTotalColumns : 0;
-     var vColumns = columns < 0 ? -1 : columns > 0 ? 1 : 0;
-     return vRows + vColumns;
   }
 
   void trimLeft(){
