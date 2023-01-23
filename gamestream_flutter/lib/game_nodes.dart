@@ -132,7 +132,7 @@ class GameNodes {
     return (a * (1.0 - t) + b * t).round();
   }
 
-  static const interpolations = [
+  static const interpolations = <double>[
     0,
     0.26530612244897944,
     0.4897959183673469,
