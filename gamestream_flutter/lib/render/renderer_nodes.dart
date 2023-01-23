@@ -177,7 +177,7 @@ class RendererNodes extends Renderer {
     orderZ = currentNodeZ;
   }
 
-  int getIndex(int row, int column, int z){
+  static int getIndex(int row, int column, int z){
     return (row * GameState.nodesTotalColumns) + column + (z * GameNodes.area);
   }
 
@@ -188,6 +188,9 @@ class RendererNodes extends Renderer {
         if (GameNodes.nodeOrientations[index] != NodeOrientation.None) return true;
      }
   }
+
+  @override
+  int getTotal() => GameNodes.total;
 
   @override
   void reset() {
@@ -301,7 +304,6 @@ class RendererNodes extends Renderer {
     final centerRow = GamePlayer.indexRow;
     final centerCol = GamePlayer.indexColumn;
     final centerZ = GamePlayer.indexZ;
-    final centerIndex = getIndex(centerRow, centerCol, centerZ);
 
     for (var i = 0; i < nodesPerceptibleStackIndex; i++){
       nodesPerceptible[nodesPerceptibleStack[i]] = false;
@@ -324,18 +326,15 @@ class RendererNodes extends Renderer {
     shootCorner(row, column, z, range, -1, 1);
     shootCorner(row, column, z, range, 1, 1);
   }
-  
-  @override
-  int getTotal() => GameNodes.total;
 
-  void addPerceptible(int index){
+  static void addPerceptible(int index){
     nodesReserved[getProjectionIndex(index)] = true;
     nodesPerceptible[index] = true;
     nodesPerceptibleStack[nodesPerceptibleStackIndex] = index;
     nodesPerceptibleStackIndex++;
   }
 
-  void shootCorner(int row, int column, int z, int range, int dirRow, int dirColumn){
+  static void shootCorner(int row, int column, int z, int range, int dirRow, int dirColumn){
     for (var r = 1; r < range; r++){
       row += dirRow;
       column += dirColumn;
@@ -358,8 +357,7 @@ class RendererNodes extends Renderer {
     }
   }
 
-
-  void shootBeam(int z, int row, int column, int range, int dirRow, int dirCol){
+  static void shootBeam(int z, int row, int column, int range, int dirRow, int dirCol){
     if (z < 0) return;
     if (z >= GameState.nodesTotalZ) return;
 
@@ -386,7 +384,7 @@ class RendererNodes extends Renderer {
     return index;
   }
 
-  void projectBeamDown(int index) {
+  static void projectBeamDown(int index) {
     index -= GameNodes.area;
     while (index > 0) {
       addPerceptible(index);

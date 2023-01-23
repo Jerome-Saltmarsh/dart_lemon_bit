@@ -44,9 +44,9 @@ class GameRender {
 
   static void render3D() {
     totalRemaining = 0;
+    resetRenderOrder(rendererNodes);
     resetRenderOrder(rendererCharacters);
     resetRenderOrder(rendererGameObjects);
-    resetRenderOrder(rendererNodes);
     resetRenderOrder(rendererParticles);
     resetRenderOrder(rendererProjectiles);
 

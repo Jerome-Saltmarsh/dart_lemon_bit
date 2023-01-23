@@ -61,6 +61,10 @@ class GameNodes {
 
   // METHODS
 
+  static int getIndex(int row, int column, int z){
+    return (row * GameState.nodesTotalColumns) + column + (z * GameNodes.area);
+  }
+
   static void generateMiniMap(){
       if (miniMap.length != area){
         miniMap = Uint8List(area);
