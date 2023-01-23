@@ -298,31 +298,33 @@ class RendererNodes extends Renderer {
   }
 
   void updatePerceptible() {
-    final centerIndex = GamePlayer.nodeIndex;
     final centerRow = GamePlayer.indexRow;
     final centerCol = GamePlayer.indexColumn;
     final centerZ = GamePlayer.indexZ;
-
+    final centerIndex = getIndex(centerRow, centerCol, centerZ);
 
     for (var i = 0; i < nodesPerceptibleStackIndex; i++){
       nodesPerceptible[nodesPerceptibleStack[i]] = false;
     }
     nodesPerceptibleStackIndex = 0;
-    addPerceptible(centerIndex);
-
-    const range = 10;
-
-    projectBeamDown(centerIndex);
-    shootBeam(centerZ, centerRow, centerCol, range, 1, 0);
-    shootBeam(centerZ, centerRow, centerCol, range, 0, 1);
-    shootBeam(centerZ, centerRow, centerCol, range, -1, 0);
-    shootBeam(centerZ, centerRow, centerCol, range, 0, -1);
-
-    shootCorner(centerRow, centerCol, centerZ, range, -1, -1);
-    shootCorner(centerRow, centerCol, centerZ, range, 1, -1);
-    shootCorner(centerRow, centerCol, centerZ, range, -1, 1);
-    shootCorner(centerRow, centerCol, centerZ, range, 1, 1);
+    shootIndex(centerZ, centerRow, centerCol);
   }
+  
+  void shootIndex(int z, int row, int column) {
+    const range = 10;
+    final index = getIndex(row, column, z);
+    addPerceptible(index);
+    projectBeamDown(index);
+    shootBeam(z, row, column, range, 1, 0);
+    shootBeam(z, row, column, range, 0, 1);
+    shootBeam(z, row, column, range, -1, 0);
+    shootBeam(z, row, column, range, 0, -1);
+    shootCorner(row, column, z, range, -1, -1);
+    shootCorner(row, column, z, range, 1, -1);
+    shootCorner(row, column, z, range, -1, 1);
+    shootCorner(row, column, z, range, 1, 1);
+  }
+  
   @override
   int getTotal() => GameNodes.total;
 
