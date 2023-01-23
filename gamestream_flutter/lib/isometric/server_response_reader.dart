@@ -454,14 +454,14 @@ class ServerResponseReader with ByteReader {
 
   void readNodes() {
     final scenePart = readByte(); /// DO NOT DELETE
-    GameState.nodesTotalZ = readUInt16();
-    GameState.nodesTotalRows = readUInt16();
-    GameState.nodesTotalColumns = readUInt16();
-    GameNodes.area = GameState.nodesTotalRows * GameState.nodesTotalColumns;
+    GameNodes.totalZ = readUInt16();
+    GameNodes.totalRows = readUInt16();
+    GameNodes.totalColumns = readUInt16();
+    GameNodes.area = GameNodes.totalRows * GameNodes.totalColumns;
     GameNodes.area2 = GameNodes.area * 2;
-    GameNodes.projection = GameNodes.area2 + GameState.nodesTotalColumns + 1;
+    GameNodes.projection = GameNodes.area2 + GameNodes.totalColumns + 1;
     GameNodes.projectionHalf =  GameNodes.projection ~/ 2;
-    final totalNodes = GameState.nodesTotalZ * GameState.nodesTotalRows * GameState.nodesTotalColumns;
+    final totalNodes = GameNodes.totalZ * GameNodes.totalRows * GameNodes.totalColumns;
     if (GameNodes.nodeTypes.length < totalNodes) {
       GameNodes.nodeTypes = Uint8List(totalNodes);
       GameNodes.nodeOrientations = Uint8List(totalNodes);
@@ -472,7 +472,7 @@ class ServerResponseReader with ByteReader {
       GameNodes.nodeDynamicIndex = Uint16List(totalNodes);
     }
     GameNodes.total = totalNodes;
-    GameState.nodesRaycast = GameNodes.area +  GameNodes.area + GameState.nodesTotalColumns + 1;
+    GameState.nodesRaycast = GameNodes.area +  GameNodes.area + GameNodes.totalColumns + 1;
 
     var gridIndex = 0;
     var total = 0;
@@ -504,10 +504,10 @@ class ServerResponseReader with ByteReader {
         gridIndex++;
         count--;
         currentColumn++;
-        if (currentColumn >= GameState.nodesTotalColumns) {
+        if (currentColumn >= GameNodes.totalColumns) {
           currentColumn = 0;
           currentRow++;
-          if (currentRow >= GameState.nodesTotalRows) {
+          if (currentRow >= GameNodes.totalRows) {
             currentRow = 0;
           }
         }

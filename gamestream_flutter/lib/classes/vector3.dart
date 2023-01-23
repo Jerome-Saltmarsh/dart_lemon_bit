@@ -58,9 +58,9 @@ class Vector3 with Position {
      z < 0                ||
      x < 0                ||
      y < 0                ||
-     x >= GameState.nodesLengthRow    ||
-     y >= GameState.nodesLengthColumn ||
-     z >= GameState.nodesLengthZ     ;
+     x >= GameNodes.lengthRows    ||
+     y >= GameNodes.lengthColumns ||
+     z >= GameNodes.lengthZ     ;
 
   /// TODO Delete
   int getGridDistance(int z, int row, int column){

@@ -11,9 +11,9 @@ class GameActions {
   }
 
   static void rainStart(){
-    final rows = GameState.nodesTotalRows;
-    final columns = GameState.nodesTotalColumns;
-    final zs = GameState.nodesTotalZ - 1;
+    final rows = GameNodes.totalRows;
+    final columns = GameNodes.totalColumns;
+    final zs = GameNodes.totalZ - 1;
     for (var row = 0; row < rows; row++) {
       for (var column = 0; column < columns; column++) {
         for (var z = zs; z >= 0; z--) {

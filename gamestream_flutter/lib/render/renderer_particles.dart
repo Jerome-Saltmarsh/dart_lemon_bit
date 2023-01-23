@@ -459,7 +459,7 @@ class RendererParticles extends Renderer {
 
   static void casteShadowDownV3(Vector3 vector3){
     if (vector3.z < Node_Height) return;
-    if (vector3.z >= GameState.nodesLengthZ) return;
+    if (vector3.z >= GameNodes.lengthZ) return;
     final nodeIndex = GameQueries.getNodeIndexV3(vector3);
     if (nodeIndex > GameNodes.area) {
       final nodeBelowIndex = nodeIndex - GameNodes.area;

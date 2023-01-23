@@ -141,8 +141,8 @@ class RendererNodes extends Renderer {
 
       assert (column >= 0);
       assert (row >= 0);
-      assert (row < GameState.nodesTotalRows);
-      assert (column < GameState.nodesTotalColumns);
+      assert (row < GameNodes.totalRows);
+      assert (column < GameNodes.totalColumns);
 
       trimLeft();
 
@@ -154,20 +154,20 @@ class RendererNodes extends Renderer {
         }
       }
     } else {
-      assert (nodesStartRow < GameState.nodesTotalRows);
-      assert (column < GameState.nodesTotalColumns);
+      assert (nodesStartRow < GameNodes.totalRows);
+      assert (column < GameNodes.totalColumns);
       row = nodesStartRow;
       column = nodeStartColumn;
     }
 
-    currentNodeIndex = (currentNodeZ * GameNodes.area) + (row * GameState.nodesTotalColumns) + column;
+    currentNodeIndex = (currentNodeZ * GameNodes.area) + (row * GameNodes.totalColumns) + column;
     assert (currentNodeZ >= 0);
     assert (row >= 0);
     assert (column >= 0);
     assert (currentNodeIndex >= 0);
-    assert (currentNodeZ < GameState.nodesTotalZ);
-    assert (row < GameState.nodesTotalRows);
-    assert (column < GameState.nodesTotalColumns);
+    assert (currentNodeZ < GameNodes.totalZ);
+    assert (row < GameNodes.totalRows);
+    assert (column < GameNodes.totalColumns);
     assert (currentNodeIndex < GameNodes.total);
     currentNodeDstX = (row - column) * Node_Size_Half;
     currentNodeDstY = ((row + column) * Node_Size_Half) - (currentNodeZ * Node_Height);
@@ -177,7 +177,7 @@ class RendererNodes extends Renderer {
   }
 
   static int getIndex(int row, int column, int z){
-    return (row * GameState.nodesTotalColumns) + column + (z * GameNodes.area);
+    return (row * GameNodes.totalColumns) + column + (z * GameNodes.area);
   }
 
   static bool indexIsUnderRoof(int index){
@@ -196,8 +196,8 @@ class RendererNodes extends Renderer {
     nodeTypes = GameNodes.nodeTypes;
     nodeOrientations = GameNodes.nodeOrientations;
     nodeVisibility = GameNodes.nodeVisible;
-    nodesRowsMax = GameState.nodesTotalRows - 1;
-    nodesGridTotalZMinusOne = GameState.nodesTotalZ - 1;
+    nodesRowsMax = GameNodes.totalRows - 1;
+    nodesGridTotalZMinusOne = GameNodes.totalZ - 1;
     offscreenNodesTop = 0;
     offscreenNodesRight = 0;
     offscreenNodesBottom = 0;
@@ -208,7 +208,7 @@ class RendererNodes extends Renderer {
     order = 0;
     orderZ = 0;
     currentNodeZ = 0;
-    nodesGridTotalColumnsMinusOne = GameState.nodesTotalColumns - 1;
+    nodesGridTotalColumnsMinusOne = GameNodes.totalColumns - 1;
     playerZ = GamePlayer.position.indexZ;
     playerRow = GamePlayer.position.indexRow;
     playerColumn = GamePlayer.position.indexColumn;
@@ -222,7 +222,7 @@ class RendererNodes extends Renderer {
     screenTop = Engine.screen.top - 72;
     screenBottom = Engine.screen.bottom + 72;
     var screenTopLeftColumn = GameConvert.convertWorldToColumn(screenLeft, screenTop, 0);
-    nodesScreenBottomRightRow = clamp(GameConvert.convertWorldToRow(screenRight, screenBottom, 0), 0, GameState.nodesTotalRows - 1);
+    nodesScreenBottomRightRow = clamp(GameConvert.convertWorldToRow(screenRight, screenBottom, 0), 0, GameNodes.totalRows - 1);
     nodesScreenTopLeftRow = GameConvert.convertWorldToRow(screenLeft, screenTop, 0);
 
     if (nodesScreenTopLeftRow < 0){
@@ -233,7 +233,7 @@ class RendererNodes extends Renderer {
       nodesScreenTopLeftRow += screenTopLeftColumn;
       screenTopLeftColumn = 0;
     }
-    if (screenTopLeftColumn >= GameState.nodesTotalColumns){
+    if (screenTopLeftColumn >= GameNodes.totalColumns){
       nodesScreenTopLeftRow = screenTopLeftColumn - nodesGridTotalColumnsMinusOne;
       screenTopLeftColumn = nodesGridTotalColumnsMinusOne;
     }
@@ -252,7 +252,7 @@ class RendererNodes extends Renderer {
 
     currentNodeDstX = (row - column) * Node_Size_Half;
     currentNodeDstY = ((row + column) * Node_Size_Half) - (currentNodeZ * Node_Height);
-    currentNodeIndex = (currentNodeZ * GameNodes.area) + (row * GameState.nodesTotalColumns) + column;
+    currentNodeIndex = (currentNodeZ * GameNodes.area) + (row * GameNodes.totalColumns) + column;
     currentNodeType = nodeTypes[currentNodeIndex];
 
 
@@ -343,7 +343,7 @@ class RendererNodes extends Renderer {
       column += dirColumn;
       if (row < 0) break;
       if (column < 0) break;
-      if (row >= GameState.nodesTotalRows) break;
+      if (row >= GameNodes.totalRows) break;
       final nodeIndex = getIndex(row, column, z);
       addPerceptible(nodeIndex);
       projectBeamVertical(nodeIndex);
@@ -368,7 +368,7 @@ class RendererNodes extends Renderer {
 
   static void shootBeam(int z, int row, int column, int range, int dirRow, int dirCol){
     if (z < 0) return;
-    if (z >= GameState.nodesTotalZ) return;
+    if (z >= GameNodes.totalZ) return;
 
     assert (dirRow == 0 || dirCol == 0);
 
@@ -377,8 +377,8 @@ class RendererNodes extends Renderer {
       column += dirCol;
       if (row < 0) return;
       if (column < 0) return;
-      if (row >= GameState.nodesTotalRows) return;
-      if (column >= GameState.nodesTotalColumns) return;
+      if (row >= GameNodes.totalRows) return;
+      if (column >= GameNodes.totalColumns) return;
       final index = getIndex(row, column, z);
       addPerceptible(index);
       projectBeamVertical(index);
@@ -459,7 +459,7 @@ class RendererNodes extends Renderer {
 
   void trimLeft(){
     var currentNodeRenderX = (row - column) * Node_Size_Half;
-    final maxRow = GameState.nodesTotalRows - 1;
+    final maxRow = GameNodes.totalRows - 1;
     while (currentNodeRenderX < screenLeft && column > 0 && row < maxRow){
       row++;
       column--;
@@ -469,25 +469,25 @@ class RendererNodes extends Renderer {
   }
 
   static void nodesSetStart(){
-    nodesStartRow = clamp(row, 0, GameState.nodesTotalRows - 1);
-    nodeStartColumn = clamp(column, 0, GameState.nodesTotalColumns - 1);
+    nodesStartRow = clamp(row, 0, GameNodes.totalRows - 1);
+    nodeStartColumn = clamp(column, 0, GameNodes.totalColumns - 1);
 
     assert (nodesStartRow >= 0);
     assert (nodeStartColumn >= 0);
-    assert (nodesStartRow < GameState.nodesTotalRows);
-    assert (nodeStartColumn < GameState.nodesTotalColumns);
+    assert (nodesStartRow < GameNodes.totalRows);
+    assert (nodeStartColumn < GameNodes.totalColumns);
   }
 
   static void nodesShiftIndexDown(){
 
     column = row + column + 1;
     row = 0;
-    if (column < GameState.nodesTotalColumns) {
+    if (column < GameNodes.totalColumns) {
       nodesSetStart();
       return;
     }
 
-    if (column - nodesGridTotalColumnsMinusOne >= GameState.nodesTotalRows){
+    if (column - nodesGridTotalColumnsMinusOne >= GameNodes.totalRows){
       GameRender.rendererNodes.remaining = false;
       return;
     }
@@ -513,7 +513,7 @@ class RendererNodes extends Renderer {
     while (renderY > screenBottom){
       nodesMinZ++;
       renderY -= Node_Height;
-      if (nodesMinZ >= GameState.nodesTotalZ){
+      if (nodesMinZ >= GameNodes.totalZ){
         GameRender.rendererNodes.remaining = false;
         return;
       }
@@ -1264,7 +1264,7 @@ class RendererNodes extends Renderer {
 
   void nodesHideIndex(int z, int row, int column, int initRow, int initColumn){
 
-    var index = (z * GameNodes.area) + (row * GameState.nodesTotalColumns) + column;
+    var index = (z * GameNodes.area) + (row * GameNodes.totalColumns) + column;
     final indexBelowEmpty = index <= GameNodes.area ? false : GameNodes.nodeTypes[index - GameNodes.area] == NodeType.Empty;
 
 
@@ -1284,7 +1284,7 @@ class RendererNodes extends Renderer {
         row += 1;
         column += 1;
         z += 2;
-        index = (z * GameNodes.area) + (row * GameState.nodesTotalColumns) + column;
+        index = (z * GameNodes.area) + (row * GameNodes.totalColumns) + column;
         continue;
       }
       var nodeIndexBelow = index - GameNodes.area;
@@ -1300,7 +1300,7 @@ class RendererNodes extends Renderer {
         row += 1;
         column += 1;
         z += 2;
-        index = (z * GameNodes.area) + (row * GameState.nodesTotalColumns) + column;
+        index = (z * GameNodes.area) + (row * GameNodes.totalColumns) + column;
         continue;
       }
 
@@ -1315,13 +1315,13 @@ class RendererNodes extends Renderer {
         row += 1;
         column += 1;
         z += 2;
-        index = (z * GameNodes.area) + (row * GameState.nodesTotalColumns) + column;
+        index = (z * GameNodes.area) + (row * GameNodes.totalColumns) + column;
         continue;
       }
       row += 1;
       column += 1;
       z += 2;
-      index = (z * GameNodes.area) + (row * GameState.nodesTotalColumns) + column;
+      index = (z * GameNodes.area) + (row * GameNodes.totalColumns) + column;
     }
   }
 
@@ -1340,11 +1340,11 @@ class RendererNodes extends Renderer {
     for (var r = -radius; r <= radius + 2; r++) {
       final row = indexRow + r;
       if (row < 0) continue;
-      if (row >= GameState.nodesTotalRows) break;
+      if (row >= GameNodes.totalRows) break;
       for (var c = -radius; c <= radius + 2; c++) {
         final column = indexColumn + c;
         if (column < 0) continue;
-        if (column >= GameState.nodesTotalColumns) break;
+        if (column >= GameNodes.totalColumns) break;
         nodesHideIndex(indexZ, row, column, indexRow, indexColumn);
       }
     }

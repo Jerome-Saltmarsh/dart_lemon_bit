@@ -16,11 +16,11 @@ class GameQueries {
 
    static bool isInboundZRC(int z, int row, int column){
      if (z < 0) return false;
-     if (z >= GameState.nodesTotalZ) return false;
+     if (z >= GameNodes.totalZ) return false;
      if (row < 0) return false;
-     if (row >= GameState.nodesTotalRows) return false;
+     if (row >= GameNodes.totalRows) return false;
      if (column < 0) return false;
-     if (column >= GameState.nodesTotalColumns) return false;
+     if (column >= GameNodes.totalColumns) return false;
      return true;
    }
 
@@ -37,9 +37,9 @@ class GameQueries {
      if (x < 0) return false;
      if (y < 0) return false;
      if (z < 0) return false;
-     if (x >= GameState.nodesLengthRow) return false;
-     if (y >= GameState.nodesLengthColumn) return false;
-     if (z >= GameState.nodesLengthZ) return false;
+     if (x >= GameNodes.lengthRows) return false;
+     if (y >= GameNodes.lengthColumns) return false;
+     if (z >= GameNodes.lengthZ) return false;
      return true;
    }
 
@@ -62,9 +62,9 @@ class GameQueries {
      if (x < 0) return NodeType.Boundary;
      if (y < 0) return NodeType.Boundary;
      if (z < 0) return NodeType.Boundary;
-     if (x >= GameState.nodesLengthRow) return NodeType.Boundary;
-     if (y >= GameState.nodesLengthColumn) return NodeType.Boundary;
-     if (z >= GameState.nodesLengthZ) return NodeType.Boundary;
+     if (x >= GameNodes.lengthRows) return NodeType.Boundary;
+     if (y >= GameNodes.lengthColumns) return NodeType.Boundary;
+     if (z >= GameNodes.lengthZ) return NodeType.Boundary;
      return gridNodeXYZType(x, y, z);
    }
 
@@ -78,9 +78,9 @@ class GameQueries {
      if (z < 0) return NodeType.Boundary;
      if (row < 0) return NodeType.Boundary;
      if (column < 0) return NodeType.Boundary;
-     if (z >= GameState.nodesTotalZ) return NodeType.Boundary;
-     if (row >= GameState.nodesTotalRows) return NodeType.Boundary;
-     if (column >= GameState.nodesTotalColumns) return NodeType.Boundary;
+     if (z >= GameNodes.totalZ) return NodeType.Boundary;
+     if (row >= GameNodes.totalRows) return NodeType.Boundary;
+     if (column >= GameNodes.totalColumns) return NodeType.Boundary;
      return gridNodeZRCType(z, row, column);
    }
 
@@ -102,11 +102,11 @@ class GameQueries {
    // TODO REFACTOR
    static int getClosestByType({required int radius, required int type}){
      final minRow = max(GamePlayer.position.indexRow - radius, 0);
-     final maxRow = min(GamePlayer.position.indexRow + radius, GameState.nodesTotalRows - 1);
+     final maxRow = min(GamePlayer.position.indexRow + radius, GameNodes.totalRows - 1);
      final minColumn = max(GamePlayer.position.indexColumn - radius, 0);
-     final maxColumn = min(GamePlayer.position.indexColumn + radius, GameState.nodesTotalColumns - 1);
+     final maxColumn = min(GamePlayer.position.indexColumn + radius, GameNodes.totalColumns - 1);
      final minZ = max(GamePlayer.position.indexZ - radius, 0);
-     final maxZ = min(GamePlayer.position.indexZ + radius, GameState.nodesTotalZ - 1);
+     final maxZ = min(GamePlayer.position.indexZ + radius, GameNodes.totalZ - 1);
      var closest = 99999;
      for (var z = minZ; z <= maxZ; z++){
        for (var row = minRow; row <= maxRow; row++){
@@ -124,12 +124,12 @@ class GameQueries {
    static double get windLineRenderX {
      var windLineColumn = 0;
      var windLineRow = 0;
-     if (GameState.windLine < GameState.nodesTotalRows){
+     if (GameState.windLine < GameNodes.totalRows){
        windLineColumn = 0;
-       windLineRow = GameState.nodesTotalRows - GameState.windLine - 1;
+       windLineRow = GameNodes.totalRows - GameState.windLine - 1;
      } else {
        windLineRow = 0;
-       windLineColumn = GameState.windLine - GameState.nodesTotalRows + 1;
+       windLineColumn = GameState.windLine - GameNodes.totalRows + 1;
      }
      return (windLineRow - windLineColumn) * Node_Size_Half;
    }

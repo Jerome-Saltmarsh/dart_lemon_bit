@@ -24,16 +24,12 @@ class GameMinimap {
 
   static void generateSrcDst(){
     var index = 0;
-    final rows = GameState.nodesTotalRows;
-    final columns = GameState.nodesTotalColumns;
+    final rows = GameNodes.totalRows;
+    final columns = GameNodes.totalColumns;
     final area = GameNodes.area;
     final nodeTypes = GameNodes.miniMap;
 
     final vendors = <int>[];
-    // for (var i = 0; i < GameNodes.total; i++){
-    //      if (GameNodes.nodeTypes[i] != NodeType.Vendor) continue;
-    //      vendors.add(i);
-    // }
 
     final total = ((area + vendors.length) * 4);
     if (src.length != total){

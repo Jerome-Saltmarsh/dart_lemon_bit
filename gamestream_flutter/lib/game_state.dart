@@ -16,12 +16,6 @@ class GameState {
     GameNodes.resetNodeColorsToAmbient();
   });
 
-  static var nodesTotalZ = 0;
-  static var nodesTotalRows = 0;
-  static var nodesTotalColumns = 0;
-  static var nodesLengthRow = 0.0;
-  static var nodesLengthColumn = 0.0;
-  static var nodesLengthZ = 0.0;
   static var nodesRaycast = 0;
   static var windLine = 0;
 
@@ -35,17 +29,17 @@ class GameState {
   }
 
   static int getNodeIndexZRC(int z, int row, int column) {
-    return (z * GameNodes.area) + (row * nodesTotalColumns) + column;
+    return (z * GameNodes.area) + (row * GameNodes.totalColumns) + column;
   }
 
   static int convertNodeIndexToIndexZ(int index) =>
       index ~/ GameNodes.area;
 
   static int convertNodeIndexToIndexX(int index) =>
-      (index - ((index ~/ GameNodes.area) * GameNodes.area)) ~/ nodesTotalColumns;
+      (index - ((index ~/ GameNodes.area) * GameNodes.area)) ~/ GameNodes.totalColumns;
 
   static int convertNodeIndexToIndexY(int index) =>
-      index - ((convertNodeIndexToIndexZ(index) * GameNodes.area) + (convertNodeIndexToIndexX(index) * nodesTotalColumns));
+      index - ((convertNodeIndexToIndexZ(index) * GameNodes.area) + (convertNodeIndexToIndexX(index) * GameNodes.totalColumns));
 
   static int getV3RenderColor(Vector3 vector3) =>
       vector3.outOfBounds
@@ -59,17 +53,17 @@ class GameState {
     z < 0                       ||
     row < 0                     ||
     column < 0                  ||
-    z >= nodesTotalZ            ||
-    row >= nodesTotalRows       ||
-    column >= nodesTotalColumns  ;
+    z >= GameNodes.totalZ            ||
+    row >= GameNodes.totalRows       ||
+    column >= GameNodes.totalColumns  ;
 
   static bool outOfBoundsXYZ(double x, double y, double z) =>
     z < 0                       ||
     y < 0                       ||
     z < 0                       ||
-    z >= nodesLengthZ           ||
-    x >= nodesLengthRow         ||
-    y >= nodesLengthColumn       ;
+    z >= GameNodes.lengthZ           ||
+    x >= GameNodes.lengthRows         ||
+    y >= GameNodes.lengthColumns       ;
 
   // ACTIONS
 
@@ -1234,9 +1228,9 @@ class GameState {
     }){
       final shadowShade = Shade.Medium;
 
-      for (var z = 0; z < nodesTotalZ; z++) {
-        for (var row = 0; row < nodesTotalRows; row++){
-          for (var column = 0; column < nodesTotalColumns; column++){
+      for (var z = 0; z < GameNodes.totalZ; z++) {
+        for (var row = 0; row < GameNodes.totalRows; row++){
+          for (var column = 0; column < GameNodes.totalColumns; column++){
             // final tile = grid[z][row][column];
             final index = getNodeIndexZRC(z, row, column);
             final tile = GameNodes.nodeTypes[index];
@@ -1248,9 +1242,9 @@ class GameState {
             projectionZ >= 0 &&
                 projectionRow >= 0 &&
                 projectionColumn >= 0 &&
-                projectionZ < nodesTotalZ &&
-                projectionRow < nodesTotalRows &&
-                projectionColumn < nodesTotalColumns
+                projectionZ < GameNodes.totalZ &&
+                projectionRow < GameNodes.totalRows &&
+                projectionColumn < GameNodes.totalColumns
             ) {
               // final shade = GameNodes.nodeBake[index];
               // if (shade < shadowShade){
@@ -1273,7 +1267,7 @@ class GameState {
 
     static bool gridIsUnderSomething(int z, int row, int column){
       if (outOfBounds(z, row, column)) return false;
-      for (var zIndex = z + 1; zIndex < nodesTotalZ; zIndex++){
+      for (var zIndex = z + 1; zIndex < GameNodes.totalZ; zIndex++){
         if (!GameQueries.gridNodeZRCTypeRainOrEmpty(z, row, column)) return false;
       }
       return true;
@@ -1285,7 +1279,7 @@ class GameState {
       while (true){
         index += GameNodes.area;
         index++;
-        index += nodesTotalColumns;
+        index += GameNodes.totalColumns;
         if (index >= GameNodes.total) return true;
         if (GameNodes.nodeOrientations[index] != NodeOrientation.None){
           return false;
@@ -1294,9 +1288,9 @@ class GameState {
     }
 
     static void refreshGridMetrics(){
-      nodesLengthRow = nodesTotalRows * Node_Size;
-      nodesLengthColumn = nodesTotalColumns * Node_Size;
-      nodesLengthZ = nodesTotalZ * Node_Height;
+      GameNodes.lengthRows = GameNodes.totalRows * Node_Size;
+      GameNodes.lengthColumns = GameNodes.totalColumns * Node_Size;
+      GameNodes.lengthZ = GameNodes.totalZ * Node_Height;
     }
 
     static void setNodeType(int z, int row, int column, int type){
@@ -1306,11 +1300,11 @@ class GameState {
         return;
       if (column < 0)
         return;
-      if (z >= nodesTotalZ)
+      if (z >= GameNodes.totalZ)
         return;
-      if (row >= nodesTotalRows)
+      if (row >= GameNodes.totalRows)
         return;
-      if (column >= nodesTotalColumns)
+      if (column >= GameNodes.totalColumns)
         return;
 
       GameNodes.nodeTypes[getNodeIndexZRC(z, row, column)] = type;

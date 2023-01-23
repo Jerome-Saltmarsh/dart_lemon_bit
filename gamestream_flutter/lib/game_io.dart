@@ -430,7 +430,7 @@ class GameIO {
   }
 
   static void mouseRaycast(Function(int z, int row, int column) callback){
-    var z = GameState.nodesTotalZ - 1;
+    var z = GameNodes.totalZ - 1;
     final mouseWorldX = Engine.mouseWorldX;
     final mouseWorldY = Engine.mouseWorldY;
     while (z >= 0){
@@ -438,9 +438,9 @@ class GameIO {
       final column = GameConvert.convertWorldToColumn(mouseWorldX, mouseWorldY, z * Node_Height);
       if (row < 0) break;
       if (column < 0) break;
-      if (row >= GameState.nodesTotalRows) break;
-      if (column >= GameState.nodesTotalColumns) break;
-      if (z >= GameState.nodesTotalZ) break;
+      if (row >= GameNodes.totalRows) break;
+      if (column >= GameNodes.totalColumns) break;
+      if (z >= GameNodes.totalZ) break;
       final index = GameState.getNodeIndexZRC(z, row, column);
       if (NodeType.isRainOrEmpty(GameNodes.nodeTypes[index])) {
         z--;

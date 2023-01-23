@@ -37,21 +37,21 @@ class GameEditor {
 
   static set z(int value){
      if (value < 0) return;
-     if (value >= GameState.nodesTotalZ) return;
+     if (value >= GameNodes.totalZ) return;
      final difference = value - z;
      nodeSelectedIndex.value += difference * GameNodes.area;
   }
 
   static set row(int value){
     if (value < 0) return;
-    if (value >= GameState.nodesTotalRows) return;
+    if (value >= GameNodes.totalRows) return;
     final difference = value - row;
-    nodeSelectedIndex.value += difference * GameState.nodesTotalColumns;
+    nodeSelectedIndex.value += difference * GameNodes.totalColumns;
   }
 
   static set column(int value){
     if (value < 0) return;
-    if (value >= GameState.nodesTotalColumns) return;
+    if (value >= GameNodes.totalColumns) return;
     nodeSelectedIndex.value += value - column;
   }
 

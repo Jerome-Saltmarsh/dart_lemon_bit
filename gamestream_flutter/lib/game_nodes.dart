@@ -60,10 +60,26 @@ class GameNodes {
   static var projection = 0;
   static var projectionHalf = 0;
 
+  static var totalZ = 0;
+  static var totalRows = 0;
+  static var totalColumns = 0;
+  static var lengthRows = 0.0;
+  static var lengthColumns = 0.0;
+  static var lengthZ = 0.0;
+
+
+  static var heightMap = Uint16List(0);
+
   // METHODS
 
+  static void generateHeightMap(){
+     for (var row = 0; row < totalRows; row++){
+
+     }
+  }
+
   static int getIndex(int row, int column, int z){
-    return (row * GameState.nodesTotalColumns) + column + (z * GameNodes.area);
+    return (row * totalColumns) + column + (z * GameNodes.area);
   }
 
   static void generateMiniMap(){
@@ -72,11 +88,8 @@ class GameNodes {
       }
 
       var index = 0;
-      final rows = GameState.nodesTotalRows;
-      final columns = GameState.nodesTotalColumns;
-
-      for (var row = 0; row < rows; row++){
-          for (var column = 0; column < columns; column++){
+      for (var row = 0; row < totalRows; row++){
+          for (var column = 0; column < totalColumns; column++){
             var searchIndex = total - area +  index;
             var typeFound = ItemType.Empty;
             while (true) {
@@ -164,16 +177,16 @@ class GameNodes {
     assert (alpha <= 255);
 
     final zIndex = index ~/ area;
-    final rowIndex = (index - (zIndex * area)) ~/ GameState.nodesTotalColumns;
+    final rowIndex = (index - (zIndex * area)) ~/ totalColumns;
     final columnIndex = GameState.convertNodeIndexToIndexY(index);
     final radius = Shade.Pitch_Black;
     final zMin = max(zIndex - radius, 0);
-    final zMax = min(zIndex + radius, GameState.nodesTotalZ);
+    final zMax = min(zIndex + radius, totalZ);
     final rowMin = max(rowIndex - radius, 0);
-    final rowMax = min(rowIndex + radius, GameState.nodesTotalRows);
+    final rowMax = min(rowIndex + radius, totalRows);
     final columnMin = max(columnIndex - radius, 0);
-    final columnMax = min(columnIndex + radius, GameState.nodesTotalColumns);
-    final rowInitInit = GameState.nodesTotalColumns * rowMin;
+    final columnMax = min(columnIndex + radius, totalColumns);
+    final rowInitInit = totalColumns * rowMin;
     var zTotal = zMin * area;
 
     const r = 4;
@@ -191,7 +204,7 @@ class GameNodes {
 
       for (var row = rowMin; row <= rowMax; row++){
         final a = (zTotal) + (rowInit);
-        rowInit += GameState.nodesTotalColumns;
+        rowInit += totalColumns;
         final b = (z - zIndex).abs() + (row - rowIndex).abs();
         for (var column = columnMin; column <= columnMax; column++) {
           final nodeIndex = a + column;
@@ -220,16 +233,16 @@ class GameNodes {
     if (index >= total) return;
 
     final zIndex = index ~/ area;
-    final rowIndex = (index - (zIndex * area)) ~/ GameState.nodesTotalColumns;
+    final rowIndex = (index - (zIndex * area)) ~/ totalColumns;
     final columnIndex = GameState.convertNodeIndexToIndexY(index);
     final radius = Shade.Pitch_Black;
     final zMin = max(zIndex - radius, 0);
-    final zMax = min(zIndex + radius, GameState.nodesTotalZ);
+    final zMax = min(zIndex + radius, totalZ);
     final rowMin = max(rowIndex - radius, 0);
-    final rowMax = min(rowIndex + radius, GameState.nodesTotalRows);
+    final rowMax = min(rowIndex + radius, totalRows);
     final columnMin = max(columnIndex - radius, 0);
-    final columnMax = min(columnIndex + radius, GameState.nodesTotalColumns);
-    final rowInitInit = GameState.nodesTotalColumns * rowMin;
+    final columnMax = min(columnIndex + radius, totalColumns);
+    final rowInitInit = totalColumns * rowMin;
     var zTotal = zMin * area;
 
     const r = 4;
@@ -247,7 +260,7 @@ class GameNodes {
 
       for (var row = rowMin; row <= rowMax; row++){
         final a = (zTotal) + (rowInit);
-        rowInit += GameState.nodesTotalColumns;
+        rowInit += totalColumns;
         final b = (z - zIndex).abs() + (row - rowIndex).abs();
         for (var column = columnMin; column <= columnMax; column++) {
           final nodeIndex = a + column;
@@ -277,7 +290,7 @@ class GameNodes {
 
 
   static int getTorchIndex(int nodeIndex){
-    final initialSearchIndex = nodeIndex - GameState.nodesTotalColumns - 1; // shifts the selectIndex - 1 row and - 1 column
+    final initialSearchIndex = nodeIndex - totalColumns - 1; // shifts the selectIndex - 1 row and - 1 column
     var torchIndex = -1;
     var rowIndex = 0;
 
@@ -289,7 +302,7 @@ class GameNodes {
         torchIndex = searchIndex;
         break;
       }
-      rowIndex += GameState.nodesTotalColumns;
+      rowIndex += totalColumns;
     }
     return torchIndex;
   }
