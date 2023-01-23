@@ -355,6 +355,12 @@ class RendererNodes extends Renderer {
         shootBeam(z, row, column, range - r, 0, dirColumn);
       }
 
+      final nodeOrientation = GameNodes.nodeOrientations[nodeIndex];
+      if (nodeOrientation == NodeOrientation.None) continue;
+      if (nodeOrientation == NodeOrientation.Radial) continue;
+      if (NodeOrientation.isCorner(nodeOrientation)) continue;
+      if (NodeOrientation.isColumn(nodeOrientation)) continue;
+
       if (!nodeTypeBlocks(nodeType)) continue;
       break;
     }
@@ -408,17 +414,10 @@ class RendererNodes extends Renderer {
   }
 
   static bool nodeTypeBlocks(int nodeType){
-    if (nodeType == NodeType.Empty) return false;
-    if (nodeType == NodeType.Rain_Falling) return false;
-    if (nodeType == NodeType.Rain_Landing) return false;
     if (nodeType == NodeType.Window) return false;
     if (nodeType == NodeType.Shopping_Shelf) return false;
     if (nodeType == NodeType.Wooden_Plank) return false;
-    if (nodeType == NodeType.Torch) return false;
     if (nodeType == NodeType.Boulder) return false;
-    if (nodeType == NodeType.Tree_Bottom) return false;
-    if (nodeType == NodeType.Tree_Top) return false;
-    if (nodeType == NodeType.Grass_Long) return false;
     return true;
   }
 
