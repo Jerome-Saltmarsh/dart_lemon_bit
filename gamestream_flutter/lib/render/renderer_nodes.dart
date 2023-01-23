@@ -327,8 +327,15 @@ class RendererNodes extends Renderer {
     shootCorner(row, column, z, range, 1, 1);
   }
 
+
   static void addPerceptible(int index){
-    nodesReserved[getProjectionIndex(index)] = true;
+    final projectionIndex = getProjectionIndex(index);
+    nodesReserved[projectionIndex] = true;
+    if (projectionIndex < GameNodes.projectionHalf){
+      nodesReserved[projectionIndex + GameNodes.projectionHalf] = true;
+    } else {
+      nodesReserved[projectionIndex - GameNodes.projectionHalf] = true;
+    }
     nodesPerceptible[index] = true;
     nodesPerceptibleStack[nodesPerceptibleStackIndex] = index;
     nodesPerceptibleStackIndex++;
@@ -419,11 +426,7 @@ class RendererNodes extends Renderer {
     if (nodeType == NodeType.Window) return false;
     if (nodeType == NodeType.Shopping_Shelf) return false;
     if (nodeType == NodeType.Wooden_Plank) return false;
-    if (nodeType == NodeType.Torch) return false;
     if (nodeType == NodeType.Boulder) return false;
-    if (nodeType == NodeType.Tree_Bottom) return false;
-    if (nodeType == NodeType.Tree_Top) return false;
-    if (nodeType == NodeType.Grass_Long) return false;
     if (nodeOrientation == NodeOrientation.Half_Vertical_Bottom) return false;
 
     if (nodeOrientation == NodeOrientation.Solid) return true;

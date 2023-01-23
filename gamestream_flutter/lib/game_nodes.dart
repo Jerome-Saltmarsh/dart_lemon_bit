@@ -58,6 +58,7 @@ class GameNodes {
   static var area = 0;
   static var area2 = 0;
   static var projection = 0;
+  static var projectionHalf = 0;
 
   // METHODS
 
