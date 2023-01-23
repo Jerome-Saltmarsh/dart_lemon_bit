@@ -90,7 +90,7 @@ class RendererNodes extends Renderer {
   static var nodesPerceptibleStack = Uint16List(100000);
   static var nodesPerceptibleStackIndex = 0;
 
-  static var nodesReserved = <bool>[];
+  static var nodesReserved = Uint32List(0);
 
 
   static int getNodeColorAtIndex(int index){
@@ -116,10 +116,9 @@ class RendererNodes extends Renderer {
 
         if (perceptible) {
           renderCurrentNode();
-        } else {
-          if (!nodesReserved[currentNodeIndex % GameNodes.projection]){
-            renderCurrentNode();
-          }
+        } else
+        if (nodesReserved[currentNodeIndex % GameNodes.projection] >= currentNodeIndex){
+          renderCurrentNode();
         }
       }
       if (row + 1 > nodesRowsMax) return;
@@ -260,12 +259,11 @@ class RendererNodes extends Renderer {
     GameNodes.resetVisible();
 
     if (nodesReserved.length != GameNodes.projection){
-      nodesReserved = List.generate(GameNodes.projection, (index) => false, growable: false);
-    } else {
-      final length = nodesReserved.length;
-      for (var i = 0; i < length; i++){
-        nodesReserved[i] = false;
-      }
+      nodesReserved = Uint32List(GameNodes.projection);
+    }
+    final length = nodesReserved.length;
+    for (var i = 0; i < length; i++) {
+      nodesReserved[i] = GameNodes.total;
     }
 
     if (nodesPerceptible.length != GameNodes.total) {
@@ -330,9 +328,10 @@ class RendererNodes extends Renderer {
     shootCorner(row, column, z, range, 1, 1);
   }
 
+
   static void addPerceptible(int index){
     final projectionIndex = index % GameNodes.projection;
-    nodesReserved[projectionIndex] = true;
+    nodesReserved[projectionIndex] = index;
     nodesPerceptible[index] = true;
     nodesPerceptibleStack[nodesPerceptibleStackIndex] = index;
     nodesPerceptibleStackIndex++;
