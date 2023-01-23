@@ -34,7 +34,7 @@ class GameEvents {
   }
 
   static void onChangedNodes(){
-    GameState.refreshGridMetrics();
+    GameNodes.refreshGridMetrics();
     GameNodes.generateHeightMap();
     GameNodes.generateMiniMap();
     GameMinimap.generateSrcDst();

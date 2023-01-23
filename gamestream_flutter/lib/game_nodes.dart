@@ -72,10 +72,27 @@ class GameNodes {
 
   // METHODS
 
-  static void generateHeightMap(){
-     for (var row = 0; row < totalRows; row++){
 
-     }
+  static int getHeightAt(int row, int column){
+    final index = total - area + ((row * totalColumns) + column);
+    var i = index;
+    for (var z = totalZ - 1; z >= 0; z--){
+      if (!NodeType.isRainOrEmpty(nodeTypes[i])) return z;
+      i -= area;
+    }
+    return 0;
+  }
+
+  static void generateHeightMap() {
+    if (heightMap.length != area) {
+      heightMap = Uint16List(area);
+    }
+    for (var row = 0; row < totalRows; row++) {
+      final rowIndex = row * totalColumns;
+      for (var column = 0; column < totalColumns; column++) {
+        heightMap[rowIndex + column] = getHeightAt(row, column);
+      }
+    }
   }
 
   static int getIndex(int row, int column, int z){
@@ -305,5 +322,11 @@ class GameNodes {
       rowIndex += totalColumns;
     }
     return torchIndex;
+  }
+
+  static void refreshGridMetrics(){
+    lengthRows = totalRows * Node_Size;
+    lengthColumns = totalColumns * Node_Size;
+    lengthZ = totalZ * Node_Height;
   }
 }

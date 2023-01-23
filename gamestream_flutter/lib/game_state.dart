@@ -1287,12 +1287,6 @@ class GameState {
       }
     }
 
-    static void refreshGridMetrics(){
-      GameNodes.lengthRows = GameNodes.totalRows * Node_Size;
-      GameNodes.lengthColumns = GameNodes.totalColumns * Node_Size;
-      GameNodes.lengthZ = GameNodes.totalZ * Node_Height;
-    }
-
     static void setNodeType(int z, int row, int column, int type){
       if (z < 0)
         return;

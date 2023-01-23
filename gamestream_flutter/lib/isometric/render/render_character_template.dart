@@ -207,7 +207,9 @@ void renderCharacterTemplate(Character character, {
         anchorY: Anchor_Y
     );
 
-  // GameRender.renderTextV3(character, "head: $frameHead, body: $frameBody", offsetY: -80);
+    // final height = GameNodes.heightMap[(character.indexRow * GameNodes.totalColumns) + character.indexColumn];
+    // GameRender.renderTextV3(character, height, offsetY: -80);
+
     Engine.renderSprite(
         image: GameImages.getImageForHeadType(character.headType),
         srcX: frameHead * Sprite_Size,
