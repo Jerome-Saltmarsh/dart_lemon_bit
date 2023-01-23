@@ -450,6 +450,7 @@ class RendererNodes extends Renderer {
     final nodeOrientation = GameNodes.nodeOrientations[index];
     if (nodeOrientation == NodeOrientation.None) return false;
     if (NodeOrientation.isHalf(nodeOrientation)) return false;
+    if (NodeOrientation.isRadial(nodeOrientation)) return false;
     if (NodeOrientation.isColumn(nodeOrientation)) return false;
     return true;
   }
