@@ -32,7 +32,7 @@ class Vector3 with Position {
     if (outOfBounds) return false;
     final index = nodeIndex;
     if (index < RendererNodes.nodesPerceptible.length && RendererNodes.nodesPerceptible[index]) return true;
-    return !(RendererNodes.nodesReserved[RendererNodes.getProjectionIndex(index)]);
+    return !(RendererNodes.nodesReserved[index % GameNodes.projection]);
   }
 
 

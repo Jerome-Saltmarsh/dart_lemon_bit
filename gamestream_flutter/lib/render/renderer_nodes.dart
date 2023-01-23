@@ -117,7 +117,7 @@ class RendererNodes extends Renderer {
         if (perceptible) {
           renderCurrentNode();
         } else {
-          if (!nodesReserved[getProjectionIndex(currentNodeIndex)]){
+          if (!nodesReserved[currentNodeIndex % GameNodes.projection]){
             renderCurrentNode();
           }
         }
@@ -330,15 +330,14 @@ class RendererNodes extends Renderer {
     shootCorner(row, column, z, range, 1, 1);
   }
 
-
   static void addPerceptible(int index){
-    final projectionIndex = getProjectionIndex(index);
+    final projectionIndex = index % GameNodes.projection;
     nodesReserved[projectionIndex] = true;
-    if (projectionIndex < GameNodes.projectionHalf){
-      nodesReserved[projectionIndex + GameNodes.projectionHalf] = true;
-    } else {
-      nodesReserved[projectionIndex - GameNodes.projectionHalf] = true;
-    }
+    // if (projectionIndex < GameNodes.projectionHalf){
+    //   nodesReserved[projectionIndex + GameNodes.projectionHalf] = true;
+    // } else {
+    //   nodesReserved[projectionIndex - GameNodes.projectionHalf] = true;
+    // }
     nodesPerceptible[index] = true;
     nodesPerceptibleStack[nodesPerceptibleStackIndex] = index;
     nodesPerceptibleStackIndex++;
@@ -388,10 +387,10 @@ class RendererNodes extends Renderer {
   }
 
   static int getProjectionIndex(int index){
-    while (index >= GameNodes.projection) {
-      index -= GameNodes.projection;
-    }
-    return index;
+    // while (index >= GameNodes.projection) {
+    //   index -= GameNodes.projection;
+    // }
+    return index % GameNodes.projection;
   }
 
   static void projectBeamDown(int index) {
@@ -422,31 +421,32 @@ class RendererNodes extends Renderer {
     assert (dirRow == 0 || dirColumn == 0);
     final nodeOrientation = GameNodes.nodeOrientations[index];
     if (nodeOrientation == NodeOrientation.None) return false;
+    if (nodeOrientation == NodeOrientation.Solid) return true;
     if (nodeOrientation == NodeOrientation.Radial) return false;
+    if (nodeOrientation == NodeOrientation.Half_Vertical_Bottom) return false;
+    if (NodeOrientation.isColumn(nodeOrientation)) return false;
+
+    if (NodeOrientation.isHalf(nodeOrientation)){
+      if (dirRow != 0){
+        return nodeOrientation == NodeOrientation.Half_North || nodeOrientation == NodeOrientation.Half_South;
+      }
+      return nodeOrientation == NodeOrientation.Half_East || nodeOrientation == NodeOrientation.Half_West;
+    }
 
     final nodeType = GameNodes.nodeTypes[index];
-
     if (nodeType == NodeType.Window) return false;
     if (nodeType == NodeType.Shopping_Shelf) return false;
     if (nodeType == NodeType.Wooden_Plank) return false;
     if (nodeType == NodeType.Boulder) return false;
-    if (nodeOrientation == NodeOrientation.Half_Vertical_Bottom) return false;
-
-    if (nodeOrientation == NodeOrientation.Solid) return true;
-
-    if (NodeOrientation.isHalf(nodeOrientation)){
-        if (dirRow != 0){
-            return nodeOrientation == NodeOrientation.Half_North || nodeOrientation == NodeOrientation.Half_South;
-        }
-        return nodeOrientation == NodeOrientation.Half_East || nodeOrientation == NodeOrientation.Half_West;
-    }
 
     return true;
   }
 
   static bool blocksBeamVertical(int index){
-    if (NodeType.isRainOrEmpty(GameNodes.nodeTypes[index])) return false;
-    if (NodeOrientation.isHalf(GameNodes.nodeOrientations[index])) return false;
+    final nodeOrientation = GameNodes.nodeOrientations[index];
+    if (nodeOrientation == NodeOrientation.None) return false;
+    if (NodeOrientation.isHalf(nodeOrientation)) return false;
+    if (NodeOrientation.isColumn(nodeOrientation)) return false;
     return true;
   }
 
