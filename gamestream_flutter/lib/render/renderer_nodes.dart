@@ -319,7 +319,7 @@ class RendererNodes extends Renderer {
     if (blocksBeamVertical(index)) return;
 
     addPerceptible(index);
-    projectBeamDown(index);
+    projectBeamVertical(index);
     shootBeam(z, row, column, range, 1, 0);
     shootBeam(z, row, column, range, 0, 1);
     shootBeam(z, row, column, range, -1, 0);
@@ -333,11 +333,6 @@ class RendererNodes extends Renderer {
   static void addPerceptible(int index){
     final projectionIndex = index % GameNodes.projection;
     nodesReserved[projectionIndex] = true;
-    // if (projectionIndex < GameNodes.projectionHalf){
-    //   nodesReserved[projectionIndex + GameNodes.projectionHalf] = true;
-    // } else {
-    //   nodesReserved[projectionIndex - GameNodes.projectionHalf] = true;
-    // }
     nodesPerceptible[index] = true;
     nodesPerceptibleStack[nodesPerceptibleStackIndex] = index;
     nodesPerceptibleStackIndex++;
@@ -352,7 +347,7 @@ class RendererNodes extends Renderer {
       if (row >= GameState.nodesTotalRows) break;
       final nodeIndex = getIndex(row, column, z);
       addPerceptible(nodeIndex);
-      projectBeamDown(nodeIndex);
+      projectBeamVertical(nodeIndex);
       final nodeType = GameNodes.nodeTypes[nodeIndex];
       if (!blocksBeamHorizontal(nodeIndex, dirRow, 0)){
         shootBeam(z, row, column, range - r, dirRow, 0);
@@ -381,16 +376,18 @@ class RendererNodes extends Renderer {
       if (column >= GameState.nodesTotalColumns) return;
       final index = getIndex(row, column, z);
       addPerceptible(index);
-      projectBeamDown(index);
+      projectBeamVertical(index);
       if (blocksBeamHorizontal(index, dirRow, dirCol)) return;
     }
   }
 
   static int getProjectionIndex(int index){
-    // while (index >= GameNodes.projection) {
-    //   index -= GameNodes.projection;
-    // }
     return index % GameNodes.projection;
+  }
+
+  static void projectBeamVertical(int index){
+    projectBeamDown(index);
+    // projectBeamUp(index);
   }
 
   static void projectBeamDown(int index) {
@@ -398,6 +395,15 @@ class RendererNodes extends Renderer {
       if (blocksBeamVertical(index)) return;
       index -= GameNodes.area;
       if (index < 0) return;
+      addPerceptible(index);
+    }
+  }
+
+  static void projectBeamUp(int index) {
+    while (true) {
+      index += GameNodes.area;
+      if (index >= GameNodes.total) return;
+      if (blocksBeamVertical(index)) return;
       addPerceptible(index);
     }
   }
