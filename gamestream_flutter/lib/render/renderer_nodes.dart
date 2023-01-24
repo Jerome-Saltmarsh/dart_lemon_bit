@@ -352,6 +352,12 @@ class RendererNodes extends Renderer {
     visit2D(playerI);
   }
 
+  static void addVisible3D(int i){
+    visible3D[i] = true;
+    visible3DStack[visible3DIndex] = i;
+    visible3DIndex++;
+  }
+
   static void visit2D(int i) {
      if (visited2D[i]) return;
      visited2D[i] = true;
@@ -361,21 +367,19 @@ class RendererNodes extends Renderer {
      // scan vertical here
 
      var searchIndex = i + (GameNodes.area * GamePlayer.indexZ);
+     addVisible3D(searchIndex);
+
      while (true) {
         if (searchIndex >= GameNodes.total) break;
         if (GameNodes.nodeOrientations[searchIndex] != NodeOrientation.None) break;
-        visible3D[searchIndex] = true;
-        visible3DStack[visible3DIndex] = searchIndex;
-        visible3DIndex++;
+        addVisible3D(searchIndex);
         searchIndex += GameNodes.area;
         if (searchIndex >= GameNodes.total) break;
      }
      searchIndex = i + (GameNodes.area * GamePlayer.indexZ);
      while (true) {
        if (GameNodes.nodeOrientations[searchIndex] != NodeOrientation.None) break;
-      visible3D[searchIndex] = true;
-      visible3DStack[visible3DIndex] = searchIndex;
-      visible3DIndex++;
+       addVisible3D(searchIndex);
       searchIndex -= GameNodes.area;
        if (searchIndex < 0) break;
      }
