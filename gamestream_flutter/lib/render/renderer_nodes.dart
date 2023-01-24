@@ -112,14 +112,25 @@ class RendererNodes extends Renderer {
       currentNodeType = nodeTypes[currentNodeIndex];
       if (currentNodeType != NodeType.Empty){
 
-        final perceptible = nodesPerceptible[currentNodeIndex];
+        // final perceptible = nodesPerceptible[currentNodeIndex];
 
-        if (perceptible) {
+        if (!playerUnder){
           renderCurrentNode();
-        } else
-        if (nodesReserved[currentNodeIndex % GameNodes.projection] >= currentNodeIndex){
-          renderCurrentNode();
+        } else {
+          final i = row * GameNodes.totalColumns + column;
+
+          if (!island[i]){
+            renderCurrentNode();
+          } else if (currentNodeZ < GamePlayer.indexZ + 1){
+            renderCurrentNode();
+          }
         }
+        // if (perceptible) {
+        //   renderCurrentNode();
+        // } else
+        // if (nodesReserved[currentNodeIndex % GameNodes.projection] >= currentNodeIndex){
+        //   renderCurrentNode();
+        // }
       }
       if (row + 1 > nodesRowsMax) return;
       row++;
@@ -270,11 +281,13 @@ class RendererNodes extends Renderer {
       nodesPerceptible = List.generate(GameNodes.total, (index) => false, growable: false);
     }
 
+    updateHeightMapPerception();
+
     /**
      * If the player is inside of a building, scan the nodes which are
      * visible to him and do not render the others.
      */
-    updatePerceptible();
+    // updatePerceptible();
 
     // showIndexPlayer();
     // showIndexMouse();
@@ -296,6 +309,56 @@ class RendererNodes extends Renderer {
     }
 
     highlightCharacterNearMouse();
+  }
+
+  final toVisit = Uint16List(100000);
+  static var visited = <bool>[];
+  static var island = <bool>[];
+  static var zMin = 0;
+  static var playerUnder = false;
+
+  static void updateHeightMapPerception() {
+
+    if (visited.length != GameNodes.area) {
+      visited = List.generate(GameNodes.area, (index) => false, growable: false);
+      island = List.generate(GameNodes.area, (index) => false, growable: false);
+    } else {
+      for (var i = 0; i < GameNodes.area; i++){
+        visited[i] = false;
+        island[i] = false;
+      }
+    }
+
+    final playerI = (GamePlayer.indexRow * GameNodes.totalColumns) + GamePlayer.indexColumn;
+    final height = GameNodes.heightMap[playerI];
+    playerUnder = GamePlayer.indexZ < height;
+    if (!playerUnder) return;
+    zMin = max(GamePlayer.indexZ - 1, 0);
+    visit(playerI);
+  }
+
+  static void visit(int i){
+     if (visited[i]) return;
+     visited[i] = true;
+     if (GameNodes.heightMap[i] <= zMin) return;
+     island[i] = true;
+
+     final iAbove = i - GameNodes.totalColumns;
+     if (iAbove > 0) {
+       visit(iAbove);
+     }
+     final iBelow = i + GameNodes.totalColumns;
+     if (iAbove < GameNodes.area) {
+       visit(iBelow);
+     }
+
+     final row = i % GameNodes.totalRows;
+     if (row - 1 >= 0) {
+       visit(i - 1);
+     }
+     if (row + 1 < GameNodes.totalRows){
+       visit(i + 1);
+     }
   }
 
   void updatePerceptible() {

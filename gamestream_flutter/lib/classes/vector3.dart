@@ -31,10 +31,15 @@ class Vector3 with Position {
 
   bool get nodePerceptible {
     if (outOfBounds) return false;
-    final index = nodeIndex;
-    if (index < RendererNodes.nodesPerceptible.length && RendererNodes.nodesPerceptible[index]) return true;
-    final projectionIndex = index % GameNodes.projection;
-    return index <= projectionIndex;
+    // final index = nodeIndex;
+    // if (index < RendererNodes.nodesPerceptible.length && RendererNodes.nodesPerceptible[index]) return true;
+    // final projectionIndex = index % GameNodes.projection;
+    // return index <= projectionIndex;
+
+    if (!RendererNodes.playerUnder) return true;
+    final i = indexRow * GameNodes.totalColumns + indexColumn;
+    if (!RendererNodes.island[i]) return true;
+    return (indexZ <= GamePlayer.indexZ + 1);
   }
 
   int get indexProjection => nodeIndex % GameNodes.projection;
