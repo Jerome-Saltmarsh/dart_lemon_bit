@@ -314,16 +314,20 @@ class RendererNodes extends Renderer {
     }
     transparencyGridStackIndex = 0;
 
-    for (var row = playerRow - 1; row <= playerRow + 1; row++){
+    const r = 2;
+
+    final indexZ = playerZ * GameNodes.area;
+    for (var row = playerRow - r; row <= playerRow + r; row++){
       if (row < 0) continue;
       if (row >= GameNodes.totalRows) break;
-      final rowIndex = row * GameNodes.totalColumns;
-       for (var column = playerColumn - 1; column <= playerColumn + 1; column++){
+      final rowIndex = row * GameNodes.totalColumns + indexZ;
+       for (var column = playerColumn - r; column <= playerColumn + r; column++){
          if (column < 0) continue;
          if (column >= GameNodes.totalColumns) break;
          final index = rowIndex + column;
-         transparencyGrid[index] = true;
-         transparencyGridStack[transparencyGridStackIndex] = index;
+         final projectionIndex = index % GameNodes.projection;
+         transparencyGrid[projectionIndex] = true;
+         transparencyGridStack[transparencyGridStackIndex] = projectionIndex;
          transparencyGridStackIndex++;
        }
     }
