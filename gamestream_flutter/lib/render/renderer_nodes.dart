@@ -11,7 +11,7 @@ class RendererNodes extends Renderer {
   static final bufferClr = Engine.bufferClr;
   static final bufferSrc = Engine.bufferSrc;
   static final bufferDst = Engine.bufferDst;
-  static final atlas = GameImages.atlas_nodes;
+  static final atlas_nodes = GameImages.atlas_nodes;
 
   static var playerRenderRow = 0;
   static var playerRenderColumn = 0;
@@ -48,6 +48,7 @@ class RendererNodes extends Renderer {
   static var nodesGridTotalZMinusOne = 0;
   static var nodesPlayerColumnRow = 0;
   static var playerUnderRoof = false;
+  static var playerProjection = 0;
 
   static var playerZ = 0;
   static var playerRow = 0;
@@ -92,6 +93,10 @@ class RendererNodes extends Renderer {
 
   static var nodesReserved = Uint32List(0);
 
+  static var transparencyGrid = <bool>[];
+  static var transparencyGridStack = Uint16List(0);
+  static var transparencyGridStackIndex = 0;
+
 
   static int getNodeColorAtIndex(int index){
     if (index < 0) return GameNodes.ambient_color;
@@ -99,11 +104,13 @@ class RendererNodes extends Renderer {
     return GameNodes.nodeColors[index];
   }
 
+  static var currentNodeWithinIsland = false;
+
   // METHODS
 
   @override
   void renderFunction() {
-    Engine.bufferImage = atlas;
+    Engine.bufferImage = atlas_nodes;
     while (
         column >= 0            &&
         row    <= nodesRowsMax &&
@@ -115,9 +122,8 @@ class RendererNodes extends Renderer {
         if (!playerInsideIsland){
           renderCurrentNode();
         } else {
-          final i = row * GameNodes.totalColumns + column;
-
-          if (!island[i]){
+          currentNodeWithinIsland = island[row * GameNodes.totalColumns + column];
+          if (!currentNodeWithinIsland){
             renderCurrentNode();
           } else if (visible3D[currentNodeIndex]) {
             renderCurrentNode();
@@ -219,6 +225,7 @@ class RendererNodes extends Renderer {
     playerRenderRow = playerRow - (GamePlayer.position.indexZ ~/ 2);
     playerRenderColumn = playerColumn - (GamePlayer.position.indexZ ~/ 2);
     playerUnderRoof = indexIsUnderRoof(GamePlayer.position.nodeIndex);
+    playerProjection = playerIndex % GameNodes.projection;
 
     screenRight = Engine.screen.right + Node_Size;
     screenLeft = Engine.screen.left - Node_Size;
@@ -273,16 +280,8 @@ class RendererNodes extends Renderer {
       nodesPerceptible = List.generate(GameNodes.total, (index) => false, growable: false);
     }
 
+    updateTransparencyGrid();
     updateHeightMapPerception();
-
-    /**
-     * If the player is inside of a building, scan the nodes which are
-     * visible to him and do not render the others.
-     */
-    // updatePerceptible();
-
-    // showIndexPlayer();
-    // showIndexMouse();
 
     total = getTotal();
     index = 0;
@@ -301,6 +300,33 @@ class RendererNodes extends Renderer {
     }
 
     highlightCharacterNearMouse();
+  }
+
+  void updateTransparencyGrid() {
+
+    if (transparencyGrid.length != GameNodes.projection) {
+      transparencyGrid = List.generate(GameNodes.projection, (index) => false, growable: false);
+      transparencyGridStack = Uint16List(GameNodes.projection);
+    } else {
+      for (var i = 0; i < transparencyGridStackIndex; i++){
+        transparencyGrid[transparencyGridStack[i]] = false;
+      }
+    }
+    transparencyGridStackIndex = 0;
+
+    for (var row = playerRow - 1; row <= playerRow + 1; row++){
+      if (row < 0) continue;
+      if (row >= GameNodes.totalRows) break;
+      final rowIndex = row * GameNodes.totalColumns;
+       for (var column = playerColumn - 1; column <= playerColumn + 1; column++){
+         if (column < 0) continue;
+         if (column >= GameNodes.totalColumns) break;
+         final index = rowIndex + column;
+         transparencyGrid[index] = true;
+         transparencyGridStack[transparencyGridStackIndex] = index;
+         transparencyGridStackIndex++;
+       }
+    }
   }
 
   final toVisit = Uint16List(100000);
@@ -690,14 +716,26 @@ class RendererNodes extends Renderer {
   }
 
   static void renderCurrentNode() {
-    final visibility = currentNodeVisibility;
-    if (visibility == Visibility.Invisible) return;
+    // final visibility = currentNodeVisibility;
+    // if (visibility == Visibility.Invisible) return;
+    // if (visibility != previousVisibility) {
+    //   previousVisibility = visibility;
+    //   Engine.bufferImage = visibility == Visibility.Opaque
+    //       ? GameImages.atlas_nodes
+    //       : GameImages.atlas_nodes_transparent;
+    // }
 
-    if (visibility != previousVisibility) {
-      previousVisibility = visibility;
-      Engine.bufferImage = visibility == Visibility.Opaque
-          ? GameImages.atlas_nodes
-          : GameImages.atlas_nodes_transparent;
+    if (currentNodeWithinIsland) {
+       if (currentNodeZ > playerZ){
+         final currentNodeProjection = currentNodeIndex % GameNodes.projection;
+         if (transparencyGrid[currentNodeProjection]){
+           Engine.bufferImage = GameImages.atlas_nodes_transparent;
+         } else {
+           Engine.bufferImage = GameImages.atlas_nodes;
+         }
+       } else {
+         Engine.bufferImage = GameImages.atlas_nodes;
+       }
     }
 
     switch (currentNodeType) {
