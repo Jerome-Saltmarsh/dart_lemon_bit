@@ -316,20 +316,24 @@ class RendererNodes extends Renderer {
 
     const r = 2;
 
-    final indexZ = playerZ * GameNodes.area;
-    for (var row = playerRow - r; row <= playerRow + r; row++){
-      if (row < 0) continue;
-      if (row >= GameNodes.totalRows) break;
-      final rowIndex = row * GameNodes.totalColumns + indexZ;
-       for (var column = playerColumn - r; column <= playerColumn + r; column++){
-         if (column < 0) continue;
-         if (column >= GameNodes.totalColumns) break;
-         final index = rowIndex + column;
-         final projectionIndex = index % GameNodes.projection;
-         transparencyGrid[projectionIndex] = true;
-         transparencyGridStack[transparencyGridStackIndex] = projectionIndex;
-         transparencyGridStackIndex++;
-       }
+
+    for (var z = playerZ; z <= playerZ + 1; z++){
+      if (z >= GameNodes.totalZ) break;
+      final indexZ = z * GameNodes.area;
+      for (var row = playerRow - r; row <= playerRow + r; row++){
+        if (row < 0) continue;
+        if (row >= GameNodes.totalRows) break;
+        final rowIndex = row * GameNodes.totalColumns + indexZ;
+        for (var column = playerColumn - r; column <= playerColumn + r; column++){
+          if (column < 0) continue;
+          if (column >= GameNodes.totalColumns) break;
+          final index = rowIndex + column;
+          final projectionIndex = index % GameNodes.projection;
+          transparencyGrid[projectionIndex] = true;
+          transparencyGridStack[transparencyGridStackIndex] = projectionIndex;
+          transparencyGridStackIndex++;
+        }
+      }
     }
   }
 
