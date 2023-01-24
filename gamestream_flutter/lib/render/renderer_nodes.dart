@@ -366,13 +366,16 @@ class RendererNodes extends Renderer {
      while (true) {
        searchIndex += GameNodes.area;
         if (searchIndex >= GameNodes.total) break;
+        final nodeOrientation = GameNodes.nodeOrientations[searchIndex];
+        if (nodeOrientation == NodeOrientation.Half_Vertical_Top) break;
+        if (nodeOrientation == NodeOrientation.Half_Vertical_Bottom) break;
         if (!spaceReached){
-          if (GameNodes.nodeOrientations[searchIndex] == NodeOrientation.None){
+          if (nodeOrientation == NodeOrientation.None){
             spaceReached = true;
           }
-        } else if (GameNodes.nodeOrientations[searchIndex] != NodeOrientation.None){
-          break;
-        }
+        } else
+
+        if (nodeOrientation != NodeOrientation.None)  break;
 
         addVisible3D(searchIndex);
      }
