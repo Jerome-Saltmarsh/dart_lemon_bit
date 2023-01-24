@@ -316,7 +316,6 @@ class RendererNodes extends Renderer {
 
     const r = 2;
 
-
     for (var z = playerZ; z <= playerZ + 1; z++){
       if (z >= GameNodes.totalZ) break;
       final indexZ = z * GameNodes.area;
@@ -723,28 +722,27 @@ class RendererNodes extends Renderer {
     return true;
   }
 
-  static void renderCurrentNode() {
-    // final visibility = currentNodeVisibility;
-    // if (visibility == Visibility.Invisible) return;
-    // if (visibility != previousVisibility) {
-    //   previousVisibility = visibility;
-    //   Engine.bufferImage = visibility == Visibility.Opaque
-    //       ? GameImages.atlas_nodes
-    //       : GameImages.atlas_nodes_transparent;
-    // }
+  static bool get currentNodeTransparent {
+    if (!currentNodeWithinIsland) return false;
+    if (currentNodeZ <= playerZ) return false;
+    final currentNodeProjection = currentNodeIndex % GameNodes.projection;
+    if (!transparencyGrid[currentNodeProjection]) return false;
 
-    if (currentNodeWithinIsland) {
-       if (currentNodeZ > playerZ){
-         final currentNodeProjection = currentNodeIndex % GameNodes.projection;
-         if (transparencyGrid[currentNodeProjection]){
-           Engine.bufferImage = GameImages.atlas_nodes_transparent;
-         } else {
-           Engine.bufferImage = GameImages.atlas_nodes;
-         }
-       } else {
-         Engine.bufferImage = GameImages.atlas_nodes;
-       }
+    final nodeOrientation = currentNodeOrientation;
+
+    if (nodeOrientation == NodeOrientation.Half_North || nodeOrientation == NodeOrientation.Half_South){
+      return row >= playerRow;
     }
+    if (nodeOrientation == NodeOrientation.Half_East || nodeOrientation == NodeOrientation.Half_West){
+      return column >= playerColumn;
+    }
+
+    return row >= playerRow && column >= playerColumn;
+  }
+
+  static void renderCurrentNode() {
+
+    Engine.bufferImage = currentNodeTransparent ? GameImages.atlas_nodes_transparent : GameImages.atlas_nodes;
 
     switch (currentNodeType) {
       case NodeType.Grass:
