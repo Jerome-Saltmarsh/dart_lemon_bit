@@ -112,8 +112,6 @@ class RendererNodes extends Renderer {
       currentNodeType = nodeTypes[currentNodeIndex];
       if (currentNodeType != NodeType.Empty){
 
-        // final perceptible = nodesPerceptible[currentNodeIndex];
-
         if (!playerInsideIsland){
           renderCurrentNode();
         } else {
@@ -121,16 +119,10 @@ class RendererNodes extends Renderer {
 
           if (!island[i]){
             renderCurrentNode();
-          } else if (currentNodeZ < GamePlayer.indexZ + 1){
+          } else if (visible3D[currentNodeIndex]) {
             renderCurrentNode();
           }
         }
-        // if (perceptible) {
-        //   renderCurrentNode();
-        // } else
-        // if (nodesReserved[currentNodeIndex % GameNodes.projection] >= currentNodeIndex){
-        //   renderCurrentNode();
-        // }
       }
       if (row + 1 > nodesRowsMax) return;
       row++;
@@ -369,17 +361,26 @@ class RendererNodes extends Renderer {
      var searchIndex = i + (GameNodes.area * GamePlayer.indexZ);
      addVisible3D(searchIndex);
 
+     var spaceReached = GameNodes.nodeOrientations[searchIndex] == NodeOrientation.None;
+
      while (true) {
        searchIndex += GameNodes.area;
         if (searchIndex >= GameNodes.total) break;
-        if (GameNodes.nodeOrientations[searchIndex] != NodeOrientation.None) break;
+        if (!spaceReached){
+          if (GameNodes.nodeOrientations[searchIndex] == NodeOrientation.None){
+            spaceReached = true;
+          }
+        } else if (GameNodes.nodeOrientations[searchIndex] != NodeOrientation.None){
+          break;
+        }
+
         addVisible3D(searchIndex);
      }
      searchIndex = i + (GameNodes.area * GamePlayer.indexZ);
      while (true) {
-       if (GameNodes.nodeOrientations[searchIndex] != NodeOrientation.None) break;
        addVisible3D(searchIndex);
-      searchIndex -= GameNodes.area;
+       if (blocksBeamVertical(searchIndex)) break;
+       searchIndex -= GameNodes.area;
        if (searchIndex < 0) break;
      }
 
