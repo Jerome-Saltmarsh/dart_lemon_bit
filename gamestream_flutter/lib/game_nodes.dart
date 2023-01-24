@@ -77,7 +77,7 @@ class GameNodes {
     final index = total - area + ((row * totalColumns) + column);
     var i = index;
     for (var z = totalZ - 1; z >= 0; z--){
-      if (!NodeType.isRainOrEmpty(nodeTypes[i])) return z;
+      if (nodeOrientations[i] != NodeOrientation.None) return z;
       i -= area;
     }
     return 0;

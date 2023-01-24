@@ -36,10 +36,11 @@ class Vector3 with Position {
     // final projectionIndex = index % GameNodes.projection;
     // return index <= projectionIndex;
 
-    if (!RendererNodes.playerUnder) return true;
+    if (!RendererNodes.playerInsideIsland) return true;
     final i = indexRow * GameNodes.totalColumns + indexColumn;
     if (!RendererNodes.island[i]) return true;
-    return (indexZ <= GamePlayer.indexZ + 1);
+
+    return RendererNodes.visible3D[nodeIndex];
   }
 
   int get indexProjection => nodeIndex % GameNodes.projection;

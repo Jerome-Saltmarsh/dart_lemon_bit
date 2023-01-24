@@ -166,6 +166,7 @@ class ServerResponseReader with ByteReader {
         GamePlayer.indexColumn = GamePlayer.position.indexColumn;
         GamePlayer.indexRow = GamePlayer.position.indexRow;
         GamePlayer.indexZ = GamePlayer.position.indexZ;
+        GamePlayer.nodeIndex = GamePlayer.position.nodeIndex;
         break;
       case ApiPlayer.Aim_Target_Category:
         GamePlayer.aimTargetCategory = readByte();

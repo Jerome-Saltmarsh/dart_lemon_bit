@@ -114,7 +114,7 @@ class RendererNodes extends Renderer {
 
         // final perceptible = nodesPerceptible[currentNodeIndex];
 
-        if (!playerUnder){
+        if (!playerInsideIsland){
           renderCurrentNode();
         } else {
           final i = row * GameNodes.totalColumns + column;
@@ -312,52 +312,89 @@ class RendererNodes extends Renderer {
   }
 
   final toVisit = Uint16List(100000);
-  static var visited = <bool>[];
+  static var visited2D = <bool>[];
   static var island = <bool>[];
   static var zMin = 0;
-  static var playerUnder = false;
+  static var playerInsideIsland = false;
+  static var visible3D = <bool>[];
+  static var visible3DStack = Uint16List(10000);
+  static var visible3DIndex = 0;
+  static var playerIndex = 0;
 
   static void updateHeightMapPerception() {
 
-    if (visited.length != GameNodes.area) {
-      visited = List.generate(GameNodes.area, (index) => false, growable: false);
+    if (visible3D.length != GameNodes.total) {
+      visible3D = List.generate(GameNodes.total, (index) => false);
+      visible3DIndex = 0;
+    }
+
+    for (var i = 0; i < visible3DIndex; i++){
+      visible3D[visible3DStack[i]] = false;
+    }
+    visible3DIndex = 0;
+
+    if (visited2D.length != GameNodes.area) {
+      visited2D = List.generate(GameNodes.area, (index) => false, growable: false);
       island = List.generate(GameNodes.area, (index) => false, growable: false);
     } else {
       for (var i = 0; i < GameNodes.area; i++){
-        visited[i] = false;
+        visited2D[i] = false;
         island[i] = false;
       }
     }
 
     final playerI = (GamePlayer.indexRow * GameNodes.totalColumns) + GamePlayer.indexColumn;
     final height = GameNodes.heightMap[playerI];
-    playerUnder = GamePlayer.indexZ < height;
-    if (!playerUnder) return;
+    playerInsideIsland = GamePlayer.indexZ < height;
+
+    if (!playerInsideIsland) return;
     zMin = max(GamePlayer.indexZ - 1, 0);
-    visit(playerI);
+    visit2D(playerI);
   }
 
-  static void visit(int i){
-     if (visited[i]) return;
-     visited[i] = true;
+  static void visit2D(int i) {
+     if (visited2D[i]) return;
+     visited2D[i] = true;
      if (GameNodes.heightMap[i] <= zMin) return;
      island[i] = true;
 
+     // scan vertical here
+
+     var searchIndex = i + (GameNodes.area * GamePlayer.indexZ);
+     while (true) {
+        if (searchIndex >= GameNodes.total) break;
+        if (GameNodes.nodeOrientations[searchIndex] != NodeOrientation.None) break;
+        visible3D[searchIndex] = true;
+        visible3DStack[visible3DIndex] = searchIndex;
+        visible3DIndex++;
+        searchIndex += GameNodes.area;
+        if (searchIndex >= GameNodes.total) break;
+     }
+     searchIndex = i + (GameNodes.area * GamePlayer.indexZ);
+     while (true) {
+       if (GameNodes.nodeOrientations[searchIndex] != NodeOrientation.None) break;
+      visible3D[searchIndex] = true;
+      visible3DStack[visible3DIndex] = searchIndex;
+      visible3DIndex++;
+      searchIndex -= GameNodes.area;
+       if (searchIndex < 0) break;
+     }
+
      final iAbove = i - GameNodes.totalColumns;
      if (iAbove > 0) {
-       visit(iAbove);
+       visit2D(iAbove);
      }
      final iBelow = i + GameNodes.totalColumns;
      if (iAbove < GameNodes.area) {
-       visit(iBelow);
+       visit2D(iBelow);
      }
 
      final row = i % GameNodes.totalRows;
      if (row - 1 >= 0) {
-       visit(i - 1);
+       visit2D(i - 1);
      }
      if (row + 1 < GameNodes.totalRows){
-       visit(i + 1);
+       visit2D(i + 1);
      }
   }
 

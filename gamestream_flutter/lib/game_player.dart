@@ -46,6 +46,7 @@ class GamePlayer {
   static var indexZ = 0;
   static var indexRow = 0;
   static var indexColumn = 0;
+  static var nodeIndex = 0;
 
   static double get renderX => GameConvert.convertV3ToRenderX(position);
   static double get renderY => GameConvert.convertV3ToRenderY(position);
@@ -54,7 +55,7 @@ class GamePlayer {
   static bool get interactModeTrading => ServerState.interactMode.value == InteractMode.Trading;
   static bool get dead => !alive.value;
   static bool get inBounds => GameQueries.inBoundsVector3(position);
-  static int get nodeIndex => position.nodeIndex;
+
 
   static bool isCharacter(Character character){
     return position.x == character.x && position.y == character.y && position.z == character.z;
