@@ -370,11 +370,10 @@ class RendererNodes extends Renderer {
      addVisible3D(searchIndex);
 
      while (true) {
+       searchIndex += GameNodes.area;
         if (searchIndex >= GameNodes.total) break;
         if (GameNodes.nodeOrientations[searchIndex] != NodeOrientation.None) break;
         addVisible3D(searchIndex);
-        searchIndex += GameNodes.area;
-        if (searchIndex >= GameNodes.total) break;
      }
      searchIndex = i + (GameNodes.area * GamePlayer.indexZ);
      while (true) {
