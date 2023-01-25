@@ -15,9 +15,7 @@ class RendererGameObjects extends Renderer {
     final type = gameObject.type;
     if (ItemType.isTypeGameObject(type)) {
       Engine.renderSprite(
-        image: gameObject.nodeVisibilityOpaque
-            ? GameImages.atlas_gameobjects
-            : GameImages.atlas_gameobjects_transparent,
+        image: GameImages.atlas_gameobjects,
         dstX: gameObject.renderX,
         dstY: gameObject.renderY,
         srcX: AtlasItems.getSrcX(type),

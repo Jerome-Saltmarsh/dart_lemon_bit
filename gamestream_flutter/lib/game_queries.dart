@@ -24,11 +24,11 @@ class GameQueries {
      return true;
    }
 
-   static bool isVisibleV3(Vector3 vector) =>
-       inBoundsVector3(vector) ? GameNodes.nodeVisible[getNodeIndexV3(vector)] != Visibility.Invisible : true;
+   // static bool isVisibleV3(Vector3 vector) =>
+   //     inBoundsVector3(vector) ? GameNodes.nodeVisible[getNodeIndexV3(vector)] != Visibility.Invisible : true;
 
-   static bool isVisibleXYZ(double x, double y, double z) =>
-       inBounds(x, y, z) ? GameNodes.nodeVisible[getNodeIndex(x, y, z)] != Visibility.Invisible : true;
+   // static bool isVisibleXYZ(double x, double y, double z) =>
+   //     inBounds(x, y, z) ? GameNodes.nodeVisible[getNodeIndex(x, y, z)] != Visibility.Invisible : true;
 
    static bool inBoundsVector3(Vector3 vector3) =>
        inBounds(vector3.x, vector3.y, vector3.z);

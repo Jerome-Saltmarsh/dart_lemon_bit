@@ -446,10 +446,10 @@ class GameIO {
         z--;
         continue;
       }
-      if (GameNodes.nodeVisible[index] == Visibility.Invisible) {
-        z--;
-        continue;
-      }
+      // if (GameNodes.nodeVisible[index] == Visibility.Invisible) {
+      //   z--;
+      //   continue;
+      // }
       callback(z, row, column);
       return;
     }

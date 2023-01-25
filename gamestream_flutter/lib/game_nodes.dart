@@ -47,12 +47,12 @@ class GameNodes {
   static var nodeOrientations = Uint8List(0);
   static var nodeTypes = Uint8List(0);
   static var nodeVariations = Uint8List(0);
-  static var nodeVisible = Uint8List(0);
-  static var nodeVisibleIndex = Uint16List(0);
+  // static var nodeVisible = Uint8List(0);
+  // static var nodeVisibleIndex = Uint16List(0);
   static var nodeDynamicIndex = Uint16List(0);
   static var nodeWind = Uint8List(0);
   static var miniMap = Uint8List(0);
-  static var visibleIndex = 0;
+  // static var visibleIndex = 0;
   static var dynamicIndex = -1;
   static var total = 0;
   static var area = 0;
@@ -123,13 +123,13 @@ class GameNodes {
       }
   }
   
-  static void resetVisible(){
-    while (visibleIndex > 0) {
-      nodeVisible[nodeVisibleIndex[visibleIndex]] = Visibility.Opaque;
-      visibleIndex--;
-    }
-    nodeVisible[nodeVisibleIndex[0]] = Visibility.Opaque;
-  }
+  // static void resetVisible(){
+  //   while (visibleIndex > 0) {
+  //     nodeVisible[nodeVisibleIndex[visibleIndex]] = Visibility.Opaque;
+  //     visibleIndex--;
+  //   }
+  //   nodeVisible[nodeVisibleIndex[0]] = Visibility.Opaque;
+  // }
 
   static void resetStackDynamicLight() {
     while (dynamicIndex >= 0) {
@@ -144,19 +144,19 @@ class GameNodes {
     dynamicIndex = 0;
   }
 
-  static void addInvisibleIndex(int index){
-    if (nodeVisible[index] == Visibility.Invisible) return;
-    nodeVisible[index] = Visibility.Invisible;
-    nodeVisibleIndex[visibleIndex] = index;
-    visibleIndex++;
-  }
+  // static void addInvisibleIndex(int index){
+  //   if (nodeVisible[index] == Visibility.Invisible) return;
+  //   nodeVisible[index] = Visibility.Invisible;
+  //   nodeVisibleIndex[visibleIndex] = index;
+  //   visibleIndex++;
+  // }
 
-  static void addTransparentIndex(int index){
-    if (nodeVisible[index] == Visibility.Transparent) return;
-    nodeVisible[index] = Visibility.Transparent;
-    nodeVisibleIndex[visibleIndex] = index;
-    visibleIndex++;
-  }
+  // static void addTransparentIndex(int index){
+  //   if (nodeVisible[index] == Visibility.Transparent) return;
+  //   nodeVisible[index] = Visibility.Transparent;
+  //   nodeVisibleIndex[visibleIndex] = index;
+  //   visibleIndex++;
+  // }
 
   static int linerInterpolationInt(int a, int b, double t) {
     return (a * (1.0 - t) + b * t).round();

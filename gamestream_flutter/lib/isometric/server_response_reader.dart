@@ -468,8 +468,8 @@ class ServerResponseReader with ByteReader {
       GameNodes.nodeOrientations = Uint8List(totalNodes);
       GameNodes.nodeWind = Uint8List(totalNodes);
       GameNodes.nodeVariations = Uint8List(totalNodes);
-      GameNodes.nodeVisible = Uint8List(totalNodes);
-      GameNodes.nodeVisibleIndex = Uint16List(totalNodes);
+      // GameNodes.nodeVisible = Uint8List(totalNodes);
+      // GameNodes.nodeVisibleIndex = Uint16List(totalNodes);
       GameNodes.nodeDynamicIndex = Uint16List(totalNodes);
     }
     GameNodes.total = totalNodes;

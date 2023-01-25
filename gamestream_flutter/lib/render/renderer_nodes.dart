@@ -61,20 +61,14 @@ class RendererNodes extends Renderer {
 
   static var nodeTypes = GameNodes.nodeTypes;
   static var nodeOrientations = GameNodes.nodeOrientations;
-  static var nodeVisibility = GameNodes.nodeVisible;
 
   // GETTERS
   static double get currentNodeRenderY => GameConvert.rowColumnZToRenderY(row, column, currentNodeZ);
-  static bool get currentNodeOpaque => currentNodeVisibility == Visibility.Opaque;
   static int get currentNodeColor => GameNodes.nodeColors[currentNodeIndex];
 
   static int get currentNodeOrientation => nodeOrientations[currentNodeIndex];
-  static int get currentNodeVisibility => nodeVisibility[currentNodeIndex];
   static int get currentNodeWind => ServerState.windTypeAmbient.value;
 
-  static bool get currentNodeVisible => currentNodeVisibility == Visibility.Invisible;
-  static bool get currentNodeInvisible => currentNodeVisibility == Visibility.Invisible;
-  static bool get currentNodeVisibilityOpaque => nodeVisibility[currentNodeIndex] == Visibility.Opaque;
   static int get currentNodeVariation => GameNodes.nodeVariations[currentNodeIndex];
 
   static int get renderNodeOrientation => nodeOrientations[currentNodeIndex];
@@ -204,7 +198,6 @@ class RendererNodes extends Renderer {
   void reset() {
     nodeTypes = GameNodes.nodeTypes;
     nodeOrientations = GameNodes.nodeOrientations;
-    nodeVisibility = GameNodes.nodeVisible;
     nodesRowsMax = GameNodes.totalRows - 1;
     nodesGridTotalZMinusOne = GameNodes.totalZ - 1;
     offscreenNodesTop = 0;
@@ -264,9 +257,6 @@ class RendererNodes extends Renderer {
     currentNodeDstY = ((row + column) * Node_Size_Half) - (currentNodeZ * Node_Height);
     currentNodeIndex = (currentNodeZ * GameNodes.area) + (row * GameNodes.totalColumns) + column;
     currentNodeType = nodeTypes[currentNodeIndex];
-
-
-    GameNodes.resetVisible();
 
     if (nodesReserved.length != GameNodes.projection){
       nodesReserved = Uint32List(GameNodes.projection);
@@ -984,7 +974,7 @@ class RendererNodes extends Renderer {
   static void renderTreeTopOak(){
     var shift = GameAnimation.treeAnimation[((row - column) + GameAnimation.animationFrame) % GameAnimation.treeAnimation.length] * renderNodeWind;
     Engine.renderSprite(
-      image: currentNodeOpaque ? GameImages.atlas_nodes : GameImages.atlas_nodes_transparent,
+      image: GameImages.atlas_nodes,
       srcX: AtlasNodeX.Tree_Top,
       srcY: 433.0,
       srcWidth: AtlasNode.Node_Tree_Top_Width,
@@ -998,7 +988,7 @@ class RendererNodes extends Renderer {
   static void renderTreeTopPine() {
     var shift = GameAnimation.treeAnimation[((row - column) + GameAnimation.animationFrame) % GameAnimation.treeAnimation.length] * renderNodeWind;
     Engine.renderSprite(
-      image: currentNodeOpaque ? GameImages.atlas_nodes : GameImages.atlas_nodes_transparent,
+      image: GameImages.atlas_nodes,
       srcX: 1262,
       srcY: 80 ,
       srcWidth: 45,
@@ -1379,124 +1369,4 @@ class RendererNodes extends Renderer {
   //   if (index >= GameNodes.total) return Shade.Medium;
   //   return nodeShades[index];
   // }
-
-  void showIndexPlayer() {
-    if (GamePlayer.position.outOfBounds) return;
-    showIndexFinal(GamePlayer.position.nodeIndex);
-  }
-
-  void showIndexMouse(){
-    var x1 = GamePlayer.position.x;
-    var y1 = GamePlayer.position.y;
-    final z = GamePlayer.position.z + Node_Height_Half;
-
-    if (!GameQueries.inBounds(x1, y1, z)) return;
-    if (!GameQueries.inBounds(GameMouse.positionX, GameMouse.positionY, GameMouse.positionZ)) return;
-
-    final mouseAngle = GameMouse.playerAngle;
-    final mouseDistance = min(200.0, GameMouse.playerDistance);
-    final jumps = mouseDistance ~/ Node_Height_Half;
-    final tX = Engine.calculateAdjacent(mouseAngle, Node_Height_Half);
-    final tY = Engine.calculateOpposite(mouseAngle, Node_Height_Half);
-    var i1 = GamePlayer.position.nodeIndex;
-
-    for (var i = 0; i < jumps; i++) {
-      final x2 = x1 - tX;
-      final y2 = y1 - tY;
-      final i2 = GameQueries.getNodeIndex(x2, y2, z);
-      if (!NodeType.isTransient(GameNodes.nodeTypes[i2])) break;
-      x1 = x2;
-      y1 = y2;
-      i1 = i2;
-    }
-    showIndexFinal(i1);
-  }
-
-  void nodesHideIndex(int z, int row, int column, int initRow, int initColumn){
-
-    var index = (z * GameNodes.area) + (row * GameNodes.totalColumns) + column;
-    final indexBelowEmpty = index <= GameNodes.area ? false : GameNodes.nodeTypes[index - GameNodes.area] == NodeType.Empty;
-
-
-    while (index < GameNodes.total) {
-
-      final differenceZ = (z - GamePlayer.indexZ).abs();
-      final transparent = differenceZ <= 1;
-
-      if (column >= initColumn && row >= initRow) {
-
-        if (transparent){
-          GameNodes.addTransparentIndex(index);
-        } else {
-          GameNodes.addInvisibleIndex(index);
-        }
-
-        row += 1;
-        column += 1;
-        z += 2;
-        index = (z * GameNodes.area) + (row * GameNodes.totalColumns) + column;
-        continue;
-      }
-      var nodeIndexBelow = index - GameNodes.area;
-
-      if (indexBelowEmpty) {
-
-        if (transparent){
-          GameNodes.addTransparentIndex(index);
-        } else {
-          GameNodes.addInvisibleIndex(index);
-        }
-
-        row += 1;
-        column += 1;
-        z += 2;
-        index = (z * GameNodes.area) + (row * GameNodes.totalColumns) + column;
-        continue;
-      }
-
-      if (nodeVisibility[nodeIndexBelow] == Visibility.Invisible) {
-
-        if (transparent){
-          GameNodes.addTransparentIndex(index);
-        } else {
-          GameNodes.addInvisibleIndex(index);
-        }
-
-        row += 1;
-        column += 1;
-        z += 2;
-        index = (z * GameNodes.area) + (row * GameNodes.totalColumns) + column;
-        continue;
-      }
-      row += 1;
-      column += 1;
-      z += 2;
-      index = (z * GameNodes.area) + (row * GameNodes.totalColumns) + column;
-    }
-  }
-
-  void showIndexFinal(int index){
-    showIndex(index + GameNodes.area);
-    showIndex(index + GameNodes.area + GameNodes.area);
-  }
-
-  void showIndex(int index) {
-    if (index < 0) return;
-    if (index >= GameNodes.total) return;
-    indexZ = GameState.convertNodeIndexToIndexZ(index);
-    indexRow = GameState.convertNodeIndexToIndexX(index);
-    indexColumn = GameState.convertNodeIndexToIndexY(index);
-    const radius = 3;
-    for (var r = -radius; r <= radius + 2; r++) {
-      final row = indexRow + r;
-      if (row < 0) continue;
-      if (row >= GameNodes.totalRows) break;
-      for (var c = -radius; c <= radius + 2; c++) {
-        final column = indexColumn + c;
-        if (column < 0) continue;
-        if (column >= GameNodes.totalColumns) break;
-        nodesHideIndex(indexZ, row, column, indexRow, indexColumn);
-      }
-    }
-  }
 }
