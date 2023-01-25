@@ -183,14 +183,6 @@ class RendererNodes extends Renderer {
     return (row * GameNodes.totalColumns) + column + (z * GameNodes.area);
   }
 
-  // static bool indexIsUnderRoof(int index){
-  //    while (true) {
-  //       index += GameNodes.area;
-  //       if (index >= GameNodes.total) return false;
-  //       if (GameNodes.nodeOrientations[index] != NodeOrientation.None) return true;
-  //    }
-  // }
-
   @override
   int getTotal() => GameNodes.total;
 
@@ -252,22 +244,11 @@ class RendererNodes extends Renderer {
     nodesTrimTop();
     trimLeft();
 
+
     currentNodeDstX = (row - column) * Node_Size_Half;
     currentNodeDstY = ((row + column) * Node_Size_Half) - (currentNodeZ * Node_Height);
     currentNodeIndex = (currentNodeZ * GameNodes.area) + (row * GameNodes.totalColumns) + column;
     currentNodeType = nodeTypes[currentNodeIndex];
-
-    // if (nodesReserved.length != GameNodes.projection){
-    //   nodesReserved = Uint32List(GameNodes.projection);
-    // }
-    // final length = nodesReserved.length;
-    // for (var i = 0; i < length; i++) {
-    //   nodesReserved[i] = GameNodes.total;
-    // }
-
-    // if (nodesPerceptible.length != GameNodes.total) {
-    //   nodesPerceptible = List.generate(GameNodes.total, (index) => false, growable: false);
-    // }
 
     updateTransparencyGrid();
     updateHeightMapPerception();
@@ -291,7 +272,7 @@ class RendererNodes extends Renderer {
     highlightCharacterNearMouse();
   }
 
-  void updateTransparencyGrid() {
+  static void updateTransparencyGrid() {
 
     if (transparencyGrid.length != GameNodes.projection) {
       transparencyGrid = List.generate(GameNodes.projection, (index) => false, growable: false);
@@ -474,7 +455,7 @@ class RendererNodes extends Renderer {
     return true;
   }
 
-  void trimLeft(){
+  static void trimLeft(){
     var currentNodeRenderX = (row - column) * Node_Size_Half;
     final maxRow = GameNodes.totalRows - 1;
     while (currentNodeRenderX < screenLeft && column > 0 && row < maxRow){
@@ -539,7 +520,7 @@ class RendererNodes extends Renderer {
 
 
 
-  void nodesTrimTop() {
+  static void nodesTrimTop() {
     // TODO optimize
     while (currentNodeRenderY < screenTop){
       nodesShiftIndexDown();
