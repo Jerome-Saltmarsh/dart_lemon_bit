@@ -47,7 +47,7 @@ class RendererNodes extends Renderer {
   static var nodesGridTotalColumnsMinusOne = 0;
   static var nodesGridTotalZMinusOne = 0;
   static var nodesPlayerColumnRow = 0;
-  static var playerUnderRoof = false;
+  // static var playerUnderRoof = false;
   static var playerProjection = 0;
 
   static var playerZ = 0;
@@ -81,11 +81,11 @@ class RendererNodes extends Renderer {
   static int get renderNodeBelowColor => getNodeColorAtIndex(currentNodeIndex - GameNodes.area);
 
 
-  static var nodesPerceptible = <bool>[];
-  static var nodesPerceptibleStack = Uint16List(100000);
-  static var nodesPerceptibleStackIndex = 0;
+  // static var nodesPerceptible = <bool>[];
+  // static var nodesPerceptibleStack = Uint16List(100000);
+  // static var nodesPerceptibleStackIndex = 0;
 
-  static var nodesReserved = Uint32List(0);
+  // static var nodesReserved = Uint32List(0);
 
   static var transparencyGrid = <bool>[];
   static var transparencyGridStack = Uint16List(0);
@@ -183,13 +183,13 @@ class RendererNodes extends Renderer {
     return (row * GameNodes.totalColumns) + column + (z * GameNodes.area);
   }
 
-  static bool indexIsUnderRoof(int index){
-     while (true) {
-        index += GameNodes.area;
-        if (index >= GameNodes.total) return false;
-        if (GameNodes.nodeOrientations[index] != NodeOrientation.None) return true;
-     }
-  }
+  // static bool indexIsUnderRoof(int index){
+  //    while (true) {
+  //       index += GameNodes.area;
+  //       if (index >= GameNodes.total) return false;
+  //       if (GameNodes.nodeOrientations[index] != NodeOrientation.None) return true;
+  //    }
+  // }
 
   @override
   int getTotal() => GameNodes.total;
@@ -217,7 +217,6 @@ class RendererNodes extends Renderer {
     nodesPlayerColumnRow = playerRow + playerColumn;
     playerRenderRow = playerRow - (GamePlayer.position.indexZ ~/ 2);
     playerRenderColumn = playerColumn - (GamePlayer.position.indexZ ~/ 2);
-    playerUnderRoof = indexIsUnderRoof(GamePlayer.position.nodeIndex);
     playerProjection = playerIndex % GameNodes.projection;
 
     screenRight = Engine.screen.right + Node_Size;
@@ -258,17 +257,17 @@ class RendererNodes extends Renderer {
     currentNodeIndex = (currentNodeZ * GameNodes.area) + (row * GameNodes.totalColumns) + column;
     currentNodeType = nodeTypes[currentNodeIndex];
 
-    if (nodesReserved.length != GameNodes.projection){
-      nodesReserved = Uint32List(GameNodes.projection);
-    }
-    final length = nodesReserved.length;
-    for (var i = 0; i < length; i++) {
-      nodesReserved[i] = GameNodes.total;
-    }
+    // if (nodesReserved.length != GameNodes.projection){
+    //   nodesReserved = Uint32List(GameNodes.projection);
+    // }
+    // final length = nodesReserved.length;
+    // for (var i = 0; i < length; i++) {
+    //   nodesReserved[i] = GameNodes.total;
+    // }
 
-    if (nodesPerceptible.length != GameNodes.total) {
-      nodesPerceptible = List.generate(GameNodes.total, (index) => false, growable: false);
-    }
+    // if (nodesPerceptible.length != GameNodes.total) {
+    //   nodesPerceptible = List.generate(GameNodes.total, (index) => false, growable: false);
+    // }
 
     updateTransparencyGrid();
     updateHeightMapPerception();
@@ -427,119 +426,8 @@ class RendererNodes extends Renderer {
      }
   }
 
-  void updatePerceptible() {
-    final centerRow = GamePlayer.indexRow;
-    final centerCol = GamePlayer.indexColumn;
-    final centerZ = GamePlayer.indexZ;
-
-    for (var i = 0; i < nodesPerceptibleStackIndex; i++){
-      nodesPerceptible[nodesPerceptibleStack[i]] = false;
-    }
-    nodesPerceptibleStackIndex = 0;
-    shootIndex(centerZ, centerRow, centerCol);
-    shootIndex(centerZ + 1, centerRow, centerCol);
-  }
-  
-  void shootIndex(int z, int row, int column) {
-    const range = 10;
-    final index = getIndex(row, column, z);
-    if (blocksBeamVertical(index)) return;
-
-    addPerceptible(index);
-    projectBeamVertical(index);
-    shootBeam(z, row, column, range, 1, 0);
-    shootBeam(z, row, column, range, 0, 1);
-    shootBeam(z, row, column, range, -1, 0);
-    shootBeam(z, row, column, range, 0, -1);
-    shootCorner(row, column, z, range, -1, -1);
-    shootCorner(row, column, z, range, 1, -1);
-    shootCorner(row, column, z, range, -1, 1);
-    shootCorner(row, column, z, range, 1, 1);
-  }
-
-
-  static void addPerceptible(int index){
-    final projectionIndex = index % GameNodes.projection;
-    nodesReserved[projectionIndex] = index;
-    nodesPerceptible[index] = true;
-    nodesPerceptibleStack[nodesPerceptibleStackIndex] = index;
-    nodesPerceptibleStackIndex++;
-  }
-
-  static void shootCorner(int row, int column, int z, int range, int dirRow, int dirColumn){
-    for (var r = 1; r < range; r++){
-      row += dirRow;
-      column += dirColumn;
-      if (row < 0) break;
-      if (column < 0) break;
-      if (row >= GameNodes.totalRows) break;
-      final nodeIndex = getIndex(row, column, z);
-      addPerceptible(nodeIndex);
-      projectBeamVertical(nodeIndex);
-      final nodeType = GameNodes.nodeTypes[nodeIndex];
-      if (!blocksBeamHorizontal(nodeIndex, dirRow, 0)){
-        shootBeam(z, row, column, range - r, dirRow, 0);
-      }
-      if (!blocksBeamHorizontal(nodeIndex, 0, dirColumn)){
-        shootBeam(z, row, column, range - r, 0, dirColumn);
-      }
-
-      final nodeOrientation = GameNodes.nodeOrientations[nodeIndex];
-      if (nodeOrientation == NodeOrientation.None) continue;
-      if (nodeOrientation == NodeOrientation.Radial) continue;
-      if (NodeOrientation.isCorner(nodeOrientation)) continue;
-      if (NodeOrientation.isColumn(nodeOrientation)) continue;
-
-      if (!nodeTypeBlocks(nodeType)) continue;
-      break;
-    }
-  }
-
-  static void shootBeam(int z, int row, int column, int range, int dirRow, int dirCol){
-    if (z < 0) return;
-    if (z >= GameNodes.totalZ) return;
-
-    assert (dirRow == 0 || dirCol == 0);
-
-    for (var i = 0; i < range; i++) {
-      row += dirRow;
-      column += dirCol;
-      if (row < 0) return;
-      if (column < 0) return;
-      if (row >= GameNodes.totalRows) return;
-      if (column >= GameNodes.totalColumns) return;
-      final index = getIndex(row, column, z);
-      addPerceptible(index);
-      projectBeamVertical(index);
-      if (blocksBeamHorizontal(index, dirRow, dirCol)) return;
-    }
-  }
-
   static int getProjectionIndex(int index){
     return index % GameNodes.projection;
-  }
-
-  static void projectBeamVertical(int index){
-    projectBeamDown(index);
-    // projectBeamUp(index);
-  }
-
-  static void projectBeamDown(int index) {
-    while (true) {
-      if (blocksBeamVertical(index)) return;
-      index -= GameNodes.area;
-      if (index < 0) return;
-      addPerceptible(index);
-    }
-  }
-
-  static void projectBeamUp(int index) {
-    while (true) {
-      index += GameNodes.area;
-      if (index >= GameNodes.total) return;
-      if (blocksBeamVertical(index)) return;
-      addPerceptible(index);
-    }
   }
 
   static bool nodeTypeBlocks(int nodeType){
