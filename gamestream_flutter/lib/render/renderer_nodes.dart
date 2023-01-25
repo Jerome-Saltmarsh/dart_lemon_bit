@@ -61,6 +61,8 @@ class RendererNodes extends Renderer {
   static var nodeTypes = GameNodes.nodeTypes;
   static var nodeOrientations = GameNodes.nodeOrientations;
 
+  static var visited2DStack = Uint16List(0);
+  static var visited2DStackIndex = 0;
   static var visited2D = <bool>[];
   static var island = <bool>[];
   static var zMin = 0;
@@ -313,13 +315,17 @@ class RendererNodes extends Renderer {
 
     if (visited2D.length != GameNodes.area) {
       visited2D = List.generate(GameNodes.area, (index) => false, growable: false);
+      visited2DStack = Uint16List(GameNodes.area);
+      visited2DStackIndex = 0;
       island = List.generate(GameNodes.area, (index) => false, growable: false);
     } else {
-      for (var i = 0; i < GameNodes.area; i++){
-        visited2D[i] = false;
-        island[i] = false;
+      for (var i = 0; i < visited2DStackIndex; i++){
+        final j = visited2DStack[i];
+        visited2D[j] = false;
+        island[j] = false;
       }
     }
+    visited2DStackIndex = 0;
 
     final playerI = (GamePlayer.indexRow * GameNodes.totalColumns) + GamePlayer.indexColumn;
     final height = GameNodes.heightMap[playerI];
@@ -339,6 +345,8 @@ class RendererNodes extends Renderer {
   static void visit2D(int i) {
      if (visited2D[i]) return;
      visited2D[i] = true;
+     visited2DStack[visited2DStackIndex] = i;
+     visited2DStackIndex++;
      if (GameNodes.heightMap[i] <= zMin) return;
      island[i] = true;
 
