@@ -47,7 +47,6 @@ class RendererNodes extends Renderer {
   static var nodesGridTotalColumnsMinusOne = 0;
   static var nodesGridTotalZMinusOne = 0;
   static var nodesPlayerColumnRow = 0;
-  // static var playerUnderRoof = false;
   static var playerProjection = 0;
 
   static var playerZ = 0;
@@ -62,35 +61,30 @@ class RendererNodes extends Renderer {
   static var nodeTypes = GameNodes.nodeTypes;
   static var nodeOrientations = GameNodes.nodeOrientations;
 
-  // GETTERS
-  static double get currentNodeRenderY => GameConvert.rowColumnZToRenderY(row, column, currentNodeZ);
-  static int get currentNodeColor => GameNodes.nodeColors[currentNodeIndex];
-
-  static int get currentNodeOrientation => nodeOrientations[currentNodeIndex];
-  static int get currentNodeWind => ServerState.windTypeAmbient.value;
-
-  static int get currentNodeVariation => GameNodes.nodeVariations[currentNodeIndex];
-
-  static int get renderNodeOrientation => nodeOrientations[currentNodeIndex];
-  static int get renderNodeWind => ServerState.windTypeAmbient.value;
-  static int get renderNodeVariation => GameNodes.nodeVariations[currentNodeIndex];
-
-  static int get renderNodeBelowIndex => currentNodeIndex - GameNodes.area;
-  static int get renderNodeBelowVariation => renderNodeBelowIndex > 0 ? GameNodes.nodeVariations[renderNodeBelowIndex] : renderNodeVariation;
-
-  static int get renderNodeBelowColor => getNodeColorAtIndex(currentNodeIndex - GameNodes.area);
-
-
-  // static var nodesPerceptible = <bool>[];
-  // static var nodesPerceptibleStack = Uint16List(100000);
-  // static var nodesPerceptibleStackIndex = 0;
-
-  // static var nodesReserved = Uint32List(0);
-
+  static var visited2D = <bool>[];
+  static var island = <bool>[];
+  static var zMin = 0;
+  static var playerInsideIsland = false;
+  static var visible3D = <bool>[];
+  static var visible3DStack = Uint16List(10000);
+  static var visible3DIndex = 0;
+  static var playerIndex = 0;
   static var transparencyGrid = <bool>[];
   static var transparencyGridStack = Uint16List(0);
   static var transparencyGridStackIndex = 0;
 
+  // GETTERS
+  static double get currentNodeRenderY => GameConvert.rowColumnZToRenderY(row, column, currentNodeZ);
+  static int get currentNodeColor => GameNodes.nodeColors[currentNodeIndex];
+  static int get currentNodeOrientation => nodeOrientations[currentNodeIndex];
+  static int get currentNodeWind => ServerState.windTypeAmbient.value;
+  static int get currentNodeVariation => GameNodes.nodeVariations[currentNodeIndex];
+  static int get renderNodeOrientation => nodeOrientations[currentNodeIndex];
+  static int get renderNodeWind => ServerState.windTypeAmbient.value;
+  static int get renderNodeVariation => GameNodes.nodeVariations[currentNodeIndex];
+  static int get renderNodeBelowIndex => currentNodeIndex - GameNodes.area;
+  static int get renderNodeBelowVariation => renderNodeBelowIndex > 0 ? GameNodes.nodeVariations[renderNodeBelowIndex] : renderNodeVariation;
+  static int get renderNodeBelowColor => getNodeColorAtIndex(currentNodeIndex - GameNodes.area);
 
   static int getNodeColorAtIndex(int index){
     if (index < 0) return GameNodes.ambient_color;
@@ -244,7 +238,6 @@ class RendererNodes extends Renderer {
     nodesTrimTop();
     trimLeft();
 
-
     currentNodeDstX = (row - column) * Node_Size_Half;
     currentNodeDstY = ((row + column) * Node_Size_Half) - (currentNodeZ * Node_Height);
     currentNodeIndex = (currentNodeZ * GameNodes.area) + (row * GameNodes.totalColumns) + column;
@@ -305,15 +298,6 @@ class RendererNodes extends Renderer {
       }
     }
   }
-
-  static var visited2D = <bool>[];
-  static var island = <bool>[];
-  static var zMin = 0;
-  static var playerInsideIsland = false;
-  static var visible3D = <bool>[];
-  static var visible3DStack = Uint16List(10000);
-  static var visible3DIndex = 0;
-  static var playerIndex = 0;
 
   static void updateHeightMapPerception() {
 
