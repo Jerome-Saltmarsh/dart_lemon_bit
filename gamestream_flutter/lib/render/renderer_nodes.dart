@@ -125,7 +125,7 @@ class RendererNodes extends Renderer {
           currentNodeWithinIsland = island[row * GameNodes.totalColumns + column];
           if (!currentNodeWithinIsland){
             renderCurrentNode();
-          } else if (visible3D[currentNodeIndex]) {
+          } else if (currentNodeZ <= playerZ || visible3D[currentNodeIndex]) {
             renderCurrentNode();
           }
         }
@@ -336,7 +336,6 @@ class RendererNodes extends Renderer {
     }
   }
 
-  final toVisit = Uint16List(100000);
   static var visited2D = <bool>[];
   static var island = <bool>[];
   static var zMin = 0;
