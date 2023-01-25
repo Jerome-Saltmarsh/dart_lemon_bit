@@ -722,7 +722,7 @@ class RendererNodes extends Renderer {
   }
 
   static bool get currentNodeTransparent {
-    if (!currentNodeWithinIsland) return false;
+    // if (!currentNodeWithinIsland) return false;
     if (currentNodeZ <= playerZ) return false;
     final currentNodeProjection = currentNodeIndex % GameNodes.projection;
     if (!transparencyGrid[currentNodeProjection]) return false;

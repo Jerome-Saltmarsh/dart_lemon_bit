@@ -2,6 +2,7 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:bleed_server/src/dark_age/dark_age_environment.dart';
+import 'package:bleed_server/src/game_physics.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_byte/byte_writer.dart';
 import 'package:lemon_math/library.dart';
@@ -631,6 +632,7 @@ abstract class Game {
         force: 4.5,
         angle: angle + pi,
       );
+      character.clampVelocity(GamePhysics.Max_Velocity);
       attackHit = true;
       for (final player in players) {
         if (!player.onScreen(performX, performY)) continue;
@@ -692,6 +694,7 @@ abstract class Game {
       force: 1.0,
       angle: angle + pi,
     );
+    character.clampVelocity(GamePhysics.Max_Velocity);
 
     spawnProjectile(
       src: character,
@@ -1593,6 +1596,8 @@ abstract class Game {
       angle: angle,
     );
 
+    target.clampVelocity(GamePhysics.Max_Velocity);
+
     customOnHitApplied(
         srcCharacter: srcCharacter,
         target: target,
@@ -1895,6 +1900,7 @@ abstract class Game {
       force: 6.0,
       angle: angle + pi,
     );
+    src.clampVelocity(GamePhysics.Max_Velocity);
     for (var i = 0; i < 5; i++) {
       spawnProjectile(
         src: src,

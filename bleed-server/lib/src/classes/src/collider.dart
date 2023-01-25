@@ -100,6 +100,12 @@ class Collider extends Position3 {
     velocityY += getOpposite(angle, force);
   }
 
+  void clampVelocity(double value){
+    assert (value > 0);
+    if (velocitySpeed <= value) return;
+    velocitySpeed = value;
+  }
+
   void applyVelocity(){
     x += velocityX;
     y += velocityY;
