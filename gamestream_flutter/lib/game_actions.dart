@@ -101,5 +101,32 @@ class GameActions {
       Engine.targetZoom = GameConfig.Zoom_Close;
     }
   }
+
+  static void createExplosion(double x, double y, double z){
+    GameState.spawnParticleLightEmissionAmbient(x: x, y: y, z: z);
+    GameAudio.explosion_grenade_04.playXYZ(x, y, z);
+    const flameSpeed = 1.0;
+    GameState.spawnParticleFire(x: x, y: y, z: z)
+      ..delay = 0
+      ..xv = flameSpeed
+      ..yv = flameSpeed;
+    GameState.spawnParticleFire(x: x, y: y, z: z)
+      ..delay = 0
+      ..xv = -flameSpeed
+      ..yv = flameSpeed;
+    GameState.spawnParticleFire(x: x, y: y, z: z)
+      ..delay = 0
+      ..xv = flameSpeed
+      ..yv = -flameSpeed;
+    GameState.spawnParticleFire(x: x, y: y, z: z)
+      ..delay = 0
+      ..xv = -flameSpeed
+      ..yv = -flameSpeed;
+    GameState.spawnParticleFire(x: x, y: y, z: z)..delay = 0;
+    GameState.spawnParticleFire(x: x, y: y, z: z)..delay = 2;
+    GameState.spawnParticleFire(x: x, y: y, z: z)..delay = 4;
+    GameState.spawnParticleFire(x: x, y: y, z: z)..delay = 6;
+
+  }
 }
 

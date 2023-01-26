@@ -643,7 +643,7 @@ abstract class Game {
             z: performZ,
             angle: angle,
         );
-        player.writeByte(nodeType);
+        // player.writeByte(nodeType);
       }
     }
 
@@ -949,6 +949,10 @@ abstract class Game {
   }){
     dispatchV3(GameEventType.Explosion, target);
     final length = characters.length;
+
+    if (scene.inboundsV3(target)) {
+        dispatch(GameEventType.Node_Struck, target.x, target.y, target.z);
+    }
 
     for (final gameObject in gameObjects) {
         if (!gameObject.active) continue;
@@ -1368,7 +1372,6 @@ abstract class Game {
             z: projectile.z,
             angle: velocityAngle,
           );
-          player.writeByte(nodeType);
         }
       }
     }

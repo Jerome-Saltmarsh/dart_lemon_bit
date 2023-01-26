@@ -87,10 +87,9 @@ class ClientState {
     GameNodes.resetNodeColorsToAmbient();
   }
 
-  static void updateActiveParticles(){
+  static void countTotalActiveParticles(){
     totalActiveParticles = 0;
-    ClientState.totalParticles = particles.length;
-    final totalParticles = ClientState.totalParticles;
+    totalParticles = particles.length;
     for (; totalActiveParticles < totalParticles; totalActiveParticles++){
       if (!particles[totalActiveParticles].active) break;
     }
@@ -98,7 +97,7 @@ class ClientState {
 
   static void sortParticles() {
     sortParticlesActive();
-    updateActiveParticles();
+    countTotalActiveParticles();
 
     if (totalActiveParticles == 0) return;
 
@@ -183,22 +182,10 @@ class ClientState {
   }
 
   static void applyEmissionsParticles() {
-    //   for (var i = 0; i < totalActiveParticles; i++){
-    //     final particle = particles[i];
-    //     if (!particle.emitsLight) continue;
-    //     GameNodes.emitLightDynamic(
-    //       index: particle.nodeIndex,
-    //       hue: particle.lightHue,
-    //       saturation: particle.lightSaturation,
-    //       value: particle.lightValue,
-    //       alpha: particle.alpha,
-    //       strength: particle.strength,
-    //     );
-    //   }
-    // }
-
-    for (var i = 0; i < totalActiveParticles; i++) {
+    final length = particles.length;
+    for (var i = 0; i < length; i++) {
       final particle = particles[i];
+      if (!particle.active) continue;
       if (particle.type != ParticleType.Light_Emission) continue;
       GameNodes.emitLightDynamic(
         index: particle.nodeIndex,

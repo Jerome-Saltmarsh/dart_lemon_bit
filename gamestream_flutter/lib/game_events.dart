@@ -97,29 +97,7 @@ class GameEvents {
         GameAudio.teleport.playXYZ(x, y, z);
         return;
       case GameEventType.Explosion:
-        GameState.spawnParticleLightEmissionAmbient(x: x, y: y, z: z);
-        GameAudio.explosion_grenade_04.playXYZ(x, y, z);
-        const flameSpeed = 1.0;
-        GameState.spawnParticleFire(x: x, y: y, z: z)
-          ..delay = 0
-          ..xv = flameSpeed
-          ..yv = flameSpeed;
-        GameState.spawnParticleFire(x: x, y: y, z: z)
-          ..delay = 0
-          ..xv = -flameSpeed
-          ..yv = flameSpeed;
-        GameState.spawnParticleFire(x: x, y: y, z: z)
-          ..delay = 0
-          ..xv = flameSpeed
-          ..yv = -flameSpeed;
-        GameState.spawnParticleFire(x: x, y: y, z: z)
-          ..delay = 0
-          ..xv = -flameSpeed
-          ..yv = -flameSpeed;
-        GameState.spawnParticleFire(x: x, y: y, z: z)..delay = 0;
-        GameState.spawnParticleFire(x: x, y: y, z: z)..delay = 2;
-        GameState.spawnParticleFire(x: x, y: y, z: z)..delay = 4;
-        GameState.spawnParticleFire(x: x, y: y, z: z)..delay = 6;
+        onGameEventExplosion(x, y, z);
         return;
       case GameEventType.AI_Target_Acquired:
         final characterType = serverResponseReader.readByte();
@@ -129,15 +107,17 @@ class GameEvents {
             break;
         }
         break;
+
       case GameEventType.Node_Set:
-        return onNodeSet(x, y, z);
+        onNodeSet(x, y, z);
+        return;
       case GameEventType.GameObject_Timeout:
         GameSpawn.spawnBubbles(x, y, z);
         break;
       case GameEventType.Node_Struck:
-        final nodeType = serverResponseReader.readByte();
-        onNodeStruck(nodeType, x, y, z);
+        onNodeStruck(x, y, z);
         break;
+
       case GameEventType.Node_Deleted:
         GameAudio.hover_over_button_sound_30.playXYZ(x, y, z);
         break;
@@ -230,12 +210,19 @@ class GameEvents {
     }
   }
 
+  static void onGameEventExplosion(double x, double y, double z) {
+    GameActions.createExplosion(x, y, z);
+  }
 
   static void onNodeSet(double x, double y, double z) {
     GameAudio.hover_over_button_sound_43.playXYZ(x, y, z);
   }
 
-  static void onNodeStruck(int nodeType, double x, double y, double z) {
+  static void onNodeStruck(double x, double y, double z) {
+    if (!GameQueries.inBounds(x, y, z)) return;
+
+    final nodeIndex = GameNodes.getIndexXYZ(x, y, z);
+    final nodeType = GameNodes.nodeTypes[nodeIndex];
 
     if (NodeType.isMaterialWood(nodeType)){
       GameAudio.material_struck_wood.playXYZ(x, y, z);
@@ -259,15 +246,7 @@ class GameEvents {
   }
 
   static void onGameEventAttackPerformedBlade(double x, double y, double z, double angle) {
-    // GameState.spawnParticleStrikeBlade(x: x, y: y, z: z, angle: angle);
     GameAudio.swing_sword.playXYZ(x, y, z);
-    // GameState.spawnParticleBubbles(
-    //   count: 3,
-    //   x: x,
-    //   y: y,
-    //   z: z,
-    //   angle: angle,
-    // );
   }
 
   static void onAttackPerformedUnarmed(double x, double y, double z, double angle) {

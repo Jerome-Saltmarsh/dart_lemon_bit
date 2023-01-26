@@ -108,6 +108,13 @@ class Scene {
           ? nodeTypes[getNodeIndexXYZ(x, y, z)]
           : NodeType.Boundary;
 
+  int getNodeIndexV3(Position3 position3) =>
+      getNodeIndexXYZ(
+        position3.z,
+        position3.x,
+        position3.y,
+      );
+
   int getNodeIndexXYZ(double x, double y, double z) =>
     getNodeIndex(
         z ~/ Node_Size_Half,

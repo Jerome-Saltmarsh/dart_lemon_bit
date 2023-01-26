@@ -47,12 +47,9 @@ class GameNodes {
   static var nodeOrientations = Uint8List(0);
   static var nodeTypes = Uint8List(0);
   static var nodeVariations = Uint8List(0);
-  // static var nodeVisible = Uint8List(0);
-  // static var nodeVisibleIndex = Uint16List(0);
   static var nodeDynamicIndex = Uint16List(0);
   static var nodeWind = Uint8List(0);
   static var miniMap = Uint8List(0);
-  // static var visibleIndex = 0;
   static var dynamicIndex = -1;
   static var total = 0;
   static var area = 0;
@@ -95,9 +92,11 @@ class GameNodes {
     }
   }
 
-  static int getIndex(int row, int column, int z){
-    return (row * totalColumns) + column + (z * GameNodes.area);
-  }
+  static int getIndexXYZ(double x, double y, double z) =>
+      getIndex(x ~/ Node_Size, y ~/ Node_Size, z ~/ Node_Size_Half);
+
+  static int getIndex(int row, int column, int z) =>
+      (row * totalColumns) + column + (z * GameNodes.area);
 
   static void generateMiniMap(){
       if (miniMap.length != area){
