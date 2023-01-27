@@ -228,7 +228,7 @@ class AtlasItems {
 
   static double getAnchorY(int itemType) => const <int, double>{
     ItemType.GameObjects_Barrel_Explosive: 0.75,
-    ItemType.GameObjects_Barrel_Purple: 0.75,
+    ItemType.GameObjects_Barrel_Purple: 0.65,
     ItemType.GameObjects_Barrel_Flaming: 0.75,
     ItemType.GameObjects_Crate_Wooden: 0.61,
     ItemType.GameObjects_Vending_Machine: 0.6,

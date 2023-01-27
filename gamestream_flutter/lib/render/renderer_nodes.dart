@@ -551,7 +551,7 @@ class RendererNodes extends Renderer {
   }
 
   static bool assertOnScreen(){
-    if (!ClientState.debugVisible.value) return true;
+    if (!ClientState.debugMode.value) return true;
     if (currentNodeDstX < screenLeft){
       offscreenNodesLeft++;
       return true;

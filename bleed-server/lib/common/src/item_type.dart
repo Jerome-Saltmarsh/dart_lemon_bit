@@ -224,6 +224,7 @@ class ItemType {
     GameObjects_Bed: 25,
     GameObjects_Car: 25,
     GameObjects_Crate_Wooden: 18,
+    GameObjects_Barrel_Purple: 18,
   }[value] ?? 15;
 
   static bool isCollidable(int value) =>

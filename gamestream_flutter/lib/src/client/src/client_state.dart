@@ -14,7 +14,7 @@ class ClientState {
   static final hoverIndex = Watch(-1);
   static final hoverDialogType = Watch(DialogType.None);
   static final windowVisibleAttributes = Watch(false, onChanged: ClientEvents.onChangedAttributesWindowVisible);
-  static final debugVisible = Watch(false);
+  static final debugMode = Watch(false);
   static final Map_Visible = WatchBool(true);
   static final touchButtonSide = Watch(TouchButtonSide.Right);
   static final rendersSinceUpdate = Watch(0, onChanged: GameEvents.onChangedRendersSinceUpdate);

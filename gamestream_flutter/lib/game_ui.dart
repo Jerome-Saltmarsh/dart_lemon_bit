@@ -43,7 +43,7 @@ class GameUI {
         buildWatchBool(GameUI.mapVisible, buildMiniMap),
         WatchBuilder(ClientState.edit, buildPlayMode),
         WatchBuilder(GameIO.inputMode, buildStackInputMode),
-        buildWatchBool(ClientState.debugVisible, GameDebug.buildStackDebug),
+        buildWatchBool(ClientState.debugMode, GameDebug.buildStackDebug),
         buildPositionedAreaType(),
         buildPositionedMessageStatus(),
         buildWatchGameStatus(),

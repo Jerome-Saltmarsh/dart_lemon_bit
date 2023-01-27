@@ -92,7 +92,7 @@ class GameDebug {
                       ),
                     ),
                     height24,
-                    text("close x", onPressed: () => ClientState.debugVisible.value = false, bold: true),
+                    text("close x", onPressed: () => ClientState.debugMode.value = false, bold: true),
                   ],
                 ),
               )),

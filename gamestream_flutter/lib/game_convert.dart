@@ -33,3 +33,6 @@ class GameConvert {
   static double getRenderX(double x, double y, double z) => (x - y) * 0.5;
   static double getRenderY(double x, double y, double z) => ((y + x) * 0.5) - z;
 }
+
+double renderX(double x, double y, double z) => (x - y) * 0.5;
+double renderY(double x, double y, double z) => ((y + x) * 0.5) - z;
