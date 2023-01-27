@@ -495,7 +495,7 @@ abstract class Game {
         ..physical = false
         ..movable = true
         ..quantity = 1
-        ..airborn = true
+        ..friction = 0.99
         ..velocityZ = velocityZ
         ..owner = player
         ..damage = 15;
@@ -731,6 +731,13 @@ abstract class Game {
     customOnColliderActivated(collider);
   }
 
+  void onGridChanged() {
+    scene.refreshGridMetrics();
+    for (final player in players) {
+      player.writeGrid();
+    }
+  }
+
   void deactivateCollider(Collider collider){
      if (!collider.active) return;
      collider.active = false;
@@ -749,13 +756,6 @@ abstract class Game {
      }
 
      customOnColliderDeactivated(collider);
-  }
-
-  void onGridChanged() {
-    scene.refreshGridMetrics();
-    for (final player in players) {
-      player.writeGrid();
-    }
   }
 
   void dispatchGameEventCharacterDeath(Character character){
@@ -953,6 +953,7 @@ abstract class Game {
     double radius = 100.0,
     int damage = 5,
   }){
+    if (!scene.inboundsV3(target)) return;
     dispatchV3(GameEventType.Explosion, target);
     final length = characters.length;
 
@@ -1757,10 +1758,6 @@ abstract class Game {
         break;
       case CharacterState.Running:
         character.applyForce(force: 1.0, angle: character.faceAngle);
-        if (character.airborn){
-           character.clampVelocity(GamePhysics.Max_Velocity);
-        }
-
         if (character.nextFootstep++ >= 10) {
           dispatch(
             GameEventType.Footstep,
@@ -2090,6 +2087,7 @@ abstract class Game {
        gameObject.velocityZ = 0;
        gameObject.type = type;
        gameObject.active = true;
+       gameObject.friction = GamePhysics.Friction;
        return gameObject;
     }
     final instance = GameObject(
@@ -2101,6 +2099,7 @@ abstract class Game {
     instance.collidable = ItemType.isCollidable(type);
     instance.physical = ItemType.isPhysical(type);
     instance.movable = instance.physical;
+    instance.friction = GamePhysics.Friction;
     gameObjects.add(instance);
 
     return instance;
@@ -2360,7 +2359,6 @@ abstract class Game {
     if (nodeBottomOrientation == NodeOrientation.Solid){
       collider.z = ((bottomZ ~/ Node_Height) * Node_Height) + Node_Height;
       collider.velocityZ = 0;
-      collider.airborn = false;
       return;
     }
 
@@ -2369,8 +2367,7 @@ abstract class Game {
       final percX = ((collider.x % Node_Size) / Node_Size);
       final percY = ((collider.y % Node_Size) / Node_Size);
       final nodeTop = bottom + (NodeOrientation.getGradient(nodeBottomOrientation, percX, percY) * Node_Height);
-      collider.airborn = nodeTop <= bottomZ;
-      if (!collider.airborn){
+      if (nodeTop > bottomZ){
         collider.z = nodeTop;
         collider.velocityZ = 0;
       }
@@ -2383,8 +2380,6 @@ abstract class Game {
       }
       return;
     }
-
-    collider.airborn = true;
   }
 
   void setNode({

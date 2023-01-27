@@ -106,28 +106,49 @@ class GameActions {
     GameState.spawnParticleLightEmissionAmbient(x: x, y: y, z: z);
     GameAudio.explosion_grenade_04.playXYZ(x, y, z);
     const flameSpeed = 1.0;
+    const flameSpeed2 = 2.0;
     GameState.spawnParticleFire(x: x, y: y, z: z)
       ..delay = 0
       ..xv = flameSpeed
       ..yv = flameSpeed;
     GameState.spawnParticleFire(x: x, y: y, z: z)
+      ..delay = 2
+      ..xv = flameSpeed2
+      ..yv = flameSpeed2;
+
+    GameState.spawnParticleFire(x: x, y: y, z: z)
       ..delay = 0
       ..xv = -flameSpeed
       ..yv = flameSpeed;
+    GameState.spawnParticleFire(x: x, y: y, z: z)
+      ..delay = 2
+      ..xv = -flameSpeed2
+      ..yv = flameSpeed2;
+
     GameState.spawnParticleFire(x: x, y: y, z: z)
       ..delay = 0
       ..xv = flameSpeed
       ..yv = -flameSpeed;
     GameState.spawnParticleFire(x: x, y: y, z: z)
+      ..delay = 2
+      ..xv = flameSpeed2
+      ..yv = -flameSpeed2;
+
+    GameState.spawnParticleFire(x: x, y: y, z: z)
       ..delay = 0
       ..xv = -flameSpeed
       ..yv = -flameSpeed;
+    GameState.spawnParticleFire(x: x, y: y, z: z)
+      ..delay = 2
+      ..xv = -flameSpeed2
+      ..yv = -flameSpeed2;
+
     GameState.spawnParticleFire(x: x, y: y, z: z)..delay = 0;
     GameState.spawnParticleFire(x: x, y: y, z: z)..delay = 2;
     GameState.spawnParticleFire(x: x, y: y, z: z)..delay = 4;
     GameState.spawnParticleFire(x: x, y: y, z: z)..delay = 6;
 
-    for (var i = 0; i < 5; i++) {
+    for (var i = 0; i < 7; i++) {
       GameState.spawnParticle(
         type: ParticleType.Fire,
         x: x,
@@ -146,7 +167,7 @@ class GameActions {
       );
     }
 
-    for (var i = 0; i < 6; i++) {
+    for (var i = 0; i < 7; i++) {
       const r = 5.0;
       GameState.spawnParticleSmoke(
           x: x + giveOrTake(r),
