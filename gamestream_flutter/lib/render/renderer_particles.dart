@@ -173,17 +173,7 @@ class RendererParticles extends Renderer {
           );
           break;
         case ParticleType.Shell:
-          Engine.renderSprite(
-            image: GameImages.atlas_particles,
-            dstX: dstX,
-            dstY: dstY,
-            srcX: particle.direction * 32,
-            srcY: 512,
-            srcWidth: 32,
-            srcHeight: 32,
-            scale: 0.25,
-            color: GameState.getV3RenderColor(particle),
-          );
+          renderParticleShell(dstX, dstY);
           break;
         case ParticleType.Fire_Purple:
           if (particle.frame > 24 ) {
@@ -340,6 +330,20 @@ class RendererParticles extends Renderer {
           break;
       }
     }
+
+  void renderParticleShell(double dstX, double dstY) {
+    Engine.renderSprite(
+      image: GameImages.atlas_particles,
+      dstX: dstX,
+      dstY: dstY,
+      srcX: particle.direction * 32,
+      srcY: 522,
+      srcWidth: 32,
+      srcHeight: 16,
+      scale: 0.25,
+      color: GameState.getV3RenderColor(particle),
+    );
+  }
 
   void renderParticleSmoke() {
     casteShadowDownV3(particle);
