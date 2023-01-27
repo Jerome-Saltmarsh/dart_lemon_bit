@@ -117,7 +117,6 @@ class GameEvents {
       case GameEventType.Node_Struck:
         onNodeStruck(x, y, z);
         break;
-
       case GameEventType.Node_Deleted:
         GameAudio.hover_over_button_sound_30.playXYZ(x, y, z);
         break;

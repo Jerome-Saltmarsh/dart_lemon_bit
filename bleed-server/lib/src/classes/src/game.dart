@@ -495,6 +495,7 @@ abstract class Game {
         ..damage = 15;
 
     performJob(50, (){
+      print("job finished: explode grenade");
       deactivateCollider(instance);
       final owner = instance.owner;
       if (owner == null) return;
@@ -643,7 +644,6 @@ abstract class Game {
             z: performZ,
             angle: angle,
         );
-        // player.writeByte(nodeType);
       }
     }
 
@@ -816,6 +816,7 @@ abstract class Game {
       if (job.timer > 0) continue;
       job.timer = timer;
       job.action = action;
+      return;
     }
     final job = GameJob(timer, action);
     jobs.add(job);
@@ -947,11 +948,17 @@ abstract class Game {
     double radius = 100.0,
     int damage = 5,
   }){
+    print("createExplosion");
     dispatchV3(GameEventType.Explosion, target);
     final length = characters.length;
 
-    if (scene.inboundsV3(target)) {
-        dispatch(GameEventType.Node_Struck, target.x, target.y, target.z);
+    if (scene.inboundsXYZ(target.x, target.y, target.z - Node_Height_Half)) {
+        dispatch(
+            GameEventType.Node_Struck,
+            target.x,
+            target.y,
+            target.z - Node_Height_Half,
+        );
     }
 
     for (final gameObject in gameObjects) {

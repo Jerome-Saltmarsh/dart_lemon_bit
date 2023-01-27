@@ -103,6 +103,7 @@ class GameActions {
   }
 
   static void createExplosion(double x, double y, double z){
+    print('createExplosion()');
     GameState.spawnParticleLightEmissionAmbient(x: x, y: y, z: z);
     GameAudio.explosion_grenade_04.playXYZ(x, y, z);
     const flameSpeed = 1.0;
@@ -127,6 +128,36 @@ class GameActions {
     GameState.spawnParticleFire(x: x, y: y, z: z)..delay = 4;
     GameState.spawnParticleFire(x: x, y: y, z: z)..delay = 6;
 
+    for (var i = 0; i < 5; i++) {
+      GameState.spawnParticle(
+        type: ParticleType.Fire,
+        x: x,
+        y: y,
+        z: z,
+        angle: randomAngle(),
+        speed: 4.5,
+        zv: randomBetween(2, 3),
+        weight: 10,
+        duration: 15,
+        scale: 0.5,
+        scaleV: 0,
+        rotation: 0,
+        bounciness: 0,
+        checkCollision: false,
+      );
+    }
+
+    for (var i = 0; i < 6; i++) {
+      const r = 5.0;
+      GameState.spawnParticleSmoke(
+          x: x + giveOrTake(r),
+          y: y + giveOrTake(r),
+          z: z+ giveOrTake(r),
+      )
+        ..delay = i
+        ..zv = 1.0
+        ..setSpeed(randomAngle(), giveOrTake(3));
+    }
   }
 }
 

@@ -324,6 +324,17 @@ class RendererParticles extends Renderer {
         case ParticleType.Strike_Bullet_Light:
           renderParticleStrikeBulletLight();
           break;
+        // case ParticleType.Flame_Pixel:
+        //   Engine.renderSprite(
+        //       image: GameImages.atlas_gameobjects,
+        //       srcX: srcX,
+        //       srcY: srcY,
+        //       srcWidth: srcWidth,
+        //       srcHeight: srcHeight,
+        //       dstX: dstX,
+        //       dstY: dstY,
+        //   )
+        //   break;
         default:
           break;
       }

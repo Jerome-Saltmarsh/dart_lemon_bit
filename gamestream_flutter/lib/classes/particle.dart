@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:bleed_common/library.dart';
+import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_math/library.dart';
 
 import 'vector3.dart';
@@ -61,6 +62,11 @@ class Particle extends Vector3 {
   bool get active => duration > 0;
   int get direction => Direction.fromRadian(rotation);
   double get duration01 => duration / durationTotal;
+
+  void setSpeed(double angle, double speed){
+    xv = Engine.calculateAdjacent(angle, speed);
+    yv = Engine.calculateOpposite(angle, speed);
+  }
 
   void deactivate(){
     duration = -1;
