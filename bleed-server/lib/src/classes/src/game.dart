@@ -2353,7 +2353,7 @@ abstract class Game {
       return;
     }
 
-    final bottomZ = collider.z;
+    final bottomZ = collider.z + 3;
     final nodeBottomIndex = scene.getNodeIndexXYZ(collider.x, collider.y, bottomZ);
     final nodeBottomOrientation = scene.nodeOrientations[nodeBottomIndex];
     final nodeBottomType = scene.nodeTypes[nodeBottomIndex];

@@ -40,7 +40,6 @@ class GameConstants {
   static const Sprite_Height_Padded_21 = Sprite_Height_Padded * 21;
 
   static const Sprite_Anchor_Y = 0.3;
-  static const Frames_Per_Particle_Animation_Frame = 2;
+  static const Frames_Per_Particle_Animation_Frame = 3;
   static const Frames_Per_Lighting_Update = 15;
-
 }
