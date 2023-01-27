@@ -105,43 +105,20 @@ class GameActions {
   static void createExplosion(double x, double y, double z){
     GameState.spawnParticleLightEmissionAmbient(x: x, y: y, z: z);
     GameAudio.explosion_grenade_04.playXYZ(x, y, z);
-    const flameSpeed = 1.0;
-    const flameSpeed2 = 2.0;
-    GameState.spawnParticleFire(x: x, y: y, z: z)
-      ..delay = 0
-      ..xv = flameSpeed
-      ..yv = flameSpeed;
-    GameState.spawnParticleFire(x: x, y: y, z: z)
-      ..delay = 2
-      ..xv = flameSpeed2
-      ..yv = flameSpeed2;
 
-    GameState.spawnParticleFire(x: x, y: y, z: z)
-      ..delay = 0
-      ..xv = -flameSpeed
-      ..yv = flameSpeed;
-    GameState.spawnParticleFire(x: x, y: y, z: z)
-      ..delay = 2
-      ..xv = -flameSpeed2
-      ..yv = flameSpeed2;
+    for (var i = 0; i <= 8; i++){
+      final angle = piQuarter * i;
+      final speed = randomBetween(0.5, 3.5);
 
-    GameState.spawnParticleFire(x: x, y: y, z: z)
-      ..delay = 0
-      ..xv = flameSpeed
-      ..yv = -flameSpeed;
-    GameState.spawnParticleFire(x: x, y: y, z: z)
-      ..delay = 2
-      ..xv = flameSpeed2
-      ..yv = -flameSpeed2;
-
-    GameState.spawnParticleFire(x: x, y: y, z: z)
-      ..delay = 0
-      ..xv = -flameSpeed
-      ..yv = -flameSpeed;
-    GameState.spawnParticleFire(x: x, y: y, z: z)
-      ..delay = 2
-      ..xv = -flameSpeed2
-      ..yv = -flameSpeed2;
+      GameState.spawnParticleFire(
+          x: x,
+          y: y,
+          z: z,
+      )
+      ..xv = getAdjacent(angle, speed)
+      ..yv = getOpposite(angle, speed)
+      ;
+    }
 
     GameState.spawnParticleFire(x: x, y: y, z: z)..delay = 0;
     GameState.spawnParticleFire(x: x, y: y, z: z)..delay = 2;
