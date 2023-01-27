@@ -14,6 +14,7 @@ class Collider extends Position3 {
   var velocityY = 0.0;
   var velocityZ = 0.0;
   var friction = GamePhysics.Friction;
+  var bounce = false;
   var team = 0;
   var radius = 0.0;
   /// If false this object is completely ignored by collision detection

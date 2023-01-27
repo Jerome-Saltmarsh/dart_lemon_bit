@@ -495,7 +495,8 @@ abstract class Game {
         ..physical = false
         ..movable = true
         ..quantity = 1
-        ..friction = 0.99
+        ..friction = 0.985
+        ..bounce = true
         ..velocityZ = velocityZ
         ..owner = player
         ..damage = 15;
@@ -2088,6 +2089,7 @@ abstract class Game {
        gameObject.type = type;
        gameObject.active = true;
        gameObject.friction = GamePhysics.Friction;
+       gameObject.bounce = false;
        return gameObject;
     }
     final instance = GameObject(
@@ -2100,8 +2102,8 @@ abstract class Game {
     instance.physical = ItemType.isPhysical(type);
     instance.movable = instance.physical;
     instance.friction = GamePhysics.Friction;
+    instance.bounce = false;
     gameObjects.add(instance);
-
     return instance;
   }
 
@@ -2358,7 +2360,9 @@ abstract class Game {
 
     if (nodeBottomOrientation == NodeOrientation.Solid){
       collider.z = ((bottomZ ~/ Node_Height) * Node_Height) + Node_Height;
-      collider.velocityZ = 0;
+      if (collider.bounce && collider.velocityZ < 0){
+        collider.velocityZ = -collider.velocityZ * GamePhysics.Bounce_Friction;
+      }
       return;
     }
 
@@ -2369,7 +2373,9 @@ abstract class Game {
       final nodeTop = bottom + (NodeOrientation.getGradient(nodeBottomOrientation, percX, percY) * Node_Height);
       if (nodeTop > bottomZ){
         collider.z = nodeTop;
-        collider.velocityZ = 0;
+        if (collider.bounce && collider.velocityZ < 0){
+          collider.velocityZ = -collider.velocityZ * GamePhysics.Bounce_Friction;
+        }
       }
       return;
     }
