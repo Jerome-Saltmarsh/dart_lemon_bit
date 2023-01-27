@@ -1204,6 +1204,7 @@ class GameState {
         final projectile = ServerState.projectiles[i];
         if (projectile.type == ProjectileType.Rocket) {
           spawnParticleSmoke(x: projectile.x, y: projectile.y, z: projectile.z);
+          ServerState.projectShadow(projectile);
           continue;
         }
         if (projectile.type == ProjectileType.Fireball) {

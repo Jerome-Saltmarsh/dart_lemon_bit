@@ -255,7 +255,7 @@ class GameAudio {
     return convertDistanceToVolume(distance, maxDistance: maxDistance * 0.25);
   }
 
-  static void playAudioSingle(AudioSingle audioSingle, double x, double y, double z, {double maxDistance = 200}){
+  static void playAudioSingle(AudioSingle audioSingle, double x, double y, double z, {double maxDistance = 400}){
     // TODO calculate from screen center instead
     final distanceFromPlayer = GamePlayer.position.distance3(x, y, z);
     final distanceVolume = convertDistanceToVolume(
