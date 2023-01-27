@@ -9,6 +9,13 @@ ctrl + w:   minimal mode
 [TODO]
 
 
+27.01.2023
+[x] fixed throw grenade
+
+26.01.2023
+[x] clamp velocity after apply force 
+[x] fixed node visibility algorithm
+
 21.01.2023
 [x] fix particle blood direction
 [x] reload with key code R
