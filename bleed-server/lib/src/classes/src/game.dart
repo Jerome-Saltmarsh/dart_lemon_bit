@@ -2362,6 +2362,7 @@ abstract class Game {
       collider.z = ((bottomZ ~/ Node_Height) * Node_Height) + Node_Height;
       if (collider.bounce && collider.velocityZ < 0){
         collider.velocityZ = -collider.velocityZ * GamePhysics.Bounce_Friction;
+        dispatchV3(GameEventType.Item_Bounce, collider, angle: -collider.velocityZ);
       }
       return;
     }
@@ -2375,6 +2376,7 @@ abstract class Game {
         collider.z = nodeTop;
         if (collider.bounce && collider.velocityZ < 0){
           collider.velocityZ = -collider.velocityZ * GamePhysics.Bounce_Friction;
+          dispatchV3(GameEventType.Item_Bounce, collider, angle: -collider.velocityZ);
         }
       }
       return;

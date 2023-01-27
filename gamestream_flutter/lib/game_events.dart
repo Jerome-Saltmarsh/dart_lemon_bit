@@ -131,6 +131,9 @@ class GameEvents {
       case GameEventType.Splash:
         onSplash(x, y, z);
         return;
+      case GameEventType.Item_Bounce:
+        GameAudio.grenade_bounce.playXYZ(x, y, z);
+        return;
       case GameEventType.Spawn_Dust_Cloud:
         break;
       case GameEventType.Player_Hit:

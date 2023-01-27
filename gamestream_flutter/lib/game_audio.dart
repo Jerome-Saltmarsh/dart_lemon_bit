@@ -78,6 +78,7 @@ class GameAudio {
   static final bow_draw = AudioSingle(name: 'bow-draw', volume: 0.5);
   static final bow_release = AudioSingle(name: 'bow-release', volume: 0.5);
   static final arrow_impact = AudioSingle(name: 'arrow-impact', volume: 0.5);
+  static final grenade_bounce = AudioSingle(name: 'grenade-bounce', volume: 0.5);
   static final arrow_flying_past_6 = AudioSingle(name: 'arrow-flying-past-6', volume: 0.5);
   static final notification_sound_10 = AudioSingle(name: 'notification-sound-10', volume: 0.5);
   static final notification_sound_12 = AudioSingle(name: 'notification-sound-12', volume: 0.5);
