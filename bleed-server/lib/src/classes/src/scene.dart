@@ -104,7 +104,7 @@ class Scene {
   }
 
   int getNodeTypeXYZ(double x, double y, double z) =>
-      getNodeInBoundsXYZ(x, y, z)
+      isInboundXYZ(x, y, z)
           ? nodeTypes[getNodeIndexXYZ(x, y, z)]
           : NodeType.Boundary;
 
@@ -137,7 +137,10 @@ class Scene {
      return nodeOrientations[getNodeIndexXYZ(x, y, z)];
   }
 
-  bool getNodeInBoundsXYZ(double x, double y, double z) =>
+  bool isInboundV3(Position3 pos ) =>
+    isInboundXYZ(pos.x, pos.y, pos.z);
+
+  bool isInboundXYZ(double x, double y, double z) =>
     z >= 0 &&
     x >= 0 &&
     y >= 0 &&

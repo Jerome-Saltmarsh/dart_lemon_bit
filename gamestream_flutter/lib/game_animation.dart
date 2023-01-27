@@ -22,7 +22,7 @@ class GameAnimation {
   static var _next = 0;
 
   static void updateAnimationFrame() {
-    if (_next++ < 4) return;
+    if (_next++ < 3) return;
     _next = 0;
     animationFrame++;
     animationFrame6++;
