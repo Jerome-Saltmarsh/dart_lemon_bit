@@ -103,7 +103,6 @@ class GameActions {
   }
 
   static void createExplosion(double x, double y, double z){
-    print('createExplosion()');
     GameState.spawnParticleLightEmissionAmbient(x: x, y: y, z: z);
     GameAudio.explosion_grenade_04.playXYZ(x, y, z);
     const flameSpeed = 1.0;
@@ -153,9 +152,10 @@ class GameActions {
           x: x + giveOrTake(r),
           y: y + giveOrTake(r),
           z: z+ giveOrTake(r),
+          duration: 60,
       )
         ..delay = i
-        ..zv = 1.0
+        ..zv = 0.75
         ..setSpeed(randomAngle(), giveOrTake(3));
     }
   }
