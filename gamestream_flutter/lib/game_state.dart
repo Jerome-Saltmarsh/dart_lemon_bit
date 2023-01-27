@@ -7,7 +7,7 @@ import 'library.dart';
 
 
 class GameState {
-  static final particleEmitters = <ParticleEmitter>[];
+  // static final particleEmitters = <ParticleEmitter>[];
   static final particleOverflow = Particle();
 
   static var nextParticleFrame = 0;
@@ -222,7 +222,7 @@ class GameState {
     ServerState.totalNpcs = 0;
     ServerState.interactMode.value = InteractMode.None;
     ClientState.particles.clear();
-    particleEmitters.clear();
+    // particleEmitters.clear();
     Engine.zoom = 1;
     Engine.redrawCanvas();
   }
@@ -1146,7 +1146,7 @@ class GameState {
 
   static void update() {
     GameAnimation.updateAnimationFrame();
-    // updateParticleEmitters();
+    updateParticleEmitters();
     updateProjectiles();
     ServerState.updateGameObjects();
     GameAudio.update();
@@ -1178,15 +1178,15 @@ class GameState {
   static var nextEmissionSmoke = 0;
 
     static void updateParticleEmitters(){
-      for (final emitter in particleEmitters) {
-        if (emitter.next-- > 0) continue;
-        emitter.next = emitter.rate;
-        final particle = ClientState.getInstanceParticle();
-        particle.x = emitter.x;
-        particle.y = emitter.y;
-        particle.z = emitter.z;
-        emitter.emit(particle);
-      }
+      // for (final emitter in particleEmitters) {
+      //   if (emitter.next-- > 0) continue;
+      //   emitter.next = emitter.rate;
+      //   final particle = ClientState.getInstanceParticle();
+      //   particle.x = emitter.x;
+      //   particle.y = emitter.y;
+      //   particle.z = emitter.z;
+      //   emitter.emit(particle);
+      // }
 
       nextEmissionSmoke--;
       if (nextEmissionSmoke > 0) return;
