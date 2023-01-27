@@ -501,7 +501,7 @@ abstract class Game {
         ..owner = player
         ..damage = 15;
 
-    performJob(50, (){
+    performJob(GameSettings.Grenade_Cook_Duration, (){
       deactivateCollider(instance);
       final owner = instance.owner;
       if (owner == null) return;
