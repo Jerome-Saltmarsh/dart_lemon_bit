@@ -7,16 +7,16 @@ class ProjectileType {
    static const Wave = 4;
    static const Rocket = 5;
 
-   static double getSpeed(int type) => {
+   static double getSpeed(int type) => const {
       Arrow: 5.0,
       Orb: 4.5,
       Fireball: 4.5,
       Bullet: 7.0,
       Wave: 6.0,
-      Rocket: 2.5,
+      Rocket: 4.0,
    }[type] ?? 0;
 
-   static double getRadius(int type) => {
+   static double getRadius(int type) => const {
       Arrow    : 10.0,
       Orb      : 10.0,
       Fireball : 10.0,

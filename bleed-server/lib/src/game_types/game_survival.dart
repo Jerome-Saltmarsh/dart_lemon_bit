@@ -45,6 +45,8 @@ class GameSurvival extends Game {
     player.inventoryAdd(itemType: ItemType.Legs_Green);
     player.inventoryAdd(itemType: ItemType.Legs_Brown);
     player.inventoryAdd(itemType: ItemType.Legs_White);
+    player.inventoryAdd(itemType: ItemType.Weapon_Special_Bazooka);
+    player.inventoryAddMax(itemType: ItemType.Resource_Rocket);
     player.bodyType = getRandomStartingShirt();
     player.legsType = getRandomStartingLegs();
     player.headType = ItemType.Empty;

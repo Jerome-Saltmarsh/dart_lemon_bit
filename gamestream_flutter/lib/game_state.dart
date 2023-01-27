@@ -1201,12 +1201,21 @@ class GameState {
     static void updateProjectiles() {
       for (var i = 0; i < ServerState.totalProjectiles; i++) {
         final projectile = ServerState.projectiles[i];
+        if (projectile.type == ProjectileType.Rocket) {
+          spawnParticleSmoke(x: projectile.x, y: projectile.y, z: projectile.z);
+          continue;
+        }
         if (projectile.type == ProjectileType.Fireball) {
           spawnParticleFire(x: projectile.x, y: projectile.y, z: projectile.z);
           continue;
         }
         if (projectile.type == ProjectileType.Orb) {
-          spawnParticleOrbShard(x: projectile.x, y: projectile.y, z: projectile.z, angle: randomAngle());
+          spawnParticleOrbShard(
+              x: projectile.x,
+              y: projectile.y,
+              z: projectile.z,
+              angle: randomAngle(),
+          );
         }
       }
     }
