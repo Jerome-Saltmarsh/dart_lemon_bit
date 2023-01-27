@@ -8,7 +8,6 @@ export 'game_object.dart';
 export 'item.dart';
 export 'npc_debug.dart';
 export 'particle.dart';
-export 'particle_emitter.dart';
 export 'projectile.dart';
 export 'structure.dart';
 export 'vector3.dart';
