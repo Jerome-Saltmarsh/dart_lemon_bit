@@ -13,6 +13,7 @@ class Collider extends Position3 {
   var velocityX = 0.0;
   var velocityY = 0.0;
   var velocityZ = 0.0;
+  var airborn = false;
   var team = 0;
   var radius = 0.0;
   /// If false this object is completely ignored by collision detection
@@ -114,9 +115,15 @@ class Collider extends Position3 {
   }
 
   void applyFriction() {
-    velocityX *= GamePhysics.Friction;
-    velocityY *= GamePhysics.Friction;
-    velocityZ *= GamePhysics.Friction;
+    if (airborn) {
+      velocityX *= GamePhysics.Friction_Air;
+      velocityY *= GamePhysics.Friction_Air;
+      velocityZ *= GamePhysics.Friction_Air;
+    } else {
+      velocityX *= GamePhysics.Friction;
+      velocityY *= GamePhysics.Friction;
+      velocityZ *= GamePhysics.Friction;
+    }
   }
 
   void applyGravity(){

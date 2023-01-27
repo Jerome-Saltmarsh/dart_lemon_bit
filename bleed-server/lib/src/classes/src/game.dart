@@ -479,7 +479,10 @@ abstract class Game {
     player.assignWeaponStateFiring();
 
     final mouseDistance = getDistanceXY(player.x, player.y, player.mouseGridX, player.mouseGridY);
-    final velocity = min(mouseDistance * GamePhysics.Throw_Velocity_Ratio, GamePhysics.Max_Throw_Velocity);
+    final throwDistance = min(mouseDistance, GamePhysics.Max_Throw_Distance);
+    final throwRatio = throwDistance / GamePhysics.Max_Throw_Distance;
+    final velocity = GamePhysics.Max_Throw_Velocity * throwRatio;
+    final velocityZ = GamePhysics.Max_Throw_Velocity_Z * throwRatio;
 
     final instance = spawnGameObject(
         x: player.x,
@@ -492,7 +495,8 @@ abstract class Game {
         ..physical = false
         ..movable = true
         ..quantity = 1
-        ..velocityZ = 30.00
+        ..airborn = true
+        ..velocityZ = velocityZ
         ..owner = player
         ..damage = 15;
 
@@ -1753,6 +1757,10 @@ abstract class Game {
         break;
       case CharacterState.Running:
         character.applyForce(force: 1.0, angle: character.faceAngle);
+        if (character.airborn){
+           character.clampVelocity(GamePhysics.Max_Velocity);
+        }
+
         if (character.nextFootstep++ >= 10) {
           dispatch(
             GameEventType.Footstep,
@@ -2335,38 +2343,48 @@ abstract class Game {
 
   void updateColliderSceneCollisionCenter(Collider collider) {
 
-    if (scene.getNodeInBoundsXYZ(collider.x, collider.y, collider.z)) {
-      final nodeBottomIndex = scene.getNodeIndexXYZ(collider.x, collider.y, collider.z);
-      final nodeBottomOrientation = scene.nodeOrientations[nodeBottomIndex];
-      final nodeType = scene.nodeTypes[nodeBottomIndex];
-
-      if (nodeBottomOrientation == NodeOrientation.Solid){
-        collider.z = ((collider.z ~/ Node_Height) * Node_Height) + Node_Height;
-        collider.velocityZ = 0;
-      } else
-      if (nodeBottomOrientation != NodeOrientation.None) {
-        final bottom = (collider.z ~/ Node_Height) * Node_Height;
-        final percX = ((collider.x % Node_Size) / Node_Size);
-        final percY = ((collider.y % Node_Size) / Node_Size);
-        final nodeTop = bottom + (NodeOrientation.getGradient(nodeBottomOrientation, percX, percY) * Node_Height);
-        if (nodeTop > collider.z){
-          collider.z = nodeTop;
-          collider.velocityZ = 0;
-        }
-      } else if (nodeType == NodeType.Water) {
-          if (collider.z % Node_Height < Node_Height_Half){
-            internalOnColliderEnteredWater(collider);
-          }
-          return;
-     }
-    } else {
-      if (collider.z < -100){
-        deactivateCollider(collider);
-        if (collider is Character){
-          setCharacterStateDead(collider);
-        }
+    if (!scene.getNodeInBoundsXYZ(collider.x, collider.y, collider.z)) {
+      if (collider.z > -100) return;
+      deactivateCollider(collider);
+      if (collider is Character) {
+        setCharacterStateDead(collider);
       }
+      return;
     }
+
+    final bottomZ = collider.z;
+    final nodeBottomIndex = scene.getNodeIndexXYZ(collider.x, collider.y, bottomZ);
+    final nodeBottomOrientation = scene.nodeOrientations[nodeBottomIndex];
+    final nodeBottomType = scene.nodeTypes[nodeBottomIndex];
+
+    if (nodeBottomOrientation == NodeOrientation.Solid){
+      collider.z = ((bottomZ ~/ Node_Height) * Node_Height) + Node_Height;
+      collider.velocityZ = 0;
+      collider.airborn = false;
+      return;
+    }
+
+    if (nodeBottomOrientation != NodeOrientation.None) {
+      final bottom = (bottomZ ~/ Node_Height) * Node_Height;
+      final percX = ((collider.x % Node_Size) / Node_Size);
+      final percY = ((collider.y % Node_Size) / Node_Size);
+      final nodeTop = bottom + (NodeOrientation.getGradient(nodeBottomOrientation, percX, percY) * Node_Height);
+      collider.airborn = nodeTop <= bottomZ;
+      if (!collider.airborn){
+        collider.z = nodeTop;
+        collider.velocityZ = 0;
+      }
+      return;
+    }
+
+    if (nodeBottomType == NodeType.Water) {
+      if (collider.z % Node_Height < Node_Height_Half){
+        internalOnColliderEnteredWater(collider);
+      }
+      return;
+    }
+
+    collider.airborn = true;
   }
 
   void setNode({
