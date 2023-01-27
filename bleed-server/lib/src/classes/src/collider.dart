@@ -17,6 +17,7 @@ class Collider extends Position3 {
   var radius = 0.0;
   /// If false this object is completely ignored by collision detection
   var collidable = true;
+  var gravity = true;
   /// an item which is not physical may still cause a collision detection
   var physical = true;
   /// If false this object will not be moved during a collision or when force is applied

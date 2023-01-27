@@ -53,7 +53,7 @@ class GameSurvival extends Game {
     player.belt2_itemType = ItemType.Weapon_Melee_Knife;
     player.belt2_quantity = 1;
     player.belt3_itemType = ItemType.Weapon_Thrown_Grenade;
-    player.belt3_quantity = 3;
+    player.belt3_quantity = 10;
     player.belt4_itemType = ItemType.Consumables_Apple;
     player.belt4_quantity = 3;
     player.belt5_itemType = ItemType.Weapon_Rifle_Jager;

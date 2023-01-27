@@ -479,6 +479,7 @@ abstract class Game {
     player.assignWeaponStateFiring();
 
     final mouseDistance = getDistanceXY(player.x, player.y, player.mouseGridX, player.mouseGridY);
+    final velocity = min(mouseDistance * GamePhysics.Throw_Velocity_Ratio, GamePhysics.Max_Throw_Velocity);
 
     final instance = spawnGameObject(
         x: player.x,
@@ -486,16 +487,16 @@ abstract class Game {
         z: player.z + Character_Height,
         type: ItemType.GameObjects_Grenade
     )
-        ..setVelocity(player.lookRadian, mouseDistance * 0.15)
-        ..collidable = false
+        ..setVelocity(player.lookRadian, velocity)
+        ..collidable = true
         ..physical = false
+        ..movable = true
         ..quantity = 1
-        ..velocityZ = 1.00
+        ..velocityZ = 30.00
         ..owner = player
         ..damage = 15;
 
     performJob(50, (){
-      print("job finished: explode grenade");
       deactivateCollider(instance);
       final owner = instance.owner;
       if (owner == null) return;
@@ -928,7 +929,7 @@ abstract class Game {
       collider.applyFriction();
     }
 
-    if (collider.collidable) {
+    if (collider.gravity) {
       collider.applyGravity();
     }
 
@@ -948,7 +949,6 @@ abstract class Game {
     double radius = 100.0,
     int damage = 5,
   }){
-    print("createExplosion");
     dispatchV3(GameEventType.Explosion, target);
     final length = characters.length;
 
