@@ -289,9 +289,11 @@ class GameEvents {
       return;
     }
     if (ItemType.isAutomaticFirearm(attackType)){
+      GameState.spawnParticleShell(x - getAdjacent(angle, 50), y - getOpposite(angle, 50), z);
       GameState.spawnParticleStrikeBulletLight(x: x, y: y, z: z, angle: angle);
       return;
     }
+    GameState.spawnParticleShell(x - getAdjacent(angle, 50), y - getOpposite(angle, 50), z);
     GameState.spawnParticleStrikeBullet(x: x, y: y, z: z, angle: angle);
   }
 
