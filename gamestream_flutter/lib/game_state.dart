@@ -1146,8 +1146,9 @@ class GameState {
 
   static void update() {
     GameAnimation.updateAnimationFrame();
-    updateParticleEmitters();
+    // updateParticleEmitters();
     updateProjectiles();
+    ServerState.updateGameObjects();
     GameAudio.update();
     ClientState.update();
     updatePlayerMessageTimer();
@@ -1197,7 +1198,7 @@ class GameState {
       }
     }
 
-    
+
     static void updateProjectiles() {
       for (var i = 0; i < ServerState.totalProjectiles; i++) {
         final projectile = ServerState.projectiles[i];

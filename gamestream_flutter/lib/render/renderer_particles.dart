@@ -95,7 +95,7 @@ class RendererParticles extends Renderer {
           }
           final frame = particle.frame <= 11 ? particle.frame : 23 - particle.frame;
           Engine.renderSprite(
-            image: GameImages.particles,
+            image: GameImages.atlas_particles,
             dstX: dstX,
             dstY: dstY,
             srcX: 544,
@@ -162,7 +162,7 @@ class RendererParticles extends Renderer {
             return particle.deactivate();
           }
           Engine.renderSprite(
-            image: GameImages.particles,
+            image: GameImages.atlas_particles,
             dstX: dstX,
             dstY: dstY,
             srcX: 0,
@@ -174,7 +174,7 @@ class RendererParticles extends Renderer {
           break;
         case ParticleType.Shell:
           Engine.renderSprite(
-            image: GameImages.particles,
+            image: GameImages.atlas_particles,
             dstX: dstX,
             dstY: dstY,
             srcX: 34 + (particle.direction * 32),
@@ -191,7 +191,7 @@ class RendererParticles extends Renderer {
             break;
           }
           Engine.renderSprite(
-            image: GameImages.particles,
+            image: GameImages.atlas_particles,
             dstX: dstX,
             dstY: dstY,
             srcX: 291,
@@ -235,7 +235,7 @@ class RendererParticles extends Renderer {
             return particle.deactivate();
           }
           Engine.renderSprite(
-            image: GameImages.particles,
+            image: GameImages.atlas_particles,
             dstX: dstX,
             dstY: dstY,
             srcX: 234.0,
@@ -247,7 +247,7 @@ class RendererParticles extends Renderer {
         case ParticleType.Zombie_Arm:
           casteShadowDownV3(particle);
           Engine.renderSprite(
-            image: GameImages.particles,
+            image: GameImages.atlas_particles,
             dstX: dstX,
             dstY: dstY,
             srcX: 34.0,
@@ -260,7 +260,7 @@ class RendererParticles extends Renderer {
         case ParticleType.Zombie_Head:
           casteShadowDownV3(particle);
           Engine.renderSprite(
-            image: GameImages.particles,
+            image: GameImages.atlas_particles,
             dstX: dstX,
             dstY: dstY,
             srcX: 34.0 + 64,
@@ -273,7 +273,7 @@ class RendererParticles extends Renderer {
         case ParticleType.Zombie_leg:
           casteShadowDownV3(particle);
           Engine.renderSprite(
-            image: GameImages.particles,
+            image: GameImages.atlas_particles,
             dstX: dstX,
             dstY: dstY,
             srcX: 34.0 + (64 * 2),
@@ -302,7 +302,7 @@ class RendererParticles extends Renderer {
         case ParticleType.Zombie_Torso:
           casteShadowDownV3(particle);
           Engine.renderSprite(
-            image: GameImages.particles,
+            image: GameImages.atlas_particles,
             dstX: dstX,
             dstY: dstY,
             srcX: 34.0 + (64 * 3),
@@ -324,17 +324,18 @@ class RendererParticles extends Renderer {
         case ParticleType.Strike_Bullet_Light:
           renderParticleStrikeBulletLight();
           break;
-        // case ParticleType.Flame_Pixel:
-        //   Engine.renderSprite(
-        //       image: GameImages.atlas_gameobjects,
-        //       srcX: srcX,
-        //       srcY: srcY,
-        //       srcWidth: srcWidth,
-        //       srcHeight: srcHeight,
-        //       dstX: dstX,
-        //       dstY: dstY,
-        //   )
-        //   break;
+        case ParticleType.Shadow:
+          Engine.renderSprite(
+              image: GameImages.atlas_particles,
+              srcX: 8,
+              srcY: 552,
+              srcWidth: 16,
+              srcHeight: 16,
+              dstX: dstX,
+              dstY: dstY,
+              scale: 0.5,
+          );
+          break;
         default:
           break;
       }
@@ -342,7 +343,7 @@ class RendererParticles extends Renderer {
 
   void renderParticleSmoke() {
     Engine.renderSpriteRotated(
-      image: GameImages.particles,
+      image: GameImages.atlas_particles,
       dstX: particle.renderX,
       dstY: particle.renderY,
       srcX: 552,
@@ -361,7 +362,7 @@ class RendererParticles extends Renderer {
       return;
     }
     Engine.renderSpriteRotated(
-      image: GameImages.particles,
+      image: GameImages.atlas_particles,
       dstX: particle.renderX,
       dstY: particle.renderY,
       srcX: 688,
@@ -382,7 +383,7 @@ class RendererParticles extends Renderer {
       return;
     }
     Engine.renderSpriteRotated(
-      image: GameImages.particles,
+      image: GameImages.atlas_particles,
       dstX: particle.renderX,
       dstY: particle.renderY,
       srcX: 592,
@@ -403,7 +404,7 @@ class RendererParticles extends Renderer {
       return;
     }
     Engine.renderSpriteRotated(
-      image: GameImages.particles,
+      image: GameImages.atlas_particles,
       dstX: particle.renderX,
       dstY: particle.renderY,
       srcX: 624,
@@ -423,7 +424,7 @@ class RendererParticles extends Renderer {
       return;
     }
     Engine.renderSpriteRotated(
-      image: GameImages.particles,
+      image: GameImages.atlas_particles,
       dstX: particle.renderX,
       dstY: particle.renderY,
       srcX: 656,

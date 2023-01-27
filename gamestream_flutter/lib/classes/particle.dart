@@ -1,36 +1,4 @@
-import 'dart:typed_data';
-
-import 'package:bleed_common/library.dart';
 import 'package:gamestream_flutter/library.dart';
-import 'package:lemon_math/library.dart';
-
-import 'vector3.dart';
-
-class Particles {
-  static const length = 500;
-  final delay = Uint16List(length);
-  final xv = Float32List(length);
-  final yv = Float32List(length);
-  final zv = Float32List(length);
-  final frame = Uint16List(length);
-  final weight = Float32List(length);
-  final duration = Uint16List(length);
-  final rotation = Float32List(length);
-  final rotationVelocity = Float32List(length);
-  final scale = Float32List(length);
-  final scaleVelocity = Float32List(length);
-  final type = Uint8List(length);
-  final bounciness = Float32List(length);
-  final checkNodeCollision = List.generate(length, (index) => true);
-  final animation = List.generate(length, (index) => false);
-  final order = Uint16List(length);
-
-  Particles(){
-    for (var i = 0; i < length; i++){
-       order[i] = i;
-    }
-  }
-}
 
 class Particle extends Vector3 {
   var delay = 0;

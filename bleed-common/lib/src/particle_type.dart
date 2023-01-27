@@ -33,6 +33,7 @@ class ParticleType {
   static const Strike_Bullet = 46;
   static const Strike_Bullet_Light = 47;
   static const Block_Sand = 48;
+  static const Shadow = 49;
 
   static String getName(int particleType){
     return const {

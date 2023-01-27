@@ -147,6 +147,57 @@ class ServerState {
     }
   }
 
+  static void updateGameObjects() {
+    for (var i = 0; i < totalGameObjects; i++){
+      final gameObject = gameObjects[i];
+      if (gameObject.type != ItemType.GameObjects_Grenade) continue;
+      projectShadow(gameObject);
+    }
+  }
+
+
+  static void projectShadow(Vector3 v3){
+     final z = getProjectionZ(v3);
+     if (z < 0) return;
+     GameState.spawnParticle(
+         type: ParticleType.Shadow,
+         x: v3.x,
+         y: v3.y,
+         z: z,
+         angle: 0,
+         speed: 0,
+         duration: 2,
+     );
+  }
+
+  static double getProjectionZ(Vector3 vector3){
+    final x = vector3.x;
+    final y = vector3.y;
+    var z = vector3.z;
+    while (true) {
+        if (z < 0) return -1;
+        final nodeIndex = GameNodes.getIndexXYZ(x, y, z);
+        final nodeOrientation = GameNodes.nodeOrientations[nodeIndex];
+
+        if (const <int> [
+          NodeOrientation.None,
+          NodeOrientation.Radial,
+          NodeOrientation.Half_South,
+          NodeOrientation.Half_North,
+          NodeOrientation.Half_East,
+          NodeOrientation.Half_West,
+        ].contains(nodeOrientation)) {
+          z -= GameConstants.Node_Height;
+          continue;
+        }
+        if (z > Node_Height){
+          return z + (z % Node_Height);
+        } else {
+          return Node_Height;
+        }
+    }
+  }
 }
+
 
 
