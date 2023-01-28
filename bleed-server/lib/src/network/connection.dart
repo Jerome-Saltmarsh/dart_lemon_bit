@@ -824,6 +824,7 @@ class Connection with ByteReader {
       player.y = player.mouseGridY;
       player.health = player.maxHealth;
       player.state = CharacterState.Idle;
+      player.active = true;
   }
 
   int? parseArg0(List<String> arguments,) => parseArg(arguments, 0);
