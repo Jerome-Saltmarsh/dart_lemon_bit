@@ -180,34 +180,14 @@ class RendererCharacters extends Renderer {
   }
 
   void renderCharacterZombie(Character character) {
-    // final shade = GameState.getV3RenderShade(character);
-    // if (shade < Shade.Dark) renderCharacterHealthBar(character);
     if (character.deadOrDying) return;
     if (character.spawning) return;
-
 
     var angle = 0.0;
     var distance = 0.0;
 
     if (!GameState.outOfBoundsV3(character)){
-      // find the nearest torch and move the shadow behind the character
-      // final characterNodeIndex = GameState.getNodeIndexV3(character);
-      // final initialSearchIndex = characterNodeIndex - GameState.nodesTotalColumns - 1; // shifts the selectIndex - 1 row and - 1 column
       var torchIndex = GameNodes.getTorchIndex(GameState.getNodeIndexV3(character));
-      // var rowIndex = 0;
-      // final totalNodes = GameNodes.nodesTotal;
-      //
-      // for (var row = 0; row < 3; row++){
-      //   for (var column = 0; column < 3; column++){
-      //     final searchIndex = initialSearchIndex + rowIndex + column;
-      //     if (searchIndex >= totalNodes) break;
-      //     if (GameNodes.nodesType[searchIndex] != NodeType.Torch) continue;
-      //     torchIndex = searchIndex;
-      //     break;
-      //   }
-      //   rowIndex += GameState.nodesTotalColumns;
-      // }
-
       if (torchIndex != -1) {
         final torchRow = GameState.convertNodeIndexToIndexX(torchIndex);
         final torchColumn = GameState.convertNodeIndexToIndexY(torchIndex);
@@ -251,7 +231,7 @@ class RendererCharacters extends Renderer {
       srcHeight: 64,
       dstX: character.renderX,
       dstY: character.renderY,
-      anchorY: 0.66,
+      anchorY: 0.68,
       scale: 0.7,
       color: character.color,
     );

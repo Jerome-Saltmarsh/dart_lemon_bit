@@ -1578,7 +1578,7 @@ class Player extends Character with ByteWriter {
     writePosition3(selectedGameObject);
     writeUInt16(selectedGameObject.type);
     writeBool(selectedGameObject.collidable);
-    writeBool(selectedGameObject.movable);
+    writeBool(selectedGameObject.fixed);
     writeBool(selectedGameObject.collectable);
     writeBool(selectedGameObject.physical);
     writeBool(selectedGameObject.persistable);

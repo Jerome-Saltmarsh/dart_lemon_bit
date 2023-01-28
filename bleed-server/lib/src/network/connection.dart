@@ -634,9 +634,9 @@ class Connection with ByteReader {
         player.writeEditorGameObjectSelected();
         break;
 
-      case GameObjectRequest.Toggle_Movable:
+      case GameObjectRequest.Toggle_Fixed:
         if (selectedGameObject == null) return;
-        selectedGameObject.movable = !selectedGameObject.movable;
+        selectedGameObject.fixed = !selectedGameObject.fixed;
         player.writeEditorGameObjectSelected();
         break;
 

@@ -218,7 +218,7 @@ abstract class Character extends Collider {
     if (name != null){
       this.name = name;
     }
-    movable = true;
+    fixed = false;
     physical = true;
     collidable = true;
     radius = CharacterType.getRadius(characterType);

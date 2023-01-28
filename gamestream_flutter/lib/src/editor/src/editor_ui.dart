@@ -1061,13 +1061,13 @@ class EditorUI {
                       ),
                     )
                   ),
-                  watch(GameEditor.gameObjectSelectedMovable, (bool enabled) =>
+                  watch(GameEditor.gameObjectSelectedFixed, (bool enabled) =>
                       onPressed(
-                        action: () => GameNetwork.sendGameObjectRequest(GameObjectRequest.Toggle_Movable),
+                        action: () => GameNetwork.sendGameObjectRequest(GameObjectRequest.Toggle_Fixed),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            text("Movable"),
+                            text("Fixed"),
                             text(enabled),
                           ],
                         ),

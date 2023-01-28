@@ -357,7 +357,7 @@ class ServerResponseReader with ByteReader {
     readVector3(GameEditor.gameObject);
     final type                                       = readUInt16();
     GameEditor.gameObjectSelectedCollidable   .value = readBool();
-    GameEditor.gameObjectSelectedMovable      .value = readBool();
+    GameEditor.gameObjectSelectedFixed      .value = readBool();
     GameEditor.gameObjectSelectedCollectable  .value = readBool();
     GameEditor.gameObjectSelectedPhysical     .value = readBool();
     GameEditor.gameObjectSelectedPersistable  .value = readBool();

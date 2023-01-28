@@ -493,7 +493,7 @@ abstract class Game {
         ..setVelocity(player.lookRadian, velocity)
         ..collidable = true
         ..physical = false
-        ..movable = true
+        ..fixed = false
         ..quantity = 1
         ..friction = 0.985
         ..bounce = true
@@ -929,14 +929,9 @@ abstract class Game {
   void updateColliderPhysics(Collider collider) {
     if (!collider.active) return;
 
-    if (collider.movable) {
-      collider.applyVelocity();
-      collider.applyFriction();
-    }
-
-    if (collider.gravity) {
-      collider.applyGravity();
-    }
+    collider.applyVelocity();
+    collider.applyFriction();
+    collider.applyGravity();
 
     if (collider.z < 0) {
       deactivateCollider(collider);
@@ -1231,11 +1226,11 @@ abstract class Game {
     var yDiff = a.y - b.y;
 
     if (xDiff == 0 && yDiff == 0) {
-      if (a.movable){
+      if (!a.fixed){
         a.x += 5;
         xDiff += 5;
       }
-      if (b.movable){
+      if (!b.fixed){
         b.x -= 5;
         xDiff += 5;
       }
@@ -1247,15 +1242,11 @@ abstract class Game {
     final halfOverlap = overlap * 0.5;
     final targetX = xDiffNormalized * halfOverlap;
     final targetY = yDiffNormalized * halfOverlap;
-    if (a.movable){
-      // a.velocityX += targetX;
-      // a.velocityY += targetY;
+    if (!a.fixed){
       a.x += targetX;
       a.y += targetY;
     }
-    if (b.movable){
-      // b.velocityX -= targetX;
-      // b.velocityY -= targetY;
+    if (!b.fixed){
       b.x -= targetX;
       b.y -= targetY;
     }
@@ -2099,11 +2090,11 @@ abstract class Game {
       z: z,
       type: type,
     );
-    instance.collidable = ItemType.isCollidable(type);
-    instance.physical = ItemType.isPhysical(type);
-    instance.movable = instance.physical;
-    instance.friction = GamePhysics.Friction;
-    instance.bounce = false;
+    instance.collidable   = ItemType.isCollidable(type);
+    instance.physical     = ItemType.isPhysical(type);
+    instance.fixed        = ItemType.isFixed(type);
+    instance.friction     = GamePhysics.Friction;
+    instance.bounce       = false;
     gameObjects.add(instance);
     return instance;
   }

@@ -23,7 +23,8 @@ class Collider extends Position3 {
   /// an item which is not physical may still cause a collision detection
   var physical = true;
   /// If false this object will not be moved during a collision or when force is applied
-  var movable = true;
+  var fixed = true;
+  var strikable = true;
 
   var startX = 0.0;
   var startY = 0.0;
@@ -98,30 +99,34 @@ class Collider extends Position3 {
     required double force,
     required double angle,
   }) {
-    if (!movable) return;
+    if (fixed) return;
     velocityX += getAdjacent(angle, force);
     velocityY += getOpposite(angle, force);
   }
 
   void clampVelocity(double value){
+    if (fixed) return;
     assert (value > 0);
     if (velocitySpeed <= value) return;
     velocitySpeed = value;
   }
 
   void applyVelocity(){
+    if (fixed) return;
     x += velocityX;
     y += velocityY;
     z += velocityZ;
   }
 
   void applyFriction() {
+    if (fixed) return;
     velocityX *= friction;
     velocityY *= friction;
     velocityZ *= friction;
   }
 
   void applyGravity(){
+    if (!gravity) return;
     velocityZ -= GamePhysics.Gravity;
   }
 

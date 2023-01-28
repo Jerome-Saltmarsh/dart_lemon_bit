@@ -8,7 +8,7 @@ enum GameObjectRequest {
   Set_Type,
   Move_To_Mouse,
   Toggle_Collider,
-  Toggle_Movable,
+  Toggle_Fixed,
   Toggle_Collectable,
   Toggle_Physical,
   Toggle_Persistable,

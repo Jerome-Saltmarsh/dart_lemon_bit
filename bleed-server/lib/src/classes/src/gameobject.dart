@@ -15,10 +15,10 @@ class GameObject extends Collider {
      radius           = ItemType.getRadius(value);
      collectable      = ItemType.isCollectable(value);
      physical         = ItemType.isPhysical(value);
-     movable          = ItemType.isMovable(value);
+     fixed            = ItemType.isFixed(value);
      collidable       = ItemType.isCollidable(value);
      persistable      = ItemType.isPersistable(value);
-     interactable     = value == ItemType.GameObjects_Vending_Machine;
+     interactable     = ItemType.isInteractable(value);
   }
 
   GameObject({

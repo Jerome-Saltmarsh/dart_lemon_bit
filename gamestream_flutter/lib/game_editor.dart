@@ -10,7 +10,7 @@ class GameEditor {
   static final gameObjectSelected = Watch(false);
   static final gameObjectSelectedType = Watch(0);
   static final gameObjectSelectedCollidable = Watch(true);
-  static final gameObjectSelectedMovable = Watch(true);
+  static final gameObjectSelectedFixed = Watch(true);
   static final gameObjectSelectedCollectable = Watch(true);
   static final gameObjectSelectedPhysical = Watch(true);
   static final gameObjectSelectedPersistable = Watch(true);

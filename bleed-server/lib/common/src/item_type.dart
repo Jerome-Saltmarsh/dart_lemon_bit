@@ -215,9 +215,7 @@ class ItemType {
 
   static bool isTypeEmpty(int value) => value == Empty;
   static bool isNotTypeEmpty(int value) => value != Empty;
-
-  static bool isPersistable(int value) =>
-       isTypeEnvironment(value);
+  static bool isPersistable(int value) => isTypeEnvironment(value);
 
   static double getRadius(int value) => const <int, double> {
     GameObjects_Vending_Machine: 25,
@@ -225,6 +223,8 @@ class ItemType {
     GameObjects_Car: 25,
     GameObjects_Crate_Wooden: 18,
     GameObjects_Barrel_Purple: 18,
+    GameObjects_Barrel_Flaming: 18,
+    GameObjects_Barrel_Explosive: 18,
   }[value] ?? 15;
 
   static bool isCollidable(int value) =>
@@ -242,6 +242,18 @@ class ItemType {
       value == GameObjects_Grenade           ||
       value == GameObjects_Tavern_Sign        ;
 
+  static bool isFixed(int value) => const [
+    GameObjects_Vending_Machine,
+    GameObjects_Car,
+    GameObjects_Firehydrant,
+    GameObjects_Bed,
+    GameObjects_Desk,
+  ].contains(value);
+
+  static bool isInteractable(int value) => const [
+    GameObjects_Vending_Machine,
+  ].contains(value);
+
   static bool isPhysical(int value) =>
     value == GameObjects_Barrel_Purple     ||
     value == GameObjects_Barrel_Explosive  ||
@@ -255,14 +267,6 @@ class ItemType {
     value == GameObjects_Firehydrant       ||
     value == GameObjects_Car               ||
     value == GameObjects_Tavern_Sign        ;
-
-  static bool isMovable(int value) =>
-    value == GameObjects_Barrel_Purple     ||
-    value == GameObjects_Barrel_Explosive  ||
-    value == GameObjects_Grenade           ||
-    value == GameObjects_Barrel_Flaming    ||
-    value == GameObjects_Crate_Wooden      ||
-    value == GameObjects_Barrel            ;
 
   static bool isTypeEquipped(int value) =>
     value == Equipped_Weapon  ||
