@@ -627,9 +627,9 @@ class Connection with ByteReader {
         // TODO: Handle this case.
         break;
 
-      case GameObjectRequest.Toggle_Collider:
+      case GameObjectRequest.Toggle_Strikable:
         if (selectedGameObject == null) return;
-        selectedGameObject.collidable = !selectedGameObject.collidable;
+        selectedGameObject.strikable = !selectedGameObject.strikable;
         selectedGameObject.velocityZ = 0;
         player.writeEditorGameObjectSelected();
         break;
@@ -643,6 +643,12 @@ class Connection with ByteReader {
       case GameObjectRequest.Toggle_Collectable:
         if (selectedGameObject == null) return;
         selectedGameObject.collectable = !selectedGameObject.collectable;
+        player.writeEditorGameObjectSelected();
+        break;
+
+      case GameObjectRequest.Toggle_Gravity:
+        if (selectedGameObject == null) return;
+        selectedGameObject.gravity = !selectedGameObject.gravity;
         player.writeEditorGameObjectSelected();
         break;
 

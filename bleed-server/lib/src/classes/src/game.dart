@@ -491,7 +491,7 @@ abstract class Game {
         type: ItemType.GameObjects_Grenade
     )
         ..setVelocity(player.lookRadian, velocity)
-        ..collidable = true
+        ..strikable = true
         ..physical = false
         ..fixed = false
         ..quantity = 1
@@ -594,7 +594,7 @@ abstract class Game {
 
     for (final other in characters) {
       if (!other.active) continue;
-      if (!other.collidable) continue;
+      if (!other.strikable) continue;
       if (Collider.onSameTeam(character, other)) continue;
       if (!other.withinDistance(
         performX,
@@ -613,7 +613,7 @@ abstract class Game {
 
     for (final gameObject in gameObjects) {
       if (!gameObject.active) continue;
-      if (!gameObject.collidable) continue;
+      if (!gameObject.strikable) continue;
       if (!gameObject.withinDistance(
           performX,
           performY,
@@ -938,7 +938,7 @@ abstract class Game {
       return;
     }
 
-    if (collider.collidable) {
+    if (collider.physical) {
       updateColliderSceneCollision(collider);
     }
   }
@@ -964,7 +964,7 @@ abstract class Game {
 
     for (final gameObject in gameObjects) {
         if (!gameObject.active) continue;
-        if (!gameObject.collidable) continue;
+        if (!gameObject.strikable) continue;
         if (!gameObject.withinRadius(target, radius)) continue;
         applyHit(
           angle: radiansV2(target, gameObject),
@@ -978,7 +978,7 @@ abstract class Game {
 
     for (var i = 0; i < length; i++){
       final character = characters[i];
-      if (!character.collidable) continue;
+      if (!character.strikable) continue;
       if (!character.active) continue;
       if (character.dead) continue;
       if (!target.withinRadius(character, radius)) continue;
@@ -1145,11 +1145,11 @@ abstract class Game {
     for (var i = 0; i < numberOfCollidersMinusOne; i++) {
       final colliderI = colliders[i];
       if (!colliderI.active) continue;
-      if (!colliderI.collidable) continue;
+      // if (!colliderI.strikable) continue;
       for (var j = i + 1; j < numberOfColliders; j++) {
         final colliderJ = colliders[j];
         if (!colliderJ.active) continue;
-        if (!colliderJ.collidable) continue;
+        // if (!colliderJ.strikable) continue;
         if (colliderJ.top > colliderI.bottom) continue;
         if (colliderJ.left > colliderI.right) continue;
         if (colliderJ.right < colliderI.left) continue;
@@ -1168,11 +1168,11 @@ abstract class Game {
     for (var indexA = 0; indexA < aLength; indexA++) {
       final colliderA = collidersA[indexA];
       if (!colliderA.active) continue;
-      if (!colliderA.collidable) continue;
+      // if (!colliderA.strikable) continue;
       for (var indexB = 0; indexB < bLength; indexB++) {
         final colliderB = collidersB[indexB];
         if (!colliderB.active) continue;
-        if (!colliderB.collidable) continue;
+        // if (!colliderB.strikable) continue;
         if (colliderA.bottom < colliderB.top) continue;
         if (colliderA.top > colliderB.bottom) continue;
         if (colliderA.right < colliderB.left) continue;
@@ -1187,8 +1187,8 @@ abstract class Game {
   void internalOnCollisionBetweenColliders(Collider a, Collider b){
     assert (a.active);
     assert (b.active);
-    assert (a.collidable);
-    assert (b.collidable);
+    // assert (a.strikable);
+    // assert (b.strikable);
     assert (a != b);
     if (a.physical && b.physical){
       resolveCollisionPhysics(a, b);
@@ -1210,10 +1210,6 @@ abstract class Game {
   }
 
   void resolveCollisionPhysics(Collider a, Collider b) {
-    if (a.shapeRadial && b.shapeRadial) {
-       resolveCollisionPhysicsRadial(a, b);
-       return;
-    }
     resolveCollisionPhysicsRadial(a, b);
   }
 
@@ -1469,7 +1465,7 @@ abstract class Game {
            }
         }
       } else {
-        if (!target.active || !target.collidable) {
+        if (!target.active || !target.strikable) {
           clearCharacterTarget(player);
           return;
         }
@@ -1537,8 +1533,7 @@ abstract class Game {
       for (var j = 0; j < colliders.length; j++) {
         final collider = colliders[j];
         if (!collider.active) continue;
-        if (!collider.collidable) continue;
-        if (!collider.physical) continue;
+        if (!collider.strikable) continue;
         final radius = collider.radius + projectile.radius;
         if ((collider.x - projectile.x).abs() > radius) continue;
         if ((collider.y - projectile.y).abs() > radius) continue;
@@ -1590,7 +1585,7 @@ abstract class Game {
     bool friendlyFire = false,
   }) {
     assert (target.active);
-    assert (target.collidable);
+    assert (target.strikable);
 
     if (target is GameObject){
        if (ItemType.isMaterialMetal(target.type)){
@@ -1646,7 +1641,7 @@ abstract class Game {
     final attackTarget = character.target;
     if (attackTarget == null) return;
     if (attackTarget is Collider) {
-      if (attackTarget.collidable){
+      if (attackTarget.strikable){
         applyHit(
           target: attackTarget,
           angle: radiansV2(character, attackTarget),
@@ -1954,7 +1949,7 @@ abstract class Game {
       finalAngle += giveOrTake(accuracy * accuracyAngleDeviation);
     }
     projectile.damage = damage;
-    projectile.collidable = true;
+    projectile.strikable = true;
     projectile.active = true;
     if (target is Collider) {
       projectile.target = target;
@@ -2090,7 +2085,7 @@ abstract class Game {
       z: z,
       type: type,
     );
-    instance.collidable   = ItemType.isCollidable(type);
+    instance.strikable   = ItemType.isCollidable(type);
     instance.physical     = ItemType.isPhysical(type);
     instance.fixed        = ItemType.isFixed(type);
     instance.friction     = GamePhysics.Friction;

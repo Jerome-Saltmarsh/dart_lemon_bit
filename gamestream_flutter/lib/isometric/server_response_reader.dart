@@ -353,14 +353,16 @@ class ServerResponseReader with ByteReader {
     GamePlayer.mapTile.value = readByte();
   }
 
+
   void readEditorGameObjectSelected() {
     readVector3(GameEditor.gameObject);
     final type                                       = readUInt16();
     GameEditor.gameObjectSelectedCollidable   .value = readBool();
-    GameEditor.gameObjectSelectedFixed      .value = readBool();
+    GameEditor.gameObjectSelectedFixed        .value = readBool();
     GameEditor.gameObjectSelectedCollectable  .value = readBool();
     GameEditor.gameObjectSelectedPhysical     .value = readBool();
     GameEditor.gameObjectSelectedPersistable  .value = readBool();
+    GameEditor.gameObjectSelectedGravity      .value = readBool();
     GameEditor.gameObject.type                       = type;
     GameEditor.gameObjectSelectedType.value          = type;
     GameEditor.gameObjectSelected.value              = true;

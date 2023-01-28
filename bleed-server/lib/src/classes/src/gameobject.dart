@@ -16,7 +16,7 @@ class GameObject extends Collider {
      collectable      = ItemType.isCollectable(value);
      physical         = ItemType.isPhysical(value);
      fixed            = ItemType.isFixed(value);
-     collidable       = ItemType.isCollidable(value);
+     strikable       = ItemType.isCollidable(value);
      persistable      = ItemType.isPersistable(value);
      interactable     = ItemType.isInteractable(value);
   }

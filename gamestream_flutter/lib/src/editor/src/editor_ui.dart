@@ -1046,20 +1046,33 @@ class EditorUI {
                       ),
                       child: GameUI.buildAtlasItemType(type),
                   ),
+
                   height8,
                   text(ItemType.getName(type), size: 22),
                   height8,
                   watch(GameEditor.gameObjectSelectedCollidable, (bool enabled) =>
                     onPressed(
-                      action: () => GameNetwork.sendGameObjectRequest(GameObjectRequest.Toggle_Collider),
+                      action: () => GameNetwork.sendGameObjectRequest(GameObjectRequest.Toggle_Strikable),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          text("Collidable"),
+                          text("Strikable"),
                           text(enabled),
                         ],
                       ),
                     )
+                  ),
+                  watch(GameEditor.gameObjectSelectedGravity, (bool enabled) =>
+                      onPressed(
+                        action: () => GameNetwork.sendGameObjectRequest(GameObjectRequest.Toggle_Gravity),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            text("Gravity"),
+                            text(enabled),
+                          ],
+                        ),
+                      )
                   ),
                   watch(GameEditor.gameObjectSelectedFixed, (bool enabled) =>
                       onPressed(

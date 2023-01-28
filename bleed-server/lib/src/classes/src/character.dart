@@ -220,7 +220,7 @@ abstract class Character extends Collider {
     }
     fixed = false;
     physical = true;
-    collidable = true;
+    strikable = true;
     radius = CharacterType.getRadius(characterType);
   }
 

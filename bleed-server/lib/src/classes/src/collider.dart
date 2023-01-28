@@ -4,10 +4,6 @@ import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/game_physics.dart';
 import 'package:lemon_math/library.dart';
 
-enum ColliderShape {
-   Radial, Box,
-}
-
 class Collider extends Position3 {
   var active = true;
   var velocityX = 0.0;
@@ -17,14 +13,11 @@ class Collider extends Position3 {
   var bounce = false;
   var team = 0;
   var radius = 0.0;
-  /// If false this object is completely ignored by collision detection
-  var collidable = true;
-  var gravity = true;
-  /// an item which is not physical may still cause a collision detection
-  var physical = true;
-  /// If false this object will not be moved during a collision or when force is applied
-  var fixed = true;
+
   var strikable = true;
+  var gravity = true;
+  var physical = true;
+  var fixed = true;
 
   var startX = 0.0;
   var startY = 0.0;
@@ -32,9 +25,6 @@ class Collider extends Position3 {
 
   var sizeX = 0.0;
   var sizeY = 0.0;
-
-  /// True for radial and false for box
-  var shapeRadial = true;
 
   Character? owner;
   var damage = 0;
@@ -145,19 +135,13 @@ class Collider extends Position3 {
 
   bool collidingWith(Collider that){
     if (!active) return false;
-    if (!collidable) return false;
+    // if (!strikable) return false;
     if (!that.active) return false;
-    if (!that.collidable) return false;
+    // if (!that.strikable) return false;
     if (left > that.right) return false;
     if (right < that.left) return false;
     if (top > that.bottom) return false;
     if (bottom < that.top) return false;
-
-     if (shapeRadial){
-        if (that.shapeRadial){
-
-        }
-     }
      return true;
   }
 
