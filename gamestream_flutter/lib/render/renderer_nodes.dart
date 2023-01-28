@@ -696,10 +696,10 @@ class RendererNodes extends Renderer {
         renderNodeTemplateShaded(GameConstants.Sprite_Width_Padded_4);
         return;
       case NodeType.Road:
-        renderNodeTemplateShadedOffset(GameConstants.Sprite_Width_Padded_9, offsetY: 6);
+        renderNodeTemplateShadedOffset(GameConstants.Sprite_Width_Padded_9, offsetY: 7);
         return;
       case NodeType.Road_2:
-        renderNodeShadedOffset(srcX: 768, srcY: 672 + GameConstants.Sprite_Height_Padded, offsetX: 0, offsetY: 6);
+        renderNodeShadedOffset(srcX: 768, srcY: 672 + GameConstants.Sprite_Height_Padded, offsetX: 0, offsetY: 7);
         return;
       case NodeType.Wooden_Plank:
         renderNodeTemplateShaded(GameConstants.Sprite_Width_Padded_10);

@@ -256,6 +256,8 @@ class ItemType {
 
   static bool isPhysical(int value) =>
     value == GameObjects_Barrel_Purple     ||
+    value == GameObjects_Grenade           ||
+    value == Weapon_Thrown_Grenade         ||
     value == GameObjects_Barrel_Explosive  ||
     value == GameObjects_Barrel_Flaming    ||
     value == GameObjects_Barrel            ||

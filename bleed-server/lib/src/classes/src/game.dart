@@ -491,9 +491,6 @@ abstract class Game {
         type: ItemType.GameObjects_Grenade
     )
         ..setVelocity(player.lookRadian, velocity)
-        ..strikable = true
-        ..physical = false
-        ..fixed = false
         ..quantity = 1
         ..friction = 0.985
         ..bounce = true
