@@ -114,9 +114,12 @@ class GameCanvas {
 
 
   static void renderCanvas(Canvas canvas, Size size) {
-    /// particles are only on the ui and thus can update every frame
-    /// this makes them much smoother as they don't freeze
-    GameState.updateParticles();
+
+    if (ServerState.gameRunning.value){
+      /// particles are only on the ui and thus can update every frame
+      /// this makes them much smoother as they don't freeze
+      GameState.updateParticles();
+    }
     GameState.interpolatePlayer();
     GameCamera.update();
     GameRender.render3D();

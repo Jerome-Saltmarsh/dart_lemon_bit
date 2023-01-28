@@ -1145,6 +1145,12 @@ class GameState {
   }
 
   static void update() {
+
+    if (!ServerState.gameRunning.value) {
+      GameNetwork.sendClientRequestUpdate();
+      return;
+    }
+
     GameAnimation.updateAnimationFrame();
     updateParticleEmitters();
     updateProjectiles();

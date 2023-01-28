@@ -1110,7 +1110,6 @@ class EditorUI {
                         ),
                       )
                   ),
-                  height16,
                   watch(GameEditor.gameObjectSelectedPersistable, (bool enabled) =>
                       onPressed(
                         action: () => GameNetwork.sendGameObjectRequest(GameObjectRequest.Toggle_Persistable),
