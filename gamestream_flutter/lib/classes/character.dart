@@ -29,6 +29,8 @@ class Character extends Vector3 {
 
   static const piSixteenth = pi / 16.0;
 
+  double get radius => CharacterType.getRadius(characterType);
+
   bool get weaponStateIdle => weaponState == WeaponState.Idle;
   bool get weaponStateFiring => weaponState == WeaponState.Firing;
   bool get weaponStateReloading => weaponState == WeaponState.Reloading;

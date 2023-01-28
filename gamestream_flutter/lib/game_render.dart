@@ -1,5 +1,6 @@
 import 'dart:ui' as ui;
 
+import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_gameobjects.dart';
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:gamestream_flutter/render/renderer_particles.dart';
@@ -18,8 +19,41 @@ class GameRender {
   static final rendererProjectiles  = RendererProjectiles();
   static final rendererCharacters   = RendererCharacters();
   static final rendererGameObjects  = RendererGameObjects();
+  static var renderDebug = false;
 
   // ACTIONS
+
+  static void renderCircle(double x, double y, double z, double radius, {int sections = 12}){
+    Engine.paint.color = Colors.white;
+    final anglePerSection = pi2 / sections;
+    var lineX1 = getAdjacent(0, radius);
+    var lineY1 = getOpposite(0, radius);
+    var lineX2 = lineX1;
+    var lineY2 = lineY1;
+    for (var i = 1; i < sections; i++){
+      final a = i * anglePerSection;
+      lineX2 = getAdjacent(a, radius);
+      lineY2 = getOpposite(a, radius);
+      GameRender.renderLine(
+        x + lineX1,
+        y + lineY1,
+        z,
+        x + lineX2,
+        y + lineY2,
+        z,
+      );
+      lineX1 = lineX2;
+      lineY1 = lineY2;
+    }
+  }
+
+  static void renderLine(double x1, double y1, double z1, double x2, double y2, double z2) =>
+      Engine.renderLine(
+        renderX(x1, y1, z1),
+        renderY(x1, y1, z1),
+        renderX(x2, y2, z2),
+        renderY(x2, y2, z2),
+      );
 
   static void resetRenderOrder(Renderer value){
     value.reset();

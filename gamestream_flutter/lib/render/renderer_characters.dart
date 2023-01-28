@@ -25,6 +25,11 @@ class RendererCharacters extends Renderer {
   int getTotal() => ServerState.totalCharacters;
 
   void renderCurrentCharacter(){
+
+    if (GameRender.renderDebug) {
+      GameRender.renderCircle(character.x, character.y, character.z, character.radius);
+    }
+
     if (character.spawning) {
       if (character.characterType == CharacterType.Rat){
         Engine.renderSprite(

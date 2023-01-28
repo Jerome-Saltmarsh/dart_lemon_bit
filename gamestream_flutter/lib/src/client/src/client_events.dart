@@ -183,4 +183,8 @@ class ClientEvents {
       ClientState.areaTypeVisibleDuration = value
           ? ClientConstants.Area_Type_Duration
           : 0;
+
+  static void onChangedDebugMode(bool value){
+    GameRender.renderDebug = value;
+  }
 }
