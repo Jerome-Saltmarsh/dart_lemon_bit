@@ -648,7 +648,7 @@ class RendererNodes extends Renderer {
         break;
       case NodeType.Sandbag:
         renderStandardNode(
-          srcX: 588,
+          srcX: 539,
           srcY: 0,
         );
         break;

@@ -30,7 +30,7 @@ class GameRender {
     var lineY1 = getOpposite(0, radius);
     var lineX2 = lineX1;
     var lineY2 = lineY1;
-    for (var i = 1; i < sections; i++){
+    for (var i = 1; i <= sections; i++){
       final a = i * anglePerSection;
       lineX2 = getAdjacent(a, radius);
       lineY2 = getOpposite(a, radius);
