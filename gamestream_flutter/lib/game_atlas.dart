@@ -18,6 +18,7 @@ class AtlasItems {
         ItemType.GameObjects_Grenade: 53,
         ItemType.GameObjects_Crystal_Small_Red: 35,
         ItemType.GameObjects_Crystal_Small_Blue: 35,
+        ItemType.GameObjects_Aircon_South: 224,
         ItemType.GameObjects_Toilet: 309,
         ItemType.GameObjects_Crate_Wooden: 361,
         ItemType.GameObjects_Desk: 410,
@@ -108,6 +109,7 @@ class AtlasItems {
         ItemType.GameObjects_Vending_Machine: 256,
         ItemType.GameObjects_Bed: 0,
         ItemType.GameObjects_Firehydrant: 49,
+        ItemType.GameObjects_Aircon_South: 64,
         ItemType.Trinket_Ring_of_Health: 32,
         ItemType.Trinket_Ring_of_Damage: 32,
         ItemType.Weapon_Ranged_Shotgun: 32,
@@ -185,6 +187,7 @@ class AtlasItems {
         ItemType.GameObjects_Vending_Machine: 48,
         ItemType.GameObjects_Bed: 56,
         ItemType.GameObjects_Firehydrant: 53,
+        ItemType.GameObjects_Aircon_South: 48,
         ItemType.Weapon_Rifle_Sniper: 48,
         ItemType.Weapon_Flamethrower: 64,
         ItemType.Weapon_Special_Bazooka: 48,
@@ -210,6 +213,7 @@ class AtlasItems {
         ItemType.GameObjects_Toilet: 92,
         ItemType.GameObjects_Vending_Machine: 72,
         ItemType.GameObjects_Bed: 72,
+        ItemType.GameObjects_Aircon_South: 81,
         ItemType.Weapon_Rifle_Sniper: 16,
         ItemType.Weapon_Special_Bazooka: 16,
         ItemType.Weapon_Special_Minigun: 12,
@@ -223,6 +227,7 @@ class AtlasItems {
         ItemType.GameObjects_Crate_Wooden: 0.75,
         ItemType.GameObjects_Firehydrant: 0.4,
         ItemType.GameObjects_Car: 0.66,
+        ItemType.GameObjects_Aircon_South: 0.6,
   }[itemType] ?? 1.0;
 
 

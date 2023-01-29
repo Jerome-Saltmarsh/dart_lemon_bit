@@ -87,6 +87,7 @@ class ItemType {
   static const GameObjects_Vending_Machine      = Index_GameObjects + 24;
   static const GameObjects_Bed                  = Index_GameObjects + 25;
   static const GameObjects_Firehydrant          = Index_GameObjects + 26;
+  static const GameObjects_Aircon_South         = Index_GameObjects + 27;
 
   static const Resource_Wood = Index_Resources + 5;
   static const Resource_Stone = Index_Resources + 6;
@@ -227,7 +228,7 @@ class ItemType {
     GameObjects_Barrel_Explosive: 18,
   }[value] ?? 15;
 
-  static bool isCollidable(int value) =>
+  static bool isStrikable(int value) =>
       value == GameObjects_Barrel_Purple     ||
       value == GameObjects_Barrel_Explosive  ||
       value == GameObjects_Barrel_Flaming    ||
@@ -248,6 +249,7 @@ class ItemType {
     GameObjects_Firehydrant,
     GameObjects_Bed,
     GameObjects_Desk,
+    GameObjects_Aircon_South,
   ].contains(value);
 
   static bool isInteractable(int value) => const [
@@ -268,6 +270,7 @@ class ItemType {
     value == GameObjects_Toilet            ||
     value == GameObjects_Firehydrant       ||
     value == GameObjects_Car               ||
+    value == GameObjects_Aircon_South      ||
     value == GameObjects_Tavern_Sign        ;
 
   static bool isTypeEquipped(int value) =>
@@ -658,6 +661,7 @@ class ItemType {
      GameObjects_Barrel_Explosive: "Explosive Barrel",
      GameObjects_Barrel_Purple: "Purple Barrel",
      GameObjects_Barrel_Flaming: "Flaming Barrel",
+     GameObjects_Tavern_Sign: "Tavern Sign",
      GameObjects_Toilet: "Toilet",
      GameObjects_Crate_Wooden: "Wooden Crate",
      GameObjects_Desk: "Wooden Desk",
@@ -782,6 +786,7 @@ class ItemType {
      GameObjects_Bed,
      GameObjects_Firehydrant,
      GameObjects_Car,
+     GameObjects_Aircon_South
   ];
 
   static bool isTypeBarrel(int type)=> const [

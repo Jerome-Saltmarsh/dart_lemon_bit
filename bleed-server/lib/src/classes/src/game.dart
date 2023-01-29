@@ -2082,7 +2082,7 @@ abstract class Game {
       z: z,
       type: type,
     );
-    instance.strikable   = ItemType.isCollidable(type);
+    instance.strikable   = ItemType.isStrikable(type);
     instance.physical     = ItemType.isPhysical(type);
     instance.fixed        = ItemType.isFixed(type);
     instance.friction     = GamePhysics.Friction;

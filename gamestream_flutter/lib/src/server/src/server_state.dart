@@ -114,6 +114,11 @@ class ServerState {
         continue;
       }
 
+      if (gameObject.type == ItemType.GameObjects_Tavern_Sign) {
+        GameState.applyVector3Emission(gameObject, hue: 150, saturation: 150, value: 150, alpha: 100);
+        continue;
+      }
+
       if (gameObject.type == ItemType.GameObjects_Grenade) {
         GameState.applyVector3Emission(gameObject,
           hue: GameNodes.ambient_hue,
