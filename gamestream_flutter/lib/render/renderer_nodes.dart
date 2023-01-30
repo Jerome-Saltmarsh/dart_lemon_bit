@@ -585,7 +585,11 @@ class RendererNodes extends Renderer {
   }
 
   static bool get currentNodeTransparent {
-    // if (!currentNodeWithinIsland) return false;
+    // if (currentNodeWithinIsland) {
+    //   if (currentNodeZ >= playerZ + 2) {
+    //     return true;
+    //   }
+    // }
     if (currentNodeZ <= playerZ) return false;
     final currentNodeProjection = currentNodeIndex % GameNodes.projection;
     if (!transparencyGrid[currentNodeProjection]) return false;
@@ -603,6 +607,13 @@ class RendererNodes extends Renderer {
   }
 
   static void renderCurrentNode() {
+
+    if (currentNodeWithinIsland) {
+      if (currentNodeZ >= playerZ + 2) {
+        return;
+      }
+    }
+
 
     Engine.bufferImage = currentNodeTransparent ? GameImages.atlas_nodes_transparent : GameImages.atlas_nodes;
 
