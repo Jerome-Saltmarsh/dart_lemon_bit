@@ -252,6 +252,15 @@ class ItemType {
     GameObjects_Aircon_South,
   ].contains(value);
 
+  static bool isApplyGravity(int value) => const [
+    GameObjects_Vending_Machine,
+    GameObjects_Car,
+    GameObjects_Firehydrant,
+    GameObjects_Bed,
+    GameObjects_Desk,
+    GameObjects_Aircon_South,
+  ].contains(value);
+
   static bool isInteractable(int value) => const [
     GameObjects_Vending_Machine,
   ].contains(value);

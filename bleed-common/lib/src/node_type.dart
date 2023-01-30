@@ -40,6 +40,7 @@ class NodeType {
   static const Metal = 77;
   static const Sandbag = 79;
   static const Shopping_Shelf = 80;
+  static const Tile = 81;
 
   static bool isMaterialWood(int value) =>
       value == Torch ||
@@ -60,6 +61,7 @@ class NodeType {
       value == Brick      ||
       value == Road       ||
       value == Road_2     ||
+      value == Tile       ||
       value == Chimney     ;
   
   static bool isMaterialDirt(int value) =>
@@ -83,6 +85,7 @@ class NodeType {
       type == Metal         ||
       type == Sandbag       ||
       type == Shopping_Shelf||
+      type == Tile          ||
       type == Boulder        ;
 
   static bool supportsOrientationEmpty(int type) =>
@@ -138,8 +141,8 @@ class NodeType {
       type == Wooden_Plank      ||
       type == Brick             ||
       type == Concrete          ||
-      type == Road          ||
-      type == Metal         ||
+      type == Road              ||
+      type == Metal             ||
       type == Bau_Haus           ;
 
   static bool supportsOrientationHalfVertical(int type) =>
@@ -147,7 +150,8 @@ class NodeType {
       type == Wood              ||
       type == Brick             ||
       type == Road          ||
-          type == Metal         ||
+      type == Metal         ||
+      type == Tile          ||
       type == Bau_Haus           ;
 
   static bool supportsOrientationCorner(int type) =>
@@ -317,5 +321,6 @@ class NodeType {
     Road: 'Road',
     Road_2: 'Road Paint',
     Shopping_Shelf: "Shopping Shelf",
+    Tile: "Tile",
   }[type] ?? 'unknown($type)';
 }

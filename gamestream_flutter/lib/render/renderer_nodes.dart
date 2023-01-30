@@ -689,6 +689,9 @@ class RendererNodes extends Renderer {
       case NodeType.Rain_Landing:
         renderNodeRainLanding();
         return;
+      case NodeType.Tile:
+        renderNodeTemplateShaded(588);
+        return;
       case NodeType.Concrete:
         renderNodeTemplateShaded(GameConstants.Sprite_Width_Padded_8);
         return;

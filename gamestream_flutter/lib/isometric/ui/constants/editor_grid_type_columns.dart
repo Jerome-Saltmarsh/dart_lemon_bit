@@ -28,4 +28,5 @@ const editorGridTypesColumn2 = [
   NodeType.Sandbag,
   NodeType.Boulder,
   NodeType.Shopping_Shelf,
+  NodeType.Tile,
 ];
