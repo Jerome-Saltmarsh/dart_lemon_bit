@@ -326,6 +326,7 @@ class GameIO {
     // EDIT MODE
     if (key == PhysicalKeyboardKey.keyF) return GameEditor.paint();
     if (key == PhysicalKeyboardKey.keyR) return GameEditor.selectPaintType();
+    if (key == PhysicalKeyboardKey.keyE) return GameEditor.raise();
     if (key == PhysicalKeyboardKey.keyG) {
       if (GameEditor.gameObjectSelected.value) {
         GameNetwork.sendGameObjectRequestMoveToMouse();

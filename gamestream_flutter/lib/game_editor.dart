@@ -156,6 +156,17 @@ class GameEditor {
         orientation: orientation,
     );
 
+  static void raise(){
+    final nodeIndex = nodeSelectedIndex.value;
+    if (nodeIndex <= GameNodes.area) return;
+    final nodeIndexBelow = nodeIndex - GameNodes.area;
+    GameNetwork.sendClientRequestSetBlock(
+      index: nodeSelectedIndex.value,
+      type: GameNodes.nodeTypes[nodeIndexBelow],
+      orientation: GameNodes.nodeOrientations[nodeIndexBelow],
+    );
+  }
+
   static void selectPaintType(){
      paintType.value = nodeSelectedType.value;
      paintOrientation.value = nodeSelectedOrientation.value;
