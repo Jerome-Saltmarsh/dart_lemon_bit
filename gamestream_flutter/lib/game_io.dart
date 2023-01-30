@@ -400,8 +400,8 @@ class GameIO {
         GameEditor.selectMouseBlock();
         break;
       case EditTab.Grid:
-        GameEditor.actionRecenterCamera();
         GameEditor.selectMouseBlock();
+        GameEditor.actionRecenterCamera();
         break;
       case EditTab.Objects:
         GameEditor.selectMouseGameObject();

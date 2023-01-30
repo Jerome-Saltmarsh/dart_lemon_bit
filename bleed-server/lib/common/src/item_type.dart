@@ -240,7 +240,6 @@ class ItemType {
       value == GameObjects_Toilet            ||
       value == GameObjects_Firehydrant       ||
       value == GameObjects_Car               ||
-      value == GameObjects_Grenade           ||
       value == GameObjects_Tavern_Sign        ;
 
   static bool isFixed(int value) => const [
