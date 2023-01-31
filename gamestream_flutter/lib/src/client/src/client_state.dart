@@ -5,7 +5,6 @@ import 'package:gamestream_flutter/library.dart';
 class ClientState {
   // WATCHES
   static final sceneChanged = Watch(0);
-  static final process = Watch(0);
   static final raining = Watch(false, onChanged: ClientEvents.onChangedRaining);
   static final areaTypeVisible = Watch(false, onChanged: ClientEvents.onChangedAreaTypeVisible);
   static final readsHotKeys = Watch(0);
@@ -45,8 +44,6 @@ class ClientState {
   static bool get hoverDialogDialogIsTrade => hoverDialogType.value == DialogType.Trade;
 
   static void update(){
-
-    process.value = 0;
 
     if (areaTypeVisible.value) {
       if (areaTypeVisibleDuration-- <= 0) {

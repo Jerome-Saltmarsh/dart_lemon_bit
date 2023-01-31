@@ -27,8 +27,6 @@ class GameDebug {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             watch(serverResponseReader.byteLength, (int bytes) => text('network-bytes: $bytes')),
-                            watch(serverResponseReader.bufferSize, (int bufferSize) => text('network-buffer: $bufferSize')),
-                            watch(ClientState.process, (int index) => text("client-state.process: $index")),
                             Refresh(() =>  text(
                                 "mouse-grid: x: ${GameIO.mouseGridX.toInt()}, y: ${GameIO.mouseGridY.toInt()}\n"
                                 "mouse-world: x: ${Engine.mouseWorldX.toInt()}, y: ${Engine.mouseWorldY.toInt()}\n"
@@ -51,16 +49,13 @@ class GameDebug {
                                 "player-weapon: ${ItemType.getName(GamePlayer.weapon.value)}\n"
                                 "player-interact-mode: ${InteractMode.getName(ServerState.interactMode.value)}\n"
                                 "scene-light-sources: ${ClientState.nodesLightSourcesTotal}\n"
-                                "total-gameobjects: ${ServerState.totalGameObjects}\n"
+                                "total-gameobjects: ${ServerState.totalGameObjects} (${ServerState.totalGameObjects * 8} bytes)\n"
                                 "total-characters: ${ServerState.totalCharacters}\n"
+                                'total-particles: ${ClientState.particles.length}\n'
+                                'total-particles-active: ${ClientState.totalActiveParticles}\n'
                                 "offscreen-nodes: left: ${RendererNodes.offscreenNodesLeft}, top: ${RendererNodes.offscreenNodesTop}, right: ${RendererNodes.offscreenNodesRight}, bottom: ${RendererNodes.offscreenNodesBottom}"
                             )),
                             Refresh(() => text('touch-world: x: ${GameIO.touchCursorWorldX.toInt()}, y: ${GameIO.touchCursorWorldY.toInt()}')),
-                            Refresh(() => text('characters-total: ${ServerState.characters.length}')),
-                            Refresh(() => text('characters-active: ${ServerState.totalCharacters}')),
-                            Refresh(() => text('particles-total: ${ClientState.particles.length}')),
-                            Refresh(() => text('particles-active: ${ClientState.totalActiveParticles}')),
-                            // Refresh(() => text('nodes-rendered: ${GameRender.onscreenNodes}')),
                             Refresh(() => text('engine-render-batches: ${Engine.batchesRendered}')),
                             Refresh(() => text('engine-render-batch-1: ${Engine.batches1Rendered}')),
                             Refresh(() => text('engine-render-batch-2: ${Engine.batches2Rendered}')),
