@@ -14,6 +14,16 @@ class Vector3 with Position {
   int get nodeIndex => GameQueries.getNodeIndex(x, y, z);
   int get indexProjection => nodeIndex % GameNodes.projection;
 
+  bool get onscreen {
+     final rx = renderX;
+     if (rx < Engine.screen.left) return false;
+     if (rx > Engine.screen.right) return false;
+     final ry = renderY;
+     if (ry < Engine.screen.top) return false;
+     if (ry > Engine.screen.bottom) return false;
+     return true;
+  }
+
   bool get nodePerceptible {
     if (outOfBounds) return false;
     if (!RendererNodes.playerInsideIsland) return true;

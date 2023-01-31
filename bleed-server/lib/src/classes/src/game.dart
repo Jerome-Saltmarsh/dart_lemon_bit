@@ -728,6 +728,9 @@ abstract class Game {
   void activateCollider(Collider collider){
     if (collider.active) return;
     collider.active = true;
+    if (collider is GameObject) {
+      collider.dirty = true;
+    }
     customOnColliderActivated(collider);
   }
 

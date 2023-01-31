@@ -71,7 +71,7 @@ class RendererGameObjects extends Renderer {
   void updateFunction() {
     gameObject = gameObjects[index];
 
-    while (!gameObject.active || !gameObject.nodePerceptible) {
+    while (!gameObject.active || !gameObject.onscreen || !gameObject.nodePerceptible) {
       index++;
       if (!remaining) return;
       gameObject = gameObjects[index];
