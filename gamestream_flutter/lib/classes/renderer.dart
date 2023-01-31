@@ -26,8 +26,8 @@ abstract class Renderer {
   }
 
   Renderer compare(Renderer that){
-    if (order < that.order) return this;
     if (orderZ < that.orderZ) return this;
+    if (order < that.order) return this;
     return that;
   }
 

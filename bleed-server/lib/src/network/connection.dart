@@ -335,11 +335,6 @@ class Connection with ByteReader {
     if (player == null) return;
     final game = player.game;
 
-    if (!isLocalMachine && game is GameDarkAgeEditor == false) {
-      player.writeError('cannot edit scene');
-      return;
-    }
-
     if (arguments.length < 2){
       return errorInvalidArg('insufficient args');
     }
@@ -352,6 +347,14 @@ class Connection with ByteReader {
        return errorInvalidArg('invalid edit request $editRequestIndex');
     }
     final editRequest = EditRequest.values[editRequestIndex];
+
+    if (editRequest != EditRequest.Download
+        && !isLocalMachine
+        && game is GameDarkAgeEditor == false
+    ) {
+      player.writeError('cannot edit scene');
+      return;
+    }
 
     switch (editRequest) {
       case EditRequest.Toggle_Game_Running:

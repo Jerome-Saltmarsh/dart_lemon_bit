@@ -54,12 +54,14 @@ class GameSystem {
 
       final cachedVersion = sharedPreferences.getString('version');
 
+
       if (cachedVersion != null){
          if (version != cachedVersion){
             print("New version detected (previous: $cachedVersion, latest: $version)");
          }
       }
     }
+    await Future.delayed(const Duration(seconds: 3));
   }
 
   static void onDeviceTypeChanged(int deviceType){
