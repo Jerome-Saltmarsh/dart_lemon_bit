@@ -66,6 +66,7 @@ abstract class Game {
   final scripts = <GameScript>[];
   final scriptReader = ByteReader();
   var _timerUpdateAITargets = 0;
+  var gameObjectId = 0;
 
   DarkAgeEnvironment environment;
   DarkAgeTime time;
@@ -157,6 +158,7 @@ abstract class Game {
   /// CONSTRUCTOR
   Game({required this.scene, required this.time, required this.environment, required this.gameType}) {
     engine.onGameCreated(this); /// TODO Illegal external scope reference
+    gameObjectId = scene.gameObjects.length;
   }
 
   /// QUERIES
@@ -743,6 +745,10 @@ abstract class Game {
      collider.velocityY = 0;
      collider.velocityZ = 0;
 
+     if (collider is GameObject){
+       collider.dirty = true;
+     }
+
      for (final character in characters) {
        if (character.target != collider) continue;
        clearCharacterTarget(character);
@@ -920,11 +926,23 @@ abstract class Game {
   void updateGameObjects() {
     for (final gameObject in gameObjects){
       updateColliderPhysics(gameObject);
+      if (gameObject.positionDirty) {
+        gameObject.dirty = true;
+      }
+    }
+    for (final gameObject in gameObjects) {
+      if (!gameObject.dirty) continue;
+      gameObject.synchronizePrevious();
+      for (final player in players) {
+         player.writeGameObject(gameObject);
+      }
+      gameObject.dirty = false;
     }
   }
 
   void updateColliderPhysics(Collider collider) {
     if (!collider.active) return;
+
 
     collider.applyVelocity();
     collider.applyFriction();
@@ -2021,6 +2039,7 @@ abstract class Game {
       y: 0,
       z: 0,
       type: type,
+      id: gameObjectId++,
     );
     moveV3ToNodeIndex(instance, index);
     gameObjects.add(instance);
@@ -2081,6 +2100,7 @@ abstract class Game {
       y: y,
       z: z,
       type: type,
+      id: gameObjectId++,
     );
     instance.strikable   = ItemType.isStrikable(type);
     instance.physical     = ItemType.isPhysical(type);

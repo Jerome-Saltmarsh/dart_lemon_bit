@@ -1079,7 +1079,7 @@ class Player extends Character with ByteWriter {
     writeProjectiles();
     writePlayerTargetPosition();
     writeCharacters();
-    writeGameObjects();
+    // writeGameObjects();
     writeEditorGameObjectSelected();
 
     if (game.time.enabled){
@@ -1147,23 +1147,24 @@ class Player extends Character with ByteWriter {
   void writeGameObjects(){
     final gameObjects = game.gameObjects;
     for (final gameObject in gameObjects) {
-      if (!gameObject.active) continue;
-
-      const AlwaysSend = [
-        ItemType.GameObjects_Crystal_Small_Blue,
-        ItemType.GameObjects_Crystal_Small_Red,
-        ItemType.GameObjects_Barrel_Flaming,
-      ];
-
-      if (!AlwaysSend.contains(gameObject.type)) {
-        if (gameObject.renderY < screenTop) continue;
-        if (gameObject.renderX < screenLeft) continue;
-        if (gameObject.renderX > screenRight) continue;
-        if (gameObject.renderY > screenBottom) continue;
-      }
-      writeByte(ServerResponse.GameObject);
-      writeUInt16(gameObject.type);
-      writePosition3(gameObject);
+      writeGameObject(gameObject);
+      // if (!gameObject.active) continue;
+      //
+      // const AlwaysSend = [
+      //   ItemType.GameObjects_Crystal_Small_Blue,
+      //   ItemType.GameObjects_Crystal_Small_Red,
+      //   ItemType.GameObjects_Barrel_Flaming,
+      // ];
+      //
+      // if (!AlwaysSend.contains(gameObject.type)) {
+      //   if (gameObject.renderY < screenTop) continue;
+      //   if (gameObject.renderX < screenLeft) continue;
+      //   if (gameObject.renderX > screenRight) continue;
+      //   if (gameObject.renderY > screenBottom) continue;
+      // }
+      // writeByte(ServerResponse.GameObject);
+      // writeUInt16(gameObject.type);
+      // writePosition3(gameObject);
     }
   }
 
@@ -1207,6 +1208,7 @@ class Player extends Character with ByteWriter {
     writeRenderMap(game.customPropMapVisible);
     writeGameType(game.gameType);
     writeWeather();
+    writeGameObjects();
     game.customDownloadScene(this);
     writePlayerEvent(PlayerEvent.Scene_Changed);
     sceneDownloaded = true;
@@ -1719,6 +1721,14 @@ class Player extends Character with ByteWriter {
     writeUInt8(ApiPlayer.Energy);
     writeUInt16(energy);
     writeUInt16(maxEnergy);
+  }
+
+  void writeGameObject(GameObject gameObject){
+    writeUInt8(ServerResponse.GameObject);
+    writeUInt16(gameObject.id);
+    writeBool(gameObject.active);
+    writeUInt16(gameObject.type);
+    writeVector3(gameObject);
   }
 }
 

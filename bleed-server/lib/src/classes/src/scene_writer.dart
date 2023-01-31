@@ -165,6 +165,7 @@ class SceneReader extends ByteReader {
 
   void readGameObjects() {
     gameObjects.clear();
+    var id = 0;
     final total = readUInt16();
     for (var i = 0; i < total; i++){
       final type = readUInt16();
@@ -172,7 +173,7 @@ class SceneReader extends ByteReader {
       final y = readUDouble16();
       final z = readUDouble16();
       gameObjects.add(
-        GameObject(x: x, y: y, z: z, type: type)
+        GameObject(x: x, y: y, z: z, type: type, id: id++)
       );
     }
   }

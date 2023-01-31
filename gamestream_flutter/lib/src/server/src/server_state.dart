@@ -202,6 +202,16 @@ class ServerState {
         }
     }
   }
+
+  static GameObject findGameObjectById(int id){
+    for (final gameObject in gameObjects){
+      if (gameObject.id != id) continue;
+      return gameObject;
+    }
+    final instance = GameObject()..id = id;
+    gameObjects.add(instance);
+    return instance;
+  }
 }
 
 

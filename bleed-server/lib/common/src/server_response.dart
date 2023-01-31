@@ -24,6 +24,7 @@ class ServerResponse {
   static const Dark_Age = 110;
   static const Game_Status = 111;
   static const Download_Scene = 112;
+  static const GameObjects= 113;
 
 }
 

@@ -607,10 +607,10 @@ class Connection with ByteReader {
               y: scene.convertNodeIndexToPositionY(index) + Node_Size_Half,
               z: scene.convertNodeIndexToPositionZ(index),
               type: type,
+              id: player.game.gameObjectId++,
           )
         );
         player.editorSelectedGameObject = player.game.scene.gameObjects.last;
-        // player.scene.dirty = true;
         break;
 
       case GameObjectRequest.Delete:

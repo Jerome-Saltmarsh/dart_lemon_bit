@@ -150,9 +150,11 @@ class ServerResponseReader with ByteReader {
   }
 
   void readGameObject() {
-    final instance = ServerState.getInstanceGameObject();
-    instance.type = readUInt16();
-    readVector3(instance);
+    final id = readUInt16();
+    final gameObject = ServerState.findGameObjectById(id);
+    gameObject.active = readBool();
+    gameObject.type = readUInt16();
+    readVector3(gameObject);
   }
 
   void readApiPlayer() {

@@ -102,12 +102,12 @@ class ClientState {
 
     Engine.insertionSort(
       particles,
-      compare: compareParticleRenderOrder,
+      compare: compareRenderOrder,
       end: totalActiveParticles,
     );
   }
   
-  static int compareParticleRenderOrder(Particle a, Particle b) {
+  static int compareRenderOrder(Vector3 a, Vector3 b) {
     return a.sortOrder > b.sortOrder ? 1 : -1;
   }
 

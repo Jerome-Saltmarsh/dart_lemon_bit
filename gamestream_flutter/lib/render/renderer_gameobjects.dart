@@ -8,7 +8,9 @@ class RendererGameObjects extends Renderer {
   static final gameObjects = ServerState.gameObjects;
 
   @override
-  int getTotal() => ServerState.totalGameObjects;
+  int getTotal() {
+    return gameObjects.length;
+  }
 
   @override
   void renderFunction() {
@@ -57,15 +59,24 @@ class RendererGameObjects extends Renderer {
   }
 
   @override
+  void reset(){
+    Engine.insertionSort(
+      ServerState.gameObjects,
+      compare: ClientState.compareRenderOrder,
+    );
+    super.reset();
+  }
+
+  @override
   void updateFunction() {
     gameObject = gameObjects[index];
 
-
-    while (!gameObject.nodePerceptible) {
+    while (!gameObject.active || !gameObject.nodePerceptible) {
       index++;
       if (!remaining) return;
       gameObject = gameObjects[index];
     }
+
     order = gameObject.renderOrder;
     orderZ = gameObject.indexZ;
   }
