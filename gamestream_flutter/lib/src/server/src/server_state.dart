@@ -6,7 +6,6 @@ import 'package:gamestream_flutter/library.dart';
 ///
 /// WARNING - WRITING TO SERVER STATE IS FORBIDDEN
 class ServerState {
-  static var totalGameObjects = 0;
   static var totalCharacters = 0;
   static var totalPlayers = 0;
   static var totalNpcs = 0;
@@ -89,13 +88,6 @@ class ServerState {
     return characters[totalCharacters];
   }
 
-  static GameObject getInstanceGameObject(){
-    if (gameObjects.length <= totalGameObjects){
-      gameObjects.add(GameObject());
-    }
-    return gameObjects[totalGameObjects++];
-  }
-
   static Character? getPlayerCharacter(){
     for (var i = 0; i < totalCharacters; i++){
       if (characters[i].x != GamePlayer.position.x) continue;
@@ -106,8 +98,9 @@ class ServerState {
   }
 
   static void applyEmissionGameObjects() {
-    for (var i = 0; i < totalGameObjects; i++){
-      final gameObject = gameObjects[i];
+    for (final gameObject in gameObjects){
+
+      if (!gameObject.active) continue;
 
       if (gameObject.type == ItemType.GameObjects_Barrel_Flaming) {
         GameState.applyVector3EmissionAmbient(gameObject, alpha: 0);
@@ -153,8 +146,8 @@ class ServerState {
   }
 
   static void updateGameObjects() {
-    for (var i = 0; i < totalGameObjects; i++){
-      final gameObject = gameObjects[i];
+    for (final gameObject in gameObjects){
+      if (!gameObject.active) continue;
       if (gameObject.type != ItemType.GameObjects_Grenade) continue;
       projectShadow(gameObject);
     }
@@ -211,6 +204,10 @@ class ServerState {
     final instance = GameObject()..id = id;
     gameObjects.add(instance);
     return instance;
+  }
+
+  static void clean() {
+    // gameObjects.clear();
   }
 }
 

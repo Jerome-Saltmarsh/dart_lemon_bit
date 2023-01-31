@@ -185,6 +185,7 @@ class GameNetwork {
   static void onChangedConnectionStatus(ConnectionStatus connection) {
     GameIO.removeListeners();
     Engine.onDrawForeground = null;
+
     switch (connection) {
       case ConnectionStatus.Connected:
         Engine.cursorType.value = CursorType.None;
@@ -216,6 +217,7 @@ class GameNetwork {
         Engine.onUpdate = GameWebsite.update;
         Engine.fullScreenExit();
         GameState.clear();
+        ServerState.clean();
         // TODO illegal server state assignment
         ServerState.gameType.value = null;
         ServerState.sceneEditable.value = false;

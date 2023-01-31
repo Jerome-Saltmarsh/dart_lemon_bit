@@ -222,7 +222,6 @@ class GameState {
     ServerState.totalNpcs = 0;
     ServerState.interactMode.value = InteractMode.None;
     ClientState.particles.clear();
-    // particleEmitters.clear();
     Engine.zoom = 1;
     Engine.redrawCanvas();
   }
@@ -374,6 +373,7 @@ class GameState {
     required double y,
     required double z,
     required double zv,
+    int duration = 30,
   }) {
     spawnParticle(
         type: ParticleType.Water_Drop,
@@ -384,7 +384,7 @@ class GameState {
         speed: 0.5,
         zv: zv,
         weight: 5,
-        duration: 30,
+        duration: duration,
         rotation: 0,
         rotationV: 0,
         scaleV: 0,
@@ -1184,21 +1184,11 @@ class GameState {
   static var nextEmissionSmoke = 0;
 
     static void updateParticleEmitters(){
-      // for (final emitter in particleEmitters) {
-      //   if (emitter.next-- > 0) continue;
-      //   emitter.next = emitter.rate;
-      //   final particle = ClientState.getInstanceParticle();
-      //   particle.x = emitter.x;
-      //   particle.y = emitter.y;
-      //   particle.z = emitter.z;
-      //   emitter.emit(particle);
-      // }
-
       nextEmissionSmoke--;
       if (nextEmissionSmoke > 0) return;
       nextEmissionSmoke = 20;
-      for (var i = 0; i < ServerState.totalGameObjects; i++){
-          final gameObject = ServerState.gameObjects[i];
+      for (final gameObject in ServerState.gameObjects){
+          if (!gameObject.active) continue;
           if (gameObject.type != ItemType.GameObjects_Barrel_Flaming) continue;
           spawnParticleSmoke(x: gameObject.x + giveOrTake(5), y: gameObject.y + giveOrTake(5), z: gameObject.z + 35);
       }

@@ -262,8 +262,9 @@ class GameEvents {
   }
 
   static void onSplash(double x, double y, double z) {
-    for (var i = 0; i < 10; i++){
-      GameState.spawnParticleWaterDrop(x: x, y: y, z: z, zv: randomBetween(1.5, 2.5));
+    for (var i = 0; i < 12; i++){
+      final zv = randomBetween(1.5, 5);
+      GameState.spawnParticleWaterDrop(x: x, y: y, z: z, zv: zv, duration: (zv * 12).toInt());
     }
     return GameAudio.splash.playXYZ(x, y, z);
   }

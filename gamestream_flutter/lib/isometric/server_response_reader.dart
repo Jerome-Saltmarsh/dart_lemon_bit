@@ -13,7 +13,6 @@ class ServerResponseReader with ByteReader {
     updateFrame.value++;
     index = 0;
     ServerState.totalCharacters = 0;
-    ServerState.totalGameObjects = 0;
     this.values = values;
     bufferSize.value = values.length;
 
