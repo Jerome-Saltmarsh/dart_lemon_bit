@@ -121,14 +121,6 @@ class GameNodes {
           }
       }
   }
-  
-  // static void resetVisible(){
-  //   while (visibleIndex > 0) {
-  //     nodeVisible[nodeVisibleIndex[visibleIndex]] = Visibility.Opaque;
-  //     visibleIndex--;
-  //   }
-  //   nodeVisible[nodeVisibleIndex[0]] = Visibility.Opaque;
-  // }
 
   static void resetStackDynamicLight() {
     while (dynamicIndex >= 0) {
@@ -142,20 +134,6 @@ class GameNodes {
     }
     dynamicIndex = 0;
   }
-
-  // static void addInvisibleIndex(int index){
-  //   if (nodeVisible[index] == Visibility.Invisible) return;
-  //   nodeVisible[index] = Visibility.Invisible;
-  //   nodeVisibleIndex[visibleIndex] = index;
-  //   visibleIndex++;
-  // }
-
-  // static void addTransparentIndex(int index){
-  //   if (nodeVisible[index] == Visibility.Transparent) return;
-  //   nodeVisible[index] = Visibility.Transparent;
-  //   nodeVisibleIndex[visibleIndex] = index;
-  //   visibleIndex++;
-  // }
 
   static int linerInterpolationInt(int a, int b, double t) {
     return (a * (1.0 - t) + b * t).round();
@@ -328,4 +306,50 @@ class GameNodes {
     lengthColumns = totalColumns * Node_Size;
     lengthZ = totalZ * Node_Height;
   }
+
+  static final shadow = Vector3();
+
+  static void markShadow(Vector3 vector){
+    final index = vector.nodeIndex - area;
+    if (index < 0) return;
+    if (index >= total) return;
+
+    final indexRow = getIndexRow(index);
+    final indexColumn = getIndexColumn(index);
+
+    final vectorX = vector.x;
+    final vectorY = vector.y;
+
+    var vx = 0.0;
+    var vy = 0.0;
+
+    for (var row = -1; row <= 1; row++) {
+      final searchRow = indexRow + row;
+      if (searchRow < 0) continue;
+      if (searchRow >= totalRows) break;
+      final rowAddition = index + (row * totalColumns);
+      for (var column = -1; column <= 1; column++){
+        final searchColumn = indexColumn + column;
+        if (searchColumn < 0) continue;
+        if (searchColumn >= totalColumns) break;
+        final searchIndex = rowAddition + column;
+        final x = (searchRow * Node_Size) + Node_Size_Half;
+        final y = (searchColumn * Node_Size) + Node_Size_Half;
+        final angle = getAngleBetween(vectorX, vectorY, x, y);
+        // final strength = -(nodeAlps[searchIndex] - 255);
+        final strength = nodeAlps[searchIndex];
+        vx += (cos(angle) * strength);
+        vy += (sin(angle) * strength);
+      }
+    }
+
+    // final angle = getAngle(vx, vy);
+    shadow.x = vx;
+    shadow.y = vy;
+    shadow.z = getAngle(vx, vy);
+ }
+
+  static int getIndexRow(int index) => (index % area) ~/ totalColumns;
+  static int getIndexZ(int index) => index ~/ area;
+  static int getIndexColumn(int index) => index % totalColumns;
 }
