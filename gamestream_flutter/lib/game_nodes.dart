@@ -334,6 +334,8 @@ class GameNodes {
         if (searchColumn < 0) continue;
         if (searchColumn >= totalColumns) break;
         final searchIndex = rowAddition + column;
+        final alpha = nodeAlps[searchIndex];
+        if (alpha >= GameNodes.ambient_alp) continue;
         final x = (searchRow * Node_Size);
         final y = (searchColumn * Node_Size);
 
@@ -344,7 +346,6 @@ class GameNodes {
         final distanceChecked = max(distance, Node_Size);
 
         final angle = getAngleBetween(vectorX, vectorY, x, y);
-        final alpha = nodeAlps[searchIndex];
         final strength = (alpha / distanceChecked) * 3.0;
         vx += (cos(angle) * strength);
         vy += (sin(angle) * strength);

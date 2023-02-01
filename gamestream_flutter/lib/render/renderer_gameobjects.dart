@@ -19,6 +19,24 @@ class RendererGameObjects extends Renderer {
     final type = gameObject.type;
     if (ItemType.isTypeGameObject(type)) {
 
+
+
+      Engine.renderSprite(
+        image: GameImages.atlas_gameobjects,
+        dstX: gameObject.renderX,
+        dstY: gameObject.renderY,
+        srcX: AtlasItems.getSrcX(type),
+        srcY: AtlasItems.getSrcY(type),
+        anchorY: AtlasItems.getAnchorY(type),
+        srcWidth: AtlasItems.getSrcWidth(type),
+        srcHeight: AtlasItems.getSrcHeight(type),
+        scale: AtlasItems.getSrcScale(type),
+        color: GameState.getV3RenderColor(gameObject),
+      );
+      if (GameRender.renderDebug) {
+        renderGameObjectRadius(gameObject);
+      }
+
       if (type == ItemType.GameObjects_Crate_Wooden){
         GameNodes.markShadow(gameObject);
 
@@ -40,23 +58,6 @@ class RendererGameObjects extends Renderer {
           scale: AtlasItems.getSrcScale(type),
           color: GameState.getV3RenderColor(gameObject),
         );
-      }
-
-
-      Engine.renderSprite(
-        image: GameImages.atlas_gameobjects,
-        dstX: gameObject.renderX,
-        dstY: gameObject.renderY,
-        srcX: AtlasItems.getSrcX(type),
-        srcY: AtlasItems.getSrcY(type),
-        anchorY: AtlasItems.getAnchorY(type),
-        srcWidth: AtlasItems.getSrcWidth(type),
-        srcHeight: AtlasItems.getSrcHeight(type),
-        scale: AtlasItems.getSrcScale(type),
-        color: GameState.getV3RenderColor(gameObject),
-      );
-      if (GameRender.renderDebug) {
-        renderGameObjectRadius(gameObject);
       }
 
       return;
