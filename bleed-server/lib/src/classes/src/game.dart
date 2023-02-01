@@ -1270,7 +1270,7 @@ abstract class Game {
   void sortGameObjects() {
     Position3.sort(characters);
     Position3.sort(projectiles);
-    Position3.sort(gameObjects);
+    // Position3.sort(gameObjects);
   }
 
   void setCharacterStateDying(Character character) {
