@@ -154,6 +154,7 @@ class ServerResponseReader with ByteReader {
     gameObject.active = readBool();
     gameObject.type = readUInt16();
     readVector3(gameObject);
+    ServerState.sortGameObjects();
   }
 
   void readApiPlayer() {

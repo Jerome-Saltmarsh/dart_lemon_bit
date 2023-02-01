@@ -209,6 +209,13 @@ class ServerState {
   static void clean() {
     // gameObjects.clear();
   }
+
+  static void sortGameObjects(){
+    Engine.insertionSort(
+      gameObjects,
+      compare: ClientState.compareRenderOrder,
+    );
+  }
 }
 
 

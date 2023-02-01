@@ -14,33 +14,14 @@ class RendererGameObjects extends Renderer {
     return gameObjects.length;
   }
 
+
   @override
   void renderFunction() {
     final type = gameObject.type;
     if (ItemType.isTypeGameObject(type)) {
 
-
-
-      Engine.renderSprite(
-        image: GameImages.atlas_gameobjects,
-        dstX: gameObject.renderX,
-        dstY: gameObject.renderY,
-        srcX: AtlasItems.getSrcX(type),
-        srcY: AtlasItems.getSrcY(type),
-        anchorY: AtlasItems.getAnchorY(type),
-        srcWidth: AtlasItems.getSrcWidth(type),
-        srcHeight: AtlasItems.getSrcHeight(type),
-        scale: AtlasItems.getSrcScale(type),
-        color: GameState.getV3RenderColor(gameObject),
-      );
-      if (GameRender.renderDebug) {
-        renderGameObjectRadius(gameObject);
-      }
-
       if (type == ItemType.GameObjects_Crate_Wooden){
         GameNodes.markShadow(gameObject);
-
-        // final anchorY = AtlasItems.getAnchorY(type) * AtlasItems.getSrcHeight(type);
         final shadowAngle = GameNodes.shadow.z + pi;
         final shadowDistance = min(GameNodes.shadow.magnitudeXY, 10.0);
         final shadowX = gameObject.x + getAdjacent(shadowAngle, shadowDistance);
@@ -58,6 +39,22 @@ class RendererGameObjects extends Renderer {
           scale: AtlasItems.getSrcScale(type),
           color: GameState.getV3RenderColor(gameObject),
         );
+      }
+
+      Engine.renderSprite(
+        image: GameImages.atlas_gameobjects,
+        dstX: gameObject.renderX,
+        dstY: gameObject.renderY,
+        srcX: AtlasItems.getSrcX(type),
+        srcY: AtlasItems.getSrcY(type),
+        anchorY: AtlasItems.getAnchorY(type),
+        srcWidth: AtlasItems.getSrcWidth(type),
+        srcHeight: AtlasItems.getSrcHeight(type),
+        scale: AtlasItems.getSrcScale(type),
+        color: GameState.getV3RenderColor(gameObject),
+      );
+      if (GameRender.renderDebug) {
+        renderGameObjectRadius(gameObject);
       }
 
       return;
@@ -86,14 +83,14 @@ class RendererGameObjects extends Renderer {
     );
   }
 
-  @override
-  void reset(){
-    Engine.insertionSort(
-      ServerState.gameObjects,
-      compare: ClientState.compareRenderOrder,
-    );
-    super.reset();
-  }
+  // @override
+  // void reset(){
+  //   Engine.insertionSort(
+  //     ServerState.gameObjects,
+  //     compare: ClientState.compareRenderOrder,
+  //   );
+  //   super.reset();
+  // }
 
   @override
   void updateFunction() {

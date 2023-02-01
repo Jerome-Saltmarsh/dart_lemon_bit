@@ -322,7 +322,7 @@ class GameNodes {
 
     var vx = 0.0;
     var vy = 0.0;
-    const r = 2;
+    const r = 1;
 
     for (var row = -r; row <= r; row++) {
       final searchRow = indexRow + row;
@@ -346,7 +346,7 @@ class GameNodes {
         final distanceChecked = max(distance, Node_Size);
 
         final angle = getAngleBetween(vectorX, vectorY, x, y);
-        final strength = (alpha / distanceChecked) * 3.0;
+        final strength = (alpha / distanceChecked) * 4.0;
         vx += (cos(angle) * strength);
         vy += (sin(angle) * strength);
       }
@@ -361,4 +361,51 @@ class GameNodes {
   static int getIndexRow(int index) => (index % area) ~/ totalColumns;
   static int getIndexZ(int index) => index ~/ area;
   static int getIndexColumn(int index) => index % totalColumns;
+
+
+
+
+
+  /// EMIT LIGHT FUNCTIONS
+
+  static void emitLightAmbientWithShadows({
+    required int index,
+    required int alpha,
+  }){
+    if (index < 0) return;
+    if (index >= total) return;
+    const range = 7;
+    shootLightNorth(
+        index: index - totalColumns,
+        range: range,
+        alpha: alpha,
+    );
+  }
+
+  static void shootLightNorth({
+    required int index,
+    required int range,
+    required int alpha,
+  }) {
+    if (index < 0) return;
+    if (index >= total) return;
+    var distance = 0;
+
+    for (var i = 0; i < range; i++) {
+      index -= totalColumns;
+      if (index < 0) return;
+
+      // // final nodeIndex = a + column;
+      // final distanceValue = Engine.clamp(b + (column - columnIndex).abs() - 2, 0, Shade.Pitch_Black);
+      // if (distanceValue > 5) continue;
+      //
+      // nodeDynamicIndex[dynamicIndex++] = index;
+      //
+      // final intensity = 1.0 - interpolations[clamp(distanceValue, 0, 7)];
+      // final nodeAlpha = nodeAlps[index];
+      // if (nodeAlpha < alpha) continue;
+      // nodeAlps[index] = linerInterpolationInt(nodeAlps[index], alpha, intensity);
+      // refreshNodeColor(index);
+    }
+  }
 }

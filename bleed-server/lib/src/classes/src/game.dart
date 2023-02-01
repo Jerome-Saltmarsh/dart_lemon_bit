@@ -965,7 +965,7 @@ abstract class Game {
     required Position3 target,
     required Character srcCharacter,
     double radius = 100.0,
-    int damage = 5,
+    int damage = 25,
   }){
     if (!scene.inboundsV3(target)) return;
     dispatchV3(GameEventType.Explosion, target);
