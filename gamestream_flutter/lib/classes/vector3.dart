@@ -99,4 +99,8 @@ class Vector3 with Position {
     return sqrt((x * x) + (y * y) + (z * z));
   }
 
+  double get magnitudeXY {
+    return sqrt((x * x) + (y * y));
+  }
+
 }

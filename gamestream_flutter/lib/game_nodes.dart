@@ -341,11 +341,11 @@ class GameNodes {
         final distanceY = y - vectorY;
         final distanceSquared = (distanceX * distanceX) + (distanceY * distanceY);
         final distance = sqrt(distanceSquared);
-        final distanceChecked = max(distance, Node_Size_Half);
+        final distanceChecked = max(distance, Node_Size);
 
         final angle = getAngleBetween(vectorX, vectorY, x, y);
         final alpha = nodeAlps[searchIndex];
-        final strength = (alpha / distanceChecked) * 10.0;
+        final strength = (alpha / distanceChecked) * 3.0;
         vx += (cos(angle) * strength);
         vy += (sin(angle) * strength);
       }

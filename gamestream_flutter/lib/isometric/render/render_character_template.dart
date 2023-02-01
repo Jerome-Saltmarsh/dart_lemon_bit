@@ -179,8 +179,10 @@ void renderCharacterTemplate(Character character, {
     Engine.paint.color = Colors.white;
 
     final shadowAngle = GameNodes.shadow.z + pi;
-    final shadowX = character.x + getAdjacent(shadowAngle, 10);
-    final shadowY = character.y + getOpposite(shadowAngle, 10);
+    final shadowDistance = GameNodes.shadow.magnitudeXY;
+
+    final shadowX = character.x + getAdjacent(shadowAngle, shadowDistance);
+    final shadowY = character.y + getOpposite(shadowAngle, shadowDistance);
     final shadowZ = character.z;
 
     Engine.renderSprite(
@@ -224,7 +226,7 @@ void renderCharacterTemplate(Character character, {
     );
 
     // final height = GameNodes.heightMap[(character.indexRow * GameNodes.totalColumns) + character.indexColumn];
-    GameRender.renderTextV3(character, GameNodes.nodeAlps[character.nodeIndex - GameNodes.area], offsetY: -80);
+    // GameRender.renderTextV3(character, GameNodes.nodeAlps[character.nodeIndex - GameNodes.area], offsetY: -80);
 
     Engine.renderSprite(
         image: GameImages.getImageForHeadType(character.headType),
