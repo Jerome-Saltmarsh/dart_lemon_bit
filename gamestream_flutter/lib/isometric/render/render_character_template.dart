@@ -174,13 +174,12 @@ void renderCharacterTemplate(Character character, {
   if (character.z >= GameConstants.Node_Height){
     GameNodes.markShadow(character);
 
-    Engine.paint.color = Colors.red;
-    GameRender.renderLine(character.x, character.y, character.z, character.x + GameNodes.shadow.x, character.y + GameNodes.shadow.y, character.z);
-    Engine.paint.color = Colors.white;
+    // Engine.paint.color = Colors.red;
+    // GameRender.renderLine(character.x, character.y, character.z, character.x + GameNodes.shadow.x, character.y + GameNodes.shadow.y, character.z);
+    // Engine.paint.color = Colors.white;
 
     final shadowAngle = GameNodes.shadow.z + pi;
     final shadowDistance = GameNodes.shadow.magnitudeXY;
-
     final shadowX = character.x + getAdjacent(shadowAngle, shadowDistance);
     final shadowY = character.y + getOpposite(shadowAngle, shadowDistance);
     final shadowZ = character.z;

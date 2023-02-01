@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:gamestream_flutter/library.dart';
 
 import 'functions/render_shadow.dart';
@@ -17,6 +19,30 @@ class RendererGameObjects extends Renderer {
     final type = gameObject.type;
     if (ItemType.isTypeGameObject(type)) {
 
+      if (type == ItemType.GameObjects_Crate_Wooden){
+        GameNodes.markShadow(gameObject);
+
+        // final anchorY = AtlasItems.getAnchorY(type) * AtlasItems.getSrcHeight(type);
+        final shadowAngle = GameNodes.shadow.z + pi;
+        final shadowDistance = min(GameNodes.shadow.magnitudeXY, 10.0);
+        final shadowX = gameObject.x + getAdjacent(shadowAngle, shadowDistance);
+        final shadowY = gameObject.y + getOpposite(shadowAngle, shadowDistance);
+        final shadowZ = gameObject.z;
+
+        Engine.renderSprite(
+          image: GameImages.atlas_gameobjects,
+          dstX: GameConvert.getRenderX(shadowX, shadowY, shadowZ),
+          dstY: GameConvert.getRenderY(shadowX, shadowY, shadowZ),
+          srcX: 49,
+          srcY: 256,
+          srcWidth: 48,
+          srcHeight: 48,
+          scale: AtlasItems.getSrcScale(type),
+          color: GameState.getV3RenderColor(gameObject),
+        );
+      }
+
+
       Engine.renderSprite(
         image: GameImages.atlas_gameobjects,
         dstX: gameObject.renderX,
@@ -32,6 +58,7 @@ class RendererGameObjects extends Renderer {
       if (GameRender.renderDebug) {
         renderGameObjectRadius(gameObject);
       }
+
       return;
     }
 
