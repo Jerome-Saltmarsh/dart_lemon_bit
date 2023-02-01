@@ -322,22 +322,30 @@ class GameNodes {
 
     var vx = 0.0;
     var vy = 0.0;
+    const r = 2;
 
-    for (var row = -1; row <= 1; row++) {
+    for (var row = -r; row <= r; row++) {
       final searchRow = indexRow + row;
       if (searchRow < 0) continue;
       if (searchRow >= totalRows) break;
       final rowAddition = index + (row * totalColumns);
-      for (var column = -1; column <= 1; column++){
+      for (var column = -r; column <= r; column++){
         final searchColumn = indexColumn + column;
         if (searchColumn < 0) continue;
         if (searchColumn >= totalColumns) break;
         final searchIndex = rowAddition + column;
-        final x = (searchRow * Node_Size) + Node_Size_Half;
-        final y = (searchColumn * Node_Size) + Node_Size_Half;
+        final x = (searchRow * Node_Size);
+        final y = (searchColumn * Node_Size);
+
+        final distanceX = x - vectorX;
+        final distanceY = y - vectorY;
+        final distanceSquared = (distanceX * distanceX) + (distanceY * distanceY);
+        final distance = sqrt(distanceSquared);
+        final distanceChecked = max(distance, Node_Size_Half);
+
         final angle = getAngleBetween(vectorX, vectorY, x, y);
-        // final strength = -(nodeAlps[searchIndex] - 255);
-        final strength = nodeAlps[searchIndex];
+        final alpha = nodeAlps[searchIndex];
+        final strength = (alpha / distanceChecked) * 10.0;
         vx += (cos(angle) * strength);
         vy += (sin(angle) * strength);
       }

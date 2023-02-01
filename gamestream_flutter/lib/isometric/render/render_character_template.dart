@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:flutter/material.dart';
+
 import '../../library.dart';
 import 'render_character_health_bar.dart';
 
@@ -169,27 +171,32 @@ void renderCharacterTemplate(Character character, {
   //   }
   // }
 
-  GameNodes.markShadow(character);
+  if (character.z >= GameConstants.Node_Height){
+    GameNodes.markShadow(character);
 
-  GameRender.renderLine(character.x, character.y, character.z, character.x + GameNodes.shadow.x, character.y + GameNodes.shadow.y, character.z);
+    Engine.paint.color = Colors.red;
+    GameRender.renderLine(character.x, character.y, character.z, character.x + GameNodes.shadow.x, character.y + GameNodes.shadow.y, character.z);
+    Engine.paint.color = Colors.white;
 
-  final shadowAngle = GameNodes.shadow.z + pi;
-  final shadowX = character.x + getAdjacent(shadowAngle, 10);
-  final shadowY = character.y + getOpposite(shadowAngle, 10);
-  final shadowZ = character.z;
+    final shadowAngle = GameNodes.shadow.z + pi;
+    final shadowX = character.x + getAdjacent(shadowAngle, 10);
+    final shadowY = character.y + getOpposite(shadowAngle, 10);
+    final shadowZ = character.z;
 
-  Engine.renderSprite(
-    image: GameImages.template_shadow,
-    srcX: frameLegs * 64,
-    srcY: upperBodyDirection * 64,
-    srcWidth: 64,
-    srcHeight: 64,
-    dstX: GameConvert.getRenderX(shadowX, shadowY, shadowZ),
-    dstY: GameConvert.getRenderY(shadowX, shadowY, shadowZ),
-    scale: Scale,
-    color: color,
-    anchorY: Anchor_Y,
-  );
+    Engine.renderSprite(
+      image: GameImages.template_shadow,
+      srcX: frameLegs * 64,
+      srcY: upperBodyDirection * 64,
+      srcWidth: 64,
+      srcHeight: 64,
+      dstX: GameConvert.getRenderX(shadowX, shadowY, shadowZ),
+      dstY: GameConvert.getRenderY(shadowX, shadowY, shadowZ),
+      scale: Scale,
+      color: color,
+      anchorY: Anchor_Y,
+    );
+  }
+
 
     Engine.renderSprite(
         image: GameImages.getImageForLegType(character.legType),
