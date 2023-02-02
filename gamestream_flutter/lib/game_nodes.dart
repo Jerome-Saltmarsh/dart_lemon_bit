@@ -229,6 +229,9 @@ class GameNodes {
     required int index,
     required int alpha,
   }){
+    emitLightAmbientWithShadows(index: index, alpha: alpha);
+    return;
+
     if (index < 0) return;
     if (index >= total) return;
 
@@ -762,12 +765,12 @@ class GameNodes {
     while (interpolation < interpolationsLength) {
       index += area;
       if (index >= total) return;
+      if (nodeBlocksVertical(index)) return;
       applyAmbient(
         index: index,
         alpha: alpha,
         interpolation: interpolation++,
       );
-      if (nodeBlocksVertical(index)) return;
     }
   }
 
@@ -791,14 +794,22 @@ class GameNodes {
         NodeOrientation.Half_North,
         NodeOrientation.Half_South,
         NodeOrientation.Radial,
-     ].contains(nodeOrientations[index]));
+  ].contains(nodeOrientations[index])) && !nodeTypeBlocks(index);
 
   static bool nodeBlocksEastWest(int index) => (const [
     NodeOrientation.Solid,
     NodeOrientation.Half_East,
     NodeOrientation.Half_West,
     NodeOrientation.Radial,
-  ].contains(nodeOrientations[index]));
+  ].contains(nodeOrientations[index])) && !nodeTypeBlocks(index);
+
+  static bool nodeTypeBlocks(int index){
+    return const [
+      NodeType.Window,
+      NodeType.Wooden_Plank,
+      NodeType.Torch,
+    ].contains(nodeTypes[index]);
+  }
 
   static bool nodeBlocksVertical(int index) => (const [
       NodeOrientation.Solid,
@@ -806,5 +817,5 @@ class GameNodes {
       NodeOrientation.Half_Vertical_Top,
       NodeOrientation.Half_Vertical_Center,
       NodeOrientation.Half_Vertical_Bottom,
-    ].contains(nodeOrientations[index]));
+  ].contains(nodeOrientations[index])) && !nodeTypeBlocks(index);
 }
