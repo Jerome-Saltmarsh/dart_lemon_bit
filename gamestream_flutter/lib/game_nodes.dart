@@ -507,7 +507,6 @@ class GameNodes {
 
       if (blocked) return;
       interpolation++;
-
     }
   }
 
@@ -539,17 +538,22 @@ class GameNodes {
         interpolation: interpolation,
       );
 
+      interpolation++;
+      if (interpolation >= interpolationsLength) return;
+
       var blocked = false;
       if (nodeBlocksNorthSouth(index)) {
         blocked = true;
       } else {
-        shootLightAmbientSouth(index: index, alpha: alpha, interpolation: interpolation + 1, shootVertical: true);
+        shootLightAmbientSouth(index: index, alpha: alpha, interpolation: interpolation, shootVertical: true);
       }
+
       if (nodeBlocksEastWest(index)) {
         blocked = true;
       } else {
-        shootLightAmbientEast(index: index, alpha: alpha, interpolation: interpolation + 1, shootVertical: true);
+        shootLightAmbientEast(index: index, alpha: alpha, interpolation: interpolation, shootVertical: true);
       }
+
 
       if (blocked) return;
 
@@ -665,7 +669,9 @@ class GameNodes {
 
       if (shootVertical) {
         shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);
+        shootLightAmbientUp(index: index, alpha: alpha, interpolation: interpolation);
       }
+
       applyAmbient(
         index: index,
         alpha: alpha,
@@ -689,7 +695,9 @@ class GameNodes {
 
       if (shootVertical) {
         shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);
+        shootLightAmbientUp(index: index, alpha: alpha, interpolation: interpolation);
       }
+
       applyAmbient(
         index: index,
         alpha: alpha,
