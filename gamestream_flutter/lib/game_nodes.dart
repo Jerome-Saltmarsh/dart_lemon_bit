@@ -480,8 +480,8 @@ class GameNodes {
       index -= (totalColumns + 1);
 
       if (shootVertical) {
-        shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation + 1);
-        shootLightAmbientUp(index: index, alpha: alpha, interpolation: interpolation + 1);
+        shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);
+        shootLightAmbientUp(index: index, alpha: alpha, interpolation: interpolation);
       }
 
       applyAmbient(
