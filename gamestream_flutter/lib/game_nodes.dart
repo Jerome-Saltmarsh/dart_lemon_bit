@@ -393,12 +393,15 @@ class GameNodes {
       interpolation: 0,
     );
 
-    shootLightAmbientNorth(
+    if (!nodeBlocksNorthSouth(index)){
+      shootLightAmbientNorth(
         index: index,
         alpha: alpha,
         interpolation: 0,
         shootVertical: true,
-    );
+      );
+    }
+
   }
 
   static void shootLightAmbientNorth({
@@ -423,6 +426,8 @@ class GameNodes {
       nodeAlps[index] = linerInterpolationInt(nodeAlps[index], alpha, intensity);
       refreshNodeColor(index);
       interpolation++;
+
+      if (nodeBlocksNorthSouth(index)) return;
     }
   }
 
@@ -456,4 +461,16 @@ class GameNodes {
     refreshNodeColor(index);
   }
 
+
+  static bool nodeBlocksNorthSouth(int index){
+     // final orientation = nodeOrientations[index];
+
+     return (const [
+        NodeOrientation.Solid,
+        NodeOrientation.Half_North,
+        NodeOrientation.Half_South,
+        NodeOrientation.Radial,
+        // NodeOrientation.Corn,
+     ].contains(nodeOrientations[index]));
+  }
 }
