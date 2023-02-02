@@ -414,19 +414,14 @@ class GameNodes {
       index -= totalColumns;
       if (index < 0) return;
 
-      if (shootVertical){
+      if (shootVertical) {
         shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);
       }
-
-      nodeDynamicIndex[dynamicIndex++] = index;
-      final intensity = 1.0 - interpolations[interpolation];
-      final interpolatedAlpha = alpha * intensity;
-      final currentAlpha = nodeAlps[index];
-      if (currentAlpha < interpolatedAlpha) continue;
-      nodeAlps[index] = linerInterpolationInt(nodeAlps[index], alpha, intensity);
-      refreshNodeColor(index);
-      interpolation++;
-
+      applyAmbient(
+        index: index,
+        alpha: alpha,
+        interpolation: interpolation++,
+      );
       if (nodeBlocksNorthSouth(index)) return;
     }
   }
