@@ -149,6 +149,12 @@ class GameNodes {
     0.9795918367346939,
   ];
 
+  static const interpolationsLength = 7;
+
+  static const interpolationsAlpha = <int>[
+    0, 67, 124, 171, 208, 234, 249
+  ];
+
   static void emitLightDynamic({
     required int index,
     required int hue,
@@ -374,38 +380,34 @@ class GameNodes {
   }){
     if (index < 0) return;
     if (index >= total) return;
-    const range = 7;
-    shootLightNorth(
-        index: index - totalColumns,
-        range: range,
+    shootLightNorthAmbient(
+        index: index,
         alpha: alpha,
+        interpolation: 0,
     );
   }
 
-  static void shootLightNorth({
+  static void shootLightNorthAmbient({
     required int index,
-    required int range,
     required int alpha,
+    required int interpolation,
   }) {
+    index -= totalColumns;
     if (index < 0) return;
     if (index >= total) return;
-    var distance = 0;
 
-    for (var i = 0; i < range; i++) {
+    while (interpolation < interpolationsLength) {
       index -= totalColumns;
       if (index < 0) return;
 
-      // // final nodeIndex = a + column;
-      // final distanceValue = Engine.clamp(b + (column - columnIndex).abs() - 2, 0, Shade.Pitch_Black);
-      // if (distanceValue > 5) continue;
-      //
-      // nodeDynamicIndex[dynamicIndex++] = index;
-      //
-      // final intensity = 1.0 - interpolations[clamp(distanceValue, 0, 7)];
-      // final nodeAlpha = nodeAlps[index];
-      // if (nodeAlpha < alpha) continue;
-      // nodeAlps[index] = linerInterpolationInt(nodeAlps[index], alpha, intensity);
-      // refreshNodeColor(index);
+      nodeDynamicIndex[dynamicIndex++] = index;
+      final intensity = 1.0 - interpolations[interpolation];
+      final interpolatedAlpha = alpha * intensity;
+      final currentAlpha = nodeAlps[index];
+      if (currentAlpha < interpolatedAlpha) continue;
+      nodeAlps[index] = linerInterpolationInt(nodeAlps[index], alpha, intensity);
+      refreshNodeColor(index);
+      interpolation++;
     }
   }
 }

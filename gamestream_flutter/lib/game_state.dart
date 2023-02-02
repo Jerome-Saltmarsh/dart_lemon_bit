@@ -184,10 +184,15 @@ class GameState {
     required int alpha,
   }){
     if (!GameQueries.inBoundsVector3(v)) return;
-    GameNodes.emitLightDynamicAmbient(
-      index: GameQueries.getNodeIndexV3(v),
+
+    GameNodes.emitLightAmbientWithShadows(
+      index: v.nodeIndex,
       alpha: alpha,
     );
+    // GameNodes.emitLightDynamicAmbient(
+    //   index: GameQueries.getNodeIndexV3(v),
+    //   alpha: alpha,
+    // );
   }
 
 
