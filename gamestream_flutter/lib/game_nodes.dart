@@ -380,10 +380,24 @@ class GameNodes {
   }){
     if (index < 0) return;
     if (index >= total) return;
+
+    applyAmbient(
+      index: index,
+      alpha: alpha,
+      interpolation: 0,
+    );
+
+    shootLightAmbientDown(
+      index: index,
+      alpha: alpha,
+      interpolation: 0,
+    );
+
     shootLightAmbientNorth(
         index: index,
         alpha: alpha,
         interpolation: 0,
+        shootVertical: true,
     );
   }
 
@@ -391,12 +405,15 @@ class GameNodes {
     required int index,
     required int alpha,
     required int interpolation,
+    bool shootVertical = false,
   }) {
     while (interpolation < interpolationsLength) {
       index -= totalColumns;
       if (index < 0) return;
 
-      shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);
+      if (shootVertical){
+        shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);
+      }
 
       nodeDynamicIndex[dynamicIndex++] = index;
       final intensity = 1.0 - interpolations[interpolation];
