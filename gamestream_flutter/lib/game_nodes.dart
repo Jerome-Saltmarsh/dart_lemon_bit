@@ -404,6 +404,24 @@ class GameNodes {
       interpolation: 1,
       shootVertical: true,
     );
+    shootLightAmbientSouthEast(
+      index: index,
+      alpha: alpha,
+      interpolation: 1,
+      shootVertical: true,
+    );
+    shootLightAmbientSouthWest(
+      index: index,
+      alpha: alpha,
+      interpolation: 1,
+      shootVertical: true,
+    );
+    shootLightAmbientNorthWest(
+      index: index,
+      alpha: alpha,
+      interpolation: 1,
+      shootVertical: true,
+    );
 
     if (!nodeBlocksNorthSouth(index)){
       shootLightAmbientNorth(
@@ -480,6 +498,145 @@ class GameNodes {
       interpolation++;
     }
   }
+
+  static void shootLightAmbientSouthEast({
+    required int index,
+    required int alpha,
+    required int interpolation,
+    bool shootVertical = false,
+  }) {
+    var row = getIndexRow(index);
+    var column = getIndexColumn(index);
+
+    while (interpolation < interpolationsLength) {
+      row++;
+      if (row >= totalRows) return;
+      column--;
+      if (column < 0) return;
+
+      index += (totalColumns - 1);
+
+      if (shootVertical) {
+        shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);
+        shootLightAmbientUp(index: index, alpha: alpha, interpolation: interpolation);
+      }
+
+      applyAmbient(
+        index: index,
+        alpha: alpha,
+        interpolation: interpolation,
+      );
+
+      var blocked = false;
+      if (nodeBlocksNorthSouth(index)) {
+        blocked = true;
+      } else {
+        shootLightAmbientSouth(index: index, alpha: alpha, interpolation: interpolation, shootVertical: true);
+      }
+      if (nodeBlocksEastWest(index)) {
+        blocked = true;
+      } else {
+        shootLightAmbientEast(index: index, alpha: alpha, interpolation: interpolation, shootVertical: true);
+      }
+
+      if (blocked) return;
+
+      interpolation++;
+    }
+  }
+
+  static void shootLightAmbientSouthWest({
+    required int index,
+    required int alpha,
+    required int interpolation,
+    bool shootVertical = false,
+  }) {
+    var row = getIndexRow(index);
+    var column = getIndexColumn(index);
+
+    while (interpolation < interpolationsLength) {
+      row++;
+      if (row >= totalRows) return;
+      column++;
+      if (column >= totalColumns) return;
+
+      index += (totalColumns + 1);
+
+      if (shootVertical) {
+        shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);
+        shootLightAmbientUp(index: index, alpha: alpha, interpolation: interpolation);
+      }
+
+      applyAmbient(
+        index: index,
+        alpha: alpha,
+        interpolation: interpolation,
+      );
+
+      var blocked = false;
+      if (nodeBlocksNorthSouth(index)) {
+        blocked = true;
+      } else {
+        shootLightAmbientSouth(index: index, alpha: alpha, interpolation: interpolation, shootVertical: true);
+      }
+      if (nodeBlocksEastWest(index)) {
+        blocked = true;
+      } else {
+        shootLightAmbientWest(index: index, alpha: alpha, interpolation: interpolation, shootVertical: true);
+      }
+
+      if (blocked) return;
+
+      interpolation++;
+    }
+  }
+
+  static void shootLightAmbientNorthWest({
+    required int index,
+    required int alpha,
+    required int interpolation,
+    bool shootVertical = false,
+  }) {
+    var row = getIndexRow(index);
+    var column = getIndexColumn(index);
+
+    while (interpolation < interpolationsLength) {
+      row--;
+      if (row < 0) return;
+      column++;
+      if (column >= totalColumns) return;
+
+      index += (-totalColumns + 1);
+
+      if (shootVertical) {
+        shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);
+        shootLightAmbientUp(index: index, alpha: alpha, interpolation: interpolation);
+      }
+
+      applyAmbient(
+        index: index,
+        alpha: alpha,
+        interpolation: interpolation,
+      );
+
+      var blocked = false;
+      if (nodeBlocksNorthSouth(index)) {
+        blocked = true;
+      } else {
+        shootLightAmbientNorth(index: index, alpha: alpha, interpolation: interpolation, shootVertical: true);
+      }
+      if (nodeBlocksEastWest(index)) {
+        blocked = true;
+      } else {
+        shootLightAmbientWest(index: index, alpha: alpha, interpolation: interpolation, shootVertical: true);
+      }
+
+      if (blocked) return;
+
+      interpolation++;
+    }
+  }
+
 
   static void shootLightAmbientNorth({
     required int index,
