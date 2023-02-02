@@ -419,6 +419,12 @@ class GameNodes {
           interpolation: 0,
           shootVertical: true,
       );
+      shootLightAmbientWest(
+          index: index,
+          alpha: alpha,
+          interpolation: 0,
+          shootVertical: true,
+      );
     }
   }
 
@@ -455,6 +461,30 @@ class GameNodes {
       index--;
       column--;
       if (column < 0) return;
+
+      if (shootVertical) {
+        shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);
+      }
+      applyAmbient(
+        index: index,
+        alpha: alpha,
+        interpolation: interpolation++,
+      );
+      if (nodeBlocksEastWest(index)) return;
+    }
+  }
+
+  static void shootLightAmbientWest({
+    required int index,
+    required int alpha,
+    required int interpolation,
+    bool shootVertical = false,
+  }) {
+    var column = getIndexColumn(index);
+    while (interpolation < interpolationsLength) {
+      index++;
+      column++;
+      if (column >= totalColumns) return;
 
       if (shootVertical) {
         shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);
