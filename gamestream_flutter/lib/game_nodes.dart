@@ -225,12 +225,18 @@ class GameNodes {
     }
   }
 
-  static void emitLightDynamicAmbient({
+  static void emitLightAmbient({
     required int index,
     required int alpha,
   }){
-    emitLightAmbientWithShadows(index: index, alpha: alpha);
-    return;
+
+    if (GameSettings.Dynamic_Shadows) {
+      emitLightAmbientDynamicShadows(
+        index: index,
+        alpha: alpha,
+      );
+      return;
+    }
 
     if (index < 0) return;
     if (index >= total) return;
@@ -377,7 +383,7 @@ class GameNodes {
 
   /// EMIT LIGHT FUNCTIONS
 
-  static void emitLightAmbientWithShadows({
+  static void emitLightAmbientDynamicShadows({
     required int index,
     required int alpha,
   }){
@@ -701,6 +707,7 @@ class GameNodes {
       index++;
       column++;
       if (column >= totalColumns) return;
+      if (nodeBlocksEastWest(index)) return;
 
       if (shootVertical) {
         shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);
@@ -710,7 +717,6 @@ class GameNodes {
         alpha: alpha,
         interpolation: interpolation++,
       );
-      if (nodeBlocksEastWest(index)) return;
     }
   }
 

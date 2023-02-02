@@ -83,7 +83,7 @@ class GameState {
 
       switch (nodeType){
         case NodeType.Torch:
-          GameNodes.emitLightDynamicAmbient(
+          GameNodes.emitLightAmbient(
             index: nodeIndex,
             alpha: 0,
           );
@@ -185,22 +185,11 @@ class GameState {
   }){
     if (!GameQueries.inBoundsVector3(v)) return;
 
-    GameNodes.emitLightAmbientWithShadows(
-      index: v.nodeIndex,
+    GameNodes.emitLightAmbient(
+      index: GameQueries.getNodeIndexV3(v),
       alpha: alpha,
     );
-    // GameNodes.emitLightDynamicAmbient(
-    //   index: GameQueries.getNodeIndexV3(v),
-    //   alpha: alpha,
-    // );
   }
-
-
-  // static void applyEmissionDynamicV3(Vector3 v3, ) =>
-  //     GameNodes.emitLightDynamic(
-  //         index: GameQueries.getNodeIndexV3(v3),
-  //         hue: 200,
-  //     );
 
   static void onChangedUpdateFrame(int value){
     ClientState.rendersSinceUpdate.value = 0;

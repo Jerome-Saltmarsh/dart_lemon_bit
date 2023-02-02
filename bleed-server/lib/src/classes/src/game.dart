@@ -2466,10 +2466,9 @@ abstract class Game {
   /// WARNING EXPENSIVE OPERATION
   void clearSpawnedAI(){
       for (var i = 0; i < characters.length; i++){
-         if (characters[i].characterTypeZombie) {
-           characters.removeAt(i);
-           i--;
-         }
+         if (characters[i] is Player) continue;
+         characters.removeAt(i);
+         i--;
       }
   }
 
