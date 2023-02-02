@@ -380,25 +380,23 @@ class GameNodes {
   }){
     if (index < 0) return;
     if (index >= total) return;
-    shootLightNorthAmbient(
+    shootLightAmbientNorth(
         index: index,
         alpha: alpha,
         interpolation: 0,
     );
   }
 
-  static void shootLightNorthAmbient({
+  static void shootLightAmbientNorth({
     required int index,
     required int alpha,
     required int interpolation,
   }) {
-    index -= totalColumns;
-    if (index < 0) return;
-    if (index >= total) return;
-
     while (interpolation < interpolationsLength) {
       index -= totalColumns;
       if (index < 0) return;
+
+      shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);
 
       nodeDynamicIndex[dynamicIndex++] = index;
       final intensity = 1.0 - interpolations[interpolation];
@@ -410,4 +408,35 @@ class GameNodes {
       interpolation++;
     }
   }
+
+  static void shootLightAmbientDown({
+    required int index,
+    required int alpha,
+    required int interpolation,
+  }) {
+    while (interpolation < interpolationsLength) {
+      index -= area;
+      if (index < 0) return;
+      applyAmbient(
+        index: index,
+        alpha: alpha,
+        interpolation: interpolation++,
+      );
+    }
+  }
+
+  static void applyAmbient({
+    required int index,
+    required int alpha,
+    required int interpolation,
+  }){
+    nodeDynamicIndex[dynamicIndex++] = index;
+    final intensity = 1.0 - interpolations[interpolation];
+    final interpolatedAlpha = alpha * intensity;
+    final currentAlpha = nodeAlps[index];
+    if (currentAlpha < interpolatedAlpha) return;
+    nodeAlps[index] = linerInterpolationInt(nodeAlps[index], alpha, intensity);
+    refreshNodeColor(index);
+  }
+
 }
