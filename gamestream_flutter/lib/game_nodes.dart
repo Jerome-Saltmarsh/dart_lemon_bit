@@ -398,6 +398,13 @@ class GameNodes {
       interpolation: 0,
     );
 
+    shootLightAmbientNorthEast(
+      index: index,
+      alpha: alpha,
+      interpolation: 1,
+      shootVertical: true,
+    );
+
     if (!nodeBlocksNorthSouth(index)){
       shootLightAmbientNorth(
         index: index,
@@ -428,15 +435,64 @@ class GameNodes {
     }
   }
 
+  static void shootLightAmbientNorthEast({
+    required int index,
+    required int alpha,
+    required int interpolation,
+    bool shootVertical = false,
+  }) {
+    var row = getIndexRow(index);
+    var column = getIndexColumn(index);
+
+    while (interpolation < interpolationsLength) {
+      row--;
+      if (row < 0) return;
+      column--;
+      if (column < 0) return;
+
+      index -= (totalColumns + 1);
+
+      if (shootVertical) {
+        shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);
+        shootLightAmbientUp(index: index, alpha: alpha, interpolation: interpolation);
+      }
+
+      applyAmbient(
+        index: index,
+        alpha: alpha,
+        interpolation: interpolation,
+      );
+
+      var blocked = false;
+      if (nodeBlocksNorthSouth(index)) {
+        blocked = true;
+      } else {
+        shootLightAmbientNorth(index: index, alpha: alpha, interpolation: interpolation, shootVertical: true);
+      }
+      if (nodeBlocksEastWest(index)) {
+        blocked = true;
+      } else {
+        shootLightAmbientEast(index: index, alpha: alpha, interpolation: interpolation, shootVertical: true);
+      }
+
+      if (blocked) return;
+
+      interpolation++;
+    }
+  }
+
   static void shootLightAmbientNorth({
     required int index,
     required int alpha,
     required int interpolation,
     bool shootVertical = false,
   }) {
+    var row = getIndexRow(index);
     while (interpolation < interpolationsLength) {
+      row--;
+      if (row < 0) return;
+
       index -= totalColumns;
-      if (index < 0) return;
 
       if (shootVertical) {
         shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);
@@ -510,6 +566,7 @@ class GameNodes {
       index += totalColumns;
       row++;
       if (row >= totalRows) return;
+      if (nodeBlocksNorthSouth(index)) return;
 
       if (shootVertical) {
         shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);
@@ -519,7 +576,6 @@ class GameNodes {
         alpha: alpha,
         interpolation: interpolation++,
       );
-      if (nodeBlocksNorthSouth(index)) return;
     }
   }
 
