@@ -392,6 +392,11 @@ class GameNodes {
       alpha: alpha,
       interpolation: 0,
     );
+    shootLightAmbientUp(
+      index: index,
+      alpha: alpha,
+      interpolation: 0,
+    );
 
     if (!nodeBlocksNorthSouth(index)){
       shootLightAmbientNorth(
@@ -401,7 +406,14 @@ class GameNodes {
         shootVertical: true,
       );
     }
-
+    if (!nodeBlocksEastWest(index)) {
+      shootLightAmbientEast(
+          index: index,
+          alpha: alpha,
+          interpolation: 0,
+          shootVertical: true,
+      );
+    }
   }
 
   static void shootLightAmbientNorth({
@@ -426,6 +438,31 @@ class GameNodes {
     }
   }
 
+  static void shootLightAmbientEast({
+    required int index,
+    required int alpha,
+    required int interpolation,
+    bool shootVertical = false,
+  }) {
+    var column = getIndexColumn(index);
+    while (interpolation < interpolationsLength) {
+      index--;
+      column--;
+      if (column < 0) return;
+
+      if (shootVertical) {
+        shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);
+      }
+      applyAmbient(
+        index: index,
+        alpha: alpha,
+        interpolation: interpolation++,
+      );
+      if (nodeBlocksEastWest(index)) return;
+    }
+  }
+
+
   static void shootLightAmbientDown({
     required int index,
     required int alpha,
@@ -439,6 +476,24 @@ class GameNodes {
         alpha: alpha,
         interpolation: interpolation++,
       );
+      if (nodeBlocksVertical(index)) return;
+    }
+  }
+
+  static void shootLightAmbientUp({
+    required int index,
+    required int alpha,
+    required int interpolation,
+  }) {
+    while (interpolation < interpolationsLength) {
+      index += area;
+      if (index >= total) return;
+      applyAmbient(
+        index: index,
+        alpha: alpha,
+        interpolation: interpolation++,
+      );
+      if (nodeBlocksVertical(index)) return;
     }
   }
 
@@ -457,15 +512,25 @@ class GameNodes {
   }
 
 
-  static bool nodeBlocksNorthSouth(int index){
-     // final orientation = nodeOrientations[index];
-
-     return (const [
+  static bool nodeBlocksNorthSouth(int index) => (const [
         NodeOrientation.Solid,
         NodeOrientation.Half_North,
         NodeOrientation.Half_South,
         NodeOrientation.Radial,
-        // NodeOrientation.Corn,
      ].contains(nodeOrientations[index]));
-  }
+
+  static bool nodeBlocksEastWest(int index) => (const [
+    NodeOrientation.Solid,
+    NodeOrientation.Half_East,
+    NodeOrientation.Half_West,
+    NodeOrientation.Radial,
+  ].contains(nodeOrientations[index]));
+
+  static bool nodeBlocksVertical(int index) => (const [
+      NodeOrientation.Solid,
+      NodeOrientation.Radial,
+      NodeOrientation.Half_Vertical_Top,
+      NodeOrientation.Half_Vertical_Center,
+      NodeOrientation.Half_Vertical_Bottom,
+    ].contains(nodeOrientations[index]));
 }
