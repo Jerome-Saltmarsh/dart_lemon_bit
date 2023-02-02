@@ -490,21 +490,24 @@ class GameNodes {
         interpolation: interpolation,
       );
 
+      interpolation++;
+      if (interpolation >= interpolationsLength) return;
+
       var blocked = false;
       if (nodeBlocksNorthSouth(index)) {
         blocked = true;
       } else {
-        shootLightAmbientNorth(index: index, alpha: alpha, interpolation: interpolation + 1, shootVertical: true);
+        shootLightAmbientNorth(index: index, alpha: alpha, interpolation: interpolation, shootVertical: true);
       }
       if (nodeBlocksEastWest(index)) {
         blocked = true;
       } else {
-        shootLightAmbientEast(index: index, alpha: alpha, interpolation: interpolation + 1, shootVertical: true);
+        shootLightAmbientEast(index: index, alpha: alpha, interpolation: interpolation, shootVertical: true);
       }
 
       if (blocked) return;
-
       interpolation++;
+
     }
   }
 
