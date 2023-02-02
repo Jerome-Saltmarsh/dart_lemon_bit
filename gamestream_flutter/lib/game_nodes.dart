@@ -589,20 +589,22 @@ class GameNodes {
         interpolation: interpolation,
       );
 
+      interpolation++;
+      if (interpolation >= interpolationsLength) return;
+
       var blocked = false;
       if (nodeBlocksNorthSouth(index)) {
         blocked = true;
       } else {
-        shootLightAmbientSouth(index: index, alpha: alpha, interpolation: interpolation + 1, shootVertical: true);
+        shootLightAmbientSouth(index: index, alpha: alpha, interpolation: interpolation, shootVertical: true);
       }
       if (nodeBlocksEastWest(index)) {
         blocked = true;
       } else {
-        shootLightAmbientWest(index: index, alpha: alpha, interpolation: interpolation + 1, shootVertical: true);
+        shootLightAmbientWest(index: index, alpha: alpha, interpolation: interpolation, shootVertical: true);
       }
 
       if (blocked) return;
-
       interpolation++;
     }
   }
@@ -635,24 +637,25 @@ class GameNodes {
         interpolation: interpolation,
       );
 
+      interpolation++;
+      if (interpolation >= interpolationsLength) return;
+
       var blocked = false;
       if (nodeBlocksNorthSouth(index)) {
         blocked = true;
       } else {
-        shootLightAmbientNorth(index: index, alpha: alpha, interpolation: interpolation + 1, shootVertical: true);
+        shootLightAmbientNorth(index: index, alpha: alpha, interpolation: interpolation, shootVertical: true);
       }
       if (nodeBlocksEastWest(index)) {
         blocked = true;
       } else {
-        shootLightAmbientWest(index: index, alpha: alpha, interpolation: interpolation + 1, shootVertical: true);
+        shootLightAmbientWest(index: index, alpha: alpha, interpolation: interpolation, shootVertical: true);
       }
 
       if (blocked) return;
-
       interpolation++;
     }
   }
-
 
   static void shootLightAmbientNorth({
     required int index,
