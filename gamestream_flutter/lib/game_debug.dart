@@ -28,6 +28,7 @@ class GameDebug {
                           children: [
                             watch(serverResponseReader.byteLength, (int bytes) => text('network-bytes: $bytes')),
                             Refresh(() =>  text(
+                                "offscreen-nodes: ${GameNodes.offscreenNodes}\n"
                                 "mouse-grid: x: ${GameIO.mouseGridX.toInt()}, y: ${GameIO.mouseGridY.toInt()}\n"
                                 "mouse-world: x: ${Engine.mouseWorldX.toInt()}, y: ${Engine.mouseWorldY.toInt()}\n"
                                 'mouse-screen: x: ${Engine.mousePosition.x.toInt()}, y: ${Engine.mousePosition.y.toInt()}\n'

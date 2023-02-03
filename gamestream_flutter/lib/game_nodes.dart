@@ -64,6 +64,7 @@ class GameNodes {
   static var lengthColumns = 0.0;
   static var lengthZ = 0.0;
 
+  static var offscreenNodes = 0;
 
   static var heightMap = Uint16List(0);
 
@@ -390,47 +391,74 @@ class GameNodes {
     if (index < 0) return;
     if (index >= total) return;
 
+    final row = getIndexRow(index);
+    final column = getIndexColumn(index);
+    final z = getIndexZ(index);
+
+    final renderX = GameConvert.rowColumnZToRenderX(row, column, z);
+    final renderY = GameConvert.rowColumnZToRenderY(row, column, z);
+
+    final xOnscreen = renderX > Engine.screen.left && renderX < Engine.screen.right;
+    final YOnscreen = renderY > Engine.screen.top && renderX < Engine.screen.top;
+
     applyAmbient(
       index: index,
       alpha: alpha,
       interpolation: 0,
     );
 
-    shootLightAmbientDown(
-      index: index,
-      alpha: alpha,
-      interpolation: 0,
-    );
-    shootLightAmbientUp(
-      index: index,
-      alpha: alpha,
-      interpolation: 0,
-    );
+    if (xOnscreen) {
+      if (renderY > Engine.screen.top){
+        shootLightAmbientDown(
+          index: index,
+          alpha: alpha,
+          interpolation: 0,
+        );
+      }
+      if (renderY < Engine.screen.bottom){
+        shootLightAmbientUp(
+          index: index,
+          alpha: alpha,
+          interpolation: 0,
+        );
+      }
+    }
 
-    shootLightAmbientNorthEast(
-      index: index,
-      alpha: alpha,
-      interpolation: 1,
-      shootVertical: true,
-    );
-    shootLightAmbientSouthEast(
-      index: index,
-      alpha: alpha,
-      interpolation: 1,
-      shootVertical: true,
-    );
-    shootLightAmbientSouthWest(
-      index: index,
-      alpha: alpha,
-      interpolation: 1,
-      shootVertical: true,
-    );
-    shootLightAmbientNorthWest(
-      index: index,
-      alpha: alpha,
-      interpolation: 1,
-      shootVertical: true,
-    );
+    if (renderY > Engine.screen.top) {
+      shootLightAmbientNorthEast(
+        index: index,
+        alpha: alpha,
+        interpolation: 1,
+        shootVertical: true,
+      );
+    }
+
+    if (renderY < Engine.screen.bottom) {
+      shootLightAmbientSouthWest(
+        index: index,
+        alpha: alpha,
+        interpolation: 1,
+        shootVertical: true,
+      );
+    }
+
+    if (renderX > Engine.screen.left){
+      shootLightAmbientNorthWest(
+        index: index,
+        alpha: alpha,
+        interpolation: 1,
+        shootVertical: true,
+      );
+    }
+
+    if (renderX < Engine.screen.right){
+      shootLightAmbientSouthEast(
+        index: index,
+        alpha: alpha,
+        interpolation: 1,
+        shootVertical: true,
+      );
+    }
 
     if (!nodeBlocksNorthSouth(index)){
       shootLightAmbientNorth(
@@ -799,6 +827,9 @@ class GameNodes {
     required int alpha,
     required int interpolation,
   }){
+    if (!isIndexOnScreen(index)){
+      offscreenNodes++;
+    }
     nodeDynamicIndex[dynamicIndex++] = index;
     final intensity = 1.0 - interpolations[interpolation];
     final interpolatedAlpha = alpha * intensity;
@@ -838,4 +869,21 @@ class GameNodes {
       NodeOrientation.Half_Vertical_Center,
       NodeOrientation.Half_Vertical_Bottom,
   ].contains(nodeOrientations[index])) && !nodeTypeBlocks(index);
+
+  static bool isIndexOnScreen(int index){
+
+    final row = getIndexRow(index);
+    final column = getIndexColumn(index);
+    final z = getIndexZ(index);
+
+    final renderX = GameConvert.rowColumnZToRenderX(row, column, z);
+    if (renderX < Engine.screen.left) return false;
+    if (renderX > Engine.screen.right) return false;
+
+    final renderY = GameConvert.rowColumnZToRenderY(row, column, z);
+    if (renderY < Engine.screen.top) return false;
+    if (renderY > Engine.screen.bottom) return false;
+
+    return true;
+  }
 }
