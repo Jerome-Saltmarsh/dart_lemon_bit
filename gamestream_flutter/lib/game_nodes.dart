@@ -466,7 +466,7 @@ class GameNodes {
           index: index,
           alpha: alpha,
           interpolation: 0,
-          shootVertical: true,
+          shootBelow: true,
         );
       }
       if (renderX < Engine.Screen_Right && renderY < Engine.Screen_Bottom){
@@ -555,7 +555,7 @@ class GameNodes {
       if (nodeBlocksNorthSouth(index)) {
         blocked = true;
       } else {
-        shootLightAmbientNorth(index: index, alpha: alpha, interpolation: interpolation, shootVertical: true);
+        shootLightAmbientNorth(index: index, alpha: alpha, interpolation: interpolation, shootBelow: true);
       }
       if (nodeBlocksEastWest(index)) {
         blocked = true;
@@ -746,7 +746,7 @@ class GameNodes {
       if (nodeBlocksNorthSouth(index)) {
         blocked = true;
       } else {
-        shootLightAmbientNorth(index: index, alpha: alpha, interpolation: interpolation, shootVertical: true);
+        shootLightAmbientNorth(index: index, alpha: alpha, interpolation: interpolation, shootBelow: true);
       }
       if (nodeBlocksEastWest(index)) {
         blocked = true;
@@ -759,14 +759,26 @@ class GameNodes {
     }
   }
 
+  static void shootLightAmbient({
+    required int index,
+    required int interpolation,
+    required int alpha,
+    int rows = 0,
+    int columns = 0,
+    zs = 0,
+  }){
+    final velocity = rows.abs() + columns.abs() + zs.abs();
+
+    assert (interpolation < interpolationsLength);
+  }
+
   static void shootLightAmbientNorth({
     required int index,
     required int alpha,
     required int interpolation,
-    bool shootVertical = false,
+    bool shootBelow = false,
   }) {
-
-    if (interpolation >= interpolationsLength) return;
+    assert (interpolation < interpolationsLength);
 
     var row = getIndexRow(index);
     var column = getIndexColumn(index);
@@ -796,7 +808,7 @@ class GameNodes {
         continue;
       }
 
-      if (shootVertical && rY + Node_Size_Half < Engine.Screen_Bottom) {
+      if (shootBelow && rY + Node_Size_Half < Engine.Screen_Bottom) {
         final nodeIndexBelow = index - area;
         if (nodeIndexBelow > 0){
           applyAmbient(
@@ -805,8 +817,6 @@ class GameNodes {
             interpolation: interpolation,
           );
         }
-        // shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);
-        // shootLightAmbientUp(index: index, alpha: alpha, interpolation: interpolation);
       }
 
       applyAmbient(
@@ -824,7 +834,7 @@ class GameNodes {
     required int interpolation,
     bool shootVertical = false,
   }) {
-    if (interpolation >= interpolationsLength) return;
+    assert (interpolation < interpolationsLength);
 
     var row = getIndexRow(index);
     var column = getIndexColumn(index);
@@ -856,9 +866,15 @@ class GameNodes {
         continue;
       }
 
-      if (shootVertical) {
-        shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);
-        shootLightAmbientUp(index: index, alpha: alpha, interpolation: interpolation);
+      if (shootVertical && rY + Node_Size_Half < Engine.Screen_Bottom) {
+        final nodeIndexBelow = index - area;
+        if (nodeIndexBelow > 0){
+          applyAmbient(
+            index: nodeIndexBelow,
+            alpha: alpha,
+            interpolation: interpolation,
+          );
+        }
       }
 
       applyAmbient(
@@ -876,7 +892,7 @@ class GameNodes {
     required int interpolation,
     bool shootVertical = false,
   }) {
-    if (interpolation >= interpolationsLength) return;
+    assert (interpolation < interpolationsLength);
 
     var row = getIndexRow(index);
     var column = getIndexColumn(index);
@@ -908,10 +924,17 @@ class GameNodes {
         continue;
       }
 
-      if (shootVertical) {
-        shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);
-        shootLightAmbientUp(index: index, alpha: alpha, interpolation: interpolation);
+      if (shootVertical && rY + Node_Size_Half < Engine.Screen_Bottom) {
+        final nodeIndexBelow = index - area;
+        if (nodeIndexBelow > 0){
+          applyAmbient(
+            index: nodeIndexBelow,
+            alpha: alpha,
+            interpolation: interpolation,
+          );
+        }
       }
+
       applyAmbient(
         index: index,
         alpha: alpha,
@@ -926,7 +949,7 @@ class GameNodes {
     required int interpolation,
     bool shootVertical = false,
   }) {
-    if (interpolation >= interpolationsLength) return;
+    assert (interpolation < interpolationsLength);
 
     var row = getIndexRow(index);
     var column = getIndexColumn(index);
@@ -958,9 +981,15 @@ class GameNodes {
         continue;
       }
 
-      if (shootVertical) {
-        shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);
-        shootLightAmbientUp(index: index, alpha: alpha, interpolation: interpolation);
+      if (shootVertical && rY + Node_Size_Half < Engine.Screen_Bottom) {
+        final nodeIndexBelow = index - area;
+        if (nodeIndexBelow > 0){
+          applyAmbient(
+            index: nodeIndexBelow,
+            alpha: alpha,
+            interpolation: interpolation,
+          );
+        }
       }
       applyAmbient(
         index: index,
