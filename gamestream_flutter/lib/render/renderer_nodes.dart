@@ -253,7 +253,7 @@ class RendererNodes extends Renderer {
     total = getTotal();
     index = 0;
     remaining = total > 0;
-    GameNodes.resetStackDynamicLight();
+    GameNodes.resetNodeColorStack();
     GameState.applyEmissions();
 
     if (GameState.editMode){

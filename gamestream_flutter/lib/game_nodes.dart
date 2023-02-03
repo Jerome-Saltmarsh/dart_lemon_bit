@@ -21,7 +21,7 @@ class GameNodes {
         value: ambient_val,
         opacity: ambient_alp
     );
-    dynamicIndex = 0;
+    nodeColorStackIndex = 0;
 
      if (nodeColors.length != total) {
        nodeColors = Uint32List(total);
@@ -47,10 +47,10 @@ class GameNodes {
   static var nodeOrientations = Uint8List(0);
   static var nodeTypes = Uint8List(0);
   static var nodeVariations = Uint8List(0);
-  static var nodeDynamicIndex = Uint16List(0);
+  static var nodeColorStack = Uint16List(0);
   static var nodeWind = Uint8List(0);
   static var miniMap = Uint8List(0);
-  static var dynamicIndex = -1;
+  static var nodeColorStackIndex = -1;
   static var total = 0;
   static var area = 0;
   static var area2 = 0;
@@ -124,22 +124,21 @@ class GameNodes {
       }
   }
 
-  static void resetStackDynamicLight() {
-    while (dynamicIndex >= 0) {
-      final i = nodeDynamicIndex[dynamicIndex];
+  static void resetNodeColorStack() {
+    while (nodeColorStackIndex >= 0) {
+      final i = nodeColorStack[nodeColorStackIndex];
       nodeColors[i] = ambient_color;
       nodeHues[i] = ambient_hue;
       nodeSats[i] = ambient_sat;
       nodeVals[i] = ambient_val;
       nodeAlps[i] = ambient_alp;
-      dynamicIndex--;
+      nodeColorStackIndex--;
     }
-    dynamicIndex = 0;
+    nodeColorStackIndex = 0;
   }
 
-  static int linerInterpolationInt(int a, int b, double t) {
-    return (a * (1.0 - t) + b * t).round();
-  }
+  static int linerInterpolationInt(int a, int b, double t) =>
+      (a * (1.0 - t) + b * t).toInt();
 
   static const interpolations = <double>[
     0,
@@ -209,7 +208,7 @@ class GameNodes {
           final distanceValue = Engine.clamp(b + (column - columnIndex).abs() - 2, 0, 6);
           if (distanceValue > 5) continue;
 
-          nodeDynamicIndex[dynamicIndex++] = nodeIndex;
+          nodeColorStack[nodeColorStackIndex++] = nodeIndex;
 
           final intensity = (1.0 - interpolations[clamp(distanceValue, 0, 7)]) * strength;
           nodeHues[nodeIndex] = linerInterpolationInt(nodeHues[nodeIndex], hue        , intensity);
@@ -274,7 +273,7 @@ class GameNodes {
           final distanceValue = Engine.clamp(b + (column - columnIndex).abs() - 2, 0, Shade.Pitch_Black);
           if (distanceValue > 5) continue;
 
-          nodeDynamicIndex[dynamicIndex++] = nodeIndex;
+          nodeColorStack[nodeColorStackIndex++] = nodeIndex;
 
           final intensity = 1.0 - interpolations[clamp(distanceValue, 0, 7)];
           final nodeAlpha = nodeAlps[nodeIndex];
@@ -374,9 +373,6 @@ class GameNodes {
   static int getIndexRow(int index) => (index % area) ~/ totalColumns;
   static int getIndexZ(int index) => index ~/ area;
   static int getIndexColumn(int index) => index % totalColumns;
-
-
-
 
 
   /// EMIT LIGHT FUNCTIONS
@@ -1022,9 +1018,11 @@ class GameNodes {
 
     var rX = GameConvert.rowColumnZToRenderX(row, column);
     if (rX < Engine.Screen_Left) {
+      // TODO Remove
       return;
     }
     if (rX > Engine.Screen_Right) {
+      // TODO Remove
       return;
     }
 
@@ -1067,17 +1065,21 @@ class GameNodes {
 
     final renderX = GameConvert.rowColumnToRenderX(row, column);
     if (renderX < Engine.Screen_Left) {
+      // TODO Remove
       return;
     }
     if (renderX > Engine.Screen_Right) {
+      // TODO Remove
       return;
     }
 
     final renderY = GameConvert.rowColumnZToRenderY(row, column, getIndexZ(index));
     if (renderY < Engine.Screen_Top) {
+      // TODO Remove
       return;
     }
     if (renderY > Engine.Screen_Bottom) {
+      // TODO Remove
       return;
     }
 
@@ -1087,7 +1089,7 @@ class GameNodes {
     } else {
       onscreenNodes++;
     }
-    nodeDynamicIndex[dynamicIndex++] = index;
+    nodeColorStack[nodeColorStackIndex++] = index;
     final intensity = 1.0 - interpolations[interpolation];
     final interpolatedAlpha = alpha * intensity;
     final currentAlpha = nodeAlps[index];
