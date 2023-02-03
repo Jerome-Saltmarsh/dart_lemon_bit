@@ -137,9 +137,6 @@ class GameNodes {
     nodeColorStackIndex = 0;
   }
 
-  static int linerInterpolationInt(int a, int b, double t) =>
-      (a * (1.0 - t) + b * t).toInt();
-
   static const interpolations = <double>[
     0,
     0.30555555555555547,
@@ -211,10 +208,10 @@ class GameNodes {
           nodeColorStack[nodeColorStackIndex++] = nodeIndex;
 
           final intensity = (1.0 - interpolations[clamp(distanceValue, 0, 7)]) * strength;
-          nodeHues[nodeIndex] = linerInterpolationInt(nodeHues[nodeIndex], hue        , intensity);
-          nodeSats[nodeIndex] = linerInterpolationInt(nodeSats[nodeIndex], saturation , intensity);
-          nodeVals[nodeIndex] = linerInterpolationInt(nodeVals[nodeIndex], value      , intensity);
-          nodeAlps[nodeIndex] = linerInterpolationInt(nodeAlps[nodeIndex], alpha      , intensity);
+          nodeHues[nodeIndex] = Engine.linerInterpolationInt(nodeHues[nodeIndex], hue        , intensity);
+          nodeSats[nodeIndex] = Engine.linerInterpolationInt(nodeSats[nodeIndex], saturation , intensity);
+          nodeVals[nodeIndex] = Engine.linerInterpolationInt(nodeVals[nodeIndex], value      , intensity);
+          nodeAlps[nodeIndex] = Engine.linerInterpolationInt(nodeAlps[nodeIndex], alpha      , intensity);
           refreshNodeColor(nodeIndex);
         }
       }
@@ -278,7 +275,7 @@ class GameNodes {
           final intensity = 1.0 - interpolations[clamp(distanceValue, 0, 7)];
           final nodeAlpha = nodeAlps[nodeIndex];
           if (nodeAlpha < alpha) continue;
-          nodeAlps[nodeIndex] = linerInterpolationInt(nodeAlps[nodeIndex], alpha      , intensity);
+          nodeAlps[nodeIndex] = Engine.linerInterpolationInt(nodeAlps[nodeIndex], alpha      , intensity);
           refreshNodeColor(nodeIndex);
         }
       }
@@ -1060,44 +1057,45 @@ class GameNodes {
     required int interpolation,
   }){
 
-    final row = getIndexRow(index);
-    final column = getIndexColumn(index);
+    assert (isIndexOnScreen(index));
 
-    final renderX = GameConvert.rowColumnToRenderX(row, column);
-    if (renderX < Engine.Screen_Left) {
-      // TODO Remove
-      return;
-    }
-    if (renderX > Engine.Screen_Right) {
-      // TODO Remove
-      return;
-    }
+    // final row = getIndexRow(index);
+    // final column = getIndexColumn(index);
 
-    final renderY = GameConvert.rowColumnZToRenderY(row, column, getIndexZ(index));
-    if (renderY < Engine.Screen_Top) {
-      // TODO Remove
-      return;
-    }
-    if (renderY > Engine.Screen_Bottom) {
-      // TODO Remove
-      return;
-    }
-
-    if (!isIndexOnScreen(index)){
-      offscreenNodes++;
-      return;
-    } else {
-      onscreenNodes++;
-    }
+    // final renderX = GameConvert.rowColumnToRenderX(row, column);
+    // if (renderX < Engine.Screen_Left) {
+    //   // TODO Remove
+    //   return;
+    // }
+    // if (renderX > Engine.Screen_Right) {
+    //   // TODO Remove
+    //   return;
+    // }
+    //
+    // final renderY = GameConvert.rowColumnZToRenderY(row, column, getIndexZ(index));
+    // if (renderY < Engine.Screen_Top) {
+    //   // TODO Remove
+    //   return;
+    // }
+    // if (renderY > Engine.Screen_Bottom) {
+    //   // TODO Remove
+    //   return;
+    // }
+    //
+    // if (!isIndexOnScreen(index)){
+    //   offscreenNodes++;
+    //   return;
+    // } else {
+    //   onscreenNodes++;
+    // }
     nodeColorStack[nodeColorStackIndex++] = index;
     final intensity = 1.0 - interpolations[interpolation];
     final interpolatedAlpha = alpha * intensity;
     final currentAlpha = nodeAlps[index];
     if (currentAlpha < interpolatedAlpha) return;
-    nodeAlps[index] = linerInterpolationInt(nodeAlps[index], alpha, intensity);
+    nodeAlps[index] = Engine.linerInterpolationInt(nodeAlps[index], alpha, intensity);
     refreshNodeColor(index);
   }
-
 
   static bool nodeBlocksNorthSouth(int index) => (const [
         NodeOrientation.Solid,
