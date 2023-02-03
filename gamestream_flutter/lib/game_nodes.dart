@@ -534,11 +534,19 @@ class GameNodes {
         }
       }
 
-      applyAmbient(
-        index: index,
-        alpha: alpha,
-        interpolation: interpolation,
-      );
+      if (rY > Engine.Screen_Bottom){
+        interpolation += 2;
+        continue;
+      }
+
+      if (rY > Engine.Screen_Top){
+        applyAmbient(
+          index: index,
+          alpha: alpha,
+          interpolation: interpolation,
+        );
+      }
+
 
       interpolation++;
       if (interpolation >= interpolationsLength) return;
@@ -649,7 +657,7 @@ class GameNodes {
       if (column >= totalColumns) return;
 
       index += (totalColumns + 1);
-      rY -= Node_Size;
+      rY += Node_Size;
 
       if (shootVertical && rxOnScreen) {
         if (rY < Engine.Screen_Bottom){
@@ -660,11 +668,18 @@ class GameNodes {
         }
       }
 
-      applyAmbient(
-        index: index,
-        alpha: alpha,
-        interpolation: interpolation,
-      );
+      if (rY < Engine.Screen_Top){
+        interpolation += 2;
+        continue;
+      }
+
+      if (rY < Engine.Screen_Bottom){
+        applyAmbient(
+          index: index,
+          alpha: alpha,
+          interpolation: interpolation,
+        );
+      }
 
       interpolation++;
       if (interpolation >= interpolationsLength) return;
@@ -952,9 +967,36 @@ class GameNodes {
     required int alpha,
     required int interpolation,
   }) {
+
+    final row = getIndexRow(index);
+    final column = getIndexColumn(index);
+    final rX = GameConvert.rowColumnZToRenderX(row, column);
+
+    if (rX < Engine.Screen_Left) {
+      // TODO REMOVE
+      return;
+    }
+    if (rX > Engine.Screen_Right) {
+      // TODO REMOVE
+      return;
+    }
+
+    final z = getIndexZ(index);
+    var rY = GameConvert.rowColumnZToRenderY(row, column, z);
+    if (rY > Engine.Screen_Bottom) return;
+
     while (interpolation < interpolationsLength) {
       index -= area;
       if (index < 0) return;
+      rY += Node_Size_Half;
+
+      if (rY > Engine.Screen_Bottom) return;
+
+      if (rY < Engine.Screen_Top) {
+        interpolation++;
+        continue;
+      }
+
       applyAmbient(
         index: index,
         alpha: alpha,
