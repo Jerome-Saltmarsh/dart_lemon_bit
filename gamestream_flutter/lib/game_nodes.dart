@@ -788,11 +788,27 @@ class GameNodes {
     required int interpolation,
     bool shootVertical = false,
   }) {
+    if (interpolation >= interpolationsLength) return;
+
+    var row = getIndexRow(index);
     var column = getIndexColumn(index);
+    var z = getIndexZ(index);
+
+    var rX = GameConvert.rowColumnZToRenderX(row, column, z);
+    if (rX < Engine.screen.left) return;
+    var rY = GameConvert.rowColumnZToRenderY(row, column, z);
+    if (rY > Engine.screen.bottom) return;
+
     while (interpolation < interpolationsLength) {
-      index++;
       column++;
       if (column >= totalColumns) return;
+
+      rX -= Node_Size_Half;
+      if (rX < Engine.screen.left) return;
+      rY += Node_Size_Half;
+      if (rY > Engine.screen.bottom) return;
+
+      index++;
       if (nodeBlocksEastWest(index)) return;
 
       if (shootVertical) {
