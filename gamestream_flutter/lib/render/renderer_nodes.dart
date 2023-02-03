@@ -207,6 +207,7 @@ class RendererNodes extends Renderer {
     playerRenderColumn = playerColumn - (GamePlayer.position.indexZ ~/ 2);
     playerProjection = playerIndex % GameNodes.projection;
     GameNodes.offscreenNodes = 0;
+    GameNodes.onscreenNodes = 0;
 
     screenRight = Engine.Screen_Right + Node_Size;
     screenLeft = Engine.Screen_Left - Node_Size;

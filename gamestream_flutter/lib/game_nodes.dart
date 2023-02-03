@@ -65,6 +65,7 @@ class GameNodes {
   static var lengthZ = 0.0;
 
   static var offscreenNodes = 0;
+  static var onscreenNodes = 0;
 
   static var heightMap = Uint16List(0);
 
@@ -905,6 +906,9 @@ class GameNodes {
   }){
     if (!isIndexOnScreen(index)){
       offscreenNodes++;
+      return;
+    } else {
+      onscreenNodes++;
     }
     nodeDynamicIndex[dynamicIndex++] = index;
     final intensity = 1.0 - interpolations[interpolation];
@@ -950,13 +954,12 @@ class GameNodes {
 
     final row = getIndexRow(index);
     final column = getIndexColumn(index);
-    final z = getIndexZ(index);
 
-    final renderX = GameConvert.rowColumnZToRenderX(row, column, z);
+    final renderX = GameConvert.rowColumnToRenderX(row, column);
     if (renderX < Engine.Screen_Left) return false;
     if (renderX > Engine.Screen_Right) return false;
 
-    final renderY = GameConvert.rowColumnZToRenderY(row, column, z);
+    final renderY = GameConvert.rowColumnZToRenderY(row, column, getIndexZ(index));
     if (renderY < Engine.Screen_Top) return false;
     if (renderY > Engine.Screen_Bottom) return false;
 
