@@ -2,7 +2,6 @@
 import 'dart:math';
 
 import 'package:flutter/painting.dart';
-import 'package:gamestream_flutter/functions/ease.dart';
 import 'package:gamestream_flutter/functions/hsv_to_color.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -561,9 +560,14 @@ class GameNodes {
   }) {
     var row = getIndexRow(index);
     var column = getIndexColumn(index);
+    var z = getIndexColumn(index);
 
-    final rX = GameConvert.rowColumnToRenderX(row, column);
-    final rxOnScreen = rX > Engine.Screen_Left && rX < Engine.Screen_Right;
+    var rX = GameConvert.rowColumnZToRenderX(row, column);
+
+    if (rX > Engine.Screen_Right) return;
+
+    final rY = GameConvert.rowColumnZToRenderY(row, column, z);
+    final rYOnScreen = rY > Engine.Screen_Top && rY < Engine.Screen_Bottom;
 
     while (interpolation < interpolationsLength) {
       row++;
@@ -572,17 +576,26 @@ class GameNodes {
       if (column < 0) return;
 
       index += (totalColumns - 1);
+      rX += Node_Size;
 
-      if (shootVertical && rxOnScreen) {
+      if (rX > Engine.Screen_Right) return;
+      if (rX < Engine.Screen_Left) {
+        interpolation += 2;
+        continue;
+      }
+
+      if (shootVertical) {
         shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);
         shootLightAmbientUp(index: index, alpha: alpha, interpolation: interpolation);
       }
 
-      applyAmbient(
-        index: index,
-        alpha: alpha,
-        interpolation: interpolation,
-      );
+      if (rYOnScreen){
+        applyAmbient(
+          index: index,
+          alpha: alpha,
+          interpolation: interpolation,
+        );
+      }
 
       interpolation++;
       if (interpolation >= interpolationsLength) return;
@@ -667,8 +680,8 @@ class GameNodes {
     var row = getIndexRow(index);
     var column = getIndexColumn(index);
 
-    final rX = GameConvert.rowColumnToRenderX(row, column);
-    final rxOnScreen = rX > Engine.Screen_Left && rX < Engine.Screen_Right;
+    var rX = GameConvert.rowColumnToRenderX(row, column);
+    if (rX < Engine.Screen_Left) return;
 
     while (interpolation < interpolationsLength) {
       row--;
@@ -678,7 +691,14 @@ class GameNodes {
 
       index += (-totalColumns + 1);
 
-      if (shootVertical && rxOnScreen) {
+      rX -= Node_Size;
+      if (rX < Engine.Screen_Left) return;
+      if (rX > Engine.Screen_Right) {
+        interpolation += 2;
+        continue;
+      }
+
+      if (shootVertical) {
         shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);
         shootLightAmbientUp(index: index, alpha: alpha, interpolation: interpolation);
       }
@@ -735,10 +755,16 @@ class GameNodes {
       rY -= Node_Size_Half;
       if (rY < Engine.Screen_Top) return;
 
-      if (rX > Engine.Screen_Right) continue;
-      if (rY > Engine.Screen_Bottom) continue;
-
       index -= totalColumns;
+
+      if (rX > Engine.Screen_Right) {
+        interpolation++;
+        continue;
+      }
+      if (rY > Engine.Screen_Bottom) {
+        interpolation++;
+        continue;
+      }
 
       if (shootVertical) {
         shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);
@@ -778,16 +804,19 @@ class GameNodes {
 
       rX += Node_Size_Half;
       if (rX > Engine.Screen_Right) return;
-      if (rX < Engine.Screen_Left) continue;
-
       rY -= Node_Size_Half;
       if (rY < Engine.Screen_Top) return;
-      if (rY > Engine.Screen_Bottom) continue;
 
       index--;
 
-      // assert (getIndexRenderX(index) == rX);
-      // assert (getIndexRenderY(index) == rY);
+      if (rY > Engine.Screen_Bottom) {
+        interpolation++;
+        continue;
+      }
+      if (rX < Engine.Screen_Left) {
+        interpolation++;
+        continue;
+      }
 
       if (shootVertical) {
         shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);
@@ -829,12 +858,17 @@ class GameNodes {
       rY += Node_Size_Half;
       if (rY > Engine.Screen_Bottom) return;
 
-      if (rX < Engine.Screen_Left) continue;
-      if (rY < Engine.Screen_Top) continue;
-
       index += totalColumns;
       if (nodeBlocksNorthSouth(index)) return;
 
+      if (rX < Engine.Screen_Left) {
+        interpolation++;
+        continue;
+      };
+      if (rY < Engine.Screen_Top) {
+        interpolation++;
+        continue;
+      }
 
       if (shootVertical) {
         shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);
@@ -874,11 +908,17 @@ class GameNodes {
       rY += Node_Size_Half;
       if (rY > Engine.Screen_Bottom) return;
 
-      if (rX > Engine.Screen_Right) continue;
-      if (rY < Engine.Screen_Top) continue;
-
       index++;
       if (nodeBlocksEastWest(index)) return;
+
+      if (rX > Engine.Screen_Right) {
+        interpolation++;
+        continue;
+      };
+      if (rY < Engine.Screen_Top) {
+        interpolation++;
+        continue;
+      }
 
       if (shootVertical) {
         shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);

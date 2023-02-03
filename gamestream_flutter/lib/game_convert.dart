@@ -10,7 +10,7 @@ class GameConvert {
       (row - column) * Node_Size_Half;
 
   static double rowColumnZToRenderY(int row, int column, int z) =>
-      ((row + column - z) * Node_Size_Half);
+      (row + column - z) * Node_Size_Half;
 
   static double rowColumnToRenderY(int row, int column) =>
       (row + column) * Node_Size_Half;
