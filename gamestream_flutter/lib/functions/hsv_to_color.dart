@@ -11,7 +11,7 @@ int hsvToColor({
 }) {
   // Calculate color
   int r, g, b;
-  final i = (hue / 43).floor();
+  final i = (hue ~/ 43);
   final f = (hue - (i * 43)) * 6;
   final p = (value * (255 - saturation)) >> 8;
   final q = (value * (255 - ((saturation * f) >> 8))) >> 8;
