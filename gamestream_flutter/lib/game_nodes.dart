@@ -2,6 +2,7 @@
 import 'dart:math';
 
 import 'package:flutter/painting.dart';
+import 'package:gamestream_flutter/functions/ease.dart';
 import 'package:gamestream_flutter/functions/hsv_to_color.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -152,10 +153,6 @@ class GameNodes {
   ];
 
   static const interpolationsLength = 6;
-
-  static const interpolationsAlpha = <int>[
-    0, 67, 124, 171, 208, 234, 249
-  ];
 
   static void emitLightDynamic({
     required int index,
@@ -402,11 +399,13 @@ class GameNodes {
     final xOnscreen = renderX > Engine.Screen_Left && renderX < Engine.Screen_Right;
     final yOnscreen = renderY > Engine.Screen_Top && renderY < Engine.Screen_Bottom;
 
-    applyAmbient(
-      index: index,
-      alpha: alpha,
-      interpolation: 0,
-    );
+    if (xOnscreen && yOnscreen){
+      applyAmbient(
+        index: index,
+        alpha: alpha,
+        interpolation: 0,
+      );
+    }
 
     if (xOnscreen) {
       if (renderY > Engine.Screen_Top){
@@ -441,7 +440,6 @@ class GameNodes {
           shootVertical: true,
         );
       }
-
     }
 
 
@@ -513,6 +511,9 @@ class GameNodes {
     var row = getIndexRow(index);
     var column = getIndexColumn(index);
 
+    final rX = GameConvert.rowColumnToRenderX(row, column);
+    final rxOnScreen = rX > Engine.Screen_Left && rX < Engine.Screen_Right;
+
     while (interpolation < interpolationsLength) {
       row--;
       if (row < 0) return;
@@ -521,7 +522,7 @@ class GameNodes {
 
       index -= (totalColumns + 1);
 
-      if (shootVertical) {
+      if (shootVertical && rxOnScreen) {
         shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);
         shootLightAmbientUp(index: index, alpha: alpha, interpolation: interpolation);
       }
@@ -561,6 +562,9 @@ class GameNodes {
     var row = getIndexRow(index);
     var column = getIndexColumn(index);
 
+    final rX = GameConvert.rowColumnToRenderX(row, column);
+    final rxOnScreen = rX > Engine.Screen_Left && rX < Engine.Screen_Right;
+
     while (interpolation < interpolationsLength) {
       row++;
       if (row >= totalRows) return;
@@ -569,7 +573,7 @@ class GameNodes {
 
       index += (totalColumns - 1);
 
-      if (shootVertical) {
+      if (shootVertical && rxOnScreen) {
         shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);
         shootLightAmbientUp(index: index, alpha: alpha, interpolation: interpolation);
       }
@@ -612,6 +616,9 @@ class GameNodes {
     var row = getIndexRow(index);
     var column = getIndexColumn(index);
 
+    final rX = GameConvert.rowColumnToRenderX(row, column);
+    final rxOnScreen = rX > Engine.Screen_Left && rX < Engine.Screen_Right;
+
     while (interpolation < interpolationsLength) {
       row++;
       if (row >= totalRows) return;
@@ -620,7 +627,7 @@ class GameNodes {
 
       index += (totalColumns + 1);
 
-      if (shootVertical) {
+      if (shootVertical && rxOnScreen) {
         shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);
         shootLightAmbientUp(index: index, alpha: alpha, interpolation: interpolation);
       }
@@ -660,6 +667,9 @@ class GameNodes {
     var row = getIndexRow(index);
     var column = getIndexColumn(index);
 
+    final rX = GameConvert.rowColumnToRenderX(row, column);
+    final rxOnScreen = rX > Engine.Screen_Left && rX < Engine.Screen_Right;
+
     while (interpolation < interpolationsLength) {
       row--;
       if (row < 0) return;
@@ -668,7 +678,7 @@ class GameNodes {
 
       index += (-totalColumns + 1);
 
-      if (shootVertical) {
+      if (shootVertical && rxOnScreen) {
         shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);
         shootLightAmbientUp(index: index, alpha: alpha, interpolation: interpolation);
       }
@@ -724,6 +734,8 @@ class GameNodes {
       if (rX < Engine.Screen_Left) return;
       rY -= Node_Size_Half;
       if (rY < Engine.Screen_Top) return;
+
+      // if (rX > En)
 
       index -= totalColumns;
 
@@ -966,3 +978,5 @@ class GameNodes {
     return true;
   }
 }
+
+
