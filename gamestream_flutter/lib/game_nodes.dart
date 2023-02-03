@@ -390,10 +390,10 @@ class GameNodes {
     final xOnscreen = renderX > Engine.Screen_Left && renderX < Engine.Screen_Right;
     final yOnscreen = renderY > Engine.Screen_Top && renderY < Engine.Screen_Bottom;
 
+
+    final nodeOrientation = nodeOrientations[index];
+
     if (xOnscreen && yOnscreen){
-
-      final nodeOrientation = nodeOrientations[index];
-
       if (nodeOrientation != NodeOrientation.Half_South && nodeOrientation != NodeOrientation.Half_West){
         applyAmbient(
           index: index,
@@ -429,6 +429,7 @@ class GameNodes {
       }
 
       if (renderY < Engine.Screen_Bottom) {
+
         shootLightAmbientSouthWest(
           index: index,
           alpha: alpha,
@@ -795,9 +796,17 @@ class GameNodes {
         continue;
       }
 
-      if (shootVertical) {
-        shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);
-        shootLightAmbientUp(index: index, alpha: alpha, interpolation: interpolation);
+      if (shootVertical && rY + Node_Size_Half < Engine.Screen_Bottom) {
+        final nodeIndexBelow = index - area;
+        if (nodeIndexBelow > 0){
+          applyAmbient(
+            index: nodeIndexBelow,
+            alpha: alpha,
+            interpolation: interpolation,
+          );
+        }
+        // shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);
+        // shootLightAmbientUp(index: index, alpha: alpha, interpolation: interpolation);
       }
 
       applyAmbient(
@@ -967,6 +976,8 @@ class GameNodes {
     required int interpolation,
   }) {
 
+    if (interpolation >= interpolationsLength) return;
+
     final row = getIndexRow(index);
     final column = getIndexColumn(index);
     final rX = GameConvert.rowColumnZToRenderX(row, column);
@@ -1006,7 +1017,6 @@ class GameNodes {
       if (nodeBlocksVertical(index)) return;
     }
   }
-
 
   static void shootLightAmbientUp({
     required int index,
