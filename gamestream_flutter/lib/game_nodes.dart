@@ -407,14 +407,14 @@ class GameNodes {
     }
 
     if (xOnscreen) {
-      if (renderY > Engine.Screen_Top){
+      if (renderY < Engine.Screen_Bottom){
         shootLightAmbientDown(
           index: index,
           alpha: alpha,
           interpolation: 0,
         );
       }
-      if (renderY < Engine.Screen_Bottom){
+      if (renderY > Engine.Screen_Top && renderY < Engine.Screen_Bottom){
         shootLightAmbientUp(
           index: index,
           alpha: alpha,
@@ -509,6 +509,11 @@ class GameNodes {
     if (interpolation >= interpolationsLength) return;
     var row = getIndexRow(index);
     var column = getIndexColumn(index);
+    var z = getIndexZ(index);
+
+
+    var rY = GameConvert.rowColumnZToRenderY(row, column, z);
+    if (rY < Engine.Screen_Top) return;
 
     final rX = GameConvert.rowColumnToRenderX(row, column);
     final rxOnScreen = rX > Engine.Screen_Left && rX < Engine.Screen_Right;
@@ -520,10 +525,13 @@ class GameNodes {
       if (column < 0) return;
 
       index -= (totalColumns + 1);
+      rY -= Node_Size;
 
       if (shootVertical && rxOnScreen) {
         shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);
-        shootLightAmbientUp(index: index, alpha: alpha, interpolation: interpolation);
+        if (rY > Engine.Screen_Top){
+          shootLightAmbientUp(index: index, alpha: alpha, interpolation: interpolation);
+        }
       }
 
       applyAmbient(
@@ -628,9 +636,11 @@ class GameNodes {
   }) {
     var row = getIndexRow(index);
     var column = getIndexColumn(index);
+    var z = getIndexZ(index);
 
     final rX = GameConvert.rowColumnToRenderX(row, column);
     final rxOnScreen = rX > Engine.Screen_Left && rX < Engine.Screen_Right;
+    var rY = GameConvert.rowColumnZToRenderY(row, column, z);
 
     while (interpolation < interpolationsLength) {
       row++;
@@ -639,10 +649,15 @@ class GameNodes {
       if (column >= totalColumns) return;
 
       index += (totalColumns + 1);
+      rY -= Node_Size;
 
       if (shootVertical && rxOnScreen) {
-        shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);
-        shootLightAmbientUp(index: index, alpha: alpha, interpolation: interpolation);
+        if (rY < Engine.Screen_Bottom){
+          shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);
+        }
+        if (rY > Engine.Screen_Top){
+          shootLightAmbientUp(index: index, alpha: alpha, interpolation: interpolation);
+        }
       }
 
       applyAmbient(
@@ -960,12 +975,18 @@ class GameNodes {
     final column = getIndexColumn(index);
 
     var rX = GameConvert.rowColumnZToRenderX(row, column);
-    if (rX < Engine.Screen_Left) return;
-    if (rX > Engine.Screen_Right) return;
+    if (rX < Engine.Screen_Left) {
+      return;
+    }
+    if (rX > Engine.Screen_Right) {
+      return;
+    }
 
     final z = getIndexZ(index);
     var rY = GameConvert.rowColumnZToRenderY(row, column, z);
-    if (rY < Engine.Screen_Top) return;
+    if (rY < Engine.Screen_Top) {
+      return;
+    };
 
     while (interpolation < interpolationsLength) {
       index += area;
