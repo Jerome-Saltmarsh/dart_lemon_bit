@@ -399,7 +399,7 @@ class GameNodes {
     final renderY = GameConvert.rowColumnZToRenderY(row, column, z);
 
     final xOnscreen = renderX > Engine.screen.left && renderX < Engine.screen.right;
-    final YOnscreen = renderY > Engine.screen.top && renderX < Engine.screen.top;
+    final yOnscreen = renderY > Engine.screen.top && renderY < Engine.screen.bottom;
 
     applyAmbient(
       index: index,
@@ -422,71 +422,83 @@ class GameNodes {
           interpolation: 0,
         );
       }
+
+      if (renderY > Engine.screen.top) {
+        shootLightAmbientNorthEast(
+          index: index,
+          alpha: alpha,
+          interpolation: 1,
+          shootVertical: true,
+        );
+      }
+
+      if (renderY < Engine.screen.bottom) {
+        shootLightAmbientSouthWest(
+          index: index,
+          alpha: alpha,
+          interpolation: 1,
+          shootVertical: true,
+        );
+      }
+
     }
 
-    if (renderY > Engine.screen.top) {
-      shootLightAmbientNorthEast(
-        index: index,
-        alpha: alpha,
-        interpolation: 1,
-        shootVertical: true,
-      );
-    }
 
-    if (renderY < Engine.screen.bottom) {
-      shootLightAmbientSouthWest(
-        index: index,
-        alpha: alpha,
-        interpolation: 1,
-        shootVertical: true,
-      );
-    }
+    if (yOnscreen){
+      if (renderX > Engine.screen.left){
+        shootLightAmbientNorthWest(
+          index: index,
+          alpha: alpha,
+          interpolation: 1,
+          shootVertical: true,
+        );
+      }
 
-    if (renderX > Engine.screen.left){
-      shootLightAmbientNorthWest(
-        index: index,
-        alpha: alpha,
-        interpolation: 1,
-        shootVertical: true,
-      );
-    }
-
-    if (renderX < Engine.screen.right){
-      shootLightAmbientSouthEast(
-        index: index,
-        alpha: alpha,
-        interpolation: 1,
-        shootVertical: true,
-      );
+      if (renderX < Engine.screen.right){
+        shootLightAmbientSouthEast(
+          index: index,
+          alpha: alpha,
+          interpolation: 1,
+          shootVertical: true,
+        );
+      }
     }
 
     if (!nodeBlocksNorthSouth(index)){
-      shootLightAmbientNorth(
-        index: index,
-        alpha: alpha,
-        interpolation: 0,
-        shootVertical: true,
-      );
-      shootLightAmbientSouth(
-        index: index,
-        alpha: alpha,
-        interpolation: 0,
-        shootVertical: true,
-      );
+      if (renderX > Engine.screen.left && renderY > Engine.screen.top){
+        shootLightAmbientNorth(
+          index: index,
+          alpha: alpha,
+          interpolation: 0,
+          shootVertical: true,
+        );
+      }
+      if (renderX < Engine.screen.right && renderY < Engine.screen.bottom){
+        shootLightAmbientSouth(
+          index: index,
+          alpha: alpha,
+          interpolation: 0,
+          shootVertical: true,
+        );
+      }
     }
     if (!nodeBlocksEastWest(index)) {
-      shootLightAmbientEast(
+      if (renderY > Engine.screen.top && renderX < Engine.screen.right){
+        shootLightAmbientEast(
           index: index,
           alpha: alpha,
           interpolation: 0,
           shootVertical: true,
-      );
-      shootLightAmbientWest(
+        );
+      }
+      if (renderY < Engine.screen.bottom && renderX > Engine.screen.left){
+        shootLightAmbientWest(
           index: index,
           alpha: alpha,
           interpolation: 0,
           shootVertical: true,
-      );
+        );
+      }
     }
   }
 
