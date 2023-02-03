@@ -904,14 +904,30 @@ class GameNodes {
     }
   }
 
+
   static void shootLightAmbientUp({
     required int index,
     required int alpha,
     required int interpolation,
   }) {
+
+    var row = getIndexRow(index);
+    var column = getIndexColumn(index);
+    var z = getIndexZ(index);
+
+    var rX = GameConvert.rowColumnZToRenderX(row, column, z);
+    if (rX < Engine.Screen_Left) return;
+    if (rX > Engine.Screen_Right) return;
+    var rY = GameConvert.rowColumnZToRenderY(row, column, z);
+    if (rY < Engine.Screen_Top) return;
+
     while (interpolation < interpolationsLength) {
       index += area;
       if (index >= total) return;
+      rY -= GameConstants.Node_Height;
+      if (rY < Engine.Screen_Top) return;
+      if (rY > Engine.Screen_Bottom) continue;
+
       if (nodeBlocksVertical(index)) return;
       applyAmbient(
         index: index,
