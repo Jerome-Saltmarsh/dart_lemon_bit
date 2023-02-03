@@ -207,7 +207,8 @@ class ServerState {
   }
 
   static void clean() {
-    // gameObjects.clear();
+    gameObjects.clear();
+    GameNodes.dynamicIndex = 0;
   }
 
   static void sortGameObjects(){

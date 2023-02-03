@@ -150,7 +150,7 @@ class GameNodes {
     0.9795918367346939,
   ];
 
-  static const interpolationsLength = 7;
+  static const interpolationsLength = 6;
 
   static const interpolationsAlpha = <int>[
     0, 67, 124, 171, 208, 234, 249
@@ -508,6 +508,7 @@ class GameNodes {
     required int interpolation,
     bool shootVertical = false,
   }) {
+    if (interpolation >= interpolationsLength) return;
     var row = getIndexRow(index);
     var column = getIndexColumn(index);
 
@@ -782,47 +783,6 @@ class GameNodes {
     }
   }
 
-  static void shootLightAmbientWest({
-    required int index,
-    required int alpha,
-    required int interpolation,
-    bool shootVertical = false,
-  }) {
-    if (interpolation >= interpolationsLength) return;
-
-    var row = getIndexRow(index);
-    var column = getIndexColumn(index);
-    var z = getIndexZ(index);
-
-    var rX = GameConvert.rowColumnZToRenderX(row, column, z);
-    if (rX < Engine.screen.left) return;
-    var rY = GameConvert.rowColumnZToRenderY(row, column, z);
-    if (rY > Engine.screen.bottom) return;
-
-    while (interpolation < interpolationsLength) {
-      column++;
-      if (column >= totalColumns) return;
-
-      rX -= Node_Size_Half;
-      if (rX < Engine.screen.left) return;
-      rY += Node_Size_Half;
-      if (rY > Engine.screen.bottom) return;
-
-      index++;
-      if (nodeBlocksEastWest(index)) return;
-
-      if (shootVertical) {
-        shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);
-      }
-      applyAmbient(
-        index: index,
-        alpha: alpha,
-        interpolation: interpolation++,
-      );
-    }
-  }
-
-
   static void shootLightAmbientSouth({
     required int index,
     required int alpha,
@@ -864,6 +824,45 @@ class GameNodes {
     }
   }
 
+  static void shootLightAmbientWest({
+    required int index,
+    required int alpha,
+    required int interpolation,
+    bool shootVertical = false,
+  }) {
+    if (interpolation >= interpolationsLength) return;
+
+    var row = getIndexRow(index);
+    var column = getIndexColumn(index);
+    var z = getIndexZ(index);
+
+    var rX = GameConvert.rowColumnZToRenderX(row, column, z);
+    if (rX < Engine.screen.left) return;
+    var rY = GameConvert.rowColumnZToRenderY(row, column, z);
+    if (rY > Engine.screen.bottom) return;
+
+    while (interpolation < interpolationsLength) {
+      column++;
+      if (column >= totalColumns) return;
+
+      rX -= Node_Size_Half;
+      if (rX < Engine.screen.left) return;
+      rY += Node_Size_Half;
+      if (rY > Engine.screen.bottom) return;
+
+      index++;
+      if (nodeBlocksEastWest(index)) return;
+
+      if (shootVertical) {
+        shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);
+      }
+      applyAmbient(
+        index: index,
+        alpha: alpha,
+        interpolation: interpolation++,
+      );
+    }
+  }
 
   static void shootLightAmbientDown({
     required int index,
