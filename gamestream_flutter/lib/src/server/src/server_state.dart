@@ -208,7 +208,7 @@ class ServerState {
 
   static void clean() {
     gameObjects.clear();
-    GameNodes.nodeColorStackIndex = 0;
+    GameNodes.colorStackIndex = 0;
   }
 
   static void sortGameObjects(){
