@@ -528,7 +528,9 @@ class GameNodes {
       rY -= Node_Size;
 
       if (shootVertical && rxOnScreen) {
-        shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);
+        if (rY <= Engine.Screen_Bottom) {
+          shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);
+        }
         if (rY > Engine.Screen_Top){
           shootLightAmbientUp(index: index, alpha: alpha, interpolation: interpolation);
         }
@@ -983,7 +985,9 @@ class GameNodes {
 
     final z = getIndexZ(index);
     var rY = GameConvert.rowColumnZToRenderY(row, column, z);
-    if (rY > Engine.Screen_Bottom) return;
+    if (rY > Engine.Screen_Bottom) {
+      return;
+    }
 
     while (interpolation < interpolationsLength) {
       index -= area;
