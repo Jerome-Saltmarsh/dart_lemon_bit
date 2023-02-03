@@ -3,14 +3,14 @@ import 'library.dart';
 
 class GameConvert {
 
-  static double rowColumnZToRenderX(int row, int column, int z) =>
+  static double rowColumnZToRenderX(int row, int column) =>
       (row - column) * Node_Size_Half;
 
   static double rowColumnToRenderX(int row, int column) =>
       (row - column) * Node_Size_Half;
 
   static double rowColumnZToRenderY(int row, int column, int z) =>
-      ((row + column) * Node_Size_Half) - (z * Node_Height);
+      ((row + column - z) * Node_Size_Half);
 
   static double rowColumnToRenderY(int row, int column) =>
       (row + column) * Node_Size_Half;
