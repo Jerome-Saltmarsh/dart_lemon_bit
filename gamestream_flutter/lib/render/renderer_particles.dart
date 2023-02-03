@@ -13,11 +13,11 @@ class RendererParticles extends Renderer {
       assert (particle.active);
       assert (particle.delay <= 0);
       final dstX = GameConvert.convertV3ToRenderX(particle);
-      assert (dstX > screen.left - 50);
-      assert (dstX < screen.right + 50);
+      assert (dstX > Engine.Screen_Left - 50);
+      assert (dstX < Engine.Screen_Right + 50);
       final dstY = GameConvert.convertV3ToRenderY(particle);
-      assert (dstY > screen.top - 50);
-      assert (dstY < screen.bottom + 50);
+      assert (dstY > Engine.Screen_Top - 50);
+      assert (dstY < Engine.Screen_Bottom + 50);
 
       switch (particle.type) {
         case ParticleType.Water_Drop:
@@ -445,6 +445,7 @@ class RendererParticles extends Renderer {
     );
   }
 
+
   @override
   void updateFunction() {
     while (index < total) {
@@ -452,11 +453,11 @@ class RendererParticles extends Renderer {
       if (particle.delay > 0) continue;
       if (!particle.active) continue;
       final dstX = GameConvert.convertV3ToRenderX(particle);
-      if (dstX < screen.left - 50) continue;
-      if (dstX > screen.right + 50) continue;
+      if (dstX < Engine.Screen_Left - 50) continue;
+      if (dstX > Engine.Screen_Right + 50) continue;
       final dstY = GameConvert.convertV3ToRenderY(particle);
-      if (dstY < screen.top - 50) continue;
-      if (dstY > screen.bottom + 50) continue;
+      if (dstY < Engine.Screen_Top - 50) continue;
+      if (dstY > Engine.Screen_Bottom + 50) continue;
       if (!particle.nodePerceptible) continue;
 
       order = particle.renderOrder;

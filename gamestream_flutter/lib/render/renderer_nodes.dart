@@ -208,10 +208,10 @@ class RendererNodes extends Renderer {
     playerProjection = playerIndex % GameNodes.projection;
     GameNodes.offscreenNodes = 0;
 
-    screenRight = Engine.screen.right + Node_Size;
-    screenLeft = Engine.screen.left - Node_Size;
-    screenTop = Engine.screen.top - 72;
-    screenBottom = Engine.screen.bottom + 72;
+    screenRight = Engine.Screen_Right + Node_Size;
+    screenLeft = Engine.Screen_Left - Node_Size;
+    screenTop = Engine.Screen_Top - 72;
+    screenBottom = Engine.Screen_Bottom + 72;
     var screenTopLeftColumn = GameConvert.convertWorldToColumn(screenLeft, screenTop, 0);
     nodesScreenBottomRightRow = clamp(GameConvert.convertWorldToRow(screenRight, screenBottom, 0), 0, GameNodes.totalRows - 1);
     nodesScreenTopLeftRow = GameConvert.convertWorldToRow(screenLeft, screenTop, 0);

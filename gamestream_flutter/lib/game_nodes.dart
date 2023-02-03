@@ -192,13 +192,13 @@ class GameNodes {
 
     const r = 4;
     final dstXLeft = GameConvert.rowColumnZToRenderX(rowIndex + r, columnIndex - r, zIndex);
-    if (dstXLeft < Engine.screen.left)    return;
+    if (dstXLeft < Engine.Screen_Left)    return;
     final dstXRight = GameConvert.rowColumnZToRenderX(rowIndex - r, columnIndex + r, zIndex);
-    if (dstXRight > Engine.screen.right)   return;
+    if (dstXRight > Engine.Screen_Right)   return;
     final dstYTop = GameConvert.rowColumnZToRenderY(rowIndex + r, columnIndex + r, zIndex);
-    if (dstYTop <  Engine.screen.top) return;
+    if (dstYTop <  Engine.Screen_Top) return;
     final dstYBottom = GameConvert.rowColumnZToRenderY(rowIndex - r, columnIndex - r, zIndex);
-    if (dstYBottom >  Engine.screen.bottom) return;
+    if (dstYBottom >  Engine.Screen_Bottom) return;
 
     for (var z = zMin; z < zMax; z++) {
       var rowInit = rowInitInit;
@@ -257,13 +257,13 @@ class GameNodes {
 
     const r = 4;
     final dstXLeft = GameConvert.rowColumnZToRenderX(rowIndex + r, columnIndex - r, zIndex);
-    if (dstXLeft < Engine.screen.left)    return;
+    if (dstXLeft < Engine.Screen_Left)    return;
     final dstXRight = GameConvert.rowColumnZToRenderX(rowIndex - r, columnIndex + r, zIndex);
-    if (dstXRight > Engine.screen.right)   return;
+    if (dstXRight > Engine.Screen_Right)   return;
     final dstYTop = GameConvert.rowColumnZToRenderY(rowIndex + r, columnIndex + r, zIndex);
-    if (dstYTop <  Engine.screen.top) return;
+    if (dstYTop <  Engine.Screen_Top) return;
     final dstYBottom = GameConvert.rowColumnZToRenderY(rowIndex - r, columnIndex - r, zIndex);
-    if (dstYBottom >  Engine.screen.bottom) return;
+    if (dstYBottom >  Engine.Screen_Bottom) return;
 
     for (var z = zMin; z < zMax; z++) {
       var rowInit = rowInitInit;
@@ -398,8 +398,8 @@ class GameNodes {
     final renderX = GameConvert.rowColumnZToRenderX(row, column, z);
     final renderY = GameConvert.rowColumnZToRenderY(row, column, z);
 
-    final xOnscreen = renderX > Engine.screen.left && renderX < Engine.screen.right;
-    final yOnscreen = renderY > Engine.screen.top && renderY < Engine.screen.bottom;
+    final xOnscreen = renderX > Engine.Screen_Left && renderX < Engine.Screen_Right;
+    final yOnscreen = renderY > Engine.Screen_Top && renderY < Engine.Screen_Bottom;
 
     applyAmbient(
       index: index,
@@ -408,14 +408,14 @@ class GameNodes {
     );
 
     if (xOnscreen) {
-      if (renderY > Engine.screen.top){
+      if (renderY > Engine.Screen_Top){
         shootLightAmbientDown(
           index: index,
           alpha: alpha,
           interpolation: 0,
         );
       }
-      if (renderY < Engine.screen.bottom){
+      if (renderY < Engine.Screen_Bottom){
         shootLightAmbientUp(
           index: index,
           alpha: alpha,
@@ -423,7 +423,7 @@ class GameNodes {
         );
       }
 
-      if (renderY > Engine.screen.top) {
+      if (renderY > Engine.Screen_Top) {
         shootLightAmbientNorthEast(
           index: index,
           alpha: alpha,
@@ -432,7 +432,7 @@ class GameNodes {
         );
       }
 
-      if (renderY < Engine.screen.bottom) {
+      if (renderY < Engine.Screen_Bottom) {
         shootLightAmbientSouthWest(
           index: index,
           alpha: alpha,
@@ -445,7 +445,7 @@ class GameNodes {
 
 
     if (yOnscreen){
-      if (renderX > Engine.screen.left){
+      if (renderX > Engine.Screen_Left){
         shootLightAmbientNorthWest(
           index: index,
           alpha: alpha,
@@ -454,7 +454,7 @@ class GameNodes {
         );
       }
 
-      if (renderX < Engine.screen.right){
+      if (renderX < Engine.Screen_Right){
         shootLightAmbientSouthEast(
           index: index,
           alpha: alpha,
@@ -465,7 +465,7 @@ class GameNodes {
     }
 
     if (!nodeBlocksNorthSouth(index)){
-      if (renderX > Engine.screen.left && renderY > Engine.screen.top){
+      if (renderX > Engine.Screen_Left && renderY > Engine.Screen_Top){
         shootLightAmbientNorth(
           index: index,
           alpha: alpha,
@@ -473,7 +473,7 @@ class GameNodes {
           shootVertical: true,
         );
       }
-      if (renderX < Engine.screen.right && renderY < Engine.screen.bottom){
+      if (renderX < Engine.Screen_Right && renderY < Engine.Screen_Bottom){
         shootLightAmbientSouth(
           index: index,
           alpha: alpha,
@@ -483,7 +483,7 @@ class GameNodes {
       }
     }
     if (!nodeBlocksEastWest(index)) {
-      if (renderY > Engine.screen.top && renderX < Engine.screen.right){
+      if (renderY > Engine.Screen_Top && renderX < Engine.Screen_Right){
         shootLightAmbientEast(
           index: index,
           alpha: alpha,
@@ -491,7 +491,7 @@ class GameNodes {
           shootVertical: true,
         );
       }
-      if (renderY < Engine.screen.bottom && renderX > Engine.screen.left){
+      if (renderY < Engine.Screen_Bottom && renderX > Engine.Screen_Left){
         shootLightAmbientWest(
           index: index,
           alpha: alpha,
@@ -712,17 +712,17 @@ class GameNodes {
     var z = getIndexZ(index);
 
     var rX = GameConvert.rowColumnZToRenderX(row, column, z);
-    if (rX < Engine.screen.left) return;
+    if (rX < Engine.Screen_Left) return;
     var rY = GameConvert.rowColumnZToRenderY(row, column, z);
-    if (rY < Engine.screen.top) return;
+    if (rY < Engine.Screen_Top) return;
 
     while (interpolation < interpolationsLength) {
       row--;
       if (row < 0) return;
       rX -= Node_Size_Half;
-      if (rX < Engine.screen.left) return;
+      if (rX < Engine.Screen_Left) return;
       rY -= Node_Size_Half;
-      if (rY < Engine.screen.top) return;
+      if (rY < Engine.Screen_Top) return;
 
       index -= totalColumns;
 
@@ -753,9 +753,9 @@ class GameNodes {
     var z = getIndexZ(index);
 
     var rX = GameConvert.rowColumnZToRenderX(row, column, z);
-    if (rX > Engine.screen.right) return;
+    if (rX > Engine.Screen_Right) return;
     var rY = GameConvert.rowColumnZToRenderY(row, column, z);
-    if (rY < Engine.screen.top) return;
+    if (rY < Engine.Screen_Top) return;
 
 
     while (interpolation < interpolationsLength) {
@@ -763,9 +763,9 @@ class GameNodes {
       if (column < 0) return;
 
       rX += Node_Size_Half;
-      if (rX > Engine.screen.right) return;
+      if (rX > Engine.Screen_Right) return;
       rY -= Node_Size_Half;
-      if (rY < Engine.screen.top) return;
+      if (rY < Engine.Screen_Top) return;
 
       index--;
 
@@ -796,18 +796,18 @@ class GameNodes {
     var z = getIndexZ(index);
 
     var rX = GameConvert.rowColumnZToRenderX(row, column, z);
-    if (rX > Engine.screen.right) return;
+    if (rX > Engine.Screen_Right) return;
     var rY = GameConvert.rowColumnZToRenderY(row, column, z);
-    if (rY > Engine.screen.bottom) return;
+    if (rY > Engine.Screen_Bottom) return;
 
     while (interpolation < interpolationsLength) {
       row++;
       if (row >= totalRows) return;
 
       rX += Node_Size_Half;
-      if (rX > Engine.screen.right) return;
+      if (rX > Engine.Screen_Right) return;
       rY += Node_Size_Half;
-      if (rY > Engine.screen.bottom) return;
+      if (rY > Engine.Screen_Bottom) return;
 
       index += totalColumns;
       if (nodeBlocksNorthSouth(index)) return;
@@ -837,18 +837,18 @@ class GameNodes {
     var z = getIndexZ(index);
 
     var rX = GameConvert.rowColumnZToRenderX(row, column, z);
-    if (rX < Engine.screen.left) return;
+    if (rX < Engine.Screen_Left) return;
     var rY = GameConvert.rowColumnZToRenderY(row, column, z);
-    if (rY > Engine.screen.bottom) return;
+    if (rY > Engine.Screen_Bottom) return;
 
     while (interpolation < interpolationsLength) {
       column++;
       if (column >= totalColumns) return;
 
       rX -= Node_Size_Half;
-      if (rX < Engine.screen.left) return;
+      if (rX < Engine.Screen_Left) return;
       rY += Node_Size_Half;
-      if (rY > Engine.screen.bottom) return;
+      if (rY > Engine.Screen_Bottom) return;
 
       index++;
       if (nodeBlocksEastWest(index)) return;
@@ -953,12 +953,12 @@ class GameNodes {
     final z = getIndexZ(index);
 
     final renderX = GameConvert.rowColumnZToRenderX(row, column, z);
-    if (renderX < Engine.screen.left) return false;
-    if (renderX > Engine.screen.right) return false;
+    if (renderX < Engine.Screen_Left) return false;
+    if (renderX > Engine.Screen_Right) return false;
 
     final renderY = GameConvert.rowColumnZToRenderY(row, column, z);
-    if (renderY < Engine.screen.top) return false;
-    if (renderY > Engine.screen.bottom) return false;
+    if (renderY < Engine.Screen_Top) return false;
+    if (renderY > Engine.Screen_Bottom) return false;
 
     return true;
   }

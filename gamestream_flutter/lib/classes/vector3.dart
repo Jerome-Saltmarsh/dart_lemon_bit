@@ -16,11 +16,11 @@ class Vector3 with Position {
 
   bool get onscreen {
      final rx = renderX;
-     if (rx < Engine.screen.left) return false;
-     if (rx > Engine.screen.right) return false;
+     if (rx < Engine.Screen_Left) return false;
+     if (rx > Engine.Screen_Right) return false;
      final ry = renderY;
-     if (ry < Engine.screen.top) return false;
-     if (ry > Engine.screen.bottom) return false;
+     if (ry < Engine.Screen_Top) return false;
+     if (ry > Engine.Screen_Bottom) return false;
      return true;
   }
 

@@ -193,7 +193,7 @@ class Engine {
   static BlendMode get bufferBlendMode => _bufferBlendMode;
   static double get joystickDistance => Engine.calculateDistance(joystickBaseX, joystickBaseY, joystickEndX, joystickEndY);
   static double get joystickAngle => Engine.calculateAngleBetween(joystickBaseX, joystickBaseY, joystickEndX, joystickEndY);
-  static double get screenCenterRenderX => (screen.left + screen.right) * 0.5;
+  static double get screenCenterRenderX => (Screen_Left + Screen_Right) * 0.5;
   static double get screenDiagonalLength => calculateHypotenuse(screen.width, screen.height);
   static double get screenArea => screen.width * screen.height;
   static WidgetBuilder? get buildUI => watchBuildUI.value;
@@ -232,6 +232,12 @@ class Engine {
   static const GoldenRatio_1_381 = 1.38196601125;
   static const GoldenRatio_0_618 = 0.61803398875;
   static const GoldenRatio_0_381 = 0.38196601125;
+
+  static var Screen_Top = 0.0;
+  static var Screen_Right = 0.0;
+  static var Screen_Bottom = 0.0;
+  static var Screen_Left = 0.0;
+
 
 
   // QUERIES
@@ -633,10 +639,10 @@ class Engine {
   }
 
   static void _internalOnUpdate(Timer timer){
-    screen.left = camera.x;
-    screen.right = camera.x + (screen.width / zoom);
-    screen.top = camera.y;
-    screen.bottom = camera.y + (screen.height / zoom);
+    Screen_Left = camera.x;
+    Screen_Right = camera.x + (screen.width / zoom);
+    Screen_Top = camera.y;
+    Screen_Bottom = camera.y + (screen.height / zoom);
     if (watchMouseLeftDown.value) {
       mouseLeftDownFrames++;
     }
@@ -1395,16 +1401,6 @@ class _Screen {
   var initialized = false;
   var width = 0.0;
   var height = 0.0;
-  var top = 0.0;
-  var right = 0.0;
-  var bottom = 0.0;
-  var left = 0.0;
-
-  bool contains(double x, double y) =>
-    x > left &&
-    x < right &&
-    y > top &&
-    y < bottom ;
 }
 
 class DeviceType {

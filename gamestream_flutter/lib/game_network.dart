@@ -81,10 +81,10 @@ class GameNetwork {
 
     writeNumberToByteArray(number: GameIO.getCursorWorldX(), list: updateBuffer, index: 5);
     writeNumberToByteArray(number: GameIO.getCursorWorldY(), list: updateBuffer, index: 7);
-    writeNumberToByteArray(number: Engine.screen.left, list: updateBuffer, index: 9);
-    writeNumberToByteArray(number: Engine.screen.top, list: updateBuffer, index: 11);
-    writeNumberToByteArray(number: Engine.screen.right, list: updateBuffer, index: 13);
-    writeNumberToByteArray(number: Engine.screen.bottom, list: updateBuffer, index: 15);
+    writeNumberToByteArray(number: Engine.Screen_Left, list: updateBuffer, index: 9);
+    writeNumberToByteArray(number: Engine.Screen_Top, list: updateBuffer, index: 11);
+    writeNumberToByteArray(number: Engine.Screen_Right, list: updateBuffer, index: 13);
+    writeNumberToByteArray(number: Engine.Screen_Bottom, list: updateBuffer, index: 15);
     sink.add(updateBuffer);
     GameIO.setCursorAction(CursorAction.None);
   }
