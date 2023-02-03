@@ -735,7 +735,8 @@ class GameNodes {
       rY -= Node_Size_Half;
       if (rY < Engine.Screen_Top) return;
 
-      // if (rX > En)
+      if (rX > Engine.Screen_Right) continue;
+      if (rY > Engine.Screen_Bottom) continue;
 
       index -= totalColumns;
 
@@ -780,6 +781,9 @@ class GameNodes {
       rY -= Node_Size_Half;
       if (rY < Engine.Screen_Top) return;
 
+      if (rX < Engine.Screen_Left) continue;
+      if (rY > Engine.Screen_Bottom) continue;
+
       index--;
 
       if (shootVertical) {
@@ -822,6 +826,9 @@ class GameNodes {
       rY += Node_Size_Half;
       if (rY > Engine.Screen_Bottom) return;
 
+      if (rX < Engine.Screen_Left) continue;
+      if (rY < Engine.Screen_Top) continue;
+
       index += totalColumns;
       if (nodeBlocksNorthSouth(index)) return;
 
@@ -862,6 +869,9 @@ class GameNodes {
       if (rX < Engine.Screen_Left) return;
       rY += Node_Size_Half;
       if (rY > Engine.Screen_Bottom) return;
+
+      if (rX > Engine.Screen_Right) continue;
+      if (rY < Engine.Screen_Top) continue;
 
       index++;
       if (nodeBlocksEastWest(index)) return;
