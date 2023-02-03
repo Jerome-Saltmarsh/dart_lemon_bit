@@ -745,11 +745,28 @@ class GameNodes {
     required int interpolation,
     bool shootVertical = false,
   }) {
+    if (interpolation >= interpolationsLength) return;
+
+    var row = getIndexRow(index);
     var column = getIndexColumn(index);
+    var z = getIndexZ(index);
+
+    var rX = GameConvert.rowColumnZToRenderX(row, column, z);
+    if (rX > Engine.screen.right) return;
+    var rY = GameConvert.rowColumnZToRenderY(row, column, z);
+    if (rY < Engine.screen.top) return;
+
+
     while (interpolation < interpolationsLength) {
-      index--;
       column--;
       if (column < 0) return;
+
+      rX += Node_Size_Half;
+      if (rX > Engine.screen.right) return;
+      rY -= Node_Size_Half;
+      if (rY < Engine.screen.top) return;
+
+      index--;
 
       if (shootVertical) {
         shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);
