@@ -787,6 +787,7 @@ class GameNodes {
     var z = getIndexZ(index);
 
     while (interpolation < interpolationsLength) {
+
        row += vx;
        if (row < 0 || row >= totalRows) return;
        column += vy;
@@ -798,9 +799,9 @@ class GameNodes {
        applyAmbient(index: index, alpha: alpha, interpolation: interpolation);
 
        if (vx > 0){
-         shootLightAmbientNorth(index: index, alpha: alpha, interpolation: interpolation);
-       } else if (vx < 0){
          shootLightAmbientSouth(index: index, alpha: alpha, interpolation: interpolation);
+       } else if (vx < 0){
+         shootLightAmbientNorth(index: index, alpha: alpha, interpolation: interpolation);
        }
 
        if (vy > 0){
