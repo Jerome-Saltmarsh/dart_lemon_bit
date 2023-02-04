@@ -379,48 +379,17 @@ class GameNodes {
   }){
     if (index < 0) return;
     if (index >= total) return;
-    //
-    // final row = getIndexRow(index);
-    // final column = getIndexColumn(index);
-    // final z = getIndexZ(index);
 
-    // final renderX = GameConvert.rowColumnZToRenderX(row, column);
-    // final renderY = GameConvert.rowColumnZToRenderY(row, column, z);
-
-    // final xOnscreen = renderX > Engine.Screen_Left && renderX < Engine.Screen_Right;
-    // final yOnscreen = renderY > Engine.Screen_Top && renderY < Engine.Screen_Bottom;
-    //
-    // final nodeOrientation = nodeOrientations[index];
-
-    // if (xOnscreen && yOnscreen){
-    //   if (nodeOrientation != NodeOrientation.Half_South && nodeOrientation != NodeOrientation.Half_West){
-    //     applyAmbient(
-    //       index: index,
-    //       alpha: alpha,
-    //       interpolation: 0,
-    //     );
-    //
-    //     final nodeIndexBelow = index - area;
-    //     if (nodeIndexBelow > 0){
-    //       applyAmbient(
-    //         index: nodeIndexBelow,
-    //         alpha: alpha,
-    //         interpolation: 0,
-    //       );
-    //     }
-    //   }
-    // }
-
-    for (var z = -1; z <= 1; z++){
-      for (var row = -1; row <= 1; row++){
-        for (var column = -1; column <= 1; column++){
+    for (var vz = -1; vz <= 1; vz++){
+      for (var vx = -1; vx <= 1; vx++){
+        for (var vy = -1; vy <= 1; vy++){
           shootLightTreeAmbient(
             index: index,
             interpolation: 0,
             alpha: alpha,
-            vx: row,
-            vy: column,
-            vz: z,
+            vx: vx,
+            vy: vy,
+            vz: vz,
           );
         }
       }
@@ -725,14 +694,17 @@ class GameNodes {
        applyAmbient(index: index, alpha: alpha, interpolation: interpolation);
 
 
-      if (nodeBlocksNorthSouth(index)) {
-         vx = 0;
-         velocity = vx.abs() + vy.abs() + vz.abs();
-      }
-      if (nodeBlocksEastWest(index)) {
-        vy = 0;
-        velocity = vx.abs() + vy.abs() + vz.abs();
-      }
+       if (vx != 0 && nodeBlocksNorthSouth(index)) {
+          vx = 0;
+          velocity = vx.abs() + vy.abs() + vz.abs();
+       }
+
+       if (vy != 0 && nodeBlocksEastWest(index)) {
+          vy = 0;
+          velocity = vx.abs() + vy.abs() + vz.abs();
+       }
+
+       if (velocity == 0) return;
 
        if (vz == 0){
          final nodeIndexBelow = index - area;
@@ -760,8 +732,6 @@ class GameNodes {
        } else {
          interpolation += velocity;
        }
-
-
     }
   }
 
@@ -1121,6 +1091,11 @@ class GameNodes {
     // } else {
     //   onscreenNodes++;
     // }
+
+    if (colorStackIndex >= colorStack.length){
+      return;
+    }
+
     colorStack[colorStackIndex++] = index;
     final intensity = 1.0 - interpolations[interpolation];
     final interpolatedAlpha = alpha * intensity;
