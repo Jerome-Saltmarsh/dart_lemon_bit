@@ -691,20 +691,35 @@ class GameNodes {
 
        index = (z * area) + (row * totalColumns) + column;
 
-       applyAmbient(index: index, alpha: alpha, interpolation: interpolation);
-
-
        if (vx != 0 && nodeBlocksNorthSouth(index)) {
+          velocity = vy.abs() + vz.abs();
+          if (velocity == 0){
+            if (vx < 0){
+              applyAmbient(
+                index: index,
+                alpha: alpha,
+                interpolation: interpolation,
+              );
+            }
+            return;
+          }
           vx = 0;
-          velocity = vx.abs() + vy.abs() + vz.abs();
        }
 
        if (vy != 0 && nodeBlocksEastWest(index)) {
+         velocity = vx.abs() + vz.abs();
+         if (velocity == 0){
+           if (vy < 1){
+             applyAmbient(
+               index: index,
+               alpha: alpha,
+               interpolation: interpolation,
+             );
+           }
+           return;
+         }
           vy = 0;
-          velocity = vx.abs() + vy.abs() + vz.abs();
        }
-
-       if (velocity == 0) return;
 
        if (vz == 0){
          final nodeIndexBelow = index - area;
