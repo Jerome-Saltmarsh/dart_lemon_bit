@@ -797,7 +797,6 @@ class GameNodes {
   }){
     assert (interpolation < interpolationsLength);
 
-
     final velocity = vx.abs() + vy.abs() + vz.abs();
     var row = getIndexRow(index);
     var column = getIndexColumn(index);
@@ -818,21 +817,28 @@ class GameNodes {
        if (interpolation >= interpolationsLength) return;
        applyAmbient(index: index, alpha: alpha, interpolation: interpolation);
 
-       if (vx > 0){
-         shootLightAmbientSouth(index: index, alpha: alpha, interpolation: interpolation);
-       } else if (vx < 0){
-         shootLightAmbientNorth(index: index, alpha: alpha, interpolation: interpolation);
+       if (!nodeBlocksNorthSouth(index)){
+         if (vx > 0) {
+           shootLightAmbientSouth(index: index, alpha: alpha, interpolation: interpolation);
+         } else if (vx < 0) {
+           shootLightAmbientNorth(index: index, alpha: alpha, interpolation: interpolation);
+         }
        }
 
-       if (vy > 0){
-         shootLightAmbientWest(index: index, alpha: alpha, interpolation: interpolation);
-       } else if (vy < 0){
-         shootLightAmbientEast(index: index, alpha: alpha, interpolation: interpolation);
+       if (!nodeBlocksEastWest(index)){
+         if (vy > 0) {
+           shootLightAmbientWest(index: index, alpha: alpha, interpolation: interpolation);
+         } else if (vy < 0) {
+           shootLightAmbientEast(index: index, alpha: alpha, interpolation: interpolation);
+         }
        }
 
        if (vz > 0) {
-         shootLightAmbientUp(index: index, alpha: alpha, interpolation: interpolation);
-       } else if (vz < 0){
+         if (!nodeBlocksVertical(index)){
+           shootLightAmbientUp(index: index, alpha: alpha, interpolation: interpolation);
+         }
+
+       } else if (vz < 0) {
          shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);
        }
     }
