@@ -679,10 +679,10 @@ class GameNodes {
       return;
     }
 
-    if (velocity >= 2){
-      interpolation += (velocity - 1);
-      if (interpolation >= interpolationsLength) return;
-    }
+    // if (velocity >= 2){
+    //   interpolation += (velocity - 1);
+    //   if (interpolation >= interpolationsLength) return;
+    // }
 
     var row = getIndexRow(index);
     var column = getIndexColumn(index);
@@ -729,13 +729,14 @@ class GameNodes {
           vy = 0;
        }
 
+       // if (velocity >= 2){
+       //   interpolation += (velocity);
+       // } else {
+       //   interpolation += velocity;
+       // }
 
-       if (velocity >= 2){
-         interpolation += (velocity - 1);
-         if (interpolation >= interpolationsLength) return;
-       } else {
-         interpolation += velocity;
-       }
+       interpolation += velocity;
+
 
        if (interpolation >= interpolationsLength) return;
 
