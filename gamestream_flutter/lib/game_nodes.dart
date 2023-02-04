@@ -726,11 +726,12 @@ class GameNodes {
 
        applyAmbient(index: index, alpha: alpha, interpolation: interpolation);
 
-      if (vy == 0){
-        if (nodeBlocksNorthSouth(index)) return;
+
+      if (nodeBlocksNorthSouth(index)) {
+         vx = 0;
       }
-      if (vx == 0){
-        if (nodeBlocksEastWest(index)) return;
+      if (nodeBlocksEastWest(index)) {
+        vy = 0;
       }
 
        if (vz == 0){
