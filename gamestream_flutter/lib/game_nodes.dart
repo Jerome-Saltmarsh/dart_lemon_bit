@@ -729,7 +729,14 @@ class GameNodes {
           vy = 0;
        }
 
-       interpolation += velocity;
+
+       if (velocity >= 2){
+         interpolation += (velocity - 1);
+         if (interpolation >= interpolationsLength) return;
+       } else {
+         interpolation += velocity;
+       }
+
        if (interpolation >= interpolationsLength) return;
 
 
