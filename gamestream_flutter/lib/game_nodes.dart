@@ -391,6 +391,7 @@ class GameNodes {
     final yOnscreen = renderY > Engine.Screen_Top && renderY < Engine.Screen_Bottom;
 
 
+
     final nodeOrientation = nodeOrientations[index];
 
     if (xOnscreen && yOnscreen){
@@ -403,151 +404,175 @@ class GameNodes {
       }
     }
 
-    if (xOnscreen) {
-      if (renderY < Engine.Screen_Bottom){
-        shootLightAmbientDown(
-          index: index,
-          alpha: alpha,
-          interpolation: 0,
-        );
-      }
-      if (renderY > Engine.Screen_Top && renderY < Engine.Screen_Bottom){
-        shootLightAmbientUp(
-          index: index,
-          alpha: alpha,
-          interpolation: 0,
-        );
-      }
+    // if (xOnscreen) {
+    //   if (renderY < Engine.Screen_Bottom){
+    //     shootLightAmbientDown(
+    //       index: index,
+    //       alpha: alpha,
+    //       interpolation: 0,
+    //     );
+    //   }
+    //   if (renderY > Engine.Screen_Top && renderY < Engine.Screen_Bottom){
+    //     shootLightAmbientUp(
+    //       index: index,
+    //       alpha: alpha,
+    //       interpolation: 0,
+    //     );
+    //   }
+    //
+    //   if (renderY > Engine.Screen_Top) {
+    //     shootLightAmbientNorthEast(
+    //       index: index,
+    //       alpha: alpha,
+    //       interpolation: 1,
+    //       shootVertical: true,
+    //     );
+    //   }
+    //
+    //   if (renderY < Engine.Screen_Bottom) {
+    //
+    //     shootLightAmbientSouthWest(
+    //       index: index,
+    //       alpha: alpha,
+    //       interpolation: 1,
+    //       shootVertical: true,
+    //     );
+    //   }
+    // }
+    //
+    //
+    // if (yOnscreen){
+    //   if (renderX > Engine.Screen_Left){
+    //     shootLightAmbientNorthWest(
+    //       index: index,
+    //       alpha: alpha,
+    //       interpolation: 1,
+    //       shootVertical: true,
+    //     );
+    //   }
+    //
+    //   if (renderX < Engine.Screen_Right){
+    //     shootLightAmbientSouthEast(
+    //       index: index,
+    //       alpha: alpha,
+    //       interpolation: 1,
+    //       shootVertical: true,
+    //     );
+    //   }
+    // }
 
-      if (renderY > Engine.Screen_Top) {
-        shootLightAmbientNorthEast(
-          index: index,
-          alpha: alpha,
-          interpolation: 1,
-          shootVertical: true,
-        );
-      }
+          // shootLightTreeAmbient(
+          //   index: index,
+          //   interpolation: 0,
+          //   alpha: alpha,
+          //   vx: -1,
+          //   vy: 0,
+          //   vz: 0,
+          // );
 
-      if (renderY < Engine.Screen_Bottom) {
-
-        shootLightAmbientSouthWest(
-          index: index,
-          alpha: alpha,
-          interpolation: 1,
-          shootVertical: true,
-        );
-      }
-    }
-
-
-    if (yOnscreen){
-      if (renderX > Engine.Screen_Left){
-        shootLightAmbientNorthWest(
-          index: index,
-          alpha: alpha,
-          interpolation: 1,
-          shootVertical: true,
-        );
-      }
-
-      if (renderX < Engine.Screen_Right){
-        shootLightAmbientSouthEast(
-          index: index,
-          alpha: alpha,
-          interpolation: 1,
-          shootVertical: true,
-        );
+    for (var z = -1; z <= 1; z++){
+      for (var row = -1; row <= 1; row++){
+        for (var column = -1; column <= 1; column++){
+          shootLightTreeAmbient(
+            index: index,
+            interpolation: 0,
+            alpha: alpha,
+            vx: row,
+            vy: column,
+            vz: z,
+          );
+        }
       }
     }
 
     /// UP NORTH
-    shootLightTreeAmbient(
-      index: index,
-      interpolation: 0,
-      alpha: alpha,
-      vx: -1,
-      vy: 0,
-      vz: 1,
-    );
+    // shootLightTreeAmbient(
+    //   index: index,
+    //   interpolation: 0,
+    //   alpha: alpha,
+    //   vx: -1,
+    //   vy: 0,
+    //   vz: 1,
+    // );
 
     /// UP NORTH EAST
-    shootLightTreeAmbient(
-      index: index,
-      interpolation: 0,
-      alpha: alpha,
-      vx: -1,
-      vy: -1,
-      vz: 1,
-    );
+    // shootLightTreeAmbient(
+    //   index: index,
+    //   interpolation: 0,
+    //   alpha: alpha,
+    //   vx: -1,
+    //   vy: -1,
+    //   vz: 1,
+    // );
 
 
     /// UP EAST
-    shootLightTreeAmbient(
-      index: index,
-      interpolation: 0,
-      alpha: alpha,
-      vx: 0,
-      vy: -1,
-      vz: 1,
-    );
+    // shootLightTreeAmbient(
+    //   index: index,
+    //   interpolation: 0,
+    //   alpha: alpha,
+    //   vx: 0,
+    //   vy: -1,
+    //   vz: 1,
+    // );
 
     /// UP SOUTH EAST
-    shootLightTreeAmbient(
-      index: index,
-      interpolation: 0,
-      alpha: alpha,
-      vx: 1,
-      vy: -1,
-      vz: 1,
-    );
+    // shootLightTreeAmbient(
+    //   index: index,
+    //   interpolation: 0,
+    //   alpha: alpha,
+    //   vx: 1,
+    //   vy: -1,
+    //   vz: 1,
+    // );
 
     /// UP NORTH WEST
-    shootLightTreeAmbient(
-      index: index,
-      interpolation: 0,
-      alpha: alpha,
-      vx: -1,
-      vy: 1,
-      vz: 1,
-    );
+    // shootLightTreeAmbient(
+    //   index: index,
+    //   interpolation: 0,
+    //   alpha: alpha,
+    //   vx: -1,
+    //   vy: 1,
+    //   vz: 1,
+    // );
 
 
-    if (!nodeBlocksNorthSouth(index)){
-      if (renderX > Engine.Screen_Left && renderY > Engine.Screen_Top){
-        shootLightAmbientNorth(
-          index: index,
-          alpha: alpha,
-          interpolation: 0,
-          shootBelow: true,
-        );
-      }
-      if (renderX < Engine.Screen_Right && renderY < Engine.Screen_Bottom){
-        shootLightAmbientSouth(
-          index: index,
-          alpha: alpha,
-          interpolation: 0,
-          shootVertical: true,
-        );
-      }
-    }
-    if (!nodeBlocksEastWest(index)) {
-      if (renderY > Engine.Screen_Top && renderX < Engine.Screen_Right){
-        shootLightAmbientEast(
-          index: index,
-          alpha: alpha,
-          interpolation: 0,
-          shootVertical: true,
-        );
-      }
-      if (renderY < Engine.Screen_Bottom && renderX > Engine.Screen_Left){
-        shootLightAmbientWest(
-          index: index,
-          alpha: alpha,
-          interpolation: 0,
-          shootVertical: true,
-        );
-      }
-    }
+    // if (!nodeBlocksNorthSouth(index)){
+    //   if (renderX > Engine.Screen_Left && renderY > Engine.Screen_Top){
+    //     shootLightAmbientNorth(
+    //       index: index,
+    //       alpha: alpha,
+    //       interpolation: 0,
+    //       shootBelow: true,
+    //     );
+    //   }
+    //   if (renderX < Engine.Screen_Right && renderY < Engine.Screen_Bottom){
+    //     shootLightAmbientSouth(
+    //       index: index,
+    //       alpha: alpha,
+    //       interpolation: 0,
+    //       shootVertical: true,
+    //     );
+    //   }
+    // }
+    // if (!nodeBlocksEastWest(index)) {
+    //   if (renderY > Engine.Screen_Top && renderX < Engine.Screen_Right){
+    //     shootLightAmbientEast(
+    //       index: index,
+    //       alpha: alpha,
+    //       interpolation: 0,
+    //       shootVertical: true,
+    //     );
+    //   }
+    //   if (renderY < Engine.Screen_Bottom && renderX > Engine.Screen_Left){
+    //     shootLightAmbientWest(
+    //       index: index,
+    //       alpha: alpha,
+    //       interpolation: 0,
+    //       shootVertical: true,
+    //     );
+    //   }
+    // }
   }
 
   static void shootLightAmbientNorthEast({
@@ -824,11 +849,18 @@ class GameNodes {
     assert (interpolation < interpolationsLength);
 
     final velocity = vx.abs() + vy.abs() + vz.abs();
+
+    if (velocity == 0) {
+      return;
+    }
+
     var row = getIndexRow(index);
     var column = getIndexColumn(index);
     var z = getIndexZ(index);
 
     while (interpolation < interpolationsLength) {
+      interpolation += velocity;
+      if (interpolation >= interpolationsLength) return;
 
        row += vx;
        if (row < 0 || row >= totalRows) return;
@@ -838,35 +870,72 @@ class GameNodes {
        if (z < 0 || z >= totalZ) return;
 
        index = (z * area) + (row * totalColumns) + column;
-       interpolation += velocity;
 
-       if (interpolation >= interpolationsLength) return;
        applyAmbient(index: index, alpha: alpha, interpolation: interpolation);
 
-       if (!nodeBlocksNorthSouth(index)){
-         if (vx > 0) {
-           shootLightAmbientSouth(index: index, alpha: alpha, interpolation: interpolation);
-         } else if (vx < 0) {
-           shootLightAmbientNorth(index: index, alpha: alpha, interpolation: interpolation);
+       if (vz == 0){
+         final nodeIndexBelow = index - area;
+         if (nodeIndexBelow > 0){
+           applyAmbient(
+             index: nodeIndexBelow,
+             alpha: alpha,
+             interpolation: interpolation,
+           );
          }
        }
 
-       if (!nodeBlocksEastWest(index)){
-         if (vy > 0) {
-           shootLightAmbientWest(index: index, alpha: alpha, interpolation: interpolation);
-         } else if (vy < 0) {
-           shootLightAmbientEast(index: index, alpha: alpha, interpolation: interpolation);
+       if (velocity > 1){
+         if (vx != 0){
+           shootLightTreeAmbient(index: index, interpolation: interpolation, alpha: alpha, vx: vx);
+         }
+         if (vy != 0){
+           shootLightTreeAmbient(index: index, interpolation: interpolation, alpha: alpha, vy: vy);
+         }
+         if (vz != 0){
+           shootLightTreeAmbient(index: index, interpolation: interpolation, alpha: alpha, vz: vz);
          }
        }
 
-       if (vz > 0) {
-         if (!nodeBlocksVertical(index)){
-           shootLightAmbientUp(index: index, alpha: alpha, interpolation: interpolation);
-         }
 
-       } else if (vz < 0) {
-         shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);
-       }
+       // if (velocity > 1){
+       //   if (!nodeBlocksNorthSouth(index)){
+       //     if (vx > 0) {
+       //       shootLightAmbientSouth(index: index, alpha: alpha, interpolation: interpolation);
+       //     } else if (vx < 0) {
+       //       shootLightAmbientNorth(index: index, alpha: alpha, interpolation: interpolation);
+       //     }
+       //   }
+       //
+       //   if (!nodeBlocksEastWest(index)){
+       //     if (vy > 0) {
+       //       shootLightAmbientWest(index: index, alpha: alpha, interpolation: interpolation);
+       //     } else if (vy < 0) {
+       //       shootLightAmbientEast(index: index, alpha: alpha, interpolation: interpolation);
+       //     }
+       //   }
+       //
+       //   if (vz > 0) {
+       //     if (!nodeBlocksVertical(index)){
+       //       shootLightAmbientUp(index: index, alpha: alpha, interpolation: interpolation);
+       //     }
+       //
+       //   } else if (vz < 0) {
+       //     shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);
+       //   }
+       // } else if (vz == 0){
+       //
+       //   // if (shootBelow && rY + Node_Size_Half < Engine.Screen_Bottom) {
+       //     final nodeIndexBelow = index - area;
+       //     if (nodeIndexBelow > 0){
+       //       applyAmbient(
+       //         index: nodeIndexBelow,
+       //         alpha: alpha,
+       //         interpolation: interpolation,
+       //       );
+       //     }
+       //   // }
+       // }
+
     }
   }
 
@@ -1192,6 +1261,9 @@ class GameNodes {
     required int interpolation,
   }){
 
+    // if (index < 0) return;
+    // if (index >= total - 1) return;
+    // if (index >= 19999) return;
     // assert (isIndexOnScreen(index));
 
     // final row = getIndexRow(index);
