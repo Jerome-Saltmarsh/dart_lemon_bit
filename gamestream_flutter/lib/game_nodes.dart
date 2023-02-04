@@ -138,7 +138,6 @@ class GameNodes {
 
   static const interpolations = <double>[
     0,
-    0,
     0.30555555555555547,
     0.5555555555555555,
     0.75,
@@ -147,7 +146,7 @@ class GameNodes {
     1,
   ];
 
-  static const interpolationsLength = 7;
+  static const interpolationsLength = 6;
 
   static void emitLightDynamic({
     required int index,
@@ -381,13 +380,14 @@ class GameNodes {
     if (index < 0) return;
     if (index >= total) return;
 
+
     for (var vz = -1; vz <= 1; vz++){
       for (var vx = -1; vx <= 1; vx++){
         for (var vy = -1; vy <= 1; vy++){
           shootLightTreeAmbient(
             origin: index,
             index: index,
-            interpolation: 0,
+            interpolation: -1,
             alpha: alpha,
             vx: vx,
             vy: vy,
@@ -679,16 +679,14 @@ class GameNodes {
       return;
     }
 
-    // if (velocity >= 2){
-    //   interpolation += (velocity - 1);
-    //   if (interpolation >= interpolationsLength) return;
-    // }
-
     var row = getIndexRow(index);
     var column = getIndexColumn(index);
     var z = getIndexZ(index);
 
     while (interpolation < interpolationsLength) {
+
+       interpolation += velocity;
+       if (interpolation >= interpolationsLength) return;
 
        row += vx;
        if (row < 0 || row >= totalRows) return;
@@ -728,18 +726,6 @@ class GameNodes {
          }
           vy = 0;
        }
-
-       // if (velocity >= 2){
-       //   interpolation += (velocity);
-       // } else {
-       //   interpolation += velocity;
-       // }
-
-       interpolation += velocity;
-
-
-       if (interpolation >= interpolationsLength) return;
-
 
        applyAmbient(index: index, alpha: alpha, interpolation: interpolation);
        if (vz == 0){
@@ -1133,11 +1119,11 @@ class GameNodes {
     }
 
     colorStack[colorStackIndex++] = index;
-    final intensity = 1.0 - interpolations[interpolation];
-    final interpolatedAlpha = alpha * intensity;
+    final intensity = interpolations[interpolation < 0 ? 0 : interpolation];
+    final interpolatedAlpha = Engine.linerInterpolationInt(alpha, 255, intensity);;
     final currentAlpha = hsv_alphas[index];
     if (currentAlpha < interpolatedAlpha) return;
-    hsv_alphas[index] = Engine.linerInterpolationInt(hsv_alphas[index], alpha, intensity);
+    hsv_alphas[index] = interpolatedAlpha;
     refreshNodeColor(index);
   }
 
