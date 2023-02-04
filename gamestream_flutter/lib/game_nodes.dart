@@ -674,7 +674,7 @@ class GameNodes {
 
     var velocity = vx.abs() + vy.abs() + vz.abs();
 
-    if (velocity <= 0){
+    if (velocity == 0){
       applyAmbient(index: index, alpha: alpha, interpolation: interpolation);
       return;
     }
@@ -751,10 +751,6 @@ class GameNodes {
          }
        }
     }
-  }
-
-  static int getIndexDistance(int indexA, int indexB){
-    return -1;
   }
 
   static void shootLightAmbientNorth({
@@ -1120,7 +1116,7 @@ class GameNodes {
 
     colorStack[colorStackIndex++] = index;
     final intensity = interpolations[interpolation < 0 ? 0 : interpolation];
-    final interpolatedAlpha = Engine.linerInterpolationInt(alpha, 255, intensity);;
+    final interpolatedAlpha = Engine.linerInterpolationInt(alpha, ambient_alp, intensity);;
     final currentAlpha = hsv_alphas[index];
     if (currentAlpha < interpolatedAlpha) return;
     hsv_alphas[index] = interpolatedAlpha;
