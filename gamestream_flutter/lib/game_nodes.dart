@@ -460,6 +460,7 @@ class GameNodes {
       }
     }
 
+    /// UP NORTH
     shootLightTreeAmbient(
       index: index,
       interpolation: 0,
@@ -468,6 +469,39 @@ class GameNodes {
       vy: 0,
       vz: 1,
     );
+
+    /// UP NORTH EAST
+    shootLightTreeAmbient(
+      index: index,
+      interpolation: 0,
+      alpha: alpha,
+      vx: -1,
+      vy: -1,
+      vz: 1,
+    );
+
+
+    /// UP EAST
+    shootLightTreeAmbient(
+      index: index,
+      interpolation: 0,
+      alpha: alpha,
+      vx: 0,
+      vy: -1,
+      vz: 1,
+    );
+
+    /// UP SOUTH EAST
+    shootLightTreeAmbient(
+      index: index,
+      interpolation: 0,
+      alpha: alpha,
+      vx: 1,
+      vy: -1,
+      vz: 1,
+    );
+
+    /// UP NORTH WEST
     shootLightTreeAmbient(
       index: index,
       interpolation: 0,
@@ -477,14 +511,6 @@ class GameNodes {
       vz: 1,
     );
 
-    shootLightTreeAmbient(
-      index: index,
-      interpolation: 0,
-      alpha: alpha,
-      vx: -1,
-      vy: -1,
-      vz: 1,
-    );
 
     if (!nodeBlocksNorthSouth(index)){
       if (renderX > Engine.Screen_Left && renderY > Engine.Screen_Top){
