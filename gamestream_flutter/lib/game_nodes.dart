@@ -700,7 +700,7 @@ class GameNodes {
   }){
     assert (interpolation < interpolationsLength);
 
-    final velocity = vx.abs() + vy.abs() + vz.abs();
+    var velocity = vx.abs() + vy.abs() + vz.abs();
 
     if (velocity == 0) {
       applyAmbient(index: index, alpha: alpha, interpolation: interpolation);
@@ -712,8 +712,6 @@ class GameNodes {
     var z = getIndexZ(index);
 
     while (interpolation < interpolationsLength) {
-      interpolation += velocity;
-      if (interpolation >= interpolationsLength) return;
 
        row += vx;
        if (row < 0 || row >= totalRows) return;
@@ -729,9 +727,11 @@ class GameNodes {
 
       if (nodeBlocksNorthSouth(index)) {
          vx = 0;
+         velocity = vx.abs() + vy.abs() + vz.abs();
       }
       if (nodeBlocksEastWest(index)) {
         vy = 0;
+        velocity = vx.abs() + vy.abs() + vz.abs();
       }
 
        if (vz == 0){
@@ -746,6 +746,8 @@ class GameNodes {
        }
 
        if (velocity > 1){
+         interpolation += velocity;
+         if (interpolation >= interpolationsLength) return;
          if (vx != 0){
            shootLightTreeAmbient(index: index, interpolation: interpolation, alpha: alpha, vx: vx);
          }
@@ -755,7 +757,11 @@ class GameNodes {
          if (vz != 0){
            shootLightTreeAmbient(index: index, interpolation: interpolation, alpha: alpha, vz: vz);
          }
+       } else {
+         interpolation += velocity;
        }
+
+
     }
   }
 
