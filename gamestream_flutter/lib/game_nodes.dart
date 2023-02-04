@@ -468,6 +468,23 @@ class GameNodes {
       vy: 0,
       vz: 1,
     );
+    shootLightTreeAmbient(
+      index: index,
+      interpolation: 0,
+      alpha: alpha,
+      vx: -1,
+      vy: 1,
+      vz: 1,
+    );
+
+    shootLightTreeAmbient(
+      index: index,
+      interpolation: 0,
+      alpha: alpha,
+      vx: -1,
+      vy: -1,
+      vz: 1,
+    );
 
     if (!nodeBlocksNorthSouth(index)){
       if (renderX > Engine.Screen_Left && renderY > Engine.Screen_Top){
@@ -796,6 +813,9 @@ class GameNodes {
        if (z < 0 || z >= totalZ) return;
 
        index = (z * area) + (row * totalColumns) + column;
+       interpolation += velocity;
+
+       if (interpolation >= interpolationsLength) return;
        applyAmbient(index: index, alpha: alpha, interpolation: interpolation);
 
        if (vx > 0){
@@ -815,8 +835,6 @@ class GameNodes {
        } else if (vz < 0){
          shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);
        }
-
-       interpolation += velocity;
     }
   }
 
