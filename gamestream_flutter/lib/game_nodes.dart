@@ -379,96 +379,37 @@ class GameNodes {
   }){
     if (index < 0) return;
     if (index >= total) return;
+    //
+    // final row = getIndexRow(index);
+    // final column = getIndexColumn(index);
+    // final z = getIndexZ(index);
 
-    final row = getIndexRow(index);
-    final column = getIndexColumn(index);
-    final z = getIndexZ(index);
+    // final renderX = GameConvert.rowColumnZToRenderX(row, column);
+    // final renderY = GameConvert.rowColumnZToRenderY(row, column, z);
 
-    final renderX = GameConvert.rowColumnZToRenderX(row, column);
-    final renderY = GameConvert.rowColumnZToRenderY(row, column, z);
+    // final xOnscreen = renderX > Engine.Screen_Left && renderX < Engine.Screen_Right;
+    // final yOnscreen = renderY > Engine.Screen_Top && renderY < Engine.Screen_Bottom;
+    //
+    // final nodeOrientation = nodeOrientations[index];
 
-    final xOnscreen = renderX > Engine.Screen_Left && renderX < Engine.Screen_Right;
-    final yOnscreen = renderY > Engine.Screen_Top && renderY < Engine.Screen_Bottom;
-
-
-
-    final nodeOrientation = nodeOrientations[index];
-
-    if (xOnscreen && yOnscreen){
-      if (nodeOrientation != NodeOrientation.Half_South && nodeOrientation != NodeOrientation.Half_West){
-        applyAmbient(
-          index: index,
-          alpha: alpha,
-          interpolation: 0,
-        );
-      }
-    }
-
-    // if (xOnscreen) {
-    //   if (renderY < Engine.Screen_Bottom){
-    //     shootLightAmbientDown(
+    // if (xOnscreen && yOnscreen){
+    //   if (nodeOrientation != NodeOrientation.Half_South && nodeOrientation != NodeOrientation.Half_West){
+    //     applyAmbient(
     //       index: index,
     //       alpha: alpha,
     //       interpolation: 0,
     //     );
-    //   }
-    //   if (renderY > Engine.Screen_Top && renderY < Engine.Screen_Bottom){
-    //     shootLightAmbientUp(
-    //       index: index,
-    //       alpha: alpha,
-    //       interpolation: 0,
-    //     );
-    //   }
     //
-    //   if (renderY > Engine.Screen_Top) {
-    //     shootLightAmbientNorthEast(
-    //       index: index,
-    //       alpha: alpha,
-    //       interpolation: 1,
-    //       shootVertical: true,
-    //     );
-    //   }
-    //
-    //   if (renderY < Engine.Screen_Bottom) {
-    //
-    //     shootLightAmbientSouthWest(
-    //       index: index,
-    //       alpha: alpha,
-    //       interpolation: 1,
-    //       shootVertical: true,
-    //     );
+    //     final nodeIndexBelow = index - area;
+    //     if (nodeIndexBelow > 0){
+    //       applyAmbient(
+    //         index: nodeIndexBelow,
+    //         alpha: alpha,
+    //         interpolation: 0,
+    //       );
+    //     }
     //   }
     // }
-    //
-    //
-    // if (yOnscreen){
-    //   if (renderX > Engine.Screen_Left){
-    //     shootLightAmbientNorthWest(
-    //       index: index,
-    //       alpha: alpha,
-    //       interpolation: 1,
-    //       shootVertical: true,
-    //     );
-    //   }
-    //
-    //   if (renderX < Engine.Screen_Right){
-    //     shootLightAmbientSouthEast(
-    //       index: index,
-    //       alpha: alpha,
-    //       interpolation: 1,
-    //       shootVertical: true,
-    //     );
-    //   }
-    // }
-
-          // shootLightTreeAmbient(
-          //   index: index,
-          //   interpolation: 0,
-          //   alpha: alpha,
-          //   vx: -1,
-          //   vy: 0,
-          //   vz: 0,
-          // );
 
     for (var z = -1; z <= 1; z++){
       for (var row = -1; row <= 1; row++){
@@ -484,95 +425,6 @@ class GameNodes {
         }
       }
     }
-
-    /// UP NORTH
-    // shootLightTreeAmbient(
-    //   index: index,
-    //   interpolation: 0,
-    //   alpha: alpha,
-    //   vx: -1,
-    //   vy: 0,
-    //   vz: 1,
-    // );
-
-    /// UP NORTH EAST
-    // shootLightTreeAmbient(
-    //   index: index,
-    //   interpolation: 0,
-    //   alpha: alpha,
-    //   vx: -1,
-    //   vy: -1,
-    //   vz: 1,
-    // );
-
-
-    /// UP EAST
-    // shootLightTreeAmbient(
-    //   index: index,
-    //   interpolation: 0,
-    //   alpha: alpha,
-    //   vx: 0,
-    //   vy: -1,
-    //   vz: 1,
-    // );
-
-    /// UP SOUTH EAST
-    // shootLightTreeAmbient(
-    //   index: index,
-    //   interpolation: 0,
-    //   alpha: alpha,
-    //   vx: 1,
-    //   vy: -1,
-    //   vz: 1,
-    // );
-
-    /// UP NORTH WEST
-    // shootLightTreeAmbient(
-    //   index: index,
-    //   interpolation: 0,
-    //   alpha: alpha,
-    //   vx: -1,
-    //   vy: 1,
-    //   vz: 1,
-    // );
-
-
-    // if (!nodeBlocksNorthSouth(index)){
-    //   if (renderX > Engine.Screen_Left && renderY > Engine.Screen_Top){
-    //     shootLightAmbientNorth(
-    //       index: index,
-    //       alpha: alpha,
-    //       interpolation: 0,
-    //       shootBelow: true,
-    //     );
-    //   }
-    //   if (renderX < Engine.Screen_Right && renderY < Engine.Screen_Bottom){
-    //     shootLightAmbientSouth(
-    //       index: index,
-    //       alpha: alpha,
-    //       interpolation: 0,
-    //       shootVertical: true,
-    //     );
-    //   }
-    // }
-    // if (!nodeBlocksEastWest(index)) {
-    //   if (renderY > Engine.Screen_Top && renderX < Engine.Screen_Right){
-    //     shootLightAmbientEast(
-    //       index: index,
-    //       alpha: alpha,
-    //       interpolation: 0,
-    //       shootVertical: true,
-    //     );
-    //   }
-    //   if (renderY < Engine.Screen_Bottom && renderX > Engine.Screen_Left){
-    //     shootLightAmbientWest(
-    //       index: index,
-    //       alpha: alpha,
-    //       interpolation: 0,
-    //       shootVertical: true,
-    //     );
-    //   }
-    // }
   }
 
   static void shootLightAmbientNorthEast({
@@ -851,6 +703,7 @@ class GameNodes {
     final velocity = vx.abs() + vy.abs() + vz.abs();
 
     if (velocity == 0) {
+      applyAmbient(index: index, alpha: alpha, interpolation: interpolation);
       return;
     }
 
@@ -872,6 +725,13 @@ class GameNodes {
        index = (z * area) + (row * totalColumns) + column;
 
        applyAmbient(index: index, alpha: alpha, interpolation: interpolation);
+
+      if (vy == 0){
+        if (nodeBlocksNorthSouth(index)) return;
+      }
+      if (vx == 0){
+        if (nodeBlocksEastWest(index)) return;
+      }
 
        if (vz == 0){
          final nodeIndexBelow = index - area;
@@ -895,47 +755,6 @@ class GameNodes {
            shootLightTreeAmbient(index: index, interpolation: interpolation, alpha: alpha, vz: vz);
          }
        }
-
-
-       // if (velocity > 1){
-       //   if (!nodeBlocksNorthSouth(index)){
-       //     if (vx > 0) {
-       //       shootLightAmbientSouth(index: index, alpha: alpha, interpolation: interpolation);
-       //     } else if (vx < 0) {
-       //       shootLightAmbientNorth(index: index, alpha: alpha, interpolation: interpolation);
-       //     }
-       //   }
-       //
-       //   if (!nodeBlocksEastWest(index)){
-       //     if (vy > 0) {
-       //       shootLightAmbientWest(index: index, alpha: alpha, interpolation: interpolation);
-       //     } else if (vy < 0) {
-       //       shootLightAmbientEast(index: index, alpha: alpha, interpolation: interpolation);
-       //     }
-       //   }
-       //
-       //   if (vz > 0) {
-       //     if (!nodeBlocksVertical(index)){
-       //       shootLightAmbientUp(index: index, alpha: alpha, interpolation: interpolation);
-       //     }
-       //
-       //   } else if (vz < 0) {
-       //     shootLightAmbientDown(index: index, alpha: alpha, interpolation: interpolation);
-       //   }
-       // } else if (vz == 0){
-       //
-       //   // if (shootBelow && rY + Node_Size_Half < Engine.Screen_Bottom) {
-       //     final nodeIndexBelow = index - area;
-       //     if (nodeIndexBelow > 0){
-       //       applyAmbient(
-       //         index: nodeIndexBelow,
-       //         alpha: alpha,
-       //         interpolation: interpolation,
-       //       );
-       //     }
-       //   // }
-       // }
-
     }
   }
 
