@@ -1236,17 +1236,21 @@ class GameNodes {
         NodeOrientation.Solid,
         NodeOrientation.Half_North,
         NodeOrientation.Half_South,
+        NodeOrientation.Slope_North,
+        NodeOrientation.Slope_South,
         NodeOrientation.Radial,
-  ].contains(nodeOrientations[index])) && !nodeTypeBlocks(index);
+  ].contains(nodeOrientations[index])) && !nodeTypeTransient(index);
 
   static bool nodeBlocksEastWest(int index) => (const [
     NodeOrientation.Solid,
     NodeOrientation.Half_East,
     NodeOrientation.Half_West,
+    NodeOrientation.Slope_East,
+    NodeOrientation.Slope_West,
     NodeOrientation.Radial,
-  ].contains(nodeOrientations[index])) && !nodeTypeBlocks(index);
+  ].contains(nodeOrientations[index])) && !nodeTypeTransient(index);
 
-  static bool nodeTypeBlocks(int index){
+  static bool nodeTypeTransient(int index){
     return const [
       NodeType.Window,
       NodeType.Wooden_Plank,
@@ -1260,7 +1264,7 @@ class GameNodes {
       NodeOrientation.Half_Vertical_Top,
       NodeOrientation.Half_Vertical_Center,
       NodeOrientation.Half_Vertical_Bottom,
-  ].contains(nodeOrientations[index])) && !nodeTypeBlocks(index);
+  ].contains(nodeOrientations[index])) && !nodeTypeTransient(index);
 
   static bool isIndexOnScreen(int index){
 

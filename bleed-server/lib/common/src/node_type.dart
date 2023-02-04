@@ -104,6 +104,7 @@ class NodeType {
   static bool supportsOrientationRadial(int type) =>
       type == Grass         ||
       type == Tree_Bottom   ||
+      type == Tree_Top      ||
       type == Torch         ||
       type == Concrete      ||
       type == Brick         ||
