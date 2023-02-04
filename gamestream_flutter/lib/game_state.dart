@@ -119,7 +119,7 @@ class GameState {
       } else {
         applyVector3EmissionAmbient(
           character,
-          alpha: 50,
+          alpha: GameSettings.Emission_Alpha_Character,
         );
       }
     }

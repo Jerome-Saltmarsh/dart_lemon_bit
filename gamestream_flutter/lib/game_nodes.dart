@@ -138,6 +138,7 @@ class GameNodes {
 
   static const interpolations = <double>[
     0,
+    0,
     0.30555555555555547,
     0.5555555555555555,
     0.75,
@@ -146,7 +147,7 @@ class GameNodes {
     1,
   ];
 
-  static const interpolationsLength = 6;
+  static const interpolationsLength = 7;
 
   static void emitLightDynamic({
     required int index,
@@ -384,6 +385,7 @@ class GameNodes {
       for (var vx = -1; vx <= 1; vx++){
         for (var vy = -1; vy <= 1; vy++){
           shootLightTreeAmbient(
+            origin: index,
             index: index,
             interpolation: 0,
             alpha: alpha,
@@ -660,6 +662,7 @@ class GameNodes {
 
   /// illuminates the square it reaches then fires consecutive beams for each direction of movement
   static void shootLightTreeAmbient({
+    required int origin,
     required int index,
     required int interpolation,
     required int alpha,
@@ -676,6 +679,11 @@ class GameNodes {
       return;
     }
 
+    if (velocity >= 2){
+      interpolation += (velocity - 1);
+      if (interpolation >= interpolationsLength) return;
+    }
+
     var row = getIndexRow(index);
     var column = getIndexColumn(index);
     var z = getIndexZ(index);
@@ -690,13 +698,6 @@ class GameNodes {
        if (z < 0 || z >= totalZ) return;
 
        index = (z * area) + (row * totalColumns) + column;
-
-       if (velocity <= 1) {
-         applyAmbient(index: index, alpha: alpha, interpolation: interpolation);
-       }
-
-       final branching = velocity > 1;
-
 
        if (vx != 0 && nodeBlocksNorthSouth(index)) {
           velocity = vy.abs() + vz.abs();
@@ -728,6 +729,11 @@ class GameNodes {
           vy = 0;
        }
 
+       interpolation += velocity;
+       if (interpolation >= interpolationsLength) return;
+
+
+       applyAmbient(index: index, alpha: alpha, interpolation: interpolation);
        if (vz == 0){
          final nodeIndexBelow = index - area;
          if (nodeIndexBelow > 0){
@@ -739,22 +745,22 @@ class GameNodes {
          }
        }
 
-       interpolation += velocity;
-       if (interpolation >= interpolationsLength) return;
-
-
        if (velocity > 1) {
          if (vx != 0){
-           shootLightTreeAmbient(index: index, interpolation: interpolation, alpha: alpha, vx: vx);
+           shootLightTreeAmbient(origin: origin, index: index, interpolation: interpolation, alpha: alpha, vx: vx);
          }
          if (vy != 0){
-           shootLightTreeAmbient(index: index, interpolation: interpolation, alpha: alpha, vy: vy);
+           shootLightTreeAmbient(origin: origin, index: index, interpolation: interpolation, alpha: alpha, vy: vy);
          }
          if (vz != 0){
-           shootLightTreeAmbient(index: index, interpolation: interpolation, alpha: alpha, vz: vz);
+           shootLightTreeAmbient(origin: origin, index: index, interpolation: interpolation, alpha: alpha, vz: vz);
          }
        }
     }
+  }
+
+  static int getIndexDistance(int indexA, int indexB){
+    return -1;
   }
 
   static void shootLightAmbientNorth({
