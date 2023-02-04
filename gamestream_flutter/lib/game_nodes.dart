@@ -731,10 +731,10 @@ class GameNodes {
            );
          }
        }
+       interpolation += velocity;
+       if (interpolation >= interpolationsLength) return;
 
-       if (velocity > 1){
-         interpolation += velocity;
-         if (interpolation >= interpolationsLength) return;
+       if (velocity > 1) {
          if (vx != 0){
            shootLightTreeAmbient(index: index, interpolation: interpolation, alpha: alpha, vx: vx);
          }
@@ -744,8 +744,6 @@ class GameNodes {
          if (vz != 0){
            shootLightTreeAmbient(index: index, interpolation: interpolation, alpha: alpha, vz: vz);
          }
-       } else {
-         interpolation += velocity;
        }
     }
   }
