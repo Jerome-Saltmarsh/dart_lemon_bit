@@ -6,39 +6,15 @@ import 'package:gamestream_flutter/functions/hsv_to_color.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class GameNodes {
+
+  // VARIABLES
+
   static var ambient_color_hsv  = HSVColor.fromColor(Color.fromRGBO(31, 1, 86, 0.5));
   static var ambient_hue        = ((ambient_color_hsv.hue / 360) * 255).round();
   static var ambient_sat        = (ambient_color_hsv.saturation * 255).round();
   static var ambient_val        = (ambient_color_hsv.value * 255).round();
   static var ambient_alp        = (ambient_color_hsv.alpha * 255).round();
   static var ambient_color      = 0;
-
-  static void resetNodeColorsToAmbient() {
-    GameNodes.ambient_alp = clamp(GameNodes.ambient_alp, 0, 255);
-    ambient_color = hsvToColor(
-        hue: ambient_hue,
-        saturation: ambient_sat,
-        value: ambient_val,
-        opacity: ambient_alp
-    );
-    colorStackIndex = -1;
-
-     if (node_colors.length != total) {
-       colorStack = Uint16List(total);
-       node_colors = Uint32List(total);
-       hsv_hue = Uint8List(total);
-       hsv_saturation = Uint8List(total);
-       hsv_values = Uint8List(total);
-       hsv_alphas = Uint8List(total);
-     }
-     for (var i = 0; i < total; i++) {
-       node_colors[i] = ambient_color;
-       hsv_hue[i] = ambient_hue;
-       hsv_saturation[i] = ambient_sat;
-       hsv_values[i] = ambient_val;
-       hsv_alphas[i] = ambient_alp;
-     }
-  }
 
   static var node_colors = Uint32List(0);
   static var hsv_hue = Uint8List(0);
@@ -49,7 +25,6 @@ class GameNodes {
   static var nodeTypes = Uint8List(0);
   static var nodeVariations = Uint8List(0);
   static var colorStack = Uint16List(0);
-  // static var nodeWind = Uint8List(0);
   static var miniMap = Uint8List(0);
   static var heightMap = Uint16List(0);
   static var colorStackIndex = -1;
@@ -69,8 +44,47 @@ class GameNodes {
   static var offscreenNodes = 0;
   static var onscreenNodes = 0;
 
-  // METHODS
+  // CONSTANTS
 
+  static const interpolationsLength = 6;
+  static const interpolations = <double>[
+    0,
+    0.30555555555555547,
+    0.5555555555555555,
+    0.75,
+    0.8888888888888888,
+    0.9722222222222222,
+    1,
+  ];
+
+  // FUNCTIONS
+
+  static void resetNodeColorsToAmbient() {
+    GameNodes.ambient_alp = clamp(GameNodes.ambient_alp, 0, 255);
+    ambient_color = hsvToColor(
+        hue: ambient_hue,
+        saturation: ambient_sat,
+        value: ambient_val,
+        opacity: ambient_alp
+    );
+    colorStackIndex = -1;
+
+    if (node_colors.length != total) {
+      colorStack = Uint16List(total);
+      node_colors = Uint32List(total);
+      hsv_hue = Uint8List(total);
+      hsv_saturation = Uint8List(total);
+      hsv_values = Uint8List(total);
+      hsv_alphas = Uint8List(total);
+    }
+    for (var i = 0; i < total; i++) {
+      node_colors[i] = ambient_color;
+      hsv_hue[i] = ambient_hue;
+      hsv_saturation[i] = ambient_sat;
+      hsv_values[i] = ambient_val;
+      hsv_alphas[i] = ambient_alp;
+    }
+  }
 
   static int getHeightAt(int row, int column){
     final index = total - area + ((row * totalColumns) + column);
@@ -136,18 +150,6 @@ class GameNodes {
     }
     colorStackIndex = -1;
   }
-
-  static const interpolations = <double>[
-    0,
-    0.30555555555555547,
-    0.5555555555555555,
-    0.75,
-    0.8888888888888888,
-    0.9722222222222222,
-    1,
-  ];
-
-  static const interpolationsLength = 6;
 
   static void emitLightDynamic({
     required int index,
