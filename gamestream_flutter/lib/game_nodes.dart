@@ -384,6 +384,7 @@ class GameNodes {
     if (index < 0) return;
     if (index >= total) return;
 
+
     final row = getIndexRow(index);
     final column = getIndexColumn(index);
     final z = getIndexZ(index);
@@ -420,20 +421,20 @@ class GameNodes {
     assert (interpolation < interpolationsLength);
 
     var velocity = vx.abs() + vy.abs() + vz.abs();
-
-    if (velocity == 0) {
-      applyAmbient(index: (z * area) + (row * totalColumns) + column, alpha: alpha, interpolation: interpolation);
-      return;
-    }
-    var paintBelow = vz == 0;
-    var paintRowBehind = vx == 0;
-    var paintColumnBehind = vy == 0;
     var paint = true;
+    var paintBehindZ = vz == 0;
+    var paintBehindRow = vx == 0;
+    var paintBehindColumn = vy == 0;
 
     while (interpolation < interpolationsLength) {
 
-       interpolation += velocity;
-       if (interpolation >= interpolationsLength) return;
+      interpolation += velocity;
+      if (interpolation >= interpolationsLength) return;
+
+      if (velocity == 0) {
+        applyAmbient(index: (z * area) + (row * totalColumns) + column, alpha: alpha, interpolation: interpolation);
+        return;
+      }
 
        if (vx != 0){
          row += vx;
@@ -454,82 +455,53 @@ class GameNodes {
 
        if (vx != 0 && nodeBlocksNorthSouth(index)) {
           velocity = vy.abs() + vz.abs();
-          if (velocity == 0){
-            if (vx < 0){
-              applyAmbient(
-                index: index,
-                alpha: alpha,
-                interpolation: interpolation,
-              );
-            }
-            return;
-          }
+          vx = 0;
+          paintBehindColumn = false;
+          paintBehindZ = false;
        }
-
 
        if (vy != 0 && nodeBlocksEastWest(index)) {
-
-         if (vx > 0 && vy < 0){
-           final indexInFront = index + 1;
-           if (indexInFront < totalColumns){
-             if (nodeBlocksNorthSouth(indexInFront)){
-               return;
-               // paint = false;
-             }
-           }
-         }
          velocity = vx.abs() + vz.abs();
-         if (velocity == 0){
-           if (vy < 1){
-             applyAmbient(
-               index: index,
-               alpha: alpha,
-               interpolation: interpolation,
-             );
-           }
-           return;
-         }
-          vy = 0;
+         vy = 0;
+         paintBehindRow = false;
+         paintBehindZ = false;
        }
 
-       if (z != 0 && nodeBlocksVertical(index)){
+       if (vz != 0 && nodeBlocksVertical(index)){
          velocity = vx.abs() + vy.abs();
          if (z > 0) {
-           if (velocity == 0) return;
-           paint = false;
+           // if (velocity == 0) return;
+           // paint = false;
+           return;
          }
          vz = 0;
        }
 
-       if (paint) {
-         applyAmbient(index: index, alpha: alpha, interpolation: interpolation);
+      applyAmbient(index: index, alpha: alpha, interpolation: interpolation);
 
-         if (paintBelow){
-           applyAmbient(
-             index: index - area,
-             alpha: alpha,
-             interpolation: interpolation,
-           );
-         }
+      if (paintBehindZ){
+        applyAmbient(
+          index: index - area,
+          alpha: alpha,
+          interpolation: interpolation,
+        );
+      }
 
-         if (paintRowBehind){
-           applyAmbient(
-             index: index - totalColumns,
-             alpha: alpha,
-             interpolation: interpolation,
-           );
-         }
+      if (paintBehindRow){
+        applyAmbient(
+          index: index - totalColumns,
+          alpha: alpha,
+          interpolation: interpolation,
+        );
+      }
 
-         if (paintColumnBehind) {
-           applyAmbient(
-             index: index - 1,
-             alpha: alpha,
-             interpolation: interpolation,
-           );
-         }
-       }
-
-       assert (velocity != 0);
+      if (paintBehindColumn) {
+        applyAmbient(
+          index: index - 1,
+          alpha: alpha,
+          interpolation: interpolation,
+        );
+      }
 
        if (velocity > 1) {
          if (vx != 0){
@@ -597,7 +569,7 @@ class GameNodes {
     final intensity = interpolations[interpolation < 0 ? 0 : interpolation];
     final interpolatedAlpha = Engine.linerInterpolationInt(alpha, ambient_alp, intensity);;
     final currentAlpha = hsv_alphas[index];
-    if (currentAlpha < interpolatedAlpha) return;
+    if (currentAlpha <= interpolatedAlpha) return;
     colorStackIndex++;
     colorStack[colorStackIndex] = index;
     hsv_alphas[index] = interpolatedAlpha;
