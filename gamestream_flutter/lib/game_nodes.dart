@@ -49,7 +49,7 @@ class GameNodes {
   static var nodeTypes = Uint8List(0);
   static var nodeVariations = Uint8List(0);
   static var colorStack = Uint16List(0);
-  static var nodeWind = Uint8List(0);
+  // static var nodeWind = Uint8List(0);
   static var miniMap = Uint8List(0);
   static var heightMap = Uint16List(0);
   static var colorStackIndex = -1;

@@ -144,7 +144,7 @@ class GameQueries {
    static bool isInboundV3(Vector3 vector3) =>
        GameQueries.isInboundZRC(vector3.indexZ, vector3.indexRow, vector3.indexColumn);
 
-   static int getWindAtV3(Vector3 vector3) =>
-       GameNodes.nodeWind[getNodeIndexV3(vector3)];
+   // static int getWindAtV3(Vector3 vector3) =>
+   //     GameNodes.nodeWind[getNodeIndexV3(vector3)];
 
 }

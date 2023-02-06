@@ -470,7 +470,6 @@ class ServerResponseReader with ByteReader {
     if (GameNodes.nodeTypes.length < totalNodes) {
       GameNodes.nodeTypes = Uint8List(totalNodes);
       GameNodes.nodeOrientations = Uint8List(totalNodes);
-      GameNodes.nodeWind = Uint8List(totalNodes);
       GameNodes.nodeVariations = Uint8List(totalNodes);
       GameNodes.colorStack = Uint16List(totalNodes);
     }

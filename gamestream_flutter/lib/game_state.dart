@@ -332,7 +332,7 @@ class GameState {
       particle.applyFloorFriction();
     } else {
       if (particle.type == ParticleType.Smoke){
-        final wind = GameQueries.getWindAtV3(particle) * 0.01;
+        final wind = ServerState.windTypeAmbient.value * 0.01;
         particle.xv -= wind;
         particle.yv += wind;
       }
