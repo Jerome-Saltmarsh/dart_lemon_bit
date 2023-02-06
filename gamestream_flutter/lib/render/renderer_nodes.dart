@@ -77,7 +77,7 @@ class RendererNodes extends Renderer {
 
   // GETTERS
   static double get currentNodeRenderY => GameConvert.rowColumnZToRenderY(row, column, currentNodeZ);
-  static int get currentNodeColor => GameNodes.nodeColors[currentNodeIndex];
+  static int get currentNodeColor => GameNodes.node_colors[currentNodeIndex];
   static int get currentNodeOrientation => nodeOrientations[currentNodeIndex];
   static int get currentNodeWind => ServerState.windTypeAmbient.value;
   static int get currentNodeVariation => GameNodes.nodeVariations[currentNodeIndex];
@@ -91,7 +91,7 @@ class RendererNodes extends Renderer {
   static int getNodeColorAtIndex(int index){
     if (index < 0) return GameNodes.ambient_color;
     if (index >= GameNodes.total) return GameNodes.ambient_color;
-    return GameNodes.nodeColors[index];
+    return GameNodes.node_colors[index];
   }
 
   static var currentNodeWithinIsland = false;

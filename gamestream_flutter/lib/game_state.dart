@@ -44,7 +44,7 @@ class GameState {
   static int getV3RenderColor(Vector3 vector3) =>
       vector3.outOfBounds
           ? GameNodes.ambient_color
-          : GameNodes.nodeColors[vector3.nodeIndex];
+          : GameNodes.node_colors[vector3.nodeIndex];
 
   static bool outOfBoundsV3(Vector3 v3) =>
     outOfBoundsXYZ(v3.x, v3.y, v3.z);

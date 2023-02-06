@@ -21,17 +21,18 @@ class GameNodes {
         value: ambient_val,
         opacity: ambient_alp
     );
-    colorStackIndex = 0;
+    colorStackIndex = -1;
 
-     if (nodeColors.length != total) {
-       nodeColors = Uint32List(total);
+     if (node_colors.length != total) {
+       colorStack = Uint16List(total);
+       node_colors = Uint32List(total);
        hsv_hue = Uint8List(total);
        hsv_saturation = Uint8List(total);
        hsv_values = Uint8List(total);
        hsv_alphas = Uint8List(total);
      }
      for (var i = 0; i < total; i++) {
-       nodeColors[i] = ambient_color;
+       node_colors[i] = ambient_color;
        hsv_hue[i] = ambient_hue;
        hsv_saturation[i] = ambient_sat;
        hsv_values[i] = ambient_val;
@@ -39,7 +40,7 @@ class GameNodes {
      }
   }
 
-  static var nodeColors = Uint32List(0);
+  static var node_colors = Uint32List(0);
   static var hsv_hue = Uint8List(0);
   static var hsv_saturation = Uint8List(0);
   static var hsv_values = Uint8List(0);
@@ -126,14 +127,17 @@ class GameNodes {
   static void resetNodeColorStack() {
     while (colorStackIndex >= 0) {
       final i = colorStack[colorStackIndex];
-      nodeColors[i] = ambient_color;
+      if (i >= node_colors.length){
+        print('colorStackIndex $colorStackIndex exceeded ${node_colors.length}' );
+      }
+      node_colors[i] = ambient_color;
       hsv_hue[i] = ambient_hue;
       hsv_saturation[i] = ambient_sat;
       hsv_values[i] = ambient_val;
       hsv_alphas[i] = ambient_alp;
       colorStackIndex--;
     }
-    colorStackIndex = 0;
+    colorStackIndex = -1;
   }
 
   static const interpolations = <double>[
@@ -204,7 +208,8 @@ class GameNodes {
           final distanceValue = Engine.clamp(b + (column - columnIndex).abs() - 2, 0, 6);
           if (distanceValue > 5) continue;
 
-          colorStack[colorStackIndex++] = nodeIndex;
+          colorStackIndex++;
+          colorStack[colorStackIndex] = nodeIndex;
 
           final intensity = (1.0 - interpolations[clamp(distanceValue, 0, 7)]) * strength;
           hsv_hue[nodeIndex] = Engine.linerInterpolationInt(hsv_hue[nodeIndex], hue        , intensity);
@@ -268,8 +273,8 @@ class GameNodes {
           final nodeIndex = a + column;
           final distanceValue = Engine.clamp(b + (column - columnIndex).abs() - 2, 0, Shade.Pitch_Black);
           if (distanceValue > 5) continue;
-
-          colorStack[colorStackIndex++] = nodeIndex;
+          colorStackIndex++;
+          colorStack[colorStackIndex] = nodeIndex;
 
           final intensity = 1.0 - interpolations[clamp(distanceValue, 0, 7)];
           final nodeAlpha = hsv_alphas[nodeIndex];
@@ -283,7 +288,7 @@ class GameNodes {
   }
 
   static void refreshNodeColor(int index) =>
-    nodeColors[index] = hsvToColor(
+    node_colors[index] = hsvToColor(
       hue: hsv_hue[index],
       saturation: hsv_saturation[index],
       value: hsv_values[index],
@@ -431,12 +436,20 @@ class GameNodes {
        interpolation += velocity;
        if (interpolation >= interpolationsLength) return;
 
-       row += vx;
-       if (row < 0 || row >= totalRows) return;
-       column += vy;
-       if (column < 0 || column >= totalColumns) return;
-       z += vz;
-       if (z < 0 || z >= totalZ) return;
+       if (vx != 0){
+         row += vx;
+         if (row < 0 || row >= totalRows) return;
+       }
+
+       if (vy != 0){
+         column += vy;
+         if (column < 0 || column >= totalColumns) return;
+       }
+
+       if (vz != 0){
+         z += vz;
+         if (z < 0 || z >= totalZ) return;
+       }
 
        final index = (z * area) + (row * totalColumns) + column;
 
@@ -597,7 +610,8 @@ class GameNodes {
     final interpolatedAlpha = Engine.linerInterpolationInt(alpha, ambient_alp, intensity);;
     final currentAlpha = hsv_alphas[index];
     if (currentAlpha < interpolatedAlpha) return;
-    colorStack[colorStackIndex++] = index;
+    colorStackIndex++;
+    colorStack[colorStackIndex] = index;
     hsv_alphas[index] = interpolatedAlpha;
     refreshNodeColor(index);
   }
