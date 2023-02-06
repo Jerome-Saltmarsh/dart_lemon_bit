@@ -490,7 +490,6 @@ class GameNodes {
            return;
          }
           vy = 0;
-
        }
 
        if (z != 0 && nodeBlocksVertical(index)){
@@ -502,41 +501,31 @@ class GameNodes {
          vz = 0;
        }
 
-
-       if (paint){
+       if (paint) {
          applyAmbient(index: index, alpha: alpha, interpolation: interpolation);
 
          if (paintBelow){
-           final nodeIndexBelow = index - area;
-           if (nodeIndexBelow > 0){
-             applyAmbient(
-               index: nodeIndexBelow,
-               alpha: alpha,
-               interpolation: interpolation,
-             );
-           }
+           applyAmbient(
+             index: index - area,
+             alpha: alpha,
+             interpolation: interpolation,
+           );
          }
 
          if (paintRowBehind){
-           final nodeBehind = index - totalColumns;
-           if (nodeBehind > 0){
-             applyAmbient(
-               index: nodeBehind,
-               alpha: alpha,
-               interpolation: interpolation,
-             );
-           }
+           applyAmbient(
+             index: index - totalColumns,
+             alpha: alpha,
+             interpolation: interpolation,
+           );
          }
 
          if (paintColumnBehind) {
-           final columnBehindIndex = index - 1;
-           if (columnBehindIndex > 0) {
-             applyAmbient(
-               index: columnBehindIndex,
-               alpha: alpha,
-               interpolation: interpolation,
-             );
-           }
+           applyAmbient(
+             index: index - 1,
+             alpha: alpha,
+             interpolation: interpolation,
+           );
          }
        }
 
@@ -568,8 +557,8 @@ class GameNodes {
     required int interpolation,
   }){
 
-    // if (index < 0) return;
-    // if (index >= total - 1) return;
+    if (index < 0) return;
+    if (index >= total) return;
     // if (index >= 19999) return;
     // assert (isIndexOnScreen(index));
 
@@ -643,7 +632,7 @@ class GameNodes {
 
   static bool nodeBlocksVertical(int index) => (const [
       NodeOrientation.Solid,
-      NodeOrientation.Radial,
+      // NodeOrientation.Radial,
       NodeOrientation.Half_Vertical_Top,
       NodeOrientation.Half_Vertical_Center,
       NodeOrientation.Half_Vertical_Bottom,
