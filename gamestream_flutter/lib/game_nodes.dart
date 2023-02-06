@@ -422,6 +422,7 @@ class GameNodes {
       return;
     }
     var paintBelow = vz == 0;
+    var paintForward = vx == 0;
     var paint = true;
 
     while (interpolation < interpolationsLength) {
@@ -487,6 +488,17 @@ class GameNodes {
          if (nodeIndexBelow > 0){
            applyAmbient(
              index: nodeIndexBelow,
+             alpha: alpha,
+             interpolation: interpolation,
+           );
+         }
+       }
+
+       if (paintForward){
+         final nodeBehind = index - totalColumns;
+         if (nodeBehind > 0){
+           applyAmbient(
+             index: nodeBehind,
              alpha: alpha,
              interpolation: interpolation,
            );
