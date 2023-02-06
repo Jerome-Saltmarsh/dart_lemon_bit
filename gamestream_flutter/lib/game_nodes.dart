@@ -421,6 +421,8 @@ class GameNodes {
       applyAmbient(index: (z * area) + (row * totalColumns) + column, alpha: alpha, interpolation: interpolation);
       return;
     }
+    var paintBelow = vz == 0;
+    var paint = true;
 
     while (interpolation < interpolationsLength) {
 
@@ -466,8 +468,21 @@ class GameNodes {
           vy = 0;
        }
 
-       applyAmbient(index: index, alpha: alpha, interpolation: interpolation);
-       if (vz == 0){
+       if (z != 0 && nodeBlocksVertical(index)){
+         velocity = vx.abs() + vy.abs();
+         if (z > 0) {
+           if (velocity == 0) return;
+           paint = false;
+         }
+         vz = 0;
+       }
+
+
+       if (paint){
+         applyAmbient(index: index, alpha: alpha, interpolation: interpolation);
+       }
+
+       if (paintBelow){
          final nodeIndexBelow = index - area;
          if (nodeIndexBelow > 0){
            applyAmbient(
@@ -477,6 +492,8 @@ class GameNodes {
            );
          }
        }
+
+       assert (velocity != 0);
 
        if (velocity > 1) {
          if (vx != 0){
