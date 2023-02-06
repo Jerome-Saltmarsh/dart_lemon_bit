@@ -459,33 +459,38 @@ class GameNodes {
          final nodeOrientation = nodeOrientations[index];
 
          if (vx != 0 && nodeOrientationBlocksNorthSouth(nodeOrientation)) {
+           if (vx > 0)  return;
            velocity = vy.abs() + vz.abs();
            vx = 0;
            paintBehindColumn = false;
            paintBehindZ = false;
+           if (nodeType == NodeType.Tree_Bottom){
+             paintBehindZ = true;
+           }
          }
 
          if (vy != 0 && nodeOrientationBlocksEastWest(nodeOrientation)) {
+           if (vy > 0)  return;
            velocity = vx.abs() + vz.abs();
            vy = 0;
            paintBehindRow = false;
+           paintBehindZ = false;
+
+           if (nodeType == NodeType.Tree_Bottom){
+             paintBehindZ = true;
+           }
          }
 
          if (vz != 0 && nodeOrientationBlocksVertical(nodeOrientation)){
-           if (vz < 0)
-             velocity = vx.abs() + vy.abs();
-           if (z > 0) {
-             // if (velocity == 0) return;
-             // paint = false;
-             return;
-           }
+           if (vz > 0) return;
+           velocity = vx.abs() + vy.abs();
            vz = 0;
          }
        }
 
       applyAmbient(index: index, alpha: alpha, interpolation: interpolation);
 
-      if (paintBehindZ){
+      if (paintBehindZ) {
         applyAmbient(
           index: index - area,
           alpha: alpha,
@@ -493,7 +498,7 @@ class GameNodes {
         );
       }
 
-      if (paintBehindRow){
+      if (paintBehindRow) {
         applyAmbient(
           index: index - totalColumns,
           alpha: alpha,
@@ -509,7 +514,7 @@ class GameNodes {
         );
       }
 
-       if (velocity > 1) {
+      if (velocity > 1) {
          if (vx != 0){
            shootLightTreeAmbient(row: row, column: column, z: z, interpolation: interpolation, alpha: alpha, vx: vx);
          }
@@ -600,7 +605,7 @@ class GameNodes {
     NodeOrientation.Radial,
   ]).contains(value);
 
-  static bool isNodeTypeTransient(int index) => const [
+  static bool isNodeTypeTransient(int nodeType) => const [
       NodeType.Empty,
       NodeType.Rain_Landing,
       NodeType.Rain_Falling,
@@ -608,7 +613,7 @@ class GameNodes {
       NodeType.Wooden_Plank,
       NodeType.Torch,
       NodeType.Grass_Long,
-    ].contains(nodeTypes[index]);
+    ].contains(nodeType);
 
   static bool nodeOrientationBlocksVertical(int nodeOrientation) => (const [
       NodeOrientation.Solid,
