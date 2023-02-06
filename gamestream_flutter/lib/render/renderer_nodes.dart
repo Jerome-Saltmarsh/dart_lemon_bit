@@ -870,7 +870,9 @@ class RendererNodes extends Renderer {
       srcHeight: AtlasNode.Node_Tree_Top_Height,
       dstX: currentNodeDstX + (shift * 0.5),
       dstY: currentNodeDstY,
-      color: getNodeColorAtIndex(currentNodeIndex - (GameNodes.area + GameNodes.area)),
+      // color: getNodeColorAtIndex(currentNodeIndex - (GameNodes.area + GameNodes.area)),
+      // color: getNodeColorAtIndex(currentNodeIndex),
+      color: renderNodeBelowColor,
     );
   }
 
@@ -884,7 +886,9 @@ class RendererNodes extends Renderer {
       srcHeight: 58,
       dstX: currentNodeDstX + (shift * 0.5),
       dstY: currentNodeDstY,
-      color: getNodeColorAtIndex(currentNodeIndex - (GameNodes.area + GameNodes.area)),
+      // color: getNodeColorAtIndex(currentNodeIndex - (GameNodes.area + GameNodes.area)),
+      // color: getNodeColorAtIndex(currentNodeIndex),
+      color: renderNodeBelowColor,
     );
   }
 
@@ -897,7 +901,8 @@ class RendererNodes extends Renderer {
       srcHeight: AtlasNode.Node_Tree_Bottom_Height,
       dstX: currentNodeDstX,
       dstY: currentNodeDstY,
-      color: renderNodeBelowColor,
+      // color: renderNodeBelowColor,
+      color: getNodeColorAtIndex(currentNodeIndex),
     );
   }
 
@@ -910,7 +915,8 @@ class RendererNodes extends Renderer {
       srcHeight: 72,
       dstX: currentNodeDstX,
       dstY: currentNodeDstY,
-      color: renderNodeBelowColor,
+      // color: renderNodeBelowColor,
+      color: getNodeColorAtIndex(currentNodeIndex),
       anchorY: 0.5,
     );
   }

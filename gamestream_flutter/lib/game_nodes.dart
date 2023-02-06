@@ -469,7 +469,6 @@ class GameNodes {
            velocity = vx.abs() + vz.abs();
            vy = 0;
            paintBehindRow = false;
-           paintBehindZ = false;
          }
 
          if (vz != 0 && nodeOrientationBlocksVertical(nodeOrientation)){
@@ -617,6 +616,13 @@ class GameNodes {
       NodeOrientation.Half_Vertical_Top,
       NodeOrientation.Half_Vertical_Center,
       NodeOrientation.Half_Vertical_Bottom,
+  ]).contains(nodeOrientation);
+
+  static bool nodeOrientationBlocksVerticalDown(int nodeOrientation) => (const [
+    NodeOrientation.Solid,
+    NodeOrientation.Half_Vertical_Top,
+    NodeOrientation.Half_Vertical_Center,
+    NodeOrientation.Half_Vertical_Bottom,
   ]).contains(nodeOrientation);
 
   static bool isIndexOnScreen(int index){
