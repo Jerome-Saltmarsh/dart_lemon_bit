@@ -591,11 +591,10 @@ class GameNodes {
     //   onscreenNodes++;
     // }
 
-    if (colorStackIndex >= colorStack.length){
-      return;
-    }
-
+    assert (index >= 0);
+    assert (index < total);
     colorStack[colorStackIndex++] = index;
+
     final intensity = interpolations[interpolation < 0 ? 0 : interpolation];
     final interpolatedAlpha = Engine.linerInterpolationInt(alpha, ambient_alp, intensity);;
     final currentAlpha = hsv_alphas[index];
