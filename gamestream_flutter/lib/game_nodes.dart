@@ -422,7 +422,8 @@ class GameNodes {
       return;
     }
     var paintBelow = vz == 0;
-    var paintForward = vx == 0;
+    var paintRowBehind = vx == 0;
+    var paintColumnBehind = vy == 0;
     var paint = true;
 
     while (interpolation < interpolationsLength) {
@@ -481,27 +482,38 @@ class GameNodes {
 
        if (paint){
          applyAmbient(index: index, alpha: alpha, interpolation: interpolation);
-       }
 
-       if (paintBelow){
-         final nodeIndexBelow = index - area;
-         if (nodeIndexBelow > 0){
-           applyAmbient(
-             index: nodeIndexBelow,
-             alpha: alpha,
-             interpolation: interpolation,
-           );
+         if (paintBelow){
+           final nodeIndexBelow = index - area;
+           if (nodeIndexBelow > 0){
+             applyAmbient(
+               index: nodeIndexBelow,
+               alpha: alpha,
+               interpolation: interpolation,
+             );
+           }
          }
-       }
 
-       if (paintForward){
-         final nodeBehind = index - totalColumns;
-         if (nodeBehind > 0){
-           applyAmbient(
-             index: nodeBehind,
-             alpha: alpha,
-             interpolation: interpolation,
-           );
+         if (paintRowBehind){
+           final nodeBehind = index - totalColumns;
+           if (nodeBehind > 0){
+             applyAmbient(
+               index: nodeBehind,
+               alpha: alpha,
+               interpolation: interpolation,
+             );
+           }
+         }
+
+         if (paintColumnBehind) {
+           final columnBehindIndex = index - 1;
+           if (columnBehindIndex > 0) {
+             applyAmbient(
+               index: columnBehindIndex,
+               alpha: alpha,
+               interpolation: interpolation,
+             );
+           }
          }
        }
 
