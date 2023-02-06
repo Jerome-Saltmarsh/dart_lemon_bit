@@ -452,10 +452,20 @@ class GameNodes {
             }
             return;
           }
-          vx = 0;
        }
 
+
        if (vy != 0 && nodeBlocksEastWest(index)) {
+
+         if (vx > 0 && vy < 0){
+           final indexInFront = index + 1;
+           if (indexInFront < totalColumns){
+             if (nodeBlocksNorthSouth(indexInFront)){
+               return;
+               // paint = false;
+             }
+           }
+         }
          velocity = vx.abs() + vz.abs();
          if (velocity == 0){
            if (vy < 1){
@@ -468,6 +478,7 @@ class GameNodes {
            return;
          }
           vy = 0;
+
        }
 
        if (z != 0 && nodeBlocksVertical(index)){
