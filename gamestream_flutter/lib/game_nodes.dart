@@ -389,6 +389,7 @@ class GameNodes {
     final column = getIndexColumn(index);
     final z = getIndexZ(index);
 
+
     for (var vz = -1; vz <= 1; vz++){
       for (var vx = -1; vx <= 1; vx++){
         for (var vy = -1; vy <= 1; vy++){
@@ -421,7 +422,6 @@ class GameNodes {
     assert (interpolation < interpolationsLength);
 
     var velocity = vx.abs() + vy.abs() + vz.abs();
-    var paint = true;
     var paintBehindZ = vz == 0;
     var paintBehindRow = vx == 0;
     var paintBehindColumn = vy == 0;
@@ -432,6 +432,7 @@ class GameNodes {
       if (interpolation >= interpolationsLength) return;
 
       if (velocity == 0) {
+
         applyAmbient(index: (z * area) + (row * totalColumns) + column, alpha: alpha, interpolation: interpolation);
         return;
       }
@@ -452,29 +453,35 @@ class GameNodes {
        }
 
        final index = (z * area) + (row * totalColumns) + column;
+       final nodeType = nodeTypes[index];
 
-       if (vx != 0 && nodeBlocksNorthSouth(index)) {
-          velocity = vy.abs() + vz.abs();
-          vx = 0;
-          paintBehindColumn = false;
-          paintBehindZ = false;
-       }
+       if (!isNodeTypeTransient(nodeType)) {
+         final nodeOrientation = nodeOrientations[index];
 
-       if (vy != 0 && nodeBlocksEastWest(index)) {
-         velocity = vx.abs() + vz.abs();
-         vy = 0;
-         paintBehindRow = false;
-         paintBehindZ = false;
-       }
-
-       if (vz != 0 && nodeBlocksVertical(index)){
-         velocity = vx.abs() + vy.abs();
-         if (z > 0) {
-           // if (velocity == 0) return;
-           // paint = false;
-           return;
+         if (vx != 0 && nodeOrientationBlocksNorthSouth(nodeOrientation)) {
+           velocity = vy.abs() + vz.abs();
+           vx = 0;
+           paintBehindColumn = false;
+           paintBehindZ = false;
          }
-         vz = 0;
+
+         if (vy != 0 && nodeOrientationBlocksEastWest(nodeOrientation)) {
+           velocity = vx.abs() + vz.abs();
+           vy = 0;
+           paintBehindRow = false;
+           paintBehindZ = false;
+         }
+
+         if (vz != 0 && nodeOrientationBlocksVertical(nodeOrientation)){
+           if (vz < 0)
+             velocity = vx.abs() + vy.abs();
+           if (z > 0) {
+             // if (velocity == 0) return;
+             // paint = false;
+             return;
+           }
+           vz = 0;
+         }
        }
 
       applyAmbient(index: index, alpha: alpha, interpolation: interpolation);
@@ -576,39 +583,41 @@ class GameNodes {
     refreshNodeColor(index);
   }
 
-  static bool nodeBlocksNorthSouth(int index) => (const [
+  static bool nodeOrientationBlocksNorthSouth(int nodeOrientation) => (const [
         NodeOrientation.Solid,
         NodeOrientation.Half_North,
         NodeOrientation.Half_South,
         NodeOrientation.Slope_North,
         NodeOrientation.Slope_South,
         NodeOrientation.Radial,
-  ].contains(nodeOrientations[index])) && !nodeTypeTransient(index);
+  ]).contains(nodeOrientation);
 
-  static bool nodeBlocksEastWest(int index) => (const [
+  static bool nodeOrientationBlocksEastWest(int value) => (const [
     NodeOrientation.Solid,
     NodeOrientation.Half_East,
     NodeOrientation.Half_West,
     NodeOrientation.Slope_East,
     NodeOrientation.Slope_West,
     NodeOrientation.Radial,
-  ].contains(nodeOrientations[index])) && !nodeTypeTransient(index);
+  ]).contains(value);
 
-  static bool nodeTypeTransient(int index){
-    return const [
+  static bool isNodeTypeTransient(int index) => const [
+      NodeType.Empty,
+      NodeType.Rain_Landing,
+      NodeType.Rain_Falling,
       NodeType.Window,
       NodeType.Wooden_Plank,
       NodeType.Torch,
+      NodeType.Grass_Long,
     ].contains(nodeTypes[index]);
-  }
 
-  static bool nodeBlocksVertical(int index) => (const [
+  static bool nodeOrientationBlocksVertical(int nodeOrientation) => (const [
       NodeOrientation.Solid,
-      // NodeOrientation.Radial,
+      NodeOrientation.Radial,
       NodeOrientation.Half_Vertical_Top,
       NodeOrientation.Half_Vertical_Center,
       NodeOrientation.Half_Vertical_Bottom,
-  ].contains(nodeOrientations[index])) && !nodeTypeTransient(index);
+  ]).contains(nodeOrientation);
 
   static bool isIndexOnScreen(int index){
 
