@@ -127,9 +127,6 @@ class GameNodes {
   static void resetNodeColorStack() {
     while (colorStackIndex >= 0) {
       final i = colorStack[colorStackIndex];
-      if (i >= node_colors.length){
-        print('colorStackIndex $colorStackIndex exceeded ${node_colors.length}' );
-      }
       node_colors[i] = ambient_color;
       hsv_hue[i] = ambient_hue;
       hsv_saturation[i] = ambient_sat;
