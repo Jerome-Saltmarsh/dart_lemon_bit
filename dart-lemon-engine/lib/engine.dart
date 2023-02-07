@@ -1109,7 +1109,7 @@ class Engine {
   }
 
   static void insertionSort<E>(List<E> list, {
-    required int Function(E, E) compare,
+    required bool Function(E, E) compare,
     int start = 0,
     int? end,
   }) {
@@ -1120,8 +1120,8 @@ class Engine {
       var element = list[pos];
       while (min < max) {
         var mid = min + ((max - min) >> 1);
-        var comparison = compare(element, list[mid]);
-        if (comparison < 0) {
+        // var comparison = ;
+        if (compare(element, list[mid])) {
           max = mid;
         } else {
           min = mid + 1;

@@ -109,8 +109,8 @@ class ClientState {
     );
   }
   
-  static int compareRenderOrder(Vector3 a, Vector3 b) {
-    return a.sortOrder > b.sortOrder ? 1 : -1;
+  static bool compareRenderOrder(Vector3 a, Vector3 b) {
+    return a.sortOrder < b.sortOrder;
   }
 
   static void sortParticlesActive(){
