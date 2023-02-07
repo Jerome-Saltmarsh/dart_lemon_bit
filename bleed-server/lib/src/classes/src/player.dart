@@ -1148,23 +1148,6 @@ class Player extends Character with ByteWriter {
     final gameObjects = game.gameObjects;
     for (final gameObject in gameObjects) {
       writeGameObject(gameObject);
-      // if (!gameObject.active) continue;
-      //
-      // const AlwaysSend = [
-      //   ItemType.GameObjects_Crystal_Small_Blue,
-      //   ItemType.GameObjects_Crystal_Small_Red,
-      //   ItemType.GameObjects_Barrel_Flaming,
-      // ];
-      //
-      // if (!AlwaysSend.contains(gameObject.type)) {
-      //   if (gameObject.renderY < screenTop) continue;
-      //   if (gameObject.renderX < screenLeft) continue;
-      //   if (gameObject.renderX > screenRight) continue;
-      //   if (gameObject.renderY > screenBottom) continue;
-      // }
-      // writeByte(ServerResponse.GameObject);
-      // writeUInt16(gameObject.type);
-      // writePosition3(gameObject);
     }
   }
 

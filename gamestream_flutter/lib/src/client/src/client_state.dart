@@ -108,7 +108,7 @@ class ClientState {
       end: totalActiveParticles,
     );
   }
-  
+
   static bool compareRenderOrder(Vector3 a, Vector3 b) {
     return a.sortOrder < b.sortOrder;
   }

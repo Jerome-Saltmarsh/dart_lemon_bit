@@ -462,6 +462,11 @@ class GameNodes {
        final index = (z * area) + (row * totalColumns) + column;
        final nodeType = nodeTypes[index];
 
+       // final isTree = const [NodeType.Tree_Bottom, NodeType.Tree_Top].contains(nodeType);
+       // if (const [NodeType.Tree_Bottom, NodeType.Tree_Top].contains(nodeType)){
+       //   interpolation += 3;
+       // } else
+
        if (!isNodeTypeTransient(nodeType)) {
 
          final nodeOrientation = nodeOrientations[index];
@@ -527,6 +532,11 @@ class GameNodes {
           alpha: alpha,
           interpolation: interpolation,
         );
+      }
+
+      if (const[NodeType.Grass_Long, NodeType.Tree_Bottom, NodeType.Tree_Top].contains(nodeType)){
+        interpolation += 2;
+        if (interpolation >= interpolationsLength) return;
       }
 
       if (velocity > 1) {
@@ -631,6 +641,8 @@ class GameNodes {
       NodeType.Wooden_Plank,
       NodeType.Torch,
       NodeType.Grass_Long,
+      NodeType.Tree_Bottom,
+      NodeType.Tree_Top,
     ].contains(nodeType);
 
   static bool nodeOrientationBlocksVertical(int nodeOrientation) => (const [
