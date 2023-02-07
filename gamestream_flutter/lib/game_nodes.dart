@@ -364,7 +364,6 @@ class GameNodes {
       }
     }
 
-    // final angle = getAngle(vx, vy);
     shadow.x = vx;
     shadow.y = vy;
     shadow.z = getAngle(vx, vy);
@@ -384,6 +383,15 @@ class GameNodes {
     if (index < 0) return;
     if (index >= total) return;
 
+    final padding = ClientState.interpolation_padding;
+    final rx = getIndexRenderX(index);
+    if (rx < Engine.Screen_Left - padding) return;
+    if (rx > Engine.Screen_Right + padding) return;
+    final ry = getIndexRenderY(index);
+    if (ry < Engine.Screen_Top - padding) return;
+    if (ry > Engine.Screen_Bottom + padding) return;
+
+    ClientState.lights_active++;
 
     final row = getIndexRow(index);
     final column = getIndexColumn(index);

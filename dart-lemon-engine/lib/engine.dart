@@ -194,6 +194,7 @@ class Engine {
   static double get joystickDistance => Engine.calculateDistance(joystickBaseX, joystickBaseY, joystickEndX, joystickEndY);
   static double get joystickAngle => Engine.calculateAngleBetween(joystickBaseX, joystickBaseY, joystickEndX, joystickEndY);
   static double get screenCenterRenderX => (Screen_Left + Screen_Right) * 0.5;
+  static double get screenCenterRenderY => (Screen_Top + Screen_Bottom) * 0.5;
   static double get screenDiagonalLength => calculateHypotenuse(screen.width, screen.height);
   static double get screenArea => screen.width * screen.height;
   static WidgetBuilder? get buildUI => watchBuildUI.value;

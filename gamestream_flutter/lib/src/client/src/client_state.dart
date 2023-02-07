@@ -38,13 +38,15 @@ class ClientState {
   static var nodesLightSources = Uint16List(0);
   static var nodesLightSourcesTotal = 0;
   static var nextLightingUpdate = 0;
+  static var lights_active = 0;
+  static var interpolation_padding = 0.0;
 
   // PROPERTIES
   static bool get hoverDialogIsInventory => hoverDialogType.value == DialogType.Inventory;
   static bool get hoverDialogDialogIsTrade => hoverDialogType.value == DialogType.Trade;
 
   static void update(){
-
+    interpolation_padding = ((GameNodes.interpolationsLength + 1) * Node_Size) / Engine.zoom;
     if (areaTypeVisible.value) {
       if (areaTypeVisibleDuration-- <= 0) {
         areaTypeVisible.value = false;

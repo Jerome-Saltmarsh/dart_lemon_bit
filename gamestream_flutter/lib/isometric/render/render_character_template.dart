@@ -139,44 +139,8 @@ void renderCharacterTemplate(Character character, {
   const Sprite_Size = 125.0;
   const Anchor_Y = 0.625;
 
-  // var angle = 0.0;
-  // var distance = 0.0;
-
-  // var shadowX = character.x;
-  // var shadowY = character.y;
-  // final shadowZ = character.z;
-  //
-  // if (!character.outOfBounds) {
-  //   var torchIndex = GameNodes.getTorchIndex(character.nodeIndex);
-  //
-  //   if (torchIndex != -1) {
-  //     // TODO optimize
-  //     final torchRow = GameState.convertNodeIndexToIndexX(torchIndex);
-  //     // TODO optimize
-  //     final torchColumn = GameState.convertNodeIndexToIndexY(torchIndex);
-  //     final torchPosX = torchRow * Node_Size + Node_Size_Half;
-  //     final torchPosY = torchColumn * Node_Size + Node_Size_Half;
-  //     angle = getAngleBetween(character.x, character.y, torchPosX, torchPosY);
-  //     distance = min(
-  //       GameConfig.Character_Shadow_Distance_Max,
-  //       Engine.calculateDistance(
-  //           character.x,
-  //           character.y,
-  //           torchPosX,
-  //           torchPosY
-  //       ) * GameConfig.Character_Shadow_Distance_Ratio,
-  //     );
-  //     shadowX += getAdjacent(angle, distance);
-  //     shadowY += getOpposite(angle, distance);
-  //   }
-  // }
-
   if (character.z >= GameConstants.Node_Height){
     GameNodes.markShadow(character);
-
-    // Engine.paint.color = Colors.red;
-    // GameRender.renderLine(character.x, character.y, character.z, character.x + GameNodes.shadow.x, character.y + GameNodes.shadow.y, character.z);
-    // Engine.paint.color = Colors.white;
 
     final shadowAngle = GameNodes.shadow.z + pi;
     final shadowDistance = GameNodes.shadow.magnitudeXY;

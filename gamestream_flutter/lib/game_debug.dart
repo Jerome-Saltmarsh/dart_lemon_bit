@@ -51,6 +51,7 @@ class GameDebug {
                                 "player-weapon: ${ItemType.getName(GamePlayer.weapon.value)}\n"
                                 "player-interact-mode: ${InteractMode.getName(ServerState.interactMode.value)}\n"
                                 "scene-light-sources: ${ClientState.nodesLightSourcesTotal}\n"
+                                "scene-light-active: ${ClientState.lights_active}\n"
                                 "total-gameobjects: ${ServerState.gameObjects.length}\n"
                                 "total-characters: ${ServerState.totalCharacters}\n"
                                 'total-particles: ${ClientState.particles.length}\n'

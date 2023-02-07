@@ -24,6 +24,9 @@ class GameState {
   static bool get editMode => ClientState.edit.value;
   static bool get lightningOn => ServerState.lightningType.value != LightningType.Off;
 
+
+
+
   static int getNodeIndexV3(Vector3 v3) {
     return getNodeIndexZRC(v3.indexZ, v3.indexRow, v3.indexColumn);
   }
@@ -68,6 +71,7 @@ class GameState {
   // ACTIONS
 
   static void applyEmissions(){
+    ClientState.lights_active = 0;
     applyEmissionsLightSources();
     applyEmissionsCharacters();
     ServerState.applyEmissionGameObjects();
