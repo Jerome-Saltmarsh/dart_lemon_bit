@@ -15,8 +15,9 @@ Widget buildEditorSelectedNode() =>
     child: Column(
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            watch(GameEditor.nodeSelectedIndex, text),
             onPressed(
               hint: "Delete",
               action: GameEditor.delete,
@@ -35,7 +36,6 @@ Widget buildEditorSelectedNode() =>
             ),
           ],
         ),
-        watch(GameEditor.nodeSelectedIndex, text),
         Container(
           height: 70,
             alignment: Alignment.center,
