@@ -428,14 +428,13 @@ class GameNodes {
 
     while (interpolation < interpolationsLength) {
 
-      interpolation += velocity;
-      if (interpolation >= interpolationsLength) return;
-
       if (velocity == 0) {
-
         applyAmbient(index: (z * area) + (row * totalColumns) + column, alpha: alpha, interpolation: interpolation);
         return;
       }
+
+      interpolation += velocity;
+      if (interpolation >= interpolationsLength) return;
 
        if (vx != 0){
          row += vx;
@@ -456,10 +455,24 @@ class GameNodes {
        final nodeType = nodeTypes[index];
 
        if (!isNodeTypeTransient(nodeType)) {
+
          final nodeOrientation = nodeOrientations[index];
+         final xBehind = vx > 0;
+         final yBehind = vy > 0;
+
+         if (vz != 0 && nodeOrientationBlocksVertical(nodeOrientation)){
+           if (vz > 0) {
+             if (vx == 0 && vy == 0) return;
+             final previousNodeIndex = index - (vy) - (vx * totalColumns);
+             final previousNodeOrientation = nodeOrientations[previousNodeIndex];
+             if (nodeOrientationBlocksVertical(previousNodeOrientation)) return;
+           }
+           velocity = vx.abs() + vy.abs();
+           vz = 0;
+         }
 
          if (vx != 0 && nodeOrientationBlocksNorthSouth(nodeOrientation)) {
-           if (vx > 0)  return;
+           if (xBehind && yBehind)  return;
            velocity = vy.abs() + vz.abs();
            vx = 0;
            paintBehindColumn = false;
@@ -470,7 +483,7 @@ class GameNodes {
          }
 
          if (vy != 0 && nodeOrientationBlocksEastWest(nodeOrientation)) {
-           if (vy > 0)  return;
+           if (xBehind && yBehind)  return;
            velocity = vx.abs() + vz.abs();
            vy = 0;
            paintBehindRow = false;
@@ -479,12 +492,6 @@ class GameNodes {
            if (nodeType == NodeType.Tree_Bottom){
              paintBehindZ = true;
            }
-         }
-
-         if (vz != 0 && nodeOrientationBlocksVertical(nodeOrientation)){
-           if (vz > 0) return;
-           velocity = vx.abs() + vy.abs();
-           vz = 0;
          }
        }
 
@@ -527,6 +534,9 @@ class GameNodes {
        }
     }
   }
+
+  static bool isValidIndex(int index) => index >= 0 && index < total;
+
 
   static double getIndexRenderX(int index) =>
       GameConvert.rowColumnToRenderX(getIndexRow(index), getIndexColumn(index));

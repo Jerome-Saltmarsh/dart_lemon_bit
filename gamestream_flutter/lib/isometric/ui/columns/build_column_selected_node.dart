@@ -35,6 +35,7 @@ Widget buildEditorSelectedNode() =>
             ),
           ],
         ),
+        watch(GameEditor.nodeSelectedIndex, text),
         Container(
           height: 70,
             alignment: Alignment.center,
