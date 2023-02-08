@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gamestream_flutter/functions/ease.dart';
 import 'package:gamestream_flutter/game_minimap.dart';
 import 'package:gamestream_flutter/game_ui_interact.dart';
 import 'package:gamestream_flutter/isometric/events/on_visibility_changed_message_box.dart';
@@ -54,6 +55,7 @@ class GameUI {
      return Container(
         padding: GameStyle.Padding_6,
         color: GameColors.brownDark,
+        width: 300,
         child: Column(
           children: [
             text("Settings"),
@@ -64,6 +66,22 @@ class GameUI {
             text("+", onPressed: (){
               GameNodes.setInterpolationLength(GameNodes.interpolation_length + 1);
             }),
+            Row(
+              children: [
+                text("<-", onPressed: (){
+                  final indexCurrent = EaseType.values.indexOf(GameNodes.interpolation_ease_type.value);
+                  final indexNext = indexCurrent - 1 >= 0 ? indexCurrent - 1 : EaseType.values.length - 1;
+                  GameNodes.interpolation_ease_type.value = EaseType.values[indexNext];
+                }),
+                watch(GameNodes.interpolation_ease_type, text),
+                text("->", onPressed: (){
+                  final indexCurrent = EaseType.values.indexOf(GameNodes.interpolation_ease_type.value);
+                  final indexNext = indexCurrent + 1 >= EaseType.values.length ? 0 : indexCurrent + 1;
+                  GameNodes.interpolation_ease_type.value = EaseType.values[indexNext];
+                }),
+              ],
+            ),
+
           ],
         ),
      );

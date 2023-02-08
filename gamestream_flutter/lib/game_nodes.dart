@@ -47,11 +47,14 @@ class GameNodes {
 
   // CONSTANTS
 
-
   static var interpolation_length = 6;
-  static var interpolation_ease_type = EaseType.Out_Quad;
+  static final interpolation_ease_type = Watch(EaseType.Out_Quad, onChanged: (EaseType easeType){
+    interpolations = easeType.generate(
+      length: interpolation_length,
+    );
+  });
 
-  static var interpolations = interpolation_ease_type.generate(
+  static var interpolations = interpolation_ease_type.value.generate(
       length: interpolation_length,
   );
 
@@ -59,7 +62,7 @@ class GameNodes {
      if (value < 1) return;
      if (interpolation_length == value) return;
      interpolation_length = value;
-     interpolations = interpolation_ease_type.generate(
+     interpolations = interpolation_ease_type.value.generate(
        length: interpolation_length,
      );
   }

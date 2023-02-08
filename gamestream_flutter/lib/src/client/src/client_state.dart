@@ -1,5 +1,4 @@
 
-import 'package:flutter/animation.dart';
 import 'package:gamestream_flutter/library.dart';
 
 /// The data stored in client state belongs to the client and can be safely read and written

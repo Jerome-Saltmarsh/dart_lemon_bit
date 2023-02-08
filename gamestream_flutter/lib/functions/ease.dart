@@ -9,6 +9,7 @@ class EaseFunctions {
 
 typedef EaseFunction = double Function(double i);
 
+
 enum EaseType {
   Out_Quad(EaseFunctions.outQuad),
   Out_Circ(EaseFunctions.outCirc);

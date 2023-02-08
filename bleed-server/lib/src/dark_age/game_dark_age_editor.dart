@@ -30,7 +30,7 @@ class GameDarkAgeEditor extends GameDarkAge {
        // player.indexColumn = 25;
        // player.indexRow = 25;
        // player.indexZ = 8;
-       Game.setGridPosition(position: player, z: 8, row: 25, column: 25);
+       Game.setGridPosition(position: player, z: 4, row: 25, column: 25);
        player.state = CharacterState.Idle;
        return;
      }
@@ -41,7 +41,7 @@ class GameDarkAgeEditor extends GameDarkAge {
             // player.indexColumn = column;
             // player.indexRow = row;
             // player.indexZ = 8;
-            Game.setGridPosition(position: player, z: 8, row: row, column: column);
+            Game.setGridPosition(position: player, z: 4, row: row, column: column);
             return;
           }
         }
