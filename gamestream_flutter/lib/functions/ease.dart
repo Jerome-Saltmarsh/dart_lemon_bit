@@ -6,4 +6,4 @@ class Ease {
 }
 
 List<double> generateCurve(int length) =>
-    List.generate(length, (i) => Ease.easeOutQuad(i * (1 / length)));
+    List.generate(length, (i) => Ease.easeOutQuad(i * (1 / length)), growable: false);

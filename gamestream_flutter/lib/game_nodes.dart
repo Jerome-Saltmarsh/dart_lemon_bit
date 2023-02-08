@@ -2,6 +2,7 @@
 import 'dart:math';
 
 import 'package:flutter/painting.dart';
+import 'package:gamestream_flutter/functions/ease.dart';
 import 'package:gamestream_flutter/functions/hsv_to_color.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -47,15 +48,7 @@ class GameNodes {
   // CONSTANTS
 
   static const interpolationsLength = 6;
-  static const interpolations = <double>[
-    0,
-    0.30555555555555547,
-    0.5555555555555555,
-    0.75,
-    0.8888888888888888,
-    0.9722222222222222,
-    1,
-  ];
+  static var interpolations = generateCurve(interpolationsLength);
 
   // FUNCTIONS
 
@@ -461,11 +454,6 @@ class GameNodes {
 
        final index = (z * area) + (row * totalColumns) + column;
        final nodeType = nodeTypes[index];
-
-       // final isTree = const [NodeType.Tree_Bottom, NodeType.Tree_Top].contains(nodeType);
-       // if (const [NodeType.Tree_Bottom, NodeType.Tree_Top].contains(nodeType)){
-       //   interpolation += 3;
-       // } else
 
        if (!isNodeTypeTransient(nodeType)) {
 
