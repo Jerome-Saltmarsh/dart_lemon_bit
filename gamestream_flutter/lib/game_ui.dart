@@ -57,12 +57,12 @@ class GameUI {
         child: Column(
           children: [
             text("Settings"),
-            Refresh(() => text('Light-Length: ${GameNodes.interpolationsLength}')),
+            Refresh(() => text('Light-Length: ${GameNodes.interpolation_length}')),
             text("-", onPressed: (){
-              GameNodes.setInterpolationLength(GameNodes.interpolationsLength - 1);
+              GameNodes.setInterpolationLength(GameNodes.interpolation_length - 1);
             }),
             text("+", onPressed: (){
-              GameNodes.setInterpolationLength(GameNodes.interpolationsLength + 1);
+              GameNodes.setInterpolationLength(GameNodes.interpolation_length + 1);
             }),
           ],
         ),

@@ -6,6 +6,9 @@ firebase deploy
 navigate to next method: ctrl + shift + up / down arrows
 ctrl + w:   minimal mode
 
+[IDEA]
+[ ] node type wooden plank should add (interpolation + 1);
+
 [TODO]
 [ ] feature key throw grenade
 [ ] feature key use primary weapon

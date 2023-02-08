@@ -47,13 +47,22 @@ class GameNodes {
 
   // CONSTANTS
 
-  static var interpolationsLength = 6;
-  static var interpolations = generateCurve(interpolationsLength);
+  static var interpolation_length = 6;
+  static var interpolation_function = Ease.outQuad;
+
+  static var interpolations = Ease.generateCurve(
+      length: interpolation_length,
+      function: interpolation_function,
+  );
 
   static void setInterpolationLength(int value){
      if (value < 1) return;
-     interpolationsLength = value;
-     interpolations = generateCurve(interpolationsLength);
+     if (interpolation_length == value) return;
+     interpolation_length = value;
+     interpolations = Ease.generateCurve(
+       length: interpolation_length,
+       function: interpolation_function,
+     );
   }
 
   // FUNCTIONS
@@ -426,14 +435,14 @@ class GameNodes {
     int vy = 0,
     int vz = 0,
   }){
-    assert (interpolation < interpolationsLength);
+    assert (interpolation < interpolation_length);
 
     var velocity = vx.abs() + vy.abs() + vz.abs();
     var paintBehindZ = vz == 0;
     var paintBehindRow = vx == 0;
     var paintBehindColumn = vy == 0;
 
-    while (interpolation < interpolationsLength) {
+    while (interpolation < interpolation_length) {
 
       if (velocity == 0) {
         applyAmbient(index: (z * area) + (row * totalColumns) + column, alpha: alpha, interpolation: interpolation);
@@ -441,7 +450,7 @@ class GameNodes {
       }
 
       interpolation += velocity;
-      if (interpolation >= interpolationsLength) return;
+      if (interpolation >= interpolation_length) return;
 
        if (vx != 0){
          row += vx;
@@ -540,7 +549,7 @@ class GameNodes {
 
       if (const[NodeType.Grass_Long, NodeType.Tree_Bottom, NodeType.Tree_Top].contains(nodeType)){
         interpolation += 2;
-        if (interpolation >= interpolationsLength) return;
+        if (interpolation >= interpolation_length) return;
       }
 
       if (velocity > 1) {

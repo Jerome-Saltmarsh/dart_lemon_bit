@@ -1,4 +1,5 @@
 
+import 'package:flutter/animation.dart';
 import 'package:gamestream_flutter/library.dart';
 
 /// The data stored in client state belongs to the client and can be safely read and written
@@ -48,7 +49,7 @@ class ClientState {
   static bool get hoverDialogDialogIsTrade => hoverDialogType.value == DialogType.Trade;
 
   static void update(){
-    interpolation_padding = ((GameNodes.interpolationsLength + 1) * Node_Size) / Engine.zoom;
+    interpolation_padding = ((GameNodes.interpolation_length + 1) * Node_Size) / Engine.zoom;
     if (areaTypeVisible.value) {
       if (areaTypeVisibleDuration-- <= 0) {
         areaTypeVisible.value = false;
