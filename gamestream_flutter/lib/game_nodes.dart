@@ -487,12 +487,14 @@ class GameNodes {
          if (vx != 0 && nodeOrientationBlocksNorthSouth(nodeOrientation)) {
            if (xBehind && yBehind)  return;
            velocity = vy.abs() + vz.abs();
-           vx = 0;
            paintBehindColumn = false;
            paintBehindZ = false;
-           if (nodeType == NodeType.Tree_Bottom){
-             paintBehindZ = true;
+           if (vx < 0){
+             if (nodeOrientation == NodeOrientation.Half_North){
+               paintBehindZ = true;
+             }
            }
+           vx = 0;
          }
 
          if (vy != 0 && nodeOrientationBlocksEastWest(nodeOrientation)) {
@@ -501,12 +503,11 @@ class GameNodes {
            paintBehindRow = false;
            paintBehindZ = false;
 
-           if (vy < 0){
+           if (vy < 0) {
              if (nodeOrientation == NodeOrientation.Half_East){
                paintBehindZ = true;
              }
            }
-
            vy = 0;
          }
        }
