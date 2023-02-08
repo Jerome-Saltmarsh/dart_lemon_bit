@@ -615,23 +615,31 @@ class GameNodes {
     refreshNodeColor(index);
   }
 
-  static bool nodeOrientationBlocksNorthSouth(int nodeOrientation) => (const [
+  static bool nodeOrientationBlocksNorthSouth(int nodeOrientation) => const [
         NodeOrientation.Solid,
         NodeOrientation.Half_North,
         NodeOrientation.Half_South,
         NodeOrientation.Slope_North,
         NodeOrientation.Slope_South,
+        NodeOrientation.Corner_Top,
+        NodeOrientation.Corner_Right,
+        NodeOrientation.Corner_Bottom,
+        NodeOrientation.Corner_Left,
         NodeOrientation.Radial,
-  ]).contains(nodeOrientation);
+  ].contains(nodeOrientation);
 
-  static bool nodeOrientationBlocksEastWest(int value) => (const [
+  static bool nodeOrientationBlocksEastWest(int value) => const [
     NodeOrientation.Solid,
     NodeOrientation.Half_East,
     NodeOrientation.Half_West,
     NodeOrientation.Slope_East,
     NodeOrientation.Slope_West,
+    NodeOrientation.Corner_Top,
+    NodeOrientation.Corner_Right,
+    NodeOrientation.Corner_Bottom,
+    NodeOrientation.Corner_Left,
     NodeOrientation.Radial,
-  ]).contains(value);
+  ].contains(value);
 
   static bool isNodeTypeTransient(int nodeType) => const [
       NodeType.Empty,

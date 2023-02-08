@@ -624,6 +624,9 @@ class RendererNodes extends Renderer {
       case NodeType.Water:
         renderNodeWater();
         break;
+      case NodeType.Dust:
+        renderNodeDust();
+        break;
       case NodeType.Tree_Bottom:
         renderTreeBottom();
         break;
@@ -1470,6 +1473,19 @@ class RendererNodes extends Renderer {
         throw Exception("render_node_window(${NodeOrientation.getName(renderNodeOrientation)})");
     }
   }
+
+  static void renderNodeDust() =>
+      Engine.renderSprite(
+        image: GameImages.atlas_nodes,
+        srcX: 1552,
+        srcY: 432 + (GameAnimation.animationFrame6 * 72.0), // TODO Optimize
+        srcWidth: GameConstants.Sprite_Width,
+        srcHeight: GameConstants.Sprite_Height,
+        dstX: currentNodeDstX,
+        dstY: currentNodeDstY,
+        anchorY: 0.3334,
+        color: currentNodeColor,
+      );
 
   static void renderNodeWater() =>
       Engine.renderSprite(
