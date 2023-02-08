@@ -47,21 +47,20 @@ class GameNodes {
 
   // CONSTANTS
 
-  static var interpolation_length = 6;
-  static var interpolation_function = Ease.outQuad;
 
-  static var interpolations = Ease.generateCurve(
+  static var interpolation_length = 6;
+  static var interpolation_ease_type = EaseType.Out_Quad;
+
+  static var interpolations = interpolation_ease_type.generate(
       length: interpolation_length,
-      function: interpolation_function,
   );
 
   static void setInterpolationLength(int value){
      if (value < 1) return;
      if (interpolation_length == value) return;
      interpolation_length = value;
-     interpolations = Ease.generateCurve(
+     interpolations = interpolation_ease_type.generate(
        length: interpolation_length,
-       function: interpolation_function,
      );
   }
 
