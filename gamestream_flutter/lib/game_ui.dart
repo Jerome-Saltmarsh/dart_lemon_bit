@@ -58,15 +58,22 @@ class GameUI {
         width: 300,
         child: Column(
           children: [
-            text("Settings"),
-            Refresh(() => text('Light-Length: ${GameNodes.interpolation_length}')),
-            text("-", onPressed: (){
-              GameNodes.setInterpolationLength(GameNodes.interpolation_length - 1);
-            }),
-            text("+", onPressed: (){
-              GameNodes.setInterpolationLength(GameNodes.interpolation_length + 1);
-            }),
+            text("Settings", bold: true),
+            height8,
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                text("<-", onPressed: (){
+                  GameNodes.setInterpolationLength(GameNodes.interpolation_length - 1);
+                }),
+                Refresh(() => text('Light-Length: ${GameNodes.interpolation_length}')),
+                text("->", onPressed: (){
+                  GameNodes.setInterpolationLength(GameNodes.interpolation_length + 1);
+                }),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 text("<-", onPressed: (){
                   final indexCurrent = EaseType.values.indexOf(GameNodes.interpolation_ease_type.value);
