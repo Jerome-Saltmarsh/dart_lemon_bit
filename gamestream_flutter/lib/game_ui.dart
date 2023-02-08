@@ -89,11 +89,14 @@ class GameUI {
                 }),
               ],
             ),
+
+            height16,
+            text("Ambient Color"),
             ColorPicker(
               portraitOnly: true,
               pickerColor: HSVColor.fromAHSV(
                   GameNodes.ambient_alp / 255,
-                  GameNodes.ambient_hue / 255,
+                  (GameNodes.ambient_hue / 255) * 360,
                   GameNodes.ambient_sat / 255,
                   GameNodes.ambient_val / 255,
               ).toColor(),
