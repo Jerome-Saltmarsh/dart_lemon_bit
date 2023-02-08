@@ -1,7 +1,5 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
-
 import '../../library.dart';
 import 'render_character_health_bar.dart';
 

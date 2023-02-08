@@ -18,8 +18,6 @@ class NodeType {
   static const Bau_Haus_Window = 53;
   static const Bau_Haus_Plain = 54;
   static const Chimney = 55;
-  static const Bed_Bottom = 56;
-  static const Bed_Top = 57;
   static const Table = 58;
   static const Sunflower = 59;
   static const Oven = 60;
@@ -41,6 +39,7 @@ class NodeType {
   static const Sandbag = 79;
   static const Shopping_Shelf = 80;
   static const Tile = 81;
+  static const Dust = 82;
 
   static bool isMaterialWood(int value) =>
       value == Torch ||
@@ -79,8 +78,6 @@ class NodeType {
       type == Bau_Haus      ||
       type == Table         ||
       type == Oven          ||
-      type == Bed_Top       ||
-      type == Bed_Bottom    ||
       type == Chimney       ||
       type == Metal         ||
       type == Sandbag       ||
@@ -99,6 +96,7 @@ class NodeType {
       type == Tree_Top      ||
       type == Grass_Long    ||
       type == Sunflower     ||
+      type == Dust          ||
       type == Rain_Falling   ;
 
   static bool supportsOrientationRadial(int type) =>
@@ -303,8 +301,6 @@ class NodeType {
     Bau_Haus_Window: 'Bau Haus Window',
     Bau_Haus_Plain: 'Bau Hau Plain',
     Chimney: 'Chimney',
-    Bed_Bottom: 'Bed Bottom',
-    Bed_Top: 'Bed Top',
     Table: 'Table',
     Sunflower: 'Sunflower',
     Oven: 'Oven',

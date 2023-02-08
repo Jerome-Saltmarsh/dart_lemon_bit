@@ -803,22 +803,11 @@ class RendererNodes extends Renderer {
           srcY: AtlasNode.Spawn_Player_Y,
         );
         break;
+
       case NodeType.Table:
         renderStandardNode(
           srcX: AtlasNode.Table_X,
           srcY: AtlasNode.Node_Table_Y,
-        );
-        return;
-      case NodeType.Bed_Top:
-        renderStandardNode(
-          srcX: AtlasNode.X_Bed_Top,
-          srcY: AtlasNode.Y_Bed_Top,
-        );
-        return;
-      case NodeType.Bed_Bottom:
-        renderStandardNode(
-          srcX: AtlasNode.X_Bed_Bottom,
-          srcY: AtlasNode.Y_Bed_Bottom,
         );
         return;
       case NodeType.Respawning:
