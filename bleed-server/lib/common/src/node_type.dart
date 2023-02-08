@@ -319,5 +319,6 @@ class NodeType {
     Road_2: 'Road Paint',
     Shopping_Shelf: "Shopping Shelf",
     Tile: "Tile",
+    Dust: "Dust",
   }[type] ?? 'unknown($type)';
 }

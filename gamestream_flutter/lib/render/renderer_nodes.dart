@@ -610,58 +610,17 @@ class RendererNodes extends Renderer {
 
   static void renderCurrentNode() {
 
-    if (currentNodeWithinIsland) {
-      if (currentNodeZ >= playerZ + 2) {
-        return;
-      }
-    }
-
+    if (currentNodeWithinIsland && currentNodeZ >= playerZ + 2) return;
 
     Engine.bufferImage = currentNodeTransparent ? GameImages.atlas_nodes_transparent : GameImages.atlas_nodes;
 
     switch (currentNodeType) {
       case NodeType.Grass:
-        if (currentNodeOrientation == NodeOrientation.Solid){
-          final variation = currentNodeVariation;
-          if (variation == 0) {
-            renderStandardNode(
-              srcX: 147,
-              srcY: 0,
-            );
-            return;
-          }
-          if (variation == 1) {
-            renderStandardNode(
-              srcX: 1168,
-              srcY: 0,
-            );
-            return;
-          }
-          if (variation == 2) {
-            renderStandardNode(
-              srcX: 1119,
-              srcY: 0,
-            );
-            return;
-          }
-          if (variation == 3) {
-            renderStandardNode(
-              srcX: 1070,
-              srcY: 0,
-            );
-            return;
-          }
-        }
-        renderNodeTemplateShaded(GameConstants.Sprite_Width_Padded_3);
-        return;
-      case NodeType.Brick:
-        const index_grass = 2;
-        const srcX = GameConstants.Sprite_Width_Padded * index_grass;
-        renderNodeTemplateShaded(srcX);
-        return;
-      case NodeType.Torch:
-        renderNodeTorch();
+        renderNodeGrass();
         break;
+      case NodeType.Brick:
+        renderNodeTemplateShaded(GameConstants.Sprite_Width_Padded_2);
+        return;
       case NodeType.Water:
         renderNodeWater();
         break;
@@ -671,11 +630,20 @@ class RendererNodes extends Renderer {
       case NodeType.Tree_Top:
         renderTreeTop();
         break;
+      case NodeType.Rain_Falling:
+        renderNodeRainFalling();
+        return;
+      case NodeType.Rain_Landing:
+        renderNodeRainLanding();
+        return;
       case NodeType.Sandbag:
         renderStandardNode(
           srcX: 539,
           srcY: 0,
         );
+        break;
+      case NodeType.Torch:
+        renderNodeTorch();
         break;
       case NodeType.Shopping_Shelf:
         if (currentNodeVariation == 0){
@@ -692,28 +660,8 @@ class RendererNodes extends Renderer {
 
         break;
       case NodeType.Grass_Long:
-        if (currentNodeOrientation == NodeOrientation.Destroyed) return;
-
-        switch (currentNodeWind) {
-          case WindType.Calm:
-            renderStandardNode(
-              srcX: AtlasNodeX.Grass_Long,
-              srcY: 0,
-            );
-            return;
-          default:
-            renderStandardNode(
-              srcX: AtlasNodeX.Grass_Long + ((((row - column) + GameAnimation.animationFrameGrass) % 6) * 48), // TODO Expensive Operation
-              srcY: 0,
-            );
-            return;
-        }
-      case NodeType.Rain_Falling:
-        renderNodeRainFalling();
-        return;
-      case NodeType.Rain_Landing:
-        renderNodeRainLanding();
-        return;
+        renderNodeGrassLong();
+        break;
       case NodeType.Tile:
         renderNodeTemplateShaded(588);
         return;
@@ -814,6 +762,59 @@ class RendererNodes extends Renderer {
         return;
       default:
         throw Exception('renderNode(index: ${currentNodeIndex}, type: ${NodeType.getName(currentNodeType)}, orientation: ${NodeOrientation.getName(nodeOrientations[currentNodeIndex])}');
+    }
+  }
+
+  static void renderNodeGrass() {
+    if (currentNodeOrientation == NodeOrientation.Solid){
+      final variation = currentNodeVariation;
+      if (variation == 0) {
+        renderStandardNode(
+          srcX: 147,
+          srcY: 0,
+        );
+        return;
+      }
+      if (variation == 1) {
+        renderStandardNode(
+          srcX: 1168,
+          srcY: 0,
+        );
+        return;
+      }
+      if (variation == 2) {
+        renderStandardNode(
+          srcX: 1119,
+          srcY: 0,
+        );
+        return;
+      }
+      if (variation == 3) {
+        renderStandardNode(
+          srcX: 1070,
+          srcY: 0,
+        );
+        return;
+      }
+    }
+    renderNodeTemplateShaded(GameConstants.Sprite_Width_Padded_3);
+  }
+
+  static void renderNodeGrassLong() {
+    if (currentNodeOrientation == NodeOrientation.Destroyed) return;
+    switch (currentNodeWind) {
+      case WindType.Calm:
+        renderStandardNode(
+          srcX: AtlasNodeX.Grass_Long,
+          srcY: 0,
+        );
+        return;
+      default:
+        renderStandardNode(
+          srcX: AtlasNodeX.Grass_Long + ((((row - column) + GameAnimation.animationFrameGrass) % 6) * 48), // TODO Expensive Operation
+          srcY: 0,
+        );
+        return;
     }
   }
 
