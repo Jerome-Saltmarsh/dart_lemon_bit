@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:gamestream_flutter/functions/ease.dart';
 import 'package:gamestream_flutter/game_minimap.dart';
 import 'package:gamestream_flutter/game_ui_interact.dart';
@@ -88,7 +89,24 @@ class GameUI {
                 }),
               ],
             ),
-
+            ColorPicker(
+              portraitOnly: true,
+              pickerColor: HSVColor.fromAHSV(
+                  GameNodes.ambient_alp / 255,
+                  GameNodes.ambient_hue / 255,
+                  GameNodes.ambient_sat / 255,
+                  GameNodes.ambient_val / 255,
+              ).toColor(),
+              onColorChanged: (color){
+                ClientState.overrideColor.value = true;
+                final hsvColor = HSVColor.fromColor(color);
+                GameNodes.ambient_alp = (hsvColor.alpha * 255).round();
+                GameNodes.ambient_hue = ((hsvColor.hue / 360) * 255).round();
+                GameNodes.ambient_sat = (hsvColor.saturation * 255).round();
+                GameNodes.ambient_val = (hsvColor.value * 255).round();
+                GameNodes.resetNodeColorsToAmbient();
+              },
+            ),
           ],
         ),
      );
