@@ -498,13 +498,16 @@ class GameNodes {
          if (vy != 0 && nodeOrientationBlocksEastWest(nodeOrientation)) {
            if (xBehind && yBehind)  return;
            velocity = vx.abs() + vz.abs();
-           vy = 0;
            paintBehindRow = false;
            paintBehindZ = false;
 
-           if (nodeType == NodeType.Tree_Bottom){
-             paintBehindZ = true;
+           if (vy < 0){
+             if (nodeOrientation == NodeOrientation.Half_East){
+               paintBehindZ = true;
+             }
            }
+
+           vy = 0;
          }
        }
 
