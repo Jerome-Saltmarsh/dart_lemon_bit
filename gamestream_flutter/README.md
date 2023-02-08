@@ -14,6 +14,7 @@ ctrl + w:   minimal mode
 [ ] feature weapon upgrades
 
 08.02.2023
+[x] fix physics teleport upwards
 [x] gameobject washing machine
 [x] gameobject chair
 [x] gameobject sink

@@ -2365,7 +2365,10 @@ abstract class Game {
     final nodeBottomType = scene.nodeTypes[nodeBottomIndex];
 
     if (nodeBottomOrientation == NodeOrientation.Solid) {
-      collider.z = ((bottomZ ~/ Node_Height) * Node_Height) + Node_Height;
+
+      final nodeTop = ((bottomZ ~/ Node_Height) * Node_Height) + Node_Height;
+      if (nodeTop - bottomZ > GamePhysics.Max_Vertical_Collision_Displacement) return;
+      collider.z = nodeTop;
       if (collider.velocityZ < 0) {
         if (collider.bounce) {
           collider.velocityZ =
@@ -2387,6 +2390,9 @@ abstract class Game {
           (NodeOrientation.getGradient(nodeBottomOrientation, percX, percY) *
               Node_Height);
       if (nodeTop <= bottomZ) return;
+
+      if (nodeTop - bottomZ > GamePhysics.Max_Vertical_Collision_Displacement) return;
+
       collider.z = nodeTop;
 
       if (collider.velocityZ < 0) {

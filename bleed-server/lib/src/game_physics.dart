@@ -11,4 +11,5 @@ class GamePhysics {
   static const Max_Throw_Velocity = 15.0;
   static const Max_Throw_Velocity_Z = 10;
   static const Max_Throw_Distance = 400.0;
+  static const Max_Vertical_Collision_Displacement = 15.0;
 }
