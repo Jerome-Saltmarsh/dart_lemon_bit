@@ -7,10 +7,15 @@ navigate to next method: ctrl + shift + up / down arrows
 ctrl + w:   minimal mode
 
 [TODO]
+[ ] feature key throw grenade
+[ ] feature key use primary weapon
+[ ] feature key use secondary weapon
 [ ] feature melee strike weapon
 [ ] feature weapon upgrades
 
 08.02.2023
+[x] gameobject sink
+[x] node type bookshelf
 [x] feature grass and trees shed half shadow
 [x] fix bug gravity
 

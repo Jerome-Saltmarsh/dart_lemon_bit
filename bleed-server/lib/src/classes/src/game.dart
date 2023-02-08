@@ -2106,6 +2106,7 @@ abstract class Game {
     instance.strikable   = ItemType.isStrikable(type);
     instance.physical     = ItemType.isPhysical(type);
     instance.fixed        = ItemType.isFixed(type);
+    instance.gravity      = !instance.fixed && instance.physical;
     instance.friction     = GamePhysics.Friction;
     instance.bounce       = false;
     gameObjects.add(instance);

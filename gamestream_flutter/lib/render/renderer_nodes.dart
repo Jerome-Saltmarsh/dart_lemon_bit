@@ -621,17 +621,16 @@ class RendererNodes extends Renderer {
       case NodeType.Brick:
         renderNodeTemplateShaded(GameConstants.Sprite_Width_Padded_2);
         return;
+      case NodeType.Wood:
+        const index_grass = 5;
+        const srcX = GameConstants.Sprite_Width_Padded * index_grass;
+        renderNodeTemplateShaded(srcX);
+        break;
       case NodeType.Water:
         renderNodeWater();
         break;
       case NodeType.Dust:
         renderNodeDust();
-        break;
-      case NodeType.Tree_Bottom:
-        renderTreeBottom();
-        break;
-      case NodeType.Tree_Top:
-        renderTreeTop();
         break;
       case NodeType.Rain_Falling:
         renderNodeRainFalling();
@@ -645,29 +644,6 @@ class RendererNodes extends Renderer {
           srcY: 0,
         );
         break;
-      case NodeType.Torch:
-        renderNodeTorch();
-        break;
-      case NodeType.Shopping_Shelf:
-        if (currentNodeVariation == 0){
-          renderStandardNode(
-            srcX: 1392,
-            srcY: 160,
-          );
-        } else {
-          renderStandardNode(
-            srcX: 1441,
-            srcY: 160,
-          );
-        }
-
-        break;
-      case NodeType.Grass_Long:
-        renderNodeGrassLong();
-        break;
-      case NodeType.Tile:
-        renderNodeTemplateShaded(588);
-        return;
       case NodeType.Concrete:
         renderNodeTemplateShaded(GameConstants.Sprite_Width_Padded_8);
         return;
@@ -677,18 +653,33 @@ class RendererNodes extends Renderer {
       case NodeType.Road:
         renderNodeTemplateShadedOffset(GameConstants.Sprite_Width_Padded_9, offsetY: 7);
         return;
+      case NodeType.Tree_Bottom:
+        renderTreeBottom();
+        break;
+      case NodeType.Tree_Top:
+        renderTreeTop();
+        break;
       case NodeType.Road_2:
         renderNodeShadedOffset(srcX: 768, srcY: 672 + GameConstants.Sprite_Height_Padded, offsetX: 0, offsetY: 7);
         return;
       case NodeType.Wooden_Plank:
         renderNodeTemplateShaded(GameConstants.Sprite_Width_Padded_10);
         return;
-
-      case NodeType.Wood:
-        const index_grass = 5;
-        const srcX = GameConstants.Sprite_Width_Padded * index_grass;
-        renderNodeTemplateShaded(srcX);
+      case NodeType.Torch:
+        renderNodeTorch();
         break;
+      case NodeType.Shopping_Shelf:
+        renderNodeShoppingShelf();
+        break;
+      case NodeType.Bookshelf:
+        renderNodeBookShelf();
+        break;
+      case NodeType.Grass_Long:
+        renderNodeGrassLong();
+        break;
+      case NodeType.Tile:
+        renderNodeTemplateShaded(588);
+        return;
       case NodeType.Bau_Haus:
         const index_grass = 6;
         const srcX = GameConstants.Sprite_Width_Padded * index_grass;
@@ -766,6 +757,27 @@ class RendererNodes extends Renderer {
       default:
         throw Exception('renderNode(index: ${currentNodeIndex}, type: ${NodeType.getName(currentNodeType)}, orientation: ${NodeOrientation.getName(nodeOrientations[currentNodeIndex])}');
     }
+  }
+
+  static void renderNodeShoppingShelf() {
+     if (currentNodeVariation == 0){
+      renderStandardNode(
+        srcX: 1392,
+        srcY: 160,
+      );
+    } else {
+      renderStandardNode(
+        srcX: 1441,
+        srcY: 160,
+      );
+    }
+  }
+
+  static void renderNodeBookShelf() {
+    renderStandardNode(
+      srcX: 1392,
+      srcY: 233,
+    );
   }
 
   static void renderNodeGrass() {

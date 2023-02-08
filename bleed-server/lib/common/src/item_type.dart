@@ -88,6 +88,7 @@ class ItemType {
   static const GameObjects_Bed                  = Index_GameObjects + 25;
   static const GameObjects_Firehydrant          = Index_GameObjects + 26;
   static const GameObjects_Aircon_South         = Index_GameObjects + 27;
+  static const GameObjects_Sink                 = Index_GameObjects + 28;
 
   static const Resource_Wood = Index_Resources + 5;
   static const Resource_Stone = Index_Resources + 6;
@@ -226,6 +227,7 @@ class ItemType {
     GameObjects_Barrel_Purple: 18,
     GameObjects_Barrel_Flaming: 18,
     GameObjects_Barrel_Explosive: 18,
+    GameObjects_Sink: 10,
   }[value] ?? 15;
 
   static bool isStrikable(int value) =>
@@ -248,38 +250,33 @@ class ItemType {
     GameObjects_Firehydrant,
     GameObjects_Bed,
     GameObjects_Desk,
+    GameObjects_Toilet,
     GameObjects_Aircon_South,
-  ].contains(value);
-
-  static bool isApplyGravity(int value) => const [
-    GameObjects_Vending_Machine,
-    GameObjects_Car,
-    GameObjects_Firehydrant,
-    GameObjects_Bed,
-    GameObjects_Desk,
-    GameObjects_Aircon_South,
+    GameObjects_Sink,
   ].contains(value);
 
   static bool isInteractable(int value) => const [
     GameObjects_Vending_Machine,
   ].contains(value);
 
-  static bool isPhysical(int value) =>
-    value == GameObjects_Barrel_Purple     ||
-    value == GameObjects_Grenade           ||
-    value == Weapon_Thrown_Grenade         ||
-    value == GameObjects_Barrel_Explosive  ||
-    value == GameObjects_Barrel_Flaming    ||
-    value == GameObjects_Barrel            ||
-    value == GameObjects_Crate_Wooden      ||
-    value == GameObjects_Desk              ||
-    value == GameObjects_Vending_Machine   ||
-    value == GameObjects_Bed               ||
-    value == GameObjects_Toilet            ||
-    value == GameObjects_Firehydrant       ||
-    value == GameObjects_Car               ||
-    value == GameObjects_Aircon_South      ||
-    value == GameObjects_Tavern_Sign        ;
+  static bool isPhysical(int value) => const [
+        GameObjects_Barrel_Purple,
+        GameObjects_Grenade,
+        Weapon_Thrown_Grenade,
+        GameObjects_Barrel_Explosive,
+        GameObjects_Barrel_Flaming,
+        GameObjects_Barrel,
+        GameObjects_Crate_Wooden,
+        GameObjects_Desk,
+        GameObjects_Vending_Machine,
+        GameObjects_Bed,
+        GameObjects_Toilet,
+        GameObjects_Firehydrant,
+        GameObjects_Car,
+        GameObjects_Aircon_South,
+        GameObjects_Tavern_Sign,
+        GameObjects_Sink,
+      ].contains(value);
 
   static bool isTypeEquipped(int value) =>
     value == Equipped_Weapon  ||
@@ -677,6 +674,7 @@ class ItemType {
      GameObjects_Car: "Car",
      GameObjects_Vending_Machine: "Vending Machine",
      GameObjects_Firehydrant: "Fire Hydrant",
+     GameObjects_Sink: "Sink",
   }[value] ?? "item-type-unknown($value)";
 
 
@@ -794,9 +792,11 @@ class ItemType {
      GameObjects_Bed,
      GameObjects_Firehydrant,
      GameObjects_Car,
-     GameObjects_Aircon_South
+     GameObjects_Aircon_South,
+     GameObjects_Sink,
   ];
 
+  
   static bool isTypeBarrel(int type)=> const [
       GameObjects_Barrel,
       GameObjects_Barrel_Explosive,

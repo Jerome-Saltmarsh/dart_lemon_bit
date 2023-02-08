@@ -24,6 +24,7 @@ class AtlasItems {
         ItemType.GameObjects_Desk: 410,
         ItemType.GameObjects_Vending_Machine: 0,
         ItemType.GameObjects_Bed: 447,
+        ItemType.GameObjects_Sink: 273,
         ItemType.GameObjects_Firehydrant: 162,
         ItemType.Trinket_Ring_of_Health: 256,
         ItemType.Trinket_Ring_of_Damage: 288,
@@ -110,6 +111,7 @@ class AtlasItems {
         ItemType.GameObjects_Bed: 0,
         ItemType.GameObjects_Firehydrant: 49,
         ItemType.GameObjects_Aircon_South: 64,
+        ItemType.GameObjects_Sink: 48,
         ItemType.Trinket_Ring_of_Health: 32,
         ItemType.Trinket_Ring_of_Damage: 32,
         ItemType.Weapon_Ranged_Shotgun: 32,
@@ -188,6 +190,7 @@ class AtlasItems {
         ItemType.GameObjects_Bed: 56,
         ItemType.GameObjects_Firehydrant: 53,
         ItemType.GameObjects_Aircon_South: 48,
+        ItemType.GameObjects_Sink: 27,
         ItemType.Weapon_Rifle_Sniper: 48,
         ItemType.Weapon_Flamethrower: 64,
         ItemType.Weapon_Special_Bazooka: 48,
@@ -212,14 +215,16 @@ class AtlasItems {
         ItemType.GameObjects_Crystal_Small_Red: 18,
         ItemType.GameObjects_Toilet: 92,
         ItemType.GameObjects_Vending_Machine: 72,
-        ItemType.GameObjects_Bed: 72,
+        ItemType.GameObjects_Bed: 78,
         ItemType.GameObjects_Aircon_South: 81,
+        ItemType.GameObjects_Sink: 33,
         ItemType.Weapon_Rifle_Sniper: 16,
         ItemType.Weapon_Special_Bazooka: 16,
         ItemType.Weapon_Special_Minigun: 12,
   }[itemType] ?? size;
 
-  static double getSrcScale(int itemType) => const <int, double>{
+
+  static double getSrcScale(int itemType) => const <int, double> {
         ItemType.GameObjects_Barrel_Explosive: 0.75,
         ItemType.GameObjects_Barrel_Purple: 0.75,
         ItemType.GameObjects_Barrel_Flaming: 0.75,
@@ -228,10 +233,10 @@ class AtlasItems {
         ItemType.GameObjects_Firehydrant: 0.4,
         ItemType.GameObjects_Car: 0.66,
         ItemType.GameObjects_Aircon_South: 0.6,
+        ItemType.GameObjects_Sink: 0.75,
   }[itemType] ?? 1.0;
 
-
-  static double getAnchorY(int itemType) => const <int, double>{
+  static double getAnchorY(int itemType) => const <int, double> {
     ItemType.GameObjects_Barrel_Explosive: 0.65,
     ItemType.GameObjects_Barrel_Purple: 0.65,
     ItemType.GameObjects_Barrel_Flaming: 0.65,
@@ -240,8 +245,6 @@ class AtlasItems {
     ItemType.GameObjects_Firehydrant: 0.66,
   }[itemType] ?? 0.5;
 }
-
-
 
 class AtlasIcons {
 
