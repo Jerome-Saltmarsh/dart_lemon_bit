@@ -2349,7 +2349,6 @@ abstract class Game {
   }
 
   void updateColliderSceneCollisionVertical(Collider collider) {
-
     if (!scene.isInboundV3(collider)) {
       if (collider.z > -100) return;
       deactivateCollider(collider);
@@ -2359,51 +2358,56 @@ abstract class Game {
       return;
     }
 
-    while (true) {
-      final bottomZ = collider.z;
-      final nodeBottomIndex = scene.getNodeIndexXYZ(collider.x, collider.y, bottomZ);
-      final nodeBottomOrientation = scene.nodeOrientations[nodeBottomIndex];
-      final nodeBottomType = scene.nodeTypes[nodeBottomIndex];
+    final bottomZ = collider.z;
+    final nodeBottomIndex =
+        scene.getNodeIndexXYZ(collider.x, collider.y, bottomZ);
+    final nodeBottomOrientation = scene.nodeOrientations[nodeBottomIndex];
+    final nodeBottomType = scene.nodeTypes[nodeBottomIndex];
 
-      if (nodeBottomOrientation == NodeOrientation.Solid) {
-        collider.z = ((bottomZ ~/ Node_Height) * Node_Height) + Node_Height;
-        if (collider.velocityZ < 0){
-          if (collider.bounce){
-            collider.velocityZ = -collider.velocityZ * GamePhysics.Bounce_Friction;
-            dispatchV3(GameEventType.Item_Bounce, collider, angle: -collider.velocityZ);
-          } else {
-            collider.velocityZ = 0;
-          }
-        }
-        continue;
-      }
-
-      if (nodeBottomOrientation != NodeOrientation.None) {
-        final percX = ((collider.x % Node_Size) / Node_Size);
-        final percY = ((collider.y % Node_Size) / Node_Size);
-        final nodeBottom = (bottomZ ~/ Node_Height) * Node_Height;
-        final nodeTop = nodeBottom + (NodeOrientation.getGradient(nodeBottomOrientation, percX, percY) * Node_Height);
-        if (nodeTop <= bottomZ) return;
-        collider.z = nodeTop;
-
-        if (collider.velocityZ < 0) {
-           if (collider.bounce){
-             collider.velocityZ = -collider.velocityZ * GamePhysics.Bounce_Friction;
-             dispatchV3(GameEventType.Item_Bounce, collider, angle: -collider.velocityZ);
-           } else {
-             collider.velocityZ = 0;
-           }
-        }
-        continue;
-      }
-
-      if (nodeBottomType == NodeType.Water) {
-        if (collider.z % Node_Height < Node_Height_Half){
-          internalOnColliderEnteredWater(collider);
+    if (nodeBottomOrientation == NodeOrientation.Solid) {
+      collider.z = ((bottomZ ~/ Node_Height) * Node_Height) + Node_Height;
+      if (collider.velocityZ < 0) {
+        if (collider.bounce) {
+          collider.velocityZ =
+              -collider.velocityZ * GamePhysics.Bounce_Friction;
+          dispatchV3(GameEventType.Item_Bounce, collider,
+              angle: -collider.velocityZ);
+        } else {
+          collider.velocityZ = 0;
         }
       }
       return;
     }
+
+    if (nodeBottomOrientation != NodeOrientation.None) {
+      final percX = ((collider.x % Node_Size) / Node_Size);
+      final percY = ((collider.y % Node_Size) / Node_Size);
+      final nodeBottom = (bottomZ ~/ Node_Height) * Node_Height;
+      final nodeTop = nodeBottom +
+          (NodeOrientation.getGradient(nodeBottomOrientation, percX, percY) *
+              Node_Height);
+      if (nodeTop <= bottomZ) return;
+      collider.z = nodeTop;
+
+      if (collider.velocityZ < 0) {
+        if (collider.bounce) {
+          collider.velocityZ =
+              -collider.velocityZ * GamePhysics.Bounce_Friction;
+          dispatchV3(GameEventType.Item_Bounce, collider,
+              angle: -collider.velocityZ);
+        } else {
+          collider.velocityZ = 0;
+        }
+      }
+      return;
+    }
+
+    if (nodeBottomType == NodeType.Water) {
+      if (collider.z % Node_Height < Node_Height_Half) {
+        internalOnColliderEnteredWater(collider);
+      }
+    }
+    return;
   }
 
   void setNode({

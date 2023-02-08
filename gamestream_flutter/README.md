@@ -14,6 +14,8 @@ ctrl + w:   minimal mode
 [ ] feature weapon upgrades
 
 08.02.2023
+[x] gameobject washing machine
+[x] gameobject chair
 [x] gameobject sink
 [x] node type bookshelf
 [x] feature grass and trees shed half shadow

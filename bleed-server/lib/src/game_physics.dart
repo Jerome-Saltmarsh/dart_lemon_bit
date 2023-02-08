@@ -7,7 +7,7 @@ class GamePhysics {
   static const Min_Velocity = 0.005;
   static const Projectile_Radius = 10.0;
   static const Projectile_Z_Velocity = 0.05;
-  static const Max_Velocity = 10.0;
+  static const Max_Velocity = 7.0;
   static const Max_Throw_Velocity = 15.0;
   static const Max_Throw_Velocity_Z = 10;
   static const Max_Throw_Distance = 400.0;

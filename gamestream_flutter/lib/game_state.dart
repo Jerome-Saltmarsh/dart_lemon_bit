@@ -91,6 +91,10 @@ class GameState {
             index: nodeIndex,
             alpha: 0,
           );
+          // GameNodes.emitLightAmbient(
+          //   index: nodeIndex + GameNodes.area,
+          //   alpha: 0,
+          // );
           break;
       }
     }

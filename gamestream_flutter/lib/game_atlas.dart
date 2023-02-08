@@ -26,6 +26,8 @@ class AtlasItems {
         ItemType.GameObjects_Bed: 447,
         ItemType.GameObjects_Sink: 273,
         ItemType.GameObjects_Firehydrant: 162,
+        ItemType.GameObjects_Chair: 273,
+        ItemType.GameObjects_Washing_Machine: 304,
         ItemType.Trinket_Ring_of_Health: 256,
         ItemType.Trinket_Ring_of_Damage: 288,
         ItemType.Empty: 224,
@@ -112,6 +114,8 @@ class AtlasItems {
         ItemType.GameObjects_Firehydrant: 49,
         ItemType.GameObjects_Aircon_South: 64,
         ItemType.GameObjects_Sink: 48,
+        ItemType.GameObjects_Chair: 83,
+        ItemType.GameObjects_Washing_Machine: 96,
         ItemType.Trinket_Ring_of_Health: 32,
         ItemType.Trinket_Ring_of_Damage: 32,
         ItemType.Weapon_Ranged_Shotgun: 32,
@@ -191,6 +195,8 @@ class AtlasItems {
         ItemType.GameObjects_Firehydrant: 53,
         ItemType.GameObjects_Aircon_South: 48,
         ItemType.GameObjects_Sink: 27,
+        ItemType.GameObjects_Chair: 24,
+        ItemType.GameObjects_Washing_Machine: 48,
         ItemType.Weapon_Rifle_Sniper: 48,
         ItemType.Weapon_Flamethrower: 64,
         ItemType.Weapon_Special_Bazooka: 48,
@@ -210,6 +216,7 @@ class AtlasItems {
         ItemType.GameObjects_Cup: 11,
         ItemType.GameObjects_Tavern_Sign: 39,
         ItemType.GameObjects_Firehydrant: 104,
+        ItemType.GameObjects_Washing_Machine: 81,
         ItemType.GameObjects_Grenade: 9,
         ItemType.GameObjects_Crystal_Small_Blue: 18,
         ItemType.GameObjects_Crystal_Small_Red: 18,
@@ -218,11 +225,11 @@ class AtlasItems {
         ItemType.GameObjects_Bed: 78,
         ItemType.GameObjects_Aircon_South: 81,
         ItemType.GameObjects_Sink: 33,
+        ItemType.GameObjects_Chair: 39,
         ItemType.Weapon_Rifle_Sniper: 16,
         ItemType.Weapon_Special_Bazooka: 16,
         ItemType.Weapon_Special_Minigun: 12,
   }[itemType] ?? size;
-
 
   static double getSrcScale(int itemType) => const <int, double> {
         ItemType.GameObjects_Barrel_Explosive: 0.75,
@@ -234,6 +241,7 @@ class AtlasItems {
         ItemType.GameObjects_Car: 0.66,
         ItemType.GameObjects_Aircon_South: 0.6,
         ItemType.GameObjects_Sink: 0.75,
+        ItemType.GameObjects_Washing_Machine: 0.75,
   }[itemType] ?? 1.0;
 
   static double getAnchorY(int itemType) => const <int, double> {

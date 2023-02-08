@@ -89,6 +89,8 @@ class ItemType {
   static const GameObjects_Firehydrant          = Index_GameObjects + 26;
   static const GameObjects_Aircon_South         = Index_GameObjects + 27;
   static const GameObjects_Sink                 = Index_GameObjects + 28;
+  static const GameObjects_Chair                = Index_GameObjects + 29;
+  static const GameObjects_Washing_Machine      = Index_GameObjects + 30;
 
   static const Resource_Wood = Index_Resources + 5;
   static const Resource_Stone = Index_Resources + 6;
@@ -253,6 +255,7 @@ class ItemType {
     GameObjects_Toilet,
     GameObjects_Aircon_South,
     GameObjects_Sink,
+    GameObjects_Washing_Machine,
   ].contains(value);
 
   static bool isInteractable(int value) => const [
@@ -276,6 +279,8 @@ class ItemType {
         GameObjects_Aircon_South,
         GameObjects_Tavern_Sign,
         GameObjects_Sink,
+        GameObjects_Chair,
+        GameObjects_Washing_Machine,
       ].contains(value);
 
   static bool isTypeEquipped(int value) =>
@@ -675,6 +680,8 @@ class ItemType {
      GameObjects_Vending_Machine: "Vending Machine",
      GameObjects_Firehydrant: "Fire Hydrant",
      GameObjects_Sink: "Sink",
+     GameObjects_Chair: "Chair",
+     GameObjects_Washing_Machine: "Washing Machine",
   }[value] ?? "item-type-unknown($value)";
 
 
@@ -794,9 +801,10 @@ class ItemType {
      GameObjects_Car,
      GameObjects_Aircon_South,
      GameObjects_Sink,
+     GameObjects_Chair,
+     GameObjects_Washing_Machine,
   ];
 
-  
   static bool isTypeBarrel(int type)=> const [
       GameObjects_Barrel,
       GameObjects_Barrel_Explosive,
@@ -812,6 +820,7 @@ class ItemType {
     GameObjects_Vending_Machine,
     GameObjects_Firehydrant,
     GameObjects_Car,
+    GameObjects_Washing_Machine,
   ].contains(type);
 }
 
