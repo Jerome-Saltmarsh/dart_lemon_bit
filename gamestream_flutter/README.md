@@ -7,7 +7,12 @@ navigate to next method: ctrl + shift + up / down arrows
 ctrl + w:   minimal mode
 
 [TODO]
+[ ] feature melee strike weapon
+[ ] feature weapon upgrades
 
+08.02.2023
+[x] feature grass and trees shed half shadow
+[x] fix bug gravity
 
 27.01.2023
 [x] fixed throw grenade

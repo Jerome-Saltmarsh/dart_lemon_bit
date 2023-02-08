@@ -946,7 +946,6 @@ abstract class Game {
   void updateColliderPhysics(Collider collider) {
     if (!collider.active) return;
 
-
     collider.applyVelocity();
     collider.applyFriction();
     collider.applyGravity();
@@ -1762,7 +1761,6 @@ abstract class Game {
       // speed *= 0.75;
         break;
       case CharacterState.Running:
-        character.velocityZ += 0.1;
         character.applyForce(force: 1.0, angle: character.faceAngle);
         if (character.nextFootstep++ >= 10) {
           dispatch(
@@ -2337,7 +2335,7 @@ abstract class Game {
   }
 
   void updateColliderSceneCollision(Collider collider){
-    updateColliderSceneCollisionCenter(collider);
+    updateColliderSceneCollisionVertical(collider);
     updateColliderSceneCollisionHorizontal(collider);
   }
 
@@ -2349,7 +2347,7 @@ abstract class Game {
     dispatchV3(GameEventType.Splash, collider);
   }
 
-  void updateColliderSceneCollisionCenter(Collider collider) {
+  void updateColliderSceneCollisionVertical(Collider collider) {
 
     if (!scene.isInboundV3(collider)) {
       if (collider.z > -100) return;
@@ -2366,11 +2364,15 @@ abstract class Game {
       final nodeBottomOrientation = scene.nodeOrientations[nodeBottomIndex];
       final nodeBottomType = scene.nodeTypes[nodeBottomIndex];
 
-      if (nodeBottomOrientation == NodeOrientation.Solid){
+      if (nodeBottomOrientation == NodeOrientation.Solid) {
         collider.z = ((bottomZ ~/ Node_Height) * Node_Height) + Node_Height;
-        if (collider.bounce && collider.velocityZ < 0){
-          collider.velocityZ = -collider.velocityZ * GamePhysics.Bounce_Friction;
-          dispatchV3(GameEventType.Item_Bounce, collider, angle: -collider.velocityZ);
+        if (collider.velocityZ < 0){
+          if (collider.bounce){
+            collider.velocityZ = -collider.velocityZ * GamePhysics.Bounce_Friction;
+            dispatchV3(GameEventType.Item_Bounce, collider, angle: -collider.velocityZ);
+          } else {
+            collider.velocityZ = 0;
+          }
         }
         continue;
       }
@@ -2382,9 +2384,14 @@ abstract class Game {
         final nodeTop = nodeBottom + (NodeOrientation.getGradient(nodeBottomOrientation, percX, percY) * Node_Height);
         if (nodeTop <= bottomZ) return;
         collider.z = nodeTop;
-        if (collider.bounce && collider.velocityZ < 0){
-          collider.velocityZ = -collider.velocityZ * GamePhysics.Bounce_Friction;
-          dispatchV3(GameEventType.Item_Bounce, collider, angle: -collider.velocityZ);
+
+        if (collider.velocityZ < 0) {
+           if (collider.bounce){
+             collider.velocityZ = -collider.velocityZ * GamePhysics.Bounce_Friction;
+             dispatchV3(GameEventType.Item_Bounce, collider, angle: -collider.velocityZ);
+           } else {
+             collider.velocityZ = 0;
+           }
         }
         continue;
       }

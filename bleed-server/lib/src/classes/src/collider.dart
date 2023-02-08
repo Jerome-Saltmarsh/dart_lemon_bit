@@ -112,7 +112,7 @@ class Collider extends Position3 {
     if (fixed) return;
     velocityX *= friction;
     velocityY *= friction;
-    velocityZ *= friction;
+    // velocityZ *= friction;
   }
 
   void applyGravity(){
