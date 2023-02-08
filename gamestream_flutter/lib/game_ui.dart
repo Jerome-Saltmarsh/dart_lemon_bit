@@ -52,7 +52,20 @@ class GameUI {
 
   static Widget buildWindowSettings(){
      return Container(
-        child: text("Settings"),
+        padding: GameStyle.Padding_6,
+        color: GameColors.brownDark,
+        child: Column(
+          children: [
+            text("Settings"),
+            Refresh(() => text('Light-Length: ${GameNodes.interpolationsLength}')),
+            text("-", onPressed: (){
+              GameNodes.setInterpolationLength(GameNodes.interpolationsLength - 1);
+            }),
+            text("+", onPressed: (){
+              GameNodes.setInterpolationLength(GameNodes.interpolationsLength + 1);
+            }),
+          ],
+        ),
      );
   }
 

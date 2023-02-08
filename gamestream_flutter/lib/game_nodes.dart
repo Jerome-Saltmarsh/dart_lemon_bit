@@ -47,8 +47,14 @@ class GameNodes {
 
   // CONSTANTS
 
-  static const interpolationsLength = 6;
+  static var interpolationsLength = 6;
   static var interpolations = generateCurve(interpolationsLength);
+
+  static void setInterpolationLength(int value){
+     if (value < 1) return;
+     interpolationsLength = value;
+     interpolations = generateCurve(interpolationsLength);
+  }
 
   // FUNCTIONS
 
