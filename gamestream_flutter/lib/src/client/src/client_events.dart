@@ -125,6 +125,11 @@ class ClientEvents {
       return;
     }
 
+    if (key == ClientConstants.Key_Settings) {
+      GameActions.toggleWindowSettings();
+      return;
+    }
+
     if (key == LogicalKeyboardKey.keyV) {
       GameState.spawnParticle(
           type: ParticleType.Myst,

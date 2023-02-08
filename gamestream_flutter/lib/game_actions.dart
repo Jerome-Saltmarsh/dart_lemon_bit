@@ -103,6 +103,10 @@ class GameActions {
     }
   }
 
+  static void toggleWindowSettings(){
+      ClientState.window_visible_settings.toggle();
+  }
+
   static void createExplosion(double x, double y, double z){
     GameState.spawnParticleLightEmissionAmbient(x: x, y: y, z: z);
     GameAudio.explosion_grenade_04.playXYZ(x, y, z);

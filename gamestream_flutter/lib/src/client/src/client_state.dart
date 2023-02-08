@@ -23,6 +23,8 @@ class ClientState {
   static final messageStatus = Watch("", onChanged: ClientEvents.onChangedMessageStatus);
   static final overrideColor = WatchBool(false);
 
+  static final window_visible_settings = WatchBool(false);
+
   static final triggerAlarmNoMessageReceivedFromServer = Watch(false);
 
   static final particles = <Particle>[];

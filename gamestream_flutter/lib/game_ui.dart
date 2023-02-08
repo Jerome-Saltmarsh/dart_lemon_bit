@@ -47,7 +47,14 @@ class GameUI {
         buildPositionedAreaType(),
         buildPositionedMessageStatus(),
         buildWatchGameStatus(),
+        buildWatchBool(ClientState.window_visible_settings, buildWindowSettings),
       ]);
+
+  static Widget buildWindowSettings(){
+     return Container(
+        child: text("Settings"),
+     );
+  }
 
 
   static Widget buildGeneratedMiniMap(){
