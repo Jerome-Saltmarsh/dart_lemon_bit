@@ -1245,27 +1245,77 @@ class RendererNodes extends Renderer {
         );
         return;
       case NodeOrientation.Corner_Top:
-        renderStandardNode(
-          srcX: srcX,
-          srcY: GameConstants.Sprite_Height_Padded_03,
+        renderNodeShadedCustom(
+          srcX: srcX + 16,
+          srcY: GameConstants.Sprite_Height_Padded_02,
+          offsetX: 8 + 16,
+          offsetY: -8,
+          srcWidth: 32,
         );
+        renderNodeShadedCustom(
+          srcX: srcX,
+          srcY: GameConstants.Sprite_Height_Padded_01,
+          offsetX: -8,
+          offsetY: -8,
+          srcWidth: 32,
+        );
+        // renderStandardNode(
+        //   srcX: srcX,
+        //   srcY: GameConstants.Sprite_Height_Padded_03,
+        // );
         return;
       case NodeOrientation.Corner_Right:
-        renderStandardNode(
+        renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameConstants.Sprite_Height_Padded_04,
+          srcY: GameConstants.Sprite_Height_Padded_02,
+          offsetX: 8,
+          offsetY: -8,
         );
+        renderNodeShadedOffset(
+          srcX: srcX,
+          srcY: GameConstants.Sprite_Height_Padded_01,
+          offsetX: 8,
+          offsetY: 8,
+        );
+        // renderStandardNode(
+        //   srcX: srcX,
+        //   srcY: GameConstants.Sprite_Height_Padded_04,
+        // );
         return;
       case NodeOrientation.Corner_Bottom:
-        renderStandardNode(
+        // renderStandardNode(
+        //   srcX: srcX,
+        //   srcY: GameConstants.Sprite_Height_Padded_05,
+        // );
+        renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameConstants.Sprite_Height_Padded_05,
+          srcY: GameConstants.Sprite_Height_Padded_02,
+          offsetX: -8,
+          offsetY: 8,
+        );
+        renderNodeShadedOffset(
+          srcX: srcX,
+          srcY: GameConstants.Sprite_Height_Padded_01,
+          offsetX: 8,
+          offsetY: 8,
         );
         return;
       case NodeOrientation.Corner_Left:
-        renderStandardNode(
+        // renderStandardNode(
+        //   srcX: srcX,
+        //   srcY: GameConstants.Sprite_Height_Padded_06,
+        // );
+        renderNodeShadedOffset(
           srcX: srcX,
-          srcY: GameConstants.Sprite_Height_Padded_06,
+          srcY: GameConstants.Sprite_Height_Padded_01,
+          offsetX: -8,
+          offsetY: -8,
+        );
+        renderNodeShadedOffset(
+          srcX: srcX,
+          srcY: GameConstants.Sprite_Height_Padded_02,
+          offsetX: -8,
+          offsetY: 8,
         );
         return;
       case NodeOrientation.Slope_North:
@@ -1347,7 +1397,7 @@ class RendererNodes extends Renderer {
         );
         return;
       case NodeOrientation.Half_Vertical_Top:
-        renderNodeShadedOffsetColor(
+        renderNodeShadedCustom(
           srcX: srcX,
           srcY: GameConstants.Sprite_Height_Padded_20,
           offsetX: 0,
@@ -1551,20 +1601,22 @@ class RendererNodes extends Renderer {
     Engine.incrementBufferIndex();
   }
 
-  static void renderNodeShadedOffsetColor({
+  static void renderNodeShadedCustom({
     required double srcX,
     required double srcY,
     required double offsetX,
     required double offsetY,
-    required int color,
+    int? color,
+    double? srcWidth,
+    double? srcHeight
   }){
     onscreenNodes++;
     final f = Engine.bufferIndex << 2;
-    bufferClr[Engine.bufferIndex] = color;
+    bufferClr[Engine.bufferIndex] = color ?? currentNodeColor;
     bufferSrc[f] = srcX;
     bufferSrc[f + 1] = srcY;
-    bufferSrc[f + 2] = srcX + GameConstants.Sprite_Width;
-    bufferSrc[f + 3] = srcY + GameConstants.Sprite_Height;
+    bufferSrc[f + 2] = srcX + (srcWidth ?? GameConstants.Sprite_Width);
+    bufferSrc[f + 3] = srcY + (srcHeight ?? GameConstants.Sprite_Height);
     bufferDst[f] = 1.0; // scale
     bufferDst[f + 1] = 0;
     bufferDst[f + 2] = currentNodeDstX - (GameConstants.Sprite_Width_Half) + offsetX;
