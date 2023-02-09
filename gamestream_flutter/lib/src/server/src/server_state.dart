@@ -218,7 +218,6 @@ class ServerState {
       compare: ClientState.compareRenderOrder,
     );
   }
-
 }
 
 

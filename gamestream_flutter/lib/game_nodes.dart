@@ -421,9 +421,32 @@ class GameNodes {
     final column = getIndexColumn(index);
     final z = getIndexZ(index);
 
+    final nodeType = nodeTypes[index];
+    final nodeOrientation = nodeOrientations[index];
+
+    var vxStart = -1;
+    var vxEnd = 1;
+
+    if (!isNodeTypeTransient(nodeType)){
+      if (const [
+        NodeOrientation.Half_North,
+        NodeOrientation.Corner_Top,
+        NodeOrientation.Corner_Left
+      ].contains(nodeOrientation)) {
+        vxStart = 0;
+      }
+
+      if (const [
+        NodeOrientation.Half_South,
+        NodeOrientation.Corner_Bottom,
+        NodeOrientation.Corner_Right
+      ].contains(nodeOrientation)) {
+        vxEnd = 0;
+      }
+    }
 
     for (var vz = -1; vz <= 1; vz++){
-      for (var vx = -1; vx <= 1; vx++){
+      for (var vx = vxStart; vx <= vxEnd; vx++){
         for (var vy = -1; vy <= 1; vy++){
           shootLightTreeAmbient(
             row: row,
