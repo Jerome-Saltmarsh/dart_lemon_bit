@@ -479,31 +479,35 @@ class GameUI {
     final consumeType = ItemType.getConsumeType(weaponType);
       return buildDialogUIControl(
         child: GameInventoryUI.buildHoverTarget(
-            child: Row(
-              children: [
-                Container(
-                  height: 50,
-                  color: Colors.black12,
-                  padding: GameStyle.Padding_6,
-                  child: buildAtlasItemType(weaponType),
-                ),
-                if (consumeType != ItemType.Empty)
+            child: Container(
+              width: 240,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
                   Container(
                     height: 50,
                     color: Colors.black12,
                     padding: GameStyle.Padding_6,
-                    margin: const EdgeInsets.only(left: 6),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        buildAtlasItemType(consumeType),
-                        watch(ClientState.inventoryReads, (int value){
-                          return text('${ServerQuery.getEquippedWeaponQuantity()} / ${ServerQuery.countItemTypeQuantityInPlayerPossession(consumeType)}', size: 25);
-                        }),
-                      ],
-                    ),
+                    child: buildAtlasItemType(weaponType),
                   ),
-              ],
+                  if (consumeType != ItemType.Empty)
+                    Container(
+                      height: 50,
+                      color: Colors.black12,
+                      padding: GameStyle.Padding_6,
+                      margin: const EdgeInsets.only(left: 6),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          buildAtlasItemType(consumeType),
+                          watch(ClientState.inventoryReads, (int value){
+                            return text('${ServerQuery.getEquippedWeaponQuantity()} / ${ServerQuery.countItemTypeQuantityInPlayerPossession(consumeType)}', size: 25);
+                          }),
+                        ],
+                      ),
+                    ),
+                ],
+              ),
             ),
             hoverTargetType: ClientType.Hover_Target_Player_Stats_Damage,
         ),
