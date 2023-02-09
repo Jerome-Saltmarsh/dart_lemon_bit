@@ -4,6 +4,7 @@ import 'package:gamestream_flutter/library.dart';
 const editorGridTypesColumn1 = [
   NodeType.Water,
   NodeType.Brick,
+  NodeType.Bricks_Red,
   NodeType.Soil,
   NodeType.Wood,
   NodeType.Wooden_Plank,

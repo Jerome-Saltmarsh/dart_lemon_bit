@@ -614,12 +614,16 @@ class RendererNodes extends Renderer {
 
     Engine.bufferImage = currentNodeTransparent ? GameImages.atlas_nodes_transparent : GameImages.atlas_nodes;
 
+
     switch (currentNodeType) {
       case NodeType.Grass:
         renderNodeGrass();
         break;
       case NodeType.Brick:
         renderNodeTemplateShaded(GameConstants.Sprite_Width_Padded_2);
+        return;
+      case NodeType.Bricks_Red:
+        renderNodeTemplateShaded(GameConstants.Sprite_Width_Padded_13);
         return;
       case NodeType.Wood:
         const index_grass = 5;

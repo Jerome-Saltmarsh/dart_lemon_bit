@@ -185,17 +185,19 @@ class NodeType {
   static bool supportsOrientationDestroyed(int type) =>
       isDestroyable(type);
 
-  static bool isDestroyable(int type) =>
-      type == Sunflower       ||
-      type == Grass_Long       ;
+  static bool isDestroyable(int type) => const [
+      Sunflower,
+      Grass_Long,       
+  ].contains(type);
 
-  static bool isTransient(int value) =>
-      value == Empty          ||
-      value == Grass_Long     ||
-      value == Rain_Falling   ||
-      value == Tree_Bottom    ||
-      value == Tree_Top       ||
-      value == Rain_Landing    ;
+  static bool isTransient(int value) => const [
+        Empty,
+        Grass_Long,
+        Rain_Falling,
+        Tree_Bottom,
+        Tree_Top,
+        Rain_Landing
+      ].contains(value);
 
   static bool isRainOrEmpty(int value) =>
     value == Empty            ||
@@ -333,5 +335,6 @@ class NodeType {
     Tile: "Tile",
     Dust: "Dust",
     Bookshelf: "Bookshelf",
+    Bricks_Red: "Bricks (Red)"
   }[type] ?? 'unknown($type)';
 }
