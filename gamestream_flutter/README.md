@@ -16,6 +16,11 @@ ctrl + w:   minimal mode
 [ ] feature melee strike weapon
 [ ] feature weapon upgrades
 
+09.02.2023
+[x] fix house wall color on first floor
+[x] feature game settings ambient color
+[x] feature light ease functions
+
 08.02.2023
 [x] fix physics teleport upwards
 [x] gameobject washing machine

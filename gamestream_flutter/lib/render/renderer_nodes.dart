@@ -1347,11 +1347,12 @@ class RendererNodes extends Renderer {
         );
         return;
       case NodeOrientation.Half_Vertical_Top:
-        renderNodeShadedOffset(
+        renderNodeShadedOffsetColor(
           srcX: srcX,
           srcY: GameConstants.Sprite_Height_Padded_20,
           offsetX: 0,
           offsetY: -9,
+          color: GameNodes.node_colors[currentNodeIndex + GameNodes.area],
         );
         return;
       case NodeOrientation.Half_Vertical_Center:
@@ -1539,6 +1540,28 @@ class RendererNodes extends Renderer {
     onscreenNodes++;
     final f = Engine.bufferIndex << 2;
     bufferClr[Engine.bufferIndex] = currentNodeColor;
+    bufferSrc[f] = srcX;
+    bufferSrc[f + 1] = srcY;
+    bufferSrc[f + 2] = srcX + GameConstants.Sprite_Width;
+    bufferSrc[f + 3] = srcY + GameConstants.Sprite_Height;
+    bufferDst[f] = 1.0; // scale
+    bufferDst[f + 1] = 0;
+    bufferDst[f + 2] = currentNodeDstX - (GameConstants.Sprite_Width_Half) + offsetX;
+    bufferDst[f + 3] = currentNodeDstY - (GameConstants.Sprite_Height_Third) + offsetY;
+    Engine.incrementBufferIndex();
+  }
+
+
+  static void renderNodeShadedOffsetColor({
+    required double srcX,
+    required double srcY,
+    required double offsetX,
+    required double offsetY,
+    required int color,
+  }){
+    onscreenNodes++;
+    final f = Engine.bufferIndex << 2;
+    bufferClr[Engine.bufferIndex] = color;
     bufferSrc[f] = srcX;
     bufferSrc[f + 1] = srcY;
     bufferSrc[f + 2] = srcX + GameConstants.Sprite_Width;

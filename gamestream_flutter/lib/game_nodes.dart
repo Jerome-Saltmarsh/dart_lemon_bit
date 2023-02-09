@@ -480,10 +480,12 @@ class GameNodes {
 
          if (vz != 0 && nodeOrientationBlocksVertical(nodeOrientation)){
            if (vz > 0) {
-             if (vx == 0 && vy == 0) return;
-             final previousNodeIndex = index - (vy) - (vx * totalColumns);
-             final previousNodeOrientation = nodeOrientations[previousNodeIndex];
-             if (nodeOrientationBlocksVertical(previousNodeOrientation)) return;
+             if (nodeOrientation != NodeOrientation.Half_Vertical_Top){
+               if (vx == 0 && vy == 0) return;
+               final previousNodeIndex = index - (vy) - (vx * totalColumns);
+               final previousNodeOrientation = nodeOrientations[previousNodeIndex];
+               if (nodeOrientationBlocksVertical(previousNodeOrientation)) return;
+             }
            }
            velocity = vx.abs() + vy.abs();
            vz = 0;
