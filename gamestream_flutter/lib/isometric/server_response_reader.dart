@@ -472,6 +472,7 @@ class ServerResponseReader with ByteReader {
       GameNodes.nodeOrientations = Uint8List(totalNodes);
       GameNodes.nodeVariations = Uint8List(totalNodes);
       GameNodes.colorStack = Uint16List(totalNodes);
+      GameNodes.ambientStack = Uint16List(totalNodes);
     }
     GameNodes.total = totalNodes;
     GameState.nodesRaycast = GameNodes.area +  GameNodes.area + GameNodes.totalColumns + 1;

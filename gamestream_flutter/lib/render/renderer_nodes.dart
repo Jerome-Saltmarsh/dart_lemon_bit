@@ -254,6 +254,7 @@ class RendererNodes extends Renderer {
     index = 0;
     remaining = total > 0;
     GameNodes.resetNodeColorStack();
+    GameNodes.resetNodeAmbientStack();
     GameState.applyEmissions();
 
     if (GameState.editMode){

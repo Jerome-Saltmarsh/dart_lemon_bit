@@ -26,9 +26,11 @@ class GameNodes {
   static var nodeTypes = Uint8List(0);
   static var nodeVariations = Uint8List(0);
   static var colorStack = Uint16List(0);
+  static var ambientStack = Uint16List(0);
   static var miniMap = Uint8List(0);
   static var heightMap = Uint16List(0);
   static var colorStackIndex = -1;
+  static var ambientStackIndex = -1;
   static var total = 0;
   static var area = 0;
   static var area2 = 0;
@@ -161,6 +163,18 @@ class GameNodes {
     colorStackIndex = -1;
   }
 
+  static void resetNodeAmbientStack() {
+    while (ambientStackIndex >= 0) {
+      final i = ambientStack[ambientStackIndex];
+      node_colors[i] = ambient_color;
+      hsv_alphas[i] = ambient_alp;
+      ambientStackIndex--;
+    }
+    ambientStackIndex = -1;
+  }
+
+
+
   static void emitLightDynamic({
     required int index,
     required int hue,
@@ -282,8 +296,8 @@ class GameNodes {
           final nodeIndex = a + column;
           final distanceValue = Engine.clamp(b + (column - columnIndex).abs() - 2, 0, Shade.Pitch_Black);
           if (distanceValue > 5) continue;
-          colorStackIndex++;
-          colorStack[colorStackIndex] = nodeIndex;
+          ambientStackIndex++;
+          ambientStack[ambientStackIndex] = nodeIndex;
 
           final intensity = 1.0 - interpolations[clamp(distanceValue, 0, 7)];
           final nodeAlpha = hsv_alphas[nodeIndex];
@@ -584,50 +598,15 @@ class GameNodes {
     required int alpha,
     required int interpolation,
   }){
-
     if (index < 0) return;
     if (index >= total) return;
-    // if (index >= 19999) return;
-    // assert (isIndexOnScreen(index));
-
-    // final row = getIndexRow(index);
-    // final column = getIndexColumn(index);
-
-    // final renderX = GameConvert.rowColumnToRenderX(row, column);
-    // if (renderX < Engine.Screen_Left) {
-    //   // TODO Remove
-    //   return;
-    // }
-    // if (renderX > Engine.Screen_Right) {
-    //   // TODO Remove
-    //   return;
-    // }
-    //
-    // final renderY = GameConvert.rowColumnZToRenderY(row, column, getIndexZ(index));
-    // if (renderY < Engine.Screen_Top) {
-    //   // TODO Remove
-    //   return;
-    // }
-    // if (renderY > Engine.Screen_Bottom) {
-    //   // TODO Remove
-    //   return;
-    // }
-    //
-    // if (!isIndexOnScreen(index)){
-    //   offscreenNodes++;
-    //   return;
-    // } else {
-    //   onscreenNodes++;
-    // }
-    assert (index >= 0);
-    assert (index < total);
 
     final intensity = interpolations[interpolation < 0 ? 0 : interpolation];
     final interpolatedAlpha = Engine.linerInterpolationInt(alpha, ambient_alp, intensity);;
     final currentAlpha = hsv_alphas[index];
     if (currentAlpha <= interpolatedAlpha) return;
-    colorStackIndex++;
-    colorStack[colorStackIndex] = index;
+    ambientStackIndex++;
+    ambientStack[ambientStackIndex] = index;
     hsv_alphas[index] = interpolatedAlpha;
     refreshNodeColor(index);
   }

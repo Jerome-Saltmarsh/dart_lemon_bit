@@ -61,13 +61,26 @@ class GameUI {
           children: [
             text("Settings", bold: true),
             height8,
+            onPressed(
+                action: GameSettings.ToggleDynamicShadows,
+                child: Refresh(() => text('dynamic-shadows-enabled: ${GameSettings.Dynamic_Shadows}'))
+            ),
+            onPressed(
+                child: Refresh(() => text('blend-mode: ${Engine.bufferBlendMode.name}')),
+                action: (){
+                  final currentIndex = BlendMode.values.indexOf(Engine.bufferBlendMode);
+                  final nextIndex = currentIndex + 1 >= BlendMode.values.length ? 0 : currentIndex + 1;
+                  Engine.bufferBlendMode = BlendMode.values[nextIndex];
+                }
+            ),
+            height8,
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 text("<-", onPressed: (){
                   GameNodes.setInterpolationLength(GameNodes.interpolation_length - 1);
                 }),
-                Refresh(() => text('Light-Length: ${GameNodes.interpolation_length}')),
+                Refresh(() => text('light-size: ${GameNodes.interpolation_length}')),
                 text("->", onPressed: (){
                   GameNodes.setInterpolationLength(GameNodes.interpolation_length + 1);
                 }),
@@ -91,7 +104,7 @@ class GameUI {
             ),
 
             height16,
-            text("Ambient Color"),
+            text("ambient-color"),
             ColorPicker(
               portraitOnly: true,
               pickerColor: HSVColor.fromAHSV(

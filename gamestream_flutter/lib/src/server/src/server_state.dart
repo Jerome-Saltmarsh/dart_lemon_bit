@@ -209,6 +209,7 @@ class ServerState {
   static void clean() {
     gameObjects.clear();
     GameNodes.colorStackIndex = -1;
+    GameNodes.ambientStackIndex = -1;
   }
 
   static void sortGameObjects(){
@@ -217,6 +218,7 @@ class ServerState {
       compare: ClientState.compareRenderOrder,
     );
   }
+
 }
 
 
