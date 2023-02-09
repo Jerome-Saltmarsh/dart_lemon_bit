@@ -41,34 +41,40 @@ class NodeType {
   static const Tile = 81;
   static const Dust = 82;
   static const Bookshelf = 83;
+  static const Bricks_Red = 84;
 
-  static bool isMaterialWood(int value) =>
-      value == Torch ||
-      value == Tree_Bottom ||
-      value == Table ||
-      value == Wood ||
-      value == Wooden_Plank;
+  static bool isMaterialWood(int value) => const [
+    Torch,
+    Tree_Bottom,
+    Table,
+    Wood,
+    Wooden_Plank
+  ].contains(value);
 
-  static bool isMaterialGrass(int value) =>
-      value == Grass_Long ||
-      value == Grass_Flowers ||
-      value == Grass;
+  static bool isMaterialGrass(int value) => const [
+    Grass_Long,
+    Grass
+  ].contains(value);
 
-  static bool isMaterialStone(int value) =>
-      value == Concrete   ||
-      value == Boulder    ||
-      value == Oven       ||
-      value == Brick      ||
-      value == Road       ||
-      value == Road_2     ||
-      value == Tile       ||
-      value == Chimney     ;
+  static bool isMaterialStone(int value) => const [
+        Concrete,
+        Boulder,
+        Oven,
+        Brick,
+        Road,
+        Road_2,
+        Tile,
+        Bricks_Red,
+        Chimney
+  ].contains(value);
+      
   
   static bool isMaterialDirt(int value) =>
-      value == Sandbag     ;
+      value == Sandbag;
 
   static bool supportsOrientationSolid(int type) => const [
         Brick,
+        Bricks_Red,
         Soil,
         Road,
         Road_2,
@@ -88,85 +94,93 @@ class NodeType {
         Boulder,
       ].contains(type);
 
-  static bool supportsOrientationEmpty(int type) =>
-      type == Empty         ||
-      type == Water         ||
-      type == Spawn         ||
-      type == Spawn_Weapon  ||
-      type == Spawn_Player  ||
-      type == Respawning    ||
-      type == Rain_Landing  ||
-      type == Tree_Top      ||
-      type == Grass_Long    ||
-      type == Sunflower     ||
-      type == Dust          ||
-      type == Rain_Falling   ;
+  static bool supportsOrientationEmpty(int type) => const [
+        Empty,
+        Water,
+        Spawn,
+        Spawn_Weapon,
+        Spawn_Player,
+        Respawning,
+        Rain_Landing,
+        Tree_Top,
+        Grass_Long,
+        Sunflower,
+        Dust,
+        Rain_Falling
+  ].contains(type);
 
-  static bool supportsOrientationRadial(int type) =>
-      type == Grass         ||
-      type == Tree_Bottom   ||
-      type == Tree_Top      ||
-      type == Torch         ||
-      type == Concrete      ||
-      type == Brick         ||
-      type == Wood          ||
-      type == Road          ||
-      type == Metal         ||
-      type == Fireplace      ;
+  static bool supportsOrientationRadial(int type) => const [
+        Grass,
+        Tree_Bottom,
+        Tree_Top,
+        Torch,
+        Concrete,
+        Brick,
+        Wood,
+        Road,
+        Metal,
+        Fireplace
+  ].contains(type);
 
-  static bool supportsOrientationSlopeSymmetric(int type) =>
-      type == Wood          ||
-      type == Grass         ||
-      type == Brick         ||
-      type == Concrete      ||
-      type == Road          ||
-      type == Metal         ||
-      type == Wooden_Plank  ||
-      type == Bau_Haus       ;
+  static bool supportsOrientationSlopeSymmetric(int type) => const [
+        Wood,
+        Grass,
+        Brick,
+        Concrete,
+        Road,
+        Metal,
+        Wooden_Plank,
+        Bau_Haus
+  ].contains(type);
 
-  static bool supportsOrientationSlopeCornerInner(int type) =>
-      type == Grass             ||
-      type == Concrete          ||
-      type == Road              ||
-      type == Metal         ||
-      type == Bau_Haus           ;
+  static bool supportsOrientationSlopeCornerInner(int type) => const [
+        Grass,
+        Concrete,
+        Road,
+        Metal,
+        Bau_Haus,
+  ].contains(type);
 
-  static bool supportsOrientationSlopeCornerOuter(int type) =>
-      type == Concrete          ||
-      type == Road          ||
-      type == Metal         ||
-      type == Grass              ;
+  static bool supportsOrientationSlopeCornerOuter(int type) => const [
+        Concrete,
+        Road,
+        Metal,
+        Grass
+  ].contains(type);
 
-  static bool supportsOrientationHalf(int type) =>
-      type == Wood              ||
-      type == Window            ||
-      type == Wooden_Plank      ||
-      type == Brick             ||
-      type == Concrete          ||
-      type == Road              ||
-      type == Metal             ||
-      type == Bau_Haus           ;
+  static bool supportsOrientationHalf(int type) => const [
+        Wood,
+        Window,
+        Wooden_Plank,
+        Brick,
+        Concrete,
+        Road,
+        Metal,
+        Bau_Haus,
+  ].contains(type);
 
-  static bool supportsOrientationHalfVertical(int type) =>
-      type == Grass         ||
-      type == Wood              ||
-      type == Brick             ||
-      type == Road          ||
-      type == Metal         ||
-      type == Tile          ||
-      type == Bau_Haus           ;
+  static bool supportsOrientationHalfVertical(int type) => const [
+        Grass,
+        Wood,
+        Brick,
+        Road,
+        Metal,
+        Tile,
+        Bau_Haus
+  ].contains(type);
 
   static bool supportsOrientationCorner(int type) =>
        type != NodeType.Window &&
        supportsOrientationHalf(type);
 
-  static bool supportsOrientationColumn(int type) =>
-      type == Concrete          ||
-      type == Brick             ||
-      type == Road              ||
-      type == Metal             ||
-      type == Wood              ||
-      type == Grass              ;
+  static bool supportsOrientationColumn(int type) => const [
+        Concrete,
+        Brick,
+        Road,
+        Metal,
+        Wood,
+        Grass,
+  ].contains(type);
 
   static bool supportsOrientationDestroyed(int type) =>
       isDestroyable(type);
