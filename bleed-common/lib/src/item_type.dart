@@ -91,6 +91,7 @@ class ItemType {
   static const GameObjects_Sink                 = Index_GameObjects + 28;
   static const GameObjects_Chair                = Index_GameObjects + 29;
   static const GameObjects_Washing_Machine      = Index_GameObjects + 30;
+  static const GameObjects_Car_Tire             = Index_GameObjects + 31;
 
   static const Resource_Wood = Index_Resources + 5;
   static const Resource_Stone = Index_Resources + 6;
@@ -281,6 +282,7 @@ class ItemType {
         GameObjects_Sink,
         GameObjects_Chair,
         GameObjects_Washing_Machine,
+        GameObjects_Car_Tire,
       ].contains(value);
 
   static bool isTypeEquipped(int value) =>
@@ -682,6 +684,7 @@ class ItemType {
      GameObjects_Sink: "Sink",
      GameObjects_Chair: "Chair",
      GameObjects_Washing_Machine: "Washing Machine",
+    GameObjects_Car_Tire: "Car Tire",
   }[value] ?? "item-type-unknown($value)";
 
 
@@ -803,6 +806,7 @@ class ItemType {
      GameObjects_Sink,
      GameObjects_Chair,
      GameObjects_Washing_Machine,
+     GameObjects_Car_Tire
   ];
 
   static bool isTypeBarrel(int type)=> const [

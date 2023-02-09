@@ -74,12 +74,10 @@ class Player extends Character with ByteWriter {
   var storeItems = <int>[];
   final questsInProgress = <Quest>[];
   final questsCompleted = <Quest>[];
-  final flags = <Flag>[];
+  // final flags = <Flag>[];
   var options = <String, Function> {};
   var _interactMode = InteractMode.Inventory;
   var inventoryOpen = true;
-  var mapX = 0;
-  var mapY = 0;
   var nextEnergyGain = Frames_Per_Energy_Gain;
 
   /// CONSTRUCTOR
@@ -331,13 +329,6 @@ class Player extends Character with ByteWriter {
   bool questToDo(Quest quest) => !questCompleted(quest) && !questInProgress(quest);
   bool questInProgress(Quest quest) => questsInProgress.contains(quest);
   bool questCompleted(Quest quest) => questsCompleted.contains(quest);
-  bool flag(Flag flag) {
-    if (flagged(flag)) return false;
-    flags.add(flag);
-    return true;
-  }
-  bool flagged(Flag flag) => flags.contains(flag);
-
 
   void beginQuest(Quest quest){
     assert (!questsInProgress.contains(quest));

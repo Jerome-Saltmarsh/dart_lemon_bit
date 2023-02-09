@@ -14,6 +14,7 @@ ctrl + w:   minimal mode
 [ ] feature weapon upgrades
 
 09.02.2023
+[x] item type car tire
 [x] node type bricks red
 [x] fix house wall color on first floor
 [x] feature game settings ambient color

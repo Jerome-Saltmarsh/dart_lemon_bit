@@ -239,11 +239,11 @@ abstract class Game {
       }
     }
 
-    if (cursorAction == CursorAction.Stationary_Attack_Cursor){
-      if (!player.weaponStateBusy){
+    if (cursorAction == CursorAction.Stationary_Attack_Cursor) {
+      if (!player.weaponStateBusy) {
         characterUseWeapon(player);
+        // characterWeaponAim(player);
       }
-
     }
 
     if (cursorAction == CursorAction.Stationary_Attack_Auto){
@@ -331,6 +331,11 @@ abstract class Game {
     ){
       return player.endInteraction();
     }
+  }
+
+  void characterWeaponAim(Character character){
+      character.weaponState = WeaponState.Aiming;
+      character.weaponStateDurationTotal = 2;
   }
 
   void characterUseWeapon(Character character) {
