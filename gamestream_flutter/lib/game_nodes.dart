@@ -426,6 +426,8 @@ class GameNodes {
 
     var vxStart = -1;
     var vxEnd = 1;
+    var vyStart = -1;
+    var vyEnd = 1;
 
     if (!isNodeTypeTransient(nodeType)){
       if (const [
@@ -443,11 +445,27 @@ class GameNodes {
       ].contains(nodeOrientation)) {
         vxEnd = 0;
       }
+
+      if (const [
+        NodeOrientation.Half_East,
+        NodeOrientation.Corner_Top,
+        NodeOrientation.Corner_Right
+      ].contains(nodeOrientation)) {
+        vyStart = 0;
+      }
+
+      if (const [
+        NodeOrientation.Half_West,
+        NodeOrientation.Corner_Bottom,
+        NodeOrientation.Corner_Left
+      ].contains(nodeOrientation)) {
+        vyEnd = 0;
+      }
     }
 
     for (var vz = -1; vz <= 1; vz++){
       for (var vx = vxStart; vx <= vxEnd; vx++){
-        for (var vy = -1; vy <= 1; vy++){
+        for (var vy = vyStart; vy <= vyEnd; vy++){
           shootLightTreeAmbient(
             row: row,
             column: column,
