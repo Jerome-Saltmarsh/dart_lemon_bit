@@ -6,9 +6,6 @@ firebase deploy
 navigate to next method: ctrl + shift + up / down arrows
 ctrl + w:   minimal mode
 
-[IDEA]
-[ ] node type wooden plank should add (interpolation + 1);
-
 [TODO]
 [ ] feature key throw grenade
 [ ] feature key use primary weapon
@@ -17,6 +14,7 @@ ctrl + w:   minimal mode
 [ ] feature weapon upgrades
 
 09.02.2023
+[x] node type bricks red
 [x] fix house wall color on first floor
 [x] feature game settings ambient color
 [x] feature light ease functions
