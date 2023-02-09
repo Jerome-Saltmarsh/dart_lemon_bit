@@ -452,7 +452,8 @@ class GameUI {
               children: [
                 GameInventoryUI.buildPlayerHealthBar(),
                 width6,
-                buildWatchPlayerLevel(),
+                // buildWatchPlayerLevel(),
+                buildHudPlayerWeapon(),
                 width6,
                 GameInventoryUI.buildPlayerEnergyBar(),
               ],
@@ -460,11 +461,11 @@ class GameUI {
           ),
           bottom: GameStyle.Default_Padding,
         ),
-        Positioned(
-            bottom: GameStyle.Default_Padding,
-            left: GameStyle.Default_Padding,
-            child: buildHudPlayerWeapon()
-        ),
+        // Positioned(
+        //     bottom: GameStyle.Default_Padding,
+        //     left: GameStyle.Default_Padding,
+        //     child: buildHudPlayerWeapon()
+        // ),
         Positioned(
           bottom: GameStyle.Default_Padding,
           right: GameStyle.Default_Padding,
