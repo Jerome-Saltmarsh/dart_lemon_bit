@@ -1352,7 +1352,7 @@ class RendererNodes extends Renderer {
           srcY: GameConstants.Sprite_Height_Padded_20,
           offsetX: 0,
           offsetY: -9,
-          color: GameNodes.node_colors[currentNodeIndex + GameNodes.area],
+          color: GameNodes.node_colors[currentNodeIndex + GameNodes.area < GameNodes.total ? currentNodeIndex + GameNodes.area : currentNodeIndex],
         );
         return;
       case NodeOrientation.Half_Vertical_Center:
@@ -1551,7 +1551,6 @@ class RendererNodes extends Renderer {
     Engine.incrementBufferIndex();
   }
 
-
   static void renderNodeShadedOffsetColor({
     required double srcX,
     required double srcY,
@@ -1572,15 +1571,4 @@ class RendererNodes extends Renderer {
     bufferDst[f + 3] = currentNodeDstY - (GameConstants.Sprite_Height_Third) + offsetY;
     Engine.incrementBufferIndex();
   }
-
-
-  // static int getColorAtIndexSafe(int index) =>
-  //     // getShadeColor(getShadeAtIndexSafe(index));
-  //     GameNodes.nodeColors[index];
-
-  // static int getShadeAtIndexSafe(int index){
-  //   if (index < 0) return Shade.Medium;
-  //   if (index >= GameNodes.total) return Shade.Medium;
-  //   return nodeShades[index];
-  // }
 }
