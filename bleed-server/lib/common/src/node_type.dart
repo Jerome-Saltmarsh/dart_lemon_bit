@@ -157,13 +157,8 @@ class NodeType {
       type == Bau_Haus           ;
 
   static bool supportsOrientationCorner(int type) =>
-      type == Wood            ||
-      type == Brick           ||
-      type == Bau_Haus        ||
-      type == Concrete        ||
-      type == Road          ||
-          type == Metal         ||
-      type == Wooden_Plank     ;
+       type != NodeType.Window &&
+       supportsOrientationHalf(type);
 
   static bool supportsOrientationColumn(int type) =>
       type == Concrete          ||

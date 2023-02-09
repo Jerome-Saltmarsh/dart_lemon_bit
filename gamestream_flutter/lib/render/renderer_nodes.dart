@@ -1481,6 +1481,7 @@ class RendererNodes extends Renderer {
     }
   }
 
+
   static void renderNodeWindow(){
     const srcX = 1508.0;
     switch (renderNodeOrientation) {
