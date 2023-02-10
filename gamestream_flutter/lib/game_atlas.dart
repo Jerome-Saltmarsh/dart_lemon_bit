@@ -237,7 +237,7 @@ class AtlasItems {
         ItemType.GameObjects_Aircon_South: 81,
         ItemType.GameObjects_Sink: 33,
         ItemType.GameObjects_Van: 129,
-        ItemType.GameObjects_Chair: 39,
+        ItemType.GameObjects_Chair: 49,
         ItemType.Weapon_Rifle_Sniper: 16,
         ItemType.Weapon_Special_Bazooka: 16,
         ItemType.Weapon_Special_Minigun: 12,
