@@ -5,6 +5,7 @@ const editorGridTypesColumn1 = [
   NodeType.Water,
   NodeType.Brick,
   NodeType.Bricks_Red,
+  NodeType.Bricks_Brown,
   NodeType.Soil,
   NodeType.Wood,
   NodeType.Wooden_Plank,

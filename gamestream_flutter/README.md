@@ -14,6 +14,7 @@ ctrl + w:   minimal mode
 [ ] feature key use secondary weapon
 
 10.02.2023
+[x] feature item type bottle
 [x] feature check player projection for perception map
 [x] fix do not shine light through half and corner orientations
 [x] improvement move enable shadows to settings window

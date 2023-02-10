@@ -222,6 +222,7 @@ class ItemType {
   static bool isNotTypeEmpty(int value) => value != Empty;
   static bool isPersistable(int value) => isTypeEnvironment(value);
 
+  
   static double getRadius(int value) => const <int, double> {
     GameObjects_Vending_Machine: 25,
     GameObjects_Bed: 25,
@@ -231,6 +232,7 @@ class ItemType {
     GameObjects_Barrel_Flaming: 18,
     GameObjects_Barrel_Explosive: 18,
     GameObjects_Sink: 10,
+    GameObjects_Bottle: 4,
   }[value] ?? 15;
 
   static bool isStrikable(int value) =>
@@ -684,9 +686,9 @@ class ItemType {
      GameObjects_Sink: "Sink",
      GameObjects_Chair: "Chair",
      GameObjects_Washing_Machine: "Washing Machine",
-    GameObjects_Car_Tire: "Car Tire",
+     GameObjects_Car_Tire: "Car Tire",
+     GameObjects_Bottle: "Bottle",
   }[value] ?? "item-type-unknown($value)";
-
 
   static int getMaxQuantity(int itemType) => const {
     Resource_Fuel         : 500,
@@ -788,7 +790,6 @@ class ItemType {
   ];
   
   static const GameObjectTypes = [
-     GameObjects_Barrel,
      GameObjects_Barrel_Explosive,
      GameObjects_Barrel_Purple,
      GameObjects_Barrel_Flaming,
@@ -806,7 +807,8 @@ class ItemType {
      GameObjects_Sink,
      GameObjects_Chair,
      GameObjects_Washing_Machine,
-     GameObjects_Car_Tire
+     GameObjects_Car_Tire,
+     GameObjects_Bottle,
   ];
 
   static bool isTypeBarrel(int type)=> const [

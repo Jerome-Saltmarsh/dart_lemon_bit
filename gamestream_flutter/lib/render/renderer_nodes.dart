@@ -645,6 +645,9 @@ class RendererNodes extends Renderer {
       case NodeType.Bricks_Red:
         renderNodeTemplateShaded(GameConstants.Sprite_Width_Padded_13);
         return;
+      case NodeType.Bricks_Brown:
+        renderNodeTemplateShaded(GameConstants.Sprite_Width_Padded_14);
+        return;
       case NodeType.Wood:
         const index_grass = 5;
         const srcX = GameConstants.Sprite_Width_Padded * index_grass;
