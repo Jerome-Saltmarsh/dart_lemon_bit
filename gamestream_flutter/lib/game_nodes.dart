@@ -529,8 +529,6 @@ class GameNodes {
        if (!isNodeTypeTransient(nodeType)) {
 
          final nodeOrientation = nodeOrientations[index];
-         final xBehind = vx > 0;
-         final yBehind = vy > 0;
 
          if (vz != 0 && nodeOrientationBlocksVertical(nodeOrientation)){
            if (vz > 0) {
@@ -545,9 +543,17 @@ class GameNodes {
            vz = 0;
          }
 
+         final vx2 = vx;
+         final xBehind = vx > 0;
+         final yBehind = vy > 0;
+
          if (vx != 0 && nodeOrientationBlocksNorthSouth(nodeOrientation)) {
            if (xBehind && yBehind)  {
-             if (const [NodeOrientation.Corner_Bottom, NodeOrientation.Half_South, NodeOrientation.Half_West].contains(nodeOrientation)){
+             if (const [
+               NodeOrientation.Corner_Bottom,
+               NodeOrientation.Half_South,
+               NodeOrientation.Half_West,
+             ].contains(nodeOrientation)){
                applyAmbient(
                  index: index - area,
                  alpha: alpha,
@@ -590,17 +596,20 @@ class GameNodes {
              if (nodeOrientation == NodeOrientation.Half_East){
                paintBehindZ = true;
              } else
-             if (nodeOrientation == NodeOrientation.Corner_Top && !xBehind){
+             if (nodeOrientation == NodeOrientation.Corner_Top && vx2 <= 0){
+               paintBehindZ = true;
+             } else
+             if (nodeOrientation == NodeOrientation.Corner_Bottom && vx2 >= 0){
                paintBehindZ = true;
              }
            } else {
              if (nodeOrientation == NodeOrientation.Half_West){
                paintBehindZ = true;
              } else
-             if (nodeOrientation == NodeOrientation.Corner_Left && !xBehind){
+             if (nodeOrientation == NodeOrientation.Corner_Left && vx2 <= 2){
                paintBehindZ = true;
              } else
-             if (nodeOrientation == NodeOrientation.Corner_Bottom && xBehind){
+             if (nodeOrientation == NodeOrientation.Corner_Bottom && vx2 >= 0){
                paintBehindZ = true;
              }
            }
@@ -634,7 +643,11 @@ class GameNodes {
         );
       }
 
-      if (const[NodeType.Grass_Long, NodeType.Tree_Bottom, NodeType.Tree_Top].contains(nodeType)){
+      if (const [
+        NodeType.Grass_Long,
+        NodeType.Tree_Bottom,
+        NodeType.Tree_Top,
+      ].contains(nodeType)){
         interpolation += 2;
         if (interpolation >= interpolation_length) return;
       }
