@@ -92,6 +92,7 @@ class ItemType {
   static const GameObjects_Chair                = Index_GameObjects + 29;
   static const GameObjects_Washing_Machine      = Index_GameObjects + 30;
   static const GameObjects_Car_Tire             = Index_GameObjects + 31;
+  static const GameObjects_Van                  = Index_GameObjects + 32;
 
   static const Resource_Wood = Index_Resources + 5;
   static const Resource_Stone = Index_Resources + 6;
@@ -222,11 +223,12 @@ class ItemType {
   static bool isNotTypeEmpty(int value) => value != Empty;
   static bool isPersistable(int value) => isTypeEnvironment(value);
 
-  
+
   static double getRadius(int value) => const <int, double> {
     GameObjects_Vending_Machine: 25,
     GameObjects_Bed: 25,
     GameObjects_Car: 25,
+    GameObjects_Van: 25,
     GameObjects_Crate_Wooden: 18,
     GameObjects_Barrel_Purple: 18,
     GameObjects_Barrel_Flaming: 18,
@@ -259,6 +261,7 @@ class ItemType {
     GameObjects_Aircon_South,
     GameObjects_Sink,
     GameObjects_Washing_Machine,
+    GameObjects_Van,
   ].contains(value);
 
   static bool isInteractable(int value) => const [
@@ -279,6 +282,7 @@ class ItemType {
         GameObjects_Toilet,
         GameObjects_Firehydrant,
         GameObjects_Car,
+        GameObjects_Van,
         GameObjects_Aircon_South,
         GameObjects_Tavern_Sign,
         GameObjects_Sink,
@@ -809,6 +813,7 @@ class ItemType {
      GameObjects_Washing_Machine,
      GameObjects_Car_Tire,
      GameObjects_Bottle,
+     GameObjects_Van,
   ];
 
   static bool isTypeBarrel(int type)=> const [
@@ -826,6 +831,7 @@ class ItemType {
     GameObjects_Vending_Machine,
     GameObjects_Firehydrant,
     GameObjects_Car,
+    GameObjects_Van,
     GameObjects_Washing_Machine,
   ].contains(type);
 }

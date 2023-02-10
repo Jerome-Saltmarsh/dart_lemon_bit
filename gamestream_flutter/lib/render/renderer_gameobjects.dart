@@ -100,6 +100,11 @@ class RendererGameObjects extends Renderer {
       index++;
       if (!remaining) return;
       gameObject = gameObjects[index];
+
+      if (gameObject.renderY > Engine.Screen_Bottom) {
+        end();
+        return;
+      }
     }
 
     order = gameObject.renderOrder;
