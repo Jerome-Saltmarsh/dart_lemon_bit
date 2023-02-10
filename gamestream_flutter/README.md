@@ -13,6 +13,11 @@ ctrl + w:   minimal mode
 [ ] feature melee strike weapon
 [ ] feature weapon upgrades
 
+10.02.2023
+[x] feature check player projection for perception map
+[x] fix do not shine light through half and corner orientations
+[x] improvement move enable shadows to settings window
+
 09.02.2023
 [x] item type car tire
 [x] node type bricks red

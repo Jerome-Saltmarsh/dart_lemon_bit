@@ -99,8 +99,7 @@ class GameNodes {
   }
 
   static int getHeightAt(int row, int column){
-    final index = total - area + ((row * totalColumns) + column);
-    var i = index;
+    var i = total - area + ((row * totalColumns) + column);
     for (var z = totalZ - 1; z >= 0; z--){
       if (nodeOrientations[i] != NodeOrientation.None) return z;
       i -= area;

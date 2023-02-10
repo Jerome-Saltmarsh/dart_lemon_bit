@@ -356,8 +356,6 @@ class RendererNodes extends Renderer {
           return;
         }
       }
-
-
     }
     zMin = max(GamePlayer.indexZ - 1, 0);
     visit2D(GamePlayer.areaNodeIndex);
