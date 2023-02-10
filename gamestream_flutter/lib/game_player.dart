@@ -48,6 +48,8 @@ class GamePlayer {
   static var indexColumn = 0;
   static var nodeIndex = 0;
 
+  static int get areaNodeIndex => (indexRow * GameNodes.totalColumns) + indexColumn;
+
   static double get renderX => GameConvert.convertV3ToRenderX(position);
   static double get renderY => GameConvert.convertV3ToRenderY(position);
   static double get positionScreenX => Engine.worldToScreenX(position.renderX);

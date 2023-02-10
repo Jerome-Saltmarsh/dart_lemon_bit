@@ -330,13 +330,37 @@ class RendererNodes extends Renderer {
     }
     visited2DStackIndex = 0;
 
-    final playerI = (GamePlayer.indexRow * GameNodes.totalColumns) + GamePlayer.indexColumn;
-    final height = GameNodes.heightMap[playerI];
+    final height = GameNodes.heightMap[GamePlayer.areaNodeIndex];
     playerInsideIsland = GamePlayer.indexZ < height;
 
-    if (!playerInsideIsland) return;
+    if (!playerInsideIsland) {
+      for (var z = GamePlayer.indexZ; z <= GamePlayer.indexZ + 1; z++) {
+
+        var projectionRow = GamePlayer.indexRow;
+        var projectionColumn = GamePlayer.indexColumn;
+        var projectionZ = z;
+
+        while (true) {
+          projectionZ += 2;
+          projectionColumn++;
+          projectionRow++;
+          if (projectionZ >= GameNodes.totalZ) return;
+          if (projectionColumn >= GameNodes.totalColumns) return;
+          if (projectionRow >= GameNodes.totalRows) return;
+          final projectionIndex = (projectionRow * GameNodes.totalColumns) + projectionColumn;
+          final projectionHeight = GameNodes.heightMap[projectionIndex];
+          if (projectionZ > projectionHeight) continue;
+          playerInsideIsland = true;
+          zMin = max(GamePlayer.indexZ - 1, 0);
+          visit2D(projectionIndex);
+          return;
+        }
+      }
+
+
+    }
     zMin = max(GamePlayer.indexZ - 1, 0);
-    visit2D(playerI);
+    visit2D(GamePlayer.areaNodeIndex);
   }
 
   static void addVisible3D(int i){
@@ -353,13 +377,10 @@ class RendererNodes extends Renderer {
      if (GameNodes.heightMap[i] <= zMin) return;
      island[i] = true;
 
-     // scan vertical here
-
      var searchIndex = i + (GameNodes.area * GamePlayer.indexZ);
      addVisible3D(searchIndex);
 
      var spaceReached = GameNodes.nodeOrientations[searchIndex] == NodeOrientation.None;
-
      var gapReached = false;
 
      while (true) {
