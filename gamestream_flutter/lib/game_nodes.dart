@@ -593,6 +593,16 @@ class GameNodes {
              if (nodeOrientation == NodeOrientation.Corner_Top && !xBehind){
                paintBehindZ = true;
              }
+           } else {
+             if (nodeOrientation == NodeOrientation.Half_West){
+               paintBehindZ = true;
+             } else
+             if (nodeOrientation == NodeOrientation.Corner_Left && !xBehind){
+               paintBehindZ = true;
+             } else
+             if (nodeOrientation == NodeOrientation.Corner_Bottom && xBehind){
+               paintBehindZ = true;
+             }
            }
            vy = 0;
          }
