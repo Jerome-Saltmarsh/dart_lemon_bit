@@ -547,7 +547,7 @@ class GameNodes {
 
          if (vx != 0 && nodeOrientationBlocksNorthSouth(nodeOrientation)) {
            if (xBehind && yBehind)  {
-             if (nodeOrientation == NodeOrientation.Corner_Bottom){
+             if (const [NodeOrientation.Corner_Bottom, NodeOrientation.Half_South, NodeOrientation.Half_West].contains(nodeOrientation)){
                applyAmbient(
                  index: index - area,
                  alpha: alpha,
