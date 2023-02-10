@@ -50,7 +50,7 @@ class GameNodes {
   // CONSTANTS
 
   static var interpolation_length = 6;
-  static final interpolation_ease_type = Watch(EaseType.Out_Quad, onChanged: (EaseType easeType){
+  static final Watch<EaseType> interpolation_ease_type = Watch(EaseType.Out_Quad, onChanged: (EaseType easeType){
     interpolations = easeType.generate(
       length: interpolation_length,
     );
