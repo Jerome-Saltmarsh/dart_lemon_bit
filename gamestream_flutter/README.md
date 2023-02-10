@@ -8,10 +8,10 @@ ctrl + w:   minimal mode
 
 [TODO]
 [ ] feature key throw grenade
-[ ] feature key use primary weapon
-[ ] feature key use secondary weapon
 [ ] feature melee strike weapon
 [ ] feature weapon upgrades
+[ ] feature key use primary weapon
+[ ] feature key use secondary weapon
 
 10.02.2023
 [x] feature check player projection for perception map
