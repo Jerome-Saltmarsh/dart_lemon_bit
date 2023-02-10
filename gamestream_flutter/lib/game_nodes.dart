@@ -546,7 +546,16 @@ class GameNodes {
          }
 
          if (vx != 0 && nodeOrientationBlocksNorthSouth(nodeOrientation)) {
-           if (xBehind && yBehind)  return;
+           if (xBehind && yBehind)  {
+             if (nodeOrientation == NodeOrientation.Corner_Bottom){
+               applyAmbient(
+                 index: index - area,
+                 alpha: alpha,
+                 interpolation: interpolation,
+               );
+             }
+             return;
+           }
            velocity = vy.abs() + vz.abs();
            paintBehindColumn = false;
            paintBehindZ = false;
@@ -559,6 +568,12 @@ class GameNodes {
              }
            } else {
              if (nodeOrientation == NodeOrientation.Half_South){
+               paintBehindZ = true;
+             } else
+             if (nodeOrientation == NodeOrientation.Corner_Right && vy <= 0){
+               paintBehindZ = true;
+             } else
+             if (nodeOrientation == NodeOrientation.Corner_Bottom && vy >= 0){
                paintBehindZ = true;
              }
            }
