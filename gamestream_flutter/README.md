@@ -7,7 +7,6 @@ navigate to next method: ctrl + shift + up / down arrows
 ctrl + w:   minimal mode
 
 [TODO]
-
 [ ] feature melee strike weapon
 [ ] feature weapon upgrades
 [ ] feature key use primary weapon
