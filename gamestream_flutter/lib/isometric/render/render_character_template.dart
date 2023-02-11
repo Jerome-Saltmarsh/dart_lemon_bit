@@ -56,8 +56,9 @@ void renderCharacterTemplate(Character character, {
   var weaponIsTwoHandedFirearm = ItemType.isTwoHanded(character.weaponType);
 
   var directionLegs = upperBodyDirection;
-  var directionBody = (character.weaponStateAiming || character.weaponStateFiring) ? character.aimDirection : upperBodyDirection;
-  var directionHead = character.aimDirection;
+  final weaponEngaged = (character.weaponStateAiming || character.weaponStateFiring || character.weaponStateMelee);
+  var directionBody = weaponEngaged ? character.aimDirection : upperBodyDirection;
+  var directionHead = weaponEngaged ? directionBody : character.aimDirection;
 
   switch (character.state) {
     case CharacterState.Idle:
