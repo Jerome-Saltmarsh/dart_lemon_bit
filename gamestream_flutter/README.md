@@ -7,9 +7,8 @@ navigate to next method: ctrl + shift + up / down arrows
 ctrl + w:   minimal mode
 
 [TODO]
+[ ] game learn to play 
 [ ] feature weapon upgrades
-[ ] feature key use primary weapon
-[ ] feature key use secondary weapon
 
 11.02.2023
 [x] feature melee strike weapon

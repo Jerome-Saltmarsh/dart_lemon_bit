@@ -251,7 +251,18 @@ abstract class Game {
         }
         break;
       case CursorAction.Use_Weapon:
-        characterUseWeapon(player);
+          final aimTarget = player.aimTarget;
+          if (aimTarget != null){
+            if (aimTarget is GameObject && (aimTarget.collectable || aimTarget.interactable)){
+              setCharacterTarget(player, aimTarget);
+              break;
+            }
+            if (Collider.onSameTeam(player, aimTarget)){
+              setCharacterTarget(player, aimTarget);
+              break;
+            }
+          }
+          characterUseWeapon(player);
         break;
       case CursorAction.Attack_Melee:
         characterAttackMelee(player);
