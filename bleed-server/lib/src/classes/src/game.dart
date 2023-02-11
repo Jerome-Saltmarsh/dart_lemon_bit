@@ -436,15 +436,15 @@ abstract class Game {
 
     if (character is Player) {
 
-      final energyConsumeAmount = ItemType.getEnergyConsumeAmount(weaponType);
-
-      if (energyConsumeAmount > 0) {
-         if (energyConsumeAmount > character.energy) {
-           character.writeError('Not Enough Energy');
-           return;
-         }
-         character.energy -= energyConsumeAmount;
-      }
+      // final energyConsumeAmount = ItemType.getEnergyConsumeAmount(weaponType);
+      //
+      // if (energyConsumeAmount > 0) {
+      //    if (energyConsumeAmount > character.energy) {
+      //      character.writeError('Not Enough Energy');
+      //      return;
+      //    }
+      //    character.energy -= energyConsumeAmount;
+      // }
 
       final playerWeaponConsumeType = ItemType.getConsumeType(weaponType);
 
@@ -647,6 +647,19 @@ abstract class Game {
     assert (character.damage >= 0);
 
     if (character.deadBusyOrWeaponStateBusy) return;
+
+    final weaponType = character.weaponType;
+
+    if (character is Player){
+      final energyConsumeAmount = ItemType.getEnergyConsumeAmountMelee(weaponType);
+      if (energyConsumeAmount > 0) {
+        if (energyConsumeAmount > character.energy) {
+          character.writeError('Not Enough Energy');
+          return;
+        }
+        character.energy -= energyConsumeAmount;
+      }
+    }
 
     final angle = character.lookRadian;
     final attackRadius = ItemType.getRangeMelee(character.weaponType);

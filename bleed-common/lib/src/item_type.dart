@@ -442,6 +442,18 @@ class ItemType {
     Weapon_Melee_Hammer: 3,
   }[itemType] ?? 0;
 
+  static int getEnergyConsumeAmountMelee(int itemType) => const {
+    Empty: 1,
+    Weapon_Melee_Knife: 1,
+    Weapon_Melee_Axe: 3,
+    Weapon_Melee_Staff: 3,
+    Weapon_Melee_Crowbar: 2,
+    Weapon_Melee_Sword: 3,
+    Weapon_Melee_Pickaxe: 3,
+    Weapon_Melee_Hammer: 3,
+  }[itemType] ?? 1;
+
+
   static int getConsumeAmount(int itemType) => const {
     Weapon_Ranged_Bow: 1,
     Weapon_Handgun_Glock: 1,

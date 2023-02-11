@@ -7,12 +7,12 @@ navigate to next method: ctrl + shift + up / down arrows
 ctrl + w:   minimal mode
 
 [TODO]
-[ ] feature melee strike weapon
 [ ] feature weapon upgrades
 [ ] feature key use primary weapon
 [ ] feature key use secondary weapon
 
 11.02.2023
+[x] feature melee strike weapon
 [x] optimize server playerUpdateAimTarget
 [x] move ease library to lemon engine
 [x] feature quick throw grenade 
