@@ -284,6 +284,9 @@ abstract class Game {
 
     for (final character in characters) {
       if (character.deadOrDying) continue;
+      if ((mouseX - character.x).abs() > GameSettings.Pickup_Range) continue;
+      if ((mouseY - character.y).abs() > GameSettings.Pickup_Range) continue;
+      if ((mouseZ - character.z).abs() > GameSettings.Pickup_Range) continue;
       final distance = getDistanceV3Squared(mouseX, mouseY, mouseZ, character.x, character.y, character.z);
       if (distance > closestDistance) continue;
       closestDistance = distance;
@@ -293,6 +296,9 @@ abstract class Game {
     for (final gameObject in gameObjects) {
       if (!gameObject.active) continue;
       if (!gameObject.collectable && !gameObject.interactable) continue;
+      if ((mouseX - gameObject.x).abs() > GameSettings.Pickup_Range) continue;
+      if ((mouseY - gameObject.y).abs() > GameSettings.Pickup_Range) continue;
+      if ((mouseZ - gameObject.z).abs() > GameSettings.Pickup_Range) continue;
       final distance = getDistanceV3Squared(mouseX, mouseY, mouseZ, gameObject.x, gameObject.y, gameObject.z);
       if (distance > closestDistance) continue;
       closestDistance = distance;
