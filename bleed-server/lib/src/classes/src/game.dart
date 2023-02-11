@@ -1160,6 +1160,7 @@ abstract class Game {
     activateCollider(player);
     player.setCharacterStateSpawning();
     player.health = player.maxHealth;
+    player.energy = player.maxEnergy;
     clearCharacterTarget(player);
     player.writePlayerMoved();
     player.writePlayerAlive();
