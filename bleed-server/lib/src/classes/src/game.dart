@@ -341,9 +341,44 @@ abstract class Game {
       character.weaponStateDurationTotal = 2;
   }
 
-  void characterThrowGrenade(Character character){
-    if (character.deadOrBusy) return;
-    character.assignWeaponStateThrowing();
+  void characterThrowGrenade(Player player){
+    if (player.deadBusyOrWeaponStateBusy) return;
+    player.assignWeaponStateThrowing();
+
+    dispatchAttackPerformed(
+      ItemType.Weapon_Thrown_Grenade,
+      player.x + getAdjacent(player.lookRadian, 60),
+      player.y + getOpposite(player.lookRadian, 60),
+      player.z + Character_Gun_Height,
+      player.lookRadian,
+    );
+
+    final mouseDistance = getDistanceXY(player.x, player.y, player.mouseGridX, player.mouseGridY);
+    final throwDistance = min(mouseDistance, GamePhysics.Max_Throw_Distance);
+    final throwRatio = throwDistance / GamePhysics.Max_Throw_Distance;
+    final velocity = GamePhysics.Max_Throw_Velocity * throwRatio;
+    final velocityZ = GamePhysics.Max_Throw_Velocity_Z * throwRatio;
+
+    final instance = spawnGameObject(
+        x: player.x,
+        y: player.y,
+        z: player.z + Character_Height,
+        type: ItemType.GameObjects_Grenade
+    )
+      ..setVelocity(player.lookRadian, velocity)
+      ..quantity = 1
+      ..friction = 0.985
+      ..bounce = true
+      ..velocityZ = velocityZ
+      ..owner = player
+      ..damage = 15;
+
+    performJob(GameSettings.Grenade_Cook_Duration, (){
+      deactivateCollider(instance);
+      final owner = instance.owner;
+      if (owner == null) return;
+      createExplosion(target: instance, srcCharacter: owner);
+    });
   }
 
   void characterUseWeapon(Character character) {

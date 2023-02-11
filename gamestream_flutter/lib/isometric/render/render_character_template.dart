@@ -87,6 +87,8 @@ void renderCharacterTemplate(Character character, {
   }
 
   switch (character.weaponState) {
+    case WeaponState.Idle:
+      break;
     case WeaponState.Firing:
       final animation = TemplateAnimation.getAttackAnimation(character.weaponType);
       frameWeapon = (character.weaponFrame >= animation.length ? animation.last : animation[character.weaponFrame]) - 1;

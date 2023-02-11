@@ -85,7 +85,7 @@ abstract class Character extends Collider {
     if (targetTeam == 0) return false;
     return team == targetTeam;
   }
-  bool get weaponStateBusy => weaponStateFiring || weaponStateReloading;
+  bool get weaponStateBusy => weaponStateDuration > 0 && weaponState != WeaponState.Aiming;
   bool get running => state == CharacterState.Running;
   bool get performing => state == CharacterState.Performing;
   bool get idling => state == CharacterState.Idle;
@@ -175,7 +175,7 @@ abstract class Character extends Collider {
 
   void assignWeaponStateThrowing() {
     weaponState = WeaponState.Throwing;
-    weaponStateDurationTotal = 50;
+    weaponStateDurationTotal = GameSettings.Weapon_State_Duration_Throw;
     assert (weaponStateDurationTotal > 0);
   }
 
