@@ -274,7 +274,7 @@ abstract class Game {
   }
 
   void playerUpdateAimTarget(Player player){
-    var closestDistance = 9999.0;
+    var closestDistance = 999999.0;
 
     final mouseX = player.mouseGridX;
     final mouseY = player.mouseGridY;
@@ -284,7 +284,7 @@ abstract class Game {
 
     for (final character in characters) {
       if (character.deadOrDying) continue;
-      final distance = getDistanceV3(mouseX, mouseY, mouseZ, character.x, character.y, character.z);
+      final distance = getDistanceV3Squared(mouseX, mouseY, mouseZ, character.x, character.y, character.z);
       if (distance > closestDistance) continue;
       closestDistance = distance;
       closestCollider = character;
@@ -293,13 +293,13 @@ abstract class Game {
     for (final gameObject in gameObjects) {
       if (!gameObject.active) continue;
       if (!gameObject.collectable && !gameObject.interactable) continue;
-      final distance = getDistanceV3(mouseX, mouseY, mouseZ, gameObject.x, gameObject.y, gameObject.z);
+      final distance = getDistanceV3Squared(mouseX, mouseY, mouseZ, gameObject.x, gameObject.y, gameObject.z);
       if (distance > closestDistance) continue;
       closestDistance = distance;
       closestCollider = gameObject;
     }
 
-    if (closestDistance > 50) {
+    if (closestDistance > 2500) {
        player.aimTarget = null;
        return;
     }

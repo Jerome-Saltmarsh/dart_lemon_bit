@@ -261,18 +261,23 @@ class GameIO {
     }
 
     if (inputModeKeyboard) {
-      if (Engine.mouseRightDown.value){
-        return CursorAction.Stationary_Attack_Cursor;
-      }
-      if (Engine.keyPressedSpace){
+
+      if (Engine.watchMouseLeftDown.value)
+        return CursorAction.Attack_Primary;
+      if (Engine.mouseRightDown.value)
+        return CursorAction.Attack_Secondary;
+      if (Engine.keyPressedSpace)
         return CursorAction.Throw_Grenade;
-      }
-      if (Engine.watchMouseLeftDown.value) {
-          if (Engine.keyPressedShiftLeft) {
-             return CursorAction.Stationary_Attack_Cursor;
-          }
-          return CursorAction.Set_Target;
-      }
+      // if (Engine.mouseRightDown.value){
+      //   return CursorAction.Stationary_Attack_Cursor;
+      // }
+
+      // if (Engine.watchMouseLeftDown.value) {
+      //     if (Engine.keyPressedShiftLeft) {
+      //        return CursorAction.Stationary_Attack_Cursor;
+      //     }
+      //     return CursorAction.Set_Target;
+      // }
       return CursorAction.None;
     }
     if (performActionPrimary) {

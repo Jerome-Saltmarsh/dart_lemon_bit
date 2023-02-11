@@ -13,6 +13,7 @@ ctrl + w:   minimal mode
 [ ] feature key use secondary weapon
 
 11.02.2023
+[x] move ease library to lemon engine
 [x] feature quick throw grenade 
 [x] upgrade flutter version
 
