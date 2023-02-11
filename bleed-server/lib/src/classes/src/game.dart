@@ -343,6 +343,14 @@ abstract class Game {
 
   void characterThrowGrenade(Player player){
     if (player.deadBusyOrWeaponStateBusy) return;
+
+    if (player.inventoryGetTotalQuantityOfItemType(ItemType.Weapon_Thrown_Grenade) <= 0) return;
+
+    player.inventoryReduceItemTypeQuantity(
+        itemType: ItemType.Weapon_Thrown_Grenade,
+        reduction: 1,
+    );
+
     player.assignWeaponStateThrowing();
 
     dispatchAttackPerformed(
