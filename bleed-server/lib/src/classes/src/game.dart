@@ -223,38 +223,76 @@ abstract class Game {
       player.lookRadian = player.mouseAngle;
     }
 
-    if (cursorAction == CursorAction.Set_Target) {
-      if (direction != Direction.None) {
+    switch (cursorAction) {
+      case CursorAction.Set_Target:
+        if (direction != Direction.None) {
+          if (!player.weaponStateBusy){
+            characterUseWeapon(player);
+          }
+        } else {
+          final aimTarget = player.aimTarget;
+          if (aimTarget == null){
+            player.runToMouse();
+          } else {
+            setCharacterTarget(player, aimTarget);
+          }
+        }
+        break;
+      case CursorAction.Stationary_Attack_Cursor:
+        if (!player.weaponStateBusy) {
+          characterUseWeapon(player);
+          // characterWeaponAim(player);
+        }
+        break;
+      case CursorAction.Stationary_Attack_Auto:
         if (!player.weaponStateBusy){
+          playerAutoAim(player);
           characterUseWeapon(player);
         }
-      } else {
-        final aimTarget = player.aimTarget;
-        if (aimTarget == null){
-          player.runToMouse();
-        } else {
-          setCharacterTarget(player, aimTarget);
-        }
-      }
-    }
-
-    if (cursorAction == CursorAction.Stationary_Attack_Cursor) {
-      if (!player.weaponStateBusy) {
+        break;
+      case CursorAction.Use_Weapon:
         characterUseWeapon(player);
-        // characterWeaponAim(player);
-      }
+        break;
+      case CursorAction.Attack_Melee:
+        characterMeleeAttack(player);
+        break;
+      case CursorAction.Throw_Grenade:
+        characterThrowGrenade(player);
+        break;
     }
 
-    if (cursorAction == CursorAction.Stationary_Attack_Auto){
-      if (!player.weaponStateBusy){
-        playerAutoAim(player);
-        characterUseWeapon(player);
-      }
-    }
+    // if (cursorAction == CursorAction.Set_Target) {
+    //   if (direction != Direction.None) {
+    //     if (!player.weaponStateBusy){
+    //       characterUseWeapon(player);
+    //     }
+    //   } else {
+    //     final aimTarget = player.aimTarget;
+    //     if (aimTarget == null){
+    //       player.runToMouse();
+    //     } else {
+    //       setCharacterTarget(player, aimTarget);
+    //     }
+    //   }
+    // }
 
-    if (cursorAction == CursorAction.Throw_Grenade){
-       characterThrowGrenade(player);
-    }
+    // if (cursorAction == CursorAction.Stationary_Attack_Cursor) {
+    //   if (!player.weaponStateBusy) {
+    //     characterUseWeapon(player);
+    //     // characterWeaponAim(player);
+    //   }
+    // }
+
+    // if (cursorAction == CursorAction.Stationary_Attack_Auto){
+    //   if (!player.weaponStateBusy){
+    //     playerAutoAim(player);
+    //     characterUseWeapon(player);
+    //   }
+    // }
+
+    // if (cursorAction == CursorAction.Throw_Grenade){
+    //    characterThrowGrenade(player);
+    // }
 
     playerRunInDirection(player, direction);
   }
@@ -338,12 +376,17 @@ abstract class Game {
     }
   }
 
-  void characterWeaponAim(Character character){
+  void characterWeaponAim(Character character) {
       character.weaponState = WeaponState.Aiming;
-      character.weaponStateDurationTotal = 2;
+      character.weaponStateDurationTotal = 30;
   }
 
-  void characterThrowGrenade(Player player){
+  void characterMeleeAttack(Character character) {
+    if (character.deadBusyOrWeaponStateBusy) return;
+    character.assignWeaponStateMelee();
+  }
+
+  void characterThrowGrenade(Player player) {
     if (player.deadBusyOrWeaponStateBusy) return;
 
     if (player.inventoryGetTotalQuantityOfItemType(ItemType.Weapon_Thrown_Grenade) <= 0) return;

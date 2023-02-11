@@ -80,7 +80,7 @@ abstract class Character extends Collider {
   bool get targetIsAlly {
     if (target == null) return false;
     if (target == this) return true;
-    if (target is Collider == false) return false;
+    if (target is! Collider) return false;
     final targetTeam = (target as Collider).team;
     if (targetTeam == 0) return false;
     return team == targetTeam;
@@ -176,6 +176,12 @@ abstract class Character extends Collider {
   void assignWeaponStateThrowing() {
     weaponState = WeaponState.Throwing;
     weaponStateDurationTotal = GameSettings.Weapon_State_Duration_Throw;
+    assert (weaponStateDurationTotal > 0);
+  }
+
+  void assignWeaponStateMelee() {
+    weaponState = WeaponState.Melee;
+    weaponStateDurationTotal = GameSettings.Weapon_State_Duration_Melee;
     assert (weaponStateDurationTotal > 0);
   }
 

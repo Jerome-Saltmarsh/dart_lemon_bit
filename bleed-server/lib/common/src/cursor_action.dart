@@ -4,6 +4,6 @@ class CursorAction {
   static const Stationary_Attack_Cursor = 2;
   static const Stationary_Attack_Auto = 3;
   static const Throw_Grenade = 4;
-  static const Attack_Primary = 5;
-  static const Attack_Secondary = 6;
+  static const Use_Weapon = 5;
+  static const Attack_Melee = 6;
 }
