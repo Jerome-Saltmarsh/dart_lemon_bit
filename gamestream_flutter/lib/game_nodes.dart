@@ -2,7 +2,6 @@
 import 'dart:math';
 
 import 'package:flutter/painting.dart';
-import 'package:gamestream_flutter/functions/ease.dart';
 import 'package:gamestream_flutter/functions/hsv_to_color.dart';
 import 'package:gamestream_flutter/library.dart';
 

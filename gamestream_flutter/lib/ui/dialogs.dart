@@ -9,7 +9,7 @@ import 'package:gamestream_flutter/ui/style.dart';
 import 'package:gamestream_flutter/ui/views.dart';
 import 'package:gamestream_flutter/ui/widgets.dart';
 import 'package:golden_ratio/constants.dart';
-import 'package:lemon_engine/engine.dart';
+import 'package:lemon_engine/src.dart';
 
 import '../game_widgets.dart';
 

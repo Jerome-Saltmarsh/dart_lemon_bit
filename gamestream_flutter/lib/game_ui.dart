@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:gamestream_flutter/functions/ease.dart';
 import 'package:gamestream_flutter/game_minimap.dart';
 import 'package:gamestream_flutter/game_ui_interact.dart';
 import 'package:gamestream_flutter/isometric/events/on_visibility_changed_message_box.dart';

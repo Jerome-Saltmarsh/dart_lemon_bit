@@ -1,4 +1,4 @@
-import 'package:lemon_engine/engine.dart';
+import 'package:lemon_engine/src.dart';
 
 enum ConnectionStatus {
   None,

@@ -37,7 +37,7 @@ export 'game_player.dart';
 export 'game_camera.dart';
 export 'game_atlas.dart';
 export 'game_nodes.dart';
-export 'package:lemon_engine/engine.dart';
+export 'package:lemon_engine/src.dart';
 export 'package:lemon_watch/src.dart';
 export 'package:bleed_common/library.dart';
 export 'package:lemon_math/library.dart';

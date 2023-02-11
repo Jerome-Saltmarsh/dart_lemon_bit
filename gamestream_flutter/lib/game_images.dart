@@ -2,7 +2,7 @@
 import 'dart:ui';
 
 import 'package:bleed_common/library.dart';
-import 'package:lemon_engine/engine.dart';
+import 'package:lemon_engine/src.dart';
 
 class GameImages {
    static late Image pixel;

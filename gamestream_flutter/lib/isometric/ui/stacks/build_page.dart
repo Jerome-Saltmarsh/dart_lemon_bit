@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:lemon_engine/engine.dart';
+import 'package:lemon_engine/src.dart';
 
 Widget buildPage({required List<Widget> children}) =>
     Container(

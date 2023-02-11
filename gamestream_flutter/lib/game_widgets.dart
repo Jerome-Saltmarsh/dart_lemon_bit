@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:lemon_engine/engine.dart';
+import 'package:lemon_engine/src.dart';
 import 'package:lemon_watch/src.dart';
 
 import 'game_style.dart';

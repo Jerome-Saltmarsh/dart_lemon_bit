@@ -374,7 +374,7 @@ packages:
       path: "C:\\Users\\Jerome\\github\\bleed\\dart-lemon-engine"
       relative: false
     source: path
-    version: "0.3.20"
+    version: "0.3.22"
   lemon_math:
     dependency: transitive
     description:
