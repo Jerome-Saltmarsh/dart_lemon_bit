@@ -274,7 +274,7 @@ abstract class Game {
   }
 
   void playerUpdateAimTarget(Player player){
-    var closestDistance = 999999.0;
+    var closestDistance = GameSettings.Pickup_Range_Squared;
 
     final mouseX = player.mouseGridX;
     final mouseY = player.mouseGridY;
@@ -299,10 +299,6 @@ abstract class Game {
       closestCollider = gameObject;
     }
 
-    if (closestDistance > 2500) {
-       player.aimTarget = null;
-       return;
-    }
     player.aimTarget = closestCollider;
   }
 
