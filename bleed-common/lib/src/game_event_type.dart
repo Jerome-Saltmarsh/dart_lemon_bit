@@ -35,4 +35,5 @@ class GameEventType {
   static const Bullet_Deactivated = 76;
   static const Material_Struck_Metal = 77;
   static const Item_Bounce = 78;
+  static const Melee_Attack_Performed = 79;
 }

@@ -249,6 +249,7 @@ class GameIO {
     return Direction.None;
   }
 
+
   static void setCursorAction(int cursorAction) {
     GameIO.touchscreenCursorAction = CursorAction.None;
   }
@@ -263,9 +264,9 @@ class GameIO {
     if (inputModeKeyboard) {
 
       if (Engine.watchMouseLeftDown.value)
-        return CursorAction.Attack_Primary;
+        return CursorAction.Use_Weapon;
       if (Engine.mouseRightDown.value)
-        return CursorAction.Attack_Secondary;
+        return CursorAction.Attack_Melee;
       if (Engine.keyPressedSpace)
         return CursorAction.Throw_Grenade;
       // if (Engine.mouseRightDown.value){

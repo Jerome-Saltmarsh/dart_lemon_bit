@@ -86,6 +86,9 @@ class GameEvents {
       case GameEventType.Attack_Performed:
         onAttackPerformed(x, y, z, angle);
         return;
+      case GameEventType.Melee_Attack_Performed:
+        onMeleeAttackPerformed(x, y, z, angle);
+        return;
       case GameEventType.Bullet_Deactivated:
         GameAudio.metal_light_3.playXYZ(x, y, z);
         return;
@@ -296,6 +299,31 @@ class GameEvents {
     }
     GameState.spawnParticleShell(x - getAdjacent(angle, 50), y - getOpposite(angle, 50), z);
     GameState.spawnParticleStrikeBullet(x: x, y: y, z: z, angle: angle);
+  }
+
+  static void onMeleeAttackPerformed(double x, double y, double z, double angle) {
+    final attackType = serverResponseReader.readUInt16();
+    final attackTypeAudio = GameAudio.MapItemTypeAudioSinglesAttackMelee[attackType];
+
+    if (attackTypeAudio != null) {
+      attackTypeAudio.playXYZ(x, y, z);
+    }
+
+    if (attackType == ItemType.Empty){
+      GameState.spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
+      return;
+    }
+    if (attackType == ItemType.Weapon_Melee_Knife){
+      GameState.spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
+      return;
+    }
+    if (ItemType.isTypeWeaponMelee(attackType)) {
+      GameState.spawnParticleStrikeBlade(x: x, y: y, z: z, angle: angle);
+      return;
+    }
+
+    GameState.spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
+    return;
   }
 
 

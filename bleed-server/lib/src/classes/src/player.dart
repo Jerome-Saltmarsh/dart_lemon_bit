@@ -1386,10 +1386,10 @@ class Player extends Character with ByteWriter {
     assert (ItemType.isTypeBody(character.bodyType) || character.bodyType == ItemType.Empty);
     assert (ItemType.isTypeHead(character.headType) || character.headType == ItemType.Empty);
     writeUInt16(character.weaponType);
-    writeUInt16(character.weaponState);
-    writeUInt16(character.bodyType); // armour
-    writeUInt16(character.headType); // helm
-    writeUInt16(character.legsType); // helm
+    writeUInt16(character.weaponState); // TODO use byte instead
+    writeUInt16(character.bodyType);
+    writeUInt16(character.headType);
+    writeUInt16(character.legsType);
     writeAngle(character.lookRadian);
     writeByte(character.weaponFrame);
   }

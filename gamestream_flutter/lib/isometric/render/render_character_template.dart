@@ -112,6 +112,9 @@ void renderCharacterTemplate(Character character, {
     case WeaponState.Throwing:
       frameWeapon = capIndex(TemplateAnimation.Throwing, character.weaponFrame);
       break;
+    case WeaponState.Melee:
+      frameWeapon = capIndex(TemplateAnimation.Throwing, character.weaponFrame);
+      break;
   }
 
   frameBody = frameWeapon;

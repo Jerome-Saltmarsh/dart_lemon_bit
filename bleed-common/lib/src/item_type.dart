@@ -497,6 +497,10 @@ class ItemType {
      Weapon_Rifle_M4: 0.125,
   }[value] ?? 0.25;
 
+  static double getRangeMelee(int value) => const <int, double> {
+    Weapon_Ranged_Shotgun: 50,
+  }[value] ?? 50;
+
   static double getRange(int value) => const <int, double> {
       Empty: 30,
       Weapon_Thrown_Grenade: 300,

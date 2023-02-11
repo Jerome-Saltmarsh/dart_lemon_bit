@@ -254,7 +254,7 @@ abstract class Game {
         characterUseWeapon(player);
         break;
       case CursorAction.Attack_Melee:
-        characterMeleeAttack(player);
+        characterAttackMelee(player);
         break;
       case CursorAction.Throw_Grenade:
         characterThrowGrenade(player);
@@ -381,11 +381,6 @@ abstract class Game {
       character.weaponStateDurationTotal = 30;
   }
 
-  void characterMeleeAttack(Character character) {
-    if (character.deadBusyOrWeaponStateBusy) return;
-    character.assignWeaponStateMelee();
-  }
-
   void characterThrowGrenade(Player player) {
     if (player.deadBusyOrWeaponStateBusy) return;
 
@@ -435,8 +430,7 @@ abstract class Game {
   }
 
   void characterUseWeapon(Character character) {
-    assert (character.alive);
-    assert (!character.weaponStateBusy);
+    if (character.deadBusyOrWeaponStateBusy) return;
 
     final weaponType = character.weaponType;
 
@@ -650,39 +644,36 @@ abstract class Game {
   void characterAttackMelee(Character character) {
     assert (character.active);
     assert (character.alive);
+    assert (character.damage >= 0);
 
     if (character.deadBusyOrWeaponStateBusy) return;
 
     final angle = character.lookRadian;
-    final distance = ItemType.getRange(character.weaponType);
-    if (distance <= 0){
+    final attackRadius = ItemType.getRangeMelee(character.weaponType);
+
+    if (attackRadius <= 0) {
       throw Exception('ItemType.getRange(${ItemType.getName(character.weaponType)})');
     }
-    if (character.damage <= 0){
-      throw Exception('game.playerAttackMelee character.damage <= 0');
-    }
-    final attackRadius = character.weaponTypeRange;
 
-    final performX = character.x + getAdjacent(angle, distance);
-    final performY = character.y + getOpposite(angle, distance);
+    final performX = character.x + getAdjacent(angle, attackRadius);
+    final performY = character.y + getOpposite(angle, attackRadius);
     final performZ = character.z;
 
     character.performX = performX;
     character.performY = performY;
     character.performZ = performZ;
-    character.assignWeaponStateFiring();
+    character.assignWeaponStateMelee();
 
-    if (character.weaponType == ItemType.Weapon_Melee_Staff){
+    if (character.weaponType == ItemType.Weapon_Melee_Staff) {
        spawnProjectileOrb(src: character, damage: 5, range: 200);
     }
 
-    /// TODO name arguments
-    dispatchAttackPerformed(
+    dispatchMeleeAttackPerformed(
       character.weaponType,
-        performX,
-        performY,
-        performZ,
-        angle,
+      performX,
+      performY,
+      performZ,
+      angle,
     );
 
     character.applyForce(
@@ -2231,6 +2222,20 @@ abstract class Game {
       if (!player.onScreen(x, y)) continue;
       player.writeGameEvent(
         type: GameEventType.Attack_Performed,
+        x: x,
+        y: y,
+        z: z,
+        angle: angle,
+      );
+      player.writeUInt16(attackType);
+    }
+  }
+
+  void dispatchMeleeAttackPerformed(int attackType, double x, double y, double z, double angle){
+    for (final player in players) {
+      if (!player.onScreen(x, y)) continue;
+      player.writeGameEvent(
+        type: GameEventType.Melee_Attack_Performed,
         x: x,
         y: y,
         z: z,

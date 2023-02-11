@@ -109,6 +109,7 @@ abstract class Character extends Collider {
   double get healthPercentage => health / maxHealth;
   double get faceAngle => _faceAngle;
   double get weaponTypeRange => ItemType.getRange(weaponType);
+  double get weaponTypeRangeMelee => ItemType.getRangeMelee(weaponType);
   double get weaponDurationPercentage =>  weaponStateDurationTotal == 0 || weaponStateAiming ? 0 : weaponStateDuration / weaponStateDurationTotal;
 
   int get weaponFrame {
