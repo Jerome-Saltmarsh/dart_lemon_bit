@@ -62,30 +62,23 @@ void renderCharacterTemplate(Character character, {
   switch (character.state) {
     case CharacterState.Idle:
       frameLegs = 0;
-      frameBody = weaponIsTwoHandedFirearm ? 0 : 1;
-      frameHead = frameBody;
-      frameWeapon = frameBody;
+      frameWeapon = weaponIsTwoHandedFirearm ? 0 : 1;
       break;
     case CharacterState.Running:
       if (weaponIsTwoHandedFirearm) {
-        frameBody = 15 + (character.frame % 4);
+        frameWeapon = 15 + (character.frame % 4);
       } else {
-        frameBody = 11 + (character.frame % 4);
+        frameWeapon = 11 + (character.frame % 4);
       }
-      frameWeapon = frameBody;
-      frameLegs = frameBody;
+      frameLegs = frameWeapon;
       break;
     case CharacterState.Changing:
-      frameHead = TemplateAnimation.StateChangingFrame;
-      frameBody = TemplateAnimation.StateChangingFrame;
-      frameLegs = TemplateAnimation.StateChangingFrame;
-      frameWeapon = TemplateAnimation.StateChangingFrame;
+      frameLegs = TemplateAnimation.Frame_Changing;
+      frameWeapon = TemplateAnimation.Frame_Changing;
       break;
     case CharacterState.Performing:
       final animation = TemplateAnimation.getAttackAnimation(character.weaponType);
       frameWeapon = capIndex(animation, character.frame);
-      frameBody = frameWeapon;
-      frameHead = frameWeapon;
       frameLegs = frameWeapon;
       directionBody = character.renderDirection;
       directionHead = directionBody;
@@ -93,39 +86,35 @@ void renderCharacterTemplate(Character character, {
       break;
   }
 
-  if (character.weaponStateFiring) {
-    final animation = TemplateAnimation.getAttackAnimation(character.weaponType);
-    frameWeapon = (character.weaponFrame >= animation.length ? animation.last : animation[character.weaponFrame]) - 1;
-    frameBody = frameWeapon;
-    frameHead = frameWeapon;
-  } else
-  if (character.weaponStateReloading){
-    frameHead = TemplateAnimation.StateChangingFrame;
-    frameBody = TemplateAnimation.StateChangingFrame;
-    frameWeapon = TemplateAnimation.StateChangingFrame;
-  } else
-  if (character.weaponStateAiming) {
-
-    if (ItemType.isTypeWeaponMelee(character.weaponType) || ItemType.isTypeWeaponThrown(character.weaponType)) {
-      frameHead = TemplateAnimation.Frame_Aiming_Sword;
-      frameBody = TemplateAnimation.Frame_Aiming_Sword;
-      frameWeapon = TemplateAnimation.Frame_Aiming_Sword;
-    } else
-    if (ItemType.isOneHanded(character.weaponType)){
-      frameHead = TemplateAnimation.Frame_Aiming_One_Handed;
-      frameBody = TemplateAnimation.Frame_Aiming_One_Handed;
-      frameWeapon = TemplateAnimation.Frame_Aiming_One_Handed;
-    } else {
-      frameHead = TemplateAnimation.Frame_Aiming_Two_Handed;
-      frameBody = TemplateAnimation.Frame_Aiming_Two_Handed;
-      frameWeapon = TemplateAnimation.Frame_Aiming_Two_Handed;
-    }
-  } else
-  if (character.weaponStateChanging) {
-    frameHead = TemplateAnimation.StateChangingFrame;
-    frameBody = TemplateAnimation.StateChangingFrame;
-    frameWeapon = TemplateAnimation.StateChangingFrame;
+  switch (character.weaponState) {
+    case WeaponState.Firing:
+      final animation = TemplateAnimation.getAttackAnimation(character.weaponType);
+      frameWeapon = (character.weaponFrame >= animation.length ? animation.last : animation[character.weaponFrame]) - 1;
+      break;
+    case WeaponState.Reloading:
+      frameWeapon = TemplateAnimation.Frame_Changing;
+      break;
+    case WeaponState.Aiming:
+      if (ItemType.isTypeWeaponMelee(character.weaponType) || ItemType.isTypeWeaponThrown(character.weaponType)) {
+        frameWeapon = TemplateAnimation.Frame_Aiming_Sword;
+      } else
+      if (ItemType.isOneHanded(character.weaponType)){
+        frameWeapon = TemplateAnimation.Frame_Aiming_One_Handed;
+      } else {
+        frameWeapon = TemplateAnimation.Frame_Aiming_Two_Handed;
+      }
+      break;
+    case WeaponState.Changing:
+      frameWeapon = TemplateAnimation.Frame_Changing;
+      break;
+    case WeaponState.Throwing:
+      frameWeapon = capIndex(TemplateAnimation.Throwing, character.weaponFrame);
+      break;
   }
+
+  frameBody = frameWeapon;
+  frameHead = frameWeapon;
+
   final dstX = GameConvert.convertV3ToRenderX(character);
   final dstY = GameConvert.convertV3ToRenderY(character);
   final color = GameState.getV3RenderColor(character);
@@ -222,7 +211,7 @@ void renderCharacterTemplate(Character character, {
 
 class TemplateAnimation {
 
-  static const StateChangingFrame = 4;
+  static const Frame_Changing = 4;
   static const Frame_Aiming_One_Handed = 7;
   static const Frame_Aiming_Two_Handed = 5;
   static const Frame_Aiming_Sword = 9;
@@ -297,6 +286,10 @@ class TemplateAnimation {
 
   static const Punch = [
      10, 10, 10, 10, 10, 11
+  ];
+
+  static const Throwing = [
+    10, 10, 10, 10, 10, 11
   ];
 
   static Uint8List StrikingBlade = (){

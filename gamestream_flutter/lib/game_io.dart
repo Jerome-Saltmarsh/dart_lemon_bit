@@ -265,7 +265,7 @@ class GameIO {
         return CursorAction.Stationary_Attack_Cursor;
       }
       if (Engine.keyPressedSpace){
-        return CursorAction.Stationary_Attack_Auto;
+        return CursorAction.Throw_Grenade;
       }
       if (Engine.watchMouseLeftDown.value) {
           if (Engine.keyPressedShiftLeft) {

@@ -197,7 +197,6 @@ abstract class Game {
     required Player player,
     required int direction,
     required int cursorAction,
-    /// Right Click
     required bool perform2,
     required bool perform3,
     required double mouseX,
@@ -251,6 +250,10 @@ abstract class Game {
         playerAutoAim(player);
         characterUseWeapon(player);
       }
+    }
+
+    if (cursorAction == CursorAction.Throw_Grenade){
+       characterThrowGrenade(player);
     }
 
     playerRunInDirection(player, direction);
@@ -336,6 +339,11 @@ abstract class Game {
   void characterWeaponAim(Character character){
       character.weaponState = WeaponState.Aiming;
       character.weaponStateDurationTotal = 2;
+  }
+
+  void characterThrowGrenade(Character character){
+    if (character.deadOrBusy) return;
+    character.assignWeaponStateThrowing();
   }
 
   void characterUseWeapon(Character character) {
@@ -1702,16 +1710,7 @@ abstract class Game {
           case WeaponState.Firing:
             character.assignWeaponStateAiming();
             break;
-          case WeaponState.Aiming:
-            character.assignWeaponStateIdle();
-            break;
-          case WeaponState.Reloading:
-            character.assignWeaponStateIdle();
-            break;
-          case WeaponState.Changing:
-            character.assignWeaponStateIdle();
-            break;
-          case WeaponState.Idle:
+          default:
             character.assignWeaponStateIdle();
             break;
         }

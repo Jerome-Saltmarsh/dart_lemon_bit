@@ -173,6 +173,12 @@ abstract class Character extends Collider {
     assert (weaponStateDurationTotal > 0);
   }
 
+  void assignWeaponStateThrowing() {
+    weaponState = WeaponState.Throwing;
+    weaponStateDurationTotal = 50;
+    assert (weaponStateDurationTotal > 0);
+  }
+
   void assignWeaponStateReloading(){
     weaponState = WeaponState.Reloading;
     weaponStateDurationTotal = 30;
