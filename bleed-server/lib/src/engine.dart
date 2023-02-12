@@ -29,9 +29,15 @@ class Engine {
   late DarkAgeEnvironment environmentAboveGround;
   late DarkAgeEnvironment environmentUnderground;
 
-  // final gameMap = <List<DarkAgeArea>>[];
-
   Future run() async {
+
+    var addresses = await InternetAddress.lookup('localhost');
+    if (addresses.isNotEmpty) {
+      print('ip-address: ${addresses.first.address}');
+    } else {
+      print('ip-address:: Unable to get local IP address');
+    }
+
     print('dart-version: ${Platform.version}');
     print('gamestream.online server starting');
     print("Directory.current.path: ${Directory.current.path}");

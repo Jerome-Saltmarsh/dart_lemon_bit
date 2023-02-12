@@ -9,6 +9,10 @@ ctrl + w:   minimal mode
 [TODO]
 [ ] game learn to play 
 [ ] feature weapon upgrades
+[ ] feature colored lights
+[ ] gameobject type tv
+[ ] gameobject type computer
+[ ] gameobject neon sign
 
 11.02.2023
 [x] feature melee strike weapon

@@ -461,6 +461,12 @@ class GameNodes {
       }
     }
 
+    applyAmbient(
+      index: index,
+      alpha: alpha,
+      interpolation: 0,
+    );
+
     for (var vz = -1; vz <= 1; vz++){
       for (var vx = vxStart; vx <= vxEnd; vx++){
         for (var vy = vyStart; vy <= vyEnd; vy++){
@@ -499,10 +505,7 @@ class GameNodes {
 
     while (interpolation < interpolation_length) {
 
-      if (velocity == 0) {
-        applyAmbient(index: (z * area) + (row * totalColumns) + column, alpha: alpha, interpolation: interpolation);
-        return;
-      }
+      if (velocity == 0) return;
 
       interpolation += velocity;
       if (interpolation >= interpolation_length) return;
@@ -614,6 +617,10 @@ class GameNodes {
            }
            vy = 0;
          }
+
+         if (vx == 1 && vy == 1 && vz == 0 && nodeOrientation == NodeOrientation.Column_Top_Left){
+           return;
+         }
        }
 
       applyAmbient(index: index, alpha: alpha, interpolation: interpolation);
@@ -642,7 +649,8 @@ class GameNodes {
         );
       }
 
-      if (const [
+
+        if (const [
         NodeType.Grass_Long,
         NodeType.Tree_Bottom,
         NodeType.Tree_Top,
@@ -652,6 +660,7 @@ class GameNodes {
       }
 
       if (velocity > 1) {
+
          if (vx != 0){
            shootLightTreeAmbient(row: row, column: column, z: z, interpolation: interpolation, alpha: alpha, vx: vx);
          }
