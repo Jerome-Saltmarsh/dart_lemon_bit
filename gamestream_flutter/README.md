@@ -17,6 +17,7 @@ ctrl + w:   minimal mode
 [ ] gameobject neon sign
 
 12.02.2023
+[x] fix starting items
 [x] fix zombie death animation angle
 
 11.02.2023
