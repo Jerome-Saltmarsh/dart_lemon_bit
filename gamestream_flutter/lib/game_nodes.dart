@@ -1037,19 +1037,24 @@ class GameNodes {
     if (index < 0) return;
     if (index >= total) return;
 
+
+    final blend = hsv_alphas[index] / 255.0;
     final intensity = interpolations[interpolation < 0 ? 0 : interpolation];
-    final interpolatedAlpha = Engine.linerInterpolationInt(alpha, ambient_alp, intensity);
-    final interpolatedHue = Engine.linerInterpolationInt(hue, ambient_hue, intensity);
-    final interpolatedSaturation = Engine.linerInterpolationInt(saturation, ambient_sat, intensity);
-    final interpolatedValue = Engine.linerInterpolationInt(saturation, ambient_val, intensity);
-    // final currentAlpha = hsv_alphas[index];
-    // if (currentAlpha <= interpolatedAlpha) return;
+    final blendF = intensity * blend;
+    final interpolatedA = Engine.linerInterpolationInt(alpha, hsv_alphas[index], intensity);
+    final interpolatedH = Engine.linerInterpolationInt(hue, hsv_hue[index], blendF);
+    final interpolatedS = Engine.linerInterpolationInt(saturation, hsv_saturation[index], blendF);
+    final interpolatedV = Engine.linerInterpolationInt(value, hsv_values[index], blendF);
     colorStackIndex++;
     colorStack[colorStackIndex] = index;
-    hsv_alphas[index] = interpolatedAlpha;
-    hsv_hue[index] = interpolatedHue;
-    hsv_saturation[index] = interpolatedSaturation;
-    hsv_values[index] = interpolatedValue;
+    hsv_alphas[index] = interpolatedA;
+    hsv_hue[index] = interpolatedH;
+    hsv_saturation[index] = interpolatedS;
+    hsv_values[index] = interpolatedV;
+    // hsv_alphas[index] = (hsv_alphas[index] + interpolatedA) ~/ 2;
+    // hsv_hue[index] = (hsv_hue[index] + interpolatedH) ~/ 2;
+    // hsv_saturation[index] = (hsv_saturation[index] + interpolatedS) ~/ 2;
+    // hsv_values[index] = (hsv_values[index] + interpolatedV) ~/ 2;
     refreshNodeColor(index);
   }
 

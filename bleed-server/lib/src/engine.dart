@@ -44,6 +44,7 @@ class Engine {
   late DarkAgeEnvironment environmentUnderground;
 
   Future run() async {
+    print('gamestream-version: $version');
 
     var addresses = await getPublicIP();
     if (addresses.isNotEmpty) {
@@ -54,8 +55,7 @@ class Engine {
 
     print('dart-version: ${Platform.version}');
     print('gamestream.online server starting');
-    print("Directory.current.path: ${Directory.current.path}");
-    print('$version');
+    // print("Directory.current.path: ${Directory.current.path}");
 
     final sceneDirectoryExists = await Scene_Directory.exists();
 
