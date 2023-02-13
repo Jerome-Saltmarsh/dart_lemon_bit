@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:bleed_server/gamestream.dart';
@@ -22,6 +23,19 @@ import 'system.dart';
 
 final engine = Engine();
 
+Future<String> getPublicIP() async {
+  var httpClient = HttpClient();
+  var request = await httpClient.getUrl(Uri.parse('http://checkip.amazonaws.com/'));
+  var response = await request.close();
+
+  if (response.statusCode == HttpStatus.ok) {
+    var ip = await response.transform(utf8.decoder).join();
+    return ip.trim();
+  } else {
+    throw Exception('Failed to get public IP');
+  }
+}
+
 class Engine {
   final games = <Game>[];
   var frame = 0;
@@ -31,9 +45,9 @@ class Engine {
 
   Future run() async {
 
-    var addresses = await InternetAddress.lookup('localhost');
+    var addresses = await getPublicIP();
     if (addresses.isNotEmpty) {
-      print('ip-address: ${addresses.first.address}');
+      print('ip-address: $addresses');
     } else {
       print('ip-address:: Unable to get local IP address');
     }

@@ -13,10 +13,10 @@ ctrl + w:   minimal mode
 [ ] feature weapon upgrades
 [ ] feature colored lights
 [ ] gameobject type tv
-[ ] gameobject type computer
 [ ] gameobject neon sign
 
 12.02.2023
+[x] gameobject type computer
 [x] feature hud total grenades
 [x] fix starting items
 [x] fix zombie death animation angle

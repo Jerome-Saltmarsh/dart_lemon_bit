@@ -93,6 +93,7 @@ class ItemType {
   static const GameObjects_Washing_Machine      = Index_GameObjects + 30;
   static const GameObjects_Car_Tire             = Index_GameObjects + 31;
   static const GameObjects_Van                  = Index_GameObjects + 32;
+  static const GameObjects_Computer             = Index_GameObjects + 33;
 
   static const Resource_Wood = Index_Resources + 5;
   static const Resource_Stone = Index_Resources + 6;
@@ -262,6 +263,7 @@ class ItemType {
     GameObjects_Sink,
     GameObjects_Washing_Machine,
     GameObjects_Van,
+    GameObjects_Computer,
   ].contains(value);
 
   static bool isInteractable(int value) => const [
@@ -708,6 +710,7 @@ class ItemType {
      GameObjects_Washing_Machine: "Washing Machine",
      GameObjects_Car_Tire: "Car Tire",
      GameObjects_Bottle: "Bottle",
+     GameObjects_Computer: "Computer",
   }[value] ?? "item-type-unknown($value)";
 
   static int getMaxQuantity(int itemType) => const {
@@ -771,19 +774,16 @@ class ItemType {
     Legs_Green          : 30,
   }[itemType] ??          00;
 
-  static bool hasCapacity(int itemType){
-    return getMaxQuantity(itemType) > 0;
-  }
+  static bool hasCapacity(int itemType) =>
+    getMaxQuantity(itemType) > 0;
 
-  static double getScopeDistance(int itemType){
-    return const <int, double> {
-        Weapon_Rifle_Arquebus: 1.25,
-        Weapon_Rifle_Blunderbuss: 1.33,
-        Weapon_Rifle_Musket: 1.5,
-        Weapon_Rifle_AK_47: 1.33,
-        Weapon_Rifle_Sniper: 3.0,
-    }[itemType] ?? 1.0;
-  }
+  static double getScopeDistance(int itemType) => const <int, double>{
+    Weapon_Rifle_Arquebus: 1.25,
+    Weapon_Rifle_Blunderbuss: 1.33,
+    Weapon_Rifle_Musket: 1.5,
+    Weapon_Rifle_AK_47: 1.33,
+    Weapon_Rifle_Sniper: 3.0,
+  }[itemType] ?? 1.0;
 
   static const HeadTypes = [
       Head_Swat,
@@ -830,6 +830,7 @@ class ItemType {
      GameObjects_Car_Tire,
      GameObjects_Bottle,
      GameObjects_Van,
+     GameObjects_Computer,
   ];
 
   static bool isTypeBarrel(int type)=> const [

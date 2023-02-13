@@ -31,6 +31,7 @@ class AtlasItems {
         ItemType.GameObjects_Car_Tire: 208,
         ItemType.GameObjects_Bottle: 83,
         ItemType.GameObjects_Van: 102,
+        ItemType.GameObjects_Computer: 204,
         ItemType.Trinket_Ring_of_Health: 256,
         ItemType.Trinket_Ring_of_Damage: 288,
         ItemType.Empty: 224,
@@ -122,6 +123,7 @@ class AtlasItems {
         ItemType.GameObjects_Car_Tire: 146,
         ItemType.GameObjects_Bottle: 81,
         ItemType.GameObjects_Van: 248,
+        ItemType.GameObjects_Computer: 206,
         ItemType.Trinket_Ring_of_Health: 32,
         ItemType.Trinket_Ring_of_Damage: 32,
         ItemType.Weapon_Ranged_Shotgun: 32,
@@ -206,6 +208,7 @@ class AtlasItems {
         ItemType.GameObjects_Car_Tire: 56,
         ItemType.GameObjects_Bottle: 18,
         ItemType.GameObjects_Van: 80,
+        ItemType.GameObjects_Computer: 37,
         ItemType.Weapon_Rifle_Sniper: 48,
         ItemType.Weapon_Flamethrower: 64,
         ItemType.Weapon_Special_Bazooka: 48,
@@ -238,6 +241,7 @@ class AtlasItems {
         ItemType.GameObjects_Sink: 33,
         ItemType.GameObjects_Van: 129,
         ItemType.GameObjects_Chair: 49,
+        ItemType.GameObjects_Computer: 68,
         ItemType.Weapon_Rifle_Sniper: 16,
         ItemType.Weapon_Special_Bazooka: 16,
         ItemType.Weapon_Special_Minigun: 12,
@@ -256,6 +260,7 @@ class AtlasItems {
         ItemType.GameObjects_Washing_Machine: 0.75,
         ItemType.GameObjects_Car_Tire: 0.5,
         ItemType.GameObjects_Bottle: 0.4,
+        ItemType.GameObjects_Computer: 0.61,
   }[itemType] ?? 1.0;
 
   static double getAnchorY(int itemType) => const <int, double> {
