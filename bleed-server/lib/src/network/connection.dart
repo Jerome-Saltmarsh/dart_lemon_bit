@@ -467,7 +467,7 @@ class Connection with ByteReader {
         }
         game.spawnAI(
             nodeIndex: spawnIndex,
-            characterType: CharacterType.Dog,
+            characterType: CharacterType.Zombie,
         );
         break;
     }

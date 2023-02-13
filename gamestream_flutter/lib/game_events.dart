@@ -524,20 +524,6 @@ class GameEvents {
   }
 
   static void onCharacterDeathZombie(int type, double x, double y, double z, double angle){
-    // GameState.spawnParticleAnimation(
-    //   type: Engine.randomItem(
-    //       const [
-    //         ParticleType.Character_Animation_Death_Zombie_1,
-    //         ParticleType.Character_Animation_Death_Zombie_2,
-    //         ParticleType.Character_Animation_Death_Zombie_3,
-    //       ]
-    //   ),
-    //   x: x,
-    //   y: y,
-    //   z: z,
-    //   angle: angle,
-    // );
-    angle += Engine.PI;
     final zPos = z + Node_Size_Half;
     GameState.spawnParticleHeadZombie(x: x, y: y, z: zPos, angle: angle, speed: 4.0);
     GameState.spawnParticleArm(

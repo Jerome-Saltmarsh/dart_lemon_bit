@@ -7,12 +7,17 @@ navigate to next method: ctrl + shift + up / down arrows
 ctrl + w:   minimal mode
 
 [TODO]
+[ ] fix z ordering
+[ ] fix light corners
 [ ] game learn to play 
 [ ] feature weapon upgrades
 [ ] feature colored lights
 [ ] gameobject type tv
 [ ] gameobject type computer
 [ ] gameobject neon sign
+
+12.02.2023
+[x] fix zombie death animation angle
 
 11.02.2023
 [x] feature melee strike weapon

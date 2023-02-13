@@ -660,7 +660,6 @@ class GameNodes {
       }
 
       if (velocity > 1) {
-
          if (vx != 0){
            shootLightTreeAmbient(row: row, column: column, z: z, interpolation: interpolation, alpha: alpha, vx: vx);
          }
