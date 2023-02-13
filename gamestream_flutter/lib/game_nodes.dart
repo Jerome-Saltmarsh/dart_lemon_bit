@@ -185,6 +185,17 @@ class GameNodes {
     if (index < 0) return;
     if (index >= total) return;
 
+    if (GameSettings.Dynamic_Shadows) {
+      emitLightAHSV(
+        index: index,
+        alpha: alpha,
+        hue: hue,
+        saturation: saturation,
+        value: value,
+      );
+      return;
+    }
+
     assert (hue >= 0);
     assert (hue <= 255);
     assert (saturation >= 0);
@@ -250,7 +261,7 @@ class GameNodes {
   }){
 
     if (GameSettings.Dynamic_Shadows) {
-      emitLightAmbientDynamicShadows(
+      emitLightAmbientShadows(
         index: index,
         alpha: alpha,
       );
@@ -398,7 +409,103 @@ class GameNodes {
 
   /// EMIT LIGHT FUNCTIONS
 
-  static void emitLightAmbientDynamicShadows({
+  static void emitLightAHSV({
+    required int index,
+    required int alpha,
+    required int hue,
+    required int saturation,
+    required int value,
+  }){
+    if (index < 0) return;
+    if (index >= total) return;
+
+    final padding = ClientState.interpolation_padding;
+    final rx = getIndexRenderX(index);
+    if (rx < Engine.Screen_Left - padding) return;
+    if (rx > Engine.Screen_Right + padding) return;
+    final ry = getIndexRenderY(index);
+    if (ry < Engine.Screen_Top - padding) return;
+    if (ry > Engine.Screen_Bottom + padding) return;
+
+    ClientState.lights_active++;
+
+    final row = getIndexRow(index);
+    final column = getIndexColumn(index);
+    final z = getIndexZ(index);
+
+    final nodeType = nodeTypes[index];
+    final nodeOrientation = nodeOrientations[index];
+
+    var vxStart = -1;
+    var vxEnd = 1;
+    var vyStart = -1;
+    var vyEnd = 1;
+
+    if (!isNodeTypeTransient(nodeType)){
+      if (const [
+        NodeOrientation.Half_North,
+        NodeOrientation.Corner_Top,
+        NodeOrientation.Corner_Left
+      ].contains(nodeOrientation)) {
+        vxStart = 0;
+      }
+
+      if (const [
+        NodeOrientation.Half_South,
+        NodeOrientation.Corner_Bottom,
+        NodeOrientation.Corner_Right
+      ].contains(nodeOrientation)) {
+        vxEnd = 0;
+      }
+
+      if (const [
+        NodeOrientation.Half_East,
+        NodeOrientation.Corner_Top,
+        NodeOrientation.Corner_Right
+      ].contains(nodeOrientation)) {
+        vyStart = 0;
+      }
+
+      if (const [
+        NodeOrientation.Half_West,
+        NodeOrientation.Corner_Bottom,
+        NodeOrientation.Corner_Left
+      ].contains(nodeOrientation)) {
+        vyEnd = 0;
+      }
+    }
+
+    applyAHSV(
+      index: index,
+      alpha: alpha,
+      interpolation: 0,
+      hue: hue,
+      saturation: saturation,
+      value: value,
+    );
+
+    for (var vz = -1; vz <= 1; vz++){
+      for (var vx = vxStart; vx <= vxEnd; vx++){
+        for (var vy = vyStart; vy <= vyEnd; vy++){
+          shootLightTreeAHSV(
+            row: row,
+            column: column,
+            z: z,
+            interpolation: -1,
+            alpha: alpha,
+            hue: hue,
+            saturation: saturation,
+            value: value,
+            vx: vx,
+            vy: vy,
+            vz: vz,
+          );
+        }
+      }
+    }
+  }
+
+  static void emitLightAmbientShadows({
     required int index,
     required int alpha,
   }){
@@ -633,6 +740,7 @@ class GameNodes {
         );
       }
 
+
       if (paintBehindRow) {
         applyAmbient(
           index: index - totalColumns,
@@ -673,6 +781,224 @@ class GameNodes {
     }
   }
 
+  static void shootLightTreeAHSV({
+    required int row,
+    required int column,
+    required int z,
+    required int interpolation,
+    required int alpha,
+    required int hue,
+    required int saturation,
+    required int value,
+    int vx = 0,
+    int vy = 0,
+    int vz = 0,
+  }){
+    assert (interpolation < interpolation_length);
+
+    var velocity = vx.abs() + vy.abs() + vz.abs();
+    var paintBehindZ = vz == 0;
+    var paintBehindRow = vx == 0;
+    var paintBehindColumn = vy == 0;
+
+    while (interpolation < interpolation_length) {
+
+      if (velocity == 0) return;
+
+      interpolation += velocity;
+      if (interpolation >= interpolation_length) return;
+
+       if (vx != 0){
+         row += vx;
+         if (row < 0 || row >= totalRows) return;
+       }
+
+       if (vy != 0){
+         column += vy;
+         if (column < 0 || column >= totalColumns) return;
+       }
+
+       if (vz != 0){
+         z += vz;
+         if (z < 0 || z >= totalZ) return;
+       }
+
+       final index = (z * area) + (row * totalColumns) + column;
+       final nodeType = nodeTypes[index];
+
+       if (!isNodeTypeTransient(nodeType)) {
+
+         final nodeOrientation = nodeOrientations[index];
+
+         if (vz != 0 && nodeOrientationBlocksVertical(nodeOrientation)){
+           if (vz > 0) {
+             if (nodeOrientation != NodeOrientation.Half_Vertical_Top){
+               if (vx == 0 && vy == 0) return;
+               final previousNodeIndex = index - (vy) - (vx * totalColumns);
+               final previousNodeOrientation = nodeOrientations[previousNodeIndex];
+               if (nodeOrientationBlocksVertical(previousNodeOrientation)) return;
+             }
+           }
+           velocity = vx.abs() + vy.abs();
+           vz = 0;
+         }
+
+         final vx2 = vx;
+         final xBehind = vx > 0;
+         final yBehind = vy > 0;
+
+         if (vx != 0 && nodeOrientationBlocksNorthSouth(nodeOrientation)) {
+           if (xBehind && yBehind)  {
+             if (const [
+               NodeOrientation.Corner_Bottom,
+               NodeOrientation.Half_South,
+               NodeOrientation.Half_West,
+             ].contains(nodeOrientation)){
+               applyAHSV(
+                 index: index - area,
+                 alpha: alpha,
+                 hue: hue,
+                 saturation: saturation,
+                 value: value,
+                 interpolation: interpolation,
+               );
+             }
+             return;
+           }
+           velocity = vy.abs() + vz.abs();
+           paintBehindColumn = false;
+           paintBehindZ = false;
+           if (vx < 0){
+             if (nodeOrientation == NodeOrientation.Half_North){
+               paintBehindZ = true;
+             } else
+             if (nodeOrientation == NodeOrientation.Corner_Top && vy < 0){
+               paintBehindZ = true;
+             }
+           } else {
+             if (nodeOrientation == NodeOrientation.Half_South){
+               paintBehindZ = true;
+             } else
+             if (nodeOrientation == NodeOrientation.Corner_Right && vy <= 0){
+               paintBehindZ = true;
+             } else
+             if (nodeOrientation == NodeOrientation.Corner_Bottom && vy >= 0){
+               paintBehindZ = true;
+             }
+           }
+           vx = 0;
+         }
+
+         if (vy != 0 && nodeOrientationBlocksEastWest(nodeOrientation)) {
+           if (xBehind && yBehind)  return;
+           velocity = vx.abs() + vz.abs();
+           paintBehindRow = false;
+           paintBehindZ = false;
+
+           if (vy < 0) {
+             if (nodeOrientation == NodeOrientation.Half_East){
+               paintBehindZ = true;
+             } else
+             if (nodeOrientation == NodeOrientation.Corner_Top && vx2 <= 0){
+               paintBehindZ = true;
+             } else
+             if (nodeOrientation == NodeOrientation.Corner_Bottom && vx2 >= 0){
+               paintBehindZ = true;
+             }
+           } else {
+             if (nodeOrientation == NodeOrientation.Half_West){
+               paintBehindZ = true;
+             } else
+             if (nodeOrientation == NodeOrientation.Corner_Left && vx2 <= 2){
+               paintBehindZ = true;
+             } else
+             if (nodeOrientation == NodeOrientation.Corner_Bottom && vx2 >= 0){
+               paintBehindZ = true;
+             }
+           }
+           vy = 0;
+         }
+
+         if (vx == 1 && vy == 1 && vz == 0 && nodeOrientation == NodeOrientation.Column_Top_Left){
+           return;
+         }
+       }
+
+      applyAHSV(
+          index: index,
+          alpha: alpha,
+          hue: hue,
+          saturation: saturation,
+          value: value,
+          interpolation: interpolation,
+      );
+
+      if (paintBehindZ) {
+        applyAHSV(
+          index: index - area,
+          alpha: alpha,
+          hue: hue,
+          saturation: saturation,
+          value: value,
+          interpolation: interpolation,
+        );
+      }
+
+      if (paintBehindRow) {
+        applyAHSV(
+          index: index - totalColumns,
+          alpha: alpha,
+          hue: hue,
+          saturation: saturation,
+          value: value,
+          interpolation: interpolation,
+        );
+      }
+
+      if (paintBehindColumn) {
+        applyAHSV(
+          index: index - 1,
+          alpha: alpha,
+          hue: hue,
+          saturation: saturation,
+          value: value,
+          interpolation: interpolation,
+        );
+      }
+
+      if (const [
+        NodeType.Grass_Long,
+        NodeType.Tree_Bottom,
+        NodeType.Tree_Top,
+      ].contains(nodeType)) {
+        interpolation += 2;
+        if (interpolation >= interpolation_length) return;
+      }
+
+      if (velocity > 1) {
+         if (vx != 0){
+           shootLightTreeAHSV(
+               row: row,
+               column: column,
+               z: z,
+               interpolation: interpolation,
+               alpha: alpha,
+               hue: hue,
+               saturation: saturation,
+               value: value,
+               vx: vx,
+           );
+         }
+         if (vy != 0){
+           shootLightTreeAHSV(row: row, column: column, z: z, interpolation: interpolation, alpha: alpha, hue: hue, saturation: saturation, value: value,  vy: vy);
+         }
+         if (vz != 0){
+           shootLightTreeAHSV(row: row, column: column, z: z, interpolation: interpolation, alpha: alpha, hue: hue, saturation: saturation, value: value, vz: vz);
+         }
+       }
+    }
+  }
+
   static bool isValidIndex(int index) => index >= 0 && index < total;
 
 
@@ -699,6 +1025,34 @@ class GameNodes {
     hsv_alphas[index] = interpolatedAlpha;
     refreshNodeColor(index);
   }
+
+  static void applyAHSV({
+    required int index,
+    required int alpha,
+    required int hue,
+    required int saturation,
+    required int value,
+    required int interpolation,
+  }){
+    if (index < 0) return;
+    if (index >= total) return;
+
+    final intensity = interpolations[interpolation < 0 ? 0 : interpolation];
+    final interpolatedAlpha = Engine.linerInterpolationInt(alpha, ambient_alp, intensity);
+    final interpolatedHue = Engine.linerInterpolationInt(hue, ambient_hue, intensity);
+    final interpolatedSaturation = Engine.linerInterpolationInt(saturation, ambient_sat, intensity);
+    final interpolatedValue = Engine.linerInterpolationInt(saturation, ambient_val, intensity);
+    // final currentAlpha = hsv_alphas[index];
+    // if (currentAlpha <= interpolatedAlpha) return;
+    colorStackIndex++;
+    colorStack[colorStackIndex] = index;
+    hsv_alphas[index] = interpolatedAlpha;
+    hsv_hue[index] = interpolatedHue;
+    hsv_saturation[index] = interpolatedSaturation;
+    hsv_values[index] = interpolatedValue;
+    refreshNodeColor(index);
+  }
+
 
   static bool nodeOrientationBlocksNorthSouth(int nodeOrientation) => const [
         NodeOrientation.Solid,

@@ -331,6 +331,13 @@ class RendererNodes extends Renderer {
     visited2DStackIndex = 0;
 
     final height = GameNodes.heightMap[GamePlayer.areaNodeIndex];
+
+    if (GamePlayer.indexZ <= 0) {
+      zMin = 0;
+      playerInsideIsland = false;
+      return;
+    }
+
     playerInsideIsland = GamePlayer.indexZ < height;
 
     if (!playerInsideIsland) {

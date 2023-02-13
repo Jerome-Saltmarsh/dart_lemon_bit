@@ -208,7 +208,7 @@ class AtlasItems {
         ItemType.GameObjects_Car_Tire: 56,
         ItemType.GameObjects_Bottle: 18,
         ItemType.GameObjects_Van: 80,
-        ItemType.GameObjects_Computer: 37,
+        ItemType.GameObjects_Computer: 40,
         ItemType.Weapon_Rifle_Sniper: 48,
         ItemType.Weapon_Flamethrower: 64,
         ItemType.Weapon_Special_Bazooka: 48,
