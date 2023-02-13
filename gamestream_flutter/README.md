@@ -17,6 +17,7 @@ ctrl + w:   minimal mode
 [ ] gameobject neon sign
 
 12.02.2023
+[x] feature hud total grenades
 [x] fix starting items
 [x] fix zombie death animation angle
 

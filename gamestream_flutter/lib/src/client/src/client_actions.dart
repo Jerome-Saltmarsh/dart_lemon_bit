@@ -100,4 +100,8 @@ class ClientActions {
     ClientState.messageStatus.value = "";
     ClientState.messageStatus.value = message;
   }
+
+  static void refreshTotalGrenades(){
+    GamePlayer.totalGrenades.value = ServerQuery.countItemTypeQuantityInPlayerPossession(ItemType.Weapon_Thrown_Grenade);
+  }
 }

@@ -9,6 +9,7 @@ class GamePlayer {
   static final head = Watch(0);
   static final legs = Watch(0);
   static final alive = Watch(true);
+  static final totalGrenades = Watch(0);
   static final previousPosition = Vector3();
   static final storeItems = Watch(<int>[]);
 

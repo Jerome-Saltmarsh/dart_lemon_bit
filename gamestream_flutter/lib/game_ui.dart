@@ -473,11 +473,23 @@ class GameUI {
           ),
           bottom: GameStyle.Default_Padding,
         ),
-        // Positioned(
-        //     bottom: GameStyle.Default_Padding,
-        //     left: GameStyle.Default_Padding,
-        //     child: buildHudPlayerWeapon()
-        // ),
+        Positioned(
+            bottom: GameStyle.Default_Padding,
+            left: GameStyle.Default_Padding,
+            child: watch(GamePlayer.totalGrenades, (int totalGrenades) => totalGrenades <= 0
+                    ? GameStyle.Null
+                    : Row(
+                        children: [
+                          Container(
+                            width: 40,
+                            height: 40,
+                            child: buildAtlasItemType(
+                                ItemType.GameObjects_Grenade),
+                          ),
+                          width4,
+                          text(totalGrenades, size: 25),
+                        ],
+                      ))),
         Positioned(
           bottom: GameStyle.Default_Padding,
           right: GameStyle.Default_Padding,
