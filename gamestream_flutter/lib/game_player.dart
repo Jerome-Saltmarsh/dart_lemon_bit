@@ -1,8 +1,6 @@
 import 'package:gamestream_flutter/isometric/events/on_quests_in_progress_changed.dart';
 import 'package:gamestream_flutter/library.dart';
 
-import 'services/mini_map.dart';
-
 class GamePlayer {
   static final weapon = Watch(0);
   static final body = Watch(0);
@@ -31,7 +29,7 @@ class GamePlayer {
   static final questAdded = Watch(false);
   static var gameDialog = Watch<GameDialog?>(null, onChanged: onChangedGameDialog);
   static var mouseAngle = 0.0;
-  static final mapTile = Watch(0, onChanged: MiniMap.onMapTileChanged);
+  // static final mapTile = Watch(0, onChanged: MiniMap.onMapTileChanged);
   static var npcTalk = Watch("");
   static var npcTalkOptions = Watch<List<String>>([]);
   static final abilityTarget = Vector3();

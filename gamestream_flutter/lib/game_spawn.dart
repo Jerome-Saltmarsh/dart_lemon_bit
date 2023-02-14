@@ -19,9 +19,9 @@ class GameSpawn {
         x: x,
         y: y,
         z: z,
-        hue: 255,
-        saturation: 120,
-        value: 242,
+        hue: 259,
+        saturation: 45,
+        value: 95,
         alpha: 0,
     );
   }

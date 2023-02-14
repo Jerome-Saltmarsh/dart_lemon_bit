@@ -970,6 +970,7 @@ class GameNodes {
 
     final intensity = interpolations[interpolation < 0 ? 0 : interpolation];
 
+
     // var a = hsv_alphas[index];
     // final indexHue = hsv_hue[index];
     // if (indexHue == ambient_hue){

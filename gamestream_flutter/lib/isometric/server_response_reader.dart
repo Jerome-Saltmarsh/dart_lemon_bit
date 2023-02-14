@@ -352,7 +352,7 @@ class ServerResponseReader with ByteReader {
   }
 
   void readMapCoordinate() {
-    GamePlayer.mapTile.value = readByte();
+    readByte(); // DO NOT DELETE
   }
 
 

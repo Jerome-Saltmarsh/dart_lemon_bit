@@ -7,13 +7,16 @@ navigate to next method: ctrl + shift + up / down arrows
 ctrl + w:   minimal mode
 
 [TODO]
-[ ] fix z ordering
-[ ] fix light corners
+[ ] milestone fix z ordering
+[ ] milestone fix light corners
 [ ] game learn to play 
 [ ] feature weapon upgrades
-[ ] feature colored lights
 [ ] gameobject type tv
 [ ] gameobject neon sign
+
+13.02.2023
+[x] remove previous mini map
+[x] milestone feature colored lights
 
 12.02.2023
 [x] gameobject type computer

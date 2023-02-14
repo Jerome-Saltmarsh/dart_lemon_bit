@@ -13,26 +13,26 @@ const mapTileSize = 64.0;
 const mapTileSizeHalf = mapTileSize / 2;
 
 
-Widget buildGameDialogMap(){
-  MiniMap.mapScreenCenterX = Engine.screen.width / 2;
-  MiniMap.mapScreenCenterY = Engine.screen.height / 2;
-  return Container(
-    width: Engine.screen.width,
-    height: Engine.screen.height,
-    alignment: Alignment.center,
-    child: Container(
-      color: brownLight,
-      width: Engine.screen.width * goldenRatio_0618,
-      height: Engine.screen.height * goldenRatio_0618,
-      child: Column(
-        children: [
-          watch(GamePlayer.gameDialog, buildGameDialog),
-          GameMapWidget(width: Engine.screen.width * goldenRatio_0618, height: Engine.screen.height * goldenRatio_0618 - 50),
-        ],
-      ),
-    ),
-  );
-}
+// Widget buildGameDialogMap(){
+//   MiniMap.mapScreenCenterX = Engine.screen.width / 2;
+//   MiniMap.mapScreenCenterY = Engine.screen.height / 2;
+//   return Container(
+//     width: Engine.screen.width,
+//     height: Engine.screen.height,
+//     alignment: Alignment.center,
+//     child: Container(
+//       color: brownLight,
+//       width: Engine.screen.width * goldenRatio_0618,
+//       height: Engine.screen.height * goldenRatio_0618,
+//       child: Column(
+//         children: [
+//           watch(GamePlayer.gameDialog, buildGameDialog),
+//           GameMapWidget(width: Engine.screen.width * goldenRatio_0618, height: Engine.screen.height * goldenRatio_0618 - 50),
+//         ],
+//       ),
+//     ),
+//   );
+// }
 
 
 

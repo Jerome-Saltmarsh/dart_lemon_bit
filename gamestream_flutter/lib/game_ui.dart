@@ -30,7 +30,7 @@ class GameUI {
   static Widget buildUI() => StackFullscreen(children: [
         buildWatchBool(ClientState.triggerAlarmNoMessageReceivedFromServer,
             buildDialogFramesSinceUpdate),
-        watch(GamePlayer.gameDialog, buildGameDialog),
+        // watch(GamePlayer.gameDialog, buildGameDialog),
         buildWatchBool(GamePlayer.alive, buildPositionedContainerRespawn, false),
         Positioned(
             top: 0,
@@ -41,7 +41,7 @@ class GameUI {
         buildWatchBool(ClientState.Map_Visible, (){
           return Positioned(child: buildGeneratedMiniMap(), top: 0, left: 0);
         }),
-        buildWatchBool(GameUI.mapVisible, buildMiniMap),
+        // buildWatchBool(GameUI.mapVisible, buildMiniMap),
         WatchBuilder(ClientState.edit, buildPlayMode),
         WatchBuilder(GameIO.inputMode, buildStackInputMode),
         buildWatchBool(ClientState.debugMode, GameDebug.buildStackDebug),

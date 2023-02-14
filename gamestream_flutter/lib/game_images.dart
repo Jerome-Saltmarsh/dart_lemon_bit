@@ -6,7 +6,6 @@ import 'package:lemon_engine/src.dart';
 
 class GameImages {
    static late Image pixel;
-   static late Image minimap;
    static late Image projectiles;
    static late Image zombie;
    static late Image zombie_shadow;
@@ -197,7 +196,6 @@ class GameImages {
       Engine.loadImageAsset('images/atlas-gameobjects-transparent.png').then((value) => atlas_gameobjects_transparent = value);
       Engine.loadImageAsset('images/atlas-particles.png').then((value) => atlas_particles = value);
       Engine.loadImageAsset('images/atlas-projectiles.png').then((value) => projectiles = value);
-      Engine.loadImageAsset('images/atlas-map.png').then((value) => minimap = value);
       Engine.loadImageAsset('images/atlas-nodes.png').then((value) => atlas_nodes = value);
       Engine.loadImageAsset('images/atlas-nodes-transparent.png').then((value) => atlas_nodes_transparent = value);
       Engine.loadImageAsset('images/atlas-nodes-mini.png').then((value) => atlas_nodes_mini = value);
