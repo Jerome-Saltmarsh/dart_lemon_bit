@@ -108,17 +108,17 @@ class GameUI {
               portraitOnly: true,
               pickerColor: HSVColor.fromAHSV(
                   GameNodes.ambient_alp / 255,
-                  (GameNodes.ambient_hue / 255) * 360,
-                  GameNodes.ambient_sat / 255,
-                  GameNodes.ambient_val / 255,
+                  GameNodes.ambient_hue.toDouble(),
+                  GameNodes.ambient_sat / 100,
+                  GameNodes.ambient_val / 100,
               ).toColor(),
               onColorChanged: (color){
                 ClientState.overrideColor.value = true;
                 final hsvColor = HSVColor.fromColor(color);
                 GameNodes.ambient_alp = (hsvColor.alpha * 255).round();
-                GameNodes.ambient_hue = ((hsvColor.hue / 360) * 255).round();
-                GameNodes.ambient_sat = (hsvColor.saturation * 255).round();
-                GameNodes.ambient_val = (hsvColor.value * 255).round();
+                GameNodes.ambient_hue = hsvColor.hue.round();
+                GameNodes.ambient_sat = (hsvColor.saturation * 100).round();
+                GameNodes.ambient_val = (hsvColor.value * 100).round();
                 GameNodes.resetNodeColorsToAmbient();
               },
             ),

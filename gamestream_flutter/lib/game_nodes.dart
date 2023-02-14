@@ -13,7 +13,8 @@ class GameNodes {
   static var hsv_color_purple  = HSVColor.fromColor(Color.fromRGBO(168, 132, 243, 0.5));
   static var hsv_color_yellow  = HSVColor.fromColor(Color.fromRGBO(251, 255, 134, 0.5));
 
-  static var ambient_color_hsv  = HSVColor.fromColor(Color.fromRGBO(31, 1, 86, 0.5));
+  static var ambient_color_rgb  = Color.fromRGBO(31, 1, 86, 0.5);
+  static var ambient_color_hsv  = HSVColor.fromColor(ambient_color_rgb);
   static var ambient_hue        = ((ambient_color_hsv.hue)).round();
   static var ambient_sat        = (ambient_color_hsv.saturation * 100).round();
   static var ambient_val        = (ambient_color_hsv.value * 100).round();
