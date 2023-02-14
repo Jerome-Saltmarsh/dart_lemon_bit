@@ -12,9 +12,10 @@ ctrl + w:   minimal mode
 [ ] game learn to play 
 [ ] feature weapon upgrades
 [ ] gameobject type tv
-[ ] gameobject neon sign
+[ ] fix delete game object
 
 13.02.2023
+[x] gameobject neon sign
 [x] remove previous mini map
 [x] milestone feature colored lights
 

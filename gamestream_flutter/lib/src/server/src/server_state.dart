@@ -128,6 +128,17 @@ class ServerState {
         continue;
       }
 
+      if (gameObject.type == ItemType.GameObjects_Neon_Sign_01) {
+        GameState.applyVector3Emission(
+          gameObject,
+          hue: 344,
+          saturation: 67,
+          value: 94,
+          alpha: 156,
+        );
+        continue;
+      }
+
       if (gameObject.type == ItemType.GameObjects_Crystal_Small_Red) {
         GameState.applyVector3Emission(gameObject,
           hue: 360,
