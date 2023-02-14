@@ -327,6 +327,14 @@ class GameNodes {
       opacity: hsv_alphas[index],
     );
 
+  static void refreshNodeColor2(int index) =>
+      node_colors[index] = hsvToColor2(
+        hue: hsv_hue[index],
+        saturation: hsv_saturation[index],
+        value: hsv_values[index],
+        opacity: hsv_alphas[index],
+      );
+
 
   static int getTorchIndex(int nodeIndex){
     final initialSearchIndex = nodeIndex - totalColumns - 1; // shifts the selectIndex - 1 row and - 1 column
@@ -1020,6 +1028,8 @@ class GameNodes {
     final interpolatedAlpha = Engine.linerInterpolationInt(alpha, ambient_alp, intensity);;
     final currentAlpha = hsv_alphas[index];
     if (currentAlpha <= interpolatedAlpha) return;
+    final currentHue = hsv_hue[index];
+    if (currentHue != ambient_hue) return;
     ambientStackIndex++;
     ambientStack[ambientStackIndex] = index;
     hsv_alphas[index] = interpolatedAlpha;
@@ -1037,27 +1047,26 @@ class GameNodes {
     if (index < 0) return;
     if (index >= total) return;
 
-
-    final blend = hsv_alphas[index] / 255.0;
     final intensity = interpolations[interpolation < 0 ? 0 : interpolation];
-    final blendF = intensity * blend;
+
+    // var a = hsv_alphas[index];
+    // final indexHue = hsv_hue[index];
+    // if (indexHue == ambient_hue){
+    //   a = ambient_alp;
+    // }
+
     final interpolatedA = Engine.linerInterpolationInt(alpha, hsv_alphas[index], intensity);
-    final interpolatedH = Engine.linerInterpolationInt(hue, hsv_hue[index], blendF);
-    final interpolatedS = Engine.linerInterpolationInt(saturation, hsv_saturation[index], blendF);
-    final interpolatedV = Engine.linerInterpolationInt(value, hsv_values[index], blendF);
+    final interpolatedH = Engine.linerInterpolationInt(hue, hsv_hue[index], intensity);
+    final interpolatedS = Engine.linerInterpolationInt(saturation, hsv_saturation[index], intensity);
+    final interpolatedV = Engine.linerInterpolationInt(value, hsv_values[index], intensity);
     colorStackIndex++;
     colorStack[colorStackIndex] = index;
     hsv_alphas[index] = interpolatedA;
     hsv_hue[index] = interpolatedH;
     hsv_saturation[index] = interpolatedS;
     hsv_values[index] = interpolatedV;
-    // hsv_alphas[index] = (hsv_alphas[index] + interpolatedA) ~/ 2;
-    // hsv_hue[index] = (hsv_hue[index] + interpolatedH) ~/ 2;
-    // hsv_saturation[index] = (hsv_saturation[index] + interpolatedS) ~/ 2;
-    // hsv_values[index] = (hsv_values[index] + interpolatedV) ~/ 2;
-    refreshNodeColor(index);
+    refreshNodeColor2(index);
   }
-
 
   static bool nodeOrientationBlocksNorthSouth(int nodeOrientation) => const [
         NodeOrientation.Solid,
