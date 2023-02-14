@@ -8,16 +8,20 @@ import 'package:gamestream_flutter/library.dart';
 class GameNodes {
 
   // VARIABLES
+  static var hsv_color_red  = HSVColor.fromColor(Color.fromRGBO(232, 59, 59, 0.5));
+  static var hsv_color_blue  = HSVColor.fromColor(Color.fromRGBO(77, 155, 230, 0.5));
+  static var hsv_color_purple  = HSVColor.fromColor(Color.fromRGBO(168, 132, 243, 0.5));
+  static var hsv_color_yellow  = HSVColor.fromColor(Color.fromRGBO(251, 255, 134, 0.5));
 
   static var ambient_color_hsv  = HSVColor.fromColor(Color.fromRGBO(31, 1, 86, 0.5));
-  static var ambient_hue        = ((ambient_color_hsv.hue / 360) * 255).round();
-  static var ambient_sat        = (ambient_color_hsv.saturation * 255).round();
-  static var ambient_val        = (ambient_color_hsv.value * 255).round();
+  static var ambient_hue        = ((ambient_color_hsv.hue)).round();
+  static var ambient_sat        = (ambient_color_hsv.saturation * 100).round();
+  static var ambient_val        = (ambient_color_hsv.value * 100).round();
   static var ambient_alp        = (ambient_color_hsv.alpha * 255).round();
   static var ambient_color      = 0;
 
   static var node_colors = Uint32List(0);
-  static var hsv_hue = Uint8List(0);
+  static var hsv_hue = Uint16List(0);
   static var hsv_saturation = Uint8List(0);
   static var hsv_values = Uint8List(0);
   static var hsv_alphas = Uint8List(0);
@@ -72,7 +76,7 @@ class GameNodes {
 
   static void resetNodeColorsToAmbient() {
     GameNodes.ambient_alp = clamp(GameNodes.ambient_alp, 0, 255);
-    ambient_color = hsvToColor(
+    ambient_color = hsvToColor4(
         hue: ambient_hue,
         saturation: ambient_sat,
         value: ambient_val,
@@ -83,7 +87,7 @@ class GameNodes {
     if (node_colors.length != total) {
       colorStack = Uint16List(total);
       node_colors = Uint32List(total);
-      hsv_hue = Uint8List(total);
+      hsv_hue = Uint16List(total);
       hsv_saturation = Uint8List(total);
       hsv_values = Uint8List(total);
       hsv_alphas = Uint8List(total);
@@ -171,90 +175,6 @@ class GameNodes {
     ambientStackIndex = -1;
   }
 
-
-
-  static void emitLightDynamic({
-    required int index,
-    required int hue,
-    required int saturation,
-    required int value,
-    required int alpha,
-    double strength = 1.0,
-
-  }){
-    if (index < 0) return;
-    if (index >= total) return;
-
-    if (GameSettings.Dynamic_Shadows) {
-      emitLightAHSV(
-        index: index,
-        alpha: alpha,
-        hue: hue,
-        saturation: saturation,
-        value: value,
-      );
-      return;
-    }
-
-    assert (hue >= 0);
-    assert (hue <= 255);
-    assert (saturation >= 0);
-    assert (saturation <= 255);
-    assert (value >= 0);
-    assert (value <= 255);
-    assert (alpha >= 0);
-    assert (alpha <= 255);
-
-    final zIndex = index ~/ area;
-    final rowIndex = (index - (zIndex * area)) ~/ totalColumns;
-    final columnIndex = GameState.convertNodeIndexToIndexY(index);
-    final radius = Shade.Pitch_Black;
-    final zMin = max(zIndex - radius, 0);
-    final zMax = min(zIndex + radius, totalZ);
-    final rowMin = max(rowIndex - radius, 0);
-    final rowMax = min(rowIndex + radius, totalRows);
-    final columnMin = max(columnIndex - radius, 0);
-    final columnMax = min(columnIndex + radius, totalColumns);
-    final rowInitInit = totalColumns * rowMin;
-    var zTotal = zMin * area;
-
-    const r = 4;
-    final dstXLeft = GameConvert.rowColumnZToRenderX(rowIndex + r, columnIndex - r);
-    if (dstXLeft < Engine.Screen_Left)    return;
-    final dstXRight = GameConvert.rowColumnZToRenderX(rowIndex - r, columnIndex + r);
-    if (dstXRight > Engine.Screen_Right)   return;
-    final dstYTop = GameConvert.rowColumnZToRenderY(rowIndex + r, columnIndex + r, zIndex);
-    if (dstYTop <  Engine.Screen_Top) return;
-    final dstYBottom = GameConvert.rowColumnZToRenderY(rowIndex - r, columnIndex - r, zIndex);
-    if (dstYBottom >  Engine.Screen_Bottom) return;
-
-    for (var z = zMin; z < zMax; z++) {
-      var rowInit = rowInitInit;
-
-      for (var row = rowMin; row <= rowMax; row++){
-        final a = (zTotal) + (rowInit);
-        rowInit += totalColumns;
-        final b = (z - zIndex).abs() + (row - rowIndex).abs();
-        for (var column = columnMin; column <= columnMax; column++) {
-          final nodeIndex = a + column;
-          final distanceValue = Engine.clamp(b + (column - columnIndex).abs() - 2, 0, 6);
-          if (distanceValue > 5) continue;
-
-          colorStackIndex++;
-          colorStack[colorStackIndex] = nodeIndex;
-
-          final intensity = (1.0 - interpolations[clamp(distanceValue, 0, 7)]) * strength;
-          hsv_hue[nodeIndex] = Engine.linerInterpolationInt(hsv_hue[nodeIndex], hue        , intensity);
-          hsv_saturation[nodeIndex] = Engine.linerInterpolationInt(hsv_saturation[nodeIndex], saturation , intensity);
-          hsv_values[nodeIndex] = Engine.linerInterpolationInt(hsv_values[nodeIndex], value      , intensity);
-          hsv_alphas[nodeIndex] = Engine.linerInterpolationInt(hsv_alphas[nodeIndex], alpha      , intensity);
-          refreshNodeColor(nodeIndex);
-        }
-      }
-      zTotal += area;
-    }
-  }
-
   static void emitLightAmbient({
     required int index,
     required int alpha,
@@ -320,7 +240,7 @@ class GameNodes {
   }
 
   static void refreshNodeColor(int index) =>
-    node_colors[index] = hsvToColor(
+    node_colors[index] = hsvToColor4(
       hue: hsv_hue[index],
       saturation: hsv_saturation[index],
       value: hsv_values[index],
@@ -328,7 +248,7 @@ class GameNodes {
     );
 
   static void refreshNodeColor2(int index) =>
-      node_colors[index] = hsvToColor2(
+      node_colors[index] = hsvToColor4(
         hue: hsv_hue[index],
         saturation: hsv_saturation[index],
         value: hsv_values[index],
@@ -417,7 +337,7 @@ class GameNodes {
 
   /// EMIT LIGHT FUNCTIONS
 
-  static void emitLightAHSV({
+  static void emitLightAHSVShadowed({
     required int index,
     required int alpha,
     required int hue,

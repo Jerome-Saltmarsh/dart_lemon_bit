@@ -179,13 +179,17 @@ class GameState {
     required int alpha,
   }){
     if (!GameQueries.inBoundsVector3(v)) return;
-    GameNodes.emitLightDynamic(
+    GameNodes.emitLightAmbientShadows(
       index: GameQueries.getNodeIndexV3(v),
-      hue: hue,
-      saturation: saturation,
-      value: value,
       alpha: alpha,
     );
+    // GameNodes.emitLightAHSVShadowed(
+    //   index: GameQueries.getNodeIndexV3(v),
+    //   hue: hue,
+    //   saturation: saturation,
+    //   value: value,
+    //   alpha: alpha,
+    // );
   }
 
   static void applyVector3EmissionAmbient(Vector3 v, {

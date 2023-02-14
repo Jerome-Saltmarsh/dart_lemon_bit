@@ -113,37 +113,33 @@ class ServerState {
       }
 
       if (gameObject.type == ItemType.GameObjects_Grenade) {
-        GameState.applyVector3Emission(gameObject,
-          hue: GameNodes.ambient_hue,
-          alpha: 0,
-          saturation: GameNodes.ambient_sat,
-          value: 0,
-        );
+        GameState.applyVector3EmissionAmbient(gameObject, alpha: 0);
         continue;
       }
+
       if (gameObject.type == ItemType.GameObjects_Crystal_Small_Blue) {
         GameState.applyVector3Emission(
           gameObject,
           hue: 209,
-          saturation: 169,
-          value: 229,
+          saturation: 66,
+          value: 90,
           alpha: 156,
-
         );
         continue;
       }
 
       if (gameObject.type == ItemType.GameObjects_Crystal_Small_Red) {
         GameState.applyVector3Emission(gameObject,
-          hue: 255,
-          saturation: 194,
-          value: 232,
+          hue: 360,
+          saturation: 74,
+          value: 90,
           alpha: 156,
         );
         continue;
       }
     }
   }
+
 
   static void updateGameObjects() {
     for (final gameObject in gameObjects){

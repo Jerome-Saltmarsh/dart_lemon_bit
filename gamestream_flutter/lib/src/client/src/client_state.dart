@@ -188,14 +188,17 @@ class ClientState {
       final particle = particles[i];
       if (!particle.active) continue;
       if (particle.type != ParticleType.Light_Emission) continue;
-      GameNodes.emitLightDynamic(
+      GameNodes.emitLightAmbientShadows(
         index: particle.nodeIndex,
-        hue: particle.lightHue,
-        saturation: particle.lightSaturation,
-        value: particle.lightValue,
         alpha: particle.alpha,
-        strength: particle.strength,
       );
+      // GameNodes.emitLightAHSVShadowed(
+      //   index: particle.nodeIndex,
+      //   hue: particle.lightHue,
+      //   saturation: particle.lightSaturation,
+      //   value: particle.lightValue,
+      //   alpha: particle.alpha,
+      // );
     }
   }
 }
