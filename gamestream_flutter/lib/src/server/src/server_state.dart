@@ -97,18 +97,26 @@ class ServerState {
     return null;
   }
 
+  static var lightsOn = true;
+  static var lightsNext = 200;
+
   static void applyEmissionGameObjects() {
-    for (final gameObject in gameObjects){
+    lightsNext--;
+    if (lightsNext <= 0) {
+      lightsOn = !lightsOn;
+      if (lightsOn) {
+        lightsNext = randomInt(5, 200);
+      } else {
+        lightsNext = randomInt(2, 15);
+      }
+    }
+
+    for (final gameObject in gameObjects) {
 
       if (!gameObject.active) continue;
 
       if (gameObject.type == ItemType.GameObjects_Barrel_Flaming) {
         GameState.applyVector3EmissionAmbient(gameObject, alpha: 0);
-        continue;
-      }
-
-      if (gameObject.type == ItemType.GameObjects_Tavern_Sign) {
-        GameState.applyVector3Emission(gameObject, hue: 150, saturation: 150, value: 150, alpha: 100);
         continue;
       }
 
@@ -128,27 +136,40 @@ class ServerState {
         continue;
       }
 
-      if (gameObject.type == ItemType.GameObjects_Neon_Sign_01) {
+      if (gameObject.emission) {
         GameState.applyVector3Emission(
           gameObject,
-          hue: 344,
-          saturation: 67,
-          value: 94,
-          alpha: 156,
+          hue: gameObject.emission_hue,
+          saturation: gameObject.emission_sat,
+          value: gameObject.emission_val,
+          alpha: gameObject.emission_alp,
         );
         continue;
       }
 
-      if (gameObject.type == ItemType.GameObjects_Neon_Sign_02) {
-        GameState.applyVector3Emission(
-          gameObject,
-          hue: 166,
-          saturation: 78,
-          value: 88,
-          alpha: 156,
-        );
-        continue;
-      }
+      // if (gameObject.type == ItemType.GameObjects_Neon_Sign_01) {
+      //   if (!lightsOn) continue;
+      //   GameState.applyVector3Emission(
+      //     gameObject,
+      //     hue: 344,
+      //     saturation: 67,
+      //     value: 94,
+      //     alpha: 156,
+      //   );
+      //   continue;
+      // }
+      //
+      // if (gameObject.type == ItemType.GameObjects_Neon_Sign_02) {
+      //   if (!lightsOn) continue;
+      //   GameState.applyVector3Emission(
+      //     gameObject,
+      //     hue: 166,
+      //     saturation: 78,
+      //     value: 88,
+      //     alpha: 156,
+      //   );
+      //   continue;
+      // }
 
       if (gameObject.type == ItemType.GameObjects_Crystal_Small_Red) {
         GameState.applyVector3Emission(gameObject,
@@ -161,7 +182,6 @@ class ServerState {
       }
     }
   }
-
 
   static void updateGameObjects() {
     for (final gameObject in gameObjects){

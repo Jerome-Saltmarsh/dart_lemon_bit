@@ -158,6 +158,23 @@ class ServerResponseReader with ByteReader {
     final gameObject = ServerState.findGameObjectById(id);
     gameObject.active = readBool();
     gameObject.type = readUInt16();
+
+    switch (gameObject.type) {
+      case ItemType.GameObjects_Neon_Sign_01:
+        gameObject.emission = true;
+        gameObject.emission_hue = 344;
+        gameObject.emission_sat = 67;
+        gameObject.emission_val = 94;
+        gameObject.emission_alp = 156;
+        break;
+      case ItemType.GameObjects_Neon_Sign_02:
+        gameObject.emission = true;
+        gameObject.emission_hue = 166;
+        gameObject.emission_sat = 78;
+        gameObject.emission_val = 88;
+        gameObject.emission_alp = 156;
+        break;
+    }
     readVector3(gameObject);
     ServerState.sortGameObjects();
   }

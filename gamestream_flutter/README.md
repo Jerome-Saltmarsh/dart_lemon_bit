@@ -12,6 +12,7 @@ ctrl + w:   minimal mode
 [ ] game learn to play 
 [ ] feature weapon upgrades
 [ ] gameobject type tv
+[ ] feature flicker light
 
 15.02.2023
 [x] gameobject neon sign 2
