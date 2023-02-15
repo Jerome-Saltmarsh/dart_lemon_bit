@@ -281,6 +281,27 @@ class GameNodes {
     lengthZ = totalZ * Node_Height;
   }
 
+  static void refreshNodeVariations(){
+     if (nodeVariations.length < total) {
+       nodeVariations = Uint8List(total);
+     }
+     assert (nodeTypes.length == total);
+     for (var i = 0; i < total; i++){
+        final nodeType = nodeTypes[i];
+        switch (nodeType) {
+          case NodeType.Grass:
+            nodeVariations[i] = randomInt(0, 4);
+            break;
+          case NodeType.Shopping_Shelf:
+            nodeVariations[i] = randomInt(0, 2);
+            break;
+          case NodeType.Tree_Bottom:
+            nodeVariations[i] = randomInt(0, 2);
+            break;
+        }
+     }
+  }
+
   static final shadow = Vector3();
 
   static void markShadow(Vector3 vector){

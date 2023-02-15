@@ -14,6 +14,9 @@ ctrl + w:   minimal mode
 [ ] gameobject type tv
 [ ] fix delete game object
 
+15.02.2023
+[x] client side scene decompression
+
 13.02.2023
 [x] gameobject neon sign
 [x] remove previous mini map

@@ -37,6 +37,7 @@ class GameEvents {
     GameNodes.refreshGridMetrics();
     GameNodes.generateHeightMap();
     GameNodes.generateMiniMap();
+    GameNodes.refreshNodeVariations();
     GameMinimap.generateSrcDst();
     ClientActions.refreshBakeMapLightSources();
 

@@ -479,7 +479,6 @@ class ServerResponseReader with ByteReader {
     GameNodes.projection = GameNodes.area2 + GameNodes.totalColumns + 1;
     GameNodes.projectionHalf =  GameNodes.projection ~/ 2;
     final totalNodes = GameNodes.totalZ * GameNodes.totalRows * GameNodes.totalColumns;
-    GameNodes.nodeVariations = Uint8List(totalNodes);
     GameNodes.colorStack = Uint16List(totalNodes);
     GameNodes.ambientStack = Uint16List(totalNodes);
     GameNodes.total = totalNodes;
