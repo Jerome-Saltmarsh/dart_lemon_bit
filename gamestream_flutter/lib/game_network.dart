@@ -198,6 +198,7 @@ class GameNetwork {
         Engine.zoom = GameConfig.Zoom_Spawn;
         Engine.targetZoom = GameConfig.Zoom_Default;
         ClientState.hoverDialogType.value = DialogType.None;
+        ClientState.timeConnectionEstablished = DateTime.now();
         if (!Engine.isLocalHost) {
           Engine.fullScreenEnter();
         }
@@ -205,6 +206,7 @@ class GameNetwork {
         break;
 
       case ConnectionStatus.Done:
+        ClientState.timeConnectionEstablished = null;
         Engine.camera.x = 0;
         Engine.camera.y = 0;
         Engine.zoom = 1.0;

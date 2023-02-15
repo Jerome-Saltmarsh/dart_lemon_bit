@@ -15,6 +15,7 @@ ctrl + w:   minimal mode
 [ ] feature flicker light
 
 16.02.2023
+[x] feature debug stack display connection information
 [x] fix hue interpolation
 
 15.02.2023

@@ -1,5 +1,4 @@
 import 'package:archive/archive.dart';
-import 'package:gamestream_flutter/functions/hsv_to_color.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_scene.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_byte/byte_reader.dart';
@@ -7,8 +6,8 @@ import 'package:lemon_byte/byte_reader.dart';
 final serverResponseReader = ServerResponseReader();
 
 class ServerResponseReader with ByteReader {
-  final byteLength = Watch(0);
   final bufferSize = Watch(0);
+  final bufferSizeTotal = Watch(0);
   final updateFrame = Watch(0, onChanged: GameState.onChangedUpdateFrame);
   final decoder = ZLibDecoder();
 
@@ -18,6 +17,7 @@ class ServerResponseReader with ByteReader {
     ServerState.totalCharacters = 0;
     this.values = values;
     bufferSize.value = values.length;
+    bufferSizeTotal.value += values.length;
 
     while (true) {
       switch (readByte()) {
@@ -450,18 +450,14 @@ class ServerResponseReader with ByteReader {
     ServerState.rainType.value = readByte();
     ServerState.weatherBreeze.value = readBool();
     ServerState.lightningType.value = readByte();
-    // ServerState.watchTimePassing.value = readBool();
     ServerState.windTypeAmbient.value = readByte();
-    // readByte(); // ambient shade DO NOT DELETE
-    // ServerState.ambientShade.value = readByte();
   }
 
   void readEnd() {
-    byteLength.value = index;
+    bufferSize.value = index;
     index = 0;
     Engine.redrawCanvas();
   }
-
 
   void readStoreItems() {
     final length = readUInt16();

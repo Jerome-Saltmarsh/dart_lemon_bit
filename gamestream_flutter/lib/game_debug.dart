@@ -26,8 +26,10 @@ class GameDebug {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            watch(serverResponseReader.byteLength, (int bytes) => text('network-bytes: $bytes')),
+                            watch(serverResponseReader.bufferSize, (int bytes) => text('network-bytes: $bytes')),
+                            watch(serverResponseReader.bufferSizeTotal, (int bytes) => text('network-bytes-total: ${formatBytes(bytes)}')),
                             Refresh(() =>  text(
+                                "connection-duration: ${ClientState.formattedConnectionDuration}\n"
                                 "offscreen-nodes: ${GameNodes.offscreenNodes}\n"
                                 "onscreen-nodes: ${GameNodes.onscreenNodes}\n"
                                 "mouse-grid: x: ${GameIO.mouseGridX.toInt()}, y: ${GameIO.mouseGridY.toInt()}\n"
@@ -161,4 +163,10 @@ Widget buildColumnLightingControls(){
       // ),
     ],
   );
+}
+
+String formatBytes(int bytes){
+   final kb = bytes ~/ 1000;
+   final mb = kb ~/ 1000;
+   return 'mb: $mb, kb: ${kb % 1000}';
 }

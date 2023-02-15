@@ -43,6 +43,8 @@ class ClientState {
   static var lights_active = 0;
   static var interpolation_padding = 0.0;
 
+  static DateTime? timeConnectionEstablished;
+
   // PROPERTIES
   static bool get hoverDialogIsInventory => hoverDialogType.value == DialogType.Inventory;
   static bool get hoverDialogDialogIsTrade => hoverDialogType.value == DialogType.Trade;
@@ -188,10 +190,6 @@ class ClientState {
       final particle = particles[i];
       if (!particle.active) continue;
       if (particle.type != ParticleType.Light_Emission) continue;
-      // GameNodes.emitLightAmbientShadows(
-      //   index: particle.nodeIndex,
-      //   alpha: particle.alpha,
-      // );
       GameNodes.emitLightAHSVShadowed(
         index: particle.nodeIndex,
         hue: particle.lightHue,
@@ -200,5 +198,13 @@ class ClientState {
         alpha: particle.alpha,
       );
     }
+  }
+
+  static String get formattedConnectionDuration {
+    if (timeConnectionEstablished == null) return 'not connected';
+    final duration = DateTime.now().difference(timeConnectionEstablished!);
+    final seconds = duration.inSeconds % 60;
+    final minutes = duration.inMinutes;
+    return 'minutes: $minutes, seconds: $seconds';
   }
 }
