@@ -1,3 +1,4 @@
+import 'package:archive/archive.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_scene.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_byte/byte_reader.dart';
@@ -8,6 +9,7 @@ class ServerResponseReader with ByteReader {
   final byteLength = Watch(0);
   final bufferSize = Watch(0);
   final updateFrame = Watch(0, onChanged: GameState.onChangedUpdateFrame);
+  final decoder = ZLibDecoder();
 
   void read(Uint8List values) {
     updateFrame.value++;
@@ -462,61 +464,26 @@ class ServerResponseReader with ByteReader {
     GameNodes.totalZ = readUInt16();
     GameNodes.totalRows = readUInt16();
     GameNodes.totalColumns = readUInt16();
+
+    final compressedNodeTypeLength = readUInt24();
+    final compressedNodeOrientationsLength = readUInt24();
+    
+    final compressedNodeTypes = readUint8List(compressedNodeTypeLength);
+    final compressedNodeOrientations = readUint8List(compressedNodeOrientationsLength);
+    final nodeTypes = decoder.decodeBytes(compressedNodeTypes);
+
+    GameNodes.nodeTypes = Uint8List.fromList(nodeTypes);
+    GameNodes.nodeOrientations = Uint8List.fromList(decoder.decodeBytes(compressedNodeOrientations));
     GameNodes.area = GameNodes.totalRows * GameNodes.totalColumns;
     GameNodes.area2 = GameNodes.area * 2;
     GameNodes.projection = GameNodes.area2 + GameNodes.totalColumns + 1;
     GameNodes.projectionHalf =  GameNodes.projection ~/ 2;
     final totalNodes = GameNodes.totalZ * GameNodes.totalRows * GameNodes.totalColumns;
-    if (GameNodes.nodeTypes.length < totalNodes) {
-      GameNodes.nodeTypes = Uint8List(totalNodes);
-      GameNodes.nodeOrientations = Uint8List(totalNodes);
-      GameNodes.nodeVariations = Uint8List(totalNodes);
-      GameNodes.colorStack = Uint16List(totalNodes);
-      GameNodes.ambientStack = Uint16List(totalNodes);
-    }
+    GameNodes.nodeVariations = Uint8List(totalNodes);
+    GameNodes.colorStack = Uint16List(totalNodes);
+    GameNodes.ambientStack = Uint16List(totalNodes);
     GameNodes.total = totalNodes;
     GameState.nodesRaycast = GameNodes.area +  GameNodes.area + GameNodes.totalColumns + 1;
-
-    var gridIndex = 0;
-    var total = 0;
-    var currentRow = 0;
-    var currentColumn = 0;
-
-    while (total < totalNodes) {
-      final nodeType = readByte();
-      final nodeOrientation = readByte();
-      assert (NodeType.supportsOrientation(nodeType, nodeOrientation));
-
-      var count = readUInt16();
-      total += count;
-
-      while (count > 0) {
-        GameNodes.nodeTypes[gridIndex] = nodeType;
-        GameNodes.nodeOrientations[gridIndex] = nodeOrientation;
-
-        if (nodeType == NodeType.Tree_Bottom) {
-          GameNodes.nodeVariations[gridIndex] = randomInt(0, 2);
-        } else
-        if (nodeType == NodeType.Grass) {
-          GameNodes.nodeVariations[gridIndex] = randomInt(0, 4);
-        } else
-        if (nodeType == NodeType.Shopping_Shelf) {
-          GameNodes.nodeVariations[gridIndex] = randomInt(0, 2);
-        }
-
-        gridIndex++;
-        count--;
-        currentColumn++;
-        if (currentColumn >= GameNodes.totalColumns) {
-          currentColumn = 0;
-          currentRow++;
-          if (currentRow >= GameNodes.totalRows) {
-            currentRow = 0;
-          }
-        }
-      }
-    }
-    assert(total == totalNodes);
     GameEvents.onChangedNodes();
     ClientState.sceneChanged.value++;
     onChangedScene();

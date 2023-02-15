@@ -69,10 +69,10 @@ packages:
     dependency: "direct main"
     description:
       name: lemon_byte
-      sha256: fca73e0305abdfaed653f561349460f7fdb4d44870dddb1a6453a59cf69de90a
+      sha256: "63ec2425ec953c5ef863e0bb855d782330c7e516514bb68fce775e9c02d2f6ca"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.37"
+    version: "1.0.39"
   lemon_math:
     dependency: "direct main"
     description:
