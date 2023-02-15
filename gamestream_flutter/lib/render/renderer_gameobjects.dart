@@ -54,7 +54,7 @@ class RendererGameObjects extends Renderer {
         srcWidth: AtlasItems.getSrcWidth(type),
         srcHeight: AtlasItems.getSrcHeight(type),
         scale: AtlasItems.getSrcScale(type),
-        color: gameObject.emission_type == EmissionType.None
+        color: gameObject.emission_type != EmissionType.Color
             ? GameState.getV3RenderColor(gameObject)
             : gameObject.emission_col,
       );

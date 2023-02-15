@@ -1144,7 +1144,7 @@ class EditorUI {
                                       final gameObject = GameEditor.gameObject.value!;
                                       final hsv = HSVColor.fromColor(color);
                                       gameObject.emission_alp = (hsv.alpha * 255).round();
-                                      gameObject.emission_hue = (hsv.hue * 360).round();
+                                      gameObject.emission_hue = (hsv.hue).round();
                                       gameObject.emission_sat = (hsv.saturation * 100).round();
                                       gameObject.emission_val = (hsv.value * 100).round();
                                       gameObject.refreshEmissionColor();

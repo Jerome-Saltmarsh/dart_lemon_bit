@@ -97,24 +97,10 @@ class ServerState {
     return null;
   }
 
-  static var lightsOn = true;
-  static var lightsNext = 200;
-
   static void applyEmissionGameObjects() {
-    lightsNext--;
-    if (lightsNext <= 0) {
-      lightsOn = !lightsOn;
-      if (lightsOn) {
-        lightsNext = randomInt(5, 200);
-      } else {
-        lightsNext = randomInt(2, 15);
-      }
-    }
-
     for (final gameObject in gameObjects) {
       if (!gameObject.active) continue;
-
-      switch (gameObject.emission_type){
+      switch (gameObject.emission_type) {
         case EmissionType.None:
           continue;
         case EmissionType.Color:
@@ -130,48 +116,6 @@ class ServerState {
           GameState.applyVector3EmissionAmbient(gameObject, alpha: 0);
           continue;
       }
-
-      // if (gameObject.type == ItemType.GameObjects_Barrel_Flaming) {
-      //   GameState.applyVector3EmissionAmbient(gameObject, alpha: 0);
-      //   continue;
-      // }
-
-      // if (gameObject.type == ItemType.GameObjects_Grenade) {
-      //   GameState.applyVector3EmissionAmbient(gameObject, alpha: 0);
-      //   continue;
-      // }
-
-      // if (gameObject.type == ItemType.GameObjects_Crystal_Small_Blue) {
-      //   GameState.applyVector3Emission(
-      //     gameObject,
-      //     hue: 209,
-      //     saturation: 66,
-      //     value: 90,
-      //     alpha: 156,
-      //   );
-      //   continue;
-      // }
-
-      // if (gameObject.emission_type == EmissionType.Color) {
-      //   GameState.applyVector3Emission(
-      //     gameObject,
-      //     hue: gameObject.emission_hue,
-      //     saturation: gameObject.emission_sat,
-      //     value: gameObject.emission_val,
-      //     alpha: gameObject.emission_alp,
-      //   );
-      //   continue;
-      // }
-      //
-      // if (gameObject.type == ItemType.GameObjects_Crystal_Small_Red) {
-      //   GameState.applyVector3Emission(gameObject,
-      //     hue: 360,
-      //     saturation: 74,
-      //     value: 90,
-      //     alpha: 156,
-      //   );
-      //   continue;
-      // }
     }
   }
 
