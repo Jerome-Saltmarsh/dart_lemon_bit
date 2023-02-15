@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:gamestream_flutter/isometric/ui/columns/build_column_selected_node.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/stacks/build_page.dart';
@@ -1027,117 +1028,137 @@ class EditorUI {
   static Widget buildColumnSelectedGameObject() => GameUI.buildDialogUIControl(
       child: Container(
         color: brownLight,
-        width: 200,
+        width: 220,
         padding: GameStyle.Padding_10,
-        child: Column(
-          children: [
-            watch(GameEditor.gameObjectSelectedType, (int type) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                      alignment: Alignment.centerRight,
-                      child: text("X", onPressed: GameNetwork.sendGameObjectRequestDeselect),
-                  ),
-                  Container(
-                      constraints: BoxConstraints(
-                        maxWidth: 80,
-                        maxHeight: 80,
-                      ),
-                      child: GameUI.buildAtlasItemType(type),
-                  ),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              watch(GameEditor.gameObjectSelectedType, (int type) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                        alignment: Alignment.centerRight,
+                        child: text("X", onPressed: GameNetwork.sendGameObjectRequestDeselect),
+                    ),
+                    Container(
+                        constraints: BoxConstraints(
+                          maxWidth: 80,
+                          maxHeight: 80,
+                        ),
+                        child: GameUI.buildAtlasItemType(type),
+                    ),
 
-                  height8,
-                  text(ItemType.getName(type), size: 22),
-                  height8,
-                  watch(GameEditor.gameObjectSelectedCollidable, (bool enabled) =>
-                    onPressed(
-                      action: () => GameNetwork.sendGameObjectRequest(GameObjectRequest.Toggle_Strikable),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          text("Strikable"),
-                          text(enabled),
-                        ],
-                      ),
-                    )
-                  ),
-                  watch(GameEditor.gameObjectSelectedGravity, (bool enabled) =>
+                    height8,
+                    text(ItemType.getName(type), size: 22),
+                    height8,
+                    watch(GameEditor.gameObjectSelectedCollidable, (bool enabled) =>
                       onPressed(
-                        action: () => GameNetwork.sendGameObjectRequest(GameObjectRequest.Toggle_Gravity),
+                        action: () => GameNetwork.sendGameObjectRequest(GameObjectRequest.Toggle_Strikable),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            text("Gravity"),
+                            text("Strikable"),
                             text(enabled),
                           ],
                         ),
                       )
-                  ),
-                  watch(GameEditor.gameObjectSelectedFixed, (bool enabled) =>
-                      onPressed(
-                        action: () => GameNetwork.sendGameObjectRequest(GameObjectRequest.Toggle_Fixed),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            text("Fixed"),
-                            text(enabled),
-                          ],
-                        ),
-                      )
-                  ),
-                  watch(GameEditor.gameObjectSelectedCollectable, (bool enabled) =>
-                      onPressed(
-                        action: () => GameNetwork.sendGameObjectRequest(GameObjectRequest.Toggle_Collectable),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            text("Collectable"),
-                            text(enabled),
-                          ],
-                        ),
-                      )
-                  ),
-                  watch(GameEditor.gameObjectSelectedPhysical, (bool enabled) =>
-                      onPressed(
-                        action: () => GameNetwork.sendGameObjectRequest(GameObjectRequest.Toggle_Physical),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            text("Physical"),
-                            text(enabled),
-                          ],
-                        ),
-                      )
-                  ),
-                  watch(GameEditor.gameObjectSelectedPersistable, (bool enabled) =>
-                      onPressed(
-                        action: () => GameNetwork.sendGameObjectRequest(GameObjectRequest.Toggle_Persistable),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            text("Persistable"),
-                            text(enabled),
-                          ],
-                        ),
-                      )
-                  ),
-                  watch(GameEditor.gameObjectSelectedEmission, (bool enabled) =>
-                      onPressed(
-                        action: () => GameEditor.gameObject.value!.emission = !GameEditor.gameObject.value!.emission,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            text("Emission"),
-                            text(enabled),
-                          ],
-                        ),
-                      )
-                  ),
-                ],
-              );
-            }),
-          ],
+                    ),
+                    watch(GameEditor.gameObjectSelectedGravity, (bool enabled) =>
+                        onPressed(
+                          action: () => GameNetwork.sendGameObjectRequest(GameObjectRequest.Toggle_Gravity),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              text("Gravity"),
+                              text(enabled),
+                            ],
+                          ),
+                        )
+                    ),
+                    watch(GameEditor.gameObjectSelectedFixed, (bool enabled) =>
+                        onPressed(
+                          action: () => GameNetwork.sendGameObjectRequest(GameObjectRequest.Toggle_Fixed),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              text("Fixed"),
+                              text(enabled),
+                            ],
+                          ),
+                        )
+                    ),
+                    watch(GameEditor.gameObjectSelectedCollectable, (bool enabled) =>
+                        onPressed(
+                          action: () => GameNetwork.sendGameObjectRequest(GameObjectRequest.Toggle_Collectable),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              text("Collectable"),
+                              text(enabled),
+                            ],
+                          ),
+                        )
+                    ),
+                    watch(GameEditor.gameObjectSelectedPhysical, (bool enabled) =>
+                        onPressed(
+                          action: () => GameNetwork.sendGameObjectRequest(GameObjectRequest.Toggle_Physical),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              text("Physical"),
+                              text(enabled),
+                            ],
+                          ),
+                        )
+                    ),
+                    watch(GameEditor.gameObjectSelectedPersistable, (bool enabled) =>
+                        onPressed(
+                          action: () => GameNetwork.sendGameObjectRequest(GameObjectRequest.Toggle_Persistable),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              text("Persistable"),
+                              text(enabled),
+                            ],
+                          ),
+                        )
+                    ),
+                    watch(GameEditor.gameObjectSelectedEmission, (bool enabled) =>
+                        onPressed(
+                          action: () => GameEditor.gameObject.value!.emission = !GameEditor.gameObject.value!.emission,
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  text("Emission"),
+                                  text(enabled),
+                                ],
+                              ),
+                              if (enabled)
+                                ColorPicker(
+                                    portraitOnly: true,
+                                    pickerColor: Color(GameEditor.gameObject.value!.emission_col),
+                                    onColorChanged: (color){
+                                      final gameObject = GameEditor.gameObject.value!;
+                                      final hsv = HSVColor.fromColor(color);
+                                      gameObject.emission_alp = (hsv.alpha * 255).round();
+                                      gameObject.emission_hue = (hsv.hue * 360).round();
+                                      gameObject.emission_sat = (hsv.saturation * 100).round();
+                                      gameObject.emission_val = (hsv.value * 100).round();
+                                      gameObject.refreshColor();
+                                    },
+                                )
+                            ],
+                          ),
+                        )
+                    ),
+                  ],
+                );
+              }),
+            ],
+          ),
         ),
       ),
     );
