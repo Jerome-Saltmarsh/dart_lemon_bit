@@ -164,6 +164,8 @@ class GameWebsite {
       children: [
         // buildTextButton("DARK-AGE", action: GameNetwork.connectToGameDarkAge),
         // height24,
+        text("STREAMPUNK", size: 30),
+        height32,
         buildTextButton("PRACTICE", action: GameNetwork.connectToGamePractice),
         height24,
         buildTextButton("SURVIVE", action: GameNetwork.connectToGameSurvival),

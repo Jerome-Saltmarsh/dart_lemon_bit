@@ -281,7 +281,7 @@ class GameNodes {
     lengthZ = totalZ * Node_Height;
   }
 
-  static void refreshNodeVariations(){
+  static void refreshNodeVariations() {
      if (nodeVariations.length < total) {
        nodeVariations = Uint8List(total);
      }
