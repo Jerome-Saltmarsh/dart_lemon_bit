@@ -1527,6 +1527,10 @@ abstract class Game {
     }
     if (instance is GameObject) {
       gameObjects.remove(instance);
+      for (final player in players) {
+        player.writeUInt8(ServerResponse.GameObject_Deleted);
+        player.writeUInt16(instance.id);
+      }
       return;
     }
     if (instance is Projectile) {

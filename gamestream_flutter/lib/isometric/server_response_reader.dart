@@ -102,6 +102,9 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Game_Status:
           ServerState.gameStatus.value = readByte();
           break;
+        case ServerResponse.GameObject_Deleted:
+          ServerState.removeGameObjectById(readUInt16());
+          break;
         default:
           if (debugging) {
             return;

@@ -225,6 +225,9 @@ class ServerState {
       compare: ClientState.compareRenderOrder,
     );
   }
+
+  static void removeGameObjectById(int id )=>
+      gameObjects.removeWhere((element) => element.id == id);
 }
 
 
