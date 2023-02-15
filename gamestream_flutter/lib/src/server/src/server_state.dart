@@ -234,6 +234,7 @@ class ServerState {
     }
   }
 
+  /// TODO rename to findOrCreateGameObject
   static GameObject findGameObjectById(int id){
     for (final gameObject in gameObjects){
       if (gameObject.id != id) continue;
@@ -242,6 +243,14 @@ class ServerState {
     final instance = GameObject()..id = id;
     gameObjects.add(instance);
     return instance;
+  }
+
+  static GameObject? findGameObjectById2(int id){
+    for (final gameObject in gameObjects){
+      if (gameObject.id != id) continue;
+      return gameObject;
+    }
+    return null;
   }
 
   static void clean() {

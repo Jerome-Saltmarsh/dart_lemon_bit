@@ -6,7 +6,7 @@ class GameEditor {
 
 
   static final editTab = Watch(EditTab.Grid, onChanged: onChangedEditTab);
-  static final gameObject = GameObject();
+  static final gameObject = Watch<GameObject?>(null);
   static final gameObjectSelected = Watch(false);
   static final gameObjectSelectedType = Watch(0);
   static final gameObjectSelectedCollidable = Watch(true);
@@ -19,6 +19,7 @@ class GameEditor {
   static final gameObjectSelectedParticleType = Watch(0);
   static final gameObjectSelectedParticleSpawnRate = Watch(0);
   static final gameObjectSelectedSpawnType = Watch(0);
+  static final gameObjectSelectedEmission = Watch(false);
 
   static final nodeSelectedType = Watch<int>(0, onChanged: onChangedSelectedNodeType);
   static final nodeSelectedOrientation = Watch(NodeOrientation.None);
@@ -140,8 +141,10 @@ class GameEditor {
   }
 
   static void cameraCenterSelectedObject() =>
-      Engine.cameraCenter(gameObject.renderX, gameObject.renderY)
-  ;
+      Engine.cameraCenter(
+          gameObject.value!.renderX,
+          gameObject.value!.renderY,
+      );
 
   static void delete(){
     if (gameObjectSelected.value)

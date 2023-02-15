@@ -1122,6 +1122,19 @@ class EditorUI {
                         ),
                       )
                   ),
+
+                  watch(GameEditor.gameObjectSelectedEmission, (bool enabled) =>
+                      onPressed(
+                        action: () => GameEditor.gameObject.value!.emission != GameEditor.gameObject.value!.emission,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            text("Emission"),
+                            text(enabled),
+                          ],
+                        ),
+                      )
+                  ),
                 ],
               );
             }),

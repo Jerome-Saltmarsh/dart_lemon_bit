@@ -1,4 +1,5 @@
 import 'package:archive/archive.dart';
+import 'package:gamestream_flutter/functions/hsv_to_color.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_scene.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_byte/byte_reader.dart';
@@ -166,6 +167,7 @@ class ServerResponseReader with ByteReader {
         gameObject.emission_sat = 67;
         gameObject.emission_val = 94;
         gameObject.emission_alp = 156;
+        gameObject.refreshColor();
         break;
       case ItemType.GameObjects_Neon_Sign_02:
         gameObject.emission = true;
@@ -173,6 +175,7 @@ class ServerResponseReader with ByteReader {
         gameObject.emission_sat = 78;
         gameObject.emission_val = 88;
         gameObject.emission_alp = 156;
+        gameObject.refreshColor();
         break;
     }
     readVector3(gameObject);
@@ -377,20 +380,25 @@ class ServerResponseReader with ByteReader {
     readByte(); // DO NOT DELETE
   }
 
-
   void readEditorGameObjectSelected() {
-    readVector3(GameEditor.gameObject);
-    final type                                       = readUInt16();
+    // readVector3(GameEditor.gameObject);
+
+    final id = readUInt16();
+    final gameObject = ServerState.findGameObjectById2(id);
+    if (gameObject == null) throw Exception("could not find gameobject with id $id");
+    GameEditor.gameObject.value = gameObject;
     GameEditor.gameObjectSelectedCollidable   .value = readBool();
     GameEditor.gameObjectSelectedFixed        .value = readBool();
     GameEditor.gameObjectSelectedCollectable  .value = readBool();
     GameEditor.gameObjectSelectedPhysical     .value = readBool();
     GameEditor.gameObjectSelectedPersistable  .value = readBool();
     GameEditor.gameObjectSelectedGravity      .value = readBool();
-    GameEditor.gameObject.type                       = type;
-    GameEditor.gameObjectSelectedType.value          = type;
+
+    GameEditor.gameObjectSelectedType.value          = gameObject.type;
     GameEditor.gameObjectSelected.value              = true;
     GameEditor.cameraCenterSelectedObject();
+
+    GameEditor.gameObjectSelectedEmission.value = gameObject.emission;
   }
 
   void readCharacters(){

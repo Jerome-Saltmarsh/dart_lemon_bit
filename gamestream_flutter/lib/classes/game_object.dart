@@ -1,3 +1,4 @@
+import 'package:gamestream_flutter/functions/hsv_to_color.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class GameObject extends Vector3 {
@@ -10,4 +11,13 @@ class GameObject extends Vector3 {
   var emission_val = 0;
   var emission_alp = 0;
   var emission_col = 0;
+
+  void refreshColor(){
+    emission_col = hsvToColor4(
+        hue: emission_hue,
+        saturation: emission_sat,
+        value: emission_val,
+        opacity: emission_alp,
+    );
+  }
 }

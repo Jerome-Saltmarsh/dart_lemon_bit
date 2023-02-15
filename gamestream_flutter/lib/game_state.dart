@@ -1121,11 +1121,11 @@ class GameState {
       Engine.renderCircleOutline(
         sides: 24,
         radius: ItemType.getRadius(GameEditor.gameObjectSelectedType.value),
-        x: GameEditor.gameObject.renderX,
-        y: GameEditor.gameObject.renderY,
+        x: GameEditor.gameObject.value!.renderX,
+        y: GameEditor.gameObject.value!.renderY,
         color: Colors.white,
       );
-      return renderCircleV3(GameEditor.gameObject);
+      return renderCircleV3(GameEditor.gameObject.value!);
     }
 
     renderEditWireFrames();

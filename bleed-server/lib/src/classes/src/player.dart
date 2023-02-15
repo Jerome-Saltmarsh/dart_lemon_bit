@@ -1551,8 +1551,7 @@ class Player extends Character with ByteWriter {
     final selectedGameObject = editorSelectedGameObject;
     if (selectedGameObject == null) return;
     writeByte(ServerResponse.Editor_GameObject_Selected);
-    writePosition3(selectedGameObject);
-    writeUInt16(selectedGameObject.type);
+    writeUInt16(selectedGameObject.id);
     writeBool(selectedGameObject.strikable);
     writeBool(selectedGameObject.fixed);
     writeBool(selectedGameObject.collectable);
