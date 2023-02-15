@@ -1124,19 +1124,19 @@ class EditorUI {
                           ),
                         )
                     ),
-                    watch(GameEditor.gameObjectSelectedEmission, (bool enabled) =>
+                    watch(GameEditor.gameObjectSelectedEmission, (int emissionType) =>
                         onPressed(
-                          action: () => GameEditor.gameObject.value!.emission = !GameEditor.gameObject.value!.emission,
+                          action: () => GameEditor.gameObject.value!.emission_type = ((GameEditor.gameObject.value!.emission_type + 1) % 3),
                           child: Column(
                             children: [
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   text("Emission"),
-                                  text(enabled),
+                                  text(emissionType),
                                 ],
                               ),
-                              if (enabled)
+                              if (emissionType == EmissionType.Color)
                                 ColorPicker(
                                     portraitOnly: true,
                                     pickerColor: Color(GameEditor.gameObject.value!.emission_col),
@@ -1147,7 +1147,7 @@ class EditorUI {
                                       gameObject.emission_hue = (hsv.hue * 360).round();
                                       gameObject.emission_sat = (hsv.saturation * 100).round();
                                       gameObject.emission_val = (hsv.value * 100).round();
-                                      gameObject.refreshColor();
+                                      gameObject.refreshEmissionColor();
                                     },
                                 )
                             ],

@@ -112,77 +112,70 @@ class ServerState {
     }
 
     for (final gameObject in gameObjects) {
-
       if (!gameObject.active) continue;
 
-      if (gameObject.type == ItemType.GameObjects_Barrel_Flaming) {
-        GameState.applyVector3EmissionAmbient(gameObject, alpha: 0);
-        continue;
+      switch (gameObject.emission_type){
+        case EmissionType.None:
+          continue;
+        case EmissionType.Color:
+          GameState.applyVector3Emission(
+            gameObject,
+            hue: gameObject.emission_hue,
+            saturation: gameObject.emission_sat,
+            value: gameObject.emission_val,
+            alpha: gameObject.emission_alp,
+          );
+          continue;
+        case EmissionType.Ambient:
+          GameState.applyVector3EmissionAmbient(gameObject, alpha: 0);
+          continue;
       }
 
-      if (gameObject.type == ItemType.GameObjects_Grenade) {
-        GameState.applyVector3EmissionAmbient(gameObject, alpha: 0);
-        continue;
-      }
+      // if (gameObject.type == ItemType.GameObjects_Barrel_Flaming) {
+      //   GameState.applyVector3EmissionAmbient(gameObject, alpha: 0);
+      //   continue;
+      // }
 
-      if (gameObject.type == ItemType.GameObjects_Crystal_Small_Blue) {
-        GameState.applyVector3Emission(
-          gameObject,
-          hue: 209,
-          saturation: 66,
-          value: 90,
-          alpha: 156,
-        );
-        continue;
-      }
+      // if (gameObject.type == ItemType.GameObjects_Grenade) {
+      //   GameState.applyVector3EmissionAmbient(gameObject, alpha: 0);
+      //   continue;
+      // }
 
-      if (gameObject.emission) {
-        GameState.applyVector3Emission(
-          gameObject,
-          hue: gameObject.emission_hue,
-          saturation: gameObject.emission_sat,
-          value: gameObject.emission_val,
-          alpha: gameObject.emission_alp,
-        );
-        continue;
-      }
-
-      // if (gameObject.type == ItemType.GameObjects_Neon_Sign_01) {
-      //   if (!lightsOn) continue;
+      // if (gameObject.type == ItemType.GameObjects_Crystal_Small_Blue) {
       //   GameState.applyVector3Emission(
       //     gameObject,
-      //     hue: 344,
-      //     saturation: 67,
-      //     value: 94,
+      //     hue: 209,
+      //     saturation: 66,
+      //     value: 90,
       //     alpha: 156,
+      //   );
+      //   continue;
+      // }
+
+      // if (gameObject.emission_type == EmissionType.Color) {
+      //   GameState.applyVector3Emission(
+      //     gameObject,
+      //     hue: gameObject.emission_hue,
+      //     saturation: gameObject.emission_sat,
+      //     value: gameObject.emission_val,
+      //     alpha: gameObject.emission_alp,
       //   );
       //   continue;
       // }
       //
-      // if (gameObject.type == ItemType.GameObjects_Neon_Sign_02) {
-      //   if (!lightsOn) continue;
-      //   GameState.applyVector3Emission(
-      //     gameObject,
-      //     hue: 166,
-      //     saturation: 78,
-      //     value: 88,
+      // if (gameObject.type == ItemType.GameObjects_Crystal_Small_Red) {
+      //   GameState.applyVector3Emission(gameObject,
+      //     hue: 360,
+      //     saturation: 74,
+      //     value: 90,
       //     alpha: 156,
       //   );
       //   continue;
       // }
-
-      if (gameObject.type == ItemType.GameObjects_Crystal_Small_Red) {
-        GameState.applyVector3Emission(gameObject,
-          hue: 360,
-          saturation: 74,
-          value: 90,
-          alpha: 156,
-        );
-        continue;
-      }
     }
   }
 
+  /// TODO Optimize
   static void updateGameObjects() {
     for (final gameObject in gameObjects){
       if (!gameObject.active) continue;
@@ -190,7 +183,6 @@ class ServerState {
       projectShadow(gameObject);
     }
   }
-
 
   static void projectShadow(Vector3 v3){
      final z = getProjectionZ(v3);

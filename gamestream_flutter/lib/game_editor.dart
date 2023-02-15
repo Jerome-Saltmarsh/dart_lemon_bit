@@ -19,7 +19,7 @@ class GameEditor {
   static final gameObjectSelectedParticleType = Watch(0);
   static final gameObjectSelectedParticleSpawnRate = Watch(0);
   static final gameObjectSelectedSpawnType = Watch(0);
-  static final gameObjectSelectedEmission = Watch(false);
+  static final gameObjectSelectedEmission = Watch(EmissionType.None);
 
   static final nodeSelectedType = Watch<int>(0, onChanged: onChangedSelectedNodeType);
   static final nodeSelectedOrientation = Watch(NodeOrientation.None);

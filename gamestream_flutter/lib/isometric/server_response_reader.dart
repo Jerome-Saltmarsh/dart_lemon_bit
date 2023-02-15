@@ -162,20 +162,26 @@ class ServerResponseReader with ByteReader {
 
     switch (gameObject.type) {
       case ItemType.GameObjects_Neon_Sign_01:
-        gameObject.emission = true;
+        gameObject.emission_type = EmissionType.Color;
         gameObject.emission_hue = 344;
         gameObject.emission_sat = 67;
         gameObject.emission_val = 94;
         gameObject.emission_alp = 156;
-        gameObject.refreshColor();
+        gameObject.refreshEmissionColor();
         break;
       case ItemType.GameObjects_Neon_Sign_02:
-        gameObject.emission = true;
+        gameObject.emission_type = EmissionType.Color;
         gameObject.emission_hue = 166;
         gameObject.emission_sat = 78;
         gameObject.emission_val = 88;
         gameObject.emission_alp = 156;
-        gameObject.refreshColor();
+        gameObject.refreshEmissionColor();
+        break;
+      case ItemType.GameObjects_Barrel_Flaming:
+        gameObject.emission_type = EmissionType.Ambient;
+        break;
+      case ItemType.GameObjects_Grenade:
+        gameObject.emission_type = EmissionType.Ambient;
         break;
     }
     readVector3(gameObject);
@@ -398,7 +404,7 @@ class ServerResponseReader with ByteReader {
     GameEditor.gameObjectSelected.value              = true;
     GameEditor.cameraCenterSelectedObject();
 
-    GameEditor.gameObjectSelectedEmission.value = gameObject.emission;
+    GameEditor.gameObjectSelectedEmission.value = gameObject.emission_type;
   }
 
   void readCharacters(){
