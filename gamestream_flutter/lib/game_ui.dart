@@ -11,7 +11,6 @@ import 'package:gamestream_flutter/language_utils.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import 'game_ui_config.dart';
-import 'isometric/ui/dialogs/build_game_dialog.dart';
 
 class GameUI {
   static const Icon_Scale = 1.5;

@@ -95,6 +95,7 @@ class ItemType {
   static const GameObjects_Van                  = Index_GameObjects + 32;
   static const GameObjects_Computer             = Index_GameObjects + 33;
   static const GameObjects_Neon_Sign_01         = Index_GameObjects + 34;
+  static const GameObjects_Neon_Sign_02         = Index_GameObjects + 35;
 
   static const Resource_Wood = Index_Resources + 5;
   static const Resource_Stone = Index_Resources + 6;
@@ -266,6 +267,7 @@ class ItemType {
     GameObjects_Van,
     GameObjects_Computer,
     GameObjects_Neon_Sign_01,
+    GameObjects_Neon_Sign_02,
   ].contains(value);
 
   static bool isInteractable(int value) => const [
@@ -714,6 +716,7 @@ class ItemType {
      GameObjects_Bottle: "Bottle",
      GameObjects_Computer: "Computer",
      GameObjects_Neon_Sign_01: "Neon Sign 01",
+     GameObjects_Neon_Sign_02: "Neon Sign 02",
   }[value] ?? "item-type-unknown($value)";
 
   static int getMaxQuantity(int itemType) => const {
@@ -834,7 +837,8 @@ class ItemType {
      GameObjects_Bottle,
      GameObjects_Van,
      GameObjects_Computer,
-    GameObjects_Neon_Sign_01,
+     GameObjects_Neon_Sign_01,
+     GameObjects_Neon_Sign_02,
   ];
 
   static bool isTypeBarrel(int type)=> const [

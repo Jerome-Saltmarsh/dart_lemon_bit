@@ -37,7 +37,12 @@ class RendererGameObjects extends Renderer {
           srcWidth: 48,
           srcHeight: 48,
           scale: AtlasItems.getSrcScale(type),
-          color: GameState.getV3RenderColor(gameObject),
+          color: const [
+            ItemType.GameObjects_Neon_Sign_01,
+            ItemType.GameObjects_Neon_Sign_02,
+          ].contains(gameObject.id)
+              ? 0
+              : GameState.getV3RenderColor(gameObject),
         );
       }
 

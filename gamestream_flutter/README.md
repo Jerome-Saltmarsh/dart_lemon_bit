@@ -12,9 +12,10 @@ ctrl + w:   minimal mode
 [ ] game learn to play 
 [ ] feature weapon upgrades
 [ ] gameobject type tv
-[ ] fix delete game object
 
 15.02.2023
+[x] gameobject neon sign 2
+[x] fix delete game object
 [x] client side scene decompression
 
 13.02.2023
