@@ -28,6 +28,9 @@ class GameDebug {
                           children: [
                             watch(serverResponseReader.bufferSize, (int bytes) => text('network-bytes: $bytes')),
                             watch(serverResponseReader.bufferSizeTotal, (int bytes) => text('network-bytes-total: ${formatBytes(bytes)}')),
+                            watch(serverResponseReader.bufferSizeTotal, (int bytes) => text('network-bytes-per-second: ${ClientState.formatAverageBytePerSecond(bytes)}')),
+                            watch(serverResponseReader.bufferSizeTotal, (int bytes) => text('network-bytes-per-minute: ${ClientState.formatAverageBytePerMinute(bytes)}')),
+                            watch(serverResponseReader.bufferSizeTotal, (int bytes) => text('network-bytes-per-hour: ${ClientState.formatAverageBytePerHour(bytes)}')),
                             Refresh(() =>  text(
                                 "connection-duration: ${ClientState.formattedConnectionDuration}\n"
                                 "offscreen-nodes: ${GameNodes.offscreenNodes}\n"

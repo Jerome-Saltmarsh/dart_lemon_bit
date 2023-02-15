@@ -200,11 +200,47 @@ class ClientState {
     }
   }
 
+  static Duration? get connectionDuration {
+    if (timeConnectionEstablished == null) return null;
+    return DateTime.now().difference(timeConnectionEstablished!);
+  }
+
   static String get formattedConnectionDuration {
-    if (timeConnectionEstablished == null) return 'not connected';
-    final duration = DateTime.now().difference(timeConnectionEstablished!);
+    final duration = connectionDuration;
+    if (duration == null) return 'not connected';
     final seconds = duration.inSeconds % 60;
     final minutes = duration.inMinutes;
     return 'minutes: $minutes, seconds: $seconds';
+  }
+
+  static String formatAverageBufferSize(int bytes){
+    final duration = connectionDuration;
+    if (duration == null) return 'not connected';
+    final seconds = duration.inSeconds;
+    final bytesPerSecond = (bytes / seconds).round();
+    final bytesPerMinute = bytesPerSecond * 60;
+    final bytesPerHour = bytesPerMinute * 60;
+    return 'per second: $bytesPerSecond, per minute: $bytesPerMinute, per hour: $bytesPerHour';
+  }
+
+  static String formatAverageBytePerSecond(int bytes){
+    final duration = connectionDuration;
+    if (duration == null) return 'not connected';
+    if (duration.inSeconds <= 0) return '-';
+    return formatBytes((bytes / duration.inSeconds).round());
+  }
+
+  static String formatAverageBytePerMinute(int bytes){
+    final duration = connectionDuration;
+    if (duration == null) return 'not connected';
+    if (duration.inSeconds <= 0) return '-';
+    return formatBytes((bytes / duration.inSeconds).round() * 60);
+  }
+
+  static String formatAverageBytePerHour(int bytes){
+    final duration = connectionDuration;
+    if (duration == null) return 'not connected';
+    if (duration.inSeconds <= 0) return '-';
+    return formatBytes((bytes / duration.inSeconds).round() * 3600);
   }
 }
