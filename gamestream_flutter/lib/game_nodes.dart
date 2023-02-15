@@ -991,21 +991,28 @@ class GameNodes {
 
     final intensity = interpolations[interpolation < 0 ? 0 : interpolation];
 
+    var hueA = hue;
+    var hueB = hsv_hue[index];
+    int hueI;
 
-    // var a = hsv_alphas[index];
-    // final indexHue = hsv_hue[index];
-    // if (indexHue == ambient_hue){
-    //   a = ambient_alp;
-    // }
+    if ((hueA - hueB).abs() > 180){
+      if (hueA < hueB){
+         hueA += 360;
+      } else {
+         hueB += 360;
+      }
+      hueI = Engine.linerInterpolationInt(hueA, hueB, intensity) % 360;
+    } else {
+      hueI = Engine.linerInterpolationInt(hueA, hueB, intensity);
+    }
 
     final interpolatedA = Engine.linerInterpolationInt(alpha, hsv_alphas[index], intensity);
-    final interpolatedH = Engine.linerInterpolationInt(hue, hsv_hue[index], intensity);
     final interpolatedS = Engine.linerInterpolationInt(saturation, hsv_saturation[index], intensity);
     final interpolatedV = Engine.linerInterpolationInt(value, hsv_values[index], intensity);
     colorStackIndex++;
     colorStack[colorStackIndex] = index;
     hsv_alphas[index] = interpolatedA;
-    hsv_hue[index] = interpolatedH;
+    hsv_hue[index] = hueI;
     hsv_saturation[index] = interpolatedS;
     hsv_values[index] = interpolatedV;
     refreshNodeColor2(index);

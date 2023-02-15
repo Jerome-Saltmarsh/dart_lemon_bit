@@ -14,6 +14,9 @@ ctrl + w:   minimal mode
 [ ] gameobject type tv
 [ ] feature flicker light
 
+16.02.2023
+[x] fix hue interpolation
+
 15.02.2023
 [x] gameobject neon sign 2
 [x] fix delete game object
