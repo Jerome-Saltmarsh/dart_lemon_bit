@@ -1594,6 +1594,7 @@ abstract class Game {
            if (target.interactable) {
              player.setCharacterStateIdle();
              customOnPlayerInteractedWithGameObject(player, target);
+             player.target = null;
              return;
            }
            if (target.collectable) {

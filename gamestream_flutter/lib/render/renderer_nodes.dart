@@ -257,15 +257,6 @@ class RendererNodes extends Renderer {
     GameNodes.resetNodeAmbientStack();
     GameState.applyEmissions();
 
-    if (GameState.editMode){
-      GameNodes.emitLightAHSVShadowed(
-        index: GameEditor.nodeSelectedIndex.value,
-        hue: GameNodes.ambient_hue,
-        saturation: GameNodes.ambient_sat,
-        value: GameNodes.ambient_val,
-        alpha: 0,
-      );
-    }
 
     highlightCharacterNearMouse();
   }

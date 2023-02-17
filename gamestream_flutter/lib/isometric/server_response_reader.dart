@@ -183,6 +183,14 @@ class ServerResponseReader with ByteReader {
       case ItemType.GameObjects_Grenade:
         gameObject.emission_type = EmissionType.Ambient;
         break;
+      case ItemType.GameObjects_Vending_Upgrades:
+        gameObject.emission_type = EmissionType.Color;
+        gameObject.emission_hue = 203;
+        gameObject.emission_sat = 43;
+        gameObject.emission_val = 100;
+        gameObject.emission_alp = 150;
+        gameObject.refreshEmissionColor();
+        break;
     }
     readVector3(gameObject);
     ServerState.sortGameObjects();

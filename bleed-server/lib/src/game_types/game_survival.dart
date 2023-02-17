@@ -1,5 +1,6 @@
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/dark_age/dark_age_environment.dart';
+import 'package:lemon_math/functions/random_bool.dart';
 import 'package:lemon_math/functions/random_item.dart';
 
 class GameSurvival extends Game {
@@ -57,27 +58,21 @@ class GameSurvival extends Game {
 
   int getRandomItemType() => randomItem(const[
       ItemType.Resource_Round_9mm,
-      ItemType.Resource_Round_9mm,
-      ItemType.Resource_Round_9mm,
       ItemType.Resource_Round_Shotgun,
-      ItemType.Resource_Round_Shotgun,
-      ItemType.Resource_Round_Rifle,
       ItemType.Resource_Round_Rifle,
       ItemType.Resource_Round_50cal,
-      ItemType.Resource_Scrap_Metal,
-      ItemType.Resource_Gold,
-      ItemType.Resource_Gun_Powder,
       ItemType.Weapon_Thrown_Grenade,
       ItemType.Consumables_Apple,
     ]);
 
   int getItemQuantityForItemType(int itemType) => const {
-      ItemType.Resource_Round_9mm: 10,
-      ItemType.Resource_Round_Shotgun: 3,
-      ItemType.Resource_Round_Rifle: 15,
+      ItemType.Resource_Round_9mm: 4,
+      ItemType.Resource_Round_Shotgun: 2,
+      ItemType.Resource_Round_Rifle: 8,
       ItemType.Resource_Round_50cal: 2,
       ItemType.Resource_Scrap_Metal: 1,
       ItemType.Resource_Gold: 1,
+      ItemType.Resource_Credit: 5,
       ItemType.Resource_Gun_Powder: 2,
       ItemType.Consumables_Apple: 2,
   }[itemType] ?? 1;
@@ -94,8 +89,8 @@ class GameSurvival extends Game {
   }
 
   void spawnRandomGameObjectAtPosition(Position3 value) {
+    if (randomBool()) return;
     final itemType = getRandomItemType();
-    if (itemType == ItemType.Empty) return;
     spawnGameObjectItemAtPosition(
       position: value,
       type: itemType,
@@ -111,7 +106,9 @@ class GameSurvival extends Game {
 
   @override
   void customOnPlayerInteractedWithGameObject(Player player, GameObject gameObject) {
-    player.setStoreItems(const [
+
+    if (gameObject.type == ItemType.GameObjects_Vending_Machine){
+      player.setStoreItems(const [
         ItemType.Weapon_Thrown_Grenade,
         ItemType.Weapon_Handgun_Glock,
         ItemType.Weapon_Rifle_Musket,
@@ -119,7 +116,43 @@ class GameSurvival extends Game {
         ItemType.Weapon_Rifle_M4,
         ItemType.Weapon_Rifle_Sniper,
         ItemType.Weapon_Ranged_Bow,
-    ]);
+      ]);
+    }
+
+    if (gameObject.type == ItemType.GameObjects_Vending_Upgrades) {
+      final items = <int>[];
+      for (var i = 0; i < player.inventory.length; i++){
+          final itemType = player.inventory[i];
+          final itemTypeUpgrade = ItemType.getUpgrade(itemType);
+          if (itemTypeUpgrade == ItemType.Empty) continue;
+          items.add(itemTypeUpgrade);
+      }
+      final belt1Upgrade = ItemType.getUpgrade(player.belt1_itemType);
+      if (belt1Upgrade != ItemType.Empty){
+        items.add(belt1Upgrade);
+      }
+      final belt2Upgrade = ItemType.getUpgrade(player.belt2_itemType);
+      if (belt2Upgrade != ItemType.Empty){
+        items.add(belt2Upgrade);
+      }
+      final belt3Upgrade = ItemType.getUpgrade(player.belt3_itemType);
+      if (belt3Upgrade != ItemType.Empty){
+        items.add(belt3Upgrade);
+      }
+      final belt4Upgrade = ItemType.getUpgrade(player.belt4_itemType);
+      if (belt4Upgrade != ItemType.Empty){
+        items.add(belt4Upgrade);
+      }
+      final belt5Upgrade = ItemType.getUpgrade(player.belt5_itemType);
+      if (belt5Upgrade != ItemType.Empty){
+        items.add(belt5Upgrade);
+      }
+      final belt6Upgrade = ItemType.getUpgrade(player.belt6_itemType);
+      if (belt6Upgrade != ItemType.Empty){
+        items.add(belt6Upgrade);
+      }
+      player.setStoreItems(items);
+    }
   }
 
   @override
@@ -163,6 +196,14 @@ class GameSurvival extends Game {
     ItemType.GameObjects_Toilet,
     ItemType.GameObjects_Crate_Wooden,
   ];
+
+  @override
+  void customOnCollisionBetweenPlayerAndGameObject(Player player, GameObject gameObject) {
+    if (gameObject.type == ItemType.Resource_Credit){
+       deactivateCollider(gameObject);
+       player.credits += 5;
+    }
+  }
 
   @override
   void customOnAIRespawned(AI ai) {

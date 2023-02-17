@@ -1,7 +1,5 @@
 
-///
 class ItemType {
-
   static const Invalid                      = -0001;
   static const Empty                        = 00000;
   static const Index_Perk                   = 00500;
@@ -96,6 +94,7 @@ class ItemType {
   static const GameObjects_Computer             = Index_GameObjects + 33;
   static const GameObjects_Neon_Sign_01         = Index_GameObjects + 34;
   static const GameObjects_Neon_Sign_02         = Index_GameObjects + 35;
+  static const GameObjects_Vending_Upgrades     = Index_GameObjects + 36;
 
   static const Resource_Wood = Index_Resources + 5;
   static const Resource_Stone = Index_Resources + 6;
@@ -255,10 +254,12 @@ class ItemType {
     GameObjects_Computer,
     GameObjects_Neon_Sign_01,
     GameObjects_Neon_Sign_02,
+    GameObjects_Vending_Upgrades,
   ].contains(value);
 
   static bool isInteractable(int value) => const [
     GameObjects_Vending_Machine,
+    GameObjects_Vending_Upgrades,
   ].contains(value);
 
   static bool isPhysical(int value) => const [
@@ -281,7 +282,7 @@ class ItemType {
         GameObjects_Sink,
         GameObjects_Chair,
         GameObjects_Washing_Machine,
-        GameObjects_Car_Tire,
+        GameObjects_Vending_Upgrades,
       ].contains(value);
 
   static bool isTypeEquipped(int value) =>
@@ -625,8 +626,9 @@ class ItemType {
      Resource_Iron: "Iron",
      Resource_Stone: "Stone",
      Resource_Gold: "Gold",
+     Resource_Credit: "Credits",
      Resource_Scrap_Metal: "Scrap Metal",
-     Resource_Gun_Powder: "Gun-Powder",
+     Resource_Gun_Powder: "Gun Powder",
      Resource_Round_Shotgun: "Shotgun Rounds",
      Resource_Round_Rifle: "Rifle Rounds",
      Resource_Round_9mm: "9mm Rounds",
@@ -704,6 +706,7 @@ class ItemType {
      GameObjects_Computer: "Computer",
      GameObjects_Neon_Sign_01: "Neon Sign 01",
      GameObjects_Neon_Sign_02: "Neon Sign 02",
+    ItemType.GameObjects_Vending_Upgrades: "Vending Upgrade",
   }[value] ?? "item-type-unknown($value)";
 
   static int getMaxQuantity(int itemType) => const {
@@ -826,6 +829,7 @@ class ItemType {
      GameObjects_Computer,
      GameObjects_Neon_Sign_01,
      GameObjects_Neon_Sign_02,
+     GameObjects_Vending_Upgrades,
   ];
 
   static bool isTypeBarrel(int type)=> const [
@@ -846,6 +850,20 @@ class ItemType {
     GameObjects_Van,
     GameObjects_Washing_Machine,
   ].contains(type);
+
+  static int getUpgrade(int itemType) {
+     return const {
+       Weapon_Handgun_Glock: Weapon_Handgun_Revolver,
+       Weapon_Rifle_AK_47: Weapon_Rifle_M4,
+     }[itemType] ?? Empty;
+  }
+
+  static int getUpgradeCost(int itemType){
+    return const {
+      Weapon_Handgun_Glock: 200,
+      Weapon_Rifle_AK_47: 300,
+    }[itemType] ?? Empty;
+  }
 }
 
 

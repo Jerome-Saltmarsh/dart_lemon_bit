@@ -78,6 +78,20 @@ class GameState {
     applyEmissionsProjectiles();
     applyCharacterColors();
     ClientState.applyEmissionsParticles();
+    applyEmissionEditorSelectedNode();
+  }
+
+  static void applyEmissionEditorSelectedNode() {
+    if (!editMode) return;
+    if ((GameEditor.gameObject.value == null || GameEditor.gameObject.value!.emission_type == EmissionType.None)){
+      GameNodes.emitLightAHSVShadowed(
+        index: GameEditor.nodeSelectedIndex.value,
+        hue: GameNodes.ambient_hue,
+        saturation: GameNodes.ambient_sat,
+        value: GameNodes.ambient_val,
+        alpha: 0,
+      );
+    }
   }
 
   static void applyEmissionsLightSources() {
