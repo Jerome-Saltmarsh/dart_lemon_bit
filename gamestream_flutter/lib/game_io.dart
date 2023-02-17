@@ -267,7 +267,7 @@ class GameIO {
         return CursorAction.Use_Weapon;
       if (Engine.mouseRightDown.value)
         return CursorAction.Attack_Melee;
-      if (Engine.keyPressedSpace)
+      if (Engine.keyPressed(ClientConstants.Key_Throw_Grenade))
         return CursorAction.Throw_Grenade;
       // if (Engine.mouseRightDown.value){
       //   return CursorAction.Stationary_Attack_Cursor;

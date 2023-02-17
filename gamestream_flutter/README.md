@@ -9,12 +9,14 @@ ctrl + w:   minimal mode
 [TODO]
 [ ] milestone fix z ordering
 [ ] milestone fix light corners
-[ ] game learn to play 
+[ ] game learn to play tips
 [ ] feature weapon upgrades
 [ ] gameobject type tv
+[ ] gameobject type pipe
 [ ] feature flicker light
 
 17.02.2023
+[x] feature grenade instruction tooltip
 [x] fix physics fall through stairs
 [x] fix editor select node type column 
 [x] fix render vertical half height

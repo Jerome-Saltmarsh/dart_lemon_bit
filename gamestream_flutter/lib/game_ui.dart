@@ -475,9 +475,22 @@ class GameUI {
         Positioned(
             bottom: GameStyle.Default_Padding,
             left: GameStyle.Default_Padding,
-            child: watch(GamePlayer.totalGrenades, (int totalGrenades) => totalGrenades <= 0
-                    ? GameStyle.Null
-                    : Row(
+            child: buildPanelTotalGrenades()),
+        Positioned(
+          bottom: GameStyle.Default_Padding,
+          right: GameStyle.Default_Padding,
+          child: buildDialogUIControl(
+            child: buildColumnBelt(),
+          ),
+        ),
+      ]);
+
+  static Widget buildPanelTotalGrenades() {
+    return watch(GamePlayer.totalGrenades, (int totalGrenades) => totalGrenades <= 0
+                  ? GameStyle.Null
+                  : Tooltip(
+      message: "Press SPACE to throw grenade",
+                    child: Row(
                         children: [
                           Container(
                             width: 40,
@@ -488,15 +501,9 @@ class GameUI {
                           width4,
                           text(totalGrenades, size: 25),
                         ],
-                      ))),
-        Positioned(
-          bottom: GameStyle.Default_Padding,
-          right: GameStyle.Default_Padding,
-          child: buildDialogUIControl(
-            child: buildColumnBelt(),
-          ),
-        ),
-      ]);
+                      ),
+                  ));
+  }
 
   static Widget buildHudPlayerWeapon() => watch(GamePlayer.weapon, (int weaponType){
     final consumeType = ItemType.getConsumeType(weaponType);

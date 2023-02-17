@@ -15,6 +15,7 @@ class ClientConstants {
   static final Key_Toggle_Debug_Mode = LogicalKeyboardKey.keyP;
   static final Key_Toggle_Input_Mode = LogicalKeyboardKey.keyX;
   static final Key_Toggle_Map = LogicalKeyboardKey.keyM;
+  static final Key_Throw_Grenade = LogicalKeyboardKey.space;
 
   static const Mouse_Translation_Sensitivity = 0.1;
 
