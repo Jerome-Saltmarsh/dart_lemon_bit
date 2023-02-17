@@ -32,4 +32,5 @@ const editorGridTypesColumn2 = [
   NodeType.Shopping_Shelf,
   NodeType.Bookshelf,
   NodeType.Tile,
+  NodeType.Glass,
 ];

@@ -481,7 +481,7 @@ class GameUI {
                   children: [
                     buildAtlasItemType(ItemType.Resource_Credit),
                     width4,
-                    watch(ServerState.playerCredits, text),
+                    watch(ServerState.playerCredits, (value) => text(value, size: 25)),
                   ],
                 ),
                 width16,

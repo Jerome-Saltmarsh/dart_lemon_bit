@@ -708,6 +708,9 @@ class RendererNodes extends Renderer {
       case NodeType.Tile:
         renderNodeTemplateShaded(588);
         return;
+      case NodeType.Glass:
+        renderNodeTemplateShaded(GameConstants.Sprite_Width_Padded_16);
+        return;
       case NodeType.Bau_Haus:
         const index_grass = 6;
         const srcX = GameConstants.Sprite_Width_Padded * index_grass;

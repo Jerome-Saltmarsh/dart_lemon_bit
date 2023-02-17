@@ -185,9 +185,9 @@ class ServerResponseReader with ByteReader {
         break;
       case ItemType.GameObjects_Vending_Upgrades:
         gameObject.emission_type = EmissionType.Color;
-        gameObject.emission_hue = 203;
-        gameObject.emission_sat = 43;
-        gameObject.emission_val = 100;
+        gameObject.emission_hue = 209;
+        gameObject.emission_sat = 66;
+        gameObject.emission_val = 90;
         gameObject.emission_alp = 150;
         gameObject.refreshEmissionColor();
         break;

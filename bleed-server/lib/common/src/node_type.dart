@@ -44,6 +44,7 @@ class NodeType {
   static const Bricks_Red = 84;
   static const Bricks_Brown = 85;
   static const Scaffold = 86;
+  static const Glass = 87;
 
   static bool isMaterialWood(int value) => const [
     Torch,
@@ -96,6 +97,7 @@ class NodeType {
         Bookshelf,
         Tile,
         Boulder,
+        Glass,
       ].contains(type);
 
   static bool supportsOrientationEmpty(int type) => const [
@@ -169,6 +171,7 @@ class NodeType {
         Metal,
         Bau_Haus,
         Scaffold,
+        Glass,
   ].contains(type);
 
   static bool supportsOrientationHalfVertical(int type) => const [
@@ -356,5 +359,6 @@ class NodeType {
     Bricks_Brown: "Bricks (Brown)",
     Scaffold: "Scaffold", 
     Sandbag: "Sandbag",
+    Glass: "Glass",
   }[type] ?? 'unknown($type)';
 }

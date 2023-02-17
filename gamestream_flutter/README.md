@@ -17,6 +17,7 @@ ctrl + w:   minimal mode
 [ ] milestone simplify upgrade system
 
 17.02.2023
+[x] node type glass
 [x] feature credits
 [x] feature grenade instruction tooltip
 [x] fix physics fall through stairs
