@@ -103,14 +103,15 @@ class ItemType {
   static const Resource_Iron = Index_Resources + 8;
   static const Resource_Scrap_Metal = Index_Resources + 9;
   static const Resource_Gold = Index_Resources + 10;
-  static const Resource_Gun_Powder = Index_Resources + 11;
-  static const Resource_Arrow = Index_Resources + 12;
-  static const Resource_Round_9mm = Index_Resources + 13;
-  static const Resource_Round_50cal = Index_Resources + 14;
-  static const Resource_Round_Rifle = Index_Resources + 15;
-  static const Resource_Round_Shotgun = Index_Resources + 16;
-  static const Resource_Fuel = Index_Resources + 17;
-  static const Resource_Rocket = Index_Resources + 18;
+  static const Resource_Credit = Index_Resources + 11;
+  static const Resource_Gun_Powder = Index_Resources + 12;
+  static const Resource_Arrow = Index_Resources + 13;
+  static const Resource_Round_9mm = Index_Resources + 14;
+  static const Resource_Round_50cal = Index_Resources + 15;
+  static const Resource_Round_Rifle = Index_Resources + 16;
+  static const Resource_Round_Shotgun = Index_Resources + 17;
+  static const Resource_Fuel = Index_Resources + 18;
+  static const Resource_Rocket = Index_Resources + 19;
 
   static const Head_Steel_Helm = Index_Heads + 1;
   static const Head_Rogues_Hood = Index_Heads + 2;
@@ -172,53 +173,39 @@ class ItemType {
   static const Weapon_Ranged_Bow_Long = Weapon_Ranged_Bow + 1;
   static const Weapon_Ranged_Crossbow = Weapon_Ranged_Bow_Long + 1;
 
-
   static const Recipes = <int, List<int>> {
     Consumables_Apple: const [
-      0005, Resource_Gold,
+      0003, Resource_Credit,
     ],
     Consumables_Meat: const [
-     0010, Resource_Gold,
+     0006, Resource_Credit,
+    ],
+    Weapon_Handgun_Flint_Lock_Old: const [
+      0010, Resource_Credit,
     ],
     Weapon_Handgun_Flint_Lock: const [
-      0001, Weapon_Handgun_Flint_Lock_Old,
-      0005, Resource_Scrap_Metal,
-      0005, Resource_Gold,
+      0010, Resource_Credit,
     ],
     Weapon_Handgun_Flint_Lock_Superior: const [
-      0002, Weapon_Handgun_Flint_Lock,
-      0010, Resource_Scrap_Metal,
-      0010, Resource_Gold,
+      0050, Resource_Credit,
     ],
     Weapon_Handgun_Blunderbuss: const [
-      0003, Weapon_Handgun_Flint_Lock_Superior,
-      0400, Resource_Scrap_Metal,
-      0100, Resource_Gold,
+      0050, Resource_Credit,
     ],
     Weapon_Handgun_Revolver: const [
-      0003, Weapon_Handgun_Blunderbuss,
-      0400, Resource_Scrap_Metal,
-      0100, Resource_Gold,
+      0050, Resource_Credit,
     ],
     Weapon_Handgun_Glock: const [
-      0003, Weapon_Handgun_Blunderbuss,
-      0400, Resource_Scrap_Metal,
-      0100, Resource_Gold,
+      0050, Resource_Credit,
     ],
     Weapon_Rifle_Arquebus: const [
-      0002, Weapon_Handgun_Flint_Lock,
-      0400, Resource_Scrap_Metal,
-      0300, Resource_Gold,
+      0050, Resource_Credit,
     ],
     Weapon_Rifle_Musket: const [
-      0002, Weapon_Rifle_Arquebus,
-      0400, Resource_Scrap_Metal,
-      0300, Resource_Gold,
+      0050, Resource_Credit,
     ],
     Weapon_Rifle_Jager: const [
-      0300, Weapon_Rifle_Musket,
-      0400, Resource_Scrap_Metal,
-      0300, Resource_Gold,
+      0050, Resource_Credit,
     ],
   };
 

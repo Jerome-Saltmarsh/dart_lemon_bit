@@ -244,8 +244,8 @@ class ServerResponseReader with ByteReader {
       case ApiPlayer.Level:
         ServerState.playerLevel.value = readUInt16();
         break;
-      case ApiPlayer.Gold:
-        ServerState.playerGold.value = readUInt16();
+      case ApiPlayer.Credits:
+        ServerState.playerCredits.value = readUInt16();
         break;
       case ApiPlayer.Energy:
         GamePlayer.energy.value = readUInt16();

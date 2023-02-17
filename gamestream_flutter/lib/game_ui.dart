@@ -475,7 +475,19 @@ class GameUI {
         Positioned(
             bottom: GameStyle.Default_Padding,
             left: GameStyle.Default_Padding,
-            child: buildPanelTotalGrenades()),
+            child: Row(
+              children: [
+                Row(
+                  children: [
+                    buildAtlasItemType(ItemType.Resource_Credit),
+                    width4,
+                    watch(ServerState.playerCredits, text),
+                  ],
+                ),
+                width16,
+                buildPanelTotalGrenades(),
+              ],
+            )),
         Positioned(
           bottom: GameStyle.Default_Padding,
           right: GameStyle.Default_Padding,

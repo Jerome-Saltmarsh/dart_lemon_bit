@@ -743,6 +743,7 @@ class Connection with ByteReader {
     game.customOnPlayerJoined(player);
     player.writePlayerInventory();
     player.writePlayerStats();
+    player.writePlayerCredits();
     player.health = player.maxHealth;
 
 

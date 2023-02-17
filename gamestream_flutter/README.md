@@ -14,6 +14,7 @@ ctrl + w:   minimal mode
 [ ] gameobject type tv
 [ ] gameobject type pipe
 [ ] feature flicker light
+[ ] simplify upgrade system
 
 17.02.2023
 [x] feature grenade instruction tooltip

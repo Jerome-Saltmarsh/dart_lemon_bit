@@ -87,6 +87,10 @@ class GameSurvival extends Game {
     if (target is AI) {
       spawnRandomGameObjectAtPosition(target);
     }
+
+    if (src is Player) {
+      src.credits += 10;
+    }
   }
 
   void spawnRandomGameObjectAtPosition(Position3 value) {

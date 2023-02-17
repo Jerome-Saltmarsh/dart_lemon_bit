@@ -22,7 +22,7 @@ class Player extends Character with ByteWriter {
   final runTarget = Position3();
   late Function sendBufferToClient;
   GameObject? editorSelectedGameObject;
-  var _gold = 0;
+  var _credits = 0;
   var debug = false;
   var framesSinceClientRequest = 0;
   var textDuration = 0;
@@ -58,6 +58,13 @@ class Player extends Character with ByteWriter {
   var belt5_quantity = 0; // Q
   var belt6_quantity = 0; // E
 
+  var belt1_upgrade = 0;
+  var belt2_upgrade = 0;
+  var belt3_upgrade = 0;
+  var belt4_upgrade = 0;
+  var belt5_upgrade = 0;
+  var belt6_upgrade = 0;
+
   var _baseHealth = 10;
   var _baseDamage = 0;
   var _baseEnergy = 10;
@@ -71,6 +78,7 @@ class Player extends Character with ByteWriter {
   static const InventorySize = 6 * 5;
   final inventory = Uint16List(InventorySize);
   final inventoryQuantity = Uint16List(InventorySize);
+  final inventoryUpgrades = Uint16List(InventorySize);
   var storeItems = <int>[];
   final questsInProgress = <Quest>[];
   final questsCompleted = <Quest>[];
@@ -105,7 +113,7 @@ class Player extends Character with ByteWriter {
   Collider? get aimTarget => _aimTarget;
   int get baseMaxHealth => _baseHealth;
   int get baseDamage => _baseDamage;
-  int get gold => _gold;
+  int get credits => _credits;
   int get level => _level;
   int get attributes => _attributes;
   int get equippedWeaponIndex => _equippedWeaponIndex;
@@ -186,10 +194,10 @@ class Player extends Character with ByteWriter {
     writePlayerAttributes();
   }
 
-  set gold(int value) {
-    if (_gold == value) return;
-    _gold = clamp(value, 0, 65000);
-    writePlayerGold();
+  set credits(int value) {
+    if (_credits == value) return;
+    _credits = clamp(value, 0, 65000);
+    writePlayerCredits();
   }
 
   set aimTarget(Collider? collider) {
@@ -788,7 +796,7 @@ class Player extends Character with ByteWriter {
     refreshStats();
   }
 
-  void inventorySwapIndexes(int indexA, int indexB){
+  void inventorySwapIndexes(int indexA, int indexB) {
      if (indexA == indexB) return;
      assert (isValidInventoryIndex(indexA));
      assert (isValidInventoryIndex(indexB));
@@ -1452,10 +1460,10 @@ class Player extends Character with ByteWriter {
     writeBytes(compiled);
   }
 
-  void writePlayerGold(){
+  void writePlayerCredits(){
     writeByte(ServerResponse.Player);
-    writeByte(ApiPlayer.Gold);
-    writeUInt16(gold);
+    writeByte(ApiPlayer.Credits);
+    writeUInt16(credits);
   }
 
   void writePlayerInventory() {

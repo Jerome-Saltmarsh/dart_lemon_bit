@@ -178,15 +178,11 @@ class SceneReader extends ByteReader {
     totalZ = readUInt16();
     totalRows = readUInt16();
     totalColumns = readUInt16();
-    final nodesArea = totalRows * totalColumns;
-    final totalNodes = totalZ * nodesArea;
-
     final compressedNodeTypeLength = readUInt24();
     final compressedNodeOrientationLength = readUInt24();
     final compressedNodeTypes = readUint8List(compressedNodeTypeLength);
     final compressedNodeOrientations = readUint8List(
         compressedNodeOrientationLength);
-
     nodeTypes = Uint8List.fromList(decoder.convert(compressedNodeTypes));
     nodeOrientations = Uint8List.fromList(decoder.convert(compressedNodeOrientations));
   }
