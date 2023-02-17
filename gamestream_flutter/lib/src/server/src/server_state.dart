@@ -27,7 +27,7 @@ class ServerState {
   static final playerBaseEnergy = Watch(0);
   static final playerPerkMaxHealth = Watch(0);
   static final playerPerkMaxDamage = Watch(0);
-  static final playerCredits = Watch(0);
+  static final playerCredits = Watch(0, onChanged: ServerEvents.onChangedPlayerCredits);
   static final playerExperiencePercentage = Watch(0.0);
   static final playerLevel = Watch(1);
   static final playerAttributes = Watch(0);

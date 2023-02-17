@@ -113,13 +113,7 @@ class GameSurvival extends Game {
   void customOnPlayerInteractedWithGameObject(Player player, GameObject gameObject) {
     player.setStoreItems(const [
         ItemType.Weapon_Thrown_Grenade,
-        ItemType.Weapon_Handgun_Flint_Lock_Old,
-        ItemType.Weapon_Handgun_Flint_Lock,
-        ItemType.Weapon_Handgun_Flint_Lock_Superior,
         ItemType.Weapon_Handgun_Glock,
-        ItemType.Weapon_Rifle_Arquebus,
-        ItemType.Weapon_Rifle_Blunderbuss,
-        ItemType.Weapon_Rifle_Jager,
         ItemType.Weapon_Rifle_Musket,
         ItemType.Weapon_Rifle_AK_47,
         ItemType.Weapon_Rifle_M4,

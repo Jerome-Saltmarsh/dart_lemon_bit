@@ -63,6 +63,7 @@ class GameAudio {
   static final buff_1 = AudioSingle(name: 'buff-1', volume: 0.5);
   static final errorSound15 = AudioSingle(name: 'error-sound-15', volume: 0.5);
   static final popSounds14 = AudioSingle(name: 'pop-sounds-14', volume: 0.5);
+  static final coins = AudioSingle(name: 'coins', volume: 0.5);
   static final coins_24 = AudioSingle(name: 'coins-24', volume: 0.5);
   static final hoverOverButtonSound5 = AudioSingle(name: 'hover-over-button-sound-5', volume: 0.5);
   static final thunder = AudioSingle(name: 'thunder', volume: 0.5);

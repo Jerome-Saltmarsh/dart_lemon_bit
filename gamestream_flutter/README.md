@@ -14,9 +14,10 @@ ctrl + w:   minimal mode
 [ ] gameobject type tv
 [ ] gameobject type pipe
 [ ] feature flicker light
-[ ] simplify upgrade system
+[ ] milestone simplify upgrade system
 
 17.02.2023
+[x] feature credits
 [x] feature grenade instruction tooltip
 [x] fix physics fall through stairs
 [x] fix editor select node type column 
