@@ -291,6 +291,7 @@ class AtlasItems {
     ItemType.GameObjects_Firehydrant: 0.66,
     ItemType.GameObjects_Bottle: 0.6,
     ItemType.GameObjects_Van: 0.6,
+    ItemType.GameObjects_Pipe_Vertical: 0.9,
   }[itemType] ?? 0.5;
 }
 

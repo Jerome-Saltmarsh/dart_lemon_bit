@@ -89,6 +89,14 @@ class ClientEvents {
 
     if (GameState.playMode) {
       onKeyPressedPlayMode(key);
+    } else {
+      onKeyPressedEdit(key);
+    }
+  }
+
+  static void onKeyPressedEdit(LogicalKeyboardKey key){
+    if (key == ClientConstants.Key_Duplicate) {
+      GameNetwork.sendGameObjectRequestDuplicate();
     }
   }
 
