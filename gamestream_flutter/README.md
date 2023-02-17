@@ -21,6 +21,7 @@ ctrl + w:   minimal mode
 [ ] milestone simplify upgrade system
 
 17.02.2023
+[x] feature editor duplicate gameobject button
 [x] item type pipe vertical
 [x] node type glass
 [x] feature credits

@@ -1048,9 +1048,14 @@ class EditorUI {
                         ),
                         child: GameUI.buildAtlasItemType(type),
                     ),
-
                     height8,
-                    text(ItemType.getName(type), size: 22),
+                      Row(
+                      children: [
+                        text(ItemType.getName(type), size: 22),
+                        width8,
+                        text("Duplicate", onPressed: GameNetwork.sendGameObjectRequestDuplicate)
+                      ],
+                    ),
                     height8,
                     watch(GameEditor.gameObjectSelectedCollidable, (bool enabled) =>
                       onPressed(

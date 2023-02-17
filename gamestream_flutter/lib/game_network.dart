@@ -382,6 +382,13 @@ class GameNetwork {
     );
   }
 
+  static void sendGameObjectRequestDuplicate() {
+    sendClientRequest(
+      ClientRequest.GameObject,
+      "${GameObjectRequest.Duplicate.index}",
+    );
+  }
+
   static void sendGameObjectRequestSelect() {
     sendGameObjectRequest(GameObjectRequest.Select);
   }

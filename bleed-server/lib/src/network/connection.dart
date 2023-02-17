@@ -655,6 +655,17 @@ class Connection with ByteReader {
         player.writeEditorGameObjectSelected();
         break;
 
+      case GameObjectRequest.Duplicate:
+        if (selectedGameObject == null) return;
+        final duplicated = player.game.spawnGameObject(
+            x: selectedGameObject.x,
+            y: selectedGameObject.y,
+            z: selectedGameObject.z,
+            type: selectedGameObject.type
+        );
+        player.editorSelectedGameObject = duplicated;
+        break;
+
       case GameObjectRequest.Toggle_Physical:
         if (selectedGameObject == null) return;
         selectedGameObject.physical = !selectedGameObject.physical;

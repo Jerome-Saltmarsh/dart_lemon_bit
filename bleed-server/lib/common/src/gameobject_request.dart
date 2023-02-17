@@ -13,6 +13,7 @@ enum GameObjectRequest {
   Toggle_Physical,
   Toggle_Persistable,
   Toggle_Gravity,
+  Duplicate,
 }
 
 const gameObjectRequests = GameObjectRequest.values;
