@@ -7,6 +7,10 @@ navigate to next method: ctrl + shift + up / down arrows
 ctrl + w:   minimal mode
 
 [TODO]
+[ ] building hospital
+[ ] building office
+[ ] building store
+[ ] building police station
 [ ] milestone fix z ordering
 [ ] milestone fix light corners
 [ ] game learn to play tips

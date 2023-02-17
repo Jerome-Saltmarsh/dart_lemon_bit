@@ -95,6 +95,7 @@ class ItemType {
   static const GameObjects_Neon_Sign_01         = Index_GameObjects + 34;
   static const GameObjects_Neon_Sign_02         = Index_GameObjects + 35;
   static const GameObjects_Vending_Upgrades     = Index_GameObjects + 36;
+  static const GameObjects_Pipe_Vertical        = Index_GameObjects + 37;
 
   static const Resource_Wood = Index_Resources + 5;
   static const Resource_Stone = Index_Resources + 6;
@@ -255,6 +256,7 @@ class ItemType {
     GameObjects_Neon_Sign_01,
     GameObjects_Neon_Sign_02,
     GameObjects_Vending_Upgrades,
+    GameObjects_Pipe_Vertical,
   ].contains(value);
 
   static bool isInteractable(int value) => const [
@@ -283,6 +285,7 @@ class ItemType {
         GameObjects_Chair,
         GameObjects_Washing_Machine,
         GameObjects_Vending_Upgrades,
+        GameObjects_Pipe_Vertical,
       ].contains(value);
 
   static bool isTypeEquipped(int value) =>
@@ -706,6 +709,7 @@ class ItemType {
      GameObjects_Computer: "Computer",
      GameObjects_Neon_Sign_01: "Neon Sign 01",
      GameObjects_Neon_Sign_02: "Neon Sign 02",
+    GameObjects_Pipe_Vertical: "Pipe Vertical",
     ItemType.GameObjects_Vending_Upgrades: "Vending Upgrade",
   }[value] ?? "item-type-unknown($value)";
 
@@ -830,6 +834,7 @@ class ItemType {
      GameObjects_Neon_Sign_01,
      GameObjects_Neon_Sign_02,
      GameObjects_Vending_Upgrades,
+     GameObjects_Pipe_Vertical,
   ];
 
   static bool isTypeBarrel(int type)=> const [
