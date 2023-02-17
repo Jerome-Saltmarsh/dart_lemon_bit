@@ -1071,7 +1071,7 @@ abstract class Game {
       return;
     }
 
-    if (collider.physical) {
+    if (collider.physical && !collider.fixed) {
       updateColliderSceneCollision(collider);
     }
   }
@@ -1882,6 +1882,7 @@ abstract class Game {
             character.z,
           );
           character.nextFootstep = 0;
+          character.velocityZ += 1;
         }
         break;
       case CharacterState.Performing:
@@ -2485,8 +2486,11 @@ abstract class Game {
     }
 
     final bottomZ = collider.z;
-    final nodeBottomIndex =
-        scene.getNodeIndexXYZ(collider.x, collider.y, bottomZ);
+    final nodeBottomIndex = scene.getNodeIndexXYZ(
+        collider.x,
+        collider.y,
+        bottomZ,
+    );
     final nodeBottomOrientation = scene.nodeOrientations[nodeBottomIndex];
     final nodeBottomType = scene.nodeTypes[nodeBottomIndex];
 
@@ -2532,6 +2536,81 @@ abstract class Game {
         }
       }
       return;
+    } else {
+      updateColliderSceneCollisionVertical2(collider);
+    }
+
+    if (nodeBottomType == NodeType.Water) {
+      if (collider.z % Node_Height < Node_Height_Half) {
+        internalOnColliderEnteredWater(collider);
+      }
+    }
+    return;
+  }
+
+  void updateColliderSceneCollisionVertical2(Collider collider) {
+    if (!scene.isInboundV3(collider)) {
+      if (collider.z > -100) return;
+      deactivateCollider(collider);
+      if (collider is Character) {
+        setCharacterStateDead(collider);
+      }
+      return;
+    }
+
+    final bottomZ = collider.z + 5;
+    final nodeBottomIndex = scene.getNodeIndexXYZ(
+      collider.x,
+      collider.y,
+      bottomZ,
+    );
+    final nodeBottomOrientation = scene.nodeOrientations[nodeBottomIndex];
+    final nodeBottomType = scene.nodeTypes[nodeBottomIndex];
+
+    if (nodeBottomOrientation == NodeOrientation.Solid) {
+
+      final nodeTop = ((bottomZ ~/ Node_Height) * Node_Height) + Node_Height;
+      if (nodeTop - bottomZ > GamePhysics.Max_Vertical_Collision_Displacement) return;
+      collider.z = nodeTop;
+      if (collider.velocityZ < 0) {
+        if (collider.bounce) {
+          collider.velocityZ =
+              -collider.velocityZ * GamePhysics.Bounce_Friction;
+          dispatchV3(GameEventType.Item_Bounce, collider,
+              angle: -collider.velocityZ);
+        } else {
+          collider.velocityZ = 0;
+        }
+      }
+      return;
+    }
+
+    if (nodeBottomOrientation != NodeOrientation.None) {
+      final percX = ((collider.x % Node_Size) / Node_Size);
+      final percY = ((collider.y % Node_Size) / Node_Size);
+      final nodeBottom = (bottomZ ~/ Node_Height) * Node_Height;
+      final nodeTop = nodeBottom +
+          (NodeOrientation.getGradient(nodeBottomOrientation, percX, percY) *
+              Node_Height);
+      if (nodeTop <= bottomZ) return;
+
+      if (nodeTop - bottomZ > GamePhysics.Max_Vertical_Collision_Displacement) return;
+
+      collider.z = nodeTop;
+
+      if (collider.velocityZ < 0) {
+        if (collider.bounce) {
+          collider.velocityZ =
+              -collider.velocityZ * GamePhysics.Bounce_Friction;
+          dispatchV3(GameEventType.Item_Bounce, collider,
+              angle: -collider.velocityZ);
+        } else {
+          collider.velocityZ = 0;
+        }
+      }
+      return;
+    } else {
+
     }
 
     if (nodeBottomType == NodeType.Water) {

@@ -15,6 +15,7 @@ ctrl + w:   minimal mode
 [ ] feature flicker light
 
 17.02.2023
+[x] fix physics fall through stairs
 [x] fix editor select node type column 
 [x] fix render vertical half height
 [x] node type scaffold
