@@ -11,6 +11,7 @@ class GameObject extends Vector3 {
   var emission_val = 0;
   var emission_alp = 0;
   var emission_col = 0;
+  var emission_intensity = 1.0;
 
   void refreshEmissionColor(){
     emission_col = hsvToColor4(

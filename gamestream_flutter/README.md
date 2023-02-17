@@ -14,6 +14,10 @@ ctrl + w:   minimal mode
 [ ] gameobject type tv
 [ ] feature flicker light
 
+17.02.2023
+[x] fix render vertical half height
+[x] node type scaffold
+
 16.02.2023
 [x] feature debug stack display connection information
 [x] fix hue interpolation

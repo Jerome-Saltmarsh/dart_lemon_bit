@@ -26,6 +26,7 @@ class GameConstants {
   static const Sprite_Width_Padded_12 = Sprite_Width_Padded * 12;
   static const Sprite_Width_Padded_13 = Sprite_Width_Padded * 13;
   static const Sprite_Width_Padded_14 = Sprite_Width_Padded * 14;
+  static const Sprite_Width_Padded_15 = Sprite_Width_Padded * 15;
 
   static const Sprite_Height_Padded_00 = Sprite_Height_Padded * 0;
   static const Sprite_Height_Padded_01 = Sprite_Height_Padded * 1;

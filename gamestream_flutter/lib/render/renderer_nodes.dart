@@ -693,8 +693,11 @@ class RendererNodes extends Renderer {
       case NodeType.Tree_Top:
         renderTreeTop();
         break;
+      case NodeType.Scaffold:
+        renderNodeTemplateShaded(GameConstants.Sprite_Width_Padded_15);
+        break;
       case NodeType.Road_2:
-        renderNodeShadedOffset(srcX: 768, srcY: 672 + GameConstants.Sprite_Height_Padded, offsetX: 0, offsetY: 7);
+        renderNodeShadedOffset(srcX: 1490, srcY: 305, offsetX: 0, offsetY: 7);
         return;
       case NodeType.Wooden_Plank:
         renderNodeTemplateShaded(GameConstants.Sprite_Width_Padded_10);
@@ -1447,7 +1450,7 @@ class RendererNodes extends Renderer {
           srcX: srcX,
           srcY: GameConstants.Sprite_Height_Padded_16,
           offsetX: 0,
-          offsetY: -9,
+          offsetY: -8,
           color: GameNodes.node_colors[currentNodeIndex + GameNodes.area < GameNodes.total ? currentNodeIndex + GameNodes.area : currentNodeIndex],
         );
         return;
@@ -1456,7 +1459,7 @@ class RendererNodes extends Renderer {
           srcX: srcX,
           srcY: GameConstants.Sprite_Height_Padded_16,
           offsetX: 0,
-          offsetY: -1,
+          offsetY: 0,
         );
         return;
       case NodeOrientation.Half_Vertical_Bottom:
@@ -1464,7 +1467,7 @@ class RendererNodes extends Renderer {
           srcX: srcX,
           srcY: GameConstants.Sprite_Height_Padded_16,
           offsetX: 0,
-          offsetY: 2,
+          offsetY: 8,
         );
         return;
       case NodeOrientation.Column_Top_Right:

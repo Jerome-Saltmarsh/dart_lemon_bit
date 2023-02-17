@@ -17,6 +17,7 @@ const editorGridTypesColumn1 = [
   NodeType.Tree_Bottom,
   NodeType.Road,
   NodeType.Road_2,
+  NodeType.Scaffold,
 ];
 
 const editorGridTypesColumn2 = [
