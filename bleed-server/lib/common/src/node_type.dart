@@ -353,6 +353,8 @@ class NodeType {
     Dust: "Dust",
     Bookshelf: "Bookshelf",
     Bricks_Red: "Bricks (Red)",
+    Bricks_Brown: "Bricks (Brown)",
     Scaffold: "Scaffold", 
+    Sandbag: "Sandbag",
   }[type] ?? 'unknown($type)';
 }

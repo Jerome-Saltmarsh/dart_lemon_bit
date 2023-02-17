@@ -397,17 +397,24 @@ class AtlasNodeX {
   static const Orientation_Empty = 1018.0;
   static const Orientation_Radial = 1888.0;
 
+
   static double mapNodeType(int type) => const {
     NodeType.Brick: GameConstants.Sprite_Width_Padded_2,
     NodeType.Grass: GameConstants.Sprite_Width_Padded_3,
+    NodeType.Metal: GameConstants.Sprite_Width_Padded_4,
     NodeType.Wood: GameConstants.Sprite_Width_Padded_5,
     NodeType.Bau_Haus: GameConstants.Sprite_Width_Padded_6,
     NodeType.Soil: GameConstants.Sprite_Width_Padded_7,
     NodeType.Concrete: GameConstants.Sprite_Width_Padded_8,
+    NodeType.Road: GameConstants.Sprite_Width_Padded_9,
+    NodeType.Sandbag: GameConstants.Sprite_Width_Padded_11,
+    NodeType.Tile: GameConstants.Sprite_Width_Padded_12,
+    NodeType.Bricks_Red: GameConstants.Sprite_Width_Padded_13,
+    NodeType.Bricks_Brown: GameConstants.Sprite_Width_Padded_14,
+    NodeType.Scaffold: GameConstants.Sprite_Width_Padded_15,
     NodeType.Torch: Torch,
     NodeType.Grass_Long: Grass_Long,
     NodeType.Grass_Flowers: Grass_Flowers,
-    NodeType.Metal: GameConstants.Sprite_Width_Padded_4,
     NodeType.Tree_Bottom: Tree_Bottom,
     NodeType.Wooden_Plank: AtlasNode.Wooden_Plank_Solid_X,
     NodeType.Spawn: 1704.0,
@@ -423,9 +430,9 @@ class AtlasNodeX {
     NodeType.Oven: Oven,
     NodeType.Window: 1508.0,
     NodeType.Boulder: Boulder,
-    NodeType.Road: 768.0,
-    NodeType.Road_2: 768.0,
-    NodeType.Sandbag: 588.0,
+    NodeType.Road_2: 1490.0,
+    NodeType.Shopping_Shelf: 1441.0,
+    NodeType.Bookshelf: 1392.0,
   }[type] ?? 7055;
 }
 
@@ -476,8 +483,9 @@ class AtlasNodeY {
     NodeType.Tree_Bottom: 433.0,
     NodeType.Oven: Oven,
     NodeType.Boulder: Boulder,
-    NodeType.Road: 672.0,
-    NodeType.Road_2: 672.0 + GameConstants.Sprite_Height_Padded,
+    NodeType.Road_2: 305.0,
+    NodeType.Shopping_Shelf: 160.0,
+    NodeType.Bookshelf: 233.0,
   }[type] ?? 0;
 
   static double mapOrientation(int orientation) {

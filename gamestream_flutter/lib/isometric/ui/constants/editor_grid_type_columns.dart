@@ -12,7 +12,6 @@ const editorGridTypesColumn1 = [
   NodeType.Bau_Haus,
   NodeType.Concrete,
   NodeType.Torch,
-  NodeType.Fireplace,
   NodeType.Tree_Top,
   NodeType.Tree_Bottom,
   NodeType.Road,
@@ -33,5 +32,4 @@ const editorGridTypesColumn2 = [
   NodeType.Shopping_Shelf,
   NodeType.Bookshelf,
   NodeType.Tile,
-  NodeType.Dust,
 ];
