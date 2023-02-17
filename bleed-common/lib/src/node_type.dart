@@ -142,6 +142,7 @@ class NodeType {
         Wooden_Plank,
         Bau_Haus,
         Scaffold,
+        Glass,
   ].contains(type);
 
   static bool supportsOrientationSlopeCornerInner(int type) => const [
