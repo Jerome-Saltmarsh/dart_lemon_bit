@@ -1,4 +1,3 @@
-import 'package:gamestream_flutter/functions/hsv_to_color.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class GameObject extends Vector3 {
@@ -23,11 +22,11 @@ class GameObject extends Vector3 {
   }
 
   void refreshEmissionColor(){
-    emission_col = hsvToColor4(
-        hue: Engine.linerInterpolationInt(GameNodes.ambient_hue, emission_hue , emission_intensity),
-        saturation: Engine.linerInterpolationInt(GameNodes.ambient_sat, emission_sat, emission_intensity),
-        value: Engine.linerInterpolationInt(GameNodes.ambient_val, emission_val, emission_intensity),
-        opacity: Engine.linerInterpolationInt(GameNodes.ambient_alp, emission_alp, emission_intensity),
+    emission_col = hsvToColor(
+        hue: interpolate(start: GameNodes.ambient_hue, end: emission_hue , t: emission_intensity),
+        saturation: interpolate(start: GameNodes.ambient_sat, end: emission_sat, t: emission_intensity),
+        value: interpolate(start: GameNodes.ambient_val, end: emission_val, t: emission_intensity),
+        opacity: interpolate(start: GameNodes.ambient_alp, end: emission_alp, t: emission_intensity),
     );
   }
 }

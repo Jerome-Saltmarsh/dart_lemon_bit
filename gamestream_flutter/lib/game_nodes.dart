@@ -2,7 +2,6 @@
 import 'dart:math';
 
 import 'package:flutter/painting.dart';
-import 'package:gamestream_flutter/functions/hsv_to_color.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class GameNodes {
@@ -77,7 +76,7 @@ class GameNodes {
 
   static void resetNodeColorsToAmbient() {
     GameNodes.ambient_alp = clamp(GameNodes.ambient_alp, 0, 255);
-    ambient_color = hsvToColor4(
+    ambient_color = hsvToColor(
         hue: ambient_hue,
         saturation: ambient_sat,
         value: ambient_val,
@@ -241,15 +240,16 @@ class GameNodes {
   }
 
   static void refreshNodeColor(int index) =>
-    node_colors[index] = hsvToColor4(
+    node_colors[index] = hsvToColor(
       hue: hsv_hue[index],
       saturation: hsv_saturation[index],
       value: hsv_values[index],
       opacity: hsv_alphas[index],
     );
 
+
   static void refreshNodeColor2(int index) =>
-      node_colors[index] = hsvToColor4(
+      node_colors[index] = hsvToColor(
         hue: hsv_hue[index],
         saturation: hsv_saturation[index],
         value: hsv_values[index],
