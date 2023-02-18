@@ -11,7 +11,16 @@ class GameObject extends Vector3 {
   var emission_val = 0;
   var emission_alp = 0;
   var emission_col = 0;
-  var emission_intensity = 1.0;
+  var _emission_intensity = 1.0;
+
+  double get emission_intensity => _emission_intensity;
+
+  set emission_intensity(double value){
+     final clamped = clamp01(value);
+     if (_emission_intensity == clamped) return;
+     _emission_intensity = value;
+     refreshEmissionColor();
+  }
 
   void refreshEmissionColor(){
     emission_col = hsvToColor4(
