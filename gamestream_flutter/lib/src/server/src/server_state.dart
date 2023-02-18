@@ -124,6 +124,7 @@ class ServerState {
   static void updateGameObjects() {
     for (final gameObject in gameObjects){
       if (!gameObject.active) continue;
+      gameObject.update();
       if (gameObject.type != ItemType.GameObjects_Grenade) continue;
       projectShadow(gameObject);
     }

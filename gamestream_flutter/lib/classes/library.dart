@@ -8,6 +8,5 @@ export 'item.dart';
 export 'npc_debug.dart';
 export 'particle.dart';
 export 'projectile.dart';
-export 'structure.dart';
 export 'vector3.dart';
 export 'renderer.dart';

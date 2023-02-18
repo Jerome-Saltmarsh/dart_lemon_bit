@@ -18,9 +18,9 @@ ctrl + w:   minimal mode
 [ ] gameobject type tv
 [ ] gameobject type pipe
 [ ] milestone simplify upgrade system
-[ ] feature flicker light
 
 18.02.2023
+[x] feature flicker light
 [x] feature light intensity
 
 17.02.2023

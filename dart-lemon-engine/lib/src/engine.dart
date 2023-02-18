@@ -12,7 +12,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:lemon_math/library.dart';
+import 'package:lemon_math/src.dart';
 import 'package:lemon_watch/src.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_strategy/url_strategy.dart' as us;
