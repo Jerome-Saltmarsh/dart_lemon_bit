@@ -1,6 +1,6 @@
 
 
-import 'package:bleed_common/library.dart';
+import 'package:bleed_common/src.dart';
 import 'package:gamestream_flutter/game_audio.dart';
 import 'package:gamestream_flutter/game_state.dart';
 

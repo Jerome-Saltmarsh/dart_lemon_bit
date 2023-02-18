@@ -133,7 +133,7 @@ class Connection with ByteReader {
       case ClientRequest.Select_Perk:
         final perkType = parseArg1(arguments);
         if (perkType == null) return;
-        player.selectPerk(perkType);
+        // player.selectPerk(perkType);
         return;
 
       case ClientRequest.Weather_Set_Rain:

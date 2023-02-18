@@ -76,10 +76,6 @@ class ClientEvents {
         GameIO.actionToggleInputMode();
         return;
       }
-      if (key == ClientConstants.Key_Toggle_Window_Attributes) {
-        ClientActions.windowTogglePlayerAttributes();
-        return;
-      }
     }
 
     if (key == ClientConstants.Key_Toggle_Debug_Mode) {

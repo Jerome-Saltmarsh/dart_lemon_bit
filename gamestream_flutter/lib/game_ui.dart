@@ -449,12 +449,6 @@ class GameUI {
         watch(ClientState.hoverTargetType,
             GameInventoryUI.buildPositionedContainerHoverTarget),
         Positioned(
-          left: 50,
-          top: 50,
-          child: buildWatchBool(
-              ClientState.windowVisibleAttributes, buildWindowAttributes),
-        ),
-        Positioned(
           child: Container(
             width: Engine.screen.width,
             alignment: Alignment.center,
@@ -495,7 +489,20 @@ class GameUI {
             child: buildColumnBelt(),
           ),
         ),
+          Positioned(
+            child: buildWindowPerks(),
+            left: GameStyle.Default_Padding,
+            top: GameStyle.Default_Padding,
+          )
       ]);
+
+  static Widget buildWindowPerks(){
+    return Column(
+      children: [
+
+      ],
+    );
+  }
 
   static Widget buildPanelTotalGrenades() {
     return watch(GamePlayer.totalGrenades, (int totalGrenades) => totalGrenades <= 0
@@ -719,98 +726,6 @@ class GameUI {
   /// Automatically rebuilds whenever the inventory gets updated
   static Widget buildInventoryAware({required BasicWidgetBuilder builder}) =>
       watch(ClientState.inventoryReads, (int reads) => builder());
-
-  static Widget buildWindowAttributes() =>
-      watch(ServerState.playerAttributes, (int attributes) {
-        final remaining = attributes > 0;
-        return buildDialogUIControl(
-          child: Container(
-            padding: const EdgeInsets.all(16),
-            color: GameColors.brownDark,
-            width: GameStyle.Window_Attributes_Width,
-            height: GameStyle.Window_Attributes_Height,
-            child: Column(
-              children: [
-                Container(
-                  height: GameStyle.Window_Attributes_Height - 60,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        text("Weapon Capacity"),
-                        text("Weapon Accuracy"),
-                        text("Reload Speed"),
-                        text("Fire Rate"),
-                        text("Movement Speed"),
-                        text("Change Weapon Speed"),
-                        text("Ability: Throw Grenade"),
-                        text("Ability: Heal"),
-                        text("Ability: Blink"),
-                        text("Ability: Double Damage"),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            text("Max Health"),
-                            Row(
-                              children: [
-                                watch(ServerState.playerPerkMaxHealth, text),
-                                width16,
-                                container(
-                                    action: remaining ? ServerActions.selectPerkTypeMaxHealth : null,
-                                    child: text('+', align: TextAlign.center),
-                                    width: 50,
-                                    height: 50,
-                                    color: GameColors.brownLight,
-                                    alignment: Alignment.center,
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                        height4,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            text("Damage"),
-                            Row(
-                              children: [
-                                watch(ServerState.playerPerkMaxDamage, text),
-                                width16,
-                                container(
-                                    action: remaining ? ServerActions.selectPerkTypeDamage : null,
-                                    child: text('+', align: TextAlign.center),
-                                    width: 50,
-                                    height: 50,
-                                    color: GameColors.brownLight,
-                                    alignment: Alignment.center,
-                                ),
-                              ],
-                            )
-
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                if (remaining) text("REMAINING $attributes"),
-              ],
-            ),
-          ),
-        );
-      });
-
-  static Widget buildButtonAttributes(int attributes) {
-    if (attributes == 0) return GameStyle.Null;
-    return buildDialog(
-      dialogType: DialogType.UI_Control,
-      child: container(
-          action: ClientActions.windowTogglePlayerAttributes,
-          alignment: Alignment.center,
-          color: GameColors.brownDark,
-          child: text("ATTRIBUTES +$attributes", align: TextAlign.center)),
-    );
-  }
 
   static Widget buildWatchPlayerLevel() => watch(
       ServerState.playerLevel,

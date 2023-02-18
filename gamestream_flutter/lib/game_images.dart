@@ -1,7 +1,7 @@
 
 import 'dart:ui';
 
-import 'package:bleed_common/library.dart';
+import 'package:bleed_common/src.dart';
 import 'package:lemon_engine/src.dart';
 
 class GameImages {

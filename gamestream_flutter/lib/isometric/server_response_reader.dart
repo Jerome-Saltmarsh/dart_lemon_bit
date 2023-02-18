@@ -332,12 +332,16 @@ class ServerResponseReader with ByteReader {
         ServerState.playerBaseHealth.value = readUInt16();
         ServerState.playerBaseEnergy.value = readUInt16();
         break;
-      case ApiPlayer.Perks:
-        ServerState.playerPerkMaxHealth.value = readByte();
-        ServerState.playerPerkMaxDamage.value = readByte();
-        break;
       case ApiPlayer.Select_Hero:
         ServerState.playerSelectHero.value = readBool();
+        break;
+      case ApiPlayer.Perks_Unlocked:
+        final length = readUInt16();
+        final values = Uint8List(length);
+        for (var i = 0; i < length; i++) {
+          values[i] = readUInt8();
+        }
+        ServerState.playerPerksUnlocked.value = values;
         break;
       default:
         throw Exception("Cannot parse apiPlayer $apiPlayer");

@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:bleed_common/library.dart';
+import 'package:bleed_common/src.dart';
 import 'package:lemon_math/src.dart';
 
 import 'vector3.dart';

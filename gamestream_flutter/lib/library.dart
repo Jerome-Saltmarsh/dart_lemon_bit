@@ -39,7 +39,7 @@ export 'game_atlas.dart';
 export 'game_nodes.dart';
 export 'game_inventory_ui.dart';
 export 'game_style.dart';
-export 'package:bleed_common/library.dart';
+export 'package:bleed_common/src.dart';
 export 'dart:typed_data';
 export 'build/website_build.dart';
 export 'widgets/library_widgets.dart';

@@ -12,10 +12,15 @@ import '../../dark_age/game_dark_age.dart';
 import '../../dark_age/game_dark_age_editor.dart';
 import 'scene_writer.dart';
 
+
 class Player extends Character with ByteWriter {
   /// CONSTANTS
   static const Health_Per_Perk = 5;
   static const Frames_Per_Energy_Gain = 150;
+  static const Perks_Length = 5;
+
+  final perksUnlocked = <int>[];
+  var perksActive = Uint8List(Perks_Length);
 
   /// Variables
   final mouse = Vector2(0, 0);
@@ -43,6 +48,7 @@ class Player extends Character with ByteWriter {
 
   var inventoryDirty = false;
   var _equippedWeaponIndex = 0;
+
 
   var belt1_itemType = ItemType.Empty; // 1
   var belt2_itemType = ItemType.Empty; // 2
@@ -73,8 +79,6 @@ class Player extends Character with ByteWriter {
   Game game;
   Collider? _aimTarget; // the currently highlighted character
   Account? account;
-  var perkMaxHealth = 0;
-  var perkMaxDamage = 0;
   static const InventorySize = 6 * 5;
   final inventory = Uint16List(InventorySize);
   final inventoryQuantity = Uint16List(InventorySize);
@@ -270,9 +274,6 @@ class Player extends Character with ByteWriter {
         damage    += ItemType.getDamage(belt6_itemType);
       }
 
-      maxHealth += perkMaxHealth * Health_Per_Perk;
-      damage += perkMaxDamage;
-
       if (health > maxHealth){
         health = maxHealth;
       }
@@ -282,7 +283,7 @@ class Player extends Character with ByteWriter {
 
       assert (damage > 0);
 
-      writePlayerPerks();
+      writePlayerPerksUnlocked();
       writePlayerMaxHealth();
       writePlayerHealth();
       writePlayerDamage();
@@ -1026,11 +1027,11 @@ class Player extends Character with ByteWriter {
     writeUInt16(_baseEnergy);
   }
 
-  void writePlayerPerks() {
+  void writePlayerPerksUnlocked() {
     writeByte(ServerResponse.Player);
-    writeByte(ApiPlayer.Perks);
-    writeByte(perkMaxHealth);
-    writeByte(perkMaxDamage);
+    writeByte(ApiPlayer.Perks_Unlocked);
+    writeUInt16(perksUnlocked.length);
+    writeUint8List(perksUnlocked);
   }
 
   void writePlayerDamage() {
@@ -1653,19 +1654,6 @@ class Player extends Character with ByteWriter {
   void lookAt(Position position) {
     assert(!deadOrDying);
     lookRadian = this.getAngle(position) + pi;
-  }
-
-  void selectPerk(int perkType) {
-    switch (perkType) {
-      case PerkType.Max_Health:
-        perkMaxHealth++;
-        refreshStats();
-        break;
-      case PerkType.Damage:
-        perkMaxDamage++;
-        refreshStats();
-        break;
-    }
   }
 
   void inventoryClear() {

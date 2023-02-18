@@ -12,7 +12,6 @@ class ClientState {
   static final hoverTargetType = Watch(ClientType.Hover_Target_None);
   static final hoverIndex = Watch(-1);
   static final hoverDialogType = Watch(DialogType.None);
-  static final windowVisibleAttributes = Watch(false, onChanged: ClientEvents.onChangedAttributesWindowVisible);
   static final debugMode = Watch(false, onChanged: ClientEvents.onChangedDebugMode);
   static final Map_Visible = WatchBool(true);
   static final touchButtonSide = Watch(TouchButtonSide.Right);
@@ -24,6 +23,7 @@ class ClientState {
   static final overrideColor = WatchBool(false);
 
   static final window_visible_settings = WatchBool(false);
+  static final window_visible_perks = WatchBool(false);
 
   static final triggerAlarmNoMessageReceivedFromServer = Watch(false);
 

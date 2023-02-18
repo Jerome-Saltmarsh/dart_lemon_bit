@@ -7,17 +7,28 @@ navigate to next method: ctrl + shift + up / down arrows
 ctrl + w:   minimal mode
 
 [TODO]
+[ ] perk melee shoots fireball
+[ ] perk melee doubled coins
+[ ] perk melee steals health
+[ ] perk melee quick draw
+[ ] perk shotgun extra bullet
+[ ] perk grenade extra capacity
+[ ] perk grenade extra blast radius
+[ ] perk grenade extra damage
+
+
 [ ] building hospital
 [ ] building office
 [ ] building store
 [ ] building police station
 [ ] milestone fix z ordering
-[ ] milestone fix light corners
 [ ] game learn to play tips
 [ ] feature weapon upgrades
 [ ] gameobject type tv
 [ ] gameobject type pipe
 [ ] milestone simplify upgrade system
+[ ] feature rotate gameobjects
+[ ] milestone fix light corners
 
 18.02.2023
 [x] feature flicker light

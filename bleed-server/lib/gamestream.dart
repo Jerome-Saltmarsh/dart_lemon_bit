@@ -1,7 +1,7 @@
 
 library GameStream;
 
-export 'common/library.dart';
+export 'common/src.dart';
 export 'firestoreClient/firestoreService.dart';
 
 export 'src/engine.dart';

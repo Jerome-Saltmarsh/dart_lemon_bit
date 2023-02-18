@@ -12,15 +12,6 @@ class ClientActions {
   static void clearHoverIndex() =>
     ClientState.hoverIndex.value = -1;
 
-  static void windowClosePlayerAttributes() =>
-    ClientState.windowVisibleAttributes.value = false;
-
-  static void windowOpenPlayerAttributes() =>
-    ClientState.windowVisibleAttributes.value = true;
-
-  static void windowTogglePlayerAttributes() =>
-      ClientState.windowVisibleAttributes.value = !ClientState.windowVisibleAttributes.value;
-
   static void playSoundWindow() =>
       GameAudio.click_sound_8(1);
 

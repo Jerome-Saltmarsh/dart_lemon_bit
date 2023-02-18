@@ -25,8 +25,9 @@ class ApiPlayer {
   static const Credits = 32;
   static const Attributes = 33;
   static const Damage = 34;
-  static const Perks = 37;
   static const Select_Hero = 38;
   static const Energy = 39;
   static const Base_Damage_Health_Energy = 40;
+  static const Perks_Unlocked = 37;
+  static const Perks_Active = 38;
 }
