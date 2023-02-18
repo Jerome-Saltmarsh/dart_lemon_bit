@@ -1,4 +1,4 @@
-import 'package:lemon_math/library.dart';
+import 'package:lemon_math/src.dart';
 
 class FloatingText with Position {
   var value = "";

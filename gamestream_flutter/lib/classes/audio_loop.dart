@@ -1,5 +1,5 @@
 import 'package:just_audio/just_audio.dart';
-import 'package:lemon_math/library.dart';
+import 'package:lemon_math/src.dart';
 
 class AudioLoop {
 
