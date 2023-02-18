@@ -277,5 +277,6 @@ class GameEditor {
 
   static void setSelectedObjectedIntensity(double value){
     gameObject.value?.emission_intensity = value;
+    gameObject.value?.refreshEmissionColor();
   }
 }

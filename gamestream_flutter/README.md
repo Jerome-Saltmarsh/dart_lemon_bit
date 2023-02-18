@@ -21,6 +21,9 @@ ctrl + w:   minimal mode
 [ ] feature flicker light
 [ ] feature light intensity
 
+18.02.2023
+[x] feature light intensity
+
 17.02.2023
 [x] feature editor duplicate gameobject button
 [x] item type pipe vertical

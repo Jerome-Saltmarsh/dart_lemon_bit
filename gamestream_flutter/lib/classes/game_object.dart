@@ -15,10 +15,10 @@ class GameObject extends Vector3 {
 
   void refreshEmissionColor(){
     emission_col = hsvToColor4(
-        hue: emission_hue,
-        saturation: emission_sat,
-        value: emission_val,
-        opacity: emission_alp,
+        hue: Engine.linerInterpolationInt(GameNodes.ambient_hue, emission_hue , emission_intensity),
+        saturation: Engine.linerInterpolationInt(GameNodes.ambient_sat, emission_sat, emission_intensity),
+        value: Engine.linerInterpolationInt(GameNodes.ambient_val, emission_val, emission_intensity),
+        opacity: Engine.linerInterpolationInt(GameNodes.ambient_alp, emission_alp, emission_intensity),
     );
   }
 }

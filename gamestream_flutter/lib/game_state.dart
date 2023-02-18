@@ -194,10 +194,6 @@ class GameState {
     double intensity = 1.0,
   }){
     if (!GameQueries.inBoundsVector3(v)) return;
-    // GameNodes.emitLightAmbientShadows(
-    //   index: GameQueries.getNodeIndexV3(v),
-    //   alpha: alpha,
-    // );
     GameNodes.emitLightAHSVShadowed(
       index: GameQueries.getNodeIndexV3(v),
       hue: hue,
