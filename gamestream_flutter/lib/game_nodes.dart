@@ -426,13 +426,18 @@ class GameNodes {
       }
     }
 
+    final h = Engine.linerInterpolationInt(ambient_hue, hue , intensity);
+    final s = Engine.linerInterpolationInt(ambient_sat, saturation, intensity);
+    final v = Engine.linerInterpolationInt(ambient_val, value, intensity);
+    final a = Engine.linerInterpolationInt(ambient_alp, alpha, intensity);
+
     applyAHSV(
       index: index,
-      alpha: alpha,
-      hue: hue,
-      saturation: saturation,
-      value: value,
-      intensity: interpolations[0] * intensity,
+      alpha: a,
+      hue: h,
+      saturation: s,
+      value: v,
+      interpolation: 0,
     );
 
     for (var vz = -1; vz <= 1; vz++){
@@ -443,11 +448,10 @@ class GameNodes {
             column: column,
             z: z,
             interpolation: -1,
-            intensity: intensity,
-            alpha: alpha,
-            hue: hue,
-            saturation: saturation,
-            value: value,
+            alpha: a,
+            hue: h,
+            saturation: s,
+            value: v,
             vx: vx,
             vy: vy,
             vz: vz,
@@ -742,7 +746,6 @@ class GameNodes {
     required int hue,
     required int saturation,
     required int value,
-    required double intensity,
     int vx = 0,
     int vy = 0,
     int vz = 0,
@@ -814,7 +817,7 @@ class GameNodes {
                  hue: hue,
                  saturation: saturation,
                  value: value,
-                 intensity: interpolations[interpolation < 0 ? 0 : interpolation] * intensity,
+                 interpolation: interpolation,
                );
              }
              return;
@@ -884,7 +887,7 @@ class GameNodes {
           hue: hue,
           saturation: saturation,
           value: value,
-          intensity: interpolations[interpolation < 0 ? 0 : interpolation] * intensity,
+          interpolation: interpolation,
       );
 
       if (paintBehindZ) {
@@ -894,7 +897,7 @@ class GameNodes {
           hue: hue,
           saturation: saturation,
           value: value,
-          intensity: interpolations[interpolation < 0 ? 0 : interpolation] * intensity,
+          interpolation: interpolation,
         );
       }
 
@@ -905,7 +908,7 @@ class GameNodes {
           hue: hue,
           saturation: saturation,
           value: value,
-          intensity: interpolations[interpolation < 0 ? 0 : interpolation] * intensity,
+          interpolation: interpolation,
         );
       }
 
@@ -916,7 +919,7 @@ class GameNodes {
           hue: hue,
           saturation: saturation,
           value: value,
-          intensity: interpolations[interpolation < 0 ? 0 : interpolation] * intensity,
+          interpolation: interpolation,
         );
       }
 
@@ -936,7 +939,6 @@ class GameNodes {
                column: column,
                z: z,
                interpolation: interpolation,
-               intensity: intensity,
                alpha: alpha,
                hue: hue,
                saturation: saturation,
@@ -955,7 +957,6 @@ class GameNodes {
                saturation: saturation,
                value: value,
                vy: vy,
-               intensity: intensity,
            );
          }
          if (vz != 0){
@@ -964,7 +965,6 @@ class GameNodes {
                column: column,
                z: z,
                interpolation: interpolation,
-               intensity: intensity,
                alpha: alpha,
                hue: hue,
                saturation: saturation,
@@ -1011,13 +1011,12 @@ class GameNodes {
     required int hue,
     required int saturation,
     required int value,
-    required double intensity,
+    required int interpolation,
   }){
-    assert (intensity >= 0);
-    assert (intensity <= 1);
-
     if (index < 0) return;
     if (index >= total) return;
+
+    final intensity = interpolations[interpolation < 0 ? 0 : interpolation];
 
     var hueA = hue;
     var hueB = hsv_hue[index];
