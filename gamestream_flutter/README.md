@@ -17,8 +17,9 @@ ctrl + w:   minimal mode
 [ ] feature weapon upgrades
 [ ] gameobject type tv
 [ ] gameobject type pipe
-[ ] feature flicker light
 [ ] milestone simplify upgrade system
+[ ] feature flicker light
+[ ] feature light intensity
 
 17.02.2023
 [x] feature editor duplicate gameobject button

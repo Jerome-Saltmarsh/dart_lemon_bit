@@ -1141,6 +1141,11 @@ class EditorUI {
                                   text(emissionType),
                                 ],
                               ),
+                              text("Intensity"),
+                              watch(GameEditor.gameObjectSelectedEmissionIntensity, (double value) => Slider(
+                                  value: GameEditor.gameObject.value?.emission_intensity ?? 0,
+                                  onChanged: GameEditor.setSelectedObjectedIntensity,
+                                )),
                               if (emissionType == EmissionType.Color)
                                 ColorPicker(
                                     portraitOnly: true,

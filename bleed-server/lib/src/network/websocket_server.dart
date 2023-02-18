@@ -16,6 +16,7 @@ void startWebsocketServer(){
   );
 
   shelf_io.serve(handler, '0.0.0.0', 8080).then((server) {
+    // server. = false;
     print('Serving at wss://${server.address.host}:${server.port}');
   }).catchError((error){
     print("Websocket error occurred");

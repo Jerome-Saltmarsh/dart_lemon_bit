@@ -21,6 +21,10 @@ class GameEditor {
   static final gameObjectSelectedSpawnType = Watch(0);
   static final gameObjectSelectedEmission = Watch(EmissionType.None);
 
+  static final gameObjectSelectedEmissionIntensity = Watch(1.0, onChanged: (double value){
+     gameObject.value?.emission_intensity = value;
+  });
+
   static final nodeSelectedType = Watch<int>(0, onChanged: onChangedSelectedNodeType);
   static final nodeSelectedOrientation = Watch(NodeOrientation.None);
   static final nodeOrientationVisible = Watch(true);
@@ -269,5 +273,9 @@ class GameEditor {
 
   static void onChangedEditTab(EditTab editTab){
      deselectGameObject();
+  }
+
+  static void setSelectedObjectedIntensity(double value){
+    gameObject.value?.emission_intensity = value;
   }
 }

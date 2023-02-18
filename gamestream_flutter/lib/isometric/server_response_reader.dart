@@ -413,6 +413,7 @@ class ServerResponseReader with ByteReader {
     GameEditor.cameraCenterSelectedObject();
 
     GameEditor.gameObjectSelectedEmission.value = gameObject.emission_type;
+    GameEditor.gameObjectSelectedEmissionIntensity.value = gameObject.emission_intensity;
   }
 
   void readCharacters(){

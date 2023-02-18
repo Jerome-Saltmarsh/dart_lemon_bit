@@ -191,6 +191,7 @@ class GameState {
     required int saturation,
     required int value,
     required int alpha,
+    double intensity = 1.0,
   }){
     if (!GameQueries.inBoundsVector3(v)) return;
     // GameNodes.emitLightAmbientShadows(
@@ -203,6 +204,7 @@ class GameState {
       saturation: saturation,
       value: value,
       alpha: alpha,
+      intensity: intensity,
     );
   }
 

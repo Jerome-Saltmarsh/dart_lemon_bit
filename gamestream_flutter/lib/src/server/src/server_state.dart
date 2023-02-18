@@ -110,6 +110,7 @@ class ServerState {
             saturation: gameObject.emission_sat,
             value: gameObject.emission_val,
             alpha: gameObject.emission_alp,
+            intensity: gameObject.emission_intensity,
           );
           continue;
         case EmissionType.Ambient:
