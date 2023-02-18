@@ -35,7 +35,6 @@ export 'src/map_tiles.dart';
 export 'src/maths.dart';
 export 'src/node_orientation.dart';
 export 'src/node_type.dart';
-export 'src/perk_type.dart';
 export 'src/particle_type.dart';
 export 'src/player_event.dart';
 export 'src/projectile_type.dart';

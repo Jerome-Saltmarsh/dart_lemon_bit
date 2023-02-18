@@ -497,10 +497,14 @@ class GameUI {
       ]);
 
   static Widget buildWindowPerks(){
-    return Column(
-      children: [
-
-      ],
+    return Container(
+      color: GameStyle.Container_Color,
+      padding: GameStyle.Padding_6,
+      child: Column(
+        children: PerkType.Values.map((perkType) => Row(children: [
+           text(PerkType.getName(perkType))
+        ],)).toList()
+      ),
     );
   }
 

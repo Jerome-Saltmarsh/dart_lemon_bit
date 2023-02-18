@@ -1,11 +1,20 @@
 
-class PerkTypes {
+class PerkType {
   static const Extra_Gold_1 = 0;
   static const Extra_Gold_2 = 1;
   static const Extra_Gold_3 = 2;
   static const Grenade_Capacity_1 = 3;
   static const Grenade_Capacity_2 = 4;
   static const Grenade_Capacity_3 = 5;
+  
+  static String getName(int value) => const {
+      Extra_Gold_1: "Extra Gold 1",
+      Extra_Gold_2: "Extra Gold 2",
+      Extra_Gold_3: "Extra Gold 3",
+      Grenade_Capacity_1: "Grenade Capacity 1",
+      Grenade_Capacity_2: "Grenade Capacity 2",
+      Grenade_Capacity_3: "Grenade Capacity 3",
+  }[value] ?? "? $value";
 
   static const Values = [
     Extra_Gold_1,

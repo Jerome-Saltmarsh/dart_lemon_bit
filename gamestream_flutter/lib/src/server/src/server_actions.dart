@@ -36,12 +36,4 @@ class ServerActions {
   static void editSceneClearSpawnedAI(){
     GameNetwork.sendClientRequest(ClientRequest.Edit, EditRequest.Clear_Spawned.index);
   }
-
-  static void selectPerkTypeMaxHealth(){
-    GameNetwork.sendClientRequestSelectPerkType(PerkType.Max_Health);
-  }
-
-  static void selectPerkTypeDamage(){
-    GameNetwork.sendClientRequestSelectPerkType(PerkType.Damage);
-  }
 }
