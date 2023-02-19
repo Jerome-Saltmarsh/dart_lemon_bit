@@ -32,6 +32,7 @@ class GameObject extends Vector3 {
         emission_sat = 67;
         emission_val = 94;
         emission_alp = 156;
+        emission_intensity_vel = 0.05;
         refreshEmissionColor();
         break;
       case ItemType.GameObjects_Neon_Sign_02:
@@ -44,6 +45,9 @@ class GameObject extends Vector3 {
         break;
       case ItemType.GameObjects_Barrel_Flaming:
         emission_type = EmissionType.Ambient;
+        emission_intensity_vel = 0.1;
+        emission_intensity_start = 0.78;
+        emission_intensity_end = 1.0;
         break;
       case ItemType.GameObjects_Grenade:
         emission_type = EmissionType.Ambient;
