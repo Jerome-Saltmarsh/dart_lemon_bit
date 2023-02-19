@@ -171,21 +171,18 @@ class ServerState {
     }
   }
 
-  /// TODO rename to findOrCreateGameObject
-  static GameObject findGameObjectById(int id){
-    for (final gameObject in gameObjects){
-      if (gameObject.id != id) continue;
-      return gameObject;
+  static GameObject findOrCreateGameObject(int id) {
+    for (final gameObject in gameObjects) {
+      if (gameObject.id == id) return gameObject;
     }
-    final instance = GameObject()..id = id;
+    final instance = GameObject(id);
     gameObjects.add(instance);
     return instance;
   }
 
-  static GameObject? findGameObjectById2(int id){
-    for (final gameObject in gameObjects){
-      if (gameObject.id != id) continue;
-      return gameObject;
+  static GameObject? findGameObjectById(int id) {
+    for (final gameObject in gameObjects) {
+      if (gameObject.id == id) return gameObject;
     }
     return null;
   }

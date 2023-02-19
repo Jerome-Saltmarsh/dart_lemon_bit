@@ -156,42 +156,9 @@ class ServerResponseReader with ByteReader {
 
   void readGameObject() {
     final id = readUInt16();
-    final gameObject = ServerState.findGameObjectById(id);
+    final gameObject = ServerState.findOrCreateGameObject(id);
     gameObject.active = readBool();
     gameObject.type = readUInt16();
-
-    switch (gameObject.type) {
-      case ItemType.GameObjects_Neon_Sign_01:
-        gameObject.emission_type = EmissionType.Color;
-        gameObject.emission_hue = 344;
-        gameObject.emission_sat = 67;
-        gameObject.emission_val = 94;
-        gameObject.emission_alp = 156;
-        gameObject.refreshEmissionColor();
-        break;
-      case ItemType.GameObjects_Neon_Sign_02:
-        gameObject.emission_type = EmissionType.Color;
-        gameObject.emission_hue = 166;
-        gameObject.emission_sat = 78;
-        gameObject.emission_val = 88;
-        gameObject.emission_alp = 156;
-        gameObject.refreshEmissionColor();
-        break;
-      case ItemType.GameObjects_Barrel_Flaming:
-        gameObject.emission_type = EmissionType.Ambient;
-        break;
-      case ItemType.GameObjects_Grenade:
-        gameObject.emission_type = EmissionType.Ambient;
-        break;
-      case ItemType.GameObjects_Vending_Upgrades:
-        gameObject.emission_type = EmissionType.Color;
-        gameObject.emission_hue = 209;
-        gameObject.emission_sat = 66;
-        gameObject.emission_val = 90;
-        gameObject.emission_alp = 150;
-        gameObject.refreshEmissionColor();
-        break;
-    }
     readVector3(gameObject);
     ServerState.sortGameObjects();
   }
@@ -402,7 +369,7 @@ class ServerResponseReader with ByteReader {
     // readVector3(GameEditor.gameObject);
 
     final id = readUInt16();
-    final gameObject = ServerState.findGameObjectById2(id);
+    final gameObject = ServerState.findGameObjectById(id);
     if (gameObject == null) throw Exception("could not find gameobject with id $id");
     GameEditor.gameObject.value = gameObject;
     GameEditor.gameObjectSelectedCollidable   .value = readBool();

@@ -1,20 +1,8 @@
 import 'package:gamestream_flutter/library.dart';
 
-class GameObjectEmissionController {
-
-  final GameObject gameObject;
-  var emission_intensity_interpolation = 1.0;
-  var intensity_start = 0.0;
-  var intensity_end = 0.0;
-
-  GameObjectEmissionController(this.gameObject);
-
-
-}
-
 class GameObject extends Vector3 {
-  var id = 0;
-  var type = 0;
+  final int id;
+  var _type = -1;
   var active = false;
   var emission_type = EmissionType.None;
   var emission_hue = 0;
@@ -26,9 +14,50 @@ class GameObject extends Vector3 {
   var emission_intensity_start = 0.15;
   var emission_intensity_end = 1.0;
   var emission_intensity_t = 0.0;
-  var emission_intensity_vel = 0.05;
+  var emission_intensity_vel = 0.00;
 
-  // PROPERTIES
+
+  GameObject(this.id); // PROPERTIES
+  
+  int get type => _type;
+  
+  set type(int value) {
+    if (_type == value) return;
+    _type = value;
+
+    switch (value) {
+      case ItemType.GameObjects_Neon_Sign_01:
+        emission_type = EmissionType.Color;
+        emission_hue = 344;
+        emission_sat = 67;
+        emission_val = 94;
+        emission_alp = 156;
+        refreshEmissionColor();
+        break;
+      case ItemType.GameObjects_Neon_Sign_02:
+        emission_type = EmissionType.Color;
+        emission_hue = 166;
+        emission_sat = 78;
+        emission_val = 88;
+        emission_alp = 156;
+        refreshEmissionColor();
+        break;
+      case ItemType.GameObjects_Barrel_Flaming:
+        emission_type = EmissionType.Ambient;
+        break;
+      case ItemType.GameObjects_Grenade:
+        emission_type = EmissionType.Ambient;
+        break;
+      case ItemType.GameObjects_Vending_Upgrades:
+        emission_type = EmissionType.Color;
+        emission_hue = 209;
+        emission_sat = 66;
+        emission_val = 90;
+        emission_alp = 150;
+        refreshEmissionColor();
+        break;
+    }
+  }
 
   double get emission_intensity => _emission_intensity;
 
@@ -42,7 +71,6 @@ class GameObject extends Vector3 {
   // METHODS
 
   void update(){
-    if (type != ItemType.GameObjects_Neon_Sign_01) return;
     if (emission_intensity_vel == 0) return;
     emission_intensity_t += emission_intensity_vel;
 

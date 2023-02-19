@@ -15,6 +15,7 @@ void startWebsocketServer(){
     pingInterval: const Duration(seconds: 30),
   );
 
+
   shelf_io.serve(handler, '0.0.0.0', 8080).then((server) {
     // server. = false;
     print('Serving at wss://${server.address.host}:${server.port}');
