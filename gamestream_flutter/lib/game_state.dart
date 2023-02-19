@@ -186,6 +186,11 @@ class GameState {
     }
   }
 
+  /// @hue a number between 0 and 360
+  /// @saturation a number between 0 and 100
+  /// @value a number between 0 and 100
+  /// @alpha a number between 0 and 255
+  /// @intensity a number between 0.0 and 1.0
   static void applyVector3Emission(Vector3 v, {
     required int hue,
     required int saturation,
@@ -204,14 +209,20 @@ class GameState {
     );
   }
 
+  /// @alpha a number between 0 and 255
+  /// @intensity a number between 0.0 and 1.0
   static void applyVector3EmissionAmbient(Vector3 v, {
     required int alpha,
+    double intensity = 1.0,
   }){
+    assert (intensity >= 0);
+    assert (intensity <= 1);
+    assert (alpha >= 0);
+    assert (alpha <= 255);
     if (!GameQueries.inBoundsVector3(v)) return;
-
     GameNodes.emitLightAmbient(
       index: GameQueries.getNodeIndexV3(v),
-      alpha: alpha,
+      alpha: Engine.linerInterpolationInt(GameNodes.ambient_hue, alpha , intensity),
     );
   }
 

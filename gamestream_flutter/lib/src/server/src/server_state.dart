@@ -113,7 +113,10 @@ class ServerState {
           );
           continue;
         case EmissionType.Ambient:
-          GameState.applyVector3EmissionAmbient(gameObject, alpha: 0);
+          GameState.applyVector3EmissionAmbient(gameObject,
+              alpha: gameObject.emission_alp,
+              intensity: gameObject.emission_intensity,
+          );
           continue;
       }
     }
