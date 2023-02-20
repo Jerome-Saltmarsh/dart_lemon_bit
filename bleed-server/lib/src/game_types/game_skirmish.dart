@@ -12,7 +12,10 @@ class GameSkirmish extends Game {
       gameType: GameType.Skirmish,
       time: GameTime(enabled: false, hour: 15, minute: 30),
       environment: GameEnvironment(),
-      options: GameOptions(perks: false, inventory: false),
+      options: GameOptions(perks: false, inventory: false, itemDamage: const {
+         ItemType.Weapon_Rifle_M4: 30,
+         ItemType.Weapon_Ranged_Shotgun: 5,
+      }),
   );
 
   @override
@@ -25,5 +28,13 @@ class GameSkirmish extends Game {
         ItemType.Head_Rogues_Hood,
         ItemType.Head_Wizards_Hat,
       ]);
+
+      player.belt1_itemType = ItemType.Weapon_Ranged_Shotgun;
+      player.belt1_quantity = ItemType.getMaxQuantity(player.belt1_itemType);
+
+      player.belt2_itemType = ItemType.Weapon_Rifle_M4;
+      player.belt2_quantity = ItemType.getMaxQuantity(player.belt2_itemType);
+
+      player.equippedWeaponIndex = ItemType.Belt_1;
   }
 }
