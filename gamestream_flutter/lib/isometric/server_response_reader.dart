@@ -1,4 +1,5 @@
 import 'package:archive/archive.dart';
+import 'package:gamestream_flutter/classes/game_options.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_scene.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_byte/byte_reader.dart';
@@ -102,6 +103,10 @@ class ServerResponseReader with ByteReader {
           break;
         case ServerResponse.GameObject_Deleted:
           ServerState.removeGameObjectById(readUInt16());
+          break;
+        case ServerResponse.Game_Options:
+          GameOptions.perks.value = readBool();
+          GameOptions.inventory.value = readBool();
           break;
         default:
           if (debugging) {

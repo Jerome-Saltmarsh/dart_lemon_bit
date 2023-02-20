@@ -1453,6 +1453,7 @@ class Player extends Character with ByteWriter {
     final options = game.options;
     writeByte(ServerResponse.Game_Options);
     writeBool(options.perks);
+    writeBool(options.inventory);
   }
 
   void writePlayerInventory() {

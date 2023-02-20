@@ -468,17 +468,17 @@ class GameUI {
           )
       ]);
 
-  static Widget buildWindowPerks(){
-    return Container(
+  static Widget buildWindowPerks() =>
+    visibleBuilder(GameOptions.perks, Container(
       color: GameStyle.Container_Color,
       padding: GameStyle.Padding_6,
       child: Column(
-        children: PerkType.Values.map((perkType) => Row(children: [
-           text(PerkType.getName(perkType))
-        ],)).toList()
+          children: PerkType.Values.map((perkType) => Row(children: [
+            text(PerkType.getName(perkType))
+          ],)).toList()
       ),
-    );
-  }
+    ));
+
 
   static Widget buildPanelTotalGrenades() {
     return watch(GamePlayer.totalGrenades, (int totalGrenades) => totalGrenades <= 0

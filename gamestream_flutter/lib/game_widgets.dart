@@ -350,14 +350,8 @@ Widget buildDecorationImage({
   );
 }
 
-Widget visibleBuilder(Watch<bool> watch, Widget widget){
-  return WatchBuilder(watch, (bool visible){
-    if (!visible){
-      return GameStyle.Null;
-    }
-    return widget;
-  });
-}
+Widget visibleBuilder(Watch<bool> watch, Widget widget) =>
+    WatchBuilder(watch, (bool visible) => visible ? widget : GameStyle.Null);
 
 Widget buildWatchBool(Watch<bool> watch, Widget Function() builder, [bool match = true]) =>
   WatchBuilder(watch, (bool value) =>
