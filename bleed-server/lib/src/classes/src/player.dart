@@ -1138,12 +1138,6 @@ class Player extends Character with ByteWriter {
     writePercentage(accuracy);
   }
 
-  void writePlayerSelectHero(bool value){
-    writeByte(ServerResponse.Player);
-    writeByte(ApiPlayer.Select_Hero);
-    writeBool(value);
-  }
-
   void writeGameObjects(){
     final gameObjects = game.gameObjects;
     for (final gameObject in gameObjects) {
@@ -1460,6 +1454,7 @@ class Player extends Character with ByteWriter {
     writeByte(ServerResponse.Game_Options);
     writeBool(options.perks);
     writeBool(options.inventory);
+    writeBool(options.items);
     writeMap(game.options.itemDamage);
   }
 

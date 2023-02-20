@@ -21,14 +21,13 @@ class ApiPlayer {
   static const Target_Category = 27;
   static const Target_Position = 28;
   static const Interact_Mode = 29;
-  static const Inventory_Slot = 31;
-  static const Credits = 32;
-  static const Attributes = 33;
-  static const Damage = 34;
-  static const Select_Hero = 38;
-  static const Energy = 39;
-  static const Base_Damage_Health_Energy = 40;
-  static const Perks_Unlocked = 37;
-  static const Perks_Active = 38;
-  static const Items = 39;
+  static const Inventory_Slot = 30;
+  static const Credits = 31;
+  static const Attributes = 32;
+  static const Damage = 33;
+  static const Energy = 34;
+  static const Base_Damage_Health_Energy = 35;
+  static const Perks_Unlocked = 36;
+  static const Perks_Active = 37;
+  static const Items = 38;
 }

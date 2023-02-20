@@ -16,6 +16,7 @@ class GameDarkAgeEditor extends Game {
       options: GameOptions(
         perks: false,
         inventory: false,
+        items: false,
       ),
   );
 

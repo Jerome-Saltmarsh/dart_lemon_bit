@@ -31,7 +31,6 @@ class ServerState {
   static final playerPerksUnlocked = Watch(Uint8List(0));
   static final playerAttributes = Watch(0);
   static final playerAccuracy = Watch(1.0);
-  static final playerSelectHero = Watch(false);
   static final sceneEditable = Watch(false);
   static final sceneName = Watch<String?>(null);
   static final gameRunning = Watch(true);

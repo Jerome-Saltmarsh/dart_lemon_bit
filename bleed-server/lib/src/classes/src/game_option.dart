@@ -3,12 +3,14 @@ import 'package:bleed_server/common/src/item_type.dart';
 class GameOptions {
   final bool perks;
   final bool inventory;
+  final bool items;
 
   final Map<int, int> itemDamage;
 
   GameOptions({
     required this.perks,
     required this.inventory,
+    required this.items,
     this.itemDamage = Default_Item_Damage,
   });
 

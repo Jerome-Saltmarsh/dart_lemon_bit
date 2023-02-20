@@ -17,7 +17,11 @@ class GamePractice extends Game {
         minute: 30,
       ),
       gameType: GameType.Practice,
-      options: GameOptions(perks: false, inventory: true),
+      options: GameOptions(
+          perks: false,
+          inventory: true,
+          items: false,
+      ),
   ) {
     aiRespawnDuration = framesPerSecond * 60;
     triggerSpawnPoints();

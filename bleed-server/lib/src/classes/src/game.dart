@@ -1138,10 +1138,17 @@ abstract class Game {
 
     player.writePlayerMoved();
     player.writePlayerAlive();
-    player.writePlayerInventory();
     player.writePlayerStats();
     player.writePlayerCredits();
     player.writeGameTime(time.time);
+
+    if (options.inventory) {
+      player.writePlayerInventory();
+    }
+    if (options.items) {
+      player.writePlayerItems();
+    }
+
     player.health = player.maxHealth;
 
   }

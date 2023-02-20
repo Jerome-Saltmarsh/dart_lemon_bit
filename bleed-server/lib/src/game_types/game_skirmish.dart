@@ -12,10 +12,14 @@ class GameSkirmish extends Game {
       gameType: GameType.Skirmish,
       time: GameTime(enabled: false, hour: 15, minute: 30),
       environment: GameEnvironment(),
-      options: GameOptions(perks: false, inventory: false, itemDamage: const {
-         ItemType.Weapon_Rifle_M4: 30,
-         ItemType.Weapon_Ranged_Shotgun: 5,
-      }),
+      options: GameOptions(
+          perks: false,
+          inventory: false,
+          items: true,
+          itemDamage: const {
+            ItemType.Weapon_Rifle_M4: 30,
+            ItemType.Weapon_Ranged_Shotgun: 5,
+            }),
   );
 
   @override

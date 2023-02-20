@@ -11,6 +11,7 @@ class GamePlayer {
   static final previousPosition = Vector3();
   static final storeItems = Watch(<int>[]);
   static final items = <int, int> {};
+  static final items_reads = Watch(0);
 
   static final energy = Watch(0);
   static final energyMax = Watch(0);
@@ -78,5 +79,9 @@ class GamePlayer {
        return true;
      }
      return false;
+  }
+
+  static void Refresh_Items(){
+    items_reads.value++;
   }
 }

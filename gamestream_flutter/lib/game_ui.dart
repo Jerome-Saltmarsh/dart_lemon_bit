@@ -462,11 +462,32 @@ class GameUI {
           ),
         ),
           Positioned(
+              top: GameStyle.Default_Padding,
+              left: GameStyle.Default_Padding,
+              child: buildWindowPlayerItems(),
+          ),
+          Positioned(
             child: buildWindowPerks(),
             left: GameStyle.Default_Padding,
             top: GameStyle.Default_Padding,
           )
       ]);
+
+  static Widget buildWindowPlayerItems(){
+      return watch(GamePlayer.items_reads, (t) {
+        return Column(
+          children: GamePlayer.items.entries.map((entry){
+            return Row(
+              children: [
+                text(ItemType.getName(entry.key)),
+                width8,
+                text(entry.value),
+              ],
+            );
+          }).toList(),
+        );
+      });
+  }
 
   static Widget buildWindowPerks() =>
     visibleBuilder(GameOptions.perks, Container(

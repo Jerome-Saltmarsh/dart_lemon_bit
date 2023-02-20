@@ -1,10 +1,10 @@
 import 'package:archive/archive.dart';
-import 'package:gamestream_flutter/classes/game_options.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_scene.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_byte/byte_reader.dart';
 
 final serverResponseReader = ServerResponseReader();
+
 
 class ServerResponseReader with ByteReader {
   final bufferSize = Watch(0);
@@ -107,6 +107,7 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Game_Options:
           GameOptions.perks.value = readBool();
           GameOptions.inventory.value = readBool();
+          GameOptions.items.value = readBool();
           readMap(GameOptions.item_damage);
           break;
 
@@ -313,9 +314,6 @@ class ServerResponseReader with ByteReader {
         ServerState.playerBaseHealth.value = readUInt16();
         ServerState.playerBaseEnergy.value = readUInt16();
         break;
-      case ApiPlayer.Select_Hero:
-        ServerState.playerSelectHero.value = readBool();
-        break;
       case ApiPlayer.Perks_Unlocked:
         final length = readUInt16();
         final values = Uint8List(length);
@@ -326,6 +324,7 @@ class ServerResponseReader with ByteReader {
         break;
       case ApiPlayer.Items:
         readMap(GamePlayer.items);
+        GamePlayer.Refresh_Items();
         break;
       default:
         throw Exception("Cannot parse apiPlayer $apiPlayer");

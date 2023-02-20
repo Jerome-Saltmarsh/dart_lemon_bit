@@ -669,7 +669,6 @@ class EditorUI {
         ],
       );
 
-
   static Positioned buildWindowAIControls() {
     return Positioned(
       top: 70,
