@@ -218,7 +218,7 @@ abstract class Game {
           characterUseWeapon(player);
         }
         break;
-      case CursorAction.Use_Weapon:
+      case CursorAction.Mouse_Left_Click:
           final aimTarget = player.aimTarget;
           if (aimTarget != null){
             if (aimTarget is GameObject && (aimTarget.collectable || aimTarget.interactable)){
@@ -232,10 +232,10 @@ abstract class Game {
           }
           characterUseWeapon(player);
         break;
-      case CursorAction.Attack_Melee:
+      case CursorAction.Mouse_Right_Click:
         characterAttackMelee(player);
         break;
-      case CursorAction.Throw_Grenade:
+      case CursorAction.Key_Space:
         characterThrowGrenade(player);
         break;
     }
@@ -408,22 +408,42 @@ abstract class Game {
     });
   }
 
+  void characterUseOrEquipWeapon({
+    required Character character,
+    required int weaponType,
+    required bool characterStateChange,
+  }){
+    if (character.deadBusyOrWeaponStateBusy) return;
+
+    if (character.weaponType != weaponType) {
+      character.weaponType = weaponType;
+      if (characterStateChange) {
+        setCharacterStateChanging(character);
+        return;
+      }
+    }
+    characterUseWeapon(character);
+  }
+
+  void characterEquipWeapon({
+    required Character character,
+    required int weaponType,
+    required bool characterStateChange,
+  }){
+    if (character.deadBusyOrWeaponStateBusy) return;
+    if (character.weaponType == weaponType) return;
+    character.weaponType = weaponType;
+    if (characterStateChange){
+      setCharacterStateChanging(character);
+    }
+  }
+
   void characterUseWeapon(Character character) {
     if (character.deadBusyOrWeaponStateBusy) return;
 
     final weaponType = character.weaponType;
 
     if (character is Player) {
-
-      // final energyConsumeAmount = ItemType.getEnergyConsumeAmount(weaponType);
-      //
-      // if (energyConsumeAmount > 0) {
-      //    if (energyConsumeAmount > character.energy) {
-      //      character.writeError('Not Enough Energy');
-      //      return;
-      //    }
-      //    character.energy -= energyConsumeAmount;
-      // }
 
       final playerWeaponConsumeType = ItemType.getConsumeType(weaponType);
 

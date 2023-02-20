@@ -264,11 +264,11 @@ class GameIO {
     if (inputModeKeyboard) {
 
       if (Engine.watchMouseLeftDown.value)
-        return CursorAction.Use_Weapon;
+        return CursorAction.Mouse_Left_Click;
       if (Engine.mouseRightDown.value)
-        return CursorAction.Attack_Melee;
+        return CursorAction.Mouse_Right_Click;
       if (Engine.keyPressed(ClientConstants.Key_Throw_Grenade))
-        return CursorAction.Throw_Grenade;
+        return CursorAction.Key_Space;
       // if (Engine.mouseRightDown.value){
       //   return CursorAction.Stationary_Attack_Cursor;
       // }
