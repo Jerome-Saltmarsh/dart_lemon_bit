@@ -1537,13 +1537,6 @@ class Player extends Character with ByteWriter {
     }
   }
 
-  // void writeMapCoordinate() {
-  //   if (game is DarkAgeArea == false) return;
-  //   final area = game as DarkAgeArea;
-  //   writeByte(ServerResponse.Map_Coordinate);
-  //   writeByte(area.mapTile);
-  // }
-
   void writeEditorGameObjectSelected() {
     final selectedGameObject = editorSelectedGameObject;
     if (selectedGameObject == null) return;

@@ -9,7 +9,6 @@ import 'package:bleed_server/src/scene_generator.dart';
 import 'package:bleed_server/src/system.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-import '../dark_age/dark_age_scenes.dart';
 import '../dark_age/game_dark_age_editor.dart';
 import '../functions/generateName.dart';
 import '../game_types/game_practice.dart';
@@ -700,7 +699,7 @@ class Connection with ByteReader {
             return joinGame(game);
        }
     }
-    joinGame(GamePractice(scene: darkAgeScenes.suburbs_01));
+    joinGame(GamePractice(scene: engine.scenes.suburbs_01));
   }
 
   Future joinGameDeathMatch() async {
@@ -710,7 +709,7 @@ class Connection with ByteReader {
         return joinGame(game);
       }
     }
-    joinGame(GameSkirmish(scene: darkAgeScenes.suburbs_01));
+    joinGame(GameSkirmish(scene: engine.scenes.suburbs_01));
   }
 
   Future joinGameSurvival() async {
@@ -720,7 +719,7 @@ class Connection with ByteReader {
         return joinGame(game);
       }
     }
-    joinGame(GameSurvival(scene: darkAgeScenes.suburbs_01));
+    joinGame(GameSurvival(scene: engine.scenes.suburbs_01));
   }
 
   void joinGame(Game game){

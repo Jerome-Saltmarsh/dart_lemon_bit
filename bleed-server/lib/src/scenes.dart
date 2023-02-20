@@ -1,11 +1,9 @@
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/io/write_scene_to_file.dart';
 
-import '../io/load_scene.dart';
+import 'io/load_scene.dart';
 
-final darkAgeScenes = DarkAgeScenes();
-
-class DarkAgeScenes {
+class Scenes {
   late Scene suburbs_01;
 
   List<Scene> values = [];
