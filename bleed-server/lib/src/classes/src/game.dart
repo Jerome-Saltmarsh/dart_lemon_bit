@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:bleed_server/src/dark_age/dark_age_environment.dart';
+import 'package:bleed_server/src/classes/src/game_environment.dart';
 import 'package:bleed_server/src/game_physics.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_byte/byte_writer.dart';
@@ -11,6 +11,7 @@ import 'package:bleed_server/gamestream.dart';
 import '../../constants/frames_per_second.dart';
 import '../../io/write_scene_to_file.dart';
 import '../../maths/get_distance_between_v3.dart';
+import 'game_time.dart';
 
 
 class GameScript extends ByteWriter {
@@ -68,8 +69,8 @@ abstract class Game {
   var _timerUpdateAITargets = 0;
   var gameObjectId = 0;
 
-  DarkAgeEnvironment environment;
-  DarkAgeTime time;
+  GameEnvironment environment;
+  GameTime time;
 
   bool get running => _running;
 

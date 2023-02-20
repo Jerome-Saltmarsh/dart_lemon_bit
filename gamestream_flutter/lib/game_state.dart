@@ -8,9 +8,9 @@ import 'library.dart';
 
 class GameState {
   static final particleOverflow = Particle();
-  static var torch_emission_start = 0.78;
+  static var torch_emission_start = 0.8;
   static var torch_emission_end = 1.0;
-  static var torch_emission_vel = 0.1;
+  static var torch_emission_vel = 0.061;
   static var torch_emission_t = 0.0;
   static var torch_emission_intensity = 1.0;
 

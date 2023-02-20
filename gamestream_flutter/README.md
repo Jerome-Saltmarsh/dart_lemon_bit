@@ -6,6 +6,8 @@ firebase deploy
 navigate to next method: ctrl + shift + up / down arrows
 ctrl + w:   minimal mode
 
+EXPLORE and SURVIVE
+
 [TODO]
 [ ] perk melee shoots fireball
 [ ] perk melee doubled coins
@@ -15,7 +17,6 @@ ctrl + w:   minimal mode
 [ ] perk grenade extra capacity
 [ ] perk grenade extra blast radius
 [ ] perk grenade extra damage
-
 
 [ ] building hospital
 [ ] building office

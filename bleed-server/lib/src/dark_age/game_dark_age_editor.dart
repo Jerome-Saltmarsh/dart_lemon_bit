@@ -1,6 +1,7 @@
 import 'package:bleed_server/gamestream.dart';
+import 'package:bleed_server/src/classes/src/game_environment.dart';
+import 'package:bleed_server/src/classes/src/game_time.dart';
 import '../scene/generate_empty_scene.dart';
-import 'dark_age_environment.dart';
 import 'game_dark_age.dart';
 
 class GameDarkAgeEditor extends GameDarkAge {
@@ -10,8 +11,8 @@ class GameDarkAgeEditor extends GameDarkAge {
 
   GameDarkAgeEditor({Scene? scene}) : super(
       scene: scene ?? generateEmptyScene(),
-      environment: DarkAgeEnvironment(),
-      time: DarkAgeTime(),
+      environment: GameEnvironment(),
+      time: GameTime(),
   );
 
   @override

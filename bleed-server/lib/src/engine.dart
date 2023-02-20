@@ -3,9 +3,11 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:bleed_server/gamestream.dart';
+import 'package:bleed_server/src/classes/src/game_environment.dart';
 import 'package:bleed_server/src/dark_age/dark_age_scenes.dart';
 import 'package:bleed_server/src/io/save_directory.dart';
 
+import 'classes/src/game_time.dart';
 import 'constants/frames_per_second.dart';
 import 'dark_age/areas/area_old_village.dart';
 import 'dark_age/areas/area_tavern_cellar.dart';
@@ -15,7 +17,6 @@ import 'dark_age/areas/game_dark_age_farm.dart';
 import 'dark_age/areas/game_dark_age_forest.dart';
 import 'dark_age/areas/game_dark_age_fortress_dungeon.dart';
 import 'dark_age/areas/game_dark_age_village.dart';
-import 'dark_age/dark_age_environment.dart';
 import 'dark_age/game_dark_age.dart';
 import 'dark_age/game_dark_age_editor.dart';
 import 'network/websocket_server.dart';
@@ -39,9 +40,9 @@ Future<String> getPublicIP() async {
 class Engine {
   final games = <Game>[];
   var frame = 0;
-  late DarkAgeTime officialTime;
-  late DarkAgeEnvironment environmentAboveGround;
-  late DarkAgeEnvironment environmentUnderground;
+  late GameTime officialTime;
+  late GameEnvironment environmentAboveGround;
+  late GameEnvironment environmentUnderground;
 
   Future run() async {
     print('gamestream-version: $version');
@@ -69,9 +70,9 @@ class Engine {
       print("Environment Detected: Google Cloud Machine");
     }
 
-    officialTime = DarkAgeTime();
-    environmentAboveGround = DarkAgeEnvironment();
-    environmentUnderground = DarkAgeEnvironment();
+    officialTime = GameTime();
+    environmentAboveGround = GameEnvironment();
+    environmentUnderground = GameEnvironment();
     await darkAgeScenes.load();
 
     // suburbs_01 = await loadScene('suburbs_01');

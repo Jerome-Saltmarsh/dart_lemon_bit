@@ -1,7 +1,8 @@
 
 import 'package:bleed_server/gamestream.dart';
+import 'package:bleed_server/src/classes/src/game_environment.dart';
+import 'package:bleed_server/src/classes/src/game_time.dart';
 import 'package:bleed_server/src/constants/frames_per_second.dart';
-import 'package:bleed_server/src/dark_age/dark_age_environment.dart';
 import 'package:lemon_math/library.dart';
 
 class GamePractice extends Game {
@@ -10,8 +11,8 @@ class GamePractice extends Game {
   var configZombieSpeed = 5.0;
 
   GamePractice({required super.scene}) : super(
-      environment: DarkAgeEnvironment(),
-      time: DarkAgeTime(),
+      environment: GameEnvironment(),
+      time: GameTime(),
       gameType: GameType.Practice,
   ) {
     aiRespawnDuration = framesPerSecond * 60;

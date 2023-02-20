@@ -154,17 +154,17 @@ class GameWebsite {
 
   static Widget buildWebsitePage(WebsitePage page) =>
       page == WebsitePage.Games
-       ? buildWebsitePageGames()
+       ? buildColumnSelectGameType()
        : buildWebsitePageRegions();
 
-  static Widget buildWebsitePageGames() =>
+  static Widget buildColumnSelectGameType() =>
     Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         text("STREAMPUNK", size: 30),
         height32,
-        buildTextButton("PRACTICE", action: GameNetwork.connectToGamePractice),
+        buildTextButton("SKIRMISH", action: GameNetwork.connectToGameSkirmish),
         height24,
         buildTextButton("SURVIVE", action: GameNetwork.connectToGameSurvival),
         height24,
