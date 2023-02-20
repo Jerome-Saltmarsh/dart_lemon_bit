@@ -128,7 +128,8 @@ class SceneReader extends ByteReader {
 
   void readLoop() {
     while (this.index < values.length){
-      switch (readByte()){
+      final scenePart = readByte();
+      switch (scenePart){
         case ScenePart.Nodes:
           readNodes();
           break;
@@ -144,7 +145,7 @@ class SceneReader extends ByteReader {
         case ScenePart.End:
           return;
         default:
-          throw Exception("could not read scene");
+          throw Exception("could not read scene. index: $index");
       }
     }
   }

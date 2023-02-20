@@ -5,13 +5,13 @@ import 'io/load_scene.dart';
 
 class Scenes {
   late Scene suburbs_01;
+  late Scene warehouse;
 
   List<Scene> values = [];
 
   Future load() async {
-      print('Loading dark age scenes');
       suburbs_01 = await loadScene('suburbs_01');
-      print("Loading dark age scenes finished");
+      // warehouse = await loadScene('warehouse');
   }
 
   void saveAllToFile(){
