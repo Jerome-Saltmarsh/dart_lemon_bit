@@ -7,8 +7,6 @@ import 'package:lemon_byte/byte_writer.dart';
 import 'package:lemon_math/library.dart';
 
 import 'package:bleed_server/gamestream.dart';
-import '../../dark_age/areas/dark_age_area.dart';
-import '../../dark_age/game_dark_age.dart';
 import '../../dark_age/game_dark_age_editor.dart';
 import 'scene_writer.dart';
 
@@ -1187,7 +1185,6 @@ class Player extends Character with ByteWriter {
   void downloadScene(){
     writeGrid();
     writeGameProperties();
-    writeMapCoordinate();
     writeRenderMap(game.customPropMapVisible);
     writeGameType(game.gameType);
     writeWeather();
@@ -1405,22 +1402,13 @@ class Player extends Character with ByteWriter {
 
   void writeWeather() {
     final environment = game.environment;
+    final underground = false;
 
-    final underground = game is GameDarkAge && (game as GameDarkAge).underground;
-
-    if (underground) {
-      writeByte(ServerResponse.Weather);
-      writeByte(RainType.None);
-      writeBool(false);
-      writeByte(LightningType.Off);
-      writeByte(WindType.Calm);
-    } else {
-      writeByte(ServerResponse.Weather);
-      writeByte(environment.rainType);
-      writeBool(environment.breezy);
-      writeByte(environment.lightningType);
-      writeByte(environment.windType);
-    }
+    writeByte(ServerResponse.Weather);
+    writeByte(environment.rainType);
+    writeBool(environment.breezy);
+    writeByte(environment.lightningType);
+    writeByte(environment.windType);
 
     writeEnvironmentUnderground(underground);
     writeGameTimeEnabled();
@@ -1549,12 +1537,12 @@ class Player extends Character with ByteWriter {
     }
   }
 
-  void writeMapCoordinate() {
-    if (game is DarkAgeArea == false) return;
-    final area = game as DarkAgeArea;
-    writeByte(ServerResponse.Map_Coordinate);
-    writeByte(area.mapTile);
-  }
+  // void writeMapCoordinate() {
+  //   if (game is DarkAgeArea == false) return;
+  //   final area = game as DarkAgeArea;
+  //   writeByte(ServerResponse.Map_Coordinate);
+  //   writeByte(area.mapTile);
+  // }
 
   void writeEditorGameObjectSelected() {
     final selectedGameObject = editorSelectedGameObject;

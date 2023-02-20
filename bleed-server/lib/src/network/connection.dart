@@ -10,10 +10,8 @@ import 'package:bleed_server/src/system.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import '../dark_age/dark_age_scenes.dart';
-import '../dark_age/game_dark_age.dart';
 import '../dark_age/game_dark_age_editor.dart';
 import '../functions/generateName.dart';
-import '../functions/move_player_to_crystal.dart';
 import '../game_types/game_practice.dart';
 import '../utilities/is_valid_index.dart';
 import 'handle_request_modify_canvas_size.dart';
@@ -211,21 +209,7 @@ class Connection with ByteReader {
         if (!isValidIndex(sceneIndex, teleportScenes))
           return errorInvalidArg("invalid scene index $sceneIndex");
 
-        final scene = teleportScenes[sceneIndex];
-
-        switch (scene) {
-          case TeleportScenes.Village:
-            game.changeGame(player, engine.findGameDarkAge());
-            movePlayerToCrystal(player);
-            break;
-          case TeleportScenes.Dungeon_1:
-            game.changeGame(player, engine.findGameDarkAgeDungeon1());
-            movePlayerToCrystal(player);
-            break;
-          default:
-            break;
-        }
-
+        // final scene = teleportScenes[sceneIndex];
         break;
 
       case ClientRequest.Editor_Load_Game:
@@ -422,12 +406,12 @@ class Connection with ByteReader {
         player.game.clearSpawnedAI();
         break;
       case EditRequest.Scene_Toggle_Underground:
-        if (player.game is! GameDarkAge) {
-          errorInvalidArg('game is not GameDarkAge');
-          return;
-        }
-        final gameDarkAge = player.game as GameDarkAge;
-        gameDarkAge.underground = !gameDarkAge.underground;
+        // if (player.game is! GameDarkAge) {
+        //   errorInvalidArg('game is not GameDarkAge');
+        //   return;
+        // }
+        // final gameDarkAge = player.game as GameDarkAge;
+        // gameDarkAge.underground = !gameDarkAge.underground;
         break;
       case EditRequest.Spawn_AI:
         player.game.clearSpawnedAI();
@@ -701,10 +685,6 @@ class Connection with ByteReader {
     );
   }
 
-  Future joinGameDarkAge() async {
-    joinGame(engine.findGameDarkAge());
-  }
-
   Future joinGameEditor({String? name}) async {
     joinGame(await engine.findGameEditorNew());
   }
@@ -816,9 +796,6 @@ class Connection with ByteReader {
     switch (gameType) {
       case GameType.Editor:
         joinGameEditor();
-        break;
-      case GameType.Dark_Age:
-        joinGameDarkAge();
         break;
       case GameType.Practice:
         joinGamePractice();

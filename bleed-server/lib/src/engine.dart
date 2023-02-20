@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:bleed_server/gamestream.dart';
@@ -9,33 +8,11 @@ import 'package:bleed_server/src/io/save_directory.dart';
 
 import 'classes/src/game_time.dart';
 import 'constants/frames_per_second.dart';
-import 'dark_age/areas/area_old_village.dart';
-import 'dark_age/areas/area_tavern_cellar.dart';
-import 'dark_age/areas/dark_age_dungeon_1.dart';
-import 'dark_age/areas/game_dark_age_dark_fortress.dart';
-import 'dark_age/areas/game_dark_age_farm.dart';
-import 'dark_age/areas/game_dark_age_forest.dart';
-import 'dark_age/areas/game_dark_age_fortress_dungeon.dart';
-import 'dark_age/areas/game_dark_age_village.dart';
-import 'dark_age/game_dark_age.dart';
 import 'dark_age/game_dark_age_editor.dart';
 import 'network/websocket_server.dart';
 import 'system.dart';
 
 final engine = Engine();
-
-Future<String> getPublicIP() async {
-  var httpClient = HttpClient();
-  var request = await httpClient.getUrl(Uri.parse('http://checkip.amazonaws.com/'));
-  var response = await request.close();
-
-  if (response.statusCode == HttpStatus.ok) {
-    var ip = await response.transform(utf8.decoder).join();
-    return ip.trim();
-  } else {
-    throw Exception('Failed to get public IP');
-  }
-}
 
 class Engine {
   final games = <Game>[];
@@ -46,13 +23,6 @@ class Engine {
 
   Future run() async {
     print('gamestream-version: $version');
-
-    var addresses = await getPublicIP();
-    if (addresses.isNotEmpty) {
-      print('ip-address: $addresses');
-    } else {
-      print('ip-address:: Unable to get local IP address');
-    }
 
     print('dart-version: ${Platform.version}');
     print('gamestream.online server starting');
@@ -145,7 +115,7 @@ class Engine {
     }
   }
 
-  Future<GameDarkAge> findGameEditorNew() async {
+  Future<GameDarkAgeEditor> findGameEditorNew() async {
     return GameDarkAgeEditor();
   }
 
@@ -153,79 +123,5 @@ class Engine {
   // and should not be called again
   void onGameCreated(Game game) {
     games.add(game);
-  }
-
-  GameDarkAge findGameDarkAge() => findGameDarkAreaPlains1();
-
-  DarkAgeDungeon1 findGameDarkAgeDungeon1() {
-    for (final game in games) {
-      if (game is DarkAgeDungeon1) {
-        return game;
-      }
-    }
-    return DarkAgeDungeon1();
-  }
-
-  GameDarkAge findGameDarkAgeVillage() {
-    for (final game in games) {
-      if (game is GameDarkAgeVillage) {
-        return game;
-      }
-    }
-    return GameDarkAgeVillage();
-  }
-
-  GameDarkAge findGameDarkAreaPlains1() {
-    for (final game in games) {
-      if (game is Area_OldVillage) {
-        return game;
-      }
-    }
-    throw Exception("Could not find game dark age");
-  }
-
-  GameDarkAge findAreaTavernCellar() {
-    for (final game in games) {
-      if (game is AreaTavernCellar) {
-        return game;
-      }
-    }
-    return AreaTavernCellar();
-  }
-
-  GameDarkAge findGameDarkAgeFortressDungeon() {
-    for (final game in games) {
-      if (game is GameDarkAgeFortressDungeon) {
-        return game;
-      }
-    }
-    return GameDarkAgeFortressDungeon();
-  }
-
-  GameDarkAge findGameDarkDarkFortress() {
-    for (final game in games) {
-      if (game is GameDarkAgeDarkFortress) {
-        return game;
-      }
-    }
-    return GameDarkAgeDarkFortress();
-  }
-
-  GameDarkAgeForest findGameForest() {
-    for (final game in games) {
-      if (game is GameDarkAgeForest) {
-        return game;
-      }
-    }
-    return GameDarkAgeForest();
-  }
-
-  GameDarkAgeFarm findGameFarm() {
-    for (final game in games) {
-      if (game is GameDarkAgeFarm) {
-        return game;
-      }
-    }
-    return GameDarkAgeFarm();
   }
 }
