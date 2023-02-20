@@ -15,7 +15,6 @@ import 'game_time.dart';
 
 abstract class Game {
 
-  static const Interact_Radius = 100.0;
   var aiRespawnDuration = framesPerSecond * 60 * 2; // 5 minutes
 
   final int gameType;
@@ -1539,10 +1538,6 @@ abstract class Game {
       }
     }
 
-    // if (player.framesSinceClientRequest > 10) {
-    //   player.setCharacterStateIdle();
-    // }
-
     final target = player.target;
     if (target == null) return;
     if (!player.busy) {
@@ -1556,7 +1551,7 @@ abstract class Game {
            return;
         }
         if (target.collectable || target.interactable) {
-           if (getDistanceBetweenV3(player, target) > Interact_Radius) {
+           if (getDistanceBetweenV3(player, target) > GameSettings.Interact_Radius) {
              setCharacterStateRunning(player);
              return;
            }

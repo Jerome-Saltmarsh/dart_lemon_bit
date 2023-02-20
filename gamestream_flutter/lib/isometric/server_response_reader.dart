@@ -107,17 +107,9 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Game_Options:
           GameOptions.perks.value = readBool();
           GameOptions.inventory.value = readBool();
-
-          final length = readUInt16();
-          GameOptions.item_damage.clear();
-
-          for (var i = 0; i < length; i++) {
-             final key = readUInt16();
-             final value = readUInt16();
-             GameOptions.item_damage[key] = value;
-          }
-
+          readMap(GameOptions.item_damage);
           break;
+
         default:
           if (debugging) {
             return;
@@ -129,6 +121,16 @@ class ServerResponseReader with ByteReader {
           WebsiteState.error.value = "An error occurred";
           return;
       }
+    }
+  }
+
+  void readMap(Map<int, int> map){
+    final length = readUInt16();
+    map.clear();
+    for (var i = 0; i < length; i++) {
+      final key = readUInt16();
+      final value = readUInt16();
+      map[key] = value;
     }
   }
 

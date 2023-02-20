@@ -90,6 +90,9 @@ class Player extends Character with ByteWriter {
   var inventoryOpen = true;
   var nextEnergyGain = Frames_Per_Energy_Gain;
 
+  /// the key is the item_type and the value is its level
+  final items = <int, int> {};
+
   /// CONSTRUCTOR
   Player({
     required this.game,
@@ -1453,13 +1456,7 @@ class Player extends Character with ByteWriter {
     writeByte(ServerResponse.Game_Options);
     writeBool(options.perks);
     writeBool(options.inventory);
-
-    final itemDamage = game.options.itemDamage;
-    writeUInt16(itemDamage.length);
-    for (final entry in itemDamage.entries) {
-      writeUInt16(entry.key);
-      writeUInt16(entry.value);
-    }
+    writeMap(game.options.itemDamage);
   }
 
   void writePlayerInventory() {
@@ -1680,6 +1677,15 @@ class Player extends Character with ByteWriter {
     writeBool(gameObject.active);
     writeUInt16(gameObject.type);
     writeVector3(gameObject);
+  }
+
+  void writeMap(Map<int, int> map){
+    final entries = map.entries;
+    writeUInt16(entries.length);
+    for (final entry in entries) {
+      writeUInt16(entry.key);
+      writeUInt16(entry.value);
+    }
   }
 }
 

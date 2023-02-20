@@ -5,4 +5,5 @@ class GameSettings {
   static const Weapon_State_Duration_Melee = 25;
   static const Pickup_Range = 50.0;
   static const Pickup_Range_Squared = Pickup_Range * Pickup_Range;
+  static const Interact_Radius = 100.0;
 }
