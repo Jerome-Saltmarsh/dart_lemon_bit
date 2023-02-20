@@ -1102,8 +1102,6 @@ class Player extends Character with ByteWriter {
       writePlayerInventory();
       writePlayerLevel();
       writePlayerExperiencePercentage();
-      // writePlayerBaseMaxHealth();
-      // writePlayerBaseMaxHealth();
       writePlayerBaseDamageHealthEnergy();
       writePlayerHealth();
       writePlayerMaxHealth();
@@ -1449,6 +1447,12 @@ class Player extends Character with ByteWriter {
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Credits);
     writeUInt16(credits);
+  }
+
+  void writePlayerItems(){
+    writeByte(ServerResponse.Player);
+    writeByte(ApiPlayer.Items);
+    writeMap(items);
   }
 
   void writeGameOptions() {

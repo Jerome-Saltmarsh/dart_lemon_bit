@@ -728,14 +728,8 @@ class Connection with ByteReader {
     player.sendBufferToClient = sendBufferToClient;
     player.sceneDownloaded = false;
     game.customOnPlayerJoined(player);
-    player.writePlayerInventory();
-    player.writePlayerStats();
-    player.writePlayerCredits();
     player.writeGameOptions();
-    player.writeGameTime(game.time.time);
-    player.health = player.maxHealth;
-
-
+    game.revive(player);
     final account = _account;
     if (account != null) {
       player.name = account.publicName;

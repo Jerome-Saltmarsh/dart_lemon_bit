@@ -1130,13 +1130,20 @@ abstract class Game {
     player.health = player.maxHealth;
     player.energy = player.maxEnergy;
     clearCharacterTarget(player);
-    player.writePlayerMoved();
-    player.writePlayerAlive();
 
     if (player.inventoryOpen){
       player.interactMode = InteractMode.Inventory;
     }
     customOnPlayerRevived(player);
+
+    player.writePlayerMoved();
+    player.writePlayerAlive();
+    player.writePlayerInventory();
+    player.writePlayerStats();
+    player.writePlayerCredits();
+    player.writeGameTime(time.time);
+    player.health = player.maxHealth;
+
   }
 
   int countAlive(List<Character> characters) {

@@ -324,6 +324,9 @@ class ServerResponseReader with ByteReader {
         }
         ServerState.playerPerksUnlocked.value = values;
         break;
+      case ApiPlayer.Items:
+        readMap(GamePlayer.items);
+        break;
       default:
         throw Exception("Cannot parse apiPlayer $apiPlayer");
     }

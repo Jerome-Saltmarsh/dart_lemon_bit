@@ -30,4 +30,5 @@ class ApiPlayer {
   static const Base_Damage_Health_Energy = 40;
   static const Perks_Unlocked = 37;
   static const Perks_Active = 38;
+  static const Items = 39;
 }
