@@ -699,14 +699,14 @@ class Connection with ByteReader {
     joinGame(GamePractice(scene: engine.scenes.suburbs_01));
   }
 
-  Future joinGameDeathMatch() async {
+  Future joinGameSkirmish() async {
     for (final game in engine.games){
       if (game is GameSkirmish) {
         if (game.players.length > 12) continue;
         return joinGame(game);
       }
     }
-    joinGame(GameSkirmish(scene: engine.scenes.suburbs_01));
+    joinGame(GameSkirmish(scene: engine.scenes.warehouse));
   }
 
   Future joinGameSurvival() async {
@@ -800,7 +800,7 @@ class Connection with ByteReader {
         joinGameSurvival();
         break;
       case GameType.Skirmish:
-        joinGameDeathMatch();
+        joinGameSkirmish();
         break;
       default:
         return errorInvalidArg('invalid game type index $gameType');

@@ -11,7 +11,7 @@ class Scenes {
 
   Future load() async {
       suburbs_01 = await loadScene('suburbs_01');
-      // warehouse = await loadScene('warehouse');
+      warehouse = await loadScene('warehouse');
   }
 
   void saveAllToFile(){
