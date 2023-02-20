@@ -1367,9 +1367,7 @@ class Player extends Character with ByteWriter {
 
   void writeGameTime(int time){
     writeByte(ServerResponse.Game_Time);
-    final totalMinutes = time ~/ 60;
-    writeByte(totalMinutes ~/ 60);
-    writeByte(totalMinutes % 60);
+    writeUInt24(time);
   }
 
   void writeProjectile(Projectile projectile){
@@ -1573,12 +1571,6 @@ class Player extends Character with ByteWriter {
     writeByte(ServerResponse.Environment);
     writeByte(EnvironmentResponse.Rain);
     writeByte(rainType);
-  }
-
-  void writeEnvironmentTime(int value){
-    writeByte(ServerResponse.Environment);
-    writeByte(EnvironmentResponse.Time);
-    writeByte(value);
   }
 
   void writeEnvironmentBreeze(bool value){

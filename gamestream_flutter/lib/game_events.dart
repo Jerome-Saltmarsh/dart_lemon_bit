@@ -353,6 +353,12 @@ class GameEvents {
     ClientState.updateGameLighting();
   }
 
+  static void onChangedSeconds(int seconds){
+    final minutes = seconds ~/ 60;
+    ServerState.hours.value = minutes ~/ Duration.minutesPerHour;
+    ServerState.minutes.value = minutes % Duration.minutesPerHour;
+  }
+
   static void onChangedRain(int value) {
     ClientState.raining.value = value != RainType.None;
     ClientState.refreshRain();

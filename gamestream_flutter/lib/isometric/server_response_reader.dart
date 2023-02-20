@@ -467,8 +467,8 @@ class ServerResponseReader with ByteReader {
   }
 
   void readGameTime() {
-    ServerState.hours.value = readByte();
-    ServerState.minutes.value = readByte();
+    ServerState.seconds.value = readUInt24();
+
   }
 
   void readNodes() {

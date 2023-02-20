@@ -12,7 +12,10 @@ class GamePractice extends Game {
 
   GamePractice({required super.scene}) : super(
       environment: GameEnvironment(),
-      time: GameTime(),
+      time: GameTime(
+        hour: 12,
+        minute: 30,
+      ),
       gameType: GameType.Practice,
       options: GameOptions(perks: false, inventory: true),
   ) {

@@ -1,1 +1,1 @@
-const secondsPerHour = 3600;
+const Seconds_Per_Hour = 3600;

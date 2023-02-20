@@ -1,5 +1,4 @@
-import 'package:bleed_server/common/src/seconds_per_day.dart';
-import 'package:bleed_server/common/src/seconds_per_hour.dart';
+import 'package:bleed_server/common/src.dart';
 
 class GameTime {
   var secondsPerFrame = 2;
@@ -13,10 +12,10 @@ class GameTime {
     int minute = 0,
     this.enabled = true,
   }) {
-    time = hour * 60 + minute;
+    time = (hour * Seconds_Per_Hour) + (minute * Seconds_Per_Minute);
   }
 
-  int get hour => time ~/ secondsPerHour;
+  int get hour => time ~/ Seconds_Per_Hour;
 
   set hour(int value) {
     time = value * 60 * 60;
