@@ -369,8 +369,8 @@ class GameUI {
         image: GameImages.atlas_icons,
         srcX: AtlasIcons.getSrcX(iconType),
         srcY: AtlasIcons.getSrcY(iconType),
-        srcWidth: AtlasIcons.getSrcSize(iconType),
-        srcHeight: AtlasIcons.getSrcSize(iconType),
+        srcWidth: AtlasIcons.getSrcWidth(iconType),
+        srcHeight: AtlasIcons.getSrcHeight(iconType),
         scale: scale,
         color: color,
       );
@@ -473,18 +473,49 @@ class GameUI {
           )
       ]);
 
+  static int mapItemTabToIconType(ItemTab itemTab) => const {
+      ItemTab.Primary_Weapon: IconType.Primary_Weapon,
+      ItemTab.Secondary_Weapon: IconType.Secondary_Weapon,
+      ItemTab.Tertiary_Weapon: IconType.Tertiary_Weapon,
+      ItemTab.Head_Type: IconType.Head_Type,
+      ItemTab.Body_Type: IconType.Body_Type,
+      ItemTab.Legs_Type: IconType.Leg_Type,
+    }[itemTab] ?? IconType.Unknown;
+
+  static Widget buildIconItemTab(ItemTab itemTab) =>
+      buildAtlasIconType(mapItemTabToIconType(itemTab));
+
   static Widget buildWindowPlayerItems(){
       return watch(GamePlayer.items_reads, (t) {
-        return Column(
-          children: GamePlayer.items.entries.map((entry){
-            return Row(
-              children: [
-                text(ItemType.getName(entry.key)),
-                width8,
-                text(entry.value),
-              ],
-            );
-          }).toList(),
+        return Container(
+          padding: GameStyle.Padding_6,
+          color: GameStyle.Container_Color,
+          width: 300,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(children: ItemTab.values.map(buildIconItemTab).toList()),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: GamePlayer.items.entries.map((entry){
+                  final itemType = entry.key;
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          buildAtlasItemType(itemType),
+                          width8,
+                          text(ItemType.getName(itemType)),
+                        ],
+                      ),
+                      text(entry.value),
+                    ],
+                  );
+                }).toList(),
+              ),
+            ],
+          ),
         );
       });
   }

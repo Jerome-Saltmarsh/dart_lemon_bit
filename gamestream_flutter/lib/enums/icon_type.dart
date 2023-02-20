@@ -27,4 +27,12 @@ class IconType {
   static const Heart = 31;
   static const Damage = 32;
   static const Energy = 33;
+  static const Unknown = 100;
+
+  static const Primary_Weapon = 34;
+  static const Secondary_Weapon = 35;
+  static const Tertiary_Weapon = 36;
+  static const Head_Type = 37;
+  static const Body_Type = 38;
+  static const Leg_Type = 39;
 }

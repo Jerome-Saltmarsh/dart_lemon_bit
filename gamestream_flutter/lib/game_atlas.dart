@@ -321,6 +321,12 @@ class AtlasIcons {
     IconType.Heart: 0,
     IconType.Damage: 48,
     IconType.Energy: 96,
+    IconType.Primary_Weapon: 208,
+    IconType.Secondary_Weapon: 240,
+    IconType.Tertiary_Weapon: 240,
+    IconType.Head_Type: 262,
+    IconType.Body_Type: 292,
+    IconType.Leg_Type: 214,
   }[itemType] ?? 0;
 
   static double getSrcY(int itemType) => const  <int, double> {
@@ -349,7 +355,31 @@ class AtlasIcons {
     IconType.Heart: 448,
     IconType.Damage: 448,
     IconType.Energy: 448,
+    IconType.Primary_Weapon: 145,
+    IconType.Secondary_Weapon: 147,
+    IconType.Tertiary_Weapon: 166,
+    IconType.Head_Type: 147,
+    IconType.Body_Type: 147,
+    IconType.Leg_Type: 163,
   }[itemType] ?? 0;
+
+  static double getSrcWidth(int itemType) => const  <int, double> {
+    IconType.Primary_Weapon: 31,
+    IconType.Secondary_Weapon: 12,
+    IconType.Tertiary_Weapon: 16,
+    IconType.Head_Type: 20,
+    IconType.Body_Type: 26,
+    IconType.Leg_Type: 21,
+  }[itemType] ?? getSrcSize(itemType);
+
+  static double getSrcHeight(int itemType) => const  <int, double> {
+    IconType.Primary_Weapon: 13,
+    IconType.Secondary_Weapon: 10,
+    IconType.Tertiary_Weapon: 5,
+    IconType.Head_Type: 26,
+    IconType.Body_Type: 26,
+    IconType.Leg_Type: 26,
+  }[itemType] ?? getSrcSize(itemType);
 
   static double getSrcSize(int itemType) => const  <int, double> {
       IconType.Heart: 48.0,
