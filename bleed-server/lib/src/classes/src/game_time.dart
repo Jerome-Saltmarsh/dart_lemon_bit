@@ -12,6 +12,10 @@ class GameTime {
     int minute = 0,
     this.enabled = true,
   }) {
+    assert (hour >= 0);
+    assert (hour <= 24);
+    assert (minute >= 0);
+    assert (minute <= 60);
     time = (hour * Seconds_Per_Hour) + (minute * Seconds_Per_Minute);
   }
 
