@@ -3,12 +3,12 @@ import 'dart:io';
 
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/classes/src/game_environment.dart';
+import 'package:bleed_server/src/games/game_editor.dart';
 import 'package:bleed_server/src/io/save_directory.dart';
 import 'package:bleed_server/src/scenes.dart';
 
 import 'classes/src/game_time.dart';
 import 'constants/frames_per_second.dart';
-import 'dark_age/game_dark_age_editor.dart';
 import 'network/websocket_server.dart';
 import 'system.dart';
 
@@ -60,8 +60,8 @@ class Engine {
     }
   }
 
-  Future<GameDarkAgeEditor> findGameEditorNew() async {
-    return GameDarkAgeEditor();
+  Future<GameEditor> findGameEditorNew() async {
+    return GameEditor();
   }
 
   // This method is called by the game constructor automatically

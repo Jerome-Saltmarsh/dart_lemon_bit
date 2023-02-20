@@ -9,6 +9,8 @@ ctrl + w:   minimal mode
 EXPLORE and SURVIVE
 
 [TODO]
+[ ] experiment characters caste shadow
+[ ] feature torch audio
 [ ] perk melee shoots fireball
 [ ] perk melee doubled coins
 [ ] perk melee steals health
@@ -17,7 +19,6 @@ EXPLORE and SURVIVE
 [ ] perk grenade extra capacity
 [ ] perk grenade extra blast radius
 [ ] perk grenade extra damage
-
 [ ] building hospital
 [ ] building office
 [ ] building store

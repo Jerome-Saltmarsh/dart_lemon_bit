@@ -41,8 +41,6 @@ class GamePlayer {
   static final mouseTargetHealth = Watch(0.0);
   static final message = Watch("", onChanged: GameEvents.onChangedPlayerMessage);
   static var messageTimer = 0;
-  static final questsInProgress = Watch<List<Quest>>([], onChanged: onQuestsInProgressChanged);
-  static final questsCompleted = Watch<List<Quest>>([]);
 
   static var indexZ = 0;
   static var indexRow = 0;

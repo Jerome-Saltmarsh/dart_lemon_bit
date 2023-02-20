@@ -1,6 +1,4 @@
 
-import 'package:http/http.dart';
-
 import 'enums/item_group.dart';
 
 class ItemType {

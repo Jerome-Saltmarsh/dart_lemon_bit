@@ -13,7 +13,6 @@ class ServerResponse {
   static const Weather = 78;
   static const Game_Properties = 80;
   static const Npc_Talk = 83;
-  static const Player_Quests = 84;
   static const Map_Coordinate = 85;
   static const Characters = 92;
   static const Editor_GameObject_Selected = 101;

@@ -2,15 +2,15 @@ import 'dart:typed_data';
 
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/classes/src/scene_writer.dart';
-import 'package:bleed_server/src/game_types/game_skirmish.dart';
-import 'package:bleed_server/src/game_types/game_survival.dart';
+import 'package:bleed_server/src/games/game_editor.dart';
+import 'package:bleed_server/src/games/game_practice.dart';
+import 'package:bleed_server/src/games/game_skirmish.dart';
+import 'package:bleed_server/src/games/game_survival.dart';
 import 'package:bleed_server/src/scene_generator.dart';
 import 'package:bleed_server/src/system.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-import '../dark_age/game_dark_age_editor.dart';
 import '../functions/generateName.dart';
-import '../game_types/game_practice.dart';
 import '../utilities/is_valid_index.dart';
 import 'handle_request_modify_canvas_size.dart';
 import 'package:lemon_byte/byte_reader.dart';
@@ -117,7 +117,7 @@ class Connection with ByteReader {
         break;
 
       case ClientRequest.Teleport:
-        if (!isLocalMachine && game is! GameDarkAgeEditor) return;
+        if (!isLocalMachine && game is! GameEditor) return;
         handleClientRequestTeleport(player);
         return;
 
@@ -132,7 +132,7 @@ class Connection with ByteReader {
         return;
 
       case ClientRequest.Weather_Set_Rain:
-        if (!isLocalMachine && game is! GameDarkAgeEditor) return;
+        if (!isLocalMachine && game is! GameEditor) return;
         final rainType = parse(arguments[1]);
         if (rainType == null || !isValidIndex(rainType, RainType.values))
            return errorInvalidArg('invalid rain index: $rainType');
@@ -141,12 +141,12 @@ class Connection with ByteReader {
         break;
 
       case ClientRequest.Weather_Toggle_Breeze:
-        if (!isLocalMachine && game is! GameDarkAgeEditor) return;
+        if (!isLocalMachine && game is! GameEditor) return;
         game.environment.toggleBreeze();
         break;
 
       case ClientRequest.Weather_Set_Wind:
-        if (!isLocalMachine && game is! GameDarkAgeEditor) return;
+        if (!isLocalMachine && game is! GameEditor) return;
         final index = parse(arguments[1]);
         if (index == null || !isValidIndex(index, WindType.values))
           return errorInvalidArg('invalid rain index: $index');
@@ -155,7 +155,7 @@ class Connection with ByteReader {
         break;
 
       case ClientRequest.Weather_Set_Lightning:
-        if (!isLocalMachine && game is! GameDarkAgeEditor) return;
+        if (!isLocalMachine && game is! GameEditor) return;
         final index = parse(arguments[1]);
         if (index == null || !isValidIndex(index, LightningType.values))
           return errorInvalidArg('invalid lightning index: $index');
@@ -176,15 +176,15 @@ class Connection with ByteReader {
         return;
 
       case ClientRequest.GameObject:
-        if (!isLocalMachine && game is! GameDarkAgeEditor) return;
+        if (!isLocalMachine && game is! GameEditor) return;
         return handleGameObjectRequest(arguments);
 
       case ClientRequest.Node:
-        if (!isLocalMachine && game is! GameDarkAgeEditor) return;
+        if (!isLocalMachine && game is! GameEditor) return;
         return handleNodeRequestSetBlock(arguments);
 
       case ClientRequest.Edit:
-        if (!isLocalMachine && game is! GameDarkAgeEditor) return;
+        if (!isLocalMachine && game is! GameEditor) return;
         return handleRequestEdit(arguments);
 
       case ClientRequest.Npc_Talk_Select_Option:
@@ -214,7 +214,7 @@ class Connection with ByteReader {
           break;
 
       case ClientRequest.Time_Set_Hour:
-        if (!isLocalMachine && game is! GameDarkAgeEditor) return;
+        if (!isLocalMachine && game is! GameEditor) return;
           final hour = parse(arguments[1]);
           if (hour == null) return errorInvalidArg('hour required');
           player.game.setHourMinutes(hour, 0);
@@ -331,7 +331,7 @@ class Connection with ByteReader {
 
     if (editRequest != EditRequest.Download
         && !isLocalMachine
-        && game is GameDarkAgeEditor == false
+        && game is GameEditor == false
     ) {
       player.writeError('cannot edit scene');
       return;
@@ -339,12 +339,12 @@ class Connection with ByteReader {
 
     switch (editRequest) {
       case EditRequest.Toggle_Game_Running:
-        if (!isLocalMachine && game is! GameDarkAgeEditor) return;
+        if (!isLocalMachine && game is! GameEditor) return;
         game.running = !game.running;
         break;
 
       case EditRequest.Scene_Reset:
-        if (!isLocalMachine && game is! GameDarkAgeEditor) return;
+        if (!isLocalMachine && game is! GameEditor) return;
         game.reset();
         break;
 
@@ -457,7 +457,7 @@ class Connection with ByteReader {
   void handleNodeRequestSetBlock(List<String> arguments) {
     final player = _player;
     if (player == null) return;
-    if (!isLocalMachine && player.game is GameDarkAgeEditor == false) return;
+    if (!isLocalMachine && player.game is GameEditor == false) return;
 
     if (arguments.length < 4) return errorInvalidArg('4 args expected');
 
@@ -686,7 +686,7 @@ class Connection with ByteReader {
   }
 
   Future joinGameEditorScene(Scene scene) async {
-    joinGame(GameDarkAgeEditor(scene: scene));
+    joinGame(GameEditor(scene: scene));
   }
 
   Future joinGamePractice() async {

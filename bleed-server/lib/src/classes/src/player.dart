@@ -2,12 +2,12 @@
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:bleed_server/src/games/game_editor.dart';
 import 'package:bleed_server/src/system.dart';
 import 'package:lemon_byte/byte_writer.dart';
 import 'package:lemon_math/library.dart';
 
 import 'package:bleed_server/gamestream.dart';
-import '../../dark_age/game_dark_age_editor.dart';
 import 'scene_writer.dart';
 
 
@@ -82,9 +82,6 @@ class Player extends Character with ByteWriter {
   final inventoryQuantity = Uint16List(InventorySize);
   final inventoryUpgrades = Uint16List(InventorySize);
   var storeItems = <int>[];
-  final questsInProgress = <Quest>[];
-  final questsCompleted = <Quest>[];
-  // final flags = <Flag>[];
   var options = <String, Function> {};
   var _interactMode = InteractMode.Inventory;
   var inventoryOpen = true;
@@ -335,27 +332,6 @@ class Player extends Character with ByteWriter {
       writePlayerEvent(PlayerEvent.Level_Increased);
     }
     writePlayerExperiencePercentage();
-  }
-
-  bool questToDo(Quest quest) => !questCompleted(quest) && !questInProgress(quest);
-  bool questInProgress(Quest quest) => questsInProgress.contains(quest);
-  bool questCompleted(Quest quest) => questsCompleted.contains(quest);
-
-  void beginQuest(Quest quest){
-    assert (!questsInProgress.contains(quest));
-    assert (!questsCompleted.contains(quest));
-    questsInProgress.add(quest);
-    writePlayerQuests();
-    writePlayerEvent(PlayerEvent.Quest_Started);
-  }
-
-  void completeQuest(Quest quest){
-    assert (questsInProgress.contains(quest));
-    assert (!questsCompleted.contains(quest));
-    questsInProgress.remove(quest);
-    questsCompleted.add(quest);
-    writePlayerQuests();
-    writePlayerEvent(PlayerEvent.Quest_Completed);
   }
 
   void endInteraction(){
@@ -1523,21 +1499,9 @@ class Player extends Character with ByteWriter {
 
   void writeGameProperties() {
     writeByte(ServerResponse.Game_Properties);
-    writeBool((game is GameDarkAgeEditor || isLocalMachine));
+    writeBool((game is GameEditor || isLocalMachine));
     writeString(game.scene.name);
     writeBool(game.running);
-  }
-
-  void writePlayerQuests(){
-    writeByte(ServerResponse.Player_Quests);
-    writeUInt16(questsInProgress.length);
-    for (final quest in questsInProgress){
-      writeByte(quest.index);
-    }
-    writeUInt16(questsCompleted.length);
-    for (final quest in questsCompleted){
-      writeByte(quest.index);
-    }
   }
 
   void writeEditorGameObjectSelected() {

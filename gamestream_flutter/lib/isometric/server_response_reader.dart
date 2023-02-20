@@ -66,9 +66,6 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Npc_Talk:
           readNpcTalk();
           break;
-        case ServerResponse.Player_Quests:
-          readPlayerQuests();
-          break;
         case ServerResponse.Weather:
           readWeather();
           break;
@@ -419,11 +416,6 @@ class ServerResponseReader with ByteReader {
       }
       ServerState.totalCharacters++;
     }
-  }
-
-  void readPlayerQuests() {
-    GamePlayer.questsInProgress.value = readQuests();
-    GamePlayer.questsCompleted.value = readQuests();
   }
 
   void readNpcTalk() {
