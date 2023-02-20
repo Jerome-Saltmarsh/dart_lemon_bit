@@ -51,7 +51,7 @@ class GameAudio {
     AudioLoop(name: 'wind', getTargetVolume: getVolumeTargetWind),
     AudioLoop(name: 'rain', getTargetVolume: getVolumeTargetRain),
     AudioLoop(name: 'crickets', getTargetVolume: getVolumeTargetCrickets),
-    AudioLoop(name: 'day-ambience', getTargetVolume: GameAudio.getVolumeTargetDayAmbience),
+    AudioLoop(name: 'day-ambience', getTargetVolume: getVolumeTargetDayAmbience),
     AudioLoop(name: 'distant-thunder', getTargetVolume: getVolumeTargetDistanceThunder),
     AudioLoop(name: 'heart-beat', getTargetVolume: getVolumeHeartBeat),
   ];
