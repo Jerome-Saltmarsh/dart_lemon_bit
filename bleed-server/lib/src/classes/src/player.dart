@@ -16,6 +16,7 @@ class Player extends Character with ByteWriter {
   static const Health_Per_Perk = 5;
   static const Frames_Per_Energy_Gain = 150;
   static const Perks_Length = 5;
+  static const inventory_size = 6 * 5;
 
   final perksUnlocked = <int>[];
   var perksActive = Uint8List(Perks_Length);
@@ -47,7 +48,6 @@ class Player extends Character with ByteWriter {
   var inventoryDirty = false;
   var _equippedWeaponIndex = 0;
 
-
   var belt1_itemType = ItemType.Empty; // 1
   var belt2_itemType = ItemType.Empty; // 2
   var belt3_itemType = ItemType.Empty; // 3
@@ -73,14 +73,17 @@ class Player extends Character with ByteWriter {
   var _baseDamage = 0;
   var _baseEnergy = 10;
 
+  var Weapon_Primary = ItemType.Empty;
+  var Weapon_Secondary = ItemType.Empty;
+  var Weapon_Tertiary = ItemType.Empty;
+
   /// Warning - do not reference
   Game game;
   Collider? _aimTarget; // the currently highlighted character
   Account? account;
-  static const InventorySize = 6 * 5;
-  final inventory = Uint16List(InventorySize);
-  final inventoryQuantity = Uint16List(InventorySize);
-  final inventoryUpgrades = Uint16List(InventorySize);
+  final inventory = Uint16List(inventory_size);
+  final inventoryQuantity = Uint16List(inventory_size);
+  final inventoryUpgrades = Uint16List(inventory_size);
   var storeItems = <int>[];
   var options = <String, Function> {};
   var _interactMode = InteractMode.Inventory;
@@ -107,8 +110,6 @@ class Player extends Character with ByteWriter {
   ){
     maxEnergy = energy;
     _energy = maxEnergy;
-    game.players.add(this);
-    game.characters.add(this);
   }
 
   /// GETTERS

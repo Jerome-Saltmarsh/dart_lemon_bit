@@ -727,6 +727,8 @@ class Connection with ByteReader {
     _player = _player = player;
     player.sendBufferToClient = sendBufferToClient;
     player.sceneDownloaded = false;
+    game.players.add(player);
+    game.characters.add(player);
     game.customOnPlayerJoined(player);
     player.writeGameOptions();
     game.revive(player);
