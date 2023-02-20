@@ -393,7 +393,7 @@ class GameInventoryUI {
          children.add(
              _buildRowHoverValue(
                itemType: equippedWeaponType,
-               value: ItemType.getDamage(equippedWeaponType),
+               value: GameOptions.getItemTypeDamage(equippedWeaponType, ignoreEmpty: false),
                total: total,
              )
          );
@@ -401,21 +401,21 @@ class GameInventoryUI {
          if (GamePlayer.head.value != ItemType.Empty) {
            children.add(
                _buildRowHoverValue(itemType: GamePlayer.head.value,
-                 value: ItemType.getDamage(GamePlayer.head.value),
+                 value: GameOptions.getItemTypeDamage(GamePlayer.head.value),
                  total: total,)
            );
          }
          if (GamePlayer.body.value != ItemType.Empty) {
            children.add(
                _buildRowHoverValue(itemType: GamePlayer.body.value,
-                 value: ItemType.getDamage(GamePlayer.body.value),
+                 value: GameOptions.getItemTypeDamage(GamePlayer.body.value),
                  total: total,)
            );
          }
          if (GamePlayer.legs.value != ItemType.Empty) {
            children.add(
                _buildRowHoverValue(itemType: GamePlayer.legs.value,
-                 value: ItemType.getDamage(GamePlayer.legs.value),
+                 value: GameOptions.getItemTypeDamage(GamePlayer.legs.value),
                  total: total,)
            );
          }
@@ -424,7 +424,7 @@ class GameInventoryUI {
            children.add(
                _buildRowHoverValue(
                    itemType: beltType.value,
-                   value: ItemType.getDamage(beltType.value),
+                   value: GameOptions.getItemTypeDamage(beltType.value),
                    total: total,
                )
            );
@@ -582,11 +582,11 @@ class GameInventoryUI {
     final itemTypeIsEquippable = ItemType.isTypeEquippable(itemType);
     final equippedItemType          = ServerQuery.getEquippedItemType(itemType);
     final itemTypeIsTrinket         = ItemType.isTypeTrinket(itemType);
-    final itemTypeDamage            = ItemType.getDamage(itemType);
+    final itemTypeDamage            = GameOptions.getItemTypeDamage(itemType);
     final itemTypeRange             = ItemType.getRange(itemType).toInt();
     final itemTypeCooldown          = ItemType.getCooldown(itemType);
     final itemTypeMaxHealth         = ItemType.getMaxHealth(itemType);
-    final equippedItemTypeDamage    = itemTypeIsEquippable ? ItemType.getDamage(equippedItemType) : null;
+    final equippedItemTypeDamage    = itemTypeIsEquippable ? GameOptions.getItemTypeDamage(equippedItemType) : null;
     final equippedItemTypeRange     = itemTypeIsEquippable ? ItemType.getRange(equippedItemType) : null;
     final equippedItemTypeCooldown  = itemTypeIsEquippable ? ItemType.getCooldown(equippedItemType) : null;
     final equippedItemTypeMaxHealth = itemTypeIsEquippable ? ItemType.getMaxHealth(equippedItemType) : null;

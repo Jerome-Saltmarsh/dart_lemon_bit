@@ -107,6 +107,16 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Game_Options:
           GameOptions.perks.value = readBool();
           GameOptions.inventory.value = readBool();
+
+          final length = readUInt16();
+          GameOptions.item_damage.clear();
+
+          for (var i = 0; i < length; i++) {
+             final key = readUInt16();
+             final value = readUInt16();
+             GameOptions.item_damage[key] = value;
+          }
+
           break;
         default:
           if (debugging) {
