@@ -4,13 +4,12 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:gamestream_flutter/game_minimap.dart';
 import 'package:gamestream_flutter/game_ui_interact.dart';
 import 'package:gamestream_flutter/isometric/events/on_visibility_changed_message_box.dart';
-import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
-import 'package:gamestream_flutter/isometric/ui/widgets/game_map.dart';
 import 'package:gamestream_flutter/language_utils.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import 'game_ui_config.dart';
+
 
 class GameUI {
   static const Icon_Scale = 1.5;
@@ -22,7 +21,6 @@ class GameUI {
   static final textFieldMessage = FocusNode();
   static final panelTypeKey = <int, GlobalKey>{};
   static final playerTextStyle = TextStyle(color: Colors.white);
-  static final mapVisible = Watch(false);
   static final timeVisible = Watch(true);
 
 
@@ -315,32 +313,6 @@ class GameUI {
                 onPressed: () => GamePlayer.interpolating.value = false);
           });
         }),
-      );
-
-  static Positioned buildMiniMap() => Positioned(
-        left: 6,
-        top: 6,
-        child: buildDialogUIControl(
-          child: onPressed(
-            action: GameState.actionGameDialogShowMap,
-            child: Container(
-                padding: const EdgeInsets.all(4),
-                color: brownDark,
-                child: GameMapWidget(width: 133, height: 133)),
-          ),
-        ),
-      );
-
-  static Widget buildContainerQuestUpdated() => Container(
-        width: Engine.screen.width,
-        alignment: Alignment.topCenter,
-        child: container(
-            child: "QUEST UPDATED",
-            alignment: Alignment.center,
-            color: Colors.green,
-            width: 200,
-            margin: EdgeInsets.only(top: 16),
-            action: GameState.actionGameDialogShowQuests),
       );
 
   static Widget buildRowMainMenu() =>

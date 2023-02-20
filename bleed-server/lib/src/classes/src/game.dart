@@ -51,6 +51,16 @@ class GameJob {
   GameJob(this.timer, this.action);
 }
 
+class GameOptions {
+   final bool perks;
+   final bool inventory;
+
+   GameOptions({
+     required this.perks,
+     required this.inventory,
+   });
+}
+
 abstract class Game {
 
   static const Interact_Radius = 100.0;
@@ -66,8 +76,10 @@ abstract class Game {
   final jobs = <GameJob>[];
   final scripts = <GameScript>[];
   final scriptReader = ByteReader();
+  final GameOptions options;
   var _timerUpdateAITargets = 0;
   var gameObjectId = 0;
+
 
   GameEnvironment environment;
   GameTime time;
@@ -154,10 +166,14 @@ abstract class Game {
   /// @override
   double get minAimTargetCursorDistance => 35;
 
-  bool get customPropMapVisible => false;
-
   /// CONSTRUCTOR
-  Game({required this.scene, required this.time, required this.environment, required this.gameType}) {
+  Game({
+    required this.scene,
+    required this.time,
+    required this.environment,
+    required this.gameType,
+    required this.options,
+  }) {
     engine.onGameCreated(this); /// TODO Illegal external scope reference
     gameObjectId = scene.gameObjects.length;
   }

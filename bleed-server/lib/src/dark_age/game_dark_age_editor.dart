@@ -13,6 +13,10 @@ class GameDarkAgeEditor extends Game {
       environment: GameEnvironment(),
       time: GameTime(),
       gameType: GameType.Editor,
+      options: GameOptions(
+        perks: false,
+        inventory: false,
+      ),
   );
 
   @override

@@ -9,7 +9,13 @@ class GameSkirmish extends Game {
     required super.scene,
   }) : super(
       gameType: GameType.Skirmish,
-      time: GameTime(enabled: false),
+      time: GameTime(enabled: false, hour: 15),
       environment: GameEnvironment(),
+      options: GameOptions(perks: false, inventory: false),
   );
+
+  @override
+  void customOnPlayerJoined(Player player) {
+
+  }
 }

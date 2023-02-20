@@ -58,8 +58,6 @@ class GameNetwork {
     }
   }
 
-  static void connectToGameDarkAge() => connectToGame(GameType.Dark_Age);
-
   static void connectToGameEditor() => connectToGame(GameType.Editor);
 
   static void connectToGameSurvival() => connectToGame(GameType.Survival);

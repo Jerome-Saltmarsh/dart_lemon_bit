@@ -1185,18 +1185,12 @@ class Player extends Character with ByteWriter {
   void downloadScene(){
     writeGrid();
     writeGameProperties();
-    writeRenderMap(game.customPropMapVisible);
     writeGameType(game.gameType);
     writeWeather();
     writeGameObjects();
     game.customDownloadScene(this);
     writePlayerEvent(PlayerEvent.Scene_Changed);
     sceneDownloaded = true;
-  }
-
-  void writeRenderMap(bool value){
-    writeByte(ServerResponse.Render_Map);
-    writeBool(value);
   }
 
   void writeGameType(int value){
@@ -1453,6 +1447,12 @@ class Player extends Character with ByteWriter {
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Credits);
     writeUInt16(credits);
+  }
+
+  void writeGameOptions() {
+    final options = game.options;
+    writeByte(ServerResponse.Game_Options);
+    writeBool(options.perks);
   }
 
   void writePlayerInventory() {

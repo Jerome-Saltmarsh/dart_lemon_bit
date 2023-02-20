@@ -10,6 +10,7 @@ class GameSurvival extends Game {
       environment: GameEnvironment(),
       time: GameTime(),
       gameType: GameType.Survival,
+      options: GameOptions(perks: true, inventory: false),
   ) {
     triggerSpawnPoints();
   }

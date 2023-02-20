@@ -232,16 +232,6 @@ class GameState {
     ClientState.rendersSinceUpdate.value = 0;
   }
 
-  static void actionGameDialogShowMap() {
-    if (ServerState.gameType.value != GameType.Dark_Age) return;
-
-    if (GamePlayer.gameDialog.value == GameDialog.Map){
-      GamePlayer.gameDialog.value = null;
-      return;
-    }
-    GamePlayer.gameDialog.value = GameDialog.Map;
-  }
-
   static void clear() {
     GamePlayer.position.x = -1;
     GamePlayer.position.y = -1;
@@ -1221,16 +1211,6 @@ class GameState {
   }
 
   static void toggleShadows () => gridShadows.value = !gridShadows.value;
-
-  static void actionGameDialogShowQuests() {
-    if (ServerState.gameType.value != GameType.Dark_Age) return;
-
-    if (GamePlayer.gameDialog.value == GameDialog.Quests){
-      GamePlayer.gameDialog.value = null;
-      return;
-    }
-    GamePlayer.gameDialog.value = GameDialog.Quests;
-  }
 
   static var nextEmissionSmoke = 0;
 

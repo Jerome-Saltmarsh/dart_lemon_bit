@@ -22,13 +22,6 @@ class GameEnvironment {
   bool get lightningFlashing => lightningFlashDuration > 0;
   int get windType => _windType;
 
-  // set shade(int value) {
-  //   final clampedValue = clamp(value, maxShade, Shade.Pitch_Black);
-  //   if (_shade == clampedValue) return;
-  //   _shade = clampedValue;
-  //   onChangedWeather();
-  // }
-
   set windType(int value) {
     if (_windType == value) return;
     if (value < WindType.Calm) return;

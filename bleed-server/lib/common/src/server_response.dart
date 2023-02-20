@@ -17,7 +17,6 @@ class ServerResponse {
   static const Map_Coordinate = 85;
   static const Characters = 92;
   static const Editor_GameObject_Selected = 101;
-  static const Render_Map = 104;
   static const GameObject = 107;
   static const Environment = 108;
   static const Error = 109;
@@ -26,6 +25,6 @@ class ServerResponse {
   static const Download_Scene = 112;
   static const GameObjects= 113;
   static const GameObject_Deleted = 114;
-
+  static const Game_Options = 115;
 }
 

@@ -80,9 +80,6 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Editor_GameObject_Selected:
           readEditorGameObjectSelected();
           break;
-        case ServerResponse.Render_Map:
-          GameUI.mapVisible.value = readBool();
-          break;
         case ServerResponse.Error:
           readServerResponseError();
           break;
