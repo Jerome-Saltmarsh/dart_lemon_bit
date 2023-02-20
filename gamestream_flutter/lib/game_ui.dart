@@ -483,40 +483,54 @@ class GameUI {
     }[itemTab] ?? IconType.Unknown;
 
   static Widget buildIconItemTab(ItemTab itemTab) =>
-      buildAtlasIconType(mapItemTabToIconType(itemTab));
+      onPressed(
+          action: ClientState.itemTab.value != itemTab
+              ? () => ClientState.itemTab.value = itemTab
+              : null,
+          child: Container(
+            width: 50,
+              height: 50,
+              color: ClientState.itemTab.value == itemTab ? Colors.white12 : Colors.transparent,
+              child: buildAtlasIconType(mapItemTabToIconType(itemTab))),
+              );
 
   static Widget buildWindowPlayerItems(){
       return watch(GamePlayer.items_reads, (t) {
-        return Container(
-          padding: GameStyle.Padding_6,
-          color: GameStyle.Container_Color,
-          width: 300,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(children: ItemTab.values.map(buildIconItemTab).toList()),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: GamePlayer.items.entries.map((entry){
-                  final itemType = entry.key;
-                  return Row(
+
+        return watch(ClientState.itemTab, (activeItemTab){
+          return Container(
+            padding: GameStyle.Padding_6,
+            color: GameStyle.Container_Color,
+            width: 320,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          buildAtlasItemType(itemType),
-                          width8,
-                          text(ItemType.getName(itemType)),
-                        ],
-                      ),
-                      text(entry.value),
-                    ],
-                  );
-                }).toList(),
-              ),
-            ],
-          ),
-        );
+                    children: ItemTab.values.map(buildIconItemTab).toList()),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: GamePlayer.items.entries.map((entry){
+                    final itemType = entry.key;
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            buildAtlasItemType(itemType),
+                            width8,
+                            text(ItemType.getName(itemType)),
+                          ],
+                        ),
+                        text(entry.value),
+                      ],
+                    );
+                  }).toList(),
+                ),
+              ],
+            ),
+          );
+        });
       });
   }
 
