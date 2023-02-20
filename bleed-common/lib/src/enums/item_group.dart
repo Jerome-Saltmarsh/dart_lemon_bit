@@ -1,4 +1,5 @@
-enum ItemTab {
+
+enum ItemGroup {
   Primary_Weapon,
   Secondary_Weapon,
   Tertiary_Weapon,

@@ -27,7 +27,7 @@ class ClientState {
 
   static final triggerAlarmNoMessageReceivedFromServer = Watch(false);
 
-  static final itemTab = Watch(ItemTab.Primary_Weapon);
+  static final itemGroup = Watch(ItemGroup.Primary_Weapon);
 
   static final particles = <Particle>[];
 

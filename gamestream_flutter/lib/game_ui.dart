@@ -473,31 +473,31 @@ class GameUI {
           )
       ]);
 
-  static int mapItemTabToIconType(ItemTab itemTab) => const {
-      ItemTab.Primary_Weapon: IconType.Primary_Weapon,
-      ItemTab.Secondary_Weapon: IconType.Secondary_Weapon,
-      ItemTab.Tertiary_Weapon: IconType.Tertiary_Weapon,
-      ItemTab.Head_Type: IconType.Head_Type,
-      ItemTab.Body_Type: IconType.Body_Type,
-      ItemTab.Legs_Type: IconType.Leg_Type,
+  static int mapItemTabToIconType(ItemGroup itemTab) => const {
+      ItemGroup.Primary_Weapon: IconType.Primary_Weapon,
+      ItemGroup.Secondary_Weapon: IconType.Secondary_Weapon,
+      ItemGroup.Tertiary_Weapon: IconType.Tertiary_Weapon,
+      ItemGroup.Head_Type: IconType.Head_Type,
+      ItemGroup.Body_Type: IconType.Body_Type,
+      ItemGroup.Legs_Type: IconType.Leg_Type,
     }[itemTab] ?? IconType.Unknown;
 
-  static Widget buildIconItemTab(ItemTab itemTab) =>
+  static Widget buildIconItemTab(ItemGroup itemTab) =>
       onPressed(
-          action: ClientState.itemTab.value != itemTab
-              ? () => ClientState.itemTab.value = itemTab
+          action: ClientState.itemGroup.value != itemTab
+              ? () => ClientState.itemGroup.value = itemTab
               : null,
           child: Container(
             width: 50,
               height: 50,
-              color: ClientState.itemTab.value == itemTab ? Colors.white12 : Colors.transparent,
+              color: ClientState.itemGroup.value == itemTab ? Colors.white12 : Colors.transparent,
               child: buildAtlasIconType(mapItemTabToIconType(itemTab))),
               );
 
   static Widget buildWindowPlayerItems(){
       return watch(GamePlayer.items_reads, (t) {
 
-        return watch(ClientState.itemTab, (activeItemTab){
+        return watch(ClientState.itemGroup, (activeItemGroup){
           return Container(
             padding: GameStyle.Padding_6,
             color: GameStyle.Container_Color,
@@ -507,25 +507,29 @@ class GameUI {
               children: [
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: ItemTab.values.map(buildIconItemTab).toList()),
+                    children: ItemGroup.values.map(buildIconItemTab).toList()),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: GamePlayer.items.entries.map((entry){
-                    final itemType = entry.key;
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            buildAtlasItemType(itemType),
-                            width8,
-                            text(ItemType.getName(itemType)),
-                          ],
-                        ),
-                        text(entry.value),
-                      ],
-                    );
-                  }).toList(),
+                  children: GamePlayer.items.entries
+                    .where((element) =>
+                        element.key != ItemType.Empty &&
+                        ItemType.getItemGroup(element.key) == activeItemGroup)
+                    .map((entry) {
+                  final itemType = entry.key;
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          buildAtlasItemType(itemType),
+                          width8,
+                          text(ItemType.getName(itemType)),
+                        ],
+                      ),
+                      text(entry.value),
+                    ],
+                  );
+                }).toList(),
                 ),
               ],
             ),

@@ -1,4 +1,8 @@
 
+import 'package:http/http.dart';
+
+import 'enums/item_group.dart';
+
 class ItemType {
   static const Invalid                      = -0001;
   static const Empty                        = 00000;
@@ -467,38 +471,6 @@ class ItemType {
     Weapon_Rifle_M4: 2,
   }[itemType] ?? 0;
 
-  // static int getDamage(int value) => const {
-  //     Empty: 1,
-  //     Weapon_Ranged_Shotgun: 2,
-  //     Weapon_Handgun_Flint_Lock_Old: 4,
-  //     Weapon_Handgun_Flint_Lock: 5,
-  //     Weapon_Handgun_Flint_Lock_Superior: 6,
-  //     Weapon_Handgun_Glock: 7,
-  //     Weapon_Handgun_Desert_Eagle: 18,
-  //     Weapon_Handgun_Revolver: 25,
-  //     Weapon_Melee_Sword_Rusty: 3,
-  //     Weapon_Melee_Sword: 3,
-  //     Weapon_Melee_Knife: 3,
-  //     Weapon_Melee_Axe: 3,
-  //     Weapon_Melee_Pickaxe: 3,
-  //     Weapon_Melee_Crowbar: 2,
-  //     Weapon_Ranged_Bow: 1,
-  //     Weapon_Ranged_Bow_Long: 2,
-  //     Weapon_Ranged_Crossbow: 5,
-  //     Weapon_Rifle_Arquebus: 3,
-  //     Weapon_Rifle_Blunderbuss: 4,
-  //     Weapon_Rifle_Musket: 5,
-  //     Weapon_Rifle_Jager: 8,
-  //     Weapon_Rifle_AK_47: 2,
-  //     Weapon_Rifle_M4: 2,
-  //     Weapon_Rifle_Sniper: 50,
-  //     Weapon_Smg_Mp5: 1,
-  //     Trinket_Ring_of_Damage: 1,
-  //     Weapon_Flamethrower: 10,
-  //     Weapon_Special_Bazooka: 100,
-  //     Weapon_Special_Minigun: 7,
-  // }[value] ?? 1;
-
   static int getEnergy(int value) => const {
     
   }[value] ?? 0;
@@ -869,6 +841,54 @@ class ItemType {
       Weapon_Handgun_Glock: 200,
       Weapon_Rifle_AK_47: 300,
     }[itemType] ?? Empty;
+  }
+
+  static const Item_Group_Primary_Weapons = [
+     Weapon_Rifle_M4,
+     Weapon_Ranged_Shotgun,
+     Weapon_Smg_Mp5,
+  ];
+
+  static const Item_Group_Secondary_Weapons = [
+      Weapon_Handgun_Glock,
+      Weapon_Handgun_Revolver,
+   ];
+
+  static const Item_Group_Tertiary_Weapons = [
+     Weapon_Melee_Crowbar,
+     Weapon_Melee_Knife,
+     Weapon_Melee_Sword,
+  ];
+
+  static const Item_Group_Head_Types = [
+    Head_Wizards_Hat,
+    Head_Rogues_Hood,
+    Head_Steel_Helm,
+    Head_Swat,
+  ];
+
+  static const Item_Group_Body_Types = [
+    Body_Shirt_Blue,
+    Body_Tunic_Padded,
+    Body_Swat,
+    Body_Shirt_Cyan,
+  ];
+
+  static const Item_Group_Leg_Types = [
+    Legs_Green,
+    Legs_Swat,
+    Legs_White,
+    Legs_Red,
+  ];
+
+  static ItemGroup getItemGroup(int itemType){
+     if (Item_Group_Primary_Weapons.contains(itemType)) return ItemGroup.Primary_Weapon;
+     if (Item_Group_Secondary_Weapons.contains(itemType)) return ItemGroup.Secondary_Weapon;
+     if (Item_Group_Tertiary_Weapons.contains(itemType)) return ItemGroup.Tertiary_Weapon;
+     if (Item_Group_Head_Types.contains(itemType)) return ItemGroup.Head_Type;
+     if (Item_Group_Body_Types.contains(itemType)) return ItemGroup.Body_Type;
+     if (Item_Group_Leg_Types.contains(itemType)) return ItemGroup.Legs_Type;
+     throw Exception("ItemType.getItemGroup(${getName(itemType)})");
   }
 }
 

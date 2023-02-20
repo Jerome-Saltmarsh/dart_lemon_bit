@@ -9,4 +9,3 @@ export 'drag_start.dart';
 export 'client_type.dart';
 export 'visibility.dart';
 export 'emission_type.dart';
-export 'item_tab.dart';
