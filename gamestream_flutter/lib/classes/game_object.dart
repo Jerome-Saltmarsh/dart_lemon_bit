@@ -81,7 +81,6 @@ class GameObject extends Vector3 {
     if (emission_intensity_t < emission_intensity_start || emission_intensity_t > emission_intensity_end){
       emission_intensity_t = clamp(emission_intensity_t, emission_intensity_start, emission_intensity_end);
       emission_intensity_vel = -emission_intensity_vel;
-      // emission_intensity_t += emission_intensity_vel;
     }
 
     emission_intensity = interpolateDouble(

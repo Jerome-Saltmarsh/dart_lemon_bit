@@ -31,6 +31,7 @@ ctrl + w:   minimal mode
 [ ] milestone fix light corners
 
 19.02.2023
+[x] feature torch light flicker
 [x] feature game object barrel flame flicker
 [x] feature ambient light intensity
 

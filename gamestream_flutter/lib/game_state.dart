@@ -7,8 +7,12 @@ import 'library.dart';
 
 
 class GameState {
-  // static final particleEmitters = <ParticleEmitter>[];
   static final particleOverflow = Particle();
+  static var torch_emission_start = 0.78;
+  static var torch_emission_end = 1.0;
+  static var torch_emission_vel = 0.1;
+  static var torch_emission_t = 0.0;
+  static var torch_emission_intensity = 1.0;
 
   static var nextParticleFrame = 0;
 
@@ -23,8 +27,6 @@ class GameState {
   static bool get playMode => !editMode;
   static bool get editMode => ClientState.edit.value;
   static bool get lightningOn => ServerState.lightningType.value != LightningType.Off;
-
-
 
 
   static int getNodeIndexV3(Vector3 v3) {
@@ -103,12 +105,12 @@ class GameState {
         case NodeType.Torch:
           GameNodes.emitLightAmbient(
             index: nodeIndex,
-            alpha: 0,
+            alpha: Engine.linerInterpolationInt(
+                GameNodes.ambient_hue,
+                0,
+                torch_emission_intensity,
+            ),
           );
-          // GameNodes.emitLightAmbient(
-          //   index: nodeIndex + GameNodes.area,
-          //   alpha: 0,
-          // );
           break;
       }
     }
@@ -1180,6 +1182,7 @@ class GameState {
       return;
     }
 
+    updateTorchEmissionIntensity();
     GameAnimation.updateAnimationFrame();
     updateParticleEmitters();
     updateProjectiles();
@@ -1189,6 +1192,25 @@ class GameState {
     updatePlayerMessageTimer();
     GameIO.readPlayerInput();
     GameNetwork.sendClientRequestUpdate();
+  }
+
+  static void updateTorchEmissionIntensity(){
+    if (torch_emission_vel == 0) return;
+    torch_emission_t += torch_emission_vel;
+
+    if (
+      torch_emission_t < torch_emission_start ||
+      torch_emission_t > torch_emission_end
+    ) {
+      torch_emission_t = clamp(torch_emission_t, torch_emission_start, torch_emission_end);
+      torch_emission_vel = -torch_emission_vel;
+    }
+
+    torch_emission_intensity = interpolateDouble(
+      start: torch_emission_start,
+      end: torch_emission_end,
+      t: torch_emission_t,
+    );
   }
 
   static void updatePlayerMessageTimer() {
