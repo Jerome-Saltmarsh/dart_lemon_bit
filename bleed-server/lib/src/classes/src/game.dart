@@ -4,7 +4,6 @@ import 'dart:typed_data';
 import 'package:bleed_server/src/classes/src/game_environment.dart';
 import 'package:bleed_server/src/game_physics.dart';
 import 'package:lemon_byte/byte_reader.dart';
-import 'package:lemon_byte/byte_writer.dart';
 import 'package:lemon_math/library.dart';
 
 import 'package:bleed_server/gamestream.dart';
@@ -13,88 +12,6 @@ import '../../io/write_scene_to_file.dart';
 import '../../maths/get_distance_between_v3.dart';
 import 'game_time.dart';
 
-
-class GameScript extends ByteWriter {
-  var timer = 0;
-  var script = Uint8List(0);
-
-  void writeDeactivate(int target){
-    writeUInt8(ScriptType.Action_Deactivate);
-    writeUInt8(target);
-  }
-
-  void writeSpawnGameObject({
-    required int type,
-    required double x,
-    required double y,
-    required double z,
-  }){
-    writeUInt8(ScriptType.Spawn_GameObject);
-    writeUInt16(type);
-    writeUInt16(x.toInt());
-    writeUInt16(y.toInt());
-    writeUInt16(z.toInt());
-  }
-}
-
-class ScriptType {
-  static const Action_Deactivate = 0;
-  static const Action_Explode = 1;
-  static const If_Within_Radius = 2;
-  static const Spawn_GameObject = 3;
-}
-
-class GameJob {
-  int timer;
-  Function action;
-
-  GameJob(this.timer, this.action);
-}
-
-class GameOptions {
-   final bool perks;
-   final bool inventory;
-
-   final Map<int, int> itemDamage;
-
-   GameOptions({
-     required this.perks,
-     required this.inventory,
-     this.itemDamage = Default_Item_Damage,
-   });
-
-   static const Default_Item_Damage = <int, int>{
-    ItemType.Empty: 1,
-    ItemType.Weapon_Ranged_Shotgun: 2,
-    ItemType.Weapon_Handgun_Flint_Lock_Old: 4,
-    ItemType.Weapon_Handgun_Flint_Lock: 5,
-    ItemType.Weapon_Handgun_Flint_Lock_Superior: 6,
-    ItemType.Weapon_Handgun_Glock: 7,
-    ItemType.Weapon_Handgun_Desert_Eagle: 18,
-    ItemType.Weapon_Handgun_Revolver: 25,
-    ItemType.Weapon_Melee_Sword_Rusty: 3,
-    ItemType.Weapon_Melee_Sword: 3,
-    ItemType.Weapon_Melee_Knife: 3,
-    ItemType.Weapon_Melee_Axe: 3,
-    ItemType.Weapon_Melee_Pickaxe: 3,
-    ItemType.Weapon_Melee_Crowbar: 2,
-    ItemType.Weapon_Ranged_Bow: 1,
-    ItemType.Weapon_Ranged_Bow_Long: 2,
-    ItemType.Weapon_Ranged_Crossbow: 5,
-    ItemType.Weapon_Rifle_Arquebus: 3,
-    ItemType.Weapon_Rifle_Blunderbuss: 4,
-    ItemType.Weapon_Rifle_Musket: 5,
-    ItemType.Weapon_Rifle_Jager: 8,
-    ItemType.Weapon_Rifle_AK_47: 2,
-    ItemType.Weapon_Rifle_M4: 2,
-    ItemType.Weapon_Rifle_Sniper: 50,
-    ItemType.Weapon_Smg_Mp5: 1,
-    ItemType.Trinket_Ring_of_Damage: 1,
-    ItemType.Weapon_Flamethrower: 10,
-    ItemType.Weapon_Special_Bazooka: 100,
-    ItemType.Weapon_Special_Minigun: 7,
-  };
-}
 
 abstract class Game {
 
