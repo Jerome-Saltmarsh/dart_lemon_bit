@@ -73,9 +73,32 @@ class Player extends Character with ByteWriter {
   var _baseDamage = 0;
   var _baseEnergy = 10;
 
-  var weaponPrimary = ItemType.Empty;
-  var weaponSecondary = ItemType.Empty;
-  var weaponTertiary = ItemType.Empty;
+  var _weaponPrimary = ItemType.Empty;
+  var _weaponSecondary = ItemType.Empty;
+  var _weaponTertiary = ItemType.Empty;
+
+  int get weaponPrimary => _weaponPrimary;
+  int get weaponSecondary => _weaponPrimary;
+  int get weaponTertiary => _weaponPrimary;
+
+  set weaponPrimary(int value) {
+    if (_weaponPrimary == value) return;
+    _weaponPrimary = value;
+    writePlayerItemsEquipped();
+  }
+
+  set weaponSecondary(int value) {
+    if (_weaponSecondary == value) return;
+    _weaponSecondary = value;
+    writePlayerItemsEquipped();
+  }
+
+  set weaponTertiary(int value) {
+    if (_weaponTertiary == value) return;
+    _weaponTertiary = value;
+    writePlayerItemsEquipped();
+  }
+
 
   /// Warning - do not reference
   Game game;
@@ -1424,6 +1447,14 @@ class Player extends Character with ByteWriter {
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Items);
     writeMap(items);
+  }
+
+  void writePlayerItemsEquipped(){
+    writeByte(ServerResponse.Player);
+    writeByte(ApiPlayer.Items_Equipped);
+    writeUInt16(weaponPrimary);
+    writeUInt16(weaponSecondary);
+    writeUInt16(weaponTertiary);
   }
 
   void writeGameOptions() {

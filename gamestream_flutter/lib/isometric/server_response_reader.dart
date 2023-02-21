@@ -238,6 +238,11 @@ class ServerResponseReader with ByteReader {
         GamePlayer.energy.value = readUInt16();
         GamePlayer.energyMax.value = readUInt16();
         break;
+      case ApiPlayer.Items_Equipped:
+        GamePlayer.weaponPrimary.value = readUInt16();
+        GamePlayer.weaponSecondary.value = readUInt16();
+        GamePlayer.weaponTertiary.value = readUInt16();
+        break;
       case ApiPlayer.Aim_Angle:
         GamePlayer.mouseAngle = readAngle();
         break;
