@@ -481,6 +481,7 @@ class GameUI {
       ItemGroup.Head_Type: IconType.Head_Type,
       ItemGroup.Body_Type: IconType.Body_Type,
       ItemGroup.Legs_Type: IconType.Leg_Type,
+      ItemGroup.Unknown: IconType.Bag_White,
     }[itemTab] ?? IconType.Unknown;
 
   static Widget buildIconItemTab(ItemGroup itemTab) =>
@@ -502,7 +503,7 @@ class GameUI {
           return Container(
             padding: GameStyle.Padding_6,
             color: GameStyle.Container_Color,
-            width: 320,
+            width: 370,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

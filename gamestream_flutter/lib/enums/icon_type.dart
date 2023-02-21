@@ -35,4 +35,5 @@ class IconType {
   static const Head_Type = 37;
   static const Body_Type = 38;
   static const Leg_Type = 39;
+  static const Bag_White = 40;
 }

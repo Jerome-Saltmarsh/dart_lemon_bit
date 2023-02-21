@@ -100,7 +100,8 @@ class GamePlayer {
         return body;
       case ItemGroup.Legs_Type:
         return legs;
+      default:
+        throw Exception('GamePlayer.getItemGroupWatch($itemGroup)');
     }
   }
-
 }

@@ -327,6 +327,7 @@ class AtlasIcons {
     IconType.Head_Type: 262,
     IconType.Body_Type: 292,
     IconType.Leg_Type: 214,
+    IconType.Bag_White: 245,
   }[itemType] ?? 0;
 
   static double getSrcY(int itemType) => const  <int, double> {
@@ -361,6 +362,7 @@ class AtlasIcons {
     IconType.Head_Type: 147,
     IconType.Body_Type: 147,
     IconType.Leg_Type: 163,
+    IconType.Bag_White: 179,
   }[itemType] ?? 0;
 
   static double getSrcWidth(int itemType) => const  <int, double> {
@@ -370,6 +372,7 @@ class AtlasIcons {
     IconType.Head_Type: 20,
     IconType.Body_Type: 26,
     IconType.Leg_Type: 21,
+    IconType.Bag_White: 23,
   }[itemType] ?? getSrcSize(itemType);
 
   static double getSrcHeight(int itemType) => const  <int, double> {
@@ -379,6 +382,7 @@ class AtlasIcons {
     IconType.Head_Type: 26,
     IconType.Body_Type: 26,
     IconType.Leg_Type: 26,
+    IconType.Bag_White: 26,
   }[itemType] ?? getSrcSize(itemType);
 
   static double getSrcSize(int itemType) => const  <int, double> {
