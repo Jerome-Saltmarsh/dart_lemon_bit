@@ -444,24 +444,25 @@ abstract class Game {
     final weaponType = character.weaponType;
 
     if (character is Player) {
+      if (options.inventory) {
+        final playerWeaponConsumeType = ItemType.getConsumeType(weaponType);
 
-      final playerWeaponConsumeType = ItemType.getConsumeType(weaponType);
-
-      if (playerWeaponConsumeType != ItemType.Empty) {
-        final equippedWeaponQuantity = character.equippedWeaponQuantity;
-        if (equippedWeaponQuantity == 0){
-          playerReload(character);
-          return;
+        if (playerWeaponConsumeType != ItemType.Empty) {
+          final equippedWeaponQuantity = character.equippedWeaponQuantity;
+          if (equippedWeaponQuantity == 0){
+            playerReload(character);
+            return;
+          }
+          character.inventorySetQuantityAtIndex(
+            quantity: equippedWeaponQuantity - 1,
+            index: character.equippedWeaponIndex,
+          );
+          if (character.weaponIsEquipped){
+            character.writePlayerEquippedWeaponAmmunition();
+          }
         }
-        character.inventorySetQuantityAtIndex(
-          quantity: equippedWeaponQuantity - 1,
-          index: character.equippedWeaponIndex,
-        );
-        if (character.weaponIsEquipped){
-          character.writePlayerEquippedWeaponAmmunition();
-        }
-
       }
+
     } else if (character is AI){
       if (ItemType.isTypeWeaponFirearm(weaponType)){
         if (character.rounds <= 0){
