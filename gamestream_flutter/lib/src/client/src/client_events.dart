@@ -164,16 +164,35 @@ class ClientEvents {
   }
 
   static void onKeyPressedPlayModeHotKey(LogicalKeyboardKey key) {
-    if (ClientState.hoverIndex.value >= 0 &&
-        ClientState.hoverDialogIsInventory
-    ) {
-      GameNetwork.sendClientRequestInventoryMove(
+
+    if (GameOptions.inventory.value) {
+      if (ClientState.hoverIndex.value >= 0 &&
+          ClientState.hoverDialogIsInventory
+      ) {
+        GameNetwork.sendClientRequestInventoryMove(
           indexFrom: ClientState.hoverIndex.value,
           indexTo: ClientQuery.mapKeyboardKeyToBeltIndex(key),
-      );
-      return;
+        );
+        return;
+      }
+      ServerActions.equipWatchBeltType(ClientQuery.mapKeyboardKeyToWatchBeltType(key));
     }
-    ServerActions.equipWatchBeltType(ClientQuery.mapKeyboardKeyToWatchBeltType(key));
+
+
+    if (GameOptions.items.value){
+      if (key == LogicalKeyboardKey.digit1) {
+        GameNetwork.sendClientRequest(ClientRequest.Equip_Next, ItemGroup.Primary_Weapon.index);
+        return;
+      }
+      if (key == LogicalKeyboardKey.digit2) {
+        GameNetwork.sendClientRequest(ClientRequest.Equip_Next, ItemGroup.Secondary_Weapon.index);
+        return;
+      }
+      if (key == LogicalKeyboardKey.digit3) {
+        GameNetwork.sendClientRequest(ClientRequest.Equip_Next, ItemGroup.Tertiary_Weapon.index);
+        return;
+      }
+    }
   }
 
   static void onAcceptDragInventoryIcon(){

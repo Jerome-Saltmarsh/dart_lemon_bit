@@ -1682,6 +1682,16 @@ class Player extends Character with ByteWriter {
       writeUInt16(entry.value);
     }
   }
+
+  int getItemIndex(int itemType) {
+    final itemEntries = items.entries;
+    var index = 0;
+    for (var item in itemEntries){
+      if (item.key == itemType) return index;
+      index++;
+    }
+    return -1;
+  }
 }
 
 int getExperienceForLevel(int level){

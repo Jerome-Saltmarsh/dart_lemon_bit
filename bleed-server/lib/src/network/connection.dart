@@ -137,6 +137,16 @@ class Connection with ByteReader {
         player.game.characterEquipItemType(player, itemType);
         return;
 
+      case ClientRequest.Equip_Next:
+        final itemGroupIndex = parseArg1(arguments);
+        if (itemGroupIndex == null) return;
+        if (!isValidIndex(itemGroupIndex, ItemGroup.values)){
+          errorInvalidArg('invalid item group index: $itemGroupIndex');
+          return;
+        }
+        game.playerEquipNextItemGroup(player, ItemGroup.values[itemGroupIndex]);
+        return;
+
       case ClientRequest.Weather_Set_Rain:
         if (!isLocalMachine && game is! GameEditor) return;
         final rainType = parse(arguments[1]);
