@@ -498,7 +498,7 @@ class GameUI {
   static Widget buildWindowPlayerItems(){
       return watch(GamePlayer.items_reads, (t) {
 
-        return watch(ClientState.itemGroup, (activeItemGroup) {
+        return watch(ClientState.itemGroup, (ItemGroup activeItemGroup) {
           return Container(
             padding: GameStyle.Padding_6,
             color: GameStyle.Container_Color,
@@ -515,58 +515,14 @@ class GameUI {
                     .where((element) =>
                         element.key != ItemType.Empty &&
                         ItemType.getItemGroup(element.key) == activeItemGroup)
-                    .map((entry) {
-                  final itemType = entry.key;
-
-                  switch (activeItemGroup){
-                    case ItemGroup.Primary_Weapon:
-                       return watch(GamePlayer.weaponPrimary, (primaryWeaponType){
-                           return buildItemRow(
-                               itemType: itemType,
-                               amount: entry.value,
-                               active: itemType == primaryWeaponType,
-                           );
-                       });
-                    case ItemGroup.Secondary_Weapon:
-                      return watch(GamePlayer.weaponSecondary, (equippedWeapon){
-                        return  buildItemRow(
-                          itemType: itemType,
-                          amount: entry.value,
-                          active: itemType == equippedWeapon,
-                        );
-                      });
-                    case ItemGroup.Tertiary_Weapon:
-                      return watch(GamePlayer.weaponTertiary, (equippedWeapon){
-                        return  buildItemRow(
-                          itemType: itemType,
-                          amount: entry.value,
-                          active: itemType == equippedWeapon,
-                        );
-                      });
-                    default:
-                      throw Exception();
-                  }
-
-                  // return onPressed(
-                  //   action: () =>
-                  //       GameNetwork.sendClientRequest(ClientRequest.Equip, itemType),
-                  //   child: Container(
-                  //     child: Row(
-                  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //       children: [
-                  //         Row(
-                  //           children: [
-                  //             buildAtlasItemType(itemType),
-                  //             width8,
-                  //             text(ItemType.getName(itemType)),
-                  //           ],
-                  //         ),
-                  //         text(entry.value),
-                  //       ],
-                  //     ),
-                  //   ),
-                  // );
-                }).toList(),
+                    .map((entry) => watch(
+                        GamePlayer.getItemGroupWatch(activeItemGroup),
+                        (int activeItemType) => buildItemRow(
+                              itemType: entry.key,
+                              amount: entry.value,
+                              active: entry.key == activeItemType,
+                            )))
+                    .toList(),
                 ),
               ],
             ),
@@ -576,6 +532,35 @@ class GameUI {
   }
 
   static Widget buildItemRow({
+    required int itemType,
+    required int amount,
+    required bool active,
+  }){
+    return onPressed(
+      action: () =>
+          GameNetwork.sendClientRequest(ClientRequest.Equip, itemType),
+      child: Container(
+        color: active ? Colors.white24 : Colors.transparent,
+        padding: GameStyle.Padding_6,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                buildAtlasItemType(itemType),
+                width8,
+                text(ItemType.getName(itemType)),
+              ],
+            ),
+            text(amount),
+          ],
+        ),
+      ),
+    );
+  }
+
+  static Widget buildItemRow2({
+    required Watch<int> watch,
     required int itemType,
     required int amount,
     required bool active,

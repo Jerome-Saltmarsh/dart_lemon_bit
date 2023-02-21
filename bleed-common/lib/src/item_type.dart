@@ -854,12 +854,17 @@ class ItemType {
       Weapon_Handgun_Glock,
       Weapon_Handgun_Revolver,
       Weapon_Handgun_Flint_Lock,
+      Weapon_Handgun_Desert_Eagle,
    ];
 
   static const Item_Group_Tertiary_Weapons = [
      Weapon_Melee_Crowbar,
      Weapon_Melee_Knife,
      Weapon_Melee_Sword,
+     Weapon_Melee_Axe,
+     Weapon_Melee_Hammer,
+     Weapon_Melee_Pickaxe,
+     Weapon_Melee_Staff,
   ];
 
   static const Item_Group_Head_Types = [
@@ -871,9 +876,9 @@ class ItemType {
 
   static const Item_Group_Body_Types = [
     Body_Shirt_Blue,
+    Body_Shirt_Cyan,
     Body_Tunic_Padded,
     Body_Swat,
-    Body_Shirt_Cyan,
   ];
 
   static const Item_Group_Leg_Types = [
@@ -892,6 +897,10 @@ class ItemType {
      if (Item_Group_Leg_Types.contains(itemType)) return ItemGroup.Legs_Type;
      throw Exception("ItemType.getItemGroup(${getName(itemType)})");
   }
+
+  static const ItemTypeGroups = <int, ItemGroup> {
+      Weapon_Rifle_AK_47: ItemGroup.Primary_Weapon,
+  };
 }
 
 

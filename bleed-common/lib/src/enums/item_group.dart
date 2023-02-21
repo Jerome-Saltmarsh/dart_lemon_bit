@@ -6,4 +6,5 @@ enum ItemGroup {
   Head_Type,
   Body_Type,
   Legs_Type,
+  Unknown,
 }

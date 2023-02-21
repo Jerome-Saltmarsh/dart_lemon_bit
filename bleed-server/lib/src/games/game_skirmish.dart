@@ -53,7 +53,14 @@ class GameSkirmish extends Game {
     player.items[ItemType.Body_Shirt_Blue] = 1;
     player.items[ItemType.Legs_Green] = 1;
     player.items[ItemType.Weapon_Rifle_M4] = 1;
+    player.items[ItemType.Weapon_Rifle_AK_47] = 1;
+    player.items[ItemType.Weapon_Rifle_Jager] = 1;
     player.items[ItemType.Weapon_Handgun_Glock] = 1;
+    player.items[ItemType.Weapon_Handgun_Revolver] = 1;
+    player.items[ItemType.Weapon_Handgun_Desert_Eagle] = 1;
+    player.items[ItemType.Weapon_Melee_Crowbar] = 1;
+    player.items[ItemType.Weapon_Melee_Axe] = 1;
+    player.items[ItemType.Weapon_Melee_Knife] = 1;
 
     player.weaponPrimary = ItemType.Weapon_Rifle_M4;
     player.weaponSecondary = ItemType.Weapon_Handgun_Glock;

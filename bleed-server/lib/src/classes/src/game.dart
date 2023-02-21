@@ -425,6 +425,41 @@ abstract class Game {
     characterUseWeapon(character);
   }
 
+  void characterEquipItemType(Character character, int itemType){
+    if (character.deadBusyOrWeaponStateBusy) return;
+
+    if (ItemType.isTypeWeapon(itemType)){
+      characterEquipWeapon(
+        character: character,
+        weaponType: itemType,
+        characterStateChange: true,
+      );
+      return;
+    }
+
+    if (ItemType.isTypeHead(itemType)){
+      character.headType = itemType;
+      setCharacterStateChanging(character);
+      return;
+    }
+
+    if (ItemType.isTypeBody(itemType)){
+      character.bodyType = itemType;
+      setCharacterStateChanging(character);
+      return;
+    }
+
+    if (ItemType.isTypeLegs(itemType)){
+      character.legsType = itemType;
+      setCharacterStateChanging(character);
+      return;
+    }
+
+    throw Exception(
+        "game.characterEquipItemType(${ItemType.getName(itemType)})"
+    );
+  }
+
   void characterEquipWeapon({
     required Character character,
     required int weaponType,
@@ -1183,6 +1218,7 @@ abstract class Game {
     }
     if (options.items) {
       player.writePlayerItems();
+      player.writePlayerItemsEquipped();
     }
 
     player.health = player.maxHealth;

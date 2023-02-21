@@ -134,11 +134,7 @@ class Connection with ByteReader {
       case ClientRequest.Equip:
         final itemType = parseArg1(arguments);
         if (itemType == null) return;
-        player.game.characterEquipWeapon(
-            character: player,
-            weaponType: itemType,
-            characterStateChange: true,
-        );
+        player.game.characterEquipItemType(player, itemType);
         return;
 
       case ClientRequest.Weather_Set_Rain:

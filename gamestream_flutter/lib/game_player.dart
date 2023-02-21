@@ -85,4 +85,22 @@ class GamePlayer {
   static void Refresh_Items(){
     items_reads.value++;
   }
+
+  static Watch<int> getItemGroupWatch(ItemGroup itemGroup){
+    switch (itemGroup) {
+      case ItemGroup.Primary_Weapon:
+        return weaponPrimary;
+      case ItemGroup.Secondary_Weapon:
+        return weaponSecondary;
+      case ItemGroup.Tertiary_Weapon:
+        return weaponTertiary;
+      case ItemGroup.Head_Type:
+        return head;
+      case ItemGroup.Body_Type:
+        return body;
+      case ItemGroup.Legs_Type:
+        return legs;
+    }
+  }
+
 }
