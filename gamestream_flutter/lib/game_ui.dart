@@ -575,6 +575,7 @@ class GameUI {
       });
   }
 
+
   static Widget buildItemRow({
     required int itemType,
     required int amount,
@@ -585,6 +586,7 @@ class GameUI {
           GameNetwork.sendClientRequest(ClientRequest.Equip, itemType),
       child: Container(
         color: active ? Colors.white24 : Colors.transparent,
+        padding: GameStyle.Padding_6,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
