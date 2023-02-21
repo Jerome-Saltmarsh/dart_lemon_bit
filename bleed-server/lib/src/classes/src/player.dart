@@ -1692,6 +1692,25 @@ class Player extends Character with ByteWriter {
     }
     return -1;
   }
+
+  int getEquippedItemGroupItem(ItemGroup itemGroup){
+     switch (itemGroup){
+       case ItemGroup.Primary_Weapon:
+         return weaponPrimary;
+       case ItemGroup.Secondary_Weapon:
+         return weaponSecondary;
+       case ItemGroup.Tertiary_Weapon:
+         return weaponTertiary;
+       case ItemGroup.Head_Type:
+         return headType;
+       case ItemGroup.Body_Type:
+         return bodyType;
+       case ItemGroup.Legs_Type:
+         return legsType;
+       case ItemGroup.Unknown:
+         throw Exception('player.getEquippedItemGroupItem($itemGroup)');
+     }
+  }
 }
 
 int getExperienceForLevel(int level){

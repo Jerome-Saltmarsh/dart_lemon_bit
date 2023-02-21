@@ -41,9 +41,9 @@ class GamePlayer {
   static final message = Watch("", onChanged: GameEvents.onChangedPlayerMessage);
   static var messageTimer = 0;
 
-  static final weaponPrimary = Watch(0);
-  static final weaponSecondary = Watch(0);
-  static final weaponTertiary = Watch(0);
+  static final weaponPrimary = Watch(0, onChanged: GameEvents.onChangedPlayerPrimaryWeapon);
+  static final weaponSecondary = Watch(0, onChanged: GameEvents.onChangedPlayerSecondaryWeapon);
+  static final weaponTertiary = Watch(0, onChanged: GameEvents.onChangedPlayerTertiaryWeapon);
 
   static var indexZ = 0;
   static var indexRow = 0;

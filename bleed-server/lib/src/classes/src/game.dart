@@ -426,51 +426,30 @@ abstract class Game {
   }
 
   void playerEquipNextItemGroup(Player player, ItemGroup itemGroup){
-      switch (itemGroup) {
-        case ItemGroup.Primary_Weapon:
-          final primaryWeaponIndex = player.getItemIndex(player.weaponPrimary);
-          assert (primaryWeaponIndex != -1);
 
-          final itemEntries = player.items.entries.toList(growable: false);
-          final itemEntriesLength = itemEntries.length;
-          for (var i = primaryWeaponIndex + 1; i < itemEntriesLength; i++){
-            final entry = itemEntries[i];
-            final entryItemType = entry.key;
-            final entryItemGroup = ItemType.getItemGroup(entryItemType);
-            if (entryItemGroup != ItemGroup.Primary_Weapon) continue;
-            characterEquipItemType(player, entryItemType);
-            return;
-          }
+     final equippedItemType = player.getEquippedItemGroupItem(itemGroup);
+     final equippedItemIndex = player.getItemIndex(equippedItemType);
+     assert (equippedItemType != -1);
 
-          for (var i = 0; i < primaryWeaponIndex; i++){
-            final entry = itemEntries[i];
-            final entryItemType = entry.key;
-            final entryItemGroup = ItemType.getItemGroup(entryItemType);
-            if (entryItemGroup != ItemGroup.Primary_Weapon) continue;
-            characterEquipItemType(player, entryItemType);
-            return;
-          }
+     final itemEntries = player.items.entries.toList(growable: false);
+     final itemEntriesLength = itemEntries.length;
+     for (var i = equippedItemIndex + 1; i < itemEntriesLength; i++){
+       final entry = itemEntries[i];
+       final entryItemType = entry.key;
+       final entryItemGroup = ItemType.getItemGroup(entryItemType);
+       if (entryItemGroup != itemGroup) continue;
+       characterEquipItemType(player, entryItemType);
+       return;
+     }
 
-          break;
-        case ItemGroup.Secondary_Weapon:
-          // TODO: Handle this case.
-          break;
-        case ItemGroup.Tertiary_Weapon:
-          // TODO: Handle this case.
-          break;
-        case ItemGroup.Head_Type:
-          // TODO: Handle this case.
-          break;
-        case ItemGroup.Body_Type:
-          // TODO: Handle this case.
-          break;
-        case ItemGroup.Legs_Type:
-          // TODO: Handle this case.
-          break;
-        case ItemGroup.Unknown:
-          // TODO: Handle this case.
-          break;
-      }
+     for (var i = 0; i < equippedItemIndex; i++){
+       final entry = itemEntries[i];
+       final entryItemType = entry.key;
+       final entryItemGroup = ItemType.getItemGroup(entryItemType);
+       if (entryItemGroup != itemGroup) continue;
+       characterEquipItemType(player, entryItemType);
+       return;
+     }
   }
 
   void characterEquipItemType(Character character, int itemType){

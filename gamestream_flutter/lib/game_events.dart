@@ -593,4 +593,16 @@ class GameEvents {
         break;
     }
   }
+
+  static void onChangedPlayerPrimaryWeapon(int weaponType) {
+    ClientState.itemGroup.value = ItemGroup.Primary_Weapon;
+  }
+
+  static void onChangedPlayerSecondaryWeapon(int weaponType) {
+     ClientState.itemGroup.value = ItemGroup.Secondary_Weapon;
+  }
+
+  static void onChangedPlayerTertiaryWeapon(int weaponType) {
+    ClientState.itemGroup.value = ItemGroup.Tertiary_Weapon;
+  }
 }
