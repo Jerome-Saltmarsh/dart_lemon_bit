@@ -136,6 +136,7 @@ class Player extends Character with ByteWriter {
   }
 
   /// GETTERS
+  ///
   Collider? get aimTarget => _aimTarget;
   int get baseMaxHealth => _baseHealth;
   int get baseDamage => _baseDamage;
@@ -148,6 +149,9 @@ class Player extends Character with ByteWriter {
   int get energy => _energy;
   int get experienceRequiredForNextLevel => getExperienceForLevel(level + 1);
   bool get weaponIsEquipped => _equippedWeaponIndex != -1;
+
+  bool get weaponPrimaryEquipped => weaponType == weaponPrimary;
+  bool get weaponSecondaryEquipped => weaponType == weaponSecondary;
   double get mouseGridX => (mouse.x + mouse.y) + z;
   double get mouseGridY => (mouse.y - mouse.x) + z;
   int get interactMode => _interactMode;

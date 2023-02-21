@@ -109,10 +109,41 @@ class ClientEvents {
       GameNetwork.sendClientRequestUnequip();
       return;
     }
-    if (ClientQuery.keyboardKeyIsHotKey(key)) {
-      onKeyPressedPlayModeHotKey(key);
-      return;
+
+    if (GameOptions.inventory.value){
+      if (ClientQuery.keyboardKeyIsHotKey(key)) {
+        onKeyPressedPlayModeHotKey(key);
+        return;
+      }
     }
+
+    if (GameOptions.items.value) {
+       if (key == LogicalKeyboardKey.keyQ) {
+         GameNetwork.sendClientRequest(ClientRequest.Swap_Weapons);
+         return;
+       }
+       if (key == LogicalKeyboardKey.keyE) {
+         GameNetwork.sendClientRequest(ClientRequest.Swap_Weapons);
+         return;
+       }
+       if (key == LogicalKeyboardKey.shiftLeft) {
+         GameNetwork.sendClientRequest(ClientRequest.Swap_Weapons);
+         return;
+       }
+       if (key == LogicalKeyboardKey.digit1) {
+         GameNetwork.sendClientRequest(ClientRequest.Equip_Next, ItemGroup.Primary_Weapon.index);
+         return;
+       }
+       if (key == LogicalKeyboardKey.digit2) {
+         GameNetwork.sendClientRequest(ClientRequest.Equip_Next, ItemGroup.Secondary_Weapon.index);
+         return;
+       }
+       if (key == LogicalKeyboardKey.digit3) {
+         GameNetwork.sendClientRequest(ClientRequest.Equip_Next, ItemGroup.Tertiary_Weapon.index);
+         return;
+       }
+    }
+
     if (key == ClientConstants.Key_Message) {
       GameActions.messageBoxShow();
       return;
@@ -176,22 +207,6 @@ class ClientEvents {
         return;
       }
       ServerActions.equipWatchBeltType(ClientQuery.mapKeyboardKeyToWatchBeltType(key));
-    }
-
-
-    if (GameOptions.items.value){
-      if (key == LogicalKeyboardKey.digit1) {
-        GameNetwork.sendClientRequest(ClientRequest.Equip_Next, ItemGroup.Primary_Weapon.index);
-        return;
-      }
-      if (key == LogicalKeyboardKey.digit2) {
-        GameNetwork.sendClientRequest(ClientRequest.Equip_Next, ItemGroup.Secondary_Weapon.index);
-        return;
-      }
-      if (key == LogicalKeyboardKey.digit3) {
-        GameNetwork.sendClientRequest(ClientRequest.Equip_Next, ItemGroup.Tertiary_Weapon.index);
-        return;
-      }
     }
   }
 

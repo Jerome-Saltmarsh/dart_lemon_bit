@@ -147,6 +147,10 @@ class Connection with ByteReader {
         game.playerEquipNextItemGroup(player, ItemGroup.values[itemGroupIndex]);
         return;
 
+      case ClientRequest.Swap_Weapons:
+        game.swapPlayerWeapons(player);
+        break;
+
       case ClientRequest.Weather_Set_Rain:
         if (!isLocalMachine && game is! GameEditor) return;
         final rainType = parse(arguments[1]);

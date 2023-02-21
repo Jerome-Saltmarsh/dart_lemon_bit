@@ -643,7 +643,7 @@ class ItemType {
      Weapon_Ranged_Shotgun: "Shotgun",
      Weapon_Rifle_Arquebus: "Arquebus",
      Weapon_Rifle_Blunderbuss: "Blunderbuss",
-     Weapon_Rifle_Jager: "Jager Rifle",
+     Weapon_Rifle_Jager: "Hunting Rifle",
      Weapon_Rifle_Musket: "Musket",
      Weapon_Rifle_AK_47: "AK-47",
      Weapon_Rifle_M4: "M4 Assault Rifle",

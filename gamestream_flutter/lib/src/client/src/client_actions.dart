@@ -19,27 +19,6 @@ class ClientActions {
     ClientState.dragStart.value = -1;
   }
 
-  static void assignEquippedItemToHotKey(String index){
-       if (index == "1") {
-         // assignHotKeyWatchPlayerWeapon(ServerState.hotKey1);
-       }
-       if (index == "2") {
-         // assignHotKeyWatchPlayerWeapon(ClientState.hotKey2);
-       }
-       if (index == "3") {
-         // assignHotKeyWatchPlayerWeapon(ClientState.hotKey3);
-       }
-       if (index == "4") {
-         // assignHotKeyWatchPlayerWeapon(ClientState.hotKey4);
-       }
-       if (index == "Q") {
-         // assignHotKeyWatchPlayerWeapon(ClientState.hotKeyQ);
-       }
-       if (index == "E") {
-         // assignHotKeyWatchPlayerWeapon(ClientState.hotKeyE);
-       }
-  }
-
   static void setDragItemIndex(int index) =>
     () => ClientState.dragStart.value = index;
 

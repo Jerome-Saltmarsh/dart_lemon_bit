@@ -2896,5 +2896,35 @@ abstract class Game {
      if (itemType == ItemType.Empty) return empty;
      return options.itemDamage[itemType] ?? 0;
   }
+
+  void swapPlayerWeapons(Player player) {
+      if (player.deadBusyOrWeaponStateBusy) {
+        return;
+      }
+      if (player.weaponPrimaryEquipped) {
+        playerEquipSecondary(player);
+        return;
+      }
+      if (player.weaponSecondaryEquipped) {
+        playerEquipPrimary(player);
+        return;
+      }
+  }
+
+  void playerEquipPrimary(Player player){
+    characterEquipWeapon(
+      character: player,
+      weaponType: player.weaponPrimary,
+      characterStateChange: true,
+    );
+  }
+
+  void playerEquipSecondary(Player player){
+    characterEquipWeapon(
+      character: player,
+      weaponType: player.weaponSecondary,
+      characterStateChange: true,
+    );
+  }
 }
 
