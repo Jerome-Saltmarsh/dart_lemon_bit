@@ -575,7 +575,6 @@ class GameUI {
       });
   }
 
-
   static Widget buildItemRow({
     required int itemType,
     required int amount,

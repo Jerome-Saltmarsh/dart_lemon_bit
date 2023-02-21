@@ -78,8 +78,8 @@ class Player extends Character with ByteWriter {
   var _weaponTertiary = ItemType.Empty;
 
   int get weaponPrimary => _weaponPrimary;
-  int get weaponSecondary => _weaponPrimary;
-  int get weaponTertiary => _weaponPrimary;
+  int get weaponSecondary => _weaponSecondary;
+  int get weaponTertiary => _weaponTertiary;
 
   set weaponPrimary(int value) {
     if (_weaponPrimary == value) return;
