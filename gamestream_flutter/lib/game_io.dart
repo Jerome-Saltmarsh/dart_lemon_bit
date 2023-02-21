@@ -269,16 +269,6 @@ class GameIO {
         return CursorAction.Mouse_Right_Click;
       if (Engine.keyPressed(ClientConstants.Key_Throw_Grenade))
         return CursorAction.Key_Space;
-      // if (Engine.mouseRightDown.value){
-      //   return CursorAction.Stationary_Attack_Cursor;
-      // }
-
-      // if (Engine.watchMouseLeftDown.value) {
-      //     if (Engine.keyPressedShiftLeft) {
-      //        return CursorAction.Stationary_Attack_Cursor;
-      //     }
-      //     return CursorAction.Set_Target;
-      // }
       return CursorAction.None;
     }
     if (performActionPrimary) {

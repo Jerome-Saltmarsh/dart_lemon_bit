@@ -415,7 +415,7 @@ class GameUI {
       edit ? watch(GameEditor.editTab, EditorUI.buildUI) : buildStackPlay();
 
   static Widget buildStackPlay() => StackFullscreen(children: [
-        GameUIInteract.buildWatchInteractMode(),
+        visibleBuilder(GameOptions.inventory, GameUIInteract.buildWatchInteractMode()),
         watch(ClientState.hoverIndex,
             GameInventoryUI.buildPositionedContainerItemTypeInformation),
         watch(ClientState.hoverTargetType,
@@ -429,7 +429,6 @@ class GameUI {
               children: [
                 GameInventoryUI.buildPlayerHealthBar(),
                 width6,
-                // buildWatchPlayerLevel(),
                 buildHudPlayerWeapon(),
                 width6,
                 GameInventoryUI.buildPlayerEnergyBar(),
@@ -454,14 +453,16 @@ class GameUI {
                 buildPanelTotalGrenades(),
               ],
             )),
+    visibleBuilder(
+            GameOptions.inventory,
+            Positioned(
+              bottom: GameStyle.Default_Padding,
+              right: GameStyle.Default_Padding,
+              child: buildDialogUIControl(
+                child: buildColumnBelt(),
+              ),
+            )),
         Positioned(
-          bottom: GameStyle.Default_Padding,
-          right: GameStyle.Default_Padding,
-          child: buildDialogUIControl(
-            child: buildColumnBelt(),
-          ),
-        ),
-          Positioned(
               top: GameStyle.Default_Padding,
               left: GameStyle.Default_Padding,
               child: buildWindowPlayerItems(),
