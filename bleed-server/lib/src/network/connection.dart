@@ -131,6 +131,16 @@ class Connection with ByteReader {
         // player.selectPerk(perkType);
         return;
 
+      case ClientRequest.Equip:
+        final itemType = parseArg1(arguments);
+        if (itemType == null) return;
+        player.game.characterEquipWeapon(
+            character: player,
+            weaponType: itemType,
+            characterStateChange: true,
+        );
+        return;
+
       case ClientRequest.Weather_Set_Rain:
         if (!isLocalMachine && game is! GameEditor) return;
         final rainType = parse(arguments[1]);

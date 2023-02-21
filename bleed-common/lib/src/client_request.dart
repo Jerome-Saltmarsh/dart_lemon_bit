@@ -21,6 +21,7 @@ class ClientRequest {
   static const Select_Perk = 36;
   static const Unequip = 37;
   static const Reload = 38;
+  static const Equip = 39;
 }
 
 

@@ -845,11 +845,15 @@ class ItemType {
      Weapon_Rifle_M4,
      Weapon_Ranged_Shotgun,
      Weapon_Smg_Mp5,
+     Weapon_Rifle_Sniper,
+     Weapon_Rifle_AK_47,
+     Weapon_Rifle_Jager,
   ];
 
   static const Item_Group_Secondary_Weapons = [
       Weapon_Handgun_Glock,
       Weapon_Handgun_Revolver,
+      Weapon_Handgun_Flint_Lock,
    ];
 
   static const Item_Group_Tertiary_Weapons = [

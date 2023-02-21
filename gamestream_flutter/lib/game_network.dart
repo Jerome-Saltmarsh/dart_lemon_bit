@@ -137,6 +137,8 @@ class GameNetwork {
     connectionStatus.value = ConnectionStatus.None;
   }
 
+  static void sendIntList(List<int> values) => send(Uint8List.fromList(values));
+
   static void send(dynamic message) {
     if (!connected) {
       print("warning cannot send because not connected");

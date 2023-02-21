@@ -433,6 +433,21 @@ abstract class Game {
     if (character.deadBusyOrWeaponStateBusy) return;
     if (character.weaponType == weaponType) return;
     character.weaponType = weaponType;
+
+    if (character is Player){
+      switch (ItemType.getItemGroup(weaponType)) {
+        case ItemGroup.Primary_Weapon:
+          character.weaponPrimary = weaponType;
+          break;
+        case ItemGroup.Secondary_Weapon:
+          character.weaponSecondary = weaponType;
+          break;
+        case ItemGroup.Tertiary_Weapon:
+          character.weaponTertiary = weaponType;
+          break;
+      }
+    }
+
     if (characterStateChange){
       setCharacterStateChanging(character);
     }

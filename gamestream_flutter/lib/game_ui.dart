@@ -517,18 +517,22 @@ class GameUI {
                         ItemType.getItemGroup(element.key) == activeItemGroup)
                     .map((entry) {
                   final itemType = entry.key;
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          buildAtlasItemType(itemType),
-                          width8,
-                          text(ItemType.getName(itemType)),
-                        ],
-                      ),
-                      text(entry.value),
-                    ],
+                  return onPressed(
+                    action: () =>
+                        GameNetwork.sendClientRequest(ClientRequest.Equip, itemType),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            buildAtlasItemType(itemType),
+                            width8,
+                            text(ItemType.getName(itemType)),
+                          ],
+                        ),
+                        text(entry.value),
+                      ],
+                    ),
                   );
                 }).toList(),
                 ),
