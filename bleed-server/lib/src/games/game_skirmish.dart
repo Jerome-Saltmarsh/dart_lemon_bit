@@ -70,6 +70,7 @@ class GameSkirmish extends Game {
     player.weaponPrimary = ItemType.Weapon_Rifle_M4;
     player.weaponSecondary = ItemType.Weapon_Handgun_Glock;
     player.weaponTertiary = ItemType.Weapon_Melee_Crowbar;
+    player.credits = 100;
   }
 
   @override

@@ -428,7 +428,6 @@ abstract class Game {
   void playerEquipNextItemGroup(Player player, ItemGroup itemGroup){
      if (!player.canChangeEquipment) return;
 
-
      final equippedItemType = player.getEquippedItemGroupItem(itemGroup);
      final equippedItemIndex = player.getItemIndex(equippedItemType);
      assert (equippedItemType != -1);
@@ -437,6 +436,7 @@ abstract class Game {
      final itemEntriesLength = itemEntries.length;
      for (var i = equippedItemIndex + 1; i < itemEntriesLength; i++){
        final entry = itemEntries[i];
+       if (entry.value <= 0) continue;
        final entryItemType = entry.key;
        final entryItemGroup = ItemType.getItemGroup(entryItemType);
        if (entryItemGroup != itemGroup) continue;
@@ -446,6 +446,7 @@ abstract class Game {
 
      for (var i = 0; i < equippedItemIndex; i++){
        final entry = itemEntries[i];
+       if (entry.value <= 0) continue;
        final entryItemType = entry.key;
        final entryItemGroup = ItemType.getItemGroup(entryItemType);
        if (entryItemGroup != itemGroup) continue;
