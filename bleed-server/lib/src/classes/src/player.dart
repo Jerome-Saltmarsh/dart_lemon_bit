@@ -535,6 +535,11 @@ class Player extends Character with ByteWriter {
       writeString(error);
   }
 
+  void writeInfo(String info){
+    writeByte(ServerResponse.Info);
+    writeString(info);
+  }
+
   void inventoryDeposit(int index){
     if (!isValidInventoryIndex(index)){
       writePlayerEventInvalidRequest();

@@ -5,12 +5,12 @@ import 'package:lemon_byte/byte_reader.dart';
 
 final serverResponseReader = ServerResponseReader();
 
-
 class ServerResponseReader with ByteReader {
   final bufferSize = Watch(0);
   final bufferSizeTotal = Watch(0);
   final updateFrame = Watch(0, onChanged: GameState.onChangedUpdateFrame);
   final decoder = ZLibDecoder();
+  var debugging = false;
 
   void read(Uint8List values) {
     updateFrame.value++;
@@ -81,6 +81,9 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Error:
           readServerResponseError();
           break;
+        case ServerResponse.Info:
+          readServerResponseError();
+          break;
         case ServerResponse.Dark_Age:
           final darkAgeCode = readByte();
           switch (darkAgeCode) {
@@ -133,11 +136,13 @@ class ServerResponseReader with ByteReader {
   }
 
   void readServerResponseError() {
-    ServerState.error.value = "";
-    ServerState.error.value = readString();
+    ClientActions.playAudioError();
+    ServerState.setMessage(readString());
   }
 
-  var debugging = false;
+  void readServerResponseInfo() {
+    ServerState.setMessage(readString());
+  }
 
   void readServerResponseEnvironment() {
     final environmentResponse = readByte();

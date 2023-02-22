@@ -2982,8 +2982,6 @@ abstract class Game {
     player.items[itemType] = currentLevel + 1;
     player.writePlayerItems();
     player.writePlayerEventItemPurchased(itemType);
-
-
   }
 
   Map<int, int> getPlayerItemsCost(Player player) {

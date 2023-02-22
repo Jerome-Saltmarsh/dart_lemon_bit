@@ -25,5 +25,6 @@ class ServerResponse {
   static const GameObjects= 113;
   static const GameObject_Deleted = 114;
   static const Game_Options = 115;
+  static const Info = 110;
 }
 

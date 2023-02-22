@@ -205,6 +205,11 @@ class ServerState {
 
   static void removeGameObjectById(int id )=>
       gameObjects.removeWhere((element) => element.id == id);
+
+  static void setMessage(String value){
+    error.value = "";
+    error.value = value;
+  }
 }
 
 
