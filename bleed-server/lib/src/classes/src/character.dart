@@ -26,9 +26,9 @@ abstract class Character extends Collider {
   var weaponStateDuration = 0;
   var _weaponStateDurationTotal = 0;
   var _weaponType = ItemType.Empty;
-  var bodyType = ItemType.Body_Shirt_Cyan;
-  var headType = ItemType.Head_Steel_Helm;
-  var legsType = ItemType.Legs_Blue;
+  var _headType = ItemType.Head_Steel_Helm;
+  var _bodyType = ItemType.Body_Shirt_Cyan;
+  var _legsType = ItemType.Legs_Blue;
   var performX = 0.0;
   var performY = 0.0;
   var performZ = 0.0;
@@ -37,11 +37,37 @@ abstract class Character extends Collider {
   var name = "";
 
   int get weaponType => _weaponType;
+  int get headType => _headType;
+  int get bodyType => _bodyType;
+  int get legsType => _legsType;
+
 
   set weaponType(int value){
+    assert (value == ItemType.Empty || ItemType.isTypeWeapon(value));
     if (_weaponType == value) return;
     _weaponType = value;
-    onWeaponTypeChanged();
+    onEquipmentChanged();
+  }
+
+  set headType(int value){
+    assert (value == ItemType.Empty || ItemType.isTypeHead(value));
+    if (_headType == value) return;
+    _headType = value;
+    onEquipmentChanged();
+  }
+
+  set bodyType(int value){
+    assert (value == ItemType.Empty || ItemType.isTypeBody(value));
+    if (_bodyType == value) return;
+    _bodyType = value;
+    onEquipmentChanged();
+  }
+
+  set legsType(int value) {
+    assert (value == ItemType.Empty || ItemType.isTypeLegs(value));
+    if (_legsType == value) return;
+    _legsType = value;
+    onEquipmentChanged();
   }
 
   int get weaponStateDurationTotal => _weaponStateDurationTotal;
@@ -216,8 +242,8 @@ abstract class Character extends Collider {
   Character({
     required int characterType,
     required int health,
-    required this.bodyType,
-    required this.headType,
+    required int bodyType,
+    required int headType,
     required int weaponType,
     required int team,
     required int damage,
@@ -233,6 +259,9 @@ abstract class Character extends Collider {
   ) {
     maxHealth = health;
     this.weaponType = weaponType;
+    this.headType = headType;
+    this.bodyType = bodyType;
+    this.legsType = legsType;
     this.characterType = characterType;
     this.health = health;
     this.team = team;
@@ -326,5 +355,5 @@ abstract class Character extends Collider {
   }
 
   /// safe to override
-  void onWeaponTypeChanged() {}
+  void onEquipmentChanged() {}
 }

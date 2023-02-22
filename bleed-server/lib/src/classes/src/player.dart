@@ -1717,7 +1717,7 @@ class Player extends Character with ByteWriter {
   }
 
   @override
-  void onWeaponTypeChanged() {
+  void onEquipmentChanged() {
     writeEquipped();
   }
 
