@@ -19,10 +19,9 @@ class GameSkirmish extends Game {
   static const hints = [
      'Press the W,A,S,D keys to move',
      'Left click to use your weapon',
-     'Press 1 or Q to equip your heavy weapon.',
-     'Press 2 or E to equip your light weapon',
-     'Press 3 or C to equip your hand to hand weapon',
-     'Press 1 or Q multiple times to change heavy weapon',
+     'Press 1 or Q to equip your heavy weapon. Repeat to change heavy weapon.',
+     'Press 2 or E to equip your light weapon. Repeat to change heavy weapon',
+     'Press 3 or C to equip your hand to hand weapon. Repeat to change heavy weapon',
   ];
 
   static final hints_length = hints.length;
