@@ -458,6 +458,12 @@ abstract class Game {
   void characterEquipItemType(Character character, int itemType){
     if (!character.canChangeEquipment) return;
 
+    if (options.items && character is Player){
+      final itemAmount = character.items[itemType];
+      if (itemAmount == null) return;
+      if (itemAmount <= 0) return;
+    }
+
     if (ItemType.isTypeWeapon(itemType)){
       characterEquipWeapon(
         character: character,
