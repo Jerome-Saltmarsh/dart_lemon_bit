@@ -4,7 +4,8 @@ import 'package:flutter/services.dart';
 class ClientConstants {
   static const Area_Type_Duration = 150;
 
-  static final Key_Unequip = LogicalKeyboardKey.keyC;
+
+  static final Key_Unequip = LogicalKeyboardKey.keyB;
   static final Key_Inventory = LogicalKeyboardKey.keyV;
   static final Key_Reload = LogicalKeyboardKey.keyR;
   static final Key_Zoom = LogicalKeyboardKey.keyF;

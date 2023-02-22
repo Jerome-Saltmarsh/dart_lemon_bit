@@ -119,17 +119,21 @@ class ClientEvents {
 
     if (GameOptions.items.value) {
        if (key == LogicalKeyboardKey.keyQ) {
-         GameNetwork.sendClientRequest(ClientRequest.Swap_Weapons);
+         GameNetwork.sendClientRequest(ClientRequest.Equip_Next, ItemGroup.Primary_Weapon.index);
          return;
        }
        if (key == LogicalKeyboardKey.keyE) {
-         GameNetwork.sendClientRequest(ClientRequest.Swap_Weapons);
+         GameNetwork.sendClientRequest(ClientRequest.Equip_Next, ItemGroup.Secondary_Weapon.index);
          return;
        }
-       if (key == LogicalKeyboardKey.shiftLeft) {
-         GameNetwork.sendClientRequest(ClientRequest.Swap_Weapons);
+       if (key == LogicalKeyboardKey.keyC) {
+         GameNetwork.sendClientRequest(ClientRequest.Equip_Next, ItemGroup.Tertiary_Weapon.index);
          return;
        }
+       // if (key == LogicalKeyboardKey.shiftLeft) {
+       //   GameNetwork.sendClientRequest(ClientRequest.Swap_Weapons);
+       //   return;
+       // }
        if (key == LogicalKeyboardKey.digit1) {
          GameNetwork.sendClientRequest(ClientRequest.Equip_Next, ItemGroup.Primary_Weapon.index);
          return;
