@@ -417,7 +417,7 @@ class GameEvents {
         break;
       case PlayerEvent.Item_Purchased:
         final itemType = serverResponseReader.readUInt16();
-        GameAudio.coins_24();
+        GameAudio.cash_register_4();
         ClientActions.writeMessage('purchased ${ItemType.getName(itemType)}');
         break;
 

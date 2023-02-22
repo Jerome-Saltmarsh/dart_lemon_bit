@@ -89,6 +89,7 @@ class GameAudio {
   static final revolver_shot_3 = AudioSingle(name: 'revolver-shot-03', volume: 0.5);
   static final revolver_shot_6 = AudioSingle(name: 'revolver-shot-06', volume: 0.5);
   static final cock_shotgun_3 = AudioSingle(name: 'cock-shotgun-03', volume: 0.5);
+  static final cash_register_4 = AudioSingle(name: 'cash_register_4', volume: 0.5);
   static final mag_in_03 = AudioSingle(name: 'mag-in-02', volume: 0.5);
   static final sword_unsheathe = AudioSingle(name: 'sword-unsheathe', volume: 0.5);
   static final gun_pickup_01 = AudioSingle(name: 'gun-pickup-01', volume: 0.5);
