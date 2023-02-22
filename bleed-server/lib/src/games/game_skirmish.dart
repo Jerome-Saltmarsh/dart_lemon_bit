@@ -12,6 +12,21 @@ class EquippedType {
 }
 
 class GameSkirmish extends Game {
+
+  var nextHint = 0;
+  var hintIndex = 0;
+
+  static const hints = [
+     'Press the W,A,S,D keys to move',
+     'Left click to use your weapon',
+     'Press 1 or Q to equip your heavy weapon.',
+     'Press 2 or E to equip your light weapon',
+     'Press 3 or C to equip your hand to hand weapon',
+     'Press 1 or Q multiple times to change heavy weapon',
+  ];
+
+  static final hints_length = hints.length;
+
   GameSkirmish({
     required super.scene,
   }) : super(
@@ -178,5 +193,15 @@ class GameSkirmish extends Game {
     };
     final amount = map[itemType] ?? 0;
     return amount * (level + 1);
+  }
+
+  @override
+  void customUpdatePlayer(Player player){
+     if (player.hintIndex >= hints_length) return;
+     player.hintNext--;
+     if (player.hintNext > 0) return;
+     player.writeInfo('Tip: ${hints[player.hintIndex]}');
+     player.hintNext = 300;
+     player.hintIndex++;
   }
 }

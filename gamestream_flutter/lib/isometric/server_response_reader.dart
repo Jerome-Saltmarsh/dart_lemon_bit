@@ -82,7 +82,7 @@ class ServerResponseReader with ByteReader {
           readServerResponseError();
           break;
         case ServerResponse.Info:
-          readServerResponseError();
+          readServerResponseInfo();
           break;
         case ServerResponse.Dark_Age:
           final darkAgeCode = readByte();

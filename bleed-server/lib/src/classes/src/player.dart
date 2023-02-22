@@ -72,6 +72,8 @@ class Player extends Character with ByteWriter {
   var _baseHealth = 10;
   var _baseDamage = 0;
   var _baseEnergy = 10;
+  var hintIndex = 0;
+  var hintNext = 100;
 
   var _weaponPrimary = ItemType.Empty;
   var _weaponSecondary = ItemType.Empty;
