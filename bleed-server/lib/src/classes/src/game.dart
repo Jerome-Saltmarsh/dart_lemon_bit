@@ -429,6 +429,14 @@ abstract class Game {
      if (!player.canChangeEquipment) return;
 
      final equippedItemType = player.getEquippedItemGroupItem(itemGroup);
+
+     final equippedWeaponItemGroup = ItemType.getItemGroup(player.weaponType);
+
+     if (equippedWeaponItemGroup != itemGroup) {
+        characterEquipItemType(player, player.getEquippedItemGroupItem(itemGroup));
+        return;
+     }
+
      final equippedItemIndex = player.getItemIndex(equippedItemType);
      assert (equippedItemType != -1);
 
