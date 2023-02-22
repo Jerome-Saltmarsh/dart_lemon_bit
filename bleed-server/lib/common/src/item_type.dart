@@ -858,6 +858,7 @@ class ItemType {
    ];
 
   static const Item_Group_Tertiary_Weapons = [
+     Empty,
      Weapon_Melee_Crowbar,
      Weapon_Melee_Knife,
      Weapon_Melee_Sword,
