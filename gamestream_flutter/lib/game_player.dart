@@ -110,6 +110,16 @@ class GamePlayer {
               itemEntry.key != ItemType.Empty &&
               ItemType.getItemGroup(itemEntry.key) == itemGroup)
           .toList();
+
+  static Watch<int> getItemTypeWatch(int itemType){
+    if (ItemType.isTypeWeapon(itemType)) return weapon;
+    if (ItemType.isTypeHead(itemType)) return head;
+    if (ItemType.isTypeBody(itemType)) return body;
+    if (ItemType.isTypeLegs(itemType)) return legs;
+    throw Exception(
+        "GamePlayer.getItemTypeWatch(${ItemType.getName(itemType)})"
+    );
+  }
 }
 
 typedef ItemTypeEntry = MapEntry<int, int>;

@@ -527,12 +527,13 @@ class GameUI {
       });
   }
 
+
   static Widget buildItemRow({
     required int itemType,
     required int amount,
   }){
-    return watch(GamePlayer.weapon, (int playerWeaponType) {
-       final active = playerWeaponType == itemType;
+    return watch(GamePlayer.getItemTypeWatch(itemType), (int equippedItemType) {
+       final active = equippedItemType == itemType;
        return onPressed(
          action: () =>
              GameNetwork.sendClientRequest(ClientRequest.Equip, itemType),
@@ -550,7 +551,6 @@ class GameUI {
                  ],
                ),
                text(amount),
-               text("${ItemType.getName(playerWeaponType)}")
              ],
            ),
          ),
