@@ -598,6 +598,10 @@ class GameEvents {
     ClientState.itemGroup.value = ItemGroup.Primary_Weapon;
   }
 
+  static void onChangedPlayerWeapon(int weaponType){
+    ClientState.itemGroup.value = ItemType.getItemGroup(weaponType);
+  }
+
   static void onChangedPlayerSecondaryWeapon(int weaponType) {
      ClientState.itemGroup.value = ItemGroup.Secondary_Weapon;
   }
