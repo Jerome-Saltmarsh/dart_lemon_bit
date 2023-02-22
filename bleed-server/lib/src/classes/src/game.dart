@@ -2967,11 +2967,19 @@ abstract class Game {
   void playerPurchaseItemType(Player player, int itemType){
     if (player.dead) return;
     final currentLevel = player.items[itemType];
+
     if (currentLevel == null){
-       player.items[itemType] = 1;
-    } else {
-      player.items[itemType] = currentLevel + 1;
+       player.writeError('Cannot be purchased');
+       return;
     }
+
+    final cost = getItemPurchaseCost(itemType, currentLevel);
+    if (player.credits < cost){
+      player.writeError('insufficient credits');
+      return;
+    }
+    player.credits -= cost;
+    player.items[itemType] = currentLevel + 1;
     player.writePlayerItems();
   }
 

@@ -516,7 +516,7 @@ class GameUI {
                       .getItemsByItemGroup(activeItemGroup)
                       .map((entry) => buildItemRow(
                         itemType: entry.key,
-                        amount: entry.value,
+                        itemValue: entry.value,
                       )
                   ).toList(),
                 ),
@@ -530,7 +530,7 @@ class GameUI {
 
   static Widget buildItemRow({
     required int itemType,
-    required int amount,
+    required int itemValue,
   }){
     return watch(GamePlayer.getItemTypeWatch(itemType), (int equippedItemType) {
        final active = equippedItemType == itemType;
@@ -556,17 +556,30 @@ class GameUI {
                  ),
                ),
                // text(amount),
-               if (amount > 0) buildItemTypeBars(amount),
+               if (itemValue > 0) buildItemTypeBars(itemValue),
                onPressed(
                  action: () => GameNetwork.sendClientRequest(
                      ClientRequest.Purchase_Item,
                      itemType,
                  ),
                  child: Container(
+                   width: 70,
                    alignment: Alignment.center,
                    color: Colors.white12,
                    padding: GameStyle.Padding_6,
-                   child: text("BUY $cost"),
+                   child: Row(
+                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                     children: [
+                       text("BUY"),
+                       width6,
+                       Container(
+                           width: 12,
+                           height: 12,
+                           child: buildAtlasItemType(ItemType.Resource_Credit)),
+                       width2,
+                       text(cost),
+                     ],
+                   ),
                  ),
                ),
              ],
