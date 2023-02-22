@@ -431,6 +431,11 @@ abstract class Game {
 
      final equippedItemType = player.getEquippedItemGroupItem(itemGroup);
 
+     if (equippedItemType == ItemType.Empty){
+       playerEquipFirstItemTypeFromItemGroup(player, itemGroup);
+       return;
+     }
+
      final equippedWeaponItemGroup = ItemType.getItemGroup(player.weaponType);
 
      if (equippedWeaponItemGroup != itemGroup) {
@@ -462,6 +467,20 @@ abstract class Game {
        characterEquipItemType(player, entryItemType);
        return;
      }
+  }
+
+  void playerEquipFirstItemTypeFromItemGroup(Player player, ItemGroup itemGroup){
+    final itemEntries = player.items.entries.toList(growable: false);
+    final itemEntriesLength = itemEntries.length;
+    for (var i = 0 + 1; i < itemEntriesLength; i++){
+      final entry = itemEntries[i];
+      if (entry.value <= 0) continue;
+      final entryItemType = entry.key;
+      final entryItemGroup = ItemType.getItemGroup(entryItemType);
+      if (entryItemGroup != itemGroup) continue;
+      characterEquipItemType(player, entryItemType);
+      return;
+    }
   }
 
   void characterEquipItemType(Character character, int itemType){
