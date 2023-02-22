@@ -555,7 +555,6 @@ class GameUI {
                    ],
                  ),
                ),
-               // text(amount),
                if (itemValue > 0) buildItemTypeBars(itemValue),
                onPressed(
                  action: () => GameNetwork.sendClientRequest(
@@ -570,7 +569,9 @@ class GameUI {
                    child: Row(
                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                      children: [
-                       text("BUY"),
+                       watch(ServerState.playerCredits, (int playerCredits) {
+                         return text("BUY", color: cost <= playerCredits ? Colors.white : Colors.white38);
+                       }),
                        width6,
                        Container(
                            width: 12,
