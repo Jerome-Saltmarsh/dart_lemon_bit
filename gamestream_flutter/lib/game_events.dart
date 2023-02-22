@@ -26,7 +26,6 @@ class GameEvents {
   static void onChangedError(String error) {
     ClientState.messageStatus.value = error;
     if (error.isNotEmpty) {
-      ClientActions.playAudioError();
       ClientState.messageStatusDuration = 200;
     } else {
       ClientState.messageStatusDuration = 0;

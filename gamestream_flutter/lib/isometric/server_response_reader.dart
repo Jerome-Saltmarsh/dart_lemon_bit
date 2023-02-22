@@ -111,6 +111,16 @@ class ServerResponseReader with ByteReader {
           readMap(GameOptions.item_damage);
           break;
 
+        case ServerResponse.ItemType_Statistics:
+          GameOptions.ItemType_Damage.clear();
+          final length = readUInt16();
+          for (var i = 0; i < length; i++) {
+             final itemType = readUInt16();
+             final values = readUint16List(5);
+             GameOptions.ItemType_Damage[itemType] = values;
+          }
+          break;
+
         default:
           if (debugging) {
             return;

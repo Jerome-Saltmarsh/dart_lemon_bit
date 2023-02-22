@@ -2929,9 +2929,16 @@ abstract class Game {
     }
   }
 
-  int getItemTypeDamage(int itemType, {int empty = 0}){
-     if (itemType == ItemType.Empty) return empty;
-     return options.itemDamage[itemType] ?? 0;
+  int getItemTypeDamage(int itemType, {int empty = 0, int level = 0}){
+     assert (level >= 0);
+     assert (level <= 4);
+
+     if (itemType == ItemType.Empty)
+       return empty;
+     if (options.inventory)
+       return options.itemDamage[itemType] ?? 0;
+
+     return options.itemTypeDamage[itemType]?[level] ?? 0;
   }
 
   void swapPlayerWeapons(Player player) {
@@ -2995,6 +3002,10 @@ abstract class Game {
 
   int getItemPurchaseCost(int itemType, int level){
     return 15;
+  }
+
+  int getExperienceForLevel(int level){
+    return (((level - 1) * (level - 1))) * 6;
   }
 }
 

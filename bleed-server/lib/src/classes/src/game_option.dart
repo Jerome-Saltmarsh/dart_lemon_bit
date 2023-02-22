@@ -6,13 +6,19 @@ class GameOptions {
   final bool items;
 
   final Map<int, int> itemDamage;
+  final Map<int, List<int>> itemTypeDamage;
 
   GameOptions({
     required this.perks,
     required this.inventory,
     required this.items,
     this.itemDamage = Default_Item_Damage,
+    this.itemTypeDamage = Default_ItemType_Damage,
   });
+
+  static const Default_ItemType_Damage = <int, List<int>> {
+     ItemType.Weapon_Rifle_AK_47: [2, 3, 4, 5, 6],
+  };
 
   static const Default_Item_Damage = <int, int> {
     ItemType.Empty: 1,

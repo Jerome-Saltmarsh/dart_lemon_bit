@@ -83,6 +83,8 @@ class Player extends Character with ByteWriter {
   int get weaponSecondary => _weaponSecondary;
   int get weaponTertiary => _weaponTertiary;
 
+  var itemTypeStatistics = 0;
+
   set weaponPrimary(int value) {
     if (_weaponPrimary == value) return;
     _weaponPrimary = value;
@@ -149,7 +151,7 @@ class Player extends Character with ByteWriter {
   int get lookDirection => Direction.fromRadian(lookRadian);
   int get experience => _experience;
   int get energy => _energy;
-  int get experienceRequiredForNextLevel => getExperienceForLevel(level + 1);
+  int get experienceRequiredForNextLevel => game.getExperienceForLevel(level + 1);
   bool get weaponIsEquipped => _equippedWeaponIndex != -1;
 
   bool get weaponPrimaryEquipped => weaponType == weaponPrimary;
@@ -1738,8 +1740,18 @@ class Player extends Character with ByteWriter {
      writeUInt16(bodyType);
      writeUInt16(legsType);
   }
+
+  void writeItemTypeStatistics(){
+      writeByte(ServerResponse.ItemType_Statistics);
+
+      final damageEntries = game.options.itemTypeDamage.entries;
+      writeUInt16(damageEntries.length);
+      for (final entry in damageEntries) {
+        writeUInt16(entry.key);
+        assert (entry.value.length == 5);
+        writeUint16List(entry.value);
+      }
+  }
 }
 
-int getExperienceForLevel(int level){
-  return (((level - 1) * (level - 1))) * 6;
-}
+

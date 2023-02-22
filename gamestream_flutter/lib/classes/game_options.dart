@@ -5,6 +5,7 @@ class GameOptions {
    static final inventory = Watch(false);
    static final items = Watch(false);
    static final item_damage = <int, int>{};
+   static final ItemType_Damage = <int, List<int>> {};
 
    static int getItemTypeDamage(int itemType, {bool ignoreEmpty = true}){
       if (itemType == ItemType.Empty && ignoreEmpty) return 0;

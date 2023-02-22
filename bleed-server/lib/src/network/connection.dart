@@ -757,6 +757,11 @@ class Connection with ByteReader {
     game.characters.add(player);
     game.customOnPlayerJoined(player);
     player.writeGameOptions();
+
+    if (game.options.items){
+      player.writeItemTypeStatistics();
+    }
+
     game.revive(player);
     final account = _account;
     if (account != null) {
