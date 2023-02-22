@@ -14,6 +14,7 @@ import 'game_time.dart';
 
 
 abstract class Game {
+  static final Cost_Map = <int, int>{ };
 
   var aiRespawnDuration = framesPerSecond * 60 * 2; // 5 minutes
 
@@ -2953,6 +2954,19 @@ abstract class Game {
       player.items[itemType] = currentLevel + 1;
     }
     player.writePlayerItems();
+  }
+
+  Map<int, int> getPlayerItemsCost(Player player) {
+    Cost_Map.clear();
+    final items = player.items.entries;
+    for (final entry in items){
+      Cost_Map[entry.key] = getItemPurchaseCost(entry.key, entry.value);
+    }
+    return Cost_Map;
+  }
+
+  int getItemPurchaseCost(int itemType, int level){
+    return 15;
   }
 }
 

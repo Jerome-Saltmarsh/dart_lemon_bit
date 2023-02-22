@@ -10,6 +10,7 @@ class GamePlayer {
   static final previousPosition = Vector3();
   static final storeItems = Watch(<int>[]);
   static final items = <int, int> {};
+  static final itemsCost = <int, int> {};
   static final items_reads = Watch(0);
 
   static final energy = Watch(0);

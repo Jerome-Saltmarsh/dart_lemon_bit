@@ -534,7 +534,7 @@ class GameUI {
   }){
     return watch(GamePlayer.getItemTypeWatch(itemType), (int equippedItemType) {
        final active = equippedItemType == itemType;
-       final cost = 10;
+       final cost = GamePlayer.itemsCost[itemType] ?? 0;
 
        return onPressed(
          action: () =>

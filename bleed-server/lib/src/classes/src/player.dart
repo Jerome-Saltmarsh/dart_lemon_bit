@@ -1451,6 +1451,8 @@ class Player extends Character with ByteWriter {
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Items);
     writeMap(items);
+    writeMap(game.getPlayerItemsCost(this));
+
   }
 
   void writePlayerItemsEquipped(){

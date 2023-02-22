@@ -326,6 +326,7 @@ class ServerResponseReader with ByteReader {
         break;
       case ApiPlayer.Items:
         readMap(GamePlayer.items);
+        readMap(GamePlayer.itemsCost);
         GamePlayer.Refresh_Items();
         break;
       case ApiPlayer.Equipped:
