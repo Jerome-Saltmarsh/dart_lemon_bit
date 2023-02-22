@@ -426,6 +426,8 @@ abstract class Game {
   }
 
   void playerEquipNextItemGroup(Player player, ItemGroup itemGroup){
+     if (!player.canChangeEquipment) return;
+
 
      final equippedItemType = player.getEquippedItemGroupItem(itemGroup);
      final equippedItemIndex = player.getItemIndex(equippedItemType);
@@ -453,7 +455,7 @@ abstract class Game {
   }
 
   void characterEquipItemType(Character character, int itemType){
-    if (character.deadBusyOrWeaponStateBusy) return;
+    if (!character.canChangeEquipment) return;
 
     if (ItemType.isTypeWeapon(itemType)){
       characterEquipWeapon(
@@ -492,7 +494,7 @@ abstract class Game {
     required int weaponType,
     required bool characterStateChange,
   }){
-    if (character.deadBusyOrWeaponStateBusy) return;
+    if (!character.canChangeEquipment) return;
     if (character.weaponType == weaponType) return;
     character.weaponType = weaponType;
 
@@ -1494,7 +1496,7 @@ abstract class Game {
   }
 
   void setCharacterStateChanging(Character character){
-    if (character.deadOrBusy) return;
+    if (!character.canChangeEquipment) return;
     character.assignWeaponStateChanging();
     dispatchV3(GameEventType.Character_Changing, character);
   }
@@ -2898,7 +2900,7 @@ abstract class Game {
   }
 
   void swapPlayerWeapons(Player player) {
-      if (player.deadBusyOrWeaponStateBusy) {
+      if (!player.canChangeEquipment) {
         return;
       }
       if (player.weaponPrimaryEquipped) {

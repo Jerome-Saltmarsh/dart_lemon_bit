@@ -124,9 +124,11 @@ abstract class Character extends Collider {
   bool get performing => state == CharacterState.Performing;
   bool get idling => state == CharacterState.Idle;
   bool get characterStateIdle => state == CharacterState.Idle;
+  bool get characterStateChanging => state == CharacterState.Changing || weaponState == WeaponState.Changing;
   bool get busy => stateDurationRemaining > 0;
   bool get deadOrBusy => dying || dead || busy;
   bool get deadBusyOrWeaponStateBusy => dying || dead || weaponStateBusy;
+  bool get canChangeEquipment => !deadBusyOrWeaponStateBusy || characterStateChanging;
   bool get equippedTypeIsBow => weaponType == ItemType.Weapon_Ranged_Bow;
   bool get equippedTypeIsStaff => weaponType == ItemType.Weapon_Melee_Staff;
   bool get unarmed => weaponType == ItemType.Empty;
