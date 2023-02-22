@@ -151,6 +151,12 @@ class Connection with ByteReader {
         game.swapPlayerWeapons(player);
         break;
 
+      case ClientRequest.Purchase_Item:
+        final itemType = parseArg1(arguments);
+        if (itemType == null) return;
+        game.playerPurchaseItemType(player, itemType);
+        break;
+
       case ClientRequest.Weather_Set_Rain:
         if (!isLocalMachine && game is! GameEditor) return;
         final rainType = parse(arguments[1]);

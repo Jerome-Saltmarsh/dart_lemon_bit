@@ -534,6 +534,8 @@ class GameUI {
   }){
     return watch(GamePlayer.getItemTypeWatch(itemType), (int equippedItemType) {
        final active = equippedItemType == itemType;
+       final cost = 10;
+
        return onPressed(
          action: () =>
              GameNetwork.sendClientRequest(ClientRequest.Equip, itemType),
@@ -543,22 +545,46 @@ class GameUI {
            child: Row(
              mainAxisAlignment: MainAxisAlignment.spaceBetween,
              children: [
-               Row(
-                 children: [
-                   buildAtlasItemType(itemType),
-                   width8,
-                   text(ItemType.getName(itemType)),
-                 ],
+               Tooltip(
+                 message: ItemType.getName(itemType),
+                 child: Row(
+                   children: [
+                     buildAtlasItemType(itemType),
+                     // width8,
+                     // text(ItemType.getName(itemType)),
+                   ],
+                 ),
                ),
-               text(amount),
+               // text(amount),
+               if (amount > 0) buildItemTypeBars(amount),
+               onPressed(
+                 action: () => GameNetwork.sendClientRequest(
+                     ClientRequest.Purchase_Item,
+                     itemType,
+                 ),
+                 child: Container(
+                   alignment: Alignment.center,
+                   color: Colors.white12,
+                   padding: GameStyle.Padding_6,
+                   child: text("BUY $cost"),
+                 ),
+               ),
              ],
            ),
          ),
        );
-
     });
-
   }
+
+  static Widget buildItemTypeBars(int amount) => Row(
+        children: List.generate(5, (i) => Container(
+                  width: 8,
+                  height: 15,
+                  color: i < amount ? GameColors.blue : GameColors.blue05,
+                  margin: i < 4 ? const EdgeInsets.only(right: 5) : null,
+                )
+        )
+  );
 
   static Widget buildItemRow2({
     required Watch<int> watch,

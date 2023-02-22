@@ -2926,5 +2926,16 @@ abstract class Game {
       characterStateChange: true,
     );
   }
+
+  void playerPurchaseItemType(Player player, int itemType){
+    if (player.dead) return;
+    final currentLevel = player.items[itemType];
+    if (currentLevel == null){
+       player.items[itemType] = 1;
+    } else {
+      player.items[itemType] = currentLevel + 1;
+    }
+    player.writePlayerItems();
+  }
 }
 

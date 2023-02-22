@@ -24,6 +24,7 @@ class ClientRequest {
   static const Equip = 39;
   static const Equip_Next = 40;
   static const Swap_Weapons = 41;
+  static const Purchase_Item = 42;
 }
 
 

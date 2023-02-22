@@ -51,7 +51,12 @@ class GameSkirmish extends Game {
 
     player.items[ItemType.Head_Wizards_Hat] = 1;
     player.items[ItemType.Body_Shirt_Blue] = 1;
+    player.items[ItemType.Body_Swat] = 1;
+    player.items[ItemType.Body_Tunic_Padded] = 1;
+    player.items[ItemType.Body_Shirt_Cyan] = 1;
     player.items[ItemType.Legs_Green] = 1;
+    player.items[ItemType.Legs_White] = 0;
+    player.items[ItemType.Legs_Swat] = 1;
     player.items[ItemType.Weapon_Rifle_M4] = 1;
     player.items[ItemType.Weapon_Rifle_AK_47] = 1;
     player.items[ItemType.Weapon_Rifle_Jager] = 1;
