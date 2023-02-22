@@ -512,18 +512,13 @@ class GameUI {
                     children: ItemGroup.values.map(buildIconItemTab).toList()),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: GamePlayer.items.entries
-                    .where((element) =>
-                        element.key != ItemType.Empty &&
-                        ItemType.getItemGroup(element.key) == activeItemGroup)
-                    .map((entry) => watch(
-                        GamePlayer.getItemGroupWatch(activeItemGroup),
-                        (int activeItemType) => buildItemRow(
-                              itemType: entry.key,
-                              amount: entry.value,
-                              active: entry.key == activeItemType,
-                            )))
-                    .toList(),
+                  children: GamePlayer
+                      .getItemsByItemGroup(activeItemGroup)
+                      .map((entry) => buildItemRow(
+                        itemType: entry.key,
+                        amount: entry.value,
+                      )
+                  ).toList(),
                 ),
               ],
             ),
@@ -535,29 +530,34 @@ class GameUI {
   static Widget buildItemRow({
     required int itemType,
     required int amount,
-    required bool active,
   }){
-    return onPressed(
-      action: () =>
-          GameNetwork.sendClientRequest(ClientRequest.Equip, itemType),
-      child: Container(
-        color: active ? Colors.white24 : Colors.transparent,
-        padding: GameStyle.Padding_6,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                buildAtlasItemType(itemType),
-                width8,
-                text(ItemType.getName(itemType)),
-              ],
-            ),
-            text(amount),
-          ],
-        ),
-      ),
-    );
+    return watch(GamePlayer.weapon, (int playerWeaponType) {
+       final active = playerWeaponType == itemType;
+       return onPressed(
+         action: () =>
+             GameNetwork.sendClientRequest(ClientRequest.Equip, itemType),
+         child: Container(
+           color: active ? Colors.white24 : Colors.transparent,
+           padding: GameStyle.Padding_6,
+           child: Row(
+             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+             children: [
+               Row(
+                 children: [
+                   buildAtlasItemType(itemType),
+                   width8,
+                   text(ItemType.getName(itemType)),
+                 ],
+               ),
+               text(amount),
+               text("${ItemType.getName(playerWeaponType)}")
+             ],
+           ),
+         ),
+       );
+
+    });
+
   }
 
   static Widget buildItemRow2({

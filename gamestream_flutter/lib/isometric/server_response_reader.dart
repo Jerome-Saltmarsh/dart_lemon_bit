@@ -328,6 +328,12 @@ class ServerResponseReader with ByteReader {
         readMap(GamePlayer.items);
         GamePlayer.Refresh_Items();
         break;
+      case ApiPlayer.Equipped:
+        GamePlayer.weapon.value = readUInt16();
+        GamePlayer.head.value = readUInt16();
+        GamePlayer.body.value = readUInt16();
+        GamePlayer.legs.value = readUInt16();
+        break;
       default:
         throw Exception("Cannot parse apiPlayer $apiPlayer");
     }

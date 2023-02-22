@@ -1715,6 +1715,20 @@ class Player extends Character with ByteWriter {
          throw Exception('player.getEquippedItemGroupItem($itemGroup)');
      }
   }
+
+  @override
+  void onWeaponTypeChanged() {
+    writeEquipped();
+  }
+
+  void writeEquipped(){
+     writeByte(ServerResponse.Player);
+     writeByte(ApiPlayer.Equipped);
+     writeUInt16(weaponType);
+     writeUInt16(headType);
+     writeUInt16(bodyType);
+     writeUInt16(legsType);
+  }
 }
 
 int getExperienceForLevel(int level){

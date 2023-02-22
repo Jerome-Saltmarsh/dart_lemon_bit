@@ -30,7 +30,6 @@ class GamePlayer {
   static final questAdded = Watch(false);
   static var gameDialog = Watch<GameDialog?>(null, onChanged: onChangedGameDialog);
   static var mouseAngle = 0.0;
-  // static final mapTile = Watch(0, onChanged: MiniMap.onMapTileChanged);
   static var npcTalk = Watch("");
   static var npcTalkOptions = Watch<List<String>>([]);
   static final abilityTarget = Vector3();
@@ -104,4 +103,13 @@ class GamePlayer {
         throw Exception('GamePlayer.getItemGroupWatch($itemGroup)');
     }
   }
+
+  static List<ItemTypeEntry> getItemsByItemGroup(ItemGroup itemGroup) =>
+      GamePlayer.items.entries
+          .where((itemEntry) =>
+              itemEntry.key != ItemType.Empty &&
+              ItemType.getItemGroup(itemEntry.key) == itemGroup)
+          .toList();
 }
+
+typedef ItemTypeEntry = MapEntry<int, int>;

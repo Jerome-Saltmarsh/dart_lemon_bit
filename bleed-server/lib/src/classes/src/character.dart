@@ -25,7 +25,7 @@ abstract class Character extends Collider {
   var weaponState = WeaponState.Idle;
   var weaponStateDuration = 0;
   var _weaponStateDurationTotal = 0;
-  var weaponType = ItemType.Empty;
+  var _weaponType = ItemType.Empty;
   var bodyType = ItemType.Body_Shirt_Cyan;
   var headType = ItemType.Head_Steel_Helm;
   var legsType = ItemType.Legs_Blue;
@@ -35,6 +35,14 @@ abstract class Character extends Collider {
   var _characterType = 0;
   var lookRadian = 0.0;
   var name = "";
+
+  int get weaponType => _weaponType;
+
+  set weaponType(int value){
+    if (_weaponType == value) return;
+    _weaponType = value;
+    onWeaponTypeChanged();
+  }
 
   int get weaponStateDurationTotal => _weaponStateDurationTotal;
 
@@ -210,7 +218,7 @@ abstract class Character extends Collider {
     required int health,
     required this.bodyType,
     required this.headType,
-    required this.weaponType,
+    required int weaponType,
     required int team,
     required int damage,
     double x = 0,
@@ -224,6 +232,7 @@ abstract class Character extends Collider {
       radius: CharacterType.getRadius(characterType),
   ) {
     maxHealth = health;
+    this.weaponType = weaponType;
     this.characterType = characterType;
     this.health = health;
     this.team = team;
@@ -316,4 +325,6 @@ abstract class Character extends Collider {
     }
   }
 
+  /// safe to override
+  void onWeaponTypeChanged() {}
 }
