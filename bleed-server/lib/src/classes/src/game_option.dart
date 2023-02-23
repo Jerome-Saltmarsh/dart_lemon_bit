@@ -19,10 +19,30 @@ class GameOptions {
   });
 
   static const Default_ItemType_Damage = <int, List<int>> {
+     ItemType.Weapon_Smg_Mp5: [2, 3, 4, 5, 6],
+     ItemType.Weapon_Rifle_M4: [2, 3, 4, 5, 6],
      ItemType.Weapon_Rifle_AK_47: [2, 3, 4, 5, 6],
      ItemType.Weapon_Rifle_Jager: [4, 5, 7, 8, 10],
+     ItemType.Weapon_Rifle_Sniper: [4, 5, 7, 8, 10],
+     ItemType.Weapon_Rifle_Musket: [4, 5, 7, 8, 10],
+     ItemType.Weapon_Rifle_Blunderbuss: [4, 5, 7, 8, 10],
+     ItemType.Weapon_Rifle_Arquebus: [4, 5, 7, 8, 10],
+
+     ItemType.Weapon_Special_Bazooka: [4, 5, 7, 8, 10],
+     ItemType.Weapon_Flamethrower: [4, 5, 7, 8, 10],
+     ItemType.Weapon_Special_Minigun: [4, 5, 7, 8, 10],
+
+     ItemType.Weapon_Handgun_Glock: [4, 5, 7, 8, 10],
+     ItemType.Weapon_Handgun_Revolver: [4, 5, 7, 8, 10],
+     ItemType.Weapon_Handgun_Desert_Eagle: [4, 5, 7, 8, 10],
+     ItemType.Weapon_Handgun_Flint_Lock: [4, 5, 7, 8, 10],
+
      ItemType.Weapon_Melee_Hammer: [3, 4, 5, 6, 7],
      ItemType.Weapon_Melee_Pickaxe: [5, 7, 10, 12, 14],
+     ItemType.Weapon_Melee_Knife: [4, 5, 7, 8, 10],
+     ItemType.Weapon_Melee_Crowbar: [4, 5, 7, 8, 10],
+     ItemType.Weapon_Melee_Sword: [4, 5, 7, 8, 10],
+     ItemType.Weapon_Melee_Axe: [4, 5, 7, 8, 10],
   };
 
   static const Default_ItemType_Cost = <int, List<int>> {

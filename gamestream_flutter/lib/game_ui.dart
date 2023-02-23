@@ -487,20 +487,22 @@ class GameUI {
         return watch(ClientState.mouseOverItemType, (int itemType){
           if (itemType < 0) return GameStyle.Null;
           final entry = itemMap[itemType];
-          if (entry == null) return text("Not Found");
+          if (entry == null) return GameStyle.Null;
           final currentLevel = GamePlayer.items[itemType] ?? 1;
           return buildContainer(
+            width: GameStyle.Window_PlayerItems_Width,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
                       width: 50,
                       height: 50,
                       child: buildAtlasItemType(itemType),
                     ),
-                    width4,
-                    text(ItemType.getName(itemType))
+                    text(ItemType.getName(itemType), size: 22, color: Colors.white70)
                   ],
                 ),
                 text("Damage: ${capIndex(entry, currentLevel)}"),

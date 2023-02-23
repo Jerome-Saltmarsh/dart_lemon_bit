@@ -45,7 +45,7 @@ class GameImages {
    static late Image template_weapon_bow;
    static late Image template_weapon_grenade;
    static late Image template_weapon_shotgun;
-   static late Image template_weapon_handgun;
+   static late Image template_weapon_desert_eagle;
    static late Image template_weapon_handgun_black;
    static late Image template_weapon_handgun_flintlock;
    static late Image template_weapon_sniper_rifle;
@@ -148,7 +148,7 @@ class GameImages {
          case ItemType.Weapon_Smg_Mp5:
             return template_weapon_mp5;
          case ItemType.Weapon_Handgun_Desert_Eagle:
-            return template_weapon_handgun;
+            return template_weapon_desert_eagle;
          case ItemType.Weapon_Handgun_Glock:
             return template_weapon_handgun_black;
          case ItemType.Weapon_Handgun_Flint_Lock_Old:
@@ -223,7 +223,7 @@ class GameImages {
       Engine.loadImageAsset('images/template/legs/template-legs-swat.png').then((value) => template_legs_swat = value);
       Engine.loadImageAsset('images/template/weapons/template-weapons-bow.png').then((value) => template_weapon_bow = value);
       Engine.loadImageAsset('images/template/weapons/template-weapons-grenade.png').then((value) => template_weapon_grenade = value);
-      Engine.loadImageAsset('images/template/weapons/template-weapons-handgun.png').then((value) => template_weapon_handgun = value);
+      Engine.loadImageAsset('images/template/weapons/template-weapons-desert-eagle.png').then((value) => template_weapon_desert_eagle = value);
       Engine.loadImageAsset('images/template/weapons/template-weapons-handgun-black.png').then((value) => template_weapon_handgun_black = value);
       Engine.loadImageAsset('images/template/weapons/template-weapons-pistol-flintlock.png').then((value) => template_weapon_handgun_flintlock = value);
       Engine.loadImageAsset('images/template/weapons/template-weapons-sniper-rifle.png').then((value) => template_weapon_sniper_rifle = value);

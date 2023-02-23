@@ -2993,6 +2993,8 @@ abstract class Game {
     player.items[itemType] = currentLevel + 1;
     player.writePlayerItems();
     player.writePlayerEventItemPurchased(itemType);
+    characterEquipItemType(player, itemType);
+    setCharacterStateChanging(player);
   }
 
   int getItemPurchaseCost(int itemType, int level){
