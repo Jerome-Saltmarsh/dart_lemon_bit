@@ -108,10 +108,6 @@ class ServerResponseReader with ByteReader {
           readGameOptions();
           break;
 
-        case ServerResponse.ItemType_Statistics:
-          readItemTypeStatistics();
-          break;
-
         default:
           if (debugging) {
             return;
@@ -126,11 +122,6 @@ class ServerResponseReader with ByteReader {
     }
   }
 
-  void readItemTypeStatistics() {
-    GameOptions.ItemType_Damage.value = readMapListInt();
-    GameOptions.ItemType_Cost.value = readMapListInt();
-  }
-
   void readGameOptions() {
     GameOptions.perks.value = readBool();
     GameOptions.inventory.value = readBool();
@@ -138,6 +129,13 @@ class ServerResponseReader with ByteReader {
 
     if (GameOptions.inventory.value) {
       readMap(GameOptions.item_damage);
+    }
+
+    if (GameOptions.items.value) {
+      final length = readUInt16();
+      GameOptions.ItemTypes.value = readUint16List(length);
+      GameOptions.ItemType_Damage.value = readMapListInt();
+      GameOptions.ItemType_Cost.value = readMapListInt();
     }
   }
 

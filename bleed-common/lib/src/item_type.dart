@@ -848,6 +848,12 @@ class ItemType {
      Weapon_Rifle_Sniper,
      Weapon_Rifle_AK_47,
      Weapon_Rifle_Jager,
+     Weapon_Rifle_Musket,
+     Weapon_Rifle_Arquebus,
+     Weapon_Rifle_Blunderbuss,
+     Weapon_Special_Minigun,
+     Weapon_Special_Bazooka,
+     Weapon_Flamethrower,
   ];
 
   static const Item_Group_Secondary_Weapons = [

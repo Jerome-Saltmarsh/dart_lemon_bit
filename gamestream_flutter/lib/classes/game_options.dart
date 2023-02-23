@@ -5,6 +5,7 @@ class GameOptions {
    static final inventory = Watch(false);
    static final items = Watch(false);
    static final item_damage = <int, int>{};
+   static final ItemTypes = Watch(<int>[]);
    static final ItemType_Damage = Watch(<int, List<int>> {});
    static final ItemType_Cost = Watch(<int, List<int>> {});
 

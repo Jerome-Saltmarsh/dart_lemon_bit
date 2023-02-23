@@ -562,10 +562,10 @@ class GameUI {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: GamePlayer
-                      .getItemsByItemGroup(activeItemGroup)
-                      .map((entry) => buildItemRow(
-                        itemType: entry.key,
-                        itemValue: entry.value,
+                      .getItemTypesByItemGroup(activeItemGroup)
+                      .map((itemType) => buildItemRow(
+                        itemType: itemType,
+                        itemValue: GamePlayer.items[itemType] ?? 0,
                       )
                   ).toList(),
                 ),

@@ -10,7 +10,6 @@ class GamePlayer {
   static final previousPosition = Vector3();
   static final storeItems = Watch(<int>[]);
   static final items = <int, int> {};
-  // static final itemsCost = <int, int> {};
   static final items_reads = Watch(0);
 
   static final energy = Watch(0);
@@ -105,11 +104,9 @@ class GamePlayer {
     }
   }
 
-  static List<ItemTypeEntry> getItemsByItemGroup(ItemGroup itemGroup) =>
-      GamePlayer.items.entries
-          .where((itemEntry) =>
-              itemEntry.key != ItemType.Empty &&
-              ItemType.getItemGroup(itemEntry.key) == itemGroup)
+  static List<int> getItemTypesByItemGroup(ItemGroup itemGroup) =>
+      GameOptions.ItemType_Damage.value.keys
+          .where((itemType) => ItemType.getItemGroup(itemType) == itemGroup)
           .toList();
 
   static Watch<int> getItemTypeWatch(int itemType){

@@ -1494,8 +1494,11 @@ class Player extends Character with ByteWriter {
       writeMap(game.options.itemDamage);
     }
 
-    if (options.items){
-
+    if (options.items) {
+      writeUInt16(game.options.itemTypes.length);
+      writeUint16List(game.options.itemTypes);
+      writeMapListInt(game.options.itemTypeDamage);
+      writeMapListInt(game.options.itemTypeCost);
     }
 
   }
@@ -1759,12 +1762,6 @@ class Player extends Character with ByteWriter {
      writeUInt16(headType);
      writeUInt16(bodyType);
      writeUInt16(legsType);
-  }
-
-  void writeItemTypeStatistics(){
-      writeByte(ServerResponse.ItemType_Statistics);
-      writeMapListInt(game.options.itemTypeDamage);
-      writeMapListInt(game.options.itemTypeCost);
   }
 
   void writeMapListInt(Map<int, List<int>> value){
