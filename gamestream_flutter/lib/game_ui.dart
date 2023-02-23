@@ -469,7 +469,7 @@ class GameUI {
           ),
           Positioned(
             top: GameStyle.Default_Padding,
-            left: 400,
+            left: GameStyle.Window_PlayerItems_Width + (GameStyle.Default_Padding * 2),
             child: buildWindowMouseOverItemType(),
           ),
           Positioned(
@@ -542,7 +542,7 @@ class GameUI {
 
         return watch(ClientState.itemGroup, (ItemGroup activeItemGroup) {
           return buildContainer(
-            width: 370,
+            width: GameStyle.Window_PlayerItems_Width,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

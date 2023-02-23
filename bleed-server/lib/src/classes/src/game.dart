@@ -2933,6 +2933,10 @@ abstract class Game {
      assert (level >= 0);
      assert (level <= 4);
 
+     if (itemType < 0) {
+       return 0;
+     }
+
      if (itemType == ItemType.Empty)
        return empty;
      if (options.inventory)
