@@ -1,4 +1,6 @@
 
+import 'dart:math';
+
 import 'package:gamestream_flutter/library.dart';
 
 /// The data stored in client state belongs to the client and can be safely read and written
@@ -77,14 +79,19 @@ class ClientState {
     updateCredits();
   }
 
+  static var _updateCredits = true;
+
   static void updateCredits() {
+    _updateCredits = !_updateCredits;
+    if (!_updateCredits) return;
     final diff = playerCreditsAnimation.value - ServerState.playerCredits.value;
     if (diff == 0) return;
-
+    final diffAbs = diff.abs();
+    final speed = max(diffAbs ~/ 10, 1);
     if (diff > 0) {
-      playerCreditsAnimation.value--;
+      playerCreditsAnimation.value -= speed;
     } else {
-      playerCreditsAnimation.value++;
+      playerCreditsAnimation.value += speed;
     }
   }
 

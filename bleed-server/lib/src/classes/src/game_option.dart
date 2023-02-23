@@ -46,7 +46,7 @@ class GameOptions {
   };
 
   static const Default_ItemType_Cost = <int, List<int>> {
-     ItemType.Weapon_Rifle_AK_47: [2, 3, 4, 5, 6],
+     ItemType.Weapon_Rifle_AK_47: [10, 15, 30, 50, 100],
      ItemType.Weapon_Rifle_Jager: [4, 5, 7, 8, 10],
      ItemType.Weapon_Melee_Hammer: [3, 4, 5, 6, 7],
      ItemType.Weapon_Melee_Pickaxe: [5, 7, 10, 12, 14],
