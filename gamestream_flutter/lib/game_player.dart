@@ -105,7 +105,7 @@ class GamePlayer {
   }
 
   static List<int> getItemTypesByItemGroup(ItemGroup itemGroup) =>
-      GameOptions.ItemType_Damage.value.keys
+      GameOptions.ItemTypes.value
           .where((itemType) => ItemType.getItemGroup(itemType) == itemGroup)
           .toList();
 

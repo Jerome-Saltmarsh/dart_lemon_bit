@@ -549,7 +549,6 @@ class GameUI {
 
   static Widget buildWindowPlayerItems(){
       return watch(GamePlayer.items_reads, (t) {
-
         return watch(ClientState.itemGroup, (ItemGroup activeItemGroup) {
           return buildContainer(
             width: GameStyle.Window_PlayerItems_Width,

@@ -14,15 +14,11 @@ class GameOptions {
     required this.perks,
     required this.inventory,
     required this.items,
-    this.itemTypes = Default_ItemTypes,
+    this.itemTypes = ItemType.Collection,
     this.itemDamage = Default_Item_Damage,
     this.itemTypeDamage = Default_ItemType_Damage,
     this.itemTypeCost = Default_ItemType_Cost,
   });
-
-  static const Default_ItemTypes = <int> [
-     ItemType.Weapon_Rifle_M4,
-  ];
 
   static const Default_ItemType_Damage = <int, List<int>> {
      ItemType.Weapon_Smg_Mp5: [2, 3, 4, 5, 6],

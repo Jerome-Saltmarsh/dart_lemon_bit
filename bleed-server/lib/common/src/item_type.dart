@@ -893,6 +893,8 @@ class ItemType {
     Legs_Swat,
     Legs_White,
     Legs_Red,
+    Legs_Blue,
+    Legs_Brown,
   ];
 
   static ItemGroup getItemGroup(int itemType){
@@ -913,6 +915,68 @@ class ItemType {
         Weapon_Rifle_AK_47: 30,
         Weapon_Handgun_Glock: 20,
   }[itemType] ?? 20;
+
+  static const Collection_Weapons_Rifles = [
+     Weapon_Rifle_Blunderbuss,
+     Weapon_Rifle_Arquebus,
+     Weapon_Rifle_Musket,
+     Weapon_Rifle_AK_47,
+     Weapon_Rifle_Sniper,
+     Weapon_Rifle_M4,
+  ];
+
+  static const Collection_Weapons_Handguns = [
+    Weapon_Handgun_Flint_Lock,
+    Weapon_Handgun_Desert_Eagle,
+    Weapon_Handgun_Revolver,
+    Weapon_Handgun_Glock,
+  ];
+
+  static const Collection_Weapons_Special = [
+    Weapon_Special_Bazooka,
+    Weapon_Special_Minigun,
+    Weapon_Flamethrower,
+  ];
+
+  static const Collection_Weapons = [
+    ...Collection_Weapons_Handguns,
+    ...Collection_Weapons_Rifles,
+    ...Collection_Weapons_Special,
+  ];
+
+  static const Collection_Clothing_Head = [
+    Head_Swat,
+    Head_Steel_Helm,
+    Head_Rogues_Hood,
+    Head_Wizards_Hat,
+  ];
+
+  static const Collection_Clothing_Body = [
+    Body_Shirt_Cyan,
+    Body_Shirt_Blue,
+    Body_Tunic_Padded,
+    Body_Swat,
+  ];
+
+  static const Collection_Clothing_Legs = [
+    Legs_Swat,
+    Legs_White,
+    Legs_Red,
+    Legs_Green,
+    Legs_Blue,
+    Legs_Brown,
+  ];
+
+  static const Collection_Clothing = [
+    ...Collection_Clothing_Head,
+    ...Collection_Clothing_Body,
+    ...Collection_Clothing_Legs,
+  ];
+
+  static const Collection = [
+    ...Collection_Clothing,
+    ...Collection_Weapons,
+  ];
 }
 
 
