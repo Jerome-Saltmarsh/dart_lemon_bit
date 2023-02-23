@@ -492,10 +492,16 @@ class GameUI {
           return buildContainer(
             child: Column(
               children: [
-                Container(
-                  width: 50,
-                  height: 50,
-                  child: buildAtlasItemType(itemType),
+                Row(
+                  children: [
+                    Container(
+                      width: 50,
+                      height: 50,
+                      child: buildAtlasItemType(itemType),
+                    ),
+                    width4,
+                    text(ItemType.getName(itemType))
+                  ],
                 ),
                 text("Damage: ${capIndex(entry, currentLevel)}"),
               ],
@@ -595,41 +601,36 @@ class GameUI {
              child: Row(
                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                children: [
-                 Tooltip(
-                   message: ItemType.getName(itemType),
-                   child: Row(
-                     children: [
-                       buildAtlasItemType(itemType),
-                       // width8,
-                       // text(ItemType.getName(itemType)),
-                     ],
-                   ),
-                 ),
+                 buildAtlasItemType(itemType),
                  if (itemValue > 0) buildItemTypeBars(itemValue),
-                 if (!fullyUpgraded)
                  onPressed(
-                   action: () => GameNetwork.sendClientRequest(
+                   action: fullyUpgraded ? null : () => GameNetwork.sendClientRequest(
                        ClientRequest.Purchase_Item,
                        itemType,
                    ),
                    child: Container(
-                     width: 70,
+                     width: 100,
                      alignment: Alignment.center,
                      color: Colors.white12,
                      padding: GameStyle.Padding_6,
-                     child: Row(
+                     child:
+                     fullyUpgraded ? text("MAX", color: GameColors.white60) :
+                     Row(
                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                        children: [
                          watch(ServerState.playerCredits, (int playerCredits) {
-                           return text("BUY", color: cost <= playerCredits ? Colors.white : Colors.white38);
+                           return text(itemValue < 1 ? "BUY" : "UPGRADE", color: cost <= playerCredits ? Colors.white : Colors.white38);
                          }),
-                         width6,
-                         Container(
-                             width: 12,
-                             height: 12,
-                             child: buildAtlasItemType(ItemType.Resource_Credit)),
-                         width2,
-                         text(cost),
+                         Row(
+                           children: [
+                             Container(
+                                 width: 12,
+                                 height: 12,
+                                 child: buildAtlasItemType(ItemType.Resource_Credit)),
+                             width2,
+                             text(cost),
+                           ],
+                         )
                        ],
                      ),
                    ),
