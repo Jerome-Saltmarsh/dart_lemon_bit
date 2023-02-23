@@ -292,12 +292,19 @@ class GameEvents {
       GameState.spawnParticleStrikeBlade(x: x, y: y, z: z, angle: angle);
       return;
     }
+
+    const gun_distance = 50.0;
+    final gunX = x - getAdjacent(angle, gun_distance);
+    final gunY = y - getOpposite(angle, gun_distance);
+
+    if (ItemType.isTypeWeaponFirearm(attackType)){
+      GameState.spawnParticleSmoke(x: gunX, y: gunY, z: z);
+      GameState.spawnParticleShell(gunX, gunY, z);
+    }
     if (ItemType.isAutomaticFirearm(attackType)){
-      GameState.spawnParticleShell(x - getAdjacent(angle, 50), y - getOpposite(angle, 50), z);
       GameState.spawnParticleStrikeBulletLight(x: x, y: y, z: z, angle: angle);
       return;
     }
-    GameState.spawnParticleShell(x - getAdjacent(angle, 50), y - getOpposite(angle, 50), z);
     GameState.spawnParticleStrikeBullet(x: x, y: y, z: z, angle: angle);
   }
 
