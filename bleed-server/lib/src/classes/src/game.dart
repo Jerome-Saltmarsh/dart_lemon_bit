@@ -2982,13 +2982,11 @@ abstract class Game {
 
   void playerPurchaseItemType(Player player, int itemType){
     if (player.dead) return;
-    final currentLevel = player.items[itemType];
-
-    if (currentLevel == null){
-       player.writeError('Cannot be purchased');
-       return;
+    if (!options.itemTypes.contains(itemType)){
+      player.writeError('${ItemType.getName(itemType)} cannot be purchased');
+      return;
     }
-
+    final currentLevel = player.items[itemType] ?? 0;
     final cost = getItemPurchaseCost(itemType, currentLevel);
     if (player.credits < cost){
       player.writeError('insufficient credits');
