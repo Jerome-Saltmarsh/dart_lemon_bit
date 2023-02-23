@@ -572,7 +572,8 @@ class GameUI {
   }){
     return watch(GamePlayer.getItemTypeWatch(itemType), (int equippedItemType) {
        final active = equippedItemType == itemType;
-       final cost = GameOptions.ItemType_Cost.value[itemType]?[itemValue] ?? 0;
+       final fullyUpgraded = itemValue >= 5;
+       final cost = fullyUpgraded ? 0 : GameOptions.ItemType_Cost.value[itemType]?[itemValue] ?? 0;
 
        return MouseRegion(
          onEnter: (_){
@@ -603,6 +604,7 @@ class GameUI {
                    ),
                  ),
                  if (itemValue > 0) buildItemTypeBars(itemValue),
+                 if (!fullyUpgraded)
                  onPressed(
                    action: () => GameNetwork.sendClientRequest(
                        ClientRequest.Purchase_Item,

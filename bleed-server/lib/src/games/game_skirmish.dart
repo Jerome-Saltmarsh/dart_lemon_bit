@@ -182,16 +182,6 @@ class GameSkirmish extends Game {
   }
 
   @override
-  int getItemPurchaseCost(int itemType, int level){
-    const map = <int, int> {
-      ItemType.Weapon_Rifle_AK_47: 10,
-      ItemType.Weapon_Rifle_Jager: 5,
-    };
-    final amount = map[itemType] ?? 0;
-    return amount * (level + 1);
-  }
-
-  @override
   void customUpdatePlayer(Player player){
      if (player.hintIndex >= hints_length) return;
      player.hintNext--;

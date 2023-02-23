@@ -3001,7 +3001,7 @@ abstract class Game {
     if (options.items){
       return options.itemTypeCost[itemType]?[level] ?? 0;
     }
-    return 15;
+    return 0;
   }
 
   int getExperienceForLevel(int level){
