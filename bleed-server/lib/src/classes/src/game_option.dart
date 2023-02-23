@@ -6,6 +6,7 @@ class GameOptions {
   final bool items;
 
   final Map<int, int> itemDamage;
+  final Map<int, List<int>> itemTypeCost;
   final Map<int, List<int>> itemTypeDamage;
 
   GameOptions({
@@ -14,10 +15,21 @@ class GameOptions {
     required this.items,
     this.itemDamage = Default_Item_Damage,
     this.itemTypeDamage = Default_ItemType_Damage,
+    this.itemTypeCost = Default_ItemType_Cost,
   });
 
   static const Default_ItemType_Damage = <int, List<int>> {
      ItemType.Weapon_Rifle_AK_47: [2, 3, 4, 5, 6],
+     ItemType.Weapon_Rifle_Jager: [4, 5, 7, 8, 10],
+     ItemType.Weapon_Melee_Hammer: [3, 4, 5, 6, 7],
+     ItemType.Weapon_Melee_Pickaxe: [5, 7, 10, 12, 14],
+  };
+
+  static const Default_ItemType_Cost = <int, List<int>> {
+     ItemType.Weapon_Rifle_AK_47: [2, 3, 4, 5, 6],
+     ItemType.Weapon_Rifle_Jager: [4, 5, 7, 8, 10],
+     ItemType.Weapon_Melee_Hammer: [3, 4, 5, 6, 7],
+     ItemType.Weapon_Melee_Pickaxe: [5, 7, 10, 12, 14],
   };
 
   static const Default_Item_Damage = <int, int> {

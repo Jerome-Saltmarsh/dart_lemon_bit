@@ -200,4 +200,11 @@ class GameSkirmish extends Game {
      player.hintNext = 300;
      player.hintIndex++;
   }
+
+  @override
+  void customOnCharacterKilled(Character target, dynamic src) {
+     if (src is Player) {
+       src.credits += 10;
+     }
+  }
 }

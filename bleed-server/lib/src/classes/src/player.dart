@@ -1490,7 +1490,11 @@ class Player extends Character with ByteWriter {
     writeBool(options.perks);
     writeBool(options.inventory);
     writeBool(options.items);
-    writeMap(game.options.itemDamage);
+
+    if (options.inventory){
+      writeMap(game.options.itemDamage);
+    }
+
   }
 
   void writePlayerInventory() {

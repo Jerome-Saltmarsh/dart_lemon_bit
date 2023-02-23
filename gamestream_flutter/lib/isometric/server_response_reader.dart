@@ -105,10 +105,7 @@ class ServerResponseReader with ByteReader {
           ServerState.removeGameObjectById(readUInt16());
           break;
         case ServerResponse.Game_Options:
-          GameOptions.perks.value = readBool();
-          GameOptions.inventory.value = readBool();
-          GameOptions.items.value = readBool();
-          readMap(GameOptions.item_damage);
+          readGameOptions();
           break;
 
         case ServerResponse.ItemType_Statistics:
@@ -133,6 +130,16 @@ class ServerResponseReader with ByteReader {
           WebsiteState.error.value = "An error occurred";
           return;
       }
+    }
+  }
+
+  void readGameOptions() {
+    GameOptions.perks.value = readBool();
+    GameOptions.inventory.value = readBool();
+    GameOptions.items.value = readBool();
+
+    if (GameOptions.inventory.value){
+      readMap(GameOptions.item_damage);
     }
   }
 
