@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -495,7 +497,7 @@ class GameUI {
                   height: 50,
                   child: buildAtlasItemType(itemType),
                 ),
-                text("Damage: ${entry[currentLevel]}"),
+                text("Damage: ${capIndex(entry, currentLevel)}"),
               ],
             ),
           );
