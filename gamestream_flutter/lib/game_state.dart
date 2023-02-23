@@ -1029,7 +1029,8 @@ class GameState {
     required double y,
     required double z,
     int duration = 100,
-    double scale = 1.0
+    double scale = 1.0,
+    double scaleV = 0.01,
   }) =>
       spawnParticle(
         type: ParticleType.Smoke,
@@ -1041,7 +1042,7 @@ class GameState {
         rotation: 0,
         rotationV: giveOrTake(0.05),
         speed: 0,
-        scaleV: 0.01,
+        scaleV: scaleV,
         weight: -0.25,
         duration: duration,
         scale: scale,

@@ -297,8 +297,9 @@ class GameEvents {
     final gunX = x - getAdjacent(angle, gun_distance);
     final gunY = y - getOpposite(angle, gun_distance);
 
+
     if (ItemType.isTypeWeaponFirearm(attackType)){
-      GameState.spawnParticleSmoke(x: gunX, y: gunY, z: z);
+      GameState.spawnParticleSmoke(x: gunX, y: gunY, z: z, scale: 0.1, scaleV: 0.006, duration: 50);
       GameState.spawnParticleShell(gunX, gunY, z);
     }
     if (ItemType.isAutomaticFirearm(attackType)){

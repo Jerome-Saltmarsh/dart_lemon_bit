@@ -346,7 +346,7 @@ class RendererParticles extends Renderer {
   }
 
   void renderParticleSmoke() {
-    casteShadowDownV3(particle);
+    // casteShadowDownV3(particle);
     Engine.renderSpriteRotated(
       image: GameImages.atlas_particles,
       dstX: particle.renderX,
@@ -357,8 +357,7 @@ class RendererParticles extends Renderer {
       srcHeight: 16,
       color: GameState.getV3RenderColor(particle),
       rotation: particle.rotation,
-      // scale: particle.scale,
-
+      scale: particle.scale,
     );
   }
 
