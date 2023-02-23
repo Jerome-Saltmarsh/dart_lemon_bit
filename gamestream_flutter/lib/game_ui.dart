@@ -602,7 +602,12 @@ class GameUI {
              child: Row(
                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                children: [
-                 buildAtlasItemType(itemType),
+                 Container(
+                     width: 100,
+                     child: buildAtlasItemType(itemType),
+                     height: 50,
+                     alignment: Alignment.centerLeft,
+                 ),
                  if (itemValue > 0) buildItemTypeBars(itemValue),
                  onPressed(
                    action: fullyUpgraded ? null : () => GameNetwork.sendClientRequest(
