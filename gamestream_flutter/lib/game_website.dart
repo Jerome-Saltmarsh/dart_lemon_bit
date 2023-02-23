@@ -164,7 +164,7 @@ class GameWebsite {
       children: [
         text("STREAMPUNK", size: 30),
         height32,
-        buildTextButton("SKIRMISH", action: GameNetwork.connectToGameSkirmish),
+        buildTextButton("COMBAT", action: GameNetwork.connectToGameCombat),
         height24,
         buildTextButton("SURVIVE", action: GameNetwork.connectToGameSurvival),
         height24,

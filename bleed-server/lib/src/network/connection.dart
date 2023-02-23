@@ -4,8 +4,8 @@ import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/classes/src/scene_writer.dart';
 import 'package:bleed_server/src/games/game_editor.dart';
 import 'package:bleed_server/src/games/game_practice.dart';
-import 'package:bleed_server/src/games/game_skirmish.dart';
 import 'package:bleed_server/src/games/game_survival.dart';
+import 'package:bleed_server/src/games/game_combat.dart';
 import 'package:bleed_server/src/scene_generator.dart';
 import 'package:bleed_server/src/system.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -725,14 +725,14 @@ class Connection with ByteReader {
     joinGame(GamePractice(scene: engine.scenes.suburbs_01));
   }
 
-  Future joinGameSkirmish() async {
+  Future joinGameCombat() async {
     for (final game in engine.games){
-      if (game is GameSkirmish) {
+      if (game is GameCombat) {
         if (game.players.length > 12) continue;
         return joinGame(game);
       }
     }
-    joinGame(GameSkirmish(scene: engine.scenes.warehouse));
+    joinGame(GameCombat(scene: engine.scenes.warehouse));
   }
 
   Future joinGameSurvival() async {
@@ -825,8 +825,8 @@ class Connection with ByteReader {
       case GameType.Survival:
         joinGameSurvival();
         break;
-      case GameType.Skirmish:
-        joinGameSkirmish();
+      case GameType.Combat:
+        joinGameCombat();
         break;
       default:
         return errorInvalidArg('invalid game type index $gameType');

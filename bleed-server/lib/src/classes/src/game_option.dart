@@ -63,7 +63,6 @@ class GameOptions {
     ItemType.Weapon_Handgun_Glock: 7,
     ItemType.Weapon_Handgun_Desert_Eagle: 18,
     ItemType.Weapon_Handgun_Revolver: 25,
-    ItemType.Weapon_Melee_Sword_Rusty: 3,
     ItemType.Weapon_Melee_Sword: 3,
     ItemType.Weapon_Melee_Knife: 3,
     ItemType.Weapon_Melee_Axe: 3,

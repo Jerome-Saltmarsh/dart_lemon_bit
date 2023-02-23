@@ -136,8 +136,7 @@ class ItemType {
   static const Weapon_Melee_Staff = Index_Weapon_Melee + 1;
   static const Weapon_Melee_Staff_Of_Flames = Weapon_Melee_Staff + 1;
   static const Weapon_Melee_Sword = Weapon_Melee_Staff_Of_Flames + 1;
-  static const Weapon_Melee_Sword_Rusty = Weapon_Melee_Sword + 1;
-  static const Weapon_Melee_Crowbar = Weapon_Melee_Sword_Rusty + 1;
+  static const Weapon_Melee_Crowbar = Weapon_Melee_Sword + 1;
   static const Weapon_Melee_Pickaxe = Weapon_Melee_Crowbar + 1;
   static const Weapon_Melee_Axe = Weapon_Melee_Pickaxe + 1;
   static const Weapon_Melee_Hammer = Weapon_Melee_Axe + 1;
@@ -938,10 +937,21 @@ class ItemType {
     Weapon_Flamethrower,
   ];
 
+  static const Collection_Weapons_Melee = [
+    Weapon_Melee_Axe,
+    Weapon_Melee_Sword,
+    Weapon_Melee_Crowbar,
+    Weapon_Melee_Pickaxe,
+    Weapon_Melee_Hammer,
+    Weapon_Melee_Staff,
+    Weapon_Melee_Knife,
+  ];
+
   static const Collection_Weapons = [
     ...Collection_Weapons_Handguns,
     ...Collection_Weapons_Rifles,
     ...Collection_Weapons_Special,
+    ...Collection_Weapons_Melee,
   ];
 
   static const Collection_Clothing_Head = [

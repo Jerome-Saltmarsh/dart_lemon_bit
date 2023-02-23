@@ -3,19 +3,19 @@ class GameType {
   static const Practice = 2;
   static const Survival = 3;
   /// Intense Action
-  static const Skirmish = 4;
+  static const Combat = 4;
 
   static const values = [
      Editor,
      Practice,
      Survival,
-      Skirmish,
+     Combat,
   ];
 
   static String getName(int? value) => value == null ? 'None' : const {
       Editor    : 'Editor'    ,
       Practice  : 'Practice'  ,
       Survival  : 'Survival'  ,
-      Skirmish : 'Skirmish',
+      Combat : 'Combat',
   } [value] ?? 'Unknown ($value)';
 }

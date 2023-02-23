@@ -11,7 +11,7 @@ class EquippedType {
   static const Tertiary = 2;
 }
 
-class GameSkirmish extends Game {
+class GameCombat extends Game {
   static const hints = [
      'Press the W,A,S,D keys to move',
      'Left click to use your weapon',
@@ -23,10 +23,10 @@ class GameSkirmish extends Game {
 
   static final hints_length = hints.length;
 
-  GameSkirmish({
+  GameCombat({
     required super.scene,
   }) : super(
-      gameType: GameType.Skirmish,
+      gameType: GameType.Combat,
       time: GameTime(enabled: true, hour: 15, minute: 30),
       environment: GameEnvironment(),
       options: GameOptions(
