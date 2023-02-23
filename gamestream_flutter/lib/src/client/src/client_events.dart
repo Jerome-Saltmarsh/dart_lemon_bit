@@ -235,4 +235,8 @@ class ClientEvents {
   static void onChangedDebugMode(bool value){
     GameRender.renderDebug = value;
   }
+
+  static void onChangedCredits(int value){
+    GameAudio.coins.play();
+  }
 }

@@ -25,7 +25,7 @@ class ServerState {
   static final playerBaseHealth = Watch(0);
   static final playerBaseDamage = Watch(0);
   static final playerBaseEnergy = Watch(0);
-  static final playerCredits = Watch(0, onChanged: ServerEvents.onChangedPlayerCredits);
+  static final playerCredits = Watch(0);
   static final playerExperiencePercentage = Watch(0.0);
   static final playerLevel = Watch(1);
   static final playerPerksUnlocked = Watch(Uint8List(0));

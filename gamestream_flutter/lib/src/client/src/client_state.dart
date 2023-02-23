@@ -46,6 +46,8 @@ class ClientState {
   static var lights_active = 0;
   static var interpolation_padding = 0.0;
 
+  static final playerCreditsAnimation = Watch(0, onChanged: ClientEvents.onChangedCredits);
+
   static DateTime? timeConnectionEstablished;
 
   // PROPERTIES
@@ -71,7 +73,22 @@ class ClientState {
       nextLightingUpdate = GameConstants.Frames_Per_Lighting_Update;
       updateGameLighting();
     }
+
+    updateCredits();
   }
+
+  static void updateCredits() {
+    final diff = playerCreditsAnimation.value - ServerState.playerCredits.value;
+    if (diff == 0) return;
+
+    if (diff > 0) {
+      playerCreditsAnimation.value--;
+    } else {
+      playerCreditsAnimation.value++;
+    }
+  }
+
+
 
   static void updateGameLighting(){
     if (overrideColor.value) return;
