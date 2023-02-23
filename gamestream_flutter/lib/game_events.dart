@@ -425,6 +425,18 @@ class GameEvents {
       case PlayerEvent.Item_Purchased:
         final itemType = serverResponseReader.readUInt16();
         GameAudio.cash_register_4();
+
+        if (GameOptions.items.value){
+          final level = GamePlayer.items[itemType];
+          if (level == null) return;
+          if (level == 1){
+            ClientActions.writeMessage('Purchased ${ItemType.getName(itemType)}');
+            return;
+          }
+          ClientActions.writeMessage('Upgraded ${ItemType.getName(itemType)} to level $level');
+          return;
+        }
+
         ClientActions.writeMessage('purchased ${ItemType.getName(itemType)}');
         break;
 

@@ -920,6 +920,9 @@ abstract class Game {
     );
     character.clampVelocity(GamePhysics.Max_Velocity);
 
+    final spawnX = character.x + getAdjacent(angle, 70);
+    final spawnY = character.x + getAdjacent(angle, 70);
+
     spawnProjectile(
       src: character,
       accuracy: character.accuracy,
@@ -2112,19 +2115,19 @@ abstract class Game {
         damage: damage,
       );
 
-  Projectile spawnProjectileBullet({
-    required Character src,
-    required double speed,
-    double accuracy = 0,
-  }) =>
-    spawnProjectile(
-      src: src,
-      accuracy: 0,
-      angle: src.faceAngle,
-      range: src.weaponTypeRange,
-      projectileType: ProjectileType.Bullet,
-      damage: src.damage,
-    );
+  // Projectile spawnProjectileBullet({
+  //   required Character src,
+  //   required double speed,
+  //   double accuracy = 0,
+  // }) =>
+  //   spawnProjectile(
+  //     src: src,
+  //     accuracy: 0,
+  //     angle: src.faceAngle,
+  //     range: src.weaponTypeRange,
+  //     projectileType: ProjectileType.Bullet,
+  //     damage: src.damage,
+  //   );
 
   void characterSpawnProjectileFireball(Character character, {
     required double angle,
@@ -2198,7 +2201,8 @@ abstract class Game {
     if (target is Collider) {
       projectile.target = target;
     }
-    const r = 0.01;
+    // final r = 10.0 + (src.isTemplate ? ItemType.getWeaponLength(src.weaponType) : 0);
+    final r = 5.0;
     projectile.x = src.x + getAdjacent(finalAngle, r);
     projectile.y = src.y + getOpposite(finalAngle, r);
     projectile.z = src.z + Character_Gun_Height;
@@ -2210,6 +2214,7 @@ abstract class Game {
     projectile.range = range;
     projectile.type = projectileType;
     projectile.radius = ProjectileType.getRadius(projectileType);
+
     return projectile;
   }
 

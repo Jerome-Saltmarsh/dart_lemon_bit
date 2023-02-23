@@ -902,6 +902,11 @@ class ItemType {
   static const ItemTypeGroups = <int, ItemGroup> {
       Weapon_Rifle_AK_47: ItemGroup.Primary_Weapon,
   };
+
+  static double getWeaponLength(int itemType) => const <int, double>{
+        Weapon_Rifle_AK_47: 30,
+        Weapon_Handgun_Glock: 20,
+  }[itemType] ?? 20;
 }
 
 
