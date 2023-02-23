@@ -2996,7 +2996,7 @@ abstract class Game {
   }
 
   int getItemPurchaseCost(int itemType, int level){
-    assert (level > 0);
+    // assert (level > 0);
     assert (level < 6);
     if (options.items){
       return options.itemTypeCost[itemType]?[level] ?? 0;

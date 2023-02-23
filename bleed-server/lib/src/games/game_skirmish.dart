@@ -27,16 +27,13 @@ class GameSkirmish extends Game {
     required super.scene,
   }) : super(
       gameType: GameType.Skirmish,
-      time: GameTime(enabled: false, hour: 15, minute: 30),
+      time: GameTime(enabled: true, hour: 15, minute: 30),
       environment: GameEnvironment(),
       options: GameOptions(
           perks: false,
           inventory: false,
           items: true,
-          itemDamage: const {
-            ItemType.Weapon_Rifle_M4: 30,
-            ItemType.Weapon_Ranged_Shotgun: 5,
-            }),
+      ),
   );
 
   @override
@@ -68,15 +65,15 @@ class GameSkirmish extends Game {
     player.items[ItemType.Legs_Green] = 1;
     player.items[ItemType.Legs_White] = 0;
     player.items[ItemType.Legs_Swat] = 1;
-    player.items[ItemType.Weapon_Rifle_M4] = 1;
-    player.items[ItemType.Weapon_Rifle_AK_47] = 1;
-    player.items[ItemType.Weapon_Rifle_Jager] = 1;
-    player.items[ItemType.Weapon_Handgun_Glock] = 1;
-    player.items[ItemType.Weapon_Handgun_Revolver] = 1;
-    player.items[ItemType.Weapon_Handgun_Desert_Eagle] = 1;
-    player.items[ItemType.Weapon_Melee_Crowbar] = 1;
-    player.items[ItemType.Weapon_Melee_Axe] = 1;
-    player.items[ItemType.Weapon_Melee_Knife] = 1;
+    player.items[ItemType.Weapon_Rifle_M4] = 0;
+    player.items[ItemType.Weapon_Rifle_AK_47] = 0;
+    player.items[ItemType.Weapon_Rifle_Jager] = 0;
+    player.items[ItemType.Weapon_Handgun_Glock] = 0;
+    player.items[ItemType.Weapon_Handgun_Revolver] = 0;
+    player.items[ItemType.Weapon_Handgun_Desert_Eagle] = 0;
+    player.items[ItemType.Weapon_Melee_Crowbar] = 0;
+    player.items[ItemType.Weapon_Melee_Axe] = 0;
+    player.items[ItemType.Weapon_Melee_Knife] = 0;
 
     player.weaponPrimary = ItemType.Weapon_Rifle_M4;
     player.weaponSecondary = ItemType.Weapon_Handgun_Glock;
