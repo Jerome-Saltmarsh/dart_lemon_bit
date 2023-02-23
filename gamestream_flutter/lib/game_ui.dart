@@ -480,26 +480,29 @@ class GameUI {
       ]);
 
   static Widget buildWindowMouseOverItemType(){
-    return watch(GameOptions.ItemType_Damage, (MapListInt itemMap){
-      return watch(ClientState.mouseOverItemType, (int itemType){
-        if (itemType < 0) return GameStyle.Null;
-        final entry = itemMap[itemType];
-        if (entry == null) return text("Not Found");
-        final currentLevel = GamePlayer.items[itemType] ?? 1;
-        return buildContainer(
-          child: Column(
-            children: [
-              Container(
+    return watch(GamePlayer.items_reads, (_){
+      return watch(GameOptions.ItemType_Damage, (MapListInt itemMap){
+        return watch(ClientState.mouseOverItemType, (int itemType){
+          if (itemType < 0) return GameStyle.Null;
+          final entry = itemMap[itemType];
+          if (entry == null) return text("Not Found");
+          final currentLevel = GamePlayer.items[itemType] ?? 1;
+          return buildContainer(
+            child: Column(
+              children: [
+                Container(
                   width: 50,
                   height: 50,
                   child: buildAtlasItemType(itemType),
-              ),
-              text("Damage: ${entry[currentLevel]}"),
-            ],
-          ),
-        );
+                ),
+                text("Damage: ${entry[currentLevel]}"),
+              ],
+            ),
+          );
+        });
       });
     });
+
   }
 
   static Widget buildContainer({required Widget child, double? width}) =>
