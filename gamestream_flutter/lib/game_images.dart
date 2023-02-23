@@ -5,6 +5,7 @@ import 'package:bleed_common/src.dart';
 import 'package:lemon_engine/src.dart';
 
 class GameImages {
+   static late Image shades;
    static late Image pixel;
    static late Image projectiles;
    static late Image zombie;
@@ -189,6 +190,7 @@ class GameImages {
    }
 
    static void loadImages() {
+      Engine.loadImageAsset('images/shades.png').then((value) => shades = value);
       Engine.loadImageAsset('images/atlas-characters.png').then((value) => atlas_characters = value);
       Engine.loadImageAsset('images/atlas-zombie.png').then((value) => zombie = value);
       Engine.loadImageAsset('images/atlas-zombie-shadow.png').then((value) => zombie_shadow = value);

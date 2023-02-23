@@ -131,6 +131,71 @@ class RendererParticles extends Renderer {
             color: GameState.getV3RenderColor(particle),
           );
           break;
+        case ParticleType.Confetti_Yellow:
+          Engine.renderSprite(
+            image: GameImages.shades,
+            dstX: dstX,
+            dstY: dstY,
+            srcX: 216,
+            srcY: 0,
+            srcWidth: 8,
+            srcHeight: 8,
+            scale: particle.scale,
+            color: GameState.getV3RenderColor(particle),
+          );
+          break;
+        case ParticleType.Confetti_Red:
+          Engine.renderSprite(
+            image: GameImages.shades,
+            dstX: dstX,
+            dstY: dstY,
+            srcX: 192,
+            srcY: 0,
+            srcWidth: 8,
+            srcHeight: 8,
+            scale: particle.scale,
+            color: GameState.getV3RenderColor(particle),
+          );
+          break;
+        case ParticleType.Confetti_Blue:
+          Engine.renderSprite(
+            image: GameImages.shades,
+            dstX: dstX,
+            dstY: dstY,
+            srcX: 560,
+            srcY: 0,
+            srcWidth: 8,
+            srcHeight: 8,
+            scale: particle.scale,
+            color: GameState.getV3RenderColor(particle),
+          );
+          break;
+        case ParticleType.Confetti_Green:
+          Engine.renderSprite(
+            image: GameImages.shades,
+            dstX: dstX,
+            dstY: dstY,
+            srcX: 384,
+            srcY: 0,
+            srcWidth: 8,
+            srcHeight: 8,
+            scale: particle.scale,
+            color: GameState.getV3RenderColor(particle),
+          );
+          break;
+        case ParticleType.Confetti_Purple:
+          Engine.renderSprite(
+            image: GameImages.shades,
+            dstX: dstX,
+            dstY: dstY,
+            srcX: 616,
+            srcY: 0,
+            srcWidth: 8,
+            srcHeight: 8,
+            scale: particle.scale,
+            color: GameState.getV3RenderColor(particle),
+          );
+          break;
         case ParticleType.Block_Brick:
           Engine.renderSprite(
             image: GameImages.atlas_gameobjects,

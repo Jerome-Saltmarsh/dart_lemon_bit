@@ -264,6 +264,7 @@ class GameState {
     double rotationV = 0,
     bounciness = 0.5,
     bool animation = false,
+    int delay = 0,
   }) {
     if (ClientState.totalActiveParticles >= GameConfig.Particles_Max) {
       return particleOverflow;
@@ -278,6 +279,7 @@ class GameState {
     particle.checkNodeCollision = checkCollision;
     particle.animation = animation;
     particle.emitsLight = false;
+    particle.delay = delay;
 
     if (speed > 0){
       particle.xv = Engine.calculateAdjacent(angle, speed);
@@ -1342,4 +1344,25 @@ class GameState {
 
       GameNodes.nodeTypes[getNodeIndexZRC(z, row, column)] = type;
     }
+
+  static void spawnParticleConfetti(double x, double y, double z) {
+      spawnParticle(
+          type: randomItem(const[
+            ParticleType.Confetti_Red,
+            ParticleType.Confetti_Yellow,
+            ParticleType.Confetti_Blue,
+            ParticleType.Confetti_Green,
+            ParticleType.Confetti_Purple,
+          ]),
+          x: x,
+          y: y,
+          z: z,
+          angle: randomAngle(),
+          speed: randomBetween(0.5, 2.0),
+          weight: -0.02,
+          scale: 0.5,
+          duration: randomInt(25, 100),
+          delay: randomInt(0, 10),
+      );
+  }
 }

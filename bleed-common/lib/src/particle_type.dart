@@ -34,6 +34,11 @@ class ParticleType {
   static const Strike_Bullet_Light = 47;
   static const Block_Sand = 48;
   static const Shadow = 49;
+  static const Confetti_Red = 50;
+  static const Confetti_Yellow = 51;
+  static const Confetti_Blue = 52;
+  static const Confetti_Green = 53;
+  static const Confetti_Purple = 54;
 
   static String getName(int particleType){
     return const {
