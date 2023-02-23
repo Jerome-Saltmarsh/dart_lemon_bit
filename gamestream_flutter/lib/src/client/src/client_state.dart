@@ -29,6 +29,7 @@ class ClientState {
 
   static final itemGroup = Watch(ItemGroup.Primary_Weapon);
 
+  static final mouseOverItemType = Watch(-1);
   static final particles = <Particle>[];
 
   static var totalParticles = 0;

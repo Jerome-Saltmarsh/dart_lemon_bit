@@ -5,10 +5,12 @@ class GameOptions {
    static final inventory = Watch(false);
    static final items = Watch(false);
    static final item_damage = <int, int>{};
-   static final ItemType_Damage = <int, List<int>> {};
+   static final ItemType_Damage = Watch(<int, List<int>> {});
 
    static int getItemTypeDamage(int itemType, {bool ignoreEmpty = true}){
       if (itemType == ItemType.Empty && ignoreEmpty) return 0;
       return item_damage[itemType] ?? 0;
    }
 }
+
+typedef MapListInt = Map<int, List<int>>;

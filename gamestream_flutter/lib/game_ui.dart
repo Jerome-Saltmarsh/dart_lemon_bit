@@ -468,11 +468,49 @@ class GameUI {
               child: buildWindowPlayerItems(),
           ),
           Positioned(
+            top: GameStyle.Default_Padding,
+            left: 400,
+            child: buildWindowMouseOverItemType(),
+          ),
+          Positioned(
             child: buildWindowPerks(),
             left: GameStyle.Default_Padding,
             top: GameStyle.Default_Padding,
           )
       ]);
+
+  static Widget buildWindowMouseOverItemType(){
+    return watch(GameOptions.ItemType_Damage, (MapListInt itemMap){
+      return watch(ClientState.mouseOverItemType, (int itemType){
+        if (itemType < 0) return GameStyle.Null;
+        final entry = itemMap[itemType];
+        if (entry == null) return text("Not Found");
+        final currentLevel = GamePlayer.items[itemType] ?? 1;
+        return buildContainer(
+          child: Column(
+            children: [
+              Container(
+                  width: 50,
+                  height: 50,
+                  child: buildAtlasItemType(itemType),
+              ),
+              text("Damage: ${entry[currentLevel]}"),
+            ],
+          ),
+        );
+      });
+    });
+  }
+
+  static Widget buildContainer({required Widget child, double? width}) =>
+    buildDialogUIControl(
+        child: Container(
+          padding: GameStyle.Padding_6,
+          color: GameStyle.Container_Color,
+          width: width,
+          child: child,
+      )
+    );
 
   static int mapItemTabToIconType(ItemGroup itemTab) => const {
       ItemGroup.Primary_Weapon: IconType.Primary_Weapon,
@@ -500,9 +538,7 @@ class GameUI {
       return watch(GamePlayer.items_reads, (t) {
 
         return watch(ClientState.itemGroup, (ItemGroup activeItemGroup) {
-          return Container(
-            padding: GameStyle.Padding_6,
-            color: GameStyle.Container_Color,
+          return buildContainer(
             width: 370,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -527,7 +563,6 @@ class GameUI {
       });
   }
 
-
   static Widget buildItemRow({
     required int itemType,
     required int itemValue,
@@ -536,54 +571,64 @@ class GameUI {
        final active = equippedItemType == itemType;
        final cost = GamePlayer.itemsCost[itemType] ?? 0;
 
-       return onPressed(
-         action: () =>
-             GameNetwork.sendClientRequest(ClientRequest.Equip, itemType),
-         child: Container(
-           color: active ? Colors.white24 : Colors.transparent,
-           padding: GameStyle.Padding_6,
-           child: Row(
-             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-             children: [
-               Tooltip(
-                 message: ItemType.getName(itemType),
-                 child: Row(
-                   children: [
-                     buildAtlasItemType(itemType),
-                     // width8,
-                     // text(ItemType.getName(itemType)),
-                   ],
-                 ),
-               ),
-               if (itemValue > 0) buildItemTypeBars(itemValue),
-               onPressed(
-                 action: () => GameNetwork.sendClientRequest(
-                     ClientRequest.Purchase_Item,
-                     itemType,
-                 ),
-                 child: Container(
-                   width: 70,
-                   alignment: Alignment.center,
-                   color: Colors.white12,
-                   padding: GameStyle.Padding_6,
+       return MouseRegion(
+         onEnter: (_){
+           ClientState.mouseOverItemType.value = itemType;
+         },
+         onExit: (_){
+           if (ClientState.mouseOverItemType.value == itemType) {
+             ClientState.mouseOverItemType.value = -1;
+           }
+         },
+         child: onPressed(
+           action: () =>
+               GameNetwork.sendClientRequest(ClientRequest.Equip, itemType),
+           child: Container(
+             color: active ? Colors.white24 : Colors.transparent,
+             padding: GameStyle.Padding_6,
+             child: Row(
+               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+               children: [
+                 Tooltip(
+                   message: ItemType.getName(itemType),
                    child: Row(
-                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                      children: [
-                       watch(ServerState.playerCredits, (int playerCredits) {
-                         return text("BUY", color: cost <= playerCredits ? Colors.white : Colors.white38);
-                       }),
-                       width6,
-                       Container(
-                           width: 12,
-                           height: 12,
-                           child: buildAtlasItemType(ItemType.Resource_Credit)),
-                       width2,
-                       text(cost),
+                       buildAtlasItemType(itemType),
+                       // width8,
+                       // text(ItemType.getName(itemType)),
                      ],
                    ),
                  ),
-               ),
-             ],
+                 if (itemValue > 0) buildItemTypeBars(itemValue),
+                 onPressed(
+                   action: () => GameNetwork.sendClientRequest(
+                       ClientRequest.Purchase_Item,
+                       itemType,
+                   ),
+                   child: Container(
+                     width: 70,
+                     alignment: Alignment.center,
+                     color: Colors.white12,
+                     padding: GameStyle.Padding_6,
+                     child: Row(
+                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                       children: [
+                         watch(ServerState.playerCredits, (int playerCredits) {
+                           return text("BUY", color: cost <= playerCredits ? Colors.white : Colors.white38);
+                         }),
+                         width6,
+                         Container(
+                             width: 12,
+                             height: 12,
+                             child: buildAtlasItemType(ItemType.Resource_Credit)),
+                         width2,
+                         text(cost),
+                       ],
+                     ),
+                   ),
+                 ),
+               ],
+             ),
            ),
          ),
        );
