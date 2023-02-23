@@ -2995,15 +2995,6 @@ abstract class Game {
     player.writePlayerEventItemPurchased(itemType);
   }
 
-  Map<int, int> getPlayerItemsCost(Player player) {
-    Cost_Map.clear();
-    final items = player.items.entries;
-    for (final entry in items){
-      Cost_Map[entry.key] = getItemPurchaseCost(entry.key, entry.value);
-    }
-    return Cost_Map;
-  }
-
   int getItemPurchaseCost(int itemType, int level){
     assert (level > 0);
     assert (level < 6);

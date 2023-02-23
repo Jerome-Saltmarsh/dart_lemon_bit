@@ -109,14 +109,7 @@ class ServerResponseReader with ByteReader {
           break;
 
         case ServerResponse.ItemType_Statistics:
-          final valueMap = <int, List<int>> {};
-          final length = readUInt16();
-          for (var i = 0; i < length; i++) {
-             final itemType = readUInt16();
-             final values = readUint16List(5);
-             valueMap[itemType] = values;
-          }
-          GameOptions.ItemType_Damage.value = valueMap;
+          readItemTypeStatistics();
           break;
 
         default:
@@ -133,12 +126,17 @@ class ServerResponseReader with ByteReader {
     }
   }
 
+  void readItemTypeStatistics() {
+    GameOptions.ItemType_Damage.value = readMapListInt();
+    GameOptions.ItemType_Cost.value = readMapListInt();
+  }
+
   void readGameOptions() {
     GameOptions.perks.value = readBool();
     GameOptions.inventory.value = readBool();
     GameOptions.items.value = readBool();
 
-    if (GameOptions.inventory.value){
+    if (GameOptions.inventory.value) {
       readMap(GameOptions.item_damage);
     }
   }
@@ -349,7 +347,6 @@ class ServerResponseReader with ByteReader {
         break;
       case ApiPlayer.Items:
         readMap(GamePlayer.items);
-        readMap(GamePlayer.itemsCost);
         GamePlayer.Refresh_Items();
         break;
       case ApiPlayer.Equipped:
@@ -631,4 +628,16 @@ class ServerResponseReader with ByteReader {
   }
 
   double readAngle() => readDouble() * degreesToRadians;
+
+  Map<int, List<int>> readMapListInt(){
+    final valueMap = <int, List<int>> {};
+    final totalEntries = readUInt16();
+    for (var i = 0; i < totalEntries; i++) {
+      final key = readUInt16();
+      final valueLength = readUInt16();
+      final values = readUint16List(valueLength);
+      valueMap[key] = values;
+    }
+    return valueMap;
+  }
 }

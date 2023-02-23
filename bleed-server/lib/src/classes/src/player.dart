@@ -1473,7 +1473,6 @@ class Player extends Character with ByteWriter {
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Items);
     writeMap(items);
-    writeMap(game.getPlayerItemsCost(this));
   }
 
   void writePlayerItemsEquipped(){
@@ -1493,6 +1492,10 @@ class Player extends Character with ByteWriter {
 
     if (options.inventory){
       writeMap(game.options.itemDamage);
+    }
+
+    if (options.items){
+
     }
 
   }
@@ -1760,14 +1763,18 @@ class Player extends Character with ByteWriter {
 
   void writeItemTypeStatistics(){
       writeByte(ServerResponse.ItemType_Statistics);
+      writeMapListInt(game.options.itemTypeDamage);
+      writeMapListInt(game.options.itemTypeCost);
+  }
 
-      final damageEntries = game.options.itemTypeDamage.entries;
-      writeUInt16(damageEntries.length);
-      for (final entry in damageEntries) {
-        writeUInt16(entry.key);
-        assert (entry.value.length == 5);
-        writeUint16List(entry.value);
-      }
+  void writeMapListInt(Map<int, List<int>> value){
+    final entries = value.entries;
+    writeUInt16(entries.length);
+    for (final entry in entries) {
+      writeUInt16(entry.key);
+      writeUInt16(entry.value.length);
+      writeUint16List(entry.value);
+    }
   }
 }
 

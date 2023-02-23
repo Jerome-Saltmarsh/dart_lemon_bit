@@ -572,7 +572,7 @@ class GameUI {
   }){
     return watch(GamePlayer.getItemTypeWatch(itemType), (int equippedItemType) {
        final active = equippedItemType == itemType;
-       final cost = GamePlayer.itemsCost[itemType] ?? 0;
+       final cost = GameOptions.ItemType_Cost.value[itemType]?[itemValue] ?? 0;
 
        return MouseRegion(
          onEnter: (_){
