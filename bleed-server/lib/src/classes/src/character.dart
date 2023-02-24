@@ -286,7 +286,7 @@ abstract class Character extends Collider {
   void setCharacterStateSpawning(){
     if (state == CharacterState.Spawning) return;
     state = CharacterState.Spawning;
-    stateDurationRemaining = 100;
+    stateDurationRemaining = 50;
   }
 
   void setCharacterStateHurt(){

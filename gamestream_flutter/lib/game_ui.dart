@@ -29,17 +29,35 @@ class GameUI {
   static Widget buildUI() => StackFullscreen(children: [
         buildWatchBool(ClientState.triggerAlarmNoMessageReceivedFromServer,
             buildDialogFramesSinceUpdate),
-        // watch(GamePlayer.gameDialog, buildGameDialog),
         buildWatchBool(GamePlayer.alive, buildPositionedContainerRespawn, false),
         Positioned(
             top: 0,
             right: 0,
             child: buildRowMainMenu()
         ),
-
-        buildWatchBool(ClientState.Map_Visible, (){
-          return Positioned(child: buildGeneratedMiniMap(), top: 0, left: 0);
-        }),
+        // buildWatchBool(ClientState.Map_Visible, (){
+        //   return Positioned(
+        //       child: buildGeneratedMiniMap(),
+        //       bottom: GameStyle.Default_Padding,
+        //       left: GameStyle.Default_Padding,
+        //   );
+        // }),
+        Positioned(
+          child: ClipOval(
+            child: Container(
+                alignment: Alignment.topLeft,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(color: Colors.black38, width: 3),
+                  color: Colors.black12
+                ),
+                width: 200,
+                height: 200,
+                child: buildGeneratedMiniMap()),
+          ),
+          bottom: GameStyle.Default_Padding,
+          right: GameStyle.Default_Padding,
+        ),
         // buildWatchBool(GameUI.mapVisible, buildMiniMap),
         WatchBuilder(ClientState.edit, buildPlayMode),
         WatchBuilder(GameIO.inputMode, buildStackInputMode),
