@@ -39,42 +39,19 @@ class GameCombat extends Game {
   @override
   void customOnPlayerRevived(Player player) {
     moveToRandomPlayerSpawnPoint(player);
-
-    player.headType = randomItem(const [
-      ItemType.Head_Swat,
-      ItemType.Head_Steel_Helm,
-      ItemType.Head_Rogues_Hood,
-      ItemType.Head_Wizards_Hat,
-    ]);
-
     player.items.clear();
-
-    for (final itemType in const [
-      ItemType.Head_Rogues_Hood,
-      ItemType.Weapon_Smg_Mp5,
-      ItemType.Head_Wizards_Hat,
-    ]){
-      player.items[itemType] = 0;
-    }
-
-    player.items[ItemType.Head_Wizards_Hat] = 1;
-    player.items[ItemType.Body_Shirt_Blue] = 1;
-    player.items[ItemType.Body_Swat] = 1;
-    player.items[ItemType.Body_Tunic_Padded] = 1;
-    player.items[ItemType.Body_Shirt_Cyan] = 1;
-    player.items[ItemType.Legs_Green] = 1;
-    player.items[ItemType.Legs_White] = 0;
-    player.items[ItemType.Legs_Swat] = 1;
-    player.items[ItemType.Weapon_Rifle_M4] = 0;
-    player.items[ItemType.Weapon_Rifle_AK_47] = 0;
-    player.items[ItemType.Weapon_Rifle_Jager] = 0;
-    player.items[ItemType.Weapon_Handgun_Glock] = 0;
-    player.items[ItemType.Weapon_Handgun_Revolver] = 0;
-    player.items[ItemType.Weapon_Handgun_Desert_Eagle] = 0;
-    player.items[ItemType.Weapon_Melee_Crowbar] = 0;
-    player.items[ItemType.Weapon_Melee_Axe] = 0;
-    player.items[ItemType.Weapon_Melee_Knife] = 0;
+    player.headType = randomItem(ItemType.Collection_Clothing_Head);
+    player.bodyType = randomItem(ItemType.Collection_Clothing_Body);
+    player.legsType = randomItem(ItemType.Collection_Clothing_Legs);
+    player.items[ItemType.Weapon_Rifle_Jager] = 1;
+    player.items[ItemType.Weapon_Handgun_Glock] = 1;
+    player.items[ItemType.Weapon_Melee_Knife] = 1;
+    characterEquipItemType(player, ItemType.Weapon_Rifle_Jager);
+    player.weaponPrimary = ItemType.Weapon_Rifle_Jager;
+    player.weaponSecondary = ItemType.Weapon_Handgun_Glock;
+    player.weaponMelee = ItemType.Weapon_Melee_Knife;
     player.credits = 100;
+    player.writeEquipped();
   }
 
   @override

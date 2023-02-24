@@ -75,8 +75,8 @@ class Player extends Character with ByteWriter {
   var hintIndex = 0;
   var hintNext = 100;
 
-  var _weaponPrimary = ItemType.Empty;
-  var _weaponSecondary = ItemType.Empty;
+  var weaponPrimary = ItemType.Empty;
+  var weaponSecondary = ItemType.Empty;
 
   var _weaponRanged = ItemType.Empty;
   var _weaponMelee = ItemType.Empty;
@@ -1726,9 +1726,9 @@ class Player extends Character with ByteWriter {
   int getEquippedItemGroupItem(ItemGroup itemGroup) {
      switch (itemGroup){
        case ItemGroup.Primary_Weapon:
-         return _weaponPrimary;
+         return weaponPrimary;
        case ItemGroup.Secondary_Weapon:
-         return _weaponSecondary;
+         return weaponSecondary;
        case ItemGroup.Tertiary_Weapon:
          return weaponMelee;
        case ItemGroup.Head_Type:
@@ -1749,11 +1749,11 @@ class Player extends Character with ByteWriter {
       switch (weaponTypeItemGroup) {
         case ItemGroup.Primary_Weapon:
           weaponRanged = weaponType;
-          _weaponPrimary = weaponType;
+          weaponPrimary = weaponType;
           break;
         case ItemGroup.Secondary_Weapon:
           weaponRanged = weaponType;
-          _weaponSecondary = weaponType;
+          weaponSecondary = weaponType;
           break;
         case ItemGroup.Tertiary_Weapon:
           weaponMelee = weaponType;
@@ -1774,8 +1774,8 @@ class Player extends Character with ByteWriter {
      writeUInt16(legsType);
      writeUInt16(_weaponRanged);
      writeUInt16(_weaponMelee);
-     writeUInt16(_weaponPrimary);
-     writeUInt16(_weaponSecondary);
+     writeUInt16(weaponPrimary);
+     writeUInt16(weaponSecondary);
   }
 
   void writeMapListInt(Map<int, List<int>> value){
@@ -1822,10 +1822,10 @@ class Player extends Character with ByteWriter {
     if (!canChangeEquipment) {
       return;
     }
-    if (weaponRanged == _weaponPrimary) {
-      game.characterEquipItemType(this, _weaponSecondary);
+    if (weaponRanged == weaponPrimary) {
+      game.characterEquipItemType(this, weaponSecondary);
     } else {
-      game.characterEquipItemType(this, _weaponPrimary);
+      game.characterEquipItemType(this, weaponPrimary);
     }
   }
 }
