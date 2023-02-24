@@ -314,8 +314,6 @@ class GameIO {
     if (GameState.playMode) {
       if (key == PhysicalKeyboardKey.keyG)
         return GameNetwork.sendClientRequestTeleport();
-      if (key == PhysicalKeyboardKey.keyI)
-        return GameNetwork.sendClientRequestInventoryToggle();
       return;
     }
 

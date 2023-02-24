@@ -35,40 +35,11 @@ class GameUI {
             right: 0,
             child: buildRowMainMenu()
         ),
-        // buildWatchBool(ClientState.Map_Visible, (){
-        //   return Positioned(
-        //       child: buildGeneratedMiniMap(),
-        //       bottom: GameStyle.Default_Padding,
-        //       left: GameStyle.Default_Padding,
-        //   );
-        // }),
         Positioned(
-          child: Container(
-            width: 203,
-            height: 203,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(color: Colors.black38, width: 3),
-                color: Colors.black12
-            ),
-            child: ClipOval(
-              child: Container(
-                  alignment: Alignment.topLeft,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    // border: Border.all(color: Colors.black38, width: 3),
-                    // color: Colors.black12
-                  ),
-                  width: 200,
-                  height: 200,
-                  child: buildGeneratedMiniMap()),
-            ),
-          ),
+          child: buildMapCircle(),
           bottom: GameStyle.Default_Padding,
           right: GameStyle.Default_Padding,
         ),
-        // buildWatchBool(GameUI.mapVisible, buildMiniMap),
         WatchBuilder(ClientState.edit, buildPlayMode),
         WatchBuilder(GameIO.inputMode, buildStackInputMode),
         buildWatchBool(ClientState.debugMode, GameDebug.buildStackDebug),
@@ -77,6 +48,31 @@ class GameUI {
         buildWatchGameStatus(),
         buildWatchBool(ClientState.window_visible_settings, buildWindowSettings),
       ]);
+
+  static Container buildMapCircle() {
+    return Container(
+          width: 203,
+          height: 203,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(color: Colors.black38, width: 3),
+              color: Colors.black26
+          ),
+          child: ClipOval(
+            child: Container(
+                alignment: Alignment.topLeft,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  // border: Border.all(color: Colors.black38, width: 3),
+                  // color: Colors.black12
+                ),
+                width: 200,
+                height: 200,
+                child: buildGeneratedMiniMap()),
+          ),
+        );
+  }
 
   static Widget buildWindowSettings(){
      return Container(
@@ -473,7 +469,7 @@ class GameUI {
                 buildPanelTotalGrenades(),
               ],
             )),
-    visibleBuilder(
+            visibleBuilder(
             GameOptions.inventory,
             Positioned(
               bottom: GameStyle.Default_Padding,
@@ -482,10 +478,14 @@ class GameUI {
                 child: buildColumnBelt(),
               ),
             )),
-        Positioned(
+          Positioned(
               top: GameStyle.Default_Padding,
               left: GameStyle.Default_Padding,
-              child: buildWindowPlayerItems(),
+              child: visibleBuilder(
+                  ClientState.window_visible_items,
+                  buildWindowPlayerItems(),
+              ),
+              // child: buildWindowPlayerItems(),
           ),
           Positioned(
             top: GameStyle.Default_Padding,

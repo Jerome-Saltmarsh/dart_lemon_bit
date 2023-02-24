@@ -65,7 +65,7 @@ class ClientQuery {
     return Engine.calculateHypotenuse(adjacent, opposite);
   }
 
-  static bool dialogOpenInventory() {
-    return ServerState.interactMode.value == InteractMode.Inventory;
-  }
+  static bool dialogOpenInventory() =>
+      GameOptions.inventory.value &&
+      ServerState.interactMode.value == InteractMode.Inventory;
 }

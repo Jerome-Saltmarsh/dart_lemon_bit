@@ -6,7 +6,7 @@ class ClientConstants {
 
 
   static final Key_Unequip = LogicalKeyboardKey.keyB;
-  static final Key_Inventory = LogicalKeyboardKey.keyV;
+  static final Key_Inventory = LogicalKeyboardKey.keyI;
   static final Key_Reload = LogicalKeyboardKey.keyR;
   static final Key_Zoom = LogicalKeyboardKey.keyF;
   static final Key_Settings = LogicalKeyboardKey.digit0;

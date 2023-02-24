@@ -97,10 +97,7 @@ class ClientEvents {
   }
 
   static void onKeyPressedPlayMode(LogicalKeyboardKey key){
-    if (key == ClientConstants.Key_Inventory){
-      GameNetwork.sendClientRequestInventoryToggle();
-      return;
-    }
+
     if (key == ClientConstants.Key_Reload){
       GameNetwork.sendClientRequestReload();
       return;
@@ -111,6 +108,10 @@ class ClientEvents {
     }
 
     if (GameOptions.inventory.value){
+      if (key == ClientConstants.Key_Inventory){
+        GameNetwork.sendClientRequestInventoryToggle();
+        return;
+      }
       if (ClientQuery.keyboardKeyIsHotKey(key)) {
         onKeyPressedPlayModeHotKey(key);
         return;
@@ -118,14 +119,12 @@ class ClientEvents {
     }
 
     if (GameOptions.items.value) {
-       // if (key == LogicalKeyboardKey.keyQ) {
-       //   GameNetwork.sendClientRequest(ClientRequest.Equip_Next, ItemGroup.Primary_Weapon.index);
-       //   return;
-       // }
-       // if (key == LogicalKeyboardKey.keyE) {
-       //   GameNetwork.sendClientRequest(ClientRequest.Equip_Next, ItemGroup.Secondary_Weapon.index);
-       //   return;
-       // }
+      if (key == ClientConstants.Key_Inventory){
+        ClientState.window_visible_items.toggle();
+        print("toggle");
+        return;
+      }
+
        if (key == LogicalKeyboardKey.keyC) {
          GameNetwork.sendClientRequest(ClientRequest.Equip_Next, ItemGroup.Tertiary_Weapon.index);
          return;
