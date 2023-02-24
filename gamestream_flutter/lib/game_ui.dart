@@ -828,7 +828,7 @@ class GameUI {
   static Widget buildPlayerHealth() {
     return border(
           width: GameStyle.Player_Weapons_Border_Size,
-          color: Colors.black54,
+          color: Colors.black38,
           child: Container(
             width: GameStyle.Player_Weapons_Icon_Size,
             height: GameStyle.Player_Weapons_Icon_Size,
@@ -852,11 +852,13 @@ class GameUI {
                   }),
                 ),
                 Container(
-                    width: GameStyle.Player_Weapons_Icon_Size,
-                    height: GameStyle.Player_Weapons_Icon_Size,
-                    child: Container(
-                        width: 30,
-                        child: buildAtlasIconType(IconType.Heart),
+                    width: 40,
+                    height: 40,
+                    child: FittedBox(
+                      child: buildAtlasIconType(
+                          IconType.Heart,
+                          color: Colors.black87.value,
+                      ),
                     )
                 ),
               ],

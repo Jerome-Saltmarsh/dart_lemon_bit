@@ -318,7 +318,7 @@ class AtlasIcons {
     IconType.Sound_Disabled: 224,
     IconType.Plus: 32,
     IconType.Minus: 64,
-    IconType.Heart: 0,
+    IconType.Heart: 193,
     IconType.Damage: 48,
     IconType.Energy: 96,
     IconType.Primary_Weapon: 208,
@@ -353,7 +353,7 @@ class AtlasIcons {
     IconType.Inventory: 32,
     IconType.Plus: 96,
     IconType.Minus: 96,
-    IconType.Heart: 448,
+    IconType.Heart: 209,
     IconType.Damage: 448,
     IconType.Energy: 448,
     IconType.Primary_Weapon: 145,
@@ -373,6 +373,7 @@ class AtlasIcons {
     IconType.Body_Type: 26,
     IconType.Leg_Type: 21,
     IconType.Bag_White: 23,
+    IconType.Heart: 94,
   }[itemType] ?? getSrcSize(itemType);
 
   static double getSrcHeight(int itemType) => const  <int, double> {
@@ -383,6 +384,7 @@ class AtlasIcons {
     IconType.Body_Type: 26,
     IconType.Leg_Type: 26,
     IconType.Bag_White: 26,
+    IconType.Heart: 85,
   }[itemType] ?? getSrcSize(itemType);
 
   static double getSrcSize(int itemType) => const  <int, double> {
