@@ -828,7 +828,7 @@ class GameUI {
   static Widget buildPlayerHealth() {
     return border(
           width: GameStyle.Player_Weapons_Border_Size,
-          color: Colors.black38,
+          color: GameColors.redDark1,
           child: Container(
             width: GameStyle.Player_Weapons_Icon_Size,
             height: GameStyle.Player_Weapons_Icon_Size,
@@ -871,7 +871,7 @@ class GameUI {
   static Widget buildPlayerEnergy() {
     return border(
           width: GameStyle.Player_Weapons_Border_Size,
-          color: Colors.black54,
+          color: GameColors.Blue04,
           child: Container(
             width: GameStyle.Player_Weapons_Icon_Size,
             height: GameStyle.Player_Weapons_Icon_Size,
@@ -894,11 +894,13 @@ class GameUI {
                   }),
                 ),
                 Container(
-                    width: GameStyle.Player_Weapons_Icon_Size,
-                    height: GameStyle.Player_Weapons_Icon_Size,
-                    child: Container(
-                        width: 30,
-                        child: buildAtlasIconType(IconType.Energy),
+                    width: 40,
+                    height: 40,
+                    child: FittedBox(
+                      child: buildAtlasIconType(
+                        IconType.Energy,
+                        color: Colors.black87.value,
+                      ),
                     )
                 ),
               ],
