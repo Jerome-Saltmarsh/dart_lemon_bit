@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -427,12 +429,7 @@ class GameUI {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                GameInventoryUI.buildPlayerHealthBar(),
-                width6,
-                // buildHudPlayerWeapon(),
                 buildPlayerWeapons(),
-                width6,
-                GameInventoryUI.buildPlayerEnergyBar(),
               ],
             ),
           ),
@@ -769,10 +766,12 @@ class GameUI {
 
 
   static Widget buildPlayerWeapons() => watch(GamePlayer.weapon, (int playerWeaponType){
-    const Icon_Size = 75.0;
+    const Border_Width = 3.0;
     return buildDialogUIControl(
       child: Row(
         children: [
+          buildPlayerHealth(),
+          width4,
           watch(GamePlayer.weaponRanged, (int playerWeaponRanged) {
              return Row(
                children: [
@@ -780,7 +779,7 @@ class GameUI {
                    final active = playerWeaponRanged == itemType;
                    return border(
                      color: active ? playerWeaponType == itemType ? Colors.white70 : Colors.black54 : Colors.transparent,
-                     width: 3,
+                     width: Border_Width,
                      child: Container(
                        height: GameStyle.Player_Weapons_Icon_Size,
                        color: active ? Colors.black45 : Colors.black12,
@@ -794,7 +793,7 @@ class GameUI {
                    final active = playerWeaponRanged == itemType;
                    return border(
                      color: active ? playerWeaponType == itemType ? Colors.white70 : Colors.black54 : Colors.transparent,
-                     width: 3,
+                     width: Border_Width,
                      child: Container(
                        height: GameStyle.Player_Weapons_Icon_Size,
                        color: active ? Colors.black45 : Colors.black12,
@@ -819,10 +818,92 @@ class GameUI {
               ),
             );
           }),
+          width4,
+          buildPlayerEnergy(),
         ],
       ),
     );
   });
+
+  static Widget buildPlayerHealth() {
+    return border(
+          width: GameStyle.Player_Weapons_Border_Size,
+          color: Colors.black54,
+          child: Container(
+            width: GameStyle.Player_Weapons_Icon_Size,
+            height: GameStyle.Player_Weapons_Icon_Size,
+            alignment: Alignment.center,
+            child: Stack(
+              alignment: AlignmentDirectional.center,
+              children: [
+                Container(
+                  width: GameStyle.Player_Weapons_Icon_Size,
+                  height: GameStyle.Player_Weapons_Icon_Size,
+                  alignment: Alignment.topCenter,
+                  child: watch(ServerState.playerMaxHealth, (int maxHealth) {
+                    return watch(ServerState.playerHealth, (int health){
+                       final percentage = health / max(maxHealth, 1);
+                       return Container(
+                         width: GameStyle.Player_Weapons_Icon_Size,
+                         height: GameStyle.Player_Weapons_Icon_Size * percentage,
+                         color: GameColors.redDark1,
+                       );
+                    });
+                  }),
+                ),
+                Container(
+                    width: GameStyle.Player_Weapons_Icon_Size,
+                    height: GameStyle.Player_Weapons_Icon_Size,
+                    child: Container(
+                        width: 30,
+                        child: buildAtlasIconType(IconType.Heart),
+                    )
+                ),
+              ],
+
+            ),
+          ),
+        );
+  }
+
+  static Widget buildPlayerEnergy() {
+    return border(
+          width: GameStyle.Player_Weapons_Border_Size,
+          color: Colors.black54,
+          child: Container(
+            width: GameStyle.Player_Weapons_Icon_Size,
+            height: GameStyle.Player_Weapons_Icon_Size,
+            alignment: Alignment.center,
+            child: Stack(
+              alignment: AlignmentDirectional.center,
+              children: [
+                Container(
+                  width: GameStyle.Player_Weapons_Icon_Size,
+                  height: GameStyle.Player_Weapons_Icon_Size,
+                  alignment: Alignment.topCenter,
+                  child: watch(GamePlayer.energyMax, (int energyMax) {
+                    return watch(GamePlayer.energy, (int energy){
+                       return Container(
+                         width: GameStyle.Player_Weapons_Icon_Size,
+                         height: GameStyle.Player_Weapons_Icon_Size * energy / max(energyMax, 1),
+                         color: GameColors.Blue04,
+                       );
+                    });
+                  }),
+                ),
+                Container(
+                    width: GameStyle.Player_Weapons_Icon_Size,
+                    height: GameStyle.Player_Weapons_Icon_Size,
+                    child: Container(
+                        width: 30,
+                        child: buildAtlasIconType(IconType.Energy),
+                    )
+                ),
+              ],
+            ),
+          ),
+        );
+  }
 
 
   static Column buildColumnBelt() => Column(
