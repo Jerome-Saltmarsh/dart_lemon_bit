@@ -152,19 +152,15 @@ class GameCombat extends Game {
           }
         }
         characterUseWeapon(player);
-        // characterUseOrEquipWeapon(
-        //   character: player,
-        //   weaponType: player.weaponPrimary,
-        //   characterStateChange: true,
-        // );
         break;
       case CursorAction.Mouse_Right_Click:
-        // characterUseOrEquipWeapon(
-        //   character: player,
-        //   weaponType: player.weaponSecondary,
-        //   characterStateChange: true,
-        // );
-        characterUseWeapon(player);
+        // characterAimWeapon(player);
+        // characterUseWeapon(player);
+        characterUseOrEquipWeapon(
+          character: player,
+          weaponType: player.weaponTertiary,
+          characterStateChange: false,
+        );
         break;
       case CursorAction.Key_Space:
         characterUseOrEquipWeapon(

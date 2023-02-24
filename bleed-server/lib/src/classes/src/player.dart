@@ -83,6 +83,8 @@ class Player extends Character with ByteWriter {
   int get weaponSecondary => _weaponSecondary;
   int get weaponTertiary => _weaponTertiary;
 
+  ItemGroup get weaponTypeItemGroup => ItemType.getItemGroup(weaponType);
+
   var itemTypeStatistics = 0;
 
   set weaponPrimary(int value) {
@@ -1753,6 +1755,20 @@ class Player extends Character with ByteWriter {
   void onEquipmentChanged() {
     refreshStats();
     writeEquipped();
+
+    if (game.options.items) {
+      switch (weaponTypeItemGroup) {
+        case ItemGroup.Primary_Weapon:
+          weaponPrimary = weaponType;
+          break;
+        case ItemGroup.Secondary_Weapon:
+          weaponSecondary = weaponType;
+          break;
+        case ItemGroup.Tertiary_Weapon:
+          weaponTertiary = weaponType;
+          break;
+      }
+    }
   }
 
   void writeEquipped(){

@@ -238,7 +238,7 @@ abstract class Character extends Collider {
 
   void assignWeaponStateAiming() {
     weaponState = WeaponState.Aiming;
-    weaponStateDurationTotal = 60;
+    weaponStateDurationTotal = 10;
   }
 
   Character({

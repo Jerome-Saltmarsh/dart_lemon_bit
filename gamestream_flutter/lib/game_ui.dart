@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -557,7 +555,12 @@ class GameUI {
               children: [
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: ItemGroup.values.map(buildIconItemTab).toList()),
+                    children: const[
+                      ItemGroup.Primary_Weapon,
+                      ItemGroup.Secondary_Weapon,
+                      ItemGroup.Tertiary_Weapon,
+                      ItemGroup.Unknown,
+                    ].map(buildIconItemTab).toList()),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: GamePlayer

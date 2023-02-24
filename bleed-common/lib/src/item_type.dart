@@ -903,6 +903,7 @@ class ItemType {
      if (Item_Group_Head_Types.contains(itemType)) return ItemGroup.Head_Type;
      if (Item_Group_Body_Types.contains(itemType)) return ItemGroup.Body_Type;
      if (Item_Group_Leg_Types.contains(itemType)) return ItemGroup.Legs_Type;
+     if (Collection_Misc.contains(itemType)) return ItemGroup.Unknown;
      throw Exception("ItemType.getItemGroup(${getName(itemType)})");
   }
 
@@ -983,9 +984,17 @@ class ItemType {
     ...Collection_Clothing_Legs,
   ];
 
+  static const Collection_Misc = [
+     Weapon_Thrown_Grenade,
+     Resource_Round_9mm,
+     Resource_Round_Rifle,
+     Resource_Round_Shotgun,
+  ];
+
   static const Collection = [
     ...Collection_Clothing,
     ...Collection_Weapons,
+    ...Collection_Misc,
   ];
 }
 
