@@ -2944,28 +2944,28 @@ abstract class Game {
       if (!player.canChangeEquipment) {
         return;
       }
-      if (player.weaponPrimaryEquipped) {
-        playerEquipSecondary(player);
+      if (player.weaponEquippedRanged) {
+        playerEquipWeaponMelee(player);
         return;
       }
-      if (player.weaponSecondaryEquipped) {
-        playerEquipPrimary(player);
+      if (player.weaponEquippedMelee) {
+        playerEquipWeaponRanged(player);
         return;
       }
   }
 
-  void playerEquipPrimary(Player player){
+  void playerEquipWeaponRanged(Player player){
     characterEquipWeapon(
       character: player,
-      weaponType: player.weaponPrimary,
+      weaponType: player.weaponRanged,
       characterStateChange: true,
     );
   }
 
-  void playerEquipSecondary(Player player){
+  void playerEquipWeaponMelee(Player player){
     characterEquipWeapon(
       character: player,
-      weaponType: player.weaponSecondary,
+      weaponType: player.weaponMelee,
       characterStateChange: true,
     );
   }

@@ -75,36 +75,25 @@ class Player extends Character with ByteWriter {
   var hintIndex = 0;
   var hintNext = 100;
 
-  var _weaponPrimary = ItemType.Empty;
-  var _weaponSecondary = ItemType.Empty;
-  var _weaponTertiary = ItemType.Empty;
-
-  int get weaponPrimary => _weaponPrimary;
-  int get weaponSecondary => _weaponSecondary;
-  int get weaponTertiary => _weaponTertiary;
+  var _weaponRanged = ItemType.Empty;
+  var _weaponMelee = ItemType.Empty;
 
   ItemGroup get weaponTypeItemGroup => ItemType.getItemGroup(weaponType);
 
-  var itemTypeStatistics = 0;
+  int get weaponRanged => _weaponRanged;
+  int get weaponMelee => _weaponMelee;
 
-  set weaponPrimary(int value) {
-    if (_weaponPrimary == value) return;
-    _weaponPrimary = value;
+  set weaponRanged(int value) {
+    if (_weaponRanged == value) return;
+    _weaponRanged = value;
     writePlayerItemsEquipped();
   }
 
-  set weaponSecondary(int value) {
-    if (_weaponSecondary == value) return;
-    _weaponSecondary = value;
+  set weaponMelee(int value) {
+    if (_weaponMelee == value) return;
+    _weaponMelee = value;
     writePlayerItemsEquipped();
   }
-
-  set weaponTertiary(int value) {
-    if (_weaponTertiary == value) return;
-    _weaponTertiary = value;
-    writePlayerItemsEquipped();
-  }
-
 
   /// Warning - do not reference
   Game game;
@@ -156,8 +145,8 @@ class Player extends Character with ByteWriter {
   int get experienceRequiredForNextLevel => game.getExperienceForLevel(level + 1);
   bool get weaponIsEquipped => _equippedWeaponIndex != -1;
 
-  bool get weaponPrimaryEquipped => weaponType == weaponPrimary;
-  bool get weaponSecondaryEquipped => weaponType == weaponSecondary;
+  bool get weaponEquippedRanged => weaponType == weaponRanged;
+  bool get weaponEquippedMelee => weaponType == weaponMelee;
   double get mouseGridX => (mouse.x + mouse.y) + z;
   double get mouseGridY => (mouse.y - mouse.x) + z;
   int get interactMode => _interactMode;
@@ -1480,9 +1469,8 @@ class Player extends Character with ByteWriter {
   void writePlayerItemsEquipped(){
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Items_Equipped);
-    writeUInt16(weaponPrimary);
-    writeUInt16(weaponSecondary);
-    writeUInt16(weaponTertiary);
+    writeUInt16(weaponRanged);
+    writeUInt16(weaponMelee);
   }
 
   void writeGameOptions() {
@@ -1732,14 +1720,20 @@ class Player extends Character with ByteWriter {
     return -1;
   }
 
-  int getEquippedItemGroupItem(ItemGroup itemGroup){
+  int getEquippedItemGroupItem(ItemGroup itemGroup) {
      switch (itemGroup){
        case ItemGroup.Primary_Weapon:
-         return weaponPrimary;
+         if (ItemType.getItemGroup(weaponRanged) == ItemGroup.Primary_Weapon){
+           return weaponRanged;
+         }
+         return ItemType.Empty;
        case ItemGroup.Secondary_Weapon:
-         return weaponSecondary;
+         if (ItemType.getItemGroup(weaponRanged) == ItemGroup.Secondary_Weapon){
+           return weaponRanged;
+         }
+         return ItemType.Empty;
        case ItemGroup.Tertiary_Weapon:
-         return weaponTertiary;
+         return weaponMelee;
        case ItemGroup.Head_Type:
          return headType;
        case ItemGroup.Body_Type:
@@ -1759,13 +1753,13 @@ class Player extends Character with ByteWriter {
     if (game.options.items) {
       switch (weaponTypeItemGroup) {
         case ItemGroup.Primary_Weapon:
-          weaponPrimary = weaponType;
+          weaponRanged = weaponType;
           break;
         case ItemGroup.Secondary_Weapon:
-          weaponSecondary = weaponType;
+          weaponRanged = weaponType;
           break;
         case ItemGroup.Tertiary_Weapon:
-          weaponTertiary = weaponType;
+          weaponMelee = weaponType;
           break;
       }
     }
@@ -1789,6 +1783,37 @@ class Player extends Character with ByteWriter {
       writeUint16List(entry.value);
     }
   }
+
+  int getNextItemFromItemGroup(ItemGroup itemGroup){
+
+    final equippedItemType = getEquippedItemGroupItem(itemGroup);
+    assert (equippedItemType != -1);
+    final equippedItemIndex = getItemIndex(equippedItemType);
+    assert (equippedItemType != -1);
+
+    final itemEntries = items.entries.toList(growable: false);
+    final itemEntriesLength = itemEntries.length;
+    for (var i = equippedItemIndex + 1; i < itemEntriesLength; i++){
+      final entry = itemEntries[i];
+      if (entry.value <= 0) continue;
+      final entryItemType = entry.key;
+      final entryItemGroup = ItemType.getItemGroup(entryItemType);
+      if (entryItemGroup != itemGroup) continue;
+      return entryItemType;
+    }
+
+    for (var i = 0; i < equippedItemIndex; i++){
+      final entry = itemEntries[i];
+      if (entry.value <= 0) continue;
+      final entryItemType = entry.key;
+      final entryItemGroup = ItemType.getItemGroup(entryItemType);
+      if (entryItemGroup != itemGroup) continue;
+      return entryItemType;
+    }
+
+    return ItemType.Empty;
+  }
+
 }
 
 

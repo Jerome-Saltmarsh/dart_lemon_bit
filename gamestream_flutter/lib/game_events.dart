@@ -614,7 +614,7 @@ class GameEvents {
     }
   }
 
-  static void onChangedPlayerPrimaryWeapon(int weaponType) {
+  static void onChangedPlayerWeaponRanged(int weaponType) {
     ClientState.itemGroup.value = ItemGroup.Primary_Weapon;
   }
 
@@ -622,7 +622,7 @@ class GameEvents {
     ClientState.itemGroup.value = ItemType.getItemGroup(weaponType);
   }
 
-  static void onChangedPlayerSecondaryWeapon(int weaponType) {
+  static void onChangedPlayerWeaponMelee(int weaponType) {
      ClientState.itemGroup.value = ItemGroup.Secondary_Weapon;
   }
 

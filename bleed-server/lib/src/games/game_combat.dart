@@ -74,10 +74,6 @@ class GameCombat extends Game {
     player.items[ItemType.Weapon_Melee_Crowbar] = 0;
     player.items[ItemType.Weapon_Melee_Axe] = 0;
     player.items[ItemType.Weapon_Melee_Knife] = 0;
-
-    player.weaponPrimary = ItemType.Weapon_Rifle_M4;
-    player.weaponSecondary = ItemType.Weapon_Handgun_Glock;
-    player.weaponTertiary = ItemType.Weapon_Melee_Crowbar;
     player.credits = 100;
   }
 
@@ -151,21 +147,26 @@ class GameCombat extends Game {
             break;
           }
         }
-        characterUseWeapon(player);
+        // characterUseWeapon(player);
+        characterUseOrEquipWeapon(
+          character: player,
+          weaponType: player.weaponRanged,
+          characterStateChange: true,
+        );
         break;
       case CursorAction.Mouse_Right_Click:
         // characterAimWeapon(player);
         // characterUseWeapon(player);
         characterUseOrEquipWeapon(
           character: player,
-          weaponType: player.weaponTertiary,
+          weaponType: player.weaponMelee,
           characterStateChange: false,
         );
         break;
       case CursorAction.Key_Space:
         characterUseOrEquipWeapon(
             character: player,
-            weaponType: player.weaponTertiary,
+            weaponType: player.weaponMelee,
             characterStateChange: false,
         );
         break;

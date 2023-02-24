@@ -40,9 +40,8 @@ class GamePlayer {
   static final message = Watch("", onChanged: GameEvents.onChangedPlayerMessage);
   static var messageTimer = 0;
 
-  static final weaponPrimary = Watch(0, onChanged: GameEvents.onChangedPlayerPrimaryWeapon);
-  static final weaponSecondary = Watch(0, onChanged: GameEvents.onChangedPlayerSecondaryWeapon);
-  static final weaponTertiary = Watch(0, onChanged: GameEvents.onChangedPlayerTertiaryWeapon);
+  static final weaponRanged = Watch(0, onChanged: GameEvents.onChangedPlayerWeaponRanged);
+  static final weaponMelee = Watch(0, onChanged: GameEvents.onChangedPlayerWeaponMelee);
 
   static var indexZ = 0;
   static var indexRow = 0;
@@ -88,11 +87,11 @@ class GamePlayer {
   static Watch<int> getItemGroupWatch(ItemGroup itemGroup){
     switch (itemGroup) {
       case ItemGroup.Primary_Weapon:
-        return weaponPrimary;
+        return weaponRanged;
       case ItemGroup.Secondary_Weapon:
-        return weaponSecondary;
+        return weaponRanged;
       case ItemGroup.Tertiary_Weapon:
-        return weaponTertiary;
+        return weaponMelee;
       case ItemGroup.Head_Type:
         return head;
       case ItemGroup.Body_Type:
