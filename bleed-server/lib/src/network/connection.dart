@@ -148,7 +148,7 @@ class Connection with ByteReader {
         return;
 
       case ClientRequest.Swap_Weapons:
-        game.swapPlayerWeapons(player);
+        player.swapWeaponsRanged();
         break;
 
       case ClientRequest.Purchase_Item:

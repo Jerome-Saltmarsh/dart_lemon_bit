@@ -2940,20 +2940,6 @@ abstract class Game {
      return options.itemTypeDamage[itemType]?[level] ?? 0;
   }
 
-  void swapPlayerWeapons(Player player) {
-      if (!player.canChangeEquipment) {
-        return;
-      }
-      if (player.weaponEquippedRanged) {
-        playerEquipWeaponMelee(player);
-        return;
-      }
-      if (player.weaponEquippedMelee) {
-        playerEquipWeaponRanged(player);
-        return;
-      }
-  }
-
   void playerEquipWeaponRanged(Player player){
     characterEquipWeapon(
       character: player,
