@@ -768,32 +768,52 @@ class GameUI {
   });
 
 
-  static Widget buildPlayerWeapons() => watch(GamePlayer.weapon, (int weaponType){
+  static Widget buildPlayerWeapons() => watch(GamePlayer.weapon, (int playerWeaponType){
     return buildDialogUIControl(
       child: Row(
         children: [
-          watch(GamePlayer.weaponPrimary, (int itemType) {
-            return Container(
-              height: 50,
-              color: weaponType == itemType ? Colors.red : Colors.black12,
-              padding: GameStyle.Padding_6,
-              child: buildAtlasItemType(itemType),
-            );
-          }),
-          watch(GamePlayer.weaponSecondary, (int itemType) {
-            return Container(
-              height: 50,
-              color: weaponType == itemType ? Colors.red : Colors.black12,
-              padding: GameStyle.Padding_6,
-              child: buildAtlasItemType(itemType),
-            );
+          watch(GamePlayer.weaponRanged, (int playerWeaponRanged) {
+             return Row(
+               children: [
+                 watch(GamePlayer.weaponPrimary, (int itemType) {
+                   final active = playerWeaponRanged == itemType;
+                   return border(
+                     color: active ? Colors.green : Colors.transparent,
+                     borderWidth: 2,
+                     child: Container(
+                       height: 50,
+                       color: active ? Colors.black45 : Colors.black12,
+                       padding: GameStyle.Padding_6,
+                       child: buildAtlasItemType(itemType),
+                     ),
+                   );
+                 }),
+                 watch(GamePlayer.weaponSecondary, (int itemType) {
+                   final active = playerWeaponRanged == itemType;
+                   return border(
+                     color: active ? Colors.green : Colors.transparent,
+                     borderWidth: 2,
+                     child: Container(
+                       height: 50,
+                       color: active ? Colors.black45 : Colors.black12,
+                       padding: GameStyle.Padding_6,
+                       child: buildAtlasItemType(itemType),
+                     ),
+                   );
+                 }),
+               ],
+             );
           }),
           watch(GamePlayer.weaponMelee, (int itemType) {
-            return Container(
-              height: 50,
-              color: weaponType == itemType ? Colors.red : Colors.black12,
-              padding: GameStyle.Padding_6,
-              child: buildAtlasItemType(itemType),
+            return border(
+              color: Colors.green,
+              borderWidth: 2,
+              child: Container(
+                height: 50,
+                color: playerWeaponType == itemType ? Colors.black45 : Colors.black12,
+                padding: GameStyle.Padding_6,
+                child: buildAtlasItemType(itemType),
+              ),
             );
           }),
         ],
