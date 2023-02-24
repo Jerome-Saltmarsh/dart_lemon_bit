@@ -783,7 +783,7 @@ class GameUI {
                      child: Container(
                        height: GameStyle.Player_Weapons_Icon_Size,
                        color: active ? Colors.black45 : Colors.black12,
-                       padding: GameStyle.Padding_6,
+                       padding: GameStyle.Padding_2,
                        child: buildAtlasItemType(itemType),
                      ),
                    );
@@ -797,7 +797,7 @@ class GameUI {
                      child: Container(
                        height: GameStyle.Player_Weapons_Icon_Size,
                        color: active ? Colors.black45 : Colors.black12,
-                       padding: GameStyle.Padding_6,
+                       padding: GameStyle.Padding_2,
                        child: buildAtlasItemType(itemType),
                      ),
                    );
@@ -813,7 +813,7 @@ class GameUI {
               child: Container(
                 height: GameStyle.Player_Weapons_Icon_Size,
                 color: Colors.black45,
-                padding: GameStyle.Padding_6,
+                padding: GameStyle.Padding_2,
                 child: buildAtlasItemType(itemType),
               ),
             );
