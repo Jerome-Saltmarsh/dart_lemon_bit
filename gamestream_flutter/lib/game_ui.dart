@@ -429,7 +429,8 @@ class GameUI {
               children: [
                 GameInventoryUI.buildPlayerHealthBar(),
                 width6,
-                buildHudPlayerWeapon(),
+                // buildHudPlayerWeapon(),
+                buildPlayerWeapons(),
                 width6,
                 GameInventoryUI.buildPlayerEnergyBar(),
               ],
@@ -442,13 +443,7 @@ class GameUI {
             left: GameStyle.Default_Padding,
             child: Row(
               children: [
-                Row(
-                  children: [
-                    buildAtlasItemType(ItemType.Resource_Credit),
-                    width4,
-                    watch(ClientState.playerCreditsAnimation, (value) => text(value, size: 25)),
-                  ],
-                ),
+                buildPanelCredits(),
                 width16,
                 buildPanelTotalGrenades(),
               ],
@@ -478,6 +473,16 @@ class GameUI {
             top: GameStyle.Default_Padding,
           )
       ]);
+
+  static Row buildPanelCredits() {
+    return Row(
+                children: [
+                  buildAtlasItemType(ItemType.Resource_Credit),
+                  width4,
+                  watch(ClientState.playerCreditsAnimation, (value) => text(value, size: 25)),
+                ],
+              );
+  }
 
   static Widget buildWindowMouseOverItemType(){
     return watch(GamePlayer.items_reads, (_){
@@ -761,6 +766,41 @@ class GameUI {
         ),
       );
   });
+
+
+  static Widget buildPlayerWeapons() => watch(GamePlayer.weapon, (int weaponType){
+    return buildDialogUIControl(
+      child: Row(
+        children: [
+          watch(GamePlayer.weaponPrimary, (int itemType) {
+            return Container(
+              height: 50,
+              color: weaponType == itemType ? Colors.red : Colors.black12,
+              padding: GameStyle.Padding_6,
+              child: buildAtlasItemType(itemType),
+            );
+          }),
+          watch(GamePlayer.weaponSecondary, (int itemType) {
+            return Container(
+              height: 50,
+              color: weaponType == itemType ? Colors.red : Colors.black12,
+              padding: GameStyle.Padding_6,
+              child: buildAtlasItemType(itemType),
+            );
+          }),
+          watch(GamePlayer.weaponMelee, (int itemType) {
+            return Container(
+              height: 50,
+              color: weaponType == itemType ? Colors.red : Colors.black12,
+              padding: GameStyle.Padding_6,
+              child: buildAtlasItemType(itemType),
+            );
+          }),
+        ],
+      ),
+    );
+  });
+
 
   static Column buildColumnBelt() => Column(
         crossAxisAlignment: CrossAxisAlignment.end,

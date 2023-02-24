@@ -75,6 +75,9 @@ class Player extends Character with ByteWriter {
   var hintIndex = 0;
   var hintNext = 100;
 
+  var _weaponPrimary = ItemType.Empty;
+  var _weaponSecondary = ItemType.Empty;
+
   var _weaponRanged = ItemType.Empty;
   var _weaponMelee = ItemType.Empty;
 
@@ -1747,22 +1750,25 @@ class Player extends Character with ByteWriter {
 
   @override
   void onEquipmentChanged() {
-    refreshStats();
-    writeEquipped();
 
     if (game.options.items) {
       switch (weaponTypeItemGroup) {
         case ItemGroup.Primary_Weapon:
           weaponRanged = weaponType;
+          _weaponPrimary = weaponType;
           break;
         case ItemGroup.Secondary_Weapon:
           weaponRanged = weaponType;
+          _weaponSecondary = weaponType;
           break;
         case ItemGroup.Tertiary_Weapon:
           weaponMelee = weaponType;
           break;
       }
     }
+
+    refreshStats();
+    writeEquipped();
   }
 
   void writeEquipped(){
@@ -1772,6 +1778,10 @@ class Player extends Character with ByteWriter {
      writeUInt16(headType);
      writeUInt16(bodyType);
      writeUInt16(legsType);
+     writeUInt16(_weaponRanged);
+     writeUInt16(_weaponMelee);
+     writeUInt16(_weaponPrimary);
+     writeUInt16(_weaponSecondary);
   }
 
   void writeMapListInt(Map<int, List<int>> value){

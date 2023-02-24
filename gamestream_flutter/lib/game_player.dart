@@ -2,6 +2,13 @@ import 'package:gamestream_flutter/library.dart';
 
 class GamePlayer {
   static final weapon = Watch(0, onChanged: GameEvents.onChangedPlayerWeapon);
+
+  static final weaponRanged = Watch(0, onChanged: GameEvents.onChangedPlayerWeaponRanged);
+  static final weaponMelee = Watch(0, onChanged: GameEvents.onChangedPlayerWeaponMelee);
+
+  static final weaponPrimary = Watch(0, onChanged: GameEvents.onChangedPlayerWeapon);
+  static final weaponSecondary = Watch(0, onChanged: GameEvents.onChangedPlayerWeapon);
+
   static final body = Watch(0);
   static final head = Watch(0);
   static final legs = Watch(0);
@@ -39,9 +46,6 @@ class GamePlayer {
   static final mouseTargetHealth = Watch(0.0);
   static final message = Watch("", onChanged: GameEvents.onChangedPlayerMessage);
   static var messageTimer = 0;
-
-  static final weaponRanged = Watch(0, onChanged: GameEvents.onChangedPlayerWeaponRanged);
-  static final weaponMelee = Watch(0, onChanged: GameEvents.onChangedPlayerWeaponMelee);
 
   static var indexZ = 0;
   static var indexRow = 0;

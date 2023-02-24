@@ -347,14 +347,23 @@ class ServerResponseReader with ByteReader {
         GamePlayer.Refresh_Items();
         break;
       case ApiPlayer.Equipped:
-        GamePlayer.weapon.value = readUInt16();
-        GamePlayer.head.value = readUInt16();
-        GamePlayer.body.value = readUInt16();
-        GamePlayer.legs.value = readUInt16();
+        readPlayerEquipped();
         break;
       default:
         throw Exception("Cannot parse apiPlayer $apiPlayer");
     }
+  }
+
+  void readPlayerEquipped() {
+    GamePlayer.weapon.value = readUInt16();
+    GamePlayer.head.value = readUInt16();
+    GamePlayer.body.value = readUInt16();
+    GamePlayer.legs.value = readUInt16();
+
+    GamePlayer.weaponRanged.value = readUInt16();
+    GamePlayer.weaponMelee.value = readUInt16();
+    GamePlayer.weaponPrimary.value = readUInt16();
+    GamePlayer.weaponSecondary.value = readUInt16();
   }
 
   void readPlayerMaxHealth() {
