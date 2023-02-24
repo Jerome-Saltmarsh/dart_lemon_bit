@@ -896,20 +896,24 @@ class ItemType {
     Legs_Brown,
   ];
 
-  static ItemGroup getItemGroup(int itemType){
-     if (Item_Group_Primary_Weapons.contains(itemType)) return ItemGroup.Primary_Weapon;
-     if (Item_Group_Secondary_Weapons.contains(itemType)) return ItemGroup.Secondary_Weapon;
-     if (Item_Group_Tertiary_Weapons.contains(itemType)) return ItemGroup.Tertiary_Weapon;
-     if (Item_Group_Head_Types.contains(itemType)) return ItemGroup.Head_Type;
-     if (Item_Group_Body_Types.contains(itemType)) return ItemGroup.Body_Type;
-     if (Item_Group_Leg_Types.contains(itemType)) return ItemGroup.Legs_Type;
-     if (Collection_Misc.contains(itemType)) return ItemGroup.Unknown;
+  static ItemGroup getItemGroup(int itemType) {
+     if (Item_Group_Primary_Weapons     .contains(itemType)) 
+       return ItemGroup.Primary_Weapon    ;
+     if (Item_Group_Secondary_Weapons   .contains(itemType)) 
+       return ItemGroup.Secondary_Weapon  ;
+     if (Item_Group_Tertiary_Weapons    .contains(itemType)) 
+       return ItemGroup.Tertiary_Weapon   ;
+     if (Item_Group_Head_Types          .contains(itemType)) 
+       return ItemGroup.Head_Type         ;
+     if (Item_Group_Body_Types          .contains(itemType)) 
+       return ItemGroup.Body_Type         ;
+     if (Item_Group_Leg_Types           .contains(itemType)) 
+       return ItemGroup.Legs_Type         ;
+     if (Collection_Misc                .contains(itemType)) 
+       return ItemGroup.Unknown           ;
+     
      throw Exception("ItemType.getItemGroup(${getName(itemType)})");
   }
-
-  static const ItemTypeGroups = <int, ItemGroup> {
-      Weapon_Rifle_AK_47: ItemGroup.Primary_Weapon,
-  };
 
   static double getWeaponLength(int itemType) => const <int, double>{
         Weapon_Rifle_AK_47: 30,
