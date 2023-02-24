@@ -769,6 +769,7 @@ class GameUI {
 
 
   static Widget buildPlayerWeapons() => watch(GamePlayer.weapon, (int playerWeaponType){
+    const Icon_Size = 75.0;
     return buildDialogUIControl(
       child: Row(
         children: [
@@ -778,23 +779,24 @@ class GameUI {
                  watch(GamePlayer.weaponPrimary, (int itemType) {
                    final active = playerWeaponRanged == itemType;
                    return border(
-                     color: active ? Colors.green : Colors.transparent,
-                     borderWidth: 2,
+                     color: active ? playerWeaponType == itemType ? Colors.white70 : Colors.black54 : Colors.transparent,
+                     width: 3,
                      child: Container(
-                       height: 50,
+                       height: GameStyle.Player_Weapons_Icon_Size,
                        color: active ? Colors.black45 : Colors.black12,
                        padding: GameStyle.Padding_6,
                        child: buildAtlasItemType(itemType),
                      ),
                    );
                  }),
+                 width4,
                  watch(GamePlayer.weaponSecondary, (int itemType) {
                    final active = playerWeaponRanged == itemType;
                    return border(
-                     color: active ? Colors.green : Colors.transparent,
-                     borderWidth: 2,
+                     color: active ? playerWeaponType == itemType ? Colors.white70 : Colors.black54 : Colors.transparent,
+                     width: 3,
                      child: Container(
-                       height: 50,
+                       height: GameStyle.Player_Weapons_Icon_Size,
                        color: active ? Colors.black45 : Colors.black12,
                        padding: GameStyle.Padding_6,
                        child: buildAtlasItemType(itemType),
@@ -804,13 +806,14 @@ class GameUI {
                ],
              );
           }),
+          width32,
           watch(GamePlayer.weaponMelee, (int itemType) {
             return border(
-              color: Colors.green,
-              borderWidth: 2,
+              color: playerWeaponType == itemType ? Colors.white70 : Colors.black54,
+              width: 3,
               child: Container(
-                height: 50,
-                color: playerWeaponType == itemType ? Colors.black45 : Colors.black12,
+                height: GameStyle.Player_Weapons_Icon_Size,
+                color: Colors.black45,
                 padding: GameStyle.Padding_6,
                 child: buildAtlasItemType(itemType),
               ),

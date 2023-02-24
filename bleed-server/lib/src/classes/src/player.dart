@@ -1726,15 +1726,9 @@ class Player extends Character with ByteWriter {
   int getEquippedItemGroupItem(ItemGroup itemGroup) {
      switch (itemGroup){
        case ItemGroup.Primary_Weapon:
-         if (ItemType.getItemGroup(weaponRanged) == ItemGroup.Primary_Weapon){
-           return weaponRanged;
-         }
-         return ItemType.Empty;
+         return _weaponPrimary;
        case ItemGroup.Secondary_Weapon:
-         if (ItemType.getItemGroup(weaponRanged) == ItemGroup.Secondary_Weapon){
-           return weaponRanged;
-         }
-         return ItemType.Empty;
+         return _weaponSecondary;
        case ItemGroup.Tertiary_Weapon:
          return weaponMelee;
        case ItemGroup.Head_Type:

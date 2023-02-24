@@ -157,16 +157,6 @@ final backButton = button(text("Back", color: GameColors.white618), () {
   borderColor: GameColors.none,
 );
 
-
-Widget buildInfo({required Widget child}){
-  return border(
-    fillColor: GameColors.white05,
-    color: GameColors.none,
-    padding: padding16,
-    child: child,
-  );
-}
-
 Widget buildMenuButton(String text, Function onPressed){
   return button(text,
     onPressed,

@@ -17,6 +17,8 @@ class GameStyle {
 
   static const Player_Stats_Text_Color = Colors.black54;
 
+  static const Player_Weapons_Icon_Size = 60.0;
+
   static const Default_Padding = 12.0;
 
   static final Text_Color_Default = Colors.white.withOpacity(0.85);
