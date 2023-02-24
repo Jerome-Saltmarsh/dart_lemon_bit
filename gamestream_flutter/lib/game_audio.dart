@@ -294,9 +294,10 @@ class GameAudio {
     if (hour > 9 && hour < 15) {
       return playRandom(soundsDay);
     }
-    if (hour >= 15 && hour < 18) {
-      return playRandom(soundsLateAfternoon);
-    }
+    // if (hour >= 15 && hour < 18) {
+    //   playRandom(soundsLateAfternoon);
+    //   return;
+    // }
   }
 
   static void playRandom(List<AudioSingle> items){

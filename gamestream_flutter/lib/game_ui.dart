@@ -43,17 +43,27 @@ class GameUI {
         //   );
         // }),
         Positioned(
-          child: ClipOval(
-            child: Container(
-                alignment: Alignment.topLeft,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.black38, width: 3),
-                  color: Colors.black12
-                ),
-                width: 200,
-                height: 200,
-                child: buildGeneratedMiniMap()),
+          child: Container(
+            width: 203,
+            height: 203,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(color: Colors.black38, width: 3),
+                color: Colors.black12
+            ),
+            child: ClipOval(
+              child: Container(
+                  alignment: Alignment.topLeft,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    // border: Border.all(color: Colors.black38, width: 3),
+                    // color: Colors.black12
+                  ),
+                  width: 200,
+                  height: 200,
+                  child: buildGeneratedMiniMap()),
+            ),
           ),
           bottom: GameStyle.Default_Padding,
           right: GameStyle.Default_Padding,
