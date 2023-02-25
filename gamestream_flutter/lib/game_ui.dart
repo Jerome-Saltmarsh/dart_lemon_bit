@@ -1197,4 +1197,10 @@ class GameUI {
       ],
     ),
   );
+
+  int getItemTypeIconColor(int itemType){
+    return const <int, int> {
+
+    }[itemType] ?? 0;
+  }
 }
