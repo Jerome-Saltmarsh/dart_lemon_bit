@@ -810,7 +810,7 @@ class GameUI {
                      color: active ? playerWeaponType == itemType ? Colors.white70 : Colors.black54 : Colors.transparent,
                      width: Border_Width,
                      child: Container(
-                       constraints: BoxConstraints(maxWidth: 100),
+                       constraints: BoxConstraints(maxWidth: 120),
                        height: GameStyle.Player_Weapons_Icon_Size,
                        color: active ? Colors.black45 : Colors.black12,
                        padding: GameStyle.Padding_4,
