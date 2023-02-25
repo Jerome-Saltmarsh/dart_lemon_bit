@@ -1758,6 +1758,8 @@ class Player extends Character with ByteWriter {
         case ItemGroup.Tertiary_Weapon:
           weaponMelee = weaponType;
           break;
+        default:
+          break;
       }
     }
 

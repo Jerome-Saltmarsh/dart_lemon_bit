@@ -8,6 +8,27 @@ ctrl + w:   minimal mode
 
 EXPLORE and SURVIVE
 
+[ITEMS]
+- Handgun
+- Revolver
+- Bow
+
+- Knife
+- Crowbar
+- Axe
+
+- Rifle
+- Smg
+- Machine Gun
+- Shotgun
+- Sniper Rifle
+- Bazooka
+- Flamethrower
+- Minigun
+
+- Armour
+- grenade
+
 [TODO]
 [ ] experiment characters caste shadow
 [ ] feature torch audio

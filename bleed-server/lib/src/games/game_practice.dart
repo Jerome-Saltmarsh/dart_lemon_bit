@@ -55,26 +55,26 @@ class GamePractice extends Game {
     player.inventoryAddMax(itemType: ItemType.Trinket_Ring_of_Health);
     player.inventoryAddMax(itemType: ItemType.Weapon_Melee_Sword);
     player.inventoryAddMax(itemType: ItemType.Weapon_Rifle_Arquebus);
-    player.inventoryAddMax(itemType: ItemType.Weapon_Rifle_Jager);
+    player.inventoryAddMax(itemType: ItemType.Weapon_Ranged_Rifle);
     player.inventoryAddMax(itemType: ItemType.Weapon_Rifle_Musket);
-    player.inventoryAddMax(itemType: ItemType.Weapon_Rifle_Sniper);
-    player.inventoryAddMax(itemType: ItemType.Weapon_Handgun_Glock);
+    player.inventoryAddMax(itemType: ItemType.Weapon_Ranged_Sniper_Rifle);
+    player.inventoryAddMax(itemType: ItemType.Weapon_Ranged_Glock);
     player.inventoryAddMax(itemType: ItemType.Weapon_Handgun_Desert_Eagle);
-    player.inventoryAddMax(itemType: ItemType.Weapon_Rifle_AK_47);
+    player.inventoryAddMax(itemType: ItemType.Weapon_Ranged_AK_47);
     player.inventoryAddMax(itemType: ItemType.Weapon_Rifle_M4);
     player.inventoryAddMax(itemType: ItemType.Weapon_Melee_Knife);
     player.inventoryAdd(itemType: ItemType.Weapon_Thrown_Grenade, itemQuantity: 10);
-    player.inventoryAdd(itemType: ItemType.Weapon_Flamethrower, itemQuantity: 500);
-    player.inventoryAdd(itemType: ItemType.Weapon_Special_Bazooka, itemQuantity: 500);
-    player.inventoryAdd(itemType: ItemType.Weapon_Smg_Mp5, itemQuantity: 200);
+    player.inventoryAdd(itemType: ItemType.Weapon_Ranged_Flamethrower, itemQuantity: 500);
+    player.inventoryAdd(itemType: ItemType.Weapon_Ranged_Bazooka, itemQuantity: 500);
+    player.inventoryAdd(itemType: ItemType.Weapon_Ranged_Smg, itemQuantity: 200);
     player.inventoryAdd(itemType: ItemType.Weapon_Special_Minigun, itemQuantity: 1000);
-    player.inventoryAdd(itemType: ItemType.Weapon_Handgun_Revolver, itemQuantity: 1000);
+    player.inventoryAdd(itemType: ItemType.Weapon_Ranged_Revolver, itemQuantity: 1000);
     player.headType = randomItem(ItemType.HeadTypes);
     player.bodyType = randomItem(ItemType.BodyTypes);
     player.legsType = randomItem(ItemType.LegTypes);
-    player.inventorySet(index: ItemType.Belt_1, itemType: ItemType.Weapon_Rifle_AK_47, itemQuantity: ItemType.getMaxQuantity(ItemType.Weapon_Rifle_AK_47));
-    player.inventorySet(index: ItemType.Belt_2, itemType: ItemType.Weapon_Rifle_Sniper, itemQuantity: ItemType.getMaxQuantity(ItemType.Weapon_Rifle_Sniper));
-    player.inventorySet(index: ItemType.Belt_3, itemType: ItemType.Weapon_Handgun_Glock, itemQuantity: ItemType.getMaxQuantity(ItemType.Weapon_Handgun_Glock));
+    player.inventorySet(index: ItemType.Belt_1, itemType: ItemType.Weapon_Ranged_AK_47, itemQuantity: ItemType.getMaxQuantity(ItemType.Weapon_Ranged_AK_47));
+    player.inventorySet(index: ItemType.Belt_2, itemType: ItemType.Weapon_Ranged_Sniper_Rifle, itemQuantity: ItemType.getMaxQuantity(ItemType.Weapon_Ranged_Sniper_Rifle));
+    player.inventorySet(index: ItemType.Belt_3, itemType: ItemType.Weapon_Ranged_Glock, itemQuantity: ItemType.getMaxQuantity(ItemType.Weapon_Ranged_Glock));
     player.inventorySet(index: ItemType.Belt_4, itemType: ItemType.Weapon_Thrown_Grenade, itemQuantity: 10);
     player.inventorySet(index: ItemType.Belt_5, itemType: ItemType.Weapon_Melee_Knife, itemQuantity: 1);
     player.inventorySet(index: ItemType.Belt_6, itemType: ItemType.Consumables_Apple, itemQuantity: 3);
@@ -107,10 +107,10 @@ class GamePractice extends Game {
      ]);
      if (ai.characterType == CharacterType.Template){
        ai.weaponType = randomItem(const [
-         ItemType.Weapon_Handgun_Glock,
+         ItemType.Weapon_Ranged_Glock,
          ItemType.Weapon_Ranged_Bow,
          ItemType.Weapon_Melee_Sword,
-         ItemType.Weapon_Smg_Mp5,
+         ItemType.Weapon_Ranged_Smg,
        ]);
      } else {
        ai.weaponType = ItemType.Empty;

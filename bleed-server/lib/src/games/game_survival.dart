@@ -48,10 +48,10 @@ class GameSurvival extends Game {
     player.belt3_quantity = 1;
     player.belt4_itemType = ItemType.Consumables_Apple;
     player.belt4_quantity = 3;
-    player.belt5_itemType = ItemType.Weapon_Rifle_Jager;
-    player.belt5_quantity = ItemType.getMaxQuantity(ItemType.Weapon_Rifle_Jager);
-    player.belt6_itemType = ItemType.Weapon_Rifle_AK_47;
-    player.belt6_quantity = ItemType.getMaxQuantity(ItemType.Weapon_Rifle_AK_47);
+    player.belt5_itemType = ItemType.Weapon_Ranged_Rifle;
+    player.belt5_quantity = ItemType.getMaxQuantity(ItemType.Weapon_Ranged_Rifle);
+    player.belt6_itemType = ItemType.Weapon_Ranged_AK_47;
+    player.belt6_quantity = ItemType.getMaxQuantity(ItemType.Weapon_Ranged_AK_47);
     player.equippedWeaponIndex = ItemType.Belt_1;
     player.refreshStats();
     moveToRandomPlayerSpawnPoint(player);
@@ -112,11 +112,11 @@ class GameSurvival extends Game {
     if (gameObject.type == ItemType.GameObjects_Vending_Machine){
       player.setStoreItems(const [
         ItemType.Weapon_Thrown_Grenade,
-        ItemType.Weapon_Handgun_Glock,
+        ItemType.Weapon_Ranged_Glock,
         ItemType.Weapon_Rifle_Musket,
-        ItemType.Weapon_Rifle_AK_47,
+        ItemType.Weapon_Ranged_AK_47,
         ItemType.Weapon_Rifle_M4,
-        ItemType.Weapon_Rifle_Sniper,
+        ItemType.Weapon_Ranged_Sniper_Rifle,
         ItemType.Weapon_Ranged_Bow,
       ]);
     }
@@ -220,7 +220,7 @@ class GameSurvival extends Game {
     if (ai.characterTypeTemplate){
       ai.weaponType = randomItem(const[
         ItemType.Empty,
-        ItemType.Weapon_Handgun_Glock,
+        ItemType.Weapon_Ranged_Glock,
         ItemType.Weapon_Melee_Crowbar,
       ]);
       ai.headType = randomItem(const[

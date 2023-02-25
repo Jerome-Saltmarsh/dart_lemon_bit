@@ -132,9 +132,9 @@ class GameImages {
       switch (weaponType) {
          case ItemType.Weapon_Melee_Knife:
             return template_weapon_knife;
-         case ItemType.Weapon_Rifle_Sniper:
+         case ItemType.Weapon_Ranged_Sniper_Rifle:
             return template_weapon_sniper_rifle;
-         case ItemType.Weapon_Rifle_AK_47:
+         case ItemType.Weapon_Ranged_AK_47:
             return template_weapon_ak47;
          case ItemType.Weapon_Rifle_M4:
             return template_weapon_m4;
@@ -144,13 +144,13 @@ class GameImages {
             return template_weapon_winchester;
          case ItemType.Weapon_Rifle_Blunderbuss:
             return template_weapon_blunderbuss;
-         case ItemType.Weapon_Rifle_Jager:
+         case ItemType.Weapon_Ranged_Rifle:
             return template_weapon_winchester;
-         case ItemType.Weapon_Smg_Mp5:
+         case ItemType.Weapon_Ranged_Smg:
             return template_weapon_mp5;
          case ItemType.Weapon_Handgun_Desert_Eagle:
             return template_weapon_desert_eagle;
-         case ItemType.Weapon_Handgun_Glock:
+         case ItemType.Weapon_Ranged_Glock:
             return template_weapon_handgun_black;
          case ItemType.Weapon_Handgun_Flint_Lock_Old:
             return template_weapon_handgun_flintlock;
@@ -158,7 +158,7 @@ class GameImages {
             return template_weapon_handgun_flintlock;
          case ItemType.Weapon_Handgun_Flint_Lock_Superior:
             return template_weapon_handgun_flintlock;
-         case ItemType.Weapon_Handgun_Revolver:
+         case ItemType.Weapon_Ranged_Revolver:
             return template_weapon_revolver;
          case ItemType.Weapon_Ranged_Shotgun:
             return template_weapon_shotgun;
@@ -178,11 +178,11 @@ class GameImages {
             return template_weapon_crowbar;
          case ItemType.Weapon_Special_Minigun:
             return template_weapon_minigun;
-         case ItemType.Weapon_Handgun_Revolver:
+         case ItemType.Weapon_Ranged_Revolver:
             return template_weapon_revolver;
-         case ItemType.Weapon_Flamethrower:
+         case ItemType.Weapon_Ranged_Flamethrower:
             return template_weapon_flamethrower;
-         case ItemType.Weapon_Special_Bazooka:
+         case ItemType.Weapon_Ranged_Bazooka:
             return template_weapon_bazooka;
          default:
             throw Exception("GameImages.getImageForWeaponType(${ItemType.getName(weaponType)})");

@@ -150,29 +150,27 @@ class ItemType {
   static const Weapon_Handgun_Flint_Lock = Weapon_Handgun_Flint_Lock_Old + 1;
   static const Weapon_Handgun_Flint_Lock_Superior = Weapon_Handgun_Flint_Lock + 1;
   static const Weapon_Handgun_Blunderbuss = Weapon_Handgun_Flint_Lock_Superior + 1;
-  static const Weapon_Handgun_Revolver = Weapon_Handgun_Blunderbuss + 1;
-  static const Weapon_Handgun_Glock = Weapon_Handgun_Revolver + 1;
-  static const Weapon_Handgun_Desert_Eagle  = Weapon_Handgun_Glock + 1;
+  static const Weapon_Ranged_Revolver = Weapon_Handgun_Blunderbuss + 1;
+  static const Weapon_Ranged_Glock = Weapon_Ranged_Revolver + 1;
+  static const Weapon_Handgun_Desert_Eagle  = Weapon_Ranged_Glock + 1;
 
   static const Weapon_Rifle_Arquebus = Index_Weapon_Ranged_Rifle + 1;
   static const Weapon_Rifle_Blunderbuss = Weapon_Rifle_Arquebus + 1;
   static const Weapon_Rifle_Musket = Weapon_Rifle_Blunderbuss + 1;
-  static const Weapon_Rifle_Jager = Weapon_Rifle_Musket + 1;
-  static const Weapon_Rifle_AK_47 = Weapon_Rifle_Jager + 1;
-  static const Weapon_Rifle_M4 = Weapon_Rifle_AK_47 + 1;
-  static const Weapon_Rifle_Sniper = Weapon_Rifle_M4 + 1;
+  static const Weapon_Ranged_Rifle = Weapon_Rifle_Musket + 1;
+  static const Weapon_Ranged_AK_47 = Weapon_Ranged_Rifle + 1;
+  static const Weapon_Rifle_M4 = Weapon_Ranged_AK_47 + 1;
+  static const Weapon_Ranged_Sniper_Rifle = Weapon_Rifle_M4 + 1;
 
-  static const Weapon_Smg_Mp5 = Index_Weapon_Ranged_Smg + 1;
+  static const Weapon_Ranged_Smg = Index_Weapon_Ranged_Smg + 1;
 
-  static const Weapon_Flamethrower    = Index_Weapon_Special + 1;
-  static const Weapon_Special_Bazooka = Index_Weapon_Special + 2;
+  static const Weapon_Ranged_Flamethrower    = Index_Weapon_Special + 1;
+  static const Weapon_Ranged_Bazooka = Index_Weapon_Special + 2;
   static const Weapon_Special_Minigun = Index_Weapon_Special + 3;
 
   static const Weapon_Ranged_Shotgun = Index_Weapon_Ranged_Shotgun + 1;
-
   static const Weapon_Ranged_Bow = Index_Weapon_Ranged_Bow + 1;
-  static const Weapon_Ranged_Bow_Long = Weapon_Ranged_Bow + 1;
-  static const Weapon_Ranged_Crossbow = Weapon_Ranged_Bow_Long + 1;
+  static const Weapon_Ranged_Crossbow = Weapon_Ranged_Bow + 1;
 
   static const Recipes = <int, List<int>> {
     Consumables_Apple: const [
@@ -193,10 +191,10 @@ class ItemType {
     Weapon_Handgun_Blunderbuss: const [
       0050, Resource_Credit,
     ],
-    Weapon_Handgun_Revolver: const [
+    Weapon_Ranged_Revolver: const [
       0050, Resource_Credit,
     ],
-    Weapon_Handgun_Glock: const [
+    Weapon_Ranged_Glock: const [
       0050, Resource_Credit,
     ],
     Weapon_Rifle_Arquebus: const [
@@ -205,7 +203,7 @@ class ItemType {
     Weapon_Rifle_Musket: const [
       0050, Resource_Credit,
     ],
-    Weapon_Rifle_Jager: const [
+    Weapon_Ranged_Rifle: const [
       0050, Resource_Credit,
     ],
   };
@@ -337,8 +335,8 @@ class ItemType {
       value < Index_Weapon_Ranged_Bow;
 
   static bool isAutomaticFirearm(int value) =>
-      value ==  Weapon_Smg_Mp5      ||
-      value ==  Weapon_Rifle_AK_47  ||
+      value ==  Weapon_Ranged_Smg      ||
+      value ==  Weapon_Ranged_AK_47  ||
       value ==  Weapon_Rifle_M4      ;
   
   static bool isTypeWeaponMelee(int value) =>
@@ -353,8 +351,7 @@ class ItemType {
       value < Index_Weapon_Ranged_Handgun  ;
 
   static bool isTypeWeaponBow(int value) =>
-      value == Weapon_Ranged_Bow ||
-      value == Weapon_Ranged_Bow_Long;
+      value == Weapon_Ranged_Bow;
 
   static bool isTypeWeaponHandgun(int value) =>
       value > Index_Weapon_Ranged_Handgun &&
@@ -383,8 +380,8 @@ class ItemType {
       isTypeWeaponRifle       (weaponType) ||
       isTypeWeaponShotgun     (weaponType) ||
       isTypeWeaponBow         (weaponType) ||
-      weaponType == Weapon_Special_Bazooka ||
-      weaponType == Weapon_Flamethrower    ||
+      weaponType == Weapon_Ranged_Bazooka ||
+      weaponType == Weapon_Ranged_Flamethrower    ||
       weaponType == Weapon_Special_Minigun  ;
 
   static bool isFood(int type) =>
@@ -412,21 +409,21 @@ class ItemType {
       Weapon_Handgun_Flint_Lock_Old       : Resource_Gun_Powder,
       Weapon_Handgun_Flint_Lock           : Resource_Gun_Powder,
       Weapon_Handgun_Flint_Lock_Superior  : Resource_Gun_Powder,
-      Weapon_Handgun_Glock                : Resource_Round_9mm,
-      Weapon_Handgun_Revolver             : Resource_Round_50cal,
+      Weapon_Ranged_Glock                : Resource_Round_9mm,
+      Weapon_Ranged_Revolver             : Resource_Round_50cal,
       Weapon_Handgun_Desert_Eagle         : Resource_Round_50cal,
       Weapon_Rifle_Arquebus               : Resource_Gun_Powder,
       Weapon_Rifle_Blunderbuss            : Resource_Gun_Powder,
       Weapon_Rifle_Musket                 : Resource_Gun_Powder,
-      Weapon_Rifle_Jager                  : Resource_Round_Rifle,
+      Weapon_Ranged_Rifle                  : Resource_Round_Rifle,
       Weapon_Rifle_M4                     : Resource_Round_Rifle,
-      Weapon_Rifle_AK_47                  : Resource_Round_Rifle,
-      Weapon_Rifle_Sniper                 : Resource_Round_50cal,
-      Weapon_Smg_Mp5                      : Resource_Round_9mm,
+      Weapon_Ranged_AK_47                  : Resource_Round_Rifle,
+      Weapon_Ranged_Sniper_Rifle                 : Resource_Round_50cal,
+      Weapon_Ranged_Smg                      : Resource_Round_9mm,
       Weapon_Ranged_Shotgun               : Resource_Round_Shotgun,
       Weapon_Ranged_Bow                   : Resource_Arrow,
-      Weapon_Flamethrower                 : Resource_Fuel,
-      Weapon_Special_Bazooka              : Resource_Rocket,
+      Weapon_Ranged_Flamethrower                 : Resource_Fuel,
+      Weapon_Ranged_Bazooka              : Resource_Rocket,
       Weapon_Special_Minigun              : Resource_Round_Rifle,
   }[itemType] ?? Empty;
 
@@ -455,7 +452,7 @@ class ItemType {
 
   static int getConsumeAmount(int itemType) => const {
     Weapon_Ranged_Bow: 1,
-    Weapon_Handgun_Glock: 1,
+    Weapon_Ranged_Glock: 1,
     Weapon_Ranged_Shotgun: 3,
     Weapon_Handgun_Flint_Lock_Old: 1,
     Weapon_Handgun_Flint_Lock: 1,
@@ -463,8 +460,8 @@ class ItemType {
     Weapon_Rifle_Arquebus: 2,
     Weapon_Rifle_Blunderbuss: 2,
     Weapon_Rifle_Musket: 2,
-    Weapon_Rifle_Jager: 2,
-    Weapon_Rifle_AK_47: 2,
+    Weapon_Ranged_Rifle: 2,
+    Weapon_Ranged_AK_47: 2,
     Weapon_Rifle_M4: 2,
   }[itemType] ?? 0;
 
@@ -487,11 +484,10 @@ class ItemType {
       Weapon_Handgun_Flint_Lock_Old: 350,
       Weapon_Handgun_Flint_Lock: 355,
       Weapon_Handgun_Flint_Lock_Superior: 360,
-      Weapon_Handgun_Glock: 350,
+      Weapon_Ranged_Glock: 350,
       Weapon_Handgun_Desert_Eagle: 350,
-      Weapon_Handgun_Revolver: 400,
+      Weapon_Ranged_Revolver: 400,
       Weapon_Ranged_Bow: 300,
-      Weapon_Ranged_Bow_Long: 350,
       Weapon_Ranged_Crossbow: 400,
       Weapon_Melee_Sword: 65,
       Weapon_Melee_Knife: 40,
@@ -503,13 +499,13 @@ class ItemType {
       Weapon_Rifle_Arquebus: 400,
       Weapon_Rifle_Blunderbuss: 400,
       Weapon_Rifle_Musket: 420,
-      Weapon_Rifle_Jager: 440,
-      Weapon_Rifle_AK_47: 400,
+      Weapon_Ranged_Rifle: 440,
+      Weapon_Ranged_AK_47: 400,
       Weapon_Rifle_M4: 420,
-      Weapon_Rifle_Sniper: 750,
-      Weapon_Smg_Mp5: 270,
-      Weapon_Flamethrower: 150,
-      Weapon_Special_Bazooka: 350,
+      Weapon_Ranged_Sniper_Rifle: 750,
+      Weapon_Ranged_Smg: 270,
+      Weapon_Ranged_Flamethrower: 150,
+      Weapon_Ranged_Bazooka: 350,
       Weapon_Special_Minigun: 400,
   }[value] ?? 0;
 
@@ -520,8 +516,8 @@ class ItemType {
       Weapon_Handgun_Flint_Lock_Old: 50,
       Weapon_Handgun_Flint_Lock: 45,
       Weapon_Handgun_Flint_Lock_Superior: 40,
-      Weapon_Handgun_Glock: 20,
-      Weapon_Handgun_Revolver: 40,
+      Weapon_Ranged_Glock: 20,
+      Weapon_Ranged_Revolver: 40,
       Weapon_Handgun_Desert_Eagle: 30,
       Weapon_Melee_Sword: 30,
       Weapon_Melee_Knife: 25,
@@ -531,18 +527,17 @@ class ItemType {
       Weapon_Melee_Pickaxe: 40,
       Weapon_Melee_Staff: 40,
       Weapon_Ranged_Bow: 50,
-      Weapon_Ranged_Bow_Long: 50,
       Weapon_Ranged_Crossbow: 50,
       Weapon_Rifle_Arquebus: 60,
       Weapon_Rifle_Blunderbuss: 80,
       Weapon_Rifle_Musket: 55,
-      Weapon_Rifle_Jager: 50,
-      Weapon_Rifle_AK_47: 5,
+      Weapon_Ranged_Rifle: 50,
+      Weapon_Ranged_AK_47: 5,
       Weapon_Rifle_M4: 5,
-      Weapon_Rifle_Sniper: 75,
-      Weapon_Smg_Mp5: 5,
-      Weapon_Flamethrower: 2,
-      Weapon_Special_Bazooka: 100,
+      Weapon_Ranged_Sniper_Rifle: 75,
+      Weapon_Ranged_Smg: 5,
+      Weapon_Ranged_Flamethrower: 2,
+      Weapon_Ranged_Bazooka: 100,
       Weapon_Special_Minigun: 1,
   }[value] ?? 0;
 
@@ -636,20 +631,20 @@ class ItemType {
      Weapon_Handgun_Flint_Lock: "Flint Lock Pistol",
      Weapon_Handgun_Flint_Lock_Superior: "Superior Flint Lock Pistol",
      Weapon_Handgun_Blunderbuss: "Blunderbuss Pistol",
-     Weapon_Handgun_Glock: "Glock 22",
-     Weapon_Handgun_Revolver: "Revolver",
+     Weapon_Ranged_Glock: "Glock 22",
+     Weapon_Ranged_Revolver: "Revolver",
      Weapon_Handgun_Desert_Eagle: "Desert Eagle",
      Weapon_Ranged_Shotgun: "Shotgun",
      Weapon_Rifle_Arquebus: "Arquebus",
      Weapon_Rifle_Blunderbuss: "Blunderbuss",
-     Weapon_Rifle_Jager: "Hunting Rifle",
+     Weapon_Ranged_Rifle: "Hunting Rifle",
      Weapon_Rifle_Musket: "Musket",
-     Weapon_Rifle_AK_47: "AK-47",
+     Weapon_Ranged_AK_47: "AK-47",
      Weapon_Rifle_M4: "M4 Assault Rifle",
-     Weapon_Rifle_Sniper: "Sniper Rifle",
-     Weapon_Smg_Mp5: "Mp5",
-     Weapon_Flamethrower: "Flamethrower",
-     Weapon_Special_Bazooka: "Bazooka",
+     Weapon_Ranged_Sniper_Rifle: "Sniper Rifle",
+     Weapon_Ranged_Smg: "Mp5",
+     Weapon_Ranged_Flamethrower: "Flamethrower",
+     Weapon_Ranged_Bazooka: "Bazooka",
      Weapon_Special_Minigun: "Minigun",
      Weapon_Ranged_Bow: "Bow",
      Consumables_Apple: "Apple",
@@ -700,19 +695,19 @@ class ItemType {
     Weapon_Handgun_Flint_Lock_Old       : 01,
     Weapon_Handgun_Flint_Lock           : 01,
     Weapon_Handgun_Flint_Lock_Superior  : 01,
-    Weapon_Handgun_Glock                : 15,
-    Weapon_Handgun_Revolver             : 05,
+    Weapon_Ranged_Glock                : 15,
+    Weapon_Ranged_Revolver             : 05,
     Weapon_Handgun_Desert_Eagle         : 07,
     Weapon_Rifle_M4                     : 35,
-    Weapon_Rifle_AK_47                  : 35,
-    Weapon_Rifle_Jager                  : 04,
+    Weapon_Ranged_AK_47                  : 35,
+    Weapon_Ranged_Rifle                  : 04,
     Weapon_Rifle_Musket                 : 01,
-    Weapon_Rifle_Sniper                 : 5,
-    Weapon_Smg_Mp5                      : 25,
+    Weapon_Ranged_Sniper_Rifle                 : 5,
+    Weapon_Ranged_Smg                      : 25,
     Weapon_Ranged_Shotgun               : 04,
     Weapon_Thrown_Grenade               : 05,
-    Weapon_Flamethrower                 : 200,
-    Weapon_Special_Bazooka              : 01,
+    Weapon_Ranged_Flamethrower                 : 200,
+    Weapon_Ranged_Bazooka              : 01,
     Weapon_Special_Minigun              : 1000,
   }[itemType]            ?? 001;
 
@@ -751,8 +746,8 @@ class ItemType {
     Weapon_Rifle_Arquebus: 1.25,
     Weapon_Rifle_Blunderbuss: 1.33,
     Weapon_Rifle_Musket: 1.5,
-    Weapon_Rifle_AK_47: 1.33,
-    Weapon_Rifle_Sniper: 3.0,
+    Weapon_Ranged_AK_47: 1.33,
+    Weapon_Ranged_Sniper_Rifle: 3.0,
   }[itemType] ?? 1.0;
 
   static const HeadTypes = [
@@ -828,36 +823,36 @@ class ItemType {
 
   static int getUpgrade(int itemType) {
      return const {
-       Weapon_Handgun_Glock: Weapon_Handgun_Revolver,
-       Weapon_Rifle_AK_47: Weapon_Rifle_M4,
+       Weapon_Ranged_Glock: Weapon_Ranged_Revolver,
+       Weapon_Ranged_AK_47: Weapon_Rifle_M4,
      }[itemType] ?? Empty;
   }
 
   static int getUpgradeCost(int itemType){
     return const {
-      Weapon_Handgun_Glock: 200,
-      Weapon_Rifle_AK_47: 300,
+      Weapon_Ranged_Glock: 200,
+      Weapon_Ranged_AK_47: 300,
     }[itemType] ?? Empty;
   }
 
   static const Item_Group_Primary_Weapons = [
      Weapon_Rifle_M4,
      Weapon_Ranged_Shotgun,
-     Weapon_Smg_Mp5,
-     Weapon_Rifle_Sniper,
-     Weapon_Rifle_AK_47,
-     Weapon_Rifle_Jager,
+     Weapon_Ranged_Smg,
+     Weapon_Ranged_Sniper_Rifle,
+     Weapon_Ranged_AK_47,
+     Weapon_Ranged_Rifle,
      Weapon_Rifle_Musket,
      Weapon_Rifle_Arquebus,
      Weapon_Rifle_Blunderbuss,
      Weapon_Special_Minigun,
-     Weapon_Special_Bazooka,
-     Weapon_Flamethrower,
+     Weapon_Ranged_Bazooka,
+     Weapon_Ranged_Flamethrower,
   ];
 
   static const Item_Group_Secondary_Weapons = [
-      Weapon_Handgun_Glock,
-      Weapon_Handgun_Revolver,
+      Weapon_Ranged_Glock,
+      Weapon_Ranged_Revolver,
       Weapon_Handgun_Flint_Lock,
       Weapon_Handgun_Desert_Eagle,
    ];
@@ -916,30 +911,30 @@ class ItemType {
   }
 
   static double getWeaponLength(int itemType) => const <int, double>{
-        Weapon_Rifle_AK_47: 30,
-        Weapon_Handgun_Glock: 20,
+        Weapon_Ranged_AK_47: 30,
+        Weapon_Ranged_Glock: 20,
   }[itemType] ?? 20;
 
   static const Collection_Weapons_Rifles = [
      Weapon_Rifle_Blunderbuss,
      Weapon_Rifle_Arquebus,
      Weapon_Rifle_Musket,
-     Weapon_Rifle_AK_47,
-     Weapon_Rifle_Sniper,
+     Weapon_Ranged_AK_47,
+     Weapon_Ranged_Sniper_Rifle,
      Weapon_Rifle_M4,
   ];
 
   static const Collection_Weapons_Handguns = [
     Weapon_Handgun_Flint_Lock,
     Weapon_Handgun_Desert_Eagle,
-    Weapon_Handgun_Revolver,
-    Weapon_Handgun_Glock,
+    Weapon_Ranged_Revolver,
+    Weapon_Ranged_Glock,
   ];
 
   static const Collection_Weapons_Special = [
-    Weapon_Special_Bazooka,
+    Weapon_Ranged_Bazooka,
     Weapon_Special_Minigun,
-    Weapon_Flamethrower,
+    Weapon_Ranged_Flamethrower,
   ];
 
   static const Collection_Weapons_Melee = [

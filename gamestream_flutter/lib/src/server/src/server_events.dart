@@ -1,21 +1,13 @@
 
-import 'dart:async';
-
 import 'package:gamestream_flutter/library.dart';
 
 class ServerEvents {
 
-  // static void onChangedPlayerCredits(int credits) {
-  //   Timer(const Duration(milliseconds: 400), GameAudio.coins.play);
-  // }
-
   static void onChangedAreaType(int areaType) {
-    print("ServerEvents.onChangedAreaType(${AreaType.getName(areaType)})");
      ClientState.areaTypeVisible.value = true;
   }
 
   static void onChangedGameType(int? value){
-    print("gamestream.onChangedGameType(${GameType.getName(value)})");
     if (value == null) {
       return;
     }

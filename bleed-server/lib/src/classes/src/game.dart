@@ -586,7 +586,7 @@ abstract class Game {
       throw Exception('ai cannot throw grenades');
     }
 
-    if (weaponType == ItemType.Weapon_Flamethrower){
+    if (weaponType == ItemType.Weapon_Ranged_Flamethrower){
       if (character is Player){
         playerUseFlamethrower(character);
         return;
@@ -594,7 +594,7 @@ abstract class Game {
       throw Exception('ai cannot use flamethrower');
     }
 
-    if (weaponType == ItemType.Weapon_Special_Bazooka){
+    if (weaponType == ItemType.Weapon_Ranged_Bazooka){
       if (character is Player){
         playerUseBazooka(character);
       }
@@ -910,8 +910,8 @@ abstract class Game {
     );
     character.clampVelocity(GamePhysics.Max_Velocity);
 
-    final spawnX = character.x + getAdjacent(angle, 70);
-    final spawnY = character.x + getAdjacent(angle, 70);
+    // final spawnX = character.x + getAdjacent(angle, 70);
+    // final spawnY = character.x + getAdjacent(angle, 70);
 
     spawnProjectile(
       src: character,

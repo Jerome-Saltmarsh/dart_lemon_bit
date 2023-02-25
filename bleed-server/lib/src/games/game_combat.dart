@@ -33,6 +33,21 @@ class GameCombat extends Game {
           perks: false,
           inventory: false,
           items: true,
+          itemTypes: [
+              ItemType.Weapon_Melee_Knife,
+              ItemType.Weapon_Melee_Crowbar,
+              ItemType.Weapon_Melee_Axe,
+              ItemType.Weapon_Ranged_Glock,
+              ItemType.Weapon_Ranged_Revolver,
+              ItemType.Weapon_Ranged_Bow,
+              ItemType.Weapon_Ranged_Rifle,
+              ItemType.Weapon_Ranged_Smg,
+              ItemType.Weapon_Ranged_AK_47,
+              ItemType.Weapon_Ranged_Shotgun,
+              ItemType.Weapon_Ranged_Sniper_Rifle,
+              ItemType.Weapon_Ranged_Bazooka,
+              ItemType.Weapon_Ranged_Flamethrower,
+          ],
       ),
   );
 
@@ -43,12 +58,12 @@ class GameCombat extends Game {
     player.headType = randomItem(ItemType.Collection_Clothing_Head);
     player.bodyType = randomItem(ItemType.Collection_Clothing_Body);
     player.legsType = randomItem(ItemType.Collection_Clothing_Legs);
-    player.items[ItemType.Weapon_Rifle_Jager] = 1;
-    player.items[ItemType.Weapon_Handgun_Glock] = 1;
+    player.items[ItemType.Weapon_Ranged_Rifle] = 1;
+    player.items[ItemType.Weapon_Ranged_Glock] = 1;
     player.items[ItemType.Weapon_Melee_Knife] = 1;
-    characterEquipItemType(player, ItemType.Weapon_Rifle_Jager);
-    player.weaponPrimary = ItemType.Weapon_Rifle_Jager;
-    player.weaponSecondary = ItemType.Weapon_Handgun_Glock;
+    characterEquipItemType(player, ItemType.Weapon_Ranged_Rifle);
+    player.weaponPrimary = ItemType.Weapon_Ranged_Rifle;
+    player.weaponSecondary = ItemType.Weapon_Ranged_Glock;
     player.weaponMelee = ItemType.Weapon_Melee_Knife;
     player.credits = 100;
     player.writeEquipped();

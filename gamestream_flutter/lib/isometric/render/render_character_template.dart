@@ -343,16 +343,16 @@ class TemplateAnimation {
        return Punch;
      }
 
-     if (weaponType == ItemType.Weapon_Flamethrower){
+     if (weaponType == ItemType.Weapon_Ranged_Flamethrower){
        return FiringShotgun;
      }
-     if (weaponType == ItemType.Weapon_Smg_Mp5) {
+     if (weaponType == ItemType.Weapon_Ranged_Smg) {
        return FiringShotgun;
      }
      if (weaponType == ItemType.Weapon_Special_Minigun) {
        return FiringShotgun;
      }
-     if (weaponType == ItemType.Weapon_Special_Bazooka) {
+     if (weaponType == ItemType.Weapon_Ranged_Bazooka) {
        return FiringShotgun;
      }
      throw Exception("TemplateAnimation.getAttackAnimation(${ItemType.getName(weaponType)})");

@@ -376,7 +376,7 @@ class GameEvents {
     switch (event) {
       case PlayerEvent.Reloading:
         switch (GamePlayer.weapon.value){
-          case ItemType.Weapon_Handgun_Glock:
+          case ItemType.Weapon_Ranged_Glock:
             GameAudio.reload_6();
             break;
           default:
@@ -500,10 +500,10 @@ class GameEvents {
 
   static void onPlayerEventItemEquipped(int type) {
     switch (type) {
-      case ItemType.Weapon_Handgun_Revolver:
+      case ItemType.Weapon_Ranged_Revolver:
         GameAudio.revolver_reload_1();
         break;
-      case ItemType.Weapon_Handgun_Glock:
+      case ItemType.Weapon_Ranged_Glock:
         GameAudio.reload_6();
         break;
       case ItemType.Weapon_Ranged_Shotgun:

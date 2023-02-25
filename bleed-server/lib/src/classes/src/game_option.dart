@@ -21,21 +21,21 @@ class GameOptions {
   });
 
   static const Default_ItemType_Damage = <int, List<int>> {
-     ItemType.Weapon_Smg_Mp5: [2, 3, 4, 5, 6],
+     ItemType.Weapon_Ranged_Smg: [2, 3, 4, 5, 6],
      ItemType.Weapon_Rifle_M4: [2, 3, 4, 5, 6],
-     ItemType.Weapon_Rifle_AK_47: [2, 3, 4, 5, 6],
-     ItemType.Weapon_Rifle_Jager: [4, 5, 7, 8, 10],
-     ItemType.Weapon_Rifle_Sniper: [4, 5, 7, 8, 10],
+     ItemType.Weapon_Ranged_AK_47: [2, 3, 4, 5, 6],
+     ItemType.Weapon_Ranged_Rifle: [4, 5, 7, 8, 10],
+     ItemType.Weapon_Ranged_Sniper_Rifle: [4, 5, 7, 8, 10],
      ItemType.Weapon_Rifle_Musket: [4, 5, 7, 8, 10],
      ItemType.Weapon_Rifle_Blunderbuss: [4, 5, 7, 8, 10],
      ItemType.Weapon_Rifle_Arquebus: [4, 5, 7, 8, 10],
 
-     ItemType.Weapon_Special_Bazooka: [4, 5, 7, 8, 10],
-     ItemType.Weapon_Flamethrower: [4, 5, 7, 8, 10],
+     ItemType.Weapon_Ranged_Bazooka: [4, 5, 7, 8, 10],
+     ItemType.Weapon_Ranged_Flamethrower: [4, 5, 7, 8, 10],
      ItemType.Weapon_Special_Minigun: [4, 5, 7, 8, 10],
 
-     ItemType.Weapon_Handgun_Glock: [4, 5, 7, 8, 10],
-     ItemType.Weapon_Handgun_Revolver: [4, 5, 7, 8, 10],
+     ItemType.Weapon_Ranged_Glock: [4, 5, 7, 8, 10],
+     ItemType.Weapon_Ranged_Revolver: [4, 5, 7, 8, 10],
      ItemType.Weapon_Handgun_Desert_Eagle: [4, 5, 7, 8, 10],
      ItemType.Weapon_Handgun_Flint_Lock: [4, 5, 7, 8, 10],
 
@@ -48,8 +48,8 @@ class GameOptions {
   };
 
   static const Default_ItemType_Cost = <int, List<int>> {
-     ItemType.Weapon_Rifle_AK_47: [10, 15, 30, 50, 100],
-     ItemType.Weapon_Rifle_Jager: [4, 5, 7, 8, 10],
+     ItemType.Weapon_Ranged_AK_47: [10, 15, 30, 50, 100],
+     ItemType.Weapon_Ranged_Rifle: [4, 5, 7, 8, 10],
      ItemType.Weapon_Melee_Hammer: [3, 4, 5, 6, 7],
      ItemType.Weapon_Melee_Pickaxe: [5, 7, 10, 12, 14],
   };
@@ -60,28 +60,27 @@ class GameOptions {
     ItemType.Weapon_Handgun_Flint_Lock_Old: 4,
     ItemType.Weapon_Handgun_Flint_Lock: 5,
     ItemType.Weapon_Handgun_Flint_Lock_Superior: 6,
-    ItemType.Weapon_Handgun_Glock: 7,
+    ItemType.Weapon_Ranged_Glock: 7,
     ItemType.Weapon_Handgun_Desert_Eagle: 18,
-    ItemType.Weapon_Handgun_Revolver: 25,
+    ItemType.Weapon_Ranged_Revolver: 25,
     ItemType.Weapon_Melee_Sword: 3,
     ItemType.Weapon_Melee_Knife: 3,
     ItemType.Weapon_Melee_Axe: 3,
     ItemType.Weapon_Melee_Pickaxe: 3,
     ItemType.Weapon_Melee_Crowbar: 2,
     ItemType.Weapon_Ranged_Bow: 1,
-    ItemType.Weapon_Ranged_Bow_Long: 2,
     ItemType.Weapon_Ranged_Crossbow: 5,
     ItemType.Weapon_Rifle_Arquebus: 3,
     ItemType.Weapon_Rifle_Blunderbuss: 4,
     ItemType.Weapon_Rifle_Musket: 5,
-    ItemType.Weapon_Rifle_Jager: 8,
-    ItemType.Weapon_Rifle_AK_47: 2,
+    ItemType.Weapon_Ranged_Rifle: 8,
+    ItemType.Weapon_Ranged_AK_47: 2,
     ItemType.Weapon_Rifle_M4: 2,
-    ItemType.Weapon_Rifle_Sniper: 50,
-    ItemType.Weapon_Smg_Mp5: 1,
+    ItemType.Weapon_Ranged_Sniper_Rifle: 50,
+    ItemType.Weapon_Ranged_Smg: 1,
     ItemType.Trinket_Ring_of_Damage: 1,
-    ItemType.Weapon_Flamethrower: 10,
-    ItemType.Weapon_Special_Bazooka: 100,
+    ItemType.Weapon_Ranged_Flamethrower: 10,
+    ItemType.Weapon_Ranged_Bazooka: 100,
     ItemType.Weapon_Special_Minigun: 7,
   };
 }
