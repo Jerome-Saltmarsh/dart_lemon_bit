@@ -136,27 +136,19 @@ class GameImages {
             return template_weapon_sniper_rifle;
          case ItemType.Weapon_Ranged_AK_47:
             return template_weapon_ak47;
-         case ItemType.Weapon_Rifle_M4:
+         case ItemType.Weapon_Ranged_M4:
             return template_weapon_m4;
-         case ItemType.Weapon_Rifle_Arquebus:
-            return template_weapon_blunderbuss;
-         case ItemType.Weapon_Rifle_Musket:
+         case ItemType.Weapon_Ranged_Musket:
             return template_weapon_winchester;
-         case ItemType.Weapon_Rifle_Blunderbuss:
-            return template_weapon_blunderbuss;
          case ItemType.Weapon_Ranged_Rifle:
             return template_weapon_winchester;
          case ItemType.Weapon_Ranged_Smg:
             return template_weapon_mp5;
-         case ItemType.Weapon_Handgun_Desert_Eagle:
+         case ItemType.Weapon_Ranged_Desert_Eagle:
             return template_weapon_desert_eagle;
-         case ItemType.Weapon_Ranged_Glock:
+         case ItemType.Weapon_Ranged_Handgun:
             return template_weapon_handgun_black;
-         case ItemType.Weapon_Handgun_Flint_Lock_Old:
-            return template_weapon_handgun_flintlock;
-         case ItemType.Weapon_Handgun_Flint_Lock:
-            return template_weapon_handgun_flintlock;
-         case ItemType.Weapon_Handgun_Flint_Lock_Superior:
+         case ItemType.Weapon_Ranged_Pistol:
             return template_weapon_handgun_flintlock;
          case ItemType.Weapon_Ranged_Revolver:
             return template_weapon_revolver;
@@ -176,7 +168,7 @@ class GameImages {
             return template_weapon_hammer;
          case ItemType.Weapon_Melee_Crowbar:
             return template_weapon_crowbar;
-         case ItemType.Weapon_Special_Minigun:
+         case ItemType.Weapon_Ranged_Minigun:
             return template_weapon_minigun;
          case ItemType.Weapon_Ranged_Revolver:
             return template_weapon_revolver;

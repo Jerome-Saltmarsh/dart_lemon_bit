@@ -37,7 +37,7 @@ class GameCombat extends Game {
               ItemType.Weapon_Melee_Knife,
               ItemType.Weapon_Melee_Crowbar,
               ItemType.Weapon_Melee_Axe,
-              ItemType.Weapon_Ranged_Glock,
+              ItemType.Weapon_Ranged_Handgun,
               ItemType.Weapon_Ranged_Revolver,
               ItemType.Weapon_Ranged_Bow,
               ItemType.Weapon_Ranged_Rifle,
@@ -59,11 +59,11 @@ class GameCombat extends Game {
     player.bodyType = randomItem(ItemType.Collection_Clothing_Body);
     player.legsType = randomItem(ItemType.Collection_Clothing_Legs);
     player.items[ItemType.Weapon_Ranged_Rifle] = 1;
-    player.items[ItemType.Weapon_Ranged_Glock] = 1;
+    player.items[ItemType.Weapon_Ranged_Handgun] = 1;
     player.items[ItemType.Weapon_Melee_Knife] = 1;
     characterEquipItemType(player, ItemType.Weapon_Ranged_Rifle);
     player.weaponPrimary = ItemType.Weapon_Ranged_Rifle;
-    player.weaponSecondary = ItemType.Weapon_Ranged_Glock;
+    player.weaponSecondary = ItemType.Weapon_Ranged_Handgun;
     player.weaponMelee = ItemType.Weapon_Melee_Knife;
     player.credits = 100;
     player.writeEquipped();

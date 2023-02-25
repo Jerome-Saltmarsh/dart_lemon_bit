@@ -112,10 +112,10 @@ class GameSurvival extends Game {
     if (gameObject.type == ItemType.GameObjects_Vending_Machine){
       player.setStoreItems(const [
         ItemType.Weapon_Thrown_Grenade,
-        ItemType.Weapon_Ranged_Glock,
-        ItemType.Weapon_Rifle_Musket,
+        ItemType.Weapon_Ranged_Handgun,
+        ItemType.Weapon_Ranged_Musket,
         ItemType.Weapon_Ranged_AK_47,
-        ItemType.Weapon_Rifle_M4,
+        ItemType.Weapon_Ranged_M4,
         ItemType.Weapon_Ranged_Sniper_Rifle,
         ItemType.Weapon_Ranged_Bow,
       ]);
@@ -220,7 +220,7 @@ class GameSurvival extends Game {
     if (ai.characterTypeTemplate){
       ai.weaponType = randomItem(const[
         ItemType.Empty,
-        ItemType.Weapon_Ranged_Glock,
+        ItemType.Weapon_Ranged_Handgun,
         ItemType.Weapon_Melee_Crowbar,
       ]);
       ai.headType = randomItem(const[

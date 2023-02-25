@@ -601,7 +601,7 @@ abstract class Game {
       return;
     }
 
-    if (weaponType == ItemType.Weapon_Special_Minigun){
+    if (weaponType == ItemType.Weapon_Ranged_Minigun){
       if (character is Player){
         playerUseMinigun(character);
       }

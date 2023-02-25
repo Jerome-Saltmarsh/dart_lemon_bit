@@ -342,14 +342,13 @@ class TemplateAnimation {
      if (weaponType == ItemType.Weapon_Thrown_Grenade) {
        return Punch;
      }
-
      if (weaponType == ItemType.Weapon_Ranged_Flamethrower){
        return FiringShotgun;
      }
      if (weaponType == ItemType.Weapon_Ranged_Smg) {
        return FiringShotgun;
      }
-     if (weaponType == ItemType.Weapon_Special_Minigun) {
+     if (weaponType == ItemType.Weapon_Ranged_Minigun) {
        return FiringShotgun;
      }
      if (weaponType == ItemType.Weapon_Ranged_Bazooka) {
