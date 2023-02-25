@@ -50,8 +50,8 @@ class GameSurvival extends Game {
     player.belt4_quantity = 3;
     player.belt5_itemType = ItemType.Weapon_Ranged_Rifle;
     player.belt5_quantity = ItemType.getMaxQuantity(ItemType.Weapon_Ranged_Rifle);
-    player.belt6_itemType = ItemType.Weapon_Ranged_AK_47;
-    player.belt6_quantity = ItemType.getMaxQuantity(ItemType.Weapon_Ranged_AK_47);
+    player.belt6_itemType = ItemType.Weapon_Ranged_Machine_Gun;
+    player.belt6_quantity = ItemType.getMaxQuantity(ItemType.Weapon_Ranged_Machine_Gun);
     player.equippedWeaponIndex = ItemType.Belt_1;
     player.refreshStats();
     moveToRandomPlayerSpawnPoint(player);
@@ -114,8 +114,7 @@ class GameSurvival extends Game {
         ItemType.Weapon_Thrown_Grenade,
         ItemType.Weapon_Ranged_Handgun,
         ItemType.Weapon_Ranged_Musket,
-        ItemType.Weapon_Ranged_AK_47,
-        ItemType.Weapon_Ranged_M4,
+        ItemType.Weapon_Ranged_Machine_Gun,
         ItemType.Weapon_Ranged_Sniper_Rifle,
         ItemType.Weapon_Ranged_Bow,
       ]);

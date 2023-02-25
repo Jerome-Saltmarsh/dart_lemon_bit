@@ -22,8 +22,7 @@ class GameOptions {
 
   static const Default_ItemType_Damage = <int, List<int>> {
      ItemType.Weapon_Ranged_Smg: [2, 3, 4, 5, 6],
-     ItemType.Weapon_Ranged_M4: [2, 3, 4, 5, 6],
-     ItemType.Weapon_Ranged_AK_47: [2, 3, 4, 5, 6],
+     ItemType.Weapon_Ranged_Machine_Gun: [2, 3, 4, 5, 6],
      ItemType.Weapon_Ranged_Rifle: [4, 5, 7, 8, 10],
      ItemType.Weapon_Ranged_Sniper_Rifle: [4, 5, 7, 8, 10],
      ItemType.Weapon_Ranged_Musket: [4, 5, 7, 8, 10],
@@ -44,7 +43,7 @@ class GameOptions {
   };
 
   static const Default_ItemType_Cost = <int, List<int>> {
-     ItemType.Weapon_Ranged_AK_47: [10, 15, 30, 50, 100],
+     ItemType.Weapon_Ranged_Machine_Gun: [10, 15, 30, 50, 100],
      ItemType.Weapon_Ranged_Rifle: [4, 5, 7, 8, 10],
      ItemType.Weapon_Melee_Hammer: [3, 4, 5, 6, 7],
      ItemType.Weapon_Melee_Pickaxe: [5, 7, 10, 12, 14],
@@ -66,8 +65,7 @@ class GameOptions {
     ItemType.Weapon_Ranged_Crossbow: 5,
     ItemType.Weapon_Ranged_Musket: 5,
     ItemType.Weapon_Ranged_Rifle: 8,
-    ItemType.Weapon_Ranged_AK_47: 2,
-    ItemType.Weapon_Ranged_M4: 2,
+    ItemType.Weapon_Ranged_Machine_Gun: 2,
     ItemType.Weapon_Ranged_Sniper_Rifle: 50,
     ItemType.Weapon_Ranged_Smg: 1,
     ItemType.Weapon_Ranged_Flamethrower: 10,

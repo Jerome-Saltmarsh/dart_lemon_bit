@@ -70,8 +70,7 @@ class AtlasItems {
         ItemType.Weapon_Ranged_Revolver: 224,
         ItemType.Weapon_Ranged_Rifle: 595,
         ItemType.Weapon_Ranged_Musket: 64,
-        ItemType.Weapon_Ranged_M4: 64,
-        ItemType.Weapon_Ranged_AK_47: 64,
+        ItemType.Weapon_Ranged_Machine_Gun: 704,
         ItemType.Weapon_Ranged_Sniper_Rifle: 64,
         ItemType.Weapon_Ranged_Smg: 783,
         ItemType.Weapon_Ranged_Flamethrower: 64,
@@ -170,8 +169,7 @@ class AtlasItems {
         ItemType.Weapon_Ranged_Desert_Eagle: 32,
         ItemType.Weapon_Ranged_Rifle: 0,
         ItemType.Weapon_Ranged_Musket: 96,
-        ItemType.Weapon_Ranged_AK_47: 128,
-        ItemType.Weapon_Ranged_M4: 160,
+        ItemType.Weapon_Ranged_Machine_Gun: 236,
         ItemType.Weapon_Ranged_Sniper_Rifle: 224,
         ItemType.Weapon_Ranged_Smg: 85,
         ItemType.Weapon_Ranged_Flamethrower: 240,
@@ -223,6 +221,7 @@ class AtlasItems {
         ItemType.Weapon_Ranged_Minigun: 35,
         ItemType.Weapon_Ranged_Rifle: 429,
         ItemType.Weapon_Ranged_Smg: 240,
+        ItemType.Weapon_Ranged_Machine_Gun: 319,
       }[itemType] ?? size;
 
   static double getSrcHeight(int itemType) => const <int, double>{
@@ -261,6 +260,7 @@ class AtlasItems {
         ItemType.Weapon_Ranged_Minigun: 12,
         ItemType.Weapon_Ranged_Rifle: 83,
         ItemType.Weapon_Ranged_Smg: 150,
+        ItemType.Weapon_Ranged_Machine_Gun: 93,
   }[itemType] ?? size;
 
   static double getSrcScale(int itemType) => const <int, double> {

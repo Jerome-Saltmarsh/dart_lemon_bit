@@ -134,10 +134,8 @@ class GameImages {
             return template_weapon_knife;
          case ItemType.Weapon_Ranged_Sniper_Rifle:
             return template_weapon_sniper_rifle;
-         case ItemType.Weapon_Ranged_AK_47:
+         case ItemType.Weapon_Ranged_Minigun:
             return template_weapon_ak47;
-         case ItemType.Weapon_Ranged_M4:
-            return template_weapon_m4;
          case ItemType.Weapon_Ranged_Musket:
             return template_weapon_winchester;
          case ItemType.Weapon_Ranged_Rifle:
@@ -240,6 +238,7 @@ class GameImages {
       Engine.loadImageAsset('images/template/weapons/template-weapons-crowbar.png').then((value) => template_weapon_crowbar = value);
    }
 }
+
 
 
 

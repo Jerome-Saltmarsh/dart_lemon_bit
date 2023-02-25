@@ -59,8 +59,7 @@ class GamePractice extends Game {
     player.inventoryAddMax(itemType: ItemType.Weapon_Ranged_Sniper_Rifle);
     player.inventoryAddMax(itemType: ItemType.Weapon_Ranged_Handgun);
     player.inventoryAddMax(itemType: ItemType.Weapon_Ranged_Desert_Eagle);
-    player.inventoryAddMax(itemType: ItemType.Weapon_Ranged_AK_47);
-    player.inventoryAddMax(itemType: ItemType.Weapon_Ranged_M4);
+    player.inventoryAddMax(itemType: ItemType.Weapon_Ranged_Machine_Gun);
     player.inventoryAddMax(itemType: ItemType.Weapon_Melee_Knife);
     player.inventoryAdd(itemType: ItemType.Weapon_Thrown_Grenade, itemQuantity: 10);
     player.inventoryAdd(itemType: ItemType.Weapon_Ranged_Flamethrower, itemQuantity: 500);
@@ -71,7 +70,7 @@ class GamePractice extends Game {
     player.headType = randomItem(ItemType.HeadTypes);
     player.bodyType = randomItem(ItemType.BodyTypes);
     player.legsType = randomItem(ItemType.LegTypes);
-    player.inventorySet(index: ItemType.Belt_1, itemType: ItemType.Weapon_Ranged_AK_47, itemQuantity: ItemType.getMaxQuantity(ItemType.Weapon_Ranged_AK_47));
+    player.inventorySet(index: ItemType.Belt_1, itemType: ItemType.Weapon_Ranged_Machine_Gun, itemQuantity: ItemType.getMaxQuantity(ItemType.Weapon_Ranged_Machine_Gun));
     player.inventorySet(index: ItemType.Belt_2, itemType: ItemType.Weapon_Ranged_Sniper_Rifle, itemQuantity: ItemType.getMaxQuantity(ItemType.Weapon_Ranged_Sniper_Rifle));
     player.inventorySet(index: ItemType.Belt_3, itemType: ItemType.Weapon_Ranged_Handgun, itemQuantity: ItemType.getMaxQuantity(ItemType.Weapon_Ranged_Handgun));
     player.inventorySet(index: ItemType.Belt_4, itemType: ItemType.Weapon_Thrown_Grenade, itemQuantity: 10);

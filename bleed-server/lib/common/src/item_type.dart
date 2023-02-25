@@ -147,8 +147,7 @@ class ItemType {
   static const Weapon_Ranged_Desert_Eagle = Index_Weapon_Ranged + 04;
   static const Weapon_Ranged_Musket       = Index_Weapon_Ranged + 05;
   static const Weapon_Ranged_Rifle        = Index_Weapon_Ranged + 06;
-  static const Weapon_Ranged_AK_47        = Index_Weapon_Ranged + 07;
-  static const Weapon_Ranged_M4           = Index_Weapon_Ranged + 08;
+  static const Weapon_Ranged_Machine_Gun  = Index_Weapon_Ranged + 07;
   static const Weapon_Ranged_Sniper_Rifle = Index_Weapon_Ranged + 09;
   static const Weapon_Ranged_Smg          = Index_Weapon_Ranged + 10;
   static const Weapon_Ranged_Flamethrower = Index_Weapon_Ranged + 11;
@@ -307,11 +306,10 @@ class ItemType {
   static bool isTypeWeaponFirearm(int value) => const [
     Weapon_Ranged_Pistol,
     Weapon_Ranged_Handgun,
-    Weapon_Ranged_M4,
     Weapon_Ranged_Minigun,
     Weapon_Ranged_Musket,
     Weapon_Ranged_Rifle,
-    Weapon_Ranged_AK_47,
+    Weapon_Ranged_Machine_Gun,
     Weapon_Ranged_Sniper_Rifle,
     Weapon_Ranged_Flamethrower,
     Weapon_Ranged_Smg,
@@ -321,12 +319,11 @@ class ItemType {
     Weapon_Ranged_Desert_Eagle,
   ].contains(value);
 
-
   static bool isAutomaticFirearm(int value) =>
       value ==  Weapon_Ranged_Smg      ||
-      value ==  Weapon_Ranged_AK_47  ||
-      value ==  Weapon_Ranged_M4      ;
-  
+      value ==  Weapon_Ranged_Minigun  ||
+      value ==  Weapon_Ranged_Machine_Gun;
+
   static bool isTypeWeaponMelee(int value) =>
       value == Empty ||
       (
@@ -350,10 +347,9 @@ class ItemType {
 
   static bool isTypeWeaponRifle(int value) => const <int> [
       Weapon_Ranged_Sniper_Rifle,
-      Weapon_Ranged_AK_47,
+      Weapon_Ranged_Machine_Gun,
       Weapon_Ranged_Rifle,
       Weapon_Ranged_Musket,
-      Weapon_Ranged_M4,
   ].contains(value);
 
   static bool isTypeWeaponRanged(int value) =>
@@ -376,10 +372,9 @@ class ItemType {
   ].contains(itemType);
 
   static bool isTwoHanded(int itemType) => const <int>[
-    Weapon_Ranged_M4,
     Weapon_Ranged_Musket,
     Weapon_Ranged_Rifle,
-    Weapon_Ranged_AK_47,
+    Weapon_Ranged_Machine_Gun,
     Weapon_Ranged_Sniper_Rifle,
     Weapon_Ranged_Shotgun,
     Weapon_Ranged_Bazooka,
@@ -421,8 +416,7 @@ class ItemType {
       Weapon_Ranged_Desert_Eagle         : Resource_Round_50cal,
       Weapon_Ranged_Musket                 : Resource_Gun_Powder,
       Weapon_Ranged_Rifle                  : Resource_Round_Rifle,
-      Weapon_Ranged_M4                     : Resource_Round_Rifle,
-      Weapon_Ranged_AK_47                  : Resource_Round_Rifle,
+      Weapon_Ranged_Machine_Gun                  : Resource_Round_Rifle,
       Weapon_Ranged_Sniper_Rifle                 : Resource_Round_50cal,
       Weapon_Ranged_Smg                      : Resource_Round_9mm,
       Weapon_Ranged_Shotgun               : Resource_Round_Shotgun,
@@ -462,8 +456,7 @@ class ItemType {
     Weapon_Ranged_Pistol: 1,
     Weapon_Ranged_Musket: 2,
     Weapon_Ranged_Rifle: 2,
-    Weapon_Ranged_AK_47: 2,
-    Weapon_Ranged_M4: 2,
+    Weapon_Ranged_Machine_Gun: 2,
   }[itemType] ?? 0;
 
   static int getEnergy(int value) => const {
@@ -471,7 +464,7 @@ class ItemType {
   }[value] ?? 0;
 
   static double getAccuracy(int value) => const <int, double> {
-     Weapon_Ranged_M4: 0.125,
+
   }[value] ?? 0.25;
 
   static double getRangeMelee(int value) => const <int, double> {
@@ -497,8 +490,7 @@ class ItemType {
       Weapon_Melee_Staff: 40,
       Weapon_Ranged_Musket: 420,
       Weapon_Ranged_Rifle: 440,
-      Weapon_Ranged_AK_47: 400,
-      Weapon_Ranged_M4: 420,
+      Weapon_Ranged_Machine_Gun: 400,
       Weapon_Ranged_Sniper_Rifle: 750,
       Weapon_Ranged_Smg: 270,
       Weapon_Ranged_Flamethrower: 150,
@@ -525,8 +517,7 @@ class ItemType {
       Weapon_Ranged_Crossbow: 50,
       Weapon_Ranged_Musket: 55,
       Weapon_Ranged_Rifle: 50,
-      Weapon_Ranged_AK_47: 5,
-      Weapon_Ranged_M4: 5,
+      Weapon_Ranged_Machine_Gun: 5,
       Weapon_Ranged_Sniper_Rifle: 75,
       Weapon_Ranged_Smg: 5,
       Weapon_Ranged_Flamethrower: 2,
@@ -625,10 +616,9 @@ class ItemType {
      Weapon_Ranged_Revolver: "Revolver",
      Weapon_Ranged_Desert_Eagle: "Desert Eagle",
      Weapon_Ranged_Shotgun: "Shotgun",
-     Weapon_Ranged_Rifle: "Rifle",
+     Weapon_Ranged_Rifle: "Bolt-Action Rifle",
      Weapon_Ranged_Musket: "Musket",
-     Weapon_Ranged_AK_47: "Machine-Gun",
-     Weapon_Ranged_M4: "M4 Assault Rifle",
+     Weapon_Ranged_Machine_Gun: "Machine-Gun",
      Weapon_Ranged_Sniper_Rifle: "Sniper Rifle",
      Weapon_Ranged_Smg: "Smg",
      Weapon_Ranged_Flamethrower: "Flamethrower",
@@ -684,8 +674,7 @@ class ItemType {
     Weapon_Ranged_Handgun                : 15,
     Weapon_Ranged_Revolver             : 05,
     Weapon_Ranged_Desert_Eagle         : 07,
-    Weapon_Ranged_M4                     : 35,
-    Weapon_Ranged_AK_47                  : 35,
+    Weapon_Ranged_Machine_Gun                  : 35,
     Weapon_Ranged_Rifle                  : 04,
     Weapon_Ranged_Musket                 : 01,
     Weapon_Ranged_Sniper_Rifle                 : 5,
@@ -730,7 +719,7 @@ class ItemType {
 
   static double getScopeDistance(int itemType) => const <int, double>{
     Weapon_Ranged_Musket: 1.5,
-    Weapon_Ranged_AK_47: 1.33,
+    Weapon_Ranged_Machine_Gun: 1.33,
     Weapon_Ranged_Sniper_Rifle: 3.0,
   }[itemType] ?? 1.0;
 
@@ -808,23 +797,21 @@ class ItemType {
   static int getUpgrade(int itemType) {
      return const {
        Weapon_Ranged_Handgun: Weapon_Ranged_Revolver,
-       Weapon_Ranged_AK_47: Weapon_Ranged_M4,
      }[itemType] ?? Empty;
   }
 
   static int getUpgradeCost(int itemType){
     return const {
       Weapon_Ranged_Handgun: 200,
-      Weapon_Ranged_AK_47: 300,
+      Weapon_Ranged_Machine_Gun: 300,
     }[itemType] ?? Empty;
   }
 
   static const Item_Group_Primary_Weapons = [
-     Weapon_Ranged_M4,
      Weapon_Ranged_Shotgun,
      Weapon_Ranged_Smg,
      Weapon_Ranged_Sniper_Rifle,
-     Weapon_Ranged_AK_47,
+     Weapon_Ranged_Machine_Gun,
      Weapon_Ranged_Rifle,
      Weapon_Ranged_Musket,
      Weapon_Ranged_Minigun,
@@ -894,15 +881,14 @@ class ItemType {
   }
 
   static double getWeaponLength(int itemType) => const <int, double>{
-        Weapon_Ranged_AK_47: 30,
+        Weapon_Ranged_Machine_Gun: 30,
         Weapon_Ranged_Handgun: 20,
   }[itemType] ?? 20;
 
   static const Collection_Weapons_Rifles = [
      Weapon_Ranged_Musket,
-     Weapon_Ranged_AK_47,
+     Weapon_Ranged_Machine_Gun,
      Weapon_Ranged_Sniper_Rifle,
-     Weapon_Ranged_M4,
   ];
 
   static const Collection_Weapons_Handguns = [
