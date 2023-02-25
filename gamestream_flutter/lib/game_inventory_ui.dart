@@ -249,7 +249,6 @@ class GameInventoryUI {
               children: [
                 GameUI.buildAtlasItemType(
                   itemType ?? ServerQuery.getItemTypeAtInventoryIndex(itemIndex),
-                  scale: scale,
                 ),
                 if (itemQuantity != null && itemQuantity > 1)
                   Positioned(child: text(itemQuantity, size: 13, color: Colors.white70), right: 0, bottom: 0),
@@ -724,7 +723,9 @@ class GameInventoryUI {
           Expanded(
             child: Row(
               children: [
-                GameUI.buildAtlasItemType(recipeItemType, scale: 0.75),
+                Container(
+                    constraints: const BoxConstraints(maxWidth: 150),
+                    child: GameUI.buildAtlasItemType(recipeItemType)),
                 width4,
                 text(ItemType.getName(recipeItemType), color: textColor),
               ],

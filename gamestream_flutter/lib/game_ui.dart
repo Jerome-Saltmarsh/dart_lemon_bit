@@ -262,7 +262,7 @@ class GameUI {
                 width: GameUIConfig.runButtonSize,
                 height: GameUIConfig.runButtonSize,
                 alignment: Alignment.center,
-                child: watch(GamePlayer.weapon, (int itemType) => buildAtlasItemType(itemType, scale: 3)),
+                child: watch(GamePlayer.weapon, (int itemType) => buildAtlasItemType(itemType)),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(color: Colors.white70, width: 5),
@@ -401,7 +401,7 @@ class GameUI {
         color: color,
       );
 
-  static Widget buildAtlasItemType(int itemType, {double scale = 1.25}) =>
+  static Widget buildAtlasItemType(int itemType) =>
       FittedBox(
         child: Engine.buildAtlasImage(
           image: ItemType.isTypeGameObject(itemType)
@@ -411,7 +411,6 @@ class GameUI {
           srcY: AtlasItems.getSrcY(itemType),
           srcWidth: AtlasItems.getSrcWidth(itemType),
           srcHeight: AtlasItems.getSrcHeight(itemType),
-          scale: 1.25,
         ),
       );
 
@@ -636,10 +635,12 @@ class GameUI {
                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                children: [
                  Container(
-                     width: 100,
+                     constraints: const BoxConstraints(maxWidth: 150),
                      child: buildAtlasItemType(itemType),
                      height: 50,
-                     alignment: Alignment.centerLeft,
+                     alignment: Alignment.center,
+                     color: Colors.black12,
+                     padding: GameStyle.Padding_4,
                  ),
                  if (itemValue > 0) buildItemTypeBars(itemValue),
                  onPressed(
@@ -809,9 +810,10 @@ class GameUI {
                      color: active ? playerWeaponType == itemType ? Colors.white70 : Colors.black54 : Colors.transparent,
                      width: Border_Width,
                      child: Container(
+                       constraints: BoxConstraints(maxWidth: 100),
                        height: GameStyle.Player_Weapons_Icon_Size,
                        color: active ? Colors.black45 : Colors.black12,
-                       padding: GameStyle.Padding_2,
+                       padding: GameStyle.Padding_4,
                        child: buildAtlasItemType(itemType),
                      ),
                    );
@@ -1069,7 +1071,7 @@ class GameUI {
   }) => Stack(
       children: [
         buildAtlasIconType(IconType.Slot, scale: 2.0),
-        buildAtlasItemType(itemType, scale: 1.8),
+        buildAtlasItemType(itemType),
         Positioned(
           left: 5,
           top: 5,
