@@ -27,16 +27,14 @@ class GameOptions {
      ItemType.Weapon_Ranged_Rifle: [4, 5, 7, 8, 10],
      ItemType.Weapon_Ranged_Sniper_Rifle: [4, 5, 7, 8, 10],
      ItemType.Weapon_Ranged_Musket: [4, 5, 7, 8, 10],
-
      ItemType.Weapon_Ranged_Bazooka: [4, 5, 7, 8, 10],
      ItemType.Weapon_Ranged_Flamethrower: [4, 5, 7, 8, 10],
      ItemType.Weapon_Ranged_Minigun: [4, 5, 7, 8, 10],
-
      ItemType.Weapon_Ranged_Handgun: [4, 5, 7, 8, 10],
      ItemType.Weapon_Ranged_Revolver: [4, 5, 7, 8, 10],
      ItemType.Weapon_Ranged_Desert_Eagle: [4, 5, 7, 8, 10],
      ItemType.Weapon_Ranged_Pistol: [4, 5, 7, 8, 10],
-
+     ItemType.Weapon_Ranged_Shotgun: [4, 5, 7, 8, 10],
      ItemType.Weapon_Melee_Hammer: [3, 4, 5, 6, 7],
      ItemType.Weapon_Melee_Pickaxe: [5, 7, 10, 12, 14],
      ItemType.Weapon_Melee_Knife: [4, 5, 7, 8, 10],
@@ -72,9 +70,9 @@ class GameOptions {
     ItemType.Weapon_Ranged_M4: 2,
     ItemType.Weapon_Ranged_Sniper_Rifle: 50,
     ItemType.Weapon_Ranged_Smg: 1,
-    ItemType.Trinket_Ring_of_Damage: 1,
     ItemType.Weapon_Ranged_Flamethrower: 10,
     ItemType.Weapon_Ranged_Bazooka: 100,
     ItemType.Weapon_Ranged_Minigun: 7,
+    ItemType.Trinket_Ring_of_Damage: 1,
   };
 }

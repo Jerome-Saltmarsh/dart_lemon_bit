@@ -16,13 +16,7 @@ class ItemType {
   static const Index_Weapon                 = 40000;
   static const Index_Weapon_Melee           = 40001;
   static const Index_Weapon_Thrown          = 42500;
-  static const Index_Weapon_Ranged_Handgun  = 45000;
-  static const Index_Weapon_Ranged_Rifle    = 46000;
-  static const Index_Weapon_Ranged_Smg      = 46500;
-  static const Index_Weapon_Ranged_Shotgun  = 47000;
-  static const Index_Weapon_Ranged_Bow      = 48000;
-  static const Index_Weapon_Ranged_Crossbow = 49000;
-  static const Index_Weapon_Special         = 49200;
+  static const Index_Weapon_Ranged          = 45000;
   static const Index_Recipe                 = 50000;
   static const Index_Belt                   = 65000;
   static const Index_Equipped               = Index_Belt + 7;
@@ -147,23 +141,22 @@ class ItemType {
   static const Weapon_Thrown_Grenade      = Index_Weapon_Thrown + 2;
   static const Weapon_Thrown_Molotov      = Index_Weapon_Thrown + 3;
 
-  static const Weapon_Ranged_Pistol       = Index_Weapon_Ranged_Handgun + 1;
-  static const Weapon_Ranged_Handgun      = Index_Weapon_Ranged_Handgun + 2;
-  static const Weapon_Ranged_Revolver     = Index_Weapon_Ranged_Handgun + 3;
-  static const Weapon_Ranged_Desert_Eagle = Index_Weapon_Ranged_Handgun + 4;
-  static const Weapon_Ranged_Musket       = Index_Weapon_Ranged_Rifle + 1;
-  static const Weapon_Ranged_Rifle        = Weapon_Ranged_Musket + 1;
-  static const Weapon_Ranged_AK_47        = Weapon_Ranged_Rifle + 1;
-  static const Weapon_Ranged_M4           = Weapon_Ranged_AK_47 + 1;
-  static const Weapon_Ranged_Sniper_Rifle = Weapon_Ranged_M4 + 1;
-  static const Weapon_Ranged_Smg          = Index_Weapon_Ranged_Smg + 1;
-  static const Weapon_Ranged_Flamethrower = Index_Weapon_Special + 1;
-  static const Weapon_Ranged_Bazooka      = Index_Weapon_Special + 2;
-  static const Weapon_Ranged_Minigun      = Index_Weapon_Special + 3;
-
-  static const Weapon_Ranged_Shotgun = Index_Weapon_Ranged_Shotgun + 1;
-  static const Weapon_Ranged_Bow = Index_Weapon_Ranged_Bow + 1;
-  static const Weapon_Ranged_Crossbow = Weapon_Ranged_Bow + 1;
+  static const Weapon_Ranged_Pistol       = Index_Weapon_Ranged + 01;
+  static const Weapon_Ranged_Handgun      = Index_Weapon_Ranged + 02;
+  static const Weapon_Ranged_Revolver     = Index_Weapon_Ranged + 03;
+  static const Weapon_Ranged_Desert_Eagle = Index_Weapon_Ranged + 04;
+  static const Weapon_Ranged_Musket       = Index_Weapon_Ranged + 05;
+  static const Weapon_Ranged_Rifle        = Index_Weapon_Ranged + 06;
+  static const Weapon_Ranged_AK_47        = Index_Weapon_Ranged + 07;
+  static const Weapon_Ranged_M4           = Index_Weapon_Ranged + 08;
+  static const Weapon_Ranged_Sniper_Rifle = Index_Weapon_Ranged + 09;
+  static const Weapon_Ranged_Smg          = Index_Weapon_Ranged + 10;
+  static const Weapon_Ranged_Flamethrower = Index_Weapon_Ranged + 11;
+  static const Weapon_Ranged_Bazooka      = Index_Weapon_Ranged + 12;
+  static const Weapon_Ranged_Minigun      = Index_Weapon_Ranged + 13;
+  static const Weapon_Ranged_Shotgun      = Index_Weapon_Ranged + 14;
+  static const Weapon_Ranged_Bow          = Index_Weapon_Ranged + 15;
+  static const Weapon_Ranged_Crossbow     = Index_Weapon_Ranged + 16;
 
   static const Recipes = <int, List<int>> {
     Consumables_Apple: const [
@@ -311,9 +304,23 @@ class ItemType {
   static bool isTypeWeapon(int value) =>
       value > Index_Weapon_Melee && value < Index_Recipe;
 
-  static bool isTypeWeaponFirearm(int value) =>
-      value >= Index_Weapon_Ranged_Handgun &&
-      value < Index_Weapon_Ranged_Bow;
+  static bool isTypeWeaponFirearm(int value) => const [
+    Weapon_Ranged_Pistol,
+    Weapon_Ranged_Handgun,
+    Weapon_Ranged_M4,
+    Weapon_Ranged_Minigun,
+    Weapon_Ranged_Musket,
+    Weapon_Ranged_Rifle,
+    Weapon_Ranged_AK_47,
+    Weapon_Ranged_Sniper_Rifle,
+    Weapon_Ranged_Flamethrower,
+    Weapon_Ranged_Smg,
+    Weapon_Ranged_Bazooka,
+    Weapon_Ranged_Revolver,
+    Weapon_Ranged_Shotgun,
+    Weapon_Ranged_Desert_Eagle,
+  ].contains(value);
+
 
   static bool isAutomaticFirearm(int value) =>
       value ==  Weapon_Ranged_Smg      ||
@@ -329,24 +336,28 @@ class ItemType {
 
   static bool isTypeWeaponThrown(int value) =>
       value >= Index_Weapon_Thrown         &&
-      value < Index_Weapon_Ranged_Handgun  ;
+      value < Index_Weapon_Ranged  ;
 
   static bool isTypeWeaponBow(int value) =>
       value == Weapon_Ranged_Bow;
 
-  static bool isTypeWeaponHandgun(int value) =>
-      value > Index_Weapon_Ranged_Handgun &&
-      value < Index_Weapon_Ranged_Rifle;
+  static bool isTypeWeaponHandgun(int value) => const <int> [
+      Weapon_Ranged_Desert_Eagle,
+      Weapon_Ranged_Revolver,
+      Weapon_Ranged_Handgun,
+      Weapon_Ranged_Pistol,
+  ].contains(value);
 
-  static bool isTypeWeaponRifle(int value) =>
-      value > Index_Weapon_Ranged_Rifle &&
-      value < Index_Weapon_Ranged_Smg;
-
-  static bool isTypeWeaponShotgun(int value) =>
-      value > Index_Weapon_Ranged_Shotgun && value < Index_Weapon_Ranged_Bow;
+  static bool isTypeWeaponRifle(int value) => const <int> [
+      Weapon_Ranged_Sniper_Rifle,
+      Weapon_Ranged_AK_47,
+      Weapon_Ranged_Rifle,
+      Weapon_Ranged_Musket,
+      Weapon_Ranged_M4,
+  ].contains(value);
 
   static bool isTypeWeaponRanged(int value) =>
-      value >= Index_Weapon_Ranged_Handgun && value < Index_Recipe;
+      value >= Index_Weapon_Ranged && value < Index_Recipe;
 
   static bool isIndexBelt(int index)=> index >= Belt_1 && index <= Belt_6;
 
@@ -354,16 +365,33 @@ class ItemType {
       value >= Index_Recipe &&
       value < Index_Equipped ;
 
-  static bool isOneHanded(int weaponType) =>
-      isTypeWeaponHandgun   (weaponType) ;
+  static bool isOneHanded(int itemType) => const <int> [
+    Weapon_Ranged_Pistol,
+    Weapon_Ranged_Handgun,
+    Weapon_Ranged_Revolver,
+    Weapon_Ranged_Desert_Eagle,
+    Weapon_Ranged_Smg,
+    Weapon_Melee_Knife,
+    Weapon_Melee_Crowbar,
+  ].contains(itemType);
 
-  static bool isTwoHanded(int weaponType) =>
-      isTypeWeaponRifle       (weaponType) ||
-      isTypeWeaponShotgun     (weaponType) ||
-      isTypeWeaponBow         (weaponType) ||
-      weaponType == Weapon_Ranged_Bazooka ||
-      weaponType == Weapon_Ranged_Flamethrower    ||
-      weaponType == Weapon_Ranged_Minigun  ;
+  static bool isTwoHanded(int itemType) => const <int>[
+    Weapon_Ranged_M4,
+    Weapon_Ranged_Musket,
+    Weapon_Ranged_Rifle,
+    Weapon_Ranged_AK_47,
+    Weapon_Ranged_Sniper_Rifle,
+    Weapon_Ranged_Shotgun,
+    Weapon_Ranged_Bazooka,
+    Weapon_Ranged_Flamethrower,
+    Weapon_Ranged_Minigun,
+    Weapon_Ranged_Bow,
+    Weapon_Melee_Axe,
+    Weapon_Melee_Hammer,
+    Weapon_Melee_Pickaxe,
+    Weapon_Melee_Staff,
+    Weapon_Melee_Sword,
+  ].contains(itemType);
 
   static bool isFood(int type) =>
      type == Consumables_Apple ||

@@ -320,17 +320,13 @@ class TemplateAnimation {
        return FiringHandgun;
      }
 
-     if (ItemType.isTypeWeaponShotgun(weaponType)){
+     if (weaponType == ItemType.Weapon_Ranged_Shotgun){
        return FiringShotgun;
      }
 
       if (ItemType.isTypeWeaponRifle(weaponType)){
         return FiringRifle;
       }
-
-     if (ItemType.isTypeWeaponShotgun(weaponType)){
-       return FiringShotgun;
-     }
 
      if (ItemType.isTypeWeaponMelee(weaponType)){
        return StrikingBlade;
@@ -346,7 +342,7 @@ class TemplateAnimation {
        return FiringShotgun;
      }
      if (weaponType == ItemType.Weapon_Ranged_Smg) {
-       return FiringShotgun;
+       return FiringHandgun;
      }
      if (weaponType == ItemType.Weapon_Ranged_Minigun) {
        return FiringShotgun;
