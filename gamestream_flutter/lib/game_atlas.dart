@@ -73,7 +73,7 @@ class AtlasItems {
         ItemType.Weapon_Ranged_Machine_Gun: 704,
         ItemType.Weapon_Ranged_Sniper_Rifle: 845,
         ItemType.Weapon_Ranged_Smg: 783,
-        ItemType.Weapon_Ranged_Flamethrower: 64,
+        ItemType.Weapon_Ranged_Flamethrower: 782,
         ItemType.Weapon_Ranged_Bazooka: 795,
         ItemType.Weapon_Ranged_Minigun: 1,
         ItemType.Resource_Wood: 32,
@@ -172,7 +172,7 @@ class AtlasItems {
         ItemType.Weapon_Ranged_Machine_Gun: 236,
         ItemType.Weapon_Ranged_Sniper_Rifle: 383,
         ItemType.Weapon_Ranged_Smg: 85,
-        ItemType.Weapon_Ranged_Flamethrower: 240,
+        ItemType.Weapon_Ranged_Flamethrower: 545,
         ItemType.Weapon_Ranged_Bazooka: 431,
         ItemType.Weapon_Ranged_Minigun: 130,
         ItemType.Base_Health: 64,
@@ -216,7 +216,7 @@ class AtlasItems {
         ItemType.GameObjects_Vending_Upgrades: 39,
         ItemType.GameObjects_Pipe_Vertical: 8,
         ItemType.Weapon_Ranged_Sniper_Rifle: 178,
-        ItemType.Weapon_Ranged_Flamethrower: 64,
+        ItemType.Weapon_Ranged_Flamethrower: 241,
         ItemType.Weapon_Ranged_Bazooka: 228,
         ItemType.Weapon_Ranged_Minigun: 35,
         ItemType.Weapon_Ranged_Rifle: 429,
@@ -263,6 +263,7 @@ class AtlasItems {
         ItemType.Weapon_Ranged_Smg: 150,
         ItemType.Weapon_Ranged_Machine_Gun: 93,
         ItemType.Weapon_Ranged_Shotgun: 48,
+    ItemType.Weapon_Ranged_Flamethrower: 101,
   }[itemType] ?? size;
 
   static double getSrcScale(int itemType) => const <int, double> {
