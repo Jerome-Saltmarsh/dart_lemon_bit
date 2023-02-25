@@ -855,6 +855,7 @@ class ItemType {
       Weapon_Ranged_Revolver,
       Weapon_Handgun_Flint_Lock,
       Weapon_Handgun_Desert_Eagle,
+      Weapon_Ranged_Bow,
    ];
 
   static const Item_Group_Tertiary_Weapons = [

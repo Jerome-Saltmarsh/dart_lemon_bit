@@ -57,7 +57,7 @@ class GameUI {
           decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(color: Colors.black38, width: 3),
-              color: Colors.black26
+              color: Colors.black38
           ),
           child: ClipOval(
             child: Container(
