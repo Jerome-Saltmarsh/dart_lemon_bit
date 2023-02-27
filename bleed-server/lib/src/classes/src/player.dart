@@ -33,8 +33,8 @@ class Player extends Character with ByteWriter {
   var _experience = 0;
   var _level = 1;
   var _attributes = 0;
-  var _energy = 100;
-  var maxEnergy = 100;
+  var _energy = 10;
+  var maxEnergy = 10;
   var message = "";
   var text = "";
   var name = 'anon';
@@ -61,13 +61,6 @@ class Player extends Character with ByteWriter {
   var belt4_quantity = 0; // 4
   var belt5_quantity = 0; // Q
   var belt6_quantity = 0; // E
-
-  var belt1_upgrade = 0;
-  var belt2_upgrade = 0;
-  var belt3_upgrade = 0;
-  var belt4_upgrade = 0;
-  var belt5_upgrade = 0;
-  var belt6_upgrade = 0;
 
   var _baseHealth = 10;
   var _baseDamage = 0;
@@ -1469,11 +1462,13 @@ class Player extends Character with ByteWriter {
     writeMap(items);
   }
 
-  void writePlayerItemsEquipped(){
+  void writePlayerItemsEquipped() {
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Items_Equipped);
     writeUInt16(weaponRanged);
     writeUInt16(weaponMelee);
+    writeUInt16(weaponPrimary);
+    writeUInt16(weaponSecondary);
   }
 
   void writeGameOptions() {

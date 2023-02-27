@@ -121,7 +121,6 @@ class ClientEvents {
     if (GameOptions.items.value) {
       if (key == ClientConstants.Key_Inventory){
         ClientState.window_visible_items.toggle();
-        print("toggle");
         return;
       }
 
