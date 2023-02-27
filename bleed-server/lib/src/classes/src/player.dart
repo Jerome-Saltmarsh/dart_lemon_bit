@@ -1450,13 +1450,13 @@ class Player extends Character with ByteWriter {
     writeBytes(compiled);
   }
 
-  void writePlayerCredits(){
+  void writePlayerCredits() {
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Credits);
     writeUInt16(credits);
   }
 
-  void writePlayerItems(){
+  void writePlayerItems() {
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Items);
     writeMap(items);
@@ -1488,7 +1488,6 @@ class Player extends Character with ByteWriter {
       writeMapListInt(game.options.itemTypeDamage);
       writeMapListInt(game.options.itemTypeCost);
     }
-
   }
 
   void writePlayerInventory() {

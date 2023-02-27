@@ -835,25 +835,31 @@ class GameUI {
                ],
              );
           }),
-          width32,
-          watch(GamePlayer.weaponMelee, (int itemType) {
-            return border(
-              color: playerWeaponType == itemType ? Colors.white70 : Colors.black54,
-              width: 3,
-              child: Container(
-                height: GameStyle.Player_Weapons_Icon_Size,
-                color: Colors.black45,
-                padding: GameStyle.Padding_2,
-                child: buildAtlasItemType(itemType),
-              ),
-            );
-          }),
+          // width32,
+          // buildIconPlayerWeaponMelee(),
           width4,
           buildPlayerEnergy(),
         ],
       ),
     );
   });
+
+  static Widget buildIconPlayerWeaponMelee(){
+    return watch(GamePlayer.weapon, (int playerWeaponType){
+      return watch(GamePlayer.weaponMelee, (int itemType) {
+        return border(
+          color: playerWeaponType == itemType ? Colors.white70 : Colors.black54,
+          width: 3,
+          child: Container(
+            height: GameStyle.Player_Weapons_Icon_Size,
+            color: Colors.black45,
+            padding: GameStyle.Padding_2,
+            child: buildAtlasItemType(itemType),
+          ),
+        );
+      });
+    });
+  }
 
   static Widget buildPlayerHealth() {
     return border(
