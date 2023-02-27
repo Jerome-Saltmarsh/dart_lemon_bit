@@ -48,7 +48,7 @@ class GameImages {
    static late Image template_weapon_shotgun;
    static late Image template_weapon_desert_eagle;
    static late Image template_weapon_plasma_pistol;
-   static late Image template_weapon_plasma_machine_gun;
+   static late Image template_weapon_plasma_rifle;
    static late Image template_weapon_handgun_black;
    static late Image template_weapon_handgun_flintlock;
    static late Image template_weapon_sniper_rifle;
@@ -130,7 +130,9 @@ class GameImages {
    static Image getImageForWeaponType(int weaponType) {
       switch (weaponType) {
          case ItemType.Weapon_Ranged_Machine_Gun:
-            return template_weapon_plasma_machine_gun;
+            return template_weapon_ak47;
+         case ItemType.Weapon_Ranged_Plasma_Rifle:
+            return template_weapon_plasma_rifle;
          case ItemType.Weapon_Melee_Knife:
             return template_weapon_knife;
          case ItemType.Weapon_Ranged_Sniper_Rifle:
@@ -223,7 +225,7 @@ class GameImages {
       Engine.loadImageAsset('images/template/weapons/template-weapons-grenade.png').then((value) => template_weapon_grenade = value);
       Engine.loadImageAsset('images/template/weapons/template-weapons-desert-eagle.png').then((value) => template_weapon_desert_eagle = value);
       Engine.loadImageAsset('images/template/weapons/template-weapons-plasma-pistol.png').then((value) => template_weapon_plasma_pistol = value);
-      Engine.loadImageAsset('images/template/weapons/template-weapons-plasma-rifle.png').then((value) => template_weapon_plasma_machine_gun = value);
+      Engine.loadImageAsset('images/template/weapons/template-weapons-plasma-rifle.png').then((value) => template_weapon_plasma_rifle = value);
       Engine.loadImageAsset('images/template/weapons/template-weapons-handgun-black.png').then((value) => template_weapon_handgun_black = value);
       Engine.loadImageAsset('images/template/weapons/template-weapons-pistol-flintlock.png').then((value) => template_weapon_handgun_flintlock = value);
       Engine.loadImageAsset('images/template/weapons/template-weapons-sniper-rifle.png').then((value) => template_weapon_sniper_rifle = value);

@@ -43,7 +43,7 @@ class GameCombat extends Game {
               // ItemType.Weapon_Ranged_Bow,
               // ItemType.Weapon_Ranged_Rifle,
               // ItemType.Weapon_Ranged_Smg,
-              ItemType.Weapon_Ranged_Machine_Gun,
+              ItemType.Weapon_Ranged_Plasma_Rifle,
               ItemType.Weapon_Ranged_Shotgun,
               ItemType.Weapon_Ranged_Sniper_Rifle,
               ItemType.Weapon_Ranged_Bazooka,
