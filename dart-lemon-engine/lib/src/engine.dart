@@ -1294,6 +1294,7 @@ class Engine {
     required double srcWidth,
     required double srcHeight,
     required Function? action,
+    int color = 1,
     double scale = 1.0,
     String hint = "",
   }) =>
@@ -1307,6 +1308,7 @@ class Engine {
           srcWidth: srcWidth,
           srcHeight: srcHeight,
           scale: scale,
+          color: color,
         ),
       );
 

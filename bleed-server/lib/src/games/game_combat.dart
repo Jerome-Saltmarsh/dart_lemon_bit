@@ -148,14 +148,14 @@ class GameCombat extends Game {
         characterUseOrEquipWeapon(
           character: player,
           weaponType: player.weaponPrimary,
-          characterStateChange: true,
+          characterStateChange: player.weaponType != player.weaponTertiary,
         );
         break;
       case CursorAction.Mouse_Right_Click:
         characterUseOrEquipWeapon(
           character: player,
           weaponType: player.weaponSecondary,
-          characterStateChange: false,
+          characterStateChange: player.weaponType != player.weaponTertiary,
         );
         break;
       case CursorAction.Key_Space:

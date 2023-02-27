@@ -381,6 +381,7 @@ class EditorUI {
                         GameEditor.nodeSelectedIndex.value,
                       );
                     }),
+                buildRowAddGameObject(ItemType.Weapon_Ranged_Plasma_Pistol, color: Colors.black.value),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: ItemType.GameObjectTypes
@@ -392,7 +393,7 @@ class EditorUI {
           );
       });
 
-  static Widget buildRowAddGameObject(int gameObjectType){
+  static Widget buildRowAddGameObject(int gameObjectType, {int color = 1}){
 
     return Container(
       width: 70,
@@ -405,6 +406,7 @@ class EditorUI {
             srcY: AtlasItems.getSrcY(gameObjectType),
             srcWidth: AtlasItems.getSrcWidth(gameObjectType),
             srcHeight: AtlasItems.getSrcHeight(gameObjectType),
+            color: color,
             action: () =>
                 GameNetwork.sendClientRequestAddGameObject(
                   index: GameEditor.nodeSelectedIndex.value,
