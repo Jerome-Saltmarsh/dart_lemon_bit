@@ -319,6 +319,7 @@ class ItemType {
     Weapon_Ranged_Shotgun,
     Weapon_Ranged_Desert_Eagle,
     Weapon_Ranged_Plasma_Pistol,
+    Weapon_Ranged_Plasma_Rifle,
   ].contains(value);
 
   static bool isAutomaticFirearm(int value) => const <int> [
@@ -375,6 +376,7 @@ class ItemType {
 
   static bool isOneHanded(int itemType) => const <int> [
     Weapon_Ranged_Pistol,
+    Weapon_Ranged_Plasma_Pistol,
     Weapon_Ranged_Handgun,
     Weapon_Ranged_Revolver,
     Weapon_Ranged_Desert_Eagle,
@@ -388,6 +390,7 @@ class ItemType {
     Weapon_Ranged_Rifle,
     Weapon_Ranged_Machine_Gun,
     Weapon_Ranged_Sniper_Rifle,
+    Weapon_Ranged_Plasma_Rifle,
     Weapon_Ranged_Shotgun,
     Weapon_Ranged_Bazooka,
     Weapon_Ranged_Flamethrower,

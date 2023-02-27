@@ -59,13 +59,18 @@ class GameCombat extends Game {
     player.headType = randomItem(ItemType.Collection_Clothing_Head);
     player.bodyType = randomItem(ItemType.Collection_Clothing_Body);
     player.legsType = randomItem(ItemType.Collection_Clothing_Legs);
-    player.items[ItemType.Weapon_Ranged_Rifle] = 1;
-    player.items[ItemType.Weapon_Ranged_Handgun] = 1;
-    player.items[ItemType.Weapon_Melee_Knife] = 1;
-    characterEquipItemType(player, ItemType.Weapon_Ranged_Rifle);
-    player.weaponPrimary = ItemType.Weapon_Ranged_Plasma_Rifle;
-    player.weaponSecondary = ItemType.Weapon_Ranged_Plasma_Pistol;
-    player.weaponMelee = ItemType.Weapon_Melee_Knife;
+
+    final weaponPrimary = ItemType.Weapon_Ranged_Plasma_Rifle;
+    final weaponSecondary = ItemType.Weapon_Ranged_Plasma_Pistol;
+    final weaponTertiary = ItemType.Weapon_Melee_Knife;
+
+    player.items[weaponPrimary] = 1;
+    player.items[weaponSecondary] = 1;
+    player.items[weaponTertiary] = 1;
+    characterEquipItemType(player, weaponPrimary);
+    player.weaponPrimary = weaponPrimary;
+    player.weaponSecondary = weaponSecondary;
+    player.weaponMelee = weaponTertiary;
     player.credits = 100;
     player.writeEquipped();
   }
