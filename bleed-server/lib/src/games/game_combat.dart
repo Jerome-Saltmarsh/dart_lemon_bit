@@ -63,8 +63,8 @@ class GameCombat extends Game {
     player.items[ItemType.Weapon_Ranged_Handgun] = 1;
     player.items[ItemType.Weapon_Melee_Knife] = 1;
     characterEquipItemType(player, ItemType.Weapon_Ranged_Rifle);
-    player.weaponPrimary = ItemType.Weapon_Ranged_Rifle;
-    player.weaponSecondary = ItemType.Weapon_Ranged_Handgun;
+    player.weaponPrimary = ItemType.Weapon_Ranged_Plasma_Rifle;
+    player.weaponSecondary = ItemType.Weapon_Ranged_Plasma_Pistol;
     player.weaponMelee = ItemType.Weapon_Melee_Knife;
     player.credits = 100;
     player.writeEquipped();

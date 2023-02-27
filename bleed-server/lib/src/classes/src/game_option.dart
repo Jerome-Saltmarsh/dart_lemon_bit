@@ -33,6 +33,8 @@ class GameOptions {
      ItemType.Weapon_Ranged_Revolver: [4, 5, 7, 8, 10],
      ItemType.Weapon_Ranged_Desert_Eagle: [4, 5, 7, 8, 10],
      ItemType.Weapon_Ranged_Pistol: [4, 5, 7, 8, 10],
+     ItemType.Weapon_Ranged_Plasma_Pistol: [4, 5, 7, 8, 10],
+     ItemType.Weapon_Ranged_Plasma_Rifle: [4, 5, 7, 8, 10],
      ItemType.Weapon_Ranged_Shotgun: [4, 5, 7, 8, 10],
      ItemType.Weapon_Melee_Hammer: [3, 4, 5, 6, 7],
      ItemType.Weapon_Melee_Pickaxe: [5, 7, 10, 12, 14],
@@ -43,6 +45,8 @@ class GameOptions {
   };
 
   static const Default_ItemType_Cost = <int, List<int>> {
+     ItemType.Weapon_Ranged_Plasma_Pistol: [10, 15, 30, 50, 100],
+     ItemType.Weapon_Ranged_Plasma_Rifle: [10, 15, 30, 50, 100],
      ItemType.Weapon_Ranged_Machine_Gun: [10, 15, 30, 50, 100],
      ItemType.Weapon_Ranged_Rifle: [4, 5, 7, 8, 10],
      ItemType.Weapon_Melee_Hammer: [3, 4, 5, 6, 7],

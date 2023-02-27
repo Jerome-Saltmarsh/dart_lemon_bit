@@ -304,7 +304,7 @@ class ItemType {
   static bool isTypeWeapon(int value) =>
       value > Index_Weapon_Melee && value < Index_Recipe;
 
-  static bool isTypeWeaponFirearm(int value) => const [
+  static bool isTypeWeaponFirearm(int value) => const <int> [
     Weapon_Ranged_Pistol,
     Weapon_Ranged_Handgun,
     Weapon_Ranged_Minigun,
@@ -318,23 +318,32 @@ class ItemType {
     Weapon_Ranged_Revolver,
     Weapon_Ranged_Shotgun,
     Weapon_Ranged_Desert_Eagle,
+    Weapon_Ranged_Plasma_Pistol,
   ].contains(value);
 
-  static bool isAutomaticFirearm(int value) =>
-      value ==  Weapon_Ranged_Smg      ||
-      value ==  Weapon_Ranged_Minigun  ||
-      value ==  Weapon_Ranged_Machine_Gun;
+  static bool isAutomaticFirearm(int value) => const <int> [
+    Weapon_Ranged_Smg,
+    Weapon_Ranged_Minigun,
+    Weapon_Ranged_Plasma_Rifle,
+    Weapon_Ranged_Machine_Gun
+  ].contains(value);
 
-  static bool isTypeWeaponMelee(int value) =>
-      value == Empty ||
-      (
-          value > Index_Weapon_Melee &&
-          value < Index_Weapon_Thrown
-      );
+  static bool isTypeWeaponMelee(int value) => const <int> [
+    Weapon_Melee_Sword,
+    Weapon_Melee_Staff,
+    Weapon_Melee_Pickaxe,
+    Weapon_Melee_Hammer,
+    Weapon_Melee_Axe,
+    Weapon_Melee_Crowbar,
+    Weapon_Melee_Knife,
+  ].contains(value);
 
-  static bool isTypeWeaponThrown(int value) =>
-      value >= Index_Weapon_Thrown         &&
-      value < Index_Weapon_Ranged  ;
+  static bool isTypeWeaponThrown(int value) => const <int> [
+      ItemType.Weapon_Thrown_Grenade,
+      ItemType.Weapon_Thrown_Molotov,
+      ItemType.Weapon_Thrown_Pike,
+  ].contains(value);
+      
 
   static bool isTypeWeaponBow(int value) =>
       value == Weapon_Ranged_Bow;
@@ -344,6 +353,7 @@ class ItemType {
       Weapon_Ranged_Revolver,
       Weapon_Ranged_Handgun,
       Weapon_Ranged_Pistol,
+      Weapon_Ranged_Plasma_Pistol,
   ].contains(value);
 
   static bool isTypeWeaponRifle(int value) => const <int> [
@@ -351,6 +361,7 @@ class ItemType {
       Weapon_Ranged_Machine_Gun,
       Weapon_Ranged_Rifle,
       Weapon_Ranged_Musket,
+      Weapon_Ranged_Plasma_Rifle,
   ].contains(value);
 
   static bool isTypeWeaponRanged(int value) =>
@@ -477,6 +488,8 @@ class ItemType {
       Weapon_Thrown_Grenade: 300,
       Weapon_Ranged_Shotgun: 250,
       Weapon_Ranged_Pistol: 355,
+      Weapon_Ranged_Plasma_Pistol: 355,
+      Weapon_Ranged_Plasma_Rifle: 355,
       Weapon_Ranged_Handgun: 350,
       Weapon_Ranged_Desert_Eagle: 350,
       Weapon_Ranged_Revolver: 400,
@@ -504,6 +517,8 @@ class ItemType {
       Weapon_Thrown_Grenade: 40,
       Weapon_Ranged_Shotgun: 40,
       Weapon_Ranged_Pistol: 45,
+      Weapon_Ranged_Plasma_Pistol: 45,
+      Weapon_Ranged_Plasma_Rifle: 5,
       Weapon_Ranged_Handgun: 20,
       Weapon_Ranged_Revolver: 40,
       Weapon_Ranged_Desert_Eagle: 30,
@@ -625,6 +640,8 @@ class ItemType {
      Weapon_Ranged_Flamethrower: "Flamethrower",
      Weapon_Ranged_Bazooka: "Bazooka",
      Weapon_Ranged_Minigun: "Minigun",
+     Weapon_Ranged_Plasma_Rifle: "Plasma Rifle",
+     Weapon_Ranged_Plasma_Pistol: "Plasma Pistol",
      Weapon_Ranged_Bow: "Bow",
      Consumables_Apple: "Apple",
      Consumables_Meat: "Meat",
@@ -796,19 +813,19 @@ class ItemType {
   ].contains(type);
 
   static int getUpgrade(int itemType) {
-     return const {
+     return const <int, int> {
        Weapon_Ranged_Handgun: Weapon_Ranged_Revolver,
      }[itemType] ?? Empty;
   }
 
   static int getUpgradeCost(int itemType){
-    return const {
+    return const <int, int> {
       Weapon_Ranged_Handgun: 200,
       Weapon_Ranged_Machine_Gun: 300,
     }[itemType] ?? Empty;
   }
 
-  static const Item_Group_Primary_Weapons = [
+  static const Item_Group_Primary_Weapons = <int> [
      Weapon_Ranged_Shotgun,
      Weapon_Ranged_Smg,
      Weapon_Ranged_Sniper_Rifle,
@@ -819,6 +836,7 @@ class ItemType {
      Weapon_Ranged_Bazooka,
      Weapon_Ranged_Flamethrower,
      Weapon_Ranged_Plasma_Pistol,
+     Weapon_Ranged_Plasma_Rifle,
   ];
 
   static const Item_Group_Secondary_Weapons = [
