@@ -156,6 +156,7 @@ class ItemType {
   static const Weapon_Ranged_Bow          = Index_Weapon_Ranged + 15;
   static const Weapon_Ranged_Crossbow     = Index_Weapon_Ranged + 16;
   static const Weapon_Ranged_Plasma_Rifle = Index_Weapon_Ranged + 17;
+  static const Weapon_Ranged_Plasma_Pistol= Index_Weapon_Ranged + 18;
 
   static const Recipes = <int, List<int>> {
     Consumables_Apple: const [
@@ -817,6 +818,7 @@ class ItemType {
      Weapon_Ranged_Minigun,
      Weapon_Ranged_Bazooka,
      Weapon_Ranged_Flamethrower,
+     Weapon_Ranged_Plasma_Pistol,
   ];
 
   static const Item_Group_Secondary_Weapons = [

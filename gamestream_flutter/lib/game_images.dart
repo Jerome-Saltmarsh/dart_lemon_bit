@@ -128,9 +128,6 @@ class GameImages {
    }
 
    static Image getImageForWeaponType(int weaponType) {
-      if (ItemType.isTypeWeaponThrown(weaponType)){
-         return template_weapon_grenade;
-      }
       switch (weaponType) {
          case ItemType.Weapon_Ranged_Machine_Gun:
             return template_weapon_plasma_machine_gun;
@@ -148,9 +145,10 @@ class GameImages {
             return template_weapon_mp5;
          case ItemType.Weapon_Ranged_Desert_Eagle:
             return template_weapon_desert_eagle;
-         case ItemType.Weapon_Ranged_Handgun:
-            // return template_weapon_handgun_black;
+         case ItemType.Weapon_Ranged_Plasma_Pistol:
             return template_weapon_plasma_pistol;
+         case ItemType.Weapon_Ranged_Handgun:
+            return template_weapon_handgun_black;
          case ItemType.Weapon_Ranged_Pistol:
             return template_weapon_handgun_flintlock;
          case ItemType.Weapon_Ranged_Revolver:
@@ -179,6 +177,9 @@ class GameImages {
             return template_weapon_flamethrower;
          case ItemType.Weapon_Ranged_Bazooka:
             return template_weapon_bazooka;
+         case ItemType.Weapon_Thrown_Grenade:
+            return template_weapon_grenade;
+
          default:
             throw Exception("GameImages.getImageForWeaponType(${ItemType.getName(weaponType)})");
       }

@@ -586,7 +586,7 @@ class GameUI {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: const[
                       ItemGroup.Primary_Weapon,
-                      ItemGroup.Secondary_Weapon,
+                      // ItemGroup.Secondary_Weapon,
                       ItemGroup.Tertiary_Weapon,
                       ItemGroup.Unknown,
                     ].map(buildIconItemTab).toList()),

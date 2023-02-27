@@ -76,6 +76,7 @@ class AtlasItems {
         ItemType.Weapon_Ranged_Flamethrower: 782,
         ItemType.Weapon_Ranged_Bazooka: 795,
         ItemType.Weapon_Ranged_Minigun: 1,
+        ItemType.Weapon_Ranged_Plasma_Pistol: 821,
         ItemType.Resource_Wood: 32,
         ItemType.Resource_Stone: 64,
         ItemType.Resource_Crystal: 96,
@@ -175,6 +176,7 @@ class AtlasItems {
         ItemType.Weapon_Ranged_Flamethrower: 545,
         ItemType.Weapon_Ranged_Bazooka: 431,
         ItemType.Weapon_Ranged_Minigun: 130,
+        ItemType.Weapon_Ranged_Plasma_Pistol: 647,
         ItemType.Base_Health: 64,
         ItemType.Base_Energy: 64,
         ItemType.Base_Damage: 64,
@@ -223,6 +225,7 @@ class AtlasItems {
         ItemType.Weapon_Ranged_Smg: 240,
         ItemType.Weapon_Ranged_Machine_Gun: 319,
         ItemType.Weapon_Ranged_Shotgun: 200,
+        ItemType.Weapon_Ranged_Plasma_Pistol: 201,
       }[itemType] ?? size;
 
   static double getSrcHeight(int itemType) => const <int, double>{
@@ -263,6 +266,7 @@ class AtlasItems {
         ItemType.Weapon_Ranged_Smg: 150,
         ItemType.Weapon_Ranged_Machine_Gun: 93,
         ItemType.Weapon_Ranged_Shotgun: 48,
+        ItemType.Weapon_Ranged_Plasma_Pistol: 121,
     ItemType.Weapon_Ranged_Flamethrower: 101,
   }[itemType] ?? size;
 
