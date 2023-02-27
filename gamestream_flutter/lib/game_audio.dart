@@ -336,6 +336,8 @@ class GameAudio {
      ItemType.Weapon_Melee_Crowbar: dagger_woosh_9,
      ItemType.Weapon_Melee_Sword: dagger_woosh_9,
      ItemType.Weapon_Ranged_Pistol: revolver_shot_3,
+     ItemType.Weapon_Ranged_Plasma_Pistol: revolver_shot_6,
+     ItemType.Weapon_Ranged_Plasma_Rifle: assault_rifle_shot_14,
      ItemType.Weapon_Ranged_Smg: pistol_shot_07,
      ItemType.Weapon_Ranged_Desert_Eagle: revolver_shot_6,
      ItemType.Weapon_Ranged_Revolver: revolver_shot_3,
