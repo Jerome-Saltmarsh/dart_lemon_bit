@@ -39,6 +39,7 @@ class GameColors {
   static const Red_3 = Color.fromRGBO(179, 56, 49, 1);
 
   static const red    = Color.fromRGBO(234, 79, 54, 1.0);
+  static const yellow = Color.fromRGBO(251, 250, 134, 1);
   static const orange = Color.fromRGBO(247, 150, 23, 1);
   static const green  = Color.fromRGBO(30, 188, 115, 1);
   static const blue   = Color.fromRGBO(77, 155, 230, 1);

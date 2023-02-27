@@ -858,7 +858,7 @@ class GameUI {
   static Widget buildPlayerHealth() {
     return border(
           width: GameStyle.Player_Weapons_Border_Size,
-          color: GameColors.redDark1,
+          color: GameColors.Red_3,
           child: Container(
             width: GameStyle.Player_Weapons_Icon_Size,
             height: GameStyle.Player_Weapons_Icon_Size,
@@ -876,7 +876,7 @@ class GameUI {
                        return Container(
                          width: GameStyle.Player_Weapons_Icon_Size,
                          height: GameStyle.Player_Weapons_Icon_Size * percentage,
-                         color: GameColors.redDark1,
+                         color: GameColors.Red_3,
                        );
                     });
                   }),
@@ -901,7 +901,7 @@ class GameUI {
   static Widget buildPlayerEnergy() {
     return border(
           width: GameStyle.Player_Weapons_Border_Size,
-          color: GameColors.Blue04,
+          color: GameColors.yellow,
           child: Container(
             width: GameStyle.Player_Weapons_Icon_Size,
             height: GameStyle.Player_Weapons_Icon_Size,
@@ -918,7 +918,7 @@ class GameUI {
                        return Container(
                          width: GameStyle.Player_Weapons_Icon_Size,
                          height: GameStyle.Player_Weapons_Icon_Size * energy / max(energyMax, 1),
-                         color: GameColors.Blue04,
+                         color:  GameColors.yellow,
                        );
                     });
                   }),
