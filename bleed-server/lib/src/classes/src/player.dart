@@ -1815,15 +1815,18 @@ class Player extends Character with ByteWriter {
     return ItemType.Empty;
   }
 
-  void swapWeaponsRanged() {
+  void swapWeapons() {
     if (!canChangeEquipment) {
       return;
     }
-    if (weaponType == weaponPrimary) {
-      game.characterEquipItemType(this, weaponSecondary);
-    } else {
-      game.characterEquipItemType(this, weaponPrimary);
-    }
+
+    final a = weaponPrimary;
+    final b = weaponSecondary;
+
+    weaponPrimary = b;
+    weaponSecondary = a;
+    game.setCharacterStateChanging(this);
+    writeEquipped();
   }
 }
 
