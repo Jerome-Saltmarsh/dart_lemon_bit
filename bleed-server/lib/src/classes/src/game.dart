@@ -2940,21 +2940,21 @@ abstract class Game {
      return options.itemTypeDamage[itemType]?[level] ?? 0;
   }
 
-  void playerEquipWeaponRanged(Player player){
-    characterEquipWeapon(
-      character: player,
-      weaponType: player.weaponRanged,
-      characterStateChange: true,
-    );
-  }
+  // void playerEquipWeaponRanged(Player player){
+  //   characterEquipWeapon(
+  //     character: player,
+  //     weaponType: player.weaponRanged,
+  //     characterStateChange: true,
+  //   );
+  // }
 
-  void playerEquipWeaponMelee(Player player){
-    characterEquipWeapon(
-      character: player,
-      weaponType: player.weaponMelee,
-      characterStateChange: true,
-    );
-  }
+  // void playerEquipWeaponMelee(Player player){
+  //   characterEquipWeapon(
+  //     character: player,
+  //     weaponType: player.weaponMelee,
+  //     characterStateChange: true,
+  //   );
+  // }
 
   void playerPurchaseItemType(Player player, int itemType){
     if (player.dead) return;

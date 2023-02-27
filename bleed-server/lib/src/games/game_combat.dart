@@ -70,7 +70,7 @@ class GameCombat extends Game {
     characterEquipItemType(player, weaponPrimary);
     player.weaponPrimary = weaponPrimary;
     player.weaponSecondary = weaponSecondary;
-    player.weaponMelee = weaponTertiary;
+    player.weaponTertiary = weaponTertiary;
     player.credits = 100;
     player.writeEquipped();
   }
@@ -145,26 +145,23 @@ class GameCombat extends Game {
             break;
           }
         }
-        // characterUseWeapon(player);
         characterUseOrEquipWeapon(
           character: player,
-          weaponType: player.weaponRanged,
+          weaponType: player.weaponPrimary,
           characterStateChange: true,
         );
         break;
       case CursorAction.Mouse_Right_Click:
-        // characterAimWeapon(player);
-        // characterUseWeapon(player);
         characterUseOrEquipWeapon(
           character: player,
-          weaponType: player.weaponMelee,
+          weaponType: player.weaponSecondary,
           characterStateChange: false,
         );
         break;
       case CursorAction.Key_Space:
         characterUseOrEquipWeapon(
             character: player,
-            weaponType: player.weaponMelee,
+            weaponType: player.weaponTertiary,
             characterStateChange: false,
         );
         break;

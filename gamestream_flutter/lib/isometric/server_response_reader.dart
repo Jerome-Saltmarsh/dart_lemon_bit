@@ -258,8 +258,8 @@ class ServerResponseReader with ByteReader {
         GamePlayer.energyMax.value = readUInt16();
         break;
       case ApiPlayer.Items_Equipped:
-        GamePlayer.weaponRanged.value = readUInt16();
-        GamePlayer.weaponMelee.value = readUInt16();
+        // GamePlayer.weaponRanged.value = readUInt16();
+        // GamePlayer.weaponMelee.value = readUInt16();
         GamePlayer.weaponPrimary.value = readUInt16();
         GamePlayer.weaponSecondary.value = readUInt16();
         break;
@@ -362,8 +362,8 @@ class ServerResponseReader with ByteReader {
     GamePlayer.body.value = readUInt16();
     GamePlayer.legs.value = readUInt16();
 
-    GamePlayer.weaponRanged.value = readUInt16();
-    GamePlayer.weaponMelee.value = readUInt16();
+    // GamePlayer.weaponRanged.value = readUInt16();
+    // GamePlayer.weaponMelee.value = readUInt16();
     GamePlayer.weaponPrimary.value = readUInt16();
     GamePlayer.weaponSecondary.value = readUInt16();
   }

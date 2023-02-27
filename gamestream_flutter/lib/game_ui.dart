@@ -801,11 +801,11 @@ class GameUI {
         children: [
           buildPlayerHealth(),
           width4,
-          watch(GamePlayer.weaponRanged, (int playerWeaponRanged) {
-             return Row(
+          // watch(GamePlayer.weaponRanged, (int playerWeaponRanged) {
+             Row(
                children: [
                  watch(GamePlayer.weaponPrimary, (int itemType) {
-                   final active = playerWeaponRanged == itemType;
+                   final active = playerWeaponType == itemType;
                    return border(
                      color: active ? playerWeaponType == itemType ? Colors.white70 : Colors.black54 : Colors.transparent,
                      width: Border_Width,
@@ -820,7 +820,7 @@ class GameUI {
                  }),
                  width4,
                  watch(GamePlayer.weaponSecondary, (int itemType) {
-                   final active = playerWeaponRanged == itemType;
+                   final active = playerWeaponType == itemType;
                    return border(
                      color: active ? playerWeaponType == itemType ? Colors.white70 : Colors.black54 : Colors.transparent,
                      width: Border_Width,
@@ -833,8 +833,8 @@ class GameUI {
                    );
                  }),
                ],
-             );
-          }),
+             ),
+          // }),
           // width32,
           // buildIconPlayerWeaponMelee(),
           width4,
@@ -846,7 +846,7 @@ class GameUI {
 
   static Widget buildIconPlayerWeaponMelee(){
     return watch(GamePlayer.weapon, (int playerWeaponType){
-      return watch(GamePlayer.weaponMelee, (int itemType) {
+      return watch(GamePlayer.weaponTertiary, (int itemType) {
         return border(
           color: playerWeaponType == itemType ? Colors.white70 : Colors.black54,
           width: 3,

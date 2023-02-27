@@ -3,11 +3,12 @@ import 'package:gamestream_flutter/library.dart';
 class GamePlayer {
   static final weapon = Watch(0, onChanged: GameEvents.onChangedPlayerWeapon);
 
-  static final weaponRanged = Watch(0, onChanged: GameEvents.onChangedPlayerWeaponRanged);
-  static final weaponMelee = Watch(0, onChanged: GameEvents.onChangedPlayerWeaponMelee);
+  // static final weaponRanged = Watch(0, onChanged: GameEvents.onChangedPlayerWeaponRanged);
+  // static final weaponMelee = Watch(0, onChanged: GameEvents.onChangedPlayerWeaponMelee);
 
   static final weaponPrimary = Watch(0, onChanged: GameEvents.onChangedPlayerWeapon);
   static final weaponSecondary = Watch(0, onChanged: GameEvents.onChangedPlayerWeapon);
+  static final weaponTertiary = Watch(0, onChanged: GameEvents.onChangedPlayerWeapon);
 
   static final body = Watch(0);
   static final head = Watch(0);
@@ -91,11 +92,11 @@ class GamePlayer {
   static Watch<int> getItemGroupWatch(ItemGroup itemGroup){
     switch (itemGroup) {
       case ItemGroup.Primary_Weapon:
-        return weaponRanged;
+        return weaponPrimary;
       case ItemGroup.Secondary_Weapon:
-        return weaponRanged;
+        return weaponSecondary;
       case ItemGroup.Tertiary_Weapon:
-        return weaponMelee;
+        return weaponTertiary;
       case ItemGroup.Head_Type:
         return head;
       case ItemGroup.Body_Type:

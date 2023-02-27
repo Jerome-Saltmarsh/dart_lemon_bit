@@ -70,26 +70,27 @@ class Player extends Character with ByteWriter {
 
   var weaponPrimary = ItemType.Empty;
   var weaponSecondary = ItemType.Empty;
+  var weaponTertiary = ItemType.Empty;
 
-  var _weaponRanged = ItemType.Empty;
-  var _weaponMelee = ItemType.Empty;
+  // var _weaponRanged = ItemType.Empty;
+  // var _weaponMelee = ItemType.Empty;
 
   ItemGroup get weaponTypeItemGroup => ItemType.getItemGroup(weaponType);
 
-  int get weaponRanged => _weaponRanged;
-  int get weaponMelee => _weaponMelee;
+  // int get weaponRanged => _weaponRanged;
+  // int get weaponMelee => _weaponMelee;
 
-  set weaponRanged(int value) {
-    if (_weaponRanged == value) return;
-    _weaponRanged = value;
-    writePlayerItemsEquipped();
-  }
+  // set weaponRanged(int value) {
+  //   if (_weaponRanged == value) return;
+  //   _weaponRanged = value;
+  //   writePlayerItemsEquipped();
+  // }
 
-  set weaponMelee(int value) {
-    if (_weaponMelee == value) return;
-    _weaponMelee = value;
-    writePlayerItemsEquipped();
-  }
+  // set weaponMelee(int value) {
+  //   if (_weaponMelee == value) return;
+  //   _weaponMelee = value;
+  //   writePlayerItemsEquipped();
+  // }
 
   /// Warning - do not reference
   Game game;
@@ -141,8 +142,8 @@ class Player extends Character with ByteWriter {
   int get experienceRequiredForNextLevel => game.getExperienceForLevel(level + 1);
   bool get weaponIsEquipped => _equippedWeaponIndex != -1;
 
-  bool get weaponEquippedRanged => weaponType == weaponRanged;
-  bool get weaponEquippedMelee => weaponType == weaponMelee;
+  // bool get weaponEquippedRanged => weaponType == weaponRanged;
+  // bool get weaponEquippedMelee => weaponType == weaponMelee;
   double get mouseGridX => (mouse.x + mouse.y) + z;
   double get mouseGridY => (mouse.y - mouse.x) + z;
   int get interactMode => _interactMode;
@@ -1465,8 +1466,8 @@ class Player extends Character with ByteWriter {
   void writePlayerItemsEquipped() {
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Items_Equipped);
-    writeUInt16(weaponRanged);
-    writeUInt16(weaponMelee);
+    // writeUInt16(weaponRanged);
+    // writeUInt16(weaponMelee);
     writeUInt16(weaponPrimary);
     writeUInt16(weaponSecondary);
   }
@@ -1724,7 +1725,7 @@ class Player extends Character with ByteWriter {
        case ItemGroup.Secondary_Weapon:
          return weaponSecondary;
        case ItemGroup.Tertiary_Weapon:
-         return weaponMelee;
+         return weaponTertiary;
        case ItemGroup.Head_Type:
          return headType;
        case ItemGroup.Body_Type:
@@ -1739,23 +1740,23 @@ class Player extends Character with ByteWriter {
   @override
   void onEquipmentChanged() {
 
-    if (game.options.items) {
-      switch (weaponTypeItemGroup) {
-        case ItemGroup.Primary_Weapon:
-          weaponRanged = weaponType;
-          weaponPrimary = weaponType;
-          break;
-        case ItemGroup.Secondary_Weapon:
-          weaponRanged = weaponType;
-          weaponSecondary = weaponType;
-          break;
-        case ItemGroup.Tertiary_Weapon:
-          weaponMelee = weaponType;
-          break;
-        default:
-          break;
-      }
-    }
+    // if (game.options.items) {
+    //   switch (weaponTypeItemGroup) {
+    //     case ItemGroup.Primary_Weapon:
+    //       weaponRanged = weaponType;
+    //       weaponPrimary = weaponType;
+    //       break;
+    //     case ItemGroup.Secondary_Weapon:
+    //       weaponRanged = weaponType;
+    //       weaponSecondary = weaponType;
+    //       break;
+    //     case ItemGroup.Tertiary_Weapon:
+    //       weaponMelee = weaponType;
+    //       break;
+    //     default:
+    //       break;
+    //   }
+    // }
 
     refreshStats();
     writeEquipped();
@@ -1768,8 +1769,8 @@ class Player extends Character with ByteWriter {
      writeUInt16(headType);
      writeUInt16(bodyType);
      writeUInt16(legsType);
-     writeUInt16(_weaponRanged);
-     writeUInt16(_weaponMelee);
+     // writeUInt16(_weaponRanged);
+     // writeUInt16(_weaponMelee);
      writeUInt16(weaponPrimary);
      writeUInt16(weaponSecondary);
   }
@@ -1818,7 +1819,7 @@ class Player extends Character with ByteWriter {
     if (!canChangeEquipment) {
       return;
     }
-    if (weaponRanged == weaponPrimary) {
+    if (weaponType == weaponPrimary) {
       game.characterEquipItemType(this, weaponSecondary);
     } else {
       game.characterEquipItemType(this, weaponPrimary);
