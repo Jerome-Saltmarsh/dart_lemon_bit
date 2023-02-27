@@ -48,6 +48,7 @@ class GameImages {
    static late Image template_weapon_shotgun;
    static late Image template_weapon_desert_eagle;
    static late Image template_weapon_plasma_pistol;
+   static late Image template_weapon_plasma_machine_gun;
    static late Image template_weapon_handgun_black;
    static late Image template_weapon_handgun_flintlock;
    static late Image template_weapon_sniper_rifle;
@@ -66,7 +67,7 @@ class GameImages {
    static late Image template_weapon_m4;
    static late Image template_weapon_revolver;
    static late Image template_weapon_winchester;
-   static late Image template_weapon_blunderbuss;
+   static late Image template_weapon_musket;
    static late Image template_weapon_crowbar;
 
    static Image getImageForHeadType(int headType) {
@@ -131,14 +132,16 @@ class GameImages {
          return template_weapon_grenade;
       }
       switch (weaponType) {
+         case ItemType.Weapon_Ranged_Machine_Gun:
+            return template_weapon_plasma_machine_gun;
          case ItemType.Weapon_Melee_Knife:
             return template_weapon_knife;
          case ItemType.Weapon_Ranged_Sniper_Rifle:
             return template_weapon_sniper_rifle;
          case ItemType.Weapon_Ranged_Minigun:
-            return template_weapon_ak47;
+            return template_weapon_minigun;
          case ItemType.Weapon_Ranged_Musket:
-            return template_weapon_winchester;
+            return template_weapon_musket;
          case ItemType.Weapon_Ranged_Rifle:
             return template_weapon_winchester;
          case ItemType.Weapon_Ranged_Smg:
@@ -219,6 +222,7 @@ class GameImages {
       Engine.loadImageAsset('images/template/weapons/template-weapons-grenade.png').then((value) => template_weapon_grenade = value);
       Engine.loadImageAsset('images/template/weapons/template-weapons-desert-eagle.png').then((value) => template_weapon_desert_eagle = value);
       Engine.loadImageAsset('images/template/weapons/template-weapons-plasma-pistol.png').then((value) => template_weapon_plasma_pistol = value);
+      Engine.loadImageAsset('images/template/weapons/template-weapons-plasma-rifle.png').then((value) => template_weapon_plasma_machine_gun = value);
       Engine.loadImageAsset('images/template/weapons/template-weapons-handgun-black.png').then((value) => template_weapon_handgun_black = value);
       Engine.loadImageAsset('images/template/weapons/template-weapons-pistol-flintlock.png').then((value) => template_weapon_handgun_flintlock = value);
       Engine.loadImageAsset('images/template/weapons/template-weapons-sniper-rifle.png').then((value) => template_weapon_sniper_rifle = value);
@@ -237,7 +241,7 @@ class GameImages {
       Engine.loadImageAsset('images/template/weapons/template-weapons-m4.png').then((value) => template_weapon_m4 = value);
       Engine.loadImageAsset('images/template/weapons/template-weapons-revolver.png').then((value) => template_weapon_revolver = value);
       Engine.loadImageAsset('images/template/weapons/template-weapons-winchester.png').then((value) => template_weapon_winchester = value);
-      Engine.loadImageAsset('images/template/weapons/template-weapons-blunderbuss.png').then((value) => template_weapon_blunderbuss = value);
+      Engine.loadImageAsset('images/template/weapons/template-weapons-blunderbuss.png').then((value) => template_weapon_musket = value);
       Engine.loadImageAsset('images/template/weapons/template-weapons-crowbar.png').then((value) => template_weapon_crowbar = value);
    }
 }

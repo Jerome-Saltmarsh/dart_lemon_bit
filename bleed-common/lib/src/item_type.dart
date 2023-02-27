@@ -128,18 +128,17 @@ class ItemType {
   static const Legs_White = Index_Legs + 5;
   static const Legs_Swat = Index_Legs + 6;
 
-  static const Weapon_Melee_Staff = Index_Weapon_Melee + 1;
-  static const Weapon_Melee_Staff_Of_Flames = Weapon_Melee_Staff + 1;
-  static const Weapon_Melee_Sword = Weapon_Melee_Staff_Of_Flames + 1;
-  static const Weapon_Melee_Crowbar = Weapon_Melee_Sword + 1;
-  static const Weapon_Melee_Pickaxe = Weapon_Melee_Crowbar + 1;
-  static const Weapon_Melee_Axe = Weapon_Melee_Pickaxe + 1;
-  static const Weapon_Melee_Hammer = Weapon_Melee_Axe + 1;
-  static const Weapon_Melee_Knife = Weapon_Melee_Hammer + 1;
+  static const Weapon_Melee_Staff         = Index_Weapon_Melee + 01;
+  static const Weapon_Melee_Sword         = Index_Weapon_Melee + 02;
+  static const Weapon_Melee_Crowbar       = Index_Weapon_Melee + 03;
+  static const Weapon_Melee_Pickaxe       = Index_Weapon_Melee + 04;
+  static const Weapon_Melee_Axe           = Index_Weapon_Melee + 05;
+  static const Weapon_Melee_Hammer        = Index_Weapon_Melee + 06;
+  static const Weapon_Melee_Knife         = Index_Weapon_Melee + 07;
 
-  static const Weapon_Thrown_Pike         = Index_Weapon_Thrown + 1;
-  static const Weapon_Thrown_Grenade      = Index_Weapon_Thrown + 2;
-  static const Weapon_Thrown_Molotov      = Index_Weapon_Thrown + 3;
+  static const Weapon_Thrown_Pike         = Index_Weapon_Thrown + 01;
+  static const Weapon_Thrown_Grenade      = Index_Weapon_Thrown + 02;
+  static const Weapon_Thrown_Molotov      = Index_Weapon_Thrown + 03;
 
   static const Weapon_Ranged_Pistol       = Index_Weapon_Ranged + 01;
   static const Weapon_Ranged_Handgun      = Index_Weapon_Ranged + 02;
@@ -156,6 +155,7 @@ class ItemType {
   static const Weapon_Ranged_Shotgun      = Index_Weapon_Ranged + 14;
   static const Weapon_Ranged_Bow          = Index_Weapon_Ranged + 15;
   static const Weapon_Ranged_Crossbow     = Index_Weapon_Ranged + 16;
+  static const Weapon_Ranged_Plasma_Rifle = Index_Weapon_Ranged + 17;
 
   static const Recipes = <int, List<int>> {
     Consumables_Apple: const [
