@@ -17,7 +17,6 @@ class RendererGameObjects extends Renderer {
   void renderFunction() {
     final type = gameObject.type;
     if (ItemType.isTypeGameObject(type)) {
-
       Engine.renderSprite(
         image: GameImages.atlas_gameobjects,
         dstX: gameObject.renderX,
@@ -39,6 +38,23 @@ class RendererGameObjects extends Renderer {
       return;
     }
 
+    if (type == ItemType.Weapon_Ranged_Plasma_Rifle){
+      renderBouncingGameObjectShadow(gameObject);
+      Engine.renderSprite(
+        image: GameImages.atlas_weapons,
+        dstX: GameConvert.convertV3ToRenderX(gameObject),
+        dstY: getRenderYBouncing(gameObject),
+        // srcX: GameAnimation.animationFrame8 * 125,
+        srcX: 0,
+        srcY: 0,
+        srcWidth: 125,
+        srcHeight: 125,
+        color: GameState.getV3RenderColor(gameObject),
+        scale: 0.5
+      );
+      return;
+    }
+
     assert (ItemType.isTypeItem(type));
 
     renderBouncingGameObjectShadow(gameObject);
@@ -48,8 +64,8 @@ class RendererGameObjects extends Renderer {
       dstY: getRenderYBouncing(gameObject),
       srcX: AtlasItems.getSrcX(type),
       srcY: AtlasItems.getSrcY(type),
-      srcWidth: AtlasItems.size,
-      srcHeight: AtlasItems.size,
+      srcWidth: AtlasItems.getSrcWidth(type),
+      srcHeight: AtlasItems.getSrcHeight(type),
       color: GameState.getV3RenderColor(gameObject),
     );
   }

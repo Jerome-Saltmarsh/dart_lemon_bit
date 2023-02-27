@@ -21,6 +21,7 @@ class GameImages {
    static late Image atlas_icons;
    static late Image atlas_items;
    static late Image atlas_nodes_mini;
+   static late Image atlas_weapons;
 
    static late Image template_head_plain;
    static late Image template_head_rogue;
@@ -199,6 +200,7 @@ class GameImages {
       Engine.loadImageAsset('images/atlas-nodes.png').then((value) => atlas_nodes = value);
       Engine.loadImageAsset('images/atlas-nodes-transparent.png').then((value) => atlas_nodes_transparent = value);
       Engine.loadImageAsset('images/atlas-nodes-mini.png').then((value) => atlas_nodes_mini = value);
+      Engine.loadImageAsset('images/atlas-weapons.png').then((value) => atlas_weapons = value);
       Engine.loadImageAsset('images/atlas-icons.png').then((value) => atlas_icons = value);
       Engine.loadImageAsset('images/atlas-items.png').then((value) => atlas_items = value);
       Engine.loadImageAsset('images/character-dog.png').then((value) => character_dog = value);
