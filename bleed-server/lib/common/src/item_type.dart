@@ -30,32 +30,26 @@ class ItemType {
 
   static const Belt_Indexes = [Belt_1, Belt_2, Belt_3, Belt_4, Belt_5, Belt_6];
 
-  static const Equipped_Head = Index_Equipped + 1;
-  static const Equipped_Body = Index_Equipped + 2;
-  static const Equipped_Legs = Index_Equipped + 3;
-  static const Equipped_Weapon = Index_Equipped + 4;
+  static const Equipped_Head                    = Index_Equipped + 1;
+  static const Equipped_Body                    = Index_Equipped + 2;
+  static const Equipped_Legs                    = Index_Equipped + 3;
+  static const Equipped_Weapon                  = Index_Equipped + 4;
 
-  static const Perk_Max_Health        = Index_Perk + 1;
-  static const Perk_Damage            = Perk_Max_Health + 1;
+  static const Perk_Max_Health                  = Index_Perk + 1;
+  static const Perk_Damage                      = Perk_Max_Health + 1;
 
-  static const Base_Health            = Index_Base + 1;
-  static const Base_Damage            = Base_Health + 2;
-  static const Base_Energy            = Base_Health + 3;
+  static const Base_Health                      = Index_Base + 1;
+  static const Base_Damage                      = Base_Health + 2;
+  static const Base_Energy                      = Base_Health + 3;
 
-  static const Consumables_Apple        = Index_Consumables + 1;
-  static const Consumables_Meat         = Index_Consumables + 2;
-  static const Consumables_Potion_Red   = Index_Consumables + 3;
-  static const Consumables_Potion_Blue  = Index_Consumables + 4;
+  static const Consumables_Apple                = Index_Consumables + 1;
+  static const Consumables_Meat                 = Index_Consumables + 2;
+  static const Consumables_Potion_Red           = Index_Consumables + 3;
+  static const Consumables_Potion_Blue          = Index_Consumables + 4;
 
-  static const Trinket_Ring_of_Health   = Index_Trinkets;
-  static const Trinket_Ring_of_Damage   = Trinket_Ring_of_Health + 1;
-  /// Causes the flame thrower damage to be +5
-  /// Does not stack
-  /// Does not stack means that the effects only apply to up to one time
-  /// Buying a second would not add any additional effects
-  /// Boots 
-  /// Boots can give the player special powers
-  static const Trinket_Gem_of_Fire = Trinket_Ring_of_Health + 2;
+  static const Trinket_Ring_of_Health           = Index_Trinkets + 01;
+  static const Trinket_Ring_of_Damage           = Index_Trinkets + 02;
+  static const Trinket_Gem_of_Fire              = Index_Trinkets + 03;
 
   static const GameObjects_Flower               = Index_GameObjects + 01;
   static const GameObjects_Rock                 = Index_GameObjects + 02;
@@ -94,39 +88,39 @@ class ItemType {
   static const GameObjects_Vending_Upgrades     = Index_GameObjects + 36;
   static const GameObjects_Pipe_Vertical        = Index_GameObjects + 37;
 
-  static const Resource_Wood = Index_Resources + 5;
-  static const Resource_Stone = Index_Resources + 6;
-  static const Resource_Crystal = Index_Resources + 7;
-  static const Resource_Iron = Index_Resources + 8;
-  static const Resource_Scrap_Metal = Index_Resources + 9;
-  static const Resource_Gold = Index_Resources + 10;
-  static const Resource_Credit = Index_Resources + 11;
-  static const Resource_Gun_Powder = Index_Resources + 12;
-  static const Resource_Arrow = Index_Resources + 13;
-  static const Resource_Round_9mm = Index_Resources + 14;
-  static const Resource_Round_50cal = Index_Resources + 15;
-  static const Resource_Round_Rifle = Index_Resources + 16;
-  static const Resource_Round_Shotgun = Index_Resources + 17;
-  static const Resource_Fuel = Index_Resources + 18;
-  static const Resource_Rocket = Index_Resources + 19;
+  static const Resource_Wood                    = Index_Resources + 01;
+  static const Resource_Stone                   = Index_Resources + 02;
+  static const Resource_Crystal                 = Index_Resources + 03;
+  static const Resource_Iron                    = Index_Resources + 04;
+  static const Resource_Scrap_Metal             = Index_Resources + 05;
+  static const Resource_Gold                    = Index_Resources + 06;
+  static const Resource_Credit                  = Index_Resources + 07;
+  static const Resource_Gun_Powder              = Index_Resources + 08;
+  static const Resource_Arrow                   = Index_Resources + 09;
+  static const Resource_Round_9mm               = Index_Resources + 10;
+  static const Resource_Round_50cal             = Index_Resources + 11;
+  static const Resource_Round_Rifle             = Index_Resources + 12;
+  static const Resource_Round_Shotgun           = Index_Resources + 13;
+  static const Resource_Fuel                    = Index_Resources + 14;
+  static const Resource_Rocket                  = Index_Resources + 15;
 
-  static const Head_Steel_Helm = Index_Heads + 1;
-  static const Head_Rogues_Hood = Index_Heads + 2;
-  static const Head_Wizards_Hat = Index_Heads + 3;
-  static const Head_Blonde = Index_Heads + 4;
-  static const Head_Swat = Index_Heads + 5;
+  static const Head_Steel_Helm                  = Index_Heads + 1;
+  static const Head_Rogues_Hood                 = Index_Heads + 2;
+  static const Head_Wizards_Hat                 = Index_Heads + 3;
+  static const Head_Blonde                      = Index_Heads + 4;
+  static const Head_Swat                        = Index_Heads + 5;
 
-  static const Body_Shirt_Cyan = Index_Bodies + 1;
-  static const Body_Shirt_Blue = Index_Bodies + 2;
-  static const Body_Tunic_Padded = Index_Bodies + 3;
-  static const Body_Swat = Index_Bodies + 4;
+  static const Body_Shirt_Cyan                  = Index_Bodies + 1;
+  static const Body_Shirt_Blue                  = Index_Bodies + 2;
+  static const Body_Tunic_Padded                = Index_Bodies + 3;
+  static const Body_Swat                        = Index_Bodies + 4;
 
-  static const Legs_Brown = Index_Legs + 1;
-  static const Legs_Blue = Index_Legs + 2;
-  static const Legs_Red = Index_Legs + 3;
-  static const Legs_Green = Index_Legs + 4;
-  static const Legs_White = Index_Legs + 5;
-  static const Legs_Swat = Index_Legs + 6;
+  static const Legs_Brown                       = Index_Legs + 1;
+  static const Legs_Blue                        = Index_Legs + 2;
+  static const Legs_Red                         = Index_Legs + 3;
+  static const Legs_Green                       = Index_Legs + 4;
+  static const Legs_White                       = Index_Legs + 5;
+  static const Legs_Swat                        = Index_Legs + 6;
 
   static const Weapon_Melee_Staff         = Index_Weapon_Melee + 01;
   static const Weapon_Melee_Sword         = Index_Weapon_Melee + 02;
