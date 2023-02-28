@@ -402,6 +402,11 @@ class GameNetwork {
     sendGameObjectRequest(GameObjectRequest.Delete);
   }
 
+  static void sendRequestPlayerAction(){
+    if (GamePlayer.action.value == PlayerAction.None) return;
+    sendClientRequest(ClientRequest.Player_Action);
+  }
+
   static void sendClientRequestModifyCanvasSize(RequestModifyCanvasSize request) =>
       sendClientRequestEdit(EditRequest.Modify_Canvas_Size, request.index);
 

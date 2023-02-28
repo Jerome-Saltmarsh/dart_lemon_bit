@@ -212,7 +212,7 @@ class GameUI {
       );
 
   static Positioned buildPositionedMessageStatus() => Positioned(
-          bottom: 100,
+          bottom: 150,
           child: IgnorePointer(
             child: Container(
                 width: Engine.screen.width,

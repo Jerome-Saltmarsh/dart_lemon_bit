@@ -9,12 +9,11 @@ import 'package:lemon_math/functions/random_item.dart';
 
 class GameCombat extends Game {
   static const hints = [
-     'Press the W,A,S,D keys to move',
-     'Left click to use your weapon',
-     'Press 1 to equip your heavy weapon',
-     'Press 2 to equip your light weapon',
-     'Press 3 to equip your hand to hand weapon',
-     'Repeat to cycle through heavy weapons',
+     'Use the W,A,S,D keys to move',
+     'Left click to fire first weapon',
+     'Right click to fire second weapon',
+     'Press Space bar to melee attack',
+     'Press Q to swap weapon positions',
   ];
 
   static final hints_length = hints.length;
@@ -268,6 +267,8 @@ class GameCombat extends Game {
      } else {
        player.writeInfo('${ItemType.getName(itemType)} Upgraded');
      }
+
+     player.writePlayerEventItemPurchased(itemType);
 
      if (player.weaponPrimary == itemType) {
        player.writeEquipped();

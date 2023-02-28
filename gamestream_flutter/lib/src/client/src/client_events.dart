@@ -133,10 +133,9 @@ class ClientEvents {
          return;
        }
       if (key == LogicalKeyboardKey.keyE) {
-        GameNetwork.sendClientRequest(ClientRequest.Player_Action);
+        GameNetwork.sendRequestPlayerAction();
         return;
       }
-
        if (key == LogicalKeyboardKey.digit1) {
          GameNetwork.sendClientRequest(ClientRequest.Equip_Next, ItemGroup.Primary_Weapon.index);
          return;
