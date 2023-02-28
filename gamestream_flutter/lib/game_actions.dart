@@ -157,6 +157,7 @@ class GameActions {
           z: z+ giveOrTake(r),
           duration: 60,
       )
+        ..checkNodeCollision = false
         ..delay = i
         ..zv = 0.75
         ..setSpeed(randomAngle(), giveOrTake(3));

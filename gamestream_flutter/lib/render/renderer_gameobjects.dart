@@ -113,6 +113,20 @@ class RendererGameObjects extends Renderer {
       return;
     }
 
+    if (type == ItemType.Weapon_Ranged_Sniper_Rifle) {
+      Engine.renderSprite(
+          image: GameImages.atlas_weapons,
+          dstX: gameObject.renderX,
+          dstY: gameObject.renderY,
+          srcX: GameAnimation.animationFrame16 * 125.0,
+          srcY: 625,
+          srcWidth: 125,
+          srcHeight: 125,
+          color: GameState.getV3RenderColor(gameObject),
+          scale: 0.4
+      );
+      return;
+    }
 
     assert (ItemType.isTypeItem(type));
 

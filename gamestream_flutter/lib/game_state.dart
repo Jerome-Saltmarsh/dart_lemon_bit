@@ -1023,6 +1023,7 @@ class GameState {
       ..lightSaturation = GameNodes.ambient_sat
       ..lightValue = GameNodes.ambient_val
       ..alpha = 0
+      ..checkNodeCollision = false
       ..strength = 0.5
   ;
 
