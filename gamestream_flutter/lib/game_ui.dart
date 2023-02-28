@@ -469,7 +469,9 @@ class GameUI {
                    watch(GamePlayer.action, (int action) {
                      if (action == PlayerAction.None) return GameStyle.Null;
                      return watch(GamePlayer.actionItemType, (int actionItemType) {
-                        return text('Press E to ${PlayerAction.getName(action)} ${ItemType.getName(actionItemType)}');
+                        return watch(GamePlayer.actionCost, (int cost){
+                          return text('Press E to ${PlayerAction.getName(action)} ${ItemType.getName(actionItemType)} for $cost credits');
+                        });
                      });
                    }),
                  ],

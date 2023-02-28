@@ -92,9 +92,11 @@ class Player extends Character with ByteWriter {
 
   var _action = PlayerAction.None;
   var _actionItemType = ItemType.Empty;
+  var _actionCost = 0;
 
   int get action => _action;
   int get actionItemType => _actionItemType;
+  int get actionCost => _actionCost;
 
   set action(int value) {
     if (_action == value) return;
@@ -108,6 +110,11 @@ class Player extends Character with ByteWriter {
     writePlayerAction();
   }
 
+  set actionCost(int value){
+    if (_actionCost == value) return;
+    _actionCost = value;
+    writePlayerAction();
+  }
 
   /// CONSTRUCTOR
   Player({
@@ -1835,6 +1842,11 @@ class Player extends Character with ByteWriter {
     writeUInt8(ApiPlayer.Action);
     writeUInt8(_action);
     writeUInt16(_actionItemType);
+    writeUInt16(_actionCost);
+  }
+
+  int getItemLevel(int itemType) {
+    return items[itemType] ?? 0;
   }
 }
 

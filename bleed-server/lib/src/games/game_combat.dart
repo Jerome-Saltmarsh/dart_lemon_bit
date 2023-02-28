@@ -169,21 +169,17 @@ class GameCombat extends Game {
   }
 
   void updatePlayerAction(Player player){
-    var closestWeaponDistance = 100000.0;
-    const minDistance = 200.0;
+    var minDistance = 50.0;
     GameObject? closestGameObject;
 
     for (final gameObject in gameObjects) {
       if (!gameObject.active) continue;
       if (gameObject.type != ItemType.Weapon_Ranged_Plasma_Rifle) continue;
       final xDiff = (player.x - gameObject.x).abs();
-      if (xDiff > closestWeaponDistance) continue;
+      if (xDiff > minDistance) continue;
       final yDiff = (player.y - gameObject.y).abs();
-      if (yDiff > closestWeaponDistance) continue;
-      final dis = max(xDiff, yDiff);
-      if (dis > closestWeaponDistance) continue;
-      if (dis > minDistance) continue;
-      closestWeaponDistance = dis;
+      if (yDiff > minDistance) continue;
+      minDistance = max(xDiff, yDiff);
       closestGameObject = gameObject;
     }
 
@@ -195,19 +191,27 @@ class GameCombat extends Game {
     final itemType = closestGameObject.type;
 
     player.actionItemType = itemType;
+    final itemLevel = player.getItemLevel(itemType);
+    player.actionCost = getItemPurchaseCost(itemType, itemLevel);
 
     if (player.weaponPrimary == itemType) {
-      player.action = PlayerAction.Upgrade_Weapon;
+      player.action = PlayerAction.Upgrade;
       return;
     }
 
     if (player.weaponSecondary == itemType) {
-      player.action = PlayerAction.Upgrade_Weapon;
+      player.action = PlayerAction.Upgrade;
       return;
     }
 
-    player.action = PlayerAction.Purchase_Weapon;
+    if (itemLevel == 0) {
+      player.action = PlayerAction.Purchase;
+      return;
+    }
+
+    player.action = PlayerAction.Equip;
   }
+
 
   void updateHint(Player player){
     if (player.hintIndex >= hints_length) return;
