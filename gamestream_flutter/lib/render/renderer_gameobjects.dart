@@ -56,13 +56,11 @@ class RendererGameObjects extends Renderer {
     }
 
     if (type == ItemType.Weapon_Ranged_Plasma_Pistol) {
-      renderBouncingGameObjectShadow(gameObject);
       Engine.renderSprite(
           image: GameImages.atlas_weapons,
           dstX: gameObject.renderX,
-          dstY: getRenderYBouncing(gameObject),
-          srcX: GameAnimation.animationFrame8 * 125.0,
-          // srcX: 0,
+          dstY: gameObject.renderY,
+          srcX: GameAnimation.animationFrame16 * 125.0,
           srcY: 0,
           srcWidth: 125,
           srcHeight: 125,
