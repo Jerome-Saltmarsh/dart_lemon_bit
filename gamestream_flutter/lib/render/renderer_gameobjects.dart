@@ -94,7 +94,7 @@ class RendererGameObjects extends Renderer {
           image: GameImages.atlas_weapons,
           dstX: GameConvert.convertV3ToRenderX(gameObject),
           dstY: gameObject.renderY,
-          srcX: GameAnimation.animationFrame8 * 125.0,
+          srcX: GameAnimation.animationFrame16 * 125.0,
           srcY: 375,
           srcWidth: 125,
           srcHeight: 125,

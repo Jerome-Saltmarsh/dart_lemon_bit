@@ -9,6 +9,7 @@ class GameAnimation {
   static var animationFrameWaterFlowingSrcX = 0.0;
   static var animationFrame6 = 0;
   static var animationFrame8 = 0;
+  static var animationFrame16 = 0;
   static var animationFrameGrass = 0;
   static var animationFrameGrassShort = 0;
   static var animationFrameRainWater = 0;
@@ -27,6 +28,7 @@ class GameAnimation {
     animationFrame++;
     animationFrame6++;
     animationFrame8++;
+    animationFrame16++;
 
     if (animationFrame6 >= 6){
       animationFrame6 = 0;
@@ -34,6 +36,10 @@ class GameAnimation {
 
     if (animationFrame8 >= 8){
       animationFrame8 = 0;
+    }
+
+    if (animationFrame16 >= 16) {
+      animationFrame16 = 0;
     }
 
     if (animationFrameWater++ >= 9){
