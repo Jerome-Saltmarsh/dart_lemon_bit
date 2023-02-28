@@ -611,16 +611,22 @@ class Connection with ByteReader {
         if (index >= scene.gridVolume) {
           return errorInvalidArg('index must be lower than grid volume');
         }
-        scene.gameObjects.add(
-          GameObject(
-              x: scene.convertNodeIndexToPositionX(index) + Node_Size_Half,
-              y: scene.convertNodeIndexToPositionY(index) + Node_Size_Half,
-              z: scene.convertNodeIndexToPositionZ(index),
-              type: type,
-              id: player.game.gameObjectId++,
-          )
+        final instance = player.game.spawnGameObject(
+          x: scene.convertNodeIndexToPositionX(index) + Node_Size_Half,
+          y: scene.convertNodeIndexToPositionY(index) + Node_Size_Half,
+          z: scene.convertNodeIndexToPositionZ(index),
+          type: type,
         );
-        player.editorSelectedGameObject = player.game.scene.gameObjects.last;
+        // scene.gameObjects.add(
+        //   GameObject(
+        //       x: scene.convertNodeIndexToPositionX(index) + Node_Size_Half,
+        //       y: scene.convertNodeIndexToPositionY(index) + Node_Size_Half,
+        //       z: scene.convertNodeIndexToPositionZ(index),
+        //       type: type,
+        //       id: player.game.gameObjectId++,
+        //   )
+        // );
+        player.editorSelectedGameObject = instance;
         break;
 
       case GameObjectRequest.Delete:
