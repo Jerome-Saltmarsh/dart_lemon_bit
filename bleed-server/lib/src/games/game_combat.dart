@@ -235,6 +235,7 @@ class GameCombat extends Game {
 
       switch (player.action) {
         case PlayerAction.Equip:
+          playerEquip(player, player.actionItemType);
           break;
         case PlayerAction.Purchase:
           playerPurchaseItemType(player, player.actionItemType);
@@ -279,12 +280,20 @@ class GameCombat extends Game {
        return;
      }
 
-     if (player.weaponType == player.weaponPrimary){
-       player.weaponPrimary = itemType;
-     } else {
-       player.weaponSecondary = itemType;
-     }
-     player.weaponType = itemType;
+     playerEquip(player, itemType);
+  }
+
+  void playerEquip(Player player, int itemType){
+    if (player.weaponType == player.weaponPrimary){
+      player.weaponPrimary = itemType;
+    } else {
+      player.weaponSecondary = itemType;
+    }
+    player.weaponType = itemType;
+
+    if (player.canChangeEquipment) {
+      setCharacterStateChanging(player);
+    }
   }
 
   @override
