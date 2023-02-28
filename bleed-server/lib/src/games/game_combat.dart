@@ -286,4 +286,30 @@ class GameCombat extends Game {
      }
      player.weaponType = itemType;
   }
+
+  @override
+  void customInit() {
+    for (final gameObject in gameObjects){
+       if (!ItemType.isTypeWeapon(gameObject.type)) continue;
+       gameObject
+         ..collectable  = false
+         ..interactable = false
+         ..gravity      = false
+         ..physical     = false
+         ..persistable  = true
+       ;
+    }
+  }
+
+  @override
+  void customOnGameObjectSpawned(GameObject gameObject) {
+    if (!ItemType.isTypeWeapon(gameObject.type)) return;
+    gameObject
+      ..collectable  = false
+      ..interactable = false
+      ..gravity      = false
+      ..physical     = false
+      ..persistable  = true
+    ;
+  }
 }

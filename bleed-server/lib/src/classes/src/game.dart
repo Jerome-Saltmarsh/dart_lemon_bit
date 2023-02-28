@@ -112,7 +112,13 @@ abstract class Game {
 
   /// @override
   void customOnPlayerJoined(Player player) {}
-  
+
+  /// @override
+  void customInit() { }
+
+  /// @override
+  void customOnGameObjectSpawned(GameObject gameObject){ }
+
   /// PROPERTIES
   List<GameObject> get gameObjects => scene.gameObjects;
   /// @override
@@ -128,6 +134,11 @@ abstract class Game {
   }) {
     engine.onGameCreated(this); /// TODO Illegal external scope reference
     gameObjectId = scene.gameObjects.length;
+    customInit();
+
+    for (final gameObject in gameObjects) {
+      customOnGameObjectSpawned(gameObject);
+    }
   }
 
   /// QUERIES
@@ -2317,6 +2328,7 @@ abstract class Game {
        gameObject.active = true;
        gameObject.friction = GamePhysics.Friction;
        gameObject.bounce = false;
+       customOnGameObjectSpawned(gameObject);
        return gameObject;
     }
     final instance = GameObject(
@@ -2333,6 +2345,7 @@ abstract class Game {
     instance.friction     = GamePhysics.Friction;
     instance.bounce       = false;
     gameObjects.add(instance);
+    customOnGameObjectSpawned(instance);
     return instance;
   }
 
