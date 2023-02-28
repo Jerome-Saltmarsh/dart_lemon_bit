@@ -42,7 +42,7 @@ class RendererGameObjects extends Renderer {
       renderBouncingGameObjectShadow(gameObject);
       Engine.renderSprite(
         image: GameImages.atlas_weapons,
-        dstX: GameConvert.convertV3ToRenderX(gameObject),
+        dstX: gameObject.renderX,
         dstY: getRenderYBouncing(gameObject),
         srcX: GameAnimation.animationFrame8 * 125.0,
         // srcX: 0,
@@ -59,7 +59,7 @@ class RendererGameObjects extends Renderer {
       renderBouncingGameObjectShadow(gameObject);
       Engine.renderSprite(
           image: GameImages.atlas_weapons,
-          dstX: GameConvert.convertV3ToRenderX(gameObject),
+          dstX: gameObject.renderX,
           dstY: getRenderYBouncing(gameObject),
           srcX: GameAnimation.animationFrame8 * 125.0,
           // srcX: 0,
@@ -73,12 +73,11 @@ class RendererGameObjects extends Renderer {
     }
 
     if (type == ItemType.Weapon_Ranged_Shotgun) {
-      renderBouncingGameObjectShadow(gameObject);
       Engine.renderSprite(
           image: GameImages.atlas_weapons,
-          dstX: GameConvert.convertV3ToRenderX(gameObject),
-          dstY: getRenderYBouncing(gameObject),
-          srcX: GameAnimation.animationFrame8 * 125.0,
+          dstX: gameObject.renderX,
+          dstY: gameObject.renderY,
+          srcX: GameAnimation.animationFrame16 * 125.0,
           srcY: 250,
           srcWidth: 125,
           srcHeight: 125,
@@ -89,10 +88,9 @@ class RendererGameObjects extends Renderer {
     }
 
     if (type == ItemType.Weapon_Ranged_Bazooka) {
-      // renderBouncingGameObjectShadow(gameObject);
       Engine.renderSprite(
           image: GameImages.atlas_weapons,
-          dstX: GameConvert.convertV3ToRenderX(gameObject),
+          dstX: gameObject.renderX,
           dstY: gameObject.renderY,
           srcX: GameAnimation.animationFrame16 * 125.0,
           srcY: 375,
@@ -110,7 +108,7 @@ class RendererGameObjects extends Renderer {
     renderBouncingGameObjectShadow(gameObject);
     Engine.renderSprite(
       image: GameImages.atlas_items,
-      dstX: GameConvert.convertV3ToRenderX(gameObject),
+      dstX: gameObject.renderX,
       dstY: getRenderYBouncing(gameObject),
       srcX: AtlasItems.getSrcX(type),
       srcY: AtlasItems.getSrcY(type),
