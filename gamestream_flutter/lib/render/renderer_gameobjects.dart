@@ -88,6 +88,22 @@ class RendererGameObjects extends Renderer {
       return;
     }
 
+    if (type == ItemType.Weapon_Ranged_Bazooka) {
+      // renderBouncingGameObjectShadow(gameObject);
+      Engine.renderSprite(
+          image: GameImages.atlas_weapons,
+          dstX: GameConvert.convertV3ToRenderX(gameObject),
+          dstY: gameObject.renderY,
+          srcX: GameAnimation.animationFrame8 * 125.0,
+          srcY: 375,
+          srcWidth: 125,
+          srcHeight: 125,
+          color: GameState.getV3RenderColor(gameObject),
+          scale: 0.4
+      );
+      return;
+    }
+
 
     assert (ItemType.isTypeItem(type));
 
