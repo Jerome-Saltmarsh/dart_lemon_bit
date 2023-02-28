@@ -269,8 +269,14 @@ class GameCombat extends Game {
        player.writeInfo('${ItemType.getName(itemType)} Upgraded');
      }
 
-     if (player.weaponPrimary == itemType) return;
-     if (player.weaponSecondary == itemType) return;
+     if (player.weaponPrimary == itemType) {
+       player.writeEquipped();
+       return;
+     }
+     if (player.weaponSecondary == itemType) {
+       player.writeEquipped();
+       return;
+     }
 
      if (player.weaponType == player.weaponPrimary){
        player.weaponPrimary = itemType;

@@ -824,35 +824,46 @@ class GameUI {
           // watch(GamePlayer.weaponRanged, (int playerWeaponRanged) {
              Row(
                children: [
-                 watch(GamePlayer.weaponPrimary, (int itemType) {
-                   final active = playerWeaponType == itemType;
-                   return border(
-                     color: active ? playerWeaponType == itemType ? Colors.white70 : Colors.black54 : Colors.transparent,
-                     width: Border_Width,
-                     child: Container(
-                       constraints: BoxConstraints(maxWidth: 120),
-                       height: GameStyle.Player_Weapons_Icon_Size,
-                       color: active ? Colors.black45 : Colors.black12,
-                       padding: GameStyle.Padding_4,
-                       child: buildAtlasItemType(itemType),
-                     ),
-                   );
-                 }),
+                 Column(
+                   crossAxisAlignment: CrossAxisAlignment.start,
+                   children: [
+                     watch(GamePlayer.weaponPrimary, (int itemType) {
+                       final active = playerWeaponType == itemType;
+                       return border(
+                         color: active ? playerWeaponType == itemType ? Colors.white70 : Colors.black54 : Colors.transparent,
+                         width: Border_Width,
+                         child: Container(
+                           constraints: BoxConstraints(maxWidth: 120),
+                           height: GameStyle.Player_Weapons_Icon_Size,
+                           color: active ? Colors.black45 : Colors.black12,
+                           padding: GameStyle.Padding_4,
+                           child: buildAtlasItemType(itemType),
+                         ),
+                       );
+                     }),
+                     watch(GamePlayer.weaponPrimaryLevel, buildRowItemTypeLevel),
+                   ],
+                 ),
                  width4,
-                 watch(GamePlayer.weaponSecondary, (int itemType) {
-                   final active = playerWeaponType == itemType;
-                   return border(
-                     color: active ? playerWeaponType == itemType ? Colors.white70 : Colors.black54 : Colors.transparent,
-                     width: Border_Width,
-                     child: Container(
-                       constraints: BoxConstraints(maxWidth: 120),
-                       height: GameStyle.Player_Weapons_Icon_Size,
-                       color: active ? Colors.black45 : Colors.black12,
-                       padding: GameStyle.Padding_2,
-                       child: buildAtlasItemType(itemType),
-                     ),
-                   );
-                 }),
+                 Column(
+                   children: [
+                     watch(GamePlayer.weaponSecondary, (int itemType) {
+                       final active = playerWeaponType == itemType;
+                       return border(
+                         color: active ? playerWeaponType == itemType ? Colors.white70 : Colors.black54 : Colors.transparent,
+                         width: Border_Width,
+                         child: Container(
+                           constraints: BoxConstraints(maxWidth: 120),
+                           height: GameStyle.Player_Weapons_Icon_Size,
+                           color: active ? Colors.black45 : Colors.black12,
+                           padding: GameStyle.Padding_2,
+                           child: buildAtlasItemType(itemType),
+                         ),
+                       );
+                     }),
+                     watch(GamePlayer.weaponSecondaryLevel, buildRowItemTypeLevel),
+                   ],
+                 ),
                ],
              ),
           // }),
@@ -864,6 +875,22 @@ class GameUI {
       ),
     );
   });
+
+  static Widget buildRowItemTypeLevel(int level){
+    return Container(
+      height: 50,
+      child: Row(
+        children: List.generate(5, (index) {
+          return Container(
+            width: 5,
+            height: 20,
+            color: index < level ? GameColors.blue : GameColors.blue05,
+            margin: const EdgeInsets.only(right: 2),
+          );
+        }),
+      ),
+    );
+  }
 
   static Widget buildIconPlayerWeaponMelee(){
     return watch(GamePlayer.weapon, (int playerWeaponType){

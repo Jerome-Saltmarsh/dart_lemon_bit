@@ -7,7 +7,9 @@ class GamePlayer {
   // static final weaponMelee = Watch(0, onChanged: GameEvents.onChangedPlayerWeaponMelee);
 
   static final weaponPrimary = Watch(0, onChanged: GameEvents.onChangedPlayerWeapon);
+  static final weaponPrimaryLevel = Watch(0);
   static final weaponSecondary = Watch(0, onChanged: GameEvents.onChangedPlayerWeapon);
+  static final weaponSecondaryLevel = Watch(0);
   static final weaponTertiary = Watch(0, onChanged: GameEvents.onChangedPlayerWeapon);
 
   static final body = Watch(0);

@@ -116,6 +116,9 @@ class Player extends Character with ByteWriter {
     writePlayerAction();
   }
 
+  int get weaponPrimaryLevel => items[weaponPrimary] ?? 0;
+  int get weaponSecondaryLevel => items[weaponSecondary] ?? 0;
+
   /// CONSTRUCTOR
   Player({
     required this.game,
@@ -1777,10 +1780,10 @@ class Player extends Character with ByteWriter {
      writeUInt16(headType);
      writeUInt16(bodyType);
      writeUInt16(legsType);
-     // writeUInt16(_weaponRanged);
-     // writeUInt16(_weaponMelee);
      writeUInt16(weaponPrimary);
      writeUInt16(weaponSecondary);
+     writeUInt8(weaponPrimaryLevel);
+     writeUInt8(weaponSecondaryLevel);
   }
 
   void writeMapListInt(Map<int, List<int>> value){
