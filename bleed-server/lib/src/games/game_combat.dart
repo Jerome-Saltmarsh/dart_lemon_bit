@@ -173,7 +173,7 @@ class GameCombat extends Game {
 
     for (final gameObject in gameObjects) {
       if (!gameObject.active) continue;
-      if (gameObject.type != ItemType.Weapon_Ranged_Plasma_Rifle) continue;
+      if (!ItemType.isTypeWeapon(gameObject.type)) continue;
       final xDiff = (player.x - gameObject.x).abs();
       if (xDiff > minDistance) continue;
       final yDiff = (player.y - gameObject.y).abs();

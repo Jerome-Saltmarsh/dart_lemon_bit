@@ -617,15 +617,6 @@ class Connection with ByteReader {
           z: scene.convertNodeIndexToPositionZ(index),
           type: type,
         );
-        // scene.gameObjects.add(
-        //   GameObject(
-        //       x: scene.convertNodeIndexToPositionX(index) + Node_Size_Half,
-        //       y: scene.convertNodeIndexToPositionY(index) + Node_Size_Half,
-        //       z: scene.convertNodeIndexToPositionZ(index),
-        //       type: type,
-        //       id: player.game.gameObjectId++,
-        //   )
-        // );
         player.editorSelectedGameObject = instance;
         break;
 
