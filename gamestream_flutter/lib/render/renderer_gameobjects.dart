@@ -38,7 +38,7 @@ class RendererGameObjects extends Renderer {
       return;
     }
 
-    if (type == ItemType.Weapon_Ranged_Plasma_Rifle){
+    if (type == ItemType.Weapon_Ranged_Plasma_Rifle) {
       renderBouncingGameObjectShadow(gameObject);
       Engine.renderSprite(
         image: GameImages.atlas_weapons,

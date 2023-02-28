@@ -459,6 +459,24 @@ class GameUI {
           bottom: GameStyle.Default_Padding,
         ),
         Positioned(
+            top: 50,
+            child: Container(
+              width: Engine.screen.width,
+              alignment: Alignment.center,
+              child: Row(
+                 mainAxisAlignment: MainAxisAlignment.center,
+                 children: [
+                   watch(GamePlayer.action, (int action) {
+                     if (action == PlayerAction.None) return GameStyle.Null;
+                     return watch(GamePlayer.actionItemType, (int actionItemType) {
+                        return text('Press E to ${PlayerAction.getName(action)} ${ItemType.getName(actionItemType)}');
+                     });
+                   }),
+                 ],
+              ),
+            )
+        ),
+        Positioned(
             bottom: GameStyle.Default_Padding,
             left: GameStyle.Default_Padding,
             child: Row(

@@ -1,15 +1,11 @@
 
 
+import 'dart:math';
+
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/classes/src/game_environment.dart';
 import 'package:bleed_server/src/classes/src/game_time.dart';
 import 'package:lemon_math/functions/random_item.dart';
-
-class EquippedType {
-  static const Primary = 0;
-  static const Secondary = 1;
-  static const Tertiary = 2;
-}
 
 class GameCombat extends Game {
   static const hints = [
@@ -22,6 +18,7 @@ class GameCombat extends Game {
   ];
 
   static final hints_length = hints.length;
+  static final hints_frames_between = 500;
 
   GameCombat({
     required super.scene,
@@ -38,11 +35,6 @@ class GameCombat extends Game {
               ItemType.Weapon_Melee_Crowbar,
               ItemType.Weapon_Melee_Axe,
               ItemType.Weapon_Ranged_Plasma_Pistol,
-              // ItemType.Weapon_Ranged_Handgun,
-              // ItemType.Weapon_Ranged_Revolver,
-              // ItemType.Weapon_Ranged_Bow,
-              // ItemType.Weapon_Ranged_Rifle,
-              // ItemType.Weapon_Ranged_Smg,
               ItemType.Weapon_Ranged_Plasma_Rifle,
               ItemType.Weapon_Ranged_Shotgun,
               ItemType.Weapon_Ranged_Sniper_Rifle,
@@ -172,12 +164,58 @@ class GameCombat extends Game {
 
   @override
   void customUpdatePlayer(Player player){
-     if (player.hintIndex >= hints_length) return;
-     player.hintNext--;
-     if (player.hintNext > 0) return;
-     player.writeInfo('Tip: ${hints[player.hintIndex]}');
-     player.hintNext = 300;
-     player.hintIndex++;
+      updateHint(player);
+      updatePlayerAction(player);
+  }
+
+  void updatePlayerAction(Player player){
+    var closestWeaponDistance = 100000.0;
+    const minDistance = 200.0;
+    GameObject? closestGameObject;
+
+    for (final gameObject in gameObjects) {
+      if (!gameObject.active) continue;
+      if (gameObject.type != ItemType.Weapon_Ranged_Plasma_Rifle) continue;
+      final xDiff = (player.x - gameObject.x).abs();
+      if (xDiff > closestWeaponDistance) continue;
+      final yDiff = (player.y - gameObject.y).abs();
+      if (yDiff > closestWeaponDistance) continue;
+      final dis = max(xDiff, yDiff);
+      if (dis > closestWeaponDistance) continue;
+      if (dis > minDistance) continue;
+      closestWeaponDistance = dis;
+      closestGameObject = gameObject;
+    }
+
+    if (closestGameObject == null) {
+      player.action = PlayerAction.None;
+      return;
+    }
+
+    final itemType = closestGameObject.type;
+
+    player.actionItemType = itemType;
+
+    if (player.weaponPrimary == itemType) {
+      player.action = PlayerAction.Upgrade_Weapon;
+      return;
+    }
+
+    if (player.weaponSecondary == itemType) {
+      player.action = PlayerAction.Upgrade_Weapon;
+      return;
+    }
+
+    player.action = PlayerAction.Purchase_Weapon;
+  }
+
+  void updateHint(Player player){
+    if (player.hintIndex >= hints_length) return;
+    player.hintNext--;
+    if (player.hintNext > 0) return;
+    player.writeInfo('Tip: ${hints[player.hintIndex]}');
+    player.hintNext = hints_frames_between;
+    player.hintIndex++;
   }
 
   @override

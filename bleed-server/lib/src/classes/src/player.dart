@@ -72,25 +72,7 @@ class Player extends Character with ByteWriter {
   var weaponSecondary = ItemType.Empty;
   var weaponTertiary = ItemType.Empty;
 
-  // var _weaponRanged = ItemType.Empty;
-  // var _weaponMelee = ItemType.Empty;
-
   ItemGroup get weaponTypeItemGroup => ItemType.getItemGroup(weaponType);
-
-  // int get weaponRanged => _weaponRanged;
-  // int get weaponMelee => _weaponMelee;
-
-  // set weaponRanged(int value) {
-  //   if (_weaponRanged == value) return;
-  //   _weaponRanged = value;
-  //   writePlayerItemsEquipped();
-  // }
-
-  // set weaponMelee(int value) {
-  //   if (_weaponMelee == value) return;
-  //   _weaponMelee = value;
-  //   writePlayerItemsEquipped();
-  // }
 
   /// Warning - do not reference
   Game game;
@@ -107,6 +89,25 @@ class Player extends Character with ByteWriter {
 
   /// the key is the item_type and the value is its level
   final items = <int, int> {};
+
+  var _action = PlayerAction.None;
+  var _actionItemType = ItemType.Empty;
+
+  int get action => _action;
+  int get actionItemType => _actionItemType;
+
+  set action(int value) {
+    if (_action == value) return;
+    _action = value;
+    writePlayerAction();
+  }
+
+  set actionItemType(int value){
+    if (_actionItemType == value) return;
+    _actionItemType = value;
+    writePlayerAction();
+  }
+
 
   /// CONSTRUCTOR
   Player({
@@ -1827,6 +1828,13 @@ class Player extends Character with ByteWriter {
     weaponSecondary = a;
     game.setCharacterStateChanging(this);
     writeEquipped();
+  }
+
+  void writePlayerAction(){
+    writeUInt8(ServerResponse.Player);
+    writeUInt8(ApiPlayer.Action);
+    writeUInt8(_action);
+    writeUInt16(_actionItemType);
   }
 }
 

@@ -34,6 +34,8 @@ class GamePlayer {
   static var aimTargetPosition = Vector3();
   static final weaponCooldown = Watch(1.0);
   static final interpolating = Watch(true);
+  static final action = Watch(PlayerAction.None);
+  static final actionItemType = Watch(ItemType.Empty);
   static final target = Vector3();
   static final questAdded = Watch(false);
   static var gameDialog = Watch<GameDialog?>(null, onChanged: onChangedGameDialog);
