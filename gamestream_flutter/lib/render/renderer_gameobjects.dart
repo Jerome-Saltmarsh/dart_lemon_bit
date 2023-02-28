@@ -39,13 +39,11 @@ class RendererGameObjects extends Renderer {
     }
 
     if (type == ItemType.Weapon_Ranged_Plasma_Rifle) {
-      renderBouncingGameObjectShadow(gameObject);
       Engine.renderSprite(
         image: GameImages.atlas_weapons,
         dstX: gameObject.renderX,
-        dstY: getRenderYBouncing(gameObject),
-        srcX: GameAnimation.animationFrame8 * 125.0,
-        // srcX: 0,
+        dstY: gameObject.renderY,
+        srcX: GameAnimation.animationFrame16 * 125.0,
         srcY: 125,
         srcWidth: 125,
         srcHeight: 125,
@@ -92,6 +90,21 @@ class RendererGameObjects extends Renderer {
           dstY: gameObject.renderY,
           srcX: GameAnimation.animationFrame16 * 125.0,
           srcY: 375,
+          srcWidth: 125,
+          srcHeight: 125,
+          color: GameState.getV3RenderColor(gameObject),
+          scale: 0.4
+      );
+      return;
+    }
+
+    if (type == ItemType.Weapon_Ranged_Flamethrower) {
+      Engine.renderSprite(
+          image: GameImages.atlas_weapons,
+          dstX: gameObject.renderX,
+          dstY: gameObject.renderY,
+          srcX: GameAnimation.animationFrame16 * 125.0,
+          srcY: 500,
           srcWidth: 125,
           srcHeight: 125,
           color: GameState.getV3RenderColor(gameObject),

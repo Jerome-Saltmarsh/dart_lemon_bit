@@ -385,6 +385,7 @@ class EditorUI {
                 buildRowAddGameObject(ItemType.Weapon_Ranged_Plasma_Pistol, color: Colors.black.value),
                 buildRowAddGameObject(ItemType.Weapon_Ranged_Shotgun, color: Colors.black.value),
                 buildRowAddGameObject(ItemType.Weapon_Ranged_Bazooka, color: Colors.black.value),
+                buildRowAddGameObject(ItemType.Weapon_Ranged_Flamethrower, color: Colors.black.value),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: ItemType.GameObjectTypes
