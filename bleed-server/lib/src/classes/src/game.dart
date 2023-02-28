@@ -2988,5 +2988,9 @@ abstract class Game {
   int getExperienceForLevel(int level){
     return (((level - 1) * (level - 1))) * 6;
   }
+
+  void performPlayerAction(Player player) {
+
+  }
 }
 

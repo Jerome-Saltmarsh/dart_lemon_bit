@@ -157,6 +157,10 @@ class Connection with ByteReader {
         game.playerPurchaseItemType(player, itemType);
         break;
 
+      case ClientRequest.Player_Action:
+        game.performPlayerAction(player);
+        break;
+
       case ClientRequest.Weather_Set_Rain:
         if (!isLocalMachine && game is! GameEditor) return;
         final rainType = parse(arguments[1]);

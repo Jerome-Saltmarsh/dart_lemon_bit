@@ -228,4 +228,55 @@ class GameCombat extends Game {
        src.credits += 10;
      }
   }
+
+  @override
+  void performPlayerAction(Player player) {
+      if (player.dead) return;
+      if (player.action == PlayerAction.None) return;
+
+      switch (player.action) {
+        case PlayerAction.Equip:
+          break;
+        case PlayerAction.Purchase:
+          playerPurchaseItemType(player, player.actionItemType);
+          break;
+        case PlayerAction.Upgrade:
+          playerPurchaseItemType(player, player.actionItemType);
+          break;
+        default:
+          break;
+      }
+  }
+
+  @override
+  void playerPurchaseItemType(Player player, int itemType){
+     if (player.dead) return;
+
+     final itemLevel = player.getItemLevel(itemType);
+     final itemCost = getItemPurchaseCost(itemType, itemLevel);
+
+     if (player.credits < itemCost){
+       player.writeError('insufficient credits');
+       return;
+     }
+
+     player.credits -= itemCost;
+     player.items[itemType] = itemLevel + 1;
+
+     if (itemLevel == 0){
+       player.writeInfo('${ItemType.getName(itemType)} Purchased');
+     } else {
+       player.writeInfo('${ItemType.getName(itemType)} Upgraded');
+     }
+
+     if (player.weaponPrimary == itemType) return;
+     if (player.weaponSecondary == itemType) return;
+
+     if (player.weaponType == player.weaponPrimary){
+       player.weaponPrimary = itemType;
+     } else {
+       player.weaponSecondary = itemType;
+     }
+     player.weaponType = itemType;
+  }
 }

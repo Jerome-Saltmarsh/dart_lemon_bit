@@ -132,6 +132,11 @@ class ClientEvents {
          GameNetwork.sendClientRequest(ClientRequest.Swap_Weapons);
          return;
        }
+      if (key == LogicalKeyboardKey.keyE) {
+        GameNetwork.sendClientRequest(ClientRequest.Player_Action);
+        return;
+      }
+
        if (key == LogicalKeyboardKey.digit1) {
          GameNetwork.sendClientRequest(ClientRequest.Equip_Next, ItemGroup.Primary_Weapon.index);
          return;
