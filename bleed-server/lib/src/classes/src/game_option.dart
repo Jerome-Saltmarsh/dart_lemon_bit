@@ -69,8 +69,8 @@ class GameOptions {
      ItemType.Weapon_Ranged_Plasma_Rifle: [10, 15, 30, 50, 100],
      ItemType.Weapon_Ranged_Machine_Gun: [10, 15, 30, 50, 100],
      ItemType.Weapon_Ranged_Rifle: [4, 5, 7, 8, 10],
-     ItemType.Weapon_Melee_Hammer: [3, 4, 5, 6, 7],
-     ItemType.Weapon_Melee_Pickaxe: [5, 7, 10, 12, 14],
+     ItemType.Weapon_Ranged_Bazooka: [4, 5, 7, 8, 10],
+     ItemType.Weapon_Ranged_Flamethrower: [4, 5, 7, 8, 10],
   };
 
   static const Default_Item_Damage = <int, int> {

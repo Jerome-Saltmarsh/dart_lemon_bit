@@ -132,8 +132,13 @@ class ClientEvents {
          GameNetwork.sendRequestPlayerActionPrimary();
          return;
        }
+
       if (key == LogicalKeyboardKey.keyE) {
         GameNetwork.sendRequestPlayerActionSecondary();
+        return;
+      }
+      if (key == LogicalKeyboardKey.keyF) {
+        GameNetwork.sendRequestThrowGrenade();
         return;
       }
        if (key == LogicalKeyboardKey.digit1) {

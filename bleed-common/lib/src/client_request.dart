@@ -27,6 +27,7 @@ class ClientRequest {
   static const Purchase_Item = 42;
   static const Player_Action_Primary = 43;
   static const Player_Action_Secondary = 44;
+  static const Player_Throw_Grenade = 45;
 }
 
 

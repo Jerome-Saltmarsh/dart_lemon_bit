@@ -165,6 +165,10 @@ class Connection with ByteReader {
         game.performPlayerActionSecondary(player);
         break;
 
+      case ClientRequest.Player_Throw_Grenade:
+        game.playerThrowGrenade(player);
+        break;
+
       case ClientRequest.Weather_Set_Rain:
         if (!isLocalMachine && game is! GameEditor) return;
         final rainType = parse(arguments[1]);

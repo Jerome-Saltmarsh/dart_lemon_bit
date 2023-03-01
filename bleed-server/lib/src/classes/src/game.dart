@@ -694,6 +694,8 @@ abstract class Game {
   }
 
   void playerThrowGrenade(Player player) {
+    if (player.deadBusyOrWeaponStateBusy) return;
+
     dispatchAttackPerformed(
       ItemType.Weapon_Thrown_Grenade,
       player.x + getAdjacent(player.lookRadian, 60),
@@ -702,7 +704,7 @@ abstract class Game {
       player.lookRadian,
     );
 
-    player.assignWeaponStateFiring();
+    player.assignWeaponStateThrowing();
 
     final mouseDistance = getDistanceXY(player.x, player.y, player.mouseGridX, player.mouseGridY);
     final throwDistance = min(mouseDistance, GamePhysics.Max_Throw_Distance);

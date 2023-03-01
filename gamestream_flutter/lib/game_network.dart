@@ -412,6 +412,8 @@ class GameNetwork {
     sendClientRequest(ClientRequest.Player_Action_Secondary);
   }
 
+  static void sendRequestThrowGrenade() => sendClientRequest(ClientRequest.Player_Throw_Grenade);
+
   static void sendClientRequestModifyCanvasSize(RequestModifyCanvasSize request) =>
       sendClientRequestEdit(EditRequest.Modify_Canvas_Size, request.index);
 

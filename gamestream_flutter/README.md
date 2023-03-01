@@ -8,50 +8,11 @@ ctrl + w:   minimal mode
 
 EXPLORE and SURVIVE
 
-[ITEMS]
-- Handgun
-- Revolver
-- Bow
-
-- Knife
-- Crowbar
-- Axe
-
-- Rifle
-- Smg
-- Machine Gun
-- Shotgun
-- Sniper Rifle
-- Bazooka
-- Flamethrower
-- Minigun
-
-- Armour
-- grenade
-
 [TODO]
-[ ] experiment characters caste shadow
-[ ] feature torch audio
-[ ] perk melee shoots fireball
-[ ] perk melee doubled coins
-[ ] perk melee steals health
-[ ] perk melee quick draw
-[ ] perk shotgun extra bullet
-[ ] perk grenade extra capacity
-[ ] perk grenade extra blast radius
-[ ] perk grenade extra damage
-[ ] building hospital
-[ ] building office
-[ ] building store
-[ ] building police station
-[ ] milestone fix z ordering
-[ ] game learn to play tips
-[ ] feature weapon upgrades
-[ ] gameobject type tv
-[ ] gameobject type pipe
-[ ] milestone simplify upgrade system
-[ ] feature rotate gameobjects
-[ ] milestone fix light corners
+[ ] throw grenade
+[ ] upgrade melee
+[ ] upgrade max health
+[ ] upgrade grenade
 
 19.02.2023
 [x] feature torch light flicker
