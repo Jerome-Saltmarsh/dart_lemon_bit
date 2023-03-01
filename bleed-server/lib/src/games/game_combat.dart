@@ -306,6 +306,8 @@ class GameCombat extends Game {
          playerEquipSecondary(player, itemType);
          break;
      }
+
+     player.writeEquipped();
   }
 
   void playerEquipPrimary(Player player, int itemType) {

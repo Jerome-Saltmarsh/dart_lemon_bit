@@ -927,16 +927,22 @@ class GameUI {
                       width: Border_Width,
                       child: Container(
                         constraints: BoxConstraints(maxWidth: 120),
-                        height: GameStyle.Player_Weapons_Icon_Size,
                         color: active ? Colors.black45 : Colors.black12,
-                        padding: GameStyle.Padding_2,
-                        child: buildAtlasItemType(playerWeaponSecondary),
+                        padding: GameStyle.Padding_4,
+                        child: Column(
+                          children: [
+                            Container(
+                                height: GameStyle.Player_Weapons_Icon_Size,
+                                child: buildAtlasItemType(playerWeaponSecondary)
+                            ),
+                            watch(GamePlayer.weaponSecondaryLevel, buildRowItemTypeLevel)
+                          ],
+                        ),
                       ),
                     ),
                   ],
                 );
               }),
-              watch(GamePlayer.weaponSecondaryLevel, buildRowItemTypeLevel),
             ],
           ),
         ],

@@ -1754,25 +1754,6 @@ class Player extends Character with ByteWriter {
 
   @override
   void onEquipmentChanged() {
-
-    // if (game.options.items) {
-    //   switch (weaponTypeItemGroup) {
-    //     case ItemGroup.Primary_Weapon:
-    //       weaponRanged = weaponType;
-    //       weaponPrimary = weaponType;
-    //       break;
-    //     case ItemGroup.Secondary_Weapon:
-    //       weaponRanged = weaponType;
-    //       weaponSecondary = weaponType;
-    //       break;
-    //     case ItemGroup.Tertiary_Weapon:
-    //       weaponMelee = weaponType;
-    //       break;
-    //     default:
-    //       break;
-    //   }
-    // }
-
     refreshStats();
     writeEquipped();
   }
