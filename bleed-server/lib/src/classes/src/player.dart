@@ -122,7 +122,7 @@ class Player extends Character with ByteWriter {
   }
 
   int get weaponPrimaryLevel => item_level[weaponPrimary] ?? 0;
-  int get weaponPrimaryQuantity => item_quantity[weaponSecondary] ?? 0;
+  int get weaponPrimaryQuantity => item_quantity[weaponPrimary] ?? 0;
   int get weaponPrimaryCapacity {
     if (weaponPrimary == ItemType.Empty) return 0;
 
