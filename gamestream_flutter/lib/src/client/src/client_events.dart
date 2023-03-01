@@ -129,11 +129,11 @@ class ClientEvents {
          return;
        }
        if (key == LogicalKeyboardKey.keyQ) {
-         GameNetwork.sendClientRequest(ClientRequest.Swap_Weapons);
+         GameNetwork.sendRequestPlayerActionPrimary();
          return;
        }
       if (key == LogicalKeyboardKey.keyE) {
-        GameNetwork.sendRequestPlayerAction();
+        GameNetwork.sendRequestPlayerActionSecondary();
         return;
       }
        if (key == LogicalKeyboardKey.digit1) {

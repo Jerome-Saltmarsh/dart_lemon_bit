@@ -154,11 +154,15 @@ class Connection with ByteReader {
       case ClientRequest.Purchase_Item:
         final itemType = parseArg1(arguments);
         if (itemType == null) return;
-        game.playerPurchaseItemType(player, itemType);
+        game.playerPurchaseItemType(player, itemType, weaponSide: WeaponSide.Primary);
         break;
 
-      case ClientRequest.Player_Action:
-        game.performPlayerAction(player);
+      case ClientRequest.Player_Action_Primary:
+        game.performPlayerActionPrimary(player);
+        break;
+
+      case ClientRequest.Player_Action_Secondary:
+        game.performPlayerActionSecondary(player);
         break;
 
       case ClientRequest.Weather_Set_Rain:

@@ -229,19 +229,19 @@ class GameCombat extends Game {
   }
 
   @override
-  void performPlayerAction(Player player) {
+  void performPlayerActionPrimary(Player player) {
       if (player.dead) return;
       if (player.action == PlayerAction.None) return;
 
       switch (player.action) {
         case PlayerAction.Equip:
-          playerEquip(player, player.actionItemType);
+          playerEquipPrimary(player, player.actionItemType);
           break;
         case PlayerAction.Purchase:
-          playerPurchaseItemType(player, player.actionItemType);
+          playerPurchaseItemType(player, player.actionItemType, weaponSide: WeaponSide.Primary);
           break;
         case PlayerAction.Upgrade:
-          playerPurchaseItemType(player, player.actionItemType);
+          playerPurchaseItemType(player, player.actionItemType, weaponSide: WeaponSide.Primary);
           break;
         default:
           break;
@@ -249,7 +249,27 @@ class GameCombat extends Game {
   }
 
   @override
-  void playerPurchaseItemType(Player player, int itemType){
+  void performPlayerActionSecondary(Player player) {
+    if (player.dead) return;
+    if (player.action == PlayerAction.None) return;
+
+    switch (player.action) {
+      case PlayerAction.Equip:
+        playerEquipSecondary(player, player.actionItemType);
+        break;
+      case PlayerAction.Purchase:
+        playerPurchaseItemType(player, player.actionItemType, weaponSide: WeaponSide.Secondary);
+        break;
+      case PlayerAction.Upgrade:
+        playerPurchaseItemType(player, player.actionItemType, weaponSide: WeaponSide.Secondary);
+        break;
+      default:
+        break;
+    }
+  }
+
+  @override
+  void playerPurchaseItemType(Player player, int itemType, {required WeaponSide weaponSide}){
      if (player.dead) return;
 
      final itemLevel = player.getItemLevel(itemType);
@@ -271,30 +291,59 @@ class GameCombat extends Game {
 
      player.writePlayerEventItemPurchased(itemType);
 
-     if (player.weaponPrimary == itemType) {
-       player.writeEquipped();
-       return;
+     switch (weaponSide) {
+       case WeaponSide.Primary:
+         playerEquipPrimary(player, itemType);
+         break;
+       case WeaponSide.Secondary:
+         playerEquipSecondary(player, itemType);
+         break;
      }
-     if (player.weaponSecondary == itemType) {
-       player.writeEquipped();
-       return;
-     }
-
-     playerEquip(player, itemType);
   }
 
-  void playerEquip(Player player, int itemType){
-    if (player.weaponType == player.weaponPrimary){
-      player.weaponPrimary = itemType;
-    } else {
-      player.weaponSecondary = itemType;
-    }
-    player.weaponType = itemType;
+  void playerEquipPrimary(Player player, int itemType) {
+    if (
+      player.weaponPrimary == itemType &&
+      player.weaponType == itemType
+    ) return;
 
     if (player.canChangeEquipment) {
       setCharacterStateChanging(player);
     }
+
+    if (player.weaponSecondary == itemType) {
+      final previousWeaponPrimary = player.weaponPrimary;
+      player.weaponPrimary = itemType;
+      player.weaponSecondary = previousWeaponPrimary;
+      return;
+    }
+
+    player.weaponPrimary = itemType;
+    player.weaponType = itemType;
+    player.writeEquipped();
   }
+
+  void playerEquipSecondary(Player player, int itemType) {
+    if (
+        player.weaponSecondary == itemType &&
+        player.weaponType == itemType
+    ) return;
+
+    if (player.canChangeEquipment) {
+      setCharacterStateChanging(player);
+    }
+
+    if (player.weaponPrimary == itemType) {
+      final previousWeaponSecondary = player.weaponSecondary;
+      player.weaponSecondary = itemType;
+      player.weaponPrimary = previousWeaponSecondary;
+      return;
+    }
+
+    player.weaponSecondary = itemType;
+    player.weaponType = itemType;
+  }
+
 
   @override
   void customInit() {
@@ -321,4 +370,9 @@ class GameCombat extends Game {
       ..persistable  = true
     ;
   }
+}
+
+enum WeaponSide {
+  Primary,
+  Secondary,
 }
