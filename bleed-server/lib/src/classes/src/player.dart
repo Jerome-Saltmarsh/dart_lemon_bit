@@ -1508,12 +1508,18 @@ class Player extends Character with ByteWriter {
   void writePlayerWeapons() {
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Weapons);
+
+    writeUInt16(weaponType);
+
     writeUInt16(weaponPrimary);
-    writeUInt16(weaponSecondary);
     writeUInt16(weaponPrimaryQuantity);
-    writeUInt16(weaponSecondaryQuantity);
     writeUInt16(weaponPrimaryCapacity);
+    writeUInt8 (weaponPrimaryLevel);
+
+    writeUInt16(weaponSecondary);
+    writeUInt16(weaponSecondaryQuantity);
     writeUInt16(weaponSecondaryCapacity);
+    writeUInt8 (weaponSecondaryLevel);
   }
 
   void writeGameOptions() {
@@ -1784,20 +1790,22 @@ class Player extends Character with ByteWriter {
   @override
   void onEquipmentChanged() {
     refreshStats();
-    writeEquipped();
+    writePlayerEquipment();
   }
 
-  void writeEquipped(){
+  @override
+  void onWeaponChanged() {
+    refreshStats();
+    writePlayerWeapons();
+  }
+
+  void writePlayerEquipment(){
      writeByte(ServerResponse.Player);
-     writeByte(ApiPlayer.Equipped);
+     writeByte(ApiPlayer.Equipment);
      writeUInt16(weaponType);
      writeUInt16(headType);
      writeUInt16(bodyType);
      writeUInt16(legsType);
-     writeUInt16(weaponPrimary);
-     writeUInt16(weaponSecondary);
-     writeUInt8(weaponPrimaryLevel);
-     writeUInt8(weaponSecondaryLevel);
   }
 
   void writeMapListInt(Map<int, List<int>> value){
@@ -1851,7 +1859,7 @@ class Player extends Character with ByteWriter {
     weaponPrimary = b;
     weaponSecondary = a;
     game.setCharacterStateChanging(this);
-    writeEquipped();
+    writePlayerEquipment();
   }
 
   void writePlayerAction(){

@@ -31,6 +31,6 @@ class ApiPlayer {
   static const Perks_Active = 37;
   static const Items = 38;
   static const Weapons = 39;
-  static const Equipped = 40;
+  static const Equipment = 40;
   static const Action = 41;
 }

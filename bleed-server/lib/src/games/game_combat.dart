@@ -71,7 +71,7 @@ class GameCombat extends Game {
     player.item_quantity[weaponPrimary] = player.weaponPrimaryCapacity;
     player.item_quantity[weaponSecondary] = player.weaponSecondaryCapacity;
     player.credits = 100;
-    player.writeEquipped();
+    player.writePlayerEquipment();
   }
 
   @override
@@ -308,7 +308,7 @@ class GameCombat extends Game {
          break;
      }
 
-     player.writeEquipped();
+     player.writePlayerEquipment();
   }
 
   void playerEquipPrimary(Player player, int itemType) {
@@ -330,7 +330,7 @@ class GameCombat extends Game {
 
     player.weaponPrimary = itemType;
     player.weaponType = itemType;
-    player.writeEquipped();
+    player.writePlayerEquipment();
   }
 
   void playerEquipSecondary(Player player, int itemType) {

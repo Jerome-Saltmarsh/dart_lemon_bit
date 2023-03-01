@@ -350,7 +350,7 @@ class ServerResponseReader with ByteReader {
         readMap(GamePlayer.items);
         GamePlayer.Refresh_Items();
         break;
-      case ApiPlayer.Equipped:
+      case ApiPlayer.Equipment:
         readPlayerEquipped();
         break;
       default:
@@ -358,13 +358,19 @@ class ServerResponseReader with ByteReader {
     }
   }
 
+
   void readPlayerWeapons() {
+    GamePlayer.weapon.value = readUInt16();
+
     GamePlayer.weaponPrimary.value = readUInt16();
-    GamePlayer.weaponSecondary.value = readUInt16();
     GamePlayer.weaponPrimaryQuantity.value = readUInt16();
-    GamePlayer.weaponSecondaryQuantity.value = readUInt16();
     GamePlayer.weaponPrimaryCapacity.value = readUInt16();
+    GamePlayer.weaponPrimaryLevel.value = readUInt8();
+
+    GamePlayer.weaponSecondary.value = readUInt16();
+    GamePlayer.weaponSecondaryQuantity.value = readUInt16();
     GamePlayer.weaponSecondaryCapacity.value = readUInt16();
+    GamePlayer.weaponSecondaryLevel.value = readUInt8();
   }
 
   void readPlayerEquipped() {
@@ -372,12 +378,6 @@ class ServerResponseReader with ByteReader {
     GamePlayer.head.value = readUInt16();
     GamePlayer.body.value = readUInt16();
     GamePlayer.legs.value = readUInt16();
-
-    GamePlayer.weaponPrimary.value = readUInt16();
-    GamePlayer.weaponSecondary.value = readUInt16();
-
-    GamePlayer.weaponPrimaryLevel.value = readUInt8();
-    GamePlayer.weaponSecondaryLevel.value = readUInt8();
   }
 
   void readPlayerMaxHealth() {

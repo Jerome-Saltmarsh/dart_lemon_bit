@@ -46,7 +46,7 @@ abstract class Character extends Collider {
     assert (value == ItemType.Empty || ItemType.isTypeWeapon(value));
     if (_weaponType == value) return;
     _weaponType = value;
-    onEquipmentChanged();
+    onWeaponChanged();
   }
 
   set headType(int value){
@@ -358,4 +358,7 @@ abstract class Character extends Collider {
 
   /// safe to override
   void onEquipmentChanged() {}
+
+  /// safe to override
+  void onWeaponChanged() {}
 }
