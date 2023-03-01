@@ -61,13 +61,14 @@ class GameCombat extends Game {
       ItemType.Weapon_Melee_Sword,
     ]);
 
-    player.item_level[weaponPrimary] = 1;
-    player.item_level[weaponSecondary] = 1;
-    player.item_level[weaponTertiary] = 1;
+    player.item_level[weaponPrimary] = 0;
+    player.item_level[weaponSecondary] = 0;
+    player.item_level[weaponTertiary] = 0;
     characterEquipItemType(player, weaponPrimary);
     player.weaponPrimary = weaponPrimary;
     player.weaponSecondary = weaponSecondary;
     player.weaponTertiary = weaponTertiary;
+    player.grenades = 3;
     player.item_quantity[weaponPrimary] = player.weaponPrimaryCapacity;
     player.item_quantity[weaponSecondary] = player.weaponSecondaryCapacity;
     player.credits = 100;

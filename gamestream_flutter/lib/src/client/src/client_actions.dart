@@ -71,10 +71,6 @@ class ClientActions {
     ClientState.messageStatus.value = message;
   }
 
-  static void refreshTotalGrenades(){
-    GamePlayer.totalGrenades.value = ServerQuery.countItemTypeQuantityInPlayerPossession(ItemType.Weapon_Thrown_Grenade);
-  }
-
   static void spawnConfettiPlayer() {
      for (var i = 0; i < 10; i++){
        GameState.spawnParticleConfetti(

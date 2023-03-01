@@ -47,6 +47,7 @@ class GameOptions {
   };
 
   static const Default_ItemType_Capacity = <int, List<int>> {
+     ItemType.Weapon_Thrown_Grenade: [3, 4, 5, 6, 7],
      ItemType.Weapon_Ranged_Smg: [2, 3, 4, 5, 6],
      ItemType.Weapon_Ranged_Machine_Gun: [2, 3, 4, 5, 6],
      ItemType.Weapon_Ranged_Rifle: [4, 5, 7, 8, 10],

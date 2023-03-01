@@ -342,12 +342,7 @@ class ServerResponseReader with ByteReader {
         ServerState.playerBaseEnergy.value = readUInt16();
         break;
       case ApiPlayer.Perks_Unlocked:
-        final length = readUInt16();
-        final values = Uint8List(length);
-        for (var i = 0; i < length; i++) {
-          values[i] = readUInt8();
-        }
-        ServerState.playerPerksUnlocked.value = values;
+        readPlayerPerksUnlocked();
         break;
       case ApiPlayer.Items:
         readMap(GamePlayer.items);
@@ -356,9 +351,21 @@ class ServerResponseReader with ByteReader {
       case ApiPlayer.Equipment:
         readPlayerEquipped();
         break;
+      case ApiPlayer.Grenades:
+        GamePlayer.totalGrenades.value = readUInt16();
+        break;
       default:
         throw Exception("Cannot parse apiPlayer $apiPlayer");
     }
+  }
+
+  void readPlayerPerksUnlocked() {
+    final length = readUInt16();
+    final values = Uint8List(length);
+    for (var i = 0; i < length; i++) {
+      values[i] = readUInt8();
+    }
+    ServerState.playerPerksUnlocked.value = values;
   }
 
   void readPlayerWeapons() {

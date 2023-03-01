@@ -130,9 +130,7 @@ class ItemType {
   static const Weapon_Melee_Hammer        = Index_Weapon_Melee + 06;
   static const Weapon_Melee_Knife         = Index_Weapon_Melee + 07;
 
-  static const Weapon_Thrown_Pike         = Index_Weapon_Thrown + 01;
-  static const Weapon_Thrown_Grenade      = Index_Weapon_Thrown + 02;
-  static const Weapon_Thrown_Molotov      = Index_Weapon_Thrown + 03;
+  static const Weapon_Thrown_Grenade      = Index_Weapon_Thrown + 01;
 
   static const Weapon_Ranged_Pistol       = Index_Weapon_Ranged + 01;
   static const Weapon_Ranged_Handgun      = Index_Weapon_Ranged + 02;
@@ -335,8 +333,6 @@ class ItemType {
 
   static bool isTypeWeaponThrown(int value) => const <int> [
       ItemType.Weapon_Thrown_Grenade,
-      ItemType.Weapon_Thrown_Molotov,
-      ItemType.Weapon_Thrown_Pike,
   ].contains(value);
       
 

@@ -72,8 +72,6 @@ class Player extends Character with ByteWriter {
   var weaponSecondary = ItemType.Empty;
   var weaponTertiary = ItemType.Empty;
 
-  ItemGroup get weaponTypeItemGroup => ItemType.getItemGroup(weaponType);
-
   /// Warning - do not reference
   Game game;
   Collider? _aimTarget; // the currently highlighted character
@@ -98,6 +96,20 @@ class Player extends Character with ByteWriter {
   int get action => _action;
   int get actionItemType => _actionItemType;
   int get actionCost => _actionCost;
+
+  ItemGroup get weaponTypeItemGroup => ItemType.getItemGroup(weaponType);
+  int get grenades => getItemQuantity(ItemType.Weapon_Thrown_Grenade);
+
+  set grenades(int value) {
+    value = clamp(value, 0, getItemCapacity(ItemType.Weapon_Thrown_Grenade));
+    if (grenades == value) return;
+    setItemQuantity(ItemType.Weapon_Thrown_Grenade, value);
+    writePlayerGrenades();
+  }
+
+  void setItemQuantity(int itemType, int quantity) {
+    item_quantity[itemType] = clamp(quantity, 0, getItemCapacity(itemType));
+  }
 
   set action(int value) {
     if (_action == value) return;
@@ -1855,9 +1867,9 @@ class Player extends Character with ByteWriter {
     writeUInt16(_actionCost);
   }
 
-  int getItemLevel(int itemType) {
-    return item_level[itemType] ?? 0;
-  }
+  int getItemLevel(int itemType) => item_level[itemType] ?? 0;
+
+  int getItemQuantity(int itemType) => item_quantity[itemType] ?? 0;
 
   int getItemCapacity(int itemType) {
     if (itemType == ItemType.Empty) return 0;
@@ -1866,6 +1878,12 @@ class Player extends Character with ByteWriter {
     if (itemTypeCapacity == null) return 0;
     if (level >= itemTypeCapacity.length) return itemTypeCapacity.last;
     return itemTypeCapacity[level];
+  }
+
+  void writePlayerGrenades() {
+      writeByte(ServerResponse.Player);
+      writeByte(ApiPlayer.Grenades);
+      writeUInt16(grenades);
   }
 }
 
