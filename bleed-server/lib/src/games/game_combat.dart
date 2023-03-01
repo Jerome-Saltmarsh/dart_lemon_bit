@@ -53,7 +53,14 @@ class GameCombat extends Game {
 
     final weaponPrimary = ItemType.Weapon_Ranged_Plasma_Rifle;
     final weaponSecondary = ItemType.Weapon_Ranged_Plasma_Pistol;
-    final weaponTertiary = ItemType.Weapon_Melee_Knife;
+    final weaponTertiary = randomItem(const[
+      ItemType.Weapon_Melee_Knife,
+      ItemType.Weapon_Melee_Crowbar,
+      ItemType.Weapon_Melee_Axe,
+      ItemType.Weapon_Melee_Pickaxe,
+      ItemType.Weapon_Melee_Hammer,
+      ItemType.Weapon_Melee_Sword,
+    ]);
 
     player.items[weaponPrimary] = 1;
     player.items[weaponSecondary] = 1;

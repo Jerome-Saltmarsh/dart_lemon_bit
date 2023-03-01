@@ -460,26 +460,26 @@ class GameUI {
           ),
           bottom: GameStyle.Default_Padding,
         ),
-        Positioned(
-            top: 50,
-            child: Container(
-              width: Engine.screen.width,
-              alignment: Alignment.center,
-              child: Row(
-                 mainAxisAlignment: MainAxisAlignment.center,
-                 children: [
-                   watch(GamePlayer.action, (int action) {
-                     if (action == PlayerAction.None) return GameStyle.Null;
-                     return watch(GamePlayer.actionItemType, (int actionItemType) {
-                        return watch(GamePlayer.actionCost, (int cost){
-                          return text('Press E to ${PlayerAction.getName(action)} ${ItemType.getName(actionItemType)} for $cost credits');
-                        });
-                     });
-                   }),
-                 ],
-              ),
-            )
-        ),
+        // Positioned(
+        //     top: 50,
+        //     child: Container(
+        //       width: Engine.screen.width,
+        //       alignment: Alignment.center,
+        //       child: Row(
+        //          mainAxisAlignment: MainAxisAlignment.center,
+        //          children: [
+        //            watch(GamePlayer.action, (int action) {
+        //              if (action == PlayerAction.None) return GameStyle.Null;
+        //              return watch(GamePlayer.actionItemType, (int actionItemType) {
+        //                 return watch(GamePlayer.actionCost, (int cost){
+        //                   return text('Press E to ${PlayerAction.getName(action)} ${ItemType.getName(actionItemType)} for $cost credits');
+        //                 });
+        //              });
+        //            }),
+        //          ],
+        //       ),
+        //     )
+        // ),
         Positioned(
             bottom: GameStyle.Default_Padding,
             left: GameStyle.Default_Padding,
@@ -873,16 +873,22 @@ class GameUI {
                       width: Border_Width,
                       child: Container(
                         constraints: BoxConstraints(maxWidth: 120),
-                        height: GameStyle.Player_Weapons_Icon_Size,
                         color: active ? Colors.black45 : Colors.black12,
                         padding: GameStyle.Padding_4,
-                        child: buildAtlasItemType(playerWeaponPrimary),
+                        child: Column(
+                          children: [
+                            Container(
+                                height: GameStyle.Player_Weapons_Icon_Size,
+                                child: buildAtlasItemType(playerWeaponPrimary)
+                            ),
+                            watch(GamePlayer.weaponPrimaryLevel, buildRowItemTypeLevel)
+                          ],
+                        ),
                       ),
                     ),
                   ],
                 );
               }),
-              watch(GamePlayer.weaponPrimaryLevel, buildRowItemTypeLevel),
             ],
           ),
           width4,
@@ -939,18 +945,15 @@ class GameUI {
   }
 
   static Widget buildRowItemTypeLevel(int level){
-    return Container(
-      height: 50,
-      child: Row(
-        children: List.generate(5, (index) {
-          return Container(
-            width: 5,
-            height: 20,
-            color: index < level ? GameColors.blue : GameColors.blue05,
-            margin: const EdgeInsets.only(right: 2),
-          );
-        }),
-      ),
+    return Row(
+      children: List.generate(5, (index) {
+        return Container(
+          width: 5,
+          height: 20,
+          color: index < level ? GameColors.blue : GameColors.blue05,
+          margin: const EdgeInsets.only(right: 2),
+        );
+      }),
     );
   }
 
