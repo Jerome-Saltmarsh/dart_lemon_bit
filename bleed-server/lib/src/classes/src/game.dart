@@ -458,7 +458,7 @@ abstract class Game {
      final equippedItemIndex = player.getItemIndex(equippedItemType);
      assert (equippedItemType != -1);
 
-     final itemEntries = player.items.entries.toList(growable: false);
+     final itemEntries = player.item_level.entries.toList(growable: false);
      final itemEntriesLength = itemEntries.length;
      for (var i = equippedItemIndex + 1; i < itemEntriesLength; i++){
        final entry = itemEntries[i];
@@ -482,7 +482,7 @@ abstract class Game {
   }
 
   void playerEquipFirstItemTypeFromItemGroup(Player player, ItemGroup itemGroup){
-    final itemEntries = player.items.entries.toList(growable: false);
+    final itemEntries = player.item_level.entries.toList(growable: false);
     final itemEntriesLength = itemEntries.length;
     for (var i = 0 + 1; i < itemEntriesLength; i++){
       final entry = itemEntries[i];
@@ -499,7 +499,7 @@ abstract class Game {
     if (!character.canChangeEquipment) return;
 
     if (options.items && character is Player){
-      final itemAmount = character.items[itemType];
+      final itemAmount = character.item_level[itemType];
       if (itemAmount == null) return;
       if (itemAmount <= 0) return;
     }
@@ -576,6 +576,18 @@ abstract class Game {
           if (character.weaponIsEquipped){
             character.writePlayerEquippedWeaponAmmunition();
           }
+        }
+      }
+
+      if (options.items) {
+        if (ItemType.isTypeWeaponFirearm(weaponType)){
+          final equippedQuantity = character.item_quantity[weaponType] ?? 0;
+
+          if (equippedQuantity <= 0) {
+            character.writeError('No Ammo');
+            return;
+          }
+          character.item_quantity[weaponType] = equippedQuantity - 1;
         }
       }
 
@@ -1287,7 +1299,7 @@ abstract class Game {
     }
     if (options.items) {
       player.writePlayerItems();
-      player.writePlayerItemsEquipped();
+      player.writePlayerWeapons();
     }
 
     player.health = player.maxHealth;
@@ -2976,15 +2988,31 @@ abstract class Game {
       player.writeError('${ItemType.getName(itemType)} cannot be purchased');
       return;
     }
-    final currentLevel = player.items[itemType] ?? 0;
+    final currentLevel = player.item_level[itemType] ?? 0;
+
+    if (currentLevel >= 4){
+      player.writeError('${ItemType.getName(itemType)} max');
+      return;
+    }
+
     final cost = getItemPurchaseCost(itemType, currentLevel);
     if (player.credits < cost){
       player.writeError('insufficient credits');
       return;
     }
+    final nextLevel = currentLevel + 1;
+
+    final itemCapacity = options.itemTypeCapacity[itemType];
+
+    if (itemCapacity == null){
+      player.writeError('itemCapacity == null');
+      return;
+    }
+
     player.credits -= cost;
-    player.items[itemType] = currentLevel + 1;
-    player.writePlayerItems();
+    player.item_level[itemType] = nextLevel;
+    player.item_quantity[itemType] = itemCapacity[nextLevel];
+    // player.writePlayerItems();
     player.writePlayerEventItemPurchased(itemType);
     characterEquipItemType(player, itemType);
     setCharacterStateChanging(player);

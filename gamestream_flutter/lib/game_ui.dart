@@ -841,6 +841,11 @@ class GameUI {
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              watch(GamePlayer.weaponPrimaryCapacity, (int capacity){
+                 return watch(GamePlayer.weaponPrimaryQuantity, (int quantity){
+                   return text('$quantity / $capacity');
+                 });
+              }),
               watch(GamePlayer.weaponPrimary, (int playerWeaponPrimary) {
                 final active = playerWeaponType == playerWeaponPrimary;
                 return Column(
@@ -900,6 +905,11 @@ class GameUI {
           width4,
           Column(
             children: [
+              watch(GamePlayer.weaponSecondaryCapacity, (int capacity){
+                return watch(GamePlayer.weaponSecondaryQuantity, (int quantity){
+                  return text('$quantity / $capacity');
+                });
+              }),
               watch(GamePlayer.weaponSecondary, (int playerWeaponSecondary) {
                 final active = playerWeaponType == playerWeaponSecondary;
                 return Column(

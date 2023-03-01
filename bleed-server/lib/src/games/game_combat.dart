@@ -45,7 +45,7 @@ class GameCombat extends Game {
   @override
   void customOnPlayerRevived(Player player) {
     moveToRandomPlayerSpawnPoint(player);
-    player.items.clear();
+    player.item_level.clear();
     player.headType = randomItem(ItemType.Collection_Clothing_Head);
     player.bodyType = randomItem(ItemType.Collection_Clothing_Body);
     player.legsType = randomItem(ItemType.Collection_Clothing_Legs);
@@ -61,13 +61,15 @@ class GameCombat extends Game {
       ItemType.Weapon_Melee_Sword,
     ]);
 
-    player.items[weaponPrimary] = 1;
-    player.items[weaponSecondary] = 1;
-    player.items[weaponTertiary] = 1;
+    player.item_level[weaponPrimary] = 1;
+    player.item_level[weaponSecondary] = 1;
+    player.item_level[weaponTertiary] = 1;
     characterEquipItemType(player, weaponPrimary);
     player.weaponPrimary = weaponPrimary;
     player.weaponSecondary = weaponSecondary;
     player.weaponTertiary = weaponTertiary;
+    player.item_quantity[weaponPrimary] = player.weaponPrimaryCapacity;
+    player.item_quantity[weaponSecondary] = player.weaponSecondaryCapacity;
     player.credits = 100;
     player.writeEquipped();
   }
@@ -287,7 +289,7 @@ class GameCombat extends Game {
      }
 
      player.credits -= itemCost;
-     player.items[itemType] = itemLevel + 1;
+     player.item_level[itemType] = itemLevel + 1;
 
      if (itemLevel == 0){
        player.writeInfo('${ItemType.getName(itemType)} Purchased');

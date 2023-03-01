@@ -8,8 +8,12 @@ class GamePlayer {
 
   static final weaponPrimary = Watch(0, onChanged: GameEvents.onChangedPlayerWeapon);
   static final weaponPrimaryLevel = Watch(0);
+  static final weaponPrimaryQuantity = Watch(0);
+  static final weaponPrimaryCapacity = Watch(0);
   static final weaponSecondary = Watch(0, onChanged: GameEvents.onChangedPlayerWeapon);
   static final weaponSecondaryLevel = Watch(0);
+  static final weaponSecondaryQuantity = Watch(0);
+  static final weaponSecondaryCapacity = Watch(0);
   static final weaponTertiary = Watch(0, onChanged: GameEvents.onChangedPlayerWeapon);
 
   static final body = Watch(0);

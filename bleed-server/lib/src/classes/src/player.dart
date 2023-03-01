@@ -88,7 +88,8 @@ class Player extends Character with ByteWriter {
   var nextEnergyGain = Frames_Per_Energy_Gain;
 
   /// the key is the item_type and the value is its level
-  final items = <int, int> {};
+  final item_level = <int, int> {};
+  final item_quantity = <int, int> {};
 
   var _action = PlayerAction.None;
   var _actionItemType = ItemType.Empty;
@@ -120,8 +121,34 @@ class Player extends Character with ByteWriter {
     writePlayerAction();
   }
 
-  int get weaponPrimaryLevel => items[weaponPrimary] ?? 0;
-  int get weaponSecondaryLevel => items[weaponSecondary] ?? 0;
+  int get weaponPrimaryLevel => item_level[weaponPrimary] ?? 0;
+  int get weaponPrimaryQuantity => item_quantity[weaponSecondary] ?? 0;
+  int get weaponPrimaryCapacity {
+    if (weaponPrimary == ItemType.Empty) return 0;
+
+    final itemTypeCapacity = game.options.itemTypeCapacity[weaponPrimary];
+    if (itemTypeCapacity == null){
+       throw Exception('int get player.weaponPrimaryCapacity - game.options.itemTypeCapacity(${ItemType.getName(weaponPrimary)} == null');
+    }
+
+    if (weaponPrimaryLevel >= itemTypeCapacity.length)
+      return itemTypeCapacity.length;
+    return itemTypeCapacity[weaponPrimaryLevel];
+  }
+
+  int get weaponSecondaryLevel => item_level[weaponSecondary] ?? 0;
+  int get weaponSecondaryQuantity => item_quantity[weaponSecondary] ?? 0;
+  int get weaponSecondaryCapacity {
+    if (weaponSecondary == ItemType.Empty) return 0;
+    final itemTypeCapacity = game.options.itemTypeCapacity[weaponSecondary];
+    if (itemTypeCapacity == null){
+      throw Exception('int get player.weaponPrimaryCapacity - game.options.itemTypeCapacity(${ItemType.getName(weaponSecondary)} == null');
+    }
+
+    if (weaponSecondaryLevel >= itemTypeCapacity.length)
+      return itemTypeCapacity.length;
+    return itemTypeCapacity[weaponSecondaryLevel];
+  }
 
   /// CONSTRUCTOR
   Player({
@@ -267,7 +294,7 @@ class Player extends Character with ByteWriter {
   }
 
   void refreshStatsItems(){
-    damage = game.getItemTypeDamage(weaponType, level: this.items[weaponType] ?? 0);
+    damage = game.getItemTypeDamage(weaponType, level: this.item_level[weaponType] ?? 0);
   }
 
   void refreshStatsInventory() {
@@ -1475,16 +1502,18 @@ class Player extends Character with ByteWriter {
   void writePlayerItems() {
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Items);
-    writeMap(items);
+    writeMap(item_level);
   }
 
-  void writePlayerItemsEquipped() {
+  void writePlayerWeapons() {
     writeByte(ServerResponse.Player);
-    writeByte(ApiPlayer.Items_Equipped);
-    // writeUInt16(weaponRanged);
-    // writeUInt16(weaponMelee);
+    writeByte(ApiPlayer.Weapons);
     writeUInt16(weaponPrimary);
     writeUInt16(weaponSecondary);
+    writeUInt16(weaponPrimaryQuantity);
+    writeUInt16(weaponSecondaryQuantity);
+    writeUInt16(weaponPrimaryCapacity);
+    writeUInt16(weaponSecondaryCapacity);
   }
 
   void writeGameOptions() {
@@ -1724,7 +1753,7 @@ class Player extends Character with ByteWriter {
   }
 
   int getItemIndex(int itemType) {
-    final itemEntries = items.entries;
+    final itemEntries = item_level.entries;
     var index = 0;
     for (var item in itemEntries){
       if (item.key == itemType) return index;
@@ -1788,7 +1817,7 @@ class Player extends Character with ByteWriter {
     final equippedItemIndex = getItemIndex(equippedItemType);
     assert (equippedItemType != -1);
 
-    final itemEntries = items.entries.toList(growable: false);
+    final itemEntries = item_level.entries.toList(growable: false);
     final itemEntriesLength = itemEntries.length;
     for (var i = equippedItemIndex + 1; i < itemEntriesLength; i++){
       final entry = itemEntries[i];
@@ -1834,7 +1863,7 @@ class Player extends Character with ByteWriter {
   }
 
   int getItemLevel(int itemType) {
-    return items[itemType] ?? 0;
+    return item_level[itemType] ?? 0;
   }
 }
 

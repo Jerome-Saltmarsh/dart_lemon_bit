@@ -262,11 +262,8 @@ class ServerResponseReader with ByteReader {
         GamePlayer.energy.value = readUInt16();
         GamePlayer.energyMax.value = readUInt16();
         break;
-      case ApiPlayer.Items_Equipped:
-        // GamePlayer.weaponRanged.value = readUInt16();
-        // GamePlayer.weaponMelee.value = readUInt16();
-        GamePlayer.weaponPrimary.value = readUInt16();
-        GamePlayer.weaponSecondary.value = readUInt16();
+      case ApiPlayer.Weapons:
+        readPlayerWeapons();
         break;
       case ApiPlayer.Aim_Angle:
         GamePlayer.mouseAngle = readAngle();
@@ -359,6 +356,15 @@ class ServerResponseReader with ByteReader {
       default:
         throw Exception("Cannot parse apiPlayer $apiPlayer");
     }
+  }
+
+  void readPlayerWeapons() {
+    GamePlayer.weaponPrimary.value = readUInt16();
+    GamePlayer.weaponSecondary.value = readUInt16();
+    GamePlayer.weaponPrimaryQuantity.value = readUInt16();
+    GamePlayer.weaponSecondaryQuantity.value = readUInt16();
+    GamePlayer.weaponPrimaryCapacity.value = readUInt16();
+    GamePlayer.weaponSecondaryCapacity.value = readUInt16();
   }
 
   void readPlayerEquipped() {
