@@ -1522,6 +1522,13 @@ class Player extends Character with ByteWriter {
     writeUInt8 (weaponSecondaryLevel);
   }
 
+  void writeWeaponQuantity(){
+    writeByte(ServerResponse.Player);
+    writeByte(ApiPlayer.Weapon_Quantity);
+    writeUInt16(weaponPrimaryQuantity);
+    writeUInt16(weaponSecondaryQuantity);
+  }
+
   void writeGameOptions() {
     final options = game.options;
     writeByte(ServerResponse.Game_Options);

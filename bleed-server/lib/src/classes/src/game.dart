@@ -588,6 +588,7 @@ abstract class Game {
             return;
           }
           character.item_quantity[weaponType] = equippedQuantity - 1;
+          character.writeWeaponQuantity();
         }
       }
 

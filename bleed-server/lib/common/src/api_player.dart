@@ -33,4 +33,5 @@ class ApiPlayer {
   static const Weapons = 39;
   static const Equipment = 40;
   static const Action = 41;
+  static const Weapon_Quantity = 42;
 }

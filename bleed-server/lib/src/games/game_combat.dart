@@ -281,23 +281,24 @@ class GameCombat extends Game {
      if (player.dead) return;
 
      final itemLevel = player.getItemLevel(itemType);
-     final itemCost = getItemPurchaseCost(itemType, itemLevel);
 
-     if (player.credits < itemCost){
-       player.writeError('insufficient credits');
-       return;
+     if (itemLevel < 4) {
+       final itemCost = getItemPurchaseCost(itemType, itemLevel);
+
+       if (player.credits < itemCost){
+         player.writeError('insufficient credits');
+         return;
+       }
+
+       player.credits -= itemCost;
+       player.item_level[itemType] = itemLevel + 1;
+       if (itemLevel == 0){
+         player.writeInfo('${ItemType.getName(itemType)} Purchased');
+       } else {
+         player.writeInfo('${ItemType.getName(itemType)} Upgraded');
+       }
+       player.writePlayerEventItemPurchased(itemType);
      }
-
-     player.credits -= itemCost;
-     player.item_level[itemType] = itemLevel + 1;
-
-     if (itemLevel == 0){
-       player.writeInfo('${ItemType.getName(itemType)} Purchased');
-     } else {
-       player.writeInfo('${ItemType.getName(itemType)} Upgraded');
-     }
-
-     player.writePlayerEventItemPurchased(itemType);
 
      switch (weaponSide) {
        case WeaponSide.Primary:
@@ -309,6 +310,7 @@ class GameCombat extends Game {
      }
 
      player.writePlayerEquipment();
+     player.writePlayerWeapons();
   }
 
   void playerEquipPrimary(Player player, int itemType) {

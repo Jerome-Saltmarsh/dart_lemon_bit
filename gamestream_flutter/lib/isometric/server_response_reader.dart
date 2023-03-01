@@ -265,6 +265,9 @@ class ServerResponseReader with ByteReader {
       case ApiPlayer.Weapons:
         readPlayerWeapons();
         break;
+      case ApiPlayer.Weapon_Quantity:
+        readPlayerWeaponQuantity();
+        break;
       case ApiPlayer.Aim_Angle:
         GamePlayer.mouseAngle = readAngle();
         break;
@@ -358,19 +361,23 @@ class ServerResponseReader with ByteReader {
     }
   }
 
-
   void readPlayerWeapons() {
     GamePlayer.weapon.value = readUInt16();
 
-    GamePlayer.weaponPrimary.value = readUInt16();
-    GamePlayer.weaponPrimaryQuantity.value = readUInt16();
-    GamePlayer.weaponPrimaryCapacity.value = readUInt16();
-    GamePlayer.weaponPrimaryLevel.value = readUInt8();
+    GamePlayer.weaponPrimary.value           = readUInt16();
+    GamePlayer.weaponPrimaryQuantity.value   = readUInt16();
+    GamePlayer.weaponPrimaryCapacity.value   = readUInt16();
+    GamePlayer.weaponPrimaryLevel.value      = readUInt8();
 
-    GamePlayer.weaponSecondary.value = readUInt16();
+    GamePlayer.weaponSecondary.value         = readUInt16();
     GamePlayer.weaponSecondaryQuantity.value = readUInt16();
     GamePlayer.weaponSecondaryCapacity.value = readUInt16();
-    GamePlayer.weaponSecondaryLevel.value = readUInt8();
+    GamePlayer.weaponSecondaryLevel.value    = readUInt8();
+  }
+
+  void readPlayerWeaponQuantity() {
+    GamePlayer.weaponPrimaryQuantity.value   = readUInt16();
+    GamePlayer.weaponSecondaryQuantity.value = readUInt16();
   }
 
   void readPlayerEquipped() {
