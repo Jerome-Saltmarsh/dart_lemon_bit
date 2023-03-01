@@ -121,34 +121,12 @@ class Player extends Character with ByteWriter {
     writePlayerAction();
   }
 
-  int get weaponPrimaryLevel => item_level[weaponPrimary] ?? 0;
-  int get weaponPrimaryQuantity => item_quantity[weaponPrimary] ?? 0;
-  int get weaponPrimaryCapacity {
-    if (weaponPrimary == ItemType.Empty) return 0;
-
-    final itemTypeCapacity = game.options.itemTypeCapacity[weaponPrimary];
-    if (itemTypeCapacity == null){
-       throw Exception('int get player.weaponPrimaryCapacity - game.options.itemTypeCapacity(${ItemType.getName(weaponPrimary)} == null');
-    }
-
-    if (weaponPrimaryLevel >= itemTypeCapacity.length)
-      return itemTypeCapacity.length;
-    return itemTypeCapacity[weaponPrimaryLevel];
-  }
-
-  int get weaponSecondaryLevel => item_level[weaponSecondary] ?? 0;
+  int get weaponPrimaryLevel      => item_level[weaponPrimary] ?? 0;
+  int get weaponPrimaryQuantity   => item_quantity[weaponPrimary] ?? 0;
+  int get weaponPrimaryCapacity   => getItemCapacity(weaponPrimary);
+  int get weaponSecondaryLevel    => item_level[weaponSecondary] ?? 0;
   int get weaponSecondaryQuantity => item_quantity[weaponSecondary] ?? 0;
-  int get weaponSecondaryCapacity {
-    if (weaponSecondary == ItemType.Empty) return 0;
-    final itemTypeCapacity = game.options.itemTypeCapacity[weaponSecondary];
-    if (itemTypeCapacity == null){
-      throw Exception('int get player.weaponPrimaryCapacity - game.options.itemTypeCapacity(${ItemType.getName(weaponSecondary)} == null');
-    }
-
-    if (weaponSecondaryLevel >= itemTypeCapacity.length)
-      return itemTypeCapacity.length;
-    return itemTypeCapacity[weaponSecondaryLevel];
-  }
+  int get weaponSecondaryCapacity => getItemCapacity(weaponSecondary);
 
   /// CONSTRUCTOR
   Player({
@@ -1879,6 +1857,15 @@ class Player extends Character with ByteWriter {
 
   int getItemLevel(int itemType) {
     return item_level[itemType] ?? 0;
+  }
+
+  int getItemCapacity(int itemType) {
+    if (itemType == ItemType.Empty) return 0;
+    final level = getItemLevel(itemType);
+    final itemTypeCapacity = game.options.itemTypeCapacity[itemType];
+    if (itemTypeCapacity == null) return 0;
+    if (level >= itemTypeCapacity.length) return itemTypeCapacity.last;
+    return itemTypeCapacity[level];
   }
 }
 

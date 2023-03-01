@@ -292,6 +292,7 @@ class GameCombat extends Game {
 
        player.credits -= itemCost;
        player.item_level[itemType] = itemLevel + 1;
+       player.item_quantity[itemType] = player.getItemCapacity(itemType);
        if (itemLevel == 0){
          player.writeInfo('${ItemType.getName(itemType)} Purchased');
        } else {
