@@ -9,7 +9,7 @@ ctrl + w:   minimal mode
 EXPLORE and SURVIVE
 
 [TODO]
-[ ] throw grenade
+[x] throw grenade
 [ ] upgrade melee
 [ ] upgrade max health
 [ ] upgrade grenade

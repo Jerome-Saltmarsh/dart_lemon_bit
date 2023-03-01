@@ -63,7 +63,7 @@ class RendererGameObjects extends Renderer {
           srcWidth: 125,
           srcHeight: 125,
           color: GameState.getV3RenderColor(gameObject),
-          scale: 0.4
+          scale: 0.5
       );
       return;
     }
@@ -78,7 +78,7 @@ class RendererGameObjects extends Renderer {
           srcWidth: 125,
           srcHeight: 125,
           color: GameState.getV3RenderColor(gameObject),
-          scale: 0.4
+          scale: 0.5
       );
       return;
     }
@@ -93,7 +93,7 @@ class RendererGameObjects extends Renderer {
           srcWidth: 125,
           srcHeight: 125,
           color: GameState.getV3RenderColor(gameObject),
-          scale: 0.4
+          scale: 0.5
       );
       return;
     }

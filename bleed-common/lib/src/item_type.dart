@@ -935,6 +935,7 @@ class ItemType {
   ];
 
   static const Collection_Clothing_Head = [
+    Head_Blonde,
     Head_Swat,
     Head_Steel_Helm,
     Head_Rogues_Hood,

@@ -870,14 +870,14 @@ class GameUI {
                             color: Colors.grey,
                             child: text("Q"),
                           ),
-                          if (playerWeaponPrimary == actionItemType)
-                            Container(
-                              width: 40,
-                              height: 40,
-                              alignment: Alignment.center,
-                              color: GameColors.green,
-                              child: text(GamePlayer.actionCost.value),
-                            )
+                          // if (playerWeaponPrimary == actionItemType)
+                          //   Container(
+                          //     width: 40,
+                          //     height: 40,
+                          //     alignment: Alignment.center,
+                          //     color: GameColors.green,
+                          //     child: text(GamePlayer.actionCost.value),
+                          //   )
                         ],
                       );
                     }),
@@ -894,18 +894,13 @@ class GameUI {
                         // color: active ? Colors.black45 : Colors.black12,
                         padding: GameStyle.Padding_6,
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Container(
                                 height: GameStyle.Player_Weapons_Icon_Size,
                                 child: buildAtlasItemType(playerWeaponPrimary)
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                watch(GamePlayer.weaponPrimaryLevel, buildRowItemTypeLevel),
-                                weaponPrimaryAmmo,
-                              ],
-                            )
+                            weaponPrimaryAmmo
                           ],
                         ),
                       ),
@@ -934,14 +929,14 @@ class GameUI {
                             color: Colors.grey,
                             child: text("E"),
                           ),
-                          if (playerWeaponSecondary == actionItemType)
-                            Container(
-                              width: 40,
-                              height: 40,
-                              alignment: Alignment.center,
-                              color: GameColors.green,
-                              child: text(GamePlayer.actionCost.value),
-                            )
+                          // if (playerWeaponSecondary == actionItemType)
+                          //   Container(
+                          //     width: 40,
+                          //     height: 40,
+                          //     alignment: Alignment.center,
+                          //     color: GameColors.green,
+                          //     child: text(GamePlayer.actionCost.value),
+                          //   )
                         ],
                       );
                     }),
@@ -958,18 +953,13 @@ class GameUI {
                         ),
                         padding: GameStyle.Padding_6,
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Container(
                                 height: GameStyle.Player_Weapons_Icon_Size,
                                 child: buildAtlasItemType(playerWeaponSecondary)
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                watch(GamePlayer.weaponSecondaryLevel, buildRowItemTypeLevel),
-                                weaponSecondaryAmmo,
-                              ],
-                            )
+                            weaponSecondaryAmmo
                           ],
                         ),
                       ),
