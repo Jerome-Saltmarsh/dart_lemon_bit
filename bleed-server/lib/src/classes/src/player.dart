@@ -101,6 +101,10 @@ class Player extends Character with ByteWriter {
   set action(int value) {
     if (_action == value) return;
     _action = value;
+    if (_action == PlayerAction.None) {
+      _actionCost = 0;
+      _actionItemType = ItemType.Empty;
+    }
     writePlayerAction();
   }
 

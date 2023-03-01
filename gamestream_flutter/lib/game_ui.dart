@@ -818,27 +818,55 @@ class GameUI {
     const Border_Width = 3.0;
     return buildDialogUIControl(
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           buildPlayerHealth(),
           width4,
-          // watch(GamePlayer.weaponRanged, (int playerWeaponRanged) {
              Row(
                children: [
                  Column(
+                   mainAxisAlignment: MainAxisAlignment.end,
                    crossAxisAlignment: CrossAxisAlignment.start,
                    children: [
-                     watch(GamePlayer.weaponPrimary, (int itemType) {
-                       final active = playerWeaponType == itemType;
-                       return border(
-                         color: active ? playerWeaponType == itemType ? Colors.white70 : Colors.black54 : Colors.transparent,
-                         width: Border_Width,
-                         child: Container(
-                           constraints: BoxConstraints(maxWidth: 120),
-                           height: GameStyle.Player_Weapons_Icon_Size,
-                           color: active ? Colors.black45 : Colors.black12,
-                           padding: GameStyle.Padding_4,
-                           child: buildAtlasItemType(itemType),
-                         ),
+                     watch(GamePlayer.weaponPrimary, (int playerWeaponPrimary) {
+                       final active = playerWeaponType == playerWeaponPrimary;
+                       return Column(
+                         children: [
+                           watch(GamePlayer.actionItemType, (int actionItemType){
+                             if (actionItemType == PlayerAction.None) return GameStyle.Null;
+                             return Row(
+                               children: [
+                                 Container(
+                                   width: 40,
+                                   height: 40,
+                                   alignment: Alignment.center,
+                                   color: Colors.grey,
+                                   child: text("Q"),
+                                 ),
+                                 if (playerWeaponPrimary == actionItemType)
+                                   Container(
+                                     width: 40,
+                                     height: 40,
+                                     alignment: Alignment.center,
+                                     color: GameColors.green,
+                                     child: text(GamePlayer.actionCost.value),
+                                   )
+                               ],
+                             );
+                           }),
+                           height4,
+                           border(
+                             color: active ? playerWeaponType == playerWeaponPrimary ? Colors.white70 : Colors.black54 : Colors.transparent,
+                             width: Border_Width,
+                             child: Container(
+                               constraints: BoxConstraints(maxWidth: 120),
+                               height: GameStyle.Player_Weapons_Icon_Size,
+                               color: active ? Colors.black45 : Colors.black12,
+                               padding: GameStyle.Padding_4,
+                               child: buildAtlasItemType(playerWeaponPrimary),
+                             ),
+                           ),
+                         ],
                        );
                      }),
                      watch(GamePlayer.weaponPrimaryLevel, buildRowItemTypeLevel),
@@ -847,18 +875,45 @@ class GameUI {
                  width4,
                  Column(
                    children: [
-                     watch(GamePlayer.weaponSecondary, (int itemType) {
-                       final active = playerWeaponType == itemType;
-                       return border(
-                         color: active ? playerWeaponType == itemType ? Colors.white70 : Colors.black54 : Colors.transparent,
-                         width: Border_Width,
-                         child: Container(
-                           constraints: BoxConstraints(maxWidth: 120),
-                           height: GameStyle.Player_Weapons_Icon_Size,
-                           color: active ? Colors.black45 : Colors.black12,
-                           padding: GameStyle.Padding_2,
-                           child: buildAtlasItemType(itemType),
-                         ),
+                     watch(GamePlayer.weaponSecondary, (int playerWeaponSecondary) {
+                       final active = playerWeaponType == playerWeaponSecondary;
+                       return Column(
+                         children: [
+                           watch(GamePlayer.actionItemType, (int actionItemType){
+                             if (actionItemType == PlayerAction.None) return GameStyle.Null;
+                             return Row(
+                               children: [
+                                 Container(
+                                   width: 40,
+                                   height: 40,
+                                   alignment: Alignment.center,
+                                   color: Colors.grey,
+                                   child: text("E"),
+                                 ),
+                                 if (playerWeaponSecondary == actionItemType)
+                                   Container(
+                                     width: 40,
+                                     height: 40,
+                                     alignment: Alignment.center,
+                                     color: GameColors.green,
+                                     child: text(GamePlayer.actionCost.value),
+                                   )
+                               ],
+                             );
+                           }),
+                           height4,
+                           border(
+                             color: active ? playerWeaponType == playerWeaponSecondary ? Colors.white70 : Colors.black54 : Colors.transparent,
+                             width: Border_Width,
+                             child: Container(
+                               constraints: BoxConstraints(maxWidth: 120),
+                               height: GameStyle.Player_Weapons_Icon_Size,
+                               color: active ? Colors.black45 : Colors.black12,
+                               padding: GameStyle.Padding_2,
+                               child: buildAtlasItemType(playerWeaponSecondary),
+                             ),
+                           ),
+                         ],
                        );
                      }),
                      watch(GamePlayer.weaponSecondaryLevel, buildRowItemTypeLevel),
