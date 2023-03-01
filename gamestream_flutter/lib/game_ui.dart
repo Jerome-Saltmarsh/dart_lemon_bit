@@ -831,6 +831,18 @@ class GameUI {
     ),
   );
 
+  static final widgetWeaponPrimaryAmmo = watch(GamePlayer.weaponPrimaryCapacity, (int capacity){
+    return watch(GamePlayer.weaponPrimaryQuantity, (int quantity){
+      return text('$quantity / $capacity');
+    });
+  });
+
+  static final widgetWeaponSecondaryAmmo = watch(GamePlayer.weaponSecondaryCapacity, (int capacity){
+    return watch(GamePlayer.weaponSecondaryQuantity, (int quantity){
+      return text('$quantity / $capacity');
+    });
+  });
+
   static Widget buildPlayerUIWeapons() {
     const Border_Width = 3.0;
     return watch(GamePlayer.weapon, (int playerWeaponType){
@@ -841,11 +853,11 @@ class GameUI {
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              watch(GamePlayer.weaponPrimaryCapacity, (int capacity){
-                 return watch(GamePlayer.weaponPrimaryQuantity, (int quantity){
-                   return text('$quantity / $capacity');
-                 });
-              }),
+              // watch(GamePlayer.weaponPrimaryCapacity, (int capacity){
+              //    return watch(GamePlayer.weaponPrimaryQuantity, (int quantity){
+              //      return text('$quantity / $capacity');
+              //    });
+              // }),
               watch(GamePlayer.weaponPrimary, (int playerWeaponPrimary) {
                 final active = playerWeaponType == playerWeaponPrimary;
                 return Column(
@@ -875,7 +887,6 @@ class GameUI {
                     }),
                     height4,
                     border(
-                      // color: active ? playerWeaponType == playerWeaponPrimary ? Colors.black87 : Colors.black54 : Colors.transparent,
                       color: Colors.transparent,
                       width: Border_Width,
                       child: Container(
@@ -892,7 +903,13 @@ class GameUI {
                                 height: GameStyle.Player_Weapons_Icon_Size,
                                 child: buildAtlasItemType(playerWeaponPrimary)
                             ),
-                            watch(GamePlayer.weaponPrimaryLevel, buildRowItemTypeLevel)
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                watch(GamePlayer.weaponPrimaryLevel, buildRowItemTypeLevel),
+                                widgetWeaponPrimaryAmmo,
+                              ],
+                            )
                           ],
                         ),
                       ),
@@ -905,11 +922,6 @@ class GameUI {
           width4,
           Column(
             children: [
-              watch(GamePlayer.weaponSecondaryCapacity, (int capacity){
-                return watch(GamePlayer.weaponSecondaryQuantity, (int quantity){
-                  return text('$quantity / $capacity');
-                });
-              }),
               watch(GamePlayer.weaponSecondary, (int playerWeaponSecondary) {
                 final active = playerWeaponType == playerWeaponSecondary;
                 return Column(
@@ -955,7 +967,13 @@ class GameUI {
                                 height: GameStyle.Player_Weapons_Icon_Size,
                                 child: buildAtlasItemType(playerWeaponSecondary)
                             ),
-                            watch(GamePlayer.weaponSecondaryLevel, buildRowItemTypeLevel)
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                watch(GamePlayer.weaponSecondaryLevel, buildRowItemTypeLevel),
+                                widgetWeaponSecondaryAmmo,
+                              ],
+                            )
                           ],
                         ),
                       ),
