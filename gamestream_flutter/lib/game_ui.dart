@@ -870,12 +870,17 @@ class GameUI {
                     }),
                     height4,
                     border(
-                      color: active ? playerWeaponType == playerWeaponPrimary ? Colors.white70 : Colors.black54 : Colors.transparent,
+                      // color: active ? playerWeaponType == playerWeaponPrimary ? Colors.black87 : Colors.black54 : Colors.transparent,
+                      color: Colors.transparent,
                       width: Border_Width,
                       child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: borderRadius4,
+                          color: active ? Colors.black45 : Colors.black12,
+                        ),
                         constraints: BoxConstraints(maxWidth: 120),
-                        color: active ? Colors.black45 : Colors.black12,
-                        padding: GameStyle.Padding_4,
+                        // color: active ? Colors.black45 : Colors.black12,
+                        padding: GameStyle.Padding_6,
                         child: Column(
                           children: [
                             Container(
@@ -924,12 +929,16 @@ class GameUI {
                     }),
                     height4,
                     border(
-                      color: active ? playerWeaponType == playerWeaponSecondary ? Colors.white70 : Colors.black54 : Colors.transparent,
+                      // color: active ? playerWeaponType == playerWeaponSecondary ? Colors.white70 : Colors.black54 : Colors.transparent,
+                      color: Colors.transparent,
                       width: Border_Width,
                       child: Container(
                         constraints: BoxConstraints(maxWidth: 120),
-                        color: active ? Colors.black45 : Colors.black12,
-                        padding: GameStyle.Padding_4,
+                        decoration: BoxDecoration(
+                          borderRadius: borderRadius4,
+                          color: active ? Colors.black45 : Colors.black12,
+                        ),
+                        padding: GameStyle.Padding_6,
                         child: Column(
                           children: [
                             Container(
@@ -982,27 +991,28 @@ class GameUI {
   }
 
   static Widget buildPlayerHealth() {
-    final size = 88.0;
+    final height = 87.0;
+    final width = height * goldenRatio_0618;
     return border(
-          width: 3,
+          width: GameStyle.Player_Weapons_Border_Size,
           color: GameColors.Red_3,
           child: Container(
-            width: size * goldenRatio_0618,
-            height: size,
+            width: width,
+            height: height,
             alignment: Alignment.center,
             child: Stack(
               alignment: AlignmentDirectional.center,
               children: [
                 Container(
-                  width: size * goldenRatio_0618,
-                  height: size,
+                  width: width,
+                  height: height,
                   alignment: Alignment.topCenter,
                   child: watch(ServerState.playerMaxHealth, (int maxHealth) {
                     return watch(ServerState.playerHealth, (int health){
                        final percentage = health / max(maxHealth, 1);
                        return Container(
-                         width: size * goldenRatio_0618,
-                         height: size * percentage,
+                         width: width,
+                         height: height * percentage,
                          color: GameColors.Red_3,
                        );
                     });
@@ -1026,25 +1036,27 @@ class GameUI {
   }
 
   static Widget buildPlayerEnergy() {
+    final height = 87.0;
+    final width = height * goldenRatio_0618;
     return border(
           width: GameStyle.Player_Weapons_Border_Size,
           color: GameColors.yellow,
           child: Container(
-            width: GameStyle.Player_Weapons_Icon_Size,
-            height: GameStyle.Player_Weapons_Icon_Size,
+            width: width,
+            height: height,
             alignment: Alignment.center,
             child: Stack(
               alignment: AlignmentDirectional.center,
               children: [
                 Container(
-                  width: GameStyle.Player_Weapons_Icon_Size,
-                  height: GameStyle.Player_Weapons_Icon_Size,
+                  width: width,
+                  height: height,
                   alignment: Alignment.topCenter,
                   child: watch(GamePlayer.energyMax, (int energyMax) {
                     return watch(GamePlayer.energy, (int energy){
                        return Container(
-                         width: GameStyle.Player_Weapons_Icon_Size,
-                         height: GameStyle.Player_Weapons_Icon_Size * energy / max(energyMax, 1),
+                         width: width,
+                         height: height * energy / max(energyMax, 1),
                          color:  GameColors.yellow,
                        );
                     });

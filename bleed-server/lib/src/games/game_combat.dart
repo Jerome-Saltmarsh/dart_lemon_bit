@@ -13,11 +13,10 @@ class GameCombat extends Game {
      'Left click to fire first weapon',
      'Right click to fire second weapon',
      'Press Space bar to melee attack',
-     'Press Q to swap weapon positions',
   ];
 
   static final hints_length = hints.length;
-  static final hints_frames_between = 500;
+  static final hints_frames_between = 600;
 
   GameCombat({
     required super.scene,
