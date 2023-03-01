@@ -49,29 +49,31 @@ class GameUI {
         buildWatchBool(ClientState.window_visible_settings, buildWindowSettings),
       ]);
 
-  static Container buildMapCircle() {
-    return Container(
-          width: 203,
-          height: 203,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(color: Colors.black38, width: 3),
-              color: Colors.black38
+  static Widget buildMapCircle() {
+    return IgnorePointer(
+      child: Container(
+            width: 203,
+            height: 203,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(color: Colors.black38, width: 3),
+                color: Colors.black38
+            ),
+            child: ClipOval(
+              child: Container(
+                  alignment: Alignment.topLeft,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    // border: Border.all(color: Colors.black38, width: 3),
+                    // color: Colors.black12
+                  ),
+                  width: 200,
+                  height: 200,
+                  child: buildGeneratedMiniMap()),
+            ),
           ),
-          child: ClipOval(
-            child: Container(
-                alignment: Alignment.topLeft,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  // border: Border.all(color: Colors.black38, width: 3),
-                  // color: Colors.black12
-                ),
-                width: 200,
-                height: 200,
-                child: buildGeneratedMiniMap()),
-          ),
-        );
+    );
   }
 
   static Widget buildWindowSettings(){
@@ -481,12 +483,14 @@ class GameUI {
         Positioned(
             bottom: GameStyle.Default_Padding,
             left: GameStyle.Default_Padding,
-            child: Row(
-              children: [
-                buildPanelCredits(),
-                width16,
-                buildPanelTotalGrenades(),
-              ],
+            child: IgnorePointer(
+              child: Row(
+                children: [
+                  buildPanelCredits(),
+                  width16,
+                  buildPanelTotalGrenades(),
+                ],
+              ),
             )),
             visibleBuilder(
             GameOptions.inventory,
@@ -813,7 +817,7 @@ class GameUI {
       );
   });
 
-  static Widget buildPlayerUI() => buildDialogUIControl(
+  static Widget buildPlayerUI() => IgnorePointer(
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
@@ -830,6 +834,7 @@ class GameUI {
     const Border_Width = 3.0;
     return watch(GamePlayer.weapon, (int playerWeaponType){
       return Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -841,6 +846,7 @@ class GameUI {
                   children: [
                     watch(GamePlayer.actionItemType, (int actionItemType){
                       if (actionItemType == PlayerAction.None) return GameStyle.Null;
+                      if (actionItemType == GamePlayer.weaponSecondary.value) return GameStyle.Null;
                       return Row(
                         children: [
                           Container(
@@ -888,6 +894,7 @@ class GameUI {
                   children: [
                     watch(GamePlayer.actionItemType, (int actionItemType){
                       if (actionItemType == PlayerAction.None) return GameStyle.Null;
+                      if (actionItemType == GamePlayer.weaponPrimary.value) return GameStyle.Null;
                       return Row(
                         children: [
                           Container(
