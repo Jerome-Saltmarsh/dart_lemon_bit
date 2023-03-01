@@ -425,7 +425,7 @@ class GameEvents {
       case PlayerEvent.Item_Purchased:
         final itemType = serverResponseReader.readUInt16();
         GameAudio.cash_register_4();
-        ClientActions.spawnConfettiPlayer();
+        // ClientActions.spawnConfettiPlayer();
 
         if (GameOptions.items.value){
           final level = GamePlayer.items[itemType];

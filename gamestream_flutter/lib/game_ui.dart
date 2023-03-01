@@ -9,6 +9,7 @@ import 'package:gamestream_flutter/isometric/events/on_visibility_changed_messag
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/language_utils.dart';
 import 'package:gamestream_flutter/library.dart';
+import 'package:golden_ratio/constants.dart';
 
 import 'game_ui_config.dart';
 
@@ -981,26 +982,27 @@ class GameUI {
   }
 
   static Widget buildPlayerHealth() {
+    final size = 88.0;
     return border(
-          width: GameStyle.Player_Weapons_Border_Size,
+          width: 3,
           color: GameColors.Red_3,
           child: Container(
-            width: GameStyle.Player_Weapons_Icon_Size,
-            height: GameStyle.Player_Weapons_Icon_Size,
+            width: size * goldenRatio_0618,
+            height: size,
             alignment: Alignment.center,
             child: Stack(
               alignment: AlignmentDirectional.center,
               children: [
                 Container(
-                  width: GameStyle.Player_Weapons_Icon_Size,
-                  height: GameStyle.Player_Weapons_Icon_Size,
+                  width: size * goldenRatio_0618,
+                  height: size,
                   alignment: Alignment.topCenter,
                   child: watch(ServerState.playerMaxHealth, (int maxHealth) {
                     return watch(ServerState.playerHealth, (int health){
                        final percentage = health / max(maxHealth, 1);
                        return Container(
-                         width: GameStyle.Player_Weapons_Icon_Size,
-                         height: GameStyle.Player_Weapons_Icon_Size * percentage,
+                         width: size * goldenRatio_0618,
+                         height: size * percentage,
                          color: GameColors.Red_3,
                        );
                     });
