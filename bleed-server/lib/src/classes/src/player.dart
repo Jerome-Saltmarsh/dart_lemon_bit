@@ -92,9 +92,11 @@ class Player extends Character with ByteWriter {
   var _action = PlayerAction.None;
   var _actionItemType = ItemType.Empty;
   var _actionCost = 0;
+  var actionItemId = -1;
 
   int get action => _action;
   int get actionItemType => _actionItemType;
+
   int get actionCost => _actionCost;
 
   ItemGroup get weaponTypeItemGroup => ItemType.getItemGroup(weaponType);

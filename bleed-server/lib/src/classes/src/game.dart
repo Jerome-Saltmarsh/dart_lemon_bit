@@ -151,6 +151,13 @@ abstract class Game {
     return null;
   }
 
+  GameObject? findGameObjectById(int id){
+    for (final gameObject in gameObjects){
+       if (gameObject.id == id) return gameObject;
+    }
+    return null;
+  }
+
   /// ACTIONS
 
   void moveV3ToNodeIndex(Position3 vector3, int nodeIndex){
@@ -1090,7 +1097,6 @@ abstract class Game {
       if (job.timer > 0) continue;
       job.action();
     }
-
   }
 
   void internalUpdateScripts() {

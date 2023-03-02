@@ -193,20 +193,23 @@ class GameCombat extends Game {
 
     if (closestGameObject == null) {
       player.action = PlayerAction.None;
+      player.actionItemId = -1;
       return;
     }
 
-    final itemType = closestGameObject.type;
+    final itemType        = closestGameObject.type;
+    final itemLevel       = player.getItemLevel(itemType);
 
     player.actionItemType = itemType;
-    final itemLevel = player.getItemLevel(itemType);
-    player.actionCost = getItemPurchaseCost(itemType, itemLevel);
+    player.actionItemId   = closestGameObject.id;
+    player.actionCost     = getItemPurchaseCost(itemType, itemLevel);
 
     if (player.weaponPrimary == itemType) {
       if (player.weaponPrimaryQuantity < player.weaponPrimaryCapacity){
          player.weaponPrimaryQuantity = player.weaponPrimaryCapacity;
          player.writeInfo('Ammo Acquired');
          deactivateCollider(closestGameObject);
+
          performScript(timer: 300).writeSpawnGameObject(
              type: randomItem(const [
                ItemType.Weapon_Ranged_Flamethrower,
@@ -229,22 +232,23 @@ class GameCombat extends Game {
         player.weaponSecondaryQuantity = player.weaponSecondaryCapacity;
         player.writeInfo('Ammo Acquired');
         deactivateCollider(closestGameObject);
+
+        performScript(timer: 300).writeSpawnGameObject(
+          type: randomItem(const [
+            ItemType.Weapon_Ranged_Flamethrower,
+            ItemType.Weapon_Ranged_Bazooka,
+            ItemType.Weapon_Ranged_Plasma_Pistol,
+            ItemType.Weapon_Ranged_Plasma_Rifle,
+            ItemType.Weapon_Ranged_Sniper_Rifle,
+            ItemType.Weapon_Ranged_Shotgun,
+          ]),
+          x: closestGameObject.x,
+          y: closestGameObject.y,
+          z: closestGameObject.z,
+        );
       }
       return;
     }
-
-
-
-    //
-    // if (player.weaponSecondary == itemType) {
-    //   player.action = PlayerAction.Upgrade;
-    //   return;
-    // }
-    //
-    // if (itemLevel == 0) {
-    //   player.action = PlayerAction.Purchase;
-    //   return;
-    // }
 
     player.action = PlayerAction.Equip;
   }
@@ -268,42 +272,51 @@ class GameCombat extends Game {
 
   @override
   void performPlayerActionPrimary(Player player) {
-      if (player.dead) return;
-      if (player.action == PlayerAction.None) return;
+    if (player.dead) return;
+    if (player.action == PlayerAction.None) return;
+    if (player.actionItemId == -1) return;
 
-      switch (player.action) {
-        case PlayerAction.Equip:
-          playerEquipPrimary(player, player.actionItemType);
-          break;
-        case PlayerAction.Purchase:
-          playerPurchaseItemType(player, player.actionItemType, weaponSide: WeaponSide.Primary);
-          break;
-        case PlayerAction.Upgrade:
-          playerPurchaseItemType(player, player.actionItemType, weaponSide: WeaponSide.Primary);
-          break;
-        default:
-          break;
-      }
+    final playerActionGameObject = findGameObjectById(player.actionItemId);
+    if (playerActionGameObject == null) {
+      player.actionItemId = -1;
+      return;
+    }
+    playerEquipPrimary(player, playerActionGameObject.type);
+    player.setItemQuantityMax(playerActionGameObject.type);
+    deactivateGameObjectAndScheduleRespawn(playerActionGameObject);  }
+
+  void deactivateGameObjectAndScheduleRespawn(GameObject gameObject){
+    if (!gameObject.active) return;
+    deactivateCollider(gameObject);
+    performScript(timer: 300).writeSpawnGameObject(
+      type: randomItem(const [
+        ItemType.Weapon_Ranged_Flamethrower,
+        ItemType.Weapon_Ranged_Bazooka,
+        ItemType.Weapon_Ranged_Plasma_Pistol,
+        ItemType.Weapon_Ranged_Plasma_Rifle,
+        ItemType.Weapon_Ranged_Sniper_Rifle,
+        ItemType.Weapon_Ranged_Shotgun,
+      ]),
+      x: gameObject.x,
+      y: gameObject.y,
+      z: gameObject.z,
+    );
   }
 
   @override
   void performPlayerActionSecondary(Player player) {
     if (player.dead) return;
     if (player.action == PlayerAction.None) return;
+    if (player.actionItemId == -1) return;
 
-    switch (player.action) {
-      case PlayerAction.Equip:
-        playerEquipSecondary(player, player.actionItemType);
-        break;
-      case PlayerAction.Purchase:
-        playerPurchaseItemType(player, player.actionItemType, weaponSide: WeaponSide.Secondary);
-        break;
-      case PlayerAction.Upgrade:
-        playerPurchaseItemType(player, player.actionItemType, weaponSide: WeaponSide.Secondary);
-        break;
-      default:
-        break;
+    final playerActionGameObject = findGameObjectById(player.actionItemId);
+    if (playerActionGameObject == null) {
+      player.actionItemId = -1;
+      return;
     }
+    playerEquipSecondary(player, playerActionGameObject.type);
+    player.setItemQuantityMax(playerActionGameObject.type);
+    deactivateGameObjectAndScheduleRespawn(playerActionGameObject);
   }
 
   @override
