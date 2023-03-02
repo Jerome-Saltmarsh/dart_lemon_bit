@@ -106,7 +106,7 @@ class Player extends Character with ByteWriter {
   int get grenades => getItemQuantity(ItemType.Weapon_Thrown_Grenade);
 
   bool get targetWithinInteractRadius => target != null
-      ? getDistanceBetweenV3(this, target!) > GameSettings.Interact_Radius
+      ? getDistanceBetweenV3(this, target!) < GameSettings.Interact_Radius
       : false;
 
   set grenades(int value) {

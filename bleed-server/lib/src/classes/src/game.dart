@@ -1808,6 +1808,7 @@ abstract class Game {
     for (var i = 0; i < projectiles.length; i++) {
       final projectile = projectiles[i];
       if (!projectile.active) continue;
+      if (!projectile.strikable) continue;
       final target = projectile.target;
       if (target != null) {
         if (projectile.withinRadius(target, projectile.radius)) {

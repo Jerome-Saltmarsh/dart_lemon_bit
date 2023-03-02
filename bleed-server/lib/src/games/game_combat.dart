@@ -108,19 +108,18 @@ class GameCombat extends Game {
 
     if (mouseLeftDown){
       final aimTarget = player.aimTarget;
-      if (aimTarget != null){
+      if (aimTarget != null) {
 
         player.aimTargetWeaponSide = WeaponSide.Left;
         if (aimTarget is GameObject && (aimTarget.collectable || aimTarget.interactable)){
-
           if (player.targetWithinInteractRadius) {
-            if (aimTarget.interactable || aimTarget.collectable) {
-              playerPickup(player, aimTarget);
+            if (aimTarget.interactable) {
+              customOnPlayerInteractedWithGameObject(player, aimTarget);
               return;
             }
+          } else {
+            setCharacterTarget(player, aimTarget);
           }
-
-          setCharacterTarget(player, aimTarget);
           return;
         }
         if (Collider.onSameTeam(player, aimTarget)){
@@ -135,12 +134,21 @@ class GameCombat extends Game {
       );
     }
 
-    if (mouseRightDown){
+    if (mouseRightDown) {
+      player.aimTargetWeaponSide = WeaponSide.Right;
       final aimTarget = player.aimTarget;
       if (aimTarget != null){
         player.aimTargetWeaponSide = WeaponSide.Right;
+
         if (aimTarget is GameObject && (aimTarget.collectable || aimTarget.interactable)){
-          setCharacterTarget(player, aimTarget);
+          if (player.targetWithinInteractRadius) {
+            if (aimTarget.interactable) {
+              customOnPlayerInteractedWithGameObject(player, aimTarget);
+              return;
+            }
+          } else {
+            setCharacterTarget(player, aimTarget);
+          }
         }
         if (Collider.onSameTeam(player, aimTarget)) {
           setCharacterTarget(player, aimTarget);
