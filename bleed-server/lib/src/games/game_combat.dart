@@ -419,11 +419,11 @@ class GameCombat extends Game {
   void customOnGameObjectSpawned(GameObject gameObject) {
     if (!ItemType.isTypeWeapon(gameObject.type)) return;
     gameObject
-      ..collectable  = false
+      ..collectable  = true
+      ..persistable  = true
       ..interactable = false
       ..gravity      = false
       ..physical     = false
-      ..persistable  = true
     ;
   }
 }

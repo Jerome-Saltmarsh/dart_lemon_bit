@@ -324,6 +324,7 @@ abstract class Game {
       if ((mouseX - character.x).abs() > GameSettings.Pickup_Range) continue;
       if ((mouseY - character.y).abs() > GameSettings.Pickup_Range) continue;
       if ((mouseZ - character.z).abs() > GameSettings.Pickup_Range) continue;
+      if (character == player) continue;
       final distance = getDistanceV3Squared(mouseX, mouseY, mouseZ, character.x, character.y, character.z);
       if (distance > closestDistance) continue;
       closestDistance = distance;
