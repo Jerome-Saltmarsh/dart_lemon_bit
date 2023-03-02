@@ -79,16 +79,16 @@ class GameCombat extends Game {
   void onPlayerUpdateRequestedReceived({
     required Player player,
     required int direction,
-    required int cursorAction,
-    required bool perform2,
-    required bool perform3,
+    required bool mouseLeftDown,
+    required bool mouseRightDown,
+    required bool keyShiftDown,
+    required bool keySpaceDown,
     required double mouseX,
     required double mouseY,
     required double screenLeft,
     required double screenTop,
     required double screenRight,
     required double screenBottom,
-    required bool runToMouse,
   }) {
     player.framesSinceClientRequest = 0;
     player.screenLeft = screenLeft;
@@ -106,79 +106,123 @@ class GameCombat extends Game {
       player.lookRadian = player.mouseAngle;
     }
 
-    switch (cursorAction) {
-      case CursorAction.Set_Target:
-        if (direction != Direction.None) {
-          if (!player.weaponStateBusy){
-            characterUseWeapon(player);
-          }
-        } else {
-          final aimTarget = player.aimTarget;
-          if (aimTarget == null){
-            player.runToMouse();
-          } else {
-            setCharacterTarget(player, aimTarget);
-          }
+    if (mouseLeftDown){
+      final aimTarget = player.aimTarget;
+      if (aimTarget != null){
+        player.aimTargetWeaponSide = WeaponSide.Left;
+        if (aimTarget is GameObject && (aimTarget.collectable || aimTarget.interactable)){
+          setCharacterTarget(player, aimTarget);
         }
-        break;
-      case CursorAction.Stationary_Attack_Cursor:
-        if (!player.weaponStateBusy) {
-          characterUseWeapon(player);
-          // characterWeaponAim(player);
+        if (Collider.onSameTeam(player, aimTarget)){
+          setCharacterTarget(player, aimTarget);
         }
-        break;
-      case CursorAction.Stationary_Attack_Auto:
-        if (!player.weaponStateBusy){
-          playerAutoAim(player);
-          characterUseWeapon(player);
-        }
-        break;
-      case CursorAction.Mouse_Left_Click:
-        final aimTarget = player.aimTarget;
-        if (aimTarget != null){
-          player.aimTargetWeaponSide = WeaponSide.Left;
-          if (aimTarget is GameObject && (aimTarget.collectable || aimTarget.interactable)){
-            setCharacterTarget(player, aimTarget);
-            break;
-          }
-          if (Collider.onSameTeam(player, aimTarget)){
-            setCharacterTarget(player, aimTarget);
-            break;
-          }
-        }
-        characterUseOrEquipWeapon(
-          character: player,
-          weaponType: player.weaponPrimary,
-          characterStateChange: player.weaponType != player.weaponTertiary,
-        );
-        break;
-      case CursorAction.Mouse_Right_Click:
-        final aimTarget = player.aimTarget;
-        if (aimTarget != null){
-          player.aimTargetWeaponSide = WeaponSide.Right;
-          if (aimTarget is GameObject && (aimTarget.collectable || aimTarget.interactable)){
-            setCharacterTarget(player, aimTarget);
-            break;
-          }
-          if (Collider.onSameTeam(player, aimTarget)){
-            setCharacterTarget(player, aimTarget);
-            break;
-          }
-        }
-        characterUseOrEquipWeapon(
-          character: player,
-          weaponType: player.weaponSecondary,
-          characterStateChange: player.weaponType != player.weaponTertiary,
-        );
-        break;
-      case CursorAction.Key_Space:
-        characterUseOrEquipWeapon(
-            character: player,
-            weaponType: player.weaponTertiary,
-            characterStateChange: false,
-        );
-        break;
+      }
+      characterUseOrEquipWeapon(
+        character: player,
+        weaponType: player.weaponPrimary,
+        characterStateChange: player.weaponType != player.weaponTertiary,
+      );
     }
+
+    if (mouseRightDown){
+      final aimTarget = player.aimTarget;
+      if (aimTarget != null){
+        player.aimTargetWeaponSide = WeaponSide.Right;
+        if (aimTarget is GameObject && (aimTarget.collectable || aimTarget.interactable)){
+          setCharacterTarget(player, aimTarget);
+        }
+        if (Collider.onSameTeam(player, aimTarget)){
+          setCharacterTarget(player, aimTarget);
+        }
+      }
+      characterUseOrEquipWeapon(
+        character: player,
+        weaponType: player.weaponSecondary,
+        characterStateChange: player.weaponType != player.weaponTertiary,
+      );
+    }
+
+    if (keySpaceDown){
+      characterUseOrEquipWeapon(
+        character: player,
+        weaponType: player.weaponTertiary,
+        characterStateChange: false,
+      );
+    }
+
+    // switch (cursorAction) {
+    //   case CursorAction.Set_Target:
+    //     if (direction != Direction.None) {
+    //       if (!player.weaponStateBusy){
+    //         characterUseWeapon(player);
+    //       }
+    //     } else {
+    //       final aimTarget = player.aimTarget;
+    //       if (aimTarget == null){
+    //         player.runToMouse();
+    //       } else {
+    //         setCharacterTarget(player, aimTarget);
+    //       }
+    //     }
+    //     break;
+    //   case CursorAction.Stationary_Attack_Cursor:
+    //     if (!player.weaponStateBusy) {
+    //       characterUseWeapon(player);
+    //       // characterWeaponAim(player);
+    //     }
+    //     break;
+    //   case CursorAction.Stationary_Attack_Auto:
+    //     if (!player.weaponStateBusy){
+    //       playerAutoAim(player);
+    //       characterUseWeapon(player);
+    //     }
+    //     break;
+    //   case CursorAction.Mouse_Left_Click:
+    //     final aimTarget = player.aimTarget;
+    //     if (aimTarget != null){
+    //       player.aimTargetWeaponSide = WeaponSide.Left;
+    //       if (aimTarget is GameObject && (aimTarget.collectable || aimTarget.interactable)){
+    //         setCharacterTarget(player, aimTarget);
+    //         break;
+    //       }
+    //       if (Collider.onSameTeam(player, aimTarget)){
+    //         setCharacterTarget(player, aimTarget);
+    //         break;
+    //       }
+    //     }
+    //     characterUseOrEquipWeapon(
+    //       character: player,
+    //       weaponType: player.weaponPrimary,
+    //       characterStateChange: player.weaponType != player.weaponTertiary,
+    //     );
+    //     break;
+    //   case CursorAction.Mouse_Right_Click:
+    //     final aimTarget = player.aimTarget;
+    //     if (aimTarget != null){
+    //       player.aimTargetWeaponSide = WeaponSide.Right;
+    //       if (aimTarget is GameObject && (aimTarget.collectable || aimTarget.interactable)){
+    //         setCharacterTarget(player, aimTarget);
+    //         break;
+    //       }
+    //       if (Collider.onSameTeam(player, aimTarget)){
+    //         setCharacterTarget(player, aimTarget);
+    //         break;
+    //       }
+    //     }
+    //     characterUseOrEquipWeapon(
+    //       character: player,
+    //       weaponType: player.weaponSecondary,
+    //       characterStateChange: player.weaponType != player.weaponTertiary,
+    //     );
+    //     break;
+    //   case CursorAction.Key_Space:
+    //     characterUseOrEquipWeapon(
+    //         character: player,
+    //         weaponType: player.weaponTertiary,
+    //         characterStateChange: false,
+    //     );
+    //     break;
+    // }
 
     playerRunInDirection(player, direction);
   }

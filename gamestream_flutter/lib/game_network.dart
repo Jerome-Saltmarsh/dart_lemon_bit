@@ -7,7 +7,7 @@ import 'library.dart';
 class GameNetwork {
   static late WebSocketChannel webSocketChannel;
   static late WebSocketSink sink;
-  static final updateBuffer = Uint8List(18);
+  static final updateBuffer = Uint8List(15);
   static final connectionStatus = Watch(ConnectionStatus.None, onChanged: onChangedConnectionStatus);
   static String connectionUri = "";
   static DateTime? connectionEstablished;
@@ -70,33 +70,53 @@ class GameNetwork {
       connectToRegion(GameWebsite.region.value, '${gameType} $message');
 
   static Future sendClientRequestUpdate() async {
-    applyUpdateBuffer(
-      actionPrimary: GameIO.getCursorAction(),
-      direction: GameIO.getDirection(),
-      actionSecondary: false,
-      actionTertiary: false,
-    );
+    applyIOToUpdateBuffer();
 
-    writeNumberToByteArray(number: GameIO.getCursorWorldX(), list: updateBuffer, index: 5);
-    writeNumberToByteArray(number: GameIO.getCursorWorldY(), list: updateBuffer, index: 7);
-    writeNumberToByteArray(number: Engine.Screen_Left, list: updateBuffer, index: 9);
-    writeNumberToByteArray(number: Engine.Screen_Top, list: updateBuffer, index: 11);
-    writeNumberToByteArray(number: Engine.Screen_Right, list: updateBuffer, index: 13);
-    writeNumberToByteArray(number: Engine.Screen_Bottom, list: updateBuffer, index: 15);
     sink.add(updateBuffer);
     GameIO.setCursorAction(CursorAction.None);
   }
 
-  static applyUpdateBuffer({
-    required int direction,
-    required int actionPrimary,
-    required bool actionSecondary,
-    required bool actionTertiary,
-  }){
-    updateBuffer[1] = direction;
-    updateBuffer[2] = actionPrimary;
-    updateBuffer[3] = actionSecondary ? 1 : 0;
-    updateBuffer[4] = actionTertiary ? 1 : 0;
+  static applyIOToUpdateBuffer(){
+
+    // [0] Direction
+    // [1] Direction
+    // [2] Direction
+    // [3] Direction
+    // [4] Mouse_Left
+    // [5] Mouse_Right
+    // [6] Shift
+    // [7] Space
+
+    /// 00010000
+    final Hex_16 = 0x10;
+    /// 00100000
+    final Hex_32 = 0x20;
+    /// 01000000
+    final Hex_64 = 0x40;
+    /// 10000000
+    final Hex_128 = 0x80;
+
+    var hex = GameIO.getDirection();
+
+    if (Engine.watchMouseLeftDown.value) {
+       hex = hex | Hex_16;
+    }
+    if (Engine.mouseRightDown.value) {
+      hex = hex | Hex_32;
+    }
+    if (Engine.keyPressedShiftLeft){
+      hex = hex | Hex_64;
+    }
+    if (Engine.keyPressedSpace){
+      hex = hex | Hex_128;
+    }
+    updateBuffer[1] = hex;
+    writeNumberToByteArray(number: GameIO.getCursorWorldX(), list: updateBuffer, index: 2);
+    writeNumberToByteArray(number: GameIO.getCursorWorldY(), list: updateBuffer, index: 4);
+    writeNumberToByteArray(number: Engine.Screen_Left, list: updateBuffer, index: 6);
+    writeNumberToByteArray(number: Engine.Screen_Top, list: updateBuffer, index: 8);
+    writeNumberToByteArray(number: Engine.Screen_Right, list: updateBuffer, index: 10);
+    writeNumberToByteArray(number: Engine.Screen_Bottom, list: updateBuffer, index: 12);
   }
 
   static void connect({required String uri, required dynamic message}) {

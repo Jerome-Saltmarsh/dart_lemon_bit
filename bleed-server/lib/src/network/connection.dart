@@ -700,19 +700,27 @@ class Connection with ByteReader {
 
     if (player == null) return errorPlayerNotFound();
 
+    final hex = args[1];
+
+    final direction = hex & 0xf;
+    final mouseDownLeft = hex & 0x10 > 0;
+    final mouseDownRight = hex & 0x20 > 0;
+    final keyDownSpace = hex & 0x40 > 0;
+    final keyDownShift = hex & 0x80 > 0;
+
     player.game.onPlayerUpdateRequestedReceived(
       player: player,
-      direction: args[1],
-      cursorAction: args[2],
-      perform2: args[3] == 1,
-      perform3: args[4] == 1,
-      mouseX: readNumberFromByteArray(args, index: 5).toDouble(),
-      mouseY: readNumberFromByteArray(args, index: 7).toDouble(),
-      screenLeft: readNumberFromByteArray(args, index: 9).toDouble(),
-      screenTop: readNumberFromByteArray(args, index: 11).toDouble(),
-      screenRight: readNumberFromByteArray(args, index: 13).toDouble(),
-      screenBottom: readNumberFromByteArray(args, index: 15).toDouble(),
-      runToMouse: readBoolFromBytes(bytes: args, index: 17),
+      direction: direction,
+      mouseLeftDown: mouseDownLeft,
+      mouseRightDown: mouseDownRight,
+      keySpaceDown: keyDownSpace,
+      keyShiftDown: keyDownShift,
+      mouseX: readNumberFromByteArray(args, index: 2).toDouble(),
+      mouseY: readNumberFromByteArray(args, index: 4).toDouble(),
+      screenLeft: readNumberFromByteArray(args, index: 6).toDouble(),
+      screenTop: readNumberFromByteArray(args, index: 8).toDouble(),
+      screenRight: readNumberFromByteArray(args, index: 10).toDouble(),
+      screenBottom: readNumberFromByteArray(args, index: 12).toDouble(),
     );
   }
 
