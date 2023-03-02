@@ -2,6 +2,7 @@
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:bleed_server/src/games/game_combat.dart';
 import 'package:bleed_server/src/games/game_editor.dart';
 import 'package:bleed_server/src/system.dart';
 import 'package:lemon_byte/byte_writer.dart';
@@ -75,6 +76,7 @@ class Player extends Character with ByteWriter {
   /// Warning - do not reference
   Game game;
   Collider? _aimTarget; // the currently highlighted character
+  var aimTargetWeaponSide = WeaponSide.Left;
   Account? account;
   final inventory = Uint16List(inventory_size);
   final inventoryQuantity = Uint16List(inventory_size);

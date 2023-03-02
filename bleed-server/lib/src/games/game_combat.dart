@@ -136,6 +136,7 @@ class GameCombat extends Game {
       case CursorAction.Mouse_Left_Click:
         final aimTarget = player.aimTarget;
         if (aimTarget != null){
+          player.aimTargetWeaponSide = WeaponSide.Left;
           if (aimTarget is GameObject && (aimTarget.collectable || aimTarget.interactable)){
             setCharacterTarget(player, aimTarget);
             break;
@@ -152,6 +153,18 @@ class GameCombat extends Game {
         );
         break;
       case CursorAction.Mouse_Right_Click:
+        final aimTarget = player.aimTarget;
+        if (aimTarget != null){
+          player.aimTargetWeaponSide = WeaponSide.Right;
+          if (aimTarget is GameObject && (aimTarget.collectable || aimTarget.interactable)){
+            setCharacterTarget(player, aimTarget);
+            break;
+          }
+          if (Collider.onSameTeam(player, aimTarget)){
+            setCharacterTarget(player, aimTarget);
+            break;
+          }
+        }
         characterUseOrEquipWeapon(
           character: player,
           weaponType: player.weaponSecondary,
@@ -283,7 +296,8 @@ class GameCombat extends Game {
     }
     playerEquipPrimary(player, playerActionGameObject.type);
     player.setItemQuantityMax(playerActionGameObject.type);
-    deactivateGameObjectAndScheduleRespawn(playerActionGameObject);  }
+    deactivateGameObjectAndScheduleRespawn(playerActionGameObject);
+  }
 
   void deactivateGameObjectAndScheduleRespawn(GameObject gameObject){
     if (!gameObject.active) return;
@@ -345,10 +359,10 @@ class GameCombat extends Game {
      }
 
      switch (weaponSide) {
-       case WeaponSide.Primary:
+       case WeaponSide.Left:
          playerEquipPrimary(player, itemType);
          break;
-       case WeaponSide.Secondary:
+       case WeaponSide.Right:
          playerEquipSecondary(player, itemType);
          break;
      }
@@ -419,16 +433,32 @@ class GameCombat extends Game {
   void customOnGameObjectSpawned(GameObject gameObject) {
     if (!ItemType.isTypeWeapon(gameObject.type)) return;
     gameObject
-      ..collectable  = true
+      ..collectable  = false
       ..persistable  = true
-      ..interactable = false
+      ..interactable = true
       ..gravity      = false
       ..physical     = false
     ;
   }
+
+  @override
+  void customOnPlayerInteractedWithGameObject(Player player, GameObject gameObject){
+
+     if (!ItemType.isTypeWeapon(gameObject.type)) return;
+
+     if (player.aimTargetWeaponSide == WeaponSide.Left){
+       playerEquipPrimary(player, gameObject.type);
+       player.setItemQuantityMax(gameObject.type);
+       deactivateGameObjectAndScheduleRespawn(gameObject);
+     } else {
+       playerEquipSecondary(player, gameObject.type);
+       player.setItemQuantityMax(gameObject.type);
+       deactivateGameObjectAndScheduleRespawn(gameObject);
+     }
+  }
 }
 
 enum WeaponSide {
-  Primary,
-  Secondary,
+  Left,
+  Right,
 }
