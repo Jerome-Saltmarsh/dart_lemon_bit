@@ -597,7 +597,12 @@ class GameEvents {
   static void onChangedPlayerWeapon(int itemType){
     ClientState.itemGroup.value = ItemType.getItemGroup(itemType);
 
+    if (itemType == ItemType.Empty) return;
+
     switch (itemType) {
+      case ItemType.Weapon_Ranged_Plasma_Rifle:
+        GameAudio.gun_pickup_01();
+        break;
       case ItemType.Weapon_Ranged_Revolver:
         GameAudio.revolver_reload_1();
         break;
@@ -612,6 +617,9 @@ class GameEvents {
         break;
       case ItemType.Weapon_Ranged_Bow:
         GameAudio.bow_draw();
+        break;
+      default:
+        GameAudio.gun_pickup_01();
         break;
     }
   }
