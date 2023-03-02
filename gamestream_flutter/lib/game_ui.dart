@@ -843,11 +843,11 @@ class GameUI {
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        buildPlayerHealth(),
-        width4,
+        // buildPlayerHealth(),
+        // width4,
         buildPlayerUIWeapons(),
-        width4,
-        buildPlayerEnergy(),
+        // width4,
+        // buildPlayerEnergy(),
       ],
     ),
   );
