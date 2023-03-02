@@ -112,7 +112,7 @@ class GameCombat extends Game {
 
         player.aimTargetWeaponSide = WeaponSide.Left;
         if (aimTarget is GameObject && (aimTarget.collectable || aimTarget.interactable)){
-          if (player.targetWithinInteractRadius) {
+          if (player.aimTargetWithinInteractRadius) {
             if (aimTarget.interactable) {
               customOnPlayerInteractedWithGameObject(player, aimTarget);
               return;
@@ -141,7 +141,7 @@ class GameCombat extends Game {
         player.aimTargetWeaponSide = WeaponSide.Right;
 
         if (aimTarget is GameObject && (aimTarget.collectable || aimTarget.interactable)){
-          if (player.targetWithinInteractRadius) {
+          if (player.aimTargetWithinInteractRadius) {
             if (aimTarget.interactable) {
               customOnPlayerInteractedWithGameObject(player, aimTarget);
               return;

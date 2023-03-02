@@ -105,8 +105,8 @@ class Player extends Character with ByteWriter {
   ItemGroup get weaponTypeItemGroup => ItemType.getItemGroup(weaponType);
   int get grenades => getItemQuantity(ItemType.Weapon_Thrown_Grenade);
 
-  bool get targetWithinInteractRadius => target != null
-      ? getDistanceBetweenV3(this, target!) < GameSettings.Interact_Radius
+  bool get aimTargetWithinInteractRadius => aimTarget != null
+      ? getDistanceBetweenV3(this, aimTarget!) < GameSettings.Interact_Radius
       : false;
 
   set grenades(int value) {
