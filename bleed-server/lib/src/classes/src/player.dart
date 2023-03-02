@@ -1400,11 +1400,6 @@ class Player extends Character with ByteWriter {
     writePlayerEvent(PlayerEvent.Player_Moved);
   }
 
-  void writePlayerEventItemEquipped(int itemType){
-    writePlayerEvent(PlayerEvent.Item_Equipped);
-    writeByte(itemType);
-  }
-
   void writePlayerMessage(String message){
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Message);

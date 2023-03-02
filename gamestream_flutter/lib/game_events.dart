@@ -444,10 +444,6 @@ class GameEvents {
       case PlayerEvent.Ammo_Acquired:
         // audio.itemAcquired(Engine.screenCenterWorldX, Engine.screenCenterWorldY);
         break;
-      case PlayerEvent.Item_Equipped:
-        final type = serverResponseReader.readByte();
-        onPlayerEventItemEquipped(type);
-        break;
       case PlayerEvent.Item_Dropped:
         GameAudio.popSounds14();
         break;
@@ -495,26 +491,6 @@ class GameEvents {
     if (ItemType.isFood(itemType)) {
       GameAudio.eat();
       return;
-    }
-  }
-
-  static void onPlayerEventItemEquipped(int type) {
-    switch (type) {
-      case ItemType.Weapon_Ranged_Revolver:
-        GameAudio.revolver_reload_1();
-        break;
-      case ItemType.Weapon_Ranged_Handgun:
-        GameAudio.reload_6();
-        break;
-      case ItemType.Weapon_Ranged_Shotgun:
-        GameAudio.cock_shotgun_3();
-        break;
-      case ItemType.Weapon_Melee_Sword:
-        GameAudio.sword_unsheathe();
-        break;
-      case ItemType.Weapon_Ranged_Bow:
-        GameAudio.bow_draw();
-        break;
     }
   }
 
@@ -618,8 +594,26 @@ class GameEvents {
     ClientState.itemGroup.value = ItemGroup.Primary_Weapon;
   }
 
-  static void onChangedPlayerWeapon(int weaponType){
-    ClientState.itemGroup.value = ItemType.getItemGroup(weaponType);
+  static void onChangedPlayerWeapon(int itemType){
+    ClientState.itemGroup.value = ItemType.getItemGroup(itemType);
+
+    switch (itemType) {
+      case ItemType.Weapon_Ranged_Revolver:
+        GameAudio.revolver_reload_1();
+        break;
+      case ItemType.Weapon_Ranged_Handgun:
+        GameAudio.reload_6();
+        break;
+      case ItemType.Weapon_Ranged_Shotgun:
+        GameAudio.cock_shotgun_3();
+        break;
+      case ItemType.Weapon_Melee_Sword:
+        GameAudio.sword_unsheathe();
+        break;
+      case ItemType.Weapon_Ranged_Bow:
+        GameAudio.bow_draw();
+        break;
+    }
   }
 
   static void onChangedPlayerWeaponMelee(int weaponType) {
