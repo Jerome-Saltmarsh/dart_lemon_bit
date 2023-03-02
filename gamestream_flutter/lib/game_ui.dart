@@ -872,6 +872,29 @@ class GameUI {
         })
     );
 
+    final weaponLeftAmmo2 = Container(
+        width: Ammo_Width,
+        height: Ammo_Height,
+        // color: GameColors.white10,
+        alignment: Alignment.centerLeft,
+        child: watch(GamePlayer.weaponPrimaryCapacity, (int capacity){
+          if (capacity == 0) return GameStyle.Null;
+          return watch(GamePlayer.weaponPrimaryQuantity, (int quantity) {
+            final bulletWidth = Ammo_Width / (capacity * 2);
+            final margin = EdgeInsets.only(right: bulletWidth);
+            return Row(children: List.generate(capacity, (index) {
+              return Container(
+                width: bulletWidth,
+                height: Ammo_Height,
+                margin: margin,
+                color: index < quantity ? Colors.white : Colors.white12,
+              );
+            }));
+          });
+        })
+    );
+
+
     final weaponAmmoRight = Container(
         width: Ammo_Width,
         height: Ammo_Height,
@@ -885,6 +908,28 @@ class GameUI {
               height: Ammo_Height,
               color: GameColors.white85,
             );                  });
+        })
+    );
+
+    final weaponAmmoRight2 = Container(
+        width: Ammo_Width,
+        height: Ammo_Height,
+        // color: GameColors.white10,
+        alignment: Alignment.centerLeft,
+        child: watch(GamePlayer.weaponSecondaryCapacity, (int capacity){
+          if (capacity == 0) return GameStyle.Null;
+          return watch(GamePlayer.weaponSecondaryQuantity, (int quantity) {
+            final bulletWidth = Ammo_Width / (capacity * 2);
+            final margin = EdgeInsets.only(right: bulletWidth);
+            return Row(children: List.generate(capacity, (index) {
+              return Container(
+                width: bulletWidth,
+                height: Ammo_Height,
+                margin: margin,
+                color: index < quantity ? Colors.white : Colors.white12,
+              );
+            }));
+          });
         })
     );
 
@@ -919,7 +964,8 @@ class GameUI {
                                 child: buildAtlasItemType(playerWeaponPrimary)
                             ),
                             height2,
-                            weaponLeftAmmo,
+                            weaponLeftAmmo2,
+                            // weaponLeftAmmo,
                           ],
                         ),
                       ),
@@ -955,7 +1001,8 @@ class GameUI {
                                 child: buildAtlasItemType(playerWeaponSecondary)
                             ),
                             height2,
-                            weaponAmmoRight,
+                            // weaponAmmoRight,
+                            weaponAmmoRight2
                           ],
                         ),
                       ),
