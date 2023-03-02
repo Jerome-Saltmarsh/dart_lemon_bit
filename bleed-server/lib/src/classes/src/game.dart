@@ -2921,7 +2921,7 @@ abstract class Game {
           player.inventoryQuantity[i] += quantityRemaining;
           player.inventoryDirty = true;
           deactivateCollider(target);
-          player.writePlayerEvent(PlayerEvent.Item_Picked_Up);
+          player.writePlayerEvent(PlayerEvent.Item_Acquired);
           clearCharacterTarget(player);
           return;
         }
@@ -2940,7 +2940,7 @@ abstract class Game {
       player.inventoryQuantity[emptyInventoryIndex] = min(quantityRemaining, maxQuantity);
       player.inventoryDirty = true;
       deactivateCollider(target);
-      player.writePlayerEvent(PlayerEvent.Item_Picked_Up);
+      player.writePlayerEvent(PlayerEvent.Item_Acquired);
       clearCharacterTarget(player);
     } else {
       clearCharacterTarget(player);

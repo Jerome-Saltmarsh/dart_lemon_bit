@@ -221,6 +221,7 @@ class GameCombat extends Game {
       if (player.weaponPrimaryQuantity < player.weaponPrimaryCapacity){
          player.weaponPrimaryQuantity = player.weaponPrimaryCapacity;
          player.writeInfo('Ammo Acquired');
+         player.writePlayerEventItemAcquired(itemType);
          deactivateCollider(closestGameObject);
 
          performScript(timer: 300).writeSpawnGameObject(
@@ -244,6 +245,7 @@ class GameCombat extends Game {
       if (player.weaponSecondaryQuantity < player.weaponSecondaryCapacity){
         player.weaponSecondaryQuantity = player.weaponSecondaryCapacity;
         player.writeInfo('Ammo Acquired');
+        player.writePlayerEventItemAcquired(itemType);
         deactivateCollider(closestGameObject);
 
         performScript(timer: 300).writeSpawnGameObject(

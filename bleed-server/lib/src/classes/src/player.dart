@@ -1390,6 +1390,11 @@ class Player extends Character with ByteWriter {
     writeUInt16(itemType);
   }
 
+  void writePlayerEventItemAcquired(int itemType){
+    writePlayerEvent(PlayerEvent.Item_Acquired);
+    writeUInt16(itemType);
+  }
+
   void writePlayerEvent(int value){
     writeByte(ServerResponse.Player_Event);
     writeByte(value);

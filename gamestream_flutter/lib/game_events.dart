@@ -416,8 +416,36 @@ class GameEvents {
       case PlayerEvent.Skill_Upgraded:
         // audio.unlock(GameState.player.x, GameState.player.y);
         break;
-      case PlayerEvent.Item_Picked_Up:
-        GameAudio.hoverOverButtonSound5();
+
+      case PlayerEvent.Item_Acquired:
+        final itemType = serverResponseReader.readUInt16();
+        if (itemType == ItemType.Empty) return;
+        switch (itemType) {
+          case ItemType.Weapon_Ranged_Plasma_Rifle:
+            GameAudio.gun_pickup_01();
+            break;
+          case ItemType.Weapon_Ranged_Plasma_Pistol:
+            GameAudio.revolver_reload_1();
+            break;
+          case ItemType.Weapon_Ranged_Revolver:
+            GameAudio.revolver_reload_1();
+            break;
+          case ItemType.Weapon_Ranged_Handgun:
+            GameAudio.reload_6();
+            break;
+          case ItemType.Weapon_Ranged_Shotgun:
+            GameAudio.cock_shotgun_3();
+            break;
+          case ItemType.Weapon_Melee_Sword:
+            GameAudio.sword_unsheathe();
+            break;
+          case ItemType.Weapon_Ranged_Bow:
+            GameAudio.bow_draw();
+            break;
+          default:
+            GameAudio.gun_pickup_01();
+            break;
+        }
         break;
       case PlayerEvent.Dash_Activated:
         // audio.buff11(GameState.player.x, GameState.player.y);
@@ -602,6 +630,9 @@ class GameEvents {
     switch (itemType) {
       case ItemType.Weapon_Ranged_Plasma_Rifle:
         GameAudio.gun_pickup_01();
+        break;
+      case ItemType.Weapon_Ranged_Plasma_Pistol:
+        GameAudio.revolver_reload_1();
         break;
       case ItemType.Weapon_Ranged_Revolver:
         GameAudio.revolver_reload_1();

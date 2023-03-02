@@ -858,30 +858,30 @@ class GameUI {
                 final active = playerWeaponType == playerWeaponPrimary;
                 return Column(
                   children: [
-                    watch(GamePlayer.actionItemType, (int actionItemType){
-                      if (actionItemType == PlayerAction.None) return GameStyle.Null;
-                      if (actionItemType == GamePlayer.weaponSecondary.value) return GameStyle.Null;
-                      return Row(
-                        children: [
-                          Container(
-                            width: 40,
-                            height: 40,
-                            alignment: Alignment.center,
-                            color: Colors.grey,
-                            child: text("Q"),
-                          ),
-                          // if (playerWeaponPrimary == actionItemType)
-                          //   Container(
-                          //     width: 40,
-                          //     height: 40,
-                          //     alignment: Alignment.center,
-                          //     color: GameColors.green,
-                          //     child: text(GamePlayer.actionCost.value),
-                          //   )
-                        ],
-                      );
-                    }),
-                    height4,
+                    // watch(GamePlayer.actionItemType, (int actionItemType){
+                    //   if (actionItemType == PlayerAction.None) return GameStyle.Null;
+                    //   if (actionItemType == GamePlayer.weaponSecondary.value) return GameStyle.Null;
+                    //   return Row(
+                    //     children: [
+                    //       Container(
+                    //         width: 40,
+                    //         height: 40,
+                    //         alignment: Alignment.center,
+                    //         color: Colors.grey,
+                    //         child: text("Q"),
+                    //       ),
+                    //       // if (playerWeaponPrimary == actionItemType)
+                    //       //   Container(
+                    //       //     width: 40,
+                    //       //     height: 40,
+                    //       //     alignment: Alignment.center,
+                    //       //     color: GameColors.green,
+                    //       //     child: text(GamePlayer.actionCost.value),
+                    //       //   )
+                    //     ],
+                    //   );
+                    // }),
+                    // height4,
                     border(
                       color: Colors.transparent,
                       width: Border_Width,
@@ -917,30 +917,30 @@ class GameUI {
                 final active = playerWeaponType == playerWeaponSecondary;
                 return Column(
                   children: [
-                    watch(GamePlayer.actionItemType, (int actionItemType){
-                      if (actionItemType == PlayerAction.None) return GameStyle.Null;
-                      if (actionItemType == GamePlayer.weaponPrimary.value) return GameStyle.Null;
-                      return Row(
-                        children: [
-                          Container(
-                            width: 40,
-                            height: 40,
-                            alignment: Alignment.center,
-                            color: Colors.grey,
-                            child: text("E"),
-                          ),
-                          // if (playerWeaponSecondary == actionItemType)
-                          //   Container(
-                          //     width: 40,
-                          //     height: 40,
-                          //     alignment: Alignment.center,
-                          //     color: GameColors.green,
-                          //     child: text(GamePlayer.actionCost.value),
-                          //   )
-                        ],
-                      );
-                    }),
-                    height4,
+                    // watch(GamePlayer.actionItemType, (int actionItemType){
+                    //   if (actionItemType == PlayerAction.None) return GameStyle.Null;
+                    //   if (actionItemType == GamePlayer.weaponPrimary.value) return GameStyle.Null;
+                    //   return Row(
+                    //     children: [
+                    //       Container(
+                    //         width: 40,
+                    //         height: 40,
+                    //         alignment: Alignment.center,
+                    //         color: Colors.grey,
+                    //         child: text("E"),
+                    //       ),
+                    //       // if (playerWeaponSecondary == actionItemType)
+                    //       //   Container(
+                    //       //     width: 40,
+                    //       //     height: 40,
+                    //       //     alignment: Alignment.center,
+                    //       //     color: GameColors.green,
+                    //       //     child: text(GamePlayer.actionCost.value),
+                    //       //   )
+                    //     ],
+                    //   );
+                    // }),
+                    // height4,
                     border(
                       // color: active ? playerWeaponType == playerWeaponSecondary ? Colors.white70 : Colors.black54 : Colors.transparent,
                       color: Colors.transparent,
