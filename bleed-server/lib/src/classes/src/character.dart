@@ -346,7 +346,8 @@ abstract class Character extends Collider {
 
   void updateAccuracy() {
     final change = 0.01;
-    final targetAccuracy = running ? 0.5 : 0;
+    final targetAccuracy = 0;
+    // final targetAccuracy = running ? 0.5 : 0;
     final difference = accuracy - targetAccuracy;
     if (difference.abs() < change) return;
     if (difference > 0) {

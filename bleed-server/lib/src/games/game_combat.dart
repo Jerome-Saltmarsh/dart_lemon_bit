@@ -463,6 +463,11 @@ class GameCombat extends Game {
        deactivateGameObjectAndScheduleRespawn(gameObject);
      }
   }
+
+  @override
+  void customOnCollisionBetweenPlayerAndGameObject(Player player, GameObject gameObject) {
+      if (!ItemType.isTypeWeapon(gameObject.type)) return;
+  }
 }
 
 enum WeaponSide {
