@@ -854,32 +854,39 @@ class GameUI {
 
   static Widget buildPlayerUIWeapons() {
 
-
-    final weaponSecondaryAmmo = watch(GamePlayer.weaponSecondaryCapacity, (int capacity){
-      return watch(GamePlayer.weaponSecondaryQuantity, (int quantity){
-        return text('$quantity / $capacity');
-      });
-    });
-
-    final width = 100.0;
-    final height = 40.0;
+    final Ammo_Width = 100.0;
+    final Ammo_Height = 30.0;
     final weaponLeftAmmo = Container(
-        width: width,
-        height: height,
+        width: Ammo_Width,
+        height: Ammo_Height,
         color: GameColors.white10,
         alignment: Alignment.centerLeft,
         child: watch(GamePlayer.weaponPrimaryCapacity, (int capacity){
           if (capacity == 0) return GameStyle.Null;
           return watch(GamePlayer.weaponPrimaryQuantity, (int quantity) {
             return Container(
-              width: width * (quantity / capacity),
-              height: height,
-              color: GameColors.white,
+              width: Ammo_Width * (quantity / capacity),
+              height: Ammo_Height,
+              color: GameColors.white85,
             );                  });
         })
     );
 
-
+    final weaponAmmoRight = Container(
+        width: Ammo_Width,
+        height: Ammo_Height,
+        color: GameColors.white10,
+        alignment: Alignment.centerLeft,
+        child: watch(GamePlayer.weaponSecondaryCapacity, (int capacity){
+          if (capacity == 0) return GameStyle.Null;
+          return watch(GamePlayer.weaponSecondaryQuantity, (int quantity) {
+            return Container(
+              width: Ammo_Width * (quantity / capacity),
+              height: Ammo_Height,
+              color: GameColors.white85,
+            );                  });
+        })
+    );
 
     const Border_Width = 3.0;
     return watch(GamePlayer.weapon, (int playerWeaponType){
@@ -894,30 +901,6 @@ class GameUI {
                 final active = playerWeaponType == playerWeaponPrimary;
                 return Column(
                   children: [
-                    // watch(GamePlayer.actionItemType, (int actionItemType){
-                    //   if (actionItemType == PlayerAction.None) return GameStyle.Null;
-                    //   if (actionItemType == GamePlayer.weaponSecondary.value) return GameStyle.Null;
-                    //   return Row(
-                    //     children: [
-                    //       Container(
-                    //         width: 40,
-                    //         height: 40,
-                    //         alignment: Alignment.center,
-                    //         color: Colors.grey,
-                    //         child: text("Q"),
-                    //       ),
-                    //       // if (playerWeaponPrimary == actionItemType)
-                    //       //   Container(
-                    //       //     width: 40,
-                    //       //     height: 40,
-                    //       //     alignment: Alignment.center,
-                    //       //     color: GameColors.green,
-                    //       //     child: text(GamePlayer.actionCost.value),
-                    //       //   )
-                    //     ],
-                    //   );
-                    // }),
-                    // height4,
                     border(
                       color: Colors.transparent,
                       width: Border_Width,
@@ -927,7 +910,6 @@ class GameUI {
                           color: active ? Colors.black45 : Colors.black12,
                         ),
                         constraints: BoxConstraints(maxWidth: 120),
-                        // color: active ? Colors.black45 : Colors.black12,
                         padding: GameStyle.Padding_6,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -936,8 +918,8 @@ class GameUI {
                                 height: GameStyle.Player_Weapons_Icon_Size,
                                 child: buildAtlasItemType(playerWeaponPrimary)
                             ),
+                            height2,
                             weaponLeftAmmo,
-                            // weaponPrimaryAmmo
                           ],
                         ),
                       ),
@@ -954,30 +936,6 @@ class GameUI {
                 final active = playerWeaponType == playerWeaponSecondary;
                 return Column(
                   children: [
-                    // watch(GamePlayer.actionItemType, (int actionItemType){
-                    //   if (actionItemType == PlayerAction.None) return GameStyle.Null;
-                    //   if (actionItemType == GamePlayer.weaponPrimary.value) return GameStyle.Null;
-                    //   return Row(
-                    //     children: [
-                    //       Container(
-                    //         width: 40,
-                    //         height: 40,
-                    //         alignment: Alignment.center,
-                    //         color: Colors.grey,
-                    //         child: text("E"),
-                    //       ),
-                    //       // if (playerWeaponSecondary == actionItemType)
-                    //       //   Container(
-                    //       //     width: 40,
-                    //       //     height: 40,
-                    //       //     alignment: Alignment.center,
-                    //       //     color: GameColors.green,
-                    //       //     child: text(GamePlayer.actionCost.value),
-                    //       //   )
-                    //     ],
-                    //   );
-                    // }),
-                    // height4,
                     border(
                       // color: active ? playerWeaponType == playerWeaponSecondary ? Colors.white70 : Colors.black54 : Colors.transparent,
                       color: Colors.transparent,
@@ -996,7 +954,8 @@ class GameUI {
                                 height: GameStyle.Player_Weapons_Icon_Size,
                                 child: buildAtlasItemType(playerWeaponSecondary)
                             ),
-                            weaponSecondaryAmmo
+                            height2,
+                            weaponAmmoRight,
                           ],
                         ),
                       ),
