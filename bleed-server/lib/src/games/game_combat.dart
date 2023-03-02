@@ -446,6 +446,22 @@ class GameCombat extends Game {
 
      if (!ItemType.isTypeWeapon(gameObject.type)) return;
 
+     final gameObjectType = gameObject.type;
+
+     if (gameObjectType == player.weaponPrimary) {
+       if (player.weaponPrimaryQuantity >= player.weaponPrimaryCapacity) {
+         player.writeError('${ItemType.getName(gameObjectType)} Full');
+         return;
+       }
+     }
+
+     if (gameObjectType == player.weaponSecondary) {
+       if (player.weaponSecondaryQuantity >= player.weaponSecondaryCapacity) {
+         player.writeError('${ItemType.getName(gameObjectType)} Full');
+         return;
+       }
+     }
+
      if (player.aimTargetWeaponSide == WeaponSide.Left){
        playerEquipPrimary(player, gameObject.type);
        player.setItemQuantityMax(gameObject.type);
