@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:bleed_server/src/games/game_combat.dart';
 import 'package:bleed_server/src/games/game_editor.dart';
+import 'package:bleed_server/src/maths/get_distance_between_v3.dart';
 import 'package:bleed_server/src/system.dart';
 import 'package:lemon_byte/byte_writer.dart';
 import 'package:lemon_math/library.dart';
@@ -103,6 +104,10 @@ class Player extends Character with ByteWriter {
 
   ItemGroup get weaponTypeItemGroup => ItemType.getItemGroup(weaponType);
   int get grenades => getItemQuantity(ItemType.Weapon_Thrown_Grenade);
+
+  bool get targetWithinInteractRadius => target != null
+      ? getDistanceBetweenV3(this, target!) > GameSettings.Interact_Radius
+      : false;
 
   set grenades(int value) {
     value = clamp(value, 0, getItemCapacity(ItemType.Weapon_Thrown_Grenade));

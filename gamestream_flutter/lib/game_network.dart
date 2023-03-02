@@ -76,41 +76,16 @@ class GameNetwork {
     GameIO.setCursorAction(CursorAction.None);
   }
 
+  /// [0] Direction
+  /// [1] Direction
+  /// [2] Direction
+  /// [3] Direction
+  /// [4] Mouse_Left
+  /// [5] Mouse_Right
+  /// [6] Shift
+  /// [7] Space
   static applyIOToUpdateBuffer(){
-
-    // [0] Direction
-    // [1] Direction
-    // [2] Direction
-    // [3] Direction
-    // [4] Mouse_Left
-    // [5] Mouse_Right
-    // [6] Shift
-    // [7] Space
-
-    /// 00010000
-    final Hex_16 = 0x10;
-    /// 00100000
-    final Hex_32 = 0x20;
-    /// 01000000
-    final Hex_64 = 0x40;
-    /// 10000000
-    final Hex_128 = 0x80;
-
-    var hex = GameIO.getDirection();
-
-    if (Engine.watchMouseLeftDown.value) {
-       hex = hex | Hex_16;
-    }
-    if (Engine.mouseRightDown.value) {
-      hex = hex | Hex_32;
-    }
-    if (Engine.keyPressedShiftLeft){
-      hex = hex | Hex_64;
-    }
-    if (Engine.keyPressedSpace){
-      hex = hex | Hex_128;
-    }
-    updateBuffer[1] = hex;
+    updateBuffer[1] = GameIO.getInputAsByte();
     writeNumberToByteArray(number: GameIO.getCursorWorldX(), list: updateBuffer, index: 2);
     writeNumberToByteArray(number: GameIO.getCursorWorldY(), list: updateBuffer, index: 4);
     writeNumberToByteArray(number: Engine.Screen_Left, list: updateBuffer, index: 6);
