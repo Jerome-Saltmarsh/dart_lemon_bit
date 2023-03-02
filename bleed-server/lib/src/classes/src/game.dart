@@ -588,7 +588,7 @@ abstract class Game {
             return;
           }
           character.item_quantity[weaponType] = equippedQuantity - 1;
-          character.writeWeaponQuantity();
+          character.writePlayerWeaponQuantity();
         }
       }
 
@@ -1175,13 +1175,11 @@ abstract class Game {
   }
 
   void updateGameObjects() {
-    for (final gameObject in gameObjects){
+    for (final gameObject in gameObjects) {
       updateColliderPhysics(gameObject);
       if (gameObject.positionDirty) {
         gameObject.dirty = true;
       }
-    }
-    for (final gameObject in gameObjects) {
       if (!gameObject.dirty) continue;
       gameObject.synchronizePrevious();
       for (final player in players) {
@@ -2343,6 +2341,7 @@ abstract class Game {
   }){
     for (final gameObject in gameObjects) {
        if (gameObject.active) continue;
+       gameObject.dirty = true;
        gameObject.x = x;
        gameObject.y = y;
        gameObject.z = z;
@@ -2352,7 +2351,6 @@ abstract class Game {
        gameObject.type = type;
        gameObject.active = true;
        gameObject.friction = GamePhysics.Friction;
-       gameObject.bounce = false;
        customOnGameObjectSpawned(gameObject);
        return gameObject;
     }
@@ -2363,12 +2361,7 @@ abstract class Game {
       type: type,
       id: gameObjectId++,
     );
-    instance.strikable   = ItemType.isStrikable(type);
-    instance.physical     = ItemType.isPhysical(type);
-    instance.fixed        = ItemType.isFixed(type);
-    instance.gravity      = !instance.fixed && instance.physical;
-    instance.friction     = GamePhysics.Friction;
-    instance.bounce       = false;
+    instance.dirty = true;
     gameObjects.add(instance);
     customOnGameObjectSpawned(instance);
     return instance;

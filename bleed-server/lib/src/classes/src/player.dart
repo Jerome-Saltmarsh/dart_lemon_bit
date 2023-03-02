@@ -107,10 +107,6 @@ class Player extends Character with ByteWriter {
     writePlayerGrenades();
   }
 
-  void setItemQuantity(int itemType, int quantity) {
-    item_quantity[itemType] = clamp(quantity, 0, getItemCapacity(itemType));
-  }
-
   set action(int value) {
     if (_action == value) return;
     _action = value;
@@ -132,6 +128,12 @@ class Player extends Character with ByteWriter {
     _actionCost = value;
     writePlayerAction();
   }
+
+  set weaponPrimaryQuantity(int value) =>
+      setItemQuantity(weaponPrimary, value);
+
+  set weaponSecondaryQuantity(int value) =>
+      setItemQuantity(weaponSecondary, value);
 
   int get weaponPrimaryLevel      => item_level[weaponPrimary] ?? 0;
   int get weaponPrimaryQuantity   => item_quantity[weaponPrimary] ?? 0;
@@ -1512,7 +1514,7 @@ class Player extends Character with ByteWriter {
     writeUInt8 (weaponSecondaryLevel);
   }
 
-  void writeWeaponQuantity(){
+  void writePlayerWeaponQuantity(){
     writeByte(ServerResponse.Player);
     writeByte(ApiPlayer.Weapon_Quantity);
     writeUInt16(weaponPrimaryQuantity);
@@ -1884,6 +1886,19 @@ class Player extends Character with ByteWriter {
       writeByte(ServerResponse.Player);
       writeByte(ApiPlayer.Grenades);
       writeUInt16(grenades);
+  }
+
+  void setItemQuantityMax(int itemType) =>
+      setItemQuantity(itemType, getItemCapacity(itemType));
+
+  void setItemQuantity(int itemType, int quantity) {
+    if (itemType == ItemType.Empty) return;
+    final quantityClamped = clamp(quantity, 0, getItemCapacity(itemType));
+    if (getItemQuantity(itemType) == quantityClamped) return;
+    item_quantity[itemType] = quantityClamped;
+    if (itemType == weaponPrimary || itemType == weaponSecondary) {
+      writePlayerWeaponQuantity();
+    }
   }
 }
 

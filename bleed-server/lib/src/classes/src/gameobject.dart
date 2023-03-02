@@ -34,6 +34,7 @@ class GameObject extends Collider {
      strikable        = ItemType.isStrikable(value);
      persistable      = ItemType.isPersistable(value);
      interactable     = ItemType.isInteractable(value);
+     bounce           = false;
      gravity          = !fixed && physical;
   }
 

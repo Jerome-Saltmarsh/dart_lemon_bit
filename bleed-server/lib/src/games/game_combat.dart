@@ -203,19 +203,48 @@ class GameCombat extends Game {
     player.actionCost = getItemPurchaseCost(itemType, itemLevel);
 
     if (player.weaponPrimary == itemType) {
-      player.action = PlayerAction.Upgrade;
+      if (player.weaponPrimaryQuantity < player.weaponPrimaryCapacity){
+         player.weaponPrimaryQuantity = player.weaponPrimaryCapacity;
+         player.writeInfo('Ammo Acquired');
+         deactivateCollider(closestGameObject);
+         performScript(timer: 300).writeSpawnGameObject(
+             type: randomItem(const [
+               ItemType.Weapon_Ranged_Flamethrower,
+               ItemType.Weapon_Ranged_Bazooka,
+               ItemType.Weapon_Ranged_Plasma_Pistol,
+               ItemType.Weapon_Ranged_Plasma_Rifle,
+               ItemType.Weapon_Ranged_Sniper_Rifle,
+               ItemType.Weapon_Ranged_Shotgun,
+             ]),
+             x: closestGameObject.x,
+             y: closestGameObject.y,
+             z: closestGameObject.z,
+         );
+      }
       return;
     }
 
     if (player.weaponSecondary == itemType) {
-      player.action = PlayerAction.Upgrade;
+      if (player.weaponSecondaryQuantity < player.weaponSecondaryCapacity){
+        player.weaponSecondaryQuantity = player.weaponSecondaryCapacity;
+        player.writeInfo('Ammo Acquired');
+        deactivateCollider(closestGameObject);
+      }
       return;
     }
 
-    if (itemLevel == 0) {
-      player.action = PlayerAction.Purchase;
-      return;
-    }
+
+
+    //
+    // if (player.weaponSecondary == itemType) {
+    //   player.action = PlayerAction.Upgrade;
+    //   return;
+    // }
+    //
+    // if (itemLevel == 0) {
+    //   player.action = PlayerAction.Purchase;
+    //   return;
+    // }
 
     player.action = PlayerAction.Equip;
   }

@@ -1,11 +1,8 @@
-import 'dart:typed_data';
-
 import 'package:bleed_server/gamestream.dart';
 import 'package:lemon_byte/byte_writer.dart';
 
 class GameScript extends ByteWriter {
   var timer = 0;
-  var script = Uint8List(0);
 
   void writeDeactivate(int target){
     writeUInt8(ScriptType.Action_Deactivate);
