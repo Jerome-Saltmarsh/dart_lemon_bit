@@ -13,6 +13,7 @@ class GameCombat extends Game {
      'Left click to fire first weapon',
      'Right click to fire second weapon',
      'Press Space bar to melee attack',
+     'Right Click item to equip',
   ];
 
   static final hints_length = hints.length;

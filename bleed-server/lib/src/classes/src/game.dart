@@ -588,15 +588,32 @@ abstract class Game {
       }
 
       if (options.items) {
+
+        if (weaponType == ItemType.Empty){
+          characterAttackMelee(character);
+          return;
+        }
+
         if (ItemType.isTypeWeaponFirearm(weaponType)){
           final equippedQuantity = character.item_quantity[weaponType] ?? 0;
 
           if (equippedQuantity <= 0) {
-            character.writeError('No Ammo');
+            // character.writeError('No Ammo');
+            if (character.weaponPrimary == weaponType){
+              character.weaponPrimary = ItemType.Empty;
+            }
+            if (character.weaponSecondary == weaponType) {
+              character.weaponSecondary = ItemType.Empty;
+            }
+            character.weaponType = ItemType.Empty;
+            characterAttackMelee(character);
             return;
           }
-          character.item_quantity[weaponType] = equippedQuantity - 1;
+          final nextQuantity = equippedQuantity - 1;
+          character.item_quantity[weaponType] = nextQuantity;
           character.writePlayerWeaponQuantity();
+
+
         }
       }
 

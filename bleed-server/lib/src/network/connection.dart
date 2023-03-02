@@ -702,11 +702,11 @@ class Connection with ByteReader {
 
     final hex = args[1];
 
-    final direction = hex & 0xf;
-    final mouseDownLeft = hex & 0x10 > 0;
-    final mouseDownRight = hex & 0x20 > 0;
-    final keyDownSpace = hex & 0x40 > 0;
-    final keyDownShift = hex & 0x80 > 0;
+    final direction       = hex & 0xf;
+    final mouseDownLeft   = hex & 0x10 > 0;
+    final mouseDownRight  = hex & 0x20 > 0;
+    final keyDownShift    = hex & 0x40 > 0;
+    final keyDownSpace    = hex & 0x80 > 0;
 
     player.game.onPlayerUpdateRequestedReceived(
       player: player,
