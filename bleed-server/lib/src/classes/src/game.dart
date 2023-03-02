@@ -2345,6 +2345,7 @@ abstract class Game {
        gameObject.x = x;
        gameObject.y = y;
        gameObject.z = z;
+       gameObject.synchronizePrevious();
        gameObject.velocityX = 0;
        gameObject.velocityY = 0;
        gameObject.velocityZ = 0;
@@ -2361,6 +2362,8 @@ abstract class Game {
       type: type,
       id: gameObjectId++,
     );
+    instance.type = type;
+    instance.active = true;
     instance.dirty = true;
     gameObjects.add(instance);
     customOnGameObjectSpawned(instance);
