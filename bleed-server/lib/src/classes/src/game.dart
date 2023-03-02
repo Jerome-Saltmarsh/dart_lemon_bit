@@ -954,9 +954,6 @@ abstract class Game {
     );
     character.clampVelocity(GamePhysics.Max_Velocity);
 
-    // final spawnX = character.x + getAdjacent(angle, 70);
-    // final spawnY = character.x + getAdjacent(angle, 70);
-
     spawnProjectile(
       src: character,
       accuracy: character.accuracy,

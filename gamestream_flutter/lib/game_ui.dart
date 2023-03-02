@@ -780,6 +780,26 @@ class GameUI {
   }
 
   static Widget buildHudPlayerWeapon() => watch(GamePlayer.weapon, (int weaponType){
+
+    final weaponLeftAmmo = watch(GamePlayer.weaponPrimaryCapacity, (int capacity){
+       if (capacity == 0) return GameStyle.Null;
+       return watch(GamePlayer.weaponPrimaryQuantity, (int quantity) {
+           const width = 200.0;
+           const height = 40.0;
+           return Container(
+             width: width,
+             height: height,
+             color: GameColors.white10,
+             alignment: Alignment.centerLeft,
+             child: Container(
+                width: width * (quantity / capacity),
+                height: height,
+                color: GameColors.white,
+             )
+           );
+       });
+    });
+
     final consumeType = ItemType.getConsumeType(weaponType);
       return buildDialogUIControl(
         child: GameInventoryUI.buildHoverTarget(
@@ -804,9 +824,10 @@ class GameUI {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           buildAtlasItemType(consumeType),
-                          watch(ClientState.inventoryReads, (int value){
-                            return text('${ServerQuery.getEquippedWeaponQuantity()} / ${ServerQuery.countItemTypeQuantityInPlayerPossession(consumeType)}', size: 25);
-                          }),
+                          weaponLeftAmmo,
+                          // watch(ClientState.inventoryReads, (int value){
+                          //   return text('${ServerQuery.getEquippedWeaponQuantity()} / ${ServerQuery.countItemTypeQuantityInPlayerPossession(consumeType)}', size: 25);
+                          // }),
                         ],
                       ),
                     ),
@@ -833,17 +854,32 @@ class GameUI {
 
   static Widget buildPlayerUIWeapons() {
 
-    final weaponPrimaryAmmo = watch(GamePlayer.weaponPrimaryCapacity, (int capacity){
-      return watch(GamePlayer.weaponPrimaryQuantity, (int quantity){
-        return text('$quantity / $capacity');
-      });
-    });
 
     final weaponSecondaryAmmo = watch(GamePlayer.weaponSecondaryCapacity, (int capacity){
       return watch(GamePlayer.weaponSecondaryQuantity, (int quantity){
         return text('$quantity / $capacity');
       });
     });
+
+    final width = 100.0;
+    final height = 40.0;
+    final weaponLeftAmmo = Container(
+        width: width,
+        height: height,
+        color: GameColors.white10,
+        alignment: Alignment.centerLeft,
+        child: watch(GamePlayer.weaponPrimaryCapacity, (int capacity){
+          if (capacity == 0) return GameStyle.Null;
+          return watch(GamePlayer.weaponPrimaryQuantity, (int quantity) {
+            return Container(
+              width: width * (quantity / capacity),
+              height: height,
+              color: GameColors.white,
+            );                  });
+        })
+    );
+
+
 
     const Border_Width = 3.0;
     return watch(GamePlayer.weapon, (int playerWeaponType){
@@ -900,7 +936,8 @@ class GameUI {
                                 height: GameStyle.Player_Weapons_Icon_Size,
                                 child: buildAtlasItemType(playerWeaponPrimary)
                             ),
-                            weaponPrimaryAmmo
+                            weaponLeftAmmo,
+                            // weaponPrimaryAmmo
                           ],
                         ),
                       ),
