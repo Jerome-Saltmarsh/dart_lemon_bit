@@ -23,8 +23,6 @@ class GameCanvas {
     );
   }
 
-
-
   static void renderForeground(Canvas canvas, Size size) {
     if (ClientState.hoverDialogType.value == DialogType.None){
       renderCursor(canvas);
@@ -32,8 +30,6 @@ class GameCanvas {
 
     const style = TextStyle(color: Colors.white, fontSize: 18);
     switch (GamePlayer.aimTargetCategory) {
-      case TargetCategory.GameObject:
-        break;
       case TargetCategory.Item:
         Engine.renderText(
           GamePlayer.aimTargetQuantity > 1
