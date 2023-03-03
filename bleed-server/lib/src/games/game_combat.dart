@@ -493,17 +493,22 @@ class GameCombat extends Game {
       }
   }
 
-  // @override
-  // void customOnColliderDeactivated(Collider collider) {
-  //    if (collider is GameObject) {
-  //       if (collider.type == ItemType.GameObjects_Crate_Wooden) {
-  //         spawnGameObjectItemAtPosition(
-  //             position: collider,
-  //             type: ItemType.Buff_Infinite_Ammo,
-  //         );
-  //       }
-  //    }
-  // }
+  @override
+  void customOnGameObjectDestroyed(GameObject gameObject) {
+    if (gameObject.type == ItemType.GameObjects_Crate_Wooden) {
+      spawnGameObjectItemAtPosition(
+        position: gameObject,
+        type: ItemType.Buff_Infinite_Ammo,
+      );
+
+      performScript(timer: 300).writeSpawnGameObject(
+        type: ItemType.GameObjects_Crate_Wooden,
+        x: gameObject.x,
+        y: gameObject.y,
+        z: gameObject.z,
+      );
+    }
+  }
 
   @override
   void customOnHitApplied({
