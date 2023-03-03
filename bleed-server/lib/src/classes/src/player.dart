@@ -94,8 +94,8 @@ class Player extends Character with ByteWriter {
 
   var buffInfiniteAmmo  = 0;
   var buffDoubleDamage  = 0;
-  var buffSpeed         = 0;
-  var buffInvincibility = 0;
+  var buffFast         = 0;
+  var buffInvincibe = 0;
   var buffNoRecoil      = 0;
 
   var _action = PlayerAction.None;
@@ -1919,8 +1919,8 @@ class Player extends Character with ByteWriter {
     writeUInt8(ApiPlayer.Buffs);
     writeUInt16(buffInfiniteAmmo);
     writeUInt16(buffDoubleDamage);
-    writeUInt16(buffSpeed);
-    writeUInt16(buffInvincibility);
+    writeUInt16(buffFast);
+    writeUInt16(buffInvincibe);
     writeUInt16(buffNoRecoil);
   }
 
@@ -1934,16 +1934,16 @@ class Player extends Character with ByteWriter {
       buffDoubleDamage--;
       changed = true;
     }
-    if (buffInvincibility > 0) {
-      buffInvincibility--;
+    if (buffInvincibe > 0) {
+      buffInvincibe--;
       changed = true;
     }
     if (buffNoRecoil > 0) {
       buffNoRecoil--;
       changed = true;
     }
-    if (buffSpeed > 0) {
-      buffSpeed--;
+    if (buffFast > 0) {
+      buffFast--;
       changed = true;
     }
     if (changed) {

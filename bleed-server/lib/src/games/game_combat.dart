@@ -490,12 +490,40 @@ class GameCombat extends Game {
         player.buffInfiniteAmmo = 30;
         player.writePlayerBuffs();
         deactivateCollider(gameObject);
+        return;
       }
-  }
 
-  @override
-  void customOnGameObjectDestroyed(GameObject gameObject) {
+      if (gameObject.type == ItemType.Buff_Double_Damage) {
+        player.writeInfo('Double Damage');
+        player.buffDoubleDamage = 30;
+        player.writePlayerBuffs();
+        deactivateCollider(gameObject);
+        return;
+      }
 
+      if (gameObject.type == ItemType.Buff_No_Recoil) {
+        player.writeInfo('No Recoil');
+        player.buffNoRecoil = 30;
+        player.writePlayerBuffs();
+        deactivateCollider(gameObject);
+        return;
+      }
+
+      if (gameObject.type == ItemType.Buff_Invincibe) {
+        player.writeInfo('Invincible');
+        player.buffInvincibe = 30;
+        player.writePlayerBuffs();
+        deactivateCollider(gameObject);
+        return;
+      }
+
+      if (gameObject.type == ItemType.Buff_Fast) {
+        player.writeInfo('Fast');
+        player.buffFast = 30;
+        player.writePlayerBuffs();
+        deactivateCollider(gameObject);
+        return;
+      }
   }
 
   @override
