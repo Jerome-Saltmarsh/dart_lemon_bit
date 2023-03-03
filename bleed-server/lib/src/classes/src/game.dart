@@ -1128,9 +1128,14 @@ abstract class Game {
     final length = script.length;
     while (scriptReader.index < length){
       switch (scriptReader.readUInt8()){
-        case ScriptType.Action_Deactivate:
+        case ScriptType.GameObject_Deactivate:
+          final id = scriptReader.readUInt16();
+          final instance = findGameObjectById(id);
+          if (instance != null) {
+            deactivateCollider(instance);
+          }
           break;
-        case ScriptType.Spawn_GameObject:
+        case ScriptType.GameObject_Spawn:
           final type = scriptReader.readUInt16();
           final x = scriptReader.readUInt16();
           final y = scriptReader.readUInt16();
@@ -2357,6 +2362,16 @@ abstract class Game {
     spawnGameObject(x: x, y: y, z: z, type: type)
       ..quantity = quantity;
   }
+
+  GameObject spawnGameObjectAtPosition({
+    required Position3 position,
+    required int type,
+  }) => spawnGameObject(
+          x: position.x,
+          y: position.y,
+          z: position.z,
+          type: type,
+      );
 
   GameObject spawnGameObject({
     required double x,

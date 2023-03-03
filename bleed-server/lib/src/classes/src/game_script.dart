@@ -4,9 +4,9 @@ import 'package:lemon_byte/byte_writer.dart';
 class GameScript extends ByteWriter {
   var timer = 0;
 
-  void writeDeactivate(int target){
-    writeUInt8(ScriptType.Action_Deactivate);
-    writeUInt8(target);
+  void writeGameObjectDeactivate(GameObject gameObject){
+    writeUInt8(ScriptType.GameObject_Deactivate);
+    writeUInt16(gameObject.id);
   }
 
   void writeSpawnGameObject({
@@ -15,7 +15,7 @@ class GameScript extends ByteWriter {
     required double y,
     required double z,
   }){
-    writeUInt8(ScriptType.Spawn_GameObject);
+    writeUInt8(ScriptType.GameObject_Spawn);
     writeUInt16(type);
     writeUInt16(x.toInt());
     writeUInt16(y.toInt());

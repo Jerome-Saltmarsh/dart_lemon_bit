@@ -545,10 +545,13 @@ class GameCombat extends Game {
           z: target.z,
         );
 
-        spawnGameObjectItemAtPosition(
+        final gameObjectBuff = spawnGameObjectAtPosition(
           position: target,
           type: randomItem(ItemType.Collection_Buffs),
         );
+
+        performScript(timer: 300)
+            .writeGameObjectDeactivate(gameObjectBuff);
       }
     }
   }
