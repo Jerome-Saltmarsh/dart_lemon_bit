@@ -50,6 +50,7 @@ class GameObject extends Collider {
     startX = x;
     startY = y;
     startZ = z;
+    synchronizePrevious();
   }
 }
 

@@ -92,6 +92,12 @@ class Player extends Character with ByteWriter {
   final item_level = <int, int> {};
   final item_quantity = <int, int> {};
 
+  var buffInfiniteAmmo  = 0;
+  var buffDoubleDamage  = 0;
+  var buffSpeed         = 0;
+  var buffInvincibility = 0;
+  var buffNoRecoil      = 0;
+
   var _action = PlayerAction.None;
   var _actionItemType = ItemType.Empty;
   var _actionCost = 0;
@@ -1061,25 +1067,25 @@ class Player extends Character with ByteWriter {
   }
 
   void writePlayerPosition(){
-    writeByte(ServerResponse.Player);
+    writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Position);
     writePosition3(this);
   }
 
   void writePlayerHealth(){
-    writeByte(ServerResponse.Player);
+    writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Health);
     writeUInt16(health);
   }
 
   void writePlayerMaxHealth() {
-    writeByte(ServerResponse.Player);
+    writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Max_Health);
     writeUInt16(maxHealth); // 2
   }
 
   void writePlayerBaseDamageHealthEnergy(){
-    writeByte(ServerResponse.Player);
+    writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Base_Damage_Health_Energy);
     writeUInt16(_baseDamage);
     writeUInt16(_baseHealth);
@@ -1087,44 +1093,44 @@ class Player extends Character with ByteWriter {
   }
 
   void writePlayerPerksUnlocked() {
-    writeByte(ServerResponse.Player);
+    writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Perks_Unlocked);
     writeUInt16(perksUnlocked.length);
     writeUint8List(perksUnlocked);
   }
 
   void writePlayerDamage() {
-    writeByte(ServerResponse.Player);
+    writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Damage);
     writeUInt16(damage);
   }
 
   void writePlayerAlive(){
-    writeByte(ServerResponse.Player);
+    writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Alive);
     writeBool(alive);
   }
 
   void writePlayerExperiencePercentage(){
-    writeByte(ServerResponse.Player);
+    writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Experience_Percentage);
     writePercentage(experiencePercentage);
   }
 
   void writePlayerLevel(){
-    writeByte(ServerResponse.Player);
+    writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Level);
     writeUInt16(level);
   }
 
   void writePlayerAttributes(){
-    writeByte(ServerResponse.Player);
+    writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Attributes);
     writeUInt16(attributes);
   }
 
   void writePlayerAimAngle(){
-    writeByte(ServerResponse.Player);
+    writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Aim_Angle);
     writeAngle(mouseAngle);
   }
@@ -1184,13 +1190,13 @@ class Player extends Character with ByteWriter {
   }
 
   void writePlayerWeaponCooldown() {
-    writeByte(ServerResponse.Player);
+    writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Weapon_Cooldown);
     writePercentage(weaponDurationPercentage);
   }
 
   void writePlayerAccuracy(){
-    writeByte(ServerResponse.Player);
+    writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Accuracy);
     writePercentage(accuracy);
   }
@@ -1252,7 +1258,7 @@ class Player extends Character with ByteWriter {
   }
 
   void writePlayerSpawned(){
-    writeByte(ServerResponse.Player);
+    writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Spawned);
   }
 
@@ -1265,26 +1271,26 @@ class Player extends Character with ByteWriter {
 
   void writePlayerTargetPosition(){
     if (target == null) return;
-    writeByte(ServerResponse.Player);
+    writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Target_Position);
     writePosition3(target!);
   }
 
   void writePlayerTargetCategory(){
-    writeByte(ServerResponse.Player);
+    writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Target_Category);
     writeByte(getAimCategory(target));
   }
 
   void writePlayerAimTargetPosition(){
     if (aimTarget == null) return;
-    writeByte(ServerResponse.Player);
+    writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Aim_Target_Position);
     writePosition3(aimTarget!);
   }
 
   void writePlayerAimTargetCategory() {
-    writeByte(ServerResponse.Player);
+    writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Aim_Target_Category);
     writeByte(getAimCategory(aimTarget));
   }
@@ -1292,12 +1298,12 @@ class Player extends Character with ByteWriter {
   void writePlayerAimTargetType() {
     if (aimTarget == null) return;
     if (aimTarget is GameObject){
-      writeByte(ServerResponse.Player);
+      writeByte(ServerResponse.Api_Player);
       writeByte(ApiPlayer.Aim_Target_Type);
       writeUInt16((aimTarget as GameObject).type);
     }
     if (aimTarget is Character) {
-      writeByte(ServerResponse.Player);
+      writeByte(ServerResponse.Api_Player);
       writeByte(ApiPlayer.Aim_Target_Type);
       writeUInt16((aimTarget as Character).characterType);
     }
@@ -1305,7 +1311,7 @@ class Player extends Character with ByteWriter {
 
   void writePlayerAimTargetQuantity() {
     if (aimTarget is GameObject) {
-      writeByte(ServerResponse.Player);
+      writeByte(ServerResponse.Api_Player);
       writeByte(ApiPlayer.Aim_Target_Quantity);
       writeUInt16((aimTarget as GameObject).quantity);
     }
@@ -1315,13 +1321,13 @@ class Player extends Character with ByteWriter {
     if (aimTarget == null) return;
 
     if (aimTarget is Player){
-      writeByte(ServerResponse.Player);
+      writeByte(ServerResponse.Api_Player);
       writeByte(ApiPlayer.Aim_Target_Name);
       writeString((aimTarget as Player).name);
       return;
     }
     if (aimTarget is AI){
-      writeByte(ServerResponse.Player);
+      writeByte(ServerResponse.Api_Player);
       writeByte(ApiPlayer.Aim_Target_Name);
       writeString((aimTarget as AI).name);
       return;
@@ -1411,7 +1417,7 @@ class Player extends Character with ByteWriter {
   }
 
   void writePlayerMessage(String message){
-    writeByte(ServerResponse.Player);
+    writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Message);
     writeString(message);
   }
@@ -1493,19 +1499,19 @@ class Player extends Character with ByteWriter {
   }
 
   void writePlayerCredits() {
-    writeByte(ServerResponse.Player);
+    writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Credits);
     writeUInt16(credits);
   }
 
   void writePlayerItems() {
-    writeByte(ServerResponse.Player);
+    writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Items);
     writeMap(item_level);
   }
 
   void writePlayerWeapons() {
-    writeByte(ServerResponse.Player);
+    writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Weapons);
 
     writeUInt16(weaponType);
@@ -1522,7 +1528,7 @@ class Player extends Character with ByteWriter {
   }
 
   void writePlayerWeaponQuantity(){
-    writeByte(ServerResponse.Player);
+    writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Weapon_Quantity);
     writeUInt16(weaponPrimaryQuantity);
     writeUInt16(weaponSecondaryQuantity);
@@ -1548,7 +1554,7 @@ class Player extends Character with ByteWriter {
   }
 
   void writePlayerInventory() {
-    writeByte(ServerResponse.Player);
+    writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Inventory);
     writeUInt16(headType);
     writeUInt16(bodyType);
@@ -1594,7 +1600,7 @@ class Player extends Character with ByteWriter {
   }
 
   void writePlayerInteractMode() {
-    writeByte(ServerResponse.Player);
+    writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Interact_Mode);
     writeByte(interactMode);
   }
@@ -1688,7 +1694,7 @@ class Player extends Character with ByteWriter {
 
   void writePlayerInventorySlot(int index) {
      assert (isValidInventoryIndex(index));
-     writeByte(ServerResponse.Player);
+     writeByte(ServerResponse.Api_Player);
      writeByte(ApiPlayer.Inventory_Slot);
      writeUInt16(index);
      writeUInt16(inventoryGetItemType(index));
@@ -1741,7 +1747,7 @@ class Player extends Character with ByteWriter {
   }
 
   void writePlayerEnergy() {
-    writeUInt8(ServerResponse.Player);
+    writeUInt8(ServerResponse.Api_Player);
     writeUInt8(ApiPlayer.Energy);
     writeUInt16(energy);
     writeUInt16(maxEnergy);
@@ -1806,7 +1812,7 @@ class Player extends Character with ByteWriter {
   }
 
   void writePlayerEquipment(){
-     writeByte(ServerResponse.Player);
+     writeByte(ServerResponse.Api_Player);
      writeByte(ApiPlayer.Equipment);
      writeUInt16(weaponType);
      writeUInt16(headType);
@@ -1869,7 +1875,7 @@ class Player extends Character with ByteWriter {
   }
 
   void writePlayerAction(){
-    writeUInt8(ServerResponse.Player);
+    writeUInt8(ServerResponse.Api_Player);
     writeUInt8(ApiPlayer.Action);
     writeUInt8(_action);
     writeUInt16(_actionItemType);
@@ -1890,7 +1896,7 @@ class Player extends Character with ByteWriter {
   }
 
   void writePlayerGrenades() {
-      writeByte(ServerResponse.Player);
+      writeByte(ServerResponse.Api_Player);
       writeByte(ApiPlayer.Grenades);
       writeUInt16(grenades);
   }
@@ -1905,6 +1911,43 @@ class Player extends Character with ByteWriter {
     item_quantity[itemType] = quantityClamped;
     if (itemType == weaponPrimary || itemType == weaponSecondary) {
       writePlayerWeaponQuantity();
+    }
+  }
+
+  void writePlayerBuffs() {
+    writeUInt8(ServerResponse.Api_Player);
+    writeUInt8(ApiPlayer.Buffs);
+    writeUInt16(buffInfiniteAmmo);
+    writeUInt16(buffDoubleDamage);
+    writeUInt16(buffSpeed);
+    writeUInt16(buffInvincibility);
+    writeUInt16(buffNoRecoil);
+  }
+
+  void reduceBuffs(){
+    var changed = false;
+    if (buffInfiniteAmmo > 0) {
+      buffInfiniteAmmo--;
+      changed = true;
+    }
+    if (buffDoubleDamage > 0) {
+      buffDoubleDamage--;
+      changed = true;
+    }
+    if (buffInvincibility > 0) {
+      buffInvincibility--;
+      changed = true;
+    }
+    if (buffNoRecoil > 0) {
+      buffNoRecoil--;
+      changed = true;
+    }
+    if (buffSpeed > 0) {
+      buffSpeed--;
+      changed = true;
+    }
+    if (changed) {
+      writePlayerBuffs();
     }
   }
 }

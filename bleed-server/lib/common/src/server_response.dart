@@ -1,5 +1,5 @@
 class ServerResponse {
-  static const Player                     = 00;
+  static const Api_Player                 = 00;
   static const Projectiles                = 01;
   static const Game_Event                 = 02;
   static const Player_Event               = 03;

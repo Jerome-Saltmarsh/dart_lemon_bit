@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/classes/src/game_environment.dart';
 import 'package:bleed_server/src/classes/src/game_time.dart';
+import 'package:bleed_server/src/constants/frames_per_second.dart';
 import 'package:lemon_math/functions/random_item.dart';
 
 class GameCombat extends Game {
@@ -18,6 +19,8 @@ class GameCombat extends Game {
 
   static final hints_length = hints.length;
   static final hints_frames_between = 600;
+
+  var nextBuffUpdate = 0;
 
   GameCombat({
     required super.scene,
@@ -178,6 +181,22 @@ class GameCombat extends Game {
       updatePlayerAction(player);
   }
 
+  @override
+  void customUpdate() {
+    updatePlayerBuffs();
+  }
+
+  void updatePlayerBuffs(){
+    nextBuffUpdate--;
+    if (nextBuffUpdate > 0) return;
+    nextBuffUpdate = framesPerSecond;
+
+    for (final player in players) {
+       if (player.dead) continue;
+       player.reduceBuffs();
+    }
+  }
+
   void updatePlayerAction(Player player){
     var minDistance = 50.0;
     GameObject? closestGameObject;
@@ -262,7 +281,7 @@ class GameCombat extends Game {
     if (player.hintIndex >= hints_length) return;
     player.hintNext--;
     if (player.hintNext > 0) return;
-    player.writeInfo('Tip: ${hints[player.hintIndex]}');
+    player.writeInfo(hints[player.hintIndex]);
     player.hintNext = hints_frames_between;
     player.hintIndex++;
   }
@@ -466,7 +485,45 @@ class GameCombat extends Game {
 
   @override
   void customOnCollisionBetweenPlayerAndGameObject(Player player, GameObject gameObject) {
-      if (!ItemType.isTypeWeapon(gameObject.type)) return;
+      if (gameObject.type == ItemType.Buff_Infinite_Ammo) {
+        player.writeInfo('Infinite Ammo');
+        player.buffInfiniteAmmo = 30;
+        player.writePlayerBuffs();
+        deactivateCollider(gameObject);
+      }
+  }
+
+  // @override
+  // void customOnColliderDeactivated(Collider collider) {
+  //    if (collider is GameObject) {
+  //       if (collider.type == ItemType.GameObjects_Crate_Wooden) {
+  //         spawnGameObjectItemAtPosition(
+  //             position: collider,
+  //             type: ItemType.Buff_Infinite_Ammo,
+  //         );
+  //       }
+  //    }
+  // }
+
+  @override
+  void customOnHitApplied({
+    required Character srcCharacter,
+    required Collider target,
+    required int damage,
+    required double angle,
+    required int hitType,
+    required double force,
+  }) {
+    if (target is GameObject) {
+      if (target.type == ItemType.GameObjects_Crate_Wooden) {
+        deactivateCollider(target);
+
+        spawnGameObjectItemAtPosition(
+          position: target,
+          type: ItemType.Buff_Infinite_Ammo,
+        );
+      }
+    }
   }
 }
 

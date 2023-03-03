@@ -490,6 +490,8 @@ class GameUI {
                   buildPanelCredits(),
                   width16,
                   buildPanelTotalGrenades(),
+                  width16,
+                  buildPlayerBuffs(),
                 ],
               ),
             )),
@@ -777,6 +779,26 @@ class GameUI {
                         ],
                       ),
                   ));
+  }
+
+  static Widget buildPlayerBuffs(){
+    return Row(
+      children: [
+        watch(GamePlayer.buffInfiniteAmmo, (int duration) {
+            if (duration <= 0) return GameStyle.Null;
+            return Column(
+              children: [
+                buildAtlasItemType(ItemType.Buff_Infinite_Ammo),
+                height4,
+                Container(
+                    color: Colors.black26,
+                    child: text(duration),
+                )
+              ],
+            );
+        }),
+      ],
+    );
   }
 
   static Widget buildHudPlayerWeapon() => watch(GamePlayer.weapon, (int weaponType){

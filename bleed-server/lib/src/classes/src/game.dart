@@ -116,9 +116,10 @@ abstract class Game {
 
   /// @override
   void customInit() { }
-
   /// @override
   void customOnGameObjectSpawned(GameObject gameObject){ }
+  /// @override
+  void customOnGameObjectDestroyed(GameObject gameObject) { }
 
   /// PROPERTIES
   List<GameObject> get gameObjects => scene.gameObjects;
@@ -1889,12 +1890,6 @@ abstract class Game {
     assert (target.active);
     assert (target.strikable);
 
-    if (target is GameObject){
-       if (ItemType.isMaterialMetal(target.type)){
-          dispatch(GameEventType.Material_Struck_Metal, target.x, target.y, target.z, angle);
-       }
-    }
-
     target.applyForce(
       force: force,
       angle: angle,
@@ -1910,6 +1905,16 @@ abstract class Game {
         force: force,
         hitType: hitType,
     );
+
+    if (target is GameObject){
+      if (ItemType.isMaterialMetal(target.type)){
+        dispatch(GameEventType.Material_Struck_Metal, target.x, target.y, target.z, angle);
+      }
+      if (target.destroyable) {
+         deactivateCollider(target);
+         customOnGameObjectDestroyed(target);
+      }
+    }
 
     // TODO Hack
     if (srcCharacter.characterTypeZombie) {
@@ -2367,6 +2372,9 @@ abstract class Game {
        gameObject.x = x;
        gameObject.y = y;
        gameObject.z = z;
+       gameObject.startX = x;
+       gameObject.startY = y;
+       gameObject.startZ = z;
        gameObject.synchronizePrevious();
        gameObject.velocityX = 0;
        gameObject.velocityY = 0;

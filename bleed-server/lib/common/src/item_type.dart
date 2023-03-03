@@ -10,6 +10,7 @@ class ItemType {
   static const Index_Consumables            = 02000;
   static const Index_Resources              = 05000;
   static const Index_Trinkets               = 07000;
+  static const Index_Buffs                  = 08000;
   static const Index_Heads                  = 10000;
   static const Index_Bodies                 = 20000;
   static const Index_Legs                   = 30000;
@@ -109,6 +110,12 @@ class ItemType {
   static const Head_Wizards_Hat                 = Index_Heads + 3;
   static const Head_Blonde                      = Index_Heads + 4;
   static const Head_Swat                        = Index_Heads + 5;
+
+  static const Buff_Infinite_Ammo               = Index_Buffs + 1;
+  static const Buff_Double_Damage               = Index_Buffs + 2;
+  static const Buff_Run_Fast                    = Index_Buffs + 3;
+  static const Buff_Invincibility               = Index_Buffs + 4;
+  static const Buff_No_Recoil                   = Index_Buffs + 5;
 
   static const Body_Shirt_Cyan                  = Index_Bodies + 1;
   static const Body_Shirt_Blue                  = Index_Bodies + 2;
@@ -663,7 +670,12 @@ class ItemType {
      GameObjects_Computer: "Computer",
      GameObjects_Neon_Sign_01: "Neon Sign 01",
      GameObjects_Neon_Sign_02: "Neon Sign 02",
-    GameObjects_Pipe_Vertical: "Pipe Vertical",
+     GameObjects_Pipe_Vertical: "Pipe Vertical",
+     Buff_Infinite_Ammo: "Infinite Ammo",
+     Buff_Double_Damage: "Double Damage",
+     Buff_Invincibility: "Invincible",
+     Buff_No_Recoil: "No Recoil",
+     Buff_Run_Fast: "Speed",
     ItemType.GameObjects_Vending_Upgrades: "Vending Upgrade",
   }[value] ?? "item-type-unknown($value)";
 

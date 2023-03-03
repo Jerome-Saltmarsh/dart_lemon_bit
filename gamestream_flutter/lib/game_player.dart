@@ -1,11 +1,13 @@
 import 'package:gamestream_flutter/library.dart';
 
 class GamePlayer {
+  static final buffInfiniteAmmo = Watch(0);
+  static final buffDoubleDamage = Watch(0);
+  static final buffSpeed = Watch(0);
+  static final buffInvincible = Watch(0);
+  static final buffNoRecoil = Watch(0);
+
   static final weapon = Watch(0, onChanged: GameEvents.onChangedPlayerWeapon);
-
-  // static final weaponRanged = Watch(0, onChanged: GameEvents.onChangedPlayerWeaponRanged);
-  // static final weaponMelee = Watch(0, onChanged: GameEvents.onChangedPlayerWeaponMelee);
-
   static final weaponPrimary = Watch(0, onChanged: GameEvents.onChangedPlayerWeapon);
   static final weaponPrimaryLevel = Watch(0);
   static final weaponPrimaryQuantity = Watch(0);
