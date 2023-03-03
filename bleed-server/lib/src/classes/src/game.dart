@@ -1324,6 +1324,12 @@ abstract class Game {
     if (player.inventoryOpen){
       player.interactMode = InteractMode.Inventory;
     }
+    player.buffDoubleDamage = 0;
+    player.buffNoRecoil = 0;
+    player.buffFast = 0;
+    player.buffInfiniteAmmo = 0;
+    player.buffInvincibe = 0;
+    player.writePlayerBuffs();
     customOnPlayerRevived(player);
 
     player.writePlayerMoved();
