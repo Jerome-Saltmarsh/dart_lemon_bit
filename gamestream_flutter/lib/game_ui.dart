@@ -486,6 +486,7 @@ class GameUI {
             left: GameStyle.Default_Padding,
             child: IgnorePointer(
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   buildPanelCredits(),
                   width16,
@@ -525,10 +526,13 @@ class GameUI {
           )
       ]);
 
-  static Row buildPanelCredits() {
-    return Row(
+  static Widget buildPanelCredits() {
+    return Column(
                 children: [
-                  buildAtlasItemType(ItemType.Resource_Credit),
+                  Container(
+                      width: 64,
+                      height: 64,
+                      child: buildAtlasItemType(ItemType.Resource_Credit)),
                   width4,
                   watch(ClientState.playerCreditsAnimation, (value) => text(value, size: 25)),
                 ],
@@ -766,11 +770,11 @@ class GameUI {
                   ? GameStyle.Null
                   : Tooltip(
       message: "Press SPACE to throw grenade",
-                    child: Row(
+                    child: Column(
                         children: [
                           Container(
-                            width: 40,
-                            height: 40,
+                            width: 64,
+                            height: 64,
                             child: buildAtlasItemType(
                                 ItemType.GameObjects_Grenade),
                           ),
@@ -788,7 +792,11 @@ class GameUI {
             if (duration <= 0) return GameStyle.Null;
             return Column(
               children: [
-                buildAtlasItemType(ItemType.Buff_Infinite_Ammo),
+                Container(
+                  width: 64,
+                    height: 64,
+                    child: buildAtlasItemType(ItemType.Buff_Infinite_Ammo),
+                ),
                 height4,
                 Container(
                     color: Colors.black26,
