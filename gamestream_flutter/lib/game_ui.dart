@@ -797,10 +797,11 @@ class GameUI {
             child: buildAtlasItemType(buffType),
           ),
           height4,
-          Container(
-            color: Colors.black26,
-            child: watch(buffDuration, text),
-          ),
+          // Container(
+          //   color: Colors.black26,
+          //   child: watch(buffDuration, text),
+          // ),
+          text(ItemType.getName(buffType)),
         ],
       ),
     );
