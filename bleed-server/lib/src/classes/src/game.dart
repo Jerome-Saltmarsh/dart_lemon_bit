@@ -595,7 +595,7 @@ abstract class Game {
           return;
         }
 
-        if (ItemType.isTypeWeaponFirearm(weaponType)){
+        if (character.buffInfiniteAmmo <= 0 && ItemType.isTypeWeaponFirearm(weaponType)){
           final equippedQuantity = character.item_quantity[weaponType] ?? 0;
 
           if (equippedQuantity <= 0) {
@@ -613,8 +613,6 @@ abstract class Game {
           final nextQuantity = equippedQuantity - 1;
           character.item_quantity[weaponType] = nextQuantity;
           character.writePlayerWeaponQuantity();
-
-
         }
       }
 
