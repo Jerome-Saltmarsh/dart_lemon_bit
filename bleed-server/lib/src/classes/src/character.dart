@@ -40,6 +40,7 @@ abstract class Character extends Collider {
   int get headType => _headType;
   int get bodyType => _bodyType;
   int get legsType => _legsType;
+  double get runSpeed => 1.0;
 
 
   set weaponType(int value){

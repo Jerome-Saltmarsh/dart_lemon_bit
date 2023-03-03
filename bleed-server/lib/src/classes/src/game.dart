@@ -2045,7 +2045,7 @@ abstract class Game {
       // speed *= 0.75;
         break;
       case CharacterState.Running:
-        character.applyForce(force: 1.0, angle: character.faceAngle);
+        character.applyForce(force: character.runSpeed, angle: character.faceAngle);
         if (character.nextFootstep++ >= 10) {
           dispatch(
             GameEventType.Footstep,

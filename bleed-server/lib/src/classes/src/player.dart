@@ -115,6 +115,9 @@ class Player extends Character with ByteWriter {
       ? getDistanceBetweenV3(this, aimTarget!) < GameSettings.Interact_Radius
       : false;
 
+  @override
+  double get runSpeed => buffFast > 0 ? 1.3333 : 1.0;
+
   set grenades(int value) {
     value = clamp(value, 0, getItemCapacity(ItemType.Weapon_Thrown_Grenade));
     if (grenades == value) return;
