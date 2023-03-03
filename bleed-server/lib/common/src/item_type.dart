@@ -983,6 +983,14 @@ class ItemType {
      Resource_Round_Shotgun,
   ];
 
+  static const Collection_Buffs = [
+    Buff_Run_Fast,
+    Buff_No_Recoil,
+    Buff_Invincibility,
+    Buff_Double_Damage,
+    Buff_Infinite_Ammo,
+  ];
+
   static const Collection = [
     ...Collection_Clothing,
     ...Collection_Weapons,

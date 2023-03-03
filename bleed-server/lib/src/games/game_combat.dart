@@ -495,19 +495,7 @@ class GameCombat extends Game {
 
   @override
   void customOnGameObjectDestroyed(GameObject gameObject) {
-    if (gameObject.type == ItemType.GameObjects_Crate_Wooden) {
-      spawnGameObjectItemAtPosition(
-        position: gameObject,
-        type: ItemType.Buff_Infinite_Ammo,
-      );
 
-      performScript(timer: 300).writeSpawnGameObject(
-        type: ItemType.GameObjects_Crate_Wooden,
-        x: gameObject.x,
-        y: gameObject.y,
-        z: gameObject.z,
-      );
-    }
   }
 
   @override
@@ -522,10 +510,16 @@ class GameCombat extends Game {
     if (target is GameObject) {
       if (target.type == ItemType.GameObjects_Crate_Wooden) {
         deactivateCollider(target);
+        performScript(timer: 1000).writeSpawnGameObject(
+          type: ItemType.GameObjects_Crate_Wooden,
+          x: target.x,
+          y: target.y,
+          z: target.z,
+        );
 
         spawnGameObjectItemAtPosition(
           position: target,
-          type: ItemType.Buff_Infinite_Ammo,
+          type: randomItem(ItemType.Collection_Buffs),
         );
       }
     }
