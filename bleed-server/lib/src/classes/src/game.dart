@@ -657,9 +657,12 @@ abstract class Game {
       return;
     }
 
-    if (ItemType.isTypeWeaponFirearm(weaponType)){
+    if (ItemType.isTypeWeaponFirearm(weaponType)) {
       characterFireWeapon(character);
-      character.accuracy += ItemType.getAccuracy(weaponType);
+      if (character is Player){
+        if (character.buffNoRecoil > 0) return;
+      }
+      character.accuracy += 0.25;
       return;
     }
 
