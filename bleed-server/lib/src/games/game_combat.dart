@@ -487,7 +487,7 @@ class GameCombat extends Game {
   void customOnCollisionBetweenPlayerAndGameObject(Player player, GameObject gameObject) {
       if (gameObject.type == ItemType.Buff_Infinite_Ammo) {
         player.writeInfo('Infinite Ammo');
-        player.buffInfiniteAmmo = 30;
+        player.buffInfiniteAmmo = 15;
         player.writePlayerBuffs();
         deactivateCollider(gameObject);
         return;
@@ -503,15 +503,15 @@ class GameCombat extends Game {
 
       if (gameObject.type == ItemType.Buff_No_Recoil) {
         player.writeInfo('No Recoil');
-        player.buffNoRecoil = 30;
+        player.buffNoRecoil = 45;
         player.writePlayerBuffs();
         deactivateCollider(gameObject);
         return;
       }
 
-      if (gameObject.type == ItemType.Buff_Invincibe) {
+      if (gameObject.type == ItemType.Buff_Invincible) {
         player.writeInfo('Invincible');
-        player.buffInvincibe = 30;
+        player.buffInvincibe = 15;
         player.writePlayerBuffs();
         deactivateCollider(gameObject);
         return;
@@ -519,8 +519,17 @@ class GameCombat extends Game {
 
       if (gameObject.type == ItemType.Buff_Fast) {
         player.writeInfo('Fast');
-        player.buffFast = 30;
+        player.buffFast = 25;
         player.writePlayerBuffs();
+        deactivateCollider(gameObject);
+        return;
+      }
+
+      if (gameObject.type == ItemType.Consumables_Potion_Red) {
+        if (player.health >= player.maxHealth) return;
+        player.health = player.maxHealth;
+        player.writeInfo('Full Health');
+        player.writePlayerEvent(PlayerEvent.Item_Consumed);
         deactivateCollider(gameObject);
         return;
       }
@@ -547,7 +556,10 @@ class GameCombat extends Game {
 
         final gameObjectBuff = spawnGameObjectAtPosition(
           position: target,
-          type: randomItem(ItemType.Collection_Buffs),
+          type: randomItem(const [
+            ...ItemType.Collection_Buffs,
+            ItemType.Consumables_Potion_Red,
+          ]),
         );
 
         performScript(timer: 300)
@@ -555,6 +567,8 @@ class GameCombat extends Game {
       }
     }
   }
+
+
 }
 
 enum WeaponSide {

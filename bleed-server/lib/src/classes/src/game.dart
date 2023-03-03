@@ -1385,6 +1385,8 @@ abstract class Game {
     required int amount,
   }) {
     if (target.deadOrDying) return;
+    if (target is Player && target.buffInvincibe > 0) return;
+
     final damage = min(amount, target.health);
     target.health -= damage;
 

@@ -113,8 +113,8 @@ class ItemType {
 
   static const Buff_Infinite_Ammo               = Index_Buffs + 1;
   static const Buff_Double_Damage               = Index_Buffs + 2;
-  static const Buff_Fast                    = Index_Buffs + 3;
-  static const Buff_Invincibe               = Index_Buffs + 4;
+  static const Buff_Fast                        = Index_Buffs + 3;
+  static const Buff_Invincible                  = Index_Buffs + 4;
   static const Buff_No_Recoil                   = Index_Buffs + 5;
 
   static const Body_Shirt_Cyan                  = Index_Bodies + 1;
@@ -673,7 +673,7 @@ class ItemType {
      GameObjects_Pipe_Vertical: "Pipe Vertical",
      Buff_Infinite_Ammo: "Ammo",
      Buff_Double_Damage: "Damage",
-     Buff_Invincibe: "Invincible",
+     Buff_Invincible: "Invincible",
      Buff_No_Recoil: "Aim",
      Buff_Fast: "Sprint",
     ItemType.GameObjects_Vending_Upgrades: "Vending Upgrade",
@@ -986,7 +986,7 @@ class ItemType {
   static const Collection_Buffs = [
     Buff_Fast,
     Buff_No_Recoil,
-    Buff_Invincibe,
+    Buff_Invincible,
     Buff_Double_Damage,
     Buff_Infinite_Ammo,
   ];

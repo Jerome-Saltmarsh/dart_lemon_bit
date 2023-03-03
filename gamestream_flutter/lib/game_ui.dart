@@ -818,7 +818,7 @@ class GameUI {
         buildWatchBuff(GamePlayer.buffInfiniteAmmo, ItemType.Buff_Infinite_Ammo),
         buildWatchBuff(GamePlayer.buffNoRecoil, ItemType.Buff_No_Recoil),
         buildWatchBuff(GamePlayer.buffFast, ItemType.Buff_Fast),
-        buildWatchBuff(GamePlayer.buffInvincible, ItemType.Buff_Invincibe),
+        buildWatchBuff(GamePlayer.buffInvincible, ItemType.Buff_Invincible),
         buildWatchBuff(GamePlayer.buffDoubleDamage, ItemType.Buff_Double_Damage),
       ],
     );

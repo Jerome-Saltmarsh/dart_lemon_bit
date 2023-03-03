@@ -10,7 +10,6 @@ class ServerResponseReader with ByteReader {
   final bufferSizeTotal = Watch(0);
   final updateFrame = Watch(0, onChanged: GameState.onChangedUpdateFrame);
   final decoder = ZLibDecoder();
-  var debugging = false;
 
   void read(Uint8List values) {
     updateFrame.value++;
@@ -107,16 +106,9 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Game_Options:
           readGameOptions();
           break;
-
         default:
-          if (debugging) {
-            return;
-          }
+          print("read error at index $index");
           print(values);
-          debugging = true;
-          read(values);
-          GameNetwork.disconnect();
-          WebsiteState.error.value = "An error occurred";
           return;
       }
     }
