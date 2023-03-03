@@ -785,27 +785,29 @@ class GameUI {
                   ));
   }
 
-  static Widget buildWatchBuff(Watch<int> buffWatch, int buffType){
-    final icon = Container(
-      width: 64,
-      height: 64,
-      child: buildAtlasItemType(buffType),
+  static Widget buildWatchBuff(Watch<int> buffDuration, int buffType){
+
+    final container = Container(
+      margin: const EdgeInsets.only(right: 4),
+      child: Column(
+        children: [
+          Container(
+            width: 64,
+            height: 64,
+            child: buildAtlasItemType(buffType),
+          ),
+          height4,
+          Container(
+            color: Colors.black26,
+            child: watch(buffDuration, text),
+          ),
+        ],
+      ),
     );
-    return watch(buffWatch, (int duration) {
+
+    return watch(buffDuration, (int duration) {
       if (duration <= 0) return GameStyle.Null;
-      return Container(
-        margin: const EdgeInsets.only(right: 4),
-        child: Column(
-          children: [
-            icon,
-            height4,
-            Container(
-              color: Colors.black26,
-              child: text(duration),
-            )
-          ],
-        ),
-      );
+      return container;
     });
   }
 

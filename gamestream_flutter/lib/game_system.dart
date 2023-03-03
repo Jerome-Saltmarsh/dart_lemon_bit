@@ -9,8 +9,7 @@ class GameSystem {
 
   static Future init(SharedPreferences sharedPreferences) async {
     print("environment: ${Engine.isLocalHost ? 'localhost' : 'production'}");
-
-    // GameLighting.refreshValues();
+    GameReactions.initialize();
 
     final visitDateTimeString = sharedPreferences.getString('visit-datetime');
     if (visitDateTimeString != null) {

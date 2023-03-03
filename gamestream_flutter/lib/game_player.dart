@@ -3,9 +3,9 @@ import 'package:gamestream_flutter/library.dart';
 class GamePlayer {
   static final buffInfiniteAmmo = Watch(0);
   static final buffDoubleDamage = Watch(0);
-  static final buffFast = Watch(0);
-  static final buffInvincible = Watch(0);
-  static final buffNoRecoil = Watch(0);
+  static final buffFast         = Watch(0);
+  static final buffInvincible   = Watch(0);
+  static final buffNoRecoil     = Watch(0);
 
   static final weapon = Watch(0, onChanged: GameEvents.onChangedPlayerWeapon);
   static final weaponPrimary = Watch(0, onChanged: GameEvents.onChangedPlayerWeapon);

@@ -33,6 +33,13 @@ class ClientState {
   static final itemGroup = Watch(ItemGroup.Primary_Weapon);
 
   static final mouseOverItemType = Watch(-1);
+
+  static final buff_active_infinite_ammo  = Watch(false);
+  static final buff_active_double_damage  = Watch(false);
+  static final buff_active_fast           = Watch(false);
+  static final buff_active_invincible     = Watch(false);
+  static final buff_active_no_recoil      = Watch(false);
+
   static final particles = <Particle>[];
 
   static var totalParticles = 0;
