@@ -3,7 +3,7 @@ import 'package:gamestream_flutter/library.dart';
 class GamePlayer {
   static final buffInfiniteAmmo = Watch(0);
   static final buffDoubleDamage = Watch(0);
-  static final buffSpeed = Watch(0);
+  static final buffFast = Watch(0);
   static final buffInvincible = Watch(0);
   static final buffNoRecoil = Watch(0);
 

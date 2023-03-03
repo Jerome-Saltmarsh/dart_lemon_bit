@@ -785,27 +785,47 @@ class GameUI {
                   ));
   }
 
+  static Widget buildWatchBuff(Watch<int> buffWatch, int buffType){
+    final icon = Container(
+      width: 64,
+      height: 64,
+      child: buildAtlasItemType(buffType),
+    );
+    return watch(buffWatch, (int duration) {
+      if (duration <= 0) return GameStyle.Null;
+      return Container(
+        margin: const EdgeInsets.only(right: 4),
+        child: Column(
+          children: [
+            icon,
+            height4,
+            Container(
+              color: Colors.black26,
+              child: text(duration),
+            )
+          ],
+        ),
+      );
+    });
+  }
+
   static Widget buildPlayerBuffs(){
     return Row(
       children: [
-        watch(GamePlayer.buffInfiniteAmmo, (int duration) {
-            if (duration <= 0) return GameStyle.Null;
-            return Column(
-              children: [
-                Container(
-                  width: 64,
-                    height: 64,
-                    child: buildAtlasItemType(ItemType.Buff_Infinite_Ammo),
-                ),
-                height4,
-                Container(
-                    color: Colors.black26,
-                    child: text(duration),
-                )
-              ],
-            );
-        }),
+        buildWatchBuff(GamePlayer.buffInfiniteAmmo, ItemType.Buff_Infinite_Ammo),
+        buildWatchBuff(GamePlayer.buffNoRecoil, ItemType.Buff_No_Recoil),
+        buildWatchBuff(GamePlayer.buffFast, ItemType.Buff_Fast),
+        buildWatchBuff(GamePlayer.buffInvincible, ItemType.Buff_Invincibe),
+        buildWatchBuff(GamePlayer.buffDoubleDamage, ItemType.Buff_Double_Damage),
       ],
+    );
+  }
+
+  static Widget buildBuffIcon(int itemType){
+    return Container(
+      width: 64,
+      height: 64,
+      child: buildAtlasItemType(itemType),
     );
   }
 

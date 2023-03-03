@@ -681,7 +681,7 @@ class ServerResponseReader with ByteReader {
   void readApiPlayerBuffs() {
     GamePlayer.buffInfiniteAmmo.value = readUInt16();
     GamePlayer.buffDoubleDamage.value = readUInt16();
-    GamePlayer.buffSpeed.value = readUInt16();
+    GamePlayer.buffFast.value = readUInt16();
     GamePlayer.buffInvincible.value = readUInt16();
     GamePlayer.buffNoRecoil.value = readUInt16();
   }
