@@ -118,6 +118,15 @@ class Player extends Character with ByteWriter {
   @override
   double get runSpeed => buffFast > 0 ? 1.3333 : 1.0;
 
+  @override
+  int get damage {
+    final itemTypeDamage = game.options.itemTypeDamage[weaponType];
+    if (itemTypeDamage == null) return 0;
+    final damage = itemTypeDamage[0];
+    if (buffDoubleDamage > 0) return damage + damage;
+    return damage;
+  }
+
   set grenades(int value) {
     value = clamp(value, 0, getItemCapacity(ItemType.Weapon_Thrown_Grenade));
     if (grenades == value) return;
