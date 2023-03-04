@@ -1,3 +1,5 @@
+import 'package:golden_ratio/constants.dart';
+
 import 'library.dart';
 
 class AtlasItems {
@@ -98,6 +100,7 @@ class AtlasItems {
         ItemType.Consumables_Apple: 256,
         ItemType.Consumables_Potion_Red: 448,
         ItemType.Consumables_Potion_Blue: 480,
+        ItemType.Consumables_Ammo_Box: 113,
         ItemType.Base_Health: 288,
         ItemType.Base_Energy: 288,
         ItemType.Base_Damage: 352,
@@ -194,6 +197,7 @@ class AtlasItems {
         ItemType.Base_Damage: 64,
         ItemType.Consumables_Potion_Red: 0,
         ItemType.Consumables_Potion_Blue: 0,
+        ItemType.Consumables_Ammo_Box: 160,
       }[itemType] ?? 0;
 
 
@@ -239,6 +243,7 @@ class AtlasItems {
         ItemType.Weapon_Ranged_Machine_Gun: 319,
         ItemType.Weapon_Ranged_Shotgun: 200,
         ItemType.Weapon_Ranged_Plasma_Pistol: 201,
+        ItemType.Consumables_Ammo_Box: 56,
       }[itemType] ?? size;
 
   static double getSrcHeight(int itemType) => const <int, double>{
@@ -281,7 +286,8 @@ class AtlasItems {
         ItemType.Weapon_Ranged_Plasma_Rifle: 123,
         ItemType.Weapon_Ranged_Shotgun: 48,
         ItemType.Weapon_Ranged_Plasma_Pistol: 121,
-    ItemType.Weapon_Ranged_Flamethrower: 101,
+        ItemType.Weapon_Ranged_Flamethrower: 101,
+        ItemType.Consumables_Ammo_Box: 80,
   }[itemType] ?? size;
 
   static double getSrcScale(int itemType) => const <int, double> {
@@ -298,6 +304,7 @@ class AtlasItems {
         ItemType.GameObjects_Car_Tire: 0.5,
         ItemType.GameObjects_Bottle: 0.4,
         ItemType.GameObjects_Computer: 0.61,
+        ItemType.Consumables_Ammo_Box: goldenRatio_0381,
   }[itemType] ?? 1.0;
 
   static double getAnchorY(int itemType) => const <int, double> {

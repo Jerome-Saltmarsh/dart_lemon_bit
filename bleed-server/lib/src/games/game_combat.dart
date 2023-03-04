@@ -533,6 +533,15 @@ class GameCombat extends Game {
         deactivateCollider(gameObject);
         return;
       }
+
+      if (gameObject.type == ItemType.Consumables_Ammo_Box) {
+        player.weaponPrimaryQuantity = player.weaponPrimaryCapacity;
+        player.weaponSecondaryQuantity = player.weaponSecondaryCapacity;
+        player.writeInfo('Full Ammo');
+        player.writePlayerEvent(PlayerEvent.Item_Consumed);
+        deactivateCollider(gameObject);
+        return;
+      }
   }
 
   @override
@@ -559,6 +568,7 @@ class GameCombat extends Game {
           type: randomItem(const [
             ...ItemType.Collection_Buffs,
             ItemType.Consumables_Potion_Red,
+            ItemType.Consumables_Ammo_Box,
           ]),
         );
 

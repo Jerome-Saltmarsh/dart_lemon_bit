@@ -139,6 +139,7 @@ class RendererGameObjects extends Renderer {
       srcY: AtlasItems.getSrcY(type),
       srcWidth: AtlasItems.getSrcWidth(type),
       srcHeight: AtlasItems.getSrcHeight(type),
+      scale: AtlasItems.getSrcScale(gameObject.type),
       color: GameState.getV3RenderColor(gameObject),
     );
   }

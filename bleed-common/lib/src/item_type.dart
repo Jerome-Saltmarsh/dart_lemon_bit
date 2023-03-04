@@ -47,6 +47,7 @@ class ItemType {
   static const Consumables_Meat                 = Index_Consumables + 2;
   static const Consumables_Potion_Red           = Index_Consumables + 3;
   static const Consumables_Potion_Blue          = Index_Consumables + 4;
+  static const Consumables_Ammo_Box             = Index_Consumables + 5;
 
   static const Trinket_Ring_of_Health           = Index_Trinkets + 01;
   static const Trinket_Ring_of_Damage           = Index_Trinkets + 02;
@@ -647,6 +648,7 @@ class ItemType {
      Consumables_Meat: "Meat",
      Consumables_Potion_Red: "Health Potion",
      Consumables_Potion_Blue: "Energy Potion",
+     Consumables_Ammo_Box: "Ammo Box",
      Weapon_Thrown_Grenade: "Grenade",
      GameObjects_Crystal: "Crystal",
      GameObjects_Crystal_Small_Blue: "Crystal Small Blue",

@@ -492,7 +492,7 @@ class GameUI {
                   width16,
                   buildPanelTotalGrenades(),
                   width16,
-                  buildPlayerBuffs(),
+                  buildRowPlayerBuffs(),
                 ],
               ),
             )),
@@ -812,8 +812,7 @@ class GameUI {
     });
   }
 
-  static Widget buildPlayerBuffs(){
-    return Row(
+  static Widget buildRowPlayerBuffs() => Row(
       children: [
         buildWatchBuff(GamePlayer.buffInfiniteAmmo, ItemType.Buff_Infinite_Ammo),
         buildWatchBuff(GamePlayer.buffNoRecoil, ItemType.Buff_No_Recoil),
@@ -822,75 +821,6 @@ class GameUI {
         buildWatchBuff(GamePlayer.buffDoubleDamage, ItemType.Buff_Double_Damage),
       ],
     );
-  }
-
-  static Widget buildBuffIcon(int itemType){
-    return Container(
-      width: 64,
-      height: 64,
-      child: buildAtlasItemType(itemType),
-    );
-  }
-
-  static Widget buildHudPlayerWeapon() => watch(GamePlayer.weapon, (int weaponType){
-
-    final weaponLeftAmmo = watch(GamePlayer.weaponPrimaryCapacity, (int capacity){
-       if (capacity == 0) return GameStyle.Null;
-       return watch(GamePlayer.weaponPrimaryQuantity, (int quantity) {
-           const width = 200.0;
-           const height = 40.0;
-           return Container(
-             width: width,
-             height: height,
-             color: GameColors.white10,
-             alignment: Alignment.centerLeft,
-             child: Container(
-                width: width * (quantity / capacity),
-                height: height,
-                color: GameColors.white,
-             )
-           );
-       });
-    });
-
-    final consumeType = ItemType.getConsumeType(weaponType);
-      return buildDialogUIControl(
-        child: GameInventoryUI.buildHoverTarget(
-            child: Container(
-              width: 240,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    height: 50,
-                    color: Colors.black12,
-                    padding: GameStyle.Padding_6,
-                    child: buildAtlasItemType(weaponType),
-                  ),
-                  if (consumeType != ItemType.Empty)
-                    Container(
-                      height: 50,
-                      color: Colors.black12,
-                      padding: GameStyle.Padding_6,
-                      margin: const EdgeInsets.only(left: 6),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          buildAtlasItemType(consumeType),
-                          weaponLeftAmmo,
-                          // watch(ClientState.inventoryReads, (int value){
-                          //   return text('${ServerQuery.getEquippedWeaponQuantity()} / ${ServerQuery.countItemTypeQuantityInPlayerPossession(consumeType)}', size: 25);
-                          // }),
-                        ],
-                      ),
-                    ),
-                ],
-              ),
-            ),
-            hoverTargetType: ClientType.Hover_Target_Player_Stats_Damage,
-        ),
-      );
-  });
 
   static Widget buildPlayerUI() => IgnorePointer(
     child: Row(
@@ -909,26 +839,10 @@ class GameUI {
 
     final Ammo_Width = 100.0;
     final Ammo_Height = 30.0;
-    final weaponLeftAmmo = Container(
-        width: Ammo_Width,
-        height: Ammo_Height,
-        color: GameColors.white10,
-        alignment: Alignment.centerLeft,
-        child: watch(GamePlayer.weaponPrimaryCapacity, (int capacity){
-          if (capacity == 0) return GameStyle.Null;
-          return watch(GamePlayer.weaponPrimaryQuantity, (int quantity) {
-            return Container(
-              width: Ammo_Width * (quantity / capacity),
-              height: Ammo_Height,
-              color: GameColors.white85,
-            );                  });
-        })
-    );
 
     final weaponLeftAmmo2 = Container(
         width: Ammo_Width,
         height: Ammo_Height,
-        // color: GameColors.white10,
         alignment: Alignment.centerLeft,
         child: watch(GamePlayer.weaponPrimaryCapacity, (int capacity){
           if (capacity == 0) return GameStyle.Null;
@@ -947,27 +861,9 @@ class GameUI {
         })
     );
 
-
-    final weaponAmmoRight = Container(
-        width: Ammo_Width,
-        height: Ammo_Height,
-        color: GameColors.white10,
-        alignment: Alignment.centerLeft,
-        child: watch(GamePlayer.weaponSecondaryCapacity, (int capacity){
-          if (capacity == 0) return GameStyle.Null;
-          return watch(GamePlayer.weaponSecondaryQuantity, (int quantity) {
-            return Container(
-              width: Ammo_Width * (quantity / capacity),
-              height: Ammo_Height,
-              color: GameColors.white85,
-            );                  });
-        })
-    );
-
     final weaponAmmoRight2 = Container(
         width: Ammo_Width,
         height: Ammo_Height,
-        // color: GameColors.white10,
         alignment: Alignment.centerLeft,
         child: watch(GamePlayer.weaponSecondaryCapacity, (int capacity){
           if (capacity == 0) return GameStyle.Null;
