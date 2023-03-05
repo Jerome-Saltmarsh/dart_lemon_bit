@@ -4,11 +4,12 @@ firebase deploy
 
 [shortcut-keys]
 navigate to next method: ctrl + shift + up / down arrows
-ctrl + w:   minimal mode
+ctrl + w            : minimal mode
+ctrl + shift + e    : view recent changes
 
-EXPLORE and SURVIVE
+[EXPLORE and SURVIVE]
 
-[TODO]
+[INTENSE ACTION]
 [x] throw grenade
 [ ] upgrade melee
 [ ] upgrade max health

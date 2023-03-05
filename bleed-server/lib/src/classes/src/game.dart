@@ -3,7 +3,6 @@ import 'dart:typed_data';
 
 import 'package:bleed_server/src/classes/src/game_environment.dart';
 import 'package:bleed_server/src/game_physics.dart';
-import 'package:bleed_server/src/games/game_combat.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_math/library.dart';
 
@@ -3044,7 +3043,7 @@ abstract class Game {
   //   );
   // }
 
-  void playerPurchaseItemType(Player player, int itemType, {required WeaponSide weaponSide}){
+  void playerPurchaseItemType(Player player, int itemType, {required Side weaponSide}){
     if (player.dead) return;
     if (!options.itemTypes.contains(itemType)){
       player.writeError('${ItemType.getName(itemType)} cannot be purchased');

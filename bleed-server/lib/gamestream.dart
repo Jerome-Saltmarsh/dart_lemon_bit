@@ -8,6 +8,7 @@ export 'src/engine.dart';
 export 'src/maths.dart';
 export 'src/enums/hit_type.dart';
 export 'src/enums/script_type.dart';
+export 'src/enums/side.dart';
 export 'src/physics.dart';
 export 'src/typedefs.dart';
 export 'src/game_settings.dart';

@@ -2,7 +2,6 @@
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:bleed_server/src/games/game_combat.dart';
 import 'package:bleed_server/src/games/game_editor.dart';
 import 'package:bleed_server/src/maths/get_distance_between_v3.dart';
 import 'package:bleed_server/src/system.dart';
@@ -77,7 +76,7 @@ class Player extends Character with ByteWriter {
   /// Warning - do not reference
   Game game;
   Collider? _aimTarget; // the currently highlighted character
-  var aimTargetWeaponSide = WeaponSide.Left;
+  var aimTargetWeaponSide = Side.Left;
   Account? account;
   final inventory = Uint16List(inventory_size);
   final inventoryQuantity = Uint16List(inventory_size);
@@ -168,6 +167,9 @@ class Player extends Character with ByteWriter {
   int get weaponSecondaryLevel    => item_level[weaponSecondary] ?? 0;
   int get weaponSecondaryQuantity => item_quantity[weaponSecondary] ?? 0;
   int get weaponSecondaryCapacity => getItemCapacity(weaponSecondary);
+
+  bool get weaponPrimaryFull => weaponPrimaryQuantity >= weaponPrimaryCapacity;
+  bool get weaponSecondaryFull => weaponSecondaryQuantity >= weaponSecondaryCapacity;
 
   /// CONSTRUCTOR
   Player({

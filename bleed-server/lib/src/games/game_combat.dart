@@ -114,7 +114,7 @@ class GameCombat extends Game {
       final aimTarget = player.aimTarget;
       if (aimTarget != null) {
 
-        player.aimTargetWeaponSide = WeaponSide.Left;
+        player.aimTargetWeaponSide = Side.Left;
         if (aimTarget is GameObject && (aimTarget.collectable || aimTarget.interactable)){
           if (player.aimTargetWithinInteractRadius) {
             if (aimTarget.interactable) {
@@ -139,10 +139,10 @@ class GameCombat extends Game {
     }
 
     if (mouseRightDown) {
-      player.aimTargetWeaponSide = WeaponSide.Right;
+      player.aimTargetWeaponSide = Side.Right;
       final aimTarget = player.aimTarget;
       if (aimTarget != null){
-        player.aimTargetWeaponSide = WeaponSide.Right;
+        player.aimTargetWeaponSide = Side.Right;
 
         if (aimTarget is GameObject && (aimTarget.collectable || aimTarget.interactable)){
           if (player.aimTargetWithinInteractRadius) {
@@ -344,7 +344,7 @@ class GameCombat extends Game {
   }
 
   @override
-  void playerPurchaseItemType(Player player, int itemType, {required WeaponSide weaponSide}){
+  void playerPurchaseItemType(Player player, int itemType, {required Side weaponSide}){
      if (player.dead) return;
 
      final itemLevel = player.getItemLevel(itemType);
@@ -369,10 +369,10 @@ class GameCombat extends Game {
      }
 
      switch (weaponSide) {
-       case WeaponSide.Left:
+       case Side.Left:
          playerEquipPrimary(player, itemType);
          break;
-       case WeaponSide.Right:
+       case Side.Right:
          playerEquipSecondary(player, itemType);
          break;
      }
@@ -472,7 +472,7 @@ class GameCombat extends Game {
        }
      }
 
-     if (player.aimTargetWeaponSide == WeaponSide.Left){
+     if (player.aimTargetWeaponSide == Side.Left){
        playerEquipPrimary(player, gameObject.type);
        player.setItemQuantityMax(gameObject.type);
        deactivateGameObjectAndScheduleRespawn(gameObject);
@@ -485,6 +485,7 @@ class GameCombat extends Game {
 
   @override
   void customOnCollisionBetweenPlayerAndGameObject(Player player, GameObject gameObject) {
+
       if (gameObject.type == ItemType.Buff_Infinite_Ammo) {
         player.writeInfo('Infinite Ammo');
         player.buffInfiniteAmmo = 15;
@@ -542,6 +543,35 @@ class GameCombat extends Game {
         deactivateCollider(gameObject);
         return;
       }
+
+      final itemType = gameObject.type;
+
+      if (ItemType.isTypeWeapon(itemType)) {
+          if (player.weaponPrimary == itemType) {
+            if (player.weaponPrimaryQuantity < player.weaponPrimaryCapacity) {
+              player.weaponPrimaryQuantity = player.weaponPrimaryCapacity;
+              player.writePlayerEvent(PlayerEvent.Ammo_Acquired);
+            }
+            return;
+          }
+          if (player.weaponSecondary == itemType) {
+            if (player.weaponSecondaryQuantity < player.weaponSecondaryCapacity) {
+              player.weaponSecondaryQuantity = player.weaponSecondaryCapacity;
+              player.writePlayerEvent(PlayerEvent.Ammo_Acquired);
+            }
+            return;
+          }
+
+          if (player.weaponPrimary == ItemType.Empty) {
+             playerEquipPrimary(player, itemType);
+             return;
+          }
+
+          if (player.weaponSecondary == ItemType.Empty) {
+            playerEquipSecondary(player, itemType);
+            return;
+          }
+      }
   }
 
   @override
@@ -577,11 +607,5 @@ class GameCombat extends Game {
       }
     }
   }
-
-
 }
 
-enum WeaponSide {
-  Left,
-  Right,
-}
