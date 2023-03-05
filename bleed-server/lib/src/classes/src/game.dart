@@ -1901,7 +1901,7 @@ abstract class Game {
     bool friendlyFire = false,
   }) {
     assert (target.active);
-    assert (target.strikable);
+    if (!target.strikable) return;
 
     target.applyForce(
       force: force,
