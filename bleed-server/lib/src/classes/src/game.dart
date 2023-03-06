@@ -65,7 +65,7 @@ abstract class Game {
   /// @override
   void customUpdatePlayer(Player player){ }
   /// @override
-  void customOnPlayerInteractedWithGameObject(Player player, GameObject gameObject){ }
+  void customOnPlayerInteractWithGameObject(Player player, GameObject gameObject){ }
   /// @override
   void customDownloadScene(Player player){ }
   /// @override
@@ -119,6 +119,8 @@ abstract class Game {
   void customOnGameObjectSpawned(GameObject gameObject){ }
   /// @override
   void customOnGameObjectDestroyed(GameObject gameObject) { }
+  /// @override
+  void customOnCharacterWeaponStateReady(Character character){ }
 
   /// PROPERTIES
   List<GameObject> get gameObjects => scene.gameObjects;
@@ -1769,13 +1771,14 @@ abstract class Game {
            }
            if (target.interactable) {
              player.setCharacterStateIdle();
-             customOnPlayerInteractedWithGameObject(player, target);
+             customOnPlayerInteractWithGameObject(player, target);
              player.target = null;
              return;
            }
            if (target.collectable) {
              player.setCharacterStateIdle();
-             playerPickup(player, target);
+             customOnPlayerCollectGameObject(player, target);
+             player.target = null;
              return;
            }
         }
@@ -1986,7 +1989,7 @@ abstract class Game {
 
     if (!character.active) return;
 
-    if (character is! Player) {
+    if (!character.isPlayer) {
       character.lookRadian = character.faceAngle;
     }
 
@@ -1996,6 +1999,7 @@ abstract class Game {
       character.weaponStateDuration--;
 
       if (character.weaponStateDuration <= 0){
+        customOnCharacterWeaponStateReady(character);
         switch (character.weaponState) {
           case WeaponState.Firing:
             character.assignWeaponStateAiming();
@@ -2957,7 +2961,16 @@ abstract class Game {
   int getNodeIndexV3(Position3 value) =>
       scene.getNodeIndex(value.indexZ, value.indexRow, value.indexColumn);
 
-  void playerPickup(Player player, GameObject target) {
+
+  void customOnPlayerCollectGameObject(Player player, GameObject target) {
+
+    if (options.items) {
+      deactivateCollider(target);
+      player.writePlayerEventItemAcquired(target.type);
+      clearCharacterTarget(player);
+      return;
+    }
+
     var quantityRemaining = target.quantity > 0 ? target.quantity : 1;
     final maxQuantity = ItemType.getMaxQuantity(target.type);
     if (maxQuantity > 1) {
@@ -2967,7 +2980,7 @@ abstract class Game {
           player.inventoryQuantity[i] += quantityRemaining;
           player.inventoryDirty = true;
           deactivateCollider(target);
-          player.writePlayerEvent(PlayerEvent.Item_Acquired);
+          player.writePlayerEventItemAcquired(target.type);
           clearCharacterTarget(player);
           return;
         }
@@ -2986,7 +2999,7 @@ abstract class Game {
       player.inventoryQuantity[emptyInventoryIndex] = min(quantityRemaining, maxQuantity);
       player.inventoryDirty = true;
       deactivateCollider(target);
-      player.writePlayerEvent(PlayerEvent.Item_Acquired);
+      player.writePlayerEventItemAcquired(target.type);
       clearCharacterTarget(player);
     } else {
       clearCharacterTarget(player);

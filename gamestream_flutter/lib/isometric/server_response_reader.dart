@@ -11,6 +11,8 @@ class ServerResponseReader with ByteReader {
   final updateFrame = Watch(0, onChanged: GameState.onChangedUpdateFrame);
   final decoder = ZLibDecoder();
 
+  var previousServerResponse = -1;
+
   void read(Uint8List values) {
     updateFrame.value++;
     index = 0;
@@ -20,7 +22,8 @@ class ServerResponseReader with ByteReader {
     bufferSizeTotal.value += values.length;
 
     while (true) {
-      switch (readByte()) {
+      final serverResponse = readByte();
+      switch (serverResponse) {
         case ServerResponse.Api_Player:
           readApiPlayer();
           break;
@@ -107,10 +110,11 @@ class ServerResponseReader with ByteReader {
           readGameOptions();
           break;
         default:
-          print("read error at index $index");
+          print("read error; index: $index, previous-server-response: $previousServerResponse");
           print(values);
           return;
       }
+      previousServerResponse = serverResponse;
     }
   }
 
@@ -185,6 +189,7 @@ class ServerResponseReader with ByteReader {
     readVector3(gameObject);
     ServerState.sortGameObjects();
   }
+
 
   void readApiPlayer() {
     final apiPlayer = readByte();

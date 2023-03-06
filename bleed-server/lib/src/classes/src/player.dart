@@ -171,6 +171,12 @@ class Player extends Character with ByteWriter {
   bool get weaponPrimaryFull => weaponPrimaryQuantity >= weaponPrimaryCapacity;
   bool get weaponSecondaryFull => weaponSecondaryQuantity >= weaponSecondaryCapacity;
 
+  bool get weaponPrimaryEquipped => weaponType == weaponPrimary;
+  bool get weaponSecondaryEquipped => weaponType == weaponSecondary;
+
+  bool get weaponPrimaryEmpty => weaponPrimaryQuantity <= 0;
+  bool get weaponSecondaryEmpty => weaponSecondaryQuantity <= 0;
+
   /// CONSTRUCTOR
   Player({
     required this.game,
@@ -1964,6 +1970,9 @@ class Player extends Character with ByteWriter {
       writePlayerBuffs();
     }
   }
+
+  @override
+  bool get isPlayer => true;
 }
 
 

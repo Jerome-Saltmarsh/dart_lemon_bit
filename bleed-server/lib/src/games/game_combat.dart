@@ -118,7 +118,7 @@ class GameCombat extends Game {
         if (aimTarget is GameObject && (aimTarget.collectable || aimTarget.interactable)){
           if (player.aimTargetWithinInteractRadius) {
             if (aimTarget.interactable) {
-              customOnPlayerInteractedWithGameObject(player, aimTarget);
+              customOnPlayerInteractWithGameObject(player, aimTarget);
               return;
             }
           } else {
@@ -147,7 +147,7 @@ class GameCombat extends Game {
         if (aimTarget is GameObject && (aimTarget.collectable || aimTarget.interactable)){
           if (player.aimTargetWithinInteractRadius) {
             if (aimTarget.interactable) {
-              customOnPlayerInteractedWithGameObject(player, aimTarget);
+              customOnPlayerInteractWithGameObject(player, aimTarget);
               return;
             }
           } else {
@@ -452,7 +452,7 @@ class GameCombat extends Game {
   }
 
   @override
-  void customOnPlayerInteractedWithGameObject(Player player, GameObject gameObject){
+  void customOnPlayerInteractWithGameObject(Player player, GameObject gameObject){
 
      if (!ItemType.isTypeWeapon(gameObject.type)) return;
 
@@ -607,5 +607,30 @@ class GameCombat extends Game {
       }
     }
   }
+
+  @override
+  void customOnCharacterWeaponStateReady(Character character){
+    if (character.weaponType == ItemType.Empty) return;
+    if (character is! Player) return;
+
+    if (character.weaponPrimaryEquipped) {
+      if (!character.weaponPrimaryEmpty) return;
+      character.weaponPrimary = ItemType.Empty;
+      character.weaponType = ItemType.Empty;
+      return;
+    }
+
+    if (!character.weaponSecondaryEmpty) return;
+    character.weaponSecondary = ItemType.Empty;
+    character.weaponType = ItemType.Empty;
+    return;
+  }
+
+  @override
+  void customOnPlayerCollectGameObject(Player player, GameObject target) {
+    customOnCollisionBetweenPlayerAndGameObject(player, target);
+  }
 }
+
+
 

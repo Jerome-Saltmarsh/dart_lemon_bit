@@ -107,7 +107,7 @@ class GameSurvival extends Game {
   }
 
   @override
-  void customOnPlayerInteractedWithGameObject(Player player, GameObject gameObject) {
+  void customOnPlayerInteractWithGameObject(Player player, GameObject gameObject) {
 
     if (gameObject.type == ItemType.GameObjects_Vending_Machine){
       player.setStoreItems(const [

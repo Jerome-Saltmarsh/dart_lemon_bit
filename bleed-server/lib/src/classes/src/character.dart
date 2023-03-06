@@ -21,7 +21,6 @@ abstract class Character extends Collider {
   var animationFrame = 0;
   var frozenDuration = 0;
   Position3? target;
-  var invincible = false;
   var weaponState = WeaponState.Idle;
   var weaponStateDuration = 0;
   var _weaponStateDurationTotal = 0;
@@ -36,12 +35,15 @@ abstract class Character extends Collider {
   var lookRadian = 0.0;
   var name = "";
 
+  var buffInvincible = false;
+
   int get weaponType => _weaponType;
   int get headType => _headType;
   int get bodyType => _bodyType;
   int get legsType => _legsType;
   double get runSpeed => 1.0;
 
+  bool get isPlayer => false;
 
   set weaponType(int value){
     assert (value == ItemType.Empty || ItemType.isTypeWeapon(value));

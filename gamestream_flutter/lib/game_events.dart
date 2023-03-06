@@ -385,19 +385,17 @@ class GameEvents {
         }
         break;
       case PlayerEvent.Level_Increased:
-        print("onPlayerEvent_LevelIncreased()");
         GameAudio.buff_1();
         ClientActions.writeMessage("Level Gained");
         break;
       case PlayerEvent.Item_Consumed:
-        onItemTypeConsumed(serverResponseReader.readUInt16());
+        readPlayerEventItemConsumed();
         break;
       case PlayerEvent.Recipe_Crafted:
         GameAudio.unlock();
         break;
       case PlayerEvent.Spawn_Started:
         GameAudio.teleport();
-
         break;
       case PlayerEvent.Inventory_Item_Moved:
         GameAudio.switch_sounds_4();
@@ -417,36 +415,8 @@ class GameEvents {
       case PlayerEvent.Skill_Upgraded:
         // audio.unlock(GameState.player.x, GameState.player.y);
         break;
-
       case PlayerEvent.Item_Acquired:
-        final itemType = serverResponseReader.readUInt16();
-        if (itemType == ItemType.Empty) return;
-        switch (itemType) {
-          case ItemType.Weapon_Ranged_Plasma_Rifle:
-            GameAudio.gun_pickup_01();
-            break;
-          case ItemType.Weapon_Ranged_Plasma_Pistol:
-            GameAudio.revolver_reload_1();
-            break;
-          case ItemType.Weapon_Ranged_Revolver:
-            GameAudio.revolver_reload_1();
-            break;
-          case ItemType.Weapon_Ranged_Handgun:
-            GameAudio.reload_6();
-            break;
-          case ItemType.Weapon_Ranged_Shotgun:
-            GameAudio.cock_shotgun_3();
-            break;
-          case ItemType.Weapon_Melee_Sword:
-            GameAudio.sword_unsheathe();
-            break;
-          case ItemType.Weapon_Ranged_Bow:
-            GameAudio.bow_draw();
-            break;
-          default:
-            GameAudio.gun_pickup_01();
-            break;
-        }
+        readPlayerEventItemAcquired();
         break;
       case PlayerEvent.Dash_Activated:
         // audio.buff11(GameState.player.x, GameState.player.y);
@@ -514,6 +484,10 @@ class GameEvents {
         ClientActions.writeMessage("Invalid Request");
         break;
     }
+  }
+
+  static void readPlayerEventItemConsumed() {
+    onItemTypeConsumed(serverResponseReader.readUInt16());
   }
 
   static void onItemTypeConsumed(int itemType) {
@@ -662,5 +636,36 @@ class GameEvents {
 
   static void onChangedPlayerTertiaryWeapon(int weaponType) {
     ClientState.itemGroup.value = ItemGroup.Tertiary_Weapon;
+  }
+
+  static void readPlayerEventItemAcquired() {
+    final itemType = serverResponseReader.readUInt16();
+    if (itemType == ItemType.Empty) return;
+    switch (itemType) {
+      case ItemType.Weapon_Ranged_Plasma_Rifle:
+        GameAudio.gun_pickup_01();
+        break;
+      case ItemType.Weapon_Ranged_Plasma_Pistol:
+        GameAudio.revolver_reload_1();
+        break;
+      case ItemType.Weapon_Ranged_Revolver:
+        GameAudio.revolver_reload_1();
+        break;
+      case ItemType.Weapon_Ranged_Handgun:
+        GameAudio.reload_6();
+        break;
+      case ItemType.Weapon_Ranged_Shotgun:
+        GameAudio.cock_shotgun_3();
+        break;
+      case ItemType.Weapon_Melee_Sword:
+        GameAudio.sword_unsheathe();
+        break;
+      case ItemType.Weapon_Ranged_Bow:
+        GameAudio.bow_draw();
+        break;
+      default:
+        GameAudio.gun_pickup_01();
+        break;
+    }
   }
 }
