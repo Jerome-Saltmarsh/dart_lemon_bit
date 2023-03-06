@@ -1139,7 +1139,7 @@ abstract class Game {
             deactivateCollider(instance);
           }
           break;
-        case ScriptType.GameObject_Spawn:
+        case ScriptType.Spawn_GameObject:
           final type = scriptReader.readUInt16();
           final x = scriptReader.readUInt16();
           final y = scriptReader.readUInt16();
@@ -1149,6 +1149,20 @@ abstract class Game {
               y: y.toDouble(),
               z: z.toDouble(),
               type: type,
+          );
+          break;
+        case ScriptType.Spawn_AI:
+          final type = scriptReader.readUInt16();
+          final x = scriptReader.readUInt16();
+          final y = scriptReader.readUInt16();
+          final z = scriptReader.readUInt16();
+          final team = scriptReader.readUInt8();
+          spawnAIXYZ(
+            x: x.toDouble(),
+            y: y.toDouble(),
+            z: z.toDouble(),
+            characterType: type,
+            team: team,
           );
           break;
         default:
@@ -2294,6 +2308,41 @@ abstract class Game {
     final projectile = Projectile();
     projectiles.add(projectile);
     return projectile;
+  }
+
+  AI spawnAIXYZ({
+    required double x,
+    required double y,
+    required double z,
+    required int characterType,
+    int health = 10,
+    int damage = 1,
+    int team = TeamType.Evil,
+    double wanderRadius = 200,
+  }) {
+    if (!scene.inboundsXYZ(x, y, z)) throw Exception('game.spawnAIXYZ() - out of bounds');
+
+    final instance = AI(
+      weaponType: ItemType.Empty,
+      characterType: characterType,
+      health: health,
+      damage: damage,
+      team: team,
+      wanderRadius: wanderRadius,
+    );
+    instance.x = x;
+    instance.y = y;
+    instance.z = z;
+    instance.clearDest();
+    instance.clearPath();
+    instance.spawnX = instance.x;
+    instance.spawnY = instance.y;
+    instance.spawnZ = instance.z;
+    instance.setCharacterStateSpawning();
+    characters.add(instance);
+    instance.spawnNodeIndex = scene.getNodeIndexXYZ(x, y, z);
+    customOnAIRespawned(instance);
+    return instance;
   }
 
   AI spawnAI({

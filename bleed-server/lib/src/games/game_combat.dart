@@ -292,6 +292,16 @@ class GameCombat extends Game {
      if (src is Player) {
        src.credits += 10;
      }
+
+     if (target is AI) {
+       performScript(timer: 300).writeSpawnAI(
+         type: randomItem(const[CharacterType.Zombie, CharacterType.Dog]),
+         x: target.x,
+         y: target.y,
+         z: target.z,
+         team: TeamType.Evil,
+       );
+     }
   }
 
   @override
