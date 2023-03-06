@@ -490,6 +490,7 @@ class GameEvents {
     switch (serverResponseReader.readUInt16()){
       case ItemType.Consumables_Potion_Red:
         GameAudio.drink();
+        GameAudio.reviveHeal1();
         break;
       case ItemType.Consumables_Potion_Blue:
         GameAudio.drink();

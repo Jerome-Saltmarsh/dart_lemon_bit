@@ -2875,15 +2875,19 @@ abstract class Game {
   void triggerSpawnPoints({int instances = 1}){
     for (final index in scene.spawnPoints) {
       for (var i = 0; i < instances; i++) {
-        spawnAI(
-          characterType: randomItem(const [CharacterType.Dog, CharacterType.Zombie, CharacterType.Template]),
-          nodeIndex: index,
-          damage: 10,
-          team: TeamType.Evil,
-          health: 3,
-        );
+        customSpawnRandomEnemyAi(index);
       }
     }
+  }
+
+  void customSpawnRandomEnemyAi(int index){
+    spawnAI(
+      characterType: randomItem(const [CharacterType.Dog, CharacterType.Zombie, CharacterType.Template]),
+      nodeIndex: index,
+      damage: 10,
+      team: TeamType.Evil,
+      health: 3,
+    );
   }
 
   /// WARNING EXPENSIVE OPERATION

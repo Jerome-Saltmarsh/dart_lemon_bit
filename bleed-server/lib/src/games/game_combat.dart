@@ -653,6 +653,18 @@ class GameCombat extends Game {
   void customOnPlayerCollectGameObject(Player player, GameObject target) {
     customOnCollisionBetweenPlayerAndGameObject(player, target);
   }
+
+  @override
+  void customSpawnRandomEnemyAi(int index){
+    spawnAI(
+      characterType: randomItem(const [CharacterType.Dog, CharacterType.Zombie]),
+      nodeIndex: index,
+      damage: 1,
+      team: TeamType.Evil,
+      health: 5,
+    );
+  }
+
 }
 
 

@@ -60,6 +60,7 @@ class GameAudio {
   static final wolf_howl = AudioSingle(name: 'wolf-howl', volume: 0.5);
   static final weaponSwap2 = AudioSingle(name: 'weapon-swap-2', volume: 0.5);
   static final eat = AudioSingle(name: 'eat', volume: 0.5);
+  static final reviveHeal1 = AudioSingle(name: 'revive-heal-1', volume: 0.5);
   static final drink = AudioSingle(name: 'drink-potion-2', volume: 0.5);
   static final buff_1 = AudioSingle(name: 'buff-1', volume: 0.5);
   static final errorSound15 = AudioSingle(name: 'error-sound-15', volume: 0.5);
