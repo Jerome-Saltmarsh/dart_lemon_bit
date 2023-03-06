@@ -35,7 +35,8 @@ abstract class Character extends Collider {
   var lookRadian = 0.0;
   var name = "";
 
-  var buffInvincible = false;
+  var buffInvincible      = false;
+  var buffDoubleDamage    = false;
 
   int get weaponType => _weaponType;
   int get headType => _headType;

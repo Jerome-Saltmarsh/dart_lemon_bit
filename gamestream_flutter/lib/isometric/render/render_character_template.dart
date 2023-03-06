@@ -41,6 +41,20 @@ void renderCharacterTemplate(Character character, {
     }
   }
 
+  if (character.buffDoubleDamage) {
+    Engine.renderSprite(
+      image: GameImages.atlas_items,
+      srcX: 448,
+      srcY: 128,
+      dstX: character.renderX,
+      dstY: character.renderY - 45,
+      srcWidth: 32,
+      srcHeight: 32,
+      scale: 1,
+    );
+  }
+
+
   var frameLegs = 0;
   var frameHead = 0;
   var frameBody = 0;

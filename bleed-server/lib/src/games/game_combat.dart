@@ -166,12 +166,13 @@ class GameCombat extends Game {
       );
     }
 
-    if (keySpaceDown){
-      characterUseOrEquipWeapon(
-        character: player,
-        weaponType: player.weaponTertiary,
-        characterStateChange: false,
-      );
+    if (keySpaceDown) {
+      // characterUseOrEquipWeapon(
+      //   character: player,
+      //   weaponType: player.weaponTertiary,
+      //   characterStateChange: false,
+      // );
+      playerThrowGrenade(player);
     }
     playerRunInDirection(player, direction);
   }
@@ -512,7 +513,8 @@ class GameCombat extends Game {
 
       if (gameObject.type == ItemType.Buff_Double_Damage) {
         player.writeInfo('Double Damage');
-        player.buffDoubleDamage = 30;
+        player.buffDoubleDamageTimer = 30;
+        player.buffDoubleDamage = true;
         player.writePlayerBuffs();
         player.writePlayerEventItemAcquired(gameObject.type);
         deactivateCollider(gameObject);
@@ -630,12 +632,12 @@ class GameCombat extends Game {
           position: target,
           type: randomItem(const [
             ItemType.Buff_Double_Damage,
-            ItemType.Buff_Infinite_Ammo,
-            ItemType.Buff_Fast,
+            // ItemType.Buff_Infinite_Ammo,
+            // ItemType.Buff_Fast,
             ItemType.Buff_Invincible,
-            ItemType.Consumables_Potion_Red,
-            ItemType.Consumables_Ammo_Box,
-            ItemType.Weapon_Thrown_Grenade,
+            // ItemType.Consumables_Potion_Red,
+            // ItemType.Consumables_Ammo_Box,
+            // ItemType.Weapon_Thrown_Grenade,
           ]),
         );
 

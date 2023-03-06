@@ -101,12 +101,6 @@ class GameSurvival extends Game {
   }
 
   @override
-  void customUpdate() {
-    time.update();
-    environment.update();
-  }
-
-  @override
   void customOnPlayerInteractWithGameObject(Player player, GameObject gameObject) {
 
     if (gameObject.type == ItemType.GameObjects_Vending_Machine){

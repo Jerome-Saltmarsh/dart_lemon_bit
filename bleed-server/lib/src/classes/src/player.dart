@@ -91,11 +91,11 @@ class Player extends Character with ByteWriter {
   final item_level = <int, int> {};
   final item_quantity = <int, int> {};
 
-  var buffInfiniteAmmo    = 0;
-  var buffDoubleDamage    = 0;
-  var buffFast            = 0;
-  var buffInvincibleTimer = 0;
-  var buffNoRecoil        = 0;
+  var buffInfiniteAmmo      = 0;
+  var buffDoubleDamageTimer = 0;
+  var buffFast              = 0;
+  var buffInvincibleTimer   = 0;
+  var buffNoRecoil          = 0;
 
   var _action = PlayerAction.None;
   var _actionItemType = ItemType.Empty;
@@ -104,7 +104,6 @@ class Player extends Character with ByteWriter {
 
   int get action => _action;
   int get actionItemType => _actionItemType;
-
   int get actionCost => _actionCost;
 
   ItemGroup get weaponTypeItemGroup => ItemType.getItemGroup(weaponType);
@@ -122,7 +121,7 @@ class Player extends Character with ByteWriter {
     final itemTypeDamage = game.options.itemTypeDamage[weaponType];
     if (itemTypeDamage == null) return 0;
     final damage = itemTypeDamage[0];
-    if (buffDoubleDamage > 0) return damage + damage;
+    if (buffDoubleDamage) return damage + damage;
     return damage;
   }
 
@@ -1250,7 +1249,14 @@ class Player extends Character with ByteWriter {
         writeCharacterUpperBody(character);
       }
 
-      writeBool(character.buffInvincible);
+      var buff = 0;
+      if (character.buffInvincible){
+        buff = buff | 0x00000001;
+      }
+      if (character.buffDoubleDamage){
+        buff = buff | 0x00000002;
+      }
+      writeByte(buff);
     }
     writeByte(END);
   }
@@ -1940,7 +1946,7 @@ class Player extends Character with ByteWriter {
     writeUInt8(ServerResponse.Api_Player);
     writeUInt8(ApiPlayer.Buffs);
     writeUInt16(buffInfiniteAmmo);
-    writeUInt16(buffDoubleDamage);
+    writeUInt16(buffDoubleDamageTimer);
     writeUInt16(buffFast);
     writeUInt16(buffInvincibleTimer);
     writeUInt16(buffNoRecoil);
@@ -1952,9 +1958,12 @@ class Player extends Character with ByteWriter {
       buffInfiniteAmmo--;
       changed = true;
     }
-    if (buffDoubleDamage > 0) {
-      buffDoubleDamage--;
+    if (buffDoubleDamageTimer > 0) {
+      buffDoubleDamageTimer--;
       changed = true;
+      if (buffDoubleDamageTimer <= 0) {
+        buffDoubleDamage = false;
+      }
     }
     if (buffInvincibleTimer > 0) {
       buffInvincibleTimer--;

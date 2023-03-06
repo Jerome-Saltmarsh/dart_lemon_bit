@@ -1081,6 +1081,9 @@ abstract class Game {
     if (!_running) return;
 
     frame++;
+    time.update();
+    environment.update();
+
     updateAITargets();
     internalUpdateJobs();
     internalUpdateScripts();
@@ -1339,13 +1342,16 @@ abstract class Game {
     if (player.inventoryOpen){
       player.interactMode = InteractMode.Inventory;
     }
-    player.buffDoubleDamage = 0;
-    player.buffNoRecoil = 0;
-    player.buffFast = 0;
-    player.buffInfiniteAmmo = 0;
-    player.buffInvincibleTimer = 0;
-    player.buffInvincible = false;
+
+    player.buffDoubleDamageTimer  = 0;
+    player.buffNoRecoil           = 0;
+    player.buffFast               = 0;
+    player.buffInfiniteAmmo       = 0;
+    player.buffInvincibleTimer    = 0;
+    player.buffInvincible         = false;
+    player.buffDoubleDamage       = false;
     player.writePlayerBuffs();
+
     customOnPlayerRevived(player);
 
     player.writePlayerMoved();

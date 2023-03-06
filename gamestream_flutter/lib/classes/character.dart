@@ -25,7 +25,9 @@ class Character extends Vector3 {
   var lookRadian = 0.0;
   var weaponFrame = 0;
   var color = 0;
+  var buff = 0;
   var buffInvincible = false;
+  var buffDoubleDamage = false;
 
   static const piSixteenth = pi / 16.0;
 

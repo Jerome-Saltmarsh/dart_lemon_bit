@@ -481,7 +481,17 @@ class ServerResponseReader with ByteReader {
         readCharacterUpperBody(character);
       }
 
-      character.buffInvincible = readBool();
+
+      final buff = readUInt8();
+      if (buff > 0) {
+        character.buff = buff;
+        character.buffInvincible    = buff & 0x00000001 == 1;
+        character.buffDoubleDamage  = buff & 0x00000002 == 2;
+      } else {
+        character.buffInvincible    = false;
+        character.buffDoubleDamage  = false;
+      }
+
       ServerState.totalCharacters++;
     }
   }
