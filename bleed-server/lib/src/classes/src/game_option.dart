@@ -64,6 +64,8 @@ class GameOptions {
      ItemType.Weapon_Ranged_Plasma_Pistol: [8, 10, 12, 14, 16],
      ItemType.Weapon_Ranged_Plasma_Rifle: [30, 40, 50, 60, 70],
      ItemType.Weapon_Ranged_Shotgun: [4, 6, 8, 10, 12],
+     ItemType.Weapon_Melee_Crowbar: [10, 10, 10, 10, 10],
+     ItemType.Weapon_Melee_Pickaxe: [10, 10, 10, 10, 10],
   };
 
   static const Default_ItemType_Cost = <int, List<int>> {

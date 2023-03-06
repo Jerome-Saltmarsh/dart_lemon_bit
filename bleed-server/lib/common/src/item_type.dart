@@ -451,7 +451,7 @@ class ItemType {
   }[itemType] ?? 0;
 
   static int getEnergyConsumeAmountMelee(int itemType) => const {
-    Empty: 1,
+    Empty: 0,
     Weapon_Melee_Knife: 1,
     Weapon_Melee_Axe: 3,
     Weapon_Melee_Staff: 3,

@@ -118,10 +118,10 @@ class ClientEvents {
     }
 
     if (GameOptions.items.value) {
-      if (key == ClientConstants.Key_Inventory){
-        ClientState.window_visible_items.toggle();
-        return;
-      }
+      // if (key == ClientConstants.Key_Inventory){
+      //   ClientState.window_visible_items.toggle();
+      //   return;
+      // }
 
        if (key == LogicalKeyboardKey.keyC) {
          GameNetwork.sendClientRequest(ClientRequest.Equip_Next, ItemGroup.Tertiary_Weapon.index);

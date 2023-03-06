@@ -596,6 +596,11 @@ abstract class Game {
           return;
         }
 
+        final equippedQuantity = character.item_quantity[weaponType] ?? 0;
+        final nextQuantity = equippedQuantity - 1;
+        character.item_quantity[weaponType] = nextQuantity;
+        character.writePlayerWeaponQuantity();
+
         if (character.buffInfiniteAmmo <= 0 && ItemType.isTypeWeaponFirearm(weaponType)){
           final equippedQuantity = character.item_quantity[weaponType] ?? 0;
 
@@ -611,9 +616,6 @@ abstract class Game {
             characterAttackMelee(character);
             return;
           }
-          final nextQuantity = equippedQuantity - 1;
-          character.item_quantity[weaponType] = nextQuantity;
-          character.writePlayerWeaponQuantity();
         }
       }
 
@@ -816,18 +818,17 @@ abstract class Game {
 
     if (character.deadBusyOrWeaponStateBusy) return;
 
-    final weaponType = character.weaponType;
-
-    if (character is Player){
-      final energyConsumeAmount = ItemType.getEnergyConsumeAmountMelee(weaponType);
-      if (energyConsumeAmount > 0) {
-        if (energyConsumeAmount > character.energy) {
-          character.writeError('Not Enough Energy');
-          return;
-        }
-        character.energy -= energyConsumeAmount;
-      }
-    }
+    // final weaponType = character.weaponType;
+    // if (character is Player){
+    //   final energyConsumeAmount = ItemType.getEnergyConsumeAmountMelee(weaponType);
+    //   if (energyConsumeAmount > 0) {
+    //     if (energyConsumeAmount > character.energy) {
+    //       character.writeError('Not Enough Energy');
+    //       return;
+    //     }
+    //     character.energy -= energyConsumeAmount;
+    //   }
+    // }
 
     final angle = character.lookRadian;
     final attackRadius = ItemType.getRangeMelee(character.weaponType);
@@ -844,10 +845,6 @@ abstract class Game {
     character.performY = performY;
     character.performZ = performZ;
     character.assignWeaponStateMelee();
-
-    if (character.weaponType == ItemType.Weapon_Melee_Staff) {
-       spawnProjectileOrb(src: character, damage: 5, range: 200);
-    }
 
     dispatchMeleeAttackPerformed(
       character.weaponType,

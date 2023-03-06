@@ -20,6 +20,31 @@ class GameCombat extends Game {
   static final hints_length = hints.length;
   static final hints_frames_between = 600;
   static const Max_Grenades = 3;
+  static const GameObject_Duration = 300;
+  static const Crate_Respawn_Duration = 1000;
+
+  static const weaponTypes = [
+    ItemType.Weapon_Ranged_Flamethrower,
+    ItemType.Weapon_Ranged_Bazooka,
+    ItemType.Weapon_Ranged_Plasma_Pistol,
+    ItemType.Weapon_Ranged_Plasma_Rifle,
+    ItemType.Weapon_Ranged_Sniper_Rifle,
+    ItemType.Weapon_Ranged_Shotgun,
+    ItemType.Weapon_Melee_Crowbar,
+    ItemType.Weapon_Melee_Pickaxe,
+  ];
+
+  static const buffTypes = [
+    ItemType.Buff_Double_Damage,
+    ItemType.Buff_Infinite_Ammo,
+    ItemType.Buff_Fast,
+    ItemType.Buff_Invincible,
+    ItemType.Consumables_Potion_Red,
+    ItemType.Consumables_Ammo_Box,
+    ItemType.Weapon_Thrown_Grenade,
+    ItemType.Weapon_Melee_Crowbar,
+    ItemType.Weapon_Melee_Pickaxe,
+  ];
 
   var nextBuffUpdate = 0;
 
@@ -167,17 +192,7 @@ class GameCombat extends Game {
     }
 
     if (keySpaceDown) {
-      // characterUseOrEquipWeapon(
-      //   character: player,
-      //   weaponType: player.weaponTertiary,
-      //   characterStateChange: false,
-      // );
       playerThrowGrenade(player);
-    }
-
-    if (keyShiftDown) {
-      // perform a jump if player is on ground
-      player.velocityZ = 10.0;
     }
 
     playerRunInDirection(player, direction);
@@ -627,7 +642,7 @@ class GameCombat extends Game {
     if (target is GameObject) {
       if (target.type == ItemType.GameObjects_Crate_Wooden) {
         deactivateCollider(target);
-        performScript(timer: 1000).writeSpawnGameObject(
+        performScript(timer: Crate_Respawn_Duration).writeSpawnGameObject(
           type: ItemType.GameObjects_Crate_Wooden,
           x: target.x,
           y: target.y,
@@ -636,18 +651,10 @@ class GameCombat extends Game {
 
         final gameObjectBuff = spawnGameObjectAtPosition(
           position: target,
-          type: randomItem(const [
-            ItemType.Buff_Double_Damage,
-            ItemType.Buff_Infinite_Ammo,
-            ItemType.Buff_Fast,
-            ItemType.Buff_Invincible,
-            ItemType.Consumables_Potion_Red,
-            ItemType.Consumables_Ammo_Box,
-            ItemType.Weapon_Thrown_Grenade,
-          ]),
+          type: randomItem(buffTypes),
         );
 
-        performScript(timer: 300)
+        performScript(timer: GameObject_Duration)
             .writeGameObjectDeactivate(gameObjectBuff);
       }
     }
