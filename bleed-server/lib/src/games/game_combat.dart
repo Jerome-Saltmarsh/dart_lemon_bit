@@ -536,7 +536,7 @@ class GameCombat extends Game {
         if (player.health >= player.maxHealth) return;
         player.health = player.maxHealth;
         player.writeInfo('Full Health');
-        player.writePlayerEvent(PlayerEvent.Item_Consumed);
+        player.writePlayerEventItemTypeConsumed(gameObject.type);
         deactivateCollider(gameObject);
         return;
       }
@@ -545,12 +545,12 @@ class GameCombat extends Game {
         player.weaponPrimaryQuantity = player.weaponPrimaryCapacity;
         player.weaponSecondaryQuantity = player.weaponSecondaryCapacity;
         player.writeInfo('Full Ammo');
-        player.writePlayerEvent(PlayerEvent.Item_Consumed);
+        player.writePlayerEventItemAcquired(gameObject.type);
         deactivateCollider(gameObject);
         return;
       }
 
-      if (gameObject.type == ItemType.GameObjects_Grenade) {
+      if (gameObject.type == ItemType.Weapon_Thrown_Grenade) {
 
         if (player.grenades >= Max_Grenades) {
           player.writeInfo('Max Grenades');
@@ -558,6 +558,7 @@ class GameCombat extends Game {
         }
         player.grenades++;
         player.writeInfo('Grenade');
+        player.writePlayerEventItemAcquired(gameObject.type);
         deactivateCollider(gameObject);
         return;
       }
@@ -620,7 +621,7 @@ class GameCombat extends Game {
             ItemType.Buff_Invincible,
             ItemType.Consumables_Potion_Red,
             ItemType.Consumables_Ammo_Box,
-            ItemType.GameObjects_Grenade,
+            ItemType.Weapon_Thrown_Grenade,
           ]),
         );
 

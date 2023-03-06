@@ -487,13 +487,22 @@ class GameEvents {
   }
 
   static void readPlayerEventItemConsumed() {
-    onItemTypeConsumed(serverResponseReader.readUInt16());
-  }
-
-  static void onItemTypeConsumed(int itemType) {
-    if (ItemType.isFood(itemType)) {
-      GameAudio.eat();
-      return;
+    switch (serverResponseReader.readUInt16()){
+      case ItemType.Consumables_Potion_Red:
+        GameAudio.drink();
+        break;
+      case ItemType.Consumables_Potion_Blue:
+        GameAudio.drink();
+        break;
+      case ItemType.Consumables_Meat:
+        GameAudio.eat();
+        break;
+      case ItemType.Consumables_Apple:
+        GameAudio.eat();
+        break;
+      case ItemType.Consumables_Meat:
+        GameAudio.eat();
+        break;
     }
   }
 
