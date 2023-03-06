@@ -19,6 +19,7 @@ class GameCombat extends Game {
 
   static final hints_length = hints.length;
   static final hints_frames_between = 600;
+  static const Max_Grenades = 3;
 
   var nextBuffUpdate = 0;
 
@@ -549,6 +550,18 @@ class GameCombat extends Game {
         return;
       }
 
+      if (gameObject.type == ItemType.GameObjects_Grenade) {
+
+        if (player.grenades >= Max_Grenades) {
+          player.writeInfo('Max Grenades');
+          return;
+        }
+        player.grenades++;
+        player.writeInfo('Grenade');
+        deactivateCollider(gameObject);
+        return;
+      }
+
       final itemType = gameObject.type;
 
       if (ItemType.isTypeWeapon(itemType)) {
@@ -601,9 +614,13 @@ class GameCombat extends Game {
         final gameObjectBuff = spawnGameObjectAtPosition(
           position: target,
           type: randomItem(const [
-            ...ItemType.Collection_Buffs,
+            ItemType.Buff_Double_Damage,
+            ItemType.Buff_Infinite_Ammo,
+            ItemType.Buff_Fast,
+            ItemType.Buff_Invincible,
             ItemType.Consumables_Potion_Red,
             ItemType.Consumables_Ammo_Box,
+            ItemType.GameObjects_Grenade,
           ]),
         );
 
