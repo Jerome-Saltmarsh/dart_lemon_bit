@@ -518,7 +518,7 @@ class ItemType {
       Weapon_Thrown_Grenade: 40,
       Weapon_Ranged_Shotgun: 40,
       Weapon_Ranged_Pistol: 45,
-      Weapon_Ranged_Plasma_Pistol: 30,
+      Weapon_Ranged_Plasma_Pistol: 28,
       Weapon_Ranged_Plasma_Rifle: 5,
       Weapon_Ranged_Handgun: 20,
       Weapon_Ranged_Revolver: 40,
@@ -535,10 +535,10 @@ class ItemType {
       Weapon_Ranged_Musket: 55,
       Weapon_Ranged_Rifle: 50,
       Weapon_Ranged_Machine_Gun: 5,
-      Weapon_Ranged_Sniper_Rifle: 75,
+      Weapon_Ranged_Sniper_Rifle: 65,
       Weapon_Ranged_Smg: 5,
       Weapon_Ranged_Flamethrower: 2,
-      Weapon_Ranged_Bazooka: 100,
+      Weapon_Ranged_Bazooka: 60,
       Weapon_Ranged_Minigun: 1,
   }[value] ?? 0;
 

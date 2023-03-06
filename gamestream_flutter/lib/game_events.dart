@@ -293,6 +293,8 @@ class GameEvents {
       return;
     }
 
+    if (attackType == ItemType.Weapon_Ranged_Flamethrower) return;
+
     const gun_distance = 50.0;
     final gunX = x - getAdjacent(angle, gun_distance);
     final gunY = y - getOpposite(angle, gun_distance);
