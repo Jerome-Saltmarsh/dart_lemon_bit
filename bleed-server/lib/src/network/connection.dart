@@ -708,7 +708,7 @@ class Connection with ByteReader {
     final keyDownShift    = hex & 0x40 > 0;
     final keyDownSpace    = hex & 0x80 > 0;
 
-    player.game.onPlayerUpdateRequestedReceived(
+    player.game.onPlayerUpdateRequestReceived(
       player: player,
       direction: direction,
       mouseLeftDown: mouseDownLeft,

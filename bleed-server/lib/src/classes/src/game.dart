@@ -183,7 +183,7 @@ abstract class Game {
          position.z,
      );
 
-  void onPlayerUpdateRequestedReceived({
+  void onPlayerUpdateRequestReceived({
     required Player player,
     required int direction,
     required bool mouseLeftDown,
@@ -982,6 +982,31 @@ abstract class Game {
       projectileType: ProjectileType.Bullet,
       damage: character.damage,
     );
+
+    if (character.buffDoubleDamage){
+      const angleOffset = degreesToRadians * 20;
+      spawnProjectile(
+        src: character,
+        accuracy: character.accuracy,
+        angle: angle - angleOffset,
+        range: character.weaponTypeRange,
+        projectileType: ProjectileType.Bullet,
+        damage: character.damage,
+      );
+    }
+
+    if (character.buffDoubleDamage){
+      const angleOffset = degreesToRadians * 20;
+      spawnProjectile(
+        src: character,
+        accuracy: character.accuracy,
+        angle: angle + angleOffset,
+        range: character.weaponTypeRange,
+        projectileType: ProjectileType.Bullet,
+        damage: character.damage,
+      );
+    }
+
     dispatchAttackPerformed(
         character.weaponType,
         character.x + getAdjacent(angle, 70),
@@ -1924,8 +1949,9 @@ abstract class Game {
     double force = 20,
     bool friendlyFire = false,
   }) {
-    assert (target.active);
+    // assert (target.active);
     if (!target.strikable) return;
+    if (!target.active) return;
 
     target.applyForce(
       force: force,
@@ -2774,11 +2800,11 @@ abstract class Game {
       final nodeTop = nodeBottom +
           (NodeOrientation.getGradient(nodeBottomOrientation, percX, percY) *
               Node_Height);
-      if (nodeTop <= bottomZ) return;
+      if (nodeTop <= bottomZ) {
+        return;
+      }
 
       if (nodeTop - bottomZ > GamePhysics.Max_Vertical_Collision_Displacement) return;
-
-      collider.z = nodeTop;
 
       if (collider.velocityZ < 0) {
         if (collider.bounce) {
@@ -2788,6 +2814,7 @@ abstract class Game {
               angle: -collider.velocityZ);
         } else {
           collider.velocityZ = 0;
+          collider.z = nodeTop;
         }
       }
       return;
@@ -2814,6 +2841,9 @@ abstract class Game {
     }
 
     final bottomZ = collider.z + 5;
+
+    if (bottomZ >= scene.gridHeightLength) return;
+
     final nodeBottomIndex = scene.getNodeIndexXYZ(
       collider.x,
       collider.y,
@@ -2847,7 +2877,9 @@ abstract class Game {
       final nodeTop = nodeBottom +
           (NodeOrientation.getGradient(nodeBottomOrientation, percX, percY) *
               Node_Height);
-      if (nodeTop <= bottomZ) return;
+      if (nodeTop <= bottomZ) {
+        return;
+      }
 
       if (nodeTop - bottomZ > GamePhysics.Max_Vertical_Collision_Displacement) return;
 
@@ -2864,8 +2896,6 @@ abstract class Game {
         }
       }
       return;
-    } else {
-
     }
 
     if (nodeBottomType == NodeType.Water) {
@@ -2873,7 +2903,6 @@ abstract class Game {
         internalOnColliderEnteredWater(collider);
       }
     }
-    return;
   }
 
   void setNode({

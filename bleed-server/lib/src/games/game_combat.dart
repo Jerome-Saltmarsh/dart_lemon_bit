@@ -81,7 +81,7 @@ class GameCombat extends Game {
   }
 
   @override
-  void onPlayerUpdateRequestedReceived({
+  void onPlayerUpdateRequestReceived({
     required Player player,
     required int direction,
     required bool mouseLeftDown,
@@ -174,6 +174,12 @@ class GameCombat extends Game {
       // );
       playerThrowGrenade(player);
     }
+
+    if (keyShiftDown) {
+      // perform a jump if player is on ground
+      player.velocityZ = 10.0;
+    }
+
     playerRunInDirection(player, direction);
   }
 
@@ -632,12 +638,12 @@ class GameCombat extends Game {
           position: target,
           type: randomItem(const [
             ItemType.Buff_Double_Damage,
-            // ItemType.Buff_Infinite_Ammo,
-            // ItemType.Buff_Fast,
+            ItemType.Buff_Infinite_Ammo,
+            ItemType.Buff_Fast,
             ItemType.Buff_Invincible,
-            // ItemType.Consumables_Potion_Red,
-            // ItemType.Consumables_Ammo_Box,
-            // ItemType.Weapon_Thrown_Grenade,
+            ItemType.Consumables_Potion_Red,
+            ItemType.Consumables_Ammo_Box,
+            ItemType.Weapon_Thrown_Grenade,
           ]),
         );
 
