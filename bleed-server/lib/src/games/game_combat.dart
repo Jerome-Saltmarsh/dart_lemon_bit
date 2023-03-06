@@ -495,6 +495,7 @@ class GameCombat extends Game {
         player.writeInfo('Infinite Ammo');
         player.buffInfiniteAmmo = 15;
         player.writePlayerBuffs();
+        player.writePlayerEventItemAcquired(gameObject.type);
         deactivateCollider(gameObject);
         return;
       }
@@ -503,6 +504,7 @@ class GameCombat extends Game {
         player.writeInfo('Double Damage');
         player.buffDoubleDamage = 30;
         player.writePlayerBuffs();
+        player.writePlayerEventItemAcquired(gameObject.type);
         deactivateCollider(gameObject);
         return;
       }
@@ -520,6 +522,7 @@ class GameCombat extends Game {
         player.buffInvincibleTimer = 15;
         player.buffInvincible = true;
         player.writePlayerBuffs();
+        player.writePlayerEventItemAcquired(gameObject.type);
         deactivateCollider(gameObject);
         return;
       }
@@ -528,6 +531,7 @@ class GameCombat extends Game {
         player.writeInfo('Fast');
         player.buffFast = 25;
         player.writePlayerBuffs();
+        player.writePlayerEventItemAcquired(gameObject.type);
         deactivateCollider(gameObject);
         return;
       }

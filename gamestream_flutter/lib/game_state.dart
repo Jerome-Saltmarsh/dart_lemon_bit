@@ -1366,4 +1366,21 @@ class GameState {
           delay: randomInt(0, 10),
       );
   }
+
+  static void spawnParticleConfettiByType(double x, double y, double z, int type) {
+    spawnParticle(
+      type: type,
+      x: x,
+      y: y,
+      z: z,
+      zv: randomBetween(0, 1),
+      angle: randomAngle(),
+      speed: randomBetween(0.5, 1.0),
+      weight: -0.02,
+      scale: 0.5,
+      duration: randomInt(25, 150),
+      delay: randomInt(0, 10),
+    );
+  }
+
 }

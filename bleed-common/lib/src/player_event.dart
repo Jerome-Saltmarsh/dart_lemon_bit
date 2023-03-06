@@ -33,5 +33,4 @@ class PlayerEvent {
   static const Invalid_Request = 33;
   static const Item_Consumed = 34;
   static const Reloading = 36;
-  static const Buff_Acquired = 37;
 }

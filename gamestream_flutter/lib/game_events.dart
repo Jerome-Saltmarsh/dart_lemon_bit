@@ -491,6 +491,15 @@ class GameEvents {
       case ItemType.Consumables_Potion_Red:
         GameAudio.drink();
         GameAudio.reviveHeal1();
+
+        for (var i = 0; i < 8; i++){
+          GameState.spawnParticleConfettiByType(
+             GamePlayer.position.x,
+             GamePlayer.position.y,
+             GamePlayer.position.z,
+             ParticleType.Confetti_Green,
+          );
+        }
         break;
       case ItemType.Consumables_Potion_Blue:
         GameAudio.drink();
@@ -672,6 +681,9 @@ class GameEvents {
         break;
       case ItemType.Weapon_Ranged_Bow:
         GameAudio.bow_draw();
+        break;
+      case ItemType.Buff_Invincible:
+        GameAudio.buff_16();
         break;
       default:
         GameAudio.gun_pickup_01();
