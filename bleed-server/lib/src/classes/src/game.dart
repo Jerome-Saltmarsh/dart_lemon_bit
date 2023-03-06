@@ -1329,7 +1329,8 @@ abstract class Game {
     player.buffNoRecoil = 0;
     player.buffFast = 0;
     player.buffInfiniteAmmo = 0;
-    player.buffInvincibe = 0;
+    player.buffInvincibleTimer = 0;
+    player.buffInvincible = false;
     player.writePlayerBuffs();
     customOnPlayerRevived(player);
 
@@ -1386,7 +1387,7 @@ abstract class Game {
     required int amount,
   }) {
     if (target.deadOrDying) return;
-    if (target is Player && target.buffInvincibe > 0) return;
+    if (target.buffInvincible) return;
 
     final damage = min(amount, target.health);
     target.health -= damage;
@@ -2078,10 +2079,8 @@ abstract class Game {
         if (character.stateDurationRemaining == 1){
           customOnCharacterSpawned(character);
         }
-        if (character.stateDuration == 0) {
-          if (this is Player){
-            (this as Player).writePlayerEvent(PlayerEvent.Spawn_Started);
-          }
+        if (character.stateDuration == 0 && character is Player) {
+          // character.writePlayerEvent(PlayerEvent.Spawn_Started);
         }
         break;
     }

@@ -437,6 +437,10 @@ class GameCombat extends Game {
          ..persistable  = true
        ;
     }
+
+    for (final spawnPoint in scene.spawnPoints) {
+       spawnAI(nodeIndex: spawnPoint, characterType: CharacterType.Zombie);
+    }
   }
 
   @override
@@ -512,7 +516,8 @@ class GameCombat extends Game {
 
       if (gameObject.type == ItemType.Buff_Invincible) {
         player.writeInfo('Invincible');
-        player.buffInvincibe = 15;
+        player.buffInvincibleTimer = 15;
+        player.buffInvincible = true;
         player.writePlayerBuffs();
         deactivateCollider(gameObject);
         return;

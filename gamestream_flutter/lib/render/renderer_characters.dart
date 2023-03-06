@@ -30,6 +30,19 @@ class RendererCharacters extends Renderer {
       GameRender.renderCircle(character.x, character.y, character.z, character.radius);
     }
 
+    if (character.buffInvincible) {
+      Engine.renderSprite(
+        image: GameImages.atlas_gameobjects,
+        srcX: 48,
+        srcY: 368,
+        dstX: character.renderX,
+        dstY: character.renderY,
+        srcWidth: 48,
+        srcHeight: 48,
+        scale: 1,
+      );
+    }
+
     if (character.spawning) {
       if (character.characterType == CharacterType.Rat){
         Engine.renderSprite(

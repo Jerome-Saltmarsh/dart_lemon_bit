@@ -91,11 +91,11 @@ class Player extends Character with ByteWriter {
   final item_level = <int, int> {};
   final item_quantity = <int, int> {};
 
-  var buffInfiniteAmmo  = 0;
-  var buffDoubleDamage  = 0;
-  var buffFast         = 0;
-  var buffInvincibe = 0;
-  var buffNoRecoil      = 0;
+  var buffInfiniteAmmo    = 0;
+  var buffDoubleDamage    = 0;
+  var buffFast            = 0;
+  var buffInvincibleTimer = 0;
+  var buffNoRecoil        = 0;
 
   var _action = PlayerAction.None;
   var _actionItemType = ItemType.Empty;
@@ -1249,6 +1249,8 @@ class Player extends Character with ByteWriter {
       if (CharacterType.supportsUpperBody(character.characterType)) {
         writeCharacterUpperBody(character);
       }
+
+      writeBool(character.buffInvincible);
     }
     writeByte(END);
   }
@@ -1940,7 +1942,7 @@ class Player extends Character with ByteWriter {
     writeUInt16(buffInfiniteAmmo);
     writeUInt16(buffDoubleDamage);
     writeUInt16(buffFast);
-    writeUInt16(buffInvincibe);
+    writeUInt16(buffInvincibleTimer);
     writeUInt16(buffNoRecoil);
   }
 
@@ -1954,9 +1956,12 @@ class Player extends Character with ByteWriter {
       buffDoubleDamage--;
       changed = true;
     }
-    if (buffInvincibe > 0) {
-      buffInvincibe--;
+    if (buffInvincibleTimer > 0) {
+      buffInvincibleTimer--;
       changed = true;
+      if (buffInvincibleTimer <= 0) {
+        buffInvincible = false;
+      }
     }
     if (buffNoRecoil > 0) {
       buffNoRecoil--;

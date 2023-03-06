@@ -480,6 +480,8 @@ class ServerResponseReader with ByteReader {
       if (CharacterType.supportsUpperBody(characterType)){
         readCharacterUpperBody(character);
       }
+
+      character.buffInvincible = readBool();
       ServerState.totalCharacters++;
     }
   }
