@@ -8,6 +8,13 @@ import 'package:bleed_server/src/classes/src/game_time.dart';
 import 'package:bleed_server/src/constants/frames_per_second.dart';
 import 'package:lemon_math/library.dart';
 
+class TutorialType {
+   static const Movement              = 0;
+   static const Left_Click_Fire       = 1;
+   static const Right_Click_Fire      = 2;
+   static const Space_Throw_Grenade   = 3;
+}
+
 class GameCombat extends Game {
   static const hints = [
      'Use the W,A,S,D keys to move',

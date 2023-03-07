@@ -11,15 +11,13 @@ ctrl + shift + e    : view recent changes
 
 [IDEAS]
 [ ] metal crates can only be smashed with hammer
+[ ] find keys, which can unlock chests, chests provide treasures
 [ ] tree cans only be chopped with axe
 [ ] apples heal minor health
 [ ] coins give credits
-
-[INTENSE ACTION]
-[x] throw grenade
-[ ] upgrade melee
-[ ] upgrade max health
-[ ] upgrade grenade
+[ ] weapon bow - Stuns Enemy
+[ ] Frost staff
+[ ] Taser 
 
 19.02.2023
 [x] feature torch light flicker

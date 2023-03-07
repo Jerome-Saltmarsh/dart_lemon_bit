@@ -438,7 +438,7 @@ class GameUI {
         color: color,
       );
 
-  static Widget buildAtlasItemType(int itemType) =>
+  static Widget buildAtlasItemType(int itemType, {int color = 1}) =>
       FittedBox(
         child: Engine.buildAtlasImage(
           image: ItemType.isTypeGameObject(itemType)
@@ -448,6 +448,7 @@ class GameUI {
           srcY: AtlasItems.getSrcY(itemType),
           srcWidth: AtlasItems.getSrcWidth(itemType),
           srcHeight: AtlasItems.getSrcHeight(itemType),
+          color: color,
         ),
       );
 
@@ -804,25 +805,16 @@ class GameUI {
       ),
     ));
 
-
   static Widget buildPanelTotalGrenades() {
-    return watch(GamePlayer.totalGrenades, (int totalGrenades) => totalGrenades <= 0
-                  ? GameStyle.Null
-                  : Tooltip(
-      message: "Press SPACE to throw grenade",
-                    child: Column(
-                        children: [
-                          Container(
-                            width: 64,
-                            height: 64,
-                            child: buildAtlasItemType(
-                                ItemType.Weapon_Thrown_Grenade),
-                          ),
-                          width4,
-                          text(totalGrenades, size: 25),
-                        ],
-                      ),
-                  ));
+    final icon = Container(
+      width: 48,
+      height: 48,
+      child: buildAtlasItemType(
+          ItemType.Weapon_Thrown_Grenade),
+    );
+    return watch(GamePlayer.totalGrenades, (int totalGrenades) => Row(
+        children: List.generate(totalGrenades, (index) => icon))
+    );
   }
 
   static Widget buildWatchBuff(Watch<int> buffDuration, int buffType){
