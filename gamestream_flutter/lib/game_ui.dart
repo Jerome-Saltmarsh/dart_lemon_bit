@@ -351,7 +351,7 @@ class GameUI {
           constraints: BoxConstraints(
             maxHeight: 400,
           ),
-          width: 200,
+          width: 180,
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -488,7 +488,6 @@ class GameUI {
             left: GameStyle.Default_Padding,
             child: buildPlayersScore(),
         ),
-
         Positioned(
           child: Container(
             width: Engine.screen.width,

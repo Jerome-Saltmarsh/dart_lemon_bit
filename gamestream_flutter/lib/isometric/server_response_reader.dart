@@ -358,7 +358,6 @@ class ServerResponseReader with ByteReader {
         break;
       case ApiPlayer.Id:
         GamePlayer.id.value = readUInt24();
-        print("id ${GamePlayer.id.value}");
         break;
       default:
         throw Exception("Cannot parse apiPlayer $apiPlayer");

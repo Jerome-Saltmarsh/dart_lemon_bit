@@ -4,19 +4,17 @@ import '../../library.dart';
 
 /// @percentage is a double between 0 and 1
 /// determines how full it is
-void renderBarGreen(double x, double y, double z, double percentage, {
-  bool transparent = false, int color = 1,
-}) {
+void renderBarGreen(double x, double y, double z, double percentage) {
   Engine.renderSprite(
     image: GameImages.atlas_gameobjects,
     dstX: GameConvert.getRenderX(x, y, z) - AtlasGameObjects.Bar_Green_Width_Half,
     dstY: GameConvert.getRenderY(x, y, z) - 45,
-    srcX: transparent ? AtlasGameObjects.Bar_Green_Transparent_X :AtlasGameObjects.Bar_Green_X,
-    srcY: transparent ? AtlasGameObjects.Bar_Green_Transparent_Y :AtlasGameObjects.Bar_Green_Y,
-    srcWidth: (transparent ? AtlasGameObjects.Bar_Green_Transparent_Width :AtlasGameObjects.Bar_Green_Width) * percentage,
-    srcHeight: transparent ? AtlasGameObjects.Bar_Green_Transparent_Height :AtlasGameObjects.Bar_Green_Height,
+    srcX: 171,
+    srcY: 16,
+    srcWidth: 51.0 * percentage,
+    srcHeight: 8,
     anchorX: 0.0,
-    color: color,
+    color: 1,
   );
 }
 
