@@ -711,9 +711,22 @@ class GameCombat extends Game {
       health: 5,
     );
   }
+
   @override
   void customOnPlayerJoined(Player player) {
-    player.writeApiPlayersAll();
+    writePlayerScoresAll();
+  }
+
+  @override
+  void customOnPlayerDisconnected(Player player) {
+    writePlayerScoresAll();
+  }
+
+  @override
+  void customOnPlayerCreditsChanged(Player player) {
+    for (final otherPlayer in players) {
+      otherPlayer.writeApiPlayersPlayerScore(player);
+    }
   }
 }
 

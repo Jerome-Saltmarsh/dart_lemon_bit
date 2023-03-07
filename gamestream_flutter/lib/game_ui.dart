@@ -345,9 +345,9 @@ class GameUI {
       );
 
   static Widget buildPlayersScore(){
-    return watch(ServerState.playerScores, (List<PlayerScore> playerScores){
+    return watch(ServerState.playerScoresReads, (_){
         return Column(
-           children: playerScores
+           children: ServerState.playerScores
                .map(buildRowPlayerScore)
                .toList(growable: false)
         );
@@ -519,8 +519,8 @@ class GameUI {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  buildPanelCredits(),
-                  width16,
+                  // buildPanelCredits(),
+                  // width16,
                   buildPanelTotalGrenades(),
                   width16,
                   buildRowPlayerBuffs(),

@@ -702,6 +702,9 @@ class ServerResponseReader with ByteReader {
       case ApiPlayers.All:
         readApiPlayersAll();
         break;
+      case ApiPlayers.Score:
+        readApiPlayersScore();
+        break;
       default:
         throw Exception('readApiPlayers()');
     }
@@ -709,12 +712,12 @@ class ServerResponseReader with ByteReader {
 
   void readApiPlayersAll() {
      final total = readUInt16();
-     final playerScores = <PlayerScore>[];
+     ServerState.playerScores.clear();
      for (var i = 0; i < total; i++) {
        final id = readUInt24();
        final name = readString();
        final credits = readUInt24();
-       playerScores.add(
+       ServerState.playerScores.add(
          PlayerScore(
            id: id,
            name: name,
@@ -722,6 +725,18 @@ class ServerResponseReader with ByteReader {
          )
        );
      }
-     ServerState.playerScores.value = playerScores;
+     ServerState.sortPlayerScores();
+  }
+
+  void readApiPlayersScore() {
+    final id = readUInt24();
+    final credits = readUInt24();
+
+    for (final player in ServerState.playerScores) {
+      if (player.id != id) continue;
+      player.credits = credits;
+      break;
+    }
+    ServerState.sortPlayerScores();
   }
 }

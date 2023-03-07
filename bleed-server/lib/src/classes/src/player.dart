@@ -288,8 +288,9 @@ class Player extends Character with ByteWriter {
 
   set credits(int value) {
     if (_credits == value) return;
-    _credits = clamp(value, 0, 65000);
+    _credits = max(value, 0);
     writePlayerCredits();
+    game.customOnPlayerCreditsChanged(this);
   }
 
   set aimTarget(Collider? collider) {
@@ -2001,6 +2002,23 @@ class Player extends Character with ByteWriter {
      }
   }
 
+  void writeApiPlayersScore() {
+    writeUInt8(ServerResponse.Api_Players);
+    writeUInt8(ApiPlayers.All);
+    writeUInt16(game.players.length);
+    for (final player in game.players) {
+      writeUInt24(player.id);
+      writeString(player.name);
+      writeUInt24(player.credits);
+    }
+  }
+
+  void writeApiPlayersPlayerScore(Player player) {
+    writeUInt8(ServerResponse.Api_Players);
+    writeUInt8(ApiPlayers.Score);
+    writeUInt24(player.id);
+    writeUInt24(player.credits);
+  }
 }
 
 

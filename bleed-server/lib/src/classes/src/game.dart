@@ -86,6 +86,8 @@ abstract class Game {
   /// @override
   void customOnPlayerRevived(Player player) { }
   /// @override
+  void customOnPlayerCreditsChanged(Player player){ }
+  /// @override
   void customOnGameStarted() { }
   /// @override
   void customOnNpcObjectivesCompleted(Character npc) { }
@@ -3153,6 +3155,12 @@ abstract class Game {
 
   void performPlayerActionSecondary(Player player) {
 
+  }
+
+  void writePlayerScoresAll() {
+    for (final player in players) {
+      player.writeApiPlayersAll();
+    }
   }
 }
 

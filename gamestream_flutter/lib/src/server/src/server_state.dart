@@ -12,7 +12,8 @@ class ServerState {
   static var totalZombies = 0;
   static var totalProjectiles = 0;
 
-  static final playerScores = Watch(<PlayerScore>[]);
+  static final playerScores = <PlayerScore>[];
+  static final playerScoresReads = Watch(0);
   static final gameObjects = <GameObject>[];
   static final characters = <Character>[];
   static final npcs = <Character>[];
@@ -214,6 +215,22 @@ class ServerState {
   static void setMessage(String value){
     error.value = "";
     error.value = value;
+  }
+
+  static void sortPlayerScores(){
+    if (playerScoresInOrder) return;
+    playerScores.sort(PlayerScore.compare);
+    playerScoresReads.value++;
+  }
+
+  static bool get playerScoresInOrder {
+    final total = playerScores.length;
+    if (total <= 1) return true;
+    for (var i = 0; i < total - 1; i++){
+      if (playerScores[i].credits > playerScores[i + 1].credits)
+        return false;
+    }
+    return true;
   }
 }
 
