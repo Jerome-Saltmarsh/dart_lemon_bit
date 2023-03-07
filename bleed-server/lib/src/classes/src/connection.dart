@@ -774,19 +774,12 @@ class Connection with ByteReader {
     game.characters.add(player);
     game.customOnPlayerJoined(player);
     player.writeGameOptions();
-
-
+    player.writePlayerApiId();
     game.revive(player);
+
     final account = _account;
     if (account != null) {
       player.name = account.publicName;
-    } else {
-      while (true) {
-        final randomName = generateRandomName();
-        if (game.containsPlayerWithName(randomName)) continue;
-        player.name = randomName;
-        break;
-      }
     }
   }
 

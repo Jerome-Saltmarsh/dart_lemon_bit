@@ -2,6 +2,7 @@
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:bleed_server/src/functions/generateName.dart';
 import 'package:bleed_server/src/games/game_editor.dart';
 import 'package:bleed_server/src/maths/get_distance_between_v3.dart';
 import 'package:bleed_server/src/system.dart';
@@ -38,7 +39,7 @@ class Player extends Character with ByteWriter {
   var maxEnergy = 10;
   var message = "";
   var text = "";
-  var name = 'anon';
+  var name = generateRandomName();
   var screenLeft = 0.0;
   var screenTop = 0.0;
   var screenRight = 0.0;
@@ -1953,6 +1954,12 @@ class Player extends Character with ByteWriter {
     writeUInt16(buffFast);
     writeUInt16(buffInvincibleTimer);
     writeUInt16(buffNoRecoil);
+  }
+
+  writePlayerApiId(){
+    writeUInt8(ServerResponse.Api_Player);
+    writeUInt8(ApiPlayer.Id);
+    writeUInt24(id);
   }
 
   void reduceBuffs(){

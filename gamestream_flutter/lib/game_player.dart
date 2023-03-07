@@ -7,6 +7,7 @@ class GamePlayer {
   static final buffInvincible   = Watch(0);
   static final buffNoRecoil     = Watch(0);
 
+  static final id = Watch(0);
   static final weapon = Watch(0, onChanged: GameEvents.onChangedPlayerWeapon);
   static final weaponPrimary = Watch(0, onChanged: GameEvents.onChangedPlayerWeapon);
   static final weaponPrimaryLevel = Watch(0);

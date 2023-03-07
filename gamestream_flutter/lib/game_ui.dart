@@ -363,13 +363,20 @@ class GameUI {
         ));
   }
 
-  static Widget buildRowPlayerScore(PlayerScore playerScore) => Row(
-       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-       children: [
-         text(playerScore.name),
-         text(playerScore.credits),
-       ],
-    );
+  static Widget buildRowPlayerScore(PlayerScore playerScore) =>
+      Container(
+        color: playerScore.id == GamePlayer.id.value
+            ? Colors.white10
+            : Colors.transparent,
+        padding: GameStyle.Padding_4,
+        child: Row(
+         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+         children: [
+           text(playerScore.name),
+           text(playerScore.credits),
+         ],
+      ),
+  );
 
   static Widget buildRowMainMenu() =>
       GameUI.buildDialogUIControl(

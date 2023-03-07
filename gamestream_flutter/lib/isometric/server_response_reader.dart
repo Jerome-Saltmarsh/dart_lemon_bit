@@ -356,6 +356,10 @@ class ServerResponseReader with ByteReader {
       case ApiPlayer.Grenades:
         GamePlayer.totalGrenades.value = readUInt16();
         break;
+      case ApiPlayer.Id:
+        GamePlayer.id.value = readUInt24();
+        print("id ${GamePlayer.id.value}");
+        break;
       default:
         throw Exception("Cannot parse apiPlayer $apiPlayer");
     }

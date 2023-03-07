@@ -27,7 +27,6 @@ String generateRandomName() {
     "rotten",
     "Chipped",
     "Mild",
-    "Spicy",
     "Wicked",
     "Sadistic",
     "Swift",
@@ -116,6 +115,9 @@ String generateRandomName() {
     "Cactus",
     "Tiger",
     "Breeze",
+    "Breath",
+    "Foot",
+    "Armpit",
   ];
-  return '${randomItem(adjectives)}_${randomItem(nouns)}';
+  return '${randomItem(adjectives)}-${randomItem(nouns)}';
 }
