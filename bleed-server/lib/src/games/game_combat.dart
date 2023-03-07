@@ -522,6 +522,7 @@ class GameCombat extends Game {
 
   @override
   void customOnCollisionBetweenPlayerAndGameObject(Player player, GameObject gameObject) {
+       if (!gameObject.collectable) return;
 
       if (gameObject.type == ItemType.Buff_Infinite_Ammo) {
         player.writeInfo('Infinite Ammo');
