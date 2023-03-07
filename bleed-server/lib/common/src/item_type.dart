@@ -67,7 +67,6 @@ class ItemType {
   static const GameObjects_Book_Purple          = Index_GameObjects + 12;
   static const GameObjects_Crystal_Small_Blue   = Index_GameObjects + 13;
   static const GameObjects_Crystal_Small_Red    = Index_GameObjects + 14;
-  static const GameObjects_Grenade              = Index_GameObjects + 15;
   static const GameObjects_Car                  = Index_GameObjects + 16;
   static const GameObjects_Barrel_Explosive     = Index_GameObjects + 18;
   static const GameObjects_Barrel_Purple        = Index_GameObjects + 19;
@@ -139,6 +138,7 @@ class ItemType {
   static const Weapon_Melee_Knife         = Index_Weapon_Melee + 07;
 
   static const Weapon_Thrown_Grenade      = Index_Weapon_Thrown + 01;
+  static const Weapon_Thrown_Bomb         = Index_Weapon_Thrown + 02;
 
   static const Weapon_Ranged_Pistol       = Index_Weapon_Ranged + 01;
   static const Weapon_Ranged_Handgun      = Index_Weapon_Ranged + 02;
@@ -240,7 +240,6 @@ class ItemType {
 
   static bool isPhysical(int value) => const [
         GameObjects_Barrel_Purple,
-        GameObjects_Grenade,
         Weapon_Thrown_Grenade,
         GameObjects_Barrel_Explosive,
         GameObjects_Barrel_Flaming,

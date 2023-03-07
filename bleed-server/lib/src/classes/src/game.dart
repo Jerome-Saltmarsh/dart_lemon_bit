@@ -383,54 +383,6 @@ abstract class Game {
       character.weaponStateDurationTotal = 30;
   }
 
-  void characterThrowGrenade(Player player) {
-    if (player.deadBusyOrWeaponStateBusy) return;
-
-    if (player.inventoryGetTotalQuantityOfItemType(ItemType.Weapon_Thrown_Grenade) <= 0) return;
-
-    player.inventoryReduceItemTypeQuantity(
-        itemType: ItemType.Weapon_Thrown_Grenade,
-        reduction: 1,
-    );
-
-    player.assignWeaponStateThrowing();
-
-    dispatchAttackPerformed(
-      ItemType.Weapon_Thrown_Grenade,
-      player.x + getAdjacent(player.lookRadian, 60),
-      player.y + getOpposite(player.lookRadian, 60),
-      player.z + Character_Gun_Height,
-      player.lookRadian,
-    );
-
-    final mouseDistance = getDistanceXY(player.x, player.y, player.mouseGridX, player.mouseGridY);
-    final throwDistance = min(mouseDistance, GamePhysics.Max_Throw_Distance);
-    final throwRatio = throwDistance / GamePhysics.Max_Throw_Distance;
-    final velocity = GamePhysics.Max_Throw_Velocity * throwRatio;
-    final velocityZ = GamePhysics.Max_Throw_Velocity_Z * throwRatio;
-
-    final instance = spawnGameObject(
-        x: player.x,
-        y: player.y,
-        z: player.z + Character_Height,
-        type: ItemType.GameObjects_Grenade
-    )
-      ..setVelocity(player.lookRadian, velocity)
-      ..quantity = 1
-      ..friction = 0.985
-      ..bounce = true
-      ..velocityZ = velocityZ
-      ..owner = player
-      ..damage = 15;
-
-    performJob(GameSettings.Grenade_Cook_Duration, (){
-      deactivateCollider(instance);
-      final owner = instance.owner;
-      if (owner == null) return;
-      createExplosion(target: instance, srcCharacter: owner);
-    });
-  }
-
   void characterUseOrEquipWeapon({
     required Character character,
     required int weaponType,
@@ -632,7 +584,7 @@ abstract class Game {
 
     if (weaponType == ItemType.Weapon_Thrown_Grenade){
       if (character is Player){
-        playerThrowGrenade(character);
+        playerThrowGrenade(character, damage: 10);
         return;
       }
       throw Exception('ai cannot throw grenades');
@@ -723,7 +675,7 @@ abstract class Game {
     player.assignWeaponStateReloading();
   }
 
-  void playerThrowGrenade(Player player) {
+  void playerThrowGrenade(Player player, {int damage = 10}) {
     if (player.deadBusyOrWeaponStateBusy) return;
 
     if (options.items){
@@ -755,15 +707,20 @@ abstract class Game {
         x: player.x,
         y: player.y,
         z: player.z + Character_Height,
-        type: ItemType.GameObjects_Grenade
+        type: ItemType.Weapon_Thrown_Grenade,
     )
         ..setVelocity(player.lookRadian, velocity)
         ..quantity = 1
         ..friction = 0.985
         ..bounce = true
+        ..physical = true
+        ..gravity = true
+        ..strikable = true
+        ..collectable = false
+        ..interactable = false
         ..velocityZ = velocityZ
         ..owner = player
-        ..damage = 15;
+        ..damage = damage;
 
     performJob(GameSettings.Grenade_Cook_Duration, (){
       deactivateCollider(instance);
@@ -2008,15 +1965,13 @@ abstract class Game {
     final attackTarget = character.target;
     if (attackTarget == null) return;
     if (attackTarget is Collider) {
-      if (attackTarget.strikable){
-        applyHit(
-          target: attackTarget,
-          angle: radiansV2(character, attackTarget),
-          srcCharacter: character,
-          damage: character.damage,
-          hitType: HitType.Projectile,
-        );
-      }
+      applyHit(
+        target: attackTarget,
+        angle: radiansV2(character, attackTarget),
+        srcCharacter: character,
+        damage: character.damage,
+        hitType: HitType.Projectile,
+      );
       clearCharacterTarget(character);
     }
   }
@@ -2268,7 +2223,7 @@ abstract class Game {
         angle: angle + giveOrTake(0.25),
         range: src.weaponTypeRange,
         projectileType: ProjectileType.Bullet,
-        damage:src.damage,
+        damage: src.damage,
       );
     }
     src.assignWeaponStateFiring();
@@ -3196,6 +3151,5 @@ abstract class Game {
   void performPlayerActionSecondary(Player player) {
 
   }
-
 }
 

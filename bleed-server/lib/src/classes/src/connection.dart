@@ -10,9 +10,9 @@ import 'package:bleed_server/src/scene_generator.dart';
 import 'package:bleed_server/src/system.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-import '../functions/generateName.dart';
-import '../utilities/is_valid_index.dart';
-import 'handle_request_modify_canvas_size.dart';
+import '../../functions/generateName.dart';
+import '../../utilities/is_valid_index.dart';
+import '../../network/handle_request_modify_canvas_size.dart';
 import 'package:lemon_byte/byte_reader.dart';
 
 class Connection with ByteReader {

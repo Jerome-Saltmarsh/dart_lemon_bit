@@ -776,7 +776,7 @@ class GameUI {
                             width: 64,
                             height: 64,
                             child: buildAtlasItemType(
-                                ItemType.GameObjects_Grenade),
+                                ItemType.Weapon_Thrown_Grenade),
                           ),
                           width4,
                           text(totalGrenades, size: 25),

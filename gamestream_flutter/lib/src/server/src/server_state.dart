@@ -127,12 +127,14 @@ class ServerState {
     for (final gameObject in gameObjects){
       if (!gameObject.active) continue;
       gameObject.update();
-      if (gameObject.type != ItemType.GameObjects_Grenade) continue;
+      if (gameObject.type != ItemType.Weapon_Thrown_Grenade) continue;
       projectShadow(gameObject);
     }
   }
 
   static void projectShadow(Vector3 v3){
+     if (!GameQueries.inBoundsVector3(v3)) return;
+
      final z = getProjectionZ(v3);
      if (z < 0) return;
      GameState.spawnParticle(
@@ -147,9 +149,11 @@ class ServerState {
   }
 
   static double getProjectionZ(Vector3 vector3){
+
     final x = vector3.x;
     final y = vector3.y;
     var z = vector3.z;
+
     while (true) {
         if (z < 0) return -1;
         final nodeIndex = GameNodes.getIndexXYZ(x, y, z);

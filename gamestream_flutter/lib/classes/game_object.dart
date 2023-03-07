@@ -49,7 +49,7 @@ class GameObject extends Vector3 {
         emission_intensity_start = 0.78;
         emission_intensity_end = 1.0;
         break;
-      case ItemType.GameObjects_Grenade:
+      case ItemType.Weapon_Thrown_Grenade:
         emission_type = EmissionType.Ambient;
         break;
       case ItemType.GameObjects_Vending_Upgrades:

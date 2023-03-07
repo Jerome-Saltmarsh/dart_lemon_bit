@@ -6,7 +6,6 @@ import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/games/game_editor.dart';
 import 'package:bleed_server/src/io/save_directory.dart';
-import 'package:bleed_server/src/network/connection.dart';
 import 'package:bleed_server/src/scenes.dart';
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -73,9 +72,7 @@ class Engine {
       pingInterval: const Duration(seconds: 30),
     );
 
-
     shelf_io.serve(handler, '0.0.0.0', 8080).then((server) {
-      // server. = false;
       print('Serving at wss://${server.address.host}:${server.port}');
     }).catchError((error){
       print("Websocket error occurred");

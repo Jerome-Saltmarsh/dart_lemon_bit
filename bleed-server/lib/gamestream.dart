@@ -12,5 +12,5 @@ export 'src/enums/side.dart';
 export 'src/physics.dart';
 export 'src/typedefs.dart';
 export 'src/game_settings.dart';
-export 'src/classes/lib.dart';
+export 'src/classes/src.dart';
 export 'lemon_io/lemon_io.dart';

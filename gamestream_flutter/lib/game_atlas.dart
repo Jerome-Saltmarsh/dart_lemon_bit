@@ -17,7 +17,6 @@ class AtlasItems {
         ItemType.GameObjects_Barrel_Purple: 128,
         ItemType.GameObjects_Cup: 0,
         ItemType.GameObjects_Tavern_Sign: 40,
-        ItemType.GameObjects_Grenade: 53,
         ItemType.GameObjects_Crystal_Small_Red: 35,
         ItemType.GameObjects_Crystal_Small_Blue: 35,
         ItemType.GameObjects_Aircon_South: 224,
@@ -69,7 +68,7 @@ class AtlasItems {
         ItemType.Weapon_Melee_Hammer: 224,
         ItemType.Weapon_Melee_Crowbar: 256,
         ItemType.Weapon_Ranged_Bow: 64,
-        ItemType.Weapon_Thrown_Grenade: 96,
+        ItemType.Weapon_Thrown_Grenade: 7,
         ItemType.Weapon_Ranged_Shotgun: 823,
         ItemType.Weapon_Ranged_Pistol: 288,
         ItemType.Weapon_Ranged_Handgun: 32,
@@ -117,7 +116,6 @@ class AtlasItems {
         ItemType.GameObjects_Barrel_Flaming: 176,
         ItemType.GameObjects_Cup: 0,
         ItemType.GameObjects_Tavern_Sign: 0,
-        ItemType.GameObjects_Grenade: 148,
         ItemType.GameObjects_Crystal_Small_Blue: 119,
         ItemType.GameObjects_Crystal_Small_Red: 151,
         ItemType.GameObjects_Toilet: 0,
@@ -172,7 +170,7 @@ class AtlasItems {
         ItemType.Resource_Arrow: 64,
         ItemType.Consumables_Meat: 64,
         ItemType.Consumables_Apple: 64,
-        ItemType.Weapon_Thrown_Grenade: 96,
+        ItemType.Weapon_Thrown_Grenade: 176,
         ItemType.Weapon_Melee_Knife: 96,
         ItemType.Weapon_Melee_Staff: 0,
         ItemType.Weapon_Melee_Axe: 128,
@@ -214,7 +212,6 @@ class AtlasItems {
         ItemType.GameObjects_Cup: 6,
         ItemType.GameObjects_Tavern_Sign: 19,
         ItemType.GameObjects_Candle: 3,
-        ItemType.GameObjects_Grenade: 6,
         ItemType.GameObjects_Toilet: 51,
         ItemType.GameObjects_Crate_Wooden: 48,
         ItemType.GameObjects_Desk: 36,
@@ -243,6 +240,7 @@ class AtlasItems {
         ItemType.Weapon_Ranged_Machine_Gun: 319,
         ItemType.Weapon_Ranged_Shotgun: 200,
         ItemType.Weapon_Ranged_Plasma_Pistol: 201,
+        ItemType.Weapon_Thrown_Grenade: 38,
         ItemType.Consumables_Ammo_Box: 56,
       }[itemType] ?? size;
 
@@ -260,7 +258,6 @@ class AtlasItems {
         ItemType.GameObjects_Tavern_Sign: 39,
         ItemType.GameObjects_Firehydrant: 104,
         ItemType.GameObjects_Washing_Machine: 81,
-        ItemType.GameObjects_Grenade: 9,
         ItemType.GameObjects_Crystal_Small_Blue: 18,
         ItemType.GameObjects_Crystal_Small_Red: 18,
         ItemType.GameObjects_Toilet: 92,
@@ -287,6 +284,7 @@ class AtlasItems {
         ItemType.Weapon_Ranged_Shotgun: 48,
         ItemType.Weapon_Ranged_Plasma_Pistol: 121,
         ItemType.Weapon_Ranged_Flamethrower: 101,
+        ItemType.Weapon_Thrown_Grenade: 45,
         ItemType.Consumables_Ammo_Box: 80,
   }[itemType] ?? size;
 
@@ -304,6 +302,7 @@ class AtlasItems {
         ItemType.GameObjects_Car_Tire: 0.5,
         ItemType.GameObjects_Bottle: 0.4,
         ItemType.GameObjects_Computer: 0.61,
+        ItemType.Weapon_Thrown_Grenade: 0.5,
         ItemType.Consumables_Ammo_Box: goldenRatio_0381,
   }[itemType] ?? 1.0;
 
