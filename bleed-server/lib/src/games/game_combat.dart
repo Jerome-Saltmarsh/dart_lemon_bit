@@ -101,6 +101,7 @@ class GameCombat extends Game {
     player.weaponPrimary = weaponPrimary;
     player.weaponSecondary = weaponSecondary;
     player.weaponTertiary = weaponTertiary;
+    player.weaponType = weaponPrimary;
     player.grenades = 3;
     player.credits = 0;
     player.item_quantity[weaponPrimary] = player.weaponPrimaryCapacity;
