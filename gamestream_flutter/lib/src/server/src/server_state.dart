@@ -218,9 +218,8 @@ class ServerState {
   }
 
   static void sortPlayerScores(){
-    if (playerScoresInOrder) return;
+    // if (playerScoresInOrder) return;
     playerScores.sort(PlayerScore.compare);
-    playerScoresReads.value++;
   }
 
   static bool get playerScoresInOrder {

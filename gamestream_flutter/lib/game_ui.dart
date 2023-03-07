@@ -345,25 +345,28 @@ class GameUI {
       );
 
   static Widget buildPlayersScore(){
-    return watch(ServerState.playerScoresReads, (_){
-        return Column(
-           children: ServerState.playerScores
-               .map(buildRowPlayerScore)
-               .toList(growable: false)
-        );
-    });
+    return watch(ServerState.playerScoresReads, (_) => Container(
+          padding: GameStyle.Padding_6,
+          color: Colors.black26,
+          constraints: BoxConstraints(
+            maxHeight: 400,
+          ),
+          width: 200,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+               children: ServerState.playerScores
+                   .map(buildRowPlayerScore)
+                   .toList(growable: false)
+            ),
+          ),
+        ));
   }
 
   static Widget buildRowPlayerScore(PlayerScore playerScore) => Row(
+       mainAxisAlignment: MainAxisAlignment.spaceBetween,
        children: [
-         Container(
-             width: 100,
-             child: text(playerScore.name)
-         ),
-         Container(
-           width: 70,
-           child: text(playerScore.id),
-         ),
+         text(playerScore.name),
          text(playerScore.credits),
        ],
     );
@@ -474,8 +477,8 @@ class GameUI {
             GameInventoryUI.buildPositionedContainerHoverTarget),
 
         Positioned(
-            top: 0,
-            left: 0,
+            top: GameStyle.Default_Padding,
+            left: GameStyle.Default_Padding,
             child: buildPlayersScore(),
         ),
 

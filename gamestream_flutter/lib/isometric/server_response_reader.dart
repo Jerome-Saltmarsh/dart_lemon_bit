@@ -726,6 +726,7 @@ class ServerResponseReader with ByteReader {
        );
      }
      ServerState.sortPlayerScores();
+     ServerState.playerScoresReads.value++;
   }
 
   void readApiPlayersScore() {
@@ -738,5 +739,6 @@ class ServerResponseReader with ByteReader {
       break;
     }
     ServerState.sortPlayerScores();
+    ServerState.playerScoresReads.value++;
   }
 }
