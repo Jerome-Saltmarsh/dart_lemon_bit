@@ -660,6 +660,7 @@ class GameEvents {
   static void readPlayerEventItemAcquired() {
     final itemType = serverResponseReader.readUInt16();
     if (itemType == ItemType.Empty) return;
+
     switch (itemType) {
       case ItemType.Weapon_Ranged_Plasma_Rifle:
         GameAudio.gun_pickup_01();
@@ -685,8 +686,16 @@ class GameEvents {
       case ItemType.Buff_Invincible:
         GameAudio.buff_16();
         break;
+      case ItemType.Buff_Invincible:
+        GameAudio.buff_16();
+        break;
+      case ItemType.Resource_Credit:
+        GameAudio.collect_star_3();
+        break;
       default:
-        GameAudio.gun_pickup_01();
+        if (ItemType.isTypeWeapon(itemType)){
+          GameAudio.gun_pickup_01();
+        }
         break;
     }
   }

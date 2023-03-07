@@ -104,6 +104,7 @@ class ItemType {
   static const Resource_Round_Shotgun           = Index_Resources + 13;
   static const Resource_Fuel                    = Index_Resources + 14;
   static const Resource_Rocket                  = Index_Resources + 15;
+  static const Resource_Rupee                  =  Index_Resources + 16;
 
   static const Head_Steel_Helm                  = Index_Heads + 1;
   static const Head_Rogues_Hood                 = Index_Heads + 2;

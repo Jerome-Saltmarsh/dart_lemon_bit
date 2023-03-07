@@ -9,6 +9,12 @@ ctrl + shift + e    : view recent changes
 
 [EXPLORE and SURVIVE]
 
+[IDEAS]
+[ ] metal crates can only be smashed with hammer
+[ ] tree cans only be chopped with axe
+[ ] apples heal minor health
+[ ] coins give credits
+
 [INTENSE ACTION]
 [x] throw grenade
 [ ] upgrade melee

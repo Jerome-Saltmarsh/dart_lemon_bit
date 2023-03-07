@@ -6,7 +6,7 @@ import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/classes/src/game_environment.dart';
 import 'package:bleed_server/src/classes/src/game_time.dart';
 import 'package:bleed_server/src/constants/frames_per_second.dart';
-import 'package:lemon_math/functions/random_item.dart';
+import 'package:lemon_math/library.dart';
 
 class GameCombat extends Game {
   static const hints = [
@@ -20,8 +20,10 @@ class GameCombat extends Game {
   static final hints_length = hints.length;
   static final hints_frames_between = 600;
   static const Max_Grenades = 3;
-  static const GameObject_Duration = 300;
+  static const GameObject_Duration = 400;
   static const Crate_Respawn_Duration = 1000;
+  static const Chance_Of_Item_Drop = 0.25;
+  static const Credits_Collected = 5;
 
   static const weaponTypes = [
     ItemType.Weapon_Ranged_Flamethrower,
@@ -32,18 +34,19 @@ class GameCombat extends Game {
     ItemType.Weapon_Ranged_Shotgun,
     ItemType.Weapon_Melee_Crowbar,
     ItemType.Weapon_Melee_Pickaxe,
+    ItemType.Weapon_Melee_Crowbar,
+    ItemType.Weapon_Melee_Pickaxe,
   ];
 
-  static const buffTypes = [
-    ItemType.Buff_Double_Damage,
+  static const itemTypes = [
+    // ItemType.Buff_Double_Damage,
     ItemType.Buff_Infinite_Ammo,
     ItemType.Buff_Fast,
     ItemType.Buff_Invincible,
     ItemType.Consumables_Potion_Red,
     ItemType.Consumables_Ammo_Box,
     ItemType.Weapon_Thrown_Grenade,
-    ItemType.Weapon_Melee_Crowbar,
-    ItemType.Weapon_Melee_Pickaxe,
+    ItemType.Resource_Credit,
   ];
 
   var nextBuffUpdate = 0;
@@ -99,9 +102,9 @@ class GameCombat extends Game {
     player.weaponSecondary = weaponSecondary;
     player.weaponTertiary = weaponTertiary;
     player.grenades = 3;
+    player.credits = 0;
     player.item_quantity[weaponPrimary] = player.weaponPrimaryCapacity;
     player.item_quantity[weaponSecondary] = player.weaponSecondaryCapacity;
-    player.credits = 1000;
     player.writePlayerEquipment();
   }
 
@@ -220,6 +223,25 @@ class GameCombat extends Game {
     }
   }
 
+  void spawnRandomItemAtPosition(Position3 position){
+    final spawnedGameObject = spawnGameObjectAtPosition(
+      position: position,
+      type: randomItem(itemTypes),
+    );
+
+    spawnedGameObject
+      ..physical = false
+      ..interactable = ItemType.isTypeWeapon(spawnedGameObject.type)
+      ..fixed = true
+      ..strikable = false
+      ..gravity = false
+      ..collectable = true
+    ;
+
+    performScript(timer: GameObject_Duration)
+        .writeGameObjectDeactivate(spawnedGameObject);
+  }
+
   void updatePlayerAction(Player player){
     var minDistance = 50.0;
     GameObject? closestGameObject;
@@ -323,6 +345,10 @@ class GameCombat extends Game {
          z: target.z,
          team: TeamType.Evil,
        );
+
+       if (random.nextDouble() < Chance_Of_Item_Drop) {
+         spawnRandomItemAtPosition(target);
+       }
      }
   }
 
@@ -463,29 +489,18 @@ class GameCombat extends Game {
     for (final gameObject in gameObjects){
        if (!ItemType.isTypeWeapon(gameObject.type)) continue;
        gameObject
-         ..collectable  = false
-         ..interactable = false
-         ..gravity      = false
-         ..physical     = false
-         ..persistable  = true
+         ..physical = false
+         ..interactable = true
+         ..fixed = true
+         ..strikable = false
+         ..gravity = false
+         ..collectable = true
        ;
     }
 
     for (final spawnPoint in scene.spawnPoints) {
        spawnAI(nodeIndex: spawnPoint, characterType: CharacterType.Zombie);
     }
-  }
-
-  @override
-  void customOnGameObjectSpawned(GameObject gameObject) {
-    if (!ItemType.isTypeWeapon(gameObject.type)) return;
-    gameObject
-      ..collectable  = false
-      ..persistable  = true
-      ..interactable = true
-      ..gravity      = false
-      ..physical     = false
-    ;
   }
 
   @override
@@ -601,6 +616,13 @@ class GameCombat extends Game {
         return;
       }
 
+       if (gameObject.type == ItemType.Resource_Credit) {
+         player.credits += Credits_Collected;
+         player.writePlayerEventItemAcquired(gameObject.type);
+         deactivateCollider(gameObject);
+         return;
+       }
+
       final itemType = gameObject.type;
 
       if (ItemType.isTypeWeapon(itemType)) {
@@ -650,13 +672,7 @@ class GameCombat extends Game {
           z: target.z,
         );
 
-        final gameObjectBuff = spawnGameObjectAtPosition(
-          position: target,
-          type: randomItem(buffTypes),
-        );
-
-        performScript(timer: GameObject_Duration)
-            .writeGameObjectDeactivate(gameObjectBuff);
+        spawnRandomItemAtPosition(target);
       }
     }
   }
