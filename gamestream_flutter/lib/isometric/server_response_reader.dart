@@ -44,6 +44,9 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Player_Event:
           readPlayerEvent();
           break;
+        case ServerResponse.Api_Players:
+          readApiPlayers();
+          break;
         case ServerResponse.Grid:
           readNodes();
           break;
@@ -189,7 +192,6 @@ class ServerResponseReader with ByteReader {
     readVector3(gameObject);
     ServerState.sortGameObjects();
   }
-
 
   void readApiPlayer() {
     final apiPlayer = readByte();
@@ -693,5 +695,33 @@ class ServerResponseReader with ByteReader {
     GamePlayer.buffFast.value = readUInt16();
     GamePlayer.buffInvincible.value = readUInt16();
     GamePlayer.buffNoRecoil.value = readUInt16();
+  }
+
+  void readApiPlayers() {
+    switch (readUInt8()) {
+      case ApiPlayers.All:
+        readApiPlayersAll();
+        break;
+      default:
+        throw Exception('readApiPlayers()');
+    }
+  }
+
+  void readApiPlayersAll() {
+     final total = readUInt16();
+     final playerScores = <PlayerScore>[];
+     for (var i = 0; i < total; i++) {
+       final id = readUInt24();
+       final name = readString();
+       final credits = readUInt24();
+       playerScores.add(
+         PlayerScore(
+           id: id,
+           name: name,
+           credits: credits,
+         )
+       );
+     }
+     ServerState.playerScores.value = playerScores;
   }
 }

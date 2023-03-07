@@ -31,6 +31,7 @@ abstract class Game {
   final GameOptions options;
   var _timerUpdateAITargets = 0;
   var gameObjectId = 0;
+  var playerId = 0;
 
 
   GameEnvironment environment;
@@ -2911,12 +2912,14 @@ abstract class Game {
   void triggerSpawnPoints({int instances = 1}){
     for (final index in scene.spawnPoints) {
       for (var i = 0; i < instances; i++) {
-        customSpawnRandomEnemyAi(index);
+        customActionSpawnAIAtIndex(index);
       }
     }
   }
 
-  void customSpawnRandomEnemyAi(int index){
+  /// safe to override
+  /// spawn a new ai at the given index
+  void customActionSpawnAIAtIndex(int index){
     spawnAI(
       characterType: randomItem(const [CharacterType.Dog, CharacterType.Zombie, CharacterType.Template]),
       nodeIndex: index,

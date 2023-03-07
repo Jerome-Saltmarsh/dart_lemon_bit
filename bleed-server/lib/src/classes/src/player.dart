@@ -45,6 +45,7 @@ class Player extends Character with ByteWriter {
   var screenBottom = 0.0;
   var sceneDownloaded = false;
   var initialized = false;
+  var id = 0;
 
   var inventoryDirty = false;
   var _equippedWeaponIndex = 0;
@@ -191,6 +192,7 @@ class Player extends Character with ByteWriter {
     headType: ItemType.Head_Rogues_Hood,
     damage: 1,
   ){
+    id = game.playerId++;
     maxEnergy = energy;
     _energy = maxEnergy;
   }
@@ -1987,6 +1989,18 @@ class Player extends Character with ByteWriter {
 
   @override
   bool get isPlayer => true;
+
+  void writeApiPlayersAll() {
+     writeUInt8(ServerResponse.Api_Players);
+     writeUInt8(ApiPlayers.All);
+     writeUInt16(game.players.length);
+     for (final player in game.players) {
+        writeUInt24(player.id);
+        writeString(player.name);
+        writeUInt24(player.credits);
+     }
+  }
+
 }
 
 

@@ -11,3 +11,4 @@ export 'projectile.dart';
 export 'vector3.dart';
 export 'renderer.dart';
 export 'game_options.dart';
+export 'player_score.dart';

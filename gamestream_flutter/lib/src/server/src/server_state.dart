@@ -12,6 +12,7 @@ class ServerState {
   static var totalZombies = 0;
   static var totalProjectiles = 0;
 
+  static final playerScores = Watch(<PlayerScore>[]);
   static final gameObjects = <GameObject>[];
   static final characters = <Character>[];
   static final npcs = <Character>[];

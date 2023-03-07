@@ -344,6 +344,30 @@ class GameUI {
         }),
       );
 
+  static Widget buildPlayersScore(){
+    return watch(ServerState.playerScores, (List<PlayerScore> playerScores){
+        return Column(
+           children: playerScores
+               .map(buildRowPlayerScore)
+               .toList(growable: false)
+        );
+    });
+  }
+
+  static Widget buildRowPlayerScore(PlayerScore playerScore) => Row(
+       children: [
+         Container(
+             width: 100,
+             child: text(playerScore.name)
+         ),
+         Container(
+           width: 70,
+           child: text(playerScore.id),
+         ),
+         text(playerScore.credits),
+       ],
+    );
+
   static Widget buildRowMainMenu() =>
       GameUI.buildDialogUIControl(
         child: Row(
@@ -448,6 +472,13 @@ class GameUI {
             GameInventoryUI.buildPositionedContainerItemTypeInformation),
         watch(ClientState.hoverTargetType,
             GameInventoryUI.buildPositionedContainerHoverTarget),
+
+        Positioned(
+            top: 0,
+            left: 0,
+            child: buildPlayersScore(),
+        ),
+
         Positioned(
           child: Container(
             width: Engine.screen.width,

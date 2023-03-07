@@ -702,7 +702,7 @@ class GameCombat extends Game {
   }
 
   @override
-  void customSpawnRandomEnemyAi(int index){
+  void customActionSpawnAIAtIndex(int index){
     spawnAI(
       characterType: randomItem(const [CharacterType.Dog, CharacterType.Zombie]),
       nodeIndex: index,
@@ -711,7 +711,10 @@ class GameCombat extends Game {
       health: 5,
     );
   }
-
+  @override
+  void customOnPlayerJoined(Player player) {
+    player.writeApiPlayersAll();
+  }
 }
 
 
