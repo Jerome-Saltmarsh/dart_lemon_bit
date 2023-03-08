@@ -555,23 +555,22 @@ abstract class Game {
         final nextQuantity = equippedQuantity - 1;
         character.item_quantity[weaponType] = nextQuantity;
         character.writePlayerWeaponQuantity();
-
-        if (character.buffInfiniteAmmo <= 0 && ItemType.isTypeWeaponFirearm(weaponType)){
-          final equippedQuantity = character.item_quantity[weaponType] ?? 0;
-
-          if (equippedQuantity <= 0) {
-            // character.writeError('No Ammo');
-            if (character.weaponPrimary == weaponType){
-              character.weaponPrimary = ItemType.Empty;
-            }
-            if (character.weaponSecondary == weaponType) {
-              character.weaponSecondary = ItemType.Empty;
-            }
-            character.weaponType = ItemType.Empty;
-            characterAttackMelee(character);
-            return;
-          }
-        }
+        // if (character.buffInfiniteAmmo <= 0 && ItemType.isTypeWeaponFirearm(weaponType)){
+        //   final equippedQuantity = character.item_quantity[weaponType] ?? 0;
+        //
+        //   if (equippedQuantity <= 0) {
+        //     // character.writeError('No Ammo');
+        //     if (character.weaponPrimary == weaponType){
+        //       character.weaponPrimary = ItemType.Empty;
+        //     }
+        //     if (character.weaponSecondary == weaponType) {
+        //       character.weaponSecondary = ItemType.Empty;
+        //     }
+        //     character.weaponType = ItemType.Empty;
+        //     characterAttackMelee(character);
+        //     return;
+        //   }
+        // }
       }
 
     } else if (character is AI){

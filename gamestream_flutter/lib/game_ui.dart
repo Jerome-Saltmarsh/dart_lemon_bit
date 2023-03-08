@@ -886,7 +886,7 @@ class GameUI {
                 width: bulletWidth,
                 height: Ammo_Height,
                 margin: margin,
-                color: index < quantity ? Colors.white : Colors.white12,
+                color: index < quantity ? Colors.white70 : Colors.white12,
               );
             }));
           });
@@ -907,7 +907,7 @@ class GameUI {
                 width: bulletWidth,
                 height: Ammo_Height,
                 margin: index + 1 == capacity ? null : margin,
-                color: index < quantity ? Colors.white : Colors.white12,
+                color: index < quantity ? Colors.white70 : Colors.white12,
               );
             }));
           });
