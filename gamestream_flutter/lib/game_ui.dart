@@ -906,7 +906,7 @@ class GameUI {
               return Container(
                 width: bulletWidth,
                 height: Ammo_Height,
-                margin: margin,
+                margin: index + 1 == capacity ? null : margin,
                 color: index < quantity ? Colors.white : Colors.white12,
               );
             }));

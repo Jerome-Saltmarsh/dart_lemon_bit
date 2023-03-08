@@ -30,7 +30,7 @@ class GameCanvas {
 
     const style = TextStyle(color: Colors.white, fontSize: 18);
     switch (GamePlayer.aimTargetCategory) {
-      case TargetCategory.Item:
+      case TargetCategory.Collect:
         // Engine.renderText(
         //   GamePlayer.aimTargetQuantity > 1
         //       ? '${ItemType.getName(GamePlayer.aimTargetType)} x${GamePlayer.aimTargetQuantity}'
@@ -79,7 +79,7 @@ class GameCanvas {
         }
 
         break;
-      case TargetCategory.Item:
+      case TargetCategory.Collect:
         GameRender.canvasRenderCursorHand(canvas);
         return;
       case TargetCategory.Allie:
