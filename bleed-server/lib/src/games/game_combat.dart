@@ -8,7 +8,6 @@ import 'package:bleed_server/src/classes/src/game_time.dart';
 import 'package:bleed_server/src/constants/frames_per_second.dart';
 import 'package:lemon_math/library.dart';
 
-// wood (axe), stone (pickaxe), hammer (gold)
 
 class TutorialType {
    static const Movement              = 0;
@@ -29,10 +28,11 @@ class GameCombat extends Game {
   static final hints_length = hints.length;
   static final hints_frames_between = 600;
   static const Max_Grenades = 3;
-  static const GameObject_Duration = 400;
-  static const Crate_Respawn_Duration = 1000;
+  static const GameObject_Duration = 500;
+  static const Crate_Respawn_Duration = 1500;
   static const Chance_Of_Item_Drop = 0.25;
   static const Credits_Collected = 5;
+  static const Max_Players = 12;
 
   static const weaponTypes = [
     ItemType.Weapon_Ranged_Flamethrower,
@@ -47,14 +47,19 @@ class GameCombat extends Game {
   ];
 
   static const itemTypes = [
-    // ItemType.Buff_Double_Damage,
-    // ItemType.Buff_Infinite_Ammo,
-    // ItemType.Buff_Fast,
-    // ItemType.Buff_Invincible,
     ItemType.Consumables_Potion_Red,
     ItemType.Consumables_Ammo_Box,
     ItemType.Weapon_Thrown_Grenade,
     ItemType.Resource_Credit,
+    ItemType.Weapon_Ranged_Flamethrower,
+    ItemType.Weapon_Ranged_Bazooka,
+    ItemType.Weapon_Ranged_Plasma_Pistol,
+    ItemType.Weapon_Ranged_Plasma_Rifle,
+    ItemType.Weapon_Ranged_Sniper_Rifle,
+    ItemType.Weapon_Ranged_Shotgun,
+    ItemType.Weapon_Ranged_Bow,
+    ItemType.Weapon_Melee_Crowbar,
+    ItemType.Weapon_Melee_Pickaxe,
   ];
 
   var nextBuffUpdate = 0;
@@ -207,6 +212,10 @@ class GameCombat extends Game {
 
     if (keySpaceDown) {
       playerThrowGrenade(player);
+    }
+
+    if (keyShiftDown){
+       characterAttackMelee(player);
     }
 
     playerRunInDirection(player, direction);

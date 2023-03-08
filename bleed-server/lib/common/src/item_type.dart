@@ -252,6 +252,8 @@ class ItemType {
         GameObjects_Toilet,
         GameObjects_Firehydrant,
         GameObjects_Car,
+        GameObjects_Wheel,
+        GameObjects_Car_Tire,
         GameObjects_Van,
         GameObjects_Aircon_South,
         GameObjects_Tavern_Sign,

@@ -2,7 +2,6 @@
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/classes/src/game_environment.dart';
 import 'package:bleed_server/src/classes/src/game_time.dart';
-import 'package:bleed_server/src/constants/frames_per_second.dart';
 import 'package:lemon_math/library.dart';
 
 class GamePractice extends Game {
@@ -23,7 +22,6 @@ class GamePractice extends Game {
           items: false,
       ),
   ) {
-    aiRespawnDuration = framesPerSecond * 60;
     triggerSpawnPoints();
   }
 

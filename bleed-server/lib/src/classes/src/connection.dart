@@ -743,13 +743,13 @@ class Connection with ByteReader {
   }
 
   Future joinGameCombat() async {
-    for (final game in engine.games){
+    for (final game in engine.games) {
       if (game is GameCombat) {
-        if (game.players.length > 12) continue;
+        if (game.players.length >= GameCombat.Max_Players) continue;
         return joinGame(game);
       }
     }
-    joinGame(GameCombat(scene: engine.scenes.warehouse));
+    joinGame(GameCombat(scene: engine.scenes.suburbs_01));
   }
 
   Future joinGameSurvival() async {

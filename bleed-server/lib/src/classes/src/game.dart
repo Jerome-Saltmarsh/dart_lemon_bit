@@ -7,7 +7,6 @@ import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_math/library.dart';
 
 import 'package:bleed_server/gamestream.dart';
-import '../../constants/frames_per_second.dart';
 import '../../io/write_scene_to_file.dart';
 import '../../maths/get_distance_between_v3.dart';
 import 'game_time.dart';
@@ -15,8 +14,6 @@ import 'game_time.dart';
 
 abstract class Game {
   static final Cost_Map = <int, int>{ };
-
-  var aiRespawnDuration = framesPerSecond * 60 * 2; // 5 minutes
 
   final int gameType;
   var frame = 0;
@@ -1613,10 +1610,6 @@ abstract class Game {
     deactivateCollider(character);
     clearCharacterTarget(character);
 
-    if (character is AI){
-      character.respawn = aiRespawnDuration;
-    }
-
     if (character is Player) {
        character.interactMode = InteractMode.None;
        character.writePlayerAlive();
@@ -1979,15 +1972,7 @@ abstract class Game {
   }
 
   void updateCharacter(Character character) {
-
-    if (character.dead) {
-       if (character is AI){
-         if (character.respawn-- > 0) return;
-         respawnAI(character);
-       }
-       return;
-    }
-
+    if (character.dead) return;
     if (!character.active) return;
 
     if (!character.isPlayer) {
@@ -2087,12 +2072,6 @@ abstract class Game {
     character.stateDuration++;
   }
 
-  void updateRespawnAI(AI ai) {
-    assert(ai.dead);
-    if (ai.respawn-- > 0) return;
-    respawnAI(ai);
-  }
-
   void respawnAI(AI ai){
     assert (ai.dead);
     final distance = randomBetween(0, 100);
@@ -2100,7 +2079,6 @@ abstract class Game {
     ai.x = ai.spawnX + getAdjacent(angle, distance);
     ai.y = ai.spawnY + getOpposite(angle, distance);
     ai.z = ai.spawnZ;
-    ai.respawn = aiRespawnDuration;
     ai.clearDest();
     clearCharacterTarget(ai);
     ai.clearPath();

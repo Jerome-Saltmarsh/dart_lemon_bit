@@ -23,7 +23,6 @@ class AI extends Character {
   var spawnY = 0.0;
   var spawnZ = 0.0;
   var spawnNodeIndex = 0;
-  var respawn = 0;
   var wanderPause = randomInt(300, 500);
   var wanderRadius = 0.0;
   var nextTeleport = randomInt(500, 1000);
