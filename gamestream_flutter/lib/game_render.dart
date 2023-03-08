@@ -148,6 +148,18 @@ class GameRender {
     );
   }
 
+  static void renderTextXYZ({
+    required double x,
+    required double y,
+    required double z,
+    required dynamic text,
+  }) =>
+    renderText(
+      text: text.toString(),
+      x: GameConvert.getRenderX(x, y, z),
+      y: GameConvert.getRenderY(x, y, z),
+    );
+
   static void renderWireFrameBlue(
       int z,
       int row,

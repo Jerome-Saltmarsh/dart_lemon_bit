@@ -123,8 +123,22 @@ class GameCanvas {
     GameRender.renderMouseTargetName();
     ClientState.rendersSinceUpdate.value++;
     renderPlayerRunTarget();
-    // drawMouse();
-    // renderObjectRadius();
+    debugRenderHeightMapValues();
+  }
+
+  static void debugRenderHeightMapValues() {
+    var i = 0;
+    for (var row = 0; row < GameNodes.totalRows; row++){
+      for (var column = 0; column < GameNodes.totalColumns; column++){
+         GameRender.renderTextXYZ(
+             x: row * Node_Size,
+             y: column * Node_Size,
+             z: 5,
+             text: GameNodes.heightMap[i].toString(),
+         );
+         i++;
+      }
+    }
   }
 
   static void renderObjectRadius() {
