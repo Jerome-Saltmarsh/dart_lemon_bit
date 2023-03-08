@@ -532,7 +532,7 @@ class ItemType {
       Weapon_Melee_Crowbar: 40,
       Weapon_Melee_Pickaxe: 40,
       Weapon_Melee_Staff: 40,
-      Weapon_Ranged_Bow: 50,
+      Weapon_Ranged_Bow: 25,
       Weapon_Ranged_Crossbow: 50,
       Weapon_Ranged_Musket: 55,
       Weapon_Ranged_Rifle: 50,

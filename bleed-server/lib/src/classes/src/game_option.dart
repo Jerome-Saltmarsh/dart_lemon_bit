@@ -23,6 +23,7 @@ class GameOptions {
   });
 
   static const Default_ItemType_Damage = <int, List<int>> {
+     ItemType.Weapon_Ranged_Bow: [6, 6, 6, 6, 6],
      ItemType.Empty: [1, 1, 1, 1, 1],
      ItemType.Weapon_Ranged_Smg: [2, 3, 4, 5, 6],
      ItemType.Weapon_Ranged_Machine_Gun: [2, 3, 4, 5, 6],
@@ -48,24 +49,25 @@ class GameOptions {
   };
 
   static const Default_ItemType_Capacity = <int, List<int>> {
+     ItemType.Weapon_Ranged_Bow: [20, 12, 12, 12, 12],
      ItemType.Weapon_Thrown_Grenade: [3, 4, 5, 6, 7],
      ItemType.Weapon_Ranged_Smg: [2, 3, 4, 5, 6],
      ItemType.Weapon_Ranged_Machine_Gun: [2, 3, 4, 5, 6],
      ItemType.Weapon_Ranged_Rifle: [4, 5, 7, 8, 10],
-     ItemType.Weapon_Ranged_Sniper_Rifle: [4, 5, 7, 8, 10],
+     ItemType.Weapon_Ranged_Sniper_Rifle: [10, 5, 7, 8, 10],
      ItemType.Weapon_Ranged_Musket: [4, 5, 7, 8, 10],
-     ItemType.Weapon_Ranged_Bazooka: [4, 5, 6, 7, 8],
-     ItemType.Weapon_Ranged_Flamethrower: [50, 70, 90, 110, 130],
+     ItemType.Weapon_Ranged_Bazooka: [5, 5, 6, 7, 8],
+     ItemType.Weapon_Ranged_Flamethrower: [70, 70, 90, 110, 130],
      ItemType.Weapon_Ranged_Minigun: [4, 5, 7, 8, 10],
      ItemType.Weapon_Ranged_Handgun: [4, 5, 7, 8, 10],
      ItemType.Weapon_Ranged_Revolver: [4, 5, 7, 8, 10],
      ItemType.Weapon_Ranged_Desert_Eagle: [4, 5, 7, 8, 10],
      ItemType.Weapon_Ranged_Pistol: [4, 5, 7, 8, 10],
-     ItemType.Weapon_Ranged_Plasma_Pistol: [8, 10, 12, 14, 16],
-     ItemType.Weapon_Ranged_Plasma_Rifle: [30, 40, 50, 60, 70],
-     ItemType.Weapon_Ranged_Shotgun: [4, 6, 8, 10, 12],
-     ItemType.Weapon_Melee_Crowbar: [10, 10, 10, 10, 10],
-     ItemType.Weapon_Melee_Pickaxe: [10, 10, 10, 10, 10],
+     ItemType.Weapon_Ranged_Plasma_Pistol: [15, 10, 12, 14, 16],
+     ItemType.Weapon_Ranged_Plasma_Rifle: [45, 40, 50, 60, 70],
+     ItemType.Weapon_Ranged_Shotgun: [7, 6, 8, 10, 12],
+     ItemType.Weapon_Melee_Crowbar: [25, 10, 10, 10, 10],
+     ItemType.Weapon_Melee_Pickaxe: [25, 10, 10, 10, 10],
   };
 
   static const Default_ItemType_Cost = <int, List<int>> {

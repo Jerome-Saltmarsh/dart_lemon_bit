@@ -915,86 +915,68 @@ class GameUI {
     );
 
     const Border_Width = 3.0;
-    return watch(GamePlayer.weapon, (int playerWeaponType){
-      return Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              watch(GamePlayer.weaponPrimary, (int playerWeaponPrimary) {
-                // final active = playerWeaponType == playerWeaponPrimary;
-                final active = false;
-                return Column(
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Column(
+          children: [
+            border(
+              color: Colors.transparent,
+              width: Border_Width,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: borderRadius4,
+                  color: Colors.transparent,
+                ),
+                constraints: BoxConstraints(maxWidth: 120),
+                padding: GameStyle.Padding_6,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    border(
-                      color: Colors.transparent,
-                      width: Border_Width,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: borderRadius4,
-                          color: Colors.transparent,
-                        ),
-                        constraints: BoxConstraints(maxWidth: 120),
-                        padding: GameStyle.Padding_6,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                                height: GameStyle.Player_Weapons_Icon_Size,
-                                child: buildAtlasItemType(playerWeaponPrimary)
-                            ),
-                            height2,
-                            weaponLeftAmmo2,
-                            // weaponLeftAmmo,
-                          ],
-                        ),
-                      ),
+                    Container(
+                      height: GameStyle.Player_Weapons_Icon_Size,
+                      child:
+                      watch(GamePlayer.weaponPrimary, buildAtlasItemType),
                     ),
+                    height4,
+                    weaponLeftAmmo2,
+                    // weaponLeftAmmo,
                   ],
-                );
-              }),
-            ],
-          ),
-          width4,
-          Column(
-            children: [
-              watch(GamePlayer.weaponSecondary, (int playerWeaponSecondary) {
-                return Column(
+                ),
+              ),
+            ),
+          ],
+        ),
+        width4,
+        Column(
+          children: [
+            border(
+              color: Colors.transparent,
+              width: Border_Width,
+              child: Container(
+                constraints: BoxConstraints(maxWidth: 120),
+                decoration: BoxDecoration(
+                  borderRadius: borderRadius4,
+                  color: Colors.transparent,
+                ),
+                padding: GameStyle.Padding_6,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    border(
-                      color: Colors.transparent,
-                      width: Border_Width,
-                      child: Container(
-                        constraints: BoxConstraints(maxWidth: 120),
-                        decoration: BoxDecoration(
-                          borderRadius: borderRadius4,
-                          color: Colors.transparent,
-                        ),
-                        padding: GameStyle.Padding_6,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                                height: GameStyle.Player_Weapons_Icon_Size,
-                                child: buildAtlasItemType(playerWeaponSecondary)
-                            ),
-                            height2,
-                            // weaponAmmoRight,
-                            weaponAmmoRight2
-                          ],
-                        ),
-                      ),
+                    Container(
+                      height: GameStyle.Player_Weapons_Icon_Size,
+                      child: watch(GamePlayer.weaponSecondary, buildAtlasItemType),
                     ),
+                    height4,
+                    weaponAmmoRight2
                   ],
-                );
-              }),
-            ],
-          ),
-        ],
-      );
-    });
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
   }
 
   static Widget buildRowItemTypeLevel(int level){
