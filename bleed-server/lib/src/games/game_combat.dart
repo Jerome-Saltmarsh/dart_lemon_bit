@@ -159,10 +159,11 @@ class GameCombat extends Game {
               customOnPlayerInteractWithGameObject(player, aimTarget);
               return;
             }
-          } else {
-            setCharacterTarget(player, aimTarget);
           }
-          return;
+          // else {
+          //   setCharacterTarget(player, aimTarget);
+          // }
+          // return;
         }
         if (Collider.onSameTeam(player, aimTarget)){
           setCharacterTarget(player, aimTarget);
@@ -188,9 +189,10 @@ class GameCombat extends Game {
               customOnPlayerInteractWithGameObject(player, aimTarget);
               return;
             }
-          } else {
-            setCharacterTarget(player, aimTarget);
           }
+          // else {
+          //   setCharacterTarget(player, aimTarget);
+          // }
         }
         if (Collider.onSameTeam(player, aimTarget)) {
           setCharacterTarget(player, aimTarget);
