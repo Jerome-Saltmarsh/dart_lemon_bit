@@ -8,6 +8,8 @@ import 'package:bleed_server/src/classes/src/game_time.dart';
 import 'package:bleed_server/src/constants/frames_per_second.dart';
 import 'package:lemon_math/library.dart';
 
+// wood (axe), stone (pickaxe), hammer (gold)
+
 class TutorialType {
    static const Movement              = 0;
    static const Left_Click_Fire       = 1;
@@ -39,17 +41,16 @@ class GameCombat extends Game {
     ItemType.Weapon_Ranged_Plasma_Rifle,
     ItemType.Weapon_Ranged_Sniper_Rifle,
     ItemType.Weapon_Ranged_Shotgun,
-    ItemType.Weapon_Melee_Crowbar,
-    ItemType.Weapon_Melee_Pickaxe,
+    ItemType.Weapon_Ranged_Bow,
     ItemType.Weapon_Melee_Crowbar,
     ItemType.Weapon_Melee_Pickaxe,
   ];
 
   static const itemTypes = [
     // ItemType.Buff_Double_Damage,
-    ItemType.Buff_Infinite_Ammo,
-    ItemType.Buff_Fast,
-    ItemType.Buff_Invincible,
+    // ItemType.Buff_Infinite_Ammo,
+    // ItemType.Buff_Fast,
+    // ItemType.Buff_Invincible,
     ItemType.Consumables_Potion_Red,
     ItemType.Consumables_Ammo_Box,
     ItemType.Weapon_Thrown_Grenade,
@@ -467,6 +468,7 @@ class GameCombat extends Game {
 
     player.weaponPrimary = itemType;
     player.weaponType = itemType;
+    player.weaponPrimaryQuantity = player.weaponPrimaryCapacity;
     player.writePlayerEquipment();
   }
 
@@ -489,6 +491,7 @@ class GameCombat extends Game {
 
     player.weaponSecondary = itemType;
     player.weaponType = itemType;
+    player.weaponSecondaryQuantity = player.weaponSecondaryCapacity;
   }
 
 
@@ -520,26 +523,25 @@ class GameCombat extends Game {
 
      if (gameObjectType == player.weaponPrimary) {
        if (player.weaponPrimaryQuantity >= player.weaponPrimaryCapacity) {
-         player.writeError('${ItemType.getName(gameObjectType)} Full');
+         player.writeInfo('${ItemType.getName(gameObjectType)} Full');
          return;
        }
      }
 
      if (gameObjectType == player.weaponSecondary) {
        if (player.weaponSecondaryQuantity >= player.weaponSecondaryCapacity) {
-         player.writeError('${ItemType.getName(gameObjectType)} Full');
+         player.writeInfo('${ItemType.getName(gameObjectType)} Full');
          return;
        }
      }
 
-     if (player.aimTargetWeaponSide == Side.Left){
+     player.setItemQuantityMax(gameObject.type);
+     deactivateCollider(gameObject);
+
+     if (player.aimTargetWeaponSide == Side.Left) {
        playerEquipPrimary(player, gameObject.type);
-       player.setItemQuantityMax(gameObject.type);
-       deactivateGameObjectAndScheduleRespawn(gameObject);
      } else {
        playerEquipSecondary(player, gameObject.type);
-       player.setItemQuantityMax(gameObject.type);
-       deactivateGameObjectAndScheduleRespawn(gameObject);
      }
   }
 
@@ -651,11 +653,13 @@ class GameCombat extends Game {
 
           if (player.weaponPrimary == ItemType.Empty) {
              playerEquipPrimary(player, itemType);
+             deactivateCollider(gameObject);
              return;
           }
 
           if (player.weaponSecondary == ItemType.Empty) {
             playerEquipSecondary(player, itemType);
+            deactivateCollider(gameObject);
             return;
           }
       }

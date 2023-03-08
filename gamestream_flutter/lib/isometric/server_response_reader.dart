@@ -439,12 +439,6 @@ class ServerResponseReader with ByteReader {
     ClientActions.redrawInventory();
   }
 
-  void readPlayerAttackTargetName() {
-    GamePlayer.mouseTargetName.value = readString();
-    GamePlayer.mouseTargetAllie.value = readBool();
-    GamePlayer.mouseTargetHealth.value = readPercentage();
-  }
-
   void readMapCoordinate() {
     readByte(); // DO NOT DELETE
   }

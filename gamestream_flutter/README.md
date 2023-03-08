@@ -14,10 +14,15 @@ ctrl + shift + e    : view recent changes
 [ ] find keys, which can unlock chests, chests provide treasures
 [ ] tree cans only be chopped with axe
 [ ] apples heal minor health
-[ ] coins give credits
 [ ] weapon bow - Stuns Enemy
 [ ] Frost staff
 [ ] Taser 
+[ ] Portal Gun
+[ ] Scene Portal
+
+08.03.2023
+[x] coins give credits
+[x] fix bombs ui
 
 19.02.2023
 [x] feature torch light flicker

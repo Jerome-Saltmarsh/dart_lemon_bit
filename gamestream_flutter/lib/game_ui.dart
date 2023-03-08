@@ -924,7 +924,8 @@ class GameUI {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               watch(GamePlayer.weaponPrimary, (int playerWeaponPrimary) {
-                final active = playerWeaponType == playerWeaponPrimary;
+                // final active = playerWeaponType == playerWeaponPrimary;
+                final active = false;
                 return Column(
                   children: [
                     border(
@@ -933,7 +934,7 @@ class GameUI {
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: borderRadius4,
-                          color: active ? Colors.black45 : Colors.black12,
+                          color: Colors.transparent,
                         ),
                         constraints: BoxConstraints(maxWidth: 120),
                         padding: GameStyle.Padding_6,
@@ -960,18 +961,16 @@ class GameUI {
           Column(
             children: [
               watch(GamePlayer.weaponSecondary, (int playerWeaponSecondary) {
-                final active = playerWeaponType == playerWeaponSecondary;
                 return Column(
                   children: [
                     border(
-                      // color: active ? playerWeaponType == playerWeaponSecondary ? Colors.white70 : Colors.black54 : Colors.transparent,
                       color: Colors.transparent,
                       width: Border_Width,
                       child: Container(
                         constraints: BoxConstraints(maxWidth: 120),
                         decoration: BoxDecoration(
                           borderRadius: borderRadius4,
-                          color: active ? Colors.black45 : Colors.black12,
+                          color: Colors.transparent,
                         ),
                         padding: GameStyle.Padding_6,
                         child: Column(

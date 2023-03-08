@@ -31,14 +31,14 @@ class GameCanvas {
     const style = TextStyle(color: Colors.white, fontSize: 18);
     switch (GamePlayer.aimTargetCategory) {
       case TargetCategory.Item:
-        Engine.renderText(
-          GamePlayer.aimTargetQuantity > 1
-              ? '${ItemType.getName(GamePlayer.aimTargetType)} x${GamePlayer.aimTargetQuantity}'
-              : ItemType.getName(GamePlayer.aimTargetType),
-          Engine.worldToScreenX(GamePlayer.aimTargetPosition.renderX),
-          Engine.worldToScreenY(GamePlayer.aimTargetPosition.renderY),
-          style: style,
-        );
+        // Engine.renderText(
+        //   GamePlayer.aimTargetQuantity > 1
+        //       ? '${ItemType.getName(GamePlayer.aimTargetType)} x${GamePlayer.aimTargetQuantity}'
+        //       : ItemType.getName(GamePlayer.aimTargetType),
+        //   Engine.worldToScreenX(GamePlayer.aimTargetPosition.renderX),
+        //   Engine.worldToScreenY(GamePlayer.aimTargetPosition.renderY),
+        //   style: style,
+        // );
         break;
       case TargetCategory.Allie:
         Engine.renderText(

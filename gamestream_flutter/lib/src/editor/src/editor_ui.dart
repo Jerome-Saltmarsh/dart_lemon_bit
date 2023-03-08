@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:gamestream_flutter/isometric/ui/columns/build_column_selected_node.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
-import 'package:gamestream_flutter/isometric/ui/stacks/build_page.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_editor_dialog.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_editor_tab.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
@@ -10,6 +9,13 @@ import 'package:gamestream_flutter/language_utils.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class EditorUI {
+
+  static Widget buildPage({required List<Widget> children}) =>
+      Container(
+          width: Engine.screen.width,
+          height: Engine.screen.height,
+          child: Stack(children: children)
+      );
 
   static Widget buildUI(EditTab activeEditTab) => buildPage(
     children: [
