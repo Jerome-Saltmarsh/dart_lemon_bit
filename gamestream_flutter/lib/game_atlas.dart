@@ -302,6 +302,7 @@ class AtlasItems {
         ItemType.GameObjects_Car_Tire: 0.5,
         ItemType.GameObjects_Bottle: 0.4,
         ItemType.GameObjects_Computer: 0.61,
+        ItemType.Resource_Credit: goldenRatio_0618,
         ItemType.Weapon_Thrown_Grenade: 0.5,
         ItemType.Consumables_Ammo_Box: goldenRatio_0381,
   }[itemType] ?? 1.0;

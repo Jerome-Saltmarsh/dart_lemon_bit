@@ -773,7 +773,7 @@ class Connection with ByteReader {
     game.players.add(player);
     game.characters.add(player);
     game.customOnPlayerJoined(player);
-    player.writeGameOptions();
+    // player.writeGameOptions();
     player.writePlayerApiId();
     game.revive(player);
 
