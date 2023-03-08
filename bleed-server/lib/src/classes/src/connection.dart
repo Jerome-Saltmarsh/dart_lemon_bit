@@ -749,7 +749,7 @@ class Connection with ByteReader {
         return joinGame(game);
       }
     }
-    joinGame(GameCombat(scene: engine.scenes.suburbs_01));
+    joinGame(GameCombat(scene: engine.scenes.warehouse));
   }
 
   Future joinGameSurvival() async {
