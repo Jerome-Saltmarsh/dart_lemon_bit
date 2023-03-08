@@ -19,6 +19,8 @@ ctrl + shift + e    : view recent changes
 [ ] Taser 
 [ ] Portal Gun
 [ ] Scene Portal
+[ ] feature auto melee nearby targets
+[ ] melee attack unarmed should only hit closest target
 
 09.03.2023
 [x] fix bug when enter underground

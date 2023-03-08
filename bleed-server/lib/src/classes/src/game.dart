@@ -774,32 +774,18 @@ abstract class Game {
 
     if (character.deadBusyOrWeaponStateBusy) return;
 
-    // final weaponType = character.weaponType;
-    // if (character is Player){
-    //   final energyConsumeAmount = ItemType.getEnergyConsumeAmountMelee(weaponType);
-    //   if (energyConsumeAmount > 0) {
-    //     if (energyConsumeAmount > character.energy) {
-    //       character.writeError('Not Enough Energy');
-    //       return;
-    //     }
-    //     character.energy -= energyConsumeAmount;
-    //   }
-    // }
-
     final angle = character.lookRadian;
-    final attackRadius = ItemType.getRangeMelee(character.weaponType);
+    final attackRadius = ItemType.getMeleeAttackRadius(character.weaponType);
 
     if (attackRadius <= 0) {
       throw Exception('ItemType.getRange(${ItemType.getName(character.weaponType)})');
     }
 
-    final performX = character.x + getAdjacent(angle, attackRadius);
-    final performY = character.y + getOpposite(angle, attackRadius);
+    final attackRadiusHalf = attackRadius * 0.5;
+    final performX = character.x + getAdjacent(angle, attackRadiusHalf);
+    final performY = character.y + getOpposite(angle, attackRadiusHalf);
     final performZ = character.z;
 
-    character.performX = performX;
-    character.performY = performY;
-    character.performZ = performZ;
     character.assignWeaponStateMelee();
 
     dispatchMeleeAttackPerformed(
@@ -817,6 +803,10 @@ abstract class Game {
 
     var attackHit = false;
 
+    Collider? nearest;
+    var nearestDistance = 999.0;
+    final areaOfEffect = ItemType.isMeleeAOE(character.weaponType);
+
     for (final other in characters) {
       if (!other.active) continue;
       if (!other.strikable) continue;
@@ -825,7 +815,18 @@ abstract class Game {
         performX,
         performY,
         performZ,
-        attackRadius)) continue;
+        attackRadiusHalf,
+      )) continue;
+
+      if (!areaOfEffect){
+        final distance = getDistanceBetweenV3(character, other);
+        if (distance > nearestDistance) continue;
+        nearest = other;
+        nearestDistance = distance;
+        attackHit = true;
+        continue;
+      }
+
       applyHit(
           angle: radiansV2(character, other),
           target: other,
@@ -843,7 +844,17 @@ abstract class Game {
           performX,
           performY,
           performZ,
-          attackRadius)) continue;
+          attackRadiusHalf,
+      )) continue;
+
+      if (!areaOfEffect){
+        final distance = getDistanceBetweenV3(character, gameObject);
+        if (distance > nearestDistance) continue;
+        nearest = gameObject;
+        nearestDistance = distance;
+        attackHit = true;
+        continue;
+      }
 
       applyHit(
         angle: radiansV2(character, gameObject),
@@ -853,6 +864,15 @@ abstract class Game {
         hitType: HitType.Melee
       );
       attackHit = true;
+    }
+
+    if (nearest != null) {
+      applyHit(
+          angle: radiansV2(character, nearest),
+          target: nearest,
+          damage: character.damage,
+          srcCharacter: character,
+          hitType: HitType.Melee);
     }
 
     if (!scene.isInboundXYZ(performX, performY, performZ)) return;

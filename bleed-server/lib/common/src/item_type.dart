@@ -478,13 +478,10 @@ class ItemType {
     
   }[value] ?? 0;
 
-  static double getAccuracy(int value) => const <int, double> {
-
-  }[value] ?? 0.25;
-
-  static double getRangeMelee(int value) => const <int, double> {
-    Weapon_Ranged_Shotgun: 50,
-  }[value] ?? 50;
+  static double getMeleeAttackRadius(int value) => const <int, double> {
+    // Weapon_Ranged_Shotgun: 50,
+    // Empty: 50,
+  }[value] ?? 80;
 
   static double getRange(int value) => const <int, double> {
       Empty: 30,
@@ -1000,6 +997,16 @@ class ItemType {
     ...Collection_Weapons,
     ...Collection_Misc,
   ];
+
+  /// AOE refers to "Area of Effect"
+  /// When a melee weapon is struck should it hit multiple enemies or only the closest
+  static bool isMeleeAOE(int itemType) => const [
+    Weapon_Melee_Pickaxe,
+    Weapon_Melee_Crowbar,
+    Weapon_Melee_Sword,
+    Weapon_Melee_Hammer,
+    Weapon_Melee_Axe,
+  ].contains(itemType);
 }
 
 

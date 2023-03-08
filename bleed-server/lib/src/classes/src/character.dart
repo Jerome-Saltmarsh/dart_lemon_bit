@@ -28,9 +28,6 @@ abstract class Character extends Collider {
   var _headType = ItemType.Head_Steel_Helm;
   var _bodyType = ItemType.Body_Shirt_Cyan;
   var _legsType = ItemType.Legs_Blue;
-  var performX = 0.0;
-  var performY = 0.0;
-  var performZ = 0.0;
   var _characterType = 0;
   var lookRadian = 0.0;
   var name = "";
@@ -149,7 +146,7 @@ abstract class Character extends Collider {
   double get healthPercentage => health / maxHealth;
   double get faceAngle => _faceAngle;
   double get weaponTypeRange => ItemType.getRange(weaponType);
-  double get weaponTypeRangeMelee => ItemType.getRangeMelee(weaponType);
+  double get weaponTypeRangeMelee => ItemType.getMeleeAttackRadius(weaponType);
   double get weaponDurationPercentage =>  weaponStateDurationTotal == 0 || weaponStateAiming ? 0 : weaponStateDuration / weaponStateDurationTotal;
 
   int get weaponFrame {
