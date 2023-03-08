@@ -676,6 +676,7 @@ class GameCombat extends Game {
   }) {
     if (target is GameObject) {
       if (target.type == ItemType.GameObjects_Crate_Wooden) {
+        dispatchGameEventGameObjectDestroyed(target);
         deactivateCollider(target);
         performScript(timer: Crate_Respawn_Duration).writeSpawnGameObject(
           type: ItemType.GameObjects_Crate_Wooden,
