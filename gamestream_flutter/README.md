@@ -20,7 +20,8 @@ ctrl + shift + e    : view recent changes
 [ ] Portal Gun
 [ ] Scene Portal
 
-[ ] fix bug when enter underground
+09.03.2023
+[x] fix bug when enter underground
 
 08.03.2023
 [x] fixed weapon icons

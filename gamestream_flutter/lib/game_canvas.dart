@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/library.dart';
+import 'package:gamestream_flutter/render/renderer_nodes.dart';
 
 class GameCanvas {
   static void renderForegroundText(Vector3 position, String text){
@@ -123,7 +124,10 @@ class GameCanvas {
     GameRender.renderMouseTargetName();
     ClientState.rendersSinceUpdate.value++;
     renderPlayerRunTarget();
-    debugRenderHeightMapValues();
+
+    if (ClientState.debugMode.value){
+      debugRenderIsland();
+    }
   }
 
   static void debugRenderHeightMapValues() {
@@ -140,6 +144,26 @@ class GameCanvas {
       }
     }
   }
+
+  static void debugRenderIsland() {
+    var i = 0;
+    for (var row = 0; row < GameNodes.totalRows; row++){
+      for (var column = 0; column < GameNodes.totalColumns; column++){
+        if (!RendererNodes.island[i]) {
+          i++;
+          continue;
+        }
+        GameRender.renderTextXYZ(
+          x: row * Node_Size,
+          y: column * Node_Size,
+          z: 5,
+          text: RendererNodes.island[i].toString(),
+        );
+        i++;
+      }
+    }
+  }
+
 
   static void renderObjectRadius() {
     for (var i = 0; i < ServerState.totalCharacters; i++) {

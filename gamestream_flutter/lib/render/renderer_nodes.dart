@@ -246,6 +246,7 @@ class RendererNodes extends Renderer {
     currentNodeDstY = ((row + column) * Node_Size_Half) - (currentNodeZ * Node_Height);
     currentNodeIndex = (currentNodeZ * GameNodes.area) + (row * GameNodes.totalColumns) + column;
     currentNodeType = nodeTypes[currentNodeIndex];
+    currentNodeWithinIsland = false;
 
     updateTransparencyGrid();
     updateHeightMapPerception();

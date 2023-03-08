@@ -33,8 +33,8 @@ class GameDebug {
                             watch(serverResponseReader.bufferSizeTotal, (int bytes) => text('network-bytes-per-hour: ${ClientState.formatAverageBytePerHour(bytes)}')),
                             Refresh(() =>  text(
                                 "connection-duration: ${ClientState.formattedConnectionDuration}\n"
-                                "offscreen-nodes: ${GameNodes.offscreenNodes}\n"
-                                "onscreen-nodes: ${GameNodes.onscreenNodes}\n"
+                                // "offscreen-nodes: ${GameNodes.offscreenNodes}\n"
+                                // "onscreen-nodes: ${GameNodes.onscreenNodes}\n"
                                 "mouse-grid: x: ${GameIO.mouseGridX.toInt()}, y: ${GameIO.mouseGridY.toInt()}\n"
                                 "mouse-world: x: ${Engine.mouseWorldX.toInt()}, y: ${Engine.mouseWorldY.toInt()}\n"
                                 'mouse-screen: x: ${Engine.mousePosition.x.toInt()}, y: ${Engine.mousePosition.y.toInt()}\n'
@@ -43,6 +43,12 @@ class GameDebug {
                                 "player-render: x: ${GamePlayer.position.renderX}, y: ${GamePlayer.position.renderY}\n"
                                 "player-screen: x: ${Engine.worldToScreenX(GamePlayer.position.renderX).toInt()}, y: ${Engine.worldToScreenY(GamePlayer.position.renderY).toInt()}\n"
                                 "player-index: z: ${GamePlayer.position.indexZ}, row: ${GamePlayer.position.indexRow}, column: ${GamePlayer.position.indexColumn}\n"
+                                "player-inside-island: ${RendererNodes.playerInsideIsland}\n"
+                                "player-legs: ${ItemType.getName(GamePlayer.legs.value)}\n"
+                                "player-body: ${ItemType.getName(GamePlayer.body.value)}\n"
+                                "player-head: ${ItemType.getName(GamePlayer.head.value)}\n"
+                                "player-weapon: ${ItemType.getName(GamePlayer.weapon.value)}\n"
+                                "player-interact-mode: ${InteractMode.getName(ServerState.interactMode.value)}\n"
                                 "aim-target-category: ${TargetCategory.getName(GamePlayer.aimTargetCategory)}\n"
                                 "aim-target-type: ${GamePlayer.aimTargetType}\n"
                                 "aim-target-name: ${GamePlayer.aimTargetName}\n"
@@ -50,11 +56,6 @@ class GameDebug {
                                 "target-category: ${TargetCategory.getName(GamePlayer.targetCategory)}\n"
                                 "target-position: ${GamePlayer.targetPosition}\n"
                                 "dialog-type: ${DialogType.getName(ClientState.hoverDialogType.value)}\n"
-                                "player-legs: ${ItemType.getName(GamePlayer.legs.value)}\n"
-                                "player-body: ${ItemType.getName(GamePlayer.body.value)}\n"
-                                "player-head: ${ItemType.getName(GamePlayer.head.value)}\n"
-                                "player-weapon: ${ItemType.getName(GamePlayer.weapon.value)}\n"
-                                "player-interact-mode: ${InteractMode.getName(ServerState.interactMode.value)}\n"
                                 "scene-light-sources: ${ClientState.nodesLightSourcesTotal}\n"
                                 "scene-light-active: ${ClientState.lights_active}\n"
                                 "total-gameobjects: ${ServerState.gameObjects.length}\n"
@@ -83,7 +84,6 @@ class GameDebug {
                             watch(Engine.watchMouseLeftDown, (bool mouseLeftDown) => text("mouse-left-down: $mouseLeftDown")),
                             watch(Engine.mouseRightDown, (bool rightDown) => text("mouse-right-down: $rightDown")),
                             watch(GameEditor.nodeSelectedIndex, (int index) => text("edit-state-node-index: $index")),
-                            buildColumnLightingControls(),
                           ],
                         ),
                       ),
