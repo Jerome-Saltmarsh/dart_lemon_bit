@@ -517,9 +517,21 @@ class GameCombat extends Game {
   @override
   void customOnPlayerInteractWithGameObject(Player player, GameObject gameObject){
 
-     if (!ItemType.isTypeWeapon(gameObject.type)) return;
+    final gameObjectType = gameObject.type;
 
-     final gameObjectType = gameObject.type;
+     if (!ItemType.isTypeWeapon(gameObjectType)) return;
+
+     if (gameObjectType == ItemType.Weapon_Thrown_Grenade){
+        if (player.grenades >= Max_Grenades){
+          player.writeInfo('Grenades Full');
+          return;
+        }
+        player.grenades = Max_Grenades;
+        player.writePlayerEventItemAcquired(gameObjectType);
+        deactivateCollider(gameObject);
+        return;
+     }
+
 
      if (gameObjectType == player.weaponPrimary) {
        if (player.weaponPrimaryQuantity >= player.weaponPrimaryCapacity) {

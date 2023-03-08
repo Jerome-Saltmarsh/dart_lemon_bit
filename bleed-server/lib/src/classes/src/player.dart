@@ -1315,7 +1315,7 @@ class Player extends Character with ByteWriter {
   void writePlayerTargetCategory(){
     writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Target_Category);
-    writeByte(getAimCategory(target));
+    writeByte(getTargetCategory(target));
   }
 
   void writePlayerAimTargetPosition(){
@@ -1328,7 +1328,7 @@ class Player extends Character with ByteWriter {
   void writePlayerAimTargetCategory() {
     writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Aim_Target_Category);
-    writeByte(getAimCategory(aimTarget));
+    writeByte(getTargetCategory(aimTarget));
   }
 
   void writePlayerAimTargetType() {
@@ -1370,10 +1370,13 @@ class Player extends Character with ByteWriter {
     }
   }
 
-  int getAimCategory(Position3? value){
+  int getTargetCategory(Position3? value){
     if (value == null) return TargetCategory.Nothing;
     if (value is GameObject) {
-      return TargetCategory.Item;
+      if (value.interactable) {
+        return TargetCategory.Collect;
+      }
+      return TargetCategory.Nothing;
     }
     if (isAllie(value)) return TargetCategory.Allie;
     if (isEnemy(value)) return TargetCategory.Enemy;
