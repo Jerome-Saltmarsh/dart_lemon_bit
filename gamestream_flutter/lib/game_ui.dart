@@ -870,7 +870,7 @@ class GameUI {
   static Widget buildPlayerUIWeapons() {
 
     final Ammo_Width = 100.0;
-    final Ammo_Height = 30.0;
+    final Ammo_Height = 10.0;
 
     final weaponLeftAmmo2 = Container(
         width: Ammo_Width,
