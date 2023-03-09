@@ -185,7 +185,7 @@ class GameCombat extends Game {
       characterUseOrEquipWeapon(
         character: player,
         weaponType: player.weaponPrimary,
-        characterStateChange: player.weaponType != player.weaponTertiary,
+        characterStateChange: false,
       );
     }
 
@@ -219,7 +219,7 @@ class GameCombat extends Game {
       characterUseOrEquipWeapon(
         character: player,
         weaponType: player.weaponSecondary,
-        characterStateChange: player.weaponType != player.weaponTertiary,
+        characterStateChange: false,
       );
     }
 
