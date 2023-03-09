@@ -96,8 +96,8 @@ class GameCombat extends Game {
     player.bodyType = randomItem(ItemType.Collection_Clothing_Body);
     player.legsType = randomItem(ItemType.Collection_Clothing_Legs);
 
-    final weaponPrimary = ItemType.Weapon_Ranged_Plasma_Rifle;
-    // final weaponPrimary = ItemType.Weapon_Ranged_Bow;
+    // final weaponPrimary = ItemType.Weapon_Ranged_Plasma_Rifle;
+    final weaponPrimary = ItemType.Weapon_Ranged_Flamethrower;
     final weaponSecondary = ItemType.Weapon_Ranged_Plasma_Pistol;
     final weaponTertiary = randomItem(const[
       ItemType.Weapon_Melee_Knife,

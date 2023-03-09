@@ -21,6 +21,7 @@ ctrl + shift + e    : view recent changes
 [ ] Scene Portal
 
 09.03.2023
+[x] fix render flame thrower idle
 [x] feature instant draw weapon
 [x] feature auto melee nearby targets
 [x] melee attack unarmed should only hit closest target
