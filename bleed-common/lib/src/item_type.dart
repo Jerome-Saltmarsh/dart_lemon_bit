@@ -517,7 +517,7 @@ class ItemType {
       Weapon_Thrown_Grenade: 40,
       Weapon_Ranged_Shotgun: 40,
       Weapon_Ranged_Pistol: 45,
-      Weapon_Ranged_Plasma_Pistol: 28,
+      Weapon_Ranged_Plasma_Pistol: 20,
       Weapon_Ranged_Plasma_Rifle: 5,
       Weapon_Ranged_Handgun: 20,
       Weapon_Ranged_Revolver: 40,
