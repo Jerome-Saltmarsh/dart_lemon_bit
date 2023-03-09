@@ -27,6 +27,10 @@ ctrl + shift + e    : view recent changes
 [ ] Scene Portal
 [ ] scene warehouse
 
+10.03.2023
+[x] fix editor gameobjects tab
+[x] fix van sprite
+
 09.03.2023
 [x] fix render pickaxe idle
 [x] fix render flame thrower idle

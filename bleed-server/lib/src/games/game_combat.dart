@@ -369,10 +369,9 @@ class GameCombat extends Game {
          team: TeamType.Evil,
        );
 
-       // if (random.nextDouble() < Chance_Of_Item_Drop) {
-       //   spawnRandomItemAtPosition(target);
-       // }
-       spawnRandomItemAtPosition(target);
+       if (random.nextDouble() < Chance_Of_Item_Drop) {
+         spawnRandomItemAtPosition(target);
+       }
      }
   }
 

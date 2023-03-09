@@ -198,7 +198,6 @@ class AtlasItems {
         ItemType.Consumables_Ammo_Box: 160,
       }[itemType] ?? 0;
 
-
   static double getSrcWidth(int itemType) =>
       const <int, double>{
         ItemType.GameObjects_Car: 115,
@@ -224,7 +223,7 @@ class AtlasItems {
         ItemType.GameObjects_Washing_Machine: 48,
         ItemType.GameObjects_Car_Tire: 56,
         ItemType.GameObjects_Bottle: 18,
-        ItemType.GameObjects_Van: 80,
+        ItemType.GameObjects_Van: 78,
         ItemType.GameObjects_Computer: 40,
         ItemType.GameObjects_Neon_Sign_01: 43,
         ItemType.GameObjects_Neon_Sign_02: 21,

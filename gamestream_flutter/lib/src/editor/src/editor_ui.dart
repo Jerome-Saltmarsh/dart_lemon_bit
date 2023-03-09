@@ -379,20 +379,20 @@ class EditorUI {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                container(
-                    child: 'Spawn Zombie',
-                    action: () {
-                      GameNetwork.sendClientRequestEdit(
-                        EditRequest.Spawn_Zombie,
-                        GameEditor.nodeSelectedIndex.value,
-                      );
-                    }),
-                buildRowAddGameObject(ItemType.Weapon_Ranged_Plasma_Rifle, color: Colors.black.value),
-                buildRowAddGameObject(ItemType.Weapon_Ranged_Plasma_Pistol, color: Colors.black.value),
-                buildRowAddGameObject(ItemType.Weapon_Ranged_Shotgun, color: Colors.black.value),
-                buildRowAddGameObject(ItemType.Weapon_Ranged_Bazooka, color: Colors.black.value),
-                buildRowAddGameObject(ItemType.Weapon_Ranged_Flamethrower, color: Colors.black.value),
-                buildRowAddGameObject(ItemType.Weapon_Ranged_Sniper_Rifle, color: Colors.black.value),
+                // container(
+                //     child: 'Spawn Zombie',
+                //     action: () {
+                //       GameNetwork.sendClientRequestEdit(
+                //         EditRequest.Spawn_Zombie,
+                //         GameEditor.nodeSelectedIndex.value,
+                //       );
+                //     }),
+                // buildRowAddGameObject(ItemType.Weapon_Ranged_Plasma_Rifle, color: Colors.black.value),
+                // buildRowAddGameObject(ItemType.Weapon_Ranged_Plasma_Pistol, color: Colors.black.value),
+                // buildRowAddGameObject(ItemType.Weapon_Ranged_Shotgun, color: Colors.black.value),
+                // buildRowAddGameObject(ItemType.Weapon_Ranged_Bazooka, color: Colors.black.value),
+                // buildRowAddGameObject(ItemType.Weapon_Ranged_Flamethrower, color: Colors.black.value),
+                // buildRowAddGameObject(ItemType.Weapon_Ranged_Sniper_Rifle, color: Colors.black.value),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: ItemType.GameObjectTypes
