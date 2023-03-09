@@ -931,6 +931,51 @@ abstract class Game {
     }
   }
 
+  bool characterMeleeAttackTargetInRange(Character character) {
+    assert (character.active);
+    assert (character.alive);
+    assert (character.damage >= 0);
+
+    if (character.deadBusyOrWeaponStateBusy) return false;
+
+    final angle = character.lookRadian;
+    final attackRadius = ItemType.getMeleeAttackRadius(character.weaponType);
+
+    if (attackRadius <= 0) {
+      throw Exception('ItemType.getRange(${ItemType.getName(character.weaponType)})');
+    }
+
+    final attackRadiusHalf = attackRadius * 0.5;
+    final performX = character.x + getAdjacent(angle, attackRadiusHalf);
+    final performY = character.y + getOpposite(angle, attackRadiusHalf);
+    final performZ = character.z;
+
+    for (final other in characters) {
+      if (!other.active) continue;
+      if (!other.strikable) continue;
+      if (Collider.onSameTeam(character, other)) continue;
+      if (other.withinDistance(
+        performX,
+        performY,
+        performZ,
+        attackRadiusHalf,
+      )) return true;
+
+    }
+
+    for (final gameObject in gameObjects) {
+      if (!gameObject.active) continue;
+      if (!gameObject.strikable) continue;
+      if (gameObject.withinDistance(
+          performX,
+          performY,
+          performZ,
+          attackRadiusHalf,
+      )) return true;
+    }
+    return false;
+  }
+
   void characterFireWeapon(Character character){
     assert (!character.weaponStateBusy);
     final angle = (character is Player) ? character.lookRadian : character.faceAngle;

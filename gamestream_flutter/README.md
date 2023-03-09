@@ -20,9 +20,9 @@ ctrl + shift + e    : view recent changes
 [ ] Portal Gun
 [ ] Scene Portal
 [ ] feature auto melee nearby targets
-[ ] melee attack unarmed should only hit closest target
 
 09.03.2023
+[x] melee attack unarmed should only hit closest target
 [x] fix bug when enter underground
 
 08.03.2023

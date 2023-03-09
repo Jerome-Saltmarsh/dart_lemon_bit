@@ -176,6 +176,12 @@ class GameCombat extends Game {
           return;
         }
       }
+
+      if (characterMeleeAttackTargetInRange(player)){
+        characterAttackMelee(player);
+        return;
+      }
+
       characterUseOrEquipWeapon(
         character: player,
         weaponType: player.weaponPrimary,
