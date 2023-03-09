@@ -177,7 +177,7 @@ class GameCombat extends Game {
         }
       }
 
-      if (characterMeleeAttackTargetInRange(player)){
+      if (!keyShiftDown && characterMeleeAttackTargetInRange(player)){
         characterAttackMelee(player);
         return;
       }
@@ -210,6 +210,12 @@ class GameCombat extends Game {
           setCharacterTarget(player, aimTarget);
         }
       }
+
+      if (!keyShiftDown && characterMeleeAttackTargetInRange(player)){
+        characterAttackMelee(player);
+        return;
+      }
+
       characterUseOrEquipWeapon(
         character: player,
         weaponType: player.weaponSecondary,
@@ -219,10 +225,6 @@ class GameCombat extends Game {
 
     if (keySpaceDown) {
       playerThrowGrenade(player);
-    }
-
-    if (keyShiftDown){
-       characterAttackMelee(player);
     }
 
     playerRunInDirection(player, direction);
