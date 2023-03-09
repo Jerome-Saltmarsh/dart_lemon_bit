@@ -216,4 +216,10 @@ class Scene {
     }
     return false;
   }
+
+  int getNodeIndexZ(int nodeIndex) => nodeIndex ~/ gridArea;
+
+  int getNodeIndexRow(int nodeIndex) => (nodeIndex % gridArea) ~/ gridColumns;
+
+  int getNodeIndexColumn(int nodeIndex) => nodeIndex % gridRows;
 }

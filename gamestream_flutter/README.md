@@ -9,16 +9,23 @@ ctrl + shift + e    : view recent changes
 
 [EXPLORE and SURVIVE]
 
-[IDEAS]
-[ ] metal crates can only be smashed with hammer
+[NEXT GAME IDEAS]
+[ ] trinkets and perks
 [ ] find keys, which can unlock chests, chests provide treasures
+[ ] metal crates can only be smashed with hammer
 [ ] tree cans only be chopped with axe
-[ ] apples heal minor health
+[ ] resources buy trinkets
 [ ] weapon bow - Stuns Enemy
 [ ] Frost staff
-[ ] Taser 
+[ ] Taser
 [ ] Portal Gun
+[ ] armour
+[ ] fix items dropped by enemies disappear too quickly
+
+[IDEAS]
+[ ] apples heal minor health
 [ ] Scene Portal
+[ ] scene warehouse
 
 09.03.2023
 [x] fix render pickaxe idle

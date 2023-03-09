@@ -18,11 +18,10 @@ class TutorialType {
 
 class GameCombat extends Game {
   static const hints = [
-     'Use the W,A,S,D keys to move',
-     'Left click to fire first weapon',
-     'Right click to fire second weapon',
-     'Press Space bar to melee attack',
-     'Right Click item to equip',
+     '(W,A,S,D) RUN',
+     '(LEFT CLICK) FIRE WEAPON 1',
+     '(RIGHT CLICK) FIRE WEAPON 2',
+     '(SPACE) Throw Grenade',
   ];
 
   static final hints_length = hints.length;
@@ -34,21 +33,9 @@ class GameCombat extends Game {
   static const Credits_Collected = 5;
   static const Max_Players = 12;
 
-  static const weaponTypes = [
-    ItemType.Weapon_Ranged_Flamethrower,
-    ItemType.Weapon_Ranged_Bazooka,
-    ItemType.Weapon_Ranged_Plasma_Pistol,
-    ItemType.Weapon_Ranged_Plasma_Rifle,
-    ItemType.Weapon_Ranged_Sniper_Rifle,
-    ItemType.Weapon_Ranged_Shotgun,
-    ItemType.Weapon_Ranged_Bow,
-    ItemType.Weapon_Melee_Crowbar,
-    ItemType.Weapon_Melee_Pickaxe,
-  ];
-
   static const itemTypes = [
     ItemType.Consumables_Potion_Red,
-    ItemType.Consumables_Ammo_Box,
+    // ItemType.Consumables_Ammo_Box,
     ItemType.Weapon_Thrown_Grenade,
     ItemType.Resource_Credit,
     ItemType.Weapon_Ranged_Flamethrower,
@@ -92,12 +79,13 @@ class GameCombat extends Game {
   void customOnPlayerRevived(Player player) {
     moveToRandomPlayerSpawnPoint(player);
     player.item_level.clear();
+    player.team = TeamType.Alone;
     player.headType = randomItem(ItemType.Collection_Clothing_Head);
     player.bodyType = randomItem(ItemType.Collection_Clothing_Body);
     player.legsType = randomItem(ItemType.Collection_Clothing_Legs);
 
-    // final weaponPrimary = ItemType.Weapon_Ranged_Plasma_Rifle;
-    final weaponPrimary = ItemType.Weapon_Melee_Pickaxe;
+    final weaponPrimary = ItemType.Weapon_Ranged_Plasma_Rifle;
+    // final weaponPrimary = ItemType.Weapon_Melee_Pickaxe;
     final weaponSecondary = ItemType.Weapon_Ranged_Plasma_Pistol;
     final weaponTertiary = randomItem(const[
       ItemType.Weapon_Melee_Knife,
@@ -366,18 +354,25 @@ class GameCombat extends Game {
        src.credits += 10;
      }
 
-     if (target is AI) {
+     if (target is AI && scene.spawnPoints.isNotEmpty) {
+       final spawnNodeIndex = randomItem(scene.spawnPoints);
+
+       final z = scene.getNodeIndexZ(spawnNodeIndex);
+       final row = scene.getNodeIndexRow(spawnNodeIndex);
+       final column = scene.getNodeIndexColumn(spawnNodeIndex);
+
        performScript(timer: 300).writeSpawnAI(
          type: randomItem(const[CharacterType.Zombie, CharacterType.Dog]),
-         x: target.x,
-         y: target.y,
-         z: target.z,
+         x: row * Node_Size + Node_Size_Half,
+         y: column * Node_Size + Node_Size_Half,
+         z: z * Node_Height,
          team: TeamType.Evil,
        );
 
-       if (random.nextDouble() < Chance_Of_Item_Drop) {
-         spawnRandomItemAtPosition(target);
-       }
+       // if (random.nextDouble() < Chance_Of_Item_Drop) {
+       //   spawnRandomItemAtPosition(target);
+       // }
+       spawnRandomItemAtPosition(target);
      }
   }
 
