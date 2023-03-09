@@ -12,7 +12,6 @@ class RendererGameObjects extends Renderer {
     return gameObjects.length;
   }
 
-
   @override
   void renderFunction() {
     final type = gameObject.type;
@@ -152,20 +151,11 @@ class RendererGameObjects extends Renderer {
     );
   }
 
-  // @override
-  // void reset(){
-  //   Engine.insertionSort(
-  //     ServerState.gameObjects,
-  //     compare: ClientState.compareRenderOrder,
-  //   );
-  //   super.reset();
-  // }
-
   @override
   void updateFunction() {
     gameObject = gameObjects[index];
 
-    while (!gameObject.active || !gameObject.onscreen || !gameObject.nodePerceptible) {
+    while (!gameObject.active || !gameObject.onscreenPadded || !gameObject.nodePerceptible) {
       index++;
       if (!remaining) return;
       gameObject = gameObjects[index];

@@ -24,6 +24,23 @@ class Vector3 with Position {
      return true;
   }
 
+  bool get onscreenPadded {
+    const Pad_Distance = 75.0;
+    final rx = renderX;
+
+    if (rx < Engine.Screen_Left - Pad_Distance)
+      return false;
+    if (rx > Engine.Screen_Right + Pad_Distance)
+      return false;
+    final ry = renderY;
+    if (ry < Engine.Screen_Top - Pad_Distance)
+      return false;
+    if (ry > Engine.Screen_Bottom + Pad_Distance)
+      return false;
+
+    return true;
+  }
+
   bool get nodePerceptible {
     if (outOfBounds) return false;
     if (!RendererNodes.playerInsideIsland) return true;
