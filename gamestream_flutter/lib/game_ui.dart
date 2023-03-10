@@ -372,8 +372,8 @@ class GameUI {
         child: Row(
          mainAxisAlignment: MainAxisAlignment.spaceBetween,
          children: [
-           text(playerScore.name),
-           text(playerScore.credits),
+           text(playerScore.name, bold: playerScore.id == GamePlayer.id.value),
+           text(playerScore.credits, bold: playerScore.id == GamePlayer.id.value),
          ],
       ),
   );

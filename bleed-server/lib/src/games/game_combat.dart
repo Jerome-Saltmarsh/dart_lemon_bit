@@ -790,7 +790,7 @@ class GameCombat extends Game {
 
   @override
   void customOnNodeDestroyed(int nodeType, int nodeIndex, int nodeOrientation) {
-    if (nodeType == NodeType.Grass && randomBool()) {
+    if (nodeType == NodeType.Grass_Long && randomBool()) {
       spawnGameObjectAtIndex(
         index: nodeIndex,
         type: ItemType.Resource_Credit,
