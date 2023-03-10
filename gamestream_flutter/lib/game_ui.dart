@@ -936,32 +936,7 @@ class GameUI {
                     Container(
                       height: GameStyle.Player_Weapons_Icon_Size,
                       child: watch(Engine.watchMouseLeftDown, (bool leftClicked){
-                        return watch(GamePlayer.weaponPrimary, (int itemType){
-                           if (itemType == ItemType.Weapon_Ranged_Plasma_Rifle){
-                             if (leftClicked){
-                               return FittedBox(
-                                 child: Engine.buildAtlasImage(
-                                   image: GameImages.atlas_items,
-                                   srcX: 310,
-                                   srcY: 294,
-                                   srcWidth: 88,
-                                   srcHeight: 59,
-                                 ),
-                               );
-                             } else {
-                               return FittedBox(
-                                 child: Engine.buildAtlasImage(
-                                   image: GameImages.atlas_items,
-                                   srcX: 403,
-                                   srcY: 294,
-                                   srcWidth: 83,
-                                   srcHeight: 59,
-                                 ),
-                               );
-                             }
-                           }
-                           return buildAtlasItemType(itemType);
-                        });
+                        return watch(GamePlayer.weaponPrimary, buildAtlasItemType);
                       }),
                     ),
                     height4,

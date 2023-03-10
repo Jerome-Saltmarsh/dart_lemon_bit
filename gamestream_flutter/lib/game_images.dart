@@ -227,7 +227,7 @@ class GameImages {
       Engine.loadImageAsset('images/template/weapons/template-weapons-grenade.png').then((value) => template_weapon_grenade = value);
       Engine.loadImageAsset('images/template/weapons/template-weapons-desert-eagle.png').then((value) => template_weapon_desert_eagle = value);
       Engine.loadImageAsset('images/template/weapons/template-weapons-plasma-pistol.png').then((value) => template_weapon_plasma_pistol = value);
-      Engine.loadImageAsset('images/template/weapons/template-weapons-plasma-rifle-2.png').then((value) => template_weapon_plasma_rifle = value);
+      Engine.loadImageAsset('images/template/weapons/template-weapons-plasma-rifle.png').then((value) => template_weapon_plasma_rifle = value);
       Engine.loadImageAsset('images/template/weapons/template-weapons-handgun-black.png').then((value) => template_weapon_handgun_black = value);
       Engine.loadImageAsset('images/template/weapons/template-weapons-pistol-flintlock.png').then((value) => template_weapon_handgun_flintlock = value);
       Engine.loadImageAsset('images/template/weapons/template-weapons-sniper-rifle.png').then((value) => template_weapon_sniper_rifle = value);

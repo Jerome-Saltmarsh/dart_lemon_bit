@@ -27,6 +27,7 @@ class ClientState {
   static final window_visible_settings = WatchBool(false);
   static final window_visible_perks = WatchBool(false);
   static final window_visible_items = WatchBool(false);
+  static final window_visible_menu = WatchBool(false);
 
   static final triggerAlarmNoMessageReceivedFromServer = Watch(false);
 
