@@ -20,7 +20,6 @@ ctrl + shift + e    : view recent changes
 [ ] Taser
 [ ] Portal Gun
 [ ] armour
-[ ] fix items dropped by enemies disappear too quickly
 
 [IDEAS]
 [ ] apples heal minor health
@@ -28,6 +27,7 @@ ctrl + shift + e    : view recent changes
 [ ] scene warehouse
 
 10.03.2023
+[x] fix items dropped by enemies disappear too quickly
 [x] fixed plasma rifle sprite
 [x] fix render gameobject clipping
 [x] fix editor gameobjects tab

@@ -48,6 +48,7 @@ abstract class Game {
      for (final script in scripts) {
        if (script.timer > 0) continue;
        script.timer = timer;
+       script.clear();
        return script;
      }
      final instance = GameScript();
@@ -2472,20 +2473,20 @@ abstract class Game {
   }){
     for (final gameObject in gameObjects) {
        if (gameObject.active) continue;
-       gameObject.dirty = true;
        gameObject.x = x;
        gameObject.y = y;
        gameObject.z = z;
        gameObject.startX = x;
        gameObject.startY = y;
        gameObject.startZ = z;
-       gameObject.synchronizePrevious();
        gameObject.velocityX = 0;
        gameObject.velocityY = 0;
        gameObject.velocityZ = 0;
        gameObject.type = type;
        gameObject.active = true;
+       gameObject.dirty = true;
        gameObject.friction = GamePhysics.Friction;
+       gameObject.synchronizePrevious();
        customOnGameObjectSpawned(gameObject);
        return gameObject;
     }
