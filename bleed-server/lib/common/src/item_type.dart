@@ -773,6 +773,7 @@ class ItemType {
   
   static const GameObjectTypes = [
      Weapon_Ranged_Plasma_Rifle,
+     Resource_Credit,
      GameObjects_Barrel_Explosive,
      GameObjects_Barrel_Purple,
      GameObjects_Barrel_Flaming,

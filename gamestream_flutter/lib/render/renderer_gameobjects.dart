@@ -15,6 +15,23 @@ class RendererGameObjects extends Renderer {
   @override
   void renderFunction() {
     final type = gameObject.type;
+
+    if (type == ItemType.Resource_Credit) {
+      const srcY = 125.0 * 6;
+      Engine.renderSprite(
+          image: GameImages.atlas_weapons,
+          dstX: gameObject.renderX,
+          dstY: gameObject.renderY,
+          srcX: GameAnimation.animationFrame16 * 125.0,
+          srcY: srcY,
+          srcWidth: 125,
+          srcHeight: 125,
+          color: GameState.getV3RenderColor(gameObject),
+          scale: 0.3
+      );
+      return;
+    }
+
     if (ItemType.isTypeGameObject(type)) {
       Engine.renderSprite(
         image: GameImages.atlas_gameobjects,
