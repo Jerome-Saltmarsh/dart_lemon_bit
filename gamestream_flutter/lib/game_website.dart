@@ -162,7 +162,8 @@ class GameWebsite {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        text("BLAZE", size: 50),
+        text("AOEN", size: 50),
+        // text("BLAZE", size: 50),
         // text("PLASMA", size: 40),
         height32,
         buildTextButton("PLAY", action: GameNetwork.connectToGameCombat),

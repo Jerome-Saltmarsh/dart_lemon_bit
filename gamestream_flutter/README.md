@@ -28,6 +28,7 @@ ctrl + shift + e    : view recent changes
 [ ] scene warehouse
 
 10.03.2023
+[x] fixed plasma rifle sprite
 [x] fix render gameobject clipping
 [x] fix editor gameobjects tab
 [x] fix van sprite
