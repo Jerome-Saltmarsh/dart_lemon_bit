@@ -32,9 +32,10 @@ class GameCombat extends Game {
   static const Chance_Of_Item_Drop = 0.25;
   static const Credits_Collected = 5;
   static const Max_Players = 12;
+  static const Player_Health = 16;
 
   static const itemTypes = [
-    ItemType.Consumables_Potion_Red,
+    // ItemType.Consumables_Potion_Red,
     // ItemType.Consumables_Ammo_Box,
     ItemType.Weapon_Thrown_Grenade,
     ItemType.Resource_Credit,
@@ -44,7 +45,6 @@ class GameCombat extends Game {
     ItemType.Weapon_Ranged_Plasma_Rifle,
     ItemType.Weapon_Ranged_Sniper_Rifle,
     ItemType.Weapon_Ranged_Shotgun,
-    ItemType.Weapon_Ranged_Bow,
     ItemType.Weapon_Melee_Crowbar,
     ItemType.Weapon_Melee_Pickaxe,
   ];
@@ -96,6 +96,8 @@ class GameCombat extends Game {
       ItemType.Weapon_Melee_Sword,
     ]);
 
+    player.maxHealth = Player_Health;
+    player.health = Player_Health;
     player.item_level[weaponPrimary] = 0;
     player.item_level[weaponSecondary] = 0;
     player.item_level[weaponTertiary] = 0;
@@ -243,7 +245,7 @@ class GameCombat extends Game {
   void spawnRandomItemAtPosition(Position3 position){
     final spawnedGameObject = spawnGameObjectAtPosition(
       position: position,
-      type: randomItem(itemTypes),
+      type: randomBool() ? ItemType.Resource_Credit : randomItem(itemTypes),
     );
 
     spawnedGameObject
@@ -574,122 +576,7 @@ class GameCombat extends Game {
   @override
   void customOnCollisionBetweenPlayerAndGameObject(Player player, GameObject gameObject) {
        if (!gameObject.collectable) return;
-
-      if (gameObject.type == ItemType.Buff_Infinite_Ammo) {
-        player.writeInfo('Infinite Ammo');
-        player.buffInfiniteAmmo = 15;
-        player.writePlayerBuffs();
-        player.writePlayerEventItemAcquired(gameObject.type);
-        deactivateCollider(gameObject);
-        return;
-      }
-
-      if (gameObject.type == ItemType.Buff_Double_Damage) {
-        player.writeInfo('Double Damage');
-        player.buffDoubleDamageTimer = 30;
-        player.buffDoubleDamage = true;
-        player.writePlayerBuffs();
-        player.writePlayerEventItemAcquired(gameObject.type);
-        deactivateCollider(gameObject);
-        return;
-      }
-
-      if (gameObject.type == ItemType.Buff_No_Recoil) {
-        player.writeInfo('No Recoil');
-        player.buffNoRecoil = 45;
-        player.writePlayerBuffs();
-        deactivateCollider(gameObject);
-        return;
-      }
-
-      if (gameObject.type == ItemType.Buff_Invincible) {
-        player.writeInfo('Invincible');
-        player.buffInvincibleTimer = 15;
-        player.buffInvincible = true;
-        player.writePlayerBuffs();
-        player.writePlayerEventItemAcquired(gameObject.type);
-        deactivateCollider(gameObject);
-        return;
-      }
-
-      if (gameObject.type == ItemType.Buff_Fast) {
-        player.writeInfo('Fast');
-        player.buffFast = 25;
-        player.writePlayerBuffs();
-        player.writePlayerEventItemAcquired(gameObject.type);
-        deactivateCollider(gameObject);
-        return;
-      }
-
-      if (gameObject.type == ItemType.Consumables_Potion_Red) {
-        if (player.health >= player.maxHealth) return;
-        player.health = player.maxHealth;
-        player.writeInfo('Full Health');
-        player.writePlayerEventItemTypeConsumed(gameObject.type);
-        deactivateCollider(gameObject);
-        return;
-      }
-
-      if (gameObject.type == ItemType.Consumables_Ammo_Box) {
-        player.weaponPrimaryQuantity = player.weaponPrimaryCapacity;
-        player.weaponSecondaryQuantity = player.weaponSecondaryCapacity;
-        player.writeInfo('Full Ammo');
-        player.writePlayerEventItemAcquired(gameObject.type);
-        deactivateCollider(gameObject);
-        return;
-      }
-
-      if (gameObject.type == ItemType.Weapon_Thrown_Grenade) {
-
-        if (player.grenades >= Max_Grenades) {
-          player.writeInfo('Max Grenades');
-          return;
-        }
-        player.grenades++;
-        player.writeInfo('Grenade');
-        player.writePlayerEventItemAcquired(gameObject.type);
-        deactivateCollider(gameObject);
-        return;
-      }
-
-       if (gameObject.type == ItemType.Resource_Credit) {
-         player.credits += Credits_Collected;
-         player.writePlayerEventItemAcquired(gameObject.type);
-         player.writeGameEventGameObjectDestroyed(gameObject);
-         deactivateCollider(gameObject);
-         return;
-       }
-
-      final itemType = gameObject.type;
-
-      if (ItemType.isTypeWeapon(itemType)) {
-          if (player.weaponPrimary == itemType) {
-            if (player.weaponPrimaryQuantity < player.weaponPrimaryCapacity) {
-              player.weaponPrimaryQuantity = player.weaponPrimaryCapacity;
-              player.writePlayerEvent(PlayerEvent.Ammo_Acquired);
-            }
-            return;
-          }
-          if (player.weaponSecondary == itemType) {
-            if (player.weaponSecondaryQuantity < player.weaponSecondaryCapacity) {
-              player.weaponSecondaryQuantity = player.weaponSecondaryCapacity;
-              player.writePlayerEvent(PlayerEvent.Ammo_Acquired);
-            }
-            return;
-          }
-
-          if (player.weaponPrimary == ItemType.Empty) {
-             playerEquipPrimary(player, itemType);
-             deactivateCollider(gameObject);
-             return;
-          }
-
-          if (player.weaponSecondary == ItemType.Empty) {
-            playerEquipSecondary(player, itemType);
-            deactivateCollider(gameObject);
-            return;
-          }
-      }
+       customOnPlayerCollectGameObject(player, gameObject);
   }
 
   @override
@@ -736,8 +623,141 @@ class GameCombat extends Game {
   }
 
   @override
-  void customOnPlayerCollectGameObject(Player player, GameObject target) {
-    customOnCollisionBetweenPlayerAndGameObject(player, target);
+  void customOnPlayerCollectGameObject(Player player, GameObject gameObject) {
+    if (!gameObject.collectable) return;
+
+    if (gameObject.type == ItemType.Buff_Infinite_Ammo) {
+      player.writeInfo('Infinite Ammo');
+      player.buffInfiniteAmmo = 15;
+      player.writePlayerBuffs();
+      player.writePlayerEventItemAcquired(gameObject.type);
+      deactivateCollider(gameObject);
+      return;
+    }
+
+    if (gameObject.type == ItemType.Buff_Double_Damage) {
+      player.writeInfo('Double Damage');
+      player.buffDoubleDamageTimer = 30;
+      player.buffDoubleDamage = true;
+      player.writePlayerBuffs();
+      player.writePlayerEventItemAcquired(gameObject.type);
+      deactivateCollider(gameObject);
+      return;
+    }
+
+    if (gameObject.type == ItemType.Buff_No_Recoil) {
+      player.writeInfo('No Recoil');
+      player.buffNoRecoil = 45;
+      player.writePlayerBuffs();
+      deactivateCollider(gameObject);
+      return;
+    }
+
+    if (gameObject.type == ItemType.Buff_Invincible) {
+      player.writeInfo('Invincible');
+      player.buffInvincibleTimer = 15;
+      player.buffInvincible = true;
+      player.writePlayerBuffs();
+      player.writePlayerEventItemAcquired(gameObject.type);
+      deactivateCollider(gameObject);
+      return;
+    }
+
+    if (gameObject.type == ItemType.Buff_Fast) {
+      player.writeInfo('Fast');
+      player.buffFast = 25;
+      player.writePlayerBuffs();
+      player.writePlayerEventItemAcquired(gameObject.type);
+      deactivateCollider(gameObject);
+      return;
+    }
+
+    if (gameObject.type == ItemType.Consumables_Potion_Red) {
+      if (player.health >= player.maxHealth) return;
+      player.health = player.maxHealth;
+      player.writeInfo('Full Health');
+      player.writePlayerEventItemTypeConsumed(gameObject.type);
+      deactivateCollider(gameObject);
+      return;
+    }
+
+    if (gameObject.type == ItemType.Consumables_Ammo_Box) {
+      player.weaponPrimaryQuantity = player.weaponPrimaryCapacity;
+      player.weaponSecondaryQuantity = player.weaponSecondaryCapacity;
+      player.writeInfo('Full Ammo');
+      player.writePlayerEventItemAcquired(gameObject.type);
+      deactivateCollider(gameObject);
+      return;
+    }
+
+    if (gameObject.type == ItemType.Weapon_Thrown_Grenade) {
+
+      if (player.grenades >= Max_Grenades) {
+        player.writeInfo('Max Grenades');
+        return;
+      }
+      player.grenades++;
+      player.writeInfo('Grenade');
+      player.writePlayerEventItemAcquired(gameObject.type);
+      deactivateCollider(gameObject);
+      return;
+    }
+
+    if (gameObject.type == ItemType.Resource_Credit) {
+      player.credits += Credits_Collected;
+      player.writePlayerEventItemAcquired(gameObject.type);
+      player.writeGameEventGameObjectDestroyed(gameObject);
+      deactivateCollider(gameObject);
+
+      if (player.health < player.maxHealth){
+        player.health += 2;
+      }
+
+      if (!player.weaponPrimaryEmpty) {
+        if (player.weaponPrimaryQuantity < player.weaponPrimaryCapacity) {
+          player.weaponPrimaryQuantity++;
+        }
+      }
+
+      if (!player.weaponSecondaryEmpty){
+        if (player.weaponSecondaryQuantity < player.weaponSecondaryCapacity) {
+          player.weaponSecondaryQuantity++;
+        }
+      }
+
+      return;
+    }
+
+    final itemType = gameObject.type;
+
+    if (ItemType.isTypeWeapon(itemType)) {
+      if (player.weaponPrimary == itemType) {
+        if (player.weaponPrimaryQuantity < player.weaponPrimaryCapacity) {
+          player.weaponPrimaryQuantity = player.weaponPrimaryCapacity;
+          player.writePlayerEvent(PlayerEvent.Ammo_Acquired);
+        }
+        return;
+      }
+      if (player.weaponSecondary == itemType) {
+        if (player.weaponSecondaryQuantity < player.weaponSecondaryCapacity) {
+          player.weaponSecondaryQuantity = player.weaponSecondaryCapacity;
+          player.writePlayerEvent(PlayerEvent.Ammo_Acquired);
+        }
+        return;
+      }
+
+      if (player.weaponPrimary == ItemType.Empty) {
+        playerEquipPrimary(player, itemType);
+        deactivateCollider(gameObject);
+        return;
+      }
+
+      if (player.weaponSecondary == ItemType.Empty) {
+        playerEquipSecondary(player, itemType);
+        deactivateCollider(gameObject);
+        return;
+      }
+    }
   }
 
   @override
@@ -766,6 +786,24 @@ class GameCombat extends Game {
     for (final otherPlayer in players) {
       otherPlayer.writeApiPlayersPlayerScore(player);
     }
+  }
+
+  @override
+  void customOnNodeDestroyed(int nodeType, int nodeIndex, int nodeOrientation) {
+    if (nodeType == NodeType.Grass && randomBool()) {
+      spawnGameObjectAtIndex(
+        index: nodeIndex,
+        type: ItemType.Resource_Credit,
+      );
+    }
+
+    performJob(1000, (){
+      setNode(
+        nodeIndex: nodeIndex,
+        nodeType: nodeType,
+        nodeOrientation: nodeOrientation,
+      );
+    });
   }
 }
 

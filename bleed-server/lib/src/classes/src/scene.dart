@@ -163,10 +163,10 @@ class Scene {
       convertNodeIndexToZ(index) * Node_Height;
 
   double convertNodeIndexToPositionY(int index) =>
-      convertNodeIndexToColumn(index) * Node_Size;
+      (convertNodeIndexToColumn(index) * Node_Size) + Node_Size_Half;
 
   double convertNodeIndexToPositionX(int index) =>
-      convertNodeIndexToRow(index) * Node_Size;
+      (convertNodeIndexToRow(index) * Node_Size) + Node_Size_Half;
 
   int convertNodeIndexToRow(int index) =>
       (index - (convertNodeIndexToZ(index) * gridArea)) ~/ gridColumns;

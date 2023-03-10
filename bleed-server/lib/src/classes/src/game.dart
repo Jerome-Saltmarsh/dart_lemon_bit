@@ -123,6 +123,18 @@ abstract class Game {
   /// @override
   void customOnCharacterWeaponStateReady(Character character){ }
 
+  /// @override
+  void customOnNodeDestroyed(int nodeType, int nodeIndex, int nodeOrientation) {
+    // default behavior is to respawn after a period however this can be safely overriden
+    performJob(1000, (){
+      setNode(
+        nodeIndex: nodeIndex,
+        nodeType: nodeType,
+        nodeOrientation: nodeOrientation,
+      );
+    });
+  }
+
   /// PROPERTIES
   List<GameObject> get gameObjects => scene.gameObjects;
   /// @override
@@ -901,19 +913,7 @@ abstract class Game {
 
     // TODO Abstract
     if (NodeType.isDestroyable(nodeType)) {
-      final nodeOrientation = scene.nodeOrientations[nodeIndex];
-      setNode(
-          nodeIndex: nodeIndex,
-          nodeType: nodeType,
-          nodeOrientation: NodeOrientation.Destroyed,
-      );
-      performJob(1000, (){
-        setNode(
-          nodeIndex: nodeIndex,
-          nodeType: nodeType,
-          nodeOrientation: nodeOrientation,
-        );
-      });
+      destroyNode(nodeIndex);
       attackHit = true;
     }
 
@@ -931,6 +931,20 @@ abstract class Game {
       }
     }
   }
+
+  void destroyNode(int nodeIndex){
+    final nodeOrientation = scene.nodeOrientations[nodeIndex];
+    if (nodeOrientation == NodeOrientation.Destroyed) return;
+    final nodeType = scene.nodeTypes[nodeIndex];
+    if (nodeType == NodeType.Empty) return;
+    setNode(
+      nodeIndex: nodeIndex,
+      nodeType: nodeType,
+      nodeOrientation: NodeOrientation.Destroyed,
+    );
+    customOnNodeDestroyed(nodeType, nodeIndex, nodeOrientation);
+  }
+
 
   bool characterMeleeAttackTargetInRange(Character character) {
     assert (character.active);
@@ -2401,23 +2415,18 @@ abstract class Game {
   }
 
   void moveToIndex(Position3 position, int index){
-    position.x = scene.convertNodeIndexToRow(index) * Node_Size;
-    position.y = scene.convertNodeIndexToColumn(index) * Node_Size;
-    position.z = scene.convertNodeIndexToZ(index) * Node_Height;
+    position.x = scene.convertNodeIndexToPositionX(index);
+    position.y = scene.convertNodeIndexToPositionY(index);
+    position.z = scene.convertNodeIndexToPositionZ(index);
   }
 
-  GameObject spawnGameObjectAtIndex({required int index, required int type}){
-    final instance = GameObject(
-      x: 0,
-      y: 0,
-      z: 0,
-      type: type,
-      id: gameObjectId++,
+  GameObject spawnGameObjectAtIndex({required int index, required int type}) =>
+      spawnGameObject(
+        x: scene.convertNodeIndexToPositionX(index),
+        y: scene.convertNodeIndexToPositionY(index),
+        z: scene.convertNodeIndexToPositionZ(index),
+        type: type,
     );
-    moveV3ToNodeIndex(instance, index);
-    gameObjects.add(instance);
-    return instance;
-  }
 
   void spawnGameObjectItemAtPosition({
     required Position3 position,
