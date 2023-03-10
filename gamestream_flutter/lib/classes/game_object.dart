@@ -60,6 +60,15 @@ class GameObject extends Vector3 {
         emission_alp = 150;
         refreshEmissionColor();
         break;
+      case ItemType.Resource_Credit:
+        emission_type = EmissionType.Ambient;
+        // emission_type = EmissionType.Color;
+        // emission_hue = 168;
+        // emission_sat = 42;
+        // emission_val = 97;
+        // emission_alp = 200;
+        refreshEmissionColor();
+        break;
     }
   }
 
