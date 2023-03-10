@@ -2033,6 +2033,17 @@ class Player extends Character with ByteWriter {
     writeUInt24(player.id);
     writeUInt24(player.credits);
   }
+
+  void writeGameEventGameObjectDestroyed(GameObject gameObject){
+    writeGameEvent(
+      type: GameEventType.Game_Object_Destroyed,
+      x: gameObject.x,
+      y: gameObject.y,
+      z: gameObject.z,
+      angle: gameObject.velocityAngle,
+    );
+    writeUInt16(gameObject.type);
+  }
 }
 
 

@@ -202,16 +202,22 @@ class GameEvents {
         break;
 
       case GameEventType.Character_Death:
-        final characterType = serverResponseReader.readByte();
-        return onCharacterDeath(characterType, x, y, z, angle);
+        onCharacterDeath(serverResponseReader.readByte(), x, y, z, angle);
+        return;
 
       case GameEventType.Character_Hurt:
-        final characterType = serverResponseReader.readByte();
-        return onGameEventCharacterHurt(characterType, x, y, z, angle);
+        onGameEventCharacterHurt(serverResponseReader.readByte(), x, y, z, angle);
+        return;
 
       case GameEventType.Game_Object_Destroyed:
-        final type = serverResponseReader.readUInt16();
-        return onGameEventGameObjectDestroyed(x, y, z, angle, type);
+        onGameEventGameObjectDestroyed(
+            x,
+            y,
+            z,
+            angle,
+            serverResponseReader.readUInt16(),
+        );
+        return;
     }
   }
 

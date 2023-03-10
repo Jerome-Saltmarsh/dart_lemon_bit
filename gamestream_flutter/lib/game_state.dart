@@ -1362,8 +1362,8 @@ class GameState {
           speed: randomBetween(0.5, 2.0),
           weight: -0.02,
           scale: 0.5,
-          duration: randomInt(25, 100),
-          delay: randomInt(0, 10),
+          duration: 40,
+          delay: randomInt(0, 8),
       );
   }
 

@@ -39,6 +39,7 @@ class ParticleType {
   static const Confetti_Blue = 52;
   static const Confetti_Green = 53;
   static const Confetti_Purple = 54;
+  static const Confetti_Cyan = 55;
 
   static String getName(int particleType){
     return const {

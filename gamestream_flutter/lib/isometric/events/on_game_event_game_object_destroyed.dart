@@ -30,5 +30,15 @@ void onGameEventGameObjectDestroyed(
          GameState.spawnParticleBlockWood(x, y, z);
        }
        break;
+
+     case ItemType.Resource_Credit:
+       for (var i = 0; i < 8; i++){
+         GameState.spawnParticleConfettiByType(
+           x,
+           y,
+           z,
+           ParticleType.Confetti_Cyan,
+         );
+       }
    }
 }

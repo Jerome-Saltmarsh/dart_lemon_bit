@@ -196,6 +196,20 @@ class RendererParticles extends Renderer {
             color: GameState.getV3RenderColor(particle),
           );
           break;
+        case ParticleType.Confetti_Cyan:
+          Engine.renderSprite(
+            image: GameImages.shades,
+            dstX: dstX,
+            dstY: dstY,
+            srcX: 504,
+            srcY: 0,
+            srcWidth: 8,
+            srcHeight: 8,
+            scale: particle.scale,
+            color: GameState.getV3RenderColor(particle),
+          );
+          break;
+
         case ParticleType.Block_Brick:
           Engine.renderSprite(
             image: GameImages.atlas_gameobjects,

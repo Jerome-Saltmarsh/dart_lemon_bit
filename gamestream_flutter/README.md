@@ -27,6 +27,7 @@ ctrl + shift + e    : view recent changes
 [ ] scene warehouse
 
 10.03.2023
+[x] polish collect credits
 [x] fix items dropped by enemies disappear too quickly
 [x] fixed plasma rifle sprite
 [x] fix render gameobject clipping

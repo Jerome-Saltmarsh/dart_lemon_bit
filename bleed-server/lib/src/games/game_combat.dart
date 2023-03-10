@@ -655,6 +655,7 @@ class GameCombat extends Game {
        if (gameObject.type == ItemType.Resource_Credit) {
          player.credits += Credits_Collected;
          player.writePlayerEventItemAcquired(gameObject.type);
+         player.writeGameEventGameObjectDestroyed(gameObject);
          deactivateCollider(gameObject);
          return;
        }

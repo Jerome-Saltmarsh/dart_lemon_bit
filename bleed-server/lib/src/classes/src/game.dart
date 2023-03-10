@@ -1097,14 +1097,7 @@ abstract class Game {
 
   void dispatchGameEventGameObjectDestroyed(GameObject gameObject) {
     for (final player in players) {
-      player.writeGameEvent(
-        type: GameEventType.Game_Object_Destroyed,
-        x: gameObject.x,
-        y: gameObject.y,
-        z: gameObject.z,
-        angle: gameObject.velocityAngle,
-      );
-      player.writeUInt16(gameObject.type);
+      player.writeGameEventGameObjectDestroyed(gameObject);
     }
   }
 
