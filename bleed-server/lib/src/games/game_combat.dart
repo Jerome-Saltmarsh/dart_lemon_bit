@@ -26,7 +26,7 @@ class GameCombat extends Game {
   static final hints_frames_between = 600;
   static const Max_Grenades = 3;
   static const GameObject_Duration = 500;
-  static const Crate_Respawn_Duration = 1500;
+  static const GameObject_Respawn_Duration = 1500;
   static const Chance_Of_Item_Drop = 0.25;
   static const Credits_Collected = 5;
   static const Max_Players = 16;
@@ -46,8 +46,18 @@ class GameCombat extends Game {
     ItemType.Weapon_Melee_Pickaxe,
   ];
 
+  static const GameObjects_Respawnable = [
+    ItemType.GameObjects_Crate_Wooden,
+    ItemType.GameObjects_Barrel_Explosive,
+  ];
+
+  static const GameObjects_Spawn_Loot = [
+    ItemType.GameObjects_Crate_Wooden,
+  ];
+
   static const GameObjects_Destroyable = [
     ItemType.GameObjects_Crate_Wooden,
+    ItemType.GameObjects_Barrel_Explosive,
   ];
 
   static const GameObjects_Interactable = [
@@ -595,13 +605,15 @@ class GameCombat extends Game {
 
   @override
   void customOnGameObjectDestroyed(GameObject gameObject) {
-    if (gameObject.type == ItemType.GameObjects_Crate_Wooden){
-      performScript(timer: Crate_Respawn_Duration).writeSpawnGameObject(
-        type: ItemType.GameObjects_Crate_Wooden,
+    if (GameObjects_Respawnable.contains(gameObject.type)){
+      performScript(timer: GameObject_Respawn_Duration).writeSpawnGameObject(
+        type: gameObject.type,
         x: gameObject.x,
         y: gameObject.y,
         z: gameObject.z,
       );
+    }
+    if (GameObjects_Spawn_Loot.contains(gameObject.type)){
       spawnRandomItemAtPosition(gameObject);
     }
   }
