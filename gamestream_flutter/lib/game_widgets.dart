@@ -237,6 +237,8 @@ final width16 = width(16);
 final width32 = width(32);
 final width64 = width(64);
 final width96 = width(96);
+final width128 = width(128);
+final width256 = width(256);
 
 ButtonStyle buildButtonStyle(Color borderColor, double borderWidth) {
   return OutlinedButton.styleFrom(

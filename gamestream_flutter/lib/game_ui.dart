@@ -840,7 +840,7 @@ class GameUI {
             height: 64,
             child: watch(GamePlayer.weaponPrimary, buildAtlasItemType),
           ),
-          width64,
+          width128,
           Container(
             constraints: BoxConstraints(maxWidth: 120),
             height: 64,

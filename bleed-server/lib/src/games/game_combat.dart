@@ -34,8 +34,6 @@ class GameCombat extends Game {
   static const Player_Energy = 20;
 
   static const itemTypes = [
-    // ItemType.Consumables_Potion_Red,
-    // ItemType.Consumables_Ammo_Box,
     ItemType.Weapon_Thrown_Grenade,
     ItemType.Resource_Credit,
     ItemType.Weapon_Ranged_Flamethrower,
@@ -46,6 +44,25 @@ class GameCombat extends Game {
     ItemType.Weapon_Ranged_Shotgun,
     ItemType.Weapon_Melee_Crowbar,
     ItemType.Weapon_Melee_Pickaxe,
+  ];
+
+  static const GameObjects_Destroyable = [
+    ItemType.GameObjects_Crate_Wooden,
+  ];
+
+  static const GameObjects_Interactable = [
+    ItemType.Weapon_Ranged_Flamethrower,
+    ItemType.Weapon_Ranged_Bazooka,
+    ItemType.Weapon_Ranged_Plasma_Pistol,
+    ItemType.Weapon_Ranged_Plasma_Rifle,
+    ItemType.Weapon_Ranged_Sniper_Rifle,
+    ItemType.Weapon_Ranged_Shotgun,
+    ItemType.Weapon_Melee_Crowbar,
+    ItemType.Weapon_Melee_Pickaxe,
+  ];
+
+  static const GameObjects_Collectable = [
+    ...itemTypes,
   ];
 
   var nextBuffUpdate = 0;
@@ -257,10 +274,11 @@ class GameCombat extends Game {
       ..gravity = false
       ..collectable = true
     ;
-
     performScript(timer: GameObject_Duration)
         .writeGameObjectDeactivate(spawnedGameObject);
   }
+
+
 
   void updatePlayerAction(Player player){
     var minDistance = 50.0;
@@ -577,47 +595,25 @@ class GameCombat extends Game {
   }
 
   @override
-  void customOnHitApplied({
-    required Character srcCharacter,
-    required Collider target,
-    required int damage,
-    required double angle,
-    required int hitType,
-    required double force,
-  }) {
-    if (target is GameObject) {
-      if (target.type == ItemType.GameObjects_Crate_Wooden) {
-        dispatchGameEventGameObjectDestroyed(target);
-        deactivateCollider(target);
-        performScript(timer: Crate_Respawn_Duration).writeSpawnGameObject(
-          type: ItemType.GameObjects_Crate_Wooden,
-          x: target.x,
-          y: target.y,
-          z: target.z,
-        );
-
-        spawnRandomItemAtPosition(target);
-      }
+  void customOnGameObjectDestroyed(GameObject gameObject) {
+    if (gameObject.type == ItemType.GameObjects_Crate_Wooden){
+      performScript(timer: Crate_Respawn_Duration).writeSpawnGameObject(
+        type: ItemType.GameObjects_Crate_Wooden,
+        x: gameObject.x,
+        y: gameObject.y,
+        z: gameObject.z,
+      );
+      spawnRandomItemAtPosition(gameObject);
     }
   }
 
-  // @override
-  // void customOnCharacterWeaponStateReady(Character character){
-  //   if (character.weaponType == ItemType.Empty) return;
-  //   if (character is! Player) return;
-  //
-  //   // if (character.weaponPrimaryEquipped) {
-  //   //   if (!character.weaponPrimaryEmpty) return;
-  //   //   character.weaponPrimary = ItemType.Empty;
-  //   //   character.weaponType = ItemType.Empty;
-  //   //   return;
-  //   // }
-  //
-  //   if (!character.weaponSecondaryEmpty) return;
-  //   character.weaponSecondary = ItemType.Empty;
-  //   character.weaponType = ItemType.Empty;
-  //   return;
-  // }
+  @override
+  void customOnGameObjectSpawned(GameObject gameObject) {
+    final type = gameObject.type;
+     gameObject.destroyable   = GameObjects_Destroyable .contains(type);
+     gameObject.interactable  = GameObjects_Interactable.contains(type);
+     gameObject.collectable   = GameObjects_Collectable .contains(type);
+  }
 
   @override
   void customOnPlayerCollectGameObject(Player player, GameObject gameObject) {

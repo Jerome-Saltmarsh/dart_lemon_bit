@@ -1997,13 +1997,12 @@ abstract class Game {
         hitType: hitType,
     );
 
-    if (target is GameObject){
+    if (target is GameObject) {
       if (ItemType.isMaterialMetal(target.type)){
         dispatch(GameEventType.Material_Struck_Metal, target.x, target.y, target.z, angle);
       }
       if (target.destroyable) {
-         deactivateCollider(target);
-         customOnGameObjectDestroyed(target);
+         destroyGameObject(target);
       }
     }
 
@@ -3212,6 +3211,14 @@ abstract class Game {
     for (final player in players) {
       player.writeApiPlayersAll();
     }
+  }
+
+  void destroyGameObject(GameObject gameObject){
+    if (!gameObject.active) return;
+    if (!gameObject.destroyable) return;
+    dispatchGameEventGameObjectDestroyed(gameObject);
+    deactivateCollider(gameObject);
+    customOnGameObjectDestroyed(gameObject);
   }
 }
 
