@@ -163,7 +163,12 @@ class GameSurvival extends Game {
       if (hitType != HitType.Melee) {
         if (target.type == ItemType.GameObjects_Barrel_Explosive) {
           deactivateCollider(target);
-          createExplosion(target: target, srcCharacter: srcCharacter);
+          createExplosion(
+              x: target.x,
+              y: target.y,
+              z: target.z,
+              srcCharacter: srcCharacter,
+          );
         }
       }
 

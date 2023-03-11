@@ -100,9 +100,8 @@ class GameCombat extends Game {
     player.bodyType = randomItem(ItemType.Collection_Clothing_Body);
     player.legsType = randomItem(ItemType.Collection_Clothing_Legs);
 
-    final weaponPrimary = ItemType.Weapon_Ranged_Plasma_Rifle;
-    // final weaponPrimary = ItemType.Weapon_Melee_Pickaxe;
-    final weaponSecondary = ItemType.Weapon_Ranged_Plasma_Pistol;
+    final weaponPrimary = ItemType.Weapon_Ranged_Plasma_Pistol;
+    final weaponSecondary = ItemType.Weapon_Melee_Knife;
     final weaponTertiary = randomItem(const[
       ItemType.Weapon_Melee_Knife,
       ItemType.Weapon_Melee_Crowbar,
@@ -616,6 +615,31 @@ class GameCombat extends Game {
   }
 
   @override
+  void customOnHitApplied({
+    required Character srcCharacter,
+    required Collider target,
+    required int damage,
+    required double angle,
+    required int hitType,
+    required double force,
+  }) {
+
+     if (target is GameObject) {
+       if (target.type == ItemType.GameObjects_Barrel_Explosive){
+          if (hitType == HitType.Projectile || hitType == HitType.Explosion) {
+            destroyGameObject(target);
+            createExplosion(
+                x: target.x,
+                y: target.y,
+                z: target.z,
+                srcCharacter: srcCharacter,
+            );
+          }
+       }
+     }
+  }
+
+  @override
   void customOnPlayerCollectGameObject(Player player, GameObject gameObject) {
     if (!gameObject.collectable) return;
 
@@ -673,15 +697,6 @@ class GameCombat extends Game {
       deactivateCollider(gameObject);
       return;
     }
-
-    // if (gameObject.type == ItemType.Consumables_Ammo_Box) {
-    //   player.weaponPrimaryQuantity = player.weaponPrimaryCapacity;
-    //   player.weaponSecondaryQuantity = player.weaponSecondaryCapacity;
-    //   player.writeInfo('Full Ammo');
-    //   player.writePlayerEventItemAcquired(gameObject.type);
-    //   deactivateCollider(gameObject);
-    //   return;
-    // }
 
     if (gameObject.type == ItemType.Weapon_Thrown_Grenade) {
 

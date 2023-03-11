@@ -1,6 +1,8 @@
 import 'package:bleed_server/gamestream.dart';
 
 class GameObject extends Collider {
+  /// Prevents gameobject from being recycled in the object pool until the next frame
+  var available = false;
   var id = 0;
   var _type = 0;
   var quantity = 0;

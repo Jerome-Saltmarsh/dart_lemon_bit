@@ -744,7 +744,12 @@ abstract class Game {
       deactivateCollider(instance);
       final owner = instance.owner;
       if (owner == null) return;
-      createExplosion(target: instance, srcCharacter: owner);
+      createExplosion(
+          x: instance.x,
+          y: instance.y,
+          z: instance.z,
+          srcCharacter: owner,
+      );
     });
   }
 
@@ -1087,6 +1092,7 @@ abstract class Game {
 
      if (collider is GameObject){
        collider.dirty = true;
+       collider.available = false;
      }
 
      for (final character in characters) {
@@ -1279,21 +1285,27 @@ abstract class Game {
 
   void updateGameObjects() {
     for (final gameObject in gameObjects) {
-      updateColliderPhysics(gameObject);
+      if (!gameObject.active){
+        if (!gameObject.available) {
+          gameObject.available = true;
+        }
+      } else {
+        updateColliderPhysics(gameObject);
+      }
       if (gameObject.positionDirty) {
         gameObject.dirty = true;
       }
       if (!gameObject.dirty) continue;
+      gameObject.dirty = false;
       gameObject.synchronizePrevious();
       for (final player in players) {
          player.writeGameObject(gameObject);
       }
-      gameObject.dirty = false;
     }
   }
 
   void updateColliderPhysics(Collider collider) {
-    if (!collider.active) return;
+    assert (collider.active);
 
     collider.applyVelocity();
     collider.applyFriction();
@@ -1310,30 +1322,32 @@ abstract class Game {
   }
 
   void createExplosion({
-    required Position3 target,
+    required double x,
+    required double y,
+    required double z,
     required Character srcCharacter,
     double radius = 100.0,
     int damage = 25,
   }){
-    if (!scene.inboundsV3(target)) return;
-    dispatchV3(GameEventType.Explosion, target);
+    if (!scene.inboundsXYZ(x, y, z)) return;
+    dispatch(GameEventType.Explosion, x, y, z);
     final length = characters.length;
 
-    if (scene.inboundsXYZ(target.x, target.y, target.z - Node_Height_Half)) {
+    if (scene.inboundsXYZ(x, y, z - Node_Height_Half)) {
         dispatch(
             GameEventType.Node_Struck,
-            target.x,
-            target.y,
-            target.z - Node_Height_Half,
+            x,
+            y,
+            z - Node_Height_Half,
         );
     }
 
     for (final gameObject in gameObjects) {
         if (!gameObject.active) continue;
         if (!gameObject.strikable) continue;
-        if (!gameObject.withinRadius(target, radius)) continue;
+        if (!gameObject.withinDistance(x, y, z, radius)) continue;
         applyHit(
-          angle: radiansV2(target, gameObject),
+          angle: radian(x1: x, y1: y, x2:gameObject.x, y2: gameObject.y),
           target: gameObject,
           srcCharacter: srcCharacter,
           damage: damage,
@@ -1347,9 +1361,9 @@ abstract class Game {
       if (!character.strikable) continue;
       if (!character.active) continue;
       if (character.dead) continue;
-      if (!target.withinRadius(character, radius)) continue;
+      if (!character.withinDistance(x, y, z, radius)) continue;
       applyHit(
-          angle: radiansV2(target, character),
+          angle: radian(x1: x, y1: y, x2: character.x, y2: character.y),
           target: character,
           srcCharacter: srcCharacter,
           damage: damage,
@@ -1712,7 +1726,12 @@ abstract class Game {
       case ProjectileType.Rocket:
         final owner = projectile.owner;
         if (owner == null) return;
-        createExplosion(target: projectile, srcCharacter: owner);
+        createExplosion(
+            x: projectile.x,
+            y: projectile.y,
+            z: projectile.z,
+            srcCharacter: owner,
+        );
         break;
       case ProjectileType.Bullet:
         dispatch(
@@ -2480,6 +2499,7 @@ abstract class Game {
   }){
     for (final gameObject in gameObjects) {
        if (gameObject.active) continue;
+       if (!gameObject.available) continue;
        gameObject.x = x;
        gameObject.y = y;
        gameObject.z = z;
