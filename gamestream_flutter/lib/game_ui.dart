@@ -493,35 +493,10 @@ class GameUI {
           child: Container(
             width: Engine.screen.width,
             alignment: Alignment.center,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                buildPlayerUI(),
-              ],
-            ),
+            child: buildRowPlayerWeapons(),
           ),
           bottom: GameStyle.Default_Padding,
         ),
-        // Positioned(
-        //     top: 50,
-        //     child: Container(
-        //       width: Engine.screen.width,
-        //       alignment: Alignment.center,
-        //       child: Row(
-        //          mainAxisAlignment: MainAxisAlignment.center,
-        //          children: [
-        //            watch(GamePlayer.action, (int action) {
-        //              if (action == PlayerAction.None) return GameStyle.Null;
-        //              return watch(GamePlayer.actionItemType, (int actionItemType) {
-        //                 return watch(GamePlayer.actionCost, (int cost){
-        //                   return text('Press E to ${PlayerAction.getName(action)} ${ItemType.getName(actionItemType)} for $cost credits');
-        //                 });
-        //              });
-        //            }),
-        //          ],
-        //       ),
-        //     )
-        // ),
         Positioned(
             bottom: GameStyle.Default_Padding,
             left: GameStyle.Default_Padding,
@@ -854,131 +829,25 @@ class GameUI {
       ],
     );
 
-  static Widget buildPlayerUI() => IgnorePointer(
+  static Widget buildRowPlayerWeapons() => IgnorePointer(
     child: Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        // buildPlayerHealth(),
-        // width4,
-        buildPlayerUIWeapons(),
-        // width4,
-        // buildPlayerEnergy(),
-      ],
-    ),
+      mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Container(
+            constraints: BoxConstraints(maxWidth: 120),
+            height: 64,
+            child: watch(GamePlayer.weaponPrimary, buildAtlasItemType),
+          ),
+          width64,
+          Container(
+            constraints: BoxConstraints(maxWidth: 120),
+            height: 64,
+            child: watch(GamePlayer.weaponSecondary, buildAtlasItemType),
+          ),
+        ],
+      ),
   );
-
-  static Widget buildPlayerUIWeapons() {
-
-    final Ammo_Width = 100.0;
-    final Ammo_Height = 10.0;
-
-    // final weaponLeftAmmo2 = Container(
-    //     width: Ammo_Width,
-    //     height: Ammo_Height,
-    //     alignment: Alignment.centerLeft,
-    //     child: watch(GamePlayer.weaponPrimaryCapacity, (int capacity){
-    //       if (capacity == 0) return GameStyle.Null;
-    //       return watch(GamePlayer.weaponPrimaryQuantity, (int quantity) {
-    //         final bulletWidth = Ammo_Width / (capacity * 2);
-    //         final margin = EdgeInsets.only(right: bulletWidth);
-    //         return Row(children: List.generate(capacity, (index) {
-    //           return Container(
-    //             width: bulletWidth,
-    //             height: Ammo_Height,
-    //             margin: margin,
-    //             color: index < quantity ? Colors.white70 : Colors.white12,
-    //           );
-    //         }));
-    //       });
-    //     })
-    // );
-
-    // final weaponAmmoRight2 = Container(
-    //     width: Ammo_Width,
-    //     height: Ammo_Height,
-    //     alignment: Alignment.centerLeft,
-    //     child: watch(GamePlayer.weaponSecondaryCapacity, (int capacity){
-    //       if (capacity == 0) return GameStyle.Null;
-    //       return watch(GamePlayer.weaponSecondaryQuantity, (int quantity) {
-    //         final bulletWidth = Ammo_Width / (capacity * 2);
-    //         final margin = EdgeInsets.only(right: bulletWidth);
-    //         return Row(children: List.generate(capacity, (index) {
-    //           return Container(
-    //             width: bulletWidth,
-    //             height: Ammo_Height,
-    //             margin: index + 1 == capacity ? null : margin,
-    //             color: index < quantity ? Colors.white70 : Colors.white12,
-    //           );
-    //         }));
-    //       });
-    //     })
-    // );
-
-    const Border_Width = 3.0;
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        Column(
-          children: [
-            border(
-              color: Colors.transparent,
-              width: Border_Width,
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: borderRadius4,
-                  color: Colors.transparent,
-                ),
-                constraints: BoxConstraints(maxWidth: 120),
-                padding: GameStyle.Padding_6,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      height: GameStyle.Player_Weapons_Icon_Size,
-                      child: watch(Engine.watchMouseLeftDown, (bool leftClicked){
-                        return watch(GamePlayer.weaponPrimary, buildAtlasItemType);
-                      }),
-                    ),
-                    height4,
-                    // weaponLeftAmmo2,
-                    // weaponLeftAmmo,
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-        width4,
-        Column(
-          children: [
-            border(
-              color: Colors.transparent,
-              width: Border_Width,
-              child: Container(
-                constraints: BoxConstraints(maxWidth: 120),
-                decoration: BoxDecoration(
-                  borderRadius: borderRadius4,
-                  color: Colors.transparent,
-                ),
-                padding: GameStyle.Padding_6,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      height: GameStyle.Player_Weapons_Icon_Size,
-                      child: watch(GamePlayer.weaponSecondary, buildAtlasItemType),
-                    ),
-                    height4,
-                    // weaponAmmoRight2
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
 
   static Widget buildRowItemTypeLevel(int level){
     return Row(
