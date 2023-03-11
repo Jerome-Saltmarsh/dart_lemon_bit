@@ -5,9 +5,7 @@ import 'dart:math';
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/classes/src/game_environment.dart';
 import 'package:bleed_server/src/classes/src/game_time.dart';
-import 'package:bleed_server/src/constants/frames_per_second.dart';
 import 'package:lemon_math/library.dart';
-
 
 class TutorialType {
    static const Movement              = 0;
@@ -31,8 +29,9 @@ class GameCombat extends Game {
   static const Crate_Respawn_Duration = 1500;
   static const Chance_Of_Item_Drop = 0.25;
   static const Credits_Collected = 5;
-  static const Max_Players = 12;
-  static const Player_Health = 16;
+  static const Max_Players = 16;
+  static const Player_Health = 20;
+  static const Player_Energy = 20;
 
   static const itemTypes = [
     // ItemType.Consumables_Potion_Red,
@@ -98,6 +97,8 @@ class GameCombat extends Game {
 
     player.maxHealth = Player_Health;
     player.health = Player_Health;
+    player.maxEnergy = Player_Energy;
+    player.energy = Player_Energy;
     player.item_level[weaponPrimary] = 0;
     player.item_level[weaponSecondary] = 0;
     player.item_level[weaponTertiary] = 0;
@@ -108,8 +109,8 @@ class GameCombat extends Game {
     player.weaponType = weaponPrimary;
     player.grenades = 3;
     player.credits = 0;
-    player.item_quantity[weaponPrimary] = player.weaponPrimaryCapacity;
-    player.item_quantity[weaponSecondary] = player.weaponSecondaryCapacity;
+    // player.item_quantity[weaponPrimary] = player.weaponPrimaryCapacity;
+    // player.item_quantity[weaponSecondary] = player.weaponSecondaryCapacity;
     player.writePlayerEquipment();
   }
 
@@ -234,7 +235,7 @@ class GameCombat extends Game {
   void updatePlayerBuffs(){
     nextBuffUpdate--;
     if (nextBuffUpdate > 0) return;
-    nextBuffUpdate = framesPerSecond;
+    nextBuffUpdate = Engine.Frames_Per_Second;
 
     for (final player in players) {
        if (player.dead) continue;
@@ -290,50 +291,44 @@ class GameCombat extends Game {
     player.actionCost     = getItemPurchaseCost(itemType, itemLevel);
 
     if (player.weaponPrimary == itemType) {
-      if (player.weaponPrimaryQuantity < player.weaponPrimaryCapacity){
-         player.weaponPrimaryQuantity = player.weaponPrimaryCapacity;
-         player.writeInfo('Ammo Acquired');
-         player.writePlayerEventItemAcquired(itemType);
-         deactivateCollider(closestGameObject);
+      player.writeInfo('Ammo Acquired');
+      player.writePlayerEventItemAcquired(itemType);
+      deactivateCollider(closestGameObject);
 
-         performScript(timer: 300).writeSpawnGameObject(
-             type: randomItem(const [
-               ItemType.Weapon_Ranged_Flamethrower,
-               ItemType.Weapon_Ranged_Bazooka,
-               ItemType.Weapon_Ranged_Plasma_Pistol,
-               ItemType.Weapon_Ranged_Plasma_Rifle,
-               ItemType.Weapon_Ranged_Sniper_Rifle,
-               ItemType.Weapon_Ranged_Shotgun,
-             ]),
-             x: closestGameObject.x,
-             y: closestGameObject.y,
-             z: closestGameObject.z,
-         );
-      }
+      performScript(timer: 300).writeSpawnGameObject(
+        type: randomItem(const [
+          ItemType.Weapon_Ranged_Flamethrower,
+          ItemType.Weapon_Ranged_Bazooka,
+          ItemType.Weapon_Ranged_Plasma_Pistol,
+          ItemType.Weapon_Ranged_Plasma_Rifle,
+          ItemType.Weapon_Ranged_Sniper_Rifle,
+          ItemType.Weapon_Ranged_Shotgun,
+        ]),
+        x: closestGameObject.x,
+        y: closestGameObject.y,
+        z: closestGameObject.z,
+      );
       return;
     }
 
     if (player.weaponSecondary == itemType) {
-      if (player.weaponSecondaryQuantity < player.weaponSecondaryCapacity){
-        player.weaponSecondaryQuantity = player.weaponSecondaryCapacity;
-        player.writeInfo('Ammo Acquired');
-        player.writePlayerEventItemAcquired(itemType);
-        deactivateCollider(closestGameObject);
+      player.writeInfo('Ammo Acquired');
+      player.writePlayerEventItemAcquired(itemType);
+      deactivateCollider(closestGameObject);
 
-        performScript(timer: 300).writeSpawnGameObject(
-          type: randomItem(const [
-            ItemType.Weapon_Ranged_Flamethrower,
-            ItemType.Weapon_Ranged_Bazooka,
-            ItemType.Weapon_Ranged_Plasma_Pistol,
-            ItemType.Weapon_Ranged_Plasma_Rifle,
-            ItemType.Weapon_Ranged_Sniper_Rifle,
-            ItemType.Weapon_Ranged_Shotgun,
-          ]),
-          x: closestGameObject.x,
-          y: closestGameObject.y,
-          z: closestGameObject.z,
-        );
-      }
+      performScript(timer: 300).writeSpawnGameObject(
+        type: randomItem(const [
+          ItemType.Weapon_Ranged_Flamethrower,
+          ItemType.Weapon_Ranged_Bazooka,
+          ItemType.Weapon_Ranged_Plasma_Pistol,
+          ItemType.Weapon_Ranged_Plasma_Rifle,
+          ItemType.Weapon_Ranged_Sniper_Rifle,
+          ItemType.Weapon_Ranged_Shotgun,
+        ]),
+        x: closestGameObject.x,
+        y: closestGameObject.y,
+        z: closestGameObject.z,
+      );
       return;
     }
 
@@ -484,7 +479,7 @@ class GameCombat extends Game {
 
     player.weaponPrimary = itemType;
     player.weaponType = itemType;
-    player.weaponPrimaryQuantity = player.weaponPrimaryCapacity;
+    // player.weaponPrimaryQuantity = player.weaponPrimaryCapacity;
     player.writePlayerEquipment();
   }
 
@@ -507,7 +502,7 @@ class GameCombat extends Game {
 
     player.weaponSecondary = itemType;
     player.weaponType = itemType;
-    player.weaponSecondaryQuantity = player.weaponSecondaryCapacity;
+    // player.weaponSecondaryQuantity = player.weaponSecondaryCapacity;
   }
 
 
@@ -550,17 +545,19 @@ class GameCombat extends Game {
 
 
      if (gameObjectType == player.weaponPrimary) {
-       if (player.weaponPrimaryQuantity >= player.weaponPrimaryCapacity) {
-         player.writeInfo('${ItemType.getName(gameObjectType)} Full');
-         return;
-       }
+       return;
+       // if (player.weaponPrimaryQuantity >= player.weaponPrimaryCapacity) {
+       //   player.writeInfo('${ItemType.getName(gameObjectType)} Full');
+       //   return;
+       // }
      }
 
      if (gameObjectType == player.weaponSecondary) {
-       if (player.weaponSecondaryQuantity >= player.weaponSecondaryCapacity) {
-         player.writeInfo('${ItemType.getName(gameObjectType)} Full');
-         return;
-       }
+       return;
+       // if (player.weaponSecondaryQuantity >= player.weaponSecondaryCapacity) {
+       //   player.writeInfo('${ItemType.getName(gameObjectType)} Full');
+       //   return;
+       // }
      }
 
      player.setItemQuantityMax(gameObject.type);
@@ -604,23 +601,23 @@ class GameCombat extends Game {
     }
   }
 
-  @override
-  void customOnCharacterWeaponStateReady(Character character){
-    if (character.weaponType == ItemType.Empty) return;
-    if (character is! Player) return;
-
-    if (character.weaponPrimaryEquipped) {
-      if (!character.weaponPrimaryEmpty) return;
-      character.weaponPrimary = ItemType.Empty;
-      character.weaponType = ItemType.Empty;
-      return;
-    }
-
-    if (!character.weaponSecondaryEmpty) return;
-    character.weaponSecondary = ItemType.Empty;
-    character.weaponType = ItemType.Empty;
-    return;
-  }
+  // @override
+  // void customOnCharacterWeaponStateReady(Character character){
+  //   if (character.weaponType == ItemType.Empty) return;
+  //   if (character is! Player) return;
+  //
+  //   // if (character.weaponPrimaryEquipped) {
+  //   //   if (!character.weaponPrimaryEmpty) return;
+  //   //   character.weaponPrimary = ItemType.Empty;
+  //   //   character.weaponType = ItemType.Empty;
+  //   //   return;
+  //   // }
+  //
+  //   if (!character.weaponSecondaryEmpty) return;
+  //   character.weaponSecondary = ItemType.Empty;
+  //   character.weaponType = ItemType.Empty;
+  //   return;
+  // }
 
   @override
   void customOnPlayerCollectGameObject(Player player, GameObject gameObject) {
@@ -681,14 +678,14 @@ class GameCombat extends Game {
       return;
     }
 
-    if (gameObject.type == ItemType.Consumables_Ammo_Box) {
-      player.weaponPrimaryQuantity = player.weaponPrimaryCapacity;
-      player.weaponSecondaryQuantity = player.weaponSecondaryCapacity;
-      player.writeInfo('Full Ammo');
-      player.writePlayerEventItemAcquired(gameObject.type);
-      deactivateCollider(gameObject);
-      return;
-    }
+    // if (gameObject.type == ItemType.Consumables_Ammo_Box) {
+    //   player.weaponPrimaryQuantity = player.weaponPrimaryCapacity;
+    //   player.weaponSecondaryQuantity = player.weaponSecondaryCapacity;
+    //   player.writeInfo('Full Ammo');
+    //   player.writePlayerEventItemAcquired(gameObject.type);
+    //   deactivateCollider(gameObject);
+    //   return;
+    // }
 
     if (gameObject.type == ItemType.Weapon_Thrown_Grenade) {
 
@@ -709,21 +706,20 @@ class GameCombat extends Game {
       player.writeGameEventGameObjectDestroyed(gameObject);
       deactivateCollider(gameObject);
 
-      if (player.health < player.maxHealth){
-        player.health += 2;
-      }
+      player.health += 2;
+      player.energy += 2;
 
-      if (!player.weaponPrimaryEmpty) {
-        if (player.weaponPrimaryQuantity < player.weaponPrimaryCapacity) {
-          player.weaponPrimaryQuantity++;
-        }
-      }
+      // if (!player.weaponPrimaryEmpty) {
+      //   if (player.weaponPrimaryQuantity < player.weaponPrimaryCapacity) {
+      //     player.weaponPrimaryQuantity++;
+      //   }
+      // }
 
-      if (!player.weaponSecondaryEmpty){
-        if (player.weaponSecondaryQuantity < player.weaponSecondaryCapacity) {
-          player.weaponSecondaryQuantity++;
-        }
-      }
+      // if (!player.weaponSecondaryEmpty){
+      //   if (player.weaponSecondaryQuantity < player.weaponSecondaryCapacity) {
+      //     player.weaponSecondaryQuantity++;
+      //   }
+      // }
 
       return;
     }
@@ -732,17 +728,17 @@ class GameCombat extends Game {
 
     if (ItemType.isTypeWeapon(itemType)) {
       if (player.weaponPrimary == itemType) {
-        if (player.weaponPrimaryQuantity < player.weaponPrimaryCapacity) {
-          player.weaponPrimaryQuantity = player.weaponPrimaryCapacity;
-          player.writePlayerEvent(PlayerEvent.Ammo_Acquired);
-        }
+        // if (player.weaponPrimaryQuantity < player.weaponPrimaryCapacity) {
+        //   player.weaponPrimaryQuantity = player.weaponPrimaryCapacity;
+        //   player.writePlayerEvent(PlayerEvent.Ammo_Acquired);
+        // }
         return;
       }
       if (player.weaponSecondary == itemType) {
-        if (player.weaponSecondaryQuantity < player.weaponSecondaryCapacity) {
-          player.weaponSecondaryQuantity = player.weaponSecondaryCapacity;
-          player.writePlayerEvent(PlayerEvent.Ammo_Acquired);
-        }
+        // if (player.weaponSecondaryQuantity < player.weaponSecondaryCapacity) {
+        //   player.weaponSecondaryQuantity = player.weaponSecondaryCapacity;
+        //   player.writePlayerEvent(PlayerEvent.Ammo_Acquired);
+        // }
         return;
       }
 

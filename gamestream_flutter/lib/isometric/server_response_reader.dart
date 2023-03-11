@@ -261,15 +261,16 @@ class ServerResponseReader with ByteReader {
         ServerState.playerCredits.value = readUInt16();
         break;
       case ApiPlayer.Energy:
-        GamePlayer.energy.value = readUInt16();
-        GamePlayer.energyMax.value = readUInt16();
+        // GamePlayer.energy.value = readUInt16();
+        // GamePlayer.energyMax.value = readUInt16();
+        readApiPlayerEnergy();
         break;
       case ApiPlayer.Weapons:
         readPlayerWeapons();
         break;
-      case ApiPlayer.Weapon_Quantity:
-        readPlayerWeaponQuantity();
-        break;
+      // case ApiPlayer.Weapon_Quantity:
+      //   readPlayerWeaponQuantity();
+      //   break;
       case ApiPlayer.Aim_Angle:
         GamePlayer.mouseAngle = readAngle();
         break;
@@ -364,6 +365,9 @@ class ServerResponseReader with ByteReader {
     }
   }
 
+  void readApiPlayerEnergy() =>
+      GamePlayer.energyPercentage = readPercentage();
+
   void readPlayerPerksUnlocked() {
     final length = readUInt16();
     final values = Uint8List(length);
@@ -377,20 +381,20 @@ class ServerResponseReader with ByteReader {
     GamePlayer.weapon.value = readUInt16();
 
     GamePlayer.weaponPrimary.value           = readUInt16();
-    GamePlayer.weaponPrimaryQuantity.value   = readUInt16();
-    GamePlayer.weaponPrimaryCapacity.value   = readUInt16();
-    GamePlayer.weaponPrimaryLevel.value      = readUInt8();
+    // GamePlayer.weaponPrimaryQuantity.value   = readUInt16();
+    // GamePlayer.weaponPrimaryCapacity.value   = readUInt16();
+    // GamePlayer.weaponPrimaryLevel.value      = readUInt8();
 
     GamePlayer.weaponSecondary.value         = readUInt16();
-    GamePlayer.weaponSecondaryQuantity.value = readUInt16();
-    GamePlayer.weaponSecondaryCapacity.value = readUInt16();
-    GamePlayer.weaponSecondaryLevel.value    = readUInt8();
+    // GamePlayer.weaponSecondaryQuantity.value = readUInt16();
+    // GamePlayer.weaponSecondaryCapacity.value = readUInt16();
+    // GamePlayer.weaponSecondaryLevel.value    = readUInt8();
   }
 
-  void readPlayerWeaponQuantity() {
-    GamePlayer.weaponPrimaryQuantity.value   = readUInt16();
-    GamePlayer.weaponSecondaryQuantity.value = readUInt16();
-  }
+  // void readPlayerWeaponQuantity() {
+  //   GamePlayer.weaponPrimaryQuantity.value   = readUInt16();
+  //   GamePlayer.weaponSecondaryQuantity.value = readUInt16();
+  // }
 
   void readPlayerEquipped() {
     GamePlayer.weapon.value = readUInt16();
@@ -657,11 +661,7 @@ class ServerResponseReader with ByteReader {
     value.y = readDouble();
   }
 
-  double readPercentage(){
-    final value = readByte();
-    if (value == 0) return 0;
-     return value / 256.0; // todo optimize
-  }
+  double readPercentage() => readByte() / 255.0;
 
   List<Quest> readQuests(){
     final total = readUInt16();

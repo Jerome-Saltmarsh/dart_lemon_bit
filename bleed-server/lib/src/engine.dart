@@ -10,12 +10,13 @@ import 'package:bleed_server/src/scenes.dart';
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-import 'constants/frames_per_second.dart';
 import 'system.dart';
 
 final engine = Engine();
 
 class Engine {
+
+  static const Frames_Per_Second = 45;
 
   final connections = <Connection>[];
   final games = <Game>[];
@@ -42,7 +43,7 @@ class Engine {
 
     await scenes.load();
 
-    Timer.periodic(Duration(milliseconds: 1000 ~/ framesPerSecond), _fixedUpdate);
+    Timer.periodic(Duration(milliseconds: 1000 ~/ Frames_Per_Second), _fixedUpdate);
     _startWebsocketServer();
   }
 

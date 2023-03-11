@@ -872,47 +872,47 @@ class GameUI {
     final Ammo_Width = 100.0;
     final Ammo_Height = 10.0;
 
-    final weaponLeftAmmo2 = Container(
-        width: Ammo_Width,
-        height: Ammo_Height,
-        alignment: Alignment.centerLeft,
-        child: watch(GamePlayer.weaponPrimaryCapacity, (int capacity){
-          if (capacity == 0) return GameStyle.Null;
-          return watch(GamePlayer.weaponPrimaryQuantity, (int quantity) {
-            final bulletWidth = Ammo_Width / (capacity * 2);
-            final margin = EdgeInsets.only(right: bulletWidth);
-            return Row(children: List.generate(capacity, (index) {
-              return Container(
-                width: bulletWidth,
-                height: Ammo_Height,
-                margin: margin,
-                color: index < quantity ? Colors.white70 : Colors.white12,
-              );
-            }));
-          });
-        })
-    );
+    // final weaponLeftAmmo2 = Container(
+    //     width: Ammo_Width,
+    //     height: Ammo_Height,
+    //     alignment: Alignment.centerLeft,
+    //     child: watch(GamePlayer.weaponPrimaryCapacity, (int capacity){
+    //       if (capacity == 0) return GameStyle.Null;
+    //       return watch(GamePlayer.weaponPrimaryQuantity, (int quantity) {
+    //         final bulletWidth = Ammo_Width / (capacity * 2);
+    //         final margin = EdgeInsets.only(right: bulletWidth);
+    //         return Row(children: List.generate(capacity, (index) {
+    //           return Container(
+    //             width: bulletWidth,
+    //             height: Ammo_Height,
+    //             margin: margin,
+    //             color: index < quantity ? Colors.white70 : Colors.white12,
+    //           );
+    //         }));
+    //       });
+    //     })
+    // );
 
-    final weaponAmmoRight2 = Container(
-        width: Ammo_Width,
-        height: Ammo_Height,
-        alignment: Alignment.centerLeft,
-        child: watch(GamePlayer.weaponSecondaryCapacity, (int capacity){
-          if (capacity == 0) return GameStyle.Null;
-          return watch(GamePlayer.weaponSecondaryQuantity, (int quantity) {
-            final bulletWidth = Ammo_Width / (capacity * 2);
-            final margin = EdgeInsets.only(right: bulletWidth);
-            return Row(children: List.generate(capacity, (index) {
-              return Container(
-                width: bulletWidth,
-                height: Ammo_Height,
-                margin: index + 1 == capacity ? null : margin,
-                color: index < quantity ? Colors.white70 : Colors.white12,
-              );
-            }));
-          });
-        })
-    );
+    // final weaponAmmoRight2 = Container(
+    //     width: Ammo_Width,
+    //     height: Ammo_Height,
+    //     alignment: Alignment.centerLeft,
+    //     child: watch(GamePlayer.weaponSecondaryCapacity, (int capacity){
+    //       if (capacity == 0) return GameStyle.Null;
+    //       return watch(GamePlayer.weaponSecondaryQuantity, (int quantity) {
+    //         final bulletWidth = Ammo_Width / (capacity * 2);
+    //         final margin = EdgeInsets.only(right: bulletWidth);
+    //         return Row(children: List.generate(capacity, (index) {
+    //           return Container(
+    //             width: bulletWidth,
+    //             height: Ammo_Height,
+    //             margin: index + 1 == capacity ? null : margin,
+    //             color: index < quantity ? Colors.white70 : Colors.white12,
+    //           );
+    //         }));
+    //       });
+    //     })
+    // );
 
     const Border_Width = 3.0;
     return Row(
@@ -940,7 +940,7 @@ class GameUI {
                       }),
                     ),
                     height4,
-                    weaponLeftAmmo2,
+                    // weaponLeftAmmo2,
                     // weaponLeftAmmo,
                   ],
                 ),
@@ -969,7 +969,7 @@ class GameUI {
                       child: watch(GamePlayer.weaponSecondary, buildAtlasItemType),
                     ),
                     height4,
-                    weaponAmmoRight2
+                    // weaponAmmoRight2
                   ],
                 ),
               ),

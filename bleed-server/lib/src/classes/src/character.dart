@@ -171,14 +171,18 @@ abstract class Character extends Collider {
     if (_maxHealth == value) return;
     assert (value > 0);
     _maxHealth = value;
-    if (_health > _maxHealth){
-      _health = _maxHealth;
+    if (this is Player){
+      (this as Player).writePlayerMaxHealth();
+    }
+    if (_health > _maxHealth) {
+      health = _maxHealth;
     }
   }
 
   set health (int value) {
-    if (_health == value) return;
-    _health = clamp(value, 0, maxHealth);
+    final clampedValue = clamp(value, 0, maxHealth);
+    if (clampedValue == _health) return;
+    _health = clampedValue;
     if (this is Player){
       (this as Player).writePlayerHealth();
     }

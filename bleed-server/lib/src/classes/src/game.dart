@@ -561,10 +561,16 @@ abstract class Game {
           return;
         }
 
-        final equippedQuantity = character.item_quantity[weaponType] ?? 0;
-        final nextQuantity = equippedQuantity - 1;
-        character.item_quantity[weaponType] = nextQuantity;
-        character.writePlayerWeaponQuantity();
+        if (character.energy <= 0) {
+          character.writeError('Insufficient Energy');
+          return;
+        }
+        character.energy--;
+
+        // final equippedQuantity = character.item_quantity[weaponType] ?? 0;
+        // final nextQuantity = equippedQuantity - 1;
+        // character.item_quantity[weaponType] = nextQuantity;
+        // character.writePlayerWeaponQuantity();
         // if (character.buffInfiniteAmmo <= 0 && ItemType.isTypeWeaponFirearm(weaponType)){
         //   final equippedQuantity = character.item_quantity[weaponType] ?? 0;
         //
@@ -626,9 +632,9 @@ abstract class Game {
 
     if (ItemType.isTypeWeaponFirearm(weaponType)) {
       characterFireWeapon(character);
-      if (character is Player){
-        if (character.buffNoRecoil > 0) return;
-      }
+      // if (character is Player){
+      //   if (character.buffNoRecoil > 0) return;
+      // }
       character.accuracy += 0.25;
       return;
     }
@@ -1806,7 +1812,7 @@ abstract class Game {
       player.nextEnergyGain--;
       if (player.nextEnergyGain <= 0){
         player.energy++;
-        player.nextEnergyGain = Player.Frames_Per_Energy_Gain;
+        player.nextEnergyGain = player.energyGainRate;
       }
     }
 

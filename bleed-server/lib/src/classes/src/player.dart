@@ -16,7 +16,6 @@ import 'scene_writer.dart';
 class Player extends Character with ByteWriter {
   /// CONSTANTS
   static const Health_Per_Perk = 5;
-  static const Frames_Per_Energy_Gain = 150;
   static const Perks_Length = 5;
   static const inventory_size = 6 * 5;
 
@@ -28,6 +27,8 @@ class Player extends Character with ByteWriter {
   final runTarget = Position3();
   late Function sendBufferToClient;
   GameObject? editorSelectedGameObject;
+  /// Frames per energy rejuvenation
+  var energyGainRate = Engine.Frames_Per_Second;
   var _credits = 0;
   var debug = false;
   var framesSinceClientRequest = 0;
@@ -87,7 +88,7 @@ class Player extends Character with ByteWriter {
   var options = <String, Function> {};
   var _interactMode = InteractMode.Inventory;
   var inventoryOpen = true;
-  var nextEnergyGain = Frames_Per_Energy_Gain;
+  var nextEnergyGain = 0;
 
   /// the key is the item_type and the value is its level
   final item_level = <int, int> {};
@@ -160,27 +161,27 @@ class Player extends Character with ByteWriter {
     writePlayerAction();
   }
 
-  set weaponPrimaryQuantity(int value) =>
-      setItemQuantity(weaponPrimary, value);
+  // set weaponPrimaryQuantity(int value) =>
+  //     setItemQuantity(weaponPrimary, value);
+  //
+  // set weaponSecondaryQuantity(int value) =>
+  //     setItemQuantity(weaponSecondary, value);
 
-  set weaponSecondaryQuantity(int value) =>
-      setItemQuantity(weaponSecondary, value);
+  // int get weaponPrimaryLevel      => item_level[weaponPrimary] ?? 0;
+  // int get weaponPrimaryQuantity   => item_quantity[weaponPrimary] ?? 0;
+  // int get weaponPrimaryCapacity   => getItemCapacity(weaponPrimary);
+  // int get weaponSecondaryLevel    => item_level[weaponSecondary] ?? 0;
+  // int get weaponSecondaryQuantity => item_quantity[weaponSecondary] ?? 0;
+  // int get weaponSecondaryCapacity => getItemCapacity(weaponSecondary);
 
-  int get weaponPrimaryLevel      => item_level[weaponPrimary] ?? 0;
-  int get weaponPrimaryQuantity   => item_quantity[weaponPrimary] ?? 0;
-  int get weaponPrimaryCapacity   => getItemCapacity(weaponPrimary);
-  int get weaponSecondaryLevel    => item_level[weaponSecondary] ?? 0;
-  int get weaponSecondaryQuantity => item_quantity[weaponSecondary] ?? 0;
-  int get weaponSecondaryCapacity => getItemCapacity(weaponSecondary);
-
-  bool get weaponPrimaryFull => weaponPrimaryQuantity >= weaponPrimaryCapacity;
-  bool get weaponSecondaryFull => weaponSecondaryQuantity >= weaponSecondaryCapacity;
+  // bool get weaponPrimaryFull => weaponPrimaryQuantity >= weaponPrimaryCapacity;
+  // bool get weaponSecondaryFull => weaponSecondaryQuantity >= weaponSecondaryCapacity;
 
   bool get weaponPrimaryEquipped => weaponType == weaponPrimary;
   bool get weaponSecondaryEquipped => weaponType == weaponSecondary;
 
-  bool get weaponPrimaryEmpty => weaponPrimaryQuantity <= 0;
-  bool get weaponSecondaryEmpty => weaponSecondaryQuantity <= 0;
+  // bool get weaponPrimaryEmpty => weaponPrimaryQuantity <= 0;
+  // bool get weaponSecondaryEmpty => weaponSecondaryQuantity <= 0;
 
   /// CONSTRUCTOR
   Player({
@@ -1507,7 +1508,8 @@ class Player extends Character with ByteWriter {
       writeByte(0);
       return;
     }
-    writeByte((value * 256).toInt());
+    if (value > 1.0) writeByte(255);
+    writeByte((value * 255).toInt());
   }
 
   void writePosition(Position value){
@@ -1556,22 +1558,22 @@ class Player extends Character with ByteWriter {
     writeUInt16(weaponType);
 
     writeUInt16(weaponPrimary);
-    writeUInt16(weaponPrimaryQuantity);
-    writeUInt16(weaponPrimaryCapacity);
-    writeUInt8 (weaponPrimaryLevel);
+    // writeUInt16(weaponPrimaryQuantity);
+    // writeUInt16(weaponPrimaryCapacity);
+    // writeUInt8 (weaponPrimaryLevel);
 
     writeUInt16(weaponSecondary);
-    writeUInt16(weaponSecondaryQuantity);
-    writeUInt16(weaponSecondaryCapacity);
-    writeUInt8 (weaponSecondaryLevel);
+    // writeUInt16(weaponSecondaryQuantity);
+    // writeUInt16(weaponSecondaryCapacity);
+    // writeUInt8 (weaponSecondaryLevel);
   }
 
-  void writePlayerWeaponQuantity(){
-    writeByte(ServerResponse.Api_Player);
-    writeByte(ApiPlayer.Weapon_Quantity);
-    writeUInt16(weaponPrimaryQuantity);
-    writeUInt16(weaponSecondaryQuantity);
-  }
+  // void writePlayerWeaponQuantity(){
+  //   writeByte(ServerResponse.Api_Player);
+  //   writeByte(ApiPlayer.Weapon_Quantity);
+  //   writeUInt16(weaponPrimaryQuantity);
+  //   writeUInt16(weaponSecondaryQuantity);
+  // }
 
   void writeGameOptions() {
     final options = game.options;
@@ -1788,8 +1790,14 @@ class Player extends Character with ByteWriter {
   void writePlayerEnergy() {
     writeUInt8(ServerResponse.Api_Player);
     writeUInt8(ApiPlayer.Energy);
-    writeUInt16(energy);
-    writeUInt16(maxEnergy);
+    if (maxEnergy == 0) return writeByte(0);
+    writePercentage(energy / maxEnergy);
+    // if (maxEnergy <= 0) {
+    //   writeByte(0);
+    // }
+    // writePercentage(value)
+    // writeUInt16(energy);
+    // writeUInt16(maxEnergy);
   }
 
   void writeGameObject(GameObject gameObject){
@@ -1948,9 +1956,9 @@ class Player extends Character with ByteWriter {
     final quantityClamped = clamp(quantity, 0, getItemCapacity(itemType));
     if (getItemQuantity(itemType) == quantityClamped) return;
     item_quantity[itemType] = quantityClamped;
-    if (itemType == weaponPrimary || itemType == weaponSecondary) {
-      writePlayerWeaponQuantity();
-    }
+    // if (itemType == weaponPrimary || itemType == weaponSecondary) {
+    //   writePlayerWeaponQuantity();
+    // }
   }
 
   void writePlayerBuffs() {

@@ -33,7 +33,7 @@ class ApiPlayer {
   static const Weapons = 39;
   static const Equipment = 40;
   static const Action = 41;
-  static const Weapon_Quantity = 42;
+  // static const Weapon_Quantity = 42;
   static const Grenades = 43;
   static const Buffs = 44;
   static const Id = 45;

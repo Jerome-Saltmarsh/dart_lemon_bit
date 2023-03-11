@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/render/renderer_nodes.dart';
 
+import 'isometric/render/render_character_health_bar.dart';
+
 class GameCanvas {
   static void renderForegroundText(Vector3 position, String text){
     Engine.renderText(
@@ -124,6 +126,13 @@ class GameCanvas {
     GameRender.renderMouseTargetName();
     ClientState.rendersSinceUpdate.value++;
     renderPlayerRunTarget();
+
+    renderBarBlue(
+        GamePlayer.position.x,
+        GamePlayer.position.y,
+        GamePlayer.position.z,
+        GamePlayer.energyPercentage,
+    );
 
     if (ClientState.debugMode.value){
       debugRenderIsland();

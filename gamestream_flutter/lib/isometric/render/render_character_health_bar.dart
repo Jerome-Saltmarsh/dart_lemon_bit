@@ -18,6 +18,21 @@ void renderBarGreen(double x, double y, double z, double percentage) {
   );
 }
 
+void renderBarBlue(double x, double y, double z, double percentage) {
+  Engine.renderSprite(
+    image: GameImages.atlas_gameobjects,
+    dstX: GameConvert.getRenderX(x, y, z) - AtlasGameObjects.Bar_Green_Width_Half,
+    dstY: GameConvert.getRenderY(x, y, z) - 55,
+    srcX: 171,
+    srcY: 48,
+    srcWidth: 51.0 * percentage,
+    srcHeight: 8,
+    anchorX: 0.0,
+    color: 1,
+  );
+}
+
+
 void renderCharacterHealthBar(Character character){
   renderBarGreen(character.x, character.y, character.z, character.health);
 
@@ -44,8 +59,6 @@ void renderCharacterHealthBar(Character character){
   //     color: color,
   // );
 }
-
-
 
 void renderCharacterBarWeaponRounds({
   required double x,
