@@ -7,22 +7,13 @@ import 'package:bleed_server/src/classes/src/game_environment.dart';
 import 'package:bleed_server/src/classes/src/game_time.dart';
 import 'package:lemon_math/library.dart';
 
-class TutorialType {
-   static const Movement              = 0;
-   static const Left_Click_Fire       = 1;
-   static const Right_Click_Fire      = 2;
-   static const Space_Throw_Grenade   = 3;
-}
-
 class GameCombat extends Game {
-  static const hints = [
-     '(W,A,S,D) RUN',
-     '(LEFT CLICK) FIRE WEAPON 1',
-     '(RIGHT CLICK) FIRE WEAPON 2',
-     '(SPACE) Throw Grenade',
-  ];
 
-  static final hints_length = hints.length;
+  // variables
+  var nextBuffUpdate = 0;
+
+  // constants
+  static final hints_length = Hints.length;
   static final hints_frames_between = 600;
   static const Max_Grenades = 3;
   static const GameObject_Duration = 500;
@@ -33,9 +24,16 @@ class GameCombat extends Game {
   static const Player_Health = 20;
   static const Player_Energy = 20;
 
-  static const itemTypes = [
-    ItemType.Weapon_Thrown_Grenade,
+  static const Hints = [
+    '(W,A,S,D) RUN',
+    '(LEFT CLICK) FIRE WEAPON 1',
+    '(RIGHT CLICK) FIRE WEAPON 2',
+    '(SPACE) Throw Grenade',
+  ];
+
+  static const GameObjects_Spawnable = [
     ItemType.Resource_Credit,
+    ItemType.Weapon_Thrown_Grenade,
     ItemType.Weapon_Ranged_Flamethrower,
     ItemType.Weapon_Ranged_Bazooka,
     ItemType.Weapon_Ranged_Plasma_Pistol,
@@ -72,11 +70,10 @@ class GameCombat extends Game {
   ];
 
   static const GameObjects_Collectable = [
-    ...itemTypes,
+    ...GameObjects_Spawnable,
   ];
 
-  var nextBuffUpdate = 0;
-
+  // constructor
   GameCombat({
     required super.scene,
   }) : super(
@@ -272,7 +269,7 @@ class GameCombat extends Game {
   void spawnRandomItemAtPosition(Position3 position){
     final spawnedGameObject = spawnGameObjectAtPosition(
       position: position,
-      type: randomBool() ? ItemType.Resource_Credit : randomItem(itemTypes),
+      type: randomBool() ? ItemType.Resource_Credit : randomItem(GameObjects_Spawnable),
     );
 
     spawnedGameObject
@@ -367,7 +364,7 @@ class GameCombat extends Game {
     if (player.hintIndex >= hints_length) return;
     player.hintNext--;
     if (player.hintNext > 0) return;
-    player.writeInfo(hints[player.hintIndex]);
+    player.writeInfo(Hints[player.hintIndex]);
     player.hintNext = hints_frames_between;
     player.hintIndex++;
   }
@@ -621,9 +618,9 @@ class GameCombat extends Game {
   @override
   void customOnGameObjectSpawned(GameObject gameObject) {
     final type = gameObject.type;
-     gameObject.destroyable   = GameObjects_Destroyable .contains(type);
+     gameObject.destroyable   = GameObjects_Destroyable.contains(type);
      gameObject.interactable  = GameObjects_Interactable.contains(type);
-     gameObject.collectable   = GameObjects_Collectable .contains(type);
+     gameObject.collectable   = GameObjects_Collectable.contains(type);
   }
 
   @override
