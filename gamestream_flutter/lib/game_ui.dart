@@ -500,17 +500,13 @@ class GameUI {
         Positioned(
             bottom: GameStyle.Default_Padding,
             left: GameStyle.Default_Padding,
-            child: IgnorePointer(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  // buildPanelCredits(),
-                  // width16,
-                  buildPanelTotalGrenades(),
-                  width16,
-                  buildRowPlayerBuffs(),
-                ],
-              ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                buildPanelTotalGrenades(),
+                // width16,
+                // buildRowPlayerBuffs(),
+              ],
             )),
             visibleBuilder(
             GameOptions.inventory,
@@ -787,8 +783,13 @@ class GameUI {
       child: buildAtlasItemType(
           ItemType.Weapon_Thrown_Grenade),
     );
-    return watch(GamePlayer.totalGrenades, (int totalGrenades) => Row(
-        children: List.generate(totalGrenades, (index) => icon))
+    return buildDialogUIControl(
+      child: Tooltip(
+        message: 'SPACE-BAR',
+        child: watch(GamePlayer.totalGrenades, (int totalGrenades) => Row(
+            children: List.generate(totalGrenades, (index) => icon))
+        ),
+      ),
     );
   }
 
