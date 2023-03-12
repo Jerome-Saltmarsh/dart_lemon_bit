@@ -7,24 +7,17 @@ navigate to next method: ctrl + shift + up / down arrows
 ctrl + w            : minimal mode
 ctrl + shift + e    : view recent changes
 
-[EXPLORE and SURVIVE]
-
 [NEXT GAME IDEAS]
-[ ] trinkets and perks
 [ ] find keys, which can unlock chests, chests provide treasures
 [ ] metal crates can only be smashed with hammer
 [ ] tree cans only be chopped with axe
 [ ] resources buy trinkets
-[ ] weapon bow - Stuns Enemy
-[ ] Frost staff
-[ ] Taser
-[ ] Portal Gun
-[ ] armour
-
-[IDEAS]
-[ ] apples heal minor health
-[ ] Scene Portal
-[ ] scene warehouse
+[ ] purchasable trinkets
+[ ] trinket pouch
+[ ] weapon stun taser
+[ ] weapon portal gun
+[ ] weapon shield
+[ ] purchasable weapons
 
 10.03.2023
 [x] polish collect credits

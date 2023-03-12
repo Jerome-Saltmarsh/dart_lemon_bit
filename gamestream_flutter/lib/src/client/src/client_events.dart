@@ -97,97 +97,38 @@ class ClientEvents {
 
   static void onKeyPressedPlayMode(LogicalKeyboardKey key){
 
-    if (key == ClientConstants.Key_Reload){
-      GameNetwork.sendClientRequestReload();
-      return;
-    }
-    if (key == ClientConstants.Key_Unequip){
-      GameNetwork.sendClientRequestUnequip();
-      return;
-    }
+    // if (key == ClientConstants.Key_Reload){
+    //   GameNetwork.sendClientRequestReload();
+    //   return;
+    // }
+    // if (key == ClientConstants.Key_Unequip){
+    //   GameNetwork.sendClientRequestUnequip();
+    //   return;
+    // }
 
-    if (GameOptions.inventory.value){
-      if (key == ClientConstants.Key_Inventory){
-        GameNetwork.sendClientRequestInventoryToggle();
-        return;
-      }
-      if (ClientQuery.keyboardKeyIsHotKey(key)) {
-        onKeyPressedPlayModeHotKey(key);
-        return;
-      }
-    }
+    // if (GameOptions.inventory.value){
+    //   if (key == ClientConstants.Key_Inventory){
+    //     GameNetwork.sendClientRequestInventoryToggle();
+    //     return;
+    //   }
+    //   if (ClientQuery.keyboardKeyIsHotKey(key)) {
+    //     onKeyPressedPlayModeHotKey(key);
+    //     return;
+    //   }
+    // }
 
-    if (GameOptions.items.value) {
-      // if (key == ClientConstants.Key_Inventory){
-      //   ClientState.window_visible_items.toggle();
-      //   return;
-      // }
-
-       if (key == LogicalKeyboardKey.keyC) {
-         GameNetwork.sendClientRequest(ClientRequest.Equip_Next, ItemGroup.Tertiary_Weapon.index);
-         return;
-       }
-       if (key == LogicalKeyboardKey.keyQ) {
-         GameNetwork.sendRequestPlayerActionPrimary();
-         return;
-       }
-
-      if (key == LogicalKeyboardKey.keyE) {
-        GameNetwork.sendRequestPlayerActionSecondary();
-        return;
-      }
-      if (key == LogicalKeyboardKey.keyF) {
-        GameNetwork.sendRequestThrowGrenade();
-        return;
-      }
-       if (key == LogicalKeyboardKey.digit1) {
-         GameNetwork.sendClientRequest(ClientRequest.Equip_Next, ItemGroup.Primary_Weapon.index);
-         return;
-       }
-       if (key == LogicalKeyboardKey.digit2) {
-         GameNetwork.sendClientRequest(ClientRequest.Equip_Next, ItemGroup.Secondary_Weapon.index);
-         return;
-       }
-       if (key == LogicalKeyboardKey.digit3) {
-         GameNetwork.sendClientRequest(ClientRequest.Equip_Next, ItemGroup.Tertiary_Weapon.index);
-         return;
-       }
-    }
-
-    if (key == ClientConstants.Key_Message) {
-      GameActions.messageBoxShow();
-      return;
-    }
-    if (key == ClientConstants.Key_Toggle_Map) {
-      ClientState.Map_Visible.toggle();
-      return;
-    }
-    if (key == ClientConstants.Key_Auto_Attack) {
-      GameActions.attackAuto();
-      return;
-    }
     if (key == ClientConstants.Key_Zoom) {
       GameActions.toggleZoom();
       return;
     }
 
-    if (key == ClientConstants.Key_Settings) {
-      GameActions.toggleWindowSettings();
+    if (key == ClientConstants.Key_Toggle_Map) {
+      ClientState.Map_Visible.toggle();
       return;
     }
 
-    if (key == LogicalKeyboardKey.keyV) {
-      GameState.spawnParticle(
-          type: ParticleType.Myst,
-          x: GameMouse.positionX,
-          y: GameMouse.positionY,
-          z: GameMouse.positionZ + Node_Height_Half,
-          angle: randomAngle(),
-          speed: 1,
-          duration: 100,
-          checkCollision: false,
-          weight: 0,
-      );
+    if (key == ClientConstants.Key_Settings) {
+      GameActions.toggleWindowSettings();
       return;
     }
   }

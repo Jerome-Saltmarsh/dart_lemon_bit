@@ -132,8 +132,6 @@ class GameCombat extends Game {
     player.weaponType = weaponPrimary;
     player.grenades = 3;
     player.credits = 0;
-    // player.item_quantity[weaponPrimary] = player.weaponPrimaryCapacity;
-    // player.item_quantity[weaponSecondary] = player.weaponSecondaryCapacity;
     player.writePlayerEquipment();
   }
 
@@ -396,22 +394,6 @@ class GameCombat extends Game {
      }
   }
 
-  @override
-  void performPlayerActionPrimary(Player player) {
-    if (player.dead) return;
-    if (player.action == PlayerAction.None) return;
-    if (player.actionItemId == -1) return;
-
-    final playerActionGameObject = findGameObjectById(player.actionItemId);
-    if (playerActionGameObject == null) {
-      player.actionItemId = -1;
-      return;
-    }
-    playerEquipPrimary(player, playerActionGameObject.type);
-    player.setItemQuantityMax(playerActionGameObject.type);
-    deactivateGameObjectAndScheduleRespawn(playerActionGameObject);
-  }
-
   void deactivateGameObjectAndScheduleRespawn(GameObject gameObject){
     if (!gameObject.active) return;
     deactivateCollider(gameObject);
@@ -428,22 +410,6 @@ class GameCombat extends Game {
       y: gameObject.y,
       z: gameObject.z,
     );
-  }
-
-  @override
-  void performPlayerActionSecondary(Player player) {
-    if (player.dead) return;
-    if (player.action == PlayerAction.None) return;
-    if (player.actionItemId == -1) return;
-
-    final playerActionGameObject = findGameObjectById(player.actionItemId);
-    if (playerActionGameObject == null) {
-      player.actionItemId = -1;
-      return;
-    }
-    playerEquipSecondary(player, playerActionGameObject.type);
-    player.setItemQuantityMax(playerActionGameObject.type);
-    deactivateGameObjectAndScheduleRespawn(playerActionGameObject);
   }
 
   @override
@@ -621,6 +587,8 @@ class GameCombat extends Game {
      gameObject.destroyable   = GameObjects_Destroyable.contains(type);
      gameObject.interactable  = GameObjects_Interactable.contains(type);
      gameObject.collectable   = GameObjects_Collectable.contains(type);
+     gameObject.fixed         = gameObject.collectable;
+     gameObject.physical      = !gameObject.collectable;
   }
 
   @override
@@ -632,20 +600,18 @@ class GameCombat extends Game {
     required int hitType,
     required double force,
   }) {
-
-     if (target is GameObject) {
-       if (target.type == ItemType.GameObjects_Barrel_Explosive){
-          if (hitType == HitType.Projectile || hitType == HitType.Explosion) {
-            destroyGameObject(target);
-            createExplosion(
-                x: target.x,
-                y: target.y,
-                z: target.z,
-                srcCharacter: srcCharacter,
-            );
-          }
-       }
-     }
+    if (target is! GameObject) return;
+    if (target.type == ItemType.GameObjects_Barrel_Explosive) {
+      if (hitType == HitType.Projectile || hitType == HitType.Explosion) {
+        destroyGameObject(target);
+        createExplosion(
+          x: target.x,
+          y: target.y,
+          z: target.z,
+          srcCharacter: srcCharacter,
+        );
+      }
+    }
   }
 
   @override

@@ -3219,14 +3219,6 @@ abstract class Game {
     return (((level - 1) * (level - 1))) * 6;
   }
 
-  void performPlayerActionPrimary(Player player) {
-
-  }
-
-  void performPlayerActionSecondary(Player player) {
-
-  }
-
   void writePlayerScoresAll() {
     for (final player in players) {
       player.writeApiPlayersAll();

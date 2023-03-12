@@ -157,14 +157,6 @@ class Connection with ByteReader {
         game.playerPurchaseItemType(player, itemType, weaponSide: Side.Left);
         break;
 
-      case ClientRequest.Player_Action_Primary:
-        game.performPlayerActionPrimary(player);
-        break;
-
-      case ClientRequest.Player_Action_Secondary:
-        game.performPlayerActionSecondary(player);
-        break;
-
       case ClientRequest.Player_Throw_Grenade:
         game.playerThrowGrenade(player);
         break;
