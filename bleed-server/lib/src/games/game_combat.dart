@@ -271,15 +271,17 @@ class GameCombat extends Game {
     );
 
     spawnedGameObject
-      ..physical = false
-      ..interactable = ItemType.isTypeWeapon(spawnedGameObject.type)
-      ..fixed = true
-      ..hitable = false
-      ..gravity = false
-      ..collectable = true
+      ..fixed         = true
+      ..collectable   = true
+      ..physical      = false
+      ..interactable  = false
+      ..hitable       = false
+      ..gravity       = false
     ;
+
     performScript(timer: GameObject_Duration)
-        .writeGameObjectDeactivate(spawnedGameObject);
+        .writeGameObjectDeactivate(spawnedGameObject)
+    ;
   }
 
   void updateHint(Player player){
