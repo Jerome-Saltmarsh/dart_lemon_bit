@@ -185,7 +185,7 @@ class ItemType {
 
   static bool isTypeEmpty(int value) => value == Empty;
   static bool isNotTypeEmpty(int value) => value != Empty;
-  static bool isPersistable(int value) => isTypeEnvironment(value);
+  static bool isPersistable(int value) => isTypeGameObject(value) || isTypeWeapon(value);
 
 
   static double getRadius(int value) => const <int, double> {
@@ -275,9 +275,6 @@ class ItemType {
     isTypeHead(value)         ||
     isTypeLegs(value)         ||
     isTypeWeapon(value)       ;
-
-  static bool isTypeEnvironment(int value) =>
-      value >= Index_GameObjects && value < Index_Consumables;
 
   static bool isTypeConsumable(int value) =>
       value >= Index_Consumables && value < Index_Resources;
@@ -772,8 +769,6 @@ class ItemType {
   ];
   
   static const GameObjectTypes = [
-     Weapon_Ranged_Plasma_Rifle,
-     Resource_Credit,
      GameObjects_Barrel_Explosive,
      GameObjects_Barrel_Purple,
      GameObjects_Barrel_Flaming,

@@ -19,10 +19,13 @@ class GameCombat extends Game {
   static const AI_Respawn_Duration = 300;
   static const Chance_Of_Item_Drop = 0.25;
   static const Credits_Collected = 5;
+  static const Health_Gained_Per_Gem = 2;
+  static const Energy_Gained_Per_Gem = 2;
   static const Credits_Per_Kill = 10;
   static const Max_Players = 16;
   static const Player_Health = 20;
   static const Player_Energy = 20;
+
   static const Chance_Of_Spawn_Type_Credit = 0.8;
 
 
@@ -420,31 +423,30 @@ class GameCombat extends Game {
 
   @override
   void customOnPlayerInteractWithGameObject(Player player, GameObject gameObject){
-
     final gameObjectType = gameObject.type;
 
-     if (!ItemType.isTypeWeapon(gameObjectType)) return;
-
-     if (gameObjectType == ItemType.Weapon_Thrown_Grenade){
-        if (player.grenades >= Max_Grenades){
-          player.writeInfo('Grenades Full');
-          return;
-        }
-        player.grenades = Max_Grenades;
-        player.writePlayerEventItemAcquired(gameObjectType);
-        deactivateCollider(gameObject);
+    if (gameObjectType == ItemType.Weapon_Thrown_Grenade) {
+      if (player.grenades >= Max_Grenades) {
+        player.writeInfo('Grenades Full');
         return;
-     }
+      }
+      player.grenades = Max_Grenades;
+      player.writePlayerEventItemAcquired(gameObjectType);
+      deactivateCollider(gameObject);
+      return;
+    }
 
-     if (gameObjectType == player.weaponPrimary) {
-       return;
-     }
+    if (player.weaponPrimary == gameObjectType) {
+      player.writeError('already equipped');
+      return;
+    }
 
-     if (gameObjectType == player.weaponSecondary) {
-       return;
-     }
+    if (player.weaponSecondary == gameObjectType){
+      player.writeError('already equipped');
+      return;
+    }
 
-     final itemCost = getItemCost(gameObjectType);
+    final itemCost = getItemCost(gameObjectType);
 
      if (player.credits < itemCost) {
        player.writeError('insufficient credits');
@@ -452,13 +454,10 @@ class GameCombat extends Game {
      }
 
      player.credits -= itemCost;
-     player.setItemQuantityMax(gameObjectType);
 
-     if (player.aimTargetWeaponSide == Side.Left) {
-       playerEquipPrimary(player, gameObjectType);
-     } else {
-       playerEquipSecondary(player, gameObjectType);
-     }
+     player.aimTargetWeaponSide == Side.Left
+         ? playerEquipPrimary(player, gameObjectType)
+         : playerEquipSecondary(player, gameObjectType);
   }
 
   int getItemCost(int itemType) => const <int, int> {
@@ -493,14 +492,7 @@ class GameCombat extends Game {
 
   @override
   void customOnGameObjectSpawned(GameObject gameObject) {
-     final type = gameObject.type;
-     gameObject.destroyable   = GameObjects_Destroyable.contains(type);
-     gameObject.interactable  = GameObjects_Interactable.contains(type);
-     gameObject.collectable   = GameObjects_Collectable.contains(type);
-     if (gameObject.interactable || gameObject.collectable) {
-       gameObject.fixed         = true;
-       gameObject.physical      = false;
-     }
+    gameObject.destroyable = GameObjects_Destroyable.contains(gameObject.type);
   }
 
   @override
@@ -592,7 +584,6 @@ class GameCombat extends Game {
         return;
       }
       player.grenades++;
-      player.writeInfo('Grenade');
       player.writePlayerEventItemAcquired(gameObject.type);
       deactivateCollider(gameObject);
       return;
@@ -603,22 +594,8 @@ class GameCombat extends Game {
       player.writePlayerEventItemAcquired(gameObject.type);
       player.writeGameEventGameObjectDestroyed(gameObject);
       deactivateCollider(gameObject);
-
-      player.health += 2;
-      player.energy += 2;
-
-      // if (!player.weaponPrimaryEmpty) {
-      //   if (player.weaponPrimaryQuantity < player.weaponPrimaryCapacity) {
-      //     player.weaponPrimaryQuantity++;
-      //   }
-      // }
-
-      // if (!player.weaponSecondaryEmpty){
-      //   if (player.weaponSecondaryQuantity < player.weaponSecondaryCapacity) {
-      //     player.weaponSecondaryQuantity++;
-      //   }
-      // }
-
+      player.health += Health_Gained_Per_Gem;
+      player.energy += Energy_Gained_Per_Gem;
       return;
     }
 
@@ -626,17 +603,9 @@ class GameCombat extends Game {
 
     if (ItemType.isTypeWeapon(itemType)) {
       if (player.weaponPrimary == itemType) {
-        // if (player.weaponPrimaryQuantity < player.weaponPrimaryCapacity) {
-        //   player.weaponPrimaryQuantity = player.weaponPrimaryCapacity;
-        //   player.writePlayerEvent(PlayerEvent.Ammo_Acquired);
-        // }
         return;
       }
       if (player.weaponSecondary == itemType) {
-        // if (player.weaponSecondaryQuantity < player.weaponSecondaryCapacity) {
-        //   player.weaponSecondaryQuantity = player.weaponSecondaryCapacity;
-        //   player.writePlayerEvent(PlayerEvent.Ammo_Acquired);
-        // }
         return;
       }
 

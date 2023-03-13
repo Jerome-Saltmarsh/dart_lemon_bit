@@ -5,6 +5,8 @@ class GameOptions {
   final bool inventory;
   final bool items;
 
+  var explosionsFriendlyFire = false;
+
   final Map<int, int> itemDamage;
   final List<int> itemTypes;
   final Map<int, List<int>> itemTypeCost;

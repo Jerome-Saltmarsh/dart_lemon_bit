@@ -8,6 +8,16 @@ ctrl + w            : minimal mode
 ctrl + shift + e    : view recent changes
 
 [NEXT GAME IDEAS]
+[ ] perk type explosions do not cause friendly fire
+[ ] perk type instant draw weapon
+[ ] perk type collecting gems also heals health
+[ ] perk type melee attacks heal health
+[ ] perk type melee attacks damage multiple enemies
+[ ] perk type sniper bullets pass through enemies
+[ ] perk type run faster
+
+[ ] powers invisibility
+[ ] powers teleportation
 [ ] find keys, which can unlock chests, chests provide treasures
 [ ] metal crates can only be smashed with hammer
 [ ] tree cans only be chopped with axe
@@ -17,7 +27,9 @@ ctrl + shift + e    : view recent changes
 [ ] weapon stun taser
 [ ] weapon portal gun
 [ ] weapon shield
-[ ] purchasable weapons
+
+13.03.2023
+[x] purchasable weapons
 
 10.03.2023
 [x] polish collect credits

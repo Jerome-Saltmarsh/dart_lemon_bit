@@ -718,7 +718,6 @@ abstract class Game {
 
     player.assignWeaponStateThrowing();
 
-
     final mouseDistance = getDistanceXY(player.x, player.y, player.mouseGridX, player.mouseGridY);
     final throwDistance = min(mouseDistance, GamePhysics.Max_Throw_Distance);
     final throwRatio = throwDistance / GamePhysics.Max_Throw_Distance;
@@ -738,6 +737,7 @@ abstract class Game {
         ..physical = true
         ..gravity = true
         ..hitable = true
+        ..persistable = false
         ..collectable = false
         ..interactable = false
         ..velocityZ = velocityZ
@@ -1357,7 +1357,7 @@ abstract class Game {
           target: gameObject,
           srcCharacter: srcCharacter,
           damage: damage,
-          friendlyFire: true,
+          friendlyFire: options.explosionsFriendlyFire,
           hitType: HitType.Explosion,
         );
     }
@@ -1373,7 +1373,7 @@ abstract class Game {
           target: character,
           srcCharacter: srcCharacter,
           damage: damage,
-          friendlyFire: true,
+          friendlyFire: options.explosionsFriendlyFire,
           hitType: HitType.Explosion,
       );
     }
