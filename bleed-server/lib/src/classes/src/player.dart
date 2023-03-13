@@ -1982,39 +1982,6 @@ class Player extends Character with ByteWriter {
     writeUInt24(id);
   }
 
-  void reduceBuffs(){
-    var changed = false;
-    if (buffInfiniteAmmo > 0) {
-      buffInfiniteAmmo--;
-      changed = true;
-    }
-    if (buffDoubleDamageTimer > 0) {
-      buffDoubleDamageTimer--;
-      changed = true;
-      if (buffDoubleDamageTimer <= 0) {
-        buffDoubleDamage = false;
-      }
-    }
-    if (buffInvincibleTimer > 0) {
-      buffInvincibleTimer--;
-      changed = true;
-      if (buffInvincibleTimer <= 0) {
-        buffInvincible = false;
-      }
-    }
-    if (buffNoRecoil > 0) {
-      buffNoRecoil--;
-      changed = true;
-    }
-    if (buffFast > 0) {
-      buffFast--;
-      changed = true;
-    }
-    if (changed) {
-      writePlayerBuffs();
-    }
-  }
-
   @override
   bool get isPlayer => true;
 

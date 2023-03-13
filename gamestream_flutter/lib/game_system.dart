@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/game_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -7,9 +8,33 @@ import 'library.dart';
 
 class GameSystem {
 
+  static Future<Map<String, dynamic>> handleRawKeyMessage(dynamic message) async {
+       // print('handleRawKeyMessage($message)');
+       final type = message['type'];
+       final int keyCode = message['keyCode'];
+       if (type == 'keydown') {
+         Engine.keyState[keyCode] = true;
+         if (Engine.onKeyDown != null){
+           Engine.onKeyDown!(keyCode);
+         }
+       } else
+       if (type == 'keyup') {
+         Engine.keyState[keyCode] = false;
+         if (Engine.onKeyUp != null){
+           Engine.onKeyUp!(keyCode);
+         }
+       } else {
+         throw Exception('unrecognized key event $message');
+       }
+      return const {'handled': true};
+  }
+
+
   static Future init(SharedPreferences sharedPreferences) async {
     print("environment: ${Engine.isLocalHost ? 'localhost' : 'production'}");
     GameReactions.initialize();
+
+    SystemChannels.keyEvent.setMessageHandler(handleRawKeyMessage);
 
     final visitDateTimeString = sharedPreferences.getString('visit-datetime');
     if (visitDateTimeString != null) {

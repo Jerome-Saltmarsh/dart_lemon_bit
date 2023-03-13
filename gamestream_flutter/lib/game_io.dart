@@ -28,7 +28,6 @@ class GameIO {
   static final inputMode = Watch(InputMode.Keyboard, onChanged: GameEvents.onChangedInputMode);
   static bool get inputModeTouch => inputMode.value == InputMode.Touch;
   static bool get inputModeKeyboard => inputMode.value == InputMode.Keyboard;
-  static bool get keyPressedSpace => Engine.keyPressed(LogicalKeyboardKey.space);
 
   static var joystickLeftX = 0.0;
   static var joystickLeftY = 0.0;
@@ -67,7 +66,7 @@ class GameIO {
       Engine.onLeftClicked = onMouseClickedLeft;
       Engine.onRightClicked = onMouseClickedRight;
       Engine.onPointerSignalEvent = onPointerSignalEvent;
-      Engine.onKeyHeld = onKeyHeld;
+      // Engine.onKeyHeld = onKeyHeld;
       Engine.onKeyPressed = onKeyPressed;
   }
 
@@ -131,12 +130,8 @@ class GameIO {
     _panning = false;
   }
 
-  static void onKeyHeld(RawKeyDownEvent key, int duration) {
-     // print('onKeyHeld(key: ${key.logicalKey.debugName}, duration: $duration)');
-  }
-
-  static void onKeyPressed(RawKeyDownEvent event) {
-     ClientEvents.onKeyPressed(event.logicalKey);
+  static void onKeyPressed(int key) {
+     ClientEvents.onKeyPressed(key);
   }
 
   static int convertRadianToDirection(double radian) {
@@ -239,29 +234,29 @@ class GameIO {
 
   static int getDirectionKeyboard() {
 
-    if (Engine.keyPressed(LogicalKeyboardKey.keyW)) {
-      if (Engine.keyPressed(LogicalKeyboardKey.keyD)) {
+    if (Engine.keyPressed(KeyCode.W)) {
+      if (Engine.keyPressed(KeyCode.D)) {
         return Direction.East;
       }
-      if (Engine.keyPressed(LogicalKeyboardKey.keyA)) {
+      if (Engine.keyPressed(KeyCode.A)) {
         return Direction.North;
       }
       return Direction.North_East;
     }
 
-    if (Engine.keyPressed(LogicalKeyboardKey.keyS)) {
-      if (Engine.keyPressed(LogicalKeyboardKey.keyD)) {
+    if (Engine.keyPressed(KeyCode.S)) {
+      if (Engine.keyPressed(KeyCode.D)) {
         return Direction.South;
       }
-      if (Engine.keyPressed(LogicalKeyboardKey.keyA)) {
+      if (Engine.keyPressed(KeyCode.A)) {
         return Direction.West;
       }
       return Direction.South_West;
     }
-    if (Engine.keyPressed(LogicalKeyboardKey.keyA)) {
+    if (Engine.keyPressed(KeyCode.A)) {
       return Direction.North_West;
     }
-    if (Engine.keyPressed(LogicalKeyboardKey.keyD)) {
+    if (Engine.keyPressed(KeyCode.D)) {
       return Direction.South_East;
     }
     return Direction.None;
@@ -270,30 +265,6 @@ class GameIO {
 
   static void setCursorAction(int cursorAction) {
     GameIO.touchscreenCursorAction = CursorAction.None;
-  }
-
-  static int getCursorAction() {
-    if (GameState.editMode) return CursorAction.None;
-
-    if (inputModeTouch){
-       return GameIO.touchscreenCursorAction;
-    }
-
-    if (inputModeKeyboard) {
-
-      if (Engine.watchMouseLeftDown.value)
-        return CursorAction.Mouse_Left_Click;
-      if (Engine.mouseRightDown.value)
-        return CursorAction.Mouse_Right_Click;
-      if (Engine.keyPressed(ClientConstants.Key_Throw_Grenade))
-        return CursorAction.Key_Space;
-      return CursorAction.None;
-    }
-    if (performActionPrimary) {
-      performActionPrimary = false;
-      return CursorAction.Set_Target;
-    }
-    return CursorAction.None;
   }
 
   static bool getActionSecondary(){
@@ -306,8 +277,7 @@ class GameIO {
     return false;
   }
 
-  static void onRawKeyDownEvent(RawKeyDownEvent event){
-    final key = event.physicalKey;
+  static void onRawKeyDownEvent(int key){
 
     if (key == PhysicalKeyboardKey.tab)
       return GameActions.actionToggleEdit();
@@ -425,15 +395,13 @@ class GameIO {
     if (ClientState.edit.value) {
       return readPlayerInputEdit();
     }
-
-    ClientState.showAllItems = Engine.keyPressed(LogicalKeyboardKey.keyQ);
   }
 
   static void readPlayerInputEdit() {
-    if (Engine.keyPressed(LogicalKeyboardKey.space)) {
+    if (Engine.keyPressedSpace) {
       Engine.panCamera();
     }
-    if (Engine.keyPressed(LogicalKeyboardKey.delete)) {
+    if (Engine.keyPressed(KeyCode.Delete)) {
       GameEditor.delete();
     }
     if (GameIO.getDirectionKeyboard() != Direction.None) {

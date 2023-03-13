@@ -7,9 +7,6 @@ import 'package:lemon_math/library.dart';
 
 class GameCombat extends Game {
 
-  // variables
-  var nextBuffUpdate = 0;
-
   // constants
   static final hints_length = Hints.length;
   static final hints_frames_between = 600;
@@ -243,23 +240,6 @@ class GameCombat extends Game {
   @override
   void customUpdatePlayer(Player player){
       updateHint(player);
-      // updatePlayerAction(player);
-  }
-
-  @override
-  void customUpdate() {
-    updatePlayerBuffs();
-  }
-
-  void updatePlayerBuffs(){
-    nextBuffUpdate--;
-    if (nextBuffUpdate > 0) return;
-    nextBuffUpdate = Engine.Frames_Per_Second;
-
-    for (final player in players) {
-       if (player.dead) continue;
-       player.reduceBuffs();
-    }
   }
 
   void spawnRandomItemAtPosition(Position3 position){

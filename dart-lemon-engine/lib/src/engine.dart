@@ -109,8 +109,8 @@ class Engine {
   // VARIABLES
   static late ui.Image _bufferImage;
   static var _bufferBlendMode = BlendMode.dstATop;
-  static final keyState = <LogicalKeyboardKey, bool>{ };
-  static final keyStateDuration = <LogicalKeyboardKey, int>{ };
+  static final keyState = <int, bool>{ };
+  static final keyStateDuration = <int, int>{ };
   static final random = Random();
   static var textPainter = TextPainter(
       textAlign: TextAlign.center,
@@ -157,13 +157,13 @@ class Engine {
   static final screen = _Screen();
   static final camera = Vector2(0, 0);
   /// triggered if the state of the key is down
-  static Function(RawKeyDownEvent key)? onKeyDown;
+  static Function(int keyCode)? onKeyDown;
   /// triggered if the key had been held
-  static Function(RawKeyDownEvent key, int duration)? onKeyHeld;
+  static Function(int keyCode, int duration)? onKeyHeld;
   /// triggered the first moment the key is pressed down
-  static Function(RawKeyDownEvent key)? onKeyPressed;
+  static Function(int keyCode)? onKeyPressed;
   /// triggered upon key release
-  static Function(RawKeyUpEvent key)? onKeyUp;
+  static Function(int keyCode)? onKeyUp;
 
   static var joystickBaseX = 0.0;
   static var joystickBaseY = 0.0;
@@ -239,39 +239,36 @@ class Engine {
   static var Screen_Bottom = 0.0;
   static var Screen_Left = 0.0;
 
-
-
-  // QUERIES
   static bool get keyPressedShiftLeft =>
-      keyPressed(LogicalKeyboardKey.shiftLeft);
+      keyPressed(KeyCode.Left_Shift);
 
   static bool get keyPressedSpace =>
-      keyPressed(LogicalKeyboardKey.space);
+      keyPressed(KeyCode.Space);
 
-  static bool keyPressed(LogicalKeyboardKey key) =>
+  static bool keyPressed(int key) =>
       keyState[key] ?? false;
 
-  static int getKeyDownDuration(LogicalKeyboardKey key) =>
+  static int getKeyDownDuration(int key) =>
     keyStateDuration[key] ?? 0;
 
-  static void _internalOnKeyboardEvent(RawKeyEvent event) {
-    if (event is RawKeyDownEvent) {
-      if (keyState[event.logicalKey] ?? false) {
-        keyStateDuration[event.logicalKey] = getKeyDownDuration(event.logicalKey) + 1;
-        onKeyHeld?.call(event, getKeyDownDuration(event.logicalKey));
-      } else {
-        keyState[event.logicalKey] = true;
-        onKeyPressed?.call(event);
-      }
-      onKeyDown?.call(event);
-      return;
-    }
-    if (event is RawKeyUpEvent) {
-      keyState[event.logicalKey] = false;
-      onKeyUp?.call(event);
-      return;
-    }
-  }
+  // static void _internalOnKeyboardEvent(RawKeyEvent event) {
+  //   if (event is RawKeyDownEvent) {
+  //     if (keyState[event.logicalKey] ?? false) {
+  //       keyStateDuration[event.logicalKey] = getKeyDownDuration(event.logicalKey) + 1;
+  //       onKeyHeld?.call(event, getKeyDownDuration(event.logicalKey));
+  //     } else {
+  //       keyState[event.logicalKey] = true;
+  //       onKeyPressed?.call(event);
+  //     }
+  //     onKeyDown?.call(event);
+  //     return;
+  //   }
+  //   if (event is RawKeyUpEvent) {
+  //     keyState[event.logicalKey] = false;
+  //     onKeyUp?.call(event);
+  //     return;
+  //   }
+  // }
 
   static void _internalOnChangedMouseLeftDown(bool value){
     if (value) {
@@ -609,7 +606,7 @@ class Engine {
 
     paint.filterQuality = FilterQuality.none;
     paint.isAntiAlias = false;
-    keyboard.addListener(_internalOnKeyboardEvent);
+    // keyboard.addListener(_internalOnKeyboardEvent);
 
     mouseRightDown.onChanged((bool value) {
       if (value) {
@@ -1490,4 +1487,36 @@ class CustomPainterPainter extends CustomPainter {
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
     return doRepaint(oldDelegate);
   }
+}
+
+class KeyCode {
+   static const Left_Shift = 16;
+   static const Space = 32;
+   static const Delete = 46;
+   static const A = 65;
+   static const B = 66;
+   static const C = 67;
+   static const D = 68;
+   static const E = 69;
+   static const F = 70;
+   static const G = 71;
+   static const H = 72;
+   static const I = 73;
+   static const J = 74;
+   static const K = 75;
+   static const L = 76;
+   static const M = 77;
+   static const N = 78;
+   static const O = 79;
+   static const P = 80;
+   static const Q = 81;
+   static const R = 82;
+   static const S = 83;
+   static const T = 84;
+   static const U = 85;
+   static const V = 86;
+   static const W = 87;
+   static const X = 88;
+   static const Y = 89;
+   static const Z = 90;
 }

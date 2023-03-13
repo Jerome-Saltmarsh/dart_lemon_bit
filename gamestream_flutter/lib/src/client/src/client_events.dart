@@ -69,7 +69,7 @@ class ClientEvents {
     ClientState.dragEnd.value = -1;
   }
 
-  static void onKeyPressed(LogicalKeyboardKey key){
+  static void onKeyPressed(int key){
     if (Engine.isLocalHost){
       if (key == ClientConstants.Key_Toggle_Input_Mode) {
         GameIO.actionToggleInputMode();
@@ -89,13 +89,13 @@ class ClientEvents {
     }
   }
 
-  static void onKeyPressedEdit(LogicalKeyboardKey key){
+  static void onKeyPressedEdit(int key){
     if (key == ClientConstants.Key_Duplicate) {
       GameNetwork.sendGameObjectRequestDuplicate();
     }
   }
 
-  static void onKeyPressedPlayMode(LogicalKeyboardKey key){
+  static void onKeyPressedPlayMode(int key){
 
     // if (key == ClientConstants.Key_Reload){
     //   GameNetwork.sendClientRequestReload();

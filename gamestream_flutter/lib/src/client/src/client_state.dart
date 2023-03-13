@@ -45,7 +45,6 @@ class ClientState {
 
   static var totalParticles = 0;
   static var totalActiveParticles = 0;
-  static var showAllItems = false;
   static var srcXRainFalling = 6640.0;
   static var srcXRainLanding = 6739.0;
   static var messageStatusDuration = 0;
