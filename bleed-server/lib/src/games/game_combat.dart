@@ -70,7 +70,8 @@ class GameCombat extends Game {
   ];
 
   static const GameObjects_Collectable = [
-    ...GameObjects_Spawnable,
+    ItemType.Resource_Credit,
+    ItemType.Weapon_Thrown_Grenade,
   ];
 
   // constructor
@@ -392,24 +393,6 @@ class GameCombat extends Game {
          spawnRandomItemAtPosition(target);
        }
      }
-  }
-
-  void deactivateGameObjectAndScheduleRespawn(GameObject gameObject){
-    if (!gameObject.active) return;
-    deactivateCollider(gameObject);
-    performScript(timer: 300).writeSpawnGameObject(
-      type: randomItem(const [
-        ItemType.Weapon_Ranged_Flamethrower,
-        ItemType.Weapon_Ranged_Bazooka,
-        ItemType.Weapon_Ranged_Plasma_Pistol,
-        ItemType.Weapon_Ranged_Plasma_Rifle,
-        ItemType.Weapon_Ranged_Sniper_Rifle,
-        ItemType.Weapon_Ranged_Shotgun,
-      ]),
-      x: gameObject.x,
-      y: gameObject.y,
-      z: gameObject.z,
-    );
   }
 
   @override
@@ -786,6 +769,15 @@ class GameCombat extends Game {
         nodeOrientation: nodeOrientation,
       );
     });
+  }
+
+  @override
+  void customOnPlayerAimTargetChanged(Player player, Collider? collider) {
+    if (collider == null) return;
+    if (collider is GameObject){
+      player.writeApiPlayerAimTargetName('${ItemType.getName(collider.type)} : 300 Credits');
+      return;
+    }
   }
 }
 

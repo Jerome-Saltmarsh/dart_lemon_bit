@@ -308,6 +308,7 @@ class Player extends Character with ByteWriter {
     writePlayerAimTargetPosition();
     writePlayerAimTargetName();
     writePlayerAimTargetQuantity();
+    game.customOnPlayerAimTargetChanged(this, collider);
   }
 
   set energy(int value) {
@@ -1357,19 +1358,23 @@ class Player extends Character with ByteWriter {
   void writePlayerAimTargetName() {
     if (aimTarget == null) return;
 
-    if (aimTarget is Player){
-      writeByte(ServerResponse.Api_Player);
-      writeByte(ApiPlayer.Aim_Target_Name);
-      writeString((aimTarget as Player).name);
+    if (aimTarget is Player) {
+      writeApiPlayerAimTargetName((aimTarget as Player).name);
       return;
     }
-    if (aimTarget is AI){
-      writeByte(ServerResponse.Api_Player);
-      writeByte(ApiPlayer.Aim_Target_Name);
-      writeString((aimTarget as AI).name);
+
+    if (aimTarget is AI) {
+      writeApiPlayerAimTargetName((aimTarget as AI).name);
       return;
     }
   }
+
+  void writeApiPlayerAimTargetName(String value) {
+    writeByte(ServerResponse.Api_Player);
+    writeByte(ApiPlayer.Aim_Target_Name);
+    writeString(value);
+  }
+
 
   int getTargetCategory(Position3? value){
     if (value == null) return TargetCategory.Nothing;

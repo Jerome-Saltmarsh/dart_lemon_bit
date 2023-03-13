@@ -197,14 +197,7 @@ class ServerResponseReader with ByteReader {
     final apiPlayer = readByte();
     switch (apiPlayer) {
       case ApiPlayer.Position:
-        GamePlayer.previousPosition.x = GamePlayer.position.x;
-        GamePlayer.previousPosition.y = GamePlayer.position.y;
-        GamePlayer.previousPosition.z = GamePlayer.position.z;
-        readVector3(GamePlayer.position);
-        GamePlayer.indexColumn = GamePlayer.position.indexColumn;
-        GamePlayer.indexRow = GamePlayer.position.indexRow;
-        GamePlayer.indexZ = GamePlayer.position.indexZ;
-        GamePlayer.nodeIndex = GamePlayer.position.nodeIndex;
+        readApiPlayerPosition();
         break;
       case ApiPlayer.Aim_Target_Category:
         GamePlayer.aimTargetCategory = readByte();
@@ -218,13 +211,13 @@ class ServerResponseReader with ByteReader {
       case ApiPlayer.Aim_Target_Quantity:
         GamePlayer.aimTargetQuantity = readUInt16();
         break;
+      case ApiPlayer.Aim_Target_Name:
+        GamePlayer.aimTargetName = readString();
+        break;
       case ApiPlayer.Action:
         GamePlayer.action.value = readUInt8();
         GamePlayer.actionItemType.value = readUInt16();
         GamePlayer.actionCost.value = readUInt16();
-        break;
-      case ApiPlayer.Aim_Target_Name:
-        GamePlayer.aimTargetName = readString();
         break;
       case ApiPlayer.Target_Position:
         GamePlayer.runningToTarget = true;
@@ -363,6 +356,17 @@ class ServerResponseReader with ByteReader {
       default:
         throw Exception("Cannot parse apiPlayer $apiPlayer");
     }
+  }
+
+  void readApiPlayerPosition(){
+    GamePlayer.previousPosition.x = GamePlayer.position.x;
+    GamePlayer.previousPosition.y = GamePlayer.position.y;
+    GamePlayer.previousPosition.z = GamePlayer.position.z;
+    readVector3(GamePlayer.position);
+    GamePlayer.indexColumn = GamePlayer.position.indexColumn;
+    GamePlayer.indexRow = GamePlayer.position.indexRow;
+    GamePlayer.indexZ = GamePlayer.position.indexZ;
+    GamePlayer.nodeIndex = GamePlayer.position.nodeIndex;
   }
 
   void readApiPlayerEnergy() =>

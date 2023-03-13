@@ -122,6 +122,10 @@ abstract class Game {
   void customOnGameObjectDestroyed(GameObject gameObject) { }
   /// @override
   void customOnCharacterWeaponStateReady(Character character){ }
+  /// @override
+  void customOnPlayerAimTargetChanged(Player player, Collider? collider){
+
+  }
 
   /// @override
   void customOnNodeDestroyed(int nodeType, int nodeIndex, int nodeOrientation) {

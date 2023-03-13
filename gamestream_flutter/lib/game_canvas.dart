@@ -31,31 +31,19 @@ class GameCanvas {
       renderCursor(canvas);
     }
 
-    const style = TextStyle(color: Colors.white, fontSize: 18);
-    switch (GamePlayer.aimTargetCategory) {
-      case TargetCategory.Collect:
-        // Engine.renderText(
-        //   GamePlayer.aimTargetQuantity > 1
-        //       ? '${ItemType.getName(GamePlayer.aimTargetType)} x${GamePlayer.aimTargetQuantity}'
-        //       : ItemType.getName(GamePlayer.aimTargetType),
-        //   Engine.worldToScreenX(GamePlayer.aimTargetPosition.renderX),
-        //   Engine.worldToScreenY(GamePlayer.aimTargetPosition.renderY),
-        //   style: style,
-        // );
-        break;
-      case TargetCategory.Allie:
-        Engine.renderText(
-          GamePlayer.aimTargetName,
-          Engine.worldToScreenX(GamePlayer.aimTargetPosition.renderX),
-          Engine.worldToScreenY(GamePlayer.aimTargetPosition.renderY),
-          style: style,
-        );
-        break;
-      case TargetCategory.Enemy:
-        break;
-    }
+     renderGamePlayerAimTargetNameText();
   }
 
+  static void renderGamePlayerAimTargetNameText(){
+    if (GamePlayer.aimTargetName.isEmpty) return;
+    const style = TextStyle(color: Colors.white, fontSize: 18);
+    Engine.renderText(
+      GamePlayer.aimTargetName,
+      Engine.worldToScreenX(GamePlayer.aimTargetPosition.renderX),
+      Engine.worldToScreenY(GamePlayer.aimTargetPosition.renderY),
+      style: style,
+    );
+  }
 
   static void renderCursor(Canvas canvas) {
     final cooldown = GamePlayer.weaponCooldown.value;
