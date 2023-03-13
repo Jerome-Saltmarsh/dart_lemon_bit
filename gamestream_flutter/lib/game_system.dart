@@ -9,7 +9,7 @@ import 'library.dart';
 class GameSystem {
 
   static Future<Map<String, dynamic>> handleRawKeyMessage(dynamic message) async {
-       // print('handleRawKeyMessage($message)');
+       print('handleRawKeyMessage($message)');
        final type = message['type'];
        final int keyCode = message['keyCode'];
        if (type == 'keydown') {

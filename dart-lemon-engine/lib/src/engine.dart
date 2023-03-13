@@ -240,7 +240,7 @@ class Engine {
   static var Screen_Left = 0.0;
 
   static bool get keyPressedShiftLeft =>
-      keyPressed(KeyCode.Left_Shift);
+      keyPressed(KeyCode.Shift_Left);
 
   static bool get keyPressedSpace =>
       keyPressed(KeyCode.Space);
@@ -1490,9 +1490,31 @@ class CustomPainterPainter extends CustomPainter {
 }
 
 class KeyCode {
-   static const Left_Shift = 16;
-   static const Space = 32;
-   static const Delete = 46;
+   static const Backspace   = 08;
+   static const Tab         = 09;
+   static const Enter       = 13;
+   static const Shift_Left  = 16;
+   static const Ctrl_Left   = 17;
+   static const Alt_Left    = 18;
+   static const Caps_Lock   = 20;
+   static const Space       = 32;
+   static const Arrow_Left  = 37;
+   static const Arrow_Up    = 38;
+   static const Arrow_Right = 39;
+   static const Arrow_Down  = 40;
+   static const Delete      = 46;
+
+   static const Digit_0 = 48;
+   static const Digit_1 = 49;
+   static const Digit_2 = 50;
+   static const Digit_3 = 51;
+   static const Digit_4 = 51;
+   static const Digit_5 = 52;
+   static const Digit_6 = 53;
+   static const Digit_7 = 54;
+   static const Digit_8 = 55;
+   static const Digit_9 = 56;
+
    static const A = 65;
    static const B = 66;
    static const C = 67;

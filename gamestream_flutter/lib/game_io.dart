@@ -279,37 +279,20 @@ class GameIO {
 
   static void onRawKeyDownEvent(int key){
 
-    if (key == PhysicalKeyboardKey.tab)
+    if (key == KeyCode.Tab)
       return GameActions.actionToggleEdit();
 
-    if (key == PhysicalKeyboardKey.keyZ) {
-      // GameState.spawnParticleFirePurple(
-      //     x: mouseGridX,
-      //     y: mouseGridY,
-      //     z: GamePlayer.position.z,
-      // );
-
-      GameState.spawnParticleShotSmoke(
-          x: mouseGridX,
-          y: mouseGridY,
-          z: GamePlayer.position.z,
-          angle: 0,
-          speed: 0,
-      );
-      return;
-    }
-
     if (GameState.playMode) {
-      if (key == PhysicalKeyboardKey.keyG)
+      if (key == KeyCode.G)
         return GameNetwork.sendClientRequestTeleport();
       return;
     }
 
     // EDIT MODE
-    if (key == PhysicalKeyboardKey.keyF) return GameEditor.paint();
-    if (key == PhysicalKeyboardKey.keyR) return GameEditor.selectPaintType();
-    if (key == PhysicalKeyboardKey.keyE) return GameEditor.raise();
-    if (key == PhysicalKeyboardKey.keyG) {
+    if (key == KeyCode.F) return GameEditor.paint();
+    if (key == KeyCode.R) return GameEditor.selectPaintType();
+    if (key == KeyCode.E) return GameEditor.raise();
+    if (key == KeyCode.G) {
       if (GameEditor.gameObjectSelected.value) {
         GameNetwork.sendGameObjectRequestMoveToMouse();
       } else {
@@ -317,12 +300,6 @@ class GameIO {
       }
     }
 
-    if (key == PhysicalKeyboardKey.digit1)
-      return GameEditor.delete();
-    if (key == PhysicalKeyboardKey.digit2)
-      return GameEditor.paintGrass();
-    if (key == PhysicalKeyboardKey.digit3)
-      return GameEditor.paintWater();
     // if (key == PhysicalKeyboardKey.digit4)
     //   return GameEditor.paintBricks();
     if (key == PhysicalKeyboardKey.arrowUp) {
