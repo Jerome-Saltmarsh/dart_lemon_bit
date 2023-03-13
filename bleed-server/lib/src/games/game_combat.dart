@@ -14,8 +14,9 @@ class GameCombat extends Game {
   static const GameObject_Duration = 500;
   static const GameObject_Respawn_Duration = 1500;
   static const AI_Respawn_Duration = 300;
-  static const Chance_Of_Item_Drop = 0.25;
-  static const Credits_Collected = 5;
+  static const Chance_Of_Item_Bombs = 0.1;
+  static const Chance_Of_Item_Gem = 0.5;
+  static const Credits_Collected = 1;
   static const Health_Gained_Per_Gem = 2;
   static const Energy_Gained_Per_Gem = 2;
   static const Credits_Per_Kill = 10;
@@ -241,12 +242,10 @@ class GameCombat extends Game {
       updateHint(player);
   }
 
-  void spawnRandomItemAtPosition(Position3 position){
+  void spawnGrenadeAtPosition(Position3 position){
     final spawnedGameObject = spawnGameObjectAtPosition(
       position: position,
-      type: random.nextDouble() < Chance_Of_Spawn_Type_Credit
-          ? ItemType.Resource_Credit
-          : ItemType.Weapon_Thrown_Grenade,
+      type: ItemType.Weapon_Thrown_Grenade,
     );
 
     spawnedGameObject
@@ -293,8 +292,10 @@ class GameCombat extends Game {
          team: TeamType.Evil,
        );
 
-       if (random.nextDouble() < Chance_Of_Item_Drop) {
-         spawnRandomItemAtPosition(target);
+       if (random.nextDouble() < Chance_Of_Item_Gem){
+         spawnRandomGemsAtIndex(scene.getNodeIndexV3(target));
+       } else if (random.nextDouble() < Chance_Of_Item_Bombs){
+         spawnGrenadeAtPosition(target);
        }
      }
   }
@@ -466,8 +467,9 @@ class GameCombat extends Game {
         z: gameObject.z,
       );
     }
+
     if (GameObjects_Spawn_Loot.contains(gameObject.type)){
-      spawnRandomItemAtPosition(gameObject);
+      spawnGrenadeAtPosition(gameObject);
     }
   }
 
@@ -635,10 +637,7 @@ class GameCombat extends Game {
   @override
   void customOnNodeDestroyed(int nodeType, int nodeIndex, int nodeOrientation) {
     if (nodeType == NodeType.Grass_Long && randomBool()) {
-      spawnGameObjectAtIndex(
-        index: nodeIndex,
-        type: ItemType.Resource_Credit,
-      );
+      spawnRandomGemsAtIndex(nodeIndex);
     }
 
     performJob(1000, (){
@@ -648,6 +647,26 @@ class GameCombat extends Game {
         nodeOrientation: nodeOrientation,
       );
     });
+  }
+
+  void spawnRandomGemsAtIndex(int nodeIndex){
+    final total = randomInt(1, 3);
+    for (var i = 0; i <= total; i++) {
+      spawnGemAtIndex(nodeIndex);
+    }
+  }
+
+  void spawnGemAtIndex(int nodeIndex){
+    spawnGameObjectAtIndex(
+      index: nodeIndex,
+      type: ItemType.Resource_Credit,
+    )
+      ..velocityZ = 7
+      ..setVelocity(randomAngle(), 7.0)
+      ..fixed = false
+      ..gravity = true
+      ..physical = true
+    ;
   }
 
   @override

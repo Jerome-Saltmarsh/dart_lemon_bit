@@ -61,7 +61,7 @@ class AtlasItems {
         ItemType.Legs_Green: 384,
         ItemType.Legs_White: 384,
         ItemType.Weapon_Melee_Sword: 0,
-        ItemType.Weapon_Melee_Knife: 128,
+        ItemType.Weapon_Melee_Knife: 1,
         ItemType.Weapon_Melee_Staff: 32,
         ItemType.Weapon_Melee_Axe: 128,
         ItemType.Weapon_Melee_Pickaxe: 160,
@@ -171,7 +171,7 @@ class AtlasItems {
         ItemType.Consumables_Meat: 64,
         ItemType.Consumables_Apple: 64,
         ItemType.Weapon_Thrown_Grenade: 176,
-        ItemType.Weapon_Melee_Knife: 96,
+        ItemType.Weapon_Melee_Knife: 224,
         ItemType.Weapon_Melee_Staff: 0,
         ItemType.Weapon_Melee_Axe: 128,
         ItemType.Weapon_Melee_Pickaxe: 128,
@@ -240,6 +240,7 @@ class AtlasItems {
         ItemType.Weapon_Ranged_Shotgun: 117,
         ItemType.Weapon_Ranged_Plasma_Pistol: 46,
         ItemType.Weapon_Thrown_Grenade: 38,
+        ItemType.Weapon_Melee_Knife: 44,
         ItemType.Consumables_Ammo_Box: 56,
       }[itemType] ?? size;
 
@@ -284,6 +285,7 @@ class AtlasItems {
         ItemType.Weapon_Ranged_Plasma_Pistol: 37,
         ItemType.Weapon_Ranged_Flamethrower: 66,
         ItemType.Weapon_Thrown_Grenade: 45,
+        ItemType.Weapon_Melee_Knife: 10,
         ItemType.Consumables_Ammo_Box: 80,
   }[itemType] ?? size;
 

@@ -110,9 +110,9 @@ class Scene {
 
   int getNodeIndexV3(Position3 position3) =>
       getNodeIndexXYZ(
-        position3.z,
         position3.x,
         position3.y,
+        position3.z,
       );
 
   int getNodeIndexXYZ(double x, double y, double z) =>

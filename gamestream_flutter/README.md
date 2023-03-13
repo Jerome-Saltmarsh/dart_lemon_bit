@@ -25,12 +25,13 @@ ctrl + shift + e    : view recent changes
 [ ] powers teleportation
 [ ] resources buy trinkets
 [ ] purchasable trinkets
-[ ] trinket pouch
 [ ] weapon stun taser
-[ ] weapon portal gun
 [ ] weapon shield
+[ ] weapon portal gun
+[ ] fix sprite weapon knife
 
 13.03.2023
+[x] optimized handle key event
 [x] fixed columns cast shadows
 [x] purchasable weapons
 
