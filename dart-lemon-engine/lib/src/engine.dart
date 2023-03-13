@@ -409,8 +409,13 @@ class Engine {
   }
 
   static void renderText(String text, double x, double y,
-      {Canvas? other, TextStyle? style}) {
-    textPainter.text = TextSpan(style: style ?? const TextStyle(), text: text);
+      {Canvas? other, TextStyle? style}) =>
+    renderTextSpan(
+        TextSpan(style: style ?? const TextStyle(), text: text), x, y, other
+    );
+
+  static void renderTextSpan(TextSpan textSpan, double x, double y, Canvas? other) {
+    textPainter.text = textSpan;
     textPainter.layout();
     textPainter.paint(other ?? canvas, Offset(x, y));
   }

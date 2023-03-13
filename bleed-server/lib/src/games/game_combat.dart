@@ -1,7 +1,5 @@
 
 
-import 'dart:math';
-
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/classes/src/game_environment.dart';
 import 'package:bleed_server/src/classes/src/game_time.dart';
@@ -123,6 +121,7 @@ class GameCombat extends Game {
     player.health = Player_Health;
     player.maxEnergy = Player_Energy;
     player.energy = Player_Energy;
+    player.credits = 500;
     player.item_level[weaponPrimary] = 0;
     player.item_level[weaponSecondary] = 0;
     player.item_level[weaponTertiary] = 0;
@@ -132,7 +131,6 @@ class GameCombat extends Game {
     player.weaponTertiary = weaponTertiary;
     player.weaponType = weaponPrimary;
     player.grenades = 3;
-    player.credits = 0;
     player.writePlayerEquipment();
   }
 
@@ -246,7 +244,7 @@ class GameCombat extends Game {
   @override
   void customUpdatePlayer(Player player){
       updateHint(player);
-      updatePlayerAction(player);
+      // updatePlayerAction(player);
   }
 
   @override
@@ -282,82 +280,6 @@ class GameCombat extends Game {
     performScript(timer: GameObject_Duration)
         .writeGameObjectDeactivate(spawnedGameObject);
   }
-
-
-
-  void updatePlayerAction(Player player){
-    var minDistance = 50.0;
-    GameObject? closestGameObject;
-
-    for (final gameObject in gameObjects) {
-      if (!gameObject.active) continue;
-      if (!ItemType.isTypeWeapon(gameObject.type)) continue;
-      final xDiff = (player.x - gameObject.x).abs();
-      if (xDiff > minDistance) continue;
-      final yDiff = (player.y - gameObject.y).abs();
-      if (yDiff > minDistance) continue;
-      minDistance = max(xDiff, yDiff);
-      closestGameObject = gameObject;
-    }
-
-    if (closestGameObject == null) {
-      player.action = PlayerAction.None;
-      player.actionItemId = -1;
-      return;
-    }
-
-    final itemType        = closestGameObject.type;
-    final itemLevel       = player.getItemLevel(itemType);
-
-    player.actionItemType = itemType;
-    player.actionItemId   = closestGameObject.id;
-    player.actionCost     = getItemPurchaseCost(itemType, itemLevel);
-
-    if (player.weaponPrimary == itemType) {
-      player.writeInfo('Ammo Acquired');
-      player.writePlayerEventItemAcquired(itemType);
-      deactivateCollider(closestGameObject);
-
-      performScript(timer: 300).writeSpawnGameObject(
-        type: randomItem(const [
-          ItemType.Weapon_Ranged_Flamethrower,
-          ItemType.Weapon_Ranged_Bazooka,
-          ItemType.Weapon_Ranged_Plasma_Pistol,
-          ItemType.Weapon_Ranged_Plasma_Rifle,
-          ItemType.Weapon_Ranged_Sniper_Rifle,
-          ItemType.Weapon_Ranged_Shotgun,
-        ]),
-        x: closestGameObject.x,
-        y: closestGameObject.y,
-        z: closestGameObject.z,
-      );
-      return;
-    }
-
-    if (player.weaponSecondary == itemType) {
-      player.writeInfo('Ammo Acquired');
-      player.writePlayerEventItemAcquired(itemType);
-      deactivateCollider(closestGameObject);
-
-      performScript(timer: 300).writeSpawnGameObject(
-        type: randomItem(const [
-          ItemType.Weapon_Ranged_Flamethrower,
-          ItemType.Weapon_Ranged_Bazooka,
-          ItemType.Weapon_Ranged_Plasma_Pistol,
-          ItemType.Weapon_Ranged_Plasma_Rifle,
-          ItemType.Weapon_Ranged_Sniper_Rifle,
-          ItemType.Weapon_Ranged_Shotgun,
-        ]),
-        x: closestGameObject.x,
-        y: closestGameObject.y,
-        z: closestGameObject.z,
-      );
-      return;
-    }
-
-    player.action = PlayerAction.Equip;
-  }
-
 
   void updateHint(Player player){
     if (player.hintIndex >= hints_length) return;
@@ -577,8 +499,8 @@ class GameCombat extends Game {
      gameObject.destroyable   = GameObjects_Destroyable.contains(type);
      gameObject.interactable  = GameObjects_Interactable.contains(type);
      gameObject.collectable   = GameObjects_Collectable.contains(type);
-     gameObject.fixed         = gameObject.collectable;
-     gameObject.physical      = !gameObject.collectable;
+     gameObject.fixed         = gameObject.collectable || gameObject.interactable;
+     gameObject.physical      = !gameObject.fixed;
   }
 
   @override

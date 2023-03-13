@@ -1412,6 +1412,7 @@ abstract class Game {
     player.setCharacterStateSpawning();
     player.health = player.maxHealth;
     player.energy = player.maxEnergy;
+    player.credits = 0;
     clearCharacterTarget(player);
 
     if (player.inventoryOpen){
