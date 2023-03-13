@@ -713,8 +713,7 @@ class GameNodes {
         );
       }
 
-
-        if (const [
+      if (const [
         NodeType.Grass_Long,
         NodeType.Tree_Bottom,
         NodeType.Tree_Top,
@@ -1055,7 +1054,6 @@ class GameNodes {
         NodeOrientation.Corner_Right,
         NodeOrientation.Corner_Bottom,
         NodeOrientation.Corner_Left,
-        NodeOrientation.Radial,
   ].contains(nodeOrientation);
 
   static bool nodeOrientationBlocksEastWest(int value) => const [
@@ -1068,7 +1066,6 @@ class GameNodes {
     NodeOrientation.Corner_Right,
     NodeOrientation.Corner_Bottom,
     NodeOrientation.Corner_Left,
-    NodeOrientation.Radial,
   ].contains(value);
 
   static bool isNodeTypeTransient(int nodeType) => const [
@@ -1085,7 +1082,6 @@ class GameNodes {
 
   static bool nodeOrientationBlocksVertical(int nodeOrientation) => (const [
       NodeOrientation.Solid,
-      NodeOrientation.Radial,
       NodeOrientation.Half_Vertical_Top,
       NodeOrientation.Half_Vertical_Center,
       NodeOrientation.Half_Vertical_Bottom,

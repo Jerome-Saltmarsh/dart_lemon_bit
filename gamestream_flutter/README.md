@@ -8,6 +8,11 @@ ctrl + w            : minimal mode
 ctrl + shift + e    : view recent changes
 
 [NEXT GAME IDEAS]
+[ ] find keys, which can unlock chests, chests provide treasures
+[ ] metal crates can only be smashed with hammer
+[ ] tree cans only be chopped with axe
+
+[GAME IDEAS]
 [ ] perk type explosions do not cause friendly fire
 [ ] perk type instant draw weapon
 [ ] perk type collecting gems also heals health
@@ -18,9 +23,6 @@ ctrl + shift + e    : view recent changes
 
 [ ] powers invisibility
 [ ] powers teleportation
-[ ] find keys, which can unlock chests, chests provide treasures
-[ ] metal crates can only be smashed with hammer
-[ ] tree cans only be chopped with axe
 [ ] resources buy trinkets
 [ ] purchasable trinkets
 [ ] trinket pouch
@@ -29,6 +31,7 @@ ctrl + shift + e    : view recent changes
 [ ] weapon shield
 
 13.03.2023
+[x] fixed columns cast shadows
 [x] purchasable weapons
 
 10.03.2023
