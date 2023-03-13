@@ -14,7 +14,7 @@ class Collider extends Position3 {
   var team = 0;
   var radius = 0.0;
 
-  var strikable = true;
+  var hitable = true;
   var gravity = true;
   var physical = true;
   var fixed = true;

@@ -278,7 +278,7 @@ abstract class Character extends Collider {
     }
     fixed = false;
     physical = true;
-    strikable = true;
+    hitable = true;
     radius = CharacterType.getRadius(characterType);
   }
 

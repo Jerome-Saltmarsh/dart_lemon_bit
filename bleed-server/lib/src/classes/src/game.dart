@@ -737,7 +737,7 @@ abstract class Game {
         ..bounce = true
         ..physical = true
         ..gravity = true
-        ..strikable = true
+        ..hitable = true
         ..collectable = false
         ..interactable = false
         ..velocityZ = velocityZ
@@ -837,7 +837,7 @@ abstract class Game {
 
     for (final other in characters) {
       if (!other.active) continue;
-      if (!other.strikable) continue;
+      if (!other.hitable) continue;
       if (Collider.onSameTeam(character, other)) continue;
       if (!other.withinDistance(
         performX,
@@ -867,7 +867,7 @@ abstract class Game {
 
     for (final gameObject in gameObjects) {
       if (!gameObject.active) continue;
-      if (!gameObject.strikable) continue;
+      if (!gameObject.hitable) continue;
       if (!gameObject.withinDistance(
           performX,
           performY,
@@ -982,7 +982,7 @@ abstract class Game {
 
     for (final other in characters) {
       if (!other.active) continue;
-      if (!other.strikable) continue;
+      if (!other.hitable) continue;
       if (Collider.onSameTeam(character, other)) continue;
       if (other.withinDistance(
         performX,
@@ -995,7 +995,7 @@ abstract class Game {
 
     for (final gameObject in gameObjects) {
       if (!gameObject.active) continue;
-      if (!gameObject.strikable) continue;
+      if (!gameObject.hitable) continue;
       if (gameObject.withinDistance(
           performX,
           performY,
@@ -1346,9 +1346,11 @@ abstract class Game {
         );
     }
 
-    for (final gameObject in gameObjects) {
+    final gameObjectsLength = gameObjects.length;
+    for (var i = 0; i < gameObjectsLength; i++) {
+       final gameObject = gameObjects[i];
         if (!gameObject.active) continue;
-        if (!gameObject.strikable) continue;
+        if (!gameObject.hitable) continue;
         if (!gameObject.withinDistance(x, y, z, radius)) continue;
         applyHit(
           angle: radian(x1: x, y1: y, x2:gameObject.x, y2: gameObject.y),
@@ -1362,7 +1364,7 @@ abstract class Game {
 
     for (var i = 0; i < length; i++){
       final character = characters[i];
-      if (!character.strikable) continue;
+      if (!character.hitable) continue;
       if (!character.active) continue;
       if (character.dead) continue;
       if (!character.withinDistance(x, y, z, radius)) continue;
@@ -1881,7 +1883,7 @@ abstract class Game {
            }
         }
       } else {
-        if (!target.active || !target.strikable) {
+        if (!target.active || !target.hitable) {
           clearCharacterTarget(player);
           return;
         }
@@ -1937,7 +1939,7 @@ abstract class Game {
     for (var i = 0; i < projectiles.length; i++) {
       final projectile = projectiles[i];
       if (!projectile.active) continue;
-      if (!projectile.strikable) continue;
+      if (!projectile.hitable) continue;
       final target = projectile.target;
       if (target != null) {
         if (projectile.withinRadius(target, projectile.radius)) {
@@ -1950,7 +1952,7 @@ abstract class Game {
       for (var j = 0; j < colliders.length; j++) {
         final collider = colliders[j];
         if (!collider.active) continue;
-        if (!collider.strikable) continue;
+        if (!collider.hitable) continue;
         final radius = collider.radius + projectile.radius;
         if ((collider.x - projectile.x).abs() > radius) continue;
         if ((collider.y - projectile.y).abs() > radius) continue;
@@ -2002,7 +2004,7 @@ abstract class Game {
     bool friendlyFire = false,
   }) {
     // assert (target.active);
-    if (!target.strikable) return;
+    if (!target.hitable) return;
     if (!target.active) return;
 
     target.applyForce(
@@ -2343,7 +2345,7 @@ abstract class Game {
       finalAngle += giveOrTake(accuracy * accuracyAngleDeviation);
     }
     projectile.damage = damage;
-    projectile.strikable = true;
+    projectile.hitable = true;
     projectile.active = true;
     if (target is Collider) {
       projectile.target = target;

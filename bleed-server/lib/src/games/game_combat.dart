@@ -16,11 +16,15 @@ class GameCombat extends Game {
   static const Max_Grenades = 3;
   static const GameObject_Duration = 500;
   static const GameObject_Respawn_Duration = 1500;
+  static const AI_Respawn_Duration = 300;
   static const Chance_Of_Item_Drop = 0.25;
   static const Credits_Collected = 5;
+  static const Credits_Per_Kill = 10;
   static const Max_Players = 16;
   static const Player_Health = 20;
   static const Player_Energy = 20;
+  static const Chance_Of_Spawn_Type_Credit = 0.8;
+
 
   static const Hints = [
     '(W,A,S,D) RUN',
@@ -32,14 +36,6 @@ class GameCombat extends Game {
   static const GameObjects_Spawnable = [
     ItemType.Resource_Credit,
     ItemType.Weapon_Thrown_Grenade,
-    ItemType.Weapon_Ranged_Flamethrower,
-    ItemType.Weapon_Ranged_Bazooka,
-    ItemType.Weapon_Ranged_Plasma_Pistol,
-    ItemType.Weapon_Ranged_Plasma_Rifle,
-    ItemType.Weapon_Ranged_Sniper_Rifle,
-    ItemType.Weapon_Ranged_Shotgun,
-    ItemType.Weapon_Melee_Crowbar,
-    ItemType.Weapon_Melee_Pickaxe,
   ];
 
   static const GameObjects_Respawnable = [
@@ -266,14 +262,16 @@ class GameCombat extends Game {
   void spawnRandomItemAtPosition(Position3 position){
     final spawnedGameObject = spawnGameObjectAtPosition(
       position: position,
-      type: randomBool() ? ItemType.Resource_Credit : randomItem(GameObjects_Spawnable),
+      type: random.nextDouble() < Chance_Of_Spawn_Type_Credit
+          ? ItemType.Resource_Credit
+          : ItemType.Weapon_Thrown_Grenade,
     );
 
     spawnedGameObject
       ..physical = false
       ..interactable = ItemType.isTypeWeapon(spawnedGameObject.type)
       ..fixed = true
-      ..strikable = false
+      ..hitable = false
       ..gravity = false
       ..collectable = true
     ;
@@ -293,7 +291,7 @@ class GameCombat extends Game {
   @override
   void customOnCharacterKilled(Character target, dynamic src) {
      if (src is Player) {
-       src.credits += 10;
+       src.credits += Credits_Per_Kill;
      }
 
      if (target is AI && scene.spawnPoints.isNotEmpty) {
@@ -303,7 +301,7 @@ class GameCombat extends Game {
        final row = scene.getNodeIndexRow(spawnNodeIndex);
        final column = scene.getNodeIndexColumn(spawnNodeIndex);
 
-       performScript(timer: 300).writeSpawnAI(
+       performScript(timer: AI_Respawn_Duration).writeSpawnAI(
          type: randomItem(const[CharacterType.Zombie, CharacterType.Dog]),
          x: row * Node_Size + Node_Size_Half,
          y: column * Node_Size + Node_Size_Half,
@@ -409,7 +407,7 @@ class GameCombat extends Game {
          ..physical = false
          ..interactable = true
          ..fixed = true
-         ..strikable = false
+         ..hitable = false
          ..gravity = false
          ..collectable = true
        ;
@@ -495,12 +493,14 @@ class GameCombat extends Game {
 
   @override
   void customOnGameObjectSpawned(GameObject gameObject) {
-    final type = gameObject.type;
+     final type = gameObject.type;
      gameObject.destroyable   = GameObjects_Destroyable.contains(type);
      gameObject.interactable  = GameObjects_Interactable.contains(type);
      gameObject.collectable   = GameObjects_Collectable.contains(type);
-     gameObject.fixed         = gameObject.collectable || gameObject.interactable;
-     gameObject.physical      = !gameObject.fixed;
+     if (gameObject.interactable || gameObject.collectable) {
+       gameObject.fixed         = true;
+       gameObject.physical      = false;
+     }
   }
 
   @override

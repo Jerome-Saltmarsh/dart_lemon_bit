@@ -639,7 +639,7 @@ class Connection with ByteReader {
 
       case GameObjectRequest.Toggle_Strikable:
         if (selectedGameObject == null) return;
-        selectedGameObject.strikable = !selectedGameObject.strikable;
+        selectedGameObject.hitable = !selectedGameObject.hitable;
         selectedGameObject.velocityZ = 0;
         player.writeEditorGameObjectSelected();
         break;
