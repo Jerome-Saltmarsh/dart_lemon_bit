@@ -35,7 +35,10 @@ class GameCanvas {
   }
 
   static void renderGamePlayerAimTargetNameText(){
-    if (GamePlayer.aimTargetName.isEmpty) return;
+    if (GamePlayer.aimTargetCategory == TargetCategory.Nothing)
+      return;
+    if (GamePlayer.aimTargetName.isEmpty)
+      return;
     const style = TextStyle(color: Colors.white, fontSize: 18);
     Engine.renderText(
       GamePlayer.aimTargetName,

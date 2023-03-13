@@ -516,32 +516,39 @@ class GameCombat extends Game {
         return;
      }
 
-
      if (gameObjectType == player.weaponPrimary) {
        return;
-       // if (player.weaponPrimaryQuantity >= player.weaponPrimaryCapacity) {
-       //   player.writeInfo('${ItemType.getName(gameObjectType)} Full');
-       //   return;
-       // }
      }
 
      if (gameObjectType == player.weaponSecondary) {
        return;
-       // if (player.weaponSecondaryQuantity >= player.weaponSecondaryCapacity) {
-       //   player.writeInfo('${ItemType.getName(gameObjectType)} Full');
-       //   return;
-       // }
      }
 
-     player.setItemQuantityMax(gameObject.type);
-     deactivateCollider(gameObject);
+     final itemCost = getItemCost(gameObjectType);
+
+     if (player.credits < itemCost) {
+       player.writeError('insufficient credits');
+       return;
+     }
+
+     player.credits -= itemCost;
+     player.setItemQuantityMax(gameObjectType);
 
      if (player.aimTargetWeaponSide == Side.Left) {
-       playerEquipPrimary(player, gameObject.type);
+       playerEquipPrimary(player, gameObjectType);
      } else {
-       playerEquipSecondary(player, gameObject.type);
+       playerEquipSecondary(player, gameObjectType);
      }
   }
+
+  int getItemCost(int itemType) => const <int, int> {
+        ItemType.Weapon_Ranged_Plasma_Rifle: 50,
+        ItemType.Weapon_Ranged_Plasma_Pistol: 40,
+        ItemType.Weapon_Ranged_Shotgun: 30,
+        ItemType.Weapon_Ranged_Flamethrower: 100,
+        ItemType.Weapon_Ranged_Sniper_Rifle: 200,
+        ItemType.Weapon_Ranged_Bazooka: 300,
+  } [itemType] ?? 0;
 
   @override
   void customOnCollisionBetweenPlayerAndGameObject(Player player, GameObject gameObject) {
@@ -773,11 +780,8 @@ class GameCombat extends Game {
 
   @override
   void customOnPlayerAimTargetChanged(Player player, Collider? collider) {
-    if (collider == null) return;
-    if (collider is GameObject){
-      player.writeApiPlayerAimTargetName('${ItemType.getName(collider.type)} : 300 Credits');
-      return;
-    }
+    if (collider is! GameObject) return;
+    player.writeApiPlayerAimTargetName('${getItemCost(collider.type)} credits');
   }
 }
 
