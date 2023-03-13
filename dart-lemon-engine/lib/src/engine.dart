@@ -602,6 +602,9 @@ class Engine {
     Milliseconds_Per_Second ~/ framesPerSecond;
 
   static Future _internalInit() async {
+
+    SystemChannels.keyEvent.setMessageHandler(_handleRawKeyMessage);
+
     runApp(_internalBuildApp());
 
     paint.filterQuality = FilterQuality.none;
@@ -1011,6 +1014,26 @@ class Engine {
       canvas.drawLine(points[i] + z, points[i + 1] + z, Engine.paint);
     }
   }
+
+  static Future<Map<String, dynamic>> _handleRawKeyMessage(dynamic message) async {
+    // print('handleRawKeyMessage($message)');
+    final type = message['type'];
+    final int keyCode = message['keyCode'];
+    if (type == 'keydown') {
+      Engine.keyState[keyCode] = true;
+      if (Engine.onKeyDown != null){
+        Engine.onKeyDown!(keyCode);
+      }
+    } else
+    if (type == 'keyup') {
+      Engine.keyState[keyCode] = false;
+      if (Engine.onKeyUp != null){
+        Engine.onKeyUp!(keyCode);
+      }
+    }
+    return const {'handled': true};
+  }
+
 
   static Widget _internalBuildApp(){
     return WatchBuilder(themeData, (ThemeData? themeData){
