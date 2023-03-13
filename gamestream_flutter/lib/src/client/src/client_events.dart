@@ -1,6 +1,5 @@
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class ClientEvents {
@@ -70,12 +69,6 @@ class ClientEvents {
   }
 
   static void onKeyPressed(int key){
-    if (Engine.isLocalHost){
-      if (key == ClientConstants.Key_Toggle_Input_Mode) {
-        GameIO.actionToggleInputMode();
-        return;
-      }
-    }
 
     if (key == ClientConstants.Key_Toggle_Debug_Mode) {
       GameActions.toggleDebugMode();
@@ -83,39 +76,19 @@ class ClientEvents {
     }
 
     if (GameState.playMode) {
-      onKeyPressedPlayMode(key);
+      onKeyPressedModePlay(key);
     } else {
-      onKeyPressedEdit(key);
+      onKeyPressedModeEdit(key);
     }
   }
 
-  static void onKeyPressedEdit(int key){
+  static void onKeyPressedModeEdit(int key){
     if (key == ClientConstants.Key_Duplicate) {
       GameNetwork.sendGameObjectRequestDuplicate();
     }
   }
 
-  static void onKeyPressedPlayMode(int key){
-
-    // if (key == ClientConstants.Key_Reload){
-    //   GameNetwork.sendClientRequestReload();
-    //   return;
-    // }
-    // if (key == ClientConstants.Key_Unequip){
-    //   GameNetwork.sendClientRequestUnequip();
-    //   return;
-    // }
-
-    // if (GameOptions.inventory.value){
-    //   if (key == ClientConstants.Key_Inventory){
-    //     GameNetwork.sendClientRequestInventoryToggle();
-    //     return;
-    //   }
-    //   if (ClientQuery.keyboardKeyIsHotKey(key)) {
-    //     onKeyPressedPlayModeHotKey(key);
-    //     return;
-    //   }
-    // }
+  static void onKeyPressedModePlay(int key){
 
     if (key == ClientConstants.Key_Zoom) {
       GameActions.toggleZoom();
@@ -143,22 +116,6 @@ class ClientEvents {
     ServerActions.inventoryUnequip(
         ServerQuery.mapWatchBeltTypeToItemType(watchBelt)
     );
-  }
-
-  static void onKeyPressedPlayModeHotKey(LogicalKeyboardKey key) {
-
-    if (GameOptions.inventory.value) {
-      if (ClientState.hoverIndex.value >= 0 &&
-          ClientState.hoverDialogIsInventory
-      ) {
-        GameNetwork.sendClientRequestInventoryMove(
-          indexFrom: ClientState.hoverIndex.value,
-          indexTo: ClientQuery.mapKeyboardKeyToBeltIndex(key),
-        );
-        return;
-      }
-      ServerActions.equipWatchBeltType(ClientQuery.mapKeyboardKeyToWatchBeltType(key));
-    }
   }
 
   static void onAcceptDragInventoryIcon(){

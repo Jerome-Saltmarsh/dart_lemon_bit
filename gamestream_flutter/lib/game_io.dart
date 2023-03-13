@@ -62,12 +62,11 @@ class GameIO {
       Engine.onTap = onTap;
       Engine.onLongPressDown = onLongPressDown;
       Engine.onSecondaryTapDown = onSecondaryTapDown;
-      Engine.onKeyDown = onRawKeyDownEvent;
+      Engine.onKeyDown = onKeyDownEvent;
       Engine.onLeftClicked = onMouseClickedLeft;
       Engine.onRightClicked = onMouseClickedRight;
       Engine.onPointerSignalEvent = onPointerSignalEvent;
-      // Engine.onKeyHeld = onKeyHeld;
-      Engine.onKeyPressed = onKeyPressed;
+      Engine.onKeyPressed = ClientEvents.onKeyPressed;
   }
 
   static void onPointerSignalEvent(PointerSignalEvent event){
@@ -277,7 +276,7 @@ class GameIO {
     return false;
   }
 
-  static void onRawKeyDownEvent(int key){
+  static void onKeyDownEvent(int key){
 
     if (key == KeyCode.Tab)
       return GameActions.actionToggleEdit();
@@ -302,7 +301,7 @@ class GameIO {
 
     // if (key == PhysicalKeyboardKey.digit4)
     //   return GameEditor.paintBricks();
-    if (key == PhysicalKeyboardKey.arrowUp) {
+    if (key == KeyCode.Arrow_Up) {
       if (Engine.keyPressedShiftLeft) {
         if (GameEditor.gameObjectSelected.value){
           return GameEditor.translate(x: 0, y: 0, z: 1);
@@ -315,13 +314,13 @@ class GameIO {
         GameEditor.cursorRowDecrease();
       }
     }
-    if (key == PhysicalKeyboardKey.arrowRight) {
+    if (key == KeyCode.Arrow_Right) {
       if (GameEditor.gameObjectSelected.value){
         return GameEditor.translate(x: 1, y: -1, z: 0);
       }
       GameEditor.cursorColumnDecrease();
     }
-    if (key == PhysicalKeyboardKey.arrowDown) {
+    if (key == KeyCode.Arrow_Down) {
       if (Engine.keyPressedShiftLeft) {
         if (GameEditor.gameObjectSelected.value){
           return GameEditor.translate(x: 0, y: 0, z: -1);
@@ -334,7 +333,7 @@ class GameIO {
         GameEditor.cursorRowIncrease();
       }
     }
-    if (key == PhysicalKeyboardKey.arrowLeft) {
+    if (key == KeyCode.Arrow_Left) {
       if (GameEditor.gameObjectSelected.value){
         return GameEditor.translate(x: -1, y: 1, z: 0);
       }

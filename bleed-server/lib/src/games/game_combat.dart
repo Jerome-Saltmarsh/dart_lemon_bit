@@ -24,9 +24,6 @@ class GameCombat extends Game {
   static const Player_Health = 20;
   static const Player_Energy = 20;
 
-  static const Chance_Of_Spawn_Type_Credit = 0.8;
-
-
   static const Hints = [
     '(W,A,S,D) RUN',
     '(LEFT CLICK) FIRE WEAPON 1',
