@@ -119,7 +119,7 @@ class Engine {
   static final Map<String, TextSpan> textSpans = {
   };
   static late Canvas canvas;
-  static final keyboard = RawKeyboard.instance;
+
   static final paint = Paint()
     ..color = Colors.white
     ..strokeCap = StrokeCap.round

@@ -3234,8 +3234,6 @@ abstract class Game {
 
   void destroyGameObject(GameObject gameObject){
     if (!gameObject.active) return;
-    assert (gameObject.destroyable);
-    if (!gameObject.destroyable) return;
     dispatchGameEventGameObjectDestroyed(gameObject);
     deactivateCollider(gameObject);
     customOnGameObjectDestroyed(gameObject);

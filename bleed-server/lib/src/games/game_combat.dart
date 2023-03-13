@@ -49,7 +49,6 @@ class GameCombat extends Game {
 
   static const GameObjects_Destroyable = [
     ItemType.GameObjects_Crate_Wooden,
-    ItemType.GameObjects_Barrel_Explosive,
   ];
 
   static const GameObjects_Interactable = [
