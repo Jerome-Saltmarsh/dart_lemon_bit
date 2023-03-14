@@ -440,12 +440,12 @@ class GameCombat extends Game {
   }
 
   int getItemCost(int itemType) => const <int, int> {
-        ItemType.Weapon_Ranged_Plasma_Rifle: 50,
-        ItemType.Weapon_Ranged_Plasma_Pistol: 40,
-        ItemType.Weapon_Ranged_Shotgun: 30,
-        ItemType.Weapon_Ranged_Flamethrower: 100,
-        ItemType.Weapon_Ranged_Sniper_Rifle: 200,
-        ItemType.Weapon_Ranged_Bazooka: 300,
+        ItemType.Weapon_Ranged_Plasma_Rifle: 250,
+        ItemType.Weapon_Ranged_Plasma_Pistol: 100,
+        ItemType.Weapon_Ranged_Shotgun: 250,
+        ItemType.Weapon_Ranged_Flamethrower: 400,
+        ItemType.Weapon_Ranged_Sniper_Rifle: 300,
+        ItemType.Weapon_Ranged_Bazooka: 400,
   } [itemType] ?? 0;
 
   @override

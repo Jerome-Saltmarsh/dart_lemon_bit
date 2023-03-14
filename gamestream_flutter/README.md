@@ -33,7 +33,9 @@ ctrl + shift + e    : view recent changes
 
 [TASKS]
 [ ] balance item statistics
-[ ] scene warehouse
+
+14.03.2023
+[x] scene warehouse
 
 13.03.2023
 [x] fix sprite weapon knife
