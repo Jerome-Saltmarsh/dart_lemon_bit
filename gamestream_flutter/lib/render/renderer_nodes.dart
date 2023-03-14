@@ -419,7 +419,7 @@ class RendererNodes extends Renderer {
        visit2D(iAbove);
      }
      final iBelow = i + GameNodes.totalColumns;
-     if (iAbove < GameNodes.area) {
+     if (iBelow < GameNodes.area) {
        visit2D(iBelow);
      }
 
