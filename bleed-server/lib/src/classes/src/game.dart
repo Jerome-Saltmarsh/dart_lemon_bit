@@ -529,6 +529,16 @@ abstract class Game {
     character.assignWeaponStateAiming();
   }
 
+  int getCharacterWeaponEnergyCost(Character character) => const <int, int> {
+      ItemType.Weapon_Ranged_Flamethrower: 1,
+      ItemType.Weapon_Ranged_Sniper_Rifle: 5,
+      ItemType.Weapon_Ranged_Shotgun: 5,
+      ItemType.Weapon_Ranged_Plasma_Pistol: 2,
+      ItemType.Weapon_Ranged_Plasma_Rifle: 1,
+      ItemType.Weapon_Ranged_Teleport: 10,
+      ItemType.Weapon_Melee_Knife: 5,
+    }[character.weaponType] ?? 1;
+
   void characterUseWeapon(Character character) {
     if (character.deadBusyOrWeaponStateBusy) return;
 
@@ -561,32 +571,14 @@ abstract class Game {
           return;
         }
 
-        if (character.energy <= 0) {
+        final cost = getCharacterWeaponEnergyCost(character);
+
+        if (character.energy < cost) {
           character.writeError('Insufficient Energy');
           return;
         }
-        character.energy--;
 
-        // final equippedQuantity = character.item_quantity[weaponType] ?? 0;
-        // final nextQuantity = equippedQuantity - 1;
-        // character.item_quantity[weaponType] = nextQuantity;
-        // character.writePlayerWeaponQuantity();
-        // if (character.buffInfiniteAmmo <= 0 && ItemType.isTypeWeaponFirearm(weaponType)){
-        //   final equippedQuantity = character.item_quantity[weaponType] ?? 0;
-        //
-        //   if (equippedQuantity <= 0) {
-        //     // character.writeError('No Ammo');
-        //     if (character.weaponPrimary == weaponType){
-        //       character.weaponPrimary = ItemType.Empty;
-        //     }
-        //     if (character.weaponSecondary == weaponType) {
-        //       character.weaponSecondary = ItemType.Empty;
-        //     }
-        //     character.weaponType = ItemType.Empty;
-        //     characterAttackMelee(character);
-        //     return;
-        //   }
-        // }
+        character.energy -= cost;
       }
 
     } else if (character is AI){

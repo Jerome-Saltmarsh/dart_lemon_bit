@@ -538,6 +538,7 @@ class ItemType {
       Weapon_Ranged_Flamethrower: 2,
       Weapon_Ranged_Bazooka: 60,
       Weapon_Ranged_Minigun: 1,
+      Weapon_Ranged_Teleport: 15,
   }[value] ?? 0;
 
   static String getGroupTypeName(int value) {

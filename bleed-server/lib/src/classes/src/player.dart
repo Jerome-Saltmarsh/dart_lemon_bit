@@ -28,7 +28,7 @@ class Player extends Character with ByteWriter {
   late Function sendBufferToClient;
   GameObject? editorSelectedGameObject;
   /// Frames per energy rejuvenation
-  var energyGainRate = Engine.Frames_Per_Second;
+  var energyGainRate = 16;
   var _credits = 0;
   var debug = false;
   var framesSinceClientRequest = 0;
