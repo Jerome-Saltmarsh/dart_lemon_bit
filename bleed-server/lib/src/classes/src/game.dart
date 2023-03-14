@@ -13,8 +13,6 @@ import 'game_time.dart';
 
 
 abstract class Game {
-  static final Cost_Map = <int, int>{ };
-
   final int gameType;
   var frame = 0;
   var _running = true;
@@ -29,8 +27,6 @@ abstract class Game {
   var _timerUpdateAITargets = 0;
   var gameObjectId = 0;
   var playerId = 0;
-
-
   GameEnvironment environment;
   GameTime time;
 
@@ -612,6 +608,23 @@ abstract class Game {
       throw Exception('ai cannot throw grenades');
     }
 
+    if (weaponType == ItemType.Weapon_Ranged_Teleport){
+      if (character is! Player){
+        throw Exception('ai cannot teleport');
+      }
+      final range = ItemType.getRange(ItemType.Weapon_Ranged_Teleport);
+
+      if (character.withinDistance(character.mouseGridX, character.mouseGridY, character.z, range)){
+        character.x = character.mouseGridX;
+        character.y = character.mouseGridY;
+      } else {
+        final r = radian(x1: character.x, y1: character.y, x2: character.mouseGridX, y2: character.mouseGridY);
+        character.x = character.x + getAdjacent(r, range);
+        character.y = character.y + getOpposite(r, range);
+      }
+      return;
+    }
+
     if (weaponType == ItemType.Weapon_Ranged_Flamethrower){
       if (character is Player){
         playerUseFlamethrower(character);
@@ -960,7 +973,6 @@ abstract class Game {
     customOnNodeDestroyed(nodeType, nodeIndex, nodeOrientation);
   }
 
-
   bool characterMeleeAttackTargetInRange(Character character) {
     assert (character.active);
     assert (character.alive);
@@ -969,10 +981,10 @@ abstract class Game {
     if (character.deadBusyOrWeaponStateBusy) return false;
 
     final angle = character.lookRadian;
-    final attackRadius = ItemType.getMeleeAttackRadius(character.weaponType);
+    final attackRadius = ItemType.getMeleeAttackRadius(character.weaponType) * 0.75;
 
     if (attackRadius <= 0) {
-      throw Exception('ItemType.getRange(${ItemType.getName(character.weaponType)})');
+      return false;
     }
 
     final attackRadiusHalf = attackRadius * 0.5;
@@ -2003,7 +2015,6 @@ abstract class Game {
     double force = 20,
     bool friendlyFire = false,
   }) {
-    // assert (target.active);
     if (!target.hitable) return;
     if (!target.active) return;
 

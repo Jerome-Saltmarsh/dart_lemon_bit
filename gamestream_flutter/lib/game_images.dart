@@ -132,6 +132,8 @@ class GameImages {
       switch (weaponType) {
          case ItemType.Weapon_Ranged_Machine_Gun:
             return template_weapon_ak47;
+         case ItemType.Weapon_Ranged_Teleport:
+            return template_weapon_bazooka;
          case ItemType.Weapon_Ranged_Plasma_Rifle:
             return template_weapon_plasma_rifle;
          case ItemType.Weapon_Melee_Knife:

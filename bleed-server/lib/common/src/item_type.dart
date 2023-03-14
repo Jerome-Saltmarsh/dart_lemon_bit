@@ -158,6 +158,7 @@ class ItemType {
   static const Weapon_Ranged_Crossbow     = Index_Weapon_Ranged + 16;
   static const Weapon_Ranged_Plasma_Rifle = Index_Weapon_Ranged + 17;
   static const Weapon_Ranged_Plasma_Pistol= Index_Weapon_Ranged + 18;
+  static const Weapon_Ranged_Teleport     = Index_Weapon_Ranged + 19;
 
   static const Recipes = <int, List<int>> {
     Consumables_Apple: const [
@@ -492,6 +493,7 @@ class ItemType {
       Weapon_Ranged_Revolver: 400,
       Weapon_Ranged_Bow: 300,
       Weapon_Ranged_Crossbow: 400,
+      Weapon_Ranged_Teleport: 400,
       Weapon_Melee_Sword: 65,
       Weapon_Melee_Knife: 40,
       Weapon_Melee_Axe: 55,
@@ -639,6 +641,7 @@ class ItemType {
      Weapon_Ranged_Minigun: "Minigun",
      Weapon_Ranged_Plasma_Rifle: "Plasma Rifle",
      Weapon_Ranged_Plasma_Pistol: "Plasma Pistol",
+     Weapon_Ranged_Teleport: "Teleportor",
      Weapon_Ranged_Bow: "Bow",
      Consumables_Apple: "Apple",
      Consumables_Meat: "Meat",
@@ -840,6 +843,7 @@ class ItemType {
      Weapon_Ranged_Flamethrower,
      Weapon_Ranged_Plasma_Pistol,
      Weapon_Ranged_Plasma_Rifle,
+     Weapon_Ranged_Teleport,
   ];
 
   static const Item_Group_Secondary_Weapons = [

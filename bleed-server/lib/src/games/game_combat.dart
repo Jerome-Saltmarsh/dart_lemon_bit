@@ -55,6 +55,7 @@ class GameCombat extends Game {
     ItemType.Weapon_Ranged_Plasma_Pistol,
     ItemType.Weapon_Ranged_Plasma_Rifle,
     ItemType.Weapon_Ranged_Sniper_Rifle,
+    ItemType.Weapon_Ranged_Teleport,
     ItemType.Weapon_Ranged_Shotgun,
     ItemType.Weapon_Melee_Crowbar,
     ItemType.Weapon_Melee_Pickaxe,
@@ -99,7 +100,8 @@ class GameCombat extends Game {
     player.bodyType = randomItem(ItemType.Collection_Clothing_Body);
     player.legsType = randomItem(ItemType.Collection_Clothing_Legs);
 
-    final weaponPrimary = ItemType.Weapon_Ranged_Plasma_Pistol;
+    // final weaponPrimary = ItemType.Weapon_Ranged_Plasma_Pistol;
+    final weaponPrimary = ItemType.Weapon_Ranged_Teleport;
     final weaponSecondary = ItemType.Weapon_Melee_Knife;
     final weaponTertiary = randomItem(const[
       ItemType.Weapon_Melee_Knife,
@@ -123,7 +125,7 @@ class GameCombat extends Game {
     player.weaponSecondary = weaponSecondary;
     player.weaponTertiary = weaponTertiary;
     player.weaponType = weaponPrimary;
-    player.grenades = 3;
+    player.grenades = 1;
     player.writePlayerEquipment();
   }
 
