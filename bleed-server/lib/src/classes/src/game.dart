@@ -683,19 +683,68 @@ abstract class Game {
     required double y,
     required double range,
   }) {
-    dispatchV3(GameEventType.Teleport_Start, character);
-    if (character.withinDistance(x, y, character.z, range)) {
-      character.x = x;
-      character.y = y;
-    } else {
-      final r = radian(x1: character.x, y1: character.y, x2: x, y2: y);
-      character.x = character.x + getAdjacent(r, range);
-      character.y = character.y + getOpposite(r, range);
-    }
-    dispatchV3(GameEventType.Teleport_Start, character);
+    if (!scene.inboundsXYZ(x, y, character.z)) return;
 
-    if (character is Player) {
-      character.writePlayerEvent(PlayerEvent.Teleported);
+    final startX = character.x;
+    final startY = character.y;
+    final startZ = character.z;
+
+    final z = character.z;
+    final r = radian(x1: character.x, y1: character.y, x2: x, y2: y);
+    var completed = false;
+
+    if (!character.withinDistance(x, y, z, range)) {
+      x = character.x + getAdjacent(r, range);
+      y = character.y + getOpposite(r, range);
+    }
+
+    final nodeIndex = scene.getNodeIndexXYZ(x, y, z);
+    final nodeOrientation = scene.nodeOrientations[nodeIndex];
+
+    if (!completed && nodeOrientation == NodeOrientation.None){
+       character.x = x;
+       character.y = y;
+       completed = true;
+    }
+
+    if (!completed && z + Node_Height < scene.gridHeightLength) {
+      final aboveNodeIndex = scene.getNodeIndexXYZ(x, y, z + Node_Height);
+      final aboveNodeOrientation = scene.nodeOrientations[aboveNodeIndex];
+      if (aboveNodeOrientation == NodeOrientation.None){
+        character.x = x;
+        character.y = y;
+        character.z = z + Node_Height;
+        completed = true;
+      }
+    }
+
+    if (!completed) {
+      final distance = getDistanceXY(x, y, character.x, character.y);
+      final jumps = distance ~/ Node_Size_Half;
+      final jumpX = getAdjacent(r, Node_Size_Half);
+      final jumpY = getOpposite(r, Node_Size_Half);
+
+      for (var i = 0; i < jumps; i++) {
+        x -= jumpX;
+        y -= jumpY;
+        final frontNodeIndex = scene.getNodeIndexXYZ(x, y, z);
+        final frontNodeOrientation = scene.nodeOrientations[frontNodeIndex];
+        if (frontNodeOrientation == NodeOrientation.None) {
+          character.x = x;
+          character.y = y;
+          character.z = z;
+          completed = true;
+          break;
+        }
+      }
+    }
+
+    if (completed) {
+      dispatch(GameEventType.Teleport_Start, startX, startY, startZ);
+      dispatchV3(GameEventType.Teleport_End, character);
+      if (character is Player) {
+        character.writePlayerEvent(PlayerEvent.Teleported);
+      }
     }
   }
 
