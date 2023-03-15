@@ -70,6 +70,7 @@ class GameImages {
    static late Image template_weapon_winchester;
    static late Image template_weapon_musket;
    static late Image template_weapon_crowbar;
+   static late Image template_weapon_portal_gun;
 
    static Image getImageForHeadType(int headType) {
       switch (headType) {
@@ -133,7 +134,7 @@ class GameImages {
          case ItemType.Weapon_Ranged_Machine_Gun:
             return template_weapon_ak47;
          case ItemType.Weapon_Ranged_Teleport:
-            return template_weapon_bazooka;
+            return template_weapon_portal_gun;
          case ItemType.Weapon_Ranged_Plasma_Rifle:
             return template_weapon_plasma_rifle;
          case ItemType.Weapon_Melee_Knife:
@@ -250,6 +251,7 @@ class GameImages {
       Engine.loadImageAsset('images/template/weapons/template-weapons-winchester.png').then((value) => template_weapon_winchester = value);
       Engine.loadImageAsset('images/template/weapons/template-weapons-blunderbuss.png').then((value) => template_weapon_musket = value);
       Engine.loadImageAsset('images/template/weapons/template-weapons-crowbar.png').then((value) => template_weapon_crowbar = value);
+      Engine.loadImageAsset('images/template/weapons/template-weapons-portal-gun.png').then((value) => template_weapon_portal_gun = value);
    }
 }
 

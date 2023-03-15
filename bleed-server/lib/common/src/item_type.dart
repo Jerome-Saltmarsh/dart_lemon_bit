@@ -389,6 +389,7 @@ class ItemType {
     Weapon_Ranged_Machine_Gun,
     Weapon_Ranged_Sniper_Rifle,
     Weapon_Ranged_Plasma_Rifle,
+    Weapon_Ranged_Teleport,
     Weapon_Ranged_Shotgun,
     Weapon_Ranged_Bazooka,
     Weapon_Ranged_Flamethrower,
