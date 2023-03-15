@@ -549,6 +549,7 @@ class ServerResponseReader with ByteReader {
     assert(NodeType.supportsOrientation(nodeType, nodeOrientation));
     GameNodes.nodeTypes[nodeIndex] = nodeType;
     GameNodes.nodeOrientations[nodeIndex] = nodeOrientation;
+    /// TODO optimize
     GameEvents.onChangedNodes();
     GameEditor.refreshNodeSelectedIndex();
   }
@@ -587,6 +588,7 @@ class ServerResponseReader with ByteReader {
     GameNodes.total = totalNodes;
     GameState.nodesRaycast = GameNodes.area +  GameNodes.area + GameNodes.totalColumns + 1;
     GameEvents.onChangedNodes();
+    GameNodes.refreshNodeVariations();
     ClientState.sceneChanged.value++;
     onChangedScene();
   }

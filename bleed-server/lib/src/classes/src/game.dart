@@ -601,18 +601,13 @@ abstract class Game {
     }
 
     if (weaponType == ItemType.Weapon_Ranged_Teleport){
-      if (character is! Player){
-        throw Exception('ai cannot teleport');
-      }
-      final range = ItemType.getRange(ItemType.Weapon_Ranged_Teleport);
-
-      if (character.withinDistance(character.mouseGridX, character.mouseGridY, character.z, range)){
-        character.x = character.mouseGridX;
-        character.y = character.mouseGridY;
-      } else {
-        final r = radian(x1: character.x, y1: character.y, x2: character.mouseGridX, y2: character.mouseGridY);
-        character.x = character.x + getAdjacent(r, range);
-        character.y = character.y + getOpposite(r, range);
+      if (character is Player){
+        characterTeleport(
+            character: character,
+            x: character.mouseGridX,
+            y: character.mouseGridY,
+            range: ItemType.getRange(ItemType.Weapon_Ranged_Teleport),
+        );
       }
       return;
     }
@@ -679,6 +674,28 @@ abstract class Game {
         );
         character.assignWeaponStateFiring();
         break;
+    }
+  }
+
+  void characterTeleport({
+    required Character character,
+    required double x,
+    required double y,
+    required double range,
+  }) {
+    dispatchV3(GameEventType.Teleport_Start, character);
+    if (character.withinDistance(x, y, character.z, range)) {
+      character.x = x;
+      character.y = y;
+    } else {
+      final r = radian(x1: character.x, y1: character.y, x2: x, y2: y);
+      character.x = character.x + getAdjacent(r, range);
+      character.y = character.y + getOpposite(r, range);
+    }
+    dispatchV3(GameEventType.Teleport_Start, character);
+
+    if (character is Player) {
+      character.writePlayerEvent(PlayerEvent.Teleported);
     }
   }
 

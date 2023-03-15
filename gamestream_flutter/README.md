@@ -33,6 +33,7 @@ ctrl + shift + e    : view recent changes
 
 [TASKS]
 [ ] balance item statistics
+[ ] fix cutting grass regenerates randoms
 
 14.03.2023
 [x] scene warehouse

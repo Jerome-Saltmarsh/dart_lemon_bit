@@ -115,6 +115,7 @@ class GameAudio {
   static final collect_star_3 = AudioSingle(name: 'collect-star-3', volume: 0.5);
   static final magical_impact_16 = AudioSingle(name: 'magical-impact-16', volume: 0.5);
   static final magical_impact_28 = AudioSingle(name: 'magical-impact-28', volume: 0.5);
+  static final magical_swoosh_18 = AudioSingle(name: 'magical-swoosh-18', volume: 0.5);
   static final bloody_punches_1 = AudioSingle(name: 'bloody-punches-1', volume: 1.0);
   static final bloody_punches_3 = AudioSingle(name: 'bloody-punches-3', volume: 1.0);
   static final crate_breaking = AudioSingle(name: 'crate-breaking', volume: 0.5);

@@ -162,7 +162,8 @@ class GameWebsite {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        text("AOEN", size: 50),
+        text("AEON", size: 50),
+        // text("NEON", size: 50),
         // text("BLAZE", size: 50),
         // text("PLASMA", size: 40),
         height32,

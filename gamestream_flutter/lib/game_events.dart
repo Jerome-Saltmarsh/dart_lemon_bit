@@ -36,7 +36,6 @@ class GameEvents {
     GameNodes.refreshGridMetrics();
     GameNodes.generateHeightMap();
     GameNodes.generateMiniMap();
-    GameNodes.refreshNodeVariations();
     GameMinimap.generateSrcDst();
     ClientActions.refreshBakeMapLightSources();
 
@@ -159,7 +158,7 @@ class GameEvents {
       case GameEventType.Player_Death:
         break;
       case GameEventType.Teleported:
-        // audio.magicalSwoosh(x, y);
+        GameAudio.magical_impact_16();
         break;
       case GameEventType.Blue_Orb_Fired:
         GameAudio.sci_fi_blaster_1.playXYZ(x, y, z);
@@ -198,6 +197,18 @@ class GameEvents {
         for (var i = 0; i < 8; i++) {
           GameState.spawnParticleOrbShard(
               x: x, y: y, z: z, duration: 30, speed: Engine.randomBetween(1, 2), angle: Engine.randomAngle());
+        }
+        break;
+
+      case GameEventType.Teleport_Start:
+        for (var i = 0; i < 5; i++) {
+          GameState.spawnParticleConfettiByType(x, y, z, ParticleType.Confetti_Blue);
+        }
+        break;
+
+      case GameEventType.Teleport_End:
+        for (var i = 0; i < 5; i++) {
+          GameState.spawnParticleConfettiByType(x, y, z, ParticleType.Confetti_Blue);
         }
         break;
 
@@ -389,6 +400,9 @@ class GameEvents {
           default:
             GameAudio.reload_6();
         }
+        break;
+      case PlayerEvent.Teleported:
+        GameAudio.magical_swoosh_18();
         break;
       case PlayerEvent.Level_Increased:
         GameAudio.buff_1();
