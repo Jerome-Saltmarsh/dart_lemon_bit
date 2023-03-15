@@ -100,8 +100,8 @@ class GameCombat extends Game {
     player.bodyType = randomItem(ItemType.Collection_Clothing_Body);
     player.legsType = randomItem(ItemType.Collection_Clothing_Legs);
 
-    // final weaponPrimary = ItemType.Weapon_Ranged_Plasma_Pistol;
-    final weaponPrimary = ItemType.Weapon_Ranged_Teleport;
+    final weaponPrimary = ItemType.Weapon_Ranged_Plasma_Pistol;
+    // final weaponPrimary = ItemType.Weapon_Ranged_Teleport;
     final weaponSecondary = ItemType.Weapon_Melee_Knife;
     final weaponTertiary = randomItem(const[
       ItemType.Weapon_Melee_Knife,
@@ -172,10 +172,6 @@ class GameCombat extends Game {
               return;
             }
           }
-          // else {
-          //   setCharacterTarget(player, aimTarget);
-          // }
-          // return;
         }
         if (Collider.onSameTeam(player, aimTarget)){
           setCharacterTarget(player, aimTarget);
@@ -184,6 +180,7 @@ class GameCombat extends Game {
       }
 
       if (!keyShiftDown && characterMeleeAttackTargetInRange(player)){
+        player.weaponType = player.weaponPrimary;
         characterAttackMelee(player);
         return;
       }
@@ -208,16 +205,14 @@ class GameCombat extends Game {
               return;
             }
           }
-          // else {
-          //   setCharacterTarget(player, aimTarget);
-          // }
         }
         if (Collider.onSameTeam(player, aimTarget)) {
           setCharacterTarget(player, aimTarget);
         }
       }
 
-      if (!keyShiftDown && characterMeleeAttackTargetInRange(player)){
+      if (!keyShiftDown && characterMeleeAttackTargetInRange(player)) {
+        player.weaponType = player.weaponSecondary;
         characterAttackMelee(player);
         return;
       }

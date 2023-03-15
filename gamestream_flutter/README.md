@@ -12,6 +12,8 @@ ctrl + shift + e    : view recent changes
 [ ] metal crates can only be smashed with hammer
 [ ] powers invisibility
 [ ] powers teleportation
+[ ] powers shield
+[ ] powers stun pulse
 [ ] tree can only be chopped with axe
 [ ] perk type explosions do not cause friendly fire
 [ ] perk type instant draw weapon
@@ -27,13 +29,14 @@ ctrl + shift + e    : view recent changes
 [GAME IDEAS]
 [ ] resources buy trinkets
 [ ] weapon stun taser
-[ ] weapon shield
 [ ] purchasable trinkets
+[ ] weapon shield
 
 [TASKS]
 [ ] balance item statistics
 
 15.03.2023
+[x] fix bug melee attack doesn't change weapon
 [x] weapon portal gun
 [x] fix cutting grass regenerates randoms
 
