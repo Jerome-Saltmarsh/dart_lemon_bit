@@ -8,6 +8,8 @@ class GamePlayer {
   static final buffNoRecoil     = Watch(0);
 
   static final id = Watch(0);
+  static final powerType = Watch(PowerType.None);
+  static final powerCooldown = Watch(0.0);
   static final weapon = Watch(0, onChanged: GameEvents.onChangedPlayerWeapon);
   static final weaponPrimary = Watch(0, onChanged: GameEvents.onChangedPlayerWeapon);
   // static final weaponPrimaryLevel = Watch(0);

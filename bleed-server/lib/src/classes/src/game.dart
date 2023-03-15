@@ -677,6 +677,14 @@ abstract class Game {
     }
   }
 
+  void playerTeleport(Player player) =>
+      characterTeleport(
+        character: player,
+        x: player.mouseGridX,
+        y: player.mouseGridY,
+        range: ItemType.getRange(ItemType.Weapon_Ranged_Teleport),
+      );
+
   void characterTeleport({
     required Character character,
     required double x,
@@ -771,13 +779,13 @@ abstract class Game {
   void playerThrowGrenade(Player player, {int damage = 10}) {
     if (player.deadBusyOrWeaponStateBusy) return;
 
-    if (options.items){
-      if (player.grenades <= 0) {
-        player.writeError('No grenades left');
-        return;
-      }
-      player.grenades--;
-    }
+    // if (options.items){
+    //   if (player.grenades <= 0) {
+    //     player.writeError('No grenades left');
+    //     return;
+    //   }
+    //   player.grenades--;
+    // }
 
     dispatchAttackPerformed(
       ItemType.Weapon_Thrown_Grenade,
@@ -1895,12 +1903,12 @@ abstract class Game {
   void updatePlayer(Player player) {
     player.framesSinceClientRequest++;
 
-    if (player.textDuration > 0) {
-      player.textDuration--;
-      if (player.textDuration == 0) {
-        player.text = "";
-      }
-    }
+    // if (player.textDuration > 0) {
+    //   player.textDuration--;
+    //   if (player.textDuration == 0) {
+    //     player.text = "";
+    //   }
+    // }
 
     if (player.deadOrDying) return;
 
@@ -1910,6 +1918,10 @@ abstract class Game {
         player.energy++;
         player.nextEnergyGain = player.energyGainRate;
       }
+    }
+
+    if (player.powerCooldown > 0) {
+       player.powerCooldown--;
     }
 
 
@@ -3306,6 +3318,28 @@ abstract class Game {
     dispatchGameEventGameObjectDestroyed(gameObject);
     deactivateCollider(gameObject);
     customOnGameObjectDestroyed(gameObject);
+  }
+
+  void playerUsePower(Player player){
+     if (player.powerCooldown > 0) {
+       player.writeError('power not ready');
+       return;
+     }
+     player.powerCooldown = getPlayerPowerTypeCooldownTotal(player);
+
+     switch (player.powerType) {
+       case PowerType.Bomb:
+         playerThrowGrenade(player);
+         break;
+       case PowerType.Teleport:
+         playerTeleport(player);
+         break;
+
+     }
+  }
+
+  int getPlayerPowerTypeCooldownTotal(Player player){
+    return 120;
   }
 }
 

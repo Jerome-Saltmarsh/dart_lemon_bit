@@ -214,6 +214,10 @@ class ServerResponseReader with ByteReader {
       case ApiPlayer.Aim_Target_Name:
         GamePlayer.aimTargetName = readString();
         break;
+      case ApiPlayer.Power:
+        GamePlayer.powerType.value = readByte();
+        GamePlayer.powerCooldown.value = readPercentage();
+        break;
       case ApiPlayer.Action:
         GamePlayer.action.value = readUInt8();
         GamePlayer.actionItemType.value = readUInt16();

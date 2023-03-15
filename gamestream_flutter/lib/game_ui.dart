@@ -82,6 +82,8 @@ class GameUI {
 
   static Widget buildWindowCharacterCreation() {
 
+    const textSize = 22;
+
     final buildTitle = (String value)
       => text(value.toUpperCase(), color: Colors.white54, underline: true);
 
@@ -107,7 +109,7 @@ class GameUI {
                 margin: const EdgeInsets.only(bottom: 6),
                 child: text(PowerType.getName(powerType),
                     color: GameColors.white80,
-                    size: 22,
+                    size: textSize,
                 ),
 
             );
@@ -128,7 +130,7 @@ class GameUI {
                  action: () => GameNetwork.sendClientRequestSelectWeaponPrimary(itemType),
                  child: text(ItemType.getName(itemType),
                  color: weaponPrimary == itemType ? GameColors.orange : GameColors.white80,
-                   size: 22,
+                   size: textSize,
                   )),
              ),
              ).toList(growable: false),
@@ -149,7 +151,7 @@ class GameUI {
                   action: () => GameNetwork.sendClientRequestSelectWeaponSecondary(itemType),
                   child: text(ItemType.getName(itemType),
                     color: weaponSecondary == itemType ? GameColors.orange : GameColors.white80,
-                    size: 22,
+                    size: textSize,
                   )),
             ),
             ).toList(growable: false),
@@ -157,7 +159,6 @@ class GameUI {
         ],
       );
     });
-
 
     final columnPerk = Column(
       children: [

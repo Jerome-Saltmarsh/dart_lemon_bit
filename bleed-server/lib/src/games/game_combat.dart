@@ -225,7 +225,7 @@ class GameCombat extends Game {
     }
 
     if (keySpaceDown) {
-      playerThrowGrenade(player);
+      playerUsePower(player);
     }
 
     playerRunInDirection(player, direction);
