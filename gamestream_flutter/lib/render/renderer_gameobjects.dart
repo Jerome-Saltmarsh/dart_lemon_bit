@@ -143,6 +143,20 @@ class RendererGameObjects extends Renderer {
       );
       return;
     }
+    if (type == ItemType.Weapon_Ranged_Teleport) {
+      Engine.renderSprite(
+          image: GameImages.atlas_weapons,
+          dstX: gameObject.renderX,
+          dstY: gameObject.renderY,
+          srcX: GameAnimation.animationFrame16 * 125.0,
+          srcY: 875,
+          srcWidth: 125,
+          srcHeight: 125,
+          color: GameState.getV3RenderColor(gameObject),
+          scale: 0.5
+      );
+      return;
+    }
 
     assert (ItemType.isTypeItem(type));
 

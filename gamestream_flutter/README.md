@@ -28,12 +28,14 @@ ctrl + shift + e    : view recent changes
 [ ] resources buy trinkets
 [ ] weapon stun taser
 [ ] weapon shield
-[ ] weapon portal gun
 [ ] purchasable trinkets
 
 [TASKS]
 [ ] balance item statistics
-[ ] fix cutting grass regenerates randoms
+
+15.03.2023
+[x] weapon portal gun
+[x] fix cutting grass regenerates randoms
 
 14.03.2023
 [x] scene warehouse

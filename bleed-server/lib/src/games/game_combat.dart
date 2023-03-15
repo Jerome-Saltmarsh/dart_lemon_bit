@@ -448,6 +448,7 @@ class GameCombat extends Game {
         ItemType.Weapon_Ranged_Flamethrower: 400,
         ItemType.Weapon_Ranged_Sniper_Rifle: 300,
         ItemType.Weapon_Ranged_Bazooka: 400,
+        ItemType.Weapon_Ranged_Teleport: 400,
   } [itemType] ?? 0;
 
   @override
