@@ -7,21 +7,23 @@ navigate to next method: ctrl + shift + up / down arrows
 ctrl + w            : minimal mode
 ctrl + shift + e    : view recent changes
 
+[FUTURE IDEAS]
+[ ] tree can only be chopped with axe
+
 [NEXT GAME IDEAS]
 [ ] find keys, which can unlock chests, chests provide treasures
 [ ] metal crates can only be smashed with hammer
-[ ] powers invisibility
-[ ] powers teleportation
-[ ] powers shield
-[ ] powers stun pulse
-[ ] tree can only be chopped with axe
+[ ] power invisibility
+[ ] power teleportation
+[ ] power shield
+[ ] power stun pulse
+[ ] power grenade
 [ ] perk type explosions do not cause friendly fire
 [ ] perk type instant draw weapon
 [ ] perk type collecting gems also heals health
 [ ] perk type melee attacks heal health
 [ ] perk type melee attacks damage multiple enemies
 [ ] perk type sniper bullets pass through enemies
-[ ] perk type instant throw grenade
 [ ] perk type run faster
 [ ] perk type increase max energy
 [ ] perk type increase max health
@@ -34,6 +36,7 @@ ctrl + shift + e    : view recent changes
 
 [TASKS]
 [ ] balance item statistics
+[ ] character creation window
 
 15.03.2023
 [x] fix bug melee attack doesn't change weapon

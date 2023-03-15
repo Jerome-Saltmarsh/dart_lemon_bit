@@ -161,6 +161,28 @@ class Connection with ByteReader {
         game.playerThrowGrenade(player);
         break;
 
+      case ClientRequest.Select_Weapon_Primary:
+        final value = parseArg1(arguments);
+        if (value == null) return;
+        if (!ItemType.isTypeWeapon(value)) {
+          player.writeError('invalid weapon type');
+          return;
+        }
+        player.weaponPrimary = value;
+        player.weaponType = value;
+        break;
+
+      case ClientRequest.Select_Weapon_Secondary:
+        final value = parseArg1(arguments);
+        if (value == null) return;
+        if (!ItemType.isTypeWeapon(value)) {
+          player.writeError('invalid weapon type');
+          return;
+        }
+        player.weaponSecondary = value;
+        player.weaponType = value;
+        break;
+
       case ClientRequest.Weather_Set_Rain:
         if (!isLocalMachine && game is! GameEditor) return;
         final rainType = parse(arguments[1]);

@@ -30,7 +30,10 @@ class GameUI {
   static Widget buildUI() => StackFullscreen(children: [
         buildWatchBool(ClientState.triggerAlarmNoMessageReceivedFromServer,
             buildDialogFramesSinceUpdate),
-        buildWatchBool(GamePlayer.alive, buildPositionedContainerRespawn, false),
+        // buildWatchBool(GamePlayer.alive, buildPositionedContainerRespawn, false),
+        // buildWatchBool(GamePlayer.alive, buildWindowCharacterCreation, false),
+        buildWindowCharacterCreation(),
+        // visibleBuilder(GamePlayer.alive, buildWindowCharacterCreation()),
         Positioned(
             top: 0,
             right: 0,
@@ -74,6 +77,100 @@ class GameUI {
                   child: buildGeneratedMiniMap()),
             ),
           ),
+    );
+  }
+
+  static Widget buildWindowCharacterCreation() {
+
+    const weaponTypes = const [
+      ItemType.Weapon_Ranged_Plasma_Rifle,
+      ItemType.Weapon_Ranged_Plasma_Pistol,
+      ItemType.Weapon_Ranged_Shotgun,
+      ItemType.Weapon_Ranged_Bazooka,
+      ItemType.Weapon_Ranged_Sniper_Rifle,
+      ItemType.Weapon_Ranged_Flamethrower,
+      ItemType.Weapon_Ranged_Teleport,
+      ItemType.Weapon_Melee_Knife,
+      ItemType.Weapon_Melee_Crowbar,
+    ];
+
+    final columnSelectWeaponLeft = watch(GamePlayer.weaponPrimary, (int weaponPrimary) {
+       return Column(
+         children: [
+           text("WEAPON LEFT", color: Colors.white54, underline: true),
+           height8,
+           Column(
+             children: (weaponTypes).map((int itemType) => Container(
+               margin: const EdgeInsets.only(bottom: 6),
+               child: onPressed(
+                 action: () => GameNetwork.sendClientRequestSelectWeaponPrimary(itemType),
+                 child: text(ItemType.getName(itemType),
+                 color: weaponPrimary == itemType ? GameColors.orange : GameColors.white80,
+                   size: 22,
+                  )),
+             ),
+             ).toList(growable: false),
+           ),
+         ],
+       );
+    });
+
+    final columnSelectWeaponRight = watch(GamePlayer.weaponSecondary, (int weaponSecondary) {
+      return Column(
+        children: [
+          text("WEAPON RIGHT", color: Colors.white54, underline: true),
+          height8,
+          Column(
+            children: (weaponTypes).map((int itemType) => Container(
+              margin: const EdgeInsets.only(bottom: 6),
+              child: onPressed(
+                  action: () => GameNetwork.sendClientRequestSelectWeaponSecondary(itemType),
+                  child: text(ItemType.getName(itemType),
+                    color: weaponSecondary == itemType ? GameColors.orange : GameColors.white80,
+                    size: 22,
+                  )),
+            ),
+            ).toList(growable: false),
+          ),
+        ],
+      );
+    });
+
+    return buildFullscreen(
+      child: Container(
+        width: 600,
+        padding: GameStyle.Padding_6,
+        color: GameStyle.Container_Color,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            text("CHARACTER CREATION", size: 32, color: Colors.white60),
+            height32,
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                columnSelectWeaponLeft,
+                columnSelectWeaponRight,
+              ],
+            ),
+            height64,
+            onPressed(
+              action: () {},
+              child: Container(
+                width: 150,
+                height: 150 * goldenRatio_0381,
+                color: GameColors.green.withAlpha(50),
+                child: border(
+                  child: text("START", size: 45, color: GameColors.green),
+                  width: 2,
+                  color: GameColors.green,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 

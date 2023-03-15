@@ -431,6 +431,12 @@ class GameNetwork {
     sendGameObjectRequest(GameObjectRequest.Move_To_Mouse);
   }
 
+  static void sendClientRequestSelectWeaponPrimary(int value) =>
+      sendClientRequest(ClientRequest.Select_Weapon_Primary, value);
+
+  static void sendClientRequestSelectWeaponSecondary(int value) =>
+      sendClientRequest(ClientRequest.Select_Weapon_Secondary, value);
+
   static void sendGameObjectRequest(GameObjectRequest request, [dynamic message]) {
     if (message != null){
       sendClientRequest(ClientRequest.GameObject, '${request.index} $message');
