@@ -82,6 +82,9 @@ class GameUI {
 
   static Widget buildWindowCharacterCreation() {
 
+    final buildTitle = (String value)
+      => text(value.toUpperCase(), color: Colors.white54, underline: true);
+
     const weaponTypes = const [
       ItemType.Weapon_Ranged_Plasma_Rifle,
       ItemType.Weapon_Ranged_Plasma_Pistol,
@@ -94,10 +97,29 @@ class GameUI {
       ItemType.Weapon_Melee_Crowbar,
     ];
 
+    final columnPowers = Column(
+      children: [
+        buildTitle("power"),
+        height8,
+        Column(
+          children: PowerType.values.map((int powerType){
+            return Container(
+                margin: const EdgeInsets.only(bottom: 6),
+                child: text(PowerType.getName(powerType),
+                    color: GameColors.white80,
+                    size: 22,
+                ),
+
+            );
+          }).toList(growable: false)
+        ),
+      ],
+    );
+
     final columnSelectWeaponLeft = watch(GamePlayer.weaponPrimary, (int weaponPrimary) {
        return Column(
          children: [
-           text("WEAPON LEFT", color: Colors.white54, underline: true),
+           buildTitle("Weapon Left"),
            height8,
            Column(
              children: (weaponTypes).map((int itemType) => Container(
@@ -118,7 +140,7 @@ class GameUI {
     final columnSelectWeaponRight = watch(GamePlayer.weaponSecondary, (int weaponSecondary) {
       return Column(
         children: [
-          text("WEAPON RIGHT", color: Colors.white54, underline: true),
+          buildTitle("WEAPON RIGHT"),
           height8,
           Column(
             children: (weaponTypes).map((int itemType) => Container(
@@ -136,6 +158,13 @@ class GameUI {
       );
     });
 
+
+    final columnPerk = Column(
+      children: [
+        text("PERK", color: Colors.white54, underline: true),
+      ],
+    );
+
     return buildFullscreen(
       child: Container(
         width: 600,
@@ -150,8 +179,10 @@ class GameUI {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+                columnPowers,
                 columnSelectWeaponLeft,
                 columnSelectWeaponRight,
+                // columnPerk,
               ],
             ),
             height64,
