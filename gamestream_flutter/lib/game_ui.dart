@@ -175,12 +175,10 @@ class GameUI {
 
     const instructions = [
       'MOVE: W-A-S-D',
-      // 'POWER        SPACE-BAR',
-      // 'WEAPON-A     LEFT-CLICK',
-      // 'WEAPON-B     RIGHT-CLICK',
+      'ZOOM: Mouse-Scroll'
     ];
 
-    final instructionWidth = 120.0;
+    final instructionWidth = 150.0;
 
     final columnInstructions = Container(
       decoration: BoxDecoration(
@@ -593,14 +591,16 @@ class GameUI {
 
   static Widget buildAtlasIconType(int iconType,
           {double scale = 1, int color = 1}) =>
-      Engine.buildAtlasImage(
-        image: GameImages.atlas_icons,
-        srcX: AtlasIcons.getSrcX(iconType),
-        srcY: AtlasIcons.getSrcY(iconType),
-        srcWidth: AtlasIcons.getSrcWidth(iconType),
-        srcHeight: AtlasIcons.getSrcHeight(iconType),
-        scale: scale,
-        color: color,
+      FittedBox(
+        child: Engine.buildAtlasImage(
+          image: GameImages.atlas_icons,
+          srcX: AtlasIcons.getSrcX(iconType),
+          srcY: AtlasIcons.getSrcY(iconType),
+          srcWidth: AtlasIcons.getSrcWidth(iconType),
+          srcHeight: AtlasIcons.getSrcHeight(iconType),
+          scale: scale,
+          color: color,
+        ),
       );
 
   static Widget buildAtlasItemType(int itemType, {int color = 1}) =>
@@ -936,9 +936,7 @@ class GameUI {
     ));
 
   static Widget buildPlayerPowerType(){
-    return watch(GamePlayer.powerType, (int powerType){
-      return text(powerType);
-    });
+    return watch(GamePlayer.powerType, buildIconPowerType);
   }
 
   static Widget buildIconPowerType(int powerType){
@@ -952,7 +950,10 @@ class GameUI {
       PowerType.Stun      : IconType.Power_Stun,
       PowerType.Revive    : IconType.Power_Revive,
     }[powerType] ?? -1;
-    return buildAtlasIconType(powerTypeIcon);
+    return Container(
+        width: 64,
+        child: buildAtlasIconType(powerTypeIcon),
+    );
   }
 
   static Widget buildPanelTotalGrenades() {
