@@ -1904,6 +1904,9 @@ abstract class Game {
             case PowerType.Shield:
               player.buffInvincible = false;
               break;
+            case PowerType.Invisible:
+              player.buffInvisible = false;
+              break;
           }
       }
     }
@@ -3302,34 +3305,6 @@ abstract class Game {
     dispatchGameEventGameObjectDestroyed(gameObject);
     deactivateCollider(gameObject);
     customOnGameObjectDestroyed(gameObject);
-  }
-
-  void playerUsePower(Player player){
-     if (player.powerCooldown > 0) {
-       // player.writeError('power not ready');
-       return;
-     }
-     player.powerCooldown = getPlayerPowerTypeCooldownTotal(player);
-     player.writePlayerPower();
-     player.writePlayerEvent(PlayerEvent.Power_Used);
-
-     switch (player.powerType) {
-       case PowerType.Bomb:
-         playerThrowGrenade(player);
-         break;
-       case PowerType.Teleport:
-         playerTeleport(player);
-         break;
-       case PowerType.Revive:
-         player.health = player.maxHealth;
-         player.energy = player.maxEnergy;
-         player.writePlayerEventItemTypeConsumed(ItemType.Consumables_Potion_Blue);
-         break;
-       case PowerType.Shield:
-         player.buffInvincible = true;
-         player.powerDuration = Engine.Frames_Per_Second * 4;
-         break;
-     }
   }
 
   int getPlayerPowerTypeCooldownTotal(Player player) {

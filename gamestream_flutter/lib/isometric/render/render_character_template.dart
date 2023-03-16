@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:ui';
 
 import '../../library.dart';
 import 'render_character_health_bar.dart';
@@ -41,25 +42,10 @@ void renderCharacterTemplate(Character character, {
     }
   }
 
-  if (character.buffDoubleDamage) {
-    Engine.renderSprite(
-      image: GameImages.atlas_items,
-      srcX: 448,
-      srcY: 128,
-      dstX: character.renderX,
-      dstY: character.renderY - 45,
-      srcWidth: 32,
-      srcHeight: 32,
-      scale: 1,
-    );
-  }
-
-
   var frameLegs = 0;
   var frameHead = 0;
   var frameBody = 0;
   var frameWeapon = 0;
-
 
   final diff = Direction.getDifference(character.renderDirection, character.aimDirection).abs();
   final runningBackwards = diff >= 3 && character.running;
@@ -169,6 +155,9 @@ void renderCharacterTemplate(Character character, {
     );
   }
 
+  if (character.buffInvisible) {
+    Engine.bufferBlendMode = BlendMode.srcIn;
+  }
 
     Engine.renderSprite(
         image: GameImages.getImageForLegType(character.legType),
@@ -215,18 +204,9 @@ void renderCharacterTemplate(Character character, {
           character.weaponType, directionBody, frameWeapon, color, dstX, dstY);
     }
 
-  // Engine.renderSprite(
-  //   image: GameImages.template,
-  //   srcX: frameLegs * Sprite_Size,
-  //   srcY: upperBodyDirection * Sprite_Size,
-  //   srcWidth: Sprite_Size,
-  //   srcHeight: Sprite_Size,
-  //   dstX: GameConvert.getRenderX(shadowX, shadowY, shadowZ),
-  //   dstY: GameConvert.getRenderY(shadowX, shadowY, shadowZ),
-  //   scale: 0.75,
-  //   color: color,
-  //   anchorY: 0.75,
-  // );
+  if (character.buffInvisible) {
+    Engine.bufferBlendMode = BlendMode.dstATop;
+  }
 }
 
 class TemplateAnimation {

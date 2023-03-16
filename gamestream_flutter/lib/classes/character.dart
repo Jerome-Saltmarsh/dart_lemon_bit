@@ -28,6 +28,7 @@ class Character extends Vector3 {
   var buff = 0;
   var buffInvincible = false;
   var buffDoubleDamage = false;
+  var buffInvisible = false;
 
   static const piSixteenth = pi / 16.0;
 

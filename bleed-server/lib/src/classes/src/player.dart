@@ -1247,6 +1247,9 @@ class Player extends Character with ByteWriter {
       if (character.buffDoubleDamage){
         buff = buff | 0x00000002;
       }
+      if (character.buffInvisible){
+        buff = buff | 0x00000004;
+      }
       writeByte(buff);
     }
     writeByte(END);

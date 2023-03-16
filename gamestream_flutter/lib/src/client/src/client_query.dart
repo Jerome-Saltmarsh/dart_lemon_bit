@@ -7,9 +7,6 @@ class ClientQuery {
   static int getHoverItemType() =>
     ServerQuery.getItemTypeAtInventoryIndex(ClientState.hoverIndex.value);
 
-  static bool keyboardKeyIsHotKey(LogicalKeyboardKey key) =>
-      ClientConstants.Hot_Keys.contains(key);
-
   static Watch<int> mapKeyboardKeyToWatchBeltType(LogicalKeyboardKey key){
     if (key == LogicalKeyboardKey.digit1)
        return ServerState.playerBelt1_ItemType;

@@ -87,6 +87,9 @@ class GameCombat extends Game {
     moveToRandomPlayerSpawnPoint(player);
     player.item_level.clear();
     player.team = TeamType.Alone;
+    player.buffInvisible = false;
+    player.buffInvincible = false;
+    player.buffDoubleDamage = false;
     player.maxHealth = Player_Health;
     player.health = Player_Health;
     player.powerCooldown = 0;
@@ -569,6 +572,38 @@ class GameCombat extends Game {
     if (collider is! GameObject) return;
     player.writeApiPlayerAimTargetName('${getItemCost(collider.type)} credits');
   }
+
+  void playerUsePower(Player player){
+    if (player.powerCooldown > 0) {
+      return;
+    }
+    player.powerCooldown = getPlayerPowerTypeCooldownTotal(player);
+    player.writePlayerPower();
+    player.writePlayerEvent(PlayerEvent.Power_Used);
+
+    switch (player.powerType) {
+      case PowerType.Bomb:
+        playerThrowGrenade(player);
+        break;
+      case PowerType.Teleport:
+        playerTeleport(player);
+        break;
+      case PowerType.Revive:
+        player.health = player.maxHealth;
+        player.energy = player.maxEnergy;
+        player.writePlayerEventItemTypeConsumed(ItemType.Consumables_Potion_Blue);
+        break;
+      case PowerType.Shield:
+        player.buffInvincible = true;
+        player.powerDuration = Engine.Frames_Per_Second * 4;
+        break;
+      case PowerType.Invisible:
+        player.buffInvisible = true;
+        player.powerDuration = Engine.Frames_Per_Second * 4;
+        break;
+    }
+  }
+
 }
 
 
