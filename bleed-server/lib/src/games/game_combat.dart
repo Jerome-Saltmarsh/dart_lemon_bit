@@ -223,6 +223,7 @@ class GameCombat extends Game {
   @override
   void customOnPlayerDead(Player player) {
     player.powerCooldown = 0;
+    player.powerDuration = 0;
     player.writePlayerPower();
   }
 
@@ -294,48 +295,26 @@ class GameCombat extends Game {
   }
 
   void playerEquipPrimary(Player player, int itemType) {
-    if (
-      player.weaponPrimary == itemType &&
-      player.weaponType == itemType
-    ) return;
+    if (player.weaponPrimary == itemType) return;
 
     if (player.canChangeEquipment) {
       setCharacterStateChanging(player);
-    }
-
-    if (player.weaponSecondary == itemType) {
-      final previousWeaponPrimary = player.weaponPrimary;
-      player.weaponPrimary = itemType;
-      player.weaponSecondary = previousWeaponPrimary;
-      return;
     }
 
     player.weaponPrimary = itemType;
     player.weaponType = itemType;
-    // player.weaponPrimaryQuantity = player.weaponPrimaryCapacity;
     player.writePlayerEquipment();
   }
 
   void playerEquipSecondary(Player player, int itemType) {
-    if (
-        player.weaponSecondary == itemType &&
-        player.weaponType == itemType
-    ) return;
+    if (player.weaponSecondary == itemType) return;
 
     if (player.canChangeEquipment) {
       setCharacterStateChanging(player);
     }
 
-    if (player.weaponPrimary == itemType) {
-      final previousWeaponSecondary = player.weaponSecondary;
-      player.weaponSecondary = itemType;
-      player.weaponPrimary = previousWeaponSecondary;
-      return;
-    }
-
     player.weaponSecondary = itemType;
     player.weaponType = itemType;
-    // player.weaponSecondaryQuantity = player.weaponSecondaryCapacity;
   }
 
 

@@ -75,6 +75,7 @@ class Player extends Character with ByteWriter {
   var weaponTertiary = ItemType.Empty;
   var _powerType = PowerType.None;
   var powerCooldown = 0;
+  var powerDuration = 0;
 
   /// Warning - do not reference
   Game game;

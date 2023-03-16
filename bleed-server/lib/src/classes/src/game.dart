@@ -536,6 +536,7 @@ abstract class Game {
       ItemType.Weapon_Ranged_Sniper_Rifle: 5,
       ItemType.Weapon_Ranged_Shotgun: 5,
       ItemType.Weapon_Ranged_Plasma_Pistol: 2,
+      ItemType.Weapon_Ranged_Bazooka: 10,
       ItemType.Weapon_Ranged_Plasma_Rifle: 1,
       ItemType.Weapon_Ranged_Teleport: 10,
       ItemType.Weapon_Melee_Knife: 5,
@@ -1908,13 +1909,6 @@ abstract class Game {
   void updatePlayer(Player player) {
     player.framesSinceClientRequest++;
 
-    // if (player.textDuration > 0) {
-    //   player.textDuration--;
-    //   if (player.textDuration == 0) {
-    //     player.text = "";
-    //   }
-    // }
-
     if (player.deadOrDying) return;
 
     if (player.energy < player.maxEnergy) {
@@ -1930,6 +1924,17 @@ abstract class Game {
        if (player.powerCooldown == 0) {
          player.writePlayerPower();
        }
+    }
+
+    if (player.powerDuration > 0) {
+      player.powerDuration--;
+      if (player.powerDuration == 0) {
+          switch (player.powerType) {
+            case PowerType.Shield:
+              player.buffInvincible = false;
+              break;
+          }
+      }
     }
 
 
@@ -3350,7 +3355,7 @@ abstract class Game {
          break;
        case PowerType.Shield:
          player.buffInvincible = true;
-         player.buffInvincibleTimer = Engine.Frames_Per_Second * 4;
+         player.powerDuration = Engine.Frames_Per_Second * 4;
          break;
      }
   }
