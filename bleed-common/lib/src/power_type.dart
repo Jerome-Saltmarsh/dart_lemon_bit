@@ -21,8 +21,8 @@ class PowerType {
       None        : "None",
       Bomb        : "Bomb",
       Teleport    : "Teleport",
-      Invisible   : "Invisible",
-      Shield      : "Shield",
+      Invisible   : "Vanish",
+      Shield      : "Invincible",
       Stun        : "Stun",
       Revive      : "Revive",
    }[value] ?? "power-type-?-$value";

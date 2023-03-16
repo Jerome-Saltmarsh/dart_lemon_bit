@@ -248,9 +248,6 @@ class ServerResponseReader with ByteReader {
       case ApiPlayer.Accuracy:
         ServerState.playerAccuracy.value = readPercentage();
         break;
-      case ApiPlayer.Buffs:
-        readApiPlayerBuffs();
-        break;
       case ApiPlayer.Level:
         ServerState.playerLevel.value = readUInt16();
         break;
@@ -694,14 +691,6 @@ class ServerResponseReader with ByteReader {
       valueMap[key] = values;
     }
     return valueMap;
-  }
-
-  void readApiPlayerBuffs() {
-    GamePlayer.buffInfiniteAmmo.value = readUInt16();
-    GamePlayer.buffDoubleDamage.value = readUInt16();
-    GamePlayer.buffFast.value = readUInt16();
-    GamePlayer.buffInvincible.value = readUInt16();
-    GamePlayer.buffNoRecoil.value = readUInt16();
   }
 
   void readApiPlayers() {

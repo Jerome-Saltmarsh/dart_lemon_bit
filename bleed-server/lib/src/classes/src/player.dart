@@ -95,12 +95,6 @@ class Player extends Character with ByteWriter {
   final item_level = <int, int> {};
   final item_quantity = <int, int> {};
 
-  var buffInfiniteAmmo      = 0;
-  var buffDoubleDamageTimer = 0;
-  var buffFast              = 0;
-  var buffInvincibleTimer   = 0;
-  var buffNoRecoil          = 0;
-
   var _action = PlayerAction.None;
   var _actionItemType = ItemType.Empty;
   var _actionCost = 0;
@@ -132,7 +126,7 @@ class Player extends Character with ByteWriter {
       : false;
 
   @override
-  double get runSpeed => buffFast > 0 ? 1.3333 : 1.0;
+  double get runSpeed => 1.0;
 
   @override
   int get damage {
@@ -1972,19 +1966,6 @@ class Player extends Character with ByteWriter {
     final quantityClamped = clamp(quantity, 0, getItemCapacity(itemType));
     if (getItemQuantity(itemType) == quantityClamped) return;
     item_quantity[itemType] = quantityClamped;
-    // if (itemType == weaponPrimary || itemType == weaponSecondary) {
-    //   writePlayerWeaponQuantity();
-    // }
-  }
-
-  void writePlayerBuffs() {
-    writeUInt8(ServerResponse.Api_Player);
-    writeUInt8(ApiPlayer.Buffs);
-    writeUInt16(buffInfiniteAmmo);
-    writeUInt16(buffDoubleDamageTimer);
-    writeUInt16(buffFast);
-    writeUInt16(buffInvincibleTimer);
-    writeUInt16(buffNoRecoil);
   }
 
   writePlayerApiId(){

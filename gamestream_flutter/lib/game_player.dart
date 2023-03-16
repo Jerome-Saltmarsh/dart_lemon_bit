@@ -1,24 +1,12 @@
 import 'package:gamestream_flutter/library.dart';
 
 class GamePlayer {
-  static final buffInfiniteAmmo = Watch(0);
-  static final buffDoubleDamage = Watch(0);
-  static final buffFast         = Watch(0);
-  static final buffInvincible   = Watch(0);
-  static final buffNoRecoil     = Watch(0);
-
   static final id = Watch(0);
   static final powerType = Watch(PowerType.None);
   static final powerReady = Watch(true);
   static final weapon = Watch(0, onChanged: GameEvents.onChangedPlayerWeapon);
   static final weaponPrimary = Watch(0, onChanged: GameEvents.onChangedPlayerWeapon);
-  // static final weaponPrimaryLevel = Watch(0);
-  // static final weaponPrimaryQuantity = Watch(0);
-  // static final weaponPrimaryCapacity = Watch(0);
   static final weaponSecondary = Watch(0, onChanged: GameEvents.onChangedPlayerWeapon);
-  // static final weaponSecondaryLevel = Watch(0);
-  // static final weaponSecondaryQuantity = Watch(0);
-  // static final weaponSecondaryCapacity = Watch(0);
   static final weaponTertiary = Watch(0, onChanged: GameEvents.onChangedPlayerWeapon);
 
   static final body = Watch(0);

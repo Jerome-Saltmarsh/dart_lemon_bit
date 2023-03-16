@@ -1504,14 +1504,8 @@ abstract class Game {
       player.interactMode = InteractMode.Inventory;
     }
 
-    player.buffDoubleDamageTimer  = 0;
-    player.buffNoRecoil           = 0;
-    player.buffFast               = 0;
-    player.buffInfiniteAmmo       = 0;
-    player.buffInvincibleTimer    = 0;
     player.buffInvincible         = false;
     player.buffDoubleDamage       = false;
-    player.writePlayerBuffs();
 
     customOnPlayerRevived(player);
 

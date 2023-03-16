@@ -440,52 +440,6 @@ class GameCombat extends Game {
   void customOnPlayerCollectGameObject(Player player, GameObject gameObject) {
     if (!gameObject.collectable) return;
 
-    if (gameObject.type == ItemType.Buff_Infinite_Ammo) {
-      player.writeInfo('Infinite Ammo');
-      player.buffInfiniteAmmo = 15;
-      player.writePlayerBuffs();
-      player.writePlayerEventItemAcquired(gameObject.type);
-      deactivateCollider(gameObject);
-      return;
-    }
-
-    if (gameObject.type == ItemType.Buff_Double_Damage) {
-      player.writeInfo('Double Damage');
-      player.buffDoubleDamageTimer = 30;
-      player.buffDoubleDamage = true;
-      player.writePlayerBuffs();
-      player.writePlayerEventItemAcquired(gameObject.type);
-      deactivateCollider(gameObject);
-      return;
-    }
-
-    if (gameObject.type == ItemType.Buff_No_Recoil) {
-      player.writeInfo('No Recoil');
-      player.buffNoRecoil = 45;
-      player.writePlayerBuffs();
-      deactivateCollider(gameObject);
-      return;
-    }
-
-    if (gameObject.type == ItemType.Buff_Invincible) {
-      player.writeInfo('Invincible');
-      player.buffInvincibleTimer = 15;
-      player.buffInvincible = true;
-      player.writePlayerBuffs();
-      player.writePlayerEventItemAcquired(gameObject.type);
-      deactivateCollider(gameObject);
-      return;
-    }
-
-    if (gameObject.type == ItemType.Buff_Fast) {
-      player.writeInfo('Fast');
-      player.buffFast = 25;
-      player.writePlayerBuffs();
-      player.writePlayerEventItemAcquired(gameObject.type);
-      deactivateCollider(gameObject);
-      return;
-    }
-
     if (gameObject.type == ItemType.Consumables_Potion_Red) {
       if (player.health >= player.maxHealth) return;
       player.health = player.maxHealth;
