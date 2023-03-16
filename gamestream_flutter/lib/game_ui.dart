@@ -932,7 +932,10 @@ class GameUI {
     ));
 
   static Widget buildPlayerPowerType(){
-    return watch(GamePlayer.powerType, buildIconPowerType);
+    return watch(GamePlayer.powerReady, (bool powerReady) {
+      return !powerReady ? width64 :
+        watch(GamePlayer.powerType, buildIconPowerType);
+    });
   }
 
   static Widget buildIconPowerType(int powerType){

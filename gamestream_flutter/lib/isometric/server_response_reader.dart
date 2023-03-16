@@ -216,7 +216,7 @@ class ServerResponseReader with ByteReader {
         break;
       case ApiPlayer.Power:
         GamePlayer.powerType.value = readByte();
-        GamePlayer.powerCooldown.value = readPercentage();
+        GamePlayer.powerReady.value = readBool();
         break;
       case ApiPlayer.Action:
         GamePlayer.action.value = readUInt8();

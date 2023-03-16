@@ -74,7 +74,7 @@ class Player extends Character with ByteWriter {
   var weaponSecondary = ItemType.Empty;
   var weaponTertiary = ItemType.Empty;
   var _powerType = PowerType.None;
-  var _powerCooldown = 0;
+  var powerCooldown = 0;
 
   /// Warning - do not reference
   Game game;
@@ -113,7 +113,6 @@ class Player extends Character with ByteWriter {
   int get actionItemType => _actionItemType;
   int get actionCost => _actionCost;
 
-  int get powerCooldown => _powerCooldown;
   int get powerType => _powerType;
 
   set powerType(int value) {
@@ -122,20 +121,6 @@ class Player extends Character with ByteWriter {
      if (!PowerType.values.contains(value)) return;
      _powerType = value;
      writePlayerPower();
-  }
-
-  set powerCooldown(int value){
-    if (_powerCooldown == value) return;
-    if (value < 0) {
-      value = 0;
-    }
-    _powerCooldown = value;
-    writePlayerPower();
-  }
-
-  double get powerCooldownPercentage {
-    final total = game.getPlayerPowerTypeCooldownTotal(this);
-    return total == 0 ? 0 : powerCooldown / total;
   }
 
   ItemGroup get weaponTypeItemGroup => ItemType.getItemGroup(weaponType);
@@ -2054,7 +2039,7 @@ class Player extends Character with ByteWriter {
     writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Power);
     writeByte(powerType);
-    writePercentage(powerCooldownPercentage);
+    writeBool(powerCooldown <= 0);
   }
 
   void updateCooldown(){

@@ -1924,6 +1924,9 @@ abstract class Game {
 
     if (player.powerCooldown > 0) {
        player.powerCooldown--;
+       if (player.powerCooldown == 0) {
+         player.writePlayerPower();
+       }
     }
 
 
@@ -3328,6 +3331,7 @@ abstract class Game {
        return;
      }
      player.powerCooldown = getPlayerPowerTypeCooldownTotal(player);
+     player.writePlayerPower();
 
      switch (player.powerType) {
        case PowerType.Bomb:
