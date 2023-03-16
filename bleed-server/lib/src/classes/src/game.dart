@@ -3340,6 +3340,7 @@ abstract class Game {
      }
      player.powerCooldown = getPlayerPowerTypeCooldownTotal(player);
      player.writePlayerPower();
+     player.writePlayerEvent(PlayerEvent.Power_Used);
 
      switch (player.powerType) {
        case PowerType.Bomb:

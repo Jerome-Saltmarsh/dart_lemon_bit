@@ -63,6 +63,7 @@ class GameAudio {
   static final reviveHeal1 = AudioSingle(name: 'revive-heal-1', volume: 0.5);
   static final drink = AudioSingle(name: 'drink-potion-2', volume: 0.5);
   static final buff_1 = AudioSingle(name: 'buff-1', volume: 0.5);
+  static final buff_10 = AudioSingle(name: 'buff-10', volume: 0.5);
   static final errorSound15 = AudioSingle(name: 'error-sound-15', volume: 0.5);
   static final popSounds14 = AudioSingle(name: 'pop-sounds-14', volume: 0.5);
   static final coins = AudioSingle(name: 'coins', volume: 0.5);

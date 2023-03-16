@@ -404,6 +404,9 @@ class GameEvents {
       case PlayerEvent.Teleported:
         GameAudio.magical_swoosh_18();
         break;
+      case PlayerEvent.Power_Used:
+        onPlayerEventPowerUsed();
+        break;
       case PlayerEvent.Level_Increased:
         GameAudio.buff_1();
         ClientActions.writeMessage("Level Gained");
@@ -502,6 +505,14 @@ class GameEvents {
         break;
       case PlayerEvent.Invalid_Request:
         ClientActions.writeMessage("Invalid Request");
+        break;
+    }
+  }
+
+  static void onPlayerEventPowerUsed() {
+    switch (GamePlayer.powerType.value) {
+      case PowerType.Shield:
+        GameAudio.buff_10();
         break;
     }
   }
