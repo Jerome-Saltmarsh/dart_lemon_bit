@@ -294,7 +294,7 @@ class GameNetwork {
     sendClientRequest(ClientRequest.Time_Set_Hour, hour);
   }
 
-  static void sendClientRequestRespawn(){
+  static void sendClientRequestRevive(){
     sendClientRequest(ClientRequest.Revive);
   }
 

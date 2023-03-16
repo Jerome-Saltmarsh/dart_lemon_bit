@@ -183,6 +183,16 @@ class Connection with ByteReader {
         player.weaponType = value;
         break;
 
+      case ClientRequest.Select_Power:
+        final value = parseArg1(arguments);
+        if (value == null) return;
+        if (!PowerType.values.contains(value)) {
+          player.writeError('invalid power type: $value');
+          return;
+        }
+        player.powerType = value;
+        break;
+
       case ClientRequest.Weather_Set_Rain:
         if (!isLocalMachine && game is! GameEditor) return;
         final rainType = parse(arguments[1]);
@@ -787,9 +797,7 @@ class Connection with ByteReader {
     game.players.add(player);
     game.characters.add(player);
     game.customOnPlayerJoined(player);
-    // player.writeGameOptions();
     player.writePlayerApiId();
-    game.revive(player);
 
     final account = _account;
     if (account != null) {

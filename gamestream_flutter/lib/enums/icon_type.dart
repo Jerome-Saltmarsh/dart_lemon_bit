@@ -36,4 +36,12 @@ class IconType {
   static const Body_Type = 38;
   static const Leg_Type = 39;
   static const Bag_White = 40;
+
+  static const Power_None         = 41;
+  static const Power_Bomb         = 42;
+  static const Power_Teleport     = 43;
+  static const Power_Invisible    = 44;
+  static const Power_Shield       = 45;
+  static const Power_Stun         = 46;
+  static const Power_Revive       = 47;
 }

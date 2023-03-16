@@ -944,7 +944,9 @@ abstract class Game {
       attackHit = true;
     }
 
-    for (final gameObject in gameObjects) {
+    final gameObjectsLength = gameObjects.length;
+    for (var i = 0; i < gameObjectsLength; i++) {
+      final gameObject = gameObjects[i];
       if (!gameObject.active) continue;
       if (!gameObject.hitable) continue;
       if (!gameObject.withinDistance(

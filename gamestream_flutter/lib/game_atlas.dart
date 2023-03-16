@@ -359,6 +359,7 @@ class AtlasIcons {
     IconType.Body_Type: 292,
     IconType.Leg_Type: 214,
     IconType.Bag_White: 245,
+    IconType.Power_None: 0,
   }[itemType] ?? 0;
 
   static double getSrcY(int itemType) => const  <int, double> {

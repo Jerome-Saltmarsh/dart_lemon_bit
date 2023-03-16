@@ -8,8 +8,6 @@ import 'package:lemon_math/library.dart';
 class GameCombat extends Game {
 
   // constants
-  static final hints_length = Hints.length;
-  static final hints_frames_between = 600;
   static const Max_Grenades = 3;
   static const GameObject_Duration = 500;
   static const GameObject_Respawn_Duration = 1500;
@@ -23,13 +21,6 @@ class GameCombat extends Game {
   static const Max_Players = 16;
   static const Player_Health = 20;
   static const Player_Energy = 20;
-
-  static const Hints = [
-    '(W,A,S,D) RUN',
-    '(LEFT CLICK) FIRE WEAPON 1',
-    '(RIGHT CLICK) FIRE WEAPON 2',
-    '(SPACE) Throw Grenade',
-  ];
 
   static const GameObjects_Spawnable = [
     ItemType.Resource_Credit,
@@ -96,35 +87,11 @@ class GameCombat extends Game {
     moveToRandomPlayerSpawnPoint(player);
     player.item_level.clear();
     player.team = TeamType.Alone;
-    player.headType = randomItem(ItemType.Collection_Clothing_Head);
-    player.bodyType = randomItem(ItemType.Collection_Clothing_Body);
-    player.legsType = randomItem(ItemType.Collection_Clothing_Legs);
-
-    final weaponPrimary = ItemType.Weapon_Ranged_Plasma_Pistol;
-    // final weaponPrimary = ItemType.Weapon_Ranged_Teleport;
-    final weaponSecondary = ItemType.Weapon_Melee_Knife;
-    final weaponTertiary = randomItem(const[
-      ItemType.Weapon_Melee_Knife,
-      ItemType.Weapon_Melee_Crowbar,
-      ItemType.Weapon_Melee_Axe,
-      ItemType.Weapon_Melee_Pickaxe,
-      ItemType.Weapon_Melee_Hammer,
-      ItemType.Weapon_Melee_Sword,
-    ]);
-
     player.maxHealth = Player_Health;
     player.health = Player_Health;
     player.maxEnergy = Player_Energy;
     player.energy = Player_Energy;
-    player.credits = 500;
-    player.item_level[weaponPrimary] = 0;
-    player.item_level[weaponSecondary] = 0;
-    player.item_level[weaponTertiary] = 0;
-    characterEquipItemType(player, weaponPrimary);
-    player.weaponPrimary = weaponPrimary;
-    player.weaponSecondary = weaponSecondary;
-    player.weaponTertiary = weaponTertiary;
-    player.weaponType = weaponPrimary;
+    player.credits = 0;
     player.grenades = 1;
     player.writePlayerEquipment();
   }
@@ -231,11 +198,6 @@ class GameCombat extends Game {
     playerRunInDirection(player, direction);
   }
 
-  @override
-  void customUpdatePlayer(Player player){
-      updateHint(player);
-  }
-
   void spawnGrenadeAtPosition(Position3 position){
     final spawnedGameObject = spawnGameObjectAtPosition(
       position: position,
@@ -254,15 +216,6 @@ class GameCombat extends Game {
     performScript(timer: GameObject_Duration)
         .writeGameObjectDeactivate(spawnedGameObject)
     ;
-  }
-
-  void updateHint(Player player){
-    if (player.hintIndex >= hints_length) return;
-    player.hintNext--;
-    if (player.hintNext > 0) return;
-    player.writeInfo(Hints[player.hintIndex]);
-    player.hintNext = hints_frames_between;
-    player.hintIndex++;
   }
 
   @override
@@ -615,6 +568,14 @@ class GameCombat extends Game {
   @override
   void customOnPlayerJoined(Player player) {
     writePlayerScoresAll();
+    player.powerType = PowerType.Bomb;
+    player.weaponPrimary = ItemType.Weapon_Ranged_Plasma_Pistol;
+    player.weaponSecondary = ItemType.Weapon_Melee_Crowbar;
+    player.weaponType = player.weaponPrimary;
+    player.headType = randomItem(ItemType.Collection_Clothing_Head);
+    player.bodyType = randomItem(ItemType.Collection_Clothing_Body);
+    player.legsType = randomItem(ItemType.Collection_Clothing_Legs);
+    setCharacterStateDead(player);
   }
 
   @override

@@ -32,7 +32,7 @@ class GameUI {
             buildDialogFramesSinceUpdate),
         // buildWatchBool(GamePlayer.alive, buildPositionedContainerRespawn, false),
         // buildWatchBool(GamePlayer.alive, buildWindowCharacterCreation, false),
-        buildWindowCharacterCreation(),
+        buildWatchBool(GamePlayer.alive, buildWindowCharacterCreation, false),
         // visibleBuilder(GamePlayer.alive, buildWindowCharacterCreation()),
         Positioned(
             top: 0,
@@ -85,7 +85,7 @@ class GameUI {
     const textSize = 22;
 
     final buildTitle = (String value)
-      => text(value.toUpperCase(), color: Colors.white54, underline: true);
+      => text(value.toUpperCase(), color: Colors.white54);
 
     const weaponTypes = const [
       ItemType.Weapon_Ranged_Plasma_Rifle,
@@ -101,17 +101,22 @@ class GameUI {
 
     final columnPowers = Column(
       children: [
-        buildTitle("power"),
-        height8,
+        buildTitle("Power"),
+        text('space-bar', size: 14, color: Colors.white38, italic: true),
+        height12,
         Column(
           children: PowerType.values.map((int powerType){
-            return Container(
-                margin: const EdgeInsets.only(bottom: 6),
-                child: text(PowerType.getName(powerType),
-                    color: GameColors.white80,
-                    size: textSize,
-                ),
-
+            return onPressed(
+              action: () => GameNetwork.sendClientRequest(ClientRequest.Select_Power, powerType),
+              child: Container(
+                  margin: const EdgeInsets.only(bottom: 6),
+                  child: watch(GamePlayer.powerType, (int playerPowerType){
+                    return text(PowerType.getName(powerType),
+                      color: powerType == playerPowerType ? GameColors.orange : GameColors.white80,
+                      size: textSize,
+                    );
+                  }),
+              ),
             );
           }).toList(growable: false)
         ),
@@ -121,8 +126,9 @@ class GameUI {
     final columnSelectWeaponLeft = watch(GamePlayer.weaponPrimary, (int weaponPrimary) {
        return Column(
          children: [
-           buildTitle("Weapon Left"),
-           height8,
+           buildTitle("Weapon-A"),
+           text('left-click', size: 14, color: Colors.white38, italic: true),
+           height12,
            Column(
              children: (weaponTypes).map((int itemType) => Container(
                margin: const EdgeInsets.only(bottom: 6),
@@ -142,8 +148,9 @@ class GameUI {
     final columnSelectWeaponRight = watch(GamePlayer.weaponSecondary, (int weaponSecondary) {
       return Column(
         children: [
-          buildTitle("WEAPON RIGHT"),
-          height8,
+          buildTitle("Weapon-B"),
+          text('right-click', size: 14, color: Colors.white38, italic: true),
+          height12,
           Column(
             children: (weaponTypes).map((int itemType) => Container(
               margin: const EdgeInsets.only(bottom: 6),
@@ -166,6 +173,33 @@ class GameUI {
       ],
     );
 
+    const instructions = [
+      'MOVE: W-A-S-D',
+      // 'POWER        SPACE-BAR',
+      // 'WEAPON-A     LEFT-CLICK',
+      // 'WEAPON-B     RIGHT-CLICK',
+    ];
+
+    final instructionWidth = 120.0;
+
+    final columnInstructions = Container(
+      decoration: BoxDecoration(
+        color: GameColors.white05,
+        borderRadius: borderRadius4,
+      ),
+      width: instructionWidth,
+      height: instructionWidth * goldenRatio_0381,
+      alignment: Alignment.center,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: instructions
+            .map((String instruction) =>
+            text(instruction, size: 18, color: Colors.white38, italic: true))
+            .toList(growable: false),
+      ),
+    );
+
     return buildFullscreen(
       child: Container(
         width: 600,
@@ -175,7 +209,9 @@ class GameUI {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             text("CHARACTER CREATION", size: 32, color: Colors.white60),
-            height32,
+            height16,
+            columnInstructions,
+            height16,
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -186,15 +222,15 @@ class GameUI {
                 // columnPerk,
               ],
             ),
-            height64,
+            height32,
             onPressed(
-              action: () {},
+              action: GameNetwork.sendClientRequestRevive,
               child: Container(
                 width: 150,
                 height: 150 * goldenRatio_0381,
                 color: GameColors.green.withAlpha(50),
                 child: border(
-                  child: text("START", size: 45, color: GameColors.green),
+                  child: text("PLAY", size: 45, color: GameColors.green),
                   width: 2,
                   color: GameColors.green,
                 ),
@@ -629,15 +665,9 @@ class GameUI {
         Positioned(
             bottom: GameStyle.Default_Padding,
             left: GameStyle.Default_Padding,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                buildPanelTotalGrenades(),
-                // width16,
-                // buildRowPlayerBuffs(),
-              ],
-            )),
-            visibleBuilder(
+            child: buildPlayerPowerType(),
+        ),
+        visibleBuilder(
             GameOptions.inventory,
             Positioned(
               bottom: GameStyle.Default_Padding,
@@ -904,6 +934,26 @@ class GameUI {
           ],)).toList()
       ),
     ));
+
+  static Widget buildPlayerPowerType(){
+    return watch(GamePlayer.powerType, (int powerType){
+      return text(powerType);
+    });
+  }
+
+  static Widget buildIconPowerType(int powerType){
+    assert (PowerType.values.contains(powerType));
+    final powerTypeIcon = const <int, int> {
+      PowerType.None      : IconType.Power_None,
+      PowerType.Bomb      : IconType.Power_Bomb,
+      PowerType.Teleport  : IconType.Power_Teleport,
+      PowerType.Invisible : IconType.Power_Invisible,
+      PowerType.Shield    : IconType.Power_Shield,
+      PowerType.Stun      : IconType.Power_Stun,
+      PowerType.Revive    : IconType.Power_Revive,
+    }[powerType] ?? -1;
+    return buildAtlasIconType(powerTypeIcon);
+  }
 
   static Widget buildPanelTotalGrenades() {
     final icon = Container(
@@ -1329,7 +1379,7 @@ class GameUI {
               container(
                 alignment: Alignment.center,
                 child: "RESPAWN",
-                action: GameNetwork.sendClientRequestRespawn,
+                action: GameNetwork.sendClientRequestRevive,
                 color: GameColors.Red_3,
                 width: width * Engine.GoldenRatio_0_618,
               )

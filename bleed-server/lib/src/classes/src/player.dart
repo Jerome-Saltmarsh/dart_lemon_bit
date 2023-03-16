@@ -69,13 +69,11 @@ class Player extends Character with ByteWriter {
   var _baseHealth = 10;
   var _baseDamage = 0;
   var _baseEnergy = 10;
-  var hintIndex = 0;
-  var hintNext = 100;
 
   var weaponPrimary = ItemType.Empty;
   var weaponSecondary = ItemType.Empty;
   var weaponTertiary = ItemType.Empty;
-  var powerType = PowerType.None;
+  var _powerType = PowerType.None;
   var _powerCooldown = 0;
 
   /// Warning - do not reference
@@ -116,6 +114,15 @@ class Player extends Character with ByteWriter {
   int get actionCost => _actionCost;
 
   int get powerCooldown => _powerCooldown;
+  int get powerType => _powerType;
+
+  set powerType(int value) {
+     if (_powerType == value) return;
+     assert (PowerType.values.contains(value));
+     if (!PowerType.values.contains(value)) return;
+     _powerType = value;
+     writePlayerPower();
+  }
 
   set powerCooldown(int value){
     if (_powerCooldown == value) return;
