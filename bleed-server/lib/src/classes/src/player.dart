@@ -19,9 +19,6 @@ class Player extends Character with ByteWriter {
   static const Perks_Length = 5;
   static const inventory_size = 6 * 5;
 
-  final perksUnlocked = <int>[];
-  var perksActive = Uint8List(Perks_Length);
-
   /// Variables
   final mouse = Vector2(0, 0);
   final runTarget = Position3();
@@ -35,7 +32,6 @@ class Player extends Character with ByteWriter {
   var textDuration = 0;
   var _experience = 0;
   var _level = 1;
-  var _attributes = 0;
   var _energy = 10;
   var maxEnergy = 10;
   var message = "";
@@ -215,7 +211,6 @@ class Player extends Character with ByteWriter {
   int get baseDamage => _baseDamage;
   int get credits => _credits;
   int get level => _level;
-  int get attributes => _attributes;
   int get equippedWeaponIndex => _equippedWeaponIndex;
   int get lookDirection => Direction.fromRadian(lookRadian);
   int get experience => _experience;
@@ -288,13 +283,6 @@ class Player extends Character with ByteWriter {
     if (_level == value) return;
     _level = value;
     writePlayerLevel();
-  }
-
-  set attributes(int value){
-    assert (value >= 0);
-    if (_attributes == value) return;
-    _attributes = value;
-    writePlayerAttributes();
   }
 
   set credits(int value) {
@@ -398,7 +386,6 @@ class Player extends Character with ByteWriter {
 
     assert (damage > 0);
 
-    writePlayerPerksUnlocked();
     writePlayerMaxHealth();
     writePlayerHealth();
     writePlayerDamage();
@@ -443,7 +430,6 @@ class Player extends Character with ByteWriter {
     while (value >= experienceRequiredForNextLevel) {
       value -= experienceRequiredForNextLevel;
       level++;
-      attributes += 3;
       game.customOnPlayerLevelGained(this);
       writePlayerEvent(PlayerEvent.Level_Increased);
     }
@@ -1126,13 +1112,6 @@ class Player extends Character with ByteWriter {
     writeUInt16(_baseEnergy);
   }
 
-  void writePlayerPerksUnlocked() {
-    writeByte(ServerResponse.Api_Player);
-    writeByte(ApiPlayer.Perks_Unlocked);
-    writeUInt16(perksUnlocked.length);
-    writeUint8List(perksUnlocked);
-  }
-
   void writePlayerDamage() {
     writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Damage);
@@ -1157,12 +1136,6 @@ class Player extends Character with ByteWriter {
     writeUInt16(level);
   }
 
-  void writePlayerAttributes(){
-    writeByte(ServerResponse.Api_Player);
-    writeByte(ApiPlayer.Attributes);
-    writeUInt16(attributes);
-  }
-
   void writePlayerAimAngle(){
     writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Aim_Angle);
@@ -1178,7 +1151,6 @@ class Player extends Character with ByteWriter {
     writeProjectiles();
     writePlayerTargetPosition();
     writeCharacters();
-    // writeGameObjects();
     writeEditorGameObjectSelected();
 
     if (game.time.enabled){

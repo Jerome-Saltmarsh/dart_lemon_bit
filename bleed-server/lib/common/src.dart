@@ -28,8 +28,6 @@ export 'src/flag.dart';
 export 'src/game_error.dart';
 export 'src/game_event_type.dart';
 export 'src/game_type.dart';
-export 'src/game_wave_request.dart';
-export 'src/game_waves_response.dart';
 export 'src/gameobject_request.dart';
 export 'src/interact_mode.dart';
 export 'src/inventory_request.dart';

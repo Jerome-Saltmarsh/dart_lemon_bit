@@ -327,9 +327,6 @@ class ServerResponseReader with ByteReader {
         GameCamera.centerOnPlayer();
         GameIO.recenterCursor();
         break;
-      case ApiPlayer.Attributes:
-        ServerState.playerAttributes.value = readUInt16();
-        break;
       case ApiPlayer.Damage:
         ServerState.playerDamage.value = readUInt16();
         break;
@@ -337,9 +334,6 @@ class ServerResponseReader with ByteReader {
         ServerState.playerBaseDamage.value = readUInt16();
         ServerState.playerBaseHealth.value = readUInt16();
         ServerState.playerBaseEnergy.value = readUInt16();
-        break;
-      case ApiPlayer.Perks_Unlocked:
-        readPlayerPerksUnlocked();
         break;
       case ApiPlayer.Items:
         readMap(GamePlayer.items);
@@ -372,15 +366,6 @@ class ServerResponseReader with ByteReader {
 
   void readApiPlayerEnergy() =>
       GamePlayer.energyPercentage = readPercentage();
-
-  void readPlayerPerksUnlocked() {
-    final length = readUInt16();
-    final values = Uint8List(length);
-    for (var i = 0; i < length; i++) {
-      values[i] = readUInt8();
-    }
-    ServerState.playerPerksUnlocked.value = values;
-  }
 
   void readPlayerWeapons() {
     GamePlayer.weapon.value = readUInt16();

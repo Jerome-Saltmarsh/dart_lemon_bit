@@ -248,10 +248,8 @@ class GameCombat extends Game {
          team: TeamType.Evil,
        );
 
-       if (random.nextDouble() < Chance_Of_Item_Gem){
+       if (random.nextDouble() < Chance_Of_Item_Gem) {
          spawnRandomGemsAtIndex(scene.getNodeIndexV3(target));
-       } else if (random.nextDouble() < Chance_Of_Item_Bombs){
-         spawnGrenadeAtPosition(target);
        }
      }
   }

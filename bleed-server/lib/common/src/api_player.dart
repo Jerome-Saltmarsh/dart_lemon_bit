@@ -23,12 +23,9 @@ class ApiPlayer {
   static const Interact_Mode          = 29;
   static const Inventory_Slot         = 30;
   static const Credits                = 31;
-  static const Attributes             = 32;
   static const Damage                 = 33;
   static const Energy                 = 34;
   static const Base_Damage_Health_Energy = 35;
-  static const Perks_Unlocked         = 36;
-  static const Perks_Active           = 37;
   static const Items                  = 38;
   static const Weapons                = 39;
   static const Equipment              = 40;
