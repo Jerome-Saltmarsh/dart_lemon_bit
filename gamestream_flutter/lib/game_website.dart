@@ -345,10 +345,10 @@ enum WebsitePage {
    Region,
 }
 
-typedef MouseOverBuilder = Widget Function(BuildContext context, bool mouseOver);
+typedef MouseOverBuilder = Widget Function(bool mouseOver);
 
 Widget onMouseOver({
-  required MouseOverBuilder builder,
+  required Widget Function(bool mouseOver) builder,
   Function? onEnter,
   Function? onExit
 }) {
@@ -368,7 +368,7 @@ Widget onMouseOver({
               mouseOver = false;
             });
           },
-          child: builder(cont, mouseOver));
+          child: builder(mouseOver));
     });
   });
 }

@@ -121,7 +121,7 @@ Widget buildPositionedIconButton({
     left: left,
     child: onPressed(
       action: action,
-      child: onMouseOver(builder: (BuildContext context, bool mouseOver) =>
+      child: onMouseOver(builder: (bool mouseOver) =>
           GameUI.buildAtlasIconType(
             iconType,
             color: mouseOver ? Colors.black38.value : Colors.white.value,

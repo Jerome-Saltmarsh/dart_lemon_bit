@@ -101,8 +101,8 @@ class GameUI {
 
     final columnPowers = Column(
       children: [
-        buildTitle("Power"),
-        text('space-bar', size: 14, color: Colors.white38, italic: true),
+        // buildTitle("Power"),
+        // text('space-bar', size: 14, color: Colors.white38, italic: true),
         height12,
         Column(
           children: PowerType.values.map((int powerType){
@@ -126,8 +126,8 @@ class GameUI {
     final columnSelectWeaponLeft = watch(GamePlayer.weaponPrimary, (int weaponPrimary) {
        return Column(
          children: [
-           buildTitle("Weapon-A"),
-           text('left-click', size: 14, color: Colors.white38, italic: true),
+           // buildTitle("Weapon-A"),
+           // text('left-click', size: 14, color: Colors.white38, italic: true),
            height12,
            Column(
              children: (weaponTypes).map((int itemType) => Container(
@@ -148,8 +148,8 @@ class GameUI {
     final columnSelectWeaponRight = watch(GamePlayer.weaponSecondary, (int weaponSecondary) {
       return Column(
         children: [
-          buildTitle("Weapon-B"),
-          text('right-click', size: 14, color: Colors.white38, italic: true),
+          // buildTitle("Weapon-B"),
+          // text('right-click', size: 14, color: Colors.white38, italic: true),
           height12,
           Column(
             children: (weaponTypes).map((int itemType) => Container(
@@ -194,43 +194,48 @@ class GameUI {
           .toList(growable: false),
     );
 
+    final buttonPlay = onPressed(
+      action: GameNetwork.sendClientRequestRevive,
+      child: onMouseOver(
+          builder: (mouseOver) {
+            return Container(
+              width: 150,
+              height: 150 * goldenRatio_0381,
+              alignment: Alignment.center,
+              color: GameColors.green.withAlpha(mouseOver ? 140 : 100),
+              child: text("PLAY", size: 45, color: GameColors.green),
+            );
+          }
+      ),
+    );
+
     return buildFullscreen(
-      child: Container(
-        width: 600,
-        padding: GameStyle.Padding_6,
-        color: GameStyle.Container_Color,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            text("CHARACTER CREATION", size: 32, color: Colors.white60),
-            height16,
-            columnInstructions,
-            height16,
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                columnSelectWeaponLeft,
-                columnPowers,
-                columnSelectWeaponRight,
-                // columnPerk,
-              ],
-            ),
-            height32,
-            onPressed(
-              action: GameNetwork.sendClientRequestRevive,
-              child: Container(
-                width: 150,
-                height: 150 * goldenRatio_0381,
-                color: GameColors.green.withAlpha(50),
-                child: border(
-                  child: text("PLAY", size: 45, color: GameColors.green),
-                  width: 2,
-                  color: GameColors.green,
-                ),
+      child: buildDialogUIControl(
+        child: Container(
+          width: 600,
+          padding: GameStyle.Padding_6,
+          color: GameStyle.Container_Color,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              height16,
+              // text("CHARACTER CREATION", size: 32, color: Colors.white60),
+              buttonPlay,
+              height32,
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  columnSelectWeaponLeft,
+                  columnPowers,
+                  columnSelectWeaponRight,
+                  // columnPerk,
+                ],
               ),
-            ),
-          ],
+              height64,
+            ],
+          ),
         ),
       ),
     );

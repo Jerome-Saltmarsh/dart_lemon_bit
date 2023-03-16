@@ -1230,7 +1230,7 @@ class EditorUI {
   static Widget buildMenu(
       {required String text, required List<Widget> children}) {
     final child = container(child: text, color: brownLight);
-    return onMouseOver(builder: (context, over) {
+    return onMouseOver(builder: (over) {
       if (over) {
         return Column(
           children: [
