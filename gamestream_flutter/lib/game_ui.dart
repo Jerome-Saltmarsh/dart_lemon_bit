@@ -175,27 +175,23 @@ class GameUI {
 
     const instructions = [
       'MOVE: W-A-S-D',
-      'ZOOM: Mouse-Scroll'
+      'ZOOM: MOUSE-SCROLL'
     ];
 
-    final instructionWidth = 150.0;
-
-    final columnInstructions = Container(
-      decoration: BoxDecoration(
-        color: GameColors.white05,
-        borderRadius: borderRadius4,
-      ),
-      width: instructionWidth,
-      height: instructionWidth * goldenRatio_0381,
-      alignment: Alignment.center,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: instructions
-            .map((String instruction) =>
-            text(instruction, size: 18, color: Colors.white38, italic: true))
-            .toList(growable: false),
-      ),
+    final columnInstructions = Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: instructions.map((String instruction) =>
+          Container(
+            padding: const EdgeInsets.all(6),
+             margin: const EdgeInsets.symmetric(horizontal: 4),
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: GameColors.white05,
+                borderRadius: borderRadius4,
+              ),
+              child: text(instruction, size: 18, color: Colors.white38, italic: true)))
+          .toList(growable: false),
     );
 
     return buildFullscreen(
@@ -214,8 +210,8 @@ class GameUI {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                columnPowers,
                 columnSelectWeaponLeft,
+                columnPowers,
                 columnSelectWeaponRight,
                 // columnPerk,
               ],
@@ -662,11 +658,11 @@ class GameUI {
           ),
           bottom: GameStyle.Default_Padding,
         ),
-        Positioned(
-            bottom: GameStyle.Default_Padding,
-            left: GameStyle.Default_Padding,
-            child: buildPlayerPowerType(),
-        ),
+        // Positioned(
+        //     bottom: GameStyle.Default_Padding,
+        //     left: GameStyle.Default_Padding,
+        //     child: buildPlayerPowerType(),
+        // ),
         visibleBuilder(
             GameOptions.inventory,
             Positioned(
@@ -1020,7 +1016,9 @@ class GameUI {
             height: 64,
             child: watch(GamePlayer.weaponPrimary, buildAtlasItemType),
           ),
-          width128,
+          width96,
+          buildPlayerPowerType(),
+          width96,
           Container(
             constraints: BoxConstraints(maxWidth: 120),
             height: 64,

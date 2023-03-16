@@ -128,10 +128,6 @@ class GameIO {
     _panning = false;
   }
 
-  static void onKeyPressed(int key) {
-     ClientEvents.onKeyPressed(key);
-  }
-
   static int convertRadianToDirection(double radian) {
     radian = radian < 0 ? radian + Engine.PI_2 : radian % Engine.PI_2;
      if (radian < Engine.PI_Eight + (Engine.PI_Quarter * 0)) return Direction.South_East;

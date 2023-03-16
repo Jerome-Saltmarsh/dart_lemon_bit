@@ -29,6 +29,7 @@ class ClientRequest {
   static const Select_Weapon_Primary    = 27;
   static const Select_Weapon_Secondary  = 28;
   static const Select_Power             = 29;
+  static const Suicide                  = 30;
 }
 
 

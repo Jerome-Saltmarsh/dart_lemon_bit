@@ -6,6 +6,7 @@ class ClientConstants {
   static const Area_Type_Duration = 150;
   static final Key_Inventory = LogicalKeyboardKey.keyI;
   static final Key_Zoom = LogicalKeyboardKey.keyF;
+  static final Key_Suicide = KeyCode.Backspace;
   static final Key_Settings = LogicalKeyboardKey.digit0;
   static final Key_Duplicate = LogicalKeyboardKey.keyV;
   static final Key_Auto_Attack = LogicalKeyboardKey.space;

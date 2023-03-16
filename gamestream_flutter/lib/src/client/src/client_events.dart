@@ -95,6 +95,20 @@ class ClientEvents {
       return;
     }
 
+    if (key == ClientConstants.Key_Suicide) {
+      GameNetwork.sendClientRequest(ClientRequest.Suicide);
+      return;
+    }
+
+    if (key == KeyCode.Enter) {
+      GameNetwork.sendClientRequest(ClientRequest.Suicide);
+      return;
+    }
+    // if (key == KeyCode.E) {
+    //   GameNetwork.sendClientRequest(ClientRequest.Suicide);
+    //   return;
+    // }
+
     if (key == ClientConstants.Key_Toggle_Map) {
       ClientState.Map_Visible.toggle();
       return;

@@ -193,6 +193,10 @@ class Connection with ByteReader {
         player.powerType = value;
         break;
 
+      case ClientRequest.Suicide:
+        game.setCharacterStateDead(player);
+        break;
+
       case ClientRequest.Weather_Set_Rain:
         if (!isLocalMachine && game is! GameEditor) return;
         final rainType = parse(arguments[1]);

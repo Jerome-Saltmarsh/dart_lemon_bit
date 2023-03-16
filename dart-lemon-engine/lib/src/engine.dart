@@ -157,13 +157,11 @@ class Engine {
   static final screen = _Screen();
   static final camera = Vector2(0, 0);
   /// triggered if the state of the key is down
-  static Function(int keyCode)? onKeyDown;
-  /// triggered if the key had been held
-  static Function(int keyCode, int duration)? onKeyHeld;
+  static void Function(int keyCode)? onKeyDown;
   /// triggered the first moment the key is pressed down
-  static Function(int keyCode)? onKeyPressed;
+  static void Function(int keyCode)? onKeyPressed;
   /// triggered upon key release
-  static Function(int keyCode)? onKeyUp;
+  static void Function(int keyCode)? onKeyUp;
 
   static var joystickBaseX = 0.0;
   static var joystickBaseY = 0.0;
@@ -1020,16 +1018,16 @@ class Engine {
     final type = message['type'];
     final int keyCode = message['keyCode'];
     if (type == 'keydown') {
-      Engine.keyState[keyCode] = true;
-      if (Engine.onKeyDown != null){
-        Engine.onKeyDown!(keyCode);
+      if (keyState[keyCode] == true){
+        onKeyDown?.call(keyCode);
+      } else {
+        keyState[keyCode] = true;
+        onKeyPressed?.call(keyCode);
       }
     } else
     if (type == 'keyup') {
-      Engine.keyState[keyCode] = false;
-      if (Engine.onKeyUp != null){
-        Engine.onKeyUp!(keyCode);
-      }
+      keyState[keyCode] = false;
+      onKeyUp?.call(keyCode);
     }
     return const {'handled': true};
   }
