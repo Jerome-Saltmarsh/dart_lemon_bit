@@ -82,6 +82,8 @@ abstract class Game {
   /// @override
   void customOnPlayerCreditsChanged(Player player){ }
   /// @override
+  void customOnPlayerDead(Player player){  }
+  /// @override
   void customOnGameStarted() { }
   /// @override
   void customOnNpcObjectivesCompleted(Character npc) { }
@@ -1793,6 +1795,7 @@ abstract class Game {
     if (character is Player) {
        character.interactMode = InteractMode.None;
        character.writePlayerAlive();
+       customOnPlayerDead(character);
     }
   }
 
@@ -3327,7 +3330,7 @@ abstract class Game {
 
   void playerUsePower(Player player){
      if (player.powerCooldown > 0) {
-       player.writeError('power not ready');
+       // player.writeError('power not ready');
        return;
      }
      player.powerCooldown = getPlayerPowerTypeCooldownTotal(player);
@@ -3340,12 +3343,20 @@ abstract class Game {
        case PowerType.Teleport:
          playerTeleport(player);
          break;
-
+       case PowerType.Revive:
+         player.health = player.maxHealth;
+         player.energy = player.maxEnergy;
+         player.writePlayerEventItemTypeConsumed(ItemType.Consumables_Potion_Blue);
+         break;
+       case PowerType.Shield:
+         player.buffInvincible = true;
+         player.buffInvincibleTimer = Engine.Frames_Per_Second * 4;
+         break;
      }
   }
 
-  int getPlayerPowerTypeCooldownTotal(Player player){
-    return 120;
+  int getPlayerPowerTypeCooldownTotal(Player player) {
+    return Engine.Frames_Per_Second * 10;
   }
 }
 

@@ -89,11 +89,13 @@ class GameCombat extends Game {
     player.team = TeamType.Alone;
     player.maxHealth = Player_Health;
     player.health = Player_Health;
+    player.powerCooldown = 0;
     player.maxEnergy = Player_Energy;
     player.energy = Player_Energy;
     player.credits = 0;
     player.grenades = 1;
     player.writePlayerEquipment();
+    player.writePlayerPower();
   }
 
   @override
@@ -216,6 +218,12 @@ class GameCombat extends Game {
     performScript(timer: GameObject_Duration)
         .writeGameObjectDeactivate(spawnedGameObject)
     ;
+  }
+
+  @override
+  void customOnPlayerDead(Player player) {
+    player.powerCooldown = 0;
+    player.writePlayerPower();
   }
 
   @override
