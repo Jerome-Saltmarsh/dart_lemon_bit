@@ -564,7 +564,7 @@ class Connection with ByteReader {
   }
 
   void handleNpcTalkSelectOption(Player player, List<String> arguments) {
-    if (player.deadOrDying) return errorPlayerDead();
+    if (player.dead) return errorPlayerDead();
     if (arguments.length != 2) return errorArgsExpected(2, arguments);
     final index = parse(arguments[1]);
     if (index == null) {

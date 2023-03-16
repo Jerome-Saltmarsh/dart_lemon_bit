@@ -193,7 +193,7 @@ class RendererCharacters extends Renderer {
   }
 
   void renderCharacterZombie(Character character) {
-    if (character.deadOrDying) return;
+    if (character.dead) return;
     if (character.spawning) return;
 
     var angle = 0.0;
@@ -266,12 +266,6 @@ class RendererCharacters extends Renderer {
             framesPerDirection: framesPerDirection
         );
       case CharacterState.Hurt:
-        return single(
-          frame: 2,
-          direction: character.direction,
-          framesPerDirection: framesPerDirection,
-        );
-      case CharacterState.Dying:
         return single(
           frame: 2,
           direction: character.direction,

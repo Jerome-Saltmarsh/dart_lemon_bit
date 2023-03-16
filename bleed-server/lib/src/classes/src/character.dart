@@ -100,9 +100,7 @@ abstract class Character extends Collider {
   bool get characterTypeZombie => characterType == CharacterType.Zombie;
   bool get characterTypeTemplate => characterType == CharacterType.Template;
   bool get dead => state == CharacterState.Dead;
-  bool get dying => state == CharacterState.Dying;
-  bool get alive => !deadOrDying;
-  bool get deadOrDying => dead || dying;
+  bool get alive => !dead;
   bool get targetIsNull => target == null;
   bool get targetIsEnemy {
     if (target == null) return false;
@@ -127,8 +125,8 @@ abstract class Character extends Collider {
   bool get characterStateIdle => state == CharacterState.Idle;
   bool get characterStateChanging => state == CharacterState.Changing || weaponState == WeaponState.Changing;
   bool get busy => stateDurationRemaining > 0;
-  bool get deadOrBusy => dying || dead || busy;
-  bool get deadBusyOrWeaponStateBusy => dying || dead || weaponStateBusy;
+  bool get deadOrBusy => dead || busy;
+  bool get deadBusyOrWeaponStateBusy => dead || weaponStateBusy;
   bool get canChangeEquipment => !deadBusyOrWeaponStateBusy || characterStateChanging || weaponStateAiming;
   bool get equippedTypeIsBow => weaponType == ItemType.Weapon_Ranged_Bow;
   bool get equippedTypeIsStaff => weaponType == ItemType.Weapon_Melee_Staff;
@@ -295,7 +293,7 @@ abstract class Character extends Collider {
   }
 
   void setCharacterStateHurt(){
-    if (deadOrDying) return;
+    if (dead) return;
     if (state == CharacterState.Hurt) return;
     stateDurationRemaining = 10;
     state = CharacterState.Hurt;

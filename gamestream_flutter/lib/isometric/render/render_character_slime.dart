@@ -1,7 +1,7 @@
 import '../../library.dart';
 
 void renderCharacterSlime(Character character) {
-  if (character.hurt || character.dying) {
+  if (character.hurt) {
     // return renderV3(
     //   value: character,
     //   srcX: 3088,

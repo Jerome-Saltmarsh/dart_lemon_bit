@@ -6,5 +6,4 @@ class CharacterState {
   static const Performing = 4;
   static const Hurt = 5;
   static const Spawning = 7;
-  static const Dying = 8;
 }

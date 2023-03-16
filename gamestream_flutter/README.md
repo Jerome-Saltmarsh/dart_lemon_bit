@@ -38,6 +38,9 @@ ctrl + shift + e    : view recent changes
 [ ] balance item statistics
 [ ] character creation window
 
+17.03.2023
+[x] remove character state dying
+
 15.03.2023
 [x] fix bug melee attack doesn't change weapon
 [x] weapon portal gun

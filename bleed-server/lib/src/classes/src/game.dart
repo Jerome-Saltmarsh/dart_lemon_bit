@@ -337,7 +337,7 @@ abstract class Game {
     Collider? closestCollider;
 
     for (final character in characters) {
-      if (character.deadOrDying) continue;
+      if (character.dead) continue;
       if ((mouseX - character.x).abs() > GameSettings.Pickup_Range) continue;
       if ((mouseY - character.y).abs() > GameSettings.Pickup_Range) continue;
       if ((mouseZ - character.z).abs() > GameSettings.Pickup_Range) continue;
@@ -865,7 +865,7 @@ abstract class Game {
     var closestCharacterDistance = player.weaponTypeRange * 1.5;
     Character? closestCharacter = null;
     for (final character in characters) {
-      if (character.deadOrDying) continue;
+      if (character.dead) continue;
       if (Collider.onSameTeam(player, character)) continue;
       final distance = getDistanceBetweenV3(player, character);
       if (distance > closestCharacterDistance) continue;
@@ -1561,7 +1561,7 @@ abstract class Game {
     required Character target,
     required int amount,
   }) {
-    if (target.deadOrDying) return;
+    if (target.dead) return;
     if (target.buffInvincible) return;
 
     final damage = min(amount, target.health);
@@ -1747,29 +1747,6 @@ abstract class Game {
     // Position3.sort(gameObjects);
   }
 
-  void setCharacterStateDying(Character character) {
-    if (character.deadOrDying) return;
-    character.health = 0;
-    character.state = CharacterState.Dying;
-    character.stateDurationRemaining = 10;
-    character.onCharacterStateChanged();
-
-    for (final character in characters) {
-      if (character.target != character) continue;
-      clearCharacterTarget(character);
-    }
-
-    for (final projectile in projectiles) {
-      if (projectile.target != character) continue;
-      projectile.target = null;
-    }
-
-    for (final player in players) {
-      if (player.aimTarget != character) continue;
-      player.aimTarget = null;
-    }
-  }
-
   void setCharacterStateChanging(Character character){
     if (!character.canChangeEquipment) return;
     character.assignWeaponStateChanging();
@@ -1795,10 +1772,10 @@ abstract class Game {
   }
 
   void changeCharacterHealth(Character character, int amount) {
-    if (character.deadOrDying) return;
+    if (character.dead) return;
     character.health += amount;
     if (character.health > 0) return;
-    setCharacterStateDying(character);
+    setCharacterStateDead(character);
   }
 
   void deactivateProjectile(Projectile projectile) {
@@ -1903,7 +1880,7 @@ abstract class Game {
   void updatePlayer(Player player) {
     player.framesSinceClientRequest++;
 
-    if (player.deadOrDying) return;
+    if (player.dead) return;
 
     if (player.energy < player.maxEnergy) {
       player.nextEnergyGain--;
@@ -2126,7 +2103,7 @@ abstract class Game {
     }
     if (target is Character) {
       if (!friendlyFire && Collider.onSameTeam(srcCharacter, target)) return;
-      if (target.deadOrDying) return;
+      if (target.dead) return;
       applyDamageToCharacter(src: srcCharacter, target: target, amount: damage);
     }
   }
@@ -2209,7 +2186,7 @@ abstract class Game {
     }
     updateColliderPhysics(character);
 
-    if (character.dying){
+    if (character.dead){
       if (character.stateDurationRemaining-- <= 0){
         setCharacterStateDead(character);
       }

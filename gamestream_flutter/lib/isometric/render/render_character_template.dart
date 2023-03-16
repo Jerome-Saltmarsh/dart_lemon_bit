@@ -33,7 +33,7 @@ void renderCharacterTemplate(Character character, {
 }) {
   assert(character.direction >= 0);
   assert(character.direction < 8);
-  if (character.deadOrDying) return;
+  if (character.dead) return;
 
   if (renderHealthBar) {
     if (character.allie){

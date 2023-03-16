@@ -1734,9 +1734,8 @@ class Player extends Character with ByteWriter {
   int get equippedWeaponQuantity =>
     inventoryGetItemQuantity(equippedWeaponIndex);
 
-
   void lookAt(Position position) {
-    assert(!deadOrDying);
+    assert(!dead);
     lookRadian = this.getAngle(position) + pi;
   }
 
