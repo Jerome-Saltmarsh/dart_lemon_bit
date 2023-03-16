@@ -801,6 +801,7 @@ class Connection with ByteReader {
     game.players.add(player);
     game.characters.add(player);
     game.customOnPlayerJoined(player);
+    player.writePlayerAlive();
     player.writePlayerApiId();
 
     final account = _account;

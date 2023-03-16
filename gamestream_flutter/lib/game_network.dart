@@ -184,6 +184,7 @@ class GameNetwork {
     GameIO.removeListeners();
     Engine.onDrawForeground = null;
     serverResponseReader.bufferSizeTotal.value = 0;
+    ClientState.clearParticles();
 
     switch (connection) {
       case ConnectionStatus.Connected:

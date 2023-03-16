@@ -278,4 +278,10 @@ class ClientState {
     if (duration.inSeconds <= 0) return '-';
     return formatBytes((bytes / duration.inSeconds).round() * 3600);
   }
+
+  static void clearParticles(){
+    particles.clear();
+    totalActiveParticles = 0;
+    totalParticles = 0;
+  }
 }
