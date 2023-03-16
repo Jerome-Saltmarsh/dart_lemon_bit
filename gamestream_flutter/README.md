@@ -37,8 +37,11 @@ ctrl + shift + e    : view recent changes
 [TASKS]
 [ ] balance item statistics
 [ ] character creation window
+[ ] power stun
+[ ] power invisible
 
 17.03.2023
+[x] optimize collider on same team
 [x] remove character state dying
 
 15.03.2023

@@ -1227,6 +1227,10 @@ class Player extends Character with ByteWriter {
         return;
       }
 
+      if (character.buffInvisible && !Collider.onSameTeam(this, character)){
+        continue;
+      }
+
       writeByte(character.characterType);
       writeCharacterTeamDirectionAndState(character);
       writeVector3(character);

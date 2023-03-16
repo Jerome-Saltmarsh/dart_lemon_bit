@@ -121,16 +121,16 @@ class Collider extends Position3 {
   }
 
   /// FUNCTIONS
-
-  static bool onSameTeam(dynamic a, dynamic b){
-    if (a == b) return true;
-    if (a is! Collider) return false;
-    if (b is! Collider) return false;
-    if (a.team == TeamType.Alone) return false;
-    if (b.team == TeamType.Alone) return false;
-    if (a.team == TeamType.Neutral) return true;
-    if (b.team == TeamType.Neutral) return true;
-    return a.team == b.team;
+  static bool onSameTeam(dynamic a, dynamic b) {
+    if (identical(a, b))                    return true;
+    if (a is! Collider || b is! Collider)   return false;
+    final aTeam = a.team;
+    if (aTeam == TeamType.Alone)            return false;
+    if (aTeam == TeamType.Neutral)          return true;
+    final bTeam = b.team;
+    if (bTeam == TeamType.Alone)            return false;
+    if (bTeam == TeamType.Neutral)          return true;
+    return aTeam == bTeam;
   }
 
   bool collidingWith(Collider that){

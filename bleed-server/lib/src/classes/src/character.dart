@@ -34,6 +34,7 @@ abstract class Character extends Collider {
 
   var buffInvincible      = false;
   var buffDoubleDamage    = false;
+  var buffInvisible       = false;
 
   int get weaponType => _weaponType;
   int get headType => _headType;
