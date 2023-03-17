@@ -20,7 +20,11 @@ class GameCombat extends Game {
   static const Credits_Per_Kill = 10;
   static const Max_Players = 16;
   static const Player_Health = 20;
+  static const Player_Health_Perk = 24;
   static const Player_Energy = 20;
+  static const Player_Energy_Perk = 24;
+  static const Player_Run_Speed = 1.0;
+  static const Player_Run_Speed_Perk = 1.2;
 
   static const GameObjects_Spawnable = [
     ItemType.Resource_Credit,
@@ -588,6 +592,20 @@ class GameCombat extends Game {
     }
   }
 
+  @override
+  void customOnPlayerPerkTypeChanged(Player player) {
+    player.maxHealth = player.perkType == PerkType.Health
+        ? Player_Health_Perk
+        : Player_Health;
+
+    player.maxEnergy = player.perkType == PerkType.Energy
+        ? Player_Energy_Perk
+        : Player_Energy;
+
+    player.runSpeed = player.perkType == PerkType.Speed
+        ? Player_Run_Speed_Perk
+        : Player_Run_Speed;
+  }
 }
 
 

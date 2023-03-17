@@ -121,9 +121,9 @@ abstract class Game {
   /// @override
   void customOnCharacterWeaponStateReady(Character character){ }
   /// @override
-  void customOnPlayerAimTargetChanged(Player player, Collider? collider){
-
-  }
+  void customOnPlayerAimTargetChanged(Player player, Collider? collider){ }
+  /// @override
+  void customOnPlayerPerkTypeChanged(Player player) { }
 
   /// @override
   void customOnNodeDestroyed(int nodeType, int nodeIndex, int nodeOrientation) {
@@ -3268,6 +3268,9 @@ abstract class Game {
   }
 
   int getPlayerPowerTypeCooldownTotal(Player player) {
+    if (player.perkType == PerkType.Power) {
+      return Engine.Frames_Per_Second * 8;
+    }
     return Engine.Frames_Per_Second * 10;
   }
 }

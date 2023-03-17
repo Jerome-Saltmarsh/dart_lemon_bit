@@ -19,7 +19,6 @@ abstract class Character extends Collider {
   var stateDuration = 0;
   var nextFootstep = 0;
   var animationFrame = 0;
-  var frozenDuration = 0;
   Position3? target;
   var weaponState = WeaponState.Idle;
   var weaponStateDuration = 0;
@@ -31,6 +30,7 @@ abstract class Character extends Collider {
   var _characterType = 0;
   var lookRadian = 0.0;
   var name = "";
+  var runSpeed = 1.0;
 
   var buffDuration = 0;
   var buffInvincible      = false;
@@ -55,7 +55,6 @@ abstract class Character extends Collider {
   int get headType => _headType;
   int get bodyType => _bodyType;
   int get legsType => _legsType;
-  double get runSpeed => 1.0;
 
   bool get isPlayer => false;
 

@@ -69,11 +69,12 @@ class Player extends Character with ByteWriter {
 
   int get perkType => _perkType;
 
-  set perkType(int value){
+  set perkType(int value) {
      assert (PerkType.values.contains(value));
      if (!PerkType.values.contains(value)) return;
      if (_perkType == value) return;
      _perkType = value;
+     game.customOnPlayerPerkTypeChanged(this);
      writeApiPlayerPerkType();
   }
 
@@ -113,9 +114,6 @@ class Player extends Character with ByteWriter {
   bool get aimTargetWithinInteractRadius => aimTarget != null
       ? getDistanceBetweenV3(this, aimTarget!) < GameSettings.Interact_Radius
       : false;
-
-  @override
-  double get runSpeed => 1.0;
 
   set grenades(int value) {
     value = clamp(value, 0, getItemCapacity(ItemType.Weapon_Thrown_Grenade));
