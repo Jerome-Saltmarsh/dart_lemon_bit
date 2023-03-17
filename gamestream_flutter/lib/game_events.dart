@@ -514,6 +514,9 @@ class GameEvents {
       case PowerType.Shield:
         GameAudio.buff_10();
         break;
+      case PowerType.Invisible:
+        GameAudio.buff_19();
+        break;
     }
   }
 

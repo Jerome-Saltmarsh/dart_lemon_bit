@@ -2692,29 +2692,27 @@ abstract class Game {
       clearCharacterTarget(ai);
     }
 
-    var targetDistanceX = 9999.0;
-    var targetDistanceY = 9999.0;
+    var closestDistanceX = ai.viewRange;
+    var closestDistanceY = closestDistanceX;
 
-    for (final other in characters) {
-      if (!other.alive) continue;
-      if (Collider.onSameTeam(other, ai)) continue;
-      final npcDistanceX = (ai.x - other.x).abs();
-      if (targetDistanceX < npcDistanceX) continue;
-      if (npcDistanceX > ai.viewRange) continue;
-      final npcDistanceY = (ai.y - other.y).abs();
-      if (targetDistanceY < npcDistanceY) continue;
-      if (npcDistanceY > ai.viewRange) continue;
-      // if (sceneRaycastBetween(ai, other)) continue;
+    for (final character in characters) {
+      if (character.dead) continue;
+      if (Collider.onSameTeam(character, ai)) continue;
+      if (character.buffInvisible) continue;
+      final distanceX = (ai.x - character.x).abs();
+      if (closestDistanceX < distanceX) continue;
+      final distanceY = (ai.y - character.y).abs();
+      if (closestDistanceY < distanceY) continue;
 
-      targetDistanceX = npcDistanceX;
-      targetDistanceY = npcDistanceY;
-      ai.target = other;
+      closestDistanceX = distanceX;
+      closestDistanceY = distanceY;
+      ai.target = character;
     }
     target = ai.target;
     if (target == null) return;
     if (!targetSet){
       dispatchGameEventAITargetAcquired(ai);
-      npcSetPathTo(ai, target);
+      // npcSetPathTo(ai, target);
     }
   }
 

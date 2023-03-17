@@ -600,6 +600,10 @@ class GameCombat extends Game {
       case PowerType.Invisible:
         player.buffInvisible = true;
         player.powerDuration = Engine.Frames_Per_Second * 4;
+        for (final character in characters) {
+          if (character.target != player) continue;
+          clearCharacterTarget(character);
+        }
         break;
     }
   }
