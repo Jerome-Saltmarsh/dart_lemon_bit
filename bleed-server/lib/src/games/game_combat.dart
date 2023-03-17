@@ -510,6 +510,7 @@ class GameCombat extends Game {
   @override
   void customOnPlayerJoined(Player player) {
     writePlayerScoresAll();
+    player.perkType = PerkType.Health;
     player.powerType = PowerType.Bomb;
     player.weaponPrimary = ItemType.Weapon_Ranged_Plasma_Pistol;
     player.weaponSecondary = ItemType.Weapon_Melee_Crowbar;
@@ -610,11 +611,14 @@ class GameCombat extends Game {
         const duration = Engine.Frames_Per_Second * 3;
         final playerX = player.x;
         final playerY = player.y;
+        final playerZ = player.z;
         for (final character in characters) {
           final distanceX = (playerX - character.x).abs();
           if (distanceX > range) continue;
           final distanceY = (playerY - character.y).abs();
           if (distanceY > range) continue;
+          final distanceZ = (playerZ - character.z).abs();
+          if (distanceZ > range) continue;
           if (Collider.onSameTeam(character, player)) continue;
           setCharacterStateStunned(character, duration: duration);
         }

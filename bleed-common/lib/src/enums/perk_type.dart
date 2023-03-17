@@ -1,36 +1,23 @@
 
 class PerkType {
-  static const Extra_Gold_1 = 0;
-  static const Extra_Gold_2 = 1;
-  static const Extra_Gold_3 = 2;
-  static const Grenade_Capacity_1 = 3;
-  static const Grenade_Capacity_2 = 4;
-  static const Grenade_Capacity_3 = 5;
+  static const None   = 0;
+  static const Health = 1;
+  static const Energy = 2;
+  static const Power  = 4;
+  static const Speed  = 3;
   
-  static String getName(int value) => const {
-      Extra_Gold_1: "Extra Gold 1",
-      Extra_Gold_2: "Extra Gold 2",
-      Extra_Gold_3: "Extra Gold 3",
-      Grenade_Capacity_1: "Grenade Capacity 1",
-      Grenade_Capacity_2: "Grenade Capacity 2",
-      Grenade_Capacity_3: "Grenade Capacity 3",
-  }[value] ?? "? $value";
-
-  static const Values = [
-    Extra_Gold_1,
-    Extra_Gold_2,
-    Extra_Gold_3,
-    Grenade_Capacity_1,
-    Grenade_Capacity_2,
-    Grenade_Capacity_3,
+  static const values = [
+    Health,
+    Energy,
+    Speed,
+    Power,
   ];
-
-  static int getCost(int perkType) => const {
-    Extra_Gold_1: 10,
-    Extra_Gold_2: 10,
-    Extra_Gold_3: 10,
-    Grenade_Capacity_1: 50,
-    Grenade_Capacity_2: 150,
-    Grenade_Capacity_3: 200,
-  }[perkType] ?? 0;
+  
+  static String getName(int value) => const <int, String> {
+    None   : "None",
+    Health : "Health",
+    Energy : "Energy",
+    Speed  : "Speed",
+    Power  : "Power",
+  }[value] ?? '?';
 }

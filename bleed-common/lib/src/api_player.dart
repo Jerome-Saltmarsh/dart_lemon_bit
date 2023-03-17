@@ -2,7 +2,6 @@
 class ApiPlayer {
   static const Position               = 0;
   static const Health                 = 1;
-  static const Max_Health             = 2;
   static const Experience             = 8;
   static const Alive                  = 12;
   static const Experience_Percentage  = 13;
@@ -29,8 +28,8 @@ class ApiPlayer {
   static const Items                  = 38;
   static const Weapons                = 39;
   static const Equipment              = 40;
-  static const Action                 = 41;
   static const Grenades               = 43;
   static const Id                     = 45;
   static const Power                  = 46;
+  static const PerkType               = 47;
 }

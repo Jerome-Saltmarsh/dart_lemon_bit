@@ -84,9 +84,6 @@ class GameUI {
 
     const textSize = 22;
 
-    final buildTitle = (String value)
-      => text(value.toUpperCase(), color: Colors.white54);
-
     const weaponTypes = const [
       ItemType.Weapon_Ranged_Plasma_Rifle,
       ItemType.Weapon_Ranged_Plasma_Pistol,
@@ -104,7 +101,6 @@ class GameUI {
 
     final columnPowers = Column(
       children: [
-        // buildTitle("Power"),
         text('space-bar', size: titleFontSize, color: titleFontColor, italic: true),
         height12,
         Column(
@@ -129,7 +125,6 @@ class GameUI {
     final columnSelectWeaponLeft = watch(GamePlayer.weaponPrimary, (int weaponPrimary) {
        return Column(
          children: [
-           // buildTitle("Weapon-A"),
            text('left-click', size: titleFontSize, color: titleFontColor, italic: true),
            height12,
            Column(
@@ -151,7 +146,6 @@ class GameUI {
     final columnSelectWeaponRight = watch(GamePlayer.weaponSecondary, (int weaponSecondary) {
       return Column(
         children: [
-          // buildTitle("Weapon-B"),
           text('right-click', size: titleFontSize, color: titleFontColor, italic: true),
           height12,
           Column(
@@ -170,32 +164,36 @@ class GameUI {
       );
     });
 
-    final columnPerk = Column(
-      children: [
-        text("PERK", color: Colors.white54, underline: true),
-      ],
+    final columnPerk = watch(GamePlayer.perkType, (int playerPerkType) =>
+        Column(
+          children: [
+            text('bonus', size: titleFontSize, color: titleFontColor, italic: true),
+            height12,
+            Column(
+              children: PerkType.values
+                  .map((perkType) =>
+                  onPressed(
+                    action: () => GameNetwork.sendClientRequest(
+                        ClientRequest.Select_PerkType, perkType
+                      ),
+                    child: Container(
+                        margin: const EdgeInsets.only(bottom: 6),
+                        child:
+                        text(
+                          PerkType.getName(perkType),
+                          color: playerPerkType == perkType ? GameColors.orange : GameColors.white80,
+                          size: textSize,
+                        )
+                    ),
+                  )
+              )
+                  .toList(growable: false),
+            )
+          ],
+      )
     );
 
-    const instructions = [
-      'MOVE: W-A-S-D',
-      'ZOOM: MOUSE-SCROLL'
-    ];
 
-    final columnInstructions = Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: instructions.map((String instruction) =>
-          Container(
-            padding: const EdgeInsets.all(6),
-             margin: const EdgeInsets.symmetric(horizontal: 4),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: GameColors.white05,
-                borderRadius: borderRadius4,
-              ),
-              child: text(instruction, size: 18, color: Colors.white38, italic: true)))
-          .toList(growable: false),
-    );
 
     final buttonPlay = onPressed(
       action: GameNetwork.sendClientRequestRevive,
@@ -223,7 +221,6 @@ class GameUI {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               height16,
-              // text("CHARACTER CREATION", size: 32, color: Colors.white60),
               buttonPlay,
               height32,
               Row(
@@ -233,7 +230,7 @@ class GameUI {
                   columnSelectWeaponLeft,
                   columnPowers,
                   columnSelectWeaponRight,
-                  // columnPerk,
+                  columnPerk,
                 ],
               ),
               height64,
@@ -694,11 +691,6 @@ class GameUI {
             left: GameStyle.Window_PlayerItems_Width + (GameStyle.Default_Padding * 2),
             child: buildWindowMouseOverItemType(),
           ),
-          Positioned(
-            child: buildWindowPerks(),
-            left: GameStyle.Default_Padding,
-            top: GameStyle.Default_Padding,
-          )
       ]);
 
   static Widget buildPanelCredits() {
@@ -927,17 +919,6 @@ class GameUI {
       ),
     );
   }
-
-  static Widget buildWindowPerks() =>
-    visibleBuilder(GameOptions.perks, Container(
-      color: GameStyle.Container_Color,
-      padding: GameStyle.Padding_6,
-      child: Column(
-          children: PerkType.Values.map((perkType) => Row(children: [
-            text(PerkType.getName(perkType))
-          ],)).toList()
-      ),
-    ));
 
   static Widget buildPlayerPowerType(){
     return watch(GamePlayer.powerReady, (bool powerReady) {

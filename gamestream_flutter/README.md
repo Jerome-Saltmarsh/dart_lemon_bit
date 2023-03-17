@@ -24,23 +24,22 @@ ctrl + shift + e    : view recent changes
 [ ] perk type melee attacks heal health
 [ ] perk type melee attacks damage multiple enemies
 [ ] perk type sniper bullets pass through enemies
-[ ] perk type run faster
-[ ] perk type increase max energy
-[ ] perk type increase max health
 
 [GAME IDEAS]
-[ ] resources buy trinkets
 [ ] weapon stun taser
-[ ] purchasable trinkets
 [ ] weapon shield
+[ ] perk type run faster
+[ ] perk type extra health      - Patient       - health
+[ ] perk type extra energy      - Brutal        - energy
+[ ] perk type run faster        - Nimble        - speed
+[ ] perk type power quickly     - Wise          - power
 
 [TASKS]
-[ ] balance item statistics
 [ ] character creation window
-[ ] power stun
 
 17.03.2023
 [x] power invisible
+[x] power stun
 [x] optimize collider on same team
 [x] remove character state dying
 

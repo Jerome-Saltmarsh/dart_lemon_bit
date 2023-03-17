@@ -218,10 +218,8 @@ class ServerResponseReader with ByteReader {
         GamePlayer.powerType.value = readByte();
         GamePlayer.powerReady.value = readBool();
         break;
-      case ApiPlayer.Action:
-        GamePlayer.action.value = readUInt8();
-        GamePlayer.actionItemType.value = readUInt16();
-        GamePlayer.actionCost.value = readUInt16();
+      case ApiPlayer.PerkType:
+        GamePlayer.perkType.value = readByte();
         break;
       case ApiPlayer.Target_Position:
         GamePlayer.runningToTarget = true;
@@ -238,9 +236,6 @@ class ServerResponseReader with ByteReader {
         break;
       case ApiPlayer.Health:
         readPlayerHealth();
-        break;
-      case ApiPlayer.Max_Health:
-        readPlayerMaxHealth();
         break;
       case ApiPlayer.Weapon_Cooldown:
         GamePlayer.weaponCooldown.value = readPercentage();
@@ -348,6 +343,9 @@ class ServerResponseReader with ByteReader {
       case ApiPlayer.Id:
         GamePlayer.id.value = readUInt24();
         break;
+      case ApiPlayer.PerkType:
+        GamePlayer.perkType.value = readByte();
+        break;
       default:
         throw Exception("Cannot parse apiPlayer $apiPlayer");
     }
@@ -393,12 +391,9 @@ class ServerResponseReader with ByteReader {
     GamePlayer.legs.value = readUInt16();
   }
 
-  void readPlayerMaxHealth() {
-    ServerState.playerMaxHealth.value = readUInt16();
-  }
-
   void readPlayerHealth() {
     ServerState.playerHealth.value = readUInt16();
+    ServerState.playerMaxHealth.value = readUInt16();
   }
 
   void readPlayerInventory() {

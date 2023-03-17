@@ -186,7 +186,7 @@ abstract class Character extends Collider {
     assert (value > 0);
     _maxHealth = value;
     if (this is Player){
-      (this as Player).writePlayerMaxHealth();
+      (this as Player).writePlayerHealth();
     }
     if (_health > _maxHealth) {
       health = _maxHealth;

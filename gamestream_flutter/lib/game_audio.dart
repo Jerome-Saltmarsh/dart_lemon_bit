@@ -80,6 +80,7 @@ class GameAudio {
   static final footstep_stone = AudioSingle(name: 'footstep-stone', volume: 0.05);
   static final footstep_wood_4 = AudioSingle(name: 'footstep-wood-4', volume: 0.5);
   static final bow_draw = AudioSingle(name: 'bow-draw', volume: 0.5);
+  static final debuff_4 = AudioSingle(name: 'debuff-4', volume: 0.5);
   static final buff_16 = AudioSingle(name: 'buff-16', volume: 0.5);
   static final buff_19 = AudioSingle(name: 'buff-19', volume: 0.5);
   static final bow_release = AudioSingle(name: 'bow-release', volume: 0.5);

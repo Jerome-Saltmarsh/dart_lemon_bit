@@ -445,10 +445,6 @@ class GameNetwork {
     sendClientRequest(ClientRequest.GameObject, request.index);
   }
 
-  static void sendClientRequestSelectPerkType(int perk){
-    sendClientRequest(ClientRequest.Select_Perk, perk);
-  }
-
   static void sendClientRequest(int value, [dynamic message]){
     if (message != null){
       return GameNetwork.send('${value} $message');

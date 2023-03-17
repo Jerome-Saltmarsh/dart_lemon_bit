@@ -125,10 +125,14 @@ class Connection with ByteReader {
         player.game.playerReload(player);
         return;
 
-      case ClientRequest.Select_Perk:
-        final perkType = parseArg1(arguments);
-        if (perkType == null) return;
-        // player.selectPerk(perkType);
+      case ClientRequest.Select_PerkType:
+        final value = parseArg1(arguments);
+        if (value == null) return;
+        if (!PerkType.values.contains(value)) {
+          player.writeError('invalid perk type');
+          return;
+        }
+        player.perkType = value;
         return;
 
       case ClientRequest.Equip:

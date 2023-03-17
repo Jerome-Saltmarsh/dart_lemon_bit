@@ -2,6 +2,7 @@ import 'package:gamestream_flutter/library.dart';
 
 class GamePlayer {
   static final id = Watch(0);
+  static final perkType = Watch(PerkType.None);
   static final powerType = Watch(PowerType.None);
   static final powerReady = Watch(true);
   static final weapon = Watch(0, onChanged: GameEvents.onChangedPlayerWeapon);
@@ -34,9 +35,6 @@ class GamePlayer {
   static var aimTargetPosition = Vector3();
   static final weaponCooldown = Watch(1.0);
   static final interpolating = Watch(true);
-  static final action = Watch(PlayerAction.None);
-  static final actionItemType = Watch(ItemType.Empty);
-  static final actionCost = Watch(0);
   static final target = Vector3();
   static final questAdded = Watch(false);
   static var gameDialog = Watch<GameDialog?>(null, onChanged: onChangedGameDialog);

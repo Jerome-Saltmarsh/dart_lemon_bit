@@ -15,8 +15,6 @@ import 'scene_writer.dart';
 
 class Player extends Character with ByteWriter {
   /// CONSTANTS
-  static const Health_Per_Perk = 5;
-  static const Perks_Length = 5;
   static const inventory_size = 6 * 5;
 
   /// Variables
@@ -34,7 +32,6 @@ class Player extends Character with ByteWriter {
   var _level = 1;
   var _energy = 10;
   var maxEnergy = 10;
-  var message = "";
   var text = "";
   var name = generateRandomName();
   var screenLeft = 0.0;
@@ -72,6 +69,18 @@ class Player extends Character with ByteWriter {
   var _powerType = PowerType.None;
   var powerCooldown = 0;
 
+  var _perkType = PerkType.None;
+
+  int get perkType => _perkType;
+
+  set perkType(int value){
+     assert (PerkType.values.contains(value));
+     if (!PerkType.values.contains(value)) return;
+     if (_perkType == value) return;
+     _perkType = value;
+     writeApiPlayerPerkType();
+  }
+
   /// Warning - do not reference
   Game game;
   Collider? _aimTarget; // the currently highlighted character
@@ -90,18 +99,7 @@ class Player extends Character with ByteWriter {
   final item_level = <int, int> {};
   final item_quantity = <int, int> {};
 
-  var _action = PlayerAction.None;
-  var _actionItemType = ItemType.Empty;
-  var _actionCost = 0;
   var actionItemId = -1;
-
-  var tutorialMovement = false;
-  var tutorialFireLeft = false;
-  var tutorialFireRight = false;
-
-  int get action => _action;
-  int get actionItemType => _actionItemType;
-  int get actionCost => _actionCost;
 
   int get powerType => _powerType;
 
@@ -139,49 +137,8 @@ class Player extends Character with ByteWriter {
     writePlayerGrenades();
   }
 
-  set action(int value) {
-    if (_action == value) return;
-    _action = value;
-    if (_action == PlayerAction.None) {
-      _actionCost = 0;
-      _actionItemType = ItemType.Empty;
-    }
-    writePlayerAction();
-  }
-
-  set actionItemType(int value){
-    if (_actionItemType == value) return;
-    _actionItemType = value;
-    writePlayerAction();
-  }
-
-  set actionCost(int value){
-    if (_actionCost == value) return;
-    _actionCost = value;
-    writePlayerAction();
-  }
-
-  // set weaponPrimaryQuantity(int value) =>
-  //     setItemQuantity(weaponPrimary, value);
-  //
-  // set weaponSecondaryQuantity(int value) =>
-  //     setItemQuantity(weaponSecondary, value);
-
-  // int get weaponPrimaryLevel      => item_level[weaponPrimary] ?? 0;
-  // int get weaponPrimaryQuantity   => item_quantity[weaponPrimary] ?? 0;
-  // int get weaponPrimaryCapacity   => getItemCapacity(weaponPrimary);
-  // int get weaponSecondaryLevel    => item_level[weaponSecondary] ?? 0;
-  // int get weaponSecondaryQuantity => item_quantity[weaponSecondary] ?? 0;
-  // int get weaponSecondaryCapacity => getItemCapacity(weaponSecondary);
-
-  // bool get weaponPrimaryFull => weaponPrimaryQuantity >= weaponPrimaryCapacity;
-  // bool get weaponSecondaryFull => weaponSecondaryQuantity >= weaponSecondaryCapacity;
-
   bool get weaponPrimaryEquipped => weaponType == weaponPrimary;
   bool get weaponSecondaryEquipped => weaponType == weaponSecondary;
-
-  // bool get weaponPrimaryEmpty => weaponPrimaryQuantity <= 0;
-  // bool get weaponSecondaryEmpty => weaponSecondaryQuantity <= 0;
 
   /// CONSTRUCTOR
   Player({
@@ -385,7 +342,6 @@ class Player extends Character with ByteWriter {
 
     assert (damage > 0);
 
-    writePlayerMaxHealth();
     writePlayerHealth();
     writePlayerDamage();
   }
@@ -1095,11 +1051,6 @@ class Player extends Character with ByteWriter {
     writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Health);
     writeUInt16(health);
-  }
-
-  void writePlayerMaxHealth() {
-    writeByte(ServerResponse.Api_Player);
-    writeByte(ApiPlayer.Max_Health);
     writeUInt16(maxHealth); // 2
   }
 
@@ -1172,7 +1123,6 @@ class Player extends Character with ByteWriter {
       writePlayerExperiencePercentage();
       writePlayerBaseDamageHealthEnergy();
       writePlayerHealth();
-      writePlayerMaxHealth();
       writePlayerAlive();
       writePlayerInteractMode();
     }
@@ -1189,7 +1139,6 @@ class Player extends Character with ByteWriter {
     writePlayerBaseDamageHealthEnergy();
     writePlayerHealth();
     writePlayerEnergy();
-    writePlayerMaxHealth();
     writePlayerAlive();
     writePlayerInteractMode();
   }
@@ -1898,14 +1847,6 @@ class Player extends Character with ByteWriter {
     writePlayerEquipment();
   }
 
-  void writePlayerAction(){
-    writeUInt8(ServerResponse.Api_Player);
-    writeUInt8(ApiPlayer.Action);
-    writeUInt8(_action);
-    writeUInt16(_actionItemType);
-    writeUInt16(_actionCost);
-  }
-
   int getItemLevel(int itemType) => item_level[itemType] ?? 0;
 
   int getItemQuantity(int itemType) => item_quantity[itemType] ?? 0;
@@ -1991,8 +1932,10 @@ class Player extends Character with ByteWriter {
     writeBool(powerCooldown <= 0);
   }
 
-  void updateCooldown(){
-
+  void writeApiPlayerPerkType(){
+    writeByte(ServerResponse.Api_Player);
+    writeByte(ApiPlayer.PerkType);
+    writeByte(perkType);
   }
 }
 

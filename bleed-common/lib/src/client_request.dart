@@ -18,7 +18,6 @@ class ClientRequest {
   static const Teleport_Scene           = 16;
   static const Edit                     = 17;
   static const Inventory                = 18;
-  static const Select_Perk              = 19;
   static const Unequip                  = 20;
   static const Reload                   = 21;
   static const Equip                    = 22;
@@ -29,7 +28,8 @@ class ClientRequest {
   static const Select_Weapon_Primary    = 27;
   static const Select_Weapon_Secondary  = 28;
   static const Select_Power             = 29;
-  static const Suicide                  = 30;
+  static const Select_PerkType          = 30;
+  static const Suicide                  = 31;
 }
 
 
