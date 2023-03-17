@@ -548,6 +548,7 @@ abstract class Game {
     final weaponType = character.weaponType;
 
     if (character is Player) {
+
       if (options.inventory) {
         final playerWeaponConsumeType = ItemType.getConsumeType(weaponType);
 
@@ -593,6 +594,10 @@ abstract class Game {
         }
         character.rounds--;
       }
+    }
+
+    if (character.buffInvisible) {
+       character.buffInvisible = false;
     }
 
     if (weaponType == ItemType.Weapon_Thrown_Grenade){
