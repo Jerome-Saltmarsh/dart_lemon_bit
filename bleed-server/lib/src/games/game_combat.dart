@@ -607,6 +607,7 @@ class GameCombat extends Game {
         break;
       case PowerType.Stun:
         const range = 150.0;
+        const duration = Engine.Frames_Per_Second * 3;
         final playerX = player.x;
         final playerY = player.y;
         for (final character in characters) {
@@ -615,20 +616,12 @@ class GameCombat extends Game {
           final distanceY = (playerY - character.y).abs();
           if (distanceY > range) continue;
           if (Collider.onSameTeam(character, player)) continue;
-          if (character.dead) continue;
-          if (character.buffInvincible) continue;
-          stunCharacter(character);
+          setCharacterStateStunned(character, duration: duration);
         }
         break;
     }
   }
 
-  void stunCharacter(Character character) {
-    character.buffStunned = true;
-    character.buffInvisible = false;
-    character.buffDuration = Engine.Frames_Per_Second * 2;
-    character.setCharacterStateIdle();
-  }
 }
 
 

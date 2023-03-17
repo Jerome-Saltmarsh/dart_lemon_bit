@@ -30,7 +30,6 @@ class Character extends Vector3 {
   bool get buffInvincible     => buff & 0x00000001 == 1;
   bool get buffDoubleDamage   => buff & 0x00000002 == 2;
   bool get buffInvisible      => buff & 0x00000004 == 4;
-  bool get buffStunned        => buff & 0x00000008 == 8;
 
   static const piSixteenth = pi / 16.0;
 

@@ -190,6 +190,24 @@ class RendererCharacters extends Renderer {
       );
       return;
     }
+
+    if (character.state == CharacterState.Stunned){
+      GameRender.renderTextV3(character, "STUNNED");
+      Engine.renderSprite(
+        image: GameImages.character_dog,
+        dstX: character.renderX,
+        dstY: character.renderY,
+        srcX: 0,
+        srcY: Src_Size * character.direction,
+        srcWidth: Src_Size,
+        srcHeight: Src_Size,
+        anchorY: Anchor_Y,
+        scale: 1,
+        color: character.color,
+      );
+      return;
+    }
+
   }
 
   void renderCharacterZombie(Character character) {
@@ -276,6 +294,13 @@ class RendererCharacters extends Renderer {
           animation: const [7, 7, 8, 8],
           character: character,
           framesPerDirection: framesPerDirection,
+        );
+      case CharacterState.Stunned:
+        GameRender.renderTextV3(character, "STUNNED");
+        return single(
+            frame: 1,
+            direction: character.direction,
+            framesPerDirection: framesPerDirection
         );
       default:
         throw Exception("Render zombie invalid state ${character.state}");

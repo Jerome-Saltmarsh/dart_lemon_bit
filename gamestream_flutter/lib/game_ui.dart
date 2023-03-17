@@ -99,10 +99,13 @@ class GameUI {
       ItemType.Weapon_Melee_Crowbar,
     ];
 
+    const titleFontSize = 18;
+    const titleFontColor = Colors.white24;
+
     final columnPowers = Column(
       children: [
         // buildTitle("Power"),
-        // text('space-bar', size: 14, color: Colors.white38, italic: true),
+        text('space-bar', size: titleFontSize, color: titleFontColor, italic: true),
         height12,
         Column(
           children: PowerType.values.map((int powerType){
@@ -127,7 +130,7 @@ class GameUI {
        return Column(
          children: [
            // buildTitle("Weapon-A"),
-           // text('left-click', size: 14, color: Colors.white38, italic: true),
+           text('left-click', size: titleFontSize, color: titleFontColor, italic: true),
            height12,
            Column(
              children: (weaponTypes).map((int itemType) => Container(
@@ -149,7 +152,7 @@ class GameUI {
       return Column(
         children: [
           // buildTitle("Weapon-B"),
-          // text('right-click', size: 14, color: Colors.white38, italic: true),
+          text('right-click', size: titleFontSize, color: titleFontColor, italic: true),
           height12,
           Column(
             children: (weaponTypes).map((int itemType) => Container(

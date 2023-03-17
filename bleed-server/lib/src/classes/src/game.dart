@@ -1745,11 +1745,17 @@ abstract class Game {
     }
   }
 
-
   void sortGameObjects() {
     Position3.sort(characters);
     Position3.sort(projectiles);
-    // Position3.sort(gameObjects);
+  }
+
+  void setCharacterStateStunned(Character character, {int duration = Engine.Frames_Per_Second * 2}) {
+    if (character.dead) return;
+    if (character.buffInvincible) return;
+    character.stateDurationRemaining = duration;
+    character.state = CharacterState.Stunned;
+    character.onCharacterStateChanged();
   }
 
   void setCharacterStateChanging(Character character){
@@ -2193,14 +2199,6 @@ abstract class Game {
       }
     }
     updateColliderPhysics(character);
-
-    if (character.dead){
-      if (character.stateDurationRemaining-- <= 0){
-        setCharacterStateDead(character);
-      }
-      return;
-    }
-
     updateCharacterState(character);
   }
 

@@ -87,6 +87,11 @@ void renderCharacterTemplate(Character character, {
       directionHead = directionBody;
       directionLegs = directionBody;
       break;
+    case CharacterState.Stunned:
+      frameLegs = 0;
+      frameWeapon = weaponIsTwoHandedFirearm ? 0 : 1;
+      GameRender.renderTextV3(character, "STUNNED");
+      break;
   }
 
   switch (character.weaponState) {

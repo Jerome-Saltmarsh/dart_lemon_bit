@@ -33,11 +33,9 @@ abstract class Character extends Collider {
   var name = "";
 
   var buffDuration = 0;
-
   var buffInvincible      = false;
   var buffDoubleDamage    = false;
   var buffInvisible       = false;
-  var buffStunned         = false;
 
   int get buffByte {
     var buff = 0;
@@ -49,9 +47,6 @@ abstract class Character extends Collider {
     }
     if (buffInvisible) {
       buff = buff | 0x00000004;
-    }
-    if (buffStunned) {
-      buff = buff | 0x00000008;
     }
     return buff;
   }
