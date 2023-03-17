@@ -1,6 +1,8 @@
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
+
 import '../../library.dart';
 import 'render_character_health_bar.dart';
 
@@ -121,9 +123,18 @@ void renderCharacterTemplate(Character character, {
   frameBody = frameWeapon;
   frameHead = frameWeapon;
 
+
+  final invisible = character.buffInvisible;
+
   final dstX = GameConvert.convertV3ToRenderX(character);
   final dstY = GameConvert.convertV3ToRenderY(character);
-  final color = GameState.getV3RenderColor(character);
+
+  const Color_Invisible = GameColors.White38_Value;
+  final color = invisible ? Color_Invisible : GameState.getV3RenderColor(character);
+
+  if (invisible) {
+    Engine.bufferBlendMode = BlendMode.srcIn;
+  }
 
   if (!weaponInFront) {
     renderTemplateWeapon(character.weaponType, directionBody, frameWeapon, color, dstX, dstY);
@@ -153,10 +164,6 @@ void renderCharacterTemplate(Character character, {
       color: color,
       anchorY: Anchor_Y,
     );
-  }
-
-  if (character.buffInvisible) {
-    Engine.bufferBlendMode = BlendMode.srcIn;
   }
 
     Engine.renderSprite(
@@ -204,7 +211,7 @@ void renderCharacterTemplate(Character character, {
           character.weaponType, directionBody, frameWeapon, color, dstX, dstY);
     }
 
-  if (character.buffInvisible) {
+  if (invisible) {
     Engine.bufferBlendMode = BlendMode.dstATop;
   }
 }

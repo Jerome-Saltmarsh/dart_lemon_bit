@@ -49,4 +49,6 @@ class GameColors {
 
 
   static final inventoryHint = Colors.orange.withOpacity(0.85);
+
+  static const White38_Value = 1660944383;
 }
