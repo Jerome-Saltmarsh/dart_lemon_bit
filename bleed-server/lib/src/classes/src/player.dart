@@ -59,10 +59,6 @@ class Player extends Character with ByteWriter {
   var belt5_quantity = 0; // Q
   var belt6_quantity = 0; // E
 
-  var _baseHealth = 10;
-  var _baseDamage = 0;
-  var _baseEnergy = 10;
-
   var weaponPrimary = ItemType.Empty;
   var weaponSecondary = ItemType.Empty;
   var weaponTertiary = ItemType.Empty;
@@ -121,15 +117,6 @@ class Player extends Character with ByteWriter {
   @override
   double get runSpeed => 1.0;
 
-  @override
-  int get damage {
-    final itemTypeDamage = game.options.itemTypeDamage[weaponType];
-    if (itemTypeDamage == null) return 0;
-    final damage = itemTypeDamage[0];
-    if (buffDoubleDamage) return damage + damage;
-    return damage;
-  }
-
   set grenades(int value) {
     value = clamp(value, 0, getItemCapacity(ItemType.Weapon_Thrown_Grenade));
     if (grenades == value) return;
@@ -163,8 +150,6 @@ class Player extends Character with ByteWriter {
   /// GETTERS
   ///
   Collider? get aimTarget => _aimTarget;
-  int get baseMaxHealth => _baseHealth;
-  int get baseDamage => _baseDamage;
   int get credits => _credits;
   int get level => _level;
   int get equippedWeaponIndex => _equippedWeaponIndex;
@@ -193,23 +178,6 @@ class Player extends Character with ByteWriter {
     return _experience / experienceRequiredForNextLevel;
   }
 
-  /// SETTERS
-  set baseMaxHealth(int value){
-     assert (value > 0);
-     if (_baseHealth == value) return;
-     _baseHealth = value;
-     writePlayerBaseDamageHealthEnergy();
-     // writePlayerBaseMaxHealth();
-  }
-
-  set baseDamage(int value){
-    assert (value > 0);
-    if (_baseDamage == value) return;
-    _baseDamage = value;
-    writePlayerBaseDamageHealthEnergy();
-    // writePlayerBaseDamage();
-  }
-
   set equippedWeaponIndex(int index){
     if (_equippedWeaponIndex == index) return;
     if (index == -1){
@@ -226,7 +194,7 @@ class Player extends Character with ByteWriter {
       inventoryDirty = true;
       assignWeaponStateChanging();
       game.dispatchV3(GameEventType.Character_Changing, this);
-      refreshStats();
+      refreshDamage();
       return;
     }
 
@@ -268,82 +236,8 @@ class Player extends Character with ByteWriter {
   }
 
   /// METHODS
-  void refreshStats() {
-    if (game.options.inventory) {
-      refreshStatsInventory();
-    }
-
-    if (game.options.items) {
-      refreshStatsItems();
-    }
-  }
-
-  void refreshStatsItems(){
-    damage = game.getItemTypeDamage(weaponType, level: this.item_level[weaponType] ?? 0);
-  }
-
-  void refreshStatsInventory() {
-    damage = baseDamage
-        + (game.getItemTypeDamage(headType))
-        + (game.getItemTypeDamage(bodyType))
-        + (game.getItemTypeDamage(legsType))
-        + (game.getItemTypeDamage(weaponType, empty: 1));
-
-    maxHealth = baseMaxHealth
-        + ItemType.getMaxHealth(headType)
-        + ItemType.getMaxHealth(bodyType)
-        + ItemType.getMaxHealth(legsType)
-        + ItemType.getMaxHealth(weaponType);
-
-    maxEnergy = _baseEnergy
-        + ItemType.getEnergy(headType)
-        + ItemType.getEnergy(bodyType)
-        + ItemType.getEnergy(legsType)
-        + ItemType.getEnergy(weaponType);
-
-    if (ItemType.isTypeTrinket(belt1_itemType)) {
-      maxHealth += ItemType.getMaxHealth(belt1_itemType);
-      maxEnergy += ItemType.getEnergy(belt1_itemType);
-      damage += game.getItemTypeDamage(belt1_itemType);
-
-    }
-    if (ItemType.isTypeTrinket(belt2_itemType)) {
-      maxHealth += ItemType.getMaxHealth(belt2_itemType);
-      maxEnergy += ItemType.getEnergy(belt2_itemType);
-      damage += game.getItemTypeDamage(belt2_itemType);
-    }
-    if (ItemType.isTypeTrinket(belt3_itemType)) {
-      maxHealth += ItemType.getMaxHealth(belt3_itemType);
-      maxEnergy += ItemType.getEnergy(belt3_itemType);
-      damage += game.getItemTypeDamage(belt3_itemType);
-    }
-    if (ItemType.isTypeTrinket(belt4_itemType)) {
-      maxHealth += ItemType.getMaxHealth(belt4_itemType);
-      maxEnergy += ItemType.getEnergy(belt4_itemType);
-      damage    += game.getItemTypeDamage(belt4_itemType);
-    }
-    if (ItemType.isTypeTrinket(belt5_itemType)){
-      maxHealth += ItemType.getMaxHealth(belt5_itemType);
-      maxEnergy += ItemType.getEnergy(belt6_itemType);
-      damage    += game.getItemTypeDamage(belt5_itemType);
-    }
-    if (ItemType.isTypeTrinket(belt6_itemType)) {
-      maxHealth += ItemType.getMaxHealth(belt6_itemType);
-      maxEnergy += ItemType.getEnergy(belt6_itemType);
-      damage    += game.getItemTypeDamage(belt6_itemType);
-    }
-
-    if (health > maxHealth){
-      health = maxHealth;
-    }
-    if (energy > maxEnergy){
-      energy = maxEnergy;
-    }
-
-    assert (damage > 0);
-
-    writePlayerHealth();
-    writePlayerDamage();
+  void refreshDamage() {
+    damage = game.getPlayerWeaponDamage(this);
   }
 
   void unequipWeapon(){
@@ -351,7 +245,7 @@ class Player extends Character with ByteWriter {
     weaponType = ItemType.Empty;
     inventoryDirty = true;
     game.setCharacterStateChanging(this);
-    refreshStats();
+    refreshDamage();
   }
 
   set interactMode(int value){
@@ -623,7 +517,6 @@ class Player extends Character with ByteWriter {
       }
     }
     inventoryDirty = true;
-    writePlayerEventItemPurchased(itemType);
     final emptyInventoryIndex = getEmptyInventoryIndex();
     if (emptyInventoryIndex == null) {
       game.spawnGameObjectItemAtPosition(position: this, type: itemType, quantity: 1);
@@ -834,7 +727,7 @@ class Player extends Character with ByteWriter {
       inventoryQuantity[index] = itemQuantity;
       inventoryDirty = true;
     }
-    refreshStats();
+    refreshDamage();
   }
 
   void inventorySwapIndexes(int indexA, int indexB) {
@@ -1054,14 +947,6 @@ class Player extends Character with ByteWriter {
     writeUInt16(maxHealth); // 2
   }
 
-  void writePlayerBaseDamageHealthEnergy(){
-    writeByte(ServerResponse.Api_Player);
-    writeByte(ApiPlayer.Base_Damage_Health_Energy);
-    writeUInt16(_baseDamage);
-    writeUInt16(_baseHealth);
-    writeUInt16(_baseEnergy);
-  }
-
   void writePlayerDamage() {
     writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Damage);
@@ -1121,7 +1006,6 @@ class Player extends Character with ByteWriter {
       writePlayerInventory();
       writePlayerLevel();
       writePlayerExperiencePercentage();
-      writePlayerBaseDamageHealthEnergy();
       writePlayerHealth();
       writePlayerAlive();
       writePlayerInteractMode();
@@ -1133,10 +1017,9 @@ class Player extends Character with ByteWriter {
   }
 
   void writePlayerStats(){
-    refreshStats();
+    refreshDamage();
     writePlayerLevel();
     writePlayerExperiencePercentage();
-    writePlayerBaseDamageHealthEnergy();
     writePlayerHealth();
     writePlayerEnergy();
     writePlayerAlive();
@@ -1362,12 +1245,6 @@ class Player extends Character with ByteWriter {
   void writePlayerEventInvalidRequest() =>
       writePlayerEvent(PlayerEvent.Invalid_Request);
 
-
-  void writePlayerEventItemPurchased(int itemType){
-    writePlayerEvent(PlayerEvent.Item_Purchased);
-    writeUInt16(itemType);
-  }
-
   void writePlayerEventItemAcquired(int itemType){
     writePlayerEvent(PlayerEvent.Item_Acquired);
     writeUInt16(itemType);
@@ -1481,44 +1358,9 @@ class Player extends Character with ByteWriter {
   void writePlayerWeapons() {
     writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Weapons);
-
     writeUInt16(weaponType);
-
     writeUInt16(weaponPrimary);
-    // writeUInt16(weaponPrimaryQuantity);
-    // writeUInt16(weaponPrimaryCapacity);
-    // writeUInt8 (weaponPrimaryLevel);
-
     writeUInt16(weaponSecondary);
-    // writeUInt16(weaponSecondaryQuantity);
-    // writeUInt16(weaponSecondaryCapacity);
-    // writeUInt8 (weaponSecondaryLevel);
-  }
-
-  // void writePlayerWeaponQuantity(){
-  //   writeByte(ServerResponse.Api_Player);
-  //   writeByte(ApiPlayer.Weapon_Quantity);
-  //   writeUInt16(weaponPrimaryQuantity);
-  //   writeUInt16(weaponSecondaryQuantity);
-  // }
-
-  void writeGameOptions() {
-    final options = game.options;
-    writeByte(ServerResponse.Game_Options);
-    writeBool(options.perks);
-    writeBool(options.inventory);
-    writeBool(options.items);
-
-    if (options.inventory){
-      writeMap(game.options.itemDamage);
-    }
-
-    if (options.items) {
-      writeUInt16(game.options.itemTypes.length);
-      writeUint16List(game.options.itemTypes);
-      writeMapListInt(game.options.itemTypeDamage);
-      writeMapListInt(game.options.itemTypeCost);
-    }
   }
 
   void writePlayerInventory() {
@@ -1774,13 +1616,13 @@ class Player extends Character with ByteWriter {
 
   @override
   void onEquipmentChanged() {
-    refreshStats();
+    refreshDamage();
     writePlayerEquipment();
   }
 
   @override
   void onWeaponChanged() {
-    refreshStats();
+    refreshDamage();
     writePlayerWeapons();
   }
 

@@ -109,11 +109,6 @@ class GamePlayer {
     }
   }
 
-  static List<int> getItemTypesByItemGroup(ItemGroup itemGroup) =>
-      GameOptions.ItemTypes.value
-          .where((itemType) => ItemType.getItemGroup(itemType) == itemGroup)
-          .toList();
-
   static Watch<int> getItemTypeWatch(int itemType){
     if (ItemType.isTypeWeapon(itemType)) return weapon;
     if (ItemType.isTypeHead(itemType)) return head;

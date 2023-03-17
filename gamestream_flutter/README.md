@@ -18,12 +18,14 @@ ctrl + shift + e    : view recent changes
 [ ] power shield
 [ ] power stun pulse
 [ ] power grenade
-[ ] perk type explosions do not cause friendly fire
-[ ] perk type instant draw weapon
-[ ] perk type collecting gems also heals health
-[ ] perk type melee attacks heal health
-[ ] perk type melee attacks damage multiple enemies
-[ ] perk type sniper bullets pass through enemies
+[ ] talent type explosions do not cause friendly fire
+[ ] talent type instant draw weapon
+[ ] talent type collecting gems also heals health
+[ ] talent type melee attacks heal health
+[ ] talent type melee attacks damage multiple enemies
+[ ] talent type sniper bullets pass through enemies
+[ ] talent type perfect accuracy
+[ ] talent type shock half duration
 
 [GAME IDEAS]
 [ ] weapon stun taser

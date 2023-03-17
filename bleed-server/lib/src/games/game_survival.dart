@@ -53,7 +53,7 @@ class GameSurvival extends Game {
     player.belt6_itemType = ItemType.Weapon_Ranged_Machine_Gun;
     player.belt6_quantity = ItemType.getMaxQuantity(ItemType.Weapon_Ranged_Machine_Gun);
     player.equippedWeaponIndex = ItemType.Belt_1;
-    player.refreshStats();
+    player.refreshDamage();
     moveToRandomPlayerSpawnPoint(player);
     player.health = player.maxHealth;
   }

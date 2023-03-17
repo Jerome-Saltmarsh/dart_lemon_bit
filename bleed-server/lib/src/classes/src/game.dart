@@ -659,7 +659,7 @@ abstract class Game {
     switch (weaponType) {
       case ItemType.Weapon_Ranged_Crossbow:
         spawnProjectileArrow(
-            damage: getItemTypeDamage(weaponType),
+            damage: character.damage,
             range: ItemType.getRange(weaponType),
             src: character,
             angle: character.lookRadian,
@@ -676,7 +676,7 @@ abstract class Game {
       case ItemType.Weapon_Ranged_Bow:
         spawnProjectileArrow(
             src: character,
-            damage: getItemTypeDamage(weaponType),
+            damage: character.damage,
             range: ItemType.getRange(weaponType),
             angle: character.lookRadian,
         );
@@ -3214,73 +3214,32 @@ abstract class Game {
     }
   }
 
-  int getItemTypeDamage(int itemType, {int empty = 0, int level = 0}){
-     assert (level >= 0);
-     assert (level <= 4);
-
-     if (itemType < 0) {
-       return 0;
-     }
-
-     if (itemType == ItemType.Empty)
-       return empty;
-     if (options.inventory)
-       return options.itemDamage[itemType] ?? 0;
-
-     return options.itemTypeDamage[itemType]?[level] ?? 0;
-  }
-
-  // void playerEquipWeaponRanged(Player player){
-  //   characterEquipWeapon(
-  //     character: player,
-  //     weaponType: player.weaponRanged,
-  //     characterStateChange: true,
-  //   );
-  // }
-
-  // void playerEquipWeaponMelee(Player player){
-  //   characterEquipWeapon(
-  //     character: player,
-  //     weaponType: player.weaponMelee,
-  //     characterStateChange: true,
-  //   );
-  // }
-
-  void playerPurchaseItemType(Player player, int itemType, {required Side weaponSide}){
-    if (player.dead) return;
-    if (!options.itemTypes.contains(itemType)){
-      player.writeError('${ItemType.getName(itemType)} cannot be purchased');
-      return;
-    }
-    final currentLevel = player.item_level[itemType] ?? 0;
-
-    if (currentLevel >= 4){
-      player.writeError('${ItemType.getName(itemType)} max');
-      return;
-    }
-
-    final cost = getItemPurchaseCost(itemType, currentLevel);
-    if (player.credits < cost){
-      player.writeError('insufficient credits');
-      return;
-    }
-    final nextLevel = currentLevel + 1;
-
-    final itemCapacity = options.itemTypeCapacity[itemType];
-
-    if (itemCapacity == null){
-      player.writeError('itemCapacity == null');
-      return;
-    }
-
-    player.credits -= cost;
-    player.item_level[itemType] = nextLevel;
-    player.item_quantity[itemType] = itemCapacity[nextLevel];
-    // player.writePlayerItems();
-    player.writePlayerEventItemPurchased(itemType);
-    characterEquipItemType(player, itemType);
-    setCharacterStateChanging(player);
-  }
+  /// Safe to override to provide custom logic
+  int getPlayerWeaponDamage(Player player) => const <int, int> {
+      ItemType.Weapon_Ranged_Bow          : 06,
+      ItemType.Empty                      : 01,
+      ItemType.Weapon_Ranged_Smg          : 02,
+      ItemType.Weapon_Ranged_Machine_Gun  : 02,
+      ItemType.Weapon_Ranged_Rifle        : 04,
+      ItemType.Weapon_Ranged_Sniper_Rifle : 10,
+      ItemType.Weapon_Ranged_Musket       : 04,
+      ItemType.Weapon_Ranged_Bazooka      : 10,
+      ItemType.Weapon_Ranged_Flamethrower : 01,
+      ItemType.Weapon_Ranged_Minigun      : 01,
+      ItemType.Weapon_Ranged_Handgun      : 04,
+      ItemType.Weapon_Ranged_Revolver     : 06,
+      ItemType.Weapon_Ranged_Desert_Eagle : 08,
+      ItemType.Weapon_Ranged_Pistol       : 07,
+      ItemType.Weapon_Ranged_Plasma_Pistol: 04,
+      ItemType.Weapon_Ranged_Plasma_Rifle : 02,
+      ItemType.Weapon_Ranged_Shotgun      : 04,
+      ItemType.Weapon_Melee_Hammer        : 03,
+      ItemType.Weapon_Melee_Pickaxe       : 05,
+      ItemType.Weapon_Melee_Knife         : 04,
+      ItemType.Weapon_Melee_Crowbar       : 04,
+      ItemType.Weapon_Melee_Sword         : 04,
+      ItemType.Weapon_Melee_Axe           : 04,
+    } [player.weaponType] ?? 0;
 
   int getItemPurchaseCost(int itemType, int level){
     // assert (level > 0);

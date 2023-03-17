@@ -109,32 +109,12 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.GameObject_Deleted:
           ServerState.removeGameObjectById(readUInt16());
           break;
-        case ServerResponse.Game_Options:
-          readGameOptions();
-          break;
         default:
           print("read error; index: $index, previous-server-response: $previousServerResponse");
           print(values);
           return;
       }
       previousServerResponse = serverResponse;
-    }
-  }
-
-  void readGameOptions() {
-    GameOptions.perks.value = readBool();
-    GameOptions.inventory.value = readBool();
-    GameOptions.items.value = readBool();
-
-    if (GameOptions.inventory.value) {
-      readMap(GameOptions.item_damage);
-    }
-
-    if (GameOptions.items.value) {
-      final length = readUInt16();
-      GameOptions.ItemTypes.value = readUint16List(length);
-      GameOptions.ItemType_Damage.value = readMapListInt();
-      GameOptions.ItemType_Cost.value = readMapListInt();
     }
   }
 
@@ -324,11 +304,6 @@ class ServerResponseReader with ByteReader {
         break;
       case ApiPlayer.Damage:
         ServerState.playerDamage.value = readUInt16();
-        break;
-      case ApiPlayer.Base_Damage_Health_Energy:
-        ServerState.playerBaseDamage.value = readUInt16();
-        ServerState.playerBaseHealth.value = readUInt16();
-        ServerState.playerBaseEnergy.value = readUInt16();
         break;
       case ApiPlayer.Items:
         readMap(GamePlayer.items);

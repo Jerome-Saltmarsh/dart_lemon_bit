@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:gamestream_flutter/game_minimap.dart';
-import 'package:gamestream_flutter/game_ui_interact.dart';
 import 'package:gamestream_flutter/isometric/events/on_visibility_changed_message_box.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/language_utils.dart';
@@ -644,7 +643,7 @@ class GameUI {
       edit ? watch(GameEditor.editTab, EditorUI.buildUI) : buildStackPlay();
 
   static Widget buildStackPlay() => StackFullscreen(children: [
-        visibleBuilder(GameOptions.inventory, GameUIInteract.buildWatchInteractMode()),
+        // visibleBuilder(GameOptions.inventory, GameUIInteract.buildWatchInteractMode()),
         watch(ClientState.hoverIndex,
             GameInventoryUI.buildPositionedContainerItemTypeInformation),
         watch(ClientState.hoverTargetType,
@@ -668,29 +667,29 @@ class GameUI {
         //     left: GameStyle.Default_Padding,
         //     child: buildPlayerPowerType(),
         // ),
-        visibleBuilder(
-            GameOptions.inventory,
-            Positioned(
-              bottom: GameStyle.Default_Padding,
-              right: GameStyle.Default_Padding,
-              child: buildDialogUIControl(
-                child: buildColumnBelt(),
-              ),
-            )),
-          Positioned(
-              top: GameStyle.Default_Padding,
-              left: GameStyle.Default_Padding,
-              child: visibleBuilder(
-                  ClientState.window_visible_items,
-                  buildWindowPlayerItems(),
-              ),
-              // child: buildWindowPlayerItems(),
-          ),
-          Positioned(
-            top: GameStyle.Default_Padding,
-            left: GameStyle.Window_PlayerItems_Width + (GameStyle.Default_Padding * 2),
-            child: buildWindowMouseOverItemType(),
-          ),
+        // visibleBuilder(
+        //     GameOptions.inventory,
+        //     Positioned(
+        //       bottom: GameStyle.Default_Padding,
+        //       right: GameStyle.Default_Padding,
+        //       child: buildDialogUIControl(
+        //         child: buildColumnBelt(),
+        //       ),
+        //     )),
+        //   Positioned(
+        //       top: GameStyle.Default_Padding,
+        //       left: GameStyle.Default_Padding,
+        //       child: visibleBuilder(
+        //           ClientState.window_visible_items,
+        //           buildWindowPlayerItems(),
+        //       ),
+        //       // child: buildWindowPlayerItems(),
+        //   ),
+          // Positioned(
+          //   top: GameStyle.Default_Padding,
+          //   left: GameStyle.Window_PlayerItems_Width + (GameStyle.Default_Padding * 2),
+          //   child: buildWindowMouseOverItemType(),
+          // ),
       ]);
 
   static Widget buildPanelCredits() {
@@ -706,39 +705,39 @@ class GameUI {
               );
   }
 
-  static Widget buildWindowMouseOverItemType(){
-    return watch(GamePlayer.items_reads, (_){
-      return watch(GameOptions.ItemType_Damage, (MapListInt itemMap){
-        return watch(ClientState.mouseOverItemType, (int itemType){
-          if (itemType < 0) return GameStyle.Null;
-          final entry = itemMap[itemType];
-          if (entry == null) return GameStyle.Null;
-          final currentLevel = GamePlayer.items[itemType] ?? 1;
-          return buildContainer(
-            width: GameStyle.Window_PlayerItems_Width,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      width: 50,
-                      height: 50,
-                      child: buildAtlasItemType(itemType),
-                    ),
-                    text(ItemType.getName(itemType), size: 22, color: Colors.white70)
-                  ],
-                ),
-                text("Damage: ${capIndex(entry, currentLevel)}"),
-              ],
-            ),
-          );
-        });
-      });
-    });
-
-  }
+  // static Widget buildWindowMouseOverItemType(){
+  //   return watch(GamePlayer.items_reads, (_){
+  //     return watch(GameOptions.ItemType_Damage, (MapListInt itemMap){
+  //       return watch(ClientState.mouseOverItemType, (int itemType){
+  //         if (itemType < 0) return GameStyle.Null;
+  //         final entry = itemMap[itemType];
+  //         if (entry == null) return GameStyle.Null;
+  //         final currentLevel = GamePlayer.items[itemType] ?? 1;
+  //         return buildContainer(
+  //           width: GameStyle.Window_PlayerItems_Width,
+  //           child: Column(
+  //             crossAxisAlignment: CrossAxisAlignment.start,
+  //             children: [
+  //               Row(
+  //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                 children: [
+  //                   Container(
+  //                     width: 50,
+  //                     height: 50,
+  //                     child: buildAtlasItemType(itemType),
+  //                   ),
+  //                   text(ItemType.getName(itemType), size: 22, color: Colors.white70)
+  //                 ],
+  //               ),
+  //               text("Damage: ${capIndex(entry, currentLevel)}"),
+  //             ],
+  //           ),
+  //         );
+  //       });
+  //     });
+  //   });
+  //
+  // }
 
   static Widget buildContainer({required Widget child, double? width}) =>
     buildDialogUIControl(
@@ -772,114 +771,114 @@ class GameUI {
               child: buildAtlasIconType(mapItemTabToIconType(itemTab))),
               );
 
-  static Widget buildWindowPlayerItems(){
-      return watch(GamePlayer.items_reads, (t) {
-        return watch(ClientState.itemGroup, (ItemGroup activeItemGroup) {
-          return buildContainer(
-            width: GameStyle.Window_PlayerItems_Width,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: const[
-                      ItemGroup.Primary_Weapon,
-                      // ItemGroup.Secondary_Weapon,
-                      ItemGroup.Tertiary_Weapon,
-                      ItemGroup.Unknown,
-                    ].map(buildIconItemTab).toList()),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: GamePlayer
-                      .getItemTypesByItemGroup(activeItemGroup)
-                      .map((itemType) => buildItemRow(
-                        itemType: itemType,
-                        itemValue: GamePlayer.items[itemType] ?? 0,
-                      )
-                  ).toList(),
-                ),
-              ],
-            ),
-          );
-        });
-      });
-  }
+  // static Widget buildWindowPlayerItems(){
+  //     return watch(GamePlayer.items_reads, (t) {
+  //       return watch(ClientState.itemGroup, (ItemGroup activeItemGroup) {
+  //         return buildContainer(
+  //           width: GameStyle.Window_PlayerItems_Width,
+  //           child: Column(
+  //             crossAxisAlignment: CrossAxisAlignment.start,
+  //             children: [
+  //               Row(
+  //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                   children: const[
+  //                     ItemGroup.Primary_Weapon,
+  //                     // ItemGroup.Secondary_Weapon,
+  //                     ItemGroup.Tertiary_Weapon,
+  //                     ItemGroup.Unknown,
+  //                   ].map(buildIconItemTab).toList()),
+  //               Column(
+  //                 crossAxisAlignment: CrossAxisAlignment.start,
+  //                 children: GamePlayer
+  //                     .getItemTypesByItemGroup(activeItemGroup)
+  //                     .map((itemType) => buildItemRow(
+  //                       itemType: itemType,
+  //                       itemValue: GamePlayer.items[itemType] ?? 0,
+  //                     )
+  //                 ).toList(),
+  //               ),
+  //             ],
+  //           ),
+  //         );
+  //       });
+  //     });
+  // }
 
-  static Widget buildItemRow({
-    required int itemType,
-    required int itemValue,
-  }){
-    return watch(GamePlayer.getItemTypeWatch(itemType), (int equippedItemType) {
-       final active = equippedItemType == itemType;
-       final fullyUpgraded = itemValue >= 5;
-       final cost = fullyUpgraded ? 0 : GameOptions.ItemType_Cost.value[itemType]?[itemValue] ?? 0;
-
-       return MouseRegion(
-         onEnter: (_){
-           ClientState.mouseOverItemType.value = itemType;
-         },
-         onExit: (_){
-           if (ClientState.mouseOverItemType.value == itemType) {
-             ClientState.mouseOverItemType.value = -1;
-           }
-         },
-         child: onPressed(
-           action: () =>
-               GameNetwork.sendClientRequest(ClientRequest.Equip, itemType),
-           child: Container(
-             color: active ? Colors.white24 : Colors.transparent,
-             padding: GameStyle.Padding_6,
-             child: Row(
-               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-               children: [
-                 Container(
-                     constraints: const BoxConstraints(maxWidth: 150),
-                     child: buildAtlasItemType(itemType),
-                     height: 50,
-                     alignment: Alignment.center,
-                     color: Colors.black12,
-                     padding: GameStyle.Padding_4,
-                 ),
-                 if (itemValue > 0) buildItemTypeBars(itemValue),
-                 onPressed(
-                   action: fullyUpgraded ? null : () => GameNetwork.sendClientRequest(
-                       ClientRequest.Purchase_Item,
-                       itemType,
-                   ),
-                   child: Container(
-                     width: 100,
-                     alignment: Alignment.center,
-                     color: Colors.white12,
-                     padding: GameStyle.Padding_6,
-                     child:
-                     fullyUpgraded ? text("MAX", color: GameColors.white60) :
-                     Row(
-                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                       children: [
-                         watch(ServerState.playerCredits, (int playerCredits) {
-                           return text(itemValue < 1 ? "BUY" : "UPGRADE", color: cost <= playerCredits ? Colors.white : Colors.white38);
-                         }),
-                         Row(
-                           children: [
-                             Container(
-                                 width: 12,
-                                 height: 12,
-                                 child: buildAtlasItemType(ItemType.Resource_Credit)),
-                             width2,
-                             text(cost),
-                           ],
-                         )
-                       ],
-                     ),
-                   ),
-                 ),
-               ],
-             ),
-           ),
-         ),
-       );
-    });
-  }
+  // static Widget buildItemRow({
+  //   required int itemType,
+  //   required int itemValue,
+  // }){
+  //   return watch(GamePlayer.getItemTypeWatch(itemType), (int equippedItemType) {
+  //      final active = equippedItemType == itemType;
+  //      final fullyUpgraded = itemValue >= 5;
+  //      final cost = fullyUpgraded ? 0 : GameOptions.ItemType_Cost.value[itemType]?[itemValue] ?? 0;
+  //
+  //      return MouseRegion(
+  //        onEnter: (_){
+  //          ClientState.mouseOverItemType.value = itemType;
+  //        },
+  //        onExit: (_){
+  //          if (ClientState.mouseOverItemType.value == itemType) {
+  //            ClientState.mouseOverItemType.value = -1;
+  //          }
+  //        },
+  //        child: onPressed(
+  //          action: () =>
+  //              GameNetwork.sendClientRequest(ClientRequest.Equip, itemType),
+  //          child: Container(
+  //            color: active ? Colors.white24 : Colors.transparent,
+  //            padding: GameStyle.Padding_6,
+  //            child: Row(
+  //              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //              children: [
+  //                Container(
+  //                    constraints: const BoxConstraints(maxWidth: 150),
+  //                    child: buildAtlasItemType(itemType),
+  //                    height: 50,
+  //                    alignment: Alignment.center,
+  //                    color: Colors.black12,
+  //                    padding: GameStyle.Padding_4,
+  //                ),
+  //                if (itemValue > 0) buildItemTypeBars(itemValue),
+  //                onPressed(
+  //                  action: fullyUpgraded ? null : () => GameNetwork.sendClientRequest(
+  //                      ClientRequest.Purchase_Item,
+  //                      itemType,
+  //                  ),
+  //                  child: Container(
+  //                    width: 100,
+  //                    alignment: Alignment.center,
+  //                    color: Colors.white12,
+  //                    padding: GameStyle.Padding_6,
+  //                    child:
+  //                    fullyUpgraded ? text("MAX", color: GameColors.white60) :
+  //                    Row(
+  //                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                      children: [
+  //                        watch(ServerState.playerCredits, (int playerCredits) {
+  //                          return text(itemValue < 1 ? "BUY" : "UPGRADE", color: cost <= playerCredits ? Colors.white : Colors.white38);
+  //                        }),
+  //                        Row(
+  //                          children: [
+  //                            Container(
+  //                                width: 12,
+  //                                height: 12,
+  //                                child: buildAtlasItemType(ItemType.Resource_Credit)),
+  //                            width2,
+  //                            text(cost),
+  //                          ],
+  //                        )
+  //                      ],
+  //                    ),
+  //                  ),
+  //                ),
+  //              ],
+  //            ),
+  //          ),
+  //        ),
+  //      );
+  //   });
+  // }
 
   static Widget buildItemTypeBars(int amount) => Row(
         children: List.generate(5, (i) => Container(

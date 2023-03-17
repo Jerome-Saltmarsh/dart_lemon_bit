@@ -76,7 +76,7 @@ class GamePractice extends Game {
     player.inventorySet(index: ItemType.Belt_6, itemType: ItemType.Consumables_Apple, itemQuantity: 3);
     player.equippedWeaponIndex = ItemType.Belt_1;
     player.inventoryDirty = true;
-    player.refreshStats();
+    player.refreshDamage();
     player.health = player.maxHealth;
     player.team = TeamType.Alone;
   }

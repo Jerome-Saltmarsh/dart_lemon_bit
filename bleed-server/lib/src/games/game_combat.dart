@@ -257,44 +257,6 @@ class GameCombat extends Game {
      }
   }
 
-  @override
-  void playerPurchaseItemType(Player player, int itemType, {required Side weaponSide}){
-     if (player.dead) return;
-
-     final itemLevel = player.getItemLevel(itemType);
-
-     if (itemLevel < 4) {
-       final itemCost = getItemPurchaseCost(itemType, itemLevel);
-
-       if (player.credits < itemCost){
-         player.writeError('insufficient credits');
-         return;
-       }
-
-       player.credits -= itemCost;
-       player.item_level[itemType] = itemLevel + 1;
-       player.item_quantity[itemType] = player.getItemCapacity(itemType);
-       if (itemLevel == 0){
-         player.writeInfo('${ItemType.getName(itemType)} Purchased');
-       } else {
-         player.writeInfo('${ItemType.getName(itemType)} Upgraded');
-       }
-       player.writePlayerEventItemPurchased(itemType);
-     }
-
-     switch (weaponSide) {
-       case Side.Left:
-         playerEquipPrimary(player, itemType);
-         break;
-       case Side.Right:
-         playerEquipSecondary(player, itemType);
-         break;
-     }
-
-     player.writePlayerEquipment();
-     player.writePlayerWeapons();
-  }
-
   void playerEquipPrimary(Player player, int itemType) {
     if (player.weaponPrimary == itemType) return;
 

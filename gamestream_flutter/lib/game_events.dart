@@ -444,25 +444,6 @@ class GameEvents {
       case PlayerEvent.Dash_Activated:
         // audio.buff11(GameState.player.x, GameState.player.y);
         break;
-      case PlayerEvent.Item_Purchased:
-        final itemType = serverResponseReader.readUInt16();
-        GameAudio.cash_register_4();
-        // ClientActions.spawnConfettiPlayer();
-
-        if (GameOptions.items.value){
-          final level = GamePlayer.items[itemType];
-          if (level == null) return;
-          if (level == 1){
-            ClientActions.writeMessage('Purchased ${ItemType.getName(itemType)}');
-            return;
-          }
-          ClientActions.writeMessage('Upgraded ${ItemType.getName(itemType)} to level $level');
-          return;
-        }
-
-        ClientActions.writeMessage('purchased ${ItemType.getName(itemType)}');
-        break;
-
       case PlayerEvent.Ammo_Acquired:
         // audio.itemAcquired(Engine.screenCenterWorldX, Engine.screenCenterWorldY);
         break;

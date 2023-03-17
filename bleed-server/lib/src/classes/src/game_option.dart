@@ -10,7 +10,6 @@ class GameOptions {
   final Map<int, int> itemDamage;
   final List<int> itemTypes;
   final Map<int, List<int>> itemTypeCost;
-  final Map<int, List<int>> itemTypeDamage;
   final Map<int, List<int>> itemTypeCapacity;
 
   GameOptions({
@@ -19,36 +18,9 @@ class GameOptions {
     required this.items,
     this.itemTypes = ItemType.Collection,
     this.itemDamage = Default_Item_Damage,
-    this.itemTypeDamage = Default_ItemType_Damage,
     this.itemTypeCost = Default_ItemType_Cost,
     this.itemTypeCapacity = Default_ItemType_Capacity,
   });
-
-  static const Default_ItemType_Damage = <int, List<int>> {
-     ItemType.Weapon_Ranged_Bow: [6, 6, 6, 6, 6],
-     ItemType.Empty: [1, 1, 1, 1, 1],
-     ItemType.Weapon_Ranged_Smg: [2, 3, 4, 5, 6],
-     ItemType.Weapon_Ranged_Machine_Gun: [2, 3, 4, 5, 6],
-     ItemType.Weapon_Ranged_Rifle: [4, 5, 7, 8, 10],
-     ItemType.Weapon_Ranged_Sniper_Rifle: [10, 10, 10, 10, 10],
-     ItemType.Weapon_Ranged_Musket: [4, 5, 7, 8, 10],
-     ItemType.Weapon_Ranged_Bazooka: [10, 5, 7, 8, 10],
-     ItemType.Weapon_Ranged_Flamethrower: [1, 1, 1, 1, 1],
-     ItemType.Weapon_Ranged_Minigun: [4, 5, 7, 8, 10],
-     ItemType.Weapon_Ranged_Handgun: [4, 5, 7, 8, 10],
-     ItemType.Weapon_Ranged_Revolver: [4, 5, 7, 8, 10],
-     ItemType.Weapon_Ranged_Desert_Eagle: [4, 5, 7, 8, 10],
-     ItemType.Weapon_Ranged_Pistol: [4, 5, 7, 8, 10],
-     ItemType.Weapon_Ranged_Plasma_Pistol: [4, 5, 7, 8, 10],
-     ItemType.Weapon_Ranged_Plasma_Rifle: [2, 5, 7, 8, 10],
-     ItemType.Weapon_Ranged_Shotgun: [4, 5, 7, 8, 10],
-     ItemType.Weapon_Melee_Hammer: [3, 4, 5, 6, 7],
-     ItemType.Weapon_Melee_Pickaxe: [5, 7, 10, 12, 14],
-     ItemType.Weapon_Melee_Knife: [4, 5, 7, 8, 10],
-     ItemType.Weapon_Melee_Crowbar: [4, 5, 7, 8, 10],
-     ItemType.Weapon_Melee_Sword: [4, 5, 7, 8, 10],
-     ItemType.Weapon_Melee_Axe: [4, 5, 7, 8, 10],
-  };
 
   static const Default_ItemType_Capacity = <int, List<int>> {
      ItemType.Weapon_Ranged_Bow: [20, 12, 12, 12, 12],

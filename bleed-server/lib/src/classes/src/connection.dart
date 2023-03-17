@@ -155,12 +155,6 @@ class Connection with ByteReader {
         player.swapWeapons();
         break;
 
-      case ClientRequest.Purchase_Item:
-        final itemType = parseArg1(arguments);
-        if (itemType == null) return;
-        game.playerPurchaseItemType(player, itemType, weaponSide: Side.Left);
-        break;
-
       case ClientRequest.Player_Throw_Grenade:
         game.playerThrowGrenade(player);
         break;
