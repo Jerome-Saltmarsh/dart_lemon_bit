@@ -296,7 +296,8 @@ class RendererCharacters extends Renderer {
           framesPerDirection: framesPerDirection,
         );
       case CharacterState.Stunned:
-        GameRender.renderTextV3(character, "STUNNED");
+        GameRender.renderStarsV3(character);
+
         return single(
             frame: 1,
             direction: character.direction,

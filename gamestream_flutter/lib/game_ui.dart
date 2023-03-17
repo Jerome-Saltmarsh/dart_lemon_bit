@@ -99,7 +99,7 @@ class GameUI {
       ItemType.Weapon_Melee_Crowbar,
     ];
 
-    const titleFontSize = 18;
+    const titleFontSize = 22;
     const titleFontColor = Colors.white24;
 
     final columnPowers = Column(

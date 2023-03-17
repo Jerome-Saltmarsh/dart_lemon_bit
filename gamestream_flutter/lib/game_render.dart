@@ -330,6 +330,21 @@ class GameRender {
       dstY: GameConvert.getRenderY(x, y, z),
     );
   }
+
+  static void renderStarsV3(Vector3 v3) =>
+      renderStars(v3.renderX, v3.renderY - 40);
+
+  static void renderStars(double x, double y) =>
+    Engine.renderSprite(
+      image: GameImages.sprite_stars,
+      srcX: 125.0 * GameAnimation.animationFrame16,
+      srcY: 0,
+      srcWidth: 125,
+      srcHeight: 125,
+      dstX: x,
+      dstY: y,
+      scale: 0.4,
+    );
 }
 
 
