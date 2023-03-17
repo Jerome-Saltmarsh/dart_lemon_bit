@@ -1902,9 +1902,9 @@ abstract class Game {
        }
     }
 
-    if (player.powerDuration > 0) {
-      player.powerDuration--;
-      if (player.powerDuration == 0) {
+    if (player.buffDuration > 0) {
+      player.buffDuration--;
+      if (player.buffDuration == 0) {
           switch (player.powerType) {
             case PowerType.Shield:
               player.buffInvincible = false;

@@ -226,7 +226,7 @@ class GameCombat extends Game {
   @override
   void customOnPlayerDead(Player player) {
     player.powerCooldown = 0;
-    player.powerDuration = 0;
+    player.buffDuration = 0;
     player.writePlayerPower();
   }
 
@@ -595,19 +595,40 @@ class GameCombat extends Game {
         break;
       case PowerType.Shield:
         player.buffInvincible = true;
-        player.powerDuration = Engine.Frames_Per_Second * 4;
+        player.buffDuration = Engine.Frames_Per_Second * 4;
         break;
       case PowerType.Invisible:
         player.buffInvisible = true;
-        player.powerDuration = Engine.Frames_Per_Second * 4;
+        player.buffDuration = Engine.Frames_Per_Second * 4;
         for (final character in characters) {
           if (character.target != player) continue;
           clearCharacterTarget(character);
         }
         break;
+      case PowerType.Stun:
+        const range = 150.0;
+        final playerX = player.x;
+        final playerY = player.y;
+        for (final character in characters) {
+          final distanceX = (playerX - character.x).abs();
+          if (distanceX > range) continue;
+          final distanceY = (playerY - character.y).abs();
+          if (distanceY > range) continue;
+          if (Collider.onSameTeam(character, player)) continue;
+          if (character.dead) continue;
+          if (character.buffInvincible) continue;
+          stunCharacter(character);
+        }
+        break;
     }
   }
 
+  void stunCharacter(Character character) {
+    character.buffStunned = true;
+    character.buffInvisible = false;
+    character.buffDuration = Engine.Frames_Per_Second * 2;
+    character.setCharacterStateIdle();
+  }
 }
 
 

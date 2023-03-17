@@ -71,7 +71,6 @@ class Player extends Character with ByteWriter {
   var weaponTertiary = ItemType.Empty;
   var _powerType = PowerType.None;
   var powerCooldown = 0;
-  var powerDuration = 0;
 
   /// Warning - do not reference
   Game game;
@@ -1240,17 +1239,7 @@ class Player extends Character with ByteWriter {
         writeCharacterUpperBody(character);
       }
 
-      var buff = 0;
-      if (character.buffInvincible){
-        buff = buff | 0x00000001;
-      }
-      if (character.buffDoubleDamage){
-        buff = buff | 0x00000002;
-      }
-      if (character.buffInvisible){
-        buff = buff | 0x00000004;
-      }
-      writeByte(buff);
+      writeByte(character.buffByte);
     }
     writeByte(END);
   }

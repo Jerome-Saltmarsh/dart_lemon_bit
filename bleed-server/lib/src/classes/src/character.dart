@@ -32,9 +32,29 @@ abstract class Character extends Collider {
   var lookRadian = 0.0;
   var name = "";
 
+  var buffDuration = 0;
+
   var buffInvincible      = false;
   var buffDoubleDamage    = false;
   var buffInvisible       = false;
+  var buffStunned         = false;
+
+  int get buffByte {
+    var buff = 0;
+    if (buffInvincible) {
+      buff = buff | 0x00000001;
+    }
+    if (buffDoubleDamage) {
+      buff = buff | 0x00000002;
+    }
+    if (buffInvisible) {
+      buff = buff | 0x00000004;
+    }
+    if (buffStunned) {
+      buff = buff | 0x00000008;
+    }
+    return buff;
+  }
 
   int get weaponType => _weaponType;
   int get headType => _headType;
