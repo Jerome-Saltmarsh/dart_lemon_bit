@@ -98,48 +98,35 @@ class GameRender {
     resetRenderOrder(rendererProjectiles);
 
     if (totalRemaining == 0) return;
-    next = rendererNodes;
-    nextOrderZ = next.orderZ;
-    nextOrder = next.order;
 
     while (true) {
+      next = rendererNodes;
+      nextOrderZ = next.orderZ;
+      nextOrder = next.order;
       checkNext(rendererCharacters);
       checkNext(rendererProjectiles);
       checkNext(rendererGameObjects);
       checkNext(rendererParticles);
       if (next.remaining) {
         next.renderNext();
-        next = rendererNodes;
-        nextOrderZ = next.orderZ;
-        nextOrder = next.order;
         continue;
       }
       totalRemaining--;
-      if (totalRemaining <= 0) return;
+      if (totalRemaining == 0) return;
 
-      if (totalRemaining > 1) {
-        if (next == rendererNodes) {
-          if (rendererCharacters.remaining) {
-            next = rendererCharacters;
-          }
-          if (rendererProjectiles.remaining) {
-            next = rendererProjectiles;
-          }
-          if (rendererGameObjects.remaining) {
-            next = rendererGameObjects;
-          }
-          if (rendererParticles.remaining) {
-            next = rendererParticles;
-          }
+      if (totalRemaining == 1) {
+        while (rendererNodes.remaining) {
+          rendererNodes.renderNext();
         }
-        continue;
-      }
-
-      while (rendererNodes.remaining) {
-        rendererNodes.renderNext();
-      }
-      while (rendererCharacters.remaining) {
-        rendererCharacters.renderNext();
+        while (rendererCharacters.remaining) {
+          rendererCharacters.renderNext();
+        }
+        while (rendererParticles.remaining) {
+          rendererParticles.renderNext();
+        }
+        while (rendererProjectiles.remaining) {
+          rendererProjectiles.renderNext();
+        }
       }
       return;
     }
