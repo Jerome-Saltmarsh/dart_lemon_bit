@@ -84,22 +84,20 @@ class GameRender {
     resetRenderOrder(rendererParticles);
     resetRenderOrder(rendererProjectiles);
 
-    var first = rendererNodes;
-
     if (totalRemaining == 0) return;
     while (true) {
-      Renderer next = first;
-      if (rendererCharacters.remaining){
-        next = next.compare(rendererCharacters);
+      Renderer next = rendererNodes;
+      if (rendererCharacters.remaining && rendererCharacters.before(next)){
+        next = rendererCharacters;
       }
-      if (rendererProjectiles.remaining){
-        next = next.compare(rendererProjectiles);
+      if (rendererProjectiles.remaining && rendererProjectiles.before(next)){
+        next = rendererProjectiles;
       }
-      if (rendererGameObjects.remaining){
-        next = next.compare(rendererGameObjects);
+      if (rendererGameObjects.remaining && rendererGameObjects.before(next)){
+        next = rendererGameObjects;
       }
-      if (rendererParticles.remaining){
-        next = next.compare(rendererParticles);
+      if (rendererParticles.remaining && rendererParticles.before(next)){
+        next = rendererParticles;
       }
       if (next.remaining){
         next.renderNext();
