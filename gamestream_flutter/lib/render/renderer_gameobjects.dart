@@ -190,15 +190,11 @@ class RendererGameObjects extends Renderer {
       index++;
       if (!remaining) return;
       gameObject = gameObjects[index];
-
-      if (gameObject.renderY > Engine.Screen_Bottom) {
-        end();
-        return;
-      }
     }
 
-    order = gameObject.renderOrder;
+    order = gameObject.sortOrder;
     orderZ = gameObject.indexZ;
+    orderRowColumn = gameObject.indexRow + gameObject.indexColumn;
   }
 
   static double getRenderYBouncing(Vector3 v3) =>

@@ -28,25 +28,4 @@ class Vector3 {
 
     return sqrt((xDiff * xDiff) + (yDiff * yDiff) + (zDiff * zDiff)) <= radius;
   }
-
-  /// FUNCTIONS
-  static void sort(List<Vector3> items) {
-    var start = 0;
-    var end = items.length;
-    for (var pos = start + 1; pos < end; pos++) {
-      var min = start;
-      var max = pos;
-      var element = items[pos];
-      while (min < max) {
-        var mid = min + ((max - min) >> 1);
-        if (element.order <= items[mid].order) {
-          max = mid;
-        } else {
-          min = mid + 1;
-        }
-      }
-      items.setRange(min + 1, pos + 1, items, min);
-      items[min] = element;
-    }
-  }
 }

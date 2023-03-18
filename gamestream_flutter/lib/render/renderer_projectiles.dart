@@ -41,7 +41,8 @@ class RendererProjectiles extends Renderer {
   @override
   void updateFunction() {
     projectile = ServerState.projectiles[index];
-    order = projectile.renderOrder;
+    order = projectile.sortOrder;
+    orderRowColumn = projectile.indexRow + projectile.indexColumn;
     orderZ = projectile.indexZ;
   }
 

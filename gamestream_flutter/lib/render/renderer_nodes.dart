@@ -123,6 +123,7 @@ class RendererNodes extends Renderer {
       if (row + 1 > nodesRowsMax) return;
       row++;
       column--;
+      orderZ = currentNodeZ;
       currentNodeIndex += nodesGridTotalColumnsMinusOne;
       currentNodeDstX += GameConstants.Sprite_Width;
     }
@@ -173,6 +174,7 @@ class RendererNodes extends Renderer {
     currentNodeType = GameNodes.nodeTypes[currentNodeIndex];
     order = ((row + column) * Node_Size) + Node_Size_Half;
     orderZ = currentNodeZ;
+    orderRowColumn = row + column;
   }
 
   static int getIndex(int row, int column, int z){

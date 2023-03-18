@@ -57,7 +57,6 @@ class Vector3 with Position {
           y >= GameNodes.lengthColumns ||
           z >= GameNodes.lengthZ     ;
 
-  double get renderOrder => x + y + (z * 0.25);
   double get sortOrder => x + y + z;
   double get renderX => (x - y) * 0.5;
   double get renderY => ((y + x) * 0.5) - z;

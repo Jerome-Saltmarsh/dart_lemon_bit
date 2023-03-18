@@ -523,7 +523,6 @@ class RendererParticles extends Renderer {
     );
   }
 
-
   @override
   void updateFunction() {
     while (index < total) {
@@ -538,8 +537,9 @@ class RendererParticles extends Renderer {
       if (dstY > Engine.Screen_Bottom + 50) continue;
       if (!particle.nodePerceptible) continue;
 
-      order = particle.renderOrder;
+      order = particle.sortOrder;
       orderZ = particle.indexZ;
+      orderRowColumn = particle.indexRow + particle.indexColumn;
       index--;
       return;
     }

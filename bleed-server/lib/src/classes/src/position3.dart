@@ -11,7 +11,7 @@ class Position3 with Position {
   int get indexZ => z ~/ Node_Size_Half;
   double get renderX => (x - y) * 0.5;
   double get renderY => ((y + x) * 0.5) - z;
-  double get order => (y + x);
+  double get order => (y + x + z);
 
   Position3 set({double? x, double? y, double? z}){
      if (x != null) this.x = x;
@@ -42,10 +42,18 @@ class Position3 with Position {
   }
 
   static bool compare(Position3 a, Position3 b){
+    final aRowColumn = a.indexRow + a.indexColumn;
+    final bRowColumn = b.indexRow + b.indexColumn;
+
+    if (aRowColumn > bRowColumn) return false;
+    if (aRowColumn < bRowColumn) return true;
+
     final aIndexZ = a.indexZ;
     final bIndexZ = b.indexZ;
+
     if (aIndexZ > bIndexZ) return false;
     if (aIndexZ < bIndexZ) return true;
+
     return a.order < b.order;
   }
 
