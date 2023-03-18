@@ -150,6 +150,7 @@ abstract class Game {
     required this.gameType,
     required this.options,
   }) {
+    Position3.sort(gameObjects);
     engine.onGameCreated(this); /// TODO Illegal external scope reference
     gameObjectId = scene.gameObjects.length;
     customInit();
@@ -1250,7 +1251,7 @@ abstract class Game {
     updateProjectiles(); // called twice to fix collision detection
     updateProjectiles(); // called twice to fix collision detection
     updateCharacterFrames();
-    sortGameObjects();
+    sortColliders();
   }
 
   void performJob(int timer, Function action){
@@ -1376,6 +1377,7 @@ abstract class Game {
   }
 
   void updateGameObjects() {
+    var sortRequired = false;
     for (final gameObject in gameObjects) {
       if (!gameObject.active){
         if (!gameObject.available) {
@@ -1386,6 +1388,7 @@ abstract class Game {
       }
       if (gameObject.positionDirty) {
         gameObject.dirty = true;
+        sortRequired = true;
       }
       if (!gameObject.dirty) continue;
       gameObject.dirty = false;
@@ -1393,6 +1396,10 @@ abstract class Game {
       for (final player in players) {
          player.writeGameObject(gameObject);
       }
+    }
+
+    if (sortRequired){
+      Position3.sort(gameObjects);
     }
   }
 
@@ -1745,7 +1752,7 @@ abstract class Game {
     }
   }
 
-  void sortGameObjects() {
+  void sortColliders() {
     Position3.sort(characters);
     Position3.sort(projectiles);
   }

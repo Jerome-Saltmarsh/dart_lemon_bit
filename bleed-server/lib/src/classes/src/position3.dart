@@ -41,6 +41,15 @@ class Position3 with Position {
     return ((xDiff * xDiff) + (yDiff * yDiff) + (zDiff * zDiff)) <= radius * radius;
   }
 
+  static bool compare(Position3 a, Position3 b){
+    final aIndexZ = a.indexZ;
+    final bIndexZ = b.indexZ;
+    if (aIndexZ > bIndexZ) return false;
+    if (aIndexZ < bIndexZ) return true;
+    return a.order < b.order;
+  }
+
+
   /// FUNCTIONS
   ///
   static void sort(List<Position3> items) {
@@ -52,7 +61,7 @@ class Position3 with Position {
       var element = items[pos];
       while (min < max) {
         var mid = min + ((max - min) >> 1);
-        if (element.order <= items[mid].order) {
+        if (compare(element, items[mid])) {
           max = mid;
         } else {
           min = mid + 1;
@@ -62,5 +71,4 @@ class Position3 with Position {
       items[min] = element;
     }
   }
-
 }

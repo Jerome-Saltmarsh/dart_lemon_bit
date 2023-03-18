@@ -25,20 +25,6 @@ abstract class Renderer {
     return "$order: $order, orderZ: $orderZ, index: $_index, total: $total";
   }
 
-  Renderer compare(Renderer that){
-    if (orderZ < that.orderZ) return this;
-    if (orderZ > that.orderZ) return that;
-    if (order < that.order) return this;
-    return that;
-  }
-
-  bool before(Renderer that){
-    final thatOrderZ = that.orderZ;
-    // if (orderZ < thatOrderZ) return true;
-    if (orderZ > thatOrderZ) return false;
-    return order < that.order;
-  }
-
   void set index(int value){
     _index = value;
     if (value >= total) {
@@ -50,7 +36,6 @@ abstract class Renderer {
     index = total;
     remaining = false;
   }
-
 
   void renderNext() {
     renderFunction();

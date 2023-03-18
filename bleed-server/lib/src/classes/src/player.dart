@@ -1051,10 +1051,7 @@ class Player extends Character with ByteWriter {
       if (character.renderY < screenTop) continue;
       if (character.renderX < screenLeft) continue;
       if (character.renderX > screenRight) continue;
-      if (character.renderY > screenBottom) {
-        writeByte(END);
-        return;
-      }
+      if (character.renderY > screenBottom) continue;
 
       if (character.buffInvisible && !Collider.onSameTeam(this, character)){
         continue;
