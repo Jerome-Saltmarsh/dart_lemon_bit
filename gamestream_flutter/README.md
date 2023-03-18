@@ -7,17 +7,8 @@ navigate to next method: ctrl + shift + up / down arrows
 ctrl + w            : minimal mode
 ctrl + shift + e    : view recent changes
 
-[FUTURE IDEAS]
+[IDEAS]
 [ ] tree can only be chopped with axe
-
-[NEXT GAME IDEAS]
-[ ] find keys, which can unlock chests, chests provide treasures
-[ ] metal crates can only be smashed with hammer
-[ ] power invisibility
-[ ] power teleportation
-[ ] power shield
-[ ] power stun pulse
-[ ] power grenade
 [ ] talent type explosions do not cause friendly fire
 [ ] talent type instant draw weapon
 [ ] talent type collecting gems also heals health
@@ -26,12 +17,14 @@ ctrl + shift + e    : view recent changes
 [ ] talent type sniper bullets pass through enemies
 [ ] talent type perfect accuracy
 [ ] talent type shock half duration
+[ ] find keys, which can unlock chests, chests provide treasures
+[ ] metal crates can only be smashed with hammer
 
-[GAME IDEAS]
+[FUTURE-TASKS]
 [ ] weapon stun taser
 [ ] weapon shield
 
-[TASKS]
+[RELEASE-TASKS]
 [ ] feature teleport does damage to things in between
 [ ] improve sprite bazooka
 [ ] improve sprite sniper rifle
