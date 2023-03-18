@@ -174,7 +174,7 @@ class RendererNodes extends Renderer {
     currentNodeType = GameNodes.nodeTypes[currentNodeIndex];
     order = ((row + column) * Node_Size) + Node_Size_Half;
     orderZ = currentNodeZ;
-    orderRowColumn = row + column;
+    indexSum = row + column;
   }
 
   static int getIndex(int row, int column, int z){

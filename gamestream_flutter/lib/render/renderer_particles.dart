@@ -539,7 +539,7 @@ class RendererParticles extends Renderer {
 
       order = particle.sortOrder;
       orderZ = particle.indexZ;
-      orderRowColumn = particle.indexRow + particle.indexColumn;
+      indexSum = particle.indexSum;
       index--;
       return;
     }

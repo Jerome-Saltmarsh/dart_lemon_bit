@@ -194,7 +194,7 @@ class RendererGameObjects extends Renderer {
 
     order = gameObject.sortOrder;
     orderZ = gameObject.indexZ;
-    orderRowColumn = gameObject.indexRow + gameObject.indexColumn;
+    indexSum = gameObject.indexSum;
   }
 
   static double getRenderYBouncing(Vector3 v3) =>

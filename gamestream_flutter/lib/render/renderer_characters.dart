@@ -17,7 +17,7 @@ class RendererCharacters extends Renderer {
       character = ServerState.characters[index];
       order = character.sortOrder;
       orderZ = character.indexZ;
-      orderRowColumn = character.indexColumn + character.indexRow;
+      indexSum = character.indexSum;
       if (character.nodePerceptible) break;
       index++;
     }

@@ -80,7 +80,7 @@ class GameRender {
 
   static void checkNext(Renderer renderer){
     if (!renderer.remaining) return;
-    if (renderer.orderRowColumn > next.orderRowColumn) return;
+    if (renderer.indexSum > next.indexSum) return;
     if (renderer.orderZ > next.orderZ) return;
     // if (renderer.order > next.order) return;
     next = renderer;
