@@ -76,6 +76,15 @@ class GameRender {
         y: GamePlayer.aimTargetPosition.renderY - 55);
   }
 
+  static Renderer next = rendererNodes;
+
+  static void checkNext(Renderer renderer){
+    if (!renderer.remaining) return;
+    if (renderer.orderZ > next.orderZ) return;
+    if (renderer.order > next.order) return;
+    next = renderer;
+  }
+
   static void render3D() {
     totalRemaining = 0;
     resetRenderOrder(rendererNodes);
@@ -85,22 +94,15 @@ class GameRender {
     resetRenderOrder(rendererProjectiles);
 
     if (totalRemaining == 0) return;
+    next = rendererNodes;
     while (true) {
-      Renderer next = rendererNodes;
-      if (rendererCharacters.remaining && rendererCharacters.before(next)){
-        next = rendererCharacters;
-      }
-      if (rendererProjectiles.remaining && rendererProjectiles.before(next)){
-        next = rendererProjectiles;
-      }
-      if (rendererGameObjects.remaining && rendererGameObjects.before(next)){
-        next = rendererGameObjects;
-      }
-      if (rendererParticles.remaining && rendererParticles.before(next)){
-        next = rendererParticles;
-      }
-      if (next.remaining){
+      checkNext(rendererCharacters);
+      checkNext(rendererProjectiles);
+      checkNext(rendererGameObjects);
+      checkNext(rendererParticles);
+      if (next.remaining) {
         next.renderNext();
+        next = rendererNodes;
         continue;
       }
       totalRemaining--;
