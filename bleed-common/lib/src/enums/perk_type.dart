@@ -7,6 +7,7 @@ class PerkType {
   static const Speed  = 3;
   
   static const values = [
+    None,
     Health,
     Energy,
     Speed,

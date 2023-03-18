@@ -26,11 +26,6 @@ class GameCombat extends Game {
   static const Player_Run_Speed = 1.0;
   static const Player_Run_Speed_Perk = 1.2;
 
-  static const GameObjects_Spawnable = [
-    ItemType.Resource_Credit,
-    ItemType.Weapon_Thrown_Grenade,
-  ];
-
   static const GameObjects_Respawnable = [
     ItemType.GameObjects_Crate_Wooden,
     ItemType.GameObjects_Barrel_Explosive,
@@ -207,26 +202,6 @@ class GameCombat extends Game {
     playerRunInDirection(player, direction);
   }
 
-  void spawnGrenadeAtPosition(Position3 position){
-    final spawnedGameObject = spawnGameObjectAtPosition(
-      position: position,
-      type: ItemType.Weapon_Thrown_Grenade,
-    );
-
-    spawnedGameObject
-      ..fixed         = true
-      ..collectable   = true
-      ..physical      = false
-      ..interactable  = false
-      ..hitable       = false
-      ..gravity       = false
-    ;
-
-    performScript(timer: GameObject_Duration)
-        .writeGameObjectDeactivate(spawnedGameObject)
-    ;
-  }
-
   @override
   void customOnPlayerDead(Player player) {
     player.powerCooldown = 0;
@@ -371,7 +346,7 @@ class GameCombat extends Game {
     }
 
     if (GameObjects_Spawn_Loot.contains(gameObject.type)){
-      spawnGrenadeAtPosition(gameObject);
+       spawnGemAtIndex(scene.getNodeIndexV3(gameObject));
     }
   }
 
@@ -476,7 +451,7 @@ class GameCombat extends Game {
   @override
   void customOnPlayerJoined(Player player) {
     writePlayerScoresAll();
-    player.perkType = PerkType.Health;
+    player.perkType = PerkType.None;
     player.powerType = PowerType.Bomb;
     player.weaponPrimary = ItemType.Weapon_Ranged_Plasma_Pistol;
     player.weaponSecondary = ItemType.Weapon_Melee_Crowbar;

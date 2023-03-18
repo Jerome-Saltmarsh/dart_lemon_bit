@@ -212,7 +212,7 @@ class GameUI {
     return buildFullscreen(
       child: buildDialogUIControl(
         child: Container(
-          width: 700,
+          width: 600,
           padding: GameStyle.Padding_6,
           color: GameStyle.Container_Color,
           child: Column(
@@ -226,11 +226,10 @@ class GameUI {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  width(100),
                   columnSelectWeaponLeft,
                   columnPowers,
                   columnSelectWeaponRight,
-                  columnPerk,
+                  // columnPerk,
                 ],
               ),
               height64,

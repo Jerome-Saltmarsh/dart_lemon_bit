@@ -30,14 +30,13 @@ ctrl + shift + e    : view recent changes
 [GAME IDEAS]
 [ ] weapon stun taser
 [ ] weapon shield
-[ ] perk type run faster
-[ ] perk type extra health      - Patient       - health
-[ ] perk type extra energy      - Brutal        - energy
-[ ] perk type run faster        - Nimble        - speed
-[ ] perk type power quickly     - Wise          - power
 
 [TASKS]
-[ ] character creation window
+[ ] feature teleport does damage to things in between
+[ ] improve sprite bazooka
+[ ] improve sprite sniper rifle
+[ ] feature lightning particle on shocked targets 
+[ ] fix render order bug
 
 17.03.2023
 [x] power invisible
