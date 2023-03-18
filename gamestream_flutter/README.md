@@ -32,6 +32,9 @@ ctrl + shift + e    : view recent changes
 [ ] feature lightning particle on shocked targets 
 [ ] fix render order bug
 
+[ ] client fix gameobject order
+[ ] client fix particle order
+
 17.03.2023
 [x] power invisible
 [x] power stun

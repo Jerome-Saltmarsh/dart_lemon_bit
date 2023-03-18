@@ -133,6 +133,7 @@ class ClientState {
     }
   }
 
+
   static void sortParticles() {
     sortParticlesActive();
     countTotalActiveParticles();
@@ -149,6 +150,18 @@ class ClientState {
   }
 
   static bool compareRenderOrder(Vector3 a, Vector3 b) {
+    final aRowColumn = a.indexRow + a.indexColumn;
+    final bRowColumn = b.indexRow + b.indexColumn;
+
+    if (aRowColumn > bRowColumn) return false;
+    if (aRowColumn < bRowColumn) return true;
+
+    final aIndexZ = a.indexZ;
+    final bIndexZ = b.indexZ;
+
+    if (aIndexZ > bIndexZ) return false;
+    if (aIndexZ < bIndexZ) return true;
+
     return a.sortOrder < b.sortOrder;
   }
 
