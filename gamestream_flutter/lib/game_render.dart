@@ -77,12 +77,16 @@ class GameRender {
   }
 
   static Renderer next = rendererNodes;
+  static var nextOrderZ = 0;
+  static var nextOrder = 0.0;
 
   static void checkNext(Renderer renderer){
     if (!renderer.remaining) return;
-    if (renderer.orderZ > next.orderZ) return;
-    if (renderer.order > next.order) return;
+    if (renderer.orderZ > nextOrderZ) return;
+    if (renderer.order > nextOrder) return;
     next = renderer;
+    nextOrderZ = next.orderZ;
+    nextOrder = next.order;
   }
 
   static void render3D() {
@@ -95,6 +99,9 @@ class GameRender {
 
     if (totalRemaining == 0) return;
     next = rendererNodes;
+    nextOrderZ = next.orderZ;
+    nextOrder = next.order;
+
     while (true) {
       checkNext(rendererCharacters);
       checkNext(rendererProjectiles);
@@ -103,6 +110,8 @@ class GameRender {
       if (next.remaining) {
         next.renderNext();
         next = rendererNodes;
+        nextOrderZ = next.orderZ;
+        nextOrder = next.order;
         continue;
       }
       totalRemaining--;
