@@ -30,10 +30,9 @@ ctrl + shift + e    : view recent changes
 [ ] improve sprite bazooka
 [ ] improve sprite sniper rifle
 [ ] feature lightning particle on shocked targets 
-[ ] fix render order bug
 
-[ ] client fix gameobject order
-[ ] client fix particle order
+18.03.2023
+[x] fix render order bug
 
 17.03.2023
 [x] power invisible
