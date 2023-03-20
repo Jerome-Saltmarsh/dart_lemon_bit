@@ -172,9 +172,8 @@ class RendererNodes extends Renderer {
     currentNodeDstX = (row - column) * Node_Size_Half;
     currentNodeDstY = ((row + column) * Node_Size_Half) - (currentNodeZ * Node_Height);
     currentNodeType = GameNodes.nodeTypes[currentNodeIndex];
-    order = ((row + column) * Node_Size) + Node_Size_Half;
     orderZ = currentNodeZ;
-    indexSum = row + column;
+    orderRowColumn = row + column;
   }
 
   static int getIndex(int row, int column, int z){
@@ -197,7 +196,6 @@ class RendererNodes extends Renderer {
     offscreenNodes = 0;
     onscreenNodes = 0;
     nodesMinZ = 0;
-    order = 0;
     orderZ = 0;
     currentNodeZ = 0;
     nodesGridTotalColumnsMinusOne = GameNodes.totalColumns - 1;

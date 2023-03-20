@@ -1,8 +1,7 @@
 abstract class Renderer {
   var _index = 0;
   var total = 0;
-  var order = 0.0;
-  var indexSum = 0;
+  var orderRowColumn = 0;
   var orderZ = 0;
   var remaining = true;
 
@@ -19,11 +18,6 @@ abstract class Renderer {
     if (remaining){
       updateFunction();
     }
-  }
-
-  @override
-  String toString(){
-    return "$order: $order, orderZ: $orderZ, index: $_index, total: $total";
   }
 
   void set index(int value){

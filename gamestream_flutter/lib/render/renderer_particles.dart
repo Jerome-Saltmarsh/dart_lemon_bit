@@ -537,9 +537,8 @@ class RendererParticles extends Renderer {
       if (dstY > Engine.Screen_Bottom + 50) continue;
       if (!particle.nodePerceptible) continue;
 
-      order = particle.sortOrder;
       orderZ = particle.indexZ;
-      indexSum = particle.indexSum;
+      orderRowColumn = particle.indexSum;
       index--;
       return;
     }
