@@ -125,9 +125,9 @@ class GameCanvas {
         GamePlayer.energyPercentage,
     );
 
-    if (ClientState.debugMode.value){
-      debugRenderIsland();
-    }
+    // if (ClientState.debugMode.value){
+    //   debugRenderIsland();
+    // }
   }
 
   static void debugRenderHeightMapValues() {
