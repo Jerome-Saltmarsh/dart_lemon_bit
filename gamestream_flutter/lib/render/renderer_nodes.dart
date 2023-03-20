@@ -173,7 +173,7 @@ class RendererNodes extends Renderer {
     currentNodeDstY = ((row + column) * Node_Size_Half) - (currentNodeZ * Node_Height);
     currentNodeType = GameNodes.nodeTypes[currentNodeIndex];
     orderZ = currentNodeZ;
-    orderRowColumn = row + column;
+    orderRowColumn = (row + column).toDouble() - 0.5;
   }
 
   static int getIndex(int row, int column, int z){

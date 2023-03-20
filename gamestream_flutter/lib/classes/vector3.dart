@@ -11,7 +11,7 @@ class Vector3 with Position {
   int get indexZ => z ~/ Node_Size_Half;
   int get indexRow => x ~/ Node_Size;
   int get indexColumn => y ~/ Node_Size;
-  int get indexSum => indexRow + indexColumn;
+  double get indexSum => (indexRow + indexColumn).toDouble();
   int get nodeIndex => GameQueries.getNodeIndex(x, y, z);
   int get indexProjection => nodeIndex % GameNodes.projection;
 

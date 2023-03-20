@@ -1,7 +1,7 @@
 abstract class Renderer {
   var _index = 0;
   var total = 0;
-  var orderRowColumn = 0;
+  var orderRowColumn = 0.0;
   var orderZ = 0;
   var remaining = true;
 
