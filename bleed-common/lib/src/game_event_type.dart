@@ -38,5 +38,5 @@ class GameEventType {
   static const Melee_Attack_Performed   = 79;
   static const Teleport_Start           = 80;
   static const Teleport_End             = 81;
-  static const Power_Used               = 81;
+  static const Power_Used               = 82;
 }

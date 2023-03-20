@@ -8,23 +8,27 @@ import 'package:lemon_math/library.dart';
 class GameCombat extends Game {
 
   // constants
-  static const Max_Grenades = 3;
-  static const GameObject_Duration = 500;
+  static const GameObject_Duration      = 500;
   static const GameObject_Respawn_Duration = 1500;
-  static const AI_Respawn_Duration = 300;
-  static const Chance_Of_Item_Bombs = 0.1;
-  static const Chance_Of_Item_Gem = 0.5;
-  static const Credits_Collected = 1;
-  static const Health_Gained_Per_Gem = 2;
-  static const Energy_Gained_Per_Gem = 2;
-  static const Credits_Per_Kill = 10;
-  static const Max_Players = 16;
-  static const Player_Health = 20;
-  static const Player_Health_Perk = 24;
-  static const Player_Energy = 20;
-  static const Player_Energy_Perk = 24;
-  static const Player_Run_Speed = 1.0;
-  static const Player_Run_Speed_Perk = 1.2;
+  static const AI_Respawn_Duration      = 300;
+  static const Chance_Of_Item_Bombs     = 0.1;
+  static const Chance_Of_Item_Gem       = 0.5;
+  static const Credits_Collected        = 1;
+  static const Health_Gained_Per_Gem    = 2;
+  static const Energy_Gained_Per_Gem    = 2;
+  static const Credits_Per_Kill         = 10;
+  static const Max_Players              = 16;
+  static const Player_Health            = 20;
+  static const Player_Health_Perk       = 24;
+  static const Player_Energy            = 20;
+  static const Player_Energy_Perk       = 24;
+  static const Player_Run_Speed         = 1.0;
+  static const Player_Run_Speed_Perk    = 1.2;
+  static const Power_Duration_Invisible = Engine.Frames_Per_Second * 6;
+  static const Power_Duration_Shield    = Engine.Frames_Per_Second * 4;
+  static const Power_Duration_Stun      = Engine.Frames_Per_Second * 3;
+
+  static const Power_Range_Stun         = 125.0;
 
   static const GameObjects_Respawnable = [
     ItemType.GameObjects_Crate_Wooden,
@@ -283,17 +287,6 @@ class GameCombat extends Game {
   void customOnPlayerInteractWithGameObject(Player player, GameObject gameObject){
     final gameObjectType = gameObject.type;
 
-    if (gameObjectType == ItemType.Weapon_Thrown_Grenade) {
-      if (player.grenades >= Max_Grenades) {
-        player.writeInfo('Grenades Full');
-        return;
-      }
-      player.grenades = Max_Grenades;
-      player.writePlayerEventItemAcquired(gameObjectType);
-      deactivateCollider(gameObject);
-      return;
-    }
-
     if (player.weaponPrimary == gameObjectType) {
       player.writeError('already equipped');
       return;
@@ -381,27 +374,6 @@ class GameCombat extends Game {
   @override
   void customOnPlayerCollectGameObject(Player player, GameObject gameObject) {
     if (!gameObject.collectable) return;
-
-    if (gameObject.type == ItemType.Consumables_Potion_Red) {
-      if (player.health >= player.maxHealth) return;
-      player.health = player.maxHealth;
-      player.writeInfo('Full Health');
-      player.writePlayerEventItemTypeConsumed(gameObject.type);
-      deactivateCollider(gameObject);
-      return;
-    }
-
-    if (gameObject.type == ItemType.Weapon_Thrown_Grenade) {
-
-      if (player.grenades >= Max_Grenades) {
-        player.writeInfo('Max Grenades');
-        return;
-      }
-      player.grenades++;
-      player.writePlayerEventItemAcquired(gameObject.type);
-      deactivateCollider(gameObject);
-      return;
-    }
 
     if (gameObject.type == ItemType.Resource_Credit) {
       player.credits += Credits_Collected;
@@ -548,29 +520,28 @@ class GameCombat extends Game {
         break;
       case PowerType.Shield:
         player.buffInvincible = true;
-        player.buffDuration = Engine.Frames_Per_Second * 4;
+        player.buffDuration = Power_Duration_Shield;
         break;
       case PowerType.Invisible:
         player.buffInvisible = true;
-        player.buffDuration = Engine.Frames_Per_Second * 4;
+        player.buffDuration = Power_Duration_Invisible;
         for (final character in characters) {
           if (character.target != player) continue;
           clearCharacterTarget(character);
         }
         break;
       case PowerType.Stun:
-        const range = 150.0;
-        const duration = Engine.Frames_Per_Second * 3;
+        const duration = Power_Duration_Stun;
         final playerX = player.x;
         final playerY = player.y;
         final playerZ = player.z;
         for (final character in characters) {
           final distanceX = (playerX - character.x).abs();
-          if (distanceX > range) continue;
+          if (distanceX > Power_Range_Stun) continue;
           final distanceY = (playerY - character.y).abs();
-          if (distanceY > range) continue;
+          if (distanceY > Power_Range_Stun) continue;
           final distanceZ = (playerZ - character.z).abs();
-          if (distanceZ > range) continue;
+          if (distanceZ > Power_Range_Stun) continue;
           if (Collider.onSameTeam(character, player)) continue;
           setCharacterStateStunned(character, duration: duration);
         }
