@@ -647,10 +647,12 @@ class GameUI {
 
   static Widget buildStackPlay(int? gameType) => StackFullscreen(children: [
         buildWatchBool(ClientState.window_visible_player_creation, buildWindowCharacterCreation),
-        Positioned(
-            top: GameStyle.Default_Padding,
-            left: GameStyle.Default_Padding,
-            child: buildPlayersScore(),
+        buildWatchBool(ClientState.control_visible_scoreboard, () =>
+          Positioned(
+              top: GameStyle.Default_Padding,
+              left: GameStyle.Default_Padding,
+              child: buildPlayersScore(),
+          )
         ),
         buildWatchBool(ClientState.control_visible_player_weapons, () =>
           Positioned(

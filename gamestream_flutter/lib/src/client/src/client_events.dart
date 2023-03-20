@@ -75,8 +75,9 @@ class ClientEvents {
       return;
     }
 
-    if (key == KeyCode.Tab){
-
+    if (key == KeyCode.Tab) {
+      GameActions.actionToggleEdit();
+      return;
     }
 
     if (GameState.playMode) {

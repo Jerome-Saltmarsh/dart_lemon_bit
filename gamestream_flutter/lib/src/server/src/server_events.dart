@@ -10,7 +10,9 @@ class ServerEvents {
   static void onChangedGameType(int? value){
     if (value == null) return;
     ClientState.edit.value = value == GameType.Editor;
+
     ClientState.control_visible_player_weapons.value = value == GameType.Combat;
+    ClientState.control_visible_scoreboard.value = value == GameType.Combat;
 
     if (!Engine.isLocalHost){
       Engine.fullScreenEnter();
