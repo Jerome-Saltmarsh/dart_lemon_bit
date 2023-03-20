@@ -652,13 +652,15 @@ class GameUI {
             left: GameStyle.Default_Padding,
             child: buildPlayersScore(),
         ),
-        Positioned(
-          child: Container(
-            width: Engine.screen.width,
-            alignment: Alignment.center,
-            child: buildRowPlayerWeapons(),
-          ),
-          bottom: GameStyle.Default_Padding,
+        buildWatchBool(ClientState.control_visible_player_weapons, () =>
+          Positioned(
+            child: Container(
+              width: Engine.screen.width,
+              alignment: Alignment.center,
+              child: buildRowPlayerWeapons(),
+            ),
+            bottom: GameStyle.Default_Padding,
+          )
         ),
       ]);
 

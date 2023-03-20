@@ -30,6 +30,8 @@ class ClientState {
   static final window_visible_menu            = WatchBool(false);
   static final window_visible_player_creation = WatchBool(false);
 
+  static final control_visible_player_weapons = WatchBool(false);
+
   static final triggerAlarmNoMessageReceivedFromServer = Watch(false);
 
   static final itemGroup = Watch(ItemGroup.Primary_Weapon);
