@@ -91,7 +91,7 @@ class GameUI {
       ItemType.Weapon_Ranged_Sniper_Rifle,
       ItemType.Weapon_Ranged_Flamethrower,
       ItemType.Weapon_Ranged_Teleport,
-      ItemType.Weapon_Melee_Knife,
+      // ItemType.Weapon_Melee_Knife,
       ItemType.Weapon_Melee_Crowbar,
       ItemType.Weapon_Melee_Sword,
     ];

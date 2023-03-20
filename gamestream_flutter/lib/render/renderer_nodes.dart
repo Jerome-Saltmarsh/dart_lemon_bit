@@ -258,8 +258,7 @@ class RendererNodes extends Renderer {
     GameNodes.resetNodeAmbientStack();
     GameState.applyEmissions();
 
-
-    highlightCharacterNearMouse();
+    // highlightCharacterNearMouse();
   }
 
   static void updateTransparencyGrid() {
@@ -330,34 +329,42 @@ class RendererNodes extends Renderer {
       return;
     }
 
+
     playerInsideIsland = GamePlayer.indexZ < height;
 
     if (!playerInsideIsland) {
-      for (var z = GamePlayer.indexZ; z <= GamePlayer.indexZ + 1; z++) {
-
-        var projectionRow = GamePlayer.indexRow;
-        var projectionColumn = GamePlayer.indexColumn;
-        var projectionZ = z;
-
-        while (true) {
-          projectionZ += 2;
-          projectionColumn++;
-          projectionRow++;
-          if (projectionZ >= GameNodes.totalZ) return;
-          if (projectionColumn >= GameNodes.totalColumns) return;
-          if (projectionRow >= GameNodes.totalRows) return;
-          final projectionIndex = (projectionRow * GameNodes.totalColumns) + projectionColumn;
-          final projectionHeight = GameNodes.heightMap[projectionIndex];
-          if (projectionZ > projectionHeight) continue;
-          playerInsideIsland = true;
-          zMin = max(GamePlayer.indexZ - 1, 0);
-          visit2D(projectionIndex);
-          return;
-        }
-      }
+      ensureIndexPerceptible(GamePlayer.nodeIndex);
     }
+
+    if (GameMouse.inBounds){
+      ensureIndexPerceptible(GameMouse.nodeIndex);
+    }
+
     zMin = max(GamePlayer.indexZ - 1, 0);
     visit2D(GamePlayer.areaNodeIndex);
+  }
+
+  static void ensureIndexPerceptible(int index){
+    var projectionRow     = GameNodes.getIndexRow(index);
+    var projectionColumn  = GameNodes.getIndexColumn(index);
+    var projectionZ       = GameNodes.getIndexZ(index);
+
+    while (true) {
+      projectionZ += 2;
+      projectionColumn++;
+      projectionRow++;
+      if (projectionZ >= GameNodes.totalZ) return;
+      if (projectionColumn >= GameNodes.totalColumns) return;
+      if (projectionRow >= GameNodes.totalRows) return;
+      final projectionIndex =
+          (projectionRow * GameNodes.totalColumns) + projectionColumn;
+      final projectionHeight = GameNodes.heightMap[projectionIndex];
+      if (projectionZ > projectionHeight) continue;
+      playerInsideIsland = true;
+      zMin = max(GamePlayer.indexZ - 1, 0);
+      visit2D(projectionIndex);
+      return;
+    }
   }
 
   static void addVisible3D(int i){

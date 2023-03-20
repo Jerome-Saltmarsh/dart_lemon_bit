@@ -9,4 +9,8 @@ class GameMouse {
   static int get nodeIndex => GameQueries.getNodeIndex(positionX, positionY, positionZ);
   static double get playerAngle => Engine.calculateAngleBetween(GamePlayer.position.x, GamePlayer.position.y, positionX, positionY);
   static double get playerDistance => Engine.calculateDistance(GamePlayer.position.x, GamePlayer.position.y, positionX, positionY);
+
+  static bool get inBounds {
+    return !GameState.outOfBoundsXYZ(positionX, positionY, positionZ);
+  }
 }

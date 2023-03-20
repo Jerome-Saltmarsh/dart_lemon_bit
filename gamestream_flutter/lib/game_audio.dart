@@ -1,6 +1,5 @@
 
 import 'package:gamestream_flutter/classes/audio_single.dart';
-import 'package:gamestream_flutter/lemon_cache/cache.dart';
 
 import 'library.dart';
 
@@ -9,8 +8,7 @@ class GameAudio {
 
   static void toggleMuted() => muted.value = !muted.value;
 
-  static final muted = Cache(key: 'game-audio-muted', value: false, onChanged: (bool value){
-    print("GameAudio.mutedChanged($value)");
+  static final muted = Watch(false, onChanged: (bool value){
     if (value){
       for (final audioSource in audioLoops) {
         audioSource.setVolume(0);
@@ -22,6 +20,19 @@ class GameAudio {
       }
     }
   });
+  // static final muted = Cache(key: 'game-audio-muted', value: false, onChanged: (bool value){
+  //   print("GameAudio.mutedChanged($value)");
+  //   if (value){
+  //     for (final audioSource in audioLoops) {
+  //       audioSource.setVolume(0);
+  //       audioSource.audioPlayer.pause();
+  //     }
+  //   } else {
+  //     for (final audioSource in audioLoops) {
+  //       audioSource.audioPlayer.play();
+  //     }
+  //   }
+  // });
 
   static var nextCharacterNoise = 100;
   static var nextRandomSound = 0;

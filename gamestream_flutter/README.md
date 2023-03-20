@@ -31,6 +31,7 @@ ctrl + shift + e    : view recent changes
 [ ] improve sprite bazooka
 
 20.03.2023
+[x] feature show perception where mouse is
 [x] feature lightning particle power shock used
 [x] improve render order
 
