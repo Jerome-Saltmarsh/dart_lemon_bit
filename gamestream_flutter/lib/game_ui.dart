@@ -104,7 +104,13 @@ class GameUI {
         text('space-bar', size: titleFontSize, color: titleFontColor, italic: true),
         height12,
         Column(
-          children: PowerType.values.map((int powerType){
+          children: const <int> [
+            PowerType.Bomb,
+            PowerType.Stun,
+            PowerType.Invisible,
+            PowerType.Shield,
+            PowerType.Teleport,
+          ].map((int powerType){
             return onPressed(
               action: () => GameNetwork.sendClientRequest(ClientRequest.Select_Power, powerType),
               child: Container(

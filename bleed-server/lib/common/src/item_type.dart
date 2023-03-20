@@ -478,8 +478,8 @@ class ItemType {
   }[value] ?? 0;
 
   static double getMeleeAttackRadius(int value) => const <int, double> {
-    // Weapon_Ranged_Shotgun: 50,
-    // Empty: 50,
+    Weapon_Melee_Sword: 120,
+    Weapon_Melee_Crowbar: 100,
   }[value] ?? 80;
 
   static double getRange(int value) => const <int, double> {
@@ -517,7 +517,7 @@ class ItemType {
       Weapon_Thrown_Grenade: 40,
       Weapon_Ranged_Shotgun: 40,
       Weapon_Ranged_Pistol: 45,
-      Weapon_Ranged_Plasma_Pistol: 20,
+      Weapon_Ranged_Plasma_Pistol: 16,
       Weapon_Ranged_Plasma_Rifle: 5,
       Weapon_Ranged_Handgun: 20,
       Weapon_Ranged_Revolver: 40,

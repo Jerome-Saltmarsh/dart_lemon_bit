@@ -538,7 +538,7 @@ abstract class Game {
       ItemType.Weapon_Ranged_Shotgun: 5,
       ItemType.Weapon_Ranged_Plasma_Pistol: 2,
       ItemType.Weapon_Ranged_Bazooka: 10,
-      ItemType.Weapon_Ranged_Plasma_Rifle: 1,
+      ItemType.Weapon_Ranged_Plasma_Rifle: 2,
       ItemType.Weapon_Ranged_Teleport: 10,
       ItemType.Weapon_Melee_Knife: 5,
       ItemType.Weapon_Melee_Sword: 8,
@@ -575,10 +575,6 @@ abstract class Game {
         final cost = getCharacterWeaponEnergyCost(character);
         if (character.energy < cost) {
           character.writeError('Insufficient Energy');
-          return;
-        }
-        if (weaponType == ItemType.Empty){
-          characterAttackMelee(character);
           return;
         }
         character.energy -= cost;
@@ -3226,7 +3222,7 @@ abstract class Game {
       ItemType.Weapon_Ranged_Smg          : 02,
       ItemType.Weapon_Ranged_Machine_Gun  : 02,
       ItemType.Weapon_Ranged_Rifle        : 04,
-      ItemType.Weapon_Ranged_Sniper_Rifle : 10,
+      ItemType.Weapon_Ranged_Sniper_Rifle : 12,
       ItemType.Weapon_Ranged_Musket       : 04,
       ItemType.Weapon_Ranged_Bazooka      : 10,
       ItemType.Weapon_Ranged_Flamethrower : 01,
@@ -3235,14 +3231,14 @@ abstract class Game {
       ItemType.Weapon_Ranged_Revolver     : 06,
       ItemType.Weapon_Ranged_Desert_Eagle : 08,
       ItemType.Weapon_Ranged_Pistol       : 07,
-      ItemType.Weapon_Ranged_Plasma_Pistol: 04,
+      ItemType.Weapon_Ranged_Plasma_Pistol: 05,
       ItemType.Weapon_Ranged_Plasma_Rifle : 02,
       ItemType.Weapon_Ranged_Shotgun      : 04,
       ItemType.Weapon_Melee_Hammer        : 03,
       ItemType.Weapon_Melee_Pickaxe       : 05,
       ItemType.Weapon_Melee_Knife         : 04,
       ItemType.Weapon_Melee_Crowbar       : 05,
-      ItemType.Weapon_Melee_Sword         : 10,
+      ItemType.Weapon_Melee_Sword         : 15,
       ItemType.Weapon_Melee_Axe           : 04,
     } [player.weaponType] ?? 0;
 

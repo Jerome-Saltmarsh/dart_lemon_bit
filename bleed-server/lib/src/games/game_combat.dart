@@ -154,7 +154,10 @@ class GameCombat extends Game {
         }
       }
 
-      if (!keyShiftDown && characterMeleeAttackTargetInRange(player)){
+      if (!ItemType.isTypeWeaponMelee(player.weaponPrimary)
+          && !keyShiftDown
+          && characterMeleeAttackTargetInRange(player)
+      ){
         player.weaponType = player.weaponPrimary;
         characterAttackMelee(player);
         return;
@@ -186,7 +189,10 @@ class GameCombat extends Game {
         }
       }
 
-      if (!keyShiftDown && characterMeleeAttackTargetInRange(player)) {
+      if (!ItemType.isTypeWeaponMelee(player.weaponSecondary)
+          && !keyShiftDown
+          && characterMeleeAttackTargetInRange(player)
+      ) {
         player.weaponType = player.weaponSecondary;
         characterAttackMelee(player);
         return;
