@@ -523,6 +523,17 @@ class GameCombat extends Game {
     player.writePlayerPower();
     player.writePlayerEvent(PlayerEvent.Power_Used);
 
+    for (final otherPlayer in players) {
+      otherPlayer.writeGameEvent(
+          type: GameEventType.Power_Used,
+          x: player.x,
+          y: player.y,
+          z: player.z,
+          angle: 0,
+      );
+      player.writeByte(player.powerType);
+    }
+
     switch (player.powerType) {
       case PowerType.Bomb:
         playerThrowGrenade(player);

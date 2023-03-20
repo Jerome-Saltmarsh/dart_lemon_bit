@@ -101,6 +101,9 @@ class GameEvents {
       case GameEventType.Explosion:
         onGameEventExplosion(x, y, z);
         return;
+      case GameEventType.Power_Used:
+        onGameEventPowerUsed(x, y, z, serverResponseReader.readByte());
+        break;
       case GameEventType.AI_Target_Acquired:
         final characterType = serverResponseReader.readByte();
         switch (characterType){
@@ -499,20 +502,20 @@ class GameEvents {
         GameAudio.buff_19();
         break;
       case PowerType.Stun:
-        GameAudio.debuff_4();
-        GameState.spawnParticle(
-            type: ParticleType.Lightning_Bolt,
-            x: GamePlayer.x,
-            y: GamePlayer.y,
-            z: GamePlayer.z,
-            duration: 10,
-            animation: true,
-        );
-        GameState.spawnParticleLightEmissionAmbient(
-            x: GamePlayer.x,
-            y: GamePlayer.y,
-            z: GamePlayer.z,
-        );
+        // GameAudio.debuff_4();
+        // GameState.spawnParticle(
+        //     type: ParticleType.Lightning_Bolt,
+        //     x: GamePlayer.x,
+        //     y: GamePlayer.y,
+        //     z: GamePlayer.z,
+        //     duration: 10,
+        //     animation: true,
+        // );
+        // GameState.spawnParticleLightEmissionAmbient(
+        //     x: GamePlayer.x,
+        //     y: GamePlayer.y,
+        //     z: GamePlayer.z,
+        // );
         break;
     }
   }
@@ -729,5 +732,26 @@ class GameEvents {
         }
         break;
     }
+  }
+
+  static void onGameEventPowerUsed(double x, double y, double z, int powerType) {
+      switch (powerType){
+        case PowerType.Stun:
+          GameAudio.debuff_4();
+          GameState.spawnParticle(
+            type: ParticleType.Lightning_Bolt,
+            x: GamePlayer.x,
+            y: GamePlayer.y,
+            z: GamePlayer.z,
+            duration: 10,
+            animation: true,
+          );
+          GameState.spawnParticleLightEmissionAmbient(
+            x: GamePlayer.x,
+            y: GamePlayer.y,
+            z: GamePlayer.z,
+          );
+          break;
+      }
   }
 }
