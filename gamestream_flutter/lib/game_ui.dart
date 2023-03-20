@@ -29,10 +29,6 @@ class GameUI {
   static Widget buildUI() => StackFullscreen(children: [
         buildWatchBool(ClientState.triggerAlarmNoMessageReceivedFromServer,
             buildDialogFramesSinceUpdate),
-        // buildWatchBool(GamePlayer.alive, buildPositionedContainerRespawn, false),
-        // buildWatchBool(GamePlayer.alive, buildWindowCharacterCreation, false),
-        buildWatchBool(GamePlayer.alive, buildWindowCharacterCreation, false),
-        // visibleBuilder(GamePlayer.alive, buildWindowCharacterCreation()),
         Positioned(
             top: 0,
             right: 0,
@@ -46,7 +42,7 @@ class GameUI {
         WatchBuilder(ClientState.edit, buildPlayMode),
         WatchBuilder(GameIO.inputMode, buildStackInputMode),
         buildWatchBool(ClientState.debugMode, GameDebug.buildStackDebug),
-        buildPositionedAreaType(),
+        // buildPositionedAreaType(),
         buildPositionedMessageStatus(),
         buildWatchGameStatus(),
         buildWatchBool(ClientState.window_visible_settings, buildWindowSettings),
@@ -647,15 +643,10 @@ class GameUI {
       );
 
   static Widget buildPlayMode(bool edit) =>
-      edit ? watch(GameEditor.editTab, EditorUI.buildUI) : buildStackPlay();
+      edit ? watch(GameEditor.editTab, EditorUI.buildUI) : watch(ServerState.gameType, buildStackPlay);
 
-  static Widget buildStackPlay() => StackFullscreen(children: [
-        // visibleBuilder(GameOptions.inventory, GameUIInteract.buildWatchInteractMode()),
-        watch(ClientState.hoverIndex,
-            GameInventoryUI.buildPositionedContainerItemTypeInformation),
-        watch(ClientState.hoverTargetType,
-            GameInventoryUI.buildPositionedContainerHoverTarget),
-
+  static Widget buildStackPlay(int? gameType) => StackFullscreen(children: [
+        buildWatchBool(ClientState.window_visible_player_creation, buildWindowCharacterCreation),
         Positioned(
             top: GameStyle.Default_Padding,
             left: GameStyle.Default_Padding,
@@ -669,34 +660,6 @@ class GameUI {
           ),
           bottom: GameStyle.Default_Padding,
         ),
-        // Positioned(
-        //     bottom: GameStyle.Default_Padding,
-        //     left: GameStyle.Default_Padding,
-        //     child: buildPlayerPowerType(),
-        // ),
-        // visibleBuilder(
-        //     GameOptions.inventory,
-        //     Positioned(
-        //       bottom: GameStyle.Default_Padding,
-        //       right: GameStyle.Default_Padding,
-        //       child: buildDialogUIControl(
-        //         child: buildColumnBelt(),
-        //       ),
-        //     )),
-        //   Positioned(
-        //       top: GameStyle.Default_Padding,
-        //       left: GameStyle.Default_Padding,
-        //       child: visibleBuilder(
-        //           ClientState.window_visible_items,
-        //           buildWindowPlayerItems(),
-        //       ),
-        //       // child: buildWindowPlayerItems(),
-        //   ),
-          // Positioned(
-          //   top: GameStyle.Default_Padding,
-          //   left: GameStyle.Window_PlayerItems_Width + (GameStyle.Default_Padding * 2),
-          //   child: buildWindowMouseOverItemType(),
-          // ),
       ]);
 
   static Widget buildPanelCredits() {

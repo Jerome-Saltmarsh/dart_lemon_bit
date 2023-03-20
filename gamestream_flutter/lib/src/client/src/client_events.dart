@@ -75,6 +75,10 @@ class ClientEvents {
       return;
     }
 
+    if (key == KeyCode.Tab){
+
+    }
+
     if (GameState.playMode) {
       onKeyPressedModePlay(key);
     } else {
@@ -83,12 +87,68 @@ class ClientEvents {
   }
 
   static void onKeyPressedModeEdit(int key){
-    if (key == ClientConstants.Key_Duplicate) {
-      GameNetwork.sendGameObjectRequestDuplicate();
+
+    switch (key){
+      case ClientConstants.Key_Duplicate:
+        GameNetwork.sendGameObjectRequestDuplicate();
+        break;
+      case KeyCode.F:
+        GameEditor.paint();
+        break;
+      case KeyCode.G:
+        if (GameEditor.gameObjectSelected.value) {
+          GameNetwork.sendGameObjectRequestMoveToMouse();
+        } else {
+          GameCamera.cameraSetPositionGrid(GameEditor.row, GameEditor.column, GameEditor.z);
+        }
+        break;
+      case KeyCode.R:
+        GameEditor.selectPaintType();
+        break;
+      case KeyCode.Arrow_Up:
+        if (Engine.keyPressedShiftLeft) {
+          if (GameEditor.gameObjectSelected.value){
+            GameEditor.translate(x: 0, y: 0, z: 1);
+            return;
+          }
+          GameEditor.cursorZIncrease();
+          return;
+        }
+        if (GameEditor.gameObjectSelected.value) {
+          GameEditor.translate(x: -1, y: -1, z: 0);
+          return;
+        }
+        GameEditor.cursorRowDecrease();
+        return;
+      case KeyCode.Arrow_Right:
+        if (GameEditor.gameObjectSelected.value){
+          return GameEditor.translate(x: 1, y: -1, z: 0);
+        }
+        GameEditor.cursorColumnDecrease();
+        break;
+      case KeyCode.Arrow_Down:
+        if (Engine.keyPressedShiftLeft) {
+          if (GameEditor.gameObjectSelected.value){
+            return GameEditor.translate(x: 0, y: 0, z: -1);
+          }
+          GameEditor.cursorZDecrease();
+        } else {
+          if (GameEditor.gameObjectSelected.value){
+            return GameEditor.translate(x: 1, y: 1, z: 0);
+          }
+          GameEditor.cursorRowIncrease();
+        }
+        break;
+      case KeyCode.Arrow_Left:
+        if (GameEditor.gameObjectSelected.value){
+          return GameEditor.translate(x: -1, y: 1, z: 0);
+        }
+        GameEditor.cursorColumnIncrease();
+        break;
     }
   }
 
-  static void onKeyPressedModePlay(int key){
+  static void onKeyPressedModePlay(int key) {
 
     if (key == ClientConstants.Key_Zoom) {
       GameActions.toggleZoom();
@@ -104,19 +164,12 @@ class ClientEvents {
       GameNetwork.sendClientRequest(ClientRequest.Suicide);
       return;
     }
-    // if (key == KeyCode.E) {
-    //   GameNetwork.sendClientRequest(ClientRequest.Suicide);
-    //   return;
-    // }
 
-    if (key == ClientConstants.Key_Toggle_Map) {
-      ClientState.Map_Visible.toggle();
-      return;
-    }
-
-    if (key == ClientConstants.Key_Settings) {
-      GameActions.toggleWindowSettings();
-      return;
+    if (Engine.isLocalHost){
+      if (key == ClientConstants.Key_Settings) {
+        GameActions.toggleWindowSettings();
+        return;
+      }
     }
   }
 

@@ -30,6 +30,7 @@ ctrl + shift + e    : view recent changes
 [RELEASE-TASKS]
 [ ] music track 01
 [ ] polish editor
+[ ] fix death sound on spawn
 
 20.03.2023
 [x] improve power shield sprite

@@ -754,4 +754,10 @@ class GameEvents {
           break;
       }
   }
+
+  static void onChangedPlayerAlive(bool playerAlive){
+      if (ServerState.gameType.value == GameType.Combat) {
+        ClientState.window_visible_player_creation.value = !playerAlive;
+      }
+  }
 }

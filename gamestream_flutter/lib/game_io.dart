@@ -61,7 +61,6 @@ class GameIO {
       Engine.onTap = onTap;
       Engine.onLongPressDown = onLongPressDown;
       Engine.onSecondaryTapDown = onSecondaryTapDown;
-      Engine.onKeyDown = onKeyDownEvent;
       Engine.onLeftClicked = onMouseClickedLeft;
       Engine.onRightClicked = onMouseClickedRight;
       Engine.onPointerSignalEvent = onPointerSignalEvent;
@@ -269,71 +268,6 @@ class GameIO {
   static bool getActionTertiary(){
     if (GameState.editMode) return false;
     return false;
-  }
-
-  static void onKeyDownEvent(int key){
-
-    if (key == KeyCode.Tab)
-      return GameActions.actionToggleEdit();
-
-    if (GameState.playMode) {
-      if (key == KeyCode.G)
-        return GameNetwork.sendClientRequestTeleport();
-      return;
-    }
-
-    // EDIT MODE
-    if (key == KeyCode.F) return GameEditor.paint();
-    if (key == KeyCode.R) return GameEditor.selectPaintType();
-    if (key == KeyCode.E) return GameEditor.raise();
-    if (key == KeyCode.G) {
-      if (GameEditor.gameObjectSelected.value) {
-        GameNetwork.sendGameObjectRequestMoveToMouse();
-      } else {
-        GameCamera.cameraSetPositionGrid(GameEditor.row, GameEditor.column, GameEditor.z);
-      }
-    }
-
-    // if (key == PhysicalKeyboardKey.digit4)
-    //   return GameEditor.paintBricks();
-    if (key == KeyCode.Arrow_Up) {
-      if (Engine.keyPressedShiftLeft) {
-        if (GameEditor.gameObjectSelected.value){
-          return GameEditor.translate(x: 0, y: 0, z: 1);
-        }
-        GameEditor.cursorZIncrease();
-      } else {
-        if (GameEditor.gameObjectSelected.value){
-          return GameEditor.translate(x: -1, y: -1, z: 0);
-        }
-        GameEditor.cursorRowDecrease();
-      }
-    }
-    if (key == KeyCode.Arrow_Right) {
-      if (GameEditor.gameObjectSelected.value){
-        return GameEditor.translate(x: 1, y: -1, z: 0);
-      }
-      GameEditor.cursorColumnDecrease();
-    }
-    if (key == KeyCode.Arrow_Down) {
-      if (Engine.keyPressedShiftLeft) {
-        if (GameEditor.gameObjectSelected.value){
-          return GameEditor.translate(x: 0, y: 0, z: -1);
-        }
-        GameEditor.cursorZDecrease();
-      } else {
-        if (GameEditor.gameObjectSelected.value){
-          return GameEditor.translate(x: 1, y: 1, z: 0);
-        }
-        GameEditor.cursorRowIncrease();
-      }
-    }
-    if (key == KeyCode.Arrow_Left) {
-      if (GameEditor.gameObjectSelected.value){
-        return GameEditor.translate(x: -1, y: 1, z: 0);
-      }
-      GameEditor.cursorColumnIncrease();
-    }
   }
 
   static void onMouseClickedLeft(){
