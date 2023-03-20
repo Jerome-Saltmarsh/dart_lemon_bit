@@ -31,19 +31,6 @@ class RendererCharacters extends Renderer {
       GameRender.renderCircle(character.x, character.y, character.z, character.radius);
     }
 
-    if (character.buffInvincible) {
-      Engine.renderSprite(
-        image: GameImages.atlas_gameobjects,
-        srcX: 48,
-        srcY: 368,
-        dstX: character.renderX,
-        dstY: character.renderY,
-        srcWidth: 48,
-        srcHeight: 48,
-        scale: 1,
-      );
-    }
-
     if (character.spawning) {
       if (character.characterType == CharacterType.Rat){
         Engine.renderSprite(
@@ -81,19 +68,22 @@ class RendererCharacters extends Renderer {
         anchorY: 0.61,
         scale: 0.75,
       );
-      return;
+      return; // character spawning
     }
 
     switch (character.characterType) {
       case CharacterType.Template:
         renderCharacterTemplate(character);
-        return;
+        break;
       case CharacterType.Slime:
-        return renderCharacterSlime(character);
+        renderCharacterSlime(character);
+        break;
       case CharacterType.Rat:
-        return renderCharacterRat(character);
+        renderCharacterRat(character);
+        break;
       case CharacterType.Zombie:
-        return renderCharacterZombie(character);
+        renderCharacterZombie(character);
+        break;
       case CharacterType.Triangle:
         Engine.renderSpriteRotated(
           image: GameImages.atlas_characters,
@@ -112,6 +102,20 @@ class RendererCharacters extends Renderer {
       default:
         throw Exception("Cannot render character type: ${character.characterType}");
     }
+
+    if (character.buffInvincible) {
+      Engine.renderSprite(
+        image: GameImages.sprite_shield,
+        srcX: 125.0 * GameAnimation.animationFrame16,
+        srcY: 0,
+        dstX: character.renderX,
+        dstY: character.renderY - 10,
+        srcWidth: 125,
+        srcHeight: 125,
+        scale: 0.4,
+      );
+    }
+
   }
 
 

@@ -23,14 +23,16 @@ ctrl + shift + e    : view recent changes
 [FUTURE-TASKS]
 [ ] weapon stun taser
 [ ] weapon shield
-
-[RELEASE-TASKS]
-[ ] polish editor
-[ ] feature teleport does damage to things in between
 [ ] improve sprite sniper rifle
 [ ] improve sprite bazooka
+[ ] feature teleport does damage to things in between
+
+[RELEASE-TASKS]
+[ ] music track 01
+[ ] polish editor
 
 20.03.2023
+[x] improve power shield sprite
 [x] feature show perception where mouse is
 [x] feature lightning particle power shock used
 [x] improve render order

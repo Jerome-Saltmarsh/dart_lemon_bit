@@ -23,6 +23,7 @@ class GameImages {
    static late Image atlas_nodes_mini;
    static late Image atlas_weapons;
    static late Image sprite_stars;
+   static late Image sprite_shield;
 
    static late Image template_head_plain;
    static late Image template_head_rogue;
@@ -255,6 +256,7 @@ class GameImages {
       Engine.loadImageAsset('images/template/weapons/template-weapons-portal-gun.png').then((value) => template_weapon_portal_gun = value);
 
       Engine.loadImageAsset('images/sprites/sprite-stars.png').then((value) => sprite_stars = value);
+      Engine.loadImageAsset('images/sprites/sprite-shield.png').then((value) => sprite_shield = value);
    }
 }
 
