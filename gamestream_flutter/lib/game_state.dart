@@ -252,8 +252,8 @@ class GameState {
     required double x,
     required double y,
     required double z,
-    required double angle,
-    required double speed,
+    double speed = 0,
+    double angle = 0,
     bool checkCollision = true,
     double zv = 0,
     double weight = 1,
@@ -856,7 +856,7 @@ class GameState {
     double speed = 2,
   }) {
     spawnParticle(
-      type: ParticleType.Strike_Bullet_Light,
+      type: ParticleType.Strike_Light,
       x: x,
       y: y,
       z: z,
@@ -1076,28 +1076,6 @@ class GameState {
     );
   }
 
-
-  static void spawnParticleSlimeDeath({
-    required double x,
-    required double y,
-    required double z,
-  }) {
-    spawnParticle(
-      type: ParticleType.Character_Death_Slime,
-      x: x,
-      y: y,
-      z: z,
-      zv: 0,
-      angle: 0,
-      rotation: 0,
-      speed: 0,
-      scaleV: 0.01,
-      weight: -1,
-      duration: 0,
-      scale: 1.0,
-    );
-  }
-
   /// do this during the draw call so that particles are smoother
   static void updateParticles() {
     nextParticleFrame--;
@@ -1179,7 +1157,7 @@ class GameState {
     updateTorchEmissionIntensity();
     GameAnimation.updateAnimationFrame();
     updateParticleEmitters();
-    updateProjectiles();
+    ServerState.updateProjectiles();
     ServerState.updateGameObjects();
     GameAudio.update();
     ClientState.update();
@@ -1226,106 +1204,6 @@ class GameState {
           if (!gameObject.active) continue;
           if (gameObject.type != ItemType.GameObjects_Barrel_Flaming) continue;
           spawnParticleSmoke(x: gameObject.x + giveOrTake(5), y: gameObject.y + giveOrTake(5), z: gameObject.z + 35);
-      }
-    }
-
-
-    static void updateProjectiles() {
-      for (var i = 0; i < ServerState.totalProjectiles; i++) {
-        final projectile = ServerState.projectiles[i];
-        if (projectile.type == ProjectileType.Rocket) {
-          spawnParticleSmoke(x: projectile.x, y: projectile.y, z: projectile.z);
-          ServerState.projectShadow(projectile);
-          continue;
-        }
-        if (projectile.type == ProjectileType.Fireball) {
-          spawnParticleFire(x: projectile.x, y: projectile.y, z: projectile.z);
-          continue;
-        }
-        if (projectile.type == ProjectileType.Orb) {
-          spawnParticleOrbShard(
-              x: projectile.x,
-              y: projectile.y,
-              z: projectile.z,
-              angle: randomAngle(),
-          );
-        }
-      }
-    }
-
-    static void applyShadows(){
-      // if (ServerState.ambientShade.value > Shade.Very_Bright) return;
-      applyShadowsMidAfternoon();
-    }
-
-    static void applyShadowsMidAfternoon() {
-      applyShadowAt(directionZ: -1, directionRow: 0, directionColumn: 0, maxDistance: 1);
-    }
-
-    static void applyShadowAt({
-      required int directionZ,
-      required int directionRow,
-      required int directionColumn,
-      required int maxDistance,
-    }){
-      final shadowShade = Shade.Medium;
-
-      for (var z = 0; z < GameNodes.totalZ; z++) {
-        for (var row = 0; row < GameNodes.totalRows; row++){
-          for (var column = 0; column < GameNodes.totalColumns; column++){
-            // final tile = grid[z][row][column];
-            final index = getNodeIndexZRC(z, row, column);
-            final tile = GameNodes.nodeTypes[index];
-            if (!castesShadow(tile)) continue;
-            var projectionZ = z + directionZ;
-            var projectionRow = row + directionRow;
-            var projectionColumn = column + directionColumn;
-            while (
-            projectionZ >= 0 &&
-                projectionRow >= 0 &&
-                projectionColumn >= 0 &&
-                projectionZ < GameNodes.totalZ &&
-                projectionRow < GameNodes.totalRows &&
-                projectionColumn < GameNodes.totalColumns
-            ) {
-              // final shade = GameNodes.nodeBake[index];
-              // if (shade < shadowShade){
-              //   if (GameQueries.gridNodeZRCType(projectionZ + 1, projectionRow, projectionColumn) == NodeType.Empty){
-              //     GameNodes.nodeBake[index] = shadowShade;
-              //   }
-              // }
-              projectionZ += directionZ;
-              projectionRow += directionRow;
-              projectionColumn += directionColumn;
-            }
-          }
-        }
-      }
-    }
-
-    static bool castesShadow(int type) =>
-        type == NodeType.Brick ||
-        type == NodeType.Water;
-
-    static bool gridIsUnderSomething(int z, int row, int column){
-      if (outOfBounds(z, row, column)) return false;
-      for (var zIndex = z + 1; zIndex < GameNodes.totalZ; zIndex++){
-        if (!GameQueries.gridNodeZRCTypeRainOrEmpty(z, row, column)) return false;
-      }
-      return true;
-    }
-
-    static bool gridIsPerceptible(int index){
-      if (index < 0) return true;
-      if (index >= GameNodes.total) return true;
-      while (true){
-        index += GameNodes.area;
-        index++;
-        index += GameNodes.totalColumns;
-        if (index >= GameNodes.total) return true;
-        if (GameNodes.nodeOrientations[index] != NodeOrientation.None){
-          return false;
-        }
       }
     }
 

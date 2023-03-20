@@ -353,21 +353,6 @@ class RendererParticles extends Renderer {
           );
           break;
 
-        case ParticleType.Character_Animation_Dog_Death:
-          final frame = capIndex(const [1, 1, 6, 6, 7], particle.frame);
-
-          Engine.renderSprite(
-            image: GameImages.character_dog,
-            dstX: dstX,
-            dstY: dstY,
-            srcX: 64.0 * frame,
-            srcY: 64.0 * particle.direction,
-            srcWidth: 64,
-            srcHeight: 64,
-            color: GameState.getV3RenderColor(particle),
-          );
-          break;
-
         case ParticleType.Zombie_Torso:
           casteShadowDownV3(particle);
           Engine.renderSprite(
@@ -390,8 +375,8 @@ class RendererParticles extends Renderer {
         case ParticleType.Strike_Bullet:
           renderParticleStrikeBullet();
           break;
-        case ParticleType.Strike_Bullet_Light:
-          renderParticleStrikeBulletLight();
+        case ParticleType.Strike_Light:
+          renderParticleStrikeLight();
           break;
         case ParticleType.Shadow:
           Engine.renderSprite(
@@ -403,6 +388,19 @@ class RendererParticles extends Renderer {
               dstX: dstX,
               dstY: dstY,
               scale: 0.5,
+          );
+          break;
+        case ParticleType.Lightning_Bolt:
+          Engine.renderSprite(
+            image: GameImages.atlas_particles,
+            srcX: 1,
+            srcY: 576,
+            srcWidth: 51,
+            srcHeight: 90,
+            dstX: dstX,
+            dstY: dstY,
+            scale: 1.0,
+            anchorY: 1.0,
           );
           break;
         default:
@@ -502,7 +500,7 @@ class RendererParticles extends Renderer {
       color: GameState.getV3RenderColor(particle),
     );
   }
-  static void renderParticleStrikeBulletLight() {
+  static void renderParticleStrikeLight() {
     if (particle.frame >= 6 ) {
       particle.deactivate();
       return;

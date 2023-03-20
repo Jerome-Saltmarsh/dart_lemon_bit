@@ -226,6 +226,29 @@ class ServerState {
     }
     return true;
   }
+
+  static void updateProjectiles() {
+    for (var i = 0; i < totalProjectiles; i++) {
+      final projectile = projectiles[i];
+      if (projectile.type == ProjectileType.Rocket) {
+        GameState.spawnParticleSmoke(x: projectile.x, y: projectile.y, z: projectile.z);
+        ServerState.projectShadow(projectile);
+        continue;
+      }
+      if (projectile.type == ProjectileType.Fireball) {
+        GameState.spawnParticleFire(x: projectile.x, y: projectile.y, z: projectile.z);
+        continue;
+      }
+      if (projectile.type == ProjectileType.Orb) {
+        GameState.spawnParticleOrbShard(
+          x: projectile.x,
+          y: projectile.y,
+          z: projectile.z,
+          angle: randomAngle(),
+        );
+      }
+    }
+  }
 }
 
 

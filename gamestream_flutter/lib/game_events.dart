@@ -500,6 +500,19 @@ class GameEvents {
         break;
       case PowerType.Stun:
         GameAudio.debuff_4();
+        GameState.spawnParticle(
+            type: ParticleType.Lightning_Bolt,
+            x: GamePlayer.x,
+            y: GamePlayer.y,
+            z: GamePlayer.z,
+            duration: 10,
+            animation: true,
+        );
+        GameState.spawnParticleLightEmissionAmbient(
+            x: GamePlayer.x,
+            y: GamePlayer.y,
+            z: GamePlayer.z,
+        );
         break;
     }
   }

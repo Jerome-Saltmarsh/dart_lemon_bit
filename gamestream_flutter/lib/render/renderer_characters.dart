@@ -193,7 +193,7 @@ class RendererCharacters extends Renderer {
     }
 
     if (character.state == CharacterState.Stunned){
-      GameRender.renderTextV3(character, "STUNNED");
+      GameRender.renderStarsV3(character);
       Engine.renderSprite(
         image: GameImages.character_dog,
         dstX: character.renderX,
@@ -208,7 +208,6 @@ class RendererCharacters extends Renderer {
       );
       return;
     }
-
   }
 
   void renderCharacterZombie(Character character) {

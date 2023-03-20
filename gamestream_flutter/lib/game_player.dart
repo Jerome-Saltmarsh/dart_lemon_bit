@@ -54,6 +54,9 @@ class GamePlayer {
   static var indexColumn = 0;
   static var nodeIndex = 0;
 
+  static double get x => position.x;
+  static double get y => position.y;
+  static double get z => position.z;
   static int get areaNodeIndex => (indexRow * GameNodes.totalColumns) + indexColumn;
 
   static double get renderX => GameConvert.convertV3ToRenderX(position);
