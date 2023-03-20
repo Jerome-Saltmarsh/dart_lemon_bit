@@ -399,7 +399,7 @@ class ItemType {
     Weapon_Melee_Hammer,
     Weapon_Melee_Pickaxe,
     Weapon_Melee_Staff,
-    Weapon_Melee_Sword,
+    // Weapon_Melee_Sword,
   ].contains(itemType);
 
   static bool isFood(int type) =>

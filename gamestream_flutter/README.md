@@ -27,9 +27,12 @@ ctrl + shift + e    : view recent changes
 [RELEASE-TASKS]
 [ ] polish editor
 [ ] feature teleport does damage to things in between
-[ ] improve sprite bazooka
 [ ] improve sprite sniper rifle
-[ ] feature lightning particle on shocked targets 
+[ ] improve sprite bazooka
+
+20.03.2023
+[x] feature lightning particle power shock used
+[x] improve render order
 
 18.03.2023
 [x] fix render order bug

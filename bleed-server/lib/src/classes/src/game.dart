@@ -541,6 +541,8 @@ abstract class Game {
       ItemType.Weapon_Ranged_Plasma_Rifle: 1,
       ItemType.Weapon_Ranged_Teleport: 10,
       ItemType.Weapon_Melee_Knife: 5,
+      ItemType.Weapon_Melee_Sword: 8,
+      ItemType.Weapon_Melee_Crowbar: 2,
     }[character.weaponType] ?? 1;
 
   void characterUseWeapon(Character character) {
@@ -550,7 +552,7 @@ abstract class Game {
 
     if (character is Player) {
 
-      if (options.inventory) {
+      if (options.useWeaponConsumesResource) {
         final playerWeaponConsumeType = ItemType.getConsumeType(weaponType);
 
         if (playerWeaponConsumeType != ItemType.Empty) {
@@ -569,20 +571,16 @@ abstract class Game {
         }
       }
 
-      if (options.items) {
-
-        if (weaponType == ItemType.Empty){
-          characterAttackMelee(character);
-          return;
-        }
-
+      if (options.useWeaponCostEnergy) {
         final cost = getCharacterWeaponEnergyCost(character);
-
         if (character.energy < cost) {
           character.writeError('Insufficient Energy');
           return;
         }
-
+        if (weaponType == ItemType.Empty){
+          characterAttackMelee(character);
+          return;
+        }
         character.energy -= cost;
       }
 
@@ -3243,19 +3241,10 @@ abstract class Game {
       ItemType.Weapon_Melee_Hammer        : 03,
       ItemType.Weapon_Melee_Pickaxe       : 05,
       ItemType.Weapon_Melee_Knife         : 04,
-      ItemType.Weapon_Melee_Crowbar       : 04,
-      ItemType.Weapon_Melee_Sword         : 04,
+      ItemType.Weapon_Melee_Crowbar       : 05,
+      ItemType.Weapon_Melee_Sword         : 10,
       ItemType.Weapon_Melee_Axe           : 04,
     } [player.weaponType] ?? 0;
-
-  int getItemPurchaseCost(int itemType, int level){
-    // assert (level > 0);
-    assert (level < 6);
-    if (options.items){
-      return options.itemTypeCost[itemType]?[level] ?? 0;
-    }
-    return 0;
-  }
 
   int getExperienceForLevel(int level){
     return (((level - 1) * (level - 1))) * 6;

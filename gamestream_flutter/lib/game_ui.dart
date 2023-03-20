@@ -93,6 +93,7 @@ class GameUI {
       ItemType.Weapon_Ranged_Teleport,
       ItemType.Weapon_Melee_Knife,
       ItemType.Weapon_Melee_Crowbar,
+      ItemType.Weapon_Melee_Sword,
     ];
 
     const titleFontSize = 22;

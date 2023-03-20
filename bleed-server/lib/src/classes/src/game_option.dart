@@ -4,6 +4,8 @@ class GameOptions {
   final bool perks;
   final bool inventory;
   final bool items;
+  final bool useWeaponCostEnergy;
+  final bool useWeaponConsumesResource;
 
   var explosionsFriendlyFire = false;
 
@@ -20,6 +22,8 @@ class GameOptions {
     this.itemDamage = Default_Item_Damage,
     this.itemTypeCost = Default_ItemType_Cost,
     this.itemTypeCapacity = Default_ItemType_Capacity,
+    this.useWeaponCostEnergy = true,
+    this.useWeaponConsumesResource = false,
   });
 
   static const Default_ItemType_Capacity = <int, List<int>> {
