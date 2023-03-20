@@ -29,10 +29,11 @@ ctrl + shift + e    : view recent changes
 
 [RELEASE-TASKS]
 [ ] music track 01
-[ ] polish editor
 [ ] fix death sound on spawn
 
 20.03.2023
+[x] fix edit key codes
+[x] fix edit camera centers player on spawn
 [x] improve power shield sprite
 [x] feature show perception where mouse is
 [x] feature lightning particle power shock used

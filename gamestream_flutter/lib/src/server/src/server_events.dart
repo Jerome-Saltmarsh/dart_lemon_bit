@@ -1,4 +1,6 @@
 
+import 'dart:async';
+
 import 'package:gamestream_flutter/library.dart';
 
 class ServerEvents {

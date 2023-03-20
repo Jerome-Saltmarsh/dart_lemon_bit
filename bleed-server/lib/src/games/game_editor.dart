@@ -29,8 +29,8 @@ class GameEditor extends Game {
 
   @override
   void customOnPlayerRevived(Player player) {
-     if (isSafeToRevive(25, 25)){
-       Game.setGridPosition(position: player, z: 4, row: 25, column: 25);
+     if (isSafeToRevive(25, 25)) {
+       Game.setGridPosition(position: player, z: 1, row: 25, column: 25);
        player.state = CharacterState.Idle;
        player.writePlayerMoved();
        return;
@@ -39,7 +39,7 @@ class GameEditor extends Game {
      for (var row = 0; row < scene.gridRows; row++) {
         for (var column = 0; column < scene.gridColumns; column++){
           if (isSafeToRevive(row, column)){
-            Game.setGridPosition(position: player, z: 4, row: row, column: column);
+            Game.setGridPosition(position: player, z: 1, row: row, column: column);
             player.writePlayerMoved();
             return;
           }

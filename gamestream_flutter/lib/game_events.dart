@@ -360,6 +360,7 @@ class GameEvents {
     if (value) {
       GameCamera.setModeFree();
       GameEditor.cursorSetToPlayer();
+      GameCamera.centerOnPlayer();
       GamePlayer.message.value = "-press arrow keys to move\n\n-press tab to play";
       GamePlayer.messageTimer = 300;
     } else {
@@ -478,6 +479,11 @@ class GameEvents {
         GameEditor.gameObjectSelected.value = false;
         break;
       case PlayerEvent.Player_Moved:
+        if (ServerState.gameType.value == GameType.Editor){
+          GameEditor.row = GamePlayer.indexRow;
+          GameEditor.column = GamePlayer.indexColumn;
+          GameEditor.z = GamePlayer.indexZ;
+        }
         GameCamera.centerOnPlayer();
         GameIO.recenterCursor();
         break;
