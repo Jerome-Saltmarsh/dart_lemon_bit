@@ -117,17 +117,20 @@ class GameCanvas {
     GameRender.renderMouseTargetName();
     ClientState.rendersSinceUpdate.value++;
     renderPlayerRunTarget();
+    renderPlayerEnergy();
 
+    // if (ClientState.debugMode.value){
+    //   debugRenderIsland();
+    // }
+  }
+
+  static void renderPlayerEnergy() {
     renderBarBlue(
         GamePlayer.position.x,
         GamePlayer.position.y,
         GamePlayer.position.z,
         GamePlayer.energyPercentage,
     );
-
-    // if (ClientState.debugMode.value){
-    //   debugRenderIsland();
-    // }
   }
 
   static void debugRenderHeightMapValues() {
