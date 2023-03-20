@@ -30,21 +30,17 @@ class GameEditor extends Game {
   @override
   void customOnPlayerRevived(Player player) {
      if (isSafeToRevive(25, 25)){
-       // player.indexColumn = 25;
-       // player.indexRow = 25;
-       // player.indexZ = 8;
        Game.setGridPosition(position: player, z: 4, row: 25, column: 25);
        player.state = CharacterState.Idle;
+       player.writePlayerMoved();
        return;
      }
 
      for (var row = 0; row < scene.gridRows; row++) {
         for (var column = 0; column < scene.gridColumns; column++){
           if (isSafeToRevive(row, column)){
-            // player.indexColumn = column;
-            // player.indexRow = row;
-            // player.indexZ = 8;
             Game.setGridPosition(position: player, z: 4, row: row, column: column);
+            player.writePlayerMoved();
             return;
           }
         }

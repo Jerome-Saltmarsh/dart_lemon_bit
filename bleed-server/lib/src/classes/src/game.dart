@@ -1516,6 +1516,7 @@ abstract class Game {
     customOnPlayerRevived(player);
 
     player.writePlayerMoved();
+    player.writeApiPlayerSpawned();
     player.writePlayerAlive();
     player.writePlayerStats();
     player.writePlayerCredits();

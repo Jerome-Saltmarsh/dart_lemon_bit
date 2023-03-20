@@ -11,6 +11,10 @@ class ServerEvents {
     if (value == null) return;
     ClientState.edit.value = value == GameType.Editor;
 
+    if (value != GameType.Combat){
+      ClientState.window_visible_player_creation.value = false;
+    }
+
     ClientState.control_visible_player_weapons.value = value == GameType.Combat;
     ClientState.control_visible_scoreboard.value = value == GameType.Combat;
 

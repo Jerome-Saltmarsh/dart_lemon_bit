@@ -20,7 +20,7 @@ class PowerType {
    static String getName(int value) => const <int, String> {
       None        : "None",
       Bomb        : "Bomb",
-      Teleport    : "Swift",
+      Teleport    : "Shift",
       Invisible   : "Vanish",
       Shield      : "Shield",
       Stun        : "Stun",

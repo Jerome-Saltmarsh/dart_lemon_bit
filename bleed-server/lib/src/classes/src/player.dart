@@ -1255,6 +1255,11 @@ class Player extends Character with ByteWriter {
     writePlayerEvent(PlayerEvent.Player_Moved);
   }
 
+  void writeApiPlayerSpawned(){
+    writeByte(ServerResponse.Api_Player);
+    writeByte(ApiPlayer.Spawned);
+  }
+
   void writePlayerMessage(String message){
     writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Message);
