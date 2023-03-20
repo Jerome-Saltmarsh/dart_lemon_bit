@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/ui/views.dart';
+import 'package:golden_ratio/constants.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class GameWebsite {
   static final operationStatus = Watch(OperationStatus.None);
@@ -162,14 +164,11 @@ class GameWebsite {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        text("AEON", size: 50),
-        // text("NEON", size: 50),
-        // text("BLAZE", size: 50),
-        // text("PLASMA", size: 40),
+        text("AEON", size: 100),
         height32,
-        buildTextButton("PLAY", action: GameNetwork.connectToGameCombat),
+        buildTextButton("PLAY", action: GameNetwork.connectToGameCombat, colorRegular: GameColors.green.withOpacity(0.5), size: 50),
         height24,
-        buildTextButton("CREATE", action: GameNetwork.connectToGameEditor),
+        buildTextButton("CREATE", action: GameNetwork.connectToGameEditor, colorRegular: GameColors.green.withOpacity(0.5), size: 50),
       ],
     );
 
@@ -198,63 +197,60 @@ class GameWebsite {
 
   static Widget buildDevice(int deviceType) =>
     Container(
-      width: Engine.screen.width,
-      height: Engine.screen.height,
-      color: Colors.transparent,
-      child: Stack(
-        children: [
-          Positioned(
-            top: Padding,
-            right: Padding,
-            child: buildTextVersion(),
-          ),
-          Positioned(
-            top: Padding,
-            left: 180,
-            child: buildWatchBool(isVisibleDialogCustomRegion, buildInputCustomConnectionString),
-          ),
-          if (deviceType == DeviceType.Computer)
+      constraints: BoxConstraints(
+        maxWidth: 700,
+        maxHeight: 700 * goldenRatio_0618,
+      ),
+      child: border(
+        color: Colors.white24,
+        child: Stack(
+          children: [
             Positioned(
-              left: 32,
-              child: buildFullscreen(
-                child: watch(GameWebsite.region, buildColumnRegions),
-                alignment: Alignment.centerLeft
+              top: Padding,
+              right: Padding,
+              child: buildTextVersion(),
+            ),
+            // Positioned(
+            //   top: Padding,
+            //   left: 180,
+            //   child: buildWatchBool(isVisibleDialogCustomRegion, buildInputCustomConnectionString),
+            // ),
+            if (deviceType == DeviceType.Computer)
+              buildColumnRegions(),
+            if (deviceType == DeviceType.Phone)
+              Positioned(
+                  bottom: Padding,
+                  left: Padding,
+                  child:
+                  watch(websitePage, (WebsitePage page){
+                      if (page == WebsitePage.Games){
+                        return watch(region, (ConnectionRegion region) => text(region.name, color: colorRegion, onPressed: () => websitePage.value = WebsitePage.Region, size: 25));
+                      } else {
+                        return text("<- BACK", onPressed: toggleWebsitePage);
+                      }
+                  }),
+              ),
+            Positioned(
+              bottom: Padding,
+              right: Padding,
+              child: onPressed(
+                  action: () {
+                    launchUrl(
+                      Uri.parse('https://linktr.ee/gamestream.online'),
+                      mode: LaunchMode.externalApplication,
+                      webOnlyWindowName: '_blank',
+                    );
+                  },
+                  child: text("Created by Jerome Saltmarsh", color: GameColors.white60)
               ),
             ),
-          if (deviceType == DeviceType.Phone)
             Positioned(
-                bottom: Padding,
-                left: Padding,
-                child:
-                watch(websitePage, (WebsitePage page){
-                    if (page == WebsitePage.Games){
-                      return watch(region, (ConnectionRegion region) => text(region.name, color: colorRegion, onPressed: () => websitePage.value = WebsitePage.Region, size: 25));
-                    } else {
-                      return text("<- BACK", onPressed: toggleWebsitePage);
-                    }
-                }),
-            ),
-          // if (deviceType == DeviceType.Phone)
-          //   Positioned(
-          //     top: Padding,
-          //     left: Padding,
-          //     child: text('Device-Type ${DeviceType.getName(deviceType)}'),
-          //   ),
-          Positioned(
-            bottom: Padding,
-            right: Padding,
-            child: text(
-                "Created by Jerome Saltmarsh",
-                color: GameColors.white382,
-                size: FontSize.Small
-            ),
-          ),
-          Positioned(
-            child: buildFullscreen(
-              child: watch(websitePage, buildWebsitePage)
-            ),
-          )
-        ],
+              child: buildFullscreen(
+                child: watch(websitePage, buildWebsitePage)
+              ),
+            )
+          ],
+        ),
       ),
     );
 
@@ -289,30 +285,61 @@ class GameWebsite {
         child: child,
       );
 
-  
-  static Widget buildColumnRegions(ConnectionRegion selectedRegion) =>
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: ConnectionRegion.values
-            .map((ConnectionRegion region) => Container(
-                  margin: const EdgeInsets.symmetric(vertical: 4),
-                  child: buildTextButton(
-                    '${Engine.enumString(region)}',
-                    action: selectedRegion == region
-                        ? null
-                        : () => actionSelectRegion(region),
-                    size: 18,
-                    colorRegular: selectedRegion == region
-                        ? colorRegion.withOpacity(0.54)
-                        : colorRegion.withOpacity(0.24),
-                    colorMouseOver: selectedRegion == region
-                        ? colorRegion.withOpacity(0.54)
-                        : colorRegion.withOpacity(0.39),
-                  ),
-                ))
-            .toList(),
+  static const Live_Regions = [
+    ConnectionRegion.Australia,
+    ConnectionRegion.Singapore,
+    ConnectionRegion.Brazil,
+    ConnectionRegion.Germany,
+    ConnectionRegion.South_Korea,
+    ConnectionRegion.USA_East,
+    ConnectionRegion.USA_West,
+  ];
+
+
+  static Widget buildColumnRegions() =>
+      Container(
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        decoration: BoxDecoration(
+          border: Border(
+            right: BorderSide(
+              width: 1.0,
+              color: Colors.white10,
+            ),
+          ),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            text("SERVER", color: Colors.white38),
+            height6,
+            watch(GameWebsite.region, (ConnectionRegion selectedRegion) =>
+                Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: (Engine.isLocalHost ? ConnectionRegion.values : Live_Regions)
+                        .map((ConnectionRegion region) => Container(
+                      margin: const EdgeInsets.symmetric(vertical: 4),
+                      child: buildTextButton(
+                        '${Engine.enumString(region)}',
+                        action: selectedRegion == region
+                            ? null
+                            : () => actionSelectRegion(region),
+                        size: 18,
+                        colorRegular: selectedRegion == region
+                            ? colorRegion.withOpacity(0.70)
+                            : colorRegion.withOpacity(0.30),
+                        colorMouseOver: selectedRegion == region
+                            ? colorRegion.withOpacity(0.70)
+                            : colorRegion.withOpacity(0.40),
+                      ),
+                    ))
+                        .toList(),
+                  )),
+          ],
+        ),
       );
+
 
   static Widget buildInputCustomConnectionString() =>
       Container(
@@ -334,7 +361,7 @@ class GameWebsite {
     );
 
   static Widget buildTextVersion() =>
-    text(version, color: GameColors.white382, size: FontSize.Small);
+    text('gamestream.online - v$version', color:  Colors.white60, size: FontSize.Regular);
 
   static void actionSelectRegion(ConnectionRegion value) =>
     GameWebsite.region.value = value;

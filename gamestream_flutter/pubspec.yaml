@@ -30,6 +30,7 @@ dependencies:
   flutter_facebook_auth: ^4.0.1
   typedef: ^1.0.5
   device_info_plus: ^6.0.0
+  url_launcher: ^6.1.10
   bleed_common:
     path: C:\Users\Jerome\github\bleed\bleed-common
 

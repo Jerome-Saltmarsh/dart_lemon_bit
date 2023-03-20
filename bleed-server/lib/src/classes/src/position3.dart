@@ -42,8 +42,8 @@ class Position3 with Position {
   }
 
   static bool compare(Position3 a, Position3 b){
-    final aRowColumn = a.x + a.y;
-    final bRowColumn = b.x + b.y;
+    final aRowColumn = a.indexRow + a.indexColumn;
+    final bRowColumn = b.indexRow + b.indexColumn;
 
     if (aRowColumn > bRowColumn) return false;
     if (aRowColumn < bRowColumn) return true;
