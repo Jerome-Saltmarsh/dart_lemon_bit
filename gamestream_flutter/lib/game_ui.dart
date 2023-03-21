@@ -588,8 +588,11 @@ class GameUI {
       onPressed(
         hint: "toggle sound",
         action: GameAudio.toggleMutedSound,
-        child: watch(GameAudio.mutedSound, (bool t) =>
-            GameUI.buildAtlasIconType(t ? IconType.Sound_Disabled : IconType.Sound_Enabled, scale: Icon_Scale)
+        child: Container(
+          width: 32,
+          child: watch(GameAudio.mutedSound, (bool t) =>
+              GameUI.buildAtlasIconType(t ? IconType.Sound_Disabled : IconType.Sound_Enabled, scale: Icon_Scale)
+          ),
         ),
       );
 
