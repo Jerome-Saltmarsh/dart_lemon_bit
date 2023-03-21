@@ -13,16 +13,16 @@ class ServerEvents {
     if (value != GameType.Combat) {
       ClientState.window_visible_player_creation.value = false;
       ClientState.control_visible_respawn_timer.value = false;
-      GameAudio.soundtrack01.stop();
+      GameAudio.musicStop();
     } else {
-      GameAudio.soundtrack01.play();
+      GameAudio.musicPlay();
     }
 
     ClientState.control_visible_player_weapons.value = value == GameType.Combat;
     ClientState.control_visible_scoreboard.value = value == GameType.Combat;
 
     if (value == null) {
-      GameAudio.soundtrack01.stop();
+      GameAudio.musicStop();
       Engine.fullScreenExit();
     }
 

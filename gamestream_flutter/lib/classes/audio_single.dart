@@ -36,7 +36,7 @@ class AudioSingle {
   }
 
   void playXYZ(double x, double y, double z, {double maxDistance = 600}){
-    if (GameAudio.muted.value) return;
+    if (GameAudio.mutedSound.value) return;
     final distanceFromPlayer = GamePlayer.position.distance3(x, y, z);
     final distanceVolume = GameAudio.convertDistanceToVolume(
         distanceFromPlayer,
@@ -50,7 +50,7 @@ class AudioSingle {
   }
 
   void play({double volume = 1.0}) async {
-    if (GameAudio.muted.value) return;
+    if (GameAudio.mutedSound.value) return;
     final playVolume = this.volume * volume;
     if (playVolume <= 0) return;
     await audioPlayer.setVolume(min(playVolume, 1));

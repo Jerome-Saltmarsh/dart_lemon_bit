@@ -6,10 +6,30 @@ import 'library.dart';
 
 class GameAudio {
 
-  static void toggleMuted() => muted.value = !muted.value;
+  static void toggleMutedSound() => mutedSound.value = !mutedSound.value;
+  static void toggleMutedMusic() => mutedMusic.value = !mutedMusic.value;
 
-  static final muted = Watch(false, onChanged: (bool value){
-    if (value){
+  static void musicPlay(){
+    if (mutedMusic.value) return;
+    soundtrack01.play();
+  }
+
+  static void musicStop(){
+    soundtrack01.stop();
+  }
+
+  static final mutedMusic = Watch(false, onChanged: (bool muted){
+    print("music muted: $muted");
+    if (muted) {
+      soundtrack01.audioPlayer.pause();
+    } else {
+      soundtrack01.play();
+    }
+  });
+
+  static final mutedSound = Watch(false, onChanged: (bool muted){
+    print("sound muted: $muted");
+    if (muted){
       for (final audioSource in audioLoops) {
         audioSource.setVolume(0);
         audioSource.audioPlayer.pause();
@@ -20,19 +40,6 @@ class GameAudio {
       }
     }
   });
-  // static final muted = Cache(key: 'game-audio-muted', value: false, onChanged: (bool value){
-  //   print("GameAudio.mutedChanged($value)");
-  //   if (value){
-  //     for (final audioSource in audioLoops) {
-  //       audioSource.setVolume(0);
-  //       audioSource.audioPlayer.pause();
-  //     }
-  //   } else {
-  //     for (final audioSource in audioLoops) {
-  //       audioSource.audioPlayer.play();
-  //     }
-  //   }
-  // });
 
   static var nextCharacterNoise = 100;
   static var nextRandomSound = 0;
@@ -191,7 +198,7 @@ class GameAudio {
   static var _nextAudioSourceUpdate = 0;
 
   static void update() {
-    if (GameAudio.muted.value) {
+    if (GameAudio.mutedSound.value) {
       return;
     }
 

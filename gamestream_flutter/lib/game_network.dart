@@ -202,7 +202,7 @@ class GameNetwork {
         if (!Engine.isLocalHost) {
           Engine.fullScreenEnter();
         }
-        GameAudio.muted.value = false;
+        GameAudio.mutedSound.value = false;
         break;
 
       case ConnectionStatus.Done:
@@ -223,7 +223,7 @@ class GameNetwork {
         // TODO illegal server state assignment
         ServerState.gameType.value = null;
         ServerState.sceneEditable.value = false;
-        GameAudio.muted.value = true;
+        GameAudio.mutedSound.value = true;
         break;
       case ConnectionStatus.Failed_To_Connect:
         WebsiteState.error.value = "Failed to connect";

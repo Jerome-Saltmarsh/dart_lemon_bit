@@ -24,9 +24,7 @@ class ClientState {
   static final messageStatus = Watch("", onChanged: ClientEvents.onChangedMessageStatus);
   static final overrideColor = WatchBool(false);
 
-  static final window_visible_settings        = WatchBool(false);
-  static final window_visible_perks           = WatchBool(false);
-  static final window_visible_items           = WatchBool(false);
+  static final window_visible_light_settings  = WatchBool(false);
   static final window_visible_menu            = WatchBool(false);
   static final window_visible_player_creation = WatchBool(false);
 

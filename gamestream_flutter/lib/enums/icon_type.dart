@@ -44,4 +44,7 @@ class IconType {
   static const Power_Shield       = 45;
   static const Power_Stun         = 46;
   static const Power_Revive       = 47;
+
+  static const Music_Enabled      = 48;
+  static const Music_Disabled     = 49;
 }

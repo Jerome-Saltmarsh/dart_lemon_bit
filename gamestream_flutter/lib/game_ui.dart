@@ -45,7 +45,7 @@ class GameUI {
         // buildPositionedAreaType(),
         buildPositionedMessageStatus(),
         buildWatchGameStatus(),
-        buildWatchBool(ClientState.window_visible_settings, buildWindowSettings),
+        buildWatchBool(ClientState.window_visible_light_settings, buildWindowLightSettings),
       ]);
 
   static Widget buildMapCircle() {
@@ -243,14 +243,14 @@ class GameUI {
     );
   }
 
-  static Widget buildWindowSettings(){
+  static Widget buildWindowLightSettings(){
      return Container(
         padding: GameStyle.Padding_6,
         color: GameColors.brownDark,
         width: 300,
         child: Column(
           children: [
-            text("Settings", bold: true),
+            text("Light-Settings", bold: true),
             height8,
             onPressed(
                 action: GameSettings.ToggleDynamicShadows,
@@ -568,14 +568,12 @@ class GameUI {
               width3,
               buildTime(),
               width3,
-              GameUI.buildIconAudio(),
+              buildIconAudioSound(),
               width3,
-              GameUI.buildIconZoom(),
+              buildIconAudioMusic(),
               width3,
-              onPressed(
-                child: GameUI.buildIconFullscreen(),
-                action:  Engine.fullscreenToggle,
-              ),
+              buildIconToggleFullscreen(),
+              width3,
               onPressed(
                 child: GameUI.buildIconHome(),
                 action: GameNetwork.disconnect,
@@ -584,11 +582,28 @@ class GameUI {
         ),
       );
 
-  static Widget buildIconAudio() =>
+  static Widget buildIconToggleFullscreen() => onPressed(
+              child: GameUI.buildIconFullscreen(),
+              action:  Engine.fullscreenToggle,
+            );
+
+  static Widget buildIconAudioSound() =>
       onPressed(
-        action: GameAudio.toggleMuted,
-        child: watch(GameAudio.muted, (bool t) =>
+        hint: "toggle sound",
+        action: GameAudio.toggleMutedSound,
+        child: watch(GameAudio.mutedSound, (bool t) =>
             GameUI.buildAtlasIconType(t ? IconType.Sound_Disabled : IconType.Sound_Enabled, scale: Icon_Scale)
+        ),
+      );
+
+  static Widget buildIconAudioMusic() =>
+      onPressed(
+        hint: 'toggle music',
+        action: GameAudio.toggleMutedMusic,
+        child: watch(GameAudio.mutedMusic, (bool musicMuted) =>
+            Container(
+                width: 32,
+                child: GameUI.buildAtlasIconType(musicMuted ? IconType.Music_Disabled : IconType.Music_Enabled))
         ),
       );
 
@@ -596,7 +611,9 @@ class GameUI {
       Engine.fullScreen,
       (bool fullscreen) => onPressed(
           action: Engine.fullscreenToggle,
-          child: GameUI.buildAtlasIconType(IconType.Fullscreen, scale: Icon_Scale)));
+          child: Container(
+              width: 32,
+              child: GameUI.buildAtlasIconType(IconType.Fullscreen, scale: Icon_Scale))));
 
   static Widget buildIconZoom() => onPressed(
       action: GameActions.toggleZoom, child: buildAtlasIconType(IconType.Zoom, scale: Icon_Scale));

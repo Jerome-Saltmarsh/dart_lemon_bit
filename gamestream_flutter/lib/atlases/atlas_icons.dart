@@ -40,6 +40,8 @@ class AtlasIcons {
     IconType.Power_Teleport: 503,
     IconType.Power_Revive: 466,
     IconType.Power_Stun: 534,
+    IconType.Music_Enabled: 1,
+    IconType.Music_Disabled: 1,
   }[itemType] ?? 0;
 
   static double getSrcY(int itemType) => const  <int, double> {
@@ -82,6 +84,8 @@ class AtlasIcons {
     IconType.Power_Teleport: 115,
     IconType.Power_Revive: 84,
     IconType.Power_Stun: 83,
+    IconType.Music_Enabled: 499,
+    IconType.Music_Disabled: 609,
   }[itemType] ?? 0;
 
   static double getSrcWidth(int itemType) => const  <int, double> {
@@ -101,6 +105,8 @@ class AtlasIcons {
     IconType.Power_Teleport: 18,
     IconType.Power_Revive: 26,
     IconType.Power_Stun: 25,
+    IconType.Music_Enabled: 90,
+    IconType.Music_Disabled: 90,
   }[itemType] ?? getSrcSize(itemType);
 
   static double getSrcHeight(int itemType) => const  <int, double> {
@@ -120,6 +126,8 @@ class AtlasIcons {
     IconType.Power_Teleport: 25,
     IconType.Power_Revive: 26,
     IconType.Power_Stun: 26,
+    IconType.Music_Enabled: 98,
+    IconType.Music_Disabled: 98,
   }[itemType] ?? getSrcSize(itemType);
 
   static double getSrcSize(int itemType) => const  <int, double> {

@@ -104,7 +104,7 @@ class GameActions {
   }
 
   static void toggleWindowSettings(){
-      ClientState.window_visible_settings.toggle();
+      ClientState.window_visible_light_settings.toggle();
   }
 
   static void createExplosion(double x, double y, double z){
