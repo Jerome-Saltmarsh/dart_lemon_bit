@@ -32,6 +32,7 @@ class ClientState {
 
   static final control_visible_player_weapons = WatchBool(false);
   static final control_visible_scoreboard     = WatchBool(false);
+  static final control_visible_respawn_timer  = WatchBool(false);
 
   static final triggerAlarmNoMessageReceivedFromServer = Watch(false);
 

@@ -4,6 +4,7 @@ import 'package:gamestream_flutter/library.dart';
 
 class GameStyle {
   static final Container_Color = GameColors.brownDark;
+  static final Container_Padding = EdgeInsets.all(16);
 
   static final ExperienceBarColorBackground = Colors.white.withOpacity(Engine.GoldenRatio_0_381);
   static final ExperienceBarColorFill = Colors.white;

@@ -198,6 +198,9 @@ class ServerResponseReader with ByteReader {
         GamePlayer.powerType.value = readByte();
         GamePlayer.powerReady.value = readBool();
         break;
+      case ApiPlayer.Respawn_Timer:
+        GamePlayer.respawnTimer.value = readUInt16();
+        break;
       case ApiPlayer.PerkType:
         GamePlayer.perkType.value = readByte();
         break;

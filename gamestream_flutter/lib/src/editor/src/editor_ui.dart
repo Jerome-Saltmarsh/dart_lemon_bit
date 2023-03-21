@@ -28,12 +28,6 @@ class EditorUI {
               child: EditorUI.buildRowWeatherControls()
           )
       ),
-      // if (activeEditTab == EditTab.Objects)
-      //   Positioned(
-      //     left: 0,
-      //     bottom: 6,
-      //     child: buildColumnSelectedGameObject(),
-      //   ),
       buildWindowAIControls(),
       if (activeEditTab == EditTab.Objects)
         Positioned(

@@ -689,6 +689,12 @@ class GameEvents {
     }
   }
 
+  static void onChangedPlayerRespawnTimer(int respawnTimer) {
+       if (GamePlayer.alive.value) return;
+       ClientState.window_visible_player_creation.value = respawnTimer <= 0;
+       ClientState.control_visible_respawn_timer.value = respawnTimer > 0;
+  }
+
   static void onChangedPlayerWeaponMelee(int weaponType) {
      ClientState.itemGroup.value = ItemGroup.Secondary_Weapon;
   }

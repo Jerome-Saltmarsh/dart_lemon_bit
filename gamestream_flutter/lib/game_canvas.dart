@@ -102,7 +102,6 @@ class GameCanvas {
     }
   }
 
-
   static void renderCanvas(Canvas canvas, Size size) {
 
     if (ServerState.gameRunning.value){
@@ -115,9 +114,9 @@ class GameCanvas {
     GameRender.render3D();
     GameState.renderEditMode();
     GameRender.renderMouseTargetName();
-    ClientState.rendersSinceUpdate.value++;
     renderPlayerRunTarget();
     renderPlayerEnergy();
+    ClientState.rendersSinceUpdate.value++;
 
     // if (ClientState.debugMode.value){
     //   debugRenderIsland();
@@ -125,6 +124,7 @@ class GameCanvas {
   }
 
   static void renderPlayerEnergy() {
+    if (GamePlayer.dead) return;
     renderBarBlue(
         GamePlayer.position.x,
         GamePlayer.position.y,
@@ -202,6 +202,7 @@ class GameCanvas {
   }
 
   static void renderPlayerRunTarget(){
+    if (GamePlayer.dead) return;
     if (GamePlayer.targetCategory == TargetCategory.Run){
       GameRender.renderCircle32(GamePlayer.targetPosition.x, GamePlayer.targetPosition.y, GamePlayer.targetPosition.z);
     }

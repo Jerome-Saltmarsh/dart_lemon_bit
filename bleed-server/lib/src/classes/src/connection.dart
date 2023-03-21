@@ -238,6 +238,10 @@ class Connection with ByteReader {
           error(GameError.PlayerStillAlive);
           return;
         }
+        if (player.respawnTimer > 0) {
+          player.writeError('respawn timer remaining');
+          return;
+        }
         player.game.revive(player);
         return;
 

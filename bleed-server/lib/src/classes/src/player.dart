@@ -65,6 +65,16 @@ class Player extends Character with ByteWriter {
   var _powerType = PowerType.None;
   var powerCooldown = 0;
 
+  var _respawnTimer = Engine.Frames_Per_Second * 7;
+
+  int get respawnTimer => _respawnTimer;
+
+  set respawnTimer(int value){
+     if (_respawnTimer == value) return;
+     _respawnTimer = value;
+     writeApiPlayerRespawnTimer();
+  }
+
   var _perkType = PerkType.None;
 
   int get perkType => _perkType;
@@ -1778,6 +1788,12 @@ class Player extends Character with ByteWriter {
     writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.PerkType);
     writeByte(perkType);
+  }
+
+  void writeApiPlayerRespawnTimer(){
+    writeByte(ServerResponse.Api_Player);
+    writeByte(ApiPlayer.Respawn_Timer);
+    writeUInt16(_respawnTimer);
   }
 }
 

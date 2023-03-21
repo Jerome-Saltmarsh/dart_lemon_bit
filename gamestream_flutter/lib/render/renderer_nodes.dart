@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:gamestream_flutter/isometric/render/highlight_character_nearest_mouse.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class RendererNodes extends Renderer {

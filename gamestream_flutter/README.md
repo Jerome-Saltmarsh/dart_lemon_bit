@@ -26,12 +26,19 @@ ctrl + shift + e    : view recent changes
 [ ] improve sprite sniper rifle
 [ ] improve sprite bazooka
 [ ] feature teleport does damage to things in between
-[ ] fix death sound on spawn
+[ ] fix sound death on spawn
+
+[MODES]
+[ ] PLAY
+[ ] PRACTICE
+[ ] EDITOR
 
 [RELEASE-TASKS]
 [ ] deploy server to all countries
-[ ] youtube clips
 [ ] music track 01
+[ ] setup patreon page
+[ ] setup youtube page
+[ ] feature respawn timer
 
 20.03.2023
 [x] fix edit key codes

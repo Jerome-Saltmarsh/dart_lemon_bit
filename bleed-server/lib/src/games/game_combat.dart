@@ -8,6 +8,7 @@ import 'package:lemon_math/library.dart';
 class GameCombat extends Game {
 
   // constants
+  static const Player_Respawn_Duration  = Engine.Frames_Per_Second * 7;
   static const GameObject_Duration      = 500;
   static const GameObject_Respawn_Duration = 1500;
   static const AI_Respawn_Duration      = 300;
@@ -100,6 +101,7 @@ class GameCombat extends Game {
     player.energy = Player_Energy;
     player.credits = 0;
     player.grenades = 1;
+    player.respawnTimer = Player_Respawn_Duration;
     player.writePlayerEquipment();
     player.writePlayerPower();
   }
@@ -128,6 +130,7 @@ class GameCombat extends Game {
     player.mouse.y = mouseY;
 
     if (player.deadOrBusy) return;
+    if (!player.active) return;
 
     playerUpdateAimTarget(player);
 
@@ -429,15 +432,16 @@ class GameCombat extends Game {
   @override
   void customOnPlayerJoined(Player player) {
     writePlayerScoresAll();
-    player.perkType = PerkType.None;
-    player.powerType = PowerType.Bomb;
-    player.weaponPrimary = ItemType.Weapon_Ranged_Plasma_Pistol;
-    player.weaponSecondary = ItemType.Weapon_Melee_Crowbar;
-    player.weaponType = player.weaponPrimary;
-    player.headType = randomItem(ItemType.Collection_Clothing_Head);
-    player.bodyType = randomItem(ItemType.Collection_Clothing_Body);
-    player.legsType = randomItem(ItemType.Collection_Clothing_Legs);
     setCharacterStateDead(player);
+    player.perkType         = PerkType.None;
+    player.powerType        = PowerType.Bomb;
+    player.weaponPrimary    = ItemType.Weapon_Ranged_Plasma_Pistol;
+    player.weaponSecondary  = ItemType.Weapon_Melee_Crowbar;
+    player.weaponType       = player.weaponPrimary;
+    player.headType         = randomItem(ItemType.Collection_Clothing_Head);
+    player.bodyType         = randomItem(ItemType.Collection_Clothing_Body);
+    player.legsType         = randomItem(ItemType.Collection_Clothing_Legs);
+    player.respawnTimer     = Engine.Frames_Per_Second * 3;
   }
 
   @override

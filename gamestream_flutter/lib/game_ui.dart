@@ -510,6 +510,21 @@ class GameUI {
         }),
       );
 
+  static Widget buildWindowPlayerRespawnTimer(){
+      return buildWatchBool(ClientState.control_visible_respawn_timer, () {
+          return Container(
+            width: 240,
+            height: 240 * goldenRatio_0381,
+            color: GameStyle.Container_Color,
+            padding: GameStyle.Container_Padding,
+            alignment: Alignment.center,
+            child: watch(GamePlayer.respawnTimer, (int respawnTimer){
+              return text("RESPAWN: ${respawnTimer ~/ GameConstants.Server_FPS}", size: 25);
+            }),
+          );
+      });
+  }
+
   static Widget buildPlayersScore(){
     return watch(ServerState.playerScoresReads, (_) => Container(
           padding: GameStyle.Padding_6,
@@ -652,6 +667,16 @@ class GameUI {
               top: GameStyle.Default_Padding,
               left: GameStyle.Default_Padding,
               child: buildPlayersScore(),
+          )
+        ),
+        buildWatchBool(ClientState.control_visible_respawn_timer, () =>
+          Positioned(
+              top: GameStyle.Default_Padding,
+              left: 0,
+              child: Container(
+                  width: Engine.screen.width,
+                  alignment: Alignment.center,
+                  child: buildWindowPlayerRespawnTimer()),
           )
         ),
         buildWatchBool(ClientState.control_visible_player_weapons, () =>

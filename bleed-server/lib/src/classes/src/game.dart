@@ -1405,6 +1405,10 @@ abstract class Game {
     collider.applyGravity();
 
     if (collider.z < 0) {
+      if (collider is Character){
+        setCharacterStateDead(collider);
+        return;
+      }
       deactivateCollider(collider);
       return;
     }
@@ -1499,6 +1503,9 @@ abstract class Game {
   }
 
   void revive(Player player) {
+    if (player.alive) return;
+    if (player.respawnTimer > 0) return;
+
     activateCollider(player);
     player.setCharacterStateSpawning();
     player.health = player.maxHealth;
@@ -1531,7 +1538,6 @@ abstract class Game {
     }
 
     player.health = player.maxHealth;
-
   }
 
   int countAlive(List<Character> characters) {
@@ -1893,7 +1899,12 @@ abstract class Game {
   void updatePlayer(Player player) {
     player.framesSinceClientRequest++;
 
-    if (player.dead) return;
+    if (player.dead) {
+      if (player.respawnTimer > 0) {
+        player.respawnTimer--;
+      }
+      return;
+    }
 
     if (player.energy < player.maxEnergy) {
       player.nextEnergyGain--;
