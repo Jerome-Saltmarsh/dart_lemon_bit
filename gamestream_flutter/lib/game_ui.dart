@@ -31,7 +31,7 @@ class GameUI {
             buildDialogFramesSinceUpdate),
         Positioned(
             top: 0,
-            right: 0,
+            right: 16,
             child: buildRowMainMenu()
         ),
         Positioned(
@@ -565,19 +565,16 @@ class GameUI {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               buildButtonTogglePlayMode(),
-              width3,
+              width6,
               buildTime(),
-              width3,
+              width6,
               buildIconAudioSound(),
-              width3,
+              width6,
               buildIconAudioMusic(),
-              width3,
+              width6,
               buildIconToggleFullscreen(),
-              width3,
-              onPressed(
-                child: GameUI.buildIconHome(),
-                action: GameNetwork.disconnect,
-              ),
+              width6,
+              buildIconHome(),
             ]
         ),
       );
@@ -619,7 +616,11 @@ class GameUI {
       action: GameActions.toggleZoom, child: buildAtlasIconType(IconType.Zoom, scale: Icon_Scale));
 
   static Widget buildIconHome() => onPressed(
-      action: GameNetwork.disconnect, child: buildAtlasIconType(IconType.Home, scale: Icon_Scale));
+      action: GameNetwork.disconnect, child: Container(
+        width: 32,
+        child: buildAtlasIconType(IconType.Home),
+      )
+  );
 
   static Widget buildIconSlotEmpty() =>
       buildAtlasIconType(IconType.Slot, scale: GameInventoryUI.Slot_Scale);

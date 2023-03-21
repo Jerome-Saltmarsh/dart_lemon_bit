@@ -6,7 +6,7 @@ class AtlasIcons {
 
   static double getSrcX(int itemType) => const <int, double> {
     IconType.Zoom: Size * 1,
-    IconType.Home: Size * 2,
+    IconType.Home: 138,
     IconType.Fullscreen: Size * 3,
     IconType.Slot: Size * 1,
     IconType.Rain_None: 128,
@@ -51,7 +51,7 @@ class AtlasIcons {
     IconType.Arrows_East: Size * 3,
     IconType.Arrows_South: Size * 4,
     IconType.Arrows_West: Size * 5,
-    IconType.Home: 0,
+    IconType.Home: 515,
     IconType.Fullscreen: 0,
     IconType.Zoom: 0,
     IconType.Slot: Size * 1,
@@ -89,6 +89,7 @@ class AtlasIcons {
   }[itemType] ?? 0;
 
   static double getSrcWidth(int itemType) => const  <int, double> {
+    IconType.Home: 155,
     IconType.Primary_Weapon: 31,
     IconType.Secondary_Weapon: 12,
     IconType.Tertiary_Weapon: 16,
@@ -110,6 +111,7 @@ class AtlasIcons {
   }[itemType] ?? getSrcSize(itemType);
 
   static double getSrcHeight(int itemType) => const  <int, double> {
+    IconType.Home: 155,
     IconType.Primary_Weapon: 13,
     IconType.Secondary_Weapon: 10,
     IconType.Tertiary_Weapon: 5,
