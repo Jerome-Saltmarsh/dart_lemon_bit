@@ -101,26 +101,19 @@ class Collider extends Position3 {
     velocitySpeed = value;
   }
 
-  void applyVelocity(){
+  void updateVelocity(){
     if (fixed) return;
     x += velocityX;
     y += velocityY;
     z += velocityZ;
-  }
-
-  void applyFriction() {
-    if (fixed) return;
     velocityX *= friction;
     velocityY *= friction;
-    // velocityZ *= friction;
-  }
 
-  void applyGravity(){
-    if (!gravity) return;
-    velocityZ -= GamePhysics.Gravity;
-
-    if (velocityZ < -GamePhysics.Max_Fall_Velocity) {
-      velocityZ = -GamePhysics.Max_Fall_Velocity;
+    if (gravity) {
+      velocityZ -= GamePhysics.Gravity;
+      if (velocityZ < -GamePhysics.Max_Fall_Velocity) {
+        velocityZ = -GamePhysics.Max_Fall_Velocity;
+      }
     }
   }
 

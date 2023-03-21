@@ -1400,9 +1400,7 @@ abstract class Game {
   void updateColliderPhysics(Collider collider) {
     assert (collider.active);
 
-    collider.applyVelocity();
-    collider.applyFriction();
-    collider.applyGravity();
+    collider.updateVelocity();
 
     if (collider.z < 0) {
       if (collider is Character){
