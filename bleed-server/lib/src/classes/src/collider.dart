@@ -118,6 +118,10 @@ class Collider extends Position3 {
   void applyGravity(){
     if (!gravity) return;
     velocityZ -= GamePhysics.Gravity;
+
+    if (velocityZ < -GamePhysics.Max_Fall_Velocity) {
+      velocityZ = -GamePhysics.Max_Fall_Velocity;
+    }
   }
 
   /// FUNCTIONS

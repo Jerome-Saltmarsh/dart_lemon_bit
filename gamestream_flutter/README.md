@@ -38,7 +38,10 @@ ctrl + shift + e    : view recent changes
 [ ] music track 01
 [ ] setup patreon page
 [ ] setup youtube page
-[ ] feature respawn timer
+
+21.03.2023
+[x] feature respawn timer
+[x] fix fall through floor
 
 20.03.2023
 [x] fix edit key codes
