@@ -45,6 +45,10 @@ class AudioSingle {
     play(volume: distanceVolume);
   }
 
+  void stop(){
+    audioPlayer.stop();
+  }
+
   void play({double volume = 1.0}) async {
     if (GameAudio.muted.value) return;
     final playVolume = this.volume * volume;

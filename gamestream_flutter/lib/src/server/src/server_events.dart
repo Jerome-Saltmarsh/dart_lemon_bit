@@ -8,16 +8,23 @@ class ServerEvents {
   }
 
   static void onChangedGameType(int? value){
-    if (value == null) return;
     ClientState.edit.value = value == GameType.Editor;
 
     if (value != GameType.Combat) {
       ClientState.window_visible_player_creation.value = false;
       ClientState.control_visible_respawn_timer.value = false;
+      GameAudio.soundtrack01.stop();
+    } else {
+      GameAudio.soundtrack01.play();
     }
 
     ClientState.control_visible_player_weapons.value = value == GameType.Combat;
     ClientState.control_visible_scoreboard.value = value == GameType.Combat;
+
+    if (value == null) {
+      GameAudio.soundtrack01.stop();
+      Engine.fullScreenExit();
+    }
 
     if (!Engine.isLocalHost){
       Engine.fullScreenEnter();
