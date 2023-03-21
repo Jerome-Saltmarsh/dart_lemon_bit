@@ -312,15 +312,17 @@ class GameAudio {
     final hour = ServerState.hours.value;
 
     if (hour > 22 && hour < 4){
-      return playRandom(soundsNight);
+      playRandom(soundsNight);
+      return;
     }
-    if (hour == 6){
-      return GameAudio.rooster.play(volume: 0.3);
+    if (hour == 6 && randomBool()){
+      rooster.play(volume: 0.3);
+      return;
     }
 
-    if (hour > 9 && hour < 15) {
-      return playRandom(soundsDay);
-    }
+    // if (hour > 9 && hour < 15) {
+    //   return playRandom(soundsDay);
+    // }
     // if (hour >= 15 && hour < 18) {
     //   playRandom(soundsLateAfternoon);
     //   return;
@@ -344,11 +346,7 @@ class GameAudio {
         Engine.randomItem(GameAudio.audioSingleZombieTalking).playV3(character, maxDistance: 500);
         break;
       case CharacterType.Dog:
-        if (randomBool()){
-          GameAudio.wolf_howl.playV3(character);
-        } else {
-          GameAudio.dog_woolf_howl_4.playV3(character);
-        }
+        GameAudio.dog_woolf_howl_4.playV3(character);
         break;
     }
   }

@@ -572,17 +572,12 @@ class GameUI {
               width6,
               buildIconAudioMusic(),
               width6,
-              buildIconToggleFullscreen(),
+              buildIconFullscreen(),
               width6,
               buildIconHome(),
             ]
         ),
       );
-
-  static Widget buildIconToggleFullscreen() => onPressed(
-              child: GameUI.buildIconFullscreen(),
-              action:  Engine.fullscreenToggle,
-            );
 
   static Widget buildIconAudioSound() =>
       onPressed(
@@ -610,6 +605,7 @@ class GameUI {
   static Widget buildIconFullscreen() => WatchBuilder(
       Engine.fullScreen,
       (bool fullscreen) => onPressed(
+          hint: "toggle fullscreen",
           action: Engine.fullscreenToggle,
           child: Container(
               width: 32,
@@ -619,6 +615,7 @@ class GameUI {
       action: GameActions.toggleZoom, child: buildAtlasIconType(IconType.Zoom, scale: Icon_Scale));
 
   static Widget buildIconHome() => onPressed(
+      hint: "Exit",
       action: GameNetwork.disconnect, child: Container(
         width: 32,
         child: buildAtlasIconType(IconType.Home),
