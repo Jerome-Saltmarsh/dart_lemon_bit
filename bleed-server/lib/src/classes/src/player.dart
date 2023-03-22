@@ -167,13 +167,11 @@ class Player extends Character with ByteWriter {
   int get experienceRequiredForNextLevel => game.getExperienceForLevel(level + 1);
   bool get weaponIsEquipped => _equippedWeaponIndex != -1;
 
-  // bool get weaponEquippedRanged => weaponType == weaponRanged;
-  // bool get weaponEquippedMelee => weaponType == weaponMelee;
   double get mouseGridX => (mouse.x + mouse.y) + z;
   double get mouseGridY => (mouse.y - mouse.x) + z;
   int get interactMode => _interactMode;
   /// in radians
-  double get mouseAngle => getAngleBetween(mouseGridX, mouseGridY, x, y);
+  double get mouseAngle => getAngleBetween(mouseGridX  + Character_Gun_Height, mouseGridY + Character_Gun_Height, x, y);
   Scene get scene => game.scene;
   double get magicPercentage {
     if (_energy == 0) return 0;

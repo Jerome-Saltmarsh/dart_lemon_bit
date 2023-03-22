@@ -188,8 +188,8 @@ class GameNetwork {
 
     switch (connection) {
       case ConnectionStatus.Connected:
-        Engine.cursorType.value = CursorType.None;
         GameIO.addListeners();
+        // Engine.cursorType.value = CursorType.None;
         Engine.onDrawCanvas = GameCanvas.renderCanvas;
         Engine.onDrawForeground = GameCanvas.renderForeground;
         Engine.onUpdate = GameState.update;
@@ -199,10 +199,10 @@ class GameNetwork {
         Engine.targetZoom = GameConfig.Zoom_Default;
         ClientState.hoverDialogType.value = DialogType.None;
         ClientState.timeConnectionEstablished = DateTime.now();
+        GameAudio.mutedSound.value = false;
         if (!Engine.isLocalHost) {
           Engine.fullScreenEnter();
         }
-        GameAudio.mutedSound.value = false;
         break;
 
       case ConnectionStatus.Done:

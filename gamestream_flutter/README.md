@@ -38,12 +38,16 @@ ctrl + shift + e    : view recent changes
 [ ] update linked in profile
 [ ] setup patreon page
 [ ] setup youtube page
-[ ] mobile compatible 
+[ ] mobile compatible
+[ ] youtube video 45 seconds
+[ ] window main menu
+
+23.03.2023
+[x] fix cursor mouse position
 
 22.03.2023
-[ ] music track 02 
-[ ] youtube video 45 seconds 
-[ ] multiple music tracks
+[x] music track 02 
+[x] multiple music tracks
 
 21.03.2023
 [x] music track 01

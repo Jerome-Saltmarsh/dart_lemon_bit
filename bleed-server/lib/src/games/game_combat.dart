@@ -3,12 +3,12 @@
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/classes/src/game_environment.dart';
 import 'package:bleed_server/src/classes/src/game_time.dart';
+import 'package:bleed_server/src/system.dart';
 import 'package:lemon_math/library.dart';
 
 class GameCombat extends Game {
-
   // constants
-  static const Player_Respawn_Duration  = Engine.Frames_Per_Second * 7;
+  static final Player_Respawn_Duration  = Engine.Frames_Per_Second * (isLocalMachine ? 2 : 7);
   static const GameObject_Duration      = 500;
   static const GameObject_Respawn_Duration = 1500;
   static const AI_Respawn_Duration      = 300;
