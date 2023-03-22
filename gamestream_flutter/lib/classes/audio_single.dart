@@ -14,7 +14,7 @@ class AudioSingle {
 
   AudioSingle({
     required this.name,
-    required this.volume,
+    this.volume = 1,
   }){
     source = AudioSource.uri(Uri.parse(url));
     audioPlayer.setAudioSource(source);

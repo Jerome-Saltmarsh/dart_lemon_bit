@@ -35,11 +35,18 @@ ctrl + shift + e    : view recent changes
 
 [RELEASE-TASKS]
 [ ] deploy server to all countries
-[ ] music track 01
+[ ] update linked in profile
 [ ] setup patreon page
 [ ] setup youtube page
+[ ] mobile compatible 
+
+22.03.2023
+[ ] music track 02 
+[ ] youtube video 45 seconds 
+[ ] multiple music tracks
 
 21.03.2023
+[x] music track 01
 [x] feature respawn timer
 [x] fix fall through floor
 

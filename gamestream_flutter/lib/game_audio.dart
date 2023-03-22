@@ -1,5 +1,7 @@
 
 import 'package:gamestream_flutter/classes/audio_single.dart';
+import 'package:gamestream_flutter/classes/audio_tracks.dart';
+import 'package:just_audio/just_audio.dart';
 
 import 'library.dart';
 
@@ -11,19 +13,19 @@ class GameAudio {
 
   static void musicPlay(){
     if (mutedMusic.value) return;
-    soundtrack01.play();
+    audioTracks.play();
   }
 
   static void musicStop(){
-    soundtrack01.stop();
+    audioTracks.stop();
   }
 
   static final mutedMusic = Watch(false, onChanged: (bool muted){
     print("music muted: $muted");
     if (muted) {
-      soundtrack01.audioPlayer.pause();
+      audioTracks.audioPlayer.pause();
     } else {
-      soundtrack01.play();
+      audioTracks.play();
     }
   });
 
@@ -45,6 +47,15 @@ class GameAudio {
   static var nextRandomSound = 0;
   static var nextRandomMusic = 0;
 
+  static final audioTracks = AudioTracks(
+     tracks: [
+       AudioSource.uri(Uri.parse('assets/audio/music/gamestream-track01.mp3')),
+       AudioSource.uri(Uri.parse('assets/audio/music/gamestream-track02.mp3')),
+       AudioSource.uri(Uri.parse('assets/audio/music/gamestream-track03.mp3')),
+       AudioSource.uri(Uri.parse('assets/audio/music/gamestream-track04.mp3')),
+     ]
+  );
+
   static final musicNight = [
     AudioSingle(name: 'creepy-whistle', volume: 0.1),
     AudioSingle(name: 'creepy-wind', volume: 0.1),
@@ -53,7 +64,6 @@ class GameAudio {
 
   static final soundsNight = [
     AudioSingle(name: 'owl-1', volume: 0.15),
-    // wolf_howl,
     AudioSingle(name: 'creepy-5', volume: 0.2),
   ];
 
@@ -73,8 +83,6 @@ class GameAudio {
     AudioLoop(name: 'distant-thunder', getTargetVolume: getVolumeTargetDistanceThunder),
     AudioLoop(name: 'heart-beat', getTargetVolume: getVolumeHeartBeat),
   ];
-
-  static final soundtrack01 = AudioSingle(name: 'soundtrack-01', volume: 0.5);
 
   static final dog_woolf_howl_4 = AudioSingle(name: 'dog-woolf-howl-4', volume: 0.5);
   static final wolf_howl = AudioSingle(name: 'wolf-howl', volume: 0.5);

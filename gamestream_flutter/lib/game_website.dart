@@ -79,7 +79,7 @@ class GameWebsite {
            mainAxisAlignment: MainAxisAlignment.center,
            crossAxisAlignment: CrossAxisAlignment.center,
            children: [
-             text("please wait"),
+             text("loading gamestream online"),
              height8,
              FutureBuilder<ui.Image>(
                future: Engine.loadImageAsset('images/loading-icon.png'),

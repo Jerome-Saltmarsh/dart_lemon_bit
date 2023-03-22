@@ -4,11 +4,10 @@ import 'library.dart';
 
 void main() {
   Engine.run(
-    title: "Gamestream",
+    title: "GAMESTREAM ONLINE",
     init: GameSystem.init,
     buildUI: GameWebsite.buildUI,
     buildLoadingScreen: GameWebsite.buildLoadingPage,
-    // themeData: ThemeData(fontFamily: 'JetBrainsMono-Regular'),
     themeData: ThemeData(fontFamily: 'VT323-Regular'),
     backgroundColor: GameColors.black,
     onError: GameSystem.onError,
