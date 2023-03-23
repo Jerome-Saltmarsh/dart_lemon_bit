@@ -661,12 +661,8 @@ class GameUI {
 
     return GameUI.buildDialogUIControl(
         child: onMouseOver(
-            onEnter: () {
-              ClientState.window_visible_menu.value = true;
-            },
-            onExit: () {
-              ClientState.window_visible_menu.value = false;
-            },
+            onEnter: ClientState.window_visible_menu.setTrue,
+            onExit: ClientState.window_visible_menu.setFalse,
             builder: (bool mouseOver) => panel,
         ),
       );

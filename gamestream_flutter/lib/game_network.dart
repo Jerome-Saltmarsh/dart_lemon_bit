@@ -185,6 +185,7 @@ class GameNetwork {
     Engine.onDrawForeground = null;
     serverResponseReader.bufferSizeTotal.value = 0;
     ClientState.clearParticles();
+    ClientState.window_visible_menu.setFalse();
 
     switch (connection) {
       case ConnectionStatus.Connected:
