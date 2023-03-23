@@ -30,9 +30,14 @@ class GameUI {
         buildWatchBool(ClientState.triggerAlarmNoMessageReceivedFromServer,
             buildDialogFramesSinceUpdate),
         Positioned(
-            top: 0,
+            top: 16,
             right: 16,
             child: buildRowMainMenu()
+        ),
+        Positioned(
+            top: 16,
+            right: 16 * 16,
+            child: buildButtonTogglePlayMode(),
         ),
         Positioned(
           child: buildMapCircle(),
@@ -628,22 +633,22 @@ class GameUI {
 
   static Widget buildRowMainMenu() {
     final controlTime = buildTime();
-    final togglePlayMode = buildButtonTogglePlayMode();
     final iconMenu = buildIconMenu();
 
     final panel = watch(ClientState.window_visible_menu, (bool menuVisible){
       return Container(
         color: menuVisible ? GameStyle.Container_Color : Colors.transparent,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
+            height16,
             Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  togglePlayMode,
-                  width6,
                   controlTime,
-                  width6,
+                  width32,
                   iconMenu,
+                  width16,
                 ]
             ),
             if (menuVisible)
@@ -1478,11 +1483,11 @@ class GameUI {
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
       WatchBuilder(ServerState.hours, (int hours){
-        return text(padZero(hours));
+        return text(padZero(hours), size: 22);
       }),
-      text(":"),
+      text(":", size: 22),
       WatchBuilder(ServerState.minutes, (int minutes){
-        return text(padZero(minutes));
+        return text(padZero(minutes), size: 22);
       }),
     ],
   );
