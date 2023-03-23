@@ -44,6 +44,7 @@ ctrl + shift + e    : view recent changes
 
 23.03.2023
 [x] fix cursor mouse position
+[x] fix respawn window position
 
 22.03.2023
 [x] music track 02 

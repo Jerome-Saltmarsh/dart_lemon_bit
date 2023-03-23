@@ -689,7 +689,7 @@ class GameUI {
         ),
         buildWatchBool(ClientState.control_visible_respawn_timer, () =>
           Positioned(
-              top: GameStyle.Default_Padding,
+              bottom: GameStyle.Default_Padding,
               left: 0,
               child: Container(
                   width: Engine.screen.width,
@@ -1362,7 +1362,7 @@ class GameUI {
   static Widget buildPositionedContainerRespawn(){
     const width = 200;
     return Positioned(
-      top: 150,
+      bottom: 150,
       child: Container(
         width: Engine.screen.width,
         alignment: Alignment.center,
