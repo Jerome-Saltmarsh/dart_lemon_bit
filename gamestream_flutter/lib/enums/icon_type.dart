@@ -50,4 +50,7 @@ class IconType {
 
   static const Checkbox_True      = 50;
   static const Checkbox_False     = 51;
+
+  static const Cog                = 52;
+  static const Cog_Turned         = 53;
 }

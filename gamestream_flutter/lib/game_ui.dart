@@ -633,7 +633,7 @@ class GameUI {
 
   static Widget buildRowMainMenu() {
     final controlTime = buildTime();
-    final iconMenu = buildIconMenu();
+    // final iconMenu = buildIconMenu();
 
     final panel = watch(ClientState.window_visible_menu, (bool menuVisible){
       return Container(
@@ -647,7 +647,8 @@ class GameUI {
                 children: [
                   controlTime,
                   width32,
-                  iconMenu,
+                  // iconMenu,
+                  menuVisible ? buildIconCogTurned() : buildIconCog(),
                   width16,
                 ]
             ),
@@ -711,6 +712,22 @@ class GameUI {
       child: Container(
         width: 32,
         child: buildAtlasIconType(IconType.Home),
+      )
+  );
+
+  static Widget buildIconCog() => onPressed(
+      action: ClientState.window_visible_menu.toggle,
+      child: Container(
+        width: 32,
+        child: buildAtlasIconType(IconType.Cog),
+      )
+  );
+
+  static Widget buildIconCogTurned() => onPressed(
+      action: ClientState.window_visible_menu.toggle,
+      child: Container(
+        width: 32,
+        child: buildAtlasIconType(IconType.Cog_Turned),
       )
   );
 
