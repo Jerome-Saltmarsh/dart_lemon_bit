@@ -605,6 +605,7 @@ class Engine {
 
     SystemChannels.keyEvent.setMessageHandler(_handleRawKeyMessage);
 
+
     runApp(_internalBuildApp());
 
     paint.filterQuality = FilterQuality.none;
@@ -617,9 +618,7 @@ class Engine {
       }
     });
 
-    document.onFullscreenChange.listen((event) {
-      fullScreen.value = fullScreenActive;
-    });
+    document.addEventListener('fullscreenchange', _internalOnFullScreenChanged);
 
     loadBufferImage('images/atlas.png');
     disableRightClickContextMenu();
@@ -633,6 +632,11 @@ class Engine {
         _internalOnUpdate,
     );
     watchInitialized.value = true;
+  }
+
+  static void _internalOnFullScreenChanged(event){
+    print(event);
+    fullScreen.value = fullScreenActive;
   }
 
   static void resetUpdateTimer(){
