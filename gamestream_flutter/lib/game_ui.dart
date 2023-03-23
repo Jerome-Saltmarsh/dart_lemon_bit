@@ -31,11 +31,6 @@ class GameUI {
             buildDialogFramesSinceUpdate),
         Positioned(
             top: 16,
-            right: 16,
-            child: buildRowMainMenu()
-        ),
-        Positioned(
-            top: 16,
             right: 16 * 16,
             child: buildButtonTogglePlayMode(),
         ),
@@ -51,6 +46,11 @@ class GameUI {
         buildPositionedMessageStatus(),
         buildWatchGameStatus(),
         buildWatchBool(ClientState.window_visible_light_settings, buildWindowLightSettings),
+        Positioned(
+            top: 16,
+            right: 16,
+            child: buildRowMainMenu()
+        ),
         // Positioned(
         //     right: GameStyle.Default_Padding,
         //     top: 50,
@@ -270,8 +270,8 @@ class GameUI {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    text("SOUND"),
-                    watch(GameAudio.mutedSound, (bool muted) => buildIconCheckbox(muted)),
+                    text("SOUND", size: 20, color: Colors.white70),
+                    watch(GameAudio.mutedSound, (bool muted) => buildIconCheckbox(!muted)),
                   ],
                 ),
               ),
@@ -283,8 +283,8 @@ class GameUI {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    text("MUSIC"),
-                    watch(GameAudio.mutedMusic, (bool muted) => buildIconCheckbox(muted)),
+                    text("MUSIC", size: 20, color: Colors.white70),
+                    watch(GameAudio.mutedMusic, (bool muted) => buildIconCheckbox(!muted)),
                   ],
                 ),
               ),
@@ -296,7 +296,7 @@ class GameUI {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    text("FULLSCREEN"),
+                    text("FULLSCREEN", size: 20, color: Colors.white70),
                     watch(Engine.fullScreen, buildIconCheckbox),
                   ],
                 ),
@@ -647,7 +647,6 @@ class GameUI {
                 children: [
                   controlTime,
                   width32,
-                  // iconMenu,
                   menuVisible ? buildIconCogTurned() : buildIconCog(),
                   width16,
                 ]

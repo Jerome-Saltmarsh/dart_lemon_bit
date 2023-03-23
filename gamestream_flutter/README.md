@@ -41,6 +41,8 @@ ctrl + shift + e    : view recent changes
 [ ] mobile compatible
 [ ] youtube video 45 seconds
 [ ] window main menu
+[ ] graphic settings enable paint anti alias
+[ ] graphic settings modify paint filter quality
 
 23.03.2023
 [x] fix cursor mouse position

@@ -604,13 +604,10 @@ class Engine {
   static Future _internalInit() async {
 
     SystemChannels.keyEvent.setMessageHandler(_handleRawKeyMessage);
-
-
     runApp(_internalBuildApp());
 
     paint.filterQuality = FilterQuality.none;
     paint.isAntiAlias = false;
-    // keyboard.addListener(_internalOnKeyboardEvent);
 
     mouseRightDown.onChanged((bool value) {
       if (value) {
@@ -635,7 +632,6 @@ class Engine {
   }
 
   static void _internalOnFullScreenChanged(event){
-    print(event);
     fullScreen.value = fullScreenActive;
   }
 

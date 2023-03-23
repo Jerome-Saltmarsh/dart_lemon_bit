@@ -5,8 +5,8 @@ class AtlasIcons {
   static const Size = 32.0;
 
   static double getSrcX(int itemType) => const <int, double> {
-    IconType.Checkbox_True: 176,
-    IconType.Checkbox_False: 304,
+    IconType.Checkbox_True: 304,
+    IconType.Checkbox_False: 176,
     IconType.Zoom: Size * 1,
     IconType.Home: 138,
     IconType.Cog: 138,
