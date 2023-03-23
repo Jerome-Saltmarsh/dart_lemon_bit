@@ -46,6 +46,7 @@ class GameUI {
         buildPositionedMessageStatus(),
         buildWatchGameStatus(),
         buildWatchBool(ClientState.window_visible_light_settings, buildWindowLightSettings),
+        buildWatchBool(ClientState.window_visible_menu, buildWindowMenu),
       ]);
 
   static Widget buildMapCircle() {
@@ -239,6 +240,20 @@ class GameUI {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  static Widget buildWindowMenu(){
+    return Container(
+      alignment: Alignment.center,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          text("MENU"),
+          text("DISCONNECT"),
+        ],
       ),
     );
   }

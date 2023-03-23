@@ -80,6 +80,10 @@ class ClientEvents {
       return;
     }
 
+    if (key == KeyCode.Escape) {
+      ClientState.window_visible_menu.toggle();
+    }
+
     if (GameState.playMode) {
       onKeyPressedModePlay(key);
     } else {

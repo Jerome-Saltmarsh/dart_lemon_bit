@@ -101,7 +101,6 @@ class GameCombat extends Game {
     player.energy = Player_Energy;
     player.credits = 0;
     player.grenades = 1;
-    player.respawnTimer = Player_Respawn_Duration;
     player.writePlayerEquipment();
     player.writePlayerPower();
   }
@@ -219,8 +218,12 @@ class GameCombat extends Game {
   void customOnPlayerDead(Player player) {
     player.powerCooldown = 0;
     player.buffDuration = 0;
+    player.respawnTimer = Player_Respawn_Duration;
     player.writePlayerPower();
   }
+
+
+
 
   @override
   void customOnCharacterKilled(Character target, dynamic src) {
@@ -441,7 +444,6 @@ class GameCombat extends Game {
     player.headType         = randomItem(ItemType.Collection_Clothing_Head);
     player.bodyType         = randomItem(ItemType.Collection_Clothing_Body);
     player.legsType         = randomItem(ItemType.Collection_Clothing_Legs);
-    player.respawnTimer     = Engine.Frames_Per_Second * 3;
   }
 
   @override
