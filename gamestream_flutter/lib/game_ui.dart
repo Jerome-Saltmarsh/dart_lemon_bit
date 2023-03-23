@@ -46,7 +46,10 @@ class GameUI {
         buildPositionedMessageStatus(),
         buildWatchGameStatus(),
         buildWatchBool(ClientState.window_visible_light_settings, buildWindowLightSettings),
-        buildWatchBool(ClientState.window_visible_menu, buildWindowMenu),
+        Positioned(
+            right: GameStyle.Default_Padding,
+            top: 50,
+            child: buildWatchBool(ClientState.window_visible_menu, buildWindowMenu))
       ]);
 
   static Widget buildMapCircle() {
@@ -245,15 +248,61 @@ class GameUI {
   }
 
   static Widget buildWindowMenu(){
-    return Container(
-      alignment: Alignment.center,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          text("MENU"),
-          text("DISCONNECT"),
-        ],
+    const width = 200.0;
+    return buildDialogUIControl(
+      child: Container(
+        width: width,
+        // height: width * goldenRatio_0618,
+        alignment: Alignment.center,
+        color: GameStyle.Container_Color,
+        padding: GameStyle.Container_Padding,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            text("MENU", size: 25),
+            onPressed(
+              action: GameAudio.toggleMutedSound,
+              child: Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    text("SOUND"),
+                    watch(GameAudio.mutedSound, (bool muted) => buildIconCheckbox(muted)),
+                  ],
+                ),
+              ),
+            ),
+            height6,
+            onPressed(
+              action: GameAudio.toggleMutedMusic,
+              child: Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    text("MUSIC"),
+                    watch(GameAudio.mutedMusic, (bool muted) => buildIconCheckbox(muted)),
+                  ],
+                ),
+              ),
+            ),
+            height6,
+            onPressed(
+              action: Engine.fullscreenToggle,
+              child: Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    text("FULLSCREEN"),
+                    watch(Engine.fullScreen, buildIconCheckbox),
+                  ],
+                ),
+              ),
+            ),
+            height24,
+            text("DISCONNECT", size: 25),
+          ],
+        ),
       ),
     );
   }
@@ -541,22 +590,24 @@ class GameUI {
   }
 
   static Widget buildPlayersScore(){
-    return watch(ServerState.playerScoresReads, (_) => Container(
-          padding: GameStyle.Padding_6,
-          color: Colors.black26,
-          constraints: BoxConstraints(
-            maxHeight: 400,
-          ),
-          width: 180,
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-               children: ServerState.playerScores
-                   .map(buildRowPlayerScore)
-                   .toList(growable: false)
+    return IgnorePointer(
+      child: watch(ServerState.playerScoresReads, (_) => Container(
+            padding: GameStyle.Padding_6,
+            color: Colors.black26,
+            constraints: BoxConstraints(
+              maxHeight: 400,
             ),
-          ),
-        ));
+            width: 180,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                 children: ServerState.playerScores
+                     .map(buildRowPlayerScore)
+                     .toList(growable: false)
+              ),
+            ),
+          )),
+    );
   }
 
   static Widget buildRowPlayerScore(PlayerScore playerScore) =>
@@ -582,12 +633,6 @@ class GameUI {
               buildButtonTogglePlayMode(),
               width6,
               buildTime(),
-              width6,
-              buildIconAudioSound(),
-              width6,
-              buildIconAudioMusic(),
-              width6,
-              buildIconFullscreen(),
               width6,
               buildIconHome(),
             ]
@@ -1423,4 +1468,9 @@ class GameUI {
 
     }[itemType] ?? 0;
   }
+
+  static Widget buildIconCheckbox(bool value) => Container(
+        width: 32,
+        child: buildAtlasIconType(value ? IconType.Checkbox_True : IconType.Checkbox_False),
+    );
 }

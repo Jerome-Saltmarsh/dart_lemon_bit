@@ -47,4 +47,7 @@ class IconType {
 
   static const Music_Enabled      = 48;
   static const Music_Disabled     = 49;
+
+  static const Checkbox_True      = 50;
+  static const Checkbox_False     = 51;
 }

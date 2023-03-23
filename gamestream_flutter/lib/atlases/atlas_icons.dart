@@ -5,6 +5,8 @@ class AtlasIcons {
   static const Size = 32.0;
 
   static double getSrcX(int itemType) => const <int, double> {
+    IconType.Checkbox_True: 176,
+    IconType.Checkbox_False: 304,
     IconType.Zoom: Size * 1,
     IconType.Home: 138,
     IconType.Fullscreen: Size * 3,
@@ -45,6 +47,8 @@ class AtlasIcons {
   }[itemType] ?? 0;
 
   static double getSrcY(int itemType) => const  <int, double> {
+    IconType.Checkbox_True: 704,
+    IconType.Checkbox_False: 704,
     IconType.Arrows_Up: Size * 0,
     IconType.Arrows_Down: Size * 1,
     IconType.Arrows_North: Size * 2,
@@ -91,6 +95,8 @@ class AtlasIcons {
   }[itemType] ?? 0;
 
   static double getSrcWidth(int itemType) => const  <int, double> {
+    IconType.Checkbox_True: 112,
+    IconType.Checkbox_False: 112,
     IconType.Home: 155,
     IconType.Sound_Enabled: 137,
     IconType.Sound_Disabled: 137,
@@ -115,6 +121,8 @@ class AtlasIcons {
   }[itemType] ?? getSrcSize(itemType);
 
   static double getSrcHeight(int itemType) => const  <int, double> {
+    IconType.Checkbox_True: 112,
+    IconType.Checkbox_False: 112,
     IconType.Home: 155,
     IconType.Sound_Enabled: 107,
     IconType.Sound_Disabled: 107,

@@ -189,7 +189,7 @@ class GameNetwork {
     switch (connection) {
       case ConnectionStatus.Connected:
         GameIO.addListeners();
-        // Engine.cursorType.value = CursorType.None;
+        Engine.cursorType.value = CursorType.None;
         Engine.onDrawCanvas = GameCanvas.renderCanvas;
         Engine.onDrawForeground = GameCanvas.renderForeground;
         Engine.onUpdate = GameState.update;
