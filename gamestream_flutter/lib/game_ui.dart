@@ -46,10 +46,10 @@ class GameUI {
         buildPositionedMessageStatus(),
         buildWatchGameStatus(),
         buildWatchBool(ClientState.window_visible_light_settings, buildWindowLightSettings),
-        Positioned(
-            right: GameStyle.Default_Padding,
-            top: 50,
-            child: buildWatchBool(ClientState.window_visible_menu, buildWindowMenu))
+        // Positioned(
+        //     right: GameStyle.Default_Padding,
+        //     top: 50,
+        //     child: buildWatchBool(ClientState.window_visible_menu, buildWindowMenu))
       ]);
 
   static Widget buildMapCircle() {
@@ -252,7 +252,6 @@ class GameUI {
     return buildDialogUIControl(
       child: Container(
         width: width,
-        // height: width * goldenRatio_0618,
         alignment: Alignment.center,
         color: GameStyle.Container_Color,
         padding: GameStyle.Container_Padding,
@@ -260,7 +259,6 @@ class GameUI {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            text("MENU", size: 25),
             onPressed(
               action: GameAudio.toggleMutedSound,
               child: Container(
@@ -300,7 +298,10 @@ class GameUI {
               ),
             ),
             height24,
-            text("DISCONNECT", size: 25),
+            onPressed(
+                action: GameNetwork.disconnect,
+                child: text("DISCONNECT", size: 25),
+            ),
           ],
         ),
       ),
@@ -625,19 +626,45 @@ class GameUI {
       ),
   );
 
-  static Widget buildRowMainMenu() =>
-      GameUI.buildDialogUIControl(
-        child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              buildButtonTogglePlayMode(),
-              width6,
-              buildTime(),
-              width6,
-              buildIconHome(),
-            ]
+  static Widget buildRowMainMenu() {
+    final controlTime = buildTime();
+    final togglePlayMode = buildButtonTogglePlayMode();
+    final iconMenu = buildIconMenu();
+
+    final panel = watch(ClientState.window_visible_menu, (bool menuVisible){
+      return Container(
+        color: menuVisible ? GameStyle.Container_Color : Colors.transparent,
+        child: Column(
+          children: [
+            Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  togglePlayMode,
+                  width6,
+                  controlTime,
+                  width6,
+                  iconMenu,
+                ]
+            ),
+            if (menuVisible)
+              buildWindowMenu(),
+          ],
         ),
       );
+    });
+
+    return GameUI.buildDialogUIControl(
+        child: onMouseOver(
+            onEnter: () {
+              ClientState.window_visible_menu.value = true;
+            },
+            onExit: () {
+              ClientState.window_visible_menu.value = false;
+            },
+            builder: (bool mouseOver) => panel,
+        ),
+      );
+  }
 
   static Widget buildIconAudioSound() =>
       onPressed(
@@ -674,9 +701,9 @@ class GameUI {
   static Widget buildIconZoom() => onPressed(
       action: GameActions.toggleZoom, child: buildAtlasIconType(IconType.Zoom, scale: Icon_Scale));
 
-  static Widget buildIconHome() => onPressed(
-      hint: "Exit",
-      action: GameNetwork.disconnect, child: Container(
+  static Widget buildIconMenu() => onPressed(
+      action: ClientState.window_visible_menu.toggle,
+      child: Container(
         width: 32,
         child: buildAtlasIconType(IconType.Home),
       )
@@ -1447,20 +1474,17 @@ class GameUI {
     );
   }
 
-  static Widget buildTime() => Tooltip(
-    message: "Time",
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        WatchBuilder(ServerState.hours, (int hours){
-          return text(padZero(hours));
-        }),
-        text(":"),
-        WatchBuilder(ServerState.minutes, (int minutes){
-          return text(padZero(minutes));
-        }),
-      ],
-    ),
+  static Widget buildTime() => Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      WatchBuilder(ServerState.hours, (int hours){
+        return text(padZero(hours));
+      }),
+      text(":"),
+      WatchBuilder(ServerState.minutes, (int minutes){
+        return text(padZero(minutes));
+      }),
+    ],
   );
 
   int getItemTypeIconColor(int itemType){
