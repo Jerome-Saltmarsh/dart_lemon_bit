@@ -43,7 +43,7 @@ class AtlasIcons {
     IconType.Power_Invisible: 563,
     IconType.Power_Teleport: 503,
     IconType.Power_Revive: 466,
-    IconType.Power_Stun: 534,
+    IconType.Power_Stun: 674,
     IconType.Music_Enabled: 1,
     IconType.Music_Disabled: 1,
   }[itemType] ?? 0;
@@ -93,7 +93,7 @@ class AtlasIcons {
     IconType.Power_Invisible: 115,
     IconType.Power_Teleport: 115,
     IconType.Power_Revive: 84,
-    IconType.Power_Stun: 83,
+    IconType.Power_Stun: 113,
     IconType.Music_Enabled: 499,
     IconType.Music_Disabled: 609,
   }[itemType] ?? 0;
@@ -121,7 +121,7 @@ class AtlasIcons {
     IconType.Power_Invisible: 26,
     IconType.Power_Teleport: 18,
     IconType.Power_Revive: 26,
-    IconType.Power_Stun: 25,
+    IconType.Power_Stun: 87,
     IconType.Music_Enabled: 90,
     IconType.Music_Disabled: 90,
   }[itemType] ?? getSrcSize(itemType);
@@ -149,7 +149,7 @@ class AtlasIcons {
     IconType.Power_Invisible: 25,
     IconType.Power_Teleport: 25,
     IconType.Power_Revive: 26,
-    IconType.Power_Stun: 26,
+    IconType.Power_Stun: 174,
     IconType.Music_Enabled: 98,
     IconType.Music_Disabled: 98,
   }[itemType] ?? getSrcSize(itemType);
