@@ -500,9 +500,8 @@ class GameCombat extends Game {
   }
 
   void playerUsePower(Player player){
-    if (player.powerCooldown > 0) {
-      return;
-    }
+    if (player.powerCooldown > 0) return;
+    if (player.deadBusyOrWeaponStateBusy) return;
     player.powerCooldown = getPlayerPowerTypeCooldownTotal(player);
     player.writePlayerPower();
     player.writePlayerEvent(PlayerEvent.Power_Used);

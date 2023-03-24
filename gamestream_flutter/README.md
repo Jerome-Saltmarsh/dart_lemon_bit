@@ -43,7 +43,11 @@ ctrl + shift + e    : view recent changes
 [ ] youtube video 45 seconds
 [ ] graphic settings enable paint anti alias
 [ ] graphic settings modify paint filter quality
-[ ] fix weapon icons
+
+24.03.2023
+[x] fix power icon resolution
+[x] fix use power while busy
+[x] track-02
 
 23.03.2023
 [x] window main menu
