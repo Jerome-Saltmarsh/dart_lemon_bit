@@ -49,10 +49,9 @@ class GameAudio {
 
   static final audioTracks = AudioTracks(
      tracks: [
-       AudioSource.uri(Uri.parse('assets/audio/music/gamestream-track01.mp3')),
-       AudioSource.uri(Uri.parse('assets/audio/music/gamestream-track02.mp3')),
-       AudioSource.uri(Uri.parse('assets/audio/music/gamestream-track03.mp3')),
-       AudioSource.uri(Uri.parse('assets/audio/music/gamestream-track04.mp3')),
+       AudioSource.uri(Uri.parse('assets/audio/music/gamestream-track-01.mp3')),
+       AudioSource.uri(Uri.parse('assets/audio/music/gamestream-track-02.mp3')),
+       AudioSource.uri(Uri.parse('assets/audio/music/gamestream-track-03.mp3')),
      ]
   );
 

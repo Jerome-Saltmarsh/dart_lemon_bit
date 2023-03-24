@@ -26,7 +26,7 @@ ctrl + shift + e    : view recent changes
 [ ] improve sprite sniper rifle
 [ ] improve sprite bazooka
 [ ] feature teleport does damage to things in between
-[ ] fix sound death on spawn
+[ ] graphic settings enable paint anti alias
 
 [MODES]
 [ ] PLAY
@@ -41,8 +41,7 @@ ctrl + shift + e    : view recent changes
 [ ] setup youtube page
 [ ] mobile compatible
 [ ] youtube video 45 seconds
-[ ] graphic settings enable paint anti alias
-[ ] graphic settings modify paint filter quality
+[ ] fix sound death on spawn
 
 24.03.2023
 [x] fix power icon resolution
