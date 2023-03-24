@@ -19,8 +19,8 @@ class PowerType {
    
    static String getName(int value) => const <int, String> {
       None        : "None",
-      Bomb        : "Bomb",
-      Teleport    : "Shift",
+      Bomb        : "Explode",
+      Teleport    : "Teleport", // Dash
       Invisible   : "Vanish",
       Shield      : "Shield",
       Stun        : "Stun",

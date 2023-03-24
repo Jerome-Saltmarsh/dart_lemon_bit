@@ -34,17 +34,19 @@ ctrl + shift + e    : view recent changes
 [ ] EDITOR
 
 [RELEASE-TASKS]
+[ ] purchase domain squigitalgames.com
 [ ] deploy server to all countries
 [ ] update linked in profile
 [ ] setup patreon page
 [ ] setup youtube page
 [ ] mobile compatible
 [ ] youtube video 45 seconds
-[ ] window main menu
 [ ] graphic settings enable paint anti alias
 [ ] graphic settings modify paint filter quality
+[ ] fix weapon icons
 
 23.03.2023
+[x] window main menu
 [x] fix cursor mouse position
 [x] fix respawn window position
 

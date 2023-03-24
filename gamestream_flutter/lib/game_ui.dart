@@ -104,107 +104,107 @@ class GameUI {
     const titleFontSize = 22;
     const titleFontColor = Colors.white24;
 
+    const containerWidth = 150.0;
+    const containerHeight = 300.0;
+
     final columnPowers = Column(
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         text('space-bar', size: titleFontSize, color: titleFontColor, italic: true),
         height12,
-        Column(
-          children: const <int> [
-            PowerType.Bomb,
-            PowerType.Stun,
-            PowerType.Invisible,
-            PowerType.Shield,
-            PowerType.Teleport,
-          ].map((int powerType){
-            return onPressed(
-              action: () => GameNetwork.sendClientRequest(ClientRequest.Select_Power, powerType),
-              child: Container(
-                  margin: const EdgeInsets.only(bottom: 6),
-                  child: watch(GamePlayer.powerType, (int playerPowerType){
-                    return text(PowerType.getName(powerType),
-                      color: powerType == playerPowerType ? GameColors.orange : GameColors.white80,
-                      size: textSize,
-                    );
-                  }),
-              ),
-            );
-          }).toList(growable: false)
+        buildIconPlayerPowerType(),
+        height24,
+        Container(
+          width: containerWidth,
+          height: containerHeight,
+          child: SingleChildScrollView(
+            child: Column(
+              children: const <int> [
+                PowerType.Bomb,
+                PowerType.Stun,
+                PowerType.Invisible,
+                PowerType.Shield,
+                PowerType.Teleport,
+              ].map((int powerType){
+                return onPressed(
+                  action: () => GameNetwork.sendClientRequest(ClientRequest.Select_Power, powerType),
+                  child: Container(
+                      margin: const EdgeInsets.only(bottom: 6),
+                      child: watch(GamePlayer.powerType, (int playerPowerType){
+                        return text(PowerType.getName(powerType),
+                          color: powerType == playerPowerType ? GameColors.orange : GameColors.white80,
+                          size: textSize,
+                        );
+                      }),
+                  ),
+                );
+              }).toList(growable: false)
+            ),
+          ),
         ),
       ],
     );
 
     final columnSelectWeaponLeft = watch(GamePlayer.weaponPrimary, (int weaponPrimary) {
        return Column(
+         mainAxisAlignment: MainAxisAlignment.start,
          children: [
            text('left-click', size: titleFontSize, color: titleFontColor, italic: true),
            height12,
-           Column(
-             children: (weaponTypes).map((int itemType) => Container(
-               margin: const EdgeInsets.only(bottom: 6),
-               child: onPressed(
-                 action: () => GameNetwork.sendClientRequestSelectWeaponPrimary(itemType),
-                 child: text(ItemType.getName(itemType),
-                 color: weaponPrimary == itemType ? GameColors.orange : GameColors.white80,
-                   size: textSize,
-                  )),
+           buildIconPlayerWeaponPrimary(),
+           height24,
+           Container(
+             height: containerHeight,
+             width: containerWidth,
+             child: SingleChildScrollView(
+               child: Column(
+                 children: (weaponTypes).map((int itemType) => Container(
+                   margin: const EdgeInsets.only(bottom: 6),
+                   child: onPressed(
+                     action: () => GameNetwork.sendClientRequestSelectWeaponPrimary(itemType),
+                     child: text(ItemType.getName(itemType),
+                     color: weaponPrimary == itemType ? GameColors.orange : GameColors.white80,
+                       size: textSize,
+                      )),
+                 ),
+                 ).toList(growable: false),
+               ),
              ),
-             ).toList(growable: false),
            ),
+           // buildIconPlayerWeaponPrimary(),
          ],
        );
     });
 
     final columnSelectWeaponRight = watch(GamePlayer.weaponSecondary, (int weaponSecondary) {
       return Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           text('right-click', size: titleFontSize, color: titleFontColor, italic: true),
           height12,
-          Column(
-            children: (weaponTypes).map((int itemType) => Container(
-              margin: const EdgeInsets.only(bottom: 6),
-              child: onPressed(
-                  action: () => GameNetwork.sendClientRequestSelectWeaponSecondary(itemType),
-                  child: text(ItemType.getName(itemType),
-                    color: weaponSecondary == itemType ? GameColors.orange : GameColors.white80,
-                    size: textSize,
-                  )),
+          buildIconPlayerWeaponSecondary(),
+          height24,
+          Container(
+            width: containerWidth,
+            height: containerHeight,
+            child: SingleChildScrollView(
+              child: Column(
+                children: (weaponTypes).map((int itemType) => Container(
+                  margin: const EdgeInsets.only(bottom: 6),
+                  child: onPressed(
+                      action: () => GameNetwork.sendClientRequestSelectWeaponSecondary(itemType),
+                      child: text(ItemType.getName(itemType),
+                        color: weaponSecondary == itemType ? GameColors.orange : GameColors.white80,
+                        size: textSize,
+                      )),
+                ),
+                ).toList(growable: false),
+              ),
             ),
-            ).toList(growable: false),
           ),
         ],
       );
     });
-
-    final columnPerk = watch(GamePlayer.perkType, (int playerPerkType) =>
-        Column(
-          children: [
-            text('bonus', size: titleFontSize, color: titleFontColor, italic: true),
-            height12,
-            Column(
-              children: PerkType.values
-                  .map((perkType) =>
-                  onPressed(
-                    action: () => GameNetwork.sendClientRequest(
-                        ClientRequest.Select_PerkType, perkType
-                      ),
-                    child: Container(
-                        margin: const EdgeInsets.only(bottom: 6),
-                        child:
-                        text(
-                          PerkType.getName(perkType),
-                          color: playerPerkType == perkType ? GameColors.orange : GameColors.white80,
-                          size: textSize,
-                        )
-                    ),
-                  )
-              )
-                  .toList(growable: false),
-            )
-          ],
-      )
-    );
-
-
 
     final buttonPlay = onPressed(
       action: GameNetwork.sendClientRequestRevive,
@@ -215,7 +215,7 @@ class GameUI {
               height: 150 * goldenRatio_0381,
               alignment: Alignment.center,
               color: GameColors.green.withAlpha(mouseOver ? 140 : 100),
-              child: text("PLAY", size: 45, color: GameColors.green),
+              child: text("START", size: 45, color: GameColors.green),
             );
           }
       ),
@@ -229,10 +229,8 @@ class GameUI {
           color: GameStyle.Container_Color,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              height16,
-              buttonPlay,
               height32,
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -241,10 +239,10 @@ class GameUI {
                   columnSelectWeaponLeft,
                   columnPowers,
                   columnSelectWeaponRight,
-                  // columnPerk,
                 ],
               ),
               height64,
+              buttonPlay,
             ],
           ),
         ),
@@ -801,16 +799,16 @@ class GameUI {
                   child: buildWindowPlayerRespawnTimer()),
           )
         ),
-        buildWatchBool(ClientState.control_visible_player_weapons, () =>
-          Positioned(
-            child: Container(
-              width: Engine.screen.width,
-              alignment: Alignment.center,
-              child: buildRowPlayerWeapons(),
-            ),
-            bottom: GameStyle.Default_Padding,
-          )
-        ),
+        // buildWatchBool(ClientState.control_visible_player_weapons, () =>
+        //   Positioned(
+        //     child: Container(
+        //       width: Engine.screen.width,
+        //       alignment: Alignment.center,
+        //       child: buildRowPlayerWeapons(),
+        //     ),
+        //     bottom: GameStyle.Default_Padding,
+        //   )
+        // ),
       ]);
 
   static Widget buildPanelCredits() {
@@ -1040,28 +1038,11 @@ class GameUI {
     );
   }
 
-  static Widget buildPlayerPowerType(){
+  static Widget buildIconPlayerPowerType(){
     return watch(GamePlayer.powerReady, (bool powerReady) {
       return !powerReady ? width64 :
         watch(GamePlayer.powerType, buildIconPowerType);
     });
-  }
-
-  static Widget buildIconPowerType(int powerType){
-    assert (PowerType.values.contains(powerType));
-    final powerTypeIcon = const <int, int> {
-      PowerType.None      : IconType.Power_None,
-      PowerType.Bomb      : IconType.Power_Bomb,
-      PowerType.Teleport  : IconType.Power_Teleport,
-      PowerType.Invisible : IconType.Power_Invisible,
-      PowerType.Shield    : IconType.Power_Shield,
-      PowerType.Stun      : IconType.Power_Stun,
-      PowerType.Revive    : IconType.Power_Revive,
-    }[powerType] ?? -1;
-    return Container(
-        width: 64,
-        child: buildAtlasIconType(powerTypeIcon),
-    );
   }
 
   static Widget buildPanelTotalGrenades() {
@@ -1108,27 +1089,53 @@ class GameUI {
     });
   }
 
-  static Widget buildRowPlayerWeapons() => IgnorePointer(
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Container(
-            constraints: BoxConstraints(maxWidth: 120),
-            height: 64,
-            child: watch(GamePlayer.weaponPrimary, buildAtlasItemType),
-          ),
-          width96,
-          buildPlayerPowerType(),
-          width96,
-          Container(
-            constraints: BoxConstraints(maxWidth: 120),
-            height: 64,
-            child: watch(GamePlayer.weaponSecondary, buildAtlasItemType),
-          ),
-        ],
-      ),
-  );
+  // static Widget buildRowPlayerWeapons() => IgnorePointer(
+  //   child: Row(
+  //     mainAxisAlignment: MainAxisAlignment.center,
+  //       crossAxisAlignment: CrossAxisAlignment.end,
+  //       children: [
+  //         buildIconPlayerWeaponPrimary(),
+  //         width96,
+  //         buildIconPlayerPowerType(),
+  //         width96,
+  //         buildIconPlayerWeaponSecondary(),
+  //       ],
+  //     ),
+  // );
+
+  static Container buildIconPlayerWeaponSecondary() {
+    return Container(
+          constraints: BoxConstraints(maxWidth: 120),
+          height: 64,
+          child: watch(GamePlayer.weaponSecondary, buildAtlasItemType),
+        );
+  }
+
+  static Widget buildIconPowerType(int powerType){
+    assert (PowerType.values.contains(powerType));
+    final powerTypeIcon = const <int, int> {
+      PowerType.None      : IconType.Power_None,
+      PowerType.Bomb      : IconType.Power_Bomb,
+      PowerType.Teleport  : IconType.Power_Teleport,
+      PowerType.Invisible : IconType.Power_Invisible,
+      PowerType.Shield    : IconType.Power_Shield,
+      PowerType.Stun      : IconType.Power_Stun,
+      PowerType.Revive    : IconType.Power_Revive,
+    }[powerType] ?? -1;
+    return Container(
+      height: 64,
+      constraints: BoxConstraints(maxWidth: 120),
+      child: buildAtlasIconType(powerTypeIcon),
+    );
+  }
+
+  static Container buildIconPlayerWeaponPrimary() {
+    return Container(
+          constraints: BoxConstraints(maxWidth: 120, maxHeight: 64),
+          height: 64,
+          child: watch(GamePlayer.weaponPrimary, buildAtlasItemType),
+        );
+  }
 
   static Widget buildRowItemTypeLevel(int level){
     return Row(
