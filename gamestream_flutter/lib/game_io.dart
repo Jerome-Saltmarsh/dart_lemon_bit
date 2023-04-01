@@ -162,29 +162,25 @@ class GameIO {
 
   /// compresses keyboard and mouse inputs into a single byte to send to the server
   static int getInputAsByte(){
-    /// 00010000
-    final Hex_16 = 0x10;
-    /// 00100000
-    final Hex_32 = 0x20;
-    /// 01000000
-    final Hex_64 = 0x40;
-    /// 10000000
-    final Hex_128 = 0x80;
 
     var hex = GameIO.getDirection();
 
     if (Engine.watchMouseLeftDown.value) {
-      hex = hex | Hex_16;
+      hex = hex | ByteHex.Hex_16;
     }
-    if (Engine.mouseRightDown.value) {
-      hex = hex | Hex_32;
+
+    if (GameIO.inputModeKeyboard) {
+
+      hex = hex | ByteHex.Hex_64;
+
+      if (Engine.mouseRightDown.value) {
+        hex = hex | ByteHex.Hex_32;
+      }
+      if (Engine.keyPressedSpace){
+        hex = hex | ByteHex.Hex_128;
+      }
     }
-    if (Engine.keyPressedShiftLeft){
-      hex = hex | Hex_64;
-    }
-    if (Engine.keyPressedSpace){
-      hex = hex | Hex_128;
-    }
+
     return hex;
   }
 

@@ -111,22 +111,9 @@ class GameCombat extends Game {
     required int direction,
     required bool mouseLeftDown,
     required bool mouseRightDown,
-    required bool keyShiftDown,
     required bool keySpaceDown,
-    required double mouseX,
-    required double mouseY,
-    required double screenLeft,
-    required double screenTop,
-    required double screenRight,
-    required double screenBottom,
+    required bool inputTypeKeyboard,
   }) {
-    player.framesSinceClientRequest = 0;
-    player.screenLeft = screenLeft;
-    player.screenTop = screenTop;
-    player.screenRight = screenRight;
-    player.screenBottom = screenBottom;
-    player.mouse.x = mouseX;
-    player.mouse.y = mouseY;
 
     if (player.deadOrBusy) return;
     if (!player.active) return;
@@ -135,6 +122,13 @@ class GameCombat extends Game {
 
     if (!player.weaponStateBusy) {
       player.lookRadian = player.mouseAngle;
+    }
+
+    if (!inputTypeKeyboard){
+      if (mouseLeftDown){
+        player.runToMouse();
+      }
+      return;
     }
 
     if (mouseLeftDown){
@@ -157,7 +151,6 @@ class GameCombat extends Game {
       }
 
       if (!ItemType.isTypeWeaponMelee(player.weaponPrimary)
-          && !keyShiftDown
           && characterMeleeAttackTargetInRange(player)
       ){
         player.weaponType = player.weaponPrimary;
@@ -192,7 +185,6 @@ class GameCombat extends Game {
       }
 
       if (!ItemType.isTypeWeaponMelee(player.weaponSecondary)
-          && !keyShiftDown
           && characterMeleeAttackTargetInRange(player)
       ) {
         player.weaponType = player.weaponSecondary;

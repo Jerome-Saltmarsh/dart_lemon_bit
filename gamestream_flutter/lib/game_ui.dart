@@ -10,8 +10,6 @@ import 'package:gamestream_flutter/language_utils.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:golden_ratio/constants.dart';
 
-import 'game_ui_config.dart';
-
 
 class GameUI {
   static const Icon_Scale = 1.5;
@@ -487,28 +485,28 @@ class GameUI {
       });
 
   static Widget buildStackInputModeTouch(bool side) => Stack(children: [
-        Positioned(
-          right: side ? GameUIConfig.runButtonPadding : null,
-          left: side ? null : GameUIConfig.runButtonPadding,
-          child: Container(
-            height: Engine.screen.height,
-            alignment: Alignment.center,
-            child: onPressed(
-              action: GameUIConfig.runButtonPressed,
-              child: Container(
-                width: GameUIConfig.runButtonSize,
-                height: GameUIConfig.runButtonSize,
-                alignment: Alignment.center,
-                child: watch(GamePlayer.weapon, (int itemType) => buildAtlasItemType(itemType)),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white70, width: 5),
-                  color: GameUIConfig.runButtonColor,
-                ),
-              ),
-            ),
-          ),
-        ),
+        // Positioned(
+        //   right: side ? GameUIConfig.runButtonPadding : null,
+        //   left: side ? null : GameUIConfig.runButtonPadding,
+        //   child: Container(
+        //     height: Engine.screen.height,
+        //     alignment: Alignment.center,
+        //     child: onPressed(
+        //       action: GameUIConfig.runButtonPressed,
+        //       child: Container(
+        //         width: GameUIConfig.runButtonSize,
+        //         height: GameUIConfig.runButtonSize,
+        //         alignment: Alignment.center,
+        //         child: watch(GamePlayer.weapon, (int itemType) => buildAtlasItemType(itemType)),
+        //         decoration: BoxDecoration(
+        //           shape: BoxShape.circle,
+        //           border: Border.all(color: Colors.white70, width: 5),
+        //           color: GameUIConfig.runButtonColor,
+        //         ),
+        //       ),
+        //     ),
+        //   ),
+        // ),
       ]);
 
   static Widget buildStackInputMode(int inputMode) =>

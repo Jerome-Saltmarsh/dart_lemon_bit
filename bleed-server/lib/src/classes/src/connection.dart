@@ -734,11 +734,20 @@ class Connection with ByteReader {
 
     final hex = args[1];
 
-    final direction       = hex & 0xf;
-    final mouseDownLeft   = hex & 0x10 > 0;
-    final mouseDownRight  = hex & 0x20 > 0;
-    final keyDownShift    = hex & 0x40 > 0;
-    final keyDownSpace    = hex & 0x80 > 0;
+    final direction         = hex & 0xf;
+    final mouseDownLeft     = hex & ByteHex.Hex_16 > 0;
+    final mouseDownRight    = hex & ByteHex.Hex_32 > 0;
+    final inputTypeDesktop  = hex & ByteHex.Hex_64 > 0;
+    final keyDownSpace      = hex & ByteHex.Hex_128 > 0;
+
+    player.framesSinceClientRequest = 0;
+    player.mouse.x = readNumberFromByteArray(args, index: 2).toDouble();
+    player.mouse.y = readNumberFromByteArray(args, index: 4).toDouble();
+    player.screenLeft = readNumberFromByteArray(args, index: 6).toDouble();
+    player.screenTop = readNumberFromByteArray(args, index: 8).toDouble();
+    player.screenRight = readNumberFromByteArray(args, index: 10).toDouble();
+    player.screenBottom = readNumberFromByteArray(args, index: 12).toDouble();
+    player.inputMode = hex & ByteHex.Hex_64 > 0 ? 1 : 0;
 
     player.game.onPlayerUpdateRequestReceived(
       player: player,
@@ -746,13 +755,7 @@ class Connection with ByteReader {
       mouseLeftDown: mouseDownLeft,
       mouseRightDown: mouseDownRight,
       keySpaceDown: keyDownSpace,
-      keyShiftDown: keyDownShift,
-      mouseX: readNumberFromByteArray(args, index: 2).toDouble(),
-      mouseY: readNumberFromByteArray(args, index: 4).toDouble(),
-      screenLeft: readNumberFromByteArray(args, index: 6).toDouble(),
-      screenTop: readNumberFromByteArray(args, index: 8).toDouble(),
-      screenRight: readNumberFromByteArray(args, index: 10).toDouble(),
-      screenBottom: readNumberFromByteArray(args, index: 12).toDouble(),
+      inputTypeKeyboard: inputTypeDesktop,
     );
   }
 

@@ -12,6 +12,8 @@ export 'src/enums/perk_type.dart';
 export 'src/api_dark_age.dart';
 export 'src/api_player.dart';
 export 'src/area_type.dart';
+export 'src/byte_hex.dart';
+export 'src/enums/input_mode.dart';
 export 'src/weapon_state.dart';
 export 'src/api_players.dart';
 export 'src/character_state.dart';

@@ -199,28 +199,15 @@ abstract class Game {
          position.z,
      );
 
+  /// @inputTypeKeyboard keyboard = true, touchscreen = false
   void onPlayerUpdateRequestReceived({
     required Player player,
     required int direction,
     required bool mouseLeftDown,
     required bool mouseRightDown,
-    required bool keyShiftDown,
     required bool keySpaceDown,
-    required double mouseX,
-    required double mouseY,
-    required double screenLeft,
-    required double screenTop,
-    required double screenRight,
-    required double screenBottom,
+    required bool inputTypeKeyboard,
   }) {
-    player.framesSinceClientRequest = 0;
-    player.screenLeft = screenLeft;
-    player.screenTop = screenTop;
-    player.screenRight = screenRight;
-    player.screenBottom = screenBottom;
-    player.mouse.x = mouseX;
-    player.mouse.y = mouseY;
-
     if (player.deadOrBusy) return;
 
     playerUpdateAimTarget(player);
@@ -229,89 +216,14 @@ abstract class Game {
       player.lookRadian = player.mouseAngle;
     }
 
-    // switch (cursorAction) {
-    //   case CursorAction.Set_Target:
-    //     if (direction != Direction.None) {
-    //       if (!player.weaponStateBusy){
-    //         characterUseWeapon(player);
-    //       }
-    //     } else {
-    //       final aimTarget = player.aimTarget;
-    //       if (aimTarget == null){
-    //         player.runToMouse();
-    //       } else {
-    //         setCharacterTarget(player, aimTarget);
-    //       }
-    //     }
-    //     break;
-    //   case CursorAction.Stationary_Attack_Cursor:
-    //     if (!player.weaponStateBusy) {
-    //       characterUseWeapon(player);
-    //       // characterWeaponAim(player);
-    //     }
-    //     break;
-    //   case CursorAction.Stationary_Attack_Auto:
-    //     if (!player.weaponStateBusy){
-    //       playerAutoAim(player);
-    //       characterUseWeapon(player);
-    //     }
-    //     break;
-    //   case CursorAction.Mouse_Left_Click:
-    //       final aimTarget = player.aimTarget;
-    //       if (aimTarget != null){
-    //         if (aimTarget is GameObject && (aimTarget.collectable || aimTarget.interactable)){
-    //           setCharacterTarget(player, aimTarget);
-    //           break;
-    //         }
-    //         if (Collider.onSameTeam(player, aimTarget)){
-    //           setCharacterTarget(player, aimTarget);
-    //           break;
-    //         }
-    //       }
-    //       characterUseWeapon(player);
-    //     break;
-    //   case CursorAction.Mouse_Right_Click:
-    //     characterAttackMelee(player);
-    //     break;
-    //   case CursorAction.Key_Space:
-    //     characterThrowGrenade(player);
-    //     break;
-    // }
+    if (inputTypeKeyboard){
+      playerRunInDirection(player, direction);
+    } else {
+      if (mouseLeftDown){
+        player.runToMouse();
+      }
+    }
 
-    // if (cursorAction == CursorAction.Set_Target) {
-    //   if (direction != Direction.None) {
-    //     if (!player.weaponStateBusy){
-    //       characterUseWeapon(player);
-    //     }
-    //   } else {
-    //     final aimTarget = player.aimTarget;
-    //     if (aimTarget == null){
-    //       player.runToMouse();
-    //     } else {
-    //       setCharacterTarget(player, aimTarget);
-    //     }
-    //   }
-    // }
-
-    // if (cursorAction == CursorAction.Stationary_Attack_Cursor) {
-    //   if (!player.weaponStateBusy) {
-    //     characterUseWeapon(player);
-    //     // characterWeaponAim(player);
-    //   }
-    // }
-
-    // if (cursorAction == CursorAction.Stationary_Attack_Auto){
-    //   if (!player.weaponStateBusy){
-    //     playerAutoAim(player);
-    //     characterUseWeapon(player);
-    //   }
-    // }
-
-    // if (cursorAction == CursorAction.Throw_Grenade){
-    //    characterThrowGrenade(player);
-    // }
-
-    playerRunInDirection(player, direction);
   }
 
   void changeGame(Player player, Game to){
@@ -1671,11 +1583,10 @@ abstract class Game {
     for (var indexA = 0; indexA < aLength; indexA++) {
       final colliderA = collidersA[indexA];
       if (!colliderA.active) continue;
-      // if (!colliderA.strikable) continue;
       for (var indexB = 0; indexB < bLength; indexB++) {
         final colliderB = collidersB[indexB];
         if (!colliderB.active) continue;
-        if (colliderA.order > colliderB.order) break;
+        // if (colliderA.order > colliderB.order) break;
         if (colliderA.bottom < colliderB.top) continue;
         if (colliderA.top > colliderB.bottom) continue;
         if (colliderA.right < colliderB.left) continue;

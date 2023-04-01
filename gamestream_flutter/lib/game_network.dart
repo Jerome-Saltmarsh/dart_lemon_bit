@@ -70,9 +70,7 @@ class GameNetwork {
       connectToRegion(GameWebsite.region.value, '${gameType} $message');
 
   static Future sendClientRequestUpdate() async {
-    applyIOToUpdateBuffer();
-
-    sink.add(updateBuffer);
+    applyKeyboardInputToUpdateBuffer();
     GameIO.setCursorAction(CursorAction.None);
   }
 
@@ -84,8 +82,8 @@ class GameNetwork {
   /// [5] Mouse_Right
   /// [6] Shift
   /// [7] Space
-  static applyIOToUpdateBuffer(){
-    if (GameState.playMode){
+  static applyKeyboardInputToUpdateBuffer() {
+    if (GameState.playMode) {
       updateBuffer[1] = GameIO.getInputAsByte();
     }
     writeNumberToByteArray(number: GameIO.getCursorWorldX(), list: updateBuffer, index: 2);
@@ -94,6 +92,7 @@ class GameNetwork {
     writeNumberToByteArray(number: Engine.Screen_Top, list: updateBuffer, index: 8);
     writeNumberToByteArray(number: Engine.Screen_Right, list: updateBuffer, index: 10);
     writeNumberToByteArray(number: Engine.Screen_Bottom, list: updateBuffer, index: 12);
+    sink.add(updateBuffer);
   }
 
   static void connect({required String uri, required dynamic message}) {

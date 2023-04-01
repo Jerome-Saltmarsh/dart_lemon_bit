@@ -41,6 +41,7 @@ class Player extends Character with ByteWriter {
   var sceneDownloaded = false;
   var initialized = false;
   var id = 0;
+  var inputMode = InputMode.Keyboard;
 
   var inventoryDirty = false;
   var _equippedWeaponIndex = 0;
