@@ -109,6 +109,10 @@ class Engine {
   static Function(Object error, StackTrace stack)? onError;
 
   // VARIABLES
+  static List<Offset> touchPoints = [];
+  static var touches = 0;
+  static var touchDownId = 0;
+  static var touchHeldId = 0;
   static late ui.Image _bufferImage;
   static var _bufferBlendMode = BlendMode.dstATop;
   static final keyState = <int, bool>{ };
@@ -498,6 +502,7 @@ class Engine {
     previousMousePosition.y = mousePosition.y;
     mousePosition.x = event.position.dx;
     mousePosition.y = event.position.dy;
+    touchHeldId = event.pointer;
   }
 
   /// event.buttons is always 0 and does not seem to correspond to the left or right mouse
@@ -508,6 +513,9 @@ class Engine {
   }
 
   static void _internalOnPointerDown(PointerDownEvent event) {
+    // event.
+    touchDownId = event.pointer;
+
     if (event.buttons == 1) {
       watchMouseLeftDown.value = true;
     }
@@ -550,6 +558,22 @@ class Engine {
 
   static void _internalOnTapDown(TapDownDetails details){
      onTapDown?.call(details);
+  }
+
+  static void _internalOnScaleStart(ScaleStartDetails details){
+    touches = details.pointerCount;
+    touchPoints = [];
+  }
+
+  static void _internalOnScaleUpdate(ScaleUpdateDetails details) {
+    // final _points = details.focalPoint - details.focalPointDelta;
+    touchPoints = List.from(touchPoints)..add(details.focalPoint - details.focalPointDelta);
+    touches = details.pointerCount;
+  }
+
+  static void _internalOnScaleEnd(ScaleEndDetails details){
+    touches = details.pointerCount;
+    touchPoints = [];
   }
 
   static void _internalOnTap(){
@@ -1075,13 +1099,16 @@ class Engine {
       onPointerHover: _internalOnPointerHover,
       onPointerSignal: _internalOnPointerSignal,
       child: GestureDetector(
+          onScaleStart: _internalOnScaleStart,
+          onScaleUpdate: _internalOnScaleUpdate,
+          onScaleEnd: _internalOnScaleEnd,
           onTapDown: _internalOnTapDown,
           onTap: _internalOnTap,
           onLongPress: _internalOnLongPress,
           onLongPressDown: _internalOnLongPressDown,
-          onPanStart: _internalOnPanStart,
-          onPanUpdate: _internalOnPanUpdate,
-          onPanEnd: _internalOnPanEnd,
+          // onPanStart: _internalOnPanStart,
+          // onPanUpdate: _internalOnPanUpdate,
+          // onPanEnd: _internalOnPanEnd,
           onSecondaryTapDown: _internalOnSecondaryTapDown,
           child: WatchBuilder(watchBackgroundColor, (Color backgroundColor){
             return Container(
@@ -1089,6 +1116,8 @@ class Engine {
                 width: screen.width,
                 height: screen.height,
                 child: CustomPaint(
+                  isComplex: true,
+                  willChange: true,
                   painter: _EnginePainter(repaint: notifierPaintFrame),
                   foregroundPainter: _EngineForegroundPainter(
                       repaint: notifierPaintForeground

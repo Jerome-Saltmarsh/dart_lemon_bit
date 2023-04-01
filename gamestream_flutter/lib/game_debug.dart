@@ -35,6 +35,9 @@ class GameDebug {
                                 "connection-duration: ${ClientState.formattedConnectionDuration}\n"
                                 // "offscreen-nodes: ${GameNodes.offscreenNodes}\n"
                                 // "onscreen-nodes: ${GameNodes.onscreenNodes}\n"
+                                "touches: ${Engine.touches}\n"
+                                "touch down id: ${Engine.touchDownId}\n"
+                                "touch update id: ${Engine.touchDownId}\n"
                                 "mouse-grid: x: ${GameIO.mouseGridX.toInt()}, y: ${GameIO.mouseGridY.toInt()}\n"
                                 "mouse-world: x: ${Engine.mouseWorldX.toInt()}, y: ${Engine.mouseWorldY.toInt()}\n"
                                 'mouse-screen: x: ${Engine.mousePosition.x.toInt()}, y: ${Engine.mousePosition.y.toInt()}\n'
