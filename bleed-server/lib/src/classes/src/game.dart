@@ -1675,7 +1675,7 @@ abstract class Game {
       for (var indexB = 0; indexB < bLength; indexB++) {
         final colliderB = collidersB[indexB];
         if (!colliderB.active) continue;
-        // if (!colliderB.strikable) continue;
+        if (colliderA.order > colliderB.order) break;
         if (colliderA.bottom < colliderB.top) continue;
         if (colliderA.top > colliderB.bottom) continue;
         if (colliderA.right < colliderB.left) continue;

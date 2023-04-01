@@ -18,8 +18,9 @@ class ServerEvents {
       GameAudio.musicPlay();
     }
 
-    ClientState.control_visible_player_weapons.value = value == GameType.Combat;
-    ClientState.control_visible_scoreboard.value = value == GameType.Combat;
+    ClientState.control_visible_player_weapons.value  = value == GameType.Combat;
+    ClientState.control_visible_scoreboard.value      = value == GameType.Combat;
+    ClientState.control_visible_player_power.value    = value == GameType.Combat;
 
     if (value == null) {
       GameAudio.musicStop();

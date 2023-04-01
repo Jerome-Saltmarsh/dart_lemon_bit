@@ -27,11 +27,7 @@ ctrl + shift + e    : view recent changes
 [ ] improve sprite bazooka
 [ ] feature teleport does damage to things in between
 [ ] graphic settings enable paint anti alias
-
-[MODES]
-[ ] PLAY
-[ ] PRACTICE
-[ ] EDITOR
+[ ] game type random
 
 [RELEASE-TASKS]
 [ ] purchase domain squigitalgames.com
@@ -41,7 +37,7 @@ ctrl + shift + e    : view recent changes
 [ ] setup youtube page
 [ ] mobile compatible
 [ ] youtube video 45 seconds
-[ ] fix sound death on spawn
+[ ] fix remove sound death on join game
 
 24.03.2023
 [x] fix power icon resolution

@@ -9,6 +9,7 @@ class PowerType {
    static const Revive      = 6;
 
    static const values = [
+      None,
       Bomb,
       Teleport,
       Invisible,

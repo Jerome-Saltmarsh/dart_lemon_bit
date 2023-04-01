@@ -799,13 +799,16 @@ class GameUI {
                   child: buildWindowPlayerRespawnTimer()),
           )
         ),
-        buildWatchBool(GamePlayer.powerReady, () =>
-          Positioned(
-            child: buildIconPlayerPowerType(),
-            left: GameStyle.Default_Padding,
-            bottom: GameStyle.Default_Padding,
-          )
-        ),
+        buildWatchBool(ClientState.control_visible_player_power, (){
+          return buildWatchBool(GamePlayer.powerReady, () =>
+              Positioned(
+                child: buildIconPlayerPowerType(),
+                left: GameStyle.Default_Padding,
+                bottom: GameStyle.Default_Padding,
+              )
+          );
+        }),
+
       ]);
 
   static Widget buildPanelCredits() {
