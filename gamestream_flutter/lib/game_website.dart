@@ -215,19 +215,6 @@ class GameWebsite {
             // ),
             if (deviceType == DeviceType.Computer)
               buildColumnRegions(),
-            if (deviceType == DeviceType.Phone)
-              Positioned(
-                  bottom: Padding,
-                  left: Padding,
-                  child:
-                  watch(websitePage, (WebsitePage page){
-                      if (page == WebsitePage.Games){
-                        return watch(region, (ConnectionRegion region) => text(region.name, color: colorRegion, onPressed: () => websitePage.value = WebsitePage.Region, size: 25));
-                      } else {
-                        return text("<- BACK", onPressed: toggleWebsitePage);
-                      }
-                  }),
-              ),
             // Positioned(
             //   bottom: Padding,
             //   right: Padding,
@@ -316,32 +303,33 @@ class GameWebsite {
         children: [
           buildLogoSquigitalGames(),
           height6,
-          watch(GameWebsite.region, (ConnectionRegion selectedRegion) =>
-              Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: (Engine.isLocalHost ? ConnectionRegion.values : Live_Regions)
-                      .map((ConnectionRegion region) =>
-                            onPressed(
-                              action: (){
-                                actionSelectRegion(region);
-                                GameNetwork.connectToGameCombat();
-                              },
-                              child: onMouseOver(builder: (bool mouseOver) {
-                                return Container(
-                                  padding: const EdgeInsets.all(4),
-                                  margin: const EdgeInsets.symmetric(vertical: 4),
-                                  color: mouseOver ? Colors.green : Colors.white10,
-                                  child: text(
-                                    '${Engine.enumString(region)}',
-                                    size: 24,
-                                    color: mouseOver ? Colors.white : Colors.white60
-                                  ),
-                                );
-                              }),
-                            ))
-                      .toList(),
-                )),
+          SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: (Engine.isLocalHost ? ConnectionRegion.values : Live_Regions)
+                  .map((ConnectionRegion region) =>
+                  onPressed(
+                    action: (){
+                      actionSelectRegion(region);
+                      GameNetwork.connectToGameCombat();
+                    },
+                    child: onMouseOver(builder: (bool mouseOver) {
+                      return Container(
+                        padding: const EdgeInsets.fromLTRB(16, 4, 0, 4),
+                        margin: const EdgeInsets.symmetric(vertical: 4),
+                        color: mouseOver ? Colors.green : Colors.white10,
+                        child: text(
+                            '${Engine.enumString(region)}',
+                            size: 24,
+                            color: mouseOver ? Colors.white : Colors.white60
+                        ),
+                      );
+                    }),
+                  ))
+                  .toList(),
+            ),
+          )
         ],
       );
 
