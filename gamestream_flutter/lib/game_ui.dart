@@ -301,6 +301,11 @@ class GameUI {
             height24,
             onPressed(
                 action: GameNetwork.disconnect,
+                child: text("EDITOR", size: 25),
+            ),
+            height24,
+            onPressed(
+                action: GameNetwork.disconnect,
                 child: text("DISCONNECT", size: 25),
             ),
           ],

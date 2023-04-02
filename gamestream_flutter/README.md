@@ -36,6 +36,8 @@ ctrl + shift + e    : view recent changes
 [ ] setup patreon page
 [ ] setup youtube page
 [ ] mobile compatible
+[ ] squigital games logo
+[ ] register squigital games company
 [ ] youtube video 45 seconds
 [ ] fix remove sound death on join game
 

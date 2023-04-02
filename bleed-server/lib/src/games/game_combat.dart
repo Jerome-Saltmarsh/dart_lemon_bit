@@ -124,8 +124,8 @@ class GameCombat extends Game {
       player.lookRadian = player.mouseAngle;
     }
 
-    if (!inputTypeKeyboard){
-      if (mouseLeftDown){
+    if (!inputTypeKeyboard) {
+      if (mouseLeftDown) {
         player.runToMouse();
       }
       return;
