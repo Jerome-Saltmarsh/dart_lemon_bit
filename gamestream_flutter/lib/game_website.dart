@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/ui/views.dart';
-import 'package:golden_ratio/constants.dart';
 import 'package:intl/intl.dart';
 
 class GameWebsite {
@@ -249,7 +248,13 @@ class GameWebsite {
                         child: FittedBox(child: Image.asset('images/squigital-logo.png'))),
                     Container(
                         margin: const EdgeInsets.only(right: 4),
-                        child: text("SQUIGITAL GAMES", color: GameColors.white60, size: 35)),
+                        child: Row(
+                          children: [
+                            text("SQUIGITAL GAMES", color: GameColors.white, size: 35),
+                            // width4,
+                            // text("GAMES", color: GameColors.white85, size: 35),
+                          ],
+                        )),
                   ],
                 );
   }
@@ -286,13 +291,11 @@ class GameWebsite {
       );
 
   static const Live_Regions = [
-    ConnectionRegion.Australia,
-    ConnectionRegion.Singapore,
-    ConnectionRegion.Brazil,
-    ConnectionRegion.Germany,
-    ConnectionRegion.South_Korea,
-    ConnectionRegion.USA_East,
-    ConnectionRegion.USA_West,
+    ConnectionRegion.North_America,
+    ConnectionRegion.South_America,
+    ConnectionRegion.Europe,
+    ConnectionRegion.Asia,
+    ConnectionRegion.Oceania,
   ];
 
 

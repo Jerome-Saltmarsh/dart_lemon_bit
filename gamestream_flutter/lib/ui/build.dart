@@ -58,16 +58,16 @@ ConnectionRegion detectRegion(){
 
   if (timeZoneName.contains('australia')){
     print('australia detected');
-    return ConnectionRegion.Australia;
+    return ConnectionRegion.Oceania;
   }
   if (timeZoneName.contains('new zealand')){
     print('australia detected');
-    return ConnectionRegion.Australia;
+    return ConnectionRegion.Oceania;
   }
   if (timeZoneName.contains('european')){
-    return ConnectionRegion.Germany;
+    return ConnectionRegion.Europe;
   }
 
-  return ConnectionRegion.Australia;
+  return ConnectionRegion.Oceania;
 }
 

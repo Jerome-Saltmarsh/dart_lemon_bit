@@ -49,9 +49,9 @@ class GameNetwork {
 
   static String getRegionConnectionString(ConnectionRegion region) {
     switch (region) {
-      case ConnectionRegion.Australia:
+      case ConnectionRegion.Oceania:
         return GameNetworkConfig.Url_Sydney;
-      case ConnectionRegion.Singapore:
+      case ConnectionRegion.Asia:
         return GameNetworkConfig.Url_Singapore;
       default:
         throw Exception('GameNetwork.getRegionConnectionString($region)');

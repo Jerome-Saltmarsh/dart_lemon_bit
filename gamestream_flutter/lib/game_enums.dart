@@ -11,13 +11,11 @@ enum ConnectionStatus {
 }
 
 enum ConnectionRegion {
-  Australia,
-  Singapore,
-  Brazil,
-  Germany,
-  South_Korea,
-  USA_East,
-  USA_West,
+  North_America,
+  South_America,
+  Europe,
+  Asia,
+  Oceania,
   LocalHost,
   Custom,
 }
