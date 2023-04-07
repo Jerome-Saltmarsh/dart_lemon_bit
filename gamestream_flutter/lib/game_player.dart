@@ -11,9 +11,11 @@ class GamePlayer {
   static final weaponTertiary = Watch(0, onChanged: GameEvents.onChangedPlayerWeapon);
   static final respawnTimer = Watch(0, onChanged: GameEvents.onChangedPlayerRespawnTimer);
 
+
   static final body = Watch(0);
   static final head = Watch(0);
   static final legs = Watch(0);
+  static final active = Watch(false, onChanged: GameEvents.onChangedPlayerActive);
   static final alive = Watch(true, onChanged: GameEvents.onChangedPlayerAlive);
   static final totalGrenades = Watch(0);
   static final previousPosition = Vector3();

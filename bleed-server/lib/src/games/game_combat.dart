@@ -8,7 +8,7 @@ import 'package:lemon_math/library.dart';
 
 class GameCombat extends Game {
   // constants
-  static final Player_Respawn_Duration  = Engine.Frames_Per_Second * (isLocalMachine ? 2 : 7);
+  static final Player_Respawn_Duration  = Engine.Frames_Per_Second * (isLocalMachine ? 4 : 4);
   static const GameObject_Duration      = 500;
   static const GameObject_Respawn_Duration = 1500;
   static const AI_Respawn_Duration      = 300;
@@ -213,9 +213,6 @@ class GameCombat extends Game {
     player.respawnTimer = Player_Respawn_Duration;
     player.writePlayerPower();
   }
-
-
-
 
   @override
   void customOnCharacterKilled(Character target, dynamic src) {
@@ -427,7 +424,10 @@ class GameCombat extends Game {
   @override
   void customOnPlayerJoined(Player player) {
     writePlayerScoresAll();
-    setCharacterStateDead(player);
+    deactivatePlayer(player);
+    player.powerCooldown = 0;
+    player.buffDuration = 0;
+    player.respawnTimer = Player_Respawn_Duration;
     player.perkType         = PerkType.None;
     player.powerType        = PowerType.Bomb;
     player.weaponPrimary    = ItemType.Weapon_Ranged_Plasma_Pistol;
@@ -436,6 +436,7 @@ class GameCombat extends Game {
     player.headType         = randomItem(ItemType.Collection_Clothing_Head);
     player.bodyType         = randomItem(ItemType.Collection_Clothing_Body);
     player.legsType         = randomItem(ItemType.Collection_Clothing_Legs);
+    player.writePlayerPower();
   }
 
   @override

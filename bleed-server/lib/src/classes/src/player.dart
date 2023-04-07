@@ -966,6 +966,12 @@ class Player extends Character with ByteWriter {
     writeBool(alive);
   }
 
+  void writePlayerActive(){
+    writeByte(ServerResponse.Api_Player);
+    writeByte(ApiPlayer.Active);
+    writeBool(active);
+  }
+
   void writePlayerExperiencePercentage(){
     writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Experience_Percentage);
@@ -1057,6 +1063,7 @@ class Player extends Character with ByteWriter {
     final characters = game.characters;
     for (final character in characters) {
       if (character.dead) continue;
+      if (character.inactive) continue;
       if (character.renderY < screenTop) continue;
       if (character.renderX < screenLeft) continue;
       if (character.renderX > screenRight) continue;

@@ -234,7 +234,7 @@ class Connection with ByteReader {
         break;
 
       case ClientRequest.Revive:
-        if (player.alive) {
+        if (player.aliveAndActive) {
           error(GameError.PlayerStillAlive);
           return;
         }

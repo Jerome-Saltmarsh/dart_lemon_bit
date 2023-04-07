@@ -324,6 +324,9 @@ class ServerResponseReader with ByteReader {
       case ApiPlayer.PerkType:
         GamePlayer.perkType.value = readByte();
         break;
+      case ApiPlayer.Active:
+        GamePlayer.active.value = readBool();
+        break;
       default:
         throw Exception("Cannot parse apiPlayer $apiPlayer");
     }

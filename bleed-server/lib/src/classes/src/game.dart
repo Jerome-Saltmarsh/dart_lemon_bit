@@ -1072,6 +1072,9 @@ abstract class Game {
     if (collider is GameObject) {
       collider.dirty = true;
     }
+    if (collider is Player){
+      collider.writePlayerActive();
+    }
     customOnColliderActivated(collider);
   }
 
@@ -1092,6 +1095,9 @@ abstract class Game {
      if (collider is GameObject){
        collider.dirty = true;
        collider.available = false;
+     }
+     if (collider is Player) {
+       collider.writePlayerActive();
      }
 
      for (final character in characters) {
@@ -1413,11 +1419,10 @@ abstract class Game {
   }
 
   void revive(Player player) {
-    if (player.alive) return;
-    if (player.respawnTimer > 0) return;
+    if (player.aliveAndActive) return;
 
-    activateCollider(player);
     player.setCharacterStateSpawning();
+    activateCollider(player);
     player.health = player.maxHealth;
     player.energy = player.maxEnergy;
     player.credits = 0;
@@ -1538,7 +1543,8 @@ abstract class Game {
   }
 
   void updateCharacters() {
-    for (var i = 0; i < characters.length; i++) {
+    final characterLength = characters.length;
+    for (var i = 0; i < characterLength; i++) {
       final character = characters[i];
       updateCharacter(character);
       if (character is Player) {
@@ -1808,12 +1814,12 @@ abstract class Game {
   void updatePlayer(Player player) {
     player.framesSinceClientRequest++;
 
-    if (player.dead) {
-      if (player.respawnTimer > 0) {
-        player.respawnTimer--;
-      }
-      return;
+    if (player.respawnTimer > 0) {
+      player.respawnTimer--;
     }
+
+    if (player.dead) return;
+    if (!player.active) return;
 
     if (player.energy < player.maxEnergy) {
       player.nextEnergyGain--;
@@ -2621,7 +2627,7 @@ abstract class Game {
     var closestDistanceY = closestDistanceX;
 
     for (final character in characters) {
-      if (character.dead) continue;
+      if (!character.aliveAndActive) continue;
       if (Collider.onSameTeam(character, ai)) continue;
       if (character.buffInvisible) continue;
       final distanceX = (ai.x - character.x).abs();
@@ -3185,6 +3191,12 @@ abstract class Game {
       return Engine.Frames_Per_Second * 8;
     }
     return Engine.Frames_Per_Second * 10;
+  }
+
+  void deactivatePlayer(Player player) {
+     if (!player.active) return;
+     player.active = false;
+     player.writePlayerEvent(PlayerEvent.Player_Deactivated);
   }
 }
 

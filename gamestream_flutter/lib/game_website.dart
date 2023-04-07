@@ -76,7 +76,7 @@ class GameWebsite {
            mainAxisAlignment: MainAxisAlignment.center,
            crossAxisAlignment: CrossAxisAlignment.center,
            children: [
-             text("SQUIGITAL GAMES"),
+             text("SQUIGITAL GAMES PRESENTS"),
              height8,
              Image.asset('images/squigital-logo.png'),
              // FutureBuilder<ui.Image>(
@@ -193,52 +193,24 @@ class GameWebsite {
 
   static Widget buildDevice(int deviceType) =>
     Container(
-      constraints: BoxConstraints(
-        maxWidth: 300,
-        // maxHeight: 300 * goldenRatio_0618,
-      ),
-      child: border(
-        color: Colors.transparent,
-        child: Stack(
-          children: [
-
-            // Positioned(
-            //   top: Padding,
-            //   right: Padding,
-            //   child: buildTextVersion(),
-            // ),
-            // Positioned(
-            //   top: Padding,
-            //   left: 180,
-            //   child: buildWatchBool(isVisibleDialogCustomRegion, buildInputCustomConnectionString),
-            // ),
-            if (deviceType == DeviceType.Computer)
-              buildColumnRegions(),
-            // Positioned(
-            //   bottom: Padding,
-            //   right: Padding,
-            //   child: onPressed(
-            //       action: () {
-            //         launchUrl(
-            //           Uri.parse('https://linktr.ee/gamestream.online'),
-            //           mode: LaunchMode.externalApplication,
-            //           webOnlyWindowName: '_blank',
-            //         );
-            //       },
-            //       child: buildLogoSquigitalGames()
-            //   ),
-            // ),
-            // Positioned(
-            //   child: buildFullscreen(
-            //     child: watch(websitePage, buildWebsitePage)
-            //   ),
-            // )
-          ],
-        ),
+      width: 300,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          // buildLogoSquigitalGames(),
+          buildLogoGameStream(),
+          height8,
+          buildColumnRegions(),
+        ],
       ),
     );
 
-  static Row buildLogoSquigitalGames() {
+
+  static Widget buildLogoGameStream(){
+    return text("GAMESTREAM ONLINE", size: 40);
+  }
+
+  static Widget buildLogoSquigitalGames() {
     return Row(
          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -300,40 +272,32 @@ class GameWebsite {
 
 
   static Widget buildColumnRegions() =>
-      Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          buildLogoSquigitalGames(),
-          height6,
-          SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: (Engine.isLocalHost ? ConnectionRegion.values : Live_Regions)
-                  .map((ConnectionRegion region) =>
-                  onPressed(
-                    action: (){
-                      actionSelectRegion(region);
-                      GameNetwork.connectToGameCombat();
-                    },
-                    child: onMouseOver(builder: (bool mouseOver) {
-                      return Container(
-                        padding: const EdgeInsets.fromLTRB(16, 4, 0, 4),
-                        margin: const EdgeInsets.symmetric(vertical: 4),
-                        color: mouseOver ? Colors.green : Colors.white10,
-                        child: text(
-                            '${Engine.enumString(region)}',
-                            size: 24,
-                            color: mouseOver ? Colors.white : Colors.white60
-                        ),
-                      );
-                    }),
-                  ))
-                  .toList(),
-            ),
-          )
-        ],
+      SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: (Engine.isLocalHost ? ConnectionRegion.values : Live_Regions)
+              .map((ConnectionRegion region) =>
+              onPressed(
+                action: (){
+                  actionSelectRegion(region);
+                  GameNetwork.connectToGameCombat();
+                },
+                child: onMouseOver(builder: (bool mouseOver) {
+                  return Container(
+                    padding: const EdgeInsets.fromLTRB(16, 4, 0, 4),
+                    margin: const EdgeInsets.symmetric(vertical: 4),
+                    color: mouseOver ? Colors.green : Colors.white10,
+                    child: text(
+                        '${Engine.enumString(region)}',
+                        size: 24,
+                        color: mouseOver ? Colors.white : Colors.white60
+                    ),
+                  );
+                }),
+              ))
+              .toList(),
+        ),
       );
 
 

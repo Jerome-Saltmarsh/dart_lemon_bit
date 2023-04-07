@@ -5,6 +5,7 @@ import 'package:bleed_server/src/game_physics.dart';
 import 'package:lemon_math/library.dart';
 
 class Collider extends Position3 {
+  /// do not mutate directly use game.deactivateCollider
   var active = true;
   var velocityX = 0.0;
   var velocityY = 0.0;

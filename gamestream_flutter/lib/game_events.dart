@@ -1,7 +1,6 @@
 
 import 'package:gamestream_flutter/game_minimap.dart';
 import 'package:gamestream_flutter/isometric/events/on_game_event_game_object_destroyed.dart';
-import 'package:gamestream_flutter/isometric/events/on_player_event_quest_started.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -421,59 +420,20 @@ class GameEvents {
       case PlayerEvent.Recipe_Crafted:
         GameAudio.unlock();
         break;
-      case PlayerEvent.Spawn_Started:
-        GameAudio.teleport();
-        break;
-      case PlayerEvent.Inventory_Item_Moved:
-        GameAudio.switch_sounds_4();
-        break;
       case PlayerEvent.Loot_Collected:
         return GameAudio.collect_star_3();
       case PlayerEvent.Scene_Changed:
         GameCamera.centerOnPlayer();
         // GameActions.setAmbientShadeToHour();
         break;
-      case PlayerEvent.Quest_Started:
-        onPlayerEventQuestStarted();
-        break;
-      case PlayerEvent.Quest_Completed:
-        GameAudio.notification_sound_12();
-        break;
-      case PlayerEvent.Skill_Upgraded:
-        // audio.unlock(GameState.player.x, GameState.player.y);
-        break;
       case PlayerEvent.Item_Acquired:
         readPlayerEventItemAcquired();
-        break;
-      case PlayerEvent.Dash_Activated:
-        // audio.buff11(GameState.player.x, GameState.player.y);
-        break;
-      case PlayerEvent.Ammo_Acquired:
-        // audio.itemAcquired(Engine.screenCenterWorldX, Engine.screenCenterWorldY);
         break;
       case PlayerEvent.Item_Dropped:
         GameAudio.popSounds14();
         break;
       case PlayerEvent.Item_Sold:
         GameAudio.coins_24();
-        break;
-      case PlayerEvent.Drink_Potion:
-        // audio.bottle(Engine.screenCenterWorldX, Engine.screenCenterWorldY);
-        break;
-      case PlayerEvent.Collect_Wood:
-        // audio.coins(Engine.screenCenterWorldX, Engine.screenCenterWorldY);
-        break;
-      case PlayerEvent.Collect_Rock:
-        // audio.coins(Engine.screenCenterWorldX, Engine.screenCenterWorldY);
-        break;
-      case PlayerEvent.Collect_Experience:
-        // audio.collectStar3(Engine.screenCenterWorldX, Engine.screenCenterWorldY);
-        break;
-      case PlayerEvent.Collect_Gold:
-        // audio.coins(Engine.screenCenterWorldX, Engine.screenCenterWorldY);
-        break;
-      case PlayerEvent.Hello_Male_01:
-        GameAudio.male_hello.play();
         break;
       case PlayerEvent.GameObject_Deselected:
         GameEditor.gameObjectSelected.value = false;
@@ -691,7 +651,6 @@ class GameEvents {
 
   static void onChangedPlayerRespawnTimer(int respawnTimer) {
        ClientState.control_visible_player_weapons.value = respawnTimer <= 0;
-       if (GamePlayer.alive.value) return;
        ClientState.window_visible_player_creation.value = respawnTimer <= 0;
        ClientState.control_visible_respawn_timer.value = respawnTimer > 0;
   }
@@ -768,9 +727,15 @@ class GameEvents {
       }
   }
 
-  static void onChangedPlayerAlive(bool playerAlive){
+  static void onChangedPlayerAlive(bool playerAlive) {
+
+
+  }
+
+  static void onChangedPlayerActive(bool playerActive){
+     print("onChangedPlayerActive($playerActive)");
       if (ServerState.gameType.value == GameType.Combat) {
-        ClientState.window_visible_player_creation.value = !playerAlive;
+        ClientState.window_visible_player_creation.value = !playerActive;
       }
   }
 }

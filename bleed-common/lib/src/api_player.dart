@@ -32,4 +32,5 @@ class ApiPlayer {
   static const Power                  = 30;
   static const PerkType               = 31;
   static const Respawn_Timer          = 32;
+  static const Active                 = 33;
 }

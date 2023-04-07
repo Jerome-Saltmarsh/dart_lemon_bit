@@ -59,7 +59,7 @@ class GameSystem {
          }
       }
     }
-    await Future.delayed(const Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 4));
   }
 
   static void onDeviceTypeChanged(int deviceType){

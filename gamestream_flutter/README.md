@@ -7,19 +7,6 @@ navigate to next method: ctrl + shift + up / down arrows
 ctrl + w            : minimal mode
 ctrl + shift + e    : view recent changes
 
-[IDEAS]
-[ ] tree can only be chopped with axe
-[ ] talent type explosions do not cause friendly fire
-[ ] talent type instant draw weapon
-[ ] talent type collecting gems also heals health
-[ ] talent type melee attacks heal health
-[ ] talent type melee attacks damage multiple enemies
-[ ] talent type sniper bullets pass through enemies
-[ ] talent type perfect accuracy
-[ ] talent type shock half duration
-[ ] find keys, which can unlock chests, chests provide treasures
-[ ] metal crates can only be smashed with hammer
-
 [FUTURE-TASKS]
 [ ] weapon stun taser
 [ ] weapon shield
@@ -36,8 +23,8 @@ ctrl + shift + e    : view recent changes
 [ ] setup patreon page
 [ ] setup youtube page
 [ ] mobile compatible
-[ ] squigital games logo
-[ ] register squigital games company
+[ ] squigital media company
+[ ] register squigital games company abn
 [ ] youtube video 45 seconds
 [ ] fix remove sound death on join game
 

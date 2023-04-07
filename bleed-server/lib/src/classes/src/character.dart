@@ -57,6 +57,7 @@ abstract class Character extends Collider {
   int get legsType => _legsType;
 
   bool get isPlayer => false;
+  bool get aliveAndActive => alive && active;
 
   set weaponType(int value){
     assert (value == ItemType.Empty || ItemType.isTypeWeapon(value));

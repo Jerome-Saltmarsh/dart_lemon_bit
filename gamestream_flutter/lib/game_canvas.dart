@@ -125,6 +125,7 @@ class GameCanvas {
 
   static void renderPlayerEnergy() {
     if (GamePlayer.dead) return;
+    if (!GamePlayer.active.value) return;
     renderBarBlue(
         GamePlayer.position.x,
         GamePlayer.position.y,
