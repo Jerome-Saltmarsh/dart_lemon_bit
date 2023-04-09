@@ -7,7 +7,11 @@ navigate to next method: ctrl + shift + up / down arrows
 ctrl + w            : minimal mode
 ctrl + shift + e    : view recent changes
 
-[FUTURE-TASKS]
+[POST_RELEASE]
+[ ] update linked in profile
+[ ] setup patreon page
+[ ] purchase domain squigitalgames.com
+[ ] mobile compatible
 [ ] weapon stun taser
 [ ] weapon shield
 [ ] improve sprite sniper rifle
@@ -15,18 +19,21 @@ ctrl + shift + e    : view recent changes
 [ ] feature teleport does damage to things in between
 [ ] graphic settings enable paint anti alias
 [ ] game type random
-
-[RELEASE-TASKS]
-[ ] purchase domain squigitalgames.com
-[ ] deploy server to all countries
-[ ] update linked in profile
-[ ] setup patreon page
-[ ] setup youtube page
-[ ] mobile compatible
 [ ] squigital media company
 [ ] register squigital games company abn
+
+[PRE_RELEASE]
+[ ] share reddit post
+[ ] setup youtube page
 [ ] youtube video 45 seconds
-[ ] fix remove sound death on join game
+[ ] setup discord page
+
+08.04.2023
+[x] deploy server to all countries
+[x] disable play for mobile
+
+07.04.2023
+[x] fix remove sound death on join game
 
 24.03.2023
 [x] fix power icon resolution

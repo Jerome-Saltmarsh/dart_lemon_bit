@@ -650,9 +650,11 @@ class GameEvents {
   }
 
   static void onChangedPlayerRespawnTimer(int respawnTimer) {
-       ClientState.control_visible_player_weapons.value = respawnTimer <= 0;
-       ClientState.window_visible_player_creation.value = respawnTimer <= 0;
-       ClientState.control_visible_respawn_timer.value = respawnTimer > 0;
+    if (ServerState.gameType.value == GameType.Combat) {
+      ClientState.control_visible_player_weapons.value = respawnTimer <= 0;
+      ClientState.window_visible_player_creation.value = respawnTimer <= 0;
+      ClientState.control_visible_respawn_timer.value = respawnTimer > 0;
+    }
   }
 
   static void onChangedPlayerWeaponMelee(int weaponType) {
@@ -729,13 +731,15 @@ class GameEvents {
 
   static void onChangedPlayerAlive(bool playerAlive) {
 
-
   }
 
   static void onChangedPlayerActive(bool playerActive){
      print("onChangedPlayerActive($playerActive)");
       if (ServerState.gameType.value == GameType.Combat) {
-        ClientState.window_visible_player_creation.value = !playerActive;
+        if (playerActive){
+          ClientState.window_visible_player_creation.value = false;
+        }
+
       }
   }
 }

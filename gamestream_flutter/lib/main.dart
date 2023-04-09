@@ -11,6 +11,10 @@ void main() {
     themeData: ThemeData(fontFamily: 'VT323-Regular'),
     backgroundColor: GameColors.black,
     onError: GameSystem.onError,
+    update: (){},
+    onDrawCanvas: (canvas, size) {
+
+    }
   );
 }
 

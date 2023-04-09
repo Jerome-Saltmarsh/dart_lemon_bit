@@ -49,6 +49,6 @@ export 'src/website/website.dart';
 export 'src/editor/src_editor.dart';
 export 'game_mouse.dart';
 
-export 'package:lemon_engine/src.dart';
+export 'package:lemon_engine/lemon_engine.dart';
 export 'package:lemon_watch/src.dart';
 export 'package:lemon_math/src.dart';

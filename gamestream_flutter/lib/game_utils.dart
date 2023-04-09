@@ -19,16 +19,16 @@ class GameUtils {
         return ConnectionRegion.Oceania;
       }
       if (timeZoneName.contains('Singapore')){
-        return ConnectionRegion.Asia;
+        return ConnectionRegion.Asia_South;
       }
       if (timeZoneName.contains('Indochina')){
-        return ConnectionRegion.Asia;
+        return ConnectionRegion.Asia_South;
       }
       if (timeZoneName.contains('Brasil')){
-        return ConnectionRegion.South_America;
+        return ConnectionRegion.America_South;
       }
       if (timeZoneName.contains('Brazil')){
-        return ConnectionRegion.South_America;
+        return ConnectionRegion.America_South;
       }
       if (timeZoneName.contains('Central European Time')){
         return ConnectionRegion.Europe;
@@ -69,15 +69,15 @@ class GameUtils {
         return ConnectionRegion.Europe;
       }
       if (utc == 6) {
-        return ConnectionRegion.Asia;
+        return ConnectionRegion.Asia_South;
       }
       if (utc == 7) {
-        return ConnectionRegion.Asia;
+        return ConnectionRegion.Asia_South;
       }
       if (utc == 8) {
-        return ConnectionRegion.Asia;
+        return ConnectionRegion.Asia_South;
       }
      // return ConnectionRegion.USA_West;
-    return ConnectionRegion.North_America;
+    return ConnectionRegion.America_North;
   }
 }

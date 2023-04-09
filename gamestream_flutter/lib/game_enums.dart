@@ -1,4 +1,4 @@
-import 'package:lemon_engine/src.dart';
+import 'package:lemon_engine/lemon_engine.dart';
 
 enum ConnectionStatus {
   None,
@@ -8,16 +8,6 @@ enum ConnectionStatus {
   Error,
   Failed_To_Connect,
   Invalid_Connection,
-}
-
-enum ConnectionRegion {
-  North_America,
-  South_America,
-  Europe,
-  Asia,
-  Oceania,
-  LocalHost,
-  Custom,
 }
 
 enum OperationStatus {

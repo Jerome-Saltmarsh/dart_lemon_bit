@@ -1,9 +1,6 @@
 
 
 class GameNetworkConfig {
-  // CONSTANTS
-  static const Url_Sydney = "https://gamestream-ws-sydney-osbmaezptq-ts.a.run.app";
-  static const Url_Singapore = "https://gamestream-ws-singapore-osbmaezptq-as.a.run.app";
   // VARIABLES
   static var portLocalhost = '8080';
   // GETTERS

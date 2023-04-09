@@ -4,6 +4,7 @@ import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/ui/views.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class GameWebsite {
   static final operationStatus = Watch(OperationStatus.None);
@@ -72,48 +73,19 @@ class GameWebsite {
       Container(
          color: GameColors.black,
          alignment: Alignment.center,
-         child: Column(
-           mainAxisAlignment: MainAxisAlignment.center,
-           crossAxisAlignment: CrossAxisAlignment.center,
-           children: [
-             text("SQUIGITAL GAMES PRESENTS"),
-             height8,
-             Image.asset('images/squigital-logo.png'),
-             // FutureBuilder<ui.Image>(
-             //   future: Engine.loadImageAsset('images/loading-icon.png'),
-             //   builder: (context, snapshot){
-             //       if (snapshot.connectionState != ConnectionState.done){
-             //         return const SizedBox(height: 45,);
-             //       }
-             //       final image = snapshot.data;
-             //       if (image == null){
-             //         return const SizedBox(height: 45,);
-             //       }
-             //       return Engine.buildAtlasImage(
-             //           image: image,
-             //           srcX: 0,
-             //           srcY: 0,
-             //           srcWidth: 22,
-             //           srcHeight: 45
-             //       );
-             //
-             //   }),
-           ],
-         ),
+         child: text("LOADING GAMESTREAM"),
       );
 
-   static Widget buildUI(BuildContext context) => buildFullScreen(
-     child: Stack(
-      children: [
-        watch(GameWebsite.operationStatus, buildOperationStatus),
-        WebsiteBuild.buildWatchErrorMessage(),
-      ]),
-   );
+   static Widget buildUI(BuildContext context) => Stack(
+       children: [
+         watch(GameWebsite.operationStatus, buildOperationStatus),
+         WebsiteBuild.buildWatchErrorMessage(),
+       ]);
 
   static Widget buildOperationStatus(OperationStatus operationStatus) =>
       operationStatus != OperationStatus.None
           ? buildFullscreen(child: text(operationStatus.name.replaceAll("_", " ")))
-          : buildFullscreen(child: watch(GameNetwork.connectionStatus, buildConnection));
+          : watch(GameNetwork.connectionStatus, buildConnectionStatus);
 
   static Widget buildPageLoading(BuildContext context) {
     final _width = 300.0;
@@ -152,38 +124,7 @@ class GameWebsite {
     );
   }
 
-  static Widget buildWebsitePage(WebsitePage page) =>
-      page == WebsitePage.Games
-       ? buildColumnSelectGameType()
-       : buildWebsitePageRegions();
-
-  static Widget buildColumnSelectGameType() =>
-    Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        buildTextButton("COMBAT", action: GameNetwork.connectToGameCombat, colorRegular: GameColors.green.withOpacity(0.5), size: 50),
-        height24,
-        buildTextButton("CREATE", action: GameNetwork.connectToGameEditor, colorRegular: GameColors.green.withOpacity(0.5), size: 50),
-      ],
-    );
-
-  static Widget buildWebsitePageRegions() =>
-      Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: ConnectionRegion.values.map((ConnectionRegion region) {
-          return Container(
-              margin: const EdgeInsets.only(bottom: 16),
-              child: text(region.name.replaceAll("_", " "), onPressed: (){
-                GameWebsite.region.value = region;
-                GameWebsite.websitePage.value = WebsitePage.Games;
-              }, size: 20),
-          );
-        }).toList(),
-      );
-
-  static Widget buildNotConnected()  => watch(Engine.deviceType, buildDevice);
+  static Widget buildNotConnected()  => watch(Engine.deviceType, buildPageWebsite);
 
   static void toggleWebsitePage() =>
      websitePage.value =
@@ -191,19 +132,61 @@ class GameWebsite {
          ? WebsitePage.Games
          : WebsitePage.Region;
 
-  static Widget buildDevice(int deviceType) =>
-    Container(
-      width: 300,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          // buildLogoSquigitalGames(),
-          buildLogoGameStream(),
-          height8,
-          buildColumnRegions(),
-        ],
-      ),
-    );
+  static Widget buildPageWebsite(int deviceType) =>
+      deviceType == DeviceType.Computer
+          ? buildPageWebsiteDesktop()
+          : buildPageWebsiteMobile();
+
+  static const Icon_Size = 25.0;
+
+  static Widget buildPageWebsiteDesktop() =>
+      Center(
+        child: Container(
+          width: 300,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              buildLogoGameStream(),
+              height16,
+              buildColumnRegions(),
+              height32,
+              buildRowSocialLinks()
+            ],
+          ),
+        ),
+      );
+
+  static void openUrlYoutube() =>
+      launchUrl(Uri.parse('https://www.youtube.com/@gamestream.online'));
+
+  static void openUrlDiscord() =>
+      launchUrl(Uri.parse('https://discord.com/channels/888728235653885962/888728235653885965'));
+
+  static Widget buildRowSocialLinks() => Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                onPressed(
+                     action: openUrlYoutube,
+                     child: text("youtube", color: Colors.white70, underline: true)),
+                width16,
+                onPressed(
+                    action: openUrlDiscord,
+                    child: text("discord", color: Colors.white70, underline: true)),
+              ],
+            );
+
+  static Widget buildPageWebsiteMobile() =>
+      Container(
+        width: 300,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            buildLogoGameStream(),
+            height16,
+            text("Support for mobile coming soon"),
+          ],
+        ),
+      );
 
 
   static Widget buildLogoGameStream(){
@@ -263,13 +246,13 @@ class GameWebsite {
       );
 
   static const Live_Regions = [
-    ConnectionRegion.North_America,
-    ConnectionRegion.South_America,
+    ConnectionRegion.America_North,
+    ConnectionRegion.America_South,
     ConnectionRegion.Europe,
-    ConnectionRegion.Asia,
+    ConnectionRegion.Asia_North,
+    ConnectionRegion.Asia_South,
     ConnectionRegion.Oceania,
   ];
-
 
   static Widget buildColumnRegions() =>
       SingleChildScrollView(

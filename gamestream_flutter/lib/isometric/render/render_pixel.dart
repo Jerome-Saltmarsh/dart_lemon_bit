@@ -1,6 +1,6 @@
 import 'package:gamestream_flutter/classes/library.dart';
 import 'package:gamestream_flutter/game_images.dart';
-import 'package:lemon_engine/src.dart';
+import 'package:lemon_engine/lemon_engine.dart';
 
 void renderPixelRedV2(Vector3 value) {
   renderPixelRed(value.renderX, value.renderY);

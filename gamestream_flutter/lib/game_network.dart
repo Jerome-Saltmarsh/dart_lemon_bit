@@ -31,9 +31,7 @@ class GameNetwork {
       );
       return;
     }
-    final httpsConnectionString = getRegionConnectionString(region);
-    final wsConnectionString = parseUrlHttpToWS(httpsConnectionString);
-    connectToServer(wsConnectionString, message);
+    connectToServer(convertHttpToWSS(region.url), message);
   }
 
   static void connectLocalHost({int port = 8080, required String message}) {
@@ -44,19 +42,17 @@ class GameNetwork {
     connect(uri: uri, message: '${ClientRequest.Join} $message');
   }
 
-  static String parseUrlHttpToWS(String url, {String port = '8080'}) =>
+  static String convertHttpToWSS(String url, {String port = '8080'}) =>
       url.replaceAll("https", "wss") + "/:$port";
 
-  static String getRegionConnectionString(ConnectionRegion region) {
-    switch (region) {
-      case ConnectionRegion.Oceania:
-        return GameNetworkConfig.Url_Sydney;
-      case ConnectionRegion.Asia:
-        return GameNetworkConfig.Url_Singapore;
-      default:
-        throw Exception('GameNetwork.getRegionConnectionString($region)');
-    }
-  }
+  // static String mapConnectionRegionToConnectionString(ConnectionRegion region) => {
+  //     ConnectionRegion.Oceania       : ConnectionStrings.Sydney,
+  //     ConnectionRegion.Asia_South    : ConnectionStrings.Singapore,
+  //     ConnectionRegion.Asia_North    : ConnectionStrings.South_Korea,
+  //     ConnectionRegion.Europe        : ConnectionStrings.Frankfurt,
+  //     ConnectionRegion.America_North : ConnectionStrings.Frankfurt,
+  //     ConnectionRegion.America_South : ConnectionStrings.Frankfurt,
+  // }[region] ?? "unknown-region-$region";
 
   static void connectToGameEditor() => connectToGame(GameType.Editor);
 
@@ -185,6 +181,9 @@ class GameNetwork {
     serverResponseReader.bufferSizeTotal.value = 0;
     ClientState.clearParticles();
     ClientState.window_visible_menu.setFalse();
+    ClientState.control_visible_player_weapons.value = false;
+    ClientState.window_visible_player_creation.value = false;
+    ClientState.control_visible_respawn_timer.value = false;
 
     switch (connection) {
       case ConnectionStatus.Connected:
@@ -206,6 +205,7 @@ class GameNetwork {
         break;
 
       case ConnectionStatus.Done:
+        GamePlayer.active.value = false;
         ClientState.timeConnectionEstablished = null;
         Engine.camera.x = 0;
         Engine.camera.y = 0;

@@ -54,9 +54,6 @@ class GameIO {
     inputMode.value = inputModeKeyboard ? InputMode.Touch : InputMode.Keyboard;
 
   static void addListeners() {
-      Engine.onPanStart = onPanStart;
-      Engine.onPanUpdate = onPanUpdate;
-      Engine.onPanEnd = onPanEnd;
       Engine.onTapDown = onTapDown;
       Engine.onTap = onTap;
       Engine.onLongPressDown = onLongPressDown;
@@ -72,8 +69,6 @@ class GameIO {
   }
 
   static void removeListeners() {
-      Engine.onPanStart = null;
-      Engine.onPanStart = null;
       Engine.onTapDown = null;
       Engine.onLongPressDown = null;
       Engine.onSecondaryTapDown = null;
@@ -88,43 +83,6 @@ class GameIO {
 
   static void onLongPressDown(LongPressDownDetails details){
     // print("onLongPressDown()");
-  }
-
-  static void onPanStart(DragStartDetails details) {
-      ClientState.touchButtonSide.value = (details.globalPosition.dx < Engine.screenCenterX);
-  }
-
-  static void onPanUpdate(DragUpdateDetails details) {
-    const sensitivity = 2.0;
-    final velocityX = details.delta.dx * sensitivity;
-    final velocityY = details.delta.dy * sensitivity;
-    if (!_panning) {
-      _panning = true;
-      previousVelocityX2 = velocityX;
-      previousVelocityY2 = velocityY;
-      previousVelocityX = velocityX;
-      previousVelocityY = velocityY;
-    }
-    final combinedVelocityX = (velocityX + previousVelocityX + previousVelocityX2) / 3;
-    final combinedVelocityY = (velocityY + previousVelocityY + previousVelocityY2) / 3;
-
-    touchCursorWorldX += combinedVelocityX;
-    touchCursorWorldY += combinedVelocityY;
-    const sensitivityLoss = 0.8;
-    previousVelocityX2 = previousVelocityX * sensitivityLoss;
-    previousVelocityY2 = previousVelocityY * sensitivityLoss;
-    previousVelocityX = velocityX * sensitivityLoss;
-    previousVelocityY = velocityY * sensitivityLoss;
-  }
-
-  static void onPanEnd(DragEndDetails details){
-    touchscreenDirectionMove = Direction.None;
-    touchPanning = false;
-    if (inputModeTouch) {
-      GameActions.setTarget();
-    }
-
-    _panning = false;
   }
 
   static int convertRadianToDirection(double radian) {

@@ -38,8 +38,6 @@ class GameSystem {
     }
 
     GameWebsite.errorMessageEnabled.value = true;
-    Engine.joystickMaxDistance = 150;
-
 
     final visitCount = sharedPreferences.getInt('visit-count');
     if (visitCount == null){

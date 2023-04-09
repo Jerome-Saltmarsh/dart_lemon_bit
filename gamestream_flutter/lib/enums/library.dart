@@ -9,3 +9,5 @@ export 'drag_start.dart';
 export 'client_type.dart';
 export 'visibility.dart';
 export 'emission_type.dart';
+export 'connection_region.dart';
+export 'connection_strings.dart';
