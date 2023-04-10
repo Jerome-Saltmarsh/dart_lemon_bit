@@ -1,10 +1,11 @@
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/classes/src/game_environment.dart';
+import 'package:bleed_server/src/classes/src/game_isometric.dart';
 import 'package:bleed_server/src/classes/src/game_time.dart';
 import 'package:lemon_math/functions/random_bool.dart';
 import 'package:lemon_math/functions/random_item.dart';
 
-class GameSurvival extends Game {
+class GameSurvival extends GameIsometric {
 
   GameSurvival({required super.scene}) : super(
       environment: GameEnvironment(),

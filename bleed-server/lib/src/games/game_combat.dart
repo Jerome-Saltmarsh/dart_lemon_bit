@@ -2,11 +2,12 @@
 
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/classes/src/game_environment.dart';
+import 'package:bleed_server/src/classes/src/game_isometric.dart';
 import 'package:bleed_server/src/classes/src/game_time.dart';
 import 'package:bleed_server/src/system.dart';
 import 'package:lemon_math/library.dart';
 
-class GameCombat extends Game {
+class GameCombat extends GameIsometric {
   // constants
   static final Player_Respawn_Duration  = Engine.Frames_Per_Second * (isLocalMachine ? 4 : 4);
   static const GameObject_Duration      = 500;
@@ -219,6 +220,8 @@ class GameCombat extends Game {
      if (src is Player) {
        src.credits += Credits_Per_Kill;
      }
+
+
 
      if (target is AI && scene.spawnPoints.isNotEmpty) {
        final spawnNodeIndex = randomItem(scene.spawnPoints);

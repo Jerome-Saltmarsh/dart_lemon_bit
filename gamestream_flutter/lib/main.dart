@@ -12,7 +12,7 @@ void main() {
     backgroundColor: GameColors.black,
     onError: GameSystem.onError,
     update: (){},
-    onDrawCanvas: (canvas, size) {
+    render: (canvas, size) {
 
     }
   );

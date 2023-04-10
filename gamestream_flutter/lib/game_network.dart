@@ -45,15 +45,6 @@ class GameNetwork {
   static String convertHttpToWSS(String url, {String port = '8080'}) =>
       url.replaceAll("https", "wss") + "/:$port";
 
-  // static String mapConnectionRegionToConnectionString(ConnectionRegion region) => {
-  //     ConnectionRegion.Oceania       : ConnectionStrings.Sydney,
-  //     ConnectionRegion.Asia_South    : ConnectionStrings.Singapore,
-  //     ConnectionRegion.Asia_North    : ConnectionStrings.South_Korea,
-  //     ConnectionRegion.Europe        : ConnectionStrings.Frankfurt,
-  //     ConnectionRegion.America_North : ConnectionStrings.Frankfurt,
-  //     ConnectionRegion.America_South : ConnectionStrings.Frankfurt,
-  // }[region] ?? "unknown-region-$region";
-
   static void connectToGameEditor() => connectToGame(GameType.Editor);
 
   static void connectToGameSurvival() => connectToGame(GameType.Survival);
@@ -61,6 +52,8 @@ class GameNetwork {
   static void connectToGameCombat() => connectToGame(GameType.Combat);
 
   static void connectToGamePractice() => connectToGame(GameType.Practice);
+
+  static void connectToGameRockPaperScissors() => connectToGame(GameType.Rock_Paper_Scissors);
 
   static void connectToGame(int gameType, [String message = ""]) =>
       connectToRegion(GameWebsite.region.value, '${gameType} $message');

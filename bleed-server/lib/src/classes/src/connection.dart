@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:bleed_server/gamestream.dart';
+import 'package:bleed_server/src/classes/src/game_isometric.dart';
 import 'package:bleed_server/src/classes/src/scene_writer.dart';
 import 'package:bleed_server/src/games/game_editor.dart';
 import 'package:bleed_server/src/games/game_practice.dart';
@@ -122,7 +123,8 @@ class Connection with ByteReader {
         return;
 
       case ClientRequest.Reload:
-        player.game.playerReload(player);
+        final game = player.game;
+        game.playerReload(player);
         return;
 
       case ClientRequest.Select_PerkType:
@@ -138,7 +140,7 @@ class Connection with ByteReader {
       case ClientRequest.Equip:
         final itemType = parseArg1(arguments);
         if (itemType == null) return;
-        player.game.characterEquipItemType(player, itemType);
+        // player.game.characterEquipItemType(player, itemType);
         return;
 
       case ClientRequest.Equip_Next:
@@ -148,7 +150,7 @@ class Connection with ByteReader {
           errorInvalidArg('invalid item group index: $itemGroupIndex');
           return;
         }
-        game.playerEquipNextItemGroup(player, ItemGroup.values[itemGroupIndex]);
+        // game.playerEquipNextItemGroup(player, ItemGroup.values[itemGroupIndex]);
         return;
 
       case ClientRequest.Swap_Weapons:
@@ -156,7 +158,7 @@ class Connection with ByteReader {
         break;
 
       case ClientRequest.Player_Throw_Grenade:
-        game.playerThrowGrenade(player);
+        // game.playerThrowGrenade(player);
         break;
 
       case ClientRequest.Select_Weapon_Primary:
@@ -225,6 +227,7 @@ class Connection with ByteReader {
         final index = parse(arguments[1]);
         if (index == null || !isValidIndex(index, LightningType.values))
           return errorInvalidArg('invalid lightning index: $index');
+
         game.environment.lightningType = LightningType.values[index];
 
         if (game.environment.lightningType == LightningType.On){
@@ -242,7 +245,7 @@ class Connection with ByteReader {
           player.writeError('respawn timer remaining');
           return;
         }
-        player.game.revive(player);
+        game.revive(player);
         return;
 
       case ClientRequest.GameObject:
@@ -287,7 +290,7 @@ class Connection with ByteReader {
         if (!isLocalMachine && game is! GameEditor) return;
           final hour = parse(arguments[1]);
           if (hour == null) return errorInvalidArg('hour required');
-          player.game.setHourMinutes(hour, 0);
+          game.setHourMinutes(hour, 0);
           break;
 
       default:
@@ -433,7 +436,7 @@ class Connection with ByteReader {
         if (altitude == null) return;
         final frequency = parseArg6(arguments);
         if (frequency == null) return;
-        final sceneName = player.game.scene.name;
+        final sceneName = game.scene.name;
         final scene = SceneGenerator.generate(
             height: height,
             rows: rows,
@@ -469,7 +472,7 @@ class Connection with ByteReader {
         game.playersDownloadScene();
         break;
       case EditRequest.Clear_Spawned:
-        player.game.clearSpawnedAI();
+        game.clearSpawnedAI();
         break;
       case EditRequest.Scene_Toggle_Underground:
         // if (player.game is! GameDarkAge) {
@@ -480,18 +483,17 @@ class Connection with ByteReader {
         // gameDarkAge.underground = !gameDarkAge.underground;
         break;
       case EditRequest.Spawn_AI:
-        player.game.clearSpawnedAI();
-        player.game.scene.refreshSpawnPoints();
-        player.game.triggerSpawnPoints();
+        game.clearSpawnedAI();
+        game.scene.refreshSpawnPoints();
+        game.triggerSpawnPoints();
         break;
       case EditRequest.Save:
-        if (player.game.scene.name.isEmpty){
+        if (game.scene.name.isEmpty){
           player.writeError('cannot save because scene name is empty');
           return;
         }
-        // player.game.saveSceneToFile();
-        player.game.saveSceneToFileBytes();
-        player.writeError('scene saved: ${player.game.scene.name}');
+        game.saveSceneToFileBytes();
+        player.writeError('scene saved: ${game.scene.name}');
         break;
 
       case EditRequest.Modify_Canvas_Size:
@@ -787,6 +789,16 @@ class Connection with ByteReader {
     joinGame(GameCombat(scene: engine.scenes.warehouse));
   }
 
+  Future joinGameRockPaperScissors() async {
+    for (final game in engine.games) {
+      if (game is GameCombat) {
+        if (game.players.length >= GameCombat.Max_Players) continue;
+        return joinGame(game);
+      }
+    }
+    joinGame(GameCombat(scene: engine.scenes.warehouse));
+  }
+
   Future joinGameSurvival() async {
     for (final game in engine.games){
       if (game is GameSurvival){
@@ -797,7 +809,7 @@ class Connection with ByteReader {
     joinGame(GameSurvival(scene: engine.scenes.suburbs_01));
   }
 
-  void joinGame(Game game){
+  void joinGame(GameIsometric game){
     if (_player != null) {
       _player!.game.removePlayer(_player!);
     }
@@ -871,6 +883,9 @@ class Connection with ByteReader {
         break;
       case GameType.Combat:
         joinGameCombat();
+        break;
+      case GameType.Rock_Paper_Scissors:
+        joinGameRockPaperScissors();
         break;
       default:
         return errorInvalidArg('invalid game type index $gameType');

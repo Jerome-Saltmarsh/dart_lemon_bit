@@ -2,6 +2,7 @@
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:bleed_server/src/classes/src/game_isometric.dart';
 import 'package:bleed_server/src/functions/generateName.dart';
 import 'package:bleed_server/src/games/game_editor.dart';
 import 'package:bleed_server/src/maths/get_distance_between_v3.dart';
@@ -90,7 +91,7 @@ class Player extends Character with ByteWriter {
   }
 
   /// Warning - do not reference
-  Game game;
+  GameIsometric game;
   Collider? _aimTarget; // the currently highlighted character
   var aimTargetWeaponSide = Side.Left;
   Account? account;

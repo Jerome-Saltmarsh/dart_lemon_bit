@@ -135,7 +135,8 @@ class GameWebsite {
   static Widget buildPageWebsite(int deviceType) =>
       deviceType == DeviceType.Computer
           ? buildPageWebsiteDesktop()
-          : buildPageWebsiteMobile();
+          : buildPageWebsiteDesktop();
+          // : buildPageWebsiteMobile();
 
   static const Icon_Size = 25.0;
 
@@ -262,9 +263,13 @@ class GameWebsite {
           children: (Engine.isLocalHost ? ConnectionRegion.values : Live_Regions)
               .map((ConnectionRegion region) =>
               onPressed(
-                action: (){
+                action: () {
                   actionSelectRegion(region);
-                  GameNetwork.connectToGameCombat();
+                  if (Engine.deviceIsPhone){
+                    GameNetwork.connectToGameRockPaperScissors();
+                  } else {
+                    GameNetwork.connectToGameCombat();
+                  }
                 },
                 child: onMouseOver(builder: (bool mouseOver) {
                   return Container(

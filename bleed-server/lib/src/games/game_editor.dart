@@ -1,9 +1,10 @@
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/classes/src/game_environment.dart';
+import 'package:bleed_server/src/classes/src/game_isometric.dart';
 import 'package:bleed_server/src/classes/src/game_time.dart';
 import '../scene/generate_empty_scene.dart';
 
-class GameEditor extends Game {
+class GameEditor extends GameIsometric {
 
   GameEditor({Scene? scene}) : super(
       scene: scene ?? generateEmptyScene(),
@@ -30,7 +31,7 @@ class GameEditor extends Game {
   @override
   void customOnPlayerRevived(Player player) {
      if (isSafeToRevive(25, 25)) {
-       Game.setGridPosition(position: player, z: 1, row: 25, column: 25);
+       GameIsometric.setGridPosition(position: player, z: 1, row: 25, column: 25);
        player.state = CharacterState.Idle;
        player.writePlayerMoved();
        return;
@@ -39,7 +40,7 @@ class GameEditor extends Game {
      for (var row = 0; row < scene.gridRows; row++) {
         for (var column = 0; column < scene.gridColumns; column++){
           if (isSafeToRevive(row, column)){
-            Game.setGridPosition(position: player, z: 1, row: row, column: column);
+            GameIsometric.setGridPosition(position: player, z: 1, row: row, column: column);
             player.writePlayerMoved();
             return;
           }

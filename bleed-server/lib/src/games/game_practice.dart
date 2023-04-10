@@ -1,10 +1,11 @@
 
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/classes/src/game_environment.dart';
+import 'package:bleed_server/src/classes/src/game_isometric.dart';
 import 'package:bleed_server/src/classes/src/game_time.dart';
 import 'package:lemon_math/library.dart';
 
-class GamePractice extends Game {
+class GamePractice extends GameIsometric {
   var configMaxPlayers = 7;
   var configZombieHealth = 5;
   var configZombieSpeed = 5.0;

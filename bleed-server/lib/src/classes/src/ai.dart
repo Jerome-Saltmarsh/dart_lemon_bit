@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:bleed_server/src/classes/src/game_isometric.dart';
 import 'package:bleed_server/src/maths/get_distance_between_v3.dart';
 import 'package:lemon_math/library.dart';
 
@@ -84,7 +85,7 @@ class AI extends Character {
     face(target!);
   }
 
-  void applyBehaviorWander(Game game){
+  void applyBehaviorWander(GameIsometric game){
     if (wanderRadius <= 0) return;
     if (target != null) return;
     if (!characterStateIdle) return;
