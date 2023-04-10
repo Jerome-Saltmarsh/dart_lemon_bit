@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:bleed_server/src/games/game_rock_paper_scissors.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 
 import 'package:bleed_server/gamestream.dart';
@@ -51,7 +52,7 @@ class Engine {
     frame++;
 
     for (var i = 0; i < games.length; i++){
-      games[i].updateStatus();
+      games[i].update();
     }
   }
 
@@ -94,4 +95,14 @@ class Engine {
     print("Connection Done. Current Connections: ${connections.length}, Total Connections: $connectionsTotal");
   }
 
+  GameRockPaperScissors getGameRockPaperScissors() {
+    for (final game in games) {
+      if (game is GameRockPaperScissors) {
+        return game;
+      }
+    }
+    final gameInstance = GameRockPaperScissors();
+    games.add(gameInstance);
+    return gameInstance;
+  }
 }

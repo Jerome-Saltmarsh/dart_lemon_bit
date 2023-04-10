@@ -17,7 +17,6 @@ abstract class GameIsometric extends Game {
   var frame = 0;
   var _running = true;
   Scene scene;
-  final players = <IsometricPlayer>[];
   final characters = <Character>[];
   final projectiles = <Projectile>[];
   final jobs = <GameJob>[];
@@ -182,7 +181,7 @@ abstract class GameIsometric extends Game {
     required this.options,
   }) {
     Position3.sort(gameObjects);
-    engine.onGameCreated(this);
+    engine.onGameCreated(this); // fix this
 
     /// TODO Illegal external scope reference
     gameObjectId = scene.gameObjects.length;
@@ -1426,7 +1425,7 @@ abstract class GameIsometric extends Game {
     }
   }
 
-  void updateStatus() {
+  void update() {
     removeDisconnectedPlayers();
     if (players.length == 0) return;
     updateInProgress();

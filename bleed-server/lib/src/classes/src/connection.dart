@@ -6,7 +6,6 @@ import 'package:bleed_server/src/classes/src/player.dart';
 import 'package:bleed_server/src/classes/src/scene_writer.dart';
 import 'package:bleed_server/src/games/game_editor.dart';
 import 'package:bleed_server/src/games/game_practice.dart';
-import 'package:bleed_server/src/games/game_rock_paper_scissors.dart';
 import 'package:bleed_server/src/games/game_survival.dart';
 import 'package:bleed_server/src/games/game_combat.dart';
 import 'package:bleed_server/src/scene_generator.dart';
@@ -817,15 +816,6 @@ class Connection with ByteReader {
     joinGame(GameCombat(scene: engine.scenes.warehouse));
   }
 
-  Future joinGameRockPaperScissors() async {
-    for (final game in engine.games) {
-      if (game is GameRockPaperScissors) {
-        return joinGame(game);
-      }
-    }
-    joinGame(GameCombat(scene: engine.scenes.warehouse));
-  }
-
   Future joinGameSurvival() async {
     for (final game in engine.games){
       if (game is GameSurvival){
@@ -837,15 +827,12 @@ class Connection with ByteReader {
   }
 
   void joinGame(Game game){
-
     // if (_player != null) {
     //   _player!.game.removePlayer(_player!);
     // }
     final player = game.createPlayer();
     _player = _player = player;
     player.sendBufferToClient = sendBufferToClient;
-
-
     // final account = _account;
     // if (account != null) {
     //   player.name = account.publicName;
@@ -908,7 +895,7 @@ class Connection with ByteReader {
         joinGameCombat();
         break;
       case GameType.Rock_Paper_Scissors:
-        joinGameRockPaperScissors();
+        joinGame(engine.getGameRockPaperScissors());
         break;
       default:
         return errorInvalidArg('invalid game type index $gameType');
