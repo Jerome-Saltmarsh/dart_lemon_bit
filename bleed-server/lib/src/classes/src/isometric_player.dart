@@ -16,11 +16,17 @@ import 'scene_writer.dart';
 
 class IsometricPlayer extends Character with ByteWriter implements Player {
   /// CONSTANTS
+  final mouse = Vector2(0, 0);
+  var inputMode = InputMode.Keyboard;
+  var screenLeft = 0.0;
+  var screenTop = 0.0;
+  var screenRight = 0.0;
+  var screenBottom = 0.0;
+  var framesSinceClientRequest = 0;
   static const inventory_size = 6 * 5;
 
   /// Variables
   late GameIsometric game;
-  final mouse = Vector2(0, 0);
   final runTarget = Position3();
   late Function sendBufferToClient;
   GameObject? editorSelectedGameObject;
@@ -28,7 +34,6 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   var energyGainRate = 16;
   var _credits = 0;
   var debug = false;
-  var framesSinceClientRequest = 0;
   var textDuration = 0;
   var _experience = 0;
   var _level = 1;
@@ -36,14 +41,9 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   var maxEnergy = 10;
   var text = "";
   var name = generateRandomName();
-  var screenLeft = 0.0;
-  var screenTop = 0.0;
-  var screenRight = 0.0;
-  var screenBottom = 0.0;
   var sceneDownloaded = false;
   var initialized = false;
   var id = 0;
-  var inputMode = InputMode.Keyboard;
 
   var inventoryDirty = false;
   var _equippedWeaponIndex = 0;

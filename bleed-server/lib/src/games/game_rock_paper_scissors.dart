@@ -18,6 +18,18 @@ class GameRockPaperScissors extends Game<PlayerScissorsPaperRock> {
 
   @override
   Player createPlayer() {
-    return PlayerScissorsPaperRock();
+    return PlayerScissorsPaperRock(this);
+  }
+
+  @override
+  void onPlayerUpdateRequestReceived({
+    required PlayerScissorsPaperRock player,
+    required int direction,
+    required bool mouseLeftDown,
+    required bool mouseRightDown,
+    required bool keySpaceDown,
+    required bool inputTypeKeyboard,
+  }) {
+    print("hello");
   }
 }

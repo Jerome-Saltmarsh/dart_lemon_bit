@@ -768,7 +768,6 @@ class Connection with ByteReader {
     final inputTypeDesktop  = hex & ByteHex.Hex_64 > 0;
     final keyDownSpace      = hex & ByteHex.Hex_128 > 0;
 
-    if (player is! IsometricPlayer) return;
     player.framesSinceClientRequest = 0;
     player.mouse.x = readNumberFromByteArray(args, index: 2).toDouble();
     player.mouse.y = readNumberFromByteArray(args, index: 4).toDouble();
@@ -777,6 +776,8 @@ class Connection with ByteReader {
     player.screenRight = readNumberFromByteArray(args, index: 10).toDouble();
     player.screenBottom = readNumberFromByteArray(args, index: 12).toDouble();
     player.inputMode = hex & ByteHex.Hex_64 > 0 ? 1 : 0;
+
+    if (player is! IsometricPlayer) return;
 
     player.game.onPlayerUpdateRequestReceived(
       player: player,

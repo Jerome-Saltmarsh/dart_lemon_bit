@@ -11,5 +11,15 @@ abstract class Game <T extends Player> {
   void customPlayerWrite(IsometricPlayer player){ }
 
   Player createPlayer();
+
+  void onPlayerUpdateRequestReceived({
+    required T player,
+    required int direction,
+    required bool mouseLeftDown,
+    required bool mouseRightDown,
+    required bool keySpaceDown,
+    required bool inputTypeKeyboard,
+  });
+
 }
 
