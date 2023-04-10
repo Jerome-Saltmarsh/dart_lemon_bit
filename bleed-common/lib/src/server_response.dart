@@ -26,6 +26,7 @@ class ServerResponse {
   static const GameObject_Deleted         = 24;
   static const Info                       = 26;
   static const Api_Players                = 27;
+  static const Api_SPR                    = 28;
 }
 
 

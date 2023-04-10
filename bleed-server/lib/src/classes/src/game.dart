@@ -8,7 +8,7 @@ abstract class Game <T extends Player> {
   void update();
 
   /// @override
-  void customPlayerWrite(T player){ }
+  void customPlayerWrite(T player);
 
   Player createPlayer();
 

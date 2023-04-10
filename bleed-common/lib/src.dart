@@ -9,6 +9,7 @@ export 'src/power_type.dart';
 export 'src/enums/scene_part.dart';
 export 'src/enums/player_actions.dart';
 export 'src/enums/perk_type.dart';
+export 'src/enums/api_spr.dart';
 export 'src/api_dark_age.dart';
 export 'src/api_player.dart';
 export 'src/area_type.dart';

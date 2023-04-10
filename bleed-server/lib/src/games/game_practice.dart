@@ -118,4 +118,9 @@ class GamePractice extends GameIsometric {
   void customUpdate() {
     environment.update();
   }
+
+  @override
+  void customPlayerWrite(IsometricPlayer player) {
+    // TODO: implement customPlayerWrite
+  }
 }

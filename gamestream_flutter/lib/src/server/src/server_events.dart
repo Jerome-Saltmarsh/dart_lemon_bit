@@ -1,6 +1,7 @@
 
 import 'dart:ui';
 
+import 'package:gamestream_flutter/classes/Game_State_SPR.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class ServerEvents {
@@ -9,11 +10,14 @@ class ServerEvents {
      ClientState.areaTypeVisible.value = true;
   }
 
-  static void onChangedGameType(int? value){
-
+  static void onChangedGameType(int? value) {
     if (value == GameType.Rock_Paper_Scissors){
+      Engine.zoom = 1.0;
       Engine.onDrawCanvas = (canvas, size){
-         canvas.drawCircle(Offset(100, 100), 100, Engine.paint);
+         for (var i = 0; i < GameStateSPR.totalPlayers; i++){
+           final player = GameStateSPR.players[i];
+           canvas.drawCircle(Offset(player.x, player.y), 50, Engine.paint);
+         }
       };
       Engine.buildUI = (context){
         return text("paper rock");

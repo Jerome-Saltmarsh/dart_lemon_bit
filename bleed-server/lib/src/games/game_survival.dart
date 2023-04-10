@@ -264,4 +264,9 @@ class GameSurvival extends GameIsometric {
     }
   }
 
+  @override
+  void customPlayerWrite(IsometricPlayer player) {
+    // TODO: implement customPlayerWrite
+  }
+
 }
