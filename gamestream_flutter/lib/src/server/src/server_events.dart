@@ -1,4 +1,6 @@
 
+import 'dart:ui';
+
 import 'package:gamestream_flutter/library.dart';
 
 class ServerEvents {
@@ -8,6 +10,20 @@ class ServerEvents {
   }
 
   static void onChangedGameType(int? value){
+
+    if (value == GameType.Rock_Paper_Scissors){
+      Engine.onDrawCanvas = (canvas, size){
+         canvas.drawCircle(Offset(100, 100), 100, Engine.paint);
+      };
+      Engine.buildUI = (context){
+        return text("paper rock");
+      };
+      Engine.onDrawForeground = (canvas, size){
+
+      };
+      return;
+    }
+
     ClientState.edit.value = value == GameType.Editor;
 
     if (value != GameType.Combat) {
