@@ -53,6 +53,7 @@ class Engine {
 
     for (var i = 0; i < games.length; i++){
       games[i].update();
+      games[i].writePlayerResponses();
     }
   }
 

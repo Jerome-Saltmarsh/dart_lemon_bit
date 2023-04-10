@@ -1431,9 +1431,6 @@ abstract class GameIsometric extends Game<IsometricPlayer> {
     if (players.length == 0) return;
     updateInProgress();
 
-    for (var i = 0; i < players.length; i++) {
-      players[i].writeAndSendResponse();
-    }
   }
 
   bool containsPlayerWithName(String name) {

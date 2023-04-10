@@ -18,4 +18,13 @@ abstract class Player with ByteWriter {
     writeByte(ServerResponse.Error);
     writeString(error);
   }
+
+  void writePlayerGame();
+
+  void writeAndSendResponse(){
+    writePlayerGame();
+    game.customPlayerWrite(this);
+    writeByte(ServerResponse.End);
+    sendBufferToClient();
+  }
 }

@@ -7,10 +7,6 @@ class GameRockPaperScissors extends Game<PlayerScissorsPaperRock> {
 
   final players = <PlayerScissorsPaperRock> [];
 
-  GameRockPaperScissors() {
-
-  }
-
   @override
   void update() {
 
@@ -18,7 +14,14 @@ class GameRockPaperScissors extends Game<PlayerScissorsPaperRock> {
 
   @override
   Player createPlayer() {
-    return PlayerScissorsPaperRock(this);
+    final instance = PlayerScissorsPaperRock(this);
+    players.add(instance);
+
+    instance.writeByte(ServerResponse.Game_Type);
+    instance.writeByte(GameType.Rock_Paper_Scissors);
+
+
+    return instance;
   }
 
   @override

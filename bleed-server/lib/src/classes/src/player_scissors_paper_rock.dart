@@ -8,4 +8,9 @@ class PlayerScissorsPaperRock extends Player {
   var y = 0.0;
 
   PlayerScissorsPaperRock(this.game);
+
+  @override
+  void writePlayerGame() {
+    // TODO: implement writePlayerGame
+  }
 }
