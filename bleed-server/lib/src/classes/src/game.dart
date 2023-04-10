@@ -1,9 +1,9 @@
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/classes/src/player.dart';
 
-abstract class Game {
+abstract class Game <T extends Player> {
   var playerId = 0;
-  final players = <IsometricPlayer>[];
+  List<T> get players;
 
   void update();
 

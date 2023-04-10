@@ -14,12 +14,12 @@ import 'package:lemon_math/library.dart';
 import 'package:bleed_server/gamestream.dart';
 import 'scene_writer.dart';
 
-class IsometricPlayer extends Character with ByteWriter implements Player<GameIsometric>  {
+class IsometricPlayer extends Character with ByteWriter implements Player {
   /// CONSTANTS
   static const inventory_size = 6 * 5;
 
   /// Variables
-  GameIsometric game;
+  late GameIsometric game;
   final mouse = Vector2(0, 0);
   final runTarget = Position3();
   late Function sendBufferToClient;

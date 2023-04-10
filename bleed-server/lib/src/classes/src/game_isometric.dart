@@ -12,11 +12,12 @@ import '../../maths/get_distance_between_v3.dart';
 import 'game_time.dart';
 import 'player.dart';
 
-abstract class GameIsometric extends Game {
+abstract class GameIsometric extends Game<IsometricPlayer> {
   final int gameType;
   var frame = 0;
   var _running = true;
   Scene scene;
+  final players = <IsometricPlayer> [];
   final characters = <Character>[];
   final projectiles = <Projectile>[];
   final jobs = <GameJob>[];
