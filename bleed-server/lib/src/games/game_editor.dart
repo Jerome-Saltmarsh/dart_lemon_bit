@@ -24,12 +24,12 @@ class GameEditor extends GameIsometric {
   }
 
   @override
-  void customOnPlayerDisconnected(Player player) {
+  void customOnPlayerDisconnected(IsometricPlayer player) {
       removeFromEngine();
   }
 
   @override
-  void customOnPlayerRevived(Player player) {
+  void customOnPlayerRevived(IsometricPlayer player) {
      if (isSafeToRevive(25, 25)) {
        GameIsometric.setGridPosition(position: player, z: 1, row: 25, column: 25);
        player.state = CharacterState.Idle;

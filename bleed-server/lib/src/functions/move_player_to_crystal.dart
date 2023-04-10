@@ -2,7 +2,7 @@ import 'package:bleed_server/gamestream.dart';
 
 import 'package:lemon_math/library.dart';
 
-void movePlayerToCrystal(Player player) {
+void movePlayerToCrystal(IsometricPlayer player) {
   for (final gameObject in player.game.gameObjects) {
     if (gameObject.type != ItemType.GameObjects_Crystal) continue;
     final angle = randomAngle();

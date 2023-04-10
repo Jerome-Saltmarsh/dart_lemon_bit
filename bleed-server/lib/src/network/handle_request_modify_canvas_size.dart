@@ -1,7 +1,7 @@
 import 'package:bleed_server/gamestream.dart';
 import 'dart:typed_data';
 
-void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, Player player){
+void handleRequestModifyCanvasSize(RequestModifyCanvasSize request, IsometricPlayer player){
   final game = player.game;
   final scene = game.scene;
   scene.compiled = null;

@@ -185,8 +185,8 @@ abstract class Character extends Collider {
     if (_maxHealth == value) return;
     assert (value > 0);
     _maxHealth = value;
-    if (this is Player){
-      (this as Player).writePlayerHealth();
+    if (this is IsometricPlayer){
+      (this as IsometricPlayer).writePlayerHealth();
     }
     if (_health > _maxHealth) {
       health = _maxHealth;
@@ -197,8 +197,8 @@ abstract class Character extends Collider {
     final clampedValue = clamp(value, 0, maxHealth);
     if (clampedValue == _health) return;
     _health = clampedValue;
-    if (this is Player){
-      (this as Player).writePlayerHealth();
+    if (this is IsometricPlayer){
+      (this as IsometricPlayer).writePlayerHealth();
     }
   }
 
@@ -244,8 +244,8 @@ abstract class Character extends Collider {
   void assignWeaponStateReloading(){
     weaponState = WeaponState.Reloading;
     weaponStateDurationTotal = 30;
-    if (this is Player) {
-      (this as Player).writePlayerEvent(PlayerEvent.Reloading);
+    if (this is IsometricPlayer) {
+      (this as IsometricPlayer).writePlayerEvent(PlayerEvent.Reloading);
     }
   }
 

@@ -88,7 +88,7 @@ class GameCombat extends GameIsometric {
   );
 
   @override
-  void customOnPlayerRevived(Player player) {
+  void customOnPlayerRevived(IsometricPlayer player) {
     moveToRandomPlayerSpawnPoint(player);
     player.item_level.clear();
     player.team = TeamType.Alone;
@@ -108,7 +108,7 @@ class GameCombat extends GameIsometric {
 
   @override
   void onPlayerUpdateRequestReceived({
-    required Player player,
+    required IsometricPlayer player,
     required int direction,
     required bool mouseLeftDown,
     required bool mouseRightDown,
@@ -208,7 +208,7 @@ class GameCombat extends GameIsometric {
   }
 
   @override
-  void customOnPlayerDead(Player player) {
+  void customOnPlayerDead(IsometricPlayer player) {
     player.powerCooldown = 0;
     player.buffDuration = 0;
     player.respawnTimer = Player_Respawn_Duration;
@@ -217,7 +217,7 @@ class GameCombat extends GameIsometric {
 
   @override
   void customOnCharacterKilled(Character target, dynamic src) {
-     if (src is Player) {
+     if (src is IsometricPlayer) {
        src.credits += Credits_Per_Kill;
      }
 
@@ -244,7 +244,7 @@ class GameCombat extends GameIsometric {
      }
   }
 
-  void playerEquipPrimary(Player player, int itemType) {
+  void playerEquipPrimary(IsometricPlayer player, int itemType) {
     if (player.weaponPrimary == itemType) return;
 
     if (player.canChangeEquipment) {
@@ -256,7 +256,7 @@ class GameCombat extends GameIsometric {
     player.writePlayerEquipment();
   }
 
-  void playerEquipSecondary(Player player, int itemType) {
+  void playerEquipSecondary(IsometricPlayer player, int itemType) {
     if (player.weaponSecondary == itemType) return;
 
     if (player.canChangeEquipment) {
@@ -288,7 +288,7 @@ class GameCombat extends GameIsometric {
   }
 
   @override
-  void customOnPlayerInteractWithGameObject(Player player, GameObject gameObject){
+  void customOnPlayerInteractWithGameObject(IsometricPlayer player, GameObject gameObject){
     final gameObjectType = gameObject.type;
 
     if (player.weaponPrimary == gameObjectType) {
@@ -326,7 +326,7 @@ class GameCombat extends GameIsometric {
   } [itemType] ?? 0;
 
   @override
-  void customOnCollisionBetweenPlayerAndGameObject(Player player, GameObject gameObject) {
+  void customOnCollisionBetweenPlayerAndGameObject(IsometricPlayer player, GameObject gameObject) {
        if (!gameObject.collectable) return;
        customOnPlayerCollectGameObject(player, gameObject);
   }
@@ -376,7 +376,7 @@ class GameCombat extends GameIsometric {
   }
 
   @override
-  void customOnPlayerCollectGameObject(Player player, GameObject gameObject) {
+  void customOnPlayerCollectGameObject(IsometricPlayer player, GameObject gameObject) {
     if (!gameObject.collectable) return;
 
     if (gameObject.type == ItemType.Resource_Credit) {
@@ -425,7 +425,7 @@ class GameCombat extends GameIsometric {
   }
 
   @override
-  void customOnPlayerJoined(Player player) {
+  void customOnPlayerJoined(IsometricPlayer player) {
     writePlayerScoresAll();
     deactivatePlayer(player);
     player.powerCooldown = 0;
@@ -443,12 +443,12 @@ class GameCombat extends GameIsometric {
   }
 
   @override
-  void customOnPlayerDisconnected(Player player) {
+  void customOnPlayerDisconnected(IsometricPlayer player) {
     writePlayerScoresAll();
   }
 
   @override
-  void customOnPlayerCreditsChanged(Player player) {
+  void customOnPlayerCreditsChanged(IsometricPlayer player) {
     for (final otherPlayer in players) {
       otherPlayer.writeApiPlayersPlayerScore(player);
     }
@@ -490,12 +490,12 @@ class GameCombat extends GameIsometric {
   }
 
   @override
-  void customOnPlayerAimTargetChanged(Player player, Collider? collider) {
+  void customOnPlayerAimTargetChanged(IsometricPlayer player, Collider? collider) {
     if (collider is! GameObject) return;
     player.writeApiPlayerAimTargetName('${getItemCost(collider.type)} credits');
   }
 
-  void playerUsePower(Player player){
+  void playerUsePower(IsometricPlayer player){
     if (player.powerCooldown > 0) return;
     if (player.deadBusyOrWeaponStateBusy) return;
     player.powerCooldown = getPlayerPowerTypeCooldownTotal(player);
@@ -557,7 +557,7 @@ class GameCombat extends GameIsometric {
   }
 
   @override
-  void customOnPlayerPerkTypeChanged(Player player) {
+  void customOnPlayerPerkTypeChanged(IsometricPlayer player) {
     player.maxHealth = player.perkType == PerkType.Health
         ? Player_Health_Perk
         : Player_Health;

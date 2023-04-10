@@ -27,7 +27,7 @@ class GamePractice extends GameIsometric {
   }
 
   @override
-  void customInitPlayer(Player player) {
+  void customInitPlayer(IsometricPlayer player) {
     player.writeEnvironmentRain(RainType.Light);
     player.writeEnvironmentLightning(LightningType.Off);
     player.writeEnvironmentWind(WindType.Gentle);
@@ -35,12 +35,12 @@ class GamePractice extends GameIsometric {
   }
 
   @override
-  void customOnCollisionBetweenPlayerAndGameObject(Player player, GameObject gameObject) {
+  void customOnCollisionBetweenPlayerAndGameObject(IsometricPlayer player, GameObject gameObject) {
 
   }
 
   @override
-  void customOnPlayerRevived(Player player){
+  void customOnPlayerRevived(IsometricPlayer player){
     moveToRandomPlayerSpawnPoint(player);
     player.inventoryClear();
     player.inventoryAddMax(itemType: ItemType.Weapon_Ranged_Shotgun);
@@ -83,16 +83,16 @@ class GamePractice extends GameIsometric {
   }
 
   @override
-  void customOnPlayerWeaponChanged(Player player, int newWeapon, int previousWeapon){
+  void customOnPlayerWeaponChanged(IsometricPlayer player, int newWeapon, int previousWeapon){
 
   }
 
   @override
-  void customOnPlayerDisconnected(Player player) {
+  void customOnPlayerDisconnected(IsometricPlayer player) {
 
   }
 
-  void reactivatePlayerWeapons(Player player){
+  void reactivatePlayerWeapons(IsometricPlayer player){
   }
 
   /// @override

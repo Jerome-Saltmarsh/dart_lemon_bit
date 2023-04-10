@@ -1,5 +1,6 @@
 
 import 'package:bleed_server/gamestream.dart';
+import 'package:bleed_server/src/classes/src/player.dart';
 
 class GameRockPaperScissors extends Game {
 
@@ -9,6 +10,11 @@ class GameRockPaperScissors extends Game {
 
   @override
   void updateStatus() {
-    // TODO: implement updateStatus
+
+  }
+
+  @override
+  Player createPlayer() {
+    return Player();
   }
 }

@@ -30,7 +30,7 @@ class AI extends Character {
   var aiMode = AIMode.Idle;
   var aiModeNext = Frames_Between_AI_Mode_Min;
   var rounds = 0;
-  Function(Player player)? onInteractedWith;
+  Function(IsometricPlayer player)? onInteractedWith;
 
   AI({
     required int characterType,

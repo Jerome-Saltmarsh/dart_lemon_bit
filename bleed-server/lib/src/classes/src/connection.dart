@@ -2,9 +2,11 @@ import 'dart:typed_data';
 
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/classes/src/game_isometric.dart';
+import 'package:bleed_server/src/classes/src/player.dart';
 import 'package:bleed_server/src/classes/src/scene_writer.dart';
 import 'package:bleed_server/src/games/game_editor.dart';
 import 'package:bleed_server/src/games/game_practice.dart';
+import 'package:bleed_server/src/games/game_rock_paper_scissors.dart';
 import 'package:bleed_server/src/games/game_survival.dart';
 import 'package:bleed_server/src/games/game_combat.dart';
 import 'package:bleed_server/src/scene_generator.dart';
@@ -75,7 +77,7 @@ class Connection with ByteReader {
           }
           return;
         case ClientRequest.Unequip:
-          _player?.unequipWeapon();
+          // _player?.unequipWeapon();
           return;
         default:
           break;
@@ -114,27 +116,29 @@ class Connection with ByteReader {
     switch (clientRequest) {
 
       case ClientRequest.Inventory:
+        if (player is! IsometricPlayer) return;
         handleRequestInventory(player, arguments);
         break;
 
       case ClientRequest.Teleport:
         if (!isLocalMachine && game is! GameEditor) return;
+        if (player is! IsometricPlayer) return;
         handleClientRequestTeleport(player);
         return;
 
       case ClientRequest.Reload:
-        final game = player.game;
-        game.playerReload(player);
+        // final game = player.game;
+        // game.playerReload(player);
         return;
 
       case ClientRequest.Select_PerkType:
         final value = parseArg1(arguments);
         if (value == null) return;
         if (!PerkType.values.contains(value)) {
-          player.writeError('invalid perk type');
+          // player.writeError('invalid perk type');
           return;
         }
-        player.perkType = value;
+        // player.perkType = value;
         return;
 
       case ClientRequest.Equip:
@@ -154,7 +158,7 @@ class Connection with ByteReader {
         return;
 
       case ClientRequest.Swap_Weapons:
-        player.swapWeapons();
+        // player.swapWeapons();
         break;
 
       case ClientRequest.Player_Throw_Grenade:
@@ -162,6 +166,7 @@ class Connection with ByteReader {
         break;
 
       case ClientRequest.Select_Weapon_Primary:
+        if (player is! IsometricPlayer) return;
         final value = parseArg1(arguments);
         if (value == null) return;
         if (!ItemType.isTypeWeapon(value)) {
@@ -174,6 +179,7 @@ class Connection with ByteReader {
         break;
 
       case ClientRequest.Select_Weapon_Secondary:
+        if (player is! IsometricPlayer) return;
         final value = parseArg1(arguments);
         if (value == null) return;
         if (!ItemType.isTypeWeapon(value)) {
@@ -186,6 +192,7 @@ class Connection with ByteReader {
         break;
 
       case ClientRequest.Select_Power:
+        if (player is! IsometricPlayer) return;
         final value = parseArg1(arguments);
         if (value == null) return;
         if (!PowerType.values.contains(value)) {
@@ -196,6 +203,8 @@ class Connection with ByteReader {
         break;
 
       case ClientRequest.Suicide:
+        if (game is! GameIsometric) return;
+        if (player is! IsometricPlayer) return;
         game.setCharacterStateDead(player);
         break;
 
@@ -204,12 +213,13 @@ class Connection with ByteReader {
         final rainType = parse(arguments[1]);
         if (rainType == null || !isValidIndex(rainType, RainType.values))
            return errorInvalidArg('invalid rain index: $rainType');
-
+        if (game is! GameIsometric) return;
         game.environment.rainType = rainType;
         break;
 
       case ClientRequest.Weather_Toggle_Breeze:
         if (!isLocalMachine && game is! GameEditor) return;
+        if (game is! GameIsometric) return;
         game.environment.toggleBreeze();
         break;
 
@@ -218,7 +228,7 @@ class Connection with ByteReader {
         final index = parse(arguments[1]);
         if (index == null || !isValidIndex(index, WindType.values))
           return errorInvalidArg('invalid rain index: $index');
-
+        if (game is! GameIsometric) return;
         game.environment.windType = index;
         break;
 
@@ -227,7 +237,7 @@ class Connection with ByteReader {
         final index = parse(arguments[1]);
         if (index == null || !isValidIndex(index, LightningType.values))
           return errorInvalidArg('invalid lightning index: $index');
-
+        if (game is! GameIsometric) return;
         game.environment.lightningType = LightningType.values[index];
 
         if (game.environment.lightningType == LightningType.On){
@@ -237,6 +247,7 @@ class Connection with ByteReader {
         break;
 
       case ClientRequest.Revive:
+        if (player is! IsometricPlayer) return;
         if (player.aliveAndActive) {
           error(GameError.PlayerStillAlive);
           return;
@@ -245,6 +256,7 @@ class Connection with ByteReader {
           player.writeError('respawn timer remaining');
           return;
         }
+        if (game is! GameIsometric) return;
         game.revive(player);
         return;
 
@@ -261,13 +273,14 @@ class Connection with ByteReader {
         return handleRequestEdit(arguments);
 
       case ClientRequest.Npc_Talk_Select_Option:
+        if (player is! IsometricPlayer) return;
         return handleNpcTalkSelectOption(player, arguments);
 
       case ClientRequest.Speak:
-        player.text = arguments
-            .sublist(1, arguments.length)
-            .fold("", (previousValue, element) => '$previousValue $element');
-        player.textDuration = 150;
+        // player.text = arguments
+        //     .sublist(1, arguments.length)
+        //     .fold("", (previousValue, element) => '$previousValue $element');
+        // player.textDuration = 150;
         break;
 
       case ClientRequest.Teleport_Scene:
@@ -290,6 +303,7 @@ class Connection with ByteReader {
         if (!isLocalMachine && game is! GameEditor) return;
           final hour = parse(arguments[1]);
           if (hour == null) return errorInvalidArg('hour required');
+          if (game is! GameIsometric) return;
           game.setHourMinutes(hour, 0);
           break;
 
@@ -313,7 +327,7 @@ class Connection with ByteReader {
      return false;
   }
 
-  void handleRequestInventory(Player player, List<String> arguments){
+  void handleRequestInventory(IsometricPlayer player, List<String> arguments){
     if (insufficientArgs(arguments, 2)) return;
     if (player.deadBusyOrWeaponStateBusy) return;
     final inventoryRequest = parse(arguments[1]);
@@ -413,11 +427,13 @@ class Connection with ByteReader {
     switch (editRequest) {
       case EditRequest.Toggle_Game_Running:
         if (!isLocalMachine && game is! GameEditor) return;
+        if (game is! GameIsometric) return;
         game.running = !game.running;
         break;
 
       case EditRequest.Scene_Reset:
         if (!isLocalMachine && game is! GameEditor) return;
+        if (game is! GameIsometric) return;
         game.reset();
         break;
 
@@ -436,6 +452,7 @@ class Connection with ByteReader {
         if (altitude == null) return;
         final frequency = parseArg6(arguments);
         if (frequency == null) return;
+        if (game is! GameIsometric) return;
         final sceneName = game.scene.name;
         final scene = SceneGenerator.generate(
             height: height,
@@ -447,10 +464,12 @@ class Connection with ByteReader {
         scene.name = sceneName;
         game.scene = scene;
         game.playersDownloadScene();
+        if (player is! IsometricPlayer) return;
         player.z = Node_Height * altitude + 24;
         break;
 
       case EditRequest.Download:
+        if (player is! IsometricPlayer) return;
         final compiled = SceneWriter.compileScene(player.scene, gameObjects: true);
         player.writeByte(ServerResponse.Download_Scene);
 
@@ -466,12 +485,14 @@ class Connection with ByteReader {
       case EditRequest.Scene_Set_Floor_Type:
         final nodeType = parseArg2(arguments);
         if (nodeType == null) return;
+        if (game is! GameIsometric) return;
         for (var i = 0; i < game.scene.gridArea; i++){
           game.scene.nodeTypes[i] = nodeType;
         }
         game.playersDownloadScene();
         break;
       case EditRequest.Clear_Spawned:
+        if (game is! GameIsometric) return;
         game.clearSpawnedAI();
         break;
       case EditRequest.Scene_Toggle_Underground:
@@ -483,11 +504,13 @@ class Connection with ByteReader {
         // gameDarkAge.underground = !gameDarkAge.underground;
         break;
       case EditRequest.Spawn_AI:
+        if (game is! GameIsometric) return;
         game.clearSpawnedAI();
         game.scene.refreshSpawnPoints();
         game.triggerSpawnPoints();
         break;
       case EditRequest.Save:
+        if (game is! GameIsometric) return;
         if (game.scene.name.isEmpty){
           player.writeError('cannot save because scene name is empty');
           return;
@@ -506,6 +529,7 @@ class Connection with ByteReader {
           return errorInvalidArg('invalid modify canvas index $modifyCanvasSizeIndex');
         }
         final request = RequestModifyCanvasSize.values[modifyCanvasSizeIndex];
+        if (player is! IsometricPlayer) return;
         handleRequestModifyCanvasSize(request, player);
         return;
 
@@ -517,6 +541,7 @@ class Connection with ByteReader {
         if (spawnIndex == null) {
           return errorInvalidArg('spawn index required');
         }
+        if (game is! GameIsometric) return;
         game.spawnAI(
             nodeIndex: spawnIndex,
             characterType: CharacterType.Zombie,
@@ -549,6 +574,7 @@ class Connection with ByteReader {
       nodeOrientation = NodeType.getDefaultOrientation(nodeType);
     }
     final game = player.game;
+    if (game is! GameIsometric) return;
     game.setNode(
         nodeIndex: nodeIndex,
         nodeType: nodeType,
@@ -567,7 +593,7 @@ class Connection with ByteReader {
 
   }
 
-  void handleNpcTalkSelectOption(Player player, List<String> arguments) {
+  void handleNpcTalkSelectOption(IsometricPlayer player, List<String> arguments) {
     if (player.dead) return errorPlayerDead();
     if (arguments.length != 2) return errorArgsExpected(2, arguments);
     final index = parse(arguments[1]);
@@ -598,6 +624,7 @@ class Connection with ByteReader {
       return errorInvalidArg("gameObjectRequestIndex ($gameObjectRequestIndex) is invalid");
 
     final gameObjectRequest = gameObjectRequests[gameObjectRequestIndex];
+    if (player is! IsometricPlayer) return;
     final selectedGameObject = player.editorSelectedGameObject;
 
     switch (gameObjectRequest) {
@@ -742,6 +769,7 @@ class Connection with ByteReader {
     final inputTypeDesktop  = hex & ByteHex.Hex_64 > 0;
     final keyDownSpace      = hex & ByteHex.Hex_128 > 0;
 
+    if (player is! IsometricPlayer) return;
     player.framesSinceClientRequest = 0;
     player.mouse.x = readNumberFromByteArray(args, index: 2).toDouble();
     player.mouse.y = readNumberFromByteArray(args, index: 4).toDouble();
@@ -791,8 +819,7 @@ class Connection with ByteReader {
 
   Future joinGameRockPaperScissors() async {
     for (final game in engine.games) {
-      if (game is GameCombat) {
-        if (game.players.length >= GameCombat.Max_Players) continue;
+      if (game is GameRockPaperScissors) {
         return joinGame(game);
       }
     }
@@ -809,24 +836,20 @@ class Connection with ByteReader {
     joinGame(GameSurvival(scene: engine.scenes.suburbs_01));
   }
 
-  void joinGame(GameIsometric game){
-    if (_player != null) {
-      _player!.game.removePlayer(_player!);
-    }
-    final player = Player(game: game);
+  void joinGame(Game game){
+
+    // if (_player != null) {
+    //   _player!.game.removePlayer(_player!);
+    // }
+    final player = game.createPlayer();
     _player = _player = player;
     player.sendBufferToClient = sendBufferToClient;
-    player.sceneDownloaded = false;
-    game.players.add(player);
-    game.characters.add(player);
-    game.customOnPlayerJoined(player);
-    player.writePlayerAlive();
-    player.writePlayerApiId();
 
-    final account = _account;
-    if (account != null) {
-      player.name = account.publicName;
-    }
+
+    // final account = _account;
+    // if (account != null) {
+    //   player.name = account.publicName;
+    // }
   }
 
   void errorInsufficientResources(){
@@ -892,7 +915,7 @@ class Connection with ByteReader {
     }
   }
 
-  void handleClientRequestTeleport(Player player) {
+  void handleClientRequestTeleport(IsometricPlayer player) {
       player.x = player.mouseGridX;
       player.y = player.mouseGridY;
       player.health = player.maxHealth;

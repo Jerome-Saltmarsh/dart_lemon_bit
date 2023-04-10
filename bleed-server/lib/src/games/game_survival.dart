@@ -29,7 +29,7 @@ class GameSurvival extends GameIsometric {
   ]);
 
   @override
-  void customOnPlayerRevived(Player player) {
+  void customOnPlayerRevived(IsometricPlayer player) {
     player.team = TeamType.Alone;
     player.inventoryClear();
     player.inventoryAddMax(itemType: ItemType.Resource_Gun_Powder);
@@ -86,7 +86,7 @@ class GameSurvival extends GameIsometric {
       spawnRandomGameObjectAtPosition(target);
     }
 
-    if (src is Player) {
+    if (src is IsometricPlayer) {
       src.credits += 10;
     }
   }
@@ -102,7 +102,7 @@ class GameSurvival extends GameIsometric {
   }
 
   @override
-  void customOnPlayerInteractWithGameObject(Player player, GameObject gameObject) {
+  void customOnPlayerInteractWithGameObject(IsometricPlayer player, GameObject gameObject) {
 
     if (gameObject.type == ItemType.GameObjects_Vending_Machine){
       player.setStoreItems(const [
@@ -199,7 +199,7 @@ class GameSurvival extends GameIsometric {
   ];
 
   @override
-  void customOnCollisionBetweenPlayerAndGameObject(Player player, GameObject gameObject) {
+  void customOnCollisionBetweenPlayerAndGameObject(IsometricPlayer player, GameObject gameObject) {
     if (gameObject.type == ItemType.Resource_Credit){
        deactivateCollider(gameObject);
        player.credits += 5;
