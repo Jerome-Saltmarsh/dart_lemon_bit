@@ -1,8 +1,5 @@
 
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/classes/Game_State_SPR.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class ServerEvents {
@@ -13,22 +10,7 @@ class ServerEvents {
 
   static void onChangedGameType(int? value) {
     if (value == GameType.Rock_Paper_Scissors){
-      Engine.zoom = 1.0;
-      Engine.onDrawCanvas = (canvas, size){
-         for (var i = 0; i < GameStateSPR.totalPlayers; i++){
-           final player = GameStateSPR.players[i];
-           Engine.paint.color = Colors.white;
-           canvas.drawCircle(Offset(player.x, player.y), 25, Engine.paint);
-           Engine.paint.color = Colors.red;
-           canvas.drawCircle(Offset(player.targetX, player.targetY), 10, Engine.paint);
-         }
-      };
-      Engine.buildUI = (context){
-        return text("paper rock");
-      };
-      Engine.onDrawForeground = (canvas, size){
-
-      };
+      GameScissorsPaperRock.init();
       return;
     }
 

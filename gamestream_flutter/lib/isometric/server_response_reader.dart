@@ -1,5 +1,4 @@
 import 'package:archive/archive.dart';
-import 'package:gamestream_flutter/classes/Game_State_SPR.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_scene.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_byte/byte_reader.dart';
@@ -696,14 +695,19 @@ class ServerResponseReader with ByteReader {
   void readServerResponseApiSPR() {
      switch (readByte()){
        case ApiSPR.Player_Positions:
+         GameScissorsPaperRock.playerTeam = readByte();
+         GameScissorsPaperRock.playerX = readDouble();
+         GameScissorsPaperRock.playerY = readDouble();
+
          final total = readUInt16();
-         GameStateSPR.totalPlayers = total;
+         GameScissorsPaperRock.totalPlayers = total;
          for (var i = 0; i < total; i++) {
-           final player = GameStateSPR.players[i];
-           player.x = readInt16().toDouble();
-           player.y = readInt16().toDouble();
-           player.targetX = readInt16().toDouble();
-           player.targetY = readInt16().toDouble();
+           final player     = GameScissorsPaperRock.players[i];
+           player.team      = readUInt8();
+           player.x         = readInt16().toDouble();
+           player.y         = readInt16().toDouble();
+           player.targetX   = readInt16().toDouble();
+           player.targetY   = readInt16().toDouble();
          }
          break;
      }

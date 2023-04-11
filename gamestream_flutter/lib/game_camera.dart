@@ -14,7 +14,6 @@ class GameCamera {
 
   static void update() {
     if (!chaseTargetEnabled.value) return;
-
     final mouseAngle = ClientQuery.getMousePlayerAngle() + pi;
     final mouseDistance = ClientQuery.getMousePlayerRenderDistance();
     final translateDistance = mouseDistance * ClientConstants.Mouse_Translation_Sensitivity;

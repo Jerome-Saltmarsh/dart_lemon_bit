@@ -10,10 +10,7 @@ class PlayerScissorsPaperRock extends Player {
   var targetX = 0.0;
   var targetY = 0.0;
 
-  PlayerScissorsPaperRock(this.game);
+  var team = -1;
 
-  // @override
-  // void writePlayerGame() {
-  //   // TODO: implement writePlayerGame
-  // }
+  PlayerScissorsPaperRock(this.game);
 }

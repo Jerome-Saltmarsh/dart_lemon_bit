@@ -13,6 +13,7 @@ import 'game_time.dart';
 import 'player.dart';
 
 abstract class GameIsometric extends Game<IsometricPlayer> {
+
   final int gameType;
   var frame = 0;
   var _running = true;

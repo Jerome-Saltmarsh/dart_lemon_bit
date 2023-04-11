@@ -12,3 +12,4 @@ export 'vector3.dart';
 export 'renderer.dart';
 export 'game_options.dart';
 export 'player_score.dart';
+export 'game_scissors_paper_rock.dart';
