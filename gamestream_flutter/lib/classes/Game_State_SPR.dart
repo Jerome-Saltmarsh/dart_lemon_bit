@@ -7,4 +7,6 @@ class GameStateSPR {
 class SPRPlayer {
   var x = 0.0;
   var y = 0.0;
+  var targetX = 0.0;
+  var targetY = 0.0;
 }

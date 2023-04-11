@@ -702,6 +702,8 @@ class ServerResponseReader with ByteReader {
            final player = GameStateSPR.players[i];
            player.x = readInt16().toDouble();
            player.y = readInt16().toDouble();
+           player.targetX = readInt16().toDouble();
+           player.targetY = readInt16().toDouble();
          }
          break;
      }

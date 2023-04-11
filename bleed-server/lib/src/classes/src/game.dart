@@ -24,7 +24,6 @@ abstract class Game <T extends Player> {
   void writePlayerResponses(){
     for (var i = 0; i < players.length; i++) {
       final player = players[i];
-      player.writePlayerGame();
       customPlayerWrite(player);
       player.writeByte(ServerResponse.End);
       player.sendBufferToClient();

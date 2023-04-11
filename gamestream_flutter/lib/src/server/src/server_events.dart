@@ -1,6 +1,7 @@
 
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/classes/Game_State_SPR.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -16,7 +17,10 @@ class ServerEvents {
       Engine.onDrawCanvas = (canvas, size){
          for (var i = 0; i < GameStateSPR.totalPlayers; i++){
            final player = GameStateSPR.players[i];
-           canvas.drawCircle(Offset(player.x, player.y), 50, Engine.paint);
+           Engine.paint.color = Colors.white;
+           canvas.drawCircle(Offset(player.x, player.y), 25, Engine.paint);
+           Engine.paint.color = Colors.red;
+           canvas.drawCircle(Offset(player.targetX, player.targetY), 10, Engine.paint);
          }
       };
       Engine.buildUI = (context){

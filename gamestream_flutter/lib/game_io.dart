@@ -143,18 +143,21 @@ class GameIO {
   }
 
   static double getCursorWorldX() {
-    if (inputModeTouch){
-      return touchCursorWorldX;
-    } else {
-      return Engine.mouseWorldX;
-    }
+    // if (inputModeTouch){
+    //   return touchCursorWorldX;
+    // } else {
+    //   return Engine.mouseWorldX;
+    // }
+
+    return Engine.mouseWorldX;
   }
   static double getCursorWorldY() {
-    if (inputModeTouch){
-      return touchCursorWorldY;
-    } else {
-      return Engine.mouseWorldY;
-    }
+    // if (inputModeTouch){
+    //   return touchCursorWorldY;
+    // } else {
+    //   return Engine.mouseWorldY;
+    // }
+    return Engine.mouseWorldY;
   }
 
   static double getCursorScreenX() {

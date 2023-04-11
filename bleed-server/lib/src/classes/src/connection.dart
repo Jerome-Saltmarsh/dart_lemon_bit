@@ -777,7 +777,7 @@ class Connection with ByteReader {
     player.screenBottom = readNumberFromByteArray(args, index: 12).toDouble();
     player.inputMode = hex & ByteHex.Hex_64 > 0 ? 1 : 0;
 
-    if (player is! IsometricPlayer) return;
+    // if (player is! IsometricPlayer) return;
 
     player.game.onPlayerUpdateRequestReceived(
       player: player,

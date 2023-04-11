@@ -1808,13 +1808,6 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     writeByte(ServerResponse.Error);
     writeString(error);
   }
-
-  void writeAndSendResponse(){
-    writePlayerGame();
-    game.customPlayerWrite(this);
-    writeByte(ServerResponse.End);
-    sendBufferToClient();
-  }
 }
 
 

@@ -573,7 +573,7 @@ class GameCombat extends GameIsometric {
 
   @override
   void customPlayerWrite(IsometricPlayer player) {
-    // TODO: implement customPlayerWrite
+    player.writePlayerGame();
   }
 }
 
