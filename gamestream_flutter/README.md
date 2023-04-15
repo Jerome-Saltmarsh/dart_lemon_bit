@@ -28,6 +28,9 @@ ctrl + shift + e    : view recent changes
 [ ] youtube video 45 seconds
 [ ] setup discord page
 
+15.04.2023
+[x] fix player score
+
 08.04.2023
 [x] deploy server to all countries
 [x] disable play for mobile

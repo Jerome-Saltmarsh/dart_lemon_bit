@@ -1,12 +1,13 @@
+import 'dart:math';
+
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/classes/src/player.dart';
 import 'package:bleed_server/src/classes/src/player_scissors_paper_rock.dart';
-import 'package:lemon_math/functions/adjacent.dart';
-import 'package:lemon_math/functions/angle_between.dart';
-import 'package:lemon_math/functions/opposite.dart';
 import 'package:lemon_math/library.dart';
 
 class GameRockPaperScissors extends Game<PlayerScissorsPaperRock> {
+
+  static const movementSpeed = 4.0;
 
   final players = <PlayerScissorsPaperRock>[];
 
@@ -14,7 +15,6 @@ class GameRockPaperScissors extends Game<PlayerScissorsPaperRock> {
   void update() {
     for (final player in players) {
       const minDistance = 3.0;
-      const movementSpeed = 2.0;
       final distanceX = (player.x - player.targetX).abs();
       final distanceY = (player.y - player.targetY).abs();
       if (distanceX < minDistance && distanceY < minDistance) continue;
@@ -22,6 +22,46 @@ class GameRockPaperScissors extends Game<PlayerScissorsPaperRock> {
       player.x -= getAdjacent(angle, movementSpeed);
       player.y -= getOpposite(angle, movementSpeed);
     }
+
+    final total = players.length - 1;
+    for (var i = 0; i < total; i++) {
+      final playerI = players[i];
+      final playerIX = playerI.x;
+      final playerIY = playerI.y;
+
+      for (var j = i + 1; j < players.length; j++){
+         final playerJ = players[j];
+         if (playerI.team == playerJ.team) continue;
+         const radius = 50.0;
+         const radiusSquared = radius * radius;
+         final diffX = playerIX - playerJ.x;
+         final diffY = playerIY - playerJ.y;
+         if (pow(diffX, 2) + pow(diffY, 2) > radiusSquared) continue;
+
+         if (playerI.team == TeamsRockPaperScissors.Rock) {
+           respawn(playerJ.team == TeamsRockPaperScissors.Paper ? playerI : playerJ);
+           continue;
+         }
+
+         if (playerI.team == TeamsRockPaperScissors.Paper) {
+           respawn(playerJ.team == TeamsRockPaperScissors.Scissors ? playerI : playerJ);
+           continue;
+         }
+
+         if (playerI.team == TeamsRockPaperScissors.Scissors) {
+           respawn(playerJ.team == TeamsRockPaperScissors.Rock ? playerI : playerJ);
+           continue;
+         }
+      }
+    }
+  }
+
+  void respawn(PlayerScissorsPaperRock player){
+    player.team = getNextPlayerTeam();
+    player.x = randomInt(50, 500).toDouble();
+    player.y = randomInt(50, 500).toDouble();
+    player.targetX = player.x;
+    player.targetY = player.y;
   }
 
   @override
@@ -30,11 +70,7 @@ class GameRockPaperScissors extends Game<PlayerScissorsPaperRock> {
     players.add(instance);
     instance.writeByte(ServerResponse.Game_Type);
     instance.writeByte(GameType.Rock_Paper_Scissors);
-    instance.team = getNextPlayerTeam();
-    instance.x = randomInt(50, 200).toDouble();
-    instance.y = randomInt(50, 200).toDouble();
-    instance.targetX = instance.x;
-    instance.targetY = instance.y;
+    respawn(instance);
     return instance;
   }
 

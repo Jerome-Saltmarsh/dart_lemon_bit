@@ -426,6 +426,7 @@ class GameCombat extends GameIsometric {
 
   @override
   void customOnPlayerJoined(IsometricPlayer player) {
+    player.writePlayerApiId();
     writePlayerScoresAll();
     deactivatePlayer(player);
     player.powerCooldown = 0;
