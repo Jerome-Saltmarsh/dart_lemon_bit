@@ -55,6 +55,8 @@ class GameNetwork {
 
   static void connectToGameRockPaperScissors() => connectToGame(GameType.Rock_Paper_Scissors);
 
+  static void connectToGameAeon() => connectToGame(GameType.Mobile_Aeon);
+
   static void connectToGame(int gameType, [String message = ""]) =>
       connectToRegion(GameWebsite.region.value, '${gameType} $message');
 

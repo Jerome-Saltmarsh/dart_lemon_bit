@@ -150,8 +150,8 @@ class GameWebsite {
               buildLogoGameStream(),
               height16,
               buildColumnRegions(),
-              height32,
-              buildRowSocialLinks()
+              // height32,
+              // buildRowSocialLinks()
             ],
           ),
         ),
@@ -266,7 +266,7 @@ class GameWebsite {
                 action: () {
                   actionSelectRegion(region);
                   if (Engine.deviceIsPhone){
-                    GameNetwork.connectToGameRockPaperScissors();
+                    GameNetwork.connectToGameAeon();
                   } else {
                     GameNetwork.connectToGameCombat();
                   }

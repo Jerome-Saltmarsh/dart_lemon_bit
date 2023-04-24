@@ -5,6 +5,7 @@ import 'package:bleed_server/src/classes/src/game_isometric.dart';
 import 'package:bleed_server/src/classes/src/player.dart';
 import 'package:bleed_server/src/classes/src/scene_writer.dart';
 import 'package:bleed_server/src/games/game_editor.dart';
+import 'package:bleed_server/src/games/game_mobile_aoen.dart';
 import 'package:bleed_server/src/games/game_practice.dart';
 import 'package:bleed_server/src/games/game_survival.dart';
 import 'package:bleed_server/src/games/game_combat.dart';
@@ -817,6 +818,16 @@ class Connection with ByteReader {
     joinGame(GameCombat(scene: engine.scenes.warehouse));
   }
 
+  Future joinGameAeon() async {
+    for (final game in engine.games) {
+      if (game is GameMobileAeon) {
+        if (game.players.length >= GameCombat.Max_Players) continue;
+        return joinGame(game);
+      }
+    }
+    joinGame(GameMobileAeon(scene: engine.scenes.warehouse));
+  }
+
   Future joinGameSurvival() async {
     for (final game in engine.games){
       if (game is GameSurvival){
@@ -894,6 +905,9 @@ class Connection with ByteReader {
         break;
       case GameType.Combat:
         joinGameCombat();
+        break;
+      case GameType.Mobile_Aeon:
+        joinGameAeon();
         break;
       case GameType.Rock_Paper_Scissors:
         joinGame(engine.getGameRockPaperScissors());
