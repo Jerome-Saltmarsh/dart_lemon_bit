@@ -1428,7 +1428,6 @@ abstract class GameIsometric extends Game<IsometricPlayer> {
   }
 
   void update() {
-    removeDisconnectedPlayers();
     if (players.length == 0) return;
     updateInProgress();
 
@@ -2720,28 +2719,11 @@ abstract class GameIsometric extends Game<IsometricPlayer> {
     }
   }
 
-  void removeDisconnectedPlayers() {
-    var playerLength = players.length;
-    for (var i = 0; i < playerLength; i++) {
-      final player = players[i];
-      if (player.framesSinceClientRequest++ < 300) continue;
-      if (!removePlayer(player)) continue;
-      i--;
-      playerLength--;
-    }
-  }
-
-  bool removePlayer(IsometricPlayer player) {
-    if (!players.remove(player)) return false;
+  void removePlayer(IsometricPlayer player) {
+    if (!players.remove(player));
     characters.remove(player);
     customOnPlayerDisconnected(player);
-    return true;
   }
-
-  // void saveSceneToFile() {
-  //   assert(scene.name.isNotEmpty);
-  //   writeSceneToFileJson(scene);
-  // }
 
   void saveSceneToFileBytes() {
     assert(scene.name.isNotEmpty);

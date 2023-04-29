@@ -21,10 +21,8 @@ class GameScissorsPaperRock {
     Engine.onDrawForeground = renderForeground;
   }
 
-  static var radius = 25.0;
-
   static const Radius_Min = 10.0;
-  static const Radius_Max = 15.0;
+  static const Radius_Max = 2.5;
   static var radiusI = 0.0;
   static var radiusD = 0.03;
 
@@ -48,8 +46,8 @@ class GameScissorsPaperRock {
     }
     Engine.paint.color = Colors.white;
     canvas.drawCircle(Offset(GameScissorsPaperRock.playerX, GameScissorsPaperRock.playerY), size, Engine.paint);
-    Engine.paint.color = colorAllie;
-    canvas.drawCircle(Offset(GameScissorsPaperRock.playerX, GameScissorsPaperRock.playerY), size * 0.5, Engine.paint);
+    // Engine.paint.color = colorAllie;
+    // canvas.drawCircle(Offset(GameScissorsPaperRock.playerX, GameScissorsPaperRock.playerY), size * 0.5, Engine.paint);
   }
 
 
@@ -73,7 +71,7 @@ class GameScissorsPaperRock {
   }
 
   static Widget buildUI(BuildContext context){
-    return text("scissors paper rock");
+    return onPressed(child: text("EXIT"), action: GameNetwork.disconnect);
   }
 }
 

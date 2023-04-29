@@ -29,5 +29,18 @@ abstract class Game <T extends Player> {
       player.sendBufferToClient();
     }
   }
+
+  void removeDisconnectedPlayers() {
+    var playerLength = players.length;
+    for (var i = 0; i < playerLength; i++) {
+      final player = players[i];
+      if (player.framesSinceClientRequest++ < 300) continue;
+      removePlayer(player);
+      i--;
+      playerLength--;
+    }
+  }
+
+  void removePlayer(T player);
 }
 

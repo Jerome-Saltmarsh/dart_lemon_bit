@@ -184,29 +184,29 @@ class GameIO {
 
   static int getDirectionKeyboard() {
 
-    if (Engine.keyPressed(KeyCode.W)) {
-      if (Engine.keyPressed(KeyCode.D)) {
+    if (Engine.keyPressed(KeyCode.W) || Engine.keyPressed(KeyCode.Arrow_Up)) {
+      if (Engine.keyPressed(KeyCode.D) || Engine.keyPressed(KeyCode.Arrow_Right)) {
         return Direction.East;
       }
-      if (Engine.keyPressed(KeyCode.A)) {
+      if (Engine.keyPressed(KeyCode.A) || Engine.keyPressed(KeyCode.Arrow_Left)) {
         return Direction.North;
       }
       return Direction.North_East;
     }
 
-    if (Engine.keyPressed(KeyCode.S)) {
-      if (Engine.keyPressed(KeyCode.D)) {
+    if (Engine.keyPressed(KeyCode.S) || Engine.keyPressed(KeyCode.Arrow_Down)) {
+      if (Engine.keyPressed(KeyCode.D) || Engine.keyPressed(KeyCode.Arrow_Right)) {
         return Direction.South;
       }
-      if (Engine.keyPressed(KeyCode.A)) {
+      if (Engine.keyPressed(KeyCode.A) || Engine.keyPressed(KeyCode.Arrow_Left)) {
         return Direction.West;
       }
       return Direction.South_West;
     }
-    if (Engine.keyPressed(KeyCode.A)) {
+    if (Engine.keyPressed(KeyCode.A) || Engine.keyPressed(KeyCode.Arrow_Left)) {
       return Direction.North_West;
     }
-    if (Engine.keyPressed(KeyCode.D)) {
+    if (Engine.keyPressed(KeyCode.D) || Engine.keyPressed(KeyCode.Arrow_Right)) {
       return Direction.South_East;
     }
     return Direction.None;

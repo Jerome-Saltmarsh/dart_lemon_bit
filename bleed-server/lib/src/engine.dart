@@ -52,6 +52,7 @@ class Engine {
     frame++;
 
     for (var i = 0; i < games.length; i++){
+      games[i].removeDisconnectedPlayers();
       games[i].update();
       games[i].writePlayerResponses();
     }

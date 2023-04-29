@@ -134,4 +134,9 @@ class GameRockPaperScissors extends Game<PlayerScissorsPaperRock> {
       player.writeInt16(otherPlayer.targetY.toInt());
     }
   }
+
+  @override
+  void removePlayer(PlayerScissorsPaperRock player) {
+    players.remove(player);
+  }
 }

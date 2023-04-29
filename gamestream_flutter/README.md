@@ -9,6 +9,9 @@ ctrl + shift + e    : view recent changes
 
 
 
+25.04.2023
+[x] aeon mobile support
+
 15.04.2023
 [x] fix player score
 

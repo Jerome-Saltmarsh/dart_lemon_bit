@@ -135,8 +135,8 @@ class GameWebsite {
   static Widget buildPageWebsite(int deviceType) =>
       deviceType == DeviceType.Computer
           ? buildPageWebsiteDesktop()
-          : buildPageWebsiteDesktop();
-          // : buildPageWebsiteMobile();
+          // : buildPageWebsiteDesktop();
+          : buildPageWebsiteMobile();
 
   static const Icon_Size = 25.0;
 
@@ -184,10 +184,25 @@ class GameWebsite {
           children: [
             buildLogoGameStream(),
             height16,
-            text("Support for mobile coming soon"),
+            buildButtonJoinGameType(
+              gameType: GameType.Mobile_Aeon,
+              gameName: "AEON",
+            ),
+            height4,
+            buildButtonJoinGameType(
+              gameType: GameType.Rock_Paper_Scissors,
+              gameName: "CHASE",
+            ),
           ],
         ),
       );
+
+  static Widget buildButtonJoinGameType({required int gameType, required String gameName}){
+    return onPressed(
+        action: () => GameNetwork.connectToGame(gameType),
+        child: text(gameName, size: 22,)
+    );
+  }
 
 
   static Widget buildLogoGameStream(){

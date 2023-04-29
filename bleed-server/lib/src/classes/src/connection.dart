@@ -23,7 +23,6 @@ class Connection with ByteReader {
   late WebSocketChannel webSocket;
   late WebSocketSink sink;
   Player? _player;
-  Account? _account;
 
   Function? onDone;
 
@@ -32,7 +31,6 @@ class Connection with ByteReader {
 
     sink.done.then((value){
       _player = null;
-      _account = null;
       onDone?.call();
     });
 
