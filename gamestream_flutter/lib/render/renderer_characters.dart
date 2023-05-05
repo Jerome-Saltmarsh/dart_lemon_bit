@@ -219,7 +219,7 @@ class RendererCharacters extends Renderer {
     if (character.spawning) return;
 
     var angle = 0.0;
-    var distance = 0.0;
+    var dist = 0.0;
 
     if (!GameState.outOfBoundsV3(character)){
       var torchIndex = GameNodes.getTorchIndex(GameState.getNodeIndexV3(character));
@@ -228,10 +228,10 @@ class RendererCharacters extends Renderer {
         final torchColumn = GameState.convertNodeIndexToIndexY(torchIndex);
         final torchPosX = torchRow * Node_Size + Node_Size_Half;
         final torchPosY = torchColumn * Node_Size + Node_Size_Half;
-        angle = getAngleBetween(character.x, character.y, torchPosX, torchPosY);
-        distance = min(
+        angle = angleBetween(character.x, character.y, torchPosX, torchPosY);
+        dist = min(
           GameConfig.Character_Shadow_Distance_Max,
-          Engine.calculateDistance(
+          distanceBetween(
               character.x,
               character.y,
               torchPosX,
@@ -241,8 +241,8 @@ class RendererCharacters extends Renderer {
       }
     }
 
-    final shadowX = character.x + Engine.calculateAdjacent(angle, distance);
-    final shadowY = character.y + Engine.calculateOpposite(angle, distance);
+    final shadowX = character.x + adj(angle, dist);
+    final shadowY = character.y + opp(angle, dist);
     final shadowZ = character.z;
 
     Engine.renderSprite(

@@ -153,8 +153,8 @@ void renderCharacterTemplate(Character character, {
 
     final shadowAngle = GameNodes.shadow.z + pi;
     final shadowDistance = GameNodes.shadow.magnitudeXY;
-    final shadowX = character.x + getAdjacent(shadowAngle, shadowDistance);
-    final shadowY = character.y + getOpposite(shadowAngle, shadowDistance);
+    final shadowX = character.x + adj(shadowAngle, shadowDistance);
+    final shadowY = character.y + opp(shadowAngle, shadowDistance);
     final shadowZ = character.z;
 
     Engine.renderSprite(

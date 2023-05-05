@@ -32,8 +32,8 @@ class Particle extends Vector3 {
   double get duration01 => duration / durationTotal;
 
   void setSpeed(double angle, double speed){
-    xv = Engine.calculateAdjacent(angle, speed);
-    yv = Engine.calculateOpposite(angle, speed);
+    xv = adj(angle, speed);
+    yv = opp(angle, speed);
   }
 
   void deactivate(){
@@ -43,8 +43,8 @@ class Particle extends Vector3 {
   }
 
   void setAngle({required double value, required double speed}){
-    xv = getAdjacent(value, speed);
-    yv = getOpposite(value, speed);
+    xv = adj(value, speed);
+    yv = opp(value, speed);
   }
 
   void updateMotion(){

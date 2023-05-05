@@ -7,8 +7,6 @@ navigate to next method: ctrl + shift + up / down arrows
 ctrl + w            : minimal mode
 ctrl + shift + e    : view recent changes
 
-
-
 25.04.2023
 [x] aeon mobile support
 

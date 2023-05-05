@@ -7,8 +7,8 @@ class GameScissorsPaperRock {
   static var playerTeam = 0;
   static var playerX = 0.0;
   static var playerY = 0.0;
-  static final players = List.generate(100, (index) => PlayerScissorsPaperRock());
 
+  static final players = List.generate(100, (index) => PlayerScissorsPaperRock());
   static final colorAllie = GameColors.yellow;
   static final colorEnemy = GameColors.red;
   static final colorTarget = GameColors.green;
@@ -27,6 +27,10 @@ class GameScissorsPaperRock {
   static var radiusD = 0.03;
 
   static void render(Canvas canvas, Size size) {
+
+    Engine.paint.color = Colors.white;
+    canvas.drawCircle(const Offset(0, 0), 300, Engine.paint);
+
     final size = EaseFunctions.inOutQuad(radiusI) * Radius_Max + Radius_Min ;
     radiusI += radiusD;
     if (radiusI > 1) {

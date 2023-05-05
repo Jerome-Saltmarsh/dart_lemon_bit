@@ -17,8 +17,8 @@ class GameCamera {
     final mouseAngle = ClientQuery.getMousePlayerAngle() + pi;
     final mouseDistance = ClientQuery.getMousePlayerRenderDistance();
     final translateDistance = mouseDistance * ClientConstants.Mouse_Translation_Sensitivity;
-    translateX = Engine.calculateAdjacent(mouseAngle, translateDistance);
-    translateY = Engine.calculateOpposite(mouseAngle, translateDistance);
+    translateX = adj(mouseAngle, translateDistance);
+    translateY = opp(mouseAngle, translateDistance);
     Engine.cameraFollow(chaseTarget.renderX + translateX, chaseTarget.renderY + translateY, chaseStrength);
   }
 

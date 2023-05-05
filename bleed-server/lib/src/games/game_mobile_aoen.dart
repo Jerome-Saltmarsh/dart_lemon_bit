@@ -138,8 +138,6 @@ class GameMobileAeon extends GameIsometric {
       src.credits += Credits_Per_Kill;
     }
 
-
-
     if (target is AI && scene.spawnPoints.isNotEmpty) {
       final spawnNodeIndex = randomItem(scene.spawnPoints);
 
@@ -184,10 +182,9 @@ class GameMobileAeon extends GameIsometric {
     player.weaponType = itemType;
   }
 
-
   @override
   void customInit() {
-    for (final gameObject in gameObjects){
+    for (final gameObject in gameObjects) {
       if (!ItemType.isTypeWeapon(gameObject.type)) continue;
       gameObject
         ..physical = false

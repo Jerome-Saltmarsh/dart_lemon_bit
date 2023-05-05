@@ -382,9 +382,9 @@ packages:
       path: "C:\\Users\\Jerome\\github\\bleed\\dart-lemon-engine"
       relative: false
     source: path
-    version: "0.3.23"
+    version: "0.3.31"
   lemon_math:
-    dependency: transitive
+    dependency: "direct main"
     description:
       path: "C:\\Users\\Jerome\\github\\dart-lemon-math"
       relative: false
@@ -393,9 +393,10 @@ packages:
   lemon_watch:
     dependency: transitive
     description:
-      path: "C:\\Users\\Jerome\\github\\dart-lemon-watch"
-      relative: false
-    source: path
+      name: lemon_watch
+      sha256: "7217253fd45582a240ce5f46d4ee6d2c82b8a3ca5f53cebf9d2c549a2a5e556b"
+      url: "https://pub.dev"
+    source: hosted
     version: "1.1.0"
   logging:
     dependency: transitive

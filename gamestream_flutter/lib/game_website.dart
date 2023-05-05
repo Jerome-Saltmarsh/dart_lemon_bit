@@ -9,7 +9,7 @@ import 'package:url_launcher/url_launcher.dart';
 class GameWebsite {
   static final operationStatus = Watch(OperationStatus.None);
   static final account = Watch<Account?>(null, onChanged: onChangedAccount);
-  static final region = Watch(ConnectionRegion.LocalHost, onChanged: onChangedRegion);
+  static final region = Watch(ConnectionRegion.Asia_South, onChanged: onChangedRegion);
   static final download = Watch(0.0);
   static final debug = true;
   static final isVisibleDialogCustomRegion = Watch(false);
@@ -178,7 +178,8 @@ class GameWebsite {
 
   static Widget buildPageWebsiteMobile() =>
       Container(
-        width: 300,
+        // width: 300,
+        width: Engine.screen.width,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -188,11 +189,12 @@ class GameWebsite {
               gameType: GameType.Mobile_Aeon,
               gameName: "AEON",
             ),
-            height4,
+            height16,
             buildButtonJoinGameType(
               gameType: GameType.Rock_Paper_Scissors,
               gameName: "CHASE",
             ),
+            height16,
           ],
         ),
       );
@@ -200,7 +202,7 @@ class GameWebsite {
   static Widget buildButtonJoinGameType({required int gameType, required String gameName}){
     return onPressed(
         action: () => GameNetwork.connectToGame(gameType),
-        child: text(gameName, size: 22,)
+        child: text(gameName, size: 26, color: Colors.white70),
     );
   }
 

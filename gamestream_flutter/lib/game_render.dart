@@ -26,14 +26,14 @@ class GameRender {
   static void renderCircle(double x, double y, double z, double radius, {int sections = 12}){
     Engine.paint.color = Colors.white;
     final anglePerSection = pi2 / sections;
-    var lineX1 = getAdjacent(0, radius);
-    var lineY1 = getOpposite(0, radius);
+    var lineX1 = adj(0, radius);
+    var lineY1 = opp(0, radius);
     var lineX2 = lineX1;
     var lineY2 = lineY1;
     for (var i = 1; i <= sections; i++){
       final a = i * anglePerSection;
-      lineX2 = getAdjacent(a, radius);
-      lineY2 = getOpposite(a, radius);
+      lineX2 = adj(a, radius);
+      lineY2 = opp(a, radius);
       GameRender.renderLine(
         x + lineX1,
         y + lineY1,

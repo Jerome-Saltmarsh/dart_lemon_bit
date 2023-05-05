@@ -161,6 +161,7 @@ class GameNetwork {
 
   static void _onDone() {
     print("network.onDone()");
+
     connectionUri = "";
     if (connecting) {
       connectionStatus.value = ConnectionStatus.Failed_To_Connect;
@@ -202,8 +203,8 @@ class GameNetwork {
       case ConnectionStatus.Done:
         GamePlayer.active.value = false;
         ClientState.timeConnectionEstablished = null;
-        Engine.camera.x = 0;
-        Engine.camera.y = 0;
+        Engine.cameraX = 0;
+        Engine.cameraY = 0;
         Engine.zoom = 1.0;
         Engine.onUpdate = null;
         Engine.drawCanvasAfterUpdate = true;

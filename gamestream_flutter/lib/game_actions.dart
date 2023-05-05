@@ -120,8 +120,8 @@ class GameActions {
           y: y,
           z: z,
       )
-      ..xv = getAdjacent(angle, speed)
-      ..yv = getOpposite(angle, speed)
+      ..xv = adj(angle, speed)
+      ..yv = opp(angle, speed)
       ;
     }
 

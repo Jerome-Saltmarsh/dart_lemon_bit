@@ -223,7 +223,7 @@ class GameNodes {
         final b = (z - zIndex).abs() + (row - rowIndex).abs();
         for (var column = columnMin; column <= columnMax; column++) {
           final nodeIndex = a + column;
-          final distanceValue = Engine.clamp(b + (column - columnIndex).abs() - 2, 0, Shade.Pitch_Black);
+          final distanceValue = clamp(b + (column - columnIndex).abs() - 2, 0, Shade.Pitch_Black);
           if (distanceValue > 5) continue;
           ambientStackIndex++;
           ambientStack[ambientStackIndex] = nodeIndex;
@@ -340,7 +340,7 @@ class GameNodes {
         final distance = sqrt(distanceSquared);
         final distanceChecked = max(distance, Node_Size);
 
-        final angle = getAngleBetween(vectorX, vectorY, x, y);
+        final angle = angleBetween(vectorX, vectorY, x, y);
         final strength = (alpha / distanceChecked) * 4.0;
         vx += (cos(angle) * strength);
         vy += (sin(angle) * strength);
@@ -349,7 +349,7 @@ class GameNodes {
 
     shadow.x = vx;
     shadow.y = vy;
-    shadow.z = getAngle(vx, vy);
+    shadow.z = angle(vx, vy);
  }
 
   static int getIndexRow(int index) => (index % area) ~/ totalColumns;

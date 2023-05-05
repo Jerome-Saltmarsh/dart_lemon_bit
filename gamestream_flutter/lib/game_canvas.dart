@@ -66,8 +66,8 @@ class GameCanvas {
                srcY: 0,
                srcWidth: 128,
                srcHeight: 32,
-               dstX: Engine.mousePosition.x,
-               dstY: Engine.mousePosition.y - 70,
+               dstX: Engine.mousePositionX,
+               dstY: Engine.mousePositionY - 70,
              );
            }
         }
@@ -91,8 +91,8 @@ class GameCanvas {
               srcY: 0,
               srcWidth: 128,
               srcHeight: 32,
-              dstX: Engine.mousePosition.x,
-              dstY: Engine.mousePosition.y - 70,
+              dstX: Engine.mousePositionX,
+              dstY: Engine.mousePositionY - 70,
             );
           }
         }
@@ -187,8 +187,8 @@ class GameCanvas {
     var i1 = GamePlayer.position.nodeIndex;
     final z = GamePlayer.position.z + Node_Height_Half;
 
-    final tX = Engine.calculateAdjacent(mouseAngle, Node_Height_Half);
-    final tY = Engine.calculateOpposite(mouseAngle, Node_Height_Half);
+    final tX = adj(mouseAngle, Node_Height_Half);
+    final tY = opp(mouseAngle, Node_Height_Half);
 
     for (var i = 0; i < jumps; i++) {
       final x2 = x1 - tX;

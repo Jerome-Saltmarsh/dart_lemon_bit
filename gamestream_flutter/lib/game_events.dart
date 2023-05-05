@@ -315,8 +315,8 @@ class GameEvents {
     if (attackType == ItemType.Weapon_Ranged_Flamethrower) return;
 
     const gun_distance = 50.0;
-    final gunX = x - getAdjacent(angle, gun_distance);
-    final gunY = y - getOpposite(angle, gun_distance);
+    final gunX = x - adj(angle, gun_distance);
+    final gunY = y - opp(angle, gun_distance);
 
     if (ItemType.isTypeWeaponFirearm(attackType)){
       GameState.spawnParticleSmoke(x: gunX, y: gunY, z: z, scale: 0.1, scaleV: 0.006, duration: 50);

@@ -282,8 +282,8 @@ class GameState {
     particle.delay = delay;
 
     if (speed > 0){
-      particle.xv = Engine.calculateAdjacent(angle, speed);
-      particle.yv = Engine.calculateOpposite(angle, speed);
+      particle.xv = adj(angle, speed);
+      particle.yv = opp(angle, speed);
     } else {
       particle.xv = 0;
       particle.yv = 0;

@@ -164,7 +164,7 @@ class GameIO {
      if (inputModeTouch){
        return Engine.worldToScreenX(touchCursorWorldX);
      } else {
-       return Engine.mousePosition.x;
+       return Engine.mousePositionX;
      }
   }
 
@@ -172,7 +172,7 @@ class GameIO {
     if (inputModeTouch) {
       return Engine.worldToScreenY(touchCursorWorldY);
     } else {
-      return Engine.mousePosition.y;
+      return Engine.mousePositionY;
     }
   }
 

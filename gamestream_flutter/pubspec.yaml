@@ -14,12 +14,6 @@ dependencies:
   flutter_colorpicker: ^1.0.3
   file_picker: ^5.0.1
   just_audio: ^0.9.28
-  lemon_byte:
-    path: C:\Users\Jerome\github\dart-lemon-byte
-  lemon_engine:
-    path: C:\Users\Jerome\github\bleed\dart-lemon-engine
-  firestore_client:
-    path: C:\Users\Jerome\github\bleed\firestore-client
   universal_html: ^2.0.8
   web_socket_channel: ^2.1.0
   shelf_web_socket: ^1.0.1
@@ -31,6 +25,15 @@ dependencies:
   typedef: ^1.0.5
   device_info_plus: ^6.0.0
   url_launcher: ^6.1.10
+
+  lemon_math:
+    path: C:\Users\Jerome\github\dart-lemon-math
+  lemon_byte:
+    path: C:\Users\Jerome\github\dart-lemon-byte
+  lemon_engine:
+    path: C:\Users\Jerome\github\bleed\dart-lemon-engine
+  firestore_client:
+    path: C:\Users\Jerome\github\bleed\firestore-client
   bleed_common:
     path: C:\Users\Jerome\github\bleed\bleed-common
 
