@@ -1,6 +1,6 @@
 
-import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/library.dart';
+import 'package:gamestream_flutter/touch_controller.dart';
 
 class ServerEvents {
 
@@ -23,6 +23,8 @@ class ServerEvents {
     } else {
       GameAudio.musicPlay();
     }
+
+    Engine.onLeftClicked = TouchController.onClick;
 
     ClientState.control_visible_player_weapons.value  = value == GameType.Combat;
     ClientState.control_visible_scoreboard.value      = value == GameType.Combat;

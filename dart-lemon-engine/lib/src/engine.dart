@@ -446,7 +446,10 @@ class Engine {
   }
 
   static void _internalOnPointerDown(PointerDownEvent event) {
-    // event.
+    previousMousePositionX = mousePositionX;
+    previousMousePositionY = mousePositionY;
+    mousePositionX = event.position.dx;
+    mousePositionY = event.position.dy;
     touchDownId = event.pointer;
 
     if (event.buttons == 1) {

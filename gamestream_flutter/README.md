@@ -8,6 +8,8 @@ ctrl + w            : minimal mode
 ctrl + shift + e    : view recent changes
 
 [TODO]
+[ ] enter high score name
+[ ] high score top 100
 [ ] remove regions
 [ ] tutorial keys
 

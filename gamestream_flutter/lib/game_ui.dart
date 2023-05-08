@@ -522,46 +522,6 @@ class GameUI {
           ? GameStyle.Null
           : watch(ClientState.touchButtonSide, buildStackInputModeTouch);
 
-  static Widget buildWalkButtons() => Positioned(
-        bottom: 0,
-        left: 0,
-        child: Row(
-          children: [
-            Column(
-              children: [
-                buildWalkBox(0),
-                buildWalkBox(0),
-                buildWalkBox(0),
-              ],
-            ),
-            Column(
-              children: [
-                buildWalkBox(0),
-                Container(width: 60, height: 60),
-                buildWalkBox(0),
-              ],
-            ),
-            Column(
-              children: [
-                buildWalkBox(0),
-                buildWalkBox(0),
-                buildWalkBox(0),
-              ],
-            )
-          ],
-        ),
-      );
-
-  static Widget buildWalkBox(int direction) {
-    return container(
-        width: 60,
-        height: 60,
-        color: Colors.blue,
-        action: () {
-          GameIO.touchscreenDirectionMove = direction;
-        });
-  }
-
   static Widget buildDialogFramesSinceUpdate() => Positioned(
       top: 8,
       left: 8,

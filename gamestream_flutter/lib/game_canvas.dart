@@ -1,4 +1,5 @@
 
+import 'dart:html';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/render/renderer_nodes.dart';
 
 import 'isometric/render/render_character_health_bar.dart';
+import 'touch_controller.dart';
 
 class GameCanvas {
   static void renderForegroundText(Vector3 position, String text){
@@ -29,6 +31,10 @@ class GameCanvas {
   static void renderForeground(Canvas canvas, Size size) {
     if (ClientState.hoverDialogType.value == DialogType.None){
       renderCursor(canvas);
+    }
+
+    if (GameIO.inputModeTouch) {
+      TouchController.render(canvas);
     }
 
      renderGamePlayerAimTargetNameText();
@@ -117,6 +123,11 @@ class GameCanvas {
     renderPlayerRunTarget();
     renderPlayerEnergy();
     ClientState.rendersSinceUpdate.value++;
+
+    // final d = TouchController.dis;
+    // final x = GamePlayer.x + adj(TouchController.angle, d);
+    // final y = GamePlayer.y + opp(TouchController.angle, d);
+    // canvas.drawCircle(Offset(renderX(x, y, GamePlayer.z), renderY(x, y, GamePlayer.z)), 20, Engine.paint);
 
     // if (ClientState.debugMode.value){
     //   debugRenderIsland();

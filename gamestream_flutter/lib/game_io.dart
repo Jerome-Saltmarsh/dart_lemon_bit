@@ -2,6 +2,7 @@
 import 'package:flutter/gestures.dart';
 
 import 'library.dart';
+import 'touch_controller.dart';
 
 
 class GameIO {
@@ -9,7 +10,6 @@ class GameIO {
   static var _touchCursorTapY = 0.0;
   static var touchCursorWorldX = 100.0;
   static var touchCursorWorldY = 100.0;
-  static bool _panning = false;
 
   static var previousVelocityX = 0.0;
   static var previousVelocityY = 0.0;
@@ -177,9 +177,11 @@ class GameIO {
   }
 
   static int getDirection() {
-    final keyboardDirection = getDirectionKeyboard();
-    if (keyboardDirection != Direction.None) return keyboardDirection;
-    return inputModeKeyboard ? keyboardDirection : touchscreenDirectionMove;
+    return inputModeKeyboard ? getDirectionKeyboard() : getDirectionTouchScreen();
+  }
+
+  static int getDirectionTouchScreen() {
+    return TouchController.getDirection();
   }
 
   static int getDirectionKeyboard() {

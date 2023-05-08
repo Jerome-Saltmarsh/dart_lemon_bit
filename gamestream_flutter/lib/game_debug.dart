@@ -46,7 +46,7 @@ class GameDebug {
                                 "player-respawn-timer: ${GamePlayer.respawnTimer.value}\n"
                                 "player-position: x: ${GamePlayer.position.x}, y: ${GamePlayer.position.y}, z: ${GamePlayer.position.z}\n"
                                 "player-render: x: ${GamePlayer.position.renderX}, y: ${GamePlayer.position.renderY}\n"
-                                "player-screen: x: ${Engine.worldToScreenX(GamePlayer.position.renderX).toInt()}, y: ${Engine.worldToScreenY(GamePlayer.position.renderY).toInt()}\n"
+                                "player-screen: x: ${GamePlayer.positionScreenX.toInt()}, y: ${GamePlayer.positionScreenY.toInt()}\n"
                                 "player-index: z: ${GamePlayer.position.indexZ}, row: ${GamePlayer.position.indexRow}, column: ${GamePlayer.position.indexColumn}\n"
                                 "player-inside-island: ${RendererNodes.playerInsideIsland}\n"
                                 "player-legs: ${ItemType.getName(GamePlayer.legs.value)}\n"

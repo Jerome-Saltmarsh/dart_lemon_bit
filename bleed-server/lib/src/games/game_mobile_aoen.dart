@@ -119,9 +119,11 @@ class GameMobileAeon extends GameIsometric {
     if (player.deadOrBusy) return;
     if (!player.active) return;
 
-    if (mouseLeftDown) {
-      player.runToMouse();
-    }
+    // if (mouseLeftDown) {
+    //   player.runToMouse();
+    // }
+
+    playerRunInDirection(player, direction);
   }
 
   @override
@@ -196,9 +198,9 @@ class GameMobileAeon extends GameIsometric {
       ;
     }
 
-    for (final spawnPoint in scene.spawnPoints) {
-      spawnAI(nodeIndex: spawnPoint, characterType: CharacterType.Zombie);
-    }
+    // for (final spawnPoint in scene.spawnPoints) {
+    //   spawnAI(nodeIndex: spawnPoint, characterType: CharacterType.Zombie);
+    // }
   }
 
   @override
