@@ -425,7 +425,6 @@ String generateRandomName(){
   return 'Player_${100000 + _random.nextInt(999999999)}';
 }
 
-
 String formatDate(DateTime date){
   return date.toUtc().toIso8601String();
 }
@@ -433,5 +432,4 @@ String formatDate(DateTime date){
 class Method {
   static const GET = "GET";
   static const POST = "POST";
-
 }

@@ -1460,7 +1460,7 @@ abstract class GameIsometric extends Game<IsometricPlayer> {
     activateCollider(player);
     player.health = player.maxHealth;
     player.energy = player.maxEnergy;
-    player.credits = 0;
+    player.score = 0;
     clearCharacterTarget(player);
 
     if (player.inventoryOpen) {

@@ -282,7 +282,7 @@ class GameWebsite {
               onPressed(
                 action: () {
                   actionSelectRegion(region);
-                  if (Engine.deviceIsPhone){
+                  if (Engine.deviceIsPhone) {
                     GameNetwork.connectToGameAeon();
                   } else {
                     GameNetwork.connectToGameCombat();

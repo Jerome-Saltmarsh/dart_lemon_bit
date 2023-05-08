@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:bleed_server/firestore/firestore.dart';
 import 'package:bleed_server/src/games/game_rock_paper_scissors.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 
@@ -22,13 +23,29 @@ class Engine {
   final connections = <Connection>[];
   final games = <Game>[];
   final scenes = Scenes();
+  final database = isLocalMachine ? DatabaseLocalHost() : DatabaseFirestore();
 
+  var _highScore = 0;
   var frame = 0;
   var connectionsTotal = 0;
+
+  int get highScore => _highScore;
+
+  set highScore (int value){
+    if (_highScore == value) return;
+    _highScore = value;
+    database.writeHighScore(_highScore);
+    dispatchHighScore();
+  }
 
   Future run() async {
     print('gamestream-version: $version');
     print('dart-version: ${Platform.version}');
+
+    await database.connect();
+    database.getHighScore().then((value) {
+       highScore = value;
+    });
 
     final sceneDirectoryExists = await Scene_Directory.exists();
 
@@ -46,6 +63,16 @@ class Engine {
 
     Timer.periodic(Duration(milliseconds: 1000 ~/ Frames_Per_Second), _fixedUpdate);
     _startWebsocketServer();
+  }
+
+  void dispatchHighScore(){
+    for (final game in games) {
+      for (final player in game.players){
+        if (player is IsometricPlayer){
+          player.writeHighScore();
+        }
+      }
+    }
   }
 
   void _fixedUpdate(Timer timer) {

@@ -87,7 +87,7 @@ class GameSurvival extends GameIsometric {
     }
 
     if (src is IsometricPlayer) {
-      src.credits += 10;
+      src.score += 10;
     }
   }
 
@@ -202,7 +202,7 @@ class GameSurvival extends GameIsometric {
   void customOnCollisionBetweenPlayerAndGameObject(IsometricPlayer player, GameObject gameObject) {
     if (gameObject.type == ItemType.Resource_Credit){
        deactivateCollider(gameObject);
-       player.credits += 5;
+       player.score += 5;
     }
   }
 

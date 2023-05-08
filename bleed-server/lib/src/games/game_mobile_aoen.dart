@@ -100,7 +100,7 @@ class GameMobileAeon extends GameIsometric {
     player.powerCooldown = 0;
     player.maxEnergy = Player_Energy;
     player.energy = Player_Energy;
-    player.credits = 0;
+    player.score = 0;
     player.grenades = 1;
     player.writePlayerEquipment();
     player.writePlayerPower();
@@ -135,7 +135,7 @@ class GameMobileAeon extends GameIsometric {
   @override
   void customOnCharacterKilled(Character target, dynamic src) {
     if (src is IsometricPlayer) {
-      src.credits += Credits_Per_Kill;
+      src.score += Credits_Per_Kill;
     }
 
     if (target is AI && scene.spawnPoints.isNotEmpty) {
@@ -217,12 +217,12 @@ class GameMobileAeon extends GameIsometric {
 
     final itemCost = getItemCost(gameObjectType);
 
-    if (player.credits < itemCost) {
+    if (player.score < itemCost) {
       player.writeError('insufficient credits');
       return;
     }
 
-    player.credits -= itemCost;
+    player.score -= itemCost;
 
     player.aimTargetWeaponSide == Side.Left
         ? playerEquipPrimary(player, gameObjectType)
@@ -294,7 +294,7 @@ class GameMobileAeon extends GameIsometric {
     if (!gameObject.collectable) return;
 
     if (gameObject.type == ItemType.Resource_Credit) {
-      player.credits += Credits_Collected;
+      player.score += Credits_Collected;
       player.writePlayerEventItemAcquired(gameObject.type);
       player.writeGameEventGameObjectDestroyed(gameObject);
       deactivateCollider(gameObject);

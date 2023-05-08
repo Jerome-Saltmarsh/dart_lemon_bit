@@ -7,6 +7,13 @@ navigate to next method: ctrl + shift + up / down arrows
 ctrl + w            : minimal mode
 ctrl + shift + e    : view recent changes
 
+[TODO]
+[ ] remove regions
+[ ] tutorial keys
+
+08.05.2023
+[x] track high score
+
 25.04.2023
 [x] aeon mobile support
 

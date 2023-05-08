@@ -19,6 +19,7 @@ class ServerState {
   static final npcs = <Character>[];
   static final projectiles = <Projectile>[];
 
+  static final highScore = Watch(0);
   static final areaType = Watch(AreaType.None, onChanged: ServerEvents.onChangedAreaType);
   static final interactMode = Watch(InteractMode.None, onChanged: GameEvents.onChangedPlayerInteractMode);
   static final playerHealth = Watch(0);

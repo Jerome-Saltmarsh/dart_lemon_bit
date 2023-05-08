@@ -161,7 +161,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   /// GETTERS
   ///
   Collider? get aimTarget => _aimTarget;
-  int get credits => _credits;
+  int get score => _credits;
   int get level => _level;
   int get equippedWeaponIndex => _equippedWeaponIndex;
   int get lookDirection => Direction.fromRadian(lookRadian);
@@ -218,9 +218,12 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     writePlayerLevel();
   }
 
-  set credits(int value) {
+  set score(int value) {
     if (_credits == value) return;
     _credits = max(value, 0);
+    if (engine.highScore < value) {
+      engine.highScore = value;
+    }
     writePlayerCredits();
     game.customOnPlayerCreditsChanged(this);
   }
@@ -1024,11 +1027,17 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
       writePlayerHealth();
       writePlayerAlive();
       writePlayerInteractMode();
+      writeHighScore();
     }
 
     if (!sceneDownloaded){
       downloadScene();
     }
+  }
+
+  void writeHighScore(){
+    writeByte(ServerResponse.High_Score);
+    writeUInt24(engine.highScore);
   }
 
   void writePlayerStats(){
@@ -1364,7 +1373,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   void writePlayerCredits() {
     writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Credits);
-    writeUInt16(credits);
+    writeUInt16(score);
   }
 
   void writePlayerItems() {
@@ -1752,7 +1761,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
      for (final player in game.players) {
         writeUInt24(player.id);
         writeString(player.name);
-        writeUInt24(player.credits);
+        writeUInt24(player.score);
      }
   }
 
@@ -1763,7 +1772,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     for (final player in game.players) {
       writeUInt24(player.id);
       writeString(player.name);
-      writeUInt24(player.credits);
+      writeUInt24(player.score);
     }
   }
 
@@ -1771,7 +1780,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     writeUInt8(ServerResponse.Api_Players);
     writeUInt8(ApiPlayers.Score);
     writeUInt24(player.id);
-    writeUInt24(player.credits);
+    writeUInt24(player.score);
   }
 
   void writeGameEventGameObjectDestroyed(GameObject gameObject){

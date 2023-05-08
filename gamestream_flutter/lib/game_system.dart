@@ -43,19 +43,19 @@ class GameSystem {
     if (visitCount == null){
       sharedPreferences.putAny('visit-count', 1);
       GameWebsite.visitCount.value = 1;
-      // GameNetwork.connectToGameDarkAge();
     } else {
       sharedPreferences.putAny('visit-count', visitCount + 1);
       GameWebsite.visitCount.value = visitCount + 1;
 
       final cachedVersion = sharedPreferences.getString('version');
-
-
       if (cachedVersion != null){
          if (version != cachedVersion){
             print("New version detected (previous: $cachedVersion, latest: $version)");
          }
       }
+
+      GameWebsite.region.value = Engine.isLocalHost ? ConnectionRegion.LocalHost : ConnectionRegion.Asia_South;
+      // GameNetwork.connectToGameAeon();
     }
     await Future.delayed(const Duration(seconds: 4));
   }

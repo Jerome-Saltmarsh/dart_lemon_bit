@@ -382,14 +382,14 @@ packages:
       path: "C:\\Users\\Jerome\\github\\bleed\\dart-lemon-engine"
       relative: false
     source: path
-    version: "0.3.31"
+    version: "0.3.36"
   lemon_math:
     dependency: "direct main"
     description:
       path: "C:\\Users\\Jerome\\github\\dart-lemon-math"
       relative: false
     source: path
-    version: "1.2.13"
+    version: "1.2.14"
   lemon_watch:
     dependency: transitive
     description:

@@ -100,6 +100,9 @@ class ServerResponseReader with ByteReader {
               break;
           }
           break;
+        case ServerResponse.High_Score:
+          ServerState.highScore.value = readUInt24();
+          break;
         case ServerResponse.Download_Scene:
           final name = readString();
           final length = readUInt16();

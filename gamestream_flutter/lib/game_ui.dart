@@ -601,22 +601,31 @@ class GameUI {
 
   static Widget buildPlayersScore(){
     return IgnorePointer(
-      child: watch(ServerState.playerScoresReads, (_) => Container(
-            padding: GameStyle.Padding_6,
-            color: Colors.black26,
-            constraints: BoxConstraints(
-              maxHeight: 400,
-            ),
-            width: 180,
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                 children: ServerState.playerScores
-                     .map(buildRowPlayerScore)
-                     .toList(growable: false)
-              ),
-            ),
-          )),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          watch(ServerState.highScore, (int highScore){
+            return text('WORLD RECORD: $highScore');
+          }),
+          height8,
+          watch(ServerState.playerScoresReads, (_) => Container(
+                padding: GameStyle.Padding_6,
+                color: Colors.black26,
+                constraints: BoxConstraints(
+                  maxHeight: 400,
+                ),
+                width: 180,
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                     children: ServerState.playerScores
+                         .map(buildRowPlayerScore)
+                         .toList(growable: false)
+                  ),
+                ),
+              )),
+        ],
+      ),
     );
   }
 
