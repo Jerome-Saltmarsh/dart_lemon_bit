@@ -23,52 +23,65 @@ class GameUI {
   static final playerTextStyle = TextStyle(color: Colors.white);
   static final timeVisible = Watch(true);
 
+  // watch(GameIO.inputMode, (intputMode){})
 
-  static Widget buildUI() => StackFullscreen(children: [
-        buildWatchBool(ClientState.triggerAlarmNoMessageReceivedFromServer,
-            buildDialogFramesSinceUpdate),
-        Positioned(
+  static Widget buildUI() =>
+      watch(GameIO.inputMode, (int inputMode){
+        return StackFullscreen(children: [
+          buildWatchBool(ClientState.triggerAlarmNoMessageReceivedFromServer,
+              buildDialogFramesSinceUpdate),
+          Positioned(
             top: 16,
             right: 16 * 16,
             child: buildButtonTogglePlayMode(),
-        ),
-        Positioned(
-          child: onPressed(
-            action: () {
-              print('attack');
-              GameNetwork.sendClientRequest(ClientRequest.Attack);
-            },
-            child: Container(
-              color: Colors.blue,
-              alignment: Alignment.center,
-              padding: const EdgeInsets.all(10),
-              child: text("ATTACK", size: 30),
-            ),
           ),
-          bottom: 220,
-          right: GameStyle.Default_Padding,
-        ),
-        Positioned(
-          child: buildMapCircle(),
-          bottom: GameStyle.Default_Padding,
-          right: GameStyle.Default_Padding,
-        ),
-        WatchBuilder(ClientState.edit, buildPlayMode),
-        WatchBuilder(GameIO.inputMode, buildStackInputMode),
-        buildWatchBool(ClientState.debugMode, GameDebug.buildStackDebug),
-        buildPositionedMessageStatus(),
-        buildWatchGameStatus(),
-        buildWatchBool(ClientState.window_visible_light_settings, buildWindowLightSettings),
-        Positioned(
-            top: 16,
-            right: 16,
-            child: buildRowMainMenu()
-        ),
-        // Positioned(
-        //     right: GameStyle.Default_Padding,
-        //     top: 50,
-        //     child: buildWatchBool(ClientState.window_visible_menu, buildWindowMenu))
-      ]);
+          if (inputMode == InputMode.Touch)
+          Positioned(
+            child: onPressed(
+              action: () {
+                print('attack');
+                GameNetwork.sendClientRequest(ClientRequest.Attack);
+              },
+              child: Container(
+                color: Colors.blue,
+                alignment: Alignment.center,
+                padding: const EdgeInsets.all(32),
+                child: text("ATTACK", size: 32),
+              ),
+            ),
+            bottom: GameStyle.Default_Padding,
+            right: GameStyle.Default_Padding,
+          ),
+          if (inputMode == InputMode.Keyboard)
+          buildWatchBool(ClientState.control_visible_scoreboard, () =>
+              Positioned(
+                top: GameStyle.Default_Padding,
+                left: GameStyle.Default_Padding,
+                child: buildPlayersScore(),
+              )
+          ),
+          if (inputMode == InputMode.Keyboard)
+          Positioned(
+            child: buildMapCircle(),
+            bottom: GameStyle.Default_Padding,
+            right: GameStyle.Default_Padding,
+          ),
+          WatchBuilder(ClientState.edit, buildPlayMode),
+          WatchBuilder(GameIO.inputMode, buildStackInputMode),
+          buildWatchBool(ClientState.debugMode, GameDebug.buildStackDebug),
+          buildPositionedMessageStatus(),
+          buildWatchGameStatus(),
+          buildWatchBool(ClientState.window_visible_light_settings,
+              buildWindowLightSettings),
+          Positioned(top: 16, right: 16, child: buildRowMainMenu()),
+          // Positioned(
+          //     right: GameStyle.Default_Padding,
+          //     top: 50,
+          //     child: buildWatchBool(ClientState.window_visible_menu, buildWindowMenu))
+        ]);
+      });
+
+
 
   static Widget buildMapCircle() {
     return IgnorePointer(
@@ -772,13 +785,13 @@ class GameUI {
 
   static Widget buildStackPlay(int? gameType) => StackFullscreen(children: [
         buildWatchBool(ClientState.window_visible_player_creation, buildWindowCharacterCreation),
-        buildWatchBool(ClientState.control_visible_scoreboard, () =>
-          Positioned(
-              top: GameStyle.Default_Padding,
-              left: GameStyle.Default_Padding,
-              child: buildPlayersScore(),
-          )
-        ),
+        // buildWatchBool(ClientState.control_visible_scoreboard, () =>
+        //   Positioned(
+        //       top: GameStyle.Default_Padding,
+        //       left: GameStyle.Default_Padding,
+        //       child: buildPlayersScore(),
+        //   )
+        // ),
         buildWatchBool(ClientState.control_visible_respawn_timer, () =>
           Positioned(
               bottom: GameStyle.Default_Padding,
