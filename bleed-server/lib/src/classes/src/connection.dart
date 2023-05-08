@@ -200,6 +200,18 @@ class Connection with ByteReader {
         player.powerType = value;
         break;
 
+      case ClientRequest.Attack:
+        if (game is! GameIsometric) return;
+        if (player is! IsometricPlayer) return;
+        game.playerAutoAim(player);
+        game.characterAttackMelee(player);
+        // game.characterUseOrEquipWeapon(
+        //   character: player,
+        //   weaponType: player.weaponPrimary,
+        //   characterStateChange: false,
+        // );
+        break;
+
       case ClientRequest.Suicide:
         if (game is! GameIsometric) return;
         if (player is! IsometricPlayer) return;

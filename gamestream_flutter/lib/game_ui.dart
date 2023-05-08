@@ -33,6 +33,22 @@ class GameUI {
             child: buildButtonTogglePlayMode(),
         ),
         Positioned(
+          child: onPressed(
+            action: () {
+              print('attack');
+              GameNetwork.sendClientRequest(ClientRequest.Attack);
+            },
+            child: Container(
+              color: Colors.blue,
+              alignment: Alignment.center,
+              padding: const EdgeInsets.all(10),
+              child: text("ATTACK", size: 30),
+            ),
+          ),
+          bottom: 220,
+          right: GameStyle.Default_Padding,
+        ),
+        Positioned(
           child: buildMapCircle(),
           bottom: GameStyle.Default_Padding,
           right: GameStyle.Default_Padding,
@@ -40,7 +56,6 @@ class GameUI {
         WatchBuilder(ClientState.edit, buildPlayMode),
         WatchBuilder(GameIO.inputMode, buildStackInputMode),
         buildWatchBool(ClientState.debugMode, GameDebug.buildStackDebug),
-        // buildPositionedAreaType(),
         buildPositionedMessageStatus(),
         buildWatchGameStatus(),
         buildWatchBool(ClientState.window_visible_light_settings, buildWindowLightSettings),

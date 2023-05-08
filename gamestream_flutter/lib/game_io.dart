@@ -1,4 +1,6 @@
 
+import 'dart:html';
+
 import 'package:flutter/gestures.dart';
 
 import 'library.dart';
@@ -124,6 +126,11 @@ class GameIO {
     var hex = GameIO.getDirection();
 
     if (Engine.watchMouseLeftDown.value) {
+      hex = hex | ByteHex.Hex_16;
+    }
+
+    if (TouchController.attack) {
+      TouchController.attack = false;
       hex = hex | ByteHex.Hex_16;
     }
 

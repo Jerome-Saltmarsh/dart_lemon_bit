@@ -814,18 +814,33 @@ abstract class GameIsometric extends Game<IsometricPlayer> {
 
   void playerAutoAim(IsometricPlayer player) {
     if (player.deadOrBusy) return;
-    var closestCharacterDistance = player.weaponTypeRange * 1.5;
-    Character? closestCharacter = null;
+    var closestTargetDistance = player.weaponTypeRange * 1.5;
+    Collider? closestTarget = null;
     for (final character in characters) {
       if (character.dead) continue;
       if (Collider.onSameTeam(player, character)) continue;
       final distance = getDistanceBetweenV3(player, character);
-      if (distance > closestCharacterDistance) continue;
-      closestCharacter = character;
-      closestCharacterDistance = distance;
+      if (distance > closestTargetDistance) continue;
+      closestTarget = character;
+      closestTargetDistance = distance;
     }
-    if (closestCharacter != null) {
-      player.lookAt(closestCharacter);
+    if (closestTarget != null) {
+      player.lookAt(closestTarget);
+      return;
+    }
+
+    for (final gameObject in gameObjects) {
+      if (!gameObject.active) continue;
+      if (!gameObject.hitable) continue;
+      // if (Collider.onSameTeam(player, character)) continue;
+      final distance = getDistanceBetweenV3(player, gameObject);
+      if (distance > closestTargetDistance) continue;
+      closestTarget = gameObject;
+      closestTargetDistance = distance;
+    }
+    if (closestTarget != null) {
+      player.lookAt(closestTarget);
+      return;
     }
   }
 
