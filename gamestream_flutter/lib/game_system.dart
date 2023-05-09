@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:gamestream_flutter/game_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'game_cube.dart';
 import 'library.dart';
 
 class GameSystem {
@@ -27,7 +28,7 @@ class GameSystem {
     Engine.deviceType.onChanged(onDeviceTypeChanged);
     GameImages.loadImages();
     Engine.cursorType.value = CursorType.Basic;
-    // Engine.onDrawCanvas = GameWebsite.renderCanvas;
+    Engine.onDrawCanvas = GameCube.renderCanvas;
     GameIO.addListeners();
     GameIO.detectInputMode();
 

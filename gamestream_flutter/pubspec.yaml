@@ -25,6 +25,7 @@ dependencies:
   typedef: ^1.0.5
   device_info_plus: ^6.0.0
   url_launcher: ^6.1.10
+  flutter_cube: ^0.1.1
 
   lemon_math:
     path: C:\Users\Jerome\github\dart-lemon-math
@@ -55,6 +56,7 @@ flutter:
       fonts:
         - asset: fonts/VT323-Regular.ttf
   assets:
+    - assets/
     - images/
     - images/template/
     - images/template/body/
