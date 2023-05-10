@@ -14,6 +14,7 @@ ctrl + shift + e    : view recent changes
 [ ] tutorial keys
 
 10.05.2023
+[x] fixed mobile look angle
 [x] fixed editor
 
 08.05.2023

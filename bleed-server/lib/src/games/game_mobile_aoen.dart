@@ -90,6 +90,9 @@ class GameMobileAeon extends GameIsometric {
   @override
   void customOnPlayerRevived(IsometricPlayer player) {
     moveToRandomPlayerSpawnPoint(player);
+    player.x = 1200.0;
+    player.y = 1200.0;
+    player.z = 50.0;
     player.item_level.clear();
     player.team = TeamType.Alone;
     player.buffInvisible = false;
@@ -118,12 +121,8 @@ class GameMobileAeon extends GameIsometric {
 
     if (player.deadOrBusy) return;
     if (!player.active) return;
-
-    // if (mouseLeftDown) {
-    //   player.runToMouse();
-    // }
-
     playerRunInDirection(player, direction);
+    player.lookRadian = player.faceAngle;
   }
 
   @override

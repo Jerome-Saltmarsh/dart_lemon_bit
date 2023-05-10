@@ -835,7 +835,7 @@ class Connection with ByteReader {
         return joinGame(game);
       }
     }
-    joinGame(GameMobileAeon(scene: engine.scenes.warehouse));
+    joinGame(GameMobileAeon(scene: engine.scenes.town));
   }
 
   Future joinGameSurvival() async {

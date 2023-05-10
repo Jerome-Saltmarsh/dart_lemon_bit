@@ -6,15 +6,11 @@ import 'io/load_scene.dart';
 class Scenes {
   late Scene suburbs_01;
   late Scene warehouse;
-
-  List<Scene> values = [];
+  late Scene town;
 
   Future load() async {
       suburbs_01 = await loadScene('suburbs_01');
       warehouse = await loadScene('warehouse');
-  }
-
-  void saveAllToFile(){
-    values.forEach(writeSceneToFileBytes);
+      town = await loadScene('town');
   }
 }

@@ -23,13 +23,13 @@ class GameUI {
   static final playerTextStyle = TextStyle(color: Colors.white);
   static final timeVisible = Watch(true);
 
-  // watch(GameIO.inputMode, (intputMode){})
-
   static Widget buildUI() =>
       watch(GameIO.inputMode, (int inputMode){
         return StackFullscreen(children: [
           buildWatchBool(ClientState.triggerAlarmNoMessageReceivedFromServer,
               buildDialogFramesSinceUpdate),
+
+          if (inputMode != InputMode.Touch)
           Positioned(
             top: 16,
             right: 16 * 16,
@@ -39,7 +39,6 @@ class GameUI {
           Positioned(
             child: onPressed(
               action: () {
-                print('attack');
                 GameNetwork.sendClientRequest(ClientRequest.Attack);
               },
               child: Container(
@@ -74,10 +73,6 @@ class GameUI {
           buildWatchBool(ClientState.window_visible_light_settings,
               buildWindowLightSettings),
           Positioned(top: 16, right: 16, child: buildRowMainMenu()),
-          // Positioned(
-          //     right: GameStyle.Default_Padding,
-          //     top: 50,
-          //     child: buildWatchBool(ClientState.window_visible_menu, buildWindowMenu))
         ]);
       });
 
@@ -784,14 +779,9 @@ class GameUI {
       edit ? watch(GameEditor.editTab, EditorUI.buildUI) : watch(ServerState.gameType, buildStackPlay);
 
   static Widget buildStackPlay(int? gameType) => StackFullscreen(children: [
+          if (gameType == GameType.Combat)
         buildWatchBool(ClientState.window_visible_player_creation, buildWindowCharacterCreation),
-        // buildWatchBool(ClientState.control_visible_scoreboard, () =>
-        //   Positioned(
-        //       top: GameStyle.Default_Padding,
-        //       left: GameStyle.Default_Padding,
-        //       child: buildPlayersScore(),
-        //   )
-        // ),
+          if (gameType == GameType.Combat)
         buildWatchBool(ClientState.control_visible_respawn_timer, () =>
           Positioned(
               bottom: GameStyle.Default_Padding,
