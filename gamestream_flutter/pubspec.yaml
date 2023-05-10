@@ -26,6 +26,7 @@ dependencies:
   device_info_plus: ^6.0.0
   url_launcher: ^6.1.10
   flutter_cube: ^0.1.1
+  vector_math: ^2.1.4
 
   lemon_math:
     path: C:\Users\Jerome\github\dart-lemon-math

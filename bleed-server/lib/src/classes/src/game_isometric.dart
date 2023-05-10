@@ -3276,4 +3276,9 @@ abstract class GameIsometric extends Game<IsometricPlayer> {
     player.writePlayerAlive();
     return player;
   }
+
+  @override
+  void customPlayerWrite(IsometricPlayer player) {
+    player.writePlayerGame();
+  }
 }

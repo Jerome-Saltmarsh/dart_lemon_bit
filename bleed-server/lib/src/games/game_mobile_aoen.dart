@@ -487,11 +487,6 @@ class GameMobileAeon extends GameIsometric {
         ? Player_Run_Speed_Perk
         : Player_Run_Speed;
   }
-
-  @override
-  void customPlayerWrite(IsometricPlayer player) {
-    player.writePlayerGame();
-  }
 }
 
 

@@ -13,6 +13,9 @@ ctrl + shift + e    : view recent changes
 [ ] remove regions
 [ ] tutorial keys
 
+10.05.2023
+[x] fixed editor
+
 08.05.2023
 [x] track high score
 

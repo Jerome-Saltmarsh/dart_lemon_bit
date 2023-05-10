@@ -28,7 +28,7 @@ class GameSystem {
     Engine.deviceType.onChanged(onDeviceTypeChanged);
     GameImages.loadImages();
     Engine.cursorType.value = CursorType.Basic;
-    Engine.onDrawCanvas = GameCube.renderCanvas;
+    Engine.onDrawCanvas = Game3D.renderCanvas;
     GameIO.addListeners();
     GameIO.detectInputMode();
 

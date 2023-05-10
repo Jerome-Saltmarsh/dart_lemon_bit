@@ -849,16 +849,9 @@ class Connection with ByteReader {
   }
 
   void joinGame(Game game){
-    // if (_player != null) {
-    //   _player!.game.removePlayer(_player!);
-    // }
     final player = game.createPlayer();
     _player = _player = player;
     player.sendBufferToClient = sendBufferToClient;
-    // final account = _account;
-    // if (account != null) {
-    //   player.name = account.publicName;
-    // }
   }
 
   void errorInsufficientResources(){

@@ -56,9 +56,4 @@ class GameEditor extends GameIsometric {
      }
      return true;
   }
-
-  @override
-  void customPlayerWrite(IsometricPlayer player) {
-    // TODO: implement customPlayerWrite
-  }
 }
