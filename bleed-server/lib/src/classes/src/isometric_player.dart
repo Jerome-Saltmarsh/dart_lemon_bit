@@ -37,6 +37,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   var textDuration = 0;
   var _experience = 0;
   var _level = 1;
+  var _attributes = 0;
   var _energy = 10;
   var maxEnergy = 10;
   var text = "";
@@ -71,6 +72,13 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   var _respawnTimer = Engine.Frames_Per_Second * 7;
 
   int get respawnTimer => _respawnTimer;
+
+  int get attributes => _attributes;
+
+  set attributes(int value) {
+    _attributes = max(value, 0);
+    writeApiPlayerAttributes();
+  }
 
   set respawnTimer(int value){
      if (_respawnTimer == value) return;
@@ -454,21 +462,8 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   }
 
   void writeErrorInvalidInventoryIndex(int index){
-     writeError('invalid inventory index: $index (${ItemType.getName(index)})');
+     writeGameError(GameError.Invalid_Inventory_Index);
   }
-
-  void writeErrorInsufficientArgs(){
-      writeError('insufficient args');
-  }
-
-  void writeErrorInvalidIndex(int index){
-    writeError('invalid index $index');
-  }
-
-  // void writeError(String error){
-  //     writeByte(ServerResponse.Error);
-  //     writeString(error);
-  // }
 
   void writeInfo(String info){
     writeByte(ServerResponse.Info);
@@ -491,43 +486,23 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
 
   void inventoryBuy(int index){
     if (interactMode != InteractMode.Trading) {
-      writeError('not in trade mode');
+      writeGameError(GameError.Cannot_Purchase_At_The_Moment);
       return;
     }
     if (index < 0) {
-      writeErrorInvalidIndex(index);
+      writeErrorInvalidInventoryIndex(index);
       return;
     }
     if (index >= storeItems.length) {
-      writeErrorInvalidIndex(index);
+      writeErrorInvalidInventoryIndex(index);
       return;
     }
     final itemType = storeItems[index];
     if (itemType == ItemType.Empty) {
-      writeError('item type is empty');
+      writeGameError(GameError.Invalid_Purchase_index);
       return;
     }
 
-    final recipe = ItemType.Recipes[itemType];
-
-    if (recipe != null) {
-       for (var i = 0; i < recipe.length; i += 2) {
-         final recipeItemQuantity = recipe[i];
-         final recipeItemType = recipe[i + 1];
-         final quantityInPossession = inventoryGetTotalQuantityOfItemType(recipeItemType);
-         if (quantityInPossession < recipeItemQuantity) {
-           writeError('insufficient ${ItemType.getName(recipeItemType)} ($quantityInPossession / $recipeItemQuantity)');
-           return;
-         }
-       }
-
-       for (var i = 0; i < recipe.length; i += 2) {
-         inventoryReduceItemTypeQuantity(
-            reduction: recipe[i],
-            itemType: recipe[i + 1]
-         );
-      }
-    }
     inventoryDirty = true;
     final emptyInventoryIndex = getEmptyInventoryIndex();
     if (emptyInventoryIndex == null) {
@@ -916,7 +891,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
        }
        inventoryDirty = true;
        game.setCharacterStateChanging(this);
-       writeError('${ItemType.getName(itemType)} consumed');
+       // writeGameError('${ItemType.getName(itemType)} consumed');
        return;
     }
 
@@ -925,7 +900,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
       if (emptyBeltIndex != null) {
         inventorySwapIndexes(index, emptyBeltIndex);
       } else {
-        writeError('belt is full');
+        writeGameError(GameError.Inventory_Equip_Failed_Belt_Full);
       }
       return;
     }
@@ -935,7 +910,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
       if (emptyInventoryIndex != null) {
         inventorySwapIndexes(index, emptyInventoryIndex);
       } else {
-        writeError('inventory is full');
+        writeGameError(GameError.Inventory_Equip_Failed_Inventory_Full);
       }
       return;
     }
@@ -1776,6 +1751,12 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     }
   }
 
+  void writeApiPlayerAttributes(){
+    writeByte(ServerResponse.Api_Player);
+    writeByte(ApiPlayer.Attributes);
+    writeUInt16(_attributes);
+  }
+
   void writeApiPlayersPlayerScore(IsometricPlayer player) {
     writeUInt8(ServerResponse.Api_Players);
     writeUInt8(ApiPlayers.Score);
@@ -1811,11 +1792,6 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Respawn_Timer);
     writeUInt16(_respawnTimer);
-  }
-
-  void writeError(String error){
-    writeByte(ServerResponse.Error);
-    writeString(error);
   }
 }
 

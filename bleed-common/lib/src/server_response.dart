@@ -18,7 +18,7 @@ class ServerResponse {
   static const Editor_GameObject_Selected = 16;
   static const GameObject                 = 17;
   static const Environment                = 18;
-  static const Error                      = 19;
+  static const Game_Error                 = 19;
   static const Dark_Age                   = 20;
   static const Game_Status                = 21;
   static const Download_Scene             = 22;

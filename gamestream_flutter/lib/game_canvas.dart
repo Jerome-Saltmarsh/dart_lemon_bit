@@ -1,5 +1,4 @@
 
-import 'dart:html';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -123,18 +122,9 @@ class GameCanvas {
     GameRender.render3D();
     GameState.renderEditMode();
     GameRender.renderMouseTargetName();
-    renderPlayerRunTarget();
+    // renderPlayerRunTarget();
     renderPlayerEnergy();
     ClientState.rendersSinceUpdate.value++;
-
-    // final d = TouchController.dis;
-    // final x = GamePlayer.x + adj(TouchController.angle, d);
-    // final y = GamePlayer.y + opp(TouchController.angle, d);
-    // canvas.drawCircle(Offset(renderX(x, y, GamePlayer.z), renderY(x, y, GamePlayer.z)), 20, Engine.paint);
-
-    // if (ClientState.debugMode.value){
-    //   debugRenderIsland();
-    // }
   }
 
   static void renderPlayerEnergy() {

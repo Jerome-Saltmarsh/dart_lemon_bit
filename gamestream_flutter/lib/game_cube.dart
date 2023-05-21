@@ -11,7 +11,7 @@ class Game3D {
 
   static void renderCanvas(Canvas canvas, Size size) {
 
-    // Engine3D.renderModel(canvas, square);
+    Engine3D.renderModel(canvas, square);
 
     // Engine3D.renderTriangle(
     //     canvas: canvas,
@@ -30,32 +30,20 @@ class Model {
   /// a flat list of 4 vertex indexes
   late Uint16List polygons;
 
-  late Float32List renderPositions;
-  late Uint16List renderIndices;
-  late Int32List renderColors;
-  late Vertices renderVertexObject;
-
-  Model({required this.vertices, required this.polygons}) {
-
-    renderPositions = Float32List(vertices.length * 2);
-    final totalPolygons = polygons.length ~/ 4;
-    renderIndices = Uint16List(totalPolygons * 6);
-
-
-    renderVertexObject = Vertices.raw(
-      VertexMode.triangles,
-      renderPositions,
-      colors: renderColors,
-      indices: renderIndices,
-    );
-  }
+  Model({required this.vertices, required this.polygons});
 
   Model.square({required double size}){
     vertices = [
+      // bottom
       Vector3(0.0, 0.0, 0.0),
       Vector3(size, 0.0, 0.0),
       Vector3(size, size, 0.0),
       Vector3(0.0, size, 0.0),
+      // top
+      Vector3(0.0, 0.0, size),
+      Vector3(size, 0.0, size),
+      Vector3(size, size, size),
+      Vector3(0.0, size, size),
     ];
     polygons = Uint16List.fromList([
       0, 1, 2, 3
@@ -105,7 +93,6 @@ class Engine3D {
 
   static void renderModel(Canvas canvas, Model model){
     assert (model.polygons.length % 4 == 0);
-
     final polygons = model.polygons;
     final vertices = model.vertices;
 
@@ -115,6 +102,8 @@ class Engine3D {
       final v2 = vertices[polygons[i + 1]];
       final v3 = vertices[polygons[i + 2]];
       final v4 = vertices[polygons[i + 3]];
+
+      final v1XProjected = v1.x; // project
 
       renderTriangle(
         canvas: canvas,
@@ -137,8 +126,6 @@ class Engine3D {
         y3: v3.y,
         color: mat.Colors.red.value,
       );
-
     }
   }
-
 }

@@ -4,7 +4,7 @@ description: next gen cloud gaming
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.17.5 <3.0.0"
+  sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
   flutter:
@@ -33,11 +33,11 @@ dependencies:
   lemon_byte:
     path: C:\Users\Jerome\github\dart-lemon-byte
   lemon_engine:
-    path: C:\Users\Jerome\github\bleed\dart-lemon-engine
+    path: ..\dart-lemon-engine
   firestore_client:
-    path: C:\Users\Jerome\github\bleed\firestore-client
+    path: ..\firestore-client
   bleed_common:
-    path: C:\Users\Jerome\github\bleed\bleed-common
+    path: ..\bleed-common
 
 dev_dependencies:
   test: ^1.16.0

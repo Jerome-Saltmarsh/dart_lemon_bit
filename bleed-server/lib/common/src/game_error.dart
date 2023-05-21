@@ -1,7 +1,23 @@
 
 enum GameError {
+  Client_Request_Failed_Invalid_Arguments,
+  Unable_To_Join_Game,
+  Invalid_Weapon_Type,
+  Invalid_Power_Type,
+  Invalid_Inventory_Index,
+  Invalid_Inventory_Request_Index,
+  Respawn_Duration_Remaining,
+  Insufficient_Energy,
+  Insufficient_Ammunition,
   Insufficient_Resources,
+  Insufficient_Credits,
+  Already_Equipped,
   CharacterTypeAlreadySelected,
+  Cannot_Purchase_At_The_Moment,
+  Inventory_Equip_Failed_Belt_Full,
+  Inventory_Equip_Failed_Inventory_Full,
+  Invalid_Purchase_index,
+  Cannot_Edit_Scene,
   GameNotFound,
   PlayerNotFound,
   ClientRequestRequired,
@@ -40,4 +56,12 @@ enum GameError {
   Construct_Area_Not_Available,
   Character_Select_Not_Required,
   Choose_Card,
+  Save_Scene_Failed,
+}
+
+GameError parseIndexToGameError(int index) {
+  final values = GameError.values;
+  if (index < 0) throw Exception('$index < 0');
+  if (index >= values.length) throw Exception('$index > gameErrors.length');
+return values[index];
 }

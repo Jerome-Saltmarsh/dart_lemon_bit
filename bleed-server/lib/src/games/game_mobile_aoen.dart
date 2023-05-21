@@ -4,10 +4,12 @@ import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/classes/src/game_environment.dart';
 import 'package:bleed_server/src/classes/src/game_isometric.dart';
 import 'package:bleed_server/src/classes/src/game_time.dart';
+import 'package:bleed_server/src/classes/src/player.dart';
+import 'package:bleed_server/src/classes/src/player_aeon.dart';
 import 'package:bleed_server/src/system.dart';
 import 'package:lemon_math/library.dart';
 
-class GameMobileAeon extends GameIsometric {
+class GameMobileAeon extends GameIsometric<PlayerAeon> {
   // constants
   static final Player_Respawn_Duration  = Engine.Frames_Per_Second * (isLocalMachine ? 4 : 4);
   static const GameObject_Duration      = 500;
@@ -45,28 +47,11 @@ class GameMobileAeon extends GameIsometric {
     ItemType.GameObjects_Crate_Wooden,
   ];
 
-  static const GameObjects_Interactable = [
-    ItemType.Weapon_Ranged_Flamethrower,
-    ItemType.Weapon_Ranged_Bazooka,
-    ItemType.Weapon_Ranged_Plasma_Pistol,
-    ItemType.Weapon_Ranged_Plasma_Rifle,
-    ItemType.Weapon_Ranged_Sniper_Rifle,
-    ItemType.Weapon_Ranged_Teleport,
-    ItemType.Weapon_Ranged_Shotgun,
-    ItemType.Weapon_Melee_Crowbar,
-    ItemType.Weapon_Melee_Pickaxe,
-  ];
-
-  static const GameObjects_Collectable = [
-    ItemType.Resource_Credit,
-    ItemType.Weapon_Thrown_Grenade,
-  ];
-
   // constructor
   GameMobileAeon({
     required super.scene,
   }) : super(
-    gameType: GameType.Combat,
+    gameType: GameType.Mobile_Aeon,
     time: GameTime(enabled: true, hour: 15, minute: 30),
     environment: GameEnvironment(),
     options: GameOptions(
@@ -85,7 +70,12 @@ class GameMobileAeon extends GameIsometric {
         ItemType.Weapon_Ranged_Flamethrower,
       ],
     ),
-  );
+  ) {
+    spawnAI(
+        nodeIndex: getNodeIndexXYZ(500, 500, 24),
+        characterType: CharacterType.Zombie,
+    );
+  }
 
   @override
   void customOnPlayerRevived(IsometricPlayer player) {
@@ -135,8 +125,8 @@ class GameMobileAeon extends GameIsometric {
 
   @override
   void customOnCharacterKilled(Character target, dynamic src) {
-    if (src is IsometricPlayer) {
-      src.score += Credits_Per_Kill;
+    if (src is PlayerAeon) {
+      src.experience += 3;
     }
 
     if (target is AI && scene.spawnPoints.isNotEmpty) {
@@ -196,10 +186,6 @@ class GameMobileAeon extends GameIsometric {
         ..collectable = true
       ;
     }
-
-    // for (final spawnPoint in scene.spawnPoints) {
-    //   spawnAI(nodeIndex: spawnPoint, characterType: CharacterType.Zombie);
-    // }
   }
 
   @override
@@ -207,19 +193,19 @@ class GameMobileAeon extends GameIsometric {
     final gameObjectType = gameObject.type;
 
     if (player.weaponPrimary == gameObjectType) {
-      player.writeError('already equipped');
+      player.writeGameError(GameError.Already_Equipped);
       return;
     }
 
     if (player.weaponSecondary == gameObjectType){
-      player.writeError('already equipped');
+      player.writeGameError(GameError.Already_Equipped);
       return;
     }
 
     final itemCost = getItemCost(gameObjectType);
 
     if (player.score < itemCost) {
-      player.writeError('insufficient credits');
+      player.writeGameError(GameError.Insufficient_Credits);
       return;
     }
 
@@ -485,6 +471,34 @@ class GameMobileAeon extends GameIsometric {
     player.runSpeed = player.perkType == PerkType.Speed
         ? Player_Run_Speed_Perk
         : Player_Run_Speed;
+  }
+
+  @override
+  PlayerAeon buildPlayer() {
+    return PlayerAeon(game: this);
+  }
+
+  /// @override
+  void customOnPlayerLevelGained(PlayerAeon player) {
+    player.attributes++;
+  }
+
+  void playerAttributesAddHealth(PlayerAeon player){
+    if (player.attributes <= 0) return;
+    player.attributeHealth++;
+    player.attributes--;
+  }
+
+  void playerAttributesAddMagic(PlayerAeon player){
+    if (player.attributes <= 0) return;
+    player.attributeMagic++;
+    player.attributes--;
+  }
+
+  void playerAttributesAddDamage(PlayerAeon player){
+    player.attributeDamage++;
+    player.attributes--;
+    player.writeAttributeValues();
   }
 }
 

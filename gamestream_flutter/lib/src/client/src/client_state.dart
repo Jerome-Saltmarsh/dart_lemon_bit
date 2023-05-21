@@ -27,6 +27,7 @@ class ClientState {
   static final window_visible_light_settings  = WatchBool(false);
   static final window_visible_menu            = WatchBool(false);
   static final window_visible_player_creation = WatchBool(false);
+  static final window_visible_attributes      = WatchBool(false);
 
   static final control_visible_player_weapons = WatchBool(false);
   static final control_visible_player_power   = WatchBool(true);

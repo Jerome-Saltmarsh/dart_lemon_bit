@@ -163,5 +163,23 @@ class GameActions {
         ..setSpeed(randomAngle(), giveOrTake(3));
     }
   }
+
+  static void selectAttributeHealth() =>
+      GameNetwork.sendClientRequest(
+          ClientRequest.Select_Attribute,
+          CharacterAttribute.Health,
+      );
+
+  static void selectAttributeDamage() =>
+      GameNetwork.sendClientRequest(
+        ClientRequest.Select_Attribute,
+        CharacterAttribute.Damage,
+      );
+
+  static void selectAttributeMagic() =>
+      GameNetwork.sendClientRequest(
+        ClientRequest.Select_Attribute,
+        CharacterAttribute.Magic,
+      );
 }
 

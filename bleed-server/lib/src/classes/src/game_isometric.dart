@@ -12,13 +12,12 @@ import '../../maths/get_distance_between_v3.dart';
 import 'game_time.dart';
 import 'player.dart';
 
-abstract class GameIsometric extends Game<IsometricPlayer> {
+abstract class GameIsometric<T extends IsometricPlayer> extends Game<T> {
 
   final int gameType;
   var frame = 0;
   var _running = true;
   Scene scene;
-  final players = <IsometricPlayer> [];
   final characters = <Character>[];
   final projectiles = <Projectile>[];
   final jobs = <GameJob>[];
@@ -104,7 +103,7 @@ abstract class GameIsometric extends Game<IsometricPlayer> {
   void customOnNpcObjectivesCompleted(Character npc) {}
 
   /// @override
-  void customOnPlayerLevelGained(IsometricPlayer player) {}
+  void customOnPlayerLevelGained(T player) {}
 
   /// @override
   void customOnCollisionBetweenColliders(Collider a, Collider b) {}
@@ -525,7 +524,7 @@ abstract class GameIsometric extends Game<IsometricPlayer> {
       if (options.useWeaponCostEnergy) {
         final cost = getCharacterWeaponEnergyCost(character);
         if (character.energy < cost) {
-          character.writeError('Insufficient Energy');
+          character.writeGameError(GameError.Insufficient_Energy);
           return;
         }
         character.energy -= cost;
@@ -715,7 +714,7 @@ abstract class GameIsometric extends Game<IsometricPlayer> {
         equippedWeaponAmmoType);
 
     if (totalAmmoRemaining == 0) {
-      player.writeError('No Ammunition');
+      player.writeGameError(GameError.Insufficient_Ammunition);
       return;
     }
     var total = min(totalAmmoRemaining, player.equippedWeaponCapacity);
@@ -826,6 +825,7 @@ abstract class GameIsometric extends Game<IsometricPlayer> {
     }
     if (closestTarget != null) {
       player.lookAt(closestTarget);
+      player.face(closestTarget);
       return;
     }
 
@@ -840,6 +840,8 @@ abstract class GameIsometric extends Game<IsometricPlayer> {
     }
     if (closestTarget != null) {
       player.lookAt(closestTarget);
+      player.face(closestTarget);
+
       return;
     }
   }
@@ -3144,6 +3146,9 @@ abstract class GameIsometric extends Game<IsometricPlayer> {
   int getNodeIndexV3(Position3 value) =>
       scene.getNodeIndex(value.indexZ, value.indexRow, value.indexColumn);
 
+  int getNodeIndexXYZ(double x, double y, double z){
+      return scene.getNodeIndexXYZ(x, y, z);
+  }
 
   void customOnPlayerCollectGameObject(IsometricPlayer player,
       GameObject target) {
@@ -3236,9 +3241,7 @@ abstract class GameIsometric extends Game<IsometricPlayer> {
         ItemType.Weapon_Melee_Axe: 04,
       } [player.weaponType] ?? 0;
 
-  int getExperienceForLevel(int level) {
-    return (((level - 1) * (level - 1))) * 6;
-  }
+  int getExperienceForLevel(int level) => (((level - 1) * (level - 1))) * 6;
 
   void writePlayerScoresAll() {
     for (final player in players) {
@@ -3266,9 +3269,11 @@ abstract class GameIsometric extends Game<IsometricPlayer> {
     player.writePlayerEvent(PlayerEvent.Player_Deactivated);
   }
 
+  T buildPlayer();
+
   @override
   Player createPlayer() {
-    final player = IsometricPlayer(game: this);
+    final player = buildPlayer();
     player.sceneDownloaded = false;
     players.add(player);
     characters.add(player);
@@ -3281,4 +3286,5 @@ abstract class GameIsometric extends Game<IsometricPlayer> {
   void customPlayerWrite(IsometricPlayer player) {
     player.writePlayerGame();
   }
+
 }

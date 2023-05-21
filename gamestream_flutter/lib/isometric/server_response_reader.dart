@@ -1,6 +1,7 @@
 import 'package:archive/archive.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_scene.dart';
 import 'package:gamestream_flutter/library.dart';
+import 'package:gamestream_flutter/structure/business/handle_server_response_error.dart';
 import 'package:lemon_byte/byte_reader.dart';
 
 final serverResponseReader = ServerResponseReader();
@@ -14,6 +15,7 @@ class ServerResponseReader with ByteReader {
   var previousServerResponse = -1;
 
   void read(Uint8List values) {
+    assert (values.isNotEmpty);
     updateFrame.value++;
     index = 0;
     ServerState.totalCharacters = 0;
@@ -86,9 +88,6 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Editor_GameObject_Selected:
           readEditorGameObjectSelected();
           break;
-        case ServerResponse.Error:
-          readServerResponseError();
-          break;
         case ServerResponse.Info:
           readServerResponseInfo();
           break;
@@ -115,6 +114,11 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.GameObject_Deleted:
           ServerState.removeGameObjectById(readUInt16());
           break;
+        case ServerResponse.Game_Error:
+          final errorTypeIndex = readByte();
+          final errorType = parseIndexToGameError(errorTypeIndex);
+          handleServerResponseGameError(errorType);
+          break;
         default:
           print("read error; index: $index, previous-server-response: $previousServerResponse");
           print(values);
@@ -132,11 +136,6 @@ class ServerResponseReader with ByteReader {
       final value = readUInt16();
       map[key] = value;
     }
-  }
-
-  void readServerResponseError() {
-    ClientActions.playAudioError();
-    ServerState.setMessage(readString());
   }
 
   void readServerResponseInfo() {
@@ -235,6 +234,9 @@ class ServerResponseReader with ByteReader {
       case ApiPlayer.Level:
         ServerState.playerLevel.value = readUInt16();
         break;
+      case ApiPlayer.Attributes:
+        ServerState.playerAttributes.value = readUInt16();
+        break;
       case ApiPlayer.Credits:
         ServerState.playerCredits.value = readUInt16();
         break;
@@ -332,6 +334,11 @@ class ServerResponseReader with ByteReader {
         break;
       case ApiPlayer.Active:
         GamePlayer.active.value = readBool();
+        break;
+      case ApiPlayer.Attribute_Values:
+        GamePlayer.attributeHealth.value = readUInt16();
+        GamePlayer.attributeDamage.value = readUInt16();
+        GamePlayer.attributeMagic.value = readUInt16();
         break;
       default:
         throw Exception("Cannot parse apiPlayer $apiPlayer");

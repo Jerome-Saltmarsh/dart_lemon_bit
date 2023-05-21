@@ -4,6 +4,7 @@ import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/classes/src/game_environment.dart';
 import 'package:bleed_server/src/classes/src/game_isometric.dart';
 import 'package:bleed_server/src/classes/src/game_time.dart';
+import 'package:bleed_server/src/classes/src/player.dart';
 import 'package:bleed_server/src/system.dart';
 import 'package:lemon_math/library.dart';
 
@@ -292,19 +293,19 @@ class GameCombat extends GameIsometric {
     final gameObjectType = gameObject.type;
 
     if (player.weaponPrimary == gameObjectType) {
-      player.writeError('already equipped');
+      player.writeGameError(GameError.Already_Equipped);
       return;
     }
 
     if (player.weaponSecondary == gameObjectType){
-      player.writeError('already equipped');
+      player.writeGameError(GameError.Already_Equipped);
       return;
     }
 
     final itemCost = getItemCost(gameObjectType);
 
      if (player.score < itemCost) {
-       player.writeError('insufficient credits');
+       player.writeGameError(GameError.Already_Equipped);
        return;
      }
 
@@ -575,6 +576,11 @@ class GameCombat extends GameIsometric {
   @override
   void customPlayerWrite(IsometricPlayer player) {
     player.writePlayerGame();
+  }
+
+  @override
+  IsometricPlayer buildPlayer() {
+    return IsometricPlayer(game: this);
   }
 }
 

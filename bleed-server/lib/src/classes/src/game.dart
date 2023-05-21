@@ -3,7 +3,7 @@ import 'package:bleed_server/src/classes/src/player.dart';
 
 abstract class Game <T extends Player> {
   var playerId = 0;
-  List<T> get players;
+  final List<T> players = [];
 
   void update();
 

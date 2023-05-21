@@ -31,6 +31,7 @@ class ClientRequest {
   static const Select_PerkType          = 30;
   static const Suicide                  = 31;
   static const Attack                   = 32;
+  static const Select_Attribute         = 33;
 }
 
 

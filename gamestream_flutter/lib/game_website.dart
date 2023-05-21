@@ -1,11 +1,12 @@
 // import 'dart:ui';
-import 'dart:ui' as ui;
 import 'dart:ui';
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/ui/views.dart';
+import 'package:gamestream_flutter/website/widgets/game_type_column.dart';
+import 'package:gamestream_flutter/website/widgets/region_column.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -205,9 +206,9 @@ class GameWebsite {
             children: [
               buildLogoGameStream(),
               height16,
-              buildColumnRegions(),
-              // height32,
-              // buildRowSocialLinks()
+              // buildColumnRegions(),
+              SelectRegionColumn(),
+              GameTypeColumn(),
             ],
           ),
         ),

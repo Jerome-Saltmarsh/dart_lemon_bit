@@ -1,16 +1,18 @@
+import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/classes/src/game_isometric.dart';
 import 'package:bleed_server/src/classes/src/player.dart';
+import 'package:bleed_server/src/classes/src/player_aeon.dart';
 import 'package:bleed_server/src/classes/src/scene_writer.dart';
 import 'package:bleed_server/src/games/game_editor.dart';
+import 'package:bleed_server/src/games/game_fight2d.dart';
 import 'package:bleed_server/src/games/game_mobile_aoen.dart';
-import 'package:bleed_server/src/games/game_practice.dart';
-import 'package:bleed_server/src/games/game_survival.dart';
 import 'package:bleed_server/src/games/game_combat.dart';
 import 'package:bleed_server/src/scene_generator.dart';
 import 'package:bleed_server/src/system.dart';
+import 'package:lemon_byte/byte_writer.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import '../../functions/generateName.dart';
@@ -22,7 +24,9 @@ class Connection with ByteReader {
   final started = DateTime.now();
   late WebSocketChannel webSocket;
   late WebSocketSink sink;
+  late StreamSubscription subscription;
   Player? _player;
+  final errorWriter = ByteWriter();
 
   Function? onDone;
 
@@ -34,7 +38,7 @@ class Connection with ByteReader {
       onDone?.call();
     });
 
-    webSocket.stream.listen(onData, onError: onStreamError);
+    subscription = webSocket.stream.listen(onData, onError: onStreamError);
   }
 
   void onStreamError(Object error, StackTrace stackTrace){
@@ -53,8 +57,11 @@ class Connection with ByteReader {
     sink.add(player.compile());
   }
 
-  void error(GameError error, {String message = ""}) {
-    reply('Server Error ${error.name}: $message');
+  void sendGameError(GameError error) {
+    errorWriter.writeByte(ServerResponse.Game_Error);
+    errorWriter.writeByte(error.index);
+    final compiled = errorWriter.compile();
+    sink.add(compiled);
   }
 
   void onData(dynamic args) {
@@ -70,8 +77,8 @@ class Connection with ByteReader {
               Uint8List.fromList(args.sublist(1, args.length)),
             );
             joinGameEditorScene(scene);
-          } catch (error){
-            errorInvalidArg('Failed to load scene');
+          } catch (err){
+            sendGameError(GameError.Save_Scene_Failed);
           }
           return;
         case ClientRequest.Unequip:
@@ -89,17 +96,17 @@ class Connection with ByteReader {
 
   void onDataStringArray(List<String> arguments) {
     if (arguments.isEmpty) {
-      error(GameError.ClientRequestArgumentsEmpty);
+      sendGameError(GameError.ClientRequestArgumentsEmpty);
       return;
     }
 
     final clientRequestInt = parse(arguments[0]);
 
     if (clientRequestInt == null)
-      return error(GameError.ClientRequestRequired);
+      return sendGameError(GameError.ClientRequestRequired);
 
     if (clientRequestInt < 0)
-      return error(GameError.UnrecognizedClientRequest);
+      return sendGameError(GameError.UnrecognizedClientRequest);
 
     final clientRequest = clientRequestInt;
 
@@ -149,7 +156,6 @@ class Connection with ByteReader {
         final itemGroupIndex = parseArg1(arguments);
         if (itemGroupIndex == null) return;
         if (!isValidIndex(itemGroupIndex, ItemGroup.values)){
-          errorInvalidArg('invalid item group index: $itemGroupIndex');
           return;
         }
         // game.playerEquipNextItemGroup(player, ItemGroup.values[itemGroupIndex]);
@@ -168,7 +174,7 @@ class Connection with ByteReader {
         final value = parseArg1(arguments);
         if (value == null) return;
         if (!ItemType.isTypeWeapon(value)) {
-          player.writeError('invalid weapon type');
+          player.writeGameError(GameError.Invalid_Weapon_Type);
           return;
         }
         player.weaponPrimary = value;
@@ -181,7 +187,7 @@ class Connection with ByteReader {
         final value = parseArg1(arguments);
         if (value == null) return;
         if (!ItemType.isTypeWeapon(value)) {
-          player.writeError('invalid weapon type');
+          player.writeGameError(GameError.Invalid_Weapon_Type);
           return;
         }
         player.weaponSecondary = value;
@@ -194,7 +200,7 @@ class Connection with ByteReader {
         final value = parseArg1(arguments);
         if (value == null) return;
         if (!PowerType.values.contains(value)) {
-          player.writeError('invalid power type: $value');
+          player.writeGameError(GameError.Invalid_Power_Type);
           return;
         }
         player.powerType = value;
@@ -212,6 +218,29 @@ class Connection with ByteReader {
         // );
         break;
 
+      case ClientRequest.Select_Attribute:
+        if (game is! GameMobileAeon) return;
+        if (player is! PlayerAeon) return;
+        final attributeId = parseArg1(arguments);
+        if (attributeId == null) {
+          sendGameError(GameError.Client_Request_Failed_Invalid_Arguments);
+          return;
+        }
+
+        switch (attributeId) {
+          case CharacterAttribute.Magic:
+            game.playerAttributesAddMagic(player);
+            break;
+          case CharacterAttribute.Damage:
+            game.playerAttributesAddDamage(player);
+            break;
+          case CharacterAttribute.Health:
+            game.playerAttributesAddHealth(player);
+            break;
+        }
+
+        break;
+
       case ClientRequest.Suicide:
         if (game is! GameIsometric) return;
         if (player is! IsometricPlayer) return;
@@ -221,8 +250,11 @@ class Connection with ByteReader {
       case ClientRequest.Weather_Set_Rain:
         if (!isLocalMachine && game is! GameEditor) return;
         final rainType = parse(arguments[1]);
-        if (rainType == null || !isValidIndex(rainType, RainType.values))
-           return errorInvalidArg('invalid rain index: $rainType');
+        if (rainType == null || !isValidIndex(rainType, RainType.values)) {
+          sendGameError(GameError.Client_Request_Failed_Invalid_Arguments);
+          return;
+        }
+
         if (game is! GameIsometric) return;
         game.environment.rainType = rainType;
         break;
@@ -236,8 +268,10 @@ class Connection with ByteReader {
       case ClientRequest.Weather_Set_Wind:
         if (!isLocalMachine && game is! GameEditor) return;
         final index = parse(arguments[1]);
-        if (index == null || !isValidIndex(index, WindType.values))
-          return errorInvalidArg('invalid rain index: $index');
+        if (index == null || !isValidIndex(index, WindType.values)) {
+          sendGameError(GameError.Client_Request_Failed_Invalid_Arguments);
+          return;
+        }
         if (game is! GameIsometric) return;
         game.environment.windType = index;
         break;
@@ -245,8 +279,10 @@ class Connection with ByteReader {
       case ClientRequest.Weather_Set_Lightning:
         if (!isLocalMachine && game is! GameEditor) return;
         final index = parse(arguments[1]);
-        if (index == null || !isValidIndex(index, LightningType.values))
-          return errorInvalidArg('invalid lightning index: $index');
+        if (index == null || !isValidIndex(index, LightningType.values)) {
+          sendGameError(GameError.Client_Request_Failed_Invalid_Arguments);
+          return;
+        }
         if (game is! GameIsometric) return;
         game.environment.lightningType = LightningType.values[index];
 
@@ -259,11 +295,11 @@ class Connection with ByteReader {
       case ClientRequest.Revive:
         if (player is! IsometricPlayer) return;
         if (player.aliveAndActive) {
-          error(GameError.PlayerStillAlive);
+          sendGameError(GameError.PlayerStillAlive);
           return;
         }
         if (player.respawnTimer > 0) {
-          player.writeError('respawn timer remaining');
+          player.writeGameError(GameError.Respawn_Duration_Remaining);
           return;
         }
         if (game is! GameIsometric) return;
@@ -296,13 +332,15 @@ class Connection with ByteReader {
       case ClientRequest.Teleport_Scene:
         final sceneIndex = parse(arguments[1]);
 
-        if (sceneIndex == null)
-          return errorInvalidArg('scene index is null');
+        if (sceneIndex == null) {
+          sendGameError(GameError.Client_Request_Failed_Invalid_Arguments);
+          return;
+        }
 
-        if (!isValidIndex(sceneIndex, teleportScenes))
-          return errorInvalidArg("invalid scene index $sceneIndex");
-
-        // final scene = teleportScenes[sceneIndex];
+        if (!isValidIndex(sceneIndex, teleportScenes)) {
+          sendGameError(GameError.Client_Request_Failed_Invalid_Arguments);
+          return;
+        }
         break;
 
       case ClientRequest.Editor_Load_Game:
@@ -331,7 +369,8 @@ class Connection with ByteReader {
 
   bool insufficientArgs(List args, int min){
      if (args.length < min) {
-       _player?.writeError('insufficient args');
+       // _player?.writeGameError(GameError.Invalid_Client_Request_Insufficient_Arguments);
+       sendGameError(GameError.Client_Request_Failed_Invalid_Arguments);
        return true;
      }
      return false;
@@ -404,7 +443,8 @@ class Connection with ByteReader {
         player.inventoryEquip(index);
         break;
       default:
-        return errorInvalidArg('unrecognized inventory request $inventoryRequest');
+        sendGameError(GameError.Invalid_Inventory_Request_Index);
+        return;
     }
   }
 
@@ -430,7 +470,7 @@ class Connection with ByteReader {
         && !isLocalMachine
         && game is GameEditor == false
     ) {
-      player.writeError('cannot edit scene');
+      player.writeGameError(GameError.Cannot_Edit_Scene);
       return;
     }
 
@@ -522,11 +562,10 @@ class Connection with ByteReader {
       case EditRequest.Save:
         if (game is! GameIsometric) return;
         if (game.scene.name.isEmpty){
-          player.writeError('cannot save because scene name is empty');
+          player.writeGameError(GameError.Save_Scene_Failed);
           return;
         }
         game.saveSceneToFileBytes();
-        player.writeError('scene saved: ${game.scene.name}');
         break;
 
       case EditRequest.Modify_Canvas_Size:
@@ -808,14 +847,13 @@ class Connection with ByteReader {
     joinGame(GameEditor(scene: scene));
   }
 
-  Future joinGamePractice() async {
-    for (final game in engine.games){
-       if (game is GamePractice){
-          if (game.players.length < game.configMaxPlayers)
-            return joinGame(game);
-       }
+  Future joinGameFight2D() async {
+    for (final game in engine.games) {
+      if (game is GameFight2D) {
+        return joinGame(game);
+      }
     }
-    joinGame(GamePractice(scene: engine.scenes.suburbs_01));
+    joinGame(GameFight2D());
   }
 
   Future joinGameCombat() async {
@@ -838,16 +876,6 @@ class Connection with ByteReader {
     joinGame(GameMobileAeon(scene: engine.scenes.town));
   }
 
-  Future joinGameSurvival() async {
-    for (final game in engine.games){
-      if (game is GameSurvival){
-        if (game.players.length >= 10) continue;
-        return joinGame(game);
-      }
-    }
-    joinGame(GameSurvival(scene: engine.scenes.suburbs_01));
-  }
-
   void joinGame(Game game){
     final player = game.createPlayer();
     _player = _player = player;
@@ -855,7 +883,7 @@ class Connection with ByteReader {
   }
 
   void errorInsufficientResources(){
-    error(GameError.Insufficient_Resources);
+    sendGameError(GameError.Insufficient_Resources);
   }
 
   void errorArgsExpected(int expected, List arguments) {
@@ -877,20 +905,16 @@ class Connection with ByteReader {
     errorInvalidArg('connection.parse($source)');
   }
 
-  void errorInvalidArg(String message) {
-    _player?.writeError(message);
-  }
-
   void errorPlayerNotFound() {
-    error(GameError.PlayerNotFound);
+    sendGameError(GameError.PlayerNotFound);
   }
 
   void errorAccountRequired() {
-    error(GameError.Account_Required);
+    sendGameError(GameError.Account_Required);
   }
 
   void errorPlayerDead() {
-    error(GameError.PlayerDead);
+    sendGameError(GameError.PlayerDead);
   }
 
   void handleClientRequestJoin(List<String> arguments,) {
@@ -899,12 +923,6 @@ class Connection with ByteReader {
     switch (gameType) {
       case GameType.Editor:
         joinGameEditor();
-        break;
-      case GameType.Practice:
-        joinGamePractice();
-        break;
-      case GameType.Survival:
-        joinGameSurvival();
         break;
       case GameType.Combat:
         joinGameCombat();
@@ -915,9 +933,18 @@ class Connection with ByteReader {
       case GameType.Rock_Paper_Scissors:
         joinGame(engine.getGameRockPaperScissors());
         break;
+      // case GameType.Fight2D:
+      //   joinGameFight2D();
+      //   break;
       default:
-        return errorInvalidArg('invalid game type index $gameType');
+        sendGameError(GameError.Unable_To_Join_Game);
+        cancelSubscription();
+        return;
     }
+  }
+
+  void cancelSubscription() {
+    subscription.cancel();
   }
 
   void handleClientRequestTeleport(IsometricPlayer player) {
@@ -955,5 +982,9 @@ class Connection with ByteReader {
        return null;
     }
     return value;
+  }
+
+  void errorInvalidArg(String value){
+    sendGameError(GameError.Client_Request_Failed_Invalid_Arguments);
   }
 }

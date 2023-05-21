@@ -47,11 +47,7 @@ class GameNetwork {
 
   static void connectToGameEditor() => connectToGame(GameType.Editor);
 
-  static void connectToGameSurvival() => connectToGame(GameType.Survival);
-
   static void connectToGameCombat() => connectToGame(GameType.Combat);
-
-  static void connectToGamePractice() => connectToGame(GameType.Practice);
 
   static void connectToGameRockPaperScissors() => connectToGame(GameType.Rock_Paper_Scissors);
 

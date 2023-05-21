@@ -13,6 +13,9 @@ ctrl + shift + e    : view recent changes
 [ ] remove regions
 [ ] tutorial keys
 
+12.05.2023
+[x] minimap for mobile version
+
 10.05.2023
 [x] fixed mobile look angle
 [x] fixed editor

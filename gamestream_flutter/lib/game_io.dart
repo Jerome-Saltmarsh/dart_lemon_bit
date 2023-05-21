@@ -1,6 +1,4 @@
 
-import 'dart:html';
-
 import 'package:flutter/gestures.dart';
 
 import 'library.dart';
@@ -193,29 +191,29 @@ class GameIO {
 
   static int getDirectionKeyboard() {
 
-    if (Engine.keyPressed(KeyCode.W) || Engine.keyPressed(KeyCode.Arrow_Up)) {
-      if (Engine.keyPressed(KeyCode.D) || Engine.keyPressed(KeyCode.Arrow_Right)) {
+    if (Engine.keyPressed(KeyCode.W)) {
+      if (Engine.keyPressed(KeyCode.D)) {
         return Direction.East;
       }
-      if (Engine.keyPressed(KeyCode.A) || Engine.keyPressed(KeyCode.Arrow_Left)) {
+      if (Engine.keyPressed(KeyCode.A)) {
         return Direction.North;
       }
       return Direction.North_East;
     }
 
-    if (Engine.keyPressed(KeyCode.S) || Engine.keyPressed(KeyCode.Arrow_Down)) {
-      if (Engine.keyPressed(KeyCode.D) || Engine.keyPressed(KeyCode.Arrow_Right)) {
+    if (Engine.keyPressed(KeyCode.S)) {
+      if (Engine.keyPressed(KeyCode.D)) {
         return Direction.South;
       }
-      if (Engine.keyPressed(KeyCode.A) || Engine.keyPressed(KeyCode.Arrow_Left)) {
+      if (Engine.keyPressed(KeyCode.A)) {
         return Direction.West;
       }
       return Direction.South_West;
     }
-    if (Engine.keyPressed(KeyCode.A) || Engine.keyPressed(KeyCode.Arrow_Left)) {
+    if (Engine.keyPressed(KeyCode.A)) {
       return Direction.North_West;
     }
-    if (Engine.keyPressed(KeyCode.D) || Engine.keyPressed(KeyCode.Arrow_Right)) {
+    if (Engine.keyPressed(KeyCode.D)) {
       return Direction.South_East;
     }
     return Direction.None;

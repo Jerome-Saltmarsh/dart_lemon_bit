@@ -33,4 +33,6 @@ class ApiPlayer {
   static const PerkType               = 31;
   static const Respawn_Timer          = 32;
   static const Active                 = 33;
+  static const Attributes             = 34;
+  static const Attribute_Values       = 35;
 }

@@ -10,11 +10,14 @@ import 'package:gamestream_flutter/language_utils.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:golden_ratio/constants.dart';
 
+import 'widgets/animated_widget.dart';
+
+
+const nothing = SizedBox();
 
 class GameUI {
   static const Icon_Scale = 1.5;
   static final messageBoxVisible = Watch(false, clamp: (bool value) {
-    if (ServerState.gameType.value == GameType.Practice) return false;
     return value;
   }, onChanged: onVisibilityChangedMessageBox);
   static final textEditingControllerMessage = TextEditingController();
@@ -61,28 +64,183 @@ class GameUI {
           ),
           if (inputMode == InputMode.Keyboard)
           Positioned(
-            child: buildMapCircle(),
+            child: buildMapCircle(size: 200),
             bottom: GameStyle.Default_Padding,
             right: GameStyle.Default_Padding,
           ),
+          if (inputMode == InputMode.Touch)
+            Positioned(
+              child: buildMapCircle(size: 125),
+              top: 6,
+              left: 6,
+            ),
+          if (inputMode == InputMode.Touch)
+            Positioned(
+              top: 6,
+              left: 140,
+              child: Row(
+                children: [
+                  watch(ServerState.playerLevel, (int level){
+                    return Container(
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                      ),
+                      child: text(level),
+                    );
+                  }),
+                  width4,
+                  watch(ServerState.playerExperiencePercentage, (double experience){
+                    const width = 100.0;
+                    const height = 10.0;
+                    return Container(
+                      color: Colors.white70,
+                      width: width,
+                      height: height,
+                      padding: const EdgeInsets.all(2),
+                      alignment: Alignment.centerLeft,
+                      child: Container(
+                        color: Colors.yellow,
+                        width: width * experience,
+                        height: height,
+                      ),
+                    );
+                  }),
+                  width4,
+                  watch(ServerState.playerAttributes, (int attributes){
+                     // if (attributes <= 0) return GameStyle.Null;
+                     return onPressed(
+                         action: ClientState.window_visible_attributes.toggle,
+                         child: text('Attributes: $attributes'),
+                     );
+                  }),
+                ],
+              ),
+            ),
           WatchBuilder(ClientState.edit, buildPlayMode),
           WatchBuilder(GameIO.inputMode, buildStackInputMode),
           buildWatchBool(ClientState.debugMode, GameDebug.buildStackDebug),
           buildPositionedMessageStatus(),
           buildWatchGameStatus(),
+          buildWatchBool(ClientState.window_visible_attributes, () =>
+              Positioned(
+                top: GameStyle.Default_Padding,
+                left: GameStyle.Default_Padding,
+                child: buildWindowAttributes(),
+              )
+          ),
           buildWatchBool(ClientState.window_visible_light_settings,
               buildWindowLightSettings),
           Positioned(top: 16, right: 16, child: buildRowMainMenu()),
+
+
         ]);
       });
 
+  static Container buildWindowAttributes() => Container(
+                width: 300,
+                height: 300 * goldenRatio_0618,
+                padding: const EdgeInsets.all(8),
+                alignment: Alignment.center,
+                color: GameColors.brownLight,
+                child: watch(ServerState.playerAttributes, (int attributes){
+                  final attributesRemaining = attributes > 0;
+                  final boxColor = attributesRemaining ? Colors.green : Colors.white12;
+                  const boxWidth = 70.0;
+                  return Column(
+                    children: [
+                      Container(
+                        color: Colors.black12,
+                        padding: const EdgeInsets.all(4.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(child: text("ATTRIBUTES", color: Colors.white70)),
+                            if (!attributesRemaining)
+                              onPressed(
+                                action: ClientState.window_visible_attributes.setFalse,
+                                child: Animated(
+                                  duration: Duration(milliseconds: 500),
+                                  builder: (double value) =>
+                                      text("close", color: Colors.white.withOpacity(value)),
+                                ),
+                              ),
+                            if (attributesRemaining)
+                            onPressed(
+                                action: ClientState.window_visible_attributes.setFalse,
+                                child: text('close')
+                            ),
+                          ],
+                        ),
+                      ),
+                      height16,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          onPressed(
+                            action: GameActions.selectAttributeHealth,
+                            child: Container(
+                              color: boxColor,
+                              padding: padding4,
+                              width: boxWidth,
+                              child: Column(
+                                children: [
+                                  text("HEALTH"),
+                                  watch(GamePlayer.attributeHealth, text),
+                                ],
+                              ),
+                            ),
+                          ),
+                          onPressed(
+                            action: GameActions.selectAttributeDamage,
+                            child: Container(
+                              width: boxWidth,
+                              color: boxColor,
+                              padding: padding4,
+                              child: Column(
+                                children: [
+                                  text("DAMAGE"),
+                                  watch(GamePlayer.attributeDamage, text),
+                                ],
+                              ),
+                            ),
+                          ),
+                          onPressed(
+                            action: GameActions.selectAttributeMagic,
+                            child: Container(
+                              width: boxWidth,
+                              color: boxColor,
+                              padding: padding4,
+                              child: Column(
+                                children: [
+                                  text("MAGIC"),
+                                  watch(GamePlayer.attributeMagic, text),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      if (attributesRemaining)
+                        Container(
+                          margin: const EdgeInsets.only(top: 32),
+                          child: Animated(
+                            duration: Duration(milliseconds: 500),
+                            builder: (double value) =>
+                                text("Select an attribute to improve", color: GameColors.orange.withOpacity(value * 0.5)),
+                          ),
+                        )
+                    ],
+                  );
+                }),
+              );
 
 
-  static Widget buildMapCircle() {
+  static Widget buildMapCircle({required double size}) {
     return IgnorePointer(
       child: Container(
-            width: 203,
-            height: 203,
+            width: size + 3,
+            height: size + 3,
             alignment: Alignment.center,
             decoration: BoxDecoration(
                 shape: BoxShape.circle,
@@ -94,12 +252,10 @@ class GameUI {
                   alignment: Alignment.topLeft,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    // border: Border.all(color: Colors.black38, width: 3),
-                    // color: Colors.black12
                   ),
-                  width: 200,
-                  height: 200,
-                  child: buildGeneratedMiniMap()),
+                  width: size,
+                  height: size,
+                  child: buildGeneratedMiniMap(translate: size / 4.0)),
             ),
           ),
     );
@@ -417,7 +573,7 @@ class GameUI {
   }
 
 
-  static Widget buildGeneratedMiniMap(){
+  static Widget buildGeneratedMiniMap({required double translate}){
     return watch(ClientState.sceneChanged, (_){
         return Engine.buildCanvas(paint: (Canvas canvas, Size size){
           const scale = 2.0;
@@ -427,7 +583,6 @@ class GameUI {
           const ratio = 2 / 48.0;
           final targetX = GameCamera.chaseTarget.renderX * ratio;
           final targetY = GameCamera.chaseTarget.renderY * ratio;
-          const translate = 50;
           final cameraX = targetX - (screenCenterX / scale) - translate;
           final cameraY = targetY - (screenCenterY / scale) - translate;
           canvas.translate(-cameraX, -cameraY);

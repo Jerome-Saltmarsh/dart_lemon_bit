@@ -56,4 +56,9 @@ class GameEditor extends GameIsometric {
      }
      return true;
   }
+
+  @override
+  IsometricPlayer buildPlayer() {
+    return IsometricPlayer(game: this);
+  }
 }
