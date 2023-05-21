@@ -14,10 +14,7 @@ abstract class Player with ByteWriter {
   var screenBottom = 0.0;
   var inputMode = InputMode.Keyboard;
 
-  // void writeGameError(GameError gameError){
-  //   writeByte(ServerResponse.Game_Error);
-  //   writeByte(gameError.index);
-  // }
+  void writePlayerGame();
 }
 
 extension PlayerExtension on Player {

@@ -574,11 +574,6 @@ class GameCombat extends GameIsometric {
   }
 
   @override
-  void customPlayerWrite(IsometricPlayer player) {
-    player.writePlayerGame();
-  }
-
-  @override
   IsometricPlayer buildPlayer() {
     return IsometricPlayer(game: this);
   }

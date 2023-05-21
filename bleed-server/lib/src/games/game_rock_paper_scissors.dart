@@ -117,26 +117,6 @@ class GameRockPaperScissors extends Game<PlayerScissorsPaperRock> {
   }
 
   @override
-  void customPlayerWrite(PlayerScissorsPaperRock player) {
-    player.writeByte(ServerResponse.Api_SPR);
-    player.writeByte(ApiSPR.Player_Positions);
-    player.writeByte(player.team);
-    player.writeInt16(player.x.toInt());
-    player.writeInt16(player.y.toInt());
-    player.writeUInt16(players.length);
-
-
-
-    for (final otherPlayer in players) {
-      player.writeByte(otherPlayer.team);
-      player.writeInt16(otherPlayer.x.toInt());
-      player.writeInt16(otherPlayer.y.toInt());
-      player.writeInt16(otherPlayer.targetX.toInt());
-      player.writeInt16(otherPlayer.targetY.toInt());
-    }
-  }
-
-  @override
   void removePlayer(PlayerScissorsPaperRock player) {
     players.remove(player);
   }

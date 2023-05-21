@@ -10,9 +10,6 @@ abstract class Game <T extends Player> {
 
   void update();
 
-  /// @override
-  void customPlayerWrite(T player);
-
   T createPlayer();
 
   void onPlayerJoined(T t) {
@@ -31,7 +28,7 @@ abstract class Game <T extends Player> {
   void writePlayerResponses(){
     for (var i = 0; i < players.length; i++) {
       final player = players[i];
-      customPlayerWrite(player);
+      player.writePlayerGame();
       player.writeByte(ServerResponse.End);
       player.sendBufferToClient();
     }

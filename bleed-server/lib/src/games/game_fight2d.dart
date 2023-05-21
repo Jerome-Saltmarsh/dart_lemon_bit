@@ -13,11 +13,6 @@ class GameFight2D extends Game<GameFight2DPlayer> {
   }
 
   @override
-  void customPlayerWrite(GameFight2DPlayer player) {
-    // TODO: implement customPlayerWrite
-  }
-
-  @override
   void onPlayerUpdateRequestReceived({
     required GameFight2DPlayer player,
     required int direction,
@@ -44,4 +39,9 @@ class GameFight2DPlayer extends Player {
   @override
   // TODO: implement game
   Game<Player> get game => throw UnimplementedError();
+
+  @override
+  void writePlayerGame() {
+    // TODO: implement writePlayerGame
+  }
 }
