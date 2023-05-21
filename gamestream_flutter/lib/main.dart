@@ -5,7 +5,7 @@ import 'library.dart';
 void main() {
   Engine.run(
     title: "GAMESTREAM ONLINE",
-    init: GameSystem.init,
+    init: gsEngine.init,
     buildUI: GameWebsite.buildUI,
     buildLoadingScreen: GameWebsite.buildLoadingPage,
     themeData: ThemeData(fontFamily: 'VT323-Regular'),

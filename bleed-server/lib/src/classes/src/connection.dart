@@ -922,7 +922,13 @@ class Connection with ByteReader {
 
   void handleClientRequestJoin(List<String> arguments,) {
     if (arguments.length < 2) return errorInsufficientArgs(2, arguments);
-    final gameType = parse(arguments[1]);
+    final gameTypeIndex = parse(arguments[1]);
+    if (gameTypeIndex == null || !isValidIndex(gameTypeIndex, GameType.values)){
+      errorInvalidArg('');
+      return;
+    }
+    final gameType = GameType.values[gameTypeIndex];
+
     switch (gameType) {
       case GameType.Editor:
         joinGameEditor();

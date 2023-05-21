@@ -69,7 +69,7 @@ class GameRockPaperScissors extends Game<PlayerScissorsPaperRock> {
   PlayerScissorsPaperRock createPlayer() {
     final instance = PlayerScissorsPaperRock(this);
     instance.writeByte(ServerResponse.Game_Type);
-    instance.writeByte(GameType.Rock_Paper_Scissors);
+    instance.writeByte(GameType.Rock_Paper_Scissors.index);
     respawn(instance);
     return instance;
   }

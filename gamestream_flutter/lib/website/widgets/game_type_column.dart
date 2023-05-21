@@ -16,7 +16,7 @@ class GameTypeColumn extends StatelessWidget {
         Column(children: gameTypes
           .map((gameType) => onPressed(
             action: () => GameNetwork.connectToGame(gameType),
-            child: text(GameType.getName(gameType), size: 20))
+            child: text(gameType.name, size: 20))
         )
           .toList()
         )

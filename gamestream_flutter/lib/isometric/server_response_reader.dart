@@ -59,7 +59,12 @@ class ServerResponseReader with ByteReader {
           readGameTime();
           break;
         case ServerResponse.Game_Type:
-          gsEngine.gameType.value = readByte();
+          final index = readByte();
+          if (index >= GameType.values.length){
+            throw Exception('invalid game type index $index');
+          }
+          final gameType = GameType.values[index];
+          gsEngine.gameType.value = gameType;
           break;
         case ServerResponse.Environment:
           readServerResponseEnvironment();

@@ -51,8 +51,6 @@ class GameCombat extends Game {
 
   @override
   void onActivated() {
-    // ClientState.edit.value = value == GameType.Editor;
-
     ClientState.window_visible_player_creation.value = false;
     ClientState.control_visible_respawn_timer.value = false;
     GameAudio.musicStop();

@@ -1084,17 +1084,12 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   void downloadScene(){
     writeGrid();
     writeGameProperties();
-    writeGameType(game.gameType);
+    writeGameType();
     writeWeather();
     writeGameObjects();
     game.customDownloadScene(this);
     writePlayerEvent(PlayerEvent.Scene_Changed);
     sceneDownloaded = true;
-  }
-
-  void writeGameType(int value){
-    writeByte(ServerResponse.Game_Type);
-    writeByte(value);
   }
 
   void writePlayerSpawned(){

@@ -18,6 +18,7 @@ class GameNetwork {
 
   // FUNCTIONS
   static void connectToRegion(ConnectionRegion region, String message) {
+    print("connectToRegion(${region.name}");
     if (region == ConnectionRegion.LocalHost) {
       connectToServer(GameNetworkConfig.wsLocalHost, message);
       return;
@@ -53,8 +54,8 @@ class GameNetwork {
 
   static void connectToGameAeon() => connectToGame(GameType.Mobile_Aeon);
 
-  static void connectToGame(int gameType, [String message = ""]) =>
-      connectToRegion(GameWebsite.region.value, '${gameType} $message');
+  static void connectToGame(GameType gameType, [String message = ""]) =>
+      connectToRegion(GameWebsite.region.value, '${gameType.index} $message');
 
   static Future sendClientRequestUpdate() async {
     applyKeyboardInputToUpdateBuffer();
@@ -199,18 +200,16 @@ class GameNetwork {
         Engine.cameraX = 0;
         Engine.cameraY = 0;
         Engine.zoom = 1.0;
-        Engine.onUpdate = null;
+        // Engine.onUpdate = null;
         Engine.drawCanvasAfterUpdate = true;
         Engine.cursorType.value = CursorType.Basic;
         Engine.drawCanvasAfterUpdate = true;
-        // Engine.onDrawCanvas = GameWebsite.renderCanvas;
-        Engine.onDrawCanvas = null;
-        Engine.onUpdate = GameWebsite.update;
+        // Engine.onDrawCanvas = null;
+        // Engine.onUpdate = GameWebsite.update;
         Engine.fullScreenExit();
         GameState.clear();
         ServerState.clean();
-        // TODO illegal server state assignment
-        gsEngine.gameType.value = null;
+        gsEngine.gameType.value = GameType.Website;
         ServerState.sceneEditable.value = false;
         GameAudio.mutedSound.value = true;
         break;

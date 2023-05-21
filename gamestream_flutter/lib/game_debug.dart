@@ -83,7 +83,7 @@ class GameDebug {
                             Refresh(() => text('engine-frame: ${Engine.paintFrame}')),
                             watch(serverResponseReader.updateFrame, (t) => text("update-frame: $t")),
                             watch(GamePlayer.interpolating, (bool interpolating) => text("interpolating: $interpolating", onPressed: () => GamePlayer.interpolating.value = !GamePlayer.interpolating.value)),
-                            watch(gsEngine.gameType, (int? value) => text("game-type: ${value == null ? 'None' : GameType.getName(value)}")),
+                            watch(gsEngine.gameType, (GameType value) => text("game-type: ${value.name}")),
                             watch(Engine.deviceType, (int deviceType) => text("device-type: ${DeviceType.getName(deviceType)}", onPressed: Engine.toggleDeviceType)),
                             watch(GameIO.inputMode, (int inputMode) => text("input-mode: ${InputMode.getName(inputMode)}", onPressed: GameIO.actionToggleInputMode)),
                             watch(Engine.watchMouseLeftDown, (bool mouseLeftDown) => text("mouse-left-down: $mouseLeftDown")),

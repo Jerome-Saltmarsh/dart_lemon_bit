@@ -1,6 +1,7 @@
 
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -34,8 +35,15 @@ class GameFight2D extends Game {
 
   @override
   Widget buildUI(BuildContext context) {
-    // TODO: implement buildUI
-    throw UnimplementedError();
+    return Stack(
+      children: [
+        Positioned(
+            top: 16,
+            right: 16,
+            child: Text("FIGHT2D")
+        )
+      ],
+    );
   }
 }
 

@@ -26,6 +26,6 @@ extension PlayerExtension on Player {
 
   void writeGameType(){
     writeByte(ServerResponse.Game_Type);
-    writeByte(game.gameType);
+    writeByte(game.gameType.index);
   }
 }
