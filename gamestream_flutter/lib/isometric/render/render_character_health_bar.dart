@@ -1,5 +1,3 @@
-import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_gameobjects.dart';
-
 import '../../library.dart';
 
 /// @percentage is a double between 0 and 1
@@ -7,7 +5,7 @@ import '../../library.dart';
 void renderBarGreen(double x, double y, double z, double percentage) {
   Engine.renderSprite(
     image: GameImages.atlas_gameobjects,
-    dstX: GameConvert.getRenderX(x, y, z) - AtlasGameObjects.Bar_Green_Width_Half,
+    dstX: GameConvert.getRenderX(x, y, z) - 26,
     dstY: GameConvert.getRenderY(x, y, z) - 45,
     srcX: 171,
     srcY: 16,
@@ -21,7 +19,7 @@ void renderBarGreen(double x, double y, double z, double percentage) {
 void renderBarBlue(double x, double y, double z, double percentage) {
   Engine.renderSprite(
     image: GameImages.atlas_gameobjects,
-    dstX: GameConvert.getRenderX(x, y, z) - AtlasGameObjects.Bar_Green_Width_Half,
+    dstX: GameConvert.getRenderX(x, y, z) - 26,
     dstY: GameConvert.getRenderY(x, y, z) - 55,
     srcX: 171,
     srcY: 48,

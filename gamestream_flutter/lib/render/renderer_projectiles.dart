@@ -1,4 +1,3 @@
-import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_gameobjects.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class RendererProjectiles extends Renderer {
@@ -69,10 +68,10 @@ class RendererProjectiles extends Renderer {
   static void renderArrow(double x, double y, double rotation) {
     Engine.renderSpriteRotated(
       image: GameImages.atlas_gameobjects,
-      srcX: AtlasGameObjects.arrow_shadow_x,
-      srcY: AtlasGameObjects.arrow_shadow_y,
-      srcWidth: AtlasGameObjects.arrow_width,
-      srcHeight: AtlasGameObjects.arrow_height,
+      srcX: 49,
+      srcY: 48,
+      srcWidth: 9,
+      srcHeight: 44,
       dstX: x,
       dstY: y + 10,
       rotation: rotation - Engine.PI_Quarter,
@@ -81,10 +80,10 @@ class RendererProjectiles extends Renderer {
 
     Engine.renderSpriteRotated(
       image: GameImages.atlas_gameobjects,
-      srcX: AtlasGameObjects.arrow_x,
-      srcY: AtlasGameObjects.arrow_y,
-      srcWidth: AtlasGameObjects.arrow_width,
-      srcHeight: AtlasGameObjects.arrow_height,
+      srcX: 59,
+      srcY: 48,
+      srcWidth: 9,
+      srcHeight: 44,
       dstX: x,
       dstY: y,
       rotation: rotation - Engine.PI_Quarter,

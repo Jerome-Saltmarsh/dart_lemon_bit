@@ -1,6 +1,7 @@
 
 import 'dart:ui';
 
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import 'game.dart';
@@ -29,6 +30,12 @@ class GameFight2D extends Game {
   @override
   void onActivated() {
     // TODO: implement onActivated
+  }
+
+  @override
+  Widget buildUI(BuildContext context) {
+    // TODO: implement buildUI
+    throw UnimplementedError();
   }
 }
 

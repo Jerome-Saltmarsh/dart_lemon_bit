@@ -136,8 +136,15 @@ class GameWebsite {
    static Widget buildUI(BuildContext context) => Stack(
        children: [
          watch(GameWebsite.operationStatus, buildOperationStatus),
-         WebsiteBuild.buildWatchErrorMessage(),
+         buildWatchErrorMessage(),
        ]);
+
+  static Widget buildWatchErrorMessage(){
+    return WatchBuilder(WebsiteState.error, (String? message){
+      if (message == null) return GameStyle.Null;
+      return buildErrorDialog(message);
+    });
+  }
 
   static Widget buildOperationStatus(OperationStatus operationStatus) =>
       operationStatus != OperationStatus.None

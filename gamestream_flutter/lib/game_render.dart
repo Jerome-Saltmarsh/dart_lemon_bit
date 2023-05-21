@@ -1,7 +1,6 @@
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/isometric/nodes/render/atlas_src_gameobjects.dart';
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:gamestream_flutter/render/renderer_particles.dart';
 import 'package:gamestream_flutter/render/renderer_projectiles.dart';
@@ -311,8 +310,8 @@ class GameRender {
   static void renderCircle32(double x, double y, double z){
     Engine.renderSprite(
       image: GameImages.atlas_gameobjects,
-      srcX: AtlasGameObjects.Circle32_X,
-      srcY: AtlasGameObjects.Circle32_Y,
+      srcX: 16,
+      srcY: 48,
       srcWidth: 32,
       srcHeight: 32,
       dstX: GameConvert.getRenderX(x, y, z),

@@ -14,6 +14,7 @@ class GSEngine {
      if (game == null){
        Engine.onDrawForeground = null;
        Engine.onDrawCanvas = null;
+       Engine.buildUI = GameWebsite.buildUI;
        GameAudio.musicStop();
        Engine.fullScreenExit();
        return;
@@ -21,12 +22,12 @@ class GSEngine {
      Engine.onDrawCanvas = game.drawCanvas;
      Engine.onDrawForeground = game.renderForeground;
      Engine.onUpdate = game.update;
+     Engine.buildUI = game.buildUI;
      game.onActivated();
    }
 
    /// EVENT HANDLER (DO NOT CALL)
    void _onChangedGameType(int? value) {
-     // map gameType (int) to Game();
      game.value = switch (value) {
        GameType.Fight2D => GameFight2D(),
        GameType.Combat => GameCombat(),

@@ -1,6 +1,7 @@
 
 import 'dart:ui';
 
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/touch_controller.dart';
 
@@ -64,5 +65,10 @@ class GameCombat extends Game {
     if (!Engine.isLocalHost) {
       Engine.fullScreenEnter();
     }
+  }
+
+  @override
+  Widget buildUI(BuildContext context) {
+    return GameUI.buildUI();
   }
 }
