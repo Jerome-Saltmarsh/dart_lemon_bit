@@ -9,8 +9,18 @@ import 'game.dart';
 class GameCombat extends Game {
   @override
   void drawCanvas(Canvas canvas, Size size) {
-    // TODO: implement drawCanvas
-    GameCanvas.renderCanvas(canvas, size);
+    if (ServerState.gameRunning.value){
+      /// particles are only on the ui and thus can update every frame
+      /// this makes them much smoother as they don't freeze
+      GameState.updateParticles();
+    }
+    GameState.interpolatePlayer();
+    GameCamera.update();
+    GameRender.render3D();
+    GameState.renderEditMode();
+    GameRender.renderMouseTargetName();
+    GameCanvas.renderPlayerEnergy();
+    ClientState.rendersSinceUpdate.value++;
   }
 
   @override
