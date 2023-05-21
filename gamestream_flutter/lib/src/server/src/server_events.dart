@@ -1,4 +1,5 @@
 
+import 'package:gamestream_flutter/fight2D/game_fight2d.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/touch_controller.dart';
 
@@ -12,6 +13,13 @@ class ServerEvents {
     if (value == GameType.Rock_Paper_Scissors){
       GameScissorsPaperRock.init();
       return;
+    }
+
+    switch(value){
+      case GameType.Fight2D:
+        Engine.onDrawCanvas = Games.fight2D.drawCanvas;
+        Engine.onDrawForeground = Games.fight2D.renderForeground;
+        break;
     }
 
     ClientState.edit.value = value == GameType.Editor;

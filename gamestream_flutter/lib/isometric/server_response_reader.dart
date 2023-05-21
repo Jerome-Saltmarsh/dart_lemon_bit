@@ -119,6 +119,8 @@ class ServerResponseReader with ByteReader {
           final errorType = parseIndexToGameError(errorTypeIndex);
           handleServerResponseGameError(errorType);
           break;
+        case ServerResponse.Fight2D:
+          break;
         default:
           print("read error; index: $index, previous-server-response: $previousServerResponse");
           print(values);

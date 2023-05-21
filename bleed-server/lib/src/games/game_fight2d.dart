@@ -43,7 +43,6 @@ class GameFight2DPlayer extends Player {
 
   @override
   void writePlayerGame() {
-    // TODO: implement writePlayerGame
-
+    writeByte(ServerResponse.Fight2D);
   }
 }
