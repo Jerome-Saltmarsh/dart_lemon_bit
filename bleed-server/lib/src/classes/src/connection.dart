@@ -879,7 +879,9 @@ class Connection with ByteReader {
   void joinGame(Game game){
     final player = game.createPlayer();
     _player = _player = player;
+    player.writeGameType();
     player.sendBufferToClient = sendBufferToClient;
+
   }
 
   void errorInsufficientResources(){
@@ -933,9 +935,9 @@ class Connection with ByteReader {
       case GameType.Rock_Paper_Scissors:
         joinGame(engine.getGameRockPaperScissors());
         break;
-      // case GameType.Fight2D:
-      //   joinGameFight2D();
-      //   break;
+      case GameType.Fight2D:
+        joinGameFight2D();
+        break;
       default:
         sendGameError(GameError.Unable_To_Join_Game);
         cancelSubscription();

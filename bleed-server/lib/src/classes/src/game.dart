@@ -3,14 +3,21 @@ import 'package:bleed_server/src/classes/src/player.dart';
 
 abstract class Game <T extends Player> {
   var playerId = 0;
+  final int gameType;
   final List<T> players = [];
+
+  Game({required this.gameType});
 
   void update();
 
   /// @override
   void customPlayerWrite(T player);
 
-  Player createPlayer();
+  T createPlayer();
+
+  void onPlayerJoined(T t) {
+
+  }
 
   void onPlayerUpdateRequestReceived({
     required T player,

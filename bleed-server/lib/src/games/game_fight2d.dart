@@ -3,10 +3,13 @@ import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/classes/src/player.dart';
 
 class GameFight2D extends Game<GameFight2DPlayer> {
+  GameFight2D() : super(gameType: GameType.Fight2D);
+
 
   @override
-  Player createPlayer() {
-    return GameFight2DPlayer();
+  GameFight2DPlayer createPlayer() {
+    final player = GameFight2DPlayer();
+    return player;
   }
 
   @override
@@ -41,5 +44,4 @@ class GameFight2DPlayer extends Player {
   @override
   // TODO: implement game
   Game<Player> get game => throw UnimplementedError();
-
 }

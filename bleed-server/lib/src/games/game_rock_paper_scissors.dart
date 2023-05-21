@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:bleed_server/gamestream.dart';
-import 'package:bleed_server/src/classes/src/player.dart';
 import 'package:bleed_server/src/classes/src/player_scissors_paper_rock.dart';
 import 'package:lemon_math/library.dart';
 
@@ -10,6 +9,8 @@ class GameRockPaperScissors extends Game<PlayerScissorsPaperRock> {
   static const movementSpeed = 4.0;
 
   final players = <PlayerScissorsPaperRock>[];
+
+  GameRockPaperScissors() : super(gameType: GameType.Rock_Paper_Scissors);
 
   @override
   void update() {
@@ -65,7 +66,7 @@ class GameRockPaperScissors extends Game<PlayerScissorsPaperRock> {
   }
 
   @override
-  Player createPlayer() {
+  PlayerScissorsPaperRock createPlayer() {
     final instance = PlayerScissorsPaperRock(this);
     players.add(instance);
     instance.writeByte(ServerResponse.Game_Type);

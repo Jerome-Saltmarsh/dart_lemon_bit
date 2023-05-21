@@ -14,7 +14,6 @@ import 'player.dart';
 
 abstract class GameIsometric<T extends IsometricPlayer> extends Game<T> {
 
-  final int gameType;
   var frame = 0;
   var _running = true;
   Scene scene;
@@ -178,8 +177,8 @@ abstract class GameIsometric<T extends IsometricPlayer> extends Game<T> {
     required this.scene,
     required this.time,
     required this.environment,
-    required this.gameType,
     required this.options,
+    required super.gameType,
   }) {
     Position3.sort(gameObjects);
     engine.onGameCreated(this); // fix this
@@ -3272,7 +3271,7 @@ abstract class GameIsometric<T extends IsometricPlayer> extends Game<T> {
   T buildPlayer();
 
   @override
-  Player createPlayer() {
+  T createPlayer() {
     final player = buildPlayer();
     player.sceneDownloaded = false;
     players.add(player);
