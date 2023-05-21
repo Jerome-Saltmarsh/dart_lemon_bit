@@ -12,7 +12,7 @@ class GameTypeColumn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WatchBuilder(ServerState.gameType, (activeGameType) =>
+    return WatchBuilder(gsEngine.gameType, (activeGameType) =>
         Column(children: gameTypes
           .map((gameType) => onPressed(
             action: () => GameNetwork.connectToGame(gameType),

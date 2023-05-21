@@ -59,7 +59,7 @@ class ServerResponseReader with ByteReader {
           readGameTime();
           break;
         case ServerResponse.Game_Type:
-          ServerState.gameType.value = readByte();
+          gsEngine.gameType.value = readByte();
           break;
         case ServerResponse.Environment:
           readServerResponseEnvironment();
@@ -330,9 +330,6 @@ class ServerResponseReader with ByteReader {
         break;
       case ApiPlayer.Id:
         GamePlayer.id.value = readUInt24();
-        break;
-      case ApiPlayer.PerkType:
-        GamePlayer.perkType.value = readByte();
         break;
       case ApiPlayer.Active:
         GamePlayer.active.value = readBool();

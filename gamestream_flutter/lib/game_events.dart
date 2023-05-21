@@ -439,7 +439,7 @@ class GameEvents {
         GameEditor.gameObjectSelected.value = false;
         break;
       case PlayerEvent.Player_Moved:
-        if (ServerState.gameType.value == GameType.Editor){
+        if (gsEngine.gameType.value == GameType.Editor){
           GameEditor.row = GamePlayer.indexRow;
           GameEditor.column = GamePlayer.indexColumn;
           GameEditor.z = GamePlayer.indexZ;
@@ -508,9 +508,6 @@ class GameEvents {
         GameAudio.eat();
         break;
       case ItemType.Consumables_Apple:
-        GameAudio.eat();
-        break;
-      case ItemType.Consumables_Meat:
         GameAudio.eat();
         break;
     }
@@ -650,7 +647,7 @@ class GameEvents {
   }
 
   static void onChangedPlayerRespawnTimer(int respawnTimer) {
-    if (ServerState.gameType.value == GameType.Combat) {
+    if (gsEngine.gameType.value == GameType.Combat) {
       ClientState.control_visible_player_weapons.value = respawnTimer <= 0;
       ClientState.window_visible_player_creation.value = respawnTimer <= 0;
       ClientState.control_visible_respawn_timer.value = respawnTimer > 0;
@@ -694,9 +691,6 @@ class GameEvents {
       case ItemType.Buff_Invincible:
         GameAudio.buff_16();
         break;
-      case ItemType.Buff_Invincible:
-        GameAudio.buff_16();
-        break;
       case ItemType.Resource_Credit:
         GameAudio.collect_star_3();
         break;
@@ -735,7 +729,7 @@ class GameEvents {
 
   static void onChangedPlayerActive(bool playerActive){
      print("onChangedPlayerActive($playerActive)");
-      if (ServerState.gameType.value == GameType.Combat) {
+      if (gsEngine.gameType.value == GameType.Combat) {
         if (playerActive){
           ClientState.window_visible_player_creation.value = false;
         }

@@ -177,10 +177,6 @@ class GameImages {
             return template_weapon_hammer;
          case ItemType.Weapon_Melee_Crowbar:
             return template_weapon_crowbar;
-         case ItemType.Weapon_Ranged_Minigun:
-            return template_weapon_minigun;
-         case ItemType.Weapon_Ranged_Revolver:
-            return template_weapon_revolver;
          case ItemType.Weapon_Ranged_Flamethrower:
             return template_weapon_flamethrower;
          case ItemType.Weapon_Ranged_Bazooka:

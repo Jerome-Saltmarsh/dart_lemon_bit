@@ -210,7 +210,7 @@ class GameNetwork {
         GameState.clear();
         ServerState.clean();
         // TODO illegal server state assignment
-        ServerState.gameType.value = null;
+        gsEngine.gameType.value = null;
         ServerState.sceneEditable.value = false;
         GameAudio.mutedSound.value = true;
         break;

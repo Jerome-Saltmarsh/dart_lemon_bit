@@ -931,7 +931,7 @@ class GameUI {
       );
 
   static Widget buildPlayMode(bool edit) =>
-      edit ? watch(GameEditor.editTab, EditorUI.buildUI) : watch(ServerState.gameType, buildStackPlay);
+      edit ? watch(GameEditor.editTab, EditorUI.buildUI) : watch(gsEngine.gameType, buildStackPlay);
 
   static Widget buildStackPlay(int? gameType) => StackFullscreen(children: [
           if (gameType == GameType.Combat)

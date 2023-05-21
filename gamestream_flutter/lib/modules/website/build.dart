@@ -50,8 +50,6 @@ class WebsiteBuild {
         return buildDialogMessage("No games found");
       }
 
-      final mapNames = games as List<String>;
-
       return buildDialog(
           width: style.dialogWidthMedium,
           height: style.dialogHeightLarge,
@@ -62,7 +60,7 @@ class WebsiteBuild {
                 buttonRegion(),
                 height16,
                 Column(
-                  children: mapNames.map((mapName) => margin(
+                  children: games.map((mapName) => margin(
                     bottom: 16,
                     child: button(text(mapName, color: GameColors.white618), (){
                       // connect to custom game
