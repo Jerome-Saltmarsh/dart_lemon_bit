@@ -3,9 +3,21 @@ import 'dart:ui';
 
 import 'package:gamestream_flutter/library.dart';
 
-abstract class Game {
-  void drawCanvas(Canvas canvas, Size size);
-  void renderForeground(Canvas canvas, Size size);
+import 'game.dart';
+
+
+class GameCombat extends Game {
+  @override
+  void drawCanvas(Canvas canvas, Size size) {
+    // TODO: implement drawCanvas
+    GameCanvas.renderCanvas(canvas, size);
+  }
+
+  @override
+  void renderForeground(Canvas canvas, Size size) {
+    GameCanvas.renderForeground(canvas, size);
+  }
+
 }
 
 class GameFight2D extends Game {
@@ -23,8 +35,3 @@ class GameFight2D extends Game {
   }
 }
 
-class Games {
-  static Game? currentGame;
-
-  static final fight2D = GameFight2D();
-}

@@ -1,5 +1,6 @@
 
 import 'package:gamestream_flutter/fight2D/game_fight2d.dart';
+import 'package:gamestream_flutter/fight2D/gamestream.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/touch_controller.dart';
 
@@ -15,12 +16,10 @@ class ServerEvents {
       return;
     }
 
-    switch(value){
-      case GameType.Fight2D:
-        Engine.onDrawCanvas = Games.fight2D.drawCanvas;
-        Engine.onDrawForeground = Games.fight2D.renderForeground;
-        break;
+    if (value != null){
+      gsEngine.game.value = GameBuilder.buildGameById(value);
     }
+
 
     ClientState.edit.value = value == GameType.Editor;
 
