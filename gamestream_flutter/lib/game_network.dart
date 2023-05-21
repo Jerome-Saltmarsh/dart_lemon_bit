@@ -181,7 +181,6 @@ class GameNetwork {
       case ConnectionStatus.Connected:
         GameIO.addListeners();
         Engine.cursorType.value = CursorType.None;
-        Engine.onUpdate = GameState.update;
         Engine.drawCanvasAfterUpdate = true;
         Engine.zoomOnScroll = true;
         Engine.zoom = GameConfig.Zoom_Spawn;

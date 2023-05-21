@@ -1147,24 +1147,24 @@ class GameState {
     GameRender.renderWireFrameRed(GameEditor.row, GameEditor.column, GameEditor.z);
   }
 
-  static void update() {
-
-    if (!ServerState.gameRunning.value) {
-      GameNetwork.sendClientRequestUpdate();
-      return;
-    }
-
-    updateTorchEmissionIntensity();
-    GameAnimation.updateAnimationFrame();
-    updateParticleEmitters();
-    ServerState.updateProjectiles();
-    ServerState.updateGameObjects();
-    GameAudio.update();
-    ClientState.update();
-    updatePlayerMessageTimer();
-    GameIO.readPlayerInput();
-    GameNetwork.sendClientRequestUpdate();
-  }
+  // static void update() {
+  //
+  //   if (!ServerState.gameRunning.value) {
+  //     GameNetwork.sendClientRequestUpdate();
+  //     return;
+  //   }
+  //
+  //   updateTorchEmissionIntensity();
+  //   GameAnimation.updateAnimationFrame();
+  //   updateParticleEmitters();
+  //   ServerState.updateProjectiles();
+  //   ServerState.updateGameObjects();
+  //   GameAudio.update();
+  //   ClientState.update();
+  //   updatePlayerMessageTimer();
+  //   GameIO.readPlayerInput();
+  //   GameNetwork.sendClientRequestUpdate();
+  // }
 
   static void updateTorchEmissionIntensity(){
     if (torch_emission_vel == 0) return;

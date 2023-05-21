@@ -13,9 +13,9 @@ class GSEngine {
        Engine.onDrawCanvas = null;
        return;
      }
-
      Engine.onDrawCanvas = game.drawCanvas;
      Engine.onDrawForeground = game.renderForeground;
+     Engine.onUpdate = game.update;
    }
 }
 

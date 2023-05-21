@@ -28,6 +28,24 @@ class GameCombat extends Game {
     GameCanvas.renderForeground(canvas, size);
   }
 
+  @override
+  void update() {
+    if (!ServerState.gameRunning.value) {
+      GameNetwork.sendClientRequestUpdate();
+      return;
+    }
+    GameState.updateTorchEmissionIntensity();
+    GameAnimation.updateAnimationFrame();
+    GameState.updateParticleEmitters();
+    ServerState.updateProjectiles();
+    ServerState.updateGameObjects();
+    GameAudio.update();
+    ClientState.update();
+    GameState.updatePlayerMessageTimer();
+    GameIO.readPlayerInput();
+    GameNetwork.sendClientRequestUpdate();
+  }
+
 }
 
 class GameFight2D extends Game {
@@ -42,6 +60,11 @@ class GameFight2D extends Game {
   @override
   void renderForeground(Canvas canvas, Size size) {
     // TODO: implement renderForeground
+  }
+
+  @override
+  void update() {
+    // TODO: implement update
   }
 }
 
