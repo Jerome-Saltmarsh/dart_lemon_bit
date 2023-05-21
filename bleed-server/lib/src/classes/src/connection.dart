@@ -878,6 +878,7 @@ class Connection with ByteReader {
 
   void joinGame(Game game){
     final player = game.createPlayer();
+    game.players.add(player);
     _player = _player = player;
     player.writeGameType();
     player.sendBufferToClient = sendBufferToClient;

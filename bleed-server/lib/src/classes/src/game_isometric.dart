@@ -181,7 +181,6 @@ abstract class GameIsometric<T extends IsometricPlayer> extends Game<T> {
     required super.gameType,
   }) {
     Position3.sort(gameObjects);
-    engine.onGameCreated(this); // fix this
 
     /// TODO Illegal external scope reference
     gameObjectId = scene.gameObjects.length;
@@ -3274,7 +3273,6 @@ abstract class GameIsometric<T extends IsometricPlayer> extends Game<T> {
   T createPlayer() {
     final player = buildPlayer();
     player.sceneDownloaded = false;
-    players.add(player);
     characters.add(player);
     customOnPlayerJoined(player);
     player.writePlayerAlive();

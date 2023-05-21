@@ -6,7 +6,9 @@ abstract class Game <T extends Player> {
   final int gameType;
   final List<T> players = [];
 
-  Game({required this.gameType});
+  Game({required this.gameType}) {
+    engine.onGameCreated(this); // fix this
+  }
 
   void update();
 
@@ -25,7 +27,7 @@ abstract class Game <T extends Player> {
     required bool inputTypeKeyboard,
   });
 
-  void writePlayerResponses(){
+  void writePlayerResponses() {
     for (var i = 0; i < players.length; i++) {
       final player = players[i];
       player.writePlayerGame();

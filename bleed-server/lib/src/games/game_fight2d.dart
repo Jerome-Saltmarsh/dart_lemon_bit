@@ -8,7 +8,7 @@ class GameFight2D extends Game<GameFight2DPlayer> {
 
   @override
   GameFight2DPlayer createPlayer() {
-    final player = GameFight2DPlayer();
+    final player = GameFight2DPlayer(this);
     return player;
   }
 
@@ -36,12 +36,14 @@ class GameFight2D extends Game<GameFight2DPlayer> {
 }
 
 class GameFight2DPlayer extends Player {
-  @override
-  // TODO: implement game
-  Game<Player> get game => throw UnimplementedError();
+
+  late GameFight2D game;
+
+  GameFight2DPlayer(this.game);
 
   @override
   void writePlayerGame() {
     // TODO: implement writePlayerGame
+
   }
 }
