@@ -6,6 +6,7 @@ export 'src/enums/item_group.dart';
 export 'src/enums/tag_type.dart';
 export 'src/enums/teams_rock_paper_scissors.dart';
 export 'src/enums/character_attribute.dart';
+export 'src/enums/fight2d_response.dart';
 export 'src/enums/game_status.dart';
 export 'src/power_type.dart';
 export 'src/enums/scene_part.dart';

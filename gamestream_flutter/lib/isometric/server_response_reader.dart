@@ -1,4 +1,6 @@
 import 'package:archive/archive.dart';
+import 'package:gamestream_flutter/engine/game_fight2d.dart';
+import 'package:gamestream_flutter/engine/instances.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_scene.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/structure/business/handle_server_response_game_error.dart';
@@ -104,6 +106,9 @@ class ServerResponseReader with ByteReader {
               break;
           }
           break;
+        case ServerResponse.Fight2D:
+          readServerResponseFight2D();
+          break;
         case ServerResponse.High_Score:
           ServerState.highScore.value = readUInt24();
           break;
@@ -132,6 +137,23 @@ class ServerResponseReader with ByteReader {
           return;
       }
       previousServerResponse = serverResponse;
+    }
+  }
+
+
+  void readServerResponseFight2D() {
+    final fight2DResponse = readByte();
+    switch (fight2DResponse) {
+      case Fight2DResponse.Player_Positions:
+        final totalPlayers = readUInt16();
+        GameFight2D.totalPlayers = totalPlayers;
+        for (var i = 0; i < totalPlayers; i++) {
+          GameFight2D.playerPositionX[i] = readInt16().toDouble();
+          GameFight2D.playerPositionY[i] = readInt16().toDouble();
+        }
+        break;
+      default:
+        throw Exception('unknown fight2DResponse $fight2DResponse');
     }
   }
 

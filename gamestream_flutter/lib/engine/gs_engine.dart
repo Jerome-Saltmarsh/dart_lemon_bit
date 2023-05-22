@@ -4,14 +4,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:gamestream_flutter/engine/game_website.dart' as gw;
 import 'game.dart';
 import 'game_combat.dart';
-import 'game_fight2d.dart';
+import 'instances.dart';
 
 final gsEngine = GSEngine();
 
 class GSEngine {
-   late final gameWebsite = gw.GameWebsite();
    late final gameType = Watch(GameType.Website, onChanged: _onChangedGameType);
    late final game = Watch<Game>(gameWebsite, onChanged: _onChangedGame);
+
+   late final gameWebsite = gw.GameWebsite();
+   late final combat = GameCombat();
 
    Future init(SharedPreferences sharedPreferences) async {
      print("environment: ${Engine.isLocalHost ? 'localhost' : 'production'}");
@@ -78,9 +80,9 @@ class GSEngine {
    void _onChangedGameType(GameType value) {
      print("_onChangedGameType(${value.name})");
      game.value = switch (value) {
-       GameType.Website => gw.GameWebsite(),
-       GameType.Fight2D => GameFight2D(),
-       GameType.Combat => GameCombat(),
+       GameType.Website => gameWebsite,
+       GameType.Fight2D => gameFight2D,
+       GameType.Combat => combat,
        _ => throw Exception('mapGameTypeToGame($gameType)')
      };
    }

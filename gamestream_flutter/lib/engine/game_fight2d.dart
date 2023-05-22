@@ -1,21 +1,26 @@
 
-import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import 'game.dart';
 
 
-
 class GameFight2D extends Game {
+  static var totalPlayers = 0;
+  static final playerPositionX = Float32List(1000);
+  static final playerPositionY = Float32List(1000);
+
+
   @override
   void drawCanvas(Canvas canvas, Size size) {
       Engine.cameraCenter(0, 0);
       Engine.zoom = 1.0;
       Engine.targetZoom = 1.0;
-      canvas.drawCircle(const Offset(0, 0), 100, Engine.paint);
+
+      for (var i = 0; i < totalPlayers; i++){
+        canvas.drawCircle(Offset(playerPositionX[i].toDouble(), playerPositionY[i].toDouble()), 100, Engine.paint);
+      }
   }
 
   @override
