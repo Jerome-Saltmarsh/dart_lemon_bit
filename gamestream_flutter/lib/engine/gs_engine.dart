@@ -1,10 +1,10 @@
-import 'package:gamestream_flutter/fight2D/game.dart';
-import 'package:gamestream_flutter/fight2D/game_combat.dart';
-import 'package:gamestream_flutter/fight2D/game_fight2d.dart';
 import 'package:gamestream_flutter/game_utils.dart';
 import 'package:gamestream_flutter/library.dart';
-import 'package:gamestream_flutter/fight2D/game_website.dart' as gw;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:gamestream_flutter/engine/game_website.dart' as gw;
+import 'game.dart';
+import 'game_combat.dart';
+import 'game_fight2d.dart';
 
 final gsEngine = GSEngine();
 
@@ -67,14 +67,6 @@ class GSEngine {
 
    /// EVENT HANDLER (DO NOT CALL)
    void _onChangedGame(Game game) {
-     // if (game == null) {
-     //   Engine.onDrawForeground = null;
-     //   Engine.onDrawCanvas = null;
-     //   Engine.buildUI = GameWebsite.buildUI;
-     //   GameAudio.musicStop();
-     //   Engine.fullScreenExit();
-     //   return;
-     // }
      Engine.onDrawCanvas = game.drawCanvas;
      Engine.onDrawForeground = game.renderForeground;
      Engine.onUpdate = game.update;

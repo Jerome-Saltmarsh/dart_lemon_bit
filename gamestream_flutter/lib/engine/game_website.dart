@@ -2,10 +2,10 @@
 import 'dart:ui';
 
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:gamestream_flutter/fight2D/game.dart';
-import 'package:gamestream_flutter/game_audio.dart';
 import 'package:gamestream_flutter/game_website.dart' as gw;
 import 'package:gamestream_flutter/library.dart';
+
+import 'game.dart';
 
 class GameWebsite extends Game {
 

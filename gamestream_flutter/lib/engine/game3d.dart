@@ -3,7 +3,8 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/fight2D/game.dart';
+
+import 'game.dart';
 
 class Game3D implements Game {
   @override
