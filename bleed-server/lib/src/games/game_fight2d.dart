@@ -105,10 +105,13 @@ class GameFight2D extends Game<GameFight2DPlayer> {
     }
 
     for (final character in characters) {
-       final tileType = scene.getTileTypeAtXY(character.x, character.y + 50.0);
-       if (tileType == Fight2DNodeType.Grass){
+       var tileType = scene.getTileTypeAtXY(character.x, character.y + 50.0);
+       if (tileType == Fight2DNodeType.Grass) {
          character.grounded = true;
-         if (character.velocityY > 0){
+         while (scene.getTileTypeAtXY(character.x, character.y + 50.0) == Fight2DNodeType.Grass){
+            character.y--;
+         }
+         if (character.velocityY > 0) {
            character.velocityY = 0;
          }
        } else {

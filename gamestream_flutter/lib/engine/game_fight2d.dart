@@ -24,29 +24,26 @@ class GameFight2D extends Game {
 
   @override
   void drawCanvas(Canvas canvas, Size size) {
-      Engine.zoom = 1.0;
-      Engine.targetZoom = 1.0;
 
       var index = 0;
       for (var x = 0; x < sceneWidth; x++){
          for (var y = 0; y < sceneHeight; y++){
            final nodeType = sceneNodes[index];
            index++;
-           const nodeSize = 32.0;
 
            final srcY = <int, double>{
              Fight2DNodeType.Empty: 0,
-             Fight2DNodeType.Grass: 32,
+             Fight2DNodeType.Grass: 34,
            }[nodeType] ?? 0;
 
            Engine.renderSprite(
                image: GameImages.atlas_fight2d_nodes,
                srcX: srcY,
                srcY: 0,
-               srcWidth: nodeSize,
-               srcHeight: nodeSize,
-               dstX: x * nodeSize,
-               dstY: y * nodeSize,
+               srcWidth: 34,
+               srcHeight: 34,
+               dstX: x * 32,
+               dstY: y * 32,
            );
 
          }
@@ -82,13 +79,12 @@ class GameFight2D extends Game {
 
   @override
   void renderForeground(Canvas canvas, Size size) {
-    // TODO: implement renderForeground
+
   }
 
   @override
   void update() {
     GameNetwork.sendClientRequestUpdate();
-    // updateCamera();
     Engine.cameraFollow(playerX, playerY);
   }
 
@@ -110,7 +106,8 @@ class GameFight2D extends Game {
 
   @override
   void onActivated() {
-    // TODO: implement onActivated
+    Engine.zoom = 1.0;
+    Engine.targetZoom = 1.0;
   }
 
   @override
