@@ -2,6 +2,7 @@
 import 'package:bleed_server/common/src/enums/fight2d_response.dart';
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/classes/src/player.dart';
+import 'package:lemon_math/functions/random_between.dart';
 
 class GameFight2D extends Game<GameFight2DPlayer> {
   GameFight2D() : super(gameType: GameType.Fight2D);
@@ -9,6 +10,8 @@ class GameFight2D extends Game<GameFight2DPlayer> {
   @override
   GameFight2DPlayer createPlayer() {
     final player = GameFight2DPlayer(this);
+    player.x = randomBetween(-100, 100);
+    player.y = randomBetween(-100, 100);
     return player;
   }
 
@@ -22,6 +25,9 @@ class GameFight2D extends Game<GameFight2DPlayer> {
     required bool inputTypeKeyboard,
   }) {
     // TODO: implement onPlayerUpdateRequestReceived
+    if (direction != Direction.None){
+      player.x++;
+    }
   }
 
   @override

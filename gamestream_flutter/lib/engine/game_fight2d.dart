@@ -30,7 +30,7 @@ class GameFight2D extends Game {
 
   @override
   void update() {
-    // TODO: implement update
+    GameNetwork.sendClientRequestUpdate();
   }
 
   @override

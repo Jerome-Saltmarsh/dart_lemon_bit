@@ -71,9 +71,7 @@ class GameNetwork {
   /// [6] Shift
   /// [7] Space
   static applyKeyboardInputToUpdateBuffer() {
-    if (GameState.playMode) {
-      updateBuffer[1] = GameIO.getInputAsByte();
-    }
+    updateBuffer[1] = GameIO.getInputAsByte();
     writeNumberToByteArray(number: GameIO.getCursorWorldX(), list: updateBuffer, index: 2);
     writeNumberToByteArray(number: GameIO.getCursorWorldY(), list: updateBuffer, index: 4);
     writeNumberToByteArray(number: Engine.Screen_Left, list: updateBuffer, index: 6);
