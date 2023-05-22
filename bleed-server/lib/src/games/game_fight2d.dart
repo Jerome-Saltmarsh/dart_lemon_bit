@@ -1,16 +1,39 @@
 
+import 'dart:typed_data';
+
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/classes/src/player.dart';
 import 'package:lemon_math/functions/random_between.dart';
 
+class GameFight2DScene {
+  int width;
+  int height;
+
+  late Uint8List nodes;
+
+  GameFight2DScene({required this.width, required this.height}) {
+     nodes = Uint8List(width * height);
+
+     var index = 0;
+     for (var x = 0; x < width; x++){
+        for (var y = 0; y < height; y++){
+          nodes[index] = y > height - 3 ? Fight2DNodeType.Grass : Fight2DNodeType.Empty;
+          index++;
+        }
+     }
+  }
+}
+
 class GameFight2D extends Game<GameFight2DPlayer> {
   final List<GameFight2DCharacter> characters = [];
+  final scene = GameFight2DScene(width: 20, height: 20);
 
   GameFight2D() : super(gameType: GameType.Fight2D);
 
   @override
   GameFight2DPlayer createPlayer() {
     final player = GameFight2DPlayer(this);
+    player.writeScene();
     player.x = randomBetween(-100, 100);
     player.y = randomBetween(-100, 100);
     characters.add(player);
@@ -115,4 +138,14 @@ class GameFight2DPlayer extends Player with GameFight2DCharacter {
       writeInt16(character.y.toInt());
     }
   }
+
+  void writeScene() {
+    final scene = game.scene;
+    writeByte(ServerResponse.Fight2D);
+    writeByte(Fight2DResponse.Scene);
+    writeUInt16(scene.width);
+    writeUInt16(scene.height);
+    writeBytes(scene.nodes);
+  }
 }
+

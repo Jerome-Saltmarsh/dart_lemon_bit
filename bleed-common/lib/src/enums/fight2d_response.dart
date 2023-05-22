@@ -1,6 +1,7 @@
 
 class Fight2DResponse {
    static const Characters = 0;
+   static const Scene      = 1;
 }
 
 class GameFight2DCharacterState {

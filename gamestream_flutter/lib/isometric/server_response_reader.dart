@@ -141,14 +141,12 @@ class ServerResponseReader with ByteReader {
     final fight2DResponse = readByte();
     switch (fight2DResponse) {
       case Fight2DResponse.Characters:
-        final totalPlayers = readUInt16();
-        assert (totalPlayers < GameFight2D.length);
-        GameFight2D.characters = totalPlayers;
-        for (var i = 0; i < totalPlayers; i++) {
-          GameFight2D.characterState[i] = readByte();
-          GameFight2D.characterPositionX[i] = readInt16().toDouble();
-          GameFight2D.characterPositionY[i] = readInt16().toDouble();
-        }
+        readFight2DResponseCharacters();
+        break;
+      case Fight2DResponse.Scene:
+        GameFight2D.sceneWidth = readUInt16();
+        GameFight2D.sceneHeight = readUInt16();
+        GameFight2D.sceneNodes = readUint8List(GameFight2D.sceneTotal);
         break;
       default:
         throw Exception('unknown fight2DResponse $fight2DResponse');
@@ -745,5 +743,16 @@ class ServerResponseReader with ByteReader {
          }
          break;
      }
+  }
+
+  void readFight2DResponseCharacters() {
+    final totalPlayers = readUInt16();
+    assert (totalPlayers < GameFight2D.length);
+    GameFight2D.characters = totalPlayers;
+    for (var i = 0; i < totalPlayers; i++) {
+      GameFight2D.characterState[i] = readByte();
+      GameFight2D.characterPositionX[i] = readInt16().toDouble();
+      GameFight2D.characterPositionY[i] = readInt16().toDouble();
+    }
   }
 }
