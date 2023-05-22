@@ -84,7 +84,10 @@ class GameFight2D extends Game {
   @override
   void update() {
     GameNetwork.sendClientRequestUpdate();
+    updateCamera();
+  }
 
+  void updateCamera() {
     const speed = 4.0;
     if (Engine.keyPressed(KeyCode.Arrow_Up)){
       Engine.cameraY -= speed;

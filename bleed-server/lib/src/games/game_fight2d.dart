@@ -6,25 +6,47 @@ import 'package:bleed_server/src/classes/src/player.dart';
 import 'package:lemon_math/functions/random_between.dart';
 
 class GameFight2DScene {
+  static const tileSize = 32.0;
+
   int width;
   int height;
+  /// width * nodeSIze
+  late double widthLength;
+  /// height * nodeSize
+  late double heightLength;
 
-  late Uint8List nodes;
+  late Uint8List tiles;
 
   GameFight2DScene({required this.width, required this.height}) {
-     nodes = Uint8List(width * height);
+     tiles = Uint8List(width * height);
+     this.widthLength = width * tileSize;
+     this.heightLength = height * tileSize;
 
      var index = 0;
      for (var x = 0; x < width; x++){
         for (var y = 0; y < height; y++){
-          nodes[index] = y > height - 3 ? Fight2DNodeType.Grass : Fight2DNodeType.Empty;
+          tiles[index] = y > height - 3 ? Fight2DNodeType.Grass : Fight2DNodeType.Empty;
           index++;
         }
      }
   }
+
+  int getTileTypeAtXY(double x, double y) {
+    if (x < 0 || y < 0) {
+      return Fight2DNodeType.Out_Of_Bounds;
+    }
+    if (x > widthLength || y > heightLength) {
+      return Fight2DNodeType.Out_Of_Bounds;
+    }
+
+    final nodeX = x ~/ tileSize;
+    final nodeY = y ~/ tileSize;
+    return tiles[nodeX * height + nodeY];
+  }
 }
 
 class GameFight2D extends Game<GameFight2DPlayer> {
+
   final List<GameFight2DCharacter> characters = [];
   final scene = GameFight2DScene(width: 20, height: 20);
 
@@ -71,6 +93,17 @@ class GameFight2D extends Game<GameFight2DPlayer> {
   void update() {
     for (final character in characters) {
       character.update();
+    }
+
+    for (final character in characters) {
+       final tileType = scene.getTileTypeAtXY(character.x, character.y);
+       if (tileType == Fight2DNodeType.Grass){
+         if (character.velocityY > 0){
+           character.velocityY = 0;
+         }
+       } else {
+         character.accelerationY += 0.01;
+       }
     }
   }
 }
@@ -145,7 +178,7 @@ class GameFight2DPlayer extends Player with GameFight2DCharacter {
     writeByte(Fight2DResponse.Scene);
     writeUInt16(scene.width);
     writeUInt16(scene.height);
-    writeBytes(scene.nodes);
+    writeBytes(scene.tiles);
   }
 }
 
