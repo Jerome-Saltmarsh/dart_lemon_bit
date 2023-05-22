@@ -6,10 +6,16 @@ class Fight2DResponse {
 }
 
 class GameFight2DCharacterState {
-   static const idle          = 0;
-   static const runLeft       = 1;
-   static const runRight      = 2;
-   static const jump          = 3;
-   static const strikeLeft    = 4;
-   static const strikeRight   = 5;
+   static const Idle_Left      = 0;
+   static const Run_Left       = 1;
+   static const Strike_Left    = 2;
+   static const Jump_Left      = 3;
+   static const Idle_Right     = 4;
+   static const Run_Right      = 5;
+   static const Jump_Right     = 6;
+   static const Strike_Right   = 7;
+
+   static bool isLeft(int value){
+      return value <= Jump_Left;
+   }
 }

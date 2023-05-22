@@ -5,11 +5,10 @@ import 'package:gamestream_flutter/library.dart';
 
 import 'game.dart';
 
-
 class GameFight2D extends Game {
   static var playerX = 0.0;
   static var playerY = 0.0;
-  static var playerState = GameFight2DCharacterState.idle;
+  static var playerState = GameFight2DCharacterState.Idle_Left;
   static const length = 1000;
   static var characters = 0;
   static final characterState = Uint8List(length);
@@ -67,16 +66,18 @@ class GameFight2D extends Game {
       final animationFrame = stateDuration ~/ 5;
 
       final frame = switch (state) {
-          GameFight2DCharacterState.idle => 0,
-          GameFight2DCharacterState.runRight => runFrames[animationFrame % 4],
-          GameFight2DCharacterState.runLeft => runFrames[animationFrame % 4],
+          GameFight2DCharacterState.Idle_Left => 0,
+          GameFight2DCharacterState.Idle_Right => 0,
+          GameFight2DCharacterState.Run_Right => runFrames[animationFrame % 4],
+          GameFight2DCharacterState.Run_Left => runFrames[animationFrame % 4],
           _ => 0
       };
+
 
       Engine.renderSprite(
           image: GameImages.atlas_fight2d_character,
           srcX: frame * frameSize,
-          srcY: state == GameFight2DCharacterState.runRight ? frameSize : 0,
+          srcY: GameFight2DCharacterState.isLeft(state) ? 0 : frameSize,
           srcWidth: frameSize,
           srcHeight: frameSize,
           dstX: characterPositionX[i].toDouble(),

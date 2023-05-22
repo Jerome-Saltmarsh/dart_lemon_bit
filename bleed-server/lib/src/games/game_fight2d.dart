@@ -73,7 +73,7 @@ class GameFight2D extends Game<GameFight2DPlayer> {
   }) {
      switch (direction) {
        case InputDirection.Right:
-         player.nextState = GameFight2DCharacterState.runRight;
+         player.nextState = GameFight2DCharacterState.Run_Right;
          break;
        case InputDirection.Up_Right:
          player.jump();
@@ -82,13 +82,19 @@ class GameFight2D extends Game<GameFight2DPlayer> {
          player.jump();
          break;
        case InputDirection.Left:
-         player.nextState = GameFight2DCharacterState.runLeft;
+         player.nextState = GameFight2DCharacterState.Run_Left;
          break;
        case InputDirection.Up:
          player.jump();
          break;
        case InputDirection.None:
-         player.nextState = GameFight2DCharacterState.idle;
+         if (GameFight2DCharacterState.isLeft(player.state)){
+           player.nextState = GameFight2DCharacterState.Idle_Left;
+         } else {
+           player.nextState = GameFight2DCharacterState.Idle_Right;
+         }
+
+
          break;
      }
   }
@@ -123,8 +129,8 @@ class GameFight2D extends Game<GameFight2DPlayer> {
 
 class GameFight2DCharacter {
   var stateDuration = 0;
-  var state = GameFight2DCharacterState.idle;
-  var nextState = GameFight2DCharacterState.idle;
+  var state = GameFight2DCharacterState.Idle_Left;
+  var nextState = GameFight2DCharacterState.Idle_Left;
   var x = 0.0;
   var y = 0.0;
   var accelerationX = 0.0;
@@ -139,7 +145,13 @@ class GameFight2DCharacter {
   void jump(){
     if (!grounded) return;
     if (velocityY < 0) return;
-    nextState = GameFight2DCharacterState.jump;
+
+    if (GameFight2DCharacterState.isLeft(state)){
+      nextState = GameFight2DCharacterState.Jump_Left;
+    } else {
+      nextState = GameFight2DCharacterState.Jump_Right;
+    }
+
   }
 
   void update(){
@@ -156,17 +168,23 @@ class GameFight2DCharacter {
 
 
      switch (state) {
-       case GameFight2DCharacterState.idle:
+       case GameFight2DCharacterState.Idle_Left:
          break;
-       case GameFight2DCharacterState.runLeft:
+       case GameFight2DCharacterState.Idle_Right:
+         break;
+       case GameFight2DCharacterState.Run_Left:
          accelerationX -= runAcceleration;
          break;
-       case GameFight2DCharacterState.runRight:
+       case GameFight2DCharacterState.Run_Right:
          accelerationX += runAcceleration;
          break;
-       case GameFight2DCharacterState.jump:
+       case GameFight2DCharacterState.Jump_Right:
          accelerationY -= jumpAcceleration;
-         nextState = GameFight2DCharacterState.idle;
+         nextState = GameFight2DCharacterState.Idle_Right;
+         break;
+       case GameFight2DCharacterState.Jump_Left:
+         accelerationY -= jumpAcceleration;
+         nextState = GameFight2DCharacterState.Idle_Left;
          break;
      }
 
