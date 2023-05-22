@@ -1,6 +1,5 @@
 import 'package:archive/archive.dart';
 import 'package:gamestream_flutter/engine/game_fight2d.dart';
-import 'package:gamestream_flutter/engine/instances.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_scene.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/structure/business/handle_server_response_game_error.dart';
@@ -129,8 +128,6 @@ class ServerResponseReader with ByteReader {
           final errorType = parseIndexToGameError(errorTypeIndex);
           handleServerResponseGameError(errorType);
           break;
-        case ServerResponse.Fight2D:
-          break;
         default:
           print("read error; index: $index, previous-server-response: $previousServerResponse");
           print(values);
@@ -140,16 +137,17 @@ class ServerResponseReader with ByteReader {
     }
   }
 
-
   void readServerResponseFight2D() {
     final fight2DResponse = readByte();
     switch (fight2DResponse) {
-      case Fight2DResponse.Player_Positions:
+      case Fight2DResponse.Characters:
         final totalPlayers = readUInt16();
-        GameFight2D.totalPlayers = totalPlayers;
+        assert (totalPlayers < GameFight2D.length);
+        GameFight2D.characters = totalPlayers;
         for (var i = 0; i < totalPlayers; i++) {
-          GameFight2D.playerPositionX[i] = readInt16().toDouble();
-          GameFight2D.playerPositionY[i] = readInt16().toDouble();
+          GameFight2D.characterState[i] = readByte();
+          GameFight2D.characterPositionX[i] = readInt16().toDouble();
+          GameFight2D.characterPositionY[i] = readInt16().toDouble();
         }
         break;
       default:

@@ -1,10 +1,11 @@
 
-import 'package:bleed_server/common/src/enums/fight2d_response.dart';
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/classes/src/player.dart';
 import 'package:lemon_math/functions/random_between.dart';
 
 class GameFight2D extends Game<GameFight2DPlayer> {
+  final List<GameFight2DCharacter> characters = [];
+
   GameFight2D() : super(gameType: GameType.Fight2D);
 
   @override
@@ -12,6 +13,7 @@ class GameFight2D extends Game<GameFight2DPlayer> {
     final player = GameFight2DPlayer(this);
     player.x = randomBetween(-100, 100);
     player.y = randomBetween(-100, 100);
+    characters.add(player);
     return player;
   }
 
@@ -24,15 +26,15 @@ class GameFight2D extends Game<GameFight2DPlayer> {
     required bool keySpaceDown,
     required bool inputTypeKeyboard,
   }) {
-    // TODO: implement onPlayerUpdateRequestReceived
-    if (direction != Direction.None){
+    if (direction != Direction.None) {
+      print(direction);
       player.x++;
     }
   }
 
   @override
   void removePlayer(GameFight2DPlayer player) {
-    // TODO: implement removePlayer
+    characters.remove(player);
   }
 
   @override
@@ -41,10 +43,13 @@ class GameFight2D extends Game<GameFight2DPlayer> {
   }
 }
 
-class GameFight2DPlayer extends Player {
-
+class GameFight2DCharacter {
+  var state = GameFight2DCharacterState.idle;
   var x = 0.0;
   var y = 0.0;
+}
+
+class GameFight2DPlayer extends Player with GameFight2DCharacter {
 
   late GameFight2D game;
 
@@ -52,16 +57,17 @@ class GameFight2DPlayer extends Player {
 
   @override
   void writePlayerGame() {
-    writePlayerPositions();
+    writeCharacters();
   }
 
-  void writePlayerPositions() {
+  void writeCharacters() {
     writeByte(ServerResponse.Fight2D);
-    writeByte(Fight2DResponse.Player_Positions);
-    writeUInt16(game.players.length);
-    for (final player in game.players) {
-      writeInt16(player.x.toInt());
-      writeInt16(player.y.toInt());
+    writeByte(Fight2DResponse.Characters);
+    writeUInt16(game.characters.length);
+    for (final character in game.characters) {
+      writeByte(character.state);
+      writeInt16(character.x.toInt());
+      writeInt16(character.y.toInt());
     }
   }
 }

@@ -7,9 +7,11 @@ import 'game.dart';
 
 
 class GameFight2D extends Game {
-  static var totalPlayers = 0;
-  static final playerPositionX = Float32List(1000);
-  static final playerPositionY = Float32List(1000);
+  static const length = 1000;
+  static var characters = 0;
+  static final characterState = Uint8List(length);
+  static final characterPositionX = Float32List(length);
+  static final characterPositionY = Float32List(length);
 
 
   @override
@@ -18,8 +20,13 @@ class GameFight2D extends Game {
       Engine.zoom = 1.0;
       Engine.targetZoom = 1.0;
 
-      for (var i = 0; i < totalPlayers; i++){
-        canvas.drawCircle(Offset(playerPositionX[i].toDouble(), playerPositionY[i].toDouble()), 100, Engine.paint);
+      for (var i = 0; i < characters; i++){
+        canvas.drawCircle(
+            Offset(
+                characterPositionX[i].toDouble(),
+                characterPositionY[i].toDouble()
+            ), 100, Engine.paint
+        );
       }
   }
 

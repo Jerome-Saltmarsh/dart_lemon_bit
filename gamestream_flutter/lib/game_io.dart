@@ -182,41 +182,41 @@ class GameIO {
   }
 
   static int getDirection() {
-    return inputModeKeyboard ? getDirectionKeyboard() : getDirectionTouchScreen();
+    return inputModeKeyboard ? getInputDirectionKeyboard() : getDirectionTouchScreen();
   }
 
   static int getDirectionTouchScreen() {
     return TouchController.getDirection();
   }
 
-  static int getDirectionKeyboard() {
+  static int getInputDirectionKeyboard() {
 
     if (Engine.keyPressed(KeyCode.W)) {
       if (Engine.keyPressed(KeyCode.D)) {
-        return Direction.East;
+        return InputDirection.Up_Right;
       }
       if (Engine.keyPressed(KeyCode.A)) {
-        return Direction.North;
+        return InputDirection.Up_Left;
       }
-      return Direction.North_East;
+      return InputDirection.Up;
     }
 
     if (Engine.keyPressed(KeyCode.S)) {
       if (Engine.keyPressed(KeyCode.D)) {
-        return Direction.South;
+        return InputDirection.Down_Right;
       }
       if (Engine.keyPressed(KeyCode.A)) {
-        return Direction.West;
+        return InputDirection.Down_Left;
       }
-      return Direction.South_West;
+      return InputDirection.Down;
     }
     if (Engine.keyPressed(KeyCode.A)) {
-      return Direction.North_West;
+      return InputDirection.Left;
     }
     if (Engine.keyPressed(KeyCode.D)) {
-      return Direction.South_East;
+      return InputDirection.Right;
     }
-    return Direction.None;
+    return InputDirection.None;
   }
 
 
@@ -273,7 +273,7 @@ class GameIO {
     if (Engine.keyPressed(KeyCode.Delete)) {
       GameEditor.delete();
     }
-    if (GameIO.getDirectionKeyboard() != Direction.None) {
+    if (GameIO.getInputDirectionKeyboard() != Direction.None) {
       GameActions.actionSetModePlay();
     }
     return;

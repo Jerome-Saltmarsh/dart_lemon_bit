@@ -205,7 +205,7 @@ class GameCombat extends GameIsometric {
       playerUsePower(player);
     }
 
-    playerRunInDirection(player, direction);
+    playerRunInDirection(player, Direction.fromInputDirection(direction));
   }
 
   @override

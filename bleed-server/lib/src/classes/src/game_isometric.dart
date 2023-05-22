@@ -249,7 +249,7 @@ abstract class GameIsometric<T extends IsometricPlayer> extends Game<T> {
     }
 
     if (inputTypeKeyboard) {
-      playerRunInDirection(player, direction);
+      playerRunInDirection(player, Direction.fromInputDirection(direction));
     } else {
       if (mouseLeftDown) {
         player.runToMouse();

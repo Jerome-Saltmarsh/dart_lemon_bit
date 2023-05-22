@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'input_type.dart';
+
 class Direction {
   static const North = 0;
   static const North_East = 1;
@@ -10,6 +12,20 @@ class Direction {
   static const West = 6;
   static const North_West = 7;
   static const None = 8;
+
+  static int fromInputDirection(int inputDirection){
+    return const {
+      InputDirection.Up         : Direction.North_East,
+      InputDirection.Up_Right   : Direction.East,
+      InputDirection.Right      : Direction.South_East,
+      InputDirection.Down_Right : Direction.South,
+      InputDirection.Down       : Direction.South_West,
+      InputDirection.Down_Left  : Direction.West,
+      InputDirection.Left       : Direction.North_West,
+      InputDirection.Up_Left    : Direction.North,
+      InputDirection.None       : Direction.None,
+    }[inputDirection] ?? Direction.None;
+  }
 
   /// 7 and 1
   /// the difference is actually only 2
