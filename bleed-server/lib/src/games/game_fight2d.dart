@@ -78,7 +78,7 @@ class GameFight2D extends Game<GameFight2DPlayer> {
 
      switch (direction) {
        case InputDirection.Right:
-         player.nextState = GameFight2DCharacterState.Run_Right;
+         player.runRight();
          break;
        case InputDirection.Up_Right:
          player.jump();
@@ -87,7 +87,7 @@ class GameFight2D extends Game<GameFight2DPlayer> {
          player.jump();
          break;
        case InputDirection.Left:
-         player.nextState = GameFight2DCharacterState.Run_Left;
+         player.runLeft();
          break;
        case InputDirection.Up:
          player.jump();
@@ -129,7 +129,7 @@ class GameFight2D extends Game<GameFight2DPlayer> {
 class GameFight2DCharacter {
   var stateDuration = 0;
   var state = GameFight2DCharacterState.Idle_Left;
-  var nextState = GameFight2DCharacterState.Idle_Left;
+  var _nextState = GameFight2DCharacterState.Idle_Left;
   var x = 0.0;
   var y = 0.0;
   var accelerationX = 0.0;
@@ -138,6 +138,14 @@ class GameFight2DCharacter {
   var velocityY = 0.0;
   var grounded = false;
 
+  int get nextState => _nextState;
+
+  set nextState(int value) {
+    if (_nextState == value) return;
+    // print("next state changed from: ${GameFight2DCharacterState.getName(_nextState)} to: ${GameFight2DCharacterState.getName(value)}");
+    _nextState = value;
+  }
+
   static const frictionFloor = 0.88;
   static const frictionAir = 0.95;
 
@@ -145,7 +153,7 @@ class GameFight2DCharacter {
 
   bool get facingLeft => GameFight2DCharacterState.isLeft(state);
 
-  bool get busy =>
+  bool get striking =>
       state == GameFight2DCharacterState.Strike_Left      ||
       state == GameFight2DCharacterState.Strike_Right     ||
       nextState == GameFight2DCharacterState.Strike_Left  ||
@@ -154,23 +162,31 @@ class GameFight2DCharacter {
   // METHODS
 
   void strike() {
-    if (busy) return;
+    if (striking) return;
     if (!grounded) return;
-    nextState = facingLeft ? GameFight2DCharacterState.Strike_Left : GameFight2DCharacterState.Strike_Right;
+    nextState = facingLeft
+        ? GameFight2DCharacterState.Strike_Left
+        : GameFight2DCharacterState.Strike_Right;
+    print('strike()');
+    printState();
+  }
+
+  void printState(){
+    print("state changed from: ${GameFight2DCharacterState.getName(state)} to: ${GameFight2DCharacterState.getName(nextState)}");
   }
 
   void runLeft(){
-    if (busy) return;
+    if (striking) return;
     nextState = GameFight2DCharacterState.Run_Left;
   }
 
   void runRight(){
-    if (busy) return;
+    if (striking) return;
     nextState = GameFight2DCharacterState.Run_Right;
   }
 
   void jump() {
-    if (busy) return;
+    if (striking) return;
     if (!grounded) return;
     if (velocityY < 0) return;
 
@@ -182,7 +198,7 @@ class GameFight2DCharacter {
   }
 
   void idle() {
-    if (busy) return;
+    if (striking) return;
     forceIdle();
   }
 
@@ -207,6 +223,7 @@ class GameFight2DCharacter {
      }
 
      if (state != nextState) {
+       print("state changed from: ${GameFight2DCharacterState.getName(state)} to: ${GameFight2DCharacterState.getName(nextState)}");
        state = nextState;
        stateDuration = 0;
      } else {
@@ -236,11 +253,11 @@ class GameFight2DCharacter {
          break;
        case GameFight2DCharacterState.Jump_Right:
          accelerationY -= jumpAcceleration;
-         nextState = GameFight2DCharacterState.Idle_Right;
+         idle();
          break;
        case GameFight2DCharacterState.Jump_Left:
          accelerationY -= jumpAcceleration;
-         nextState = GameFight2DCharacterState.Idle_Left;
+         idle();
          break;
      }
 
