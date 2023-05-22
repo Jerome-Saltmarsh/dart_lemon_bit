@@ -56,8 +56,8 @@ class GameFight2D extends Game<GameFight2DPlayer> {
   GameFight2DPlayer createPlayer() {
     final player = GameFight2DPlayer(this);
     player.writeScene();
-    player.x = randomBetween(-100, 100);
-    player.y = randomBetween(-100, 100);
+    player.x = randomBetween(0, scene.widthLength);
+    player.y = 0;
     characters.add(player);
     return player;
   }
@@ -96,13 +96,13 @@ class GameFight2D extends Game<GameFight2DPlayer> {
     }
 
     for (final character in characters) {
-       final tileType = scene.getTileTypeAtXY(character.x, character.y);
+       final tileType = scene.getTileTypeAtXY(character.x, character.y + 50.0);
        if (tileType == Fight2DNodeType.Grass){
          if (character.velocityY > 0){
            character.velocityY = 0;
          }
        } else {
-         character.accelerationY += 0.01;
+         character.accelerationY += 0.02;
        }
     }
   }
