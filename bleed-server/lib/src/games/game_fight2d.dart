@@ -122,6 +122,7 @@ class GameFight2D extends Game<GameFight2DPlayer> {
 }
 
 class GameFight2DCharacter {
+  var stateDuration = 0;
   var state = GameFight2DCharacterState.idle;
   var nextState = GameFight2DCharacterState.idle;
   var x = 0.0;
@@ -146,7 +147,14 @@ class GameFight2DCharacter {
      const runAcceleration = 0.5;
      const jumpAcceleration = 10.0;
 
-     state = nextState;
+     if (state != nextState){
+       state = nextState;
+       stateDuration = 0;
+     } else {
+       stateDuration++;
+     }
+
+
      switch (state) {
        case GameFight2DCharacterState.idle:
          break;
@@ -205,6 +213,7 @@ class GameFight2DPlayer extends Player with GameFight2DCharacter {
       writeByte(character.state);
       writeInt16(character.x.toInt());
       writeInt16(character.y.toInt());
+      writeByte(character.stateDuration % 255);
     }
   }
 

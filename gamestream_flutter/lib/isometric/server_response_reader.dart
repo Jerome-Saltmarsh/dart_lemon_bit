@@ -758,6 +758,7 @@ class ServerResponseReader with ByteReader {
       GameFight2D.characterState[i] = readByte();
       GameFight2D.characterPositionX[i] = readInt16().toDouble();
       GameFight2D.characterPositionY[i] = readInt16().toDouble();
+      GameFight2D.characterStateDuration[i] = readByte();
     }
   }
 }

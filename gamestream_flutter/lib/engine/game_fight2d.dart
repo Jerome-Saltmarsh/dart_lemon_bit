@@ -13,6 +13,7 @@ class GameFight2D extends Game {
   static const length = 1000;
   static var characters = 0;
   static final characterState = Uint8List(length);
+  static final characterStateDuration = Uint8List(length);
   static final characterPositionX = Float32List(length);
   static final characterPositionY = Float32List(length);
 
@@ -24,56 +25,64 @@ class GameFight2D extends Game {
 
   @override
   void drawCanvas(Canvas canvas, Size size) {
-
-      var index = 0;
-      for (var x = 0; x < sceneWidth; x++){
-         for (var y = 0; y < sceneHeight; y++){
-           final nodeType = sceneNodes[index];
-           index++;
-
-           final srcY = <int, double>{
-             Fight2DNodeType.Empty: 0,
-             Fight2DNodeType.Grass: 34,
-           }[nodeType] ?? 0;
-
-           Engine.renderSprite(
-               image: GameImages.atlas_fight2d_nodes,
-               srcX: srcY,
-               srcY: 0,
-               srcWidth: 34,
-               srcHeight: 34,
-               dstX: x * 32,
-               dstY: y * 32,
-           );
-
-         }
-      }
-
+      renderTiles();
       renderCharacters();
+  }
+
+  void renderTiles() {
+       var index = 0;
+    for (var x = 0; x < sceneWidth; x++){
+       for (var y = 0; y < sceneHeight; y++){
+         final nodeType = sceneNodes[index];
+         index++;
+
+         final srcY = <int, double>{
+           Fight2DNodeType.Empty: 0,
+           Fight2DNodeType.Grass: 34,
+         }[nodeType] ?? 0;
+
+         Engine.renderSprite(
+             image: GameImages.atlas_fight2d_nodes,
+             srcX: srcY,
+             srcY: 0,
+             srcWidth: 34,
+             srcHeight: 34,
+             dstX: x * 32,
+             dstY: y * 32,
+         );
+
+       }
+    }
   }
 
   void renderCharacters() {
     for (var i = 0; i < characters; i++){
       final state = characterState[i];
 
-      const frameSize = 64.0;
+      const frameSize = 256.0;
+      const runFrames = <double>[
+        3, 4, 5, 6
+      ];
+      final stateDuration = characterStateDuration[i];
+      final animationFrame = stateDuration ~/ 5;
 
-      var srcX = const<int, double> {
-         GameFight2DCharacterState.idle     : 0,
-         GameFight2DCharacterState.runLeft  : frameSize * 1,
-         GameFight2DCharacterState.runRight : frameSize * 2,
-         GameFight2DCharacterState.jump     : frameSize * 3,
-      } [state] ?? 0.0;
+      final frame = switch (state) {
+          GameFight2DCharacterState.idle => 0,
+          GameFight2DCharacterState.runRight => runFrames[animationFrame % 4],
+          GameFight2DCharacterState.runLeft => runFrames[animationFrame % 4],
+          _ => 0
+      };
 
       Engine.renderSprite(
-          image: GameImages.atlas_fight2d,
-          srcX: srcX,
-          srcY: 0,
-          srcWidth: 64,
-          srcHeight: 64,
+          image: GameImages.atlas_fight2d_character,
+          srcX: frame * frameSize,
+          srcY: state == GameFight2DCharacterState.runRight ? frameSize : 0,
+          srcWidth: frameSize,
+          srcHeight: frameSize,
           dstX: characterPositionX[i].toDouble(),
           dstY: characterPositionY[i].toDouble(),
       );
+
     }
   }
 
