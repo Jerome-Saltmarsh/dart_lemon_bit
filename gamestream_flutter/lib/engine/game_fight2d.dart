@@ -56,23 +56,22 @@ class GameFight2D extends Game {
 
   void renderCharacters() {
     for (var i = 0; i < characters; i++){
-      final state = characterState[i];
-
       const frameSize = 256.0;
-      const runFrames = <double>[
-        3, 4, 5, 6
-      ];
+      const runFrames = <double>[3, 4, 5, 6];
+      const framesStrike = <double>[1, 2];
       final stateDuration = characterStateDuration[i];
       final animationFrame = stateDuration ~/ 5;
+      final state = characterState[i];
 
       final frame = switch (state) {
           GameFight2DCharacterState.Idle_Left => 0,
           GameFight2DCharacterState.Idle_Right => 0,
           GameFight2DCharacterState.Run_Right => runFrames[animationFrame % 4],
           GameFight2DCharacterState.Run_Left => runFrames[animationFrame % 4],
+          GameFight2DCharacterState.Strike_Right => framesStrike[animationFrame % 2],
+          GameFight2DCharacterState.Strike_Left => framesStrike[animationFrame % 2],
           _ => 0
       };
-
 
       Engine.renderSprite(
           image: GameImages.atlas_fight2d_character,
@@ -81,9 +80,14 @@ class GameFight2D extends Game {
           srcWidth: frameSize,
           srcHeight: frameSize,
           dstX: characterPositionX[i].toDouble(),
-          dstY: characterPositionY[i].toDouble(),
+          dstY: characterPositionY[i].toDouble() - 12,
       );
 
+      Engine.renderText(
+          state.toString(),
+          characterPositionX[i].toDouble(),
+          characterPositionY[i].toDouble() - 100,
+      );
     }
   }
 

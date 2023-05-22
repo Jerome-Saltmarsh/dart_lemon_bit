@@ -71,6 +71,11 @@ class GameFight2D extends Game<GameFight2DPlayer> {
     required bool keySpaceDown,
     required bool inputTypeKeyboard,
   }) {
+
+     if (keySpaceDown) {
+        player.strike();
+     }
+
      switch (direction) {
        case InputDirection.Right:
          player.nextState = GameFight2DCharacterState.Run_Right;
@@ -88,13 +93,7 @@ class GameFight2D extends Game<GameFight2DPlayer> {
          player.jump();
          break;
        case InputDirection.None:
-         if (GameFight2DCharacterState.isLeft(player.state)){
-           player.nextState = GameFight2DCharacterState.Idle_Left;
-         } else {
-           player.nextState = GameFight2DCharacterState.Idle_Right;
-         }
-
-
+         player.idle();
          break;
      }
   }
@@ -142,16 +141,60 @@ class GameFight2DCharacter {
   static const frictionFloor = 0.88;
   static const frictionAir = 0.95;
 
-  void jump(){
+  // PROPERTIES
+
+  bool get facingLeft => GameFight2DCharacterState.isLeft(state);
+
+  bool get busy =>
+      state == GameFight2DCharacterState.Strike_Left      ||
+      state == GameFight2DCharacterState.Strike_Right     ||
+      nextState == GameFight2DCharacterState.Strike_Left  ||
+      nextState == GameFight2DCharacterState.Strike_Right ;
+
+  // METHODS
+
+  void strike() {
+    if (busy) return;
+    if (!grounded) return;
+    nextState = facingLeft ? GameFight2DCharacterState.Strike_Left : GameFight2DCharacterState.Strike_Right;
+  }
+
+  void runLeft(){
+    if (busy) return;
+    nextState = GameFight2DCharacterState.Run_Left;
+  }
+
+  void runRight(){
+    if (busy) return;
+    nextState = GameFight2DCharacterState.Run_Right;
+  }
+
+  void jump() {
+    if (busy) return;
     if (!grounded) return;
     if (velocityY < 0) return;
 
-    if (GameFight2DCharacterState.isLeft(state)){
+    if (facingLeft) {
       nextState = GameFight2DCharacterState.Jump_Left;
     } else {
       nextState = GameFight2DCharacterState.Jump_Right;
     }
+  }
 
+  void idle() {
+    if (busy) return;
+    forceIdle();
+  }
+
+  void forceIdle() {
+      nextState = facingLeft ? GameFight2DCharacterState.Idle_Left : GameFight2DCharacterState.Idle_Right;
+  }
+
+  void respawn() {
+    x = 100;
+    y = 0;
+    velocityX = 0;
+    velocityY = 0;
   }
 
   void update(){
@@ -159,18 +202,31 @@ class GameFight2DCharacter {
      const runAcceleration = 0.5;
      const jumpAcceleration = 10.0;
 
-     if (state != nextState){
+     if (y > 1000){
+       respawn();
+     }
+
+     if (state != nextState) {
        state = nextState;
        stateDuration = 0;
      } else {
        stateDuration++;
      }
 
-
      switch (state) {
        case GameFight2DCharacterState.Idle_Left:
          break;
        case GameFight2DCharacterState.Idle_Right:
+         break;
+       case GameFight2DCharacterState.Strike_Left:
+         if (stateDuration > 16){
+           forceIdle();
+         }
+         break;
+       case GameFight2DCharacterState.Strike_Right:
+         if (stateDuration > 16){
+           forceIdle();
+         }
          break;
        case GameFight2DCharacterState.Run_Left:
          accelerationX -= runAcceleration;

@@ -10,6 +10,7 @@ class GameFight2DCharacterState {
    static const Run_Left       = 1;
    static const Strike_Left    = 2;
    static const Jump_Left      = 3;
+
    static const Idle_Right     = 4;
    static const Run_Right      = 5;
    static const Jump_Right     = 6;
