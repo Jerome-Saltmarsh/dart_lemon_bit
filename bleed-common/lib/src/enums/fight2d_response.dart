@@ -4,7 +4,7 @@ class Fight2DResponse {
 }
 
 class GameFight2DCharacterState {
-   static const idle = 0;
-   static const runLeft = 0;
-   static const runRight = 0;
+   static const idle       = 0;
+   static const runLeft    = 1;
+   static const runRight   = 2;
 }

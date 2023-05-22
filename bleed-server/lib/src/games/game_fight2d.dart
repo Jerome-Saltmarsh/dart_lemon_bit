@@ -26,10 +26,17 @@ class GameFight2D extends Game<GameFight2DPlayer> {
     required bool keySpaceDown,
     required bool inputTypeKeyboard,
   }) {
-    if (direction != Direction.None) {
-      print(direction);
-      player.x++;
-    }
+     switch (direction){
+       case InputDirection.Right:
+         player.nextState = GameFight2DCharacterState.runRight;
+         break;
+       case InputDirection.Left:
+         player.nextState = GameFight2DCharacterState.runLeft;
+         break;
+       case InputDirection.None:
+         player.nextState = GameFight2DCharacterState.idle;
+         break;
+     }
   }
 
   @override
@@ -39,14 +46,52 @@ class GameFight2D extends Game<GameFight2DPlayer> {
 
   @override
   void update() {
-    // TODO: implement update
+    for (final character in characters) {
+      character.update();
+    }
   }
 }
 
 class GameFight2DCharacter {
   var state = GameFight2DCharacterState.idle;
+  var nextState = GameFight2DCharacterState.idle;
   var x = 0.0;
   var y = 0.0;
+  var accelerationX = 0.0;
+  var accelerationY = 0.0;
+  var velocityX = 0.0;
+  var velocityY = 0.0;
+  var applyGravity = false;
+
+  static const frictionFloor = 0.9;
+
+  void update(){
+     const gravity = 0.1;
+     const runAcceleration = 0.5;
+     state = nextState;
+     switch (state) {
+       case GameFight2DCharacterState.idle:
+         break;
+       case GameFight2DCharacterState.runLeft:
+         accelerationX -= runAcceleration;
+         break;
+       case GameFight2DCharacterState.runRight:
+         accelerationX += runAcceleration;
+         break;
+
+     }
+     if (applyGravity) {
+       accelerationY += gravity;
+     }
+
+     velocityX += accelerationX;
+     velocityY += accelerationY;
+     accelerationX = 0;
+     accelerationY = 0;
+     x += velocityX;
+     y += velocityY;
+     velocityX *= frictionFloor;
+  }
 }
 
 class GameFight2DPlayer extends Player with GameFight2DCharacter {
