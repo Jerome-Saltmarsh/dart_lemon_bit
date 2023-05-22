@@ -7,6 +7,9 @@ import 'game.dart';
 
 
 class GameFight2D extends Game {
+  static var playerX = 0.0;
+  static var playerY = 0.0;
+  static var playerState = GameFight2DCharacterState.idle;
   static const length = 1000;
   static var characters = 0;
   static final characterState = Uint8List(length);
@@ -59,9 +62,10 @@ class GameFight2D extends Game {
       const frameSize = 64.0;
 
       var srcX = const<int, double> {
-         GameFight2DCharacterState.idle: 0,
-         GameFight2DCharacterState.runLeft: frameSize * 1,
-         GameFight2DCharacterState.runRight: frameSize * 2,
+         GameFight2DCharacterState.idle     : 0,
+         GameFight2DCharacterState.runLeft  : frameSize * 1,
+         GameFight2DCharacterState.runRight : frameSize * 2,
+         GameFight2DCharacterState.jump     : frameSize * 3,
       } [state] ?? 0.0;
 
       Engine.renderSprite(
@@ -84,7 +88,8 @@ class GameFight2D extends Game {
   @override
   void update() {
     GameNetwork.sendClientRequestUpdate();
-    updateCamera();
+    // updateCamera();
+    Engine.cameraFollow(playerX, playerY);
   }
 
   void updateCamera() {

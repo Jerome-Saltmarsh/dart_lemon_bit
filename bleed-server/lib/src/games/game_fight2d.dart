@@ -71,12 +71,21 @@ class GameFight2D extends Game<GameFight2DPlayer> {
     required bool keySpaceDown,
     required bool inputTypeKeyboard,
   }) {
-     switch (direction){
+     switch (direction) {
        case InputDirection.Right:
          player.nextState = GameFight2DCharacterState.runRight;
          break;
+       case InputDirection.Up_Right:
+         player.jump();
+         break;
+       case InputDirection.Up_Left:
+         player.jump();
+         break;
        case InputDirection.Left:
          player.nextState = GameFight2DCharacterState.runLeft;
+         break;
+       case InputDirection.Up:
+         player.jump();
          break;
        case InputDirection.None:
          player.nextState = GameFight2DCharacterState.idle;
@@ -98,11 +107,12 @@ class GameFight2D extends Game<GameFight2DPlayer> {
     for (final character in characters) {
        final tileType = scene.getTileTypeAtXY(character.x, character.y + 50.0);
        if (tileType == Fight2DNodeType.Grass){
+         character.grounded = true;
          if (character.velocityY > 0){
            character.velocityY = 0;
          }
        } else {
-         character.accelerationY += 0.02;
+         character.grounded = false;
        }
     }
   }
@@ -117,13 +127,22 @@ class GameFight2DCharacter {
   var accelerationY = 0.0;
   var velocityX = 0.0;
   var velocityY = 0.0;
-  var applyGravity = false;
+  var grounded = false;
 
-  static const frictionFloor = 0.9;
+  static const frictionFloor = 0.88;
+  static const frictionAir = 0.95;
+
+  void jump(){
+    if (!grounded) return;
+    if (velocityY < 0) return;
+    nextState = GameFight2DCharacterState.jump;
+  }
 
   void update(){
-     const gravity = 0.1;
+     const gravity = 0.5;
      const runAcceleration = 0.5;
+     const jumpAcceleration = 10.0;
+
      state = nextState;
      switch (state) {
        case GameFight2DCharacterState.idle:
@@ -134,19 +153,26 @@ class GameFight2DCharacter {
        case GameFight2DCharacterState.runRight:
          accelerationX += runAcceleration;
          break;
-
+       case GameFight2DCharacterState.jump:
+         accelerationY -= jumpAcceleration;
+         nextState = GameFight2DCharacterState.idle;
+         break;
      }
-     if (applyGravity) {
+
+     if (!grounded) {
        accelerationY += gravity;
      }
-
      velocityX += accelerationX;
      velocityY += accelerationY;
      accelerationX = 0;
      accelerationY = 0;
      x += velocityX;
      y += velocityY;
-     velocityX *= frictionFloor;
+     if (grounded) {
+       velocityX *= frictionFloor;
+     } else {
+       velocityX *= frictionAir;
+     }
   }
 }
 
@@ -159,6 +185,13 @@ class GameFight2DPlayer extends Player with GameFight2DCharacter {
   @override
   void writePlayerGame() {
     writeCharacters();
+    writePlayer();
+  }
+
+  void writePlayer(){
+    writeByte(ServerResponse.Fight2D);
+    writeByte(Fight2DResponse.Player);
+    writeCharacter(this);
   }
 
   void writeCharacters() {
@@ -170,6 +203,12 @@ class GameFight2DPlayer extends Player with GameFight2DCharacter {
       writeInt16(character.x.toInt());
       writeInt16(character.y.toInt());
     }
+  }
+
+  void writeCharacter(GameFight2DCharacter character){
+    writeByte(character.state);
+    writeInt16(character.x.toInt());
+    writeInt16(character.y.toInt());
   }
 
   void writeScene() {

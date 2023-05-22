@@ -143,6 +143,11 @@ class ServerResponseReader with ByteReader {
       case Fight2DResponse.Characters:
         readFight2DResponseCharacters();
         break;
+      case Fight2DResponse.Player:
+        GameFight2D.playerState = readByte();
+        GameFight2D.playerX = readInt16().toDouble();
+        GameFight2D.playerY = readInt16().toDouble();
+        break;
       case Fight2DResponse.Scene:
         GameFight2D.sceneWidth = readUInt16();
         GameFight2D.sceneHeight = readUInt16();
