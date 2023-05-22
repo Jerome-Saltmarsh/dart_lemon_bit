@@ -21,11 +21,20 @@ class GameFight2D extends Game {
       Engine.targetZoom = 1.0;
 
       for (var i = 0; i < characters; i++){
-        canvas.drawCircle(
-            Offset(
-                characterPositionX[i].toDouble(),
-                characterPositionY[i].toDouble()
-            ), 100, Engine.paint
+        // canvas.drawCircle(
+        //     Offset(
+        //         characterPositionX[i].toDouble(),
+        //         characterPositionY[i].toDouble()
+        //     ), 100, Engine.paint
+        // );
+        Engine.renderSprite(
+            image: GameImages.atlas_fight2d,
+            srcX: 0,
+            srcY: 0,
+            srcWidth: 64,
+            srcHeight: 64,
+            dstX: characterPositionX[i].toDouble(),
+            dstY: characterPositionY[i].toDouble(),
         );
       }
   }

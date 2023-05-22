@@ -20,6 +20,7 @@ class GameImages {
    static late Image atlas_characters;
    static late Image atlas_icons;
    static late Image atlas_items;
+   static late Image atlas_fight2d;
    static late Image atlas_nodes_mini;
    static late Image atlas_weapons;
    static late Image sprite_stars;
@@ -253,6 +254,8 @@ class GameImages {
 
       Engine.loadImageAsset('images/sprites/sprite-stars.png').then((value) => sprite_stars = value);
       Engine.loadImageAsset('images/sprites/sprite-shield.png').then((value) => sprite_shield = value);
+
+      Engine.loadImageAsset('images/atlas-fight2d.png').then((value) => atlas_fight2d = value);
    }
 }
 
