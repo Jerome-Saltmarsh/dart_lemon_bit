@@ -16,6 +16,7 @@ class GameFight2DCharacterState {
    static const Striking         = 2;
    static const Jumping          = 3;
    static const Running_Strike   = 4;
+   static const Jumping_Strike   = 5;
 
    static String getName(int value) =>
       const {
@@ -24,6 +25,7 @@ class GameFight2DCharacterState {
         Striking: 'Striking',
         Jumping: 'Jumping',
         Running_Strike: 'Running_Strike',
+        Jumping_Strike: 'Jumping_Strike',
       }[value] ??
       'unknown';
 }

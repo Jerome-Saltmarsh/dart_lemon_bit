@@ -112,13 +112,15 @@ class GameFight2D extends Game<GameFight2DPlayer> {
     for (final character in characters) {
        var tileType = scene.getTileTypeAtXY(character.x, character.y + 50.0);
        if (tileType == Fight2DNodeType.Grass) {
-         character.grounded = true;
 
-         if (character.jumping) {
-           character.forceIdle();
+         if (!character.grounded) {
+           character.grounded = true;
+           if (character.jumping || character.striking) {
+             character.forceIdle();
+           }
          }
 
-         while (scene.getTileTypeAtXY(character.x, character.y + 50.0) == Fight2DNodeType.Grass){
+         while (scene.getTileTypeAtXY(character.x, character.y + 49.0) == Fight2DNodeType.Grass){
             character.y--;
          }
          if (character.velocityY > 0) {
@@ -167,6 +169,8 @@ class GameFight2DCharacter {
   bool get striking =>
       state == GameFight2DCharacterState.Striking            ||
       nextState == GameFight2DCharacterState.Striking        ||
+      state == GameFight2DCharacterState.Jumping_Strike            ||
+      nextState == GameFight2DCharacterState.Jumping_Strike        ||
       state == GameFight2DCharacterState.Running_Strike      ||
       nextState == GameFight2DCharacterState.Running_Strike  ;
 
@@ -176,9 +180,15 @@ class GameFight2DCharacter {
 
   void strike() {
     if (striking) return;
-    nextState = running
-        ? GameFight2DCharacterState.Running_Strike
-        : GameFight2DCharacterState.Striking;
+    if (running) {
+      nextState = GameFight2DCharacterState.Running_Strike;
+      return;
+    }
+    if (!grounded) {
+      nextState = GameFight2DCharacterState.Jumping_Strike;
+      return;
+    }
+    nextState = GameFight2DCharacterState.Striking;
   }
 
   void printStateChange() =>

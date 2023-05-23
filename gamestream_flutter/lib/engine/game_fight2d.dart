@@ -50,7 +50,6 @@ class GameFight2D extends Game {
              dstX: x * 32,
              dstY: y * 32,
          );
-
        }
     }
   }
@@ -70,6 +69,7 @@ class GameFight2D extends Game {
           GameFight2DCharacterState.Striking => capIndex(framesStrike, animationFrame),
           GameFight2DCharacterState.Running_Strike => 7,
           GameFight2DCharacterState.Jumping => 8,
+          GameFight2DCharacterState.Jumping_Strike => 9,
           _ => 0
       };
 
