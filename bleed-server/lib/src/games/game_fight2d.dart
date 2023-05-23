@@ -180,12 +180,12 @@ class GameFight2DCharacter {
 
   void strike() {
     if (striking) return;
-    if (running) {
-      nextState = GameFight2DCharacterState.Running_Strike;
-      return;
-    }
     if (!grounded) {
       nextState = GameFight2DCharacterState.Jumping_Strike;
+      return;
+    }
+    if (running) {
+      nextState = GameFight2DCharacterState.Running_Strike;
       return;
     }
     nextState = GameFight2DCharacterState.Striking;
@@ -194,16 +194,26 @@ class GameFight2DCharacter {
   void printStateChange() =>
       print("state: ${GameFight2DCharacterState.getName(state)}, nextState: ${GameFight2DCharacterState.getName(nextState)}");
 
-  void runLeft(){
+  void runLeft() {
     if (striking) return;
+    if (jumping) return;
     faceLeft();
-    nextState = GameFight2DCharacterState.Running;
+    if (grounded) {
+      nextState = GameFight2DCharacterState.Running;
+      return;
+    }
+    nextState = GameFight2DCharacterState.Falling;
   }
 
-  void runRight(){
+  void runRight() {
     if (striking) return;
+    if (jumping) return;
     faceRight();
-    nextState = GameFight2DCharacterState.Running;
+    if (grounded) {
+      nextState = GameFight2DCharacterState.Running;
+      return;
+    }
+    nextState = GameFight2DCharacterState.Falling;
   }
 
   void faceLeft() {
@@ -241,6 +251,7 @@ class GameFight2DCharacter {
   void update(){
      const gravity = 0.5;
      const runAcceleration = 0.5;
+     const airAcceleration = 0.25;
      const jumpAcceleration = 10.0;
 
      if (y > 1000){
@@ -264,6 +275,13 @@ class GameFight2DCharacter {
        case GameFight2DCharacterState.Running_Strike:
          if (stateDuration > 16){
            forceIdle();
+         }
+         break;
+       case GameFight2DCharacterState.Falling:
+         if (facingLeft) {
+           accelerationX -= airAcceleration;
+         } else {
+           accelerationX += airAcceleration;
          }
          break;
        case GameFight2DCharacterState.Running:
