@@ -113,6 +113,11 @@ class GameFight2D extends Game<GameFight2DPlayer> {
        var tileType = scene.getTileTypeAtXY(character.x, character.y + 50.0);
        if (tileType == Fight2DNodeType.Grass) {
          character.grounded = true;
+
+         if (character.jumping) {
+           character.forceIdle();
+         }
+
          while (scene.getTileTypeAtXY(character.x, character.y + 50.0) == Fight2DNodeType.Grass){
             character.y--;
          }
@@ -138,7 +143,6 @@ class GameFight2DCharacter {
   var velocityX = 0.0;
   var velocityY = 0.0;
   var grounded = false;
-  var falling = false;
 
   int get nextState => _nextState;
 
@@ -155,6 +159,8 @@ class GameFight2DCharacter {
 
   bool get facingLeft => direction == GameFight2DDirection.Left;
 
+  bool get jumping => state == GameFight2DCharacterState.Jumping;
+
   bool get running =>
       state == GameFight2DCharacterState.Running;
 
@@ -164,6 +170,7 @@ class GameFight2DCharacter {
       state == GameFight2DCharacterState.Running_Strike      ||
       nextState == GameFight2DCharacterState.Running_Strike  ;
 
+  bool get falling => velocityY > 0;
 
   // METHODS
 
@@ -197,26 +204,21 @@ class GameFight2DCharacter {
     direction = GameFight2DDirection.Right;
   }
 
-
   void jump() {
     if (striking) return;
     if (!grounded) return;
     if (velocityY < 0) return;
-
-    if (facingLeft) {
-      nextState = GameFight2DCharacterState.Jumping;
-    } else {
-      nextState = GameFight2DCharacterState.Jumping;
-    }
+    nextState = GameFight2DCharacterState.Jumping;
   }
 
   void idle() {
     if (striking) return;
+    if (jumping) return;
     forceIdle();
   }
 
   void forceIdle() {
-      nextState = GameFight2DCharacterState.Idle;
+      _nextState = GameFight2DCharacterState.Idle;
   }
 
   void respawn() {
@@ -236,11 +238,9 @@ class GameFight2DCharacter {
      }
 
      if (state != nextState) {
-       print("state changed from: ${GameFight2DCharacterState.getName(state)} to: ${GameFight2DCharacterState.getName(nextState)}");
+       // print("state changed from: ${GameFight2DCharacterState.getName(state)} to: ${GameFight2DCharacterState.getName(nextState)}");
        state = nextState;
        stateDuration = 0;
-     } else {
-       stateDuration++;
      }
 
      switch (state) {
@@ -264,8 +264,12 @@ class GameFight2DCharacter {
          }
          break;
        case GameFight2DCharacterState.Jumping:
-         accelerationY -= jumpAcceleration;
-         idle();
+         if (stateDuration == 0) {
+           accelerationY -= jumpAcceleration;
+         }
+         if (falling) {
+           forceIdle();
+         }
          break;
      }
 
@@ -283,6 +287,7 @@ class GameFight2DCharacter {
      } else {
        velocityX *= frictionAir;
      }
+     stateDuration++;
   }
 }
 
