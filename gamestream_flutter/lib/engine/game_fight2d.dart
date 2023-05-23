@@ -8,10 +8,11 @@ import 'game.dart';
 class GameFight2D extends Game {
   static var playerX = 0.0;
   static var playerY = 0.0;
-  static var playerState = GameFight2DCharacterState.Idle_Left;
+  static var playerState = GameFight2DCharacterState.Idle;
   static const length = 1000;
   static var characters = 0;
   static final characterState = Uint8List(length);
+  static final characterDirection = Uint8List(length);
   static final characterStateDuration = Uint8List(length);
   static final characterPositionX = Float32List(length);
   static final characterPositionY = Float32List(length);
@@ -58,25 +59,23 @@ class GameFight2D extends Game {
     for (var i = 0; i < characters; i++){
       const frameSize = 256.0;
       const runFrames = <double>[3, 4, 5, 6];
-      const framesStrike = <double>[1, 2];
+      const framesStrike = [1, 2];
       final stateDuration = characterStateDuration[i];
       final animationFrame = stateDuration ~/ 5;
       final state = characterState[i];
 
       final frame = switch (state) {
-          GameFight2DCharacterState.Idle_Left => 0,
-          GameFight2DCharacterState.Idle_Right => 0,
-          GameFight2DCharacterState.Run_Right => runFrames[animationFrame % 4],
-          GameFight2DCharacterState.Run_Left => runFrames[animationFrame % 4],
-          GameFight2DCharacterState.Strike_Right => framesStrike[animationFrame % 2],
-          GameFight2DCharacterState.Strike_Left => framesStrike[animationFrame % 2],
+          GameFight2DCharacterState.Idle => 0,
+          GameFight2DCharacterState.Running => runFrames[animationFrame % 4],
+          GameFight2DCharacterState.Striking => capIndex(framesStrike, animationFrame),
+          GameFight2DCharacterState.Running_Strike => 7,
           _ => 0
       };
 
       Engine.renderSprite(
           image: GameImages.atlas_fight2d_character,
           srcX: frame * frameSize,
-          srcY: GameFight2DCharacterState.isLeft(state) ? 0 : frameSize,
+          srcY:  characterDirection[i] == GameFight2DDirection.Left ? 0 : frameSize,
           srcWidth: frameSize,
           srcHeight: frameSize,
           dstX: characterPositionX[i].toDouble(),
@@ -84,7 +83,7 @@ class GameFight2D extends Game {
       );
 
       Engine.renderText(
-          state.toString(),
+          GameFight2DCharacterState.getName(state),
           characterPositionX[i].toDouble(),
           characterPositionY[i].toDouble() - 100,
       );

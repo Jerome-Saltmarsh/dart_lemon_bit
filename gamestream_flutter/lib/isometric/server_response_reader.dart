@@ -756,6 +756,7 @@ class ServerResponseReader with ByteReader {
     GameFight2D.characters = totalPlayers;
     for (var i = 0; i < totalPlayers; i++) {
       GameFight2D.characterState[i] = readByte();
+      GameFight2D.characterDirection[i] = readByte();
       GameFight2D.characterPositionX[i] = readInt16().toDouble();
       GameFight2D.characterPositionY[i] = readInt16().toDouble();
       GameFight2D.characterStateDuration[i] = readByte();
