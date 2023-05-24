@@ -115,15 +115,25 @@ class GameFight2D extends Game<GameFight2DPlayer> {
             if (otherCharacter == character) continue;
             final xDiff = character.x - otherCharacter.x;
             const range = 100.0;
-            const force = 5.0;
+            const force = 10.0;
             if (character.facingLeft){
               if (xDiff > 0 && xDiff < range) {
-                otherCharacter.hurt();
+                if (character.state == GameFight2DCharacterState.Running_Strike){
+                  otherCharacter.hurtAirborn();
+                  otherCharacter.accelerationY -= force;
+                } else {
+                  otherCharacter.hurt();
+                }
                 otherCharacter.accelerationX -= force;
               }
             } else {
               if (xDiff < range) {
-                otherCharacter.hurt();
+                if (character.state == GameFight2DCharacterState.Running_Strike){
+                  otherCharacter.hurtAirborn();
+                  otherCharacter.accelerationY -= force;
+                } else {
+                  otherCharacter.hurt();
+                }
                 otherCharacter.accelerationX += force;
               }
             }
@@ -137,7 +147,7 @@ class GameFight2D extends Game<GameFight2DPlayer> {
 
          if (!character.grounded) {
            character.grounded = true;
-           if (character.jumping || character.striking) {
+           if (character.jumping || character.striking || character.hurtingAirborn) {
              character.forceIdle();
            }
          }
@@ -194,8 +204,14 @@ class GameFight2DCharacter {
       state == GameFight2DCharacterState.Running;
 
   bool get hurting =>
-      state == GameFight2DCharacterState.Hurting     ||
-      nextState == GameFight2DCharacterState.Hurting ;
+      state == GameFight2DCharacterState.Hurting          ||
+      state == GameFight2DCharacterState.Hurting_Airborn  ||
+      nextState == GameFight2DCharacterState.Hurting      ||
+      nextState == GameFight2DCharacterState.Hurting_Airborn ;
+
+  bool get hurtingAirborn {
+    return state == GameFight2DCharacterState.Hurting_Airborn;
+  }
 
   bool get striking =>
       state == GameFight2DCharacterState.Striking ||
@@ -213,6 +229,10 @@ class GameFight2DCharacter {
 
   void hurt() {
      nextState = GameFight2DCharacterState.Hurting;
+  }
+
+  void hurtAirborn() {
+    nextState = GameFight2DCharacterState.Hurting_Airborn;
   }
 
   void strike() {

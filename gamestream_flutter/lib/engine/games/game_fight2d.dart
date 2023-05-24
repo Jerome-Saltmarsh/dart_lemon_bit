@@ -74,6 +74,7 @@ class GameFight2D extends Game {
           GameFight2DCharacterState.Crouching => 10,
           GameFight2DCharacterState.Strike_Up => 11,
           GameFight2DCharacterState.Hurting => 12,
+          GameFight2DCharacterState.Hurting_Airborn => 13,
           _ => 0
       };
 
