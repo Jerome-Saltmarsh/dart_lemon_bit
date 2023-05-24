@@ -113,9 +113,19 @@ class GameFight2D extends Game<GameFight2DPlayer> {
       if (character.striking && character.stateDuration == 5) {
          for (final otherCharacter in characters){
             if (otherCharacter == character) continue;
-            final xDiff = (character.x - otherCharacter.x).abs();
-            if (xDiff < 100){
-              otherCharacter.hurt();
+            final xDiff = character.x - otherCharacter.x;
+            const range = 100.0;
+            const force = 5.0;
+            if (character.facingLeft){
+              if (xDiff > 0 && xDiff < range) {
+                otherCharacter.hurt();
+                otherCharacter.accelerationX -= force;
+              }
+            } else {
+              if (xDiff < range) {
+                otherCharacter.hurt();
+                otherCharacter.accelerationX += force;
+              }
             }
          }
       }
@@ -209,6 +219,11 @@ class GameFight2DCharacter {
     if (striking) return;
     if (hurting) return;
 
+    if (!grounded) {
+      nextState = GameFight2DCharacterState.Jumping_Strike;
+      return;
+    }
+
     if (jumping) {
       if (stateDuration < Jump_Frame) {
         nextState = GameFight2DCharacterState.Strike_Up;
@@ -216,10 +231,6 @@ class GameFight2DCharacter {
       }
     }
 
-    if (!grounded) {
-      nextState = GameFight2DCharacterState.Jumping_Strike;
-      return;
-    }
     if (running) {
       nextState = GameFight2DCharacterState.Running_Strike;
       return;
@@ -266,7 +277,12 @@ class GameFight2DCharacter {
 
   void jump() {
     if (hurting) return;
-    if (striking) return;
+    if (striking) {
+      if (stateDuration < 3){
+        nextState = GameFight2DCharacterState.Strike_Up;
+        return;
+      }
+    }
     if (!grounded) return;
     if (velocityY < 0) return;
     nextState = GameFight2DCharacterState.Jumping;
