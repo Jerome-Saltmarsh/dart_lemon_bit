@@ -2,6 +2,7 @@ import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
+import 'engine/instances.dart';
 import 'library.dart';
 
 class GameNetwork {

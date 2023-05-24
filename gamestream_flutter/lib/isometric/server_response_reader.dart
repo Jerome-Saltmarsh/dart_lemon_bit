@@ -1,9 +1,11 @@
 import 'package:archive/archive.dart';
-import 'package:gamestream_flutter/engine/game_fight2d.dart';
+import 'package:gamestream_flutter/engine/games/game_fight2d.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_scene.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/structure/business/handle_server_response_game_error.dart';
 import 'package:lemon_byte/byte_reader.dart';
+
+import '../engine/instances.dart';
 
 final serverResponseReader = ServerResponseReader();
 

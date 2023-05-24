@@ -1,16 +1,16 @@
 
 
 import 'package:flutter/cupertino.dart';
+import 'package:gamestream_flutter/engine/classes/game.dart';
 import 'package:gamestream_flutter/library.dart';
-
-import 'game.dart';
 
 class GameFight2D extends Game {
   static var playerX = 0.0;
   static var playerY = 0.0;
-  static var playerState = GameFight2DCharacterState.Idle;
-  static const length = 1000;
   static var characters = 0;
+  static var playerState = GameFight2DCharacterState.Idle;
+
+  static const length = 1000;
   static final characterState = Uint8List(length);
   static final characterDirection = Uint8List(length);
   static final characterStateDuration = Uint8List(length);
@@ -30,7 +30,7 @@ class GameFight2D extends Game {
   }
 
   void renderTiles() {
-       var index = 0;
+    var index = 0;
     for (var x = 0; x < sceneWidth; x++){
        for (var y = 0; y < sceneHeight; y++){
          final nodeType = sceneNodes[index];
@@ -71,6 +71,9 @@ class GameFight2D extends Game {
           GameFight2DCharacterState.Running_Strike => 7,
           GameFight2DCharacterState.Jumping => 8,
           GameFight2DCharacterState.Jumping_Strike => 9,
+          GameFight2DCharacterState.Crouching => 10,
+          GameFight2DCharacterState.Strike_Up => 11,
+          GameFight2DCharacterState.Hurting => 12,
           _ => 0
       };
 

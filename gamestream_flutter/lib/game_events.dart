@@ -4,6 +4,7 @@ import 'package:gamestream_flutter/isometric/events/on_game_event_game_object_de
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/library.dart';
 
+import 'engine/instances.dart';
 import 'isometric/events/on_character_hurt.dart';
 
 class GameEvents {

@@ -3,15 +3,33 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/engine/instances.dart';
+import 'package:gamestream_flutter/game_widgets.dart';
+import 'package:vector_math/vector_math.dart' as vector;
 
-import 'game.dart';
+import '../classes/game.dart';
 
-class Game3D implements Game {
+class GameCube3D implements Game {
   @override
-  Widget buildUI(BuildContext context) {
-    // TODO: implement buildUI
-    throw UnimplementedError();
-  }
+  Widget buildUI(BuildContext context) => buildFullscreen(
+      child: Stack(
+         children: [
+           Positioned(
+               top: 8,
+               right: 8,
+               child: onPressed(
+                 action: gsEngine.disconnect,
+                 child: Container(
+                     color: Colors.green,
+                     alignment: Alignment.center,
+                     padding: const EdgeInsets.all(8),
+                     child: text("EXIT"),
+                 ),
+               ),
+           ),
+         ],
+      ),
+    );
 
   @override
   void drawCanvas(Canvas canvas, Size size) {
@@ -82,5 +100,21 @@ class Game3D implements Game {
   void update() {
     // TODO: implement update
   }
+}
 
+class Polygon {
+   final vector.Vector3 a;
+   final vector.Vector3 b;
+   final vector.Vector3 c;
+   Polygon(this.a, this.b, this.c);
+}
+
+class Mesh {
+  /// an array of x, y, z coordinates
+   List<vector.Vector3> vertices;
+   /// each vertex uses 3 indices
+   /// an x, y, and z position
+   List<Polygon> polygons;
+
+   Mesh({required this.polygons, required this.vertices});
 }

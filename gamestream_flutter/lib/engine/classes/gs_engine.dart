@@ -1,12 +1,11 @@
 import 'package:gamestream_flutter/game_utils.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:gamestream_flutter/engine/game_website.dart' as gw;
+import 'package:gamestream_flutter/engine/games/game_website.dart' as gw;
 import 'game.dart';
-import 'game_combat.dart';
-import 'instances.dart';
+import '../games/game_combat.dart';
+import '../instances.dart';
 
-final gsEngine = GSEngine();
 
 class GSEngine {
    late final gameType = Watch(GameType.Website, onChanged: _onChangedGameType);
@@ -83,6 +82,7 @@ class GSEngine {
        GameType.Website => gameWebsite,
        GameType.Fight2D => gameFight2D,
        GameType.Combat => combat,
+       GameType.Cube3D => gameCube3D,
        _ => throw Exception('mapGameTypeToGame($gameType)')
      };
    }
@@ -96,5 +96,21 @@ class GSEngine {
 
    static void onDeviceTypeChanged(int deviceType){
      GameIO.detectInputMode();
+   }
+
+   void startGameType(GameType gameType){
+      if (gameType.isSinglePlayer) {
+        this.gameType.value = gameType;
+        return;
+      }
+      GameNetwork.connectToGame(gameType);
+   }
+
+   void disconnect(){
+      if (gameType.value.isSinglePlayer){
+        gameType.value = GameType.Website;
+      } else {
+        GameNetwork.disconnect();
+      }
    }
 }

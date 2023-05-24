@@ -131,7 +131,6 @@ class GameWebsite {
             children: [
               buildLogoGameStream(),
               height16,
-              // buildColumnRegions(),
               SelectRegionColumn(),
               GameTypeColumn(),
             ],
