@@ -146,8 +146,14 @@ class GameFight2D extends Game<GameFight2DPlayer> {
        if (tileType == Fight2DNodeType.Grass) {
 
          if (!character.grounded) {
+           // on landed
            character.grounded = true;
-           if (character.jumping || character.striking || character.hurtingAirborn) {
+           if (
+              character.jumping ||
+              character.striking ||
+              character.hurtingAirborn ||
+              character.statefalling
+           ) {
              character.forceIdle();
            }
          }
@@ -208,6 +214,12 @@ class GameFight2DCharacter {
       state == GameFight2DCharacterState.Hurting_Airborn  ||
       nextState == GameFight2DCharacterState.Hurting      ||
       nextState == GameFight2DCharacterState.Hurting_Airborn ;
+
+  bool get statefalling =>
+      state == GameFight2DCharacterState.Falling          ||
+      state == GameFight2DCharacterState.Falling_Down     ||
+      nextState == GameFight2DCharacterState.Falling      ||
+      nextState == GameFight2DCharacterState.Falling_Down ;
 
   bool get hurtingAirborn {
     return state == GameFight2DCharacterState.Hurting_Airborn;
@@ -312,11 +324,19 @@ class GameFight2DCharacter {
     if (striking) return;
     if (jumping) return;
     if (hurting) return;
+    if (statefalling) return;
     forceIdle();
   }
 
+  void fallDown(){
+    if (striking) return;
+    if (jumping) return;
+    if (hurting) return;
+    nextState = GameFight2DCharacterState.Falling_Down;
+  }
+
   void forceIdle() {
-      _nextState = GameFight2DCharacterState.Idle;
+    _nextState = GameFight2DCharacterState.Idle;
   }
 
   void respawn() {
@@ -354,6 +374,9 @@ class GameFight2DCharacter {
 
      switch (state) {
        case GameFight2DCharacterState.Idle:
+         if (!grounded && falling){
+           fallDown();
+         }
          break;
        case GameFight2DCharacterState.Striking:
          if (stateDuration > 16){

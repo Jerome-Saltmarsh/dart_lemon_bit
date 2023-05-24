@@ -22,6 +22,7 @@ class GameFight2DCharacterState {
    static const Crouching        = 8;
    static const Hurting          = 9;
    static const Hurting_Airborn  = 10;
+   static const Falling_Down     = 11;
 
    static String getName(int value) =>
       const {

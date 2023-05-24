@@ -65,7 +65,6 @@ class GameFight2D extends Game {
 
       final frame = switch (state) {
           GameFight2DCharacterState.Idle => 0,
-          GameFight2DCharacterState.Falling => 0,
           GameFight2DCharacterState.Running => runFrames[animationFrame % 4],
           GameFight2DCharacterState.Striking => capIndex(framesStrike, animationFrame),
           GameFight2DCharacterState.Running_Strike => 7,
@@ -75,6 +74,8 @@ class GameFight2D extends Game {
           GameFight2DCharacterState.Strike_Up => 11,
           GameFight2DCharacterState.Hurting => 12,
           GameFight2DCharacterState.Hurting_Airborn => 13,
+          GameFight2DCharacterState.Falling => 14,
+          GameFight2DCharacterState.Falling_Down => 14,
           _ => 0
       };
 
