@@ -39,4 +39,16 @@ class GameFight2DCharacterState {
         Hurting_Airborn: 'Hurting_Airborn',
       }[value] ??
       'unknown';
+
+
+   // static int getOutputState(int currentState, int inputState){
+   //   switch (currentState){
+   //     case Idle:
+   //       return 0;
+   //     case Running:
+   //       return switch
+   //   }
+   //
+   //   return 0;
+   // }
 }

@@ -171,7 +171,7 @@ class GameFight2D extends Game<GameFight2DPlayer> {
   }
 }
 
-class GameFight2DCharacter {
+mixin class GameFight2DCharacter {
 
   static const frictionFloor = 0.88;
   static const frictionAir = 0.95;
@@ -497,5 +497,19 @@ class GameFight2DPlayer extends Player with GameFight2DCharacter {
     if (!grounded) return;
     nextState = GameFight2DCharacterState.Crouching;
   }
+}
+
+class _StateMachine {
+
+    static const IdleTransitions = [
+       GameFight2DCharacterState.Running,
+    ];
+
+    static const StrikingTransitions = [
+      GameFight2DCharacterState.Running,
+    ];
+
+
+
 }
 
