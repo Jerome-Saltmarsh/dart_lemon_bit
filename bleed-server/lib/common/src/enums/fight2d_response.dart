@@ -16,13 +16,13 @@ class GameFight2DCharacterState {
    static const Striking         = 2;
    static const Jumping          = 3;
    static const Running_Strike   = 4;
-   static const Jumping_Strike   = 5;
-   static const Strike_Up        = 6;
-   static const Falling          = 7;
+   static const Airborn_Strike   = 5;
+   static const Striking_Up        = 6;
+   static const Airborn_Movement = 7;
    static const Crouching        = 8;
    static const Hurting          = 9;
    static const Hurting_Airborn  = 10;
-   static const Falling_Down     = 11;
+   static const Idle_Airborn     = 11;
 
    static String getName(int value) =>
       const {
@@ -31,24 +31,12 @@ class GameFight2DCharacterState {
         Striking: 'Striking',
         Jumping: 'Jumping',
         Running_Strike: 'Running_Strike',
-        Jumping_Strike: 'Jumping_Strike',
-        Falling: 'Falling',
+        Airborn_Strike: 'Jumping_Strike',
+        Airborn_Movement: 'Falling',
         Crouching: 'Crouching',
-        Strike_Up: 'Strike_Up',
+        Striking_Up: 'Strike_Up',
         Hurting: 'Hurting',
         Hurting_Airborn: 'Hurting_Airborn',
       }[value] ??
       'unknown';
-
-
-   // static int getOutputState(int currentState, int inputState){
-   //   switch (currentState){
-   //     case Idle:
-   //       return 0;
-   //     case Running:
-   //       return switch
-   //   }
-   //
-   //   return 0;
-   // }
 }
