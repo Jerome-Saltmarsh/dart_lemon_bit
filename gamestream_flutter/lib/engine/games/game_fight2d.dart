@@ -69,13 +69,13 @@ class GameFight2D extends Game {
           GameFight2DCharacterState.Striking => capIndex(framesStrike, animationFrame),
           GameFight2DCharacterState.Running_Strike => 7,
           GameFight2DCharacterState.Jumping => 8,
-          GameFight2DCharacterState.Jumping_Strike => 9,
+          GameFight2DCharacterState.Airborn_Strike => 9,
           GameFight2DCharacterState.Crouching => 10,
-          GameFight2DCharacterState.Strike_Up => 11,
+          GameFight2DCharacterState.Striking_Up => 11,
           GameFight2DCharacterState.Hurting => 12,
           GameFight2DCharacterState.Hurting_Airborn => 13,
-          GameFight2DCharacterState.Falling => 14,
-          GameFight2DCharacterState.Falling_Down => 14,
+          GameFight2DCharacterState.Airborn_Movement => 14,
+          GameFight2DCharacterState.Idle_Airborn => 14,
           _ => 0
       };
 
