@@ -71,14 +71,12 @@ class GameFight2D extends Game<GameFight2DPlayer> {
     required bool keySpaceDown,
     required bool inputTypeKeyboard,
   }) {
-     if (keySpaceDown) {
-        player.strike();
-     }
-     if (mouseLeftDown){
+     player.jumpingRequested = mouseRightDown;
+     player.directionRequested = direction;
+
+     if (keySpaceDown || mouseLeftDown) {
        player.strike();
      }
-     player.jumpingRequested = mouseRightDown || keySpaceDown;
-     player.directionRequested = direction;
 
      switch (direction) {
        case InputDirection.Right:
@@ -203,6 +201,18 @@ mixin class GameFight2DCharacter {
 
   bool get jumpingRequested => _jumpingRequested;
 
+  static int getStateDuration(int state) => const {
+       GameFight2DCharacterState.Striking: 30,
+       GameFight2DCharacterState.Jumping: 12,
+       GameFight2DCharacterState.Airborn_Strike: 30,
+       GameFight2DCharacterState.Airborn_Strike_Up: 30,
+       GameFight2DCharacterState.Striking_Up: 30,
+       GameFight2DCharacterState.Second_Jump: 12,
+       GameFight2DCharacterState.Running_Strike: 30,
+       GameFight2DCharacterState.Hurting: 30,
+       GameFight2DCharacterState.Hurting_Airborn: 30,
+    }[state] ?? 0;
+
   set jumpingRequested(bool value){
      if (_jumpingRequested == value) return;
      _jumpingRequested = value;
@@ -217,6 +227,7 @@ mixin class GameFight2DCharacter {
     if (value == _nextState) return;
     print("next state changed from: ${GameFight2DCharacterState.getName(_nextState)} to: ${GameFight2DCharacterState.getName(value)}");
     _nextState = value;
+    stateDurationTotal = getStateDuration(_nextState);
   }
 
   // PROPERTIES
@@ -268,21 +279,27 @@ mixin class GameFight2DCharacter {
       return;
     }
     nextState = GameFight2DCharacterState.Hurting;
-    stateDurationTotal = 15;
   }
 
   void hurtAirborn() {
     nextState = GameFight2DCharacterState.Hurting_Airborn;
   }
 
-
-
   void strike() {
     if (busy) return;
 
+    switch (directionRequested){
+      case InputDirection.Up:
+        strikeUp();
+        return;
+      case InputDirection.Down:
+        strikeDown();
+        return;
+    }
+
     if (!grounded){
       if (directionRequested == InputDirection.Down){
-        airbornStrikeDown();
+        strikeDown();
         return;
       }
       if (directionRequested == InputDirection.Up){
@@ -292,29 +309,27 @@ mixin class GameFight2DCharacter {
       airbornStrike();
       return;
     }
+
+    if (jumping && stateDuration < 3){
+      return;
+    }
+
     if (running && velocityX.abs() > 5){
       runningStrike();
       return;
     }
-    if (jumping && stateDuration < 3){
-      strikeUp();
-      return;
-    }
 
     nextState = GameFight2DCharacterState.Striking;
-    stateDurationTotal = 30;
   }
 
   void airbornStrike() {
     if (busy) return;
     nextState = GameFight2DCharacterState.Airborn_Strike;
-    stateDurationTotal = 30;
   }
 
   void runningStrike() {
      if (busy) return;
      nextState = GameFight2DCharacterState.Running_Strike;
-     stateDurationTotal = 30;
   }
 
   void runLeft() {
@@ -349,21 +364,26 @@ mixin class GameFight2DCharacter {
   }
 
   void strikeUp() {
-    if (busy) return;
-    nextState = GameFight2DCharacterState.Striking_Up;
-    stateDurationTotal = 30;
+    if (busy) {
+      if (!jumping || stateDuration >= Jump_Frame)
+        return;
+    }
+    if (grounded){
+      nextState = GameFight2DCharacterState.Striking_Up;
+    } else {
+      nextState = GameFight2DCharacterState.Airborn_Strike_Up;
+    }
+
   }
 
-  void airbornStrikeDown() {
+  void strikeDown() {
     if (busy) return;
     nextState = GameFight2DCharacterState.Airborn_Strike_Down;
-    stateDurationTotal = 30;
   }
 
   void airbornStrikeUp() {
     if (busy) return;
     nextState = GameFight2DCharacterState.Airborn_Strike_Up;
-    stateDurationTotal = 30;
   }
 
   void jump() {
@@ -378,13 +398,11 @@ mixin class GameFight2DCharacter {
 
     if (!grounded) {
       nextState = GameFight2DCharacterState.Second_Jump;
-      stateDurationTotal = 12;
       jumpCount++;
       return;
     }
     if (velocityY < 0) return;
     nextState = GameFight2DCharacterState.Jumping;
-    stateDurationTotal = 12;
     jumpCount++;
   }
 
