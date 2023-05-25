@@ -178,6 +178,7 @@ class GameFight2D extends Game<GameFight2DPlayer> {
 mixin class GameFight2DCharacter {
 
   static const frictionFloor = 0.88;
+  static const frictionFloorSliding = 0.92;
   static const frictionAir = 0.95;
   static const Jump_Acceleration_Horizontal = 4.0;
   static const Jump_Frame = 4;
@@ -208,7 +209,7 @@ mixin class GameFight2DCharacter {
        GameFight2DCharacterState.Airborn_Strike_Up: 30,
        GameFight2DCharacterState.Striking_Up: 30,
        GameFight2DCharacterState.Second_Jump: 12,
-       GameFight2DCharacterState.Running_Strike: 30,
+       GameFight2DCharacterState.Running_Strike: 20,
        GameFight2DCharacterState.Hurting: 30,
        GameFight2DCharacterState.Hurting_Airborn: 30,
     }[state] ?? 0;
@@ -224,6 +225,8 @@ mixin class GameFight2DCharacter {
   int get nextState => _nextState;
 
   set nextState(int value) {
+    assert (!busy);
+    if (busy) return;
     if (value == _nextState) return;
     print("next state changed from: ${GameFight2DCharacterState.getName(_nextState)} to: ${GameFight2DCharacterState.getName(value)}");
     _nextState = value;
@@ -420,9 +423,9 @@ mixin class GameFight2DCharacter {
 
   void forceIdle() {
     if (grounded) {
-      nextState = GameFight2DCharacterState.Idle;
+      _nextState = GameFight2DCharacterState.Idle;
     } else {
-      nextState = GameFight2DCharacterState.Idle_Airborn;
+      _nextState = GameFight2DCharacterState.Idle_Airborn;
     }
     stateDurationTotal = 0;
   }
@@ -442,6 +445,7 @@ mixin class GameFight2DCharacter {
      const runAcceleration = 1.0;
      const airAcceleration = 0.25;
      const jumpAcceleration = 15.0;
+     const strikeUpAcceleration = 7.5;
      const fallAcceleration = 0.5;
      const maxRunSpeed = 6.0;
 
@@ -504,8 +508,25 @@ mixin class GameFight2DCharacter {
            break;
          }
          break;
+       case GameFight2DCharacterState.Running_Strike:
+         if (stateDuration == 0) {
+           const runStrikeAcceleration = 3.0;
+           if (facingLeft){
+             accelerationX -= runStrikeAcceleration;
+           } else {
+             accelerationX += runStrikeAcceleration;
+           }
+           break;
+         }
+         break;
        case GameFight2DCharacterState.Fall_Fast:
          accelerationY += fallAcceleration;
+         break;
+       case GameFight2DCharacterState.Airborn_Strike_Up:
+         if (stateDuration == 0) {
+           accelerationY -= strikeUpAcceleration;
+           break;
+         }
          break;
      }
 
@@ -518,13 +539,20 @@ mixin class GameFight2DCharacter {
      accelerationY = 0;
      x += velocityX;
      y += velocityY;
-     if (grounded) {
-       velocityX *= frictionFloor;
-     } else {
-       velocityX *= frictionAir;
-     }
+     velocityX *= friction;
      stateDuration++;
 
+  }
+
+  double get friction {
+    if (grounded) {
+      if (state == GameFight2DCharacterState.Running_Strike) {
+        return frictionFloorSliding;
+      }
+      return frictionFloor;
+    }
+
+    return frictionAir;
   }
 
 }
