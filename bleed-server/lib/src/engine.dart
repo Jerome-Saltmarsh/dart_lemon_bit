@@ -2,15 +2,14 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:bleed_server/firestore/firestore.dart';
+import 'package:bleed_server/src/classes/src/udp.dart';
+import 'package:bleed_server/src/classes/src/websocket_server.dart';
 import 'package:bleed_server/src/games/game_rock_paper_scissors.dart';
-import 'package:shelf/shelf_io.dart' as shelf_io;
 
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/games/game_editor.dart';
 import 'package:bleed_server/src/io/save_directory.dart';
 import 'package:bleed_server/src/scenes.dart';
-import 'package:shelf_web_socket/shelf_web_socket.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'system.dart';
 
@@ -20,14 +19,13 @@ class Engine {
 
   static const Frames_Per_Second = 45;
 
-  final connections = <Connection>[];
   final games = <Game>[];
   final scenes = Scenes();
   final database = isLocalMachine ? DatabaseLocalHost() : DatabaseFirestore();
+  final server = WebSocketServer();
 
   var _highScore = 0;
   var frame = 0;
-  var connectionsTotal = 0;
 
   int get highScore => _highScore;
 
@@ -62,7 +60,8 @@ class Engine {
     await scenes.load();
 
     Timer.periodic(Duration(milliseconds: 1000 ~/ Frames_Per_Second), _fixedUpdate);
-    _startWebsocketServer();
+    server.start();
+    // udpServer.start();
   }
 
   void dispatchHighScore(){
@@ -83,6 +82,7 @@ class Engine {
       games[i].update();
       games[i].writePlayerResponses();
     }
+    server.sendResponseToClients();
   }
 
   Future<GameEditor> findGameEditorNew() async {
@@ -93,35 +93,6 @@ class Engine {
   // and should not be called again
   void onGameCreated(Game game) {
     games.add(game);
-  }
-
-  void _startWebsocketServer(){
-    print("startWebsocketServer()");
-    var handler = webSocketHandler(
-      onConnection,
-      protocols: ['gamestream.online'],
-      pingInterval: const Duration(seconds: 30),
-    );
-
-    shelf_io.serve(handler, '0.0.0.0', 8080).then((server) {
-      print('Serving at wss://${server.address.host}:${server.port}');
-    }).catchError((error){
-      print("Websocket error occurred");
-      print(error);
-    });
-  }
-
-  void onConnection(WebSocketChannel webSocketChannel) {
-    final connection = Connection(webSocketChannel);
-    connections.add(connection);
-    connection.onDone = () => onConnectionDone(connection);
-    connectionsTotal++;
-    print("Connection Added. Current Connections: ${connections.length}, Total Connections: $connectionsTotal");
-  }
-
-  void onConnectionDone(Connection connection){
-    connections.remove(connection);
-    print("Connection Done. Current Connections: ${connections.length}, Total Connections: $connectionsTotal");
   }
 
   GameRockPaperScissors getGameRockPaperScissors() {

@@ -59,6 +59,8 @@ class GameFight2D extends Game {
       const frameSize = 256.0;
       const runFrames = [3, 4, 5, 6];
       const framesStrike = [1, 2];
+      const airbornStrikeDown = [15, 16];
+      const airbornStrikeUp = [17, 18];
       final stateDuration = characterStateDuration[i];
       final animationFrame = stateDuration ~/ 5;
       final state = characterState[i];
@@ -77,6 +79,9 @@ class GameFight2D extends Game {
           GameFight2DCharacterState.Airborn_Movement => 14,
           GameFight2DCharacterState.Idle_Airborn => 14,
           GameFight2DCharacterState.Second_Jump => 8,
+          GameFight2DCharacterState.Fall_Fast => 14,
+          GameFight2DCharacterState.Airborn_Strike_Down => capIndex(airbornStrikeDown, animationFrame),
+          GameFight2DCharacterState.Airborn_Strike_Up => capIndex(airbornStrikeUp, animationFrame),
           _ => 0
       };
 

@@ -11,19 +11,22 @@ class GameFight2DDirection {
 }
 
 class GameFight2DCharacterState {
-   static const Idle             = 0;
-   static const Running          = 1;
-   static const Striking         = 2;
-   static const Jumping          = 3;
-   static const Running_Strike   = 4;
-   static const Airborn_Strike   = 5;
-   static const Striking_Up        = 6;
-   static const Airborn_Movement = 7;
-   static const Crouching        = 8;
-   static const Hurting          = 9;
-   static const Hurting_Airborn  = 10;
-   static const Idle_Airborn     = 11;
-   static const Second_Jump      = 13;
+   static const Idle                = 0;
+   static const Running             = 1;
+   static const Striking            = 2;
+   static const Jumping             = 3;
+   static const Running_Strike      = 4;
+   static const Airborn_Strike      = 5;
+   static const Striking_Up         = 6;
+   static const Airborn_Movement    = 7;
+   static const Crouching           = 8;
+   static const Hurting             = 9;
+   static const Hurting_Airborn     = 10;
+   static const Idle_Airborn        = 11;
+   static const Second_Jump         = 13;
+   static const Airborn_Strike_Down = 14;
+   static const Airborn_Strike_Up   = 15;
+   static const Fall_Fast           = 16;
 
    
    static String getName(int value) =>
@@ -41,6 +44,8 @@ class GameFight2DCharacterState {
         Hurting_Airborn: 'Hurting_Airborn',
         Idle_Airborn: "Idle_Airborn",
         Second_Jump: "Second_Jump",
+        Airborn_Strike_Down: "Airborn_Strike_Down",
+        Airborn_Strike_Up: "Airborn_Strike_Up",
       }[value] ??
       'unknown';
 }

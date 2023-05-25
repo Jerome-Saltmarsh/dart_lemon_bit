@@ -5,7 +5,6 @@ import 'package:lemon_math/library.dart';
 
 abstract class Player with ByteWriter {
   Game get game;
-  late Function sendBufferToClient;
   var framesSinceClientRequest = 0;
   final mouse = Vector2(0, 0);
   var screenLeft = 0.0;
