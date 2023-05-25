@@ -349,13 +349,13 @@ mixin class GameFight2DCharacter {
     if (busy) return;
 
     if (!grounded) {
-      if (stateDuration > 20) {
-        nextState = GameFight2DCharacterState.Second_Jump;
-      }
+      nextState = GameFight2DCharacterState.Second_Jump;
+      stateDurationTotal = 12;
       return;
     }
     if (velocityY < 0) return;
     nextState = GameFight2DCharacterState.Jumping;
+    stateDurationTotal = 12;
   }
 
   void idle() {
@@ -452,7 +452,7 @@ mixin class GameFight2DCharacter {
        case GameFight2DCharacterState.Second_Jump:
          if (stateDuration == 0) {
            accelerationY -= jumpAcceleration;
-           return;
+           break;
          }
          break;
      }

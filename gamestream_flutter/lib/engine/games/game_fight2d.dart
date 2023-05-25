@@ -76,6 +76,7 @@ class GameFight2D extends Game {
           GameFight2DCharacterState.Hurting_Airborn => 13,
           GameFight2DCharacterState.Airborn_Movement => 14,
           GameFight2DCharacterState.Idle_Airborn => 14,
+          GameFight2DCharacterState.Second_Jump => 8,
           _ => 0
       };
 

@@ -25,6 +25,7 @@ class GameFight2DCharacterState {
    static const Idle_Airborn     = 11;
    static const Second_Jump      = 13;
 
+   
    static String getName(int value) =>
       const {
         Idle: 'Idle',
