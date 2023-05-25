@@ -185,6 +185,7 @@ mixin class GameFight2DCharacter {
 
   var direction = GameFight2DDirection.Left;
   var stateDuration = 0;
+  var stateDurationInteruptable = 0;
   var stateDurationTotal = 0;
   var state = GameFight2DCharacterState.Idle;
   var _nextState = GameFight2DCharacterState.Idle;
@@ -214,6 +215,11 @@ mixin class GameFight2DCharacter {
        GameFight2DCharacterState.Hurting_Airborn: 30,
     }[state] ?? 0;
 
+  static int getStateDurationInterruptable(int state) => const {
+    GameFight2DCharacterState.Jumping: 8,
+    GameFight2DCharacterState.Second_Jump: 8,
+  }[state] ?? 0;
+
   set jumpingRequested(bool value){
      if (_jumpingRequested == value) return;
      _jumpingRequested = value;
@@ -228,9 +234,15 @@ mixin class GameFight2DCharacter {
     assert (!busy);
     if (busy) return;
     if (value == _nextState) return;
-    print("next state changed from: ${GameFight2DCharacterState.getName(_nextState)} to: ${GameFight2DCharacterState.getName(value)}");
+
+    assert((){
+      print("next state changed from: ${GameFight2DCharacterState.getName(_nextState)} to: ${GameFight2DCharacterState.getName(value)}");
+      return true;
+    }());
+
     _nextState = value;
     stateDurationTotal = getStateDuration(_nextState);
+    stateDurationInteruptable = getStateDurationInterruptable(_nextState);
   }
 
   // PROPERTIES
@@ -260,7 +272,15 @@ mixin class GameFight2DCharacter {
     return state == GameFight2DCharacterState.Hurting_Airborn;
   }
 
-  bool get busy => stateDurationTotal > 0 || hurting;
+  bool get busy {
+    if (stateDurationInteruptable > 0){
+      return stateDuration < stateDurationInteruptable;
+    }
+    if (stateDurationTotal > 0){
+      return stateDuration < stateDurationTotal;
+    }
+    return false;
+  }
 
   bool get striking =>
       state == GameFight2DCharacterState.Striking ||
