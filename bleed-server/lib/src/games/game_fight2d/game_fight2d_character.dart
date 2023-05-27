@@ -46,8 +46,11 @@ mixin class GameFight2DCharacter {
     }
   }
 
+  int get statePriority => getStatePriority(_state);
+
   set state(int value) {
-    if (busy) return;
+
+    if (getStatePriority(value) <= statePriority) return;
     if (value == _state) return;
 
     assert((){
@@ -101,16 +104,10 @@ mixin class GameFight2DCharacter {
   // METHODS
 
   void hurt() {
-    if (!grounded){
-      hurtAirborn();
-      return;
-    }
-    forceIdle();
-    state = GameFight2DCharacterState.Hurting;
+    state = grounded ? GameFight2DCharacterState.Hurting : GameFight2DCharacterState.Hurting_Airborn;
   }
 
   void hurtAirborn() {
-    forceIdle();
     state = GameFight2DCharacterState.Hurting_Airborn;
   }
 
@@ -343,13 +340,13 @@ mixin class GameFight2DCharacter {
 
   static int getStateDurationTotal(int state) => const {
     GameFight2DCharacterState.Striking: 30,
+    GameFight2DCharacterState.Running_Strike: 30,
     GameFight2DCharacterState.Crouching_Strike: 30,
     GameFight2DCharacterState.Jumping: 12,
     GameFight2DCharacterState.Airborn_Strike: 30,
     GameFight2DCharacterState.Airborn_Strike_Up: 30,
     GameFight2DCharacterState.Striking_Up: 30,
     GameFight2DCharacterState.Second_Jump: 12,
-    GameFight2DCharacterState.Running_Strike: 20,
     GameFight2DCharacterState.Hurting: 30,
     GameFight2DCharacterState.Hurting_Airborn: 30,
   }[state] ?? 0;
@@ -358,4 +355,23 @@ mixin class GameFight2DCharacter {
     GameFight2DCharacterState.Jumping: 10,
     GameFight2DCharacterState.Second_Jump: 10,
   }[state] ?? 0;
+
+  static int getStatePriority(int state) =>
+      const {
+       GameFight2DCharacterState.Idle: 0,
+       GameFight2DCharacterState.Idle_Airborn: 0,
+       GameFight2DCharacterState.Running: 1,
+       GameFight2DCharacterState.Crouching: 1,
+       GameFight2DCharacterState.Striking_Up: 2,
+       GameFight2DCharacterState.Striking: 2,
+       GameFight2DCharacterState.Jumping: 2,
+       GameFight2DCharacterState.Second_Jump: 2,
+       GameFight2DCharacterState.Running_Strike: 2,
+       GameFight2DCharacterState.Airborn_Strike: 2,
+       GameFight2DCharacterState.Airborn_Strike_Down: 2,
+       GameFight2DCharacterState.Airborn_Strike_Up: 2,
+       GameFight2DCharacterState.Crouching_Strike: 2,
+       GameFight2DCharacterState.Hurting_Airborn: 3,
+       GameFight2DCharacterState.Hurting: 3,
+     }[state] ?? 0;
 }
