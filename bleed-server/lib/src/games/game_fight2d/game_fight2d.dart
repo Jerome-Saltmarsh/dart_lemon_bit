@@ -117,58 +117,61 @@ class GameFight2D extends Game<GameFight2DPlayer> {
         case GameFight2DCharacterState.Striking_Up:
           applyCharacterHitBoxStrikeUp(character);
           break;
-      }
-
-      if (character.striking && character.stateDuration == 5) {
-         emitEventPunch(character);
-         for (final otherCharacter in characters){
-           const rangeX = 75.0;
-           const rangeY = 75.0;
-
-            if (otherCharacter == character) continue;
-            final xDiff = character.x - otherCharacter.x;
-            if (rangeX < xDiff.abs()) continue;
-            final yDiff = character.y - otherCharacter.y;
-            if (rangeY < yDiff.abs()) continue;
-
-            const force = 10.0;
-            if (character.facingLeft){
-              if (xDiff > 0 && xDiff < rangeX) {
-                if (character.state == GameFight2DCharacterState.Running_Strike){
-                  otherCharacter.hurtAirborn();
-                  otherCharacter.accelerationY -= force;
-                } else {
-                  otherCharacter.hurt();
-                }
-                otherCharacter.accelerationX -= force;
-              }
-            } else {
-              if (xDiff < rangeX) {
-                switch (character.state) {
-                  case GameFight2DCharacterState.Running_Strike:
-                    otherCharacter.hurtAirborn();
-                    otherCharacter.accelerationY -= force;
-                    break;
-                  default:
-                    otherCharacter.hurt();
-                    break;
-                }
-                if (character.state == GameFight2DCharacterState.Running_Strike) {
-                  otherCharacter.hurtAirborn();
-                  otherCharacter.accelerationY -= force;
-                } else {
-                  otherCharacter.hurt();
-                }
-                otherCharacter.accelerationX += force;
-              }
-            }
-         }
+        case GameFight2DCharacterState.Airborn_Strike:
+          applyCharacterHitBoxAirbornStrike(character);
+          break;
+        case GameFight2DCharacterState.Running_Strike:
+          applyCharacterHitBoxStrike(character);
+          break;
       }
     }
   }
 
   void applyCharacterHitBoxStrike(GameFight2DCharacter character){
+    if (character.stateDuration != 5) return;
+    emitEventPunch(character);
+    for (final otherCharacter in characters){
+      const rangeX = 75.0;
+      const rangeY = 75.0;
 
+      if (otherCharacter == character) continue;
+      final xDiff = character.x - otherCharacter.x;
+      if (rangeX < xDiff.abs()) continue;
+      final yDiff = character.y - otherCharacter.y;
+      if (rangeY < yDiff.abs()) continue;
+
+      const force = 10.0;
+      if (character.facingLeft){
+        if (xDiff > 0 && xDiff < rangeX) {
+          if (character.state == GameFight2DCharacterState.Running_Strike){
+            otherCharacter.hurtAirborn();
+            otherCharacter.accelerationY -= force;
+          } else {
+            otherCharacter.hurt();
+          }
+          otherCharacter.accelerationX -= force;
+        }
+      } else {
+        if (xDiff < rangeX) {
+          switch (character.state) {
+            case GameFight2DCharacterState.Running_Strike:
+              otherCharacter.hurtAirborn();
+              otherCharacter.accelerationY -= force;
+              break;
+            default:
+              otherCharacter.hurt();
+              break;
+          }
+          if (character.state == GameFight2DCharacterState.Running_Strike) {
+            otherCharacter.hurtAirborn();
+            otherCharacter.accelerationY -= force;
+          } else {
+            otherCharacter.hurt();
+          }
+          otherCharacter.accelerationX += force;
+        }
+      }
+    }
   }
 
   void applyCharacterHitBoxStrikeUp(GameFight2DCharacter character){
@@ -183,6 +186,24 @@ class GameFight2D extends Game<GameFight2DPlayer> {
            if (rangeY < yDiff.abs()) continue;
            otherCharacter.hurtAirborn();
            otherCharacter.accelerationY -= 20;
+           emitEventPunch(character);
+       }
+  }
+
+  void applyCharacterHitBoxAirbornStrike(GameFight2DCharacter character){
+       if (character.stateDuration != 5) return;
+       for (final otherCharacter in characters) {
+           if (otherCharacter == character) continue;
+           const rangeX = 75.0;
+           const rangeY = 75.0;
+           final xDiff = character.x - otherCharacter.x;
+           if (rangeX < xDiff.abs()) continue;
+           final yDiff = character.y - otherCharacter.y;
+           if (rangeY < yDiff.abs()) continue;
+           otherCharacter.hurtAirborn();
+           otherCharacter.accelerationY -= 20;
+           otherCharacter.accelerationX += character.facingLeft ? -10 : 10;
+           emitEventPunch(character);
        }
   }
 

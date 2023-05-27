@@ -11,14 +11,9 @@ mixin class GameFight2DCharacter {
   static const Max_Jumps = 2;
 
   var emitEventJump = false;
-  var emitEventStrike = false;
-
-  var direction = GameFight2DDirection.Left;
   var stateDuration = 0;
   var stateDurationInterruptable = 0;
   var stateDurationTotal = 0;
-  var state = GameFight2DCharacterState.Idle;
-  var _nextState = GameFight2DCharacterState.Idle;
   var x = 0.0;
   var y = 0.0;
   var accelerationX = 0.0;
@@ -29,27 +24,19 @@ mixin class GameFight2DCharacter {
   var jumpCount = 0;
   var directionRequested = 0;
 
+  var _direction = GameFight2DDirection.Left;
+  var _state = GameFight2DCharacterState.Idle;
+  var _previousState = GameFight2DCharacterState.Idle;
   var _jumpingRequested = false;
 
+  int get direction => _direction;
+  int get state => _state;
   bool get jumpingRequested => _jumpingRequested;
 
-  static int getStateDurationTotal(int state) => const {
-    GameFight2DCharacterState.Striking: 30,
-    GameFight2DCharacterState.Crouching_Strike: 30,
-    GameFight2DCharacterState.Jumping: 12,
-    GameFight2DCharacterState.Airborn_Strike: 30,
-    GameFight2DCharacterState.Airborn_Strike_Up: 30,
-    GameFight2DCharacterState.Striking_Up: 30,
-    GameFight2DCharacterState.Second_Jump: 12,
-    GameFight2DCharacterState.Running_Strike: 20,
-    GameFight2DCharacterState.Hurting: 30,
-    GameFight2DCharacterState.Hurting_Airborn: 30,
-  }[state] ?? 0;
-
-  static int getStateDurationInterruptable(int state) => const {
-    GameFight2DCharacterState.Jumping: 10,
-    GameFight2DCharacterState.Second_Jump: 10,
-  }[state] ?? 0;
+  set direction(int value){
+    if (busy) return;
+    _direction = value;
+  }
 
   set jumpingRequested(bool value){
     if (_jumpingRequested == value) return;
@@ -59,21 +46,19 @@ mixin class GameFight2DCharacter {
     }
   }
 
-  int get nextState => _nextState;
-
-  set nextState(int value) {
-    assert (!busy);
+  set state(int value) {
     if (busy) return;
-    if (value == _nextState) return;
+    if (value == _state) return;
 
     assert((){
-      print("next state changed from: ${GameFight2DCharacterState.getName(_nextState)} to: ${GameFight2DCharacterState.getName(value)}");
+      print("next state changed from: ${GameFight2DCharacterState.getName(_state)} to: ${GameFight2DCharacterState.getName(value)}");
       return true;
     }());
 
-    _nextState = value;
-    stateDurationTotal = getStateDurationTotal(_nextState);
-    stateDurationInterruptable = getStateDurationInterruptable(_nextState);
+    _state = value;
+    stateDuration = 0;
+    stateDurationTotal = getStateDurationTotal(_state);
+    stateDurationInterruptable = getStateDurationInterruptable(_state);
   }
 
   // PROPERTIES
@@ -89,9 +74,7 @@ mixin class GameFight2DCharacter {
 
   bool get hurting =>
       state == GameFight2DCharacterState.Hurting          ||
-          state == GameFight2DCharacterState.Hurting_Airborn  ||
-          nextState == GameFight2DCharacterState.Hurting      ||
-          nextState == GameFight2DCharacterState.Hurting_Airborn ;
+      _state == GameFight2DCharacterState.Hurting_Airborn ;
 
   bool get busy {
     if (stateDurationInterruptable > 0){
@@ -105,15 +88,15 @@ mixin class GameFight2DCharacter {
 
   bool get striking =>
       state     == GameFight2DCharacterState.Striking       ||
-      nextState == GameFight2DCharacterState.Striking       ||
       state     == GameFight2DCharacterState.Airborn_Strike ||
-      nextState == GameFight2DCharacterState.Airborn_Strike ||
       state     == GameFight2DCharacterState.Running_Strike ||
-      nextState == GameFight2DCharacterState.Running_Strike ||
-      state     == GameFight2DCharacterState.Striking_Up    ||
-      nextState == GameFight2DCharacterState.Striking_Up    ;
+      state     == GameFight2DCharacterState.Striking_Up    ;
 
   bool get falling => velocityY > 0;
+
+  bool get directionRequestedUp => directionRequested == InputDirection.Up;
+
+  bool get maxJumpsReached => jumpCount >= Max_Jumps;
 
   // METHODS
 
@@ -123,16 +106,15 @@ mixin class GameFight2DCharacter {
       return;
     }
     forceIdle();
-    nextState = GameFight2DCharacterState.Hurting;
+    state = GameFight2DCharacterState.Hurting;
   }
 
   void hurtAirborn() {
     forceIdle();
-    nextState = GameFight2DCharacterState.Hurting_Airborn;
+    state = GameFight2DCharacterState.Hurting_Airborn;
   }
 
   void strike() {
-
     switch (directionRequested){
       case InputDirection.Up:
         strikeUp();
@@ -141,8 +123,6 @@ mixin class GameFight2DCharacter {
         strikeDown();
         return;
     }
-
-    if (busy) return;
 
     if (!grounded){
       airbornStrike();
@@ -154,47 +134,32 @@ mixin class GameFight2DCharacter {
       return;
     }
 
-    nextState = GameFight2DCharacterState.Striking;
+    state = GameFight2DCharacterState.Striking;
   }
 
-  void airbornStrike() {
-    if (busy) return;
-    nextState = GameFight2DCharacterState.Airborn_Strike;
-  }
+  void airbornStrike() => state = GameFight2DCharacterState.Airborn_Strike;
 
-  void runningStrike() {
-    if (busy) return;
-    nextState = GameFight2DCharacterState.Running_Strike;
-  }
+  void runningStrike() => state = GameFight2DCharacterState.Running_Strike;
 
   void runLeft() {
-    if (busy) return;
     faceLeft();
     run();
   }
 
   void runRight() {
-    if (busy) return;
     faceRight();
     run();
   }
 
-  void run(){
-    if (grounded) {
-      nextState = GameFight2DCharacterState.Running;
-    } else {
-      nextState = GameFight2DCharacterState.Airborn_Movement;
-    }
-    stateDurationTotal = 0;
-  }
+  void run() => state = grounded
+        ? GameFight2DCharacterState.Running
+        : GameFight2DCharacterState.Airborn_Movement;
 
   void faceLeft() {
-    if (busy) return;
     direction = GameFight2DDirection.Left;
   }
 
   void faceRight() {
-    if (busy) return;
     direction = GameFight2DDirection.Right;
   }
 
@@ -203,31 +168,20 @@ mixin class GameFight2DCharacter {
   void strikeUp() {
     if (!canStrikeUpOrDown) return;
     forceIdle();
-    if (grounded){
-      nextState = GameFight2DCharacterState.Striking_Up;
-    } else {
-      nextState = GameFight2DCharacterState.Airborn_Strike_Up;
-    }
+    state = grounded
+        ? GameFight2DCharacterState.Striking_Up
+        : GameFight2DCharacterState.Airborn_Strike_Up;
   }
 
   void strikeDown() {
     if (!canStrikeUpOrDown) return;
-    forceIdle(); // cancel the current jump action
-    if (grounded) {
-      nextState = GameFight2DCharacterState.Crouching_Strike;
-    } else {
-      nextState = GameFight2DCharacterState.Airborn_Strike_Down;
-    }
+    forceIdle();
+    state = grounded ? GameFight2DCharacterState.Crouching_Strike : GameFight2DCharacterState.Airborn_Strike_Down;
   }
 
   void airbornStrikeUp() {
-    if (busy) return;
-    nextState = GameFight2DCharacterState.Airborn_Strike_Up;
+    state = GameFight2DCharacterState.Airborn_Strike_Up;
   }
-
-  bool get directionRequestedUp => directionRequested == InputDirection.Up;
-
-  bool get maxJumpsReached => jumpCount >= Max_Jumps;
 
   void jump() {
 
@@ -238,14 +192,12 @@ mixin class GameFight2DCharacter {
 
     if (maxJumpsReached) return;
 
-    if (busy) return;
-
     if (!grounded) {
-      nextState = GameFight2DCharacterState.Second_Jump;
+      state = GameFight2DCharacterState.Second_Jump;
       return;
     }
     if (velocityY < 0) return;
-    nextState = GameFight2DCharacterState.Jumping;
+    state = GameFight2DCharacterState.Jumping;
   }
 
   void idle() {
@@ -254,15 +206,14 @@ mixin class GameFight2DCharacter {
   }
 
   void fallDown(){
-    if (busy) return;
-    nextState = GameFight2DCharacterState.Idle_Airborn;
+    state = GameFight2DCharacterState.Idle_Airborn;
   }
 
   void forceIdle() {
-    setStateDurationZero();
-    _nextState = grounded
+    _state = grounded
         ? GameFight2DCharacterState.Idle
         : GameFight2DCharacterState.Idle_Airborn;
+    stateDuration = 0;
     stateDurationTotal = 0;
     stateDurationInterruptable = 0;
   }
@@ -272,7 +223,7 @@ mixin class GameFight2DCharacter {
     y = 0;
     velocityX = 0;
     velocityY = 0;
-    setStateDurationZero();
+    stateDuration = 0;
     forceIdle();
   }
 
@@ -289,17 +240,8 @@ mixin class GameFight2DCharacter {
       respawn();
     }
 
-    if (state != nextState) {
-      if (state == GameFight2DCharacterState.Running && nextState == GameFight2DCharacterState.Jumping){
-        if (facingLeft){
-          accelerationX -= Jump_Acceleration_Horizontal;
-        } else {
-          accelerationX += Jump_Acceleration_Horizontal;
-        }
-      }
-
-      state = nextState;
-      setStateDurationZero();
+    if (state != _previousState) {
+      _previousState = state;
     }
 
     if (stateDurationTotal > 0 && stateDuration > stateDurationTotal){
@@ -380,13 +322,6 @@ mixin class GameFight2DCharacter {
     stateDuration++;
   }
 
-  void setStateDurationZero() {
-    stateDuration = 0;
-    // if (nextState == GameFight2DCharacterState.Second_Jump && maxJumpsReached){
-    //   print("error");
-    // }
-  }
-
   void applyJumpAcceleration(double jumpAcceleration) {
     // assert (!maxJumpsReached);
     if (maxJumpsReached) return;
@@ -406,4 +341,21 @@ mixin class GameFight2DCharacter {
     return frictionAir;
   }
 
+  static int getStateDurationTotal(int state) => const {
+    GameFight2DCharacterState.Striking: 30,
+    GameFight2DCharacterState.Crouching_Strike: 30,
+    GameFight2DCharacterState.Jumping: 12,
+    GameFight2DCharacterState.Airborn_Strike: 30,
+    GameFight2DCharacterState.Airborn_Strike_Up: 30,
+    GameFight2DCharacterState.Striking_Up: 30,
+    GameFight2DCharacterState.Second_Jump: 12,
+    GameFight2DCharacterState.Running_Strike: 20,
+    GameFight2DCharacterState.Hurting: 30,
+    GameFight2DCharacterState.Hurting_Airborn: 30,
+  }[state] ?? 0;
+
+  static int getStateDurationInterruptable(int state) => const {
+    GameFight2DCharacterState.Jumping: 10,
+    GameFight2DCharacterState.Second_Jump: 10,
+  }[state] ?? 0;
 }

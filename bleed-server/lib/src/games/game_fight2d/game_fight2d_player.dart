@@ -53,12 +53,9 @@ class GameFight2DPlayer extends Player with GameFight2DCharacter {
   }
 
   void crouch() {
-    if (busy) return;
-    if (grounded) {
-      nextState = GameFight2DCharacterState.Crouching;
-    } else {
-      nextState = GameFight2DCharacterState.Fall_Fast;
-    }
+    state = grounded
+        ? GameFight2DCharacterState.Crouching
+        : GameFight2DCharacterState.Fall_Fast;
   }
 
   void writeEventJump(int x, int y){
