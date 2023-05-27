@@ -216,18 +216,15 @@ mixin class GameFight2DCharacter {
   }
 
   void forceIdle() {
-    if (
-      _state == GameFight2DCharacterState.Idle ||
-      _state == GameFight2DCharacterState.Idle_Airborn
-    ) return;
-
-    print("forceIdle()");
-    _state = grounded
+    final _nextState = grounded
         ? GameFight2DCharacterState.Idle
         : GameFight2DCharacterState.Idle_Airborn;
+
+    if (_state == _nextState) return;
+    // print("forceIdle()");
+    _state = _nextState;
     stateDuration = 0;
     stateDurationTotal = 0;
-    // stateDurationInterruptable = 0;
   }
 
   void respawn() {
