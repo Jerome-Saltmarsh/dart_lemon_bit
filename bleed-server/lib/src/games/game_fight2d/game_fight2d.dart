@@ -79,16 +79,9 @@ class GameFight2D extends Game<GameFight2DPlayer> {
 
   @override
   void update() {
-    applyCharacterHitBox();
-    applyCharacterSceneCollision();
-    applyCharacterEvents();
+    updateCharacters();
   }
 
-  void applyCharacterEvents() {
-    for (final character in characters) {
-      emitEventJump(character);
-    }
-  }
 
   void emitEventJump(GameFight2DCharacter character) {
     if (!character.emitEventJump) return;
@@ -111,9 +104,21 @@ class GameFight2D extends Game<GameFight2DPlayer> {
     }
   }
 
-  void applyCharacterHitBox() {
+  void updateCharacters() {
     for (final character in characters) {
       character.update();
+      applyCharacterSceneCollision(character);
+      emitEventJump(character);
+
+      switch (character.state){
+        case GameFight2DCharacterState.Striking:
+          applyCharacterHitBoxStrike(character);
+          break;
+        case GameFight2DCharacterState.Striking_Up:
+          applyCharacterHitBoxStrikeUp(character);
+          break;
+      }
+
       if (character.striking && character.stateDuration == 5) {
          emitEventPunch(character);
          for (final otherCharacter in characters){
@@ -139,7 +144,16 @@ class GameFight2D extends Game<GameFight2DPlayer> {
               }
             } else {
               if (xDiff < rangeX) {
-                if (character.state == GameFight2DCharacterState.Running_Strike){
+                switch (character.state) {
+                  case GameFight2DCharacterState.Running_Strike:
+                    otherCharacter.hurtAirborn();
+                    otherCharacter.accelerationY -= force;
+                    break;
+                  default:
+                    otherCharacter.hurt();
+                    break;
+                }
+                if (character.state == GameFight2DCharacterState.Running_Strike) {
                   otherCharacter.hurtAirborn();
                   otherCharacter.accelerationY -= force;
                 } else {
@@ -153,8 +167,26 @@ class GameFight2D extends Game<GameFight2DPlayer> {
     }
   }
 
-  void applyCharacterSceneCollision() {
-    for (final character in characters) {
+  void applyCharacterHitBoxStrike(GameFight2DCharacter character){
+
+  }
+
+  void applyCharacterHitBoxStrikeUp(GameFight2DCharacter character){
+       if (character.stateDuration != 5) return;
+       for (final otherCharacter in characters) {
+           if (otherCharacter == character) continue;
+           const rangeX = 75.0;
+           const rangeY = 75.0;
+           final xDiff = character.x - otherCharacter.x;
+           if (rangeX < xDiff.abs()) continue;
+           final yDiff = character.y - otherCharacter.y;
+           if (rangeY < yDiff.abs()) continue;
+           otherCharacter.hurtAirborn();
+           otherCharacter.accelerationY -= 20;
+       }
+  }
+
+  void applyCharacterSceneCollision(GameFight2DCharacter character) {
        var tileType = scene.getTileTypeAtXY(character.x, character.y + 50.0);
        if (tileType == Fight2DNodeType.Grass) {
          if (!character.grounded) {
@@ -169,7 +201,6 @@ class GameFight2D extends Game<GameFight2DPlayer> {
        } else {
          character.grounded = false;
        }
-    }
   }
 
 

@@ -104,14 +104,14 @@ mixin class GameFight2DCharacter {
   }
 
   bool get striking =>
-      state == GameFight2DCharacterState.Striking ||
-          nextState == GameFight2DCharacterState.Striking ||
-          state == GameFight2DCharacterState.Airborn_Strike ||
-          nextState == GameFight2DCharacterState.Airborn_Strike ||
-          state == GameFight2DCharacterState.Running_Strike ||
-          nextState == GameFight2DCharacterState.Running_Strike ||
-          state == GameFight2DCharacterState.Striking_Up ||
-          nextState == GameFight2DCharacterState.Striking_Up;
+      state     == GameFight2DCharacterState.Striking       ||
+      nextState == GameFight2DCharacterState.Striking       ||
+      state     == GameFight2DCharacterState.Airborn_Strike ||
+      nextState == GameFight2DCharacterState.Airborn_Strike ||
+      state     == GameFight2DCharacterState.Running_Strike ||
+      nextState == GameFight2DCharacterState.Running_Strike ||
+      state     == GameFight2DCharacterState.Striking_Up    ||
+      nextState == GameFight2DCharacterState.Striking_Up    ;
 
   bool get falling => velocityY > 0;
 
