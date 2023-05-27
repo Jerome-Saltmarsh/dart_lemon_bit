@@ -4,6 +4,7 @@ import 'package:gamestream_flutter/isometric/events/on_changed_scene.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/structure/business/handle_server_response_game_error.dart';
 import 'package:lemon_byte/byte_reader.dart';
+import 'package:bleed_common/src/fight2d/game_fight2d_events.dart';
 
 import '../engine/instances.dart';
 
@@ -151,9 +152,7 @@ class ServerResponseReader with ByteReader {
         GameFight2D.playerY = readInt16().toDouble();
         break;
       case Fight2DResponse.Event:
-        final x = readInt16().toDouble();
-        final y = readInt16().toDouble();
-        GameAudio.playAudioSingle2D(GameAudio.coins, x, y);
+        readFight2DEvent();
         break;
       case Fight2DResponse.Scene:
         GameFight2D.sceneWidth = readUInt16();
@@ -162,6 +161,21 @@ class ServerResponseReader with ByteReader {
         break;
       default:
         throw Exception('unknown fight2DResponse $fight2DResponse');
+    }
+  }
+
+  void readFight2DEvent() {
+    final eventType = readByte();
+    final x = readInt16().toDouble();
+    final y = readInt16().toDouble();
+
+    switch (eventType) {
+      case GameFight2DEvents.Punch:
+        GameAudio.playAudioSingle2D(GameAudio.heavy_punch_13, x, y);
+        break;
+      case GameFight2DEvents.Jump:
+        GameAudio.playAudioSingle2D(GameAudio.coins, x, y);
+        break;
     }
   }
 

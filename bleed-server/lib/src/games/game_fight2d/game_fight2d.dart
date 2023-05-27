@@ -1,4 +1,5 @@
 
+import 'package:bleed_server/common/src/fight2d/game_fight2d_events.dart';
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/games/game_fight2d/game_fight2d_scene.dart';
 import 'package:lemon_math/functions/random_between.dart';
@@ -78,17 +79,28 @@ class GameFight2D extends Game<GameFight2DPlayer> {
 
   void applyCharacterEvents() {
     for (final character in characters) {
-      if (!character.emitEventJump) continue;
       emitEventJump(character);
-      character.emitEventJump = false;
     }
   }
 
   void emitEventJump(GameFight2DCharacter character) {
+    if (!character.emitEventJump) return;
+    character.emitEventJump = false;
+    emitEvent(character: character, event: GameFight2DEvents.Jump);
+  }
+
+  void emitEventPunch(GameFight2DCharacter character) {
+    emitEvent(character: character, event: GameFight2DEvents.Punch);
+  }
+
+  void emitEvent({
+    required GameFight2DCharacter character,
+    required int event,
+  }){
     final xInt = character.x.toInt();
     final yInt = character.y.toInt();
     for (final player in players) {
-      player.writeEventJump(xInt, yInt);
+      player.writeEvent(event: event, x: xInt, y: yInt);
     }
   }
 
@@ -96,6 +108,7 @@ class GameFight2D extends Game<GameFight2DPlayer> {
     for (final character in characters) {
       character.update();
       if (character.striking && character.stateDuration == 5) {
+         emitEventPunch(character);
          for (final otherCharacter in characters){
             if (otherCharacter == character) continue;
             final xDiff = character.x - otherCharacter.x;

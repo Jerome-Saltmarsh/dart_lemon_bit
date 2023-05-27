@@ -10,6 +10,8 @@ mixin class GameFight2DCharacter {
   static const Max_Jumps = 2;
 
   var emitEventJump = false;
+  var emitEventStrike = false;
+
   var direction = GameFight2DDirection.Left;
   var stateDuration = 0;
   var stateDurationInterruptable = 0;
@@ -379,10 +381,9 @@ mixin class GameFight2DCharacter {
 
   void setStateDurationZero() {
     stateDuration = 0;
-
-    if (nextState == GameFight2DCharacterState.Second_Jump && maxJumpsReached){
-      print("error");
-    }
+    // if (nextState == GameFight2DCharacterState.Second_Jump && maxJumpsReached){
+    //   print("error");
+    // }
   }
 
   void applyJumpAcceleration(double jumpAcceleration) {

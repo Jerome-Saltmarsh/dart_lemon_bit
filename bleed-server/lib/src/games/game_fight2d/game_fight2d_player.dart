@@ -62,9 +62,17 @@ class GameFight2DPlayer extends Player with GameFight2DCharacter {
   }
 
   void writeEventJump(int x, int y){
+    writeEvent(event: GameFight2DEvents.Jump, x: x, y: y);
+  }
+
+  void writeEventPunch(int x, int y){
+    writeEvent(event: GameFight2DEvents.Punch, x: x, y: y);
+  }
+
+  void writeEvent({required int event, required int x, required int y}){
     writeByte(ServerResponse.Fight2D);
     writeByte(Fight2DResponse.Event);
-    writeByte(GameFight2DEvents.Jump);
+    writeByte(event);
     writeInt16(x);
     writeInt16(y);
   }
