@@ -51,4 +51,24 @@ class GameFight2DCharacterState {
         Crouching_Strike: "Crouching_Strike",
       }[value] ??
       'unknown';
+
+   static int getPriority(int state) =>
+       const {
+         Idle: 0,
+         Idle_Airborn: 0,
+         Running: 1,
+         Crouching: 2,
+         Striking_Up: 2,
+         Striking: 2,
+         Jumping: 2,
+         Second_Jump: 2,
+         Running_Strike: 2,
+         Airborn_Strike: 2,
+         Airborn_Strike_Down: 2,
+         Airborn_Strike_Up: 2,
+         Crouching_Strike: 2,
+         Hurting_Airborn: 3,
+         Hurting: 3,
+       }[state] ?? 0;
+
 }

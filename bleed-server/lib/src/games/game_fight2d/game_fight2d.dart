@@ -47,6 +47,7 @@ class GameFight2D extends Game<GameFight2DPlayer> {
        player.strike();
      }
 
+
      switch (direction) {
        case InputDirection.Right:
          player.runRight();
@@ -64,6 +65,12 @@ class GameFight2D extends Game<GameFight2DPlayer> {
          player.jump();
          break;
        case InputDirection.Down:
+         player.crouch();
+         break;
+       case InputDirection.Down_Right:
+         player.crouch();
+         break;
+       case InputDirection.Down_Left:
          player.crouch();
          break;
        case InputDirection.None:

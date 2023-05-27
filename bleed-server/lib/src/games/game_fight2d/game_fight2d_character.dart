@@ -3,16 +3,22 @@ import 'package:bleed_server/gamestream.dart';
 import 'package:lemon_math/library.dart';
 
 mixin class GameFight2DCharacter {
-  static const frictionFloor = 0.88;
-  static const frictionFloorSliding = 0.92;
-  static const frictionAir = 0.95;
+  static const Friction_Floor = 0.88;
+  static const Friction_Floor_Sliding = 0.92;
+  static const Friction_Air = 0.95;
   static const Jump_Acceleration_Horizontal = 4.0;
   static const Jump_Frame = 4;
   static const Max_Jumps = 2;
+  static const gravity = 1.00;
+  static const runAcceleration = 1.0;
+  static const airAcceleration = 0.25;
+  static const jumpAcceleration = 20.0;
+  static const strikeUpAcceleration = 7.5;
+  static const fallAcceleration = 0.5;
+  static const maxRunSpeed = 6.0;
 
   var emitEventJump = false;
   var stateDuration = 0;
-  var stateDurationInterruptable = 0;
   var stateDurationTotal = 0;
   var x = 0.0;
   var y = 0.0;
@@ -26,7 +32,6 @@ mixin class GameFight2DCharacter {
 
   var _direction = GameFight2DDirection.Left;
   var _state = GameFight2DCharacterState.Idle;
-  var _previousState = GameFight2DCharacterState.Idle;
   var _jumpingRequested = false;
 
   int get direction => _direction;
@@ -46,11 +51,16 @@ mixin class GameFight2DCharacter {
     }
   }
 
-  int get statePriority => getStatePriority(_state);
+  bool get interruptable => stateDurationTotal == 0 || stateDuration > stateDurationTotal;
+
+  int get statePriority => GameFight2DCharacterState.getPriority(_state);
 
   set state(int value) {
 
-    if (getStatePriority(value) <= statePriority) return;
+    if (GameFight2DCharacterState.getPriority(value) <= statePriority) {
+      if (!interruptable) return;
+      // return;
+    }
     if (value == _state) return;
 
     assert((){
@@ -61,7 +71,6 @@ mixin class GameFight2DCharacter {
     _state = value;
     stateDuration = 0;
     stateDurationTotal = getStateDurationTotal(_state);
-    stateDurationInterruptable = getStateDurationInterruptable(_state);
   }
 
   // PROPERTIES
@@ -80,9 +89,9 @@ mixin class GameFight2DCharacter {
       _state == GameFight2DCharacterState.Hurting_Airborn ;
 
   bool get busy {
-    if (stateDurationInterruptable > 0){
-      return stateDuration < stateDurationInterruptable;
-    }
+    // if (stateDurationInterruptable > 0){
+    //   return stateDuration < stateDurationInterruptable;
+    // }
     if (stateDurationTotal > 0){
       return stateDuration < stateDurationTotal;
     }
@@ -207,12 +216,18 @@ mixin class GameFight2DCharacter {
   }
 
   void forceIdle() {
+    if (
+      _state == GameFight2DCharacterState.Idle ||
+      _state == GameFight2DCharacterState.Idle_Airborn
+    ) return;
+
+    print("forceIdle()");
     _state = grounded
         ? GameFight2DCharacterState.Idle
         : GameFight2DCharacterState.Idle_Airborn;
     stateDuration = 0;
     stateDurationTotal = 0;
-    stateDurationInterruptable = 0;
+    // stateDurationInterruptable = 0;
   }
 
   void respawn() {
@@ -225,20 +240,9 @@ mixin class GameFight2DCharacter {
   }
 
   void update() {
-    const gravity = 1.00;
-    const runAcceleration = 1.0;
-    const airAcceleration = 0.25;
-    const jumpAcceleration = 15.0;
-    const strikeUpAcceleration = 7.5;
-    const fallAcceleration = 0.5;
-    const maxRunSpeed = 6.0;
 
-    if (y > 1000){
+    if (y > 1000) {
       respawn();
-    }
-
-    if (state != _previousState) {
-      _previousState = state;
     }
 
     if (stateDurationTotal > 0 && stateDuration > stateDurationTotal){
@@ -330,12 +334,12 @@ mixin class GameFight2DCharacter {
   double get friction {
     if (grounded) {
       if (state == GameFight2DCharacterState.Running_Strike) {
-        return frictionFloorSliding;
+        return Friction_Floor_Sliding;
       }
-      return frictionFloor;
+      return Friction_Floor;
     }
 
-    return frictionAir;
+    return Friction_Air;
   }
 
   static int getStateDurationTotal(int state) => const {
@@ -345,6 +349,7 @@ mixin class GameFight2DCharacter {
     GameFight2DCharacterState.Jumping: 12,
     GameFight2DCharacterState.Airborn_Strike: 30,
     GameFight2DCharacterState.Airborn_Strike_Up: 30,
+    GameFight2DCharacterState.Airborn_Strike_Down: 30,
     GameFight2DCharacterState.Striking_Up: 30,
     GameFight2DCharacterState.Second_Jump: 12,
     GameFight2DCharacterState.Hurting: 30,
@@ -355,23 +360,4 @@ mixin class GameFight2DCharacter {
     GameFight2DCharacterState.Jumping: 10,
     GameFight2DCharacterState.Second_Jump: 10,
   }[state] ?? 0;
-
-  static int getStatePriority(int state) =>
-      const {
-       GameFight2DCharacterState.Idle: 0,
-       GameFight2DCharacterState.Idle_Airborn: 0,
-       GameFight2DCharacterState.Running: 1,
-       GameFight2DCharacterState.Crouching: 1,
-       GameFight2DCharacterState.Striking_Up: 2,
-       GameFight2DCharacterState.Striking: 2,
-       GameFight2DCharacterState.Jumping: 2,
-       GameFight2DCharacterState.Second_Jump: 2,
-       GameFight2DCharacterState.Running_Strike: 2,
-       GameFight2DCharacterState.Airborn_Strike: 2,
-       GameFight2DCharacterState.Airborn_Strike_Down: 2,
-       GameFight2DCharacterState.Airborn_Strike_Up: 2,
-       GameFight2DCharacterState.Crouching_Strike: 2,
-       GameFight2DCharacterState.Hurting_Airborn: 3,
-       GameFight2DCharacterState.Hurting: 3,
-     }[state] ?? 0;
 }
