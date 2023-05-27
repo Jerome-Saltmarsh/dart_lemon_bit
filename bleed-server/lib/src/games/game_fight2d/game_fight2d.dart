@@ -1,6 +1,7 @@
 
 import 'package:bleed_server/common/src/fight2d/game_fight2d_events.dart';
 import 'package:bleed_server/gamestream.dart';
+import 'package:bleed_server/src/games/game_fight2d/game_fight2d_bot.dart';
 import 'package:bleed_server/src/games/game_fight2d/game_fight2d_scene.dart';
 import 'package:lemon_math/functions/random_between.dart';
 
@@ -12,7 +13,13 @@ class GameFight2D extends Game<GameFight2DPlayer> {
   final characters = <GameFight2DCharacter>[];
   final GameFight2DScene scene;
 
-  GameFight2D({required this.scene}) : super(gameType: GameType.Fight2D);
+  GameFight2D({required this.scene}) : super(gameType: GameType.Fight2D) {
+    characters.add(
+      GameFight2DBot()
+        ..x = 100
+        ..y = 200
+    );
+  }
 
   @override
   GameFight2DPlayer createPlayer() {
@@ -110,12 +117,18 @@ class GameFight2D extends Game<GameFight2DPlayer> {
       if (character.striking && character.stateDuration == 5) {
          emitEventPunch(character);
          for (final otherCharacter in characters){
+           const rangeX = 75.0;
+           const rangeY = 75.0;
+
             if (otherCharacter == character) continue;
             final xDiff = character.x - otherCharacter.x;
-            const range = 100.0;
+            if (rangeX < xDiff.abs()) continue;
+            final yDiff = character.y - otherCharacter.y;
+            if (rangeY < yDiff.abs()) continue;
+
             const force = 10.0;
             if (character.facingLeft){
-              if (xDiff > 0 && xDiff < range) {
+              if (xDiff > 0 && xDiff < rangeX) {
                 if (character.state == GameFight2DCharacterState.Running_Strike){
                   otherCharacter.hurtAirborn();
                   otherCharacter.accelerationY -= force;
@@ -125,7 +138,7 @@ class GameFight2D extends Game<GameFight2DPlayer> {
                 otherCharacter.accelerationX -= force;
               }
             } else {
-              if (xDiff < range) {
+              if (xDiff < rangeX) {
                 if (character.state == GameFight2DCharacterState.Running_Strike){
                   otherCharacter.hurtAirborn();
                   otherCharacter.accelerationY -= force;

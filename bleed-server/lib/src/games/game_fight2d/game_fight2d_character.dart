@@ -1,5 +1,6 @@
 
 import 'package:bleed_server/gamestream.dart';
+import 'package:lemon_math/library.dart';
 
 mixin class GameFight2DCharacter {
   static const frictionFloor = 0.88;
@@ -267,7 +268,7 @@ mixin class GameFight2DCharacter {
   }
 
   void respawn() {
-    x = 100;
+    x = randomBetween(0, 300);
     y = 0;
     velocityX = 0;
     velocityY = 0;
