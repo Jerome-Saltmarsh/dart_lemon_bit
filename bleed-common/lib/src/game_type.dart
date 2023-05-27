@@ -5,7 +5,8 @@ enum GameType {
   Rock_Paper_Scissors,
   Mobile_Aeon,
   Fight2D,
-  Cube3D;
+  Aeon,
+  Cube3D,
 }
 
 extension GameTypeExtension on GameType {

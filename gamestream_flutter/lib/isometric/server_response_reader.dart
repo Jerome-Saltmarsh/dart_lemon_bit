@@ -150,6 +150,11 @@ class ServerResponseReader with ByteReader {
         GameFight2D.playerX = readInt16().toDouble();
         GameFight2D.playerY = readInt16().toDouble();
         break;
+      case Fight2DResponse.Event:
+        final x = readInt16().toDouble();
+        final y = readInt16().toDouble();
+        GameAudio.playAudioSingle2D(GameAudio.coins, x, y);
+        break;
       case Fight2DResponse.Scene:
         GameFight2D.sceneWidth = readUInt16();
         GameFight2D.sceneHeight = readUInt16();

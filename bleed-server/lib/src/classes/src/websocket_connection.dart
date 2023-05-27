@@ -6,8 +6,10 @@ import 'package:bleed_server/src/classes/src/game_isometric.dart';
 import 'package:bleed_server/src/classes/src/player.dart';
 import 'package:bleed_server/src/classes/src/player_aeon.dart';
 import 'package:bleed_server/src/classes/src/scene_writer.dart';
+import 'package:bleed_server/src/games/game_aeon.dart';
 import 'package:bleed_server/src/games/game_editor.dart';
-import 'package:bleed_server/src/games/game_fight2d.dart';
+import 'package:bleed_server/src/games/game_fight2d/game_fight2d.dart';
+import 'package:bleed_server/src/games/game_fight2d/game_fight2d_scene.dart';
 import 'package:bleed_server/src/games/game_mobile_aoen.dart';
 import 'package:bleed_server/src/games/game_combat.dart';
 import 'package:bleed_server/src/scene_generator.dart';
@@ -854,7 +856,7 @@ class WebSocketConnection with ByteReader {
         return joinGame(game);
       }
     }
-    joinGame(GameFight2D());
+    joinGame(GameFight2D(scene: GameFight2DScene(width: 20, height: 20)));
   }
 
   Future joinGameCombat() async {
@@ -864,10 +866,10 @@ class WebSocketConnection with ByteReader {
         return joinGame(game);
       }
     }
-    joinGame(GameCombat(scene: engine.scenes.warehouse));
+    joinGame(GameCombat(scene: engine.scenes.warehouse02));
   }
 
-  Future joinGameAeon() async {
+  Future joinGameAeonMobile() async {
     for (final game in engine.games) {
       if (game is GameMobileAeon) {
         if (game.players.length >= GameCombat.Max_Players) continue;
@@ -875,6 +877,16 @@ class WebSocketConnection with ByteReader {
       }
     }
     joinGame(GameMobileAeon(scene: engine.scenes.town));
+  }
+
+  Future joinGameAeon() async {
+    for (final game in engine.games) {
+      if (game is GameAeon) {
+        if (game.players.length >= GameCombat.Max_Players) continue;
+        return joinGame(game);
+      }
+    }
+    joinGame(GameAeon(scene: engine.scenes.town));
   }
 
   void joinGame(Game game){
@@ -935,8 +947,11 @@ class WebSocketConnection with ByteReader {
       case GameType.Combat:
         joinGameCombat();
         break;
-      case GameType.Mobile_Aeon:
+      case GameType.Aeon:
         joinGameAeon();
+        break;
+      case GameType.Mobile_Aeon:
+        joinGameAeonMobile();
         break;
       case GameType.Rock_Paper_Scissors:
         joinGame(engine.getGameRockPaperScissors());

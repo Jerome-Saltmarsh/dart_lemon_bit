@@ -32,13 +32,8 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   GameObject? editorSelectedGameObject;
   /// Frames per energy rejuvenation
   var energyGainRate = 16;
-  var _credits = 0;
   var debug = false;
   var textDuration = 0;
-  var _experience = 0;
-  var _level = 1;
-  var _attributes = 0;
-  var _energy = 10;
   var maxEnergy = 10;
   var text = "";
   var name = generateRandomName();
@@ -47,7 +42,6 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   var id = 0;
 
   var inventoryDirty = false;
-  var _equippedWeaponIndex = 0;
 
   var belt1_itemType = ItemType.Empty; // 1
   var belt2_itemType = ItemType.Empty; // 2
@@ -66,10 +60,16 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   var weaponPrimary = ItemType.Empty;
   var weaponSecondary = ItemType.Empty;
   var weaponTertiary = ItemType.Empty;
-  var _powerType = PowerType.None;
   var powerCooldown = 0;
 
-  var _respawnTimer = Engine.Frames_Per_Second * 7;
+  var _credits = 0;
+  var _experience = 0;
+  var _level = 1;
+  var _attributes = 0;
+  var _energy = 10;
+  var _equippedWeaponIndex = 0;
+  var _powerType = PowerType.None;
+  var _respawnTimer = 0;
 
   int get respawnTimer => _respawnTimer;
 
@@ -991,9 +991,8 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     }
 
     if (!initialized) {
-      game.customInitPlayer(this);
-      game.customOnPlayerRevived(this);
       initialized = true;
+      game.customInitPlayer(this);
       writePlayerPosition();
       writePlayerSpawned();
       writePlayerInventory();

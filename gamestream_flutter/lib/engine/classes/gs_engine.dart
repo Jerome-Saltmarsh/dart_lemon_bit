@@ -1,18 +1,18 @@
+import 'package:gamestream_flutter/engine/games/game_aeon.dart';
+import 'package:gamestream_flutter/engine/games/game_cube3d.dart';
+import 'package:gamestream_flutter/engine/games/game_fight2d.dart';
 import 'package:gamestream_flutter/game_utils.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:gamestream_flutter/engine/games/game_website.dart' as gw;
 import 'game.dart';
 import '../games/game_combat.dart';
-import '../instances.dart';
 
 
 class GSEngine {
    late final gameType = Watch(GameType.Website, onChanged: _onChangedGameType);
    late final game = Watch<Game>(gameWebsite, onChanged: _onChangedGame);
-
    late final gameWebsite = gw.GameWebsite();
-   late final combat = GameCombat();
 
    Future init(SharedPreferences sharedPreferences) async {
      print("environment: ${Engine.isLocalHost ? 'localhost' : 'production'}");
@@ -80,9 +80,10 @@ class GSEngine {
      print("_onChangedGameType(${value.name})");
      game.value = switch (value) {
        GameType.Website => gameWebsite,
-       GameType.Fight2D => gameFight2D,
-       GameType.Combat => combat,
-       GameType.Cube3D => gameCube3D,
+       GameType.Fight2D => GameFight2D(),
+       GameType.Combat => GameCombat(),
+       GameType.Cube3D => GameCube3D(),
+       GameType.Aeon => GameAeon(),
        _ => throw Exception('mapGameTypeToGame($gameType)')
      };
    }

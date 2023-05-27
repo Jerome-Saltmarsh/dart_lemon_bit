@@ -5,12 +5,14 @@ import 'package:gamestream_flutter/library.dart';
 import '../../engine/instances.dart';
 
 
+
 class GameTypeColumn extends StatelessWidget {
 
   static const gameTypes = [
     GameType.Combat,
     GameType.Fight2D,
     GameType.Cube3D,
+    GameType.Aeon,
   ];
 
   @override

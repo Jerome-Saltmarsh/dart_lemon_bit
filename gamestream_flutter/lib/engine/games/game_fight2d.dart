@@ -4,6 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/engine/classes/game.dart';
 import 'package:gamestream_flutter/library.dart';
 
+/// TODO
+/// [ ] improve player movement
+/// [ ]
 class GameFight2D extends Game {
   static var playerX = 0.0;
   static var playerY = 0.0;
@@ -80,6 +83,7 @@ class GameFight2D extends Game {
           GameFight2DCharacterState.Idle_Airborn => 14,
           GameFight2DCharacterState.Second_Jump => 8,
           GameFight2DCharacterState.Fall_Fast => 14,
+          GameFight2DCharacterState.Crouching_Strike => 19,
           GameFight2DCharacterState.Airborn_Strike_Down => capIndex(airbornStrikeDown, animationFrame),
           GameFight2DCharacterState.Airborn_Strike_Up => capIndex(airbornStrikeUp, animationFrame),
           _ => 0

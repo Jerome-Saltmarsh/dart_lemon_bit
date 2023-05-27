@@ -3,6 +3,7 @@ class Fight2DResponse {
    static const Characters = 0;
    static const Scene      = 1;
    static const Player     = 2;
+   static const Event      = 3;
 }
 
 class GameFight2DDirection {
@@ -27,6 +28,7 @@ class GameFight2DCharacterState {
    static const Airborn_Strike_Down = 14;
    static const Airborn_Strike_Up   = 15;
    static const Fall_Fast           = 16;
+   static const Crouching_Strike       = 17;
 
    
    static String getName(int value) =>
@@ -46,6 +48,7 @@ class GameFight2DCharacterState {
         Second_Jump: "Second_Jump",
         Airborn_Strike_Down: "Airborn_Strike_Down",
         Airborn_Strike_Up: "Airborn_Strike_Up",
+        Crouching_Strike: "Crouching_Strike",
       }[value] ??
       'unknown';
 }
