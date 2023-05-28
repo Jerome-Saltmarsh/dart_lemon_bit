@@ -188,7 +188,7 @@ class GameAudio {
   ];
 
   double getVolumeTargetDayAmbience() {
-    final hours = ServerState.hours.value;
+    final hours = gamestream.games.isometric.serverState.hours.value;
     if (hours > 8 && hours < 4) return 0.2;
     return 0;
   }
@@ -231,10 +231,10 @@ class GameAudio {
     if (gamestream.games.isometric.windLineRenderX - 250 <= engine.screenCenterRenderX) {
       target += windLineDistanceVolume;
     }
-    final index = ServerState.windTypeAmbient.value;
+    final index = gamestream.games.isometric.serverState.windTypeAmbient.value;
     if (index <= WindType.Calm) {
-      if (ServerState.hours.value < 6) return target;
-      if (ServerState.hours.value < 18) return target + 0.1;
+      if (gamestream.games.isometric.serverState.hours.value < 6) return target;
+      if (gamestream.games.isometric.serverState.hours.value < 18) return target + 0.1;
       return target;
     }
     if (index <= WindType.Gentle) return target + 0.5;
@@ -242,7 +242,7 @@ class GameAudio {
   }
 
   double getVolumeTargetRain() {
-    switch (ServerState.rainType.value){
+    switch (gamestream.games.isometric.serverState.rainType.value){
       case RainType.None:
         return 0;
       case RainType.Light:
@@ -255,7 +255,7 @@ class GameAudio {
   }
 
   double getVolumeTargetCrickets() {
-    final hour = ServerState.hours.value;
+    final hour = gamestream.games.isometric.serverState.hours.value;
     const max = 0.8;
     if (hour >= 5 && hour < 7) return max;
     if (hour >= 17 && hour < 19) return max;
@@ -283,8 +283,8 @@ class GameAudio {
   }
 
   double getVolumeHeartBeat(){
-    if (ServerState.playerMaxHealth.value <= 0) return 0.0;
-    return 1.0 - ServerState.playerHealth.value / ServerState.playerMaxHealth.value;
+    if (gamestream.games.isometric.serverState.playerMaxHealth.value <= 0) return 0.0;
+    return 1.0 - gamestream.games.isometric.serverState.playerHealth.value / gamestream.games.isometric.serverState.playerMaxHealth.value;
   }
 
   double getVolumeStream(){
@@ -322,14 +322,14 @@ class GameAudio {
   }
 
   void playRandomMusic(){
-    final hours = ServerState.hours.value;
+    final hours = gamestream.games.isometric.serverState.hours.value;
     if (hours > 22 && hours < 3) {
       playRandom(musicNight);
     }
   }
 
   void playRandomAmbientSound(){
-    final hour = ServerState.hours.value;
+    final hour = gamestream.games.isometric.serverState.hours.value;
 
     if (hour > 22 && hour < 4){
       playRandom(soundsNight);
@@ -354,12 +354,12 @@ class GameAudio {
   }
 
   void updateCharacterNoises(){
-    if (ServerState.totalCharacters <= 0) return;
+    if (gamestream.games.isometric.serverState.totalCharacters <= 0) return;
     if (nextCharacterNoise-- > 0) return;
     nextCharacterNoise = Engine.randomInt(200, 300);
 
-    final index = randomInt(0, ServerState.totalCharacters);
-    final character = ServerState.characters[index];
+    final index = randomInt(0, gamestream.games.isometric.serverState.totalCharacters);
+    final character = gamestream.games.isometric.serverState.characters[index];
 
     switch (character.characterType) {
       case CharacterType.Zombie:

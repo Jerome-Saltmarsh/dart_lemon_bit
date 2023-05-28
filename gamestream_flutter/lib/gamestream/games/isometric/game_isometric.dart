@@ -8,17 +8,19 @@ import 'package:gamestream_flutter/touch_controller.dart';
 import 'game_isometric_actions.dart';
 import 'game_isometric_camera.dart';
 import 'game_isometric_nodes.dart';
+import 'game_isometric_server_state.dart';
 
 class GameIsometric extends Game {
   final camera = GameIsometricCamera();
   final clientState = GameIsometricClientState();
+  final serverState = GameIsometricServerState();
   final nodes = GameIsometricNodes();
   final actions = GameIsometricActions();
   final renderer = GameIsometricRenderer();
 
   @override
   void drawCanvas(Canvas canvas, Size size) {
-    if (ServerState.gameRunning.value){
+    if (serverState.gameRunning.value){
       /// particles are only on the ui and thus can update every frame
       /// this makes them much smoother as they don't freeze
       clientState.updateParticles();
@@ -29,7 +31,7 @@ class GameIsometric extends Game {
     clientState.renderEditMode();
     renderer.renderMouseTargetName();
     renderer.renderPlayerEnergy();
-    gamestream.games.isometric.clientState.rendersSinceUpdate.value++;
+    clientState.rendersSinceUpdate.value++;
   }
 
   @override
@@ -39,17 +41,17 @@ class GameIsometric extends Game {
 
   @override
   void update() {
-    if (!ServerState.gameRunning.value) {
+    if (!serverState.gameRunning.value) {
       gamestream.network.sendClientRequestUpdate();
       return;
     }
     clientState.updateTorchEmissionIntensity();
     gamestream.animation.updateAnimationFrame();
     clientState.updateParticleEmitters();
-    ServerState.updateProjectiles();
-    ServerState.updateGameObjects();
+    serverState.updateProjectiles();
+    serverState.updateGameObjects();
     gamestream.audio.update();
-    gamestream.games.isometric.clientState.update();
+    clientState.update();
     clientState.updatePlayerMessageTimer();
     gamestream.io.readPlayerInput();
     gamestream.network.sendClientRequestUpdate();
@@ -57,14 +59,14 @@ class GameIsometric extends Game {
 
   @override
   void onActivated() {
-    gamestream.games.isometric.clientState.window_visible_player_creation.value = false;
-    gamestream.games.isometric.clientState.control_visible_respawn_timer.value = false;
+    clientState.window_visible_player_creation.value = false;
+    clientState.control_visible_respawn_timer.value = false;
     gamestream.audio.musicStop();
     engine.onLeftClicked = TouchController.onClick;
     engine.onMouseMoved = TouchController.onMouseMoved;
-    gamestream.games.isometric.clientState.control_visible_player_weapons.value = true;
-    gamestream.games.isometric.clientState.control_visible_scoreboard.value = true;
-    gamestream.games.isometric.clientState.control_visible_player_power.value = true;
+    clientState.control_visible_player_weapons.value = true;
+    clientState.control_visible_scoreboard.value = true;
+    clientState.control_visible_player_power.value = true;
 
     if (!engine.isLocalHost) {
       engine.fullScreenEnter();

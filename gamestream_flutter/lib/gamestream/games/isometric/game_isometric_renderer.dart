@@ -371,15 +371,15 @@ class GameIsometricRenderer {
 
   void renderCursor(Canvas canvas) {
     final cooldown = GamePlayer.weaponCooldown.value;
-    final accuracy = ServerState.playerAccuracy.value;
+    final accuracy = gamestream.games.isometric.serverState.playerAccuracy.value;
     final distance = (cooldown + accuracy) * 10.0 + 5;
 
     switch (GamePlayer.aimTargetCategory) {
       case TargetCategory.Nothing:
         gamestream.games.isometric.renderer.canvasRenderCursorCrossHair(canvas, distance);
 
-        if (ServerQuery.getEquippedWeaponConsumeType() != ItemType.Empty){
-          if (ServerQuery.getEquippedWeaponQuantity() <= 0){
+        if (gamestream.games.isometric.serverState.getEquippedWeaponConsumeType() != ItemType.Empty){
+          if (gamestream.games.isometric.serverState.getEquippedWeaponQuantity() <= 0){
             engine.renderExternalCanvas(
               canvas: canvas,
               image: GameImages.atlas_icons,
@@ -403,8 +403,8 @@ class GameIsometricRenderer {
       case TargetCategory.Enemy:
         gamestream.games.isometric.renderer.canvasRenderCursorCrossHairRed(canvas, distance);
 
-        if (ServerQuery.getEquippedWeaponConsumeType() != ItemType.Empty){
-          if (ServerQuery.getEquippedWeaponQuantity() <= 0){
+        if (gamestream.games.isometric.serverState.getEquippedWeaponConsumeType() != ItemType.Empty){
+          if (gamestream.games.isometric.serverState.getEquippedWeaponQuantity() <= 0){
             engine.renderExternalCanvas(
               canvas: canvas,
               image: GameImages.atlas_icons,
@@ -470,8 +470,8 @@ class GameIsometricRenderer {
 
 
   void renderObjectRadius() {
-    for (var i = 0; i < ServerState.totalCharacters; i++) {
-      final character = ServerState.characters[i];
+    for (var i = 0; i < gamestream.games.isometric.serverState.totalCharacters; i++) {
+      final character = gamestream.games.isometric.serverState.characters[i];
       engine.renderCircle(character.renderX, character.renderY, CharacterType.getRadius(character.characterType), Colors.yellow);
     }
   }

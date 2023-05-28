@@ -12,7 +12,7 @@ void handleServerResponseGameError(GameError gameError){
       gamestream.network.disconnect();
       break;
     default:
-      ServerState.error.value = gameError.name;
+      gamestream.games.isometric.serverState.error.value = gameError.name;
       break;
   }
 }

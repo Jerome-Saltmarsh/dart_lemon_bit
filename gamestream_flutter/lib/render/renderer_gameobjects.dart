@@ -5,7 +5,7 @@ import 'functions/render_shadow.dart';
 class RendererGameObjects extends Renderer {
   static late GameObject gameObject;
 
-  static final gameObjects = ServerState.gameObjects;
+  static final gameObjects = gamestream.games.isometric.serverState.gameObjects;
 
   @override
   int getTotal() {

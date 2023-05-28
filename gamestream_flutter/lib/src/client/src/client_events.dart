@@ -186,7 +186,7 @@ class ClientEvents {
 
   static void onRightClickedWatchBelt(Watch<int> watchBelt){
     ServerActions.inventoryUnequip(
-        ServerQuery.mapWatchBeltTypeToItemType(watchBelt)
+        gamestream.games.isometric.serverState.mapWatchBeltTypeToItemType(watchBelt)
     );
   }
 

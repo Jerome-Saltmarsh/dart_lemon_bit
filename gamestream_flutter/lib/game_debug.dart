@@ -52,7 +52,7 @@ class GameDebug {
                                 "player-body: ${ItemType.getName(GamePlayer.body.value)}\n"
                                 "player-head: ${ItemType.getName(GamePlayer.head.value)}\n"
                                 "player-weapon: ${ItemType.getName(GamePlayer.weapon.value)}\n"
-                                "player-interact-mode: ${InteractMode.getName(ServerState.interactMode.value)}\n"
+                                "player-interact-mode: ${InteractMode.getName(gamestream.games.isometric.serverState.interactMode.value)}\n"
                                 "aim-target-category: ${TargetCategory.getName(GamePlayer.aimTargetCategory)}\n"
                                 "aim-target-type: ${GamePlayer.aimTargetType}\n"
                                 "aim-target-name: ${GamePlayer.aimTargetName}\n"
@@ -62,8 +62,8 @@ class GameDebug {
                                 "dialog-type: ${DialogType.getName(gamestream.games.isometric.clientState.hoverDialogType.value)}\n"
                                 "scene-light-sources: ${gamestream.games.isometric.clientState.nodesLightSourcesTotal}\n"
                                 "scene-light-active: ${gamestream.games.isometric.clientState.lights_active}\n"
-                                "total-gameobjects: ${ServerState.gameObjects.length}\n"
-                                "total-characters: ${ServerState.totalCharacters}\n"
+                                "total-gameobjects: ${gamestream.games.isometric.serverState.gameObjects.length}\n"
+                                "total-characters: ${gamestream.games.isometric.serverState.totalCharacters}\n"
                                 'total-particles: ${gamestream.games.isometric.clientState.particles.length}\n'
                                 'total-particles-active: ${gamestream.games.isometric.clientState.totalActiveParticles}\n'
                                 "offscreen-nodes: left: ${RendererNodes.offscreenNodesLeft}, top: ${RendererNodes.offscreenNodesTop}, right: ${RendererNodes.offscreenNodesRight}, bottom: ${RendererNodes.offscreenNodesBottom}"

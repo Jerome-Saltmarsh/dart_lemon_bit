@@ -77,7 +77,7 @@ class GameInventoryUI {
     return GameUI.buildDialogUIControl(
       child: buildHoverTarget(
               hoverTargetType: ClientType.Hover_Target_Player_Stats_Damage,
-              child: watch(ServerState.playerDamage, (int damage) {
+              child: watch(gamestream.games.isometric.serverState.playerDamage, (int damage) {
                 return Container(
                   color: Colors.white24,
                   padding: const EdgeInsets.all(6),
@@ -147,8 +147,8 @@ class GameInventoryUI {
     return GameUI.buildDialogUIControl(
       child: buildHoverTarget(
               hoverTargetType: ClientType.Hover_Target_Player_Stats_Health,
-              child: watch(ServerState.playerMaxHealth, (int maxHealth) {
-                return watch(ServerState.playerHealth, (int currentHealth) {
+              child: watch(gamestream.games.isometric.serverState.playerMaxHealth, (int maxHealth) {
+                return watch(gamestream.games.isometric.serverState.playerHealth, (int currentHealth) {
                   return Stack(
                     children: [
                       Container(color: Colors.white24, height: height, width: width),
@@ -248,7 +248,7 @@ class GameInventoryUI {
             child: Stack(
               children: [
                 GameUI.buildAtlasItemType(
-                  itemType ?? ServerQuery.getItemTypeAtInventoryIndex(itemIndex),
+                  itemType ?? gamestream.games.isometric.serverState.getItemTypeAtInventoryIndex(itemIndex),
                 ),
                 if (itemQuantity != null && itemQuantity > 1)
                   Positioned(child: text(itemQuantity, size: 13, color: Colors.white70), right: 0, bottom: 0),
@@ -271,7 +271,7 @@ class GameInventoryUI {
 
   static Widget buildStackSlotGrid() {
     final children = <Widget>[];
-    for (var i = 0; i < ServerState.inventory.length; i++) {
+    for (var i = 0; i < gamestream.games.isometric.serverState.inventory.length; i++) {
       children.add(buildPositionedGridSlot(i));
     }
     return Stack(
@@ -285,8 +285,8 @@ class GameInventoryUI {
   static Widget buildStackInventoryItems() =>
       watch(gamestream.games.isometric.clientState.inventoryReads, (int reads){
         final positioned = <Widget>[];
-        for (var i = 0; i < ServerState.inventory.length; i++){
-          if (ServerState.inventory[i] == ItemType.Empty) continue;
+        for (var i = 0; i < gamestream.games.isometric.serverState.inventory.length; i++){
+          if (gamestream.games.isometric.serverState.inventory[i] == ItemType.Empty) continue;
           positioned.add(
               buildPositionInventoryItem(i)
           );
@@ -299,7 +299,7 @@ class GameInventoryUI {
   static Widget buildPositionInventoryItem(int index) =>
       buildPositionGridItem(
         index: index,
-        child: buildDraggableItemIndex(itemIndex: index, itemQuantity: ServerQuery.getItemQuantityAtIndex(index)),
+        child: buildDraggableItemIndex(itemIndex: index, itemQuantity: gamestream.games.isometric.serverState.getItemQuantityAtIndex(index)),
       );
 
   static Widget buildDraggableItemIndex({required int itemIndex, double scale = Slot_Item_Scale, int? itemQuantity}) =>
@@ -370,7 +370,7 @@ class GameInventoryUI {
      final children = <Widget>[];
 
      if (hoverTarget == ClientType.Hover_Target_Player_Stats_Damage){
-         final total = ServerState.playerDamage.value;
+         final total = gamestream.games.isometric.serverState.playerDamage.value;
          children.add(Row(
            mainAxisAlignment: MainAxisAlignment.spaceBetween,
            children: [
@@ -383,13 +383,13 @@ class GameInventoryUI {
          children.add(
              _buildRowHoverValue(
                  itemType: ItemType.Base_Damage,
-                 // value: ServerState.playerBaseDamage.value,
+                 // value: gamestream.games.isometric.serverState.playerBaseDamage.value,
                  value: 0,
                  total: total,
              )
          );
 
-         final equippedWeaponType = ServerQuery.getEquippedWeaponType();
+         final equippedWeaponType = gamestream.games.isometric.serverState.getEquippedWeaponType();
          children.add(
              _buildRowHoverValue(
                itemType: equippedWeaponType,
@@ -423,7 +423,7 @@ class GameInventoryUI {
                  total: total,)
            );
          }
-         for (final beltType in ServerState.watchBeltItemTypes) {
+         for (final beltType in gamestream.games.isometric.serverState.watchBeltItemTypes) {
            if (!ItemType.isTypeTrinket(beltType.value)) continue;
            children.add(
                _buildRowHoverValue(
@@ -437,7 +437,7 @@ class GameInventoryUI {
      }
 
      if (hoverTarget == ClientType.Hover_Target_Player_Stats_Health){
-       final total = ServerState.playerMaxHealth.value;
+       final total = gamestream.games.isometric.serverState.playerMaxHealth.value;
        children.add(Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -450,7 +450,7 @@ class GameInventoryUI {
        children.add(
            _buildRowHoverValue(
              itemType: ItemType.Base_Health,
-             // value: ServerState.playerBaseHealth.value,
+             // value: gamestream.games.isometric.serverState.playerBaseHealth.value,
              value: 0,
              total: total,
            )
@@ -465,13 +465,13 @@ class GameInventoryUI {
        children.add(
            _buildRowHoverValue(itemType: GamePlayer.legs.value, value: ItemType.getMaxHealth(GamePlayer.legs.value), total: total)
        );
-       for (final beltType in ServerState.watchBeltItemTypes) {
+       for (final beltType in gamestream.games.isometric.serverState.watchBeltItemTypes) {
          if (!ItemType.isTypeTrinket(beltType.value)) continue;
          children.add(
              _buildRowHoverValue(itemType: beltType.value, value: ItemType.getMaxHealth(beltType.value), total: total)
          );
        }
-       final equippedWeapon = ServerQuery.getEquippedWeaponType();
+       final equippedWeapon = gamestream.games.isometric.serverState.getEquippedWeaponType();
        children.add(
            _buildRowHoverValue(itemType: equippedWeapon, value: ItemType.getMaxHealth(equippedWeapon), total: total)
        );
@@ -491,7 +491,7 @@ class GameInventoryUI {
        children.add(
            _buildRowHoverValue(
              itemType: ItemType.Base_Energy,
-             // value: ServerState.playerBaseEnergy.value,
+             // value: gamestream.games.isometric.serverState.playerBaseEnergy.value,
              value: 0,
              total: total,
            )
@@ -519,7 +519,7 @@ class GameInventoryUI {
                total: total,)
          );
        }
-       for (final beltType in ServerState.watchBeltItemTypes) {
+       for (final beltType in gamestream.games.isometric.serverState.watchBeltItemTypes) {
          if (!ItemType.isTypeTrinket(beltType.value)) continue;
          children.add(
              _buildRowHoverValue(
@@ -577,7 +577,7 @@ class GameInventoryUI {
   static Widget buildPositionedContainerItemTypeInformation(int itemIndex){
     if (itemIndex == -1) return GameStyle.Null;
 
-    final itemType = gamestream.games.isometric.clientState.hoverDialogType.value == DialogType.Trade ? GamePlayer.storeItems.value[itemIndex] : ServerQuery.getItemTypeAtInventoryIndex(itemIndex);
+    final itemType = gamestream.games.isometric.clientState.hoverDialogType.value == DialogType.Trade ? GamePlayer.storeItems.value[itemIndex] : gamestream.games.isometric.serverState.getItemTypeAtInventoryIndex(itemIndex);
 
     if (itemType == ItemType.Empty) return GameStyle.Null;
 
@@ -587,7 +587,7 @@ class GameInventoryUI {
     final replenishHealth = ItemType.getHealAmount(itemType);
     final replenishEnergy = ItemType.getReplenishEnergy(itemType);
     final itemTypeIsEquippable = ItemType.isTypeEquippable(itemType);
-    final equippedItemType          = ServerQuery.getEquippedItemType(itemType);
+    final equippedItemType          = gamestream.games.isometric.serverState.getEquippedItemType(itemType);
     final itemTypeIsTrinket         = ItemType.isTypeTrinket(itemType);
     // final itemTypeDamage            = GameOptions.getItemTypeDamage(itemType);
     final itemTypeDamage            = 0;
@@ -723,7 +723,7 @@ class GameInventoryUI {
     for (var i = 0; i < recipe.length; i += 2){
       final recipeItemQuantityRequired = recipe[i];
       final recipeItemType = recipe[i + 1];
-      final recipeItemQuantityPossessed = ServerQuery.countItemTypeQuantityInPlayerPossession(recipeItemType);
+      final recipeItemQuantityPossessed = gamestream.games.isometric.serverState.countItemTypeQuantityInPlayerPossession(recipeItemType);
       final sufficientQuantity = recipeItemQuantityPossessed >= recipeItemQuantityRequired;
       final textColor = sufficientQuantity ? GameColors.green : GameColors.red;
        children.add(

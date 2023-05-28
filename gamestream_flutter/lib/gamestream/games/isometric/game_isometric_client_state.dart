@@ -26,7 +26,7 @@ class GameIsometricClientState {
   int get bodyPartDuration => randomInt(120, 200);
   bool get playMode => !editMode;
   bool get editMode => gamestream.games.isometric.clientState.edit.value;
-  bool get lightningOn => ServerState.lightningType.value != LightningType.Off;
+  bool get lightningOn => gamestream.games.isometric.serverState.lightningType.value != LightningType.Off;
 
 
   int getNodeIndexV3(Vector3 v3) {
@@ -76,7 +76,7 @@ class GameIsometricClientState {
     gamestream.games.isometric.clientState.lights_active = 0;
     applyEmissionsLightSources();
     applyEmissionsCharacters();
-    ServerState.applyEmissionGameObjects();
+    gamestream.games.isometric.serverState.applyEmissionGameObjects();
     applyEmissionsProjectiles();
     applyCharacterColors();
     gamestream.games.isometric.clientState.applyEmissionsParticles();
@@ -118,8 +118,8 @@ class GameIsometricClientState {
 
 
   void applyCharacterColors(){
-    for (var i = 0; i < ServerState.totalCharacters; i++){
-      applyCharacterColor(ServerState.characters[i]);
+    for (var i = 0; i < gamestream.games.isometric.serverState.totalCharacters; i++){
+      applyCharacterColor(gamestream.games.isometric.serverState.characters[i]);
     }
   }
 
@@ -128,8 +128,8 @@ class GameIsometricClientState {
   }
 
   void applyEmissionsCharacters() {
-    for (var i = 0; i < ServerState.totalCharacters; i++) {
-      final character = ServerState.characters[i];
+    for (var i = 0; i < gamestream.games.isometric.serverState.totalCharacters; i++) {
+      final character = gamestream.games.isometric.serverState.characters[i];
       if (!character.allie) continue;
 
       if (character.weaponType == ItemType.Weapon_Melee_Staff){
@@ -150,8 +150,8 @@ class GameIsometricClientState {
   }
 
   void applyEmissionsProjectiles() {
-    for (var i = 0; i < ServerState.totalProjectiles; i++){
-      applyProjectileEmission(ServerState.projectiles[i]);
+    for (var i = 0; i < gamestream.games.isometric.serverState.totalProjectiles; i++){
+      applyProjectileEmission(gamestream.games.isometric.serverState.projectiles[i]);
     }
   }
 
@@ -237,11 +237,11 @@ class GameIsometricClientState {
     GamePlayer.position.y = -1;
     GamePlayer.gameDialog.value = null;
     GamePlayer.npcTalkOptions.value = [];
-    ServerState.totalZombies = 0;
-    ServerState.totalPlayers = 0;
-    ServerState.totalProjectiles = 0;
-    ServerState.totalNpcs = 0;
-    ServerState.interactMode.value = InteractMode.None;
+    gamestream.games.isometric.serverState.totalZombies = 0;
+    gamestream.games.isometric.serverState.totalPlayers = 0;
+    gamestream.games.isometric.serverState.totalProjectiles = 0;
+    gamestream.games.isometric.serverState.totalNpcs = 0;
+    gamestream.games.isometric.serverState.interactMode.value = InteractMode.None;
     gamestream.games.isometric.clientState.particles.clear();
     engine.zoom = 1;
     engine.redrawCanvas();
@@ -361,7 +361,7 @@ class GameIsometricClientState {
       particle.applyFloorFriction();
     } else {
       if (particle.type == ParticleType.Smoke){
-        final wind = ServerState.windTypeAmbient.value * 0.01;
+        final wind = gamestream.games.isometric.serverState.windTypeAmbient.value * 0.01;
         particle.xv -= wind;
         particle.yv += wind;
       }
@@ -1101,7 +1101,7 @@ class GameIsometricClientState {
     }
     if (gamestream.games.isometric.clientState.rendersSinceUpdate.value != 1) return;
 
-    final playerCharacter = ServerState.getPlayerCharacter();
+    final playerCharacter = gamestream.games.isometric.serverState.getPlayerCharacter();
     if (playerCharacter == null) return;
     final velocityX = GamePlayer.position.x - GamePlayer.previousPosition.x;
     final velocityY = GamePlayer.position.y - GamePlayer.previousPosition.y;
@@ -1169,7 +1169,7 @@ class GameIsometricClientState {
     nextEmissionSmoke--;
     if (nextEmissionSmoke > 0) return;
     nextEmissionSmoke = 20;
-    for (final gameObject in ServerState.gameObjects){
+    for (final gameObject in gamestream.games.isometric.serverState.gameObjects){
       if (!gameObject.active) continue;
       if (gameObject.type != ItemType.GameObjects_Barrel_Flaming) continue;
       spawnParticleSmoke(x: gameObject.x + giveOrTake(5), y: gameObject.y + giveOrTake(5), z: gameObject.z + 35);
@@ -1323,7 +1323,7 @@ class GameIsometricClientState {
   void updateCredits() {
     _updateCredits = !_updateCredits;
     if (!_updateCredits) return;
-    final diff = playerCreditsAnimation.value - ServerState.playerCredits.value;
+    final diff = playerCreditsAnimation.value - gamestream.games.isometric.serverState.playerCredits.value;
     if (diff == 0) return;
     final diffAbs = diff.abs();
     final speed = max(diffAbs ~/ 10, 1);
@@ -1338,19 +1338,19 @@ class GameIsometricClientState {
 
   void updateGameLighting(){
     if (overrideColor.value) return;
-    if (ServerState.lightningFlashing.value) return;
+    if (gamestream.games.isometric.serverState.lightningFlashing.value) return;
     const Seconds_Per_Hour = 3600;
     const Seconds_Per_Hours_12 = Seconds_Per_Hour * 12;
-    final totalSeconds = (ServerState.hours.value * Seconds_Per_Hour) + (ServerState.minutes.value * 60);
+    final totalSeconds = (gamestream.games.isometric.serverState.hours.value * Seconds_Per_Hour) + (gamestream.games.isometric.serverState.minutes.value * 60);
 
     gamestream.games.isometric.nodes.ambient_alp = ((totalSeconds < Seconds_Per_Hours_12
         ? 1.0 - (totalSeconds / Seconds_Per_Hours_12)
         : (totalSeconds - Seconds_Per_Hours_12) / Seconds_Per_Hours_12) * 255).round();
 
-    if (ServerState.rainType.value == RainType.Light){
+    if (gamestream.games.isometric.serverState.rainType.value == RainType.Light){
       gamestream.games.isometric.nodes.ambient_alp += 20;
     }
-    if (ServerState.rainType.value == RainType.Heavy){
+    if (gamestream.games.isometric.serverState.rainType.value == RainType.Heavy){
       gamestream.games.isometric.nodes.ambient_alp += 40;
     }
     gamestream.games.isometric.nodes.resetNodeColorsToAmbient();
@@ -1441,12 +1441,12 @@ class GameIsometricClientState {
   }
 
   void refreshRain(){
-    switch (ServerState.rainType.value) {
+    switch (gamestream.games.isometric.serverState.rainType.value) {
       case RainType.None:
         break;
       case RainType.Light:
         srcXRainLanding = AtlasNode.Node_Rain_Landing_Light_X;
-        if (ServerState.windTypeAmbient.value == WindType.Calm){
+        if (gamestream.games.isometric.serverState.windTypeAmbient.value == WindType.Calm){
           srcXRainFalling = AtlasNode.Node_Rain_Falling_Light_X;
         } else {
           srcXRainFalling = 1851;
@@ -1454,7 +1454,7 @@ class GameIsometricClientState {
         break;
       case RainType.Heavy:
         srcXRainLanding = AtlasNode.Node_Rain_Landing_Heavy_X;
-        if (ServerState.windTypeAmbient.value == WindType.Calm){
+        if (gamestream.games.isometric.serverState.windTypeAmbient.value == WindType.Calm){
           srcXRainFalling = 1900;
         } else {
           srcXRainFalling = 1606;

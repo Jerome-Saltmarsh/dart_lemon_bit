@@ -343,7 +343,7 @@ class EditorUI {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         text("Underground"),
-                        watch(ServerState.sceneUnderground, text),
+                        watch(gamestream.games.isometric.serverState.sceneUnderground, text),
                       ],
                     ),
                   ),
@@ -472,7 +472,7 @@ class EditorUI {
       );
 
   static Widget buildIconRain(int rain) => watch(
-      ServerState.rainType,
+      gamestream.games.isometric.serverState.rainType,
       (int activeRain) => buildIconWeatherControl(
             tooltip: '${RainType.getName(rain)} Rain',
             action: () => gamestream.network.sendClientRequestWeatherSetRain(rain),
@@ -481,7 +481,7 @@ class EditorUI {
           ));
 
   static Widget buildIconLightning(int lightning) => watch(
-      ServerState.lightningType,
+      gamestream.games.isometric.serverState.lightningType,
       (int activeLightning) => buildIconWeatherControl(
             tooltip: '${LightningType.getName(lightning)} Lightning',
             action: () =>
@@ -492,7 +492,7 @@ class EditorUI {
           ));
 
   static Widget buildIconWind(int windType) => watch(
-      ServerState.windTypeAmbient,
+      gamestream.games.isometric.serverState.windTypeAmbient,
       (int activeWindType) => buildIconWeatherControl(
             tooltip: '${WindType.getName(windType)} Wind',
             action: () => gamestream.network.sendClientRequestWeatherSetWind(windType),
@@ -565,7 +565,7 @@ class EditorUI {
   static Widget buildControlTime() {
     const totalWidth = 300.0;
     const buttonWidth = totalWidth / 24.0;
-    final buttons = watch(ServerState.hours, (int hours) {
+    final buttons = watch(gamestream.games.isometric.serverState.hours, (int hours) {
       final buttons1 = <Widget>[];
       final buttons2 = <Widget>[];
 
@@ -606,9 +606,9 @@ class EditorUI {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        watch(ServerState.hours, (num hour) => text(padZero(hour))),
+        watch(gamestream.games.isometric.serverState.hours, (num hour) => text(padZero(hour))),
         text(":"),
-        watch(ServerState.minutes, (num hour) => text(padZero(hour))),
+        watch(gamestream.games.isometric.serverState.minutes, (num hour) => text(padZero(hour))),
       ],
     );
     return Container(
@@ -690,7 +690,7 @@ class EditorUI {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            watch(ServerState.gameRunning, (gameRunning) {
+            watch(gamestream.games.isometric.serverState.gameRunning, (gameRunning) {
               return text("Game Running: $gameRunning", onPressed: () => gamestream.network.sendClientRequestEdit(EditRequest.Toggle_Game_Running));
             }),
             text ("Reset", onPressed: ServerActions.editSceneReset),

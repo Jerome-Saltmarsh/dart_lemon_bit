@@ -71,7 +71,7 @@ class GamePlayer {
   static double get renderY => GameIsometricRenderer.convertV3ToRenderY(position);
   static double get positionScreenX => engine.worldToScreenX(GamePlayer.position.renderX);
   static double get positionScreenY => engine.worldToScreenY(GamePlayer.position.renderY);
-  static bool get interactModeTrading => ServerState.interactMode.value == InteractMode.Trading;
+  static bool get interactModeTrading => gamestream.games.isometric.serverState.interactMode.value == InteractMode.Trading;
   static bool get dead => !alive.value;
   static bool get inBounds => gamestream.games.isometric.nodes.inBoundsVector3(position);
 

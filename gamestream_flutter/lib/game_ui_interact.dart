@@ -10,7 +10,7 @@ class GameUIInteract {
 
 
     static Widget buildWatchInteractMode() =>
-      watch(ServerState.interactMode, (int interactMode){
+      watch(gamestream.games.isometric.serverState.interactMode, (int interactMode){
         switch (interactMode) {
           case InteractMode.None:
             return GameStyle.Null;

@@ -39,14 +39,14 @@ class RendererProjectiles extends Renderer {
 
   @override
   void updateFunction() {
-    projectile = ServerState.projectiles[index];
+    projectile = gamestream.games.isometric.serverState.projectiles[index];
     orderRowColumn = projectile.indexSum;
     orderZ = projectile.indexZ;
   }
 
   @override
   int getTotal() {
-    return ServerState.totalProjectiles;
+    return gamestream.games.isometric.serverState.totalProjectiles;
   }
 
   static void renderBullet(double x, double y, double rotation) {

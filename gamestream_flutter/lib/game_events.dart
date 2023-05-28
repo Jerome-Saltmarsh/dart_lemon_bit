@@ -53,7 +53,7 @@ class GameEvents {
     )
     ){
       gamestream.audio.footstep_mud_6.playXYZ(x, y, z);
-      final amount = ServerState.rainType.value == RainType.Heavy ? 3 : 2;
+      final amount = gamestream.games.isometric.serverState.rainType.value == RainType.Heavy ? 3 : 2;
       for (var i = 0; i < amount; i++){
         gamestream.games.isometric.clientState.spawnParticleWaterDrop(x: x, y: y, z: z, zv: 1.5);
       }
@@ -365,7 +365,7 @@ class GameEvents {
       GameEditor.deselectGameObject();
       ClientActions.clearMouseOverDialogType();
       gamestream.games.isometric.camera.setModeChase();
-      if (ServerState.sceneEditable.value){
+      if (gamestream.games.isometric.serverState.sceneEditable.value){
         GamePlayer.message.value = "press tab to edit";
       }
     }
@@ -376,14 +376,14 @@ class GameEvents {
   }
 
   static void onChangedHour(int hour){
-    if (ServerState.sceneUnderground.value) return;
+    if (gamestream.games.isometric.serverState.sceneUnderground.value) return;
     gamestream.games.isometric.clientState.updateGameLighting();
   }
 
   static void onChangedSeconds(int seconds){
     final minutes = seconds ~/ 60;
-    ServerState.hours.value = minutes ~/ Duration.minutesPerHour;
-    ServerState.minutes.value = minutes % Duration.minutesPerHour;
+    gamestream.games.isometric.serverState.hours.value = minutes ~/ Duration.minutesPerHour;
+    gamestream.games.isometric.serverState.minutes.value = minutes % Duration.minutesPerHour;
   }
 
   static void onChangedRain(int value) {

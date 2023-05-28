@@ -16,8 +16,8 @@ class RendererCharacters extends Renderer {
   void renderFunction() => renderCurrentCharacter();
 
   void updateFunction() {
-    while (index < ServerState.totalCharacters){
-      character = ServerState.characters[index];
+    while (index < gamestream.games.isometric.serverState.totalCharacters){
+      character = gamestream.games.isometric.serverState.characters[index];
       orderZ = character.indexZ;
       orderRowColumn = character.indexSum;
       if (character.nodePerceptible) break;
@@ -26,7 +26,7 @@ class RendererCharacters extends Renderer {
   }
 
   @override
-  int getTotal() => ServerState.totalCharacters;
+  int getTotal() => gamestream.games.isometric.serverState.totalCharacters;
 
   void renderCurrentCharacter(){
 
