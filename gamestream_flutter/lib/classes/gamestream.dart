@@ -1,11 +1,8 @@
-import 'package:gamestream_flutter/engine/games/game_aeon.dart';
 
 import 'package:gamestream_flutter/game_utils.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'game.dart';
-import 'games.dart';
 
 class Gamestream {
    late final gameType = Watch(GameType.Website, onChanged: _onChangedGameType);
@@ -92,9 +89,9 @@ class Gamestream {
      game.value = switch (value) {
        GameType.Website => games.gameWebsite,
        GameType.Fight2D => games.gameFight2D,
-       GameType.Combat => games.combat,
-       GameType.Cube3D => games.gameCube3D,
-       GameType.Aeon => GameAeon(),
+       GameType.Combat  => games.combat,
+       GameType.Cube3D  => games.gameCube3D,
+       GameType.Aeon    => games.aeon,
        _ => throw Exception('mapGameTypeToGame($gameType)')
      };
    }

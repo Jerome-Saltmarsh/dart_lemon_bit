@@ -1,13 +1,13 @@
 
-import 'package:flutter/cupertino.dart';
+import 'dart:ui';
+
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/touch_controller.dart';
 
-import '../classes/game.dart';
 
 
-
-class GameAeon extends Game {
+class GameCombat extends Game {
 
   final camera = GameCamera();
 
@@ -68,8 +68,6 @@ class GameAeon extends Game {
 
   @override
   Widget buildUI(BuildContext context) {
-     return Stack(
-       children: [],
-     );
+    return GameUI.buildUI();
   }
 }

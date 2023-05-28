@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/engine/classes/game.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class GameFight2DPlayer {

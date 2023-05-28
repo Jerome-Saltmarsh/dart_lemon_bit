@@ -13,3 +13,6 @@ export 'renderer.dart';
 export 'game_options.dart';
 export 'player_score.dart';
 export 'game_scissors_paper_rock.dart';
+export 'games.dart';
+export 'gamestream.dart';
+export 'game.dart';

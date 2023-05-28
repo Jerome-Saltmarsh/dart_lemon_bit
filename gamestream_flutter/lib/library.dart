@@ -45,7 +45,6 @@ export 'src/server/server.dart';
 export 'src/website/website.dart';
 export 'src/editor/src_editor.dart';
 export 'game_mouse.dart';
-export 'engine/classes/gamestream.dart';
 export 'instances/engine.dart';
 
 export 'package:lemon_engine/lemon_engine.dart';
