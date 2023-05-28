@@ -19,6 +19,7 @@ mixin class GameFight2DCharacter {
   static const maxRunSpeed = 6.0;
 
   final strikeFrame = 5;
+  final strikeSwingFrame = 3;
 
   var emitEventJump = false;
   var stateDuration = 0;

@@ -179,6 +179,9 @@ class ServerResponseReader with ByteReader {
       case GameFight2DEvents.Footstep:
         GameAudio.playAudioSingle2D(GameAudio.footstep_stone, x, y);
         break;
+      case GameFight2DEvents.Strike_Swing:
+        GameAudio.playAudioSingle2D(GameAudio.arm_swing_whoosh_11, x, y);
+        break;
     }
   }
 
