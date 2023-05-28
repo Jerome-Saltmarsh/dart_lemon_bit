@@ -323,11 +323,13 @@ mixin class GameFight2DCharacter {
   }
 
   void applyJumpAcceleration(double jumpAcceleration) {
-    // assert (!maxJumpsReached);
     if (maxJumpsReached) return;
     accelerationY -= jumpAcceleration;
     jumpCount++;
     emitEventJump = true;
+    if (!grounded){
+      jumpCount = 5;
+    }
   }
 
   double get friction {
