@@ -179,7 +179,7 @@ class GameUI {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           onPressed(
-                            action: GameActions.selectAttributeHealth,
+                            action: gamestream.actions.selectAttributeHealth,
                             child: Container(
                               color: boxColor,
                               padding: padding4,
@@ -193,7 +193,7 @@ class GameUI {
                             ),
                           ),
                           onPressed(
-                            action: GameActions.selectAttributeDamage,
+                            action: gamestream.actions.selectAttributeDamage,
                             child: Container(
                               width: boxWidth,
                               color: boxColor,
@@ -207,7 +207,7 @@ class GameUI {
                             ),
                           ),
                           onPressed(
-                            action: GameActions.selectAttributeMagic,
+                            action: gamestream.actions.selectAttributeMagic,
                             child: Container(
                               width: boxWidth,
                               color: boxColor,
@@ -857,7 +857,7 @@ class GameUI {
               child: GameUI.buildAtlasIconType(IconType.Fullscreen, scale: Icon_Scale))));
 
   static Widget buildIconZoom() => onPressed(
-      action: GameActions.toggleZoom, child: buildAtlasIconType(IconType.Zoom, scale: Icon_Scale));
+      action: gamestream.actions.toggleZoom, child: buildAtlasIconType(IconType.Zoom, scale: Icon_Scale));
 
   static Widget buildIconMenu() => onPressed(
       action: ClientState.window_visible_menu.toggle,
@@ -1616,7 +1616,7 @@ class GameUI {
         return container(
             toolTip: "Tab",
             child: edit ? "PLAY" : "EDIT",
-            action: GameActions.actionToggleEdit,
+            action: gamestream.actions.actionToggleEdit,
             color: GameColors.green,
             alignment: Alignment.center,
             width: 100);

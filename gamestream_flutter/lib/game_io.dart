@@ -105,9 +105,9 @@ class GameIO {
     touchCursorWorldY = Engine.screenToWorldY(_touchCursorTapY);
 
     if (inputModeKeyboard && Engine.keyPressedShiftLeft){
-      GameActions.attackAuto();
+      gamestream.actions.attackAuto();
     } else {
-      GameActions.setTarget();
+      gamestream.actions.setTarget();
     }
   }
 
@@ -242,7 +242,7 @@ class GameIO {
   }
 
   void onMouseClickedRight(){
-    GameActions.attackAuto();
+    gamestream.actions.attackAuto();
   }
 
   void onMouseClickedEditMode(){
@@ -275,7 +275,7 @@ class GameIO {
       GameEditor.delete();
     }
     if (gamestream.io.getInputDirectionKeyboard() != Direction.None) {
-      GameActions.actionSetModePlay();
+      gamestream.actions.actionSetModePlay();
     }
     return;
   }

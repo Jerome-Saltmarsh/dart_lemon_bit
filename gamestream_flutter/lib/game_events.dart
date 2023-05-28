@@ -39,8 +39,8 @@ class GameEvents {
     ClientActions.refreshBakeMapLightSources();
 
     if (ClientState.raining.value) {
-      GameActions.rainStop();
-      GameActions.rainStart();
+      gamestream.actions.rainStop();
+      gamestream.actions.rainStart();
     }
     GameNodes.resetNodeColorsToAmbient();
     GameEditor.refreshNodeSelectedIndex();
@@ -235,7 +235,7 @@ class GameEvents {
   }
 
   static void onGameEventExplosion(double x, double y, double z) {
-    GameActions.createExplosion(x, y, z);
+    gamestream.actions.createExplosion(x, y, z);
   }
 
   static void onNodeSet(double x, double y, double z) {

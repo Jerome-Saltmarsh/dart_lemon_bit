@@ -18,6 +18,7 @@ class Gamestream {
 
    final io = GameIO();
    final audio = GameAudio();
+   final actions = GameActions();
 
    final serverResponseReader = ServerResponseReader();
    late final GameNetwork network;

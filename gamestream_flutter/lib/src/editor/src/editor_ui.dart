@@ -652,7 +652,7 @@ class EditorUI {
           ),
           action: () {
             if (GameState.playMode) {
-              GameActions.actionSetModePlay();
+              gamestream.actions.actionSetModePlay();
               return;
             }
             GameEditor.paint(nodeType: nodeType);

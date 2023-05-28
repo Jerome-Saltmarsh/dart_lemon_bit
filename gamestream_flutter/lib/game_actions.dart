@@ -5,14 +5,14 @@ import 'engine/instances.dart';
 
 class GameActions {
 
-  static void loadSelectedSceneName(){
+  void loadSelectedSceneName(){
     final sceneName = GameEditor.selectedSceneName.value;
     if (sceneName == null) throw Exception("loadSelectedSceneNameException: selected scene name is null");
     gamestream.network.sendClientRequestEditorLoadGame(sceneName);
     GameEditor.actionGameDialogClose();
   }
 
-  static void rainStart(){
+  void rainStart(){
     final rows = GameNodes.totalRows;
     final columns = GameNodes.totalColumns;
     final zs = GameNodes.totalZ - 1;
@@ -41,7 +41,7 @@ class GameActions {
     }
   }
 
-  static void rainStop() {
+  void rainStop() {
     for (var i = 0; i < GameNodes.total; i++) {
       if (!NodeType.isRain(GameNodes.nodeTypes[i])) continue;
       GameNodes.nodeTypes[i] = NodeType.Empty;
@@ -50,52 +50,52 @@ class GameActions {
   }
 
   ///
-  static void rainFixBug(){
+  void rainFixBug(){
 
   }
 
-  static void actionSetModePlay(){
+  void actionSetModePlay(){
     ClientState.edit.value = false;
   }
 
-  static void actionSetModeEdit(){
+  void actionSetModeEdit(){
     ClientState.edit.value = true;
   }
 
-  static void actionToggleEdit() {
+  void actionToggleEdit() {
     ClientState.edit.value = !ClientState.edit.value;
   }
 
-  static void messageBoxToggle(){
+  void messageBoxToggle(){
     GameUI.messageBoxVisible.value = !GameUI.messageBoxVisible.value;
   }
 
-  static void messageBoxShow(){
+  void messageBoxShow(){
     GameUI.messageBoxVisible.value = true;
   }
 
-  static void messageBoxHide(){
+  void messageBoxHide(){
     GameUI.messageBoxVisible.value = false;
   }
 
-  static void toggleDebugMode(){
+  void toggleDebugMode(){
     ClientState.debugMode.value = !ClientState.debugMode.value;;
   }
 
-  static void setTarget() {
+  void setTarget() {
     gamestream.io.touchscreenCursorAction = CursorAction.Set_Target;
   }
 
-  static void attackAuto() {
+  void attackAuto() {
     gamestream.io.touchscreenCursorAction = CursorAction.Stationary_Attack_Auto;
   }
 
-  static void playerStop() {
+  void playerStop() {
     gamestream.io.recenterCursor();
     setTarget();
   }
 
-  static void toggleZoom(){
+  void toggleZoom(){
     gamestream.audio.weaponSwap2();
     if (Engine.targetZoom != GameConfig.Zoom_Far){
       Engine.targetZoom = GameConfig.Zoom_Far;
@@ -104,11 +104,11 @@ class GameActions {
     }
   }
 
-  static void toggleWindowSettings(){
+  void toggleWindowSettings(){
       ClientState.window_visible_light_settings.toggle();
   }
 
-  static void createExplosion(double x, double y, double z){
+  void createExplosion(double x, double y, double z){
     GameState.spawnParticleLightEmissionAmbient(x: x, y: y, z: z);
     gamestream.audio.explosion_grenade_04.playXYZ(x, y, z);
 
@@ -165,19 +165,19 @@ class GameActions {
     }
   }
 
-  static void selectAttributeHealth() =>
+  void selectAttributeHealth() =>
       gamestream.network.sendClientRequest(
           ClientRequest.Select_Attribute,
           CharacterAttribute.Health,
       );
 
-  static void selectAttributeDamage() =>
+  void selectAttributeDamage() =>
       gamestream.network.sendClientRequest(
         ClientRequest.Select_Attribute,
         CharacterAttribute.Damage,
       );
 
-  static void selectAttributeMagic() =>
+  void selectAttributeMagic() =>
       gamestream.network.sendClientRequest(
         ClientRequest.Select_Attribute,
         CharacterAttribute.Magic,
