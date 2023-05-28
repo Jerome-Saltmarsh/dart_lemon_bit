@@ -1,4 +1,6 @@
 
+import 'dart:math';
+
 import 'package:gamestream_flutter/classes/audio_single.dart';
 import 'package:gamestream_flutter/classes/audio_tracks.dart';
 import 'package:just_audio/just_audio.dart';
@@ -294,7 +296,12 @@ class GameAudio {
 
   static void playAudioSingle2D(AudioSingle audioSingle, double x, double y){
     if (!enabledSound.value) return;
-    audioSingle.play(volume: 1);
+    final distanceX = Engine.screenCenterWorldX - x;
+    final distanceY = Engine.screenCenterWorldY - y;
+    final distance = hyp(distanceX, distanceY);
+    final distanceSqrt = sqrt(distance);
+    final distanceSrtClamped = max(distanceSqrt * 0.5, 1);
+    audioSingle.play(volume: 1 / distanceSrtClamped);
   }
 
   static void playAudioSingle(AudioSingle audioSingle, double x, double y, double z, {double maxDistance = 400}){

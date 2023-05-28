@@ -9,7 +9,8 @@ ctrl + shift + e    : view recent changes
 
 [FIGHT2D]
 [x] strike down hit
-[ ] audio volume distance
+[x] audio volume distance
+[ ] map editor
 
 [AEON]
 [ ] character leveling system   (goal)
