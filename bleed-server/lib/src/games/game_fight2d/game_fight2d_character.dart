@@ -193,6 +193,9 @@ mixin class GameFight2DCharacter {
 
   void jump() {
 
+    if (jumpingRequested) return;
+    jumpingRequested = true;
+
     if (striking && canStrikeUpOrDown) {
       strikeUp();
       return;
@@ -347,7 +350,7 @@ mixin class GameFight2DCharacter {
     GameFight2DCharacterState.Striking: 30,
     GameFight2DCharacterState.Running_Strike: 30,
     GameFight2DCharacterState.Crouching_Strike: 30,
-    GameFight2DCharacterState.Jumping: 12,
+    GameFight2DCharacterState.Jumping: Jump_Frame + 1,
     GameFight2DCharacterState.Airborn_Strike: 30,
     GameFight2DCharacterState.Airborn_Strike_Up: 30,
     GameFight2DCharacterState.Airborn_Strike_Down: 30,

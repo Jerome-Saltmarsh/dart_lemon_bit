@@ -40,13 +40,22 @@ class GameFight2D extends Game<GameFight2DPlayer> {
     required bool keySpaceDown,
     required bool inputTypeKeyboard,
   }) {
-     player.jumpingRequested = mouseRightDown;
+     // player.jumpingRequested = mouseRightDown;
      player.directionRequested = direction;
 
      if (keySpaceDown || mouseLeftDown) {
        player.strike();
      }
 
+     if (const [
+       InputDirection.Up,
+       InputDirection.Up_Left,
+       InputDirection.Up_Right,
+     ].contains(direction)){
+       player.jump();
+     } else {
+       player.jumpingRequested = false;
+     }
 
      switch (direction) {
        case InputDirection.Right:
