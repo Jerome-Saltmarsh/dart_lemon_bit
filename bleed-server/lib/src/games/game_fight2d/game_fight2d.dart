@@ -193,7 +193,6 @@ class GameFight2D extends Game<GameFight2DPlayer> {
       if (rangeX < xDiff.abs()) continue;
       final yDiff = character.y - otherCharacter.y;
       if (rangeY < yDiff.abs()) continue;
-      strikeHit = true;
 
       const force = 10.0;
       if (character.facingLeft){
@@ -201,29 +200,29 @@ class GameFight2D extends Game<GameFight2DPlayer> {
           if (character.state == GameFight2DCharacterState.Running_Strike){
             otherCharacter.hurtAirborn();
             otherCharacter.accelerationY -= force;
+            strikeHit = true;
           } else {
             otherCharacter.hurt();
+            strikeHit = true;
           }
           otherCharacter.accelerationX -= force;
         }
       } else {
+        if (xDiff > 0) continue;
         if (xDiff < rangeX) {
+          otherCharacter.accelerationX += force;
           switch (character.state) {
             case GameFight2DCharacterState.Running_Strike:
               otherCharacter.hurtAirborn();
               otherCharacter.accelerationY -= force;
+              strikeHit = true;
               break;
             default:
               otherCharacter.hurt();
+              strikeHit = true;
               break;
           }
-          if (character.state == GameFight2DCharacterState.Running_Strike) {
-            otherCharacter.hurtAirborn();
-            otherCharacter.accelerationY -= force;
-          } else {
-            otherCharacter.hurt();
-          }
-          otherCharacter.accelerationX += force;
+
         }
       }
     }

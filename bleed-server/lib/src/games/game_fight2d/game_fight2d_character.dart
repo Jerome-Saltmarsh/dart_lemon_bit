@@ -17,10 +17,12 @@ mixin class GameFight2DCharacter {
   static const strikeUpAcceleration = 2.5;
   static const fallAcceleration = 0.5;
   static const maxRunSpeed = 6.0;
+  static const Max_Jump_Velocity = 3.0;
 
   final strikeFrame = 5;
   final strikeSwingFrame = 3;
 
+  var mass = 1.0;
   var emitEventJump = false;
   var stateDuration = 0;
   var stateDurationTotal = 0;
@@ -312,6 +314,7 @@ mixin class GameFight2DCharacter {
 
   void applyJumpAcceleration(double jumpAcceleration) {
     if (maxJumpsReached) return;
+
     accelerationY -= jumpAcceleration;
     jumpCount++;
     emitEventJump = true;
