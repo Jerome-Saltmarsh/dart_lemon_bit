@@ -11,7 +11,7 @@ void main() {
     buildLoadingScreen: GameWebsite.buildLoadingPage,
     themeData: ThemeData(fontFamily: 'VT323-Regular'),
     backgroundColor: GameColors.black,
-    onError: GameSystem.onError,
+    onError: GSEngine.onError,
     update: (){},
     render: (canvas, size) {
 
