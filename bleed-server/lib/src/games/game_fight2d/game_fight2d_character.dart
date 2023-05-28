@@ -3,6 +3,7 @@ import 'package:bleed_server/gamestream.dart';
 import 'package:lemon_math/library.dart';
 
 mixin class GameFight2DCharacter {
+  static const Running_Strike_Velocity = 5.0;
   static const Friction_Floor = 0.88;
   static const Friction_Floor_Sliding = 0.92;
   static const Friction_Air = 0.95;
@@ -30,7 +31,7 @@ mixin class GameFight2DCharacter {
   var velocityY = 0.0;
   var grounded = false;
   var jumpCount = 0;
-  var directionRequested = 0;
+  // var directionRequested = 0;
 
   var _direction = GameFight2DDirection.Left;
   var _state = GameFight2DCharacterState.Idle;
@@ -108,8 +109,6 @@ mixin class GameFight2DCharacter {
 
   bool get falling => velocityY > 0;
 
-  bool get directionRequestedUp => directionRequested == InputDirection.Up;
-
   bool get maxJumpsReached => jumpCount >= Max_Jumps;
 
   // METHODS
@@ -123,31 +122,16 @@ mixin class GameFight2DCharacter {
   }
 
   void strike() {
-    switch (directionRequested){
-      case InputDirection.Up:
-        strikeUp();
-        return;
-      case InputDirection.Down:
-        strikeDown();
-        return;
-    }
-
-    if (!grounded){
-      airbornStrike();
+    if (!grounded) {
+      state = GameFight2DCharacterState.Airborn_Strike;
       return;
     }
-
-    if (running && velocityX.abs() > 5){
-      runningStrike();
+    if (running && velocityX.abs() > Running_Strike_Velocity){
+      state = GameFight2DCharacterState.Running_Strike;
       return;
     }
-
     state = GameFight2DCharacterState.Striking;
   }
-
-  void airbornStrike() => state = GameFight2DCharacterState.Airborn_Strike;
-
-  void runningStrike() => state = GameFight2DCharacterState.Running_Strike;
 
   void runLeft() {
     faceLeft();
