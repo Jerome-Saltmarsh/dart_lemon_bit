@@ -5,7 +5,7 @@ import 'package:gamestream_flutter/classes/audio_single.dart';
 import 'package:gamestream_flutter/classes/audio_tracks.dart';
 import 'package:just_audio/just_audio.dart';
 
-import 'engine/instances.dart';
+import 'package:gamestream_flutter/instances/gamestream.dart';
 import 'library.dart';
 
 

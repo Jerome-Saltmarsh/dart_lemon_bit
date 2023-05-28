@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 
-import 'engine/instances.dart';
+import 'package:gamestream_flutter/instances/gamestream.dart';
 import 'library.dart';
 import 'render/renderer_nodes.dart';
 

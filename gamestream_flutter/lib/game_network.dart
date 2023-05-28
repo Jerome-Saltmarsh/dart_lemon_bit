@@ -1,7 +1,7 @@
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-import 'engine/instances.dart';
+import 'package:gamestream_flutter/instances/gamestream.dart';
 import 'library.dart';
 
 class GameNetwork {

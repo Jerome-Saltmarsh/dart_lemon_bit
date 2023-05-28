@@ -10,7 +10,7 @@ import 'package:gamestream_flutter/language_utils.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:golden_ratio/constants.dart';
 
-import 'engine/instances.dart';
+import 'package:gamestream_flutter/instances/gamestream.dart';
 import 'widgets/animated_widget.dart';
 
 

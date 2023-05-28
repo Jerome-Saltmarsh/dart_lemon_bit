@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/language_utils.dart';
 
-import 'engine/instances.dart';
+import 'package:gamestream_flutter/instances/gamestream.dart';
 import 'library.dart';
 
 class GameInventoryUI {

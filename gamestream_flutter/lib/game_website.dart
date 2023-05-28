@@ -9,7 +9,6 @@ import 'package:gamestream_flutter/website/widgets/region_column.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'engine/instances.dart';
 
 class GameWebsite {
   static final operationStatus = Watch(OperationStatus.None);

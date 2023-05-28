@@ -1,7 +1,8 @@
 import 'package:gamestream_flutter/engine/games/game_aeon.dart';
 import 'package:gamestream_flutter/engine/games/game_cube3d.dart';
 import 'package:gamestream_flutter/engine/games/game_fight2d.dart';
-import 'package:gamestream_flutter/engine/instances.dart';
+
+import 'package:gamestream_flutter/instances/gamestream.dart';
 import 'package:gamestream_flutter/game_utils.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/library.dart';

@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/engine/instances.dart';
+import 'package:gamestream_flutter/instances/gamestream.dart';
 import 'package:gamestream_flutter/game_widgets.dart';
 import 'package:vector_math/vector_math.dart' as vector;
 

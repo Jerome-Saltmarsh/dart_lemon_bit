@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/engine/classes/game.dart';
-import 'package:gamestream_flutter/engine/instances.dart';
 import 'package:gamestream_flutter/library.dart';
+import 'package:gamestream_flutter/instances/gamestream.dart';
 
 class GameFight2DPlayer {
   var x = 0.0;

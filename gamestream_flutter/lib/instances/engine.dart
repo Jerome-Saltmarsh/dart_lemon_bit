@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/library.dart';
 
-import '../engine/instances.dart';
 
 final engine = Engine(
     title: "GAMESTREAM ONLINE",

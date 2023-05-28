@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/classes/audio_loop.dart';
-import 'package:gamestream_flutter/engine/instances.dart';
+import 'package:gamestream_flutter/instances/gamestream.dart';
 
 import '../../game_widgets.dart';
 import 'constants/colors.dart';

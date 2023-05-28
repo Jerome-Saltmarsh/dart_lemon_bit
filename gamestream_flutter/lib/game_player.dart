@@ -1,6 +1,6 @@
 import 'package:gamestream_flutter/library.dart';
 
-import 'engine/instances.dart';
+import 'package:gamestream_flutter/instances/gamestream.dart';
 
 class GamePlayer {
   static final id = Watch(0);

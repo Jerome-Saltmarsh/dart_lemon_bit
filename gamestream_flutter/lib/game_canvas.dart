@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/render/renderer_nodes.dart';
 
-import 'engine/instances.dart';
 import 'isometric/render/render_character_health_bar.dart';
 import 'touch_controller.dart';
 

@@ -1,6 +1,5 @@
 import 'package:gamestream_flutter/library.dart';
 
-import 'engine/instances.dart';
 
 class GameEditor {
   static final editorDialog = Watch<EditorDialog?>(null, onChanged: onChangedEditorDialog);

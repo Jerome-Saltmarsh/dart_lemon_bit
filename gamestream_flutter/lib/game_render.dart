@@ -1,7 +1,7 @@
 import 'dart:ui' as ui;
 
+import 'package:gamestream_flutter/instances/gamestream.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/engine/instances.dart';
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:gamestream_flutter/render/renderer_particles.dart';
 import 'package:gamestream_flutter/render/renderer_projectiles.dart';

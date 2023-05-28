@@ -3,6 +3,7 @@ import 'package:bleed_server/gamestream.dart';
 import 'package:lemon_math/library.dart';
 
 mixin class GameFight2DCharacter {
+  static const Boundary_Y = 1000;
   static const Running_Strike_Velocity = 5.0;
   static const Friction_Floor = 0.88;
   static const Friction_Floor_Sliding = 0.92;
@@ -35,11 +36,9 @@ mixin class GameFight2DCharacter {
   var velocityY = 0.0;
   var grounded = false;
   var jumpCount = 0;
-  // var directionRequested = 0;
 
   var _direction = GameFight2DDirection.Left;
   var _state = GameFight2DCharacterState.Idle;
-  var _previousState = GameFight2DCharacterState.Idle;
   var _jumpingRequested = false;
 
   int get direction => _direction;
@@ -67,7 +66,6 @@ mixin class GameFight2DCharacter {
 
     if (GameFight2DCharacterState.getPriority(value) <= statePriority) {
       if (!interruptable) return;
-      // return;
     }
     if (value == _state) return;
 
@@ -232,15 +230,8 @@ mixin class GameFight2DCharacter {
 
   void update() {
 
-    if (y > 1000) {
+    if (y > Boundary_Y) {
       respawn();
-    }
-
-    if (_previousState != _state){
-      if (_previousState == GameFight2DCharacterState.Rolling){
-         // velocityX *= 0.5;
-      }
-      _previousState = _state;
     }
 
     if (stateDurationTotal > 0 && stateDuration > stateDurationTotal){
@@ -284,7 +275,6 @@ mixin class GameFight2DCharacter {
         accelerationX += facingLeft ? -rollingAcceleration : rollingAcceleration;
         break;
       case GameFight2DCharacterState.Second_Jump:
-
         if (stateDuration == Jump_Frame) {
           applyJumpAcceleration(jumpAcceleration);
           break;

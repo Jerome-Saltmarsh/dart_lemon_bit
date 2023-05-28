@@ -3,7 +3,6 @@ import 'package:gamestream_flutter/game_minimap.dart';
 import 'package:gamestream_flutter/isometric/events/on_game_event_game_object_destroyed.dart';
 import 'package:gamestream_flutter/library.dart';
 
-import 'engine/instances.dart';
 import 'isometric/events/on_character_hurt.dart';
 
 class GameEvents {

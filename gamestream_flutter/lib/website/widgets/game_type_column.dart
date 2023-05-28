@@ -2,9 +2,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:gamestream_flutter/library.dart';
 
-import '../../engine/instances.dart';
-
-
 
 class GameTypeColumn extends StatelessWidget {
 

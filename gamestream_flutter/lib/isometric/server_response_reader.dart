@@ -6,8 +6,6 @@ import 'package:gamestream_flutter/structure/business/handle_server_response_gam
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:bleed_common/src/fight2d/game_fight2d_events.dart';
 
-import '../engine/instances.dart';
-
 class ServerResponseReader with ByteReader {
   final bufferSize = Watch(0);
   final bufferSizeTotal = Watch(0);
