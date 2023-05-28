@@ -12,6 +12,8 @@ import 'package:gamestream_flutter/render/renderer_particles.dart';
 import 'package:gamestream_flutter/render/renderer_projectiles.dart';
 import 'package:gamestream_flutter/touch_controller.dart';
 
+import 'game_isometric_mouse.dart';
+
 class GameIsometricRenderer {
   var totalRemaining = 0;
   var totalIndex = 0;
@@ -475,8 +477,8 @@ class GameIsometricRenderer {
   }
 
   void drawMouse() {
-    final mouseAngle = GameMouse.playerAngle;
-    final mouseDistance = min(200.0, GameMouse.playerDistance);
+    final mouseAngle = GameIsometricMouse.playerAngle;
+    final mouseDistance = min(200.0, GameIsometricMouse.playerDistance);
 
     final jumps = mouseDistance ~/ Node_Height_Half;
 

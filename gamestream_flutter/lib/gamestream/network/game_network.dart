@@ -1,13 +1,15 @@
+import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-import 'library.dart';
+import 'enums/connection_status.dart';
+
 
 class GameNetwork {
   late WebSocketChannel webSocketChannel;
   late WebSocketSink sink;
   final updateBuffer = Uint8List(15);
-  late final connectionStatus = Watch(ConnectionStatus.None, onChanged: gamestream.network.onChangedConnectionStatus);
+  late final connectionStatus = Watch(ConnectionStatus.None, onChanged: onChangedConnectionStatus);
   String connectionUri = "";
   DateTime? connectionEstablished;
 
@@ -30,8 +32,8 @@ class GameNetwork {
       print("connecting to custom server");
       print(website.state.customConnectionStrongController.text);
       connectToServer(
-          website.state.customConnectionStrongController.text,
-          message,
+        website.state.customConnectionStrongController.text,
+        message,
       );
       return;
     }
@@ -104,7 +106,7 @@ class GameNetwork {
         }
 
         if (webSocketChannel.closeCode != null){
-           WebsiteState.error.value = "Lost Connection";
+          WebsiteState.error.value = "Lost Connection";
         }
       });
       connectionUri = uri;
@@ -299,9 +301,9 @@ class GameNetwork {
     required int index,
     required int type,
   }) =>
-    sendClientRequest(
-      ClientRequest.GameObject, "${GameObjectRequest.Add.index} $index $type",
-    );
+      sendClientRequest(
+        ClientRequest.GameObject, "${GameObjectRequest.Add.index} $index $type",
+      );
 
   void sendClientRequestInventoryEquip(int index) {
     sendClientRequest(
@@ -316,9 +318,9 @@ class GameNetwork {
 
 
   final unequipRequest = (){
-     final list = Uint8List(1);
-     list[0] = ClientRequest.Unequip;
-     return list;
+    final list = Uint8List(1);
+    list[0] = ClientRequest.Unequip;
+    return list;
   }();
 
   void sendClientRequestUnequip() =>

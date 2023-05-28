@@ -13,7 +13,6 @@ export 'game_enums.dart';
 export 'game_events.dart';
 export 'game_images.dart';
 export 'gamestream/game_io.dart';
-export 'game_network.dart';
 export 'game_network_config.dart';
 export 'game_persistence.dart';
 export 'game_queries.dart';
@@ -35,7 +34,6 @@ export 'src/client/client.dart';
 export 'src/server/server.dart';
 export 'src/website/website.dart';
 export 'src/editor/src_editor.dart';
-export 'game_mouse.dart';
 export 'instances/engine.dart';
 
 export 'package:lemon_engine/lemon_engine.dart';

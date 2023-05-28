@@ -1,14 +1,6 @@
 import 'package:lemon_engine/lemon_engine.dart';
 
-enum ConnectionStatus {
-  None,
-  Connecting,
-  Connected,
-  Done,
-  Error,
-  Failed_To_Connect,
-  Invalid_Connection,
-}
+
 
 enum OperationStatus {
   None,

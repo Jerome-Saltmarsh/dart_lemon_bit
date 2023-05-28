@@ -1,9 +1,10 @@
 
+
 import 'package:gamestream_flutter/library.dart';
 
-import 'gamestream/games/isometric/game_isometric.dart';
+import 'game_isometric.dart';
 
-class GameMouse {
+class GameIsometricMouse {
   static double get positionX => GameIsometric.convertWorldToGridX(engine.mouseWorldX, engine.mouseWorldY) + GamePlayer.position.z;
   static double get positionY => GameIsometric.convertWorldToGridY(engine.mouseWorldX, engine.mouseWorldY) + GamePlayer.position.z;
   static double get positionZ => GamePlayer.position.z;

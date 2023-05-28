@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric.dart';
+import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_mouse.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_renderer.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -339,8 +340,8 @@ class RendererNodes extends Renderer {
       ensureIndexPerceptible(GamePlayer.nodeIndex);
     }
 
-    if (GameMouse.inBounds){
-      ensureIndexPerceptible(GameMouse.nodeIndex);
+    if (GameIsometricMouse.inBounds){
+      ensureIndexPerceptible(GameIsometricMouse.nodeIndex);
     }
 
     zMin = max(GamePlayer.indexZ - 1, 0);
