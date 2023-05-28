@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_renderer.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class RendererNodes extends Renderer {
@@ -75,7 +76,7 @@ class RendererNodes extends Renderer {
   static var transparencyGridStackIndex = 0;
 
   // GETTERS
-  static double get currentNodeRenderY => GameConvert.rowColumnZToRenderY(row, column, currentNodeZ);
+  static double get currentNodeRenderY => GameIsometricRenderer.rowColumnZToRenderY(row, column, currentNodeZ);
   static int get currentNodeColor => gamestream.games.isometric.nodes.node_colors[currentNodeIndex];
   static int get currentNodeOrientation => nodeOrientations[currentNodeIndex];
   static int get currentNodeWind => ServerState.windTypeAmbient.value;

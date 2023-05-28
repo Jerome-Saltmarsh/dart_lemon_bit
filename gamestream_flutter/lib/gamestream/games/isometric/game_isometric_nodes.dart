@@ -2,6 +2,7 @@
 import 'dart:math';
 
 import 'package:flutter/painting.dart';
+import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_renderer.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class GameIsometricNodes {
@@ -209,13 +210,13 @@ class GameIsometricNodes {
     var zTotal = zMin * area;
 
     const r = 4;
-    final dstXLeft = GameConvert.rowColumnZToRenderX(rowIndex + r, columnIndex - r);
+    final dstXLeft = GameIsometricRenderer.rowColumnZToRenderX(rowIndex + r, columnIndex - r);
     if (dstXLeft < engine.Screen_Left)    return;
-    final dstXRight = GameConvert.rowColumnZToRenderX(rowIndex - r, columnIndex + r);
+    final dstXRight = GameIsometricRenderer.rowColumnZToRenderX(rowIndex - r, columnIndex + r);
     if (dstXRight > engine.Screen_Right)   return;
-    final dstYTop = GameConvert.rowColumnZToRenderY(rowIndex + r, columnIndex + r, zIndex);
+    final dstYTop = GameIsometricRenderer.rowColumnZToRenderY(rowIndex + r, columnIndex + r, zIndex);
     if (dstYTop <  engine.Screen_Top) return;
-    final dstYBottom = GameConvert.rowColumnZToRenderY(rowIndex - r, columnIndex - r, zIndex);
+    final dstYBottom = GameIsometricRenderer.rowColumnZToRenderY(rowIndex - r, columnIndex - r, zIndex);
     if (dstYBottom >  engine.Screen_Bottom) return;
 
     for (var z = zMin; z < zMax; z++) {
@@ -983,10 +984,10 @@ class GameIsometricNodes {
 
 
   double getIndexRenderX(int index) =>
-      GameConvert.rowColumnToRenderX(getIndexRow(index), getIndexColumn(index));
+      GameIsometricRenderer.rowColumnToRenderX(getIndexRow(index), getIndexColumn(index));
 
   double getIndexRenderY(int index) =>
-      GameConvert.rowColumnZToRenderY(getIndexRow(index), getIndexColumn(index), getIndexZ(index));
+      GameIsometricRenderer.rowColumnZToRenderY(getIndexRow(index), getIndexColumn(index), getIndexZ(index));
 
   void applyAmbient({
     required int index,
@@ -1103,11 +1104,11 @@ class GameIsometricNodes {
     final row = getIndexRow(index);
     final column = getIndexColumn(index);
 
-    final renderX = GameConvert.rowColumnToRenderX(row, column);
+    final renderX = GameIsometricRenderer.rowColumnToRenderX(row, column);
     if (renderX < engine.Screen_Left) return false;
     if (renderX > engine.Screen_Right) return false;
 
-    final renderY = GameConvert.rowColumnZToRenderY(row, column, getIndexZ(index));
+    final renderY = GameIsometricRenderer.rowColumnZToRenderY(row, column, getIndexZ(index));
     if (renderY < engine.Screen_Top) return false;
     if (renderY > engine.Screen_Bottom) return false;
 

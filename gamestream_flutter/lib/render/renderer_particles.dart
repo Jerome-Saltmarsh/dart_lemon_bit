@@ -1,3 +1,4 @@
+import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_renderer.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import 'functions/render_shadow.dart';
@@ -12,10 +13,10 @@ class RendererParticles extends Renderer {
   void renderFunction() {
       assert (particle.active);
       assert (particle.delay <= 0);
-      final dstX = GameConvert.convertV3ToRenderX(particle);
+      final dstX = GameIsometricRenderer.convertV3ToRenderX(particle);
       assert (dstX > engine.Screen_Left - 50);
       assert (dstX < engine.Screen_Right + 50);
-      final dstY = GameConvert.convertV3ToRenderY(particle);
+      final dstY = GameIsometricRenderer.convertV3ToRenderY(particle);
       assert (dstY > engine.Screen_Top - 50);
       assert (dstY < engine.Screen_Bottom + 50);
 
@@ -527,10 +528,10 @@ class RendererParticles extends Renderer {
       particle = particles[index++];
       if (particle.delay > 0) continue;
       if (!particle.active) continue;
-      final dstX = GameConvert.convertV3ToRenderX(particle);
+      final dstX = GameIsometricRenderer.convertV3ToRenderX(particle);
       if (dstX < engine.Screen_Left - 50) continue;
       if (dstX > engine.Screen_Right + 50) continue;
-      final dstY = GameConvert.convertV3ToRenderY(particle);
+      final dstY = GameIsometricRenderer.convertV3ToRenderY(particle);
       if (dstY < engine.Screen_Top - 50) continue;
       if (dstY > engine.Screen_Bottom + 50) continue;
       if (!particle.nodePerceptible) continue;

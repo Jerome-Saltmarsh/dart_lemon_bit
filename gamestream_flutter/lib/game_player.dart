@@ -1,5 +1,7 @@
 import 'package:gamestream_flutter/library.dart';
 
+import 'gamestream/games/isometric/game_isometric_renderer.dart';
+
 class GamePlayer {
   static final id = Watch(0);
   static final perkType = Watch(PerkType.None);
@@ -65,8 +67,8 @@ class GamePlayer {
   static double get z => position.z;
   static int get areaNodeIndex => (indexRow * gamestream.games.isometric.nodes.totalColumns) + indexColumn;
 
-  static double get renderX => GameConvert.convertV3ToRenderX(position);
-  static double get renderY => GameConvert.convertV3ToRenderY(position);
+  static double get renderX => GameIsometricRenderer.convertV3ToRenderX(position);
+  static double get renderY => GameIsometricRenderer.convertV3ToRenderY(position);
   static double get positionScreenX => engine.worldToScreenX(GamePlayer.position.renderX);
   static double get positionScreenY => engine.worldToScreenY(GamePlayer.position.renderY);
   static bool get interactModeTrading => ServerState.interactMode.value == InteractMode.Trading;

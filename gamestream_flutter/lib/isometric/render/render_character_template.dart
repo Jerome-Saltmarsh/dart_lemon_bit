@@ -2,6 +2,7 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_renderer.dart';
 
 import '../../library.dart';
 import 'render_character_health_bar.dart';
@@ -131,8 +132,8 @@ void renderCharacterTemplate(Character character, {
 
   final invisible = character.buffInvisible;
 
-  final dstX = GameConvert.convertV3ToRenderX(character);
-  final dstY = GameConvert.convertV3ToRenderY(character);
+  final dstX = GameIsometricRenderer.convertV3ToRenderX(character);
+  final dstY = GameIsometricRenderer.convertV3ToRenderY(character);
 
   const Color_Invisible = GameColors.White38_Value;
   final color = invisible ? Color_Invisible : gamestream.games.isometric.clientState.getV3RenderColor(character);
@@ -163,8 +164,8 @@ void renderCharacterTemplate(Character character, {
       srcY: upperBodyDirection * 64,
       srcWidth: 64,
       srcHeight: 64,
-      dstX: GameConvert.getRenderX(shadowX, shadowY, shadowZ),
-      dstY: GameConvert.getRenderY(shadowX, shadowY, shadowZ),
+      dstX: GameIsometricRenderer.getRenderX(shadowX, shadowY, shadowZ),
+      dstY: GameIsometricRenderer.getRenderY(shadowX, shadowY, shadowZ),
       scale: Scale,
       color: color,
       anchorY: Anchor_Y,

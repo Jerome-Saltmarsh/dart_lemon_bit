@@ -16,6 +16,7 @@ import 'widgets/animated_widget.dart';
 const nothing = SizedBox();
 
 class GameUI {
+  static const Server_FPS = 45;
   static const Icon_Scale = 1.5;
   static final messageBoxVisible = Watch(false, clamp: (bool value) {
     return value;
@@ -734,7 +735,7 @@ class GameUI {
             padding: GameStyle.Container_Padding,
             alignment: Alignment.center,
             child: watch(GamePlayer.respawnTimer, (int respawnTimer){
-              return text("RESPAWN: ${respawnTimer ~/ GameConstants.Server_FPS}", size: 25);
+              return text("RESPAWN: ${respawnTimer ~/ Server_FPS}", size: 25);
             }),
           );
       });

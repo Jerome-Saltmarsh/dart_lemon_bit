@@ -12,7 +12,6 @@ import 'package:gamestream_flutter/render/renderer_particles.dart';
 import 'package:gamestream_flutter/render/renderer_projectiles.dart';
 import 'package:gamestream_flutter/touch_controller.dart';
 
-
 class GameIsometricRenderer {
   var totalRemaining = 0;
   var totalIndex = 0;
@@ -134,8 +133,8 @@ class GameIsometricRenderer {
   void renderTextV3(Vector3 v3, dynamic text, {double offsetY = 0}){
     renderText(
       text: text.toString(),
-      x: GameConvert.convertV3ToRenderX(v3),
-      y: GameConvert.convertV3ToRenderY(v3) + offsetY,
+      x: GameIsometricRenderer.convertV3ToRenderX(v3),
+      y: GameIsometricRenderer.convertV3ToRenderY(v3) + offsetY,
     );
   }
 
@@ -147,8 +146,8 @@ class GameIsometricRenderer {
   }) =>
       renderText(
         text: text.toString(),
-        x: GameConvert.getRenderX(x, y, z),
-        y: GameConvert.getRenderY(x, y, z),
+        x: GameIsometricRenderer.getRenderX(x, y, z),
+        y: GameIsometricRenderer.getRenderY(x, y, z),
       );
 
   void renderWireFrameBlue(
@@ -158,8 +157,8 @@ class GameIsometricRenderer {
       ) {
     engine.renderSprite(
       image: GameImages.atlas_nodes,
-      dstX: GameConvert.rowColumnToRenderX(row, column),
-      dstY: GameConvert.rowColumnZToRenderY(row, column,z),
+      dstX: rowColumnToRenderX(row, column),
+      dstY: rowColumnZToRenderY(row, column,z),
       srcX: AtlasNodeX.Wireframe_Blue,
       srcY: AtlasNodeY.Wireframe_Blue,
       srcWidth: GameConstants.Sprite_Width,
@@ -172,8 +171,8 @@ class GameIsometricRenderer {
   void renderWireFrameRed(int row, int column, int z) {
     engine.renderSprite(
       image: GameImages.atlas_nodes,
-      dstX: GameConvert.rowColumnToRenderX(row, column),
-      dstY: GameConvert.rowColumnZToRenderY(row, column,z),
+      dstX: rowColumnToRenderX(row, column),
+      dstY: rowColumnZToRenderY(row, column,z),
       srcX: AtlasNodeX.Wireframe_Red,
       srcY: AtlasNodeY.Wireframe_Red,
       srcWidth: GameConstants.Sprite_Width,
@@ -316,8 +315,8 @@ class GameIsometricRenderer {
       srcY: 48,
       srcWidth: 32,
       srcHeight: 32,
-      dstX: GameConvert.getRenderX(x, y, z),
-      dstY: GameConvert.getRenderY(x, y, z),
+      dstX: getRenderX(x, y, z),
+      dstY: getRenderY(x, y, z),
     );
   }
 
@@ -508,6 +507,27 @@ class GameIsometricRenderer {
     }
   }
 
+  static double rowColumnZToRenderX(int row, int column) =>
+      (row - column) * Node_Size_Half;
+
+  static double rowColumnToRenderX(int row, int column) =>
+      (row - column) * Node_Size_Half;
+
+  static double rowColumnZToRenderY(int row, int column, int z) =>
+      (row + column - z) * Node_Size_Half;
+
+  static double rowColumnToRenderY(int row, int column) =>
+      (row + column) * Node_Size_Half;
+
+
+  static double renderX(double x, double y, double z) => (x - y) * 0.5;
+  static double renderY(double x, double y, double z) => ((y + x) * 0.5) - z;
+
+  static double convertV3ToRenderX(Vector3 v3) => getRenderX(v3.x, v3.y, v3.z);
+  static double convertV3ToRenderY(Vector3 v3) => getRenderY(v3.x, v3.y, v3.z);
+
+  static double getRenderX(double x, double y, double z) => (x - y) * 0.5;
+  static double getRenderY(double x, double y, double z) => ((y + x) * 0.5) - z;
 }
 
 
