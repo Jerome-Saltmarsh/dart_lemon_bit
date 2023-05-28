@@ -5,7 +5,6 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/touch_controller.dart';
 
-import 'package:gamestream_flutter/instances/gamestream.dart';
 import '../classes/game.dart';
 
 

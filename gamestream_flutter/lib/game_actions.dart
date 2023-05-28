@@ -1,6 +1,5 @@
 
 import 'package:gamestream_flutter/library.dart';
-import 'package:gamestream_flutter/instances/gamestream.dart';
 
 class GameActions {
 

@@ -1,15 +1,12 @@
 import 'package:gamestream_flutter/engine/games/game_aeon.dart';
-import 'package:gamestream_flutter/engine/games/game_cube3d.dart';
-import 'package:gamestream_flutter/engine/games/game_fight2d.dart';
 
-import 'package:gamestream_flutter/instances/gamestream.dart';
 import 'package:gamestream_flutter/game_utils.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:gamestream_flutter/engine/games/game_website.dart' as gw;
 import 'game.dart';
-import '../games/game_combat.dart';
+import 'games.dart';
 
 
 class Gamestream {
@@ -20,12 +17,12 @@ class Gamestream {
    final io = GameIO();
    final audio = GameAudio();
    final actions = GameActions();
+   final games = Games();
+   final animation = GameAnimation();
 
    final serverResponseReader = ServerResponseReader();
    late final GameNetwork network;
-   final gameFight2D = GameFight2D();
-   final gameCube3D = GameCube3D();
-   final animation = GameAnimation();
+
 
   Gamestream() {
     network = GameNetwork(this);
@@ -97,9 +94,9 @@ class Gamestream {
      print("_onChangedGameType(${value.name})");
      game.value = switch (value) {
        GameType.Website => gameWebsite,
-       GameType.Fight2D => gameFight2D,
-       GameType.Combat => GameCombat(),
-       GameType.Cube3D => GameCube3D(),
+       GameType.Fight2D => games.gameFight2D,
+       GameType.Combat => games.combat,
+       GameType.Cube3D => games.gameCube3D,
        GameType.Aeon => GameAeon(),
        _ => throw Exception('mapGameTypeToGame($gameType)')
      };

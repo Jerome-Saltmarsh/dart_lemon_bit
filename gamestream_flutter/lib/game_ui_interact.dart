@@ -5,8 +5,6 @@ import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/library.dart';
 
 
-import 'package:gamestream_flutter/instances/gamestream.dart';
-
 class GameUIInteract {
   static const _width = 400;
 

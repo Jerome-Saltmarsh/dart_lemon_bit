@@ -28,6 +28,10 @@ class GameFight2D extends Game {
 
   int get sceneTotal => sceneWidth * sceneHeight;
 
+  GameFight2D(){
+    print('GameFight2D()');
+  }
+
   @override
   void drawCanvas(Canvas canvas, Size size) {
       renderTiles();

@@ -105,7 +105,7 @@ class ServerResponseReader with ByteReader {
           }
           break;
         case ServerResponse.Fight2D:
-          readServerResponseFight2D(gamestream.gameFight2D);
+          readServerResponseFight2D(gamestream.games.gameFight2D);
           break;
         case ServerResponse.High_Score:
           ServerState.highScore.value = readUInt24();
