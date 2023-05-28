@@ -25,16 +25,16 @@ class GameIsometric extends Game {
     }
     clientState.interpolatePlayer();
     camera.update();
-    gamestream.games.isometric.renderer.render3D();
+    renderer.render3D();
     clientState.renderEditMode();
-    gamestream.games.isometric.renderer.renderMouseTargetName();
-    GameCanvas.renderPlayerEnergy();
+    renderer.renderMouseTargetName();
+    renderer.renderPlayerEnergy();
     ClientState.rendersSinceUpdate.value++;
   }
 
   @override
   void renderForeground(Canvas canvas, Size size) {
-    GameCanvas.renderForeground(canvas, size);
+    renderer.renderForeground(canvas, size);
   }
 
   @override
