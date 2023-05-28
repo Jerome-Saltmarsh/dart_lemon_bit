@@ -43,7 +43,7 @@ class GameFight2D extends Game<GameFight2DPlayer> {
      if (keySpaceDown || mouseLeftDown) {
        switch (direction) {
          case InputDirection.Right:
-           player.runRight();
+           player.strike();
            break;
          case InputDirection.Up_Right:
            player.strikeUp();
@@ -72,14 +72,12 @@ class GameFight2D extends Game<GameFight2DPlayer> {
        }
      }
 
-     if (const [
-       InputDirection.Up,
-       InputDirection.Up_Left,
-       InputDirection.Up_Right,
-     ].contains(direction)){
-       player.jump();
-     } else {
-       player.jumpingRequested = false;
+     if (player.jumpingRequested) {
+       player.jumpingRequested = const [
+         InputDirection.Up,
+         InputDirection.Up_Left,
+         InputDirection.Up_Right,
+       ].contains(direction);
      }
 
      switch (direction) {
