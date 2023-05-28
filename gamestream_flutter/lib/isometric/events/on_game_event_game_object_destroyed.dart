@@ -2,7 +2,6 @@
 
 import 'package:bleed_common/src.dart';
 import 'package:gamestream_flutter/instances/gamestream.dart';
-import 'package:gamestream_flutter/game_state.dart';
 
 void onGameEventGameObjectDestroyed(
     double x,

@@ -8,7 +8,7 @@ void highlightCharacterNearMouse() {
     var nearest = 25.0;
     var nearestIndex = -1;
     for (var i = 0; i < ServerState.totalCharacters; i++){
-      final characterDistance = GameQueries.getDistanceFromMouse(ServerState.characters[i]);
+      final characterDistance = gamestream.games.isometric.nodes.getDistanceFromMouse(ServerState.characters[i]);
       if (characterDistance > nearest) continue;
       if (ServerState.characters[i] == playerCharacter) continue;
       nearest = characterDistance;

@@ -6,7 +6,7 @@ class GameMouse {
   static double get positionY => GameConvert.convertWorldToGridY(engine.mouseWorldX, engine.mouseWorldY) + GamePlayer.position.z;
   static double get positionZ => GamePlayer.position.z;
 
-  static int get nodeIndex => GameQueries.getNodeIndex(positionX, positionY, positionZ);
+  static int get nodeIndex => gamestream.games.isometric.nodes.getNodeIndex(positionX, positionY, positionZ);
   static double get playerAngle => angleBetween(GamePlayer.position.x, GamePlayer.position.y, positionX, positionY);
   static double get playerDistance => distanceBetween(GamePlayer.position.x, GamePlayer.position.y, positionX, positionY);
 

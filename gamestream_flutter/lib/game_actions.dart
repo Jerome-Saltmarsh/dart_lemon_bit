@@ -11,16 +11,17 @@ class GameActions {
   }
 
   void rainStart(){
-    final rows = GameNodes.totalRows;
-    final columns = GameNodes.totalColumns;
-    final zs = GameNodes.totalZ - 1;
+    final nodes = gamestream.games.isometric.nodes;
+    final rows = nodes.totalRows;
+    final columns = nodes.totalColumns;
+    final zs = nodes.totalZ - 1;
     for (var row = 0; row < rows; row++) {
       for (var column = 0; column < columns; column++) {
         for (var z = zs; z >= 0; z--) {
           final index = gamestream.games.isometric.clientState.getNodeIndexZRC(z, row, column);
-          final type = GameNodes.nodeTypes[index];
+          final type = nodes.nodeTypes[index];
           if (type != NodeType.Empty) {
-            if (type == NodeType.Water || GameNodes.nodeOrientations[index] == NodeOrientation.Solid) {
+            if (type == NodeType.Water || nodes.nodeOrientations[index] == NodeOrientation.Solid) {
               gamestream.games.isometric.clientState.setNodeType(z + 1, row, column, NodeType.Rain_Landing);
             }
             gamestream.games.isometric.clientState.setNodeType(z + 2, row, column, NodeType.Rain_Falling);
@@ -29,8 +30,8 @@ class GameActions {
           if (
               column == 0 ||
               row == 0 ||
-              !GameQueries.gridNodeZRCTypeRainOrEmpty(z, row - 1, column) ||
-              !GameQueries.gridNodeZRCTypeRainOrEmpty(z, row, column - 1)
+              !nodes.gridNodeZRCTypeRainOrEmpty(z, row - 1, column) ||
+              !nodes.gridNodeZRCTypeRainOrEmpty(z, row, column - 1)
           ){
             gamestream.games.isometric.clientState.setNodeType(z, row, column, NodeType.Rain_Falling);
           }
@@ -40,10 +41,11 @@ class GameActions {
   }
 
   void rainStop() {
-    for (var i = 0; i < GameNodes.total; i++) {
-      if (!NodeType.isRain(GameNodes.nodeTypes[i])) continue;
-      GameNodes.nodeTypes[i] = NodeType.Empty;
-      GameNodes.nodeOrientations[i] = NodeOrientation.None;
+    final nodes = gamestream.games.isometric.nodes;
+    for (var i = 0; i < nodes.total; i++) {
+      if (!NodeType.isRain(nodes.nodeTypes[i])) continue;
+      nodes.nodeTypes[i] = NodeType.Empty;
+      nodes.nodeOrientations[i] = NodeOrientation.None;
     }
   }
 

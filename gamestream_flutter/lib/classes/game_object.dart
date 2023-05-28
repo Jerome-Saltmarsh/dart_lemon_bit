@@ -101,10 +101,10 @@ class GameObject extends Vector3 {
 
   void refreshEmissionColor(){
     emission_col = hsvToColor(
-        hue: interpolate(start: GameNodes.ambient_hue, end: emission_hue , t: emission_intensity),
-        saturation: interpolate(start: GameNodes.ambient_sat, end: emission_sat, t: emission_intensity),
-        value: interpolate(start: GameNodes.ambient_val, end: emission_val, t: emission_intensity),
-        opacity: interpolate(start: GameNodes.ambient_alp, end: emission_alp, t: emission_intensity),
+        hue: interpolate(start: gamestream.games.isometric.nodes.ambient_hue, end: emission_hue , t: emission_intensity),
+        saturation: interpolate(start: gamestream.games.isometric.nodes.ambient_sat, end: emission_sat, t: emission_intensity),
+        value: interpolate(start: gamestream.games.isometric.nodes.ambient_val, end: emission_val, t: emission_intensity),
+        opacity: interpolate(start: gamestream.games.isometric.nodes.ambient_alp, end: emission_alp, t: emission_intensity),
     );
   }
 }

@@ -222,7 +222,7 @@ class RendererCharacters extends Renderer {
     var dist = 0.0;
 
     if (!gamestream.games.isometric.clientState.outOfBoundsV3(character)){
-      var torchIndex = GameNodes.getTorchIndex(gamestream.games.isometric.clientState.getNodeIndexV3(character));
+      var torchIndex = gamestream.games.isometric.nodes.getTorchIndex(gamestream.games.isometric.clientState.getNodeIndexV3(character));
       if (torchIndex != -1) {
         final torchRow = gamestream.games.isometric.clientState.convertNodeIndexToIndexX(torchIndex);
         final torchColumn = gamestream.games.isometric.clientState.convertNodeIndexToIndexY(torchIndex);

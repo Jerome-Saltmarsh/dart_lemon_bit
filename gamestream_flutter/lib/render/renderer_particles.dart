@@ -553,11 +553,11 @@ class RendererParticles extends Renderer {
 
   static void casteShadowDownV3(Vector3 vector3){
     if (vector3.z < Node_Height) return;
-    if (vector3.z >= GameNodes.lengthZ) return;
-    final nodeIndex = GameQueries.getNodeIndexV3(vector3);
-    if (nodeIndex > GameNodes.area) {
-      final nodeBelowIndex = nodeIndex - GameNodes.area;
-      final nodeBelowOrientation = GameNodes.nodeOrientations[nodeBelowIndex];
+    if (vector3.z >= gamestream.games.isometric.nodes.lengthZ) return;
+    final nodeIndex = gamestream.games.isometric.nodes.getNodeIndexV3(vector3);
+    if (nodeIndex > gamestream.games.isometric.nodes.area) {
+      final nodeBelowIndex = nodeIndex - gamestream.games.isometric.nodes.area;
+      final nodeBelowOrientation = gamestream.games.isometric.nodes.nodeOrientations[nodeBelowIndex];
       if (nodeBelowOrientation == NodeOrientation.Solid){
         final topRemainder = vector3.z % Node_Height;
         renderShadow(vector3.x, vector3.y, vector3.z - topRemainder, scale: topRemainder > 0 ? (topRemainder / Node_Height) * 2 : 2.0);

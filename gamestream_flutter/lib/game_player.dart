@@ -63,7 +63,7 @@ class GamePlayer {
   static double get x => position.x;
   static double get y => position.y;
   static double get z => position.z;
-  static int get areaNodeIndex => (indexRow * GameNodes.totalColumns) + indexColumn;
+  static int get areaNodeIndex => (indexRow * gamestream.games.isometric.nodes.totalColumns) + indexColumn;
 
   static double get renderX => GameConvert.convertV3ToRenderX(position);
   static double get renderY => GameConvert.convertV3ToRenderY(position);
@@ -71,7 +71,7 @@ class GamePlayer {
   static double get positionScreenY => engine.worldToScreenY(GamePlayer.position.renderY);
   static bool get interactModeTrading => ServerState.interactMode.value == InteractMode.Trading;
   static bool get dead => !alive.value;
-  static bool get inBounds => GameQueries.inBoundsVector3(position);
+  static bool get inBounds => gamestream.games.isometric.nodes.inBoundsVector3(position);
 
 
   static bool isCharacter(Character character){
@@ -87,9 +87,9 @@ class GamePlayer {
 
   static bool isInsideBuilding(){
      if (!inBounds) return false;
-     final index = position.nodeIndex + GameNodes.area;
-     while (index < GameNodes.total){
-       if (NodeType.isRainOrEmpty(GameNodes.nodeTypes[index]))  continue;
+     final index = position.nodeIndex + gamestream.games.isometric.nodes.area;
+     while (index < gamestream.games.isometric.nodes.total){
+       if (NodeType.isRainOrEmpty(gamestream.games.isometric.nodes.nodeTypes[index]))  continue;
        return true;
      }
      return false;

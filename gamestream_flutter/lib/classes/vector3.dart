@@ -12,8 +12,8 @@ class Vector3 with Position {
   int get indexRow => x ~/ Node_Size;
   int get indexColumn => y ~/ Node_Size;
   double get indexSum => (indexRow + indexColumn).toDouble();
-  int get nodeIndex => GameQueries.getNodeIndex(x, y, z);
-  int get indexProjection => nodeIndex % GameNodes.projection;
+  int get nodeIndex => gamestream.games.isometric.nodes.getNodeIndex(x, y, z);
+  int get indexProjection => nodeIndex % gamestream.games.isometric.nodes.projection;
 
   bool get onscreen {
      final rx = renderX;
@@ -45,7 +45,7 @@ class Vector3 with Position {
   bool get nodePerceptible {
     if (outOfBounds) return false;
     if (!RendererNodes.playerInsideIsland) return true;
-    final i = indexRow * GameNodes.totalColumns + indexColumn;
+    final i = indexRow * gamestream.games.isometric.nodes.totalColumns + indexColumn;
     if (!RendererNodes.island[i]) return true;
     if (indexZ > GamePlayer.indexZ + 2) return false;
 
@@ -56,9 +56,9 @@ class Vector3 with Position {
       z < 0                ||
           x < 0                ||
           y < 0                ||
-          x >= GameNodes.lengthRows    ||
-          y >= GameNodes.lengthColumns ||
-          z >= GameNodes.lengthZ     ;
+          x >= gamestream.games.isometric.nodes.lengthRows    ||
+          y >= gamestream.games.isometric.nodes.lengthColumns ||
+          z >= gamestream.games.isometric.nodes.lengthZ     ;
 
   double get sortOrder => x + y + z;
   double get renderX => (x - y) * 0.5;

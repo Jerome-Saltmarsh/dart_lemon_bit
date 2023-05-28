@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/games/isometric/game_isometric_client_state.dart';
+import 'package:gamestream_flutter/games/isometric/game_isometric_nodes.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/touch_controller.dart';
 
@@ -9,18 +10,19 @@ import 'game_isometric_camera.dart';
 class GameIsometric extends Game {
   final camera = GameIsometricCamera();
   final clientState = GameIsometricClientState();
+  final nodes = GameIsometricNodes();
 
   @override
   void drawCanvas(Canvas canvas, Size size) {
     if (ServerState.gameRunning.value){
       /// particles are only on the ui and thus can update every frame
       /// this makes them much smoother as they don't freeze
-      gamestream.games.isometric.clientState.updateParticles();
+      clientState.updateParticles();
     }
-    gamestream.games.isometric.clientState.interpolatePlayer();
+    clientState.interpolatePlayer();
     camera.update();
     GameRender.render3D();
-    gamestream.games.isometric.clientState.renderEditMode();
+    clientState.renderEditMode();
     GameRender.renderMouseTargetName();
     GameCanvas.renderPlayerEnergy();
     ClientState.rendersSinceUpdate.value++;
@@ -37,14 +39,14 @@ class GameIsometric extends Game {
       gamestream.network.sendClientRequestUpdate();
       return;
     }
-    gamestream.games.isometric.clientState.updateTorchEmissionIntensity();
+    clientState.updateTorchEmissionIntensity();
     gamestream.animation.updateAnimationFrame();
-    gamestream.games.isometric.clientState.updateParticleEmitters();
+    clientState.updateParticleEmitters();
     ServerState.updateProjectiles();
     ServerState.updateGameObjects();
     gamestream.audio.update();
     ClientState.update();
-    gamestream.games.isometric.clientState.updatePlayerMessageTimer();
+    clientState.updatePlayerMessageTimer();
     gamestream.io.readPlayerInput();
     gamestream.network.sendClientRequestUpdate();
   }
@@ -73,12 +75,12 @@ class GameIsometric extends Game {
   double get windLineRenderX {
     var windLineColumn = 0;
     var windLineRow = 0;
-    if (clientState.windLine < GameNodes.totalRows){
+    if (clientState.windLine < nodes.totalRows){
       windLineColumn = 0;
-      windLineRow =  GameNodes.totalRows - clientState.windLine - 1;
+      windLineRow =  nodes.totalRows - clientState.windLine - 1;
     } else {
       windLineRow = 0;
-      windLineColumn = clientState.windLine - GameNodes.totalRows + 1;
+      windLineColumn = clientState.windLine - nodes.totalRows + 1;
     }
     return (windLineRow - windLineColumn) * Node_Size_Half;
   }

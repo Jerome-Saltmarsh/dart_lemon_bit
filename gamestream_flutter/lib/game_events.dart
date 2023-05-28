@@ -31,9 +31,9 @@ class GameEvents {
   }
 
   static void onChangedNodes(){
-    GameNodes.refreshGridMetrics();
-    GameNodes.generateHeightMap();
-    GameNodes.generateMiniMap();
+    gamestream.games.isometric.nodes.refreshGridMetrics();
+    gamestream.games.isometric.nodes.generateHeightMap();
+    gamestream.games.isometric.nodes.generateMiniMap();
     GameMinimap.generateSrcDst();
     ClientActions.refreshBakeMapLightSources();
 
@@ -41,15 +41,15 @@ class GameEvents {
       gamestream.actions.rainStop();
       gamestream.actions.rainStart();
     }
-    GameNodes.resetNodeColorsToAmbient();
+    gamestream.games.isometric.nodes.resetNodeColorsToAmbient();
     GameEditor.refreshNodeSelectedIndex();
   }
 
   static void onFootstep(double x, double y, double z) {
     if (ClientState.raining.value && (
-        GameQueries.gridNodeXYZTypeSafe(x, y, z) == NodeType.Rain_Landing
+        gamestream.games.isometric.nodes.gridNodeXYZTypeSafe(x, y, z) == NodeType.Rain_Landing
             ||
-            GameQueries.gridNodeXYZTypeSafe(x, y, z + 24) == NodeType.Rain_Landing
+            gamestream.games.isometric.nodes.gridNodeXYZTypeSafe(x, y, z + 24) == NodeType.Rain_Landing
     )
     ){
       gamestream.audio.footstep_mud_6.playXYZ(x, y, z);
@@ -59,7 +59,7 @@ class GameEvents {
       }
     }
 
-    final nodeType = GameQueries.gridNodeXYZTypeSafe(x, y, z - 2);
+    final nodeType = gamestream.games.isometric.nodes.gridNodeXYZTypeSafe(x, y, z - 2);
     if (NodeType.isMaterialStone(nodeType)) {
       gamestream.audio.footstep_stone.playXYZ(x, y, z);
       return;
@@ -242,10 +242,10 @@ class GameEvents {
   }
 
   static void onNodeStruck(double x, double y, double z) {
-    if (!GameQueries.inBounds(x, y, z)) return;
+    if (!gamestream.games.isometric.nodes.inBounds(x, y, z)) return;
 
-    final nodeIndex = GameNodes.getIndexXYZ(x, y, z);
-    final nodeType = GameNodes.nodeTypes[nodeIndex];
+    final nodeIndex = gamestream.games.isometric.nodes.getIndexXYZ(x, y, z);
+    final nodeType = gamestream.games.isometric.nodes.nodeTypes[nodeIndex];
 
     if (NodeType.isMaterialWood(nodeType)){
       gamestream.audio.material_struck_wood.playXYZ(x, y, z);

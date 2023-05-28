@@ -527,11 +527,11 @@ class GameUI {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 text("<-", onPressed: (){
-                  GameNodes.setInterpolationLength(GameNodes.interpolation_length - 1);
+                  gamestream.games.isometric.nodes.setInterpolationLength(gamestream.games.isometric.nodes.interpolation_length - 1);
                 }),
-                Refresh(() => text('light-size: ${GameNodes.interpolation_length}')),
+                Refresh(() => text('light-size: ${gamestream.games.isometric.nodes.interpolation_length}')),
                 text("->", onPressed: (){
-                  GameNodes.setInterpolationLength(GameNodes.interpolation_length + 1);
+                  gamestream.games.isometric.nodes.setInterpolationLength(gamestream.games.isometric.nodes.interpolation_length + 1);
                 }),
               ],
             ),
@@ -539,15 +539,15 @@ class GameUI {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 text("<-", onPressed: (){
-                  final indexCurrent = EaseType.values.indexOf(GameNodes.interpolation_ease_type.value);
+                  final indexCurrent = EaseType.values.indexOf(gamestream.games.isometric.nodes.interpolation_ease_type.value);
                   final indexNext = indexCurrent - 1 >= 0 ? indexCurrent - 1 : EaseType.values.length - 1;
-                  GameNodes.interpolation_ease_type.value = EaseType.values[indexNext];
+                  gamestream.games.isometric.nodes.interpolation_ease_type.value = EaseType.values[indexNext];
                 }),
-                watch(GameNodes.interpolation_ease_type, text),
+                watch(gamestream.games.isometric.nodes.interpolation_ease_type, text),
                 text("->", onPressed: (){
-                  final indexCurrent = EaseType.values.indexOf(GameNodes.interpolation_ease_type.value);
+                  final indexCurrent = EaseType.values.indexOf(gamestream.games.isometric.nodes.interpolation_ease_type.value);
                   final indexNext = indexCurrent + 1 >= EaseType.values.length ? 0 : indexCurrent + 1;
-                  GameNodes.interpolation_ease_type.value = EaseType.values[indexNext];
+                  gamestream.games.isometric.nodes.interpolation_ease_type.value = EaseType.values[indexNext];
                 }),
               ],
             ),
@@ -557,19 +557,19 @@ class GameUI {
             ColorPicker(
               portraitOnly: true,
               pickerColor: HSVColor.fromAHSV(
-                  GameNodes.ambient_alp / 255,
-                  GameNodes.ambient_hue.toDouble(),
-                  GameNodes.ambient_sat / 100,
-                  GameNodes.ambient_val / 100,
+                  gamestream.games.isometric.nodes.ambient_alp / 255,
+                  gamestream.games.isometric.nodes.ambient_hue.toDouble(),
+                  gamestream.games.isometric.nodes.ambient_sat / 100,
+                  gamestream.games.isometric.nodes.ambient_val / 100,
               ).toColor(),
               onColorChanged: (color){
                 ClientState.overrideColor.value = true;
                 final hsvColor = HSVColor.fromColor(color);
-                GameNodes.ambient_alp = (hsvColor.alpha * 255).round();
-                GameNodes.ambient_hue = hsvColor.hue.round();
-                GameNodes.ambient_sat = (hsvColor.saturation * 100).round();
-                GameNodes.ambient_val = (hsvColor.value * 100).round();
-                GameNodes.resetNodeColorsToAmbient();
+                gamestream.games.isometric.nodes.ambient_alp = (hsvColor.alpha * 255).round();
+                gamestream.games.isometric.nodes.ambient_hue = hsvColor.hue.round();
+                gamestream.games.isometric.nodes.ambient_sat = (hsvColor.saturation * 100).round();
+                gamestream.games.isometric.nodes.ambient_val = (hsvColor.value * 100).round();
+                gamestream.games.isometric.nodes.resetNodeColorsToAmbient();
               },
             ),
           ],

@@ -34,7 +34,7 @@ class GameEditor {
 
   static var nodeSelectedIndex = Watch(0, clamp: (int value){
      if (value < 0) return 0;
-     if (value >= GameNodes.total) return GameNodes.total - 1;
+     if (value >= gamestream.games.isometric.nodes.total) return gamestream.games.isometric.nodes.total - 1;
      return value;
   }, onChanged: onChangedSelectedNodeIndex);
 
@@ -44,21 +44,21 @@ class GameEditor {
 
   static set z(int value){
      if (value < 0) return;
-     if (value >= GameNodes.totalZ) return;
+     if (value >= gamestream.games.isometric.nodes.totalZ) return;
      final difference = value - z;
-     nodeSelectedIndex.value += difference * GameNodes.area;
+     nodeSelectedIndex.value += difference * gamestream.games.isometric.nodes.area;
   }
 
   static set row(int value){
     if (value < 0) return;
-    if (value >= GameNodes.totalRows) return;
+    if (value >= gamestream.games.isometric.nodes.totalRows) return;
     final difference = value - row;
-    nodeSelectedIndex.value += difference * GameNodes.totalColumns;
+    nodeSelectedIndex.value += difference * gamestream.games.isometric.nodes.totalColumns;
   }
 
   static set column(int value){
     if (value < 0) return;
-    if (value >= GameNodes.totalColumns) return;
+    if (value >= gamestream.games.isometric.nodes.totalColumns) return;
     nodeSelectedIndex.value += value - column;
   }
 
@@ -71,8 +71,8 @@ class GameEditor {
   static double get posZ => z * Node_Height;
 
   static void refreshNodeSelectedIndex(){
-    nodeSelectedType.value = GameNodes.nodeTypes[nodeSelectedIndex.value];
-    nodeSelectedOrientation.value = GameNodes.nodeOrientations[nodeSelectedIndex.value];
+    nodeSelectedType.value = gamestream.games.isometric.nodes.nodeTypes[nodeSelectedIndex.value];
+    nodeSelectedOrientation.value = gamestream.games.isometric.nodes.nodeOrientations[nodeSelectedIndex.value];
   }
 
   static void deselectGameObject() {
@@ -166,12 +166,12 @@ class GameEditor {
 
   static void raise(){
     final nodeIndex = nodeSelectedIndex.value;
-    if (nodeIndex <= GameNodes.area) return;
-    final nodeIndexBelow = nodeIndex - GameNodes.area;
+    if (nodeIndex <= gamestream.games.isometric.nodes.area) return;
+    final nodeIndexBelow = nodeIndex - gamestream.games.isometric.nodes.area;
     gamestream.network.sendClientRequestSetBlock(
       index: nodeSelectedIndex.value,
-      type: GameNodes.nodeTypes[nodeIndexBelow],
-      orientation: GameNodes.nodeOrientations[nodeIndexBelow],
+      type: gamestream.games.isometric.nodes.nodeTypes[nodeIndexBelow],
+      orientation: gamestream.games.isometric.nodes.nodeOrientations[nodeIndexBelow],
     );
   }
 
@@ -240,8 +240,8 @@ class GameEditor {
   }
 
   static void onChangedSelectedNodeIndex(int index){
-    nodeSelectedOrientation.value = GameNodes.nodeOrientations[index];
-    nodeSelectedType.value = GameNodes.nodeTypes[index];
+    nodeSelectedOrientation.value = gamestream.games.isometric.nodes.nodeOrientations[index];
+    nodeSelectedType.value = gamestream.games.isometric.nodes.nodeTypes[index];
     gameObjectSelected.value = false;
     refreshNodeSelectedIndex();
     deselectGameObject();

@@ -70,7 +70,7 @@ class ClientState {
   static bool get hoverDialogDialogIsTrade => hoverDialogType.value == DialogType.Trade;
 
   static void update(){
-    interpolation_padding = ((GameNodes.interpolation_length + 1) * Node_Size) / engine.zoom;
+    interpolation_padding = ((gamestream.games.isometric.nodes.interpolation_length + 1) * Node_Size) / engine.zoom;
     if (areaTypeVisible.value) {
       if (areaTypeVisibleDuration-- <= 0) {
         areaTypeVisible.value = false;
@@ -117,17 +117,17 @@ class ClientState {
     const Seconds_Per_Hours_12 = Seconds_Per_Hour * 12;
     final totalSeconds = (ServerState.hours.value * Seconds_Per_Hour) + (ServerState.minutes.value * 60);
 
-    GameNodes.ambient_alp = ((totalSeconds < Seconds_Per_Hours_12
+    gamestream.games.isometric.nodes.ambient_alp = ((totalSeconds < Seconds_Per_Hours_12
         ? 1.0 - (totalSeconds / Seconds_Per_Hours_12)
         : (totalSeconds - Seconds_Per_Hours_12) / Seconds_Per_Hours_12) * 255).round();
 
     if (ServerState.rainType.value == RainType.Light){
-      GameNodes.ambient_alp += 20;
+      gamestream.games.isometric.nodes.ambient_alp += 20;
     }
     if (ServerState.rainType.value == RainType.Heavy){
-      GameNodes.ambient_alp += 40;
+      gamestream.games.isometric.nodes.ambient_alp += 40;
     }
-    GameNodes.resetNodeColorsToAmbient();
+    gamestream.games.isometric.nodes.resetNodeColorsToAmbient();
   }
 
   static void countTotalActiveParticles(){
@@ -243,7 +243,7 @@ class ClientState {
       final particle = particles[i];
       if (!particle.active) continue;
       if (particle.type != ParticleType.Light_Emission) continue;
-      GameNodes.emitLightAHSVShadowed(
+      gamestream.games.isometric.nodes.emitLightAHSVShadowed(
         index: particle.nodeIndex,
         hue: particle.lightHue,
         saturation: particle.lightSaturation,

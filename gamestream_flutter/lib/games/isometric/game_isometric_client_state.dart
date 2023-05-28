@@ -17,7 +17,7 @@ class GameIsometricClientState {
   var nextParticleFrame = 0;
 
   final gridShadows = Watch(true, onChanged: (bool value){
-    GameNodes.resetNodeColorsToAmbient();
+    gamestream.games.isometric.nodes.resetNodeColorsToAmbient();
   });
 
   var nodesRaycast = 0;
@@ -34,22 +34,22 @@ class GameIsometricClientState {
   }
 
   int getNodeIndexZRC(int z, int row, int column) {
-    return (z * GameNodes.area) + (row * GameNodes.totalColumns) + column;
+    return (z * gamestream.games.isometric.nodes.area) + (row * gamestream.games.isometric.nodes.totalColumns) + column;
   }
 
   int convertNodeIndexToIndexZ(int index) =>
-      index ~/ GameNodes.area;
+      index ~/ gamestream.games.isometric.nodes.area;
 
   int convertNodeIndexToIndexX(int index) =>
-      (index - ((index ~/ GameNodes.area) * GameNodes.area)) ~/ GameNodes.totalColumns;
+      (index - ((index ~/ gamestream.games.isometric.nodes.area) * gamestream.games.isometric.nodes.area)) ~/ gamestream.games.isometric.nodes.totalColumns;
 
   int convertNodeIndexToIndexY(int index) =>
-      index - ((convertNodeIndexToIndexZ(index) * GameNodes.area) + (convertNodeIndexToIndexX(index) * GameNodes.totalColumns));
+      index - ((convertNodeIndexToIndexZ(index) * gamestream.games.isometric.nodes.area) + (convertNodeIndexToIndexX(index) * gamestream.games.isometric.nodes.totalColumns));
 
   int getV3RenderColor(Vector3 vector3) =>
       vector3.outOfBounds
-          ? GameNodes.ambient_color
-          : GameNodes.node_colors[vector3.nodeIndex];
+          ? gamestream.games.isometric.nodes.ambient_color
+          : gamestream.games.isometric.nodes.node_colors[vector3.nodeIndex];
 
   bool outOfBoundsV3(Vector3 v3) =>
       outOfBoundsXYZ(v3.x, v3.y, v3.z);
@@ -58,17 +58,17 @@ class GameIsometricClientState {
       z < 0                       ||
           row < 0                     ||
           column < 0                  ||
-          z >= GameNodes.totalZ            ||
-          row >= GameNodes.totalRows       ||
-          column >= GameNodes.totalColumns  ;
+          z >= gamestream.games.isometric.nodes.totalZ            ||
+          row >= gamestream.games.isometric.nodes.totalRows       ||
+          column >= gamestream.games.isometric.nodes.totalColumns  ;
 
   bool outOfBoundsXYZ(double x, double y, double z) =>
       z < 0                       ||
           y < 0                       ||
           z < 0                       ||
-          z >= GameNodes.lengthZ           ||
-          x >= GameNodes.lengthRows         ||
-          y >= GameNodes.lengthColumns       ;
+          z >= gamestream.games.isometric.nodes.lengthZ           ||
+          x >= gamestream.games.isometric.nodes.lengthRows         ||
+          y >= gamestream.games.isometric.nodes.lengthColumns       ;
 
   // ACTIONS
 
@@ -86,11 +86,11 @@ class GameIsometricClientState {
   void applyEmissionEditorSelectedNode() {
     if (!editMode) return;
     if ((GameEditor.gameObject.value == null || GameEditor.gameObject.value!.emission_type == EmissionType.None)){
-      GameNodes.emitLightAHSVShadowed(
+      gamestream.games.isometric.nodes.emitLightAHSVShadowed(
         index: GameEditor.nodeSelectedIndex.value,
-        hue: GameNodes.ambient_hue,
-        saturation: GameNodes.ambient_sat,
-        value: GameNodes.ambient_val,
+        hue: gamestream.games.isometric.nodes.ambient_hue,
+        saturation: gamestream.games.isometric.nodes.ambient_sat,
+        value: gamestream.games.isometric.nodes.ambient_val,
         alpha: 0,
       );
     }
@@ -99,14 +99,14 @@ class GameIsometricClientState {
   void applyEmissionsLightSources() {
     for (var i = 0; i < ClientState.nodesLightSourcesTotal; i++){
       final nodeIndex = ClientState.nodesLightSources[i];
-      final nodeType = GameNodes.nodeTypes[nodeIndex];
+      final nodeType = gamestream.games.isometric.nodes.nodeTypes[nodeIndex];
 
       switch (nodeType){
         case NodeType.Torch:
-          GameNodes.emitLightAmbient(
+          gamestream.games.isometric.nodes.emitLightAmbient(
             index: nodeIndex,
             alpha: Engine.linerInterpolationInt(
-              GameNodes.ambient_hue,
+              gamestream.games.isometric.nodes.ambient_hue,
               0,
               torch_emission_intensity,
             ),
@@ -200,9 +200,9 @@ class GameIsometricClientState {
     required int alpha,
     double intensity = 1.0,
   }){
-    if (!GameQueries.inBoundsVector3(v)) return;
-    GameNodes.emitLightAHSVShadowed(
-      index: GameQueries.getNodeIndexV3(v),
+    if (!gamestream.games.isometric.nodes.inBoundsVector3(v)) return;
+    gamestream.games.isometric.nodes.emitLightAHSVShadowed(
+      index: gamestream.games.isometric.nodes.getNodeIndexV3(v),
       hue: hue,
       saturation: saturation,
       value: value,
@@ -221,10 +221,10 @@ class GameIsometricClientState {
     assert (intensity <= 1);
     assert (alpha >= 0);
     assert (alpha <= 255);
-    if (!GameQueries.inBoundsVector3(v)) return;
-    GameNodes.emitLightAmbient(
-      index: GameQueries.getNodeIndexV3(v),
-      alpha: Engine.linerInterpolationInt(GameNodes.ambient_hue, alpha , intensity),
+    if (!gamestream.games.isometric.nodes.inBoundsVector3(v)) return;
+    gamestream.games.isometric.nodes.emitLightAmbient(
+      index: gamestream.games.isometric.nodes.getNodeIndexV3(v),
+      alpha: Engine.linerInterpolationInt(gamestream.games.isometric.nodes.ambient_hue, alpha , intensity),
     );
   }
 
@@ -336,12 +336,12 @@ class GameIsometricClientState {
 
 
 
-    final nodeIndex = GameQueries.getNodeIndexV3(particle);
+    final nodeIndex = gamestream.games.isometric.nodes.getNodeIndexV3(particle);
 
     assert (nodeIndex >= 0);
-    assert (nodeIndex < GameNodes.total);
+    assert (nodeIndex < gamestream.games.isometric.nodes.total);
 
-    final tile = GameNodes.nodeTypes[nodeIndex];
+    final tile = gamestream.games.isometric.nodes.nodeTypes[nodeIndex];
     final airBorn =
         !particle.checkNodeCollision || (
             tile == NodeType.Empty        ||
@@ -988,9 +988,9 @@ class GameIsometricClientState {
         checkCollision: false,
         animation: true,
       )
-        ..lightHue = GameNodes.ambient_hue
-        ..lightSaturation = GameNodes.ambient_sat
-        ..lightValue = GameNodes.ambient_val
+        ..lightHue = gamestream.games.isometric.nodes.ambient_hue
+        ..lightSaturation = gamestream.games.isometric.nodes.ambient_sat
+        ..lightValue = gamestream.games.isometric.nodes.ambient_val
         ..alpha = 0
         ..flash = true
         ..strength = 0.0
@@ -1019,9 +1019,9 @@ class GameIsometricClientState {
         scale: scale,
       )
         ..emitsLight = true
-        ..lightHue = GameNodes.ambient_hue
-        ..lightSaturation = GameNodes.ambient_sat
-        ..lightValue = GameNodes.ambient_val
+        ..lightHue = gamestream.games.isometric.nodes.ambient_hue
+        ..lightSaturation = gamestream.games.isometric.nodes.ambient_sat
+        ..lightValue = gamestream.games.isometric.nodes.ambient_val
         ..alpha = 0
         ..checkNodeCollision = false
         ..strength = 0.5
@@ -1214,14 +1214,14 @@ class GameIsometricClientState {
       return;
     if (column < 0)
       return;
-    if (z >= GameNodes.totalZ)
+    if (z >= gamestream.games.isometric.nodes.totalZ)
       return;
-    if (row >= GameNodes.totalRows)
+    if (row >= gamestream.games.isometric.nodes.totalRows)
       return;
-    if (column >= GameNodes.totalColumns)
+    if (column >= gamestream.games.isometric.nodes.totalColumns)
       return;
 
-    GameNodes.nodeTypes[getNodeIndexZRC(z, row, column)] = type;
+    gamestream.games.isometric.nodes.nodeTypes[getNodeIndexZRC(z, row, column)] = type;
   }
 
   void spawnParticleConfetti(double x, double y, double z) {

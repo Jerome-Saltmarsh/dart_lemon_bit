@@ -123,13 +123,13 @@ class GameCanvas {
 
   static void debugRenderHeightMapValues() {
     var i = 0;
-    for (var row = 0; row < GameNodes.totalRows; row++){
-      for (var column = 0; column < GameNodes.totalColumns; column++){
+    for (var row = 0; row < gamestream.games.isometric.nodes.totalRows; row++){
+      for (var column = 0; column < gamestream.games.isometric.nodes.totalColumns; column++){
          GameRender.renderTextXYZ(
              x: row * Node_Size,
              y: column * Node_Size,
              z: 5,
-             text: GameNodes.heightMap[i].toString(),
+             text: gamestream.games.isometric.nodes.heightMap[i].toString(),
          );
          i++;
       }
@@ -138,8 +138,8 @@ class GameCanvas {
 
   static void debugRenderIsland() {
     var i = 0;
-    for (var row = 0; row < GameNodes.totalRows; row++){
-      for (var column = 0; column < GameNodes.totalColumns; column++){
+    for (var row = 0; row < gamestream.games.isometric.nodes.totalRows; row++){
+      for (var column = 0; column < gamestream.games.isometric.nodes.totalColumns; column++){
         if (!RendererNodes.island[i]) {
           i++;
           continue;
@@ -180,8 +180,8 @@ class GameCanvas {
     for (var i = 0; i < jumps; i++) {
       final x2 = x1 - tX;
       final y2 = y1 - tY;
-      final i2 = GameQueries.getNodeIndex(x2, y2, z);
-      if (!NodeType.isTransient(GameNodes.nodeTypes[i2])) break;
+      final i2 = gamestream.games.isometric.nodes.getNodeIndex(x2, y2, z);
+      if (!NodeType.isTransient(gamestream.games.isometric.nodes.nodeTypes[i2])) break;
       x1 = x2;
       y1 = y2;
       i1 = i2;

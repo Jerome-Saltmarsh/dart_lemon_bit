@@ -24,10 +24,10 @@ class GameMinimap {
 
   static void generateSrcDst(){
     var index = 0;
-    final rows = GameNodes.totalRows;
-    final columns = GameNodes.totalColumns;
-    final area = GameNodes.area;
-    final nodeTypes = GameNodes.miniMap;
+    final rows = gamestream.games.isometric.nodes.totalRows;
+    final columns = gamestream.games.isometric.nodes.totalColumns;
+    final area = gamestream.games.isometric.nodes.area;
+    final nodeTypes = gamestream.games.isometric.nodes.miniMap;
 
     final vendors = <int>[];
 

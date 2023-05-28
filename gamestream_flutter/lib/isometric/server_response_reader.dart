@@ -563,8 +563,8 @@ class ServerResponseReader with ByteReader {
     final nodeType = readByte();
     final nodeOrientation = readByte();
     assert(NodeType.supportsOrientation(nodeType, nodeOrientation));
-    GameNodes.nodeTypes[nodeIndex] = nodeType;
-    GameNodes.nodeOrientations[nodeIndex] = nodeOrientation;
+    gamestream.games.isometric.nodes.nodeTypes[nodeIndex] = nodeType;
+    gamestream.games.isometric.nodes.nodeOrientations[nodeIndex] = nodeOrientation;
     /// TODO optimize
     GameEvents.onChangedNodes();
     GameEditor.refreshNodeSelectedIndex();
@@ -581,9 +581,9 @@ class ServerResponseReader with ByteReader {
 
   void readNodes() {
     final scenePart = readByte(); /// DO NOT DELETE
-    GameNodes.totalZ = readUInt16();
-    GameNodes.totalRows = readUInt16();
-    GameNodes.totalColumns = readUInt16();
+    gamestream.games.isometric.nodes.totalZ = readUInt16();
+    gamestream.games.isometric.nodes.totalRows = readUInt16();
+    gamestream.games.isometric.nodes.totalColumns = readUInt16();
 
     final compressedNodeTypeLength = readUInt24();
     final compressedNodeOrientationsLength = readUInt24();
@@ -592,19 +592,19 @@ class ServerResponseReader with ByteReader {
     final compressedNodeOrientations = readUint8List(compressedNodeOrientationsLength);
     final nodeTypes = decoder.decodeBytes(compressedNodeTypes);
 
-    GameNodes.nodeTypes = Uint8List.fromList(nodeTypes);
-    GameNodes.nodeOrientations = Uint8List.fromList(decoder.decodeBytes(compressedNodeOrientations));
-    GameNodes.area = GameNodes.totalRows * GameNodes.totalColumns;
-    GameNodes.area2 = GameNodes.area * 2;
-    GameNodes.projection = GameNodes.area2 + GameNodes.totalColumns + 1;
-    GameNodes.projectionHalf =  GameNodes.projection ~/ 2;
-    final totalNodes = GameNodes.totalZ * GameNodes.totalRows * GameNodes.totalColumns;
-    GameNodes.colorStack = Uint16List(totalNodes);
-    GameNodes.ambientStack = Uint16List(totalNodes);
-    GameNodes.total = totalNodes;
-    gamestream.games.isometric.clientState.nodesRaycast = GameNodes.area +  GameNodes.area + GameNodes.totalColumns + 1;
+    gamestream.games.isometric.nodes.nodeTypes = Uint8List.fromList(nodeTypes);
+    gamestream.games.isometric.nodes.nodeOrientations = Uint8List.fromList(decoder.decodeBytes(compressedNodeOrientations));
+    gamestream.games.isometric.nodes.area = gamestream.games.isometric.nodes.totalRows * gamestream.games.isometric.nodes.totalColumns;
+    gamestream.games.isometric.nodes.area2 = gamestream.games.isometric.nodes.area * 2;
+    gamestream.games.isometric.nodes.projection = gamestream.games.isometric.nodes.area2 + gamestream.games.isometric.nodes.totalColumns + 1;
+    gamestream.games.isometric.nodes.projectionHalf =  gamestream.games.isometric.nodes.projection ~/ 2;
+    final totalNodes = gamestream.games.isometric.nodes.totalZ * gamestream.games.isometric.nodes.totalRows * gamestream.games.isometric.nodes.totalColumns;
+    gamestream.games.isometric.nodes.colorStack = Uint16List(totalNodes);
+    gamestream.games.isometric.nodes.ambientStack = Uint16List(totalNodes);
+    gamestream.games.isometric.nodes.total = totalNodes;
+    gamestream.games.isometric.clientState.nodesRaycast = gamestream.games.isometric.nodes.area +  gamestream.games.isometric.nodes.area + gamestream.games.isometric.nodes.totalColumns + 1;
     GameEvents.onChangedNodes();
-    GameNodes.refreshNodeVariations();
+    gamestream.games.isometric.nodes.refreshNodeVariations();
     ClientState.sceneChanged.value++;
     onChangedScene();
   }

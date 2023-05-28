@@ -32,8 +32,8 @@ class GameDebug {
                             watch(gamestream.serverResponseReader.bufferSizeTotal, (int bytes) => text('network-bytes-per-hour: ${ClientState.formatAverageBytePerHour(bytes)}')),
                             Refresh(() =>  text(
                                 "connection-duration: ${ClientState.formattedConnectionDuration}\n"
-                                // "offscreen-nodes: ${GameNodes.offscreenNodes}\n"
-                                // "onscreen-nodes: ${GameNodes.onscreenNodes}\n"
+                                // "offscreen-nodes: ${gamestream.games.isometric.nodes.offscreenNodes}\n"
+                                // "onscreen-nodes: ${gamestream.games.isometric.nodes.onscreenNodes}\n"
                                 "touches: ${engine.touches}\n"
                                 "touch down id: ${engine.touchDownId}\n"
                                 "touch update id: ${engine.touchDownId}\n"
@@ -87,7 +87,7 @@ class GameDebug {
                             watch(gamestream.io.inputMode, (int inputMode) => text("input-mode: ${InputMode.getName(inputMode)}", onPressed: gamestream.io.actionToggleInputMode)),
                             watch(engine.watchMouseLeftDown, (bool mouseLeftDown) => text("mouse-left-down: $mouseLeftDown")),
                             watch(engine.mouseRightDown, (bool rightDown) => text("mouse-right-down: $rightDown")),
-                            watch(GameEditor.nodeSelectedIndex, (int index) => text("edit-state-node-index: $index")),
+                            // watch(GameEditor.nodeSelectedIndex, (int index) => text("edit-state-node-index: $index")),
                           ],
                         ),
                       ),
@@ -153,19 +153,19 @@ Widget buildColumnLightingControls(){
       ),
       // ColorPicker(
       //   pickerColor: HSVColor.fromAHSV(
-      //       GameNodes.ambient_alp,
-      //       GameNodes.ambient_hue,
-      //       GameNodes.ambient_sat,
-      //       GameNodes.ambient_val,
+      //       gamestream.games.isometric.nodes.ambient_alp,
+      //       gamestream.games.isometric.nodes.ambient_hue,
+      //       gamestream.games.isometric.nodes.ambient_sat,
+      //       gamestream.games.isometric.nodes.ambient_val,
       //   ).toColor(),
       //   onColorChanged: (color){
       //     ClientState.overrideColor.value = true;
       //     final hsvColor = HSVColor.fromColor(color);
-      //     GameNodes.ambient_alp = hsvColor.alpha;
-      //     GameNodes.ambient_hue = hsvColor.hue;
-      //     GameNodes.ambient_sat = hsvColor.saturation;
-      //     GameNodes.ambient_val = hsvColor.value;
-      //     GameNodes.resetNodeColorsToAmbient();
+      //     gamestream.games.isometric.nodes.ambient_alp = hsvColor.alpha;
+      //     gamestream.games.isometric.nodes.ambient_hue = hsvColor.hue;
+      //     gamestream.games.isometric.nodes.ambient_sat = hsvColor.saturation;
+      //     gamestream.games.isometric.nodes.ambient_val = hsvColor.value;
+      //     gamestream.games.isometric.nodes.resetNodeColorsToAmbient();
       //   },
       // ),
     ],

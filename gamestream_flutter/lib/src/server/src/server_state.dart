@@ -131,7 +131,7 @@ class ServerState {
   }
 
   static void projectShadow(Vector3 v3){
-     if (!GameQueries.inBoundsVector3(v3)) return;
+     if (!gamestream.games.isometric.nodes.inBoundsVector3(v3)) return;
 
      final z = getProjectionZ(v3);
      if (z < 0) return;
@@ -154,8 +154,8 @@ class ServerState {
 
     while (true) {
         if (z < 0) return -1;
-        final nodeIndex = GameNodes.getIndexXYZ(x, y, z);
-        final nodeOrientation = GameNodes.nodeOrientations[nodeIndex];
+        final nodeIndex = gamestream.games.isometric.nodes.getIndexXYZ(x, y, z);
+        final nodeOrientation = gamestream.games.isometric.nodes.nodeOrientations[nodeIndex];
 
         if (const <int> [
           NodeOrientation.None,
@@ -194,8 +194,8 @@ class ServerState {
 
   static void clean() {
     gameObjects.clear();
-    GameNodes.colorStackIndex = -1;
-    GameNodes.ambientStackIndex = -1;
+    gamestream.games.isometric.nodes.colorStackIndex = -1;
+    gamestream.games.isometric.nodes.ambientStackIndex = -1;
   }
 
   static void sortGameObjects(){
