@@ -14,6 +14,7 @@ mixin class GameFight2DCharacter {
   static const runAcceleration = 1.0;
   static const airAcceleration = 0.5;
   static const jumpAcceleration = 20.0;
+  static const rollingAcceleration = 0.75;
   static const strikeUpAcceleration = 2.5;
   static const fallAcceleration = 0.5;
   static const maxRunSpeed = 6.0;
@@ -270,6 +271,9 @@ mixin class GameFight2DCharacter {
           forceIdle();
         }
         break;
+      case GameFight2DCharacterState.Rolling:
+        accelerationX += facingLeft ? -rollingAcceleration : rollingAcceleration;
+        break;
       case GameFight2DCharacterState.Second_Jump:
 
         if (stateDuration == Jump_Frame) {
@@ -346,6 +350,7 @@ mixin class GameFight2DCharacter {
     GameFight2DCharacterState.Second_Jump: 12,
     GameFight2DCharacterState.Hurting: 30,
     GameFight2DCharacterState.Hurting_Airborn: 30,
+    GameFight2DCharacterState.Rolling: 30,
   }[state] ?? 0;
 
   static int getStateDurationInterruptable(int state) => const {

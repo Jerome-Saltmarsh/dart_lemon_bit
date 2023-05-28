@@ -28,9 +28,9 @@ class GameFight2DCharacterState {
    static const Airborn_Strike_Down = 14;
    static const Airborn_Strike_Up   = 15;
    static const Fall_Fast           = 16;
-   static const Crouching_Strike       = 17;
+   static const Crouching_Strike    = 17;
+   static const Rolling             = 18;
 
-   
    static String getName(int value) =>
       const {
         Idle: 'Idle',
@@ -49,6 +49,7 @@ class GameFight2DCharacterState {
         Airborn_Strike_Down: "Airborn_Strike_Down",
         Airborn_Strike_Up: "Airborn_Strike_Up",
         Crouching_Strike: "Crouching_Strike",
+        Rolling: "Rolling",
       }[value] ??
       'unknown';
 
@@ -67,6 +68,7 @@ class GameFight2DCharacterState {
          Airborn_Strike_Down: 2,
          Airborn_Strike_Up: 2,
          Crouching_Strike: 2,
+         Rolling: 2,
          Hurting_Airborn: 3,
          Hurting: 3,
        }[state] ?? 0;

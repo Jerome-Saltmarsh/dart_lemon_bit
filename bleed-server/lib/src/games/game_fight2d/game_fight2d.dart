@@ -100,10 +100,10 @@ class GameFight2D extends Game<GameFight2DPlayer> {
          player.crouch();
          break;
        case InputDirection.Down_Right:
-         player.crouch();
+         player.rollRight();
          break;
        case InputDirection.Down_Left:
-         player.crouch();
+         player.rollLeft();
          break;
        case InputDirection.None:
          player.idle();

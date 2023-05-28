@@ -59,6 +59,18 @@ class GameFight2DPlayer extends Player with GameFight2DCharacter {
         : GameFight2DCharacterState.Fall_Fast;
   }
 
+  void rollLeft(){
+    if (!grounded) return;
+    faceLeft();
+    state = GameFight2DCharacterState.Rolling;
+  }
+
+  void rollRight(){
+    if (!grounded) return;
+    faceRight();
+    state = GameFight2DCharacterState.Rolling;
+  }
+
   void writeEventJump(int x, int y){
     writeEvent(event: GameFight2DEvents.Jump, x: x, y: y);
   }
