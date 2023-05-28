@@ -39,7 +39,7 @@ class GameDebug {
                                 "touches: ${Engine.touches}\n"
                                 "touch down id: ${Engine.touchDownId}\n"
                                 "touch update id: ${Engine.touchDownId}\n"
-                                "mouse-grid: x: ${GameIO.mouseGridX.toInt()}, y: ${GameIO.mouseGridY.toInt()}\n"
+                                "mouse-grid: x: ${gsEngine.io.mouseGridX.toInt()}, y: ${gsEngine.io.mouseGridY.toInt()}\n"
                                 "mouse-world: x: ${Engine.mouseWorldX.toInt()}, y: ${Engine.mouseWorldY.toInt()}\n"
                                 'mouse-screen: x: ${Engine.mousePositionX.toInt()}, y: ${Engine.mousePositionY.toInt()}\n'
                                 'mouse-player-angle: ${ClientQuery.getMousePlayerAngle().toStringAsFixed(4)}\n'
@@ -70,7 +70,7 @@ class GameDebug {
                                 'total-particles-active: ${ClientState.totalActiveParticles}\n'
                                 "offscreen-nodes: left: ${RendererNodes.offscreenNodesLeft}, top: ${RendererNodes.offscreenNodesTop}, right: ${RendererNodes.offscreenNodesRight}, bottom: ${RendererNodes.offscreenNodesBottom}"
                             )),
-                            Refresh(() => text('touch-world: x: ${GameIO.touchCursorWorldX.toInt()}, y: ${GameIO.touchCursorWorldY.toInt()}')),
+                            Refresh(() => text('touch-world: x: ${gsEngine.io.touchCursorWorldX.toInt()}, y: ${gsEngine.io.touchCursorWorldY.toInt()}')),
                             Refresh(() => text('engine-render-batches: ${Engine.batchesRendered}')),
                             Refresh(() => text('engine-render-batch-1: ${Engine.batches1Rendered}')),
                             Refresh(() => text('engine-render-batch-2: ${Engine.batches2Rendered}')),
@@ -86,7 +86,7 @@ class GameDebug {
                             watch(GamePlayer.interpolating, (bool interpolating) => text("interpolating: $interpolating", onPressed: () => GamePlayer.interpolating.value = !GamePlayer.interpolating.value)),
                             watch(gsEngine.gameType, (GameType value) => text("game-type: ${value.name}")),
                             watch(Engine.deviceType, (int deviceType) => text("device-type: ${DeviceType.getName(deviceType)}", onPressed: Engine.toggleDeviceType)),
-                            watch(GameIO.inputMode, (int inputMode) => text("input-mode: ${InputMode.getName(inputMode)}", onPressed: GameIO.actionToggleInputMode)),
+                            watch(gsEngine.io.inputMode, (int inputMode) => text("input-mode: ${InputMode.getName(inputMode)}", onPressed: gsEngine.io.actionToggleInputMode)),
                             watch(Engine.watchMouseLeftDown, (bool mouseLeftDown) => text("mouse-left-down: $mouseLeftDown")),
                             watch(Engine.mouseRightDown, (bool rightDown) => text("mouse-right-down: $rightDown")),
                             watch(GameEditor.nodeSelectedIndex, (int index) => text("edit-state-node-index: $index")),

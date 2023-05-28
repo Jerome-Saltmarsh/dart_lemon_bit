@@ -63,7 +63,7 @@ class GameNetwork {
 
   Future sendClientRequestUpdate() async {
     applyKeyboardInputToUpdateBuffer();
-    GameIO.setCursorAction(CursorAction.None);
+    gsEngine.io.setCursorAction(CursorAction.None);
   }
 
   /// [0] Direction
@@ -75,9 +75,9 @@ class GameNetwork {
   /// [6] Shift
   /// [7] Space
   applyKeyboardInputToUpdateBuffer() {
-    updateBuffer[1] = GameIO.getInputAsByte();
-    writeNumberToByteArray(number: GameIO.getCursorWorldX(), list: updateBuffer, index: 2);
-    writeNumberToByteArray(number: GameIO.getCursorWorldY(), list: updateBuffer, index: 4);
+    updateBuffer[1] = gsEngine.io.getInputAsByte();
+    writeNumberToByteArray(number: gsEngine.io.getCursorWorldX(), list: updateBuffer, index: 2);
+    writeNumberToByteArray(number: gsEngine.io.getCursorWorldY(), list: updateBuffer, index: 4);
     writeNumberToByteArray(number: Engine.Screen_Left, list: updateBuffer, index: 6);
     writeNumberToByteArray(number: Engine.Screen_Top, list: updateBuffer, index: 8);
     writeNumberToByteArray(number: Engine.Screen_Right, list: updateBuffer, index: 10);
@@ -171,7 +171,7 @@ class GameNetwork {
   }
 
   void onChangedConnectionStatus(ConnectionStatus connection) {
-    GameIO.removeListeners();
+    gsEngine.io.removeListeners();
     Engine.onDrawForeground = null;
     gsEngine.serverResponseReader.bufferSizeTotal.value = 0;
     ClientState.clearParticles();
@@ -182,7 +182,7 @@ class GameNetwork {
 
     switch (connection) {
       case ConnectionStatus.Connected:
-        GameIO.addListeners();
+        gsEngine.io.addListeners();
         Engine.cursorType.value = CursorType.None;
         Engine.drawCanvasAfterUpdate = true;
         Engine.zoomOnScroll = true;

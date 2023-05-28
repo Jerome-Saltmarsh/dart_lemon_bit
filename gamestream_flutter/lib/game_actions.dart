@@ -84,15 +84,15 @@ class GameActions {
   }
 
   static void setTarget() {
-    GameIO.touchscreenCursorAction = CursorAction.Set_Target;
+    gsEngine.io.touchscreenCursorAction = CursorAction.Set_Target;
   }
 
   static void attackAuto() {
-    GameIO.touchscreenCursorAction = CursorAction.Stationary_Attack_Auto;
+    gsEngine.io.touchscreenCursorAction = CursorAction.Stationary_Attack_Auto;
   }
 
   static void playerStop() {
-    GameIO.recenterCursor();
+    gsEngine.io.recenterCursor();
     setTarget();
   }
 

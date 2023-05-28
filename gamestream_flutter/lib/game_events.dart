@@ -446,7 +446,7 @@ class GameEvents {
           GameEditor.z = GamePlayer.indexZ;
         }
         GameCamera.centerOnPlayer();
-        GameIO.recenterCursor();
+        gsEngine.io.recenterCursor();
         break;
       case PlayerEvent.Insufficient_Gold:
         ClientActions.writeMessage("Not Enough Gold");
@@ -586,7 +586,7 @@ class GameEvents {
   static void onChangedInputMode(int inputMode){
     if (inputMode == InputMode.Touch){
       GameCamera.centerOnPlayer();
-      GameIO.recenterCursor();
+      gsEngine.io.recenterCursor();
     }
   }
 

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/render/renderer_nodes.dart';
 
+import 'engine/instances.dart';
 import 'isometric/render/render_character_health_bar.dart';
 import 'touch_controller.dart';
 
@@ -29,13 +30,13 @@ class GameCanvas {
 
   static void renderForeground(Canvas canvas, Size size) {
 
-    if (GameIO.inputModeKeyboard){
+    if (gsEngine.io.inputModeKeyboard){
       if (ClientState.hoverDialogType.value == DialogType.None){
         renderCursor(canvas);
       }
     }
 
-    if (GameIO.inputModeTouch) {
+    if (gsEngine.io.inputModeTouch) {
       TouchController.render(canvas);
     }
 

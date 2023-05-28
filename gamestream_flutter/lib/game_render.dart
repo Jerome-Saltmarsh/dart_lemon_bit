@@ -1,6 +1,7 @@
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/engine/instances.dart';
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:gamestream_flutter/render/renderer_particles.dart';
 import 'package:gamestream_flutter/render/renderer_projectiles.dart';
@@ -62,7 +63,7 @@ class GameRender {
   }
 
   static void renderMouseWireFrame() {
-    GameIO.mouseRaycast(renderWireFrameBlue);
+    gsEngine.io.mouseRaycast(renderWireFrameBlue);
   }
 
   static void renderMouseTargetName() {
@@ -188,8 +189,8 @@ class GameRender {
         srcY: 256,
         srcWidth: 64,
         srcHeight: 64,
-        dstX: GameIO.getCursorScreenX(),
-        dstY: GameIO.getCursorScreenY(),
+        dstX: gsEngine.io.getCursorScreenX(),
+        dstY: gsEngine.io.getCursorScreenY(),
         scale: 0.5,
     );
   }
@@ -202,8 +203,8 @@ class GameRender {
       srcY: 320,
       srcWidth: 64,
       srcHeight: 64,
-      dstX: GameIO.getCursorScreenX(),
-      dstY: GameIO.getCursorScreenY(),
+      dstX: gsEngine.io.getCursorScreenX(),
+      dstY: gsEngine.io.getCursorScreenY(),
       scale: 0.5,
     );
   }
@@ -218,8 +219,8 @@ class GameRender {
         srcY: srcY + 0,
         srcWidth: 6,
         srcHeight: 22,
-        dstX: GameIO.getCursorScreenX(),
-        dstY: GameIO.getCursorScreenY() - range,
+        dstX: gsEngine.io.getCursorScreenX(),
+        dstY: gsEngine.io.getCursorScreenY() - range,
         anchorY: 1.0
     );
     Engine.renderExternalCanvas(
@@ -229,8 +230,8 @@ class GameRender {
         srcY: srcY + 0,
         srcWidth: 6,
         srcHeight: 22,
-        dstX: GameIO.getCursorScreenX(),
-        dstY: GameIO.getCursorScreenY() + range,
+        dstX: gsEngine.io.getCursorScreenX(),
+        dstY: gsEngine.io.getCursorScreenY() + range,
         anchorY: 0.0
     );
     Engine.renderExternalCanvas(
@@ -240,8 +241,8 @@ class GameRender {
         srcY: srcY + 29,
         srcWidth: 22,
         srcHeight: 6,
-        dstX: GameIO.getCursorScreenX() - range,
-        dstY: GameIO.getCursorScreenY(),
+        dstX: gsEngine.io.getCursorScreenX() - range,
+        dstY: gsEngine.io.getCursorScreenY(),
         anchorX: 1.0
     );
     Engine.renderExternalCanvas(
@@ -251,8 +252,8 @@ class GameRender {
         srcY: srcY + 29,
         srcWidth: 22,
         srcHeight: 6,
-        dstX: GameIO.getCursorScreenX() + range,
-        dstY: GameIO.getCursorScreenY(),
+        dstX: gsEngine.io.getCursorScreenX() + range,
+        dstY: gsEngine.io.getCursorScreenY(),
         anchorX: 0.0
     );
   }
@@ -268,8 +269,8 @@ class GameRender {
         srcY: srcY + 0,
         srcWidth: 6,
         srcHeight: 22,
-        dstX: GameIO.getCursorScreenX(),
-        dstY: GameIO.getCursorScreenY() - range - offset,
+        dstX: gsEngine.io.getCursorScreenX(),
+        dstY: gsEngine.io.getCursorScreenY() - range - offset,
         anchorY: 1.0
     );
     Engine.renderExternalCanvas(
@@ -279,8 +280,8 @@ class GameRender {
         srcY: srcY + 0,
         srcWidth: 6,
         srcHeight: 22,
-        dstX: GameIO.getCursorScreenX(),
-        dstY: GameIO.getCursorScreenY() + range - offset,
+        dstX: gsEngine.io.getCursorScreenX(),
+        dstY: gsEngine.io.getCursorScreenY() + range - offset,
         anchorY: 0.0
     );
     Engine.renderExternalCanvas(
@@ -290,8 +291,8 @@ class GameRender {
         srcY: srcY + 29,
         srcWidth: 22,
         srcHeight: 6,
-        dstX: GameIO.getCursorScreenX() - range,
-        dstY: GameIO.getCursorScreenY() - offset,
+        dstX: gsEngine.io.getCursorScreenX() - range,
+        dstY: gsEngine.io.getCursorScreenY() - offset,
         anchorX: 1.0
     );
     Engine.renderExternalCanvas(
@@ -301,8 +302,8 @@ class GameRender {
         srcY: srcY + 29,
         srcWidth: 22,
         srcHeight: 6,
-        dstX: GameIO.getCursorScreenX() + range,
-        dstY: GameIO.getCursorScreenY() - offset,
+        dstX: gsEngine.io.getCursorScreenX() + range,
+        dstY: gsEngine.io.getCursorScreenY() - offset,
         anchorX: 0.0
     );
   }

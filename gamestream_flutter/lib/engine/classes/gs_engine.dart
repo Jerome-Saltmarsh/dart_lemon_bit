@@ -1,6 +1,7 @@
 import 'package:gamestream_flutter/engine/games/game_aeon.dart';
 import 'package:gamestream_flutter/engine/games/game_cube3d.dart';
 import 'package:gamestream_flutter/engine/games/game_fight2d.dart';
+import 'package:gamestream_flutter/engine/instances.dart';
 import 'package:gamestream_flutter/game_utils.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -14,6 +15,8 @@ class GSEngine {
    late final gameType = Watch(GameType.Website, onChanged: _onChangedGameType);
    late final game = Watch<Game>(gameWebsite, onChanged: _onChangedGame);
    late final gameWebsite = gw.GameWebsite();
+
+   final io = GameIO();
 
    final serverResponseReader = ServerResponseReader();
    late final GameNetwork network;
@@ -44,8 +47,8 @@ class GSEngine {
      Engine.deviceType.onChanged(onDeviceTypeChanged);
      GameImages.loadImages();
      Engine.cursorType.value = CursorType.Basic;
-     GameIO.addListeners();
-     GameIO.detectInputMode();
+     gsEngine.io.addListeners();
+     gsEngine.io.detectInputMode();
 
      if (Engine.isLocalHost) {
        GameWebsite.region.value = ConnectionRegion.LocalHost;
@@ -103,10 +106,10 @@ class GSEngine {
        double previousHeight,
        double newWidth,
        double newHeight,
-       ) => GameIO.detectInputMode();
+       ) => gsEngine.io.detectInputMode();
 
    static void onDeviceTypeChanged(int deviceType){
-     GameIO.detectInputMode();
+     gsEngine.io.detectInputMode();
    }
 
    void startGameType(GameType gameType){

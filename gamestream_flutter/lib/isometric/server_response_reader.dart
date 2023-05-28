@@ -367,7 +367,7 @@ class ServerResponseReader with ByteReader {
         break;
       case ApiPlayer.Spawned:
         GameCamera.centerOnPlayer();
-        GameIO.recenterCursor();
+        gsEngine.io.recenterCursor();
         break;
       case ApiPlayer.Damage:
         ServerState.playerDamage.value = readUInt16();

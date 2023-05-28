@@ -46,7 +46,7 @@ class GameCombat extends Game {
     GameAudio.update();
     ClientState.update();
     GameState.updatePlayerMessageTimer();
-    GameIO.readPlayerInput();
+    gsEngine.io.readPlayerInput();
     gsEngine.network.sendClientRequestUpdate();
   }
 

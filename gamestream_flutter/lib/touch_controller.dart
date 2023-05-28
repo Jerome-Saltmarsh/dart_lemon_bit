@@ -3,6 +3,8 @@ import 'dart:ui';
 
 import 'package:gamestream_flutter/library.dart';
 
+import 'engine/instances.dart';
+
 class TouchController {
     static var joystickCenterX = 0.0;
     static var joystickCenterY = 0.0;
@@ -24,7 +26,7 @@ class TouchController {
 
     static int getDirection(){
         if (Engine.touches == 0) return Direction.None;
-        return GameIO.convertRadianToDirection(angle);
+        return gsEngine.io.convertRadianToDirection(angle);
     }
 
     static void onMouseMoved(double x, double y){

@@ -107,7 +107,7 @@ class GameEditor {
   }
 
   static void selectMouseBlock(){
-    GameIO.mouseRaycast(selectBlock);
+    gsEngine.io.mouseRaycast(selectBlock);
   }
 
   static void selectMouseGameObject(){

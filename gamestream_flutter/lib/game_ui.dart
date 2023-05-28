@@ -28,7 +28,7 @@ class GameUI {
   static final timeVisible = Watch(true);
 
   static Widget buildUI() =>
-      watch(GameIO.inputMode, (int inputMode){
+      watch(gsEngine.io.inputMode, (int inputMode){
         return StackFullscreen(children: [
           buildWatchBool(ClientState.triggerAlarmNoMessageReceivedFromServer,
               buildDialogFramesSinceUpdate),
@@ -119,7 +119,7 @@ class GameUI {
               ),
             ),
           WatchBuilder(ClientState.edit, buildPlayMode),
-          WatchBuilder(GameIO.inputMode, buildStackInputMode),
+          WatchBuilder(gsEngine.io.inputMode, buildStackInputMode),
           buildWatchBool(ClientState.debugMode, GameDebug.buildStackDebug),
           buildPositionedMessageStatus(),
           buildWatchGameStatus(),
