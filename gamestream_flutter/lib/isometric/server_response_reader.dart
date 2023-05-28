@@ -174,7 +174,10 @@ class ServerResponseReader with ByteReader {
         GameAudio.playAudioSingle2D(GameAudio.heavy_punch_13, x, y);
         break;
       case GameFight2DEvents.Jump:
-        GameAudio.playAudioSingle2D(GameAudio.coins, x, y);
+        GameAudio.playAudioSingle2D(GameAudio.jump, x, y);
+        break;
+      case GameFight2DEvents.Footstep:
+        GameAudio.playAudioSingle2D(GameAudio.footstep_stone, x, y);
         break;
     }
   }
@@ -774,7 +777,7 @@ class ServerResponseReader with ByteReader {
   void readFight2DResponseCharacters() {
     final totalPlayers = readUInt16();
     assert (totalPlayers < GameFight2D.length);
-    GameFight2D.characters = totalPlayers;
+    GameFight2D.charactersTotal = totalPlayers;
     for (var i = 0; i < totalPlayers; i++) {
       GameFight2D.characterState[i] = readByte();
       GameFight2D.characterDirection[i] = readByte();

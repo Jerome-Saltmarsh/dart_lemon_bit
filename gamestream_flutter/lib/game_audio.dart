@@ -83,6 +83,7 @@ class GameAudio {
     AudioLoop(name: 'heart-beat', getTargetVolume: getVolumeHeartBeat),
   ];
 
+  static final jump = AudioSingle(name: 'sounds/jump', volume: 0.5);
   static final dog_woolf_howl_4 = AudioSingle(name: 'dog-woolf-howl-4', volume: 0.5);
   static final wolf_howl = AudioSingle(name: 'wolf-howl', volume: 0.5);
   static final weaponSwap2 = AudioSingle(name: 'weapon-swap-2', volume: 0.5);

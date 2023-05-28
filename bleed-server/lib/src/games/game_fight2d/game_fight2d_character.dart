@@ -17,6 +17,8 @@ mixin class GameFight2DCharacter {
   static const fallAcceleration = 0.5;
   static const maxRunSpeed = 6.0;
 
+  final strikeFrame = 5;
+
   var emitEventJump = false;
   var stateDuration = 0;
   var stateDurationTotal = 0;

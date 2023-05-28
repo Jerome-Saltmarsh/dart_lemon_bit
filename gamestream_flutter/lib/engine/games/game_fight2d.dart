@@ -10,8 +10,8 @@ import 'package:gamestream_flutter/library.dart';
 class GameFight2D extends Game {
   static var playerX = 0.0;
   static var playerY = 0.0;
-  static var characters = 0;
   static var playerState = GameFight2DCharacterState.Idle;
+  static var charactersTotal = 0;
 
   static const length = 1000;
   static final characterState = Uint8List(length);
@@ -58,7 +58,7 @@ class GameFight2D extends Game {
   }
 
   void renderCharacters() {
-    for (var i = 0; i < characters; i++){
+    for (var i = 0; i < charactersTotal; i++){
       const frameSize = 256.0;
       const runFrames = [3, 4, 5, 6];
       const framesStrike = [1, 2];
@@ -116,6 +116,21 @@ class GameFight2D extends Game {
   void update() {
     GameNetwork.sendClientRequestUpdate();
     Engine.cameraFollow(playerX, playerY);
+    // applyCharacterAudio();
+  }
+
+  void applyCharacterAudio() {
+    for (var i = 0; i < charactersTotal; i++){
+       if (characterState[i] == GameFight2DCharacterState.Running){
+          if (characterStateDuration[i] % 8 == 0){
+            GameAudio.playAudioSingle2D(
+                GameAudio.footstep_grass_7,
+                characterPositionX[i],
+                characterPositionY[i],
+            );
+          }
+       }
+    }
   }
 
   void updateCamera() {

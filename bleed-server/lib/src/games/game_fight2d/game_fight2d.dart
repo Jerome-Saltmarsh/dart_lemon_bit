@@ -89,7 +89,6 @@ class GameFight2D extends Game<GameFight2DPlayer> {
     updateCharacters();
   }
 
-
   void emitEventJump(GameFight2DCharacter character) {
     if (!character.emitEventJump) return;
     character.emitEventJump = false;
@@ -117,25 +116,38 @@ class GameFight2D extends Game<GameFight2DPlayer> {
       applyCharacterSceneCollision(character);
       emitEventJump(character);
 
-      switch (character.state){
-        case GameFight2DCharacterState.Striking:
-          applyCharacterHitBoxStrike(character);
-          break;
-        case GameFight2DCharacterState.Striking_Up:
-          applyCharacterHitBoxStrikeUp(character);
-          break;
-        case GameFight2DCharacterState.Airborn_Strike:
-          applyCharacterHitBoxAirbornStrike(character);
-          break;
-        case GameFight2DCharacterState.Running_Strike:
-          applyCharacterHitBoxStrike(character);
-          break;
+      if (character.running && character.stateDuration % 6 == 0) {
+         emitEvent(character: character, event: GameFight2DEvents.Footstep);
       }
+
+      applyCharacterStrike(character);
+    }
+  }
+
+  void applyCharacterStrike(GameFight2DCharacter character) {
+    if (character.stateDuration != character.strikeFrame) return;
+
+    switch (character.state){
+      case GameFight2DCharacterState.Striking:
+        applyCharacterHitBoxStrike(character);
+        break;
+      case GameFight2DCharacterState.Striking_Up:
+        applyCharacterHitBoxStrikeUp(character);
+        break;
+      case GameFight2DCharacterState.Airborn_Strike:
+        applyCharacterHitBoxAirbornStrike(character);
+        break;
+      case GameFight2DCharacterState.Running_Strike:
+        applyCharacterHitBoxStrike(character);
+        break;
+      case GameFight2DCharacterState.Crouching_Strike:
+        applyCharacterHitBoxStrike(character);
+        break;
     }
   }
 
   void applyCharacterHitBoxStrike(GameFight2DCharacter character){
-    if (character.stateDuration != 5) return;
+    if (character.stateDuration != character.strikeFrame) return;
     emitEventPunch(character);
     for (final otherCharacter in characters){
       const rangeX = 75.0;
