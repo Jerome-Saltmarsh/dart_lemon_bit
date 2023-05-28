@@ -39,6 +39,7 @@ mixin class GameFight2DCharacter {
 
   var _direction = GameFight2DDirection.Left;
   var _state = GameFight2DCharacterState.Idle;
+  var _previousState = GameFight2DCharacterState.Idle;
   var _jumpingRequested = false;
 
   int get direction => _direction;
@@ -235,6 +236,13 @@ mixin class GameFight2DCharacter {
       respawn();
     }
 
+    if (_previousState != _state){
+      if (_previousState == GameFight2DCharacterState.Rolling){
+         // velocityX *= 0.5;
+      }
+      _previousState = _state;
+    }
+
     if (stateDurationTotal > 0 && stateDuration > stateDurationTotal){
       forceIdle();
     }
@@ -272,6 +280,7 @@ mixin class GameFight2DCharacter {
         }
         break;
       case GameFight2DCharacterState.Rolling:
+        if (stateDuration > 25) break;
         accelerationX += facingLeft ? -rollingAcceleration : rollingAcceleration;
         break;
       case GameFight2DCharacterState.Second_Jump:
