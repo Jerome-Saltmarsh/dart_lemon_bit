@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_constants.dart';
 import 'package:gamestream_flutter/isometric/ui/columns/build_column_selected_node.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_editor_dialog.dart';
@@ -711,8 +712,8 @@ class EditorUI {
       image: GameImages.atlas_nodes,
       srcX: orientation == NodeOrientation.None ? 1442.0 : 0,
       srcY: AtlasNodeY.mapOrientation(orientation),
-      srcWidth: GameConstants.Sprite_Width,
-      srcHeight: GameConstants.Sprite_Height,
+      srcWidth: GameIsometricConstants.Sprite_Width,
+      srcHeight: GameIsometricConstants.Sprite_Height,
       scale: 0.75,
     );
 

@@ -2,6 +2,7 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_constants.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_renderer.dart';
 
 import '../../library.dart';
@@ -149,7 +150,7 @@ void renderCharacterTemplate(Character character, {
   const Sprite_Size = 125.0;
   const Anchor_Y = 0.625;
 
-  if (character.z >= GameConstants.Node_Height){
+  if (character.z >= GameIsometricConstants.Node_Height){
     gamestream.games.isometric.nodes.markShadow(character);
 
     final shadowAngle = gamestream.games.isometric.nodes.shadow.z + pi;

@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/render/render_circle.dart';
 import 'package:gamestream_flutter/library.dart';
 
+import 'game_isometric_constants.dart';
+
 
 
 class GameIsometricClientState {
@@ -1088,7 +1090,7 @@ class GameIsometricClientState {
       }
     }
     if (nextParticleFrame <= 0) {
-      nextParticleFrame = GameConstants.Frames_Per_Particle_Animation_Frame;
+      nextParticleFrame = GameIsometricConstants.Frames_Per_Particle_Animation_Frame;
     }
   }
 
@@ -1311,7 +1313,7 @@ class GameIsometricClientState {
     }
 
     if (nextLightingUpdate-- <= 0){
-      nextLightingUpdate = GameConstants.Frames_Per_Lighting_Update;
+      nextLightingUpdate = GameIsometricConstants.Frames_Per_Lighting_Update;
       updateGameLighting();
     }
 

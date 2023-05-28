@@ -1,5 +1,7 @@
 import 'package:gamestream_flutter/library.dart';
 
+import 'game_isometric_constants.dart';
+
 /// Synchronized server state
 ///
 /// the data inside server state belongs to the server and can only be read by the client
@@ -165,7 +167,7 @@ class GameIsometricServerState {
         NodeOrientation.Half_East,
         NodeOrientation.Half_West,
       ].contains(nodeOrientation)) {
-        z -= GameConstants.Node_Height;
+        z -= GameIsometricConstants.Node_Height;
         continue;
       }
       if (z > Node_Height){

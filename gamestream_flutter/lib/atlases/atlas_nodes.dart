@@ -1,21 +1,22 @@
+import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_constants.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class AtlasNodeX {
   static const Bau_Haus_Solid = 520.0;
   static const Bau_Haus_Half = Bau_Haus_Solid;
   static const Bau_Haus_Corner = Bau_Haus_Half;
-  static const Bau_Haus_Slope = Bau_Haus_Solid + GameConstants.Sprite_Width_Padded;
-  static const Brick_Solid = GameConstants.Sprite_Width_Padded_2;
-  static const Brick_Half_West = Brick_Solid + GameConstants.Sprite_Width_Padded;
-  static const Brick_Half_South = Brick_Half_West + GameConstants.Sprite_Width_Padded;
-  static const Brick_Corner_Top = Brick_Half_South + GameConstants.Sprite_Width_Padded;
-  static const Brick_Corner_Right = Brick_Corner_Top + GameConstants.Sprite_Width_Padded;
-  static const Brick_Corner_Bottom = Brick_Corner_Right + GameConstants.Sprite_Width_Padded;
-  static const Brick_Corner_Left = Brick_Corner_Bottom + GameConstants.Sprite_Width_Padded;
-  static const Brick_Slope_Symmetric_North = Brick_Corner_Left + GameConstants.Sprite_Width_Padded;
-  static const Brick_Slope_Symmetric_East = Brick_Slope_Symmetric_North + GameConstants.Sprite_Width_Padded;
-  static const Brick_Slope_Symmetric_South = Brick_Slope_Symmetric_East + GameConstants.Sprite_Width_Padded;
-  static const Brick_Slope_Symmetric_West = Brick_Slope_Symmetric_South + GameConstants.Sprite_Width_Padded;
+  static const Bau_Haus_Slope = Bau_Haus_Solid + GameIsometricConstants.Sprite_Width_Padded;
+  static const Brick_Solid = GameIsometricConstants.Sprite_Width_Padded_2;
+  static const Brick_Half_West = Brick_Solid + GameIsometricConstants.Sprite_Width_Padded;
+  static const Brick_Half_South = Brick_Half_West + GameIsometricConstants.Sprite_Width_Padded;
+  static const Brick_Corner_Top = Brick_Half_South + GameIsometricConstants.Sprite_Width_Padded;
+  static const Brick_Corner_Right = Brick_Corner_Top + GameIsometricConstants.Sprite_Width_Padded;
+  static const Brick_Corner_Bottom = Brick_Corner_Right + GameIsometricConstants.Sprite_Width_Padded;
+  static const Brick_Corner_Left = Brick_Corner_Bottom + GameIsometricConstants.Sprite_Width_Padded;
+  static const Brick_Slope_Symmetric_North = Brick_Corner_Left + GameIsometricConstants.Sprite_Width_Padded;
+  static const Brick_Slope_Symmetric_East = Brick_Slope_Symmetric_North + GameIsometricConstants.Sprite_Width_Padded;
+  static const Brick_Slope_Symmetric_South = Brick_Slope_Symmetric_East + GameIsometricConstants.Sprite_Width_Padded;
+  static const Brick_Slope_Symmetric_West = Brick_Slope_Symmetric_South + GameIsometricConstants.Sprite_Width_Padded;
   static const Spawn_Weapon = 0.0;
   static const Spawn_Zombie = 0.0;
   static const Chimney = 618.0;
@@ -44,19 +45,19 @@ class AtlasNodeX {
 
 
   static double mapNodeType(int type) => const {
-    NodeType.Brick: GameConstants.Sprite_Width_Padded_2,
-    NodeType.Grass: GameConstants.Sprite_Width_Padded_3,
-    NodeType.Metal: GameConstants.Sprite_Width_Padded_4,
-    NodeType.Wood: GameConstants.Sprite_Width_Padded_5,
-    NodeType.Bau_Haus: GameConstants.Sprite_Width_Padded_6,
-    NodeType.Soil: GameConstants.Sprite_Width_Padded_7,
-    NodeType.Concrete: GameConstants.Sprite_Width_Padded_8,
-    NodeType.Road: GameConstants.Sprite_Width_Padded_9,
-    NodeType.Sandbag: GameConstants.Sprite_Width_Padded_11,
-    NodeType.Tile: GameConstants.Sprite_Width_Padded_12,
-    NodeType.Bricks_Red: GameConstants.Sprite_Width_Padded_13,
-    NodeType.Bricks_Brown: GameConstants.Sprite_Width_Padded_14,
-    NodeType.Scaffold: GameConstants.Sprite_Width_Padded_15,
+    NodeType.Brick: GameIsometricConstants.Sprite_Width_Padded_2,
+    NodeType.Grass: GameIsometricConstants.Sprite_Width_Padded_3,
+    NodeType.Metal: GameIsometricConstants.Sprite_Width_Padded_4,
+    NodeType.Wood: GameIsometricConstants.Sprite_Width_Padded_5,
+    NodeType.Bau_Haus: GameIsometricConstants.Sprite_Width_Padded_6,
+    NodeType.Soil: GameIsometricConstants.Sprite_Width_Padded_7,
+    NodeType.Concrete: GameIsometricConstants.Sprite_Width_Padded_8,
+    NodeType.Road: GameIsometricConstants.Sprite_Width_Padded_9,
+    NodeType.Sandbag: GameIsometricConstants.Sprite_Width_Padded_11,
+    NodeType.Tile: GameIsometricConstants.Sprite_Width_Padded_12,
+    NodeType.Bricks_Red: GameIsometricConstants.Sprite_Width_Padded_13,
+    NodeType.Bricks_Brown: GameIsometricConstants.Sprite_Width_Padded_14,
+    NodeType.Scaffold: GameIsometricConstants.Sprite_Width_Padded_15,
     NodeType.Torch: Torch,
     NodeType.Grass_Long: Grass_Long,
     NodeType.Grass_Flowers: Grass_Flowers,
@@ -137,29 +138,29 @@ class AtlasNodeY {
     if (orientation == NodeOrientation.Solid)
       return 0;
     if (orientation == NodeOrientation.Slope_North)
-      return GameConstants.Sprite_Height_Padded_07;
+      return GameIsometricConstants.Sprite_Height_Padded_07;
     if (orientation == NodeOrientation.Slope_East)
-      return GameConstants.Sprite_Height_Padded_08;
+      return GameIsometricConstants.Sprite_Height_Padded_08;
     if (orientation == NodeOrientation.Slope_South)
-      return GameConstants.Sprite_Height_Padded_09;
+      return GameIsometricConstants.Sprite_Height_Padded_09;
     if (orientation == NodeOrientation.Slope_West)
-      return GameConstants.Sprite_Height_Padded_10;
+      return GameIsometricConstants.Sprite_Height_Padded_10;
     if (orientation == NodeOrientation.Half_North)
-      return GameConstants.Sprite_Height_Padded_01;
+      return GameIsometricConstants.Sprite_Height_Padded_01;
     if (orientation == NodeOrientation.Half_East)
-      return GameConstants.Sprite_Height_Padded_02;
+      return GameIsometricConstants.Sprite_Height_Padded_02;
     if (orientation == NodeOrientation.Half_South)
-      return GameConstants.Sprite_Height_Padded_01;
+      return GameIsometricConstants.Sprite_Height_Padded_01;
     if (orientation == NodeOrientation.Half_West)
-      return GameConstants.Sprite_Height_Padded_02;
+      return GameIsometricConstants.Sprite_Height_Padded_02;
     if (orientation == NodeOrientation.Corner_Top)
-      return GameConstants.Sprite_Height_Padded_03;
+      return GameIsometricConstants.Sprite_Height_Padded_03;
     if (orientation == NodeOrientation.Corner_Right)
-      return GameConstants.Sprite_Height_Padded_04;
+      return GameIsometricConstants.Sprite_Height_Padded_04;
     if (orientation == NodeOrientation.Corner_Bottom)
-      return GameConstants.Sprite_Height_Padded_05;
+      return GameIsometricConstants.Sprite_Height_Padded_05;
     if (orientation == NodeOrientation.Corner_Left)
-      return GameConstants.Sprite_Height_Padded_06;
+      return GameIsometricConstants.Sprite_Height_Padded_06;
     if (orientation == NodeOrientation.Slope_Outer_South_West)
       return Orientation_Slope_Outer_South_West;
     if (orientation == NodeOrientation.Slope_Outer_North_West)
@@ -177,11 +178,11 @@ class AtlasNodeY {
     if (orientation == NodeOrientation.Slope_Inner_South_West)
       return Orientation_Slope_Inner_South_West;
     if (orientation == NodeOrientation.Radial)
-      return GameConstants.Sprite_Height_Padded_19;
+      return GameIsometricConstants.Sprite_Height_Padded_19;
     if (NodeOrientation.isHalfVertical(orientation))
-      return GameConstants.Sprite_Height_Padded_20;
+      return GameIsometricConstants.Sprite_Height_Padded_20;
     if (NodeOrientation.isColumn(orientation))
-      return GameConstants.Sprite_Height_Padded_21;
+      return GameIsometricConstants.Sprite_Height_Padded_21;
     if (orientation == NodeOrientation.None)
       return 79.0;
     throw Exception('AtlasNodeY.mapOrientation(${NodeOrientation.getName(orientation)}');

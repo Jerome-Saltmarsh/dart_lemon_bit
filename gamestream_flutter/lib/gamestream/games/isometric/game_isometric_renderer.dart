@@ -12,6 +12,7 @@ import 'package:gamestream_flutter/render/renderer_particles.dart';
 import 'package:gamestream_flutter/render/renderer_projectiles.dart';
 import 'package:gamestream_flutter/touch_controller.dart';
 
+import 'game_isometric_constants.dart';
 import 'game_isometric_mouse.dart';
 
 class GameIsometricRenderer {
@@ -163,9 +164,9 @@ class GameIsometricRenderer {
       dstY: rowColumnZToRenderY(row, column,z),
       srcX: AtlasNodeX.Wireframe_Blue,
       srcY: AtlasNodeY.Wireframe_Blue,
-      srcWidth: GameConstants.Sprite_Width,
-      srcHeight: GameConstants.Sprite_Height,
-      anchorY: GameConstants.Sprite_Anchor_Y,
+      srcWidth: GameIsometricConstants.Sprite_Width,
+      srcHeight: GameIsometricConstants.Sprite_Height,
+      anchorY: GameIsometricConstants.Sprite_Anchor_Y,
     );
     return;
   }
@@ -177,9 +178,9 @@ class GameIsometricRenderer {
       dstY: rowColumnZToRenderY(row, column,z),
       srcX: AtlasNodeX.Wireframe_Red,
       srcY: AtlasNodeY.Wireframe_Red,
-      srcWidth: GameConstants.Sprite_Width,
-      srcHeight: GameConstants.Sprite_Height,
-      anchorY: GameConstants.Sprite_Anchor_Y,
+      srcWidth: GameIsometricConstants.Sprite_Width,
+      srcHeight: GameIsometricConstants.Sprite_Height,
+      anchorY: GameIsometricConstants.Sprite_Anchor_Y,
     );
   }
 

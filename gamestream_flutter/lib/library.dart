@@ -23,7 +23,6 @@ export 'game_widgets.dart';
 export 'game_ui_events.dart';
 export 'game_debug.dart';
 export 'gamestream/game_animation.dart';
-export 'game_constants.dart';
 export 'game_player.dart';
 export 'game_inventory_ui.dart';
 export 'game_style.dart';

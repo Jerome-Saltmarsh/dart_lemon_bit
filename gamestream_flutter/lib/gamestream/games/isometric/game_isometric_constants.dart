@@ -1,4 +1,4 @@
-class GameConstants {
+class GameIsometricConstants {
 
 
   static const Sprite_Height = 72.0;
