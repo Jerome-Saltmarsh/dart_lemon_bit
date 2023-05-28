@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_colors.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_constants.dart';
 import 'package:gamestream_flutter/isometric/ui/columns/build_column_selected_node.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
@@ -148,7 +149,7 @@ class EditorUI {
         padding: const EdgeInsets.all(10),
         width: 400,
         height: 520,
-        color: GameColors.brownLight,
+        color: GameIsometricColors.brownLight,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -273,7 +274,7 @@ class EditorUI {
         padding: const EdgeInsets.all(10),
         width: 400,
         height: 520,
-        color: GameColors.brownLight,
+        color: GameIsometricColors.brownLight,
         child: Column(
           children: [
             Row(
@@ -290,7 +291,7 @@ class EditorUI {
             buildRowGenerate(EditorState.generateOctaves, "Octaves"),
             buildRowGenerate(EditorState.generateFrequency, "Frequency"),
             height16,
-            container(child: "Generate", action: EditorActions.generateScene, color: GameColors.blue, alignment: Alignment.center),
+            container(child: "Generate", action: EditorActions.generateScene, color: GameIsometricColors.blue, alignment: Alignment.center),
           ],
         ),
       ),
@@ -323,7 +324,7 @@ class EditorUI {
             padding: const EdgeInsets.all(10),
             width: 400,
             height: 300,
-            color: GameColors.brownLight,
+            color: GameIsometricColors.brownLight,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -687,7 +688,7 @@ class EditorUI {
       right: 70,
       child: Container(
         padding: const EdgeInsets.all(16),
-        color: GameColors.brown02,
+        color: GameIsometricColors.brown02,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -1013,7 +1014,7 @@ class EditorUI {
           child: Container(
             width: 200,
             height: 200,
-            color: GameColors.brownDark,
+            color: GameIsometricColors.brownDark,
             child: engine.buildCanvas(paint: (Canvas canvas, Size size){
               for (var x = 0; x < 3; x++){
                 for (var y = 0; y < 3; y++){
@@ -1215,8 +1216,8 @@ class EditorUI {
                   child: editTab.name,
                   width: 150,
                   color: activeEditTab == editTab
-                      ? GameColors.brownDark
-                      : GameColors.brownLight,
+                      ? GameIsometricColors.brownDark
+                      : GameIsometricColors.brownLight,
                   action: () => GameEditor.editTab.value = editTab,
                 ))
             .toList(),

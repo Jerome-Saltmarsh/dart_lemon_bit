@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
+import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_colors.dart';
 import 'package:gamestream_flutter/library.dart';
 
 final panelDecoration = BoxDecoration(
-  color: GameColors.brownDark,
+  color: GameIsometricColors.brownDark,
   borderRadius: borderRadius4,
 );
 

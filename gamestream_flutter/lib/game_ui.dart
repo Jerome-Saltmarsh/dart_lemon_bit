@@ -10,6 +10,7 @@ import 'package:gamestream_flutter/language_utils.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:golden_ratio/constants.dart';
 
+import 'gamestream/games/isometric/game_isometric_colors.dart';
 import 'widgets/animated_widget.dart';
 
 
@@ -142,7 +143,7 @@ class GameUI {
                 height: 300 * goldenRatio_0618,
                 padding: const EdgeInsets.all(8),
                 alignment: Alignment.center,
-                color: GameColors.brownLight,
+                color: GameIsometricColors.brownLight,
                 child: watch(gamestream.games.isometric.serverState.playerAttributes, (int attributes){
                   final attributesRemaining = attributes > 0;
                   final boxColor = attributesRemaining ? Colors.green : Colors.white12;
@@ -227,7 +228,7 @@ class GameUI {
                           child: Animated(
                             duration: Duration(milliseconds: 500),
                             builder: (double value) =>
-                                text("Select an attribute to improve", color: GameColors.orange.withOpacity(value * 0.5)),
+                                text("Select an attribute to improve", color: GameIsometricColors.orange.withOpacity(value * 0.5)),
                           ),
                         )
                     ],
@@ -309,7 +310,7 @@ class GameUI {
                       margin: const EdgeInsets.only(bottom: 6),
                       child: watch(GamePlayer.powerType, (int playerPowerType){
                         return text(PowerType.getName(powerType),
-                          color: powerType == playerPowerType ? GameColors.orange : GameColors.white80,
+                          color: powerType == playerPowerType ? GameIsometricColors.orange : GameIsometricColors.white80,
                           size: textSize,
                         );
                       }),
@@ -340,7 +341,7 @@ class GameUI {
                    child: onPressed(
                      action: () => gamestream.network.sendClientRequestSelectWeaponPrimary(itemType),
                      child: text(ItemType.getName(itemType),
-                     color: weaponPrimary == itemType ? GameColors.orange : GameColors.white80,
+                     color: weaponPrimary == itemType ? GameIsometricColors.orange : GameIsometricColors.white80,
                        size: textSize,
                       )),
                  ),
@@ -371,7 +372,7 @@ class GameUI {
                   child: onPressed(
                       action: () => gamestream.network.sendClientRequestSelectWeaponSecondary(itemType),
                       child: text(ItemType.getName(itemType),
-                        color: weaponSecondary == itemType ? GameColors.orange : GameColors.white80,
+                        color: weaponSecondary == itemType ? GameIsometricColors.orange : GameIsometricColors.white80,
                         size: textSize,
                       )),
                 ),
@@ -391,8 +392,8 @@ class GameUI {
               width: 150,
               height: 150 * goldenRatio_0381,
               alignment: Alignment.center,
-              color: GameColors.green.withAlpha(mouseOver ? 140 : 100),
-              child: text("START", size: 45, color: GameColors.green),
+              color: GameIsometricColors.green.withAlpha(mouseOver ? 140 : 100),
+              child: text("START", size: 45, color: GameIsometricColors.green),
             );
           }
       ),
@@ -504,7 +505,7 @@ class GameUI {
   static Widget buildWindowLightSettings(){
      return Container(
         padding: GameStyle.Padding_6,
-        color: GameColors.brownDark,
+        color: GameIsometricColors.brownDark,
         width: 300,
         child: Column(
           children: [
@@ -1122,7 +1123,7 @@ class GameUI {
   //                    color: Colors.white12,
   //                    padding: GameStyle.Padding_6,
   //                    child:
-  //                    fullyUpgraded ? text("MAX", color: GameColors.white60) :
+  //                    fullyUpgraded ? text("MAX", color: GameIsometricColors.white60) :
   //                    Row(
   //                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
   //                      children: [
@@ -1155,7 +1156,7 @@ class GameUI {
         children: List.generate(5, (i) => Container(
                   width: 8,
                   height: 15,
-                  color: i < amount ? GameColors.blue : GameColors.blue05,
+                  color: i < amount ? GameIsometricColors.blue : GameIsometricColors.blue05,
                   margin: i < 4 ? const EdgeInsets.only(right: 5) : null,
                 )
         )
@@ -1295,7 +1296,7 @@ class GameUI {
         return Container(
           width: 5,
           height: 20,
-          color: index < level ? GameColors.blue : GameColors.blue05,
+          color: index < level ? GameIsometricColors.blue : GameIsometricColors.blue05,
           margin: const EdgeInsets.only(right: 2),
         );
       }),
@@ -1324,7 +1325,7 @@ class GameUI {
     final width = height * goldenRatio_0618;
     return border(
           width: GameStyle.Player_Weapons_Border_Size,
-          color: GameColors.Red_3,
+          color: GameIsometricColors.Red_3,
           child: Container(
             width: width,
             height: height,
@@ -1342,7 +1343,7 @@ class GameUI {
                        return Container(
                          width: width,
                          height: height * percentage,
-                         color: GameColors.Red_3,
+                         color: GameIsometricColors.Red_3,
                        );
                     });
                   }),
@@ -1369,7 +1370,7 @@ class GameUI {
     final width = height * goldenRatio_0618;
     return border(
           width: GameStyle.Player_Weapons_Border_Size,
-          color: GameColors.yellow,
+          color: GameIsometricColors.yellow,
           child: Container(
             width: width,
             height: height,
@@ -1386,7 +1387,7 @@ class GameUI {
                        return Container(
                          width: width,
                          height: height * energy / max(energyMax, 1),
-                         color:  GameColors.yellow,
+                         color:  GameIsometricColors.yellow,
                        );
                     });
                   }),
@@ -1475,8 +1476,8 @@ class GameUI {
                width: 64,
                height: 64,
                decoration: buildDecorationBorder(
-                   colorBorder: outlineColor ?? GameColors.brown01,
-                   colorFill: GameColors.brown02,
+                   colorBorder: outlineColor ?? GameIsometricColors.brown01,
+                   colorFill: GameIsometricColors.brown02,
                    width: 2,
                ),
             ),
@@ -1500,7 +1501,7 @@ class GameUI {
                 buildDragTargetSlot(
                   index: gamestream.games.isometric.serverState.mapWatchBeltTypeToItemType(watchBeltType),
                   scale: 2.0,
-                  outlineColor: gamestream.games.isometric.serverState.mapWatchBeltTypeToItemType(watchBeltType) == equippedWeaponIndex ? GameColors.white : GameColors.brown02
+                  outlineColor: gamestream.games.isometric.serverState.mapWatchBeltTypeToItemType(watchBeltType) == equippedWeaponIndex ? GameIsometricColors.white : GameIsometricColors.brown02
                 ),),
               Positioned(
                 left: 5,
@@ -1615,7 +1616,7 @@ class GameUI {
             toolTip: "Tab",
             child: edit ? "PLAY" : "EDIT",
             action: gamestream.games.isometric.actions.actionToggleEdit,
-            color: GameColors.green,
+            color: GameIsometricColors.green,
             alignment: Alignment.center,
             width: 100);
       });
@@ -1640,7 +1641,7 @@ class GameUI {
                 alignment: Alignment.center,
                 child: "RESPAWN",
                 action: gamestream.network.sendClientRequestRevive,
-                color: GameColors.Red_3,
+                color: GameIsometricColors.Red_3,
                 width: width * Engine.GoldenRatio_0_618,
               )
             ],

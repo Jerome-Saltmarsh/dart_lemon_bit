@@ -4,6 +4,8 @@ import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/library.dart';
 
+import 'gamestream/games/isometric/game_isometric_colors.dart';
+
 
 class GameUIInteract {
   static const _width = 400;
@@ -41,7 +43,7 @@ class GameUIInteract {
     static Widget buildContainerCraft() => GameUI.buildDialog(
         dialogType: DialogType.Craft,
         child: Container(
-           color: GameColors.brownDark,
+           color: GameIsometricColors.brownDark,
           child: text("Craft"),
         ),
       );
@@ -74,7 +76,7 @@ class GameUIInteract {
             return Container(
               width: GameInventoryUI.Inventory_Width,
               height: 400,
-              color: GameColors.brownDark,
+              color: GameIsometricColors.brownDark,
               child: Stack(
                 children: [
                   buildStackSlotGrid(itemTypes.length + 12),
@@ -113,7 +115,7 @@ class GameUIInteract {
       Positioned(top: 55, left: 5, child: GameUI.buildDialog(
         dialogType: DialogType.Talk,
         child: Container(
-          color: GameColors.brownDark,
+          color: GameIsometricColors.brownDark,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

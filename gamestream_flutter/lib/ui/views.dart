@@ -1,6 +1,7 @@
 
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_colors.dart';
 import 'package:gamestream_flutter/gamestream/network/enums/connection_status.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
@@ -13,11 +14,11 @@ Widget buildErrorDialog(String message, {Widget? bottomRight}){
   return dialog(
       width: style.dialogWidthMedium,
       height: style.dialogHeightVerySmall,
-      color: GameColors.brownDark,
-      borderColor: GameColors.none,
+      color: GameIsometricColors.brownDark,
+      borderColor: GameIsometricColors.none,
       child: buildLayout(
           child: Center(
-            child: text(message, color: GameColors.white),
+            child: text(message, color: GameIsometricColors.white),
           ),
           bottomRight: bottomRight ?? text("okay", onPressed: () => WebsiteState.error.value = null)
       )
@@ -73,8 +74,8 @@ Widget watchAccount(Widget builder(Account? value)) {
 //             top: 10,
 //             child: Row(
 //               children: [
-//                 text("Sign in and subscribe", color: GameColors.green, underline: hovering, onPressed: website.actions.showDialogLogin),
-//                 text(" to unlock all games", color: GameColors.white618, onPressed: website.actions.showDialogLogin, underline: hovering),
+//                 text("Sign in and subscribe", color: GameIsometricColors.green, underline: hovering, onPressed: website.actions.showDialogLogin),
+//                 text(" to unlock all games", color: GameIsometricColors.white618, onPressed: website.actions.showDialogLogin, underline: hovering),
 //               ],
 //             ),
 //           );
@@ -85,7 +86,7 @@ Widget watchAccount(Widget builder(Account? value)) {
 //         return margin(
 //           top: 10,
 //           child: text("Premium",
-//               color: GameColors.green,
+//               color: GameIsometricColors.green,
 //               size: 18,
 //               onPressed: website.actions.showDialogAccount),
 //         );
@@ -95,17 +96,17 @@ Widget watchAccount(Widget builder(Account? value)) {
 //         return button(
 //             Row(
 //               children: [
-//                 text("Subscribe", color: GameColors.green, bold: true, size: 20),
+//                 text("Subscribe", color: GameIsometricColors.green, bold: true, size: 20),
 //                 onPressed(
 //                     child: text(" for \$9.99 per month to unlock all games",
-//                         color: GameColors.white80, size: 20),
+//                         color: GameIsometricColors.white80, size: 20),
 //                     action: AccountService.openStripeCheckout),
 //               ],
 //             ),
 //             AccountService.openStripeCheckout,
-//             fillColorMouseOver: GameColors.none,
-//             borderColor: GameColors.none,
-//             borderColorMouseOver: GameColors.white80);
+//             fillColorMouseOver: GameIsometricColors.none,
+//             borderColor: GameIsometricColors.none,
+//             borderColorMouseOver: GameIsometricColors.white80);
 //       }
 //
 //       if (account.subscriptionEnded) {
@@ -115,11 +116,11 @@ Widget watchAccount(Widget builder(Account? value)) {
 //               action: AccountService.openStripeCheckout,
 //               child: text(
 //                   "Your subscription expired on ${GameWebsite.formatDate(account.subscriptionEndDate!)}",
-//                   color: GameColors.red),
+//                   color: GameIsometricColors.red),
 //             ),
 //             width16,
-//             button(text("Renew", color: GameColors.green), AccountService.openStripeCheckout,
-//                 borderColor: GameColors.green),
+//             button(text("Renew", color: GameIsometricColors.green), AccountService.openStripeCheckout,
+//                 borderColor: GameIsometricColors.green),
 //           ],
 //         );
 //       }
@@ -129,7 +130,7 @@ Widget watchAccount(Widget builder(Account? value)) {
 //         if (subscriptionEndDate != null){
 //           return margin(
 //             top: 10,
-//               child:                   text("Premium subscription cancelled : ends ${GameWebsite.formatDate(subscriptionEndDate)}", color: GameColors.white618,
+//               child:                   text("Premium subscription cancelled : ends ${GameWebsite.formatDate(subscriptionEndDate)}", color: GameIsometricColors.white618,
 //                   onPressed: website.actions.showDialogAccount
 //               ));
 //         }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/language_utils.dart';
 
+import 'gamestream/games/isometric/game_isometric_colors.dart';
 import 'library.dart';
 
 class GameInventoryUI {
@@ -19,7 +20,7 @@ class GameInventoryUI {
         dialogType: DialogType.Inventory,
         child: Container(
           width: Inventory_Width,
-          color: GameColors.brownDark,
+          color: GameIsometricColors.brownDark,
           padding: const EdgeInsets.all(4),
           child: Column(
             children: [
@@ -113,7 +114,7 @@ class GameInventoryUI {
                   return Stack(
                     children: [
                       Container(color: Colors.white24, height: height, width: width),
-                      Container(color: GameColors.Blue_3, height: height, width: width * (energy / energyMax)),
+                      Container(color: GameIsometricColors.Blue_3, height: height, width: width * (energy / energyMax)),
                       Container(
                         padding: const EdgeInsets.all(6),
                         width: width,
@@ -152,7 +153,7 @@ class GameInventoryUI {
                   return Stack(
                     children: [
                       Container(color: Colors.white24, height: height, width: width),
-                      Container(color: GameColors.Red_3, height: height, width: width * (currentHealth / maxHealth)),
+                      Container(color: GameIsometricColors.Red_3, height: height, width: width * (currentHealth / maxHealth)),
                       Container(
                         padding: const EdgeInsets.all(6),
                         width: width,
@@ -217,7 +218,7 @@ class GameInventoryUI {
   static Widget buildWatchEquippedItemType(Watch<int> watchInt, int index) =>
    Container(
      alignment: Alignment.center,
-     width: 32 * Slot_Scale, height: 32 * Slot_Scale, color: GameColors.brown02,
+     width: 32 * Slot_Scale, height: 32 * Slot_Scale, color: GameIsometricColors.brown02,
       child: watch(watchInt, (int itemType) => buildDraggableItemIndex(itemIndex: index)),
    );
 
@@ -374,8 +375,8 @@ class GameInventoryUI {
          children.add(Row(
            mainAxisAlignment: MainAxisAlignment.spaceBetween,
            children: [
-             text("Damage", color: GameColors.blue),
-             text(total, color: GameColors.blue),
+             text("Damage", color: GameIsometricColors.blue),
+             text(total, color: GameIsometricColors.blue),
            ],
          ));
          children.add(height8);
@@ -441,8 +442,8 @@ class GameInventoryUI {
        children.add(Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          text("Health", color: GameColors.blue),
-          text(total, color: GameColors.blue),
+          text("Health", color: GameIsometricColors.blue),
+          text(total, color: GameIsometricColors.blue),
         ],
       ));
        children.add(height8);
@@ -482,8 +483,8 @@ class GameInventoryUI {
        children.add(Row(
          mainAxisAlignment: MainAxisAlignment.spaceBetween,
          children: [
-           text("Energy", color: GameColors.blue),
-           text(total, color: GameColors.blue),
+           text("Energy", color: GameIsometricColors.blue),
+           text(total, color: GameIsometricColors.blue),
          ],
        ));
        children.add(height8);
@@ -622,7 +623,7 @@ class GameInventoryUI {
                 children: [
                   GameUI.buildAtlasItemType(itemType),
                   width8,
-                  Expanded(child: text(ItemType.getName(itemType), color: GameColors.blue)),
+                  Expanded(child: text(ItemType.getName(itemType), color: GameIsometricColors.blue)),
                   if (itemTypeIsEquipped)
                     text("Equipped", color: Colors.white60),
                 ],
@@ -655,15 +656,15 @@ class GameInventoryUI {
               height16,
 
               if (gamestream.games.isometric.clientState.hoverDialogDialogIsTrade)
-                text("left click to buy", color: GameColors.inventoryHint),
+                text("left click to buy", color: GameIsometricColors.inventoryHint),
               if (gamestream.games.isometric.clientState.hoverDialogIsInventory && ItemType.isTypeEquippable(itemType))
-                text("left click to equip", color: GameColors.inventoryHint),
+                text("left click to equip", color: GameIsometricColors.inventoryHint),
               if (gamestream.games.isometric.clientState.hoverDialogIsInventory && ItemType.isFood(itemType))
-                text("left click to eat", color: GameColors.inventoryHint),
+                text("left click to eat", color: GameIsometricColors.inventoryHint),
               if (GamePlayer.interactModeTrading && gamestream.games.isometric.clientState.hoverDialogIsInventory)
-                text("right click to sell", color: GameColors.inventoryHint),
+                text("right click to sell", color: GameIsometricColors.inventoryHint),
               if (!GamePlayer.interactModeTrading && gamestream.games.isometric.clientState.hoverDialogIsInventory)
-                text("right click to drop", color: GameColors.inventoryHint),
+                text("right click to drop", color: GameIsometricColors.inventoryHint),
             ],
           ),
         ),
@@ -705,7 +706,7 @@ class GameInventoryUI {
   static Widget buildTableRow(dynamic key, dynamic value, {Color color = Colors.white70}) =>
     Container(
       padding: const EdgeInsets.all(5),
-      color: GameColors.white05,
+      color: GameIsometricColors.white05,
       margin: const EdgeInsets.only(bottom: 5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -725,7 +726,7 @@ class GameInventoryUI {
       final recipeItemType = recipe[i + 1];
       final recipeItemQuantityPossessed = gamestream.games.isometric.serverState.countItemTypeQuantityInPlayerPossession(recipeItemType);
       final sufficientQuantity = recipeItemQuantityPossessed >= recipeItemQuantityRequired;
-      final textColor = sufficientQuantity ? GameColors.green : GameColors.red;
+      final textColor = sufficientQuantity ? GameIsometricColors.green : GameIsometricColors.red;
        children.add(
            Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -760,7 +761,7 @@ class GameInventoryUI {
 
     return Container(
       padding: const EdgeInsets.all(8),
-      color: GameColors.brownLight,
+      color: GameIsometricColors.brownLight,
       constraints: BoxConstraints(
         minWidth: 450,
       ),
@@ -795,18 +796,18 @@ class GameInventoryUI {
   }
 
   static Color getValueColor(num value, {bool swap = false}){
-     if (value == 0) return  GameColors.white;
+     if (value == 0) return  GameIsometricColors.white;
      if (value < 0) {
        if (swap){
-         return GameColors.green;
+         return GameIsometricColors.green;
        }else {
-         return GameColors.red;
+         return GameIsometricColors.red;
        }
      }
      if (swap){
-       return GameColors.red;
+       return GameIsometricColors.red;
      }else {
-       return GameColors.green;
+       return GameIsometricColors.green;
      }
   }
 }

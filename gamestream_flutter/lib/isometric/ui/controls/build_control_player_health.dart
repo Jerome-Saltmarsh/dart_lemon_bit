@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_colors.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:golden_ratio/constants.dart';
 
@@ -26,12 +27,12 @@ Widget buildControlPlayerHealth() {
           alignment: Alignment.centerLeft,
           children: [
             Container(
-              color: GameColors.redDarkest,
+              color: GameIsometricColors.redDarkest,
               width: width,
               height: height,
             ),
             Container(
-              color: GameColors.red,
+              color: GameIsometricColors.red,
               width: width * percentage,
               height: height,
             ),

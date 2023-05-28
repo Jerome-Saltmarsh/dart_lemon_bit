@@ -9,6 +9,8 @@ import 'package:gamestream_flutter/website/widgets/region_column.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'gamestream/games/isometric/game_isometric_colors.dart';
+
 
 class GameWebsite {
   static final operationStatus = Watch(OperationStatus.None);
@@ -47,7 +49,7 @@ class GameWebsite {
 
    static Widget buildLoadingPage() =>
       Container(
-         color: GameColors.black,
+         color: GameIsometricColors.black,
          alignment: Alignment.center,
          child: text("LOADING GAMESTREAM"),
       );
@@ -74,7 +76,7 @@ class GameWebsite {
     final _width = 300.0;
     final _height = 50.0;
     return buildFullscreen(
-      color: GameColors.black,
+      color: GameIsometricColors.black,
       child: watch(GameWebsite.download, (double value) {
         value = 0.6182;
         return Row(
@@ -205,9 +207,9 @@ class GameWebsite {
                         margin: const EdgeInsets.only(right: 4),
                         child: Row(
                           children: [
-                            text("SQUIGITAL GAMES", color: GameColors.white, size: 35),
+                            text("SQUIGITAL GAMES", color: GameIsometricColors.white, size: 35),
                             // width4,
-                            // text("GAMES", color: GameColors.white85, size: 35),
+                            // text("GAMES", color: GameIsometricColors.white85, size: 35),
                           ],
                         )),
                   ],
@@ -234,7 +236,7 @@ class GameWebsite {
 
   static Widget buildPageConnectionStatus(String message) =>
       buildFullScreen(
-        child: text(message, color: GameColors.white80, align: TextAlign.center),
+        child: text(message, color: GameIsometricColors.white80, align: TextAlign.center),
       );
 
   static Widget buildFullScreen({required Widget child, Alignment alignment = Alignment.center}) =>

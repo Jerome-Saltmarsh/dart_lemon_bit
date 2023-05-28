@@ -2,6 +2,7 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_colors.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_constants.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_renderer.dart';
 
@@ -136,7 +137,7 @@ void renderCharacterTemplate(Character character, {
   final dstX = GameIsometricRenderer.convertV3ToRenderX(character);
   final dstY = GameIsometricRenderer.convertV3ToRenderY(character);
 
-  const Color_Invisible = GameColors.White38_Value;
+  const Color_Invisible = GameIsometricColors.White38_Value;
   final color = invisible ? Color_Invisible : gamestream.games.isometric.clientState.getV3RenderColor(character);
 
   if (invisible) {
