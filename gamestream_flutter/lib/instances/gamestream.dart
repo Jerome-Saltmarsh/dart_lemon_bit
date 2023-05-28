@@ -1,4 +1,4 @@
 
-import 'package:gamestream_flutter/classes/gamestream.dart';
+import 'package:gamestream_flutter/gamestream/gamestream.dart';
 
 final gamestream = Gamestream();

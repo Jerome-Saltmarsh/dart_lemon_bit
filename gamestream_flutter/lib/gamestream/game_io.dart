@@ -1,8 +1,8 @@
 
 import 'package:flutter/gestures.dart';
 
-import 'library.dart';
-import 'touch_controller.dart';
+import '../library.dart';
+import '../touch_controller.dart';
 
 
 class GameIO {

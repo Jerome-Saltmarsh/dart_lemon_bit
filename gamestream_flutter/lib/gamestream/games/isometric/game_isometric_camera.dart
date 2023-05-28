@@ -1,6 +1,6 @@
 import 'dart:math';
-import '../../library.dart';
 
+import 'package:gamestream_flutter/library.dart';
 
 class GameIsometricCamera {
   final chaseTargetEnabled = Watch(true);

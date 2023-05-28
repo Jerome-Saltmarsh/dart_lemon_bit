@@ -1,5 +1,5 @@
 
-import 'library.dart';
+import '../library.dart';
 
 class GameAnimation {
   var animationFrame = 0;
