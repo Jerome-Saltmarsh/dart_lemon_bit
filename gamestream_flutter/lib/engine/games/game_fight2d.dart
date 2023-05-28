@@ -6,28 +6,28 @@ import 'package:gamestream_flutter/library.dart';
 class GameFight2DPlayer {
   var x = 0.0;
   var y = 0.0;
+  var state = GameFight2DCharacterState.Idle;
 }
 
 class GameFight2D extends Game {
-  static final renderCharacterState = WatchBool(false);
-  static var playerEditMode = WatchBool(false);
-  static var playerState = GameFight2DCharacterState.Idle;
-  static var charactersTotal = 0;
+  final renderCharacterState = WatchBool(false);
+  var playerEditMode = WatchBool(false);
+  var charactersTotal = 0;
 
   static const length = 1000;
-  static final characterState = Uint8List(length);
-  static final characterDirection = Uint8List(length);
-  static final characterStateDuration = Uint8List(length);
-  static final characterPositionX = Float32List(length);
-  static final characterPositionY = Float32List(length);
+  final characterState = Uint8List(length);
+  final characterDirection = Uint8List(length);
+  final characterStateDuration = Uint8List(length);
+  final characterPositionX = Float32List(length);
+  final characterPositionY = Float32List(length);
 
-  static var sceneWidth = 0;
-  static var sceneHeight = 0;
-  static var sceneNodes = Uint8List(0);
+  var sceneWidth = 0;
+  var sceneHeight = 0;
+  var sceneNodes = Uint8List(0);
 
   final player = GameFight2DPlayer();
 
-  static int get sceneTotal => sceneWidth * sceneHeight;
+  int get sceneTotal => sceneWidth * sceneHeight;
 
   @override
   void drawCanvas(Canvas canvas, Size size) {

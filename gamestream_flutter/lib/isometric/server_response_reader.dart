@@ -144,20 +144,21 @@ class ServerResponseReader with ByteReader {
     final fight2DResponse = readByte();
     switch (fight2DResponse) {
       case Fight2DResponse.Characters:
-        readFight2DResponseCharacters();
+        readFight2DResponseCharacters(game);
         break;
       case Fight2DResponse.Player:
-        GameFight2D.playerState = readByte();
-        game.player.x = readInt16().toDouble();
-        game.player.y = readInt16().toDouble();
+        final player = game.player;
+        player.state = readByte();
+        player.x = readInt16().toDouble();
+        player.y = readInt16().toDouble();
         break;
       case Fight2DResponse.Event:
         readFight2DEvent();
         break;
       case Fight2DResponse.Scene:
-        GameFight2D.sceneWidth = readUInt16();
-        GameFight2D.sceneHeight = readUInt16();
-        GameFight2D.sceneNodes = readUint8List(GameFight2D.sceneTotal);
+        game.sceneWidth = readUInt16();
+        game.sceneHeight = readUInt16();
+        game.sceneNodes = readUint8List(game.sceneTotal);
         break;
       default:
         throw Exception('unknown fight2DResponse $fight2DResponse');
@@ -777,16 +778,16 @@ class ServerResponseReader with ByteReader {
      }
   }
 
-  void readFight2DResponseCharacters() {
+  void readFight2DResponseCharacters(GameFight2D game) {
     final totalPlayers = readUInt16();
     assert (totalPlayers < GameFight2D.length);
-    GameFight2D.charactersTotal = totalPlayers;
+    game.charactersTotal = totalPlayers;
     for (var i = 0; i < totalPlayers; i++) {
-      GameFight2D.characterState[i] = readByte();
-      GameFight2D.characterDirection[i] = readByte();
-      GameFight2D.characterPositionX[i] = readInt16().toDouble();
-      GameFight2D.characterPositionY[i] = readInt16().toDouble();
-      GameFight2D.characterStateDuration[i] = readByte();
+      game.characterState[i] = readByte();
+      game.characterDirection[i] = readByte();
+      game.characterPositionX[i] = readInt16().toDouble();
+      game.characterPositionY[i] = readInt16().toDouble();
+      game.characterStateDuration[i] = readByte();
     }
   }
 }
