@@ -1,12 +1,13 @@
 
 import 'package:file_picker/file_picker.dart';
+import 'package:gamestream_flutter/engine/instances.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class EditorActions {
 
 
   static void downloadScene() =>
-      GameNetwork.sendClientRequestEdit(EditRequest.Download);
+      gsEngine.network.sendClientRequestEdit(EditRequest.Download);
 
   static void uploadScene() async {
     final result = await FilePicker.platform.pickFiles(
@@ -24,8 +25,9 @@ class EditorActions {
       ClientActions.showMessage('contents == null');
       return;
     }
-    GameNetwork.uploadScene(contents);
+    gsEngine.network.uploadScene(contents);
   }
+
 
   static void toggleWindowEnabledScene(){
     EditorState.windowEnabledScene.value = !EditorState.windowEnabledScene.value;
@@ -41,7 +43,7 @@ class EditorActions {
   }
 
   static void generateScene() =>
-      GameNetwork.sendClientRequestEditGenerateScene(
+      gsEngine.network.sendClientRequestEditGenerateScene(
         rows: EditorState.generateRows.value,
         columns: EditorState.generateColumns.value,
         height: EditorState.generateHeight.value,

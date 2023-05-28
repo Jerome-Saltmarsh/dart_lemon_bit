@@ -2,23 +2,26 @@ import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-import 'engine/instances.dart';
 import 'library.dart';
 
 class GameNetwork {
-  static late WebSocketChannel webSocketChannel;
-  static late WebSocketSink sink;
-  static final updateBuffer = Uint8List(15);
-  static final connectionStatus = Watch(ConnectionStatus.None, onChanged: onChangedConnectionStatus);
-  static String connectionUri = "";
-  static DateTime? connectionEstablished;
+  late WebSocketChannel webSocketChannel;
+  late WebSocketSink sink;
+  final updateBuffer = Uint8List(15);
+  late final connectionStatus = Watch(ConnectionStatus.None, onChanged: gsEngine.network.onChangedConnectionStatus);
+  String connectionUri = "";
+  DateTime? connectionEstablished;
+
+  final GSEngine gsEngine;
+
+  GameNetwork(this.gsEngine);
 
   // GETTERS
-  static bool get connected => connectionStatus.value == ConnectionStatus.Connected;
-  static bool get connecting => connectionStatus.value == ConnectionStatus.Connecting;
+  bool get connected => connectionStatus.value == ConnectionStatus.Connected;
+  bool get connecting => connectionStatus.value == ConnectionStatus.Connecting;
 
   // FUNCTIONS
-  static void connectToRegion(ConnectionRegion region, String message) {
+  void connectToRegion(ConnectionRegion region, String message) {
     print("connectToRegion(${region.name}");
     if (region == ConnectionRegion.LocalHost) {
       connectToServer(GameNetworkConfig.wsLocalHost, message);
@@ -36,29 +39,29 @@ class GameNetwork {
     connectToServer(convertHttpToWSS(region.url), message);
   }
 
-  static void connectLocalHost({int port = 8080, required String message}) {
+  void connectLocalHost({int port = 8080, required String message}) {
     connectToServer('ws://localhost:$port', message);
   }
 
-  static void connectToServer(String uri, String message) {
+  void connectToServer(String uri, String message) {
     connect(uri: uri, message: '${ClientRequest.Join} $message');
   }
 
   static String convertHttpToWSS(String url, {String port = '8080'}) =>
       url.replaceAll("https", "wss") + "/:$port";
 
-  static void connectToGameEditor() => connectToGame(GameType.Editor);
+  void connectToGameEditor() => connectToGame(GameType.Editor);
 
-  static void connectToGameCombat() => connectToGame(GameType.Combat);
+  void connectToGameCombat() => connectToGame(GameType.Combat);
 
-  static void connectToGameRockPaperScissors() => connectToGame(GameType.Rock_Paper_Scissors);
+  void connectToGameRockPaperScissors() => connectToGame(GameType.Rock_Paper_Scissors);
 
-  static void connectToGameAeon() => connectToGame(GameType.Mobile_Aeon);
+  void connectToGameAeon() => connectToGame(GameType.Mobile_Aeon);
 
-  static void connectToGame(GameType gameType, [String message = ""]) =>
+  void connectToGame(GameType gameType, [String message = ""]) =>
       connectToRegion(GameWebsite.region.value, '${gameType.index} $message');
 
-  static Future sendClientRequestUpdate() async {
+  Future sendClientRequestUpdate() async {
     applyKeyboardInputToUpdateBuffer();
     GameIO.setCursorAction(CursorAction.None);
   }
@@ -71,7 +74,7 @@ class GameNetwork {
   /// [5] Mouse_Right
   /// [6] Shift
   /// [7] Space
-  static applyKeyboardInputToUpdateBuffer() {
+  applyKeyboardInputToUpdateBuffer() {
     updateBuffer[1] = GameIO.getInputAsByte();
     writeNumberToByteArray(number: GameIO.getCursorWorldX(), list: updateBuffer, index: 2);
     writeNumberToByteArray(number: GameIO.getCursorWorldY(), list: updateBuffer, index: 4);
@@ -82,7 +85,7 @@ class GameNetwork {
     sink.add(updateBuffer);
   }
 
-  static void connect({required String uri, required dynamic message}) {
+  void connect({required String uri, required dynamic message}) {
     print("webSocket.connect($uri)");
     connectionStatus.value = ConnectionStatus.Connecting;
     try {
@@ -112,7 +115,7 @@ class GameNetwork {
     }
   }
 
-  static void disconnect() {
+  void disconnect() {
     print('network.disconnect()');
     if (connected){
       sink.close();
@@ -120,9 +123,9 @@ class GameNetwork {
     connectionStatus.value = ConnectionStatus.None;
   }
 
-  static void sendIntList(List<int> values) => send(Uint8List.fromList(values));
+  void sendIntList(List<int> values) => send(Uint8List.fromList(values));
 
-  static void send(dynamic message) {
+  void send(dynamic message) {
     if (!connected) {
       print("warning cannot send because not connected");
       return;
@@ -130,13 +133,13 @@ class GameNetwork {
     sink.add(message);
   }
 
-  static void _onEvent(dynamic response) {
+  void _onEvent(dynamic response) {
     if (connecting) {
       connectionStatus.value = ConnectionStatus.Connected;
     }
 
     if (response is Uint8List) {
-      return serverResponseReader.read(response);
+      return serverResponseReader.read(response, gsEngine.gameFight2D);
     }
     if (response is String) {
       if (response.toLowerCase() == 'ping'){
@@ -150,12 +153,12 @@ class GameNetwork {
     throw Exception("cannot parse response: $response");
   }
 
-  static void _onError(Object error, StackTrace stackTrace) {
+  void _onError(Object error, StackTrace stackTrace) {
     print("network.onError()");
     // core.actions.setError(error.toString());
   }
 
-  static void _onDone() {
+  void _onDone() {
     print("network.onDone()");
 
     connectionUri = "";
@@ -167,7 +170,7 @@ class GameNetwork {
     sink.close();
   }
 
-  static void onChangedConnectionStatus(ConnectionStatus connection) {
+  void onChangedConnectionStatus(ConnectionStatus connection) {
     GameIO.removeListeners();
     Engine.onDrawForeground = null;
     serverResponseReader.bufferSizeTotal.value = 0;
@@ -224,66 +227,66 @@ class GameNetwork {
   }
 
 
-  static void sendRequestSpeak(String message){
+  void sendRequestSpeak(String message){
     if (message.trim().isEmpty) return;
     sendClientRequest(ClientRequest.Speak, message);
   }
 
-  static void sendClientRequestTeleport(){
+  void sendClientRequestTeleport(){
     sendClientRequest(ClientRequest.Teleport);
   }
 
-  static void sendClientRequestReload(){
+  void sendClientRequestReload(){
     sendClientRequest(ClientRequest.Reload);
   }
 
-  static void sendClientRequestTeleportScene(TeleportScenes scene){
+  void sendClientRequestTeleportScene(TeleportScenes scene){
     sendClientRequest(ClientRequest.Teleport_Scene, scene.index);
   }
 
-  static void sendClientRequestWeatherSetRain(int value){
+  void sendClientRequestWeatherSetRain(int value){
     sendClientRequest(ClientRequest.Weather_Set_Rain, value);
   }
 
-  static void sendClientRequestWeatherToggleBreeze(){
+  void sendClientRequestWeatherToggleBreeze(){
     sendClientRequest(ClientRequest.Weather_Toggle_Breeze);
   }
 
-  static void sendClientRequestWeatherSetWind(int windType){
+  void sendClientRequestWeatherSetWind(int windType){
     sendClientRequest(ClientRequest.Weather_Set_Wind, windType);
   }
 
-  static void sendClientRequestWeatherSetLightning(int value){
+  void sendClientRequestWeatherSetLightning(int value){
     sendClientRequest(ClientRequest.Weather_Set_Lightning, value);
   }
 
-  static void sendClientRequestEditorLoadGame(String name){
+  void sendClientRequestEditorLoadGame(String name){
     sendClientRequest(ClientRequest.Editor_Load_Game, name);
   }
 
-  static void uploadScene(List<int> bytes) {
+  void uploadScene(List<int> bytes) {
     final package = Uint8List(bytes.length + 1);
     package[0] = ClientRequest.Editor_Load_Scene;
     for (var i = 0; i < bytes.length; i++){
       package[i + 1] = bytes[i];
     }
-    GameNetwork.sink.add(package);
+    gsEngine.network.sink.add(package);
   }
 
-  static void sendClientRequestNpcSelectTopic(int index) =>
+  void sendClientRequestNpcSelectTopic(int index) =>
       sendClientRequest(ClientRequest.Npc_Talk_Select_Option, index);
 
-  static void sendClientRequestTimeSetHour(int hour){
+  void sendClientRequestTimeSetHour(int hour){
     assert(hour >= 0);
     assert(hour <= 24);
     sendClientRequest(ClientRequest.Time_Set_Hour, hour);
   }
 
-  static void sendClientRequestRevive(){
+  void sendClientRequestRevive(){
     sendClientRequest(ClientRequest.Revive);
   }
 
-  static void sendClientRequestSetBlock({
+  void sendClientRequestSetBlock({
     required int index,
     required int type,
     required int orientation,
@@ -293,7 +296,7 @@ class GameNetwork {
         '$index $type $orientation',
       );
 
-  static void sendClientRequestAddGameObject({
+  void sendClientRequestAddGameObject({
     required int index,
     required int type,
   }) =>
@@ -301,53 +304,53 @@ class GameNetwork {
       ClientRequest.GameObject, "${GameObjectRequest.Add.index} $index $type",
     );
 
-  static void sendClientRequestInventoryEquip(int index) {
+  void sendClientRequestInventoryEquip(int index) {
     sendClientRequest(
       ClientRequest.Inventory, "${InventoryRequest.Equip} $index",
     );
   }
 
-  static void sendClientRequestInventoryToggle() =>
+  void sendClientRequestInventoryToggle() =>
       sendClientRequest(
         ClientRequest.Inventory, "${InventoryRequest.Toggle}",
       );
 
 
-  static final unequipRequest = (){
+  final unequipRequest = (){
      final list = Uint8List(1);
      list[0] = ClientRequest.Unequip;
      return list;
   }();
 
-  static void sendClientRequestUnequip() =>
-      GameNetwork.send(unequipRequest);
+  void sendClientRequestUnequip() =>
+      gsEngine.network.send(unequipRequest);
 
-  static void sendClientRequestInventoryDrop(int index) =>
+  void sendClientRequestInventoryDrop(int index) =>
       sendClientRequest(
         ClientRequest.Inventory, "${InventoryRequest.Drop} $index",
       );
 
-  static void sendClientRequestInventoryUnequip(int index) =>
+  void sendClientRequestInventoryUnequip(int index) =>
       sendClientRequest(
         ClientRequest.Inventory, "${InventoryRequest.Unequip} $index",
       );
 
-  static void sendClientRequestInventoryBuy(int index) =>
+  void sendClientRequestInventoryBuy(int index) =>
       sendClientRequest(
         ClientRequest.Inventory, "${InventoryRequest.Buy} $index",
       );
 
-  static void sendClientRequestInventoryDeposit(int index) =>
+  void sendClientRequestInventoryDeposit(int index) =>
       sendClientRequest(
         ClientRequest.Inventory, "${InventoryRequest.Deposit} $index",
       );
 
-  static void sendClientRequestInventorySell(int index) =>
+  void sendClientRequestInventorySell(int index) =>
       sendClientRequest(
         ClientRequest.Inventory, "${InventoryRequest.Sell} $index",
       );
 
-  static void sendClientRequestInventoryMove({
+  void sendClientRequestInventoryMove({
     required int indexFrom,
     required int indexTo,
   }) =>
@@ -355,7 +358,7 @@ class GameNetwork {
         ClientRequest.Inventory, "${InventoryRequest.Move} $indexFrom $indexTo",
       );
 
-  static void sendClientRequestGameObjectTranslate({
+  void sendClientRequestGameObjectTranslate({
     required double tx,
     required double ty,
     required double tz,
@@ -366,34 +369,34 @@ class GameNetwork {
     );
   }
 
-  static void sendGameObjectRequestDuplicate() {
+  void sendGameObjectRequestDuplicate() {
     sendClientRequest(
       ClientRequest.GameObject,
       "${GameObjectRequest.Duplicate.index}",
     );
   }
 
-  static void sendGameObjectRequestSelect() {
+  void sendGameObjectRequestSelect() {
     sendGameObjectRequest(GameObjectRequest.Select);
   }
 
-  static void sendGameObjectRequestDeselect() {
+  void sendGameObjectRequestDeselect() {
     sendGameObjectRequest(GameObjectRequest.Deselect);
   }
 
-  static void sendGameObjectRequestDelete() {
+  void sendGameObjectRequestDelete() {
     sendGameObjectRequest(GameObjectRequest.Delete);
   }
 
-  static void sendRequestThrowGrenade() => sendClientRequest(ClientRequest.Player_Throw_Grenade);
+  void sendRequestThrowGrenade() => sendClientRequest(ClientRequest.Player_Throw_Grenade);
 
-  static void sendClientRequestModifyCanvasSize(RequestModifyCanvasSize request) =>
+  void sendClientRequestModifyCanvasSize(RequestModifyCanvasSize request) =>
       sendClientRequestEdit(EditRequest.Modify_Canvas_Size, request.index);
 
-  static void sendClientRequestEditSceneToggleUnderground() =>
+  void sendClientRequestEditSceneToggleUnderground() =>
       sendClientRequestEdit(EditRequest.Scene_Toggle_Underground);
 
-  static void sendClientRequestEditGenerateScene({
+  void sendClientRequestEditGenerateScene({
     required int rows,
     required int columns,
     required int height,
@@ -403,37 +406,37 @@ class GameNetwork {
       EditRequest.Generate_Scene, '$rows $columns $height $octaves $frequency'
   );
 
-  static void sendClientRequestEditSceneSetFloorTypeStone() =>
+  void sendClientRequestEditSceneSetFloorTypeStone() =>
       sendClientRequestEditSceneSetFloorType(NodeType.Concrete);
 
-  static void sendClientRequestEditSceneSetFloorType(int nodeType) =>
+  void sendClientRequestEditSceneSetFloorType(int nodeType) =>
       sendClientRequestEdit(EditRequest.Scene_Set_Floor_Type, nodeType);
 
-  static void sendClientRequestEdit(EditRequest request, [dynamic message = null]) =>
+  void sendClientRequestEdit(EditRequest request, [dynamic message = null]) =>
       sendClientRequest(ClientRequest.Edit, '${request.index} $message');
 
-  static void sendGameObjectRequestMoveToMouse() {
+  void sendGameObjectRequestMoveToMouse() {
     sendGameObjectRequest(GameObjectRequest.Move_To_Mouse);
   }
 
-  static void sendClientRequestSelectWeaponPrimary(int value) =>
+  void sendClientRequestSelectWeaponPrimary(int value) =>
       sendClientRequest(ClientRequest.Select_Weapon_Primary, value);
 
-  static void sendClientRequestSelectWeaponSecondary(int value) =>
+  void sendClientRequestSelectWeaponSecondary(int value) =>
       sendClientRequest(ClientRequest.Select_Weapon_Secondary, value);
 
-  static void sendGameObjectRequest(GameObjectRequest request, [dynamic message]) {
+  void sendGameObjectRequest(GameObjectRequest request, [dynamic message]) {
     if (message != null){
       sendClientRequest(ClientRequest.GameObject, '${request.index} $message');
     }
     sendClientRequest(ClientRequest.GameObject, request.index);
   }
 
-  static void sendClientRequest(int value, [dynamic message]){
+  void sendClientRequest(int value, [dynamic message]){
     if (message != null){
-      return GameNetwork.send('${value} $message');
+      return gsEngine.network.send('${value} $message');
     }
-    GameNetwork.send(value);
+    gsEngine.network.send(value);
   }
 }
 

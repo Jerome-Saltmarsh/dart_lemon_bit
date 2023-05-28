@@ -2,6 +2,7 @@
 import 'dart:ui';
 
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:gamestream_flutter/engine/instances.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/touch_controller.dart';
 
@@ -34,7 +35,7 @@ class GameCombat extends Game {
   @override
   void update() {
     if (!ServerState.gameRunning.value) {
-      GameNetwork.sendClientRequestUpdate();
+      gsEngine.network.sendClientRequestUpdate();
       return;
     }
     GameState.updateTorchEmissionIntensity();
@@ -46,7 +47,7 @@ class GameCombat extends Game {
     ClientState.update();
     GameState.updatePlayerMessageTimer();
     GameIO.readPlayerInput();
-    GameNetwork.sendClientRequestUpdate();
+    gsEngine.network.sendClientRequestUpdate();
   }
 
   @override

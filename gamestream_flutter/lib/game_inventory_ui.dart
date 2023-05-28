@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/language_utils.dart';
 
+import 'engine/instances.dart';
 import 'library.dart';
 
 class GameInventoryUI {
@@ -353,7 +354,7 @@ class GameInventoryUI {
           onWillAccept: (int? index) => index != null,
           onAccept: (int? indexFrom){
             if (indexFrom == null) return;
-            GameNetwork.sendClientRequestInventoryMove(
+            gsEngine.network.sendClientRequestInventoryMove(
               indexFrom: indexFrom,
               indexTo: index,
             );

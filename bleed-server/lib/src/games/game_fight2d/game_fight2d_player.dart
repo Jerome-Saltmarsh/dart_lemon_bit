@@ -8,6 +8,7 @@ import 'package:bleed_server/src/classes/src/player.dart';
 class GameFight2DPlayer extends Player with GameFight2DCharacter {
 
   late GameFight2D game;
+  var editMode = false;
 
   /// constructor
   GameFight2DPlayer(this.game);

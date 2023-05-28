@@ -1,8 +1,8 @@
 
-import 'game_network.dart';
+import 'engine/instances.dart';
 
 class GameNetworkRequest {
   static void sinkMessage(dynamic message) {
-    GameNetwork.sink.add(message);
+    gsEngine.network.sink.add(message);
   }
 }

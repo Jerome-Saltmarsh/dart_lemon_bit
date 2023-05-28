@@ -18,7 +18,7 @@ class ServerResponseReader with ByteReader {
 
   var previousServerResponse = -1;
 
-  void read(Uint8List values) {
+  void read(Uint8List values, GameFight2D gameFight2D) {
     assert (values.isNotEmpty);
     updateFrame.value++;
     index = 0;
@@ -109,7 +109,7 @@ class ServerResponseReader with ByteReader {
           }
           break;
         case ServerResponse.Fight2D:
-          readServerResponseFight2D();
+          readServerResponseFight2D(gsEngine.gameFight2D);
           break;
         case ServerResponse.High_Score:
           ServerState.highScore.value = readUInt24();
@@ -140,7 +140,7 @@ class ServerResponseReader with ByteReader {
     }
   }
 
-  void readServerResponseFight2D() {
+  void readServerResponseFight2D(GameFight2D game) {
     final fight2DResponse = readByte();
     switch (fight2DResponse) {
       case Fight2DResponse.Characters:
@@ -148,8 +148,8 @@ class ServerResponseReader with ByteReader {
         break;
       case Fight2DResponse.Player:
         GameFight2D.playerState = readByte();
-        GameFight2D.playerX = readInt16().toDouble();
-        GameFight2D.playerY = readInt16().toDouble();
+        game.player.x = readInt16().toDouble();
+        game.player.y = readInt16().toDouble();
         break;
       case Fight2DResponse.Event:
         readFight2DEvent();

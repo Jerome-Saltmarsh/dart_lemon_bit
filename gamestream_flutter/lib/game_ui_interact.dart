@@ -4,6 +4,8 @@ import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/library.dart';
 
+import 'engine/instances.dart';
+
 
 class GameUIInteract {
   static const _width = 400;
@@ -68,7 +70,7 @@ class GameUIInteract {
           },
           onAccept: (int? data){
             if (data == null) return;
-            GameNetwork.sendClientRequestInventorySell(data);
+            gsEngine.network.sendClientRequestInventorySell(data);
           },
           builder: (context, data, rejected){
             return Container(
@@ -145,7 +147,7 @@ class GameUIInteract {
                 width: _width,
                 alignment: Alignment.center,
                 action: () {
-                  GameNetwork.sendClientRequestNpcSelectTopic(topics.indexOf(value));
+                  gsEngine.network.sendClientRequestNpcSelectTopic(topics.indexOf(value));
                 }
             );
           }).toList(),
@@ -167,12 +169,12 @@ class GameUIInteract {
                    feedback: GameUI.buildAtlasItemType(itemTypes[i]),
                    onDraggableCanceled: (Velocity velocity, Offset offset){
                      if (ClientState.hoverDialogIsInventory) return;
-                     GameNetwork.sendClientRequestInventoryBuy(i);
+                     gsEngine.network.sendClientRequestInventoryBuy(i);
                    },
                    child: onPressed(
                          child: GameInventoryUI.buildPressableItemIndex(itemIndex: i, itemType: itemTypes[i]),
-                         action: () => GameNetwork.sendClientRequestInventoryBuy(i),
-                         onRightClick: () => GameNetwork.sendClientRequestInventoryBuy(i),
+                         action: () => gsEngine.network.sendClientRequestInventoryBuy(i),
+                         onRightClick: () => gsEngine.network.sendClientRequestInventoryBuy(i),
                      ),
                    ),
                  ),

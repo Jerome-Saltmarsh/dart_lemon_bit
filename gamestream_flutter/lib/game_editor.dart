@@ -1,5 +1,7 @@
 import 'package:gamestream_flutter/library.dart';
 
+import 'engine/instances.dart';
+
 class GameEditor {
   static final editorDialog = Watch<EditorDialog?>(null, onChanged: onChangedEditorDialog);
   static final selectedSceneName = Watch<String?>(null);
@@ -75,12 +77,12 @@ class GameEditor {
   }
 
   static void deselectGameObject() {
-    GameNetwork.sendGameObjectRequestDeselect();
+    gsEngine.network.sendGameObjectRequestDeselect();
   }
 
   static void translate({ double x = 0, double y = 0, double z = 0}){
     assert (gameObjectSelected.value);
-    return GameNetwork.sendClientRequestGameObjectTranslate(
+    return gsEngine.network.sendClientRequestGameObjectTranslate(
       tx: x,
       ty: y,
       tz: z,
@@ -109,7 +111,7 @@ class GameEditor {
   }
 
   static void selectMouseGameObject(){
-    GameNetwork.sendGameObjectRequestSelect();
+    gsEngine.network.sendGameObjectRequestSelect();
   }
 
   static void paintTorch(){
@@ -141,7 +143,7 @@ class GameEditor {
   }
 
   static void deleteGameObjectSelected(){
-    GameNetwork.sendGameObjectRequestDelete();
+    gsEngine.network.sendGameObjectRequestDelete();
   }
 
   static void cameraCenterSelectedObject() =>
@@ -157,7 +159,7 @@ class GameEditor {
   }
 
   static void setNodeType(int type, int orientation) =>
-      GameNetwork.sendClientRequestSetBlock(
+      gsEngine.network.sendClientRequestSetBlock(
         index: nodeSelectedIndex.value,
         type: type,
         orientation: orientation,
@@ -167,7 +169,7 @@ class GameEditor {
     final nodeIndex = nodeSelectedIndex.value;
     if (nodeIndex <= GameNodes.area) return;
     final nodeIndexBelow = nodeIndex - GameNodes.area;
-    GameNetwork.sendClientRequestSetBlock(
+    gsEngine.network.sendClientRequestSetBlock(
       index: nodeSelectedIndex.value,
       type: GameNodes.nodeTypes[nodeIndexBelow],
       orientation: GameNodes.nodeOrientations[nodeIndexBelow],
@@ -196,7 +198,7 @@ class GameEditor {
       orientation = NodeType.getDefaultOrientation(nodeType);
     }
 
-    return GameNetwork.sendClientRequestSetBlock(
+    return gsEngine.network.sendClientRequestSetBlock(
         index: nodeSelectedIndex.value,
         type: nodeType,
         orientation: orientation,
@@ -219,7 +221,7 @@ class GameEditor {
   }
 
   static void actionAddGameObject(int type) =>
-      GameNetwork.sendClientRequestAddGameObject(
+      gsEngine.network.sendClientRequestAddGameObject(
         index: GameEditor.nodeSelectedIndex.value,
         type: type,
       );

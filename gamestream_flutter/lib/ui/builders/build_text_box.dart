@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/engine/instances.dart';
 import 'package:gamestream_flutter/library.dart';
 
 
@@ -58,6 +59,6 @@ Widget buildPanelWriteMessage() {
 }
 
 void sendAndCloseTextBox(){
-  GameNetwork.sendRequestSpeak(GameUI.textEditingControllerMessage.text);
+  gsEngine.network.sendRequestSpeak(GameUI.textEditingControllerMessage.text);
   GameActions.messageBoxHide();
 }

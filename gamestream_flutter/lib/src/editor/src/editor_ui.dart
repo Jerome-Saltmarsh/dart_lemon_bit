@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:gamestream_flutter/engine/instances.dart';
 import 'package:gamestream_flutter/isometric/ui/columns/build_column_selected_node.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_editor_dialog.dart';
@@ -174,70 +175,70 @@ class EditorUI {
                     buildPositionedIconButton(
                        top: 0,
                        left: 0,
-                       action: () => GameNetwork.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Add_Row_Start),
+                       action: () => gsEngine.network.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Add_Row_Start),
                        iconType: IconType.Plus,
                        hint: "Add Row",
                     ),
                     buildPositionedIconButton(
                       top: 0,
                       left: 40,
-                      action: () => GameNetwork.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Remove_Row_Start),
+                      action: () => gsEngine.network.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Remove_Row_Start),
                       iconType: IconType.Minus,
                       hint: "Remove Row",
                     ),
                     buildPositionedIconButton(
                       top: 0,
                       left: 150,
-                      action: () => GameNetwork.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Add_Column_Start),
+                      action: () => gsEngine.network.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Add_Column_Start),
                       iconType: IconType.Plus,
                       hint: "Add Column",
                     ),
                     buildPositionedIconButton(
                       top: 20,
                       left: 160,
-                      action: () => GameNetwork.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Remove_Column_Start),
+                      action: () => gsEngine.network.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Remove_Column_Start),
                       iconType: IconType.Minus,
                       hint: "Remove Column",
                     ),
                     buildPositionedIconButton(
                       top: 160,
                       left: 120,
-                      action: () => GameNetwork.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Remove_Row_End),
+                      action: () => gsEngine.network.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Remove_Row_End),
                       iconType: IconType.Minus,
                       hint: "Remove Row",
                     ),
                     buildPositionedIconButton(
                       top: 160,
                       left: 160,
-                      action: () => GameNetwork.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Add_Row_End),
+                      action: () => gsEngine.network.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Add_Row_End),
                       iconType: IconType.Plus,
                       hint: "Add Row",
                     ),
                     buildPositionedIconButton(
                       top: 140,
                       left: 0,
-                      action: () => GameNetwork.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Add_Column_End),
+                      action: () => gsEngine.network.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Add_Column_End),
                       iconType: IconType.Plus,
                       hint: "Add Column",
                     ),
                     buildPositionedIconButton(
                       top: 140,
                       left: 40,
-                      action: () => GameNetwork.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Remove_Column_End),
+                      action: () => gsEngine.network.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Remove_Column_End),
                       iconType: IconType.Minus,
                       hint: "Remove Column",
                     ),
                     buildPositionedIconButton(
                       top: 80,
                       left: 60,
-                      action: () => GameNetwork.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Add_Z),
+                      action: () => gsEngine.network.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Add_Z),
                       iconType: IconType.Plus,
                       hint: "Add Z",
                     ),
                     buildPositionedIconButton(
                       top: 80,
                       left: 100,
-                      action: () => GameNetwork.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Remove_Z),
+                      action: () => gsEngine.network.sendClientRequestModifyCanvasSize(RequestModifyCanvasSize.Remove_Z),
                       iconType: IconType.Minus,
                       hint: "Remove Z",
                     ),
@@ -335,7 +336,7 @@ class EditorUI {
                 ),
                 height16,
                 onPressed(
-                  action: GameNetwork.sendClientRequestEditSceneToggleUnderground,
+                  action: gsEngine.network.sendClientRequestEditSceneToggleUnderground,
                   child: Container(
                     color: Colors.white12,
                     padding: const EdgeInsets.all(5),
@@ -350,7 +351,7 @@ class EditorUI {
                 ),
                 height8,
                 onPressed(
-                  action: GameNetwork.sendClientRequestEditSceneSetFloorTypeStone,
+                  action: gsEngine.network.sendClientRequestEditSceneSetFloorTypeStone,
                   child: Container(
                     color: Colors.white12,
                     padding: const EdgeInsets.all(5),
@@ -417,7 +418,7 @@ class EditorUI {
               srcHeight: AtlasItems.getSrcHeight(gameObjectType),
               color: color,
               action: () =>
-                  GameNetwork.sendClientRequestAddGameObject(
+                  gsEngine.network.sendClientRequestAddGameObject(
                     index: GameEditor.nodeSelectedIndex.value,
                     type: gameObjectType,
                   )),
@@ -475,7 +476,7 @@ class EditorUI {
       ServerState.rainType,
       (int activeRain) => buildIconWeatherControl(
             tooltip: '${RainType.getName(rain)} Rain',
-            action: () => GameNetwork.sendClientRequestWeatherSetRain(rain),
+            action: () => gsEngine.network.sendClientRequestWeatherSetRain(rain),
             icon: GameUI.buildAtlasIconType(convertRainToIconType(rain)),
             isActive: rain == activeRain,
           ));
@@ -485,7 +486,7 @@ class EditorUI {
       (int activeLightning) => buildIconWeatherControl(
             tooltip: '${LightningType.getName(lightning)} Lightning',
             action: () =>
-                GameNetwork.sendClientRequestWeatherSetLightning(lightning),
+                gsEngine.network.sendClientRequestWeatherSetLightning(lightning),
             icon: GameUI.buildAtlasIconType(
                 convertLightningToIconType(lightning)),
             isActive: lightning == activeLightning,
@@ -495,7 +496,7 @@ class EditorUI {
       ServerState.windTypeAmbient,
       (int activeWindType) => buildIconWeatherControl(
             tooltip: '${WindType.getName(windType)} Wind',
-            action: () => GameNetwork.sendClientRequestWeatherSetWind(windType),
+            action: () => gsEngine.network.sendClientRequestWeatherSetWind(windType),
             icon: GameUI.buildAtlasIconType(convertWindToIconType(windType)),
             isActive: windType == activeWindType,
           ));
@@ -576,7 +577,7 @@ class EditorUI {
             child: container(
               width: buttonWidth,
               color: purple4,
-              action: () => GameNetwork.sendClientRequestTimeSetHour(i),
+              action: () => gsEngine.network.sendClientRequestTimeSetHour(i),
             ),
           ),
         );
@@ -588,7 +589,7 @@ class EditorUI {
             child: container(
               width: buttonWidth,
               color: purple3,
-              action: () => GameNetwork.sendClientRequestTimeSetHour(i),
+              action: () => gsEngine.network.sendClientRequestTimeSetHour(i),
             ),
           ),
         );
@@ -691,7 +692,7 @@ class EditorUI {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             watch(ServerState.gameRunning, (gameRunning) {
-              return text("Game Running: $gameRunning", onPressed: () => GameNetwork.sendClientRequestEdit(EditRequest.Toggle_Game_Running));
+              return text("Game Running: $gameRunning", onPressed: () => gsEngine.network.sendClientRequestEdit(EditRequest.Toggle_Game_Running));
             }),
             text ("Reset", onPressed: ServerActions.editSceneReset),
             text("Spawn AI", onPressed: ServerActions.editSceneSpawnAI),
@@ -720,7 +721,7 @@ class EditorUI {
       hint: NodeOrientation.getName(orientation),
       action: () {
         GameEditor.paintOrientation.value = orientation;
-        GameNetwork.sendClientRequestSetBlock(
+        gsEngine.network.sendClientRequestSetBlock(
           index: GameEditor.nodeSelectedIndex.value,
           type: GameEditor.nodeSelectedType.value,
           orientation: orientation,
@@ -935,7 +936,7 @@ class EditorUI {
             indexX = row;
             indexY = column;
             if (row == 0 && column == 2){
-              GameNetwork.sendClientRequestSetBlock(
+              gsEngine.network.sendClientRequestSetBlock(
                 index: GameEditor.nodeSelectedIndex.value,
                 type: GameEditor.nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Top_Left,
@@ -943,7 +944,7 @@ class EditorUI {
               return;
             }
             if (row == 0 && column == 1){
-              GameNetwork.sendClientRequestSetBlock(
+              gsEngine.network.sendClientRequestSetBlock(
                 index: GameEditor.nodeSelectedIndex.value,
                 type: GameEditor.nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Top_Center,
@@ -951,7 +952,7 @@ class EditorUI {
               return;
             }
             if (row == 0 && column == 0){
-              GameNetwork.sendClientRequestSetBlock(
+              gsEngine.network.sendClientRequestSetBlock(
                 index: GameEditor.nodeSelectedIndex.value,
                 type: GameEditor.nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Top_Right,
@@ -960,7 +961,7 @@ class EditorUI {
             }
 
             if (row == 1 && column == 2){
-              GameNetwork.sendClientRequestSetBlock(
+              gsEngine.network.sendClientRequestSetBlock(
                 index: GameEditor.nodeSelectedIndex.value,
                 type: GameEditor.nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Center_Left,
@@ -968,7 +969,7 @@ class EditorUI {
               return;
             }
             if (row == 1 && column == 1){
-              GameNetwork.sendClientRequestSetBlock(
+              gsEngine.network.sendClientRequestSetBlock(
                 index: GameEditor.nodeSelectedIndex.value,
                 type: GameEditor.nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Center_Center,
@@ -976,7 +977,7 @@ class EditorUI {
               return;
             }
             if (row == 1 && column == 0){
-              GameNetwork.sendClientRequestSetBlock(
+              gsEngine.network.sendClientRequestSetBlock(
                 index: GameEditor.nodeSelectedIndex.value,
                 type: GameEditor.nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Center_Right,
@@ -985,7 +986,7 @@ class EditorUI {
             }
 
             if (row == 2 && column == 2){
-              GameNetwork.sendClientRequestSetBlock(
+              gsEngine.network.sendClientRequestSetBlock(
                 index: GameEditor.nodeSelectedIndex.value,
                 type: GameEditor.nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Bottom_Left,
@@ -993,7 +994,7 @@ class EditorUI {
               return;
             }
             if (row == 2 && column == 1){
-              GameNetwork.sendClientRequestSetBlock(
+              gsEngine.network.sendClientRequestSetBlock(
                 index: GameEditor.nodeSelectedIndex.value,
                 type: GameEditor.nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Bottom_Center,
@@ -1001,7 +1002,7 @@ class EditorUI {
               return;
             }
             if (row == 2 && column == 0){
-              GameNetwork.sendClientRequestSetBlock(
+              gsEngine.network.sendClientRequestSetBlock(
                 index: GameEditor.nodeSelectedIndex.value,
                 type: GameEditor.nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Bottom_Right,
@@ -1049,7 +1050,7 @@ class EditorUI {
                   children: [
                     Container(
                         alignment: Alignment.centerRight,
-                        child: text("X", onPressed: GameNetwork.sendGameObjectRequestDeselect),
+                        child: text("X", onPressed: gsEngine.network.sendGameObjectRequestDeselect),
                     ),
                     Container(
                         constraints: BoxConstraints(
@@ -1063,13 +1064,13 @@ class EditorUI {
                       children: [
                         text(ItemType.getName(type), size: 22),
                         width8,
-                        text("Duplicate", onPressed: GameNetwork.sendGameObjectRequestDuplicate)
+                        text("Duplicate", onPressed: gsEngine.network.sendGameObjectRequestDuplicate)
                       ],
                     ),
                     height8,
                     watch(GameEditor.gameObjectSelectedCollidable, (bool enabled) =>
                       onPressed(
-                        action: () => GameNetwork.sendGameObjectRequest(GameObjectRequest.Toggle_Strikable),
+                        action: () => gsEngine.network.sendGameObjectRequest(GameObjectRequest.Toggle_Strikable),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -1081,7 +1082,7 @@ class EditorUI {
                     ),
                     watch(GameEditor.gameObjectSelectedGravity, (bool enabled) =>
                         onPressed(
-                          action: () => GameNetwork.sendGameObjectRequest(GameObjectRequest.Toggle_Gravity),
+                          action: () => gsEngine.network.sendGameObjectRequest(GameObjectRequest.Toggle_Gravity),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -1093,7 +1094,7 @@ class EditorUI {
                     ),
                     watch(GameEditor.gameObjectSelectedFixed, (bool enabled) =>
                         onPressed(
-                          action: () => GameNetwork.sendGameObjectRequest(GameObjectRequest.Toggle_Fixed),
+                          action: () => gsEngine.network.sendGameObjectRequest(GameObjectRequest.Toggle_Fixed),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -1105,7 +1106,7 @@ class EditorUI {
                     ),
                     watch(GameEditor.gameObjectSelectedCollectable, (bool enabled) =>
                         onPressed(
-                          action: () => GameNetwork.sendGameObjectRequest(GameObjectRequest.Toggle_Collectable),
+                          action: () => gsEngine.network.sendGameObjectRequest(GameObjectRequest.Toggle_Collectable),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -1117,7 +1118,7 @@ class EditorUI {
                     ),
                     watch(GameEditor.gameObjectSelectedPhysical, (bool enabled) =>
                         onPressed(
-                          action: () => GameNetwork.sendGameObjectRequest(GameObjectRequest.Toggle_Physical),
+                          action: () => gsEngine.network.sendGameObjectRequest(GameObjectRequest.Toggle_Physical),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -1129,7 +1130,7 @@ class EditorUI {
                     ),
                     watch(GameEditor.gameObjectSelectedPersistable, (bool enabled) =>
                         onPressed(
-                          action: () => GameNetwork.sendGameObjectRequest(GameObjectRequest.Toggle_Persistable),
+                          action: () => gsEngine.network.sendGameObjectRequest(GameObjectRequest.Toggle_Persistable),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [

@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/engine/instances.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class GameScissorsPaperRock {
@@ -75,7 +76,7 @@ class GameScissorsPaperRock {
   }
 
   static Widget buildUI(BuildContext context){
-    return onPressed(child: text("EXIT"), action: GameNetwork.disconnect);
+    return onPressed(child: text("EXIT"), action: gsEngine.network.disconnect);
   }
 }
 

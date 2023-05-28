@@ -14,6 +14,14 @@ class GSEngine {
    late final game = Watch<Game>(gameWebsite, onChanged: _onChangedGame);
    late final gameWebsite = gw.GameWebsite();
 
+   late final GameNetwork network;
+   final gameFight2D = GameFight2D();
+   final gameCube3D = GameCube3D();
+
+  GSEngine() {
+    network = GameNetwork(this);
+  }
+
    Future init(SharedPreferences sharedPreferences) async {
      print("environment: ${Engine.isLocalHost ? 'localhost' : 'production'}");
 
@@ -80,7 +88,7 @@ class GSEngine {
      print("_onChangedGameType(${value.name})");
      game.value = switch (value) {
        GameType.Website => gameWebsite,
-       GameType.Fight2D => GameFight2D(),
+       GameType.Fight2D => gameFight2D,
        GameType.Combat => GameCombat(),
        GameType.Cube3D => GameCube3D(),
        GameType.Aeon => GameAeon(),
@@ -104,14 +112,14 @@ class GSEngine {
         this.gameType.value = gameType;
         return;
       }
-      GameNetwork.connectToGame(gameType);
+      network.connectToGame(gameType);
    }
 
    void disconnect(){
       if (gameType.value.isSinglePlayer){
         gameType.value = GameType.Website;
       } else {
-        GameNetwork.disconnect();
+        network.disconnect();
       }
    }
 }

@@ -1,13 +1,15 @@
 
 import 'package:gamestream_flutter/library.dart';
 
+import 'engine/instances.dart';
+
 class GameActions {
 
 
   static void loadSelectedSceneName(){
     final sceneName = GameEditor.selectedSceneName.value;
     if (sceneName == null) throw Exception("loadSelectedSceneNameException: selected scene name is null");
-    GameNetwork.sendClientRequestEditorLoadGame(sceneName);
+    gsEngine.network.sendClientRequestEditorLoadGame(sceneName);
     GameEditor.actionGameDialogClose();
   }
 
@@ -165,19 +167,19 @@ class GameActions {
   }
 
   static void selectAttributeHealth() =>
-      GameNetwork.sendClientRequest(
+      gsEngine.network.sendClientRequest(
           ClientRequest.Select_Attribute,
           CharacterAttribute.Health,
       );
 
   static void selectAttributeDamage() =>
-      GameNetwork.sendClientRequest(
+      gsEngine.network.sendClientRequest(
         ClientRequest.Select_Attribute,
         CharacterAttribute.Damage,
       );
 
   static void selectAttributeMagic() =>
-      GameNetwork.sendClientRequest(
+      gsEngine.network.sendClientRequest(
         ClientRequest.Select_Attribute,
         CharacterAttribute.Magic,
       );

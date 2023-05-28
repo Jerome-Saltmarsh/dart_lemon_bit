@@ -1,5 +1,6 @@
 
 import 'package:flutter/cupertino.dart';
+import 'package:gamestream_flutter/engine/instances.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class ClientEvents {
@@ -36,25 +37,25 @@ class ClientEvents {
 
   static void onItemIndexPrimary(int itemIndex) {
     if (ClientState.hoverDialogDialogIsTrade){
-      GameNetwork.sendClientRequestInventoryBuy(itemIndex);
+      gsEngine.network.sendClientRequestInventoryBuy(itemIndex);
       return;
     }
-     GameNetwork.sendClientRequestInventoryEquip(itemIndex);
+    gsEngine.network.sendClientRequestInventoryEquip(itemIndex);
   }
 
   static void onItemIndexSecondary(int itemIndex){
     if (ClientState.hoverDialogDialogIsTrade){
-      GameNetwork.sendClientRequestInventoryBuy(itemIndex);
+      gsEngine.network.sendClientRequestInventoryBuy(itemIndex);
       return;
     }
     GamePlayer.interactModeTrading
-        ? GameNetwork.sendClientRequestInventorySell(itemIndex)
-        : GameNetwork.sendClientRequestInventoryDrop(itemIndex);
+        ? gsEngine.network.sendClientRequestInventorySell(itemIndex)
+        : gsEngine.network.sendClientRequestInventoryDrop(itemIndex);
   }
 
   static void onDragAcceptEquippedItemContainer(int? i){
     if (i == null) return;
-    GameNetwork.sendClientRequestInventoryEquip(i);
+    gsEngine.network.sendClientRequestInventoryEquip(i);
   }
 
   static void onDragCancelled(Velocity velocity, Offset offset){
@@ -95,14 +96,14 @@ class ClientEvents {
 
     switch (key){
       case ClientConstants.Key_Duplicate:
-        GameNetwork.sendGameObjectRequestDuplicate();
+        gsEngine.network.sendGameObjectRequestDuplicate();
         break;
       case KeyCode.F:
         GameEditor.paint();
         break;
       case KeyCode.G:
         if (GameEditor.gameObjectSelected.value) {
-          GameNetwork.sendGameObjectRequestMoveToMouse();
+          gsEngine.network.sendGameObjectRequestMoveToMouse();
         } else {
           GameCamera.cameraSetPositionGrid(GameEditor.row, GameEditor.column, GameEditor.z);
         }
@@ -161,12 +162,12 @@ class ClientEvents {
     }
 
     if (key == ClientConstants.Key_Suicide) {
-      GameNetwork.sendClientRequest(ClientRequest.Suicide);
+      gsEngine.network.sendClientRequest(ClientRequest.Suicide);
       return;
     }
 
     if (key == KeyCode.Enter) {
-      GameNetwork.sendClientRequest(ClientRequest.Suicide);
+      gsEngine.network.sendClientRequest(ClientRequest.Suicide);
       return;
     }
 
@@ -192,7 +193,7 @@ class ClientEvents {
 
   static void onAcceptDragInventoryIcon(){
      if (ClientState.dragStart.value == -1) return;
-     GameNetwork.sendClientRequestInventoryDeposit(ClientState.dragStart.value);
+     gsEngine.network.sendClientRequestInventoryDeposit(ClientState.dragStart.value);
   }
 
   static void onChangedMessageStatus(String value){

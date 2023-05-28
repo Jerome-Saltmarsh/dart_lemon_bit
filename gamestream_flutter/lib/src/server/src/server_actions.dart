@@ -1,39 +1,40 @@
 
+import 'package:gamestream_flutter/engine/instances.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class ServerActions {
 
   static void dropEquippedWeapon() =>
-     GameNetwork.sendClientRequestInventoryDrop(ItemType.Equipped_Weapon);
+      gsEngine.network.sendClientRequestInventoryDrop(ItemType.Equipped_Weapon);
 
   static void equipWatchBeltType(Watch<int> watchBeltType) =>
-    GameNetwork.sendClientRequestInventoryEquip(
+      gsEngine.network.sendClientRequestInventoryEquip(
         ServerQuery.mapWatchBeltTypeToItemType(watchBeltType)
     );
 
   static void inventoryUnequip(int index) =>
-      GameNetwork.sendClientRequestInventoryUnequip(index);
+      gsEngine.network.sendClientRequestInventoryUnequip(index);
 
   static void inventoryMoveToWatchBelt(int index, Watch<int> watchBelt)=>
-      GameNetwork.sendClientRequestInventoryMove(
+      gsEngine.network.sendClientRequestInventoryMove(
         indexFrom: index,
         indexTo: ServerQuery.mapWatchBeltTypeToItemType(watchBelt),
       );
 
   static void saveScene(){
-    GameNetwork.sendClientRequest(ClientRequest.Edit, EditRequest.Save.index);
+    gsEngine.network.sendClientRequest(ClientRequest.Edit, EditRequest.Save.index);
   }
 
   static void editSceneSpawnAI() =>
-    GameNetwork.sendClientRequest(
+      gsEngine.network.sendClientRequest(
         ClientRequest.Edit,
         EditRequest.Spawn_AI.index,
     );
 
   static void editSceneReset() =>
-    GameNetwork.sendClientRequestEdit(EditRequest.Scene_Reset);
+      gsEngine.network.sendClientRequestEdit(EditRequest.Scene_Reset);
 
   static void editSceneClearSpawnedAI(){
-    GameNetwork.sendClientRequest(ClientRequest.Edit, EditRequest.Clear_Spawned.index);
+    gsEngine.network.sendClientRequest(ClientRequest.Edit, EditRequest.Clear_Spawned.index);
   }
 }

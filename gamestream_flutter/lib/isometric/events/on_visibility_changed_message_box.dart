@@ -1,4 +1,5 @@
 
+import 'package:gamestream_flutter/engine/instances.dart';
 import 'package:gamestream_flutter/library.dart';
 
 void onVisibilityChangedMessageBox(bool visible){
@@ -6,7 +7,7 @@ void onVisibilityChangedMessageBox(bool visible){
     GameUI.textFieldMessage.requestFocus();
     return;
   }
-  GameNetwork.sendRequestSpeak(GameUI.textEditingControllerMessage.text);
+  gsEngine.network.sendRequestSpeak(GameUI.textEditingControllerMessage.text);
   GameUI.textFieldMessage.unfocus();
   GameUI.textEditingControllerMessage.text = "";
 }

@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/engine/classes/game.dart';
+import 'package:gamestream_flutter/engine/instances.dart';
 import 'package:gamestream_flutter/library.dart';
 
-/// TODO
-/// [ ] improve player movement
-/// [ ]
+class GameFight2DPlayer {
+  var x = 0.0;
+  var y = 0.0;
+}
+
 class GameFight2D extends Game {
   static final renderCharacterState = WatchBool(false);
-  static var playerX = 0.0;
-  static var playerY = 0.0;
+  static var playerEditMode = WatchBool(false);
   static var playerState = GameFight2DCharacterState.Idle;
   static var charactersTotal = 0;
 
@@ -22,6 +24,8 @@ class GameFight2D extends Game {
   static var sceneWidth = 0;
   static var sceneHeight = 0;
   static var sceneNodes = Uint8List(0);
+
+  final player = GameFight2DPlayer();
 
   static int get sceneTotal => sceneWidth * sceneHeight;
 
@@ -115,8 +119,8 @@ class GameFight2D extends Game {
 
   @override
   void update() {
-    GameNetwork.sendClientRequestUpdate();
-    Engine.cameraFollow(playerX, playerY);
+    gsEngine.network.sendClientRequestUpdate();
+    Engine.cameraFollow(player.x, player.y);
     // applyCharacterAudio();
   }
 

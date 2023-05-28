@@ -1,4 +1,5 @@
 
+import 'package:gamestream_flutter/engine/instances.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class ClientActions {
@@ -24,7 +25,7 @@ class ClientActions {
 
   static void dropDraggedItem(){
     if (ClientState.dragStart.value == -1) return;
-    GameNetwork.sendClientRequestInventoryDrop(ClientState.dragStart.value);
+    gsEngine.network.sendClientRequestInventoryDrop(ClientState.dragStart.value);
   }
 
   static void messageClear(){
@@ -42,7 +43,7 @@ class ClientActions {
   static void inventorySwapDragTarget(){
     if (ClientState.dragStart.value == -1) return;
     if (ClientState.hoverIndex.value == -1) return;
-    GameNetwork.sendClientRequestInventoryMove(
+    gsEngine.network.sendClientRequestInventoryMove(
       indexFrom: ClientState.dragStart.value,
       indexTo: ClientState.hoverIndex.value,
     );

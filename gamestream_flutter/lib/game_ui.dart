@@ -43,7 +43,7 @@ class GameUI {
           Positioned(
             child: onPressed(
               action: () {
-                GameNetwork.sendClientRequest(ClientRequest.Attack);
+                gsEngine.network.sendClientRequest(ClientRequest.Attack);
               },
               child: Container(
                 color: Colors.blue,
@@ -305,7 +305,7 @@ class GameUI {
                 PowerType.Teleport,
               ].map((int powerType){
                 return onPressed(
-                  action: () => GameNetwork.sendClientRequest(ClientRequest.Select_Power, powerType),
+                  action: () => gsEngine.network.sendClientRequest(ClientRequest.Select_Power, powerType),
                   child: Container(
                       margin: const EdgeInsets.only(bottom: 6),
                       child: watch(GamePlayer.powerType, (int playerPowerType){
@@ -339,7 +339,7 @@ class GameUI {
                  children: (weaponTypes).map((int itemType) => Container(
                    margin: const EdgeInsets.only(bottom: 6),
                    child: onPressed(
-                     action: () => GameNetwork.sendClientRequestSelectWeaponPrimary(itemType),
+                     action: () => gsEngine.network.sendClientRequestSelectWeaponPrimary(itemType),
                      child: text(ItemType.getName(itemType),
                      color: weaponPrimary == itemType ? GameColors.orange : GameColors.white80,
                        size: textSize,
@@ -370,7 +370,7 @@ class GameUI {
                 children: (weaponTypes).map((int itemType) => Container(
                   margin: const EdgeInsets.only(bottom: 6),
                   child: onPressed(
-                      action: () => GameNetwork.sendClientRequestSelectWeaponSecondary(itemType),
+                      action: () => gsEngine.network.sendClientRequestSelectWeaponSecondary(itemType),
                       child: text(ItemType.getName(itemType),
                         color: weaponSecondary == itemType ? GameColors.orange : GameColors.white80,
                         size: textSize,
@@ -385,7 +385,7 @@ class GameUI {
     });
 
     final buttonPlay = onPressed(
-      action: GameNetwork.sendClientRequestRevive,
+      action: gsEngine.network.sendClientRequestRevive,
       child: onMouseOver(
           builder: (mouseOver) {
             return Container(
@@ -485,14 +485,14 @@ class GameUI {
             height24,
             onPressed(
                 action: () {
-                  GameNetwork.disconnect();
-                  GameNetwork.connectToGameEditor();
+                  gsEngine.network.disconnect();
+                  gsEngine.network.connectToGameEditor();
                 },
                 child: text("EDITOR", size: 25),
             ),
             height24,
             onPressed(
-                action: GameNetwork.disconnect,
+                action: gsEngine.network.disconnect,
                 child: text("DISCONNECT", size: 25),
             ),
             height24,
@@ -1171,7 +1171,7 @@ class GameUI {
   }){
     return onPressed(
       action: () =>
-          GameNetwork.sendClientRequest(ClientRequest.Equip, itemType),
+          gsEngine.network.sendClientRequest(ClientRequest.Equip, itemType),
       child: Container(
         color: active ? Colors.white24 : Colors.transparent,
         padding: GameStyle.Padding_6,
@@ -1449,8 +1449,8 @@ class GameUI {
               builder: (context, data, dataRejected){
                 return onPressed(
                   hint: "Inventory",
-                  action: GameNetwork.sendClientRequestInventoryToggle,
-                  onRightClick: GameNetwork.sendClientRequestInventoryToggle,
+                  action: gsEngine.network.sendClientRequestInventoryToggle,
+                  onRightClick: gsEngine.network.sendClientRequestInventoryToggle,
                   child: buildAtlasIconType(IconType.Inventory, scale: 2.0),
                 );
               },
@@ -1485,7 +1485,7 @@ class GameUI {
         onWillAccept: (int? data) => data != null,
         onAccept: (int? data) {
           if (data == null) return;
-          GameNetwork.sendClientRequestInventoryMove(
+          gsEngine.network.sendClientRequestInventoryMove(
             indexFrom: data,
             indexTo: index,
           );
@@ -1641,7 +1641,7 @@ class GameUI {
               container(
                 alignment: Alignment.center,
                 child: "RESPAWN",
-                action: GameNetwork.sendClientRequestRevive,
+                action: gsEngine.network.sendClientRequestRevive,
                 color: GameColors.Red_3,
                 width: width * Engine.GoldenRatio_0_618,
               )

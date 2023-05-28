@@ -32,6 +32,7 @@ class ClientRequest {
   static const Suicide                  = 31;
   static const Attack                   = 32;
   static const Select_Attribute         = 33;
+  static const Fight2D                  = 34;
 }
 
 
