@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 
 import '../library.dart';
 import '../touch_controller.dart';
+import 'games/isometric/game_isometric.dart';
 
 
 class GameIO {
@@ -36,8 +37,8 @@ class GameIO {
   var panDistance = Watch(0.0);
   var panDirection = Watch(0.0);
 
-  double get mouseGridX => GameConvert.convertWorldToGridX(engine.mouseWorldX, engine.mouseWorldY) + GamePlayer.position.z;
-  double get mouseGridY => GameConvert.convertWorldToGridY(engine.mouseWorldX, engine.mouseWorldY) + GamePlayer.position.z;
+  double get mouseGridX => GameIsometric.convertWorldToGridX(engine.mouseWorldX, engine.mouseWorldY) + GamePlayer.position.z;
+  double get mouseGridY => GameIsometric.convertWorldToGridY(engine.mouseWorldX, engine.mouseWorldY) + GamePlayer.position.z;
   double get mouseGridZ => GamePlayer.position.z;
 
   void recenterCursor(){
@@ -284,8 +285,8 @@ class GameIO {
     final mouseWorldX = engine.mouseWorldX;
     final mouseWorldY = engine.mouseWorldY;
     while (z >= 0){
-      final row = GameConvert.convertWorldToRow(mouseWorldX, mouseWorldY, z * Node_Height);
-      final column = GameConvert.convertWorldToColumn(mouseWorldX, mouseWorldY, z * Node_Height);
+      final row = GameIsometric.convertWorldToRow(mouseWorldX, mouseWorldY, z * Node_Height);
+      final column = GameIsometric.convertWorldToColumn(mouseWorldX, mouseWorldY, z * Node_Height);
       if (row < 0) break;
       if (column < 0) break;
       if (row >= gamestream.games.isometric.nodes.totalRows) break;

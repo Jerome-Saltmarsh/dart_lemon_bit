@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_renderer.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -214,9 +215,9 @@ class RendererNodes extends Renderer {
     screenLeft = engine.Screen_Left - Node_Size;
     screenTop = engine.Screen_Top - 72;
     screenBottom = engine.Screen_Bottom + 72;
-    var screenTopLeftColumn = GameConvert.convertWorldToColumn(screenLeft, screenTop, 0);
-    nodesScreenBottomRightRow = clamp(GameConvert.convertWorldToRow(screenRight, screenBottom, 0), 0, gamestream.games.isometric.nodes.totalRows - 1);
-    nodesScreenTopLeftRow = GameConvert.convertWorldToRow(screenLeft, screenTop, 0);
+    var screenTopLeftColumn = GameIsometric.convertWorldToColumn(screenLeft, screenTop, 0);
+    nodesScreenBottomRightRow = clamp(GameIsometric.convertWorldToRow(screenRight, screenBottom, 0), 0, gamestream.games.isometric.nodes.totalRows - 1);
+    nodesScreenTopLeftRow = GameIsometric.convertWorldToRow(screenLeft, screenTop, 0);
 
     if (nodesScreenTopLeftRow < 0){
       screenTopLeftColumn += nodesScreenTopLeftRow;

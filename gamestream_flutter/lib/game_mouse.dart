@@ -1,9 +1,11 @@
 
 import 'package:gamestream_flutter/library.dart';
 
+import 'gamestream/games/isometric/game_isometric.dart';
+
 class GameMouse {
-  static double get positionX => GameConvert.convertWorldToGridX(engine.mouseWorldX, engine.mouseWorldY) + GamePlayer.position.z;
-  static double get positionY => GameConvert.convertWorldToGridY(engine.mouseWorldX, engine.mouseWorldY) + GamePlayer.position.z;
+  static double get positionX => GameIsometric.convertWorldToGridX(engine.mouseWorldX, engine.mouseWorldY) + GamePlayer.position.z;
+  static double get positionY => GameIsometric.convertWorldToGridY(engine.mouseWorldX, engine.mouseWorldY) + GamePlayer.position.z;
   static double get positionZ => GamePlayer.position.z;
 
   static int get nodeIndex => gamestream.games.isometric.nodes.getNodeIndex(positionX, positionY, positionZ);
