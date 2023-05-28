@@ -2,8 +2,8 @@
 import 'package:gamestream_flutter/library.dart';
 
 void onChangedScene(){
-  ClientState.totalActiveParticles = 0;
-  ClientState.totalParticles = 0;
-  ClientState.particles.clear();
+  gamestream.games.isometric.clientState2.totalActiveParticles = 0;
+  gamestream.games.isometric.clientState2.totalParticles = 0;
+  gamestream.games.isometric.clientState2.particles.clear();
   gamestream.io.recenterCursor();
 }

@@ -342,7 +342,7 @@ class GameIsometricRenderer {
   void renderForeground(Canvas canvas, Size size) {
 
     if (gamestream.io.inputModeKeyboard){
-      if (ClientState.hoverDialogType.value == DialogType.None){
+      if (gamestream.games.isometric.clientState2.hoverDialogType.value == DialogType.None){
         renderCursor(canvas);
       }
     }

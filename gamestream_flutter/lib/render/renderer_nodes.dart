@@ -592,7 +592,7 @@ class RendererNodes extends Renderer {
   }
 
   static bool assertOnScreen(){
-    if (!ClientState.debugMode.value) return true;
+    if (!gamestream.games.isometric.clientState2.debugMode.value) return true;
     if (currentNodeDstX < screenLeft){
       offscreenNodesLeft++;
       return true;
@@ -889,14 +889,14 @@ class RendererNodes extends Renderer {
       return;
     }
     renderStandardNode(
-      srcX: ClientState.srcXRainLanding,
+      srcX: gamestream.games.isometric.clientState2.srcXRainLanding,
       srcY: 72.0 * ((gamestream.animation.animationFrame + row + column) % 6), // TODO Expensive Operation
     );
   }
 
   static void renderNodeRainFalling() {
     renderStandardNode(
-      srcX: ClientState.srcXRainFalling,
+      srcX: gamestream.games.isometric.clientState2.srcXRainFalling,
       srcY: 72.0 * ((gamestream.animation.animationFrame + row + row + column) % 6), // TODO Expensive Operation
     );
   }

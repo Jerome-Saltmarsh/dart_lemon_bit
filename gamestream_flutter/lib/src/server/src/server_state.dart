@@ -201,7 +201,7 @@ class ServerState {
   static void sortGameObjects(){
     Engine.insertionSort(
       gameObjects,
-      compare: ClientState.compareRenderOrder,
+      compare: gamestream.games.isometric.clientState2.compareRenderOrder,
     );
   }
 

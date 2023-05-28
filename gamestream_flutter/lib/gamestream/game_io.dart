@@ -235,7 +235,7 @@ class GameIO {
   }
 
   void onMouseClickedLeft(){
-    if (ClientState.edit.value) {
+    if (gamestream.games.isometric.clientState2.edit.value) {
       onMouseClickedEditMode();
     }
   }
@@ -261,7 +261,7 @@ class GameIO {
   }
 
   void readPlayerInput() {
-    if (ClientState.edit.value) {
+    if (gamestream.games.isometric.clientState2.edit.value) {
       return readPlayerInputEdit();
     }
   }

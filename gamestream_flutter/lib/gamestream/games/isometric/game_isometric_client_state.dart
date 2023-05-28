@@ -15,19 +15,17 @@ class GameIsometricClientState {
   var torch_emission_vel = 0.061;
   var torch_emission_t = 0.0;
   var torch_emission_intensity = 1.0;
-
   var nextParticleFrame = 0;
+  var nodesRaycast = 0;
+  var windLine = 0;
 
   final gridShadows = Watch(true, onChanged: (bool value){
     gamestream.games.isometric.nodes.resetNodeColorsToAmbient();
   });
 
-  var nodesRaycast = 0;
-  var windLine = 0;
-
   int get bodyPartDuration => randomInt(120, 200);
   bool get playMode => !editMode;
-  bool get editMode => ClientState.edit.value;
+  bool get editMode => gamestream.games.isometric.clientState2.edit.value;
   bool get lightningOn => ServerState.lightningType.value != LightningType.Off;
 
 
@@ -75,13 +73,13 @@ class GameIsometricClientState {
   // ACTIONS
 
   void applyEmissions(){
-    ClientState.lights_active = 0;
+    gamestream.games.isometric.clientState2.lights_active = 0;
     applyEmissionsLightSources();
     applyEmissionsCharacters();
     ServerState.applyEmissionGameObjects();
     applyEmissionsProjectiles();
     applyCharacterColors();
-    ClientState.applyEmissionsParticles();
+    gamestream.games.isometric.clientState2.applyEmissionsParticles();
     applyEmissionEditorSelectedNode();
   }
 
@@ -99,8 +97,8 @@ class GameIsometricClientState {
   }
 
   void applyEmissionsLightSources() {
-    for (var i = 0; i < ClientState.nodesLightSourcesTotal; i++){
-      final nodeIndex = ClientState.nodesLightSources[i];
+    for (var i = 0; i < gamestream.games.isometric.clientState2.nodesLightSourcesTotal; i++){
+      final nodeIndex = gamestream.games.isometric.clientState2.nodesLightSources[i];
       final nodeType = gamestream.games.isometric.nodes.nodeTypes[nodeIndex];
 
       switch (nodeType){
@@ -231,7 +229,7 @@ class GameIsometricClientState {
   }
 
   void onChangedUpdateFrame(int value){
-    ClientState.rendersSinceUpdate.value = 0;
+    gamestream.games.isometric.clientState2.rendersSinceUpdate.value = 0;
   }
 
   void clear() {
@@ -244,7 +242,7 @@ class GameIsometricClientState {
     ServerState.totalProjectiles = 0;
     ServerState.totalNpcs = 0;
     ServerState.interactMode.value = InteractMode.None;
-    ClientState.particles.clear();
+    gamestream.games.isometric.clientState2.particles.clear();
     engine.zoom = 1;
     engine.redrawCanvas();
   }
@@ -268,11 +266,11 @@ class GameIsometricClientState {
     bool animation = false,
     int delay = 0,
   }) {
-    if (ClientState.totalActiveParticles >= Particles_Max) {
+    if (gamestream.games.isometric.clientState2.totalActiveParticles >= Particles_Max) {
       return particleOverflow;
     }
     assert(duration > 0);
-    final particle = ClientState.getInstanceParticle();
+    final particle = gamestream.games.isometric.clientState2.getInstanceParticle();
     assert(!particle.active);
     particle.type = type;
     particle.x = x;
@@ -1082,7 +1080,7 @@ class GameIsometricClientState {
   void updateParticles() {
     nextParticleFrame--;
 
-    for (final particle in ClientState.particles) {
+    for (final particle in gamestream.games.isometric.clientState2.particles) {
       if (!particle.active) continue;
       updateParticle(particle);
       if (nextParticleFrame <= 0){
@@ -1098,11 +1096,10 @@ class GameIsometricClientState {
   void interpolatePlayer(){
 
     if (!GamePlayer.interpolating.value) return;
-
-    if (ClientState.rendersSinceUpdate.value == 0) {
+    if (gamestream.games.isometric.clientState2.rendersSinceUpdate.value == 0) {
       return;
     }
-    if (ClientState.rendersSinceUpdate.value != 1) return;
+    if (gamestream.games.isometric.clientState2.rendersSinceUpdate.value != 1) return;
 
     final playerCharacter = ServerState.getPlayerCharacter();
     if (playerCharacter == null) return;

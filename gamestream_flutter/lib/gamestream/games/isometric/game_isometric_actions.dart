@@ -61,15 +61,15 @@ class GameIsometricActions {
   }
 
   void actionSetModePlay(){
-    ClientState.edit.value = false;
+    gamestream.games.isometric.clientState2.edit.value = false;
   }
 
   void actionSetModeEdit(){
-    ClientState.edit.value = true;
+    gamestream.games.isometric.clientState2.edit.value = true;
   }
 
   void actionToggleEdit() {
-    ClientState.edit.value = !ClientState.edit.value;
+    gamestream.games.isometric.clientState2.edit.value = !gamestream.games.isometric.clientState2.edit.value;
   }
 
   void messageBoxToggle(){
@@ -85,7 +85,7 @@ class GameIsometricActions {
   }
 
   void toggleDebugMode(){
-    ClientState.debugMode.value = !ClientState.debugMode.value;;
+    gamestream.games.isometric.clientState2.debugMode.value = !gamestream.games.isometric.clientState2.debugMode.value;;
   }
 
   void setTarget() {
@@ -111,7 +111,7 @@ class GameIsometricActions {
   }
 
   void toggleWindowSettings(){
-      ClientState.window_visible_light_settings.toggle();
+      gamestream.games.isometric.clientState2.window_visible_light_settings.toggle();
   }
 
   void createExplosion(double x, double y, double z){

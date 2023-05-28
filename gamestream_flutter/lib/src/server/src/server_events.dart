@@ -4,14 +4,14 @@ import 'package:gamestream_flutter/library.dart';
 class ServerEvents {
 
   static void onChangedAreaType(int areaType) {
-     ClientState.areaTypeVisible.value = true;
+     gamestream.games.isometric.clientState2.areaTypeVisible.value = true;
   }
 
   static void onChangedLightningFlashing(bool lightningFlashing){
     if (lightningFlashing) {
       gamestream.audio.thunder(1.0);
     } else {
-      ClientState.updateGameLighting();
+      gamestream.games.isometric.clientState2.updateGameLighting();
     }
   }
 

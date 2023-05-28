@@ -3,28 +3,28 @@ import 'package:gamestream_flutter/library.dart';
 
 class ClientActions {
 
-  static void redrawInventory() => ClientState.inventoryReads.value++;
-  static void redrawHotKeys() => ClientState.readsHotKeys.value++;
+  static void redrawInventory() => gamestream.games.isometric.clientState2.inventoryReads.value++;
+  static void redrawHotKeys() => gamestream.games.isometric.clientState2.readsHotKeys.value++;
 
   static void clearMouseOverDialogType() =>
-    ClientState.hoverDialogType.value = DialogType.None;
+    gamestream.games.isometric.clientState2.hoverDialogType.value = DialogType.None;
 
   static void clearHoverIndex() =>
-    ClientState.hoverIndex.value = -1;
+    gamestream.games.isometric.clientState2.hoverIndex.value = -1;
 
   static void playSoundWindow() =>
       gamestream.audio.click_sound_8(1);
 
   static void dragStartSetNone(){
-    ClientState.dragStart.value = -1;
+    gamestream.games.isometric.clientState2.dragStart.value = -1;
   }
 
   static void setDragItemIndex(int index) =>
-    () => ClientState.dragStart.value = index;
+    () => gamestream.games.isometric.clientState2.dragStart.value = index;
 
   static void dropDraggedItem(){
-    if (ClientState.dragStart.value == -1) return;
-    gamestream.network.sendClientRequestInventoryDrop(ClientState.dragStart.value);
+    if (gamestream.games.isometric.clientState2.dragStart.value == -1) return;
+    gamestream.network.sendClientRequestInventoryDrop(gamestream.games.isometric.clientState2.dragStart.value);
   }
 
   static void messageClear(){
@@ -32,7 +32,7 @@ class ClientActions {
   }
 
   static void writeMessage(String value){
-    ClientState.messageStatus.value = value;
+    gamestream.games.isometric.clientState2.messageStatus.value = value;
   }
 
   static void playAudioError(){
@@ -40,35 +40,35 @@ class ClientActions {
   }
 
   static void inventorySwapDragTarget(){
-    if (ClientState.dragStart.value == -1) return;
-    if (ClientState.hoverIndex.value == -1) return;
+    if (gamestream.games.isometric.clientState2.dragStart.value == -1) return;
+    if (gamestream.games.isometric.clientState2.hoverIndex.value == -1) return;
     gamestream.network.sendClientRequestInventoryMove(
-      indexFrom: ClientState.dragStart.value,
-      indexTo: ClientState.hoverIndex.value,
+      indexFrom: gamestream.games.isometric.clientState2.dragStart.value,
+      indexTo: gamestream.games.isometric.clientState2.hoverIndex.value,
     );
   }
 
   static void refreshBakeMapLightSources() {
-    ClientState.nodesLightSourcesTotal = 0;
+    gamestream.games.isometric.clientState2.nodesLightSourcesTotal = 0;
     for (var i = 0; i < gamestream.games.isometric.nodes.total; i++){
       if (!NodeType.emitsLight(gamestream.games.isometric.nodes.nodeTypes[i])) continue;
-      if (ClientState.nodesLightSourcesTotal >= ClientState.nodesLightSources.length) {
-        ClientState.nodesLightSources = Uint16List(ClientState.nodesLightSources.length + 100);
+      if (gamestream.games.isometric.clientState2.nodesLightSourcesTotal >= gamestream.games.isometric.clientState2.nodesLightSources.length) {
+        gamestream.games.isometric.clientState2.nodesLightSources = Uint16List(gamestream.games.isometric.clientState2.nodesLightSources.length + 100);
         refreshBakeMapLightSources();
         return;
       }
-      ClientState.nodesLightSources[ClientState.nodesLightSourcesTotal] = i;
-      ClientState.nodesLightSourcesTotal++;
+      gamestream.games.isometric.clientState2.nodesLightSources[gamestream.games.isometric.clientState2.nodesLightSourcesTotal] = i;
+      gamestream.games.isometric.clientState2.nodesLightSourcesTotal++;
     }
   }
 
   static void clearHoverDialogType() {
-    ClientState.hoverDialogType.value = DialogType.None;
+    gamestream.games.isometric.clientState2.hoverDialogType.value = DialogType.None;
   }
 
   static void showMessage(String message){
-    ClientState.messageStatus.value = "";
-    ClientState.messageStatus.value = message;
+    gamestream.games.isometric.clientState2.messageStatus.value = "";
+    gamestream.games.isometric.clientState2.messageStatus.value = message;
   }
 
   static void spawnConfettiPlayer() {

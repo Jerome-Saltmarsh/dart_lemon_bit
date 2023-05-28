@@ -29,7 +29,7 @@ class GameUI {
   static Widget buildUI() =>
       watch(gamestream.io.inputMode, (int inputMode){
         return StackFullscreen(children: [
-          buildWatchBool(ClientState.triggerAlarmNoMessageReceivedFromServer,
+          buildWatchBool(gamestream.games.isometric.clientState2.triggerAlarmNoMessageReceivedFromServer,
               buildDialogFramesSinceUpdate),
 
           if (inputMode != InputMode.Touch)
@@ -55,7 +55,7 @@ class GameUI {
             right: GameStyle.Default_Padding,
           ),
           if (inputMode == InputMode.Keyboard)
-          buildWatchBool(ClientState.control_visible_scoreboard, () =>
+          buildWatchBool(gamestream.games.isometric.clientState2.control_visible_scoreboard, () =>
               Positioned(
                 top: GameStyle.Default_Padding,
                 left: GameStyle.Default_Padding,
@@ -108,28 +108,27 @@ class GameUI {
                   }),
                   width4,
                   watch(ServerState.playerAttributes, (int attributes){
-                     // if (attributes <= 0) return GameStyle.Null;
                      return onPressed(
-                         action: ClientState.window_visible_attributes.toggle,
+                         action: gamestream.games.isometric.clientState2.window_visible_attributes.toggle,
                          child: text('Attributes: $attributes'),
                      );
                   }),
                 ],
               ),
             ),
-          WatchBuilder(ClientState.edit, buildPlayMode),
+          WatchBuilder(gamestream.games.isometric.clientState2.edit, buildPlayMode),
           WatchBuilder(gamestream.io.inputMode, buildStackInputMode),
-          buildWatchBool(ClientState.debugMode, GameDebug.buildStackDebug),
+          buildWatchBool(gamestream.games.isometric.clientState2.debugMode, GameDebug.buildStackDebug),
           buildPositionedMessageStatus(),
           buildWatchGameStatus(),
-          buildWatchBool(ClientState.window_visible_attributes, () =>
+          buildWatchBool(gamestream.games.isometric.clientState2.window_visible_attributes, () =>
               Positioned(
                 top: GameStyle.Default_Padding,
                 left: GameStyle.Default_Padding,
                 child: buildWindowAttributes(),
               )
           ),
-          buildWatchBool(ClientState.window_visible_light_settings,
+          buildWatchBool(gamestream.games.isometric.clientState2.window_visible_light_settings,
               buildWindowLightSettings),
           Positioned(top: 16, right: 16, child: buildRowMainMenu()),
 
@@ -158,7 +157,7 @@ class GameUI {
                             Expanded(child: text("ATTRIBUTES", color: Colors.white70)),
                             if (!attributesRemaining)
                               onPressed(
-                                action: ClientState.window_visible_attributes.setFalse,
+                                action: gamestream.games.isometric.clientState2.window_visible_attributes.setFalse,
                                 child: Animated(
                                   duration: Duration(milliseconds: 500),
                                   builder: (double value) =>
@@ -167,7 +166,7 @@ class GameUI {
                               ),
                             if (attributesRemaining)
                             onPressed(
-                                action: ClientState.window_visible_attributes.setFalse,
+                                action: gamestream.games.isometric.clientState2.window_visible_attributes.setFalse,
                                 child: text('close')
                             ),
                           ],
@@ -563,7 +562,7 @@ class GameUI {
                   gamestream.games.isometric.nodes.ambient_val / 100,
               ).toColor(),
               onColorChanged: (color){
-                ClientState.overrideColor.value = true;
+                gamestream.games.isometric.clientState2.overrideColor.value = true;
                 final hsvColor = HSVColor.fromColor(color);
                 gamestream.games.isometric.nodes.ambient_alp = (hsvColor.alpha * 255).round();
                 gamestream.games.isometric.nodes.ambient_hue = hsvColor.hue.round();
@@ -578,7 +577,7 @@ class GameUI {
   }
 
   static Widget buildGeneratedMiniMap({required double translate}){
-    return watch(ClientState.sceneChanged, (_){
+    return watch(gamestream.games.isometric.clientState2.sceneChanged, (_){
         return engine.buildCanvas(paint: (Canvas canvas, Size size){
           const scale = 2.0;
           canvas.scale(scale, scale);
@@ -642,7 +641,7 @@ class GameUI {
             child: Container(
                 width: engine.screen.width,
                 alignment: Alignment.center,
-                child: watch(ClientState.messageStatus, buildMessageStatus),
+                child: watch(gamestream.games.isometric.clientState2.messageStatus, buildMessageStatus),
             ),
           ),
       );
@@ -663,7 +662,7 @@ class GameUI {
 
   static WatchBuilder<int> buildWatchAreaType() =>
       WatchBuilder(ServerState.areaType, (int areaType) {
-        return WatchBuilder(ClientState.areaTypeVisible, (bool areaTypeVisible){
+        return WatchBuilder(gamestream.games.isometric.clientState2.areaTypeVisible, (bool areaTypeVisible){
           return IgnorePointer(
             child: AnimatedOpacity(
                 opacity: areaTypeVisible ? 1.0 : 0.0,
@@ -702,13 +701,13 @@ class GameUI {
   static Widget buildStackInputMode(int inputMode) =>
       inputMode == InputMode.Keyboard
           ? GameStyle.Null
-          : watch(ClientState.touchButtonSide, buildStackInputModeTouch);
+          : watch(gamestream.games.isometric.clientState2.touchButtonSide, buildStackInputModeTouch);
 
   static Widget buildDialogFramesSinceUpdate() => Positioned(
       top: 8,
       left: 8,
       child: watch(
-          ClientState.rendersSinceUpdate,
+          gamestream.games.isometric.clientState2.rendersSinceUpdate,
           (int frames) =>
               text("Warning: No message received from server $frames")));
 
@@ -719,7 +718,7 @@ class GameUI {
           if (!value)
             return text("Interpolation Off",
                 onPressed: () => GamePlayer.interpolating.value = true);
-          return watch(ClientState.rendersSinceUpdate, (int frames) {
+          return watch(gamestream.games.isometric.clientState2.rendersSinceUpdate, (int frames) {
             return text("Frames: $frames",
                 onPressed: () => GamePlayer.interpolating.value = false);
           });
@@ -727,7 +726,7 @@ class GameUI {
       );
 
   static Widget buildWindowPlayerRespawnTimer(){
-      return buildWatchBool(ClientState.control_visible_respawn_timer, () {
+      return buildWatchBool(gamestream.games.isometric.clientState2.control_visible_respawn_timer, () {
           return Container(
             width: 240,
             height: 240 * goldenRatio_0381,
@@ -790,7 +789,7 @@ class GameUI {
     final controlTime = buildTime();
     // final iconMenu = buildIconMenu();
 
-    final panel = watch(ClientState.window_visible_menu, (bool menuVisible){
+    final panel = watch(gamestream.games.isometric.clientState2.window_visible_menu, (bool menuVisible){
       return Container(
         color: menuVisible ? GameStyle.Container_Color : Colors.transparent,
         child: Column(
@@ -815,8 +814,8 @@ class GameUI {
 
     return GameUI.buildDialogUIControl(
         child: onMouseOver(
-            onEnter: ClientState.window_visible_menu.setTrue,
-            onExit: ClientState.window_visible_menu.setFalse,
+            onEnter: gamestream.games.isometric.clientState2.window_visible_menu.setTrue,
+            onExit: gamestream.games.isometric.clientState2.window_visible_menu.setFalse,
             builder: (bool mouseOver) => panel,
         ),
       );
@@ -858,7 +857,7 @@ class GameUI {
       action: gamestream.games.isometric.actions.toggleZoom, child: buildAtlasIconType(IconType.Zoom, scale: Icon_Scale));
 
   static Widget buildIconMenu() => onPressed(
-      action: ClientState.window_visible_menu.toggle,
+      action: gamestream.games.isometric.clientState2.window_visible_menu.toggle,
       child: Container(
         width: 32,
         child: buildAtlasIconType(IconType.Home),
@@ -866,7 +865,7 @@ class GameUI {
   );
 
   static Widget buildIconCog() => onPressed(
-      action: ClientState.window_visible_menu.toggle,
+      action: gamestream.games.isometric.clientState2.window_visible_menu.toggle,
       child: Container(
         width: 32,
         child: buildAtlasIconType(IconType.Cog),
@@ -874,7 +873,7 @@ class GameUI {
   );
 
   static Widget buildIconCogTurned() => onPressed(
-      action: ClientState.window_visible_menu.toggle,
+      action: gamestream.games.isometric.clientState2.window_visible_menu.toggle,
       child: Container(
         width: 32,
         child: buildAtlasIconType(IconType.Cog_Turned),
@@ -926,10 +925,10 @@ class GameUI {
   static Widget buildDialog({required Widget child, required int dialogType}) =>
       MouseRegion(
         onEnter: (PointerEnterEvent event) {
-          ClientState.hoverDialogType.value = dialogType;
+          gamestream.games.isometric.clientState2.hoverDialogType.value = dialogType;
         },
         onExit: (PointerExitEvent event) {
-          ClientState.hoverDialogType.value = DialogType.None;
+          gamestream.games.isometric.clientState2.hoverDialogType.value = DialogType.None;
         },
         child: child,
       );
@@ -939,9 +938,9 @@ class GameUI {
 
   static Widget buildStackPlay(GameType gameType) => StackFullscreen(children: [
           if (gameType == GameType.Combat)
-        buildWatchBool(ClientState.window_visible_player_creation, buildWindowCharacterCreation),
+        buildWatchBool(gamestream.games.isometric.clientState2.window_visible_player_creation, buildWindowCharacterCreation),
           if (gameType == GameType.Combat)
-        buildWatchBool(ClientState.control_visible_respawn_timer, () =>
+        buildWatchBool(gamestream.games.isometric.clientState2.control_visible_respawn_timer, () =>
           Positioned(
               bottom: GameStyle.Default_Padding,
               left: 0,
@@ -951,7 +950,7 @@ class GameUI {
                   child: buildWindowPlayerRespawnTimer()),
           )
         ),
-        buildWatchBool(ClientState.control_visible_player_power, (){
+        buildWatchBool(gamestream.games.isometric.clientState2.control_visible_player_power, (){
           return buildWatchBool(GamePlayer.powerReady, () =>
               Positioned(
                 child: buildIconPlayerPowerType(),
@@ -971,7 +970,7 @@ class GameUI {
                       height: 64,
                       child: buildAtlasItemType(ItemType.Resource_Credit)),
                   width4,
-                  watch(ClientState.playerCreditsAnimation, (value) => text(value, size: 25)),
+                  watch(gamestream.games.isometric.clientState2.playerCreditsAnimation, (value) => text(value, size: 25)),
                 ],
               );
   }
@@ -979,7 +978,7 @@ class GameUI {
   // static Widget buildWindowMouseOverItemType(){
   //   return watch(GamePlayer.items_reads, (_){
   //     return watch(GameOptions.ItemType_Damage, (MapListInt itemMap){
-  //       return watch(ClientState.mouseOverItemType, (int itemType){
+  //       return watch(gamestream.games.isometric.clientState2.mouseOverItemType, (int itemType){
   //         if (itemType < 0) return GameStyle.Null;
   //         final entry = itemMap[itemType];
   //         if (entry == null) return GameStyle.Null;
@@ -1032,19 +1031,19 @@ class GameUI {
 
   static Widget buildIconItemTab(ItemGroup itemTab) =>
       onPressed(
-          action: ClientState.itemGroup.value != itemTab
-              ? () => ClientState.itemGroup.value = itemTab
+          action: gamestream.games.isometric.clientState2.itemGroup.value != itemTab
+              ? () => gamestream.games.isometric.clientState2.itemGroup.value = itemTab
               : null,
           child: Container(
             width: 50,
               height: 50,
-              color: ClientState.itemGroup.value == itemTab ? Colors.white12 : Colors.transparent,
+              color: gamestream.games.isometric.clientState2.itemGroup.value == itemTab ? Colors.white12 : Colors.transparent,
               child: buildAtlasIconType(mapItemTabToIconType(itemTab))),
               );
 
   // static Widget buildWindowPlayerItems(){
   //     return watch(GamePlayer.items_reads, (t) {
-  //       return watch(ClientState.itemGroup, (ItemGroup activeItemGroup) {
+  //       return watch(gamestream.games.isometric.clientState2.itemGroup, (ItemGroup activeItemGroup) {
   //         return buildContainer(
   //           width: GameStyle.Window_PlayerItems_Width,
   //           child: Column(
@@ -1086,11 +1085,11 @@ class GameUI {
   //
   //      return MouseRegion(
   //        onEnter: (_){
-  //          ClientState.mouseOverItemType.value = itemType;
+  //          gamestream.games.isometric.clientState2.mouseOverItemType.value = itemType;
   //        },
   //        onExit: (_){
-  //          if (ClientState.mouseOverItemType.value == itemType) {
-  //            ClientState.mouseOverItemType.value = -1;
+  //          if (gamestream.games.isometric.clientState2.mouseOverItemType.value == itemType) {
+  //            gamestream.games.isometric.clientState2.mouseOverItemType.value = -1;
   //          }
   //        },
   //        child: onPressed(
@@ -1570,7 +1569,7 @@ class GameUI {
 
   /// Automatically rebuilds whenever the inventory gets updated
   static Widget buildInventoryAware({required BasicWidgetBuilder builder}) =>
-      watch(ClientState.inventoryReads, (int reads) => builder());
+      watch(gamestream.games.isometric.clientState2.inventoryReads, (int reads) => builder());
 
   static Widget buildWatchPlayerLevel() => watch(
       ServerState.playerLevel,
@@ -1610,7 +1609,7 @@ class GameUI {
   static Widget buildButtonTogglePlayMode() {
     return watch(ServerState.sceneEditable, (bool isOwner) {
       if (!isOwner) return const SizedBox();
-      return watch(ClientState.edit, (bool edit) {
+      return watch(gamestream.games.isometric.clientState2.edit, (bool edit) {
         return container(
             toolTip: "Tab",
             child: edit ? "PLAY" : "EDIT",

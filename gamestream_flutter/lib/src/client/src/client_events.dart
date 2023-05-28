@@ -22,8 +22,8 @@ class ClientEvents {
 
   static void onDragStarted(int itemIndex){
     // print("onDragStarted()");
-    ClientState.dragStart.value = itemIndex;
-    ClientState.dragEnd.value = -1;
+    gamestream.games.isometric.clientState2.dragStart.value = itemIndex;
+    gamestream.games.isometric.clientState2.dragEnd.value = -1;
   }
 
   static void onDragCompleted(){
@@ -35,7 +35,7 @@ class ClientEvents {
   }
 
   static void onItemIndexPrimary(int itemIndex) {
-    if (ClientState.hoverDialogDialogIsTrade){
+    if (gamestream.games.isometric.clientState2.hoverDialogDialogIsTrade){
       gamestream.network.sendClientRequestInventoryBuy(itemIndex);
       return;
     }
@@ -43,7 +43,7 @@ class ClientEvents {
   }
 
   static void onItemIndexSecondary(int itemIndex){
-    if (ClientState.hoverDialogDialogIsTrade){
+    if (gamestream.games.isometric.clientState2.hoverDialogDialogIsTrade){
       gamestream.network.sendClientRequestInventoryBuy(itemIndex);
       return;
     }
@@ -59,13 +59,13 @@ class ClientEvents {
 
   static void onDragCancelled(Velocity velocity, Offset offset){
     // print("onDragCancelled()");
-    if (ClientState.hoverIndex.value == -1){
+    if (gamestream.games.isometric.clientState2.hoverIndex.value == -1){
       ClientActions.dropDraggedItem();
     } else {
       ClientActions.inventorySwapDragTarget();
     }
-    ClientState.dragStart.value = -1;
-    ClientState.dragEnd.value = -1;
+    gamestream.games.isometric.clientState2.dragStart.value = -1;
+    gamestream.games.isometric.clientState2.dragEnd.value = -1;
   }
 
   static void onKeyPressed(int key){
@@ -81,7 +81,7 @@ class ClientEvents {
     }
 
     if (key == KeyCode.Escape) {
-      ClientState.window_visible_menu.toggle();
+      gamestream.games.isometric.clientState2.window_visible_menu.toggle();
     }
 
     if (gamestream.games.isometric.clientState.playMode) {
@@ -191,20 +191,20 @@ class ClientEvents {
   }
 
   static void onAcceptDragInventoryIcon(){
-     if (ClientState.dragStart.value == -1) return;
-     gamestream.network.sendClientRequestInventoryDeposit(ClientState.dragStart.value);
+     if (gamestream.games.isometric.clientState2.dragStart.value == -1) return;
+     gamestream.network.sendClientRequestInventoryDeposit(gamestream.games.isometric.clientState2.dragStart.value);
   }
 
   static void onChangedMessageStatus(String value){
     if (value.isEmpty){
-      ClientState.messageStatusDuration = 0;
+      gamestream.games.isometric.clientState2.messageStatusDuration = 0;
     } else {
-      ClientState.messageStatusDuration = 150;
+      gamestream.games.isometric.clientState2.messageStatusDuration = 150;
     }
   }
 
   static void onChangedAreaTypeVisible(bool value) =>
-      ClientState.areaTypeVisibleDuration = value
+      gamestream.games.isometric.clientState2.areaTypeVisibleDuration = value
           ? ClientConstants.Area_Type_Duration
           : 0;
 

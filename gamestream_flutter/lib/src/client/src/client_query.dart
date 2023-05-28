@@ -5,7 +5,7 @@ import 'package:gamestream_flutter/library.dart';
 class ClientQuery {
 
   static int getHoverItemType() =>
-    ServerQuery.getItemTypeAtInventoryIndex(ClientState.hoverIndex.value);
+    ServerQuery.getItemTypeAtInventoryIndex(gamestream.games.isometric.clientState2.hoverIndex.value);
 
   static Watch<int> mapKeyboardKeyToWatchBeltType(LogicalKeyboardKey key){
     if (key == LogicalKeyboardKey.digit1)

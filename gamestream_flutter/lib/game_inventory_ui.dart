@@ -43,11 +43,11 @@ class GameInventoryUI {
   static Widget buildHoverTarget({required Widget child, required int hoverTargetType}) =>
       MouseRegion(
         onEnter: (_){
-          ClientState.hoverTargetType.value = hoverTargetType;
+          gamestream.games.isometric.clientState2.hoverTargetType.value = hoverTargetType;
         },
         onExit: (_){
-          if (ClientState.hoverTargetType.value == hoverTargetType){
-            ClientState.hoverTargetType.value = ClientType.Hover_Target_None;
+          if (gamestream.games.isometric.clientState2.hoverTargetType.value == hoverTargetType){
+            gamestream.games.isometric.clientState2.hoverTargetType.value = ClientType.Hover_Target_None;
           }
         },
         child: child,
@@ -234,10 +234,10 @@ class GameInventoryUI {
           onEnter: (event) {
             engine.mousePositionX = event.position.dx;
             engine.mousePositionY = event.position.dy;
-            ClientState.hoverIndex.value = itemIndex;
+            gamestream.games.isometric.clientState2.hoverIndex.value = itemIndex;
           },
           onExit: (_) {
-            if (ClientState.hoverIndex.value == itemIndex) {
+            if (gamestream.games.isometric.clientState2.hoverIndex.value == itemIndex) {
               ClientActions.clearHoverIndex();
             }
           },
@@ -283,7 +283,7 @@ class GameInventoryUI {
   static bool onDragWillAccept(int? i) => i != null;
 
   static Widget buildStackInventoryItems() =>
-      watch(ClientState.inventoryReads, (int reads){
+      watch(gamestream.games.isometric.clientState2.inventoryReads, (int reads){
         final positioned = <Widget>[];
         for (var i = 0; i < ServerState.inventory.length; i++){
           if (ServerState.inventory[i] == ItemType.Empty) continue;
@@ -577,7 +577,7 @@ class GameInventoryUI {
   static Widget buildPositionedContainerItemTypeInformation(int itemIndex){
     if (itemIndex == -1) return GameStyle.Null;
 
-    final itemType = ClientState.hoverDialogType.value == DialogType.Trade ? GamePlayer.storeItems.value[itemIndex] : ServerQuery.getItemTypeAtInventoryIndex(itemIndex);
+    final itemType = gamestream.games.isometric.clientState2.hoverDialogType.value == DialogType.Trade ? GamePlayer.storeItems.value[itemIndex] : ServerQuery.getItemTypeAtInventoryIndex(itemIndex);
 
     if (itemType == ItemType.Empty) return GameStyle.Null;
 
@@ -649,20 +649,20 @@ class GameInventoryUI {
                   text("${ItemType.getName(itemTypeConsumeType)} x${ItemType.getConsumeAmount(itemType)}", color: Colors.white70),
                 ],)),
               height16,
-              if (ClientState.hoverDialogDialogIsTrade)
+              if (gamestream.games.isometric.clientState2.hoverDialogDialogIsTrade)
                 buildItemTypeRecipe(itemType),
 
               height16,
 
-              if (ClientState.hoverDialogDialogIsTrade)
+              if (gamestream.games.isometric.clientState2.hoverDialogDialogIsTrade)
                 text("left click to buy", color: GameColors.inventoryHint),
-              if (ClientState.hoverDialogIsInventory && ItemType.isTypeEquippable(itemType))
+              if (gamestream.games.isometric.clientState2.hoverDialogIsInventory && ItemType.isTypeEquippable(itemType))
                 text("left click to equip", color: GameColors.inventoryHint),
-              if (ClientState.hoverDialogIsInventory && ItemType.isFood(itemType))
+              if (gamestream.games.isometric.clientState2.hoverDialogIsInventory && ItemType.isFood(itemType))
                 text("left click to eat", color: GameColors.inventoryHint),
-              if (GamePlayer.interactModeTrading && ClientState.hoverDialogIsInventory)
+              if (GamePlayer.interactModeTrading && gamestream.games.isometric.clientState2.hoverDialogIsInventory)
                 text("right click to sell", color: GameColors.inventoryHint),
-              if (!GamePlayer.interactModeTrading && ClientState.hoverDialogIsInventory)
+              if (!GamePlayer.interactModeTrading && gamestream.games.isometric.clientState2.hoverDialogIsInventory)
                 text("right click to drop", color: GameColors.inventoryHint),
             ],
           ),

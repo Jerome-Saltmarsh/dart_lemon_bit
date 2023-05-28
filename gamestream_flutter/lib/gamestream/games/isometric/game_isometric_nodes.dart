@@ -374,7 +374,7 @@ class GameIsometricNodes {
     if (index < 0) return;
     if (index >= total) return;
 
-    final padding = ClientState.interpolation_padding;
+    final padding = gamestream.games.isometric.clientState2.interpolation_padding;
     final rx = getIndexRenderX(index);
     if (rx < engine.Screen_Left - padding) return;
     if (rx > engine.Screen_Right + padding) return;
@@ -382,7 +382,7 @@ class GameIsometricNodes {
     if (ry < engine.Screen_Top - padding) return;
     if (ry > engine.Screen_Bottom + padding) return;
 
-    ClientState.lights_active++;
+    gamestream.games.isometric.clientState2.lights_active++;
 
     final row = getIndexRow(index);
     final column = getIndexColumn(index);
@@ -472,7 +472,7 @@ class GameIsometricNodes {
     if (index < 0) return;
     if (index >= total) return;
 
-    final padding = ClientState.interpolation_padding;
+    final padding = gamestream.games.isometric.clientState2.interpolation_padding;
     final rx = getIndexRenderX(index);
     if (rx < engine.Screen_Left - padding) return;
     if (rx > engine.Screen_Right + padding) return;
@@ -480,7 +480,7 @@ class GameIsometricNodes {
     if (ry < engine.Screen_Top - padding) return;
     if (ry > engine.Screen_Bottom + padding) return;
 
-    ClientState.lights_active++;
+    gamestream.games.isometric.clientState2.lights_active++;
 
     final row = getIndexRow(index);
     final column = getIndexColumn(index);
