@@ -104,7 +104,7 @@ class ClientEvents {
         if (GameEditor.gameObjectSelected.value) {
           gamestream.network.sendGameObjectRequestMoveToMouse();
         } else {
-          GameCamera.cameraSetPositionGrid(GameEditor.row, GameEditor.column, GameEditor.z);
+          gamestream.games.combat.camera.cameraSetPositionGrid(GameEditor.row, GameEditor.column, GameEditor.z);
         }
         break;
       case KeyCode.R:

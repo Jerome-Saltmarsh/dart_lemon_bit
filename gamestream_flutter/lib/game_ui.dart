@@ -577,7 +577,6 @@ class GameUI {
      );
   }
 
-
   static Widget buildGeneratedMiniMap({required double translate}){
     return watch(ClientState.sceneChanged, (_){
         return engine.buildCanvas(paint: (Canvas canvas, Size size){
@@ -586,8 +585,8 @@ class GameUI {
           final screenCenterX = size.width * 0.5;
           final screenCenterY = size.height * 0.5;
           const ratio = 2 / 48.0;
-          final targetX = GameCamera.chaseTarget.renderX * ratio;
-          final targetY = GameCamera.chaseTarget.renderY * ratio;
+          final targetX = gamestream.games.combat.camera.chaseTarget.renderX * ratio;
+          final targetY = gamestream.games.combat.camera.chaseTarget.renderY * ratio;
           final cameraX = targetX - (screenCenterX / scale) - translate;
           final cameraY = targetY - (screenCenterY / scale) - translate;
           canvas.translate(-cameraX, -cameraY);

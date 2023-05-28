@@ -93,7 +93,7 @@ class GameEvents {
         gamestream.audio.metal_struck.playXYZ(x, y, z);
         return;
       case GameEventType.Player_Spawn_Started:
-        GameCamera.centerOnPlayer();
+        gamestream.games.combat.camera.centerOnPlayer();
         gamestream.audio.teleport.playXYZ(x, y, z);
         return;
       case GameEventType.Explosion:
@@ -356,15 +356,15 @@ class GameEvents {
 
   static void onChangedEdit(bool value) {
     if (value) {
-      GameCamera.setModeFree();
+      gamestream.games.combat.camera.setModeFree();
       GameEditor.cursorSetToPlayer();
-      GameCamera.centerOnPlayer();
+      gamestream.games.combat.camera.centerOnPlayer();
       GamePlayer.message.value = "-press arrow keys to move\n\n-press tab to play";
       GamePlayer.messageTimer = 300;
     } else {
       GameEditor.deselectGameObject();
       ClientActions.clearMouseOverDialogType();
-      GameCamera.setModeChase();
+      gamestream.games.combat.camera.setModeChase();
       if (ServerState.sceneEditable.value){
         GamePlayer.message.value = "press tab to edit";
       }
@@ -422,7 +422,7 @@ class GameEvents {
       case PlayerEvent.Loot_Collected:
         return gamestream.audio.collect_star_3();
       case PlayerEvent.Scene_Changed:
-        GameCamera.centerOnPlayer();
+        gamestream.games.combat.camera.centerOnPlayer();
         // GameActions.setAmbientShadeToHour();
         break;
       case PlayerEvent.Item_Acquired:
@@ -443,7 +443,7 @@ class GameEvents {
           GameEditor.column = GamePlayer.indexColumn;
           GameEditor.z = GamePlayer.indexZ;
         }
-        GameCamera.centerOnPlayer();
+        gamestream.games.combat.camera.centerOnPlayer();
         gamestream.io.recenterCursor();
         break;
       case PlayerEvent.Insufficient_Gold:
@@ -583,25 +583,26 @@ class GameEvents {
 
   static void onChangedInputMode(int inputMode){
     if (inputMode == InputMode.Touch){
-      GameCamera.centerOnPlayer();
+      gamestream.games.combat.camera.centerOnPlayer();
       gamestream.io.recenterCursor();
     }
   }
 
   static void onChangedPlayerInteractMode(int value) {
+    final camera = gamestream.games.combat.camera;
     ClientActions.playSoundWindow();
     switch (value) {
       case InteractMode.Inventory:
-        GameCamera.translateX = GameInventoryUI.Inventory_Width * 0.5;
+        camera.translateX = GameInventoryUI.Inventory_Width * 0.5;
         break;
       case InteractMode.Talking:
-        GameCamera.translateX = -GameInventoryUI.Inventory_Width * 0.5;
+        camera.translateX = -GameInventoryUI.Inventory_Width * 0.5;
         break;
       case InteractMode.Trading:
-        GameCamera.translateX = 0;
+        camera.translateX = 0;
         break;
       case InteractMode.None:
-        GameCamera.translateX = 0;
+        camera.translateX = 0;
         ClientActions.clearHoverIndex();
         ClientActions.clearMouseOverDialogType();
         break;

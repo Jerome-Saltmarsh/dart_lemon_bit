@@ -8,6 +8,9 @@ import '../classes/game.dart';
 
 
 class GameAeon extends Game {
+
+  final camera = GameCamera();
+
   @override
   void drawCanvas(Canvas canvas, Size size) {
     if (ServerState.gameRunning.value){
@@ -16,7 +19,7 @@ class GameAeon extends Game {
       GameState.updateParticles();
     }
     GameState.interpolatePlayer();
-    GameCamera.update();
+    camera.update();
     GameRender.render3D();
     GameState.renderEditMode();
     GameRender.renderMouseTargetName();

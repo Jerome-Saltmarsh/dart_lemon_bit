@@ -226,7 +226,7 @@ class GameEditor {
       );
 
   static void actionRecenterCamera() =>
-      GameCamera.cameraSetPositionGrid(
+        gamestream.games.combat.camera.cameraSetPositionGrid(
         GameEditor.row,
         GameEditor.column,
         GameEditor.z,

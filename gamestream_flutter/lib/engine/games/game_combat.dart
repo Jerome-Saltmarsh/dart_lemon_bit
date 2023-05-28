@@ -10,6 +10,9 @@ import '../classes/game.dart';
 
 
 class GameCombat extends Game {
+
+  final camera = GameCamera();
+
   @override
   void drawCanvas(Canvas canvas, Size size) {
     if (ServerState.gameRunning.value){
@@ -18,7 +21,7 @@ class GameCombat extends Game {
       GameState.updateParticles();
     }
     GameState.interpolatePlayer();
-    GameCamera.update();
+    camera.update();
     GameRender.render3D();
     GameState.renderEditMode();
     GameRender.renderMouseTargetName();

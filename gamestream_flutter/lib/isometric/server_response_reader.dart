@@ -364,7 +364,7 @@ class ServerResponseReader with ByteReader {
         ClientActions.clearHoverDialogType();
         break;
       case ApiPlayer.Spawned:
-        GameCamera.centerOnPlayer();
+        gamestream.games.combat.camera.centerOnPlayer();
         gamestream.io.recenterCursor();
         break;
       case ApiPlayer.Damage:
