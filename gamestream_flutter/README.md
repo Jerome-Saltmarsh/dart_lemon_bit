@@ -10,6 +10,7 @@ ctrl + shift + e    : view recent changes
 [FIGHT2D]
 [x] strike down hit
 [x] audio volume distance
+[x] remove disconnected players
 [ ] map editor
 
 [AEON]

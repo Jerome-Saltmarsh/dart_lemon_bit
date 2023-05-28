@@ -75,11 +75,9 @@ class Engine {
 
   void _fixedUpdate(Timer timer) {
     frame++;
-
-    for (var i = 0; i < games.length; i++){
-      games[i].removeDisconnectedPlayers();
-      games[i].update();
-      games[i].writePlayerResponses();
+    for (final game in games){
+      game.update();
+      game.writePlayerResponses();
     }
     server.sendResponseToClients();
   }

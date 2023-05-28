@@ -39,8 +39,13 @@ class WebSocketConnection with ByteReader {
     sink = webSocket.sink;
 
     sink.done.then((value){
+      final player = _player;
+      if (player != null){
+        player.game.removePlayer(player);
+      }
       _player = null;
       onDone?.call();
+      subscription.cancel();
     });
 
     subscription = webSocket.stream.listen(onData, onError: onStreamError);
