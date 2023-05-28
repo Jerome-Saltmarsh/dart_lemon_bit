@@ -139,7 +139,7 @@ class GameNetwork {
     }
 
     if (response is Uint8List) {
-      return serverResponseReader.read(response, gsEngine.gameFight2D);
+      return gsEngine.serverResponseReader.read(response, gsEngine.gameFight2D);
     }
     if (response is String) {
       if (response.toLowerCase() == 'ping'){
@@ -173,7 +173,7 @@ class GameNetwork {
   void onChangedConnectionStatus(ConnectionStatus connection) {
     GameIO.removeListeners();
     Engine.onDrawForeground = null;
-    serverResponseReader.bufferSizeTotal.value = 0;
+    gsEngine.serverResponseReader.bufferSizeTotal.value = 0;
     ClientState.clearParticles();
     ClientState.window_visible_menu.setFalse();
     ClientState.control_visible_player_weapons.value = false;

@@ -8,8 +8,6 @@ import 'package:bleed_common/src/fight2d/game_fight2d_events.dart';
 
 import '../engine/instances.dart';
 
-final serverResponseReader = ServerResponseReader();
-
 class ServerResponseReader with ByteReader {
   final bufferSize = Watch(0);
   final bufferSizeTotal = Watch(0);

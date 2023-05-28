@@ -2,6 +2,7 @@ import 'package:gamestream_flutter/engine/games/game_aeon.dart';
 import 'package:gamestream_flutter/engine/games/game_cube3d.dart';
 import 'package:gamestream_flutter/engine/games/game_fight2d.dart';
 import 'package:gamestream_flutter/game_utils.dart';
+import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:gamestream_flutter/engine/games/game_website.dart' as gw;
@@ -14,6 +15,7 @@ class GSEngine {
    late final game = Watch<Game>(gameWebsite, onChanged: _onChangedGame);
    late final gameWebsite = gw.GameWebsite();
 
+   final serverResponseReader = ServerResponseReader();
    late final GameNetwork network;
    final gameFight2D = GameFight2D();
    final gameCube3D = GameCube3D();

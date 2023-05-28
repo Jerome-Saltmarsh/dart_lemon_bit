@@ -102,10 +102,10 @@ class GameEvents {
         onGameEventExplosion(x, y, z);
         return;
       case GameEventType.Power_Used:
-        onGameEventPowerUsed(x, y, z, serverResponseReader.readByte());
+        onGameEventPowerUsed(x, y, z, gsEngine.serverResponseReader.readByte());
         break;
       case GameEventType.AI_Target_Acquired:
-        final characterType = serverResponseReader.readByte();
+        final characterType = gsEngine.serverResponseReader.readByte();
         switch (characterType){
           case CharacterType.Zombie:
             Engine.randomItem(GameAudio.audioSingleZombieTalking).playXYZ(x, y, z);
@@ -126,7 +126,7 @@ class GameEvents {
         GameAudio.hover_over_button_sound_30.playXYZ(x, y, z);
         break;
       case GameEventType.Weapon_Type_Equipped:
-        final attackType =  serverResponseReader.readByte();
+        final attackType =  gsEngine.serverResponseReader.readByte();
         return GameEvents.onWeaponTypeEquipped(attackType, x, y, z);
       case GameEventType.Player_Spawned:
         for (var i = 0; i < 7; i++){
@@ -178,7 +178,7 @@ class GameEvents {
       case GameEventType.EnemyTargeted:
         break;
       case GameEventType.Attack_Missed:
-        final attackType = serverResponseReader.readUInt16();
+        final attackType = gsEngine.serverResponseReader.readUInt16();
         switch (attackType) {
           case ItemType.Empty:
             GameAudio.arm_swing_whoosh_11.playXYZ(x, y, z);
@@ -216,11 +216,11 @@ class GameEvents {
         break;
 
       case GameEventType.Character_Death:
-        onCharacterDeath(serverResponseReader.readByte(), x, y, z, angle);
+        onCharacterDeath(gsEngine.serverResponseReader.readByte(), x, y, z, angle);
         return;
 
       case GameEventType.Character_Hurt:
-        onGameEventCharacterHurt(serverResponseReader.readByte(), x, y, z, angle);
+        onGameEventCharacterHurt(gsEngine.serverResponseReader.readByte(), x, y, z, angle);
         return;
 
       case GameEventType.Game_Object_Destroyed:
@@ -229,7 +229,7 @@ class GameEvents {
             y,
             z,
             angle,
-            serverResponseReader.readUInt16(),
+          gsEngine.serverResponseReader.readUInt16(),
         );
         return;
     }
@@ -293,7 +293,7 @@ class GameEvents {
   }
 
   static void onAttackPerformed(double x, double y, double z, double angle) {
-    final attackType = serverResponseReader.readUInt16();
+    final attackType = gsEngine.serverResponseReader.readUInt16();
     final attackTypeAudio = GameAudio.MapItemTypeAudioSinglesAttack[attackType];
 
     if (attackTypeAudio != null) {
@@ -331,7 +331,7 @@ class GameEvents {
   }
 
   static void onMeleeAttackPerformed(double x, double y, double z, double angle) {
-    final attackType = serverResponseReader.readUInt16();
+    final attackType = gsEngine.serverResponseReader.readUInt16();
     final attackTypeAudio = GameAudio.MapItemTypeAudioSinglesAttackMelee[attackType];
 
     if (attackTypeAudio != null) {
@@ -488,7 +488,7 @@ class GameEvents {
   }
 
   static void readPlayerEventItemConsumed() {
-    switch (serverResponseReader.readUInt16()){
+    switch (gsEngine.serverResponseReader.readUInt16()){
       case ItemType.Consumables_Potion_Red:
         GameAudio.drink();
         GameAudio.reviveHeal1();
@@ -664,7 +664,7 @@ class GameEvents {
   }
 
   static void readPlayerEventItemAcquired() {
-    final itemType = serverResponseReader.readUInt16();
+    final itemType = gsEngine.serverResponseReader.readUInt16();
     if (itemType == ItemType.Empty) return;
 
     switch (itemType) {
