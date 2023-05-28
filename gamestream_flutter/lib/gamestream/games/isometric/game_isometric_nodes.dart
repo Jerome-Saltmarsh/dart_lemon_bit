@@ -1205,18 +1205,18 @@ class GameIsometricNodes {
 
   // TODO REFACTOR
   int getClosestByType({required int radius, required int type}){
-    final minRow = max(GamePlayer.position.indexRow - radius, 0);
-    final maxRow = min(GamePlayer.position.indexRow + radius, totalRows - 1);
-    final minColumn = max(GamePlayer.position.indexColumn - radius, 0);
-    final maxColumn = min(GamePlayer.position.indexColumn + radius, totalColumns - 1);
-    final minZ = max(GamePlayer.position.indexZ - radius, 0);
-    final maxZ = min(GamePlayer.position.indexZ + radius, totalZ - 1);
+    final minRow = max(gamestream.games.isometric.player.position.indexRow - radius, 0);
+    final maxRow = min(gamestream.games.isometric.player.position.indexRow + radius, totalRows - 1);
+    final minColumn = max(gamestream.games.isometric.player.position.indexColumn - radius, 0);
+    final maxColumn = min(gamestream.games.isometric.player.position.indexColumn + radius, totalColumns - 1);
+    final minZ = max(gamestream.games.isometric.player.position.indexZ - radius, 0);
+    final maxZ = min(gamestream.games.isometric.player.position.indexZ + radius, totalZ - 1);
     var closest = 99999;
     for (var z = minZ; z <= maxZ; z++){
       for (var row = minRow; row <= maxRow; row++){
         for (var column = minColumn; column <= maxColumn; column++){
           if (gamestream.games.isometric.nodes.gridNodeZRCType(z, row, column) != type) continue;
-          final distance = GamePlayer.position.getGridDistance(z, row, column);
+          final distance = gamestream.games.isometric.player.position.getGridDistance(z, row, column);
           if (distance > closest) continue;
           closest = distance;
         }

@@ -37,13 +37,13 @@ class GameIO {
   var panDistance = Watch(0.0);
   var panDirection = Watch(0.0);
 
-  double get mouseGridX => GameIsometric.convertWorldToGridX(engine.mouseWorldX, engine.mouseWorldY) + GamePlayer.position.z;
-  double get mouseGridY => GameIsometric.convertWorldToGridY(engine.mouseWorldX, engine.mouseWorldY) + GamePlayer.position.z;
-  double get mouseGridZ => GamePlayer.position.z;
+  double get mouseGridX => GameIsometric.convertWorldToGridX(engine.mouseWorldX, engine.mouseWorldY) + gamestream.games.isometric.player.position.z;
+  double get mouseGridY => GameIsometric.convertWorldToGridY(engine.mouseWorldX, engine.mouseWorldY) + gamestream.games.isometric.player.position.z;
+  double get mouseGridZ => gamestream.games.isometric.player.position.z;
 
   void recenterCursor(){
-    touchCursorWorldX = GamePlayer.renderX;
-    touchCursorWorldY = GamePlayer.renderY;
+    touchCursorWorldX = gamestream.games.isometric.player.renderX;
+    touchCursorWorldY = gamestream.games.isometric.player.renderY;
   }
 
   void detectInputMode() =>
@@ -117,7 +117,7 @@ class GameIO {
     _touchCursorTapY = details.globalPosition.dy;
   }
 
-  double get touchMouseWorldZ => GamePlayer.position.z;
+  double get touchMouseWorldZ => gamestream.games.isometric.player.position.z;
 
   /// compresses keyboard and mouse inputs into a single byte to send to the server
   int getInputAsByte(){

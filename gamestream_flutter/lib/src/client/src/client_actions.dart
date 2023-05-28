@@ -74,9 +74,9 @@ class ClientActions {
   static void spawnConfettiPlayer() {
      for (var i = 0; i < 10; i++){
        gamestream.games.isometric.clientState.spawnParticleConfetti(
-         GamePlayer.position.x,
-         GamePlayer.position.y,
-         GamePlayer.position.z,
+         gamestream.games.isometric.player.position.x,
+         gamestream.games.isometric.player.position.y,
+         gamestream.games.isometric.player.position.z,
        );
      }
   }

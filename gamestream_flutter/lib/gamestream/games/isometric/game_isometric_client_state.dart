@@ -235,10 +235,10 @@ class GameIsometricClientState {
   }
 
   void clear() {
-    GamePlayer.position.x = -1;
-    GamePlayer.position.y = -1;
-    GamePlayer.gameDialog.value = null;
-    GamePlayer.npcTalkOptions.value = [];
+    gamestream.games.isometric.player.position.x = -1;
+    gamestream.games.isometric.player.position.y = -1;
+    gamestream.games.isometric.player.gameDialog.value = null;
+    gamestream.games.isometric.player.npcTalkOptions.value = [];
     gamestream.games.isometric.serverState.totalZombies = 0;
     gamestream.games.isometric.serverState.totalPlayers = 0;
     gamestream.games.isometric.serverState.totalProjectiles = 0;
@@ -1097,7 +1097,7 @@ class GameIsometricClientState {
 
   void interpolatePlayer(){
 
-    if (!GamePlayer.interpolating.value) return;
+    if (!gamestream.games.isometric.player.interpolating.value) return;
     if (gamestream.games.isometric.clientState.rendersSinceUpdate.value == 0) {
       return;
     }
@@ -1105,9 +1105,9 @@ class GameIsometricClientState {
 
     final playerCharacter = gamestream.games.isometric.serverState.getPlayerCharacter();
     if (playerCharacter == null) return;
-    final velocityX = GamePlayer.position.x - GamePlayer.previousPosition.x;
-    final velocityY = GamePlayer.position.y - GamePlayer.previousPosition.y;
-    final velocityZ = GamePlayer.position.z - GamePlayer.previousPosition.z;
+    final velocityX = gamestream.games.isometric.player.position.x - gamestream.games.isometric.player.previousPosition.x;
+    final velocityY = gamestream.games.isometric.player.position.y - gamestream.games.isometric.player.previousPosition.y;
+    final velocityZ = gamestream.games.isometric.player.position.z - gamestream.games.isometric.player.previousPosition.z;
     playerCharacter.x += velocityX;
     playerCharacter.y += velocityY;
     playerCharacter.z -= velocityZ;
@@ -1157,10 +1157,10 @@ class GameIsometricClientState {
   }
 
   void updatePlayerMessageTimer() {
-    if (GamePlayer.messageTimer <= 0) return;
-    GamePlayer.messageTimer--;
-    if (GamePlayer.messageTimer > 0) return;
-    GamePlayer.message.value = "";
+    if (gamestream.games.isometric.player.messageTimer <= 0) return;
+    gamestream.games.isometric.player.messageTimer--;
+    if (gamestream.games.isometric.player.messageTimer > 0) return;
+    gamestream.games.isometric.player.message.value = "";
   }
 
   void toggleShadows () => gridShadows.value = !gridShadows.value;

@@ -1,4 +1,5 @@
 import 'package:gamestream_flutter/library.dart';
+import 'package:gamestream_flutter/src/server/src/server_events.dart';
 
 import 'game_isometric_constants.dart';
 
@@ -89,8 +90,8 @@ class GameIsometricServerState {
 
   Character? getPlayerCharacter(){
     for (var i = 0; i < totalCharacters; i++){
-      if (characters[i].x != GamePlayer.position.x) continue;
-      if (characters[i].y != GamePlayer.position.y) continue;
+      if (characters[i].x != gamestream.games.isometric.player.position.x) continue;
+      if (characters[i].y != gamestream.games.isometric.player.position.y) continue;
       return characters[i];
     }
     return null;
@@ -312,16 +313,16 @@ class GameIsometricServerState {
 
   int getItemTypeAtInventoryIndex(int index){
     if (index == ItemType.Equipped_Weapon)
-      return GamePlayer.weapon.value;
+      return gamestream.games.isometric.player.weapon.value;
 
     if (index == ItemType.Equipped_Head)
-      return GamePlayer.head.value;
+      return gamestream.games.isometric.player.head.value;
 
     if (index == ItemType.Equipped_Body)
-      return GamePlayer.body.value;
+      return gamestream.games.isometric.player.body.value;
 
     if (index == ItemType.Equipped_Legs)
-      return GamePlayer.legs.value;
+      return gamestream.games.isometric.player.legs.value;
 
     if (index == ItemType.Belt_1){
       return playerBelt1_ItemType.value;
@@ -385,10 +386,10 @@ class GameIsometricServerState {
       getItemQuantityAtIndex(equippedWeaponIndex.value);
 
   int getEquippedItemType(int itemType) =>
-      ItemType.isTypeWeapon (itemType) ? GamePlayer.weapon.value :
-      ItemType.isTypeHead   (itemType) ? GamePlayer.head.value   :
-      ItemType.isTypeBody   (itemType) ? GamePlayer.body.value   :
-      ItemType.isTypeLegs   (itemType) ? GamePlayer.legs.value   :
+      ItemType.isTypeWeapon (itemType) ? gamestream.games.isometric.player.weapon.value :
+      ItemType.isTypeHead   (itemType) ? gamestream.games.isometric.player.head.value   :
+      ItemType.isTypeBody   (itemType) ? gamestream.games.isometric.player.body.value   :
+      ItemType.isTypeLegs   (itemType) ? gamestream.games.isometric.player.legs.value   :
       ItemType.Empty          ;
 
   int getEquippedWeaponConsumeType() =>

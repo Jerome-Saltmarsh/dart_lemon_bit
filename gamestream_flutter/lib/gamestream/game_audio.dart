@@ -306,7 +306,7 @@ class GameAudio {
 
   void playAudioSingle(AudioSingle audioSingle, double x, double y, double z, {double maxDistance = 400}){
     // TODO calculate from screen center instead
-    final distanceFromPlayer = GamePlayer.position.distance3(x, y, z);
+    final distanceFromPlayer = gamestream.games.isometric.player.position.distance3(x, y, z);
     final distanceVolume = convertDistanceToVolume(
       distanceFromPlayer,
       maxDistance: maxDistance,

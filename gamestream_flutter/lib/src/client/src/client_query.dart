@@ -51,14 +51,14 @@ class ClientQuery {
   }
 
   static double getMousePlayerAngle(){
-    final adjacent = GamePlayer.renderX - engine.mouseWorldX;
-    final opposite = GamePlayer.renderY - engine.mouseWorldY;
+    final adjacent = gamestream.games.isometric.player.renderX - engine.mouseWorldX;
+    final opposite = gamestream.games.isometric.player.renderY - engine.mouseWorldY;
     return angle(adjacent, opposite);
   }
 
   static double getMousePlayerRenderDistance(){
-    final adjacent = GamePlayer.renderX - engine.mouseWorldX;
-    final opposite = GamePlayer.renderY - engine.mouseWorldY;
+    final adjacent = gamestream.games.isometric.player.renderX - engine.mouseWorldX;
+    final opposite = gamestream.games.isometric.player.renderY - engine.mouseWorldY;
     return hyp(adjacent, opposite);
   }
 }

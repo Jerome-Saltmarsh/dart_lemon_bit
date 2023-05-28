@@ -6,6 +6,10 @@ import 'enums/connection_status.dart';
 
 
 class GameNetwork {
+
+  static var portLocalhost = '8080';
+  static String get wsLocalHost => 'ws://localhost:${portLocalhost}';
+  
   late WebSocketChannel webSocketChannel;
   late WebSocketSink sink;
   final updateBuffer = Uint8List(15);
@@ -25,7 +29,7 @@ class GameNetwork {
   void connectToRegion(ConnectionRegion region, String message) {
     print("connectToRegion(${region.name}");
     if (region == ConnectionRegion.LocalHost) {
-      connectToServer(GameNetworkConfig.wsLocalHost, message);
+      connectToServer(wsLocalHost, message);
       return;
     }
     if (region == ConnectionRegion.Custom) {
@@ -198,7 +202,7 @@ class GameNetwork {
         break;
 
       case ConnectionStatus.Done:
-        GamePlayer.active.value = false;
+        gamestream.games.isometric.player.active.value = false;
         gamestream.games.isometric.clientState.timeConnectionEstablished = null;
         engine.cameraX = 0;
         engine.cameraY = 0;

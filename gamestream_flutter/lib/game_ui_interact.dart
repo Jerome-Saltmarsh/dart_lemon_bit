@@ -54,7 +54,7 @@ class GameUIInteract {
           Positioned(
             left: 0,
             top: 100,
-            child: watch(GamePlayer.storeItems, buildContainerStoreItems),
+            child: watch(gamestream.games.isometric.player.storeItems, buildContainerStoreItems),
           ),
           buildInteractModeInventory(),
         ],
@@ -119,8 +119,8 @@ class GameUIInteract {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              watch(GamePlayer.npcTalk, buildControlNpcTalk),
-              watch(GamePlayer.npcTalkOptions, buildControlNpcTopics)
+              watch(gamestream.games.isometric.player.npcTalk, buildControlNpcTalk),
+              watch(gamestream.games.isometric.player.npcTalkOptions, buildControlNpcTopics)
             ],
           ),
         ),

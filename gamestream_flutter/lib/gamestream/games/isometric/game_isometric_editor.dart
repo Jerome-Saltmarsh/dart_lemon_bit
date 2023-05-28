@@ -204,8 +204,8 @@ class GameIsometricEditor {
   }
 
   void cursorSetToPlayer() {
-    if (!GamePlayer.inBounds) return;
-    nodeSelectedIndex.value = GamePlayer.position.nodeIndex;
+    if (!gamestream.games.isometric.player.inBounds) return;
+    nodeSelectedIndex.value = gamestream.games.isometric.player.position.nodeIndex;
   }
   void cursorRowIncrease() => row++;
   void cursorRowDecrease() => row--;

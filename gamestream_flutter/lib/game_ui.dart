@@ -188,7 +188,7 @@ class GameUI {
                               child: Column(
                                 children: [
                                   text("HEALTH"),
-                                  watch(GamePlayer.attributeHealth, text),
+                                  watch(gamestream.games.isometric.player.attributeHealth, text),
                                 ],
                               ),
                             ),
@@ -202,7 +202,7 @@ class GameUI {
                               child: Column(
                                 children: [
                                   text("DAMAGE"),
-                                  watch(GamePlayer.attributeDamage, text),
+                                  watch(gamestream.games.isometric.player.attributeDamage, text),
                                 ],
                               ),
                             ),
@@ -216,7 +216,7 @@ class GameUI {
                               child: Column(
                                 children: [
                                   text("MAGIC"),
-                                  watch(GamePlayer.attributeMagic, text),
+                                  watch(gamestream.games.isometric.player.attributeMagic, text),
                                 ],
                               ),
                             ),
@@ -309,7 +309,7 @@ class GameUI {
                   action: () => gamestream.network.sendClientRequest(ClientRequest.Select_Power, powerType),
                   child: Container(
                       margin: const EdgeInsets.only(bottom: 6),
-                      child: watch(GamePlayer.powerType, (int playerPowerType){
+                      child: watch(gamestream.games.isometric.player.powerType, (int playerPowerType){
                         return text(PowerType.getName(powerType),
                           color: powerType == playerPowerType ? GameIsometricColors.orange : GameIsometricColors.white80,
                           size: textSize,
@@ -324,7 +324,7 @@ class GameUI {
       ],
     );
 
-    final columnSelectWeaponLeft = watch(GamePlayer.weaponPrimary, (int weaponPrimary) {
+    final columnSelectWeaponLeft = watch(gamestream.games.isometric.player.weaponPrimary, (int weaponPrimary) {
        return Column(
          mainAxisAlignment: MainAxisAlignment.start,
          children: [
@@ -355,7 +355,7 @@ class GameUI {
        );
     });
 
-    final columnSelectWeaponRight = watch(GamePlayer.weaponSecondary, (int weaponSecondary) {
+    final columnSelectWeaponRight = watch(gamestream.games.isometric.player.weaponSecondary, (int weaponSecondary) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -597,7 +597,7 @@ class GameUI {
 
           for (var i = 0; i < gamestream.games.isometric.serverState.totalCharacters; i++) {
             final character = gamestream.games.isometric.serverState.characters[i];
-            final isPlayer = GamePlayer.isCharacter(character);
+            final isPlayer = gamestream.games.isometric.player.isCharacter(character);
             engine.renderExternalCanvas(
                 canvas: canvas,
                 image: GameImages.atlas_gameobjects,
@@ -689,7 +689,7 @@ class GameUI {
         //         width: GameUIConfig.runButtonSize,
         //         height: GameUIConfig.runButtonSize,
         //         alignment: Alignment.center,
-        //         child: watch(GamePlayer.weapon, (int itemType) => buildAtlasItemType(itemType)),
+        //         child: watch(gamestream.games.isometric.player.weapon, (int itemType) => buildAtlasItemType(itemType)),
         //         decoration: BoxDecoration(
         //           shape: BoxShape.circle,
         //           border: Border.all(color: Colors.white70, width: 5),
@@ -717,13 +717,13 @@ class GameUI {
   static Positioned buildWatchInterpolation() => Positioned(
         bottom: 0,
         left: 0,
-        child: watch(GamePlayer.interpolating, (bool value) {
+        child: watch(gamestream.games.isometric.player.interpolating, (bool value) {
           if (!value)
             return text("Interpolation Off",
-                onPressed: () => GamePlayer.interpolating.value = true);
+                onPressed: () => gamestream.games.isometric.player.interpolating.value = true);
           return watch(gamestream.games.isometric.clientState.rendersSinceUpdate, (int frames) {
             return text("Frames: $frames",
-                onPressed: () => GamePlayer.interpolating.value = false);
+                onPressed: () => gamestream.games.isometric.player.interpolating.value = false);
           });
         }),
       );
@@ -736,7 +736,7 @@ class GameUI {
             color: GameStyle.Container_Color,
             padding: GameStyle.Container_Padding,
             alignment: Alignment.center,
-            child: watch(GamePlayer.respawnTimer, (int respawnTimer){
+            child: watch(gamestream.games.isometric.player.respawnTimer, (int respawnTimer){
               return text("RESPAWN: ${respawnTimer ~/ Server_FPS}", size: 25);
             }),
           );
@@ -775,15 +775,15 @@ class GameUI {
 
   static Widget buildRowPlayerScore(PlayerScore playerScore) =>
       Container(
-        color: playerScore.id == GamePlayer.id.value
+        color: playerScore.id == gamestream.games.isometric.player.id.value
             ? Colors.white10
             : Colors.transparent,
         padding: GameStyle.Padding_4,
         child: Row(
          mainAxisAlignment: MainAxisAlignment.spaceBetween,
          children: [
-           text(playerScore.name, bold: playerScore.id == GamePlayer.id.value),
-           text(playerScore.credits, bold: playerScore.id == GamePlayer.id.value),
+           text(playerScore.name, bold: playerScore.id == gamestream.games.isometric.player.id.value),
+           text(playerScore.credits, bold: playerScore.id == gamestream.games.isometric.player.id.value),
          ],
       ),
   );
@@ -954,7 +954,7 @@ class GameUI {
           )
         ),
         buildWatchBool(gamestream.games.isometric.clientState.control_visible_player_power, (){
-          return buildWatchBool(GamePlayer.powerReady, () =>
+          return buildWatchBool(gamestream.games.isometric.player.powerReady, () =>
               Positioned(
                 child: buildIconPlayerPowerType(),
                 left: GameStyle.Default_Padding,
@@ -979,13 +979,13 @@ class GameUI {
   }
 
   // static Widget buildWindowMouseOverItemType(){
-  //   return watch(GamePlayer.items_reads, (_){
+  //   return watch(gamestream.games.isometric.player.items_reads, (_){
   //     return watch(GameOptions.ItemType_Damage, (MapListInt itemMap){
   //       return watch(gamestream.games.isometric.clientState.mouseOverItemType, (int itemType){
   //         if (itemType < 0) return GameStyle.Null;
   //         final entry = itemMap[itemType];
   //         if (entry == null) return GameStyle.Null;
-  //         final currentLevel = GamePlayer.items[itemType] ?? 1;
+  //         final currentLevel = gamestream.games.isometric.player.items[itemType] ?? 1;
   //         return buildContainer(
   //           width: GameStyle.Window_PlayerItems_Width,
   //           child: Column(
@@ -1045,7 +1045,7 @@ class GameUI {
               );
 
   // static Widget buildWindowPlayerItems(){
-  //     return watch(GamePlayer.items_reads, (t) {
+  //     return watch(gamestream.games.isometric.player.items_reads, (t) {
   //       return watch(gamestream.games.isometric.clientState.itemGroup, (ItemGroup activeItemGroup) {
   //         return buildContainer(
   //           width: GameStyle.Window_PlayerItems_Width,
@@ -1062,11 +1062,11 @@ class GameUI {
   //                   ].map(buildIconItemTab).toList()),
   //               Column(
   //                 crossAxisAlignment: CrossAxisAlignment.start,
-  //                 children: GamePlayer
+  //                 children: gamestream.games.isometric.player
   //                     .getItemTypesByItemGroup(activeItemGroup)
   //                     .map((itemType) => buildItemRow(
   //                       itemType: itemType,
-  //                       itemValue: GamePlayer.items[itemType] ?? 0,
+  //                       itemValue: gamestream.games.isometric.player.items[itemType] ?? 0,
   //                     )
   //                 ).toList(),
   //               ),
@@ -1081,7 +1081,7 @@ class GameUI {
   //   required int itemType,
   //   required int itemValue,
   // }){
-  //   return watch(GamePlayer.getItemTypeWatch(itemType), (int equippedItemType) {
+  //   return watch(gamestream.games.isometric.player.getItemTypeWatch(itemType), (int equippedItemType) {
   //      final active = equippedItemType == itemType;
   //      final fullyUpgraded = itemValue >= 5;
   //      final cost = fullyUpgraded ? 0 : GameOptions.ItemType_Cost.value[itemType]?[itemValue] ?? 0;
@@ -1193,9 +1193,9 @@ class GameUI {
   }
 
   static Widget buildIconPlayerPowerType(){
-    return watch(GamePlayer.powerReady, (bool powerReady) {
+    return watch(gamestream.games.isometric.player.powerReady, (bool powerReady) {
       return !powerReady ? width64 :
-        watch(GamePlayer.powerType, buildIconPowerType);
+        watch(gamestream.games.isometric.player.powerType, buildIconPowerType);
     });
   }
 
@@ -1209,7 +1209,7 @@ class GameUI {
     return buildDialogUIControl(
       child: Tooltip(
         message: 'SPACE-BAR',
-        child: watch(GamePlayer.totalGrenades, (int totalGrenades) => Row(
+        child: watch(gamestream.games.isometric.player.totalGrenades, (int totalGrenades) => Row(
             children: List.generate(totalGrenades, (index) => icon))
         ),
       ),
@@ -1261,7 +1261,7 @@ class GameUI {
     return Container(
           constraints: BoxConstraints(maxWidth: 120),
           height: 64,
-          child: watch(GamePlayer.weaponSecondary, buildAtlasItemType),
+          child: watch(gamestream.games.isometric.player.weaponSecondary, buildAtlasItemType),
         );
   }
 
@@ -1287,7 +1287,7 @@ class GameUI {
     return Container(
           constraints: BoxConstraints(maxWidth: 120, maxHeight: 64),
           height: 64,
-          child: watch(GamePlayer.weaponPrimary, buildAtlasItemType),
+          child: watch(gamestream.games.isometric.player.weaponPrimary, buildAtlasItemType),
         );
   }
 
@@ -1305,8 +1305,8 @@ class GameUI {
   }
 
   static Widget buildIconPlayerWeaponMelee(){
-    return watch(GamePlayer.weapon, (int playerWeaponType){
-      return watch(GamePlayer.weaponTertiary, (int itemType) {
+    return watch(gamestream.games.isometric.player.weapon, (int playerWeaponType){
+      return watch(gamestream.games.isometric.player.weaponTertiary, (int itemType) {
         return border(
           color: playerWeaponType == itemType ? Colors.white70 : Colors.black54,
           width: 3,
@@ -1383,8 +1383,8 @@ class GameUI {
                   width: width,
                   height: height,
                   alignment: Alignment.topCenter,
-                  child: watch(GamePlayer.energyMax, (int energyMax) {
-                    return watch(GamePlayer.energy, (int energy){
+                  child: watch(gamestream.games.isometric.player.energyMax, (int energyMax) {
+                    return watch(gamestream.games.isometric.player.energy, (int energy){
                        return Container(
                          width: width,
                          height: height * energy / max(energyMax, 1),
@@ -1557,7 +1557,7 @@ class GameUI {
                         italic: true,
                         color: Colors.white70,
                       ))),
-        if (itemType != ItemType.Empty && GamePlayer.weapon.value == itemType)
+        if (itemType != ItemType.Empty && gamestream.games.isometric.player.weapon.value == itemType)
           Container(
             width: 64,
             height: 64,

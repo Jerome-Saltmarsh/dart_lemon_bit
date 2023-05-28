@@ -109,8 +109,8 @@ class GameInventoryUI {
     return GameUI.buildDialogUIControl(
       child: buildHoverTarget(
               hoverTargetType: ClientType.Hover_Target_Player_Stats_Energy,
-              child: watch(GamePlayer.energyMax, (int energyMax) {
-                return watch(GamePlayer.energy, (int energy) {
+              child: watch(gamestream.games.isometric.player.energyMax, (int energyMax) {
+                return watch(gamestream.games.isometric.player.energy, (int energy) {
                   return Stack(
                     children: [
                       Container(color: Colors.white24, height: height, width: width),
@@ -204,16 +204,16 @@ class GameInventoryUI {
           ));
 
   static Widget buildContainerEquippedWeapon() =>
-      buildWatchEquippedItemType(GamePlayer.weapon, ItemType.Equipped_Weapon);
+      buildWatchEquippedItemType(gamestream.games.isometric.player.weapon, ItemType.Equipped_Weapon);
 
   static Widget buildContainerEquippedBody() =>
-      buildWatchEquippedItemType(GamePlayer.body, ItemType.Equipped_Body);
+      buildWatchEquippedItemType(gamestream.games.isometric.player.body, ItemType.Equipped_Body);
 
   static Widget buildContainerEquippedHead() =>
-      buildWatchEquippedItemType(GamePlayer.head, ItemType.Equipped_Head);
+      buildWatchEquippedItemType(gamestream.games.isometric.player.head, ItemType.Equipped_Head);
 
   static Widget buildContainerEquippedLegs() =>
-      buildWatchEquippedItemType(GamePlayer.legs, ItemType.Equipped_Legs);
+      buildWatchEquippedItemType(gamestream.games.isometric.player.legs, ItemType.Equipped_Legs);
 
   static Widget buildWatchEquippedItemType(Watch<int> watchInt, int index) =>
    Container(
@@ -400,26 +400,26 @@ class GameInventoryUI {
              )
          );
 
-         if (GamePlayer.head.value != ItemType.Empty) {
+         if (gamestream.games.isometric.player.head.value != ItemType.Empty) {
            children.add(
-               _buildRowHoverValue(itemType: GamePlayer.head.value,
-                 // value: GameOptions.getItemTypeDamage(GamePlayer.head.value),
+               _buildRowHoverValue(itemType: gamestream.games.isometric.player.head.value,
+                 // value: GameOptions.getItemTypeDamage(gamestream.games.isometric.player.head.value),
                  value: 0,
                  total: total,)
            );
          }
-         if (GamePlayer.body.value != ItemType.Empty) {
+         if (gamestream.games.isometric.player.body.value != ItemType.Empty) {
            children.add(
-               _buildRowHoverValue(itemType: GamePlayer.body.value,
-                 // value: GameOptions.getItemTypeDamage(GamePlayer.body.value),
+               _buildRowHoverValue(itemType: gamestream.games.isometric.player.body.value,
+                 // value: GameOptions.getItemTypeDamage(gamestream.games.isometric.player.body.value),
                  value: 0,
                  total: total,)
            );
          }
-         if (GamePlayer.legs.value != ItemType.Empty) {
+         if (gamestream.games.isometric.player.legs.value != ItemType.Empty) {
            children.add(
-               _buildRowHoverValue(itemType: GamePlayer.legs.value,
-                 // value: GameOptions.getItemTypeDamage(GamePlayer.legs.value),
+               _buildRowHoverValue(itemType: gamestream.games.isometric.player.legs.value,
+                 // value: GameOptions.getItemTypeDamage(gamestream.games.isometric.player.legs.value),
                  value: 0,
                  total: total,)
            );
@@ -458,13 +458,13 @@ class GameInventoryUI {
        );
 
        children.add(
-           _buildRowHoverValue(itemType: GamePlayer.head.value, value: ItemType.getMaxHealth(GamePlayer.head.value), total: total)
+           _buildRowHoverValue(itemType: gamestream.games.isometric.player.head.value, value: ItemType.getMaxHealth(gamestream.games.isometric.player.head.value), total: total)
        );
        children.add(
-           _buildRowHoverValue(itemType: GamePlayer.body.value, value: ItemType.getMaxHealth(GamePlayer.body.value), total: total)
+           _buildRowHoverValue(itemType: gamestream.games.isometric.player.body.value, value: ItemType.getMaxHealth(gamestream.games.isometric.player.body.value), total: total)
        );
        children.add(
-           _buildRowHoverValue(itemType: GamePlayer.legs.value, value: ItemType.getMaxHealth(GamePlayer.legs.value), total: total)
+           _buildRowHoverValue(itemType: gamestream.games.isometric.player.legs.value, value: ItemType.getMaxHealth(gamestream.games.isometric.player.legs.value), total: total)
        );
        for (final beltType in gamestream.games.isometric.serverState.watchBeltItemTypes) {
          if (!ItemType.isTypeTrinket(beltType.value)) continue;
@@ -479,7 +479,7 @@ class GameInventoryUI {
      }
 
      if (hoverTarget == ClientType.Hover_Target_Player_Stats_Energy) {
-       final total = GamePlayer.energyMax.value;
+       final total = gamestream.games.isometric.player.energyMax.value;
        children.add(Row(
          mainAxisAlignment: MainAxisAlignment.spaceBetween,
          children: [
@@ -498,25 +498,25 @@ class GameInventoryUI {
            )
        );
 
-       if (GamePlayer.head.value != ItemType.Empty) {
+       if (gamestream.games.isometric.player.head.value != ItemType.Empty) {
          children.add(
-             _buildRowHoverValue(itemType: GamePlayer.head.value,
-               value: ItemType.getEnergy(GamePlayer.head.value),
+             _buildRowHoverValue(itemType: gamestream.games.isometric.player.head.value,
+               value: ItemType.getEnergy(gamestream.games.isometric.player.head.value),
                total: total,)
          );
        }
 
-       if (GamePlayer.body.value != ItemType.Empty) {
+       if (gamestream.games.isometric.player.body.value != ItemType.Empty) {
          children.add(
-             _buildRowHoverValue(itemType: GamePlayer.body.value,
-               value: ItemType.getEnergy(GamePlayer.body.value),
+             _buildRowHoverValue(itemType: gamestream.games.isometric.player.body.value,
+               value: ItemType.getEnergy(gamestream.games.isometric.player.body.value),
                total: total,)
          );
        }
-       if (GamePlayer.legs.value != ItemType.Empty) {
+       if (gamestream.games.isometric.player.legs.value != ItemType.Empty) {
          children.add(
-             _buildRowHoverValue(itemType: GamePlayer.legs.value,
-               value: ItemType.getEnergy(GamePlayer.legs.value),
+             _buildRowHoverValue(itemType: gamestream.games.isometric.player.legs.value,
+               value: ItemType.getEnergy(gamestream.games.isometric.player.legs.value),
                total: total,)
          );
        }
@@ -578,7 +578,7 @@ class GameInventoryUI {
   static Widget buildPositionedContainerItemTypeInformation(int itemIndex){
     if (itemIndex == -1) return GameStyle.Null;
 
-    final itemType = gamestream.games.isometric.clientState.hoverDialogType.value == DialogType.Trade ? GamePlayer.storeItems.value[itemIndex] : gamestream.games.isometric.serverState.getItemTypeAtInventoryIndex(itemIndex);
+    final itemType = gamestream.games.isometric.clientState.hoverDialogType.value == DialogType.Trade ? gamestream.games.isometric.player.storeItems.value[itemIndex] : gamestream.games.isometric.serverState.getItemTypeAtInventoryIndex(itemIndex);
 
     if (itemType == ItemType.Empty) return GameStyle.Null;
 
@@ -661,9 +661,9 @@ class GameInventoryUI {
                 text("left click to equip", color: GameIsometricColors.inventoryHint),
               if (gamestream.games.isometric.clientState.hoverDialogIsInventory && ItemType.isFood(itemType))
                 text("left click to eat", color: GameIsometricColors.inventoryHint),
-              if (GamePlayer.interactModeTrading && gamestream.games.isometric.clientState.hoverDialogIsInventory)
+              if (gamestream.games.isometric.player.interactModeTrading && gamestream.games.isometric.clientState.hoverDialogIsInventory)
                 text("right click to sell", color: GameIsometricColors.inventoryHint),
-              if (!GamePlayer.interactModeTrading && gamestream.games.isometric.clientState.hoverDialogIsInventory)
+              if (!gamestream.games.isometric.player.interactModeTrading && gamestream.games.isometric.clientState.hoverDialogIsInventory)
                 text("right click to drop", color: GameIsometricColors.inventoryHint),
             ],
           ),

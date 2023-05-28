@@ -73,7 +73,7 @@ class ServerResponseReader with ByteReader {
           readNode();
           break;
         case ServerResponse.Player_Target:
-          readVector3(GamePlayer.target);
+          readVector3(gamestream.games.isometric.player.target);
           break;
         case ServerResponse.Store_Items:
           readStoreItems();
@@ -239,36 +239,36 @@ class ServerResponseReader with ByteReader {
         readApiPlayerPosition();
         break;
       case ApiPlayer.Aim_Target_Category:
-        GamePlayer.aimTargetCategory = readByte();
+        gamestream.games.isometric.player.aimTargetCategory = readByte();
         break;
       case ApiPlayer.Aim_Target_Position:
-        readVector3(GamePlayer.aimTargetPosition);
+        readVector3(gamestream.games.isometric.player.aimTargetPosition);
         break;
       case ApiPlayer.Aim_Target_Type:
-        GamePlayer.aimTargetType = readUInt16();
+        gamestream.games.isometric.player.aimTargetType = readUInt16();
         break;
       case ApiPlayer.Aim_Target_Quantity:
-        GamePlayer.aimTargetQuantity = readUInt16();
+        gamestream.games.isometric.player.aimTargetQuantity = readUInt16();
         break;
       case ApiPlayer.Aim_Target_Name:
-        GamePlayer.aimTargetName = readString();
+        gamestream.games.isometric.player.aimTargetName = readString();
         break;
       case ApiPlayer.Power:
-        GamePlayer.powerType.value = readByte();
-        GamePlayer.powerReady.value = readBool();
+        gamestream.games.isometric.player.powerType.value = readByte();
+        gamestream.games.isometric.player.powerReady.value = readBool();
         break;
       case ApiPlayer.Respawn_Timer:
-        GamePlayer.respawnTimer.value = readUInt16();
+        gamestream.games.isometric.player.respawnTimer.value = readUInt16();
         break;
       case ApiPlayer.PerkType:
-        GamePlayer.perkType.value = readByte();
+        gamestream.games.isometric.player.perkType.value = readByte();
         break;
       case ApiPlayer.Target_Position:
-        GamePlayer.runningToTarget = true;
-        readVector3(GamePlayer.targetPosition);
+        gamestream.games.isometric.player.runningToTarget = true;
+        readVector3(gamestream.games.isometric.player.targetPosition);
         break;
       case ApiPlayer.Target_Category:
-        GamePlayer.targetCategory = readByte();
+        gamestream.games.isometric.player.targetCategory = readByte();
         break;
       case ApiPlayer.Experience_Percentage:
         gamestream.games.isometric.serverState.playerExperiencePercentage.value = readPercentage();
@@ -280,7 +280,7 @@ class ServerResponseReader with ByteReader {
         readPlayerHealth();
         break;
       case ApiPlayer.Weapon_Cooldown:
-        GamePlayer.weaponCooldown.value = readPercentage();
+        gamestream.games.isometric.player.weaponCooldown.value = readPercentage();
         break;
       case ApiPlayer.Accuracy:
         gamestream.games.isometric.serverState.playerAccuracy.value = readPercentage();
@@ -295,8 +295,8 @@ class ServerResponseReader with ByteReader {
         gamestream.games.isometric.serverState.playerCredits.value = readUInt16();
         break;
       case ApiPlayer.Energy:
-        // GamePlayer.energy.value = readUInt16();
-        // GamePlayer.energyMax.value = readUInt16();
+        // gamestream.games.isometric.player.energy.value = readUInt16();
+        // gamestream.games.isometric.player.energyMax.value = readUInt16();
         readApiPlayerEnergy();
         break;
       case ApiPlayer.Weapons:
@@ -306,7 +306,7 @@ class ServerResponseReader with ByteReader {
       //   readPlayerWeaponQuantity();
       //   break;
       case ApiPlayer.Aim_Angle:
-        GamePlayer.mouseAngle = readAngle();
+        gamestream.games.isometric.player.mouseAngle = readAngle();
         break;
       case ApiPlayer.Inventory:
         readPlayerInventory();
@@ -357,10 +357,10 @@ class ServerResponseReader with ByteReader {
         ClientActions.redrawInventory();
         break;
       case ApiPlayer.Message:
-        GamePlayer.message.value = readString();
+        gamestream.games.isometric.player.message.value = readString();
         break;
       case ApiPlayer.Alive:
-        GamePlayer.alive.value = readBool();
+        gamestream.games.isometric.player.alive.value = readBool();
         ClientActions.clearHoverDialogType();
         break;
       case ApiPlayer.Spawned:
@@ -371,25 +371,25 @@ class ServerResponseReader with ByteReader {
         gamestream.games.isometric.serverState.playerDamage.value = readUInt16();
         break;
       case ApiPlayer.Items:
-        readMap(GamePlayer.items);
-        GamePlayer.Refresh_Items();
+        readMap(gamestream.games.isometric.player.items);
+        gamestream.games.isometric.player.Refresh_Items();
         break;
       case ApiPlayer.Equipment:
         readPlayerEquipped();
         break;
       case ApiPlayer.Grenades:
-        GamePlayer.totalGrenades.value = readUInt16();
+        gamestream.games.isometric.player.totalGrenades.value = readUInt16();
         break;
       case ApiPlayer.Id:
-        GamePlayer.id.value = readUInt24();
+        gamestream.games.isometric.player.id.value = readUInt24();
         break;
       case ApiPlayer.Active:
-        GamePlayer.active.value = readBool();
+        gamestream.games.isometric.player.active.value = readBool();
         break;
       case ApiPlayer.Attribute_Values:
-        GamePlayer.attributeHealth.value = readUInt16();
-        GamePlayer.attributeDamage.value = readUInt16();
-        GamePlayer.attributeMagic.value = readUInt16();
+        gamestream.games.isometric.player.attributeHealth.value = readUInt16();
+        gamestream.games.isometric.player.attributeDamage.value = readUInt16();
+        gamestream.games.isometric.player.attributeMagic.value = readUInt16();
         break;
       default:
         throw Exception("Cannot parse apiPlayer $apiPlayer");
@@ -397,43 +397,43 @@ class ServerResponseReader with ByteReader {
   }
 
   void readApiPlayerPosition(){
-    GamePlayer.previousPosition.x = GamePlayer.position.x;
-    GamePlayer.previousPosition.y = GamePlayer.position.y;
-    GamePlayer.previousPosition.z = GamePlayer.position.z;
-    readVector3(GamePlayer.position);
-    GamePlayer.indexColumn = GamePlayer.position.indexColumn;
-    GamePlayer.indexRow = GamePlayer.position.indexRow;
-    GamePlayer.indexZ = GamePlayer.position.indexZ;
-    GamePlayer.nodeIndex = GamePlayer.position.nodeIndex;
+    gamestream.games.isometric.player.previousPosition.x = gamestream.games.isometric.player.position.x;
+    gamestream.games.isometric.player.previousPosition.y = gamestream.games.isometric.player.position.y;
+    gamestream.games.isometric.player.previousPosition.z = gamestream.games.isometric.player.position.z;
+    readVector3(gamestream.games.isometric.player.position);
+    gamestream.games.isometric.player.indexColumn = gamestream.games.isometric.player.position.indexColumn;
+    gamestream.games.isometric.player.indexRow = gamestream.games.isometric.player.position.indexRow;
+    gamestream.games.isometric.player.indexZ = gamestream.games.isometric.player.position.indexZ;
+    gamestream.games.isometric.player.nodeIndex = gamestream.games.isometric.player.position.nodeIndex;
   }
 
   void readApiPlayerEnergy() =>
-      GamePlayer.energyPercentage = readPercentage();
+      gamestream.games.isometric.player.energyPercentage = readPercentage();
 
   void readPlayerWeapons() {
-    GamePlayer.weapon.value = readUInt16();
+    gamestream.games.isometric.player.weapon.value = readUInt16();
 
-    GamePlayer.weaponPrimary.value           = readUInt16();
-    // GamePlayer.weaponPrimaryQuantity.value   = readUInt16();
-    // GamePlayer.weaponPrimaryCapacity.value   = readUInt16();
-    // GamePlayer.weaponPrimaryLevel.value      = readUInt8();
+    gamestream.games.isometric.player.weaponPrimary.value           = readUInt16();
+    // gamestream.games.isometric.player.weaponPrimaryQuantity.value   = readUInt16();
+    // gamestream.games.isometric.player.weaponPrimaryCapacity.value   = readUInt16();
+    // gamestream.games.isometric.player.weaponPrimaryLevel.value      = readUInt8();
 
-    GamePlayer.weaponSecondary.value         = readUInt16();
-    // GamePlayer.weaponSecondaryQuantity.value = readUInt16();
-    // GamePlayer.weaponSecondaryCapacity.value = readUInt16();
-    // GamePlayer.weaponSecondaryLevel.value    = readUInt8();
+    gamestream.games.isometric.player.weaponSecondary.value         = readUInt16();
+    // gamestream.games.isometric.player.weaponSecondaryQuantity.value = readUInt16();
+    // gamestream.games.isometric.player.weaponSecondaryCapacity.value = readUInt16();
+    // gamestream.games.isometric.player.weaponSecondaryLevel.value    = readUInt8();
   }
 
   // void readPlayerWeaponQuantity() {
-  //   GamePlayer.weaponPrimaryQuantity.value   = readUInt16();
-  //   GamePlayer.weaponSecondaryQuantity.value = readUInt16();
+  //   gamestream.games.isometric.player.weaponPrimaryQuantity.value   = readUInt16();
+  //   gamestream.games.isometric.player.weaponSecondaryQuantity.value = readUInt16();
   // }
 
   void readPlayerEquipped() {
-    GamePlayer.weapon.value = readUInt16();
-    GamePlayer.head.value = readUInt16();
-    GamePlayer.body.value = readUInt16();
-    GamePlayer.legs.value = readUInt16();
+    gamestream.games.isometric.player.weapon.value = readUInt16();
+    gamestream.games.isometric.player.head.value = readUInt16();
+    gamestream.games.isometric.player.body.value = readUInt16();
+    gamestream.games.isometric.player.legs.value = readUInt16();
   }
 
   void readPlayerHealth() {
@@ -442,10 +442,10 @@ class ServerResponseReader with ByteReader {
   }
 
   void readPlayerInventory() {
-    GamePlayer.head.value = readUInt16();
-    GamePlayer.body.value = readUInt16();
-    GamePlayer.legs.value = readUInt16();
-    GamePlayer.weapon.value = readUInt16();
+    gamestream.games.isometric.player.head.value = readUInt16();
+    gamestream.games.isometric.player.body.value = readUInt16();
+    gamestream.games.isometric.player.legs.value = readUInt16();
+    gamestream.games.isometric.player.weapon.value = readUInt16();
     gamestream.games.isometric.serverState.playerBelt1_ItemType.value = readUInt16();
     gamestream.games.isometric.serverState.playerBelt2_ItemType.value = readUInt16();
     gamestream.games.isometric.serverState.playerBelt3_ItemType.value = readUInt16();
@@ -520,13 +520,13 @@ class ServerResponseReader with ByteReader {
   }
 
   void readNpcTalk() {
-    GamePlayer.npcTalk.value = readString();
+    gamestream.games.isometric.player.npcTalk.value = readString();
     final totalOptions = readByte();
     final options = <String>[];
     for (var i = 0; i < totalOptions; i++) {
        options.add(readString());
     }
-    GamePlayer.npcTalkOptions.value = options;
+    gamestream.games.isometric.player.npcTalkOptions.value = options;
   }
 
   void readGameProperties() {
@@ -550,11 +550,11 @@ class ServerResponseReader with ByteReader {
 
   void readStoreItems() {
     final length = readUInt16();
-    if (GamePlayer.storeItems.value.length != length){
-      GamePlayer.storeItems.value = Uint16List(length);
+    if (gamestream.games.isometric.player.storeItems.value.length != length){
+      gamestream.games.isometric.player.storeItems.value = Uint16List(length);
     }
     for (var i = 0; i < length; i++){
-      GamePlayer.storeItems.value[i] = readUInt16();
+      gamestream.games.isometric.player.storeItems.value[i] = readUInt16();
     }
   }
 
@@ -571,7 +571,7 @@ class ServerResponseReader with ByteReader {
   }
 
   void readPlayerTarget() {
-    readVector3(GamePlayer.abilityTarget);
+    readVector3(gamestream.games.isometric.player.abilityTarget);
   }
 
   void readGameTime() {

@@ -5,11 +5,11 @@ import 'package:gamestream_flutter/library.dart';
 class GameIsometricCamera {
   final chaseTargetEnabled = Watch(true);
   var chaseStrength = 0.00075;
-  var chaseTarget = GamePlayer.position;
+  late var chaseTarget = gamestream.games.isometric.player.position;
   var translateX = 0.0;
   var translateY = 0.0;
 
-  void centerOnPlayer() => centerOnV3(GamePlayer.position);
+  void centerOnPlayer() => centerOnV3(gamestream.games.isometric.player.position);
   void centerOnV3(Vector3 v3) => engine.cameraCenter(v3.renderX, v3.renderY);
 
   void update() {

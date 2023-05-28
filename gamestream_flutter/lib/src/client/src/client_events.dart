@@ -47,7 +47,7 @@ class ClientEvents {
       gamestream.network.sendClientRequestInventoryBuy(itemIndex);
       return;
     }
-    GamePlayer.interactModeTrading
+    gamestream.games.isometric.player.interactModeTrading
         ? gamestream.network.sendClientRequestInventorySell(itemIndex)
         : gamestream.network.sendClientRequestInventoryDrop(itemIndex);
   }

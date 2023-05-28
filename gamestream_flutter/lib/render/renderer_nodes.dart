@@ -203,12 +203,12 @@ class RendererNodes extends Renderer {
     orderZ = 0;
     currentNodeZ = 0;
     nodesGridTotalColumnsMinusOne = gamestream.games.isometric.nodes.totalColumns - 1;
-    playerZ = GamePlayer.position.indexZ;
-    playerRow = GamePlayer.position.indexRow;
-    playerColumn = GamePlayer.position.indexColumn;
+    playerZ = gamestream.games.isometric.player.position.indexZ;
+    playerRow = gamestream.games.isometric.player.position.indexRow;
+    playerColumn = gamestream.games.isometric.player.position.indexColumn;
     nodesPlayerColumnRow = playerRow + playerColumn;
-    playerRenderRow = playerRow - (GamePlayer.position.indexZ ~/ 2);
-    playerRenderColumn = playerColumn - (GamePlayer.position.indexZ ~/ 2);
+    playerRenderRow = playerRow - (gamestream.games.isometric.player.position.indexZ ~/ 2);
+    playerRenderColumn = playerColumn - (gamestream.games.isometric.player.position.indexZ ~/ 2);
     playerProjection = playerIndex % gamestream.games.isometric.nodes.projection;
     gamestream.games.isometric.nodes.offscreenNodes = 0;
     gamestream.games.isometric.nodes.onscreenNodes = 0;
@@ -326,27 +326,27 @@ class RendererNodes extends Renderer {
     }
     visited2DStackIndex = 0;
 
-    final height = gamestream.games.isometric.nodes.heightMap[GamePlayer.areaNodeIndex];
+    final height = gamestream.games.isometric.nodes.heightMap[gamestream.games.isometric.player.areaNodeIndex];
 
-    if (GamePlayer.indexZ <= 0) {
+    if (gamestream.games.isometric.player.indexZ <= 0) {
       zMin = 0;
       playerInsideIsland = false;
       return;
     }
 
 
-    playerInsideIsland = GamePlayer.indexZ < height;
+    playerInsideIsland = gamestream.games.isometric.player.indexZ < height;
 
     if (!playerInsideIsland) {
-      ensureIndexPerceptible(GamePlayer.nodeIndex);
+      ensureIndexPerceptible(gamestream.games.isometric.player.nodeIndex);
     }
 
     if (GameIsometricMouse.inBounds){
       ensureIndexPerceptible(GameIsometricMouse.nodeIndex);
     }
 
-    zMin = max(GamePlayer.indexZ - 1, 0);
-    visit2D(GamePlayer.areaNodeIndex);
+    zMin = max(gamestream.games.isometric.player.indexZ - 1, 0);
+    visit2D(gamestream.games.isometric.player.areaNodeIndex);
   }
 
   static void ensureIndexPerceptible(int index){
@@ -366,7 +366,7 @@ class RendererNodes extends Renderer {
       final projectionHeight = gamestream.games.isometric.nodes.heightMap[projectionIndex];
       if (projectionZ > projectionHeight) continue;
       playerInsideIsland = true;
-      zMin = max(GamePlayer.indexZ - 1, 0);
+      zMin = max(gamestream.games.isometric.player.indexZ - 1, 0);
       visit2D(projectionIndex);
       return;
     }
@@ -386,7 +386,7 @@ class RendererNodes extends Renderer {
      if (gamestream.games.isometric.nodes.heightMap[i] <= zMin) return;
      island[i] = true;
 
-     var searchIndex = i + (gamestream.games.isometric.nodes.area * GamePlayer.indexZ);
+     var searchIndex = i + (gamestream.games.isometric.nodes.area * gamestream.games.isometric.player.indexZ);
      addVisible3D(searchIndex);
 
      var spaceReached = gamestream.games.isometric.nodes.nodeOrientations[searchIndex] == NodeOrientation.None;
@@ -418,7 +418,7 @@ class RendererNodes extends Renderer {
 
         addVisible3D(searchIndex);
      }
-     searchIndex = i + (gamestream.games.isometric.nodes.area * GamePlayer.indexZ);
+     searchIndex = i + (gamestream.games.isometric.nodes.area * gamestream.games.isometric.player.indexZ);
      while (true) {
        addVisible3D(searchIndex);
        if (blocksBeamVertical(searchIndex)) break;

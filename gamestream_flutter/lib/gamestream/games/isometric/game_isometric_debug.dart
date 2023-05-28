@@ -43,24 +43,24 @@ class GameIsometricDebug {
                                     "mouse-world: x: ${engine.mouseWorldX.toInt()}, y: ${engine.mouseWorldY.toInt()}\n"
                                     'mouse-screen: x: ${engine.mousePositionX.toInt()}, y: ${engine.mousePositionY.toInt()}\n'
                                     'mouse-player-angle: ${ClientQuery.getMousePlayerAngle().toStringAsFixed(4)}\n'
-                                    "player-alive: ${GamePlayer.alive.value}\n"
-                                    "player-respawn-timer: ${GamePlayer.respawnTimer.value}\n"
-                                    "player-position: x: ${GamePlayer.position.x}, y: ${GamePlayer.position.y}, z: ${GamePlayer.position.z}\n"
-                                    "player-render: x: ${GamePlayer.position.renderX}, y: ${GamePlayer.position.renderY}\n"
-                                    "player-screen: x: ${GamePlayer.positionScreenX.toInt()}, y: ${GamePlayer.positionScreenY.toInt()}\n"
-                                    "player-index: z: ${GamePlayer.position.indexZ}, row: ${GamePlayer.position.indexRow}, column: ${GamePlayer.position.indexColumn}\n"
+                                    "player-alive: ${gamestream.games.isometric.player.alive.value}\n"
+                                    "player-respawn-timer: ${gamestream.games.isometric.player.respawnTimer.value}\n"
+                                    "player-position: x: ${gamestream.games.isometric.player.position.x}, y: ${gamestream.games.isometric.player.position.y}, z: ${gamestream.games.isometric.player.position.z}\n"
+                                    "player-render: x: ${gamestream.games.isometric.player.position.renderX}, y: ${gamestream.games.isometric.player.position.renderY}\n"
+                                    "player-screen: x: ${gamestream.games.isometric.player.positionScreenX.toInt()}, y: ${gamestream.games.isometric.player.positionScreenY.toInt()}\n"
+                                    "player-index: z: ${gamestream.games.isometric.player.position.indexZ}, row: ${gamestream.games.isometric.player.position.indexRow}, column: ${gamestream.games.isometric.player.position.indexColumn}\n"
                                     "player-inside-island: ${RendererNodes.playerInsideIsland}\n"
-                                    "player-legs: ${ItemType.getName(GamePlayer.legs.value)}\n"
-                                    "player-body: ${ItemType.getName(GamePlayer.body.value)}\n"
-                                    "player-head: ${ItemType.getName(GamePlayer.head.value)}\n"
-                                    "player-weapon: ${ItemType.getName(GamePlayer.weapon.value)}\n"
+                                    "player-legs: ${ItemType.getName(gamestream.games.isometric.player.legs.value)}\n"
+                                    "player-body: ${ItemType.getName(gamestream.games.isometric.player.body.value)}\n"
+                                    "player-head: ${ItemType.getName(gamestream.games.isometric.player.head.value)}\n"
+                                    "player-weapon: ${ItemType.getName(gamestream.games.isometric.player.weapon.value)}\n"
                                     "player-interact-mode: ${InteractMode.getName(gamestream.games.isometric.serverState.interactMode.value)}\n"
-                                    "aim-target-category: ${TargetCategory.getName(GamePlayer.aimTargetCategory)}\n"
-                                    "aim-target-type: ${GamePlayer.aimTargetType}\n"
-                                    "aim-target-name: ${GamePlayer.aimTargetName}\n"
-                                    "aim-target-position: ${GamePlayer.aimTargetPosition}\n"
-                                    "target-category: ${TargetCategory.getName(GamePlayer.targetCategory)}\n"
-                                    "target-position: ${GamePlayer.targetPosition}\n"
+                                    "aim-target-category: ${TargetCategory.getName(gamestream.games.isometric.player.aimTargetCategory)}\n"
+                                    "aim-target-type: ${gamestream.games.isometric.player.aimTargetType}\n"
+                                    "aim-target-name: ${gamestream.games.isometric.player.aimTargetName}\n"
+                                    "aim-target-position: ${gamestream.games.isometric.player.aimTargetPosition}\n"
+                                    "target-category: ${TargetCategory.getName(gamestream.games.isometric.player.targetCategory)}\n"
+                                    "target-position: ${gamestream.games.isometric.player.targetPosition}\n"
                                     "dialog-type: ${DialogType.getName(gamestream.games.isometric.clientState.hoverDialogType.value)}\n"
                                     "scene-light-sources: ${gamestream.games.isometric.clientState.nodesLightSourcesTotal}\n"
                                     "scene-light-active: ${gamestream.games.isometric.clientState.lights_active}\n"
@@ -83,7 +83,7 @@ class GameIsometricDebug {
                             Refresh(() => text('camera-zoom: ${engine.targetZoom.toStringAsFixed(3)}')),
                             Refresh(() => text('engine-frame: ${engine.paintFrame}')),
                             watch(gamestream.serverResponseReader.updateFrame, (t) => text("update-frame: $t")),
-                            watch(GamePlayer.interpolating, (bool interpolating) => text("interpolating: $interpolating", onPressed: () => GamePlayer.interpolating.value = !GamePlayer.interpolating.value)),
+                            watch(gamestream.games.isometric.player.interpolating, (bool interpolating) => text("interpolating: $interpolating", onPressed: () => gamestream.games.isometric.player.interpolating.value = !gamestream.games.isometric.player.interpolating.value)),
                             watch(gamestream.gameType, (GameType value) => text("game-type: ${value.name}")),
                             watch(engine.deviceType, (int deviceType) => text("device-type: ${DeviceType.getName(deviceType)}", onPressed: engine.toggleDeviceType)),
                             watch(gamestream.io.inputMode, (int inputMode) => text("input-mode: ${InputMode.getName(inputMode)}", onPressed: gamestream.io.actionToggleInputMode)),

@@ -47,7 +47,7 @@ class Vector3 with Position {
     if (!RendererNodes.playerInsideIsland) return true;
     final i = indexRow * gamestream.games.isometric.nodes.totalColumns + indexColumn;
     if (!RendererNodes.island[i]) return true;
-    if (indexZ > GamePlayer.indexZ + 2) return false;
+    if (indexZ > gamestream.games.isometric.player.indexZ + 2) return false;
 
     return RendererNodes.visible3D[nodeIndex];
   }

@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_client_state.dart';
+import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_player.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_renderer.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/touch_controller.dart';
@@ -19,6 +20,7 @@ class GameIsometric extends Game {
   final actions = GameIsometricActions();
   final renderer = GameIsometricRenderer();
   final editor = GameIsometricEditor();
+  final player = GameIsometricPlayer();
 
   @override
   void drawCanvas(Canvas canvas, Size size) {

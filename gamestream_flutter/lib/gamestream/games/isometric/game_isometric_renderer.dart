@@ -72,13 +72,13 @@ class GameIsometricRenderer {
   }
 
   void renderMouseTargetName() {
-    if (!GamePlayer.mouseTargetAllie.value) return;
-    final mouseTargetName = GamePlayer.mouseTargetName.value;
+    if (!gamestream.games.isometric.player.mouseTargetAllie.value) return;
+    final mouseTargetName = gamestream.games.isometric.player.mouseTargetName.value;
     if (mouseTargetName == null) return;
     renderText(
         text: mouseTargetName,
-        x: GamePlayer.aimTargetPosition.renderX,
-        y: GamePlayer.aimTargetPosition.renderY - 55);
+        x: gamestream.games.isometric.player.aimTargetPosition.renderX,
+        y: gamestream.games.isometric.player.aimTargetPosition.renderY - 55);
   }
 
   void checkNext(Renderer renderer){
@@ -353,29 +353,29 @@ class GameIsometricRenderer {
       TouchController.render(canvas);
     }
 
-    renderGamePlayerAimTargetNameText();
+    playerAimTargetNameText();
   }
 
-  void renderGamePlayerAimTargetNameText(){
-    if (GamePlayer.aimTargetCategory == TargetCategory.Nothing)
+  void playerAimTargetNameText(){
+    if (gamestream.games.isometric.player.aimTargetCategory == TargetCategory.Nothing)
       return;
-    if (GamePlayer.aimTargetName.isEmpty)
+    if (gamestream.games.isometric.player.aimTargetName.isEmpty)
       return;
     const style = TextStyle(color: Colors.white, fontSize: 18);
     engine.renderText(
-      GamePlayer.aimTargetName,
-      engine.worldToScreenX(GamePlayer.aimTargetPosition.renderX),
-      engine.worldToScreenY(GamePlayer.aimTargetPosition.renderY),
+      gamestream.games.isometric.player.aimTargetName,
+      engine.worldToScreenX(gamestream.games.isometric.player.aimTargetPosition.renderX),
+      engine.worldToScreenY(gamestream.games.isometric.player.aimTargetPosition.renderY),
       style: style,
     );
   }
 
   void renderCursor(Canvas canvas) {
-    final cooldown = GamePlayer.weaponCooldown.value;
+    final cooldown = gamestream.games.isometric.player.weaponCooldown.value;
     final accuracy = gamestream.games.isometric.serverState.playerAccuracy.value;
     final distance = (cooldown + accuracy) * 10.0 + 5;
 
-    switch (GamePlayer.aimTargetCategory) {
+    switch (gamestream.games.isometric.player.aimTargetCategory) {
       case TargetCategory.Nothing:
         gamestream.games.isometric.renderer.canvasRenderCursorCrossHair(canvas, distance);
 
@@ -425,13 +425,13 @@ class GameIsometricRenderer {
   }
 
   void renderPlayerEnergy() {
-    if (GamePlayer.dead) return;
-    if (!GamePlayer.active.value) return;
+    if (gamestream.games.isometric.player.dead) return;
+    if (!gamestream.games.isometric.player.active.value) return;
     renderBarBlue(
-      GamePlayer.position.x,
-      GamePlayer.position.y,
-      GamePlayer.position.z,
-      GamePlayer.energyPercentage,
+      gamestream.games.isometric.player.position.x,
+      gamestream.games.isometric.player.position.y,
+      gamestream.games.isometric.player.position.z,
+      gamestream.games.isometric.player.energyPercentage,
     );
   }
 
@@ -483,10 +483,10 @@ class GameIsometricRenderer {
 
     final jumps = mouseDistance ~/ Node_Height_Half;
 
-    var x1 = GamePlayer.position.x;
-    var y1 = GamePlayer.position.y;
-    var i1 = GamePlayer.position.nodeIndex;
-    final z = GamePlayer.position.z + Node_Height_Half;
+    var x1 = gamestream.games.isometric.player.position.x;
+    var y1 = gamestream.games.isometric.player.position.y;
+    var i1 = gamestream.games.isometric.player.position.nodeIndex;
+    final z = gamestream.games.isometric.player.position.z + Node_Height_Half;
 
     final tX = adj(mouseAngle, Node_Height_Half);
     final tY = opp(mouseAngle, Node_Height_Half);
@@ -504,9 +504,9 @@ class GameIsometricRenderer {
   }
 
   void renderPlayerRunTarget(){
-    if (GamePlayer.dead) return;
-    if (GamePlayer.targetCategory == TargetCategory.Run){
-      gamestream.games.isometric.renderer.renderCircle32(GamePlayer.targetPosition.x, GamePlayer.targetPosition.y, GamePlayer.targetPosition.z);
+    if (gamestream.games.isometric.player.dead) return;
+    if (gamestream.games.isometric.player.targetCategory == TargetCategory.Run){
+      gamestream.games.isometric.renderer.renderCircle32(gamestream.games.isometric.player.targetPosition.x, gamestream.games.isometric.player.targetPosition.y, gamestream.games.isometric.player.targetPosition.z);
     }
   }
 
