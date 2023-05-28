@@ -143,6 +143,9 @@ class GameFight2D extends Game<GameFight2DPlayer> {
       case GameFight2DCharacterState.Crouching_Strike:
         applyCharacterHitBoxStrike(character);
         break;
+      case GameFight2DCharacterState.Airborn_Strike_Down:
+        applyCharacterHitBoxAirbornStrikeDown(character);
+        break;
     }
   }
 
@@ -205,6 +208,27 @@ class GameFight2D extends Game<GameFight2DPlayer> {
            if (rangeY < yDiff.abs()) continue;
            otherCharacter.hurtAirborn();
            otherCharacter.accelerationY -= 20;
+           emitEventPunch(character);
+       }
+  }
+
+  void applyCharacterHitBoxAirbornStrikeDown(GameFight2DCharacter character){
+       if (character.stateDuration != character.strikeFrame) return;
+       for (final otherCharacter in characters) {
+           if (otherCharacter == character) continue;
+           const rangeX = 75.0;
+           const rangeY = 180.0;
+           final xDiff = character.x - otherCharacter.x;
+           if (rangeX < xDiff.abs()) continue;
+           final yDiff = character.y - otherCharacter.y;
+           if (yDiff > 0) continue;
+           if (yDiff < -rangeY) continue;
+           otherCharacter.hurtAirborn();
+           if (otherCharacter.grounded) {
+             otherCharacter.accelerationY -= 20;
+           } else {
+             otherCharacter.accelerationY += 20;
+           }
            emitEventPunch(character);
        }
   }

@@ -11,7 +11,7 @@ mixin class GameFight2DCharacter {
   static const Max_Jumps = 2;
   static const gravity = 1.00;
   static const runAcceleration = 1.0;
-  static const airAcceleration = 0.25;
+  static const airAcceleration = 0.5;
   static const jumpAcceleration = 20.0;
   static const strikeUpAcceleration = 7.5;
   static const fallAcceleration = 0.5;
@@ -351,7 +351,7 @@ mixin class GameFight2DCharacter {
     GameFight2DCharacterState.Airborn_Strike: 30,
     GameFight2DCharacterState.Airborn_Strike_Up: 30,
     GameFight2DCharacterState.Airborn_Strike_Down: 30,
-    GameFight2DCharacterState.Striking_Up: 30,
+    GameFight2DCharacterState.Striking_Up: 20,
     GameFight2DCharacterState.Second_Jump: 12,
     GameFight2DCharacterState.Hurting: 30,
     GameFight2DCharacterState.Hurting_Airborn: 30,

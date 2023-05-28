@@ -7,9 +7,17 @@ navigate to next method: ctrl + shift + up / down arrows
 ctrl + w            : minimal mode
 ctrl + shift + e    : view recent changes
 
-[TODO]
+[FIGHT2D]
+[x] strike down hit
+[ ] audio volume distance
+
+[AEON]
+[ ] character leveling system   (goal)
+[ ] base capture system         (goal)
+[ ] high score top 100          (goal)
+[ ] team bases
+[ ] teams red and blue
 [ ] enter high score name
-[ ] high score top 100
 [ ] remove regions
 [ ] tutorial keys
 
