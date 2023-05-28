@@ -221,11 +221,11 @@ class RendererCharacters extends Renderer {
     var angle = 0.0;
     var dist = 0.0;
 
-    if (!GameState.outOfBoundsV3(character)){
-      var torchIndex = GameNodes.getTorchIndex(GameState.getNodeIndexV3(character));
+    if (!gamestream.games.isometric.clientState.outOfBoundsV3(character)){
+      var torchIndex = GameNodes.getTorchIndex(gamestream.games.isometric.clientState.getNodeIndexV3(character));
       if (torchIndex != -1) {
-        final torchRow = GameState.convertNodeIndexToIndexX(torchIndex);
-        final torchColumn = GameState.convertNodeIndexToIndexY(torchIndex);
+        final torchRow = gamestream.games.isometric.clientState.convertNodeIndexToIndexX(torchIndex);
+        final torchColumn = gamestream.games.isometric.clientState.convertNodeIndexToIndexY(torchIndex);
         final torchPosX = torchRow * Node_Size + Node_Size_Half;
         final torchPosY = torchColumn * Node_Size + Node_Size_Half;
         angle = angleBetween(character.x, character.y, torchPosX, torchPosY);

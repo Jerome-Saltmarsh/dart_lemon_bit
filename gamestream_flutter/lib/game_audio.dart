@@ -225,10 +225,10 @@ class GameAudio {
   }
 
   double getVolumeTargetWind() {
-    final windLineDistance = (engine.screenCenterRenderX - GameQueries.windLineRenderX).abs();
+    final windLineDistance = (engine.screenCenterRenderX - gamestream.games.isometric.windLineRenderX).abs();
     final windLineDistanceVolume = convertDistanceToVolume(windLineDistance, maxDistance: 300);
     var target = 0.0;
-    if (GameQueries.windLineRenderX - 250 <= engine.screenCenterRenderX) {
+    if (gamestream.games.isometric.windLineRenderX - 250 <= engine.screenCenterRenderX) {
       target += windLineDistanceVolume;
     }
     final index = ServerState.windTypeAmbient.value;
@@ -278,7 +278,7 @@ class GameAudio {
   }
 
   double getVolumeTargetDistanceThunder(){
-    if (GameState.lightningOn) return 1.0;
+    if (gamestream.games.isometric.clientState.lightningOn) return 1.0;
     return 0;
   }
 

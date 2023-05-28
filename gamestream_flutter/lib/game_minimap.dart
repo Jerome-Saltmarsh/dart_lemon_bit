@@ -63,8 +63,8 @@ class GameMinimap {
 
     for (var i = 0; i < vendors.length; i++){
        final nodeIndex = vendors[i];
-       final indexX = GameState.convertNodeIndexToIndexX(nodeIndex);
-       final indexY = GameState.convertNodeIndexToIndexY(nodeIndex);
+       final indexX = gamestream.games.isometric.clientState.convertNodeIndexToIndexX(nodeIndex);
+       final indexY = gamestream.games.isometric.clientState.convertNodeIndexToIndexY(nodeIndex);
        final dstX = (indexX - indexY) * 1.0;
        final dstY = (indexX + indexY) * 1.0;
        final f = ((area + i) * 4);

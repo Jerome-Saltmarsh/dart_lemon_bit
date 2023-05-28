@@ -17,13 +17,13 @@ class GameActions {
     for (var row = 0; row < rows; row++) {
       for (var column = 0; column < columns; column++) {
         for (var z = zs; z >= 0; z--) {
-          final index = GameState.getNodeIndexZRC(z, row, column);
+          final index = gamestream.games.isometric.clientState.getNodeIndexZRC(z, row, column);
           final type = GameNodes.nodeTypes[index];
           if (type != NodeType.Empty) {
             if (type == NodeType.Water || GameNodes.nodeOrientations[index] == NodeOrientation.Solid) {
-              GameState.setNodeType(z + 1, row, column, NodeType.Rain_Landing);
+              gamestream.games.isometric.clientState.setNodeType(z + 1, row, column, NodeType.Rain_Landing);
             }
-            GameState.setNodeType(z + 2, row, column, NodeType.Rain_Falling);
+            gamestream.games.isometric.clientState.setNodeType(z + 2, row, column, NodeType.Rain_Falling);
             break;
           }
           if (
@@ -32,7 +32,7 @@ class GameActions {
               !GameQueries.gridNodeZRCTypeRainOrEmpty(z, row - 1, column) ||
               !GameQueries.gridNodeZRCTypeRainOrEmpty(z, row, column - 1)
           ){
-            GameState.setNodeType(z, row, column, NodeType.Rain_Falling);
+            gamestream.games.isometric.clientState.setNodeType(z, row, column, NodeType.Rain_Falling);
           }
         }
       }
@@ -107,14 +107,14 @@ class GameActions {
   }
 
   void createExplosion(double x, double y, double z){
-    GameState.spawnParticleLightEmissionAmbient(x: x, y: y, z: z);
+    gamestream.games.isometric.clientState.spawnParticleLightEmissionAmbient(x: x, y: y, z: z);
     gamestream.audio.explosion_grenade_04.playXYZ(x, y, z);
 
     for (var i = 0; i <= 8; i++){
       final angle = piQuarter * i;
       final speed = randomBetween(0.5, 3.5);
 
-      GameState.spawnParticleFire(
+      gamestream.games.isometric.clientState.spawnParticleFire(
           x: x,
           y: y,
           z: z,
@@ -124,13 +124,13 @@ class GameActions {
       ;
     }
 
-    GameState.spawnParticleFire(x: x, y: y, z: z)..delay = 0;
-    GameState.spawnParticleFire(x: x, y: y, z: z)..delay = 2;
-    GameState.spawnParticleFire(x: x, y: y, z: z)..delay = 4;
-    GameState.spawnParticleFire(x: x, y: y, z: z)..delay = 6;
+    gamestream.games.isometric.clientState.spawnParticleFire(x: x, y: y, z: z)..delay = 0;
+    gamestream.games.isometric.clientState.spawnParticleFire(x: x, y: y, z: z)..delay = 2;
+    gamestream.games.isometric.clientState.spawnParticleFire(x: x, y: y, z: z)..delay = 4;
+    gamestream.games.isometric.clientState.spawnParticleFire(x: x, y: y, z: z)..delay = 6;
 
     for (var i = 0; i < 7; i++) {
-      GameState.spawnParticle(
+      gamestream.games.isometric.clientState.spawnParticle(
         type: ParticleType.Fire,
         x: x,
         y: y,
@@ -150,7 +150,7 @@ class GameActions {
 
     for (var i = 0; i < 7; i++) {
       const r = 5.0;
-      GameState.spawnParticleSmoke(
+      gamestream.games.isometric.clientState.spawnParticleSmoke(
           x: x + giveOrTake(r),
           y: y + giveOrTake(r),
           z: z+ giveOrTake(r),

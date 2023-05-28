@@ -205,7 +205,7 @@ class GameNetwork {
         engine.cursorType.value = CursorType.Basic;
         engine.drawCanvasAfterUpdate = true;
         engine.fullScreenExit();
-        GameState.clear();
+        gamestream.games.isometric.clientState.clear();
         ServerState.clean();
         gamestream.gameType.value = GameType.Website;
         ServerState.sceneEditable.value = false;

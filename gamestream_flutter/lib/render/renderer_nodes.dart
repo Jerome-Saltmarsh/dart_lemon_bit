@@ -255,7 +255,7 @@ class RendererNodes extends Renderer {
     remaining = total > 0;
     GameNodes.resetNodeColorStack();
     GameNodes.resetNodeAmbientStack();
-    GameState.applyEmissions();
+    gamestream.games.isometric.clientState.applyEmissions();
 
     // highlightCharacterNearMouse();
   }
@@ -763,21 +763,21 @@ class RendererNodes extends Renderer {
         renderNodeWindow();
         break;
       case NodeType.Spawn:
-        if (GameState.playMode) return;
+        if (gamestream.games.isometric.clientState.playMode) return;
         renderStandardNode(
           srcX: AtlasNode.Spawn_X,
           srcY: AtlasNode.Spawn_Y,
         );
         break;
       case NodeType.Spawn_Weapon:
-        if (GameState.playMode) return;
+        if (gamestream.games.isometric.clientState.playMode) return;
         renderStandardNode(
           srcX: AtlasNode.Spawn_Weapon_X,
           srcY: AtlasNode.Spawn_Weapon_Y,
         );
         break;
       case NodeType.Spawn_Player:
-        if (GameState.playMode) return;
+        if (gamestream.games.isometric.clientState.playMode) return;
         renderStandardNode(
           srcX: AtlasNode.Spawn_Player_X,
           srcY: AtlasNode.Spawn_Player_Y,

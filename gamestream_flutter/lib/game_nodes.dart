@@ -196,7 +196,7 @@ class GameNodes {
 
     final zIndex = index ~/ area;
     final rowIndex = (index - (zIndex * area)) ~/ totalColumns;
-    final columnIndex = GameState.convertNodeIndexToIndexY(index);
+    final columnIndex = gamestream.games.isometric.clientState.convertNodeIndexToIndexY(index);
     final radius = Shade.Pitch_Black;
     final zMin = max(zIndex - radius, 0);
     final zMax = min(zIndex + radius, totalZ);

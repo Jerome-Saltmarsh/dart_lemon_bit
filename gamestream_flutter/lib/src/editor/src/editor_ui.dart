@@ -650,7 +650,7 @@ class EditorUI {
             message: NodeType.getName(nodeType),
           ),
           action: () {
-            if (GameState.playMode) {
+            if (gamestream.games.isometric.clientState.playMode) {
               gamestream.actions.actionSetModePlay();
               return;
             }

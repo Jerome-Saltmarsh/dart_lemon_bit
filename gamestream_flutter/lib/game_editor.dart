@@ -38,9 +38,9 @@ class GameEditor {
      return value;
   }, onChanged: onChangedSelectedNodeIndex);
 
-  static int get z => GameState.convertNodeIndexToIndexZ(nodeSelectedIndex.value);
-  static int get row => GameState.convertNodeIndexToIndexX(nodeSelectedIndex.value);
-  static int get column => GameState.convertNodeIndexToIndexY(nodeSelectedIndex.value);
+  static int get z => gamestream.games.isometric.clientState.convertNodeIndexToIndexZ(nodeSelectedIndex.value);
+  static int get row => gamestream.games.isometric.clientState.convertNodeIndexToIndexX(nodeSelectedIndex.value);
+  static int get column => gamestream.games.isometric.clientState.convertNodeIndexToIndexY(nodeSelectedIndex.value);
 
   static set z(int value){
      if (value < 0) return;
@@ -138,7 +138,7 @@ class GameEditor {
   }
 
   static void selectBlock(int z, int row, int column){
-    nodeSelectedIndex.value = GameState.getNodeIndexZRC(z, row, column);
+    nodeSelectedIndex.value = gamestream.games.isometric.clientState.getNodeIndexZRC(z, row, column);
   }
 
   static void deleteGameObjectSelected(){
@@ -226,7 +226,7 @@ class GameEditor {
       );
 
   static void actionRecenterCamera() =>
-        gamestream.games.combat.camera.cameraSetPositionGrid(
+        gamestream.games.isometric.camera.cameraSetPositionGrid(
         GameEditor.row,
         GameEditor.column,
         GameEditor.z,

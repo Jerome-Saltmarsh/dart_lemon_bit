@@ -44,14 +44,14 @@ class GameQueries {
    }
 
    static int getNodeIndex(double x, double y, double z) =>
-       GameState.getNodeIndexZRC(
+       gamestream.games.isometric.clientState.getNodeIndexZRC(
          z ~/ Node_Size_Half,
          x ~/ Node_Size,
          y ~/ Node_Size,
        );
 
    static int getNodeIndexV3(Vector3 vector3) =>
-       GameState.getNodeIndexZRC(
+       gamestream.games.isometric.clientState.getNodeIndexZRC(
          vector3.indexZ,
          vector3.indexRow,
          vector3.indexColumn,
@@ -72,7 +72,7 @@ class GameQueries {
        GameNodes.nodeTypes[gridNodeXYZIndex(x, y, z)];
 
    static bool gridNodeZRCTypeRainOrEmpty(int z, int row, int column) =>
-       NodeType.isRainOrEmpty(GameNodes.nodeTypes[GameState.getNodeIndexZRC(z, row, column)]);
+       NodeType.isRainOrEmpty(GameNodes.nodeTypes[gamestream.games.isometric.clientState.getNodeIndexZRC(z, row, column)]);
 
    static int gridNodeZRCTypeSafe(int z, int row, int column) {
      if (z < 0) return NodeType.Boundary;
@@ -85,11 +85,11 @@ class GameQueries {
    }
 
    static int gridNodeZRCType(int z, int row, int column) =>
-       GameNodes.nodeTypes[GameState.getNodeIndexZRC(z, row, column)];
+       GameNodes.nodeTypes[gamestream.games.isometric.clientState.getNodeIndexZRC(z, row, column)];
 
 
    static int gridNodeXYZIndex(double x, double y, double z) =>
-       GameState.getNodeIndexZRC(
+       gamestream.games.isometric.clientState.getNodeIndexZRC(
          z ~/ Node_Size_Half,
          x ~/ Node_Size,
          y ~/ Node_Size,
@@ -121,21 +121,10 @@ class GameQueries {
      return closest;
    }
 
-   static double get windLineRenderX {
-     var windLineColumn = 0;
-     var windLineRow = 0;
-     if (GameState.windLine < GameNodes.totalRows){
-       windLineColumn = 0;
-       windLineRow = GameNodes.totalRows - GameState.windLine - 1;
-     } else {
-       windLineRow = 0;
-       windLineColumn = GameState.windLine - GameNodes.totalRows + 1;
-     }
-     return (windLineRow - windLineColumn) * Node_Size_Half;
-   }
+
 
    static int getNodeIndexBelowV3(Vector3 vector3) =>
-       GameState.getNodeIndexZRC(
+       gamestream.games.isometric.clientState.getNodeIndexZRC(
          vector3.indexZ - 1,
          vector3.indexRow,
          vector3.indexColumn,

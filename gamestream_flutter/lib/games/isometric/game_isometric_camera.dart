@@ -1,8 +1,8 @@
 import 'dart:math';
-import 'library.dart';
+import '../../library.dart';
 
 
-class GameCamera {
+class GameIsometricCamera {
   final chaseTargetEnabled = Watch(true);
   var chaseStrength = 0.00075;
   var chaseTarget = GamePlayer.position;

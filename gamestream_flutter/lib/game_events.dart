@@ -55,7 +55,7 @@ class GameEvents {
       gamestream.audio.footstep_mud_6.playXYZ(x, y, z);
       final amount = ServerState.rainType.value == RainType.Heavy ? 3 : 2;
       for (var i = 0; i < amount; i++){
-        GameState.spawnParticleWaterDrop(x: x, y: y, z: z, zv: 1.5);
+        gamestream.games.isometric.clientState.spawnParticleWaterDrop(x: x, y: y, z: z, zv: 1.5);
       }
     }
 
@@ -93,7 +93,7 @@ class GameEvents {
         gamestream.audio.metal_struck.playXYZ(x, y, z);
         return;
       case GameEventType.Player_Spawn_Started:
-        gamestream.games.combat.camera.centerOnPlayer();
+        gamestream.games.isometric.camera.centerOnPlayer();
         gamestream.audio.teleport.playXYZ(x, y, z);
         return;
       case GameEventType.Explosion:
@@ -128,7 +128,7 @@ class GameEvents {
         return GameEvents.onWeaponTypeEquipped(attackType, x, y, z);
       case GameEventType.Player_Spawned:
         for (var i = 0; i < 7; i++){
-          GameState.spawnParticleOrbShard(x: x, y: y, z: z, angle: Engine.randomAngle());
+          gamestream.games.isometric.clientState.spawnParticleOrbShard(x: x, y: y, z: z, angle: Engine.randomAngle());
         }
         return;
       case GameEventType.Splash:
@@ -194,22 +194,22 @@ class GameEvents {
         break;
 
       case GameEventType.Blue_Orb_Deactivated:
-        GameState.spawnParticleLightEmissionAmbient(x: x, y: y, z: z);
+        gamestream.games.isometric.clientState.spawnParticleLightEmissionAmbient(x: x, y: y, z: z);
         for (var i = 0; i < 8; i++) {
-          GameState.spawnParticleOrbShard(
+          gamestream.games.isometric.clientState.spawnParticleOrbShard(
               x: x, y: y, z: z, duration: 30, speed: Engine.randomBetween(1, 2), angle: Engine.randomAngle());
         }
         break;
 
       case GameEventType.Teleport_Start:
         for (var i = 0; i < 5; i++) {
-          GameState.spawnParticleConfettiByType(x, y, z, ParticleType.Confetti_Blue);
+          gamestream.games.isometric.clientState.spawnParticleConfettiByType(x, y, z, ParticleType.Confetti_Blue);
         }
         break;
 
       case GameEventType.Teleport_End:
         for (var i = 0; i < 5; i++) {
-          GameState.spawnParticleConfettiByType(x, y, z, ParticleType.Confetti_Blue);
+          gamestream.games.isometric.clientState.spawnParticleConfettiByType(x, y, z, ParticleType.Confetti_Blue);
         }
         break;
 
@@ -249,22 +249,22 @@ class GameEvents {
 
     if (NodeType.isMaterialWood(nodeType)){
       gamestream.audio.material_struck_wood.playXYZ(x, y, z);
-      GameState.spawnParticleBlockWood(x, y, z);
+      gamestream.games.isometric.clientState.spawnParticleBlockWood(x, y, z);
     }
 
     if (NodeType.isMaterialGrass(nodeType)){
       gamestream.audio.grass_cut.playXYZ(x, y, z);
-      GameState.spawnParticleBlockGrass(x, y, z);
+      gamestream.games.isometric.clientState.spawnParticleBlockGrass(x, y, z);
     }
 
     if (NodeType.isMaterialStone(nodeType)){
       gamestream.audio.material_struck_stone.playXYZ(x, y, z);
-      GameState.spawnParticleBlockBrick(x, y, z);
+      gamestream.games.isometric.clientState.spawnParticleBlockBrick(x, y, z);
     }
 
     if (NodeType.isMaterialDirt(nodeType)){
       gamestream.audio.material_struck_dirt.playXYZ(x, y, z);
-      GameState.spawnParticleBlockSand(x, y, z);
+      gamestream.games.isometric.clientState.spawnParticleBlockSand(x, y, z);
     }
   }
 
@@ -273,7 +273,7 @@ class GameEvents {
   }
 
   static void onAttackPerformedUnarmed(double x, double y, double z, double angle) {
-    GameState.spawnParticleBubbles(
+    gamestream.games.isometric.clientState.spawnParticleBubbles(
       count: 3,
       x: x,
       y: y,
@@ -285,7 +285,7 @@ class GameEvents {
   static void onSplash(double x, double y, double z) {
     for (var i = 0; i < 12; i++){
       final zv = randomBetween(1.5, 5);
-      GameState.spawnParticleWaterDrop(x: x, y: y, z: z, zv: zv, duration: (zv * 12).toInt());
+      gamestream.games.isometric.clientState.spawnParticleWaterDrop(x: x, y: y, z: z, zv: zv, duration: (zv * 12).toInt());
     }
     return gamestream.audio.splash.playXYZ(x, y, z);
   }
@@ -299,15 +299,15 @@ class GameEvents {
     }
 
     if (attackType == ItemType.Empty){
-      GameState.spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
+      gamestream.games.isometric.clientState.spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
       return;
     }
     if (attackType == ItemType.Weapon_Melee_Knife){
-      GameState.spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
+      gamestream.games.isometric.clientState.spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
       return;
     }
     if (ItemType.isTypeWeaponMelee(attackType)) {
-      GameState.spawnParticleStrikeBlade(x: x, y: y, z: z, angle: angle);
+      gamestream.games.isometric.clientState.spawnParticleStrikeBlade(x: x, y: y, z: z, angle: angle);
       return;
     }
 
@@ -318,14 +318,14 @@ class GameEvents {
     final gunY = y - opp(angle, gun_distance);
 
     if (ItemType.isTypeWeaponFirearm(attackType)){
-      GameState.spawnParticleSmoke(x: gunX, y: gunY, z: z, scale: 0.1, scaleV: 0.006, duration: 50);
-      GameState.spawnParticleShell(gunX, gunY, z);
+      gamestream.games.isometric.clientState.spawnParticleSmoke(x: gunX, y: gunY, z: z, scale: 0.1, scaleV: 0.006, duration: 50);
+      gamestream.games.isometric.clientState.spawnParticleShell(gunX, gunY, z);
     }
     if (ItemType.isAutomaticFirearm(attackType)){
-      GameState.spawnParticleStrikeBulletLight(x: x, y: y, z: z, angle: angle);
+      gamestream.games.isometric.clientState.spawnParticleStrikeBulletLight(x: x, y: y, z: z, angle: angle);
       return;
     }
-    GameState.spawnParticleStrikeBullet(x: x, y: y, z: z, angle: angle);
+    gamestream.games.isometric.clientState.spawnParticleStrikeBullet(x: x, y: y, z: z, angle: angle);
   }
 
   static void onMeleeAttackPerformed(double x, double y, double z, double angle) {
@@ -337,34 +337,34 @@ class GameEvents {
     }
 
     if (attackType == ItemType.Empty){
-      GameState.spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
+      gamestream.games.isometric.clientState.spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
       return;
     }
     if (attackType == ItemType.Weapon_Melee_Knife){
-      GameState.spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
+      gamestream.games.isometric.clientState.spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
       return;
     }
     if (ItemType.isTypeWeaponMelee(attackType)) {
-      GameState.spawnParticleStrikeBlade(x: x, y: y, z: z, angle: angle);
+      gamestream.games.isometric.clientState.spawnParticleStrikeBlade(x: x, y: y, z: z, angle: angle);
       return;
     }
 
-    GameState.spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
+    gamestream.games.isometric.clientState.spawnParticleStrikePunch(x: x, y: y, z: z, angle: angle);
     return;
   }
 
 
   static void onChangedEdit(bool value) {
     if (value) {
-      gamestream.games.combat.camera.setModeFree();
+      gamestream.games.isometric.camera.setModeFree();
       GameEditor.cursorSetToPlayer();
-      gamestream.games.combat.camera.centerOnPlayer();
+      gamestream.games.isometric.camera.centerOnPlayer();
       GamePlayer.message.value = "-press arrow keys to move\n\n-press tab to play";
       GamePlayer.messageTimer = 300;
     } else {
       GameEditor.deselectGameObject();
       ClientActions.clearMouseOverDialogType();
-      gamestream.games.combat.camera.setModeChase();
+      gamestream.games.isometric.camera.setModeChase();
       if (ServerState.sceneEditable.value){
         GamePlayer.message.value = "press tab to edit";
       }
@@ -422,8 +422,7 @@ class GameEvents {
       case PlayerEvent.Loot_Collected:
         return gamestream.audio.collect_star_3();
       case PlayerEvent.Scene_Changed:
-        gamestream.games.combat.camera.centerOnPlayer();
-        // GameActions.setAmbientShadeToHour();
+        gamestream.games.isometric.camera.centerOnPlayer();
         break;
       case PlayerEvent.Item_Acquired:
         readPlayerEventItemAcquired();
@@ -443,7 +442,7 @@ class GameEvents {
           GameEditor.column = GamePlayer.indexColumn;
           GameEditor.z = GamePlayer.indexZ;
         }
-        gamestream.games.combat.camera.centerOnPlayer();
+        gamestream.games.isometric.camera.centerOnPlayer();
         gamestream.io.recenterCursor();
         break;
       case PlayerEvent.Insufficient_Gold:
@@ -492,7 +491,7 @@ class GameEvents {
         gamestream.audio.reviveHeal1();
 
         for (var i = 0; i < 8; i++){
-          GameState.spawnParticleConfettiByType(
+          gamestream.games.isometric.clientState.spawnParticleConfettiByType(
              GamePlayer.position.x,
              GamePlayer.position.y,
              GamePlayer.position.z,
@@ -519,7 +518,7 @@ class GameEvents {
     GameSpawn.spawnBubbles(x, y, z);
 
     for (var i = 0; i < 4; i++){
-      GameState.spawnParticleBlood(
+      gamestream.games.isometric.clientState.spawnParticleBlood(
         x: x,
         y: y,
         z: z,
@@ -546,20 +545,20 @@ class GameEvents {
 
   static void onCharacterDeathZombie(int type, double x, double y, double z, double angle){
     final zPos = z + Node_Size_Half;
-    GameState.spawnParticleHeadZombie(x: x, y: y, z: zPos, angle: angle, speed: 4.0);
-    GameState.spawnParticleArm(
+    gamestream.games.isometric.clientState.spawnParticleHeadZombie(x: x, y: y, z: zPos, angle: angle, speed: 4.0);
+    gamestream.games.isometric.clientState.spawnParticleArm(
         x: x,
         y: y,
         z: zPos,
         angle: angle + Engine.randomGiveOrTake(0.5),
         speed: 4.0 + Engine.randomGiveOrTake(0.5));
-    GameState.spawnParticleLegZombie(
+    gamestream.games.isometric.clientState.spawnParticleLegZombie(
         x: x,
         y: y,
         z: zPos,
         angle: angle + Engine.randomGiveOrTake(0.5),
         speed: 4.0 + Engine.randomGiveOrTake(0.5));
-    GameState.spawnParticleOrgan(
+    gamestream.games.isometric.clientState.spawnParticleOrgan(
         x: x,
         y: y,
         z: zPos,
@@ -583,13 +582,13 @@ class GameEvents {
 
   static void onChangedInputMode(int inputMode){
     if (inputMode == InputMode.Touch){
-      gamestream.games.combat.camera.centerOnPlayer();
+      gamestream.games.isometric.camera.centerOnPlayer();
       gamestream.io.recenterCursor();
     }
   }
 
   static void onChangedPlayerInteractMode(int value) {
-    final camera = gamestream.games.combat.camera;
+    final camera = gamestream.games.isometric.camera;
     ClientActions.playSoundWindow();
     switch (value) {
       case InteractMode.Inventory:
@@ -706,7 +705,7 @@ class GameEvents {
       switch (powerType){
         case PowerType.Stun:
           gamestream.audio.debuff_4();
-          GameState.spawnParticle(
+          gamestream.games.isometric.clientState.spawnParticle(
             type: ParticleType.Lightning_Bolt,
             x: GamePlayer.x,
             y: GamePlayer.y,
@@ -714,7 +713,7 @@ class GameEvents {
             duration: 10,
             animation: true,
           );
-          GameState.spawnParticleLightEmissionAmbient(
+          gamestream.games.isometric.clientState.spawnParticleLightEmissionAmbient(
             x: GamePlayer.x,
             y: GamePlayer.y,
             z: GamePlayer.z,

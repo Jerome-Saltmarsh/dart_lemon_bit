@@ -1,22 +1,26 @@
 
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/games/isometric/game_isometric_client_state.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/touch_controller.dart';
 
+import 'game_isometric_camera.dart';
+
 class GameIsometric extends Game {
-  final camera = GameCamera();
+  final camera = GameIsometricCamera();
+  final clientState = GameIsometricClientState();
 
   @override
   void drawCanvas(Canvas canvas, Size size) {
     if (ServerState.gameRunning.value){
       /// particles are only on the ui and thus can update every frame
       /// this makes them much smoother as they don't freeze
-      GameState.updateParticles();
+      gamestream.games.isometric.clientState.updateParticles();
     }
-    GameState.interpolatePlayer();
+    gamestream.games.isometric.clientState.interpolatePlayer();
     camera.update();
     GameRender.render3D();
-    GameState.renderEditMode();
+    gamestream.games.isometric.clientState.renderEditMode();
     GameRender.renderMouseTargetName();
     GameCanvas.renderPlayerEnergy();
     ClientState.rendersSinceUpdate.value++;
@@ -33,14 +37,14 @@ class GameIsometric extends Game {
       gamestream.network.sendClientRequestUpdate();
       return;
     }
-    GameState.updateTorchEmissionIntensity();
+    gamestream.games.isometric.clientState.updateTorchEmissionIntensity();
     gamestream.animation.updateAnimationFrame();
-    GameState.updateParticleEmitters();
+    gamestream.games.isometric.clientState.updateParticleEmitters();
     ServerState.updateProjectiles();
     ServerState.updateGameObjects();
     gamestream.audio.update();
     ClientState.update();
-    GameState.updatePlayerMessageTimer();
+    gamestream.games.isometric.clientState.updatePlayerMessageTimer();
     gamestream.io.readPlayerInput();
     gamestream.network.sendClientRequestUpdate();
   }
@@ -64,5 +68,18 @@ class GameIsometric extends Game {
   @override
   Widget buildUI(BuildContext context) {
     return GameUI.buildUI();
+  }
+
+  double get windLineRenderX {
+    var windLineColumn = 0;
+    var windLineRow = 0;
+    if (clientState.windLine < GameNodes.totalRows){
+      windLineColumn = 0;
+      windLineRow =  GameNodes.totalRows - clientState.windLine - 1;
+    } else {
+      windLineRow = 0;
+      windLineColumn = clientState.windLine - GameNodes.totalRows + 1;
+    }
+    return (windLineRow - windLineColumn) * Node_Size_Half;
   }
 }

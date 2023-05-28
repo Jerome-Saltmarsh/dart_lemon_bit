@@ -135,7 +135,7 @@ void renderCharacterTemplate(Character character, {
   final dstY = GameConvert.convertV3ToRenderY(character);
 
   const Color_Invisible = GameColors.White38_Value;
-  final color = invisible ? Color_Invisible : GameState.getV3RenderColor(character);
+  final color = invisible ? Color_Invisible : gamestream.games.isometric.clientState.getV3RenderColor(character);
 
   if (invisible) {
     engine.bufferBlendMode = BlendMode.srcIn;

@@ -89,9 +89,9 @@ class Gamestream {
      game.value = switch (value) {
        GameType.Website => games.gameWebsite,
        GameType.Fight2D => games.gameFight2D,
-       GameType.Combat  => games.combat,
+       GameType.Combat  => games.isometric,
        GameType.Cube3D  => games.gameCube3D,
-       GameType.Aeon    => games.aeon,
+       GameType.Aeon    => games.isometric,
        _ => throw Exception('mapGameTypeToGame($gameType)')
      };
    }

@@ -585,8 +585,8 @@ class GameUI {
           final screenCenterX = size.width * 0.5;
           final screenCenterY = size.height * 0.5;
           const ratio = 2 / 48.0;
-          final targetX = gamestream.games.combat.camera.chaseTarget.renderX * ratio;
-          final targetY = gamestream.games.combat.camera.chaseTarget.renderY * ratio;
+          final targetX = gamestream.games.isometric.camera.chaseTarget.renderX * ratio;
+          final targetY = gamestream.games.isometric.camera.chaseTarget.renderY * ratio;
           final cameraX = targetX - (screenCenterX / scale) - translate;
           final cameraY = targetY - (screenCenterY / scale) - translate;
           canvas.translate(-cameraX, -cameraY);

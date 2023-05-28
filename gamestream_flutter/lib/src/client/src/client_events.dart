@@ -84,7 +84,7 @@ class ClientEvents {
       ClientState.window_visible_menu.toggle();
     }
 
-    if (GameState.playMode) {
+    if (gamestream.games.isometric.clientState.playMode) {
       onKeyPressedModePlay(key);
     } else {
       onKeyPressedModeEdit(key);
@@ -104,7 +104,7 @@ class ClientEvents {
         if (GameEditor.gameObjectSelected.value) {
           gamestream.network.sendGameObjectRequestMoveToMouse();
         } else {
-          gamestream.games.combat.camera.cameraSetPositionGrid(GameEditor.row, GameEditor.column, GameEditor.z);
+          gamestream.games.isometric.camera.cameraSetPositionGrid(GameEditor.row, GameEditor.column, GameEditor.z);
         }
         break;
       case KeyCode.R:

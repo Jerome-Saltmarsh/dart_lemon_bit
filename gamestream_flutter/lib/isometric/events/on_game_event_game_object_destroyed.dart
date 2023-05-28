@@ -15,25 +15,25 @@ void onGameEventGameObjectDestroyed(
      case ItemType.GameObjects_Barrel:
        gamestream.audio.crate_breaking.playXYZ(x, y, z);
        for (var i = 0; i < 5; i++) {
-         GameState.spawnParticleBlockWood(x, y, z);
+         gamestream.games.isometric.clientState.spawnParticleBlockWood(x, y, z);
        }
        break;
      case ItemType.GameObjects_Toilet:
        gamestream.audio.crate_breaking.playXYZ(x, y, z);
        for (var i = 0; i < 5; i++) {
-         GameState.spawnParticleBlockWood(x, y, z);
+         gamestream.games.isometric.clientState.spawnParticleBlockWood(x, y, z);
        }
        break;
      case ItemType.GameObjects_Crate_Wooden:
        gamestream.audio.crate_breaking.playXYZ(x, y, z);
        for (var i = 0; i < 5; i++) {
-         GameState.spawnParticleBlockWood(x, y, z);
+         gamestream.games.isometric.clientState.spawnParticleBlockWood(x, y, z);
        }
        break;
 
      case ItemType.Resource_Credit:
        for (var i = 0; i < 8; i++){
-         GameState.spawnParticleConfettiByType(
+         gamestream.games.isometric.clientState.spawnParticleConfettiByType(
            x,
            y,
            z,

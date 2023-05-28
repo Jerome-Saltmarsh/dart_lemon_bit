@@ -101,7 +101,7 @@ class ServerState {
         case EmissionType.None:
           continue;
         case EmissionType.Color:
-          GameState.applyVector3Emission(
+          gamestream.games.isometric.clientState.applyVector3Emission(
             gameObject,
             hue: gameObject.emission_hue,
             saturation: gameObject.emission_sat,
@@ -111,7 +111,7 @@ class ServerState {
           );
           continue;
         case EmissionType.Ambient:
-          GameState.applyVector3EmissionAmbient(gameObject,
+          gamestream.games.isometric.clientState.applyVector3EmissionAmbient(gameObject,
               alpha: gameObject.emission_alp,
               intensity: gameObject.emission_intensity,
           );
@@ -135,7 +135,7 @@ class ServerState {
 
      final z = getProjectionZ(v3);
      if (z < 0) return;
-     GameState.spawnParticle(
+     gamestream.games.isometric.clientState.spawnParticle(
          type: ParticleType.Shadow,
          x: v3.x,
          y: v3.y,
@@ -232,16 +232,16 @@ class ServerState {
     for (var i = 0; i < totalProjectiles; i++) {
       final projectile = projectiles[i];
       if (projectile.type == ProjectileType.Rocket) {
-        GameState.spawnParticleSmoke(x: projectile.x, y: projectile.y, z: projectile.z);
+        gamestream.games.isometric.clientState.spawnParticleSmoke(x: projectile.x, y: projectile.y, z: projectile.z);
         ServerState.projectShadow(projectile);
         continue;
       }
       if (projectile.type == ProjectileType.Fireball) {
-        GameState.spawnParticleFire(x: projectile.x, y: projectile.y, z: projectile.z);
+        gamestream.games.isometric.clientState.spawnParticleFire(x: projectile.x, y: projectile.y, z: projectile.z);
         continue;
       }
       if (projectile.type == ProjectileType.Orb) {
-        GameState.spawnParticleOrbShard(
+        gamestream.games.isometric.clientState.spawnParticleOrbShard(
           x: projectile.x,
           y: projectile.y,
           z: projectile.z,

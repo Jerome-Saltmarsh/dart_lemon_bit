@@ -73,7 +73,7 @@ class ClientActions {
 
   static void spawnConfettiPlayer() {
      for (var i = 0; i < 10; i++){
-       GameState.spawnParticleConfetti(
+       gamestream.games.isometric.clientState.spawnParticleConfetti(
          GamePlayer.position.x,
          GamePlayer.position.y,
          GamePlayer.position.z,

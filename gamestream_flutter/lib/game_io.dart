@@ -225,12 +225,12 @@ class GameIO {
   }
 
   bool getActionSecondary(){
-    if (GameState.editMode) return false;
+    if (gamestream.games.isometric.clientState.editMode) return false;
     return false;
   }
 
   bool getActionTertiary(){
-    if (GameState.editMode) return false;
+    if (gamestream.games.isometric.clientState.editMode) return false;
     return false;
   }
 
@@ -291,7 +291,7 @@ class GameIO {
       if (row >= GameNodes.totalRows) break;
       if (column >= GameNodes.totalColumns) break;
       if (z >= GameNodes.totalZ) break;
-      final index = GameState.getNodeIndexZRC(z, row, column);
+      final index = gamestream.games.isometric.clientState.getNodeIndexZRC(z, row, column);
       if (NodeType.isRainOrEmpty(GameNodes.nodeTypes[index])) {
         z--;
         continue;

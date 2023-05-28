@@ -18,7 +18,7 @@ void renderCharacterRat(Character character){
       srcHeight: 64,
       anchorY: 0.66,
       scale: 1,
-      color: GameState.getV3RenderColor(character),
+      color: gamestream.games.isometric.clientState.getV3RenderColor(character),
     );
   }
 
@@ -33,7 +33,7 @@ void renderCharacterRat(Character character){
       srcHeight: 64,
       anchorY: 0.66,
       scale: 1,
-      color: GameState.getV3RenderColor(character),
+      color: gamestream.games.isometric.clientState.getV3RenderColor(character),
     );
   }
 
@@ -47,6 +47,6 @@ void renderCharacterRat(Character character){
     srcHeight: 64,
     anchorY: 0.66,
     scale: 1,
-    color: GameState.getV3RenderColor(character),
+    color: gamestream.games.isometric.clientState.getV3RenderColor(character),
   );
 }

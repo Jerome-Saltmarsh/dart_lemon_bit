@@ -9,7 +9,7 @@ import 'package:bleed_common/src/fight2d/game_fight2d_events.dart';
 class ServerResponseReader with ByteReader {
   final bufferSize = Watch(0);
   final bufferSizeTotal = Watch(0);
-  final updateFrame = Watch(0, onChanged: GameState.onChangedUpdateFrame);
+  late final updateFrame = Watch(0, onChanged: gamestream.games.isometric.clientState.onChangedUpdateFrame);
   final decoder = ZLibDecoder();
 
   var previousServerResponse = -1;
@@ -364,7 +364,7 @@ class ServerResponseReader with ByteReader {
         ClientActions.clearHoverDialogType();
         break;
       case ApiPlayer.Spawned:
-        gamestream.games.combat.camera.centerOnPlayer();
+        gamestream.games.isometric.camera.centerOnPlayer();
         gamestream.io.recenterCursor();
         break;
       case ApiPlayer.Damage:
@@ -602,7 +602,7 @@ class ServerResponseReader with ByteReader {
     GameNodes.colorStack = Uint16List(totalNodes);
     GameNodes.ambientStack = Uint16List(totalNodes);
     GameNodes.total = totalNodes;
-    GameState.nodesRaycast = GameNodes.area +  GameNodes.area + GameNodes.totalColumns + 1;
+    gamestream.games.isometric.clientState.nodesRaycast = GameNodes.area +  GameNodes.area + GameNodes.totalColumns + 1;
     GameEvents.onChangedNodes();
     GameNodes.refreshNodeVariations();
     ClientState.sceneChanged.value++;
