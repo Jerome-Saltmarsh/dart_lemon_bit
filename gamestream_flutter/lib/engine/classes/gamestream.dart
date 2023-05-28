@@ -4,15 +4,12 @@ import 'package:gamestream_flutter/game_utils.dart';
 import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:gamestream_flutter/engine/games/game_website.dart' as gw;
 import 'game.dart';
 import 'games.dart';
 
-
 class Gamestream {
    late final gameType = Watch(GameType.Website, onChanged: _onChangedGameType);
-   late final game = Watch<Game>(gameWebsite, onChanged: _onChangedGame);
-   late final gameWebsite = gw.GameWebsite();
+   late final game = Watch<Game>(games.gameWebsite, onChanged: _onChangedGame);
 
    final io = GameIO();
    final audio = GameAudio();
@@ -93,7 +90,7 @@ class Gamestream {
    void _onChangedGameType(GameType value) {
      print("_onChangedGameType(${value.name})");
      game.value = switch (value) {
-       GameType.Website => gameWebsite,
+       GameType.Website => games.gameWebsite,
        GameType.Fight2D => games.gameFight2D,
        GameType.Combat => games.combat,
        GameType.Cube3D => games.gameCube3D,

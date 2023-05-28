@@ -529,8 +529,15 @@ class Engine extends StatelessWidget {
   int convertFramesPerSecondsToMilliseconds(int framesPerSecond) =>
     Milliseconds_Per_Second ~/ framesPerSecond;
 
+  var _initCallAmount = 0;
+
   Future _internalInit() async {
+    _initCallAmount++;
     print("_internalInit()");
+    if (_initCallAmount > 1){
+      print('warning init called ${_initCallAmount}');
+      return;
+    }
     WidgetsFlutterBinding.ensureInitialized();
     SystemChannels.keyEvent.setMessageHandler(_handleRawKeyMessage);
     _bufferImage = await _generateEmptyImage();
