@@ -7,7 +7,6 @@ export 'atlases/atlases.dart';
 export 'game_account.dart';
 export 'game_settings.dart';
 export 'gamestream/game_audio.dart';
-export 'game_classes.dart';
 export 'game_colors.dart';
 export 'game_config.dart';
 export 'game_convert.dart';

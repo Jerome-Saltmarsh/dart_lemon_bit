@@ -519,7 +519,7 @@ class RendererNodes extends Renderer {
     }
 
     if (column - nodesGridTotalColumnsMinusOne >= gamestream.games.isometric.nodes.totalRows){
-      GameRender.rendererNodes.remaining = false;
+      gamestream.games.isometric.renderer.rendererNodes.remaining = false;
       return;
     }
 
@@ -545,7 +545,7 @@ class RendererNodes extends Renderer {
       nodesMinZ++;
       renderY -= Node_Height;
       if (nodesMinZ >= gamestream.games.isometric.nodes.totalZ){
-        GameRender.rendererNodes.remaining = false;
+        gamestream.games.isometric.renderer.rendererNodes.remaining = false;
         return;
       }
     }

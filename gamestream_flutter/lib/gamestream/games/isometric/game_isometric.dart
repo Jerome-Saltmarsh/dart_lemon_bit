@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_renderer.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/touch_controller.dart';
 
@@ -13,6 +14,7 @@ class GameIsometric extends Game {
   final clientState = GameIsometricClientState();
   final nodes = GameIsometricNodes();
   final actions = GameIsometricActions();
+  final renderer = GameIsometricRenderer();
 
   @override
   void drawCanvas(Canvas canvas, Size size) {
@@ -23,9 +25,9 @@ class GameIsometric extends Game {
     }
     clientState.interpolatePlayer();
     camera.update();
-    GameRender.render3D();
+    gamestream.games.isometric.renderer.render3D();
     clientState.renderEditMode();
-    GameRender.renderMouseTargetName();
+    gamestream.games.isometric.renderer.renderMouseTargetName();
     GameCanvas.renderPlayerEnergy();
     ClientState.rendersSinceUpdate.value++;
   }

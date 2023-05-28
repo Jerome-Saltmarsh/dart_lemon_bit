@@ -1126,45 +1126,15 @@ class GameIsometricClientState {
     }
 
     renderEditWireFrames();
-    GameRender.renderMouseWireFrame();
-
-    // final nodeData = EditState.selectedNodeData.value;
-    // if (nodeData != null){
-    //   engine.renderCircleOutline(
-    //        radius: nodeData.spawnRadius.toDouble(),
-    //        x: EditState.renderX,
-    //        y: EditState.renderY,
-    //        color: Colors.white,
-    //        sides: 8,
-    //    );
-    // }
+    gamestream.games.isometric.renderer.renderMouseWireFrame();
   }
 
   void renderEditWireFrames() {
     for (var z = 0; z < GameEditor.z; z++) {
-      GameRender.renderWireFrameBlue(z, GameEditor.row, GameEditor.column);
+      gamestream.games.isometric.renderer.renderWireFrameBlue(z, GameEditor.row, GameEditor.column);
     }
-    GameRender.renderWireFrameRed(GameEditor.row, GameEditor.column, GameEditor.z);
+    gamestream.games.isometric.renderer.renderWireFrameRed(GameEditor.row, GameEditor.column, GameEditor.z);
   }
-
-  // void update() {
-  //
-  //   if (!ServerState.gameRunning.value) {
-  //     GameNetwork.sendClientRequestUpdate();
-  //     return;
-  //   }
-  //
-  //   updateTorchEmissionIntensity();
-  //   GameAnimation.updateAnimationFrame();
-  //   updateParticleEmitters();
-  //   ServerState.updateProjectiles();
-  //   ServerState.updateGameObjects();
-  //   GameAudio.update();
-  //   ClientState.update();
-  //   updatePlayerMessageTimer();
-  //   GameIO.readPlayerInput();
-  //   GameNetwork.sendClientRequestUpdate();
-  // }
 
   void updateTorchEmissionIntensity(){
     if (torch_emission_vel == 0) return;

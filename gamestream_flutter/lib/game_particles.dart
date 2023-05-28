@@ -2,8 +2,6 @@
 
 import 'dart:typed_data';
 
-import 'package:gamestream_flutter/bool_list.dart';
-
 class GameParticles {
   static const total = 0;
   static final masses = Float32List(total);
@@ -17,7 +15,7 @@ class GameParticles {
   static final accelerationsY = Float32List(total);
   static final accelerationsZ = Float32List(total);
   static final types = Uint8List(total);
-  static final actives = BoolList(total);
+  static final actives = List.filled(total, false, growable: false);
   static final durations = Int16List(total);
   static final maxDurations = Int16List(total);
   static final order = Int16List(total);

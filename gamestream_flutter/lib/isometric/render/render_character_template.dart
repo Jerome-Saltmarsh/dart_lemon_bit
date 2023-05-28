@@ -90,7 +90,7 @@ void renderCharacterTemplate(Character character, {
     case CharacterState.Stunned:
       frameLegs = 0;
       frameWeapon = weaponIsTwoHandedFirearm ? 0 : 1;
-      GameRender.renderStarsV3(character);
+      gamestream.games.isometric.renderer.renderStarsV3(character);
       break;
   }
 

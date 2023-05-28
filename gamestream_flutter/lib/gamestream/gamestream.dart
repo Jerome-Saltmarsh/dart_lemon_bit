@@ -1,8 +1,9 @@
 
 import 'package:gamestream_flutter/game_utils.dart';
-import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'server_response_reader.dart';
 
 class Gamestream {
    late final gameType = Watch(GameType.Website, onChanged: _onChangedGameType);

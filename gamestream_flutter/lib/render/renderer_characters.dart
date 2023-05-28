@@ -27,8 +27,8 @@ class RendererCharacters extends Renderer {
 
   void renderCurrentCharacter(){
 
-    if (GameRender.renderDebug) {
-      GameRender.renderCircle(character.x, character.y, character.z, character.radius);
+    if (gamestream.games.isometric.renderer.renderDebug) {
+      gamestream.games.isometric.renderer.renderCircle(character.x, character.y, character.z, character.radius);
     }
 
     if (character.spawning) {
@@ -197,7 +197,7 @@ class RendererCharacters extends Renderer {
     }
 
     if (character.state == CharacterState.Stunned){
-      GameRender.renderStarsV3(character);
+      gamestream.games.isometric.renderer.renderStarsV3(character);
       engine.renderSprite(
         image: GameImages.character_dog,
         dstX: character.renderX,
@@ -300,7 +300,7 @@ class RendererCharacters extends Renderer {
           framesPerDirection: framesPerDirection,
         );
       case CharacterState.Stunned:
-        GameRender.renderStarsV3(character);
+        gamestream.games.isometric.renderer.renderStarsV3(character);
 
         return single(
             frame: 1,

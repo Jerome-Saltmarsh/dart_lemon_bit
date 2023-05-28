@@ -9,6 +9,9 @@ import 'isometric/render/render_character_health_bar.dart';
 import 'touch_controller.dart';
 
 class GameCanvas {
+
+
+
   static void renderForegroundText(Vector3 position, String text){
     engine.renderText(
       text,
@@ -63,7 +66,7 @@ class GameCanvas {
 
     switch (GamePlayer.aimTargetCategory) {
       case TargetCategory.Nothing:
-        GameRender.canvasRenderCursorCrossHair(canvas, distance);
+        gamestream.games.isometric.renderer.canvasRenderCursorCrossHair(canvas, distance);
 
         if (ServerQuery.getEquippedWeaponConsumeType() != ItemType.Empty){
            if (ServerQuery.getEquippedWeaponQuantity() <= 0){
@@ -82,13 +85,13 @@ class GameCanvas {
 
         break;
       case TargetCategory.Collect:
-        GameRender.canvasRenderCursorHand(canvas);
+        gamestream.games.isometric.renderer.canvasRenderCursorHand(canvas);
         return;
       case TargetCategory.Allie:
-        GameRender.canvasRenderCursorTalk(canvas);
+        gamestream.games.isometric.renderer.canvasRenderCursorTalk(canvas);
         return;
       case TargetCategory.Enemy:
-        GameRender.canvasRenderCursorCrossHairRed(canvas, distance);
+        gamestream.games.isometric.renderer.canvasRenderCursorCrossHairRed(canvas, distance);
 
         if (ServerQuery.getEquippedWeaponConsumeType() != ItemType.Empty){
           if (ServerQuery.getEquippedWeaponQuantity() <= 0){
@@ -125,7 +128,7 @@ class GameCanvas {
     var i = 0;
     for (var row = 0; row < gamestream.games.isometric.nodes.totalRows; row++){
       for (var column = 0; column < gamestream.games.isometric.nodes.totalColumns; column++){
-         GameRender.renderTextXYZ(
+        gamestream.games.isometric.renderer.renderTextXYZ(
              x: row * Node_Size,
              y: column * Node_Size,
              z: 5,
@@ -144,7 +147,7 @@ class GameCanvas {
           i++;
           continue;
         }
-        GameRender.renderTextXYZ(
+        gamestream.games.isometric.renderer.renderTextXYZ(
           x: row * Node_Size,
           y: column * Node_Size,
           z: 5,
@@ -186,13 +189,13 @@ class GameCanvas {
       y1 = y2;
       i1 = i2;
     }
-    GameRender.renderCircle32(x1, y1, z);
+    gamestream.games.isometric.renderer.renderCircle32(x1, y1, z);
   }
 
   static void renderPlayerRunTarget(){
     if (GamePlayer.dead) return;
     if (GamePlayer.targetCategory == TargetCategory.Run){
-      GameRender.renderCircle32(GamePlayer.targetPosition.x, GamePlayer.targetPosition.y, GamePlayer.targetPosition.z);
+      gamestream.games.isometric.renderer.renderCircle32(GamePlayer.targetPosition.x, GamePlayer.targetPosition.y, GamePlayer.targetPosition.z);
     }
   }
 }

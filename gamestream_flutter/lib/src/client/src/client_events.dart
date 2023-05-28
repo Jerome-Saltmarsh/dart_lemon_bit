@@ -209,7 +209,7 @@ class ClientEvents {
           : 0;
 
   static void onChangedDebugMode(bool value){
-    GameRender.renderDebug = value;
+    gamestream.games.isometric.renderer.renderDebug = value;
   }
 
   static void onChangedCredits(int value){

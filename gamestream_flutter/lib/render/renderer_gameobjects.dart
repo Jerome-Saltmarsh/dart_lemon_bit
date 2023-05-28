@@ -47,7 +47,7 @@ class RendererGameObjects extends Renderer {
             ? gamestream.games.isometric.clientState.getV3RenderColor(gameObject)
             : gameObject.emission_col,
       );
-      if (GameRender.renderDebug) {
+      if (gamestream.games.isometric.renderer.renderDebug) {
         renderGameObjectRadius(gameObject);
       }
 
@@ -175,7 +175,7 @@ class RendererGameObjects extends Renderer {
   }
 
   void renderGameObjectRadius(GameObject gameObject) {
-    GameRender.renderCircle(
+    gamestream.games.isometric.renderer.renderCircle(
         gameObject.x,
         gameObject.y,
         gameObject.z, ItemType.getRadius(gameObject.type),
