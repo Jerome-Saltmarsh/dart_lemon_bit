@@ -53,14 +53,14 @@ class GameAeon extends Game {
     ClientState.window_visible_player_creation.value = false;
     ClientState.control_visible_respawn_timer.value = false;
     gamestream.audio.musicStop();
-    Engine.onLeftClicked = TouchController.onClick;
-    Engine.onMouseMoved = TouchController.onMouseMoved;
+    engine.onLeftClicked = TouchController.onClick;
+    engine.onMouseMoved = TouchController.onMouseMoved;
     ClientState.control_visible_player_weapons.value = true;
     ClientState.control_visible_scoreboard.value = true;
     ClientState.control_visible_player_power.value = true;
 
-    if (!Engine.isLocalHost) {
-      Engine.fullScreenEnter();
+    if (!engine.isLocalHost) {
+      engine.fullScreenEnter();
     }
   }
 

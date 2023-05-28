@@ -233,8 +233,8 @@ class GameInventoryUI {
         onRightClick: () => ClientEvents.onItemIndexSecondary(itemIndex),
         child: MouseRegion(
           onEnter: (event) {
-            Engine.mousePositionX = event.position.dx;
-            Engine.mousePositionY = event.position.dy;
+            engine.mousePositionX = event.position.dx;
+            engine.mousePositionY = event.position.dy;
             ClientState.hoverIndex.value = itemIndex;
           },
           onExit: (_) {
@@ -605,8 +605,8 @@ class GameInventoryUI {
 
     return Positioned(
       top: 100,
-      left:  Engine.mousePositionX < (Engine.screen.width * 0.5) ? 300 : null,
-      right: Engine.mousePositionX >= (Engine.screen.width * 0.5) ? 300 : null,
+      left:  engine.mousePositionX < (engine.screen.width * 0.5) ? 300 : null,
+      right: engine.mousePositionX >= (engine.screen.width * 0.5) ? 300 : null,
       child: Container(
         padding: const EdgeInsets.all(12),
         color: brownDark,

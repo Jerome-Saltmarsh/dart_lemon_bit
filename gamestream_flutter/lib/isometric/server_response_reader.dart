@@ -116,7 +116,7 @@ class ServerResponseReader with ByteReader {
           final name = readString();
           final length = readUInt16();
           final bytes = readBytes(length);
-          Engine.downloadBytes(bytes, name: '$name.scene');
+          engine.downloadBytes(bytes, name: '$name.scene');
           break;
         case ServerResponse.Game_Status:
           ServerState.gameStatus.value = readByte();
@@ -547,7 +547,7 @@ class ServerResponseReader with ByteReader {
   void readEnd() {
     bufferSize.value = index;
     index = 0;
-    Engine.redrawCanvas();
+    engine.redrawCanvas();
   }
 
   void readStoreItems() {

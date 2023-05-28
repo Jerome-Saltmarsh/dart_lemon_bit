@@ -54,21 +54,24 @@ class GameNodes {
 
   static var interpolation_length = 6;
   static final Watch<EaseType> interpolation_ease_type = Watch(EaseType.Out_Quad, onChanged: (EaseType easeType){
-    interpolations = easeType.generate(
+    interpolations = interpolateEase(
       length: interpolation_length,
+      easeType: EaseType.In_Out_Quad,
     );
   });
 
-  static var interpolations = interpolation_ease_type.value.generate(
+  static var interpolations = interpolateEase(
       length: interpolation_length,
+      easeType: interpolation_ease_type.value,
   );
 
   static void setInterpolationLength(int value){
      if (value < 1) return;
      if (interpolation_length == value) return;
      interpolation_length = value;
-     interpolations = interpolation_ease_type.value.generate(
+     interpolations = interpolateEase(
        length: interpolation_length,
+       easeType: interpolation_ease_type.value,
      );
   }
 
@@ -206,13 +209,13 @@ class GameNodes {
 
     const r = 4;
     final dstXLeft = GameConvert.rowColumnZToRenderX(rowIndex + r, columnIndex - r);
-    if (dstXLeft < Engine.Screen_Left)    return;
+    if (dstXLeft < engine.Screen_Left)    return;
     final dstXRight = GameConvert.rowColumnZToRenderX(rowIndex - r, columnIndex + r);
-    if (dstXRight > Engine.Screen_Right)   return;
+    if (dstXRight > engine.Screen_Right)   return;
     final dstYTop = GameConvert.rowColumnZToRenderY(rowIndex + r, columnIndex + r, zIndex);
-    if (dstYTop <  Engine.Screen_Top) return;
+    if (dstYTop <  engine.Screen_Top) return;
     final dstYBottom = GameConvert.rowColumnZToRenderY(rowIndex - r, columnIndex - r, zIndex);
-    if (dstYBottom >  Engine.Screen_Bottom) return;
+    if (dstYBottom >  engine.Screen_Bottom) return;
 
     for (var z = zMin; z < zMax; z++) {
       var rowInit = rowInitInit;
@@ -372,11 +375,11 @@ class GameNodes {
 
     final padding = ClientState.interpolation_padding;
     final rx = getIndexRenderX(index);
-    if (rx < Engine.Screen_Left - padding) return;
-    if (rx > Engine.Screen_Right + padding) return;
+    if (rx < engine.Screen_Left - padding) return;
+    if (rx > engine.Screen_Right + padding) return;
     final ry = getIndexRenderY(index);
-    if (ry < Engine.Screen_Top - padding) return;
-    if (ry > Engine.Screen_Bottom + padding) return;
+    if (ry < engine.Screen_Top - padding) return;
+    if (ry > engine.Screen_Bottom + padding) return;
 
     ClientState.lights_active++;
 
@@ -470,11 +473,11 @@ class GameNodes {
 
     final padding = ClientState.interpolation_padding;
     final rx = getIndexRenderX(index);
-    if (rx < Engine.Screen_Left - padding) return;
-    if (rx > Engine.Screen_Right + padding) return;
+    if (rx < engine.Screen_Left - padding) return;
+    if (rx > engine.Screen_Right + padding) return;
     final ry = getIndexRenderY(index);
-    if (ry < Engine.Screen_Top - padding) return;
-    if (ry > Engine.Screen_Bottom + padding) return;
+    if (ry < engine.Screen_Top - padding) return;
+    if (ry > engine.Screen_Bottom + padding) return;
 
     ClientState.lights_active++;
 
@@ -1100,12 +1103,12 @@ class GameNodes {
     final column = getIndexColumn(index);
 
     final renderX = GameConvert.rowColumnToRenderX(row, column);
-    if (renderX < Engine.Screen_Left) return false;
-    if (renderX > Engine.Screen_Right) return false;
+    if (renderX < engine.Screen_Left) return false;
+    if (renderX > engine.Screen_Right) return false;
 
     final renderY = GameConvert.rowColumnZToRenderY(row, column, getIndexZ(index));
-    if (renderY < Engine.Screen_Top) return false;
-    if (renderY > Engine.Screen_Bottom) return false;
+    if (renderY < engine.Screen_Top) return false;
+    if (renderY > engine.Screen_Bottom) return false;
 
     return true;
   }

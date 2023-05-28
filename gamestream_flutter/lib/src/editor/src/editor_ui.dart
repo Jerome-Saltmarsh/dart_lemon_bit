@@ -13,8 +13,8 @@ class EditorUI {
 
   static Widget buildPage({required List<Widget> children}) =>
       Container(
-          width: Engine.screen.width,
-          height: Engine.screen.height,
+          width: engine.screen.width,
+          height: engine.screen.height,
           child: Stack(children: children)
       );
 
@@ -25,7 +25,7 @@ class EditorUI {
           bottom: 10,
           child: Container(
               alignment: Alignment.center,
-              width: Engine.screen.width,
+              width: engine.screen.width,
               child: EditorUI.buildRowWeatherControls()
           )
       ),
@@ -35,7 +35,7 @@ class EditorUI {
           left: 0,
           top: 50,
           child: Container(
-              height: Engine.screen.height - 100,
+              height: engine.screen.height - 100,
               child: buildEditorTabGameObjects()),
         ),
       if (activeEditTab == EditTab.Grid)
@@ -136,7 +136,7 @@ class EditorUI {
                 container(child: "EDIT", action: EditorActions.toggleWindowEnabledScene),
                 container(child: "MAP SIZE", action: EditorActions.toggleWindowEnabledCanvasSize),
                 container(child: "GENERATE", action: EditorState.windowEnabledGenerate.toggle),
-                if (Engine.isLocalHost)
+                if (engine.isLocalHost)
                   container(child: "SAVE SERVER FILE", action: ServerActions.saveScene),
               ],
             );
@@ -164,7 +164,7 @@ class EditorUI {
               child: Center(
                 child: Stack(
                   children: [
-                    Engine.buildAtlasImage(
+                    engine.buildAtlasImage(
                       image: GameImages.atlas_icons,
                       srcX: 193,
                       srcY: 32,
@@ -408,7 +408,7 @@ class EditorUI {
         height: 70,
         color: Colors.white,
         child: FittedBox(
-          child: Engine.buildAtlasImageButton(
+          child: engine.buildAtlasImageButton(
               image: ItemType.isTypeGameObject(gameObjectType)
                   ? GameImages.atlas_gameobjects
                   : GameImages.atlas_items,
@@ -633,7 +633,7 @@ class EditorUI {
   }
 
   static Widget buildButtonSelectNodeType(int nodeType) {
-    final canvas = Engine.buildAtlasImage(
+    final canvas = engine.buildAtlasImage(
       image: GameImages.atlas_nodes,
       srcX: AtlasNodeX.mapNodeType(nodeType),
       srcY: AtlasNodeY.mapNodeType(nodeType),
@@ -708,7 +708,7 @@ class EditorUI {
 
   static Widget buildOrientationIcon(int orientation) {
 
-    final canvas = Engine.buildAtlasImage(
+    final canvas = engine.buildAtlasImage(
       image: GameImages.atlas_nodes,
       srcX: orientation == NodeOrientation.None ? 1442.0 : 0,
       srcY: AtlasNodeY.mapOrientation(orientation),
@@ -837,7 +837,7 @@ class EditorUI {
     required double x,
     required double y,
   }) =>
-      Engine.renderExternalCanvas(
+      engine.renderExternalCanvas(
       canvas: canvas,
       image: GameImages.atlas_icons,
       srcX: 304,
@@ -853,7 +853,7 @@ class EditorUI {
     required double x,
     required double y,
   }) =>
-      Engine.renderExternalCanvas(
+      engine.renderExternalCanvas(
         canvas: canvas,
         image: GameImages.atlas_icons,
         srcX: 352,
@@ -1014,7 +1014,7 @@ class EditorUI {
             width: 200,
             height: 200,
             color: GameColors.brownDark,
-            child: Engine.buildCanvas(paint: (Canvas canvas, Size size){
+            child: engine.buildCanvas(paint: (Canvas canvas, Size size){
               for (var x = 0; x < 3; x++){
                 for (var y = 0; y < 3; y++){
                   renderIconSquareEmpty(
@@ -1231,7 +1231,7 @@ class EditorUI {
           children: [
             child,
             Container(
-              height: Engine.screen.height - 100,
+              height: engine.screen.height - 100,
               child: SingleChildScrollView(
                 child: Column(
                   children: children,

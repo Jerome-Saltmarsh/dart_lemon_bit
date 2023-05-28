@@ -8,7 +8,7 @@ final _keys = _Keys();
 
 class StorageService {
 
-  bool get serverSaved => Engine.sharedPreferences.containsKey(_keys.server);
+  bool get serverSaved => engine.sharedPreferences.containsKey(_keys.server);
 
   void saveRegion(ConnectionRegion value){
     SharedPreferences.getInstance().then((instance){
@@ -24,9 +24,9 @@ class StorageService {
   }
 
   void forgetAuthorization(){
-    Engine.sharedPreferences.remove(_keys.userId);
-    Engine.sharedPreferences.remove(_keys.userEmail);
-    Engine.sharedPreferences.remove(_keys.userName);
+    engine.sharedPreferences.remove(_keys.userId);
+    engine.sharedPreferences.remove(_keys.userEmail);
+    engine.sharedPreferences.remove(_keys.userName);
   }
 
   DataAuthentication recallAuthorization() {
@@ -40,12 +40,12 @@ class StorageService {
     );
   }
 
-  bool get authorizationRemembered => Engine.sharedPreferences.containsKey(_keys.userId);
+  bool get authorizationRemembered => engine.sharedPreferences.containsKey(_keys.userId);
 
   String get userId => get(_keys.userId);
 
   void remove(String key){
-    Engine.sharedPreferences.remove(key);
+    engine.sharedPreferences.remove(key);
   }
 
   void put(String key, dynamic value){
@@ -57,27 +57,27 @@ class StorageService {
     }
 
     if (value is String){
-      Engine.sharedPreferences.setString(key, value);
+      engine.sharedPreferences.setString(key, value);
       return;
     }
 
     if (value is int){
-      Engine.sharedPreferences.setInt(key, value);
+      engine.sharedPreferences.setInt(key, value);
       return;
     }
 
     if (value is double){
-      Engine.sharedPreferences.setDouble(key, value);
+      engine.sharedPreferences.setDouble(key, value);
       return;
     }
 
     if (value is bool){
-      Engine.sharedPreferences.setBool(key, value);
+      engine.sharedPreferences.setBool(key, value);
       return;
     }
 
     if (value is DateTime){
-      Engine.sharedPreferences.setString(key, value.toIso8601String());
+      engine.sharedPreferences.setString(key, value.toIso8601String());
       return;
     }
 
@@ -85,27 +85,27 @@ class StorageService {
   }
 
   bool contains(String key){
-    return Engine.sharedPreferences.containsKey(key);
+    return engine.sharedPreferences.containsKey(key);
   }
 
   T get<T>(String key){
-    if (!Engine.sharedPreferences.containsKey(key)){
+    if (!engine.sharedPreferences.containsKey(key)){
       throw Exception('shared preference does not contain key $key');
     }
     if (T == int){
-      return Engine.sharedPreferences.getInt(key) as T;
+      return engine.sharedPreferences.getInt(key) as T;
     }
     if (T == double){
-      return Engine.sharedPreferences.getDouble(key) as T;
+      return engine.sharedPreferences.getDouble(key) as T;
     }
     if (T == String){
-      return Engine.sharedPreferences.getString(key) as T;
+      return engine.sharedPreferences.getString(key) as T;
     }
     if (T == bool){
-      return Engine.sharedPreferences.getBool(key) as T;
+      return engine.sharedPreferences.getBool(key) as T;
     }
     if (T.toString().startsWith('DateTime')){
-      return DateTime.parse(Engine.sharedPreferences.getString(key)!) as T;
+      return DateTime.parse(engine.sharedPreferences.getString(key)!) as T;
     }
     throw Exception("cannot get value for key $key");
   }

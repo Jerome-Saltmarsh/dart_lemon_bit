@@ -7,7 +7,7 @@ class WebsiteActions {
   static void checkForLatestVersion() async {
     await saveVisitDateTime();
     GameWebsite.operationStatus.value = OperationStatus.Checking_For_Updates;
-    Engine.refreshPage();
+    engine.refreshPage();
   }
 
   static Future saveVisitDateTime() async =>

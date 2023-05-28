@@ -8,7 +8,7 @@ class GameNetwork {
   late WebSocketChannel webSocketChannel;
   late WebSocketSink sink;
   final updateBuffer = Uint8List(15);
-  late final connectionStatus = Watch(ConnectionStatus.None, onChanged: gsEngine.network.onChangedConnectionStatus);
+  late final connectionStatus = Watch(ConnectionStatus.None, onChanged: gamestream.network.onChangedConnectionStatus);
   String connectionUri = "";
   DateTime? connectionEstablished;
 
@@ -63,7 +63,7 @@ class GameNetwork {
 
   Future sendClientRequestUpdate() async {
     applyKeyboardInputToUpdateBuffer();
-    gsEngine.io.setCursorAction(CursorAction.None);
+    gamestream.io.setCursorAction(CursorAction.None);
   }
 
   /// [0] Direction
@@ -75,13 +75,13 @@ class GameNetwork {
   /// [6] Shift
   /// [7] Space
   applyKeyboardInputToUpdateBuffer() {
-    updateBuffer[1] = gsEngine.io.getInputAsByte();
-    writeNumberToByteArray(number: gsEngine.io.getCursorWorldX(), list: updateBuffer, index: 2);
-    writeNumberToByteArray(number: gsEngine.io.getCursorWorldY(), list: updateBuffer, index: 4);
-    writeNumberToByteArray(number: Engine.Screen_Left, list: updateBuffer, index: 6);
-    writeNumberToByteArray(number: Engine.Screen_Top, list: updateBuffer, index: 8);
-    writeNumberToByteArray(number: Engine.Screen_Right, list: updateBuffer, index: 10);
-    writeNumberToByteArray(number: Engine.Screen_Bottom, list: updateBuffer, index: 12);
+    updateBuffer[1] = gamestream.io.getInputAsByte();
+    writeNumberToByteArray(number: gamestream.io.getCursorWorldX(), list: updateBuffer, index: 2);
+    writeNumberToByteArray(number: gamestream.io.getCursorWorldY(), list: updateBuffer, index: 4);
+    writeNumberToByteArray(number: engine.Screen_Left, list: updateBuffer, index: 6);
+    writeNumberToByteArray(number: engine.Screen_Top, list: updateBuffer, index: 8);
+    writeNumberToByteArray(number: engine.Screen_Right, list: updateBuffer, index: 10);
+    writeNumberToByteArray(number: engine.Screen_Bottom, list: updateBuffer, index: 12);
     sink.add(updateBuffer);
   }
 
@@ -139,7 +139,7 @@ class GameNetwork {
     }
 
     if (response is Uint8List) {
-      return gsEngine.serverResponseReader.read(response, gsEngine.gameFight2D);
+      return gamestream.serverResponseReader.read(response, gamestream.gameFight2D);
     }
     if (response is String) {
       if (response.toLowerCase() == 'ping'){
@@ -171,9 +171,9 @@ class GameNetwork {
   }
 
   void onChangedConnectionStatus(ConnectionStatus connection) {
-    gsEngine.io.removeListeners();
-    Engine.onDrawForeground = null;
-    gsEngine.serverResponseReader.bufferSizeTotal.value = 0;
+    gamestream.io.removeListeners();
+    engine.onDrawForeground = null;
+    gamestream.serverResponseReader.bufferSizeTotal.value = 0;
     ClientState.clearParticles();
     ClientState.window_visible_menu.setFalse();
     ClientState.control_visible_player_weapons.value = false;
@@ -182,33 +182,33 @@ class GameNetwork {
 
     switch (connection) {
       case ConnectionStatus.Connected:
-        gsEngine.io.addListeners();
-        Engine.cursorType.value = CursorType.None;
-        Engine.drawCanvasAfterUpdate = true;
-        Engine.zoomOnScroll = true;
-        Engine.zoom = GameConfig.Zoom_Spawn;
-        Engine.targetZoom = GameConfig.Zoom_Default;
+        gamestream.io.addListeners();
+        engine.cursorType.value = CursorType.None;
+        engine.drawCanvasAfterUpdate = true;
+        engine.zoomOnScroll = true;
+        engine.zoom = GameConfig.Zoom_Spawn;
+        engine.targetZoom = GameConfig.Zoom_Default;
         ClientState.hoverDialogType.value = DialogType.None;
         ClientState.timeConnectionEstablished = DateTime.now();
         gamestream.audio.enabledSound.value = true;
-        if (!Engine.isLocalHost) {
-          Engine.fullScreenEnter();
+        if (!engine.isLocalHost) {
+          engine.fullScreenEnter();
         }
         break;
 
       case ConnectionStatus.Done:
         GamePlayer.active.value = false;
         ClientState.timeConnectionEstablished = null;
-        Engine.cameraX = 0;
-        Engine.cameraY = 0;
-        Engine.zoom = 1.0;
-        Engine.drawCanvasAfterUpdate = true;
-        Engine.cursorType.value = CursorType.Basic;
-        Engine.drawCanvasAfterUpdate = true;
-        Engine.fullScreenExit();
+        engine.cameraX = 0;
+        engine.cameraY = 0;
+        engine.zoom = 1.0;
+        engine.drawCanvasAfterUpdate = true;
+        engine.cursorType.value = CursorType.Basic;
+        engine.drawCanvasAfterUpdate = true;
+        engine.fullScreenExit();
         GameState.clear();
         ServerState.clean();
-        gsEngine.gameType.value = GameType.Website;
+        gamestream.gameType.value = GameType.Website;
         ServerState.sceneEditable.value = false;
         gamestream.audio.enabledSound.value = false;
         break;
@@ -270,7 +270,7 @@ class GameNetwork {
     for (var i = 0; i < bytes.length; i++){
       package[i + 1] = bytes[i];
     }
-    gsEngine.network.sink.add(package);
+    gamestream.network.sink.add(package);
   }
 
   void sendClientRequestNpcSelectTopic(int index) =>
@@ -323,7 +323,7 @@ class GameNetwork {
   }();
 
   void sendClientRequestUnequip() =>
-      gsEngine.network.send(unequipRequest);
+      gamestream.network.send(unequipRequest);
 
   void sendClientRequestInventoryDrop(int index) =>
       sendClientRequest(
@@ -434,9 +434,9 @@ class GameNetwork {
 
   void sendClientRequest(int value, [dynamic message]){
     if (message != null){
-      return gsEngine.network.send('${value} $message');
+      return gamestream.network.send('${value} $message');
     }
-    gsEngine.network.send(value);
+    gamestream.network.send(value);
   }
 }
 

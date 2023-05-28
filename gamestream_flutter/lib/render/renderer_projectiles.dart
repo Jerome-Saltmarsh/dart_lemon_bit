@@ -20,7 +20,7 @@ class RendererProjectiles extends Renderer {
       case ProjectileType.Wave:
         break;
       case ProjectileType.Rocket:
-        Engine.renderSpriteRotated(
+        engine.renderSpriteRotated(
           image: GameImages.atlas_items,
           srcX: 201,
           srcY: 109,
@@ -50,7 +50,7 @@ class RendererProjectiles extends Renderer {
   }
 
   static void renderBullet(double x, double y, double rotation) {
-    Engine.renderSpriteRotated(
+    engine.renderSpriteRotated(
       image: GameImages.atlas_gameobjects,
       srcX: 87,
       srcY: 48,
@@ -66,7 +66,7 @@ class RendererProjectiles extends Renderer {
   }
 
   static void renderArrow(double x, double y, double rotation) {
-    Engine.renderSpriteRotated(
+    engine.renderSpriteRotated(
       image: GameImages.atlas_gameobjects,
       srcX: 49,
       srcY: 48,
@@ -78,7 +78,7 @@ class RendererProjectiles extends Renderer {
       scale: 0.7,
     );
 
-    Engine.renderSpriteRotated(
+    engine.renderSpriteRotated(
       image: GameImages.atlas_gameobjects,
       srcX: 59,
       srcY: 48,

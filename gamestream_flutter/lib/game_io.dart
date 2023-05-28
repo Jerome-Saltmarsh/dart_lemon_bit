@@ -37,8 +37,8 @@ class GameIO {
   var panDistance = Watch(0.0);
   var panDirection = Watch(0.0);
 
-  double get mouseGridX => GameConvert.convertWorldToGridX(Engine.mouseWorldX, Engine.mouseWorldY) + GamePlayer.position.z;
-  double get mouseGridY => GameConvert.convertWorldToGridY(Engine.mouseWorldX, Engine.mouseWorldY) + GamePlayer.position.z;
+  double get mouseGridX => GameConvert.convertWorldToGridX(engine.mouseWorldX, engine.mouseWorldY) + GamePlayer.position.z;
+  double get mouseGridY => GameConvert.convertWorldToGridY(engine.mouseWorldX, engine.mouseWorldY) + GamePlayer.position.z;
   double get mouseGridZ => GamePlayer.position.z;
 
   void recenterCursor(){
@@ -47,7 +47,7 @@ class GameIO {
   }
 
   void detectInputMode() =>
-    inputMode.value = Engine.deviceIsComputer
+    inputMode.value = engine.deviceIsComputer
         ? InputMode.Keyboard
         : InputMode.Touch;
 
@@ -55,14 +55,14 @@ class GameIO {
     inputMode.value = inputModeKeyboard ? InputMode.Touch : InputMode.Keyboard;
 
   void addListeners() {
-      Engine.onTapDown = onTapDown;
-      Engine.onTap = onTap;
-      Engine.onLongPressDown = onLongPressDown;
-      Engine.onSecondaryTapDown = onSecondaryTapDown;
-      Engine.onLeftClicked = onMouseClickedLeft;
-      Engine.onRightClicked = onMouseClickedRight;
-      Engine.onPointerSignalEvent = onPointerSignalEvent;
-      Engine.onKeyPressed = ClientEvents.onKeyPressed;
+      engine.onTapDown = onTapDown;
+      engine.onTap = onTap;
+      engine.onLongPressDown = onLongPressDown;
+      engine.onSecondaryTapDown = onSecondaryTapDown;
+      engine.onLeftClicked = onMouseClickedLeft;
+      engine.onRightClicked = onMouseClickedRight;
+      engine.onPointerSignalEvent = onPointerSignalEvent;
+      engine.onKeyPressed = ClientEvents.onKeyPressed;
   }
 
   void onPointerSignalEvent(PointerSignalEvent event){
@@ -70,12 +70,12 @@ class GameIO {
   }
 
   void removeListeners() {
-      Engine.onTapDown = null;
-      Engine.onLongPressDown = null;
-      Engine.onSecondaryTapDown = null;
-      Engine.onKeyDown = null;
-      Engine.onKeyUp = null;
-      Engine.onLeftClicked = null;
+      engine.onTapDown = null;
+      engine.onLongPressDown = null;
+      engine.onSecondaryTapDown = null;
+      engine.onKeyDown = null;
+      engine.onKeyUp = null;
+      engine.onLeftClicked = null;
   }
 
   void onSecondaryTapDown(TapDownDetails details){
@@ -101,10 +101,10 @@ class GameIO {
 
   void onTap(){
     // print("onTap()");
-    touchCursorWorldX = Engine.screenToWorldX(_touchCursorTapX);
-    touchCursorWorldY = Engine.screenToWorldY(_touchCursorTapY);
+    touchCursorWorldX = engine.screenToWorldX(_touchCursorTapX);
+    touchCursorWorldY = engine.screenToWorldY(_touchCursorTapY);
 
-    if (inputModeKeyboard && Engine.keyPressedShiftLeft){
+    if (inputModeKeyboard && engine.keyPressedShiftLeft){
       gamestream.actions.attackAuto();
     } else {
       gamestream.actions.setTarget();
@@ -124,7 +124,7 @@ class GameIO {
 
     var hex = getDirection();
 
-    if (Engine.watchMouseLeftDown.value) {
+    if (engine.watchMouseLeftDown.value) {
       hex = hex | ByteHex.Hex_16;
     }
 
@@ -137,10 +137,10 @@ class GameIO {
 
       hex = hex | ByteHex.Hex_64;
 
-      if (Engine.mouseRightDown.value) {
+      if (engine.mouseRightDown.value) {
         hex = hex | ByteHex.Hex_32;
       }
-      if (Engine.keyPressedSpace){
+      if (engine.keyPressedSpace){
         hex = hex | ByteHex.Hex_128;
       }
     }
@@ -152,33 +152,33 @@ class GameIO {
     // if (inputModeTouch){
     //   return touchCursorWorldX;
     // } else {
-    //   return Engine.mouseWorldX;
+    //   return engine.mouseWorldX;
     // }
 
-    return Engine.mouseWorldX;
+    return engine.mouseWorldX;
   }
   double getCursorWorldY() {
     // if (inputModeTouch){
     //   return touchCursorWorldY;
     // } else {
-    //   return Engine.mouseWorldY;
+    //   return engine.mouseWorldY;
     // }
-    return Engine.mouseWorldY;
+    return engine.mouseWorldY;
   }
 
   double getCursorScreenX() {
      if (inputModeTouch){
-       return Engine.worldToScreenX(touchCursorWorldX);
+       return engine.worldToScreenX(touchCursorWorldX);
      } else {
-       return Engine.mousePositionX;
+       return engine.mousePositionX;
      }
   }
 
   double getCursorScreenY() {
     if (inputModeTouch) {
-      return Engine.worldToScreenY(touchCursorWorldY);
+      return engine.worldToScreenY(touchCursorWorldY);
     } else {
-      return Engine.mousePositionY;
+      return engine.mousePositionY;
     }
   }
 
@@ -192,29 +192,29 @@ class GameIO {
 
   int getInputDirectionKeyboard() {
 
-    if (Engine.keyPressed(KeyCode.W)) {
-      if (Engine.keyPressed(KeyCode.D)) {
+    if (engine.keyPressed(KeyCode.W)) {
+      if (engine.keyPressed(KeyCode.D)) {
         return InputDirection.Up_Right;
       }
-      if (Engine.keyPressed(KeyCode.A)) {
+      if (engine.keyPressed(KeyCode.A)) {
         return InputDirection.Up_Left;
       }
       return InputDirection.Up;
     }
 
-    if (Engine.keyPressed(KeyCode.S)) {
-      if (Engine.keyPressed(KeyCode.D)) {
+    if (engine.keyPressed(KeyCode.S)) {
+      if (engine.keyPressed(KeyCode.D)) {
         return InputDirection.Down_Right;
       }
-      if (Engine.keyPressed(KeyCode.A)) {
+      if (engine.keyPressed(KeyCode.A)) {
         return InputDirection.Down_Left;
       }
       return InputDirection.Down;
     }
-    if (Engine.keyPressed(KeyCode.A)) {
+    if (engine.keyPressed(KeyCode.A)) {
       return InputDirection.Left;
     }
-    if (Engine.keyPressed(KeyCode.D)) {
+    if (engine.keyPressed(KeyCode.D)) {
       return InputDirection.Right;
     }
     return InputDirection.None;
@@ -268,10 +268,10 @@ class GameIO {
   }
 
   void readPlayerInputEdit() {
-    if (Engine.keyPressedSpace) {
-      Engine.panCamera();
+    if (engine.keyPressedSpace) {
+      engine.panCamera();
     }
-    if (Engine.keyPressed(KeyCode.Delete)) {
+    if (engine.keyPressed(KeyCode.Delete)) {
       GameEditor.delete();
     }
     if (gamestream.io.getInputDirectionKeyboard() != Direction.None) {
@@ -282,8 +282,8 @@ class GameIO {
 
   void mouseRaycast(Function(int z, int row, int column) callback){
     var z = GameNodes.totalZ - 1;
-    final mouseWorldX = Engine.mouseWorldX;
-    final mouseWorldY = Engine.mouseWorldY;
+    final mouseWorldX = engine.mouseWorldX;
+    final mouseWorldY = engine.mouseWorldY;
     while (z >= 0){
       final row = GameConvert.convertWorldToRow(mouseWorldX, mouseWorldY, z * Node_Height);
       final column = GameConvert.convertWorldToColumn(mouseWorldX, mouseWorldY, z * Node_Height);

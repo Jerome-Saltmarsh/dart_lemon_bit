@@ -1,13 +1,11 @@
-import 'package:gamestream_flutter/classes/library.dart';
-import 'package:gamestream_flutter/game_images.dart';
-import 'package:lemon_engine/lemon_engine.dart';
+import 'package:gamestream_flutter/library.dart';
 
 void renderPixelRedV2(Vector3 value) {
   renderPixelRed(value.renderX, value.renderY);
 }
 
 void renderPixelRed(double x, double y) {
-  Engine.renderSprite(
+  engine.renderSprite(
       image: GameImages.atlas_gameobjects,
       dstX: x,
       dstY: y,

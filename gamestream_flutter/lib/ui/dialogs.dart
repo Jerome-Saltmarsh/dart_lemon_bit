@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/game_account.dart';
 import 'package:gamestream_flutter/game_colors.dart';
 import 'package:gamestream_flutter/game_website.dart';
+import 'package:gamestream_flutter/instances/engine.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
 import 'package:gamestream_flutter/ui/style.dart';
 import 'package:gamestream_flutter/ui/views.dart';
 import 'package:gamestream_flutter/ui/widgets.dart';
 import 'package:golden_ratio/constants.dart';
-import 'package:lemon_engine/lemon_engine.dart';
 
 import '../game_widgets.dart';
 
@@ -242,7 +242,7 @@ Widget buildDialogSubscriptionStatus(){
     case SubscriptionStatus.Canceled:
       return buildDialogSubscriptionCancelled();
     default:
-      return buildDialogMessage("Premium subscription ${Engine.enumString(subscriptionStatus)}");
+      return buildDialogMessage("Premium subscription ${engine.enumString(subscriptionStatus)}");
   }
 }
 
@@ -350,7 +350,7 @@ Widget buildDialogConfirmCancelSubscription(){
 }
 
 String formatSubscriptionStatus(value){
-  return value == SubscriptionStatus.Canceled ? "Cancelled" : Engine.enumString(value);
+  return value == SubscriptionStatus.Canceled ? "Cancelled" : engine.enumString(value);
 }
 
 Widget buildButton(String value, Function action, {bool underline = false}){

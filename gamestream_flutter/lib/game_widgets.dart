@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:lemon_engine/lemon_engine.dart';
 import 'package:lemon_watch/src.dart';
 
 import 'game_style.dart';
 import 'game_website.dart';
+import 'instances/engine.dart';
 import 'ui/style.dart';
 
 
@@ -202,8 +202,8 @@ Widget buildFullscreen({
 }) =>
   Container(
       alignment: alignment,
-      width: Engine.screen.width,
-      height: Engine.screen.height,
+      width: engine.screen.width,
+      height: engine.screen.height,
       color: color,
       child: child
   );
@@ -301,8 +301,8 @@ Widget dialog({
   EdgeInsets margin = EdgeInsets.zero,
 }) {
   return Container(
-    width: Engine.screen.width,
-    height: Engine.screen.height,
+    width: engine.screen.width,
+    height: engine.screen.height,
     alignment: alignment,
     child: Container(
       margin: margin,

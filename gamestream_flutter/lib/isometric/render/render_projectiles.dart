@@ -5,7 +5,7 @@ import 'package:gamestream_flutter/library.dart';
 const piQuarter = pi * 0.25;
 
 void renderPixelRed(double x, double y){
-  Engine.renderSprite(
+  engine.renderSprite(
       image: GameImages.atlas_gameobjects,
       srcX: 171,
       srcY: 0,

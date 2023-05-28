@@ -20,7 +20,7 @@ class GameDebug {
                 child: Column(
                   children: [
                     Container(
-                      height: Engine.screen.height - 100,
+                      height: engine.screen.height - 100,
                       child: SingleChildScrollView(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,12 +35,12 @@ class GameDebug {
                                 "connection-duration: ${ClientState.formattedConnectionDuration}\n"
                                 // "offscreen-nodes: ${GameNodes.offscreenNodes}\n"
                                 // "onscreen-nodes: ${GameNodes.onscreenNodes}\n"
-                                "touches: ${Engine.touches}\n"
-                                "touch down id: ${Engine.touchDownId}\n"
-                                "touch update id: ${Engine.touchDownId}\n"
+                                "touches: ${engine.touches}\n"
+                                "touch down id: ${engine.touchDownId}\n"
+                                "touch update id: ${engine.touchDownId}\n"
                                 "mouse-grid: x: ${gamestream.io.mouseGridX.toInt()}, y: ${gamestream.io.mouseGridY.toInt()}\n"
-                                "mouse-world: x: ${Engine.mouseWorldX.toInt()}, y: ${Engine.mouseWorldY.toInt()}\n"
-                                'mouse-screen: x: ${Engine.mousePositionX.toInt()}, y: ${Engine.mousePositionY.toInt()}\n'
+                                "mouse-world: x: ${engine.mouseWorldX.toInt()}, y: ${engine.mouseWorldY.toInt()}\n"
+                                'mouse-screen: x: ${engine.mousePositionX.toInt()}, y: ${engine.mousePositionY.toInt()}\n'
                                 'mouse-player-angle: ${ClientQuery.getMousePlayerAngle().toStringAsFixed(4)}\n'
                                 "player-alive: ${GamePlayer.alive.value}\n"
                                 "player-respawn-timer: ${GamePlayer.respawnTimer.value}\n"
@@ -70,24 +70,24 @@ class GameDebug {
                                 "offscreen-nodes: left: ${RendererNodes.offscreenNodesLeft}, top: ${RendererNodes.offscreenNodesTop}, right: ${RendererNodes.offscreenNodesRight}, bottom: ${RendererNodes.offscreenNodesBottom}"
                             )),
                             Refresh(() => text('touch-world: x: ${gamestream.io.touchCursorWorldX.toInt()}, y: ${gamestream.io.touchCursorWorldY.toInt()}')),
-                            Refresh(() => text('engine-render-batches: ${Engine.batchesRendered}')),
-                            Refresh(() => text('engine-render-batch-1: ${Engine.batches1Rendered}')),
-                            Refresh(() => text('engine-render-batch-2: ${Engine.batches2Rendered}')),
-                            Refresh(() => text('engine-render-batch-4: ${Engine.batches4Rendered}')),
-                            Refresh(() => text('engine-render-batch-8: ${Engine.batches8Rendered}')),
-                            Refresh(() => text('engine-render-batch-16: ${Engine.batches16Rendered}')),
-                            Refresh(() => text('engine-render-batch-32: ${Engine.batches32Rendered}')),
-                            Refresh(() => text('engine-render-batch-64: ${Engine.batches64Rendered}')),
-                            Refresh(() => text('engine-render-batch-128: ${Engine.batches128Rendered}')),
-                            Refresh(() => text('camera-zoom: ${Engine.targetZoom.toStringAsFixed(3)}')),
-                            Refresh(() => text('engine-frame: ${Engine.paintFrame}')),
+                            Refresh(() => text('engine-render-batches: ${engine.batchesRendered}')),
+                            Refresh(() => text('engine-render-batch-1: ${engine.batches1Rendered}')),
+                            Refresh(() => text('engine-render-batch-2: ${engine.batches2Rendered}')),
+                            Refresh(() => text('engine-render-batch-4: ${engine.batches4Rendered}')),
+                            Refresh(() => text('engine-render-batch-8: ${engine.batches8Rendered}')),
+                            Refresh(() => text('engine-render-batch-16: ${engine.batches16Rendered}')),
+                            Refresh(() => text('engine-render-batch-32: ${engine.batches32Rendered}')),
+                            Refresh(() => text('engine-render-batch-64: ${engine.batches64Rendered}')),
+                            Refresh(() => text('engine-render-batch-128: ${engine.batches128Rendered}')),
+                            Refresh(() => text('camera-zoom: ${engine.targetZoom.toStringAsFixed(3)}')),
+                            Refresh(() => text('engine-frame: ${engine.paintFrame}')),
                             watch(gamestream.serverResponseReader.updateFrame, (t) => text("update-frame: $t")),
                             watch(GamePlayer.interpolating, (bool interpolating) => text("interpolating: $interpolating", onPressed: () => GamePlayer.interpolating.value = !GamePlayer.interpolating.value)),
                             watch(gamestream.gameType, (GameType value) => text("game-type: ${value.name}")),
-                            watch(Engine.deviceType, (int deviceType) => text("device-type: ${DeviceType.getName(deviceType)}", onPressed: Engine.toggleDeviceType)),
+                            watch(engine.deviceType, (int deviceType) => text("device-type: ${DeviceType.getName(deviceType)}", onPressed: engine.toggleDeviceType)),
                             watch(gamestream.io.inputMode, (int inputMode) => text("input-mode: ${InputMode.getName(inputMode)}", onPressed: gamestream.io.actionToggleInputMode)),
-                            watch(Engine.watchMouseLeftDown, (bool mouseLeftDown) => text("mouse-left-down: $mouseLeftDown")),
-                            watch(Engine.mouseRightDown, (bool rightDown) => text("mouse-right-down: $rightDown")),
+                            watch(engine.watchMouseLeftDown, (bool mouseLeftDown) => text("mouse-left-down: $mouseLeftDown")),
+                            watch(engine.mouseRightDown, (bool rightDown) => text("mouse-right-down: $rightDown")),
                             watch(GameEditor.nodeSelectedIndex, (int index) => text("edit-state-node-index: $index")),
                           ],
                         ),
@@ -107,7 +107,7 @@ Future<double> getFutureDouble01(double initial) async =>
 
 
 Future<double> getFutureDouble(double initial) async =>
-  await showDialog<double>(context: Engine.buildContext, builder: (context){
+  await showDialog<double>(context: engine.buildContext, builder: (context){
     final controller = TextEditingController(text: initial.toString());
     return AlertDialog(
       content: Container(

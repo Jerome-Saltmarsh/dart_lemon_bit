@@ -6,22 +6,22 @@ class RendererParticles extends Renderer {
 
   static final particles = ClientState.particles;
   static late Particle particle;
-  static final screen = Engine.screen;
+  static final screen = engine.screen;
 
   @override
   void renderFunction() {
       assert (particle.active);
       assert (particle.delay <= 0);
       final dstX = GameConvert.convertV3ToRenderX(particle);
-      assert (dstX > Engine.Screen_Left - 50);
-      assert (dstX < Engine.Screen_Right + 50);
+      assert (dstX > engine.Screen_Left - 50);
+      assert (dstX < engine.Screen_Right + 50);
       final dstY = GameConvert.convertV3ToRenderY(particle);
-      assert (dstY > Engine.Screen_Top - 50);
-      assert (dstY < Engine.Screen_Bottom + 50);
+      assert (dstY > engine.Screen_Top - 50);
+      assert (dstY < engine.Screen_Bottom + 50);
 
       switch (particle.type) {
         case ParticleType.Water_Drop:
-          Engine.renderSprite(
+          engine.renderSprite(
             image: GameImages.atlas_gameobjects,
             dstX: dstX,
             dstY: dstY,
@@ -34,7 +34,7 @@ class RendererParticles extends Renderer {
           break;
         case ParticleType.Blood:
           casteShadowDownV3(particle);
-          Engine.renderSprite(
+          engine.renderSprite(
             image: GameImages.atlas_gameobjects,
             dstX: dstX,
             dstY: dstY,
@@ -50,7 +50,7 @@ class RendererParticles extends Renderer {
             particle.deactivate();
             break;
           }
-          Engine.renderSprite(
+          engine.renderSprite(
             image: GameImages.atlas_gameobjects,
             dstX: dstX,
             dstY: dstY,
@@ -62,7 +62,7 @@ class RendererParticles extends Renderer {
           );
           break;
         case ParticleType.Bubble_Small:
-          Engine.renderSprite(
+          engine.renderSprite(
             image: GameImages.atlas_gameobjects,
             dstX: dstX,
             dstY: dstY,
@@ -74,7 +74,7 @@ class RendererParticles extends Renderer {
           );
           break;
         case ParticleType.Bullet_Ring:
-          Engine.renderSprite(
+          engine.renderSprite(
             image: GameImages.atlas_gameobjects,
             dstX: dstX,
             dstY: dstY,
@@ -94,7 +94,7 @@ class RendererParticles extends Renderer {
             return;
           }
           final frame = particle.frame <= 11 ? particle.frame : 23 - particle.frame;
-          Engine.renderSprite(
+          engine.renderSprite(
             image: GameImages.atlas_particles,
             dstX: dstX,
             dstY: dstY,
@@ -106,7 +106,7 @@ class RendererParticles extends Renderer {
           );
           break;
         case ParticleType.Block_Wood:
-          Engine.renderSprite(
+          engine.renderSprite(
             image: GameImages.atlas_gameobjects,
             dstX: dstX,
             dstY: dstY,
@@ -119,7 +119,7 @@ class RendererParticles extends Renderer {
           );
           break;
         case ParticleType.Block_Grass:
-          Engine.renderSprite(
+          engine.renderSprite(
             image: GameImages.atlas_gameobjects,
             dstX: dstX,
             dstY: dstY,
@@ -132,7 +132,7 @@ class RendererParticles extends Renderer {
           );
           break;
         case ParticleType.Confetti_Yellow:
-          Engine.renderSprite(
+          engine.renderSprite(
             image: GameImages.shades,
             dstX: dstX,
             dstY: dstY,
@@ -145,7 +145,7 @@ class RendererParticles extends Renderer {
           );
           break;
         case ParticleType.Confetti_Red:
-          Engine.renderSprite(
+          engine.renderSprite(
             image: GameImages.shades,
             dstX: dstX,
             dstY: dstY,
@@ -158,7 +158,7 @@ class RendererParticles extends Renderer {
           );
           break;
         case ParticleType.Confetti_Blue:
-          Engine.renderSprite(
+          engine.renderSprite(
             image: GameImages.shades,
             dstX: dstX,
             dstY: dstY,
@@ -171,7 +171,7 @@ class RendererParticles extends Renderer {
           );
           break;
         case ParticleType.Confetti_Green:
-          Engine.renderSprite(
+          engine.renderSprite(
             image: GameImages.shades,
             dstX: dstX,
             dstY: dstY,
@@ -184,7 +184,7 @@ class RendererParticles extends Renderer {
           );
           break;
         case ParticleType.Confetti_Purple:
-          Engine.renderSprite(
+          engine.renderSprite(
             image: GameImages.shades,
             dstX: dstX,
             dstY: dstY,
@@ -197,7 +197,7 @@ class RendererParticles extends Renderer {
           );
           break;
         case ParticleType.Confetti_Cyan:
-          Engine.renderSprite(
+          engine.renderSprite(
             image: GameImages.shades,
             dstX: dstX,
             dstY: dstY,
@@ -211,7 +211,7 @@ class RendererParticles extends Renderer {
           break;
 
         case ParticleType.Block_Brick:
-          Engine.renderSprite(
+          engine.renderSprite(
             image: GameImages.atlas_gameobjects,
             dstX: dstX,
             dstY: dstY,
@@ -224,7 +224,7 @@ class RendererParticles extends Renderer {
           );
           break;
         case ParticleType.Block_Sand:
-          Engine.renderSprite(
+          engine.renderSprite(
             image: GameImages.atlas_gameobjects,
             dstX: dstX,
             dstY: dstY,
@@ -240,7 +240,7 @@ class RendererParticles extends Renderer {
           if (particle.frame > 12 ) {
             return particle.deactivate();
           }
-          Engine.renderSprite(
+          engine.renderSprite(
             image: GameImages.atlas_particles,
             dstX: dstX,
             dstY: dstY,
@@ -259,7 +259,7 @@ class RendererParticles extends Renderer {
             particle.deactivate();
             break;
           }
-          Engine.renderSprite(
+          engine.renderSprite(
             image: GameImages.atlas_particles,
             dstX: dstX,
             dstY: dstY,
@@ -274,7 +274,7 @@ class RendererParticles extends Renderer {
           // const size = 48.0;
           // final shade = GameState.getV3RenderShade(particle);
           // if (shade >= 5) return;
-          // Engine.renderSprite(
+          // engine.renderSprite(
           //   image: GameImages.particles,
           //   dstX: particle.renderX,
           //   dstY: particle.renderY,
@@ -288,7 +288,7 @@ class RendererParticles extends Renderer {
           break;
         case ParticleType.Orb_Shard:
           const size = 16.0;
-          Engine.renderSprite(
+          engine.renderSprite(
             image: GameImages.atlas_gameobjects,
             dstX: dstX,
             dstY: dstY,
@@ -303,7 +303,7 @@ class RendererParticles extends Renderer {
           if (particle.frame >= 7) {
             return particle.deactivate();
           }
-          Engine.renderSprite(
+          engine.renderSprite(
             image: GameImages.atlas_particles,
             dstX: dstX,
             dstY: dstY,
@@ -315,7 +315,7 @@ class RendererParticles extends Renderer {
           return;
         case ParticleType.Zombie_Arm:
           casteShadowDownV3(particle);
-          Engine.renderSprite(
+          engine.renderSprite(
             image: GameImages.atlas_particles,
             dstX: dstX,
             dstY: dstY,
@@ -328,7 +328,7 @@ class RendererParticles extends Renderer {
           break;
         case ParticleType.Zombie_Head:
           casteShadowDownV3(particle);
-          Engine.renderSprite(
+          engine.renderSprite(
             image: GameImages.atlas_particles,
             dstX: dstX,
             dstY: dstY,
@@ -341,7 +341,7 @@ class RendererParticles extends Renderer {
           break;
         case ParticleType.Zombie_leg:
           casteShadowDownV3(particle);
-          Engine.renderSprite(
+          engine.renderSprite(
             image: GameImages.atlas_particles,
             dstX: dstX,
             dstY: dstY,
@@ -355,7 +355,7 @@ class RendererParticles extends Renderer {
 
         case ParticleType.Zombie_Torso:
           casteShadowDownV3(particle);
-          Engine.renderSprite(
+          engine.renderSprite(
             image: GameImages.atlas_particles,
             dstX: dstX,
             dstY: dstY,
@@ -379,7 +379,7 @@ class RendererParticles extends Renderer {
           renderParticleStrikeLight();
           break;
         case ParticleType.Shadow:
-          Engine.renderSprite(
+          engine.renderSprite(
               image: GameImages.atlas_particles,
               srcX: 8,
               srcY: 552,
@@ -391,7 +391,7 @@ class RendererParticles extends Renderer {
           );
           break;
         case ParticleType.Lightning_Bolt:
-          Engine.renderSprite(
+          engine.renderSprite(
             image: GameImages.atlas_particles,
             srcX: 1,
             srcY: 576,
@@ -409,7 +409,7 @@ class RendererParticles extends Renderer {
     }
 
   void renderParticleShell(double dstX, double dstY) {
-    Engine.renderSprite(
+    engine.renderSprite(
       image: GameImages.atlas_particles,
       dstX: dstX,
       dstY: dstY,
@@ -424,7 +424,7 @@ class RendererParticles extends Renderer {
 
   void renderParticleSmoke() {
     // casteShadowDownV3(particle);
-    Engine.renderSpriteRotated(
+    engine.renderSpriteRotated(
       image: GameImages.atlas_particles,
       dstX: particle.renderX,
       dstY: particle.renderY,
@@ -443,7 +443,7 @@ class RendererParticles extends Renderer {
       particle.deactivate();
       return;
     }
-    Engine.renderSpriteRotated(
+    engine.renderSpriteRotated(
       image: GameImages.atlas_particles,
       dstX: particle.renderX,
       dstY: particle.renderY,
@@ -464,7 +464,7 @@ class RendererParticles extends Renderer {
       particle.deactivate();
       return;
     }
-    Engine.renderSpriteRotated(
+    engine.renderSpriteRotated(
       image: GameImages.atlas_particles,
       dstX: particle.renderX,
       dstY: particle.renderY,
@@ -485,7 +485,7 @@ class RendererParticles extends Renderer {
       particle.deactivate();
       return;
     }
-    Engine.renderSpriteRotated(
+    engine.renderSpriteRotated(
       image: GameImages.atlas_particles,
       dstX: particle.renderX,
       dstY: particle.renderY,
@@ -505,7 +505,7 @@ class RendererParticles extends Renderer {
       particle.deactivate();
       return;
     }
-    Engine.renderSpriteRotated(
+    engine.renderSpriteRotated(
       image: GameImages.atlas_particles,
       dstX: particle.renderX,
       dstY: particle.renderY,
@@ -528,11 +528,11 @@ class RendererParticles extends Renderer {
       if (particle.delay > 0) continue;
       if (!particle.active) continue;
       final dstX = GameConvert.convertV3ToRenderX(particle);
-      if (dstX < Engine.Screen_Left - 50) continue;
-      if (dstX > Engine.Screen_Right + 50) continue;
+      if (dstX < engine.Screen_Left - 50) continue;
+      if (dstX > engine.Screen_Right + 50) continue;
       final dstY = GameConvert.convertV3ToRenderY(particle);
-      if (dstY < Engine.Screen_Top - 50) continue;
-      if (dstY > Engine.Screen_Bottom + 50) continue;
+      if (dstY < engine.Screen_Top - 50) continue;
+      if (dstY > engine.Screen_Bottom + 50) continue;
       if (!particle.nodePerceptible) continue;
 
       orderZ = particle.indexZ;

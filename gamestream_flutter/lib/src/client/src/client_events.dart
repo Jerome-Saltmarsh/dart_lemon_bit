@@ -112,7 +112,7 @@ class ClientEvents {
         GameEditor.selectPaintType();
         break;
       case KeyCode.Arrow_Up:
-        if (Engine.keyPressedShiftLeft) {
+        if (engine.keyPressedShiftLeft) {
           if (GameEditor.gameObjectSelected.value){
             GameEditor.translate(x: 0, y: 0, z: 1);
             return;
@@ -133,7 +133,7 @@ class ClientEvents {
         GameEditor.cursorColumnDecrease();
         break;
       case KeyCode.Arrow_Down:
-        if (Engine.keyPressedShiftLeft) {
+        if (engine.keyPressedShiftLeft) {
           if (GameEditor.gameObjectSelected.value){
             return GameEditor.translate(x: 0, y: 0, z: -1);
           }
@@ -171,7 +171,7 @@ class ClientEvents {
       return;
     }
 
-    if (Engine.isLocalHost){
+    if (engine.isLocalHost){
       if (key == ClientConstants.Key_Settings) {
         gamestream.actions.toggleWindowSettings();
         return;

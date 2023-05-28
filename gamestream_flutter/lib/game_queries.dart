@@ -96,7 +96,7 @@ class GameQueries {
        );
 
    static double getDistanceFromMouse(Vector3 value) =>
-     Engine.distanceFromMouse(value.renderX, value.renderY);
+     engine.distanceFromMouse(value.renderX, value.renderY);
 
 
    // TODO REFACTOR

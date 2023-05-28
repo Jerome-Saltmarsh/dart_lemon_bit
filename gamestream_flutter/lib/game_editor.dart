@@ -147,7 +147,7 @@ class GameEditor {
   }
 
   static void cameraCenterSelectedObject() =>
-      Engine.cameraCenter(
+      engine.cameraCenter(
           gameObject.value!.renderX,
           gameObject.value!.renderY,
       );

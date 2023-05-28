@@ -69,8 +69,8 @@ class GamePlayer {
 
   static double get renderX => GameConvert.convertV3ToRenderX(position);
   static double get renderY => GameConvert.convertV3ToRenderY(position);
-  static double get positionScreenX => Engine.worldToScreenX(GamePlayer.position.renderX);
-  static double get positionScreenY => Engine.worldToScreenY(GamePlayer.position.renderY);
+  static double get positionScreenX => engine.worldToScreenX(GamePlayer.position.renderX);
+  static double get positionScreenY => engine.worldToScreenY(GamePlayer.position.renderY);
   static bool get interactModeTrading => ServerState.interactMode.value == InteractMode.Trading;
   static bool get dead => !alive.value;
   static bool get inBounds => GameQueries.inBoundsVector3(position);

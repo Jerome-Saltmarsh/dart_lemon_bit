@@ -23,7 +23,7 @@ class GameWebsite extends Game {
   @override
   void onActivated() {
     gamestream.audio.musicStop();
-    Engine.fullScreenExit();
+    engine.fullScreenExit();
   }
 
   @override

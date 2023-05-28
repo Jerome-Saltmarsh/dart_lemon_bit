@@ -10,12 +10,12 @@ class SelectRegionColumn extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.center,
-          children: (Engine.isLocalHost ? ConnectionRegion.values : GameWebsite.Live_Regions)
+          children: (engine.isLocalHost ? ConnectionRegion.values : GameWebsite.Live_Regions)
               .map((ConnectionRegion region) =>
               onPressed(
                 action: () {
                   GameWebsite.actionSelectRegion(region);
-                  if (Engine.deviceIsPhone) {
+                  if (engine.deviceIsPhone) {
                     // GameNetwork.connectToGameAeon();
                   } else {
                     // GameNetwork.connectToGameCombat();
@@ -27,7 +27,7 @@ class SelectRegionColumn extends StatelessWidget {
                     margin: const EdgeInsets.symmetric(vertical: 4),
                     color: activeRegion == region ? Colors.greenAccent : mouseOver ? Colors.green : Colors.white10,
                     child: text(
-                        '${Engine.enumString(region)}',
+                        '${engine.enumString(region)}',
                         size: 24,
                         color: mouseOver ? Colors.white : Colors.white60
                     ),

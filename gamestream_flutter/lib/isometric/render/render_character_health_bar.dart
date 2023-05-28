@@ -3,7 +3,7 @@ import '../../library.dart';
 /// @percentage is a double between 0 and 1
 /// determines how full it is
 void renderBarGreen(double x, double y, double z, double percentage) {
-  Engine.renderSprite(
+  engine.renderSprite(
     image: GameImages.atlas_gameobjects,
     dstX: GameConvert.getRenderX(x, y, z) - 26,
     dstY: GameConvert.getRenderY(x, y, z) - 45,
@@ -17,7 +17,7 @@ void renderBarGreen(double x, double y, double z, double percentage) {
 }
 
 void renderBarBlue(double x, double y, double z, double percentage) {
-  Engine.renderSprite(
+  engine.renderSprite(
     image: GameImages.atlas_gameobjects,
     dstX: GameConvert.getRenderX(x, y, z) - 26,
     dstY: GameConvert.getRenderY(x, y, z) - 55,
@@ -34,7 +34,7 @@ void renderBarBlue(double x, double y, double z, double percentage) {
 void renderCharacterHealthBar(Character character){
   renderBarGreen(character.x, character.y, character.z, character.health);
 
-  // Engine.renderSprite(
+  // engine.renderSprite(
   //     image: Images.gameobjects,
   //     dstX: character.renderX - srcWidthHalf,
   //     dstY: character.renderY - marginY,
@@ -46,7 +46,7 @@ void renderCharacterHealthBar(Character character){
   //     color: color,
   // );
 
-  // Engine.renderBuffer(
+  // engine.renderBuffer(
   //     dstX: character.renderX - srcWidthHalf,
   //     dstY: character.renderY - marginY,
   //     srcX: srcX,
@@ -69,7 +69,7 @@ void renderCharacterBarWeaponRounds({
   const marginY = 45;
   const srcWidthHalf = srcWidth * 0.5;
 
-  Engine.renderSprite(
+  engine.renderSprite(
     image: GameImages.atlas_gameobjects,
     dstX: x - srcWidthHalf,
     dstY: y - marginY,
@@ -80,7 +80,7 @@ void renderCharacterBarWeaponRounds({
     anchorX: 0,
   );
 
-  Engine.renderSprite(
+  engine.renderSprite(
     image: GameImages.atlas_gameobjects,
     dstX: x - srcWidthHalf,
     dstY: y - marginY,

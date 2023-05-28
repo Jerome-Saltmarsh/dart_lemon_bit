@@ -33,7 +33,7 @@ class RendererCharacters extends Renderer {
 
     if (character.spawning) {
       if (character.characterType == CharacterType.Rat){
-        Engine.renderSprite(
+        engine.renderSprite(
           image: GameImages.atlas_gameobjects,
           srcX: 1920,
           srcY: (character.frame % 8) * 43.0,
@@ -45,7 +45,7 @@ class RendererCharacters extends Renderer {
         );
       }
       if (character.characterType == CharacterType.Slime) {
-        Engine.renderSprite(
+        engine.renderSprite(
           image: GameImages.atlas_gameobjects,
           srcX: 3040,
           srcY: (character.frame % 6) * 48.0,
@@ -57,7 +57,7 @@ class RendererCharacters extends Renderer {
         );
         return;
       }
-      Engine.renderSprite(
+      engine.renderSprite(
         image: GameImages.atlas_characters,
         srcX: 513,
         srcY: (character.frame % 8) * 73.0,
@@ -85,7 +85,7 @@ class RendererCharacters extends Renderer {
         renderCharacterZombie(character);
         break;
       case CharacterType.Triangle:
-        Engine.renderSpriteRotated(
+        engine.renderSpriteRotated(
           image: GameImages.atlas_characters,
           srcX: 0,
           srcY: 512,
@@ -104,7 +104,7 @@ class RendererCharacters extends Renderer {
     }
 
     if (character.buffInvincible) {
-      Engine.renderSprite(
+      engine.renderSprite(
         image: GameImages.sprite_shield,
         srcX: 125.0 * GameAnimation.animationFrame16,
         srcY: 0,
@@ -124,7 +124,7 @@ class RendererCharacters extends Renderer {
     const Anchor_Y = 0.66;
 
     if (character.state == CharacterState.Idle){
-      Engine.renderSprite(
+      engine.renderSprite(
         image: GameImages.character_dog,
         dstX: character.renderX,
         dstY: character.renderY,
@@ -142,7 +142,7 @@ class RendererCharacters extends Renderer {
     if (character.state == CharacterState.Running) {
       const frames = const [4, 5];
       final frame = frames[(character.frame % 2)];
-      Engine.renderSprite(
+      engine.renderSprite(
         image: GameImages.character_dog,
         dstX: character.renderX,
         dstY: character.renderY,
@@ -165,7 +165,7 @@ class RendererCharacters extends Renderer {
       } else {
         frame = frames[frame];
       }
-      Engine.renderSprite(
+      engine.renderSprite(
         image: GameImages.character_dog,
         dstX: character.renderX,
         dstY: character.renderY,
@@ -181,7 +181,7 @@ class RendererCharacters extends Renderer {
     }
 
     if (character.state == CharacterState.Hurt) {
-      Engine.renderSprite(
+      engine.renderSprite(
         image: GameImages.character_dog,
         dstX: character.renderX,
         dstY: character.renderY,
@@ -198,7 +198,7 @@ class RendererCharacters extends Renderer {
 
     if (character.state == CharacterState.Stunned){
       GameRender.renderStarsV3(character);
-      Engine.renderSprite(
+      engine.renderSprite(
         image: GameImages.character_dog,
         dstX: character.renderX,
         dstY: character.renderY,
@@ -245,7 +245,7 @@ class RendererCharacters extends Renderer {
     final shadowY = character.y + opp(angle, dist);
     final shadowZ = character.z;
 
-    Engine.renderSprite(
+    engine.renderSprite(
       image: GameImages.zombie_shadow,
       srcX: getZombieSrcX(character),
       srcY: character.renderDirection * 64,
@@ -258,7 +258,7 @@ class RendererCharacters extends Renderer {
       color: character.color,
     );
 
-    Engine.renderSprite(
+    engine.renderSprite(
       image: GameImages.zombie,
       srcX: getZombieSrcX(character),
       srcY: character.renderDirection * 64,

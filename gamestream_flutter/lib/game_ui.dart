@@ -467,13 +467,13 @@ class GameUI {
             ),
             height6,
             onPressed(
-              action: Engine.fullscreenToggle,
+              action: engine.fullscreenToggle,
               child: Container(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     text("FULLSCREEN", size: 20, color: Colors.white70),
-                    watch(Engine.fullScreen, buildIconCheckbox),
+                    watch(engine.fullScreen, buildIconCheckbox),
                   ],
                 ),
               ),
@@ -516,11 +516,11 @@ class GameUI {
                 child: Refresh(() => text('dynamic-shadows-enabled: ${GameSettings.Dynamic_Shadows}'))
             ),
             onPressed(
-                child: Refresh(() => text('blend-mode: ${Engine.bufferBlendMode.name}')),
+                child: Refresh(() => text('blend-mode: ${engine.bufferBlendMode.name}')),
                 action: (){
-                  final currentIndex = BlendMode.values.indexOf(Engine.bufferBlendMode);
+                  final currentIndex = BlendMode.values.indexOf(engine.bufferBlendMode);
                   final nextIndex = currentIndex + 1 >= BlendMode.values.length ? 0 : currentIndex + 1;
-                  Engine.bufferBlendMode = BlendMode.values[nextIndex];
+                  engine.bufferBlendMode = BlendMode.values[nextIndex];
                 }
             ),
             height8,
@@ -581,7 +581,7 @@ class GameUI {
 
   static Widget buildGeneratedMiniMap({required double translate}){
     return watch(ClientState.sceneChanged, (_){
-        return Engine.buildCanvas(paint: (Canvas canvas, Size size){
+        return engine.buildCanvas(paint: (Canvas canvas, Size size){
           const scale = 2.0;
           canvas.scale(scale, scale);
           final screenCenterX = size.width * 0.5;
@@ -598,7 +598,7 @@ class GameUI {
           for (var i = 0; i < ServerState.totalCharacters; i++) {
             final character = ServerState.characters[i];
             final isPlayer = GamePlayer.isCharacter(character);
-            Engine.renderExternalCanvas(
+            engine.renderExternalCanvas(
                 canvas: canvas,
                 image: GameImages.atlas_gameobjects,
                 srcX: 0,
@@ -622,7 +622,7 @@ class GameUI {
                top: 60,
                child: Container(
                  alignment: Alignment.center,
-                 width: Engine.screen.width,
+                 width: engine.screen.width,
                  child: text("Waiting for more players to join")),
                ),
            );
@@ -632,7 +632,7 @@ class GameUI {
   static Positioned buildPositionedAreaType() => Positioned(
           top: 75,
           child: Container(
-              width: Engine.screen.width,
+              width: engine.screen.width,
               alignment: Alignment.center,
               child: buildWatchAreaType()
           ),
@@ -642,7 +642,7 @@ class GameUI {
           bottom: 150,
           child: IgnorePointer(
             child: Container(
-                width: Engine.screen.width,
+                width: engine.screen.width,
                 alignment: Alignment.center,
                 child: watch(ClientState.messageStatus, buildMessageStatus),
             ),
@@ -681,7 +681,7 @@ class GameUI {
         //   right: side ? GameUIConfig.runButtonPadding : null,
         //   left: side ? null : GameUIConfig.runButtonPadding,
         //   child: Container(
-        //     height: Engine.screen.height,
+        //     height: engine.screen.height,
         //     alignment: Alignment.center,
         //     child: onPressed(
         //       action: GameUIConfig.runButtonPressed,
@@ -848,10 +848,10 @@ class GameUI {
       );
 
   static Widget buildIconFullscreen() => WatchBuilder(
-      Engine.fullScreen,
+      engine.fullScreen,
       (bool fullscreen) => onPressed(
           hint: "toggle fullscreen",
-          action: Engine.fullscreenToggle,
+          action: engine.fullscreenToggle,
           child: Container(
               width: 32,
               child: GameUI.buildAtlasIconType(IconType.Fullscreen, scale: Icon_Scale))));
@@ -889,7 +889,7 @@ class GameUI {
   static Widget buildAtlasIconType(int iconType,
           {double scale = 1, int color = 1}) =>
       FittedBox(
-        child: Engine.buildAtlasImage(
+        child: engine.buildAtlasImage(
           image: GameImages.atlas_icons,
           srcX: AtlasIcons.getSrcX(iconType),
           srcY: AtlasIcons.getSrcY(iconType),
@@ -902,7 +902,7 @@ class GameUI {
 
   static Widget buildAtlasItemType(int itemType, {int color = 1}) =>
       FittedBox(
-        child: Engine.buildAtlasImage(
+        child: engine.buildAtlasImage(
           image: ItemType.isTypeGameObject(itemType)
               ? GameImages.atlas_gameobjects
               : GameImages.atlas_items,
@@ -914,7 +914,7 @@ class GameUI {
         ),
       );
 
-  static Widget buildAtlasNodeType(int nodeType) => Engine.buildAtlasImage(
+  static Widget buildAtlasNodeType(int nodeType) => engine.buildAtlasImage(
         image: GameImages.atlas_nodes,
         srcX: AtlasNodeX.mapNodeType(nodeType),
         srcY: AtlasNodeY.mapNodeType(nodeType),
@@ -948,7 +948,7 @@ class GameUI {
               bottom: GameStyle.Default_Padding,
               left: 0,
               child: Container(
-                  width: Engine.screen.width,
+                  width: engine.screen.width,
                   alignment: Alignment.center,
                   child: buildWindowPlayerRespawnTimer()),
           )
@@ -1629,7 +1629,7 @@ class GameUI {
     return Positioned(
       bottom: 150,
       child: Container(
-        width: Engine.screen.width,
+        width: engine.screen.width,
         alignment: Alignment.center,
         child: GameUI.buildDialogUIControl(
           child: Column(

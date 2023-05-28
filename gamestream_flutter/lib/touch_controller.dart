@@ -18,28 +18,28 @@ class TouchController {
     static double get dis => distanceBetween(joystickX, joystickY, joystickCenterX, joystickCenterY);
 
     static void onClick() {
-        joystickCenterX = Engine.mousePositionX;
-        joystickCenterY = Engine.mousePositionY;
+        joystickCenterX = engine.mousePositionX;
+        joystickCenterY = engine.mousePositionY;
         joystickX = joystickCenterX;
         joystickY = joystickCenterY;
     }
 
     static int getDirection(){
-        if (Engine.touches == 0) return Direction.None;
+        if (engine.touches == 0) return Direction.None;
         return gamestream.io.convertRadianToDirection(angle);
     }
 
     static void onMouseMoved(double x, double y){
-      joystickX = Engine.mousePositionX;
-      joystickY = Engine.mousePositionY;
+      joystickX = engine.mousePositionX;
+      joystickY = engine.mousePositionY;
     }
 
     static void render(Canvas canvas){
-    if (Engine.touches == 0) return;
+    if (engine.touches == 0) return;
 
-    if (Engine.watchMouseLeftDown.value) {
-      // joystickX = Engine.mousePositionX;
-      // joystickY = Engine.mousePositionY;
+    if (engine.watchMouseLeftDown.value) {
+      // joystickX = engine.mousePositionX;
+      // joystickY = engine.mousePositionY;
       if (dis > maxDistance) {
         final radian = angleBetween(joystickX, joystickY, joystickCenterX, joystickCenterY);
         joystickCenterX = joystickX - adj(radian, maxDistance);

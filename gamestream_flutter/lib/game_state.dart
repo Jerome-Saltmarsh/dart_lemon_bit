@@ -243,8 +243,8 @@ class GameState {
     ServerState.totalNpcs = 0;
     ServerState.interactMode.value = InteractMode.None;
     ClientState.particles.clear();
-    Engine.zoom = 1;
-    Engine.redrawCanvas();
+    engine.zoom = 1;
+    engine.redrawCanvas();
   }
 
   static Particle spawnParticle({
@@ -1115,7 +1115,7 @@ class GameState {
   static void renderEditMode() {
     if (playMode) return;
     if (GameEditor.gameObjectSelected.value){
-      Engine.renderCircleOutline(
+      engine.renderCircleOutline(
         sides: 24,
         radius: ItemType.getRadius(GameEditor.gameObjectSelectedType.value),
         x: GameEditor.gameObject.value!.renderX,
@@ -1130,7 +1130,7 @@ class GameState {
 
     // final nodeData = EditState.selectedNodeData.value;
     // if (nodeData != null){
-    //   Engine.renderCircleOutline(
+    //   engine.renderCircleOutline(
     //        radius: nodeData.spawnRadius.toDouble(),
     //        x: EditState.renderX,
     //        y: EditState.renderY,

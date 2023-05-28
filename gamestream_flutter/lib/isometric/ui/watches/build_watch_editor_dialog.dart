@@ -8,8 +8,8 @@ Widget buildWatchEditorDialog(EditorDialog? activeEditorDialog){
   if (activeEditorDialog == null) return GameStyle.Null;
 
   return Container(
-    width: Engine.screen.width,
-    height: Engine.screen.height,
+    width: engine.screen.width,
+    height: engine.screen.height,
     alignment: Alignment.center,
     child: Container(
         width: 350,

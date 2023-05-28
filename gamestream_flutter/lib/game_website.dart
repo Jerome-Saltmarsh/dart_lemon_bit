@@ -108,7 +108,7 @@ class GameWebsite {
     );
   }
 
-  static Widget buildNotConnected()  => watch(Engine.deviceType, buildPageWebsite);
+  static Widget buildNotConnected()  => watch(engine.deviceType, buildPageWebsite);
 
   static void toggleWebsitePage() =>
      websitePage.value =
@@ -162,7 +162,7 @@ class GameWebsite {
   static Widget buildPageWebsiteMobile() =>
       Container(
         // width: 300,
-        width: Engine.screen.width,
+        width: engine.screen.width,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -240,8 +240,8 @@ class GameWebsite {
 
   static Widget buildFullScreen({required Widget child, Alignment alignment = Alignment.center}) =>
       Container(
-        width: Engine.screen.width,
-        height: Engine.screen.height,
+        width: engine.screen.width,
+        height: engine.screen.height,
         alignment: alignment,
         child: child,
       );
@@ -260,12 +260,12 @@ class GameWebsite {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.center,
-          children: (Engine.isLocalHost ? ConnectionRegion.values : Live_Regions)
+          children: (engine.isLocalHost ? ConnectionRegion.values : Live_Regions)
               .map((ConnectionRegion region) =>
               onPressed(
                 action: () {
                   actionSelectRegion(region);
-                  if (Engine.deviceIsPhone) {
+                  if (engine.deviceIsPhone) {
                     gamestream.network.connectToGameAeon();
                   } else {
                     gamestream.network.connectToGameCombat();
@@ -277,7 +277,7 @@ class GameWebsite {
                     margin: const EdgeInsets.symmetric(vertical: 4),
                     color: mouseOver ? Colors.green : Colors.white10,
                     child: text(
-                        '${Engine.enumString(region)}',
+                        '${engine.enumString(region)}',
                         size: 24,
                         color: mouseOver ? Colors.white : Colors.white60
                     ),

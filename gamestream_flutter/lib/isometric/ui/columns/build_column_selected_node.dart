@@ -24,7 +24,7 @@ Widget buildEditorSelectedNode() =>
               child: Container(
                 width: 16,
                 height: 16,
-                child: Engine.buildAtlasImageButton(
+                child: engine.buildAtlasImageButton(
                   image: GameImages.atlas_icons,
                   srcX: 80,
                   srcY: 96,

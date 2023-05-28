@@ -226,10 +226,10 @@ class GameAudio {
   }
 
   double getVolumeTargetWind() {
-    final windLineDistance = (Engine.screenCenterRenderX - GameQueries.windLineRenderX).abs();
+    final windLineDistance = (engine.screenCenterRenderX - GameQueries.windLineRenderX).abs();
     final windLineDistanceVolume = convertDistanceToVolume(windLineDistance, maxDistance: 300);
     var target = 0.0;
-    if (GameQueries.windLineRenderX - 250 <= Engine.screenCenterRenderX) {
+    if (GameQueries.windLineRenderX - 250 <= engine.screenCenterRenderX) {
       target += windLineDistanceVolume;
     }
     final index = ServerState.windTypeAmbient.value;
@@ -297,8 +297,8 @@ class GameAudio {
 
   void playAudioSingle2D(AudioSingle audioSingle, double x, double y){
     if (!enabledSound.value) return;
-    final distanceX = Engine.screenCenterWorldX - x;
-    final distanceY = Engine.screenCenterWorldY - y;
+    final distanceX = engine.screenCenterWorldX - x;
+    final distanceY = engine.screenCenterWorldY - y;
     final distance = hyp(distanceX, distanceY);
     final distanceSqrt = sqrt(distance);
     final distanceSrtClamped = max(distanceSqrt * 0.5, 1);

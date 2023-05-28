@@ -10,7 +10,7 @@ class GameCamera {
   static var translateY = 0.0;
 
   static void centerOnPlayer() => centerOnV3(GamePlayer.position);
-  static void centerOnV3(Vector3 v3) => Engine.cameraCenter(v3.renderX, v3.renderY);
+  static void centerOnV3(Vector3 v3) => engine.cameraCenter(v3.renderX, v3.renderY);
 
   static void update() {
     if (!chaseTargetEnabled.value) return;
@@ -19,7 +19,7 @@ class GameCamera {
     final translateDistance = mouseDistance * ClientConstants.Mouse_Translation_Sensitivity;
     translateX = adj(mouseAngle, translateDistance);
     translateY = opp(mouseAngle, translateDistance);
-    Engine.cameraFollow(chaseTarget.renderX + translateX, chaseTarget.renderY + translateY, chaseStrength);
+    engine.cameraFollow(chaseTarget.renderX + translateX, chaseTarget.renderY + translateY, chaseStrength);
   }
 
   static void setModeFree(){
@@ -37,7 +37,7 @@ class GameCamera {
   static void cameraSetPosition(double x, double y, double z){
     final renderX = (x - y) * 0.5;
     final renderY = ((y + x) * 0.5) - z;
-    Engine.cameraCenter(renderX, renderY);
+    engine.cameraCenter(renderX, renderY);
   }
 }
 

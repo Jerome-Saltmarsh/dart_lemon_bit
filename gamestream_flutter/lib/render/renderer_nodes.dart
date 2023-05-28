@@ -7,9 +7,9 @@ class RendererNodes extends Renderer {
   // VARIABLES
   static var previousVisibility = 0;
 
-  static final bufferClr = Engine.bufferClr;
-  static final bufferSrc = Engine.bufferSrc;
-  static final bufferDst = Engine.bufferDst;
+  static final bufferClr = engine.bufferClr;
+  static final bufferSrc = engine.bufferSrc;
+  static final bufferDst = engine.bufferDst;
   static final atlas_nodes = GameImages.atlas_nodes;
 
   static var playerRenderRow = 0;
@@ -99,7 +99,7 @@ class RendererNodes extends Renderer {
 
   @override
   void renderFunction() {
-    Engine.bufferImage = atlas_nodes;
+    engine.bufferImage = atlas_nodes;
     while (
         column >= 0            &&
         row    <= nodesRowsMax &&
@@ -208,10 +208,10 @@ class RendererNodes extends Renderer {
     GameNodes.offscreenNodes = 0;
     GameNodes.onscreenNodes = 0;
 
-    screenRight = Engine.Screen_Right + Node_Size;
-    screenLeft = Engine.Screen_Left - Node_Size;
-    screenTop = Engine.Screen_Top - 72;
-    screenBottom = Engine.Screen_Bottom + 72;
+    screenRight = engine.Screen_Right + Node_Size;
+    screenLeft = engine.Screen_Left - Node_Size;
+    screenTop = engine.Screen_Top - 72;
+    screenBottom = engine.Screen_Bottom + 72;
     var screenTopLeftColumn = GameConvert.convertWorldToColumn(screenLeft, screenTop, 0);
     nodesScreenBottomRightRow = clamp(GameConvert.convertWorldToRow(screenRight, screenBottom, 0), 0, GameNodes.totalRows - 1);
     nodesScreenTopLeftRow = GameConvert.convertWorldToRow(screenLeft, screenTop, 0);
@@ -562,7 +562,7 @@ class RendererNodes extends Renderer {
 
   static void renderNodeTorch(){
     if (renderNodeWind == WindType.Calm){
-      Engine.renderSprite(
+      engine.renderSprite(
         image: GameImages.atlas_nodes,
         srcX: AtlasNodeX.Torch,
         srcY: AtlasNodeY.Torch + AtlasNode.Height_Torch + (((row + (GameAnimation.animationFrame)) % 6) * AtlasNode.Height_Torch), // TODO Optimize
@@ -575,7 +575,7 @@ class RendererNodes extends Renderer {
       );
       return;
     }
-    Engine.renderSprite(
+    engine.renderSprite(
       image: GameImages.atlas_nodes,
       srcX: AtlasNode.X_Torch_Windy,
       srcY: AtlasNode.Y_Torch_Windy + AtlasNode.Height_Torch + (((row + (GameAnimation.animationFrame)) % 6) * AtlasNode.Height_Torch), // TODO Optimize
@@ -637,7 +637,7 @@ class RendererNodes extends Renderer {
 
     if (currentNodeWithinIsland && currentNodeZ >= playerZ + 2) return;
 
-    Engine.bufferImage = currentNodeTransparent ? GameImages.atlas_nodes_transparent : GameImages.atlas_nodes;
+    engine.bufferImage = currentNodeTransparent ? GameImages.atlas_nodes_transparent : GameImages.atlas_nodes;
 
 
     switch (currentNodeType) {
@@ -873,7 +873,7 @@ class RendererNodes extends Renderer {
 
   static void renderNodeRainLanding() {
     if (currentNodeIndex > GameNodes.area && nodeTypes[currentNodeIndex - GameNodes.area] == NodeType.Water){
-      Engine.renderSprite(
+      engine.renderSprite(
         image: GameImages.atlas_nodes,
         srcX: AtlasNode.Node_Rain_Landing_Water_X,
         srcY: 72.0 * ((GameAnimation.animationFrame + row + column) % 8), // TODO Expensive Operation
@@ -905,7 +905,7 @@ class RendererNodes extends Renderer {
 
   static void renderTreeTopOak(){
     var shift = GameAnimation.treeAnimation[((row - column) + GameAnimation.animationFrame) % GameAnimation.treeAnimation.length] * renderNodeWind;
-    Engine.renderSprite(
+    engine.renderSprite(
       image: GameImages.atlas_nodes,
       srcX: AtlasNodeX.Tree_Top,
       srcY: 433.0,
@@ -921,7 +921,7 @@ class RendererNodes extends Renderer {
 
   static void renderTreeTopPine() {
     var shift = GameAnimation.treeAnimation[((row - column) + GameAnimation.animationFrame) % GameAnimation.treeAnimation.length] * renderNodeWind;
-    Engine.renderSprite(
+    engine.renderSprite(
       image: GameImages.atlas_nodes,
       srcX: 1262,
       srcY: 80 ,
@@ -936,7 +936,7 @@ class RendererNodes extends Renderer {
   }
 
   static void renderTreeBottomOak() {
-    Engine.renderSprite(
+    engine.renderSprite(
       image: GameImages.atlas_nodes,
       srcX: AtlasNodeX.Tree_Bottom,
       srcY: 433.0,
@@ -950,7 +950,7 @@ class RendererNodes extends Renderer {
   }
 
   static void renderTreeBottomPine() {
-    Engine.renderSprite(
+    engine.renderSprite(
       image: GameImages.atlas_nodes,
       srcX: 1216,
       srcY: 80,
@@ -1589,7 +1589,7 @@ class RendererNodes extends Renderer {
   }
 
   static void renderNodeDust() =>
-      Engine.renderSprite(
+      engine.renderSprite(
         image: GameImages.atlas_nodes,
         srcX: 1552,
         srcY: 432 + (GameAnimation.animationFrame6 * 72.0), // TODO Optimize
@@ -1602,7 +1602,7 @@ class RendererNodes extends Renderer {
       );
 
   static void renderNodeWater() =>
-      Engine.renderSprite(
+      engine.renderSprite(
         image: GameImages.atlas_nodes,
         srcX: AtlasNodeX.Water,
         srcY: AtlasNodeY.Water + (((GameAnimation.animationFrameWater + ((row + column) * 3)) % 10) * 72.0), // TODO Optimize
@@ -1619,8 +1619,8 @@ class RendererNodes extends Renderer {
     required double srcY,
   }){
     onscreenNodes++;
-    final f = Engine.bufferIndex * 4;
-    bufferClr[Engine.bufferIndex] = currentNodeColor;
+    final f = engine.bufferIndex * 4;
+    bufferClr[engine.bufferIndex] = currentNodeColor;
     bufferSrc[f] = srcX;
     bufferSrc[f + 1] = srcY;
     bufferSrc[f + 2] = srcX + GameConstants.Sprite_Width;
@@ -1629,7 +1629,7 @@ class RendererNodes extends Renderer {
     bufferDst[f + 1] = 0;
     bufferDst[f + 2] = currentNodeDstX - (GameConstants.Sprite_Width_Half);
     bufferDst[f + 3] = currentNodeDstY - (GameConstants.Sprite_Height_Third);
-    Engine.incrementBufferIndex();
+    engine.incrementBufferIndex();
   }
 
   static void renderNodeShadedOffset({
@@ -1639,8 +1639,8 @@ class RendererNodes extends Renderer {
     required double offsetY,
   }){
     onscreenNodes++;
-    final f = Engine.bufferIndex << 2;
-    bufferClr[Engine.bufferIndex] = currentNodeColor;
+    final f = engine.bufferIndex << 2;
+    bufferClr[engine.bufferIndex] = currentNodeColor;
     bufferSrc[f] = srcX;
     bufferSrc[f + 1] = srcY;
     bufferSrc[f + 2] = srcX + GameConstants.Sprite_Width;
@@ -1649,7 +1649,7 @@ class RendererNodes extends Renderer {
     bufferDst[f + 1] = 0;
     bufferDst[f + 2] = currentNodeDstX - (GameConstants.Sprite_Width_Half) + offsetX;
     bufferDst[f + 3] = currentNodeDstY - (GameConstants.Sprite_Height_Third) + offsetY;
-    Engine.incrementBufferIndex();
+    engine.incrementBufferIndex();
   }
 
   static void renderNodeShadedCustom({
@@ -1662,8 +1662,8 @@ class RendererNodes extends Renderer {
     double? srcHeight
   }){
     onscreenNodes++;
-    final f = Engine.bufferIndex << 2;
-    bufferClr[Engine.bufferIndex] = color ?? currentNodeColor;
+    final f = engine.bufferIndex << 2;
+    bufferClr[engine.bufferIndex] = color ?? currentNodeColor;
     bufferSrc[f] = srcX;
     bufferSrc[f + 1] = srcY;
     bufferSrc[f + 2] = srcX + (srcWidth ?? GameConstants.Sprite_Width);
@@ -1672,6 +1672,6 @@ class RendererNodes extends Renderer {
     bufferDst[f + 1] = 0;
     bufferDst[f + 2] = currentNodeDstX - (GameConstants.Sprite_Width_Half) + offsetX;
     bufferDst[f + 3] = currentNodeDstY - (GameConstants.Sprite_Height_Third) + offsetY;
-    Engine.incrementBufferIndex();
+    engine.incrementBufferIndex();
   }
 }

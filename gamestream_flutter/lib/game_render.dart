@@ -24,7 +24,7 @@ class GameRender {
   // ACTIONS
 
   static void renderCircle(double x, double y, double z, double radius, {int sections = 12}){
-    Engine.paint.color = Colors.white;
+    engine.paint.color = Colors.white;
     final anglePerSection = pi2 / sections;
     var lineX1 = adj(0, radius);
     var lineY1 = opp(0, radius);
@@ -48,7 +48,7 @@ class GameRender {
   }
 
   static void renderLine(double x1, double y1, double z1, double x2, double y2, double z2) =>
-      Engine.renderLine(
+      engine.renderLine(
         renderX(x1, y1, z1),
         renderY(x1, y1, z1),
         renderX(x2, y2, z2),
@@ -155,7 +155,7 @@ class GameRender {
       int row,
       int column,
       ) {
-    Engine.renderSprite(
+    engine.renderSprite(
       image: GameImages.atlas_nodes,
       dstX: GameConvert.rowColumnToRenderX(row, column),
       dstY: GameConvert.rowColumnZToRenderY(row, column,z),
@@ -169,7 +169,7 @@ class GameRender {
   }
 
   static void renderWireFrameRed(int row, int column, int z) {
-    Engine.renderSprite(
+    engine.renderSprite(
       image: GameImages.atlas_nodes,
       dstX: GameConvert.rowColumnToRenderX(row, column),
       dstY: GameConvert.rowColumnZToRenderY(row, column,z),
@@ -182,7 +182,7 @@ class GameRender {
   }
 
   static void canvasRenderCursorHand(ui.Canvas canvas){
-    Engine.renderExternalCanvas(
+    engine.renderExternalCanvas(
         canvas: canvas,
         image: GameImages.atlas_icons,
         srcX: 0,
@@ -196,7 +196,7 @@ class GameRender {
   }
 
   static void canvasRenderCursorTalk(ui.Canvas canvas){
-    Engine.renderExternalCanvas(
+    engine.renderExternalCanvas(
       canvas: canvas,
       image: GameImages.atlas_icons,
       srcX: 0,
@@ -212,7 +212,7 @@ class GameRender {
   static void canvasRenderCursorCrossHair(ui.Canvas canvas, double range){
     const srcX = 0;
     const srcY = 192;
-    Engine.renderExternalCanvas(
+    engine.renderExternalCanvas(
         canvas: canvas,
         image: GameImages.atlas_icons,
         srcX: srcX + 29,
@@ -223,7 +223,7 @@ class GameRender {
         dstY: gamestream.io.getCursorScreenY() - range,
         anchorY: 1.0
     );
-    Engine.renderExternalCanvas(
+    engine.renderExternalCanvas(
         canvas: canvas,
         image: GameImages.atlas_icons,
         srcX: srcX + 29,
@@ -234,7 +234,7 @@ class GameRender {
         dstY: gamestream.io.getCursorScreenY() + range,
         anchorY: 0.0
     );
-    Engine.renderExternalCanvas(
+    engine.renderExternalCanvas(
         canvas: canvas,
         image: GameImages.atlas_icons,
         srcX: srcX + 0,
@@ -245,7 +245,7 @@ class GameRender {
         dstY: gamestream.io.getCursorScreenY(),
         anchorX: 1.0
     );
-    Engine.renderExternalCanvas(
+    engine.renderExternalCanvas(
         canvas: canvas,
         image: GameImages.atlas_icons,
         srcX: srcX + 0,
@@ -262,7 +262,7 @@ class GameRender {
     const srcX = 0;
     const srcY = 384;
     const offset = 0;
-    Engine.renderExternalCanvas(
+    engine.renderExternalCanvas(
         canvas: canvas,
         image: GameImages.atlas_icons,
         srcX: srcX + 29,
@@ -273,7 +273,7 @@ class GameRender {
         dstY: gamestream.io.getCursorScreenY() - range - offset,
         anchorY: 1.0
     );
-    Engine.renderExternalCanvas(
+    engine.renderExternalCanvas(
         canvas: canvas,
         image: GameImages.atlas_icons,
         srcX: srcX + 29,
@@ -284,7 +284,7 @@ class GameRender {
         dstY: gamestream.io.getCursorScreenY() + range - offset,
         anchorY: 0.0
     );
-    Engine.renderExternalCanvas(
+    engine.renderExternalCanvas(
         canvas: canvas,
         image: GameImages.atlas_icons,
         srcX: srcX + 0,
@@ -295,7 +295,7 @@ class GameRender {
         dstY: gamestream.io.getCursorScreenY() - offset,
         anchorX: 1.0
     );
-    Engine.renderExternalCanvas(
+    engine.renderExternalCanvas(
         canvas: canvas,
         image: GameImages.atlas_icons,
         srcX: srcX + 0,
@@ -309,7 +309,7 @@ class GameRender {
   }
 
   static void renderCircle32(double x, double y, double z){
-    Engine.renderSprite(
+    engine.renderSprite(
       image: GameImages.atlas_gameobjects,
       srcX: 16,
       srcY: 48,
@@ -324,7 +324,7 @@ class GameRender {
       renderStars(v3.renderX, v3.renderY - 40);
 
   static void renderStars(double x, double y) =>
-    Engine.renderSprite(
+    engine.renderSprite(
       image: GameImages.sprite_stars,
       srcX: 125.0 * GameAnimation.animationFrame16,
       srcY: 0,

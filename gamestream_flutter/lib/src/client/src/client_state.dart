@@ -70,7 +70,7 @@ class ClientState {
   static bool get hoverDialogDialogIsTrade => hoverDialogType.value == DialogType.Trade;
 
   static void update(){
-    interpolation_padding = ((GameNodes.interpolation_length + 1) * Node_Size) / Engine.zoom;
+    interpolation_padding = ((GameNodes.interpolation_length + 1) * Node_Size) / engine.zoom;
     if (areaTypeVisible.value) {
       if (areaTypeVisibleDuration-- <= 0) {
         areaTypeVisible.value = false;

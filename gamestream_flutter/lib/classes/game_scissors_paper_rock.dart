@@ -15,11 +15,11 @@ class GameScissorsPaperRock {
   static final colorTarget = GameColors.green;
 
   static void init(){
-    Engine.zoom = 0.5;
-    Engine.targetZoom = 0.5;
-    Engine.onDrawCanvas = render;
-    Engine.buildUI = buildUI;
-    Engine.onDrawForeground = renderForeground;
+    engine.zoom = 0.5;
+    engine.targetZoom = 0.5;
+    engine.onDrawCanvas = render;
+    engine.buildUI = buildUI;
+    engine.onDrawForeground = renderForeground;
   }
 
   static const Radius_Min = 10.0;
@@ -29,8 +29,8 @@ class GameScissorsPaperRock {
 
   static void render(Canvas canvas, Size size) {
 
-    Engine.paint.color = Colors.white;
-    canvas.drawCircle(const Offset(0, 0), 300, Engine.paint);
+    engine.paint.color = Colors.white;
+    canvas.drawCircle(const Offset(0, 0), 300, engine.paint);
 
     final size = EaseFunctions.inOutQuad(radiusI) * Radius_Max + Radius_Min ;
     radiusI += radiusD;
@@ -44,15 +44,15 @@ class GameScissorsPaperRock {
 
     for (var i = 0; i < GameScissorsPaperRock.totalPlayers; i++) {
       final player = GameScissorsPaperRock.players[i];
-      Engine.paint.color = getTeamColor(player.team);
-      canvas.drawCircle(Offset(player.x, player.y), size, Engine.paint);
-      // Engine.paint.color = Colors.black;
-      // Engine.renderText(TeamsRockPaperScissors.getName(player.team), player.x, player.y);
+      engine.paint.color = getTeamColor(player.team);
+      canvas.drawCircle(Offset(player.x, player.y), size, engine.paint);
+      // engine.paint.color = Colors.black;
+      // engine.renderText(TeamsRockPaperScissors.getName(player.team), player.x, player.y);
     }
-    Engine.paint.color = Colors.white;
-    canvas.drawCircle(Offset(GameScissorsPaperRock.playerX, GameScissorsPaperRock.playerY), size, Engine.paint);
-    // Engine.paint.color = colorAllie;
-    // canvas.drawCircle(Offset(GameScissorsPaperRock.playerX, GameScissorsPaperRock.playerY), size * 0.5, Engine.paint);
+    engine.paint.color = Colors.white;
+    canvas.drawCircle(Offset(GameScissorsPaperRock.playerX, GameScissorsPaperRock.playerY), size, engine.paint);
+    // engine.paint.color = colorAllie;
+    // canvas.drawCircle(Offset(GameScissorsPaperRock.playerX, GameScissorsPaperRock.playerY), size * 0.5, engine.paint);
   }
 
 

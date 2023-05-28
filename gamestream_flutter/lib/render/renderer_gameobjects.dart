@@ -18,7 +18,7 @@ class RendererGameObjects extends Renderer {
 
     if (type == ItemType.Resource_Credit) {
       const srcY = 125.0 * 6;
-      Engine.renderSprite(
+      engine.renderSprite(
           image: GameImages.atlas_weapons,
           dstX: gameObject.renderX,
           dstY: gameObject.renderY,
@@ -33,7 +33,7 @@ class RendererGameObjects extends Renderer {
     }
 
     if (ItemType.isTypeGameObject(type)) {
-      Engine.renderSprite(
+      engine.renderSprite(
         image: GameImages.atlas_gameobjects,
         dstX: gameObject.renderX,
         dstY: gameObject.renderY,
@@ -55,7 +55,7 @@ class RendererGameObjects extends Renderer {
     }
 
     if (type == ItemType.Weapon_Ranged_Plasma_Rifle) {
-      Engine.renderSprite(
+      engine.renderSprite(
         image: GameImages.atlas_weapons,
         dstX: gameObject.renderX,
         dstY: gameObject.renderY,
@@ -70,7 +70,7 @@ class RendererGameObjects extends Renderer {
     }
 
     if (type == ItemType.Weapon_Ranged_Plasma_Pistol) {
-      Engine.renderSprite(
+      engine.renderSprite(
           image: GameImages.atlas_weapons,
           dstX: gameObject.renderX,
           dstY: gameObject.renderY,
@@ -85,7 +85,7 @@ class RendererGameObjects extends Renderer {
     }
 
     if (type == ItemType.Weapon_Ranged_Shotgun) {
-      Engine.renderSprite(
+      engine.renderSprite(
           image: GameImages.atlas_weapons,
           dstX: gameObject.renderX,
           dstY: gameObject.renderY,
@@ -100,7 +100,7 @@ class RendererGameObjects extends Renderer {
     }
 
     if (type == ItemType.Weapon_Ranged_Bazooka) {
-      Engine.renderSprite(
+      engine.renderSprite(
           image: GameImages.atlas_weapons,
           dstX: gameObject.renderX,
           dstY: gameObject.renderY,
@@ -115,7 +115,7 @@ class RendererGameObjects extends Renderer {
     }
 
     if (type == ItemType.Weapon_Ranged_Flamethrower) {
-      Engine.renderSprite(
+      engine.renderSprite(
           image: GameImages.atlas_weapons,
           dstX: gameObject.renderX,
           dstY: gameObject.renderY,
@@ -130,7 +130,7 @@ class RendererGameObjects extends Renderer {
     }
 
     if (type == ItemType.Weapon_Ranged_Sniper_Rifle) {
-      Engine.renderSprite(
+      engine.renderSprite(
           image: GameImages.atlas_weapons,
           dstX: gameObject.renderX,
           dstY: gameObject.renderY,
@@ -144,7 +144,7 @@ class RendererGameObjects extends Renderer {
       return;
     }
     if (type == ItemType.Weapon_Ranged_Teleport) {
-      Engine.renderSprite(
+      engine.renderSprite(
           image: GameImages.atlas_weapons,
           dstX: gameObject.renderX,
           dstY: gameObject.renderY,
@@ -161,7 +161,7 @@ class RendererGameObjects extends Renderer {
     assert (ItemType.isTypeItem(type));
 
     renderBouncingGameObjectShadow(gameObject);
-    Engine.renderSprite(
+    engine.renderSprite(
       image: GameImages.atlas_items,
       dstX: gameObject.renderX,
       dstY: getRenderYBouncing(gameObject),

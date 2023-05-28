@@ -5,7 +5,7 @@ import 'package:gamestream_flutter/isometric/ui/constants/editor_grid_type_colum
 
 Widget buildColumnSelectNodeType() =>
   Container(
-    height: Engine.screen.height - 70,
+    height: engine.screen.height - 70,
     child: SingleChildScrollView(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,

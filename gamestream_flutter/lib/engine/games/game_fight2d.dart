@@ -47,7 +47,7 @@ class GameFight2D extends Game {
            Fight2DNodeType.Grass: 34,
          }[nodeType] ?? 0;
 
-         Engine.renderSprite(
+         engine.renderSprite(
              image: GameImages.atlas_fight2d_nodes,
              srcX: srcY,
              srcY: 0,
@@ -92,7 +92,7 @@ class GameFight2D extends Game {
           _ => 0
       };
 
-      Engine.renderSprite(
+      engine.renderSprite(
           image: GameImages.atlas_fight2d_character,
           srcX: frame * frameSize,
           srcY:  characterDirection[i] == GameFight2DDirection.Left ? 0 : frameSize,
@@ -103,7 +103,7 @@ class GameFight2D extends Game {
       );
 
       if (renderCharacterState.value){
-        Engine.renderText(
+        engine.renderText(
           GameFight2DCharacterState.getName(state),
           characterPositionX[i].toDouble(),
           characterPositionY[i].toDouble() - 100,
@@ -120,7 +120,7 @@ class GameFight2D extends Game {
   @override
   void update() {
     gamestream.network.sendClientRequestUpdate();
-    Engine.cameraFollow(player.x, player.y);
+    engine.cameraFollow(player.x, player.y);
     // applyCharacterAudio();
   }
 
@@ -140,24 +140,24 @@ class GameFight2D extends Game {
 
   void updateCamera() {
     const speed = 4.0;
-    if (Engine.keyPressed(KeyCode.Arrow_Up)){
-      Engine.cameraY -= speed;
+    if (engine.keyPressed(KeyCode.Arrow_Up)){
+      engine.cameraY -= speed;
     }
-    if (Engine.keyPressed(KeyCode.Arrow_Down)){
-      Engine.cameraY += speed;
+    if (engine.keyPressed(KeyCode.Arrow_Down)){
+      engine.cameraY += speed;
     }
-    if (Engine.keyPressed(KeyCode.Arrow_Left)){
-      Engine.cameraX -= speed;
+    if (engine.keyPressed(KeyCode.Arrow_Left)){
+      engine.cameraX -= speed;
     }
-    if (Engine.keyPressed(KeyCode.Arrow_Right)){
-      Engine.cameraX += speed;
+    if (engine.keyPressed(KeyCode.Arrow_Right)){
+      engine.cameraX += speed;
     }
   }
 
   @override
   void onActivated() {
-    Engine.zoom = 1.0;
-    Engine.targetZoom = 1.0;
+    engine.zoom = 1.0;
+    engine.targetZoom = 1.0;
   }
 
   @override

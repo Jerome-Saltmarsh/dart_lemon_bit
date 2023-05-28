@@ -30,7 +30,7 @@ class Gamestream {
   }
 
    Future init(SharedPreferences sharedPreferences) async {
-     print("environment: ${Engine.isLocalHost ? 'localhost' : 'production'}");
+     print("environment: ${engine.isLocalHost ? 'localhost' : 'production'}");
 
      final visitDateTimeString = sharedPreferences.getString('visit-datetime');
      if (visitDateTimeString != null) {
@@ -45,14 +45,14 @@ class Gamestream {
      }
 
      print("time zone: ${GameUtils.detectConnectionRegion()}");
-     Engine.onScreenSizeChanged = onScreenSizeChanged;
-     Engine.deviceType.onChanged(onDeviceTypeChanged);
+     engine.onScreenSizeChanged = onScreenSizeChanged;
+     engine.deviceType.onChanged(onDeviceTypeChanged);
      GameImages.loadImages();
-     Engine.cursorType.value = CursorType.Basic;
+     engine.cursorType.value = CursorType.Basic;
      gamestream.io.addListeners();
      gamestream.io.detectInputMode();
 
-     if (Engine.isLocalHost) {
+     if (engine.isLocalHost) {
        GameWebsite.region.value = ConnectionRegion.LocalHost;
      } else {
        GameWebsite.region.value = GameUtils.detectConnectionRegion();
@@ -75,7 +75,7 @@ class Gamestream {
          }
        }
 
-       GameWebsite.region.value = Engine.isLocalHost ? ConnectionRegion.LocalHost : ConnectionRegion.Asia_South;
+       GameWebsite.region.value = engine.isLocalHost ? ConnectionRegion.LocalHost : ConnectionRegion.Asia_South;
        // GameNetwork.connectToGameAeon();
      }
      await Future.delayed(const Duration(seconds: 4));
@@ -83,10 +83,10 @@ class Gamestream {
 
    /// EVENT HANDLER (DO NOT CALL)
    void _onChangedGame(Game game) {
-     Engine.onDrawCanvas = game.drawCanvas;
-     Engine.onDrawForeground = game.renderForeground;
-     Engine.onUpdate = game.update;
-     Engine.buildUI = game.buildUI;
+     engine.onDrawCanvas = game.drawCanvas;
+     engine.onDrawForeground = game.renderForeground;
+     engine.onUpdate = game.update;
+     engine.buildUI = game.buildUI;
      game.onActivated();
    }
 

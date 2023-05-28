@@ -1,9 +1,9 @@
 
 import 'package:gamestream_flutter/game_images.dart';
-import 'package:lemon_engine/lemon_engine.dart';
+import 'package:gamestream_flutter/instances/engine.dart';
 
 void renderBoxYellow64(double x, double y){
-  Engine.renderSprite(
+  engine.renderSprite(
     image: GameImages.atlas_gameobjects,
     dstX: x,
     dstY: y,

@@ -11,8 +11,8 @@ class StackFullscreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
     Container(
-        width: Engine.screen.width,
-        height: Engine.screen.height,
+        width: engine.screen.width,
+        height: engine.screen.height,
         child: Stack(children:children)
     );
 

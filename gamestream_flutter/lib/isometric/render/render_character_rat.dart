@@ -8,7 +8,7 @@ void renderCharacterRat(Character character){
   renderPixelRed(character.renderX, character.renderY);
 
   if (character.state == CharacterState.Running){
-    Engine.renderSprite(
+    engine.renderSprite(
       image: GameImages.atlas_gameobjects,
       dstX: character.renderX,
       dstY: character.renderY,
@@ -23,7 +23,7 @@ void renderCharacterRat(Character character){
   }
 
   if (character.state == CharacterState.Performing){
-    Engine.renderSprite(
+    engine.renderSprite(
       image: GameImages.atlas_gameobjects,
       dstX: character.renderX,
       dstY: character.renderY,
@@ -37,7 +37,7 @@ void renderCharacterRat(Character character){
     );
   }
 
-  Engine.renderSprite(
+  engine.renderSprite(
     image: GameImages.atlas_gameobjects,
     dstX: character.renderX,
     dstY: character.renderY,

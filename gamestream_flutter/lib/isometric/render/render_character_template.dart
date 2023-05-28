@@ -17,7 +17,7 @@ void renderTemplateWeapon(
 
   if (weaponType == ItemType.Empty) return;
   const Sprite_Size = 125.0;
-  Engine.renderSprite(
+  engine.renderSprite(
     image: GameImages.getImageForWeaponType(weaponType),
     srcX: frame * Sprite_Size,
     srcY: direction * Sprite_Size,
@@ -138,7 +138,7 @@ void renderCharacterTemplate(Character character, {
   final color = invisible ? Color_Invisible : GameState.getV3RenderColor(character);
 
   if (invisible) {
-    Engine.bufferBlendMode = BlendMode.srcIn;
+    engine.bufferBlendMode = BlendMode.srcIn;
   }
 
   if (!weaponInFront) {
@@ -157,7 +157,7 @@ void renderCharacterTemplate(Character character, {
     final shadowY = character.y + opp(shadowAngle, shadowDistance);
     final shadowZ = character.z;
 
-    Engine.renderSprite(
+    engine.renderSprite(
       image: GameImages.template_shadow,
       srcX: frameLegs * 64,
       srcY: upperBodyDirection * 64,
@@ -171,7 +171,7 @@ void renderCharacterTemplate(Character character, {
     );
   }
 
-    Engine.renderSprite(
+    engine.renderSprite(
         image: GameImages.getImageForLegType(character.legType),
         srcX: frameLegs * Sprite_Size,
         srcY: directionLegs * Sprite_Size,
@@ -183,7 +183,7 @@ void renderCharacterTemplate(Character character, {
         color: color,
         anchorY: Anchor_Y
     );
-    Engine.renderSprite(
+    engine.renderSprite(
         image: GameImages.getImageForBodyType(character.bodyType),
         srcX: frameBody * Sprite_Size,
         srcY: directionBody * Sprite_Size,
@@ -199,7 +199,7 @@ void renderCharacterTemplate(Character character, {
     // final height = GameNodes.heightMap[(character.indexRow * GameNodes.totalColumns) + character.indexColumn];
     // GameRender.renderTextV3(character, GameNodes.nodeAlps[character.nodeIndex - GameNodes.area], offsetY: -80);
 
-    Engine.renderSprite(
+    engine.renderSprite(
         image: GameImages.getImageForHeadType(character.headType),
         srcX: frameHead * Sprite_Size,
         srcY: directionHead * Sprite_Size,
@@ -217,7 +217,7 @@ void renderCharacterTemplate(Character character, {
     }
 
   if (invisible) {
-    Engine.bufferBlendMode = BlendMode.dstATop;
+    engine.bufferBlendMode = BlendMode.dstATop;
   }
 }
 

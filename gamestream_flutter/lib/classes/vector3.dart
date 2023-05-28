@@ -17,11 +17,11 @@ class Vector3 with Position {
 
   bool get onscreen {
      final rx = renderX;
-     if (rx < Engine.Screen_Left) return false;
-     if (rx > Engine.Screen_Right) return false;
+     if (rx < engine.Screen_Left) return false;
+     if (rx > engine.Screen_Right) return false;
      final ry = renderY;
-     if (ry < Engine.Screen_Top) return false;
-     if (ry > Engine.Screen_Bottom) return false;
+     if (ry < engine.Screen_Top) return false;
+     if (ry > engine.Screen_Bottom) return false;
      return true;
   }
 
@@ -29,14 +29,14 @@ class Vector3 with Position {
     const Pad_Distance = 75.0;
     final rx = renderX;
 
-    if (rx < Engine.Screen_Left - Pad_Distance)
+    if (rx < engine.Screen_Left - Pad_Distance)
       return false;
-    if (rx > Engine.Screen_Right + Pad_Distance)
+    if (rx > engine.Screen_Right + Pad_Distance)
       return false;
     final ry = renderY;
-    if (ry < Engine.Screen_Top - Pad_Distance)
+    if (ry < engine.Screen_Top - Pad_Distance)
       return false;
-    if (ry > Engine.Screen_Bottom + Pad_Distance)
+    if (ry > engine.Screen_Bottom + Pad_Distance)
       return false;
 
     return true;

@@ -26,7 +26,7 @@ class GameMapWidget extends StatelessWidget {
     return SizedBox(
       width: width,
       height: height,
-      child: Engine.buildCanvas(paint: renderCanvasMap, frame: canvasFrameMap),
+      child: engine.buildCanvas(paint: renderCanvasMap, frame: canvasFrameMap),
     );
   }
 
@@ -75,7 +75,7 @@ class GameMapWidget extends StatelessWidget {
   //
   //   cameraCenter(renderX, renderY);
   //
-  //   Engine.renderExternalCanvas(
+  //   engine.renderExternalCanvas(
   //     canvas: canvas,
   //     image: GameImages.minimap,
   //     srcX: 92,

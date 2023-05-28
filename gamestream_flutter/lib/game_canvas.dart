@@ -11,19 +11,19 @@ import 'touch_controller.dart';
 
 class GameCanvas {
   static void renderForegroundText(Vector3 position, String text){
-    Engine.renderText(
+    engine.renderText(
       text,
-      Engine.worldToScreenX(position.renderX),
-      Engine.worldToScreenY(position.renderY),
+      engine.worldToScreenX(position.renderX),
+      engine.worldToScreenY(position.renderY),
       style: const TextStyle(color: Colors.white, fontSize: 18),
     );
   }
 
   static void renderText({required double x, required double y, required double z, required String text}){
-    Engine.renderText(
+    engine.renderText(
       text,
-      Engine.worldToScreenX(GameConvert.getRenderX(x, y, z)),
-      Engine.worldToScreenY(GameConvert.getRenderY(x, y, z)),
+      engine.worldToScreenX(GameConvert.getRenderX(x, y, z)),
+      engine.worldToScreenY(GameConvert.getRenderY(x, y, z)),
       style: const TextStyle(color: Colors.white, fontSize: 18),
     );
   }
@@ -49,10 +49,10 @@ class GameCanvas {
     if (GamePlayer.aimTargetName.isEmpty)
       return;
     const style = TextStyle(color: Colors.white, fontSize: 18);
-    Engine.renderText(
+    engine.renderText(
       GamePlayer.aimTargetName,
-      Engine.worldToScreenX(GamePlayer.aimTargetPosition.renderX),
-      Engine.worldToScreenY(GamePlayer.aimTargetPosition.renderY),
+      engine.worldToScreenX(GamePlayer.aimTargetPosition.renderX),
+      engine.worldToScreenY(GamePlayer.aimTargetPosition.renderY),
       style: style,
     );
   }
@@ -68,15 +68,15 @@ class GameCanvas {
 
         if (ServerQuery.getEquippedWeaponConsumeType() != ItemType.Empty){
            if (ServerQuery.getEquippedWeaponQuantity() <= 0){
-             Engine.renderExternalCanvas(
+             engine.renderExternalCanvas(
                canvas: canvas,
                image: GameImages.atlas_icons,
                srcX: 272,
                srcY: 0,
                srcWidth: 128,
                srcHeight: 32,
-               dstX: Engine.mousePositionX,
-               dstY: Engine.mousePositionY - 70,
+               dstX: engine.mousePositionX,
+               dstY: engine.mousePositionY - 70,
              );
            }
         }
@@ -93,15 +93,15 @@ class GameCanvas {
 
         if (ServerQuery.getEquippedWeaponConsumeType() != ItemType.Empty){
           if (ServerQuery.getEquippedWeaponQuantity() <= 0){
-            Engine.renderExternalCanvas(
+            engine.renderExternalCanvas(
               canvas: canvas,
               image: GameImages.atlas_icons,
               srcX: 272,
               srcY: 0,
               srcWidth: 128,
               srcHeight: 32,
-              dstX: Engine.mousePositionX,
-              dstY: Engine.mousePositionY - 70,
+              dstX: engine.mousePositionX,
+              dstY: engine.mousePositionY - 70,
             );
           }
         }
@@ -160,7 +160,7 @@ class GameCanvas {
   static void renderObjectRadius() {
     for (var i = 0; i < ServerState.totalCharacters; i++) {
       final character = ServerState.characters[i];
-      Engine.renderCircle(character.renderX, character.renderY, CharacterType.getRadius(character.characterType), Colors.yellow);
+      engine.renderCircle(character.renderX, character.renderY, CharacterType.getRadius(character.characterType), Colors.yellow);
     }
   }
 
