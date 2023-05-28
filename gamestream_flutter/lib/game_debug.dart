@@ -27,11 +27,11 @@ class GameDebug {
                           children: [
                             watch(gamestream.serverResponseReader.bufferSize, (int bytes) => text('network-bytes: $bytes')),
                             watch(gamestream.serverResponseReader.bufferSizeTotal, (int bytes) => text('network-bytes-total: ${formatBytes(bytes)}')),
-                            watch(gamestream.serverResponseReader.bufferSizeTotal, (int bytes) => text('network-bytes-per-second: ${gamestream.games.isometric.clientState2.formatAverageBytePerSecond(bytes)}')),
-                            watch(gamestream.serverResponseReader.bufferSizeTotal, (int bytes) => text('network-bytes-per-minute: ${gamestream.games.isometric.clientState2.formatAverageBytePerMinute(bytes)}')),
-                            watch(gamestream.serverResponseReader.bufferSizeTotal, (int bytes) => text('network-bytes-per-hour: ${gamestream.games.isometric.clientState2.formatAverageBytePerHour(bytes)}')),
+                            watch(gamestream.serverResponseReader.bufferSizeTotal, (int bytes) => text('network-bytes-per-second: ${gamestream.games.isometric.clientState.formatAverageBytePerSecond(bytes)}')),
+                            watch(gamestream.serverResponseReader.bufferSizeTotal, (int bytes) => text('network-bytes-per-minute: ${gamestream.games.isometric.clientState.formatAverageBytePerMinute(bytes)}')),
+                            watch(gamestream.serverResponseReader.bufferSizeTotal, (int bytes) => text('network-bytes-per-hour: ${gamestream.games.isometric.clientState.formatAverageBytePerHour(bytes)}')),
                             Refresh(() =>  text(
-                                "connection-duration: ${gamestream.games.isometric.clientState2.formattedConnectionDuration}\n"
+                                "connection-duration: ${gamestream.games.isometric.clientState.formattedConnectionDuration}\n"
                                 // "offscreen-nodes: ${gamestream.games.isometric.nodes.offscreenNodes}\n"
                                 // "onscreen-nodes: ${gamestream.games.isometric.nodes.onscreenNodes}\n"
                                 "touches: ${engine.touches}\n"
@@ -59,13 +59,13 @@ class GameDebug {
                                 "aim-target-position: ${GamePlayer.aimTargetPosition}\n"
                                 "target-category: ${TargetCategory.getName(GamePlayer.targetCategory)}\n"
                                 "target-position: ${GamePlayer.targetPosition}\n"
-                                "dialog-type: ${DialogType.getName(gamestream.games.isometric.clientState2.hoverDialogType.value)}\n"
-                                "scene-light-sources: ${gamestream.games.isometric.clientState2.nodesLightSourcesTotal}\n"
-                                "scene-light-active: ${gamestream.games.isometric.clientState2.lights_active}\n"
+                                "dialog-type: ${DialogType.getName(gamestream.games.isometric.clientState.hoverDialogType.value)}\n"
+                                "scene-light-sources: ${gamestream.games.isometric.clientState.nodesLightSourcesTotal}\n"
+                                "scene-light-active: ${gamestream.games.isometric.clientState.lights_active}\n"
                                 "total-gameobjects: ${ServerState.gameObjects.length}\n"
                                 "total-characters: ${ServerState.totalCharacters}\n"
-                                'total-particles: ${gamestream.games.isometric.clientState2.particles.length}\n'
-                                'total-particles-active: ${gamestream.games.isometric.clientState2.totalActiveParticles}\n'
+                                'total-particles: ${gamestream.games.isometric.clientState.particles.length}\n'
+                                'total-particles-active: ${gamestream.games.isometric.clientState.totalActiveParticles}\n'
                                 "offscreen-nodes: left: ${RendererNodes.offscreenNodesLeft}, top: ${RendererNodes.offscreenNodesTop}, right: ${RendererNodes.offscreenNodesRight}, bottom: ${RendererNodes.offscreenNodesBottom}"
                             )),
                             Refresh(() => text('touch-world: x: ${gamestream.io.touchCursorWorldX.toInt()}, y: ${gamestream.io.touchCursorWorldY.toInt()}')),
@@ -93,7 +93,7 @@ class GameDebug {
                       ),
                     ),
                     height24,
-                    text("close x", onPressed: () => gamestream.games.isometric.clientState2.debugMode.value = false, bold: true),
+                    text("close x", onPressed: () => gamestream.games.isometric.clientState.debugMode.value = false, bold: true),
                   ],
                 ),
               )),
@@ -143,10 +143,10 @@ Widget buildColumnLightingControls(){
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           text("Override Color"),
-          watch(gamestream.games.isometric.clientState2.overrideColor, (bool overrideColor){
+          watch(gamestream.games.isometric.clientState.overrideColor, (bool overrideColor){
             return Checkbox(value: overrideColor, onChanged: (bool? value){
                if (value == null) return;
-               gamestream.games.isometric.clientState2.overrideColor.value = value;
+               gamestream.games.isometric.clientState.overrideColor.value = value;
             });
           })
         ],
@@ -159,7 +159,7 @@ Widget buildColumnLightingControls(){
       //       gamestream.games.isometric.nodes.ambient_val,
       //   ).toColor(),
       //   onColorChanged: (color){
-      //     gamestream.games.isometric.clientState2.overrideColor.value = true;
+      //     gamestream.games.isometric.clientState.overrideColor.value = true;
       //     final hsvColor = HSVColor.fromColor(color);
       //     gamestream.games.isometric.nodes.ambient_alp = hsvColor.alpha;
       //     gamestream.games.isometric.nodes.ambient_hue = hsvColor.hue;

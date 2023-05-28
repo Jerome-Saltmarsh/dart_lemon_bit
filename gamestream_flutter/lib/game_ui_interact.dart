@@ -166,7 +166,7 @@ class GameUIInteract {
                    },
                    feedback: GameUI.buildAtlasItemType(itemTypes[i]),
                    onDraggableCanceled: (Velocity velocity, Offset offset){
-                     if (gamestream.games.isometric.clientState2.hoverDialogIsInventory) return;
+                     if (gamestream.games.isometric.clientState.hoverDialogIsInventory) return;
                      gamestream.network.sendClientRequestInventoryBuy(i);
                    },
                    child: onPressed(

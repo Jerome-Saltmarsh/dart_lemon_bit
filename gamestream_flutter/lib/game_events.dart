@@ -22,11 +22,11 @@ class GameEvents {
   }
 
   static void onChangedError(String error) {
-    gamestream.games.isometric.clientState2.messageStatus.value = error;
+    gamestream.games.isometric.clientState.messageStatus.value = error;
     if (error.isNotEmpty) {
-      gamestream.games.isometric.clientState2.messageStatusDuration = 200;
+      gamestream.games.isometric.clientState.messageStatusDuration = 200;
     } else {
-      gamestream.games.isometric.clientState2.messageStatusDuration = 0;
+      gamestream.games.isometric.clientState.messageStatusDuration = 0;
     }
   }
 
@@ -37,7 +37,7 @@ class GameEvents {
     GameMinimap.generateSrcDst();
     ClientActions.refreshBakeMapLightSources();
 
-    if (gamestream.games.isometric.clientState2.raining.value) {
+    if (gamestream.games.isometric.clientState.raining.value) {
       gamestream.games.isometric.actions.rainStop();
       gamestream.games.isometric.actions.rainStart();
     }
@@ -46,7 +46,7 @@ class GameEvents {
   }
 
   static void onFootstep(double x, double y, double z) {
-    if (gamestream.games.isometric.clientState2.raining.value && (
+    if (gamestream.games.isometric.clientState.raining.value && (
         gamestream.games.isometric.nodes.gridNodeXYZTypeSafe(x, y, z) == NodeType.Rain_Landing
             ||
             gamestream.games.isometric.nodes.gridNodeXYZTypeSafe(x, y, z + 24) == NodeType.Rain_Landing
@@ -372,12 +372,12 @@ class GameEvents {
   }
 
   static void onChangedWindType(int windType) {
-    gamestream.games.isometric.clientState2.refreshRain();
+    gamestream.games.isometric.clientState.refreshRain();
   }
 
   static void onChangedHour(int hour){
     if (ServerState.sceneUnderground.value) return;
-    gamestream.games.isometric.clientState2.updateGameLighting();
+    gamestream.games.isometric.clientState.updateGameLighting();
   }
 
   static void onChangedSeconds(int seconds){
@@ -387,9 +387,9 @@ class GameEvents {
   }
 
   static void onChangedRain(int value) {
-    gamestream.games.isometric.clientState2.raining.value = value != RainType.None;
-    gamestream.games.isometric.clientState2.refreshRain();
-    gamestream.games.isometric.clientState2.updateGameLighting();
+    gamestream.games.isometric.clientState.raining.value = value != RainType.None;
+    gamestream.games.isometric.clientState.refreshRain();
+    gamestream.games.isometric.clientState.updateGameLighting();
   }
 
   static void onPlayerEvent(int event) {
@@ -569,7 +569,7 @@ class GameEvents {
   }
 
   static void onChangedRendersSinceUpdate(int value){
-    gamestream.games.isometric.clientState2.triggerAlarmNoMessageReceivedFromServer.value = value > 200;
+    gamestream.games.isometric.clientState.triggerAlarmNoMessageReceivedFromServer.value = value > 200;
   }
 
   static void onChangedPlayerMessage(String value){
@@ -609,11 +609,11 @@ class GameEvents {
   }
 
   static void onChangedPlayerWeaponRanged(int weaponType) {
-    gamestream.games.isometric.clientState2.itemGroup.value = ItemGroup.Primary_Weapon;
+    gamestream.games.isometric.clientState.itemGroup.value = ItemGroup.Primary_Weapon;
   }
 
   static void onChangedPlayerWeapon(int itemType){
-    gamestream.games.isometric.clientState2.itemGroup.value = ItemType.getItemGroup(itemType);
+    gamestream.games.isometric.clientState.itemGroup.value = ItemType.getItemGroup(itemType);
 
     if (itemType == ItemType.Empty) return;
 
@@ -647,18 +647,18 @@ class GameEvents {
 
   static void onChangedPlayerRespawnTimer(int respawnTimer) {
     if (gamestream.gameType.value == GameType.Combat) {
-      gamestream.games.isometric.clientState2.control_visible_player_weapons.value = respawnTimer <= 0;
-      gamestream.games.isometric.clientState2.window_visible_player_creation.value = respawnTimer <= 0;
-      gamestream.games.isometric.clientState2.control_visible_respawn_timer.value = respawnTimer > 0;
+      gamestream.games.isometric.clientState.control_visible_player_weapons.value = respawnTimer <= 0;
+      gamestream.games.isometric.clientState.window_visible_player_creation.value = respawnTimer <= 0;
+      gamestream.games.isometric.clientState.control_visible_respawn_timer.value = respawnTimer > 0;
     }
   }
 
   static void onChangedPlayerWeaponMelee(int weaponType) {
-     gamestream.games.isometric.clientState2.itemGroup.value = ItemGroup.Secondary_Weapon;
+     gamestream.games.isometric.clientState.itemGroup.value = ItemGroup.Secondary_Weapon;
   }
 
   static void onChangedPlayerTertiaryWeapon(int weaponType) {
-    gamestream.games.isometric.clientState2.itemGroup.value = ItemGroup.Tertiary_Weapon;
+    gamestream.games.isometric.clientState.itemGroup.value = ItemGroup.Tertiary_Weapon;
   }
 
   static void readPlayerEventItemAcquired() {
@@ -730,7 +730,7 @@ class GameEvents {
      print("onChangedPlayerActive($playerActive)");
       if (gamestream.gameType.value == GameType.Combat) {
         if (playerActive){
-          gamestream.games.isometric.clientState2.window_visible_player_creation.value = false;
+          gamestream.games.isometric.clientState.window_visible_player_creation.value = false;
         }
 
       }

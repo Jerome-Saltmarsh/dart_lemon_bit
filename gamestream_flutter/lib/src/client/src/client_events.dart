@@ -22,8 +22,8 @@ class ClientEvents {
 
   static void onDragStarted(int itemIndex){
     // print("onDragStarted()");
-    gamestream.games.isometric.clientState2.dragStart.value = itemIndex;
-    gamestream.games.isometric.clientState2.dragEnd.value = -1;
+    gamestream.games.isometric.clientState.dragStart.value = itemIndex;
+    gamestream.games.isometric.clientState.dragEnd.value = -1;
   }
 
   static void onDragCompleted(){
@@ -35,7 +35,7 @@ class ClientEvents {
   }
 
   static void onItemIndexPrimary(int itemIndex) {
-    if (gamestream.games.isometric.clientState2.hoverDialogDialogIsTrade){
+    if (gamestream.games.isometric.clientState.hoverDialogDialogIsTrade){
       gamestream.network.sendClientRequestInventoryBuy(itemIndex);
       return;
     }
@@ -43,7 +43,7 @@ class ClientEvents {
   }
 
   static void onItemIndexSecondary(int itemIndex){
-    if (gamestream.games.isometric.clientState2.hoverDialogDialogIsTrade){
+    if (gamestream.games.isometric.clientState.hoverDialogDialogIsTrade){
       gamestream.network.sendClientRequestInventoryBuy(itemIndex);
       return;
     }
@@ -59,13 +59,13 @@ class ClientEvents {
 
   static void onDragCancelled(Velocity velocity, Offset offset){
     // print("onDragCancelled()");
-    if (gamestream.games.isometric.clientState2.hoverIndex.value == -1){
+    if (gamestream.games.isometric.clientState.hoverIndex.value == -1){
       ClientActions.dropDraggedItem();
     } else {
       ClientActions.inventorySwapDragTarget();
     }
-    gamestream.games.isometric.clientState2.dragStart.value = -1;
-    gamestream.games.isometric.clientState2.dragEnd.value = -1;
+    gamestream.games.isometric.clientState.dragStart.value = -1;
+    gamestream.games.isometric.clientState.dragEnd.value = -1;
   }
 
   static void onKeyPressed(int key){
@@ -81,7 +81,7 @@ class ClientEvents {
     }
 
     if (key == KeyCode.Escape) {
-      gamestream.games.isometric.clientState2.window_visible_menu.toggle();
+      gamestream.games.isometric.clientState.window_visible_menu.toggle();
     }
 
     if (gamestream.games.isometric.clientState.playMode) {
@@ -191,20 +191,20 @@ class ClientEvents {
   }
 
   static void onAcceptDragInventoryIcon(){
-     if (gamestream.games.isometric.clientState2.dragStart.value == -1) return;
-     gamestream.network.sendClientRequestInventoryDeposit(gamestream.games.isometric.clientState2.dragStart.value);
+     if (gamestream.games.isometric.clientState.dragStart.value == -1) return;
+     gamestream.network.sendClientRequestInventoryDeposit(gamestream.games.isometric.clientState.dragStart.value);
   }
 
   static void onChangedMessageStatus(String value){
     if (value.isEmpty){
-      gamestream.games.isometric.clientState2.messageStatusDuration = 0;
+      gamestream.games.isometric.clientState.messageStatusDuration = 0;
     } else {
-      gamestream.games.isometric.clientState2.messageStatusDuration = 150;
+      gamestream.games.isometric.clientState.messageStatusDuration = 150;
     }
   }
 
   static void onChangedAreaTypeVisible(bool value) =>
-      gamestream.games.isometric.clientState2.areaTypeVisibleDuration = value
+      gamestream.games.isometric.clientState.areaTypeVisibleDuration = value
           ? ClientConstants.Area_Type_Duration
           : 0;
 

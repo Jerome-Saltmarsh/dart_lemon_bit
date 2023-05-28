@@ -605,7 +605,7 @@ class ServerResponseReader with ByteReader {
     gamestream.games.isometric.clientState.nodesRaycast = gamestream.games.isometric.nodes.area +  gamestream.games.isometric.nodes.area + gamestream.games.isometric.nodes.totalColumns + 1;
     GameEvents.onChangedNodes();
     gamestream.games.isometric.nodes.refreshNodeVariations();
-    gamestream.games.isometric.clientState2.sceneChanged.value++;
+    gamestream.games.isometric.clientState.sceneChanged.value++;
     onChangedScene();
   }
 

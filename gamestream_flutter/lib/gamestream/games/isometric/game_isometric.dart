@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_client_state.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_renderer.dart';
-import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_state.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/touch_controller.dart';
 
@@ -13,7 +12,6 @@ import 'game_isometric_nodes.dart';
 class GameIsometric extends Game {
   final camera = GameIsometricCamera();
   final clientState = GameIsometricClientState();
-  final clientState2 = GameIsometricClientState2();
   final nodes = GameIsometricNodes();
   final actions = GameIsometricActions();
   final renderer = GameIsometricRenderer();
@@ -31,7 +29,7 @@ class GameIsometric extends Game {
     clientState.renderEditMode();
     renderer.renderMouseTargetName();
     renderer.renderPlayerEnergy();
-    gamestream.games.isometric.clientState2.rendersSinceUpdate.value++;
+    gamestream.games.isometric.clientState.rendersSinceUpdate.value++;
   }
 
   @override
@@ -51,7 +49,7 @@ class GameIsometric extends Game {
     ServerState.updateProjectiles();
     ServerState.updateGameObjects();
     gamestream.audio.update();
-    gamestream.games.isometric.clientState2.update();
+    gamestream.games.isometric.clientState.update();
     clientState.updatePlayerMessageTimer();
     gamestream.io.readPlayerInput();
     gamestream.network.sendClientRequestUpdate();
@@ -59,14 +57,14 @@ class GameIsometric extends Game {
 
   @override
   void onActivated() {
-    gamestream.games.isometric.clientState2.window_visible_player_creation.value = false;
-    gamestream.games.isometric.clientState2.control_visible_respawn_timer.value = false;
+    gamestream.games.isometric.clientState.window_visible_player_creation.value = false;
+    gamestream.games.isometric.clientState.control_visible_respawn_timer.value = false;
     gamestream.audio.musicStop();
     engine.onLeftClicked = TouchController.onClick;
     engine.onMouseMoved = TouchController.onMouseMoved;
-    gamestream.games.isometric.clientState2.control_visible_player_weapons.value = true;
-    gamestream.games.isometric.clientState2.control_visible_scoreboard.value = true;
-    gamestream.games.isometric.clientState2.control_visible_player_power.value = true;
+    gamestream.games.isometric.clientState.control_visible_player_weapons.value = true;
+    gamestream.games.isometric.clientState.control_visible_scoreboard.value = true;
+    gamestream.games.isometric.clientState.control_visible_player_power.value = true;
 
     if (!engine.isLocalHost) {
       engine.fullScreenEnter();
