@@ -16,7 +16,7 @@ class ClientEvents {
   }
 
   static void onChangedRaining(bool raining){
-    raining ? gamestream.actions.rainStart() : gamestream.actions.rainStop();
+    raining ? gamestream.games.isometric.actions.rainStart() : gamestream.games.isometric.actions.rainStop();
     gamestream.games.isometric.nodes.resetNodeColorsToAmbient();
   }
 
@@ -71,12 +71,12 @@ class ClientEvents {
   static void onKeyPressed(int key){
 
     if (key == ClientConstants.Key_Toggle_Debug_Mode) {
-      gamestream.actions.toggleDebugMode();
+      gamestream.games.isometric.actions.toggleDebugMode();
       return;
     }
 
     if (key == KeyCode.Tab) {
-      gamestream.actions.actionToggleEdit();
+      gamestream.games.isometric.actions.actionToggleEdit();
       return;
     }
 
@@ -156,7 +156,7 @@ class ClientEvents {
   static void onKeyPressedModePlay(int key) {
 
     if (key == ClientConstants.Key_Zoom) {
-      gamestream.actions.toggleZoom();
+      gamestream.games.isometric.actions.toggleZoom();
       return;
     }
 
@@ -172,7 +172,7 @@ class ClientEvents {
 
     if (engine.isLocalHost){
       if (key == ClientConstants.Key_Settings) {
-        gamestream.actions.toggleWindowSettings();
+        gamestream.games.isometric.actions.toggleWindowSettings();
         return;
       }
     }

@@ -10,7 +10,6 @@ class Gamestream {
 
    final io = GameIO();
    final audio = GameAudio();
-   final actions = GameActions();
    final games = Games();
    final animation = GameAnimation();
 

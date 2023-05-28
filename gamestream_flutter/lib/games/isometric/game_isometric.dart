@@ -5,12 +5,14 @@ import 'package:gamestream_flutter/games/isometric/game_isometric_nodes.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/touch_controller.dart';
 
+import 'game_isometric_actions.dart';
 import 'game_isometric_camera.dart';
 
 class GameIsometric extends Game {
   final camera = GameIsometricCamera();
   final clientState = GameIsometricClientState();
   final nodes = GameIsometricNodes();
+  final actions = GameIsometricActions();
 
   @override
   void drawCanvas(Canvas canvas, Size size) {

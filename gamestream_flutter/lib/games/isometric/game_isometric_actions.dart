@@ -1,7 +1,7 @@
 
 import 'package:gamestream_flutter/library.dart';
 
-class GameActions {
+class GameIsometricActions {
 
   void loadSelectedSceneName(){
     final sceneName = GameEditor.selectedSceneName.value;

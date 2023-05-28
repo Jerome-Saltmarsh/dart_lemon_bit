@@ -651,7 +651,7 @@ class EditorUI {
           ),
           action: () {
             if (gamestream.games.isometric.clientState.playMode) {
-              gamestream.actions.actionSetModePlay();
+              gamestream.games.isometric.actions.actionSetModePlay();
               return;
             }
             GameEditor.paint(nodeType: nodeType);

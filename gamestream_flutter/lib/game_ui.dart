@@ -178,7 +178,7 @@ class GameUI {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           onPressed(
-                            action: gamestream.actions.selectAttributeHealth,
+                            action: gamestream.games.isometric.actions.selectAttributeHealth,
                             child: Container(
                               color: boxColor,
                               padding: padding4,
@@ -192,7 +192,7 @@ class GameUI {
                             ),
                           ),
                           onPressed(
-                            action: gamestream.actions.selectAttributeDamage,
+                            action: gamestream.games.isometric.actions.selectAttributeDamage,
                             child: Container(
                               width: boxWidth,
                               color: boxColor,
@@ -206,7 +206,7 @@ class GameUI {
                             ),
                           ),
                           onPressed(
-                            action: gamestream.actions.selectAttributeMagic,
+                            action: gamestream.games.isometric.actions.selectAttributeMagic,
                             child: Container(
                               width: boxWidth,
                               color: boxColor,
@@ -855,7 +855,7 @@ class GameUI {
               child: GameUI.buildAtlasIconType(IconType.Fullscreen, scale: Icon_Scale))));
 
   static Widget buildIconZoom() => onPressed(
-      action: gamestream.actions.toggleZoom, child: buildAtlasIconType(IconType.Zoom, scale: Icon_Scale));
+      action: gamestream.games.isometric.actions.toggleZoom, child: buildAtlasIconType(IconType.Zoom, scale: Icon_Scale));
 
   static Widget buildIconMenu() => onPressed(
       action: ClientState.window_visible_menu.toggle,
@@ -1614,7 +1614,7 @@ class GameUI {
         return container(
             toolTip: "Tab",
             child: edit ? "PLAY" : "EDIT",
-            action: gamestream.actions.actionToggleEdit,
+            action: gamestream.games.isometric.actions.actionToggleEdit,
             color: GameColors.green,
             alignment: Alignment.center,
             width: 100);
