@@ -3,6 +3,8 @@ import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/ui/actions/sign_in_with_facebook.dart';
 
+import 'gamestream/enums/operation_status.dart';
+
 class AccountService {
 
   static bool get premiumAccountAuthenticated {

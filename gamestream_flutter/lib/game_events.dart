@@ -700,6 +700,7 @@ class GameEvents {
         break;
     }
   }
+  
 
   static void onGameEventPowerUsed(double x, double y, double z, int powerType) {
       switch (powerType){

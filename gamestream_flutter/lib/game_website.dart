@@ -3,12 +3,14 @@ import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
+import 'package:gamestream_flutter/ui/style.dart';
 import 'package:gamestream_flutter/ui/views.dart';
 import 'package:gamestream_flutter/website/widgets/game_type_column.dart';
 import 'package:gamestream_flutter/website/widgets/region_column.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'gamestream/enums/operation_status.dart';
 import 'gamestream/games/isometric/game_isometric_colors.dart';
 
 
@@ -375,4 +377,13 @@ Widget onHover(HoverBuilder builder, {
     });
   });
 }
+//
+// class FontSize {
+//   static const VerySmall = Regular * Engine.GoldenRatio_0_381;
+//   static const Small = Regular * Engine.GoldenRatio_0_618;
+//   static const Regular = 18.0;
+//   static const Large = Regular * Engine.GoldenRatio_1_381;
+//   static const VeryLarge = Large * Engine.GoldenRatio_1_618;
+// }
+
 

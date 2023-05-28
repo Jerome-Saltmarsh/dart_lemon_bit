@@ -1,6 +1,7 @@
 
 
 import 'package:golden_ratio/constants.dart';
+import 'package:lemon_engine/lemon_engine.dart';
 
 final style = _Style();
 
@@ -18,7 +19,9 @@ class _Style {
 }
 
 class FontSize {
-    static const Large = 25;
-    static const Normal = 18;
-    static const Small = 15;
+  static const VerySmall = Regular * Engine.GoldenRatio_0_381;
+  static const Small = Regular * Engine.GoldenRatio_0_618;
+  static const Regular = 18.0;
+  static const Large = Regular * Engine.GoldenRatio_1_381;
+  static const VeryLarge = Large * Engine.GoldenRatio_1_618;
 }
