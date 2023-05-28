@@ -187,7 +187,7 @@ class GameNetwork {
         Engine.targetZoom = GameConfig.Zoom_Default;
         ClientState.hoverDialogType.value = DialogType.None;
         ClientState.timeConnectionEstablished = DateTime.now();
-        GameAudio.mutedSound.value = false;
+        GameAudio.enabledSound.value = true;
         if (!Engine.isLocalHost) {
           Engine.fullScreenEnter();
         }
@@ -199,18 +199,15 @@ class GameNetwork {
         Engine.cameraX = 0;
         Engine.cameraY = 0;
         Engine.zoom = 1.0;
-        // Engine.onUpdate = null;
         Engine.drawCanvasAfterUpdate = true;
         Engine.cursorType.value = CursorType.Basic;
         Engine.drawCanvasAfterUpdate = true;
-        // Engine.onDrawCanvas = null;
-        // Engine.onUpdate = GameWebsite.update;
         Engine.fullScreenExit();
         GameState.clear();
         ServerState.clean();
         gsEngine.gameType.value = GameType.Website;
         ServerState.sceneEditable.value = false;
-        GameAudio.mutedSound.value = true;
+        GameAudio.enabledSound.value = false;
         break;
       case ConnectionStatus.Failed_To_Connect:
         WebsiteState.error.value = "Failed to connect";

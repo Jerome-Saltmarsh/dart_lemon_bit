@@ -14,7 +14,7 @@ mixin class GameFight2DCharacter {
   static const runAcceleration = 1.0;
   static const airAcceleration = 0.5;
   static const jumpAcceleration = 20.0;
-  static const strikeUpAcceleration = 7.5;
+  static const strikeUpAcceleration = 2.5;
   static const fallAcceleration = 0.5;
   static const maxRunSpeed = 6.0;
 

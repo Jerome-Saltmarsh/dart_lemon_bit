@@ -8,7 +8,7 @@ import 'library.dart';
 
 class GameAudio {
 
-  static void toggleMutedSound() => mutedSound.value = !mutedSound.value;
+  static void toggleMutedSound() => enabledSound.value = !enabledSound.value;
   static void toggleMutedMusic() => mutedMusic.value = !mutedMusic.value;
 
   static void musicPlay(){
@@ -29,9 +29,9 @@ class GameAudio {
     }
   });
 
-  static final mutedSound = Watch(false, onChanged: (bool muted){
-    print("sound muted: $muted");
-    if (muted){
+  static final enabledSound = Watch(false, onChanged: (bool soundEnabled){
+    print("sound enabled: $soundEnabled");
+    if (!soundEnabled){
       for (final audioSource in audioLoops) {
         audioSource.setVolume(0);
         audioSource.audioPlayer.pause();
@@ -206,7 +206,7 @@ class GameAudio {
   static var _nextAudioSourceUpdate = 0;
 
   static void update() {
-    if (GameAudio.mutedSound.value) {
+    if (!GameAudio.enabledSound.value) {
       return;
     }
 
@@ -293,6 +293,7 @@ class GameAudio {
   }
 
   static void playAudioSingle2D(AudioSingle audioSingle, double x, double y){
+    if (!enabledSound.value) return;
     audioSingle.play(volume: 1);
   }
 

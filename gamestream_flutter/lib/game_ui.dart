@@ -428,7 +428,7 @@ class GameUI {
     );
   }
 
-  static Widget buildWindowMenu(){
+  static Widget buildWindowMenu({List<Widget>? children}){
     const width = 200.0;
     return buildDialogUIControl(
       child: Container(
@@ -447,7 +447,7 @@ class GameUI {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     text("SOUND", size: 20, color: Colors.white70),
-                    watch(GameAudio.mutedSound, (bool muted) => buildIconCheckbox(!muted)),
+                    watch(GameAudio.enabledSound, buildIconCheckbox),
                   ],
                 ),
               ),
@@ -478,6 +478,10 @@ class GameUI {
                 ),
               ),
             ),
+            if (children != null)
+              height6,
+            if (children != null)
+              ...children,
             height24,
             onPressed(
                 action: () {
@@ -491,6 +495,7 @@ class GameUI {
                 action: GameNetwork.disconnect,
                 child: text("DISCONNECT", size: 25),
             ),
+            height24,
           ],
         ),
       ),
@@ -825,8 +830,8 @@ class GameUI {
         action: GameAudio.toggleMutedSound,
         child: Container(
           width: 32,
-          child: watch(GameAudio.mutedSound, (bool t) =>
-              GameUI.buildAtlasIconType(t ? IconType.Sound_Disabled : IconType.Sound_Enabled, scale: Icon_Scale)
+          child: watch(GameAudio.enabledSound, (bool t) =>
+              GameUI.buildAtlasIconType(t ? IconType.Sound_Enabled : IconType.Sound_Disabled, scale: Icon_Scale)
           ),
         ),
       );

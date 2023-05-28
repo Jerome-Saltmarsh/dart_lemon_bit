@@ -1,6 +1,4 @@
-
-
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/engine/classes/game.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -8,6 +6,7 @@ import 'package:gamestream_flutter/library.dart';
 /// [ ] improve player movement
 /// [ ]
 class GameFight2D extends Game {
+  static final renderCharacterState = WatchBool(false);
   static var playerX = 0.0;
   static var playerY = 0.0;
   static var playerState = GameFight2DCharacterState.Idle;
@@ -99,11 +98,13 @@ class GameFight2D extends Game {
           dstY: characterPositionY[i].toDouble() - 12,
       );
 
-      Engine.renderText(
+      if (renderCharacterState.value){
+        Engine.renderText(
           GameFight2DCharacterState.getName(state),
           characterPositionX[i].toDouble(),
           characterPositionY[i].toDouble() - 100,
-      );
+        );
+      }
     }
   }
 
@@ -162,7 +163,22 @@ class GameFight2D extends Game {
         Positioned(
             top: 16,
             right: 16,
-            child: Text("FIGHT2D")
+            child: GameUI.buildWindowMenu(
+              children: [
+                onPressed(
+                  action: renderCharacterState.toggle,
+                  child: Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        text("DEBUG", size: 20, color: Colors.white70),
+                        watch(renderCharacterState, (bool renderName) => GameUI.buildIconCheckbox(renderName)),
+                      ],
+                    ),
+                  ),
+                ),
+              ]
+            )
         )
       ],
     );
