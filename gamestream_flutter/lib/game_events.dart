@@ -42,7 +42,7 @@ class GameEvents {
       gamestream.games.isometric.actions.rainStart();
     }
     gamestream.games.isometric.nodes.resetNodeColorsToAmbient();
-    GameEditor.refreshNodeSelectedIndex();
+    gamestream.games.isometric.editor.refreshNodeSelectedIndex();
   }
 
   static void onFootstep(double x, double y, double z) {
@@ -357,12 +357,12 @@ class GameEvents {
   static void onChangedEdit(bool value) {
     if (value) {
       gamestream.games.isometric.camera.setModeFree();
-      GameEditor.cursorSetToPlayer();
+      gamestream.games.isometric.editor.cursorSetToPlayer();
       gamestream.games.isometric.camera.centerOnPlayer();
       GamePlayer.message.value = "-press arrow keys to move\n\n-press tab to play";
       GamePlayer.messageTimer = 300;
     } else {
-      GameEditor.deselectGameObject();
+      gamestream.games.isometric.editor.deselectGameObject();
       ClientActions.clearMouseOverDialogType();
       gamestream.games.isometric.camera.setModeChase();
       if (gamestream.games.isometric.serverState.sceneEditable.value){
@@ -434,13 +434,13 @@ class GameEvents {
         gamestream.audio.coins_24();
         break;
       case PlayerEvent.GameObject_Deselected:
-        GameEditor.gameObjectSelected.value = false;
+        gamestream.games.isometric.editor.gameObjectSelected.value = false;
         break;
       case PlayerEvent.Player_Moved:
         if (gamestream.gameType.value == GameType.Editor){
-          GameEditor.row = GamePlayer.indexRow;
-          GameEditor.column = GamePlayer.indexColumn;
-          GameEditor.z = GamePlayer.indexZ;
+          gamestream.games.isometric.editor.row = GamePlayer.indexRow;
+          gamestream.games.isometric.editor.column = GamePlayer.indexColumn;
+          gamestream.games.isometric.editor.z = GamePlayer.indexZ;
         }
         gamestream.games.isometric.camera.centerOnPlayer();
         gamestream.io.recenterCursor();

@@ -98,57 +98,57 @@ class ClientEvents {
         gamestream.network.sendGameObjectRequestDuplicate();
         break;
       case KeyCode.F:
-        GameEditor.paint();
+        gamestream.games.isometric.editor.paint();
         break;
       case KeyCode.G:
-        if (GameEditor.gameObjectSelected.value) {
+        if (gamestream.games.isometric.editor.gameObjectSelected.value) {
           gamestream.network.sendGameObjectRequestMoveToMouse();
         } else {
-          gamestream.games.isometric.camera.cameraSetPositionGrid(GameEditor.row, GameEditor.column, GameEditor.z);
+          gamestream.games.isometric.camera.cameraSetPositionGrid(gamestream.games.isometric.editor.row, gamestream.games.isometric.editor.column, gamestream.games.isometric.editor.z);
         }
         break;
       case KeyCode.R:
-        GameEditor.selectPaintType();
+        gamestream.games.isometric.editor.selectPaintType();
         break;
       case KeyCode.Arrow_Up:
         if (engine.keyPressedShiftLeft) {
-          if (GameEditor.gameObjectSelected.value){
-            GameEditor.translate(x: 0, y: 0, z: 1);
+          if (gamestream.games.isometric.editor.gameObjectSelected.value){
+            gamestream.games.isometric.editor.translate(x: 0, y: 0, z: 1);
             return;
           }
-          GameEditor.cursorZIncrease();
+          gamestream.games.isometric.editor.cursorZIncrease();
           return;
         }
-        if (GameEditor.gameObjectSelected.value) {
-          GameEditor.translate(x: -1, y: -1, z: 0);
+        if (gamestream.games.isometric.editor.gameObjectSelected.value) {
+          gamestream.games.isometric.editor.translate(x: -1, y: -1, z: 0);
           return;
         }
-        GameEditor.cursorRowDecrease();
+        gamestream.games.isometric.editor.cursorRowDecrease();
         return;
       case KeyCode.Arrow_Right:
-        if (GameEditor.gameObjectSelected.value){
-          return GameEditor.translate(x: 1, y: -1, z: 0);
+        if (gamestream.games.isometric.editor.gameObjectSelected.value){
+          return gamestream.games.isometric.editor.translate(x: 1, y: -1, z: 0);
         }
-        GameEditor.cursorColumnDecrease();
+        gamestream.games.isometric.editor.cursorColumnDecrease();
         break;
       case KeyCode.Arrow_Down:
         if (engine.keyPressedShiftLeft) {
-          if (GameEditor.gameObjectSelected.value){
-            return GameEditor.translate(x: 0, y: 0, z: -1);
+          if (gamestream.games.isometric.editor.gameObjectSelected.value){
+            return gamestream.games.isometric.editor.translate(x: 0, y: 0, z: -1);
           }
-          GameEditor.cursorZDecrease();
+          gamestream.games.isometric.editor.cursorZDecrease();
         } else {
-          if (GameEditor.gameObjectSelected.value){
-            return GameEditor.translate(x: 1, y: 1, z: 0);
+          if (gamestream.games.isometric.editor.gameObjectSelected.value){
+            return gamestream.games.isometric.editor.translate(x: 1, y: 1, z: 0);
           }
-          GameEditor.cursorRowIncrease();
+          gamestream.games.isometric.editor.cursorRowIncrease();
         }
         break;
       case KeyCode.Arrow_Left:
-        if (GameEditor.gameObjectSelected.value){
-          return GameEditor.translate(x: -1, y: 1, z: 0);
+        if (gamestream.games.isometric.editor.gameObjectSelected.value){
+          return gamestream.games.isometric.editor.translate(x: -1, y: 1, z: 0);
         }
-        GameEditor.cursorColumnIncrease();
+        gamestream.games.isometric.editor.cursorColumnIncrease();
         break;
     }
   }

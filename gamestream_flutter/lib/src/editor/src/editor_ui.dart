@@ -21,7 +21,7 @@ class EditorUI {
 
   static Widget buildUI(EditTab activeEditTab) => buildPage(
     children: [
-      watch(GameEditor.editorDialog, buildWatchEditorDialog),
+      watch(gamestream.games.isometric.editor.editorDialog, buildWatchEditorDialog),
       Positioned(
           bottom: 10,
           child: Container(
@@ -53,7 +53,7 @@ class EditorUI {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               watch(
-                  GameEditor.nodeSelectedType,
+                  gamestream.games.isometric.editor.nodeSelectedType,
                       (int selectedNodeType) => Row(
                     children: [
                       if (NodeType.supportsOrientationEmpty(
@@ -101,7 +101,7 @@ class EditorUI {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   buildEditorSelectedNode(),
-                  watch(GameEditor.nodeSelectedOrientation,
+                  watch(gamestream.games.isometric.editor.nodeSelectedOrientation,
                       buildColumnEditNodeOrientation),
                 ],
               ),
@@ -367,7 +367,7 @@ class EditorUI {
 
   static Widget buildEditorTabGameObjects() =>
 
-      watch(GameEditor.gameObjectSelected, (bool objectSelected){
+      watch(gamestream.games.isometric.editor.gameObjectSelected, (bool objectSelected){
           if (objectSelected){
             return buildColumnSelectedGameObject();
           }
@@ -380,7 +380,7 @@ class EditorUI {
                 //     action: () {
                 //       GameNetwork.sendClientRequestEdit(
                 //         EditRequest.Spawn_Zombie,
-                //         GameEditor.nodeSelectedIndex.value,
+                //         gamestream.games.isometric.editor.nodeSelectedIndex.value,
                 //       );
                 //     }),
                 buildRowAddGameObject(ItemType.Weapon_Ranged_Plasma_Rifle),
@@ -420,7 +420,7 @@ class EditorUI {
               color: color,
               action: () =>
                   gamestream.network.sendClientRequestAddGameObject(
-                    index: GameEditor.nodeSelectedIndex.value,
+                    index: gamestream.games.isometric.editor.nodeSelectedIndex.value,
                     type: gameObjectType,
                   )),
         ),
@@ -642,7 +642,7 @@ class EditorUI {
       srcHeight: AtlasNodeHeight.mapNodeType(nodeType),
     );
 
-    return WatchBuilder(GameEditor.nodeSelectedType, (int selectedNodeType) {
+    return WatchBuilder(gamestream.games.isometric.editor.nodeSelectedType, (int selectedNodeType) {
       return container(
           height: 78,
           width: 78,
@@ -656,7 +656,7 @@ class EditorUI {
               gamestream.games.isometric.actions.actionSetModePlay();
               return;
             }
-            GameEditor.paint(nodeType: nodeType);
+            gamestream.games.isometric.editor.paint(nodeType: nodeType);
           },
           color: selectedNodeType == nodeType ? greyDark : grey);
     });
@@ -721,14 +721,14 @@ class EditorUI {
     return onPressed(
       hint: NodeOrientation.getName(orientation),
       action: () {
-        GameEditor.paintOrientation.value = orientation;
+        gamestream.games.isometric.editor.paintOrientation.value = orientation;
         gamestream.network.sendClientRequestSetBlock(
-          index: GameEditor.nodeSelectedIndex.value,
-          type: GameEditor.nodeSelectedType.value,
+          index: gamestream.games.isometric.editor.nodeSelectedIndex.value,
+          type: gamestream.games.isometric.editor.nodeSelectedType.value,
           orientation: orientation,
         );
       },
-      child: watch(GameEditor.nodeSelectedOrientation,
+      child: watch(gamestream.games.isometric.editor.nodeSelectedOrientation,
           (int selectedNodeOrientation) {
         return Container(
             width: 72,
@@ -875,7 +875,7 @@ class EditorUI {
   }
 
   static Widget buildColumnColumns(){
-    return watch(GameEditor.nodeSelectedOrientation, (int nodeOrientation){
+    return watch(gamestream.games.isometric.editor.nodeSelectedOrientation, (int nodeOrientation){
       var mousePosX = 0.0;
       var mousePosY = 0.0;
       var indexX = 0;
@@ -938,24 +938,24 @@ class EditorUI {
             indexY = column;
             if (row == 0 && column == 2){
               gamestream.network.sendClientRequestSetBlock(
-                index: GameEditor.nodeSelectedIndex.value,
-                type: GameEditor.nodeSelectedType.value,
+                index: gamestream.games.isometric.editor.nodeSelectedIndex.value,
+                type: gamestream.games.isometric.editor.nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Top_Left,
               );
               return;
             }
             if (row == 0 && column == 1){
               gamestream.network.sendClientRequestSetBlock(
-                index: GameEditor.nodeSelectedIndex.value,
-                type: GameEditor.nodeSelectedType.value,
+                index: gamestream.games.isometric.editor.nodeSelectedIndex.value,
+                type: gamestream.games.isometric.editor.nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Top_Center,
               );
               return;
             }
             if (row == 0 && column == 0){
               gamestream.network.sendClientRequestSetBlock(
-                index: GameEditor.nodeSelectedIndex.value,
-                type: GameEditor.nodeSelectedType.value,
+                index: gamestream.games.isometric.editor.nodeSelectedIndex.value,
+                type: gamestream.games.isometric.editor.nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Top_Right,
               );
               return;
@@ -963,24 +963,24 @@ class EditorUI {
 
             if (row == 1 && column == 2){
               gamestream.network.sendClientRequestSetBlock(
-                index: GameEditor.nodeSelectedIndex.value,
-                type: GameEditor.nodeSelectedType.value,
+                index: gamestream.games.isometric.editor.nodeSelectedIndex.value,
+                type: gamestream.games.isometric.editor.nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Center_Left,
               );
               return;
             }
             if (row == 1 && column == 1){
               gamestream.network.sendClientRequestSetBlock(
-                index: GameEditor.nodeSelectedIndex.value,
-                type: GameEditor.nodeSelectedType.value,
+                index: gamestream.games.isometric.editor.nodeSelectedIndex.value,
+                type: gamestream.games.isometric.editor.nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Center_Center,
               );
               return;
             }
             if (row == 1 && column == 0){
               gamestream.network.sendClientRequestSetBlock(
-                index: GameEditor.nodeSelectedIndex.value,
-                type: GameEditor.nodeSelectedType.value,
+                index: gamestream.games.isometric.editor.nodeSelectedIndex.value,
+                type: gamestream.games.isometric.editor.nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Center_Right,
               );
               return;
@@ -988,24 +988,24 @@ class EditorUI {
 
             if (row == 2 && column == 2){
               gamestream.network.sendClientRequestSetBlock(
-                index: GameEditor.nodeSelectedIndex.value,
-                type: GameEditor.nodeSelectedType.value,
+                index: gamestream.games.isometric.editor.nodeSelectedIndex.value,
+                type: gamestream.games.isometric.editor.nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Bottom_Left,
               );
               return;
             }
             if (row == 2 && column == 1){
               gamestream.network.sendClientRequestSetBlock(
-                index: GameEditor.nodeSelectedIndex.value,
-                type: GameEditor.nodeSelectedType.value,
+                index: gamestream.games.isometric.editor.nodeSelectedIndex.value,
+                type: gamestream.games.isometric.editor.nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Bottom_Center,
               );
               return;
             }
             if (row == 2 && column == 0){
               gamestream.network.sendClientRequestSetBlock(
-                index: GameEditor.nodeSelectedIndex.value,
-                type: GameEditor.nodeSelectedType.value,
+                index: gamestream.games.isometric.editor.nodeSelectedIndex.value,
+                type: gamestream.games.isometric.editor.nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Bottom_Right,
               );
               return;
@@ -1045,7 +1045,7 @@ class EditorUI {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              watch(GameEditor.gameObjectSelectedType, (int type) {
+              watch(gamestream.games.isometric.editor.gameObjectSelectedType, (int type) {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -1069,7 +1069,7 @@ class EditorUI {
                       ],
                     ),
                     height8,
-                    watch(GameEditor.gameObjectSelectedCollidable, (bool enabled) =>
+                    watch(gamestream.games.isometric.editor.gameObjectSelectedCollidable, (bool enabled) =>
                       onPressed(
                         action: () => gamestream.network.sendGameObjectRequest(GameObjectRequest.Toggle_Strikable),
                         child: Row(
@@ -1081,7 +1081,7 @@ class EditorUI {
                         ),
                       )
                     ),
-                    watch(GameEditor.gameObjectSelectedGravity, (bool enabled) =>
+                    watch(gamestream.games.isometric.editor.gameObjectSelectedGravity, (bool enabled) =>
                         onPressed(
                           action: () => gamestream.network.sendGameObjectRequest(GameObjectRequest.Toggle_Gravity),
                           child: Row(
@@ -1093,7 +1093,7 @@ class EditorUI {
                           ),
                         )
                     ),
-                    watch(GameEditor.gameObjectSelectedFixed, (bool enabled) =>
+                    watch(gamestream.games.isometric.editor.gameObjectSelectedFixed, (bool enabled) =>
                         onPressed(
                           action: () => gamestream.network.sendGameObjectRequest(GameObjectRequest.Toggle_Fixed),
                           child: Row(
@@ -1105,7 +1105,7 @@ class EditorUI {
                           ),
                         )
                     ),
-                    watch(GameEditor.gameObjectSelectedCollectable, (bool enabled) =>
+                    watch(gamestream.games.isometric.editor.gameObjectSelectedCollectable, (bool enabled) =>
                         onPressed(
                           action: () => gamestream.network.sendGameObjectRequest(GameObjectRequest.Toggle_Collectable),
                           child: Row(
@@ -1117,7 +1117,7 @@ class EditorUI {
                           ),
                         )
                     ),
-                    watch(GameEditor.gameObjectSelectedPhysical, (bool enabled) =>
+                    watch(gamestream.games.isometric.editor.gameObjectSelectedPhysical, (bool enabled) =>
                         onPressed(
                           action: () => gamestream.network.sendGameObjectRequest(GameObjectRequest.Toggle_Physical),
                           child: Row(
@@ -1129,7 +1129,7 @@ class EditorUI {
                           ),
                         )
                     ),
-                    watch(GameEditor.gameObjectSelectedPersistable, (bool enabled) =>
+                    watch(gamestream.games.isometric.editor.gameObjectSelectedPersistable, (bool enabled) =>
                         onPressed(
                           action: () => gamestream.network.sendGameObjectRequest(GameObjectRequest.Toggle_Persistable),
                           child: Row(
@@ -1141,9 +1141,9 @@ class EditorUI {
                           ),
                         )
                     ),
-                    watch(GameEditor.gameObjectSelectedEmission, (int emissionType) =>
+                    watch(gamestream.games.isometric.editor.gameObjectSelectedEmission, (int emissionType) =>
                         onPressed(
-                          action: () => GameEditor.gameObject.value!.emission_type = ((GameEditor.gameObject.value!.emission_type + 1) % 3),
+                          action: () => gamestream.games.isometric.editor.gameObject.value!.emission_type = ((gamestream.games.isometric.editor.gameObject.value!.emission_type + 1) % 3),
                           child: Column(
                             children: [
                               Row(
@@ -1154,16 +1154,16 @@ class EditorUI {
                                 ],
                               ),
                               text("Intensity"),
-                              watch(GameEditor.gameObjectSelectedEmissionIntensity, (double value) => Slider(
-                                  value: GameEditor.gameObject.value?.emission_intensity ?? 0,
-                                  onChanged: GameEditor.setSelectedObjectedIntensity,
+                              watch(gamestream.games.isometric.editor.gameObjectSelectedEmissionIntensity, (double value) => Slider(
+                                  value: gamestream.games.isometric.editor.gameObject.value?.emission_intensity ?? 0,
+                                  onChanged: gamestream.games.isometric.editor.setSelectedObjectedIntensity,
                                 )),
                               if (emissionType == EmissionType.Color)
                                 ColorPicker(
                                     portraitOnly: true,
-                                    pickerColor: Color(GameEditor.gameObject.value!.emission_col),
+                                    pickerColor: Color(gamestream.games.isometric.editor.gameObject.value!.emission_col),
                                     onColorChanged: (color){
-                                      final gameObject = GameEditor.gameObject.value!;
+                                      final gameObject = gamestream.games.isometric.editor.gameObject.value!;
                                       final hsv = HSVColor.fromColor(color);
                                       gameObject.emission_alp = (hsv.alpha * 255).round();
                                       gameObject.emission_hue = (hsv.hue).round();
@@ -1189,9 +1189,9 @@ class EditorUI {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        watch(GameEditor.gameObjectSelectedParticleType,
+        watch(gamestream.games.isometric.editor.gameObjectSelectedParticleType,
             (int particleType) => text("Particle Type: $particleType")),
-        watch(GameEditor.gameObjectSelectedParticleSpawnRate,
+        watch(gamestream.games.isometric.editor.gameObjectSelectedParticleSpawnRate,
             (int rate) => text("Rate: $rate")),
       ],
     );
@@ -1200,7 +1200,7 @@ class EditorUI {
   static Column buildControlPaint() {
     return Column(
       children: [
-        watch(GameEditor.paintType, buildPaintType),
+        watch(gamestream.games.isometric.editor.paintType, buildPaintType),
       ],
     );
   }
@@ -1218,7 +1218,7 @@ class EditorUI {
                   color: activeEditTab == editTab
                       ? GameIsometricColors.brownDark
                       : GameIsometricColors.brownLight,
-                  action: () => GameEditor.editTab.value = editTab,
+                  action: () => gamestream.games.isometric.editor.editTab.value = editTab,
                 ))
             .toList(),
       );

@@ -10,10 +10,10 @@ class GameIsometricActions {
   static const Zoom_Close = 1.5;
 
   void loadSelectedSceneName(){
-    final sceneName = GameEditor.selectedSceneName.value;
+    final sceneName = gamestream.games.isometric.editor.selectedSceneName.value;
     if (sceneName == null) throw Exception("loadSelectedSceneNameException: selected scene name is null");
     gamestream.network.sendClientRequestEditorLoadGame(sceneName);
-    GameEditor.actionGameDialogClose();
+    gamestream.games.isometric.editor.actionGameDialogClose();
   }
 
   void rainStart(){

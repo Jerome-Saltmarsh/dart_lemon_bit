@@ -478,25 +478,25 @@ class ServerResponseReader with ByteReader {
   }
 
   void readEditorGameObjectSelected() {
-    // readVector3(GameEditor.gameObject);
+    // readVector3(gamestream.games.isometric.editor.gameObject);
 
     final id = readUInt16();
     final gameObject = gamestream.games.isometric.serverState.findGameObjectById(id);
     if (gameObject == null) throw Exception("could not find gameobject with id $id");
-    GameEditor.gameObject.value = gameObject;
-    GameEditor.gameObjectSelectedCollidable   .value = readBool();
-    GameEditor.gameObjectSelectedFixed        .value = readBool();
-    GameEditor.gameObjectSelectedCollectable  .value = readBool();
-    GameEditor.gameObjectSelectedPhysical     .value = readBool();
-    GameEditor.gameObjectSelectedPersistable  .value = readBool();
-    GameEditor.gameObjectSelectedGravity      .value = readBool();
+    gamestream.games.isometric.editor.gameObject.value = gameObject;
+    gamestream.games.isometric.editor.gameObjectSelectedCollidable   .value = readBool();
+    gamestream.games.isometric.editor.gameObjectSelectedFixed        .value = readBool();
+    gamestream.games.isometric.editor.gameObjectSelectedCollectable  .value = readBool();
+    gamestream.games.isometric.editor.gameObjectSelectedPhysical     .value = readBool();
+    gamestream.games.isometric.editor.gameObjectSelectedPersistable  .value = readBool();
+    gamestream.games.isometric.editor.gameObjectSelectedGravity      .value = readBool();
 
-    GameEditor.gameObjectSelectedType.value          = gameObject.type;
-    GameEditor.gameObjectSelected.value              = true;
-    GameEditor.cameraCenterSelectedObject();
+    gamestream.games.isometric.editor.gameObjectSelectedType.value          = gameObject.type;
+    gamestream.games.isometric.editor.gameObjectSelected.value              = true;
+    gamestream.games.isometric.editor.cameraCenterSelectedObject();
 
-    GameEditor.gameObjectSelectedEmission.value = gameObject.emission_type;
-    GameEditor.gameObjectSelectedEmissionIntensity.value = gameObject.emission_intensity;
+    gamestream.games.isometric.editor.gameObjectSelectedEmission.value = gameObject.emission_type;
+    gamestream.games.isometric.editor.gameObjectSelectedEmissionIntensity.value = gameObject.emission_intensity;
   }
 
   void readCharacters(){
@@ -567,7 +567,7 @@ class ServerResponseReader with ByteReader {
     gamestream.games.isometric.nodes.nodeOrientations[nodeIndex] = nodeOrientation;
     /// TODO optimize
     GameEvents.onChangedNodes();
-    GameEditor.refreshNodeSelectedIndex();
+    gamestream.games.isometric.editor.refreshNodeSelectedIndex();
   }
 
   void readPlayerTarget() {

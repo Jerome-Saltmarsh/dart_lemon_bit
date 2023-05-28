@@ -246,17 +246,17 @@ class GameIO {
   }
 
   void onMouseClickedEditMode(){
-    switch (GameEditor.editTab.value) {
+    switch (gamestream.games.isometric.editor.editTab.value) {
       case EditTab.File:
-        GameEditor.setTabGrid();
-        GameEditor.selectMouseBlock();
+        gamestream.games.isometric.editor.setTabGrid();
+        gamestream.games.isometric.editor.selectMouseBlock();
         break;
       case EditTab.Grid:
-        GameEditor.selectMouseBlock();
-        GameEditor.actionRecenterCamera();
+        gamestream.games.isometric.editor.selectMouseBlock();
+        gamestream.games.isometric.editor.actionRecenterCamera();
         break;
       case EditTab.Objects:
-        GameEditor.selectMouseGameObject();
+        gamestream.games.isometric.editor.selectMouseGameObject();
         break;
     }
   }
@@ -272,7 +272,7 @@ class GameIO {
       engine.panCamera();
     }
     if (engine.keyPressed(KeyCode.Delete)) {
-      GameEditor.delete();
+      gamestream.games.isometric.editor.delete();
     }
     if (gamestream.io.getInputDirectionKeyboard() != Direction.None) {
       gamestream.games.isometric.actions.actionSetModePlay();

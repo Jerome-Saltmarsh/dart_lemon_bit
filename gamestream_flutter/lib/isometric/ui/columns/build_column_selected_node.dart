@@ -17,10 +17,10 @@ Widget buildEditorSelectedNode() =>
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            watch(GameEditor.nodeSelectedIndex, text),
+            watch(gamestream.games.isometric.editor.nodeSelectedIndex, text),
             onPressed(
               hint: "Delete",
-              action: GameEditor.delete,
+              action: gamestream.games.isometric.editor.delete,
               child: Container(
                 width: 16,
                 height: 16,
@@ -30,7 +30,7 @@ Widget buildEditorSelectedNode() =>
                   srcY: 96,
                   srcWidth: 16,
                   srcHeight: 16,
-                  action: GameEditor.delete,
+                  action: gamestream.games.isometric.editor.delete,
                 ),
               ),
             ),
@@ -40,7 +40,7 @@ Widget buildEditorSelectedNode() =>
           height: 70,
             alignment: Alignment.center,
             child: watch(
-                GameEditor.nodeSelectedType,
+                gamestream.games.isometric.editor.nodeSelectedType,
                     (int nodeType) =>
                         text(NodeType.getName(nodeType), align: TextAlign.center)
             )
@@ -57,21 +57,21 @@ Widget buildEditorSelectedNode() =>
               buildPositionedIconButton(
                 top: 65 + _shiftY,
                 left: 27 + _shiftX,
-                action: GameEditor.cursorZDecrease,
+                action: gamestream.games.isometric.editor.cursorZDecrease,
                 iconType: IconType.Arrows_Down,
                 hint: "Shift + Arrow Down",
               ),
               buildPositionedIconButton(
                 top: 3 + _shiftY,
                 left: 3 + _shiftY,
-                action: GameEditor.cursorRowDecrease,
+                action: gamestream.games.isometric.editor.cursorRowDecrease,
                 iconType: IconType.Arrows_North,
                 hint: "Arrow Up",
               ),
               buildPositionedIconButton(
                 top: 5 + _shiftY,
                 left: 50 + _shiftX,
-                action: GameEditor.cursorColumnDecrease,
+                action: gamestream.games.isometric.editor.cursorColumnDecrease,
                 iconType: IconType.Arrows_East,
                 hint: "Arrow Right",
               ),
@@ -79,26 +79,26 @@ Widget buildEditorSelectedNode() =>
                   height: 72,
                   width: 72,
                   alignment: Alignment.center,
-                  child: watch(GameEditor.nodeSelectedType, GameUI.buildAtlasNodeType)
+                  child: watch(gamestream.games.isometric.editor.nodeSelectedType, GameUI.buildAtlasNodeType)
               ),
               buildPositionedIconButton(
                 top: 50 + _shiftY,
                 left: 50 + _shiftX,
-                action: GameEditor.cursorRowIncrease,
+                action: gamestream.games.isometric.editor.cursorRowIncrease,
                 iconType: IconType.Arrows_South,
                   hint: "Arrow Down"
               ),
               buildPositionedIconButton(
                   top: -10 + _shiftY,
                   left: 27 + _shiftX,
-                  action: GameEditor.cursorZIncrease,
+                  action: gamestream.games.isometric.editor.cursorZIncrease,
                   iconType: IconType.Arrows_Up,
                   hint: "Shift + Arrow Up"
               ),
               buildPositionedIconButton(
                   top: 50 + _shiftY,
                   left: 0 + _shiftX,
-                  action: GameEditor.cursorColumnIncrease,
+                  action: gamestream.games.isometric.editor.cursorColumnIncrease,
                   iconType: IconType.Arrows_West,
                   hint: "Arrow Left"
               ),

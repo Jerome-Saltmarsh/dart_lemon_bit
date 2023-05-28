@@ -11,6 +11,7 @@ import 'package:gamestream_flutter/library.dart';
 import 'package:golden_ratio/constants.dart';
 
 import 'gamestream/games/isometric/game_isometric_colors.dart';
+import 'gamestream/games/isometric/game_isometric_debug.dart';
 import 'widgets/animated_widget.dart';
 
 
@@ -120,7 +121,7 @@ class GameUI {
             ),
           WatchBuilder(gamestream.games.isometric.clientState.edit, buildPlayMode),
           WatchBuilder(gamestream.io.inputMode, buildStackInputMode),
-          buildWatchBool(gamestream.games.isometric.clientState.debugMode, GameDebug.buildStackDebug),
+          buildWatchBool(gamestream.games.isometric.clientState.debugMode, GameIsometricDebug.buildStackDebug),
           buildPositionedMessageStatus(),
           buildWatchGameStatus(),
           buildWatchBool(gamestream.games.isometric.clientState.window_visible_attributes, () =>
@@ -936,7 +937,7 @@ class GameUI {
       );
 
   static Widget buildPlayMode(bool edit) =>
-      edit ? watch(GameEditor.editTab, EditorUI.buildUI) : watch(gamestream.gameType, buildStackPlay);
+      edit ? watch(gamestream.games.isometric.editor.editTab, EditorUI.buildUI) : watch(gamestream.gameType, buildStackPlay);
 
   static Widget buildStackPlay(GameType gameType) => StackFullscreen(children: [
           if (gameType == GameType.Combat)

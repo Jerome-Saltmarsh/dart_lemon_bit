@@ -87,9 +87,9 @@ class GameIsometricClientState {
 
   void applyEmissionEditorSelectedNode() {
     if (!editMode) return;
-    if ((GameEditor.gameObject.value == null || GameEditor.gameObject.value!.emission_type == EmissionType.None)){
+    if ((gamestream.games.isometric.editor.gameObject.value == null || gamestream.games.isometric.editor.gameObject.value!.emission_type == EmissionType.None)){
       gamestream.games.isometric.nodes.emitLightAHSVShadowed(
-        index: GameEditor.nodeSelectedIndex.value,
+        index: gamestream.games.isometric.editor.nodeSelectedIndex.value,
         hue: gamestream.games.isometric.nodes.ambient_hue,
         saturation: gamestream.games.isometric.nodes.ambient_sat,
         value: gamestream.games.isometric.nodes.ambient_val,
@@ -1115,15 +1115,15 @@ class GameIsometricClientState {
 
   void renderEditMode() {
     if (playMode) return;
-    if (GameEditor.gameObjectSelected.value){
+    if (gamestream.games.isometric.editor.gameObjectSelected.value){
       engine.renderCircleOutline(
         sides: 24,
-        radius: ItemType.getRadius(GameEditor.gameObjectSelectedType.value),
-        x: GameEditor.gameObject.value!.renderX,
-        y: GameEditor.gameObject.value!.renderY,
+        radius: ItemType.getRadius(gamestream.games.isometric.editor.gameObjectSelectedType.value),
+        x: gamestream.games.isometric.editor.gameObject.value!.renderX,
+        y: gamestream.games.isometric.editor.gameObject.value!.renderY,
         color: Colors.white,
       );
-      return renderCircleV3(GameEditor.gameObject.value!);
+      return renderCircleV3(gamestream.games.isometric.editor.gameObject.value!);
     }
 
     renderEditWireFrames();
@@ -1131,10 +1131,10 @@ class GameIsometricClientState {
   }
 
   void renderEditWireFrames() {
-    for (var z = 0; z < GameEditor.z; z++) {
-      gamestream.games.isometric.renderer.renderWireFrameBlue(z, GameEditor.row, GameEditor.column);
+    for (var z = 0; z < gamestream.games.isometric.editor.z; z++) {
+      gamestream.games.isometric.renderer.renderWireFrameBlue(z, gamestream.games.isometric.editor.row, gamestream.games.isometric.editor.column);
     }
-    gamestream.games.isometric.renderer.renderWireFrameRed(GameEditor.row, GameEditor.column, GameEditor.z);
+    gamestream.games.isometric.renderer.renderWireFrameRed(gamestream.games.isometric.editor.row, gamestream.games.isometric.editor.column, gamestream.games.isometric.editor.z);
   }
 
   void updateTorchEmissionIntensity(){
@@ -1531,5 +1531,9 @@ class GameIsometricClientState {
     totalParticles = 0;
   }
 
-
+  static String formatBytes(int bytes){
+    final kb = bytes ~/ 1000;
+    final mb = kb ~/ 1000;
+    return 'mb: $mb, kb: ${kb % 1000}';
+  }
 }
