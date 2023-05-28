@@ -3,6 +3,12 @@ import 'package:gamestream_flutter/library.dart';
 
 class GameIsometricActions {
 
+  static const Zoom_Far = 1.0;
+  static const Zoom_Very_Far = 0.75;
+  static const Zoom_Default = Zoom_Close;
+  static const Zoom_Spawn = Zoom_Very_Far;
+  static const Zoom_Close = 1.5;
+
   void loadSelectedSceneName(){
     final sceneName = GameEditor.selectedSceneName.value;
     if (sceneName == null) throw Exception("loadSelectedSceneNameException: selected scene name is null");
@@ -97,10 +103,10 @@ class GameIsometricActions {
 
   void toggleZoom(){
     gamestream.audio.weaponSwap2();
-    if (engine.targetZoom != GameConfig.Zoom_Far){
-      engine.targetZoom = GameConfig.Zoom_Far;
+    if (engine.targetZoom != Zoom_Far){
+      engine.targetZoom = Zoom_Far;
     } else {
-      engine.targetZoom = GameConfig.Zoom_Close;
+      engine.targetZoom = Zoom_Close;
     }
   }
 

@@ -185,8 +185,8 @@ class GameNetwork {
         engine.cursorType.value = CursorType.None;
         engine.drawCanvasAfterUpdate = true;
         engine.zoomOnScroll = true;
-        engine.zoom = GameConfig.Zoom_Spawn;
-        engine.targetZoom = GameConfig.Zoom_Default;
+        engine.zoom = 1.0;
+        engine.targetZoom = 1.0;
         ClientState.hoverDialogType.value = DialogType.None;
         ClientState.timeConnectionEstablished = DateTime.now();
         gamestream.audio.enabledSound.value = true;

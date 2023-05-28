@@ -7,6 +7,8 @@ import 'package:gamestream_flutter/library.dart';
 
 
 class GameIsometricClientState {
+  static const Particles_Max = 500;
+
   final particleOverflow = Particle();
   var torch_emission_start = 0.8;
   var torch_emission_end = 1.0;
@@ -266,7 +268,7 @@ class GameIsometricClientState {
     bool animation = false,
     int delay = 0,
   }) {
-    if (ClientState.totalActiveParticles >= GameConfig.Particles_Max) {
+    if (ClientState.totalActiveParticles >= Particles_Max) {
       return particleOverflow;
     }
     assert(duration > 0);

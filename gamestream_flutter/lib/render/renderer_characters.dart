@@ -7,6 +7,8 @@ import 'package:gamestream_flutter/isometric/render/src_utils.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class RendererCharacters extends Renderer {
+  static const Character_Shadow_Distance_Max = 20.0;
+  static const Character_Shadow_Distance_Ratio = 0.15;
   late Character character;
 
   @override
@@ -230,13 +232,13 @@ class RendererCharacters extends Renderer {
         final torchPosY = torchColumn * Node_Size + Node_Size_Half;
         angle = angleBetween(character.x, character.y, torchPosX, torchPosY);
         dist = min(
-          GameConfig.Character_Shadow_Distance_Max,
+          Character_Shadow_Distance_Max,
           distanceBetween(
               character.x,
               character.y,
               torchPosX,
               torchPosY
-          ) * GameConfig.Character_Shadow_Distance_Ratio,
+          ) * Character_Shadow_Distance_Ratio,
         );
       }
     }
