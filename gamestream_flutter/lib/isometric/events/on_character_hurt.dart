@@ -1,10 +1,11 @@
+import 'package:gamestream_flutter/engine/instances.dart';
 import 'package:gamestream_flutter/library.dart';
 
 void onGameEventCharacterHurt(int type, double x, double y, double z, double angle) {
 
-  randomItem(GameAudio.bloody_punches).playXYZ(x, y, z);
+  randomItem(gamestream.audio.bloody_punches).playXYZ(x, y, z);
 
-  GameAudio.heavy_punch_13.playXYZ(x, y, z);
+  gamestream.audio.heavy_punch_13.playXYZ(x, y, z);
 
   for (var i = 0; i < 4; i++){
     GameState.spawnParticleBlood(
@@ -21,19 +22,19 @@ void onGameEventCharacterHurt(int type, double x, double y, double z, double ang
   switch (type) {
     case CharacterType.Zombie:
       if (randomBool()){
-        GameAudio.zombie_hurt_1.playXYZ(x, y, z);
+        gamestream.audio.zombie_hurt_1.playXYZ(x, y, z);
       } else {
-        GameAudio.zombie_hurt_4.playXYZ(x, y, z);
+        gamestream.audio.zombie_hurt_4.playXYZ(x, y, z);
       }
       break;
     case CharacterType.Rat:
-      GameAudio.rat_squeak.playXYZ(x, y, z);
+      gamestream.audio.rat_squeak.playXYZ(x, y, z);
       break;
     case CharacterType.Slime:
-      GameAudio.bloody_punches_3.playXYZ(x, y, z);
+      gamestream.audio.bloody_punches_3.playXYZ(x, y, z);
       break;
     case CharacterType.Dog:
-      GameAudio.dog_woolf_howl_4();
+      gamestream.audio.dog_woolf_howl_4();
       break;
   }
 }

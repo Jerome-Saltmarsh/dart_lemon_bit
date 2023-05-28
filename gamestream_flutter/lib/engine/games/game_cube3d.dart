@@ -18,7 +18,7 @@ class GameCube3D implements Game {
                top: 8,
                right: 8,
                child: onPressed(
-                 action: gsEngine.disconnect,
+                 action: gamestream.disconnect,
                  child: Container(
                      color: Colors.green,
                      alignment: Alignment.center,

@@ -7,7 +7,7 @@ class EditorActions {
 
 
   static void downloadScene() =>
-      gsEngine.network.sendClientRequestEdit(EditRequest.Download);
+      gamestream.network.sendClientRequestEdit(EditRequest.Download);
 
   static void uploadScene() async {
     final result = await FilePicker.platform.pickFiles(
@@ -25,7 +25,7 @@ class EditorActions {
       ClientActions.showMessage('contents == null');
       return;
     }
-    gsEngine.network.uploadScene(contents);
+    gamestream.network.uploadScene(contents);
   }
 
 
@@ -43,7 +43,7 @@ class EditorActions {
   }
 
   static void generateScene() =>
-      gsEngine.network.sendClientRequestEditGenerateScene(
+      gamestream.network.sendClientRequestEditGenerateScene(
         rows: EditorState.generateRows.value,
         columns: EditorState.generateColumns.value,
         height: EditorState.generateHeight.value,

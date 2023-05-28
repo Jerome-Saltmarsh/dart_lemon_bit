@@ -63,7 +63,7 @@ class GameRender {
   }
 
   static void renderMouseWireFrame() {
-    gsEngine.io.mouseRaycast(renderWireFrameBlue);
+    gamestream.io.mouseRaycast(renderWireFrameBlue);
   }
 
   static void renderMouseTargetName() {
@@ -189,8 +189,8 @@ class GameRender {
         srcY: 256,
         srcWidth: 64,
         srcHeight: 64,
-        dstX: gsEngine.io.getCursorScreenX(),
-        dstY: gsEngine.io.getCursorScreenY(),
+        dstX: gamestream.io.getCursorScreenX(),
+        dstY: gamestream.io.getCursorScreenY(),
         scale: 0.5,
     );
   }
@@ -203,8 +203,8 @@ class GameRender {
       srcY: 320,
       srcWidth: 64,
       srcHeight: 64,
-      dstX: gsEngine.io.getCursorScreenX(),
-      dstY: gsEngine.io.getCursorScreenY(),
+      dstX: gamestream.io.getCursorScreenX(),
+      dstY: gamestream.io.getCursorScreenY(),
       scale: 0.5,
     );
   }
@@ -219,8 +219,8 @@ class GameRender {
         srcY: srcY + 0,
         srcWidth: 6,
         srcHeight: 22,
-        dstX: gsEngine.io.getCursorScreenX(),
-        dstY: gsEngine.io.getCursorScreenY() - range,
+        dstX: gamestream.io.getCursorScreenX(),
+        dstY: gamestream.io.getCursorScreenY() - range,
         anchorY: 1.0
     );
     Engine.renderExternalCanvas(
@@ -230,8 +230,8 @@ class GameRender {
         srcY: srcY + 0,
         srcWidth: 6,
         srcHeight: 22,
-        dstX: gsEngine.io.getCursorScreenX(),
-        dstY: gsEngine.io.getCursorScreenY() + range,
+        dstX: gamestream.io.getCursorScreenX(),
+        dstY: gamestream.io.getCursorScreenY() + range,
         anchorY: 0.0
     );
     Engine.renderExternalCanvas(
@@ -241,8 +241,8 @@ class GameRender {
         srcY: srcY + 29,
         srcWidth: 22,
         srcHeight: 6,
-        dstX: gsEngine.io.getCursorScreenX() - range,
-        dstY: gsEngine.io.getCursorScreenY(),
+        dstX: gamestream.io.getCursorScreenX() - range,
+        dstY: gamestream.io.getCursorScreenY(),
         anchorX: 1.0
     );
     Engine.renderExternalCanvas(
@@ -252,8 +252,8 @@ class GameRender {
         srcY: srcY + 29,
         srcWidth: 22,
         srcHeight: 6,
-        dstX: gsEngine.io.getCursorScreenX() + range,
-        dstY: gsEngine.io.getCursorScreenY(),
+        dstX: gamestream.io.getCursorScreenX() + range,
+        dstY: gamestream.io.getCursorScreenY(),
         anchorX: 0.0
     );
   }
@@ -269,8 +269,8 @@ class GameRender {
         srcY: srcY + 0,
         srcWidth: 6,
         srcHeight: 22,
-        dstX: gsEngine.io.getCursorScreenX(),
-        dstY: gsEngine.io.getCursorScreenY() - range - offset,
+        dstX: gamestream.io.getCursorScreenX(),
+        dstY: gamestream.io.getCursorScreenY() - range - offset,
         anchorY: 1.0
     );
     Engine.renderExternalCanvas(
@@ -280,8 +280,8 @@ class GameRender {
         srcY: srcY + 0,
         srcWidth: 6,
         srcHeight: 22,
-        dstX: gsEngine.io.getCursorScreenX(),
-        dstY: gsEngine.io.getCursorScreenY() + range - offset,
+        dstX: gamestream.io.getCursorScreenX(),
+        dstY: gamestream.io.getCursorScreenY() + range - offset,
         anchorY: 0.0
     );
     Engine.renderExternalCanvas(
@@ -291,8 +291,8 @@ class GameRender {
         srcY: srcY + 29,
         srcWidth: 22,
         srcHeight: 6,
-        dstX: gsEngine.io.getCursorScreenX() - range,
-        dstY: gsEngine.io.getCursorScreenY() - offset,
+        dstX: gamestream.io.getCursorScreenX() - range,
+        dstY: gamestream.io.getCursorScreenY() - offset,
         anchorX: 1.0
     );
     Engine.renderExternalCanvas(
@@ -302,8 +302,8 @@ class GameRender {
         srcY: srcY + 29,
         srcWidth: 22,
         srcHeight: 6,
-        dstX: gsEngine.io.getCursorScreenX() + range,
-        dstY: gsEngine.io.getCursorScreenY() - offset,
+        dstX: gamestream.io.getCursorScreenX() + range,
+        dstY: gamestream.io.getCursorScreenY() - offset,
         anchorX: 0.0
     );
   }

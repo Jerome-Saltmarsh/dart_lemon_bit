@@ -66,7 +66,7 @@ class ServerResponseReader with ByteReader {
             throw Exception('invalid game type index $index');
           }
           final gameType = GameType.values[index];
-          gsEngine.gameType.value = gameType;
+          gamestream.gameType.value = gameType;
           break;
         case ServerResponse.Environment:
           readServerResponseEnvironment();
@@ -107,7 +107,7 @@ class ServerResponseReader with ByteReader {
           }
           break;
         case ServerResponse.Fight2D:
-          readServerResponseFight2D(gsEngine.gameFight2D);
+          readServerResponseFight2D(gamestream.gameFight2D);
           break;
         case ServerResponse.High_Score:
           ServerState.highScore.value = readUInt24();
@@ -170,16 +170,16 @@ class ServerResponseReader with ByteReader {
 
     switch (eventType) {
       case GameFight2DEvents.Punch:
-        GameAudio.playAudioSingle2D(GameAudio.heavy_punch_13, x, y);
+        gamestream.audio.playAudioSingle2D(gamestream.audio.heavy_punch_13, x, y);
         break;
       case GameFight2DEvents.Jump:
-        GameAudio.playAudioSingle2D(GameAudio.jump, x, y);
+        gamestream.audio.playAudioSingle2D(gamestream.audio.jump, x, y);
         break;
       case GameFight2DEvents.Footstep:
-        GameAudio.playAudioSingle2D(GameAudio.footstep_stone, x, y);
+        gamestream.audio.playAudioSingle2D(gamestream.audio.footstep_stone, x, y);
         break;
       case GameFight2DEvents.Strike_Swing:
-        GameAudio.playAudioSingle2D(GameAudio.arm_swing_whoosh_11, x, y);
+        gamestream.audio.playAudioSingle2D(gamestream.audio.arm_swing_whoosh_11, x, y);
         break;
     }
   }
@@ -367,7 +367,7 @@ class ServerResponseReader with ByteReader {
         break;
       case ApiPlayer.Spawned:
         GameCamera.centerOnPlayer();
-        gsEngine.io.recenterCursor();
+        gamestream.io.recenterCursor();
         break;
       case ApiPlayer.Damage:
         ServerState.playerDamage.value = readUInt16();

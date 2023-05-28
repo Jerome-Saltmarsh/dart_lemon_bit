@@ -354,7 +354,7 @@ class GameInventoryUI {
           onWillAccept: (int? index) => index != null,
           onAccept: (int? indexFrom){
             if (indexFrom == null) return;
-            gsEngine.network.sendClientRequestInventoryMove(
+            gamestream.network.sendClientRequestInventoryMove(
               indexFrom: indexFrom,
               indexTo: index,
             );

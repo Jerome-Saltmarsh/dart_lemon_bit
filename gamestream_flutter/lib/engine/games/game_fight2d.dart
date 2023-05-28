@@ -119,7 +119,7 @@ class GameFight2D extends Game {
 
   @override
   void update() {
-    gsEngine.network.sendClientRequestUpdate();
+    gamestream.network.sendClientRequestUpdate();
     Engine.cameraFollow(player.x, player.y);
     // applyCharacterAudio();
   }
@@ -128,8 +128,8 @@ class GameFight2D extends Game {
     for (var i = 0; i < charactersTotal; i++){
        if (characterState[i] == GameFight2DCharacterState.Running){
           if (characterStateDuration[i] % 8 == 0){
-            GameAudio.playAudioSingle2D(
-                GameAudio.footstep_grass_7,
+            gamestream.audio.playAudioSingle2D(
+                gamestream.audio.footstep_grass_7,
                 characterPositionX[i],
                 characterPositionY[i],
             );

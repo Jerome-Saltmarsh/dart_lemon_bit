@@ -1,4 +1,5 @@
 
+import 'package:gamestream_flutter/engine/instances.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class ServerEvents {
@@ -9,7 +10,7 @@ class ServerEvents {
 
   static void onChangedLightningFlashing(bool lightningFlashing){
     if (lightningFlashing) {
-      GameAudio.thunder(1.0);
+      gamestream.audio.thunder(1.0);
     } else {
       ClientState.updateGameLighting();
     }

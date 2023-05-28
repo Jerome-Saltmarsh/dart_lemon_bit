@@ -28,7 +28,7 @@ class GameUI {
   static final timeVisible = Watch(true);
 
   static Widget buildUI() =>
-      watch(gsEngine.io.inputMode, (int inputMode){
+      watch(gamestream.io.inputMode, (int inputMode){
         return StackFullscreen(children: [
           buildWatchBool(ClientState.triggerAlarmNoMessageReceivedFromServer,
               buildDialogFramesSinceUpdate),
@@ -43,7 +43,7 @@ class GameUI {
           Positioned(
             child: onPressed(
               action: () {
-                gsEngine.network.sendClientRequest(ClientRequest.Attack);
+                gamestream.network.sendClientRequest(ClientRequest.Attack);
               },
               child: Container(
                 color: Colors.blue,
@@ -119,7 +119,7 @@ class GameUI {
               ),
             ),
           WatchBuilder(ClientState.edit, buildPlayMode),
-          WatchBuilder(gsEngine.io.inputMode, buildStackInputMode),
+          WatchBuilder(gamestream.io.inputMode, buildStackInputMode),
           buildWatchBool(ClientState.debugMode, GameDebug.buildStackDebug),
           buildPositionedMessageStatus(),
           buildWatchGameStatus(),
@@ -305,7 +305,7 @@ class GameUI {
                 PowerType.Teleport,
               ].map((int powerType){
                 return onPressed(
-                  action: () => gsEngine.network.sendClientRequest(ClientRequest.Select_Power, powerType),
+                  action: () => gamestream.network.sendClientRequest(ClientRequest.Select_Power, powerType),
                   child: Container(
                       margin: const EdgeInsets.only(bottom: 6),
                       child: watch(GamePlayer.powerType, (int playerPowerType){
@@ -339,7 +339,7 @@ class GameUI {
                  children: (weaponTypes).map((int itemType) => Container(
                    margin: const EdgeInsets.only(bottom: 6),
                    child: onPressed(
-                     action: () => gsEngine.network.sendClientRequestSelectWeaponPrimary(itemType),
+                     action: () => gamestream.network.sendClientRequestSelectWeaponPrimary(itemType),
                      child: text(ItemType.getName(itemType),
                      color: weaponPrimary == itemType ? GameColors.orange : GameColors.white80,
                        size: textSize,
@@ -370,7 +370,7 @@ class GameUI {
                 children: (weaponTypes).map((int itemType) => Container(
                   margin: const EdgeInsets.only(bottom: 6),
                   child: onPressed(
-                      action: () => gsEngine.network.sendClientRequestSelectWeaponSecondary(itemType),
+                      action: () => gamestream.network.sendClientRequestSelectWeaponSecondary(itemType),
                       child: text(ItemType.getName(itemType),
                         color: weaponSecondary == itemType ? GameColors.orange : GameColors.white80,
                         size: textSize,
@@ -385,7 +385,7 @@ class GameUI {
     });
 
     final buttonPlay = onPressed(
-      action: gsEngine.network.sendClientRequestRevive,
+      action: gamestream.network.sendClientRequestRevive,
       child: onMouseOver(
           builder: (mouseOver) {
             return Container(
@@ -441,26 +441,26 @@ class GameUI {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             onPressed(
-              action: GameAudio.toggleMutedSound,
+              action: gamestream.audio.toggleMutedSound,
               child: Container(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     text("SOUND", size: 20, color: Colors.white70),
-                    watch(GameAudio.enabledSound, buildIconCheckbox),
+                    watch(gamestream.audio.enabledSound, buildIconCheckbox),
                   ],
                 ),
               ),
             ),
             height6,
             onPressed(
-              action: GameAudio.toggleMutedMusic,
+              action: gamestream.audio.toggleMutedMusic,
               child: Container(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     text("MUSIC", size: 20, color: Colors.white70),
-                    watch(GameAudio.mutedMusic, (bool muted) => buildIconCheckbox(!muted)),
+                    watch(gamestream.audio.mutedMusic, (bool muted) => buildIconCheckbox(!muted)),
                   ],
                 ),
               ),
@@ -485,14 +485,14 @@ class GameUI {
             height24,
             onPressed(
                 action: () {
-                  gsEngine.network.disconnect();
-                  gsEngine.network.connectToGameEditor();
+                  gamestream.network.disconnect();
+                  gamestream.network.connectToGameEditor();
                 },
                 child: text("EDITOR", size: 25),
             ),
             height24,
             onPressed(
-                action: gsEngine.network.disconnect,
+                action: gamestream.network.disconnect,
                 child: text("DISCONNECT", size: 25),
             ),
             height24,
@@ -827,10 +827,10 @@ class GameUI {
   static Widget buildIconAudioSound() =>
       onPressed(
         hint: "toggle sound",
-        action: GameAudio.toggleMutedSound,
+        action: gamestream.audio.toggleMutedSound,
         child: Container(
           width: 32,
-          child: watch(GameAudio.enabledSound, (bool t) =>
+          child: watch(gamestream.audio.enabledSound, (bool t) =>
               GameUI.buildAtlasIconType(t ? IconType.Sound_Enabled : IconType.Sound_Disabled, scale: Icon_Scale)
           ),
         ),
@@ -839,8 +839,8 @@ class GameUI {
   static Widget buildIconAudioMusic() =>
       onPressed(
         hint: 'toggle music',
-        action: GameAudio.toggleMutedMusic,
-        child: watch(GameAudio.mutedMusic, (bool musicMuted) =>
+        action: gamestream.audio.toggleMutedMusic,
+        child: watch(gamestream.audio.mutedMusic, (bool musicMuted) =>
             Container(
                 width: 32,
                 child: GameUI.buildAtlasIconType(musicMuted ? IconType.Music_Disabled : IconType.Music_Enabled))
@@ -937,7 +937,7 @@ class GameUI {
       );
 
   static Widget buildPlayMode(bool edit) =>
-      edit ? watch(GameEditor.editTab, EditorUI.buildUI) : watch(gsEngine.gameType, buildStackPlay);
+      edit ? watch(GameEditor.editTab, EditorUI.buildUI) : watch(gamestream.gameType, buildStackPlay);
 
   static Widget buildStackPlay(GameType gameType) => StackFullscreen(children: [
           if (gameType == GameType.Combat)
@@ -1171,7 +1171,7 @@ class GameUI {
   }){
     return onPressed(
       action: () =>
-          gsEngine.network.sendClientRequest(ClientRequest.Equip, itemType),
+          gamestream.network.sendClientRequest(ClientRequest.Equip, itemType),
       child: Container(
         color: active ? Colors.white24 : Colors.transparent,
         padding: GameStyle.Padding_6,
@@ -1449,8 +1449,8 @@ class GameUI {
               builder: (context, data, dataRejected){
                 return onPressed(
                   hint: "Inventory",
-                  action: gsEngine.network.sendClientRequestInventoryToggle,
-                  onRightClick: gsEngine.network.sendClientRequestInventoryToggle,
+                  action: gamestream.network.sendClientRequestInventoryToggle,
+                  onRightClick: gamestream.network.sendClientRequestInventoryToggle,
                   child: buildAtlasIconType(IconType.Inventory, scale: 2.0),
                 );
               },
@@ -1485,7 +1485,7 @@ class GameUI {
         onWillAccept: (int? data) => data != null,
         onAccept: (int? data) {
           if (data == null) return;
-          gsEngine.network.sendClientRequestInventoryMove(
+          gamestream.network.sendClientRequestInventoryMove(
             indexFrom: data,
             indexTo: index,
           );
@@ -1641,7 +1641,7 @@ class GameUI {
               container(
                 alignment: Alignment.center,
                 child: "RESPAWN",
-                action: gsEngine.network.sendClientRequestRevive,
+                action: gamestream.network.sendClientRequestRevive,
                 color: GameColors.Red_3,
                 width: width * Engine.GoldenRatio_0_618,
               )

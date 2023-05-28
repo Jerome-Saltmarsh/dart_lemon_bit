@@ -26,7 +26,7 @@ class TouchController {
 
     static int getDirection(){
         if (Engine.touches == 0) return Direction.None;
-        return gsEngine.io.convertRadianToDirection(angle);
+        return gamestream.io.convertRadianToDirection(angle);
     }
 
     static void onMouseMoved(double x, double y){

@@ -33,7 +33,7 @@ class GameAeon extends Game {
   @override
   void update() {
     if (!ServerState.gameRunning.value) {
-      gsEngine.network.sendClientRequestUpdate();
+      gamestream.network.sendClientRequestUpdate();
       return;
     }
     GameState.updateTorchEmissionIntensity();
@@ -41,18 +41,18 @@ class GameAeon extends Game {
     GameState.updateParticleEmitters();
     ServerState.updateProjectiles();
     ServerState.updateGameObjects();
-    GameAudio.update();
+    gamestream.audio.update();
     ClientState.update();
     GameState.updatePlayerMessageTimer();
-    gsEngine.io.readPlayerInput();
-    gsEngine.network.sendClientRequestUpdate();
+    gamestream.io.readPlayerInput();
+    gamestream.network.sendClientRequestUpdate();
   }
 
   @override
   void onActivated() {
     ClientState.window_visible_player_creation.value = false;
     ClientState.control_visible_respawn_timer.value = false;
-    GameAudio.musicStop();
+    gamestream.audio.musicStop();
     Engine.onLeftClicked = TouchController.onClick;
     Engine.onMouseMoved = TouchController.onMouseMoved;
     ClientState.control_visible_player_weapons.value = true;

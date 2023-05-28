@@ -70,7 +70,7 @@ class GameUIInteract {
           },
           onAccept: (int? data){
             if (data == null) return;
-            gsEngine.network.sendClientRequestInventorySell(data);
+            gamestream.network.sendClientRequestInventorySell(data);
           },
           builder: (context, data, rejected){
             return Container(
@@ -147,7 +147,7 @@ class GameUIInteract {
                 width: _width,
                 alignment: Alignment.center,
                 action: () {
-                  gsEngine.network.sendClientRequestNpcSelectTopic(topics.indexOf(value));
+                  gamestream.network.sendClientRequestNpcSelectTopic(topics.indexOf(value));
                 }
             );
           }).toList(),
@@ -169,12 +169,12 @@ class GameUIInteract {
                    feedback: GameUI.buildAtlasItemType(itemTypes[i]),
                    onDraggableCanceled: (Velocity velocity, Offset offset){
                      if (ClientState.hoverDialogIsInventory) return;
-                     gsEngine.network.sendClientRequestInventoryBuy(i);
+                     gamestream.network.sendClientRequestInventoryBuy(i);
                    },
                    child: onPressed(
                          child: GameInventoryUI.buildPressableItemIndex(itemIndex: i, itemType: itemTypes[i]),
-                         action: () => gsEngine.network.sendClientRequestInventoryBuy(i),
-                         onRightClick: () => gsEngine.network.sendClientRequestInventoryBuy(i),
+                         action: () => gamestream.network.sendClientRequestInventoryBuy(i),
+                         onRightClick: () => gamestream.network.sendClientRequestInventoryBuy(i),
                      ),
                    ),
                  ),

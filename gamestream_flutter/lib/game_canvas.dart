@@ -30,13 +30,13 @@ class GameCanvas {
 
   static void renderForeground(Canvas canvas, Size size) {
 
-    if (gsEngine.io.inputModeKeyboard){
+    if (gamestream.io.inputModeKeyboard){
       if (ClientState.hoverDialogType.value == DialogType.None){
         renderCursor(canvas);
       }
     }
 
-    if (gsEngine.io.inputModeTouch) {
+    if (gamestream.io.inputModeTouch) {
       TouchController.render(canvas);
     }
 

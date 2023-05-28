@@ -6,12 +6,12 @@ import 'library.dart';
 void main() {
   Engine.run(
     title: "GAMESTREAM ONLINE",
-    init: gsEngine.init,
+    init: gamestream.init,
     buildUI: GameWebsite.buildUI,
     buildLoadingScreen: GameWebsite.buildLoadingPage,
     themeData: ThemeData(fontFamily: 'VT323-Regular'),
     backgroundColor: GameColors.black,
-    onError: GSEngine.onError,
+    onError: Gamestream.onError,
     update: (){},
     render: (canvas, size) {
 

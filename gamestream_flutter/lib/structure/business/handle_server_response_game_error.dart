@@ -10,7 +10,7 @@ void handleServerResponseGameError(GameError gameError){
   switch (gameError) {
     case GameError.Unable_To_Join_Game:
       WebsiteState.error.value = 'unable to join game';
-      gsEngine.network.disconnect();
+      gamestream.network.disconnect();
       break;
     default:
       ServerState.error.value = gameError.name;

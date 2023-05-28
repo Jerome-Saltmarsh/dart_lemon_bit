@@ -6,7 +6,7 @@ import 'package:gamestream_flutter/library.dart';
 Widget buildButtonToggleInventory() {
   return onPressed(
     hint: "Inventory (I)",
-    action: gsEngine.network.sendClientRequestInventoryToggle,
+    action: gamestream.network.sendClientRequestInventoryToggle,
     child: text("Inventory"),
   );
 }

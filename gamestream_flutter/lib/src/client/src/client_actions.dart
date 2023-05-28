@@ -14,7 +14,7 @@ class ClientActions {
     ClientState.hoverIndex.value = -1;
 
   static void playSoundWindow() =>
-      GameAudio.click_sound_8(1);
+      gamestream.audio.click_sound_8(1);
 
   static void dragStartSetNone(){
     ClientState.dragStart.value = -1;
@@ -25,7 +25,7 @@ class ClientActions {
 
   static void dropDraggedItem(){
     if (ClientState.dragStart.value == -1) return;
-    gsEngine.network.sendClientRequestInventoryDrop(ClientState.dragStart.value);
+    gamestream.network.sendClientRequestInventoryDrop(ClientState.dragStart.value);
   }
 
   static void messageClear(){
@@ -37,13 +37,13 @@ class ClientActions {
   }
 
   static void playAudioError(){
-    GameAudio.errorSound15();
+    gamestream.audio.errorSound15();
   }
 
   static void inventorySwapDragTarget(){
     if (ClientState.dragStart.value == -1) return;
     if (ClientState.hoverIndex.value == -1) return;
-    gsEngine.network.sendClientRequestInventoryMove(
+    gamestream.network.sendClientRequestInventoryMove(
       indexFrom: ClientState.dragStart.value,
       indexTo: ClientState.hoverIndex.value,
     );

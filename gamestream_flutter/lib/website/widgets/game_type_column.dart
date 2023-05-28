@@ -18,13 +18,13 @@ class GameTypeColumn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WatchBuilder(
-        gsEngine.gameType,
+        gamestream.gameType,
         (activeGameType) => Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: gameTypes
                 .map((gameType) => onPressed(
-                    action: () => gsEngine.startGameType(gameType),
+                    action: () => gamestream.startGameType(gameType),
                     child: text(gameType.name, size: 25)))
                 .toList()));
   }

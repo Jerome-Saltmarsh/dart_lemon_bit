@@ -5,11 +5,10 @@ import 'engine/instances.dart';
 
 class GameActions {
 
-
   static void loadSelectedSceneName(){
     final sceneName = GameEditor.selectedSceneName.value;
     if (sceneName == null) throw Exception("loadSelectedSceneNameException: selected scene name is null");
-    gsEngine.network.sendClientRequestEditorLoadGame(sceneName);
+    gamestream.network.sendClientRequestEditorLoadGame(sceneName);
     GameEditor.actionGameDialogClose();
   }
 
@@ -84,20 +83,20 @@ class GameActions {
   }
 
   static void setTarget() {
-    gsEngine.io.touchscreenCursorAction = CursorAction.Set_Target;
+    gamestream.io.touchscreenCursorAction = CursorAction.Set_Target;
   }
 
   static void attackAuto() {
-    gsEngine.io.touchscreenCursorAction = CursorAction.Stationary_Attack_Auto;
+    gamestream.io.touchscreenCursorAction = CursorAction.Stationary_Attack_Auto;
   }
 
   static void playerStop() {
-    gsEngine.io.recenterCursor();
+    gamestream.io.recenterCursor();
     setTarget();
   }
 
   static void toggleZoom(){
-    GameAudio.weaponSwap2();
+    gamestream.audio.weaponSwap2();
     if (Engine.targetZoom != GameConfig.Zoom_Far){
       Engine.targetZoom = GameConfig.Zoom_Far;
     } else {
@@ -111,7 +110,7 @@ class GameActions {
 
   static void createExplosion(double x, double y, double z){
     GameState.spawnParticleLightEmissionAmbient(x: x, y: y, z: z);
-    GameAudio.explosion_grenade_04.playXYZ(x, y, z);
+    gamestream.audio.explosion_grenade_04.playXYZ(x, y, z);
 
     for (var i = 0; i <= 8; i++){
       final angle = piQuarter * i;
@@ -167,19 +166,19 @@ class GameActions {
   }
 
   static void selectAttributeHealth() =>
-      gsEngine.network.sendClientRequest(
+      gamestream.network.sendClientRequest(
           ClientRequest.Select_Attribute,
           CharacterAttribute.Health,
       );
 
   static void selectAttributeDamage() =>
-      gsEngine.network.sendClientRequest(
+      gamestream.network.sendClientRequest(
         ClientRequest.Select_Attribute,
         CharacterAttribute.Damage,
       );
 
   static void selectAttributeMagic() =>
-      gsEngine.network.sendClientRequest(
+      gamestream.network.sendClientRequest(
         ClientRequest.Select_Attribute,
         CharacterAttribute.Magic,
       );

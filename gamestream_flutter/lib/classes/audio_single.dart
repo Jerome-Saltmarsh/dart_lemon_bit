@@ -1,6 +1,7 @@
 
 import 'dart:math';
 
+import 'package:gamestream_flutter/engine/instances.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:just_audio/just_audio.dart';
 
@@ -36,9 +37,9 @@ class AudioSingle {
   }
 
   void playXYZ(double x, double y, double z, {double maxDistance = 600}){
-    if (GameAudio.enabledSound.value) return;
+    if (gamestream.audio.enabledSound.value) return;
     final distanceFromPlayer = GamePlayer.position.distance3(x, y, z);
-    final distanceVolume = GameAudio.convertDistanceToVolume(
+    final distanceVolume = gamestream.audio.convertDistanceToVolume(
         distanceFromPlayer,
         maxDistance: maxDistance,
     );
@@ -50,7 +51,7 @@ class AudioSingle {
   }
 
   void play({double volume = 1.0}) async {
-    if (!GameAudio.enabledSound.value) return;
+    if (!gamestream.audio.enabledSound.value) return;
     final playVolume = this.volume * volume;
     if (playVolume <= 0) return;
     await audioPlayer.setVolume(min(playVolume, 1));

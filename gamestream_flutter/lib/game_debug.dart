@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 
 import 'engine/instances.dart';
@@ -27,11 +26,11 @@ class GameDebug {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            watch(gsEngine.serverResponseReader.bufferSize, (int bytes) => text('network-bytes: $bytes')),
-                            watch(gsEngine.serverResponseReader.bufferSizeTotal, (int bytes) => text('network-bytes-total: ${formatBytes(bytes)}')),
-                            watch(gsEngine.serverResponseReader.bufferSizeTotal, (int bytes) => text('network-bytes-per-second: ${ClientState.formatAverageBytePerSecond(bytes)}')),
-                            watch(gsEngine.serverResponseReader.bufferSizeTotal, (int bytes) => text('network-bytes-per-minute: ${ClientState.formatAverageBytePerMinute(bytes)}')),
-                            watch(gsEngine.serverResponseReader.bufferSizeTotal, (int bytes) => text('network-bytes-per-hour: ${ClientState.formatAverageBytePerHour(bytes)}')),
+                            watch(gamestream.serverResponseReader.bufferSize, (int bytes) => text('network-bytes: $bytes')),
+                            watch(gamestream.serverResponseReader.bufferSizeTotal, (int bytes) => text('network-bytes-total: ${formatBytes(bytes)}')),
+                            watch(gamestream.serverResponseReader.bufferSizeTotal, (int bytes) => text('network-bytes-per-second: ${ClientState.formatAverageBytePerSecond(bytes)}')),
+                            watch(gamestream.serverResponseReader.bufferSizeTotal, (int bytes) => text('network-bytes-per-minute: ${ClientState.formatAverageBytePerMinute(bytes)}')),
+                            watch(gamestream.serverResponseReader.bufferSizeTotal, (int bytes) => text('network-bytes-per-hour: ${ClientState.formatAverageBytePerHour(bytes)}')),
                             Refresh(() =>  text(
                                 "connection-duration: ${ClientState.formattedConnectionDuration}\n"
                                 // "offscreen-nodes: ${GameNodes.offscreenNodes}\n"
@@ -39,7 +38,7 @@ class GameDebug {
                                 "touches: ${Engine.touches}\n"
                                 "touch down id: ${Engine.touchDownId}\n"
                                 "touch update id: ${Engine.touchDownId}\n"
-                                "mouse-grid: x: ${gsEngine.io.mouseGridX.toInt()}, y: ${gsEngine.io.mouseGridY.toInt()}\n"
+                                "mouse-grid: x: ${gamestream.io.mouseGridX.toInt()}, y: ${gamestream.io.mouseGridY.toInt()}\n"
                                 "mouse-world: x: ${Engine.mouseWorldX.toInt()}, y: ${Engine.mouseWorldY.toInt()}\n"
                                 'mouse-screen: x: ${Engine.mousePositionX.toInt()}, y: ${Engine.mousePositionY.toInt()}\n'
                                 'mouse-player-angle: ${ClientQuery.getMousePlayerAngle().toStringAsFixed(4)}\n'
@@ -70,7 +69,7 @@ class GameDebug {
                                 'total-particles-active: ${ClientState.totalActiveParticles}\n'
                                 "offscreen-nodes: left: ${RendererNodes.offscreenNodesLeft}, top: ${RendererNodes.offscreenNodesTop}, right: ${RendererNodes.offscreenNodesRight}, bottom: ${RendererNodes.offscreenNodesBottom}"
                             )),
-                            Refresh(() => text('touch-world: x: ${gsEngine.io.touchCursorWorldX.toInt()}, y: ${gsEngine.io.touchCursorWorldY.toInt()}')),
+                            Refresh(() => text('touch-world: x: ${gamestream.io.touchCursorWorldX.toInt()}, y: ${gamestream.io.touchCursorWorldY.toInt()}')),
                             Refresh(() => text('engine-render-batches: ${Engine.batchesRendered}')),
                             Refresh(() => text('engine-render-batch-1: ${Engine.batches1Rendered}')),
                             Refresh(() => text('engine-render-batch-2: ${Engine.batches2Rendered}')),
@@ -82,11 +81,11 @@ class GameDebug {
                             Refresh(() => text('engine-render-batch-128: ${Engine.batches128Rendered}')),
                             Refresh(() => text('camera-zoom: ${Engine.targetZoom.toStringAsFixed(3)}')),
                             Refresh(() => text('engine-frame: ${Engine.paintFrame}')),
-                            watch(gsEngine.serverResponseReader.updateFrame, (t) => text("update-frame: $t")),
+                            watch(gamestream.serverResponseReader.updateFrame, (t) => text("update-frame: $t")),
                             watch(GamePlayer.interpolating, (bool interpolating) => text("interpolating: $interpolating", onPressed: () => GamePlayer.interpolating.value = !GamePlayer.interpolating.value)),
-                            watch(gsEngine.gameType, (GameType value) => text("game-type: ${value.name}")),
+                            watch(gamestream.gameType, (GameType value) => text("game-type: ${value.name}")),
                             watch(Engine.deviceType, (int deviceType) => text("device-type: ${DeviceType.getName(deviceType)}", onPressed: Engine.toggleDeviceType)),
-                            watch(gsEngine.io.inputMode, (int inputMode) => text("input-mode: ${InputMode.getName(inputMode)}", onPressed: gsEngine.io.actionToggleInputMode)),
+                            watch(gamestream.io.inputMode, (int inputMode) => text("input-mode: ${InputMode.getName(inputMode)}", onPressed: gamestream.io.actionToggleInputMode)),
                             watch(Engine.watchMouseLeftDown, (bool mouseLeftDown) => text("mouse-left-down: $mouseLeftDown")),
                             watch(Engine.mouseRightDown, (bool rightDown) => text("mouse-right-down: $rightDown")),
                             watch(GameEditor.nodeSelectedIndex, (int index) => text("edit-state-node-index: $index")),

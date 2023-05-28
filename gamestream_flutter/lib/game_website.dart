@@ -69,7 +69,7 @@ class GameWebsite {
   static Widget buildOperationStatus(OperationStatus operationStatus) =>
       operationStatus != OperationStatus.None
           ? buildFullscreen(child: text(operationStatus.name.replaceAll("_", " ")))
-          : watch(gsEngine.network.connectionStatus, buildConnectionStatus);
+          : watch(gamestream.network.connectionStatus, buildConnectionStatus);
 
   static Widget buildPageLoading(BuildContext context) {
     final _width = 300.0;
@@ -184,7 +184,7 @@ class GameWebsite {
 
   static Widget buildButtonJoinGameType({required GameType gameType, required String gameName}){
     return onPressed(
-        action: () => gsEngine.network.connectToGame(gameType),
+        action: () => gamestream.network.connectToGame(gameType),
         child: text(gameName, size: 26, color: Colors.white70),
     );
   }
@@ -266,9 +266,9 @@ class GameWebsite {
                 action: () {
                   actionSelectRegion(region);
                   if (Engine.deviceIsPhone) {
-                    gsEngine.network.connectToGameAeon();
+                    gamestream.network.connectToGameAeon();
                   } else {
-                    gsEngine.network.connectToGameCombat();
+                    gamestream.network.connectToGameCombat();
                   }
                 },
                 child: onMouseOver(builder: (bool mouseOver) {

@@ -5,24 +5,25 @@ import 'package:gamestream_flutter/classes/audio_single.dart';
 import 'package:gamestream_flutter/classes/audio_tracks.dart';
 import 'package:just_audio/just_audio.dart';
 
+import 'engine/instances.dart';
 import 'library.dart';
 
 
 class GameAudio {
 
-  static void toggleMutedSound() => enabledSound.value = !enabledSound.value;
-  static void toggleMutedMusic() => mutedMusic.value = !mutedMusic.value;
+  void toggleMutedSound() => enabledSound.value = !enabledSound.value;
+  void toggleMutedMusic() => mutedMusic.value = !mutedMusic.value;
 
-  static void musicPlay(){
+  void musicPlay(){
     if (mutedMusic.value) return;
     audioTracks.play();
   }
 
-  static void musicStop(){
+  void musicStop(){
     audioTracks.stop();
   }
 
-  static final mutedMusic = Watch(false, onChanged: (bool muted){
+  late final mutedMusic = Watch(false, onChanged: (bool muted){
     print("music muted: $muted");
     if (muted) {
       audioTracks.audioPlayer.pause();
@@ -31,7 +32,7 @@ class GameAudio {
     }
   });
 
-  static final enabledSound = Watch(false, onChanged: (bool soundEnabled){
+  late final enabledSound = Watch(false, onChanged: (bool soundEnabled){
     print("sound enabled: $soundEnabled");
     if (!soundEnabled){
       for (final audioSource in audioLoops) {
@@ -45,11 +46,11 @@ class GameAudio {
     }
   });
 
-  static var nextCharacterNoise = 100;
-  static var nextRandomSound = 0;
-  static var nextRandomMusic = 0;
+  var nextCharacterNoise = 100;
+  var nextRandomSound = 0;
+  var nextRandomMusic = 0;
 
-  static final audioTracks = AudioTracks(
+  final audioTracks = AudioTracks(
      tracks: [
        AudioSource.uri(Uri.parse('assets/audio/music/gamestream-track-01.mp3')),
        AudioSource.uri(Uri.parse('assets/audio/music/gamestream-track-02.mp3')),
@@ -57,26 +58,26 @@ class GameAudio {
      ]
   );
 
-  static final musicNight = [
+  final musicNight = [
     AudioSingle(name: 'creepy-whistle', volume: 0.1),
     AudioSingle(name: 'creepy-wind', volume: 0.1),
     AudioSingle(name: 'spooky-tribal', volume: 1.0),
   ];
 
-  static final soundsNight = [
+  final soundsNight = [
     AudioSingle(name: 'owl-1', volume: 0.15),
     AudioSingle(name: 'creepy-5', volume: 0.2),
   ];
 
-  static final soundsDay = [
+  final soundsDay = [
     AudioSingle(name: 'wind-chime', volume: 0.25),
   ];
 
-  static final soundsLateAfternoon = [
+  final soundsLateAfternoon = [
     AudioSingle(name: 'gong', volume: 0.25),
   ];
 
-  static final audioLoops = <AudioLoop> [
+  late final audioLoops = <AudioLoop> [
     AudioLoop(name: 'wind', getTargetVolume: getVolumeTargetWind),
     AudioLoop(name: 'rain', getTargetVolume: getVolumeTargetRain),
     AudioLoop(name: 'crickets', getTargetVolume: getVolumeTargetCrickets),
@@ -85,130 +86,130 @@ class GameAudio {
     AudioLoop(name: 'heart-beat', getTargetVolume: getVolumeHeartBeat),
   ];
 
-  static final jump = AudioSingle(name: 'sounds/jump', volume: 0.5);
-  static final dog_woolf_howl_4 = AudioSingle(name: 'dog-woolf-howl-4', volume: 0.5);
-  static final wolf_howl = AudioSingle(name: 'wolf-howl', volume: 0.5);
-  static final weaponSwap2 = AudioSingle(name: 'weapon-swap-2', volume: 0.5);
-  static final eat = AudioSingle(name: 'eat', volume: 0.5);
-  static final reviveHeal1 = AudioSingle(name: 'revive-heal-1', volume: 0.5);
-  static final drink = AudioSingle(name: 'drink-potion-2', volume: 0.5);
-  static final buff_1 = AudioSingle(name: 'buff-1', volume: 0.5);
-  static final buff_10 = AudioSingle(name: 'buff-10', volume: 0.5);
-  static final errorSound15 = AudioSingle(name: 'error-sound-15', volume: 0.5);
-  static final popSounds14 = AudioSingle(name: 'pop-sounds-14', volume: 0.5);
-  static final coins = AudioSingle(name: 'coins', volume: 0.5);
-  static final coins_24 = AudioSingle(name: 'coins-24', volume: 0.5);
-  static final hoverOverButtonSound5 = AudioSingle(name: 'hover-over-button-sound-5', volume: 0.5);
-  static final thunder = AudioSingle(name: 'thunder', volume: 0.5);
-  static final fire_bolt_14 = AudioSingle(name: 'fire-bolt-14', volume: 0.5);
-  static final dagger_woosh_9 = AudioSingle(name: 'dagger_woosh_9', volume: 0.5);
-  static final metal_light_3 = AudioSingle(name: 'metal-light-3', volume: 0.5);
-  static final metal_struck = AudioSingle(name: 'metal-struck', volume: 0.5);
-  static final footstep_grass_8 = AudioSingle(name: 'footstep-grass-8', volume: 0.05);
-  static final footstep_grass_7 = AudioSingle(name: 'footstep-grass-7', volume: 0.05);
-  static final footstep_mud_6 = AudioSingle(name: 'mud-footstep-6', volume: 0.05);
-  static final footstep_stone = AudioSingle(name: 'footstep-stone', volume: 0.05);
-  static final footstep_wood_4 = AudioSingle(name: 'footstep-wood-4', volume: 0.5);
-  static final bow_draw = AudioSingle(name: 'bow-draw', volume: 0.5);
-  static final debuff_4 = AudioSingle(name: 'debuff-4', volume: 0.5);
-  static final buff_16 = AudioSingle(name: 'buff-16', volume: 0.5);
-  static final buff_19 = AudioSingle(name: 'buff-19', volume: 0.5);
-  static final bow_release = AudioSingle(name: 'bow-release', volume: 0.5);
-  static final arrow_impact = AudioSingle(name: 'arrow-impact', volume: 0.5);
-  static final grenade_bounce = AudioSingle(name: 'grenade-bounce', volume: 0.5);
-  static final arrow_flying_past_6 = AudioSingle(name: 'arrow-flying-past-6', volume: 0.5);
-  static final notification_sound_10 = AudioSingle(name: 'notification-sound-10', volume: 0.5);
-  static final notification_sound_12 = AudioSingle(name: 'notification-sound-12', volume: 0.5);
-  static final sci_fi_blaster_1 = AudioSingle(name: 'sci-fi-blaster-1', volume: 0.5);
-  static final sci_fi_blaster_8 = AudioSingle(name: 'sci-fi-blaster-8', volume: 0.5);
-  static final shotgun_shot = AudioSingle(name: 'shotgun-shot', volume: 0.5);
-  static final revolver_shot_3 = AudioSingle(name: 'revolver-shot-03', volume: 0.5);
-  static final revolver_shot_6 = AudioSingle(name: 'revolver-shot-06', volume: 0.5);
-  static final cock_shotgun_3 = AudioSingle(name: 'cock-shotgun-03', volume: 0.5);
-  static final cash_register_4 = AudioSingle(name: 'cash_register_4', volume: 0.5);
-  static final mag_in_03 = AudioSingle(name: 'mag-in-02', volume: 0.5);
-  static final sword_unsheathe = AudioSingle(name: 'sword-unsheathe', volume: 0.5);
-  static final gun_pickup_01 = AudioSingle(name: 'gun-pickup-01', volume: 0.5);
-  static final assault_rifle_shot = AudioSingle(name: 'assault-rifle-shot', volume: 0.5);
-  static final sniper_shot_4 = AudioSingle(name: 'sniper-shot-04', volume: 0.5);
-  static final assault_rifle_shot_13 = AudioSingle(name: 'assault_rifle_shot_13', volume: 0.5);
-  static final assault_rifle_shot_14 = AudioSingle(name: 'assault_rifle_shot_14', volume: 0.5);
-  static final assault_rifle_shot_17 = AudioSingle(name: 'assault_rifle_shot_17', volume: 0.5);
-  static final revolver_shot_2 = AudioSingle(name: 'revolver-shot-02', volume: 0.5);
-  static final revolver_reload_1 = AudioSingle(name: 'revolver-reload-01', volume: 0.5);
-  static final reload_6 = AudioSingle(name: 'reload_06', volume: 0.5);
-  static final unlock = AudioSingle(name: 'unlock', volume: 0.5);
-  static final zombie_hurt_1 = AudioSingle(name: 'zombie-hurt-1', volume: 0.5);
-  static final zombie_hurt_4 = AudioSingle(name: 'zombie-hit-04', volume: 0.5);
-  static final splash = AudioSingle(name: 'splash', volume: 0.5);
-  static final material_struck_wood = AudioSingle(name: 'material-struck-wood', volume: 0.5);
-  static final material_struck_stone = AudioSingle(name: 'material-struck-stone', volume: 0.5);
-  static final material_struck_dirt = AudioSingle(name: 'material-struck-dirt', volume: 0.5);
-  static final rat_squeak = AudioSingle(name: 'rat-squeak', volume: 0.5);
-  static final collect_star_3 = AudioSingle(name: 'collect-star-3', volume: 0.5);
-  static final magical_impact_16 = AudioSingle(name: 'magical-impact-16', volume: 0.5);
-  static final magical_impact_28 = AudioSingle(name: 'magical-impact-28', volume: 0.5);
-  static final magical_swoosh_18 = AudioSingle(name: 'magical-swoosh-18', volume: 0.5);
-  static final bloody_punches_1 = AudioSingle(name: 'bloody-punches-1', volume: 1.0);
-  static final bloody_punches_3 = AudioSingle(name: 'bloody-punches-3', volume: 1.0);
-  static final crate_breaking = AudioSingle(name: 'crate-breaking', volume: 0.5);
-  static final male_hello = AudioSingle(name: 'male-hello-1', volume: 0.5);
-  static final rooster = AudioSingle(name: 'rooster', volume: 0.5);
-  static final change_cloths = AudioSingle(name: 'change-cloths', volume: 0.5);
-  static final draw_sword = AudioSingle(name: 'draw-sword', volume: 0.5);
-  static final click_sound_8 = AudioSingle(name: 'click-sound-8', volume: 0.5);
-  static final swing_arm_11 = AudioSingle(name: 'swing-arm-11', volume: 0.4);
-  static final swing_sword = AudioSingle(name: 'swing-sword', volume: 0.4);
-  static final arm_swing_whoosh_11 = AudioSingle(name: 'arm-swing-whoosh-11', volume: 0.4);
-  static final heavy_punch_13 = AudioSingle(name: 'heavy-punch-13', volume: 1);
-  static final pistol_shot_20 = AudioSingle(name: 'pistol-shot-20', volume: 0.4);
-  static final pistol_shot_07 = AudioSingle(name: 'pistol_shot_07', volume: 0.4);
-  static final grass_cut = AudioSingle(name: 'grass-cut', volume: 0.4);
-  static final switch_sounds_4 = AudioSingle(name: 'switch-sounds-4', volume: 0.4);
-  static final teleport = AudioSingle(name: 'teleport-1', volume: 0.5);
-  static final hover_over_button_sound_30 = AudioSingle(name: 'hover-over-button-sound-30', volume: 0.5);
-  static final hover_over_button_sound_43 = AudioSingle(name: 'hover-over-button-sound-43', volume: 0.5);
-  static final explosion_grenade_04 = AudioSingle(name: 'explosion_grenade_04', volume: 0.5);
-  static final machine_gun_shot_02 = AudioSingle(name: 'machine_gun_shot_02', volume: 0.5);
+  final jump = AudioSingle(name: 'sounds/jump', volume: 0.5);
+  final dog_woolf_howl_4 = AudioSingle(name: 'dog-woolf-howl-4', volume: 0.5);
+  final wolf_howl = AudioSingle(name: 'wolf-howl', volume: 0.5);
+  final weaponSwap2 = AudioSingle(name: 'weapon-swap-2', volume: 0.5);
+  final eat = AudioSingle(name: 'eat', volume: 0.5);
+  final reviveHeal1 = AudioSingle(name: 'revive-heal-1', volume: 0.5);
+  final drink = AudioSingle(name: 'drink-potion-2', volume: 0.5);
+  final buff_1 = AudioSingle(name: 'buff-1', volume: 0.5);
+  final buff_10 = AudioSingle(name: 'buff-10', volume: 0.5);
+  final errorSound15 = AudioSingle(name: 'error-sound-15', volume: 0.5);
+  final popSounds14 = AudioSingle(name: 'pop-sounds-14', volume: 0.5);
+  final coins = AudioSingle(name: 'coins', volume: 0.5);
+  final coins_24 = AudioSingle(name: 'coins-24', volume: 0.5);
+  final hoverOverButtonSound5 = AudioSingle(name: 'hover-over-button-sound-5', volume: 0.5);
+  final thunder = AudioSingle(name: 'thunder', volume: 0.5);
+  final fire_bolt_14 = AudioSingle(name: 'fire-bolt-14', volume: 0.5);
+  final dagger_woosh_9 = AudioSingle(name: 'dagger_woosh_9', volume: 0.5);
+  final metal_light_3 = AudioSingle(name: 'metal-light-3', volume: 0.5);
+  final metal_struck = AudioSingle(name: 'metal-struck', volume: 0.5);
+  final footstep_grass_8 = AudioSingle(name: 'footstep-grass-8', volume: 0.05);
+  final footstep_grass_7 = AudioSingle(name: 'footstep-grass-7', volume: 0.05);
+  final footstep_mud_6 = AudioSingle(name: 'mud-footstep-6', volume: 0.05);
+  final footstep_stone = AudioSingle(name: 'footstep-stone', volume: 0.05);
+  final footstep_wood_4 = AudioSingle(name: 'footstep-wood-4', volume: 0.5);
+  final bow_draw = AudioSingle(name: 'bow-draw', volume: 0.5);
+  final debuff_4 = AudioSingle(name: 'debuff-4', volume: 0.5);
+  final buff_16 = AudioSingle(name: 'buff-16', volume: 0.5);
+  final buff_19 = AudioSingle(name: 'buff-19', volume: 0.5);
+  final bow_release = AudioSingle(name: 'bow-release', volume: 0.5);
+  final arrow_impact = AudioSingle(name: 'arrow-impact', volume: 0.5);
+  final grenade_bounce = AudioSingle(name: 'grenade-bounce', volume: 0.5);
+  final arrow_flying_past_6 = AudioSingle(name: 'arrow-flying-past-6', volume: 0.5);
+  final notification_sound_10 = AudioSingle(name: 'notification-sound-10', volume: 0.5);
+  final notification_sound_12 = AudioSingle(name: 'notification-sound-12', volume: 0.5);
+  final sci_fi_blaster_1 = AudioSingle(name: 'sci-fi-blaster-1', volume: 0.5);
+  final sci_fi_blaster_8 = AudioSingle(name: 'sci-fi-blaster-8', volume: 0.5);
+  final shotgun_shot = AudioSingle(name: 'shotgun-shot', volume: 0.5);
+  final revolver_shot_3 = AudioSingle(name: 'revolver-shot-03', volume: 0.5);
+  final revolver_shot_6 = AudioSingle(name: 'revolver-shot-06', volume: 0.5);
+  final cock_shotgun_3 = AudioSingle(name: 'cock-shotgun-03', volume: 0.5);
+  final cash_register_4 = AudioSingle(name: 'cash_register_4', volume: 0.5);
+  final mag_in_03 = AudioSingle(name: 'mag-in-02', volume: 0.5);
+  final sword_unsheathe = AudioSingle(name: 'sword-unsheathe', volume: 0.5);
+  final gun_pickup_01 = AudioSingle(name: 'gun-pickup-01', volume: 0.5);
+  final assault_rifle_shot = AudioSingle(name: 'assault-rifle-shot', volume: 0.5);
+  final sniper_shot_4 = AudioSingle(name: 'sniper-shot-04', volume: 0.5);
+  final assault_rifle_shot_13 = AudioSingle(name: 'assault_rifle_shot_13', volume: 0.5);
+  final assault_rifle_shot_14 = AudioSingle(name: 'assault_rifle_shot_14', volume: 0.5);
+  final assault_rifle_shot_17 = AudioSingle(name: 'assault_rifle_shot_17', volume: 0.5);
+  final revolver_shot_2 = AudioSingle(name: 'revolver-shot-02', volume: 0.5);
+  final revolver_reload_1 = AudioSingle(name: 'revolver-reload-01', volume: 0.5);
+  final reload_6 = AudioSingle(name: 'reload_06', volume: 0.5);
+  final unlock = AudioSingle(name: 'unlock', volume: 0.5);
+  final zombie_hurt_1 = AudioSingle(name: 'zombie-hurt-1', volume: 0.5);
+  final zombie_hurt_4 = AudioSingle(name: 'zombie-hit-04', volume: 0.5);
+  final splash = AudioSingle(name: 'splash', volume: 0.5);
+  final material_struck_wood = AudioSingle(name: 'material-struck-wood', volume: 0.5);
+  final material_struck_stone = AudioSingle(name: 'material-struck-stone', volume: 0.5);
+  final material_struck_dirt = AudioSingle(name: 'material-struck-dirt', volume: 0.5);
+  final rat_squeak = AudioSingle(name: 'rat-squeak', volume: 0.5);
+  final collect_star_3 = AudioSingle(name: 'collect-star-3', volume: 0.5);
+  final magical_impact_16 = AudioSingle(name: 'magical-impact-16', volume: 0.5);
+  final magical_impact_28 = AudioSingle(name: 'magical-impact-28', volume: 0.5);
+  final magical_swoosh_18 = AudioSingle(name: 'magical-swoosh-18', volume: 0.5);
+  final bloody_punches_1 = AudioSingle(name: 'bloody-punches-1', volume: 1.0);
+  final bloody_punches_3 = AudioSingle(name: 'bloody-punches-3', volume: 1.0);
+  final crate_breaking = AudioSingle(name: 'crate-breaking', volume: 0.5);
+  final male_hello = AudioSingle(name: 'male-hello-1', volume: 0.5);
+  final rooster = AudioSingle(name: 'rooster', volume: 0.5);
+  final change_cloths = AudioSingle(name: 'change-cloths', volume: 0.5);
+  final draw_sword = AudioSingle(name: 'draw-sword', volume: 0.5);
+  final click_sound_8 = AudioSingle(name: 'click-sound-8', volume: 0.5);
+  final swing_arm_11 = AudioSingle(name: 'swing-arm-11', volume: 0.4);
+  final swing_sword = AudioSingle(name: 'swing-sword', volume: 0.4);
+  final arm_swing_whoosh_11 = AudioSingle(name: 'arm-swing-whoosh-11', volume: 0.4);
+  final heavy_punch_13 = AudioSingle(name: 'heavy-punch-13', volume: 1);
+  final pistol_shot_20 = AudioSingle(name: 'pistol-shot-20', volume: 0.4);
+  final pistol_shot_07 = AudioSingle(name: 'pistol_shot_07', volume: 0.4);
+  final grass_cut = AudioSingle(name: 'grass-cut', volume: 0.4);
+  final switch_sounds_4 = AudioSingle(name: 'switch-sounds-4', volume: 0.4);
+  final teleport = AudioSingle(name: 'teleport-1', volume: 0.5);
+  final hover_over_button_sound_30 = AudioSingle(name: 'hover-over-button-sound-30', volume: 0.5);
+  final hover_over_button_sound_43 = AudioSingle(name: 'hover-over-button-sound-43', volume: 0.5);
+  final explosion_grenade_04 = AudioSingle(name: 'explosion_grenade_04', volume: 0.5);
+  final machine_gun_shot_02 = AudioSingle(name: 'machine_gun_shot_02', volume: 0.5);
 
-  static final zombie_deaths = [
+  final zombie_deaths = [
     AudioSingle(name: 'zombie-death-02', volume: 1),
     AudioSingle(name: 'zombie-death-09', volume: 1),
     AudioSingle(name: 'zombie-death-15', volume: 1),
   ];
-  static final bloody_punches = [bloody_punches_1, bloody_punches_3];
-  static final audioSingleZombieBits = [
+  late final bloody_punches = [bloody_punches_1, bloody_punches_3];
+  final audioSingleZombieBits = [
     AudioSingle(name: 'zombie-bite-04', volume: 0.4),
     AudioSingle(name: 'zombie-bite-05', volume: 0.4),
   ];
-  static final audioSingleZombieTalking = [
+  final audioSingleZombieTalking = [
     AudioSingle(name: 'zombie-talking-03', volume: 0.4),
     AudioSingle(name: 'zombie-talking-04', volume: 0.4),
     AudioSingle(name: 'zombie-talking-05', volume: 0.4),
   ];
 
-  static double getVolumeTargetDayAmbience() {
+  double getVolumeTargetDayAmbience() {
     final hours = ServerState.hours.value;
     if (hours > 8 && hours < 4) return 0.2;
     return 0;
   }
 
-  static void updateRandomAmbientSounds(){
+  void updateRandomAmbientSounds(){
     if (nextRandomSound-- > 0) return;
     playRandomAmbientSound();
     nextRandomSound = Engine.randomInt(200, 1000);
   }
 
-  static void updateRandomMusic(){
+  void updateRandomMusic(){
     if (nextRandomMusic-- > 0) return;
     playRandomMusic();
     nextRandomMusic = Engine.randomInt(800, 2000);
   }
 
-  static var _nextAudioSourceUpdate = 0;
+  var _nextAudioSourceUpdate = 0;
 
-  static void update() {
-    if (!GameAudio.enabledSound.value) {
+  void update() {
+    if (!gamestream.audio.enabledSound.value) {
       return;
     }
 
@@ -224,7 +225,7 @@ class GameAudio {
     updateCharacterNoises();
   }
 
-  static double getVolumeTargetWind() {
+  double getVolumeTargetWind() {
     final windLineDistance = (Engine.screenCenterRenderX - GameQueries.windLineRenderX).abs();
     final windLineDistanceVolume = convertDistanceToVolume(windLineDistance, maxDistance: 300);
     var target = 0.0;
@@ -241,7 +242,7 @@ class GameAudio {
     return 1.0;
   }
 
-  static double getVolumeTargetRain() {
+  double getVolumeTargetRain() {
     switch (ServerState.rainType.value){
       case RainType.None:
         return 0;
@@ -250,11 +251,11 @@ class GameAudio {
       case RainType.Heavy:
         return 1;
       default:
-        throw Exception('GameAudio.getVolumeTargetRain()');
+        throw Exception('gamestream.audio.getVolumeTargetRain()');
     }
   }
 
-  static double getVolumeTargetCrickets() {
+  double getVolumeTargetCrickets() {
     final hour = ServerState.hours.value;
     const max = 0.8;
     if (hour >= 5 && hour < 7) return max;
@@ -262,7 +263,7 @@ class GameAudio {
     return 0;
   }
 
-  static double getVolumeTargetFire(){
+  double getVolumeTargetFire(){
     // if (!ClientState.torchesIgnited.value) return 0;
     const r = 4;
     const maxDistance = r * Node_Size;
@@ -277,24 +278,24 @@ class GameAudio {
     return convertDistanceToVolume(closest, maxDistance: maxDistance);
   }
 
-  static double getVolumeTargetDistanceThunder(){
+  double getVolumeTargetDistanceThunder(){
     if (GameState.lightningOn) return 1.0;
     return 0;
   }
 
-  static double getVolumeHeartBeat(){
+  double getVolumeHeartBeat(){
     if (ServerState.playerMaxHealth.value <= 0) return 0.0;
     return 1.0 - ServerState.playerHealth.value / ServerState.playerMaxHealth.value;
   }
 
-  static double getVolumeStream(){
+  double getVolumeStream(){
     const r = 5;
     const maxDistance = r * Node_Size;
     final distance = GameQueries.getClosestByType(radius: r, type: NodeType.Water) * Node_Size;
     return convertDistanceToVolume(distance, maxDistance: maxDistance * 0.25);
   }
 
-  static void playAudioSingle2D(AudioSingle audioSingle, double x, double y){
+  void playAudioSingle2D(AudioSingle audioSingle, double x, double y){
     if (!enabledSound.value) return;
     final distanceX = Engine.screenCenterWorldX - x;
     final distanceY = Engine.screenCenterWorldY - y;
@@ -304,7 +305,7 @@ class GameAudio {
     audioSingle.play(volume: 1 / distanceSrtClamped);
   }
 
-  static void playAudioSingle(AudioSingle audioSingle, double x, double y, double z, {double maxDistance = 400}){
+  void playAudioSingle(AudioSingle audioSingle, double x, double y, double z, {double maxDistance = 400}){
     // TODO calculate from screen center instead
     final distanceFromPlayer = GamePlayer.position.distance3(x, y, z);
     final distanceVolume = convertDistanceToVolume(
@@ -314,21 +315,21 @@ class GameAudio {
     audioSingle.play(volume: distanceVolume);
   }
 
-  static double convertDistanceToVolume(double distance, {required double maxDistance}){
+  double convertDistanceToVolume(double distance, {required double maxDistance}){
     if (distance > maxDistance) return 0;
     if (distance < 1) return 1.0;
     final perc = distance / maxDistance;
     return 1.0 - perc;
   }
 
-  static void playRandomMusic(){
+  void playRandomMusic(){
     final hours = ServerState.hours.value;
     if (hours > 22 && hours < 3) {
       playRandom(musicNight);
     }
   }
 
-  static void playRandomAmbientSound(){
+  void playRandomAmbientSound(){
     final hour = ServerState.hours.value;
 
     if (hour > 22 && hour < 4){
@@ -349,11 +350,11 @@ class GameAudio {
     // }
   }
 
-  static void playRandom(List<AudioSingle> items){
+  void playRandom(List<AudioSingle> items){
     Engine.randomItem(items).play();
   }
 
-  static void updateCharacterNoises(){
+  void updateCharacterNoises(){
     if (ServerState.totalCharacters <= 0) return;
     if (nextCharacterNoise-- > 0) return;
     nextCharacterNoise = Engine.randomInt(200, 300);
@@ -363,15 +364,15 @@ class GameAudio {
 
     switch (character.characterType) {
       case CharacterType.Zombie:
-        Engine.randomItem(GameAudio.audioSingleZombieTalking).playV3(character, maxDistance: 500);
+        Engine.randomItem(gamestream.audio.audioSingleZombieTalking).playV3(character, maxDistance: 500);
         break;
       case CharacterType.Dog:
-        GameAudio.dog_woolf_howl_4.playV3(character);
+        gamestream.audio.dog_woolf_howl_4.playV3(character);
         break;
     }
   }
 
-  static final MapItemTypeAudioSinglesAttack = <int, AudioSingle> {
+  late final MapItemTypeAudioSinglesAttack = <int, AudioSingle> {
      ItemType.Empty: swing_arm_11,
      ItemType.Weapon_Melee_Knife: dagger_woosh_9,
      ItemType.Weapon_Melee_Axe: dagger_woosh_9,
@@ -397,7 +398,7 @@ class GameAudio {
      ItemType.Weapon_Thrown_Grenade: swing_sword,
   };
 
-  static final MapItemTypeAudioSinglesAttackMelee = <int, AudioSingle> {
+  late final MapItemTypeAudioSinglesAttackMelee = <int, AudioSingle> {
     ItemType.Empty: swing_arm_11,
     ItemType.Weapon_Melee_Knife: dagger_woosh_9,
     ItemType.Weapon_Melee_Axe: dagger_woosh_9,

@@ -11,19 +11,20 @@ import 'game.dart';
 import '../games/game_combat.dart';
 
 
-class GSEngine {
+class Gamestream {
    late final gameType = Watch(GameType.Website, onChanged: _onChangedGameType);
    late final game = Watch<Game>(gameWebsite, onChanged: _onChangedGame);
    late final gameWebsite = gw.GameWebsite();
 
    final io = GameIO();
+   final audio = GameAudio();
 
    final serverResponseReader = ServerResponseReader();
    late final GameNetwork network;
    final gameFight2D = GameFight2D();
    final gameCube3D = GameCube3D();
 
-  GSEngine() {
+  Gamestream() {
     network = GameNetwork(this);
   }
 
@@ -47,8 +48,8 @@ class GSEngine {
      Engine.deviceType.onChanged(onDeviceTypeChanged);
      GameImages.loadImages();
      Engine.cursorType.value = CursorType.Basic;
-     gsEngine.io.addListeners();
-     gsEngine.io.detectInputMode();
+     gamestream.io.addListeners();
+     gamestream.io.detectInputMode();
 
      if (Engine.isLocalHost) {
        GameWebsite.region.value = ConnectionRegion.LocalHost;
@@ -106,10 +107,10 @@ class GSEngine {
        double previousHeight,
        double newWidth,
        double newHeight,
-       ) => gsEngine.io.detectInputMode();
+       ) => gamestream.io.detectInputMode();
 
    static void onDeviceTypeChanged(int deviceType){
-     gsEngine.io.detectInputMode();
+     gamestream.io.detectInputMode();
    }
 
    void startGameType(GameType gameType){

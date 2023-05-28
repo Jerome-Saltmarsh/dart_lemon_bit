@@ -59,6 +59,6 @@ Widget buildPanelWriteMessage() {
 }
 
 void sendAndCloseTextBox(){
-  gsEngine.network.sendRequestSpeak(GameUI.textEditingControllerMessage.text);
+  gamestream.network.sendRequestSpeak(GameUI.textEditingControllerMessage.text);
   GameActions.messageBoxHide();
 }

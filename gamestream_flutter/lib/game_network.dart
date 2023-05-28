@@ -1,7 +1,7 @@
-import 'package:gamestream_flutter/isometric/server_response_reader.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
+import 'engine/instances.dart';
 import 'library.dart';
 
 class GameNetwork {
@@ -12,7 +12,7 @@ class GameNetwork {
   String connectionUri = "";
   DateTime? connectionEstablished;
 
-  final GSEngine gsEngine;
+  final Gamestream gsEngine;
 
   GameNetwork(this.gsEngine);
 
@@ -190,7 +190,7 @@ class GameNetwork {
         Engine.targetZoom = GameConfig.Zoom_Default;
         ClientState.hoverDialogType.value = DialogType.None;
         ClientState.timeConnectionEstablished = DateTime.now();
-        GameAudio.enabledSound.value = true;
+        gamestream.audio.enabledSound.value = true;
         if (!Engine.isLocalHost) {
           Engine.fullScreenEnter();
         }
@@ -210,7 +210,7 @@ class GameNetwork {
         ServerState.clean();
         gsEngine.gameType.value = GameType.Website;
         ServerState.sceneEditable.value = false;
-        GameAudio.enabledSound.value = false;
+        gamestream.audio.enabledSound.value = false;
         break;
       case ConnectionStatus.Failed_To_Connect:
         WebsiteState.error.value = "Failed to connect";

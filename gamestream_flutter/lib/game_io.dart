@@ -222,7 +222,7 @@ class GameIO {
 
 
   void setCursorAction(int cursorAction) {
-    gsEngine.io.touchscreenCursorAction = CursorAction.None;
+    gamestream.io.touchscreenCursorAction = CursorAction.None;
   }
 
   bool getActionSecondary(){
@@ -274,7 +274,7 @@ class GameIO {
     if (Engine.keyPressed(KeyCode.Delete)) {
       GameEditor.delete();
     }
-    if (gsEngine.io.getInputDirectionKeyboard() != Direction.None) {
+    if (gamestream.io.getInputDirectionKeyboard() != Direction.None) {
       GameActions.actionSetModePlay();
     }
     return;

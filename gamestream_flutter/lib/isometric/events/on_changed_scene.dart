@@ -6,5 +6,5 @@ void onChangedScene(){
   ClientState.totalActiveParticles = 0;
   ClientState.totalParticles = 0;
   ClientState.particles.clear();
-  gsEngine.io.recenterCursor();
+  gamestream.io.recenterCursor();
 }

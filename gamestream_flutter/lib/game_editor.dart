@@ -77,12 +77,12 @@ class GameEditor {
   }
 
   static void deselectGameObject() {
-    gsEngine.network.sendGameObjectRequestDeselect();
+    gamestream.network.sendGameObjectRequestDeselect();
   }
 
   static void translate({ double x = 0, double y = 0, double z = 0}){
     assert (gameObjectSelected.value);
-    return gsEngine.network.sendClientRequestGameObjectTranslate(
+    return gamestream.network.sendClientRequestGameObjectTranslate(
       tx: x,
       ty: y,
       tz: z,
@@ -107,11 +107,11 @@ class GameEditor {
   }
 
   static void selectMouseBlock(){
-    gsEngine.io.mouseRaycast(selectBlock);
+    gamestream.io.mouseRaycast(selectBlock);
   }
 
   static void selectMouseGameObject(){
-    gsEngine.network.sendGameObjectRequestSelect();
+    gamestream.network.sendGameObjectRequestSelect();
   }
 
   static void paintTorch(){
@@ -143,7 +143,7 @@ class GameEditor {
   }
 
   static void deleteGameObjectSelected(){
-    gsEngine.network.sendGameObjectRequestDelete();
+    gamestream.network.sendGameObjectRequestDelete();
   }
 
   static void cameraCenterSelectedObject() =>
@@ -159,7 +159,7 @@ class GameEditor {
   }
 
   static void setNodeType(int type, int orientation) =>
-      gsEngine.network.sendClientRequestSetBlock(
+      gamestream.network.sendClientRequestSetBlock(
         index: nodeSelectedIndex.value,
         type: type,
         orientation: orientation,
@@ -169,7 +169,7 @@ class GameEditor {
     final nodeIndex = nodeSelectedIndex.value;
     if (nodeIndex <= GameNodes.area) return;
     final nodeIndexBelow = nodeIndex - GameNodes.area;
-    gsEngine.network.sendClientRequestSetBlock(
+    gamestream.network.sendClientRequestSetBlock(
       index: nodeSelectedIndex.value,
       type: GameNodes.nodeTypes[nodeIndexBelow],
       orientation: GameNodes.nodeOrientations[nodeIndexBelow],
@@ -198,7 +198,7 @@ class GameEditor {
       orientation = NodeType.getDefaultOrientation(nodeType);
     }
 
-    return gsEngine.network.sendClientRequestSetBlock(
+    return gamestream.network.sendClientRequestSetBlock(
         index: nodeSelectedIndex.value,
         type: nodeType,
         orientation: orientation,
@@ -221,7 +221,7 @@ class GameEditor {
   }
 
   static void actionAddGameObject(int type) =>
-      gsEngine.network.sendClientRequestAddGameObject(
+      gamestream.network.sendClientRequestAddGameObject(
         index: GameEditor.nodeSelectedIndex.value,
         type: type,
       );

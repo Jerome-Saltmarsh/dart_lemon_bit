@@ -1,5 +1,7 @@
 import 'package:gamestream_flutter/library.dart';
 
+import 'engine/instances.dart';
+
 class GamePlayer {
   static final id = Watch(0);
   static final perkType = Watch(PerkType.None);
@@ -79,7 +81,7 @@ class GamePlayer {
   }
 
   static void onChangedGameDialog(GameDialog? value){
-    GameAudio.click_sound_8();
+    gamestream.audio.click_sound_8();
     if (value == GameDialog.Quests) {
       // actionHideQuestAdded();
     }

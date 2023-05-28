@@ -1,4 +1,5 @@
 
+import 'engine/instances.dart';
 import 'library.dart';
 
 class GameSpawn {
@@ -9,7 +10,7 @@ class GameSpawn {
   }
 
   static void spawnPurpleFireExplosion(double x, double y, double z){
-    GameAudio.magical_impact_16.playXYZ(x, y, z, maxDistance: 600);
+    gamestream.audio.magical_impact_16.playXYZ(x, y, z, maxDistance: 600);
     for (var i = 0; i < 5; i++) {
       GameState.spawnParticleBubble(x: x, y: y, z: z, speed: 1, angle: Engine.randomAngle());
       GameState.spawnParticleFirePurple(x: x + Engine.randomGiveOrTake(5), y: y + Engine.randomGiveOrTake(5), z: z, speed: 1, angle: Engine.randomAngle());

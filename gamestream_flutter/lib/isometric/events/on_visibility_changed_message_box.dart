@@ -7,7 +7,7 @@ void onVisibilityChangedMessageBox(bool visible){
     GameUI.textFieldMessage.requestFocus();
     return;
   }
-  gsEngine.network.sendRequestSpeak(GameUI.textEditingControllerMessage.text);
+  gamestream.network.sendRequestSpeak(GameUI.textEditingControllerMessage.text);
   GameUI.textFieldMessage.unfocus();
   GameUI.textEditingControllerMessage.text = "";
 }

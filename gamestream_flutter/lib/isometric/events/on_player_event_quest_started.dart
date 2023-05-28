@@ -1,7 +1,8 @@
 
+import 'package:gamestream_flutter/engine/instances.dart';
 import 'package:gamestream_flutter/library.dart';
 
 void onPlayerEventQuestStarted(){
-  GameAudio.notification_sound_10();
+  gamestream.audio.notification_sound_10();
   GamePlayer.questAdded.value = true;
 }
