@@ -565,7 +565,7 @@ class RendererNodes extends Renderer {
       engine.renderSprite(
         image: GameImages.atlas_nodes,
         srcX: AtlasNodeX.Torch,
-        srcY: AtlasNodeY.Torch + AtlasNode.Height_Torch + (((row + (GameAnimation.animationFrame)) % 6) * AtlasNode.Height_Torch), // TODO Optimize
+        srcY: AtlasNodeY.Torch + AtlasNode.Height_Torch + (((row + (gamestream.animation.animationFrame)) % 6) * AtlasNode.Height_Torch), // TODO Optimize
         srcWidth: AtlasNode.Width_Torch,
         srcHeight: AtlasNode.Height_Torch,
         dstX: currentNodeDstX,
@@ -578,7 +578,7 @@ class RendererNodes extends Renderer {
     engine.renderSprite(
       image: GameImages.atlas_nodes,
       srcX: AtlasNode.X_Torch_Windy,
-      srcY: AtlasNode.Y_Torch_Windy + AtlasNode.Height_Torch + (((row + (GameAnimation.animationFrame)) % 6) * AtlasNode.Height_Torch), // TODO Optimize
+      srcY: AtlasNode.Y_Torch_Windy + AtlasNode.Height_Torch + (((row + (gamestream.animation.animationFrame)) % 6) * AtlasNode.Height_Torch), // TODO Optimize
       srcWidth: AtlasNode.Width_Torch,
       srcHeight: AtlasNode.Height_Torch,
       dstX: currentNodeDstX,
@@ -738,7 +738,7 @@ class RendererNodes extends Renderer {
       case NodeType.Fireplace:
         renderStandardNode(
           srcX: AtlasNode.Campfire_X,
-          srcY: AtlasNode.Node_Campfire_Y + ((GameAnimation.animationFrame % 6) * 72),
+          srcY: AtlasNode.Node_Campfire_Y + ((gamestream.animation.animationFrame % 6) * 72),
         );
         return;
       case NodeType.Boulder:
@@ -864,7 +864,7 @@ class RendererNodes extends Renderer {
         return;
       default:
         renderStandardNode(
-          srcX: AtlasNodeX.Grass_Long + ((((row - column) + GameAnimation.animationFrameGrass) % 6) * 48), // TODO Expensive Operation
+          srcX: AtlasNodeX.Grass_Long + ((((row - column) + gamestream.animation.animationFrameGrass) % 6) * 48), // TODO Expensive Operation
           srcY: 0,
         );
         return;
@@ -876,11 +876,11 @@ class RendererNodes extends Renderer {
       engine.renderSprite(
         image: GameImages.atlas_nodes,
         srcX: AtlasNode.Node_Rain_Landing_Water_X,
-        srcY: 72.0 * ((GameAnimation.animationFrame + row + column) % 8), // TODO Expensive Operation
+        srcY: 72.0 * ((gamestream.animation.animationFrame + row + column) % 8), // TODO Expensive Operation
         srcWidth: GameConstants.Sprite_Width,
         srcHeight: GameConstants.Sprite_Height,
         dstX: currentNodeDstX,
-        dstY: currentNodeDstY + GameAnimation.animationFrameWaterHeight + 14,
+        dstY: currentNodeDstY + gamestream.animation.animationFrameWaterHeight + 14,
         anchorY: 0.3,
         color: currentNodeColor,
       );
@@ -888,14 +888,14 @@ class RendererNodes extends Renderer {
     }
     renderStandardNode(
       srcX: ClientState.srcXRainLanding,
-      srcY: 72.0 * ((GameAnimation.animationFrame + row + column) % 6), // TODO Expensive Operation
+      srcY: 72.0 * ((gamestream.animation.animationFrame + row + column) % 6), // TODO Expensive Operation
     );
   }
 
   static void renderNodeRainFalling() {
     renderStandardNode(
       srcX: ClientState.srcXRainFalling,
-      srcY: 72.0 * ((GameAnimation.animationFrame + row + row + column) % 6), // TODO Expensive Operation
+      srcY: 72.0 * ((gamestream.animation.animationFrame + row + row + column) % 6), // TODO Expensive Operation
     );
   }
 
@@ -904,7 +904,7 @@ class RendererNodes extends Renderer {
   static void renderTreeBottom() => renderNodeVariation == 0 ? renderTreeBottomPine() : renderTreeBottomOak();
 
   static void renderTreeTopOak(){
-    var shift = GameAnimation.treeAnimation[((row - column) + GameAnimation.animationFrame) % GameAnimation.treeAnimation.length] * renderNodeWind;
+    var shift = GameAnimation.treeAnimation[((row - column) + gamestream.animation.animationFrame) % GameAnimation.treeAnimation.length] * renderNodeWind;
     engine.renderSprite(
       image: GameImages.atlas_nodes,
       srcX: AtlasNodeX.Tree_Top,
@@ -920,7 +920,7 @@ class RendererNodes extends Renderer {
   }
 
   static void renderTreeTopPine() {
-    var shift = GameAnimation.treeAnimation[((row - column) + GameAnimation.animationFrame) % GameAnimation.treeAnimation.length] * renderNodeWind;
+    var shift = GameAnimation.treeAnimation[((row - column) + gamestream.animation.animationFrame) % GameAnimation.treeAnimation.length] * renderNodeWind;
     engine.renderSprite(
       image: GameImages.atlas_nodes,
       srcX: 1262,
@@ -1592,7 +1592,7 @@ class RendererNodes extends Renderer {
       engine.renderSprite(
         image: GameImages.atlas_nodes,
         srcX: 1552,
-        srcY: 432 + (GameAnimation.animationFrame6 * 72.0), // TODO Optimize
+        srcY: 432 + (gamestream.animation.animationFrame6 * 72.0), // TODO Optimize
         srcWidth: GameConstants.Sprite_Width,
         srcHeight: GameConstants.Sprite_Height,
         dstX: currentNodeDstX,
@@ -1605,11 +1605,11 @@ class RendererNodes extends Renderer {
       engine.renderSprite(
         image: GameImages.atlas_nodes,
         srcX: AtlasNodeX.Water,
-        srcY: AtlasNodeY.Water + (((GameAnimation.animationFrameWater + ((row + column) * 3)) % 10) * 72.0), // TODO Optimize
+        srcY: AtlasNodeY.Water + (((gamestream.animation.animationFrameWater + ((row + column) * 3)) % 10) * 72.0), // TODO Optimize
         srcWidth: GameConstants.Sprite_Width,
         srcHeight: GameConstants.Sprite_Height,
         dstX: currentNodeDstX,
-        dstY: currentNodeDstY + GameAnimation.animationFrameWaterHeight + 14,
+        dstY: currentNodeDstY + gamestream.animation.animationFrameWaterHeight + 14,
         anchorY: 0.3334,
         color: currentNodeColor,
       );

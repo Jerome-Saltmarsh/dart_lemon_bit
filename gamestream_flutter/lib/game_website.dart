@@ -42,7 +42,7 @@ class GameWebsite {
    }
 
    static void update(){
-      GameAnimation.updateAnimationFrame();
+     gamestream.animation.updateAnimationFrame();
    }
 
    static Widget buildLoadingPage() =>

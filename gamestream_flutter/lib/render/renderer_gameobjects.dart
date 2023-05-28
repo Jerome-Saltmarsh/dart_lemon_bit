@@ -22,7 +22,7 @@ class RendererGameObjects extends Renderer {
           image: GameImages.atlas_weapons,
           dstX: gameObject.renderX,
           dstY: gameObject.renderY,
-          srcX: GameAnimation.animationFrame16 * 125.0,
+          srcX: gamestream.animation.animationFrame16 * 125.0,
           srcY: srcY,
           srcWidth: 125,
           srcHeight: 125,
@@ -59,7 +59,7 @@ class RendererGameObjects extends Renderer {
         image: GameImages.atlas_weapons,
         dstX: gameObject.renderX,
         dstY: gameObject.renderY,
-        srcX: GameAnimation.animationFrame16 * 125.0,
+        srcX: gamestream.animation.animationFrame16 * 125.0,
         srcY: 125,
         srcWidth: 125,
         srcHeight: 125,
@@ -74,7 +74,7 @@ class RendererGameObjects extends Renderer {
           image: GameImages.atlas_weapons,
           dstX: gameObject.renderX,
           dstY: gameObject.renderY,
-          srcX: GameAnimation.animationFrame16 * 125.0,
+          srcX: gamestream.animation.animationFrame16 * 125.0,
           srcY: 0,
           srcWidth: 125,
           srcHeight: 125,
@@ -89,7 +89,7 @@ class RendererGameObjects extends Renderer {
           image: GameImages.atlas_weapons,
           dstX: gameObject.renderX,
           dstY: gameObject.renderY,
-          srcX: GameAnimation.animationFrame16 * 125.0,
+          srcX: gamestream.animation.animationFrame16 * 125.0,
           srcY: 250,
           srcWidth: 125,
           srcHeight: 125,
@@ -104,7 +104,7 @@ class RendererGameObjects extends Renderer {
           image: GameImages.atlas_weapons,
           dstX: gameObject.renderX,
           dstY: gameObject.renderY,
-          srcX: GameAnimation.animationFrame16 * 125.0,
+          srcX: gamestream.animation.animationFrame16 * 125.0,
           srcY: 375,
           srcWidth: 125,
           srcHeight: 125,
@@ -119,7 +119,7 @@ class RendererGameObjects extends Renderer {
           image: GameImages.atlas_weapons,
           dstX: gameObject.renderX,
           dstY: gameObject.renderY,
-          srcX: GameAnimation.animationFrame16 * 125.0,
+          srcX: gamestream.animation.animationFrame16 * 125.0,
           srcY: 500,
           srcWidth: 125,
           srcHeight: 125,
@@ -134,7 +134,7 @@ class RendererGameObjects extends Renderer {
           image: GameImages.atlas_weapons,
           dstX: gameObject.renderX,
           dstY: gameObject.renderY,
-          srcX: GameAnimation.animationFrame16 * 125.0,
+          srcX: gamestream.animation.animationFrame16 * 125.0,
           srcY: 625,
           srcWidth: 125,
           srcHeight: 125,
@@ -148,7 +148,7 @@ class RendererGameObjects extends Renderer {
           image: GameImages.atlas_weapons,
           dstX: gameObject.renderX,
           dstY: gameObject.renderY,
-          srcX: GameAnimation.animationFrame16 * 125.0,
+          srcX: gamestream.animation.animationFrame16 * 125.0,
           srcY: 875,
           srcWidth: 125,
           srcHeight: 125,
@@ -197,7 +197,7 @@ class RendererGameObjects extends Renderer {
   }
 
   static double getRenderYBouncing(Vector3 v3) =>
-      ((v3.y + v3.x) * 0.5) - v3.z + GameAnimation.animationFrameWaterHeight;
+      ((v3.y + v3.x) * 0.5) - v3.z + gamestream.animation.animationFrameWaterHeight;
 
   static void renderBouncingGameObjectShadow(Vector3 gameObject){
     const shadowScale = 1.5;
@@ -206,7 +206,7 @@ class RendererGameObjects extends Renderer {
         gameObject.x,
         gameObject.y,
         gameObject.z - 15,
-        scale: shadowScale + (shadowScaleHeight * GameAnimation.animationFrameWaterHeight.toDouble())
+        scale: shadowScale + (shadowScaleHeight * gamestream.animation.animationFrameWaterHeight.toDouble())
     );
   }
 }

@@ -1,7 +1,5 @@
 import 'package:gamestream_flutter/library.dart';
 
-import 'package:gamestream_flutter/instances/gamestream.dart';
-
 class GamePlayer {
   static final id = Watch(0);
   static final perkType = Watch(PerkType.None);

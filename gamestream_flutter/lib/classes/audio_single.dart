@@ -1,7 +1,6 @@
 
 import 'dart:math';
 
-import 'package:gamestream_flutter/instances/gamestream.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:just_audio/just_audio.dart';
 

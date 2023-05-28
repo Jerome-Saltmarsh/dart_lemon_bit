@@ -39,7 +39,7 @@ class GameCombat extends Game {
       return;
     }
     GameState.updateTorchEmissionIntensity();
-    GameAnimation.updateAnimationFrame();
+    gamestream.animation.updateAnimationFrame();
     GameState.updateParticleEmitters();
     ServerState.updateProjectiles();
     ServerState.updateGameObjects();

@@ -1,12 +1,12 @@
 import 'package:bleed_common/src.dart';
-import 'package:gamestream_flutter/game_animation.dart';
+import 'package:gamestream_flutter/instances/gamestream.dart';
 import 'package:golden_ratio/constants.dart';
 
 class AtlasItems {
   static const size = 32.0;
 
   static double getSrcX(int itemType) =>
-      itemType == ItemType.GameObjects_Barrel_Flaming ? 34.0 * GameAnimation.animationFrame6 :
+      itemType == ItemType.GameObjects_Barrel_Flaming ? 34.0 * gamestream.animation.animationFrame6 :
 
       const <int, double> {
         ItemType.GameObjects_Car: 384,

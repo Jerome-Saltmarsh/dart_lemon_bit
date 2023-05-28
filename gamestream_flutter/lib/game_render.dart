@@ -326,7 +326,7 @@ class GameRender {
   static void renderStars(double x, double y) =>
     engine.renderSprite(
       image: GameImages.sprite_stars,
-      srcX: 125.0 * GameAnimation.animationFrame16,
+      srcX: 125.0 * gamestream.animation.animationFrame16,
       srcY: 0,
       srcWidth: 125,
       srcHeight: 125,

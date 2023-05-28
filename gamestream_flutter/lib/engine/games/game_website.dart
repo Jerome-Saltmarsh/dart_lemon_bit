@@ -1,7 +1,6 @@
 
 import 'dart:ui';
 
-import 'package:gamestream_flutter/instances/gamestream.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:gamestream_flutter/game_website.dart' as gw;
 import 'package:gamestream_flutter/library.dart';

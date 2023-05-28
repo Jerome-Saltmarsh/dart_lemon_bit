@@ -25,6 +25,7 @@ class Gamestream {
    late final GameNetwork network;
    final gameFight2D = GameFight2D();
    final gameCube3D = GameCube3D();
+   final animation = GameAnimation();
 
   Gamestream() {
     network = GameNetwork(this);
