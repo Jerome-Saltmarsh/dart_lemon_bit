@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_ui.dart';
+import 'package:gamestream_flutter/gamestream/ui/widgets/mouse_over.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -122,7 +123,7 @@ Widget buildPositionedIconButton({
     left: left,
     child: onPressed(
       action: action,
-      child: onMouseOver(builder: (bool mouseOver) =>
+      child: MouseOver(builder: (bool mouseOver) =>
           GameIsometricUI.buildAtlasIconType(
             iconType,
             color: mouseOver ? Colors.black38.value : Colors.white.value,

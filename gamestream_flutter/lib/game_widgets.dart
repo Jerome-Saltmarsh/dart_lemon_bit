@@ -1,13 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/gamestream/ui/widgets/mouse_over.dart';
 import 'package:lemon_watch/src.dart';
 
 import 'game_style.dart';
-import 'game_website.dart';
 import 'instances/engine.dart';
 import 'ui/style.dart';
-
 
 class _FlutterKitConfiguration {
   Color defaultTextColor = Colors.white;
@@ -100,7 +99,7 @@ Widget button(dynamic value, Function onPressed, {
 }) {
   final _button = onPressed(
       callback: onPressed,
-      child: onMouseOver(builder: (bool mouseOver) {
+      child: MouseOver(builder: (bool mouseOver) {
         return border(
             radius: borderRadius,
             width: borderWidth,
@@ -396,7 +395,7 @@ Widget buildTextButton(
       Color? colorMouseOver,
       Color? colorRegular,
     }) =>
-    onMouseOver(builder: (bool mouseOver) =>
+    MouseOver(builder: (bool mouseOver) =>
         text(value,
             onPressed: action,
             size: size,

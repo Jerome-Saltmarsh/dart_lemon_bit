@@ -1,31 +1,31 @@
 import 'package:flutter/material.dart';
 
+class MouseOver extends StatelessWidget {
 
+  final Widget Function(bool mouseOver) builder;
+  final Function? onEnter;
+  final Function? onExit;
 
-typedef MouseOverBuilder = Widget Function(bool mouseOver);
-typedef HoverBuilder = Widget Function(bool hovering);
+  MouseOver({required this.builder, this.onEnter, this.onExit});
 
-Widget onHover(HoverBuilder builder, {
-  Function? onEnter,
-  Function? onExit
-}) {
-  return Builder(builder: (context) {
-    bool mouseOver = false;
+  @override
+  Widget build(BuildContext context)  {
+    var mouseOver = false;
     return StatefulBuilder(builder: (BuildContext cont, StateSetter setState) {
       return MouseRegion(
           onEnter: (_) {
-            if (onEnter != null) onEnter();
+            onEnter?.call();
             setState(() {
               mouseOver = true;
             });
           },
           onExit: (_) {
-            if (onExit != null) onExit();
+            onExit?.call();
             setState(() {
               mouseOver = false;
             });
           },
           child: builder(mouseOver));
     });
-  });
+  }
 }

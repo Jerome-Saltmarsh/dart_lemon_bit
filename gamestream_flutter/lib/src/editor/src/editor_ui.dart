@@ -3,6 +3,7 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_colors.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_constants.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_ui.dart';
+import 'package:gamestream_flutter/gamestream/ui/widgets/mouse_over.dart';
 import 'package:gamestream_flutter/isometric/ui/columns/build_column_selected_node.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_editor_dialog.dart';
@@ -1227,7 +1228,7 @@ class EditorUI {
   static Widget buildMenu(
       {required String text, required List<Widget> children}) {
     final child = container(child: text, color: brownLight);
-    return onMouseOver(builder: (over) {
+    return MouseOver(builder: (over) {
       if (over) {
         return Column(
           children: [

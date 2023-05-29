@@ -4,6 +4,7 @@ import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/enums/operation_status.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_colors.dart';
+import 'package:gamestream_flutter/gamestream/ui/widgets/mouse_over.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/ui/dialogs.dart';
 import 'package:gamestream_flutter/ui/style.dart';
@@ -15,6 +16,7 @@ import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'enums/website_dialog.dart';
+import 'enums/website_page.dart';
 
 class GameWebsite extends Game {
   final signInSuggestionVisible = Watch(false);
@@ -286,7 +288,7 @@ class GameWebsite extends Game {
                     gamestream.network.connectToGameCombat();
                   }
                 },
-                child: onMouseOver(builder: (bool mouseOver) {
+                child: MouseOver(builder: (bool mouseOver) {
                   return Container(
                     padding: const EdgeInsets.fromLTRB(16, 4, 0, 4),
                     margin: const EdgeInsets.symmetric(vertical: 4),

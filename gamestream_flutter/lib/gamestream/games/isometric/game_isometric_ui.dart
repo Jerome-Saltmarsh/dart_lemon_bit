@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:gamestream_flutter/gamestream/ui/widgets/mouse_over.dart';
 import 'package:gamestream_flutter/isometric/events/on_visibility_changed_message_box.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/language_utils.dart';
@@ -387,7 +388,7 @@ class GameIsometricUI {
 
     final buttonPlay = onPressed(
       action: gamestream.network.sendClientRequestRevive,
-      child: onMouseOver(
+      child: MouseOver(
           builder: (mouseOver) {
             return Container(
               width: 150,
@@ -816,7 +817,7 @@ class GameIsometricUI {
     });
 
     return GameIsometricUI.buildDialogUIControl(
-      child: onMouseOver(
+      child: MouseOver(
         onEnter: gamestream.games.isometric.clientState.window_visible_menu.setTrue,
         onExit: gamestream.games.isometric.clientState.window_visible_menu.setFalse,
         builder: (bool mouseOver) => panel,

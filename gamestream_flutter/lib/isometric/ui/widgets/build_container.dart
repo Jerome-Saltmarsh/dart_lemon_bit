@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/gamestream/ui/widgets/mouse_over.dart';
 import 'package:gamestream_flutter/library.dart';
 
 Widget container({
@@ -18,7 +19,7 @@ Widget container({
 }){
   late Widget con;
   if (hoverColor != null){
-    con = onMouseOver(
+    con = MouseOver(
       builder: (mouseOver) {
         return Container(
           key: key,

@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/gamestream/ui/widgets/mouse_over.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class SelectRegionColumn extends StatelessWidget {
@@ -31,7 +32,7 @@ class SelectRegionColumn extends StatelessWidget {
                     // GameNetwork.connectToGameCombat();
                   }
                 },
-                child: onMouseOver(builder: (bool mouseOver) {
+                child: MouseOver(builder: (bool mouseOver) {
                   return Container(
                     padding: const EdgeInsets.fromLTRB(16, 4, 0, 4),
                     margin: const EdgeInsets.symmetric(vertical: 4),
