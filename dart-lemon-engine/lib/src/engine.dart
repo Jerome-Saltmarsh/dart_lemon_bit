@@ -318,17 +318,6 @@ class Engine extends StatelessWidget {
       us.setPathUrlStrategy();
     }
     WidgetsFlutterBinding.ensureInitialized();
-    // runZonedGuarded(_internalInit, _internalOnError);
-  }
-
-  void _internalOnError(Object error, StackTrace stack) {
-      if (onError != null){
-        onError?.call(error, stack);
-        return;
-      }
-      print("Warning no this.onError handler set");
-      print(error);
-      print(stack);
   }
 
   void _internalOnPointerScrollEvent(PointerScrollEvent event) {
@@ -538,7 +527,6 @@ class Engine extends StatelessWidget {
       print('warning init called ${_initCallAmount}');
       return;
     }
-    WidgetsFlutterBinding.ensureInitialized();
     SystemChannels.keyEvent.setMessageHandler(_handleRawKeyMessage);
     _bufferImage = await _generateEmptyImage();
     paint.filterQuality = FilterQuality.none;

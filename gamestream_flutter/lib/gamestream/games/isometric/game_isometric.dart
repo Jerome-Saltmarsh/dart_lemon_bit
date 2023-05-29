@@ -5,13 +5,13 @@ import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_min
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_player.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_renderer.dart';
 import 'package:gamestream_flutter/library.dart';
-import 'package:gamestream_flutter/touch_controller.dart';
 
 import 'game_isometric_actions.dart';
 import 'game_isometric_camera.dart';
 import 'game_isometric_editor.dart';
 import 'game_isometric_nodes.dart';
 import 'game_isometric_server_state.dart';
+import 'game_isometric_ui.dart';
 
 class GameIsometric extends Game {
   final camera = GameIsometricCamera();
@@ -81,7 +81,7 @@ class GameIsometric extends Game {
 
   @override
   Widget buildUI(BuildContext context) {
-    return GameUI.buildUI();
+    return GameIsometricUI.buildUI();
   }
 
   double get windLineRenderX {

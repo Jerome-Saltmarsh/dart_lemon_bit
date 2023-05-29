@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/library.dart';
 
+import 'isometric/game_isometric_ui.dart';
+
 class GameFight2DPlayer {
   var x = 0.0;
   var y = 0.0;
@@ -171,7 +173,7 @@ class GameFight2D extends Game {
         Positioned(
             top: 16,
             right: 16,
-            child: GameUI.buildWindowMenu(
+            child: GameIsometricUI.buildWindowMenu(
               children: [
                 onPressed(
                   action: renderCharacterState.toggle,
@@ -180,7 +182,7 @@ class GameFight2D extends Game {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         text("DEBUG", size: 20, color: Colors.white70),
-                        watch(renderCharacterState, (bool renderName) => GameUI.buildIconCheckbox(renderName)),
+                        watch(renderCharacterState, (bool renderName) => GameIsometricUI.buildIconCheckbox(renderName)),
                       ],
                     ),
                   ),

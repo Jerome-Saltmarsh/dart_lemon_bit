@@ -4,6 +4,7 @@ import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/language_utils.dart';
 
 import 'gamestream/games/isometric/game_isometric_colors.dart';
+import 'gamestream/games/isometric/game_isometric_ui.dart';
 import 'library.dart';
 
 class GameInventoryUI {
@@ -13,10 +14,10 @@ class GameInventoryUI {
   static const Slot_Item_Scale = Slot_Scale * 0.9;
   static const Columns_Per_Row = 5;
   static const Inventory_Width = Slot_Size * Slot_Scale * Columns_Per_Row + 8;
-  static final atlasIconSlotEmpty = GameUI.buildIconSlotEmpty();
+  static final atlasIconSlotEmpty = GameIsometricUI.buildIconSlotEmpty();
 
   static Widget buildInventoryUI() =>
-      GameUI.buildDialog(
+      GameIsometricUI.buildDialog(
         dialogType: DialogType.Inventory,
         child: Container(
           width: Inventory_Width,
@@ -75,7 +76,7 @@ class GameInventoryUI {
       );
 
   static Widget buildPlayerDamageBar() {
-    return GameUI.buildDialogUIControl(
+    return GameIsometricUI.buildDialogUIControl(
       child: buildHoverTarget(
               hoverTargetType: ClientType.Hover_Target_Player_Stats_Damage,
               child: watch(gamestream.games.isometric.serverState.playerDamage, (int damage) {
@@ -92,7 +93,7 @@ class GameInventoryUI {
                           height: 20,
                           child: FittedBox(
                               child:
-                                  GameUI.buildAtlasIconType(IconType.Damage))),
+                              GameIsometricUI.buildAtlasIconType(IconType.Damage))),
                       text(damage, color: GameStyle.Player_Stats_Text_Color),
                     ],
                   ),
@@ -106,7 +107,7 @@ class GameInventoryUI {
     const width = 150.0;
     const height = 30.0;
 
-    return GameUI.buildDialogUIControl(
+    return GameIsometricUI.buildDialogUIControl(
       child: buildHoverTarget(
               hoverTargetType: ClientType.Hover_Target_Player_Stats_Energy,
               child: watch(gamestream.games.isometric.player.energyMax, (int energyMax) {
@@ -127,7 +128,7 @@ class GameInventoryUI {
                                 height: 20,
                                 child: FittedBox(
                                     child:
-                                    GameUI.buildAtlasIconType(IconType.Energy))),
+                                    GameIsometricUI.buildAtlasIconType(IconType.Energy))),
                             text("$energy / ${padSpace(energyMax, length: 3)}",
                                 color: GameStyle.Player_Stats_Text_Color),
                           ],
@@ -145,7 +146,7 @@ class GameInventoryUI {
   static Widget buildPlayerHealthBar() {
     const width = 150.0;
     const height = 30.0;
-    return GameUI.buildDialogUIControl(
+    return GameIsometricUI.buildDialogUIControl(
       child: buildHoverTarget(
               hoverTargetType: ClientType.Hover_Target_Player_Stats_Health,
               child: watch(gamestream.games.isometric.serverState.playerMaxHealth, (int maxHealth) {
@@ -165,7 +166,7 @@ class GameInventoryUI {
                                 width: 20,
                                 height: 20,
                                 child: FittedBox(
-                                    child: GameUI.buildAtlasIconType(IconType.Heart)
+                                    child: GameIsometricUI.buildAtlasIconType(IconType.Heart)
                                 ),
                             ),
                             text(
@@ -248,7 +249,7 @@ class GameInventoryUI {
             height: 32 * scale,
             child: Stack(
               children: [
-                GameUI.buildAtlasItemType(
+                GameIsometricUI.buildAtlasItemType(
                   itemType ?? gamestream.games.isometric.serverState.getItemTypeAtInventoryIndex(itemIndex),
                 ),
                 if (itemQuantity != null && itemQuantity > 1)
@@ -557,7 +558,7 @@ class GameInventoryUI {
       children: [
         Row(
           children: [
-            GameUI.buildAtlasItemType(itemType),
+            GameIsometricUI.buildAtlasItemType(itemType),
             width8,
             text(ItemType.getName(itemType), color: GameStyle.Text_Color_Default),
           ],
@@ -621,7 +622,7 @@ class GameInventoryUI {
             children: [
               Row(
                 children: [
-                  GameUI.buildAtlasItemType(itemType),
+                  GameIsometricUI.buildAtlasItemType(itemType),
                   width8,
                   Expanded(child: text(ItemType.getName(itemType), color: GameIsometricColors.blue)),
                   if (itemTypeIsEquipped)
@@ -645,7 +646,7 @@ class GameInventoryUI {
 
               if (itemTypeConsumeType != ItemType.Empty)
                 buildTableRow("Uses", Row(children: [
-                  GameUI.buildAtlasItemType(itemTypeConsumeType),
+                  GameIsometricUI.buildAtlasItemType(itemTypeConsumeType),
                   width6,
                   text("${ItemType.getName(itemTypeConsumeType)} x${ItemType.getConsumeAmount(itemType)}", color: Colors.white70),
                 ],)),
@@ -736,7 +737,7 @@ class GameInventoryUI {
               children: [
                 Container(
                     constraints: const BoxConstraints(maxWidth: 150),
-                    child: GameUI.buildAtlasItemType(recipeItemType)),
+                    child: GameIsometricUI.buildAtlasItemType(recipeItemType)),
                 width4,
                 text(ItemType.getName(recipeItemType), color: textColor),
               ],

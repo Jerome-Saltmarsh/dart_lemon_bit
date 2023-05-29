@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_colors.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_constants.dart';
+import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_ui.dart';
 import 'package:gamestream_flutter/isometric/ui/columns/build_column_selected_node.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/isometric/ui/watches/build_watch_editor_dialog.dart';
@@ -144,7 +145,7 @@ class EditorUI {
   }
 
   static Widget buildWindowEditCanvasSize() => Center(
-    child: GameUI.buildDialogUIControl(
+    child: GameIsometricUI.buildDialogUIControl(
       child: Container(
         padding: const EdgeInsets.all(10),
         width: 400,
@@ -269,7 +270,7 @@ class EditorUI {
   );
 
   static Widget buildWindowGenerateScene() => Center(
-    child: GameUI.buildDialogUIControl(
+    child: GameIsometricUI.buildDialogUIControl(
       child: Container(
         padding: const EdgeInsets.all(10),
         width: 400,
@@ -319,7 +320,7 @@ class EditorUI {
 
 
   static Widget buildWindowEditScene()=> Center(
-       child: GameUI.buildDialogUIControl(
+       child: GameIsometricUI.buildDialogUIControl(
          child: Container(
             padding: const EdgeInsets.all(10),
             width: 400,
@@ -462,7 +463,7 @@ class EditorUI {
               Container(
                 width: 64,
                 height: 64,
-                decoration: GameUI.buildDecorationBorder(
+                decoration: GameIsometricUI.buildDecorationBorder(
                   colorBorder: Colors.white,
                   colorFill: Colors.transparent,
                   width: 2,
@@ -478,7 +479,7 @@ class EditorUI {
       (int activeRain) => buildIconWeatherControl(
             tooltip: '${RainType.getName(rain)} Rain',
             action: () => gamestream.network.sendClientRequestWeatherSetRain(rain),
-            icon: GameUI.buildAtlasIconType(convertRainToIconType(rain)),
+            icon: GameIsometricUI.buildAtlasIconType(convertRainToIconType(rain)),
             isActive: rain == activeRain,
           ));
 
@@ -488,7 +489,7 @@ class EditorUI {
             tooltip: '${LightningType.getName(lightning)} Lightning',
             action: () =>
                 gamestream.network.sendClientRequestWeatherSetLightning(lightning),
-            icon: GameUI.buildAtlasIconType(
+            icon: GameIsometricUI.buildAtlasIconType(
                 convertLightningToIconType(lightning)),
             isActive: lightning == activeLightning,
           ));
@@ -498,7 +499,7 @@ class EditorUI {
       (int activeWindType) => buildIconWeatherControl(
             tooltip: '${WindType.getName(windType)} Wind',
             action: () => gamestream.network.sendClientRequestWeatherSetWind(windType),
-            icon: GameUI.buildAtlasIconType(convertWindToIconType(windType)),
+            icon: GameIsometricUI.buildAtlasIconType(convertWindToIconType(windType)),
             isActive: windType == activeWindType,
           ));
 
@@ -1037,7 +1038,7 @@ class EditorUI {
     });
   }
 
-  static Widget buildColumnSelectedGameObject() => GameUI.buildDialogUIControl(
+  static Widget buildColumnSelectedGameObject() => GameIsometricUI.buildDialogUIControl(
       child: Container(
         color: brownLight,
         width: 220,
@@ -1058,7 +1059,7 @@ class EditorUI {
                           maxWidth: 80,
                           maxHeight: 80,
                         ),
-                        child: GameUI.buildAtlasItemType(type),
+                        child: GameIsometricUI.buildAtlasItemType(type),
                     ),
                     height8,
                       Row(

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_ui.dart';
 import 'package:gamestream_flutter/library.dart';
 
 
 Widget buildPanelWriteMessage() {
-  return WatchBuilder(GameUI.messageBoxVisible, (bool visible){
+  return WatchBuilder(GameIsometricUI.messageBoxVisible, (bool visible){
     if (!visible) return blank;
     return Positioned(
         bottom: 100,
@@ -35,8 +36,8 @@ Widget buildPanelWriteMessage() {
                           borderSide: BorderSide(color: Colors.white60),
                         ),
                       ),
-                      focusNode: GameUI.textFieldMessage,
-                      controller: GameUI.textEditingControllerMessage,
+                      focusNode: GameIsometricUI.textFieldMessage,
+                      controller: GameIsometricUI.textEditingControllerMessage,
                       maxLength: 50,
                       style: TextStyle(color: Colors.white),
                     )),
@@ -58,6 +59,6 @@ Widget buildPanelWriteMessage() {
 }
 
 void sendAndCloseTextBox(){
-  gamestream.network.sendRequestSpeak(GameUI.textEditingControllerMessage.text);
+  gamestream.network.sendRequestSpeak(GameIsometricUI.textEditingControllerMessage.text);
   gamestream.games.isometric.actions.messageBoxHide();
 }

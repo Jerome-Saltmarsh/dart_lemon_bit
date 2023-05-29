@@ -1,6 +1,8 @@
 
 import 'package:gamestream_flutter/library.dart';
 
+import 'game_isometric_ui.dart';
+
 class GameIsometricActions {
 
   static const Zoom_Far = 1.0;
@@ -73,15 +75,15 @@ class GameIsometricActions {
   }
 
   void messageBoxToggle(){
-    GameUI.messageBoxVisible.value = !GameUI.messageBoxVisible.value;
+    GameIsometricUI.messageBoxVisible.value = !GameIsometricUI.messageBoxVisible.value;
   }
 
   void messageBoxShow(){
-    GameUI.messageBoxVisible.value = true;
+    GameIsometricUI.messageBoxVisible.value = true;
   }
 
   void messageBoxHide(){
-    GameUI.messageBoxVisible.value = false;
+    GameIsometricUI.messageBoxVisible.value = false;
   }
 
   void toggleDebugMode(){

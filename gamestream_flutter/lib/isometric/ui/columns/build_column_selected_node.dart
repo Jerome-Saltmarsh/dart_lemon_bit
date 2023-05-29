@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_ui.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -79,7 +80,7 @@ Widget buildEditorSelectedNode() =>
                   height: 72,
                   width: 72,
                   alignment: Alignment.center,
-                  child: watch(gamestream.games.isometric.editor.nodeSelectedType, GameUI.buildAtlasNodeType)
+                  child: watch(gamestream.games.isometric.editor.nodeSelectedType, GameIsometricUI.buildAtlasNodeType)
               ),
               buildPositionedIconButton(
                 top: 50 + _shiftY,
@@ -122,7 +123,7 @@ Widget buildPositionedIconButton({
     child: onPressed(
       action: action,
       child: onMouseOver(builder: (bool mouseOver) =>
-          GameUI.buildAtlasIconType(
+          GameIsometricUI.buildAtlasIconType(
             iconType,
             color: mouseOver ? Colors.black38.value : Colors.white.value,
           )

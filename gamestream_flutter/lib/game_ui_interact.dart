@@ -5,9 +5,10 @@ import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import 'gamestream/games/isometric/game_isometric_colors.dart';
+import 'gamestream/games/isometric/game_isometric_ui.dart';
 
 
-class GameUIInteract {
+class GameIsometricUIInteract {
   static const _width = 400;
 
 
@@ -40,7 +41,7 @@ class GameUIInteract {
         ],
       );
 
-    static Widget buildContainerCraft() => GameUI.buildDialog(
+    static Widget buildContainerCraft() => GameIsometricUI.buildDialog(
         dialogType: DialogType.Craft,
         child: Container(
            color: GameIsometricColors.brownDark,
@@ -62,7 +63,7 @@ class GameUIInteract {
     }
 
     static Widget buildContainerStoreItems(List<int> itemTypes) =>
-      GameUI.buildDialog(
+      GameIsometricUI.buildDialog(
         dialogType: DialogType.Trade,
         child: DragTarget<int>(
           onWillAccept: (int? data){
@@ -112,7 +113,7 @@ class GameUIInteract {
     }
 
     static Widget buildInteractModeTalking() =>
-      Positioned(top: 55, left: 5, child: GameUI.buildDialog(
+      Positioned(top: 55, left: 5, child: GameIsometricUI.buildDialog(
         dialogType: DialogType.Talk,
         child: Container(
           color: GameIsometricColors.brownDark,
@@ -166,7 +167,7 @@ class GameUIInteract {
                    onDragEnd: (details){
 
                    },
-                   feedback: GameUI.buildAtlasItemType(itemTypes[i]),
+                   feedback: GameIsometricUI.buildAtlasItemType(itemTypes[i]),
                    onDraggableCanceled: (Velocity velocity, Offset offset){
                      if (gamestream.games.isometric.clientState.hoverDialogIsInventory) return;
                      gamestream.network.sendClientRequestInventoryBuy(i);
