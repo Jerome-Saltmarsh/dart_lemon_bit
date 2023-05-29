@@ -24,6 +24,7 @@ mixin class GameFight2DCharacter {
   final strikeFrame = 5;
   final strikeSwingFrame = 3;
 
+  var damage = 0;
   var mass = 1.0;
   var emitEventJump = false;
   var stateDuration = 0;

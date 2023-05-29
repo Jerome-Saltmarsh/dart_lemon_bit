@@ -32,6 +32,7 @@ class GameFight2DPlayer extends Player with GameFight2DCharacter {
     for (final character in game.characters) {
       writeByte(character.state);
       writeByte(character.direction);
+      writeUInt16(character.damage);
       writeInt16(character.x.toInt());
       writeInt16(character.y.toInt());
       writeByte(character.stateDuration % 255);

@@ -15,9 +15,12 @@ class GameFight2D extends Game {
   var playerEditMode = WatchBool(false);
   var charactersTotal = 0;
 
+  final tutorialVisible = WatchBool(true);
+
   static const length = 1000;
   final characterState = Uint8List(length);
   final characterDirection = Uint8List(length);
+  final characterDamage = Uint16List(length);
   final characterStateDuration = Uint8List(length);
   final characterPositionX = Float32List(length);
   final characterPositionY = Float32List(length);
@@ -116,6 +119,12 @@ class GameFight2D extends Game {
           characterPositionY[i].toDouble() - 100,
         );
       }
+
+      engine.renderText(
+        characterDamage[i].toString(),
+        characterPositionX[i].toDouble(),
+        characterPositionY[i].toDouble() - 100,
+      );
     }
   }
 
@@ -177,6 +186,18 @@ class GameFight2D extends Game {
             child: GameIsometricUI.buildWindowMenu(
               children: [
                 onPressed(
+                  action: tutorialVisible.toggle,
+                  child: Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        text("TUTORIAL", size: 20, color: Colors.white70),
+                        watch(tutorialVisible, (bool renderName) => GameIsometricUI.buildIconCheckbox(renderName)),
+                      ],
+                    ),
+                  ),
+                ),
+                onPressed(
                   action: renderCharacterState.toggle,
                   child: Container(
                     child: Row(
@@ -187,7 +208,7 @@ class GameFight2D extends Game {
                       ],
                     ),
                   ),
-                ),
+                )
               ]
             )
         )

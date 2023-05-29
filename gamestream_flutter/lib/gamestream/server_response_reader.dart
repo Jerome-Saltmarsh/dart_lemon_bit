@@ -781,6 +781,7 @@ class ServerResponseReader with ByteReader {
     for (var i = 0; i < totalPlayers; i++) {
       game.characterState[i] = readByte();
       game.characterDirection[i] = readByte();
+      game.characterDamage[i] = readUInt16();
       game.characterPositionX[i] = readInt16().toDouble();
       game.characterPositionY[i] = readInt16().toDouble();
       game.characterStateDuration[i] = readByte();
