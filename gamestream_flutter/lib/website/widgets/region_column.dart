@@ -3,18 +3,28 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class SelectRegionColumn extends StatelessWidget {
+
+  static const Live_Regions = [
+    ConnectionRegion.America_North,
+    ConnectionRegion.America_South,
+    ConnectionRegion.Europe,
+    ConnectionRegion.Asia_North,
+    ConnectionRegion.Asia_South,
+    ConnectionRegion.Oceania,
+  ];
+
   @override
   Widget build(BuildContext context) {
-    return WatchBuilder(GameWebsite.region, (activeRegion) {
+    return WatchBuilder(gamestream.games.gameWebsite.region, (activeRegion) {
       return SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.center,
-          children: (engine.isLocalHost ? ConnectionRegion.values : GameWebsite.Live_Regions)
+          children: (engine.isLocalHost ? ConnectionRegion.values : Live_Regions)
               .map((ConnectionRegion region) =>
               onPressed(
                 action: () {
-                  GameWebsite.actionSelectRegion(region);
+                  gamestream.games.gameWebsite.actionSelectRegion(region);
                   if (engine.deviceIsPhone) {
                     // GameNetwork.connectToGameAeon();
                   } else {

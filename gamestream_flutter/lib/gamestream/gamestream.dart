@@ -47,20 +47,20 @@ class Gamestream {
      gamestream.io.detectInputMode();
 
      if (engine.isLocalHost) {
-       GameWebsite.region.value = ConnectionRegion.LocalHost;
+       gamestream.games.gameWebsite.region.value = ConnectionRegion.LocalHost;
      } else {
-       GameWebsite.region.value = GameUtils.detectConnectionRegion();
+       gamestream.games.gameWebsite.region.value = GameUtils.detectConnectionRegion();
      }
 
-     GameWebsite.errorMessageEnabled.value = true;
+     gamestream.games.gameWebsite.errorMessageEnabled.value = true;
 
      final visitCount = sharedPreferences.getInt('visit-count');
      if (visitCount == null){
        sharedPreferences.putAny('visit-count', 1);
-       GameWebsite.visitCount.value = 1;
+       gamestream.games.gameWebsite.visitCount.value = 1;
      } else {
        sharedPreferences.putAny('visit-count', visitCount + 1);
-       GameWebsite.visitCount.value = visitCount + 1;
+       gamestream.games.gameWebsite.visitCount.value = visitCount + 1;
 
        final cachedVersion = sharedPreferences.getString('version');
        if (cachedVersion != null){
@@ -69,7 +69,7 @@ class Gamestream {
          }
        }
 
-       GameWebsite.region.value = engine.isLocalHost ? ConnectionRegion.LocalHost : ConnectionRegion.Asia_South;
+       gamestream.games.gameWebsite.region.value = engine.isLocalHost ? ConnectionRegion.LocalHost : ConnectionRegion.Asia_South;
        // GameNetwork.connectToGameAeon();
      }
      await Future.delayed(const Duration(seconds: 4));

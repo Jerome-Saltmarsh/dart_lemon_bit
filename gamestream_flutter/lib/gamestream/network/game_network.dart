@@ -1,5 +1,4 @@
 import 'package:gamestream_flutter/library.dart';
-import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'enums/connection_status.dart';
@@ -34,9 +33,9 @@ class GameNetwork {
     }
     if (region == ConnectionRegion.Custom) {
       print("connecting to custom server");
-      print(website.state.customConnectionStrongController.text);
+      print(gamestream.games.gameWebsite.customConnectionStrongController.text);
       connectToServer(
-        website.state.customConnectionStrongController.text,
+        gamestream.games.gameWebsite.customConnectionStrongController.text,
         message,
       );
       return;
@@ -64,7 +63,7 @@ class GameNetwork {
   void connectToGameAeon() => connectToGame(GameType.Mobile_Aeon);
 
   void connectToGame(GameType gameType, [String message = ""]) =>
-      connectToRegion(GameWebsite.region.value, '${gameType.index} $message');
+      connectToRegion(gamestream.games.gameWebsite.region.value, '${gameType.index} $message');
 
   Future sendClientRequestUpdate() async {
     applyKeyboardInputToUpdateBuffer();

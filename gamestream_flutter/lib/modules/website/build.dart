@@ -1,11 +1,10 @@
 
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/game_website.dart';
 import 'package:gamestream_flutter/game_widgets.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_colors.dart';
 import 'package:gamestream_flutter/instances/engine.dart';
-import 'package:gamestream_flutter/modules/modules.dart';
+import 'package:gamestream_flutter/instances/gamestream.dart';
 import 'package:gamestream_flutter/ui/dialogs.dart';
 import 'package:gamestream_flutter/ui/style.dart';
 import 'package:gamestream_flutter/ui/views.dart';
@@ -18,9 +17,9 @@ class WebsiteBuild {
     return Tooltip(
       message: "Change Region",
       child: button(
-        text(engine.enumString(GameWebsite.region.value),
+        text(engine.enumString(gamestream.games.gameWebsite.region.value),
             color: GameIsometricColors.white80),
-            website.actions.showDialogChangeRegion,
+            gamestream.games.gameWebsite.showDialogChangeRegion,
         borderColor: GameIsometricColors.none,
         fillColor: GameIsometricColors.black20,
       ),
@@ -28,7 +27,7 @@ class WebsiteBuild {
   }
 
   Widget buttonCustomMap(){
-    return buildMenuButton("Custom", website.actions.showDialogCustomMaps);
+    return buildMenuButton("Custom", gamestream.games.gameWebsite.showDialogCustomMaps);
   }
 
   Widget dialogCustomMaps() {
@@ -64,7 +63,7 @@ class WebsiteBuild {
                     bottom: 16,
                     child: button(text(mapName, color: GameIsometricColors.white618), (){
                       // connect to custom game
-                      website.actions.connectToCustomGame(mapName);
+                      gamestream.games.gameWebsite.connectToCustomGame(mapName);
                     },
                         alignment: Alignment.centerLeft,
                         fillColor: GameIsometricColors.white05, fillColorMouseOver: GameIsometricColors.white10, borderColor: GameIsometricColors.none, borderColorMouseOver: GameIsometricColors.none),

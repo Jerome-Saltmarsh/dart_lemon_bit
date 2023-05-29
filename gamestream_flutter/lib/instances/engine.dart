@@ -7,8 +7,8 @@ import 'package:gamestream_flutter/library.dart';
 final engine = Engine(
     title: "GAMESTREAM ONLINE",
     init: gamestream.init,
-    buildUI: GameWebsite.buildUI,
-    buildLoadingScreen: GameWebsite.buildLoadingPage,
+    buildUI: gamestream.games.gameWebsite.buildUI,
+    buildLoadingScreen: gamestream.games.gameWebsite.buildLoadingPage,
     themeData: ThemeData(fontFamily: 'VT323-Regular'),
     backgroundColor: GameIsometricColors.black,
     onError: Gamestream.onError,

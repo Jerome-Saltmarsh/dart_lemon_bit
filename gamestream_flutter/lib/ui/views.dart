@@ -31,9 +31,9 @@ Widget buildConnectionStatus(ConnectionStatus connectionStatus) {
     case ConnectionStatus.Connected:
       return GameIsometricUI.buildUI();
     case ConnectionStatus.Connecting:
-      return GameWebsite.buildPageConnectionStatus(connectionStatus.name);
+      return gamestream.games.gameWebsite.buildPageConnectionStatus(connectionStatus.name);
     default:
-      return GameWebsite.buildNotConnected();
+      return gamestream.games.gameWebsite.buildNotConnected();
   }
 }
 
@@ -57,7 +57,7 @@ Widget margin({
 
 
 Widget watchAccount(Widget builder(Account? value)) {
-  return WatchBuilder(GameWebsite.account, (Account? account) {
+  return WatchBuilder(gamestream.games.gameWebsite.account, (Account? account) {
     return builder(account);
   });
 }
@@ -143,7 +143,7 @@ Widget watchAccount(Widget builder(Account? value)) {
 // }
 
 bool isAccountName(String publicName){
-  final account = GameWebsite.account.value;
+  final account = gamestream.games.gameWebsite.account.value;
   if (account == null) return false;
   return account.publicName == publicName;
 }
