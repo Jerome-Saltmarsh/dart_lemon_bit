@@ -114,7 +114,7 @@ class GameEvents {
         onNodeSet(x, y, z);
         return;
       case GameEventType.GameObject_Timeout:
-        GameSpawn.spawnBubbles(x, y, z);
+        gamestream.games.isometric.clientState.spawnBubbles(x, y, z);
         break;
       case GameEventType.Node_Struck:
         onNodeStruck(x, y, z);
@@ -513,8 +513,8 @@ class GameEvents {
   static void onCharacterDeath(int characterType, double x, double y, double z, double angle) {
     randomItem(gamestream.audio.bloody_punches).playXYZ(x, y, z);
     gamestream.audio.heavy_punch_13.playXYZ(x, y, z);
-    GameSpawn.spawnPurpleFireExplosion(x, y, z);
-    GameSpawn.spawnBubbles(x, y, z);
+    gamestream.games.isometric.clientState.spawnPurpleFireExplosion(x, y, z);
+    gamestream.games.isometric.clientState.spawnBubbles(x, y, z);
 
     for (var i = 0; i < 4; i++){
       gamestream.games.isometric.clientState.spawnParticleBlood(
