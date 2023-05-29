@@ -25,6 +25,8 @@ class GameIO {
   var touchscreenRadianPerform = 0.0;
   var performActionPrimary = false;
 
+  final touchController = TouchController();
+
   final inputMode = Watch(InputMode.Keyboard, onChanged: GameEvents.onChangedInputMode);
   bool get inputModeTouch => inputMode.value == InputMode.Touch;
   bool get inputModeKeyboard => inputMode.value == InputMode.Keyboard;
@@ -128,8 +130,8 @@ class GameIO {
       hex = hex | ByteHex.Hex_16;
     }
 
-    if (TouchController.attack) {
-      TouchController.attack = false;
+    if (touchController.attack) {
+      touchController.attack = false;
       hex = hex | ByteHex.Hex_16;
     }
 
@@ -187,7 +189,7 @@ class GameIO {
   }
 
   int getDirectionTouchScreen() {
-    return TouchController.getDirection();
+    return touchController.getDirection();
   }
 
   int getInputDirectionKeyboard() {

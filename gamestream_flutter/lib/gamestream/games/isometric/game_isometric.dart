@@ -68,8 +68,8 @@ class GameIsometric extends Game {
     clientState.window_visible_player_creation.value = false;
     clientState.control_visible_respawn_timer.value = false;
     gamestream.audio.musicStop();
-    engine.onLeftClicked = TouchController.onClick;
-    engine.onMouseMoved = TouchController.onMouseMoved;
+    engine.onLeftClicked = gamestream.io.touchController.onClick;
+    engine.onMouseMoved = gamestream.io.touchController.onMouseMoved;
     clientState.control_visible_player_weapons.value = true;
     clientState.control_visible_scoreboard.value = true;
     clientState.control_visible_player_power.value = true;

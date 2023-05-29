@@ -350,7 +350,7 @@ class GameIsometricRenderer {
     }
 
     if (gamestream.io.inputModeTouch) {
-      TouchController.render(canvas);
+      gamestream.io.touchController.render(canvas);
     }
 
     playerAimTargetNameText();
