@@ -185,7 +185,7 @@ class GameIsometricNodes {
     required int alpha,
   }){
 
-    if (GameSettings.Dynamic_Shadows) {
+    if (gamestream.games.isometric.clientState.dynamicShadows) {
       emitLightAmbientShadows(
         index: index,
         alpha: alpha,

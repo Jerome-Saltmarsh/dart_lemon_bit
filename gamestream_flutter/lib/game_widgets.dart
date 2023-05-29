@@ -23,6 +23,7 @@ Widget buildWatch<T>(Watch<T> watch, Widget Function(T t) builder){
   return WatchBuilder(watch, builder);
 }
 
+
 Widget text(dynamic value, {
     num? size,
     Function? onPressed,

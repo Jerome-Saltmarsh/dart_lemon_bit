@@ -1,5 +1,5 @@
 
-import 'package:gamestream_flutter/game_utils.dart';
+import 'package:gamestream_flutter/gamestream/network/functions/detect_connection_region.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -38,7 +38,7 @@ class Gamestream {
        }
      }
 
-     print("time zone: ${GameUtils.detectConnectionRegion()}");
+     print("time zone: ${detectConnectionRegion()}");
      engine.onScreenSizeChanged = onScreenSizeChanged;
      engine.deviceType.onChanged(onDeviceTypeChanged);
      GameImages.loadImages();
@@ -49,7 +49,7 @@ class Gamestream {
      if (engine.isLocalHost) {
        gamestream.games.gameWebsite.region.value = ConnectionRegion.LocalHost;
      } else {
-       gamestream.games.gameWebsite.region.value = GameUtils.detectConnectionRegion();
+       gamestream.games.gameWebsite.region.value = detectConnectionRegion();
      }
 
      gamestream.games.gameWebsite.errorMessageEnabled.value = true;

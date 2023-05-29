@@ -514,8 +514,8 @@ class GameIsometricUI {
           text("Light-Settings", bold: true),
           height8,
           onPressed(
-              action: GameSettings.ToggleDynamicShadows,
-              child: Refresh(() => text('dynamic-shadows-enabled: ${GameSettings.Dynamic_Shadows}'))
+              action: gamestream.games.isometric.clientState.toggleDynamicShadows,
+              child: Refresh(() => text('dynamic-shadows-enabled: ${gamestream.games.isometric.clientState.dynamicShadows}'))
           ),
           onPressed(
               child: Refresh(() => text('blend-mode: ${engine.bufferBlendMode.name}')),

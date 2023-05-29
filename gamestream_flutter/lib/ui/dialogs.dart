@@ -1,8 +1,8 @@
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/game_website.dart';
 import 'package:gamestream_flutter/gamestream/account/account_service.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_colors.dart';
+import 'package:gamestream_flutter/gamestream/ui/widgets/mouse_over.dart';
 import 'package:gamestream_flutter/instances/engine.dart';
 import 'package:gamestream_flutter/instances/gamestream.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
@@ -90,7 +90,7 @@ Widget _buildSubscriptionPanel(Account account){
           if (account.subscriptionActive)
             panelDark(
               expand: false,
-              child: onHover((hovering) {
+              child: MouseOver(builder: (hovering) {
                 return text("Cancel",
                     color: hovering ? GameIsometricColors.orange : GameIsometricColors.white80,
                     onPressed: gamestream.games.gameWebsite.showDialogConfirmCancelSubscription,
@@ -356,7 +356,7 @@ String formatSubscriptionStatus(value){
 Widget buildButton(String value, Function action, {bool underline = false}){
   return Container(
     padding: padding16,
-    child: onHover((hovering){
+    child: MouseOver(builder: (hovering){
       return text(value, color: hovering ? GameIsometricColors.white80 : GameIsometricColors.white618, underline: underline, onPressed: action);
     }),
   );
@@ -365,7 +365,7 @@ Widget buildButton(String value, Function action, {bool underline = false}){
 Widget buildButtonPrimary(String value, Function action){
   return Container(
     padding: padding16,
-    child: onHover((hovering){
+    child: MouseOver(builder: (hovering){
       return text(value, color: GameIsometricColors.green, underline: true, onPressed: action, bold: true);
     }),
   );

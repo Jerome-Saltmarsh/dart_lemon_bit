@@ -8,9 +8,10 @@ import 'game_isometric_constants.dart';
 
 
 
-class GameIsometricClientState {
+mixin class GameIsometricClientState {
   static const Particles_Max = 500;
-
+  var dynamicShadows = true;
+  var emissionAlphaCharacter = 50;
   final particleOverflow = Particle();
   var torch_emission_start = 0.8;
   var torch_emission_end = 1.0;
@@ -145,7 +146,7 @@ class GameIsometricClientState {
       } else {
         applyVector3EmissionAmbient(
           character,
-          alpha: GameSettings.Emission_Alpha_Character,
+          alpha: gamestream.games.isometric.clientState.emissionAlphaCharacter,
         );
       }
     }
@@ -1560,5 +1561,7 @@ class GameIsometricClientState {
       alpha: 0,
     );
   }
+
+  void toggleDynamicShadows() => dynamicShadows = !dynamicShadows;
 
 }
