@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_client_state.dart';
+import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_minimap.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_player.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_renderer.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -21,6 +22,7 @@ class GameIsometric extends Game {
   final renderer = GameIsometricRenderer();
   final editor = GameIsometricEditor();
   final player = GameIsometricPlayer();
+  final minimap = GameIsometricMinimap();
 
   @override
   void drawCanvas(Canvas canvas, Size size) {

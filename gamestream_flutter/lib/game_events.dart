@@ -1,5 +1,4 @@
 
-import 'package:gamestream_flutter/game_minimap.dart';
 import 'package:gamestream_flutter/isometric/events/on_game_event_game_object_destroyed.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -34,7 +33,7 @@ class GameEvents {
     gamestream.games.isometric.nodes.refreshGridMetrics();
     gamestream.games.isometric.nodes.generateHeightMap();
     gamestream.games.isometric.nodes.generateMiniMap();
-    GameMinimap.generateSrcDst();
+    gamestream.games.isometric.minimap.generateSrcDst();
     ClientActions.refreshBakeMapLightSources();
 
     if (gamestream.games.isometric.clientState.raining.value) {
@@ -700,7 +699,7 @@ class GameEvents {
         break;
     }
   }
-  
+
 
   static void onGameEventPowerUsed(double x, double y, double z, int powerType) {
       switch (powerType){

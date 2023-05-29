@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:gamestream_flutter/game_minimap.dart';
 import 'package:gamestream_flutter/isometric/events/on_visibility_changed_message_box.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 import 'package:gamestream_flutter/language_utils.dart';
@@ -593,7 +592,7 @@ class GameUI {
           final cameraY = targetY - (screenCenterY / scale) - translate;
           canvas.translate(-cameraX, -cameraY);
 
-          GameMinimap.renderCanvas(canvas);
+          gamestream.games.isometric.minimap.renderCanvas(canvas);
 
           for (var i = 0; i < gamestream.games.isometric.serverState.totalCharacters; i++) {
             final character = gamestream.games.isometric.serverState.characters[i];

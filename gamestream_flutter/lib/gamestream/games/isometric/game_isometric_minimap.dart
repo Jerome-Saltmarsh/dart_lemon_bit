@@ -1,28 +1,31 @@
 
+import 'dart:typed_data';
+
+import 'package:bleed_common/src.dart';
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/game_images.dart';
+import 'package:gamestream_flutter/instances/gamestream.dart';
 
-import 'library.dart';
-
-class GameMinimap {
-  static var src = Float32List(0);
-  static var dst = Float32List(0);
+class GameIsometricMinimap {
+  var src = Float32List(0);
+  var dst = Float32List(0);
 
   static double mapNodeTypeToSrcX(int nodeType) => const <int, double>{
-      NodeType.Grass: 1,
-      NodeType.Water: 2,
-      NodeType.Wood: 3,
-      NodeType.Wooden_Plank: 3,
-      NodeType.Soil: 3,
-      NodeType.Road: 4,
-      NodeType.Road_2: 4,
-      NodeType.Tree_Bottom: 6,
-      NodeType.Tree_Top: 6,
-      NodeType.Bau_Haus: 7,
-      NodeType.Brick: 8,
-      NodeType.Torch: 1,
-    }[nodeType] ?? 0;
+    NodeType.Grass: 1,
+    NodeType.Water: 2,
+    NodeType.Wood: 3,
+    NodeType.Wooden_Plank: 3,
+    NodeType.Soil: 3,
+    NodeType.Road: 4,
+    NodeType.Road_2: 4,
+    NodeType.Tree_Bottom: 6,
+    NodeType.Tree_Top: 6,
+    NodeType.Bau_Haus: 7,
+    NodeType.Brick: 8,
+    NodeType.Torch: 1,
+  }[nodeType] ?? 0;
 
-  static void generateSrcDst(){
+  void generateSrcDst(){
     var index = 0;
     final rows = gamestream.games.isometric.nodes.totalRows;
     final columns = gamestream.games.isometric.nodes.totalColumns;
@@ -62,31 +65,31 @@ class GameMinimap {
     }
 
     for (var i = 0; i < vendors.length; i++){
-       final nodeIndex = vendors[i];
-       final indexX = gamestream.games.isometric.clientState.convertNodeIndexToIndexX(nodeIndex);
-       final indexY = gamestream.games.isometric.clientState.convertNodeIndexToIndexY(nodeIndex);
-       final dstX = (indexX - indexY) * 1.0;
-       final dstY = (indexX + indexY) * 1.0;
-       final f = ((area + i) * 4);
-       src[f + 0] = 26;
-       src[f + 1] = 0;
-       src[f + 2] = 26 + 10;
-       src[f + 3] = 00 + 09;
-       dst[f + 0] = 0.612;
-       dst[f + 1] = 0;
-       dst[f + 2] = dstX;
-       dst[f + 3] = dstY;
+      final nodeIndex = vendors[i];
+      final indexX = gamestream.games.isometric.clientState.convertNodeIndexToIndexX(nodeIndex);
+      final indexY = gamestream.games.isometric.clientState.convertNodeIndexToIndexY(nodeIndex);
+      final dstX = (indexX - indexY) * 1.0;
+      final dstY = (indexX + indexY) * 1.0;
+      final f = ((area + i) * 4);
+      src[f + 0] = 26;
+      src[f + 1] = 0;
+      src[f + 2] = 26 + 10;
+      src[f + 3] = 00 + 09;
+      dst[f + 0] = 0.612;
+      dst[f + 1] = 0;
+      dst[f + 2] = dstX;
+      dst[f + 3] = dstY;
     }
   }
 
-  static final paint = Paint()
+  final paint = Paint()
     ..color = Colors.white
     ..strokeCap = StrokeCap.round
     ..style = PaintingStyle.fill
     ..isAntiAlias = false
     ..strokeWidth = 1;
 
-  static void renderCanvas(Canvas canvas){
+  void renderCanvas(Canvas canvas){
     canvas.drawRawAtlas(GameImages.atlas_nodes_mini, dst, src, null, null, null, paint);
   }
 }
