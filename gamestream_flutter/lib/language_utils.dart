@@ -5,6 +5,10 @@ String padZero(num value) {
   return '0$t';
 }
 
+int capIndex(List<int> values, int index){
+  return index < values.length ? values[index] : values.last;
+}
+
 String padSpace(num value, {required int length}) {
   String t = value.toInt().toString();
   final difference = length - t.length;

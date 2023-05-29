@@ -1,10 +1,8 @@
 library game_library;
 
 export 'classes/library.dart';
-export 'lang/src.dart';
 export 'enums/library.dart';
 export 'atlases/atlases.dart';
-export 'game_account.dart';
 export 'game_settings.dart';
 export 'gamestream/game_audio.dart';
 export 'game_events.dart';

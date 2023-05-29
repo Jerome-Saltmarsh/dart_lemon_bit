@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/gamestream/account/account_service.dart';
+import 'package:gamestream_flutter/gamestream/account/data_authentication.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_colors.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/modules/modules.dart';
 import 'package:gamestream_flutter/modules/website/enums.dart';
-import 'package:gamestream_flutter/ui/actions/sign_in_with_facebook.dart';
+import 'package:gamestream_flutter/gamestream/account/sign_in_with_facebook.dart';
 import 'package:gamestream_flutter/ui/build.dart';
 import 'package:gamestream_flutter/ui/dialogs.dart';
 import 'package:gamestream_flutter/ui/style.dart';
