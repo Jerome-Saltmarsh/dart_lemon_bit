@@ -84,11 +84,11 @@ class Gamestream {
          // });
      });
 
-     if (engine.isLocalHost) {
-       gamestream.network.region.value = ConnectionRegion.LocalHost;
-     } else {
-       gamestream.network.region.value = detectConnectionRegion();
-     }
+     // if (engine.isLocalHost) {
+     //   gamestream.network.region.value = ConnectionRegion.LocalHost;
+     // } else {
+     //   gamestream.network.region.value = detectConnectionRegion();
+     // }
 
      gamestream.games.website.errorMessageEnabled.value = true;
 

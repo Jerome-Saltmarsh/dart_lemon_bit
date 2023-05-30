@@ -26,6 +26,10 @@ String getPercentageDifferenceFormatted(num a, num b) {
 
 String formatPercentage(num a) => '${(a * 100).toInt()}%';
 
+String formatEnumName(String value){
+  return value.replaceAll("_", " ");
+}
+
 double getPercentageDifference(num a, num b) {
   if (a == 0 && b == 0) return 0;
   if (a == 0) return -1.0;

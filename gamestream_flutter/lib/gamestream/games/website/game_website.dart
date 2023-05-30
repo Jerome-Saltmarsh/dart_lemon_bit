@@ -6,6 +6,7 @@ import 'package:gamestream_flutter/gamestream/enums/operation_status.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_colors.dart';
 import 'package:gamestream_flutter/gamestream/network/enums/connection_status.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/mouse_over.dart';
+import 'package:gamestream_flutter/language_utils.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/ui/dialogs.dart';
 import 'package:gamestream_flutter/ui/style.dart';
@@ -23,7 +24,7 @@ class GameWebsite extends Game {
   static const Icon_Size = 25.0;
   static const Padding = 16.0;
 
-  final websitePage = Watch(WebsitePage.Games);
+  final websitePage = Watch(WebsitePage.Region);
   final signInSuggestionVisible = Watch(false);
   final dialog = Watch(WebsiteDialog.Games);
   final customConnectionStrongController = TextEditingController();
@@ -159,26 +160,59 @@ class GameWebsite extends Game {
           ? buildPageWebsiteDesktop()
           : buildPageWebsiteMobile();
 
-  Widget buildPageWebsiteDesktop() =>
-      WatchBuilder(
-        gamestream.network.region,
-        (ConnectionRegion region) {
-          return Center(
+  void showWebsitePageRegion(){
+     websitePage.value = WebsitePage.Region;
+  }
+
+  void showWebsitePageGames(){
+    websitePage.value = WebsitePage.Games;
+  }
+
+  Widget buildPageWebsiteDesktop() {
+    return Center(
+      child: WatchBuilder(websitePage, (websitePage){
+        if (websitePage == WebsitePage.Region){
+          return SelectRegionColumn();
+        }
+        return WatchBuilder(gamestream.network.region, (ConnectionRegion? region) {
+          if (region == null) return SelectRegionColumn();
+
+          final regionButton = onPressed(
+            action: showWebsitePageRegion,
             child: Container(
-              width: 300,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+              color: Colors.white12,
+              alignment: Alignment.center,
+              padding: GameStyle.Container_Padding,
+              child: Row(
                 children: [
-                  buildLogoGameStream(),
-                  height16,
-                  SelectRegionColumn(),
-                  SelectGameTypeColumn(),
+                  text(formatEnumName(region.name)),
                 ],
               ),
             ),
           );
+
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  buildLogoGameStream(),
+                  width32,
+                  regionButton,
+                ],
+              ),
+              height16,
+              SelectGameTypeColumn(),
+            ],
+          );
         }
-      );
+        );
+      }),
+    );
+
+  }
 
   void openUrlYoutube() =>
       launchUrl(Uri.parse('https://www.youtube.com/@gamestream.online'));
@@ -229,30 +263,8 @@ class GameWebsite extends Game {
     );
   }
 
-
   Widget buildLogoGameStream(){
     return text("GAMESTREAM ONLINE", size: 40);
-  }
-
-  Widget buildLogoSquigitalGames() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Container(
-            width: 64,
-            height: 64,
-            child: FittedBox(child: Image.asset('images/squigital-logo.png'))),
-        Container(
-            margin: const EdgeInsets.only(right: 4),
-            child: Row(
-              children: [
-                text("SQUIGITAL GAMES", color: GameIsometricColors.white, size: 35),
-                // width4,
-                // text("GAMES", color: GameIsometricColors.white85, size: 35),
-              ],
-            )),
-      ],
-    );
   }
 
   Widget buildPageConnectionStatus(String message) =>
@@ -268,40 +280,6 @@ class GameWebsite extends Game {
         child: child,
       );
 
-  Widget buildColumnRegions() =>
-      SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: (engine.isLocalHost ? ConnectionRegion.values : SelectRegionColumn.Live_Regions)
-              .map((ConnectionRegion region) =>
-              onPressed(
-                action: () {
-                  actionSelectRegion(region);
-                  if (engine.deviceIsPhone) {
-                    gamestream.network.connectToGameAeon();
-                  } else {
-                    gamestream.network.connectToGameCombat();
-                  }
-                },
-                child: MouseOver(builder: (bool mouseOver) {
-                  return Container(
-                    padding: const EdgeInsets.fromLTRB(16, 4, 0, 4),
-                    margin: const EdgeInsets.symmetric(vertical: 4),
-                    color: mouseOver ? Colors.green : Colors.white10,
-                    child: text(
-                        '${engine.enumString(region)}',
-                        size: 24,
-                        color: mouseOver ? Colors.white : Colors.white60
-                    ),
-                  );
-                }),
-              ))
-              .toList(),
-        ),
-      );
-
-
   Widget buildInputCustomConnectionString() =>
       Container(
         width: 280,
@@ -315,17 +293,8 @@ class GameWebsite extends Game {
         ),
       );
 
-  Widget buildButtonSelectRegion(ConnectionRegion region) =>
-      Container(
-          height: 50,
-          child: text(region.name, onPressed: () => actionSelectRegion(region))
-      );
-
   Widget buildTextVersion() =>
       text('gamestream.online - v$version', color:  Colors.white60, size: FontSize.Regular);
-
-  void actionSelectRegion(ConnectionRegion value) =>
-      gamestream.network.region.value = value;
 
   void showDialogChangePublicName(){
     gamestream.games.website.dialog.value = WebsiteDialog.Change_Public_Name;
