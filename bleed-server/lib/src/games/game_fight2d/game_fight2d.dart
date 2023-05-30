@@ -9,6 +9,7 @@ import 'game_fight2d_player.dart';
 class GameFight2D extends Game<GameFight2DPlayer> {
   static const Minimum_Damage_Force_Hurt_Airborn = 15.0;
   static const Boundary_Y = 1000;
+  static const Max_Players = 4;
 
   final characters = <GameFight2DCharacter>[];
   final GameFight2DScene scene;
@@ -18,6 +19,8 @@ class GameFight2D extends Game<GameFight2DPlayer> {
       ..x = 500
       ..y = 200);
   }
+
+  bool get full => players.length >= Max_Players;
 
   @override
   GameFight2DPlayer createPlayer() {

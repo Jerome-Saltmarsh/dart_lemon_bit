@@ -883,7 +883,7 @@ class WebSocketConnection with ByteReader {
 
   Future joinGameFight2D() async {
     for (final game in engine.games) {
-      if (game is GameFight2D) {
+      if (game is GameFight2D && !game.full) {
         return joinGame(game);
       }
     }

@@ -44,7 +44,7 @@ class GameFight2DSceneGenerator {
     drawRectangle(
       x: 10,
       y: 7,
-      width: 6,
+      width: 10,
       height: 2,
       type: GameFight2DNodeType.Grass,
     );
@@ -52,6 +52,10 @@ class GameFight2DSceneGenerator {
     drawRectangle(x: 0, y: height - 3, width: width, height: 3, type: GameFight2DNodeType.Grass);
     drawRectangle(x: 5, y: height - 3, width: 8, height: 3, type: GameFight2DNodeType.Empty);
     drawRectangle(x: 6, y: height - 7, width: 6, height: 2, type: GameFight2DNodeType.Grass);
+    drawRectangle(x: 25, y: height - 12, width: 12, height: 3, type: GameFight2DNodeType.Grass);
+    drawRectangle(x: 40, y: height - 15, width: 10, height: 2, type: GameFight2DNodeType.Grass);
+
+    drawRectangle(x: 35, y: height - 20, width: 5, height: 2, type: GameFight2DNodeType.Grass);
 
     return GameFight2DScene(tiles: tiles, width: width, height: height);
   }

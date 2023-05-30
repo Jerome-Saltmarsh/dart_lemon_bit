@@ -17,7 +17,8 @@ ctrl + shift + e    : view recent changes
 [x] improve strike animation
 [x] fix fall through ground on hit
 [x] fix damage text
-[ ] increase scene size
+[x] increase scene size
+[x] max players 4
 [ ] improve airborn strike
 [ ] zombie bot
 [ ] create 30 second video
