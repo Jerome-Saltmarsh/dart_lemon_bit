@@ -19,10 +19,10 @@ class GameFight2DScene {
 
   int getTileTypeAtXY(double x, double y) {
     if (x < 0 || y < 0) {
-      return GameFight2DNodeType.Out_Of_Bounds;
+      return GameFight2DNodeType.Empty;
     }
     if (x > widthLength || y > heightLength) {
-      return GameFight2DNodeType.Out_Of_Bounds;
+      return GameFight2DNodeType.Empty;
     }
 
     final nodeX = x ~/ tileSize;
