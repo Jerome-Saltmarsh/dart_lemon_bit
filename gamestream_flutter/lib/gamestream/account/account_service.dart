@@ -36,14 +36,14 @@ class AccountService {
       gamestream.games.gameWebsite.setError("Name entered is empty");
       return;
     }
-    gamestream.games.gameWebsite.operationStatus.value = OperationStatus.Changing_Public_Name;
+    gamestream.operationStatus.value = OperationStatus.Changing_Public_Name;
     final response = await firestoreService
         .changePublicName(userId: account.userId, publicName: value)
         .catchError((error) {
       gamestream.games.gameWebsite.setError(error.toString());
       throw error;
     });
-    gamestream.games.gameWebsite.operationStatus.value = OperationStatus.None;
+    gamestream.operationStatus.value = OperationStatus.None;
 
     switch (response) {
       case ChangeNameStatus.Success:
@@ -74,10 +74,10 @@ class AccountService {
       gamestream.games.gameWebsite.setError('Account is null');
       return;
     }
-    gamestream.games.gameWebsite.operationStatus.value = OperationStatus.Cancelling_Subscription;
+    gamestream.operationStatus.value = OperationStatus.Cancelling_Subscription;
     await firestoreService.cancelSubscription(account.userId);
     await updateAccount();
-    gamestream.games.gameWebsite.operationStatus.value = OperationStatus.None;
+    gamestream.operationStatus.value = OperationStatus.None;
   }
 
   static Future updateAccount() async {
@@ -87,11 +87,11 @@ class AccountService {
       return;
     }
 
-    gamestream.games.gameWebsite.operationStatus.value = OperationStatus.Updating_Account;
+    gamestream.operationStatus.value = OperationStatus.Updating_Account;
     gamestream.games.gameWebsite.account.value = await firestoreService.findUserById(account.userId).catchError((error){
       return null;
     });
-    gamestream.games.gameWebsite.operationStatus.value = OperationStatus.None;
+    gamestream.operationStatus.value = OperationStatus.None;
   }
 
   static Future login(DataAuthentication authentication){
@@ -110,15 +110,15 @@ class AccountService {
     required String privateName
   }) async {
     print("actions.signInOrCreateAccount()");
-    gamestream.games.gameWebsite.operationStatus.value = OperationStatus.Authenticating;
+    gamestream.operationStatus.value = OperationStatus.Authenticating;
     final account = await firestoreService.findUserById(userId).catchError((error){
       throw error;
     });
     if (account == null){
       print("No account found. Creating new account");
-      gamestream.games.gameWebsite.operationStatus.value = OperationStatus.Creating_Account;
+      gamestream.operationStatus.value = OperationStatus.Creating_Account;
       await firestoreService.createAccount(userId: userId, email: email, privateName: privateName);
-      gamestream.games.gameWebsite.operationStatus.value = OperationStatus.Authenticating;
+      gamestream.operationStatus.value = OperationStatus.Authenticating;
       gamestream.games.gameWebsite.account.value = await firestoreService.findUserById(userId);
       if (gamestream.games.gameWebsite.account.value == null){
         throw Exception("failed to find new account");
@@ -129,7 +129,7 @@ class AccountService {
       print("Existing Account found");
       gamestream.games.gameWebsite.account.value = account;
     }
-    gamestream.games.gameWebsite.operationStatus.value = OperationStatus.None;
+    gamestream.operationStatus.value = OperationStatus.None;
   }
 
   static void openStripeCheckout() {

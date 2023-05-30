@@ -20,24 +20,25 @@ import 'enums/website_dialog.dart';
 import 'enums/website_page.dart';
 
 class GameWebsite extends Game {
+  static const Icon_Size = 25.0;
+  static const Padding = 16.0;
+
+  final websitePage = Watch(WebsitePage.Games);
   final signInSuggestionVisible = Watch(false);
   final dialog = Watch(WebsiteDialog.Games);
   final customConnectionStrongController = TextEditingController();
-  static const Icon_Size = 25.0;
-  final operationStatus = Watch(OperationStatus.None);
   late final account = Watch<Account?>(null, onChanged: onChangedAccount);
   late final visitCount = Watch(0, onChanged: onChangedVisitCount);
   final download = Watch(0.0);
   final debug = true;
   final isVisibleDialogCustomRegion = Watch(false);
   final colorRegion = Colors.orange;
-  static const Padding = 16.0;
   final dateFormat = DateFormat(DateFormat.YEAR_MONTH_DAY);
   final errorMessageEnabled = Watch(true);
   
   @override
   void drawCanvas(Canvas canvas, Size size) {
-    // TODO: implement drawCanvas
+
   }
 
   @override
@@ -48,7 +49,7 @@ class GameWebsite extends Game {
 
   @override
   void renderForeground(Canvas canvas, Size size) {
-    // TODO: implement renderForeground
+
   }
 
   @override
@@ -63,8 +64,6 @@ class GameWebsite extends Game {
   String formatDate(DateTime value){
     return dateFormat.format(value.toLocal());
   }
-
-  final websitePage = Watch(WebsitePage.Games);
 
   void setError(String message){
     WebsiteState.error.value = message;
@@ -84,7 +83,7 @@ class GameWebsite extends Game {
   @override
   Widget buildUI(BuildContext context) => Stack(
       children: [
-        watch(operationStatus, buildOperationStatus),
+        watch(gamestream.operationStatus, buildOperationStatus),
         buildWatchErrorMessage(),
       ]);
 

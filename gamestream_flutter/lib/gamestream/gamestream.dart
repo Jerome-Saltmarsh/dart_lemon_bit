@@ -4,6 +4,7 @@ import 'package:gamestream_flutter/gamestream/network/functions/detect_connectio
 import 'package:gamestream_flutter/library.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'enums/operation_status.dart';
 import 'network/game_network.dart';
 import 'server_response_reader.dart';
 
@@ -16,6 +17,7 @@ class Gamestream {
    final audio = GameAudio();
    final games = Games();
    final animation = GameAnimation();
+   final operationStatus = Watch(OperationStatus.None);
 
    final serverResponseReader = ServerResponseReader();
    late final GameNetwork network;
