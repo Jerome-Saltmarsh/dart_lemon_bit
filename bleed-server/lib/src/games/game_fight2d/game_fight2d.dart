@@ -1,5 +1,4 @@
 
-import 'package:bleed_server/common/src/fight2d/game_fight2d_events.dart';
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/games/game_fight2d/game_fight2d_bot.dart';
 import 'package:bleed_server/src/games/game_fight2d/game_fight2d_scene.dart';
@@ -9,7 +8,6 @@ import 'game_fight2d_character.dart';
 import 'game_fight2d_player.dart';
 
 class GameFight2D extends Game<GameFight2DPlayer> {
-
   final characters = <GameFight2DCharacter>[];
   final GameFight2DScene scene;
 
@@ -25,6 +23,7 @@ class GameFight2D extends Game<GameFight2DPlayer> {
   GameFight2DPlayer createPlayer() {
     final player = GameFight2DPlayer(this);
     player.writeScene();
+    player.writePlayerEdit();
     player.x = randomBetween(0, scene.widthLength);
     player.y = 0;
     characters.add(player);
@@ -330,7 +329,7 @@ class GameFight2D extends Game<GameFight2DPlayer> {
 
   void applyCharacterSceneCollision(GameFight2DCharacter character) {
        var tileType = scene.getTileTypeAtXY(character.x, character.y + 50.0);
-       if (tileType == Fight2DNodeType.Grass) {
+       if (tileType == GameFight2DNodeType.Grass) {
          if (!character.grounded) {
            onGrounded(character);
 
@@ -338,7 +337,7 @@ class GameFight2D extends Game<GameFight2DPlayer> {
              emitEventPunch(character);
            }
          }
-         while (scene.getTileTypeAtXY(character.x, character.y + 49.0) == Fight2DNodeType.Grass){
+         while (scene.getTileTypeAtXY(character.x, character.y + 49.0) == GameFight2DNodeType.Grass){
             character.y--;
          }
          if (character.velocityY > 0) {

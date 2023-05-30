@@ -1,23 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_ui.dart';
 import 'package:gamestream_flutter/language_utils.dart';
 import 'package:gamestream_flutter/library.dart';
 
-import 'isometric/game_isometric_ui.dart';
+import 'game_fight2d_player.dart';
 
-class GameFight2DPlayer {
-  var x = 0.0;
-  var y = 0.0;
-  var state = GameFight2DCharacterState.Idle;
-}
 
 class GameFight2D extends Game {
-  final renderCharacterState = WatchBool(false);
-  var playerEditMode = WatchBool(false);
-  var charactersTotal = 0;
+  static const length = 1000;
 
+  final renderCharacterState = WatchBool(false);
   final tutorialVisible = WatchBool(true);
 
-  static const length = 1000;
   final characterState = Uint8List(length);
   final characterDirection = Uint8List(length);
   final characterDamage = Uint16List(length);
@@ -25,6 +19,7 @@ class GameFight2D extends Game {
   final characterPositionX = Float32List(length);
   final characterPositionY = Float32List(length);
 
+  var charactersTotal = 0;
   var sceneWidth = 0;
   var sceneHeight = 0;
   var sceneNodes = Uint8List(0);
@@ -33,9 +28,7 @@ class GameFight2D extends Game {
 
   int get sceneTotal => sceneWidth * sceneHeight;
 
-  GameFight2D(){
-    print('GameFight2D()');
-  }
+  GameFight2D();
 
   @override
   void drawCanvas(Canvas canvas, Size size) {
@@ -51,8 +44,8 @@ class GameFight2D extends Game {
          index++;
 
          final srcY = <int, double>{
-           Fight2DNodeType.Empty: 0,
-           Fight2DNodeType.Grass: 34,
+           GameFight2DNodeType.Empty: 0,
+           GameFight2DNodeType.Grass: 34,
          }[nodeType] ?? 0;
 
          engine.renderSprite(
@@ -192,6 +185,18 @@ class GameFight2D extends Game {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         text("TUTORIAL", size: 20, color: Colors.white70),
+                        watch(tutorialVisible, (bool renderName) => GameIsometricUI.buildIconCheckbox(renderName)),
+                      ],
+                    ),
+                  ),
+                ),
+                onPressed(
+                  action: tutorialVisible.toggle,
+                  child: Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        text("EDIT", size: 20, color: Colors.white70),
                         watch(tutorialVisible, (bool renderName) => GameIsometricUI.buildIconCheckbox(renderName)),
                       ],
                     ),

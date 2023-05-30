@@ -8,18 +8,6 @@ import 'package:bleed_server/src/classes/src/player.dart';
 import 'package:bleed_server/src/system.dart';
 import 'package:lemon_math/library.dart';
 
-///   SUB GOALS
-///     LEFT CLICK: WEAPON
-///     RIGHT CLICK: POWER
-///     LEVEL UP
-///     CAPTURE POINTS
-///     HIGH SCORE
-///
-///   UPGRADE WEAPON
-///   UPGRADE POWER
-///   UPGRADE PASSIVE
-///
-///   TWO TEAMS
 class GameCombat extends GameIsometric {
   // constants
   static final Player_Respawn_Duration  = Engine.Frames_Per_Second * (isLocalMachine ? 4 : 4);

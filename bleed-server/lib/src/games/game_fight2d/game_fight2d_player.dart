@@ -1,17 +1,26 @@
 import 'game_fight2d.dart';
 import 'game_fight2d_character.dart';
 
-import 'package:bleed_server/common/src/fight2d/game_fight2d_events.dart';
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/classes/src/player.dart';
+
+
 
 class GameFight2DPlayer extends Player with GameFight2DCharacter {
 
   late GameFight2D game;
-  var editMode = false;
+  var _edit = false;
 
   /// constructor
   GameFight2DPlayer(this.game);
+
+  bool get edit => _edit;
+
+  set mode(bool value){
+    if (_edit == value) return;
+    _edit = value;
+    writePlayerEdit();
+  }
 
   @override
   void writePlayerGame() {
@@ -19,15 +28,21 @@ class GameFight2DPlayer extends Player with GameFight2DCharacter {
     writePlayer();
   }
 
-  void writePlayer(){
+  void writePlayer() {
     writeByte(ServerResponse.Fight2D);
-    writeByte(Fight2DResponse.Player);
+    writeByte(GameFight2DResponse.Player);
     writeCharacter(this);
+  }
+
+  void writePlayerEdit() {
+    writeByte(ServerResponse.Fight2D);
+    writeByte(GameFight2DResponse.Player_Edit);
+    writeBool(edit);
   }
 
   void writeCharacters() {
     writeByte(ServerResponse.Fight2D);
-    writeByte(Fight2DResponse.Characters);
+    writeByte(GameFight2DResponse.Characters);
     writeUInt16(game.characters.length);
     for (final character in game.characters) {
       writeByte(character.state);
@@ -48,7 +63,7 @@ class GameFight2DPlayer extends Player with GameFight2DCharacter {
   void writeScene() {
     final scene = game.scene;
     writeByte(ServerResponse.Fight2D);
-    writeByte(Fight2DResponse.Scene);
+    writeByte(GameFight2DResponse.Scene);
     writeUInt16(scene.width);
     writeUInt16(scene.height);
     writeBytes(scene.tiles);
@@ -82,7 +97,7 @@ class GameFight2DPlayer extends Player with GameFight2DCharacter {
 
   void writeEvent({required int event, required int x, required int y}){
     writeByte(ServerResponse.Fight2D);
-    writeByte(Fight2DResponse.Event);
+    writeByte(GameFight2DResponse.Event);
     writeByte(event);
     writeInt16(x);
     writeInt16(y);

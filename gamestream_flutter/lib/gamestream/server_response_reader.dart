@@ -1,10 +1,9 @@
 import 'package:archive/archive.dart';
-import 'package:gamestream_flutter/gamestream/games/game_fight2d.dart';
+import 'package:gamestream_flutter/gamestream/games/fight2d/game_fight2d.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_scene.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/structure/business/handle_server_response_game_error.dart';
 import 'package:lemon_byte/byte_reader.dart';
-import 'package:bleed_common/src/fight2d/game_fight2d_events.dart';
 
 class ServerResponseReader with ByteReader {
   final bufferSize = Watch(0);
@@ -139,22 +138,25 @@ class ServerResponseReader with ByteReader {
   void readServerResponseFight2D(GameFight2D game) {
     final fight2DResponse = readByte();
     switch (fight2DResponse) {
-      case Fight2DResponse.Characters:
-        readFight2DResponseCharacters(game);
+      case GameFight2DResponse.Characters:
+        readGameFight2DResponseCharacters(game);
         break;
-      case Fight2DResponse.Player:
+      case GameFight2DResponse.Player:
         final player = game.player;
         player.state = readByte();
         player.x = readInt16().toDouble();
         player.y = readInt16().toDouble();
         break;
-      case Fight2DResponse.Event:
+      case GameFight2DResponse.Event:
         readFight2DEvent();
         break;
-      case Fight2DResponse.Scene:
+      case GameFight2DResponse.Scene:
         game.sceneWidth = readUInt16();
         game.sceneHeight = readUInt16();
         game.sceneNodes = readUint8List(game.sceneTotal);
+        break;
+      case GameFight2DResponse.Player_Edit:
+        game.player.edit.value = readBool();
         break;
       default:
         throw Exception('unknown fight2DResponse $fight2DResponse');
@@ -774,7 +776,7 @@ class ServerResponseReader with ByteReader {
      }
   }
 
-  void readFight2DResponseCharacters(GameFight2D game) {
+  void readGameFight2DResponseCharacters(GameFight2D game) {
     final totalPlayers = readUInt16();
     assert (totalPlayers < GameFight2D.length);
     game.charactersTotal = totalPlayers;

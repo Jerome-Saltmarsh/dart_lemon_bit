@@ -22,7 +22,7 @@ class GameFight2DScene {
     var index = 0;
     for (var x = 0; x < width; x++){
       for (var y = 0; y < height; y++){
-        tiles[index] = y > height - 3 ? Fight2DNodeType.Grass : Fight2DNodeType.Empty;
+        tiles[index] = y > height - 3 ? GameFight2DNodeType.Grass : GameFight2DNodeType.Empty;
         index++;
       }
     }
@@ -30,10 +30,10 @@ class GameFight2DScene {
 
   int getTileTypeAtXY(double x, double y) {
     if (x < 0 || y < 0) {
-      return Fight2DNodeType.Out_Of_Bounds;
+      return GameFight2DNodeType.Out_Of_Bounds;
     }
     if (x > widthLength || y > heightLength) {
-      return Fight2DNodeType.Out_Of_Bounds;
+      return GameFight2DNodeType.Out_Of_Bounds;
     }
 
     final nodeX = x ~/ tileSize;

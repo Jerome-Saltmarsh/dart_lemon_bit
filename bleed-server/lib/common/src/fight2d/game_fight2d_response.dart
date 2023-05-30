@@ -1,9 +1,10 @@
 
-class Fight2DResponse {
+class GameFight2DResponse {
    static const Characters = 0;
    static const Scene      = 1;
    static const Player     = 2;
    static const Event      = 3;
+   static const Player_Edit = 4;
 }
 
 class GameFight2DDirection {

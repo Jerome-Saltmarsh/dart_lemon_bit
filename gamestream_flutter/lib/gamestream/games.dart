@@ -1,6 +1,6 @@
 
 import 'games/game_cube3d.dart';
-import 'games/game_fight2d.dart';
+import 'games/fight2d/game_fight2d.dart';
 import 'games/website/game_website.dart';
 import 'games/isometric/game_isometric.dart';
 
