@@ -147,6 +147,45 @@ class GameFight2D extends Game<GameFight2DPlayer> {
   void updateCharacters() {
     for (final character in characters) {
       updateCharacter(character);
+      if (character is GameFight2DBot) {
+        updateGameFight2DBot(character);
+      }
+    }
+  }
+
+  void updateGameFight2DBot(GameFight2DBot bot) {
+    if (bot.busy) return;
+
+    if (bot.target == null) {
+       for (final character in characters) {
+         if (character == bot) continue;
+         bot.target = character;
+         break;
+       }
+    }
+
+    final target = bot.target;
+    if (target == null) {
+      bot.state = GameFight2DCharacterState.Idle;
+      return;
+    }
+
+    if (bot.x < target.x){
+      bot.faceRight();
+      bot.state = GameFight2DCharacterState.Running;
+    } else {
+      bot.faceLeft();
+      bot.state = GameFight2DCharacterState.Running;
+    }
+
+    final distanceX = (bot.x - target.x).abs();
+    final distanceY = (bot.y - target.y).abs();
+
+    if (distanceX < GameFight2DCharacter.Strike_Range_X){
+      if (distanceY < GameFight2DCharacter.Strike_Range_Y){
+          bot.state = GameFight2DCharacterState.Striking;
+          return;
+      }
     }
   }
 
@@ -196,22 +235,19 @@ class GameFight2D extends Game<GameFight2DPlayer> {
     if (character.stateDuration != character.strikeFrame) return;
 
     for (final otherCharacter in characters) {
-      const rangeX = 75.0;
-      const rangeY = 75.0;
-
       if (otherCharacter == character) continue;
       final xDiff = character.x - otherCharacter.x;
-      if (rangeX < xDiff.abs()) continue;
+      if (GameFight2DCharacter.Strike_Range_X < xDiff.abs()) continue;
       final yDiff = character.y - otherCharacter.y;
-      if (rangeY < yDiff.abs()) continue;
+      if (GameFight2DCharacter.Strike_Range_Y < yDiff.abs()) continue;
       if (character.facingLeft) {
-        if (xDiff > 0 && xDiff < rangeX) {
+        if (xDiff > 0 && xDiff < GameFight2DCharacter.Strike_Range_X) {
           applyHit(src: character, target: otherCharacter);
         }
         return;
       }
       if (xDiff > 0) continue;
-      if (xDiff < rangeX) {
+      if (xDiff < GameFight2DCharacter.Strike_Range_X) {
         applyHit(src: character, target: otherCharacter);
       }
     }
@@ -274,12 +310,10 @@ class GameFight2D extends Game<GameFight2DPlayer> {
     if (character.stateDuration != character.strikeFrame) return;
     for (final otherCharacter in characters) {
       if (otherCharacter == character) continue;
-      const rangeX = 75.0;
-      const rangeY = 75.0;
       final xDiff = character.x - otherCharacter.x;
-      if (rangeX < xDiff.abs()) continue;
+      if (GameFight2DCharacter.Strike_Range_X < xDiff.abs()) continue;
       final yDiff = character.y - otherCharacter.y;
-      if (rangeY < yDiff.abs()) continue;
+      if (GameFight2DCharacter.Strike_Range_Y < yDiff.abs()) continue;
       applyHit(src: character, target: otherCharacter);
     }
   }

@@ -19,8 +19,9 @@ ctrl + shift + e    : view recent changes
 [x] fix damage text
 [x] increase scene size
 [x] max players 4
-[ ] improve airborn strike
 [ ] zombie bot
+[ ] optimization use atlas to render text
+[ ] improve airborn strike
 [ ] create 30 second video
 [ ] publish video
 

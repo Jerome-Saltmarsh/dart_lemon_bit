@@ -19,6 +19,8 @@ mixin class GameFight2DCharacter {
   static const maxRunSpeed = 6.0;
   static const Max_Jump_Velocity = 3.0;
   static const Damage_Force_Ratio = 0.1;
+  static const Strike_Range_X = 75.0;
+  static const Strike_Range_Y = 75.0;
 
   final strikeFrame = 5;
   final strikeSwingFrame = 3;
