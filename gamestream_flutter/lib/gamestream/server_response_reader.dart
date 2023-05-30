@@ -2,7 +2,6 @@ import 'package:archive/archive.dart';
 import 'package:gamestream_flutter/gamestream/games/fight2d/game_fight2d.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_scene.dart';
 import 'package:gamestream_flutter/library.dart';
-import 'package:gamestream_flutter/structure/business/handle_server_response_game_error.dart';
 import 'package:lemon_byte/byte_reader.dart';
 
 class ServerResponseReader with ByteReader {
@@ -123,8 +122,7 @@ class ServerResponseReader with ByteReader {
           break;
         case ServerResponse.Game_Error:
           final errorTypeIndex = readByte();
-          final errorType = parseIndexToGameError(errorTypeIndex);
-          handleServerResponseGameError(errorType);
+          gamestream.error.value = parseIndexToGameError(errorTypeIndex);
           return;
         default:
           print("read error; index: $index, previous-server-response: $previousServerResponse");
@@ -195,7 +193,8 @@ class ServerResponseReader with ByteReader {
   }
 
   void readServerResponseInfo() {
-    gamestream.games.isometric.serverState.setMessage(readString());
+    final info = readString();
+    print(info);
   }
 
   void readServerResponseEnvironment() {

@@ -45,7 +45,6 @@ class GameIsometricServerState {
   final lightningType = Watch(LightningType.Off);
   final watchTimePassing = Watch(false);
   final windTypeAmbient = Watch(WindType.Calm, onChanged: GameEvents.onChangedWindType);
-  final error = Watch("invalid request", onChanged: GameEvents.onChangedError);
   final gameStatus = Watch(GameStatus.Playing);
 
   final playerBelt1_ItemType = Watch(ItemType.Empty);
@@ -211,13 +210,7 @@ class GameIsometricServerState {
   void removeGameObjectById(int id )=>
       gameObjects.removeWhere((element) => element.id == id);
 
-  void setMessage(String value){
-    error.value = "";
-    error.value = value;
-  }
-
   void sortPlayerScores(){
-    // if (playerScoresInOrder) return;
     playerScores.sort(PlayerScore.compare);
   }
 

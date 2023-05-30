@@ -1,4 +1,5 @@
 
+import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/network/functions/detect_connection_region.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -10,6 +11,7 @@ class Gamestream {
    late final gameType = Watch(GameType.Website, onChanged: _onChangedGameType);
    late final game = Watch<Game>(games.gameWebsite, onChanged: _onChangedGame);
 
+   late final error = Watch<GameError?>(null, onChanged: _onChangedGameError);
    final io = GameIO();
    final audio = GameAudio();
    final games = Games();
@@ -45,6 +47,24 @@ class Gamestream {
      engine.cursorType.value = CursorType.Basic;
      gamestream.io.addListeners();
      gamestream.io.detectInputMode();
+
+     gamestream.error.onChanged((GameError? error) {
+         if (error == null) return;
+         showDialog(context: engine.buildContext, builder: (dialogContext){
+            return AlertDialog(
+              backgroundColor: GameStyle.Container_Color,
+              contentPadding: const EdgeInsets.all(16),
+              alignment: Alignment.center,
+              content: text(error.name),
+              actions: [
+                onPressed(child: text("OKAY"), action: () {
+                  Navigator.of(dialogContext).pop();
+                  this.error.value = null;
+                }),
+              ],
+            );
+         });
+     });
 
      if (engine.isLocalHost) {
        gamestream.games.gameWebsite.region.value = ConnectionRegion.LocalHost;
@@ -136,5 +156,19 @@ class Gamestream {
      print(error.toString());
      print(stack);
      WebsiteState.error.value = error.toString();
+   }
+
+   void _onChangedGameError(GameError? gameError){
+     print("_onChangedGameError($gameError)");
+     if (gameError == null) return;
+     ClientActions.playAudioError();
+     switch (gameError) {
+       case GameError.Unable_To_Join_Game:
+         WebsiteState.error.value = 'unable to join game';
+         gamestream.network.disconnect();
+         break;
+       default:
+         break;
+     }
    }
 }
