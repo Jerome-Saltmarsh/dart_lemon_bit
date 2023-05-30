@@ -67,6 +67,7 @@ class GameFight2D extends Game {
       const frameSize = 256.0;
       const runFrames = [3, 4, 5, 6];
       const framesStrike = [1, 2];
+      const framesJump = [26, 8];
       const airbornStrikeDown = [15, 16];
       const airbornStrikeUp = [17, 18];
       const framesRolling = [20, 21, 22, 23, 24, 0];
@@ -79,7 +80,7 @@ class GameFight2D extends Game {
           GameFight2DCharacterState.Running => runFrames[animationFrame % 4],
           GameFight2DCharacterState.Striking => capIndex(framesStrike, animationFrame),
           GameFight2DCharacterState.Running_Strike => 7,
-          GameFight2DCharacterState.Jumping => 8,
+          GameFight2DCharacterState.Jumping => capIndex(framesJump, animationFrame),
           GameFight2DCharacterState.Airborn_Strike => 9,
           GameFight2DCharacterState.Crouching => 10,
           GameFight2DCharacterState.Striking_Up => 11,
