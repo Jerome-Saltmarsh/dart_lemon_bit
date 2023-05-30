@@ -11,8 +11,9 @@ ctrl + shift + e    : view recent changes
 [x] strike down hit
 [x] audio volume distance
 [x] remove disconnected players
-[x] fix platform collision 
-[ ] fix damage force
+[x] fix platform collision
+[x] fix damage force
+[ ] zombie bot
 [ ] create 30 second video
 [ ] publish video
 

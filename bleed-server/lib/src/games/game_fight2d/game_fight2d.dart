@@ -8,14 +8,16 @@ import 'game_fight2d_character.dart';
 import 'game_fight2d_player.dart';
 
 class GameFight2D extends Game<GameFight2DPlayer> {
+  static const Minimum_Damage_Force_Hurt_Airborn = 15.0;
   static const Boundary_Y = 1000;
+
   final characters = <GameFight2DCharacter>[];
   final GameFight2DScene scene;
 
   GameFight2D({required this.scene}) : super(gameType: GameType.Fight2D) {
     characters.add(
       GameFight2DBot()
-        ..x = 100
+        ..x = 500
         ..y = 200
     );
   }
@@ -192,7 +194,6 @@ class GameFight2D extends Game<GameFight2DPlayer> {
     emitCharacterStrikeSwing(character);
     if (character.stateDuration != character.strikeFrame) return;
 
-    var strikeHit = false;
     for (final otherCharacter in characters){
       const rangeX = 75.0;
       const rangeY = 75.0;
@@ -202,44 +203,16 @@ class GameFight2D extends Game<GameFight2DPlayer> {
       if (rangeX < xDiff.abs()) continue;
       final yDiff = character.y - otherCharacter.y;
       if (rangeY < yDiff.abs()) continue;
-      var force = character.strikeDamage + otherCharacter.damageForce;
       if (character.facingLeft) {
         if (xDiff > 0 && xDiff < rangeX) {
-          if (character.state == GameFight2DCharacterState.Running_Strike){
-            otherCharacter.hurtAirborn();
-            otherCharacter.accelerationY -= force;
-            otherCharacter.damage += character.runningStrikeDamage;
-          } else {
-            otherCharacter.hurt();
-            otherCharacter.damage += character.strikeDamage;
-          }
-          otherCharacter.accelerationX -= force;
-          strikeHit = true;
+          applyHit(src: character, target: otherCharacter);
         }
-      } else {
-        if (xDiff > 0) continue;
-        if (xDiff < rangeX) {
-          otherCharacter.accelerationX += force;
-          switch (character.state) {
-            case GameFight2DCharacterState.Running_Strike:
-              otherCharacter.hurtAirborn();
-              otherCharacter.accelerationY -= force;
-              otherCharacter.damage += 5;
-              strikeHit = true;
-              break;
-            default:
-              otherCharacter.hurt();
-              strikeHit = true;
-              otherCharacter.damage += 5;
-              break;
-          }
-
-        }
+        return;
       }
-    }
-
-    if (strikeHit){
-      emitEvent(character: character, event: GameFight2DEvents.Punch);
+      if (xDiff > 0) continue;
+      if (xDiff < rangeX) {
+        applyHit(src: character, target: otherCharacter);
+      }
     }
   }
 
@@ -250,15 +223,11 @@ class GameFight2D extends Game<GameFight2DPlayer> {
       if (otherCharacter == character) continue;
       const rangeX = 75.0;
       const rangeY = 75.0;
-      final force = 20 + otherCharacter.damage;
       final xDiff = character.x - otherCharacter.x;
       if (rangeX < xDiff.abs()) continue;
       final yDiff = character.y - otherCharacter.y;
       if (rangeY < yDiff.abs()) continue;
-      otherCharacter.hurtAirborn();
-      otherCharacter.accelerationY -= force;
-      otherCharacter.damage += 5;
-      emitEventPunch(character);
+      applyHit(src: character, target: otherCharacter);
     }
   }
 
@@ -279,14 +248,7 @@ class GameFight2D extends Game<GameFight2DPlayer> {
       final yDiff = character.y - otherCharacter.y;
       if (yDiff > 0) continue;
       if (yDiff < -rangeY) continue;
-      otherCharacter.hurtAirborn();
-      otherCharacter.damage += 5;
-      if (otherCharacter.grounded) {
-        otherCharacter.accelerationY -= 20;
-      } else {
-        otherCharacter.accelerationY += 20;
-      }
-      emitEventPunch(character);
+      applyHit(src: character, target: otherCharacter);
     }
   }
 
@@ -302,17 +264,13 @@ class GameFight2D extends Game<GameFight2DPlayer> {
       final yDiff = character.y - otherCharacter.y;
       if (yDiff < 0) continue;
       if (yDiff > rangeY) continue;
-      otherCharacter.hurtAirborn();
-      otherCharacter.accelerationY -= 40;
-      otherCharacter.damage += 5;
-      emitEventPunch(character);
+      applyHit(src: character, target: otherCharacter);
     }
   }
 
   void applyCharacterHitBoxAirbornStrike(GameFight2DCharacter character){
     emitCharacterStrikeSwing(character);
     if (character.stateDuration != character.strikeFrame) return;
-    var emitPunch = false;
     for (final otherCharacter in characters) {
       if (otherCharacter == character) continue;
       const rangeX = 75.0;
@@ -321,15 +279,39 @@ class GameFight2D extends Game<GameFight2DPlayer> {
       if (rangeX < xDiff.abs()) continue;
       final yDiff = character.y - otherCharacter.y;
       if (rangeY < yDiff.abs()) continue;
-      otherCharacter.hurtAirborn();
-      otherCharacter.damage += 5;
-      otherCharacter.accelerationY -= 20;
-      otherCharacter.accelerationX += character.facingLeft ? -10 : 10;
-      emitPunch = true;
+      applyHit(src: character, target: otherCharacter);
     }
-    if (emitPunch){
-      emitEventPunch(character);
+  }
+
+  void applyHit({
+    required GameFight2DCharacter src,
+    required GameFight2DCharacter target,
+  }) {
+    final damage = src.stateDamage;
+    if (damage == 0) return;
+    final totalDamageForce = damage * target.damageForce;
+    target.accelerationX += src.stateAttackForceX * totalDamageForce;
+    final accelerationY = src.stateAttackForceY * totalDamageForce;
+
+    if (target.grounded){
+      target.accelerationY -= accelerationY.abs();
+    } else {
+      target.accelerationY += accelerationY;
     }
+
+    if (totalDamageForce > Minimum_Damage_Force_Hurt_Airborn) {
+      target.hurtAirborn();
+    } else {
+      target.hurt();
+    }
+    if (src.facingLeft) {
+      target.forceFaceRight();
+    } else {
+      target.forceFaceLeft();
+    }
+
+    target.damage += damage;
+    emitEventPunch(src);
   }
 
   void applyCharacterSceneCollision(GameFight2DCharacter character) {

@@ -1,6 +1,5 @@
 
 import 'package:bleed_server/gamestream.dart';
-import 'package:lemon_math/library.dart';
 
 mixin class GameFight2DCharacter {
   static const Running_Strike_Velocity = 5.0;
@@ -19,7 +18,7 @@ mixin class GameFight2DCharacter {
   static const fallAcceleration = 0.5;
   static const maxRunSpeed = 6.0;
   static const Max_Jump_Velocity = 3.0;
-  static const Damage_Force_Ratio = 0.2;
+  static const Damage_Force_Ratio = 0.1;
 
   final strikeFrame = 5;
   final strikeSwingFrame = 3;
@@ -55,12 +54,58 @@ mixin class GameFight2DCharacter {
     _direction = value;
   }
 
+  void forceFaceLeft(){
+    _direction = GameFight2DDirection.Left;
+  }
+
+  void forceFaceRight(){
+    _direction = GameFight2DDirection.Right;
+  }
+
   set jumpingRequested(bool value){
     if (_jumpingRequested == value) return;
     _jumpingRequested = value;
     if (_jumpingRequested) {
       jump();
     }
+  }
+
+  int get stateDamage => switch (state) {
+    GameFight2DCharacterState.Striking => 4,
+    GameFight2DCharacterState.Airborn_Strike_Up => 6,
+    GameFight2DCharacterState.Airborn_Strike => 4,
+    GameFight2DCharacterState.Airborn_Strike_Down => 6,
+    GameFight2DCharacterState.Running_Strike => 3,
+    GameFight2DCharacterState.Striking_Up => 6,
+    GameFight2DCharacterState.Crouching_Strike => 3,
+    _ => 0
+  };
+
+  double get stateAttackForceX {
+    final value = switch (state) {
+      GameFight2DCharacterState.Striking => 0.75,
+      GameFight2DCharacterState.Running_Strike => 0.75,
+      GameFight2DCharacterState.Striking_Up => 0.0,
+      GameFight2DCharacterState.Airborn_Strike => 1.0,
+      GameFight2DCharacterState.Airborn_Strike_Down => 0.0,
+      GameFight2DCharacterState.Airborn_Strike_Up => 0.0,
+      GameFight2DCharacterState.Crouching_Strike => 0.5,
+      _ => 0
+    }.toDouble();
+    return facingLeft ? -value : value;
+  }
+
+  double get stateAttackForceY {
+    return switch (state) {
+      GameFight2DCharacterState.Striking => -0.5,
+      GameFight2DCharacterState.Running_Strike => -0.5,
+      GameFight2DCharacterState.Striking_Up => -1.0,
+      GameFight2DCharacterState.Airborn_Strike => 0.2,
+      GameFight2DCharacterState.Airborn_Strike_Down => 1.0,
+      GameFight2DCharacterState.Airborn_Strike_Up => -1.0,
+      GameFight2DCharacterState.Crouching_Strike => -0.5,
+      _ => 0
+    }.toDouble();
   }
 
   bool get interruptable => stateDurationTotal == 0 || stateDuration > stateDurationTotal;
