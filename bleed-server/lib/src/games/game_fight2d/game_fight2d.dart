@@ -2,6 +2,7 @@ import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/games/game_fight2d/game_fight2d_bot.dart';
 import 'package:bleed_server/src/games/game_fight2d/game_fight2d_scene.dart';
 import 'package:lemon_math/functions/random_between.dart';
+import 'package:lemon_math/functions/random_int.dart';
 
 import 'game_fight2d_character.dart';
 import 'game_fight2d_player.dart';
@@ -155,6 +156,18 @@ class GameFight2D extends Game<GameFight2DPlayer> {
 
   void updateGameFight2DBot(GameFight2DBot bot) {
     if (bot.busy) return;
+
+    if (bot.aiPause > 0){
+      bot.aiPause--;
+      bot.state = GameFight2DCharacterState.Idle;
+      return;
+    }
+
+    bot.aiPauseNext--;
+    if (bot.aiPauseNext <= 0){
+      bot.aiPause = randomInt(50, 200);
+      bot.aiPauseNext = randomInt(50, 200);
+    }
 
     if (bot.target == null) {
        for (final character in characters) {
