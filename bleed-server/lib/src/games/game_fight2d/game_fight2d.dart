@@ -333,8 +333,17 @@ class GameFight2D extends Game<GameFight2DPlayer> {
   }
 
   void applyCharacterSceneCollision(GameFight2DCharacter character) {
+      if (character.velocityY < 0) {
+        character.ignoreCollisions = true;
+        character.grounded = false;
+        return;
+      }
+
        var tileType = scene.getTileTypeAtXY(character.x, character.y + 50.0);
        if (tileType == GameFight2DNodeType.Grass) {
+
+         if (character.ignoreCollisions) return;
+
          if (!character.grounded) {
            onGrounded(character);
 
@@ -350,6 +359,7 @@ class GameFight2D extends Game<GameFight2DPlayer> {
          }
        } else {
          character.grounded = false;
+         character.ignoreCollisions = false;
        }
   }
 

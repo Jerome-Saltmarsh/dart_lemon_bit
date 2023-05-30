@@ -4,6 +4,7 @@ import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/enums/operation_status.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_colors.dart';
+import 'package:gamestream_flutter/gamestream/network/enums/connection_status.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/mouse_over.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/ui/dialogs.dart';
@@ -100,6 +101,17 @@ class GameWebsite extends Game {
           ? buildFullscreen(child: text(operationStatus.name.replaceAll("_", " ")))
           : watch(gamestream.network.connectionStatus, buildConnectionStatus);
 
+  Widget buildConnectionStatus(ConnectionStatus connectionStatus) {
+    switch (connectionStatus) {
+      case ConnectionStatus.Connected:
+        return buildPageConnectionStatus(connectionStatus.name);
+      case ConnectionStatus.Connecting:
+        return buildPageConnectionStatus(connectionStatus.name);
+      default:
+        return buildNotConnected();
+    }
+  }
+
   Widget buildPageLoading(BuildContext context) {
     final _width = 300.0;
     final _height = 50.0;
@@ -160,7 +172,7 @@ class GameWebsite extends Game {
               buildLogoGameStream(),
               height16,
               SelectRegionColumn(),
-              GameTypeColumn(),
+              SelectGameTypeColumn(),
             ],
           ),
         ),

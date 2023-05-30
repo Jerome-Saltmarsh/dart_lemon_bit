@@ -31,6 +31,7 @@ mixin class GameFight2DCharacter {
   var stateDurationTotal = 0;
   var x = 0.0;
   var y = 0.0;
+  var ignoreCollisions = false;
   var accelerationX = 0.0;
   var accelerationY = 0.0;
   var velocityX = 0.0;

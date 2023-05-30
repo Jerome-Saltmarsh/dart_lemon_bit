@@ -2,8 +2,6 @@
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_colors.dart';
-import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_ui.dart';
-import 'package:gamestream_flutter/gamestream/network/enums/connection_status.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/ui/builders/build_layout.dart';
 import 'package:gamestream_flutter/ui/style.dart';
@@ -24,17 +22,6 @@ Widget buildErrorDialog(String message, {Widget? bottomRight}){
           bottomRight: bottomRight ?? text("okay", onPressed: () => WebsiteState.error.value = null)
       )
   );
-}
-
-Widget buildConnectionStatus(ConnectionStatus connectionStatus) {
-  switch (connectionStatus) {
-    case ConnectionStatus.Connected:
-      return GameIsometricUI.buildUI();
-    case ConnectionStatus.Connecting:
-      return gamestream.games.gameWebsite.buildPageConnectionStatus(connectionStatus.name);
-    default:
-      return gamestream.games.gameWebsite.buildNotConnected();
-  }
 }
 
 Widget margin({

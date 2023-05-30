@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/games/fight2d/game_fight2d_ui.dart';
-import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_ui.dart';
-import 'package:gamestream_flutter/gamestream/ui/widgets/bool_watch_builder_checkbox.dart';
 import 'package:gamestream_flutter/language_utils.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -88,7 +86,7 @@ class GameFight2D extends Game {
           GameFight2DCharacterState.Hurting_Airborn => 13,
           GameFight2DCharacterState.Airborn_Movement => 14,
           GameFight2DCharacterState.Idle_Airborn => 14,
-          GameFight2DCharacterState.Second_Jump => 8,
+          GameFight2DCharacterState.Second_Jump => capIndex(framesJump, animationFrame),
           GameFight2DCharacterState.Fall_Fast => 14,
           GameFight2DCharacterState.Crouching_Strike => 19,
           GameFight2DCharacterState.Airborn_Strike_Down => capIndex(airbornStrikeDown, animationFrame),
