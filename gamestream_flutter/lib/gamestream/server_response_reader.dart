@@ -125,7 +125,7 @@ class ServerResponseReader with ByteReader {
           final errorTypeIndex = readByte();
           final errorType = parseIndexToGameError(errorTypeIndex);
           handleServerResponseGameError(errorType);
-          break;
+          return;
         default:
           print("read error; index: $index, previous-server-response: $previousServerResponse");
           print(values);

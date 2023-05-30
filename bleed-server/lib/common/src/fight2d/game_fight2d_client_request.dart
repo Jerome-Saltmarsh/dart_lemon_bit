@@ -1,4 +1,4 @@
 
 class GameFight2DClientRequest {
-    static const Set_Player_Mode = 0;
+    static const Toggle_Player_Edit = 0;
 }

@@ -9,6 +9,7 @@ import 'package:bleed_server/src/classes/src/scene_writer.dart';
 import 'package:bleed_server/src/games/game_aeon.dart';
 import 'package:bleed_server/src/games/game_editor.dart';
 import 'package:bleed_server/src/games/game_fight2d/game_fight2d.dart';
+import 'package:bleed_server/src/games/game_fight2d/game_fight2d_player.dart';
 import 'package:bleed_server/src/games/game_fight2d/game_fight2d_scene.dart';
 import 'package:bleed_server/src/games/game_mobile_aoen.dart';
 import 'package:bleed_server/src/games/game_combat.dart';
@@ -233,7 +234,7 @@ class WebSocketConnection with ByteReader {
         if (player is! PlayerAeon) return;
         final attributeId = parseArg1(arguments);
         if (attributeId == null) {
-          sendGameError(GameError.Client_Request_Failed_Invalid_Arguments);
+          sendGameError(GameError.Invalid_Client_Request);
           return;
         }
 
@@ -261,7 +262,7 @@ class WebSocketConnection with ByteReader {
         if (!isLocalMachine && game is! GameEditor) return;
         final rainType = parse(arguments[1]);
         if (rainType == null || !isValidIndex(rainType, RainType.values)) {
-          sendGameError(GameError.Client_Request_Failed_Invalid_Arguments);
+          sendGameError(GameError.Invalid_Client_Request);
           return;
         }
 
@@ -279,7 +280,7 @@ class WebSocketConnection with ByteReader {
         if (!isLocalMachine && game is! GameEditor) return;
         final index = parse(arguments[1]);
         if (index == null || !isValidIndex(index, WindType.values)) {
-          sendGameError(GameError.Client_Request_Failed_Invalid_Arguments);
+          sendGameError(GameError.Invalid_Client_Request);
           return;
         }
         if (game is! GameIsometric) return;
@@ -290,7 +291,7 @@ class WebSocketConnection with ByteReader {
         if (!isLocalMachine && game is! GameEditor) return;
         final index = parse(arguments[1]);
         if (index == null || !isValidIndex(index, LightningType.values)) {
-          sendGameError(GameError.Client_Request_Failed_Invalid_Arguments);
+          sendGameError(GameError.Invalid_Client_Request);
           return;
         }
         if (game is! GameIsometric) return;
@@ -343,12 +344,12 @@ class WebSocketConnection with ByteReader {
         final sceneIndex = parse(arguments[1]);
 
         if (sceneIndex == null) {
-          sendGameError(GameError.Client_Request_Failed_Invalid_Arguments);
+          sendGameError(GameError.Invalid_Client_Request);
           return;
         }
 
         if (!isValidIndex(sceneIndex, teleportScenes)) {
-          sendGameError(GameError.Client_Request_Failed_Invalid_Arguments);
+          sendGameError(GameError.Invalid_Client_Request);
           return;
         }
         break;
@@ -360,10 +361,22 @@ class WebSocketConnection with ByteReader {
       case ClientRequest.Time_Set_Hour:
         if (!isLocalMachine && game is! GameEditor) return;
           final hour = parse(arguments[1]);
-          if (hour == null) return errorInvalidArg('hour required');
+          if (hour == null) return errorInvalidClientRequest();
           if (game is! GameIsometric) return;
           game.setHourMinutes(hour, 0);
           break;
+
+      case ClientRequest.Fight2D:
+        if (player is! GameFight2DPlayer) {
+          errorInvalidPlayerType();
+          return;
+        }
+        if (arguments.length < 2){
+          errorInvalidClientRequest();
+          return;
+        }
+        handleClientRequestFight2D(player, arguments);
+        break;
 
       default:
         break;
@@ -380,10 +393,14 @@ class WebSocketConnection with ByteReader {
   bool insufficientArgs(List args, int min){
      if (args.length < min) {
        // _player?.writeGameError(GameError.Invalid_Client_Request_Insufficient_Arguments);
-       sendGameError(GameError.Client_Request_Failed_Invalid_Arguments);
+       sendGameError(GameError.Invalid_Client_Request);
        return true;
      }
      return false;
+  }
+
+  void handleClientRequestFight2D(GameFight2DPlayer player, List<String> arguments){
+    errorInvalidClientRequest();
   }
 
   void handleRequestInventory(IsometricPlayer player, List<String> arguments){
@@ -391,7 +408,7 @@ class WebSocketConnection with ByteReader {
     if (player.deadBusyOrWeaponStateBusy) return;
     final inventoryRequest = parse(arguments[1]);
 
-    if (inventoryRequest == null) return errorInvalidArg('inventory request is null');
+    if (inventoryRequest == null) return errorInvalidClientRequest();
 
     switch (inventoryRequest) {
 
@@ -437,10 +454,10 @@ class WebSocketConnection with ByteReader {
         if (insufficientArgs(arguments, 4)) return;
         final indexFrom = parse(arguments[2]);
         final indexTo = parse(arguments[3]);
-        if (indexFrom == null) return errorInvalidArg('index from is null');
-        if (indexTo == null) return errorInvalidArg('index from is null');
-        if (indexFrom < 0) return errorInvalidArg('invalid inventory from index');
-        if (indexTo < 0) return errorInvalidArg('invalid inventory to index');
+        if (indexFrom == null) return errorInvalidClientRequest();
+        if (indexTo == null) return errorInvalidClientRequest();
+        if (indexFrom < 0) return errorInvalidClientRequest();
+        if (indexTo < 0) return errorInvalidClientRequest();
         player.inventorySwapIndexes(indexFrom, indexTo);
         break;
       case InventoryRequest.Equip:
@@ -464,15 +481,15 @@ class WebSocketConnection with ByteReader {
     final game = player.game;
 
     if (arguments.length < 2){
-      return errorInvalidArg('insufficient args');
+      return errorInvalidClientRequest();
     }
 
     final editRequestIndex = parse(arguments[1]);
     if (editRequestIndex == null){
-      return errorInvalidArg('editRequestIndex is null');
+      return errorInvalidClientRequest();
     }
     if (!isValidIndex(editRequestIndex, EditRequest.values)){
-       return errorInvalidArg('invalid edit request $editRequestIndex');
+       return errorInvalidClientRequest();
     }
     final editRequest = EditRequest.values[editRequestIndex];
 
@@ -501,13 +518,13 @@ class WebSocketConnection with ByteReader {
         const min = 5;
         final rows = parseArg2(arguments);
         if (rows == null) return;
-        if (rows < min) errorInvalidArg('rows < $min');
+        if (rows < min) errorInvalidClientRequest();
         final columns = parseArg3(arguments);
         if (columns == null) return;
-        if (columns < min) errorInvalidArg('columns < $min');
+        if (columns < min) errorInvalidClientRequest();
         final height = parseArg4(arguments);
         if (height == null) return;
-        if (height < min) errorInvalidArg('height < $min');
+        if (height < min) errorInvalidClientRequest();
         final altitude = parseArg5(arguments);
         if (altitude == null) return;
         final frequency = parseArg6(arguments);
@@ -580,12 +597,12 @@ class WebSocketConnection with ByteReader {
 
       case EditRequest.Modify_Canvas_Size:
         if (arguments.length < 3) {
-          return errorInsufficientArgs(3, arguments);
+          return errorInvalidClientRequest();
         }
         final modifyCanvasSizeIndex = parse(arguments[2]);
         if (modifyCanvasSizeIndex == null) return;
         if (!isValidIndex(modifyCanvasSizeIndex, RequestModifyCanvasSize.values)){
-          return errorInvalidArg('invalid modify canvas index $modifyCanvasSizeIndex');
+          return errorInvalidClientRequest();
         }
         final request = RequestModifyCanvasSize.values[modifyCanvasSizeIndex];
         if (player is! IsometricPlayer) return;
@@ -594,11 +611,11 @@ class WebSocketConnection with ByteReader {
 
       case EditRequest.Spawn_Zombie:
         if (arguments.length < 3) {
-          return errorInsufficientArgs(3, arguments);
+          return errorInvalidClientRequest();
         }
         final spawnIndex = parse(arguments[2]);
         if (spawnIndex == null) {
-          return errorInvalidArg('spawn index required');
+          return errorInvalidClientRequest();
         }
         if (game is! GameIsometric) return;
         game.spawnAI(
@@ -615,19 +632,19 @@ class WebSocketConnection with ByteReader {
     if (player == null) return;
     if (!isLocalMachine && player.game is GameEditor == false) return;
 
-    if (arguments.length < 4) return errorInvalidArg('4 args expected');
+    if (arguments.length < 4) return errorInvalidClientRequest();
 
     var nodeIndex = parse(arguments[1]);
     var nodeType = parse(arguments[2]);
     var nodeOrientation = parse(arguments[3]);
     if (nodeIndex == null) {
-      return errorInvalidArg('orientation is null');
+      return errorInvalidClientRequest();
     }
     if (nodeType == null) {
-      return errorInvalidArg('nodeType is null');
+      return errorInvalidClientRequest();
     }
     if (nodeOrientation == null) {
-      return errorInvalidArg('nodeOrientation is null');
+      return errorInvalidClientRequest();
     }
     if (!NodeType.supportsOrientation(nodeType, nodeOrientation)){
       nodeOrientation = NodeType.getDefaultOrientation(nodeType);
@@ -654,13 +671,13 @@ class WebSocketConnection with ByteReader {
 
   void handleNpcTalkSelectOption(IsometricPlayer player, List<String> arguments) {
     if (player.dead) return errorPlayerDead();
-    if (arguments.length != 2) return errorArgsExpected(2, arguments);
+    if (arguments.length != 2) return errorInvalidClientRequest();
     final index = parse(arguments[1]);
     if (index == null) {
-      return errorInvalidArg('int required: got ${arguments[1]}');
+      return errorInvalidClientRequest();
     }
     if (index < 0 || index >= player.options.length){
-      return errorInvalidArg('invalid player option');
+      return errorInvalidClientRequest();
     }
     final action = player.options.values.toList()[index];
     action.call();
@@ -672,15 +689,15 @@ class WebSocketConnection with ByteReader {
     if (player == null) return;
 
     if (arguments.length <= 1)
-      return errorInvalidArg('handleGameObjectRequest invalid args');
+      return errorInvalidClientRequest();
 
     final gameObjectRequestIndex = parse(arguments[1]);
 
     if (gameObjectRequestIndex == null)
-      return errorInvalidArg("gameObjectRequestIndex is null");
+      return errorInvalidClientRequest();
 
     if (!isValidIndex(gameObjectRequestIndex, gameObjectRequests))
-      return errorInvalidArg("gameObjectRequestIndex ($gameObjectRequestIndex) is invalid");
+      return errorInvalidClientRequest();
 
     final gameObjectRequest = gameObjectRequests[gameObjectRequestIndex];
     if (player is! IsometricPlayer) return;
@@ -732,12 +749,12 @@ class WebSocketConnection with ByteReader {
       case GameObjectRequest.Add:
         final index = parse(arguments[2]);
         final type = parse(arguments[3]);
-        if (index == null) return errorInvalidArg('index is null (2)');
-        if (type == null) return errorInvalidArg('type is null (3)');
-        if (index < 0) return errorInvalidArg('index cannot be negative');
+        if (index == null) return errorInvalidClientRequest();
+        if (type == null) return errorInvalidClientRequest();
+        if (index < 0) return errorInvalidClientRequest();
         final scene = player.game.scene;
         if (index >= scene.gridVolume) {
-          return errorInvalidArg('index must be lower than grid volume');
+          return errorInvalidClientRequest();
         }
         final instance = player.game.spawnGameObject(
           x: scene.convertNodeIndexToPositionX(index) + Node_Size_Half,
@@ -905,25 +922,6 @@ class WebSocketConnection with ByteReader {
     sendGameError(GameError.Insufficient_Resources);
   }
 
-  void errorArgsExpected(int expected, List arguments) {
-    errorInvalidArg(
-        'Invalid number of arguments received. Expected $expected but got ${arguments.length}');
-  }
-
-  void errorInsufficientArgs(int expected, List arguments){
-    errorInvalidArg(
-        'Invalid number of arguments received. Expected $expected but got ${arguments.length}');
-  }
-
-  void errorIntegerExpected(int index, got) {
-    errorInvalidArg(
-        'Invalid type at index $index, expected integer but got $got');
-  }
-
-  void errorParse(String source){
-    errorInvalidArg('connection.parse($source)');
-  }
-
   void errorPlayerNotFound() {
     sendGameError(GameError.PlayerNotFound);
   }
@@ -937,10 +935,10 @@ class WebSocketConnection with ByteReader {
   }
 
   void handleClientRequestJoin(List<String> arguments,) {
-    if (arguments.length < 2) return errorInsufficientArgs(2, arguments);
+    if (arguments.length < 2) return errorInvalidClientRequest();
     final gameTypeIndex = parse(arguments[1]);
     if (gameTypeIndex == null || !isValidIndex(gameTypeIndex, GameType.values)){
-      errorInvalidArg('');
+      errorInvalidClientRequest();
       return;
     }
     final gameType = GameType.values[gameTypeIndex];
@@ -993,26 +991,30 @@ class WebSocketConnection with ByteReader {
 
   int? parseArg(List<String> arguments, int index){
      if (index >= arguments.length) {
-       errorInsufficientArgs(index, arguments);
+       errorInvalidClientRequest();
        return null;
      }
      final value = int.tryParse(arguments[index]);
      if (value == null) {
-       errorInvalidArg('could not convert argument $index ($value) to int');
+       errorInvalidClientRequest();
      }
      return value;
   }
 
   int? parse(String source, {int? radix}) {
     final value = int.tryParse(source);
-    if (value == null){
-        errorParse(source);
+    if (value == null) {
+        errorInvalidClientRequest();
        return null;
     }
     return value;
   }
 
-  void errorInvalidArg(String value){
-    sendGameError(GameError.Client_Request_Failed_Invalid_Arguments);
+  void errorInvalidClientRequest() {
+    sendGameError(GameError.Invalid_Client_Request);
+  }
+
+  void errorInvalidPlayerType(){
+   sendGameError(GameError.Invalid_Player_Type);
   }
 }

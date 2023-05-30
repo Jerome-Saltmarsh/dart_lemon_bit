@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_ui.dart';
+import 'package:gamestream_flutter/gamestream/ui/widgets/bool_watch_builder_checkbox.dart';
 import 'package:gamestream_flutter/language_utils.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -191,13 +192,13 @@ class GameFight2D extends Game {
                   ),
                 ),
                 onPressed(
-                  action: tutorialVisible.toggle,
+                  action: togglePlayerEdit,
                   child: Container(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         text("EDIT", size: 20, color: Colors.white70),
-                        watch(tutorialVisible, (bool renderName) => GameIsometricUI.buildIconCheckbox(renderName)),
+                        BoolWatchBuilderCheckBox(watchBool: player.edit),
                       ],
                     ),
                   ),
@@ -220,5 +221,11 @@ class GameFight2D extends Game {
       ],
     );
   }
+
+  void togglePlayerEdit() =>
+      gamestream.network.sendClientRequest(
+          ClientRequest.Fight2D,
+          GameFight2DClientRequest.Toggle_Player_Edit,
+      );
 }
 

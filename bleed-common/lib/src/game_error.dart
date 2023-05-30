@@ -1,7 +1,8 @@
 
 enum GameError {
-  Client_Request_Failed_Invalid_Arguments,
+  Invalid_Client_Request,
   Unable_To_Join_Game,
+  Invalid_Player_Type,
   Invalid_Weapon_Type,
   Invalid_Power_Type,
   Invalid_Inventory_Index,
