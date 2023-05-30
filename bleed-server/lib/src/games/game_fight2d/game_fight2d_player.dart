@@ -16,7 +16,7 @@ class GameFight2DPlayer extends Player with GameFight2DCharacter {
 
   bool get edit => _edit;
 
-  set mode(bool value){
+  set edit(bool value){
     if (_edit == value) return;
     _edit = value;
     writePlayerEdit();

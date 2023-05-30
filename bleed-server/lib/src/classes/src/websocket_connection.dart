@@ -375,7 +375,12 @@ class WebSocketConnection with ByteReader {
           errorInvalidClientRequest();
           return;
         }
-        handleClientRequestFight2D(player, arguments);
+        final gameFight2DClientRequest = parseArg1(arguments);
+        if (gameFight2DClientRequest == null){
+          errorInvalidClientRequest();
+          return;
+        }
+        handleClientRequestFight2D(player, gameFight2DClientRequest, arguments);
         break;
 
       default:
@@ -399,8 +404,12 @@ class WebSocketConnection with ByteReader {
      return false;
   }
 
-  void handleClientRequestFight2D(GameFight2DPlayer player, List<String> arguments){
-    errorInvalidClientRequest();
+  void handleClientRequestFight2D(GameFight2DPlayer player, int gameFightClientRequest, List<String> arguments){
+    switch (gameFightClientRequest) {
+      case GameFight2DClientRequest.Toggle_Player_Edit:
+        player.edit = !player.edit;
+        break;
+    }
   }
 
   void handleRequestInventory(IsometricPlayer player, List<String> arguments){
