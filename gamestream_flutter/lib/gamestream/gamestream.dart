@@ -1,4 +1,5 @@
 
+import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/network/functions/detect_connection_region.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -18,6 +19,7 @@ class Gamestream {
    final games = Games();
    final animation = GameAnimation();
    final operationStatus = Watch(OperationStatus.None);
+   late final account = Watch<Account?>(null, onChanged: onChangedAccount);
 
    final serverResponseReader = ServerResponseReader();
    late final GameNetwork network;
@@ -185,6 +187,15 @@ class Gamestream {
          break;
        default:
          break;
+     }
+   }
+
+   void onChangedAccount(Account? account) {
+     if (account == null) return;
+     final flag = 'subscription_status_${account.userId}';
+     if (storage.contains(flag)){
+       final storedSubscriptionStatusString = storage.get<String>(flag);
+       final storedSubscriptionStatus = parseSubscriptionStatus(storedSubscriptionStatusString);
      }
    }
 }

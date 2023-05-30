@@ -44,7 +44,7 @@ Widget margin({
 
 
 Widget watchAccount(Widget builder(Account? value)) {
-  return WatchBuilder(gamestream.games.website.account, (Account? account) {
+  return WatchBuilder(gamestream.account, (Account? account) {
     return builder(account);
   });
 }
@@ -130,7 +130,7 @@ Widget watchAccount(Widget builder(Account? value)) {
 // }
 
 bool isAccountName(String publicName){
-  final account = gamestream.games.website.account.value;
+  final account = gamestream.account.value;
   if (account == null) return false;
   return account.publicName == publicName;
 }

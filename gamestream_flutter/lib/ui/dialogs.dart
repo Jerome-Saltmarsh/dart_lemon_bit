@@ -229,7 +229,7 @@ Widget buildDialogPremiumAccountRequired(){
 }
 
 Widget buildDialogSubscriptionStatus(){
-  final account = gamestream.games.website.account.value;
+  final account = gamestream.account.value;
   if (account == null){
     return buildDialogMessage("Account is null");
   }
@@ -287,7 +287,7 @@ Widget buildDialogWelcome2(){
 final _nameController = TextEditingController();
 
 Widget buildDialogChangePublicName() {
-  final account = gamestream.games.website.account.value;
+  final account = gamestream.account.value;
 
   if (account == null){
     return buildDialogMessage("Account is null");

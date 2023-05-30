@@ -8,7 +8,7 @@ import 'data_authentication.dart';
 class AccountService {
 
   static bool get premiumAccountAuthenticated {
-    final account = gamestream.games.website.account.value;
+    final account = gamestream.account.value;
     if (account == null){
       return false;
     }
@@ -21,7 +21,7 @@ class AccountService {
 
   static void changeAccountPublicName(String value) async {
     print("actions.changePublicName('$value')");
-    final account = gamestream.games.website.account.value;
+    final account = gamestream.account.value;
     if (account == null) {
       gamestream.games.website.setError("Account is null");
       return;
@@ -69,7 +69,7 @@ class AccountService {
   static void cancelSubscription() async {
     print("actions.cancelSubscription()");
     gamestream.games.website.showDialogAccount();
-    final account = gamestream.games.website.account.value;
+    final account = gamestream.account.value;
     if (account == null) {
       gamestream.games.website.setError('Account is null');
       return;
@@ -82,13 +82,13 @@ class AccountService {
 
   static Future updateAccount() async {
     print("refreshAccountDetails()");
-    final account = gamestream.games.website.account.value;
+    final account = gamestream.account.value;
     if (account == null){
       return;
     }
 
     gamestream.operationStatus.value = OperationStatus.Updating_Account;
-    gamestream.games.website.account.value = await firestoreService.findUserById(account.userId).catchError((error){
+    gamestream.account.value = await firestoreService.findUserById(account.userId).catchError((error){
       return null;
     });
     gamestream.operationStatus.value = OperationStatus.None;
@@ -119,15 +119,15 @@ class AccountService {
       gamestream.operationStatus.value = OperationStatus.Creating_Account;
       await firestoreService.createAccount(userId: userId, email: email, privateName: privateName);
       gamestream.operationStatus.value = OperationStatus.Authenticating;
-      gamestream.games.website.account.value = await firestoreService.findUserById(userId);
-      if (gamestream.games.website.account.value == null){
+      gamestream.account.value = await firestoreService.findUserById(userId);
+      if (gamestream.account.value == null){
         throw Exception("failed to find new account");
       }
       // TODO Illegal reference to website
       // Website.dialog.value = WebsiteDialog.Account_Created;
     }else{
       print("Existing Account found");
-      gamestream.games.website.account.value = account;
+      gamestream.account.value = account;
     }
     gamestream.operationStatus.value = OperationStatus.None;
   }

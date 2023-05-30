@@ -27,7 +27,6 @@ class GameWebsite extends Game {
   final signInSuggestionVisible = Watch(false);
   final dialog = Watch(WebsiteDialog.Games);
   final customConnectionStrongController = TextEditingController();
-  late final account = Watch<Account?>(null, onChanged: onChangedAccount);
   late final visitCount = Watch(0, onChanged: onChangedVisitCount);
   final download = Watch(0.0);
   final debug = true;
@@ -254,19 +253,6 @@ class GameWebsite extends Game {
             )),
       ],
     );
-  }
-
-  void onChangedAccount(Account? account) {
-    if (account == null) return;
-    final flag = 'subscription_status_${account.userId}';
-    if (storage.contains(flag)){
-      final storedSubscriptionStatusString = storage.get<String>(flag);
-      final storedSubscriptionStatus = parseSubscriptionStatus(storedSubscriptionStatusString);
-      if (storedSubscriptionStatus != account.subscriptionStatus){
-        // WebsiteActions.showDialogSubscriptionStatusChanged();
-      }
-    }
-    // website.actions.showDialogGames();
   }
 
   Widget buildPageConnectionStatus(String message) =>
