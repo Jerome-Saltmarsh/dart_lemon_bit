@@ -42,6 +42,10 @@ class GameFight2D extends Game {
          final nodeType = sceneNodes[index];
          index++;
 
+         if (nodeType == GameFight2DNodeType.Empty){
+           continue;
+         }
+
          final srcY = <int, double>{
            GameFight2DNodeType.Empty: 0,
            GameFight2DNodeType.Grass: 34,

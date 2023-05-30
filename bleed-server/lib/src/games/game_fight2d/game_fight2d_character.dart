@@ -49,6 +49,10 @@ mixin class GameFight2DCharacter {
   double get damageForce => damage * Damage_Force_Ratio;
   bool get jumpingRequested => _jumpingRequested;
 
+  bool get invulnerable {
+    return state == GameFight2DCharacterState.Rolling;
+  }
+
   set direction(int value){
     if (busy) return;
     _direction = value;

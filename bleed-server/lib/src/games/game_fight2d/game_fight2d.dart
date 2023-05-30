@@ -287,6 +287,9 @@ class GameFight2D extends Game<GameFight2DPlayer> {
     required GameFight2DCharacter src,
     required GameFight2DCharacter target,
   }) {
+
+    if (target.invulnerable) return;
+
     final damage = src.stateDamage;
     if (damage == 0) return;
     final totalDamageForce = damage * target.damageForce;
