@@ -314,9 +314,9 @@ class Engine extends StatelessWidget {
     this.backgroundColor = backgroundColor;
     this.onError = onError;
 
-    if (setPathUrlStrategy){
-      us.setPathUrlStrategy();
-    }
+    // if (setPathUrlStrategy){
+    //   us.setPathUrlStrategy();
+    // }
     WidgetsFlutterBinding.ensureInitialized();
   }
 

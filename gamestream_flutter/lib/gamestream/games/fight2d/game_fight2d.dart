@@ -68,7 +68,7 @@ class GameFight2D extends Game {
       const framesJump = [26, 8];
       const framesCrouchingStrike = [31, 32, 33];
       const airbornStrikeDown = [15, 16];
-      const airbornStrikeUp = [17, 18];
+      const airbornStrikeUp = [34, 35, 36, 37, 38, 39, 40];
       const framesRolling = [20, 21, 22, 23, 24, 0];
       final stateDuration = characterStateDuration[i];
       final animationFrame = stateDuration ~/ 5;
@@ -92,7 +92,7 @@ class GameFight2D extends Game {
           GameFight2DCharacterState.Fall_Fast => 14,
           GameFight2DCharacterState.Crouching_Strike => capIndex(framesCrouchingStrike, animationFrame2),
           GameFight2DCharacterState.Airborn_Strike_Down => capIndex(airbornStrikeDown, animationFrame),
-          GameFight2DCharacterState.Airborn_Strike_Up => capIndex(airbornStrikeUp, animationFrame),
+          GameFight2DCharacterState.Airborn_Strike_Up => capIndex(airbornStrikeUp, animationFrame2),
           GameFight2DCharacterState.Rolling => capIndex(framesRolling, animationFrame),
           _ => 0
       };
