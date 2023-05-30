@@ -195,13 +195,16 @@ class GameWebsite extends Game {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  buildLogoGameStream(),
-                  width32,
-                  regionButton,
-                ],
+              SizedBox(
+                width: 500,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    buildLogoGameStream(),
+                    // width32,
+                    regionButton,
+                  ],
+                ),
               ),
               height32,
               SelectGameTypeColumn(),

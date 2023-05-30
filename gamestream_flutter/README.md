@@ -13,7 +13,9 @@ ctrl + shift + e    : view recent changes
 [x] remove disconnected players
 [x] fix platform collision
 [x] fix damage force
-[ ] website title screen
+[x] website title screen
+[ ] improve strike animation
+[ ] improve airborn strike
 [ ] zombie bot
 [ ] create 30 second video
 [ ] publish video

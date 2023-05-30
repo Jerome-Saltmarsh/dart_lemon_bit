@@ -27,7 +27,7 @@ class SelectGameTypeColumn extends StatelessWidget {
                     child: Column(
                       children: [
                         SizedBox(
-                            width: 128,
+                            width: 256,
                             child: GameTypeImage(gameType: gameType)),
                         text(gameType.name, size: 25),
                       ],

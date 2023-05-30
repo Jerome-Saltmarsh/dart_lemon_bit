@@ -64,19 +64,20 @@ class GameFight2D extends Game {
     for (var i = 0; i < charactersTotal; i++){
       const frameSize = 256.0;
       const runFrames = [3, 4, 5, 6];
-      const framesStrike = [1, 2];
+      const framesStrike = [27, 28, 29, 30];
       const framesJump = [26, 8];
       const airbornStrikeDown = [15, 16];
       const airbornStrikeUp = [17, 18];
       const framesRolling = [20, 21, 22, 23, 24, 0];
       final stateDuration = characterStateDuration[i];
       final animationFrame = stateDuration ~/ 5;
+      final animationFrame2 = stateDuration ~/ 2;
       final state = characterState[i];
 
       final frame = switch (state) {
           GameFight2DCharacterState.Idle => 0,
           GameFight2DCharacterState.Running => runFrames[animationFrame % 4],
-          GameFight2DCharacterState.Striking => capIndex(framesStrike, animationFrame),
+          GameFight2DCharacterState.Striking => capIndex(framesStrike, animationFrame2),
           GameFight2DCharacterState.Running_Strike => 7,
           GameFight2DCharacterState.Jumping => capIndex(framesJump, animationFrame),
           GameFight2DCharacterState.Airborn_Strike => 9,
