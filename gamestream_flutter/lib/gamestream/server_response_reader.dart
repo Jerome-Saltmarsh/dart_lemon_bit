@@ -179,6 +179,9 @@ class ServerResponseReader with ByteReader {
       case GameFight2DEvents.Strike_Swing:
         gamestream.audio.playAudioSingle2D(gamestream.audio.arm_swing_whoosh_11, x, y);
         break;
+      case GameFight2DEvents.Death:
+        gamestream.audio.playAudioSingle2D(gamestream.audio.magical_impact_16, x, y);
+        break;
     }
   }
 

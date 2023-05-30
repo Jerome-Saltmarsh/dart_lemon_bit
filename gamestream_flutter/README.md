@@ -7,11 +7,13 @@ navigate to next method: ctrl + shift + up / down arrows
 ctrl + w            : minimal mode
 ctrl + shift + e    : view recent changes
 
-[FIGHT2D]
+[RELEASE FIGHT2D MVP]
 [x] strike down hit
 [x] audio volume distance
 [x] remove disconnected players
-[ ] map editor
+[ ] fix damage force
+[ ] create 30 second video
+[ ] publish video
 
 [AEON]
 [ ] character leveling system   (goal)

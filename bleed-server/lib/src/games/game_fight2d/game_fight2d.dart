@@ -8,6 +8,7 @@ import 'game_fight2d_character.dart';
 import 'game_fight2d_player.dart';
 
 class GameFight2D extends Game<GameFight2DPlayer> {
+  static const Boundary_Y = 1000;
   final characters = <GameFight2DCharacter>[];
   final GameFight2DScene scene;
 
@@ -148,6 +149,11 @@ class GameFight2D extends Game<GameFight2DPlayer> {
   }
 
   void updateCharacter(GameFight2DCharacter character) {
+    if (character.y > Boundary_Y) {
+      emitEvent(character: character, event: GameFight2DEvents.Death);
+      character.respawn();
+    }
+
     character.update();
     applyCharacterSceneCollision(character);
     emitEventJump(character);

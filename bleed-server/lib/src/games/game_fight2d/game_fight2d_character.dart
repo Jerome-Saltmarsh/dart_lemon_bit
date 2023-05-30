@@ -3,7 +3,6 @@ import 'package:bleed_server/gamestream.dart';
 import 'package:lemon_math/library.dart';
 
 mixin class GameFight2DCharacter {
-  static const Boundary_Y = 1000;
   static const Running_Strike_Velocity = 5.0;
   static const Friction_Floor = 0.88;
   static const Friction_Floor_Sliding = 0.92;
@@ -236,10 +235,6 @@ mixin class GameFight2DCharacter {
   }
 
   void update() {
-
-    if (y > Boundary_Y) {
-      respawn();
-    }
 
     if (stateDurationTotal > 0 && stateDuration > stateDurationTotal){
       forceIdle();
