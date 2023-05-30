@@ -50,20 +50,34 @@ class Gamestream {
 
      gamestream.error.onChanged((GameError? error) {
          if (error == null) return;
-         showDialog(context: engine.buildContext, builder: (dialogContext){
-            return AlertDialog(
-              backgroundColor: GameStyle.Container_Color,
-              contentPadding: const EdgeInsets.all(16),
-              alignment: Alignment.center,
-              content: text(error.name),
-              actions: [
-                onPressed(child: text("OKAY"), action: () {
-                  Navigator.of(dialogContext).pop();
-                  this.error.value = null;
-                }),
-              ],
-            );
+
+         final controller = ScaffoldMessenger.of(engine.buildContext).showSnackBar(
+           SnackBar(
+             content: text(error.name),
+             duration: const Duration(milliseconds: 500),
+           ),
+         );
+
+         controller.closed.then((value) {
+            if (error == this.error.value){
+              this.error.value = null;
+            }
          });
+
+         // showDialog(context: engine.buildContext, builder: (dialogContext){
+         //    return AlertDialog(
+         //      backgroundColor: GameStyle.Container_Color,
+         //      contentPadding: const EdgeInsets.all(16),
+         //      alignment: Alignment.center,
+         //      content: text(error.name),
+         //      actions: [
+         //        onPressed(child: text("OKAY"), action: () {
+         //          Navigator.of(dialogContext).pop();
+         //          this.error.value = null;
+         //        }),
+         //      ],
+         //    );
+         // });
      });
 
      if (engine.isLocalHost) {
