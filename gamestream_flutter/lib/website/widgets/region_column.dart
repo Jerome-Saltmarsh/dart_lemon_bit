@@ -25,7 +25,7 @@ class SelectRegionColumn extends StatelessWidget {
               .map((ConnectionRegion region) =>
               onPressed(
                 action: () {
-                  gamestream.games.gameWebsite.actionSelectRegion(region);
+                  gamestream.games.website.actionSelectRegion(region);
                   if (engine.deviceIsPhone) {
                     // GameNetwork.connectToGameAeon();
                   } else {

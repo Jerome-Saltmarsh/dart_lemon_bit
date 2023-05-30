@@ -11,7 +11,7 @@ import 'package:gamestream_flutter/ui/style.dart';
 
 final closeDialogButton = button(
     "close",
-    gamestream.games.gameWebsite.showDialogGames,
+    gamestream.games.website.showDialogGames,
     borderColor: GameIsometricColors.none
 );
 
@@ -39,17 +39,17 @@ class _Widgets {
     borderColor: GameIsometricColors.none,
   );
 
-  final buttonClose = buildButton("Close",gamestream.games.gameWebsite.showDialogGames);
-  final buttonOkay = buildButton("Okay",gamestream.games.gameWebsite.showDialogGames);
-  final buttonGreat = buildButton("Great",gamestream.games.gameWebsite.showDialogGames);
+  final buttonClose = buildButton("Close",gamestream.games.website.showDialogGames);
+  final buttonOkay = buildButton("Okay",gamestream.games.website.showDialogGames);
+  final buttonGreat = buildButton("Great",gamestream.games.website.showDialogGames);
 
-  final buttonNo = button(text("No", color: GameIsometricColors.white80),gamestream.games.gameWebsite.showDialogGames, fillColor: GameIsometricColors.none,
+  final buttonNo = button(text("No", color: GameIsometricColors.white80),gamestream.games.website.showDialogGames, fillColor: GameIsometricColors.none,
     fillColorMouseOver: GameIsometricColors.none,
     borderColor: GameIsometricColors.none,
     width: 100,
   );
 
-  final buttonChangeDisplayName = button(text("Change Public Name", color: GameIsometricColors.green),gamestream.games.gameWebsite.showDialogChangePublicName, borderColor: GameIsometricColors.green);
+  final buttonChangeDisplayName = button(text("Change Public Name", color: GameIsometricColors.green),gamestream.games.website.showDialogChangePublicName, borderColor: GameIsometricColors.green);
 }
 
 final authenticationRequired = Exception("Authentication Required");
@@ -72,7 +72,7 @@ class _Buttons {
       text("LOGIN", size: 20, weight: bold),
     ],
   ), (){
-    gamestream.games.gameWebsite.dialog.value = WebsiteDialog.Login;
+    gamestream.games.website.dialog.value = WebsiteDialog.Login;
   }, width: style.buttonWidth, height: style.buttonHeight, borderWidth: 3,
     fillColor: GameIsometricColors.none,
     borderColor: GameIsometricColors.none,
@@ -90,7 +90,7 @@ class _Buttons {
     AccountService.login(DataAuthentication(userId: userId, name: userId, email: "$userId@email.com"));
   });
 
-  final showDialogSubscribed = button("Sub Success",gamestream.games.gameWebsite.showDialogSubscriptionSuccessful);
+  final showDialogSubscribed = button("Sub Success",gamestream.games.website.showDialogSubscriptionSuccessful);
 
   final signInWithFacebookButton = button(
     Container(
@@ -113,10 +113,10 @@ class _Buttons {
   );
 
   final account = button(_iconSettings, (){
-    if (gamestream.games.gameWebsite.dialog.value != WebsiteDialog.Account){
-      gamestream.games.gameWebsite.dialog.value = WebsiteDialog.Account;
+    if (gamestream.games.website.dialog.value != WebsiteDialog.Account){
+      gamestream.games.website.dialog.value = WebsiteDialog.Account;
     }else{
-      gamestream.games.gameWebsite.dialog.value = WebsiteDialog.Games;
+      gamestream.games.website.dialog.value = WebsiteDialog.Games;
     }
   },
       height: style.buttonHeight,
@@ -130,10 +130,10 @@ class _Buttons {
 
   Widget buildAccount(bool hovering){
     return button(_iconSettings, (){
-      if (gamestream.games.gameWebsite.dialog.value != WebsiteDialog.Account){
-        gamestream.games.gameWebsite.dialog.value = WebsiteDialog.Account;
+      if (gamestream.games.website.dialog.value != WebsiteDialog.Account){
+        gamestream.games.website.dialog.value = WebsiteDialog.Account;
       }else{
-        gamestream.games.gameWebsite.dialog.value = WebsiteDialog.Games;
+        gamestream.games.website.dialog.value = WebsiteDialog.Games;
       }
     },
       height: style.buttonHeight,
@@ -153,7 +153,7 @@ Widget _buildFakeLoginButton(String userId, String text){
 }
 
 final backButton = button(text("Back", color: GameIsometricColors.white618), () {
-  gamestream.games.gameWebsite.dialog.value = WebsiteDialog.Games;
+  gamestream.games.website.dialog.value = WebsiteDialog.Games;
 }, fillColor: GameIsometricColors.none,
   fillColorMouseOver: GameIsometricColors.none,
   borderColor: GameIsometricColors.none,

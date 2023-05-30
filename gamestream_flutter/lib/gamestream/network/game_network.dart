@@ -34,9 +34,9 @@ class GameNetwork {
     }
     if (region == ConnectionRegion.Custom) {
       print("connecting to custom server");
-      print(gamestream.games.gameWebsite.customConnectionStrongController.text);
+      print(gamestream.games.website.customConnectionStrongController.text);
       connectToServer(
-        gamestream.games.gameWebsite.customConnectionStrongController.text,
+        gamestream.games.website.customConnectionStrongController.text,
         message,
       );
       return;
@@ -144,7 +144,7 @@ class GameNetwork {
     }
 
     if (response is Uint8List) {
-      return gamestream.serverResponseReader.read(response, gamestream.games.gameFight2D);
+      return gamestream.serverResponseReader.read(response, gamestream.games.fight2D);
     }
     if (response is String) {
       if (response.toLowerCase() == 'ping'){

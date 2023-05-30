@@ -10,7 +10,7 @@ import 'server_response_reader.dart';
 
 class Gamestream {
    late final gameType = Watch(GameType.Website, onChanged: _onChangedGameType);
-   late final game = Watch<Game>(games.gameWebsite, onChanged: _onChangedGame);
+   late final game = Watch<Game>(games.website, onChanged: _onChangedGame);
 
    late final error = Watch<GameError?>(null, onChanged: _onChangedGameError);
    final io = GameIO();
@@ -88,15 +88,15 @@ class Gamestream {
        gamestream.network.region.value = detectConnectionRegion();
      }
 
-     gamestream.games.gameWebsite.errorMessageEnabled.value = true;
+     gamestream.games.website.errorMessageEnabled.value = true;
 
      final visitCount = sharedPreferences.getInt('visit-count');
      if (visitCount == null){
        sharedPreferences.putAny('visit-count', 1);
-       gamestream.games.gameWebsite.visitCount.value = 1;
+       gamestream.games.website.visitCount.value = 1;
      } else {
        sharedPreferences.putAny('visit-count', visitCount + 1);
-       gamestream.games.gameWebsite.visitCount.value = visitCount + 1;
+       gamestream.games.website.visitCount.value = visitCount + 1;
 
        final cachedVersion = sharedPreferences.getString('version');
        if (cachedVersion != null){
@@ -124,10 +124,10 @@ class Gamestream {
    void _onChangedGameType(GameType value) {
      print("_onChangedGameType(${value.name})");
      game.value = switch (value) {
-       GameType.Website => games.gameWebsite,
-       GameType.Fight2D => games.gameFight2D,
+       GameType.Website => games.website,
+       GameType.Fight2D => games.fight2D,
        GameType.Combat  => games.isometric,
-       GameType.Cube3D  => games.gameCube3D,
+       GameType.Cube3D  => games.cube3D,
        GameType.Aeon    => games.isometric,
        _ => throw Exception('mapGameTypeToGame($gameType)')
      };

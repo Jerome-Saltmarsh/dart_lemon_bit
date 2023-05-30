@@ -19,7 +19,7 @@ Widget buildDialogAccount(){
     if (account == null) {
       return buildLayout(
         bottomLeft: buttons.login,
-        bottomRight: button("Close", gamestream.games.gameWebsite.showDialogGames),
+        bottomRight: button("Close", gamestream.games.website.showDialogGames),
         child: dialog(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,11 +62,11 @@ Widget buildDialogAccount(){
                         color: GameIsometricColors.white60, size: 16)
                   ],
                 )),
-            action: gamestream.games.gameWebsite.showDialogChangePublicName),
+            action: gamestream.games.website.showDialogChangePublicName),
         height8,
         _buildRow("Email", account.email),
         height8,
-        _buildRow("Joined", gamestream.games.gameWebsite.formatDate(account.accountCreationDate)),
+        _buildRow("Joined", gamestream.games.website.formatDate(account.accountCreationDate)),
         height50,
         _buildSubscriptionPanel(account),
       ],
@@ -93,7 +93,7 @@ Widget _buildSubscriptionPanel(Account account){
               child: MouseOver(builder: (hovering) {
                 return text("Cancel",
                     color: hovering ? GameIsometricColors.orange : GameIsometricColors.white80,
-                    onPressed: gamestream.games.gameWebsite.showDialogConfirmCancelSubscription,
+                    onPressed: gamestream.games.website.showDialogConfirmCancelSubscription,
                 );
               }),
             ),
@@ -111,7 +111,7 @@ Widget _buildSubscriptionPanel(Account account){
           "Started",
           subscriptionStartDate == null
               ? "-"
-              : gamestream.games.gameWebsite.formatDate(subscriptionStartDate)),
+              : gamestream.games.website.formatDate(subscriptionStartDate)),
       height8,
       _buildRow(
           account.subscriptionActive
@@ -119,7 +119,7 @@ Widget _buildSubscriptionPanel(Account account){
               : account.subscriptionEnded
                   ? "Ended"
                   : "Ends",
-          subscriptionEndDate == null ? "-" : gamestream.games.gameWebsite.formatDate(subscriptionEndDate)),
+          subscriptionEndDate == null ? "-" : gamestream.games.website.formatDate(subscriptionEndDate)),
     ],
   ));
 }
@@ -224,12 +224,12 @@ Widget buildDialogSubscriptionCancelled(){
 
 Widget buildDialogPremiumAccountRequired(){
   return buildDialogMessage("Premium subscription required", bottomRight: buildButton("okay", (){
-    gamestream.games.gameWebsite.showDialogGames();
+    gamestream.games.website.showDialogGames();
   }));
 }
 
 Widget buildDialogSubscriptionStatus(){
-  final account = gamestream.games.gameWebsite.account.value;
+  final account = gamestream.games.website.account.value;
   if (account == null){
     return buildDialogMessage("Account is null");
   }
@@ -280,14 +280,14 @@ Widget buildDialogWelcome2(){
       bottomRight: button(text("PREMIUM MEMBERSHIP", color: GameIsometricColors.green), AccountService.openStripeCheckout, fillColor: GameIsometricColors.none, borderColor: GameIsometricColors.green),
       bottomLeft: Container(
           padding: padding8,
-          child: text("Perhaps Later", onPressed: gamestream.games.gameWebsite.showDialogGames, color: GameIsometricColors.white80)),
+          child: text("Perhaps Later", onPressed: gamestream.games.website.showDialogGames, color: GameIsometricColors.white80)),
   );
 }
 
 final _nameController = TextEditingController();
 
 Widget buildDialogChangePublicName() {
-  final account = gamestream.games.gameWebsite.account.value;
+  final account = gamestream.games.website.account.value;
 
   if (account == null){
     return buildDialogMessage("Account is null");
@@ -305,7 +305,7 @@ Widget buildDialogChangePublicName() {
     bottomLeft: buildButtonPrimary("Save", (){
       AccountService.changeAccountPublicName(_nameController.text);
     },),
-    bottomRight: buildButton('back', gamestream.games.gameWebsite.showDialogAccount),
+    bottomRight: buildButton('back', gamestream.games.website.showDialogAccount),
       child: TextField(
         controller: _nameController,
         autofocus: true,
@@ -345,7 +345,7 @@ Widget buildDialogConfirmCancelSubscription(){
     height: style.dialogHeightSmall,
     child: Center(child: text("Cancel premium subscription?", color: GameIsometricColors.white90)),
     bottomLeft: button(text("YES", color: GameIsometricColors.red, bold: false), AccountService.cancelSubscription, fillColor: GameIsometricColors.none, borderColor: GameIsometricColors.none, width: 100),
-    bottomRight: button(text("NO", color: GameIsometricColors.green, bold: true), gamestream.games.gameWebsite.showDialogAccount, fillColor: GameIsometricColors.none, borderColor: GameIsometricColors.green, width: 100, borderWidth: 2),
+    bottomRight: button(text("NO", color: GameIsometricColors.green, bold: true), gamestream.games.website.showDialogAccount, fillColor: GameIsometricColors.none, borderColor: GameIsometricColors.green, width: 100, borderWidth: 2),
   );
 }
 

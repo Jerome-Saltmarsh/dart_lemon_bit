@@ -6,7 +6,7 @@ import 'games/isometric/game_isometric.dart';
 
 class Games {
   late final isometric = GameIsometric();
-  late final gameFight2D = GameFight2D();
-  late final gameCube3D = GameCube3D();
-  late final gameWebsite = GameWebsite();
+  late final fight2D = GameFight2D();
+  late final cube3D = GameCube3D();
+  late final website = GameWebsite();
 }

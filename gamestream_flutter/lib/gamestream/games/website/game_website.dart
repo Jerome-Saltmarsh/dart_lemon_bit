@@ -322,7 +322,7 @@ class GameWebsite extends Game {
         margin: const EdgeInsets.only(left: 12),
         child: TextField(
           autofocus: true,
-          controller: gamestream.games.gameWebsite.customConnectionStrongController,
+          controller: gamestream.games.website.customConnectionStrongController,
           decoration: InputDecoration(
               labelText: 'ws connection string'
           ),
@@ -342,40 +342,40 @@ class GameWebsite extends Game {
       gamestream.network.region.value = value;
 
   void showDialogChangePublicName(){
-    gamestream.games.gameWebsite.dialog.value = WebsiteDialog.Change_Public_Name;
+    gamestream.games.website.dialog.value = WebsiteDialog.Change_Public_Name;
   }
 
   void showDialogConfirmCancelSubscription() {
-    gamestream.games.gameWebsite.dialog.value = WebsiteDialog.Confirm_Cancel_Subscription;
+    gamestream.games.website.dialog.value = WebsiteDialog.Confirm_Cancel_Subscription;
   }
 
   void showDialogAccount(){
-    gamestream.games.gameWebsite.dialog.value = WebsiteDialog.Account;
+    gamestream.games.website.dialog.value = WebsiteDialog.Account;
   }
 
   void showDialogWelcome(){
-    gamestream.games.gameWebsite.dialog.value = WebsiteDialog.Account_Created;
+    gamestream.games.website.dialog.value = WebsiteDialog.Account_Created;
   }
 
   void showDialogWelcome2(){
-    gamestream.games.gameWebsite.dialog.value = WebsiteDialog.Welcome_2;
+    gamestream.games.website.dialog.value = WebsiteDialog.Welcome_2;
   }
 
   void showDialogSubscriptionSuccessful(){
-    gamestream.games.gameWebsite.dialog.value = WebsiteDialog.Subscription_Successful;
+    gamestream.games.website.dialog.value = WebsiteDialog.Subscription_Successful;
   }
 
   void showDialogSubscriptionStatusChanged(){
-    gamestream.games.gameWebsite.dialog.value = WebsiteDialog.Subscription_Status_Changed;
+    gamestream.games.website.dialog.value = WebsiteDialog.Subscription_Status_Changed;
   }
 
   void showDialogSubscriptionRequired(){
-    gamestream.games.gameWebsite.dialog.value = WebsiteDialog.Subscription_Required;
+    gamestream.games.website.dialog.value = WebsiteDialog.Subscription_Required;
   }
 
   void showDialogCustomMaps(){
     _log("showDialogCustomMaps");
-    gamestream.games.gameWebsite.dialog.value = WebsiteDialog.Custom_Maps;
+    gamestream.games.website.dialog.value = WebsiteDialog.Custom_Maps;
   }
 
   void connectToCustomGame(String customGame){
@@ -411,7 +411,7 @@ class GameWebsite extends Game {
       child: button(
         text(engine.enumString(gamestream.network.region.value),
             color: GameIsometricColors.white80),
-        gamestream.games.gameWebsite.showDialogChangeRegion,
+        gamestream.games.website.showDialogChangeRegion,
         borderColor: GameIsometricColors.none,
         fillColor: GameIsometricColors.black20,
       ),
@@ -419,7 +419,7 @@ class GameWebsite extends Game {
   }
 
   Widget buttonCustomMap(){
-    return buildMenuButton("Custom", gamestream.games.gameWebsite.showDialogCustomMaps);
+    return buildMenuButton("Custom", gamestream.games.website.showDialogCustomMaps);
   }
 
   Widget dialogCustomMaps() {
@@ -455,7 +455,7 @@ class GameWebsite extends Game {
                     bottom: 16,
                     child: button(text(mapName, color: GameIsometricColors.white618), (){
                       // connect to custom game
-                      gamestream.games.gameWebsite.connectToCustomGame(mapName);
+                      gamestream.games.website.connectToCustomGame(mapName);
                     },
                         alignment: Alignment.centerLeft,
                         fillColor: GameIsometricColors.white05, fillColorMouseOver: GameIsometricColors.white10, borderColor: GameIsometricColors.none, borderColorMouseOver: GameIsometricColors.none),
