@@ -154,8 +154,9 @@ class GameFight2D extends Game<GameFight2DPlayer> {
       character.x = randomBetween(50, scene.widthLength - 50);
     }
 
-    applyCharacterSceneCollision(character);
     character.update();
+    applyCharacterSceneCollision(character);
+    character.applyVelocity();
     emitEventJump(character);
 
     if (character.running && character.stateDuration % 6 == 0) {

@@ -15,7 +15,7 @@ ctrl + shift + e    : view recent changes
 [x] fix damage force
 [x] website title screen
 [x] improve strike animation
-[ ] fix fall through ground on hit
+[x] fix fall through ground on hit
 [ ] improve airborn strike
 [ ] zombie bot
 [ ] create 30 second video

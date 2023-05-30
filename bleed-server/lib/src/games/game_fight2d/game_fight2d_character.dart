@@ -361,10 +361,13 @@ mixin class GameFight2DCharacter {
     velocityY += accelerationY;
     accelerationX = 0;
     accelerationY = 0;
-    x += velocityX;
-    y += velocityY;
     velocityX *= friction;
     stateDuration++;
+  }
+
+  void applyVelocity(){
+    x += velocityX;
+    y += velocityY;
   }
 
   void applyJumpAcceleration(double jumpAcceleration) {
