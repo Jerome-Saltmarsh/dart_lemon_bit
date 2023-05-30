@@ -334,7 +334,7 @@ class GameFight2D extends Game<GameFight2DPlayer> {
            onGrounded(character);
 
            if (character.velocityY > 2){
-             emitEventPunch(character);
+             emitEvent(character: character, event: GameFight2DEvents.Footstep);
            }
          }
          while (scene.getTileTypeAtXY(character.x, character.y + 49.0) == GameFight2DNodeType.Grass){

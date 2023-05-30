@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/gamestream/games/fight2d/game_fight2d_ui.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_ui.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/bool_watch_builder_checkbox.dart';
 import 'package:gamestream_flutter/language_utils.dart';
@@ -11,7 +12,6 @@ class GameFight2D extends Game {
   static const length = 1000;
 
   final renderCharacterState = WatchBool(false);
-  final tutorialVisible = WatchBool(true);
 
   final characterState = Uint8List(length);
   final characterDirection = Uint8List(length);
@@ -171,58 +171,7 @@ class GameFight2D extends Game {
   }
 
   @override
-  Widget buildUI(BuildContext context) {
-    return Stack(
-      children: [
-        Positioned(
-            top: 16,
-            right: 16,
-            child: GameIsometricUI.buildWindowMenu(
-              children: [
-                onPressed(
-                  action: tutorialVisible.toggle,
-                  child: Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        text("TUTORIAL", size: 20, color: Colors.white70),
-                        watch(tutorialVisible, (bool renderName) => GameIsometricUI.buildIconCheckbox(renderName)),
-                      ],
-                    ),
-                  ),
-                ),
-                height6,
-                onPressed(
-                  action: togglePlayerEdit,
-                  child: Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        text("EDIT", size: 20, color: Colors.white70),
-                        BoolWatchBuilderCheckBox(watchBool: player.edit),
-                      ],
-                    ),
-                  ),
-                ),
-                height6,
-                onPressed(
-                  action: renderCharacterState.toggle,
-                  child: Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        text("DEBUG", size: 20, color: Colors.white70),
-                        watch(renderCharacterState, (bool renderName) => GameIsometricUI.buildIconCheckbox(renderName)),
-                      ],
-                    ),
-                  ),
-                )
-              ]
-            )
-        )
-      ],
-    );
-  }
+  Widget buildUI(BuildContext context) => GameFight2DUI(this);
 
   void togglePlayerEdit() =>
       gamestream.network.sendClientRequest(
