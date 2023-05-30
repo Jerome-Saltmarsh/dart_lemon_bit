@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:typed_data';
 
-import 'package:bleed_server/common/src/fight2d/game_fight2d_scene_generator.dart';
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/classes/src/game_isometric.dart';
 import 'package:bleed_server/src/classes/src/player.dart';
@@ -11,6 +10,7 @@ import 'package:bleed_server/src/games/game_aeon.dart';
 import 'package:bleed_server/src/games/game_editor.dart';
 import 'package:bleed_server/src/games/game_fight2d/game_fight2d.dart';
 import 'package:bleed_server/src/games/game_fight2d/game_fight2d_player.dart';
+import 'package:bleed_server/src/games/game_fight2d/game_fight2d_scene_generator.dart';
 import 'package:bleed_server/src/games/game_mobile_aoen.dart';
 import 'package:bleed_server/src/games/game_combat.dart';
 import 'package:bleed_server/src/scene_generator.dart';

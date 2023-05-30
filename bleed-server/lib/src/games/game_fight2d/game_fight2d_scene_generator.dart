@@ -1,14 +1,15 @@
 
+
 import 'dart:typed_data';
 
+import 'package:bleed_server/common/src/fight2d/game_fight2d_node_type.dart';
 import 'package:bleed_server/src/games/game_fight2d/game_fight2d_scene.dart';
 
-import 'game_fight2d_node_type.dart';
 
 class GameFight2DSceneGenerator {
 
   static GameFight2DScene generate(){
-    final width = 40;
+    final width = 50;
     final height = 20;
     final tiles = Uint8List(width * height);
 
@@ -32,9 +33,9 @@ class GameFight2DSceneGenerator {
       for (var xIndex = 0; xIndex < width; xIndex++) {
         for (var yIndex = 0; yIndex < height; yIndex++) {
           setTile(
-              x: x + xIndex,
-              y: y + yIndex,
-              type: type,
+            x: x + xIndex,
+            y: y + yIndex,
+            type: type,
           );
         }
       }

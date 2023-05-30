@@ -8,6 +8,7 @@ import 'game_fight2d_player.dart';
 
 class GameFight2D extends Game {
   static const length = 1000;
+  static const Default_Camera_Zoom = 0.5;
 
   final renderCharacterState = WatchBool(false);
 
@@ -119,13 +120,21 @@ class GameFight2D extends Game {
         );
       }
 
+      engine.paint.color = Colors.white;
       engine.renderText(
         characterDamage[i].toString(),
-        characterPositionX[i].toDouble(),
-        characterPositionY[i].toDouble() - 100,
+        characterPositionX[i].toDouble() - 20,
+        characterPositionY[i].toDouble() - 120,
+        style: damageTextStyle,
       );
     }
   }
+
+  final damageTextStyle = TextStyle(
+      fontSize: 28,
+      color: Colors.white,
+      fontWeight: FontWeight.bold,
+  );
 
   @override
   void renderForeground(Canvas canvas, Size size) {
@@ -171,8 +180,8 @@ class GameFight2D extends Game {
 
   @override
   void onActivated() {
-    engine.zoom = 1.0;
-    engine.targetZoom = 1.0;
+    engine.zoom = Default_Camera_Zoom;
+    engine.targetZoom = engine.zoom;
   }
 
   @override
