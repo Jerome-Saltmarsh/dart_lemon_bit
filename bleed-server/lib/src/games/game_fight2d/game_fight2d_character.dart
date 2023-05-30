@@ -223,7 +223,7 @@ mixin class GameFight2DCharacter {
   }
 
   void respawn() {
-    x = randomBetween(0, 300);
+    x = 0;
     y = 0;
     velocityX = 0;
     velocityY = 0;

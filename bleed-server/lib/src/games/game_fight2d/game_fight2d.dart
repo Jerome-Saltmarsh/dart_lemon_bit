@@ -152,6 +152,7 @@ class GameFight2D extends Game<GameFight2DPlayer> {
     if (character.y > Boundary_Y) {
       emitEvent(character: character, event: GameFight2DEvents.Death);
       character.respawn();
+      character.x = randomBetween(50, scene.widthLength - 50);
     }
 
     character.update();
