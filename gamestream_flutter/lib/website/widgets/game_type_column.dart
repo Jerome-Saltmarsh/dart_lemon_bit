@@ -16,13 +16,42 @@ class SelectGameTypeColumn extends StatelessWidget {
   Widget build(BuildContext context) {
     return WatchBuilder(
         gamestream.gameType,
-        (activeGameType) => Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
+        (activeGameType) => Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: gameTypes
                 .map((gameType) => onPressed(
-                    action: () => gamestream.startGameType(gameType),
-                    child: text(gameType.name, size: 25)))
+                  action: () => gamestream.startGameType(gameType),
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 4),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                            width: 128,
+                            child: GameTypeImage(gameType: gameType)),
+                        text(gameType.name, size: 25),
+                      ],
+                    ),
+                  ),
+                ))
                 .toList()));
+  }
+}
+
+class GameTypeImage extends StatelessWidget {
+   final GameType gameType;
+
+  const GameTypeImage({super.key, required this.gameType});
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.asset(mapGameTypeToImageAsset(gameType), fit: BoxFit.fitWidth,);
+  }
+
+  static String mapGameTypeToImageAsset(GameType gameType){
+     return const {
+       GameType.Fight2D: 'images/website/game-fight2d.png',
+       GameType.Combat: 'images/website/game-isometric.png',
+     }[gameType] ?? '';
   }
 }

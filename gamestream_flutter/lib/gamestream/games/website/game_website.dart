@@ -203,7 +203,7 @@ class GameWebsite extends Game {
                   regionButton,
                 ],
               ),
-              height16,
+              height32,
               SelectGameTypeColumn(),
             ],
           );
@@ -264,7 +264,7 @@ class GameWebsite extends Game {
   }
 
   Widget buildLogoGameStream(){
-    return text("GAMESTREAM ONLINE", size: 40);
+    return text("GAMESTREAM.ONLINE", size: FontSize.VeryLarge);
   }
 
   Widget buildPageConnectionStatus(String message) =>
