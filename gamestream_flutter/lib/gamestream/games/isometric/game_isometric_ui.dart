@@ -484,14 +484,14 @@ class GameIsometricUI {
               height6,
             if (children != null)
               ...children,
-            height24,
-            onPressed(
-              action: () {
-                gamestream.network.disconnect();
-                gamestream.network.connectToGameEditor();
-              },
-              child: text("EDITOR", size: 25),
-            ),
+            // height24,
+            // onPressed(
+            //   action: () {
+            //     gamestream.network.disconnect();
+            //     gamestream.network.connectToGameEditor();
+            //   },
+            //   child: text("EDITOR", size: 25),
+            // ),
             height24,
             onPressed(
               action: gamestream.network.disconnect,

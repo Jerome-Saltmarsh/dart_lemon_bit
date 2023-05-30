@@ -191,6 +191,7 @@ class GameFight2D extends Game {
                     ),
                   ),
                 ),
+                height6,
                 onPressed(
                   action: togglePlayerEdit,
                   child: Container(
@@ -203,6 +204,7 @@ class GameFight2D extends Game {
                     ),
                   ),
                 ),
+                height6,
                 onPressed(
                   action: renderCharacterState.toggle,
                   child: Container(

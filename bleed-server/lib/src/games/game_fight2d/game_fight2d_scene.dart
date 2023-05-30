@@ -7,25 +7,14 @@ class GameFight2DScene {
 
   int width;
   int height;
-  /// width * nodeSIze
   late double widthLength;
-  /// height * nodeSize
   late double heightLength;
 
   late Uint8List tiles;
 
-  GameFight2DScene({required this.width, required this.height}) {
-    tiles = Uint8List(width * height);
+  GameFight2DScene({required this.tiles, required this.width, required this.height}) {
     this.widthLength = width * tileSize;
     this.heightLength = height * tileSize;
-
-    var index = 0;
-    for (var x = 0; x < width; x++){
-      for (var y = 0; y < height; y++){
-        tiles[index] = y > height - 3 ? GameFight2DNodeType.Grass : GameFight2DNodeType.Empty;
-        index++;
-      }
-    }
   }
 
   int getTileTypeAtXY(double x, double y) {
