@@ -20,6 +20,7 @@ mixin class GameFight2DCharacter {
   static const fallAcceleration = 0.5;
   static const maxRunSpeed = 6.0;
   static const Max_Jump_Velocity = 3.0;
+  static const Damage_Force_Ratio = 0.2;
 
   final strikeFrame = 5;
   final strikeSwingFrame = 3;
@@ -37,6 +38,8 @@ mixin class GameFight2DCharacter {
   var velocityY = 0.0;
   var grounded = false;
   var jumpCount = 0;
+  var strikeDamage = 5;
+  var runningStrikeDamage = 4;
 
   var _direction = GameFight2DDirection.Left;
   var _state = GameFight2DCharacterState.Idle;
@@ -44,6 +47,7 @@ mixin class GameFight2DCharacter {
 
   int get direction => _direction;
   int get state => _state;
+  double get damageForce => damage * Damage_Force_Ratio;
   bool get jumpingRequested => _jumpingRequested;
 
   set direction(int value){
@@ -214,7 +218,6 @@ mixin class GameFight2DCharacter {
         : GameFight2DCharacterState.Idle_Airborn;
 
     if (_state == _nextState) return;
-    // print("forceIdle()");
     _state = _nextState;
     stateDuration = 0;
     stateDurationTotal = 0;
@@ -225,7 +228,10 @@ mixin class GameFight2DCharacter {
     y = 0;
     velocityX = 0;
     velocityY = 0;
+    accelerationX = 0;
+    accelerationY = 0;
     stateDuration = 0;
+    damage = 0;
     forceIdle();
   }
 

@@ -195,21 +195,19 @@ class GameFight2D extends Game<GameFight2DPlayer> {
       if (rangeX < xDiff.abs()) continue;
       final yDiff = character.y - otherCharacter.y;
       if (rangeY < yDiff.abs()) continue;
-
-      var force = 10.0 + otherCharacter.damage;
-      if (character.facingLeft){
+      var force = character.strikeDamage + otherCharacter.damageForce;
+      if (character.facingLeft) {
         if (xDiff > 0 && xDiff < rangeX) {
           if (character.state == GameFight2DCharacterState.Running_Strike){
             otherCharacter.hurtAirborn();
             otherCharacter.accelerationY -= force;
-            strikeHit = true;
-            otherCharacter.damage += 5;
+            otherCharacter.damage += character.runningStrikeDamage;
           } else {
             otherCharacter.hurt();
-            strikeHit = true;
-            otherCharacter.damage += 5;
+            otherCharacter.damage += character.strikeDamage;
           }
           otherCharacter.accelerationX -= force;
+          strikeHit = true;
         }
       } else {
         if (xDiff > 0) continue;
