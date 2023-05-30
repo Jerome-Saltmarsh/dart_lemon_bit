@@ -13,6 +13,7 @@ ctrl + shift + e    : view recent changes
 [x] remove disconnected players
 [x] fix platform collision
 [x] fix damage force
+[ ] website title screen
 [ ] zombie bot
 [ ] create 30 second video
 [ ] publish video

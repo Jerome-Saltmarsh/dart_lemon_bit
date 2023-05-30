@@ -81,9 +81,9 @@ class Gamestream {
      });
 
      if (engine.isLocalHost) {
-       gamestream.games.gameWebsite.region.value = ConnectionRegion.LocalHost;
+       gamestream.network.region.value = ConnectionRegion.LocalHost;
      } else {
-       gamestream.games.gameWebsite.region.value = detectConnectionRegion();
+       gamestream.network.region.value = detectConnectionRegion();
      }
 
      gamestream.games.gameWebsite.errorMessageEnabled.value = true;
@@ -103,7 +103,7 @@ class Gamestream {
          }
        }
 
-       gamestream.games.gameWebsite.region.value = engine.isLocalHost ? ConnectionRegion.LocalHost : ConnectionRegion.Asia_South;
+       gamestream.network.region.value = engine.isLocalHost ? ConnectionRegion.LocalHost : ConnectionRegion.Asia_South;
        // GameNetwork.connectToGameAeon();
      }
      await Future.delayed(const Duration(seconds: 4));

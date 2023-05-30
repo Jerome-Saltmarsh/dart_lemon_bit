@@ -15,6 +15,7 @@ class GameNetwork {
   late final connectionStatus = Watch(ConnectionStatus.None, onChanged: onChangedConnectionStatus);
   String connectionUri = "";
   DateTime? connectionEstablished;
+  late final region = Watch(ConnectionRegion.Asia_South);
 
   final Gamestream gsEngine;
 
@@ -63,7 +64,7 @@ class GameNetwork {
   void connectToGameAeon() => connectToGame(GameType.Mobile_Aeon);
 
   void connectToGame(GameType gameType, [String message = ""]) =>
-      connectToRegion(gamestream.games.gameWebsite.region.value, '${gameType.index} $message');
+      connectToRegion(region.value, '${gameType.index} $message');
 
   Future sendClientRequestUpdate() async {
     applyKeyboardInputToUpdateBuffer();

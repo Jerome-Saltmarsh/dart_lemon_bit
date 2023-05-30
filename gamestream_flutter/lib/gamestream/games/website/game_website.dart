@@ -26,7 +26,6 @@ class GameWebsite extends Game {
   static const Icon_Size = 25.0;
   final operationStatus = Watch(OperationStatus.None);
   late final account = Watch<Account?>(null, onChanged: onChangedAccount);
-  late final region = Watch(ConnectionRegion.Asia_South, onChanged: onChangedRegion);
   late final visitCount = Watch(0, onChanged: onChangedVisitCount);
   final download = Watch(0.0);
   final debug = true;
@@ -163,19 +162,24 @@ class GameWebsite extends Game {
           : buildPageWebsiteMobile();
 
   Widget buildPageWebsiteDesktop() =>
-      Center(
-        child: Container(
-          width: 300,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              buildLogoGameStream(),
-              height16,
-              SelectRegionColumn(),
-              SelectGameTypeColumn(),
-            ],
-          ),
-        ),
+      WatchBuilder(
+        gamestream.network.region,
+        (ConnectionRegion region) {
+          return Center(
+            child: Container(
+              width: 300,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  buildLogoGameStream(),
+                  height16,
+                  SelectRegionColumn(),
+                  SelectGameTypeColumn(),
+                ],
+              ),
+            ),
+          );
+        }
       );
 
   void openUrlYoutube() =>
@@ -251,11 +255,6 @@ class GameWebsite extends Game {
             )),
       ],
     );
-  }
-
-  void onChangedRegion(ConnectionRegion region) {
-    storage.saveRegion(region);
-    isVisibleDialogCustomRegion.value = region == ConnectionRegion.Custom;
   }
 
   void onChangedAccount(Account? account) {
@@ -340,7 +339,8 @@ class GameWebsite extends Game {
   Widget buildTextVersion() =>
       text('gamestream.online - v$version', color:  Colors.white60, size: FontSize.Regular);
 
-  void actionSelectRegion(ConnectionRegion value) => region.value = value;
+  void actionSelectRegion(ConnectionRegion value) =>
+      gamestream.network.region.value = value;
 
   void showDialogChangePublicName(){
     gamestream.games.gameWebsite.dialog.value = WebsiteDialog.Change_Public_Name;
@@ -410,7 +410,7 @@ class GameWebsite extends Game {
     return Tooltip(
       message: "Change Region",
       child: button(
-        text(engine.enumString(gamestream.games.gameWebsite.region.value),
+        text(engine.enumString(gamestream.network.region.value),
             color: GameIsometricColors.white80),
         gamestream.games.gameWebsite.showDialogChangeRegion,
         borderColor: GameIsometricColors.none,

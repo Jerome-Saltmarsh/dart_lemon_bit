@@ -16,7 +16,7 @@ class SelectRegionColumn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WatchBuilder(gamestream.games.gameWebsite.region, (activeRegion) {
+    return WatchBuilder(gamestream.network.region, (activeRegion) {
       return SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
