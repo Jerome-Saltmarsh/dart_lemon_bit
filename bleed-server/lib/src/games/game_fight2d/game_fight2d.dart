@@ -117,6 +117,12 @@ class GameFight2D extends Game<GameFight2DPlayer> {
   @override
   void removePlayer(GameFight2DPlayer player) {
     characters.remove(player);
+
+    for (final character in characters) {
+      if (character is! GameFight2DBot) continue;
+      if (character.target != player) continue;
+      character.target = null;
+    }
   }
 
   @override
@@ -406,4 +412,6 @@ class GameFight2D extends Game<GameFight2DPlayer> {
     character.jumpCount = 0;
     character.forceIdle();
   }
+
+
 }

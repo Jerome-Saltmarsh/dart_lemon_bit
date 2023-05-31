@@ -18,6 +18,7 @@ class GameFight2D extends Game {
   final characterStateDuration = Uint8List(length);
   final characterPositionX = Float32List(length);
   final characterPositionY = Float32List(length);
+  final characterIsBot = List.generate(length, (index) => false, growable: false);
 
   var charactersTotal = 0;
   var sceneWidth = 0;
@@ -122,7 +123,7 @@ class GameFight2D extends Game {
 
       engine.paint.color = Colors.white;
       engine.renderText(
-        characterDamage[i].toString(),
+          characterIsBot[i] ? '${characterDamage[i]}-AI' : characterDamage[i].toString(),
         characterPositionX[i].toDouble() - 20,
         characterPositionY[i].toDouble() - 120,
         style: damageTextStyle,

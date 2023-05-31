@@ -41,7 +41,8 @@ class WebSocketConnection with ByteReader {
 
     sink.done.then((value){
       final player = _player;
-      if (player != null){
+      if (player != null) {
+        player.game.players.remove(player);
         player.game.removePlayer(player);
       }
       _player = null;

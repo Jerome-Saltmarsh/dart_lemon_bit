@@ -1,3 +1,5 @@
+import 'package:bleed_server/src/games/game_fight2d/game_fight2d_bot.dart';
+
 import 'game_fight2d.dart';
 import 'game_fight2d_character.dart';
 
@@ -47,6 +49,7 @@ class GameFight2DPlayer extends Player with GameFight2DCharacter {
     for (final character in game.characters) {
       writeByte(character.state);
       writeByte(character.direction);
+      writeBool(character is GameFight2DBot);
       writeUInt16(character.damage);
       writeInt16(character.x.toInt());
       writeInt16(character.y.toInt());
