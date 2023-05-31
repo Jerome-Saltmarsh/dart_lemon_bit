@@ -220,6 +220,7 @@ class GameFight2D extends Game<GameFight2DPlayer> {
     if (distanceX < GameFight2DCharacter.Strike_Range_X){
       if (distanceY < GameFight2DCharacter.Strike_Range_Y){
           bot.state = GameFight2DCharacterState.Striking;
+          bot.aiPause = randomInt(30, 100);
           return;
       }
     }
