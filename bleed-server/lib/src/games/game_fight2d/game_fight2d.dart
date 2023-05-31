@@ -15,10 +15,13 @@ class GameFight2D extends Game<GameFight2DPlayer> {
   final characters = <GameFight2DCharacter>[];
   final GameFight2DScene scene;
 
+  final bot = GameFight2DBot();
+
   GameFight2D({required this.scene}) : super(gameType: GameType.Fight2D) {
-    characters.add(GameFight2DBot()
+    characters.add(bot
       ..x = 500
-      ..y = 200);
+      ..y = 200
+    );
   }
 
   bool get full => players.length >= Max_Players;
@@ -31,6 +34,11 @@ class GameFight2D extends Game<GameFight2DPlayer> {
     player.x = randomBetween(0, scene.widthLength);
     player.y = 0;
     characters.add(player);
+
+    if (players.length == 2) {
+      characters.remove(bot);
+    }
+
     return player;
   }
 
@@ -118,6 +126,10 @@ class GameFight2D extends Game<GameFight2DPlayer> {
   void removePlayer(GameFight2DPlayer player) {
     characters.remove(player);
 
+    if (players.length == 2 && !characters.contains(bot)) {
+      characters.add(bot);
+    }
+
     for (final character in characters) {
       if (character is! GameFight2DBot) continue;
       if (character.target != player) continue;
@@ -166,6 +178,7 @@ class GameFight2D extends Game<GameFight2DPlayer> {
     if (bot.aiPause > 0){
       bot.aiPause--;
       bot.state = GameFight2DCharacterState.Idle;
+      bot.target = null;
       return;
     }
 
@@ -175,9 +188,13 @@ class GameFight2D extends Game<GameFight2DPlayer> {
       bot.aiPauseNext = randomInt(50, 200);
     }
 
+    var nearestCharacterDistanceSquared = 500.0 * 500.0;
     if (bot.target == null) {
        for (final character in characters) {
          if (character == bot) continue;
+         final distanceSquared = getDistanceV2Squared(character.x, character.y, bot.x, bot.y);
+         if (distanceSquared > nearestCharacterDistanceSquared) continue;
+         nearestCharacterDistanceSquared = distanceSquared;
          bot.target = character;
          break;
        }
