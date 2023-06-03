@@ -7,10 +7,10 @@ import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_math/library.dart';
 
 import 'package:bleed_server/gamestream.dart';
-import '../../io/write_scene_to_file.dart';
-import '../../maths/get_distance_between_v3.dart';
-import 'game_time.dart';
-import 'player.dart';
+import '../io/write_scene_to_file.dart';
+import '../maths/get_distance_between_v3.dart';
+import '../classes/src/game_time.dart';
+import '../classes/src/player.dart';
 
 abstract class GameIsometric<T extends IsometricPlayer> extends Game<T> {
 
@@ -22,7 +22,6 @@ abstract class GameIsometric<T extends IsometricPlayer> extends Game<T> {
   final jobs = <GameJob>[];
   final scripts = <GameScript>[];
   final scriptReader = ByteReader();
-  final GameOptions options;
   var _timerUpdateAITargets = 0;
   var gameObjectId = 0;
   GameEnvironment environment;
@@ -177,7 +176,6 @@ abstract class GameIsometric<T extends IsometricPlayer> extends Game<T> {
     required this.scene,
     required this.time,
     required this.environment,
-    required this.options,
     required super.gameType,
   }) {
     Position3.sort(gameObjects);
@@ -423,12 +421,6 @@ abstract class GameIsometric<T extends IsometricPlayer> extends Game<T> {
   void characterEquipItemType(Character character, int itemType) {
     if (!character.canChangeEquipment) return;
 
-    if (options.items && character is IsometricPlayer) {
-      final itemAmount = character.item_level[itemType];
-      if (itemAmount == null) return;
-      if (itemAmount <= 0) return;
-    }
-
     if (ItemType.isTypeWeapon(itemType)) {
       characterEquipWeapon(
         character: character,
@@ -500,33 +492,12 @@ abstract class GameIsometric<T extends IsometricPlayer> extends Game<T> {
     final weaponType = character.weaponType;
 
     if (character is IsometricPlayer) {
-      if (options.useWeaponConsumesResource) {
-        final playerWeaponConsumeType = ItemType.getConsumeType(weaponType);
-
-        if (playerWeaponConsumeType != ItemType.Empty) {
-          final equippedWeaponQuantity = character.equippedWeaponQuantity;
-          if (equippedWeaponQuantity == 0) {
-            playerReload(character);
-            return;
-          }
-          character.inventorySetQuantityAtIndex(
-            quantity: equippedWeaponQuantity - 1,
-            index: character.equippedWeaponIndex,
-          );
-          if (character.weaponIsEquipped) {
-            character.writePlayerEquippedWeaponAmmunition();
-          }
-        }
-      }
-
-      if (options.useWeaponCostEnergy) {
         final cost = getCharacterWeaponEnergyCost(character);
         if (character.energy < cost) {
           character.writeGameError(GameError.Insufficient_Energy);
           return;
         }
         character.energy -= cost;
-      }
     } else if (character is AI) {
       if (ItemType.isTypeWeaponFirearm(weaponType)) {
         if (character.rounds <= 0) {
@@ -1420,7 +1391,7 @@ abstract class GameIsometric<T extends IsometricPlayer> extends Game<T> {
         target: gameObject,
         srcCharacter: srcCharacter,
         damage: damage,
-        friendlyFire: options.explosionsFriendlyFire,
+        friendlyFire: true,
         hitType: HitType.Explosion,
       );
     }
@@ -1436,7 +1407,7 @@ abstract class GameIsometric<T extends IsometricPlayer> extends Game<T> {
         target: character,
         srcCharacter: srcCharacter,
         damage: damage,
-        friendlyFire: options.explosionsFriendlyFire,
+        friendlyFire: true,
         hitType: HitType.Explosion,
       );
     }
@@ -1493,15 +1464,6 @@ abstract class GameIsometric<T extends IsometricPlayer> extends Game<T> {
     player.writePlayerStats();
     player.writePlayerCredits();
     player.writeGameTime(time.time);
-
-    if (options.inventory) {
-      player.writePlayerInventory();
-    }
-    if (options.items) {
-      player.writePlayerItems();
-      player.writePlayerWeapons();
-    }
-
     player.health = player.maxHealth;
   }
 
@@ -3150,12 +3112,6 @@ abstract class GameIsometric<T extends IsometricPlayer> extends Game<T> {
 
   void customOnPlayerCollectGameObject(IsometricPlayer player,
       GameObject target) {
-    if (options.items) {
-      deactivateCollider(target);
-      player.writePlayerEventItemAcquired(target.type);
-      clearCharacterTarget(player);
-      return;
-    }
 
     var quantityRemaining = target.quantity > 0 ? target.quantity : 1;
     final maxQuantity = ItemType.getMaxQuantity(target.type);

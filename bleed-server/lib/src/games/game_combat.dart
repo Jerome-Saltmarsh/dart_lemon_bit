@@ -2,7 +2,7 @@
 
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/classes/src/game_environment.dart';
-import 'package:bleed_server/src/classes/src/game_isometric.dart';
+import 'package:bleed_server/src/games/game_isometric.dart';
 import 'package:bleed_server/src/classes/src/game_time.dart';
 import 'package:bleed_server/src/classes/src/player.dart';
 import 'package:bleed_server/src/system.dart';
@@ -70,22 +70,6 @@ class GameCombat extends GameIsometric {
       gameType: GameType.Combat,
       time: GameTime(enabled: true, hour: 15, minute: 30),
       environment: GameEnvironment(),
-      options: GameOptions(
-          perks: false,
-          inventory: false,
-          items: true,
-          itemTypes: [
-              ItemType.Weapon_Melee_Knife,
-              ItemType.Weapon_Melee_Crowbar,
-              ItemType.Weapon_Melee_Axe,
-              ItemType.Weapon_Ranged_Plasma_Pistol,
-              ItemType.Weapon_Ranged_Plasma_Rifle,
-              ItemType.Weapon_Ranged_Shotgun,
-              ItemType.Weapon_Ranged_Sniper_Rifle,
-              ItemType.Weapon_Ranged_Bazooka,
-              ItemType.Weapon_Ranged_Flamethrower,
-          ],
-      ),
   );
 
   @override
@@ -107,7 +91,6 @@ class GameCombat extends GameIsometric {
     player.maxEnergy = Player_Energy;
     player.energy = Player_Energy;
     player.score = 0;
-    player.grenades = 1;
     player.writePlayerEquipment();
     player.writePlayerPower();
   }

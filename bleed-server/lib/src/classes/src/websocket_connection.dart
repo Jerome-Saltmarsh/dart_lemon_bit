@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:bleed_server/gamestream.dart';
-import 'package:bleed_server/src/classes/src/game_isometric.dart';
+import 'package:bleed_server/src/games/game_isometric.dart';
 import 'package:bleed_server/src/classes/src/player.dart';
 import 'package:bleed_server/src/classes/src/player_aeon.dart';
 import 'package:bleed_server/src/classes/src/scene_writer.dart';

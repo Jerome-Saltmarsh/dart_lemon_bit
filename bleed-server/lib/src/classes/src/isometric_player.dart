@@ -2,7 +2,7 @@
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:bleed_server/src/classes/src/game_isometric.dart';
+import 'package:bleed_server/src/games/game_isometric.dart';
 import 'package:bleed_server/src/classes/src/player.dart';
 import 'package:bleed_server/src/functions/generateName.dart';
 import 'package:bleed_server/src/games/game_editor.dart';
@@ -135,13 +135,6 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   bool get aimTargetWithinInteractRadius => aimTarget != null
       ? getDistanceBetweenV3(this, aimTarget!) < GameSettings.Interact_Radius
       : false;
-
-  set grenades(int value) {
-    value = clamp(value, 0, getItemCapacity(ItemType.Weapon_Thrown_Grenade));
-    if (grenades == value) return;
-    setItemQuantity(ItemType.Weapon_Thrown_Grenade, value);
-    writePlayerGrenades();
-  }
 
   bool get weaponPrimaryEquipped => weaponType == weaponPrimary;
   bool get weaponSecondaryEquipped => weaponType == weaponSecondary;
@@ -1689,29 +1682,10 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
 
   int getItemQuantity(int itemType) => item_quantity[itemType] ?? 0;
 
-  int getItemCapacity(int itemType) {
-    if (itemType == ItemType.Empty) return 0;
-    final level = getItemLevel(itemType);
-    final itemTypeCapacity = game.options.itemTypeCapacity[itemType];
-    if (itemTypeCapacity == null) return 0;
-    if (level >= itemTypeCapacity.length) return itemTypeCapacity.last;
-    return itemTypeCapacity[level];
-  }
-
   void writePlayerGrenades() {
       writeByte(ServerResponse.Api_Player);
       writeByte(ApiPlayer.Grenades);
       writeUInt16(grenades);
-  }
-
-  void setItemQuantityMax(int itemType) =>
-      setItemQuantity(itemType, getItemCapacity(itemType));
-
-  void setItemQuantity(int itemType, int quantity) {
-    if (itemType == ItemType.Empty) return;
-    final quantityClamped = clamp(quantity, 0, getItemCapacity(itemType));
-    if (getItemQuantity(itemType) == quantityClamped) return;
-    item_quantity[itemType] = quantityClamped;
   }
 
   writePlayerApiId(){

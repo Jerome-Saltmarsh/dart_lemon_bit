@@ -1,6 +1,6 @@
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/classes/src/game_environment.dart';
-import 'package:bleed_server/src/classes/src/game_isometric.dart';
+import 'package:bleed_server/src/games/game_isometric.dart';
 import 'package:bleed_server/src/classes/src/game_time.dart';
 import '../scene/generate_empty_scene.dart';
 
@@ -11,11 +11,6 @@ class GameEditor extends GameIsometric {
       environment: GameEnvironment(),
       time: GameTime(),
       gameType: GameType.Editor,
-      options: GameOptions(
-        perks: false,
-        inventory: false,
-        items: false,
-      ),
   );
 
   @override
