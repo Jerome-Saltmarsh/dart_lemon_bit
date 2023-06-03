@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:bleed_server/gamestream.dart';
-import 'package:bleed_server/src/game_physics.dart';
+import 'package:bleed_server/src/games/game_isometric/isometric_physics.dart';
 import 'package:lemon_math/library.dart';
 
 class Collider extends Position3 {
@@ -10,7 +10,7 @@ class Collider extends Position3 {
   var velocityX = 0.0;
   var velocityY = 0.0;
   var velocityZ = 0.0;
-  var friction = GamePhysics.Friction;
+  var friction = IsometricPhysics.Friction;
   var bounce = false;
   var team = 0;
   var radius = 0.0;
@@ -111,9 +111,9 @@ class Collider extends Position3 {
     velocityY *= friction;
 
     if (gravity) {
-      velocityZ -= GamePhysics.Gravity;
-      if (velocityZ < -GamePhysics.Max_Fall_Velocity) {
-        velocityZ = -GamePhysics.Max_Fall_Velocity;
+      velocityZ -= IsometricPhysics.Gravity;
+      if (velocityZ < -IsometricPhysics.Max_Fall_Velocity) {
+        velocityZ = -IsometricPhysics.Max_Fall_Velocity;
       }
     }
   }

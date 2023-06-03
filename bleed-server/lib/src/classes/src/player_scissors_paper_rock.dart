@@ -1,7 +1,7 @@
 
 import 'package:bleed_server/common/src/enums/api_spr.dart';
 import 'package:bleed_server/common/src/server_response.dart';
-import 'package:bleed_server/src/classes/src/player.dart';
+import 'package:bleed_server/src/game/player.dart';
 import 'package:bleed_server/src/games/game_rock_paper_scissors.dart';
 
 class PlayerScissorsPaperRock extends Player {

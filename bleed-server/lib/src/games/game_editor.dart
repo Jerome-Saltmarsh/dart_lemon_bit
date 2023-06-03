@@ -1,10 +1,10 @@
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/classes/src/game_environment.dart';
-import 'package:bleed_server/src/games/game_isometric.dart';
 import 'package:bleed_server/src/classes/src/game_time.dart';
 import '../scene/generate_empty_scene.dart';
+import 'game_isometric/isometric_game.dart';
 
-class GameEditor extends GameIsometric {
+class GameEditor extends IsometricGame {
 
   GameEditor({Scene? scene}) : super(
       scene: scene ?? generateEmptyScene(),
@@ -26,7 +26,7 @@ class GameEditor extends GameIsometric {
   @override
   void customOnPlayerRevived(IsometricPlayer player) {
      if (isSafeToRevive(25, 25)) {
-       GameIsometric.setGridPosition(position: player, z: 1, row: 25, column: 25);
+       IsometricGame.setGridPosition(position: player, z: 1, row: 25, column: 25);
        player.state = CharacterState.Idle;
        player.writePlayerMoved();
        return;
@@ -35,7 +35,7 @@ class GameEditor extends GameIsometric {
      for (var row = 0; row < scene.gridRows; row++) {
         for (var column = 0; column < scene.gridColumns; column++){
           if (isSafeToRevive(row, column)){
-            GameIsometric.setGridPosition(position: player, z: 1, row: row, column: column);
+            IsometricGame.setGridPosition(position: player, z: 1, row: row, column: column);
             player.writePlayerMoved();
             return;
           }

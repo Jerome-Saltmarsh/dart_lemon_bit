@@ -2,8 +2,7 @@
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:bleed_server/src/games/game_isometric.dart';
-import 'package:bleed_server/src/classes/src/player.dart';
+import 'package:bleed_server/src/game/player.dart';
 import 'package:bleed_server/src/functions/generateName.dart';
 import 'package:bleed_server/src/games/game_editor.dart';
 import 'package:bleed_server/src/maths/get_distance_between_v3.dart';
@@ -12,7 +11,8 @@ import 'package:lemon_byte/byte_writer.dart';
 import 'package:lemon_math/library.dart';
 
 import 'package:bleed_server/gamestream.dart';
-import 'scene_writer.dart';
+import '../../classes/src/scene_writer.dart';
+import 'isometric_game.dart';
 
 class IsometricPlayer extends Character with ByteWriter implements Player {
   /// CONSTANTS
@@ -26,7 +26,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
   static const inventory_size = 6 * 5;
 
   /// Variables
-  late GameIsometric game;
+  late IsometricGame game;
   final runTarget = Position3();
   late Function sendBufferToClient;
   GameObject? editorSelectedGameObject;

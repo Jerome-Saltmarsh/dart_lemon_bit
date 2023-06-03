@@ -1,5 +1,5 @@
 import 'package:bleed_server/gamestream.dart';
-import 'package:bleed_server/src/games/game_isometric.dart';
+import 'package:bleed_server/src/games/game_isometric/isometric_game.dart';
 import 'package:lemon_math/library.dart';
 
 class GameEnvironment {
@@ -90,7 +90,7 @@ class GameEnvironment {
         nextLightningFlash = randomInt(500, 1000);
         lightningFlashDuration = Lightning_Flash_Duration_Total;
         for (final game in engine.games) {
-          if (game is! GameIsometric) continue;
+          if (game is! IsometricGame) continue;
           if (this != game.environment) continue;
           for (final player in game.players){
             player.writeWeather();
@@ -145,7 +145,7 @@ class GameEnvironment {
   /// WARNING HACK
   void onChangedWeather(){
     for (final game in engine.games) {
-      if (game is! GameIsometric) continue;
+      if (game is! IsometricGame) continue;
       if (game.environment != this) continue;
       game.playersWriteWeather();
     }

@@ -1,5 +1,5 @@
 import 'package:bleed_server/gamestream.dart';
-import 'package:bleed_server/src/classes/src/player.dart';
+import 'package:bleed_server/src/game/player.dart';
 
 abstract class Game <T extends Player> {
   var playerId = 0;

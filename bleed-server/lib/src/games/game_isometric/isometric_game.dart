@@ -2,17 +2,17 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:bleed_server/src/classes/src/game_environment.dart';
-import 'package:bleed_server/src/game_physics.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_math/library.dart';
 
 import 'package:bleed_server/gamestream.dart';
-import '../io/write_scene_to_file.dart';
-import '../maths/get_distance_between_v3.dart';
-import '../classes/src/game_time.dart';
-import '../classes/src/player.dart';
+import '../../io/write_scene_to_file.dart';
+import '../../maths/get_distance_between_v3.dart';
+import '../../classes/src/game_time.dart';
+import '../../game/player.dart';
+import 'isometric_physics.dart';
 
-abstract class GameIsometric<T extends IsometricPlayer> extends Game<T> {
+abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   var frame = 0;
   var _running = true;
@@ -172,7 +172,7 @@ abstract class GameIsometric<T extends IsometricPlayer> extends Game<T> {
   double get minAimTargetCursorDistance => 35;
 
   /// CONSTRUCTOR
-  GameIsometric({
+  IsometricGame({
     required this.scene,
     required this.time,
     required this.environment,
@@ -255,7 +255,7 @@ abstract class GameIsometric<T extends IsometricPlayer> extends Game<T> {
     }
   }
 
-  void changeGame(IsometricPlayer player, GameIsometric to) {
+  void changeGame(IsometricPlayer player, IsometricGame to) {
     if (this == to) return;
     removePlayer(player);
     for (final character in characters) {
@@ -721,10 +721,10 @@ abstract class GameIsometric<T extends IsometricPlayer> extends Game<T> {
 
     final mouseDistance = getDistanceXY(
         player.x, player.y, player.mouseGridX, player.mouseGridY);
-    final throwDistance = min(mouseDistance, GamePhysics.Max_Throw_Distance);
-    final throwRatio = throwDistance / GamePhysics.Max_Throw_Distance;
-    final velocity = GamePhysics.Max_Throw_Velocity * throwRatio;
-    final velocityZ = GamePhysics.Max_Throw_Velocity_Z * throwRatio;
+    final throwDistance = min(mouseDistance, IsometricPhysics.Max_Throw_Distance);
+    final throwRatio = throwDistance / IsometricPhysics.Max_Throw_Distance;
+    final velocity = IsometricPhysics.Max_Throw_Velocity * throwRatio;
+    final velocityZ = IsometricPhysics.Max_Throw_Velocity_Z * throwRatio;
 
     final instance = spawnGameObject(
       x: player.x,
@@ -935,7 +935,7 @@ abstract class GameIsometric<T extends IsometricPlayer> extends Game<T> {
         force: 4.5,
         angle: angle + pi,
       );
-      character.clampVelocity(GamePhysics.Max_Velocity);
+      character.clampVelocity(IsometricPhysics.Max_Velocity);
       attackHit = true;
       for (final player in players) {
         if (!player.onScreen(performX, performY)) continue;
@@ -1044,7 +1044,7 @@ abstract class GameIsometric<T extends IsometricPlayer> extends Game<T> {
       force: 1.0,
       angle: angle + pi,
     );
-    character.clampVelocity(GamePhysics.Max_Velocity);
+    character.clampVelocity(IsometricPhysics.Max_Velocity);
 
     spawnProjectile(
       src: character,
@@ -2037,7 +2037,7 @@ abstract class GameIsometric<T extends IsometricPlayer> extends Game<T> {
       angle: angle,
     );
 
-    target.clampVelocity(GamePhysics.Max_Velocity);
+    target.clampVelocity(IsometricPhysics.Max_Velocity);
 
     customOnHitApplied(
       srcCharacter: srcCharacter,
@@ -2323,7 +2323,7 @@ abstract class GameIsometric<T extends IsometricPlayer> extends Game<T> {
       force: 6.0,
       angle: angle + pi,
     );
-    src.clampVelocity(GamePhysics.Max_Velocity);
+    src.clampVelocity(IsometricPhysics.Max_Velocity);
     for (var i = 0; i < 5; i++) {
       spawnProjectile(
         src: src,
@@ -2546,7 +2546,7 @@ abstract class GameIsometric<T extends IsometricPlayer> extends Game<T> {
       gameObject.type = type;
       gameObject.active = true;
       gameObject.dirty = true;
-      gameObject.friction = GamePhysics.Friction;
+      gameObject.friction = IsometricPhysics.Friction;
       gameObject.synchronizePrevious();
       customOnGameObjectSpawned(gameObject);
       return gameObject;
@@ -2824,13 +2824,13 @@ abstract class GameIsometric<T extends IsometricPlayer> extends Game<T> {
 
     if (nodeBottomOrientation == NodeOrientation.Solid) {
       final nodeTop = ((bottomZ ~/ Node_Height) * Node_Height) + Node_Height;
-      if (nodeTop - bottomZ > GamePhysics.Max_Vertical_Collision_Displacement)
+      if (nodeTop - bottomZ > IsometricPhysics.Max_Vertical_Collision_Displacement)
         return;
       collider.z = nodeTop;
       if (collider.velocityZ < 0) {
         if (collider.bounce) {
           collider.velocityZ =
-              -collider.velocityZ * GamePhysics.Bounce_Friction;
+              -collider.velocityZ * IsometricPhysics.Bounce_Friction;
           dispatchV3(GameEventType.Item_Bounce, collider,
               angle: -collider.velocityZ);
         } else {
@@ -2851,13 +2851,13 @@ abstract class GameIsometric<T extends IsometricPlayer> extends Game<T> {
         return;
       }
 
-      if (nodeTop - bottomZ > GamePhysics.Max_Vertical_Collision_Displacement)
+      if (nodeTop - bottomZ > IsometricPhysics.Max_Vertical_Collision_Displacement)
         return;
 
       if (collider.velocityZ < 0) {
         if (collider.bounce) {
           collider.velocityZ =
-              -collider.velocityZ * GamePhysics.Bounce_Friction;
+              -collider.velocityZ * IsometricPhysics.Bounce_Friction;
           dispatchV3(GameEventType.Item_Bounce, collider,
               angle: -collider.velocityZ);
         } else {
@@ -2902,13 +2902,13 @@ abstract class GameIsometric<T extends IsometricPlayer> extends Game<T> {
 
     if (nodeBottomOrientation == NodeOrientation.Solid) {
       final nodeTop = ((bottomZ ~/ Node_Height) * Node_Height) + Node_Height;
-      if (nodeTop - bottomZ > GamePhysics.Max_Vertical_Collision_Displacement)
+      if (nodeTop - bottomZ > IsometricPhysics.Max_Vertical_Collision_Displacement)
         return;
       collider.z = nodeTop;
       if (collider.velocityZ < 0) {
         if (collider.bounce) {
           collider.velocityZ =
-              -collider.velocityZ * GamePhysics.Bounce_Friction;
+              -collider.velocityZ * IsometricPhysics.Bounce_Friction;
           dispatchV3(GameEventType.Item_Bounce, collider,
               angle: -collider.velocityZ);
         } else {
@@ -2929,7 +2929,7 @@ abstract class GameIsometric<T extends IsometricPlayer> extends Game<T> {
         return;
       }
 
-      if (nodeTop - bottomZ > GamePhysics.Max_Vertical_Collision_Displacement)
+      if (nodeTop - bottomZ > IsometricPhysics.Max_Vertical_Collision_Displacement)
         return;
 
       collider.z = nodeTop;
@@ -2937,7 +2937,7 @@ abstract class GameIsometric<T extends IsometricPlayer> extends Game<T> {
       if (collider.velocityZ < 0) {
         if (collider.bounce) {
           collider.velocityZ =
-              -collider.velocityZ * GamePhysics.Bounce_Friction;
+              -collider.velocityZ * IsometricPhysics.Bounce_Friction;
           dispatchV3(GameEventType.Item_Bounce, collider,
               angle: -collider.velocityZ);
         } else {

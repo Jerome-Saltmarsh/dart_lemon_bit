@@ -1,9 +1,9 @@
 export 'src/ai.dart';
 export 'src/character.dart';
 export 'src/collider.dart';
-export 'src/game.dart';
+export '../game/game.dart';
 export 'src/gameobject.dart';
-export 'src/isometric_player.dart';
+export '../games/game_isometric/isometric_player.dart';
 export 'src/position3.dart';
 export 'src/projectile.dart';
 export 'src/scene.dart';

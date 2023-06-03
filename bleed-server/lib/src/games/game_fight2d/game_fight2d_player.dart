@@ -4,7 +4,7 @@ import 'game_fight2d.dart';
 import 'game_fight2d_character.dart';
 
 import 'package:bleed_server/gamestream.dart';
-import 'package:bleed_server/src/classes/src/player.dart';
+import 'package:bleed_server/src/game/player.dart';
 
 
 

@@ -1,5 +1,5 @@
 
-import 'package:bleed_server/src/game_physics.dart';
+import 'package:bleed_server/src/games/game_isometric/isometric_physics.dart';
 
 import 'collider.dart';
 import 'position3.dart';
@@ -9,14 +9,14 @@ class Projectile extends Collider {
   var type = 0; // ProjectileType.dart
   Position3? target = null;
 
-  Projectile() : super(x: 0, y: 0, z: 0, radius: GamePhysics.Projectile_Radius);
+  Projectile() : super(x: 0, y: 0, z: 0, radius: IsometricPhysics.Projectile_Radius);
 
   bool get overRange => distanceTravelled > range;
 
   double get distanceTravelled => getDistanceXY(startX, startY);
 
   void reduceDistanceZFrom(Position3 position){
-    z += (position.z - z) * GamePhysics.Projectile_Z_Velocity;
+    z += (position.z - z) * IsometricPhysics.Projectile_Z_Velocity;
   }
 }
 

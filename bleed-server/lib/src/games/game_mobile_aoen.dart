@@ -2,14 +2,15 @@
 
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/classes/src/game_environment.dart';
-import 'package:bleed_server/src/games/game_isometric.dart';
 import 'package:bleed_server/src/classes/src/game_time.dart';
-import 'package:bleed_server/src/classes/src/player.dart';
+import 'package:bleed_server/src/game/player.dart';
 import 'package:bleed_server/src/classes/src/player_aeon.dart';
 import 'package:bleed_server/src/system.dart';
 import 'package:lemon_math/library.dart';
 
-class GameMobileAeon extends GameIsometric<PlayerAeon> {
+import 'game_isometric/isometric_game.dart';
+
+class GameMobileAeon extends IsometricGame<PlayerAeon> {
   // constants
   static final Player_Respawn_Duration  = Engine.Frames_Per_Second * (isLocalMachine ? 4 : 4);
   static const GameObject_Duration      = 500;

@@ -2,8 +2,7 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:bleed_server/gamestream.dart';
-import 'package:bleed_server/src/games/game_isometric.dart';
-import 'package:bleed_server/src/classes/src/player.dart';
+import 'package:bleed_server/src/game/player.dart';
 import 'package:bleed_server/src/classes/src/player_aeon.dart';
 import 'package:bleed_server/src/classes/src/scene_writer.dart';
 import 'package:bleed_server/src/games/game_aeon.dart';
@@ -11,6 +10,7 @@ import 'package:bleed_server/src/games/game_editor.dart';
 import 'package:bleed_server/src/games/game_fight2d/game_fight2d.dart';
 import 'package:bleed_server/src/games/game_fight2d/game_fight2d_player.dart';
 import 'package:bleed_server/src/games/game_fight2d/game_fight2d_scene_generator.dart';
+import 'package:bleed_server/src/games/game_isometric/isometric_game.dart';
 import 'package:bleed_server/src/games/game_mobile_aoen.dart';
 import 'package:bleed_server/src/games/game_combat.dart';
 import 'package:bleed_server/src/scene_generator.dart';
@@ -219,7 +219,7 @@ class WebSocketConnection with ByteReader {
         break;
 
       case ClientRequest.Attack:
-        if (game is! GameIsometric) return;
+        if (game is! IsometricGame) return;
         if (player is! IsometricPlayer) return;
         game.playerAutoAim(player);
         game.characterAttackMelee(player);
@@ -254,7 +254,7 @@ class WebSocketConnection with ByteReader {
         break;
 
       case ClientRequest.Suicide:
-        if (game is! GameIsometric) return;
+        if (game is! IsometricGame) return;
         if (player is! IsometricPlayer) return;
         game.setCharacterStateDead(player);
         break;
@@ -267,13 +267,13 @@ class WebSocketConnection with ByteReader {
           return;
         }
 
-        if (game is! GameIsometric) return;
+        if (game is! IsometricGame) return;
         game.environment.rainType = rainType;
         break;
 
       case ClientRequest.Weather_Toggle_Breeze:
         if (!isLocalMachine && game is! GameEditor) return;
-        if (game is! GameIsometric) return;
+        if (game is! IsometricGame) return;
         game.environment.toggleBreeze();
         break;
 
@@ -284,7 +284,7 @@ class WebSocketConnection with ByteReader {
           sendGameError(GameError.Invalid_Client_Request);
           return;
         }
-        if (game is! GameIsometric) return;
+        if (game is! IsometricGame) return;
         game.environment.windType = index;
         break;
 
@@ -295,7 +295,7 @@ class WebSocketConnection with ByteReader {
           sendGameError(GameError.Invalid_Client_Request);
           return;
         }
-        if (game is! GameIsometric) return;
+        if (game is! IsometricGame) return;
         game.environment.lightningType = LightningType.values[index];
 
         if (game.environment.lightningType == LightningType.On){
@@ -314,7 +314,7 @@ class WebSocketConnection with ByteReader {
           player.writeGameError(GameError.Respawn_Duration_Remaining);
           return;
         }
-        if (game is! GameIsometric) return;
+        if (game is! IsometricGame) return;
         game.revive(player);
         return;
 
@@ -363,7 +363,7 @@ class WebSocketConnection with ByteReader {
         if (!isLocalMachine && game is! GameEditor) return;
           final hour = parse(arguments[1]);
           if (hour == null) return errorInvalidClientRequest();
-          if (game is! GameIsometric) return;
+          if (game is! IsometricGame) return;
           game.setHourMinutes(hour, 0);
           break;
 
@@ -514,13 +514,13 @@ class WebSocketConnection with ByteReader {
     switch (editRequest) {
       case EditRequest.Toggle_Game_Running:
         if (!isLocalMachine && game is! GameEditor) return;
-        if (game is! GameIsometric) return;
+        if (game is! IsometricGame) return;
         game.running = !game.running;
         break;
 
       case EditRequest.Scene_Reset:
         if (!isLocalMachine && game is! GameEditor) return;
-        if (game is! GameIsometric) return;
+        if (game is! IsometricGame) return;
         game.reset();
         break;
 
@@ -539,7 +539,7 @@ class WebSocketConnection with ByteReader {
         if (altitude == null) return;
         final frequency = parseArg6(arguments);
         if (frequency == null) return;
-        if (game is! GameIsometric) return;
+        if (game is! IsometricGame) return;
         final sceneName = game.scene.name;
         final scene = SceneGenerator.generate(
             height: height,
@@ -572,14 +572,14 @@ class WebSocketConnection with ByteReader {
       case EditRequest.Scene_Set_Floor_Type:
         final nodeType = parseArg2(arguments);
         if (nodeType == null) return;
-        if (game is! GameIsometric) return;
+        if (game is! IsometricGame) return;
         for (var i = 0; i < game.scene.gridArea; i++){
           game.scene.nodeTypes[i] = nodeType;
         }
         game.playersDownloadScene();
         break;
       case EditRequest.Clear_Spawned:
-        if (game is! GameIsometric) return;
+        if (game is! IsometricGame) return;
         game.clearSpawnedAI();
         break;
       case EditRequest.Scene_Toggle_Underground:
@@ -591,13 +591,13 @@ class WebSocketConnection with ByteReader {
         // gameDarkAge.underground = !gameDarkAge.underground;
         break;
       case EditRequest.Spawn_AI:
-        if (game is! GameIsometric) return;
+        if (game is! IsometricGame) return;
         game.clearSpawnedAI();
         game.scene.refreshSpawnPoints();
         game.triggerSpawnPoints();
         break;
       case EditRequest.Save:
-        if (game is! GameIsometric) return;
+        if (game is! IsometricGame) return;
         if (game.scene.name.isEmpty){
           player.writeGameError(GameError.Save_Scene_Failed);
           return;
@@ -627,7 +627,7 @@ class WebSocketConnection with ByteReader {
         if (spawnIndex == null) {
           return errorInvalidClientRequest();
         }
-        if (game is! GameIsometric) return;
+        if (game is! IsometricGame) return;
         game.spawnAI(
             nodeIndex: spawnIndex,
             characterType: CharacterType.Zombie,
@@ -660,7 +660,7 @@ class WebSocketConnection with ByteReader {
       nodeOrientation = NodeType.getDefaultOrientation(nodeType);
     }
     final game = player.game;
-    if (game is! GameIsometric) return;
+    if (game is! IsometricGame) return;
     game.setNode(
         nodeIndex: nodeIndex,
         nodeType: nodeType,

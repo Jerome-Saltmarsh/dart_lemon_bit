@@ -1,5 +1,5 @@
 
-class GamePhysics {
+class IsometricPhysics {
   static const Gravity = 0.98;
   static const Friction = 0.75;
   static const Bounce_Friction = 0.65;
