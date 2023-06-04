@@ -2,11 +2,11 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:bleed_server/src/game/game.dart';
+import 'package:bleed_server/src/io/save_directory.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_math/library.dart';
 
 import 'package:bleed_server/gamestream.dart';
-import '../../io/write_scene_to_file.dart';
 import '../../game/player.dart';
 import 'isometric_ai.dart';
 import 'isometric_character.dart';
@@ -20,6 +20,7 @@ import 'isometric_player.dart';
 import 'isometric_position.dart';
 import 'isometric_projectile.dart';
 import 'isometric_scene.dart';
+import 'isometric_scene_writer.dart';
 import 'isometric_script.dart';
 import 'isometric_time.dart';
 
@@ -2715,8 +2716,11 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   void saveSceneToFileBytes() {
-    assert(scene.name.isNotEmpty);
-    writeSceneToFileBytes(scene);
+    writeBytesToFile(
+      fileName: '${scene.name}.scene',
+      directory: Scene_Directory_Path,
+      contents: IsometricSceneWriter.compileScene(scene, gameObjects: true),
+    );
   }
 
   void npcSetRandomDestination(IsometricAI ai, {int radius = 10}) {
