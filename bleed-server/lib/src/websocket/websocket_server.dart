@@ -1,4 +1,4 @@
-import 'package:bleed_server/src/classes/src/server_base.dart';
+import 'package:bleed_server/src/websocket/server_base.dart';
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 

@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:bleed_server/gamestream.dart';
+import 'package:bleed_server/src/functions/generateName.dart';
+import 'package:bleed_server/src/game/game.dart';
 import 'package:bleed_server/src/game/player.dart';
 import 'package:bleed_server/src/games/aeon/aeon_game.dart';
 import 'package:bleed_server/src/games/aeon/aeon_player.dart';
@@ -15,14 +17,13 @@ import 'package:bleed_server/src/games/isometric/isometric_game.dart';
 import 'package:bleed_server/src/games/isometric/isometric_player.dart';
 import 'package:bleed_server/src/games/isometric/isometric_scene.dart';
 import 'package:bleed_server/src/games/isometric/isometric_scene_writer.dart';
+import 'package:bleed_server/src/websocket/handle_request_modify_canvas_size.dart';
 import 'package:bleed_server/src/scene_generator.dart';
 import 'package:bleed_server/src/system.dart';
+import 'package:bleed_server/src/utilities/is_valid_index.dart';
 import 'package:lemon_byte/byte_writer.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-import '../../functions/generateName.dart';
-import '../../utilities/is_valid_index.dart';
-import '../../network/handle_request_modify_canvas_size.dart';
 import 'package:lemon_byte/byte_reader.dart';
 
 

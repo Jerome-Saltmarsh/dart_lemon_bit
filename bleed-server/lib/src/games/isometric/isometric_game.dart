@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:bleed_server/src/game/game.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_math/library.dart';
 
@@ -13,6 +14,7 @@ import 'isometric_character.dart';
 import 'isometric_collider.dart';
 import 'isometric_environment.dart';
 import 'isometric_gameobject.dart';
+import 'isometric_hit_type.dart';
 import 'isometric_job.dart';
 import 'isometric_physics.dart';
 import 'isometric_player.dart';
@@ -891,7 +893,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
           target: other,
           damage: character.damage,
           srcCharacter: character,
-          hitType: HitType.Melee
+          hitType: IsometricHitType.Melee
       );
       attackHit = true;
     }
@@ -922,7 +924,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
           target: gameObject,
           damage: character.damage,
           srcCharacter: character,
-          hitType: HitType.Melee
+          hitType: IsometricHitType.Melee
       );
       attackHit = true;
     }
@@ -933,7 +935,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
           target: nearest,
           damage: character.damage,
           srcCharacter: character,
-          hitType: HitType.Melee);
+          hitType: IsometricHitType.Melee);
     }
 
     if (!scene.isInboundXYZ(performX, performY, performZ)) return;
@@ -1242,14 +1244,14 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     final length = script.length;
     while (scriptReader.index < length) {
       switch (scriptReader.readUInt8()) {
-        case ScriptType.GameObject_Deactivate:
+        case IsometricScriptType.GameObject_Deactivate:
           final id = scriptReader.readUInt16();
           final instance = findGameObjectById(id);
           if (instance != null) {
             deactivateCollider(instance);
           }
           break;
-        case ScriptType.Spawn_GameObject:
+        case IsometricScriptType.Spawn_GameObject:
           final type = scriptReader.readUInt16();
           final x = scriptReader.readUInt16();
           final y = scriptReader.readUInt16();
@@ -1261,7 +1263,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
             type: type,
           );
           break;
-        case ScriptType.Spawn_AI:
+        case IsometricScriptType.Spawn_AI:
           final type = scriptReader.readUInt16();
           final x = scriptReader.readUInt16();
           final y = scriptReader.readUInt16();
@@ -1402,7 +1404,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         srcCharacter: srcCharacter,
         damage: damage,
         friendlyFire: true,
-        hitType: HitType.Explosion,
+        hitType: IsometricHitType.Explosion,
       );
     }
 
@@ -1418,7 +1420,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         srcCharacter: srcCharacter,
         damage: damage,
         friendlyFire: true,
-        hitType: HitType.Explosion,
+        hitType: IsometricHitType.Explosion,
       );
     }
   }
@@ -2015,7 +2017,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         srcCharacter: owner,
         target: target,
         damage: projectile.damage,
-        hitType: HitType.Projectile,
+        hitType: IsometricHitType.Projectile,
       );
     }
 
@@ -2106,7 +2108,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         angle: radiansV2(character, attackTarget),
         srcCharacter: character,
         damage: character.damage,
-        hitType: HitType.Projectile,
+        hitType: IsometricHitType.Projectile,
       );
       clearCharacterTarget(character);
     }

@@ -20,6 +20,7 @@ import 'isometric_position.dart';
 import 'isometric_projectile.dart';
 import 'isometric_scene.dart';
 import 'isometric_scene_writer.dart';
+import 'isometric_side.dart';
 
 class IsometricPlayer extends IsometricCharacter with ByteWriter implements Player {
   /// CONSTANTS
@@ -109,7 +110,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   /// Warning - do not reference
   // GameIsometric game;
   IsometricCollider? _aimTarget; // the currently highlighted character
-  var aimTargetWeaponSide = Side.Left;
+  var aimTargetWeaponSide = IsometricSide.Left;
   Account? account;
   final inventory = Uint16List(inventory_size);
   final inventoryQuantity = Uint16List(inventory_size);

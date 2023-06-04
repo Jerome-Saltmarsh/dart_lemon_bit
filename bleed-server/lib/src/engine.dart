@@ -2,13 +2,14 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:bleed_server/firestore/firestore.dart';
-import 'package:bleed_server/src/classes/src/websocket_server.dart';
+import 'package:bleed_server/src/websocket/websocket_server.dart';
 
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/games/game_editor.dart';
 import 'package:bleed_server/src/io/save_directory.dart';
 import 'package:bleed_server/src/scenes.dart';
 
+import 'game/game.dart';
 import 'games/isometric/isometric_player.dart';
 import 'games/rock_paper_scissors/rock_paper_scissors_game.dart';
 import 'system.dart';

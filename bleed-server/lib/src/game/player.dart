@@ -3,6 +3,8 @@ import 'package:bleed_server/gamestream.dart';
 import 'package:lemon_byte/byte_writer.dart';
 import 'package:lemon_math/library.dart';
 
+import 'game.dart';
+
 abstract class Player with ByteWriter {
   Game get game;
   var framesSinceClientRequest = 0;

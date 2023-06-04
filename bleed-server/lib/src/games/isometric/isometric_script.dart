@@ -6,7 +6,7 @@ class IsometricScript extends ByteWriter {
   var timer = 0;
 
   void writeGameObjectDeactivate(IsometricGameObject gameObject){
-    writeUInt8(ScriptType.GameObject_Deactivate);
+    writeUInt8(IsometricScriptType.GameObject_Deactivate);
     writeUInt16(gameObject.id);
   }
 
@@ -16,7 +16,7 @@ class IsometricScript extends ByteWriter {
     required double y,
     required double z,
   }){
-    writeUInt8(ScriptType.Spawn_GameObject);
+    writeUInt8(IsometricScriptType.Spawn_GameObject);
     writeUInt16(type);
     writeUInt16(x.toInt());
     writeUInt16(y.toInt());
@@ -30,7 +30,7 @@ class IsometricScript extends ByteWriter {
     required double z,
     required int team,
   }){
-    writeUInt8(ScriptType.Spawn_AI);
+    writeUInt8(IsometricScriptType.Spawn_AI);
     writeUInt16(type);
     writeUInt16(x.toInt());
     writeUInt16(y.toInt());

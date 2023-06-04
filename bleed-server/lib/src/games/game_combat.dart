@@ -11,7 +11,9 @@ import 'isometric/isometric_collider.dart';
 import 'isometric/isometric_environment.dart';
 import 'isometric/isometric_game.dart';
 import 'isometric/isometric_gameobject.dart';
+import 'isometric/isometric_hit_type.dart';
 import 'isometric/isometric_player.dart';
+import 'isometric/isometric_side.dart';
 import 'isometric/isometric_time.dart';
 
 class GameCombat extends IsometricGame {
@@ -131,7 +133,7 @@ class GameCombat extends IsometricGame {
       final aimTarget = player.aimTarget;
       if (aimTarget != null) {
 
-        player.aimTargetWeaponSide = Side.Left;
+        player.aimTargetWeaponSide = IsometricSide.Left;
         if (aimTarget is IsometricGameObject && (aimTarget.collectable || aimTarget.interactable)){
           if (player.aimTargetWithinInteractRadius) {
             if (aimTarget.interactable) {
@@ -162,10 +164,10 @@ class GameCombat extends IsometricGame {
     }
 
     if (mouseRightDown) {
-      player.aimTargetWeaponSide = Side.Right;
+      player.aimTargetWeaponSide = IsometricSide.Right;
       final aimTarget = player.aimTarget;
       if (aimTarget != null){
-        player.aimTargetWeaponSide = Side.Right;
+        player.aimTargetWeaponSide = IsometricSide.Right;
 
         if (aimTarget is IsometricGameObject && (aimTarget.collectable || aimTarget.interactable)){
           if (player.aimTargetWithinInteractRadius) {
@@ -305,7 +307,7 @@ class GameCombat extends IsometricGame {
 
      player.score -= itemCost;
 
-     player.aimTargetWeaponSide == Side.Left
+     player.aimTargetWeaponSide == IsometricSide.Left
          ? playerEquipPrimary(player, gameObjectType)
          : playerEquipSecondary(player, gameObjectType);
   }
@@ -358,7 +360,7 @@ class GameCombat extends IsometricGame {
   }) {
     if (target is! IsometricGameObject) return;
     if (target.type == ItemType.GameObjects_Barrel_Explosive) {
-      if (hitType == HitType.Projectile || hitType == HitType.Explosion) {
+      if (hitType == IsometricHitType.Projectile || hitType == IsometricHitType.Explosion) {
         destroyGameObject(target);
         createExplosion(
           x: target.x,
