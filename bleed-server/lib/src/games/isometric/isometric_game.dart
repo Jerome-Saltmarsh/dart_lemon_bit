@@ -1196,7 +1196,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   void setHourMinutes(int hour, int minutes) {
     time.time = (hour * 60 * 60) + (minutes * 60);
-    // environment.updateShade();
     playersWriteWeather();
   }
 
@@ -1490,7 +1489,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     player.writePlayerAlive();
     player.writePlayerStats();
     player.writePlayerCredits();
-    player.writeGameTime(time.time);
+    player.writeGameTime();
     player.health = player.maxHealth;
   }
 
@@ -1505,7 +1504,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void playersWriteWeather() {
     for (final player in players) {
       player.writeWeather();
-      player.writeGameTime(time.time);
+      player.writeGameTime();
       player.writeEnvironmentLightningFlashing(environment.lightningFlashing);
     }
   }

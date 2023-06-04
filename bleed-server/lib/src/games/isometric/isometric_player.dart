@@ -1002,9 +1002,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     writeCharacters();
     writeEditorGameObjectSelected();
 
-    if (game.time.enabled){
-      writeGameTime(game.time.time);
-    }
+    writeGameTime();
 
     if (inventoryDirty) {
       inventoryDirty = false;
@@ -1108,6 +1106,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     writeGameType();
     writeWeather();
     writeGameObjects();
+    writeGameTime();
     game.customDownloadScene(this);
     writePlayerEvent(PlayerEvent.Scene_Changed);
     sceneDownloaded = true;
@@ -1284,9 +1283,9 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     writeString(message);
   }
 
-  void writeGameTime(int time){
+  void writeGameTime(){
     writeByte(ServerResponse.Game_Time);
-    writeUInt24(time);
+    writeUInt24(game.time.time);
   }
 
   void writeProjectile(IsometricProjectile projectile){
