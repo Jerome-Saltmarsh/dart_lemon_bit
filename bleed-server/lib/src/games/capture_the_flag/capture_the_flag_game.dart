@@ -3,12 +3,18 @@ import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_team.d
 import 'package:bleed_server/common/src/game_type.dart';
 import 'package:bleed_server/common/src/item_type.dart';
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_player.dart';
+import 'package:bleed_server/src/games/isometric/isometric_character.dart';
 import 'package:bleed_server/src/games/isometric/isometric_game.dart';
+import 'package:bleed_server/src/games/isometric/isometric_gameobject.dart';
+import 'package:bleed_server/src/games/isometric/isometric_player.dart';
 
 class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
 
-  late final flagRed;
-  late final flagBlue;
+  late final IsometricGameObject flagRed;
+  late final IsometricGameObject flagBlue;
+
+  IsometricCharacter? flagRedCharacter;
+  IsometricCharacter? flagBlueCharacter;
 
   int get countPlayersOnTeamRed => countPlayersOnTeam(CaptureTheFlagTeam.Red);
   int get countPlayersOnTeamBlue => countPlayersOnTeam(CaptureTheFlagTeam.Blue);
@@ -21,12 +27,42 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     required super.time,
     required super.environment,
   }) : super(gameType: GameType.Capture_The_Flag) {
-    flagRed = spawnGameObject(x: 200, y: 200, z: 50, type: ItemType.GameObjects_Flag_Red);
-    flagBlue = spawnGameObject(x: 100, y: 100, z: 50, type: ItemType.GameObjects_Flag_Blue);
+    flagRed = spawnGameObject(x: 200, y: 200, z: 24, type: ItemType.GameObjects_Flag_Red);
+    flagBlue = spawnGameObject(x: 100, y: 100, z: 24, type: ItemType.GameObjects_Flag_Blue);
   }
 
   @override
   void customWriteGame() {
+  }
+
+  @override
+  void customOnCollisionBetweenPlayerAndGameObject(IsometricPlayer player, IsometricGameObject gameObject) {
+
+    if (gameObject == flagBlue && player.team == CaptureTheFlagTeam.Red) {
+      // deactivateCollider(gameObject);
+      flagBlueCharacter = player;
+      return;
+    }
+
+    if (gameObject == flagRed && player.team == CaptureTheFlagTeam.Blue) {
+      // deactivateCollider(gameObject);
+      flagRedCharacter = player;
+      return;
+    }
+  }
+
+  @override
+  void customUpdate() {
+      if (flagBlueCharacter != null) {
+        flagBlue.x = flagBlueCharacter!.x;
+        flagBlue.y = flagBlueCharacter!.y;
+        flagBlue.z = flagBlueCharacter!.z;
+      }
+      if (flagRedCharacter != null) {
+        flagRed.x = flagRedCharacter!.x;
+        flagRed.y = flagRedCharacter!.y;
+        flagRed.z = flagRedCharacter!.z;
+      }
   }
 
   @override
