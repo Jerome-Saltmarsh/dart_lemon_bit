@@ -2,7 +2,7 @@ import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/games/isometric/isometric_game.dart';
 import 'package:lemon_math/library.dart';
 
-class GameEnvironment {
+class IsometricEnvironment {
   var durationRain = randomInt(1000, 3000);
   var nextLightningChanged = 300;
   var durationBreeze = 500;

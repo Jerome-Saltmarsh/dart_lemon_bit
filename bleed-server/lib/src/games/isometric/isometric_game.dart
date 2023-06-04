@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:bleed_server/src/classes/src/game_environment.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_math/library.dart';
 
@@ -13,6 +12,7 @@ import '../../game/player.dart';
 import 'isometric_ai.dart';
 import 'isometric_character.dart';
 import 'isometric_collider.dart';
+import 'isometric_environment.dart';
 import 'isometric_physics.dart';
 import 'isometric_player.dart';
 import 'isometric_projectile.dart';
@@ -29,7 +29,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   final scriptReader = ByteReader();
   var _timerUpdateAITargets = 0;
   var gameObjectId = 0;
-  GameEnvironment environment;
+  IsometricEnvironment environment;
   GameTime time;
 
   bool get running => _running;
