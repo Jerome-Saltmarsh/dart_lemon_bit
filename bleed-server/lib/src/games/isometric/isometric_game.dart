@@ -7,17 +7,19 @@ import 'package:lemon_math/library.dart';
 import 'package:bleed_server/gamestream.dart';
 import '../../io/write_scene_to_file.dart';
 import '../../maths/get_distance_between_v3.dart';
-import '../../classes/src/game_time.dart';
 import '../../game/player.dart';
 import 'isometric_ai.dart';
 import 'isometric_character.dart';
 import 'isometric_collider.dart';
 import 'isometric_environment.dart';
 import 'isometric_gameobject.dart';
+import 'isometric_job.dart';
 import 'isometric_physics.dart';
 import 'isometric_player.dart';
 import 'isometric_projectile.dart';
 import 'isometric_scene.dart';
+import 'isometric_script.dart';
+import 'isometric_time.dart';
 
 abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
@@ -26,13 +28,13 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   IsometricScene scene;
   final characters = <IsometricCharacter>[];
   final projectiles = <IsometricProjectile>[];
-  final jobs = <GameJob>[];
-  final scripts = <GameScript>[];
+  final jobs = <IsometricJob>[];
+  final scripts = <IsometricScript>[];
   final scriptReader = ByteReader();
   var _timerUpdateAITargets = 0;
   var gameObjectId = 0;
   IsometricEnvironment environment;
-  GameTime time;
+  IsometricTime time;
 
   bool get running => _running;
 
@@ -44,14 +46,14 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
   }
 
-  GameScript performScript({required int timer}) {
+  IsometricScript performScript({required int timer}) {
     for (final script in scripts) {
       if (script.timer > 0) continue;
       script.timer = timer;
       script.clear();
       return script;
     }
-    final instance = GameScript();
+    final instance = IsometricScript();
     scripts.add(instance);
     instance.timer = timer;
     return instance;
@@ -1210,7 +1212,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       job.action = action;
       return;
     }
-    final job = GameJob(timer, action);
+    final job = IsometricJob(timer, action);
     jobs.add(job);
   }
 

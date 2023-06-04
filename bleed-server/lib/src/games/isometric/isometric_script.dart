@@ -2,7 +2,7 @@ import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/games/isometric/isometric_gameobject.dart';
 import 'package:lemon_byte/byte_writer.dart';
 
-class GameScript extends ByteWriter {
+class IsometricScript extends ByteWriter {
   var timer = 0;
 
   void writeGameObjectDeactivate(IsometricGameObject gameObject){

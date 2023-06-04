@@ -1,7 +1,6 @@
 
 
 import 'package:bleed_server/gamestream.dart';
-import 'package:bleed_server/src/classes/src/game_time.dart';
 import 'package:bleed_server/src/game/player.dart';
 import 'package:bleed_server/src/classes/src/player_aeon.dart';
 import 'package:bleed_server/src/system.dart';
@@ -14,6 +13,7 @@ import 'isometric/isometric_environment.dart';
 import 'isometric/isometric_game.dart';
 import 'isometric/isometric_gameobject.dart';
 import 'isometric/isometric_player.dart';
+import 'isometric/isometric_time.dart';
 
 class GameMobileAeon extends IsometricGame<PlayerAeon> {
   // constants
@@ -58,7 +58,7 @@ class GameMobileAeon extends IsometricGame<PlayerAeon> {
     required super.scene,
   }) : super(
     gameType: GameType.Mobile_Aeon,
-    time: GameTime(enabled: true, hour: 15, minute: 30),
+    time: IsometricTime(enabled: true, hour: 15, minute: 30),
     environment: IsometricEnvironment(),
   ) {
     spawnAI(

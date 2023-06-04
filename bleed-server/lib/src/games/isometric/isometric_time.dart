@@ -1,12 +1,12 @@
 import 'package:bleed_server/common/src.dart';
 
-class GameTime {
+class IsometricTime {
   var secondsPerFrame = 2;
   /// In seconds
   var time = 0;
   var enabled = true;
 
-  GameTime({
+  IsometricTime({
     this.secondsPerFrame = 2,
     int hour = 12,
     int minute = 0,

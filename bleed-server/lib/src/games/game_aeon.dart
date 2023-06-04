@@ -1,7 +1,6 @@
 
 
 import 'package:bleed_server/gamestream.dart';
-import 'package:bleed_server/src/classes/src/game_time.dart';
 import 'package:bleed_server/src/game/player.dart';
 import 'package:bleed_server/src/system.dart';
 import 'package:lemon_math/library.dart';
@@ -13,6 +12,7 @@ import 'isometric/isometric_environment.dart';
 import 'isometric/isometric_game.dart';
 import 'isometric/isometric_gameobject.dart';
 import 'isometric/isometric_player.dart';
+import 'isometric/isometric_time.dart';
 
 
 class GameAeon extends IsometricGame {
@@ -75,7 +75,7 @@ class GameAeon extends IsometricGame {
     required super.scene,
   }) : super(
     gameType: GameType.Aeon,
-    time: GameTime(enabled: true, hour: 15, minute: 30),
+    time: IsometricTime(enabled: true, hour: 15, minute: 30),
     environment: IsometricEnvironment(),
   );
 
