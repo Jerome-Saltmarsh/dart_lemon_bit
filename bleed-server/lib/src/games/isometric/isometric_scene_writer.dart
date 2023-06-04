@@ -8,9 +8,9 @@ import 'package:bleed_server/src/games/isometric/isometric_scene.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_byte/byte_writer.dart';
 
-class SceneWriter extends ByteWriter {
+class IsometricSceneWriter extends ByteWriter {
 
-  static final _instance = SceneWriter();
+  static final _instance = IsometricSceneWriter();
   final encoder = ZLibEncoder(
             level: ZLibOption.minLevel,
             memLevel: ZLibOption.minMemLevel,

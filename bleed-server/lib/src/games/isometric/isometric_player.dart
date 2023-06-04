@@ -11,7 +11,6 @@ import 'package:lemon_byte/byte_writer.dart';
 import 'package:lemon_math/library.dart';
 
 import 'package:bleed_server/gamestream.dart';
-import '../../classes/src/scene_writer.dart';
 import 'isometric_ai.dart';
 import 'isometric_collider.dart';
 import 'isometric_game.dart';
@@ -20,6 +19,7 @@ import 'isometric_gameobject.dart';
 import 'isometric_position.dart';
 import 'isometric_projectile.dart';
 import 'isometric_scene.dart';
+import 'isometric_scene_writer.dart';
 
 class IsometricPlayer extends IsometricCharacter with ByteWriter implements Player {
   /// CONSTANTS
@@ -1333,7 +1333,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     writeByte(ServerResponse.Grid);
     var compiled = scene.compiled;
     if (compiled == null){
-      compiled = SceneWriter.compileScene(scene, gameObjects: false);
+      compiled = IsometricSceneWriter.compileScene(scene, gameObjects: false);
       scene.compiled = compiled;
     }
     writeBytes(compiled);

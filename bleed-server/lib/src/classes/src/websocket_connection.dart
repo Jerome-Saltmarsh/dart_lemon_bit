@@ -5,7 +5,6 @@ import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/game/player.dart';
 import 'package:bleed_server/src/games/aeon/aeon_game.dart';
 import 'package:bleed_server/src/games/aeon/aeon_player.dart';
-import 'package:bleed_server/src/classes/src/scene_writer.dart';
 import 'package:bleed_server/src/games/fight2d/game_fight2d.dart';
 import 'package:bleed_server/src/games/fight2d/game_fight2d_player.dart';
 import 'package:bleed_server/src/games/fight2d/game_fight2d_scene_generator.dart';
@@ -15,6 +14,7 @@ import 'package:bleed_server/src/games/game_combat.dart';
 import 'package:bleed_server/src/games/isometric/isometric_game.dart';
 import 'package:bleed_server/src/games/isometric/isometric_player.dart';
 import 'package:bleed_server/src/games/isometric/isometric_scene.dart';
+import 'package:bleed_server/src/games/isometric/isometric_scene_writer.dart';
 import 'package:bleed_server/src/scene_generator.dart';
 import 'package:bleed_server/src/system.dart';
 import 'package:lemon_byte/byte_writer.dart';
@@ -559,7 +559,7 @@ class WebSocketConnection with ByteReader {
 
       case EditRequest.Download:
         if (player is! IsometricPlayer) return;
-        final compiled = SceneWriter.compileScene(player.scene, gameObjects: true);
+        final compiled = IsometricSceneWriter.compileScene(player.scene, gameObjects: true);
         player.writeByte(ServerResponse.Download_Scene);
 
         if (player.scene.name.isEmpty){

@@ -1,7 +1,7 @@
 
 import 'dart:io';
-import 'package:bleed_server/src/classes/src/scene_writer.dart';
 import 'package:bleed_server/src/games/isometric/isometric_scene.dart';
+import 'package:bleed_server/src/games/isometric/isometric_scene_writer.dart';
 import 'save_directory.dart';
 
 Future<IsometricScene> readSceneFromFileBytes(String sceneName) async {
