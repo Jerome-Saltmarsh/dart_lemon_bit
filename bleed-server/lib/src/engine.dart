@@ -78,6 +78,10 @@ class Engine {
 
   void _fixedUpdate(Timer timer) {
     frame++;
+
+    if (frame % 100 == 0){
+      removeEmptyGames();
+    }
     for (final game in games){
       game.update();
       game.writePlayerResponses();
@@ -85,14 +89,17 @@ class Engine {
     server.sendResponseToClients();
   }
 
-  Future<GameEditor> findGameEditorNew() async {
-    return GameEditor();
+  void removeEmptyGames(){
+     for (var i = 0; i < games.length; i++) {
+       if (games[i].players.isNotEmpty) continue;
+       print("removing empty game ${games[i]}");
+       games.removeAt(i);
+       i--;
+     }
   }
 
-  // This method is called by the game constructor automatically
-  // and should not be called again
-  void onGameCreated(Game game) {
-    games.add(game);
+  Future<GameEditor> findGameEditorNew() async {
+    return GameEditor();
   }
 
   RockPaperScissorsGame getGameRockPaperScissors() {

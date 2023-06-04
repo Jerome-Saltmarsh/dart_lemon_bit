@@ -138,8 +138,7 @@ class IsometricEnvironment {
     }
   }
 
-  /// WARNING HACK
   void onChangedWeather(){
-    this.onChanged = true;
+    onChanged = true;
   }
 }
