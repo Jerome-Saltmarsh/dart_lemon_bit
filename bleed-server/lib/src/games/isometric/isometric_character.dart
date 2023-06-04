@@ -235,13 +235,13 @@ abstract class IsometricCharacter extends IsometricCollider {
 
   void assignWeaponStateThrowing() {
     weaponState = WeaponState.Throwing;
-    weaponStateDurationTotal = GameSettings.Weapon_State_Duration_Throw;
+    weaponStateDurationTotal = IsometricSettings.Weapon_State_Duration_Throw;
     assert (weaponStateDurationTotal > 0);
   }
 
   void assignWeaponStateMelee() {
     weaponState = WeaponState.Melee;
-    weaponStateDurationTotal = GameSettings.Weapon_State_Duration_Melee;
+    weaponStateDurationTotal = IsometricSettings.Weapon_State_Duration_Melee;
     assert (weaponStateDurationTotal > 0);
   }
 

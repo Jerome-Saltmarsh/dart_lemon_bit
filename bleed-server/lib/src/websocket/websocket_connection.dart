@@ -901,7 +901,7 @@ class WebSocketConnection with ByteReader {
         return joinGame(game);
       }
     }
-    joinGame(GameCombat(scene: engine.scenes.warehouse02));
+    joinGame(GameCombat(scene: engine.isometricScenes.warehouse02));
   }
 
   Future joinGameAeonMobile() async {
@@ -911,7 +911,7 @@ class WebSocketConnection with ByteReader {
         return joinGame(game);
       }
     }
-    joinGame(GameMobileAeon(scene: engine.scenes.town));
+    joinGame(GameMobileAeon(scene: engine.isometricScenes.town));
   }
 
   Future joinGameAeon() async {
@@ -921,7 +921,7 @@ class WebSocketConnection with ByteReader {
         return joinGame(game);
       }
     }
-    joinGame(AeonGame(scene: engine.scenes.town));
+    joinGame(AeonGame(scene: engine.isometricScenes.town));
   }
 
   void joinGame(Game game){

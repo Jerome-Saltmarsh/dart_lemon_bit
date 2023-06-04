@@ -7,7 +7,7 @@ import 'package:bleed_server/src/websocket/websocket_server.dart';
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/games/game_editor.dart';
 import 'package:bleed_server/src/io/save_directory.dart';
-import 'package:bleed_server/src/scenes.dart';
+import 'package:bleed_server/src/isometric_scenes.dart';
 
 import 'game/game.dart';
 import 'games/isometric/isometric_player.dart';
@@ -21,7 +21,7 @@ class Engine {
   static const Frames_Per_Second = 45;
 
   final games = <Game>[];
-  final scenes = Scenes();
+  final isometricScenes = IsometricScenes();
   final database = isLocalMachine ? DatabaseLocalHost() : DatabaseFirestore();
   final server = WebSocketServer();
 
@@ -58,7 +58,7 @@ class Engine {
       print("environment: Google Cloud");
     }
 
-    await scenes.load();
+    await isometricScenes.load();
 
     Timer.periodic(Duration(milliseconds: 1000 ~/ Frames_Per_Second), _fixedUpdate);
     server.start();

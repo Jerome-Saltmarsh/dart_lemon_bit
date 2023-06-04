@@ -140,7 +140,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   int get grenades => getItemQuantity(ItemType.Weapon_Thrown_Grenade);
 
   bool get aimTargetWithinInteractRadius => aimTarget != null
-      ? getDistance3(aimTarget!) < GameSettings.Interact_Radius
+      ? getDistance3(aimTarget!) < IsometricSettings.Interact_Radius
       : false;
 
   bool get weaponPrimaryEquipped => weaponType == weaponPrimary;

@@ -281,7 +281,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   void playerUpdateAimTarget(IsometricPlayer player) {
-    var closestDistance = GameSettings.Pickup_Range_Squared;
+    var closestDistance = IsometricSettings.Pickup_Range_Squared;
 
     final mouseX = player.mouseGridX;
     final mouseY = player.mouseGridY;
@@ -291,9 +291,9 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     for (final character in characters) {
       if (character.dead) continue;
-      if ((mouseX - character.x).abs() > GameSettings.Pickup_Range) continue;
-      if ((mouseY - character.y).abs() > GameSettings.Pickup_Range) continue;
-      if ((mouseZ - character.z).abs() > GameSettings.Pickup_Range) continue;
+      if ((mouseX - character.x).abs() > IsometricSettings.Pickup_Range) continue;
+      if ((mouseY - character.y).abs() > IsometricSettings.Pickup_Range) continue;
+      if ((mouseZ - character.z).abs() > IsometricSettings.Pickup_Range) continue;
       if (character == player) continue;
       final distance = getDistanceV3Squared(
           mouseX, mouseY, mouseZ, character.x, character.y, character.z);
@@ -305,9 +305,9 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     for (final gameObject in gameObjects) {
       if (!gameObject.active) continue;
       if (!gameObject.collectable && !gameObject.interactable) continue;
-      if ((mouseX - gameObject.x).abs() > GameSettings.Pickup_Range) continue;
-      if ((mouseY - gameObject.y).abs() > GameSettings.Pickup_Range) continue;
-      if ((mouseZ - gameObject.z).abs() > GameSettings.Pickup_Range) continue;
+      if ((mouseX - gameObject.x).abs() > IsometricSettings.Pickup_Range) continue;
+      if ((mouseY - gameObject.y).abs() > IsometricSettings.Pickup_Range) continue;
+      if ((mouseZ - gameObject.z).abs() > IsometricSettings.Pickup_Range) continue;
       final distance = getDistanceV3Squared(
           mouseX, mouseY, mouseZ, gameObject.x, gameObject.y, gameObject.z);
       if (distance > closestDistance) continue;
@@ -757,7 +757,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       ..owner = player
       ..damage = damage;
 
-    performJob(GameSettings.Grenade_Cook_Duration, () {
+    performJob(IsometricSettings.Grenade_Cook_Duration, () {
       deactivateCollider(instance);
       final owner = instance.owner;
       if (owner == null) return;
@@ -1499,7 +1499,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     required double y,
     required IsometricCharacter character,
   }) {
-    return findClosestVector3(
+    return IsometricPhysics.findClosestVector3(
         positions: characters,
         x: x,
         y: y,
@@ -1901,7 +1901,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         if (target.collectable || target.interactable) {
           // if (getDistanceBetweenV3(player, target) >
           if (player.getDistance3(target) >
-              GameSettings.Interact_Radius) {
+              IsometricSettings.Interact_Radius) {
             setCharacterStateRunning(player);
             return;
           }

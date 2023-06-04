@@ -4,7 +4,7 @@ import 'games/isometric/isometric_scene.dart';
 import 'games/isometric/isometric_scene_writer.dart';
 import 'io/save_directory.dart';
 
-class Scenes {
+class IsometricScenes {
   late IsometricScene suburbs_01;
   late IsometricScene warehouse;
   late IsometricScene warehouse02;
