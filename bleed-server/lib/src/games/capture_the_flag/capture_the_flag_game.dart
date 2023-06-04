@@ -7,8 +7,8 @@ import 'package:bleed_server/src/games/isometric/isometric_game.dart';
 
 class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
 
-  late final flagRed = spawnGameObject(x: 100, y: 100, z: 50, type: ItemType.GameObjects_Flag_Red);
-  late final flagBlue = spawnGameObject(x: 50, y: 50, z: 50, type: ItemType.GameObjects_Flag_Blue);
+  late final flagRed;
+  late final flagBlue;
 
   int get countPlayersOnTeamRed => countPlayersOnTeam(CaptureTheFlagTeam.Red);
   int get countPlayersOnTeamBlue => countPlayersOnTeam(CaptureTheFlagTeam.Blue);
@@ -20,7 +20,10 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     required super.scene,
     required super.time,
     required super.environment,
-  }) : super(gameType: GameType.Capture_The_Flag);
+  }) : super(gameType: GameType.Capture_The_Flag) {
+    flagRed = spawnGameObject(x: 200, y: 200, z: 50, type: ItemType.GameObjects_Flag_Red);
+    flagBlue = spawnGameObject(x: 100, y: 100, z: 50, type: ItemType.GameObjects_Flag_Blue);
+  }
 
   @override
   void customWriteGame() {

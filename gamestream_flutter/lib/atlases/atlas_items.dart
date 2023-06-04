@@ -5,6 +5,18 @@ import 'package:golden_ratio/constants.dart';
 class AtlasItems {
   static const size = 32.0;
 
+  static List<double> getSrc(int type){
+
+     final value = const <int, List<double>> {
+         /// srcX, srcY, srcWidth, srcHeight, anchorX, scale
+         ItemType.GameObjects_Flag_Red: [224, 20, 32, 32, 0.5, 1],
+     }[type];
+     if (value == null){
+       throw Exception();
+     }
+     return value;
+  }
+
   static double getSrcX(int itemType) =>
       itemType == ItemType.GameObjects_Barrel_Flaming ? 34.0 * gamestream.animation.animationFrame6 :
 
