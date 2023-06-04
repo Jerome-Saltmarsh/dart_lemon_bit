@@ -8,6 +8,7 @@ import 'package:bleed_server/src/classes/src/player_aeon.dart';
 import 'package:bleed_server/src/system.dart';
 import 'package:lemon_math/library.dart';
 
+import 'game_isometric/isometric_character.dart';
 import 'game_isometric/isometric_game.dart';
 
 class GameMobileAeon extends IsometricGame<PlayerAeon> {
@@ -108,7 +109,7 @@ class GameMobileAeon extends IsometricGame<PlayerAeon> {
   }
 
   @override
-  void customOnCharacterKilled(Character target, dynamic src) {
+  void customOnCharacterKilled(IsometricCharacter target, dynamic src) {
     if (src is PlayerAeon) {
       src.experience += 3;
     }
@@ -239,7 +240,7 @@ class GameMobileAeon extends IsometricGame<PlayerAeon> {
 
   @override
   void customOnHitApplied({
-    required Character srcCharacter,
+    required IsometricCharacter srcCharacter,
     required Collider target,
     required int damage,
     required double angle,

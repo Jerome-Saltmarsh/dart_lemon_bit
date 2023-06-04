@@ -4,7 +4,7 @@ import 'package:lemon_math/library.dart';
 
 import 'package:bleed_server/gamestream.dart';
 
-abstract class Character extends Collider {
+abstract class IsometricCharacter extends Collider {
   /// VARIABLES
 
   /// between 0 and 1
@@ -260,7 +260,7 @@ abstract class Character extends Collider {
     weaponStateDurationTotal = 10;
   }
 
-  Character({
+  IsometricCharacter({
     required int characterType,
     required int health,
     required int bodyType,

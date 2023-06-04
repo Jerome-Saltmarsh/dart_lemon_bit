@@ -3,8 +3,10 @@ import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/maths/get_distance_between_v3.dart';
 import 'package:lemon_math/library.dart';
 
+import 'games/game_isometric/isometric_character.dart';
+
 I? raycastHit<I extends Collider>({
-  required Character character,
+  required IsometricCharacter character,
   required List<I> colliders,
   required double range,
   double angleRange = pi * 0.5,

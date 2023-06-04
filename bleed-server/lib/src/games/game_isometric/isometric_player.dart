@@ -13,8 +13,9 @@ import 'package:lemon_math/library.dart';
 import 'package:bleed_server/gamestream.dart';
 import '../../classes/src/scene_writer.dart';
 import 'isometric_game.dart';
+import 'isometric_character.dart';
 
-class IsometricPlayer extends Character with ByteWriter implements Player {
+class IsometricPlayer extends IsometricCharacter with ByteWriter implements Player {
   /// CONSTANTS
   final mouse = Vector2(0, 0);
   var inputMode = InputMode.Keyboard;
@@ -1065,12 +1066,12 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     writeByte(END);
   }
 
-  void writeCharacterTeamDirectionAndState(Character character){
+  void writeCharacterTeamDirectionAndState(IsometricCharacter character){
     writeByte((Collider.onSameTeam(this, character) ? 100 : 0) + (character.faceDirection * 10) + character.state); // 1
   }
 
   // todo optimize
-  void writeCharacterHealthAndAnimationFrame(Character character) =>
+  void writeCharacterHealthAndAnimationFrame(IsometricCharacter character) =>
     writeByte((((character.health / character.maxHealth) * 24).toInt() * 10) + character.animationFrame);
 
   void downloadScene(){
@@ -1129,10 +1130,10 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
       writeByte(ApiPlayer.Aim_Target_Type);
       writeUInt16((aimTarget as GameObject).type);
     }
-    if (aimTarget is Character) {
+    if (aimTarget is IsometricCharacter) {
       writeByte(ServerResponse.Api_Player);
       writeByte(ApiPlayer.Aim_Target_Type);
-      writeUInt16((aimTarget as Character).characterType);
+      writeUInt16((aimTarget as IsometricCharacter).characterType);
     }
   }
 
@@ -1268,7 +1269,7 @@ class IsometricPlayer extends Character with ByteWriter implements Player {
     writeAngle(projectile.velocityAngle);
   }
 
-  void writeCharacterUpperBody(Character character) {
+  void writeCharacterUpperBody(IsometricCharacter character) {
     assert (ItemType.isTypeWeapon(character.weaponType) || character.weaponType == ItemType.Empty);
     assert (ItemType.isTypeLegs(character.legsType) || character.legsType == ItemType.Empty);
     assert (ItemType.isTypeBody(character.bodyType) || character.bodyType == ItemType.Empty);

@@ -1,5 +1,4 @@
 export 'src/ai.dart';
-export 'src/character.dart';
 export 'src/collider.dart';
 export '../game/game.dart';
 export 'src/gameobject.dart';

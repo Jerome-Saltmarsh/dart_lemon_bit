@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:bleed_server/gamestream.dart';
+import 'package:bleed_server/src/games/game_isometric/isometric_character.dart';
 import 'package:bleed_server/src/games/game_isometric/isometric_physics.dart';
 import 'package:lemon_math/library.dart';
 
@@ -27,7 +28,7 @@ class Collider extends Position3 {
   var sizeX = 0.0;
   var sizeY = 0.0;
 
-  Character? owner;
+  IsometricCharacter? owner;
   var damage = 0;
 
   /// CONSTRUCTOR

@@ -1,13 +1,14 @@
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:bleed_server/src/games/game_isometric/isometric_character.dart';
 import 'package:bleed_server/src/games/game_isometric/isometric_game.dart';
 import 'package:bleed_server/src/maths/get_distance_between_v3.dart';
 import 'package:lemon_math/library.dart';
 
 import 'package:bleed_server/gamestream.dart';
 
-class AI extends Character {
+class AI extends IsometricCharacter {
   static const AI_Path_Size = 80;
   static const Destination_Radius = 15;
   static const Frames_Between_AI_Mode_Min = 80;
