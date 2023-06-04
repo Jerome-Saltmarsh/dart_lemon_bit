@@ -7,6 +7,7 @@ import 'package:bleed_server/src/game/player.dart';
 import 'package:bleed_server/src/system.dart';
 import 'package:lemon_math/library.dart';
 
+import 'isometric/isometric_ai.dart';
 import 'isometric/isometric_character.dart';
 import 'isometric/isometric_collider.dart';
 import 'isometric/isometric_game.dart';
@@ -219,7 +220,7 @@ class GameAeon extends IsometricGame {
 
 
 
-    if (target is AI && scene.spawnPoints.isNotEmpty) {
+    if (target is IsometricAI && scene.spawnPoints.isNotEmpty) {
       final spawnNodeIndex = randomItem(scene.spawnPoints);
 
       final z = scene.getNodeIndexZ(spawnNodeIndex);

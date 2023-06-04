@@ -12,6 +12,7 @@ import 'package:lemon_math/library.dart';
 
 import 'package:bleed_server/gamestream.dart';
 import '../../classes/src/scene_writer.dart';
+import 'isometric_ai.dart';
 import 'isometric_collider.dart';
 import 'isometric_game.dart';
 import 'isometric_character.dart';
@@ -1155,8 +1156,8 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
       return;
     }
 
-    if (aimTarget is AI) {
-      writeApiPlayerAimTargetName((aimTarget as AI).name);
+    if (aimTarget is IsometricAI) {
+      writeApiPlayerAimTargetName((aimTarget as IsometricAI).name);
       return;
     }
   }

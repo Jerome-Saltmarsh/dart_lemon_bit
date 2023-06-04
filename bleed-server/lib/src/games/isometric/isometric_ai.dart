@@ -9,7 +9,7 @@ import 'package:lemon_math/library.dart';
 
 import 'package:bleed_server/gamestream.dart';
 
-class AI extends IsometricCharacter {
+class IsometricAI extends IsometricCharacter {
   static const AI_Path_Size = 80;
   static const Destination_Radius = 15;
   static const Frames_Between_AI_Mode_Min = 80;
@@ -34,7 +34,7 @@ class AI extends IsometricCharacter {
   var rounds = 0;
   Function(IsometricPlayer player)? onInteractedWith;
 
-  AI({
+  IsometricAI({
     required int characterType,
     required int health,
     required int weaponType,
@@ -107,7 +107,7 @@ class AI extends IsometricCharacter {
 
   void shuffleAIMode(){
     aiMode = randomInt(0, 5);
-    aiModeNext = randomInt(AI.Frames_Between_AI_Mode_Min, AI.Frames_Between_AI_Mode_Max);
+    aiModeNext = randomInt(IsometricAI.Frames_Between_AI_Mode_Min, IsometricAI.Frames_Between_AI_Mode_Max);
   }
   
   void updateAI(){
