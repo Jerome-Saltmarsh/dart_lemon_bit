@@ -1,6 +1,5 @@
 import 'dart:math';
 import 'package:bleed_server/gamestream.dart';
-import 'package:bleed_server/src/maths/get_distance_between_v3.dart';
 import 'package:lemon_math/library.dart';
 
 import 'games/isometric/isometric_character.dart';
@@ -19,7 +18,7 @@ I? raycastHit<I extends IsometricCollider>({
     if (!collider.active) continue;
     if (!collider.hitable) continue;
     if (collider == character) continue;
-    final distance =  getDistanceBetweenV3(character, collider);
+    final distance =  character.getDistance(collider);
     if (distance > range) continue;
     final angle = character.getAngle(collider);
     final angleDiff = calculateAngleDifference(angle, character.faceAngle);

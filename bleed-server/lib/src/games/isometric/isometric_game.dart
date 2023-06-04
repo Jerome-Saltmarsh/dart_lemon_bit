@@ -7,7 +7,6 @@ import 'package:lemon_math/library.dart';
 
 import 'package:bleed_server/gamestream.dart';
 import '../../io/write_scene_to_file.dart';
-import '../../maths/get_distance_between_v3.dart';
 import '../../game/player.dart';
 import 'isometric_ai.dart';
 import 'isometric_character.dart';
@@ -799,7 +798,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     for (final character in characters) {
       if (character.dead) continue;
       if (IsometricCollider.onSameTeam(player, character)) continue;
-      final distance = getDistanceBetweenV3(player, character);
+      final distance = player.getDistance3(character);
       if (distance > closestTargetDistance) continue;
       closestTarget = character;
       closestTargetDistance = distance;
@@ -814,7 +813,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       if (!gameObject.active) continue;
       if (!gameObject.hitable) continue;
       // if (Collider.onSameTeam(player, character)) continue;
-      final distance = getDistanceBetweenV3(player, gameObject);
+      final distance = player.getDistance3(gameObject);
       if (distance > closestTargetDistance) continue;
       closestTarget = gameObject;
       closestTargetDistance = distance;
@@ -880,7 +879,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       )) continue;
 
       if (!areaOfEffect) {
-        final distance = getDistanceBetweenV3(character, other);
+        final distance = character.getDistance3(other);
         if (distance > nearestDistance) continue;
         nearest = other;
         nearestDistance = distance;
@@ -911,7 +910,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       )) continue;
 
       if (!areaOfEffect) {
-        final distance = getDistanceBetweenV3(character, gameObject);
+        final distance = character.getDistance3(gameObject);
         if (distance > nearestDistance) continue;
         nearest = gameObject;
         nearestDistance = distance;
@@ -1900,7 +1899,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
           return;
         }
         if (target.collectable || target.interactable) {
-          if (getDistanceBetweenV3(player, target) >
+          // if (getDistanceBetweenV3(player, target) >
+          if (player.getDistance3(target) >
               GameSettings.Interact_Radius) {
             setCharacterStateRunning(player);
             return;
@@ -3095,7 +3095,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   bool sceneRaycastBetween(IsometricCollider a, IsometricCollider b) {
-    final distance = getDistanceBetweenV3(a, b);
+    // final distance = getDistanceBetweenV3(a, b);
+    final distance = a.getDistance3(b);
     if (distance < Node_Size_Half) return false;
     final distanceX = (a.x - b.x).abs();
     final distanceY = (a.y - b.y).abs();

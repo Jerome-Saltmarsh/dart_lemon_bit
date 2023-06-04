@@ -4,7 +4,6 @@ import 'dart:typed_data';
 import 'package:bleed_server/src/games/isometric/isometric_character.dart';
 import 'package:bleed_server/src/games/isometric/isometric_game.dart';
 import 'package:bleed_server/src/games/isometric/isometric_player.dart';
-import 'package:bleed_server/src/maths/get_distance_between_v3.dart';
 import 'package:lemon_math/library.dart';
 
 import 'package:bleed_server/gamestream.dart';
@@ -150,13 +149,13 @@ class IsometricAI extends IsometricCharacter {
           return;
         case AIMode.Encircle_CW:
           final targetAngle = getAngleBetween(target.x, target.y, x, y) + piEighth;
-          final distance = getDistanceBetweenV3(this, target);
+          final distance =  getDistance3(target);
           destX = target.x + getAdjacent(targetAngle, distance);
           destY = target.y + getOpposite(targetAngle, distance);
           break;
         case AIMode.Encircle_CCW:
           final targetAngle = getAngleBetween(target.x, target.y, x, y) - piEighth;
-          final distance = getDistanceBetweenV3(this, target);
+          final distance = getDistance3(target);
           destX = target.x + getAdjacent(targetAngle, distance);
           destY = target.y + getOpposite(targetAngle, distance);
           break;

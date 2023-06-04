@@ -5,7 +5,6 @@ import 'dart:typed_data';
 import 'package:bleed_server/src/game/player.dart';
 import 'package:bleed_server/src/functions/generateName.dart';
 import 'package:bleed_server/src/games/game_editor.dart';
-import 'package:bleed_server/src/maths/get_distance_between_v3.dart';
 import 'package:bleed_server/src/system.dart';
 import 'package:lemon_byte/byte_writer.dart';
 import 'package:lemon_math/library.dart';
@@ -141,7 +140,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   int get grenades => getItemQuantity(ItemType.Weapon_Thrown_Grenade);
 
   bool get aimTargetWithinInteractRadius => aimTarget != null
-      ? getDistanceBetweenV3(this, aimTarget!) < GameSettings.Interact_Radius
+      ? getDistance3(aimTarget!) < GameSettings.Interact_Radius
       : false;
 
   bool get weaponPrimaryEquipped => weaponType == weaponPrimary;

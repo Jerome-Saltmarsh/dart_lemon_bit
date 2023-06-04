@@ -79,4 +79,8 @@ class IsometricPosition with Position {
       items[min] = element;
     }
   }
+
+  double getDistance3(IsometricPosition position){
+    return getDistanceV3(x, y, z, position.x, position.y, position.z);
+  }
 }
