@@ -14,6 +14,7 @@ import 'package:bleed_server/gamestream.dart';
 import '../../classes/src/scene_writer.dart';
 import 'isometric_game.dart';
 import 'isometric_character.dart';
+import 'isometric_projectile.dart';
 
 class IsometricPlayer extends IsometricCharacter with ByteWriter implements Player {
   /// CONSTANTS
@@ -1261,7 +1262,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     writeUInt24(time);
   }
 
-  void writeProjectile(Projectile projectile){
+  void writeProjectile(IsometricProjectile projectile){
     if (!projectile.active) return;
     writePosition(projectile);
     writeDouble(projectile.z);

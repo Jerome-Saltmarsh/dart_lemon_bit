@@ -13,6 +13,7 @@ import '../../game/player.dart';
 import 'isometric_character.dart';
 import 'isometric_physics.dart';
 import 'isometric_player.dart';
+import 'isometric_projectile.dart';
 
 abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
@@ -20,7 +21,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   var _running = true;
   Scene scene;
   final characters = <IsometricCharacter>[];
-  final projectiles = <Projectile>[];
+  final projectiles = <IsometricProjectile>[];
   final jobs = <GameJob>[];
   final scripts = <GameScript>[];
   final scriptReader = ByteReader();
@@ -1726,7 +1727,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     setCharacterStateDead(character);
   }
 
-  void deactivateProjectile(Projectile projectile) {
+  void deactivateProjectile(IsometricProjectile projectile) {
     assert (projectile.active);
     switch (projectile.type) {
       case ProjectileType.Orb:
@@ -1820,7 +1821,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       }
       return;
     }
-    if (instance is Projectile) {
+    if (instance is IsometricProjectile) {
       projectiles.remove(instance);
       return;
     }
@@ -1993,7 +1994,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
   }
 
-  void handleProjectileHit(Projectile projectile, Position3 target) {
+  void handleProjectileHit(IsometricProjectile projectile, Position3 target) {
     assert (projectile.active);
     assert (projectile != target);
     assert (projectile.owner != target);
@@ -2219,7 +2220,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     customOnAIRespawned(ai);
   }
 
-  Projectile spawnProjectileOrb({
+  IsometricProjectile spawnProjectileOrb({
     required IsometricCharacter src,
     required int damage,
     required double range,
@@ -2259,7 +2260,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     );
   }
 
-  Projectile spawnProjectileFireball(IsometricCharacter src, {
+  IsometricProjectile spawnProjectileFireball(IsometricCharacter src, {
     required int damage,
     required double range,
     double? angle,
@@ -2274,7 +2275,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         damage: damage,
       );
 
-  Projectile spawnProjectileRocket(IsometricCharacter src, {
+  IsometricProjectile spawnProjectileRocket(IsometricCharacter src, {
     required int damage,
     required double range,
     double? angle,
@@ -2346,7 +2347,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     );
   }
 
-  Projectile spawnProjectile({
+  IsometricProjectile spawnProjectile({
     required IsometricCharacter src,
     required double range,
     required int projectileType,
@@ -2393,13 +2394,13 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     return projectile;
   }
 
-  Projectile getInstanceProjectile() {
+  IsometricProjectile getInstanceProjectile() {
     for (final projectile in projectiles) {
       if (projectile.active) continue;
       return projectile;
     }
 
-    final projectile = Projectile();
+    final projectile = IsometricProjectile();
     projectiles.add(projectile);
     return projectile;
   }
