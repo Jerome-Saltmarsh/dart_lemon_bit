@@ -5,7 +5,9 @@ import 'package:bleed_server/src/games/isometric/isometric_character.dart';
 import 'package:bleed_server/src/games/isometric/isometric_physics.dart';
 import 'package:lemon_math/library.dart';
 
-class IsometricCollider extends Position3 {
+import 'isometric_position.dart';
+
+class IsometricCollider extends IsometricPosition {
   /// do not mutate directly use game.deactivateCollider
   var active = true;
   var velocityX = 0.0;

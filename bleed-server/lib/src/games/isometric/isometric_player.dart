@@ -17,6 +17,7 @@ import 'isometric_collider.dart';
 import 'isometric_game.dart';
 import 'isometric_character.dart';
 import 'isometric_gameobject.dart';
+import 'isometric_position.dart';
 import 'isometric_projectile.dart';
 import 'isometric_scene.dart';
 
@@ -33,7 +34,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
 
   /// Variables
   late IsometricGame game;
-  final runTarget = Position3();
+  final runTarget = IsometricPosition();
   late Function sendBufferToClient;
   IsometricGameObject? editorSelectedGameObject;
   /// Frames per energy rejuvenation
@@ -1171,7 +1172,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   }
 
 
-  int getTargetCategory(Position3? value){
+  int getTargetCategory(IsometricPosition? value){
     if (value == null) return TargetCategory.Nothing;
     if (value is IsometricGameObject) {
       if (value.interactable) {
@@ -1191,8 +1192,8 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     return true;
   }
 
-  bool isAllie(Position3? value)=> IsometricCollider.onSameTeam(this, value);
-  bool isEnemy(Position3? value) => !IsometricCollider.onSameTeam(this, value);
+  bool isAllie(IsometricPosition? value)=> IsometricCollider.onSameTeam(this, value);
+  bool isEnemy(IsometricPosition? value) => !IsometricCollider.onSameTeam(this, value);
 
   void writeProjectiles(){
     writeByte(ServerResponse.Projectiles);
@@ -1316,13 +1317,13 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     writeDouble(value.y);
   }
 
-  void writePosition3(Position3 value){
+  void writePosition3(IsometricPosition value){
     writeDouble(value.x);
     writeDouble(value.y);
     writeDouble(value.z);
   }
 
-  void writeVector3(Position3 value){
+  void writeVector3(IsometricPosition value){
     writeDouble(value.x);
     writeDouble(value.y);
     writeDouble(value.z);

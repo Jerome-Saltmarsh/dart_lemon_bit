@@ -6,6 +6,7 @@ import 'package:bleed_server/gamestream.dart';
 
 import 'isometric_collider.dart';
 import 'isometric_player.dart';
+import 'isometric_position.dart';
 
 abstract class IsometricCharacter extends IsometricCollider {
   /// VARIABLES
@@ -22,7 +23,7 @@ abstract class IsometricCharacter extends IsometricCollider {
   var stateDuration = 0;
   var nextFootstep = 0;
   var animationFrame = 0;
-  Position3? target;
+  IsometricPosition? target;
   var weaponState = WeaponState.Idle;
   var weaponStateDuration = 0;
   var _weaponStateDurationTotal = 0;
@@ -342,7 +343,7 @@ abstract class IsometricCharacter extends IsometricCollider {
     animationFrame = 0;
   }
 
-  bool withinAttackRange(Position3 target){
+  bool withinAttackRange(IsometricPosition target){
     if ((target.z - z).abs() > Character_Height) return false;
     if (target is IsometricCollider){
       return withinRadiusCheap(target, weaponTypeRange + target.radius);

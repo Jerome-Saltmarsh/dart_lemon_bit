@@ -16,6 +16,7 @@ import 'isometric_gameobject.dart';
 import 'isometric_job.dart';
 import 'isometric_physics.dart';
 import 'isometric_player.dart';
+import 'isometric_position.dart';
 import 'isometric_projectile.dart';
 import 'isometric_scene.dart';
 import 'isometric_script.dart';
@@ -187,7 +188,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     required this.environment,
     required super.gameType,
   }) {
-    Position3.sort(gameObjects);
+    IsometricPosition.sort(gameObjects);
 
     /// TODO Illegal external scope reference
     gameObjectId = scene.gameObjects.length;
@@ -216,19 +217,19 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   /// ACTIONS
 
-  void moveV3ToNodeIndex(Position3 vector3, int nodeIndex) {
+  void moveV3ToNodeIndex(IsometricPosition vector3, int nodeIndex) {
     vector3.x = scene.convertNodeIndexToPositionX(nodeIndex);
     vector3.y = scene.convertNodeIndexToPositionY(nodeIndex);
     vector3.z = scene.convertNodeIndexToPositionZ(nodeIndex);
   }
 
-  void move(Position3 value, double angle, double distance) {
+  void move(IsometricPosition value, double angle, double distance) {
     value.x += getAdjacent(angle, distance);
     value.y += getOpposite(angle, distance);
   }
 
   double getDistanceFromPlayerMouse(IsometricPlayer player,
-      Position3 position) =>
+      IsometricPosition position) =>
       getDistanceV3(
         player.mouseGridX,
         player.mouseGridY,
@@ -1345,7 +1346,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
 
     if (sortRequired) {
-      Position3.sort(gameObjects);
+      IsometricPosition.sort(gameObjects);
     }
   }
 
@@ -1689,8 +1690,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   void sortColliders() {
-    Position3.sort(characters);
-    Position3.sort(projectiles);
+    IsometricPosition.sort(characters);
+    IsometricPosition.sort(projectiles);
   }
 
   void setCharacterStateStunned(IsometricCharacter character,
@@ -2000,7 +2001,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
   }
 
-  void handleProjectileHit(IsometricProjectile projectile, Position3 target) {
+  void handleProjectileHit(IsometricProjectile projectile, IsometricPosition target) {
     assert (projectile.active);
     assert (projectile != target);
     assert (projectile.owner != target);
@@ -2249,7 +2250,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     required int damage,
     required double range,
     double accuracy = 0,
-    Position3? target,
+    IsometricPosition? target,
     double? angle,
   }) {
     assert (range > 0);
@@ -2360,7 +2361,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     required int damage,
     double accuracy = 0,
     double? angle = 0,
-    Position3? target,
+    IsometricPosition? target,
   }) {
     assert (range > 0);
     assert (damage > 0);
@@ -2480,7 +2481,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     return instance;
   }
 
-  void moveToIndex(Position3 position, int index) {
+  void moveToIndex(IsometricPosition position, int index) {
     position.x = scene.convertNodeIndexToPositionX(index);
     position.y = scene.convertNodeIndexToPositionY(index);
     position.z = scene.convertNodeIndexToPositionZ(index);
@@ -2495,7 +2496,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       );
 
   void spawnGameObjectItemAtPosition({
-    required Position3 position,
+    required IsometricPosition position,
     required int type,
     int quantity = 1,
   }) =>
@@ -2524,7 +2525,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   IsometricGameObject spawnGameObjectAtPosition({
-    required Position3 position,
+    required IsometricPosition position,
     required int type,
   }) =>
       spawnGameObject(
@@ -2576,7 +2577,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   /// GameEventType
-  void dispatchV3(int type, Position3 position, {double angle = 0}) {
+  void dispatchV3(int type, IsometricPosition position, {double angle = 0}) {
     dispatch(type, position.x, position.y, position.z, angle);
   }
 
@@ -2729,7 +2730,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     // npcSetPathToTileNode(ai, randomTile);
   }
 
-  void npcSetPathTo(IsometricAI ai, Position3 position) {
+  void npcSetPathTo(IsometricAI ai, IsometricPosition position) {
     // npcSetPathToTileNode(ai, scene.getNodeByPosition(position));
   }
 
@@ -2990,7 +2991,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
   }
 
-  void setCharacterTarget(IsometricCharacter character, Position3 target) {
+  void setCharacterTarget(IsometricCharacter character, IsometricPosition target) {
     if (character.target == target) return;
     character.target = target;
     if (character is IsometricPlayer) {
@@ -3051,21 +3052,21 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   /// FUNCTIONS
   static void setGridPosition(
-      {required Position3 position, required int z, required int row, required int column}) {
+      {required IsometricPosition position, required int z, required int row, required int column}) {
     position.x = row * Node_Size + Node_Size_Half;
     position.y = column * Node_Size + Node_Size_Half;
     position.z = z * Node_Size_Half;
   }
 
-  static void setPositionZ(Position3 position, int z) {
+  static void setPositionZ(IsometricPosition position, int z) {
     position.z = z * Node_Size_Half;
   }
 
-  static void setPositionColumn(Position3 position, int column) {
+  static void setPositionColumn(IsometricPosition position, int column) {
     position.y = column * Node_Size + Node_Size_Half;
   }
 
-  static void setPositionRow(Position3 position, int row) {
+  static void setPositionRow(IsometricPosition position, int row) {
     position.x = row * Node_Size + Node_Size_Half;
   }
 
@@ -3075,7 +3076,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
   }
 
-  void moveToRandomPlayerSpawnPoint(Position3 value) {
+  void moveToRandomPlayerSpawnPoint(IsometricPosition value) {
     if (scene.spawnPointsPlayers.isEmpty) return;
     moveV3ToNodeIndex(value, randomItem(scene.spawnPointsPlayers));
   }
@@ -3112,7 +3113,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     return false;
   }
 
-  int getNodeIndexV3(Position3 value) =>
+  int getNodeIndexV3(IsometricPosition value) =>
       scene.getNodeIndex(value.indexZ, value.indexRow, value.indexColumn);
 
   int getNodeIndexXYZ(double x, double y, double z){

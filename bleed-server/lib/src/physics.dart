@@ -5,6 +5,7 @@ import 'package:lemon_math/library.dart';
 
 import 'games/isometric/isometric_character.dart';
 import 'games/isometric/isometric_collider.dart';
+import 'games/isometric/isometric_position.dart';
 
 I? raycastHit<I extends IsometricCollider>({
   required IsometricCharacter character,
@@ -74,7 +75,7 @@ T? sphereCaste<T extends IsometricCollider>({
   return closest;
 }
 
-T? findClosestVector3<T extends Position3>({
+T? findClosestVector3<T extends IsometricPosition>({
   required double x,
   required double y,
   required double z,
@@ -95,7 +96,7 @@ T? findClosestVector3<T extends Position3>({
   return closest;
 }
 
-T? findClosest3<T extends Position3>({
+T? findClosest3<T extends IsometricPosition>({
   required double x,
   required double y,
   required double z,

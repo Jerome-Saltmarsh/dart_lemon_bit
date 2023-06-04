@@ -9,6 +9,8 @@ import 'package:lemon_math/library.dart';
 
 import 'package:bleed_server/gamestream.dart';
 
+import 'isometric_position.dart';
+
 class IsometricAI extends IsometricCharacter {
   static const AI_Path_Size = 80;
   static const Destination_Radius = 15;
@@ -101,7 +103,7 @@ class IsometricAI extends IsometricCharacter {
     wanderPause = randomInt(300, 500);
   }
 
-  bool withinChaseRange(Position3 target) =>
+  bool withinChaseRange(IsometricPosition target) =>
     ((x - target.x).abs() < chaseRange) ||
     ((y - target.y).abs() < chaseRange) ;
 

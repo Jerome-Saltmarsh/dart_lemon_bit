@@ -6,6 +6,8 @@ import 'package:bleed_server/src/games/isometric/isometric_gameobject.dart';
 import 'package:bleed_server/src/lang_utils.dart';
 import 'package:lemon_math/library.dart';
 
+import 'isometric_position.dart';
+
 late IsometricAI pathFindAI;
 var pathFindSearchID = 0;
 
@@ -83,7 +85,7 @@ class IsometricScene {
      return false;
   }
 
-  bool inboundsV3(Position3 v3) => inboundsXYZ(v3.x, v3.y, v3.z);
+  bool inboundsV3(IsometricPosition v3) => inboundsXYZ(v3.x, v3.y, v3.z);
 
   bool inboundsXYZ(double x, double y, double z) =>
       x >= 0                &&
@@ -110,7 +112,7 @@ class IsometricScene {
           ? nodeTypes[getNodeIndexXYZ(x, y, z)]
           : NodeType.Boundary;
 
-  int getNodeIndexV3(Position3 position3) =>
+  int getNodeIndexV3(IsometricPosition position3) =>
       getNodeIndexXYZ(
         position3.x,
         position3.y,
@@ -139,7 +141,7 @@ class IsometricScene {
      return nodeOrientations[getNodeIndexXYZ(x, y, z)];
   }
 
-  bool isInboundV3(Position3 pos ) =>
+  bool isInboundV3(IsometricPosition pos ) =>
     isInboundXYZ(pos.x, pos.y, pos.z);
 
   bool isInboundXYZ(double x, double y, double z) =>

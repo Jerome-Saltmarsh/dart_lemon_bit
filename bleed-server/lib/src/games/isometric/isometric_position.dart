@@ -3,7 +3,7 @@ import 'package:lemon_math/library.dart';
 
 import 'package:bleed_server/gamestream.dart';
 
-class Position3 with Position {
+class IsometricPosition with Position {
   var z = 0.0;
 
   int get indexRow => x ~/ Node_Size;
@@ -13,18 +13,18 @@ class Position3 with Position {
   double get renderY => ((y + x) * 0.5) - z;
   double get order => (y + x + z);
 
-  Position3 set({double? x, double? y, double? z}){
+  IsometricPosition set({double? x, double? y, double? z}){
      if (x != null) this.x = x;
      if (y != null) this.y = y;
      if (z != null) this.x = z;
      return this;
   }
 
-  bool withinRadius(Position3 position3, double radius){
+  bool withinRadius(IsometricPosition position3, double radius){
     return withinDistance(position3.x, position3.y, position3.z, radius);
   }
 
-  bool withinRadiusCheap(Position3 position3, double radius) =>
+  bool withinRadiusCheap(IsometricPosition position3, double radius) =>
      ((this.x - position3.x).abs() < radius) &&
      ((this.y - position3.y).abs() < radius) ;
 
@@ -41,7 +41,7 @@ class Position3 with Position {
     return ((xDiff * xDiff) + (yDiff * yDiff) + (zDiff * zDiff)) <= radius * radius;
   }
 
-  static bool compare(Position3 a, Position3 b){
+  static bool compare(IsometricPosition a, IsometricPosition b){
     final aRowColumn = a.indexRow + a.indexColumn;
     final bRowColumn = b.indexRow + b.indexColumn;
 
@@ -60,7 +60,7 @@ class Position3 with Position {
 
   /// FUNCTIONS
   ///
-  static void sort(List<Position3> items) {
+  static void sort(List<IsometricPosition> items) {
     var start = 0;
     var end = items.length;
     for (var pos = start + 1; pos < end; pos++) {
