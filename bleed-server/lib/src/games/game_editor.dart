@@ -1,6 +1,9 @@
 import 'dart:typed_data';
 
-import 'package:bleed_server/gamestream.dart';
+import 'package:bleed_server/common/src/character_state.dart';
+import 'package:bleed_server/common/src/game_type.dart';
+import 'package:bleed_server/common/src/node_orientation.dart';
+import 'package:bleed_server/common/src/node_type.dart';
 import 'isometric/isometric_environment.dart';
 import 'isometric/isometric_game.dart';
 import 'isometric/isometric_player.dart';

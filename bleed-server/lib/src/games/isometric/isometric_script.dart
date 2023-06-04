@@ -1,5 +1,5 @@
-import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/games/isometric/isometric_gameobject.dart';
+import 'package:bleed_server/src/games/isometric/isometric_script_type.dart';
 import 'package:lemon_byte/byte_writer.dart';
 
 class IsometricScript extends ByteWriter {

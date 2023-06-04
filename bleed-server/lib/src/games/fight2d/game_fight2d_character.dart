@@ -1,5 +1,5 @@
 
-import 'package:bleed_server/gamestream.dart';
+import 'package:bleed_server/common/src/fight2d/game_fight2d_response.dart';
 
 mixin class GameFight2DCharacter {
   static const Running_Strike_Velocity = 5.0;
