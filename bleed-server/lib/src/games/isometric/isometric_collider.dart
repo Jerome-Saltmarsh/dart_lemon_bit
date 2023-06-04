@@ -5,7 +5,7 @@ import 'package:bleed_server/src/games/isometric/isometric_character.dart';
 import 'package:bleed_server/src/games/isometric/isometric_physics.dart';
 import 'package:lemon_math/library.dart';
 
-class Collider extends Position3 {
+class IsometricCollider extends Position3 {
   /// do not mutate directly use game.deactivateCollider
   var active = true;
   var velocityX = 0.0;
@@ -32,7 +32,7 @@ class Collider extends Position3 {
   var damage = 0;
 
   /// CONSTRUCTOR
-  Collider({
+  IsometricCollider({
     required double x,
     required double y,
     required double z,
@@ -122,7 +122,7 @@ class Collider extends Position3 {
   /// FUNCTIONS
   static bool onSameTeam(dynamic a, dynamic b) {
     if (identical(a, b))                    return true;
-    if (a is! Collider || b is! Collider)   return false;
+    if (a is! IsometricCollider || b is! IsometricCollider)   return false;
     final aTeam = a.team;
     if (aTeam == TeamType.Alone)            return false;
     if (aTeam == TeamType.Neutral)          return true;
@@ -132,7 +132,7 @@ class Collider extends Position3 {
     return aTeam == bTeam;
   }
 
-  bool collidingWith(Collider that){
+  bool collidingWith(IsometricCollider that){
     if (!active) return false;
     // if (!strikable) return false;
     if (!that.active) return false;

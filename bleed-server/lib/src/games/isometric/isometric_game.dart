@@ -11,6 +11,7 @@ import '../../maths/get_distance_between_v3.dart';
 import '../../classes/src/game_time.dart';
 import '../../game/player.dart';
 import 'isometric_character.dart';
+import 'isometric_collider.dart';
 import 'isometric_physics.dart';
 import 'isometric_player.dart';
 import 'isometric_projectile.dart';
@@ -73,10 +74,10 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void customOnPlayerDisconnected(IsometricPlayer player) {}
 
   /// @override
-  void customOnColliderDeactivated(Collider collider) {}
+  void customOnColliderDeactivated(IsometricCollider collider) {}
 
   /// @override
-  void customOnColliderActivated(Collider collider) {}
+  void customOnColliderActivated(IsometricCollider collider) {}
 
   /// @override
   void customOnCharacterSpawned(IsometricCharacter character) {}
@@ -107,11 +108,11 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void customOnPlayerLevelGained(T player) {}
 
   /// @override
-  void customOnCollisionBetweenColliders(Collider a, Collider b) {}
+  void customOnCollisionBetweenColliders(IsometricCollider a, IsometricCollider b) {}
 
   /// @override
   void customOnCollisionBetweenPlayerAndOther(IsometricPlayer player,
-      Collider collider) {}
+      IsometricCollider collider) {}
 
   /// @override
   void customOnCollisionBetweenPlayerAndGameObject(IsometricPlayer player,
@@ -127,7 +128,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   /// @override
   void customOnHitApplied({
     required IsometricCharacter srcCharacter,
-    required Collider target,
+    required IsometricCollider target,
     required int damage,
     required double angle,
     required int hitType,
@@ -151,7 +152,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   /// @override
   void customOnPlayerAimTargetChanged(IsometricPlayer player,
-      Collider? collider) {}
+      IsometricCollider? collider) {}
 
   /// @override
   void customOnPlayerPerkTypeChanged(IsometricPlayer player) {}
@@ -279,7 +280,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     final mouseY = player.mouseGridY;
     final mouseZ = player.z;
 
-    Collider? closestCollider;
+    IsometricCollider? closestCollider;
 
     for (final character in characters) {
       if (character.dead) continue;
@@ -786,10 +787,10 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void playerAutoAim(IsometricPlayer player) {
     if (player.deadOrBusy) return;
     var closestTargetDistance = player.weaponTypeRange * 1.5;
-    Collider? closestTarget = null;
+    IsometricCollider? closestTarget = null;
     for (final character in characters) {
       if (character.dead) continue;
-      if (Collider.onSameTeam(player, character)) continue;
+      if (IsometricCollider.onSameTeam(player, character)) continue;
       final distance = getDistanceBetweenV3(player, character);
       if (distance > closestTargetDistance) continue;
       closestTarget = character;
@@ -855,14 +856,14 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     var attackHit = false;
 
-    Collider? nearest;
+    IsometricCollider? nearest;
     var nearestDistance = 999.0;
     final areaOfEffect = ItemType.isMeleeAOE(character.weaponType);
 
     for (final other in characters) {
       if (!other.active) continue;
       if (!other.hitable) continue;
-      if (Collider.onSameTeam(character, other)) continue;
+      if (IsometricCollider.onSameTeam(character, other)) continue;
       if (!other.withinDistance(
         performX,
         performY,
@@ -1009,7 +1010,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     for (final other in characters) {
       if (!other.active) continue;
       if (!other.hitable) continue;
-      if (Collider.onSameTeam(character, other)) continue;
+      if (IsometricCollider.onSameTeam(character, other)) continue;
       if (other.withinDistance(
         performX,
         performY,
@@ -1098,7 +1099,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     );
   }
 
-  void activateCollider(Collider collider) {
+  void activateCollider(IsometricCollider collider) {
     if (collider.active) return;
     collider.active = true;
     if (collider is GameObject) {
@@ -1117,7 +1118,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
   }
 
-  void deactivateCollider(Collider collider) {
+  void deactivateCollider(IsometricCollider collider) {
     if (!collider.active) return;
     collider.active = false;
     collider.velocityX = 0;
@@ -1274,7 +1275,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
   }
 
-  void updateColliderSceneCollisionHorizontal(Collider collider) {
+  void updateColliderSceneCollisionHorizontal(IsometricCollider collider) {
     const Shifts = 5;
     final z = collider.z + Node_Height_Half;
 
@@ -1343,7 +1344,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
   }
 
-  void updateColliderPhysics(Collider collider) {
+  void updateColliderPhysics(IsometricCollider collider) {
     assert (collider.active);
 
     collider.updateVelocity();
@@ -1497,7 +1498,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         y: y,
         z: character.z,
         where: (other) =>
-        other.alive && !Collider.onSameTeam(other, character));
+        other.alive && !IsometricCollider.onSameTeam(other, character));
   }
 
   void applyDamageToCharacter({
@@ -1576,7 +1577,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     resolveCollisions(gameObjects);
   }
 
-  void resolveCollisions(List<Collider> colliders) {
+  void resolveCollisions(List<IsometricCollider> colliders) {
     final numberOfColliders = colliders.length;
     final numberOfCollidersMinusOne = numberOfColliders - 1;
     for (var i = 0; i < numberOfCollidersMinusOne; i++) {
@@ -1596,8 +1597,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
   }
 
-  void resolveCollisionsBetween(List<Collider> collidersA,
-      List<Collider> collidersB,) {
+  void resolveCollisionsBetween(List<IsometricCollider> collidersA,
+      List<IsometricCollider> collidersB,) {
     final aLength = collidersA.length;
     final bLength = collidersB.length;
     for (var indexA = 0; indexA < aLength; indexA++) {
@@ -1618,7 +1619,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
   }
 
-  void internalOnCollisionBetweenColliders(Collider a, Collider b) {
+  void internalOnCollisionBetweenColliders(IsometricCollider a, IsometricCollider b) {
     assert (a.active);
     assert (b.active);
     // assert (a.strikable);
@@ -1643,11 +1644,11 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     customOnCollisionBetweenColliders(a, b);
   }
 
-  void resolveCollisionPhysics(Collider a, Collider b) {
+  void resolveCollisionPhysics(IsometricCollider a, IsometricCollider b) {
     resolveCollisionPhysicsRadial(a, b);
   }
 
-  void resolveCollisionPhysicsRadial(Collider a, Collider b) {
+  void resolveCollisionPhysicsRadial(IsometricCollider a, IsometricCollider b) {
     final combinedRadius = a.radius + b.radius;
     final totalDistance = getDistanceXY(a.x, a.y, b.x, b.y);
     final overlap = combinedRadius - totalDistance;
@@ -1884,7 +1885,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       player.face(target);
     }
 
-    if (target is Collider) {
+    if (target is IsometricCollider) {
       if (target is GameObject) {
         if (!target.active) {
           clearCharacterTarget(player);
@@ -1962,7 +1963,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     character.setCharacterState(value: CharacterState.Running, duration: 0);
   }
 
-  void checkProjectileCollision(List<Collider> colliders) {
+  void checkProjectileCollision(List<IsometricCollider> colliders) {
     for (var i = 0; i < projectiles.length; i++) {
       final projectile = projectiles[i];
       if (!projectile.active) continue;
@@ -1987,7 +1988,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         if (projectile.z - projectile.radius > collider.z + Character_Height)
           continue;
         if (projectile.owner == collider) continue;
-        if (Collider.onSameTeam(projectile, collider)) continue;
+        if (IsometricCollider.onSameTeam(projectile, collider)) continue;
         handleProjectileHit(projectile, collider);
         break;
       }
@@ -2002,7 +2003,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     final owner = projectile.owner;
     if (owner == null) return;
 
-    if (target is Collider) {
+    if (target is IsometricCollider) {
       applyHit(
         angle: projectile.velocityAngle,
         srcCharacter: owner,
@@ -2025,7 +2026,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   void applyHit({
     required IsometricCharacter srcCharacter,
-    required Collider target,
+    required IsometricCollider target,
     required int damage,
     required double angle,
     required int hitType,
@@ -2067,7 +2068,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       dispatchV3(GameEventType.Zombie_Strike, srcCharacter);
     }
     if (target is IsometricCharacter) {
-      if (!friendlyFire && Collider.onSameTeam(srcCharacter, target)) return;
+      if (!friendlyFire && IsometricCollider.onSameTeam(srcCharacter, target)) return;
       if (target.dead) return;
       applyDamageToCharacter(src: srcCharacter, target: target, amount: damage);
     }
@@ -2093,7 +2094,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     final attackTarget = character.target;
     if (attackTarget == null) return;
-    if (attackTarget is Collider) {
+    if (attackTarget is IsometricCollider) {
       applyHit(
         target: attackTarget,
         angle: radiansV2(character, attackTarget),
@@ -2361,7 +2362,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     final projectile = getInstanceProjectile();
     var finalAngle = angle;
     if (finalAngle == null) {
-      if (target != null && target is Collider) {
+      if (target != null && target is IsometricCollider) {
         finalAngle = target.getAngle(src);
       } else {
         finalAngle = src is IsometricPlayer ? src.lookRadian : src.faceAngle;
@@ -2374,7 +2375,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     projectile.damage = damage;
     projectile.hitable = true;
     projectile.active = true;
-    if (target is Collider) {
+    if (target is IsometricCollider) {
       projectile.target = target;
     }
     // final r = 10.0 + (src.isTemplate ? ItemType.getWeaponLength(src.weaponType) : 0);
@@ -2666,7 +2667,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
     for (final character in characters) {
       if (!character.aliveAndActive) continue;
-      if (Collider.onSameTeam(character, ai)) continue;
+      if (IsometricCollider.onSameTeam(character, ai)) continue;
       if (character.buffInvisible) continue;
       final distanceX = (ai.x - character.x).abs();
       if (closestDistanceX < distanceX) continue;
@@ -2793,12 +2794,12 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     player.writePlayerEvent(PlayerEvent.GameObject_Deselected);
   }
 
-  void updateColliderSceneCollision(Collider collider) {
+  void updateColliderSceneCollision(IsometricCollider collider) {
     updateColliderSceneCollisionVertical(collider);
     updateColliderSceneCollisionHorizontal(collider);
   }
 
-  void internalOnColliderEnteredWater(Collider collider) {
+  void internalOnColliderEnteredWater(IsometricCollider collider) {
     deactivateCollider(collider);
     if (collider is IsometricCharacter) {
       setCharacterStateDead(collider);
@@ -2806,7 +2807,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     dispatchV3(GameEventType.Splash, collider);
   }
 
-  void updateColliderSceneCollisionVertical(Collider collider) {
+  void updateColliderSceneCollisionVertical(IsometricCollider collider) {
     if (!scene.isInboundV3(collider)) {
       if (collider.z > -100) return;
       deactivateCollider(collider);
@@ -2881,7 +2882,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     return;
   }
 
-  void updateColliderSceneCollisionVertical2(Collider collider) {
+  void updateColliderSceneCollisionVertical2(IsometricCollider collider) {
     if (!scene.isInboundV3(collider)) {
       if (collider.z > -100) return;
       deactivateCollider(collider);
@@ -3085,7 +3086,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
   }
 
-  bool sceneRaycastBetween(Collider a, Collider b) {
+  bool sceneRaycastBetween(IsometricCollider a, IsometricCollider b) {
     final distance = getDistanceBetweenV3(a, b);
     if (distance < Node_Size_Half) return false;
     final distanceX = (a.x - b.x).abs();

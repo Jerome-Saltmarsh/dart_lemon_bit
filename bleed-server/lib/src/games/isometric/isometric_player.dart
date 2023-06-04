@@ -12,6 +12,7 @@ import 'package:lemon_math/library.dart';
 
 import 'package:bleed_server/gamestream.dart';
 import '../../classes/src/scene_writer.dart';
+import 'isometric_collider.dart';
 import 'isometric_game.dart';
 import 'isometric_character.dart';
 import 'isometric_projectile.dart';
@@ -103,7 +104,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
 
   /// Warning - do not reference
   // GameIsometric game;
-  Collider? _aimTarget; // the currently highlighted character
+  IsometricCollider? _aimTarget; // the currently highlighted character
   var aimTargetWeaponSide = Side.Left;
   Account? account;
   final inventory = Uint16List(inventory_size);
@@ -163,7 +164,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
 
   /// GETTERS
   ///
-  Collider? get aimTarget => _aimTarget;
+  IsometricCollider? get aimTarget => _aimTarget;
   int get score => _credits;
   int get level => _level;
   int get equippedWeaponIndex => _equippedWeaponIndex;
@@ -231,7 +232,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     game.customOnPlayerCreditsChanged(this);
   }
 
-  set aimTarget(Collider? collider) {
+  set aimTarget(IsometricCollider? collider) {
     if (_aimTarget == collider) return;
     if (collider == this) return;
     _aimTarget = collider;
@@ -1049,7 +1050,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
       if (character.renderX > screenRight) continue;
       if (character.renderY > screenBottom) continue;
 
-      if (character.buffInvisible && !Collider.onSameTeam(this, character)){
+      if (character.buffInvisible && !IsometricCollider.onSameTeam(this, character)){
         continue;
       }
 
@@ -1068,7 +1069,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   }
 
   void writeCharacterTeamDirectionAndState(IsometricCharacter character){
-    writeByte((Collider.onSameTeam(this, character) ? 100 : 0) + (character.faceDirection * 10) + character.state); // 1
+    writeByte((IsometricCollider.onSameTeam(this, character) ? 100 : 0) + (character.faceDirection * 10) + character.state); // 1
   }
 
   // todo optimize
@@ -1187,8 +1188,8 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     return true;
   }
 
-  bool isAllie(Position3? value)=> Collider.onSameTeam(this, value);
-  bool isEnemy(Position3? value) => !Collider.onSameTeam(this, value);
+  bool isAllie(Position3? value)=> IsometricCollider.onSameTeam(this, value);
+  bool isEnemy(Position3? value) => !IsometricCollider.onSameTeam(this, value);
 
   void writeProjectiles(){
     writeByte(ServerResponse.Projectiles);

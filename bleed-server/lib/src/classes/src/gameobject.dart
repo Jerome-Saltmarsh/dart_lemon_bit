@@ -1,6 +1,7 @@
 import 'package:bleed_server/gamestream.dart';
+import 'package:bleed_server/src/games/isometric/isometric_collider.dart';
 
-class GameObject extends Collider {
+class GameObject extends IsometricCollider {
   /// Prevents gameobject from being recycled in the object pool until the next frame
   var available = false;
   var id = 0;

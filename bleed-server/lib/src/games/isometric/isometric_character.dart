@@ -4,9 +4,10 @@ import 'package:lemon_math/library.dart';
 
 import 'package:bleed_server/gamestream.dart';
 
+import 'isometric_collider.dart';
 import 'isometric_player.dart';
 
-abstract class IsometricCharacter extends Collider {
+abstract class IsometricCharacter extends IsometricCollider {
   /// VARIABLES
 
   /// between 0 and 1
@@ -123,16 +124,16 @@ abstract class IsometricCharacter extends Collider {
   bool get targetIsEnemy {
     if (target == null) return false;
     if (target == this) return false;
-    if (target is Collider == false) return false;
-    final targetTeam = (target as Collider).team;
+    if (target is IsometricCollider == false) return false;
+    final targetTeam = (target as IsometricCollider).team;
     if (targetTeam == 0) return true;
     return team != targetTeam;
   }
   bool get targetIsAlly {
     if (target == null) return false;
     if (target == this) return true;
-    if (target is! Collider) return false;
-    final targetTeam = (target as Collider).team;
+    if (target is! IsometricCollider) return false;
+    final targetTeam = (target as IsometricCollider).team;
     if (targetTeam == 0) return false;
     return team == targetTeam;
   }
@@ -343,7 +344,7 @@ abstract class IsometricCharacter extends Collider {
 
   bool withinAttackRange(Position3 target){
     if ((target.z - z).abs() > Character_Height) return false;
-    if (target is Collider){
+    if (target is IsometricCollider){
       return withinRadiusCheap(target, weaponTypeRange + target.radius);
     }
     return withinRadiusCheap(target, weaponTypeRange);

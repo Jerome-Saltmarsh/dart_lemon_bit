@@ -8,6 +8,7 @@ import 'package:bleed_server/src/system.dart';
 import 'package:lemon_math/library.dart';
 
 import 'isometric/isometric_character.dart';
+import 'isometric/isometric_collider.dart';
 import 'isometric/isometric_game.dart';
 import 'isometric/isometric_player.dart';
 
@@ -140,7 +141,7 @@ class GameAeon extends IsometricGame {
             }
           }
         }
-        if (Collider.onSameTeam(player, aimTarget)){
+        if (IsometricCollider.onSameTeam(player, aimTarget)){
           setCharacterTarget(player, aimTarget);
           return;
         }
@@ -175,7 +176,7 @@ class GameAeon extends IsometricGame {
             }
           }
         }
-        if (Collider.onSameTeam(player, aimTarget)) {
+        if (IsometricCollider.onSameTeam(player, aimTarget)) {
           setCharacterTarget(player, aimTarget);
         }
       }
@@ -350,7 +351,7 @@ class GameAeon extends IsometricGame {
   @override
   void customOnHitApplied({
     required IsometricCharacter srcCharacter,
-    required Collider target,
+    required IsometricCollider target,
     required int damage,
     required double angle,
     required int hitType,
@@ -485,7 +486,7 @@ class GameAeon extends IsometricGame {
   }
 
   @override
-  void customOnPlayerAimTargetChanged(IsometricPlayer player, Collider? collider) {
+  void customOnPlayerAimTargetChanged(IsometricPlayer player, IsometricCollider? collider) {
     if (collider is! GameObject) return;
     player.writeApiPlayerAimTargetName('${getItemCost(collider.type)} credits');
   }
@@ -544,7 +545,7 @@ class GameAeon extends IsometricGame {
           if (distanceY > Power_Range_Stun) continue;
           final distanceZ = (playerZ - character.z).abs();
           if (distanceZ > Power_Range_Stun) continue;
-          if (Collider.onSameTeam(character, player)) continue;
+          if (IsometricCollider.onSameTeam(character, player)) continue;
           setCharacterStateStunned(character, duration: duration);
         }
         break;

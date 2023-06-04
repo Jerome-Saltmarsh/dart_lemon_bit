@@ -4,8 +4,9 @@ import 'package:bleed_server/src/maths/get_distance_between_v3.dart';
 import 'package:lemon_math/library.dart';
 
 import 'games/isometric/isometric_character.dart';
+import 'games/isometric/isometric_collider.dart';
 
-I? raycastHit<I extends Collider>({
+I? raycastHit<I extends IsometricCollider>({
   required IsometricCharacter character,
   required List<I> colliders,
   required double range,
@@ -42,7 +43,7 @@ List<T> sphereCastAll<T extends Position>({
   return values.where((value) => value.getDistance(position) < radius).toList();
 }
 
-T? sphereCaste<T extends Collider>({
+T? sphereCaste<T extends IsometricCollider>({
   required List<T> colliders,
   required double x,
   required double y,

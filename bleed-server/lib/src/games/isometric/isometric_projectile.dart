@@ -1,10 +1,10 @@
 
 import 'package:bleed_server/src/games/isometric/isometric_physics.dart';
 
-import '../../classes/src/collider.dart';
 import '../../classes/src/position3.dart';
+import 'isometric_collider.dart';
 
-class IsometricProjectile extends Collider {
+class IsometricProjectile extends IsometricCollider {
   var range = 0.0;
   var type = 0; // ProjectileType.dart
   Position3? target = null;
