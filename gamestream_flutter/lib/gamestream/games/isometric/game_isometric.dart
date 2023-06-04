@@ -61,6 +61,19 @@ class GameIsometric extends Game {
     clientState.updatePlayerMessageTimer();
     gamestream.io.readPlayerInput();
     gamestream.network.sendClientRequestUpdate();
+
+    if (engine.keyPressed(KeyCode.L)) {
+        sendIsometricClientRequestSpawnZombie();
+    }
+  }
+
+  void sendIsometricClientRequestSpawnZombie(){
+    print('sendIsometricClientRequestSpawnZombie()');
+    sendIsometricClientRequest(IsometricClientRequest.Spawn_Zombie);
+  }
+
+  void sendIsometricClientRequest([dynamic message]) {
+    gamestream.network.sendClientRequest(ClientRequest.Isometric, message);
   }
 
   @override
@@ -73,10 +86,15 @@ class GameIsometric extends Game {
     clientState.control_visible_player_weapons.value = true;
     clientState.control_visible_scoreboard.value = true;
     clientState.control_visible_player_power.value = true;
+    engine.onKeyDown = onKeyDown;
 
     if (!engine.isLocalHost) {
       engine.fullScreenEnter();
     }
+  }
+
+  void onKeyDown(int keyCode){
+    print("key down: $keyCode");
   }
 
   @override

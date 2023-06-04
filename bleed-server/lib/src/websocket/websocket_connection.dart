@@ -16,6 +16,7 @@ import 'package:bleed_server/common/src/game_type.dart';
 import 'package:bleed_server/common/src/gameobject_request.dart';
 import 'package:bleed_server/common/src/interact_mode.dart';
 import 'package:bleed_server/common/src/inventory_request.dart';
+import 'package:bleed_server/common/src/isometric/isometric_client_request.dart';
 import 'package:bleed_server/common/src/item_type.dart';
 import 'package:bleed_server/common/src/lightning_type.dart';
 import 'package:bleed_server/common/src/maths.dart';
@@ -398,6 +399,34 @@ class WebSocketConnection with ByteReader {
           if (game is! IsometricGame) return;
           game.setHourMinutes(hour, 0);
           break;
+
+      case ClientRequest.Isometric:
+        if (player is! IsometricPlayer) {
+          errorInvalidPlayerType();
+          return;
+        }
+        if (arguments.length < 2){
+          errorInvalidClientRequest();
+          return;
+        }
+        final isometricClientRequest = parseArg1(arguments);
+        if (isometricClientRequest == null){
+          errorInvalidClientRequest();
+          return;
+        }
+
+        switch (isometricClientRequest){
+          case IsometricClientRequest.Spawn_Zombie:
+            player.game.spawnAIXYZ(
+              x: player.mouseGridX,
+              y: player.mouseGridY,
+              z: player.game.scene.gridHeightLength - 50,
+              characterType: CharacterType.Zombie,
+            );
+            break;
+        }
+
+        break;
 
       case ClientRequest.Fight2D:
         if (player is! GameFight2DPlayer) {

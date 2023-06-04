@@ -33,6 +33,7 @@ class ClientRequest {
   static const Attack                   = 32;
   static const Select_Attribute         = 33;
   static const Fight2D                  = 34;
+  static const Isometric                = 35;
 }
 
 

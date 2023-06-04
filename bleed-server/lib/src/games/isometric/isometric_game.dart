@@ -3264,4 +3264,5 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     environment.onChanged = false;
     playersWriteWeather();
   }
+
 }

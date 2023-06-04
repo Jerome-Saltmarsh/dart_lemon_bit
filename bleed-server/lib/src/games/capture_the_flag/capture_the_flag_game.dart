@@ -36,16 +36,27 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   }
 
   @override
+  void customOnCharacterKilled(IsometricCharacter target, src) {
+    if (target == flagRedCharacter) {
+      flagRedCharacter = null;
+      return;
+    }
+
+    if (target == flagBlueCharacter) {
+      flagBlueCharacter = null;
+      return;
+    }
+  }
+
+  @override
   void customOnCollisionBetweenPlayerAndGameObject(IsometricPlayer player, IsometricGameObject gameObject) {
 
-    if (gameObject == flagBlue && player.team == CaptureTheFlagTeam.Red) {
-      // deactivateCollider(gameObject);
+    if (gameObject == flagBlue && player.team == CaptureTheFlagTeam.Red && flagBlueCharacter != null) {
       flagBlueCharacter = player;
       return;
     }
 
-    if (gameObject == flagRed && player.team == CaptureTheFlagTeam.Blue) {
-      // deactivateCollider(gameObject);
+    if (gameObject == flagRed && player.team == CaptureTheFlagTeam.Blue && flagRedCharacter != null) {
       flagRedCharacter = player;
       return;
     }
