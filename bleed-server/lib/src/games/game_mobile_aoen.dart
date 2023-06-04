@@ -12,6 +12,7 @@ import 'isometric/isometric_character.dart';
 import 'isometric/isometric_collider.dart';
 import 'isometric/isometric_environment.dart';
 import 'isometric/isometric_game.dart';
+import 'isometric/isometric_gameobject.dart';
 import 'isometric/isometric_player.dart';
 
 class GameMobileAeon extends IsometricGame<PlayerAeon> {
@@ -177,7 +178,7 @@ class GameMobileAeon extends IsometricGame<PlayerAeon> {
   }
 
   @override
-  void customOnPlayerInteractWithGameObject(IsometricPlayer player, GameObject gameObject){
+  void customOnPlayerInteractWithGameObject(IsometricPlayer player, IsometricGameObject gameObject){
     final gameObjectType = gameObject.type;
 
     if (player.weaponPrimary == gameObjectType) {
@@ -215,13 +216,13 @@ class GameMobileAeon extends IsometricGame<PlayerAeon> {
   } [itemType] ?? 0;
 
   @override
-  void customOnCollisionBetweenPlayerAndGameObject(IsometricPlayer player, GameObject gameObject) {
+  void customOnCollisionBetweenPlayerAndGameObject(IsometricPlayer player, IsometricGameObject gameObject) {
     if (!gameObject.collectable) return;
     customOnPlayerCollectGameObject(player, gameObject);
   }
 
   @override
-  void customOnGameObjectDestroyed(GameObject gameObject) {
+  void customOnGameObjectDestroyed(IsometricGameObject gameObject) {
     if (GameObjects_Respawnable.contains(gameObject.type)){
       performScript(timer: GameObject_Respawn_Duration).writeSpawnGameObject(
         type: gameObject.type,
@@ -237,7 +238,7 @@ class GameMobileAeon extends IsometricGame<PlayerAeon> {
   }
 
   @override
-  void customOnGameObjectSpawned(GameObject gameObject) {
+  void customOnGameObjectSpawned(IsometricGameObject gameObject) {
     gameObject.destroyable = GameObjects_Destroyable.contains(gameObject.type);
   }
 
@@ -250,7 +251,7 @@ class GameMobileAeon extends IsometricGame<PlayerAeon> {
     required int hitType,
     required double force,
   }) {
-    if (target is! GameObject) return;
+    if (target is! IsometricGameObject) return;
     if (target.type == ItemType.GameObjects_Barrel_Explosive) {
       if (hitType == HitType.Projectile || hitType == HitType.Explosion) {
         destroyGameObject(target);
@@ -265,7 +266,7 @@ class GameMobileAeon extends IsometricGame<PlayerAeon> {
   }
 
   @override
-  void customOnPlayerCollectGameObject(IsometricPlayer player, GameObject gameObject) {
+  void customOnPlayerCollectGameObject(IsometricPlayer player, IsometricGameObject gameObject) {
     if (!gameObject.collectable) return;
 
     if (gameObject.type == ItemType.Resource_Credit) {
@@ -381,7 +382,7 @@ class GameMobileAeon extends IsometricGame<PlayerAeon> {
 
   @override
   void customOnPlayerAimTargetChanged(IsometricPlayer player, IsometricCollider? collider) {
-    if (collider is! GameObject) return;
+    if (collider is! IsometricGameObject) return;
     player.writeApiPlayerAimTargetName('${getItemCost(collider.type)} credits');
   }
 

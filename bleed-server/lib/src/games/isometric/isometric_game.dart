@@ -13,6 +13,7 @@ import 'isometric_ai.dart';
 import 'isometric_character.dart';
 import 'isometric_collider.dart';
 import 'isometric_environment.dart';
+import 'isometric_gameobject.dart';
 import 'isometric_physics.dart';
 import 'isometric_player.dart';
 import 'isometric_projectile.dart';
@@ -63,7 +64,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   /// @override
   void customOnPlayerInteractWithGameObject(IsometricPlayer player,
-      GameObject gameObject) {}
+      IsometricGameObject gameObject) {}
 
   /// @override
   void customDownloadScene(IsometricPlayer player) {}
@@ -117,7 +118,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   /// @override
   void customOnCollisionBetweenPlayerAndGameObject(IsometricPlayer player,
-      GameObject gameObject) {}
+      IsometricGameObject gameObject) {}
 
   /// @override
   void customOnAIRespawned(IsometricAI ai) {}
@@ -143,10 +144,10 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void customInit() {}
 
   /// @override
-  void customOnGameObjectSpawned(GameObject gameObject) {}
+  void customOnGameObjectSpawned(IsometricGameObject gameObject) {}
 
   /// @override
-  void customOnGameObjectDestroyed(GameObject gameObject) {}
+  void customOnGameObjectDestroyed(IsometricGameObject gameObject) {}
 
   /// @override
   void customOnCharacterWeaponStateReady(IsometricCharacter character) {}
@@ -171,7 +172,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   /// PROPERTIES
-  List<GameObject> get gameObjects => scene.gameObjects;
+  List<IsometricGameObject> get gameObjects => scene.gameObjects;
 
   /// @override
   double get minAimTargetCursorDistance => 35;
@@ -196,14 +197,14 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   /// QUERIES
 
-  GameObject? findGameObjectByType(int type) {
+  IsometricGameObject? findGameObjectByType(int type) {
     for (final gameObject in gameObjects) {
       if (gameObject.type == type) return gameObject;
     }
     return null;
   }
 
-  GameObject? findGameObjectById(int id) {
+  IsometricGameObject? findGameObjectById(int id) {
     for (final gameObject in gameObjects) {
       if (gameObject.id == id) return gameObject;
     }
@@ -1103,7 +1104,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void activateCollider(IsometricCollider collider) {
     if (collider.active) return;
     collider.active = true;
-    if (collider is GameObject) {
+    if (collider is IsometricGameObject) {
       collider.dirty = true;
     }
     if (collider is IsometricPlayer) {
@@ -1126,7 +1127,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     collider.velocityY = 0;
     collider.velocityZ = 0;
 
-    if (collider is GameObject) {
+    if (collider is IsometricGameObject) {
       collider.dirty = true;
       collider.available = false;
     }
@@ -1160,7 +1161,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
   }
 
-  void dispatchGameEventGameObjectDestroyed(GameObject gameObject) {
+  void dispatchGameEventGameObjectDestroyed(IsometricGameObject gameObject) {
     for (final player in players) {
       player.writeGameEventGameObjectDestroyed(gameObject);
     }
@@ -1631,13 +1632,13 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
 
     if (a is IsometricPlayer) {
-      if (b is GameObject) {
+      if (b is IsometricGameObject) {
         customOnCollisionBetweenPlayerAndGameObject(a, b);
       }
       customOnCollisionBetweenPlayerAndOther(a, b);
     }
     if (b is IsometricPlayer) {
-      if (a is GameObject) {
+      if (a is IsometricGameObject) {
         customOnCollisionBetweenPlayerAndGameObject(b, a);
       }
       customOnCollisionBetweenPlayerAndOther(b, a);
@@ -1815,7 +1816,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       characters.remove(instance);
       return;
     }
-    if (instance is GameObject) {
+    if (instance is IsometricGameObject) {
       gameObjects.remove(instance);
       for (final player in players) {
         player.writeUInt8(ServerResponse.GameObject_Deleted);
@@ -1887,7 +1888,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
 
     if (target is IsometricCollider) {
-      if (target is GameObject) {
+      if (target is IsometricGameObject) {
         if (!target.active) {
           clearCharacterTarget(player);
           return;
@@ -2053,7 +2054,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       hitType: hitType,
     );
 
-    if (target is GameObject) {
+    if (target is IsometricGameObject) {
       if (ItemType.isMaterialMetal(target.type)) {
         dispatch(
             GameEventType.Material_Struck_Metal, target.x, target.y, target.z,
@@ -2482,7 +2483,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     position.z = scene.convertNodeIndexToPositionZ(index);
   }
 
-  GameObject spawnGameObjectAtIndex({required int index, required int type}) =>
+  IsometricGameObject spawnGameObjectAtIndex({required int index, required int type}) =>
       spawnGameObject(
         x: scene.convertNodeIndexToPositionX(index),
         y: scene.convertNodeIndexToPositionY(index),
@@ -2519,7 +2520,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       ..quantity = quantity;
   }
 
-  GameObject spawnGameObjectAtPosition({
+  IsometricGameObject spawnGameObjectAtPosition({
     required Position3 position,
     required int type,
   }) =>
@@ -2530,7 +2531,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
         type: type,
       );
 
-  GameObject spawnGameObject({
+  IsometricGameObject spawnGameObject({
     required double x,
     required double y,
     required double z,
@@ -2556,7 +2557,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       customOnGameObjectSpawned(gameObject);
       return gameObject;
     }
-    final instance = GameObject(
+    final instance = IsometricGameObject(
       x: x,
       y: y,
       z: z,
@@ -3116,7 +3117,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   void customOnPlayerCollectGameObject(IsometricPlayer player,
-      GameObject target) {
+      IsometricGameObject target) {
 
     var quantityRemaining = target.quantity > 0 ? target.quantity : 1;
     final maxQuantity = ItemType.getMaxQuantity(target.type);
@@ -3208,7 +3209,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
   }
 
-  void destroyGameObject(GameObject gameObject) {
+  void destroyGameObject(IsometricGameObject gameObject) {
     if (!gameObject.active) return;
     dispatchGameEventGameObjectDestroyed(gameObject);
     deactivateCollider(gameObject);

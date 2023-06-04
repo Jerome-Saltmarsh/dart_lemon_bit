@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/games/isometric/isometric_ai.dart';
+import 'package:bleed_server/src/games/isometric/isometric_gameobject.dart';
 import 'package:bleed_server/src/lang_utils.dart';
 import 'package:lemon_math/library.dart';
 
@@ -19,7 +20,7 @@ class Scene {
   var gridVolume = 0;
   var gridArea = 0;
   var name = "";
-  final List<GameObject> gameObjects;
+  final List<IsometricGameObject> gameObjects;
 
   Uint16List spawnPoints;
   Uint16List spawnPointsPlayers;

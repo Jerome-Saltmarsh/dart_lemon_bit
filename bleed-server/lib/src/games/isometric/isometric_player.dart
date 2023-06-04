@@ -16,6 +16,7 @@ import 'isometric_ai.dart';
 import 'isometric_collider.dart';
 import 'isometric_game.dart';
 import 'isometric_character.dart';
+import 'isometric_gameobject.dart';
 import 'isometric_projectile.dart';
 
 class IsometricPlayer extends IsometricCharacter with ByteWriter implements Player {
@@ -33,7 +34,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   late IsometricGame game;
   final runTarget = Position3();
   late Function sendBufferToClient;
-  GameObject? editorSelectedGameObject;
+  IsometricGameObject? editorSelectedGameObject;
   /// Frames per energy rejuvenation
   var energyGainRate = 16;
   var debug = false;
@@ -1128,10 +1129,10 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
 
   void writePlayerAimTargetType() {
     if (aimTarget == null) return;
-    if (aimTarget is GameObject){
+    if (aimTarget is IsometricGameObject){
       writeByte(ServerResponse.Api_Player);
       writeByte(ApiPlayer.Aim_Target_Type);
-      writeUInt16((aimTarget as GameObject).type);
+      writeUInt16((aimTarget as IsometricGameObject).type);
     }
     if (aimTarget is IsometricCharacter) {
       writeByte(ServerResponse.Api_Player);
@@ -1141,10 +1142,10 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   }
 
   void writePlayerAimTargetQuantity() {
-    if (aimTarget is GameObject) {
+    if (aimTarget is IsometricGameObject) {
       writeByte(ServerResponse.Api_Player);
       writeByte(ApiPlayer.Aim_Target_Quantity);
-      writeUInt16((aimTarget as GameObject).quantity);
+      writeUInt16((aimTarget as IsometricGameObject).quantity);
     }
   }
 
@@ -1171,7 +1172,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
 
   int getTargetCategory(Position3? value){
     if (value == null) return TargetCategory.Nothing;
-    if (value is GameObject) {
+    if (value is IsometricGameObject) {
       if (value.interactable) {
         return TargetCategory.Collect;
       }
@@ -1561,7 +1562,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     // writeUInt16(maxEnergy);
   }
 
-  void writeGameObject(GameObject gameObject){
+  void writeGameObject(IsometricGameObject gameObject){
     writeUInt8(ServerResponse.GameObject);
     writeUInt16(gameObject.id);
     writeBool(gameObject.active);
@@ -1736,7 +1737,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     writeUInt24(player.score);
   }
 
-  void writeGameEventGameObjectDestroyed(GameObject gameObject){
+  void writeGameEventGameObjectDestroyed(IsometricGameObject gameObject){
     writeGameEvent(
       type: GameEventType.Game_Object_Destroyed,
       x: gameObject.x,

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:bleed_server/gamestream.dart';
+import 'package:bleed_server/src/games/isometric/isometric_gameobject.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_byte/byte_writer.dart';
 
@@ -34,7 +35,7 @@ class SceneWriter extends ByteWriter {
     writeUint8List(compressedNodeOrientations);
   }
 
-  void writeGameObjects(List<GameObject> gameObjects){
+  void writeGameObjects(List<IsometricGameObject> gameObjects){
     writeByte(ScenePart.GameObjects);
     var total = 0;
     for (final gameObject in gameObjects){
@@ -95,7 +96,7 @@ class SceneReader extends ByteReader {
   var nodeOrientations = Uint8List(0);
   var playerSpawnPoints = Uint16List(0);
   var spawnPoints = Uint16List(0);
-  var gameObjects = <GameObject>[];
+  var gameObjects = <IsometricGameObject>[];
 
   static Scene readScene(Uint8List bytes, {int startIndex = 0}) => _instance._readScene(bytes, startIndex: startIndex);
 
@@ -108,7 +109,7 @@ class SceneReader extends ByteReader {
     this.nodeOrientations = Uint8List(0);
     this.playerSpawnPoints = Uint16List(0);
     this.spawnPoints = Uint16List(0);
-    this.gameObjects = <GameObject>[];
+    this.gameObjects = <IsometricGameObject>[];
     this.values = bytes;
     readLoop();
 
@@ -160,7 +161,7 @@ class SceneReader extends ByteReader {
       final y = readUDouble16();
       final z = readUDouble16();
       gameObjects.add(
-        GameObject(x: x, y: y, z: z, type: type, id: id++)
+        IsometricGameObject(x: x, y: y, z: z, type: type, id: id++)
       );
     }
   }
