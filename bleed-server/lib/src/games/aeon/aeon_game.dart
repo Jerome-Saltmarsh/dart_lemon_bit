@@ -5,17 +5,17 @@ import 'package:bleed_server/src/game/player.dart';
 import 'package:bleed_server/src/system.dart';
 import 'package:lemon_math/library.dart';
 
-import 'isometric/isometric_ai.dart';
-import 'isometric/isometric_character.dart';
-import 'isometric/isometric_collider.dart';
-import 'isometric/isometric_environment.dart';
-import 'isometric/isometric_game.dart';
-import 'isometric/isometric_gameobject.dart';
-import 'isometric/isometric_player.dart';
-import 'isometric/isometric_time.dart';
+import '../isometric/isometric_ai.dart';
+import '../isometric/isometric_character.dart';
+import '../isometric/isometric_collider.dart';
+import '../isometric/isometric_environment.dart';
+import '../isometric/isometric_game.dart';
+import '../isometric/isometric_gameobject.dart';
+import '../isometric/isometric_player.dart';
+import '../isometric/isometric_time.dart';
 
 
-class GameAeon extends IsometricGame {
+class AeonGame extends IsometricGame {
   // constants
   static final Player_Respawn_Duration  = Engine.Frames_Per_Second * (isLocalMachine ? 4 : 4);
   static const GameObject_Duration      = 500;
@@ -71,7 +71,7 @@ class GameAeon extends IsometricGame {
   ];
 
   // constructor
-  GameAeon({
+  AeonGame({
     required super.scene,
   }) : super(
     gameType: GameType.Aeon,

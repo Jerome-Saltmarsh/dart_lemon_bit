@@ -2,10 +2,11 @@
 import 'package:bleed_server/common/src/enums/api_spr.dart';
 import 'package:bleed_server/common/src/server_response.dart';
 import 'package:bleed_server/src/game/player.dart';
-import 'package:bleed_server/src/games/game_rock_paper_scissors.dart';
 
-class PlayerScissorsPaperRock extends Player {
-  final GameRockPaperScissors game;
+import 'rock_paper_scissors_game.dart';
+
+class RockPaperScissorsPlayer extends Player {
+  final RockPaperScissorsGame game;
   var x = 0.0;
   var y = 0.0;
 
@@ -14,7 +15,7 @@ class PlayerScissorsPaperRock extends Player {
 
   var team = -1;
 
-  PlayerScissorsPaperRock(this.game);
+  RockPaperScissorsPlayer(this.game);
 
   @override
   void writePlayerGame() {

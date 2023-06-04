@@ -3,12 +3,12 @@ import 'dart:typed_data';
 
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/game/player.dart';
-import 'package:bleed_server/src/classes/src/player_aeon.dart';
+import 'package:bleed_server/src/games/aeon/aeon_game.dart';
+import 'package:bleed_server/src/games/aeon/aeon_player.dart';
 import 'package:bleed_server/src/classes/src/scene_writer.dart';
 import 'package:bleed_server/src/games/fight2d/game_fight2d.dart';
 import 'package:bleed_server/src/games/fight2d/game_fight2d_player.dart';
 import 'package:bleed_server/src/games/fight2d/game_fight2d_scene_generator.dart';
-import 'package:bleed_server/src/games/game_aeon.dart';
 import 'package:bleed_server/src/games/game_editor.dart';
 import 'package:bleed_server/src/games/game_mobile_aoen.dart';
 import 'package:bleed_server/src/games/game_combat.dart';
@@ -915,12 +915,12 @@ class WebSocketConnection with ByteReader {
 
   Future joinGameAeon() async {
     for (final game in engine.games) {
-      if (game is GameAeon) {
+      if (game is AeonGame) {
         if (game.players.length >= GameCombat.Max_Players) continue;
         return joinGame(game);
       }
     }
-    joinGame(GameAeon(scene: engine.scenes.town));
+    joinGame(AeonGame(scene: engine.scenes.town));
   }
 
   void joinGame(Game game){

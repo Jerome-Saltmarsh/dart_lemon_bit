@@ -2,10 +2,10 @@
 
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/game/player.dart';
-import 'package:bleed_server/src/classes/src/player_aeon.dart';
 import 'package:bleed_server/src/system.dart';
 import 'package:lemon_math/library.dart';
 
+import 'aeon/aeon_player.dart';
 import 'isometric/isometric_ai.dart';
 import 'isometric/isometric_character.dart';
 import 'isometric/isometric_collider.dart';

@@ -1,16 +1,17 @@
 import 'dart:math';
 
 import 'package:bleed_server/gamestream.dart';
-import 'package:bleed_server/src/classes/src/player_scissors_paper_rock.dart';
 import 'package:lemon_math/library.dart';
 
-class GameRockPaperScissors extends Game<PlayerScissorsPaperRock> {
+import 'rock_paper_scissors_player.dart';
+
+class RockPaperScissorsGame extends Game<RockPaperScissorsPlayer> {
 
   static const movementSpeed = 4.0;
 
-  final players = <PlayerScissorsPaperRock>[];
+  final players = <RockPaperScissorsPlayer>[];
 
-  GameRockPaperScissors() : super(gameType: GameType.Rock_Paper_Scissors);
+  RockPaperScissorsGame() : super(gameType: GameType.Rock_Paper_Scissors);
 
   @override
   void update() {
@@ -57,7 +58,7 @@ class GameRockPaperScissors extends Game<PlayerScissorsPaperRock> {
     }
   }
 
-  void respawn(PlayerScissorsPaperRock player){
+  void respawn(RockPaperScissorsPlayer player){
     player.team = getNextPlayerTeam();
     player.x = randomInt(50, 500).toDouble();
     player.y = randomInt(50, 500).toDouble();
@@ -66,8 +67,8 @@ class GameRockPaperScissors extends Game<PlayerScissorsPaperRock> {
   }
 
   @override
-  PlayerScissorsPaperRock createPlayer() {
-    final instance = PlayerScissorsPaperRock(this);
+  RockPaperScissorsPlayer createPlayer() {
+    final instance = RockPaperScissorsPlayer(this);
     instance.writeByte(ServerResponse.Game_Type);
     instance.writeByte(GameType.Rock_Paper_Scissors.index);
     respawn(instance);
@@ -102,7 +103,7 @@ class GameRockPaperScissors extends Game<PlayerScissorsPaperRock> {
 
   @override
   void onPlayerUpdateRequestReceived({
-    required PlayerScissorsPaperRock player,
+    required RockPaperScissorsPlayer player,
     required int direction,
     required bool mouseLeftDown,
     required bool mouseRightDown,
@@ -116,7 +117,7 @@ class GameRockPaperScissors extends Game<PlayerScissorsPaperRock> {
   }
 
   @override
-  void removePlayer(PlayerScissorsPaperRock player) {
+  void removePlayer(RockPaperScissorsPlayer player) {
     players.remove(player);
   }
 }
