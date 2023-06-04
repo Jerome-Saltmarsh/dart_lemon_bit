@@ -8,7 +8,7 @@ class SelectGameTypeColumn extends StatelessWidget {
   static const gameTypes = [
     GameType.Combat,
     GameType.Fight2D,
-    // GameType.Cube3D,
+    GameType.Capture_The_Flag,
     // GameType.Aeon,
   ];
 
@@ -52,6 +52,7 @@ class GameTypeImage extends StatelessWidget {
      return const {
        GameType.Fight2D: 'images/website/game-fight2d.png',
        GameType.Combat: 'images/website/game-isometric.png',
+       GameType.Capture_The_Flag: 'images/website/game-isometric.png',
      }[gameType] ?? '';
   }
 }

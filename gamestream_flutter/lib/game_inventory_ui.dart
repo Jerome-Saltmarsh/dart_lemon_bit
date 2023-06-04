@@ -652,8 +652,6 @@ class GameInventoryUI {
                 ],)),
               height16,
               if (gamestream.games.isometric.clientState.hoverDialogDialogIsTrade)
-                buildItemTypeRecipe(itemType),
-
               height16,
 
               if (gamestream.games.isometric.clientState.hoverDialogDialogIsTrade)
@@ -717,84 +715,6 @@ class GameInventoryUI {
         ],
       ),
     );
-
-  static Widget buildItemTypeRecipe(int itemType){
-    final recipe = ItemType.Recipes[itemType];
-    if (recipe == null) return text("(FREE)");
-    final children = <Widget>[];
-    for (var i = 0; i < recipe.length; i += 2){
-      final recipeItemQuantityRequired = recipe[i];
-      final recipeItemType = recipe[i + 1];
-      final recipeItemQuantityPossessed = gamestream.games.isometric.serverState.countItemTypeQuantityInPlayerPossession(recipeItemType);
-      final sufficientQuantity = recipeItemQuantityPossessed >= recipeItemQuantityRequired;
-      final textColor = sufficientQuantity ? GameIsometricColors.green : GameIsometricColors.red;
-       children.add(
-           Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: Row(
-              children: [
-                Container(
-                    constraints: const BoxConstraints(maxWidth: 150),
-                    child: GameIsometricUI.buildAtlasItemType(recipeItemType)),
-                width4,
-                text(ItemType.getName(recipeItemType), color: textColor),
-              ],
-            ),
-          ),
-          Row(
-            children: [
-              Container(
-                child: text('($recipeItemQuantityPossessed)',
-                    italic: true, color: textColor),
-                alignment: Alignment.centerRight,
-              ),
-              Container(
-                  width: 70,
-                  child: text(recipeItemQuantityRequired, color: textColor),
-                  alignment: Alignment.centerRight),
-            ],
-          ),
-        ],
-      ));
-    }
-
-    return Container(
-      padding: const EdgeInsets.all(8),
-      color: GameIsometricColors.brownLight,
-      constraints: BoxConstraints(
-        minWidth: 450,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          text("COST"),
-          height6,
-          ...children
-        ],
-      ),
-    );
-  }
-
-  static Widget buildContainerRecipe(int itemTypeRecipe) {
-     final recipe = ItemType.Recipes[itemTypeRecipe];
-     if (recipe == null) {
-       return text("recipe not found");
-     }
-     final children = <Widget>[];
-     for (var i = 0; i < recipe.length; i += 2){
-        final itemType = recipe[i];
-        final quantity = recipe[i + 1];
-        children.add(
-           text('${ItemType.getName(itemType)}: x$quantity', color: Colors.yellow)
-        );
-     }
-     return Column(
-       crossAxisAlignment: CrossAxisAlignment.start,
-       children: children,
-     );
-  }
 
   static Color getValueColor(num value, {bool swap = false}){
      if (value == 0) return  GameIsometricColors.white;
