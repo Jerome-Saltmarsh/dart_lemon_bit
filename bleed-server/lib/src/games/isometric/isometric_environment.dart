@@ -6,6 +6,7 @@ import 'package:bleed_server/src/games/isometric/isometric_game.dart';
 import 'package:lemon_math/library.dart';
 
 class IsometricEnvironment {
+  final Engine engine;
   var durationRain = randomInt(1000, 3000);
   var nextLightningChanged = 300;
   var durationBreeze = 500;
@@ -17,6 +18,8 @@ class IsometricEnvironment {
   var _windType = WindType.Calm;
   var nextLightningFlash = 0;
   var lightningFlashDuration = 0;
+
+  IsometricEnvironment({required this.engine});
 
   static const Lightning_Flash_Duration_Total = 7;
 

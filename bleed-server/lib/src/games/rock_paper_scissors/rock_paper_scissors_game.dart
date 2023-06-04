@@ -14,7 +14,7 @@ class RockPaperScissorsGame extends Game<RockPaperScissorsPlayer> {
 
   final players = <RockPaperScissorsPlayer>[];
 
-  RockPaperScissorsGame() : super(gameType: GameType.Rock_Paper_Scissors);
+  RockPaperScissorsGame({required super.engine}) : super(gameType: GameType.Rock_Paper_Scissors);
 
   @override
   void update() {

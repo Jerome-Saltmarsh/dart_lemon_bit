@@ -13,7 +13,7 @@ import 'games/isometric/isometric_player.dart';
 import 'games/rock_paper_scissors/rock_paper_scissors_game.dart';
 import 'utilities/system.dart';
 
-final engine = Engine();
+// final engine = Engine();
 
 class Engine {
 
@@ -22,10 +22,15 @@ class Engine {
   final games = <Game>[];
   final isometricScenes = IsometricScenes();
   final database = isLocalMachine ? DatabaseLocalHost() : DatabaseFirestore();
-  final server = WebSocketServer();
+  late final server = WebSocketServer(this);
 
   var _highScore = 0;
   var frame = 0;
+
+
+  Engine() {
+    run();
+  }
 
   int get highScore => _highScore;
 
@@ -61,7 +66,6 @@ class Engine {
 
     Timer.periodic(Duration(milliseconds: 1000 ~/ Frames_Per_Second), _fixedUpdate);
     server.start();
-    // udpServer.start();
   }
 
   void dispatchHighScore(){
@@ -84,7 +88,7 @@ class Engine {
   }
 
   Future<GameEditor> findGameEditorNew() async {
-    return GameEditor();
+    return GameEditor(engine: this);
   }
 
   // This method is called by the game constructor automatically
@@ -99,7 +103,7 @@ class Engine {
         return game;
       }
     }
-    final gameInstance = RockPaperScissorsGame();
+    final gameInstance = RockPaperScissorsGame(engine: this);
     games.add(gameInstance);
     return gameInstance;
   }

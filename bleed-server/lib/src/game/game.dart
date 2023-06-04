@@ -4,11 +4,12 @@ import 'package:bleed_server/src/engine.dart';
 import 'package:bleed_server/src/game/player.dart';
 
 abstract class Game <T extends Player> {
+  final Engine engine;
   var playerId = 0;
   final GameType gameType;
   final List<T> players = [];
 
-  Game({required this.gameType}) {
+  Game({required this.gameType, required this.engine}) {
     engine.onGameCreated(this); // fix this
   }
 

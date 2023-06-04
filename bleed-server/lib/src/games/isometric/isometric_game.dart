@@ -212,6 +212,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     required this.time,
     required this.environment,
     required super.gameType,
+    required super.engine,
   }) {
     IsometricPosition.sort(gameObjects);
 

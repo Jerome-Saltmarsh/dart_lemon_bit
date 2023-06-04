@@ -9,6 +9,7 @@ class GameCastleStorm extends IsometricGame {
     required super.time,
     required super.environment,
     required super.gameType,
+    required super.engine,
   });
 
   @override

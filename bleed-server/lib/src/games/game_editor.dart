@@ -12,9 +12,9 @@ import 'isometric/isometric_time.dart';
 
 class GameEditor extends IsometricGame {
 
-  GameEditor({IsometricScene? scene}) : super(
+  GameEditor({IsometricScene? scene, required super.engine}) : super(
       scene: scene ?? generateEmptyScene(),
-      environment: IsometricEnvironment(),
+      environment: IsometricEnvironment(engine: engine),
       time: IsometricTime(),
       gameType: GameType.Editor,
   );

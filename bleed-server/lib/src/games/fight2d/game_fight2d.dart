@@ -23,7 +23,7 @@ class GameFight2D extends Game<GameFight2DPlayer> {
 
   final bot = GameFight2DBot();
 
-  GameFight2D({required this.scene}) : super(gameType: GameType.Fight2D) {
+  GameFight2D({required this.scene, required super.engine}) : super(gameType: GameType.Fight2D) {
     characters.add(bot
       ..x = 500
       ..y = 200

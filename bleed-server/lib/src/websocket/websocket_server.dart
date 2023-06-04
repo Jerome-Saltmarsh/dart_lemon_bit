@@ -1,3 +1,4 @@
+import 'package:bleed_server/src/engine.dart';
 import 'package:bleed_server/src/websocket/server_base.dart';
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -9,6 +10,9 @@ import 'websocket_connection.dart';
 class WebSocketServer implements ServerBase {
   var connectionsTotal = 0;
   final connections = <WebSocketConnection>[];
+  final Engine engine;
+
+  WebSocketServer(this.engine);
 
   @override
   void sendResponseToClients(){
@@ -34,7 +38,7 @@ class WebSocketServer implements ServerBase {
   }
 
   void onConnection(WebSocketChannel webSocketChannel) {
-    final connection = WebSocketConnection(webSocketChannel);
+    final connection = WebSocketConnection(webSocketChannel, engine);
     connections.add(connection);
     connection.onDone = () => onConnectionDone(connection);
     connectionsTotal++;

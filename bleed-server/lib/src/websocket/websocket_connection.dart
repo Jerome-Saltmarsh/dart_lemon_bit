@@ -54,6 +54,7 @@ import 'package:lemon_byte/byte_reader.dart';
 
 
 class WebSocketConnection with ByteReader {
+  final Engine engine;
   final started = DateTime.now();
   late WebSocketChannel webSocket;
   late WebSocketSink sink;
@@ -65,7 +66,7 @@ class WebSocketConnection with ByteReader {
 
   Player? get player => _player;
 
-  WebSocketConnection(this.webSocket){
+  WebSocketConnection(this.webSocket, this.engine){
     sink = webSocket.sink;
 
     sink.done.then((value){
@@ -908,7 +909,7 @@ class WebSocketConnection with ByteReader {
   }
 
   Future joinGameEditorScene(IsometricScene scene) async {
-    joinGame(GameEditor(scene: scene));
+    joinGame(GameEditor(scene: scene, engine: engine));
   }
 
   Future joinGameFight2D() async {
@@ -917,7 +918,7 @@ class WebSocketConnection with ByteReader {
         return joinGame(game);
       }
     }
-    joinGame(GameFight2D(scene: GameFight2DSceneGenerator.generate()));
+    joinGame(GameFight2D(scene: GameFight2DSceneGenerator.generate(), engine: engine));
   }
 
   Future joinGameCombat() async {
@@ -927,7 +928,7 @@ class WebSocketConnection with ByteReader {
         return joinGame(game);
       }
     }
-    joinGame(GameCombat(scene: engine.isometricScenes.warehouse02));
+    joinGame(GameCombat(scene: engine.isometricScenes.warehouse02, engine: engine));
   }
 
   Future joinGameAeonMobile() async {
@@ -937,7 +938,7 @@ class WebSocketConnection with ByteReader {
         return joinGame(game);
       }
     }
-    joinGame(GameMobileAeon(scene: engine.isometricScenes.town));
+    joinGame(GameMobileAeon(scene: engine.isometricScenes.town, engine: engine));
   }
 
   Future joinGameAeon() async {
@@ -947,7 +948,7 @@ class WebSocketConnection with ByteReader {
         return joinGame(game);
       }
     }
-    joinGame(AeonGame(scene: engine.isometricScenes.town));
+    joinGame(AeonGame(scene: engine.isometricScenes.town, engine: engine));
   }
 
   void joinGame(Game game){
