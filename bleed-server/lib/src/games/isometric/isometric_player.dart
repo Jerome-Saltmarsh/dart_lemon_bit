@@ -22,7 +22,7 @@ import 'package:bleed_server/common/src/server_response.dart';
 import 'package:bleed_server/common/src/target_category.dart';
 import 'package:bleed_server/firestoreClient/firestoreService.dart';
 import 'package:bleed_server/src/game/player.dart';
-import 'package:bleed_server/src/utilities/generateName.dart';
+import 'package:bleed_server/src/utilities/generate_name.dart';
 import 'package:bleed_server/src/games/game_editor.dart';
 import 'package:bleed_server/src/utilities/system.dart';
 import 'package:lemon_byte/byte_writer.dart';

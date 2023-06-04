@@ -28,7 +28,7 @@ import 'package:bleed_server/common/src/server_response.dart';
 import 'package:bleed_server/common/src/teleport_scenes.dart';
 import 'package:bleed_server/common/src/wind_type.dart';
 import 'package:bleed_server/src/engine.dart';
-import 'package:bleed_server/src/utilities/generateName.dart';
+import 'package:bleed_server/src/utilities/generate_name.dart';
 import 'package:bleed_server/src/game/game.dart';
 import 'package:bleed_server/src/game/player.dart';
 import 'package:bleed_server/src/games/aeon/aeon_game.dart';
@@ -46,7 +46,6 @@ import 'package:bleed_server/src/games/isometric/isometric_scene_writer.dart';
 import 'package:bleed_server/src/utilities/system.dart';
 import 'package:bleed_server/src/websocket/handle_request_modify_canvas_size.dart';
 import 'package:bleed_server/src/games/isometric/isometric_scene_generator.dart';
-import 'package:bleed_server/src/utilities/is_valid_index.dart';
 import 'package:lemon_byte/byte_writer.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -1056,5 +1055,12 @@ class WebSocketConnection with ByteReader {
 
   void errorInvalidPlayerType(){
    sendGameError(GameError.Invalid_Player_Type);
+  }
+
+  static bool isValidIndex(int? index, List values){
+    if (index == null) return false;
+    if (values.isEmpty) return false;
+    if (index < 0) return false;
+    return index < values.length;
   }
 }

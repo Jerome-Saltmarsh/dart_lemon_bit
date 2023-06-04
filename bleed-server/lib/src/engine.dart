@@ -13,8 +13,6 @@ import 'games/isometric/isometric_player.dart';
 import 'games/rock_paper_scissors/rock_paper_scissors_game.dart';
 import 'utilities/system.dart';
 
-// final engine = Engine();
-
 class Engine {
 
   static const Frames_Per_Second = 45;
