@@ -5,9 +5,9 @@ import 'dart:typed_data';
 
 import 'package:bleed_server/gamestream.dart';
 
-import 'games/isometric/isometric_scene.dart';
+import 'isometric_scene.dart';
 
-class SceneGenerator {
+class IsometricSceneGenerator {
 
   static IsometricScene generate({
     required int height,

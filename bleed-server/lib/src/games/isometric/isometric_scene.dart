@@ -3,7 +3,6 @@ import 'dart:typed_data';
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/games/isometric/isometric_ai.dart';
 import 'package:bleed_server/src/games/isometric/isometric_gameobject.dart';
-import 'package:bleed_server/src/lang_utils.dart';
 import 'package:lemon_math/library.dart';
 
 import 'isometric_position.dart';
@@ -206,7 +205,7 @@ class IsometricScene {
   }
 
   void detectSpawnPoints() =>
-      spawnPoints = copyUInt16List(findNodesOfType(NodeType.Spawn));
+      spawnPoints = Uint16List.fromList(findNodesOfType(NodeType.Spawn));
 
   bool raycastCollisionXY(double x1, double y1, double x2, double y2, double z) {
     final distance = getDistanceXY(x1, y1, x2, y2);

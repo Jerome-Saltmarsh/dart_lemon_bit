@@ -3,9 +3,9 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:bleed_server/src/game/player.dart';
-import 'package:bleed_server/src/functions/generateName.dart';
+import 'package:bleed_server/src/utilities/generateName.dart';
 import 'package:bleed_server/src/games/game_editor.dart';
-import 'package:bleed_server/src/system.dart';
+import 'package:bleed_server/src/utilities/system.dart';
 import 'package:lemon_byte/byte_writer.dart';
 import 'package:lemon_math/library.dart';
 

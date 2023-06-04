@@ -3,7 +3,7 @@
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/game/player.dart';
 import 'package:bleed_server/src/games/isometric/isometric_hit_type.dart';
-import 'package:bleed_server/src/system.dart';
+import 'package:bleed_server/src/utilities/system.dart';
 import 'package:lemon_math/library.dart';
 
 import '../isometric/isometric_ai.dart';

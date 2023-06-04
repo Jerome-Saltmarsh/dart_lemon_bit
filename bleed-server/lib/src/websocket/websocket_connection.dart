@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:bleed_server/gamestream.dart';
-import 'package:bleed_server/src/functions/generateName.dart';
+import 'package:bleed_server/src/utilities/generateName.dart';
 import 'package:bleed_server/src/game/game.dart';
 import 'package:bleed_server/src/game/player.dart';
 import 'package:bleed_server/src/games/aeon/aeon_game.dart';
@@ -17,9 +17,9 @@ import 'package:bleed_server/src/games/isometric/isometric_game.dart';
 import 'package:bleed_server/src/games/isometric/isometric_player.dart';
 import 'package:bleed_server/src/games/isometric/isometric_scene.dart';
 import 'package:bleed_server/src/games/isometric/isometric_scene_writer.dart';
+import 'package:bleed_server/src/utilities/system.dart';
 import 'package:bleed_server/src/websocket/handle_request_modify_canvas_size.dart';
-import 'package:bleed_server/src/scene_generator.dart';
-import 'package:bleed_server/src/system.dart';
+import 'package:bleed_server/src/games/isometric/isometric_scene_generator.dart';
 import 'package:bleed_server/src/utilities/is_valid_index.dart';
 import 'package:lemon_byte/byte_writer.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -544,7 +544,7 @@ class WebSocketConnection with ByteReader {
         if (frequency == null) return;
         if (game is! IsometricGame) return;
         final sceneName = game.scene.name;
-        final scene = SceneGenerator.generate(
+        final scene = IsometricSceneGenerator.generate(
             height: height,
             rows: rows,
             columns: columns,

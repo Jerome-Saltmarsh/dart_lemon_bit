@@ -1,14 +1,14 @@
 import 'dart:io';
 
-import '../lemon_io/src/filename_remove_extension.dart';
-import '../lemon_io/src/get_file_system_entity_filename.dart';
-import 'games/isometric/isometric_scene.dart';
-import 'games/isometric/isometric_scene_writer.dart';
-import 'system.dart';
+import '../../../lemon_io/src/filename_remove_extension.dart';
+import '../../../lemon_io/src/get_file_system_entity_filename.dart';
+import 'isometric_scene.dart';
+import 'isometric_scene_writer.dart';
+import '../../utilities/system.dart';
 
 class IsometricScenes {
-  String get Scene_Directory_Path =>  isLocalMachine ? '${Directory.current.path}/scenes' : '/app/bin/scenes';
-  late final Scene_Directory = Directory(Scene_Directory_Path);
+  String get sceneDirectoryPath =>  isLocalMachine ? '${Directory.current.path}/scenes' : '/app/bin/scenes';
+  late final sceneDirectory = Directory(sceneDirectoryPath);
 
   late IsometricScene suburbs_01;
   late IsometricScene warehouse;
@@ -27,7 +27,7 @@ class IsometricScenes {
   }
 
   Future<IsometricScene> readSceneFromFileBytes(String sceneName) async {
-    final fileName = '$Scene_Directory_Path/$sceneName.scene';
+    final fileName = '$sceneDirectoryPath/$sceneName.scene';
     final file = File(fileName);
     final exists = await file.exists();
     if (!exists) {
@@ -38,7 +38,7 @@ class IsometricScenes {
   }
 
   Future<List<FileSystemEntity>> get saveDirectoryFileSystemEntities =>
-      Scene_Directory.list().toList();
+      sceneDirectory.list().toList();
 
   Future<List<String>> getSaveDirectoryFileNames() async {
     final files = await saveDirectoryFileSystemEntities;

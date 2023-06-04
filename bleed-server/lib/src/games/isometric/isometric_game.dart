@@ -2717,7 +2717,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void saveSceneToFileBytes() {
     writeBytesToFile(
       fileName: '${scene.name}.scene',
-      directory: engine.isometricScenes.Scene_Directory_Path,
+      directory: engine.isometricScenes.sceneDirectoryPath,
       contents: IsometricSceneWriter.compileScene(scene, gameObjects: true),
     );
   }
