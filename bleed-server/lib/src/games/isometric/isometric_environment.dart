@@ -1,12 +1,9 @@
 import 'package:bleed_server/common/src/lightning_type.dart';
 import 'package:bleed_server/common/src/rain_type.dart';
 import 'package:bleed_server/common/src/wind_type.dart';
-import 'package:bleed_server/src/engine.dart';
-import 'package:bleed_server/src/games/isometric/isometric_game.dart';
 import 'package:lemon_math/library.dart';
 
 class IsometricEnvironment {
-  final Engine engine;
   var durationRain = randomInt(1000, 3000);
   var nextLightningChanged = 300;
   var durationBreeze = 500;
@@ -18,8 +15,7 @@ class IsometricEnvironment {
   var _windType = WindType.Calm;
   var nextLightningFlash = 0;
   var lightningFlashDuration = 0;
-
-  IsometricEnvironment({required this.engine});
+  var onChanged = false;
 
   static const Lightning_Flash_Duration_Total = 7;
 
@@ -95,13 +91,7 @@ class IsometricEnvironment {
       if (nextLightningFlash-- <= 0) {
         nextLightningFlash = randomInt(500, 1000);
         lightningFlashDuration = Lightning_Flash_Duration_Total;
-        for (final game in engine.games) {
-          if (game is! IsometricGame) continue;
-          if (this != game.environment) continue;
-          for (final player in game.players){
-            player.writeWeather();
-          }
-        }
+        onChanged = true;
       }
     }
 
@@ -150,10 +140,6 @@ class IsometricEnvironment {
 
   /// WARNING HACK
   void onChangedWeather(){
-    for (final game in engine.games) {
-      if (game is! IsometricGame) continue;
-      if (game.environment != this) continue;
-      game.playersWriteWeather();
-    }
+    this.onChanged = true;
   }
 }

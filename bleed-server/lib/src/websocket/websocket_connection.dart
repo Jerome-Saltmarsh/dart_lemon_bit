@@ -28,7 +28,7 @@ import 'package:bleed_server/common/src/server_response.dart';
 import 'package:bleed_server/common/src/teleport_scenes.dart';
 import 'package:bleed_server/common/src/wind_type.dart';
 import 'package:bleed_server/src/engine.dart';
-import 'package:bleed_server/src/utilities/generate_name.dart';
+import 'package:bleed_server/src/utilities/generate_random_name.dart';
 import 'package:bleed_server/src/game/game.dart';
 import 'package:bleed_server/src/game/player.dart';
 import 'package:bleed_server/src/games/aeon/aeon_game.dart';
@@ -631,7 +631,8 @@ class WebSocketConnection with ByteReader {
           player.writeGameError(GameError.Save_Scene_Failed);
           return;
         }
-        game.saveSceneToFileBytes();
+        // game.saveSceneToFileBytes();
+        engine.isometricScenes.saveSceneToFileBytes(game.scene);
         break;
 
       case EditRequest.Modify_Canvas_Size:
@@ -908,7 +909,7 @@ class WebSocketConnection with ByteReader {
   }
 
   Future joinGameEditorScene(IsometricScene scene) async {
-    joinGame(GameEditor(scene: scene, engine: engine));
+    joinGame(GameEditor(scene: scene));
   }
 
   Future joinGameFight2D() async {
@@ -917,7 +918,7 @@ class WebSocketConnection with ByteReader {
         return joinGame(game);
       }
     }
-    joinGame(GameFight2D(scene: GameFight2DSceneGenerator.generate(), engine: engine));
+    joinGame(GameFight2D(scene: GameFight2DSceneGenerator.generate()));
   }
 
   Future joinGameCombat() async {
@@ -927,7 +928,7 @@ class WebSocketConnection with ByteReader {
         return joinGame(game);
       }
     }
-    joinGame(GameCombat(scene: engine.isometricScenes.warehouse02, engine: engine));
+    joinGame(GameCombat(scene: engine.isometricScenes.warehouse02));
   }
 
   Future joinGameAeonMobile() async {
@@ -937,7 +938,7 @@ class WebSocketConnection with ByteReader {
         return joinGame(game);
       }
     }
-    joinGame(GameMobileAeon(scene: engine.isometricScenes.town, engine: engine));
+    joinGame(GameMobileAeon(scene: engine.isometricScenes.town));
   }
 
   Future joinGameAeon() async {
@@ -947,10 +948,13 @@ class WebSocketConnection with ByteReader {
         return joinGame(game);
       }
     }
-    joinGame(AeonGame(scene: engine.isometricScenes.town, engine: engine));
+    joinGame(AeonGame(scene: engine.isometricScenes.town));
   }
 
   void joinGame(Game game){
+    if (!engine.games.contains(game)){
+       engine.games.add(game);
+    }
     final player = game.createPlayer();
     game.players.add(player);
     _player = _player = player;

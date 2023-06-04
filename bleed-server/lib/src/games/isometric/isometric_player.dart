@@ -22,8 +22,8 @@ import 'package:bleed_server/common/src/server_response.dart';
 import 'package:bleed_server/common/src/target_category.dart';
 import 'package:bleed_server/firestoreClient/firestoreService.dart';
 import 'package:bleed_server/src/game/player.dart';
-import 'package:bleed_server/src/utilities/generate_name.dart';
 import 'package:bleed_server/src/games/game_editor.dart';
+import 'package:bleed_server/src/utilities/generate_random_name.dart';
 import 'package:bleed_server/src/utilities/system.dart';
 import 'package:lemon_byte/byte_writer.dart';
 import 'package:lemon_math/library.dart';
@@ -248,9 +248,10 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   set score(int value) {
     if (_credits == value) return;
     _credits = max(value, 0);
-    if (game.engine.highScore < value) {
-      game.engine.highScore = value;
-    }
+    // todo
+    // if (game.engine.highScore < value) {
+    //   game.engine.highScore = value;
+    // }
     writePlayerCredits();
     game.customOnPlayerCreditsChanged(this);
   }
@@ -1030,7 +1031,8 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
 
   void writeHighScore(){
     writeByte(ServerResponse.High_Score);
-    writeUInt24(game.engine.highScore);
+    // writeUInt24(game.engine.highScore);
+    writeUInt24(0);
   }
 
   void writePlayerStats(){

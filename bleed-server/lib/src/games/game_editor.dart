@@ -12,9 +12,9 @@ import 'isometric/isometric_time.dart';
 
 class GameEditor extends IsometricGame {
 
-  GameEditor({IsometricScene? scene, required super.engine}) : super(
+  GameEditor({IsometricScene? scene}) : super(
       scene: scene ?? generateEmptyScene(),
-      environment: IsometricEnvironment(engine: engine),
+      environment: IsometricEnvironment(),
       time: IsometricTime(),
       gameType: GameType.Editor,
   );
@@ -22,11 +22,6 @@ class GameEditor extends IsometricGame {
   @override
   void customUpdate(){
     environment.update();
-  }
-
-  @override
-  void customOnPlayerDisconnected(IsometricPlayer player) {
-      removeFromEngine();
   }
 
   @override

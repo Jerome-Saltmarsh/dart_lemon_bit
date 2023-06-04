@@ -87,11 +87,10 @@ class AeonGame extends IsometricGame {
   // constructor
   AeonGame({
     required super.scene,
-    required super.engine,
   }) : super(
     gameType: GameType.Aeon,
     time: IsometricTime(enabled: true, hour: 15, minute: 30),
-    environment: IsometricEnvironment(engine: engine),
+    environment: IsometricEnvironment(),
   );
 
   @override

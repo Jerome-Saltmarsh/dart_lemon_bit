@@ -86,7 +86,7 @@ class Engine {
   }
 
   Future<GameEditor> findGameEditorNew() async {
-    return GameEditor(engine: this);
+    return GameEditor();
   }
 
   // This method is called by the game constructor automatically
@@ -101,7 +101,7 @@ class Engine {
         return game;
       }
     }
-    final gameInstance = RockPaperScissorsGame(engine: this);
+    final gameInstance = RockPaperScissorsGame();
     games.add(gameInstance);
     return gameInstance;
   }

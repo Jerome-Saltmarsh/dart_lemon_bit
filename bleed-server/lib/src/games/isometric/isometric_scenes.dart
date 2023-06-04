@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:bleed_server/lemon_io/src/write_string_to_file.dart';
+
 import '../../../lemon_io/src/filename_remove_extension.dart';
 import '../../../lemon_io/src/get_file_system_entity_filename.dart';
 import 'isometric_scene.dart';
@@ -46,5 +48,13 @@ class IsometricScenes {
         .map(getFileSystemEntityFileName)
         .map(fileNameRemoveExtension)
         .toList();
+  }
+
+  void saveSceneToFileBytes(IsometricScene scene) {
+    writeBytesToFile(
+      fileName: '${scene.name}.scene',
+      directory: sceneDirectoryPath,
+      contents: IsometricSceneWriter.compileScene(scene, gameObjects: true),
+    );
   }
 }

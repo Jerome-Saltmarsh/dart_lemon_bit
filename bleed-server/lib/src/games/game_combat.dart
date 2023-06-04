@@ -86,11 +86,10 @@ class GameCombat extends IsometricGame {
   // constructor
   GameCombat({
     required super.scene,
-    required super.engine,
   }) : super(
       gameType: GameType.Combat,
       time: IsometricTime(enabled: true, hour: 15, minute: 30),
-      environment: IsometricEnvironment(engine: engine),
+      environment: IsometricEnvironment(),
   );
 
   @override

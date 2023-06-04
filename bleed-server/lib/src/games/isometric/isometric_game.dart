@@ -21,7 +21,6 @@ import 'package:bleed_server/common/src/projectile_type.dart';
 import 'package:bleed_server/common/src/server_response.dart';
 import 'package:bleed_server/common/src/team_type.dart';
 import 'package:bleed_server/common/src/weapon_state.dart';
-import 'package:bleed_server/lemon_io/src/write_string_to_file.dart';
 import 'package:bleed_server/src/engine.dart';
 import 'package:bleed_server/src/game/game.dart';
 import 'package:bleed_server/src/utilities/maths.dart';
@@ -41,7 +40,6 @@ import 'isometric_player.dart';
 import 'isometric_position.dart';
 import 'isometric_projectile.dart';
 import 'isometric_scene.dart';
-import 'isometric_scene_writer.dart';
 import 'isometric_script.dart';
 import 'isometric_script_type.dart';
 import 'isometric_settings.dart';
@@ -212,7 +210,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     required this.time,
     required this.environment,
     required super.gameType,
-    required super.engine,
   }) {
     IsometricPosition.sort(gameObjects);
 
@@ -1195,11 +1192,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     for (final player in players) {
       player.writeGameEventGameObjectDestroyed(gameObject);
     }
-  }
-
-  void removeFromEngine() {
-    print("removeFromEngine()");
-    engine.games.remove(this);
   }
 
   void setHourMinutes(int hour, int minutes) {
@@ -2739,14 +2731,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     customOnPlayerDisconnected(player);
   }
 
-  void saveSceneToFileBytes() {
-    writeBytesToFile(
-      fileName: '${scene.name}.scene',
-      directory: engine.isometricScenes.sceneDirectoryPath,
-      contents: IsometricSceneWriter.compileScene(scene, gameObjects: true),
-    );
-  }
-
   void npcSetRandomDestination(IsometricAI ai, {int radius = 10}) {
     // final node = scene.getNodeByPosition(ai);
     // if (!node.open) return;
@@ -3274,5 +3258,12 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     customOnPlayerJoined(player);
     player.writePlayerAlive();
     return player;
+  }
+
+  @override
+  void writeGame() {
+    if (!environment.onChanged) return;
+    environment.onChanged = false;
+    playersWriteWeather();
   }
 }

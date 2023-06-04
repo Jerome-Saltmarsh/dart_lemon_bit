@@ -69,11 +69,10 @@ class GameMobileAeon extends IsometricGame<PlayerAeon> {
   // constructor
   GameMobileAeon({
     required super.scene,
-    required super.engine,
   }) : super(
     gameType: GameType.Mobile_Aeon,
     time: IsometricTime(enabled: true, hour: 15, minute: 30),
-    environment: IsometricEnvironment(engine: engine),
+    environment: IsometricEnvironment(),
   ) {
     spawnAI(
         nodeIndex: getNodeIndexXYZ(500, 500, 24),
