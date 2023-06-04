@@ -1,8 +1,9 @@
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:bleed_server/src/games/game_isometric/isometric_character.dart';
-import 'package:bleed_server/src/games/game_isometric/isometric_game.dart';
+import 'package:bleed_server/src/games/isometric/isometric_character.dart';
+import 'package:bleed_server/src/games/isometric/isometric_game.dart';
+import 'package:bleed_server/src/games/isometric/isometric_player.dart';
 import 'package:bleed_server/src/maths/get_distance_between_v3.dart';
 import 'package:lemon_math/library.dart';
 

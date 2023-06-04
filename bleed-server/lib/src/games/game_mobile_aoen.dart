@@ -8,8 +8,9 @@ import 'package:bleed_server/src/classes/src/player_aeon.dart';
 import 'package:bleed_server/src/system.dart';
 import 'package:lemon_math/library.dart';
 
-import 'game_isometric/isometric_character.dart';
-import 'game_isometric/isometric_game.dart';
+import 'isometric/isometric_character.dart';
+import 'isometric/isometric_game.dart';
+import 'isometric/isometric_player.dart';
 
 class GameMobileAeon extends IsometricGame<PlayerAeon> {
   // constants

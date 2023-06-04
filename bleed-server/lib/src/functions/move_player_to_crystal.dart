@@ -1,4 +1,5 @@
 import 'package:bleed_server/gamestream.dart';
+import 'package:bleed_server/src/games/isometric/isometric_player.dart';
 
 import 'package:lemon_math/library.dart';
 

@@ -1,11 +1,11 @@
 import 'package:bleed_server/gamestream.dart';
-import 'package:bleed_server/src/games/game_fight2d/game_fight2d_bot.dart';
-import 'package:bleed_server/src/games/game_fight2d/game_fight2d_scene.dart';
 import 'package:lemon_math/functions/random_between.dart';
 import 'package:lemon_math/functions/random_int.dart';
 
+import 'game_fight2d_bot.dart';
 import 'game_fight2d_character.dart';
 import 'game_fight2d_player.dart';
+import 'game_fight2d_scene.dart';
 
 class GameFight2D extends Game<GameFight2DPlayer> {
   static const Minimum_Damage_Force_Hurt_Airborn = 15.0;

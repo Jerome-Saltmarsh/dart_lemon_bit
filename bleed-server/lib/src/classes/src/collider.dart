@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'package:bleed_server/gamestream.dart';
-import 'package:bleed_server/src/games/game_isometric/isometric_character.dart';
-import 'package:bleed_server/src/games/game_isometric/isometric_physics.dart';
+import 'package:bleed_server/src/games/isometric/isometric_character.dart';
+import 'package:bleed_server/src/games/isometric/isometric_physics.dart';
 import 'package:lemon_math/library.dart';
 
 class Collider extends Position3 {

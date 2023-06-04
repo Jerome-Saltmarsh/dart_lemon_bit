@@ -4,6 +4,8 @@ import 'package:lemon_math/library.dart';
 
 import 'package:bleed_server/gamestream.dart';
 
+import 'isometric_player.dart';
+
 abstract class IsometricCharacter extends Collider {
   /// VARIABLES
 

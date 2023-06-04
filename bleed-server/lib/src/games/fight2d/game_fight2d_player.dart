@@ -1,6 +1,5 @@
-import 'package:bleed_server/src/games/game_fight2d/game_fight2d_bot.dart';
-
 import 'game_fight2d.dart';
+import 'game_fight2d_bot.dart';
 import 'game_fight2d_character.dart';
 
 import 'package:bleed_server/gamestream.dart';

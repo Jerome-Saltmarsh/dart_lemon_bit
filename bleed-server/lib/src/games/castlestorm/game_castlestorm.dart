@@ -1,6 +1,7 @@
 
-import 'package:bleed_server/src/games/game_isometric/isometric_game.dart';
-import 'package:bleed_server/src/games/game_isometric/isometric_player.dart';
+
+import 'package:bleed_server/src/games/isometric/isometric_game.dart';
+import 'package:bleed_server/src/games/isometric/isometric_player.dart';
 
 class GameCastleStorm extends IsometricGame {
   GameCastleStorm({

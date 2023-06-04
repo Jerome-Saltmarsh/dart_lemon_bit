@@ -12,6 +12,7 @@ import '../../classes/src/game_time.dart';
 import '../../game/player.dart';
 import 'isometric_character.dart';
 import 'isometric_physics.dart';
+import 'isometric_player.dart';
 
 abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 

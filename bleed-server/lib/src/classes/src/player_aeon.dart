@@ -1,5 +1,6 @@
 
 import 'package:bleed_server/gamestream.dart';
+import 'package:bleed_server/src/games/isometric/isometric_player.dart';
 
 class PlayerAeon extends IsometricPlayer {
   var _attributeHealth = 0;

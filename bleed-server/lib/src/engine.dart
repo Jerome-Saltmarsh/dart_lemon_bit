@@ -10,6 +10,7 @@ import 'package:bleed_server/src/games/game_editor.dart';
 import 'package:bleed_server/src/io/save_directory.dart';
 import 'package:bleed_server/src/scenes.dart';
 
+import 'games/isometric/isometric_player.dart';
 import 'system.dart';
 
 final engine = Engine();
