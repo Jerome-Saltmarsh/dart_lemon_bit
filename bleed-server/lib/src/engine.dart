@@ -6,7 +6,6 @@ import 'package:bleed_server/src/websocket/websocket_server.dart';
 
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/games/game_editor.dart';
-import 'package:bleed_server/src/io/save_directory.dart';
 import 'package:bleed_server/src/isometric_scenes.dart';
 
 import 'game/game.dart';
@@ -46,10 +45,10 @@ class Engine {
        highScore = value;
     });
 
-    final sceneDirectoryExists = await Scene_Directory.exists();
+    final sceneDirectoryExists = await isometricScenes.Scene_Directory.exists();
 
     if (!sceneDirectoryExists) {
-      throw Exception('could not find scenes directory: $Scene_Directory_Path');
+      throw Exception('could not find scenes directory: ${isometricScenes.Scene_Directory_Path}');
     }
 
     if (isLocalMachine) {

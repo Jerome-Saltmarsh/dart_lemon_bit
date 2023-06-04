@@ -1,10 +1,15 @@
 import 'dart:io';
 
+import '../lemon_io/src/filename_remove_extension.dart';
+import '../lemon_io/src/get_file_system_entity_filename.dart';
 import 'games/isometric/isometric_scene.dart';
 import 'games/isometric/isometric_scene_writer.dart';
-import 'io/save_directory.dart';
+import 'system.dart';
 
 class IsometricScenes {
+  String get Scene_Directory_Path =>  isLocalMachine ? '${Directory.current.path}/scenes' : '/app/bin/scenes';
+  late final Scene_Directory = Directory(Scene_Directory_Path);
+
   late IsometricScene suburbs_01;
   late IsometricScene warehouse;
   late IsometricScene warehouse02;
@@ -30,5 +35,16 @@ class IsometricScenes {
     }
     final bytes = await file.readAsBytes();
     return SceneReader.readScene(bytes)..name = sceneName;
+  }
+
+  Future<List<FileSystemEntity>> get saveDirectoryFileSystemEntities =>
+      Scene_Directory.list().toList();
+
+  Future<List<String>> getSaveDirectoryFileNames() async {
+    final files = await saveDirectoryFileSystemEntities;
+    return files
+        .map(getFileSystemEntityFileName)
+        .map(fileNameRemoveExtension)
+        .toList();
   }
 }

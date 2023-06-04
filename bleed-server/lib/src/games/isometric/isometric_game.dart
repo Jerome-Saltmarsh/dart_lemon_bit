@@ -2,7 +2,6 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:bleed_server/src/game/game.dart';
-import 'package:bleed_server/src/io/save_directory.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_math/library.dart';
 
@@ -2718,7 +2717,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void saveSceneToFileBytes() {
     writeBytesToFile(
       fileName: '${scene.name}.scene',
-      directory: Scene_Directory_Path,
+      directory: engine.isometricScenes.Scene_Directory_Path,
       contents: IsometricSceneWriter.compileScene(scene, gameObjects: true),
     );
   }
