@@ -1,10 +1,10 @@
 
 import 'dart:io';
-import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/classes/src/scene_writer.dart';
+import 'package:bleed_server/src/games/isometric/isometric_scene.dart';
 import 'save_directory.dart';
 
-Future<Scene> readSceneFromFileBytes(String sceneName) async {
+Future<IsometricScene> readSceneFromFileBytes(String sceneName) async {
   final fileName = '$Scene_Directory_Path/$sceneName.scene';
   final file = File(fileName);
   final exists = await file.exists();

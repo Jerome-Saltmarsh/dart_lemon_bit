@@ -4,10 +4,11 @@ import '../scene/generate_empty_scene.dart';
 import 'isometric/isometric_environment.dart';
 import 'isometric/isometric_game.dart';
 import 'isometric/isometric_player.dart';
+import 'isometric/isometric_scene.dart';
 
 class GameEditor extends IsometricGame {
 
-  GameEditor({Scene? scene}) : super(
+  GameEditor({IsometricScene? scene}) : super(
       scene: scene ?? generateEmptyScene(),
       environment: IsometricEnvironment(),
       time: GameTime(),

@@ -1,6 +1,6 @@
-import 'package:bleed_server/gamestream.dart';
+import 'package:bleed_server/src/games/isometric/isometric_scene.dart';
 import 'read_scene_from_file.dart';
 
-Future<Scene> loadScene(String sceneName) async {
+Future<IsometricScene> loadScene(String sceneName) async {
    return readSceneFromFileBytes(sceneName);
 }

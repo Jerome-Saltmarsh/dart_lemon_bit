@@ -18,6 +18,7 @@ import 'isometric_game.dart';
 import 'isometric_character.dart';
 import 'isometric_gameobject.dart';
 import 'isometric_projectile.dart';
+import 'isometric_scene.dart';
 
 class IsometricPlayer extends IsometricCharacter with ByteWriter implements Player {
   /// CONSTANTS
@@ -181,7 +182,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   int get interactMode => _interactMode;
   /// in radians
   double get mouseAngle => getAngleBetween(mouseGridX  + Character_Gun_Height, mouseGridY + Character_Gun_Height, x, y);
-  Scene get scene => game.scene;
+  IsometricScene get scene => game.scene;
   double get magicPercentage {
     if (_energy == 0) return 0;
     if (maxEnergy == 0) return 0;

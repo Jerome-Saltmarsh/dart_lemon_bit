@@ -14,6 +14,7 @@ import 'package:bleed_server/src/games/game_mobile_aoen.dart';
 import 'package:bleed_server/src/games/game_combat.dart';
 import 'package:bleed_server/src/games/isometric/isometric_game.dart';
 import 'package:bleed_server/src/games/isometric/isometric_player.dart';
+import 'package:bleed_server/src/games/isometric/isometric_scene.dart';
 import 'package:bleed_server/src/scene_generator.dart';
 import 'package:bleed_server/src/system.dart';
 import 'package:lemon_byte/byte_writer.dart';
@@ -879,7 +880,7 @@ class WebSocketConnection with ByteReader {
     joinGame(await engine.findGameEditorNew());
   }
 
-  Future joinGameEditorScene(Scene scene) async {
+  Future joinGameEditorScene(IsometricScene scene) async {
     joinGame(GameEditor(scene: scene));
   }
 

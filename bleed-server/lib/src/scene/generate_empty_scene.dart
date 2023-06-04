@@ -2,8 +2,9 @@
 import 'dart:typed_data';
 
 import 'package:bleed_server/gamestream.dart';
+import 'package:bleed_server/src/games/isometric/isometric_scene.dart';
 
-Scene generateEmptyScene({int height = 8, int rows = 50, int columns = 50}){
+IsometricScene generateEmptyScene({int height = 8, int rows = 50, int columns = 50}){
   final area = rows * columns;
   final total = height * area;
   final nodeTypes = Uint8List(total);
@@ -14,7 +15,7 @@ Scene generateEmptyScene({int height = 8, int rows = 50, int columns = 50}){
      nodeOrientations[i] = NodeOrientation.Solid;
   }
 
-  return Scene(
+  return IsometricScene(
     name: '',
     gameObjects: [],
     gridHeight: height,

@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:bleed_server/gamestream.dart';
 import 'package:bleed_server/src/games/isometric/isometric_gameobject.dart';
+import 'package:bleed_server/src/games/isometric/isometric_scene.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_byte/byte_writer.dart';
 
@@ -16,11 +17,11 @@ class SceneWriter extends ByteWriter {
             strategy: ZLibOption.strategyFixed,
         );
 
-  static Uint8List compileScene(Scene scene, {required bool gameObjects}){
+  static Uint8List compileScene(IsometricScene scene, {required bool gameObjects}){
     return _instance._compileScene(scene, gameObjects: gameObjects);
   }
 
-  void writeNodes(Scene scene){
+  void writeNodes(IsometricScene scene){
     final compressedNodeTypes = encoder.convert(scene.nodeTypes);
     final compressedNodeOrientations = encoder.convert(scene.nodeOrientations);
     assert (!compressedNodeTypes.any((element) => element > 256));
@@ -52,7 +53,7 @@ class SceneWriter extends ByteWriter {
     }
   }
 
-  void writePlayerSpawnPoints(Scene scene) {
+  void writePlayerSpawnPoints(IsometricScene scene) {
     writeByte(ScenePart.Player_SpawnPoints);
     List<int> values = [];
      for (var i = 0; i < scene.gridVolume; i++){
@@ -63,7 +64,7 @@ class SceneWriter extends ByteWriter {
      writeUint16List(values);
   }
 
-  void writeSpawnPoints(Scene scene){
+  void writeSpawnPoints(IsometricScene scene){
     scene.detectSpawnPoints();
 
     writeByte(ScenePart.Spawn_Points);
@@ -71,7 +72,7 @@ class SceneWriter extends ByteWriter {
     writeUint16List(scene.spawnPoints);
   }
 
-  Uint8List _compileScene(Scene scene, {required bool gameObjects}){
+  Uint8List _compileScene(IsometricScene scene, {required bool gameObjects}){
     clear();
     writeNodes(scene);
     if (gameObjects) {
@@ -98,9 +99,9 @@ class SceneReader extends ByteReader {
   var spawnPoints = Uint16List(0);
   var gameObjects = <IsometricGameObject>[];
 
-  static Scene readScene(Uint8List bytes, {int startIndex = 0}) => _instance._readScene(bytes, startIndex: startIndex);
+  static IsometricScene readScene(Uint8List bytes, {int startIndex = 0}) => _instance._readScene(bytes, startIndex: startIndex);
 
-  Scene _readScene(Uint8List bytes, {int startIndex = 0}){
+  IsometricScene _readScene(Uint8List bytes, {int startIndex = 0}){
     this.index = startIndex;
     this.totalColumns = 0;
     this.totalRows = 0;
@@ -113,7 +114,7 @@ class SceneReader extends ByteReader {
     this.values = bytes;
     readLoop();
 
-    return Scene(
+    return IsometricScene(
         name: 'test',
         nodeTypes: nodeTypes,
         nodeOrientations: nodeOrientations,

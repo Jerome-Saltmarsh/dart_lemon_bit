@@ -17,12 +17,13 @@ import 'isometric_gameobject.dart';
 import 'isometric_physics.dart';
 import 'isometric_player.dart';
 import 'isometric_projectile.dart';
+import 'isometric_scene.dart';
 
 abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   var frame = 0;
   var _running = true;
-  Scene scene;
+  IsometricScene scene;
   final characters = <IsometricCharacter>[];
   final projectiles = <IsometricProjectile>[];
   final jobs = <GameJob>[];

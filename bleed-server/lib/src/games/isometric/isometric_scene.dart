@@ -9,7 +9,7 @@ import 'package:lemon_math/library.dart';
 late IsometricAI pathFindAI;
 var pathFindSearchID = 0;
 
-class Scene {
+class IsometricScene {
   late Uint8List nodeTypes;
   late Uint8List nodeOrientations;
   Uint8List? compiled;
@@ -33,7 +33,7 @@ class Scene {
   int get columnsPerRow => gridRows;
   int get rowsPerZ => gridColumns;
 
-  Scene({
+  IsometricScene({
     required this.name,
     required this.nodeTypes,
     required this.nodeOrientations,

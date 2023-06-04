@@ -1,12 +1,11 @@
-import 'package:bleed_server/gamestream.dart';
-
+import 'games/isometric/isometric_scene.dart';
 import 'io/load_scene.dart';
 
 class Scenes {
-  late Scene suburbs_01;
-  late Scene warehouse;
-  late Scene warehouse02;
-  late Scene town;
+  late IsometricScene suburbs_01;
+  late IsometricScene warehouse;
+  late IsometricScene warehouse02;
+  late IsometricScene town;
 
   Future load() async {
       suburbs_01 = await loadScene('suburbs_01');
