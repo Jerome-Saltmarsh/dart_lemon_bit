@@ -30,8 +30,6 @@ class GameFight2D extends Game<GameFight2DPlayer> {
     );
   }
 
-  bool get full => players.length >= Max_Players;
-
   @override
   GameFight2DPlayer createPlayer() {
     final player = GameFight2DPlayer(this);
@@ -436,6 +434,9 @@ class GameFight2D extends Game<GameFight2DPlayer> {
     character.jumpCount = 0;
     character.forceIdle();
   }
+
+  @override
+  int get maxPlayers => 4;
 
 
 }

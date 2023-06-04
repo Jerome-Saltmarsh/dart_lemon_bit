@@ -7,6 +7,9 @@ abstract class Game <T extends Player> {
   final GameType gameType;
   final List<T> players = [];
 
+  int get maxPlayers;
+  bool get isFull => players.length >= maxPlayers;
+
   Game({required this.gameType});
 
   void update();
@@ -14,6 +17,11 @@ abstract class Game <T extends Player> {
   T createPlayer();
 
   void onPlayerJoined(T t) {
+
+  }
+
+  /// safe to override
+  void customWriteGame(){
 
   }
 
@@ -30,13 +38,9 @@ abstract class Game <T extends Player> {
     for (var i = 0; i < players.length; i++) {
       final player = players[i];
       player.writePlayerGame();
-      writeGame();
+      customWriteGame();
       player.writeByte(ServerResponse.End);
     }
-  }
-
-  void writeGame(){
-
   }
 
   void removePlayer(T player);

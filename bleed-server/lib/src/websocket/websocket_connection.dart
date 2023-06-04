@@ -28,6 +28,9 @@ import 'package:bleed_server/common/src/server_response.dart';
 import 'package:bleed_server/common/src/teleport_scenes.dart';
 import 'package:bleed_server/common/src/wind_type.dart';
 import 'package:bleed_server/src/engine.dart';
+import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_game.dart';
+import 'package:bleed_server/src/games/isometric/isometric_environment.dart';
+import 'package:bleed_server/src/games/isometric/isometric_time.dart';
 import 'package:bleed_server/src/utilities/generate_random_name.dart';
 import 'package:bleed_server/src/game/game.dart';
 import 'package:bleed_server/src/game/player.dart';
@@ -914,41 +917,53 @@ class WebSocketConnection with ByteReader {
 
   Future joinGameFight2D() async {
     for (final game in engine.games) {
-      if (game is GameFight2D && !game.full) {
-        return joinGame(game);
-      }
+      if (game.isFull) continue;
+      if (game is! GameFight2D) continue;
+      return joinGame(game);
     }
     joinGame(GameFight2D(scene: GameFight2DSceneGenerator.generate()));
   }
 
   Future joinGameCombat() async {
     for (final game in engine.games) {
-      if (game is GameCombat) {
-        if (game.players.length >= GameCombat.Max_Players) continue;
-        return joinGame(game);
-      }
+      if (game.isFull) continue;
+      if (game is! GameCombat) continue;
+      return joinGame(game);
     }
     joinGame(GameCombat(scene: engine.isometricScenes.warehouse02));
   }
 
   Future joinGameAeonMobile() async {
     for (final game in engine.games) {
-      if (game is GameMobileAeon) {
-        if (game.players.length >= GameCombat.Max_Players) continue;
-        return joinGame(game);
-      }
+      if (game.isFull) continue;
+      if (game is! GameMobileAeon) continue;
+      return joinGame(game);
     }
     joinGame(GameMobileAeon(scene: engine.isometricScenes.town));
   }
 
   Future joinGameAeon() async {
     for (final game in engine.games) {
-      if (game is AeonGame) {
-        if (game.players.length >= GameCombat.Max_Players) continue;
-        return joinGame(game);
-      }
+      if (game.isFull) continue;
+      if (game is! AeonGame) continue;
+      return joinGame(game);
     }
     joinGame(AeonGame(scene: engine.isometricScenes.town));
+  }
+
+  Future joinGameCaptureTheFlag() async {
+    for (final game in engine.games) {
+      if (game.isFull) continue;
+      if (game is! CaptureTheFlagGame) continue;
+      return joinGame(game);
+    }
+
+    joinGame(CaptureTheFlagGame(
+          scene: IsometricSceneGenerator.generateEmptyScene(),
+          time: IsometricTime(enabled: false),
+          environment: IsometricEnvironment(),
+        )
+    );
   }
 
   void joinGame(Game game){
@@ -995,6 +1010,9 @@ class WebSocketConnection with ByteReader {
         break;
       case GameType.Aeon:
         joinGameAeon();
+        break;
+      case GameType.Capture_The_Flag:
+        joinGameCaptureTheFlag();
         break;
       case GameType.Mobile_Aeon:
         joinGameAeonMobile();

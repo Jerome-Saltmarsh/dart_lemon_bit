@@ -40,7 +40,6 @@ class GameCombat extends IsometricGame {
   static const Health_Gained_Per_Gem    = 2;
   static const Energy_Gained_Per_Gem    = 2;
   static const Credits_Per_Kill         = 10;
-  static const Max_Players              = 16;
   static const Player_Health            = 20;
   static const Player_Health_Perk       = 24;
   static const Player_Energy            = 20;
@@ -584,6 +583,9 @@ class GameCombat extends IsometricGame {
   IsometricPlayer buildPlayer() {
     return IsometricPlayer(game: this);
   }
+
+  @override
+  int get maxPlayers => 12;
 }
 
 

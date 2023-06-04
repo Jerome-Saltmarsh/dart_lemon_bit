@@ -587,6 +587,9 @@ class AeonGame extends IsometricGame {
   IsometricPlayer buildPlayer() {
     return IsometricPlayer(game: this);
   }
+
+  @override
+  int get maxPlayers => 16;
 }
 
 

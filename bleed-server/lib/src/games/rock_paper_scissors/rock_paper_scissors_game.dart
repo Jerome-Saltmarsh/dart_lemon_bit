@@ -123,4 +123,7 @@ class RockPaperScissorsGame extends Game<RockPaperScissorsPlayer> {
   void removePlayer(RockPaperScissorsPlayer player) {
     players.remove(player);
   }
+
+  @override
+  int get maxPlayers => 32;
 }

@@ -502,6 +502,9 @@ class GameMobileAeon extends IsometricGame<PlayerAeon> {
     player.attributes--;
     player.writeAttributeValues();
   }
+
+  @override
+  int get maxPlayers => 64;
 }
 
 

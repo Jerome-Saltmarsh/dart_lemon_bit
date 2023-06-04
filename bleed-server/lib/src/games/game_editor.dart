@@ -1,9 +1,7 @@
-import 'dart:typed_data';
-
 import 'package:bleed_server/common/src/character_state.dart';
 import 'package:bleed_server/common/src/game_type.dart';
-import 'package:bleed_server/common/src/node_orientation.dart';
 import 'package:bleed_server/common/src/node_type.dart';
+import 'package:bleed_server/src/games/isometric/isometric_scene_generator.dart';
 import 'isometric/isometric_environment.dart';
 import 'isometric/isometric_game.dart';
 import 'isometric/isometric_player.dart';
@@ -13,7 +11,7 @@ import 'isometric/isometric_time.dart';
 class GameEditor extends IsometricGame {
 
   GameEditor({IsometricScene? scene}) : super(
-      scene: scene ?? generateEmptyScene(),
+      scene: scene ?? IsometricSceneGenerator.generateEmptyScene(),
       environment: IsometricEnvironment(),
       time: IsometricTime(),
       gameType: GameType.Editor,
@@ -58,28 +56,6 @@ class GameEditor extends IsometricGame {
     return IsometricPlayer(game: this);
   }
 
-  static IsometricScene generateEmptyScene({int height = 8, int rows = 50, int columns = 50}){
-    final area = rows * columns;
-    final total = height * area;
-    final nodeTypes = Uint8List(total);
-    final nodeOrientations = Uint8List(total);
-
-    for (var i = 0; i < area; i++){
-      nodeTypes[i] = NodeType.Grass;
-      nodeOrientations[i] = NodeOrientation.Solid;
-    }
-
-    return IsometricScene(
-      name: '',
-      gameObjects: [],
-      gridHeight: height,
-      gridColumns: columns,
-      gridRows: rows,
-      nodeTypes: nodeTypes,
-      nodeOrientations: nodeOrientations,
-      spawnPoints: Uint16List(0),
-      spawnPointTypes: Uint16List(0),
-      spawnPointsPlayers:Uint16List(0),
-    );
-  }
+  @override
+  int get maxPlayers => 1;
 }

@@ -1444,7 +1444,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   void update() {
     if (players.length == 0) return;
     updateInProgress();
-
   }
 
   bool containsPlayerWithName(String name) {
@@ -3261,7 +3260,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   @override
-  void writeGame() {
+  void customWriteGame() {
     if (!environment.onChanged) return;
     environment.onChanged = false;
     playersWriteWeather();

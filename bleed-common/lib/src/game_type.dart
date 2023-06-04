@@ -7,6 +7,8 @@ enum GameType {
   Fight2D,
   Aeon,
   Cube3D,
+  CastleStorm,
+  Capture_The_Flag,
 }
 
 extension GameTypeExtension on GameType {

@@ -990,6 +990,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     writeAngle(mouseAngle);
   }
 
+  @override
   void writePlayerGame() {
     writePlayerPosition();
     writePlayerWeaponCooldown();
