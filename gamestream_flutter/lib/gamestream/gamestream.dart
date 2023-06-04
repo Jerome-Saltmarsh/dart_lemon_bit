@@ -6,6 +6,7 @@ import 'package:gamestream_flutter/library.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'enums/operation_status.dart';
+import 'games/capture_the_flag/capture_the_flag_game.dart';
 import 'network/game_network.dart';
 import 'server_response_reader.dart';
 
@@ -131,7 +132,7 @@ class Gamestream {
        GameType.Combat  => games.isometric,
        GameType.Cube3D  => games.cube3D,
        GameType.Aeon    => games.isometric,
-       GameType.Capture_The_Flag => games.isometric,
+       GameType.Capture_The_Flag => CaptureTheFlagGame(),
        _ => throw Exception('mapGameTypeToGame($gameType)')
      };
    }

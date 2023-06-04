@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_health_bar.dart';
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:gamestream_flutter/library.dart';
-import 'package:gamestream_flutter/render/renderer_characters.dart';
-import 'package:gamestream_flutter/render/renderer_gameobjects.dart';
-import 'package:gamestream_flutter/render/renderer_nodes.dart';
-import 'package:gamestream_flutter/render/renderer_particles.dart';
-import 'package:gamestream_flutter/render/renderer_projectiles.dart';
 
 import 'game_isometric_constants.dart';
 import 'game_isometric_mouse.dart';
+import 'render/renderer_characters.dart';
+import 'render/renderer_gameobjects.dart';
+import 'render/renderer_nodes.dart';
+import 'render/renderer_particles.dart';
+import 'render/renderer_projectiles.dart';
 
 class GameIsometricRenderer {
   var totalRemaining = 0;

@@ -7,8 +7,8 @@ import 'package:bleed_server/src/games/isometric/isometric_game.dart';
 
 class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
 
-  late final flagRed = spawnGameObject(x: 0, y: 0, z: 0, type: ItemType.GameObjects_Flag_Red);
-  late final flagBlue = spawnGameObject(x: 0, y: 0, z: 0, type: ItemType.GameObjects_Flag_Blue);
+  late final flagRed = spawnGameObject(x: 100, y: 100, z: 50, type: ItemType.GameObjects_Flag_Red);
+  late final flagBlue = spawnGameObject(x: 50, y: 50, z: 50, type: ItemType.GameObjects_Flag_Blue);
 
   int get countPlayersOnTeamRed => countPlayersOnTeam(CaptureTheFlagTeam.Red);
   int get countPlayersOnTeamBlue => countPlayersOnTeam(CaptureTheFlagTeam.Blue);
