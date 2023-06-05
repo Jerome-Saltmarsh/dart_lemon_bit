@@ -86,15 +86,10 @@ class GameIsometric extends Game {
     clientState.control_visible_player_weapons.value = true;
     clientState.control_visible_scoreboard.value = true;
     clientState.control_visible_player_power.value = true;
-    engine.onKeyDown = onKeyDown;
 
     if (!engine.isLocalHost) {
       engine.fullScreenEnter();
     }
-  }
-
-  void onKeyDown(int keyCode){
-    print("key down: $keyCode");
   }
 
   @override
