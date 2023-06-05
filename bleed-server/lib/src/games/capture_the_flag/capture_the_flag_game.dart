@@ -51,12 +51,12 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   @override
   void customOnCollisionBetweenPlayerAndGameObject(IsometricPlayer player, IsometricGameObject gameObject) {
 
-    if (gameObject == flagBlue && player.team == CaptureTheFlagTeam.Red && flagBlueCharacter != null) {
+    if (gameObject == flagBlue && player.team == CaptureTheFlagTeam.Red && flagBlueCharacter == null) {
       flagBlueCharacter = player;
       return;
     }
 
-    if (gameObject == flagRed && player.team == CaptureTheFlagTeam.Blue && flagRedCharacter != null) {
+    if (gameObject == flagRed && player.team == CaptureTheFlagTeam.Blue && flagRedCharacter == null) {
       flagRedCharacter = player;
       return;
     }
