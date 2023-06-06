@@ -23,7 +23,7 @@ class GameIsometric extends Game {
   final player = GameIsometricPlayer();
   final minimap = GameIsometricMinimap();
   final camera = GameIsometricCamera();
-
+  final atlas = AtlasItems();
 
   GameIsometric() {
     camera.chaseTarget = player.position;
