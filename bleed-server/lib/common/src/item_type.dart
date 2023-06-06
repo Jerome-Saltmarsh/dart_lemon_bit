@@ -182,6 +182,8 @@ class ItemType {
     GameObjects_Sink: 10,
     GameObjects_Bottle: 4,
     GameObjects_Pipe_Vertical: 5,
+    GameObjects_Base_Red: 64,
+    GameObjects_Base_Blue: 64,
   }[value] ?? 15;
 
   static bool isStrikable(int value) =>

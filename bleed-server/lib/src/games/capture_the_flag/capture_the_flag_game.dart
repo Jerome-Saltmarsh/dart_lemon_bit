@@ -2,6 +2,7 @@
 import 'package:bleed_server/common/src.dart';
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_player.dart';
 import 'package:bleed_server/src/games/isometric/isometric_character.dart';
+import 'package:bleed_server/src/games/isometric/isometric_collider.dart';
 import 'package:bleed_server/src/games/isometric/isometric_game.dart';
 import 'package:bleed_server/src/games/isometric/isometric_gameobject.dart';
 import 'package:bleed_server/src/games/isometric/isometric_player.dart';
@@ -75,6 +76,46 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   }
 
   @override
+  void customOnCollisionBetweenColliders(IsometricCollider a, IsometricCollider b) {
+    if (a == flagBlue || b == flagBlue) {
+       if (flagBlueCharacter != null && flagBlueCharacter!.team == CaptureTheFlagTeam.Blue) {
+           if (b == baseBlue || a == baseBlue){
+              flagBlueCharacter = null;
+              flagBlue.moveTo(baseBlue);
+              // event blue flag returned to base
+              return;
+           }
+       }
+
+       if (a == baseRed || b == baseRed) {
+         flagRedCharacter = null;
+         flagRed.moveTo(baseRed);
+         scoreBlue++;
+         dispatchScore();
+         return;
+       }
+    }
+
+    if (a == flagRed || b == flagRed) {
+
+      if ((a == baseRed || b == baseRed) && flagRedCharacter?.team == CaptureTheFlagTeam.Red){
+        flagRedCharacter = null;
+        flagRed.moveTo(baseRed);
+        // dispatch event red flag returned to red base
+        return;
+      }
+
+      if ((a == baseBlue || b == baseBlue) && flagRedCharacter?.team == CaptureTheFlagTeam.Blue) {
+        flagRedCharacter = null;
+        flagRed.moveTo(baseRed);
+        scoreBlue++;
+        dispatchScore();
+        return;
+      }
+    }
+  }
+
+  @override
   void customOnCollisionBetweenPlayerAndGameObject(IsometricPlayer player, IsometricGameObject gameObject) {
 
     if (gameObject == flagBlue && flagBlueCharacter == null) {
@@ -93,22 +134,6 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
           flagRedCharacter = player;
         }
       }
-      return;
-    }
-
-    if (gameObject == baseBlue && player == flagRedCharacter) {
-      flagRedCharacter = null;
-      flagRed.moveTo(baseRed);
-      scoreBlue++;
-      dispatchScore();
-      return;
-    }
-
-    if (gameObject == baseRed && player == flagBlueCharacter) {
-      flagBlueCharacter = null;
-      flagBlue.moveTo(baseBlue);
-      scoreRed++;
-      dispatchScore();
       return;
     }
   }
