@@ -18,7 +18,7 @@ class CaptureTheFlagGame extends GameIsometric {
   void drawCanvas(Canvas canvas, Size size) {
     super.drawCanvas(canvas, size);
     engine.paint.color = Colors.red;
-    engine.drawLine(player.renderX, player.renderY, flagPositionRed.renderX, flagPositionBlue.renderY);
+    engine.drawLine(player.renderX, player.renderY, flagPositionRed.renderX, flagPositionRed.renderY);
     engine.paint.color = Colors.blue;
     engine.drawLine(player.renderX, player.renderY, flagPositionBlue.renderX, flagPositionBlue.renderY);
   }

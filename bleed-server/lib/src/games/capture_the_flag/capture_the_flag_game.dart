@@ -151,14 +151,10 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   @override
   void customUpdate() {
       if (flagBlueCharacter != null) {
-        flagBlue.x = flagBlueCharacter!.x;
-        flagBlue.y = flagBlueCharacter!.y;
-        flagBlue.z = flagBlueCharacter!.z;
+        flagBlue.moveTo(flagBlueCharacter!);
       }
       if (flagRedCharacter != null) {
-        flagRed.x = flagRedCharacter!.x;
-        flagRed.y = flagRedCharacter!.y;
-        flagRed.z = flagRedCharacter!.z;
+        flagRed.moveTo(flagRedCharacter!);
       }
   }
 
