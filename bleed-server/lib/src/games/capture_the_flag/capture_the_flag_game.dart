@@ -4,11 +4,14 @@ import 'package:bleed_server/common/src/game_type.dart';
 import 'package:bleed_server/common/src/item_type.dart';
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_player.dart';
 import 'package:bleed_server/src/games/isometric/isometric_character.dart';
+import 'package:bleed_server/src/games/isometric/isometric_collider.dart';
 import 'package:bleed_server/src/games/isometric/isometric_game.dart';
 import 'package:bleed_server/src/games/isometric/isometric_gameobject.dart';
 import 'package:bleed_server/src/games/isometric/isometric_player.dart';
 
 class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
+
+  static const Base_Radius = 64.0;
 
   late final IsometricGameObject flagRed;
   late final IsometricGameObject flagBlue;
@@ -33,7 +36,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     flagRed = spawnGameObject(x: 200, y: 200, z: 25, type: ItemType.GameObjects_Flag_Red);
     flagBlue = spawnGameObject(x: 100, y: 100, z: 25, type: ItemType.GameObjects_Flag_Blue);
 
-    baseRed = spawnGameObject(x: 400, y: 400, z: 25, type: ItemType.GameObjects_Base_Red)..fixed = true;
+    baseRed = spawnGameObject(x: 300, y: 500, z: 25, type: ItemType.GameObjects_Base_Red)..fixed = true;
     baseBlue = spawnGameObject(x: 300, y: 300, z: 25, type: ItemType.GameObjects_Base_Blue)..fixed = true;
   }
 
@@ -57,22 +60,32 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   @override
   void customOnCollisionBetweenPlayerAndGameObject(IsometricPlayer player, IsometricGameObject gameObject) {
 
-    if (gameObject == flagBlue && player.team == CaptureTheFlagTeam.Red && flagBlueCharacter == null) {
-      flagBlueCharacter = player;
-      return;
-    }
-
-    if (gameObject == flagRed && player.team == CaptureTheFlagTeam.Blue && flagRedCharacter == null) {
-      flagRedCharacter = player;
-      return;
-    }
-
-    if (gameObject == baseBlue) {
-      if (player == flagRedCharacter) {
-        flagRedCharacter = null;
-        flagRed.moveTo(baseRed);
+    if (gameObject == flagBlue && flagBlueCharacter == null) {
+      if (player.team == CaptureTheFlagTeam.Red || flagBlue.getDistance3(baseBlue) > Base_Radius){
+        flagBlueCharacter = player;
       }
+      return;
     }
+
+    if (gameObject == flagRed && flagRedCharacter == null) {
+      if (player.team == CaptureTheFlagTeam.Blue || flagRed.getDistance3(baseRed) > Base_Radius){
+        flagRedCharacter = player;
+      }
+      return;
+    }
+
+    if (gameObject == baseBlue && player == flagRedCharacter) {
+      flagRedCharacter = null;
+      flagRed.moveTo(baseRed);
+      return;
+    }
+
+    if (gameObject == baseRed && player == flagBlueCharacter) {
+      flagBlueCharacter = null;
+      flagBlue.moveTo(baseBlue);
+      return;
+    }
+
   }
 
   @override
