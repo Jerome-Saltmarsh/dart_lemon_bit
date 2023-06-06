@@ -180,6 +180,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     headType: ItemType.Head_Rogues_Hood,
     damage: 1,
   ){
+    writeGameType();
     id = game.playerId++;
     maxEnergy = energy;
     _energy = maxEnergy;

@@ -588,17 +588,24 @@ class GameIsometricUI {
         final screenCenterX = size.width * 0.5;
         final screenCenterY = size.height * 0.5;
         const ratio = 2 / 48.0;
-        final targetX = gamestream.games.isometric.camera.chaseTarget.renderX * ratio;
-        final targetY = gamestream.games.isometric.camera.chaseTarget.renderY * ratio;
-        final cameraX = targetX - (screenCenterX / scale) - translate;
-        final cameraY = targetY - (screenCenterY / scale) - translate;
-        canvas.translate(-cameraX, -cameraY);
+
+        final chaseTarget = gamestream.games.isometric.camera.chaseTarget;
+        if (chaseTarget != null){
+          final targetX = chaseTarget.renderX * ratio;
+          final targetY = chaseTarget.renderY * ratio;
+          final cameraX = targetX - (screenCenterX / scale) - translate;
+          final cameraY = targetY - (screenCenterY / scale) - translate;
+          canvas.translate(-cameraX, -cameraY);
+        }
 
         gamestream.games.isometric.minimap.renderCanvas(canvas);
 
-        for (var i = 0; i < gamestream.games.isometric.serverState.totalCharacters; i++) {
-          final character = gamestream.games.isometric.serverState.characters[i];
-          final isPlayer = gamestream.games.isometric.player.isCharacter(character);
+        final serverState = gamestream.games.isometric.serverState;
+        final player = gamestream.games.isometric.player;
+
+        for (var i = 0; i < serverState.totalCharacters; i++) {
+          final character = serverState.characters[i];
+          final isPlayer = player.isCharacter(character);
           engine.renderExternalCanvas(
               canvas: canvas,
               image: GameImages.atlas_gameobjects,

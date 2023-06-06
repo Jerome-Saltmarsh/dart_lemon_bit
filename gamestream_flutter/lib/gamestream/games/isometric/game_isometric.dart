@@ -14,7 +14,6 @@ import 'game_isometric_server_state.dart';
 import 'game_isometric_ui.dart';
 
 class GameIsometric extends Game {
-  final camera = GameIsometricCamera();
   final clientState = GameIsometricClientState();
   final serverState = GameIsometricServerState();
   final nodes = GameIsometricNodes();
@@ -23,6 +22,12 @@ class GameIsometric extends Game {
   final editor = GameIsometricEditor();
   final player = GameIsometricPlayer();
   final minimap = GameIsometricMinimap();
+  final camera = GameIsometricCamera();
+
+
+  GameIsometric() {
+    camera.chaseTarget = player.position;
+  }
 
   @override
   void drawCanvas(Canvas canvas, Size size) {

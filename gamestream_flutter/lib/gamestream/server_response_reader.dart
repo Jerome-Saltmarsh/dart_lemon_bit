@@ -1,5 +1,6 @@
 import 'package:archive/archive.dart';
 import 'package:gamestream_flutter/gamestream/games/fight2d/game_fight2d.dart';
+import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_scene.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_byte/byte_reader.dart';
@@ -7,12 +8,15 @@ import 'package:lemon_byte/byte_reader.dart';
 class ServerResponseReader with ByteReader {
   final bufferSize = Watch(0);
   final bufferSizeTotal = Watch(0);
-  late final updateFrame = Watch(0, onChanged: gamestream.games.isometric.clientState.onChangedUpdateFrame);
   final decoder = ZLibDecoder();
+  final Gamestream gamestream;
+  late final updateFrame = Watch(0, onChanged: gamestream.games.isometric.clientState.onChangedUpdateFrame);
+
+  ServerResponseReader(this.gamestream);
 
   var previousServerResponse = -1;
 
-  void read(Uint8List values, GameFight2D gameFight2D) {
+  void read(Uint8List values) {
     assert (values.isNotEmpty);
     updateFrame.value++;
     index = 0;
@@ -63,6 +67,7 @@ class ServerResponseReader with ByteReader {
           }
           final gameType = GameType.values[index];
           gamestream.gameType.value = gameType;
+          gamestream.refreshGame();
           break;
         case ServerResponse.Environment:
           readServerResponseEnvironment();
@@ -416,15 +421,22 @@ class ServerResponseReader with ByteReader {
     }
   }
 
-  void readApiPlayerPosition(){
-    gamestream.games.isometric.player.previousPosition.x = gamestream.games.isometric.player.position.x;
-    gamestream.games.isometric.player.previousPosition.y = gamestream.games.isometric.player.position.y;
-    gamestream.games.isometric.player.previousPosition.z = gamestream.games.isometric.player.position.z;
-    readVector3(gamestream.games.isometric.player.position);
-    gamestream.games.isometric.player.indexColumn = gamestream.games.isometric.player.position.indexColumn;
-    gamestream.games.isometric.player.indexRow = gamestream.games.isometric.player.position.indexRow;
-    gamestream.games.isometric.player.indexZ = gamestream.games.isometric.player.position.indexZ;
-    gamestream.games.isometric.player.nodeIndex = gamestream.games.isometric.player.position.nodeIndex;
+  void readApiPlayerPosition() {
+    final game = gamestream.game.value;
+
+    if (game is! GameIsometric){
+       throw Exception('game is! GameIsometric: $game');
+    }
+    final player = game.player;
+    player.previousPosition.x = player.position.x;
+    player.previousPosition.y = player.position.y;
+    player.previousPosition.z = player.position.z;
+    readVector3(player.position);
+    final position = player.position;
+    player.indexColumn = position.indexColumn;
+    player.indexRow = position.indexRow;
+    player.indexZ = position.indexZ;
+    player.nodeIndex = position.nodeIndex;
   }
 
   void readApiPlayerEnergy() =>
@@ -607,7 +619,7 @@ class ServerResponseReader with ByteReader {
 
     final compressedNodeTypeLength = readUInt24();
     final compressedNodeOrientationsLength = readUInt24();
-    
+
     final compressedNodeTypes = readUint8List(compressedNodeTypeLength);
     final compressedNodeOrientations = readUint8List(compressedNodeOrientationsLength);
     final nodeTypes = decoder.decodeBytes(compressedNodeTypes);

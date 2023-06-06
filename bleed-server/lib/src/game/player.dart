@@ -18,6 +18,10 @@ abstract class Player with ByteWriter {
   var inputMode = InputMode.Keyboard;
 
   void writePlayerGame();
+
+  Player(){
+    writeGameType();
+  }
 }
 
 extension PlayerExtension on Player {

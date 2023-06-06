@@ -15,6 +15,15 @@ class CaptureTheFlagGame extends GameIsometric {
   final flagPositionBlue = Vector3();
 
   @override
+  void drawCanvas(Canvas canvas, Size size) {
+    super.drawCanvas(canvas, size);
+    engine.paint.color = Colors.red;
+    engine.drawLine(player.renderX, player.renderY, flagPositionRed.renderX, flagPositionBlue.renderY);
+    engine.paint.color = Colors.blue;
+    engine.drawLine(player.renderX, player.renderY, flagPositionBlue.renderX, flagPositionBlue.renderY);
+  }
+
+  @override
   Widget buildUI(BuildContext context) {
     return Stack(
       children: [
@@ -47,4 +56,6 @@ class CaptureTheFlagGame extends GameIsometric {
       ],
     );
   }
+
+
 }

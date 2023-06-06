@@ -10,23 +10,26 @@ import 'network/game_network.dart';
 import 'server_response_reader.dart';
 
 class Gamestream {
-   late final gameType = Watch(GameType.Website, onChanged: _onChangedGameType);
-   late final game = Watch<Game>(games.website, onChanged: _onChangedGame);
-
-   late final error = Watch<GameError?>(null, onChanged: _onChangedGameError);
    final io = GameIO();
    final audio = GameAudio();
    final games = Games();
    final animation = GameAnimation();
    final operationStatus = Watch(OperationStatus.None);
-   late final account = Watch<Account?>(null, onChanged: onChangedAccount);
 
-   final serverResponseReader = ServerResponseReader();
+   late final gameType = Watch(GameType.Website, onChanged: _onChangedGameType);
+   late final game = Watch<Game>(games.website, onChanged: _onChangedGame);
+   late final error = Watch<GameError?>(null, onChanged: _onChangedGameError);
+   late final account = Watch<Account?>(null, onChanged: onChangedAccount);
+   late final ServerResponseReader serverResponseReader;
    late final GameNetwork network;
 
+   void refreshGame(){
+     _onChangedGameType(gameType.value);
+   }
 
   Gamestream() {
     network = GameNetwork(this);
+    serverResponseReader = ServerResponseReader(this);
   }
 
    Future init(SharedPreferences sharedPreferences) async {
@@ -67,28 +70,7 @@ class Gamestream {
               this.error.value = null;
             }
          });
-
-         // showDialog(context: engine.buildContext, builder: (dialogContext){
-         //    return AlertDialog(
-         //      backgroundColor: GameStyle.Container_Color,
-         //      contentPadding: const EdgeInsets.all(16),
-         //      alignment: Alignment.center,
-         //      content: text(error.name),
-         //      actions: [
-         //        onPressed(child: text("OKAY"), action: () {
-         //          Navigator.of(dialogContext).pop();
-         //          this.error.value = null;
-         //        }),
-         //      ],
-         //    );
-         // });
      });
-
-     // if (engine.isLocalHost) {
-     //   gamestream.network.region.value = ConnectionRegion.LocalHost;
-     // } else {
-     //   gamestream.network.region.value = detectConnectionRegion();
-     // }
 
      gamestream.games.website.errorMessageEnabled.value = true;
 

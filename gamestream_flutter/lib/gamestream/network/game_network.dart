@@ -149,7 +149,7 @@ class GameNetwork {
     }
 
     if (response is Uint8List) {
-      return gamestream.serverResponseReader.read(response, gamestream.games.fight2D);
+      return gamestream.serverResponseReader.read(response);
     }
     if (response is String) {
       if (response.toLowerCase() == 'ping'){
