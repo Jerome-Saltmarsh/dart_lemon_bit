@@ -28,7 +28,7 @@ class GameIO {
 
   final touchController = TouchController();
 
-  final inputMode = Watch(InputMode.Keyboard, onChanged: GameEvents.onChangedInputMode);
+  late final inputMode = Watch(InputMode.Keyboard, onChanged: gamestream.isometric.events.onChangedInputMode);
   bool get inputModeTouch => inputMode.value == InputMode.Touch;
   bool get inputModeKeyboard => inputMode.value == InputMode.Keyboard;
 

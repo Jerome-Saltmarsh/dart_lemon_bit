@@ -155,7 +155,7 @@ class Gamestream {
        // This error appears when the game attempts to fullscreen
        // without the user having interacted first
        // TODO dispatch event on fullscreen failed
-       GameEvents.onErrorFullscreenAuto();
+       gamestream.isometric.events.onErrorFullscreenAuto();
        return;
      }
      print(error.toString());

@@ -24,6 +24,7 @@ class IsometricEngine {
   final editor = IsometricEditor();
   final player = IsometricPlayer();
   final camera = IsometricCamera();
+  final events = GameEvents();
 
   void drawCanvas(Canvas canvas, Size size) {
     if (serverState.gameRunning.value){

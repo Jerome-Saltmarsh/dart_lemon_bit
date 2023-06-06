@@ -6,11 +6,11 @@ import 'isometric/events/on_character_hurt.dart';
 
 class GameEvents {
 
-  static void onErrorFullscreenAuto(){
+  void onErrorFullscreenAuto(){
      // TODO show a dialog box asking the user to go fullscreen
   }
 
-  static void onWeaponTypeEquipped(int attackType, double x, double y, double z) {
+  void onWeaponTypeEquipped(int attackType, double x, double y, double z) {
     switch (attackType) {
       case ItemType.Weapon_Ranged_Shotgun:
         gamestream.audio.cock_shotgun_3.playXYZ(x, y, z);
@@ -20,7 +20,7 @@ class GameEvents {
     }
   }
 
-  static void onChangedError(String error) {
+  void onChangedError(String error) {
     gamestream.isometric.clientState.messageStatus.value = error;
     if (error.isNotEmpty) {
       gamestream.isometric.clientState.messageStatusDuration = 200;
@@ -29,7 +29,7 @@ class GameEvents {
     }
   }
 
-  static void onChangedNodes(){
+  void onChangedNodes(){
     gamestream.isometric.nodes.refreshGridMetrics();
     gamestream.isometric.nodes.generateHeightMap();
     gamestream.isometric.nodes.generateMiniMap();
@@ -44,7 +44,7 @@ class GameEvents {
     gamestream.isometric.editor.refreshNodeSelectedIndex();
   }
 
-  static void onFootstep(double x, double y, double z) {
+  void onFootstep(double x, double y, double z) {
     if (gamestream.isometric.clientState.raining.value && (
         gamestream.isometric.nodes.gridNodeXYZTypeSafe(x, y, z) == NodeType.Rain_Landing
             ||
@@ -74,10 +74,10 @@ class GameEvents {
     gamestream.audio.footstep_grass_7.playXYZ(x, y, z);
   }
 
-  static void onGameEvent(int type, double x, double y, double z, double angle) {
+  void onGameEvent(int type, double x, double y, double z, double angle) {
     switch (type) {
       case GameEventType.Footstep:
-        GameEvents.onFootstep(x, y, z);
+        gamestream.isometric.events.onFootstep(x, y, z);
         return;
       case GameEventType.Attack_Performed:
         onAttackPerformed(x, y, z, angle);
@@ -124,7 +124,7 @@ class GameEvents {
         break;
       case GameEventType.Weapon_Type_Equipped:
         final attackType =  gamestream.serverResponseReader.readByte();
-        return GameEvents.onWeaponTypeEquipped(attackType, x, y, z);
+        return onWeaponTypeEquipped(attackType, x, y, z);
       case GameEventType.Player_Spawned:
         for (var i = 0; i < 7; i++){
           gamestream.isometric.clientState.spawnParticleOrbShard(x: x, y: y, z: z, angle: Engine.randomAngle());
@@ -232,15 +232,15 @@ class GameEvents {
     }
   }
 
-  static void onGameEventExplosion(double x, double y, double z) {
+  void onGameEventExplosion(double x, double y, double z) {
     gamestream.isometric.actions.createExplosion(x, y, z);
   }
 
-  static void onNodeSet(double x, double y, double z) {
+  void onNodeSet(double x, double y, double z) {
     gamestream.audio.hover_over_button_sound_43.playXYZ(x, y, z);
   }
 
-  static void onNodeStruck(double x, double y, double z) {
+  void onNodeStruck(double x, double y, double z) {
     if (!gamestream.isometric.nodes.inBounds(x, y, z)) return;
 
     final nodeIndex = gamestream.isometric.nodes.getIndexXYZ(x, y, z);
@@ -267,11 +267,11 @@ class GameEvents {
     }
   }
 
-  static void onGameEventAttackPerformedBlade(double x, double y, double z, double angle) {
+  void onGameEventAttackPerformedBlade(double x, double y, double z, double angle) {
     gamestream.audio.swing_sword.playXYZ(x, y, z);
   }
 
-  static void onAttackPerformedUnarmed(double x, double y, double z, double angle) {
+  void onAttackPerformedUnarmed(double x, double y, double z, double angle) {
     gamestream.isometric.clientState.spawnParticleBubbles(
       count: 3,
       x: x,
@@ -281,7 +281,7 @@ class GameEvents {
     );
   }
 
-  static void onSplash(double x, double y, double z) {
+  void onSplash(double x, double y, double z) {
     for (var i = 0; i < 12; i++){
       final zv = randomBetween(1.5, 5);
       gamestream.isometric.clientState.spawnParticleWaterDrop(x: x, y: y, z: z, zv: zv, duration: (zv * 12).toInt());
@@ -289,7 +289,7 @@ class GameEvents {
     return gamestream.audio.splash.playXYZ(x, y, z);
   }
 
-  static void onAttackPerformed(double x, double y, double z, double angle) {
+  void onAttackPerformed(double x, double y, double z, double angle) {
     final attackType = gamestream.serverResponseReader.readUInt16();
     final attackTypeAudio = gamestream.audio.MapItemTypeAudioSinglesAttack[attackType];
 
@@ -327,7 +327,7 @@ class GameEvents {
     gamestream.isometric.clientState.spawnParticleStrikeBullet(x: x, y: y, z: z, angle: angle);
   }
 
-  static void onMeleeAttackPerformed(double x, double y, double z, double angle) {
+  void onMeleeAttackPerformed(double x, double y, double z, double angle) {
     final attackType = gamestream.serverResponseReader.readUInt16();
     final attackTypeAudio = gamestream.audio.MapItemTypeAudioSinglesAttackMelee[attackType];
 
@@ -353,7 +353,7 @@ class GameEvents {
   }
 
 
-  static void onChangedEdit(bool value) {
+  void onChangedEdit(bool value) {
     if (value) {
       gamestream.isometric.camera.setModeFree();
       gamestream.isometric.editor.cursorSetToPlayer();
@@ -370,28 +370,28 @@ class GameEvents {
     }
   }
 
-  static void onChangedWindType(int windType) {
+  void onChangedWindType(int windType) {
     gamestream.isometric.clientState.refreshRain();
   }
 
-  static void onChangedHour(int hour){
+  void onChangedHour(int hour){
     if (gamestream.isometric.serverState.sceneUnderground.value) return;
     gamestream.isometric.clientState.updateGameLighting();
   }
 
-  static void onChangedSeconds(int seconds){
+  void onChangedSeconds(int seconds){
     final minutes = seconds ~/ 60;
     gamestream.isometric.serverState.hours.value = minutes ~/ Duration.minutesPerHour;
     gamestream.isometric.serverState.minutes.value = minutes % Duration.minutesPerHour;
   }
 
-  static void onChangedRain(int value) {
+  void onChangedRain(int value) {
     gamestream.isometric.clientState.raining.value = value != RainType.None;
     gamestream.isometric.clientState.refreshRain();
     gamestream.isometric.clientState.updateGameLighting();
   }
 
-  static void onPlayerEvent(int event) {
+  void onPlayerEvent(int event) {
     switch (event) {
       case PlayerEvent.Reloading:
         switch (gamestream.isometric.player.weapon.value){
@@ -456,7 +456,7 @@ class GameEvents {
     }
   }
 
-  static void onPlayerEventPowerUsed() {
+  void onPlayerEventPowerUsed() {
     switch (gamestream.isometric.player.powerType.value) {
       case PowerType.Shield:
         gamestream.audio.buff_10();
@@ -483,7 +483,7 @@ class GameEvents {
     }
   }
 
-  static void readPlayerEventItemConsumed() {
+  void readPlayerEventItemConsumed() {
     switch (gamestream.serverResponseReader.readUInt16()){
       case ItemType.Consumables_Potion_Red:
         gamestream.audio.drink();
@@ -510,7 +510,7 @@ class GameEvents {
     }
   }
 
-  static void onCharacterDeath(int characterType, double x, double y, double z, double angle) {
+  void onCharacterDeath(int characterType, double x, double y, double z, double angle) {
     randomItem(gamestream.audio.bloody_punches).playXYZ(x, y, z);
     gamestream.audio.heavy_punch_13.playXYZ(x, y, z);
     gamestream.isometric.clientState.spawnPurpleFireExplosion(x, y, z);
@@ -542,7 +542,7 @@ class GameEvents {
     }
   }
 
-  static void onCharacterDeathZombie(int type, double x, double y, double z, double angle){
+  void onCharacterDeathZombie(int type, double x, double y, double z, double angle){
     final zPos = z + Node_Size_Half;
     gamestream.isometric.clientState.spawnParticleHeadZombie(x: x, y: y, z: zPos, angle: angle, speed: 4.0);
     gamestream.isometric.clientState.spawnParticleArm(
@@ -567,11 +567,11 @@ class GameEvents {
     Engine.randomItem(gamestream.audio.zombie_deaths).playXYZ(x, y, z);
   }
 
-  static void onChangedRendersSinceUpdate(int value){
+  void onChangedRendersSinceUpdate(int value){
     gamestream.isometric.clientState.triggerAlarmNoMessageReceivedFromServer.value = value > 200;
   }
 
-  static void onChangedPlayerMessage(String value){
+  void onChangedPlayerMessage(String value){
     if (value.isNotEmpty) {
       gamestream.isometric.player.messageTimer = 200;
     } else {
@@ -579,14 +579,14 @@ class GameEvents {
     }
   }
 
-  static void onChangedInputMode(int inputMode){
+  void onChangedInputMode(int inputMode){
     if (inputMode == InputMode.Touch){
       gamestream.isometric.camera.centerOnPlayer();
       gamestream.io.recenterCursor();
     }
   }
 
-  static void onChangedPlayerInteractMode(int value) {
+  void onChangedPlayerInteractMode(int value) {
     final camera = gamestream.isometric.camera;
     ClientActions.playSoundWindow();
     switch (value) {
@@ -607,11 +607,11 @@ class GameEvents {
     }
   }
 
-  static void onChangedPlayerWeaponRanged(int weaponType) {
+  void onChangedPlayerWeaponRanged(int weaponType) {
     gamestream.isometric.clientState.itemGroup.value = ItemGroup.Primary_Weapon;
   }
 
-  static void onChangedPlayerWeapon(int itemType){
+  void onChangedPlayerWeapon(int itemType){
     gamestream.isometric.clientState.itemGroup.value = ItemType.getItemGroup(itemType);
 
     if (itemType == ItemType.Empty) return;
@@ -644,7 +644,7 @@ class GameEvents {
     }
   }
 
-  static void onChangedPlayerRespawnTimer(int respawnTimer) {
+  void onChangedPlayerRespawnTimer(int respawnTimer) {
     if (gamestream.gameType.value == GameType.Combat) {
       gamestream.isometric.clientState.control_visible_player_weapons.value = respawnTimer <= 0;
       gamestream.isometric.clientState.window_visible_player_creation.value = respawnTimer <= 0;
@@ -652,15 +652,15 @@ class GameEvents {
     }
   }
 
-  static void onChangedPlayerWeaponMelee(int weaponType) {
+  void onChangedPlayerWeaponMelee(int weaponType) {
      gamestream.isometric.clientState.itemGroup.value = ItemGroup.Secondary_Weapon;
   }
 
-  static void onChangedPlayerTertiaryWeapon(int weaponType) {
+  void onChangedPlayerTertiaryWeapon(int weaponType) {
     gamestream.isometric.clientState.itemGroup.value = ItemGroup.Tertiary_Weapon;
   }
 
-  static void readPlayerEventItemAcquired() {
+  void readPlayerEventItemAcquired() {
     final itemType = gamestream.serverResponseReader.readUInt16();
     if (itemType == ItemType.Empty) return;
 
@@ -701,7 +701,7 @@ class GameEvents {
   }
 
 
-  static void onGameEventPowerUsed(double x, double y, double z, int powerType) {
+  void onGameEventPowerUsed(double x, double y, double z, int powerType) {
       switch (powerType){
         case PowerType.Stun:
           gamestream.audio.debuff_4();
@@ -722,11 +722,11 @@ class GameEvents {
       }
   }
 
-  static void onChangedPlayerAlive(bool playerAlive) {
+  void onChangedPlayerAlive(bool playerAlive) {
 
   }
 
-  static void onChangedPlayerActive(bool playerActive){
+  void onChangedPlayerActive(bool playerActive){
      print("onChangedPlayerActive($playerActive)");
       if (gamestream.gameType.value == GameType.Combat) {
         if (playerActive){

@@ -23,7 +23,7 @@ class IsometricServerState {
 
   final highScore = Watch(0);
   final areaType = Watch(AreaType.None, onChanged: ServerEvents.onChangedAreaType);
-  final interactMode = Watch(InteractMode.None, onChanged: GameEvents.onChangedPlayerInteractMode);
+  late final interactMode = Watch(InteractMode.None, onChanged: gamestream.isometric.events.onChangedPlayerInteractMode);
   final playerHealth = Watch(0);
   final playerMaxHealth = Watch(0);
   final playerDamage = Watch(0);
@@ -35,15 +35,15 @@ class IsometricServerState {
   final sceneEditable = Watch(false);
   final sceneName = Watch<String?>(null);
   final gameRunning = Watch(true);
-  final rainType = Watch(RainType.None, onChanged: GameEvents.onChangedRain);
+  late final rainType = Watch(RainType.None, onChanged: gamestream.isometric.events.onChangedRain);
   final weatherBreeze = Watch(false);
-  final seconds = Watch(0, onChanged: GameEvents.onChangedSeconds);
-  final hours = Watch(0, onChanged: GameEvents.onChangedHour);
+  late final seconds = Watch(0, onChanged: gamestream.isometric.events.onChangedSeconds);
+  late final hours = Watch(0, onChanged: gamestream.isometric.events.onChangedHour);
   final minutes = Watch(0);
 
   final lightningType = Watch(LightningType.Off);
   final watchTimePassing = Watch(false);
-  final windTypeAmbient = Watch(WindType.Calm, onChanged: GameEvents.onChangedWindType);
+  late final windTypeAmbient = Watch(WindType.Calm, onChanged: gamestream.isometric.events.onChangedWindType);
   final gameStatus = Watch(GameStatus.Playing);
 
   final playerBelt1_ItemType = Watch(ItemType.Empty);

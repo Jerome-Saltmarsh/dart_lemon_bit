@@ -603,7 +603,7 @@ class ServerResponseReader with ByteReader {
     gamestream.isometric.nodes.nodeTypes[nodeIndex] = nodeType;
     gamestream.isometric.nodes.nodeOrientations[nodeIndex] = nodeOrientation;
     /// TODO optimize
-    GameEvents.onChangedNodes();
+    gamestream.isometric.events.onChangedNodes();
     gamestream.isometric.editor.refreshNodeSelectedIndex();
   }
 
@@ -640,7 +640,7 @@ class ServerResponseReader with ByteReader {
     gamestream.isometric.nodes.ambientStack = Uint16List(totalNodes);
     gamestream.isometric.nodes.total = totalNodes;
     gamestream.isometric.clientState.nodesRaycast = gamestream.isometric.nodes.area +  gamestream.isometric.nodes.area + gamestream.isometric.nodes.totalColumns + 1;
-    GameEvents.onChangedNodes();
+    gamestream.isometric.events.onChangedNodes();
     gamestream.isometric.nodes.refreshNodeVariations();
     gamestream.isometric.clientState.sceneChanged.value++;
     onChangedScene();
@@ -652,7 +652,7 @@ class ServerResponseReader with ByteReader {
       final y = readDouble();
       final z = readDouble();
       final angle = readDouble() * degreesToRadians;
-      GameEvents.onGameEvent(type, x, y, z, angle);
+      gamestream.isometric.events.onGameEvent(type, x, y, z, angle);
   }
 
   void readProjectiles(){
@@ -701,7 +701,7 @@ class ServerResponseReader with ByteReader {
   }
 
   void readPlayerEvent() {
-    GameEvents.onPlayerEvent(readByte());
+    gamestream.isometric.events.onPlayerEvent(readByte());
   }
 
   void readPosition(Position position){

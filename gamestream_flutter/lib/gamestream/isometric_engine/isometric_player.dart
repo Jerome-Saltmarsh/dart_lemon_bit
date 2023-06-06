@@ -7,11 +7,11 @@ class IsometricPlayer {
   final perkType = Watch(PerkType.None);
   final powerType = Watch(PowerType.None);
   final powerReady = Watch(true);
-  final weapon = Watch(0, onChanged: GameEvents.onChangedPlayerWeapon);
-  final weaponPrimary = Watch(0, onChanged: GameEvents.onChangedPlayerWeapon);
-  final weaponSecondary = Watch(0, onChanged: GameEvents.onChangedPlayerWeapon);
-  final weaponTertiary = Watch(0, onChanged: GameEvents.onChangedPlayerWeapon);
-  final respawnTimer = Watch(0, onChanged: GameEvents.onChangedPlayerRespawnTimer);
+  late final weapon = Watch(0, onChanged: gamestream.isometric.events.onChangedPlayerWeapon);
+  late final weaponPrimary = Watch(0, onChanged: gamestream.isometric.events.onChangedPlayerWeapon);
+  late final weaponSecondary = Watch(0, onChanged: gamestream.isometric.events.onChangedPlayerWeapon);
+  late final weaponTertiary = Watch(0, onChanged: gamestream.isometric.events.onChangedPlayerWeapon);
+  late final respawnTimer = Watch(0, onChanged: gamestream.isometric.events.onChangedPlayerRespawnTimer);
 
   final attributeHealth = Watch(0);
   final attributeMagic = Watch(0);
@@ -20,8 +20,8 @@ class IsometricPlayer {
   final body = Watch(0);
   final head = Watch(0);
   final legs = Watch(0);
-  final active = Watch(false, onChanged: GameEvents.onChangedPlayerActive);
-  final alive = Watch(true, onChanged: GameEvents.onChangedPlayerAlive);
+  late final active = Watch(false, onChanged: gamestream.isometric.events.onChangedPlayerActive);
+  late final alive = Watch(true, onChanged: gamestream.isometric.events.onChangedPlayerAlive);
   final totalGrenades = Watch(0);
   final previousPosition = Vector3();
   final storeItems = Watch(<int>[]);
@@ -54,7 +54,7 @@ class IsometricPlayer {
   final mouseTargetName = Watch<String?>(null);
   final mouseTargetAllie = Watch<bool>(false);
   final mouseTargetHealth = Watch(0.0);
-  final message = Watch("", onChanged: GameEvents.onChangedPlayerMessage);
+  late final message = Watch("", onChanged: gamestream.isometric.events.onChangedPlayerMessage);
   var messageTimer = 0;
 
   var indexZ = 0;

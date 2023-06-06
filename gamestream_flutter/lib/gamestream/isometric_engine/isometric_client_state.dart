@@ -1244,8 +1244,8 @@ mixin class IsometricClientState {
   final debugMode = Watch(false, onChanged: ClientEvents.onChangedDebugMode);
   final Map_Visible = WatchBool(true);
   final touchButtonSide = Watch(TouchButtonSide.Right);
-  final rendersSinceUpdate = Watch(0, onChanged: GameEvents.onChangedRendersSinceUpdate);
-  final edit = Watch(false, onChanged: GameEvents.onChangedEdit);
+  late final rendersSinceUpdate = Watch(0, onChanged: gamestream.isometric.events.onChangedRendersSinceUpdate);
+  late final edit = Watch(false, onChanged: gamestream.isometric.events.onChangedEdit);
   final dragStart = Watch(-1);
   final dragEnd = Watch(-1);
   final messageStatus = Watch("", onChanged: ClientEvents.onChangedMessageStatus);
