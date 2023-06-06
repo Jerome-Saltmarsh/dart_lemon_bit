@@ -66,6 +66,13 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
       flagRedCharacter = player;
       return;
     }
+
+    if (gameObject == baseBlue) {
+      if (player == flagRedCharacter) {
+        flagRedCharacter = null;
+        flagRed.moveTo(baseRed);
+      }
+    }
   }
 
   @override

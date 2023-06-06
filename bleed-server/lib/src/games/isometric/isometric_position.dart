@@ -83,4 +83,10 @@ class IsometricPosition with Position {
   double getDistance3(IsometricPosition position){
     return getDistanceV3(x, y, z, position.x, position.y, position.z);
   }
+
+  void moveTo(IsometricPosition value){
+    x = value.x;
+    y = value.y;
+    z = value.z;
+  }
 }
