@@ -34,7 +34,7 @@ class CaptureTheFlagGame extends GameIsometric {
         Positioned(
             bottom: 16,
             right: 16,
-            child: GameIsometricUI.buildMapCircle(size: 200),
+            child: buildMiniMap(mapSize: 200),
         ),
         Positioned(
             top: 16,
@@ -75,6 +75,72 @@ class CaptureTheFlagGame extends GameIsometric {
       ],
     );
   }
+
+  Widget buildMiniMap({required double mapSize}) {
+    return IgnorePointer(
+      child: Container(
+        width: mapSize + 3,
+        height: mapSize + 3,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(color: Colors.black38, width: 3),
+            color: Colors.black38
+        ),
+        child: ClipOval(
+          child: Container(
+              alignment: Alignment.topLeft,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+              ),
+              width: mapSize,
+              height: mapSize,
+              child:   watch(gamestream.games.isometric.clientState.sceneChanged, (_){
+            return engine.buildCanvas(paint: (Canvas canvas, Size size){
+              const scale = 2.0;
+              canvas.scale(scale, scale);
+              final screenCenterX = size.width * 0.5;
+              final screenCenterY = size.height * 0.5;
+              const ratio = 2 / 48.0;
+
+              final chaseTarget = gamestream.games.isometric.camera.chaseTarget;
+              if (chaseTarget != null){
+                final targetX = chaseTarget.renderX * ratio;
+                final targetY = chaseTarget.renderY * ratio;
+                final translate = mapSize / 4;
+                final cameraX = targetX - (screenCenterX / scale) - translate;
+                final cameraY = targetY - (screenCenterY / scale) - translate;
+                canvas.translate(-cameraX, -cameraY);
+              }
+
+              gamestream.games.isometric.minimap.renderCanvas(canvas);
+
+              final serverState = gamestream.games.isometric.serverState;
+              final player = gamestream.games.isometric.player;
+
+              for (var i = 0; i < serverState.totalCharacters; i++) {
+                final character = serverState.characters[i];
+                final isPlayer = player.isCharacter(character);
+                engine.renderExternalCanvas(
+                    canvas: canvas,
+                    image: GameImages.atlas_gameobjects,
+                    srcX: 0,
+                    srcY: isPlayer ? 96 : character.allie ? 81 : 72,
+                    srcWidth: 8,
+                    srcHeight: 8,
+                    dstX: character.renderX * ratio,
+                    dstY: character.renderY * ratio,
+                    scale: 0.25
+                );
+              }
+            });
+          })
+        ),
+        ),
+      ),
+    );
+  }
+
 
 
 }
