@@ -22,12 +22,6 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   var scoreRed = 0;
   var scoreBlue = 0;
 
-  int get countPlayersOnTeamRed => countPlayersOnTeam(CaptureTheFlagTeam.Red);
-  int get countPlayersOnTeamBlue => countPlayersOnTeam(CaptureTheFlagTeam.Blue);
-
-  int countPlayersOnTeam(int team) =>
-      players.where((player) => player.team == team).length;
-
   CaptureTheFlagGame({
     required super.scene,
     required super.time,
@@ -40,8 +34,31 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     baseBlue = spawnGameObject(x: 300, y: 300, z: 25, type: ItemType.GameObjects_Base_Blue)..fixed = true;
   }
 
+  int get countPlayersOnTeamRed => countPlayersOnTeam(CaptureTheFlagTeam.Red);
+  int get countPlayersOnTeamBlue => countPlayersOnTeam(CaptureTheFlagTeam.Blue);
+
+  int countPlayersOnTeam(int team) =>
+      players.where((player) => player.team == team).length;
+
   @override
   void customWriteGame() {
+  }
+
+
+  @override
+  void onPlayerUpdateRequestReceived({required IsometricPlayer player, required int direction, required bool mouseLeftDown, required bool mouseRightDown, required bool keySpaceDown, required bool inputTypeKeyboard}) {
+    if (player.deadOrBusy) return;
+    if (!player.active) return;
+
+    if (!player.weaponStateBusy) {
+      player.lookRadian = player.mouseAngle;
+    }
+
+    if (mouseLeftDown){
+      characterUseWeapon(player);
+    }
+
+    playerRunInDirection(player, Direction.fromInputDirection(direction));
   }
 
   @override
@@ -62,14 +79,19 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
 
     if (gameObject == flagBlue && flagBlueCharacter == null) {
       if (player.team == CaptureTheFlagTeam.Red || flagBlue.getDistance3(baseBlue) > Base_Radius){
-        flagBlueCharacter = player;
+        if (flagRedCharacter != player){
+          flagBlueCharacter = player;
+        }
+
       }
       return;
     }
 
     if (gameObject == flagRed && flagRedCharacter == null) {
       if (player.team == CaptureTheFlagTeam.Blue || flagRed.getDistance3(baseRed) > Base_Radius){
-        flagRedCharacter = player;
+        if (flagBlueCharacter != player){
+          flagRedCharacter = player;
+        }
       }
       return;
     }
@@ -117,9 +139,10 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     player.team = countPlayersOnTeamBlue > countPlayersOnTeamRed
         ? CaptureTheFlagTeam.Red
         : CaptureTheFlagTeam.Blue;
-    player.x = 100;
-    player.y = 100;
+    player.x = 50;
+    player.y = 50;
     player.z = 50;
+    player.weaponType = ItemType.Weapon_Melee_Sword;
 
     if (player.team == CaptureTheFlagTeam.Blue){
        player.legsType = ItemType.Legs_Blue;

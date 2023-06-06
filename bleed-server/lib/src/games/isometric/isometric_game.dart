@@ -273,7 +273,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }) {
     if (player.deadOrBusy) return;
 
-    playerUpdateAimTarget(player);
+    _updateIsometricPlayerAimTarget(player);
 
     if (!player.weaponStateBusy) {
       player.lookRadian = player.mouseAngle;
@@ -302,7 +302,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     player.game.clearCharacterTarget(player);
   }
 
-  void playerUpdateAimTarget(IsometricPlayer player) {
+  void _updateIsometricPlayerAimTarget(IsometricPlayer player) {
     var closestDistance = IsometricSettings.Pickup_Range_Squared;
 
     final mouseX = player.mouseGridX;
@@ -1208,6 +1208,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     time.update();
     environment.update();
 
+
     updateAITargets();
     internalUpdateJobs();
     internalUpdateScripts();
@@ -1853,6 +1854,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
 
   void updatePlayer(IsometricPlayer player) {
     player.framesSinceClientRequest++;
+
+    _updateIsometricPlayerAimTarget(player);
 
     if (player.respawnTimer > 0) {
       player.respawnTimer--;

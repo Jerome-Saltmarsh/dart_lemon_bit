@@ -131,8 +131,6 @@ class AeonGame extends IsometricGame {
     if (player.deadOrBusy) return;
     if (!player.active) return;
 
-    playerUpdateAimTarget(player);
-
     if (!player.weaponStateBusy) {
       player.lookRadian = player.mouseAngle;
     }
