@@ -79,32 +79,31 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   @override
   void customOnCollisionBetweenColliders(IsometricCollider a, IsometricCollider b) {
     if (a == flagBlue || b == flagBlue) {
-
        if (a == baseBlue || b == baseBlue){
          if (flagBlueCharacter?.team != CaptureTheFlagTeam.Blue) return;
          returnBlueFlagToBase();
+         return;
        }
-
        if (a == baseRed || b == baseRed) {
          if (flagBlueCharacter?.team == CaptureTheFlagTeam.Blue) return;
          returnBlueFlagToBase();
          scoreBlue.value++;
-         return;
        }
+       return;
     }
 
     if (a == flagRed || b == flagRed) {
-
-      if ((a == baseRed || b == baseRed) && flagRedCharacter?.team == CaptureTheFlagTeam.Red){
+      if (a == baseRed || b == baseRed){
+        if (flagRedCharacter?.team != CaptureTheFlagTeam.Red) return;
         returnRedFlagToBase();
         return;
       }
-
-      if ((a == baseBlue || b == baseBlue) && flagRedCharacter?.team == CaptureTheFlagTeam.Blue) {
+      if (a == baseBlue || b == baseBlue) {
+        if (flagRedCharacter?.team == CaptureTheFlagTeam.Red) return;
         returnRedFlagToBase();
-        scoreBlue.value++;
-        return;
+        scoreRed.value++;
       }
+      return;
     }
   }
 
