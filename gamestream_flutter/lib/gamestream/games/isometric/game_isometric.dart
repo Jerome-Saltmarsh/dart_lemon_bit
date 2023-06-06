@@ -1,69 +1,44 @@
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_client_state.dart';
-import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_minimap.dart';
-import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_player.dart';
-import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_renderer.dart';
 import 'package:gamestream_flutter/library.dart';
 
-import 'game_isometric_actions.dart';
-import 'game_isometric_camera.dart';
-import 'game_isometric_editor.dart';
-import 'game_isometric_nodes.dart';
-import 'game_isometric_server_state.dart';
 import 'game_isometric_ui.dart';
 
 class GameIsometric extends Game {
-  final clientState = GameIsometricClientState();
-  final serverState = GameIsometricServerState();
-  final nodes = GameIsometricNodes();
-  final actions = GameIsometricActions();
-  final renderer = GameIsometricRenderer();
-  final editor = GameIsometricEditor();
-  final player = GameIsometricPlayer();
-  final minimap = GameIsometricMinimap();
-  final camera = GameIsometricCamera();
-  final atlas = AtlasItems();
 
   GameIsometric() {
-    camera.chaseTarget = player.position;
+    gamestream.isometricEngine.camera.chaseTarget = gamestream.isometricEngine.player.position;
   }
 
   @override
   void drawCanvas(Canvas canvas, Size size) {
-    if (serverState.gameRunning.value){
+    if (gamestream.isometricEngine.serverState.gameRunning.value){
       /// particles are only on the ui and thus can update every frame
       /// this makes them much smoother as they don't freeze
-      clientState.updateParticles();
+      gamestream.isometricEngine.clientState.updateParticles();
     }
-    clientState.interpolatePlayer();
-    camera.update();
-    renderer.render3D();
-    clientState.renderEditMode();
-    renderer.renderMouseTargetName();
-    renderer.renderPlayerEnergy();
-    clientState.rendersSinceUpdate.value++;
+    gamestream.isometricEngine.drawCanvas(canvas, size);
   }
 
   @override
   void renderForeground(Canvas canvas, Size size) {
-    renderer.renderForeground(canvas, size);
+    gamestream.isometricEngine.renderer.renderForeground(canvas, size);
   }
 
   @override
   void update() {
-    if (!serverState.gameRunning.value) {
+    if (!gamestream.isometricEngine.serverState.gameRunning.value) {
       gamestream.network.sendClientRequestUpdate();
       return;
     }
-    clientState.updateTorchEmissionIntensity();
+    gamestream.isometricEngine.clientState.updateTorchEmissionIntensity();
     gamestream.animation.updateAnimationFrame();
-    clientState.updateParticleEmitters();
-    serverState.updateProjectiles();
-    serverState.updateGameObjects();
+    gamestream.isometricEngine.clientState.updateParticleEmitters();
+    gamestream.isometricEngine.serverState.updateProjectiles();
+    gamestream.isometricEngine.serverState.updateGameObjects();
     gamestream.audio.update();
-    clientState.update();
-    clientState.updatePlayerMessageTimer();
+    gamestream.isometricEngine.clientState.update();
+    gamestream.isometricEngine.clientState.updatePlayerMessageTimer();
     gamestream.io.readPlayerInput();
     gamestream.network.sendClientRequestUpdate();
 
@@ -83,14 +58,14 @@ class GameIsometric extends Game {
 
   @override
   void onActivated() {
-    clientState.window_visible_player_creation.value = false;
-    clientState.control_visible_respawn_timer.value = false;
+    gamestream.isometricEngine.clientState.window_visible_player_creation.value = false;
+    gamestream.isometricEngine.clientState.control_visible_respawn_timer.value = false;
     gamestream.audio.musicStop();
     engine.onLeftClicked = gamestream.io.touchController.onClick;
     engine.onMouseMoved = gamestream.io.touchController.onMouseMoved;
-    clientState.control_visible_player_weapons.value = true;
-    clientState.control_visible_scoreboard.value = true;
-    clientState.control_visible_player_power.value = true;
+    gamestream.isometricEngine.clientState.control_visible_player_weapons.value = true;
+    gamestream.isometricEngine.clientState.control_visible_scoreboard.value = true;
+    gamestream.isometricEngine.clientState.control_visible_player_power.value = true;
 
     if (!engine.isLocalHost) {
       engine.fullScreenEnter();
@@ -100,19 +75,6 @@ class GameIsometric extends Game {
   @override
   Widget buildUI(BuildContext context) {
     return GameIsometricUI.buildUI();
-  }
-
-  double get windLineRenderX {
-    var windLineColumn = 0;
-    var windLineRow = 0;
-    if (clientState.windLine < nodes.totalRows){
-      windLineColumn = 0;
-      windLineRow =  nodes.totalRows - clientState.windLine - 1;
-    } else {
-      windLineRow = 0;
-      windLineColumn = clientState.windLine - nodes.totalRows + 1;
-    }
-    return (windLineRow - windLineColumn) * Node_Size_Half;
   }
 
   static double convertWorldToGridX(double x, double y) =>

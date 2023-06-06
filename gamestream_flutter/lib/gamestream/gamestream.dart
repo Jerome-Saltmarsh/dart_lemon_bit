@@ -1,6 +1,7 @@
 
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/gamestream/isometric_engine/isometric_engine.dart';
 import 'package:gamestream_flutter/gamestream/network/functions/detect_connection_region.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,6 +16,7 @@ class Gamestream {
    final games = Games();
    final animation = GameAnimation();
    final operationStatus = Watch(OperationStatus.None);
+   final isometricEngine = IsometricEngine();
 
    late final gameType = Watch(GameType.Website, onChanged: _onChangedGameType);
    late final game = Watch<Game>(games.website, onChanged: _onChangedGame);

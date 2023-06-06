@@ -27,10 +27,10 @@ class GameIsometricMinimap {
 
   void generateSrcDst(){
     var index = 0;
-    final rows = gamestream.games.isometric.nodes.totalRows;
-    final columns = gamestream.games.isometric.nodes.totalColumns;
-    final area = gamestream.games.isometric.nodes.area;
-    final nodeTypes = gamestream.games.isometric.nodes.miniMap;
+    final rows = gamestream.isometricEngine.nodes.totalRows;
+    final columns = gamestream.isometricEngine.nodes.totalColumns;
+    final area = gamestream.isometricEngine.nodes.area;
+    final nodeTypes = gamestream.isometricEngine.nodes.miniMap;
 
     final vendors = <int>[];
 
@@ -66,8 +66,8 @@ class GameIsometricMinimap {
 
     for (var i = 0; i < vendors.length; i++){
       final nodeIndex = vendors[i];
-      final indexX = gamestream.games.isometric.clientState.convertNodeIndexToIndexX(nodeIndex);
-      final indexY = gamestream.games.isometric.clientState.convertNodeIndexToIndexY(nodeIndex);
+      final indexX = gamestream.isometricEngine.clientState.convertNodeIndexToIndexX(nodeIndex);
+      final indexY = gamestream.isometricEngine.clientState.convertNodeIndexToIndexY(nodeIndex);
       final dstX = (indexX - indexY) * 1.0;
       final dstY = (indexX + indexY) * 1.0;
       final f = ((area + i) * 4);

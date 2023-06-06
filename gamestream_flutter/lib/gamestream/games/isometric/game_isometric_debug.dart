@@ -1,7 +1,7 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_client_state.dart';
+import 'package:gamestream_flutter/gamestream/isometric_engine/game_isometric_client_state.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -30,13 +30,13 @@ class GameIsometricDebug {
                           children: [
                             watch(gamestream.serverResponseReader.bufferSize, (int bytes) => text('network-bytes: $bytes')),
                             watch(gamestream.serverResponseReader.bufferSizeTotal, (int bytes) => text('network-bytes-total: ${GameIsometricClientState.formatBytes(bytes)}')),
-                            watch(gamestream.serverResponseReader.bufferSizeTotal, (int bytes) => text('network-bytes-per-second: ${gamestream.games.isometric.clientState.formatAverageBytePerSecond(bytes)}')),
-                            watch(gamestream.serverResponseReader.bufferSizeTotal, (int bytes) => text('network-bytes-per-minute: ${gamestream.games.isometric.clientState.formatAverageBytePerMinute(bytes)}')),
-                            watch(gamestream.serverResponseReader.bufferSizeTotal, (int bytes) => text('network-bytes-per-hour: ${gamestream.games.isometric.clientState.formatAverageBytePerHour(bytes)}')),
+                            watch(gamestream.serverResponseReader.bufferSizeTotal, (int bytes) => text('network-bytes-per-second: ${gamestream.isometricEngine.clientState.formatAverageBytePerSecond(bytes)}')),
+                            watch(gamestream.serverResponseReader.bufferSizeTotal, (int bytes) => text('network-bytes-per-minute: ${gamestream.isometricEngine.clientState.formatAverageBytePerMinute(bytes)}')),
+                            watch(gamestream.serverResponseReader.bufferSizeTotal, (int bytes) => text('network-bytes-per-hour: ${gamestream.isometricEngine.clientState.formatAverageBytePerHour(bytes)}')),
                             Refresh(() =>  text(
-                                "connection-duration: ${gamestream.games.isometric.clientState.formattedConnectionDuration}\n"
-                                // "offscreen-nodes: ${gamestream.games.isometric.nodes.offscreenNodes}\n"
-                                // "onscreen-nodes: ${gamestream.games.isometric.nodes.onscreenNodes}\n"
+                                "connection-duration: ${gamestream.isometricEngine..clientState.formattedConnectionDuration}\n"
+                                // "offscreen-nodes: ${gamestream.isometricEngine.nodes.offscreenNodes}\n"
+                                // "onscreen-nodes: ${gamestream.isometricEngine.nodes.onscreenNodes}\n"
                                     "touches: ${engine.touches}\n"
                                     "touch down id: ${engine.touchDownId}\n"
                                     "touch update id: ${engine.touchDownId}\n"
@@ -44,31 +44,31 @@ class GameIsometricDebug {
                                     "mouse-world: x: ${engine.mouseWorldX.toInt()}, y: ${engine.mouseWorldY.toInt()}\n"
                                     'mouse-screen: x: ${engine.mousePositionX.toInt()}, y: ${engine.mousePositionY.toInt()}\n'
                                     'mouse-player-angle: ${ClientQuery.getMousePlayerAngle().toStringAsFixed(4)}\n'
-                                    "player-alive: ${gamestream.games.isometric.player.alive.value}\n"
-                                    "player-respawn-timer: ${gamestream.games.isometric.player.respawnTimer.value}\n"
-                                    "player-position: x: ${gamestream.games.isometric.player.position.x}, y: ${gamestream.games.isometric.player.position.y}, z: ${gamestream.games.isometric.player.position.z}\n"
-                                    "player-render: x: ${gamestream.games.isometric.player.position.renderX}, y: ${gamestream.games.isometric.player.position.renderY}\n"
-                                    "player-screen: x: ${gamestream.games.isometric.player.positionScreenX.toInt()}, y: ${gamestream.games.isometric.player.positionScreenY.toInt()}\n"
-                                    "player-index: z: ${gamestream.games.isometric.player.position.indexZ}, row: ${gamestream.games.isometric.player.position.indexRow}, column: ${gamestream.games.isometric.player.position.indexColumn}\n"
+                                    "player-alive: ${gamestream.isometricEngine.player.alive.value}\n"
+                                    "player-respawn-timer: ${gamestream.isometricEngine.player.respawnTimer.value}\n"
+                                    "player-position: x: ${gamestream.isometricEngine.player.position.x}, y: ${gamestream.isometricEngine.player.position.y}, z: ${gamestream.isometricEngine.player.position.z}\n"
+                                    "player-render: x: ${gamestream.isometricEngine.player.position.renderX}, y: ${gamestream.isometricEngine.player.position.renderY}\n"
+                                    "player-screen: x: ${gamestream.isometricEngine.player.positionScreenX.toInt()}, y: ${gamestream.isometricEngine.player.positionScreenY.toInt()}\n"
+                                    "player-index: z: ${gamestream.isometricEngine.player.position.indexZ}, row: ${gamestream.isometricEngine.player.position.indexRow}, column: ${gamestream.isometricEngine.player.position.indexColumn}\n"
                                     "player-inside-island: ${RendererNodes.playerInsideIsland}\n"
-                                    "player-legs: ${ItemType.getName(gamestream.games.isometric.player.legs.value)}\n"
-                                    "player-body: ${ItemType.getName(gamestream.games.isometric.player.body.value)}\n"
-                                    "player-head: ${ItemType.getName(gamestream.games.isometric.player.head.value)}\n"
-                                    "player-weapon: ${ItemType.getName(gamestream.games.isometric.player.weapon.value)}\n"
-                                    "player-interact-mode: ${InteractMode.getName(gamestream.games.isometric.serverState.interactMode.value)}\n"
-                                    "aim-target-category: ${TargetCategory.getName(gamestream.games.isometric.player.aimTargetCategory)}\n"
-                                    "aim-target-type: ${gamestream.games.isometric.player.aimTargetType}\n"
-                                    "aim-target-name: ${gamestream.games.isometric.player.aimTargetName}\n"
-                                    "aim-target-position: ${gamestream.games.isometric.player.aimTargetPosition}\n"
-                                    "target-category: ${TargetCategory.getName(gamestream.games.isometric.player.targetCategory)}\n"
-                                    "target-position: ${gamestream.games.isometric.player.targetPosition}\n"
-                                    "dialog-type: ${DialogType.getName(gamestream.games.isometric.clientState.hoverDialogType.value)}\n"
-                                    "scene-light-sources: ${gamestream.games.isometric.clientState.nodesLightSourcesTotal}\n"
-                                    "scene-light-active: ${gamestream.games.isometric.clientState.lights_active}\n"
-                                    "total-gameobjects: ${gamestream.games.isometric.serverState.gameObjects.length}\n"
-                                    "total-characters: ${gamestream.games.isometric.serverState.totalCharacters}\n"
-                                    'total-particles: ${gamestream.games.isometric.clientState.particles.length}\n'
-                                    'total-particles-active: ${gamestream.games.isometric.clientState.totalActiveParticles}\n'
+                                    "player-legs: ${ItemType.getName(gamestream.isometricEngine.player.legs.value)}\n"
+                                    "player-body: ${ItemType.getName(gamestream.isometricEngine.player.body.value)}\n"
+                                    "player-head: ${ItemType.getName(gamestream.isometricEngine.player.head.value)}\n"
+                                    "player-weapon: ${ItemType.getName(gamestream.isometricEngine.player.weapon.value)}\n"
+                                    "player-interact-mode: ${InteractMode.getName(gamestream.isometricEngine.serverState.interactMode.value)}\n"
+                                    "aim-target-category: ${TargetCategory.getName(gamestream.isometricEngine.player.aimTargetCategory)}\n"
+                                    "aim-target-type: ${gamestream.isometricEngine.player.aimTargetType}\n"
+                                    "aim-target-name: ${gamestream.isometricEngine.player.aimTargetName}\n"
+                                    "aim-target-position: ${gamestream.isometricEngine.player.aimTargetPosition}\n"
+                                    "target-category: ${TargetCategory.getName(gamestream.isometricEngine.player.targetCategory)}\n"
+                                    "target-position: ${gamestream.isometricEngine.player.targetPosition}\n"
+                                    "dialog-type: ${DialogType.getName(gamestream.isometricEngine.clientState.hoverDialogType.value)}\n"
+                                    "scene-light-sources: ${gamestream.isometricEngine.clientState.nodesLightSourcesTotal}\n"
+                                    "scene-light-active: ${gamestream.isometricEngine.clientState.lights_active}\n"
+                                    "total-gameobjects: ${gamestream.isometricEngine.serverState.gameObjects.length}\n"
+                                    "total-characters: ${gamestream.isometricEngine.serverState.totalCharacters}\n"
+                                    'total-particles: ${gamestream.isometricEngine.clientState.particles.length}\n'
+                                    'total-particles-active: ${gamestream.isometricEngine.clientState.totalActiveParticles}\n'
                                     "offscreen-nodes: left: ${RendererNodes.offscreenNodesLeft}, top: ${RendererNodes.offscreenNodesTop}, right: ${RendererNodes.offscreenNodesRight}, bottom: ${RendererNodes.offscreenNodesBottom}"
                             )),
                             Refresh(() => text('touch-world: x: ${gamestream.io.touchCursorWorldX.toInt()}, y: ${gamestream.io.touchCursorWorldY.toInt()}')),
@@ -84,7 +84,7 @@ class GameIsometricDebug {
                             Refresh(() => text('camera-zoom: ${engine.targetZoom.toStringAsFixed(3)}')),
                             Refresh(() => text('engine-frame: ${engine.paintFrame}')),
                             watch(gamestream.serverResponseReader.updateFrame, (t) => text("update-frame: $t")),
-                            watch(gamestream.games.isometric.player.interpolating, (bool interpolating) => text("interpolating: $interpolating", onPressed: () => gamestream.games.isometric.player.interpolating.value = !gamestream.games.isometric.player.interpolating.value)),
+                            watch(gamestream.isometricEngine.player.interpolating, (bool interpolating) => text("interpolating: $interpolating", onPressed: () => gamestream.isometricEngine.player.interpolating.value = !gamestream.isometricEngine.player.interpolating.value)),
                             watch(gamestream.gameType, (GameType value) => text("game-type: ${value.name}")),
                             watch(engine.deviceType, (int deviceType) => text("device-type: ${DeviceType.getName(deviceType)}", onPressed: engine.toggleDeviceType)),
                             watch(gamestream.io.inputMode, (int inputMode) => text("input-mode: ${InputMode.getName(inputMode)}", onPressed: gamestream.io.actionToggleInputMode)),
@@ -96,7 +96,7 @@ class GameIsometricDebug {
                       ),
                     ),
                     height24,
-                    text("close x", onPressed: () => gamestream.games.isometric.clientState.debugMode.value = false, bold: true),
+                    text("close x", onPressed: () => gamestream.isometricEngine.clientState.debugMode.value = false, bold: true),
                   ],
                 ),
               )),
@@ -146,29 +146,29 @@ Widget buildColumnLightingControls(){
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           text("Override Color"),
-          watch(gamestream.games.isometric.clientState.overrideColor, (bool overrideColor){
+          watch(gamestream.isometricEngine.clientState.overrideColor, (bool overrideColor){
             return Checkbox(value: overrideColor, onChanged: (bool? value){
               if (value == null) return;
-              gamestream.games.isometric.clientState.overrideColor.value = value;
+              gamestream.isometricEngine.clientState.overrideColor.value = value;
             });
           })
         ],
       ),
       // ColorPicker(
       //   pickerColor: HSVColor.fromAHSV(
-      //       gamestream.games.isometric.nodes.ambient_alp,
-      //       gamestream.games.isometric.nodes.ambient_hue,
-      //       gamestream.games.isometric.nodes.ambient_sat,
-      //       gamestream.games.isometric.nodes.ambient_val,
+      //       gamestream.isometricEngine.nodes.ambient_alp,
+      //       gamestream.isometricEngine.nodes.ambient_hue,
+      //       gamestream.isometricEngine.nodes.ambient_sat,
+      //       gamestream.isometricEngine.nodes.ambient_val,
       //   ).toColor(),
       //   onColorChanged: (color){
-      //     gamestream.games.isometric.clientState.overrideColor.value = true;
+      //     gamestream.isometricEngine.clientState.overrideColor.value = true;
       //     final hsvColor = HSVColor.fromColor(color);
-      //     gamestream.games.isometric.nodes.ambient_alp = hsvColor.alpha;
-      //     gamestream.games.isometric.nodes.ambient_hue = hsvColor.hue;
-      //     gamestream.games.isometric.nodes.ambient_sat = hsvColor.saturation;
-      //     gamestream.games.isometric.nodes.ambient_val = hsvColor.value;
-      //     gamestream.games.isometric.nodes.resetNodeColorsToAmbient();
+      //     gamestream.isometricEngine.nodes.ambient_alp = hsvColor.alpha;
+      //     gamestream.isometricEngine.nodes.ambient_hue = hsvColor.hue;
+      //     gamestream.isometricEngine.nodes.ambient_sat = hsvColor.saturation;
+      //     gamestream.isometricEngine.nodes.ambient_val = hsvColor.value;
+      //     gamestream.isometricEngine.nodes.resetNodeColorsToAmbient();
       //   },
       // ),
     ],

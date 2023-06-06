@@ -21,6 +21,9 @@ class CaptureTheFlagGame extends GameIsometric {
   @override
   void drawCanvas(Canvas canvas, Size size) {
     super.drawCanvas(canvas, size);
+    
+    final player = gamestream.isometricEngine.player;
+    
     engine.paint.color = Colors.red;
     engine.drawLine(player.renderX, player.renderY, flagPositionRed.renderX, flagPositionRed.renderY);
     engine.paint.color = Colors.blue;
@@ -76,8 +79,7 @@ class CaptureTheFlagGame extends GameIsometric {
     );
   }
 
-  Widget buildMiniMap({required double mapSize}) {
-    return IgnorePointer(
+  Widget buildMiniMap({required double mapSize}) => IgnorePointer(
       child: Container(
         width: mapSize + 3,
         height: mapSize + 3,
@@ -95,7 +97,7 @@ class CaptureTheFlagGame extends GameIsometric {
               ),
               width: mapSize,
               height: mapSize,
-              child:   watch(gamestream.games.isometric.clientState.sceneChanged, (_){
+              child:   watch(gamestream.isometricEngine.clientState.sceneChanged, (_){
             return engine.buildCanvas(paint: (Canvas canvas, Size size){
               const scale = 2.0;
               canvas.scale(scale, scale);
@@ -103,7 +105,7 @@ class CaptureTheFlagGame extends GameIsometric {
               final screenCenterY = size.height * 0.5;
               const ratio = 2 / 48.0;
 
-              final chaseTarget = gamestream.games.isometric.camera.chaseTarget;
+              final chaseTarget = gamestream.isometricEngine.camera.chaseTarget;
               if (chaseTarget != null){
                 final targetX = chaseTarget.renderX * ratio;
                 final targetY = chaseTarget.renderY * ratio;
@@ -113,10 +115,10 @@ class CaptureTheFlagGame extends GameIsometric {
                 canvas.translate(-cameraX, -cameraY);
               }
 
-              gamestream.games.isometric.minimap.renderCanvas(canvas);
+              gamestream.isometricEngine.minimap.renderCanvas(canvas);
 
-              final serverState = gamestream.games.isometric.serverState;
-              final player = gamestream.games.isometric.player;
+              final serverState = gamestream.isometricEngine.serverState;
+              final player = gamestream.isometricEngine.player;
 
               for (var i = 0; i < serverState.totalCharacters; i++) {
                 final character = serverState.characters[i];
@@ -139,7 +141,6 @@ class CaptureTheFlagGame extends GameIsometric {
         ),
       ),
     );
-  }
 
 
 

@@ -7,7 +7,7 @@ void onGameEventCharacterHurt(int type, double x, double y, double z, double ang
   gamestream.audio.heavy_punch_13.playXYZ(x, y, z);
 
   for (var i = 0; i < 4; i++){
-    gamestream.games.isometric.clientState.spawnParticleBlood(
+    gamestream.isometricEngine.clientState.spawnParticleBlood(
         x: x,
         y: y,
         z: z,

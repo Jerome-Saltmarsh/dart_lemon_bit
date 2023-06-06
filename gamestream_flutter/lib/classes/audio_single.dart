@@ -37,7 +37,7 @@ class AudioSingle {
 
   void playXYZ(double x, double y, double z, {double maxDistance = 600}){
     if (gamestream.audio.enabledSound.value) return;
-    final distanceFromPlayer = gamestream.games.isometric.player.position.distance3(x, y, z);
+    final distanceFromPlayer = gamestream.isometricEngine.player.position.distance3(x, y, z);
     final distanceVolume = gamestream.audio.convertDistanceToVolume(
         distanceFromPlayer,
         maxDistance: maxDistance,

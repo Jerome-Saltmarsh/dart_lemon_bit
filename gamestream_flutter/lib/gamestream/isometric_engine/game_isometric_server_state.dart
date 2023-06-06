@@ -1,7 +1,6 @@
+import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_constants.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/src/server/src/server_events.dart';
-
-import 'game_isometric_constants.dart';
 
 /// Synchronized server state
 ///
@@ -89,8 +88,8 @@ class GameIsometricServerState {
 
   Character? getPlayerCharacter(){
     for (var i = 0; i < totalCharacters; i++){
-      if (characters[i].x != gamestream.games.isometric.player.position.x) continue;
-      if (characters[i].y != gamestream.games.isometric.player.position.y) continue;
+      if (characters[i].x != gamestream.isometricEngine.player.position.x) continue;
+      if (characters[i].y != gamestream.isometricEngine.player.position.y) continue;
       return characters[i];
     }
     return null;
@@ -103,7 +102,7 @@ class GameIsometricServerState {
         case EmissionType.None:
           continue;
         case EmissionType.Color:
-          gamestream.games.isometric.clientState.applyVector3Emission(
+          gamestream.isometricEngine.clientState.applyVector3Emission(
             gameObject,
             hue: gameObject.emission_hue,
             saturation: gameObject.emission_sat,
@@ -113,7 +112,7 @@ class GameIsometricServerState {
           );
           continue;
         case EmissionType.Ambient:
-          gamestream.games.isometric.clientState.applyVector3EmissionAmbient(gameObject,
+          gamestream.isometricEngine.clientState.applyVector3EmissionAmbient(gameObject,
             alpha: gameObject.emission_alp,
             intensity: gameObject.emission_intensity,
           );
@@ -133,11 +132,11 @@ class GameIsometricServerState {
   }
 
   void projectShadow(Vector3 v3){
-    if (!gamestream.games.isometric.nodes.inBoundsVector3(v3)) return;
+    if (!gamestream.isometricEngine.nodes.inBoundsVector3(v3)) return;
 
     final z = getProjectionZ(v3);
     if (z < 0) return;
-    gamestream.games.isometric.clientState.spawnParticle(
+    gamestream.isometricEngine.clientState.spawnParticle(
       type: ParticleType.Shadow,
       x: v3.x,
       y: v3.y,
@@ -156,8 +155,8 @@ class GameIsometricServerState {
 
     while (true) {
       if (z < 0) return -1;
-      final nodeIndex = gamestream.games.isometric.nodes.getIndexXYZ(x, y, z);
-      final nodeOrientation = gamestream.games.isometric.nodes.nodeOrientations[nodeIndex];
+      final nodeIndex = gamestream.isometricEngine.nodes.getIndexXYZ(x, y, z);
+      final nodeOrientation = gamestream.isometricEngine.nodes.nodeOrientations[nodeIndex];
 
       if (const <int> [
         NodeOrientation.None,
@@ -196,14 +195,14 @@ class GameIsometricServerState {
 
   void clean() {
     gameObjects.clear();
-    gamestream.games.isometric.nodes.colorStackIndex = -1;
-    gamestream.games.isometric.nodes.ambientStackIndex = -1;
+    gamestream.isometricEngine.nodes.colorStackIndex = -1;
+    gamestream.isometricEngine.nodes.ambientStackIndex = -1;
   }
 
   void sortGameObjects(){
     Engine.insertionSort(
       gameObjects,
-      compare: gamestream.games.isometric.clientState.compareRenderOrder,
+      compare: gamestream.isometricEngine.clientState.compareRenderOrder,
     );
   }
 
@@ -228,16 +227,16 @@ class GameIsometricServerState {
     for (var i = 0; i < totalProjectiles; i++) {
       final projectile = projectiles[i];
       if (projectile.type == ProjectileType.Rocket) {
-        gamestream.games.isometric.clientState.spawnParticleSmoke(x: projectile.x, y: projectile.y, z: projectile.z);
+        gamestream.isometricEngine.clientState.spawnParticleSmoke(x: projectile.x, y: projectile.y, z: projectile.z);
         projectShadow(projectile);
         continue;
       }
       if (projectile.type == ProjectileType.Fireball) {
-        gamestream.games.isometric.clientState.spawnParticleFire(x: projectile.x, y: projectile.y, z: projectile.z);
+        gamestream.isometricEngine.clientState.spawnParticleFire(x: projectile.x, y: projectile.y, z: projectile.z);
         continue;
       }
       if (projectile.type == ProjectileType.Orb) {
-        gamestream.games.isometric.clientState.spawnParticleOrbShard(
+        gamestream.isometricEngine.clientState.spawnParticleOrbShard(
           x: projectile.x,
           y: projectile.y,
           z: projectile.z,
@@ -306,16 +305,16 @@ class GameIsometricServerState {
 
   int getItemTypeAtInventoryIndex(int index){
     if (index == ItemType.Equipped_Weapon)
-      return gamestream.games.isometric.player.weapon.value;
+      return gamestream.isometricEngine.player.weapon.value;
 
     if (index == ItemType.Equipped_Head)
-      return gamestream.games.isometric.player.head.value;
+      return gamestream.isometricEngine.player.head.value;
 
     if (index == ItemType.Equipped_Body)
-      return gamestream.games.isometric.player.body.value;
+      return gamestream.isometricEngine.player.body.value;
 
     if (index == ItemType.Equipped_Legs)
-      return gamestream.games.isometric.player.legs.value;
+      return gamestream.isometricEngine.player.legs.value;
 
     if (index == ItemType.Belt_1){
       return playerBelt1_ItemType.value;
@@ -379,10 +378,10 @@ class GameIsometricServerState {
       getItemQuantityAtIndex(equippedWeaponIndex.value);
 
   int getEquippedItemType(int itemType) =>
-      ItemType.isTypeWeapon (itemType) ? gamestream.games.isometric.player.weapon.value :
-      ItemType.isTypeHead   (itemType) ? gamestream.games.isometric.player.head.value   :
-      ItemType.isTypeBody   (itemType) ? gamestream.games.isometric.player.body.value   :
-      ItemType.isTypeLegs   (itemType) ? gamestream.games.isometric.player.legs.value   :
+      ItemType.isTypeWeapon (itemType) ? gamestream.isometricEngine.player.weapon.value :
+      ItemType.isTypeHead   (itemType) ? gamestream.isometricEngine.player.head.value   :
+      ItemType.isTypeBody   (itemType) ? gamestream.isometricEngine.player.body.value   :
+      ItemType.isTypeLegs   (itemType) ? gamestream.isometricEngine.player.legs.value   :
       ItemType.Empty          ;
 
   int getEquippedWeaponConsumeType() =>

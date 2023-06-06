@@ -3,28 +3,28 @@ import 'package:gamestream_flutter/library.dart';
 
 class ClientActions {
 
-  static void redrawInventory() => gamestream.games.isometric.clientState.inventoryReads.value++;
-  static void redrawHotKeys() => gamestream.games.isometric.clientState.readsHotKeys.value++;
+  static void redrawInventory() => gamestream.isometricEngine.clientState.inventoryReads.value++;
+  static void redrawHotKeys() => gamestream.isometricEngine.clientState.readsHotKeys.value++;
 
   static void clearMouseOverDialogType() =>
-    gamestream.games.isometric.clientState.hoverDialogType.value = DialogType.None;
+    gamestream.isometricEngine.clientState.hoverDialogType.value = DialogType.None;
 
   static void clearHoverIndex() =>
-    gamestream.games.isometric.clientState.hoverIndex.value = -1;
+    gamestream.isometricEngine.clientState.hoverIndex.value = -1;
 
   static void playSoundWindow() =>
       gamestream.audio.click_sound_8(1);
 
   static void dragStartSetNone(){
-    gamestream.games.isometric.clientState.dragStart.value = -1;
+    gamestream.isometricEngine.clientState.dragStart.value = -1;
   }
 
   static void setDragItemIndex(int index) =>
-    () => gamestream.games.isometric.clientState.dragStart.value = index;
+    () => gamestream.isometricEngine.clientState.dragStart.value = index;
 
   static void dropDraggedItem(){
-    if (gamestream.games.isometric.clientState.dragStart.value == -1) return;
-    gamestream.network.sendClientRequestInventoryDrop(gamestream.games.isometric.clientState.dragStart.value);
+    if (gamestream.isometricEngine.clientState.dragStart.value == -1) return;
+    gamestream.network.sendClientRequestInventoryDrop(gamestream.isometricEngine.clientState.dragStart.value);
   }
 
   static void messageClear(){
@@ -32,7 +32,7 @@ class ClientActions {
   }
 
   static void writeMessage(String value){
-    gamestream.games.isometric.clientState.messageStatus.value = value;
+    gamestream.isometricEngine.clientState.messageStatus.value = value;
   }
 
   static void playAudioError(){
@@ -40,43 +40,43 @@ class ClientActions {
   }
 
   static void inventorySwapDragTarget(){
-    if (gamestream.games.isometric.clientState.dragStart.value == -1) return;
-    if (gamestream.games.isometric.clientState.hoverIndex.value == -1) return;
+    if (gamestream.isometricEngine.clientState.dragStart.value == -1) return;
+    if (gamestream.isometricEngine.clientState.hoverIndex.value == -1) return;
     gamestream.network.sendClientRequestInventoryMove(
-      indexFrom: gamestream.games.isometric.clientState.dragStart.value,
-      indexTo: gamestream.games.isometric.clientState.hoverIndex.value,
+      indexFrom: gamestream.isometricEngine.clientState.dragStart.value,
+      indexTo: gamestream.isometricEngine.clientState.hoverIndex.value,
     );
   }
 
   static void refreshBakeMapLightSources() {
-    gamestream.games.isometric.clientState.nodesLightSourcesTotal = 0;
-    for (var i = 0; i < gamestream.games.isometric.nodes.total; i++){
-      if (!NodeType.emitsLight(gamestream.games.isometric.nodes.nodeTypes[i])) continue;
-      if (gamestream.games.isometric.clientState.nodesLightSourcesTotal >= gamestream.games.isometric.clientState.nodesLightSources.length) {
-        gamestream.games.isometric.clientState.nodesLightSources = Uint16List(gamestream.games.isometric.clientState.nodesLightSources.length + 100);
+    gamestream.isometricEngine.clientState.nodesLightSourcesTotal = 0;
+    for (var i = 0; i < gamestream.isometricEngine.nodes.total; i++){
+      if (!NodeType.emitsLight(gamestream.isometricEngine.nodes.nodeTypes[i])) continue;
+      if (gamestream.isometricEngine.clientState.nodesLightSourcesTotal >= gamestream.isometricEngine.clientState.nodesLightSources.length) {
+        gamestream.isometricEngine.clientState.nodesLightSources = Uint16List(gamestream.isometricEngine.clientState.nodesLightSources.length + 100);
         refreshBakeMapLightSources();
         return;
       }
-      gamestream.games.isometric.clientState.nodesLightSources[gamestream.games.isometric.clientState.nodesLightSourcesTotal] = i;
-      gamestream.games.isometric.clientState.nodesLightSourcesTotal++;
+      gamestream.isometricEngine.clientState.nodesLightSources[gamestream.isometricEngine.clientState.nodesLightSourcesTotal] = i;
+      gamestream.isometricEngine.clientState.nodesLightSourcesTotal++;
     }
   }
 
   static void clearHoverDialogType() {
-    gamestream.games.isometric.clientState.hoverDialogType.value = DialogType.None;
+    gamestream.isometricEngine.clientState.hoverDialogType.value = DialogType.None;
   }
 
   static void showMessage(String message){
-    gamestream.games.isometric.clientState.messageStatus.value = "";
-    gamestream.games.isometric.clientState.messageStatus.value = message;
+    gamestream.isometricEngine.clientState.messageStatus.value = "";
+    gamestream.isometricEngine.clientState.messageStatus.value = message;
   }
 
   static void spawnConfettiPlayer() {
      for (var i = 0; i < 10; i++){
-       gamestream.games.isometric.clientState.spawnParticleConfetti(
-         gamestream.games.isometric.player.position.x,
-         gamestream.games.isometric.player.position.y,
-         gamestream.games.isometric.player.position.z,
+       gamestream.isometricEngine.clientState.spawnParticleConfetti(
+         gamestream.isometricEngine.player.position.x,
+         gamestream.isometricEngine.player.position.y,
+         gamestream.isometricEngine.player.position.z,
        );
      }
   }

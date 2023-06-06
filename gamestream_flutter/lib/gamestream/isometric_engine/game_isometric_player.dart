@@ -1,6 +1,6 @@
 import 'package:gamestream_flutter/library.dart';
 
-import 'game_isometric_renderer.dart';
+import '../games/isometric/game_isometric_renderer.dart';
 
 class GameIsometricPlayer {
   final id = Watch(0);
@@ -65,15 +65,15 @@ class GameIsometricPlayer {
   double get x => position.x;
   double get y => position.y;
   double get z => position.z;
-  int get areaNodeIndex => (indexRow * gamestream.games.isometric.nodes.totalColumns) + indexColumn;
+  int get areaNodeIndex => (indexRow * gamestream.isometricEngine.nodes.totalColumns) + indexColumn;
 
   double get renderX => GameIsometricRenderer.convertV3ToRenderX(position);
   double get renderY => GameIsometricRenderer.convertV3ToRenderY(position);
-  double get positionScreenX => engine.worldToScreenX(gamestream.games.isometric.player.position.renderX);
-  double get positionScreenY => engine.worldToScreenY(gamestream.games.isometric.player.position.renderY);
-  bool get interactModeTrading => gamestream.games.isometric.serverState.interactMode.value == InteractMode.Trading;
+  double get positionScreenX => engine.worldToScreenX(gamestream.isometricEngine.player.position.renderX);
+  double get positionScreenY => engine.worldToScreenY(gamestream.isometricEngine.player.position.renderY);
+  bool get interactModeTrading => gamestream.isometricEngine.serverState.interactMode.value == InteractMode.Trading;
   bool get dead => !alive.value;
-  bool get inBounds => gamestream.games.isometric.nodes.inBoundsVector3(position);
+  bool get inBounds => gamestream.isometricEngine.nodes.inBoundsVector3(position);
 
 
   bool isCharacter(Character character){
@@ -89,9 +89,9 @@ class GameIsometricPlayer {
 
   bool isInsideBuilding(){
     if (!inBounds) return false;
-    final index = position.nodeIndex + gamestream.games.isometric.nodes.area;
-    while (index < gamestream.games.isometric.nodes.total){
-      if (NodeType.isRainOrEmpty(gamestream.games.isometric.nodes.nodeTypes[index]))  continue;
+    final index = position.nodeIndex + gamestream.isometricEngine.nodes.area;
+    while (index < gamestream.isometricEngine.nodes.total){
+      if (NodeType.isRainOrEmpty(gamestream.isometricEngine.nodes.nodeTypes[index]))  continue;
       return true;
     }
     return false;
@@ -116,7 +116,7 @@ class GameIsometricPlayer {
       case ItemGroup.Legs_Type:
         return legs;
       default:
-        throw Exception('gamestream.games.isometric.player.getItemGroupWatch($itemGroup)');
+        throw Exception('gamestream.isometricEngine.player.getItemGroupWatch($itemGroup)');
     }
   }
 
@@ -126,7 +126,7 @@ class GameIsometricPlayer {
     if (ItemType.isTypeBody(itemType)) return body;
     if (ItemType.isTypeLegs(itemType)) return legs;
     throw Exception(
-        "gamestream.games.isometric.player.getItemTypeWatch(${ItemType.getName(itemType)})"
+        "gamestream.isometricEngine.player.getItemTypeWatch(${ItemType.getName(itemType)})"
     );
   }
 }

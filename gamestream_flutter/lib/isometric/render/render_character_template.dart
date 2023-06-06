@@ -94,7 +94,7 @@ void renderCharacterTemplate(Character character, {
     case CharacterState.Stunned:
       frameLegs = 0;
       frameWeapon = weaponIsTwoHandedFirearm ? 0 : 1;
-      gamestream.games.isometric.renderer.renderStarsV3(character);
+      gamestream.isometricEngine.renderer.renderStarsV3(character);
       break;
   }
 
@@ -139,7 +139,7 @@ void renderCharacterTemplate(Character character, {
   final dstY = GameIsometricRenderer.convertV3ToRenderY(character);
 
   const Color_Invisible = GameIsometricColors.White38_Value;
-  final color = invisible ? Color_Invisible : gamestream.games.isometric.clientState.getV3RenderColor(character);
+  final color = invisible ? Color_Invisible : gamestream.isometricEngine.clientState.getV3RenderColor(character);
 
   if (invisible) {
     engine.bufferBlendMode = BlendMode.srcIn;
@@ -153,10 +153,10 @@ void renderCharacterTemplate(Character character, {
   const Anchor_Y = 0.625;
 
   if (character.z >= GameIsometricConstants.Node_Height){
-    gamestream.games.isometric.nodes.markShadow(character);
+    gamestream.isometricEngine.nodes.markShadow(character);
 
-    final shadowAngle = gamestream.games.isometric.nodes.shadow.z + pi;
-    final shadowDistance = gamestream.games.isometric.nodes.shadow.magnitudeXY;
+    final shadowAngle = gamestream.isometricEngine.nodes.shadow.z + pi;
+    final shadowDistance = gamestream.isometricEngine.nodes.shadow.magnitudeXY;
     final shadowX = character.x + adj(shadowAngle, shadowDistance);
     final shadowY = character.y + opp(shadowAngle, shadowDistance);
     final shadowZ = character.z;
@@ -200,8 +200,8 @@ void renderCharacterTemplate(Character character, {
         anchorY: Anchor_Y
     );
 
-    // final height = gamestream.games.isometric.nodes.heightMap[(character.indexRow * gamestream.games.isometric.nodes.totalColumns) + character.indexColumn];
-    // GameRender.renderTextV3(character, gamestream.games.isometric.nodes.nodeAlps[character.nodeIndex - gamestream.games.isometric.nodes.area], offsetY: -80);
+    // final height = gamestream.isometricEngine.nodes.heightMap[(character.indexRow * gamestream.isometricEngine.nodes.totalColumns) + character.indexColumn];
+    // GameRender.renderTextV3(character, gamestream.isometricEngine.nodes.nodeAlps[character.nodeIndex - gamestream.isometricEngine.nodes.area], offsetY: -80);
 
     engine.renderSprite(
         image: GameImages.getImageForHeadType(character.headType),

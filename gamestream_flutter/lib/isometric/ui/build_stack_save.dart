@@ -9,7 +9,7 @@ final sceneNameController = TextEditingController()..addListener(onSceneNamedCha
 final enteredSceneNameText = Watch("");
 
 Widget buildControlSceneName(){
-  return watch(gamestream.games.isometric.serverState.sceneName, (String? sceneName){
+  return watch(gamestream.isometricEngine.serverState.sceneName, (String? sceneName){
       if (sceneName == null || sceneName.trim().isEmpty) {
         return Container(
           padding: const EdgeInsets.all(24),

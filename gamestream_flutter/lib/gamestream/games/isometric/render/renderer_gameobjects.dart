@@ -5,7 +5,7 @@ import 'functions/render_shadow.dart';
 class RendererGameObjects extends Renderer {
   static late GameObject gameObject;
 
-  static final gameObjects = gamestream.games.isometric.serverState.gameObjects;
+  static final gameObjects = gamestream.isometricEngine.serverState.gameObjects;
 
   @override
   int getTotal() {
@@ -26,7 +26,7 @@ class RendererGameObjects extends Renderer {
           srcY: srcY,
           srcWidth: 125,
           srcHeight: 125,
-          color: gamestream.games.isometric.clientState.getV3RenderColor(gameObject),
+          color: gamestream.isometricEngine.clientState.getV3RenderColor(gameObject),
           scale: 0.3
       );
       return;
@@ -44,10 +44,10 @@ class RendererGameObjects extends Renderer {
         srcHeight: AtlasItems.getSrcHeight(type),
         scale: AtlasItems.getSrcScale(type),
         color: gameObject.emission_type != EmissionType.Color
-            ? gamestream.games.isometric.clientState.getV3RenderColor(gameObject)
+            ? gamestream.isometricEngine.clientState.getV3RenderColor(gameObject)
             : gameObject.emission_col,
       );
-      if (gamestream.games.isometric.renderer.renderDebug) {
+      if (gamestream.isometricEngine.renderer.renderDebug) {
         renderGameObjectRadius(gameObject);
       }
 
@@ -63,7 +63,7 @@ class RendererGameObjects extends Renderer {
         srcY: 125,
         srcWidth: 125,
         srcHeight: 125,
-        color: gamestream.games.isometric.clientState.getV3RenderColor(gameObject),
+        color: gamestream.isometricEngine.clientState.getV3RenderColor(gameObject),
         scale: 0.3
       );
       return;
@@ -78,7 +78,7 @@ class RendererGameObjects extends Renderer {
           srcY: 0,
           srcWidth: 125,
           srcHeight: 125,
-          color: gamestream.games.isometric.clientState.getV3RenderColor(gameObject),
+          color: gamestream.isometricEngine.clientState.getV3RenderColor(gameObject),
           scale: 0.5
       );
       return;
@@ -93,7 +93,7 @@ class RendererGameObjects extends Renderer {
           srcY: 250,
           srcWidth: 125,
           srcHeight: 125,
-          color: gamestream.games.isometric.clientState.getV3RenderColor(gameObject),
+          color: gamestream.isometricEngine.clientState.getV3RenderColor(gameObject),
           scale: 0.5
       );
       return;
@@ -108,7 +108,7 @@ class RendererGameObjects extends Renderer {
           srcY: 375,
           srcWidth: 125,
           srcHeight: 125,
-          color: gamestream.games.isometric.clientState.getV3RenderColor(gameObject),
+          color: gamestream.isometricEngine.clientState.getV3RenderColor(gameObject),
           scale: 0.5
       );
       return;
@@ -123,7 +123,7 @@ class RendererGameObjects extends Renderer {
           srcY: 500,
           srcWidth: 125,
           srcHeight: 125,
-          color: gamestream.games.isometric.clientState.getV3RenderColor(gameObject),
+          color: gamestream.isometricEngine.clientState.getV3RenderColor(gameObject),
           scale: 0.4
       );
       return;
@@ -138,7 +138,7 @@ class RendererGameObjects extends Renderer {
           srcY: 625,
           srcWidth: 125,
           srcHeight: 125,
-          color: gamestream.games.isometric.clientState.getV3RenderColor(gameObject),
+          color: gamestream.isometricEngine.clientState.getV3RenderColor(gameObject),
           scale: 0.4
       );
       return;
@@ -152,7 +152,7 @@ class RendererGameObjects extends Renderer {
           srcY: 875,
           srcWidth: 125,
           srcHeight: 125,
-          color: gamestream.games.isometric.clientState.getV3RenderColor(gameObject),
+          color: gamestream.isometricEngine.clientState.getV3RenderColor(gameObject),
           scale: 0.5
       );
       return;
@@ -170,12 +170,12 @@ class RendererGameObjects extends Renderer {
       srcWidth: AtlasItems.getSrcWidth(type),
       srcHeight: AtlasItems.getSrcHeight(type),
       scale: AtlasItems.getSrcScale(gameObject.type),
-      color: gamestream.games.isometric.clientState.getV3RenderColor(gameObject),
+      color: gamestream.isometricEngine.clientState.getV3RenderColor(gameObject),
     );
   }
 
   void renderGameObjectRadius(GameObject gameObject) {
-    gamestream.games.isometric.renderer.renderCircle(
+    gamestream.isometricEngine.renderer.renderCircle(
         gameObject.x,
         gameObject.y,
         gameObject.z, ItemType.getRadius(gameObject.type),

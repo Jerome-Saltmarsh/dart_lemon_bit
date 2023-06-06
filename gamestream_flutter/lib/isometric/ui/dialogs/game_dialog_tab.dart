@@ -31,7 +31,7 @@ Widget buildGameDialog(GameDialog? gameDialog) =>
         children: GameDialog.values.map((e) =>
             container(
               child: e.name,
-              action: ()=> gamestream.games.isometric.player.gameDialog.value = e,
+              action: ()=> gamestream.isometricEngine.player.gameDialog.value = e,
               color: gameDialog == e ? brownDark : brownLight,
               hoverColor: brownDark,
             ),
@@ -51,5 +51,5 @@ Widget buildButtonCloseGameDialog() =>
     );
 
 void actionCloseGameDialog(){
-  gamestream.games.isometric.player.gameDialog.value = null;
+  gamestream.isometricEngine.player.gameDialog.value = null;
 }

@@ -38,7 +38,7 @@ class GameIsometricRenderer {
       final a = i * anglePerSection;
       lineX2 = adj(a, radius);
       lineY2 = opp(a, radius);
-      gamestream.games.isometric.renderer.renderLine(
+      gamestream.isometricEngine.renderer.renderLine(
         x + lineX1,
         y + lineY1,
         z,
@@ -71,13 +71,13 @@ class GameIsometricRenderer {
   }
 
   void renderMouseTargetName() {
-    if (!gamestream.games.isometric.player.mouseTargetAllie.value) return;
-    final mouseTargetName = gamestream.games.isometric.player.mouseTargetName.value;
+    if (!gamestream.isometricEngine.player.mouseTargetAllie.value) return;
+    final mouseTargetName = gamestream.isometricEngine.player.mouseTargetName.value;
     if (mouseTargetName == null) return;
     renderText(
         text: mouseTargetName,
-        x: gamestream.games.isometric.player.aimTargetPosition.renderX,
-        y: gamestream.games.isometric.player.aimTargetPosition.renderY - 55);
+        x: gamestream.isometricEngine.player.aimTargetPosition.renderX,
+        y: gamestream.isometricEngine.player.aimTargetPosition.renderY - 55);
   }
 
   void checkNext(Renderer renderer){
@@ -343,7 +343,7 @@ class GameIsometricRenderer {
   void renderForeground(Canvas canvas, Size size) {
 
     if (gamestream.io.inputModeKeyboard){
-      if (gamestream.games.isometric.clientState.hoverDialogType.value == DialogType.None){
+      if (gamestream.isometricEngine.clientState.hoverDialogType.value == DialogType.None){
         renderCursor(canvas);
       }
     }
@@ -356,30 +356,30 @@ class GameIsometricRenderer {
   }
 
   void playerAimTargetNameText(){
-    if (gamestream.games.isometric.player.aimTargetCategory == TargetCategory.Nothing)
+    if (gamestream.isometricEngine.player.aimTargetCategory == TargetCategory.Nothing)
       return;
-    if (gamestream.games.isometric.player.aimTargetName.isEmpty)
+    if (gamestream.isometricEngine.player.aimTargetName.isEmpty)
       return;
     const style = TextStyle(color: Colors.white, fontSize: 18);
     engine.renderText(
-      gamestream.games.isometric.player.aimTargetName,
-      engine.worldToScreenX(gamestream.games.isometric.player.aimTargetPosition.renderX),
-      engine.worldToScreenY(gamestream.games.isometric.player.aimTargetPosition.renderY),
+      gamestream.isometricEngine.player.aimTargetName,
+      engine.worldToScreenX(gamestream.isometricEngine.player.aimTargetPosition.renderX),
+      engine.worldToScreenY(gamestream.isometricEngine.player.aimTargetPosition.renderY),
       style: style,
     );
   }
 
   void renderCursor(Canvas canvas) {
-    final cooldown = gamestream.games.isometric.player.weaponCooldown.value;
-    final accuracy = gamestream.games.isometric.serverState.playerAccuracy.value;
+    final cooldown = gamestream.isometricEngine.player.weaponCooldown.value;
+    final accuracy = gamestream.isometricEngine.serverState.playerAccuracy.value;
     final distance = (cooldown + accuracy) * 10.0 + 5;
 
-    switch (gamestream.games.isometric.player.aimTargetCategory) {
+    switch (gamestream.isometricEngine.player.aimTargetCategory) {
       case TargetCategory.Nothing:
-        gamestream.games.isometric.renderer.canvasRenderCursorCrossHair(canvas, distance);
+        gamestream.isometricEngine.renderer.canvasRenderCursorCrossHair(canvas, distance);
 
-        if (gamestream.games.isometric.serverState.getEquippedWeaponConsumeType() != ItemType.Empty){
-          if (gamestream.games.isometric.serverState.getEquippedWeaponQuantity() <= 0){
+        if (gamestream.isometricEngine.serverState.getEquippedWeaponConsumeType() != ItemType.Empty){
+          if (gamestream.isometricEngine.serverState.getEquippedWeaponQuantity() <= 0){
             engine.renderExternalCanvas(
               canvas: canvas,
               image: GameImages.atlas_icons,
@@ -395,16 +395,16 @@ class GameIsometricRenderer {
 
         break;
       case TargetCategory.Collect:
-        gamestream.games.isometric.renderer.canvasRenderCursorHand(canvas);
+        gamestream.isometricEngine.renderer.canvasRenderCursorHand(canvas);
         return;
       case TargetCategory.Allie:
-        gamestream.games.isometric.renderer.canvasRenderCursorTalk(canvas);
+        gamestream.isometricEngine.renderer.canvasRenderCursorTalk(canvas);
         return;
       case TargetCategory.Enemy:
-        gamestream.games.isometric.renderer.canvasRenderCursorCrossHairRed(canvas, distance);
+        gamestream.isometricEngine.renderer.canvasRenderCursorCrossHairRed(canvas, distance);
 
-        if (gamestream.games.isometric.serverState.getEquippedWeaponConsumeType() != ItemType.Empty){
-          if (gamestream.games.isometric.serverState.getEquippedWeaponQuantity() <= 0){
+        if (gamestream.isometricEngine.serverState.getEquippedWeaponConsumeType() != ItemType.Empty){
+          if (gamestream.isometricEngine.serverState.getEquippedWeaponQuantity() <= 0){
             engine.renderExternalCanvas(
               canvas: canvas,
               image: GameImages.atlas_icons,
@@ -424,25 +424,25 @@ class GameIsometricRenderer {
   }
 
   void renderPlayerEnergy() {
-    if (gamestream.games.isometric.player.dead) return;
-    if (!gamestream.games.isometric.player.active.value) return;
+    if (gamestream.isometricEngine.player.dead) return;
+    if (!gamestream.isometricEngine.player.active.value) return;
     renderBarBlue(
-      gamestream.games.isometric.player.position.x,
-      gamestream.games.isometric.player.position.y,
-      gamestream.games.isometric.player.position.z,
-      gamestream.games.isometric.player.energyPercentage,
+      gamestream.isometricEngine.player.position.x,
+      gamestream.isometricEngine.player.position.y,
+      gamestream.isometricEngine.player.position.z,
+      gamestream.isometricEngine.player.energyPercentage,
     );
   }
 
   void debugRenderHeightMapValues() {
     var i = 0;
-    for (var row = 0; row < gamestream.games.isometric.nodes.totalRows; row++){
-      for (var column = 0; column < gamestream.games.isometric.nodes.totalColumns; column++){
-        gamestream.games.isometric.renderer.renderTextXYZ(
+    for (var row = 0; row < gamestream.isometricEngine.nodes.totalRows; row++){
+      for (var column = 0; column < gamestream.isometricEngine.nodes.totalColumns; column++){
+        gamestream.isometricEngine.renderer.renderTextXYZ(
           x: row * Node_Size,
           y: column * Node_Size,
           z: 5,
-          text: gamestream.games.isometric.nodes.heightMap[i].toString(),
+          text: gamestream.isometricEngine.nodes.heightMap[i].toString(),
         );
         i++;
       }
@@ -451,13 +451,13 @@ class GameIsometricRenderer {
 
   void debugRenderIsland() {
     var i = 0;
-    for (var row = 0; row < gamestream.games.isometric.nodes.totalRows; row++){
-      for (var column = 0; column < gamestream.games.isometric.nodes.totalColumns; column++){
+    for (var row = 0; row < gamestream.isometricEngine.nodes.totalRows; row++){
+      for (var column = 0; column < gamestream.isometricEngine.nodes.totalColumns; column++){
         if (!RendererNodes.island[i]) {
           i++;
           continue;
         }
-        gamestream.games.isometric.renderer.renderTextXYZ(
+        gamestream.isometricEngine.renderer.renderTextXYZ(
           x: row * Node_Size,
           y: column * Node_Size,
           z: 5,
@@ -470,8 +470,8 @@ class GameIsometricRenderer {
 
 
   void renderObjectRadius() {
-    for (var i = 0; i < gamestream.games.isometric.serverState.totalCharacters; i++) {
-      final character = gamestream.games.isometric.serverState.characters[i];
+    for (var i = 0; i < gamestream.isometricEngine.serverState.totalCharacters; i++) {
+      final character = gamestream.isometricEngine.serverState.characters[i];
       engine.renderCircle(character.renderX, character.renderY, CharacterType.getRadius(character.characterType), Colors.yellow);
     }
   }
@@ -482,10 +482,10 @@ class GameIsometricRenderer {
 
     final jumps = mouseDistance ~/ Node_Height_Half;
 
-    var x1 = gamestream.games.isometric.player.position.x;
-    var y1 = gamestream.games.isometric.player.position.y;
-    var i1 = gamestream.games.isometric.player.position.nodeIndex;
-    final z = gamestream.games.isometric.player.position.z + Node_Height_Half;
+    var x1 = gamestream.isometricEngine.player.position.x;
+    var y1 = gamestream.isometricEngine.player.position.y;
+    var i1 = gamestream.isometricEngine.player.position.nodeIndex;
+    final z = gamestream.isometricEngine.player.position.z + Node_Height_Half;
 
     final tX = adj(mouseAngle, Node_Height_Half);
     final tY = opp(mouseAngle, Node_Height_Half);
@@ -493,19 +493,19 @@ class GameIsometricRenderer {
     for (var i = 0; i < jumps; i++) {
       final x2 = x1 - tX;
       final y2 = y1 - tY;
-      final i2 = gamestream.games.isometric.nodes.getNodeIndex(x2, y2, z);
-      if (!NodeType.isTransient(gamestream.games.isometric.nodes.nodeTypes[i2])) break;
+      final i2 = gamestream.isometricEngine.nodes.getNodeIndex(x2, y2, z);
+      if (!NodeType.isTransient(gamestream.isometricEngine.nodes.nodeTypes[i2])) break;
       x1 = x2;
       y1 = y2;
       i1 = i2;
     }
-    gamestream.games.isometric.renderer.renderCircle32(x1, y1, z);
+    gamestream.isometricEngine.renderer.renderCircle32(x1, y1, z);
   }
 
   void renderPlayerRunTarget(){
-    if (gamestream.games.isometric.player.dead) return;
-    if (gamestream.games.isometric.player.targetCategory == TargetCategory.Run){
-      gamestream.games.isometric.renderer.renderCircle32(gamestream.games.isometric.player.targetPosition.x, gamestream.games.isometric.player.targetPosition.y, gamestream.games.isometric.player.targetPosition.z);
+    if (gamestream.isometricEngine.player.dead) return;
+    if (gamestream.isometricEngine.player.targetCategory == TargetCategory.Run){
+      gamestream.isometricEngine.renderer.renderCircle32(gamestream.isometricEngine.player.targetPosition.x, gamestream.isometricEngine.player.targetPosition.y, gamestream.isometricEngine.player.targetPosition.z);
     }
   }
 
