@@ -13,6 +13,19 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
     writeScore();
   }
 
+  @override
+  void writePlayerGame() {
+    super.writePlayerGame();
+    writeFlagPositions();
+  }
+
+  void writeFlagPositions() {
+    writeByte(ServerResponse.Capture_The_Flag);
+    writeByte(CaptureTheFlagResponse.Flag_Positions);
+    writeIsometricPosition(game.flagRed);
+    writeIsometricPosition(game.flagBlue);
+  }
+
   void writeScore() {
     writeByte(ServerResponse.Capture_The_Flag);
     writeByte(CaptureTheFlagResponse.Score);

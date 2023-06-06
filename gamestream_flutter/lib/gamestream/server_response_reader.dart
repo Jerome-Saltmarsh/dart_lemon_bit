@@ -106,12 +106,7 @@ class ServerResponseReader with ByteReader {
           readServerResponseFight2D(gamestream.games.fight2D);
           break;
         case ServerResponse.Capture_The_Flag:
-          switch (readByte()) {
-            case CaptureTheFlagResponse.Score:
-              gamestream.games.captureTheFlag.scoreRed.value = readUInt16();
-              gamestream.games.captureTheFlag.scoreBlue.value = readUInt16();
-              break;
-          }
+          readCaptureTheFlag();
           break;
         case ServerResponse.High_Score:
           gamestream.games.isometric.serverState.highScore.value = readUInt24();
@@ -138,6 +133,19 @@ class ServerResponseReader with ByteReader {
           return;
       }
       previousServerResponse = serverResponse;
+    }
+  }
+
+  void readCaptureTheFlag() {
+    switch (readByte()) {
+      case CaptureTheFlagResponse.Score:
+        gamestream.games.captureTheFlag.scoreRed.value = readUInt16();
+        gamestream.games.captureTheFlag.scoreBlue.value = readUInt16();
+        break;
+      case CaptureTheFlagResponse.Flag_Positions:
+        readVector3(gamestream.games.captureTheFlag.flagPositionRed);
+        readVector3(gamestream.games.captureTheFlag.flagPositionBlue);
+        break;
     }
   }
 

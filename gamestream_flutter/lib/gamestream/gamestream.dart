@@ -6,7 +6,6 @@ import 'package:gamestream_flutter/library.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'enums/operation_status.dart';
-import 'games/capture_the_flag/capture_the_flag_game.dart';
 import 'network/game_network.dart';
 import 'server_response_reader.dart';
 

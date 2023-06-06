@@ -1,5 +1,6 @@
 
 import 'package:bleed_server/common/src.dart';
+import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_flag_status.dart';
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_player.dart';
 import 'package:bleed_server/src/games/isometric/isometric_character.dart';
 import 'package:bleed_server/src/games/isometric/isometric_collider.dart';
@@ -26,6 +27,9 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   late final scoreRed = ChangeNotifier(0, dispatchScore);
   late final scoreBlue = ChangeNotifier(0, dispatchScore);
 
+  late final flagRedStatus = ChangeNotifier(CaptureTheFlagFlagStatus.At_Base, dispatchFlagStatus);
+  late final flagBlueStatus = ChangeNotifier(CaptureTheFlagFlagStatus.At_Base, dispatchFlagStatus);
+
   CaptureTheFlagGame({
     required super.scene,
     required super.time,
@@ -43,11 +47,6 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
 
   int countPlayersOnTeam(int team) =>
       players.where((player) => player.team == team).length;
-
-  @override
-  void customWriteGame() {
-  }
-
 
   @override
   void onPlayerUpdateRequestReceived({required IsometricPlayer player, required int direction, required bool mouseLeftDown, required bool mouseRightDown, required bool keySpaceDown, required bool inputTypeKeyboard}) {
@@ -143,6 +142,10 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     for (final player in players) {
       player.writeScore();
     }
+  }
+
+  void dispatchFlagStatus(){
+
   }
 
   @override

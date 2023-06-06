@@ -11,6 +11,9 @@ class CaptureTheFlagGame extends GameIsometric {
   final scoreRed = Watch(0);
   final scoreBlue = Watch(0);
 
+  final flagPositionRed = Vector3();
+  final flagPositionBlue = Vector3();
+
   @override
   Widget buildUI(BuildContext context) {
     return Stack(

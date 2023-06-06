@@ -944,7 +944,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   void writePlayerPosition(){
     writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Position);
-    writePosition3(this);
+    writeIsometricPosition(this);
   }
 
   void writePlayerHealth(){
@@ -1128,7 +1128,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     if (target == null) return;
     writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Target_Position);
-    writePosition3(target!);
+    writeIsometricPosition(target!);
   }
 
   void writePlayerTargetCategory(){
@@ -1141,7 +1141,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     if (aimTarget == null) return;
     writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Aim_Target_Position);
-    writePosition3(aimTarget!);
+    writeIsometricPosition(aimTarget!);
   }
 
   void writePlayerAimTargetCategory() {
@@ -1338,7 +1338,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     writeDouble(value.y);
   }
 
-  void writePosition3(IsometricPosition value){
+  void writeIsometricPosition(IsometricPosition value){
     writeDouble(value.x);
     writeDouble(value.y);
     writeDouble(value.z);
