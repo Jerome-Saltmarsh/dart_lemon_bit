@@ -6,6 +6,9 @@ import 'package:bleed_server/src/games/isometric/isometric_collider.dart';
 import 'package:bleed_server/src/games/isometric/isometric_game.dart';
 import 'package:bleed_server/src/games/isometric/isometric_gameobject.dart';
 import 'package:bleed_server/src/games/isometric/isometric_player.dart';
+import 'package:bleed_server/src/utilities/change_notifier.dart';
+
+
 
 class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
 
@@ -20,8 +23,8 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   IsometricCharacter? flagRedCharacter;
   IsometricCharacter? flagBlueCharacter;
 
-  var scoreRed = 0;
-  var scoreBlue = 0;
+  late final scoreRed = ChangeNotifier(0, dispatchScore);
+  late final scoreBlue = ChangeNotifier(0, dispatchScore);
 
   CaptureTheFlagGame({
     required super.scene,
@@ -90,8 +93,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
        if (a == baseRed || b == baseRed) {
          flagRedCharacter = null;
          flagRed.moveTo(baseRed);
-         scoreBlue++;
-         dispatchScore();
+         scoreBlue.value++;
          return;
        }
     }
@@ -108,8 +110,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
       if ((a == baseBlue || b == baseBlue) && flagRedCharacter?.team == CaptureTheFlagTeam.Blue) {
         flagRedCharacter = null;
         flagRed.moveTo(baseRed);
-        scoreBlue++;
-        dispatchScore();
+        scoreBlue.value++;
         return;
       }
     }

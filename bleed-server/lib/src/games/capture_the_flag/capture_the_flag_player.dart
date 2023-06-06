@@ -16,7 +16,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
   void writeScore() {
     writeByte(ServerResponse.Capture_The_Flag);
     writeByte(CaptureTheFlagResponse.Score);
-    writeUInt16(game.scoreRed);
-    writeUInt16(game.scoreBlue);
+    writeUInt16(game.scoreRed.value);
+    writeUInt16(game.scoreBlue.value);
   }
 }
