@@ -124,8 +124,9 @@ class ItemType {
 
   static const Body_Shirt_Cyan                  = Index_Bodies + 1;
   static const Body_Shirt_Blue                  = Index_Bodies + 2;
-  static const Body_Tunic_Padded                = Index_Bodies + 3;
-  static const Body_Swat                        = Index_Bodies + 4;
+  static const Body_Shirt_Red                   = Index_Bodies + 3;
+  static const Body_Tunic_Padded                = Index_Bodies + 4;
+  static const Body_Swat                        = Index_Bodies + 5;
 
   static const Legs_Brown                       = Index_Legs + 1;
   static const Legs_Blue                        = Index_Legs + 2;
@@ -163,30 +164,6 @@ class ItemType {
   static const Weapon_Ranged_Plasma_Rifle = Index_Weapon_Ranged + 17;
   static const Weapon_Ranged_Plasma_Pistol= Index_Weapon_Ranged + 18;
   static const Weapon_Ranged_Teleport     = Index_Weapon_Ranged + 19;
-
-  // static const Recipes = <int, List<int>> {
-  //   Consumables_Apple: const [
-  //     0003, Resource_Credit,
-  //   ],
-  //   Consumables_Meat: const [
-  //    0006, Resource_Credit,
-  //   ],
-  //   Weapon_Ranged_Pistol: const [
-  //     0010, Resource_Credit,
-  //   ],
-  //   Weapon_Ranged_Revolver: const [
-  //     0050, Resource_Credit,
-  //   ],
-  //   Weapon_Ranged_Handgun: const [
-  //     0050, Resource_Credit,
-  //   ],
-  //   Weapon_Ranged_Musket: const [
-  //     0050, Resource_Credit,
-  //   ],
-  //   Weapon_Ranged_Rifle: const [
-  //     0050, Resource_Credit,
-  //   ],
-  // };
 
   static bool isTypeEmpty(int value) => value == Empty;
   static bool isNotTypeEmpty(int value) => value != Empty;

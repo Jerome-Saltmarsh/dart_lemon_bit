@@ -111,6 +111,15 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     player.x = 100;
     player.y = 100;
     player.z = 50;
+
+    if (player.team == CaptureTheFlagTeam.Blue){
+       player.legsType = ItemType.Legs_Blue;
+       player.bodyType = ItemType.Body_Shirt_Blue;
+    } else {
+      player.legsType = ItemType.Legs_Red;
+      player.bodyType = ItemType.Body_Shirt_Red;
+    }
+
     return player;
   }
 

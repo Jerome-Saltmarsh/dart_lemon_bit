@@ -37,6 +37,7 @@ class GameImages {
 
    static late Image template_body_empty;
    static late Image template_body_blue;
+   static late Image template_body_red;
    static late Image template_body_cyan;
    static late Image template_body_swat;
    static late Image template_body_tunic;
@@ -77,120 +78,66 @@ class GameImages {
    static late Image template_weapon_crowbar;
    static late Image template_weapon_portal_gun;
 
-   static Image getImageForHeadType(int headType) {
-      switch (headType) {
-         case ItemType.Empty:
-            return template_head_plain;
-         case ItemType.Head_Rogues_Hood:
-            return template_head_rogue;
-         case ItemType.Head_Steel_Helm:
-            return template_head_steel;
-         case ItemType.Head_Wizards_Hat:
-            return template_head_wizard;
-         case ItemType.Head_Blonde:
-            return template_head_blonde;
-         case ItemType.Head_Swat:
-            return template_head_swat;
-         default:
-            throw Exception('GameImages.getImageForHeadType(${ItemType.getName(headType)})');
-      }
-   }
+   static Image getImageForHeadType(int headType) => switch (headType) {
+         ItemType.Empty => template_head_plain,
+         ItemType.Head_Rogues_Hood => template_head_rogue,
+         ItemType.Head_Steel_Helm => template_head_steel,
+         ItemType.Head_Wizards_Hat => template_head_wizard,
+         ItemType.Head_Blonde => template_head_blonde,
+         ItemType.Head_Swat => template_head_swat,
+         _ => throw Exception('GameImages.getImageForHeadType(${ItemType.getName(headType)})')
+      };
 
-   static Image getImageForBodyType(int bodyType) {
-      switch (bodyType) {
-         case ItemType.Empty:
-            return template_body_empty;
-         case ItemType.Body_Shirt_Blue:
-            return template_body_blue;
-         case ItemType.Body_Shirt_Cyan:
-            return template_body_cyan;
-         case ItemType.Body_Swat:
-            return template_body_swat;
-         case ItemType.Body_Tunic_Padded:
-            return template_body_tunic;
-         default:
-            throw Exception('GameImages.getImageForBodyType(${ItemType.getName(bodyType)})');
-      }
-   }
+   static Image getImageForBodyType(int bodyType) => switch (bodyType) {
+         ItemType.Empty => template_body_empty,
+         ItemType.Body_Shirt_Blue => template_body_blue,
+         ItemType.Body_Shirt_Red => template_body_red,
+         ItemType.Body_Shirt_Cyan => template_body_cyan,
+         ItemType.Body_Swat => template_body_swat,
+         ItemType.Body_Tunic_Padded => template_body_tunic,
+         _ => throw Exception('GameImages.getImageForBodyType(${ItemType.getName(bodyType)})')
+      };
 
-   static Image getImageForLegType(int legType) {
-      switch (legType) {
-         case ItemType.Empty:
-            return template_legs_none;
-         case ItemType.Legs_White:
-            return template_legs_white;
-         case ItemType.Legs_Blue:
-            return template_legs_blue;
-         case ItemType.Legs_Green:
-            return template_legs_green;
-         case ItemType.Legs_Brown:
-            return template_legs_brown;
-         case ItemType.Legs_Red:
-            return template_legs_red;
-         case ItemType.Legs_Swat:
-            return template_legs_swat;
-         default:
-            throw Exception('GameImages.getImageForLegType(${ItemType.getName(legType)})');
-      }
-   }
+   static Image getImageForLegType(int legType) => switch (legType) {
+         ItemType.Empty => template_legs_none,
+         ItemType.Legs_White => template_legs_white,
+         ItemType.Legs_Blue => template_legs_blue,
+         ItemType.Legs_Green => template_legs_green,
+         ItemType.Legs_Brown => template_legs_brown,
+         ItemType.Legs_Red => template_legs_red,
+         ItemType.Legs_Swat => template_legs_swat,
+         _ => throw Exception('GameImages.getImageForLegType(${ItemType.getName(legType)})')
+      };
 
-   static Image getImageForWeaponType(int weaponType) {
-      switch (weaponType) {
-         case ItemType.Weapon_Ranged_Machine_Gun:
-            return template_weapon_ak47;
-         case ItemType.Weapon_Ranged_Teleport:
-            return template_weapon_portal_gun;
-         case ItemType.Weapon_Ranged_Plasma_Rifle:
-            return template_weapon_plasma_rifle;
-         case ItemType.Weapon_Melee_Knife:
-            return template_weapon_knife;
-         case ItemType.Weapon_Ranged_Sniper_Rifle:
-            return template_weapon_sniper_rifle;
-         case ItemType.Weapon_Ranged_Minigun:
-            return template_weapon_minigun;
-         case ItemType.Weapon_Ranged_Musket:
-            return template_weapon_musket;
-         case ItemType.Weapon_Ranged_Rifle:
-            return template_weapon_winchester;
-         case ItemType.Weapon_Ranged_Smg:
-            return template_weapon_mp5;
-         case ItemType.Weapon_Ranged_Desert_Eagle:
-            return template_weapon_desert_eagle;
-         case ItemType.Weapon_Ranged_Plasma_Pistol:
-            return template_weapon_plasma_pistol;
-         case ItemType.Weapon_Ranged_Handgun:
-            return template_weapon_handgun_black;
-         case ItemType.Weapon_Ranged_Pistol:
-            return template_weapon_handgun_flintlock;
-         case ItemType.Weapon_Ranged_Revolver:
-            return template_weapon_revolver;
-         case ItemType.Weapon_Ranged_Shotgun:
-            return template_weapon_shotgun;
-         case ItemType.Weapon_Ranged_Bow:
-            return template_weapon_bow;
-         case ItemType.Weapon_Melee_Staff:
-            return template_weapon_staff;
-         case ItemType.Weapon_Melee_Sword:
-            return template_weapon_sword_steel;
-         case ItemType.Weapon_Melee_Pickaxe:
-            return template_weapon_pickaxe;
-         case ItemType.Weapon_Melee_Axe:
-            return template_weapon_axe;
-         case ItemType.Weapon_Melee_Hammer:
-            return template_weapon_hammer;
-         case ItemType.Weapon_Melee_Crowbar:
-            return template_weapon_crowbar;
-         case ItemType.Weapon_Ranged_Flamethrower:
-            return template_weapon_flamethrower;
-         case ItemType.Weapon_Ranged_Bazooka:
-            return template_weapon_bazooka;
-         case ItemType.Weapon_Thrown_Grenade:
-            return template_weapon_grenade;
+   static Image getImageForWeaponType(int weaponType) => switch (weaponType) {
+         ItemType.Weapon_Ranged_Machine_Gun => template_weapon_ak47,
+         ItemType.Weapon_Ranged_Teleport => template_weapon_portal_gun,
+         ItemType.Weapon_Ranged_Plasma_Rifle => template_weapon_plasma_rifle,
+         ItemType.Weapon_Melee_Knife => template_weapon_knife,
+         ItemType.Weapon_Ranged_Sniper_Rifle => template_weapon_sniper_rifle,
+         ItemType.Weapon_Ranged_Minigun => template_weapon_minigun,
+         ItemType.Weapon_Ranged_Musket => template_weapon_musket,
+         ItemType.Weapon_Ranged_Rifle => template_weapon_winchester,
+         ItemType.Weapon_Ranged_Smg => template_weapon_mp5,
+         ItemType.Weapon_Ranged_Desert_Eagle => template_weapon_desert_eagle,
+         ItemType.Weapon_Ranged_Plasma_Pistol => template_weapon_plasma_pistol,
+         ItemType.Weapon_Ranged_Handgun => template_weapon_handgun_black,
+         ItemType.Weapon_Ranged_Pistol => template_weapon_handgun_flintlock,
+         ItemType.Weapon_Ranged_Revolver => template_weapon_revolver,
+         ItemType.Weapon_Ranged_Shotgun => template_weapon_shotgun,
+         ItemType.Weapon_Ranged_Bow => template_weapon_bow,
+         ItemType.Weapon_Melee_Staff => template_weapon_staff,
+         ItemType.Weapon_Melee_Sword => template_weapon_sword_steel,
+         ItemType.Weapon_Melee_Pickaxe => template_weapon_pickaxe,
+         ItemType.Weapon_Melee_Axe => template_weapon_axe,
+         ItemType.Weapon_Melee_Hammer => template_weapon_hammer,
+         ItemType.Weapon_Melee_Crowbar => template_weapon_crowbar,
+         ItemType.Weapon_Ranged_Flamethrower => template_weapon_flamethrower,
+         ItemType.Weapon_Ranged_Bazooka => template_weapon_bazooka,
+         ItemType.Weapon_Thrown_Grenade => template_weapon_grenade,
 
-         default:
-            throw Exception("GameImages.getImageForWeaponType(${ItemType.getName(weaponType)})");
-      }
-   }
+         _ => throw Exception("GameImages.getImageForWeaponType(${ItemType.getName(weaponType)})")
+      };
 
    static void loadImages() {
       Engine.loadImageAsset('images/shades.png').then((value) => shades = value);
@@ -216,6 +163,7 @@ class GameImages {
       Engine.loadImageAsset('images/template/head/template-head-wizard.png').then((value) => template_head_wizard = value);
       Engine.loadImageAsset('images/template/head/template-head-blonde.png').then((value) => template_head_blonde = value);
       Engine.loadImageAsset('images/template/body/template-body-blue.png').then((value) => template_body_blue = value);
+      Engine.loadImageAsset('images/template/body/template-body-red.png').then((value) => template_body_red = value);
       Engine.loadImageAsset('images/template/body/template-body-cyan.png').then((value) => template_body_cyan = value);
       Engine.loadImageAsset('images/template/body/template-body-swat.png').then((value) => template_body_swat = value);
       Engine.loadImageAsset('images/template/body/template-body-tunic.png').then((value) => template_body_tunic = value);
