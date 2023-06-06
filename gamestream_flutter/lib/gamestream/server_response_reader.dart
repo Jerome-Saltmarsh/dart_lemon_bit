@@ -142,14 +142,19 @@ class ServerResponseReader with ByteReader {
   }
 
   void readCaptureTheFlag() {
+    final captureTheFlag = gamestream.games.captureTheFlag;
     switch (readByte()) {
       case CaptureTheFlagResponse.Score:
-        gamestream.games.captureTheFlag.scoreRed.value = readUInt16();
-        gamestream.games.captureTheFlag.scoreBlue.value = readUInt16();
+        captureTheFlag.scoreRed.value = readUInt16();
+        captureTheFlag.scoreBlue.value = readUInt16();
         break;
       case CaptureTheFlagResponse.Flag_Positions:
-        readVector3(gamestream.games.captureTheFlag.flagPositionRed);
-        readVector3(gamestream.games.captureTheFlag.flagPositionBlue);
+        readVector3(captureTheFlag.flagPositionRed);
+        readVector3(captureTheFlag.flagPositionBlue);
+        break;
+      case CaptureTheFlagResponse.Flag_Status:
+        captureTheFlag.flagStatusRed.value = readByte();
+        captureTheFlag.flagStatusBlue.value = readByte();
         break;
     }
   }

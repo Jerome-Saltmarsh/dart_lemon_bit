@@ -10,7 +10,6 @@ import 'package:bleed_server/src/games/isometric/isometric_player.dart';
 import 'package:bleed_server/src/utilities/change_notifier.dart';
 
 
-
 class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
 
   static const Base_Radius = 64.0;
@@ -82,16 +81,13 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     if (a == flagBlue || b == flagBlue) {
        if (flagBlueCharacter != null && flagBlueCharacter!.team == CaptureTheFlagTeam.Blue) {
            if (b == baseBlue || a == baseBlue){
-              flagBlueCharacter = null;
-              flagBlue.moveTo(baseBlue);
-              // event blue flag returned to base
+              returnBlueFlagToBase();
               return;
            }
        }
 
        if (a == baseRed || b == baseRed) {
-         flagRedCharacter = null;
-         flagRed.moveTo(baseRed);
+         returnBlueFlagToBase();
          scoreBlue.value++;
          return;
        }
@@ -100,19 +96,28 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     if (a == flagRed || b == flagRed) {
 
       if ((a == baseRed || b == baseRed) && flagRedCharacter?.team == CaptureTheFlagTeam.Red){
-        flagRedCharacter = null;
-        flagRed.moveTo(baseRed);
-        // dispatch event red flag returned to red base
+        returnRedFlagToBase();
         return;
       }
 
       if ((a == baseBlue || b == baseBlue) && flagRedCharacter?.team == CaptureTheFlagTeam.Blue) {
-        flagRedCharacter = null;
-        flagRed.moveTo(baseRed);
+        returnRedFlagToBase();
         scoreBlue.value++;
         return;
       }
     }
+  }
+
+  void returnRedFlagToBase() {
+    flagRedCharacter = null;
+    flagRed.moveTo(baseRed);
+    flagRedStatus.value = CaptureTheFlagFlagStatus.At_Base;
+  }
+
+  void returnBlueFlagToBase() {
+    flagBlueCharacter = null;
+    flagBlue.moveTo(baseBlue);
+    flagBlueStatus.value = CaptureTheFlagFlagStatus.At_Base;
   }
 
   @override
@@ -122,8 +127,12 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
       if (player.team == CaptureTheFlagTeam.Red || flagBlue.getDistance3(baseBlue) > Base_Radius){
         if (flagRedCharacter != player){
           flagBlueCharacter = player;
+          if (player.team == CaptureTheFlagTeam.Red){
+            flagBlueStatus.value = CaptureTheFlagFlagStatus.Carried_By_Enemy;
+          } else {
+            flagBlueStatus.value = CaptureTheFlagFlagStatus.Carried_By_Allie;
+          }
         }
-
       }
       return;
     }
@@ -132,6 +141,11 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
       if (player.team == CaptureTheFlagTeam.Blue || flagRed.getDistance3(baseRed) > Base_Radius){
         if (flagBlueCharacter != player){
           flagRedCharacter = player;
+          if (player.team == CaptureTheFlagTeam.Blue){
+            flagRedStatus.value = CaptureTheFlagFlagStatus.Carried_By_Enemy;
+          } else {
+            flagRedStatus.value = CaptureTheFlagFlagStatus.Carried_By_Allie;
+          }
         }
       }
       return;
@@ -145,7 +159,9 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   }
 
   void dispatchFlagStatus(){
-
+    for (final player in players) {
+      player.writeFlagStatus();
+    }
   }
 
   @override
