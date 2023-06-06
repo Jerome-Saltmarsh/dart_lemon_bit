@@ -1,10 +1,7 @@
 
-import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_team.dart';
-import 'package:bleed_server/common/src/game_type.dart';
-import 'package:bleed_server/common/src/item_type.dart';
+import 'package:bleed_server/common/src.dart';
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_player.dart';
 import 'package:bleed_server/src/games/isometric/isometric_character.dart';
-import 'package:bleed_server/src/games/isometric/isometric_collider.dart';
 import 'package:bleed_server/src/games/isometric/isometric_game.dart';
 import 'package:bleed_server/src/games/isometric/isometric_gameobject.dart';
 import 'package:bleed_server/src/games/isometric/isometric_player.dart';
@@ -21,6 +18,9 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
 
   IsometricCharacter? flagRedCharacter;
   IsometricCharacter? flagBlueCharacter;
+
+  var scoreRed = 0;
+  var scoreBlue = 0;
 
   int get countPlayersOnTeamRed => countPlayersOnTeam(CaptureTheFlagTeam.Red);
   int get countPlayersOnTeamBlue => countPlayersOnTeam(CaptureTheFlagTeam.Blue);
@@ -77,15 +77,24 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     if (gameObject == baseBlue && player == flagRedCharacter) {
       flagRedCharacter = null;
       flagRed.moveTo(baseRed);
+      scoreBlue++;
+      dispatchScore();
       return;
     }
 
     if (gameObject == baseRed && player == flagBlueCharacter) {
       flagBlueCharacter = null;
       flagBlue.moveTo(baseBlue);
+      scoreRed++;
+      dispatchScore();
       return;
     }
+  }
 
+  void dispatchScore() {
+    for (final player in players) {
+      player.writeScore();
+    }
   }
 
   @override
@@ -124,5 +133,5 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   }
 
   @override
-  int get maxPlayers => 8;
+  int get maxPlayers => 10;
 }

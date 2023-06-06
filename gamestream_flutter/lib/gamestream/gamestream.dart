@@ -132,7 +132,7 @@ class Gamestream {
        GameType.Combat  => games.isometric,
        GameType.Cube3D  => games.cube3D,
        GameType.Aeon    => games.isometric,
-       GameType.Capture_The_Flag => CaptureTheFlagGame(),
+       GameType.Capture_The_Flag => games.captureTheFlag,
        _ => throw Exception('mapGameTypeToGame($gameType)')
      };
    }

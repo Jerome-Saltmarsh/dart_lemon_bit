@@ -29,6 +29,7 @@ class ServerResponse {
   static const Api_SPR                    = 28;
   static const High_Score                 = 29;
   static const Fight2D                    = 30;
+  static const Capture_The_Flag           = 31;
 }
 
 

@@ -105,6 +105,14 @@ class ServerResponseReader with ByteReader {
         case ServerResponse.Fight2D:
           readServerResponseFight2D(gamestream.games.fight2D);
           break;
+        case ServerResponse.Capture_The_Flag:
+          switch (readByte()) {
+            case CaptureTheFlagResponse.Score:
+              gamestream.games.captureTheFlag.scoreRed.value = readUInt16();
+              gamestream.games.captureTheFlag.scoreBlue.value = readUInt16();
+              break;
+          }
+          break;
         case ServerResponse.High_Score:
           gamestream.games.isometric.serverState.highScore.value = readUInt24();
           break;

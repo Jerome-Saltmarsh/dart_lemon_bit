@@ -1,6 +1,8 @@
 
 library common;
 
+export 'src/capture_the_flag/capture_the_flag_response.dart';
+export 'src/capture_the_flag/capture_the_flag_team.dart';
 export 'src/enums/ai_mode.dart';
 export 'src/enums/item_group.dart';
 export 'src/enums/tag_type.dart';
