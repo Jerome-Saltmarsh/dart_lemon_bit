@@ -12,27 +12,27 @@ class IsometricActions {
   static const Zoom_Close = 1.5;
 
   void loadSelectedSceneName(){
-    final sceneName = gamestream.isometricEngine.editor.selectedSceneName.value;
+    final sceneName = gamestream.isometric.editor.selectedSceneName.value;
     if (sceneName == null) throw Exception("loadSelectedSceneNameException: selected scene name is null");
     gamestream.network.sendClientRequestEditorLoadGame(sceneName);
-    gamestream.isometricEngine.editor.actionGameDialogClose();
+    gamestream.isometric.editor.actionGameDialogClose();
   }
 
   void rainStart(){
-    final nodes = gamestream.isometricEngine.nodes;
+    final nodes = gamestream.isometric.nodes;
     final rows = nodes.totalRows;
     final columns = nodes.totalColumns;
     final zs = nodes.totalZ - 1;
     for (var row = 0; row < rows; row++) {
       for (var column = 0; column < columns; column++) {
         for (var z = zs; z >= 0; z--) {
-          final index = gamestream.isometricEngine.clientState.getNodeIndexZRC(z, row, column);
+          final index = gamestream.isometric.clientState.getNodeIndexZRC(z, row, column);
           final type = nodes.nodeTypes[index];
           if (type != NodeType.Empty) {
             if (type == NodeType.Water || nodes.nodeOrientations[index] == NodeOrientation.Solid) {
-              gamestream.isometricEngine.clientState.setNodeType(z + 1, row, column, NodeType.Rain_Landing);
+              gamestream.isometric.clientState.setNodeType(z + 1, row, column, NodeType.Rain_Landing);
             }
-            gamestream.isometricEngine.clientState.setNodeType(z + 2, row, column, NodeType.Rain_Falling);
+            gamestream.isometric.clientState.setNodeType(z + 2, row, column, NodeType.Rain_Falling);
             break;
           }
           if (
@@ -41,7 +41,7 @@ class IsometricActions {
               !nodes.gridNodeZRCTypeRainOrEmpty(z, row - 1, column) ||
               !nodes.gridNodeZRCTypeRainOrEmpty(z, row, column - 1)
           ){
-            gamestream.isometricEngine.clientState.setNodeType(z, row, column, NodeType.Rain_Falling);
+            gamestream.isometric.clientState.setNodeType(z, row, column, NodeType.Rain_Falling);
           }
         }
       }
@@ -49,7 +49,7 @@ class IsometricActions {
   }
 
   void rainStop() {
-    final nodes = gamestream.isometricEngine.nodes;
+    final nodes = gamestream.isometric.nodes;
     for (var i = 0; i < nodes.total; i++) {
       if (!NodeType.isRain(nodes.nodeTypes[i])) continue;
       nodes.nodeTypes[i] = NodeType.Empty;
@@ -63,15 +63,15 @@ class IsometricActions {
   }
 
   void actionSetModePlay(){
-    gamestream.isometricEngine.clientState.edit.value = false;
+    gamestream.isometric.clientState.edit.value = false;
   }
 
   void actionSetModeEdit(){
-    gamestream.isometricEngine.clientState.edit.value = true;
+    gamestream.isometric.clientState.edit.value = true;
   }
 
   void actionToggleEdit() {
-    gamestream.isometricEngine.clientState.edit.value = !gamestream.isometricEngine.clientState.edit.value;
+    gamestream.isometric.clientState.edit.value = !gamestream.isometric.clientState.edit.value;
   }
 
   void messageBoxToggle(){
@@ -87,7 +87,7 @@ class IsometricActions {
   }
 
   void toggleDebugMode(){
-    gamestream.isometricEngine.clientState.debugMode.value = !gamestream.isometricEngine.clientState.debugMode.value;;
+    gamestream.isometric.clientState.debugMode.value = !gamestream.isometric.clientState.debugMode.value;;
   }
 
   void setTarget() {
@@ -113,18 +113,18 @@ class IsometricActions {
   }
 
   void toggleWindowSettings(){
-      gamestream.isometricEngine.clientState.window_visible_light_settings.toggle();
+      gamestream.isometric.clientState.window_visible_light_settings.toggle();
   }
 
   void createExplosion(double x, double y, double z){
-    gamestream.isometricEngine.clientState.spawnParticleLightEmissionAmbient(x: x, y: y, z: z);
+    gamestream.isometric.clientState.spawnParticleLightEmissionAmbient(x: x, y: y, z: z);
     gamestream.audio.explosion_grenade_04.playXYZ(x, y, z);
 
     for (var i = 0; i <= 8; i++){
       final angle = piQuarter * i;
       final speed = randomBetween(0.5, 3.5);
 
-      gamestream.isometricEngine.clientState.spawnParticleFire(
+      gamestream.isometric.clientState.spawnParticleFire(
           x: x,
           y: y,
           z: z,
@@ -134,13 +134,13 @@ class IsometricActions {
       ;
     }
 
-    gamestream.isometricEngine.clientState.spawnParticleFire(x: x, y: y, z: z)..delay = 0;
-    gamestream.isometricEngine.clientState.spawnParticleFire(x: x, y: y, z: z)..delay = 2;
-    gamestream.isometricEngine.clientState.spawnParticleFire(x: x, y: y, z: z)..delay = 4;
-    gamestream.isometricEngine.clientState.spawnParticleFire(x: x, y: y, z: z)..delay = 6;
+    gamestream.isometric.clientState.spawnParticleFire(x: x, y: y, z: z)..delay = 0;
+    gamestream.isometric.clientState.spawnParticleFire(x: x, y: y, z: z)..delay = 2;
+    gamestream.isometric.clientState.spawnParticleFire(x: x, y: y, z: z)..delay = 4;
+    gamestream.isometric.clientState.spawnParticleFire(x: x, y: y, z: z)..delay = 6;
 
     for (var i = 0; i < 7; i++) {
-      gamestream.isometricEngine.clientState.spawnParticle(
+      gamestream.isometric.clientState.spawnParticle(
         type: ParticleType.Fire,
         x: x,
         y: y,
@@ -160,7 +160,7 @@ class IsometricActions {
 
     for (var i = 0; i < 7; i++) {
       const r = 5.0;
-      gamestream.isometricEngine.clientState.spawnParticleSmoke(
+      gamestream.isometric.clientState.spawnParticleSmoke(
           x: x + giveOrTake(r),
           y: y + giveOrTake(r),
           z: z+ giveOrTake(r),

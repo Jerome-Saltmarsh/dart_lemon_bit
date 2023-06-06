@@ -23,7 +23,7 @@ class EditorUI {
 
   static Widget buildUI(EditTab activeEditTab) => buildPage(
     children: [
-      watch(gamestream.isometricEngine.editor.editorDialog, buildWatchEditorDialog),
+      watch(gamestream.isometric.editor.editorDialog, buildWatchEditorDialog),
       Positioned(
           bottom: 10,
           child: Container(
@@ -55,7 +55,7 @@ class EditorUI {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               watch(
-                  gamestream.isometricEngine.editor.nodeSelectedType,
+                  gamestream.isometric.editor.nodeSelectedType,
                       (int selectedNodeType) => Row(
                     children: [
                       if (NodeType.supportsOrientationEmpty(
@@ -103,7 +103,7 @@ class EditorUI {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   buildEditorSelectedNode(),
-                  watch(gamestream.isometricEngine.editor.nodeSelectedOrientation,
+                  watch(gamestream.isometric.editor.nodeSelectedOrientation,
                       buildColumnEditNodeOrientation),
                 ],
               ),
@@ -347,7 +347,7 @@ class EditorUI {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         text("Underground"),
-                        watch(gamestream.isometricEngine.serverState.sceneUnderground, text),
+                        watch(gamestream.isometric.serverState.sceneUnderground, text),
                       ],
                     ),
                   ),
@@ -369,7 +369,7 @@ class EditorUI {
 
   static Widget buildEditorTabGameObjects() =>
 
-      watch(gamestream.isometricEngine.editor.gameObjectSelected, (bool objectSelected){
+      watch(gamestream.isometric.editor.gameObjectSelected, (bool objectSelected){
           if (objectSelected){
             return buildColumnSelectedGameObject();
           }
@@ -422,7 +422,7 @@ class EditorUI {
               color: color,
               action: () =>
                   gamestream.network.sendClientRequestAddGameObject(
-                    index: gamestream.isometricEngine.editor.nodeSelectedIndex.value,
+                    index: gamestream.isometric.editor.nodeSelectedIndex.value,
                     type: gameObjectType,
                   )),
         ),
@@ -476,7 +476,7 @@ class EditorUI {
       );
 
   static Widget buildIconRain(int rain) => watch(
-      gamestream.isometricEngine.serverState.rainType,
+      gamestream.isometric.serverState.rainType,
       (int activeRain) => buildIconWeatherControl(
             tooltip: '${RainType.getName(rain)} Rain',
             action: () => gamestream.network.sendClientRequestWeatherSetRain(rain),
@@ -485,7 +485,7 @@ class EditorUI {
           ));
 
   static Widget buildIconLightning(int lightning) => watch(
-      gamestream.isometricEngine.serverState.lightningType,
+      gamestream.isometric.serverState.lightningType,
       (int activeLightning) => buildIconWeatherControl(
             tooltip: '${LightningType.getName(lightning)} Lightning',
             action: () =>
@@ -496,7 +496,7 @@ class EditorUI {
           ));
 
   static Widget buildIconWind(int windType) => watch(
-      gamestream.isometricEngine.serverState.windTypeAmbient,
+      gamestream.isometric.serverState.windTypeAmbient,
       (int activeWindType) => buildIconWeatherControl(
             tooltip: '${WindType.getName(windType)} Wind',
             action: () => gamestream.network.sendClientRequestWeatherSetWind(windType),
@@ -569,7 +569,7 @@ class EditorUI {
   static Widget buildControlTime() {
     const totalWidth = 300.0;
     const buttonWidth = totalWidth / 24.0;
-    final buttons = watch(gamestream.isometricEngine.serverState.hours, (int hours) {
+    final buttons = watch(gamestream.isometric.serverState.hours, (int hours) {
       final buttons1 = <Widget>[];
       final buttons2 = <Widget>[];
 
@@ -610,9 +610,9 @@ class EditorUI {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        watch(gamestream.isometricEngine.serverState.hours, (num hour) => text(padZero(hour))),
+        watch(gamestream.isometric.serverState.hours, (num hour) => text(padZero(hour))),
         text(":"),
-        watch(gamestream.isometricEngine.serverState.minutes, (num hour) => text(padZero(hour))),
+        watch(gamestream.isometric.serverState.minutes, (num hour) => text(padZero(hour))),
       ],
     );
     return Container(
@@ -644,7 +644,7 @@ class EditorUI {
       srcHeight: AtlasNodeHeight.mapNodeType(nodeType),
     );
 
-    return WatchBuilder(gamestream.isometricEngine.editor.nodeSelectedType, (int selectedNodeType) {
+    return WatchBuilder(gamestream.isometric.editor.nodeSelectedType, (int selectedNodeType) {
       return container(
           height: 78,
           width: 78,
@@ -654,11 +654,11 @@ class EditorUI {
             message: NodeType.getName(nodeType),
           ),
           action: () {
-            if (gamestream.isometricEngine.clientState.playMode) {
-              gamestream.isometricEngine.actions.actionSetModePlay();
+            if (gamestream.isometric.clientState.playMode) {
+              gamestream.isometric.actions.actionSetModePlay();
               return;
             }
-            gamestream.isometricEngine.editor.paint(nodeType: nodeType);
+            gamestream.isometric.editor.paint(nodeType: nodeType);
           },
           color: selectedNodeType == nodeType ? greyDark : grey);
     });
@@ -694,7 +694,7 @@ class EditorUI {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            watch(gamestream.isometricEngine.serverState.gameRunning, (gameRunning) {
+            watch(gamestream.isometric.serverState.gameRunning, (gameRunning) {
               return text("Game Running: $gameRunning", onPressed: () => gamestream.network.sendClientRequestEdit(EditRequest.Toggle_Game_Running));
             }),
             text ("Reset", onPressed: ServerActions.editSceneReset),
@@ -723,14 +723,14 @@ class EditorUI {
     return onPressed(
       hint: NodeOrientation.getName(orientation),
       action: () {
-        gamestream.isometricEngine.editor.paintOrientation.value = orientation;
+        gamestream.isometric.editor.paintOrientation.value = orientation;
         gamestream.network.sendClientRequestSetBlock(
-          index: gamestream.isometricEngine.editor.nodeSelectedIndex.value,
-          type: gamestream.isometricEngine.editor.nodeSelectedType.value,
+          index: gamestream.isometric.editor.nodeSelectedIndex.value,
+          type: gamestream.isometric.editor.nodeSelectedType.value,
           orientation: orientation,
         );
       },
-      child: watch(gamestream.isometricEngine.editor.nodeSelectedOrientation,
+      child: watch(gamestream.isometric.editor.nodeSelectedOrientation,
           (int selectedNodeOrientation) {
         return Container(
             width: 72,
@@ -877,7 +877,7 @@ class EditorUI {
   }
 
   static Widget buildColumnColumns(){
-    return watch(gamestream.isometricEngine.editor.nodeSelectedOrientation, (int nodeOrientation){
+    return watch(gamestream.isometric.editor.nodeSelectedOrientation, (int nodeOrientation){
       var mousePosX = 0.0;
       var mousePosY = 0.0;
       var indexX = 0;
@@ -940,24 +940,24 @@ class EditorUI {
             indexY = column;
             if (row == 0 && column == 2){
               gamestream.network.sendClientRequestSetBlock(
-                index: gamestream.isometricEngine.editor.nodeSelectedIndex.value,
-                type: gamestream.isometricEngine.editor.nodeSelectedType.value,
+                index: gamestream.isometric.editor.nodeSelectedIndex.value,
+                type: gamestream.isometric.editor.nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Top_Left,
               );
               return;
             }
             if (row == 0 && column == 1){
               gamestream.network.sendClientRequestSetBlock(
-                index: gamestream.isometricEngine.editor.nodeSelectedIndex.value,
-                type: gamestream.isometricEngine.editor.nodeSelectedType.value,
+                index: gamestream.isometric.editor.nodeSelectedIndex.value,
+                type: gamestream.isometric.editor.nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Top_Center,
               );
               return;
             }
             if (row == 0 && column == 0){
               gamestream.network.sendClientRequestSetBlock(
-                index: gamestream.isometricEngine.editor.nodeSelectedIndex.value,
-                type: gamestream.isometricEngine.editor.nodeSelectedType.value,
+                index: gamestream.isometric.editor.nodeSelectedIndex.value,
+                type: gamestream.isometric.editor.nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Top_Right,
               );
               return;
@@ -965,24 +965,24 @@ class EditorUI {
 
             if (row == 1 && column == 2){
               gamestream.network.sendClientRequestSetBlock(
-                index: gamestream.isometricEngine.editor.nodeSelectedIndex.value,
-                type: gamestream.isometricEngine.editor.nodeSelectedType.value,
+                index: gamestream.isometric.editor.nodeSelectedIndex.value,
+                type: gamestream.isometric.editor.nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Center_Left,
               );
               return;
             }
             if (row == 1 && column == 1){
               gamestream.network.sendClientRequestSetBlock(
-                index: gamestream.isometricEngine.editor.nodeSelectedIndex.value,
-                type: gamestream.isometricEngine.editor.nodeSelectedType.value,
+                index: gamestream.isometric.editor.nodeSelectedIndex.value,
+                type: gamestream.isometric.editor.nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Center_Center,
               );
               return;
             }
             if (row == 1 && column == 0){
               gamestream.network.sendClientRequestSetBlock(
-                index: gamestream.isometricEngine.editor.nodeSelectedIndex.value,
-                type: gamestream.isometricEngine.editor.nodeSelectedType.value,
+                index: gamestream.isometric.editor.nodeSelectedIndex.value,
+                type: gamestream.isometric.editor.nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Center_Right,
               );
               return;
@@ -990,24 +990,24 @@ class EditorUI {
 
             if (row == 2 && column == 2){
               gamestream.network.sendClientRequestSetBlock(
-                index: gamestream.isometricEngine.editor.nodeSelectedIndex.value,
-                type: gamestream.isometricEngine.editor.nodeSelectedType.value,
+                index: gamestream.isometric.editor.nodeSelectedIndex.value,
+                type: gamestream.isometric.editor.nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Bottom_Left,
               );
               return;
             }
             if (row == 2 && column == 1){
               gamestream.network.sendClientRequestSetBlock(
-                index: gamestream.isometricEngine.editor.nodeSelectedIndex.value,
-                type: gamestream.isometricEngine.editor.nodeSelectedType.value,
+                index: gamestream.isometric.editor.nodeSelectedIndex.value,
+                type: gamestream.isometric.editor.nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Bottom_Center,
               );
               return;
             }
             if (row == 2 && column == 0){
               gamestream.network.sendClientRequestSetBlock(
-                index: gamestream.isometricEngine.editor.nodeSelectedIndex.value,
-                type: gamestream.isometricEngine.editor.nodeSelectedType.value,
+                index: gamestream.isometric.editor.nodeSelectedIndex.value,
+                type: gamestream.isometric.editor.nodeSelectedType.value,
                 orientation: NodeOrientation.Column_Bottom_Right,
               );
               return;
@@ -1047,7 +1047,7 @@ class EditorUI {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              watch(gamestream.isometricEngine.editor.gameObjectSelectedType, (int type) {
+              watch(gamestream.isometric.editor.gameObjectSelectedType, (int type) {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -1071,7 +1071,7 @@ class EditorUI {
                       ],
                     ),
                     height8,
-                    watch(gamestream.isometricEngine.editor.gameObjectSelectedCollidable, (bool enabled) =>
+                    watch(gamestream.isometric.editor.gameObjectSelectedCollidable, (bool enabled) =>
                       onPressed(
                         action: () => gamestream.network.sendGameObjectRequest(GameObjectRequest.Toggle_Strikable),
                         child: Row(
@@ -1083,7 +1083,7 @@ class EditorUI {
                         ),
                       )
                     ),
-                    watch(gamestream.isometricEngine.editor.gameObjectSelectedGravity, (bool enabled) =>
+                    watch(gamestream.isometric.editor.gameObjectSelectedGravity, (bool enabled) =>
                         onPressed(
                           action: () => gamestream.network.sendGameObjectRequest(GameObjectRequest.Toggle_Gravity),
                           child: Row(
@@ -1095,7 +1095,7 @@ class EditorUI {
                           ),
                         )
                     ),
-                    watch(gamestream.isometricEngine.editor.gameObjectSelectedFixed, (bool enabled) =>
+                    watch(gamestream.isometric.editor.gameObjectSelectedFixed, (bool enabled) =>
                         onPressed(
                           action: () => gamestream.network.sendGameObjectRequest(GameObjectRequest.Toggle_Fixed),
                           child: Row(
@@ -1107,7 +1107,7 @@ class EditorUI {
                           ),
                         )
                     ),
-                    watch(gamestream.isometricEngine.editor.gameObjectSelectedCollectable, (bool enabled) =>
+                    watch(gamestream.isometric.editor.gameObjectSelectedCollectable, (bool enabled) =>
                         onPressed(
                           action: () => gamestream.network.sendGameObjectRequest(GameObjectRequest.Toggle_Collectable),
                           child: Row(
@@ -1119,7 +1119,7 @@ class EditorUI {
                           ),
                         )
                     ),
-                    watch(gamestream.isometricEngine.editor.gameObjectSelectedPhysical, (bool enabled) =>
+                    watch(gamestream.isometric.editor.gameObjectSelectedPhysical, (bool enabled) =>
                         onPressed(
                           action: () => gamestream.network.sendGameObjectRequest(GameObjectRequest.Toggle_Physical),
                           child: Row(
@@ -1131,7 +1131,7 @@ class EditorUI {
                           ),
                         )
                     ),
-                    watch(gamestream.isometricEngine.editor.gameObjectSelectedPersistable, (bool enabled) =>
+                    watch(gamestream.isometric.editor.gameObjectSelectedPersistable, (bool enabled) =>
                         onPressed(
                           action: () => gamestream.network.sendGameObjectRequest(GameObjectRequest.Toggle_Persistable),
                           child: Row(
@@ -1143,9 +1143,9 @@ class EditorUI {
                           ),
                         )
                     ),
-                    watch(gamestream.isometricEngine.editor.gameObjectSelectedEmission, (int emissionType) =>
+                    watch(gamestream.isometric.editor.gameObjectSelectedEmission, (int emissionType) =>
                         onPressed(
-                          action: () => gamestream.isometricEngine.editor.gameObject.value!.emission_type = ((gamestream.isometricEngine.editor.gameObject.value!.emission_type + 1) % 3),
+                          action: () => gamestream.isometric.editor.gameObject.value!.emission_type = ((gamestream.isometric.editor.gameObject.value!.emission_type + 1) % 3),
                           child: Column(
                             children: [
                               Row(
@@ -1156,16 +1156,16 @@ class EditorUI {
                                 ],
                               ),
                               text("Intensity"),
-                              watch(gamestream.isometricEngine.editor.gameObjectSelectedEmissionIntensity, (double value) => Slider(
-                                  value: gamestream.isometricEngine.editor.gameObject.value?.emission_intensity ?? 0,
-                                  onChanged: gamestream.isometricEngine.editor.setSelectedObjectedIntensity,
+                              watch(gamestream.isometric.editor.gameObjectSelectedEmissionIntensity, (double value) => Slider(
+                                  value: gamestream.isometric.editor.gameObject.value?.emission_intensity ?? 0,
+                                  onChanged: gamestream.isometric.editor.setSelectedObjectedIntensity,
                                 )),
                               if (emissionType == EmissionType.Color)
                                 ColorPicker(
                                     portraitOnly: true,
-                                    pickerColor: Color(gamestream.isometricEngine.editor.gameObject.value!.emission_col),
+                                    pickerColor: Color(gamestream.isometric.editor.gameObject.value!.emission_col),
                                     onColorChanged: (color){
-                                      final gameObject = gamestream.isometricEngine.editor.gameObject.value!;
+                                      final gameObject = gamestream.isometric.editor.gameObject.value!;
                                       final hsv = HSVColor.fromColor(color);
                                       gameObject.emission_alp = (hsv.alpha * 255).round();
                                       gameObject.emission_hue = (hsv.hue).round();
@@ -1191,9 +1191,9 @@ class EditorUI {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        watch(gamestream.isometricEngine.editor.gameObjectSelectedParticleType,
+        watch(gamestream.isometric.editor.gameObjectSelectedParticleType,
             (int particleType) => text("Particle Type: $particleType")),
-        watch(gamestream.isometricEngine.editor.gameObjectSelectedParticleSpawnRate,
+        watch(gamestream.isometric.editor.gameObjectSelectedParticleSpawnRate,
             (int rate) => text("Rate: $rate")),
       ],
     );
@@ -1202,7 +1202,7 @@ class EditorUI {
   static Column buildControlPaint() {
     return Column(
       children: [
-        watch(gamestream.isometricEngine.editor.paintType, buildPaintType),
+        watch(gamestream.isometric.editor.paintType, buildPaintType),
       ],
     );
   }
@@ -1220,7 +1220,7 @@ class EditorUI {
                   color: activeEditTab == editTab
                       ? GameIsometricColors.brownDark
                       : GameIsometricColors.brownLight,
-                  action: () => gamestream.isometricEngine.editor.editTab.value = editTab,
+                  action: () => gamestream.isometric.editor.editTab.value = editTab,
                 ))
             .toList(),
       );

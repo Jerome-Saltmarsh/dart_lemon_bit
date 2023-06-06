@@ -61,8 +61,8 @@ class RendererNodes extends Renderer {
   static var screenBottom = 0.0;
   static var screenLeft = 0.0;
 
-  static var nodeTypes = gamestream.isometricEngine.nodes.nodeTypes;
-  static var nodeOrientations = gamestream.isometricEngine.nodes.nodeOrientations;
+  static var nodeTypes = gamestream.isometric.nodes.nodeTypes;
+  static var nodeOrientations = gamestream.isometric.nodes.nodeOrientations;
 
   static var visited2DStack = Uint16List(0);
   static var visited2DStackIndex = 0;
@@ -80,21 +80,21 @@ class RendererNodes extends Renderer {
 
   // GETTERS
   static double get currentNodeRenderY => GameIsometricRenderer.rowColumnZToRenderY(row, column, currentNodeZ);
-  static int get currentNodeColor => gamestream.isometricEngine.nodes.node_colors[currentNodeIndex];
+  static int get currentNodeColor => gamestream.isometric.nodes.node_colors[currentNodeIndex];
   static int get currentNodeOrientation => nodeOrientations[currentNodeIndex];
-  static int get currentNodeWind => gamestream.isometricEngine.serverState.windTypeAmbient.value;
-  static int get currentNodeVariation => gamestream.isometricEngine.nodes.nodeVariations[currentNodeIndex];
+  static int get currentNodeWind => gamestream.isometric.serverState.windTypeAmbient.value;
+  static int get currentNodeVariation => gamestream.isometric.nodes.nodeVariations[currentNodeIndex];
   static int get renderNodeOrientation => nodeOrientations[currentNodeIndex];
-  static int get renderNodeWind => gamestream.isometricEngine.serverState.windTypeAmbient.value;
-  static int get renderNodeVariation => gamestream.isometricEngine.nodes.nodeVariations[currentNodeIndex];
-  static int get renderNodeBelowIndex => currentNodeIndex - gamestream.isometricEngine.nodes.area;
-  static int get renderNodeBelowVariation => renderNodeBelowIndex > 0 ? gamestream.isometricEngine.nodes.nodeVariations[renderNodeBelowIndex] : renderNodeVariation;
-  static int get renderNodeBelowColor => getNodeColorAtIndex(currentNodeIndex - gamestream.isometricEngine.nodes.area);
+  static int get renderNodeWind => gamestream.isometric.serverState.windTypeAmbient.value;
+  static int get renderNodeVariation => gamestream.isometric.nodes.nodeVariations[currentNodeIndex];
+  static int get renderNodeBelowIndex => currentNodeIndex - gamestream.isometric.nodes.area;
+  static int get renderNodeBelowVariation => renderNodeBelowIndex > 0 ? gamestream.isometric.nodes.nodeVariations[renderNodeBelowIndex] : renderNodeVariation;
+  static int get renderNodeBelowColor => getNodeColorAtIndex(currentNodeIndex - gamestream.isometric.nodes.area);
 
   static int getNodeColorAtIndex(int index){
-    if (index < 0) return gamestream.isometricEngine.nodes.ambient_color;
-    if (index >= gamestream.isometricEngine.nodes.total) return gamestream.isometricEngine.nodes.ambient_color;
-    return gamestream.isometricEngine.nodes.node_colors[index];
+    if (index < 0) return gamestream.isometric.nodes.ambient_color;
+    if (index >= gamestream.isometric.nodes.total) return gamestream.isometric.nodes.ambient_color;
+    return gamestream.isometric.nodes.node_colors[index];
   }
 
   static var currentNodeWithinIsland = false;
@@ -115,7 +115,7 @@ class RendererNodes extends Renderer {
         if (!playerInsideIsland){
           renderCurrentNode();
         } else {
-          currentNodeWithinIsland = island[row * gamestream.isometricEngine.nodes.totalColumns + column];
+          currentNodeWithinIsland = island[row * gamestream.isometric.nodes.totalColumns + column];
           if (!currentNodeWithinIsland){
             renderCurrentNode();
           } else if (currentNodeZ <= playerZ || visible3D[currentNodeIndex]) {
@@ -134,7 +134,7 @@ class RendererNodes extends Renderer {
 
   @override
   void updateFunction() {
-    final nodes = gamestream.isometricEngine.nodes;
+    final nodes = gamestream.isometric.nodes;
     currentNodeZ++;
     if (currentNodeZ > nodesMaxZ) {
       currentNodeZ = 0;
@@ -181,18 +181,18 @@ class RendererNodes extends Renderer {
   }
 
   static int getIndex(int row, int column, int z){
-    return (row * gamestream.isometricEngine.nodes.totalColumns) + column + (z * gamestream.isometricEngine.nodes.area);
+    return (row * gamestream.isometric.nodes.totalColumns) + column + (z * gamestream.isometric.nodes.area);
   }
 
   @override
-  int getTotal() => gamestream.isometricEngine.nodes.total;
+  int getTotal() => gamestream.isometric.nodes.total;
 
   @override
   void reset() {
-    nodeTypes = gamestream.isometricEngine.nodes.nodeTypes;
-    nodeOrientations = gamestream.isometricEngine.nodes.nodeOrientations;
-    nodesRowsMax = gamestream.isometricEngine.nodes.totalRows - 1;
-    nodesGridTotalZMinusOne = gamestream.isometricEngine.nodes.totalZ - 1;
+    nodeTypes = gamestream.isometric.nodes.nodeTypes;
+    nodeOrientations = gamestream.isometric.nodes.nodeOrientations;
+    nodesRowsMax = gamestream.isometric.nodes.totalRows - 1;
+    nodesGridTotalZMinusOne = gamestream.isometric.nodes.totalZ - 1;
     offscreenNodesTop = 0;
     offscreenNodesRight = 0;
     offscreenNodesBottom = 0;
@@ -202,23 +202,23 @@ class RendererNodes extends Renderer {
     nodesMinZ = 0;
     orderZ = 0;
     currentNodeZ = 0;
-    nodesGridTotalColumnsMinusOne = gamestream.isometricEngine.nodes.totalColumns - 1;
-    playerZ = gamestream.isometricEngine.player.position.indexZ;
-    playerRow = gamestream.isometricEngine.player.position.indexRow;
-    playerColumn = gamestream.isometricEngine.player.position.indexColumn;
+    nodesGridTotalColumnsMinusOne = gamestream.isometric.nodes.totalColumns - 1;
+    playerZ = gamestream.isometric.player.position.indexZ;
+    playerRow = gamestream.isometric.player.position.indexRow;
+    playerColumn = gamestream.isometric.player.position.indexColumn;
     nodesPlayerColumnRow = playerRow + playerColumn;
-    playerRenderRow = playerRow - (gamestream.isometricEngine.player.position.indexZ ~/ 2);
-    playerRenderColumn = playerColumn - (gamestream.isometricEngine.player.position.indexZ ~/ 2);
-    playerProjection = playerIndex % gamestream.isometricEngine.nodes.projection;
-    gamestream.isometricEngine.nodes.offscreenNodes = 0;
-    gamestream.isometricEngine.nodes.onscreenNodes = 0;
+    playerRenderRow = playerRow - (gamestream.isometric.player.position.indexZ ~/ 2);
+    playerRenderColumn = playerColumn - (gamestream.isometric.player.position.indexZ ~/ 2);
+    playerProjection = playerIndex % gamestream.isometric.nodes.projection;
+    gamestream.isometric.nodes.offscreenNodes = 0;
+    gamestream.isometric.nodes.onscreenNodes = 0;
 
     screenRight = engine.Screen_Right + Node_Size;
     screenLeft = engine.Screen_Left - Node_Size;
     screenTop = engine.Screen_Top - 72;
     screenBottom = engine.Screen_Bottom + 72;
     var screenTopLeftColumn = GameIsometric.convertWorldToColumn(screenLeft, screenTop, 0);
-    nodesScreenBottomRightRow = clamp(GameIsometric.convertWorldToRow(screenRight, screenBottom, 0), 0, gamestream.isometricEngine.nodes.totalRows - 1);
+    nodesScreenBottomRightRow = clamp(GameIsometric.convertWorldToRow(screenRight, screenBottom, 0), 0, gamestream.isometric.nodes.totalRows - 1);
     nodesScreenTopLeftRow = GameIsometric.convertWorldToRow(screenLeft, screenTop, 0);
 
     if (nodesScreenTopLeftRow < 0){
@@ -229,7 +229,7 @@ class RendererNodes extends Renderer {
       nodesScreenTopLeftRow += screenTopLeftColumn;
       screenTopLeftColumn = 0;
     }
-    if (screenTopLeftColumn >= gamestream.isometricEngine.nodes.totalColumns){
+    if (screenTopLeftColumn >= gamestream.isometric.nodes.totalColumns){
       nodesScreenTopLeftRow = screenTopLeftColumn - nodesGridTotalColumnsMinusOne;
       screenTopLeftColumn = nodesGridTotalColumnsMinusOne;
     }
@@ -248,7 +248,7 @@ class RendererNodes extends Renderer {
 
     currentNodeDstX = (row - column) * Node_Size_Half;
     currentNodeDstY = ((row + column) * Node_Size_Half) - (currentNodeZ * Node_Height);
-    currentNodeIndex = (currentNodeZ * gamestream.isometricEngine.nodes.area) + (row * gamestream.isometricEngine.nodes.totalColumns) + column;
+    currentNodeIndex = (currentNodeZ * gamestream.isometric.nodes.area) + (row * gamestream.isometric.nodes.totalColumns) + column;
     currentNodeType = nodeTypes[currentNodeIndex];
     currentNodeWithinIsland = false;
 
@@ -258,18 +258,18 @@ class RendererNodes extends Renderer {
     total = getTotal();
     index = 0;
     remaining = total > 0;
-    gamestream.isometricEngine.nodes.resetNodeColorStack();
-    gamestream.isometricEngine.nodes.resetNodeAmbientStack();
-    gamestream.isometricEngine.clientState.applyEmissions();
+    gamestream.isometric.nodes.resetNodeColorStack();
+    gamestream.isometric.nodes.resetNodeAmbientStack();
+    gamestream.isometric.clientState.applyEmissions();
 
     // highlightCharacterNearMouse();
   }
 
   static void updateTransparencyGrid() {
 
-    if (transparencyGrid.length != gamestream.isometricEngine.nodes.projection) {
-      transparencyGrid = List.generate(gamestream.isometricEngine.nodes.projection, (index) => false, growable: false);
-      transparencyGridStack = Uint16List(gamestream.isometricEngine.nodes.projection);
+    if (transparencyGrid.length != gamestream.isometric.nodes.projection) {
+      transparencyGrid = List.generate(gamestream.isometric.nodes.projection, (index) => false, growable: false);
+      transparencyGridStack = Uint16List(gamestream.isometric.nodes.projection);
     } else {
       for (var i = 0; i < transparencyGridStackIndex; i++){
         transparencyGrid[transparencyGridStack[i]] = false;
@@ -279,7 +279,7 @@ class RendererNodes extends Renderer {
 
     const r = 2;
 
-    final nodes = gamestream.isometricEngine.nodes;
+    final nodes = gamestream.isometric.nodes;
     for (var z = playerZ; z <= playerZ + 1; z++){
       if (z >= nodes.totalZ) break;
       final indexZ = z * nodes.area;
@@ -302,8 +302,8 @@ class RendererNodes extends Renderer {
 
   static void updateHeightMapPerception() {
 
-    if (visible3D.length != gamestream.isometricEngine.nodes.total) {
-      visible3D = List.generate(gamestream.isometricEngine.nodes.total, (index) => false);
+    if (visible3D.length != gamestream.isometric.nodes.total) {
+      visible3D = List.generate(gamestream.isometric.nodes.total, (index) => false);
       visible3DIndex = 0;
     }
 
@@ -312,11 +312,11 @@ class RendererNodes extends Renderer {
     }
     visible3DIndex = 0;
 
-    if (visited2D.length != gamestream.isometricEngine.nodes.area) {
-      visited2D = List.generate(gamestream.isometricEngine.nodes.area, (index) => false, growable: false);
-      visited2DStack = Uint16List(gamestream.isometricEngine.nodes.area);
+    if (visited2D.length != gamestream.isometric.nodes.area) {
+      visited2D = List.generate(gamestream.isometric.nodes.area, (index) => false, growable: false);
+      visited2DStack = Uint16List(gamestream.isometric.nodes.area);
       visited2DStackIndex = 0;
-      island = List.generate(gamestream.isometricEngine.nodes.area, (index) => false, growable: false);
+      island = List.generate(gamestream.isometric.nodes.area, (index) => false, growable: false);
     } else {
       for (var i = 0; i < visited2DStackIndex; i++){
         final j = visited2DStack[i];
@@ -326,47 +326,47 @@ class RendererNodes extends Renderer {
     }
     visited2DStackIndex = 0;
 
-    final height = gamestream.isometricEngine.nodes.heightMap[gamestream.isometricEngine.player.areaNodeIndex];
+    final height = gamestream.isometric.nodes.heightMap[gamestream.isometric.player.areaNodeIndex];
 
-    if (gamestream.isometricEngine.player.indexZ <= 0) {
+    if (gamestream.isometric.player.indexZ <= 0) {
       zMin = 0;
       playerInsideIsland = false;
       return;
     }
 
 
-    playerInsideIsland = gamestream.isometricEngine.player.indexZ < height;
+    playerInsideIsland = gamestream.isometric.player.indexZ < height;
 
     if (!playerInsideIsland) {
-      ensureIndexPerceptible(gamestream.isometricEngine.player.nodeIndex);
+      ensureIndexPerceptible(gamestream.isometric.player.nodeIndex);
     }
 
     if (GameIsometricMouse.inBounds){
       ensureIndexPerceptible(GameIsometricMouse.nodeIndex);
     }
 
-    zMin = max(gamestream.isometricEngine.player.indexZ - 1, 0);
-    visit2D(gamestream.isometricEngine.player.areaNodeIndex);
+    zMin = max(gamestream.isometric.player.indexZ - 1, 0);
+    visit2D(gamestream.isometric.player.areaNodeIndex);
   }
 
   static void ensureIndexPerceptible(int index){
-    var projectionRow     = gamestream.isometricEngine.nodes.getIndexRow(index);
-    var projectionColumn  = gamestream.isometricEngine.nodes.getIndexColumn(index);
-    var projectionZ       = gamestream.isometricEngine.nodes.getIndexZ(index);
+    var projectionRow     = gamestream.isometric.nodes.getIndexRow(index);
+    var projectionColumn  = gamestream.isometric.nodes.getIndexColumn(index);
+    var projectionZ       = gamestream.isometric.nodes.getIndexZ(index);
 
     while (true) {
       projectionZ += 2;
       projectionColumn++;
       projectionRow++;
-      if (projectionZ >= gamestream.isometricEngine.nodes.totalZ) return;
-      if (projectionColumn >= gamestream.isometricEngine.nodes.totalColumns) return;
-      if (projectionRow >= gamestream.isometricEngine.nodes.totalRows) return;
+      if (projectionZ >= gamestream.isometric.nodes.totalZ) return;
+      if (projectionColumn >= gamestream.isometric.nodes.totalColumns) return;
+      if (projectionRow >= gamestream.isometric.nodes.totalRows) return;
       final projectionIndex =
-          (projectionRow * gamestream.isometricEngine.nodes.totalColumns) + projectionColumn;
-      final projectionHeight = gamestream.isometricEngine.nodes.heightMap[projectionIndex];
+          (projectionRow * gamestream.isometric.nodes.totalColumns) + projectionColumn;
+      final projectionHeight = gamestream.isometric.nodes.heightMap[projectionIndex];
       if (projectionZ > projectionHeight) continue;
       playerInsideIsland = true;
-      zMin = max(gamestream.isometricEngine.player.indexZ - 1, 0);
+      zMin = max(gamestream.isometric.player.indexZ - 1, 0);
       visit2D(projectionIndex);
       return;
     }
@@ -383,19 +383,19 @@ class RendererNodes extends Renderer {
      visited2D[i] = true;
      visited2DStack[visited2DStackIndex] = i;
      visited2DStackIndex++;
-     if (gamestream.isometricEngine.nodes.heightMap[i] <= zMin) return;
+     if (gamestream.isometric.nodes.heightMap[i] <= zMin) return;
      island[i] = true;
 
-     var searchIndex = i + (gamestream.isometricEngine.nodes.area * gamestream.isometricEngine.player.indexZ);
+     var searchIndex = i + (gamestream.isometric.nodes.area * gamestream.isometric.player.indexZ);
      addVisible3D(searchIndex);
 
-     var spaceReached = gamestream.isometricEngine.nodes.nodeOrientations[searchIndex] == NodeOrientation.None;
+     var spaceReached = gamestream.isometric.nodes.nodeOrientations[searchIndex] == NodeOrientation.None;
      var gapReached = false;
 
      while (true) {
-       searchIndex += gamestream.isometricEngine.nodes.area;
-        if (searchIndex >= gamestream.isometricEngine.nodes.total) break;
-        final nodeOrientation = gamestream.isometricEngine.nodes.nodeOrientations[searchIndex];
+       searchIndex += gamestream.isometric.nodes.area;
+        if (searchIndex >= gamestream.isometric.nodes.total) break;
+        final nodeOrientation = gamestream.isometric.nodes.nodeOrientations[searchIndex];
         if (nodeOrientation == NodeOrientation.Half_Vertical_Top) break;
         if (nodeOrientation == NodeOrientation.Half_Vertical_Center) break;
         if (nodeOrientation == NodeOrientation.Half_Vertical_Bottom) break;
@@ -418,34 +418,34 @@ class RendererNodes extends Renderer {
 
         addVisible3D(searchIndex);
      }
-     searchIndex = i + (gamestream.isometricEngine.nodes.area * gamestream.isometricEngine.player.indexZ);
+     searchIndex = i + (gamestream.isometric.nodes.area * gamestream.isometric.player.indexZ);
      while (true) {
        addVisible3D(searchIndex);
        if (blocksBeamVertical(searchIndex)) break;
-       searchIndex -= gamestream.isometricEngine.nodes.area;
+       searchIndex -= gamestream.isometric.nodes.area;
        if (searchIndex < 0) break;
      }
 
-     final iAbove = i - gamestream.isometricEngine.nodes.totalColumns;
+     final iAbove = i - gamestream.isometric.nodes.totalColumns;
      if (iAbove > 0) {
        visit2D(iAbove);
      }
-     final iBelow = i + gamestream.isometricEngine.nodes.totalColumns;
-     if (iBelow < gamestream.isometricEngine.nodes.area) {
+     final iBelow = i + gamestream.isometric.nodes.totalColumns;
+     if (iBelow < gamestream.isometric.nodes.area) {
        visit2D(iBelow);
      }
 
-     final row = i % gamestream.isometricEngine.nodes.totalRows;
+     final row = i % gamestream.isometric.nodes.totalRows;
      if (row - 1 >= 0) {
        visit2D(i - 1);
      }
-     if (row + 1 < gamestream.isometricEngine.nodes.totalRows){
+     if (row + 1 < gamestream.isometric.nodes.totalRows){
        visit2D(i + 1);
      }
   }
 
   static int getProjectionIndex(int index){
-    return index % gamestream.isometricEngine.nodes.projection;
+    return index % gamestream.isometric.nodes.projection;
   }
 
   static bool nodeTypeBlocks(int nodeType){
@@ -458,7 +458,7 @@ class RendererNodes extends Renderer {
 
   static bool blocksBeamHorizontal(int index, int dirRow, int dirColumn){
     assert (dirRow == 0 || dirColumn == 0);
-    final nodeOrientation = gamestream.isometricEngine.nodes.nodeOrientations[index];
+    final nodeOrientation = gamestream.isometric.nodes.nodeOrientations[index];
     if (nodeOrientation == NodeOrientation.None) return false;
     if (nodeOrientation == NodeOrientation.Solid) return true;
     if (nodeOrientation == NodeOrientation.Radial) return false;
@@ -473,7 +473,7 @@ class RendererNodes extends Renderer {
       return nodeOrientation == NodeOrientation.Half_East || nodeOrientation == NodeOrientation.Half_West;
     }
 
-    final nodeType = gamestream.isometricEngine.nodes.nodeTypes[index];
+    final nodeType = gamestream.isometric.nodes.nodeTypes[index];
     if (nodeType == NodeType.Window) return false;
     if (nodeType == NodeType.Shopping_Shelf) return false;
     if (nodeType == NodeType.Wooden_Plank) return false;
@@ -483,7 +483,7 @@ class RendererNodes extends Renderer {
   }
 
   static bool blocksBeamVertical(int index){
-    final nodeOrientation = gamestream.isometricEngine.nodes.nodeOrientations[index];
+    final nodeOrientation = gamestream.isometric.nodes.nodeOrientations[index];
     if (nodeOrientation == NodeOrientation.None) return false;
     if (NodeOrientation.isHalf(nodeOrientation)) return false;
     if (NodeOrientation.isRadial(nodeOrientation)) return false;
@@ -494,7 +494,7 @@ class RendererNodes extends Renderer {
 
   static void trimLeft(){
     var currentNodeRenderX = (row - column) * Node_Size_Half;
-    final maxRow = gamestream.isometricEngine.nodes.totalRows - 1;
+    final maxRow = gamestream.isometric.nodes.totalRows - 1;
     while (currentNodeRenderX < screenLeft && column > 0 && row < maxRow){
       row++;
       column--;
@@ -504,26 +504,26 @@ class RendererNodes extends Renderer {
   }
 
   static void nodesSetStart(){
-    nodesStartRow = clamp(row, 0, gamestream.isometricEngine.nodes.totalRows - 1);
-    nodeStartColumn = clamp(column, 0, gamestream.isometricEngine.nodes.totalColumns - 1);
+    nodesStartRow = clamp(row, 0, gamestream.isometric.nodes.totalRows - 1);
+    nodeStartColumn = clamp(column, 0, gamestream.isometric.nodes.totalColumns - 1);
 
     assert (nodesStartRow >= 0);
     assert (nodeStartColumn >= 0);
-    assert (nodesStartRow < gamestream.isometricEngine.nodes.totalRows);
-    assert (nodeStartColumn < gamestream.isometricEngine.nodes.totalColumns);
+    assert (nodesStartRow < gamestream.isometric.nodes.totalRows);
+    assert (nodeStartColumn < gamestream.isometric.nodes.totalColumns);
   }
 
   static void nodesShiftIndexDown(){
 
     column = row + column + 1;
     row = 0;
-    if (column < gamestream.isometricEngine.nodes.totalColumns) {
+    if (column < gamestream.isometric.nodes.totalColumns) {
       nodesSetStart();
       return;
     }
 
-    if (column - nodesGridTotalColumnsMinusOne >= gamestream.isometricEngine.nodes.totalRows){
-      gamestream.isometricEngine.renderer.rendererNodes.remaining = false;
+    if (column - nodesGridTotalColumnsMinusOne >= gamestream.isometric.nodes.totalRows){
+      gamestream.isometric.renderer.rendererNodes.remaining = false;
       return;
     }
 
@@ -548,8 +548,8 @@ class RendererNodes extends Renderer {
     while (renderY > screenBottom){
       nodesMinZ++;
       renderY -= Node_Height;
-      if (nodesMinZ >= gamestream.isometricEngine.nodes.totalZ){
-        gamestream.isometricEngine.renderer.rendererNodes.remaining = false;
+      if (nodesMinZ >= gamestream.isometric.nodes.totalZ){
+        gamestream.isometric.renderer.rendererNodes.remaining = false;
         return;
       }
     }
@@ -596,7 +596,7 @@ class RendererNodes extends Renderer {
   }
 
   static bool assertOnScreen(){
-    if (!gamestream.isometricEngine.clientState.debugMode.value) return true;
+    if (!gamestream.isometric.clientState.debugMode.value) return true;
     if (currentNodeDstX < screenLeft){
       offscreenNodesLeft++;
       return true;
@@ -624,7 +624,7 @@ class RendererNodes extends Renderer {
     //   }
     // }
     if (currentNodeZ <= playerZ) return false;
-    final currentNodeProjection = currentNodeIndex % gamestream.isometricEngine.nodes.projection;
+    final currentNodeProjection = currentNodeIndex % gamestream.isometric.nodes.projection;
     if (!transparencyGrid[currentNodeProjection]) return false;
 
     final nodeOrientation = currentNodeOrientation;
@@ -769,21 +769,21 @@ class RendererNodes extends Renderer {
         renderNodeWindow();
         break;
       case NodeType.Spawn:
-        if (gamestream.isometricEngine.clientState.playMode) return;
+        if (gamestream.isometric.clientState.playMode) return;
         renderStandardNode(
           srcX: AtlasNode.Spawn_X,
           srcY: AtlasNode.Spawn_Y,
         );
         break;
       case NodeType.Spawn_Weapon:
-        if (gamestream.isometricEngine.clientState.playMode) return;
+        if (gamestream.isometric.clientState.playMode) return;
         renderStandardNode(
           srcX: AtlasNode.Spawn_Weapon_X,
           srcY: AtlasNode.Spawn_Weapon_Y,
         );
         break;
       case NodeType.Spawn_Player:
-        if (gamestream.isometricEngine.clientState.playMode) return;
+        if (gamestream.isometric.clientState.playMode) return;
         renderStandardNode(
           srcX: AtlasNode.Spawn_Player_X,
           srcY: AtlasNode.Spawn_Player_Y,
@@ -878,7 +878,7 @@ class RendererNodes extends Renderer {
   }
 
   static void renderNodeRainLanding() {
-    if (currentNodeIndex > gamestream.isometricEngine.nodes.area && nodeTypes[currentNodeIndex - gamestream.isometricEngine.nodes.area] == NodeType.Water){
+    if (currentNodeIndex > gamestream.isometric.nodes.area && nodeTypes[currentNodeIndex - gamestream.isometric.nodes.area] == NodeType.Water){
       engine.renderSprite(
         image: GameImages.atlas_nodes,
         srcX: AtlasNode.Node_Rain_Landing_Water_X,
@@ -893,14 +893,14 @@ class RendererNodes extends Renderer {
       return;
     }
     renderStandardNode(
-      srcX: gamestream.isometricEngine.clientState.srcXRainLanding,
+      srcX: gamestream.isometric.clientState.srcXRainLanding,
       srcY: 72.0 * ((gamestream.animation.animationFrame + row + column) % 6), // TODO Expensive Operation
     );
   }
 
   static void renderNodeRainFalling() {
     renderStandardNode(
-      srcX: gamestream.isometricEngine.clientState.srcXRainFalling,
+      srcX: gamestream.isometric.clientState.srcXRainFalling,
       srcY: 72.0 * ((gamestream.animation.animationFrame + row + row + column) % 6), // TODO Expensive Operation
     );
   }
@@ -1458,7 +1458,7 @@ class RendererNodes extends Renderer {
           srcY: GameIsometricConstants.Sprite_Height_Padded_16,
           offsetX: 0,
           offsetY: -8,
-          color: gamestream.isometricEngine.nodes.node_colors[currentNodeIndex + gamestream.isometricEngine.nodes.area < gamestream.isometricEngine.nodes.total ? currentNodeIndex + gamestream.isometricEngine.nodes.area : currentNodeIndex],
+          color: gamestream.isometric.nodes.node_colors[currentNodeIndex + gamestream.isometric.nodes.area < gamestream.isometric.nodes.total ? currentNodeIndex + gamestream.isometric.nodes.area : currentNodeIndex],
         );
         return;
       case NodeOrientation.Half_Vertical_Center:

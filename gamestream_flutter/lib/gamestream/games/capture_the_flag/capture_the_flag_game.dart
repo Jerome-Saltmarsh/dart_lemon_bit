@@ -18,11 +18,13 @@ class CaptureTheFlagGame extends GameIsometric {
   final flagStatusRed = Watch(CaptureTheFlagFlagStatus.At_Base);
   final flagStatusBlue = Watch(CaptureTheFlagFlagStatus.At_Base);
 
+  CaptureTheFlagGame({required super.isometric});
+
   @override
   void drawCanvas(Canvas canvas, Size size) {
     super.drawCanvas(canvas, size);
     
-    final player = gamestream.isometricEngine.player;
+    final player = gamestream.isometric.player;
     
     engine.paint.color = Colors.red;
     engine.drawLine(player.renderX, player.renderY, flagPositionRed.renderX, flagPositionRed.renderY);
@@ -97,7 +99,7 @@ class CaptureTheFlagGame extends GameIsometric {
               ),
               width: mapSize,
               height: mapSize,
-              child:   watch(gamestream.isometricEngine.clientState.sceneChanged, (_){
+              child:   watch(gamestream.isometric.clientState.sceneChanged, (_){
             return engine.buildCanvas(paint: (Canvas canvas, Size size){
               const scale = 2.0;
               canvas.scale(scale, scale);
@@ -105,7 +107,7 @@ class CaptureTheFlagGame extends GameIsometric {
               final screenCenterY = size.height * 0.5;
               const ratio = 2 / 48.0;
 
-              final chaseTarget = gamestream.isometricEngine.camera.chaseTarget;
+              final chaseTarget = gamestream.isometric.camera.chaseTarget;
               if (chaseTarget != null){
                 final targetX = chaseTarget.renderX * ratio;
                 final targetY = chaseTarget.renderY * ratio;
@@ -115,10 +117,10 @@ class CaptureTheFlagGame extends GameIsometric {
                 canvas.translate(-cameraX, -cameraY);
               }
 
-              gamestream.isometricEngine.minimap.renderCanvas(canvas);
+              gamestream.isometric.minimap.renderCanvas(canvas);
 
-              final serverState = gamestream.isometricEngine.serverState;
-              final player = gamestream.isometricEngine.player;
+              final serverState = gamestream.isometric.serverState;
+              final player = gamestream.isometric.player;
 
               for (var i = 0; i < serverState.totalCharacters; i++) {
                 final character = serverState.characters[i];

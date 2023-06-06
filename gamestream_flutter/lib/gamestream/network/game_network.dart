@@ -184,11 +184,11 @@ class GameNetwork {
     gamestream.io.removeListeners();
     engine.onDrawForeground = null;
     gamestream.serverResponseReader.bufferSizeTotal.value = 0;
-    gamestream.isometricEngine.clientState.clearParticles();
-    gamestream.isometricEngine.clientState.window_visible_menu.setFalse();
-    gamestream.isometricEngine.clientState.control_visible_player_weapons.value = false;
-    gamestream.isometricEngine.clientState.window_visible_player_creation.value = false;
-    gamestream.isometricEngine.clientState.control_visible_respawn_timer.value = false;
+    gamestream.isometric.clientState.clearParticles();
+    gamestream.isometric.clientState.window_visible_menu.setFalse();
+    gamestream.isometric.clientState.control_visible_player_weapons.value = false;
+    gamestream.isometric.clientState.window_visible_player_creation.value = false;
+    gamestream.isometric.clientState.control_visible_respawn_timer.value = false;
 
     switch (connection) {
       case ConnectionStatus.Connected:
@@ -198,8 +198,8 @@ class GameNetwork {
         engine.zoomOnScroll = true;
         engine.zoom = 1.0;
         engine.targetZoom = 1.0;
-        gamestream.isometricEngine.clientState.hoverDialogType.value = DialogType.None;
-        gamestream.isometricEngine.clientState.timeConnectionEstablished = DateTime.now();
+        gamestream.isometric.clientState.hoverDialogType.value = DialogType.None;
+        gamestream.isometric.clientState.timeConnectionEstablished = DateTime.now();
         gamestream.audio.enabledSound.value = true;
         if (!engine.isLocalHost) {
           engine.fullScreenEnter();
@@ -207,8 +207,8 @@ class GameNetwork {
         break;
 
       case ConnectionStatus.Done:
-        gamestream.isometricEngine.player.active.value = false;
-        gamestream.isometricEngine.clientState.timeConnectionEstablished = null;
+        gamestream.isometric.player.active.value = false;
+        gamestream.isometric.clientState.timeConnectionEstablished = null;
         engine.cameraX = 0;
         engine.cameraY = 0;
         engine.zoom = 1.0;
@@ -216,10 +216,10 @@ class GameNetwork {
         engine.cursorType.value = CursorType.Basic;
         engine.drawCanvasAfterUpdate = true;
         engine.fullScreenExit();
-        gamestream.isometricEngine.clientState.clear();
-        gamestream.isometricEngine.serverState.clean();
+        gamestream.isometric.clientState.clear();
+        gamestream.isometric.serverState.clean();
         gamestream.gameType.value = GameType.Website;
-        gamestream.isometricEngine.serverState.sceneEditable.value = false;
+        gamestream.isometric.serverState.sceneEditable.value = false;
         gamestream.audio.enabledSound.value = false;
         break;
       case ConnectionStatus.Failed_To_Connect:

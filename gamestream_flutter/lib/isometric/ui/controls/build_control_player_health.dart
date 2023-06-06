@@ -14,9 +14,9 @@ Widget buildControlPlayerHealth() {
 
   return Tooltip(
     message: 'Health',
-    child: WatchBuilder(gamestream.isometricEngine.serverState.playerHealth, (int health) {
+    child: WatchBuilder(gamestream.isometric.serverState.playerHealth, (int health) {
 
-      final maxHealth = gamestream.isometricEngine.serverState.playerMaxHealth;
+      final maxHealth = gamestream.isometric.serverState.playerMaxHealth;
       if (maxHealth.value <= 0) return GameStyle.Null;
       final percentage = health / maxHealth.value;
       return Container(
@@ -41,7 +41,7 @@ Widget buildControlPlayerHealth() {
               width: width,
               height: height,
               alignment: Alignment.center,
-              child: text('${health.toInt()} | ${gamestream.isometricEngine.serverState.playerMaxHealth}'),
+              child: text('${health.toInt()} | ${gamestream.isometric.serverState.playerMaxHealth}'),
             ),
           ],
         ),

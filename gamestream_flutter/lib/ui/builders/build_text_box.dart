@@ -47,7 +47,7 @@ Widget buildPanelWriteMessage() {
                     children: [
                       onPressed(action: sendAndCloseTextBox, child: border(child: text("Send")), hint: "(Press Enter)"),
                       width16,
-                      onPressed(action: gamestream.isometricEngine.actions.messageBoxHide, child: text("Cancel", decoration: TextDecoration.underline), hint: ("(Press Escape")),
+                      onPressed(action: gamestream.isometric.actions.messageBoxHide, child: text("Cancel", decoration: TextDecoration.underline), hint: ("(Press Escape")),
                     ],
                   ),
                 )
@@ -60,5 +60,5 @@ Widget buildPanelWriteMessage() {
 
 void sendAndCloseTextBox(){
   gamestream.network.sendRequestSpeak(GameIsometricUI.textEditingControllerMessage.text);
-  gamestream.isometricEngine.actions.messageBoxHide();
+  gamestream.isometric.actions.messageBoxHide();
 }

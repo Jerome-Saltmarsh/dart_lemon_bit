@@ -188,7 +188,7 @@ class GameAudio {
   ];
 
   double getVolumeTargetDayAmbience() {
-    final hours = gamestream.isometricEngine.serverState.hours.value;
+    final hours = gamestream.isometric.serverState.hours.value;
     if (hours > 8 && hours < 4) return 0.2;
     return 0;
   }
@@ -225,16 +225,16 @@ class GameAudio {
   }
 
   double getVolumeTargetWind() {
-    final windLineDistance = (engine.screenCenterRenderX - gamestream.isometricEngine.windLineRenderX).abs();
+    final windLineDistance = (engine.screenCenterRenderX - gamestream.isometric.windLineRenderX).abs();
     final windLineDistanceVolume = convertDistanceToVolume(windLineDistance, maxDistance: 300);
     var target = 0.0;
-    if (gamestream.isometricEngine.windLineRenderX - 250 <= engine.screenCenterRenderX) {
+    if (gamestream.isometric.windLineRenderX - 250 <= engine.screenCenterRenderX) {
       target += windLineDistanceVolume;
     }
-    final index = gamestream.isometricEngine.serverState.windTypeAmbient.value;
+    final index = gamestream.isometric.serverState.windTypeAmbient.value;
     if (index <= WindType.Calm) {
-      if (gamestream.isometricEngine.serverState.hours.value < 6) return target;
-      if (gamestream.isometricEngine.serverState.hours.value < 18) return target + 0.1;
+      if (gamestream.isometric.serverState.hours.value < 6) return target;
+      if (gamestream.isometric.serverState.hours.value < 18) return target + 0.1;
       return target;
     }
     if (index <= WindType.Gentle) return target + 0.5;
@@ -242,7 +242,7 @@ class GameAudio {
   }
 
   double getVolumeTargetRain() {
-    switch (gamestream.isometricEngine.serverState.rainType.value){
+    switch (gamestream.isometric.serverState.rainType.value){
       case RainType.None:
         return 0;
       case RainType.Light:
@@ -255,7 +255,7 @@ class GameAudio {
   }
 
   double getVolumeTargetCrickets() {
-    final hour = gamestream.isometricEngine.serverState.hours.value;
+    final hour = gamestream.isometric.serverState.hours.value;
     const max = 0.8;
     if (hour >= 5 && hour < 7) return max;
     if (hour >= 17 && hour < 19) return max;
@@ -266,8 +266,8 @@ class GameAudio {
     // if (!ClientState.torchesIgnited.value) return 0;
     const r = 4;
     const maxDistance = r * Node_Size;
-    var closest = gamestream.isometricEngine.nodes.getClosestByType(radius: r, type: NodeType.Fireplace) * Node_Size;
-    final closestTorch = gamestream.isometricEngine.nodes.getClosestByType(
+    var closest = gamestream.isometric.nodes.getClosestByType(radius: r, type: NodeType.Fireplace) * Node_Size;
+    final closestTorch = gamestream.isometric.nodes.getClosestByType(
         radius: r,
         type: NodeType.Torch
     ) * Node_Size;
@@ -278,19 +278,19 @@ class GameAudio {
   }
 
   double getVolumeTargetDistanceThunder(){
-    if (gamestream.isometricEngine.clientState.lightningOn) return 1.0;
+    if (gamestream.isometric.clientState.lightningOn) return 1.0;
     return 0;
   }
 
   double getVolumeHeartBeat(){
-    if (gamestream.isometricEngine.serverState.playerMaxHealth.value <= 0) return 0.0;
-    return 1.0 - gamestream.isometricEngine.serverState.playerHealth.value / gamestream.isometricEngine.serverState.playerMaxHealth.value;
+    if (gamestream.isometric.serverState.playerMaxHealth.value <= 0) return 0.0;
+    return 1.0 - gamestream.isometric.serverState.playerHealth.value / gamestream.isometric.serverState.playerMaxHealth.value;
   }
 
   double getVolumeStream(){
     const r = 5;
     const maxDistance = r * Node_Size;
-    final distance = gamestream.isometricEngine.nodes.getClosestByType(radius: r, type: NodeType.Water) * Node_Size;
+    final distance = gamestream.isometric.nodes.getClosestByType(radius: r, type: NodeType.Water) * Node_Size;
     return convertDistanceToVolume(distance, maxDistance: maxDistance * 0.25);
   }
 
@@ -312,14 +312,14 @@ class GameAudio {
   }
 
   void playRandomMusic(){
-    final hours = gamestream.isometricEngine.serverState.hours.value;
+    final hours = gamestream.isometric.serverState.hours.value;
     if (hours > 22 && hours < 3) {
       playRandom(musicNight);
     }
   }
 
   void playRandomAmbientSound(){
-    final hour = gamestream.isometricEngine.serverState.hours.value;
+    final hour = gamestream.isometric.serverState.hours.value;
 
     if (hour > 22 && hour < 4){
       playRandom(soundsNight);
@@ -344,12 +344,12 @@ class GameAudio {
   }
 
   void updateCharacterNoises(){
-    if (gamestream.isometricEngine.serverState.totalCharacters <= 0) return;
+    if (gamestream.isometric.serverState.totalCharacters <= 0) return;
     if (nextCharacterNoise-- > 0) return;
     nextCharacterNoise = Engine.randomInt(200, 300);
 
-    final index = randomInt(0, gamestream.isometricEngine.serverState.totalCharacters);
-    final character = gamestream.isometricEngine.serverState.characters[index];
+    final index = randomInt(0, gamestream.isometric.serverState.totalCharacters);
+    final character = gamestream.isometric.serverState.characters[index];
 
     switch (character.characterType) {
       case CharacterType.Zombie:

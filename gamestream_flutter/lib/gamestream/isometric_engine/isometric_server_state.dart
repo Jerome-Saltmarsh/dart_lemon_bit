@@ -88,8 +88,8 @@ class IsometricServerState {
 
   Character? getPlayerCharacter(){
     for (var i = 0; i < totalCharacters; i++){
-      if (characters[i].x != gamestream.isometricEngine.player.position.x) continue;
-      if (characters[i].y != gamestream.isometricEngine.player.position.y) continue;
+      if (characters[i].x != gamestream.isometric.player.position.x) continue;
+      if (characters[i].y != gamestream.isometric.player.position.y) continue;
       return characters[i];
     }
     return null;
@@ -102,7 +102,7 @@ class IsometricServerState {
         case EmissionType.None:
           continue;
         case EmissionType.Color:
-          gamestream.isometricEngine.clientState.applyVector3Emission(
+          gamestream.isometric.clientState.applyVector3Emission(
             gameObject,
             hue: gameObject.emission_hue,
             saturation: gameObject.emission_sat,
@@ -112,7 +112,7 @@ class IsometricServerState {
           );
           continue;
         case EmissionType.Ambient:
-          gamestream.isometricEngine.clientState.applyVector3EmissionAmbient(gameObject,
+          gamestream.isometric.clientState.applyVector3EmissionAmbient(gameObject,
             alpha: gameObject.emission_alp,
             intensity: gameObject.emission_intensity,
           );
@@ -132,11 +132,11 @@ class IsometricServerState {
   }
 
   void projectShadow(Vector3 v3){
-    if (!gamestream.isometricEngine.nodes.inBoundsVector3(v3)) return;
+    if (!gamestream.isometric.nodes.inBoundsVector3(v3)) return;
 
     final z = getProjectionZ(v3);
     if (z < 0) return;
-    gamestream.isometricEngine.clientState.spawnParticle(
+    gamestream.isometric.clientState.spawnParticle(
       type: ParticleType.Shadow,
       x: v3.x,
       y: v3.y,
@@ -155,8 +155,8 @@ class IsometricServerState {
 
     while (true) {
       if (z < 0) return -1;
-      final nodeIndex = gamestream.isometricEngine.nodes.getIndexXYZ(x, y, z);
-      final nodeOrientation = gamestream.isometricEngine.nodes.nodeOrientations[nodeIndex];
+      final nodeIndex = gamestream.isometric.nodes.getIndexXYZ(x, y, z);
+      final nodeOrientation = gamestream.isometric.nodes.nodeOrientations[nodeIndex];
 
       if (const <int> [
         NodeOrientation.None,
@@ -195,14 +195,14 @@ class IsometricServerState {
 
   void clean() {
     gameObjects.clear();
-    gamestream.isometricEngine.nodes.colorStackIndex = -1;
-    gamestream.isometricEngine.nodes.ambientStackIndex = -1;
+    gamestream.isometric.nodes.colorStackIndex = -1;
+    gamestream.isometric.nodes.ambientStackIndex = -1;
   }
 
   void sortGameObjects(){
     Engine.insertionSort(
       gameObjects,
-      compare: gamestream.isometricEngine.clientState.compareRenderOrder,
+      compare: gamestream.isometric.clientState.compareRenderOrder,
     );
   }
 
@@ -227,16 +227,16 @@ class IsometricServerState {
     for (var i = 0; i < totalProjectiles; i++) {
       final projectile = projectiles[i];
       if (projectile.type == ProjectileType.Rocket) {
-        gamestream.isometricEngine.clientState.spawnParticleSmoke(x: projectile.x, y: projectile.y, z: projectile.z);
+        gamestream.isometric.clientState.spawnParticleSmoke(x: projectile.x, y: projectile.y, z: projectile.z);
         projectShadow(projectile);
         continue;
       }
       if (projectile.type == ProjectileType.Fireball) {
-        gamestream.isometricEngine.clientState.spawnParticleFire(x: projectile.x, y: projectile.y, z: projectile.z);
+        gamestream.isometric.clientState.spawnParticleFire(x: projectile.x, y: projectile.y, z: projectile.z);
         continue;
       }
       if (projectile.type == ProjectileType.Orb) {
-        gamestream.isometricEngine.clientState.spawnParticleOrbShard(
+        gamestream.isometric.clientState.spawnParticleOrbShard(
           x: projectile.x,
           y: projectile.y,
           z: projectile.z,
@@ -305,16 +305,16 @@ class IsometricServerState {
 
   int getItemTypeAtInventoryIndex(int index){
     if (index == ItemType.Equipped_Weapon)
-      return gamestream.isometricEngine.player.weapon.value;
+      return gamestream.isometric.player.weapon.value;
 
     if (index == ItemType.Equipped_Head)
-      return gamestream.isometricEngine.player.head.value;
+      return gamestream.isometric.player.head.value;
 
     if (index == ItemType.Equipped_Body)
-      return gamestream.isometricEngine.player.body.value;
+      return gamestream.isometric.player.body.value;
 
     if (index == ItemType.Equipped_Legs)
-      return gamestream.isometricEngine.player.legs.value;
+      return gamestream.isometric.player.legs.value;
 
     if (index == ItemType.Belt_1){
       return playerBelt1_ItemType.value;
@@ -378,10 +378,10 @@ class IsometricServerState {
       getItemQuantityAtIndex(equippedWeaponIndex.value);
 
   int getEquippedItemType(int itemType) =>
-      ItemType.isTypeWeapon (itemType) ? gamestream.isometricEngine.player.weapon.value :
-      ItemType.isTypeHead   (itemType) ? gamestream.isometricEngine.player.head.value   :
-      ItemType.isTypeBody   (itemType) ? gamestream.isometricEngine.player.body.value   :
-      ItemType.isTypeLegs   (itemType) ? gamestream.isometricEngine.player.legs.value   :
+      ItemType.isTypeWeapon (itemType) ? gamestream.isometric.player.weapon.value :
+      ItemType.isTypeHead   (itemType) ? gamestream.isometric.player.head.value   :
+      ItemType.isTypeBody   (itemType) ? gamestream.isometric.player.body.value   :
+      ItemType.isTypeLegs   (itemType) ? gamestream.isometric.player.legs.value   :
       ItemType.Empty          ;
 
   int getEquippedWeaponConsumeType() =>

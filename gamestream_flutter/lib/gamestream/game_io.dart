@@ -40,13 +40,13 @@ class GameIO {
   var panDistance = Watch(0.0);
   var panDirection = Watch(0.0);
 
-  double get mouseGridX => GameIsometric.convertWorldToGridX(engine.mouseWorldX, engine.mouseWorldY) + gamestream.isometricEngine.player.position.z;
-  double get mouseGridY => GameIsometric.convertWorldToGridY(engine.mouseWorldX, engine.mouseWorldY) + gamestream.isometricEngine.player.position.z;
-  double get mouseGridZ => gamestream.isometricEngine.player.position.z;
+  double get mouseGridX => GameIsometric.convertWorldToGridX(engine.mouseWorldX, engine.mouseWorldY) + gamestream.isometric.player.position.z;
+  double get mouseGridY => GameIsometric.convertWorldToGridY(engine.mouseWorldX, engine.mouseWorldY) + gamestream.isometric.player.position.z;
+  double get mouseGridZ => gamestream.isometric.player.position.z;
 
   void recenterCursor(){
-    touchCursorWorldX = gamestream.isometricEngine.player.renderX;
-    touchCursorWorldY = gamestream.isometricEngine.player.renderY;
+    touchCursorWorldX = gamestream.isometric.player.renderX;
+    touchCursorWorldY = gamestream.isometric.player.renderY;
   }
 
   void detectInputMode() =>
@@ -108,9 +108,9 @@ class GameIO {
     touchCursorWorldY = engine.screenToWorldY(_touchCursorTapY);
 
     if (inputModeKeyboard && engine.keyPressedShiftLeft){
-      gamestream.isometricEngine.actions.attackAuto();
+      gamestream.isometric.actions.attackAuto();
     } else {
-      gamestream.isometricEngine.actions.setTarget();
+      gamestream.isometric.actions.setTarget();
     }
   }
 
@@ -120,7 +120,7 @@ class GameIO {
     _touchCursorTapY = details.globalPosition.dy;
   }
 
-  double get touchMouseWorldZ => gamestream.isometricEngine.player.position.z;
+  double get touchMouseWorldZ => gamestream.isometric.player.position.z;
 
   /// compresses keyboard and mouse inputs into a single byte to send to the server
   int getInputAsByte(){
@@ -229,43 +229,43 @@ class GameIO {
   }
 
   bool getActionSecondary(){
-    if (gamestream.isometricEngine.clientState.editMode) return false;
+    if (gamestream.isometric.clientState.editMode) return false;
     return false;
   }
 
   bool getActionTertiary(){
-    if (gamestream.isometricEngine.clientState.editMode) return false;
+    if (gamestream.isometric.clientState.editMode) return false;
     return false;
   }
 
   void onMouseClickedLeft(){
-    if (gamestream.isometricEngine.clientState.edit.value) {
+    if (gamestream.isometric.clientState.edit.value) {
       onMouseClickedEditMode();
     }
   }
 
   void onMouseClickedRight(){
-    gamestream.isometricEngine.actions.attackAuto();
+    gamestream.isometric.actions.attackAuto();
   }
 
   void onMouseClickedEditMode(){
-    switch (gamestream.isometricEngine.editor.editTab.value) {
+    switch (gamestream.isometric.editor.editTab.value) {
       case EditTab.File:
-        gamestream.isometricEngine.editor.setTabGrid();
-        gamestream.isometricEngine.editor.selectMouseBlock();
+        gamestream.isometric.editor.setTabGrid();
+        gamestream.isometric.editor.selectMouseBlock();
         break;
       case EditTab.Grid:
-        gamestream.isometricEngine.editor.selectMouseBlock();
-        gamestream.isometricEngine.editor.actionRecenterCamera();
+        gamestream.isometric.editor.selectMouseBlock();
+        gamestream.isometric.editor.actionRecenterCamera();
         break;
       case EditTab.Objects:
-        gamestream.isometricEngine.editor.selectMouseGameObject();
+        gamestream.isometric.editor.selectMouseGameObject();
         break;
     }
   }
 
   void readPlayerInput() {
-    if (gamestream.isometricEngine.clientState.edit.value) {
+    if (gamestream.isometric.clientState.edit.value) {
       return readPlayerInputEdit();
     }
   }
@@ -275,16 +275,16 @@ class GameIO {
       engine.panCamera();
     }
     if (engine.keyPressed(KeyCode.Delete)) {
-      gamestream.isometricEngine.editor.delete();
+      gamestream.isometric.editor.delete();
     }
     if (gamestream.io.getInputDirectionKeyboard() != Direction.None) {
-      gamestream.isometricEngine.actions.actionSetModePlay();
+      gamestream.isometric.actions.actionSetModePlay();
     }
     return;
   }
 
   void mouseRaycast(Function(int z, int row, int column) callback){
-    var z = gamestream.isometricEngine.nodes.totalZ - 1;
+    var z = gamestream.isometric.nodes.totalZ - 1;
     final mouseWorldX = engine.mouseWorldX;
     final mouseWorldY = engine.mouseWorldY;
     while (z >= 0){
@@ -292,11 +292,11 @@ class GameIO {
       final column = GameIsometric.convertWorldToColumn(mouseWorldX, mouseWorldY, z * Node_Height);
       if (row < 0) break;
       if (column < 0) break;
-      if (row >= gamestream.isometricEngine.nodes.totalRows) break;
-      if (column >= gamestream.isometricEngine.nodes.totalColumns) break;
-      if (z >= gamestream.isometricEngine.nodes.totalZ) break;
-      final index = gamestream.isometricEngine.clientState.getNodeIndexZRC(z, row, column);
-      if (NodeType.isRainOrEmpty(gamestream.isometricEngine.nodes.nodeTypes[index])) {
+      if (row >= gamestream.isometric.nodes.totalRows) break;
+      if (column >= gamestream.isometric.nodes.totalColumns) break;
+      if (z >= gamestream.isometric.nodes.totalZ) break;
+      final index = gamestream.isometric.clientState.getNodeIndexZRC(z, row, column);
+      if (NodeType.isRainOrEmpty(gamestream.isometric.nodes.nodeTypes[index])) {
         z--;
         continue;
       }

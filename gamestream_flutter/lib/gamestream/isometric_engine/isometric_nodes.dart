@@ -185,7 +185,7 @@ class IsometricNodes {
     required int alpha,
   }){
 
-    if (gamestream.isometricEngine.clientState.dynamicShadows) {
+    if (gamestream.isometric.clientState.dynamicShadows) {
       emitLightAmbientShadows(
         index: index,
         alpha: alpha,
@@ -198,7 +198,7 @@ class IsometricNodes {
 
     final zIndex = index ~/ area;
     final rowIndex = (index - (zIndex * area)) ~/ totalColumns;
-    final columnIndex = gamestream.isometricEngine.clientState.convertNodeIndexToIndexY(index);
+    final columnIndex = gamestream.isometric.clientState.convertNodeIndexToIndexY(index);
     final radius = Shade.Pitch_Black;
     final zMin = max(zIndex - radius, 0);
     final zMax = min(zIndex + radius, totalZ);
@@ -375,7 +375,7 @@ class IsometricNodes {
     if (index < 0) return;
     if (index >= total) return;
 
-    final padding = gamestream.isometricEngine.clientState.interpolation_padding;
+    final padding = gamestream.isometric.clientState.interpolation_padding;
     final rx = getIndexRenderX(index);
     if (rx < engine.Screen_Left - padding) return;
     if (rx > engine.Screen_Right + padding) return;
@@ -383,7 +383,7 @@ class IsometricNodes {
     if (ry < engine.Screen_Top - padding) return;
     if (ry > engine.Screen_Bottom + padding) return;
 
-    gamestream.isometricEngine.clientState.lights_active++;
+    gamestream.isometric.clientState.lights_active++;
 
     final row = getIndexRow(index);
     final column = getIndexColumn(index);
@@ -473,7 +473,7 @@ class IsometricNodes {
     if (index < 0) return;
     if (index >= total) return;
 
-    final padding = gamestream.isometricEngine.clientState.interpolation_padding;
+    final padding = gamestream.isometric.clientState.interpolation_padding;
     final rx = getIndexRenderX(index);
     if (rx < engine.Screen_Left - padding) return;
     if (rx > engine.Screen_Right + padding) return;
@@ -481,7 +481,7 @@ class IsometricNodes {
     if (ry < engine.Screen_Top - padding) return;
     if (ry > engine.Screen_Bottom + padding) return;
 
-    gamestream.isometricEngine.clientState.lights_active++;
+    gamestream.isometric.clientState.lights_active++;
 
     final row = getIndexRow(index);
     final column = getIndexColumn(index);
@@ -1148,14 +1148,14 @@ class IsometricNodes {
   }
 
   int getNodeIndex(double x, double y, double z) =>
-      gamestream.isometricEngine.clientState.getNodeIndexZRC(
+      gamestream.isometric.clientState.getNodeIndexZRC(
         z ~/ Node_Size_Half,
         x ~/ Node_Size,
         y ~/ Node_Size,
       );
 
   int getNodeIndexV3(Vector3 vector3) =>
-      gamestream.isometricEngine.clientState.getNodeIndexZRC(
+      gamestream.isometric.clientState.getNodeIndexZRC(
         vector3.indexZ,
         vector3.indexRow,
         vector3.indexColumn,
@@ -1176,7 +1176,7 @@ class IsometricNodes {
       nodeTypes[gridNodeXYZIndex(x, y, z)];
 
   bool gridNodeZRCTypeRainOrEmpty(int z, int row, int column) =>
-      NodeType.isRainOrEmpty(nodeTypes[gamestream.isometricEngine.clientState.getNodeIndexZRC(z, row, column)]);
+      NodeType.isRainOrEmpty(nodeTypes[gamestream.isometric.clientState.getNodeIndexZRC(z, row, column)]);
 
   int gridNodeZRCTypeSafe(int z, int row, int column) {
     if (z < 0) return NodeType.Boundary;
@@ -1189,11 +1189,11 @@ class IsometricNodes {
   }
 
   int gridNodeZRCType(int z, int row, int column) =>
-      nodeTypes[gamestream.isometricEngine.clientState.getNodeIndexZRC(z, row, column)];
+      nodeTypes[gamestream.isometric.clientState.getNodeIndexZRC(z, row, column)];
 
 
   int gridNodeXYZIndex(double x, double y, double z) =>
-      gamestream.isometricEngine.clientState.getNodeIndexZRC(
+      gamestream.isometric.clientState.getNodeIndexZRC(
         z ~/ Node_Size_Half,
         x ~/ Node_Size,
         y ~/ Node_Size,
@@ -1205,18 +1205,18 @@ class IsometricNodes {
 
   // TODO REFACTOR
   int getClosestByType({required int radius, required int type}){
-    final minRow = max(gamestream.isometricEngine.player.position.indexRow - radius, 0);
-    final maxRow = min(gamestream.isometricEngine.player.position.indexRow + radius, totalRows - 1);
-    final minColumn = max(gamestream.isometricEngine.player.position.indexColumn - radius, 0);
-    final maxColumn = min(gamestream.isometricEngine.player.position.indexColumn + radius, totalColumns - 1);
-    final minZ = max(gamestream.isometricEngine.player.position.indexZ - radius, 0);
-    final maxZ = min(gamestream.isometricEngine.player.position.indexZ + radius, totalZ - 1);
+    final minRow = max(gamestream.isometric.player.position.indexRow - radius, 0);
+    final maxRow = min(gamestream.isometric.player.position.indexRow + radius, totalRows - 1);
+    final minColumn = max(gamestream.isometric.player.position.indexColumn - radius, 0);
+    final maxColumn = min(gamestream.isometric.player.position.indexColumn + radius, totalColumns - 1);
+    final minZ = max(gamestream.isometric.player.position.indexZ - radius, 0);
+    final maxZ = min(gamestream.isometric.player.position.indexZ + radius, totalZ - 1);
     var closest = 99999;
     for (var z = minZ; z <= maxZ; z++){
       for (var row = minRow; row <= maxRow; row++){
         for (var column = minColumn; column <= maxColumn; column++){
-          if (gamestream.isometricEngine.nodes.gridNodeZRCType(z, row, column) != type) continue;
-          final distance = gamestream.isometricEngine.player.position.getGridDistance(z, row, column);
+          if (gamestream.isometric.nodes.gridNodeZRCType(z, row, column) != type) continue;
+          final distance = gamestream.isometric.player.position.getGridDistance(z, row, column);
           if (distance > closest) continue;
           closest = distance;
         }
@@ -1228,14 +1228,14 @@ class IsometricNodes {
 
 
   int getNodeIndexBelowV3(Vector3 vector3) =>
-      gamestream.isometricEngine.clientState.getNodeIndexZRC(
+      gamestream.isometric.clientState.getNodeIndexZRC(
         vector3.indexZ - 1,
         vector3.indexRow,
         vector3.indexColumn,
       );
 
   bool isInboundV3(Vector3 vector3) =>
-      gamestream.isometricEngine.nodes.isInboundZRC(vector3.indexZ, vector3.indexRow, vector3.indexColumn);
+      gamestream.isometric.nodes.isInboundZRC(vector3.indexZ, vector3.indexRow, vector3.indexColumn);
 
 }
 

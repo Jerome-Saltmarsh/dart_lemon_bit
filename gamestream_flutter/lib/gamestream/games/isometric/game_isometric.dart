@@ -1,28 +1,31 @@
 
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/gamestream/isometric_engine/isometric_engine.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import 'game_isometric_ui.dart';
 
 class GameIsometric extends Game {
 
-  GameIsometric() {
-    gamestream.isometricEngine.camera.chaseTarget = gamestream.isometricEngine.player.position;
+  final IsometricEngine isometric;
+
+  GameIsometric({required this.isometric}) {
+    isometric.camera.chaseTarget = isometric.player.position;
   }
 
   @override
   void drawCanvas(Canvas canvas, Size size) {
-    gamestream.isometricEngine.drawCanvas(canvas, size);
+    isometric.drawCanvas(canvas, size);
   }
 
   @override
   void renderForeground(Canvas canvas, Size size) {
-    gamestream.isometricEngine.renderer.renderForeground(canvas, size);
+    isometric.renderer.renderForeground(canvas, size);
   }
 
   @override
   void update() {
-    gamestream.isometricEngine.update();
+    isometric.update();
   }
 
   void sendIsometricClientRequest([dynamic message]) {
@@ -31,14 +34,14 @@ class GameIsometric extends Game {
 
   @override
   void onActivated() {
-    gamestream.isometricEngine.clientState.window_visible_player_creation.value = false;
-    gamestream.isometricEngine.clientState.control_visible_respawn_timer.value = false;
+    isometric.clientState.window_visible_player_creation.value = false;
+    isometric.clientState.control_visible_respawn_timer.value = false;
     gamestream.audio.musicStop();
     engine.onLeftClicked = gamestream.io.touchController.onClick;
     engine.onMouseMoved = gamestream.io.touchController.onMouseMoved;
-    gamestream.isometricEngine.clientState.control_visible_player_weapons.value = true;
-    gamestream.isometricEngine.clientState.control_visible_scoreboard.value = true;
-    gamestream.isometricEngine.clientState.control_visible_player_power.value = true;
+    isometric.clientState.control_visible_player_weapons.value = true;
+    isometric.clientState.control_visible_scoreboard.value = true;
+    isometric.clientState.control_visible_player_power.value = true;
 
     if (!engine.isLocalHost) {
       engine.fullScreenEnter();

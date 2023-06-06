@@ -8,7 +8,7 @@ class ServerActions {
 
   static void equipWatchBeltType(Watch<int> watchBeltType) =>
       gamestream.network.sendClientRequestInventoryEquip(
-        gamestream.isometricEngine.serverState.mapWatchBeltTypeToItemType(watchBeltType)
+        gamestream.isometric.serverState.mapWatchBeltTypeToItemType(watchBeltType)
     );
 
   static void inventoryUnequip(int index) =>
@@ -17,7 +17,7 @@ class ServerActions {
   static void inventoryMoveToWatchBelt(int index, Watch<int> watchBelt)=>
       gamestream.network.sendClientRequestInventoryMove(
         indexFrom: index,
-        indexTo: gamestream.isometricEngine.serverState.mapWatchBeltTypeToItemType(watchBelt),
+        indexTo: gamestream.isometric.serverState.mapWatchBeltTypeToItemType(watchBelt),
       );
 
   static void saveScene(){

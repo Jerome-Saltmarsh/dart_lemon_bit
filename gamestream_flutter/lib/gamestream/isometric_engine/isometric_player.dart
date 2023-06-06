@@ -65,15 +65,15 @@ class IsometricPlayer {
   double get x => position.x;
   double get y => position.y;
   double get z => position.z;
-  int get areaNodeIndex => (indexRow * gamestream.isometricEngine.nodes.totalColumns) + indexColumn;
+  int get areaNodeIndex => (indexRow * gamestream.isometric.nodes.totalColumns) + indexColumn;
 
   double get renderX => GameIsometricRenderer.convertV3ToRenderX(position);
   double get renderY => GameIsometricRenderer.convertV3ToRenderY(position);
-  double get positionScreenX => engine.worldToScreenX(gamestream.isometricEngine.player.position.renderX);
-  double get positionScreenY => engine.worldToScreenY(gamestream.isometricEngine.player.position.renderY);
-  bool get interactModeTrading => gamestream.isometricEngine.serverState.interactMode.value == InteractMode.Trading;
+  double get positionScreenX => engine.worldToScreenX(gamestream.isometric.player.position.renderX);
+  double get positionScreenY => engine.worldToScreenY(gamestream.isometric.player.position.renderY);
+  bool get interactModeTrading => gamestream.isometric.serverState.interactMode.value == InteractMode.Trading;
   bool get dead => !alive.value;
-  bool get inBounds => gamestream.isometricEngine.nodes.inBoundsVector3(position);
+  bool get inBounds => gamestream.isometric.nodes.inBoundsVector3(position);
 
 
   bool isCharacter(Character character){
@@ -89,9 +89,9 @@ class IsometricPlayer {
 
   bool isInsideBuilding(){
     if (!inBounds) return false;
-    final index = position.nodeIndex + gamestream.isometricEngine.nodes.area;
-    while (index < gamestream.isometricEngine.nodes.total){
-      if (NodeType.isRainOrEmpty(gamestream.isometricEngine.nodes.nodeTypes[index]))  continue;
+    final index = position.nodeIndex + gamestream.isometric.nodes.area;
+    while (index < gamestream.isometric.nodes.total){
+      if (NodeType.isRainOrEmpty(gamestream.isometric.nodes.nodeTypes[index]))  continue;
       return true;
     }
     return false;

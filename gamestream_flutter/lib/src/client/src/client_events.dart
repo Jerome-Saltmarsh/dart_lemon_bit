@@ -16,14 +16,14 @@ class ClientEvents {
   }
 
   static void onChangedRaining(bool raining){
-    raining ? gamestream.isometricEngine.actions.rainStart() : gamestream.isometricEngine.actions.rainStop();
-    gamestream.isometricEngine.nodes.resetNodeColorsToAmbient();
+    raining ? gamestream.isometric.actions.rainStart() : gamestream.isometric.actions.rainStop();
+    gamestream.isometric.nodes.resetNodeColorsToAmbient();
   }
 
   static void onDragStarted(int itemIndex){
     // print("onDragStarted()");
-    gamestream.isometricEngine.clientState.dragStart.value = itemIndex;
-    gamestream.isometricEngine.clientState.dragEnd.value = -1;
+    gamestream.isometric.clientState.dragStart.value = itemIndex;
+    gamestream.isometric.clientState.dragEnd.value = -1;
   }
 
   static void onDragCompleted(){
@@ -35,7 +35,7 @@ class ClientEvents {
   }
 
   static void onItemIndexPrimary(int itemIndex) {
-    if (gamestream.isometricEngine.clientState.hoverDialogDialogIsTrade){
+    if (gamestream.isometric.clientState.hoverDialogDialogIsTrade){
       gamestream.network.sendClientRequestInventoryBuy(itemIndex);
       return;
     }
@@ -43,11 +43,11 @@ class ClientEvents {
   }
 
   static void onItemIndexSecondary(int itemIndex){
-    if (gamestream.isometricEngine.clientState.hoverDialogDialogIsTrade){
+    if (gamestream.isometric.clientState.hoverDialogDialogIsTrade){
       gamestream.network.sendClientRequestInventoryBuy(itemIndex);
       return;
     }
-    gamestream.isometricEngine.player.interactModeTrading
+    gamestream.isometric.player.interactModeTrading
         ? gamestream.network.sendClientRequestInventorySell(itemIndex)
         : gamestream.network.sendClientRequestInventoryDrop(itemIndex);
   }
@@ -59,32 +59,32 @@ class ClientEvents {
 
   static void onDragCancelled(Velocity velocity, Offset offset){
     // print("onDragCancelled()");
-    if (gamestream.isometricEngine.clientState.hoverIndex.value == -1){
+    if (gamestream.isometric.clientState.hoverIndex.value == -1){
       ClientActions.dropDraggedItem();
     } else {
       ClientActions.inventorySwapDragTarget();
     }
-    gamestream.isometricEngine.clientState.dragStart.value = -1;
-    gamestream.isometricEngine.clientState.dragEnd.value = -1;
+    gamestream.isometric.clientState.dragStart.value = -1;
+    gamestream.isometric.clientState.dragEnd.value = -1;
   }
 
   static void onKeyPressed(int key){
 
     if (key == ClientConstants.Key_Toggle_Debug_Mode) {
-      gamestream.isometricEngine.actions.toggleDebugMode();
+      gamestream.isometric.actions.toggleDebugMode();
       return;
     }
 
     if (key == KeyCode.Tab) {
-      gamestream.isometricEngine.actions.actionToggleEdit();
+      gamestream.isometric.actions.actionToggleEdit();
       return;
     }
 
     if (key == KeyCode.Escape) {
-      gamestream.isometricEngine.clientState.window_visible_menu.toggle();
+      gamestream.isometric.clientState.window_visible_menu.toggle();
     }
 
-    if (gamestream.isometricEngine.clientState.playMode) {
+    if (gamestream.isometric.clientState.playMode) {
       onKeyPressedModePlay(key);
     } else {
       onKeyPressedModeEdit(key);
@@ -98,57 +98,57 @@ class ClientEvents {
         gamestream.network.sendGameObjectRequestDuplicate();
         break;
       case KeyCode.F:
-        gamestream.isometricEngine.editor.paint();
+        gamestream.isometric.editor.paint();
         break;
       case KeyCode.G:
-        if (gamestream.isometricEngine.editor.gameObjectSelected.value) {
+        if (gamestream.isometric.editor.gameObjectSelected.value) {
           gamestream.network.sendGameObjectRequestMoveToMouse();
         } else {
-          gamestream.isometricEngine.camera.cameraSetPositionGrid(gamestream.isometricEngine.editor.row, gamestream.isometricEngine.editor.column, gamestream.isometricEngine.editor.z);
+          gamestream.isometric.camera.cameraSetPositionGrid(gamestream.isometric.editor.row, gamestream.isometric.editor.column, gamestream.isometric.editor.z);
         }
         break;
       case KeyCode.R:
-        gamestream.isometricEngine.editor.selectPaintType();
+        gamestream.isometric.editor.selectPaintType();
         break;
       case KeyCode.Arrow_Up:
         if (engine.keyPressedShiftLeft) {
-          if (gamestream.isometricEngine.editor.gameObjectSelected.value){
-            gamestream.isometricEngine.editor.translate(x: 0, y: 0, z: 1);
+          if (gamestream.isometric.editor.gameObjectSelected.value){
+            gamestream.isometric.editor.translate(x: 0, y: 0, z: 1);
             return;
           }
-          gamestream.isometricEngine.editor.cursorZIncrease();
+          gamestream.isometric.editor.cursorZIncrease();
           return;
         }
-        if (gamestream.isometricEngine.editor.gameObjectSelected.value) {
-          gamestream.isometricEngine.editor.translate(x: -1, y: -1, z: 0);
+        if (gamestream.isometric.editor.gameObjectSelected.value) {
+          gamestream.isometric.editor.translate(x: -1, y: -1, z: 0);
           return;
         }
-        gamestream.isometricEngine.editor.cursorRowDecrease();
+        gamestream.isometric.editor.cursorRowDecrease();
         return;
       case KeyCode.Arrow_Right:
-        if (gamestream.isometricEngine.editor.gameObjectSelected.value){
-          return gamestream.isometricEngine.editor.translate(x: 1, y: -1, z: 0);
+        if (gamestream.isometric.editor.gameObjectSelected.value){
+          return gamestream.isometric.editor.translate(x: 1, y: -1, z: 0);
         }
-        gamestream.isometricEngine.editor.cursorColumnDecrease();
+        gamestream.isometric.editor.cursorColumnDecrease();
         break;
       case KeyCode.Arrow_Down:
         if (engine.keyPressedShiftLeft) {
-          if (gamestream.isometricEngine.editor.gameObjectSelected.value){
-            return gamestream.isometricEngine.editor.translate(x: 0, y: 0, z: -1);
+          if (gamestream.isometric.editor.gameObjectSelected.value){
+            return gamestream.isometric.editor.translate(x: 0, y: 0, z: -1);
           }
-          gamestream.isometricEngine.editor.cursorZDecrease();
+          gamestream.isometric.editor.cursorZDecrease();
         } else {
-          if (gamestream.isometricEngine.editor.gameObjectSelected.value){
-            return gamestream.isometricEngine.editor.translate(x: 1, y: 1, z: 0);
+          if (gamestream.isometric.editor.gameObjectSelected.value){
+            return gamestream.isometric.editor.translate(x: 1, y: 1, z: 0);
           }
-          gamestream.isometricEngine.editor.cursorRowIncrease();
+          gamestream.isometric.editor.cursorRowIncrease();
         }
         break;
       case KeyCode.Arrow_Left:
-        if (gamestream.isometricEngine.editor.gameObjectSelected.value){
-          return gamestream.isometricEngine.editor.translate(x: -1, y: 1, z: 0);
+        if (gamestream.isometric.editor.gameObjectSelected.value){
+          return gamestream.isometric.editor.translate(x: -1, y: 1, z: 0);
         }
-        gamestream.isometricEngine.editor.cursorColumnIncrease();
+        gamestream.isometric.editor.cursorColumnIncrease();
         break;
     }
   }
@@ -156,7 +156,7 @@ class ClientEvents {
   static void onKeyPressedModePlay(int key) {
 
     if (key == ClientConstants.Key_Zoom) {
-      gamestream.isometricEngine.actions.toggleZoom();
+      gamestream.isometric.actions.toggleZoom();
       return;
     }
 
@@ -172,7 +172,7 @@ class ClientEvents {
 
     if (engine.isLocalHost){
       if (key == ClientConstants.Key_Settings) {
-        gamestream.isometricEngine.actions.toggleWindowSettings();
+        gamestream.isometric.actions.toggleWindowSettings();
         return;
       }
     }
@@ -186,30 +186,30 @@ class ClientEvents {
 
   static void onRightClickedWatchBelt(Watch<int> watchBelt){
     ServerActions.inventoryUnequip(
-        gamestream.isometricEngine.serverState.mapWatchBeltTypeToItemType(watchBelt)
+        gamestream.isometric.serverState.mapWatchBeltTypeToItemType(watchBelt)
     );
   }
 
   static void onAcceptDragInventoryIcon(){
-     if (gamestream.isometricEngine.clientState.dragStart.value == -1) return;
-     gamestream.network.sendClientRequestInventoryDeposit(gamestream.isometricEngine.clientState.dragStart.value);
+     if (gamestream.isometric.clientState.dragStart.value == -1) return;
+     gamestream.network.sendClientRequestInventoryDeposit(gamestream.isometric.clientState.dragStart.value);
   }
 
   static void onChangedMessageStatus(String value){
     if (value.isEmpty){
-      gamestream.isometricEngine.clientState.messageStatusDuration = 0;
+      gamestream.isometric.clientState.messageStatusDuration = 0;
     } else {
-      gamestream.isometricEngine.clientState.messageStatusDuration = 150;
+      gamestream.isometric.clientState.messageStatusDuration = 150;
     }
   }
 
   static void onChangedAreaTypeVisible(bool value) =>
-      gamestream.isometricEngine.clientState.areaTypeVisibleDuration = value
+      gamestream.isometric.clientState.areaTypeVisibleDuration = value
           ? ClientConstants.Area_Type_Duration
           : 0;
 
   static void onChangedDebugMode(bool value){
-    gamestream.isometricEngine.renderer.renderDebug = value;
+    gamestream.isometric.renderer.renderDebug = value;
   }
 
   static void onChangedCredits(int value){

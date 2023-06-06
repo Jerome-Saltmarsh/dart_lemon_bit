@@ -6,12 +6,12 @@ import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
 
 Widget buildButtonSelectSceneName(String gameName) {
 
-  return watch(gamestream.isometricEngine.editor.selectedSceneName, (selectedSceneName) {
+  return watch(gamestream.isometric.editor.selectedSceneName, (selectedSceneName) {
     return container(
       width: 300,
       child: gameName,
       color: gameName == selectedSceneName ? greyDark : grey,
-      action: () => gamestream.isometricEngine.editor.selectSceneName(gameName),
+      action: () => gamestream.isometric.editor.selectSceneName(gameName),
     );
   });
 }

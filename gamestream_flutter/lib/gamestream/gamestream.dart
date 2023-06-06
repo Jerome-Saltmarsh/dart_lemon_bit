@@ -13,10 +13,10 @@ import 'server_response_reader.dart';
 class Gamestream {
    final io = GameIO();
    final audio = GameAudio();
-   final games = Games();
+
    final animation = GameAnimation();
    final operationStatus = Watch(OperationStatus.None);
-   final isometricEngine = IsometricEngine();
+   final isometric = IsometricEngine();
 
    late final gameType = Watch(GameType.Website, onChanged: _onChangedGameType);
    late final game = Watch<Game>(games.website, onChanged: _onChangedGame);
@@ -24,12 +24,14 @@ class Gamestream {
    late final account = Watch<Account?>(null, onChanged: onChangedAccount);
    late final ServerResponseReader serverResponseReader;
    late final GameNetwork network;
+   late final Games games;
 
    void refreshGame(){
      _onChangedGameType(gameType.value);
    }
 
   Gamestream() {
+    games = Games(this);
     network = GameNetwork(this);
     serverResponseReader = ServerResponseReader(this);
   }

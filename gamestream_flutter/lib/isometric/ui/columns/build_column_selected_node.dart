@@ -19,10 +19,10 @@ Widget buildEditorSelectedNode() =>
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            watch(gamestream.isometricEngine.editor.nodeSelectedIndex, text),
+            watch(gamestream.isometric.editor.nodeSelectedIndex, text),
             onPressed(
               hint: "Delete",
-              action: gamestream.isometricEngine.editor.delete,
+              action: gamestream.isometric.editor.delete,
               child: Container(
                 width: 16,
                 height: 16,
@@ -32,7 +32,7 @@ Widget buildEditorSelectedNode() =>
                   srcY: 96,
                   srcWidth: 16,
                   srcHeight: 16,
-                  action: gamestream.isometricEngine.editor.delete,
+                  action: gamestream.isometric.editor.delete,
                 ),
               ),
             ),
@@ -42,7 +42,7 @@ Widget buildEditorSelectedNode() =>
           height: 70,
             alignment: Alignment.center,
             child: watch(
-                gamestream.isometricEngine.editor.nodeSelectedType,
+                gamestream.isometric.editor.nodeSelectedType,
                     (int nodeType) =>
                         text(NodeType.getName(nodeType), align: TextAlign.center)
             )
@@ -59,21 +59,21 @@ Widget buildEditorSelectedNode() =>
               buildPositionedIconButton(
                 top: 65 + _shiftY,
                 left: 27 + _shiftX,
-                action: gamestream.isometricEngine.editor.cursorZDecrease,
+                action: gamestream.isometric.editor.cursorZDecrease,
                 iconType: IconType.Arrows_Down,
                 hint: "Shift + Arrow Down",
               ),
               buildPositionedIconButton(
                 top: 3 + _shiftY,
                 left: 3 + _shiftY,
-                action: gamestream.isometricEngine.editor.cursorRowDecrease,
+                action: gamestream.isometric.editor.cursorRowDecrease,
                 iconType: IconType.Arrows_North,
                 hint: "Arrow Up",
               ),
               buildPositionedIconButton(
                 top: 5 + _shiftY,
                 left: 50 + _shiftX,
-                action: gamestream.isometricEngine.editor.cursorColumnDecrease,
+                action: gamestream.isometric.editor.cursorColumnDecrease,
                 iconType: IconType.Arrows_East,
                 hint: "Arrow Right",
               ),
@@ -81,26 +81,26 @@ Widget buildEditorSelectedNode() =>
                   height: 72,
                   width: 72,
                   alignment: Alignment.center,
-                  child: watch(gamestream.isometricEngine.editor.nodeSelectedType, GameIsometricUI.buildAtlasNodeType)
+                  child: watch(gamestream.isometric.editor.nodeSelectedType, GameIsometricUI.buildAtlasNodeType)
               ),
               buildPositionedIconButton(
                 top: 50 + _shiftY,
                 left: 50 + _shiftX,
-                action: gamestream.isometricEngine.editor.cursorRowIncrease,
+                action: gamestream.isometric.editor.cursorRowIncrease,
                 iconType: IconType.Arrows_South,
                   hint: "Arrow Down"
               ),
               buildPositionedIconButton(
                   top: -10 + _shiftY,
                   left: 27 + _shiftX,
-                  action: gamestream.isometricEngine.editor.cursorZIncrease,
+                  action: gamestream.isometric.editor.cursorZIncrease,
                   iconType: IconType.Arrows_Up,
                   hint: "Shift + Arrow Up"
               ),
               buildPositionedIconButton(
                   top: 50 + _shiftY,
                   left: 0 + _shiftX,
-                  action: gamestream.isometricEngine.editor.cursorColumnIncrease,
+                  action: gamestream.isometric.editor.cursorColumnIncrease,
                   iconType: IconType.Arrows_West,
                   hint: "Arrow Left"
               ),

@@ -16,8 +16,8 @@ class RendererCharacters extends Renderer {
   void renderFunction() => renderCurrentCharacter();
 
   void updateFunction() {
-    while (index < gamestream.isometricEngine.serverState.totalCharacters){
-      character = gamestream.isometricEngine.serverState.characters[index];
+    while (index < gamestream.isometric.serverState.totalCharacters){
+      character = gamestream.isometric.serverState.characters[index];
       orderZ = character.indexZ;
       orderRowColumn = character.indexSum;
       if (character.nodePerceptible) break;
@@ -26,12 +26,12 @@ class RendererCharacters extends Renderer {
   }
 
   @override
-  int getTotal() => gamestream.isometricEngine.serverState.totalCharacters;
+  int getTotal() => gamestream.isometric.serverState.totalCharacters;
 
   void renderCurrentCharacter(){
 
-    if (gamestream.isometricEngine.renderer.renderDebug) {
-      gamestream.isometricEngine.renderer.renderCircle(character.x, character.y, character.z, character.radius);
+    if (gamestream.isometric.renderer.renderDebug) {
+      gamestream.isometric.renderer.renderCircle(character.x, character.y, character.z, character.radius);
     }
 
     if (character.spawning) {
@@ -200,7 +200,7 @@ class RendererCharacters extends Renderer {
     }
 
     if (character.state == CharacterState.Stunned){
-      gamestream.isometricEngine.renderer.renderStarsV3(character);
+      gamestream.isometric.renderer.renderStarsV3(character);
       engine.renderSprite(
         image: GameImages.character_dog,
         dstX: character.renderX,
@@ -224,11 +224,11 @@ class RendererCharacters extends Renderer {
     var angle = 0.0;
     var dist = 0.0;
 
-    if (!gamestream.isometricEngine.clientState.outOfBoundsV3(character)){
-      var torchIndex = gamestream.isometricEngine.nodes.getTorchIndex(gamestream.isometricEngine.clientState.getNodeIndexV3(character));
+    if (!gamestream.isometric.clientState.outOfBoundsV3(character)){
+      var torchIndex = gamestream.isometric.nodes.getTorchIndex(gamestream.isometric.clientState.getNodeIndexV3(character));
       if (torchIndex != -1) {
-        final torchRow = gamestream.isometricEngine.clientState.convertNodeIndexToIndexX(torchIndex);
-        final torchColumn = gamestream.isometricEngine.clientState.convertNodeIndexToIndexY(torchIndex);
+        final torchRow = gamestream.isometric.clientState.convertNodeIndexToIndexX(torchIndex);
+        final torchColumn = gamestream.isometric.clientState.convertNodeIndexToIndexY(torchIndex);
         final torchPosX = torchRow * Node_Size + Node_Size_Half;
         final torchPosY = torchColumn * Node_Size + Node_Size_Half;
         angle = angleBetween(character.x, character.y, torchPosX, torchPosY);
@@ -303,7 +303,7 @@ class RendererCharacters extends Renderer {
           framesPerDirection: framesPerDirection,
         );
       case CharacterState.Stunned:
-        gamestream.isometricEngine.renderer.renderStarsV3(character);
+        gamestream.isometric.renderer.renderStarsV3(character);
 
         return single(
             frame: 1,
