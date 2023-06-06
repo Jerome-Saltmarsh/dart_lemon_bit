@@ -12,11 +12,6 @@ class GameIsometric extends Game {
 
   @override
   void drawCanvas(Canvas canvas, Size size) {
-    if (gamestream.isometricEngine.serverState.gameRunning.value){
-      /// particles are only on the ui and thus can update every frame
-      /// this makes them much smoother as they don't freeze
-      gamestream.isometricEngine.clientState.updateParticles();
-    }
     gamestream.isometricEngine.drawCanvas(canvas, size);
   }
 
@@ -27,29 +22,7 @@ class GameIsometric extends Game {
 
   @override
   void update() {
-    if (!gamestream.isometricEngine.serverState.gameRunning.value) {
-      gamestream.network.sendClientRequestUpdate();
-      return;
-    }
-    gamestream.isometricEngine.clientState.updateTorchEmissionIntensity();
-    gamestream.animation.updateAnimationFrame();
-    gamestream.isometricEngine.clientState.updateParticleEmitters();
-    gamestream.isometricEngine.serverState.updateProjectiles();
-    gamestream.isometricEngine.serverState.updateGameObjects();
-    gamestream.audio.update();
-    gamestream.isometricEngine.clientState.update();
-    gamestream.isometricEngine.clientState.updatePlayerMessageTimer();
-    gamestream.io.readPlayerInput();
-    gamestream.network.sendClientRequestUpdate();
-
-    if (engine.keyPressed(KeyCode.L)) {
-        sendIsometricClientRequestSpawnZombie();
-    }
-  }
-
-  void sendIsometricClientRequestSpawnZombie(){
-    print('sendIsometricClientRequestSpawnZombie()');
-    sendIsometricClientRequest(IsometricClientRequest.Spawn_Zombie);
+    gamestream.isometricEngine.update();
   }
 
   void sendIsometricClientRequest([dynamic message]) {

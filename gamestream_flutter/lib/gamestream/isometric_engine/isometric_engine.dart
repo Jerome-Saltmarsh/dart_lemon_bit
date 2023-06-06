@@ -26,12 +26,12 @@ class IsometricEngine {
   final camera = GameIsometricCamera();
 
   void drawCanvas(Canvas canvas, Size size) {
-    if (gamestream.isometricEngine.serverState.gameRunning.value){
+    if (serverState.gameRunning.value){
       /// particles are only on the ui and thus can update every frame
       /// this makes them much smoother as they don't freeze
-      gamestream.isometricEngine.clientState.updateParticles();
+      clientState.updateParticles();
     }
-    gamestream.isometricEngine.clientState.interpolatePlayer();
+    clientState.interpolatePlayer();
     camera.update();
     renderer.render3D();
     clientState.renderEditMode();
@@ -51,5 +51,22 @@ class IsometricEngine {
       windLineColumn = clientState.windLine - nodes.totalRows + 1;
     }
     return (windLineRow - windLineColumn) * Node_Size_Half;
+  }
+  
+  void update(){
+    if (!serverState.gameRunning.value) {
+      gamestream.network.sendClientRequestUpdate();
+      return;
+    }
+    clientState.updateTorchEmissionIntensity();
+    gamestream.animation.updateAnimationFrame();
+    clientState.updateParticleEmitters();
+    serverState.updateProjectiles();
+    serverState.updateGameObjects();
+    gamestream.audio.update();
+    clientState.update();
+    clientState.updatePlayerMessageTimer();
+    gamestream.io.readPlayerInput();
+    gamestream.network.sendClientRequestUpdate();
   }
 }
