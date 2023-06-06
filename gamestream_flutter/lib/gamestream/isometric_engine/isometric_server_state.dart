@@ -7,7 +7,7 @@ import 'package:gamestream_flutter/src/server/src/server_events.dart';
 /// the data inside server state belongs to the server and can only be read by the client
 ///
 /// WARNING - WRITING TO SERVER STATE IS FORBIDDEN
-class GameIsometricServerState {
+class IsometricServerState {
   var totalCharacters = 0;
   var totalPlayers = 0;
   var totalNpcs = 0;

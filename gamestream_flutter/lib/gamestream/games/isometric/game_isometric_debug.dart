@@ -1,7 +1,7 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/gamestream/isometric_engine/game_isometric_client_state.dart';
+import 'package:gamestream_flutter/gamestream/isometric_engine/isometric_client_state.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -29,7 +29,7 @@ class GameIsometricDebug {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             watch(gamestream.serverResponseReader.bufferSize, (int bytes) => text('network-bytes: $bytes')),
-                            watch(gamestream.serverResponseReader.bufferSizeTotal, (int bytes) => text('network-bytes-total: ${GameIsometricClientState.formatBytes(bytes)}')),
+                            watch(gamestream.serverResponseReader.bufferSizeTotal, (int bytes) => text('network-bytes-total: ${IsometricClientState.formatBytes(bytes)}')),
                             watch(gamestream.serverResponseReader.bufferSizeTotal, (int bytes) => text('network-bytes-per-second: ${gamestream.isometricEngine.clientState.formatAverageBytePerSecond(bytes)}')),
                             watch(gamestream.serverResponseReader.bufferSizeTotal, (int bytes) => text('network-bytes-per-minute: ${gamestream.isometricEngine.clientState.formatAverageBytePerMinute(bytes)}')),
                             watch(gamestream.serverResponseReader.bufferSizeTotal, (int bytes) => text('network-bytes-per-hour: ${gamestream.isometricEngine.clientState.formatAverageBytePerHour(bytes)}')),

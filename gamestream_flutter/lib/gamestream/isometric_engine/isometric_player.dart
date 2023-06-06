@@ -2,7 +2,7 @@ import 'package:gamestream_flutter/library.dart';
 
 import '../games/isometric/game_isometric_renderer.dart';
 
-class GameIsometricPlayer {
+class IsometricPlayer {
   final id = Watch(0);
   final perkType = Watch(PerkType.None);
   final powerType = Watch(PowerType.None);

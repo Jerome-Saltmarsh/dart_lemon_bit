@@ -3,7 +3,7 @@ import 'package:gamestream_flutter/library.dart';
 
 import '../games/isometric/game_isometric_ui.dart';
 
-class GameIsometricActions {
+class IsometricActions {
 
   static const Zoom_Far = 1.0;
   static const Zoom_Very_Far = 0.75;

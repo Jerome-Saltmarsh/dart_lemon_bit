@@ -6,7 +6,7 @@ import 'package:gamestream_flutter/isometric/render/render_circle.dart';
 import 'package:gamestream_flutter/library.dart';
 
 
-mixin class GameIsometricClientState {
+mixin class IsometricClientState {
   static const Particles_Max = 500;
   var dynamicShadows = true;
   var emissionAlphaCharacter = 50;

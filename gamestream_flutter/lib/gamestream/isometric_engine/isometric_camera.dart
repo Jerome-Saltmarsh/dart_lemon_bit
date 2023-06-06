@@ -2,14 +2,14 @@ import 'dart:math';
 
 import 'package:gamestream_flutter/library.dart';
 
-class GameIsometricCamera {
+class IsometricCamera {
   final chaseTargetEnabled = Watch(true);
   Vector3? chaseTarget;
   var chaseStrength = 0.00075;
   var translateX = 0.0;
   var translateY = 0.0;
 
-  GameIsometricCamera();
+  IsometricCamera();
 
   void centerOnPlayer() {
     if (chaseTarget != null){

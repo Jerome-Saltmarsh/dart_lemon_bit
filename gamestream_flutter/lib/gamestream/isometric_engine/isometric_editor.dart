@@ -2,7 +2,7 @@
 import 'package:gamestream_flutter/library.dart';
 
 
-class GameIsometricEditor {
+class IsometricEditor {
   late final editorDialog = Watch<EditorDialog?>(null, onChanged: onChangedEditorDialog);
   late final editTab = Watch(EditTab.Grid, onChanged: onChangedEditTab);
   final selectedSceneName = Watch<String?>(null);

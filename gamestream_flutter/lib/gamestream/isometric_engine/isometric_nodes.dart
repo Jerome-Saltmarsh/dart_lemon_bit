@@ -5,7 +5,7 @@ import 'package:flutter/painting.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_renderer.dart';
 import 'package:gamestream_flutter/library.dart';
 
-class GameIsometricNodes {
+class IsometricNodes {
 
   // VARIABLES
   var hsv_color_red  = HSVColor.fromColor(Color.fromRGBO(232, 59, 59, 0.5));

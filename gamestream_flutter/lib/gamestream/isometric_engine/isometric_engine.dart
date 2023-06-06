@@ -6,24 +6,24 @@ import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_min
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_renderer.dart';
 
 import '../../library.dart';
-import 'game_isometric_actions.dart';
-import 'game_isometric_camera.dart';
-import 'game_isometric_client_state.dart';
-import 'game_isometric_editor.dart';
-import 'game_isometric_nodes.dart';
-import 'game_isometric_player.dart';
-import 'game_isometric_server_state.dart';
+import 'isometric_actions.dart';
+import 'isometric_camera.dart';
+import 'isometric_client_state.dart';
+import 'isometric_editor.dart';
+import 'isometric_nodes.dart';
+import 'isometric_player.dart';
+import 'isometric_server_state.dart';
 
 class IsometricEngine {
-  final actions = GameIsometricActions();
+  final actions = IsometricActions();
   final renderer = GameIsometricRenderer();
-  final clientState = GameIsometricClientState();
-  final serverState = GameIsometricServerState();
-  final nodes = GameIsometricNodes();
+  final clientState = IsometricClientState();
+  final serverState = IsometricServerState();
+  final nodes = IsometricNodes();
   final minimap = GameIsometricMinimap();
-  final editor = GameIsometricEditor();
-  final player = GameIsometricPlayer();
-  final camera = GameIsometricCamera();
+  final editor = IsometricEditor();
+  final player = IsometricPlayer();
+  final camera = IsometricCamera();
 
   void drawCanvas(Canvas canvas, Size size) {
     if (serverState.gameRunning.value){
