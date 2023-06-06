@@ -7,6 +7,8 @@ class AtlasItems {
 
   static List<double> getSrc(int type){
 
+
+
      final value = const <int, List<double>> {
          /// srcX, srcY, srcWidth, srcHeight, anchorX, scale
          ItemType.GameObjects_Flag_Red: [224, 20, 32, 32, 0.5, 1],
@@ -51,6 +53,8 @@ class AtlasItems {
         ItemType.GameObjects_Pipe_Vertical: 181,
         ItemType.GameObjects_Flag_Red: 368,
         ItemType.GameObjects_Flag_Blue: 416,
+        ItemType.GameObjects_Base_Red: 368,
+        ItemType.GameObjects_Base_Blue: 368,
         ItemType.Resource_Credit: 448,
         ItemType.Trinket_Ring_of_Health: 256,
         ItemType.Trinket_Ring_of_Damage: 288,
@@ -153,6 +157,8 @@ class AtlasItems {
         ItemType.GameObjects_Pipe_Vertical: 247,
         ItemType.GameObjects_Flag_Red: 224,
         ItemType.GameObjects_Flag_Blue: 224,
+        ItemType.GameObjects_Base_Red: 272,
+        ItemType.GameObjects_Base_Blue: 401,
         ItemType.Trinket_Ring_of_Health: 32,
         ItemType.Trinket_Ring_of_Damage: 32,
         ItemType.Weapon_Ranged_Shotgun: 243,
@@ -249,6 +255,8 @@ class AtlasItems {
         ItemType.GameObjects_Pipe_Vertical: 8,
         ItemType.GameObjects_Flag_Red: 32,
         ItemType.GameObjects_Flag_Blue: 32,
+        ItemType.GameObjects_Base_Red: 128,
+        ItemType.GameObjects_Base_Blue: 128,
         ItemType.Weapon_Ranged_Sniper_Rifle: 121,
         ItemType.Weapon_Ranged_Flamethrower: 114,
         ItemType.Weapon_Ranged_Bazooka: 117,
@@ -297,6 +305,8 @@ class AtlasItems {
     ItemType.GameObjects_Pipe_Vertical: 40,
     ItemType.GameObjects_Flag_Red: 32,
     ItemType.GameObjects_Flag_Blue: 32,
+    ItemType.GameObjects_Base_Red: 128,
+    ItemType.GameObjects_Base_Blue: 128,
     ItemType.Weapon_Ranged_Sniper_Rifle: 37,
     ItemType.Weapon_Ranged_Bazooka: 52,
     ItemType.Weapon_Ranged_Minigun: 12,

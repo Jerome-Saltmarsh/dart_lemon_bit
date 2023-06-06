@@ -13,6 +13,9 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   late final IsometricGameObject flagRed;
   late final IsometricGameObject flagBlue;
 
+  late final IsometricGameObject baseRed;
+  late final IsometricGameObject baseBlue;
+
   IsometricCharacter? flagRedCharacter;
   IsometricCharacter? flagBlueCharacter;
 
@@ -27,8 +30,11 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     required super.time,
     required super.environment,
   }) : super(gameType: GameType.Capture_The_Flag) {
-    flagRed = spawnGameObject(x: 200, y: 200, z: 24, type: ItemType.GameObjects_Flag_Red);
-    flagBlue = spawnGameObject(x: 100, y: 100, z: 24, type: ItemType.GameObjects_Flag_Blue);
+    flagRed = spawnGameObject(x: 200, y: 200, z: 25, type: ItemType.GameObjects_Flag_Red);
+    flagBlue = spawnGameObject(x: 100, y: 100, z: 25, type: ItemType.GameObjects_Flag_Blue);
+
+    baseRed = spawnGameObject(x: 400, y: 400, z: 25, type: ItemType.GameObjects_Base_Red)..fixed = true;
+    baseBlue = spawnGameObject(x: 300, y: 300, z: 25, type: ItemType.GameObjects_Base_Blue)..fixed = true;
   }
 
   @override

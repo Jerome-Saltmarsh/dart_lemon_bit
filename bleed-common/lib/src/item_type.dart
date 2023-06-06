@@ -90,6 +90,8 @@ class ItemType {
   static const GameObjects_Pipe_Vertical        = Index_GameObjects + 37;
   static const GameObjects_Flag_Red             = Index_GameObjects + 38;
   static const GameObjects_Flag_Blue            = Index_GameObjects + 39;
+  static const GameObjects_Base_Red             = Index_GameObjects + 40;
+  static const GameObjects_Base_Blue            = Index_GameObjects + 41;
 
   static const Resource_Wood                    = Index_Resources + 01;
   static const Resource_Stone                   = Index_Resources + 02;
