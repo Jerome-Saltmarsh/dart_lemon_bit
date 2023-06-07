@@ -48,9 +48,9 @@ class IsometricSceneWriter extends ByteWriter {
     for (final gameObject in gameObjects){
       if (!gameObject.persistable) continue;
       writeUInt16(gameObject.type);
-      writeUDouble16(gameObject.startX);
-      writeUDouble16(gameObject.startY);
-      writeUDouble16(gameObject.startZ);
+      writeUInt16(gameObject.startX.toInt());
+      writeUInt16(gameObject.startY.toInt());
+      writeUInt16(gameObject.startZ.toInt());
     }
   }
 
@@ -159,9 +159,9 @@ class SceneReader extends ByteReader {
     final total = readUInt16();
     for (var i = 0; i < total; i++){
       final type = readUInt16();
-      final x = readUDouble16();
-      final y = readUDouble16();
-      final z = readUDouble16();
+      final x = readUInt16().toDouble();
+      final y = readUInt16().toDouble();
+      final z = readUInt16().toDouble();
       gameObjects.add(
         IsometricGameObject(x: x, y: y, z: z, type: type, id: id++)
       );
@@ -190,4 +190,9 @@ class SceneReader extends ByteReader {
     nodeTypes = Uint8List.fromList(decoder.convert(compressedNodeTypes));
     nodeOrientations = Uint8List.fromList(decoder.convert(compressedNodeOrientations));
   }
+
+    // void writeUDouble16(double value) {
+    //     writeUInt16(value.toInt());
+    //   }
+
 }

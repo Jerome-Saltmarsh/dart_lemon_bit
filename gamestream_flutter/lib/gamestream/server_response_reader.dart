@@ -646,6 +646,8 @@ class ServerResponseReader with ByteReader {
     onChangedScene();
   }
 
+  double readDouble() => readInt16().toDouble();
+
   void readGameEvent(){
       final type = readByte();
       final x = readDouble();
