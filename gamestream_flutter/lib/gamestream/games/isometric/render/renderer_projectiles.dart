@@ -1,6 +1,6 @@
 import 'package:gamestream_flutter/library.dart';
 
-class RendererProjectiles extends Renderer {
+class RendererProjectiles extends IsometricRenderer {
 
   late IsometricProjectile projectile;
   

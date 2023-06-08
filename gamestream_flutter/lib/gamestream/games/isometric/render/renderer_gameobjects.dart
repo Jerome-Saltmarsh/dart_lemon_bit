@@ -3,7 +3,7 @@ import 'package:gamestream_flutter/library.dart';
 
 import 'functions/render_shadow.dart';
 
-class RendererGameObjects extends Renderer {
+class RendererGameObjects extends IsometricRenderer {
   static late IsometricGameObject gameObject;
 
   static final gameObjects = gamestream.isometric.serverState.gameObjects;

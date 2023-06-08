@@ -4,7 +4,7 @@ import 'package:gamestream_flutter/library.dart';
 
 import 'functions/render_shadow.dart';
 
-class RendererParticles extends Renderer {
+class RendererParticles extends IsometricRenderer {
 
   static final particles = gamestream.isometric.clientState.particles;
   static late IsometricParticle particle;

@@ -1,4 +1,4 @@
-abstract class Renderer {
+abstract class IsometricRenderer {
   var _index = 0;
   var total = 0;
   var orderRowColumn = 0.0;

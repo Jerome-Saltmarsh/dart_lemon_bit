@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/classes/audio_loop.dart';
+import 'package:gamestream_flutter/gamestream/audio/audio_loop.dart';
 import 'package:gamestream_flutter/instances/gamestream.dart';
 
 import '../../game_widgets.dart';

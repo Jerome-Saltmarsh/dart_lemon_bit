@@ -6,7 +6,7 @@ import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_mou
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_renderer.dart';
 import 'package:gamestream_flutter/library.dart';
 
-class RendererNodes extends Renderer {
+class RendererNodes extends IsometricRenderer {
 
   // VARIABLES
   static var previousVisibility = 0;

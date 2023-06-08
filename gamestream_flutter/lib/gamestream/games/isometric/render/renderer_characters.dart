@@ -7,7 +7,7 @@ import 'package:gamestream_flutter/isometric/render/render_character_template.da
 import 'package:gamestream_flutter/isometric/render/src_utils.dart';
 import 'package:gamestream_flutter/library.dart';
 
-class RendererCharacters extends Renderer {
+class RendererCharacters extends IsometricRenderer {
   static const Character_Shadow_Distance_Max = 20.0;
   static const Character_Shadow_Distance_Ratio = 0.15;
   late IsometricCharacter character;

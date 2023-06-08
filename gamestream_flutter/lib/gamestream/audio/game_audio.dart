@@ -1,11 +1,11 @@
 
 import 'dart:math';
 
-import 'package:gamestream_flutter/classes/audio_single.dart';
-import 'package:gamestream_flutter/classes/audio_tracks.dart';
 import 'package:just_audio/just_audio.dart';
 
-import '../library.dart';
+import '../../library.dart';
+import 'audio_single.dart';
+import 'audio_tracks.dart';
 
 
 class GameAudio {

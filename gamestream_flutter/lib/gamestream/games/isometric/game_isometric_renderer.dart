@@ -23,7 +23,7 @@ class GameIsometricRenderer {
   final rendererProjectiles  = RendererProjectiles();
   final rendererCharacters   = RendererCharacters();
   final rendererGameObjects  = RendererGameObjects();
-  late Renderer next = rendererNodes;
+  late IsometricRenderer next = rendererNodes;
   var renderDebug = false;
 
   // ACTIONS
@@ -60,7 +60,7 @@ class GameIsometricRenderer {
         renderY(x2, y2, z2),
       );
 
-  void resetRenderOrder(Renderer value){
+  void resetRenderOrder(IsometricRenderer value){
     value.reset();
     if (value.remaining){
       totalRemaining++;
@@ -81,7 +81,7 @@ class GameIsometricRenderer {
         y: gamestream.isometric.player.aimTargetPosition.renderY - 55);
   }
 
-  void checkNext(Renderer renderer){
+  void checkNext(IsometricRenderer renderer){
     if (!renderer.remaining) return;
     if (renderer.orderRowColumn > next.orderRowColumn) return;
     if (renderer.orderZ > next.orderZ) return;
