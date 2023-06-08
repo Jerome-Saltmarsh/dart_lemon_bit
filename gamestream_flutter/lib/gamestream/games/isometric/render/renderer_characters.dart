@@ -10,7 +10,7 @@ import 'package:gamestream_flutter/library.dart';
 class RendererCharacters extends Renderer {
   static const Character_Shadow_Distance_Max = 20.0;
   static const Character_Shadow_Distance_Ratio = 0.15;
-  late Character character;
+  late IsometricCharacter character;
 
   @override
   void renderFunction() => renderCurrentCharacter();
@@ -122,7 +122,7 @@ class RendererCharacters extends Renderer {
   }
 
 
-  void renderCharacterDog(Character character){
+  void renderCharacterDog(IsometricCharacter character){
     const Src_Size = 80.0;
     const Anchor_Y = 0.66;
 
@@ -217,7 +217,7 @@ class RendererCharacters extends Renderer {
     }
   }
 
-  void renderCharacterZombie(Character character) {
+  void renderCharacterZombie(IsometricCharacter character) {
     if (character.dead) return;
     if (character.spawning) return;
 
@@ -275,7 +275,7 @@ class RendererCharacters extends Renderer {
     );
   }
 
-  static double getZombieSrcX(Character character) {
+  static double getZombieSrcX(IsometricCharacter character) {
     const framesPerDirection = 0;
     switch (character.state) {
       case CharacterState.Running:

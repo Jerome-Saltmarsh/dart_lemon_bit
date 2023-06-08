@@ -4,7 +4,7 @@ import 'package:bleed_common/src.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric_position.dart';
 import 'package:lemon_math/src.dart';
 
-class Character extends IsometricPosition {
+class IsometricCharacter extends IsometricPosition {
   var characterType = CharacterType.Template;
   var weaponType = ItemType.Empty;
   var weaponState = 0;

@@ -26,7 +26,7 @@ double getSrc({
 
 double loop({
       required List<int> animation,
-      required Character character,
+      required IsometricCharacter character,
       required int framesPerDirection,
       double size = 64.0
 }) {
@@ -37,7 +37,7 @@ double loop({
 
 double loop2({
   required List<int> animation,
-  required Character character,
+  required IsometricCharacter character,
   required int framesPerDirection,
   double size = 64,
 }) {
@@ -47,7 +47,7 @@ double loop2({
 
 double loop4({
       required List<int> animation,
-      required Character character,
+      required IsometricCharacter character,
       required int framesPerDirection,
       double size = 64,
 }) {
@@ -70,7 +70,7 @@ double loopCustom({
 
 double loop4AimDirection({
   required List<int> animation,
-  required Character character,
+  required IsometricCharacter character,
   required int framesPerDirection,
   double size = 64,
 }) {
@@ -80,7 +80,7 @@ double loop4AimDirection({
 
 double animate({
       required List<int> animation,
-      required Character character,
+      required IsometricCharacter character,
       required int framesPerDirection,
       double size = 64.0
 }) {
@@ -103,7 +103,7 @@ double animateCustom({
 
 double animateAimDirection({
   required List<int> animation,
-  required Character character,
+  required IsometricCharacter character,
   required int framesPerDirection,
   double size = 64.0
 }) {

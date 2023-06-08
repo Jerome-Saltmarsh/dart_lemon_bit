@@ -1,7 +1,7 @@
 import 'package:gamestream_flutter/gamestream/isometric/isometric_position.dart';
 import 'package:gamestream_flutter/library.dart';
 
-class Particle extends IsometricPosition {
+class IsometricParticle extends IsometricPosition {
   var delay = 0;
   var xv = 0.0;
   var yv = 0.0;

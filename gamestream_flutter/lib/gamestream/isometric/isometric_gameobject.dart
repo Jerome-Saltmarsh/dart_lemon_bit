@@ -1,7 +1,7 @@
 import 'package:gamestream_flutter/gamestream/isometric/isometric_position.dart';
 import 'package:gamestream_flutter/library.dart';
 
-class GameObject extends IsometricPosition {
+class IsometricGameObject extends IsometricPosition {
   final int id;
   var _type = -1;
   var active = false;
@@ -18,7 +18,7 @@ class GameObject extends IsometricPosition {
   var emission_intensity_vel = 0.00;
 
 
-  GameObject(this.id); // PROPERTIES
+  IsometricGameObject(this.id); // PROPERTIES
   
   int get type => _type;
   

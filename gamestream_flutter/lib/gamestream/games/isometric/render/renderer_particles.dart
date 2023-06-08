@@ -7,7 +7,7 @@ import 'functions/render_shadow.dart';
 class RendererParticles extends Renderer {
 
   static final particles = gamestream.isometric.clientState.particles;
-  static late Particle particle;
+  static late IsometricParticle particle;
   static final screen = engine.screen;
 
   @override

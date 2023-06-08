@@ -4,7 +4,7 @@ import 'package:gamestream_flutter/isometric/render/src_utils.dart';
 
 import '../../library.dart';
 
-void renderCharacterRat(Character character){
+void renderCharacterRat(IsometricCharacter character){
   renderPixelRed(character.renderX, character.renderY);
 
   if (character.state == CharacterState.Running){

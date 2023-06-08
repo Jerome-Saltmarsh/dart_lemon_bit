@@ -4,7 +4,7 @@ import 'package:gamestream_flutter/library.dart';
 import 'functions/render_shadow.dart';
 
 class RendererGameObjects extends Renderer {
-  static late GameObject gameObject;
+  static late IsometricGameObject gameObject;
 
   static final gameObjects = gamestream.isometric.serverState.gameObjects;
 
@@ -175,7 +175,7 @@ class RendererGameObjects extends Renderer {
     );
   }
 
-  void renderGameObjectRadius(GameObject gameObject) {
+  void renderGameObjectRadius(IsometricGameObject gameObject) {
     gamestream.isometric.renderer.renderCircle(
         gameObject.x,
         gameObject.y,

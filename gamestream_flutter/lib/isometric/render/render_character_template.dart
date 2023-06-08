@@ -35,7 +35,7 @@ void renderTemplateWeapon(
   );
 }
 
-void renderCharacterTemplate(Character character, {
+void renderCharacterTemplate(IsometricCharacter character, {
   bool renderHealthBar = true,
 }) {
   assert(character.direction >= 0);

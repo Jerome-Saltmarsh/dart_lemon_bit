@@ -33,7 +33,7 @@ void renderBarBlue(double x, double y, double z, double percentage) {
 }
 
 
-void renderCharacterHealthBar(Character character){
+void renderCharacterHealthBar(IsometricCharacter character){
   renderBarGreen(character.x, character.y, character.z, character.health);
 
   // engine.renderSprite(

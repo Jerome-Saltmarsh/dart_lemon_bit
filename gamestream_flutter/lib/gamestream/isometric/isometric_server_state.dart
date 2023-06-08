@@ -18,10 +18,10 @@ class IsometricServerState {
 
   final playerScores = <PlayerScore>[];
   final playerScoresReads = Watch(0);
-  final gameObjects = <GameObject>[];
-  final characters = <Character>[];
-  final npcs = <Character>[];
-  final projectiles = <Projectile>[];
+  final gameObjects = <IsometricGameObject>[];
+  final characters = <IsometricCharacter>[];
+  final npcs = <IsometricCharacter>[];
+  final projectiles = <IsometricProjectile>[];
 
   final highScore = Watch(0);
   final areaType = Watch(AreaType.None, onChanged: ServerEvents.onChangedAreaType);
@@ -81,14 +81,14 @@ class IsometricServerState {
   final lightningFlashing = Watch(false, onChanged: ServerEvents.onChangedLightningFlashing);
   final gameTimeEnabled = Watch(false, onChanged: ServerEvents.onChangedGameTimeEnabled);
 
-  Character getCharacterInstance(){
+  IsometricCharacter getCharacterInstance(){
     if (characters.length <= totalCharacters){
-      characters.add(Character());
+      characters.add(IsometricCharacter());
     }
     return characters[totalCharacters];
   }
 
-  Character? getPlayerCharacter(){
+  IsometricCharacter? getPlayerCharacter(){
     for (var i = 0; i < totalCharacters; i++){
       if (characters[i].x != gamestream.isometric.player.position.x) continue;
       if (characters[i].y != gamestream.isometric.player.position.y) continue;
@@ -179,16 +179,16 @@ class IsometricServerState {
     }
   }
 
-  GameObject findOrCreateGameObject(int id) {
+  IsometricGameObject findOrCreateGameObject(int id) {
     for (final gameObject in gameObjects) {
       if (gameObject.id == id) return gameObject;
     }
-    final instance = GameObject(id);
+    final instance = IsometricGameObject(id);
     gameObjects.add(instance);
     return instance;
   }
 
-  GameObject? findGameObjectById(int id) {
+  IsometricGameObject? findGameObjectById(int id) {
     for (final gameObject in gameObjects) {
       if (gameObject.id == id) return gameObject;
     }

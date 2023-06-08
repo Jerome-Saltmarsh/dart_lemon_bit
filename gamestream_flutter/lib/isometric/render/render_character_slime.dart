@@ -1,6 +1,6 @@
 import '../../library.dart';
 
-void renderCharacterSlime(Character character) {
+void renderCharacterSlime(IsometricCharacter character) {
   if (character.hurt) {
     // return renderV3(
     //   value: character,

@@ -661,7 +661,7 @@ class ServerResponseReader with ByteReader {
   void readProjectiles(){
     gamestream.isometric.serverState.totalProjectiles = readUInt16();
     while (gamestream.isometric.serverState.totalProjectiles >= gamestream.isometric.serverState.projectiles.length){
-      gamestream.isometric.serverState.projectiles.add(Projectile());
+      gamestream.isometric.serverState.projectiles.add(IsometricProjectile());
     }
     for (var i = 0; i < gamestream.isometric.serverState.totalProjectiles; i++) {
       final projectile = gamestream.isometric.serverState.projectiles[i];
@@ -673,14 +673,14 @@ class ServerResponseReader with ByteReader {
     }
   }
 
-  void readCharacterTeamDirectionAndState(Character character){
+  void readCharacterTeamDirectionAndState(IsometricCharacter character){
     final byte = readByte();
     character.allie = byte >= 100;
     character.direction = ((byte % 100) ~/ 10);
     character.state = byte % 10;
   }
 
-  void readCharacterUpperBody(Character character){
+  void readCharacterUpperBody(IsometricCharacter character){
     character.weaponType = readUInt16();
     character.weaponState = readUInt16();
     character.bodyType = readUInt16();
@@ -691,7 +691,7 @@ class ServerResponseReader with ByteReader {
   }
 
   // todo optimize
-  void readCharacterHealthAndAnimationFrame(Character character){
+  void readCharacterHealthAndAnimationFrame(IsometricCharacter character){
     final byte = readByte();
     final frame = byte % 10;
     final health = (byte - frame) / 240.0;

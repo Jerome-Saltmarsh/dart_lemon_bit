@@ -6,7 +6,7 @@ class IsometricEditor {
   late final editorDialog = Watch<EditorDialog?>(null, onChanged: onChangedEditorDialog);
   late final editTab = Watch(EditTab.Grid, onChanged: onChangedEditTab);
   final selectedSceneName = Watch<String?>(null);
-  final gameObject = Watch<GameObject?>(null);
+  final gameObject = Watch<IsometricGameObject?>(null);
   final gameObjectSelected = Watch(false);
   final gameObjectSelectedType = Watch(0);
   final gameObjectSelectedCollidable = Watch(true);

@@ -77,7 +77,7 @@ class IsometricPlayer {
   bool get inBounds => gamestream.isometric.nodes.inBoundsVector3(position);
 
 
-  bool isCharacter(Character character){
+  bool isCharacter(IsometricCharacter character){
     return position.x == character.x && position.y == character.y && position.z == character.z;
   }
 

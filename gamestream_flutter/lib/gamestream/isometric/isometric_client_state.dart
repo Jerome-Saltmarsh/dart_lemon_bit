@@ -12,7 +12,7 @@ mixin class IsometricClientState {
   static const Particles_Max = 500;
   var dynamicShadows = true;
   var emissionAlphaCharacter = 50;
-  final particleOverflow = Particle();
+  final particleOverflow = IsometricParticle();
   var torch_emission_start = 0.8;
   var torch_emission_end = 1.0;
   var torch_emission_vel = 0.061;
@@ -126,7 +126,7 @@ mixin class IsometricClientState {
     }
   }
 
-  void applyCharacterColor(Character character){
+  void applyCharacterColor(IsometricCharacter character){
     character.color = getV3RenderColor(character);
   }
 
@@ -158,7 +158,7 @@ mixin class IsometricClientState {
     }
   }
 
-  void applyProjectileEmission(Projectile projectile) {
+  void applyProjectileEmission(IsometricProjectile projectile) {
     if (projectile.type == ProjectileType.Orb) {
       applyVector3Emission(projectile,
         hue: 100,
@@ -250,7 +250,7 @@ mixin class IsometricClientState {
     engine.redrawCanvas();
   }
 
-  Particle spawnParticle({
+  IsometricParticle spawnParticle({
     required int type,
     required double x,
     required double y,
@@ -304,7 +304,7 @@ mixin class IsometricClientState {
     return particle;
   }
 
-  void updateParticle(Particle particle) {
+  void updateParticle(IsometricParticle particle) {
     if (!particle.active) return;
     if (particle.delay > 0) {
       particle.delay--;
@@ -1000,7 +1000,7 @@ mixin class IsometricClientState {
   ;
 
 
-  Particle spawnParticleFire({
+  IsometricParticle spawnParticleFire({
     required double x,
     required double y,
     required double z,
@@ -1030,7 +1030,7 @@ mixin class IsometricClientState {
         ..strength = 0.5
   ;
 
-  Particle spawnParticleSmoke({
+  IsometricParticle spawnParticleSmoke({
     required double x,
     required double y,
     required double z,
@@ -1275,7 +1275,7 @@ mixin class IsometricClientState {
   final buff_active_invincible     = Watch(false);
   final buff_active_no_recoil      = Watch(false);
 
-  final particles = <Particle>[];
+  final particles = <IsometricParticle>[];
 
   var totalParticles = 0;
   var totalActiveParticles = 0;
@@ -1433,10 +1433,10 @@ mixin class IsometricClientState {
   }
 
   /// This may be the cause of the bug in which the sword particle does not render
-  Particle getInstanceParticle() {
+  IsometricParticle getInstanceParticle() {
     totalActiveParticles++;
     if (totalActiveParticles >= totalParticles){
-      final instance = Particle();
+      final instance = IsometricParticle();
       particles.add(instance);
       return instance;
     }

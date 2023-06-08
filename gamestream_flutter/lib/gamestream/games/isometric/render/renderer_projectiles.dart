@@ -2,7 +2,7 @@ import 'package:gamestream_flutter/library.dart';
 
 class RendererProjectiles extends Renderer {
 
-  late Projectile projectile;
+  late IsometricProjectile projectile;
   
   @override
   void renderFunction() {

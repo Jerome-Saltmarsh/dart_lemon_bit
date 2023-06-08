@@ -1,15 +1,13 @@
 library game_classes;
 
 export 'audio_loop.dart';
-export 'character.dart';
+export '../gamestream/isometric/isometric_character.dart';
 export 'floating_text.dart';
-export 'game_object.dart';
-export 'item.dart';
+export '../gamestream/isometric/isometric_gameobject.dart';
 export 'npc_debug.dart';
-export 'particle.dart';
-export 'projectile.dart';
+export '../gamestream/isometric/isometric_particle.dart';
+export '../gamestream/isometric/isometric_projectile.dart';
 export 'renderer.dart';
-export 'game_options.dart';
 export 'player_score.dart';
 export 'game_scissors_paper_rock.dart';
 export '../gamestream/games.dart';
