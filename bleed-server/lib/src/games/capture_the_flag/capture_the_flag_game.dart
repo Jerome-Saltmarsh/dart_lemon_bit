@@ -42,7 +42,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     flagRed = spawnGameObject(x: 200, y: 200, z: 25, type: ItemType.GameObjects_Flag_Red);
     flagBlue = spawnGameObject(x: 100, y: 100, z: 25, type: ItemType.GameObjects_Flag_Blue);
 
-    baseRed = spawnGameObject(x: 300, y: 500, z: 25, type: ItemType.GameObjects_Base_Red)..fixed = true;
+    baseRed = spawnGameObject(x: 300, y: 700, z: 25, type: ItemType.GameObjects_Base_Red)..fixed = true;
     baseBlue = spawnGameObject(x: 300, y: 300, z: 25, type: ItemType.GameObjects_Base_Blue)..fixed = true;
 
     flagBlueStatus.value = CaptureTheFlagFlagStatus.Dropped;
