@@ -44,6 +44,9 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
 
     baseRed = spawnGameObject(x: 300, y: 500, z: 25, type: ItemType.GameObjects_Base_Red)..fixed = true;
     baseBlue = spawnGameObject(x: 300, y: 300, z: 25, type: ItemType.GameObjects_Base_Blue)..fixed = true;
+
+    flagBlueStatus.value = CaptureTheFlagFlagStatus.Dropped;
+    flagRedStatus.value = CaptureTheFlagFlagStatus.Dropped;
   }
 
   int get countPlayersOnTeamRed => countPlayersOnTeam(CaptureTheFlagTeam.Red);
@@ -118,7 +121,13 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   void onBlueTeamScored() {
     scoreBlue.value++;
     flagRedRespawn = Flag_Respawn_Duration;
+    flagRedStatus.value = CaptureTheFlagFlagStatus.Respawning;
     deactivateCollider(flagRed);
+
+    if (flagRedCharacter is CaptureTheFlagPlayer){
+      (flagRedCharacter as CaptureTheFlagPlayer).setFlagStatusNoFlag();
+      flagRedCharacter = null;
+    }
 
     for (final player in players) {
       player.writeByte(ServerResponse.Capture_The_Flag);
@@ -129,7 +138,13 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   void onRedTeamScored() {
     scoreRed.value++;
     flagBlueRespawn = Flag_Respawn_Duration;
+    flagBlueStatus.value = CaptureTheFlagFlagStatus.Respawning;
     deactivateCollider(flagBlue);
+
+    if (flagBlueCharacter is CaptureTheFlagPlayer){
+      (flagBlueCharacter as CaptureTheFlagPlayer).setFlagStatusNoFlag();
+      flagBlueCharacter = null;
+    }
 
     for (final player in players) {
       player.writeByte(ServerResponse.Capture_The_Flag);
@@ -249,6 +264,8 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
       player.legsType = ItemType.Legs_Red;
       player.bodyType = ItemType.Body_Shirt_Red;
     }
+
+    player.writeFlagStatus();
 
     return player;
   }

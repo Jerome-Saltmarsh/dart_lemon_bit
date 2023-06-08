@@ -103,31 +103,75 @@ class CaptureTheFlagGame extends GameIsometric {
     }
   }
 
-  @override
-  void drawCanvas(Canvas canvas, Size size) {
-    super.drawCanvas(canvas, size);
-    
+  void renderLineToEnemyFlag(){
     if (playerIsTeamRed) {
       renderLineToBlueFlag();
-      final teamFlagStatus = flagRedStatus.value;
-      if (teamFlagStatus == CaptureTheFlagFlagStatus.Carried_By_Enemy){
-        renderLineToRedFlag();
-      }
+    } else {
+      renderLineToRedFlag();
     }
   }
 
-  void renderLineToBlueFlag() {
-    if (flagBlueStatus.value == CaptureTheFlagFlagStatus.Respawning) return;
+  void renderLineToOwnFlag(){
+    if (playerIsTeamRed) {
+      renderLineToRedFlag();
+    } else {
+      renderLineToBlueFlag();
+    }
+  }
 
+  void renderLineToOwnBase(){
+    if (playerIsTeamRed) {
+      renderLineToRedBase();
+    } else {
+      renderLineToBlueBase();
+    }
+  }
+
+  bool get teamFlagIsAtBase => flagStatusAlly == CaptureTheFlagFlagStatus.At_Base;
+
+  int get flagStatusAlly => playerIsTeamRed ? flagRedStatus.value : flagBlueStatus.value;
+  int get flagStatusEnemy => playerIsTeamRed ? flagBlueStatus.value : flagRedStatus.value;
+
+  @override
+  void drawCanvas(Canvas canvas, Size size) {
+    super.drawCanvas(canvas, size);
+
+    switch (playerFlagStatus.value){
+      case CaptureTheFlagPlayerStatus.No_Flag:
+        renderLineToEnemyFlag();
+        if (!teamFlagIsAtBase) {
+          renderLineToOwnFlag();
+        }
+        break;
+      case CaptureTheFlagPlayerStatus.Holding_Team_Flag:
+        renderLineToOwnBase();
+        break;
+      case CaptureTheFlagPlayerStatus.Holding_Enemy_Flag:
+        renderLineToOwnBase();
+        break;
+    }
+  }
+
+  void renderLineToRedBase() {
+    engine.paint.color = Colors.red;
+    engine.drawLine(player.renderX, player.renderY, basePositionRed.renderX, basePositionRed.renderY);
+  }
+
+  void renderLineToBlueBase() {
     engine.paint.color = Colors.blue;
-    engine.drawLine(player.renderX, player.renderY, flagPositionBlue.renderX, flagPositionBlue.renderY);
+    engine.drawLine(player.renderX, player.renderY, basePositionBlue.renderX, basePositionBlue.renderY);
   }
 
   void renderLineToRedFlag() {
     if (flagRedStatus.value == CaptureTheFlagFlagStatus.Respawning) return;
-
     engine.paint.color = Colors.red;
     engine.drawLine(player.renderX, player.renderY, flagPositionRed.renderX, flagPositionRed.renderY);
+  }
+
+  void renderLineToBlueFlag() {
+    if (flagBlueStatus.value == CaptureTheFlagFlagStatus.Respawning) return;
+    engine.paint.color = Colors.blue;
+    engine.drawLine(player.renderX, player.renderY, flagPositionBlue.renderX, flagPositionBlue.renderY);
   }
 
   @override
