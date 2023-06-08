@@ -16,6 +16,9 @@ class CaptureTheFlagGame extends GameIsometric {
   final flagPositionRed = IsometricPosition();
   final flagPositionBlue = IsometricPosition();
 
+  final basePositionRed = IsometricPosition();
+  final basePositionBlue = IsometricPosition();
+
   final flagStatusRed = Watch(CaptureTheFlagFlagStatus.At_Base);
   final flagStatusBlue = Watch(CaptureTheFlagFlagStatus.At_Base);
 
@@ -122,8 +125,9 @@ class CaptureTheFlagGame extends GameIsometric {
 
               final serverState = isometric.serverState;
               final player = isometric.player;
+              final totalCharacters = serverState.totalCharacters;
 
-              for (var i = 0; i < serverState.totalCharacters; i++) {
+              for (var i = 0; i < totalCharacters; i++) {
                 final character = serverState.characters[i];
                 final isPlayer = player.isCharacter(character);
                 engine.renderExternalCanvas(
@@ -138,6 +142,30 @@ class CaptureTheFlagGame extends GameIsometric {
                     scale: 0.25
                 );
               }
+
+              engine.renderExternalCanvas(
+                  canvas: canvas,
+                  image: GameImages.atlas_gameobjects,
+                  srcX: AtlasItems.getSrcX(ItemType.GameObjects_Flag_Red),
+                  srcY: AtlasItems.getSrcY(ItemType.GameObjects_Flag_Red),
+                  srcWidth: AtlasItems.getSrcWidth(ItemType.GameObjects_Flag_Red),
+                  srcHeight: AtlasItems.getSrcHeight(ItemType.GameObjects_Flag_Red),
+                  dstX: flagPositionRed.renderX * ratio,
+                  dstY: flagPositionRed.renderY * ratio,
+                  scale: 0.1
+              );
+
+              engine.renderExternalCanvas(
+                  canvas: canvas,
+                  image: GameImages.atlas_gameobjects,
+                  srcX: AtlasItems.getSrcX(ItemType.GameObjects_Flag_Blue),
+                  srcY: AtlasItems.getSrcY(ItemType.GameObjects_Flag_Blue),
+                  srcWidth: AtlasItems.getSrcWidth(ItemType.GameObjects_Flag_Blue),
+                  srcHeight: AtlasItems.getSrcHeight(ItemType.GameObjects_Flag_Blue),
+                  dstX: flagPositionBlue.renderX * ratio,
+                  dstY: flagPositionBlue.renderY * ratio,
+                  scale: 0.1
+              );
             });
           })
         ),

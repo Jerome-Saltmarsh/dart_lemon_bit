@@ -153,6 +153,10 @@ class ServerResponseReader with ByteReader {
         readVector3(captureTheFlag.flagPositionRed);
         readVector3(captureTheFlag.flagPositionBlue);
         break;
+      case CaptureTheFlagResponse.Base_Positions:
+        readVector3(captureTheFlag.basePositionRed);
+        readVector3(captureTheFlag.basePositionBlue);
+        break;
       case CaptureTheFlagResponse.Flag_Status:
         captureTheFlag.flagStatusRed.value = readByte();
         captureTheFlag.flagStatusBlue.value = readByte();

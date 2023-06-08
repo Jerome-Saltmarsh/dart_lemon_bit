@@ -17,6 +17,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
   void writePlayerGame() {
     super.writePlayerGame();
     writeFlagPositions();
+    writeBasePositions();
   }
 
   void writeFlagPositions() {
@@ -25,6 +26,14 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
     writeIsometricPosition(game.flagRed);
     writeIsometricPosition(game.flagBlue);
   }
+
+  void writeBasePositions() {
+    writeByte(ServerResponse.Capture_The_Flag);
+    writeByte(CaptureTheFlagResponse.Base_Positions);
+    writeIsometricPosition(game.baseRed);
+    writeIsometricPosition(game.baseBlue);
+  }
+
 
   void writeScore() {
     writeByte(ServerResponse.Capture_The_Flag);
