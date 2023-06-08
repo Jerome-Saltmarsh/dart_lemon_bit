@@ -181,6 +181,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     damage: 1,
   ){
     writeGameType();
+    writePlayerTeam();
     id = game.playerId++;
     maxEnergy = energy;
     _energy = maxEnergy;
@@ -1789,6 +1790,16 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     writeByte(ServerResponse.Api_Player);
     writeByte(ApiPlayer.Respawn_Timer);
     writeUInt16(_respawnTimer);
+  }
+
+  @override
+  void onTeamChanged() => writePlayerTeam();
+
+
+  void writePlayerTeam(){
+    writeByte(ServerResponse.Api_Player);
+    writeByte(ApiPlayer.Team);
+    writeByte(team);
   }
 }
 

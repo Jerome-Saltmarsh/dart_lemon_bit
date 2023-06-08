@@ -35,4 +35,5 @@ class ApiPlayer {
   static const Active                 = 33;
   static const Attributes             = 34;
   static const Attribute_Values       = 35;
+  static const Team                   = 36;
 }

@@ -7,9 +7,27 @@ navigate to next method: ctrl + shift + up / down arrows
 ctrl + w            : minimal mode
 ctrl + shift + e    : view recent changes
 
+
+if your flag is not at the base
+    if the player is holding their own flag
+        render a line going back to the home base
+    otherwise
+        render a line to your flag
+
+
+if the player is holding the enemy flag 
+    render a line leading to the enemy base
+
+otherwise
+    render a line to the enemy flag
+
+
+    
+
 [CAPTURE THE FLAG]
-[ ] render bases on mini map
-[ ] render flags on mini map
+[ ] render objective lines
+[x] render bases on mini map
+[x] render flags on mini map
 
 [RELEASE FIGHT2D MVP]
 [x] strike down hit

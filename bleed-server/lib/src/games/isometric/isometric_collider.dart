@@ -15,7 +15,6 @@ class IsometricCollider extends IsometricPosition {
   var velocityZ = 0.0;
   var friction = IsometricPhysics.Friction;
   var bounce = false;
-  var team = 0;
   var radius = 0.0;
 
   var hitable = true;
@@ -29,6 +28,17 @@ class IsometricCollider extends IsometricPosition {
 
   var sizeX = 0.0;
   var sizeY = 0.0;
+
+
+  var _team = 0;
+
+  int get team => _team;
+
+  set team(int value){
+    if (_team == value) return;
+    _team = value;
+    onTeamChanged();
+  }
 
   IsometricCharacter? owner;
   var damage = 0;
@@ -150,5 +160,9 @@ class IsometricCollider extends IsometricPosition {
     startX = x;
     startY = y;
     startZ = z;
+  }
+
+  void onTeamChanged(){
+
   }
 }

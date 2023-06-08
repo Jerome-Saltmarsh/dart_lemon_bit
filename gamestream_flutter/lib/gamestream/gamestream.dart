@@ -33,7 +33,10 @@ class Gamestream {
   Gamestream() {
     games = Games(this);
     network = GameNetwork(this);
-    serverResponseReader = ServerResponseReader(this);
+    serverResponseReader = ServerResponseReader(
+        gamestream: this,
+        isometric: isometric,
+    );
   }
 
    Future init(SharedPreferences sharedPreferences) async {

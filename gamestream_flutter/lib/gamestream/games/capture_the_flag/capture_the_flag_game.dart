@@ -19,8 +19,8 @@ class CaptureTheFlagGame extends GameIsometric {
   final basePositionRed = IsometricPosition();
   final basePositionBlue = IsometricPosition();
 
-  final flagStatusRed = Watch(CaptureTheFlagFlagStatus.At_Base);
-  final flagStatusBlue = Watch(CaptureTheFlagFlagStatus.At_Base);
+  final flagRedStatus = Watch(CaptureTheFlagFlagStatus.At_Base);
+  final flagBlueStatus = Watch(CaptureTheFlagFlagStatus.At_Base);
 
   CaptureTheFlagGame({required super.isometric});
 
@@ -29,7 +29,7 @@ class CaptureTheFlagGame extends GameIsometric {
     super.drawCanvas(canvas, size);
     
     final player = isometric.player;
-    
+
     engine.paint.color = Colors.red;
     engine.drawLine(player.renderX, player.renderY, flagPositionRed.renderX, flagPositionRed.renderY);
     engine.paint.color = Colors.blue;
@@ -54,6 +54,7 @@ class CaptureTheFlagGame extends GameIsometric {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                    WatchBuilder(isometric.player.team, (team) => text("TEAM: $team")),
                     text("SCORE"),
                     WatchBuilder(scoreRed, (score) => text("RED: $score")),
                     WatchBuilder(scoreBlue, (score) => text("BlUE: $score")),
@@ -71,8 +72,8 @@ class CaptureTheFlagGame extends GameIsometric {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   text("FLAG STATUS"),
-                  WatchBuilder(flagStatusRed, (status) => text("RED STATUS: ${CaptureTheFlagFlagStatus.getName(status)}")),
-                  WatchBuilder(flagStatusBlue, (status) => text("BLUE STATUS: ${CaptureTheFlagFlagStatus.getName(status)}")),
+                  WatchBuilder(flagRedStatus, (status) => text("RED STATUS: ${CaptureTheFlagFlagStatus.getName(status)}")),
+                  WatchBuilder(flagBlueStatus, (status) => text("BLUE STATUS: ${CaptureTheFlagFlagStatus.getName(status)}")),
                 ],
               ),
             )),
