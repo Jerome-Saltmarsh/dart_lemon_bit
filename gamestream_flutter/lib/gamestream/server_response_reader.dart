@@ -163,6 +163,12 @@ class ServerResponseReader with ByteReader {
         captureTheFlag.flagRedStatus.value = readByte();
         captureTheFlag.flagBlueStatus.value = readByte();
         break;
+      case CaptureTheFlagResponse.Red_Team_Scored:
+        captureTheFlag.onRedTeamScore();
+        break;
+      case CaptureTheFlagResponse.Blue_Team_Scored:
+        captureTheFlag.onBlueTeamScore();
+        break;
     }
   }
 

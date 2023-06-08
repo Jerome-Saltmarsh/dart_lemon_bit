@@ -276,4 +276,20 @@ class CaptureTheFlagGame extends GameIsometric {
         ),
       ),
     );
+
+  void onRedTeamScore(){
+    if (playerIsTeamRed){
+      gamestream.audio.voiceYourTeamHasScoredAPoint.play();
+    } else {
+      gamestream.audio.voiceTheEnemyHasScored.play();
+    }
+  }
+
+  void onBlueTeamScore() {
+    if (playerIsTeamBlue){
+      gamestream.audio.voiceYourTeamHasScoredAPoint.play();
+    } else {
+      gamestream.audio.voiceTheEnemyHasScored.play();
+    }
+  }
 }

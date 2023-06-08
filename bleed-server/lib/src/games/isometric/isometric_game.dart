@@ -1643,8 +1643,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   void internalOnCollisionBetweenColliders(IsometricCollider a, IsometricCollider b) {
-    assert (a.active);
-    assert (b.active);
+    // assert (a.active);
+    // assert (b.active);
     // assert (a.strikable);
     // assert (b.strikable);
     assert (a != b);

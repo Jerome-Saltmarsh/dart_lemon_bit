@@ -13,6 +13,7 @@ import 'package:bleed_server/src/utilities/change_notifier.dart';
 class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
 
   static const Base_Radius = 64.0;
+  static const Flag_Respawn_Duration = 500;
 
   late final IsometricGameObject flagRed;
   late final IsometricGameObject flagBlue;
@@ -22,6 +23,9 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
 
   IsometricCharacter? flagRedCharacter;
   IsometricCharacter? flagBlueCharacter;
+
+  var flagRedRespawn = 0;
+  var flagBlueRespawn = 0;
 
   late final scoreRed = ChangeNotifier(0, dispatchScore);
   late final scoreBlue = ChangeNotifier(0, dispatchScore);
@@ -76,6 +80,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     }
   }
 
+
   @override
   void customOnCollisionBetweenColliders(IsometricCollider a, IsometricCollider b) {
     if (a == flagBlue || b == flagBlue) {
@@ -86,8 +91,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
        }
        if (a == baseRed || b == baseRed) {
          if (flagBlueCharacter?.team == CaptureTheFlagTeam.Blue) return;
-         returnBlueFlagToBase();
-         scoreBlue.value++;
+         onRedTeamScored();
        }
        return;
     }
@@ -100,10 +104,31 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
       }
       if (a == baseBlue || b == baseBlue) {
         if (flagRedCharacter?.team == CaptureTheFlagTeam.Red) return;
-        returnRedFlagToBase();
-        scoreRed.value++;
+        onBlueTeamScored();
       }
       return;
+    }
+  }
+
+  void onBlueTeamScored() {
+    scoreBlue.value++;
+    flagRedRespawn = Flag_Respawn_Duration;
+    deactivateCollider(flagRed);
+
+    for (final player in players) {
+      player.writeByte(ServerResponse.Capture_The_Flag);
+      player.writeByte(CaptureTheFlagResponse.Blue_Team_Scored);
+    }
+  }
+
+  void onRedTeamScored() {
+    scoreRed.value++;
+    flagBlueRespawn = Flag_Respawn_Duration;
+    deactivateCollider(flagBlue);
+
+    for (final player in players) {
+      player.writeByte(ServerResponse.Capture_The_Flag);
+      player.writeByte(CaptureTheFlagResponse.Red_Team_Scored);
     }
   }
 
@@ -171,6 +196,23 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
       if (flagRedCharacter != null) {
         flagRed.moveTo(flagRedCharacter!);
       }
+
+      if (flagRedRespawn > 0){
+         flagRedRespawn--;
+         if (flagRedRespawn == 0){
+           returnRedFlagToBase();
+           activateCollider(flagRed);
+         }
+      }
+
+      if (flagBlueRespawn > 0){
+        flagBlueRespawn--;
+         if (flagBlueRespawn == 0){
+           returnBlueFlagToBase();
+           activateCollider(flagBlue);
+         }
+      }
+
   }
 
   @override

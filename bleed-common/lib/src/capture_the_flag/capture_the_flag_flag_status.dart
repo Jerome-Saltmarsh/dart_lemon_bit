@@ -4,12 +4,14 @@ class CaptureTheFlagFlagStatus {
    static const Carried_By_Enemy  = 2;
    static const Carried_By_Allie  = 3;
    static const Dropped           = 4;
+   static const Respawning        = 5;
 
    static String getName(int value)=> switch (value) {
           At_Base => "At_Base",
           Carried_By_Enemy => "Carried_By_Enemy",
           Carried_By_Allie => "Carried_By_Allie",
           Dropped => "Dropped",
+          Respawning => "Respawning",
           _ => 'unknown-$value'
        };
 }
