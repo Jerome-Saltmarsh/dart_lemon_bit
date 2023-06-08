@@ -1,5 +1,5 @@
 
 class CaptureTheFlagTeam {
-  static const Red = 0;
-  static const Blue = 1;
+  static const Red = 5;
+  static const Blue = 6;
 }
