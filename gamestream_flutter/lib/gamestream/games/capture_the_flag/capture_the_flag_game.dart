@@ -1,12 +1,12 @@
 
 
 
+import 'package:bleed_common/src/capture_the_flag/src.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_ui.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric_position.dart';
 import 'package:gamestream_flutter/library.dart';
-import 'package:bleed_common/src/capture_the_flag/src.dart';
 
 class CaptureTheFlagGame extends GameIsometric {
 
@@ -21,6 +21,8 @@ class CaptureTheFlagGame extends GameIsometric {
 
   late final flagRedStatus = Watch(CaptureTheFlagFlagStatus.At_Base, onChanged: onChangedFlagRedStatus);
   late final flagBlueStatus = Watch(CaptureTheFlagFlagStatus.At_Base, onChanged: onChangedFlagBlueStatus);
+
+  final playerFlagStatus = Watch(CaptureTheFlagPlayerStatus.No_Flag);
 
   CaptureTheFlagGame({required super.isometric});
 
@@ -105,12 +107,27 @@ class CaptureTheFlagGame extends GameIsometric {
   void drawCanvas(Canvas canvas, Size size) {
     super.drawCanvas(canvas, size);
     
-    final player = isometric.player;
+    if (playerIsTeamRed) {
+      renderLineToBlueFlag();
+      final teamFlagStatus = flagRedStatus.value;
+      if (teamFlagStatus == CaptureTheFlagFlagStatus.Carried_By_Enemy){
+        renderLineToRedFlag();
+      }
+    }
+  }
+
+  void renderLineToBlueFlag() {
+    if (flagBlueStatus.value == CaptureTheFlagFlagStatus.Respawning) return;
+
+    engine.paint.color = Colors.blue;
+    engine.drawLine(player.renderX, player.renderY, flagPositionBlue.renderX, flagPositionBlue.renderY);
+  }
+
+  void renderLineToRedFlag() {
+    if (flagRedStatus.value == CaptureTheFlagFlagStatus.Respawning) return;
 
     engine.paint.color = Colors.red;
     engine.drawLine(player.renderX, player.renderY, flagPositionRed.renderX, flagPositionRed.renderY);
-    engine.paint.color = Colors.blue;
-    engine.drawLine(player.renderX, player.renderY, flagPositionBlue.renderX, flagPositionBlue.renderY);
   }
 
   @override
@@ -131,6 +148,7 @@ class CaptureTheFlagGame extends GameIsometric {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                    WatchBuilder(playerFlagStatus, (playerFlagStatus) => text("Player Flag Status: ${CaptureTheFlagPlayerStatus.getName(playerFlagStatus)}")),
                     WatchBuilder(isometric.player.team, (team) => text("TEAM: $team")),
                     text("SCORE"),
                     WatchBuilder(scoreRed, (score) => text("RED: $score")),

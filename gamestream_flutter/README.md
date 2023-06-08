@@ -6,7 +6,7 @@ firebase deploy
 navigate to next method: ctrl + shift + up / down arrows
 ctrl + w            : minimal mode
 ctrl + shift + e    : view recent changes
-
+alt + m             : go to declaration
 
 if your flag is not at the base
     if the player is holding their own flag

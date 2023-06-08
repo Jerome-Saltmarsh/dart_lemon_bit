@@ -647,10 +647,7 @@ class Engine extends StatelessWidget {
     var flushIndex = 0;
     while (flushIndex < bufferIndex) {
       final remaining = bufferIndex - flushIndex;
-
-      if (remaining == 0) {
-        throw Exception();
-      }
+      assert (remaining > 0);
 
       if (remaining == 1) {
         final f = flushIndex << 2;

@@ -6,4 +6,5 @@ class CaptureTheFlagResponse {
    static const Flag_Status      = 3;
    static const Red_Team_Scored  = 4;
    static const Blue_Team_Scored = 5;
+   static const Player_Flag_Status    = 6;
 }
