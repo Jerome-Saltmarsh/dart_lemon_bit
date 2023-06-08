@@ -1,6 +1,7 @@
 import 'package:gamestream_flutter/library.dart';
 
 import '../games/isometric/game_isometric_renderer.dart';
+import 'isometric_position.dart';
 
 class IsometricPlayer {
   final id = Watch(0);
@@ -23,7 +24,7 @@ class IsometricPlayer {
   late final active = Watch(false, onChanged: gamestream.isometric.events.onChangedPlayerActive);
   late final alive = Watch(true, onChanged: gamestream.isometric.events.onChangedPlayerAlive);
   final totalGrenades = Watch(0);
-  final previousPosition = Vector3();
+  final previousPosition = IsometricPosition();
   final storeItems = Watch(<int>[]);
   final items = <int, int> {};
   final items_reads = Watch(0);
@@ -32,24 +33,24 @@ class IsometricPlayer {
   final energyMax = Watch(0);
   var energyPercentage = 0.0;
 
-  var position = Vector3();
+  var position = IsometricPosition();
   var runningToTarget = false;
   var targetCategory = TargetCategory.Nothing;
-  var targetPosition = Vector3();
+  var targetPosition = IsometricPosition();
   var aimTargetCategory = TargetCategory.Nothing;
   var aimTargetType = 0;
   var aimTargetName = "";
   var aimTargetQuantity = 0;
-  var aimTargetPosition = Vector3();
+  var aimTargetPosition = IsometricPosition();
   final weaponCooldown = Watch(1.0);
   final interpolating = Watch(true);
-  final target = Vector3();
+  final target = IsometricPosition();
   final questAdded = Watch(false);
   late var gameDialog = Watch<GameDialog?>(null, onChanged: onChangedGameDialog);
   var mouseAngle = 0.0;
   var npcTalk = Watch("");
   var npcTalkOptions = Watch<List<String>>([]);
-  final abilityTarget = Vector3();
+  final abilityTarget = IsometricPosition();
   var aimTargetChanged = Watch(0);
   final mouseTargetName = Watch<String?>(null);
   final mouseTargetAllie = Watch<bool>(false);

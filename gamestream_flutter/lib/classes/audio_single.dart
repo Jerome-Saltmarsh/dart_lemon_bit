@@ -1,6 +1,7 @@
 
 import 'dart:math';
 
+import 'package:gamestream_flutter/gamestream/isometric/isometric_position.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:just_audio/just_audio.dart';
 
@@ -31,7 +32,7 @@ class AudioSingle {
     play(volume: volume);
   }
 
-  void playV3(Vector3 value, {double maxDistance = 600}){
+  void playV3(IsometricPosition value, {double maxDistance = 600}){
     playXYZ(value.x, value.y, value.z, maxDistance: maxDistance);
   }
 

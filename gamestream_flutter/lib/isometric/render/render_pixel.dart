@@ -1,6 +1,7 @@
+import 'package:gamestream_flutter/gamestream/isometric/isometric_position.dart';
 import 'package:gamestream_flutter/library.dart';
 
-void renderPixelRedV2(Vector3 value) {
+void renderPixelRedV2(IsometricPosition value) {
   renderPixelRed(value.renderX, value.renderY);
 }
 

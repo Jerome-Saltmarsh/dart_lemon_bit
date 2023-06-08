@@ -1,6 +1,7 @@
 import 'package:archive/archive.dart';
 import 'package:gamestream_flutter/gamestream/games/fight2d/game_fight2d.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric.dart';
+import 'package:gamestream_flutter/gamestream/isometric/isometric_position.dart';
 import 'package:gamestream_flutter/isometric/events/on_changed_scene.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_byte/byte_reader.dart';
@@ -711,7 +712,7 @@ class ServerResponseReader with ByteReader {
     position.y = readDouble();
   }
 
-  void readVector3(Vector3 value){
+  void readVector3(IsometricPosition value){
     value.x = readDouble();
     value.y = readDouble();
     value.z = readDouble();

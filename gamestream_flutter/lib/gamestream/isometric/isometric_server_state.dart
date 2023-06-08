@@ -2,6 +2,8 @@ import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_con
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/src/server/src/server_events.dart';
 
+import 'isometric_position.dart';
+
 /// Synchronized server state
 ///
 /// the data inside server state belongs to the server and can only be read by the client
@@ -131,7 +133,7 @@ class IsometricServerState {
     }
   }
 
-  void projectShadow(Vector3 v3){
+  void projectShadow(IsometricPosition v3){
     if (!gamestream.isometric.nodes.inBoundsVector3(v3)) return;
 
     final z = getProjectionZ(v3);
@@ -147,7 +149,7 @@ class IsometricServerState {
     );
   }
 
-  double getProjectionZ(Vector3 vector3){
+  double getProjectionZ(IsometricPosition vector3){
 
     final x = vector3.x;
     final y = vector3.y;

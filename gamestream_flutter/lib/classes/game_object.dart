@@ -1,6 +1,7 @@
+import 'package:gamestream_flutter/gamestream/isometric/isometric_position.dart';
 import 'package:gamestream_flutter/library.dart';
 
-class GameObject extends Vector3 {
+class GameObject extends IsometricPosition {
   final int id;
   var _type = -1;
   var active = false;

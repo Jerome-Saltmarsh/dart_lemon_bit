@@ -1,4 +1,5 @@
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_renderer.dart';
+import 'package:gamestream_flutter/gamestream/isometric/isometric_position.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import 'functions/render_shadow.dart';
@@ -552,7 +553,7 @@ class RendererParticles extends Renderer {
     super.reset();
   }
 
-  static void casteShadowDownV3(Vector3 vector3){
+  static void casteShadowDownV3(IsometricPosition vector3){
     if (vector3.z < Node_Height) return;
     if (vector3.z >= gamestream.isometric.nodes.lengthZ) return;
     final nodeIndex = gamestream.isometric.nodes.getNodeIndexV3(vector3);

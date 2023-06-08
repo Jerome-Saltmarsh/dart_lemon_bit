@@ -5,6 +5,8 @@ import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_con
 import 'package:gamestream_flutter/isometric/render/render_circle.dart';
 import 'package:gamestream_flutter/library.dart';
 
+import 'isometric_position.dart';
+
 
 mixin class IsometricClientState {
   static const Particles_Max = 500;
@@ -30,7 +32,7 @@ mixin class IsometricClientState {
   bool get lightningOn => gamestream.isometric.serverState.lightningType.value != LightningType.Off;
 
 
-  int getNodeIndexV3(Vector3 v3) {
+  int getNodeIndexV3(IsometricPosition v3) {
     return getNodeIndexZRC(v3.indexZ, v3.indexRow, v3.indexColumn);
   }
 
@@ -47,12 +49,12 @@ mixin class IsometricClientState {
   int convertNodeIndexToIndexY(int index) =>
       index - ((convertNodeIndexToIndexZ(index) * gamestream.isometric.nodes.area) + (convertNodeIndexToIndexX(index) * gamestream.isometric.nodes.totalColumns));
 
-  int getV3RenderColor(Vector3 vector3) =>
+  int getV3RenderColor(IsometricPosition vector3) =>
       vector3.outOfBounds
           ? gamestream.isometric.nodes.ambient_color
           : gamestream.isometric.nodes.node_colors[vector3.nodeIndex];
 
-  bool outOfBoundsV3(Vector3 v3) =>
+  bool outOfBoundsV3(IsometricPosition v3) =>
       outOfBoundsXYZ(v3.x, v3.y, v3.z);
 
   bool outOfBounds(int z, int row, int column) =>
@@ -194,7 +196,7 @@ mixin class IsometricClientState {
   /// @value a number between 0 and 100
   /// @alpha a number between 0 and 255
   /// @intensity a number between 0.0 and 1.0
-  void applyVector3Emission(Vector3 v, {
+  void applyVector3Emission(IsometricPosition v, {
     required int hue,
     required int saturation,
     required int value,
@@ -214,7 +216,7 @@ mixin class IsometricClientState {
 
   /// @alpha a number between 0 and 255
   /// @intensity a number between 0.0 and 1.0
-  void applyVector3EmissionAmbient(Vector3 v, {
+  void applyVector3EmissionAmbient(IsometricPosition v, {
     required int alpha,
     double intensity = 1.0,
   }){
@@ -1381,7 +1383,7 @@ mixin class IsometricClientState {
     );
   }
 
-  bool compareRenderOrder(Vector3 a, Vector3 b) {
+  bool compareRenderOrder(IsometricPosition a, IsometricPosition b) {
     final aRowColumn = a.indexRow + a.indexColumn;
     final bRowColumn = b.indexRow + b.indexColumn;
 

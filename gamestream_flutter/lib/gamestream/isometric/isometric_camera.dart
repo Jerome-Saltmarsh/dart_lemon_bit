@@ -2,9 +2,11 @@ import 'dart:math';
 
 import 'package:gamestream_flutter/library.dart';
 
+import 'isometric_position.dart';
+
 class IsometricCamera {
   final chaseTargetEnabled = Watch(true);
-  Vector3? chaseTarget;
+  IsometricPosition? chaseTarget;
   var chaseStrength = 0.00075;
   var translateX = 0.0;
   var translateY = 0.0;
@@ -16,7 +18,7 @@ class IsometricCamera {
       centerOnV3(chaseTarget!);
     }
   }
-  void centerOnV3(Vector3 v3) => engine.cameraCenter(v3.renderX, v3.renderY);
+  void centerOnV3(IsometricPosition v3) => engine.cameraCenter(v3.renderX, v3.renderY);
 
   void update() {
     if (!chaseTargetEnabled.value) return;

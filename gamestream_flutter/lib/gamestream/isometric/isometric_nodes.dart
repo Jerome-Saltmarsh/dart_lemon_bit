@@ -5,6 +5,8 @@ import 'package:flutter/painting.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_renderer.dart';
 import 'package:gamestream_flutter/library.dart';
 
+import 'isometric_position.dart';
+
 class IsometricNodes {
 
   // VARIABLES
@@ -307,9 +309,9 @@ class IsometricNodes {
     }
   }
 
-  final shadow = Vector3();
+  final shadow = IsometricPosition();
 
-  void markShadow(Vector3 vector){
+  void markShadow(IsometricPosition vector){
     final index = vector.nodeIndex - area;
     if (index < 0) return;
     if (index >= total) return;
@@ -1134,7 +1136,7 @@ class IsometricNodes {
     return true;
   }
 
-  bool inBoundsVector3(Vector3 vector3) =>
+  bool inBoundsVector3(IsometricPosition vector3) =>
       inBounds(vector3.x, vector3.y, vector3.z);
 
   bool inBounds(double x, double y, double z){
@@ -1154,7 +1156,7 @@ class IsometricNodes {
         y ~/ Node_Size,
       );
 
-  int getNodeIndexV3(Vector3 vector3) =>
+  int getNodeIndexV3(IsometricPosition vector3) =>
       gamestream.isometric.clientState.getNodeIndexZRC(
         vector3.indexZ,
         vector3.indexRow,
@@ -1199,7 +1201,7 @@ class IsometricNodes {
         y ~/ Node_Size,
       );
 
-  double getDistanceFromMouse(Vector3 value) =>
+  double getDistanceFromMouse(IsometricPosition value) =>
       engine.distanceFromMouse(value.renderX, value.renderY);
 
 
@@ -1227,14 +1229,14 @@ class IsometricNodes {
 
 
 
-  int getNodeIndexBelowV3(Vector3 vector3) =>
+  int getNodeIndexBelowV3(IsometricPosition vector3) =>
       gamestream.isometric.clientState.getNodeIndexZRC(
         vector3.indexZ - 1,
         vector3.indexRow,
         vector3.indexColumn,
       );
 
-  bool isInboundV3(Vector3 vector3) =>
+  bool isInboundV3(IsometricPosition vector3) =>
       gamestream.isometric.nodes.isInboundZRC(vector3.indexZ, vector3.indexRow, vector3.indexColumn);
 
 }

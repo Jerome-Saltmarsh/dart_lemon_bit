@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_ui.dart';
+import 'package:gamestream_flutter/gamestream/isometric/isometric_position.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:bleed_common/src/capture_the_flag/src.dart';
 
@@ -12,8 +13,8 @@ class CaptureTheFlagGame extends GameIsometric {
   final scoreRed = Watch(0);
   final scoreBlue = Watch(0);
 
-  final flagPositionRed = Vector3();
-  final flagPositionBlue = Vector3();
+  final flagPositionRed = IsometricPosition();
+  final flagPositionBlue = IsometricPosition();
 
   final flagStatusRed = Watch(CaptureTheFlagFlagStatus.At_Base);
   final flagStatusBlue = Watch(CaptureTheFlagFlagStatus.At_Base);

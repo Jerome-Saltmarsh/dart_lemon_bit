@@ -1,12 +1,12 @@
 
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/gamestream/isometric_engine/isometric_engine.dart';
 import 'package:gamestream_flutter/gamestream/network/functions/detect_connection_region.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'enums/operation_status.dart';
+import 'isometric/isometric_engine.dart';
 import 'network/game_network.dart';
 import 'server_response_reader.dart';
 

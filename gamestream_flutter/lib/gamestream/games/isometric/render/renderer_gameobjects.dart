@@ -1,3 +1,4 @@
+import 'package:gamestream_flutter/gamestream/isometric/isometric_position.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import 'functions/render_shadow.dart';
@@ -196,10 +197,10 @@ class RendererGameObjects extends Renderer {
     orderRowColumn = gameObject.indexSum;
   }
 
-  static double getRenderYBouncing(Vector3 v3) =>
+  static double getRenderYBouncing(IsometricPosition v3) =>
       ((v3.y + v3.x) * 0.5) - v3.z + gamestream.animation.animationFrameWaterHeight;
 
-  static void renderBouncingGameObjectShadow(Vector3 gameObject){
+  static void renderBouncingGameObjectShadow(IsometricPosition gameObject){
     const shadowScale = 1.5;
     const shadowScaleHeight = 0.15;
     renderShadow(

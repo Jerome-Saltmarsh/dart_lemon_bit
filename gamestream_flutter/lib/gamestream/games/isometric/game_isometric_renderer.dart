@@ -2,6 +2,7 @@ import 'dart:math';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/gamestream/isometric/isometric_position.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_health_bar.dart';
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:gamestream_flutter/library.dart';
@@ -132,7 +133,7 @@ class GameIsometricRenderer {
   // otherwise use totalZ;
   // calculate the world position Y at row / column, then workout its distance from the top of the screen;
 
-  void renderTextV3(Vector3 v3, dynamic text, {double offsetY = 0}){
+  void renderTextV3(IsometricPosition v3, dynamic text, {double offsetY = 0}){
     renderText(
       text: text.toString(),
       x: GameIsometricRenderer.convertV3ToRenderX(v3),
@@ -322,7 +323,7 @@ class GameIsometricRenderer {
     );
   }
 
-  void renderStarsV3(Vector3 v3) =>
+  void renderStarsV3(IsometricPosition v3) =>
       renderStars(v3.renderX, v3.renderY - 40);
 
   void renderStars(double x, double y) =>
@@ -525,8 +526,8 @@ class GameIsometricRenderer {
   static double renderX(double x, double y, double z) => (x - y) * 0.5;
   static double renderY(double x, double y, double z) => ((y + x) * 0.5) - z;
 
-  static double convertV3ToRenderX(Vector3 v3) => getRenderX(v3.x, v3.y, v3.z);
-  static double convertV3ToRenderY(Vector3 v3) => getRenderY(v3.x, v3.y, v3.z);
+  static double convertV3ToRenderX(IsometricPosition v3) => getRenderX(v3.x, v3.y, v3.z);
+  static double convertV3ToRenderY(IsometricPosition v3) => getRenderY(v3.x, v3.y, v3.z);
 
   static double getRenderX(double x, double y, double z) => (x - y) * 0.5;
   static double getRenderY(double x, double y, double z) => ((y + x) * 0.5) - z;

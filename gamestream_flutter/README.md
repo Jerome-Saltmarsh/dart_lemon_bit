@@ -7,6 +7,10 @@ navigate to next method: ctrl + shift + up / down arrows
 ctrl + w            : minimal mode
 ctrl + shift + e    : view recent changes
 
+[CAPTURE THE FLAG]
+[ ] render bases on mini map
+[ ] render flags on mini map
+
 [RELEASE FIGHT2D MVP]
 [x] strike down hit
 [x] audio volume distance

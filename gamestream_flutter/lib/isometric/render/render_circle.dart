@@ -1,4 +1,5 @@
 
+import 'package:gamestream_flutter/gamestream/isometric/isometric_position.dart';
 import 'package:gamestream_flutter/library.dart';
 
 void renderCircle32(double x, double y, { double scale = 1.0}){
@@ -14,7 +15,7 @@ void renderCircle32(double x, double y, { double scale = 1.0}){
   );
 }
 
-void renderCircleV3(Vector3 value, { double scale = 1.0}){
+void renderCircleV3(IsometricPosition value, { double scale = 1.0}){
   engine.renderSprite(
     image: GameImages.atlas_gameobjects,
     dstX: value.renderX,

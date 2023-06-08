@@ -4,7 +4,6 @@ export 'classes/library.dart';
 export 'enums/library.dart';
 export 'atlases/atlases.dart';
 export 'gamestream/game_audio.dart';
-export 'gamestream/isometric_engine/isometric_events.dart';
 export 'game_images.dart';
 export 'gamestream/game_io.dart';
 export 'game_persistence.dart';

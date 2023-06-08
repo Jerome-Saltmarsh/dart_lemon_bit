@@ -10,6 +10,7 @@ import 'isometric_actions.dart';
 import 'isometric_camera.dart';
 import 'isometric_client_state.dart';
 import 'isometric_editor.dart';
+import 'isometric_events.dart';
 import 'isometric_nodes.dart';
 import 'isometric_player.dart';
 import 'isometric_server_state.dart';

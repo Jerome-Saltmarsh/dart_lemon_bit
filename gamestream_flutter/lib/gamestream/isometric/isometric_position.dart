@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:gamestream_flutter/gamestream/games/isometric/render/renderer_nodes.dart';
 import 'package:gamestream_flutter/library.dart';
 
-class Vector3 with Position {
+class IsometricPosition with Position {
   late double z;
 
   // GETTERS
@@ -90,7 +90,7 @@ class Vector3 with Position {
     return distance;
   }
 
-  Vector3() {
+  IsometricPosition() {
     this.x = 0;
     this.y = 0;
     this.z = 0;
@@ -106,7 +106,7 @@ class Vector3 with Position {
     return sqrt(_sq(this.x - x) + _sq(this.y - y) + _sq(this.z - z));
   }
 
-  double distanceFrom(Vector3 that){
+  double distanceFrom(IsometricPosition that){
     return distance3(that.x, that.y, that.z);
   }
 
