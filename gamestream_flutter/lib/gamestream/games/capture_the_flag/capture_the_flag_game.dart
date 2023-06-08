@@ -31,7 +31,7 @@ class CaptureTheFlagGame extends GameIsometric {
     if (playerIsTeamRed) {
        switch (flagStatus) {
          case CaptureTheFlagFlagStatus.Carried_By_Allie:
-           gamestream.audio.voiceAnAllyHasYourFlag.play();
+           gamestream.audio.voiceYourTeamHasYourFlag.play();
            break;
          case CaptureTheFlagFlagStatus.Carried_By_Enemy:
            gamestream.audio.voiceTheEnemyHasYourFlag.play();
@@ -53,7 +53,7 @@ class CaptureTheFlagGame extends GameIsometric {
         gamestream.audio.voiceTheEnemyHasTheirFlag.play();
         break;
       case CaptureTheFlagFlagStatus.Carried_By_Enemy:
-        gamestream.audio.voiceAnAllyHasTheEnemyFlag.play();
+        gamestream.audio.voiceYourTeamHasTheEnemyFlag.play();
         break;
       case CaptureTheFlagFlagStatus.At_Base:
         gamestream.audio.voiceTheEnemyFlagIsAtTheirBase.play();
@@ -68,7 +68,7 @@ class CaptureTheFlagGame extends GameIsometric {
     if (playerIsTeamBlue) {
        switch (flagStatus) {
          case CaptureTheFlagFlagStatus.Carried_By_Allie:
-           gamestream.audio.voiceAnAllyHasYourFlag.play();
+           gamestream.audio.voiceYourTeamHasYourFlag.play();
            break;
          case CaptureTheFlagFlagStatus.Carried_By_Enemy:
            gamestream.audio.voiceTheEnemyHasYourFlag.play();
@@ -90,7 +90,7 @@ class CaptureTheFlagGame extends GameIsometric {
         gamestream.audio.voiceTheEnemyHasTheirFlag.play();
         break;
       case CaptureTheFlagFlagStatus.Carried_By_Enemy:
-        gamestream.audio.voiceAnAllyHasTheEnemyFlag.play();
+        gamestream.audio.voiceYourTeamHasTheEnemyFlag.play();
         break;
       case CaptureTheFlagFlagStatus.At_Base:
         gamestream.audio.voiceTheEnemyFlagIsAtTheirBase.play();

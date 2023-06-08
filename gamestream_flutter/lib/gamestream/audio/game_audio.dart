@@ -86,8 +86,8 @@ class GameAudio {
   ];
 
 
-  final voiceAnAllyHasTheEnemyFlag = AudioSingle(name: 'voices/voice_an_ally_has_the_enemy_flag', volume: 0.5);
-  final voiceAnAllyHasYourFlag = AudioSingle(name: 'voices/voice_an_ally_has_your_flag', volume: 0.5);
+  final voiceYourTeamHasTheEnemyFlag = AudioSingle(name: 'voices/voice_your_team_has_the_enemy_flag', volume: 0.5);
+  final voiceYourTeamHasYourFlag = AudioSingle(name: 'voices/voice_your_team_has_your_flag', volume: 0.5);
   final voiceTheEnemyFlagHasBeenDropped = AudioSingle(name: 'voices/voice_the_enemy_flag_has_been_dropped', volume: 0.5);
   final voiceTheEnemyHasScored = AudioSingle(name: 'voices/voice_the_enemy_has_scored', volume: 0.5);
   final voiceTheEnemyHasTheirFlag = AudioSingle(name: 'voices/voice_the_enemy_has_their_flag', volume: 0.5);
