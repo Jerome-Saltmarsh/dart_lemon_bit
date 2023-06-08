@@ -166,6 +166,32 @@ class CaptureTheFlagGame extends GameIsometric {
                   dstY: flagPositionBlue.renderY * ratio,
                   scale: 0.1
               );
+
+              engine.renderExternalCanvas(
+                  canvas: canvas,
+                  image: GameImages.atlas_gameobjects,
+                  srcX: AtlasItems.getSrcX(ItemType.GameObjects_Base_Red),
+                  srcY: AtlasItems.getSrcY(ItemType.GameObjects_Base_Red),
+                  srcWidth: AtlasItems.getSrcWidth(ItemType.GameObjects_Base_Red),
+                  srcHeight: AtlasItems.getSrcHeight(ItemType.GameObjects_Base_Red),
+                  dstX: basePositionRed.renderX * ratio,
+                  dstY: basePositionRed.renderY * ratio,
+                  scale: 0.05
+              );
+
+              engine.renderExternalCanvas(
+                  canvas: canvas,
+                  image: GameImages.atlas_gameobjects,
+                  srcX: AtlasItems.getSrcX(ItemType.GameObjects_Base_Blue),
+                  srcY: AtlasItems.getSrcY(ItemType.GameObjects_Base_Blue),
+                  srcWidth: AtlasItems.getSrcWidth(ItemType.GameObjects_Base_Blue),
+                  srcHeight: AtlasItems.getSrcHeight(ItemType.GameObjects_Base_Blue),
+                  dstX: basePositionBlue.renderX * ratio,
+                  dstY: basePositionBlue.renderY * ratio,
+                  scale: 0.05
+              );
+
+
             });
           })
         ),
