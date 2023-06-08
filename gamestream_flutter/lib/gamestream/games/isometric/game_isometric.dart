@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric_engine.dart';
+import 'package:gamestream_flutter/gamestream/isometric/isometric_player.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import 'game_isometric_ui.dart';
@@ -12,6 +13,8 @@ class GameIsometric extends Game {
   GameIsometric({required this.isometric}) {
     isometric.camera.chaseTarget = isometric.player.position;
   }
+
+  IsometricPlayer get player => isometric.player;
 
   @override
   void drawCanvas(Canvas canvas, Size size) {
@@ -53,15 +56,19 @@ class GameIsometric extends Game {
     return GameIsometricUI.buildUI();
   }
 
+  // TODO Remove
   static double convertWorldToGridX(double x, double y) =>
       x + y;
 
+  // TODO Remove
   static double convertWorldToGridY(double x, double y) =>
       y - x;
 
+  // TODO Remove
   static int convertWorldToRow(double x, double y, double z) =>
       (x + y + z) ~/ Node_Size;
 
+  // TODO Remove
   static int convertWorldToColumn(double x, double y, double z) =>
       (y - x + z) ~/ Node_Size;
 }

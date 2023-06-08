@@ -85,6 +85,18 @@ class GameAudio {
     AudioLoop(name: 'heart-beat', getTargetVolume: getVolumeHeartBeat),
   ];
 
+
+  final voiceAnAllyHasTheEnemyFlag = AudioSingle(name: 'voices/voice_an_ally_has_the_enemy_flag', volume: 0.5);
+  final voiceAnAllyHasYourFlag = AudioSingle(name: 'voices/voice_an_ally_has_your_flag', volume: 0.5);
+  final voiceTheEnemyFlagHasBeenDropped = AudioSingle(name: 'voices/voice_the_enemy_flag_has_been_dropped', volume: 0.5);
+  final voiceTheEnemyHasScored = AudioSingle(name: 'voices/voice_the_enemy_has_scored', volume: 0.5);
+  final voiceTheEnemyHasTheirFlag = AudioSingle(name: 'voices/voice_the_enemy_has_their_flag', volume: 0.5);
+  final voiceTheEnemyHasYourFlag = AudioSingle(name: 'voices/voice_the_enemy_has_your_flag', volume: 0.5);
+  final voiceYourFlagHasBeenDropped = AudioSingle(name: 'voices/voice_your_flag_has_been_dropped', volume: 0.5);
+  final voiceYourFlagIsAtYourBase = AudioSingle(name: 'voices/voice_your_flag_is_at_your_base', volume: 0.5);
+  final voiceYourTeamHasScoredAPoint = AudioSingle(name: 'voices/voice_your_team_has_scored_a_point', volume: 0.5);
+  final voiceTheEnemyFlagIsAtTheirBase = AudioSingle(name: 'voices/voice_the_enemy_flag_is_at_their_base', volume: 0.5);
+
   final jump = AudioSingle(name: 'sounds/jump', volume: 0.5);
   final dog_woolf_howl_4 = AudioSingle(name: 'dog-woolf-howl-4', volume: 0.5);
   final wolf_howl = AudioSingle(name: 'wolf-howl', volume: 0.5);

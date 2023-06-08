@@ -19,10 +19,87 @@ class CaptureTheFlagGame extends GameIsometric {
   final basePositionRed = IsometricPosition();
   final basePositionBlue = IsometricPosition();
 
-  final flagRedStatus = Watch(CaptureTheFlagFlagStatus.At_Base);
-  final flagBlueStatus = Watch(CaptureTheFlagFlagStatus.At_Base);
+  late final flagRedStatus = Watch(CaptureTheFlagFlagStatus.At_Base, onChanged: onChangedFlagRedStatus);
+  late final flagBlueStatus = Watch(CaptureTheFlagFlagStatus.At_Base, onChanged: onChangedFlagBlueStatus);
 
   CaptureTheFlagGame({required super.isometric});
+
+  bool get playerIsTeamRed => player.team.value == CaptureTheFlagTeam.Red;
+  bool get playerIsTeamBlue => player.team.value == CaptureTheFlagTeam.Blue;
+
+  void onChangedFlagRedStatus(int flagStatus) {
+    if (playerIsTeamRed) {
+       switch (flagStatus) {
+         case CaptureTheFlagFlagStatus.Carried_By_Allie:
+           gamestream.audio.voiceAnAllyHasYourFlag.play();
+           break;
+         case CaptureTheFlagFlagStatus.Carried_By_Enemy:
+           gamestream.audio.voiceTheEnemyHasYourFlag.play();
+           break;
+         case CaptureTheFlagFlagStatus.At_Base:
+           gamestream.audio.voiceYourFlagIsAtYourBase.play();
+           break;
+         case CaptureTheFlagFlagStatus.Dropped:
+           gamestream.audio.voiceYourFlagHasBeenDropped.play();
+           break;
+       }
+       return;
+    }
+
+    assert (playerIsTeamBlue);
+
+    switch (flagStatus) {
+      case CaptureTheFlagFlagStatus.Carried_By_Allie:
+        gamestream.audio.voiceTheEnemyHasTheirFlag.play();
+        break;
+      case CaptureTheFlagFlagStatus.Carried_By_Enemy:
+        gamestream.audio.voiceAnAllyHasTheEnemyFlag.play();
+        break;
+      case CaptureTheFlagFlagStatus.At_Base:
+        gamestream.audio.voiceTheEnemyFlagIsAtTheirBase.play();
+        break;
+      case CaptureTheFlagFlagStatus.Dropped:
+        gamestream.audio.voiceTheEnemyFlagHasBeenDropped.play();
+        break;
+    }
+  }
+
+  void onChangedFlagBlueStatus(int flagStatus) {
+    if (playerIsTeamBlue) {
+       switch (flagStatus) {
+         case CaptureTheFlagFlagStatus.Carried_By_Allie:
+           gamestream.audio.voiceAnAllyHasYourFlag.play();
+           break;
+         case CaptureTheFlagFlagStatus.Carried_By_Enemy:
+           gamestream.audio.voiceTheEnemyHasYourFlag.play();
+           break;
+         case CaptureTheFlagFlagStatus.At_Base:
+           gamestream.audio.voiceYourFlagIsAtYourBase.play();
+           break;
+         case CaptureTheFlagFlagStatus.Dropped:
+           gamestream.audio.voiceYourFlagHasBeenDropped.play();
+           break;
+       }
+       return;
+    }
+
+    assert (playerIsTeamRed);
+
+    switch (flagStatus) {
+      case CaptureTheFlagFlagStatus.Carried_By_Allie:
+        gamestream.audio.voiceTheEnemyHasTheirFlag.play();
+        break;
+      case CaptureTheFlagFlagStatus.Carried_By_Enemy:
+        gamestream.audio.voiceAnAllyHasTheEnemyFlag.play();
+        break;
+      case CaptureTheFlagFlagStatus.At_Base:
+        gamestream.audio.voiceTheEnemyFlagIsAtTheirBase.play();
+        break;
+      case CaptureTheFlagFlagStatus.Dropped:
+        gamestream.audio.voiceTheEnemyFlagHasBeenDropped.play();
+        break;
+    }
+  }
 
   @override
   void drawCanvas(Canvas canvas, Size size) {

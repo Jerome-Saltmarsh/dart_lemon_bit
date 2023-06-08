@@ -67,3 +67,4 @@ flutter:
     - audio/
     - audio/music/
     - audio/sounds/
+    - audio/voices/
