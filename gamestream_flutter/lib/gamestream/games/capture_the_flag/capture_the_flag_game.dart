@@ -283,29 +283,35 @@ class CaptureTheFlagGame extends GameIsometric {
                 );
               }
 
-              engine.renderExternalCanvas(
-                  canvas: canvas,
-                  image: GameImages.atlas_gameobjects,
-                  srcX: AtlasItems.getSrcX(ItemType.GameObjects_Flag_Red),
-                  srcY: AtlasItems.getSrcY(ItemType.GameObjects_Flag_Red),
-                  srcWidth: AtlasItems.getSrcWidth(ItemType.GameObjects_Flag_Red),
-                  srcHeight: AtlasItems.getSrcHeight(ItemType.GameObjects_Flag_Red),
-                  dstX: flagPositionRed.renderX * ratio,
-                  dstY: flagPositionRed.renderY * ratio,
-                  scale: 0.1
-              );
+              if (flagRedStatus.value != CaptureTheFlagFlagStatus.Respawning) {
+                engine.renderExternalCanvas(
+                    canvas: canvas,
+                    image: GameImages.atlas_gameobjects,
+                    srcX: AtlasItems.getSrcX(ItemType.GameObjects_Flag_Red),
+                    srcY: AtlasItems.getSrcY(ItemType.GameObjects_Flag_Red),
+                    srcWidth: AtlasItems.getSrcWidth(
+                        ItemType.GameObjects_Flag_Red),
+                    srcHeight: AtlasItems.getSrcHeight(
+                        ItemType.GameObjects_Flag_Red),
+                    dstX: flagPositionRed.renderX * ratio,
+                    dstY: flagPositionRed.renderY * ratio,
+                    scale: 0.1
+                );
+              }
 
-              engine.renderExternalCanvas(
-                  canvas: canvas,
-                  image: GameImages.atlas_gameobjects,
-                  srcX: AtlasItems.getSrcX(ItemType.GameObjects_Flag_Blue),
-                  srcY: AtlasItems.getSrcY(ItemType.GameObjects_Flag_Blue),
-                  srcWidth: AtlasItems.getSrcWidth(ItemType.GameObjects_Flag_Blue),
-                  srcHeight: AtlasItems.getSrcHeight(ItemType.GameObjects_Flag_Blue),
-                  dstX: flagPositionBlue.renderX * ratio,
-                  dstY: flagPositionBlue.renderY * ratio,
-                  scale: 0.1
-              );
+              if (flagBlueStatus.value != CaptureTheFlagFlagStatus.Respawning) {
+                engine.renderExternalCanvas(
+                    canvas: canvas,
+                    image: GameImages.atlas_gameobjects,
+                    srcX: AtlasItems.getSrcX(ItemType.GameObjects_Flag_Blue),
+                    srcY: AtlasItems.getSrcY(ItemType.GameObjects_Flag_Blue),
+                    srcWidth: AtlasItems.getSrcWidth(ItemType.GameObjects_Flag_Blue),
+                    srcHeight: AtlasItems.getSrcHeight(ItemType.GameObjects_Flag_Blue),
+                    dstX: flagPositionBlue.renderX * ratio,
+                    dstY: flagPositionBlue.renderY * ratio,
+                    scale: 0.1
+                );
+              }
 
               engine.renderExternalCanvas(
                   canvas: canvas,

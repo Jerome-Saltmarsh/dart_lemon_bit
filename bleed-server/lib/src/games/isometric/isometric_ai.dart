@@ -57,8 +57,6 @@ class IsometricAI extends IsometricCharacter {
       health: health,
       team: team,
       weaponType: weaponType,
-      headType: ItemType.Head_Wizards_Hat,
-      bodyType: ItemType.Body_Tunic_Padded,
       damage: damage,
   ) {
     clearDest();

@@ -4,7 +4,6 @@ import 'dart:typed_data';
 
 import 'package:bleed_server/common/src/api_player.dart';
 import 'package:bleed_server/common/src/api_players.dart';
-import 'package:bleed_server/common/src/character_type.dart';
 import 'package:bleed_server/common/src/compile_util.dart';
 import 'package:bleed_server/common/src/direction.dart';
 import 'package:bleed_server/common/src/enums/input_mode.dart';
@@ -23,6 +22,7 @@ import 'package:bleed_server/common/src/target_category.dart';
 import 'package:bleed_server/firestoreClient/firestoreService.dart';
 import 'package:bleed_server/src/game/player.dart';
 import 'package:bleed_server/src/games/game_editor.dart';
+import 'package:bleed_server/src/games/isometric/isometric_character_template.dart';
 import 'package:bleed_server/src/utilities/generate_random_name.dart';
 import 'package:bleed_server/src/utilities/system.dart';
 import 'package:lemon_byte/byte_writer.dart';
@@ -40,7 +40,7 @@ import 'isometric_scene_writer.dart';
 import 'isometric_settings.dart';
 import 'isometric_side.dart';
 
-class IsometricPlayer extends IsometricCharacter with ByteWriter implements Player {
+class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter implements Player {
   /// CONSTANTS
   final mouse = Vector2(0, 0);
   var inputMode = InputMode.Keyboard;
@@ -169,15 +169,12 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
   IsometricPlayer({
     required this.game,
   }) : super(
-    characterType: CharacterType.Template,
     x: 0,
     y: 0,
     z: 0,
     health: 10,
     team: 0,
     weaponType: 0,
-    bodyType: ItemType.Body_Tunic_Padded,
-    headType: ItemType.Head_Rogues_Hood,
     damage: 1,
   ){
     writeGameType();
@@ -1085,7 +1082,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
       writeVector3(character);
       writeCharacterHealthAndAnimationFrame(character);
 
-      if (CharacterType.supportsUpperBody(character.characterType)) {
+      if (character is IsometricCharacterTemplate) {
         writeCharacterUpperBody(character);
       }
 
@@ -1298,7 +1295,7 @@ class IsometricPlayer extends IsometricCharacter with ByteWriter implements Play
     writeAngle(projectile.velocityAngle);
   }
 
-  void writeCharacterUpperBody(IsometricCharacter character) {
+  void writeCharacterUpperBody(IsometricCharacterTemplate character) {
     assert (ItemType.isTypeWeapon(character.weaponType) || character.weaponType == ItemType.Empty);
     assert (ItemType.isTypeLegs(character.legsType) || character.legsType == ItemType.Empty);
     assert (ItemType.isTypeBody(character.bodyType) || character.bodyType == ItemType.Empty);

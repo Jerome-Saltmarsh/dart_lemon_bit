@@ -23,6 +23,7 @@ import 'package:bleed_server/common/src/team_type.dart';
 import 'package:bleed_server/common/src/weapon_state.dart';
 import 'package:bleed_server/src/engine.dart';
 import 'package:bleed_server/src/game/game.dart';
+import 'package:bleed_server/src/games/isometric/isometric_character_template.dart';
 import 'package:bleed_server/src/utilities/maths.dart';
 import 'package:lemon_byte/byte_reader.dart';
 import 'package:lemon_math/library.dart';
@@ -451,7 +452,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
   }
 
-  void characterEquipItemType(IsometricCharacter character, int itemType) {
+  void characterEquipItemType(IsometricCharacterTemplate character, int itemType) {
     if (!character.canChangeEquipment) return;
 
     if (ItemType.isTypeWeapon(itemType)) {
@@ -2786,9 +2787,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       wanderRadius: wanderRadius,
       damage: damage,
     );
-    npc.headType = headType;
-    npc.bodyType = armour;
-    npc.legsType = pants;
     setGridPosition(position: npc, z: z, row: row, column: column);
     npc.spawnX = npc.x;
     npc.spawnY = npc.y;

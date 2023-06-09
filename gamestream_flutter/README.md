@@ -8,24 +8,13 @@ ctrl + w            : minimal mode
 ctrl + shift + e    : view recent changes
 alt + m             : go to declaration
 
-if your flag is not at the base
-    if the player is holding their own flag
-        render a line going back to the home base
-    otherwise
-        render a line to your flag
-
-
-if the player is holding the enemy flag 
-    render a line leading to the enemy base
-
-otherwise
-    render a line to the enemy flag
-
-
-    
 
 [CAPTURE THE FLAG]
-[ ] render objective lines
+[ ] capture strategic locations
+[ ] player classes  
+[ ] player abilities  
+[ ] creep spawn
+[x] render objective lines
 [x] render bases on mini map
 [x] render flags on mini map
 

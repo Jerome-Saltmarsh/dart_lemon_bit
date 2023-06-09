@@ -1,8 +1,6 @@
 
 import 'package:bleed_server/common/src.dart';
 import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_player_status.dart';
-import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_response.dart';
-import 'package:bleed_server/common/src/server_response.dart';
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_game.dart';
 import 'package:bleed_server/src/games/isometric/isometric_player.dart';
 import 'package:bleed_server/src/utilities/change_notifier.dart';

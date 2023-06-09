@@ -35,9 +35,6 @@ abstract class IsometricCharacter extends IsometricCollider {
   var weaponStateDuration = 0;
   var _weaponStateDurationTotal = 0;
   var _weaponType = ItemType.Empty;
-  var _headType = ItemType.Head_Steel_Helm;
-  var _bodyType = ItemType.Body_Shirt_Cyan;
-  var _legsType = ItemType.Legs_Blue;
   var _characterType = 0;
   var lookRadian = 0.0;
   var name = "";
@@ -63,9 +60,6 @@ abstract class IsometricCharacter extends IsometricCollider {
   }
 
   int get weaponType => _weaponType;
-  int get headType => _headType;
-  int get bodyType => _bodyType;
-  int get legsType => _legsType;
 
   bool get isPlayer => false;
   bool get aliveAndActive => alive && active;
@@ -75,27 +69,6 @@ abstract class IsometricCharacter extends IsometricCollider {
     if (_weaponType == value) return;
     _weaponType = value;
     onWeaponChanged();
-  }
-
-  set headType(int value){
-    assert (value == ItemType.Empty || ItemType.isTypeHead(value));
-    if (_headType == value) return;
-    _headType = value;
-    onEquipmentChanged();
-  }
-
-  set bodyType(int value){
-    assert (value == ItemType.Empty || ItemType.isTypeBody(value));
-    if (_bodyType == value) return;
-    _bodyType = value;
-    onEquipmentChanged();
-  }
-
-  set legsType(int value) {
-    assert (value == ItemType.Empty || ItemType.isTypeLegs(value));
-    if (_legsType == value) return;
-    _legsType = value;
-    onEquipmentChanged();
   }
 
   int get weaponStateDurationTotal => _weaponStateDurationTotal;
@@ -116,9 +89,6 @@ abstract class IsometricCharacter extends IsometricCollider {
     radius = CharacterType.getRadius(value);
     if (value != CharacterType.Template) {
       weaponType = ItemType.Empty;
-      bodyType = ItemType.Empty;
-      headType = ItemType.Empty;
-      legsType = ItemType.Empty;
     }
   }
 
@@ -274,8 +244,6 @@ abstract class IsometricCharacter extends IsometricCollider {
   IsometricCharacter({
     required int characterType,
     required int health,
-    required int bodyType,
-    required int headType,
     required int weaponType,
     required int team,
     required int damage,
@@ -291,9 +259,6 @@ abstract class IsometricCharacter extends IsometricCollider {
   ) {
     maxHealth = health;
     this.weaponType = weaponType;
-    this.headType = headType;
-    this.bodyType = bodyType;
-    this.legsType = legsType;
     this.characterType = characterType;
     this.health = health;
     this.team = team;
