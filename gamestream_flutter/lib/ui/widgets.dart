@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/gamestream/account/account_service.dart';
 import 'package:gamestream_flutter/gamestream/account/data_authentication.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_colors.dart';
 import 'package:gamestream_flutter/gamestream/games/website/enums/website_dialog.dart';
@@ -24,7 +23,7 @@ class _Widgets {
 
   final textUpgrade = button(
     text("PURCHASE", color: GameIsometricColors.green, bold: true),
-    AccountService.openStripeCheckout,
+    gamestream.accountService.openStripeCheckout,
     fillColor: GameIsometricColors.none,
     borderColor: GameIsometricColors.green,
     borderColorMouseOver: GameIsometricColors.green,
@@ -33,7 +32,7 @@ class _Widgets {
 
   final textReactivateSubscription = button(
     text("Activate", color: GameIsometricColors.green, underline: true),
-    AccountService.openStripeCheckout,
+    gamestream.accountService.openStripeCheckout,
     fillColor: GameIsometricColors.none,
     borderColorMouseOver: GameIsometricColors.green,
     borderColor: GameIsometricColors.none,
@@ -87,7 +86,7 @@ class _Buttons {
 
   final Widget spawnRandomUser = button("Random User", (){
     final userId = 'random_${random.nextInt(9999999)}';
-    AccountService.login(DataAuthentication(userId: userId, name: userId, email: "$userId@email.com"));
+    gamestream.accountService.login(DataAuthentication(userId: userId, name: userId, email: "$userId@email.com"));
   });
 
   final showDialogSubscribed = button("Sub Success",gamestream.games.website.showDialogSubscriptionSuccessful);
@@ -148,7 +147,7 @@ class _Buttons {
 }
 Widget _buildFakeLoginButton(String userId, String text){
   return button('$userId $text', (){
-    AccountService.login(DataAuthentication(userId: userId, name: userId, email: "$userId@email.com"));
+    gamestream.accountService.login(DataAuthentication(userId: userId, name: userId, email: "$userId@email.com"));
   });
 }
 

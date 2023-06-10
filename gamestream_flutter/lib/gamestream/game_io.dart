@@ -93,7 +93,7 @@ class GameIO {
     // print("onLongPressDown()");
   }
 
-  int convertRadianToDirection(double radian) {
+  static int convertRadianToDirection(double radian) {
     radian = radian < 0 ? radian + Engine.PI_2 : radian % Engine.PI_2;
      if (radian < Engine.PI_Eight + (Engine.PI_Quarter * 0)) return Direction.South_East;
      if (radian < Engine.PI_Eight + (Engine.PI_Quarter * 1)) return Direction.South;
@@ -218,7 +218,7 @@ class GameIO {
 
 
   void setCursorAction(int cursorAction) {
-    gamestream.io.touchscreenCursorAction = CursorAction.None;
+    touchscreenCursorAction = CursorAction.None;
   }
 
   bool getActionSecondary(){
@@ -270,7 +270,7 @@ class GameIO {
     if (engine.keyPressed(KeyCode.Delete)) {
       isometric.editor.delete();
     }
-    if (gamestream.io.getInputDirectionKeyboard() != Direction.None) {
+    if (getInputDirectionKeyboard() != Direction.None) {
       isometric.actions.actionSetModePlay();
     }
     return;
@@ -321,7 +321,7 @@ class TouchController {
 
   int getDirection(){
     if (engine.touches == 0) return Direction.None;
-    return gamestream.io.convertRadianToDirection(angle);
+    return GameIO.convertRadianToDirection(angle);
   }
 
   void onMouseMoved(double x, double y){

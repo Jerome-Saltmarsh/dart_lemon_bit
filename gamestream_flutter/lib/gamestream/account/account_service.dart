@@ -7,7 +7,11 @@ import 'data_authentication.dart';
 
 class AccountService {
 
-  static bool get premiumAccountAuthenticated {
+  final Gamestream gamestream;
+
+  AccountService(this.gamestream);
+
+  bool get premiumAccountAuthenticated {
     final account = gamestream.account.value;
     if (account == null){
       return false;
@@ -19,7 +23,7 @@ class AccountService {
     return subscriptionEndDate.isAfter(DateTime.now());
   }
 
-  static void changeAccountPublicName(String value) async {
+  void changeAccountPublicName(String value) async {
     print("actions.changePublicName('$value')");
     final account = gamestream.account.value;
     if (account == null) {
@@ -66,7 +70,7 @@ class AccountService {
     }
   }
 
-  static void cancelSubscription() async {
+  void cancelSubscription() async {
     print("actions.cancelSubscription()");
     gamestream.games.website.showDialogAccount();
     final account = gamestream.account.value;
@@ -80,7 +84,7 @@ class AccountService {
     gamestream.operationStatus.value = OperationStatus.None;
   }
 
-  static Future updateAccount() async {
+  Future updateAccount() async {
     print("refreshAccountDetails()");
     final account = gamestream.account.value;
     if (account == null){
@@ -94,7 +98,7 @@ class AccountService {
     gamestream.operationStatus.value = OperationStatus.None;
   }
 
-  static Future login(DataAuthentication authentication){
+  Future login(DataAuthentication authentication){
     print("actions.login()");
     // storage.rememberAuthorization(authentication);
     return signInOrCreateAccount(
@@ -104,7 +108,7 @@ class AccountService {
     );
   }
 
-  static Future signInOrCreateAccount({
+  Future signInOrCreateAccount({
     required String userId,
     required String email,
     required String privateName
@@ -132,7 +136,7 @@ class AccountService {
     gamestream.operationStatus.value = OperationStatus.None;
   }
 
-  static void openStripeCheckout() {
+  void openStripeCheckout() {
     throw Exception("No longer supported");
     // print("actions.openStripeCheckout()");
     // final account = Website.account.value;
@@ -152,7 +156,7 @@ class AccountService {
     // );
   }
 
-  static void loginWithFacebook() async {
+  void loginWithFacebook() async {
     final facebookAuthentication = await getAuthenticationFacebook();
     if (facebookAuthentication == null){
       return;
@@ -160,7 +164,7 @@ class AccountService {
     login(facebookAuthentication);
   }
 
-  static void closeErrorMessage(){
+  void closeErrorMessage(){
     WebsiteState.error.value = null;
   }
 }

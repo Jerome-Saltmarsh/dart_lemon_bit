@@ -1,6 +1,5 @@
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
-import 'package:gamestream_flutter/gamestream/account/account_service.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_colors.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/mouse_over.dart';
 import 'package:gamestream_flutter/instances/engine.dart';
@@ -277,7 +276,7 @@ Widget buildDialogWelcome2(){
               )),
         ],
       ),
-      bottomRight: button(text("PREMIUM MEMBERSHIP", color: GameIsometricColors.green), AccountService.openStripeCheckout, fillColor: GameIsometricColors.none, borderColor: GameIsometricColors.green),
+      bottomRight: button(text("PREMIUM MEMBERSHIP", color: GameIsometricColors.green), gamestream.accountService.openStripeCheckout, fillColor: GameIsometricColors.none, borderColor: GameIsometricColors.green),
       bottomLeft: Container(
           padding: padding8,
           child: text("Perhaps Later", onPressed: gamestream.games.website.showDialogGames, color: GameIsometricColors.white80)),
@@ -303,7 +302,7 @@ Widget buildDialogChangePublicName() {
     width: style.dialogWidthMedium,
     height: style.dialogHeightSmall,
     bottomLeft: buildButtonPrimary("Save", (){
-      AccountService.changeAccountPublicName(_nameController.text);
+      gamestream.accountService.changeAccountPublicName(_nameController.text);
     },),
     bottomRight: buildButton('back', gamestream.games.website.showDialogAccount),
       child: TextField(
@@ -344,7 +343,7 @@ Widget buildDialogConfirmCancelSubscription(){
     width: style.dialogWidthMedium,
     height: style.dialogHeightSmall,
     child: Center(child: text("Cancel premium subscription?", color: GameIsometricColors.white90)),
-    bottomLeft: button(text("YES", color: GameIsometricColors.red, bold: false), AccountService.cancelSubscription, fillColor: GameIsometricColors.none, borderColor: GameIsometricColors.none, width: 100),
+    bottomLeft: button(text("YES", color: GameIsometricColors.red, bold: false), gamestream.accountService.cancelSubscription, fillColor: GameIsometricColors.none, borderColor: GameIsometricColors.none, width: 100),
     bottomRight: button(text("NO", color: GameIsometricColors.green, bold: true), gamestream.games.website.showDialogAccount, fillColor: GameIsometricColors.none, borderColor: GameIsometricColors.green, width: 100, borderWidth: 2),
   );
 }

@@ -1,6 +1,7 @@
 
 import 'package:firestore_client/firestoreService.dart';
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/gamestream/account/account_service.dart';
 import 'package:gamestream_flutter/gamestream/network/functions/detect_connection_region.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,6 +23,7 @@ class Gamestream {
    late final game = Watch<Game>(games.website, onChanged: _onChangedGame);
    late final error = Watch<GameError?>(null, onChanged: _onChangedGameError);
    late final account = Watch<Account?>(null, onChanged: onChangedAccount);
+   late final accountService = AccountService(this);
    late final ServerResponseReader serverResponseReader;
    late final GameNetwork network;
    late final Games games;
