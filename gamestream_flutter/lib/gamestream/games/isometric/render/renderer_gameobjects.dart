@@ -1,3 +1,4 @@
+import 'package:gamestream_flutter/gamestream/isometric/enums/emission_type.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric_gameobject.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric_position.dart';
@@ -50,7 +51,7 @@ class RendererGameObjects extends IsometricRenderer {
         srcWidth: AtlasItems.getSrcWidth(type),
         srcHeight: AtlasItems.getSrcHeight(type),
         scale: AtlasItems.getSrcScale(type),
-        color: gameObject.emission_type != EmissionType.Color
+        color: gameObject.emission_type != IsometricEmissionType.Color
             ? nodes.getV3RenderColor(gameObject)
             : gameObject.emission_col,
       );

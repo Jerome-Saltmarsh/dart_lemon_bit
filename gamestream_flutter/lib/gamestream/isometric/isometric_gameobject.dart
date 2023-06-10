@@ -1,11 +1,13 @@
 import 'package:gamestream_flutter/gamestream/isometric/isometric_position.dart';
 import 'package:gamestream_flutter/library.dart';
 
+import 'enums/emission_type.dart';
+
 class IsometricGameObject extends IsometricPosition {
   final int id;
   var _type = -1;
   var active = false;
-  var emission_type = EmissionType.None;
+  var emission_type = IsometricEmissionType.None;
   var emission_hue = 0;
   var emission_sat = 0;
   var emission_val = 0;
@@ -28,7 +30,7 @@ class IsometricGameObject extends IsometricPosition {
 
     switch (value) {
       case ItemType.GameObjects_Neon_Sign_01:
-        emission_type = EmissionType.Color;
+        emission_type = IsometricEmissionType.Color;
         emission_hue = 344;
         emission_sat = 67;
         emission_val = 94;
@@ -37,7 +39,7 @@ class IsometricGameObject extends IsometricPosition {
         refreshEmissionColor();
         break;
       case ItemType.GameObjects_Neon_Sign_02:
-        emission_type = EmissionType.Color;
+        emission_type = IsometricEmissionType.Color;
         emission_hue = 166;
         emission_sat = 78;
         emission_val = 88;
@@ -45,16 +47,16 @@ class IsometricGameObject extends IsometricPosition {
         refreshEmissionColor();
         break;
       case ItemType.GameObjects_Barrel_Flaming:
-        emission_type = EmissionType.Ambient;
+        emission_type = IsometricEmissionType.Ambient;
         emission_intensity_vel = 0.1;
         emission_intensity_start = 0.78;
         emission_intensity_end = 1.0;
         break;
       case ItemType.Weapon_Thrown_Grenade:
-        emission_type = EmissionType.Ambient;
+        emission_type = IsometricEmissionType.Ambient;
         break;
       case ItemType.GameObjects_Vending_Upgrades:
-        emission_type = EmissionType.Color;
+        emission_type = IsometricEmissionType.Color;
         emission_hue = 209;
         emission_sat = 66;
         emission_val = 90;
@@ -62,7 +64,7 @@ class IsometricGameObject extends IsometricPosition {
         refreshEmissionColor();
         break;
       case ItemType.Resource_Credit:
-        emission_type = EmissionType.Ambient;
+        emission_type = IsometricEmissionType.Ambient;
         // emission_type = EmissionType.Color;
         // emission_hue = 168;
         // emission_sat = 42;

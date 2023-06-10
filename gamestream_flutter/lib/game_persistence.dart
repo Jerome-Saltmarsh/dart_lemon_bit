@@ -2,6 +2,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'gamestream/account/data_authentication.dart';
+import 'gamestream/network/enums/connection_region.dart';
 import 'library.dart';
 
 final storage = StorageService();

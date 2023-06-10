@@ -1,4 +1,4 @@
-import 'package:gamestream_flutter/enums/icon_type.dart';
+import 'package:gamestream_flutter/gamestream/ui/enums/icon_type.dart';
 
 class AtlasIcons {
 

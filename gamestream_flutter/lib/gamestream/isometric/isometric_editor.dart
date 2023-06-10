@@ -1,6 +1,8 @@
 
 import 'package:gamestream_flutter/library.dart';
 
+import 'enums/editor_dialog.dart';
+import 'enums/emission_type.dart';
 import 'isometric_gameobject.dart';
 
 
@@ -21,7 +23,7 @@ class IsometricEditor {
   final gameObjectSelectedParticleType = Watch(0);
   final gameObjectSelectedParticleSpawnRate = Watch(0);
   final gameObjectSelectedSpawnType = Watch(0);
-  final gameObjectSelectedEmission = Watch(EmissionType.None);
+  final gameObjectSelectedEmission = Watch(IsometricEmissionType.None);
 
   late final gameObjectSelectedEmissionIntensity = Watch(1.0, onChanged: (double value){
     gameObject.value?.emission_intensity = value;

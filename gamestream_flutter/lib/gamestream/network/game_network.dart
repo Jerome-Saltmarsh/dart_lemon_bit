@@ -1,7 +1,9 @@
 import 'package:gamestream_flutter/gamestream/gamestream.dart';
+import 'package:gamestream_flutter/gamestream/isometric/enums/dialog_type.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
+import 'enums/connection_region.dart';
 import 'enums/connection_status.dart';
 
 

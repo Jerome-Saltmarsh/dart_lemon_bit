@@ -3,6 +3,8 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_colors.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_constants.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_ui.dart';
+import 'package:gamestream_flutter/gamestream/isometric/enums/emission_type.dart';
+import 'package:gamestream_flutter/gamestream/ui/enums/icon_type.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/mouse_over.dart';
 import 'package:gamestream_flutter/isometric/ui/columns/build_column_selected_node.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
@@ -1160,7 +1162,7 @@ class EditorUI {
                                   value: gamestream.isometric.editor.gameObject.value?.emission_intensity ?? 0,
                                   onChanged: gamestream.isometric.editor.setSelectedObjectedIntensity,
                                 )),
-                              if (emissionType == EmissionType.Color)
+                              if (emissionType == IsometricEmissionType.Color)
                                 ColorPicker(
                                     portraitOnly: true,
                                     pickerColor: Color(gamestream.isometric.editor.gameObject.value!.emission_col),

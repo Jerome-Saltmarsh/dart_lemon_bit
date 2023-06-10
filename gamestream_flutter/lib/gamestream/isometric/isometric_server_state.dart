@@ -2,6 +2,7 @@ import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_con
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/src/server/src/server_events.dart';
 
+import 'enums/emission_type.dart';
 import 'isometric_character.dart';
 import 'isometric_gameobject.dart';
 import 'isometric_player_score.dart';
@@ -105,9 +106,9 @@ class IsometricServerState {
     for (final gameObject in gameObjects) {
       if (!gameObject.active) continue;
       switch (gameObject.emission_type) {
-        case EmissionType.None:
+        case IsometricEmissionType.None:
           continue;
-        case EmissionType.Color:
+        case IsometricEmissionType.Color:
           gamestream.isometric.clientState.applyVector3Emission(
             gameObject,
             hue: gameObject.emission_hue,
@@ -117,7 +118,7 @@ class IsometricServerState {
             intensity: gameObject.emission_intensity,
           );
           continue;
-        case EmissionType.Ambient:
+        case IsometricEmissionType.Ambient:
           gamestream.isometric.clientState.applyVector3EmissionAmbient(gameObject,
             alpha: gameObject.emission_alp,
             intensity: gameObject.emission_intensity,

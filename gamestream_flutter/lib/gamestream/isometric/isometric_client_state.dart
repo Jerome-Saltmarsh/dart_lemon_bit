@@ -5,6 +5,9 @@ import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_con
 import 'package:gamestream_flutter/isometric/render/render_circle.dart';
 import 'package:gamestream_flutter/library.dart';
 
+import 'enums/dialog_type.dart';
+import 'enums/emission_type.dart';
+import 'enums/touch_button_side.dart';
 import 'isometric_character.dart';
 import 'isometric_particle.dart';
 import 'isometric_position.dart';
@@ -49,7 +52,7 @@ mixin class IsometricClientState {
 
   void applyEmissionEditorSelectedNode() {
     if (!editMode) return;
-    if ((gamestream.isometric.editor.gameObject.value == null || gamestream.isometric.editor.gameObject.value!.emission_type == EmissionType.None)){
+    if ((gamestream.isometric.editor.gameObject.value == null || gamestream.isometric.editor.gameObject.value!.emission_type == IsometricEmissionType.None)){
       gamestream.isometric.nodes.emitLightAHSVShadowed(
         index: gamestream.isometric.editor.nodeSelectedIndex.value,
         hue: gamestream.isometric.nodes.ambient_hue,
