@@ -31,22 +31,11 @@ mixin class IsometricClientState {
   bool get editMode => gamestream.isometric.clientState.edit.value;
   bool get lightningOn => gamestream.isometric.serverState.lightningType.value != LightningType.Off;
 
-  int convertNodeIndexToIndexZ(int index) =>
-      index ~/ gamestream.isometric.nodes.area;
-
-  int convertNodeIndexToIndexX(int index) =>
-      (index - ((index ~/ gamestream.isometric.nodes.area) * gamestream.isometric.nodes.area)) ~/ gamestream.isometric.nodes.totalColumns;
-
-  int convertNodeIndexToIndexY(int index) =>
-      index - ((convertNodeIndexToIndexZ(index) * gamestream.isometric.nodes.area) + (convertNodeIndexToIndexX(index) * gamestream.isometric.nodes.totalColumns));
-
   int getV3RenderColor(IsometricPosition vector3) =>
       vector3.outOfBounds
           ? gamestream.isometric.nodes.ambient_color
           : gamestream.isometric.nodes.node_colors[vector3.nodeIndex];
 
-  bool outOfBoundsV3(IsometricPosition v3) =>
-      outOfBoundsXYZ(v3.x, v3.y, v3.z);
 
   bool outOfBounds(int z, int row, int column) =>
       z < 0                       ||
@@ -55,14 +44,6 @@ mixin class IsometricClientState {
           z >= gamestream.isometric.nodes.totalZ            ||
           row >= gamestream.isometric.nodes.totalRows       ||
           column >= gamestream.isometric.nodes.totalColumns  ;
-
-  bool outOfBoundsXYZ(double x, double y, double z) =>
-      z < 0                       ||
-          y < 0                       ||
-          z < 0                       ||
-          z >= gamestream.isometric.nodes.lengthZ           ||
-          x >= gamestream.isometric.nodes.lengthRows         ||
-          y >= gamestream.isometric.nodes.lengthColumns       ;
 
   // ACTIONS
 

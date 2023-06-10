@@ -17,6 +17,6 @@ class GameIsometricMouse {
   static double get playerDistance => distanceBetween(player.position.x, player.position.y, positionX, positionY);
 
   static bool get inBounds {
-    return !gamestream.isometric.clientState.outOfBoundsXYZ(positionX, positionY, positionZ);
+    return !gamestream.isometric.nodes.outOfBoundsXYZ(positionX, positionY, positionZ);
   }
 }

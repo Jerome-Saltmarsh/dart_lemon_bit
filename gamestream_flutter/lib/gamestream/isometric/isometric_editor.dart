@@ -37,9 +37,9 @@ class IsometricEditor {
     return value;
   }, onChanged: onChangedSelectedNodeIndex);
 
-  int get z => gamestream.isometric.clientState.convertNodeIndexToIndexZ(nodeSelectedIndex.value);
-  int get row => gamestream.isometric.clientState.convertNodeIndexToIndexX(nodeSelectedIndex.value);
-  int get column => gamestream.isometric.clientState.convertNodeIndexToIndexY(nodeSelectedIndex.value);
+  int get z => gamestream.isometric.nodes.convertNodeIndexToIndexZ(nodeSelectedIndex.value);
+  int get row => gamestream.isometric.nodes.convertNodeIndexToIndexX(nodeSelectedIndex.value);
+  int get column => gamestream.isometric.nodes.convertNodeIndexToIndexY(nodeSelectedIndex.value);
 
   set z(int value){
     if (value < 0) return;

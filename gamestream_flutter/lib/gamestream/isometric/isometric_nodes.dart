@@ -200,7 +200,7 @@ class IsometricNodes {
 
     final zIndex = index ~/ area;
     final rowIndex = (index - (zIndex * area)) ~/ totalColumns;
-    final columnIndex = gamestream.isometric.clientState.convertNodeIndexToIndexY(index);
+    final columnIndex = convertNodeIndexToIndexY(index);
     final radius = Shade.Pitch_Black;
     final zMin = max(zIndex - radius, 0);
     final zMax = min(zIndex + radius, totalZ);
@@ -1259,6 +1259,26 @@ class IsometricNodes {
 
   int getNodeIndexZRC(int z, int row, int column) =>
       (z * area) + (row * totalColumns) + column;
+
+  bool outOfBoundsV3(IsometricPosition v3) =>
+      outOfBoundsXYZ(v3.x, v3.y, v3.z);
+
+  bool outOfBoundsXYZ(double x, double y, double z) =>
+      z < 0 ||
+      y < 0 ||
+      z < 0 ||
+      z >= lengthZ ||
+      x >= lengthRows ||
+      y >= lengthColumns;
+
+  int convertNodeIndexToIndexY(int index) =>
+      index - ((convertNodeIndexToIndexZ(index) * area) + (convertNodeIndexToIndexX(index) * totalColumns));
+
+  int convertNodeIndexToIndexX(int index) =>
+      (index - ((index ~/ area) * area)) ~/ totalColumns;
+
+  int convertNodeIndexToIndexZ(int index) =>
+      index ~/ area;
 }
 
 
