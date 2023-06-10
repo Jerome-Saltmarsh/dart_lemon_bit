@@ -13,7 +13,7 @@ import 'capture_the_flag_player_ai_objective.dart';
 
 class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
   late final CaptureTheFlagGame game;
-  var objective = CaptureTheFlagPlayerAIObjective.Capture_Flag_Enemy;
+  var objective = CaptureTheFlagPlayerAIObjective.Capture_Flag_Own;
 
   CaptureTheFlagPlayerAI({
     required this.game,
@@ -39,51 +39,78 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
   double get baseOwnDistance => getDistance3(baseOwn);
   double get baseEnemyDistance => getDistance3(baseEnemy);
 
-  void captureEnemyFlag(){
+  void captureFlag(CaptureTheFlagGameObjectFlag flag){
+    if (flag.statusRespawning) {
+      setCharacterStateIdle();
+      return;
+    }
 
-    final heldBy = flagEnemy.heldBy;
+    final heldBy = flag.heldBy;
     if (heldBy == null){
-      face(flagEnemy);
+      face(flag);
       setCharacterStateRunning();
       return;
     }
     if (heldBy == this) {
       face(baseOwn);
       setCharacterStateRunning();
+      return;
     }
+    setCharacterStateIdle();
+  }
+
+  void captureFlagOwn(){
+    captureFlag(flagOwn);
+  }
+
+  void captureFlagEnemy(){
+    captureFlag(flagEnemy);
   }
 
   void idle(){
     setCharacterStateIdle();
   }
 
+
+  CaptureTheFlagPlayerAIObjective getObjective(){
+
+    if (flagEnemy.heldBy == this){
+      return CaptureTheFlagPlayerAIObjective.Capture_Flag_Enemy;
+    }
+
+    if (flagOwn.heldBy == this){
+      return CaptureTheFlagPlayerAIObjective.Capture_Flag_Own;
+    }
+
+    if (!flagOwn.statusRespawning && !flagOwn.statusAtBase){
+      final flagOwnHeldBy = flagOwn.heldBy;
+      if (flagOwnHeldBy == null || flagOwnHeldBy == this) {
+        return CaptureTheFlagPlayerAIObjective.Capture_Flag_Own;
+      }
+    }
+
+    if (!flagEnemy.statusRespawning){
+      final flagHeldBy = flagEnemy.heldBy;
+      if (flagHeldBy == null || flagHeldBy == this) {
+        return CaptureTheFlagPlayerAIObjective.Capture_Flag_Enemy;
+      }
+    }
+
+     return CaptureTheFlagPlayerAIObjective.Wait;
+  }
+
   @override
   void customUpdate() {
-    switch (objective) {
+    if (deadOrBusy) return;
+
+    switch (getObjective()) {
       case CaptureTheFlagPlayerAIObjective.Capture_Flag_Enemy:
-        switch (flagEnemy.status) {
-          case CaptureTheFlagFlagStatus.Dropped:
-            captureEnemyFlag();
-            break;
-          case CaptureTheFlagFlagStatus.At_Base:
-            captureEnemyFlag();
-            break;
-          case CaptureTheFlagFlagStatus.Carried_By_Allie:
-            idle();
-            break;
-          case CaptureTheFlagFlagStatus.Carried_By_Enemy:
-            captureEnemyFlag();
-            break;
-        }
+        captureFlagEnemy();
         break;
+      case CaptureTheFlagPlayerAIObjective.Capture_Flag_Own:
+        captureFlagOwn();
       default:
         setCharacterStateIdle();
     }
-
-  }
-
-  void completeObjective() {
-    objective = CaptureTheFlagPlayerAIObjective.Completed;
-    setCharacterStateIdle();
   }
 }

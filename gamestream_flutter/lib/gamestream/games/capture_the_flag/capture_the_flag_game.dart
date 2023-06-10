@@ -346,6 +346,7 @@ class CaptureTheFlagGame extends GameIsometric {
     );
 
   void onRedTeamScore(){
+    print("onRedTeamScore()");
     if (playerIsTeamRed){
       gamestream.audio.voiceYourTeamHasScoredAPoint.play();
     } else {
@@ -354,6 +355,7 @@ class CaptureTheFlagGame extends GameIsometric {
   }
 
   void onBlueTeamScore() {
+    print("onBlueTeamScore()");
     if (playerIsTeamBlue){
       gamestream.audio.voiceYourTeamHasScoredAPoint.play();
     } else {
