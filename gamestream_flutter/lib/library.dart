@@ -1,6 +1,5 @@
 library game_library;
 
-export 'classes/library.dart';
 export 'enums/library.dart';
 export 'atlases/atlases.dart';
 export 'gamestream/audio/game_audio.dart';

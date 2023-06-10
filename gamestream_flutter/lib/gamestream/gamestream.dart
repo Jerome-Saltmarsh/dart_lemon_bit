@@ -7,6 +7,8 @@ import 'package:gamestream_flutter/library.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'enums/operation_status.dart';
+import 'game.dart';
+import 'games.dart';
 import 'isometric/isometric_engine.dart';
 import 'network/game_network.dart';
 import 'server_response_reader.dart';

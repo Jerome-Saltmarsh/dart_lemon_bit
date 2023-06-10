@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:just_audio/just_audio.dart';
 
 import '../../library.dart';
+import 'audio_loop.dart';
 import 'audio_single.dart';
 import 'audio_tracks.dart';
 

@@ -1,6 +1,8 @@
 
 import 'package:gamestream_flutter/library.dart';
 
+import 'isometric_gameobject.dart';
+
 
 class IsometricEditor {
   late final editorDialog = Watch<EditorDialog?>(null, onChanged: onChangedEditorDialog);

@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:gamestream_flutter/gamestream/game.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric_engine.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric_player.dart';
 import 'package:gamestream_flutter/library.dart';

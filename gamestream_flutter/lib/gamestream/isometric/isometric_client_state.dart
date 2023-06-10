@@ -5,7 +5,10 @@ import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_con
 import 'package:gamestream_flutter/isometric/render/render_circle.dart';
 import 'package:gamestream_flutter/library.dart';
 
+import 'isometric_character.dart';
+import 'isometric_particle.dart';
 import 'isometric_position.dart';
+import 'isometric_projectile.dart';
 
 
 mixin class IsometricClientState {

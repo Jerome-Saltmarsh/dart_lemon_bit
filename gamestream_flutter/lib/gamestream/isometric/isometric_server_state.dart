@@ -2,7 +2,11 @@ import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_con
 import 'package:gamestream_flutter/library.dart';
 import 'package:gamestream_flutter/src/server/src/server_events.dart';
 
+import 'isometric_character.dart';
+import 'isometric_gameobject.dart';
+import 'isometric_player_score.dart';
 import 'isometric_position.dart';
+import 'isometric_projectile.dart';
 
 /// Synchronized server state
 ///
@@ -16,7 +20,7 @@ class IsometricServerState {
   var totalZombies = 0;
   var totalProjectiles = 0;
 
-  final playerScores = <PlayerScore>[];
+  final playerScores = <IsometricPlayerScore>[];
   final playerScoresReads = Watch(0);
   final gameObjects = <IsometricGameObject>[];
   final characters = <IsometricCharacter>[];
@@ -212,7 +216,7 @@ class IsometricServerState {
       gameObjects.removeWhere((element) => element.id == id);
 
   void sortPlayerScores(){
-    playerScores.sort(PlayerScore.compare);
+    playerScores.sort(IsometricPlayerScore.compare);
   }
 
   bool get playerScoresInOrder {

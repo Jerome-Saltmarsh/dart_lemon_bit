@@ -1,3 +1,5 @@
+import 'package:gamestream_flutter/gamestream/isometric/isometric_projectile.dart';
+import 'package:gamestream_flutter/gamestream/isometric/isometric_renderer.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class RendererProjectiles extends IsometricRenderer {

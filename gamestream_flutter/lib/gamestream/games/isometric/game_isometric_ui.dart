@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:gamestream_flutter/gamestream/isometric/isometric_player_score.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/mouse_over.dart';
 import 'package:gamestream_flutter/isometric/events/on_visibility_changed_message_box.dart';
 import 'package:gamestream_flutter/isometric/ui/widgets/build_container.dart';
@@ -782,7 +783,7 @@ class GameIsometricUI {
     );
   }
 
-  static Widget buildRowPlayerScore(PlayerScore playerScore) =>
+  static Widget buildRowPlayerScore(IsometricPlayerScore playerScore) =>
       Container(
         color: playerScore.id == gamestream.isometric.player.id.value
             ? Colors.white10

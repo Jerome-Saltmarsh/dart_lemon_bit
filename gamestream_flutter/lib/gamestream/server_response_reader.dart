@@ -7,6 +7,12 @@ import 'package:gamestream_flutter/isometric/events/on_changed_scene.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_byte/byte_reader.dart';
 
+import 'games/game_scissors_paper_rock.dart';
+import 'gamestream.dart';
+import 'isometric/isometric_character.dart';
+import 'isometric/isometric_player_score.dart';
+import 'isometric/isometric_projectile.dart';
+
 class ServerResponseReader with ByteReader {
   final bufferSize = Watch(0);
   final bufferSizeTotal = Watch(0);
@@ -787,7 +793,7 @@ class ServerResponseReader with ByteReader {
        final name = readString();
        final credits = readUInt24();
        isometric.serverState.playerScores.add(
-         PlayerScore(
+         IsometricPlayerScore(
            id: id,
            name: name,
            credits: credits,

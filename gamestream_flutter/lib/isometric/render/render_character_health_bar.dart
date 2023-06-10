@@ -1,4 +1,5 @@
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_renderer.dart';
+import 'package:gamestream_flutter/gamestream/isometric/isometric_character.dart';
 
 import '../../library.dart';
 

@@ -1,4 +1,4 @@
-import '../../library.dart';
+import 'package:gamestream_flutter/gamestream/isometric/isometric_character.dart';
 
 void renderCharacterSlime(IsometricCharacter character) {
   if (character.hurt) {
