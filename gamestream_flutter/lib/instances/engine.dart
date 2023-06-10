@@ -11,7 +11,7 @@ final engine = Engine(
     buildLoadingScreen: gamestream.games.website.buildLoadingPage,
     themeData: ThemeData(fontFamily: 'VT323-Regular'),
     backgroundColor: GameIsometricColors.black,
-    onError: Gamestream.onError,
+    onError: gamestream.onError,
     update: (){},
     render: (canvas, size) {
 

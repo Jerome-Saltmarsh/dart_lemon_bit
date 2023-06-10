@@ -59,10 +59,10 @@ class Gamestream {
      engine.deviceType.onChanged(onDeviceTypeChanged);
      GameImages.loadImages();
      engine.cursorType.value = CursorType.Basic;
-     gamestream.io.addListeners();
-     gamestream.io.detectInputMode();
+     io.addListeners();
+     io.detectInputMode();
 
-     gamestream.error.onChanged((GameError? error) {
+     error.onChanged((GameError? error) {
          if (error == null) return;
 
          final controller = ScaffoldMessenger.of(engine.buildContext).showSnackBar(
@@ -79,15 +79,15 @@ class Gamestream {
          });
      });
 
-     gamestream.games.website.errorMessageEnabled.value = true;
+     games.website.errorMessageEnabled.value = true;
 
      final visitCount = sharedPreferences.getInt('visit-count');
      if (visitCount == null){
        sharedPreferences.putAny('visit-count', 1);
-       gamestream.games.website.visitCount.value = 1;
+       games.website.visitCount.value = 1;
      } else {
        sharedPreferences.putAny('visit-count', visitCount + 1);
-       gamestream.games.website.visitCount.value = visitCount + 1;
+       games.website.visitCount.value = visitCount + 1;
 
        final cachedVersion = sharedPreferences.getString('version');
        if (cachedVersion != null){
@@ -96,7 +96,7 @@ class Gamestream {
          }
        }
 
-       gamestream.network.region.value = engine.isLocalHost ? ConnectionRegion.LocalHost : ConnectionRegion.Asia_South;
+       network.region.value = engine.isLocalHost ? ConnectionRegion.LocalHost : ConnectionRegion.Asia_South;
        // GameNetwork.connectToGameAeon();
      }
      await Future.delayed(const Duration(seconds: 4));
@@ -125,15 +125,15 @@ class Gamestream {
      };
    }
 
-   static void onScreenSizeChanged(
+   void onScreenSizeChanged(
        double previousWidth,
        double previousHeight,
        double newWidth,
        double newHeight,
-       ) => gamestream.io.detectInputMode();
+       ) => io.detectInputMode();
 
-   static void onDeviceTypeChanged(int deviceType){
-     gamestream.io.detectInputMode();
+   void onDeviceTypeChanged(int deviceType){
+     io.detectInputMode();
    }
 
    void startGameType(GameType gameType){
@@ -152,13 +152,13 @@ class Gamestream {
       }
    }
 
-   static void onError(Object error, StackTrace stack) {
+   void onError(Object error, StackTrace stack) {
      if (error.toString().contains('NotAllowedError')){
        // https://developer.chrome.com/blog/autoplay/
        // This error appears when the game attempts to fullscreen
        // without the user having interacted first
        // TODO dispatch event on fullscreen failed
-       gamestream.isometric.events.onErrorFullscreenAuto();
+       isometric.events.onErrorFullscreenAuto();
        return;
      }
      print(error.toString());
@@ -173,7 +173,7 @@ class Gamestream {
      switch (gameError) {
        case GameError.Unable_To_Join_Game:
          WebsiteState.error.value = 'unable to join game';
-         gamestream.network.disconnect();
+         network.disconnect();
          break;
        default:
          break;
