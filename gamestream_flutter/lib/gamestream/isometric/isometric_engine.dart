@@ -18,11 +18,6 @@ import 'isometric_player.dart';
 import 'isometric_server_state.dart';
 
 class IsometricEngine {
-  late final actions = IsometricActions(this);
-  late final renderer = GameIsometricRenderer(
-      rendererGameObjects: RendererGameObjects(nodes),
-      rendererParticles: RendererParticles(nodes),
-  );
   final clientState = IsometricClientState();
   final serverState = IsometricServerState();
   final nodes = IsometricNodes();
@@ -30,7 +25,13 @@ class IsometricEngine {
   final editor = IsometricEditor();
   final player = IsometricPlayer();
   final camera = IsometricCamera();
-  final events = IsometricEvents();
+
+  late final events = IsometricEvents(clientState);
+  late final actions = IsometricActions(this);
+  late final renderer = GameIsometricRenderer(
+    rendererGameObjects: RendererGameObjects(nodes),
+    rendererParticles: RendererParticles(nodes),
+  );
 
   void drawCanvas(Canvas canvas, Size size) {
     if (serverState.gameRunning.value){
