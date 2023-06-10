@@ -1,6 +1,5 @@
 library game_library;
 
-export 'atlases/atlases.dart';
 export 'gamestream/audio/game_audio.dart';
 export 'game_images.dart';
 export 'gamestream/game_io.dart';

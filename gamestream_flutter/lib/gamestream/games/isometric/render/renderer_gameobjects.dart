@@ -1,3 +1,4 @@
+import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_items.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/emission_type.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric_gameobject.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric_nodes.dart';

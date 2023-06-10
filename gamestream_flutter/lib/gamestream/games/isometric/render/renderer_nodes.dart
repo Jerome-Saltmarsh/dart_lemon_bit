@@ -4,6 +4,7 @@ import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric.dar
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_constants.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_mouse.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_renderer.dart';
+import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric_renderer.dart';
 import 'package:gamestream_flutter/library.dart';
 

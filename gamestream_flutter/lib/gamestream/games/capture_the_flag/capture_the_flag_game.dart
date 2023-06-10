@@ -5,6 +5,7 @@ import 'package:bleed_common/src/capture_the_flag/src.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_ui.dart';
+import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_items.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric_position.dart';
 import 'package:gamestream_flutter/library.dart';
 
