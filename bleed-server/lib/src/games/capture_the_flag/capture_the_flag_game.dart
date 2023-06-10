@@ -191,6 +191,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   }
 
   void returnFlagToBase(CaptureTheFlagGameObjectFlag flag){
+    activateCollider(flag);
     if (flag.statusAtBase) return;
     clearFlagHeldBy(flag);
     flag.status = CaptureTheFlagFlagStatus.At_Base;
