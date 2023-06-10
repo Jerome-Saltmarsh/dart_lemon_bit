@@ -407,7 +407,7 @@ class ServerResponseReader with ByteReader {
         break;
       case ApiPlayer.Alive:
         isometric.player.alive.value = readBool();
-        ClientActions.clearHoverDialogType();
+        isometric.clientState.clearHoverDialogType();
         break;
       case ApiPlayer.Spawned:
         isometric.camera.centerOnPlayer();

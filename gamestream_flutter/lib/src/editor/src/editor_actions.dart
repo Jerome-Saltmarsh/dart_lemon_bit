@@ -16,12 +16,12 @@ class EditorActions {
         allowedExtensions: ['scene'],
     );
     if (result == null) {
-      ClientActions.showMessage('result == null');
+      gamestream.isometric.clientState.showMessage('result == null');
       return;
     }
     final contents = result.files[0].bytes;
     if (contents == null) {
-      ClientActions.showMessage('contents == null');
+      gamestream.isometric.clientState.showMessage('contents == null');
       return;
     }
     gamestream.network.uploadScene(contents);

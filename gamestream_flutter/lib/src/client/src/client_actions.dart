@@ -38,37 +38,4 @@ class ClientActions {
       indexTo: gamestream.isometric.clientState.hoverIndex.value,
     );
   }
-
-  static void refreshBakeMapLightSources() {
-    gamestream.isometric.clientState.nodesLightSourcesTotal = 0;
-    for (var i = 0; i < gamestream.isometric.nodes.total; i++){
-      if (!NodeType.emitsLight(gamestream.isometric.nodes.nodeTypes[i])) continue;
-      if (gamestream.isometric.clientState.nodesLightSourcesTotal >= gamestream.isometric.clientState.nodesLightSources.length) {
-        gamestream.isometric.clientState.nodesLightSources = Uint16List(gamestream.isometric.clientState.nodesLightSources.length + 100);
-        refreshBakeMapLightSources();
-        return;
-      }
-      gamestream.isometric.clientState.nodesLightSources[gamestream.isometric.clientState.nodesLightSourcesTotal] = i;
-      gamestream.isometric.clientState.nodesLightSourcesTotal++;
-    }
-  }
-
-  static void clearHoverDialogType() {
-    gamestream.isometric.clientState.hoverDialogType.value = DialogType.None;
-  }
-
-  static void showMessage(String message){
-    gamestream.isometric.clientState.messageStatus.value = "";
-    gamestream.isometric.clientState.messageStatus.value = message;
-  }
-
-  static void spawnConfettiPlayer() {
-     for (var i = 0; i < 10; i++){
-       gamestream.isometric.clientState.spawnParticleConfetti(
-         gamestream.isometric.player.position.x,
-         gamestream.isometric.player.position.y,
-         gamestream.isometric.player.position.z,
-       );
-     }
-  }
 }

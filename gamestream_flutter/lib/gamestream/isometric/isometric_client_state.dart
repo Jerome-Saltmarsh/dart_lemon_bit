@@ -1531,4 +1531,38 @@ mixin class IsometricClientState {
   void clearHoverIndex() =>
       hoverIndex.value = -1;
 
+
+  void refreshBakeMapLightSources() {
+    nodesLightSourcesTotal = 0;
+    for (var i = 0; i < gamestream.isometric.nodes.total; i++){
+      if (!NodeType.emitsLight(gamestream.isometric.nodes.nodeTypes[i])) continue;
+      if (nodesLightSourcesTotal >= nodesLightSources.length) {
+        nodesLightSources = Uint16List(nodesLightSources.length + 100);
+        refreshBakeMapLightSources();
+        return;
+      }
+      nodesLightSources[nodesLightSourcesTotal] = i;
+      nodesLightSourcesTotal++;
+    }
+  }
+
+  void clearHoverDialogType() {
+    hoverDialogType.value = DialogType.None;
+  }
+
+  void showMessage(String message){
+    messageStatus.value = "";
+    messageStatus.value = message;
+  }
+
+  void spawnConfettiPlayer() {
+    for (var i = 0; i < 10; i++){
+      spawnParticleConfetti(
+        gamestream.isometric.player.position.x,
+        gamestream.isometric.player.position.y,
+        gamestream.isometric.player.position.z,
+      );
+    }
+  }
+
 }
