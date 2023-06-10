@@ -62,7 +62,7 @@ class ClientEvents {
     if (gamestream.isometric.clientState.hoverIndex.value == -1){
       ClientActions.dropDraggedItem();
     } else {
-      ClientActions.inventorySwapDragTarget();
+      gamestream.isometric.clientState.inventorySwapDragTarget();
     }
     gamestream.isometric.clientState.dragStart.value = -1;
     gamestream.isometric.clientState.dragEnd.value = -1;

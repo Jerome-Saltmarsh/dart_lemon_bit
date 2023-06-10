@@ -1565,4 +1565,13 @@ mixin class IsometricClientState {
     }
   }
 
+  void inventorySwapDragTarget(){
+    if (dragStart.value == -1) return;
+    if (hoverIndex.value == -1) return;
+    gamestream.network.sendClientRequestInventoryMove(
+      indexFrom: dragStart.value,
+      indexTo: hoverIndex.value,
+    );
+  }
+
 }

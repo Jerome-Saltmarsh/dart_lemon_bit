@@ -30,12 +30,5 @@ class ClientActions {
     gamestream.audio.errorSound15();
   }
 
-  static void inventorySwapDragTarget(){
-    if (gamestream.isometric.clientState.dragStart.value == -1) return;
-    if (gamestream.isometric.clientState.hoverIndex.value == -1) return;
-    gamestream.network.sendClientRequestInventoryMove(
-      indexFrom: gamestream.isometric.clientState.dragStart.value,
-      indexTo: gamestream.isometric.clientState.hoverIndex.value,
-    );
-  }
+
 }
