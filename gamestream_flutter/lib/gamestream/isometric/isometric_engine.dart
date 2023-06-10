@@ -26,7 +26,7 @@ class IsometricEngine {
   final player = IsometricPlayer();
   final camera = IsometricCamera();
 
-  late final events = IsometricEvents(clientState);
+  late final events = IsometricEvents(clientState, gamestream);
   late final actions = IsometricActions(this);
   late final renderer = GameIsometricRenderer(
     rendererGameObjects: RendererGameObjects(nodes),

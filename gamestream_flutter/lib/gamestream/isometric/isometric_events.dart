@@ -7,9 +7,10 @@ import '../../isometric/events/on_character_hurt.dart';
 
 class IsometricEvents {
 
+  final Gamestream gamestream;
   final IsometricClientState clientState;
 
-  IsometricEvents(this.clientState);
+  IsometricEvents(this.clientState, this.gamestream);
 
   void onErrorFullscreenAuto(){
      // TODO show a dialog box asking the user to go fullscreen
