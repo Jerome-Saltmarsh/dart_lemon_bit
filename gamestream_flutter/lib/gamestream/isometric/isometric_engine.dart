@@ -16,11 +16,11 @@ import 'isometric_editor.dart';
 import 'isometric_events.dart';
 import 'isometric_nodes.dart';
 import 'isometric_player.dart';
-import 'isometric_server_state.dart';
+import 'isometric_server.dart';
 
 class IsometricEngine {
   final clientState = IsometricClientState();
-  final serverState = IsometricServerState();
+  final serverState = IsometricServer();
   final nodes = IsometricNodes();
   final minimap = GameIsometricMinimap();
   final editor = IsometricEditor();

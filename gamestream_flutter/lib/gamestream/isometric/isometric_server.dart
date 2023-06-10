@@ -9,17 +9,16 @@ import 'isometric_player_score.dart';
 import 'isometric_position.dart';
 import 'isometric_projectile.dart';
 
-/// Synchronized server state
-///
-/// the data inside server state belongs to the server and can only be read by the client
-///
 /// WARNING - WRITING TO SERVER STATE IS FORBIDDEN
-class IsometricServerState {
+/// the data inside server state belongs to the server and can only be written by serverResponseReader
+class IsometricServer {
   var totalCharacters = 0;
   var totalPlayers = 0;
   var totalNpcs = 0;
   var totalZombies = 0;
   var totalProjectiles = 0;
+  var inventory = Uint16List(0);
+  var inventoryQuantity = Uint16List(0);
 
   final playerScores = <IsometricPlayerScore>[];
   final playerScoresReads = Watch(0);
@@ -27,10 +26,8 @@ class IsometricServerState {
   final characters = <IsometricCharacter>[];
   final npcs = <IsometricCharacter>[];
   final projectiles = <IsometricProjectile>[];
-
   final highScore = Watch(0);
   final areaType = Watch(AreaType.None, onChanged: ServerEvents.onChangedAreaType);
-  late final interactMode = Watch(InteractMode.None, onChanged: gamestream.isometric.events.onChangedPlayerInteractMode);
   final playerHealth = Watch(0);
   final playerMaxHealth = Watch(0);
   final playerDamage = Watch(0);
@@ -42,33 +39,34 @@ class IsometricServerState {
   final sceneEditable = Watch(false);
   final sceneName = Watch<String?>(null);
   final gameRunning = Watch(true);
-  late final rainType = Watch(RainType.None, onChanged: gamestream.isometric.events.onChangedRain);
   final weatherBreeze = Watch(false);
-  late final seconds = Watch(0, onChanged: gamestream.isometric.events.onChangedSeconds);
-  late final hours = Watch(0, onChanged: gamestream.isometric.events.onChangedHour);
   final minutes = Watch(0);
-
   final lightningType = Watch(LightningType.Off);
   final watchTimePassing = Watch(false);
-  late final windTypeAmbient = Watch(WindType.Calm, onChanged: gamestream.isometric.events.onChangedWindType);
   final gameStatus = Watch(GameStatus.Playing);
-
   final playerBelt1_ItemType = Watch(ItemType.Empty);
   final playerBelt2_ItemType = Watch(ItemType.Empty);
   final playerBelt3_ItemType = Watch(ItemType.Empty);
   final playerBelt4_ItemType = Watch(ItemType.Empty);
   final playerBelt5_ItemType = Watch(ItemType.Empty);
   final playerBelt6_ItemType = Watch(ItemType.Empty);
-
   final playerBelt1_Quantity = Watch(0);
   final playerBelt2_Quantity = Watch(0);
   final playerBelt3_Quantity = Watch(0);
   final playerBelt4_Quantity = Watch(0);
   final playerBelt5_Quantity = Watch(0);
   final playerBelt6_Quantity = Watch(0);
-
   final equippedWeaponIndex = Watch(0);
+  final tagTypes = <String, int> {};
+  final sceneUnderground = Watch(false);
+  final lightningFlashing = Watch(false, onChanged: ServerEvents.onChangedLightningFlashing);
+  final gameTimeEnabled = Watch(false, onChanged: ServerEvents.onChangedGameTimeEnabled);
 
+  late final rainType = Watch(RainType.None, onChanged: gamestream.isometric.events.onChangedRain);
+  late final seconds = Watch(0, onChanged: gamestream.isometric.events.onChangedSeconds);
+  late final hours = Watch(0, onChanged: gamestream.isometric.events.onChangedHour);
+  late final interactMode = Watch(InteractMode.None, onChanged: gamestream.isometric.events.onChangedPlayerInteractMode);
+  late final windTypeAmbient = Watch(WindType.Calm, onChanged: gamestream.isometric.events.onChangedWindType);
   late final watchBeltItemTypes = [
     playerBelt1_ItemType,
     playerBelt2_ItemType,
@@ -77,14 +75,6 @@ class IsometricServerState {
     playerBelt5_ItemType,
     playerBelt6_ItemType,
   ];
-
-  // VARIABLES
-  var inventory = Uint16List(0);
-  var inventoryQuantity = Uint16List(0);
-  final tagTypes = <String, int> {};
-  final sceneUnderground = Watch(false);
-  final lightningFlashing = Watch(false, onChanged: ServerEvents.onChangedLightningFlashing);
-  final gameTimeEnabled = Watch(false, onChanged: ServerEvents.onChangedGameTimeEnabled);
 
   IsometricCharacter getCharacterInstance(){
     if (characters.length <= totalCharacters){
