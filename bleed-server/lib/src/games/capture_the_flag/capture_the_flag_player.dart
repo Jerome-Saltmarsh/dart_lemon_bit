@@ -25,8 +25,9 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
   @override
   void writePlayerGame() {
     super.writePlayerGame();
-    writeFlagPositions();
-    writeBasePositions();
+    writeFlagPositions(); // todo optimize
+    writeBasePositions(); // todo optimize
+    game.dispatchFlagStatus(); // todo optimize
   }
 
   void writeFlagPositions() {
@@ -59,11 +60,15 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
   void writeFlagStatus() {
     writeByte(ServerResponse.Capture_The_Flag);
     writeByte(CaptureTheFlagResponse.Flag_Status);
-    writeByte(game.flagRedStatus.value);
-    writeByte(game.flagBlueStatus.value);
+    writeByte(game.flagRed.status);
+    writeByte(game.flagBlue.status);
   }
 
   void setFlagStatusNoFlag(){
      flagStatus.value = CaptureTheFlagPlayerStatus.No_Flag;
+  }
+
+  void setFlagStatusHoldingEnemyFlag(){
+    flagStatus.value = CaptureTheFlagPlayerStatus.Holding_Enemy_Flag;
   }
 }

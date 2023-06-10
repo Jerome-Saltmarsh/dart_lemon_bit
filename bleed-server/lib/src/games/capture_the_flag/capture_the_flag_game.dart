@@ -1,8 +1,9 @@
 
 import 'package:bleed_server/common/src.dart';
 import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_flag_status.dart';
-import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_player_status.dart';
+import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_gameobject_flag.dart';
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_player.dart';
+import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_player_ai.dart';
 import 'package:bleed_server/src/games/isometric/isometric_character.dart';
 import 'package:bleed_server/src/games/isometric/isometric_collider.dart';
 import 'package:bleed_server/src/games/isometric/isometric_game.dart';
@@ -16,37 +17,37 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   static const Base_Radius = 64.0;
   static const Flag_Respawn_Duration = 500;
 
-  late final IsometricGameObject flagRed;
-  late final IsometricGameObject flagBlue;
+  late final CaptureTheFlagGameObjectFlag flagRed;
+  late final CaptureTheFlagGameObjectFlag flagBlue;
 
   late final IsometricGameObject baseRed;
   late final IsometricGameObject baseBlue;
 
-  IsometricCharacter? flagRedCharacter;
-  IsometricCharacter? flagBlueCharacter;
-
-  var flagRedRespawn = 0;
-  var flagBlueRespawn = 0;
-
   late final scoreRed = ChangeNotifier(0, dispatchScore);
   late final scoreBlue = ChangeNotifier(0, dispatchScore);
 
-  late final flagRedStatus = ChangeNotifier(CaptureTheFlagFlagStatus.At_Base, dispatchFlagStatus);
-  late final flagBlueStatus = ChangeNotifier(CaptureTheFlagFlagStatus.At_Base, dispatchFlagStatus);
+  void onChangedFlagRedStatus() {
+    dispatchFlagStatus();
+  }
 
   CaptureTheFlagGame({
     required super.scene,
     required super.time,
     required super.environment,
   }) : super(gameType: GameType.Capture_The_Flag) {
-    flagRed = spawnGameObject(x: 200, y: 200, z: 25, type: ItemType.GameObjects_Flag_Red);
-    flagBlue = spawnGameObject(x: 100, y: 100, z: 25, type: ItemType.GameObjects_Flag_Blue);
+    flagRed = CaptureTheFlagGameObjectFlag(x: 200, y: 200, z: 25, type: ItemType.GameObjects_Flag_Red, id: generateId())..team = CaptureTheFlagTeam.Red;
+    flagBlue = CaptureTheFlagGameObjectFlag(x: 200, y: 300, z: 25, type: ItemType.GameObjects_Flag_Blue, id: generateId())..team = CaptureTheFlagTeam.Blue;
 
-    baseRed = spawnGameObject(x: 300, y: 700, z: 25, type: ItemType.GameObjects_Base_Red)..fixed = true;
-    baseBlue = spawnGameObject(x: 300, y: 300, z: 25, type: ItemType.GameObjects_Base_Blue)..fixed = true;
+    gameObjects.add(flagRed);
+    gameObjects.add(flagBlue);
 
-    flagBlueStatus.value = CaptureTheFlagFlagStatus.Dropped;
-    flagRedStatus.value = CaptureTheFlagFlagStatus.Dropped;
+    baseRed = spawnGameObject(x: 300, y: 700, z: 25, type: ItemType.GameObjects_Base_Red)..fixed = true..team = CaptureTheFlagTeam.Red;
+    baseBlue = spawnGameObject(x: 300, y: 300, z: 25, type: ItemType.GameObjects_Base_Blue)..fixed = true..team = CaptureTheFlagTeam.Blue;
+
+    flagRed.status = CaptureTheFlagFlagStatus.Dropped;
+    flagBlue.status = CaptureTheFlagFlagStatus.Dropped;
+
+    characters.add(CaptureTheFlagPlayerAI(game: this, team: CaptureTheFlagTeam.Red));
   }
 
   int get countPlayersOnTeamRed => countPlayersOnTeam(CaptureTheFlagTeam.Red);
@@ -74,60 +75,97 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   @override
   void customOnCharacterKilled(IsometricCharacter target, src) {
     if (target is CaptureTheFlagPlayer){
-      if (target == flagRedCharacter) {
-        flagRedCharacter = null;
+      if (target == flagRed.heldBy) {
+        flagRed.heldBy = null;
+        flagRed.status = CaptureTheFlagFlagStatus.Dropped;
         target.setFlagStatusNoFlag();
         return;
       }
 
-      if (target == flagBlueCharacter) {
-        flagBlueCharacter = null;
+      if (target == flagBlue.heldBy) {
+        flagBlue.heldBy = null;
+        flagBlue.status = CaptureTheFlagFlagStatus.Dropped;
         target.setFlagStatusNoFlag();
         return;
       }
     }
   }
 
-
   @override
   void customOnCollisionBetweenColliders(IsometricCollider a, IsometricCollider b) {
-    if (a == flagBlue || b == flagBlue) {
-       if (a == baseBlue || b == baseBlue){
-         if (flagBlueCharacter?.team != CaptureTheFlagTeam.Blue) return;
-         returnBlueFlagToBase();
-         return;
-       }
-       if (a == baseRed || b == baseRed) {
-         if (flagBlueCharacter?.team == CaptureTheFlagTeam.Blue) return;
-         onRedTeamScored();
-       }
+    if (a == flagRed || a == flagBlue){
+      customOnCollisionBetweenFlagAndCollider(a as CaptureTheFlagGameObjectFlag, b);
+      return;
+    }
+    if (b == flagRed || b == flagBlue){
+      customOnCollisionBetweenFlagAndCollider(b as CaptureTheFlagGameObjectFlag, a);
+      return;
+    }
+  }
+
+  void customOnCollisionBetweenFlagAndIsometricCharacter(
+      CaptureTheFlagGameObjectFlag flag,
+      IsometricCharacter character,
+  ){
+    if (flag.heldBy != null) return;
+    if (flag.team == character.team) {
+       if (flag.statusAtBase) return;
+       flag.heldBy = character;
+       flag.status = CaptureTheFlagFlagStatus.Carried_By_Allie;
        return;
     }
 
-    if (a == flagRed || b == flagRed) {
-      if (a == baseRed || b == baseRed){
-        if (flagRedCharacter?.team != CaptureTheFlagTeam.Red) return;
-        returnRedFlagToBase();
-        return;
-      }
-      if (a == baseBlue || b == baseBlue) {
-        if (flagRedCharacter?.team == CaptureTheFlagTeam.Red) return;
-        onBlueTeamScored();
-      }
+    assert (flag.team != character.team);
+    assert (flag.heldBy == null);
+    flag.heldBy = character;
+    flag.status = CaptureTheFlagFlagStatus.Carried_By_Enemy;
+    if (character is CaptureTheFlagPlayer){
+      character.setFlagStatusHoldingEnemyFlag();
+    }
+  }
+
+  void customOnCollisionBetweenFlagAndBase(
+      CaptureTheFlagGameObjectFlag flag,
+      IsometricGameObject base,
+      ){
+
+    if (flag.team == base.team) {
+      if (flag.statusAtBase) return;
+      returnFlagToBase(flag);
       return;
+    }
+
+    if (flag.isTeamRed) {
+      onRedTeamScored();
+    } else {
+      onBlueTeamScored();
+    }
+  }
+
+  void customOnCollisionBetweenFlagAndCollider(CaptureTheFlagGameObjectFlag flag, IsometricCollider collider){
+
+    if (collider is IsometricCharacter){
+       customOnCollisionBetweenFlagAndIsometricCharacter(flag, collider);
+       return;
+    }
+
+    if (collider == baseBlue || collider == baseRed){
+       customOnCollisionBetweenFlagAndBase(flag, collider as IsometricGameObject) ;
+       return;
     }
   }
 
   void onBlueTeamScored() {
     scoreBlue.value++;
-    flagRedRespawn = Flag_Respawn_Duration;
-    flagRedStatus.value = CaptureTheFlagFlagStatus.Respawning;
+    flagRed.respawnDuration = Flag_Respawn_Duration;
+    flagRed.status = CaptureTheFlagFlagStatus.Respawning;
     deactivateCollider(flagRed);
 
-    if (flagRedCharacter is CaptureTheFlagPlayer){
-      (flagRedCharacter as CaptureTheFlagPlayer).setFlagStatusNoFlag();
-      flagRedCharacter = null;
+    final flagRedHeldBy = flagRed.heldBy;
+    if (flagRedHeldBy is CaptureTheFlagPlayer){
+      flagRedHeldBy.setFlagStatusNoFlag();
     }
+    flagRed.heldBy = null;
 
     for (final player in players) {
       player.writeByte(ServerResponse.Capture_The_Flag);
@@ -135,15 +173,19 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     }
   }
 
+  void onFlagScored(CaptureTheFlagGameObjectFlag flag){
+
+  }
+
   void onRedTeamScored() {
     scoreRed.value++;
-    flagBlueRespawn = Flag_Respawn_Duration;
-    flagBlueStatus.value = CaptureTheFlagFlagStatus.Respawning;
+    flagBlue.respawnDuration = Flag_Respawn_Duration;
+    flagBlue.status = CaptureTheFlagFlagStatus.Respawning;
     deactivateCollider(flagBlue);
 
-    if (flagBlueCharacter is CaptureTheFlagPlayer){
-      (flagBlueCharacter as CaptureTheFlagPlayer).setFlagStatusNoFlag();
-      flagBlueCharacter = null;
+    final flagBlueHeldBy = flagBlue.heldBy;
+    if (flagBlueHeldBy is CaptureTheFlagPlayer){
+      flagBlueHeldBy.setFlagStatusNoFlag();
     }
 
     for (final player in players) {
@@ -152,59 +194,55 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     }
   }
 
-  void returnRedFlagToBase() {
-    if (flagRedCharacter is CaptureTheFlagPlayer){
-      (flagRedCharacter as CaptureTheFlagPlayer).setFlagStatusNoFlag();
+  void returnFlagToBase(CaptureTheFlagGameObjectFlag flag){
+    if (flag.statusAtBase) return;
+    final heldBy = flag.heldBy;
+    if (heldBy is CaptureTheFlagPlayer){
+      heldBy.setFlagStatusNoFlag();
     }
-    flagRedCharacter = null;
-    flagRed.moveTo(baseRed);
-    flagRedStatus.value = CaptureTheFlagFlagStatus.At_Base;
+    flag.heldBy = null;
+    flag.moveTo(getFlagBase(flag));
   }
 
-  void returnBlueFlagToBase() {
-    if (flagBlueCharacter is CaptureTheFlagPlayer){
-      (flagBlueCharacter as CaptureTheFlagPlayer).setFlagStatusNoFlag();
-    }
-    flagBlueCharacter = null;
-    flagBlue.moveTo(baseBlue);
-    flagBlueStatus.value = CaptureTheFlagFlagStatus.At_Base;
-  }
+  IsometricGameObject getFlagBase(CaptureTheFlagGameObjectFlag flag) =>
+      (flag == flagRed) ? baseRed : baseBlue;
+
 
   @override
   void customOnCollisionBetweenPlayerAndGameObject(IsometricPlayer player, IsometricGameObject gameObject) {
     if (player is! CaptureTheFlagPlayer) return;
 
-    if (gameObject == flagBlue && flagBlueCharacter == null) {
-      if (player.isTeamRed || flagBlue.getDistance3(baseBlue) > Base_Radius){
-        if (flagRedCharacter != player){
-          flagBlueCharacter = player;
-          if (player.isTeamRed){
-            flagBlueStatus.value = CaptureTheFlagFlagStatus.Carried_By_Enemy;
-            player.flagStatus.value = CaptureTheFlagPlayerStatus.Holding_Enemy_Flag;
-          } else {
-            flagBlueStatus.value = CaptureTheFlagFlagStatus.Carried_By_Allie;
-            player.flagStatus.value = CaptureTheFlagPlayerStatus.Holding_Team_Flag;
-          }
-        }
-      }
-      return;
-    }
-
-    if (gameObject == flagRed && flagRedCharacter == null) {
-      if (player.isTeamBlue || flagRed.getDistance3(baseRed) > Base_Radius){
-        if (flagBlueCharacter != player){
-          flagRedCharacter = player;
-          if (player.isTeamBlue){
-            flagRedStatus.value = CaptureTheFlagFlagStatus.Carried_By_Enemy;
-            player.flagStatus.value = CaptureTheFlagPlayerStatus.Holding_Enemy_Flag;
-          } else {
-            flagRedStatus.value = CaptureTheFlagFlagStatus.Carried_By_Allie;
-            player.flagStatus.value = CaptureTheFlagPlayerStatus.Holding_Team_Flag;
-          }
-        }
-      }
-      return;
-    }
+    // if (gameObject == flagBlue && flagBlueCharacter == null) {
+    //   if (player.isTeamRed || flagBlue.getDistance3(baseBlue) > Base_Radius){
+    //     if (flagRedCharacter != player){
+    //       flagBlueCharacter = player;
+    //       if (player.isTeamRed){
+    //         flagBlueStatus.value = CaptureTheFlagFlagStatus.Carried_By_Enemy;
+    //         player.flagStatus.value = CaptureTheFlagPlayerStatus.Holding_Enemy_Flag;
+    //       } else {
+    //         flagBlueStatus.value = CaptureTheFlagFlagStatus.Carried_By_Allie;
+    //         player.flagStatus.value = CaptureTheFlagPlayerStatus.Holding_Team_Flag;
+    //       }
+    //     }
+    //   }
+    //   return;
+    // }
+    //
+    // if (gameObject == flagRed && flagRedCharacter == null) {
+    //   if (player.isTeamBlue || flagRed.getDistance3(baseRed) > Base_Radius){
+    //     if (flagBlueCharacter != player){
+    //       flagRedCharacter = player;
+    //       if (player.isTeamBlue){
+    //         flagRedStatus.value = CaptureTheFlagFlagStatus.Carried_By_Enemy;
+    //         player.flagStatus.value = CaptureTheFlagPlayerStatus.Holding_Enemy_Flag;
+    //       } else {
+    //         flagRedStatus.value = CaptureTheFlagFlagStatus.Carried_By_Allie;
+    //         player.flagStatus.value = CaptureTheFlagPlayerStatus.Holding_Team_Flag;
+    //       }
+    //     }
+    //   }
+    //   return;
+    // }
   }
 
   void dispatchScore() {
@@ -219,31 +257,31 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     }
   }
 
+  void updateFlag(CaptureTheFlagGameObjectFlag flag){
+
+    if (flag.respawnDuration > 0){
+      flag.respawnDuration--;
+      if (flag.respawnDuration == 0){
+        returnFlagToBase(flag);
+        return;
+      }
+    }
+
+
+    final flagHeldBy = flag.heldBy;
+    if (flagHeldBy == null) return;
+    flag.moveTo(flagHeldBy);
+  }
+
   @override
   void customUpdate() {
-      if (flagBlueCharacter != null) {
-        flagBlue.moveTo(flagBlueCharacter!);
-      }
-      if (flagRedCharacter != null) {
-        flagRed.moveTo(flagRedCharacter!);
+
+      for (final character in characters){
+        character.customUpdate();
       }
 
-      if (flagRedRespawn > 0){
-         flagRedRespawn--;
-         if (flagRedRespawn == 0){
-           returnRedFlagToBase();
-           activateCollider(flagRed);
-         }
-      }
-
-      if (flagBlueRespawn > 0){
-        flagBlueRespawn--;
-         if (flagBlueRespawn == 0){
-           returnBlueFlagToBase();
-           activateCollider(flagBlue);
-         }
-      }
-
+      updateFlag(flagRed);
+      updateFlag(flagBlue);
   }
 
   @override

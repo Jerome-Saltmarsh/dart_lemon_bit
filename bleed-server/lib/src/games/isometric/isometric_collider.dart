@@ -10,6 +10,7 @@ import 'isometric_position.dart';
 class IsometricCollider extends IsometricPosition {
   /// do not mutate directly use game.deactivateCollider
   var active = true;
+  var collidable = true;
   var velocityX = 0.0;
   var velocityY = 0.0;
   var velocityZ = 0.0;

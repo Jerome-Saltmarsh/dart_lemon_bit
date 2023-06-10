@@ -1200,30 +1200,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     playersWriteWeather();
   }
 
-  /// UPDATE
-
-  void updateInProgress() {
-    if (!_running) return;
-
-    frame++;
-    time.update();
-    environment.update();
-
-
-    updateAITargets();
-    internalUpdateJobs();
-    internalUpdateScripts();
-    customUpdate();
-    updateGameObjects();
-    updateCollisions();
-    updateCharacters();
-    updateProjectiles(); // called twice to fix collision detection
-    updateProjectiles(); // called twice to fix collision detection
-    updateProjectiles(); // called twice to fix collision detection
-    updateCharacterFrames();
-    sortColliders();
-  }
-
   void performJob(int timer, Function action) {
     assert (timer > 0);
     for (final job in jobs) {
@@ -1346,7 +1322,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     var sortRequired = false;
     for (final gameObject in gameObjects) {
       if (!gameObject.active) {
-        if (!gameObject.available) {
+        if (gameObject.recyclable && !gameObject.available) {
           gameObject.available = true;
         }
       } else {
@@ -1443,8 +1419,24 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   void update() {
-    if (players.length == 0) return;
-    updateInProgress();
+    if (players.isEmpty || !running) return;
+
+    frame++;
+    time.update();
+    environment.update();
+
+    updateAITargets();
+    internalUpdateJobs();
+    internalUpdateScripts();
+    customUpdate();
+    updateGameObjects();
+    updateCollisions();
+    updateCharacters();
+    updateProjectiles(); // called twice to fix collision detection
+    updateProjectiles(); // called twice to fix collision detection
+    updateProjectiles(); // called twice to fix collision detection
+    updateCharacterFrames();
+    sortColliders();
   }
 
   bool containsPlayerWithName(String name) {
@@ -1607,11 +1599,11 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     for (var i = 0; i < numberOfCollidersMinusOne; i++) {
       final colliderI = colliders[i];
       if (!colliderI.active) continue;
-      // if (!colliderI.strikable) continue;
+      if (!colliderI.collidable) continue;
       for (var j = i + 1; j < numberOfColliders; j++) {
         final colliderJ = colliders[j];
         if (!colliderJ.active) continue;
-        // if (!colliderJ.strikable) continue;
+        if (!colliderI.collidable) continue;
         if (colliderJ.top > colliderI.bottom) continue;
         if (colliderJ.left > colliderI.right) continue;
         if (colliderJ.right < colliderI.left) continue;
@@ -1644,10 +1636,6 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   void internalOnCollisionBetweenColliders(IsometricCollider a, IsometricCollider b) {
-    // assert (a.active);
-    // assert (b.active);
-    // assert (a.strikable);
-    // assert (b.strikable);
     assert (a != b);
     if (a.physical && b.physical) {
       resolveCollisionPhysics(a, b);
@@ -2564,6 +2552,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }) {
     for (final gameObject in gameObjects) {
       if (gameObject.active) continue;
+      if (!gameObject.recyclable) continue;
       if (!gameObject.available) continue;
       gameObject.x = x;
       gameObject.y = y;
@@ -2587,7 +2576,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       y: y,
       z: z,
       type: type,
-      id: gameObjectId++,
+      id: generateId(),
     );
     instance.type = type;
     instance.active = true;
@@ -3266,4 +3255,5 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     playersWriteWeather();
   }
 
+  int generateId() => gameObjectId++;
 }
