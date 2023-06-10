@@ -31,15 +31,6 @@ mixin class IsometricClientState {
   bool get editMode => gamestream.isometric.clientState.edit.value;
   bool get lightningOn => gamestream.isometric.serverState.lightningType.value != LightningType.Off;
 
-
-  int getNodeIndexV3(IsometricPosition v3) {
-    return getNodeIndexZRC(v3.indexZ, v3.indexRow, v3.indexColumn);
-  }
-
-  int getNodeIndexZRC(int z, int row, int column) {
-    return (z * gamestream.isometric.nodes.area) + (row * gamestream.isometric.nodes.totalColumns) + column;
-  }
-
   int convertNodeIndexToIndexZ(int index) =>
       index ~/ gamestream.isometric.nodes.area;
 
@@ -1179,22 +1170,22 @@ mixin class IsometricClientState {
     }
   }
 
-  void setNodeType(int z, int row, int column, int type){
-    if (z < 0)
-      return;
-    if (row < 0)
-      return;
-    if (column < 0)
-      return;
-    if (z >= gamestream.isometric.nodes.totalZ)
-      return;
-    if (row >= gamestream.isometric.nodes.totalRows)
-      return;
-    if (column >= gamestream.isometric.nodes.totalColumns)
-      return;
-
-    gamestream.isometric.nodes.nodeTypes[getNodeIndexZRC(z, row, column)] = type;
-  }
+  // void setNodeType(int z, int row, int column, int type){
+  //   if (z < 0)
+  //     return;
+  //   if (row < 0)
+  //     return;
+  //   if (column < 0)
+  //     return;
+  //   if (z >= gamestream.isometric.nodes.totalZ)
+  //     return;
+  //   if (row >= gamestream.isometric.nodes.totalRows)
+  //     return;
+  //   if (column >= gamestream.isometric.nodes.totalColumns)
+  //     return;
+  //
+  //   gamestream.isometric.nodes.nodeTypes[getNodeIndexZRC(z, row, column)] = type;
+  // }
 
   void spawnParticleConfetti(double x, double y, double z) {
     spawnParticle(

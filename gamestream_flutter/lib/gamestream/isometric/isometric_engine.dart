@@ -16,7 +16,7 @@ import 'isometric_player.dart';
 import 'isometric_server_state.dart';
 
 class IsometricEngine {
-  final actions = IsometricActions();
+  late final actions = IsometricActions(this);
   final renderer = GameIsometricRenderer();
   final clientState = IsometricClientState();
   final serverState = IsometricServerState();

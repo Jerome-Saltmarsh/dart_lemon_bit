@@ -137,7 +137,7 @@ class IsometricEditor {
   }
 
   void selectBlock(int z, int row, int column){
-    nodeSelectedIndex.value = gamestream.isometric.clientState.getNodeIndexZRC(z, row, column);
+    nodeSelectedIndex.value = gamestream.isometric.nodes.getNodeIndexZRC(z, row, column);
   }
 
   void deleteGameObjectSelected(){

@@ -284,7 +284,8 @@ class GameIO {
   }
 
   void mouseRaycast(Function(int z, int row, int column) callback){
-    var z = gamestream.isometric.nodes.totalZ - 1;
+    final nodes = gamestream.isometric.nodes;
+    var z = nodes.totalZ - 1;
     final mouseWorldX = engine.mouseWorldX;
     final mouseWorldY = engine.mouseWorldY;
     while (z >= 0){
@@ -292,18 +293,14 @@ class GameIO {
       final column = GameIsometric.convertWorldToColumn(mouseWorldX, mouseWorldY, z * Node_Height);
       if (row < 0) break;
       if (column < 0) break;
-      if (row >= gamestream.isometric.nodes.totalRows) break;
-      if (column >= gamestream.isometric.nodes.totalColumns) break;
-      if (z >= gamestream.isometric.nodes.totalZ) break;
-      final index = gamestream.isometric.clientState.getNodeIndexZRC(z, row, column);
-      if (NodeType.isRainOrEmpty(gamestream.isometric.nodes.nodeTypes[index])) {
+      if (row >= nodes.totalRows) break;
+      if (column >= nodes.totalColumns) break;
+      if (z >= nodes.totalZ) break;
+      final index = nodes.getNodeIndexZRC(z, row, column);
+      if (NodeType.isRainOrEmpty(nodes.nodeTypes[index])) {
         z--;
         continue;
       }
-      // if (gamestream.isometricEngine.nodes.nodeVisible[index] == Visibility.Invisible) {
-      //   z--;
-      //   continue;
-      // }
       callback(z, row, column);
       return;
     }

@@ -1150,14 +1150,14 @@ class IsometricNodes {
   }
 
   int getNodeIndex(double x, double y, double z) =>
-      gamestream.isometric.clientState.getNodeIndexZRC(
+      getNodeIndexZRC(
         z ~/ Node_Size_Half,
         x ~/ Node_Size,
         y ~/ Node_Size,
       );
 
   int getNodeIndexV3(IsometricPosition vector3) =>
-      gamestream.isometric.clientState.getNodeIndexZRC(
+      getNodeIndexZRC(
         vector3.indexZ,
         vector3.indexRow,
         vector3.indexColumn,
@@ -1178,7 +1178,7 @@ class IsometricNodes {
       nodeTypes[gridNodeXYZIndex(x, y, z)];
 
   bool gridNodeZRCTypeRainOrEmpty(int z, int row, int column) =>
-      NodeType.isRainOrEmpty(nodeTypes[gamestream.isometric.clientState.getNodeIndexZRC(z, row, column)]);
+      NodeType.isRainOrEmpty(nodeTypes[getNodeIndexZRC(z, row, column)]);
 
   int gridNodeZRCTypeSafe(int z, int row, int column) {
     if (z < 0) return NodeType.Boundary;
@@ -1191,11 +1191,11 @@ class IsometricNodes {
   }
 
   int gridNodeZRCType(int z, int row, int column) =>
-      nodeTypes[gamestream.isometric.clientState.getNodeIndexZRC(z, row, column)];
+      nodeTypes[getNodeIndexZRC(z, row, column)];
 
 
   int gridNodeXYZIndex(double x, double y, double z) =>
-      gamestream.isometric.clientState.getNodeIndexZRC(
+      getNodeIndexZRC(
         z ~/ Node_Size_Half,
         x ~/ Node_Size,
         y ~/ Node_Size,
@@ -1230,7 +1230,7 @@ class IsometricNodes {
 
 
   int getNodeIndexBelowV3(IsometricPosition vector3) =>
-      gamestream.isometric.clientState.getNodeIndexZRC(
+      getNodeIndexZRC(
         vector3.indexZ - 1,
         vector3.indexRow,
         vector3.indexColumn,
@@ -1239,6 +1239,26 @@ class IsometricNodes {
   bool isInboundV3(IsometricPosition vector3) =>
       gamestream.isometric.nodes.isInboundZRC(vector3.indexZ, vector3.indexRow, vector3.indexColumn);
 
+
+  void setNodeType(int z, int row, int column, int type){
+    if (z < 0)
+      return;
+    if (row < 0)
+      return;
+    if (column < 0)
+      return;
+    if (z >= totalZ)
+      return;
+    if (row >= totalRows)
+      return;
+    if (column >= totalColumns)
+      return;
+
+    nodeTypes[getNodeIndexZRC(z, row, column)] = type;
+  }
+
+  int getNodeIndexZRC(int z, int row, int column) =>
+      (z * area) + (row * totalColumns) + column;
 }
 
 

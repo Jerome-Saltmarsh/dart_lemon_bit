@@ -225,7 +225,7 @@ class RendererCharacters extends IsometricRenderer {
     var dist = 0.0;
 
     if (!gamestream.isometric.clientState.outOfBoundsV3(character)){
-      var torchIndex = gamestream.isometric.nodes.getTorchIndex(gamestream.isometric.clientState.getNodeIndexV3(character));
+      var torchIndex = gamestream.isometric.nodes.getTorchIndex(gamestream.isometric.nodes.getNodeIndexV3(character));
       if (torchIndex != -1) {
         final torchRow = gamestream.isometric.clientState.convertNodeIndexToIndexX(torchIndex);
         final torchColumn = gamestream.isometric.clientState.convertNodeIndexToIndexY(torchIndex);
