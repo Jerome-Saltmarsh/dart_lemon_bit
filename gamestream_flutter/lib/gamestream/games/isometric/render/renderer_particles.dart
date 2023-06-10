@@ -1,4 +1,5 @@
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_renderer.dart';
+import 'package:gamestream_flutter/gamestream/isometric/isometric_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric_position.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -6,9 +7,12 @@ import 'functions/render_shadow.dart';
 
 class RendererParticles extends IsometricRenderer {
 
+  final IsometricNodes nodes;
   static final particles = gamestream.isometric.clientState.particles;
   static late IsometricParticle particle;
   static final screen = engine.screen;
+
+  RendererParticles(this.nodes);
 
   @override
   void renderFunction() {
@@ -31,7 +35,7 @@ class RendererParticles extends IsometricRenderer {
             srcY: 40,
             srcWidth: 4,
             srcHeight: 4,
-            color: gamestream.isometric.clientState.getV3RenderColor(particle),
+            color: nodes.getV3RenderColor(particle),
           );
           break;
         case ParticleType.Blood:
@@ -44,7 +48,7 @@ class RendererParticles extends IsometricRenderer {
             srcY: AtlasParticleY.Blood,
             srcWidth: 8,
             srcHeight: 8,
-            color: gamestream.isometric.clientState.getV3RenderColor(particle),
+            color: nodes.getV3RenderColor(particle),
           );
           break;
         case ParticleType.Bubble:
@@ -60,7 +64,7 @@ class RendererParticles extends IsometricRenderer {
             srcY: 32,
             srcWidth: 8,
             srcHeight: 8,
-            color: gamestream.isometric.clientState.getV3RenderColor(particle),
+            color: nodes.getV3RenderColor(particle),
           );
           break;
         case ParticleType.Bubble_Small:
@@ -72,7 +76,7 @@ class RendererParticles extends IsometricRenderer {
             srcY: 32,
             srcWidth: 4,
             srcHeight: 4,
-            color: gamestream.isometric.clientState.getV3RenderColor(particle),
+            color: nodes.getV3RenderColor(particle),
           );
           break;
         case ParticleType.Bullet_Ring:
@@ -84,7 +88,7 @@ class RendererParticles extends IsometricRenderer {
             srcY: 32,
             srcWidth: 4,
             srcHeight: 4,
-            color: gamestream.isometric.clientState.getV3RenderColor(particle),
+            color: nodes.getV3RenderColor(particle),
           );
           break;
         case ParticleType.Smoke:
@@ -117,7 +121,7 @@ class RendererParticles extends IsometricRenderer {
             srcWidth: 8,
             srcHeight: 8,
             scale: particle.scale,
-            color: gamestream.isometric.clientState.getV3RenderColor(particle),
+            color: nodes.getV3RenderColor(particle),
           );
           break;
         case ParticleType.Block_Grass:
@@ -130,7 +134,7 @@ class RendererParticles extends IsometricRenderer {
             srcWidth: 8,
             srcHeight: 8,
             scale: particle.scale,
-            color: gamestream.isometric.clientState.getV3RenderColor(particle),
+            color: nodes.getV3RenderColor(particle),
           );
           break;
         case ParticleType.Confetti_Yellow:
@@ -143,7 +147,7 @@ class RendererParticles extends IsometricRenderer {
             srcWidth: 8,
             srcHeight: 8,
             scale: particle.scale,
-            color: gamestream.isometric.clientState.getV3RenderColor(particle),
+            color: nodes.getV3RenderColor(particle),
           );
           break;
         case ParticleType.Confetti_Red:
@@ -156,7 +160,7 @@ class RendererParticles extends IsometricRenderer {
             srcWidth: 8,
             srcHeight: 8,
             scale: particle.scale,
-            color: gamestream.isometric.clientState.getV3RenderColor(particle),
+            color: nodes.getV3RenderColor(particle),
           );
           break;
         case ParticleType.Confetti_Blue:
@@ -169,7 +173,7 @@ class RendererParticles extends IsometricRenderer {
             srcWidth: 8,
             srcHeight: 8,
             scale: particle.scale,
-            color: gamestream.isometric.clientState.getV3RenderColor(particle),
+            color: nodes.getV3RenderColor(particle),
           );
           break;
         case ParticleType.Confetti_Green:
@@ -182,7 +186,7 @@ class RendererParticles extends IsometricRenderer {
             srcWidth: 8,
             srcHeight: 8,
             scale: particle.scale,
-            color: gamestream.isometric.clientState.getV3RenderColor(particle),
+            color: nodes.getV3RenderColor(particle),
           );
           break;
         case ParticleType.Confetti_Purple:
@@ -195,7 +199,7 @@ class RendererParticles extends IsometricRenderer {
             srcWidth: 8,
             srcHeight: 8,
             scale: particle.scale,
-            color: gamestream.isometric.clientState.getV3RenderColor(particle),
+            color: nodes.getV3RenderColor(particle),
           );
           break;
         case ParticleType.Confetti_Cyan:
@@ -208,7 +212,7 @@ class RendererParticles extends IsometricRenderer {
             srcWidth: 8,
             srcHeight: 8,
             scale: particle.scale,
-            color: gamestream.isometric.clientState.getV3RenderColor(particle),
+            color: nodes.getV3RenderColor(particle),
           );
           break;
 
@@ -222,7 +226,7 @@ class RendererParticles extends IsometricRenderer {
             srcWidth: 8,
             srcHeight: 8,
             scale: particle.scale,
-            color: gamestream.isometric.clientState.getV3RenderColor(particle),
+            color: nodes.getV3RenderColor(particle),
           );
           break;
         case ParticleType.Block_Sand:
@@ -235,7 +239,7 @@ class RendererParticles extends IsometricRenderer {
             srcWidth: 8,
             srcHeight: 8,
             scale: particle.scale,
-            color: gamestream.isometric.clientState.getV3RenderColor(particle),
+            color: nodes.getV3RenderColor(particle),
           );
           break;
         case ParticleType.Fire:
@@ -325,7 +329,7 @@ class RendererParticles extends IsometricRenderer {
             srcY: 1 + 64.0 * particle.direction,
             srcWidth: 64,
             srcHeight: 64,
-            color: gamestream.isometric.clientState.getV3RenderColor(particle),
+            color: nodes.getV3RenderColor(particle),
           );
           break;
         case ParticleType.Zombie_Head:
@@ -338,7 +342,7 @@ class RendererParticles extends IsometricRenderer {
             srcY: 64.0 * particle.direction,
             srcWidth: 64,
             srcHeight: 64,
-            color: gamestream.isometric.clientState.getV3RenderColor(particle),
+            color: nodes.getV3RenderColor(particle),
           );
           break;
         case ParticleType.Zombie_leg:
@@ -351,7 +355,7 @@ class RendererParticles extends IsometricRenderer {
             srcY: 64.0 * particle.direction,
             srcWidth: 64,
             srcHeight: 64,
-            color: gamestream.isometric.clientState.getV3RenderColor(particle),
+            color: nodes.getV3RenderColor(particle),
           );
           break;
 
@@ -365,7 +369,7 @@ class RendererParticles extends IsometricRenderer {
             srcY: 64.0 * particle.direction,
             srcWidth: 64,
             srcHeight: 64,
-            color: gamestream.isometric.clientState.getV3RenderColor(particle),
+            color: nodes.getV3RenderColor(particle),
           );
           break;
         case ParticleType.Strike_Blade:
@@ -420,7 +424,7 @@ class RendererParticles extends IsometricRenderer {
       srcWidth: 32,
       srcHeight: 16,
       scale: 0.25,
-      color: gamestream.isometric.clientState.getV3RenderColor(particle),
+      color: nodes.getV3RenderColor(particle),
     );
   }
 
@@ -434,13 +438,13 @@ class RendererParticles extends IsometricRenderer {
       srcY: 7,
       srcWidth: 16,
       srcHeight: 16,
-      color: gamestream.isometric.clientState.getV3RenderColor(particle),
+      color: nodes.getV3RenderColor(particle),
       rotation: particle.rotation,
       scale: particle.scale,
     );
   }
 
-  static void renderParticleStrikeBlade() {
+  void renderParticleStrikeBlade() {
     if (particle.frame >= 6 ) {
       particle.deactivate();
       return;
@@ -457,11 +461,11 @@ class RendererParticles extends IsometricRenderer {
       rotation: particle.rotation + piQuarter + piHalf,
       anchorX: 0.5,
       anchorY: 0.1,
-      color: gamestream.isometric.clientState.getV3RenderColor(particle),
+      color: nodes.getV3RenderColor(particle),
     );
   }
 
-  static void renderParticleStrikePunch() {
+  void renderParticleStrikePunch() {
     if (particle.frame >= 6 ) {
       particle.deactivate();
       return;
@@ -478,11 +482,11 @@ class RendererParticles extends IsometricRenderer {
       rotation: particle.rotation + piQuarter + piHalf,
       anchorX: 0.4,
       anchorY: 0.1,
-      color: gamestream.isometric.clientState.getV3RenderColor(particle),
+      color: nodes.getV3RenderColor(particle),
     );
   }
 
-  static void renderParticleStrikeBullet() {
+  void renderParticleStrikeBullet() {
     if (particle.frame >= 6 ) {
       particle.deactivate();
       return;
@@ -499,10 +503,10 @@ class RendererParticles extends IsometricRenderer {
       rotation: particle.rotation + piQuarter + piHalf,
       anchorX: 0.5,
       anchorY: 0.1,
-      color: gamestream.isometric.clientState.getV3RenderColor(particle),
+      color: nodes.getV3RenderColor(particle),
     );
   }
-  static void renderParticleStrikeLight() {
+  void renderParticleStrikeLight() {
     if (particle.frame >= 6 ) {
       particle.deactivate();
       return;
@@ -519,7 +523,7 @@ class RendererParticles extends IsometricRenderer {
       rotation: particle.rotation + piQuarter + piHalf,
       anchorX: 0.5,
       anchorY: 0.1,
-      color: gamestream.isometric.clientState.getV3RenderColor(particle),
+      color: nodes.getV3RenderColor(particle),
     );
   }
 

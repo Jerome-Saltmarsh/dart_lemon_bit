@@ -1279,6 +1279,12 @@ class IsometricNodes {
 
   int convertNodeIndexToIndexZ(int index) =>
       index ~/ area;
+
+  int getV3RenderColor(IsometricPosition vector3) =>
+      vector3.outOfBounds
+          ? ambient_color
+          : node_colors[vector3.nodeIndex];
 }
+
 
 

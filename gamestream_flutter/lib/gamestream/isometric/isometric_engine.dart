@@ -4,6 +4,8 @@ import 'dart:ui';
 
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_minimap.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_renderer.dart';
+import 'package:gamestream_flutter/gamestream/games/isometric/render/renderer_gameobjects.dart';
+import 'package:gamestream_flutter/gamestream/games/isometric/render/renderer_particles.dart';
 
 import '../../library.dart';
 import 'isometric_actions.dart';
@@ -17,7 +19,10 @@ import 'isometric_server_state.dart';
 
 class IsometricEngine {
   late final actions = IsometricActions(this);
-  final renderer = GameIsometricRenderer();
+  late final renderer = GameIsometricRenderer(
+      rendererGameObjects: RendererGameObjects(nodes),
+      rendererParticles: RendererParticles(nodes),
+  );
   final clientState = IsometricClientState();
   final serverState = IsometricServerState();
   final nodes = IsometricNodes();

@@ -31,12 +31,6 @@ mixin class IsometricClientState {
   bool get editMode => gamestream.isometric.clientState.edit.value;
   bool get lightningOn => gamestream.isometric.serverState.lightningType.value != LightningType.Off;
 
-  int getV3RenderColor(IsometricPosition vector3) =>
-      vector3.outOfBounds
-          ? gamestream.isometric.nodes.ambient_color
-          : gamestream.isometric.nodes.node_colors[vector3.nodeIndex];
-
-
   bool outOfBounds(int z, int row, int column) =>
       z < 0                       ||
           row < 0                     ||
@@ -99,7 +93,7 @@ mixin class IsometricClientState {
   }
 
   void applyCharacterColor(IsometricCharacter character){
-    character.color = getV3RenderColor(character);
+    character.color = gamestream.isometric.nodes.getV3RenderColor(character);
   }
 
   void applyEmissionsCharacters() {

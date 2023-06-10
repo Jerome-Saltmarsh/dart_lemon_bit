@@ -19,14 +19,17 @@ class GameIsometricRenderer {
   var totalRemaining = 0;
   var totalIndex = 0;
   final rendererNodes        = RendererNodes();
-  final rendererParticles    = RendererParticles();
   final rendererProjectiles  = RendererProjectiles();
   final rendererCharacters   = RendererCharacters();
-  final rendererGameObjects  = RendererGameObjects();
+  final RendererParticles rendererParticles;
+  final RendererGameObjects rendererGameObjects;
   late IsometricRenderer next = rendererNodes;
   var renderDebug = false;
 
-  // ACTIONS
+  GameIsometricRenderer({
+    required this.rendererGameObjects,
+    required this.rendererParticles,
+  }); // ACTIONS
 
   void renderCircle(double x, double y, double z, double radius, {int sections = 12}){
     engine.paint.color = Colors.white;

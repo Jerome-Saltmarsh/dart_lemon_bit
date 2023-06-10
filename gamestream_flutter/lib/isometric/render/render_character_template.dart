@@ -139,7 +139,7 @@ void renderCharacterTemplate(IsometricCharacter character, {
   final dstY = GameIsometricRenderer.convertV3ToRenderY(character);
 
   const Color_Invisible = GameIsometricColors.White38_Value;
-  final color = invisible ? Color_Invisible : gamestream.isometric.clientState.getV3RenderColor(character);
+  final color = invisible ? Color_Invisible : gamestream.isometric.nodes.getV3RenderColor(character);
 
   if (invisible) {
     engine.bufferBlendMode = BlendMode.srcIn;

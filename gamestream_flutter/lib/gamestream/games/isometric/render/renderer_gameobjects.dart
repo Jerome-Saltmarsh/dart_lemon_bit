@@ -1,3 +1,4 @@
+import 'package:gamestream_flutter/gamestream/isometric/isometric_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric_position.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -7,6 +8,9 @@ class RendererGameObjects extends IsometricRenderer {
   static late IsometricGameObject gameObject;
 
   static final gameObjects = gamestream.isometric.serverState.gameObjects;
+  final IsometricNodes nodes;
+
+  RendererGameObjects(this.nodes);
 
   @override
   int getTotal() {
@@ -27,7 +31,7 @@ class RendererGameObjects extends IsometricRenderer {
           srcY: srcY,
           srcWidth: 125,
           srcHeight: 125,
-          color: gamestream.isometric.clientState.getV3RenderColor(gameObject),
+          color: nodes.getV3RenderColor(gameObject),
           scale: 0.3
       );
       return;
@@ -45,7 +49,7 @@ class RendererGameObjects extends IsometricRenderer {
         srcHeight: AtlasItems.getSrcHeight(type),
         scale: AtlasItems.getSrcScale(type),
         color: gameObject.emission_type != EmissionType.Color
-            ? gamestream.isometric.clientState.getV3RenderColor(gameObject)
+            ? nodes.getV3RenderColor(gameObject)
             : gameObject.emission_col,
       );
       if (gamestream.isometric.renderer.renderDebug) {
@@ -64,7 +68,7 @@ class RendererGameObjects extends IsometricRenderer {
         srcY: 125,
         srcWidth: 125,
         srcHeight: 125,
-        color: gamestream.isometric.clientState.getV3RenderColor(gameObject),
+        color: nodes.getV3RenderColor(gameObject),
         scale: 0.3
       );
       return;
@@ -79,7 +83,7 @@ class RendererGameObjects extends IsometricRenderer {
           srcY: 0,
           srcWidth: 125,
           srcHeight: 125,
-          color: gamestream.isometric.clientState.getV3RenderColor(gameObject),
+          color: nodes.getV3RenderColor(gameObject),
           scale: 0.5
       );
       return;
@@ -94,7 +98,7 @@ class RendererGameObjects extends IsometricRenderer {
           srcY: 250,
           srcWidth: 125,
           srcHeight: 125,
-          color: gamestream.isometric.clientState.getV3RenderColor(gameObject),
+          color: nodes.getV3RenderColor(gameObject),
           scale: 0.5
       );
       return;
@@ -109,7 +113,7 @@ class RendererGameObjects extends IsometricRenderer {
           srcY: 375,
           srcWidth: 125,
           srcHeight: 125,
-          color: gamestream.isometric.clientState.getV3RenderColor(gameObject),
+          color: nodes.getV3RenderColor(gameObject),
           scale: 0.5
       );
       return;
@@ -124,7 +128,7 @@ class RendererGameObjects extends IsometricRenderer {
           srcY: 500,
           srcWidth: 125,
           srcHeight: 125,
-          color: gamestream.isometric.clientState.getV3RenderColor(gameObject),
+          color: nodes.getV3RenderColor(gameObject),
           scale: 0.4
       );
       return;
@@ -139,7 +143,7 @@ class RendererGameObjects extends IsometricRenderer {
           srcY: 625,
           srcWidth: 125,
           srcHeight: 125,
-          color: gamestream.isometric.clientState.getV3RenderColor(gameObject),
+          color: nodes.getV3RenderColor(gameObject),
           scale: 0.4
       );
       return;
@@ -153,7 +157,7 @@ class RendererGameObjects extends IsometricRenderer {
           srcY: 875,
           srcWidth: 125,
           srcHeight: 125,
-          color: gamestream.isometric.clientState.getV3RenderColor(gameObject),
+          color: nodes.getV3RenderColor(gameObject),
           scale: 0.5
       );
       return;
@@ -171,7 +175,7 @@ class RendererGameObjects extends IsometricRenderer {
       srcWidth: AtlasItems.getSrcWidth(type),
       srcHeight: AtlasItems.getSrcHeight(type),
       scale: AtlasItems.getSrcScale(gameObject.type),
-      color: gamestream.isometric.clientState.getV3RenderColor(gameObject),
+      color: nodes.getV3RenderColor(gameObject),
     );
   }
 
