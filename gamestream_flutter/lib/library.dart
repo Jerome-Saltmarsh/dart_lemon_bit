@@ -14,7 +14,6 @@ export 'game_style.dart';
 export 'package:bleed_common/src.dart';
 export 'dart:typed_data';
 export 'widgets/library_widgets.dart';
-export 'src/client/client.dart';
 export 'src/server/server.dart';
 export 'src/website/website.dart';
 export 'src/editor/src_editor.dart';

@@ -22,8 +22,8 @@ class IsometricCamera {
 
   void update() {
     if (!chaseTargetEnabled.value) return;
-    final mouseAngle = ClientQuery.getMousePlayerAngle() + pi;
-    final mouseDistance = ClientQuery.getMousePlayerRenderDistance();
+    final mouseAngle = getMousePlayerAngle() + pi;
+    final mouseDistance = getMousePlayerRenderDistance();
     final translateDistance = mouseDistance * gamestream.isometric.io.Mouse_Translation_Sensitivity;
     translateX = adj(mouseAngle, translateDistance);
     translateY = opp(mouseAngle, translateDistance);
@@ -51,5 +51,18 @@ class IsometricCamera {
     final renderY = ((y + x) * 0.5) - z;
     engine.cameraCenter(renderX, renderY);
   }
+
+  double getMousePlayerRenderDistance(){
+    final adjacent = gamestream.isometric.player.renderX - engine.mouseWorldX;
+    final opposite = gamestream.isometric.player.renderY - engine.mouseWorldY;
+    return hyp(adjacent, opposite);
+  }
+
+  static double getMousePlayerAngle(){
+    final adjacent = gamestream.isometric.player.renderX - engine.mouseWorldX;
+    final opposite = gamestream.isometric.player.renderY - engine.mouseWorldY;
+    return angle(adjacent, opposite);
+  }
+
 }
 

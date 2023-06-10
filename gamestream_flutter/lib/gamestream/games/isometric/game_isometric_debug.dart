@@ -43,7 +43,6 @@ class GameIsometricDebug {
                                     "mouse-grid: x: ${gamestream.io.mouseGridX.toInt()}, y: ${gamestream.io.mouseGridY.toInt()}\n"
                                     "mouse-world: x: ${engine.mouseWorldX.toInt()}, y: ${engine.mouseWorldY.toInt()}\n"
                                     'mouse-screen: x: ${engine.mousePositionX.toInt()}, y: ${engine.mousePositionY.toInt()}\n'
-                                    'mouse-player-angle: ${ClientQuery.getMousePlayerAngle().toStringAsFixed(4)}\n'
                                     "player-alive: ${gamestream.isometric.player.alive.value}\n"
                                     "player-respawn-timer: ${gamestream.isometric.player.respawnTimer.value}\n"
                                     "player-position: x: ${gamestream.isometric.player.position.x}, y: ${gamestream.isometric.player.position.y}, z: ${gamestream.isometric.player.position.z}\n"

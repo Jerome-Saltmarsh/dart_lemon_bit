@@ -1482,7 +1482,7 @@ class GameIsometricUI {
               Positioned(
                 left: 5,
                 top: 5,
-                child: text(ClientQuery.mapWatchBeltTypeTokeyboardKeyString(watchBeltType)),
+                child: text(mapWatchBeltTypeTokeyboardKeyString(watchBeltType)),
               ),
               if (beltItemType != ItemType.Empty)
                 Container(
@@ -1650,4 +1650,14 @@ class GameIsometricUI {
     width: 32,
     child: buildAtlasIconType(value ? IconType.Checkbox_True : IconType.Checkbox_False),
   );
+
+  static String mapWatchBeltTypeTokeyboardKeyString(Watch<int> hotKeyWatch){
+    if (hotKeyWatch == gamestream.isometric.serverState.playerBelt1_ItemType) return '1';
+    if (hotKeyWatch == gamestream.isometric.serverState.playerBelt2_ItemType) return '2';
+    if (hotKeyWatch == gamestream.isometric.serverState.playerBelt3_ItemType) return '3';
+    if (hotKeyWatch == gamestream.isometric.serverState.playerBelt4_ItemType) return '4';
+    if (hotKeyWatch == gamestream.isometric.serverState.playerBelt5_ItemType) return 'Q';
+    if (hotKeyWatch == gamestream.isometric.serverState.playerBelt6_ItemType) return 'E';
+    throw Exception("ClientQuery.mapHotKeyWatchToString($hotKeyWatch)");
+  }
 }
