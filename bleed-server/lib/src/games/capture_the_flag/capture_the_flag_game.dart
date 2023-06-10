@@ -108,6 +108,8 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
       IsometricCharacter character,
   ){
     if (flag.heldBy != null) return;
+    if (getOtherFlag(flag).heldBy == character) return;
+
     if (flag.team == character.team) {
        if (flag.statusAtBase) return;
        flag.heldBy = character;
@@ -207,6 +209,8 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   IsometricGameObject getFlagBase(CaptureTheFlagGameObjectFlag flag) =>
       (flag == flagRed) ? baseRed : baseBlue;
 
+  CaptureTheFlagGameObjectFlag getOtherFlag(CaptureTheFlagGameObjectFlag flag) =>
+      flag == flagRed ? flagBlue : flagRed;
 
   @override
   void customOnCollisionBetweenPlayerAndGameObject(IsometricPlayer player, IsometricGameObject gameObject) {
