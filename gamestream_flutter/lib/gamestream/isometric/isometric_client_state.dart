@@ -1694,7 +1694,7 @@ mixin class IsometricClientState {
 
   void onChangedAreaTypeVisible(bool value) =>
       gamestream.isometric.clientState.areaTypeVisibleDuration = value
-          ? ClientConstants.Area_Type_Duration
+          ? 150
           : 0;
 
   void onChangedDebugMode(bool value){

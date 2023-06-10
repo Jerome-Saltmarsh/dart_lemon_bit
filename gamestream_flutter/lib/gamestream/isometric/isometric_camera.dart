@@ -24,7 +24,7 @@ class IsometricCamera {
     if (!chaseTargetEnabled.value) return;
     final mouseAngle = ClientQuery.getMousePlayerAngle() + pi;
     final mouseDistance = ClientQuery.getMousePlayerRenderDistance();
-    final translateDistance = mouseDistance * ClientConstants.Mouse_Translation_Sensitivity;
+    final translateDistance = mouseDistance * gamestream.isometric.io.Mouse_Translation_Sensitivity;
     translateX = adj(mouseAngle, translateDistance);
     translateY = opp(mouseAngle, translateDistance);
 

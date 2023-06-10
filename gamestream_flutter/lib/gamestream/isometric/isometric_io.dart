@@ -3,9 +3,21 @@ import 'package:gamestream_flutter/library.dart';
 
 class IsometricIO {
 
+  var Key_Inventory          = KeyCode.I;
+  var Key_Zoom               = KeyCode.F;
+  var Key_Suicide            = KeyCode.Backspace;
+  var Key_Settings           = KeyCode.Digit_0;
+  var Key_Duplicate          = KeyCode.V;
+  var Key_Auto_Attack        = KeyCode.Space;
+  var Key_Message            = KeyCode.Enter;
+  var Key_Toggle_Debug_Mode  = KeyCode.P;
+  var Key_Toggle_Map         = KeyCode.M;
+  var Mouse_Translation_Sensitivity = 0.1;
+  
+
   void onKeyPressed(int key){
 
-    if (key == ClientConstants.Key_Toggle_Debug_Mode) {
+    if (key == Key_Toggle_Debug_Mode) {
       gamestream.isometric.actions.toggleDebugMode();
       return;
     }
@@ -28,12 +40,12 @@ class IsometricIO {
 
   void onKeyPressedModePlay(int key) {
 
-    if (key == ClientConstants.Key_Zoom) {
+    if (key == Key_Zoom) {
       gamestream.isometric.actions.toggleZoom();
       return;
     }
 
-    if (key == ClientConstants.Key_Suicide) {
+    if (key == Key_Suicide) {
       gamestream.network.sendClientRequest(ClientRequest.Suicide);
       return;
     }
@@ -44,7 +56,7 @@ class IsometricIO {
     }
 
     if (engine.isLocalHost){
-      if (key == ClientConstants.Key_Settings) {
+      if (key == Key_Settings) {
         gamestream.isometric.actions.toggleWindowSettings();
         return;
       }
@@ -54,7 +66,7 @@ class IsometricIO {
   void onKeyPressedModeEdit(int key){
 
     switch (key){
-      case ClientConstants.Key_Duplicate:
+      case KeyCode.V:
         gamestream.network.sendGameObjectRequestDuplicate();
         break;
       case KeyCode.F:
