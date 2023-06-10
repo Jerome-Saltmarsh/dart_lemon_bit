@@ -28,7 +28,7 @@ mixin class IsometricClientState {
 
   int get bodyPartDuration => randomInt(120, 200);
   bool get playMode => !editMode;
-  bool get editMode => gamestream.isometric.clientState.edit.value;
+  bool get editMode => edit.value;
   bool get lightningOn => gamestream.isometric.serverState.lightningType.value != LightningType.Off;
 
   bool outOfBounds(int z, int row, int column) =>
@@ -42,13 +42,13 @@ mixin class IsometricClientState {
   // ACTIONS
 
   void applyEmissions(){
-    gamestream.isometric.clientState.lights_active = 0;
+    lights_active = 0;
     applyEmissionsLightSources();
     applyEmissionsCharacters();
     gamestream.isometric.serverState.applyEmissionGameObjects();
     applyEmissionsProjectiles();
     applyCharacterColors();
-    gamestream.isometric.clientState.applyEmissionsParticles();
+    applyEmissionsParticles();
     applyEmissionEditorSelectedNode();
   }
 
@@ -66,8 +66,8 @@ mixin class IsometricClientState {
   }
 
   void applyEmissionsLightSources() {
-    for (var i = 0; i < gamestream.isometric.clientState.nodesLightSourcesTotal; i++){
-      final nodeIndex = gamestream.isometric.clientState.nodesLightSources[i];
+    for (var i = 0; i < nodesLightSourcesTotal; i++){
+      final nodeIndex = nodesLightSources[i];
       final nodeType = gamestream.isometric.nodes.nodeTypes[nodeIndex];
 
       switch (nodeType){
@@ -112,7 +112,7 @@ mixin class IsometricClientState {
       } else {
         applyVector3EmissionAmbient(
           character,
-          alpha: gamestream.isometric.clientState.emissionAlphaCharacter,
+          alpha: emissionAlphaCharacter,
         );
       }
     }
@@ -198,7 +198,7 @@ mixin class IsometricClientState {
   }
 
   void onChangedUpdateFrame(int value){
-    gamestream.isometric.clientState.rendersSinceUpdate.value = 0;
+    rendersSinceUpdate.value = 0;
   }
 
   void clear() {
@@ -211,7 +211,7 @@ mixin class IsometricClientState {
     gamestream.isometric.serverState.totalProjectiles = 0;
     gamestream.isometric.serverState.totalNpcs = 0;
     gamestream.isometric.serverState.interactMode.value = InteractMode.None;
-    gamestream.isometric.clientState.particles.clear();
+    particles.clear();
     engine.zoom = 1;
     engine.redrawCanvas();
   }
@@ -235,11 +235,11 @@ mixin class IsometricClientState {
     bool animation = false,
     int delay = 0,
   }) {
-    if (gamestream.isometric.clientState.totalActiveParticles >= Particles_Max) {
+    if (totalActiveParticles >= Particles_Max) {
       return particleOverflow;
     }
     assert(duration > 0);
-    final particle = gamestream.isometric.clientState.getInstanceParticle();
+    final particle = getInstanceParticle();
     assert(!particle.active);
     particle.type = type;
     particle.x = x;
@@ -1049,7 +1049,7 @@ mixin class IsometricClientState {
   void updateParticles() {
     nextParticleFrame--;
 
-    for (final particle in gamestream.isometric.clientState.particles) {
+    for (final particle in particles) {
       if (!particle.active) continue;
       updateParticle(particle);
       if (nextParticleFrame <= 0){
@@ -1065,10 +1065,10 @@ mixin class IsometricClientState {
   void interpolatePlayer(){
 
     if (!gamestream.isometric.player.interpolating.value) return;
-    if (gamestream.isometric.clientState.rendersSinceUpdate.value == 0) {
+    if (rendersSinceUpdate.value == 0) {
       return;
     }
-    if (gamestream.isometric.clientState.rendersSinceUpdate.value != 1) return;
+    if (rendersSinceUpdate.value != 1) return;
 
     final playerCharacter = gamestream.isometric.serverState.getPlayerCharacter();
     if (playerCharacter == null) return;
@@ -1303,8 +1303,6 @@ mixin class IsometricClientState {
     }
   }
 
-
-
   void updateGameLighting(){
     if (overrideColor.value) return;
     if (gamestream.isometric.serverState.lightningFlashing.value) return;
@@ -1506,18 +1504,18 @@ mixin class IsometricClientState {
 
   void spawnBubbles(double x, double y, double z, {int amount = 5}){
     for (var i = 0; i < amount; i++) {
-      gamestream.isometric.clientState.spawnParticleBubble(x: x + Engine.randomGiveOrTake(5), y: y + Engine.randomGiveOrTake(5), z: z, speed: 1, angle: Engine.randomAngle());
+      spawnParticleBubble(x: x + Engine.randomGiveOrTake(5), y: y + Engine.randomGiveOrTake(5), z: z, speed: 1, angle: Engine.randomAngle());
     }
   }
 
   void spawnPurpleFireExplosion(double x, double y, double z){
     gamestream.audio.magical_impact_16.playXYZ(x, y, z, maxDistance: 600);
     for (var i = 0; i < 5; i++) {
-      gamestream.isometric.clientState.spawnParticleBubble(x: x, y: y, z: z, speed: 1, angle: Engine.randomAngle());
-      gamestream.isometric.clientState.spawnParticleFirePurple(x: x + Engine.randomGiveOrTake(5), y: y + Engine.randomGiveOrTake(5), z: z, speed: 1, angle: Engine.randomAngle());
+      spawnParticleBubble(x: x, y: y, z: z, speed: 1, angle: Engine.randomAngle());
+      spawnParticleFirePurple(x: x + Engine.randomGiveOrTake(5), y: y + Engine.randomGiveOrTake(5), z: z, speed: 1, angle: Engine.randomAngle());
     }
 
-    gamestream.isometric.clientState.spawnParticleLightEmission(
+    spawnParticleLightEmission(
       x: x,
       y: y,
       z: z,
