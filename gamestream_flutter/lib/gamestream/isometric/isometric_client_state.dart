@@ -31,14 +31,6 @@ mixin class IsometricClientState {
   bool get editMode => edit.value;
   bool get lightningOn => gamestream.isometric.serverState.lightningType.value != LightningType.Off;
 
-  bool outOfBounds(int z, int row, int column) =>
-      z < 0                       ||
-          row < 0                     ||
-          column < 0                  ||
-          z >= gamestream.isometric.nodes.totalZ            ||
-          row >= gamestream.isometric.nodes.totalRows       ||
-          column >= gamestream.isometric.nodes.totalColumns  ;
-
   // ACTIONS
 
   void applyEmissions(){
@@ -66,16 +58,17 @@ mixin class IsometricClientState {
   }
 
   void applyEmissionsLightSources() {
+    final nodes = gamestream.isometric.nodes;
     for (var i = 0; i < nodesLightSourcesTotal; i++){
       final nodeIndex = nodesLightSources[i];
-      final nodeType = gamestream.isometric.nodes.nodeTypes[nodeIndex];
+      final nodeType = nodes.nodeTypes[nodeIndex];
 
       switch (nodeType){
         case NodeType.Torch:
-          gamestream.isometric.nodes.emitLightAmbient(
+          nodes.emitLightAmbient(
             index: nodeIndex,
             alpha: Engine.linerInterpolationInt(
-              gamestream.isometric.nodes.ambient_hue,
+              nodes.ambient_hue,
               0,
               torch_emission_intensity,
             ),
@@ -97,8 +90,10 @@ mixin class IsometricClientState {
   }
 
   void applyEmissionsCharacters() {
-    for (var i = 0; i < gamestream.isometric.serverState.totalCharacters; i++) {
-      final character = gamestream.isometric.serverState.characters[i];
+    final serverState = gamestream.isometric.serverState;
+    final characters = serverState.characters;
+    for (var i = 0; i < serverState.totalCharacters; i++) {
+      final character = characters[i];
       if (!character.allie) continue;
 
       if (character.weaponType == ItemType.Weapon_Melee_Staff){

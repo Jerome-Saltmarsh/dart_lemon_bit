@@ -5,6 +5,7 @@ import 'package:flutter/gestures.dart';
 
 import '../library.dart';
 import 'games/isometric/game_isometric.dart';
+import 'isometric/isometric_engine.dart';
 
 
 class GameIO {
@@ -27,8 +28,11 @@ class GameIO {
   var performActionPrimary = false;
 
   final touchController = TouchController();
+  final IsometricEngine isometric;
 
-  late final inputMode = Watch(InputMode.Keyboard, onChanged: gamestream.isometric.events.onChangedInputMode);
+  GameIO(this.isometric);
+
+  late final inputMode = Watch(InputMode.Keyboard, onChanged: isometric.events.onChangedInputMode);
   bool get inputModeTouch => inputMode.value == InputMode.Touch;
   bool get inputModeKeyboard => inputMode.value == InputMode.Keyboard;
 
@@ -40,13 +44,13 @@ class GameIO {
   var panDistance = Watch(0.0);
   var panDirection = Watch(0.0);
 
-  double get mouseGridX => GameIsometric.convertWorldToGridX(engine.mouseWorldX, engine.mouseWorldY) + gamestream.isometric.player.position.z;
-  double get mouseGridY => GameIsometric.convertWorldToGridY(engine.mouseWorldX, engine.mouseWorldY) + gamestream.isometric.player.position.z;
-  double get mouseGridZ => gamestream.isometric.player.position.z;
+  double get mouseGridX => GameIsometric.convertWorldToGridX(engine.mouseWorldX, engine.mouseWorldY) + isometric.player.position.z;
+  double get mouseGridY => GameIsometric.convertWorldToGridY(engine.mouseWorldX, engine.mouseWorldY) + isometric.player.position.z;
+  double get mouseGridZ => isometric.player.position.z;
 
   void recenterCursor(){
-    touchCursorWorldX = gamestream.isometric.player.renderX;
-    touchCursorWorldY = gamestream.isometric.player.renderY;
+    touchCursorWorldX = isometric.player.renderX;
+    touchCursorWorldY = isometric.player.renderY;
   }
 
   void detectInputMode() =>
@@ -108,9 +112,9 @@ class GameIO {
     touchCursorWorldY = engine.screenToWorldY(_touchCursorTapY);
 
     if (inputModeKeyboard && engine.keyPressedShiftLeft){
-      gamestream.isometric.actions.attackAuto();
+      isometric.actions.attackAuto();
     } else {
-      gamestream.isometric.actions.setTarget();
+      isometric.actions.setTarget();
     }
   }
 
@@ -120,7 +124,7 @@ class GameIO {
     _touchCursorTapY = details.globalPosition.dy;
   }
 
-  double get touchMouseWorldZ => gamestream.isometric.player.position.z;
+  double get touchMouseWorldZ => isometric.player.position.z;
 
   /// compresses keyboard and mouse inputs into a single byte to send to the server
   int getInputAsByte(){
@@ -152,20 +156,9 @@ class GameIO {
   }
 
   double getCursorWorldX() {
-    // if (inputModeTouch){
-    //   return touchCursorWorldX;
-    // } else {
-    //   return engine.mouseWorldX;
-    // }
-
     return engine.mouseWorldX;
   }
   double getCursorWorldY() {
-    // if (inputModeTouch){
-    //   return touchCursorWorldY;
-    // } else {
-    //   return engine.mouseWorldY;
-    // }
     return engine.mouseWorldY;
   }
 
@@ -229,43 +222,43 @@ class GameIO {
   }
 
   bool getActionSecondary(){
-    if (gamestream.isometric.clientState.editMode) return false;
+    if (isometric.clientState.editMode) return false;
     return false;
   }
 
   bool getActionTertiary(){
-    if (gamestream.isometric.clientState.editMode) return false;
+    if (isometric.clientState.editMode) return false;
     return false;
   }
 
   void onMouseClickedLeft(){
-    if (gamestream.isometric.clientState.edit.value) {
+    if (isometric.clientState.edit.value) {
       onMouseClickedEditMode();
     }
   }
 
   void onMouseClickedRight(){
-    gamestream.isometric.actions.attackAuto();
+    isometric.actions.attackAuto();
   }
 
   void onMouseClickedEditMode(){
-    switch (gamestream.isometric.editor.editTab.value) {
+    switch (isometric.editor.editTab.value) {
       case EditTab.File:
-        gamestream.isometric.editor.setTabGrid();
-        gamestream.isometric.editor.selectMouseBlock();
+        isometric.editor.setTabGrid();
+        isometric.editor.selectMouseBlock();
         break;
       case EditTab.Grid:
-        gamestream.isometric.editor.selectMouseBlock();
-        gamestream.isometric.editor.actionRecenterCamera();
+        isometric.editor.selectMouseBlock();
+        isometric.editor.actionRecenterCamera();
         break;
       case EditTab.Objects:
-        gamestream.isometric.editor.selectMouseGameObject();
+        isometric.editor.selectMouseGameObject();
         break;
     }
   }
 
   void readPlayerInput() {
-    if (gamestream.isometric.clientState.edit.value) {
+    if (isometric.clientState.edit.value) {
       return readPlayerInputEdit();
     }
   }
@@ -275,16 +268,16 @@ class GameIO {
       engine.panCamera();
     }
     if (engine.keyPressed(KeyCode.Delete)) {
-      gamestream.isometric.editor.delete();
+      isometric.editor.delete();
     }
     if (gamestream.io.getInputDirectionKeyboard() != Direction.None) {
-      gamestream.isometric.actions.actionSetModePlay();
+      isometric.actions.actionSetModePlay();
     }
     return;
   }
 
   void mouseRaycast(Function(int z, int row, int column) callback){
-    final nodes = gamestream.isometric.nodes;
+    final nodes = isometric.nodes;
     var z = nodes.totalZ - 1;
     final mouseWorldX = engine.mouseWorldX;
     final mouseWorldY = engine.mouseWorldY;

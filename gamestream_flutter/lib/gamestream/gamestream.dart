@@ -11,13 +11,13 @@ import 'network/game_network.dart';
 import 'server_response_reader.dart';
 
 class Gamestream {
-   final io = GameIO();
-   final audio = GameAudio();
 
+   final audio = GameAudio();
    final animation = GameAnimation();
    final operationStatus = Watch(OperationStatus.None);
    final isometric = IsometricEngine();
 
+   late final io = GameIO(isometric);
    late final gameType = Watch(GameType.Website, onChanged: _onChangedGameType);
    late final game = Watch<Game>(games.website, onChanged: _onChangedGame);
    late final error = Watch<GameError?>(null, onChanged: _onChangedGameError);
