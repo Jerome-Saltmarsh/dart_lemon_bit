@@ -5,36 +5,7 @@ import '../games/isometric/game_isometric_renderer.dart';
 import 'isometric_position.dart';
 
 class IsometricPlayer {
-  final id = Watch(0);
-  final team = Watch(0);
-  final perkType = Watch(PerkType.None);
-  final powerType = Watch(PowerType.None);
-  final powerReady = Watch(true);
-  late final weapon = Watch(0, onChanged: gamestream.isometric.events.onChangedPlayerWeapon);
-  late final weaponPrimary = Watch(0, onChanged: gamestream.isometric.events.onChangedPlayerWeapon);
-  late final weaponSecondary = Watch(0, onChanged: gamestream.isometric.events.onChangedPlayerWeapon);
-  late final weaponTertiary = Watch(0, onChanged: gamestream.isometric.events.onChangedPlayerWeapon);
-  late final respawnTimer = Watch(0, onChanged: gamestream.isometric.events.onChangedPlayerRespawnTimer);
-
-  final attributeHealth = Watch(0);
-  final attributeMagic = Watch(0);
-  final attributeDamage = Watch(0);
-
-  final body = Watch(0);
-  final head = Watch(0);
-  final legs = Watch(0);
-  late final active = Watch(false, onChanged: gamestream.isometric.events.onChangedPlayerActive);
-  late final alive = Watch(true, onChanged: gamestream.isometric.events.onChangedPlayerAlive);
-  final totalGrenades = Watch(0);
-  final previousPosition = IsometricPosition();
-  final storeItems = Watch(<int>[]);
-  final items = <int, int> {};
-  final items_reads = Watch(0);
-
-  final energy = Watch(0);
-  final energyMax = Watch(0);
   var energyPercentage = 0.0;
-
   var position = IsometricPosition();
   var runningToTarget = false;
   var targetCategory = TargetCategory.Nothing;
@@ -44,36 +15,63 @@ class IsometricPlayer {
   var aimTargetName = "";
   var aimTargetQuantity = 0;
   var aimTargetPosition = IsometricPosition();
-  final weaponCooldown = Watch(1.0);
-  final interpolating = Watch(true);
-  final target = IsometricPosition();
-  final questAdded = Watch(false);
-  late var gameDialog = Watch<GameDialog?>(null, onChanged: onChangedGameDialog);
+  var messageTimer = 0;
   var mouseAngle = 0.0;
   var npcTalk = Watch("");
   var npcTalkOptions = Watch<List<String>>([]);
-  final abilityTarget = IsometricPosition();
   var aimTargetChanged = Watch(0);
-  final mouseTargetName = Watch<String?>(null);
-  final mouseTargetAllie = Watch<bool>(false);
-  final mouseTargetHealth = Watch(0.0);
-  late final message = Watch("", onChanged: gamestream.isometric.events.onChangedPlayerMessage);
-  var messageTimer = 0;
-
   var indexZ = 0;
   var indexRow = 0;
   var indexColumn = 0;
   var nodeIndex = 0;
 
+  final id = Watch(0);
+  final team = Watch(0);
+  final perkType = Watch(PerkType.None);
+  final powerType = Watch(PowerType.None);
+  final powerReady = Watch(true);
+  final attributeHealth = Watch(0);
+  final attributeMagic = Watch(0);
+  final attributeDamage = Watch(0);
+  final body = Watch(0);
+  final head = Watch(0);
+  final legs = Watch(0);
+  final totalGrenades = Watch(0);
+  final previousPosition = IsometricPosition();
+  final storeItems = Watch(<int>[]);
+  final items = <int, int> {};
+  final items_reads = Watch(0);
+  final energy = Watch(0);
+  final energyMax = Watch(0);
+  final abilityTarget = IsometricPosition();
+  final mouseTargetName = Watch<String?>(null);
+  final mouseTargetAllie = Watch<bool>(false);
+  final mouseTargetHealth = Watch(0.0);
+  final weaponCooldown = Watch(1.0);
+  final interpolating = Watch(true);
+  final target = IsometricPosition();
+  final questAdded = Watch(false);
+
+  late final message = Watch("", onChanged: gamestream.isometric.events.onChangedPlayerMessage);
+  late final gameDialog = Watch<GameDialog?>(null, onChanged: onChangedGameDialog);
+  late final active = Watch(false, onChanged: gamestream.isometric.events.onChangedPlayerActive);
+  late final alive = Watch(true, onChanged: gamestream.isometric.events.onChangedPlayerAlive);
+  late final weapon = Watch(0, onChanged: gamestream.isometric.events.onChangedPlayerWeapon);
+  late final weaponPrimary = Watch(0, onChanged: gamestream.isometric.events.onChangedPlayerWeapon);
+  late final weaponSecondary = Watch(0, onChanged: gamestream.isometric.events.onChangedPlayerWeapon);
+  late final weaponTertiary = Watch(0, onChanged: gamestream.isometric.events.onChangedPlayerWeapon);
+  late final respawnTimer = Watch(0, onChanged: gamestream.isometric.events.onChangedPlayerRespawnTimer);
+
+  int get areaNodeIndex => (indexRow * gamestream.isometric.nodes.totalColumns) + indexColumn;
+
   double get x => position.x;
   double get y => position.y;
   double get z => position.z;
-  int get areaNodeIndex => (indexRow * gamestream.isometric.nodes.totalColumns) + indexColumn;
-
   double get renderX => GameIsometricRenderer.convertV3ToRenderX(position);
   double get renderY => GameIsometricRenderer.convertV3ToRenderY(position);
   double get positionScreenX => engine.worldToScreenX(gamestream.isometric.player.position.renderX);
   double get positionScreenY => engine.worldToScreenY(gamestream.isometric.player.position.renderY);
+
   bool get interactModeTrading => gamestream.isometric.serverState.interactMode.value == InteractMode.Trading;
   bool get dead => !alive.value;
   bool get inBounds => gamestream.isometric.nodes.inBoundsVector3(position);
