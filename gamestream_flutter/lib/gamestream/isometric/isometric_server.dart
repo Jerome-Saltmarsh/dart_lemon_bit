@@ -1,6 +1,6 @@
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_constants.dart';
+import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_ui.dart';
 import 'package:gamestream_flutter/library.dart';
-import 'package:gamestream_flutter/src/server/src/server_events.dart';
 
 import 'enums/emission_type.dart';
 import 'isometric_character.dart';
@@ -27,7 +27,6 @@ class IsometricServer {
   final npcs = <IsometricCharacter>[];
   final projectiles = <IsometricProjectile>[];
   final highScore = Watch(0);
-  final areaType = Watch(AreaType.None, onChanged: ServerEvents.onChangedAreaType);
   final playerHealth = Watch(0);
   final playerMaxHealth = Watch(0);
   final playerDamage = Watch(0);
@@ -59,9 +58,10 @@ class IsometricServer {
   final equippedWeaponIndex = Watch(0);
   final tagTypes = <String, int> {};
   final sceneUnderground = Watch(false);
-  final lightningFlashing = Watch(false, onChanged: ServerEvents.onChangedLightningFlashing);
-  final gameTimeEnabled = Watch(false, onChanged: ServerEvents.onChangedGameTimeEnabled);
 
+  late final areaType = Watch(AreaType.None, onChanged: onChangedAreaType);
+  late final gameTimeEnabled = Watch(false, onChanged: onChangedGameTimeEnabled);
+  late final lightningFlashing = Watch(false, onChanged: onChangedLightningFlashing);
   late final rainType = Watch(RainType.None, onChanged: gamestream.isometric.events.onChangedRain);
   late final seconds = Watch(0, onChanged: gamestream.isometric.events.onChangedSeconds);
   late final hours = Watch(0, onChanged: gamestream.isometric.events.onChangedHour);
@@ -419,7 +419,21 @@ class IsometricServer {
     gamestream.network.sendClientRequest(ClientRequest.Edit, EditRequest.Clear_Spawned.index);
   }
 
+  void onChangedAreaType(int areaType) {
+    gamestream.isometric.clientState.areaTypeVisible.value = true;
+  }
 
+  void onChangedLightningFlashing(bool lightningFlashing){
+    if (lightningFlashing) {
+      gamestream.audio.thunder(1.0);
+    } else {
+      gamestream.isometric.clientState.updateGameLighting();
+    }
+  }
+
+  void onChangedGameTimeEnabled(bool value){
+    GameIsometricUI.timeVisible.value = value;
+  }
 }
 
 
