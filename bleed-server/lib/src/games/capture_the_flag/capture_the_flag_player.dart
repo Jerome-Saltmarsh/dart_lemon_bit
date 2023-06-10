@@ -29,8 +29,6 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
     writeBasePositions(); // todo optimize
   }
 
-
-
   void writeFlagPositions() {
     writeByte(ServerResponse.Capture_The_Flag);
     writeByte(CaptureTheFlagResponse.Flag_Positions);

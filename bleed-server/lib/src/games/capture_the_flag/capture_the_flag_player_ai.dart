@@ -3,8 +3,8 @@
 import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_flag_status.dart';
 import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_team.dart';
 import 'package:bleed_server/common/src/item_type.dart';
+import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_gameobject_flag.dart';
 import 'package:bleed_server/src/games/isometric/isometric_character_template.dart';
-import 'package:bleed_server/src/games/isometric/isometric_gameobject.dart';
 import 'package:bleed_server/src/games/isometric/isometric_position.dart';
 
 import 'capture_the_flag_game.dart';
@@ -33,23 +33,24 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
   IsometricPosition get baseOwn => isTeamRed ? game.baseRed : game.baseBlue;
   IsometricPosition get baseEnemy => isTeamRed ? game.baseBlue : game.baseRed;
 
-  IsometricGameObject get flagOwn => isTeamRed ? game.flagRed : game.flagBlue;
-  IsometricGameObject get flagEnemy => isTeamBlue ? game.flagBlue : game.flagRed;
+  CaptureTheFlagGameObjectFlag get flagOwn => isTeamRed ? game.flagRed : game.flagBlue;
+  CaptureTheFlagGameObjectFlag get flagEnemy => isTeamRed ? game.flagBlue : game.flagRed;
 
   double get baseOwnDistance => getDistance3(baseOwn);
   double get baseEnemyDistance => getDistance3(baseEnemy);
 
-  int get flagOwnStatus => isTeamRed ? game.flagRed.status : game.flagBlue.status;
-  int get flagEnemyStatus => isTeamRed ? game.flagBlue.status : game.flagRed.status;
-
   void captureEnemyFlag(){
-    final flagEnemyDistance = getDistance3(flagEnemy);
 
-    if (flagEnemyDistance < 50){
-
+    final heldBy = flagEnemy.heldBy;
+    if (heldBy == null){
+      face(flagEnemy);
+      setCharacterStateRunning();
+      return;
     }
-    face(flagEnemy);
-    setCharacterStateRunning();
+    if (heldBy == this) {
+      face(baseOwn);
+      setCharacterStateRunning();
+    }
   }
 
   void idle(){
@@ -58,10 +59,9 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
 
   @override
   void customUpdate() {
-
     switch (objective) {
       case CaptureTheFlagPlayerAIObjective.Capture_Flag_Enemy:
-        switch (flagEnemyStatus) {
+        switch (flagEnemy.status) {
           case CaptureTheFlagFlagStatus.Dropped:
             captureEnemyFlag();
             break;
@@ -77,10 +77,9 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
         }
         break;
       default:
-        break;
+        setCharacterStateIdle();
     }
 
-    setCharacterStateIdle();
   }
 
   void completeObjective() {

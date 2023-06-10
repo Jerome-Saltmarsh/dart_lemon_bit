@@ -358,5 +358,6 @@ abstract class IsometricCharacter extends IsometricCollider {
   /// safe to override
   void onWeaponChanged() {}
 
+  /// safe to override
   void customUpdate() {}
 }
