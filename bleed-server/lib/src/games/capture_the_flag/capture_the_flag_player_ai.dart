@@ -1,6 +1,5 @@
 
 
-import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_flag_status.dart';
 import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_team.dart';
 import 'package:bleed_server/common/src/item_type.dart';
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_gameobject_flag.dart';
@@ -25,7 +24,15 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
     x: ((team == CaptureTheFlagTeam.Red) ? game.baseRed : game.baseBlue).x,
     y: ((team == CaptureTheFlagTeam.Red) ? game.baseRed : game.baseBlue).y,
     z: ((team == CaptureTheFlagTeam.Red) ? game.baseRed : game.baseBlue).z,
-  );
+  ) {
+    if (isTeamRed){
+      bodyType = ItemType.Body_Shirt_Red;
+      legsType = ItemType.Legs_Red;
+    } else {
+      bodyType = ItemType.Body_Shirt_Blue;
+      legsType = ItemType.Legs_Blue;
+    }
+  }
 
   bool get isTeamRed => team == CaptureTheFlagTeam.Red;
   bool get isTeamBlue => team == CaptureTheFlagTeam.Blue;

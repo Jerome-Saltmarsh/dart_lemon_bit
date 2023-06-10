@@ -43,8 +43,12 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     flagRed.status = CaptureTheFlagFlagStatus.Dropped;
     flagBlue.status = CaptureTheFlagFlagStatus.Dropped;
 
-    characters.add(CaptureTheFlagPlayerAI(game: this, team: CaptureTheFlagTeam.Red));
+    for (var i = 0; i < 3; i ++){
+      characters.add(CaptureTheFlagPlayerAI(game: this, team: CaptureTheFlagTeam.Red));
+      characters.add(CaptureTheFlagPlayerAI(game: this, team: CaptureTheFlagTeam.Blue));
+    }
   }
+
 
   int get countPlayersOnTeamRed => countPlayersOnTeam(CaptureTheFlagTeam.Red);
   int get countPlayersOnTeamBlue => countPlayersOnTeam(CaptureTheFlagTeam.Blue);
