@@ -416,7 +416,7 @@ class IsometricEvents {
         break;
       case PlayerEvent.Level_Increased:
         gamestream.audio.buff_1();
-        ClientActions.writeMessage("Level Gained");
+        gamestream.isometric.clientState.writeMessage("Level Gained");
         break;
       case PlayerEvent.Item_Consumed:
         readPlayerEventItemConsumed();
@@ -451,13 +451,13 @@ class IsometricEvents {
         gamestream.io.recenterCursor();
         break;
       case PlayerEvent.Insufficient_Gold:
-        ClientActions.writeMessage("Not Enough Gold");
+        gamestream.isometric.clientState.writeMessage("Not Enough Gold");
         break;
       case PlayerEvent.Inventory_Full:
-        ClientActions.writeMessage("Inventory Full");
+        gamestream.isometric.clientState.writeMessage("Inventory Full");
         break;
       case PlayerEvent.Invalid_Request:
-        ClientActions.writeMessage("Invalid Request");
+        gamestream.isometric.clientState.writeMessage("Invalid Request");
         break;
     }
   }
@@ -594,7 +594,7 @@ class IsometricEvents {
 
   void onChangedPlayerInteractMode(int value) {
     final camera = gamestream.isometric.camera;
-    ClientActions.playSoundWindow();
+    gamestream.isometric.clientState.playSoundWindow();
     switch (value) {
       case InteractMode.Inventory:
         camera.translateX = GameInventoryUI.Inventory_Width * 0.5;

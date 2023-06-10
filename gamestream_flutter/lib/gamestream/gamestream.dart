@@ -171,7 +171,7 @@ class Gamestream {
    void _onChangedGameError(GameError? gameError){
      print("_onChangedGameError($gameError)");
      if (gameError == null) return;
-     ClientActions.playAudioError();
+     gamestream.isometric.clientState.playAudioError();
      switch (gameError) {
        case GameError.Unable_To_Join_Game:
          WebsiteState.error.value = 'unable to join game';

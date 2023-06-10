@@ -1574,4 +1574,31 @@ mixin class IsometricClientState {
     );
   }
 
+   void playSoundWindow() =>
+      gamestream.audio.click_sound_8(1);
+
+   void dragStartSetNone(){
+    gamestream.isometric.clientState.dragStart.value = -1;
+  }
+
+   void setDragItemIndex(int index) =>
+          () => gamestream.isometric.clientState.dragStart.value = index;
+
+   void dropDraggedItem(){
+    if (gamestream.isometric.clientState.dragStart.value == -1) return;
+    gamestream.network.sendClientRequestInventoryDrop(gamestream.isometric.clientState.dragStart.value);
+  }
+
+   void messageClear(){
+    writeMessage("");
+  }
+
+   void writeMessage(String value){
+    gamestream.isometric.clientState.messageStatus.value = value;
+  }
+
+   void playAudioError(){
+    gamestream.audio.errorSound15();
+  }
+
 }

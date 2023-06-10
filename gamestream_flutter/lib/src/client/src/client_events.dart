@@ -8,7 +8,7 @@ class ClientEvents {
   }
 
   static void onChangedAttributesWindowVisible(bool value){
-    ClientActions.playSoundWindow();
+    gamestream.isometric.clientState.playSoundWindow();
   }
 
   static void onChangedHotKeys(int value){
@@ -60,7 +60,7 @@ class ClientEvents {
   static void onDragCancelled(Velocity velocity, Offset offset){
     // print("onDragCancelled()");
     if (gamestream.isometric.clientState.hoverIndex.value == -1){
-      ClientActions.dropDraggedItem();
+      gamestream.isometric.clientState.dropDraggedItem();
     } else {
       gamestream.isometric.clientState.inventorySwapDragTarget();
     }

@@ -663,12 +663,12 @@ class GameIsometricUI {
     if (message.isEmpty) return GameStyle.Null;
     return MouseRegion(
       onEnter: (_){
-        ClientActions.messageClear();
+        gamestream.isometric.clientState.messageClear();
       },
       child: Container(
         padding: const EdgeInsets.all(10),
         color: Colors.black12,
-        child: text(message, onPressed: ClientActions.messageClear),),
+        child: text(message, onPressed: gamestream.isometric.clientState.messageClear),),
     );
   }
 
