@@ -81,7 +81,7 @@ class GameInventoryUI {
     return GameIsometricUI.buildDialogUIControl(
       child: buildHoverTarget(
               hoverTargetType: ClientType.Hover_Target_Player_Stats_Damage,
-              child: watch(gamestream.isometric.serverState.playerDamage, (int damage) {
+              child: watch(gamestream.isometric.server.playerDamage, (int damage) {
                 return Container(
                   color: Colors.white24,
                   padding: const EdgeInsets.all(6),
@@ -151,8 +151,8 @@ class GameInventoryUI {
     return GameIsometricUI.buildDialogUIControl(
       child: buildHoverTarget(
               hoverTargetType: ClientType.Hover_Target_Player_Stats_Health,
-              child: watch(gamestream.isometric.serverState.playerMaxHealth, (int maxHealth) {
-                return watch(gamestream.isometric.serverState.playerHealth, (int currentHealth) {
+              child: watch(gamestream.isometric.server.playerMaxHealth, (int maxHealth) {
+                return watch(gamestream.isometric.server.playerHealth, (int currentHealth) {
                   return Stack(
                     children: [
                       Container(color: Colors.white24, height: height, width: width),
@@ -252,7 +252,7 @@ class GameInventoryUI {
             child: Stack(
               children: [
                 GameIsometricUI.buildAtlasItemType(
-                  itemType ?? gamestream.isometric.serverState.getItemTypeAtInventoryIndex(itemIndex),
+                  itemType ?? gamestream.isometric.server.getItemTypeAtInventoryIndex(itemIndex),
                 ),
                 if (itemQuantity != null && itemQuantity > 1)
                   Positioned(child: text(itemQuantity, size: 13, color: Colors.white70), right: 0, bottom: 0),
@@ -275,7 +275,7 @@ class GameInventoryUI {
 
   static Widget buildStackSlotGrid() {
     final children = <Widget>[];
-    for (var i = 0; i < gamestream.isometric.serverState.inventory.length; i++) {
+    for (var i = 0; i < gamestream.isometric.server.inventory.length; i++) {
       children.add(buildPositionedGridSlot(i));
     }
     return Stack(
@@ -289,8 +289,8 @@ class GameInventoryUI {
   static Widget buildStackInventoryItems() =>
       watch(gamestream.isometric.clientState.inventoryReads, (int reads){
         final positioned = <Widget>[];
-        for (var i = 0; i < gamestream.isometric.serverState.inventory.length; i++){
-          if (gamestream.isometric.serverState.inventory[i] == ItemType.Empty) continue;
+        for (var i = 0; i < gamestream.isometric.server.inventory.length; i++){
+          if (gamestream.isometric.server.inventory[i] == ItemType.Empty) continue;
           positioned.add(
               buildPositionInventoryItem(i)
           );
@@ -303,7 +303,7 @@ class GameInventoryUI {
   static Widget buildPositionInventoryItem(int index) =>
       buildPositionGridItem(
         index: index,
-        child: buildDraggableItemIndex(itemIndex: index, itemQuantity: gamestream.isometric.serverState.getItemQuantityAtIndex(index)),
+        child: buildDraggableItemIndex(itemIndex: index, itemQuantity: gamestream.isometric.server.getItemQuantityAtIndex(index)),
       );
 
   static Widget buildDraggableItemIndex({required int itemIndex, double scale = Slot_Item_Scale, int? itemQuantity}) =>
@@ -374,7 +374,7 @@ class GameInventoryUI {
      final children = <Widget>[];
 
      if (hoverTarget == ClientType.Hover_Target_Player_Stats_Damage){
-         final total = gamestream.isometric.serverState.playerDamage.value;
+         final total = gamestream.isometric.server.playerDamage.value;
          children.add(Row(
            mainAxisAlignment: MainAxisAlignment.spaceBetween,
            children: [
@@ -393,7 +393,7 @@ class GameInventoryUI {
              )
          );
 
-         final equippedWeaponType = gamestream.isometric.serverState.getEquippedWeaponType();
+         final equippedWeaponType = gamestream.isometric.server.getEquippedWeaponType();
          children.add(
              _buildRowHoverValue(
                itemType: equippedWeaponType,
@@ -427,7 +427,7 @@ class GameInventoryUI {
                  total: total,)
            );
          }
-         for (final beltType in gamestream.isometric.serverState.watchBeltItemTypes) {
+         for (final beltType in gamestream.isometric.server.watchBeltItemTypes) {
            if (!ItemType.isTypeTrinket(beltType.value)) continue;
            children.add(
                _buildRowHoverValue(
@@ -441,7 +441,7 @@ class GameInventoryUI {
      }
 
      if (hoverTarget == ClientType.Hover_Target_Player_Stats_Health){
-       final total = gamestream.isometric.serverState.playerMaxHealth.value;
+       final total = gamestream.isometric.server.playerMaxHealth.value;
        children.add(Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -469,13 +469,13 @@ class GameInventoryUI {
        children.add(
            _buildRowHoverValue(itemType: gamestream.isometric.player.legs.value, value: ItemType.getMaxHealth(gamestream.isometric.player.legs.value), total: total)
        );
-       for (final beltType in gamestream.isometric.serverState.watchBeltItemTypes) {
+       for (final beltType in gamestream.isometric.server.watchBeltItemTypes) {
          if (!ItemType.isTypeTrinket(beltType.value)) continue;
          children.add(
              _buildRowHoverValue(itemType: beltType.value, value: ItemType.getMaxHealth(beltType.value), total: total)
          );
        }
-       final equippedWeapon = gamestream.isometric.serverState.getEquippedWeaponType();
+       final equippedWeapon = gamestream.isometric.server.getEquippedWeaponType();
        children.add(
            _buildRowHoverValue(itemType: equippedWeapon, value: ItemType.getMaxHealth(equippedWeapon), total: total)
        );
@@ -523,7 +523,7 @@ class GameInventoryUI {
                total: total,)
          );
        }
-       for (final beltType in gamestream.isometric.serverState.watchBeltItemTypes) {
+       for (final beltType in gamestream.isometric.server.watchBeltItemTypes) {
          if (!ItemType.isTypeTrinket(beltType.value)) continue;
          children.add(
              _buildRowHoverValue(
@@ -581,7 +581,7 @@ class GameInventoryUI {
   static Widget buildPositionedContainerItemTypeInformation(int itemIndex){
     if (itemIndex == -1) return GameStyle.Null;
 
-    final itemType = gamestream.isometric.clientState.hoverDialogType.value == DialogType.Trade ? gamestream.isometric.player.storeItems.value[itemIndex] : gamestream.isometric.serverState.getItemTypeAtInventoryIndex(itemIndex);
+    final itemType = gamestream.isometric.clientState.hoverDialogType.value == DialogType.Trade ? gamestream.isometric.player.storeItems.value[itemIndex] : gamestream.isometric.server.getItemTypeAtInventoryIndex(itemIndex);
 
     if (itemType == ItemType.Empty) return GameStyle.Null;
 
@@ -591,7 +591,7 @@ class GameInventoryUI {
     final replenishHealth = ItemType.getHealAmount(itemType);
     final replenishEnergy = ItemType.getReplenishEnergy(itemType);
     final itemTypeIsEquippable = ItemType.isTypeEquippable(itemType);
-    final equippedItemType          = gamestream.isometric.serverState.getEquippedItemType(itemType);
+    final equippedItemType          = gamestream.isometric.server.getEquippedItemType(itemType);
     final itemTypeIsTrinket         = ItemType.isTypeTrinket(itemType);
     // final itemTypeDamage            = GameOptions.getItemTypeDamage(itemType);
     final itemTypeDamage            = 0;

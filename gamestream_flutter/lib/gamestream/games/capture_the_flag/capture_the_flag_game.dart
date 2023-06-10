@@ -264,7 +264,7 @@ class CaptureTheFlagGame extends GameIsometric {
 
               isometric.minimap.renderCanvas(canvas);
 
-              final serverState = isometric.serverState;
+              final serverState = isometric.server;
               final player = isometric.player;
               final totalCharacters = serverState.totalCharacters;
 

@@ -18,8 +18,8 @@ class RendererCharacters extends IsometricRenderer {
   void renderFunction() => renderCurrentCharacter();
 
   void updateFunction() {
-    while (index < gamestream.isometric.serverState.totalCharacters){
-      character = gamestream.isometric.serverState.characters[index];
+    while (index < gamestream.isometric.server.totalCharacters){
+      character = gamestream.isometric.server.characters[index];
       orderZ = character.indexZ;
       orderRowColumn = character.indexSum;
       if (character.nodePerceptible) break;
@@ -28,7 +28,7 @@ class RendererCharacters extends IsometricRenderer {
   }
 
   @override
-  int getTotal() => gamestream.isometric.serverState.totalCharacters;
+  int getTotal() => gamestream.isometric.server.totalCharacters;
 
   void renderCurrentCharacter(){
 

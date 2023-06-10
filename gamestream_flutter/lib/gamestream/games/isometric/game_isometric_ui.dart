@@ -91,7 +91,7 @@ class GameIsometricUI {
               left: 140,
               child: Row(
                 children: [
-                  watch(gamestream.isometric.serverState.playerLevel, (int level){
+                  watch(gamestream.isometric.server.playerLevel, (int level){
                     return Container(
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
@@ -101,7 +101,7 @@ class GameIsometricUI {
                     );
                   }),
                   width4,
-                  watch(gamestream.isometric.serverState.playerExperiencePercentage, (double experience){
+                  watch(gamestream.isometric.server.playerExperiencePercentage, (double experience){
                     const width = 100.0;
                     const height = 10.0;
                     return Container(
@@ -118,7 +118,7 @@ class GameIsometricUI {
                     );
                   }),
                   width4,
-                  watch(gamestream.isometric.serverState.playerAttributes, (int attributes){
+                  watch(gamestream.isometric.server.playerAttributes, (int attributes){
                     return onPressed(
                       action: gamestream.isometric.clientState.window_visible_attributes.toggle,
                       child: text('Attributes: $attributes'),
@@ -153,7 +153,7 @@ class GameIsometricUI {
     padding: const EdgeInsets.all(8),
     alignment: Alignment.center,
     color: GameIsometricColors.brownLight,
-    child: watch(gamestream.isometric.serverState.playerAttributes, (int attributes){
+    child: watch(gamestream.isometric.server.playerAttributes, (int attributes){
       final attributesRemaining = attributes > 0;
       final boxColor = attributesRemaining ? Colors.green : Colors.white12;
       const boxWidth = 70.0;
@@ -607,7 +607,7 @@ class GameIsometricUI {
 
         gamestream.isometric.minimap.renderCanvas(canvas);
 
-        final serverState = gamestream.isometric.serverState;
+        final serverState = gamestream.isometric.server;
         final player = gamestream.isometric.player;
 
         for (var i = 0; i < serverState.totalCharacters; i++) {
@@ -630,7 +630,7 @@ class GameIsometricUI {
   }
 
   static Widget buildWatchGameStatus() {
-    return watch(gamestream.isometric.serverState.gameStatus, (int gameStatus) {
+    return watch(gamestream.isometric.server.gameStatus, (int gameStatus) {
       if (gameStatus == GameStatus.Playing) return GameStyle.Null;
       return IgnorePointer(
         child: Positioned(
@@ -679,7 +679,7 @@ class GameIsometricUI {
   }
 
   static WatchBuilder<int> buildWatchAreaType() =>
-      WatchBuilder(gamestream.isometric.serverState.areaType, (int areaType) {
+      WatchBuilder(gamestream.isometric.server.areaType, (int areaType) {
         return WatchBuilder(gamestream.isometric.clientState.areaTypeVisible, (bool areaTypeVisible){
           return IgnorePointer(
             child: AnimatedOpacity(
@@ -763,11 +763,11 @@ class GameIsometricUI {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          watch(gamestream.isometric.serverState.highScore, (int highScore){
+          watch(gamestream.isometric.server.highScore, (int highScore){
             return text('WORLD RECORD: $highScore');
           }),
           height8,
-          watch(gamestream.isometric.serverState.playerScoresReads, (_) => Container(
+          watch(gamestream.isometric.server.playerScoresReads, (_) => Container(
             padding: GameStyle.Padding_6,
             color: Colors.black26,
             constraints: BoxConstraints(
@@ -777,7 +777,7 @@ class GameIsometricUI {
             child: SingleChildScrollView(
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: gamestream.isometric.serverState.playerScores
+                  children: gamestream.isometric.server.playerScores
                       .map(buildRowPlayerScore)
                       .toList(growable: false)
               ),
@@ -1319,8 +1319,8 @@ class GameIsometricUI {
               width: width,
               height: height,
               alignment: Alignment.topCenter,
-              child: watch(gamestream.isometric.serverState.playerMaxHealth, (int maxHealth) {
-                return watch(gamestream.isometric.serverState.playerHealth, (int health){
+              child: watch(gamestream.isometric.server.playerMaxHealth, (int maxHealth) {
+                return watch(gamestream.isometric.server.playerHealth, (int health){
                   final percentage = health / max(maxHealth, 1);
                   return Container(
                     width: width,
@@ -1408,9 +1408,9 @@ class GameIsometricUI {
   static Row buildRowHotKeyLettersAndInventory() => Row(
     children: [
       width96,
-      buildWatchBeltType(gamestream.isometric.serverState.playerBelt5_ItemType),
+      buildWatchBeltType(gamestream.isometric.server.playerBelt5_ItemType),
       width64,
-      buildWatchBeltType(gamestream.isometric.serverState.playerBelt6_ItemType),
+      buildWatchBeltType(gamestream.isometric.server.playerBelt6_ItemType),
       buildButtonInventory(),
     ],
   );
@@ -1444,10 +1444,10 @@ class GameIsometricUI {
   static Row buildRowBeltItems() => Row(
     mainAxisAlignment: MainAxisAlignment.end,
     children: [
-      buildWatchBeltType(gamestream.isometric.serverState.playerBelt1_ItemType),
-      buildWatchBeltType(gamestream.isometric.serverState.playerBelt2_ItemType),
-      buildWatchBeltType(gamestream.isometric.serverState.playerBelt3_ItemType),
-      buildWatchBeltType(gamestream.isometric.serverState.playerBelt4_ItemType),
+      buildWatchBeltType(gamestream.isometric.server.playerBelt1_ItemType),
+      buildWatchBeltType(gamestream.isometric.server.playerBelt2_ItemType),
+      buildWatchBeltType(gamestream.isometric.server.playerBelt3_ItemType),
+      buildWatchBeltType(gamestream.isometric.server.playerBelt4_ItemType),
     ],
   );
 
@@ -1479,11 +1479,11 @@ class GameIsometricUI {
             (int beltItemType) {
           return Stack(
             children: [
-              watch(gamestream.isometric.serverState.equippedWeaponIndex, (equippedWeaponIndex) =>
+              watch(gamestream.isometric.server.equippedWeaponIndex, (equippedWeaponIndex) =>
                   buildDragTargetSlot(
-                      index: gamestream.isometric.serverState.mapWatchBeltTypeToItemType(watchBeltType),
+                      index: gamestream.isometric.server.mapWatchBeltTypeToItemType(watchBeltType),
                       scale: 2.0,
-                      outlineColor: gamestream.isometric.serverState.mapWatchBeltTypeToItemType(watchBeltType) == equippedWeaponIndex ? GameIsometricColors.white : GameIsometricColors.brown02
+                      outlineColor: gamestream.isometric.server.mapWatchBeltTypeToItemType(watchBeltType) == equippedWeaponIndex ? GameIsometricColors.white : GameIsometricColors.brown02
                   ),),
               Positioned(
                 left: 5,
@@ -1496,7 +1496,7 @@ class GameIsometricUI {
                   height: 64,
                   alignment: Alignment.center,
                   child: GameInventoryUI.buildDraggableItemIndex(
-                    itemIndex: gamestream.isometric.serverState.mapWatchBeltTypeToItemType(watchBeltType),
+                    itemIndex: gamestream.isometric.server.mapWatchBeltTypeToItemType(watchBeltType),
                     scale: 2,
                   ),
                 ),
@@ -1507,7 +1507,7 @@ class GameIsometricUI {
                     bottom: 5,
                     child: buildInventoryAware(
                         builder: () => text(
-                          gamestream.isometric.serverState.getWatchBeltTypeWatchQuantity(watchBeltType).value,
+                          gamestream.isometric.server.getWatchBeltTypeWatchQuantity(watchBeltType).value,
                           italic: true,
                           color: Colors.white70,
                         ))),
@@ -1534,7 +1534,7 @@ class GameIsometricUI {
             bottom: 5,
             child: buildInventoryAware(
                 builder: () => text(
-                  gamestream.isometric.serverState.getItemTypeConsumesRemaining(itemType),
+                  gamestream.isometric.server.getItemTypeConsumesRemaining(itemType),
                   italic: true,
                   color: Colors.white70,
                 ))),
@@ -1556,10 +1556,10 @@ class GameIsometricUI {
       watch(gamestream.isometric.clientState.inventoryReads, (int reads) => builder());
 
   static Widget buildWatchPlayerLevel() => watch(
-      gamestream.isometric.serverState.playerLevel,
+      gamestream.isometric.server.playerLevel,
           (int level) => Tooltip(
         child: watch(
-            gamestream.isometric.serverState.playerExperiencePercentage, buildPlayerExperienceBar),
+            gamestream.isometric.server.playerExperiencePercentage, buildPlayerExperienceBar),
         message: "Level $level",
       ));
 
@@ -1591,7 +1591,7 @@ class GameIsometricUI {
       );
 
   static Widget buildButtonTogglePlayMode() {
-    return watch(gamestream.isometric.serverState.sceneEditable, (bool isOwner) {
+    return watch(gamestream.isometric.server.sceneEditable, (bool isOwner) {
       if (!isOwner) return const SizedBox();
       return watch(gamestream.isometric.clientState.edit, (bool edit) {
         return container(
@@ -1636,11 +1636,11 @@ class GameIsometricUI {
   static Widget buildTime() => Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      WatchBuilder(gamestream.isometric.serverState.hours, (int hours){
+      WatchBuilder(gamestream.isometric.server.hours, (int hours){
         return text(padZero(hours), size: 22);
       }),
       text(":", size: 22),
-      WatchBuilder(gamestream.isometric.serverState.minutes, (int minutes){
+      WatchBuilder(gamestream.isometric.server.minutes, (int minutes){
         return text(padZero(minutes), size: 22);
       }),
     ],
@@ -1658,12 +1658,12 @@ class GameIsometricUI {
   );
 
   static String mapWatchBeltTypeTokeyboardKeyString(Watch<int> hotKeyWatch){
-    if (hotKeyWatch == gamestream.isometric.serverState.playerBelt1_ItemType) return '1';
-    if (hotKeyWatch == gamestream.isometric.serverState.playerBelt2_ItemType) return '2';
-    if (hotKeyWatch == gamestream.isometric.serverState.playerBelt3_ItemType) return '3';
-    if (hotKeyWatch == gamestream.isometric.serverState.playerBelt4_ItemType) return '4';
-    if (hotKeyWatch == gamestream.isometric.serverState.playerBelt5_ItemType) return 'Q';
-    if (hotKeyWatch == gamestream.isometric.serverState.playerBelt6_ItemType) return 'E';
+    if (hotKeyWatch == gamestream.isometric.server.playerBelt1_ItemType) return '1';
+    if (hotKeyWatch == gamestream.isometric.server.playerBelt2_ItemType) return '2';
+    if (hotKeyWatch == gamestream.isometric.server.playerBelt3_ItemType) return '3';
+    if (hotKeyWatch == gamestream.isometric.server.playerBelt4_ItemType) return '4';
+    if (hotKeyWatch == gamestream.isometric.server.playerBelt5_ItemType) return 'Q';
+    if (hotKeyWatch == gamestream.isometric.server.playerBelt6_ItemType) return 'E';
     throw Exception("ClientQuery.mapHotKeyWatchToString($hotKeyWatch)");
   }
 }

@@ -20,7 +20,7 @@ import 'isometric_server.dart';
 
 class IsometricEngine {
   final clientState = IsometricClientState();
-  final serverState = IsometricServer();
+  final server = IsometricServer();
   final nodes = IsometricNodes();
   final minimap = GameIsometricMinimap();
   final editor = IsometricEditor();
@@ -36,7 +36,7 @@ class IsometricEngine {
   );
 
   void drawCanvas(Canvas canvas, Size size) {
-    if (serverState.gameRunning.value){
+    if (server.gameRunning.value){
       /// particles are only on the ui and thus can update every frame
       /// this makes them much smoother as they don't freeze
       clientState.updateParticles();
@@ -64,15 +64,15 @@ class IsometricEngine {
   }
   
   void update(){
-    if (!serverState.gameRunning.value) {
+    if (!server.gameRunning.value) {
       gamestream.network.sendClientRequestUpdate();
       return;
     }
     clientState.updateTorchEmissionIntensity();
     gamestream.animation.updateAnimationFrame();
     clientState.updateParticleEmitters();
-    serverState.updateProjectiles();
-    serverState.updateGameObjects();
+    server.updateProjectiles();
+    server.updateGameObjects();
     gamestream.audio.update();
     clientState.update();
     clientState.updatePlayerMessageTimer();

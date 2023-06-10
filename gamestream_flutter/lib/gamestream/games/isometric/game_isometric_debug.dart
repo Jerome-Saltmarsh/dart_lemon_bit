@@ -55,7 +55,7 @@ class GameIsometricDebug {
                                     "player-body: ${ItemType.getName(gamestream.isometric.player.body.value)}\n"
                                     "player-head: ${ItemType.getName(gamestream.isometric.player.head.value)}\n"
                                     "player-weapon: ${ItemType.getName(gamestream.isometric.player.weapon.value)}\n"
-                                    "player-interact-mode: ${InteractMode.getName(gamestream.isometric.serverState.interactMode.value)}\n"
+                                    "player-interact-mode: ${InteractMode.getName(gamestream.isometric.server.interactMode.value)}\n"
                                     "aim-target-category: ${TargetCategory.getName(gamestream.isometric.player.aimTargetCategory)}\n"
                                     "aim-target-type: ${gamestream.isometric.player.aimTargetType}\n"
                                     "aim-target-name: ${gamestream.isometric.player.aimTargetName}\n"
@@ -65,8 +65,8 @@ class GameIsometricDebug {
                                     "dialog-type: ${DialogType.getName(gamestream.isometric.clientState.hoverDialogType.value)}\n"
                                     "scene-light-sources: ${gamestream.isometric.clientState.nodesLightSourcesTotal}\n"
                                     "scene-light-active: ${gamestream.isometric.clientState.lights_active}\n"
-                                    "total-gameobjects: ${gamestream.isometric.serverState.gameObjects.length}\n"
-                                    "total-characters: ${gamestream.isometric.serverState.totalCharacters}\n"
+                                    "total-gameobjects: ${gamestream.isometric.server.gameObjects.length}\n"
+                                    "total-characters: ${gamestream.isometric.server.totalCharacters}\n"
                                     'total-particles: ${gamestream.isometric.clientState.particles.length}\n'
                                     'total-particles-active: ${gamestream.isometric.clientState.totalActiveParticles}\n'
                                     "offscreen-nodes: left: ${RendererNodes.offscreenNodesLeft}, top: ${RendererNodes.offscreenNodesTop}, right: ${RendererNodes.offscreenNodesRight}, bottom: ${RendererNodes.offscreenNodesBottom}"

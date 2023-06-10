@@ -84,10 +84,10 @@ class RendererNodes extends IsometricRenderer {
   static double get currentNodeRenderY => GameIsometricRenderer.rowColumnZToRenderY(row, column, currentNodeZ);
   static int get currentNodeColor => gamestream.isometric.nodes.node_colors[currentNodeIndex];
   static int get currentNodeOrientation => nodeOrientations[currentNodeIndex];
-  static int get currentNodeWind => gamestream.isometric.serverState.windTypeAmbient.value;
+  static int get currentNodeWind => gamestream.isometric.server.windTypeAmbient.value;
   static int get currentNodeVariation => gamestream.isometric.nodes.nodeVariations[currentNodeIndex];
   static int get renderNodeOrientation => nodeOrientations[currentNodeIndex];
-  static int get renderNodeWind => gamestream.isometric.serverState.windTypeAmbient.value;
+  static int get renderNodeWind => gamestream.isometric.server.windTypeAmbient.value;
   static int get renderNodeVariation => gamestream.isometric.nodes.nodeVariations[currentNodeIndex];
   static int get renderNodeBelowIndex => currentNodeIndex - gamestream.isometric.nodes.area;
   static int get renderNodeBelowVariation => renderNodeBelowIndex > 0 ? gamestream.isometric.nodes.nodeVariations[renderNodeBelowIndex] : renderNodeVariation;

@@ -378,15 +378,15 @@ class GameIsometricRenderer {
 
   void renderCursor(Canvas canvas) {
     final cooldown = gamestream.isometric.player.weaponCooldown.value;
-    final accuracy = gamestream.isometric.serverState.playerAccuracy.value;
+    final accuracy = gamestream.isometric.server.playerAccuracy.value;
     final distance = (cooldown + accuracy) * 10.0 + 5;
 
     switch (gamestream.isometric.player.aimTargetCategory) {
       case TargetCategory.Nothing:
         gamestream.isometric.renderer.canvasRenderCursorCrossHair(canvas, distance);
 
-        if (gamestream.isometric.serverState.getEquippedWeaponConsumeType() != ItemType.Empty){
-          if (gamestream.isometric.serverState.getEquippedWeaponQuantity() <= 0){
+        if (gamestream.isometric.server.getEquippedWeaponConsumeType() != ItemType.Empty){
+          if (gamestream.isometric.server.getEquippedWeaponQuantity() <= 0){
             engine.renderExternalCanvas(
               canvas: canvas,
               image: GameImages.atlas_icons,
@@ -410,8 +410,8 @@ class GameIsometricRenderer {
       case TargetCategory.Enemy:
         gamestream.isometric.renderer.canvasRenderCursorCrossHairRed(canvas, distance);
 
-        if (gamestream.isometric.serverState.getEquippedWeaponConsumeType() != ItemType.Empty){
-          if (gamestream.isometric.serverState.getEquippedWeaponQuantity() <= 0){
+        if (gamestream.isometric.server.getEquippedWeaponConsumeType() != ItemType.Empty){
+          if (gamestream.isometric.server.getEquippedWeaponQuantity() <= 0){
             engine.renderExternalCanvas(
               canvas: canvas,
               image: GameImages.atlas_icons,
@@ -477,8 +477,8 @@ class GameIsometricRenderer {
 
 
   void renderObjectRadius() {
-    for (var i = 0; i < gamestream.isometric.serverState.totalCharacters; i++) {
-      final character = gamestream.isometric.serverState.characters[i];
+    for (var i = 0; i < gamestream.isometric.server.totalCharacters; i++) {
+      final character = gamestream.isometric.server.characters[i];
       engine.renderCircle(character.renderX, character.renderY, CharacterType.getRadius(character.characterType), Colors.yellow);
     }
   }

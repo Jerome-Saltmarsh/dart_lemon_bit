@@ -73,7 +73,7 @@ class IsometricPlayer {
   double get positionScreenX => engine.worldToScreenX(gamestream.isometric.player.position.renderX);
   double get positionScreenY => engine.worldToScreenY(gamestream.isometric.player.position.renderY);
 
-  bool get interactModeTrading => gamestream.isometric.serverState.interactMode.value == InteractMode.Trading;
+  bool get interactModeTrading => gamestream.isometric.server.interactMode.value == InteractMode.Trading;
   bool get dead => !alive.value;
   bool get inBounds => gamestream.isometric.nodes.inBoundsVector3(position);
 

@@ -220,9 +220,9 @@ class GameNetwork {
         engine.drawCanvasAfterUpdate = true;
         engine.fullScreenExit();
         gamestream.isometric.clientState.clear();
-        gamestream.isometric.serverState.clean();
+        gamestream.isometric.server.clean();
         gamestream.gameType.value = GameType.Website;
-        gamestream.isometric.serverState.sceneEditable.value = false;
+        gamestream.isometric.server.sceneEditable.value = false;
         gamestream.audio.enabledSound.value = false;
         break;
       case ConnectionStatus.Failed_To_Connect:

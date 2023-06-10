@@ -144,7 +144,7 @@ class EditorUI {
                 container(child: "MAP SIZE", action: EditorActions.toggleWindowEnabledCanvasSize),
                 container(child: "GENERATE", action: EditorState.windowEnabledGenerate.toggle),
                 if (engine.isLocalHost)
-                  container(child: "SAVE SERVER FILE", action: ServerActions.saveScene),
+                  container(child: "SAVE SERVER FILE", action: gamestream.isometric.server.saveScene),
               ],
             );
   }
@@ -351,7 +351,7 @@ class EditorUI {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         text("Underground"),
-                        watch(gamestream.isometric.serverState.sceneUnderground, text),
+                        watch(gamestream.isometric.server.sceneUnderground, text),
                       ],
                     ),
                   ),
@@ -480,7 +480,7 @@ class EditorUI {
       );
 
   static Widget buildIconRain(int rain) => watch(
-      gamestream.isometric.serverState.rainType,
+      gamestream.isometric.server.rainType,
       (int activeRain) => buildIconWeatherControl(
             tooltip: '${RainType.getName(rain)} Rain',
             action: () => gamestream.network.sendClientRequestWeatherSetRain(rain),
@@ -489,7 +489,7 @@ class EditorUI {
           ));
 
   static Widget buildIconLightning(int lightning) => watch(
-      gamestream.isometric.serverState.lightningType,
+      gamestream.isometric.server.lightningType,
       (int activeLightning) => buildIconWeatherControl(
             tooltip: '${LightningType.getName(lightning)} Lightning',
             action: () =>
@@ -500,7 +500,7 @@ class EditorUI {
           ));
 
   static Widget buildIconWind(int windType) => watch(
-      gamestream.isometric.serverState.windTypeAmbient,
+      gamestream.isometric.server.windTypeAmbient,
       (int activeWindType) => buildIconWeatherControl(
             tooltip: '${WindType.getName(windType)} Wind',
             action: () => gamestream.network.sendClientRequestWeatherSetWind(windType),
@@ -573,7 +573,7 @@ class EditorUI {
   static Widget buildControlTime() {
     const totalWidth = 300.0;
     const buttonWidth = totalWidth / 24.0;
-    final buttons = watch(gamestream.isometric.serverState.hours, (int hours) {
+    final buttons = watch(gamestream.isometric.server.hours, (int hours) {
       final buttons1 = <Widget>[];
       final buttons2 = <Widget>[];
 
@@ -614,9 +614,9 @@ class EditorUI {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        watch(gamestream.isometric.serverState.hours, (num hour) => text(padZero(hour))),
+        watch(gamestream.isometric.server.hours, (num hour) => text(padZero(hour))),
         text(":"),
-        watch(gamestream.isometric.serverState.minutes, (num hour) => text(padZero(hour))),
+        watch(gamestream.isometric.server.minutes, (num hour) => text(padZero(hour))),
       ],
     );
     return Container(
@@ -698,14 +698,14 @@ class EditorUI {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            watch(gamestream.isometric.serverState.gameRunning, (gameRunning) {
+            watch(gamestream.isometric.server.gameRunning, (gameRunning) {
               return text("Game Running: $gameRunning", onPressed: () => gamestream.network.sendClientRequestEdit(EditRequest.Toggle_Game_Running));
             }),
-            text ("Reset", onPressed: ServerActions.editSceneReset),
-            text("Spawn AI", onPressed: ServerActions.editSceneSpawnAI),
+            text ("Reset", onPressed: gamestream.isometric.server.editSceneReset),
+            text("Spawn AI", onPressed: gamestream.isometric.server.editSceneSpawnAI),
             text("Clear Spawned AI",
-                onPressed: ServerActions.editSceneClearSpawnedAI),
-            text("Pause AI", onPressed: ServerActions.editSceneClearSpawnedAI),
+                onPressed: gamestream.isometric.server.editSceneClearSpawnedAI),
+            text("Pause AI", onPressed: gamestream.isometric.server.editSceneClearSpawnedAI),
           ],
         ),
       ),
