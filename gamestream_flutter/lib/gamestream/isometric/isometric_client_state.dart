@@ -12,7 +12,6 @@ mixin class IsometricClientState {
   static const Particles_Max = 500;
   var dynamicShadows = true;
   var emissionAlphaCharacter = 50;
-  final particleOverflow = IsometricParticle();
   var torch_emission_start = 0.8;
   var torch_emission_end = 1.0;
   var torch_emission_vel = 0.061;
@@ -21,6 +20,7 @@ mixin class IsometricClientState {
   var nextParticleFrame = 0;
   var nodesRaycast = 0;
   var windLine = 0;
+  final particleOverflow = IsometricParticle();
 
   final gridShadows = Watch(true, onChanged: (bool value){
     gamestream.isometric.nodes.resetNodeColorsToAmbient();
@@ -1197,21 +1197,16 @@ mixin class IsometricClientState {
 
 
   final sceneChanged = Watch(0);
-  final raining = Watch(false, onChanged: ClientEvents.onChangedRaining);
-  final areaTypeVisible = Watch(false, onChanged: ClientEvents.onChangedAreaTypeVisible);
   final readsHotKeys = Watch(0);
-  final inventoryReads = Watch(0, onChanged: ClientEvents.onInventoryReadsChanged);
   final hoverTargetType = Watch(ClientType.Hover_Target_None);
   final hoverIndex = Watch(-1);
   final hoverDialogType = Watch(DialogType.None);
-  final debugMode = Watch(false, onChanged: ClientEvents.onChangedDebugMode);
   final Map_Visible = WatchBool(true);
   final touchButtonSide = Watch(TouchButtonSide.Right);
   late final rendersSinceUpdate = Watch(0, onChanged: gamestream.isometric.events.onChangedRendersSinceUpdate);
   late final edit = Watch(false, onChanged: gamestream.isometric.events.onChangedEdit);
   final dragStart = Watch(-1);
   final dragEnd = Watch(-1);
-  final messageStatus = Watch("", onChanged: ClientEvents.onChangedMessageStatus);
   final overrideColor = WatchBool(false);
 
   final window_visible_light_settings  = WatchBool(false);
@@ -1251,9 +1246,15 @@ mixin class IsometricClientState {
   var lights_active = 0;
   var interpolation_padding = 0.0;
 
-  final playerCreditsAnimation = Watch(0, onChanged: ClientEvents.onChangedCredits);
-
   DateTime? timeConnectionEstablished;
+
+
+  late final messageStatus = Watch("", onChanged: onChangedMessageStatus);
+  late final debugMode = Watch(false, onChanged: onChangedDebugMode);
+  late final raining = Watch(false, onChanged: onChangedRaining);
+  late final inventoryReads = Watch(0, onChanged: onInventoryReadsChanged);
+  late final areaTypeVisible = Watch(false, onChanged: onChangedAreaTypeVisible);
+  late final playerCreditsAnimation = Watch(0, onChanged: onChangedCredits);
 
   // PROPERTIES
   bool get hoverDialogIsInventory => hoverDialogType.value == DialogType.Inventory;
@@ -1600,5 +1601,109 @@ mixin class IsometricClientState {
    void playAudioError(){
     gamestream.audio.errorSound15();
   }
+
+  void onInventoryReadsChanged(int value){
+    gamestream.isometric.clientState.clearHoverIndex();
+  }
+
+  void onChangedAttributesWindowVisible(bool value){
+    gamestream.isometric.clientState.playSoundWindow();
+  }
+
+  void onChangedHotKeys(int value){
+    gamestream.isometric.clientState.redrawHotKeys();
+  }
+
+  void onChangedRaining(bool raining){
+    raining ? gamestream.isometric.actions.rainStart() : gamestream.isometric.actions.rainStop();
+    gamestream.isometric.nodes.resetNodeColorsToAmbient();
+  }
+
+  void onDragStarted(int itemIndex){
+    // print("onDragStarted()");
+    gamestream.isometric.clientState.dragStart.value = itemIndex;
+    gamestream.isometric.clientState.dragEnd.value = -1;
+  }
+
+  void onDragCompleted(){
+    // print("onDragCompleted()");
+  }
+
+  void onDragEnd(DraggableDetails details){
+    // print("onDragEnd()");
+  }
+
+  void onItemIndexPrimary(int itemIndex) {
+    if (gamestream.isometric.clientState.hoverDialogDialogIsTrade){
+      gamestream.network.sendClientRequestInventoryBuy(itemIndex);
+      return;
+    }
+    gamestream.network.sendClientRequestInventoryEquip(itemIndex);
+  }
+
+  void onItemIndexSecondary(int itemIndex){
+    if (gamestream.isometric.clientState.hoverDialogDialogIsTrade){
+      gamestream.network.sendClientRequestInventoryBuy(itemIndex);
+      return;
+    }
+    gamestream.isometric.player.interactModeTrading
+        ? gamestream.network.sendClientRequestInventorySell(itemIndex)
+        : gamestream.network.sendClientRequestInventoryDrop(itemIndex);
+  }
+
+  void onDragAcceptEquippedItemContainer(int? i){
+    if (i == null) return;
+    gamestream.network.sendClientRequestInventoryEquip(i);
+  }
+
+  void onDragCancelled(Velocity velocity, Offset offset){
+    // print("onDragCancelled()");
+    if (gamestream.isometric.clientState.hoverIndex.value == -1){
+      gamestream.isometric.clientState.dropDraggedItem();
+    } else {
+      gamestream.isometric.clientState.inventorySwapDragTarget();
+    }
+    gamestream.isometric.clientState.dragStart.value = -1;
+    gamestream.isometric.clientState.dragEnd.value = -1;
+  }
+
+  void onDragAcceptWatchBelt(Watch<int> watchBelt, int index) =>
+      ServerActions.inventoryMoveToWatchBelt(index, watchBelt);
+
+  void onButtonPressedWatchBelt(Watch<int> watchBeltType) =>
+      ServerActions.equipWatchBeltType(watchBeltType);
+
+  void onRightClickedWatchBelt(Watch<int> watchBelt){
+    ServerActions.inventoryUnequip(
+        gamestream.isometric.serverState.mapWatchBeltTypeToItemType(watchBelt)
+    );
+  }
+
+  void onAcceptDragInventoryIcon(){
+    if (gamestream.isometric.clientState.dragStart.value == -1) return;
+    gamestream.network.sendClientRequestInventoryDeposit(gamestream.isometric.clientState.dragStart.value);
+  }
+
+  void onChangedMessageStatus(String value){
+    if (value.isEmpty){
+      gamestream.isometric.clientState.messageStatusDuration = 0;
+    } else {
+      gamestream.isometric.clientState.messageStatusDuration = 150;
+    }
+  }
+
+  void onChangedAreaTypeVisible(bool value) =>
+      gamestream.isometric.clientState.areaTypeVisibleDuration = value
+          ? ClientConstants.Area_Type_Duration
+          : 0;
+
+  void onChangedDebugMode(bool value){
+    gamestream.isometric.renderer.renderDebug = value;
+  }
+
+  void onChangedCredits(int value){
+    gamestream.audio.coins.play();
+  }
+
 
 }

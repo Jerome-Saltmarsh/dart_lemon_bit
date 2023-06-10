@@ -1419,7 +1419,7 @@ class GameIsometricUI {
           },
           onAccept: (int? data){
             if (data == null) return;
-            ClientEvents.onAcceptDragInventoryIcon();
+            gamestream.isometric.clientState.onAcceptDragInventoryIcon();
           },
           builder: (context, data, dataRejected){
             return onPressed(

@@ -187,7 +187,7 @@ class GameInventoryUI {
   static Widget buildContainerEquippedItems() =>
       DragTarget<int>(
         onWillAccept: onDragWillAccept,
-        onAccept: ClientEvents.onDragAcceptEquippedItemContainer,
+        onAccept: gamestream.isometric.clientState.onDragAcceptEquippedItemContainer,
         builder: (context, i, a) => Container(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -230,8 +230,8 @@ class GameInventoryUI {
     int? itemQuantity,
   }) =>
       onPressed(
-        action: () => ClientEvents.onItemIndexPrimary(itemIndex),
-        onRightClick: () => ClientEvents.onItemIndexSecondary(itemIndex),
+        action: () => gamestream.isometric.clientState.onItemIndexPrimary(itemIndex),
+        onRightClick: () => gamestream.isometric.clientState.onItemIndexSecondary(itemIndex),
         child: MouseRegion(
           onEnter: (event) {
             engine.mousePositionX = event.position.dx;
@@ -306,10 +306,10 @@ class GameInventoryUI {
 
   static Widget buildDraggableItemIndex({required int itemIndex, double scale = Slot_Item_Scale, int? itemQuantity}) =>
       Draggable(
-        onDragStarted: () => ClientEvents.onDragStarted(itemIndex),
-        onDragEnd: ClientEvents.onDragEnd,
-        onDraggableCanceled: ClientEvents.onDragCancelled,
-        onDragCompleted: ClientEvents.onDragCompleted,
+        onDragStarted: () => gamestream.isometric.clientState.onDragStarted(itemIndex),
+        onDragEnd: gamestream.isometric.clientState.onDragEnd,
+        onDraggableCanceled: gamestream.isometric.clientState.onDragCancelled,
+        onDragCompleted: gamestream.isometric.clientState.onDragCompleted,
         data: itemIndex,
         hitTestBehavior: HitTestBehavior.opaque,
         feedback: buildPressableItemIndex(
