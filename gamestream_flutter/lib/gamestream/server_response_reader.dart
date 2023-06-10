@@ -3,7 +3,6 @@ import 'package:gamestream_flutter/gamestream/games/fight2d/game_fight2d.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric_engine.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric_position.dart';
-import 'package:gamestream_flutter/isometric/events/on_changed_scene.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:lemon_byte/byte_reader.dart';
 
@@ -668,7 +667,11 @@ class ServerResponseReader with ByteReader {
     isometric.events.onChangedNodes();
     isometric.nodes.refreshNodeVariations();
     isometric.clientState.sceneChanged.value++;
-    onChangedScene();
+
+    gamestream.isometric.clientState.totalActiveParticles = 0;
+    gamestream.isometric.clientState.totalParticles = 0;
+    gamestream.isometric.clientState.particles.clear();
+    gamestream.io.recenterCursor();
   }
 
   double readDouble() => readInt16().toDouble();
