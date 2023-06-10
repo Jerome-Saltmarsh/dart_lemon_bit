@@ -131,17 +131,17 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
       IsometricGameObject base,
       ){
 
+    final flagHeldBy = flag.heldBy;
+    if (flagHeldBy == null) return;
+
     if (flag.team == base.team) {
-      if (flag.statusAtBase) return;
+      if (flag.team != flagHeldBy.team) return;
       returnFlagToBase(flag);
       return;
     }
 
-    if (flag.isTeamRed) {
-      onRedTeamScored();
-    } else {
-      onBlueTeamScored();
-    }
+    if (flagHeldBy.team != base.team) return;
+    onFlagScored(flag);
   }
 
   void customOnCollisionBetweenFlagAndCollider(CaptureTheFlagGameObjectFlag flag, IsometricCollider collider){
@@ -157,38 +157,36 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     }
   }
 
-  void onBlueTeamScored() {
-    scoreBlue.value++;
-    flagRed.respawnDuration = Flag_Respawn_Duration;
-    flagRed.status = CaptureTheFlagFlagStatus.Respawning;
-    deactivateCollider(flagRed);
-
-    final flagRedHeldBy = flagRed.heldBy;
-    if (flagRedHeldBy is CaptureTheFlagPlayer){
-      flagRedHeldBy.setFlagStatusNoFlag();
-    }
-    flagRed.heldBy = null;
-
-    for (final player in players) {
-      player.writeByte(ServerResponse.Capture_The_Flag);
-      player.writeByte(CaptureTheFlagResponse.Blue_Team_Scored);
-    }
-  }
-
   void onFlagScored(CaptureTheFlagGameObjectFlag flag){
 
+    if (flag == flagRed){
+      scoreBlue.value++;
+    } else {
+      scoreRed.value++;
+    }
+
+    flag.respawnDuration = Flag_Respawn_Duration;
+    flag.status = CaptureTheFlagFlagStatus.Respawning;
+    deactivateCollider(flag);
+    clearFlagHeldBy(flag);
+
+    final response = flag == flagRed ? CaptureTheFlagResponse.Blue_Team_Scored : CaptureTheFlagResponse.Red_Team_Scored;
+    for (final player in players) {
+      player.writeByte(ServerResponse.Capture_The_Flag);
+      player.writeByte(response);
+    }
   }
+
+  void clearFlagHeldBy(CaptureTheFlagGameObjectFlag flag){
+    final flagHeldBy = flag.heldBy;
+    if (flagHeldBy is! CaptureTheFlagPlayer) return;
+    flagHeldBy.setFlagStatusNoFlag();
+  }
+
 
   void onRedTeamScored() {
     scoreRed.value++;
-    flagBlue.respawnDuration = Flag_Respawn_Duration;
-    flagBlue.status = CaptureTheFlagFlagStatus.Respawning;
-    deactivateCollider(flagBlue);
-
-    final flagBlueHeldBy = flagBlue.heldBy;
-    if (flagBlueHeldBy is CaptureTheFlagPlayer){
-      flagBlueHeldBy.setFlagStatusNoFlag();
-    }
+    onFlagScored(flagBlue);
 
     for (final player in players) {
       player.writeByte(ServerResponse.Capture_The_Flag);
