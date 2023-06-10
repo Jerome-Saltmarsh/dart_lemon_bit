@@ -4,7 +4,7 @@ import 'package:gamestream_flutter/library.dart';
 
 class ClientEvents {
   static void onInventoryReadsChanged(int value){
-    ClientActions.clearHoverIndex();
+    gamestream.isometric.clientState.clearHoverIndex();
   }
 
   static void onChangedAttributesWindowVisible(bool value){
@@ -12,7 +12,7 @@ class ClientEvents {
   }
 
   static void onChangedHotKeys(int value){
-    ClientActions.redrawHotKeys();
+    gamestream.isometric.clientState.redrawHotKeys();
   }
 
   static void onChangedRaining(bool raining){

@@ -365,42 +365,42 @@ class ServerResponseReader with ByteReader {
         if (index == ItemType.Belt_1){
           isometric.serverState.playerBelt1_ItemType.value = itemType;
           isometric.serverState.playerBelt1_Quantity.value = itemQuantity;
-          ClientActions.redrawInventory();
+          gamestream.isometric.clientState.redrawInventory();
           return;
         }
         if (index == ItemType.Belt_2){
           isometric.serverState.playerBelt2_ItemType.value = itemType;
           isometric.serverState.playerBelt2_Quantity.value = itemQuantity;
-          ClientActions.redrawInventory();
+          gamestream.isometric.clientState.redrawInventory();
           return;
         }
         if (index == ItemType.Belt_3){
           isometric.serverState.playerBelt3_ItemType.value = itemType;
           isometric.serverState.playerBelt3_Quantity.value = itemQuantity;
-          ClientActions.redrawInventory();
+          gamestream.isometric.clientState.redrawInventory();
           return;
         }
         if (index == ItemType.Belt_4){
           isometric.serverState.playerBelt4_ItemType.value = itemType;
           isometric.serverState.playerBelt4_Quantity.value = itemQuantity;
-          ClientActions.redrawInventory();
+          gamestream.isometric.clientState.redrawInventory();
           return;
         }
         if (index == ItemType.Belt_5){
           isometric.serverState.playerBelt5_ItemType.value = itemType;
           isometric.serverState.playerBelt5_Quantity.value = itemQuantity;
-          ClientActions.redrawInventory();
+          gamestream.isometric.clientState.redrawInventory();
           return;
         }
         if (index == ItemType.Belt_6){
           isometric.serverState.playerBelt6_ItemType.value = itemType;
           isometric.serverState.playerBelt6_Quantity.value = itemQuantity;
-          ClientActions.redrawInventory();
+          gamestream.isometric.clientState.redrawInventory();
           return;
         }
         isometric.serverState.inventory[index] = itemType;
         isometric.serverState.inventoryQuantity[index] = itemQuantity;
-        ClientActions.redrawInventory();
+        gamestream.isometric.clientState.redrawInventory();
         break;
       case ApiPlayer.Message:
         isometric.player.message.value = readString();
@@ -526,7 +526,7 @@ class ServerResponseReader with ByteReader {
     for (var i = 0; i < total; i++){
       isometric.serverState.inventoryQuantity[i] = readUInt16();
     }
-    ClientActions.redrawInventory();
+    gamestream.isometric.clientState.redrawInventory();
   }
 
   void readMapCoordinate() {

@@ -1522,5 +1522,13 @@ mixin class IsometricClientState {
   }
 
   void toggleDynamicShadows() => dynamicShadows = !dynamicShadows;
+  void redrawInventory() => inventoryReads.value++;
+  void redrawHotKeys() => readsHotKeys.value++;
+
+  void clearMouseOverDialogType() =>
+      hoverDialogType.value = DialogType.None;
+
+  void clearHoverIndex() =>
+      hoverIndex.value = -1;
 
 }

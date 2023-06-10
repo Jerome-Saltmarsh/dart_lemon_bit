@@ -3,15 +3,6 @@ import 'package:gamestream_flutter/library.dart';
 
 class ClientActions {
 
-  static void redrawInventory() => gamestream.isometric.clientState.inventoryReads.value++;
-  static void redrawHotKeys() => gamestream.isometric.clientState.readsHotKeys.value++;
-
-  static void clearMouseOverDialogType() =>
-    gamestream.isometric.clientState.hoverDialogType.value = DialogType.None;
-
-  static void clearHoverIndex() =>
-    gamestream.isometric.clientState.hoverIndex.value = -1;
-
   static void playSoundWindow() =>
       gamestream.audio.click_sound_8(1);
 

@@ -240,7 +240,7 @@ class GameInventoryUI {
           },
           onExit: (_) {
             if (gamestream.isometric.clientState.hoverIndex.value == itemIndex) {
-              ClientActions.clearHoverIndex();
+              gamestream.isometric.clientState.clearHoverIndex();
             }
           },
           child: Container(
