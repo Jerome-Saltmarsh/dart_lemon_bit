@@ -10,10 +10,8 @@ alt + m             : go to declaration
 
 
 [CAPTURE THE FLAG]
-[ ] capture strategic locations
-[ ] player classes  
-[ ] player abilities  
-[ ] creep spawn
+[ ] hero classes  
+[ ] ai heroes
 [x] render objective lines
 [x] render bases on mini map
 [x] render flags on mini map

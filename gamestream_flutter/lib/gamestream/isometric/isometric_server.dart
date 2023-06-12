@@ -20,12 +20,13 @@ class IsometricServer {
   var inventory = Uint16List(0);
   var inventoryQuantity = Uint16List(0);
 
+  final tagTypes = <String, int> {};
   final playerScores = <IsometricPlayerScore>[];
-  final playerScoresReads = Watch(0);
   final gameObjects = <IsometricGameObject>[];
   final characters = <IsometricCharacter>[];
   final npcs = <IsometricCharacter>[];
   final projectiles = <IsometricProjectile>[];
+  final playerScoresReads = Watch(0);
   final highScore = Watch(0);
   final playerHealth = Watch(0);
   final playerMaxHealth = Watch(0);
@@ -56,7 +57,6 @@ class IsometricServer {
   final playerBelt5_Quantity = Watch(0);
   final playerBelt6_Quantity = Watch(0);
   final equippedWeaponIndex = Watch(0);
-  final tagTypes = <String, int> {};
   final sceneUnderground = Watch(false);
 
   late final areaType = Watch(AreaType.None, onChanged: onChangedAreaType);

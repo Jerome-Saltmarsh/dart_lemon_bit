@@ -1,11 +1,13 @@
 
 
+import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_flag_status.dart';
 import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_team.dart';
 import 'package:bleed_server/common/src/item_type.dart';
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_gameobject_flag.dart';
 import 'package:bleed_server/src/games/isometric/isometric_character_template.dart';
 import 'package:bleed_server/src/games/isometric/isometric_position.dart';
 
+import 'behavior_tree.dart';
 import 'capture_the_flag_game.dart';
 import 'capture_the_flag_player_ai_objective.dart';
 
@@ -13,6 +15,8 @@ import 'capture_the_flag_player_ai_objective.dart';
 class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
   late final CaptureTheFlagGame game;
   var objective = CaptureTheFlagPlayerAIObjective.Capture_Flag_Own;
+
+  late final BehaviorNode behaviorTree;
 
   CaptureTheFlagPlayerAI({
     required this.game,
@@ -32,6 +36,22 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
       bodyType = ItemType.Body_Shirt_Blue;
       legsType = ItemType.Legs_Blue;
     }
+
+    behaviorTree = SelectorNode([
+      SequenceNode([
+        ConditionNodeAny([holdingFlagEnemy, holdingFlagOwn]),
+        ActionNode(moveToBaseOwn),
+      ]),
+      SequenceNode([
+        ConditionNodeAny([enemyFlagStatusAtBase, enemyFlagStatusDropped]),
+        ActionNode(captureEnemyFlag),
+      ]),
+      SequenceNode([
+        ConditionNode(flagOwnDropped),
+        ActionNode(captureFlagOwn),
+      ]),
+      ActionNode(setCharacterStateIdle),
+    ]);
   }
 
   bool get isTeamRed => team == CaptureTheFlagTeam.Red;
@@ -81,6 +101,8 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
 
   CaptureTheFlagPlayerAIObjective getObjective(){
 
+    if (healthPercentage < 0.25) return CaptureTheFlagPlayerAIObjective.Heal;
+
     if (flagEnemy.heldBy == this){
       return CaptureTheFlagPlayerAIObjective.Capture_Flag_Enemy;
     }
@@ -109,15 +131,41 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
   @override
   void customUpdate() {
     if (deadOrBusy) return;
+    behaviorTree.execute();
+    // switch (getObjective()) {
+    //   case CaptureTheFlagPlayerAIObjective.Capture_Flag_Enemy:
+    //     captureFlagEnemy();
+    //     break;
+    //   case CaptureTheFlagPlayerAIObjective.Capture_Flag_Own:
+    //     captureFlagOwn();
+    //   default:
+    //     setCharacterStateIdle();
+    // }
+  }
 
-    switch (getObjective()) {
-      case CaptureTheFlagPlayerAIObjective.Capture_Flag_Enemy:
-        captureFlagEnemy();
-        break;
-      case CaptureTheFlagPlayerAIObjective.Capture_Flag_Own:
-        captureFlagOwn();
-      default:
-        setCharacterStateIdle();
-    }
+  bool flagOwnDropped() => flagOwn.status == CaptureTheFlagFlagStatus.Dropped;
+
+  bool holdingFlagEnemy() => flagEnemy.heldBy == this;
+  bool holdingFlagOwn() => flagOwn.heldBy == this;
+
+  bool enemyFlagStatusAtBase() => flagEnemy.status == CaptureTheFlagFlagStatus.At_Base;
+  bool enemyFlagStatusDropped() => flagEnemy.status == CaptureTheFlagFlagStatus.Dropped;
+
+
+  bool isEnemyFlagCaptured() => flagEnemy.status == CaptureTheFlagFlagStatus.Carried_By_Enemy;
+  bool enemyFlagCaptured() => flagEnemy.status == CaptureTheFlagFlagStatus.Carried_By_Enemy;
+  bool enemyFlagRespawning() => flagEnemy.status == CaptureTheFlagFlagStatus.Respawning;
+  bool isEnemyFlagNear() => getDistance3(flagEnemy) < 500;
+  bool isEnemyNearBase() => getDistance3(baseEnemy) < 500;
+  bool isFriendlyFlagCaptured() => flagOwn.status == CaptureTheFlagFlagStatus.Carried_By_Enemy;
+
+  void captureEnemyFlag() {
+    face(flagEnemy);
+    setCharacterStateRunning();
+  }
+
+  void moveToBaseOwn(){
+    face(baseOwn);
+    setCharacterStateRunning();
   }
 }
