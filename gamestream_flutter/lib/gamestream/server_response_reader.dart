@@ -178,7 +178,7 @@ class ServerResponseReader with ByteReader {
         captureTheFlag.playerFlagStatus.value = readByte();
         break;
       case CaptureTheFlagResponse.Select_Class:
-        captureTheFlag.selectClass.value = true;
+        captureTheFlag.selectClass.value = readBool();
         break;
     }
   }

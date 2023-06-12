@@ -1,4 +1,5 @@
 import 'package:bleed_server/common/src.dart';
+import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_character_class.dart';
 import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_flag_status.dart';
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_gameobject_flag.dart';
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_player.dart';
@@ -337,7 +338,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   @override
   void customOnPlayerJoined(CaptureTheFlagPlayer player) {
     balanceTeams();
-    player.writeSelectClass();
+    player.writeSelectClass(true);
   }
 
   int get totalAIOnTeamRed => characters
@@ -393,7 +394,24 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     }
   }
 
-  void playerSelectCharacterClass(CaptureTheFlagPlayer player, int classType){
-
+  void playerSelectCharacterClass(CaptureTheFlagPlayer player, CaptureTheFlagCharacterClass classType){
+     switch (classType){
+       case CaptureTheFlagCharacterClass.sniper:
+         player.weaponType = ItemType.Weapon_Ranged_Sniper_Rifle;
+         break;
+       case CaptureTheFlagCharacterClass.machineGun:
+         player.weaponType = ItemType.Weapon_Ranged_Machine_Gun;
+         break;
+       case CaptureTheFlagCharacterClass.medic:
+         player.weaponType = ItemType.Weapon_Ranged_Smg;
+         break;
+       case CaptureTheFlagCharacterClass.scout:
+         player.weaponType = ItemType.Weapon_Ranged_Handgun;
+         break;
+       case CaptureTheFlagCharacterClass.shotgun:
+         player.weaponType = ItemType.Weapon_Ranged_Shotgun;
+         break;
+     }
+     player.writeSelectClass(false);
   }
 }

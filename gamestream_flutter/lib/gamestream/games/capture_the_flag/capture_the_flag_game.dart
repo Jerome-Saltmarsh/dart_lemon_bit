@@ -190,17 +190,19 @@ class CaptureTheFlagGame extends GameIsometric {
           right: 16,
           child: WatchBuilder(selectClass, (value){
              if (!value) return const SizedBox();
-             return Container(
-              color: GameStyle.Container_Color,
-              padding: GameStyle.Container_Padding,
-              child: Row(
-                children: CaptureTheFlagCharacterClass.values
-                    .map((characterClass) => onPressed(
-                        child: text(characterClass.name),
-                        action: () => selectCharacterClass(characterClass)))
-                    .toList(growable: false),
-              ),
-            );
+             return buildFullscreen(
+               child: Container(
+                color: GameStyle.Container_Color,
+                padding: GameStyle.Container_Padding,
+                child: Column(
+                  children: CaptureTheFlagCharacterClass.values
+                      .map((characterClass) => onPressed(
+                          child: text(characterClass.name),
+                          action: () => selectCharacterClass(characterClass)))
+                      .toList(growable: false),
+                ),
+            ),
+             );
           }),
         ),
         Positioned(
@@ -386,6 +388,6 @@ class CaptureTheFlagGame extends GameIsometric {
   void selectCharacterClass(CaptureTheFlagCharacterClass value) =>
       gamestream.network.sendClientRequest(
         ClientRequest.Capture_The_Flag,
-        [CaptureTheFlagRequest.selectClass.index, value.index]
+        '${CaptureTheFlagRequest.selectClass.index} ${value.index}'
       );
 }
