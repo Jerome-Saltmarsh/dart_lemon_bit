@@ -178,6 +178,9 @@ class CaptureTheFlagGame extends GameIsometric {
 
   @override
   Widget buildUI(BuildContext context) {
+
+
+
     return Stack(
       children: [
         Positioned(

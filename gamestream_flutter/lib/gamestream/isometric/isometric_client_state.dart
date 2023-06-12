@@ -16,7 +16,49 @@ import 'isometric_projectile.dart';
 
 
 mixin class IsometricClientState {
+
   static const Particles_Max = 500;
+
+  final sceneChanged = Watch(0);
+  final readsHotKeys = Watch(0);
+  final hoverTargetType = Watch(ClientType.Hover_Target_None);
+  final hoverIndex = Watch(-1);
+  final hoverDialogType = Watch(DialogType.None);
+  final Map_Visible = WatchBool(true);
+  final touchButtonSide = Watch(TouchButtonSide.Right);
+  final dragStart = Watch(-1);
+  final dragEnd = Watch(-1);
+  final overrideColor = WatchBool(false);
+  final window_visible_light_settings = WatchBool(false);
+  final window_visible_menu = WatchBool(false);
+  final window_visible_player_creation = WatchBool(false);
+  final window_visible_attributes = WatchBool(false);
+  final control_visible_player_weapons = WatchBool(false);
+  final control_visible_player_power = WatchBool(true);
+  final control_visible_scoreboard = WatchBool(false);
+  final control_visible_respawn_timer = WatchBool(false);
+  final triggerAlarmNoMessageReceivedFromServer = Watch(false);
+  final itemGroup = Watch(ItemGroup.Primary_Weapon);
+  final mouseOverItemType = Watch(-1);
+  final buff_active_infinite_ammo = Watch(false);
+  final buff_active_double_damage = Watch(false);
+  final buff_active_fast = Watch(false);
+  final buff_active_invincible = Watch(false);
+  final buff_active_no_recoil = Watch(false);
+  final particles = <IsometricParticle>[];
+  final particleOverflow = IsometricParticle();
+
+  var totalParticles = 0;
+  var totalActiveParticles = 0;
+  var srcXRainFalling = 6640.0;
+  var srcXRainLanding = 6739.0;
+  var messageStatusDuration = 0;
+  var areaTypeVisibleDuration = 0;
+  var nodesLightSources = Uint16List(0);
+  var nodesLightSourcesTotal = 0;
+  var nextLightingUpdate = 0;
+  var lights_active = 0;
+  var interpolation_padding = 0.0;
   var dynamicShadows = true;
   var emissionAlphaCharacter = 50;
   var torch_emission_start = 0.8;
@@ -27,7 +69,17 @@ mixin class IsometricClientState {
   var nextParticleFrame = 0;
   var nodesRaycast = 0;
   var windLine = 0;
-  final particleOverflow = IsometricParticle();
+
+  DateTime? timeConnectionEstablished;
+
+  late final rendersSinceUpdate = Watch(0, onChanged: gamestream.isometric.events.onChangedRendersSinceUpdate);
+  late final edit = Watch(false, onChanged: gamestream.isometric.events.onChangedEdit);
+  late final messageStatus = Watch("", onChanged: onChangedMessageStatus);
+  late final debugMode = Watch(false, onChanged: onChangedDebugMode);
+  late final raining = Watch(false, onChanged: onChangedRaining);
+  late final inventoryReads = Watch(0, onChanged: onInventoryReadsChanged);
+  late final areaTypeVisible = Watch(false, onChanged: onChangedAreaTypeVisible);
+  late final playerCreditsAnimation = Watch(0, onChanged: onChangedCredits);
 
   final gridShadows = Watch(true, onChanged: (bool value){
     gamestream.isometric.nodes.resetNodeColorsToAmbient();
@@ -1203,65 +1255,6 @@ mixin class IsometricClientState {
 
 
 
-  final sceneChanged = Watch(0);
-  final readsHotKeys = Watch(0);
-  final hoverTargetType = Watch(ClientType.Hover_Target_None);
-  final hoverIndex = Watch(-1);
-  final hoverDialogType = Watch(DialogType.None);
-  final Map_Visible = WatchBool(true);
-  final touchButtonSide = Watch(TouchButtonSide.Right);
-  late final rendersSinceUpdate = Watch(0, onChanged: gamestream.isometric.events.onChangedRendersSinceUpdate);
-  late final edit = Watch(false, onChanged: gamestream.isometric.events.onChangedEdit);
-  final dragStart = Watch(-1);
-  final dragEnd = Watch(-1);
-  final overrideColor = WatchBool(false);
-
-  final window_visible_light_settings  = WatchBool(false);
-  final window_visible_menu            = WatchBool(false);
-  final window_visible_player_creation = WatchBool(false);
-  final window_visible_attributes      = WatchBool(false);
-
-  final control_visible_player_weapons = WatchBool(false);
-  final control_visible_player_power   = WatchBool(true);
-  final control_visible_scoreboard     = WatchBool(false);
-  final control_visible_respawn_timer  = WatchBool(false);
-
-  final triggerAlarmNoMessageReceivedFromServer = Watch(false);
-
-  final itemGroup = Watch(ItemGroup.Primary_Weapon);
-
-  final mouseOverItemType = Watch(-1);
-
-  final buff_active_infinite_ammo  = Watch(false);
-  final buff_active_double_damage  = Watch(false);
-  final buff_active_fast           = Watch(false);
-  final buff_active_invincible     = Watch(false);
-  final buff_active_no_recoil      = Watch(false);
-
-  final particles = <IsometricParticle>[];
-
-  var totalParticles = 0;
-  var totalActiveParticles = 0;
-  var srcXRainFalling = 6640.0;
-  var srcXRainLanding = 6739.0;
-  var messageStatusDuration = 0;
-  var areaTypeVisibleDuration = 0;
-
-  var nodesLightSources = Uint16List(0);
-  var nodesLightSourcesTotal = 0;
-  var nextLightingUpdate = 0;
-  var lights_active = 0;
-  var interpolation_padding = 0.0;
-
-  DateTime? timeConnectionEstablished;
-
-
-  late final messageStatus = Watch("", onChanged: onChangedMessageStatus);
-  late final debugMode = Watch(false, onChanged: onChangedDebugMode);
-  late final raining = Watch(false, onChanged: onChangedRaining);
-  late final inventoryReads = Watch(0, onChanged: onInventoryReadsChanged);
-  late final areaTypeVisible = Watch(false, onChanged: onChangedAreaTypeVisible);
-  late final playerCreditsAnimation = Watch(0, onChanged: onChangedCredits);
 
   // PROPERTIES
   bool get hoverDialogIsInventory => hoverDialogType.value == DialogType.Inventory;
