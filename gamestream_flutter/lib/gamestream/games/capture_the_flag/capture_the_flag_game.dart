@@ -177,54 +177,51 @@ class CaptureTheFlagGame extends GameIsometric {
   }
 
   @override
-  Widget buildUI(BuildContext context) {
-
-
-
+  Widget customBuildUI(BuildContext context) {
     return Stack(
       children: [
         Positioned(
-            bottom: 16,
-            right: 16,
-            child: buildMiniMap(mapSize: 200),
+          bottom: 16,
+          right: 16,
+          child: buildMiniMap(mapSize: 200),
         ),
         Positioned(
           bottom: 16,
           right: 16,
           child: WatchBuilder(selectClass, (value){
-             if (!value) return const SizedBox();
-             return buildFullscreen(
-               child: Container(
+            if (!value) return const SizedBox();
+            return buildFullscreen(
+              child: Container(
                 color: GameStyle.Container_Color,
                 padding: GameStyle.Container_Padding,
                 child: Column(
                   children: CaptureTheFlagCharacterClass.values
                       .map((characterClass) => onPressed(
-                          child: text(characterClass.name),
-                          action: () => selectCharacterClass(characterClass)))
+                      child: text(characterClass.name),
+                      action: () => selectCharacterClass(characterClass)))
                       .toList(growable: false),
                 ),
-            ),
-             );
+              ),
+            );
           }),
         ),
         Positioned(
-            top: 16,
-            left: 16,
-            child: Container(
-              padding: GameStyle.Container_Padding,
-              color: GameStyle.Container_Color,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                    WatchBuilder(playerFlagStatus, (playerFlagStatus) => text("Player Flag Status: ${CaptureTheFlagPlayerStatus.getName(playerFlagStatus)}")),
-                    WatchBuilder(isometric.player.team, (team) => text("TEAM: $team")),
-                    text("SCORE"),
-                    WatchBuilder(scoreRed, (score) => text("RED: $score")),
-                    WatchBuilder(scoreBlue, (score) => text("BlUE: $score")),
-                ],
-              ),
+          top: 16,
+          left: 16,
+          child: Container(
+            padding: GameStyle.Container_Padding,
+            color: GameStyle.Container_Color,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                WatchBuilder(playerFlagStatus, (playerFlagStatus) => text("Player Flag Status: ${CaptureTheFlagPlayerStatus.getName(playerFlagStatus)}")),
+                WatchBuilder(isometric.player.team, (team) => text("TEAM: $team")),
+                text("SCORE"),
+                WatchBuilder(scoreRed, (score) => text("RED: $score")),
+                WatchBuilder(scoreBlue, (score) => text("BlUE: $score")),
+              ],
             ),
+          ),
         ),
         Positioned(
             bottom: 16,
@@ -242,13 +239,14 @@ class CaptureTheFlagGame extends GameIsometric {
               ),
             )),
         Positioned(
-            top: 16,
-            right: 16,
-            child: GameIsometricUI.buildRowMainMenu(),
+          top: 16,
+          right: 16,
+          child: GameIsometricUI.buildRowMainMenu(),
         ),
       ],
     );
   }
+
 
   Widget buildMiniMap({required double mapSize}) => IgnorePointer(
       child: Container(

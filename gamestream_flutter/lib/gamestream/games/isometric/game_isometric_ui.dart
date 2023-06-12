@@ -37,115 +37,115 @@ class GameIsometricUI {
   static final playerTextStyle = TextStyle(color: Colors.white);
   static final timeVisible = Watch(true);
 
-  static Widget buildUI() =>
-      watch(gamestream.io.inputMode, (int inputMode){
-        return StackFullscreen(children: [
-          buildWatchBool(gamestream.isometric.clientState.triggerAlarmNoMessageReceivedFromServer,
-              buildDialogFramesSinceUpdate),
-
-          if (inputMode != InputMode.Touch)
-            Positioned(
-              top: 16,
-              right: 16 * 16,
-              child: buildButtonTogglePlayMode(),
-            ),
-          if (inputMode == InputMode.Touch)
-            Positioned(
-              child: onPressed(
-                action: () {
-                  gamestream.network.sendClientRequest(ClientRequest.Attack);
-                },
-                child: Container(
-                  color: Colors.blue,
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.all(32),
-                  child: text("ATTACK", size: 32),
-                ),
-              ),
-              bottom: GameStyle.Default_Padding,
-              right: GameStyle.Default_Padding,
-            ),
-          if (inputMode == InputMode.Keyboard)
-            buildWatchBool(gamestream.isometric.clientState.control_visible_scoreboard, () =>
-                Positioned(
-                  top: GameStyle.Default_Padding,
-                  left: GameStyle.Default_Padding,
-                  child: buildPlayersScore(),
-                )
-            ),
-          if (inputMode == InputMode.Keyboard)
-            Positioned(
-              child: buildMapCircle(size: 200),
-              bottom: GameStyle.Default_Padding,
-              right: GameStyle.Default_Padding,
-            ),
-          if (inputMode == InputMode.Touch)
-            Positioned(
-              child: buildMapCircle(size: 125),
-              top: 6,
-              left: 6,
-            ),
-          if (inputMode == InputMode.Touch)
-            Positioned(
-              top: 6,
-              left: 140,
-              child: Row(
-                children: [
-                  watch(gamestream.isometric.server.playerLevel, (int level){
-                    return Container(
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                      ),
-                      child: text(level),
-                    );
-                  }),
-                  width4,
-                  watch(gamestream.isometric.server.playerExperiencePercentage, (double experience){
-                    const width = 100.0;
-                    const height = 10.0;
-                    return Container(
-                      color: Colors.white70,
-                      width: width,
-                      height: height,
-                      padding: const EdgeInsets.all(2),
-                      alignment: Alignment.centerLeft,
-                      child: Container(
-                        color: Colors.yellow,
-                        width: width * experience,
-                        height: height,
-                      ),
-                    );
-                  }),
-                  width4,
-                  watch(gamestream.isometric.server.playerAttributes, (int attributes){
-                    return onPressed(
-                      action: gamestream.isometric.clientState.window_visible_attributes.toggle,
-                      child: text('Attributes: $attributes'),
-                    );
-                  }),
-                ],
-              ),
-            ),
-          WatchBuilder(gamestream.isometric.clientState.edit, buildPlayMode),
-          WatchBuilder(gamestream.io.inputMode, buildStackInputMode),
-          buildWatchBool(gamestream.isometric.clientState.debugMode, GameIsometricDebug.buildStackDebug),
-          buildPositionedMessageStatus(),
-          buildWatchGameStatus(),
-          buildWatchBool(gamestream.isometric.clientState.window_visible_attributes, () =>
-              Positioned(
-                top: GameStyle.Default_Padding,
-                left: GameStyle.Default_Padding,
-                child: buildWindowAttributes(),
-              )
-          ),
-          buildWatchBool(gamestream.isometric.clientState.window_visible_light_settings,
-              buildWindowLightSettings),
-          Positioned(top: 16, right: 16, child: buildRowMainMenu()),
-
-
-        ]);
-      });
+  // static Widget buildUI() =>
+  //     watch(gamestream.io.inputMode, (int inputMode){
+  //       return StackFullscreen(children: [
+  //         buildWatchBool(gamestream.isometric.clientState.triggerAlarmNoMessageReceivedFromServer,
+  //             buildDialogFramesSinceUpdate),
+  //
+  //         if (inputMode != InputMode.Touch)
+  //           Positioned(
+  //             top: 16,
+  //             right: 16 * 16,
+  //             child: buildButtonTogglePlayMode(),
+  //           ),
+  //         if (inputMode == InputMode.Touch)
+  //           Positioned(
+  //             child: onPressed(
+  //               action: () {
+  //                 gamestream.network.sendClientRequest(ClientRequest.Attack);
+  //               },
+  //               child: Container(
+  //                 color: Colors.blue,
+  //                 alignment: Alignment.center,
+  //                 padding: const EdgeInsets.all(32),
+  //                 child: text("ATTACK", size: 32),
+  //               ),
+  //             ),
+  //             bottom: GameStyle.Default_Padding,
+  //             right: GameStyle.Default_Padding,
+  //           ),
+  //         if (inputMode == InputMode.Keyboard)
+  //           buildWatchBool(gamestream.isometric.clientState.control_visible_scoreboard, () =>
+  //               Positioned(
+  //                 top: GameStyle.Default_Padding,
+  //                 left: GameStyle.Default_Padding,
+  //                 child: buildPlayersScore(),
+  //               )
+  //           ),
+  //         if (inputMode == InputMode.Keyboard)
+  //           Positioned(
+  //             child: buildMapCircle(size: 200),
+  //             bottom: GameStyle.Default_Padding,
+  //             right: GameStyle.Default_Padding,
+  //           ),
+  //         if (inputMode == InputMode.Touch)
+  //           Positioned(
+  //             child: buildMapCircle(size: 125),
+  //             top: 6,
+  //             left: 6,
+  //           ),
+  //         if (inputMode == InputMode.Touch)
+  //           Positioned(
+  //             top: 6,
+  //             left: 140,
+  //             child: Row(
+  //               children: [
+  //                 watch(gamestream.isometric.server.playerLevel, (int level){
+  //                   return Container(
+  //                     alignment: Alignment.center,
+  //                     decoration: BoxDecoration(
+  //                       shape: BoxShape.circle,
+  //                     ),
+  //                     child: text(level),
+  //                   );
+  //                 }),
+  //                 width4,
+  //                 watch(gamestream.isometric.server.playerExperiencePercentage, (double experience){
+  //                   const width = 100.0;
+  //                   const height = 10.0;
+  //                   return Container(
+  //                     color: Colors.white70,
+  //                     width: width,
+  //                     height: height,
+  //                     padding: const EdgeInsets.all(2),
+  //                     alignment: Alignment.centerLeft,
+  //                     child: Container(
+  //                       color: Colors.yellow,
+  //                       width: width * experience,
+  //                       height: height,
+  //                     ),
+  //                   );
+  //                 }),
+  //                 width4,
+  //                 watch(gamestream.isometric.server.playerAttributes, (int attributes){
+  //                   return onPressed(
+  //                     action: gamestream.isometric.clientState.window_visible_attributes.toggle,
+  //                     child: text('Attributes: $attributes'),
+  //                   );
+  //                 }),
+  //               ],
+  //             ),
+  //           ),
+  //         WatchBuilder(gamestream.isometric.clientState.edit, buildPlayMode),
+  //         WatchBuilder(gamestream.io.inputMode, buildStackInputMode),
+  //         buildWatchBool(gamestream.isometric.clientState.debugMode, GameIsometricDebug.buildStackDebug),
+  //         buildPositionedMessageStatus(),
+  //         buildWatchGameStatus(),
+  //         buildWatchBool(gamestream.isometric.clientState.window_visible_attributes, () =>
+  //             Positioned(
+  //               top: GameStyle.Default_Padding,
+  //               left: GameStyle.Default_Padding,
+  //               child: buildWindowAttributes(),
+  //             )
+  //         ),
+  //         buildWatchBool(gamestream.isometric.clientState.window_visible_light_settings,
+  //             buildWindowLightSettings),
+  //         Positioned(top: 16, right: 16, child: buildRowMainMenu()),
+  //
+  //
+  //       ]);
+  //     });
 
   static Container buildWindowAttributes() => Container(
     width: 300,
@@ -952,7 +952,11 @@ class GameIsometricUI {
       );
 
   static Widget buildPlayMode(bool edit) =>
-      edit ? watch(gamestream.isometric.editor.editTab, EditorUI.buildUI) : watch(gamestream.gameType, buildStackPlay);
+      edit ? buildEditor() : watch(gamestream.gameType, buildStackPlay);
+
+  static Widget buildEditor(){
+    return watch(gamestream.isometric.editor.editTab, EditorUI.buildUI);
+  }
 
   static Widget buildStackPlay(GameType gameType) => StackFullscreen(children: [
     if (gameType == GameType.Combat)

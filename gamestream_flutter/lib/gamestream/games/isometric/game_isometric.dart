@@ -5,6 +5,7 @@ import 'package:gamestream_flutter/gamestream/isometric/isometric_engine.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric_player.dart';
 import 'package:gamestream_flutter/library.dart';
 
+import 'game_isometric_debug.dart';
 import 'game_isometric_ui.dart';
 
 class GameIsometric extends Game {
@@ -52,10 +53,26 @@ class GameIsometric extends Game {
     }
   }
 
+  Widget customBuildUI(BuildContext context){
+    return const SizedBox();
+  }
+
   @override
   Widget buildUI(BuildContext context) {
-    return GameIsometricUI.buildUI();
-  }
+    return StackFullscreen(children: [
+      buildWatchBool(
+          gamestream.isometric.clientState.triggerAlarmNoMessageReceivedFromServer,
+          GameIsometricUI.buildDialogFramesSinceUpdate,
+      ),
+      WatchBuilder(gamestream.isometric.clientState.edit, (edit) =>
+        edit ? GameIsometricUI.buildEditor() : customBuildUI(context)),
+      buildWatchBool(gamestream.isometric.clientState.debugMode, GameIsometricDebug.buildStackDebug),
+      buildWatchBool(gamestream.isometric.clientState.window_visible_light_settings,
+          GameIsometricUI.buildWindowLightSettings),
+      Positioned(top: 16, right: 16, child: GameIsometricUI.buildRowMainMenu()),
+
+
+    ]);  }
 
   // TODO Remove
   static double convertWorldToGridX(double x, double y) =>
