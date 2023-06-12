@@ -1,6 +1,6 @@
 
 
-import 'package:bleed_server/behavior_tree/src.dart';
+// import 'package:bleed_server/behavior_tree/src.dart';
 import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_flag_status.dart';
 import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_team.dart';
 import 'package:bleed_server/common/src/item_type.dart';
@@ -10,18 +10,16 @@ import 'package:bleed_server/src/games/isometric/isometric_collider.dart';
 import 'package:bleed_server/src/games/isometric/isometric_position.dart';
 
 import 'capture_the_flag_game.dart';
-import 'capture_the_flag_player_ai_objective.dart';
 
 
 class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
   late final CaptureTheFlagGame game;
-  var objective = CaptureTheFlagPlayerAIObjective.Capture_Flag_Own;
-
-  late final BehaviorNode behaviorTree;
+  CaptureTheFlagAIRole role;
 
   CaptureTheFlagPlayerAI({
     required this.game,
     required super.team,
+    this.role = CaptureTheFlagAIRole.Defense,
   }) : super(
     health: 10,
     weaponType: ItemType.Empty,
@@ -38,25 +36,25 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
       legsType = ItemType.Legs_Blue;
     }
 
-    behaviorTree = SelectorNode([
-      SequenceNode([
-        ConditionNodeAny([holdingFlagEnemy, holdingFlagOwn]),
-        ActionNode(moveToBaseOwn),
-      ]),
-      SequenceNode([
-        ConditionNodeAny([enemyFlagStatusAtBase, enemyFlagStatusDropped]),
-        ActionNode(captureEnemyFlag),
-      ]),
-      SequenceNode([
-        ConditionNode(flagOwnDropped),
-        ActionNode(captureFlagOwn),
-      ]),
-      SequenceNode([
-        ConditionNode(enemyWithinRange500),
-        ActionNode(attackNearestEnemy),
-      ]),
-      ActionNode(setCharacterStateIdle),
-    ]);
+    // behaviorTree = SelectorNode([
+    //   SequenceNode([
+    //     ConditionNode(holdingFlagAny),
+    //     ActionNode(moveToBaseOwn),
+    //   ]),
+    //   SequenceNode([
+    //     ConditionNodeAny([enemyFlagStatusAtBase, enemyFlagStatusDropped]),
+    //     ActionNode(captureEnemyFlag),
+    //   ]),
+    //   SequenceNode([
+    //     ConditionNode(flagOwnDropped),
+    //     ActionNode(captureFlagOwn),
+    //   ]),
+    //   SequenceNode([
+    //     ConditionNode(enemyWithinRange500),
+    //     ActionNode(attackNearestEnemy),
+    //   ]),
+    //   ActionNode(setCharacterStateIdle),
+    // ]);
   }
 
   bool get isTeamRed => team == CaptureTheFlagTeam.Red;
@@ -128,42 +126,37 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
   }
 
 
-  CaptureTheFlagPlayerAIObjective getObjective(){
-
-    if (healthPercentage < 0.25) return CaptureTheFlagPlayerAIObjective.Heal;
-
-    if (flagEnemy.heldBy == this){
-      return CaptureTheFlagPlayerAIObjective.Capture_Flag_Enemy;
-    }
-
-    if (flagOwn.heldBy == this){
-      return CaptureTheFlagPlayerAIObjective.Capture_Flag_Own;
-    }
-
-    if (!flagOwn.statusRespawning && !flagOwn.statusAtBase){
-      final flagOwnHeldBy = flagOwn.heldBy;
-      if (flagOwnHeldBy == null || flagOwnHeldBy == this) {
-        return CaptureTheFlagPlayerAIObjective.Capture_Flag_Own;
-      }
-    }
-
-    if (!flagEnemy.statusRespawning){
-      final flagHeldBy = flagEnemy.heldBy;
-      if (flagHeldBy == null || flagHeldBy == this) {
-        return CaptureTheFlagPlayerAIObjective.Capture_Flag_Enemy;
-      }
-    }
-
-     return CaptureTheFlagPlayerAIObjective.Wait;
-  }
-
   @override
   void customUpdate() {
     if (deadOrBusy) return;
-    behaviorTree.execute();
+
+    if (holdingFlagAny())
+      return moveToBaseOwn();
+
+    if (role == CaptureTheFlagAIRole.Offense){
+      updateRoleOffense();
+    } else {
+      updateRoleDefense();
+    }
   }
 
-  bool enemyWithinRange500() => enemyWithinRange(500);
+  void updateRoleDefense(){
+    if (flagOwnDropped())
+      return captureFlagOwn();
+    if (enemyWithinRange(500))
+      return attackNearestEnemy();
+
+    setCharacterStateIdle();
+  }
+
+  void updateRoleOffense() {
+    if (enemyFlagCapturable)
+      return captureEnemyFlag();
+    if (enemyWithinRange(500))
+      return attackNearestEnemy();
+
+    setCharacterStateIdle();
+  }
 
   bool enemyWithinRange(double range){
      final distanceSquared = range * range;
@@ -176,7 +169,10 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
      }
      return false;
   }
+  bool get enemyFlagCapturable => enemyFlagStatusAtBase() || enemyFlagStatusDropped();
+
   bool flagOwnDropped() => flagOwn.status == CaptureTheFlagFlagStatus.Dropped;
+  bool holdingFlagAny() => holdingFlagEnemy() || holdingFlagOwn();
   bool holdingFlagEnemy() => flagEnemy.heldBy == this;
   bool holdingFlagOwn() => flagOwn.heldBy == this;
   bool enemyFlagStatusAtBase() => flagEnemy.status == CaptureTheFlagFlagStatus.At_Base;
@@ -201,4 +197,13 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
   void attackMelee(){
     game.characterAttackMelee(this);
   }
+}
+
+enum CaptureTheFlagAIAction {
+   Move_To_Base_Own,
+}
+
+enum CaptureTheFlagAIRole {
+  Defense,
+  Offense,
 }

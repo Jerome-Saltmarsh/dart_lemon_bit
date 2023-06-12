@@ -39,15 +39,22 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     gameObjects.add(flagRed);
     gameObjects.add(flagBlue);
 
-    baseRed = spawnGameObject(x: 300, y: 700, z: 25, type: ItemType.GameObjects_Base_Red)..fixed = true..team = CaptureTheFlagTeam.Red;
+    baseRed = spawnGameObject(x: 1000, y: 1000, z: 25, type: ItemType.GameObjects_Base_Red)..fixed = true..team = CaptureTheFlagTeam.Red;
     baseBlue = spawnGameObject(x: 300, y: 300, z: 25, type: ItemType.GameObjects_Base_Blue)..fixed = true..team = CaptureTheFlagTeam.Blue;
 
-    flagRed.status = CaptureTheFlagFlagStatus.Dropped;
-    flagBlue.status = CaptureTheFlagFlagStatus.Dropped;
+    flagRed.status = CaptureTheFlagFlagStatus.At_Base;
+    flagBlue.status = CaptureTheFlagFlagStatus.At_Base;
 
-    for (var i = 0; i < 3; i ++){
-      characters.add(CaptureTheFlagPlayerAI(game: this, team: CaptureTheFlagTeam.Red));
-      characters.add(CaptureTheFlagPlayerAI(game: this, team: CaptureTheFlagTeam.Blue));
+    flagRed.moveTo(baseRed);
+    flagBlue.moveTo(baseBlue);
+
+    for (var i = 1; i <= 3; i ++){
+      characters.add(CaptureTheFlagPlayerAI(game: this, team: CaptureTheFlagTeam.Red, role: CaptureTheFlagAIRole.Defense));
+      characters.add(CaptureTheFlagPlayerAI(game: this, team: CaptureTheFlagTeam.Blue, role: CaptureTheFlagAIRole.Defense));
+    }
+    for (var i = 1; i <= 2; i ++){
+      characters.add(CaptureTheFlagPlayerAI(game: this, team: CaptureTheFlagTeam.Red, role: CaptureTheFlagAIRole.Offense));
+      characters.add(CaptureTheFlagPlayerAI(game: this, team: CaptureTheFlagTeam.Blue, role: CaptureTheFlagAIRole.Offense));
     }
   }
 
