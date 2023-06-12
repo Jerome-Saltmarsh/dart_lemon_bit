@@ -6,6 +6,7 @@ import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_team.d
 import 'package:bleed_server/common/src/item_type.dart';
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_gameobject_flag.dart';
 import 'package:bleed_server/src/games/isometric/isometric_character_template.dart';
+import 'package:bleed_server/src/games/isometric/isometric_collider.dart';
 import 'package:bleed_server/src/games/isometric/isometric_position.dart';
 
 import 'capture_the_flag_game.dart';
@@ -50,6 +51,10 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
         ConditionNode(flagOwnDropped),
         ActionNode(captureFlagOwn),
       ]),
+      SequenceNode([
+        ConditionNode(enemyWithinRange500),
+        ActionNode(attackNearestEnemy),
+      ]),
       ActionNode(setCharacterStateIdle),
     ]);
   }
@@ -88,6 +93,30 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
 
   void captureFlagOwn(){
     captureFlag(flagOwn);
+  }
+
+  void attackNearestEnemy(){
+     final nearestEnemy = getNearestEnemy();
+     if (nearestEnemy == null) return;
+     face(nearestEnemy);
+     if (withinAttackRange(nearestEnemy)) {
+        attackMelee();
+     } else{
+        setCharacterStateRunning();
+     }
+  }
+
+  IsometricCollider? getNearestEnemy(){
+    IsometricCollider? nearestEnemy;
+    var nearestEnemyDistanceSquared = 10000.0 * 10000.0;
+    for (final character in game.characters){
+        if (!isEnemy(character)) continue;
+        final distanceSquared = getDistanceIsoPosSquared(character);
+        if (distanceSquared > nearestEnemyDistanceSquared) continue;
+        nearestEnemyDistanceSquared = distanceSquared;
+        nearestEnemy = character;
+    }
+    return nearestEnemy;
   }
 
   void captureFlagEnemy(){
