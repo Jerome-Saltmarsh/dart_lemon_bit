@@ -134,6 +134,19 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
     behaviorTree.execute();
   }
 
+  bool enemyWithinRange500() => enemyWithinRange(500);
+
+  bool enemyWithinRange(double range){
+     final distanceSquared = range * range;
+     final characters = game.characters;
+     for (final character in characters) {
+        if (!isEnemy(character)) continue;
+        final characterDistanceSquared = getDistanceIsoPosSquared(character);
+        if (characterDistanceSquared > distanceSquared) continue;
+        return true;
+     }
+     return false;
+  }
   bool flagOwnDropped() => flagOwn.status == CaptureTheFlagFlagStatus.Dropped;
   bool holdingFlagEnemy() => flagEnemy.heldBy == this;
   bool holdingFlagOwn() => flagOwn.heldBy == this;
@@ -156,8 +169,7 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
     setCharacterStateRunning();
   }
 
-  void attack(){
-      // characterAttackMelee(player);
-    setCharacterStatePerforming(duration: 30);
+  void attackMelee(){
+    game.characterAttackMelee(this);
   }
 }

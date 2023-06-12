@@ -165,5 +165,24 @@ class IsometricCollider extends IsometricPosition {
 
   void onTeamChanged(){
 
+
   }
+  bool isAlly(dynamic that) {
+    if (identical(this, that))                    return true;
+    if (that is! IsometricCollider)               return false;
+    if (team == TeamType.Alone)                   return false;
+    final thatTeam = that.team;
+    if (thatTeam == TeamType.Alone)               return false;
+    return team == thatTeam;
+  }
+
+  bool isEnemy(dynamic that) {
+    if (identical(this, that))                    return false;
+    if (that is! IsometricCollider)               return false;
+    if (team == TeamType.Alone)                   return true;
+    final thatTeam = that.team;
+    if (thatTeam == TeamType.Alone)               return true;
+    return team != thatTeam;
+  }
+
 }

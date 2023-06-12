@@ -1200,7 +1200,7 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
       }
       return TargetCategory.Nothing;
     }
-    if (isAllie(value)) return TargetCategory.Allie;
+    if (isAlly(value)) return TargetCategory.Allie;
     if (isEnemy(value)) return TargetCategory.Enemy;
     return TargetCategory.Run;
   }
@@ -1211,9 +1211,6 @@ class IsometricPlayer extends IsometricCharacterTemplate with ByteWriter impleme
     if ((this.y - y).abs() > Max_Distance) return false;
     return true;
   }
-
-  bool isAllie(IsometricPosition? value)=> IsometricCollider.onSameTeam(this, value);
-  bool isEnemy(IsometricPosition? value) => !IsometricCollider.onSameTeam(this, value);
 
   void writeProjectiles(){
     writeByte(ServerResponse.Projectiles);
