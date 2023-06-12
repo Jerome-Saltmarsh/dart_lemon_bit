@@ -8,8 +8,10 @@ import 'package:bleed_server/src/games/isometric/isometric_character.dart';
 import 'package:bleed_server/src/games/isometric/isometric_collider.dart';
 import 'package:bleed_server/src/games/isometric/isometric_game.dart';
 import 'package:bleed_server/src/games/isometric/isometric_gameobject.dart';
+import 'package:bleed_server/src/games/isometric/isometric_job.dart';
 import 'package:bleed_server/src/games/isometric/isometric_player.dart';
 import 'package:bleed_server/src/utilities/change_notifier.dart';
+import 'package:lemon_math/functions/give_or_take.dart';
 
 
 class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
@@ -66,7 +68,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     }
 
     if (mouseLeftDown){
-      characterUseWeapon(player);
+      characterAttackMelee(player);
     }
 
     playerRunInDirection(player, Direction.fromInputDirection(direction));
@@ -74,21 +76,37 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
 
   @override
   void customOnCharacterKilled(IsometricCharacter target, src) {
-    if (target is CaptureTheFlagPlayer){
-      if (target == flagRed.heldBy) {
-        flagRed.heldBy = null;
-        flagRed.status = CaptureTheFlagFlagStatus.Dropped;
-        target.setFlagStatusNoFlag();
-        return;
-      }
 
-      if (target == flagBlue.heldBy) {
-        flagBlue.heldBy = null;
-        flagBlue.status = CaptureTheFlagFlagStatus.Dropped;
-        target.setFlagStatusNoFlag();
-        return;
-      }
+    if (target == flagRed.heldBy) {
+      clearFlagHeldBy(flagRed);
     }
+    if (target == flagBlue.heldBy) {
+      clearFlagHeldBy(flagBlue);
+    }
+
+    jobs.add(IsometricJob(200, (){
+       reviveCharacter(target);
+    }));
+  }
+
+  void reviveCharacter(IsometricCharacter character){
+     final base = getBaseOwn(character);
+     activateCollider(character);
+     character.health = character.maxHealth;
+     character.state = CharacterState.Idle;
+     character.x = base.x + giveOrTake(50);
+     character.y = base.y + giveOrTake(50);
+     character.z = base.z + 25;
+  }
+
+  IsometricGameObject getBaseOwn(IsometricCollider collider){
+     if (collider.team == CaptureTheFlagTeam.Blue){
+       return baseBlue;
+     }
+     if (collider.team == CaptureTheFlagTeam.Red){
+       return baseRed;
+     }
+     throw Exception('getBaseOwn($collider)');
   }
 
   @override

@@ -132,26 +132,13 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
   void customUpdate() {
     if (deadOrBusy) return;
     behaviorTree.execute();
-    // switch (getObjective()) {
-    //   case CaptureTheFlagPlayerAIObjective.Capture_Flag_Enemy:
-    //     captureFlagEnemy();
-    //     break;
-    //   case CaptureTheFlagPlayerAIObjective.Capture_Flag_Own:
-    //     captureFlagOwn();
-    //   default:
-    //     setCharacterStateIdle();
-    // }
   }
 
   bool flagOwnDropped() => flagOwn.status == CaptureTheFlagFlagStatus.Dropped;
-
   bool holdingFlagEnemy() => flagEnemy.heldBy == this;
   bool holdingFlagOwn() => flagOwn.heldBy == this;
-
   bool enemyFlagStatusAtBase() => flagEnemy.status == CaptureTheFlagFlagStatus.At_Base;
   bool enemyFlagStatusDropped() => flagEnemy.status == CaptureTheFlagFlagStatus.Dropped;
-
-
   bool isEnemyFlagCaptured() => flagEnemy.status == CaptureTheFlagFlagStatus.Carried_By_Enemy;
   bool enemyFlagCaptured() => flagEnemy.status == CaptureTheFlagFlagStatus.Carried_By_Enemy;
   bool enemyFlagRespawning() => flagEnemy.status == CaptureTheFlagFlagStatus.Respawning;
@@ -167,5 +154,10 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
   void moveToBaseOwn(){
     face(baseOwn);
     setCharacterStateRunning();
+  }
+
+  void attack(){
+      // characterAttackMelee(player);
+    setCharacterStatePerforming(duration: 30);
   }
 }
