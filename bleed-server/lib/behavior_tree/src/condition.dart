@@ -1,0 +1,1 @@
+typedef Condition = bool Function();

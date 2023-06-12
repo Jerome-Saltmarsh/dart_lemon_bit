@@ -1,0 +1,1 @@
+typedef Action = void Function();

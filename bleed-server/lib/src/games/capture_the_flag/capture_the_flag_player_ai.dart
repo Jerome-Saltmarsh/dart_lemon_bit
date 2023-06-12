@@ -1,5 +1,6 @@
 
 
+import 'package:bleed_server/behavior_tree/src.dart';
 import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_flag_status.dart';
 import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_team.dart';
 import 'package:bleed_server/common/src/item_type.dart';
@@ -7,7 +8,6 @@ import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_gameobj
 import 'package:bleed_server/src/games/isometric/isometric_character_template.dart';
 import 'package:bleed_server/src/games/isometric/isometric_position.dart';
 
-import 'behavior_tree.dart';
 import 'capture_the_flag_game.dart';
 import 'capture_the_flag_player_ai_objective.dart';
 
