@@ -24,6 +24,7 @@ class CaptureTheFlagGame extends GameIsometric {
   late final flagBlueStatus = Watch(CaptureTheFlagFlagStatus.At_Base, onChanged: onChangedFlagBlueStatus);
 
   final playerFlagStatus = Watch(CaptureTheFlagPlayerStatus.No_Flag);
+  final selectClass = Watch(false);
 
   CaptureTheFlagGame({required super.isometric});
 
@@ -183,6 +184,24 @@ class CaptureTheFlagGame extends GameIsometric {
             bottom: 16,
             right: 16,
             child: buildMiniMap(mapSize: 200),
+        ),
+        Positioned(
+          bottom: 16,
+          right: 16,
+          child: WatchBuilder(selectClass, (value){
+             if (!value) return const SizedBox();
+             return Container(
+              color: GameStyle.Container_Color,
+              padding: GameStyle.Container_Padding,
+              child: Row(
+                children: CaptureTheFlagCharacterClass.values
+                    .map((characterClass) => onPressed(
+                        child: text(characterClass.name),
+                        action: () => selectCharacterClass(characterClass)))
+                    .toList(growable: false),
+              ),
+            );
+          }),
         ),
         Positioned(
             top: 16,
@@ -363,4 +382,10 @@ class CaptureTheFlagGame extends GameIsometric {
       gamestream.audio.voiceTheEnemyHasScored.play();
     }
   }
+
+  void selectCharacterClass(CaptureTheFlagCharacterClass value) =>
+      gamestream.network.sendClientRequest(
+        ClientRequest.Capture_The_Flag,
+        [CaptureTheFlagRequest.selectClass.index, value.index]
+      );
 }

@@ -335,8 +335,9 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   int get maxPlayers => Players_Per_Team * 2;
 
   @override
-  void customOnPlayerJoined(IsometricPlayer player) {
+  void customOnPlayerJoined(CaptureTheFlagPlayer player) {
     balanceTeams();
+    player.writeSelectClass();
   }
 
   int get totalAIOnTeamRed => characters
@@ -390,5 +391,9 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
         if (amountToRemove == 0) break;
       }
     }
+  }
+
+  void playerSelectCharacterClass(CaptureTheFlagPlayer player, int classType){
+
   }
 }

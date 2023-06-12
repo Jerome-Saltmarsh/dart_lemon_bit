@@ -72,4 +72,9 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
   void setFlagStatusHoldingEnemyFlag(){
     flagStatus.value = CaptureTheFlagPlayerStatus.Holding_Enemy_Flag;
   }
+
+  void writeSelectClass(){
+    writeByte(ServerResponse.Capture_The_Flag);
+    writeByte(CaptureTheFlagResponse.Select_Class);
+  }
 }

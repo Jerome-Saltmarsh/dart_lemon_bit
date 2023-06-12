@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:bleed_server/common/src/byte_hex.dart';
+import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_request.dart';
 import 'package:bleed_server/common/src/character_state.dart';
 import 'package:bleed_server/common/src/character_type.dart';
 import 'package:bleed_server/common/src/client_request.dart';
@@ -30,6 +31,7 @@ import 'package:bleed_server/common/src/teleport_scenes.dart';
 import 'package:bleed_server/common/src/wind_type.dart';
 import 'package:bleed_server/src/engine.dart';
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_game.dart';
+import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_player.dart';
 import 'package:bleed_server/src/games/isometric/isometric_environment.dart';
 import 'package:bleed_server/src/games/isometric/isometric_time.dart';
 import 'package:bleed_server/src/utilities/generate_random_name.dart';
@@ -423,6 +425,29 @@ class WebSocketConnection with ByteReader {
               z: player.game.scene.gridHeightLength - 50,
               characterType: CharacterType.Zombie,
             );
+            break;
+        }
+
+        break;
+
+      case ClientRequest.Capture_The_Flag:
+        if (player is! CaptureTheFlagPlayer) {
+          errorInvalidPlayerType();
+          return;
+        }
+        final captureTheFlagRequestIndex = parseArg1(arguments);
+        if (captureTheFlagRequestIndex == null) return;
+        if (!isValidIndex(captureTheFlagRequestIndex, CaptureTheFlagRequest.values)){
+          errorInvalidClientRequest();
+          return;
+        }
+        final captureTheFlagClientRequest = CaptureTheFlagRequest.values[captureTheFlagRequestIndex];
+
+        switch (captureTheFlagClientRequest){
+          case CaptureTheFlagRequest.selectClass:
+            final characterClass = parseArg2(arguments);
+            if (characterClass == null) return;
+            player.game.playerSelectCharacterClass(player, characterClass);
             break;
         }
 

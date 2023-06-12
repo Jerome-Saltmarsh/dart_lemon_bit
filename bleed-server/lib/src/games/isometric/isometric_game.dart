@@ -166,7 +166,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }) {}
 
   /// @override
-  void customOnPlayerJoined(IsometricPlayer player) {}
+  void customOnPlayerJoined(T player) {}
 
   /// @override
   void customInit() {}
