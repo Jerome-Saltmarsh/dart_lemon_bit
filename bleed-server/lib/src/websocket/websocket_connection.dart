@@ -1018,7 +1018,7 @@ class WebSocketConnection with ByteReader {
     }
 
     joinGame(CaptureTheFlagGame(
-          scene: IsometricSceneGenerator.generateEmptyScene(),
+          scene: engine.isometricScenes.captureTheFlag,
           time: IsometricTime(enabled: false, hour: 12),
           environment: IsometricEnvironment(),
         )

@@ -219,10 +219,15 @@ class CaptureTheFlagGame extends GameIsometric {
               child: Container(
                 color: GameStyle.Container_Color,
                 padding: GameStyle.Container_Padding,
+                width: 300,
+                height: 400,
                 child: Column(
                   children: CaptureTheFlagCharacterClass.values
                       .map((characterClass) => onPressed(
-                      child: text(characterClass.name),
+                      child: Container(
+                        alignment: Alignment.center,
+                          margin: const EdgeInsets.only(bottom: 12),
+                          child: text(characterClass.name, size: 20)),
                       action: () => selectCharacterClass(characterClass)))
                       .toList(growable: false),
                 ),
