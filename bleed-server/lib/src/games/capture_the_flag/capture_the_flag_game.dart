@@ -110,7 +110,8 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     }
 
     if (mouseLeftDown) {
-      characterAttackMelee(player);
+      // characterAttackMelee(player);
+      characterUseWeapon(player);
     }
 
     playerRunInDirection(player, Direction.fromInputDirection(direction));
