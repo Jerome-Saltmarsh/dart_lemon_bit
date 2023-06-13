@@ -167,8 +167,14 @@ class ItemType {
 
   static bool isTypeEmpty(int value) => value == Empty;
   static bool isNotTypeEmpty(int value) => value != Empty;
-  static bool isPersistable(int value) => isTypeGameObject(value) || isTypeWeapon(value);
+  static bool isPersistable(int value) => (isTypeGameObject(value) || isTypeWeapon(value)) && !notPersistable.contains(value);
 
+  static const notPersistable = [
+     GameObjects_Flag_Blue,
+     GameObjects_Flag_Red,
+     GameObjects_Base_Blue,
+     GameObjects_Base_Red,
+  ];
 
   static double getRadius(int value) => const <int, double> {
     GameObjects_Vending_Machine: 25,
