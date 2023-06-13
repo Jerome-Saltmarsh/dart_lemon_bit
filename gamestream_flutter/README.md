@@ -8,10 +8,35 @@ ctrl + w            : minimal mode
 ctrl + shift + e    : view recent changes
 alt + m             : go to declaration
 
+- Should the player be able to collect resource like trees and rocks?
+
+- Should creeps drop loot?
+  - Should loot vanish after a time?
+
+- Should weapons be upgradable
+  - Should it cost gold?
+  - Should it cost more gold each upgrade?
+  - Should skills cost skill points
+
+- Should creeps be spawned?
+  - Should the player be able to spawn creeps?
+  - Should there be a passive income?
+    - Should the passive income be upgradable?
+
+- Is the aim of the game to destroy the enemy's base?
+    - Should Sniper Shots do damage to buildings?
+    - Should guard towers defend the castle?
+        - Can Guard towers can be upgraded? 
+        - Can guard towers be repaired?
+    - Can all structures be repaired?
+    - Can buildings be repaired once they are destroyed?
+
 
 [CAPTURE THE FLAG]
 [ ] hero classes  
 [ ] ai heroes
+[ ] destroyable terrain
+[ ] ai pathfinding
 [x] render objective lines
 [x] render bases on mini map
 [x] render flags on mini map

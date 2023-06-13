@@ -1,8 +1,8 @@
 
 
-// import 'package:bleed_server/behavior_tree/src.dart';
-import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_flag_status.dart';
-import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_team.dart';
+import 'dart:typed_data';
+
+import 'package:bleed_server/common/src/capture_the_flag/src.dart';
 import 'package:bleed_server/common/src/item_type.dart';
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_gameobject_flag.dart';
 import 'package:bleed_server/src/games/isometric/isometric_character_template.dart';
@@ -15,10 +15,14 @@ import 'capture_the_flag_game.dart';
 class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
   late final CaptureTheFlagGame game;
   CaptureTheFlagAIRole role;
+  CaptureTheFlagCharacterClass characterClass;
+
+  final path = Uint32List(200);
 
   CaptureTheFlagPlayerAI({
     required this.game,
     required super.team,
+    required this.characterClass,
     this.role = CaptureTheFlagAIRole.Defense,
   }) : super(
     health: 10,
@@ -28,7 +32,7 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
     y: ((team == CaptureTheFlagTeam.Red) ? game.baseRed : game.baseBlue).y,
     z: ((team == CaptureTheFlagTeam.Red) ? game.baseRed : game.baseBlue).z,
   ) {
-    if (isTeamRed){
+    if (isTeamRed) {
       bodyType = ItemType.Body_Shirt_Red;
       legsType = ItemType.Legs_Red;
     } else {
@@ -77,13 +81,15 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
 
     final heldBy = flag.heldBy;
     if (heldBy == null){
-      face(flag);
-      setCharacterStateRunning();
+      target = flag;
+      // face(flag);
+      // setCharacterStateRunning();
       return;
     }
     if (heldBy == this) {
-      face(baseOwn);
-      setCharacterStateRunning();
+      // face(baseOwn);
+      // setCharacterStateRunning();
+      target = baseOwn;
       return;
     }
     setCharacterStateIdle();
@@ -94,14 +100,15 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
   }
 
   void attackNearestEnemy(){
-     final nearestEnemy = getNearestEnemy();
-     if (nearestEnemy == null) return;
-     face(nearestEnemy);
-     if (withinAttackRange(nearestEnemy)) {
-        attackMelee();
-     } else{
-        setCharacterStateRunning();
-     }
+    target = getNearestEnemy();
+     // if (nearestEnemy == null) return;
+     // face(nearestEnemy);
+     // target = nearestEnemy;
+     // if (withinAttackRange(nearestEnemy)) {
+     //    attackMelee();
+     // } else{
+     //    setCharacterStateRunning();
+     // }
   }
 
   IsometricCollider? getNearestEnemy(){

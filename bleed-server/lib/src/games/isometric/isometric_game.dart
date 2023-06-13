@@ -1588,7 +1588,7 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     final characterLength = characters.length;
     for (var i = 0; i < characterLength; i++) {
       final character = characters[i];
-      updateCharacter(character);
+      updateIsometricCharacter(character);
       if (character is IsometricPlayer) {
         updatePlayer(character);
         customUpdatePlayer(character);
@@ -2130,12 +2130,19 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
   }
 
-  void updateCharacter(IsometricCharacter character) {
+  void updateIsometricCharacter(IsometricCharacter character) {
     if (character.dead) return;
     if (!character.active) return;
 
     if (!character.isPlayer) {
       character.lookRadian = character.faceAngle;
+    }
+
+    final characterTarget = character.target;
+
+    if (characterTarget != null) {
+       character.face(characterTarget);
+       character.setCharacterStateRunning();
     }
 
     character.updateAccuracy();

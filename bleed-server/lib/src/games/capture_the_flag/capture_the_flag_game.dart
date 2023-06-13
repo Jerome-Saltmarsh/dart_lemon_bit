@@ -74,20 +74,24 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
       characters.add(CaptureTheFlagPlayerAI(
           game: this,
           team: CaptureTheFlagTeam.Red,
+          characterClass: CaptureTheFlagCharacterClass.scout,
           role: CaptureTheFlagAIRole.Defense));
       characters.add(CaptureTheFlagPlayerAI(
           game: this,
           team: CaptureTheFlagTeam.Blue,
+          characterClass: CaptureTheFlagCharacterClass.scout,
           role: CaptureTheFlagAIRole.Defense));
     }
     for (var i = 1; i <= 2; i++) {
       characters.add(CaptureTheFlagPlayerAI(
           game: this,
           team: CaptureTheFlagTeam.Red,
+          characterClass: CaptureTheFlagCharacterClass.scout,
           role: CaptureTheFlagAIRole.Offense));
       characters.add(CaptureTheFlagPlayerAI(
           game: this,
           team: CaptureTheFlagTeam.Blue,
+          characterClass: CaptureTheFlagCharacterClass.scout,
           role: CaptureTheFlagAIRole.Offense));
     }
   }
