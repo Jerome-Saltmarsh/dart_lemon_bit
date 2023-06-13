@@ -4,6 +4,7 @@ import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric.dar
 import 'package:gamestream_flutter/gamestream/isometric/isometric_engine.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric_position.dart';
 import 'package:gamestream_flutter/library.dart';
+import 'package:bleed_common/src/capture_the_flag/src.dart';
 import 'package:lemon_byte/byte_reader.dart';
 
 import 'games/game_scissors_paper_rock.dart';
@@ -179,6 +180,9 @@ class ServerResponseReader with ByteReader {
         break;
       case CaptureTheFlagResponse.Select_Class:
         captureTheFlag.selectClass.value = readBool();
+        break;
+      case CaptureTheFlagResponse.Game_Status:
+        captureTheFlag.gameStatus.value = CaptureTheFlagGameStatus.values[readByte()];
         break;
     }
   }

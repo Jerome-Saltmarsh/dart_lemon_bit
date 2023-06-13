@@ -1,5 +1,6 @@
 
 import 'package:bleed_server/common/src.dart';
+import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_game_status.dart';
 import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_player_status.dart';
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_game.dart';
 import 'package:bleed_server/src/games/isometric/isometric_player.dart';
@@ -12,16 +13,20 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
 
   late final flagStatus = ChangeNotifier(
       CaptureTheFlagPlayerStatus.No_Flag,
-      writePlayerFlagStatus,
+      onChangedFlagStatus,
   );
-
-  bool get isTeamRed => team == CaptureTheFlagTeam.Red;
-  bool get isTeamBlue => team == CaptureTheFlagTeam.Blue;
 
   CaptureTheFlagPlayer({required this.game}) : super(game: game) {
     writeScore();
     damage = 1;
     weaponType = ItemType.Empty;
+  }
+
+  bool get isTeamRed => team == CaptureTheFlagTeam.Red;
+  bool get isTeamBlue => team == CaptureTheFlagTeam.Blue;
+
+  void onChangedFlagStatus(int value){
+    writePlayerFlagStatus(value);
   }
 
   @override
@@ -45,10 +50,10 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
     writeIsometricPosition(game.baseBlue);
   }
 
-  void writePlayerFlagStatus() {
+  void writePlayerFlagStatus(int flagStatus) {
     writeByte(ServerResponse.Capture_The_Flag);
     writeByte(CaptureTheFlagResponse.Player_Flag_Status);
-    writeByte(flagStatus.value);
+    writeByte(flagStatus);
   }
 
   void writeScore() {
@@ -77,5 +82,11 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
     writeByte(ServerResponse.Capture_The_Flag);
     writeByte(CaptureTheFlagResponse.Select_Class);
     writeBool(value);
+  }
+
+  void writeCaptureTheFlagGameStatus(CaptureTheFlagGameStatus value){
+    writeByte(ServerResponse.Capture_The_Flag);
+    writeByte(CaptureTheFlagResponse.Game_Status);
+    writeByte(value.index);
   }
 }

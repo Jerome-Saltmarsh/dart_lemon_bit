@@ -18,9 +18,6 @@ import 'package:gamestream_flutter/widgets/animated_widget.dart';
 import 'package:golden_ratio/constants.dart';
 
 import 'game_isometric_colors.dart';
-import 'game_isometric_debug.dart';
-
-
 
 
 const nothing = SizedBox();

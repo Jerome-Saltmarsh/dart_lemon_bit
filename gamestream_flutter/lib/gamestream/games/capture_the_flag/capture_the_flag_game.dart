@@ -25,6 +25,7 @@ class CaptureTheFlagGame extends GameIsometric {
 
   final playerFlagStatus = Watch(CaptureTheFlagPlayerStatus.No_Flag);
   final selectClass = Watch(false);
+  final gameStatus = Watch(CaptureTheFlagGameStatus.In_Progress);
 
   CaptureTheFlagGame({required super.isometric});
 
@@ -180,6 +181,23 @@ class CaptureTheFlagGame extends GameIsometric {
   Widget customBuildUI(BuildContext context) {
     return Stack(
       children: [
+        Positioned(
+          bottom: 0,
+          right: 0,
+          child: WatchBuilder(gameStatus, (value){
+             if (value == CaptureTheFlagGameStatus.In_Progress) return nothing;
+             return buildFullscreen(
+               child: Container(
+                  width: 300,
+                  height: 200,
+                  color: GameStyle.Container_Color,
+                  padding: GameStyle.Container_Padding,
+                  alignment: Alignment.center,
+                  child: text(value.name),
+               ),
+             );
+          }),
+        ),
         Positioned(
           bottom: 16,
           right: 16,

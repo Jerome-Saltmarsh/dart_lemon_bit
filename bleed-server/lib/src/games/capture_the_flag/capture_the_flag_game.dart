@@ -1,6 +1,7 @@
 import 'package:bleed_server/common/src.dart';
 import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_character_class.dart';
 import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_flag_status.dart';
+import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_game_status.dart';
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_gameobject_flag.dart';
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_player.dart';
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_player_ai.dart';
@@ -14,6 +15,7 @@ import 'package:bleed_server/src/utilities/change_notifier.dart';
 import 'package:lemon_math/functions/give_or_take.dart';
 
 class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
+  static const Target_Points = 3;
   static const Players_Per_Team = 5;
   static const Base_Radius = 64.0;
   static const Flag_Respawn_Duration = 500;
@@ -24,8 +26,9 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   late final IsometricGameObject baseRed;
   late final IsometricGameObject baseBlue;
 
-  late final scoreRed = ChangeNotifier(0, dispatchScore);
-  late final scoreBlue = ChangeNotifier(0, dispatchScore);
+  late final gameStatus = ChangeNotifier(CaptureTheFlagGameStatus.In_Progress, onChangedGameStatus);
+  late final scoreRed = ChangeNotifier(0, onChangedScoreRed);
+  late final scoreBlue = ChangeNotifier(0, onChangedScoreBlue);
 
   CaptureTheFlagGame({
     required super.scene,
@@ -270,6 +273,22 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
           CaptureTheFlagGameObjectFlag flag) =>
       flag == flagRed ? flagBlue : flagRed;
 
+
+
+  void onChangedScoreRed(int scoreRed) {
+    dispatchScore();
+    if (scoreRed >= Target_Points) {
+      gameStatus.value = CaptureTheFlagGameStatus.Red_Won;
+    }
+  }
+
+  void onChangedScoreBlue(int scoreBlue){
+    dispatchScore();
+    if (scoreBlue >= Target_Points) {
+      gameStatus.value = CaptureTheFlagGameStatus.Blue_Won;
+    }
+  }
+
   void dispatchScore() {
     for (final player in players) {
       player.writeScore();
@@ -340,6 +359,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   void customOnPlayerJoined(CaptureTheFlagPlayer player) {
     balanceTeams();
     player.writeSelectClass(true);
+    player.writeCaptureTheFlagGameStatus(gameStatus.value);
   }
 
   int get totalAIOnTeamRed => characters
@@ -414,5 +434,12 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
          break;
      }
      player.writeSelectClass(false);
+  }
+
+  void onChangedGameStatus(CaptureTheFlagGameStatus value){
+    running = value == CaptureTheFlagGameStatus.In_Progress;
+    for (final player in players) {
+      player.writeCaptureTheFlagGameStatus(value);
+    }
   }
 }
