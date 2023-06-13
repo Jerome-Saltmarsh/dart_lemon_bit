@@ -184,6 +184,9 @@ class ServerResponseReader with ByteReader {
       case CaptureTheFlagResponse.Game_Status:
         captureTheFlag.gameStatus.value = CaptureTheFlagGameStatus.values[readByte()];
         break;
+      case CaptureTheFlagResponse.Next_Game_Count_Down:
+        captureTheFlag.nextGameCountDown.value = readUInt16();
+        break;
     }
   }
 

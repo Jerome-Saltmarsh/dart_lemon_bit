@@ -19,6 +19,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   static const Players_Per_Team = 5;
   static const Base_Radius = 64.0;
   static const Flag_Respawn_Duration = 500;
+  static const Next_Game_Duration = 45 * 8;
 
   late final CaptureTheFlagGameObjectFlag flagRed;
   late final CaptureTheFlagGameObjectFlag flagBlue;
@@ -29,6 +30,7 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   late final gameStatus = ChangeNotifier(CaptureTheFlagGameStatus.In_Progress, onChangedGameStatus);
   late final scoreRed = ChangeNotifier(0, onChangedScoreRed);
   late final scoreBlue = ChangeNotifier(0, onChangedScoreBlue);
+  late final nextGameCountDown = ChangeNotifier(Next_Game_Duration, onChangedNextGameCountDown);
 
   CaptureTheFlagGame({
     required super.scene,
@@ -282,6 +284,21 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     }
   }
 
+  void onChangedNextGameCountDown(int value) {
+    for (final player in players) {
+      player.writeNextGameCountDown(value);
+    }
+    if (value == 0){
+      setGameStatusInProgress();
+    }
+  }
+
+  void setGameStatusInProgress() {
+    gameStatus.value = CaptureTheFlagGameStatus.In_Progress;
+  }
+
+
+
   void onChangedScoreBlue(int scoreBlue){
     dispatchScore();
     if (scoreBlue >= Target_Points) {
@@ -318,6 +335,13 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     final flagHeldBy = flag.heldBy;
     if (flagHeldBy == null) return;
     flag.moveTo(flagHeldBy);
+  }
+
+  @override
+  void customNotRunningUpdate() {
+     if (nextGameCountDown.value > 0) {
+       nextGameCountDown.value--;
+     }
   }
 
   @override
@@ -437,9 +461,17 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   }
 
   void onChangedGameStatus(CaptureTheFlagGameStatus value){
-    running = value == CaptureTheFlagGameStatus.In_Progress;
+    final gameOver = value != CaptureTheFlagGameStatus.In_Progress;
+    running = !gameOver;
+    if (gameOver) {
+      resetNextGameCountDown();
+    }
     for (final player in players) {
       player.writeCaptureTheFlagGameStatus(value);
     }
+  }
+
+  void resetNextGameCountDown() {
+    nextGameCountDown.value = Next_Game_Duration;
   }
 }

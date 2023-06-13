@@ -26,6 +26,7 @@ class CaptureTheFlagGame extends GameIsometric {
   final playerFlagStatus = Watch(CaptureTheFlagPlayerStatus.No_Flag);
   final selectClass = Watch(false);
   final gameStatus = Watch(CaptureTheFlagGameStatus.In_Progress);
+  final nextGameCountDown = Watch(0);
 
   CaptureTheFlagGame({required super.isometric});
 
@@ -193,7 +194,13 @@ class CaptureTheFlagGame extends GameIsometric {
                   color: GameStyle.Container_Color,
                   padding: GameStyle.Container_Padding,
                   alignment: Alignment.center,
-                  child: text(value.name),
+                  child: Column(
+                    children: [
+                      text(value.name),
+                      WatchBuilder(nextGameCountDown, (nextGameCountDown) =>
+                          text("NEXT GAME STARTS IN $nextGameCountDown")),
+                    ],
+                  ),
                ),
              );
           }),

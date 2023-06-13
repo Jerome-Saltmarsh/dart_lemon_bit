@@ -9,4 +9,6 @@ class CaptureTheFlagResponse {
    static const Player_Flag_Status = 6;
    static const Select_Class    = 7;
    static const Game_Status    = 8;
+   static const Next_Game_Count_Down    = 9;
+
 }

@@ -1418,8 +1418,17 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     }
   }
 
+  /// called while running is false
+  void customNotRunningUpdate(){
+
+  }
+
   void update() {
-    if (players.isEmpty || !running) return;
+    if (!running) {
+      customNotRunningUpdate();
+      return;
+    }
+    if (players.isEmpty) return;
 
     frame++;
     time.update();
