@@ -31,10 +31,7 @@ import 'package:bleed_server/common/src/server_response.dart';
 import 'package:bleed_server/common/src/teleport_scenes.dart';
 import 'package:bleed_server/common/src/wind_type.dart';
 import 'package:bleed_server/src/engine.dart';
-import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_game.dart';
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_player.dart';
-import 'package:bleed_server/src/games/isometric/isometric_environment.dart';
-import 'package:bleed_server/src/games/isometric/isometric_time.dart';
 import 'package:bleed_server/src/utilities/generate_random_name.dart';
 import 'package:bleed_server/src/game/game.dart';
 import 'package:bleed_server/src/game/player.dart';
@@ -1010,20 +1007,20 @@ class WebSocketConnection with ByteReader {
     joinGame(AeonGame(scene: engine.isometricScenes.town));
   }
 
-  Future joinGameCaptureTheFlag() async {
-    for (final game in engine.games) {
-      if (game.isFull) continue;
-      if (game is! CaptureTheFlagGame) continue;
-      return joinGame(game);
-    }
-
-    joinGame(CaptureTheFlagGame(
-          scene: engine.isometricScenes.captureTheFlag,
-          time: IsometricTime(enabled: false, hour: 12),
-          environment: IsometricEnvironment(),
-        )
-    );
-  }
+  // Future joinGameCaptureTheFlag() async {
+  //   for (final game in engine.games) {
+  //     if (game.isFull) continue;
+  //     if (game is! CaptureTheFlagGame) continue;
+  //     return joinGame(game);
+  //   }
+  //
+  //   joinGame(CaptureTheFlagGame(
+  //         scene: engine.isometricScenes.captureTheFlag,
+  //         time: IsometricTime(enabled: false, hour: 12),
+  //         environment: IsometricEnvironment(),
+  //       )
+  //   );
+  // }
 
   void joinGame(Game game){
     if (!engine.games.contains(game)){
@@ -1071,7 +1068,7 @@ class WebSocketConnection with ByteReader {
         joinGameAeon();
         break;
       case GameType.Capture_The_Flag:
-        joinGameCaptureTheFlag();
+        _player = engine.joinGameCaptureTheFlag();
         break;
       case GameType.Mobile_Aeon:
         joinGameAeonMobile();
