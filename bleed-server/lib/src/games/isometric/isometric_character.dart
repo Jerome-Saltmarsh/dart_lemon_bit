@@ -16,34 +16,63 @@ import 'isometric_position.dart';
 import 'isometric_settings.dart';
 
 abstract class IsometricCharacter extends IsometricCollider {
-  /// VARIABLES
-
-  /// between 0 and 1
-  /// 0 means very accurate and 1 is very inaccurate
+  /// between 0 and 1. 0 means very accurate and 1 is very inaccurate
   var _accuracy = 0.0;
   var _faceAngle = 0.0;
   var _health = 1;
   var _maxHealth = 1;
+  var _weaponStateDurationTotal = 0;
+  var _weaponType = ItemType.Empty;
+  var _characterType = 0;
+
   var damage = 1;
   var state = CharacterState.Idle;
   var stateDurationRemaining = 0;
   var stateDuration = 0;
   var nextFootstep = 0;
   var animationFrame = 0;
-  IsometricPosition? target;
   var weaponState = WeaponState.Idle;
   var weaponStateDuration = 0;
-  var _weaponStateDurationTotal = 0;
-  var _weaponType = ItemType.Empty;
-  var _characterType = 0;
-  var lookRadian = 0.0;
-  var name = "";
-  var runSpeed = 1.0;
-
   var buffDuration = 0;
+  var lookRadian = 0.0;
+  var runSpeed = 1.0;
+  var name = "";
   var buffInvincible      = false;
   var buffDoubleDamage    = false;
   var buffInvisible       = false;
+
+  IsometricPosition? target;
+
+  IsometricCharacter({
+    required int characterType,
+    required int health,
+    required int weaponType,
+    required int team,
+    required int damage,
+    double x = 0,
+    double y = 0,
+    double z = 0,
+    String? name,
+  }) : super(
+    x: x,
+    y: y,
+    z: z,
+    radius: CharacterType.getRadius(characterType),
+  ) {
+    maxHealth = health;
+    this.weaponType = weaponType;
+    this.characterType = characterType;
+    this.health = health;
+    this.team = team;
+    this.damage = damage;
+    if (name != null){
+      this.name = name;
+    }
+    fixed = false;
+    physical = true;
+    hitable = true;
+    radius = CharacterType.getRadius(characterType);
+  }
 
   int get buffByte {
     var buff = 0;
@@ -60,7 +89,6 @@ abstract class IsometricCharacter extends IsometricCollider {
   }
 
   int get weaponType => _weaponType;
-
   bool get isPlayer => false;
   bool get aliveAndActive => alive && active;
 
@@ -239,37 +267,6 @@ abstract class IsometricCharacter extends IsometricCollider {
   void assignWeaponStateAiming() {
     weaponState = WeaponState.Aiming;
     weaponStateDurationTotal = 10;
-  }
-
-  IsometricCharacter({
-    required int characterType,
-    required int health,
-    required int weaponType,
-    required int team,
-    required int damage,
-    double x = 0,
-    double y = 0,
-    double z = 0,
-    String? name,
-  }) : super(
-      x: x,
-      y: y,
-      z: z,
-      radius: CharacterType.getRadius(characterType),
-  ) {
-    maxHealth = health;
-    this.weaponType = weaponType;
-    this.characterType = characterType;
-    this.health = health;
-    this.team = team;
-    this.damage = damage;
-    if (name != null){
-      this.name = name;
-    }
-    fixed = false;
-    physical = true;
-    hitable = true;
-    radius = CharacterType.getRadius(characterType);
   }
 
   void setCharacterStatePerforming({required int duration}){
