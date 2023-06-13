@@ -35,14 +35,10 @@ import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_player.
 import 'package:bleed_server/src/utilities/generate_random_name.dart';
 import 'package:bleed_server/src/game/game.dart';
 import 'package:bleed_server/src/game/player.dart';
-import 'package:bleed_server/src/games/aeon/aeon_game.dart';
 import 'package:bleed_server/src/games/aeon/aeon_player.dart';
-import 'package:bleed_server/src/games/fight2d/game_fight2d.dart';
 import 'package:bleed_server/src/games/fight2d/game_fight2d_player.dart';
-import 'package:bleed_server/src/games/fight2d/game_fight2d_scene_generator.dart';
 import 'package:bleed_server/src/games/game_editor.dart';
 import 'package:bleed_server/src/games/game_mobile_aoen.dart';
-import 'package:bleed_server/src/games/game_combat.dart';
 import 'package:bleed_server/src/games/isometric/isometric_game.dart';
 import 'package:bleed_server/src/games/isometric/isometric_player.dart';
 import 'package:bleed_server/src/games/isometric/isometric_scene.dart';
@@ -389,7 +385,7 @@ class WebSocketConnection with ByteReader {
         break;
 
       case ClientRequest.Editor_Load_Game:
-          joinGameEditor(name: arguments[1]);
+          _player = engine.joinGameEditor(name: arguments[1]);
           break;
 
       case ClientRequest.Time_Set_Hour:
@@ -963,64 +959,9 @@ class WebSocketConnection with ByteReader {
     );
   }
 
-  Future joinGameEditor({String? name}) async {
-    joinGame(await engine.findGameEditorNew());
-  }
-
   Future joinGameEditorScene(IsometricScene scene) async {
     joinGame(GameEditor(scene: scene));
   }
-
-  Future joinGameFight2D() async {
-    for (final game in engine.games) {
-      if (game.isFull) continue;
-      if (game is! GameFight2D) continue;
-      return joinGame(game);
-    }
-    joinGame(GameFight2D(scene: GameFight2DSceneGenerator.generate()));
-  }
-
-  Future joinGameCombat() async {
-    for (final game in engine.games) {
-      if (game.isFull) continue;
-      if (game is! GameCombat) continue;
-      return joinGame(game);
-    }
-    joinGame(GameCombat(scene: engine.isometricScenes.warehouse02));
-  }
-
-  Future joinGameAeonMobile() async {
-    for (final game in engine.games) {
-      if (game.isFull) continue;
-      if (game is! GameMobileAeon) continue;
-      return joinGame(game);
-    }
-    joinGame(GameMobileAeon(scene: engine.isometricScenes.town));
-  }
-
-  Future joinGameAeon() async {
-    for (final game in engine.games) {
-      if (game.isFull) continue;
-      if (game is! AeonGame) continue;
-      return joinGame(game);
-    }
-    joinGame(AeonGame(scene: engine.isometricScenes.town));
-  }
-
-  // Future joinGameCaptureTheFlag() async {
-  //   for (final game in engine.games) {
-  //     if (game.isFull) continue;
-  //     if (game is! CaptureTheFlagGame) continue;
-  //     return joinGame(game);
-  //   }
-  //
-  //   joinGame(CaptureTheFlagGame(
-  //         scene: engine.isometricScenes.captureTheFlag,
-  //         time: IsometricTime(enabled: false, hour: 12),
-  //         environment: IsometricEnvironment(),
-  //       )
-  //   );
-  // }
 
   void joinGame(Game game){
     if (!engine.games.contains(game)){
@@ -1059,25 +1000,25 @@ class WebSocketConnection with ByteReader {
 
     switch (gameType) {
       case GameType.Editor:
-        joinGameEditor();
+        _player = engine.joinGameEditor();
         break;
       case GameType.Combat:
-        joinGameCombat();
+        _player = engine.joinGameCombat();
         break;
       case GameType.Aeon:
-        joinGameAeon();
+        _player = engine.joinGameAeon();
         break;
       case GameType.Capture_The_Flag:
         _player = engine.joinGameCaptureTheFlag();
         break;
       case GameType.Mobile_Aeon:
-        joinGameAeonMobile();
+        _player = engine.joinGameAeonMobile();
         break;
       case GameType.Rock_Paper_Scissors:
         joinGame(engine.getGameRockPaperScissors());
         break;
       case GameType.Fight2D:
-        joinGameFight2D();
+        _player = engine.joinGameFight2D();
         break;
       default:
         sendGameError(GameError.Unable_To_Join_Game);
