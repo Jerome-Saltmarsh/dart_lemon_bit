@@ -68,7 +68,7 @@ abstract class IsometricCharacter extends IsometricCollider {
     visitedNodesIndex = 0;
     pathIndex = 0;
     pathEnd = 0;
-    if (visitNode(scene.getNodeIndexV3(this), scene)){
+    if (visitNode(indexRow, indexColumn, indexZ, scene)){
       pathEnd = pathIndex;
       pathIndex = 0;
     } else {
@@ -77,12 +77,28 @@ abstract class IsometricCharacter extends IsometricCollider {
     }
   }
 
-  bool visitNode(int index, IsometricScene scene){
+  bool visitNode(int row, int column, int z, IsometricScene scene){
+    if (row < 0)
+      return false;
+    if (column < 0)
+      return false;
+    if (z < 0)
+      return false;
+    if (row >= scene.gridRows)
+      return false;
+    if (column >= scene.gridColumns)
+      return false;
+    if (z > scene.gridHeight)
+      return false;
+
+    final index = scene.getNodeIndex(z, row, column);
+
     if (index == targetIndex) {
       return true;
     }
 
     if (index < 0) return false;
+    if (index >= scene.nodeOrientations.length) return false;
 
     final nodeOrientation = scene.nodeOrientations[index];
     if (nodeOrientation != NodeOrientation.None) {
@@ -104,28 +120,26 @@ abstract class IsometricCharacter extends IsometricCollider {
 
     if (pathIndex >= path.length) return true;
 
-    final indexRow = scene.getNodeIndexRow(index);
-    if (indexRow < targetIndexRow){
-      if (visitNode(index + scene.gridColumns, scene)){
+    if (row < targetIndexRow){
+      if (visitNode(row + 1, column, z, scene)){
         return true;
       }
       // if that path fails, then cut the path back to a previous spot
       pathIndex = cachePathIndex;
-    } else if (indexRow > targetIndexRow){
-      if (visitNode(index - scene.gridColumns, scene)){
+    } else if (row > targetIndexRow){
+      if (visitNode(row - 1, column, z, scene)){
         return true;
       }
       pathIndex = cachePathIndex;
     }
 
-    final indexColumn = scene.getNodeIndexColumn(index);
-    if (indexColumn < targetIndexColumn){
-      if (visitNode(index - scene.gridRows, scene)){
+    if (column < targetIndexColumn){
+      if (visitNode(row, column - 1, z, scene)){
         return true;
       }
       pathIndex = cachePathIndex;
-    } else if (indexColumn > targetIndexColumn){
-      if (visitNode(index + scene.gridRows, scene)){
+    } else if (column > targetIndexColumn){
+      if (visitNode(row, column + 1, z, scene)){
         return true;
       }
       pathIndex = cachePathIndex;
