@@ -140,22 +140,34 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
     }
 
     if (pathIndex < pathEnd) {
-      final scene = game.scene;
-      final pathNodeIndex = path[pathIndex];
-
-      assert (scene.nodeOrientations[pathNodeIndex] == NodeOrientation.None);
-      final pathNodeX = scene.getNodePositionX(pathNodeIndex);
-      final pathNodeY = scene.getNodePositionY(pathNodeIndex);
-      final pathNodeZ = scene.getNodePositionZ(pathNodeIndex);
-      if (withinDistance(pathNodeX, pathNodeY, pathNodeZ, 2.0)) {
-        pathIndex++;
-      } else {
-        faceXY(pathNodeX, pathNodeY);
-        setCharacterStateRunning();
-      }
+      followPath();
     } else {
       setCharacterStateIdle();
     }
+
+    updateBehaviorTree();
+  }
+
+  void followPath() {
+    final scene = game.scene;
+    final pathNodeIndex = path[pathIndex];
+    assert (scene.nodeOrientations[pathNodeIndex] == NodeOrientation.None);
+    final pathNodeX = scene.getNodePositionX(pathNodeIndex);
+    final pathNodeY = scene.getNodePositionY(pathNodeIndex);
+    final pathNodeZ = scene.getNodePositionZ(pathNodeIndex);
+    if (withinDistance(pathNodeX, pathNodeY, pathNodeZ, 2.0)) {
+      pathIndex++;
+    } else {
+      faceXY(pathNodeX, pathNodeY);
+      setCharacterStateRunning();
+    }
+  }
+
+  void updateBehaviorTree(){
+
+    // if (enemyWithinRange(50))
+    //   return attackNearestEnemy();
+
 
     if (holdingFlagAny())
       return moveToBaseOwn();

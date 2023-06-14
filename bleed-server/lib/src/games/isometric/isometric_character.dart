@@ -51,7 +51,7 @@ abstract class IsometricCharacter extends IsometricCollider {
   static final visitedNodes = Uint32List(10000);
   static var visitedNodesIndex = 0;
 
-  final path = Uint32List(10);
+  final path = Uint32List(20);
 
   var pathIndex = 0;
   var pathEnd = 0;
@@ -124,35 +124,118 @@ abstract class IsometricCharacter extends IsometricCollider {
     path[pathIndex] = index;
     pathIndex++;
 
-    if (pathIndex >= path.length) return true;
+    if (pathIndex >= path.length)
+      return true;
 
-    if (row < targetIndexRow){
-      if (visitNode(row + 1, column, z, scene)){
+    // if (row < targetIndexRow){
+    //   if (visitNode(row + 1, column, z, scene)){
+    //     return true;
+    //   }
+    //   // if that path fails, then cut the path back to a previous spot
+    //   pathIndex = cachePathIndex;
+    // } else if (row > targetIndexRow){
+    //   if (visitNode(row - 1, column, z, scene)){
+    //     return true;
+    //   }
+    //   pathIndex = cachePathIndex;
+    // }
+    //
+    // if (column < targetIndexColumn){
+    //   if (visitNode(row, column + 1, z, scene)){
+    //     return true;
+    //   }
+    //   pathIndex = cachePathIndex;
+    // } else if (column > targetIndexColumn){
+    //   if (visitNode(row, column - 1, z, scene)){
+    //     return true;
+    //   } else {
+    //     pathIndex = cachePathIndex;
+    //   }
+    // }
+
+
+    final direction = convertToDirection(targetIndexRow - row, targetIndexColumn - column);
+
+    if (visitNode(row + convertDirectionToRowVel(direction), column + convertDirectionToColumnVel(direction), z, scene)){
+      return true;
+    }
+    pathIndex = cachePathIndex;
+
+    for (var i = 1; i <= 3; i++){
+      final dirLess = (direction - 1) % 8;
+      if (visitNode(row + convertDirectionToRowVel(dirLess), column + convertDirectionToColumnVel(dirLess), z, scene)){
         return true;
       }
-      // if that path fails, then cut the path back to a previous spot
       pathIndex = cachePathIndex;
-    } else if (row > targetIndexRow){
-      if (visitNode(row - 1, column, z, scene)){
+      final dirMore = (direction + 1) % 8;
+      if (visitNode(row + convertDirectionToRowVel(dirMore), column + convertDirectionToColumnVel(dirMore), z, scene)){
         return true;
       }
       pathIndex = cachePathIndex;
     }
 
-    if (column < targetIndexColumn){
-      if (visitNode(row, column + 1, z, scene)){
-        return true;
-      }
-      pathIndex = cachePathIndex;
-    } else if (column > targetIndexColumn){
-      if (visitNode(row, column - 1, z, scene)){
-        return true;
-      }
-      pathIndex = cachePathIndex;
-    }
-    return true;
+    final dirOpp = (direction + 4) % 8;
+    return visitNode(row + convertDirectionToRowVel(dirOpp), column + convertDirectionToColumnVel(dirOpp), z, scene);
+
+    // if (visitNode(row, column + 1, z, scene)){
+    //   return true;
+    // }
+    // if (visitNode(row, column - 1, z, scene)){
+    //   return true;
+    // }
+    // if (visitNode(row + 1, column, z, scene)){
+    //   return true;
+    // }
+    // if (visitNode(row - 1, column, z, scene)){
+    //   return true;
+    // }
+    //
+    // return false;
   }
 
+  int convertToDirection(int diffRows, int diffCols){
+    if (diffRows == 0) {
+      if (diffCols < 0) return 0;
+      return 5;
+    }
+    if (diffRows > 0){
+      if (diffCols < 0) return 7;
+      return 2;
+    }
+    if (diffCols == 0){
+      if (diffRows < 0) return 6;
+      return 3;
+    }
+    if (diffCols < 0){
+      if (diffRows < 0) return 5;
+      return 3;
+    }
+    return 4;
+  }
+
+  int convertDirectionToColumnVel(int direction)=> switch(direction){
+        0 => -1,
+        1 => -1,
+        2 => 0,
+        3 => 1,
+        4 => 1,
+        5 => 1,
+        6 => 0,
+        7 => -1,
+        _ => 0,
+     };
+
+  int convertDirectionToRowVel(int direction)=> switch(direction){
+    0 => 0,
+    1 => 1,
+    2 => 1,
+    3 => 1,
+    4 => 0,
+    5 => -1,
+    6 => -1,
+    7 => -1,
+    _ => 0,
+  };
 
 
   IsometricCharacter({
