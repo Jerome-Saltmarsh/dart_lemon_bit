@@ -16,6 +16,6 @@ class Games {
 
   Games(Gamestream gamestream) {
      isometric = GameIsometric(isometric: gamestream.isometric);
-     captureTheFlag = CaptureTheFlagGame(isometric: gamestream.isometric);
+     captureTheFlag = CaptureTheFlagGame(gamestream: gamestream);
   }
 }

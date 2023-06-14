@@ -5,6 +5,7 @@ import 'package:bleed_common/src/capture_the_flag/src.dart';
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_ui.dart';
+import 'package:gamestream_flutter/gamestream/gamestream.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_items.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric_position.dart';
@@ -12,30 +13,28 @@ import 'package:gamestream_flutter/library.dart';
 
 class CaptureTheFlagGame extends GameIsometric {
 
+  var objectiveLinesEnabled = false;
+  var characterTargetTotal = 0;
+
+  final Gamestream gamestream;
   final scoreRed = Watch(0);
   final scoreBlue = Watch(0);
-
   final flagPositionRed = IsometricPosition();
   final flagPositionBlue = IsometricPosition();
-
   final basePositionRed = IsometricPosition();
   final basePositionBlue = IsometricPosition();
-
-  late final flagRedStatus = Watch(CaptureTheFlagFlagStatus.At_Base, onChanged: onChangedFlagRedStatus);
-  late final flagBlueStatus = Watch(CaptureTheFlagFlagStatus.At_Base, onChanged: onChangedFlagBlueStatus);
-
   final playerFlagStatus = Watch(CaptureTheFlagPlayerStatus.No_Flag);
   final selectClass = Watch(false);
   final gameStatus = Watch(CaptureTheFlagGameStatus.In_Progress);
   final nextGameCountDown = Watch(0);
-
-  var characterTargetTotal = 0;
   final characterPaths = <Uint16List>[];
   final characterTargets = Float32List(2000);
-
   final debugMode = Watch(false);
 
-  CaptureTheFlagGame({required super.isometric});
+  late final flagRedStatus = Watch(CaptureTheFlagFlagStatus.At_Base, onChanged: onChangedFlagRedStatus);
+  late final flagBlueStatus = Watch(CaptureTheFlagFlagStatus.At_Base, onChanged: onChangedFlagBlueStatus);
+
+  CaptureTheFlagGame({required this.gamestream}) : super(isometric: gamestream.isometric);
 
   bool get playerIsTeamRed => player.team.value == CaptureTheFlagTeam.Red;
   bool get playerIsTeamBlue => player.team.value == CaptureTheFlagTeam.Blue;
@@ -148,12 +147,16 @@ class CaptureTheFlagGame extends GameIsometric {
     super.drawCanvas(canvas, size);
 
     engine.paint.color = Colors.orange;
-    final nodes = gamestream.isometric.nodes;
 
     if (debugMode.value){
-      renderDebugMode(nodes);
+      renderDebugMode(gamestream.isometric.nodes);
     }
+    if (objectiveLinesEnabled){
+      renderObjectiveLines();
+    }
+  }
 
+  void renderObjectiveLines() {
     switch (playerFlagStatus.value){
       case CaptureTheFlagPlayerStatus.No_Flag:
         renderLineToEnemyFlag();
@@ -317,7 +320,9 @@ class CaptureTheFlagGame extends GameIsometric {
                     action: toggleDebugMode,
                     child: GameIsometricUI.buildWindowMenuItem(
                       title: "DEBUG",
-                      child: watch(debugMode, GameIsometricUI.buildIconCheckbox),
+                      child: Container(
+                          margin: const EdgeInsets.only(left: 16),
+                          child: watch(debugMode, GameIsometricUI.buildIconCheckbox)),
                     ),
                   ),
                   text("FLAG STATUS"),
