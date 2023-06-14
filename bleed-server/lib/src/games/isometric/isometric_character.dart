@@ -120,17 +120,17 @@ abstract class IsometricCharacter extends IsometricCollider {
 
     final indexColumn = scene.getNodeIndexColumn(index);
     if (indexColumn < targetIndexColumn){
-      if (visitNode(index + scene.gridRows, scene)){
-        return true;
-      }
-      pathIndex = cachePathIndex;
-    } else if (indexColumn > targetIndexColumn){
       if (visitNode(index - scene.gridRows, scene)){
         return true;
       }
       pathIndex = cachePathIndex;
+    } else if (indexColumn > targetIndexColumn){
+      if (visitNode(index + scene.gridRows, scene)){
+        return true;
+      }
+      pathIndex = cachePathIndex;
     }
-    return false;
+    return true;
   }
 
 

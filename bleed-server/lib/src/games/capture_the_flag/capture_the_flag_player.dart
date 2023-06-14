@@ -27,7 +27,9 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
 
   @override
   void customUpdate() {
-    updatePath(game.scene, game.scene.getNodeIndexXYZ(mouseGridX, mouseGridY, z));
+    if (game.scene.inboundsXYZ(mouseGridX, mouseGridY, z)){
+      updatePath(game.scene, game.scene.getNodeIndexXYZ(mouseGridX, mouseGridY, z));
+    }
   }
 
   void onChangedFlagStatus(int value){
