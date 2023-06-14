@@ -2,8 +2,8 @@
 
 import 'dart:typed_data';
 
+import 'package:bleed_server/common/src.dart';
 import 'package:bleed_server/common/src/capture_the_flag/src.dart';
-import 'package:bleed_server/common/src/item_type.dart';
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_gameobject_flag.dart';
 import 'package:bleed_server/src/games/isometric/isometric_character_template.dart';
 import 'package:bleed_server/src/games/isometric/isometric_collider.dart';
@@ -17,9 +17,18 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
   CaptureTheFlagAIRole role;
   CaptureTheFlagCharacterClass characterClass;
 
-  final path = Uint32List(200);
+  static const Max_Path_Length = 10;
+  final path = Uint32List(Max_Path_Length);
+
+  static final visitedNodes = Uint32List(10000);
+  static var visitedNodesIndex = 0;
+
   var pathIndex = 0;
   var pathEnd = 0;
+
+  var targetIndex = 0;
+  var targetIndexRow = 0;
+  var targetIndexColumn = 0;
 
   CaptureTheFlagPlayerAI({
     required this.game,
@@ -134,26 +143,94 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
     setCharacterStateIdle();
   }
 
+  bool isVisited(int index){
+    for (var i = 0; i < visitedNodesIndex; i++){
+      if (visitedNodes[i] == index) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  bool visitNode(int index){
+     if (index == targetIndex) {
+       return true;
+     }
+
+     if (index < 0) return false;
+
+     final nodeOrientation = game.scene.nodeOrientations[index];
+     if (nodeOrientation != NodeOrientation.None) return false;
+
+     if (isVisited(index)) return false;
+     visitedNodes[visitedNodesIndex] = index;
+     visitedNodesIndex++;
+
+     final cachePathIndex = pathIndex;
+     path[pathIndex] = index;
+     pathIndex++;
+
+     if (pathIndex >= Max_Path_Length) return true;
+
+     final scene = game.scene;
+
+     final indexRow = scene.getNodeIndexRow(index);
+     if (indexRow < targetIndexRow){
+       if (visitNode(index + scene.gridColumns)){
+         return true;
+       }
+       // if that path fails, then cut the path back to a previous spot
+       pathIndex = cachePathIndex;
+     } else if (indexRow > targetIndexRow){
+       if (visitNode(index - scene.gridColumns)){
+         return true;
+       }
+       pathIndex = cachePathIndex;
+     }
+
+     final indexColumn = scene.getNodeIndexColumn(index);
+     if (indexColumn < targetIndexColumn){
+       if (visitNode(index + scene.gridRows)){
+         return true;
+       }
+       pathIndex = cachePathIndex;
+     } else if (indexColumn > targetIndexColumn){
+       if (visitNode(index - scene.gridRows)){
+         return true;
+       }
+       pathIndex = cachePathIndex;
+     }
+     return false;
+  }
 
   @override
   void customUpdate() {
     if (deadOrBusy) return;
 
+    final target = this.target;
 
-    if (pathIndex < pathEnd){
+    if (target != null && pathIndex >= pathEnd) {
+      targetIndex = game.scene.getNodeIndexV3(target);
+      targetIndexRow = target.indexRow;
+      targetIndexColumn = target.indexColumn;
+      updatePath();
+    }
+
+    if (pathIndex < pathEnd) {
       final scene = game.scene;
       final pathNodeIndex = path[pathIndex];
       final pathNodeX = scene.getNodePositionX(pathNodeIndex);
       final pathNodeY = scene.getNodePositionY(pathNodeIndex);
       final pathNodeZ = scene.getNodePositionZ(pathNodeIndex);
+      if (withinDistance(pathNodeX, pathNodeY, pathNodeZ, 5.0)) {
+        pathIndex++;
+      } else {
+        faceXY(pathNodeX, pathNodeY);
+        setCharacterStateRunning();
+      }
+    } else {
+      setCharacterStateIdle();
     }
-
-    final target = this.target;
-
-    if (target != null) {
-
-    }
-
 
     if (holdingFlagAny())
       return moveToBaseOwn();
@@ -162,6 +239,19 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
       updateRoleOffense();
     } else {
       updateRoleDefense();
+    }
+  }
+
+  void updatePath() {
+    visitedNodesIndex = 0;
+    pathIndex = 0;
+    pathEnd = 0;
+    if (visitNode(game.scene.getNodeIndexV3(this))){
+      pathEnd = pathIndex;
+      pathIndex = 0;
+    } else {
+      pathIndex = 0;
+      pathEnd = 0;
     }
   }
 
@@ -210,22 +300,20 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
   bool isFriendlyFlagCaptured() => flagOwn.status == CaptureTheFlagFlagStatus.Carried_By_Enemy;
 
   void captureEnemyFlag() {
-    face(flagEnemy);
-    setCharacterStateRunning();
+    target = flagEnemy;
+    // face(flagEnemy);
+    // setCharacterStateRunning();
   }
 
   void moveToBaseOwn(){
-    face(baseOwn);
-    setCharacterStateRunning();
+    target = baseOwn;
+    // face(baseOwn);
+    // setCharacterStateRunning();
   }
 
   void attackMelee(){
     game.characterAttackMelee(this);
   }
-}
-
-enum CaptureTheFlagAIAction {
-   Move_To_Base_Own,
 }
 
 enum CaptureTheFlagAIRole {
