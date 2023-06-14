@@ -20,6 +20,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
 
   CaptureTheFlagPlayer({required this.game}) : super(game: game) {
     writeScore();
+    writeDebugMode();
     damage = 1;
     weaponType = ItemType.Empty;
   }
@@ -39,13 +40,13 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
   }
 
   void onChangedDebugMode(bool value){
-    writeDebugMode(value);
+    writeDebugMode();
   }
 
-  void writeDebugMode(bool value) {
+  void writeDebugMode() {
     writeByte(ServerResponse.Capture_The_Flag);
     writeByte(CaptureTheFlagResponse.Debug_Mode);
-    writeBool(value);
+    writeBool(debugMode.value);
   }
 
   @override
@@ -54,7 +55,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
     writeFlagPositions(); // todo optimize
     writeBasePositions(); // todo optimize
 
-    if (debug) {
+    if (debugMode.value) {
       writeAIPath();
     }
   }

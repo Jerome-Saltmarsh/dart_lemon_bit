@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_ui.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_items.dart';
+import 'package:gamestream_flutter/gamestream/isometric/isometric_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric_position.dart';
 import 'package:gamestream_flutter/library.dart';
 
@@ -147,17 +148,8 @@ class CaptureTheFlagGame extends GameIsometric {
     engine.paint.color = Colors.orange;
     final nodes = gamestream.isometric.nodes;
 
-    for (final path in paths) {
-      for (var i = 0; i < path.length - 1; i++){
-        final a = path[i];
-        final b = path[i + 1];
-        engine.drawLine(
-            nodes.getIndexRenderX(a),
-            nodes.getIndexRenderY(a),
-            nodes.getIndexRenderX(b),
-            nodes.getIndexRenderY(b),
-        );
-      }
+    if (debugMode.value){
+      renderDebugMode(nodes);
     }
 
     switch (playerFlagStatus.value){
@@ -173,6 +165,21 @@ class CaptureTheFlagGame extends GameIsometric {
       case CaptureTheFlagPlayerStatus.Holding_Enemy_Flag:
         renderLineToOwnBase();
         break;
+    }
+  }
+
+  void renderDebugMode(IsometricNodes nodes) {
+    for (final path in paths) {
+      for (var i = 0; i < path.length - 1; i++){
+        final a = path[i];
+        final b = path[i + 1];
+        engine.drawLine(
+            nodes.getIndexRenderX(a),
+            nodes.getIndexRenderY(a),
+            nodes.getIndexRenderX(b),
+            nodes.getIndexRenderY(b),
+        );
+      }
     }
   }
 
