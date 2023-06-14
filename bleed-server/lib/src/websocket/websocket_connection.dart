@@ -852,9 +852,9 @@ class WebSocketConnection with ByteReader {
           return errorInvalidClientRequest();
         }
         final instance = player.game.spawnGameObject(
-          x: scene.convertNodeIndexToPositionX(index) + Node_Size_Half,
-          y: scene.convertNodeIndexToPositionY(index) + Node_Size_Half,
-          z: scene.convertNodeIndexToPositionZ(index),
+          x: scene.getNodePositionX(index) + Node_Size_Half,
+          y: scene.getNodePositionY(index) + Node_Size_Half,
+          z: scene.getNodePositionZ(index),
           type: type,
         );
         player.editorSelectedGameObject = instance;

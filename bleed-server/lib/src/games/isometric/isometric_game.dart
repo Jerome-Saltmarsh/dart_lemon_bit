@@ -242,9 +242,9 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   /// ACTIONS
 
   void moveV3ToNodeIndex(IsometricPosition vector3, int nodeIndex) {
-    vector3.x = scene.convertNodeIndexToPositionX(nodeIndex);
-    vector3.y = scene.convertNodeIndexToPositionY(nodeIndex);
-    vector3.z = scene.convertNodeIndexToPositionZ(nodeIndex);
+    vector3.x = scene.getNodePositionX(nodeIndex);
+    vector3.y = scene.getNodePositionY(nodeIndex);
+    vector3.z = scene.getNodePositionZ(nodeIndex);
   }
 
   void move(IsometricPosition value, double angle, double distance) {
@@ -2138,12 +2138,11 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
       character.lookRadian = character.faceAngle;
     }
 
-    final characterTarget = character.target;
-
-    if (characterTarget != null) {
-       character.face(characterTarget);
-       character.setCharacterStateRunning();
-    }
+    // final characterTarget = character.target;
+    // if (characterTarget != null) {
+    //    character.face(characterTarget);
+    //    character.setCharacterStateRunning();
+    // }
 
     character.updateAccuracy();
 
@@ -2507,16 +2506,16 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
   }
 
   void moveToIndex(IsometricPosition position, int index) {
-    position.x = scene.convertNodeIndexToPositionX(index);
-    position.y = scene.convertNodeIndexToPositionY(index);
-    position.z = scene.convertNodeIndexToPositionZ(index);
+    position.x = scene.getNodePositionX(index);
+    position.y = scene.getNodePositionY(index);
+    position.z = scene.getNodePositionZ(index);
   }
 
   IsometricGameObject spawnGameObjectAtIndex({required int index, required int type}) =>
       spawnGameObject(
-        x: scene.convertNodeIndexToPositionX(index),
-        y: scene.convertNodeIndexToPositionY(index),
-        z: scene.convertNodeIndexToPositionZ(index),
+        x: scene.getNodePositionX(index),
+        y: scene.getNodePositionY(index),
+        z: scene.getNodePositionZ(index),
         type: type,
       );
 

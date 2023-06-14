@@ -165,23 +165,6 @@ class IsometricScene {
         >= z;
   }
 
-  double convertNodeIndexToPositionZ(int index) =>
-      convertNodeIndexToZ(index) * Node_Height;
-
-  double convertNodeIndexToPositionY(int index) =>
-      (convertNodeIndexToColumn(index) * Node_Size) + Node_Size_Half;
-
-  double convertNodeIndexToPositionX(int index) =>
-      (convertNodeIndexToRow(index) * Node_Size) + Node_Size_Half;
-
-  int convertNodeIndexToRow(int index) =>
-      (index - (convertNodeIndexToZ(index) * gridArea)) ~/ gridColumns;
-
-  int convertNodeIndexToColumn(int index) =>
-      index - ((convertNodeIndexToZ(index) * gridArea) + (convertNodeIndexToRow(index) * gridColumns));
-
-  int convertNodeIndexToZ(int index) => index ~/ gridArea;
-
   /// Warning Expensive, (Do not call during runtime)
   void refreshSpawnPoints() {
     final newSpawnPoints = <int>[];
@@ -223,12 +206,18 @@ class IsometricScene {
     return false;
   }
 
-  int getNodeIndexZ(int nodeIndex) => nodeIndex ~/ gridArea;
+  double getNodePositionX(int index) =>
+      (getNodeIndexRow(index) * Node_Size) + Node_Size_Half;
+
+  double getNodePositionY(int index) =>
+      (getNodeIndexColumn(index) * Node_Size) + Node_Size_Half;
+
+  double getNodePositionZ(int index) =>
+      getNodeIndexZ(index) * Node_Height;
 
   int getNodeIndexRow(int nodeIndex) => (nodeIndex % gridArea) ~/ gridColumns;
 
   int getNodeIndexColumn(int nodeIndex) => nodeIndex % gridRows;
 
-
-
+  int getNodeIndexZ(int nodeIndex) => nodeIndex ~/ gridArea;
 }
