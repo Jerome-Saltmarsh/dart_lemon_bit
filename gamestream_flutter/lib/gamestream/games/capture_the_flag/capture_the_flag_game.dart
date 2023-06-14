@@ -28,6 +28,8 @@ class CaptureTheFlagGame extends GameIsometric {
   final gameStatus = Watch(CaptureTheFlagGameStatus.In_Progress);
   final nextGameCountDown = Watch(0);
 
+  final paths = <Uint16List>[];
+
   CaptureTheFlagGame({required super.isometric});
 
   bool get playerIsTeamRed => player.team.value == CaptureTheFlagTeam.Red;
@@ -139,6 +141,22 @@ class CaptureTheFlagGame extends GameIsometric {
   @override
   void drawCanvas(Canvas canvas, Size size) {
     super.drawCanvas(canvas, size);
+
+    engine.paint.color = Colors.orange;
+    final nodes = gamestream.isometric.nodes;
+
+    for (final path in paths) {
+      for (var i = 0; i < path.length - 1; i++){
+        final a = path[i];
+        final b = path[i + 1];
+        engine.drawLine(
+            nodes.getIndexRenderX(a),
+            nodes.getIndexRenderY(a),
+            nodes.getIndexRenderX(b),
+            nodes.getIndexRenderY(b),
+        );
+      }
+    }
 
     switch (playerFlagStatus.value){
       case CaptureTheFlagPlayerStatus.No_Flag:

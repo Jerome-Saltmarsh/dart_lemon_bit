@@ -25,6 +25,8 @@ class ServerResponseReader with ByteReader {
 
   var previousServerResponse = -1;
 
+
+
   void read(Uint8List values) {
     assert (values.isNotEmpty);
     updateFrame.value++;
@@ -186,6 +188,16 @@ class ServerResponseReader with ByteReader {
         break;
       case CaptureTheFlagResponse.Next_Game_Count_Down:
         captureTheFlag.nextGameCountDown.value = readUInt16();
+        break;
+      case CaptureTheFlagResponse.AI_Paths:
+        captureTheFlag.paths.clear();
+        final total = readUInt16();
+        for (var i = 0; i < total; i++){
+           final pathIndex = readUInt16();
+           final pathLength = readUInt16();
+           final path = readUint16List(pathLength);
+           captureTheFlag.paths.add(path);
+        }
         break;
     }
   }
