@@ -190,13 +190,24 @@ class ServerResponseReader with ByteReader {
         captureTheFlag.nextGameCountDown.value = readUInt16();
         break;
       case CaptureTheFlagResponse.AI_Paths:
-        captureTheFlag.paths.clear();
+        captureTheFlag.characterPaths.clear();
         final total = readUInt16();
         for (var i = 0; i < total; i++){
            final pathIndex = readUInt16();
            final pathLength = readUInt16();
            final path = readUint16List(pathLength);
-           captureTheFlag.paths.add(path);
+           captureTheFlag.characterPaths.add(path);
+        }
+        break;
+      case CaptureTheFlagResponse.AI_Targets:
+        var index = 0;
+        final characterTargets = captureTheFlag.characterTargets;
+        captureTheFlag.characterTargetTotal = 0;
+        while (readBool()) {
+          captureTheFlag.characterTargetTotal++;
+          for (var i = 0; i < 6; i++){
+            characterTargets[index++] = readDouble();
+          }
         }
         break;
       case CaptureTheFlagResponse.Debug_Mode:

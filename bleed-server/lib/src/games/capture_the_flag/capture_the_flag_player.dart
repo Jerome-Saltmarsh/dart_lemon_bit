@@ -57,6 +57,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
 
     if (debugMode.value) {
       writeAIPath();
+      writeAITarget();
     }
   }
 
@@ -118,6 +119,21 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
     writeByte(ServerResponse.Capture_The_Flag);
     writeByte(CaptureTheFlagResponse.Next_Game_Count_Down);
     writeUInt16(value);
+  }
+
+  void writeAITarget(){
+    writeByte(ServerResponse.Capture_The_Flag);
+    writeByte(CaptureTheFlagResponse.AI_Targets);
+    final characters = game.characters;
+    for (final character in characters){
+       if (!character.active) continue;
+       final characterTarget = character.target;
+       if (characterTarget == null) continue;
+       writeBool(true);
+       writeIsometricPosition(character);
+       writeIsometricPosition(characterTarget);
+    }
+    writeBool(false);
   }
 
   void writeAIPath(){

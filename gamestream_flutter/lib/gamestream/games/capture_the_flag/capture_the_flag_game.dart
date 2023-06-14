@@ -29,7 +29,9 @@ class CaptureTheFlagGame extends GameIsometric {
   final gameStatus = Watch(CaptureTheFlagGameStatus.In_Progress);
   final nextGameCountDown = Watch(0);
 
-  final paths = <Uint16List>[];
+  var characterTargetTotal = 0;
+  final characterPaths = <Uint16List>[];
+  final characterTargets = Float32List(2000);
 
   final debugMode = Watch(false);
 
@@ -169,7 +171,12 @@ class CaptureTheFlagGame extends GameIsometric {
   }
 
   void renderDebugMode(IsometricNodes nodes) {
-    for (final path in paths) {
+    renderCharacterPaths(nodes);
+    renderCharacterTargets();
+  }
+
+  void renderCharacterPaths(IsometricNodes nodes) {
+    for (final path in characterPaths) {
       for (var i = 0; i < path.length - 1; i++){
         final a = path[i];
         final b = path[i + 1];
@@ -182,6 +189,22 @@ class CaptureTheFlagGame extends GameIsometric {
       }
     }
   }
+
+  void renderCharacterTargets() {
+    engine.setPaintColor(Colors.green);
+    for (var i = 0; i < characterTargetTotal; i++) {
+      final j = i * 6;
+      gamestream.isometric.renderer.renderLine(
+          characterTargets[j + 0],
+          characterTargets[j + 1],
+          characterTargets[j + 2],
+          characterTargets[j + 3],
+          characterTargets[j + 4],
+          characterTargets[j + 5],
+      );
+    }
+  }
+
 
   void renderLineToRedBase() {
     engine.paint.color = Colors.red;
