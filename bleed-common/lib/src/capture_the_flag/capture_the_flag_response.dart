@@ -11,5 +11,6 @@ class CaptureTheFlagResponse {
    static const Game_Status    = 8;
    static const Next_Game_Count_Down    = 9;
    static const AI_Paths    = 10;
+   static const Debug_Mode    = 11;
 
 }

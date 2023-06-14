@@ -127,33 +127,6 @@ abstract class IsometricCharacter extends IsometricCollider {
     if (pathIndex >= path.length)
       return true;
 
-    // if (row < targetIndexRow){
-    //   if (visitNode(row + 1, column, z, scene)){
-    //     return true;
-    //   }
-    //   // if that path fails, then cut the path back to a previous spot
-    //   pathIndex = cachePathIndex;
-    // } else if (row > targetIndexRow){
-    //   if (visitNode(row - 1, column, z, scene)){
-    //     return true;
-    //   }
-    //   pathIndex = cachePathIndex;
-    // }
-    //
-    // if (column < targetIndexColumn){
-    //   if (visitNode(row, column + 1, z, scene)){
-    //     return true;
-    //   }
-    //   pathIndex = cachePathIndex;
-    // } else if (column > targetIndexColumn){
-    //   if (visitNode(row, column - 1, z, scene)){
-    //     return true;
-    //   } else {
-    //     pathIndex = cachePathIndex;
-    //   }
-    // }
-
-
     final direction = convertToDirection(targetIndexRow - row, targetIndexColumn - column);
 
     if (visitNode(row + convertDirectionToRowVel(direction), column + convertDirectionToColumnVel(direction), z, scene)){
@@ -176,21 +149,6 @@ abstract class IsometricCharacter extends IsometricCollider {
 
     final dirOpp = (direction + 4) % 8;
     return visitNode(row + convertDirectionToRowVel(dirOpp), column + convertDirectionToColumnVel(dirOpp), z, scene);
-
-    // if (visitNode(row, column + 1, z, scene)){
-    //   return true;
-    // }
-    // if (visitNode(row, column - 1, z, scene)){
-    //   return true;
-    // }
-    // if (visitNode(row + 1, column, z, scene)){
-    //   return true;
-    // }
-    // if (visitNode(row - 1, column, z, scene)){
-    //   return true;
-    // }
-    //
-    // return false;
   }
 
   int convertToDirection(int diffRows, int diffCols){

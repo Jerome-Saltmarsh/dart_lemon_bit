@@ -30,6 +30,8 @@ class CaptureTheFlagGame extends GameIsometric {
 
   final paths = <Uint16List>[];
 
+  final debugMode = Watch(false);
+
   CaptureTheFlagGame({required super.isometric});
 
   bool get playerIsTeamRed => player.team.value == CaptureTheFlagTeam.Red;

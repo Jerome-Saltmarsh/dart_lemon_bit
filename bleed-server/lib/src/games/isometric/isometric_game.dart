@@ -1728,6 +1728,8 @@ abstract class IsometricGame<T extends IsometricPlayer> extends Game<T> {
     if (character.state == CharacterState.Dead) return;
 
     dispatchGameEventCharacterDeath(character);
+    character.pathIndex = 0;
+    character.pathEnd = 0;
     character.health = 0;
     character.state = CharacterState.Dead;
     character.stateDuration = 0;

@@ -11,6 +11,8 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
   @override
   final CaptureTheFlagGame game;
 
+  late final debugMode = ChangeNotifier(false, onChangedDebugMode);
+
   late final flagStatus = ChangeNotifier(
       CaptureTheFlagPlayerStatus.No_Flag,
       onChangedFlagStatus,
@@ -36,12 +38,25 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
     writePlayerFlagStatus(value);
   }
 
+  void onChangedDebugMode(bool value){
+    writeDebugMode(value);
+  }
+
+  void writeDebugMode(bool value) {
+    writeByte(ServerResponse.Capture_The_Flag);
+    writeByte(CaptureTheFlagResponse.Debug_Mode);
+    writeBool(value);
+  }
+
   @override
   void writePlayerGame() {
     super.writePlayerGame();
     writeFlagPositions(); // todo optimize
     writeBasePositions(); // todo optimize
-    writeAIPath();
+
+    if (debug) {
+      writeAIPath();
+    }
   }
 
   void writeFlagPositions() {
@@ -120,4 +135,6 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
       }
     }
   }
+
+
 }

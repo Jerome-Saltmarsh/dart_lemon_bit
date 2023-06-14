@@ -199,6 +199,9 @@ class ServerResponseReader with ByteReader {
            captureTheFlag.paths.add(path);
         }
         break;
+      case CaptureTheFlagResponse.Debug_Mode:
+         captureTheFlag.debugMode.value = readBool();
+         break;
     }
   }
 

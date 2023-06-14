@@ -5,6 +5,7 @@ import 'package:bleed_server/common/src/capture_the_flag/src.dart';
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_gameobject_flag.dart';
 import 'package:bleed_server/src/games/isometric/isometric_character_template.dart';
 import 'package:bleed_server/src/games/isometric/isometric_collider.dart';
+import 'package:bleed_server/src/games/isometric/isometric_gameobject.dart';
 import 'package:bleed_server/src/games/isometric/isometric_position.dart';
 
 import 'capture_the_flag_game.dart';
@@ -79,13 +80,9 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
     final heldBy = flag.heldBy;
     if (heldBy == null){
       target = flag;
-      // face(flag);
-      // setCharacterStateRunning();
       return;
     }
     if (heldBy == this) {
-      // face(baseOwn);
-      // setCharacterStateRunning();
       target = baseOwn;
       return;
     }
@@ -98,14 +95,6 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
 
   void attackNearestEnemy(){
     target = getNearestEnemy();
-     // if (nearestEnemy == null) return;
-     // face(nearestEnemy);
-     // target = nearestEnemy;
-     // if (withinAttackRange(nearestEnemy)) {
-     //    attackMelee();
-     // } else{
-     //    setCharacterStateRunning();
-     // }
   }
 
   IsometricCollider? getNearestEnemy(){
@@ -125,9 +114,7 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
     captureFlag(flagEnemy);
   }
 
-  void idle(){
-    setCharacterStateIdle();
-  }
+  var _updatePathToTargetUpdate = 0;
 
   @override
   void customUpdate() {
@@ -135,29 +122,44 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
 
     final target = this.target;
 
-    if (target != null && pathIndex >= pathEnd) {
-      updatePath(game.scene, game.scene.getNodeIndexV3(target));
+    if (target != null) {
+      if (pathIndex >= pathEnd) {
+        updatePathToTarget();
+      }
+    }
+
+    _updatePathToTargetUpdate--;
+    if (_updatePathToTargetUpdate == 0){
+      updatePathToTarget();
+      _updatePathToTargetUpdate = 100;
     }
 
     if (pathIndex < pathEnd) {
       followPath();
-    } else {
-      setCharacterStateIdle();
     }
 
     updateBehaviorTree();
+  }
+
+  void updatePathToTarget() {
+    if (target == null){
+      pathEnd = 0;
+      pathIndex = 0;
+      return;
+    }
+     updatePath(game.scene, game.scene.getNodeIndexV3(target!));
   }
 
   void followPath() {
     final scene = game.scene;
     final pathNodeIndex = path[pathIndex];
     assert (scene.nodeOrientations[pathNodeIndex] == NodeOrientation.None);
-    final pathNodeX = scene.getNodePositionX(pathNodeIndex);
-    final pathNodeY = scene.getNodePositionY(pathNodeIndex);
-    final pathNodeZ = scene.getNodePositionZ(pathNodeIndex);
-    if (withinDistance(pathNodeX, pathNodeY, pathNodeZ, 2.0)) {
+
+    if (scene.getNodeIndexV3(this) == pathNodeIndex) {
       pathIndex++;
     } else {
+      final pathNodeX = scene.getNodePositionX(pathNodeIndex);
+      final pathNodeY = scene.getNodePositionY(pathNodeIndex);
       faceXY(pathNodeX, pathNodeY);
       setCharacterStateRunning();
     }
@@ -168,6 +170,16 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
     // if (enemyWithinRange(50))
     //   return attackNearestEnemy();
 
+    final target = this.target;
+    if (target != null) {
+      if (target is IsometricGameObject){
+        if (distanceFromPos2(target) < 100){
+          face(target);
+          setCharacterStateRunning();
+          return;
+        }
+      }
+    }
 
     if (holdingFlagAny())
       return moveToBaseOwn();
@@ -225,14 +237,10 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
 
   void captureEnemyFlag() {
     target = flagEnemy;
-    // face(flagEnemy);
-    // setCharacterStateRunning();
   }
 
   void moveToBaseOwn(){
     target = baseOwn;
-    // face(baseOwn);
-    // setCharacterStateRunning();
   }
 
   void attackMelee(){
