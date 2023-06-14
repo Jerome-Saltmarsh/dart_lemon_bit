@@ -359,7 +359,9 @@ class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
     for (final character in characters) {
       character.customUpdate();
 
-
+      if (character is CaptureTheFlagPlayer){
+        // character.visi
+      }
     }
 
     updateFlag(flagRed);

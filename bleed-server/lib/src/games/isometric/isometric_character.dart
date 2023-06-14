@@ -1,13 +1,16 @@
 import 'dart:math';
+import 'dart:typed_data';
 
 
 import 'package:bleed_server/common/src/character_state.dart';
 import 'package:bleed_server/common/src/character_type.dart';
 import 'package:bleed_server/common/src/direction.dart';
 import 'package:bleed_server/common/src/item_type.dart';
+import 'package:bleed_server/common/src/node_orientation.dart';
 import 'package:bleed_server/common/src/node_size.dart';
 import 'package:bleed_server/common/src/player_event.dart';
 import 'package:bleed_server/common/src/weapon_state.dart';
+import 'package:bleed_server/src/games/isometric/isometric_scene.dart';
 import 'package:lemon_math/library.dart';
 
 import 'isometric_collider.dart';
@@ -42,6 +45,95 @@ abstract class IsometricCharacter extends IsometricCollider {
   var buffInvisible       = false;
 
   IsometricPosition? target;
+
+  // PATHFINDING
+
+  static final visitedNodes = Uint32List(10000);
+  static var visitedNodesIndex = 0;
+
+  final path = Uint32List(10);
+
+  var pathIndex = 0;
+  var pathEnd = 0;
+  var targetIndex = 0;
+  var targetIndexRow = 0;
+  var targetIndexColumn = 0;
+
+  void updatePath(IsometricScene scene, int targetIndex) {
+
+    this.targetIndex = targetIndex;
+    targetIndexRow = scene.getNodeIndexRow(targetIndex);
+    targetIndexColumn = scene.getNodeIndexColumn(targetIndex);
+
+    visitedNodesIndex = 0;
+    pathIndex = 0;
+    pathEnd = 0;
+    if (visitNode(scene.getNodeIndexV3(this), scene)){
+      pathEnd = pathIndex;
+      pathIndex = 0;
+    } else {
+      pathIndex = 0;
+      pathEnd = 0;
+    }
+  }
+
+  bool visitNode(int index, IsometricScene scene){
+    if (index == targetIndex) {
+      return true;
+    }
+
+    if (index < 0) return false;
+
+    final nodeOrientation = scene.nodeOrientations[index];
+    if (nodeOrientation != NodeOrientation.None) {
+      return false;
+    }
+
+    for (var i = 0; i < visitedNodesIndex; i++){
+      if (visitedNodes[i] == index) {
+        return false;
+      }
+    }
+
+    visitedNodes[visitedNodesIndex] = index;
+    visitedNodesIndex++;
+
+    final cachePathIndex = pathIndex;
+    path[pathIndex] = index;
+    pathIndex++;
+
+    if (pathIndex >= path.length) return true;
+
+    final indexRow = scene.getNodeIndexRow(index);
+    if (indexRow < targetIndexRow){
+      if (visitNode(index + scene.gridColumns, scene)){
+        return true;
+      }
+      // if that path fails, then cut the path back to a previous spot
+      pathIndex = cachePathIndex;
+    } else if (indexRow > targetIndexRow){
+      if (visitNode(index - scene.gridColumns, scene)){
+        return true;
+      }
+      pathIndex = cachePathIndex;
+    }
+
+    final indexColumn = scene.getNodeIndexColumn(index);
+    if (indexColumn < targetIndexColumn){
+      if (visitNode(index + scene.gridRows, scene)){
+        return true;
+      }
+      pathIndex = cachePathIndex;
+    } else if (indexColumn > targetIndexColumn){
+      if (visitNode(index - scene.gridRows, scene)){
+        return true;
+      }
+      pathIndex = cachePathIndex;
+    }
+    return false;
+  }
+
+
 
   IsometricCharacter({
     required int characterType,

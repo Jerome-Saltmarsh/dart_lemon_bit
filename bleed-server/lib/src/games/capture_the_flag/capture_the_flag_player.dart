@@ -3,7 +3,6 @@ import 'package:bleed_server/common/src.dart';
 import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_game_status.dart';
 import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_player_status.dart';
 import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_game.dart';
-import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_player_ai.dart';
 import 'package:bleed_server/src/games/isometric/isometric_player.dart';
 import 'package:bleed_server/src/utilities/change_notifier.dart';
 
@@ -25,6 +24,11 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
 
   bool get isTeamRed => team == CaptureTheFlagTeam.Red;
   bool get isTeamBlue => team == CaptureTheFlagTeam.Blue;
+
+  @override
+  void customUpdate() {
+    updatePath(game.scene, game.scene.getNodeIndexXYZ(mouseGridX, mouseGridY, z));
+  }
 
   void onChangedFlagStatus(int value){
     writePlayerFlagStatus(value);
@@ -102,19 +106,11 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
     writeByte(ServerResponse.Capture_The_Flag);
     writeByte(CaptureTheFlagResponse.AI_Paths);
 
-
     final characters = game.characters;
-    var total = 0;
-    for (var i = 0; i < characters.length; i++){
-       if (characters[i] is! CaptureTheFlagPlayerAI) continue;
-       total++;
-    }
-
-    writeUInt16(total);
+    writeUInt16(characters.length);
 
     for (var i = 0; i < characters.length; i++){
       final character = characters[i];
-      if (character is! CaptureTheFlagPlayerAI) continue;
       writeUInt16(character.pathIndex);
       writeUInt16(character.pathEnd);
       for (var j = 0; j < character.pathEnd; j++){
