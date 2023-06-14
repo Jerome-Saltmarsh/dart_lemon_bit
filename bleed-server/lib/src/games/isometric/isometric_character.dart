@@ -194,22 +194,19 @@ abstract class IsometricCharacter extends IsometricCollider {
   }
 
   int convertToDirection(int diffRows, int diffCols){
-    if (diffRows == 0) {
-      if (diffCols < 0) return 0;
-      return 5;
-    }
     if (diffRows > 0){
-      if (diffCols < 0) return 7;
+      if (diffCols < 0) return 1;
+      if (diffCols > 0) return 3;
       return 2;
     }
-    if (diffCols == 0){
-      if (diffRows < 0) return 6;
-      return 3;
+
+    if (diffRows < 0) {
+      if (diffCols < 0) return 7;
+      if (diffCols > 0) return 5;
+      return 6;
     }
-    if (diffCols < 0){
-      if (diffRows < 0) return 5;
-      return 3;
-    }
+
+    if (diffCols < 0) return 0;
     return 4;
   }
 
