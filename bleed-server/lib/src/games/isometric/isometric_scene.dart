@@ -217,7 +217,7 @@ class IsometricScene {
 
   int getNodeIndexRow(int nodeIndex) => (nodeIndex % gridArea) ~/ gridColumns;
 
-  int getNodeIndexColumn(int nodeIndex) => nodeIndex % gridRows;
+  int getNodeIndexColumn(int nodeIndex) => (nodeIndex) % rowsPerZ;
 
   int getNodeIndexZ(int nodeIndex) => nodeIndex ~/ gridArea;
 }

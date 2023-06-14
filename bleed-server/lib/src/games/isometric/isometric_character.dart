@@ -93,6 +93,9 @@ abstract class IsometricCharacter extends IsometricCollider {
 
     final index = scene.getNodeIndex(z, row, column);
 
+    assert (scene.getNodeIndexRow(index) == row);
+    assert (scene.getNodeIndexColumn(index) == column);
+
     if (index == targetIndex) {
       return true;
     }
@@ -134,12 +137,12 @@ abstract class IsometricCharacter extends IsometricCollider {
     }
 
     if (column < targetIndexColumn){
-      if (visitNode(row, column - 1, z, scene)){
+      if (visitNode(row, column + 1, z, scene)){
         return true;
       }
       pathIndex = cachePathIndex;
     } else if (column > targetIndexColumn){
-      if (visitNode(row, column + 1, z, scene)){
+      if (visitNode(row, column - 1, z, scene)){
         return true;
       }
       pathIndex = cachePathIndex;
