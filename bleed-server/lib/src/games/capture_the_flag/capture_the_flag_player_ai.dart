@@ -136,7 +136,7 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
     final target = this.target;
 
     if (target != null && pathIndex >= pathEnd) {
-      updatePath(game.scene, game.scene.getNodeIndexV3(this));
+      updatePath(game.scene, game.scene.getNodeIndexV3(target));
     }
 
     if (pathIndex < pathEnd) {
