@@ -160,9 +160,16 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
      if (index < 0) return false;
 
      final nodeOrientation = game.scene.nodeOrientations[index];
-     if (nodeOrientation != NodeOrientation.None) return false;
+     if (nodeOrientation != NodeOrientation.None) {
+       return false;
+     }
 
-     if (isVisited(index)) return false;
+     for (var i = 0; i < visitedNodesIndex; i++){
+       if (visitedNodes[i] == index) {
+         return false;
+       }
+     }
+
      visitedNodes[visitedNodesIndex] = index;
      visitedNodesIndex++;
 
@@ -219,10 +226,12 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
     if (pathIndex < pathEnd) {
       final scene = game.scene;
       final pathNodeIndex = path[pathIndex];
+
+      assert (scene.nodeOrientations[pathNodeIndex] == NodeOrientation.None);
       final pathNodeX = scene.getNodePositionX(pathNodeIndex);
       final pathNodeY = scene.getNodePositionY(pathNodeIndex);
       final pathNodeZ = scene.getNodePositionZ(pathNodeIndex);
-      if (withinDistance(pathNodeX, pathNodeY, pathNodeZ, 5.0)) {
+      if (withinDistance(pathNodeX, pathNodeY, pathNodeZ, 2.0)) {
         pathIndex++;
       } else {
         faceXY(pathNodeX, pathNodeY);
