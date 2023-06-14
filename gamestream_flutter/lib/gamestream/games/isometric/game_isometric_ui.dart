@@ -434,6 +434,19 @@ class GameIsometricUI {
     );
   }
 
+  static Widget buildWindowMenuItem({
+    required String title,
+    required  Widget child,
+  })=> Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          text(title, size: 20, color: Colors.white70),
+          child,
+        ],
+      ),
+    );
+
   static Widget buildWindowMenu({List<Widget>? children}){
     const width = 200.0;
     return buildDialogUIControl(
@@ -488,14 +501,6 @@ class GameIsometricUI {
               height6,
             if (children != null)
               ...children,
-            // height24,
-            // onPressed(
-            //   action: () {
-            //     gamestream.network.disconnect();
-            //     gamestream.network.connectToGameEditor();
-            //   },
-            //   child: text("EDITOR", size: 25),
-            // ),
             height24,
             onPressed(
               action: gamestream.network.disconnect,
@@ -800,9 +805,8 @@ class GameIsometricUI {
         ),
       );
 
-  static Widget buildRowMainMenu() {
+  static Widget buildRowMainMenu({List<Widget>? children}) {
     final controlTime = buildTime();
-    // final iconMenu = buildIconMenu();
 
     final panel = watch(gamestream.isometric.clientState.window_visible_menu, (bool menuVisible){
       return Container(
@@ -821,7 +825,7 @@ class GameIsometricUI {
                 ]
             ),
             if (menuVisible)
-              buildWindowMenu(),
+              buildWindowMenu(children: children),
           ],
         ),
       );

@@ -1,10 +1,5 @@
 import 'package:bleed_server/common/src.dart';
-import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_character_class.dart';
-import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_flag_status.dart';
-import 'package:bleed_server/common/src/capture_the_flag/capture_the_flag_game_status.dart';
-import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_gameobject_flag.dart';
-import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_player.dart';
-import 'package:bleed_server/src/games/capture_the_flag/capture_the_flag_player_ai.dart';
+import 'package:bleed_server/common/src/capture_the_flag/src.dart';
 import 'package:bleed_server/src/games/isometric/isometric_character.dart';
 import 'package:bleed_server/src/games/isometric/isometric_collider.dart';
 import 'package:bleed_server/src/games/isometric/isometric_game.dart';
@@ -13,6 +8,10 @@ import 'package:bleed_server/src/games/isometric/isometric_job.dart';
 import 'package:bleed_server/src/games/isometric/isometric_player.dart';
 import 'package:bleed_server/src/utilities/change_notifier.dart';
 import 'package:lemon_math/functions/give_or_take.dart';
+
+import 'capture_the_flag_gameobject_flag.dart';
+import 'capture_the_flag_player.dart';
+import 'capture_the_flag_player_ai.dart';
 
 class CaptureTheFlagGame extends IsometricGame<CaptureTheFlagPlayer> {
   static const Target_Points = 3;

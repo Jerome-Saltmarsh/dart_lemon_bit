@@ -264,6 +264,7 @@ class CaptureTheFlagGame extends GameIsometric {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // WatchBuilder(debugMode, (playerFlagStatus) => text("Debug Mode: ${CaptureTheFlagPlayerStatus.getName(playerFlagStatus)}")),
                 WatchBuilder(playerFlagStatus, (playerFlagStatus) => text("Player Flag Status: ${CaptureTheFlagPlayerStatus.getName(playerFlagStatus)}")),
                 WatchBuilder(isometric.player.team, (team) => text("TEAM: $team")),
                 text("SCORE"),
@@ -282,6 +283,13 @@ class CaptureTheFlagGame extends GameIsometric {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  onPressed(
+                    action: toggleDebugMode,
+                    child: GameIsometricUI.buildWindowMenuItem(
+                      title: "DEBUG",
+                      child: watch(debugMode, GameIsometricUI.buildIconCheckbox),
+                    ),
+                  ),
                   text("FLAG STATUS"),
                   WatchBuilder(flagRedStatus, (status) => text("RED STATUS: ${CaptureTheFlagFlagStatus.getName(status)}")),
                   WatchBuilder(flagBlueStatus, (status) => text("BLUE STATUS: ${CaptureTheFlagFlagStatus.getName(status)}")),
@@ -291,7 +299,12 @@ class CaptureTheFlagGame extends GameIsometric {
         Positioned(
           top: 16,
           right: 16,
-          child: GameIsometricUI.buildRowMainMenu(),
+          child: GameIsometricUI.buildRowMainMenu(children: [
+            GameIsometricUI.buildWindowMenuItem(
+              title: "DEBUG",
+              child: watch(debugMode, GameIsometricUI.buildIconCheckbox),
+            )
+          ]),
         ),
       ],
     );
@@ -441,4 +454,15 @@ class CaptureTheFlagGame extends GameIsometric {
         ClientRequest.Capture_The_Flag,
         '${CaptureTheFlagRequest.selectClass.index} ${value.index}'
       );
+
+  void toggleDebugMode() => sendCaptureTheFlagRequest(
+      CaptureTheFlagRequest.toggleDebug
+    );
+
+  void sendCaptureTheFlagRequest(CaptureTheFlagRequest value, [dynamic message]){
+    gamestream.network.sendClientRequest(
+        ClientRequest.Capture_The_Flag,
+        '${value.index} $message'
+    );
+  }
 }

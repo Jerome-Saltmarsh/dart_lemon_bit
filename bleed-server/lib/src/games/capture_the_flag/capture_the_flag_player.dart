@@ -136,5 +136,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
     }
   }
 
-
+  void toggleDebugMode() {
+    debugMode.value = !debugMode.value;
+  }
 }

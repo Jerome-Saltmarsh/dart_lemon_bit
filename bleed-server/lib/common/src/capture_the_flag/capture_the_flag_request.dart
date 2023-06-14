@@ -1,4 +1,5 @@
 
 enum CaptureTheFlagRequest {
    selectClass,
+   toggleDebug,
 }
