@@ -1,5 +1,5 @@
 
-import 'package:gamestream_flutter/gamestream/isometric/isometric_position.dart';
+import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_position.dart';
 import 'package:gamestream_flutter/library.dart';
 
 void renderCircle32(double x, double y, { double scale = 1.0}){

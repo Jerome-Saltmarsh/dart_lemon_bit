@@ -5,19 +5,19 @@ import 'dart:ui';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_minimap.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/render/renderer_gameobjects.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/render/renderer_particles.dart';
-import 'package:gamestream_flutter/gamestream/isometric/isometric_io.dart';
-import 'package:gamestream_flutter/gamestream/isometric/isometric_particles.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_io.dart';
+import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_particles.dart';
 
 import '../../library.dart';
-import 'isometric_actions.dart';
-import 'isometric_camera.dart';
-import 'isometric_client_state.dart';
-import 'isometric_editor.dart';
-import 'isometric_events.dart';
-import 'isometric_nodes.dart';
-import 'isometric_player.dart';
-import 'isometric_server.dart';
-import 'isometric_render.dart';
+import 'components/isometric_actions.dart';
+import 'components/isometric_camera.dart';
+import 'components/isometric_client_state.dart';
+import 'components/isometric_editor.dart';
+import 'components/isometric_events.dart';
+import 'components/isometric_nodes.dart';
+import 'components/isometric_player.dart';
+import 'components/isometric_server.dart';
+import 'components/isometric_render.dart';
 
 class IsometricEngine {
   final clientState = IsometricClientState();

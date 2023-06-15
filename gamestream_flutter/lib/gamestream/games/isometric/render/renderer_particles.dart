@@ -1,9 +1,9 @@
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
-import 'package:gamestream_flutter/gamestream/isometric/isometric_nodes.dart';
-import 'package:gamestream_flutter/gamestream/isometric/isometric_particle.dart';
-import 'package:gamestream_flutter/gamestream/isometric/isometric_position.dart';
-import 'package:gamestream_flutter/gamestream/isometric/isometric_render.dart';
-import 'package:gamestream_flutter/gamestream/isometric/isometric_renderer.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_nodes.dart';
+import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_particle.dart';
+import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_position.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_render.dart';
+import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_renderer.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import 'functions/render_shadow.dart';

@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/dialog_type.dart';
-import 'package:gamestream_flutter/gamestream/isometric/isometric_client_state.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_client_state.dart';
 import 'package:gamestream_flutter/isometric/ui/constants/colors.dart';
 import 'package:gamestream_flutter/library.dart';
 

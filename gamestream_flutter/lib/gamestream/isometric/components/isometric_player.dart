@@ -1,9 +1,9 @@
-import 'package:gamestream_flutter/gamestream/isometric/isometric_character.dart';
+import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_character.dart';
 import 'package:gamestream_flutter/library.dart';
 
 import 'isometric_render.dart';
-import 'enums/game_dialog.dart';
-import 'isometric_position.dart';
+import '../enums/game_dialog.dart';
+import '../classes/isometric_position.dart';
 
 class IsometricPlayer {
   var energyPercentage = 0.0;

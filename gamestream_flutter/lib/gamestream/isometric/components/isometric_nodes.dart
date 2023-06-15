@@ -2,10 +2,10 @@
 import 'dart:math';
 
 import 'package:flutter/painting.dart';
-import 'package:gamestream_flutter/gamestream/isometric/isometric_render.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_render.dart';
 import 'package:gamestream_flutter/library.dart';
 
-import 'isometric_position.dart';
+import '../classes/isometric_position.dart';
 
 class IsometricNodes {
 

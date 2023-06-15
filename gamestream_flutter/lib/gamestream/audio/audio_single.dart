@@ -1,7 +1,7 @@
 
 import 'dart:math';
 
-import 'package:gamestream_flutter/gamestream/isometric/isometric_position.dart';
+import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_position.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:just_audio/just_audio.dart';
 

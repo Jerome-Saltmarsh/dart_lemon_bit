@@ -2,12 +2,12 @@ import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_con
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_ui.dart';
 import 'package:gamestream_flutter/library.dart';
 
-import 'enums/emission_type.dart';
-import 'isometric_character.dart';
-import 'isometric_gameobject.dart';
+import '../enums/emission_type.dart';
+import '../classes/isometric_character.dart';
+import '../classes/isometric_gameobject.dart';
 import 'isometric_player_score.dart';
-import 'isometric_position.dart';
-import 'isometric_projectile.dart';
+import '../classes/isometric_position.dart';
+import '../classes/isometric_projectile.dart';
 
 /// WARNING - WRITING TO SERVER STATE IS FORBIDDEN
 /// the data inside server state belongs to the server and can only be written by serverResponseReader

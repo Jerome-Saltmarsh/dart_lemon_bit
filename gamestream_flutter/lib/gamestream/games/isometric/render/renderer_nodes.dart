@@ -2,10 +2,10 @@ import 'dart:math';
 
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_constants.dart';
-import 'package:gamestream_flutter/gamestream/isometric/isometric_mouse.dart';
-import 'package:gamestream_flutter/gamestream/isometric/isometric_render.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_mouse.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_render.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
-import 'package:gamestream_flutter/gamestream/isometric/isometric_renderer.dart';
+import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_renderer.dart';
 import 'package:gamestream_flutter/library.dart';
 
 class RendererNodes extends IsometricRenderer {

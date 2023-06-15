@@ -1,9 +1,9 @@
 
 import 'package:gamestream_flutter/library.dart';
 
-import 'enums/editor_dialog.dart';
-import 'enums/emission_type.dart';
-import 'isometric_gameobject.dart';
+import '../enums/editor_dialog.dart';
+import '../enums/emission_type.dart';
+import '../classes/isometric_gameobject.dart';
 
 
 class IsometricEditor {

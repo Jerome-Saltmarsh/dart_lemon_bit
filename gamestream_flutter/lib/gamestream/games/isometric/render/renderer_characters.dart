@@ -1,8 +1,8 @@
 import 'dart:math';
 
-import 'package:gamestream_flutter/gamestream/isometric/isometric_character.dart';
-import 'package:gamestream_flutter/gamestream/isometric/isometric_render.dart';
-import 'package:gamestream_flutter/gamestream/isometric/isometric_renderer.dart';
+import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_character.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_render.dart';
+import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_renderer.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_rat.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_slime.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_template.dart';

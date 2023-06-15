@@ -1,7 +1,7 @@
-import 'package:gamestream_flutter/gamestream/isometric/isometric_position.dart';
+import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_position.dart';
 import 'package:gamestream_flutter/library.dart';
 
-import 'enums/emission_type.dart';
+import '../enums/emission_type.dart';
 
 class IsometricGameObject extends IsometricPosition {
   final int id;

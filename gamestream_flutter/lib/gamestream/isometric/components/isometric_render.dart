@@ -4,20 +4,20 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/dialog_type.dart';
-import 'package:gamestream_flutter/gamestream/isometric/isometric_character.dart';
-import 'package:gamestream_flutter/gamestream/isometric/isometric_position.dart';
-import 'package:gamestream_flutter/gamestream/isometric/isometric_renderer.dart';
+import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_character.dart';
+import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_position.dart';
+import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_renderer.dart';
 import 'package:gamestream_flutter/isometric/render/render_character_health_bar.dart';
 import 'package:gamestream_flutter/isometric/render/render_floating_texts.dart';
 import 'package:gamestream_flutter/library.dart';
 
-import '../games/isometric/game_isometric_constants.dart';
+import '../../games/isometric/game_isometric_constants.dart';
 import 'isometric_mouse.dart';
-import '../games/isometric/render/renderer_characters.dart';
-import '../games/isometric/render/renderer_gameobjects.dart';
-import '../games/isometric/render/renderer_nodes.dart';
-import '../games/isometric/render/renderer_particles.dart';
-import '../games/isometric/render/renderer_projectiles.dart';
+import '../../games/isometric/render/renderer_characters.dart';
+import '../../games/isometric/render/renderer_gameobjects.dart';
+import '../../games/isometric/render/renderer_nodes.dart';
+import '../../games/isometric/render/renderer_particles.dart';
+import '../../games/isometric/render/renderer_projectiles.dart';
 
 class IsometricRender {
   var totalRemaining = 0;

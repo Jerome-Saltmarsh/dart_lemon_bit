@@ -2,16 +2,16 @@ import 'package:archive/archive.dart';
 import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_events.dart';
 import 'package:gamestream_flutter/gamestream/games/fight2d/game_fight2d.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric_engine.dart';
-import 'package:gamestream_flutter/gamestream/isometric/isometric_position.dart';
+import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_position.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:bleed_common/src/capture_the_flag/src.dart';
 import 'package:lemon_byte/byte_reader.dart';
 
 import 'games/game_scissors_paper_rock.dart';
 import 'gamestream.dart';
-import 'isometric/isometric_character.dart';
-import 'isometric/isometric_player_score.dart';
-import 'isometric/isometric_projectile.dart';
+import 'isometric/classes/isometric_character.dart';
+import 'isometric/components/isometric_player_score.dart';
+import 'isometric/classes/isometric_projectile.dart';
 
 class ServerResponseReader with ByteReader {
   final bufferSize = Watch(0);

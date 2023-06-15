@@ -7,7 +7,7 @@ import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_icons.dart
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_items.dart';
 import 'package:gamestream_flutter/gamestream/isometric/atlases/atlas_nodes.dart';
 import 'package:gamestream_flutter/gamestream/isometric/enums/dialog_type.dart';
-import 'package:gamestream_flutter/gamestream/isometric/isometric_player_score.dart';
+import 'package:gamestream_flutter/gamestream/isometric/components/isometric_player_score.dart';
 import 'package:gamestream_flutter/gamestream/ui/enums/icon_type.dart';
 import 'package:gamestream_flutter/gamestream/ui/widgets/mouse_over.dart';
 import 'package:gamestream_flutter/isometric/events/on_visibility_changed_message_box.dart';

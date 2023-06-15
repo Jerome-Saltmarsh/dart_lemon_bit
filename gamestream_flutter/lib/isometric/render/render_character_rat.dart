@@ -1,5 +1,5 @@
 
-import 'package:gamestream_flutter/gamestream/isometric/isometric_character.dart';
+import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_character.dart';
 import 'package:gamestream_flutter/isometric/render/render_projectiles.dart';
 import 'package:gamestream_flutter/isometric/render/src_utils.dart';
 

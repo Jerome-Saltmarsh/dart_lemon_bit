@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:gamestream_flutter/library.dart';
 
-import 'isometric_position.dart';
+import '../classes/isometric_position.dart';
 
 class IsometricCamera {
   final chaseTargetEnabled = Watch(true);
@@ -12,6 +12,7 @@ class IsometricCamera {
   var translateY = 0.0;
 
   IsometricCamera();
+
 
   void centerOnChaseTarget() {
     if (chaseTarget != null){
