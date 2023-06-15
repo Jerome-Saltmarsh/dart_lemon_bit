@@ -40,7 +40,9 @@ class CaptureTheFlagGame extends GameIsometric {
   bool get playerIsTeamRed => player.team.value == CaptureTheFlagTeam.Red;
   bool get playerIsTeamBlue => player.team.value == CaptureTheFlagTeam.Blue;
 
-  final characterSelectedPosition = IsometricPosition();
+  final characterSelectedX = Watch(0.0);
+  final characterSelectedY = Watch(0.0);
+  final characterSelectedZ = Watch(0.0);
 
   void onChangedFlagRedStatus(int flagStatus) {
     if (playerIsTeamRed) {
@@ -260,7 +262,7 @@ class CaptureTheFlagGame extends GameIsometric {
         Positioned(
             bottom: 16,
             left: 16,
-            child: buildWindowFlagStatus()),
+            child: buildWindowSelectedCharacter()),
         Positioned(
           top: 16,
           right: 16,
@@ -268,6 +270,25 @@ class CaptureTheFlagGame extends GameIsometric {
         ),
       ],
     );
+
+  Widget buildWindowSelectedCharacter(){
+     return WatchBuilder(characterSelected, (characterSelected){
+        if (!characterSelected) return nothing;
+        return Container(
+          color: GameStyle.Container_Color,
+          padding: GameStyle.Container_Padding,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+               WatchBuilder(characterSelectedX, (x) => text("x: ${x.toInt()}")),
+               WatchBuilder(characterSelectedY, (y) => text("y: ${y.toInt()}")),
+               WatchBuilder(characterSelectedZ, (z) => text("z: ${z.toInt()}")),
+            ],
+          ),
+        );
+     });
+  }
+
 
   Widget buildWindowMap() => buildMiniMap(mapSize: 200);
 

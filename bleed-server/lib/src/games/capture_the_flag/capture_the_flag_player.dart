@@ -58,10 +58,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
     super.writePlayerGame();
     writeFlagPositions(); // todo optimize
     writeBasePositions(); // todo optimize
-
-    if (selectedCharacter != null){
-
-    }
+    writeSelectedCharacter();
 
     if (debugMode.value) {
       writeAIPath();

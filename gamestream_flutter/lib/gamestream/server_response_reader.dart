@@ -217,7 +217,9 @@ class ServerResponseReader with ByteReader {
         final characterSelected = readBool();
         captureTheFlag.characterSelected.value = characterSelected;
         if (!characterSelected) break;
-        readIsometricPosition(captureTheFlag.characterSelectedPosition);
+        captureTheFlag.characterSelectedX.value = readDouble();
+        captureTheFlag.characterSelectedY.value = readDouble();
+        captureTheFlag.characterSelectedZ.value = readDouble();
         break;
     }
   }
