@@ -5,13 +5,13 @@ import 'package:gamestream_flutter/isometric/events/on_game_event_game_object_de
 import 'package:gamestream_flutter/library.dart';
 
 import '../../../isometric/events/on_character_hurt.dart';
-import '../isometric_engine.dart';
+import '../isometric.dart';
 
 class IsometricEvents {
 
   final Gamestream gamestream;
   final IsometricClientState clientState;
-  late final IsometricEngine isometric;
+  late final Isometric isometric;
 
   IsometricEvents(this.clientState, this.gamestream) {
     this.isometric = gamestream.isometric;

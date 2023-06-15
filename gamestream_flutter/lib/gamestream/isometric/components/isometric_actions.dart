@@ -2,7 +2,7 @@
 import 'package:gamestream_flutter/library.dart';
 
 import '../../games/isometric/game_isometric_ui.dart';
-import '../isometric_engine.dart';
+import '../isometric.dart';
 
 class IsometricActions {
   static const Zoom_Far = 1.0;
@@ -11,7 +11,7 @@ class IsometricActions {
   static const Zoom_Spawn = Zoom_Very_Far;
   static const Zoom_Close = 1.5;
   
-  final IsometricEngine isometric;
+  final Isometric isometric;
 
   IsometricActions(this.isometric);
 

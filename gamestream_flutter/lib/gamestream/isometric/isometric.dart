@@ -19,7 +19,7 @@ import 'components/isometric_player.dart';
 import 'components/isometric_server.dart';
 import 'components/isometric_render.dart';
 
-class IsometricEngine {
+class Isometric {
   final clientState = IsometricClientState();
   final server = IsometricServer();
   final nodes = IsometricNodes();

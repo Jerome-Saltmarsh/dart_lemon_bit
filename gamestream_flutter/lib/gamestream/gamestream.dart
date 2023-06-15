@@ -9,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'enums/operation_status.dart';
 import 'game.dart';
 import 'games.dart';
-import 'isometric/isometric_engine.dart';
+import 'isometric/isometric.dart';
 import 'network/enums/connection_region.dart';
 import 'network/game_network.dart';
 import 'server_response_reader.dart';
@@ -19,7 +19,7 @@ class Gamestream {
    final audio = GameAudio();
    final animation = GameAnimation();
    final operationStatus = Watch(OperationStatus.None);
-   final isometric = IsometricEngine();
+   final isometric = Isometric();
 
    late final io = GameIO(isometric);
    late final gameType = Watch(GameType.Website, onChanged: _onChangedGameType);

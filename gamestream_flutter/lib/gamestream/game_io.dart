@@ -5,7 +5,7 @@ import 'package:flutter/gestures.dart';
 
 import '../library.dart';
 import 'games/isometric/game_isometric.dart';
-import 'isometric/isometric_engine.dart';
+import 'isometric/isometric.dart';
 
 
 class GameIO {
@@ -28,7 +28,7 @@ class GameIO {
   var performActionPrimary = false;
 
   final touchController = TouchController();
-  final IsometricEngine isometric;
+  final Isometric isometric;
 
   GameIO(this.isometric);
 

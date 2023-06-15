@@ -1,7 +1,7 @@
 import 'package:archive/archive.dart';
 import 'package:gamestream_flutter/gamestream/games/capture_the_flag/capture_the_flag_events.dart';
 import 'package:gamestream_flutter/gamestream/games/fight2d/game_fight2d.dart';
-import 'package:gamestream_flutter/gamestream/isometric/isometric_engine.dart';
+import 'package:gamestream_flutter/gamestream/isometric/isometric.dart';
 import 'package:gamestream_flutter/gamestream/isometric/classes/isometric_position.dart';
 import 'package:gamestream_flutter/library.dart';
 import 'package:bleed_common/src/capture_the_flag/src.dart';
@@ -18,7 +18,7 @@ class ServerResponseReader with ByteReader {
   final bufferSizeTotal = Watch(0);
   final decoder = ZLibDecoder();
   final Gamestream gamestream;
-  final IsometricEngine isometric;
+  final Isometric isometric;
   late final updateFrame = Watch(0, onChanged: isometric.clientState.onChangedUpdateFrame);
 
   ServerResponseReader({required this.gamestream, required this.isometric});
