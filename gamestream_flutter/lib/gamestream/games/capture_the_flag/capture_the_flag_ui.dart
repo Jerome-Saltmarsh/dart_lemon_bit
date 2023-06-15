@@ -283,6 +283,8 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
             WatchBuilder(characterSelectedX, (x) => text("x: ${x.toInt()}")),
             WatchBuilder(characterSelectedY, (y) => text("y: ${y.toInt()}")),
             WatchBuilder(characterSelectedZ, (z) => text("z: ${z.toInt()}")),
+            WatchBuilder(characterSelectedPathEnd, (pathEnd) => text("path-length: $pathEnd")),
+            buildToggleRow(title: 'path-render', watchBool: characterSelectedPathRender),
             const SizedBox(height: 1,),
             WatchBuilder(characterSelectedTarget, (characterSelectedTarget){
                if (!characterSelectedTarget) return nothing;
@@ -300,8 +302,7 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
                      WatchBuilder(characterSelectedTargetRenderLine, (value) => Row(
                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                        children: [
-                         text("render line"),
-                         const SizedBox(width: 8,),
+                         text("render-line"),
                          onPressed(
                              action: characterSelectedTargetRenderLine.toggle,
                              child: GSCheckBox(value)),
@@ -316,4 +317,16 @@ extension CaptureTheFlagUI on CaptureTheFlagGame {
       );
     });
   }
+
+  Widget buildToggleRow({required String title, required WatchBool watchBool}) => onPressed(
+      action: watchBool.toggle,
+      child: watch(watchBool, (value)=> Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            text(title),
+            GSCheckBox(value),
+          ],
+        ),
+      ),
+    );
 }

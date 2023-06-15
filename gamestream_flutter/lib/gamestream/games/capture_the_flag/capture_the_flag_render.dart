@@ -85,6 +85,21 @@ extension CaptureTheFlagRender on CaptureTheFlagGame {
     renderCharacterTargets();
   }
 
+  void renderPath({required Uint16List path, required int length}){
+    final nodes = gamestream.isometric.nodes;
+    for (var i = 0; i < length - 1; i++){
+      final a = path[i];
+      final b = path[i + 1];
+      engine.drawLine(
+        nodes.getIndexRenderX(a),
+        nodes.getIndexRenderY(a),
+        nodes.getIndexRenderX(b),
+        nodes.getIndexRenderY(b),
+      );
+    }
+
+  }
+
   void renderCharacterPaths(IsometricNodes nodes) {
     for (final path in characterPaths) {
       for (var i = 0; i < path.length - 1; i++){
@@ -142,6 +157,10 @@ extension CaptureTheFlagRender on CaptureTheFlagGame {
          characterSelectedTargetY.value,
          characterSelectedTargetZ.value,
        );
+    }
+
+    if (characterSelectedPathRender.value){
+      renderPath(path: characterSelectedPath, length: characterSelectedPathEnd.value);
     }
   }
 }

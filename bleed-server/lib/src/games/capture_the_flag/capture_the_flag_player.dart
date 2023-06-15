@@ -159,17 +159,17 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
   void writeAIPath(){
     writeByte(ServerResponse.Capture_The_Flag);
     writeByte(CaptureTheFlagResponse.AI_Paths);
-
     final characters = game.characters;
     writeUInt16(characters.length);
-
     for (var i = 0; i < characters.length; i++){
-      final character = characters[i];
-      writeUInt16(character.pathIndex);
-      writeUInt16(character.pathEnd);
-      for (var j = 0; j < character.pathEnd; j++){
-          writeUInt16(character.path[j]);
-      }
+      writeCharacterPath(characters[i]);
+    }
+  }
+
+  void writeCharacterPath(IsometricCharacter character){
+    writeUInt16(character.pathEnd);
+    for (var j = 0; j < character.pathEnd; j++){
+      writeUInt16(character.path[j]);
     }
   }
 
@@ -184,6 +184,7 @@ class CaptureTheFlagPlayer extends IsometricPlayer {
     }
     writeBool(true);
     writeIsometricPosition(selectedCharacter);
+    writeCharacterPath(selectedCharacter);
 
     final selectedCharacterTarget = selectedCharacter.target;
     if (selectedCharacterTarget == null){

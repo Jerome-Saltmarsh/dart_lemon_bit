@@ -17,6 +17,7 @@ class CaptureTheFlagGame extends GameIsometric {
   var objectiveLinesEnabled = false;
   var characterTargetTotal = 0;
 
+
   final Gamestream gamestream;
   final flagPositionRed = IsometricPosition();
   final flagPositionBlue = IsometricPosition();
@@ -35,6 +36,9 @@ class CaptureTheFlagGame extends GameIsometric {
   final characterSelectedX = Watch(0.0);
   final characterSelectedY = Watch(0.0);
   final characterSelectedZ = Watch(0.0);
+  final characterSelectedPath = Uint16List(500);
+  final characterSelectedPathEnd = Watch(0);
+  final characterSelectedPathRender = WatchBool(false);
   final characterSelectedTarget = Watch(false);
   final characterSelectedTargetType = Watch("");
   final characterSelectedTargetX = Watch(0.0);
