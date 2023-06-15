@@ -21,6 +21,8 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
 
   int get pathNodeIndex => path[pathIndex];
 
+  IsometricPosition? targetPrevious;
+
   CaptureTheFlagPlayerAI({
     required this.game,
     required super.team,
@@ -98,7 +100,14 @@ class CaptureTheFlagPlayerAI extends IsometricCharacterTemplate {
   void customUpdate() {
     if (deadOrBusy) return;
 
+
+
     final target = this.target;
+
+    if (targetPrevious != target){
+      targetPrevious = target;
+      updatePathToTarget();
+    }
 
     if (target != null) {
       if (pathIndex >= pathEnd) {
