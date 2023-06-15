@@ -67,8 +67,8 @@ class GameIsometricDebug {
                                     "scene-light-active: ${gamestream.isometric.clientState.lights_active}\n"
                                     "total-gameobjects: ${gamestream.isometric.server.gameObjects.length}\n"
                                     "total-characters: ${gamestream.isometric.server.totalCharacters}\n"
-                                    'total-particles: ${gamestream.isometric.clientState.particles.length}\n'
-                                    'total-particles-active: ${gamestream.isometric.clientState.totalActiveParticles}\n'
+                                    'total-particles: ${gamestream.isometric.particles.particles.length}\n'
+                                    'total-particles-active: ${gamestream.isometric.particles.totalActiveParticles}\n'
                                     "offscreen-nodes: left: ${RendererNodes.offscreenNodesLeft}, top: ${RendererNodes.offscreenNodesTop}, right: ${RendererNodes.offscreenNodesRight}, bottom: ${RendererNodes.offscreenNodesBottom}"
                             )),
                             Refresh(() => text('touch-world: x: ${gamestream.io.touchCursorWorldX.toInt()}, y: ${gamestream.io.touchCursorWorldY.toInt()}')),

@@ -133,7 +133,7 @@ class IsometricServer {
 
     final z = getProjectionZ(v3);
     if (z < 0) return;
-    gamestream.isometric.clientState.spawnParticle(
+    gamestream.isometric.particles.spawnParticle(
       type: ParticleType.Shadow,
       x: v3.x,
       y: v3.y,
@@ -199,7 +199,7 @@ class IsometricServer {
   void sortGameObjects(){
     Engine.insertionSort(
       gameObjects,
-      compare: gamestream.isometric.clientState.compareRenderOrder,
+      compare: IsometricPosition.compareRenderOrder,
     );
   }
 
@@ -224,16 +224,16 @@ class IsometricServer {
     for (var i = 0; i < totalProjectiles; i++) {
       final projectile = projectiles[i];
       if (projectile.type == ProjectileType.Rocket) {
-        gamestream.isometric.clientState.spawnParticleSmoke(x: projectile.x, y: projectile.y, z: projectile.z);
+        gamestream.isometric.particles.spawnParticleSmoke(x: projectile.x, y: projectile.y, z: projectile.z);
         projectShadow(projectile);
         continue;
       }
       if (projectile.type == ProjectileType.Fireball) {
-        gamestream.isometric.clientState.spawnParticleFire(x: projectile.x, y: projectile.y, z: projectile.z);
+        gamestream.isometric.particles.spawnParticleFire(x: projectile.x, y: projectile.y, z: projectile.z);
         continue;
       }
       if (projectile.type == ProjectileType.Orb) {
-        gamestream.isometric.clientState.spawnParticleOrbShard(
+        gamestream.isometric.particles.spawnParticleOrbShard(
           x: projectile.x,
           y: projectile.y,
           z: projectile.z,

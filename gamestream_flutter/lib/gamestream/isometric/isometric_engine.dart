@@ -7,6 +7,7 @@ import 'package:gamestream_flutter/gamestream/games/isometric/game_isometric_ren
 import 'package:gamestream_flutter/gamestream/games/isometric/render/renderer_gameobjects.dart';
 import 'package:gamestream_flutter/gamestream/games/isometric/render/renderer_particles.dart';
 import 'package:gamestream_flutter/gamestream/isometric/isometric_io.dart';
+import 'package:gamestream_flutter/gamestream/isometric/isometric_particles.dart';
 
 import '../../library.dart';
 import 'isometric_actions.dart';
@@ -27,6 +28,7 @@ class IsometricEngine {
   final player = IsometricPlayer();
   final camera = IsometricCamera();
   final io = IsometricIO();
+  final particles = IsometricParticles();
 
   late final events = IsometricEvents(clientState, gamestream);
   late final actions = IsometricActions(this);
@@ -39,7 +41,7 @@ class IsometricEngine {
     if (server.gameRunning.value){
       /// particles are only on the ui and thus can update every frame
       /// this makes them much smoother as they don't freeze
-      clientState.updateParticles();
+      particles.updateParticles();
     }
     clientState.interpolatePlayer();
     camera.update();

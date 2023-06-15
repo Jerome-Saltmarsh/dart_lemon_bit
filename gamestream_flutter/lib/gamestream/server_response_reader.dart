@@ -727,9 +727,9 @@ class ServerResponseReader with ByteReader {
     isometric.nodes.refreshNodeVariations();
     isometric.clientState.sceneChanged.value++;
 
-    gamestream.isometric.clientState.totalActiveParticles = 0;
-    gamestream.isometric.clientState.totalParticles = 0;
-    gamestream.isometric.clientState.particles.clear();
+    gamestream.isometric.particles.totalActiveParticles = 0;
+    gamestream.isometric.particles.totalParticles = 0;
+    gamestream.isometric.particles.particles.clear();
     gamestream.io.recenterCursor();
   }
 
@@ -920,4 +920,6 @@ class ServerResponseReader with ByteReader {
       game.characterStateDuration[i] = readByte();
     }
   }
+
 }
+

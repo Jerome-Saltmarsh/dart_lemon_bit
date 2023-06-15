@@ -11,7 +11,7 @@ import 'functions/render_shadow.dart';
 class RendererParticles extends IsometricRenderer {
 
   final IsometricNodes nodes;
-  static final particles = gamestream.isometric.clientState.particles;
+  static final particles = gamestream.isometric.particles.particles;
   static late IsometricParticle particle;
   static final screen = engine.screen;
 
@@ -552,11 +552,11 @@ class RendererParticles extends IsometricRenderer {
   }
 
   @override
-  int getTotal() => gamestream.isometric.clientState.totalParticles;
+  int getTotal() => gamestream.isometric.particles.totalParticles;
 
   @override
   void reset() {
-    gamestream.isometric.clientState.sortParticles();
+    gamestream.isometric.particles.sortParticles();
     super.reset();
   }
 

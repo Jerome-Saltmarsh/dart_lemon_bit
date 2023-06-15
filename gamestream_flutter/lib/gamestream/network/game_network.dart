@@ -187,7 +187,7 @@ class GameNetwork {
     gamestream.io.removeListeners();
     engine.onDrawForeground = null;
     gamestream.serverResponseReader.bufferSizeTotal.value = 0;
-    gamestream.isometric.clientState.clearParticles();
+    gamestream.isometric.particles.clearParticles();
     gamestream.isometric.clientState.window_visible_menu.setFalse();
     gamestream.isometric.clientState.control_visible_player_weapons.value = false;
     gamestream.isometric.clientState.window_visible_player_creation.value = false;
